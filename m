@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1739B15667B;
-	Mon, 16 Sep 2024 11:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98CD154429;
+	Mon, 16 Sep 2024 11:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487977; cv=none; b=FmTDwqC++kSBbyk/oxkp6KrJvrUm0A2Rcmv+lVs2K2IC662hv8Dvn+6i4j4p2rwkfXVsUx+W3ZiLxbo8r9uSXJdCB9EX3XuRCLG2hhig7tsvkUKFarMdvhF6gMCUSgTzBHX6eYVE90Akiu0M4KA7p491916Z2fdBJx8HDrpQ9S4=
+	t=1726487980; cv=none; b=mVYyU6Y3qMxR9QnWMO5NjqYftwwHCO+nzoc8MZdMuvT1Sm8XjwONBnxPawSVpxJEdELouHjbP4qXDuLqTayAgkBDJDWfLyNYCl7BklGQD/q4PdkTywtXOE5RiQL4BMa9zyZ+dTefS/SB5ojdFZTtq0NhcQ8VJtRIxZcAE/M00OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487977; c=relaxed/simple;
-	bh=D4b12ri3fL92PS4sU914RT1bwqZLE1GPnqCtDsn1/sg=;
+	s=arc-20240116; t=1726487980; c=relaxed/simple;
+	bh=4HhcTeMIfYiUOIkQAUUJ7ebNFJ0LwJY9S0tVdU2rJ8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbbtCrJtpCE2sc4USWFVpTLUOuy4Cou1oTpaHMPCNVjwcAhVd5JXkqyi/A0SxIEnifPVf9xaUQg963O8RqROG/GHZDMldT1ILc4UFBqjlTcYWSsGhpJZRoGhR/TeiTA9Dz4PttZIgj+GwvWdrsG5dPj6k84WVjI2/8dgMJIgEr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tt59O5Tk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MI6CbZ9rCoTdIz9qbMzLasTDW1LsX9R8gsqKSG4nJHh4ez/FRycBh7mBSA3vtMJPH19G6bi9gc7s1NsnpqpiOHJyOxCak/1w0+AeutsFA7Xmo/6iibBbOGxwXRlSB2rzyTP/UmV4HKvJCfli3wGiBTcrlKBJFWab1A43t81UIbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9TMobHD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tt59O5Tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7124BC4CECE;
-	Mon, 16 Sep 2024 11:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9TMobHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB2BC4CEC4;
+	Mon, 16 Sep 2024 11:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726487976;
-	bh=D4b12ri3fL92PS4sU914RT1bwqZLE1GPnqCtDsn1/sg=;
+	s=korg; t=1726487980;
+	bh=4HhcTeMIfYiUOIkQAUUJ7ebNFJ0LwJY9S0tVdU2rJ8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tt59O5TkTePh2F98z2fqZGUZ1xVTEC+kax3rsH1dAAbr9U1BbOY95cD+GWOXYzlFg
-	 dTMycptPT0WMIVRT+OWGoRqpzJT3OLj4h1BWGe9YoxCIiHFZJhfUu2lkKXD7bxJ6rb
-	 oRF2D/yeeIEHeOhhZAcgGck+vMqWlEVExuldK7vU=
+	b=a9TMobHDHeCCQqIeBj3qZ8JmlJxq3xcUDASUMmJlBjlVTipFZ2CEvOt3gnq3qEGT6
+	 l4KBH28Q4EZvWPwgyYZsgR/rVzuXWeInHIAh6eKPPPzktAImuRYZjtoyDBxTgNTXhY
+	 O0O3dzZWHqwIyeVMKtg24M5rK8Ibwt/5dGWErhd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 16/63] drm/msm/adreno: Fix error return if missing firmware-name
-Date: Mon, 16 Sep 2024 13:43:55 +0200
-Message-ID: <20240916114221.633148975@linuxfoundation.org>
+Subject: [PATCH 6.1 17/63] Input: i8042 - add Fujitsu Lifebook E756 to i8042 quirk table
+Date: Mon, 16 Sep 2024 13:43:56 +0200
+Message-ID: <20240916114221.664647497@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,38 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 624ab9cde26a9f150b4fd268b0f3dae3184dc40c ]
+[ Upstream commit 7ce7c2283fa6843ab3c2adfeb83dcc504a107858 ]
 
--ENODEV is used to signify that there is no zap shader for the platform,
-and the CPU can directly take the GPU out of secure mode.  We want to
-use this return code when there is no zap-shader node.  But not when
-there is, but without a firmware-name property.  This case we want to
-treat as-if the needed fw is not found.
+Yet another quirk entry for Fujitsu laptop.  Lifebook E756 requires
+i8041.nomux for keeping the touchpad working after suspend/resume.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/604564/
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1229056
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240814100630.2048-1-tiwai@suse.de
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index dfd4eec21785..c4ad70eb1d92 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -99,7 +99,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		 * was a bad idea, and is only provided for backwards
- 		 * compatibility for older targets.
- 		 */
--		return -ENODEV;
-+		return -ENOENT;
- 	}
- 
- 	if (IS_ERR(fw)) {
+diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
+index e9eb9554dd7b..bad238f69a7a 100644
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -627,6 +627,15 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
+ 	},
++	{
++		/* Fujitsu Lifebook E756 */
++		/* https://bugzilla.suse.com/show_bug.cgi?id=1229056 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E756"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
++	},
+ 	{
+ 		/* Fujitsu Lifebook E5411 */
+ 		.matches = {
 -- 
 2.43.0
 
