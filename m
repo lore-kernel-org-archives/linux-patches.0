@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9EE145B0C;
-	Mon, 16 Sep 2024 12:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67031149E0B;
+	Mon, 16 Sep 2024 12:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488119; cv=none; b=bWqqtMyD0czZPKzi2NYVrKlxw4xuk4nJgD/ET3kr/HbLa1FcvRLTOrVeiCNbjeKsjO7JkeenG8CLAiZUBqUb2fNs19xGTdsm+UlTp9dsjx/IphPCGYVhyvAkaFYkOb3K1hK5JZar/LARLjMk8wLI/O26ZVCXb8sI3LQZyNgWzlA=
+	t=1726488122; cv=none; b=hR+EUaETBjN+PNAbkJRIoeeB+Zf2AvgYwLr9sy3knPAo3Cj+mSRMhD9uXuPLe0i6UPH86nwj+O2BzkVpNBkZhz4RLIB81bwruD0lm/vhKxzJz7Q07H7TG6NtTDjrF4u9HeYoMwCx6Q+ZOLrdFurkubot9+Ogh+j5/tIju+dZIso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488119; c=relaxed/simple;
-	bh=Uba+Wv5ApOVz2unbXMhNp88W7wmi6JYhdafjeTdxJ1g=;
+	s=arc-20240116; t=1726488122; c=relaxed/simple;
+	bh=DrDqNB2JbOL6bXOoIs+tK3quBOZDkDsMnZt5fok4DsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBBIN5GmoVOkAakaPx++5YgqeEiEdomBaOvde6OYpwBXNJkYHsJ4uAc4bbru8lF8ezRc0i6rCKg5GwSnhGsMzxvaKhbIZ8SxunsK3RxpUKBDYhsgswvz1dvk7nQX5E3zAvqe0Lv3MbmOLVYKxO5k8oob60z5ICZxv9p7NJQaPoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJLNs1Js; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETqkpuS4GetDNGlURUeMcNiWs7EragyqfDV+zvJxmllx39Q/MKeV4EcM0xztwZnRI8tVojlyzbpsI161Uy855kCDKLb4hQJM8+q6l3KDGujgIgWWfd3cXmwXlEH3bRvVd9VehwjD6/7EXxjPo6Loc8AYhOq5rad3Slv+PAq8pZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr9W1wUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJLNs1Js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3853C4CEC4;
-	Mon, 16 Sep 2024 12:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr9W1wUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8CAC4CEC4;
+	Mon, 16 Sep 2024 12:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488119;
-	bh=Uba+Wv5ApOVz2unbXMhNp88W7wmi6JYhdafjeTdxJ1g=;
+	s=korg; t=1726488122;
+	bh=DrDqNB2JbOL6bXOoIs+tK3quBOZDkDsMnZt5fok4DsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJLNs1JsRwaUYFWo8TxhKQx74OX0SJ3asfdQ92zKYwn+aUByB2+brGSUhXLu2wLF7
-	 RVwlddwy7Y/rda0IJKq6LZ577A/rnVU5mjlpRh0VA7rde7H00zdZhkZLDer/cRl4bH
-	 BmG9fcy6HiLj2N7um3hUDoJzY3nBAg/R0lq0/GJk=
+	b=Pr9W1wUumcrjG/wG3D9EFrHy6BOVQ5ocykymS09kJIA8LJaK/N3Z1RpNhKn6/WJ3D
+	 dSpywKKCfyhHVqKHuRNRdP+9Oap5uNXhN83R/sr11KVr/BApTzTdOIriPQpUsU4pms
+	 Vu55tERA725GqCfkqyGmK6TjokMEcA+dcoyoYxLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 40/63] net/mlx5: Update the list of the PCI supported devices
-Date: Mon, 16 Sep 2024 13:44:19 +0200
-Message-ID: <20240916114222.483820098@linuxfoundation.org>
+Subject: [PATCH 6.1 41/63] net/mlx5e: Add missing link modes to ptys2ethtool_map
+Date: Mon, 16 Sep 2024 13:44:20 +0200
+Message-ID: <20240916114222.513926295@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,34 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit 7472d157cb8014103105433bcc0705af2e6f7184 ]
+[ Upstream commit 7617d62cba4a8a3ff3ed3fda0171c43f135c142e ]
 
-Add the upcoming ConnectX-9 device ID to the table of supported
-PCI device IDs.
+Add MLX5E_1000BASE_T and MLX5E_100BASE_TX to the legacy
+modes in ptys2legacy_ethtool_table, since they were missing.
 
-Fixes: f908a35b2218 ("net/mlx5: Update the list of the PCI supported devices")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Fixes: 665bc53969d7 ("net/mlx5e: Use new ethtool get/set link ksettings API")
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 67849b1c0bb7..76af59cfdd0e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -2025,6 +2025,7 @@ static const struct pci_device_id mlx5_core_pci_table[] = {
- 	{ PCI_VDEVICE(MELLANOX, 0x101f) },			/* ConnectX-6 LX */
- 	{ PCI_VDEVICE(MELLANOX, 0x1021) },			/* ConnectX-7 */
- 	{ PCI_VDEVICE(MELLANOX, 0x1023) },			/* ConnectX-8 */
-+	{ PCI_VDEVICE(MELLANOX, 0x1025) },			/* ConnectX-9 */
- 	{ PCI_VDEVICE(MELLANOX, 0xa2d2) },			/* BlueField integrated ConnectX-5 network controller */
- 	{ PCI_VDEVICE(MELLANOX, 0xa2d3), MLX5_PCI_DEV_IS_VF},	/* BlueField integrated ConnectX-5 network controller VF */
- 	{ PCI_VDEVICE(MELLANOX, 0xa2d6) },			/* BlueField-2 integrated ConnectX-6 Dx network controller */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 3ee61987266c..8cb127a6fabf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -136,6 +136,10 @@ void mlx5e_build_ptys2ethtool_map(void)
+ 				       ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT);
+ 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100GBASE_LR4, legacy,
+ 				       ETHTOOL_LINK_MODE_100000baseLR4_ER4_Full_BIT);
++	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100BASE_TX, legacy,
++				       ETHTOOL_LINK_MODE_100baseT_Full_BIT);
++	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_1000BASE_T, legacy,
++				       ETHTOOL_LINK_MODE_1000baseT_Full_BIT);
+ 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_10GBASE_T, legacy,
+ 				       ETHTOOL_LINK_MODE_10000baseT_Full_BIT);
+ 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_25GBASE_CR, legacy,
 -- 
 2.43.0
 
