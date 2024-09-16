@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3392D155CBA;
-	Mon, 16 Sep 2024 12:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C4159583;
+	Mon, 16 Sep 2024 12:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488296; cv=none; b=kvagGaHwsV1VN8ElYEH/LGl1EYVtwFcyeFUr7aWc8bd9loB+QcFXgMl6sbuHJ7lwjHCj6c7gQeRlKVplxT5QiIkFXZ3d57PHr/5b5M/IG9El2vlFx2kolhlewS+CfDnNffay/bxPcML2Yt49cR20LNgGMvTDXop2hWKTllEdgNg=
+	t=1726488299; cv=none; b=IhwuWU33jIjZuzCRNC6SoofqvONVAF9eJLRi2vKI9IgycQ+bdGEEWnI7Lr9ZDhU9c/aGFsanuZj5SOubP9HmsjCn8ynX9XqJM+e612RhIPlyF5oYgN3c6gz4bPM8Zzp+cuaxykGCQ2oWlpAkCt3bPpmzguI+5Sg9R4LemLJ+gE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488296; c=relaxed/simple;
-	bh=E1JI0cCX5akb6grfeoaiKh2+0q5qSG5uR+6cUoxbXSY=;
+	s=arc-20240116; t=1726488299; c=relaxed/simple;
+	bh=xr8nqEXk+HGhNH/jQ96b1czQQepI7DaEqZvny0qkwos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ3gDtd9AOTpu2WC46CccGj1e/8FmHjjDnlC/oyWZ3r71zFzdTlh0VBExERQhYNGHsYcQGgaYyIMiFg57DSbbrDOas+/ezM1aR9pq6Y3JlC3bTGIFiq0tOGbXZnTIgo6zD4r85wz5zFFqWlOw5rDbSIsJ6P3vQ7qTgeC2Q3TeIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTIY6sgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ReUhMyuDacXOlsUU/vzV3X6zYNXZyT3sSNP4sWjeskY2LjK8FY24oKabfKppZbdGkAygMQQ2Q9n08NPSxYhfzd1T2b4tMwPrXWZfuYo8H3jxwJmCBrhoeBQcE8Rj9/z936g4CnKfQ5NBWdvQvYkKZSC5L2TssU7jSpfP8XKslsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzW6pW9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTIY6sgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1803C4CEC4;
-	Mon, 16 Sep 2024 12:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzW6pW9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76844C4CEC4;
+	Mon, 16 Sep 2024 12:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488296;
-	bh=E1JI0cCX5akb6grfeoaiKh2+0q5qSG5uR+6cUoxbXSY=;
+	s=korg; t=1726488298;
+	bh=xr8nqEXk+HGhNH/jQ96b1czQQepI7DaEqZvny0qkwos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTIY6sgzsj09vghbBcFNGQI6oYvMhutN9NMOU/l/ug3NGvjd9GDVOENtPPdJtEkqK
-	 MMs4w79SSr5tgbWHpQp9bEETM08DBcAIj1EQkvjOsLOfYOR3Dc8YLxutHWC0jmZr9P
-	 N7GdkoMVt3DBHGIMrV3VysIkFnWnSd2kKQHbpqaQ=
+	b=jzW6pW9v6CUwBRGyNsbDeuUJfynRYmjdJgK8CMsQOzDJlLPtFwSRzg0A0ocAiosen
+	 gVwaUi0KRXbGcU98wz1N/MrLAENhDFFtn7PAlYp0Kt8rSJ98mMB0y5enXWP7fkQSdA
+	 jkTJYR2jXRz+G8NZvgwXhVqQcMHK8mym25JKheiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 037/121] drm/xe: use devm instead of drmm for managed bo
-Date: Mon, 16 Sep 2024 13:43:31 +0200
-Message-ID: <20240916114230.353456064@linuxfoundation.org>
+Subject: [PATCH 6.10 038/121] s390/mm: Prevent lowcore vs identity mapping overlap
+Date: Mon, 16 Sep 2024 13:43:32 +0200
+Message-ID: <20240916114230.385496328@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,59 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit 8636a5c29be1f05b5162a5c82c874338b6717759 ]
+[ Upstream commit a3ca27c405faad584af6e8e38cdafe5be73230a1 ]
 
-The BO cleanup touches the GGTT and therefore requires the HW to be
-available, so we need to use devm instead of drmm.
+The identity mapping position in virtual memory is randomized
+together with the kernel mapping. That position can never
+overlap with the lowcore even when the lowcore is relocated.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/1160
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240809231237.1503796-2-daniele.ceraolospurio@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 8d3a2d3d766a823c7510cdc17e6ff7c042c63b61)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Prevent overlapping with the lowcore to allow independent
+positioning of the identity mapping. With the current value
+of the alternative lowcore address of 0x70000 the overlap
+could happen in case the identity mapping is placed at zero.
+
+This is a prerequisite for uncoupling of randomization base
+of kernel image and identity mapping in virtual memory.
+
+Acked-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_bo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/s390/kernel/setup.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
-index b6f3a43d637f..f5e3012eff20 100644
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -1539,7 +1539,7 @@ struct xe_bo *xe_bo_create_from_data(struct xe_device *xe, struct xe_tile *tile,
- 	return bo;
+diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
+index 610e6f794511..4b1afd8ac3ee 100644
+--- a/arch/s390/kernel/setup.c
++++ b/arch/s390/kernel/setup.c
+@@ -734,7 +734,23 @@ static void __init memblock_add_physmem_info(void)
  }
  
--static void __xe_bo_unpin_map_no_vm(struct drm_device *drm, void *arg)
-+static void __xe_bo_unpin_map_no_vm(void *arg)
+ /*
+- * Reserve memory used for lowcore/command line/kernel image.
++ * Reserve memory used for lowcore.
++ */
++static void __init reserve_lowcore(void)
++{
++	void *lowcore_start = get_lowcore();
++	void *lowcore_end = lowcore_start + sizeof(struct lowcore);
++	void *start, *end;
++
++	if ((void *)__identity_base < lowcore_end) {
++		start = max(lowcore_start, (void *)__identity_base);
++		end = min(lowcore_end, (void *)(__identity_base + ident_map_size));
++		memblock_reserve(__pa(start), __pa(end));
++	}
++}
++
++/*
++ * Reserve memory used for absolute lowcore/command line/kernel image.
+  */
+ static void __init reserve_kernel(void)
  {
- 	xe_bo_unpin_map_no_vm(arg);
- }
-@@ -1554,7 +1554,7 @@ struct xe_bo *xe_managed_bo_create_pin_map(struct xe_device *xe, struct xe_tile
- 	if (IS_ERR(bo))
- 		return bo;
+@@ -915,6 +931,7 @@ void __init setup_arch(char **cmdline_p)
  
--	ret = drmm_add_action_or_reset(&xe->drm, __xe_bo_unpin_map_no_vm, bo);
-+	ret = devm_add_action_or_reset(xe->drm.dev, __xe_bo_unpin_map_no_vm, bo);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-@@ -1602,7 +1602,7 @@ int xe_managed_bo_reinit_in_vram(struct xe_device *xe, struct xe_tile *tile, str
- 	if (IS_ERR(bo))
- 		return PTR_ERR(bo);
- 
--	drmm_release_action(&xe->drm, __xe_bo_unpin_map_no_vm, *src);
-+	devm_release_action(xe->drm.dev, __xe_bo_unpin_map_no_vm, *src);
- 	*src = bo;
- 
- 	return 0;
+ 	/* Do some memory reservations *before* memory is added to memblock */
+ 	reserve_pgtables();
++	reserve_lowcore();
+ 	reserve_kernel();
+ 	reserve_initrd();
+ 	reserve_certificate_list();
 -- 
 2.43.0
 
