@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF50154BFB;
-	Mon, 16 Sep 2024 12:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0684D14D2B3;
+	Mon, 16 Sep 2024 12:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488484; cv=none; b=PT3FicM1MCUOfcczyJog89qhdvYZL6Ykfx7RG7VP5HEy5WNp9iUQXNEgVh1G7mp5VTAv2vydow+Fq0um0iZcXcAwXoV12jd1Z2/f+xQk+NWGmvsINYdmkg8LOxtcX45Mh+it9uDy9HcwlwrNDEW1fxmxgZLXkOxsivCFg4JJvOY=
+	t=1726488487; cv=none; b=HcgFsdAKBHm15PuEZlM25XTNBuLj78CxQtMUq5WB+d4c3dYLmi8P6CepiBFtt06Pn65KbJ3//5IiYk3/4eFsgh8pNEPBoSRpi5e+MeFQ+YDXgavr14wliD0frYZipSDBXU3O1CUOS0P0LGQi8fwwINsDAU28ho1Bg3byocYBKqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488484; c=relaxed/simple;
-	bh=IszvJnoDWFTgFdHiMpRUrTF0Q/D9gJ2vmJ6vVN7yb9I=;
+	s=arc-20240116; t=1726488487; c=relaxed/simple;
+	bh=MzogfVQc/xMoJRShvja2MHq68MoqdCnvO7r3EUiuJhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cfgWFu8VON9ZDOoo8O2he8eOLe7pZNRP5dYztmvI98xOH/K2hkE2DHuqh0YcIrpcP50LWt+TWvemSiGoD7xBS23brI24QxVdWBdcfa4MckTQXD32XCDfLHH9oBpp1GpnIsi/yeywiEVWGRH9ddpnPvrRwWOcacYXfAmRXfX2zc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxGEO7RJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFIFU0L5LDOOKcI1gdYcnwHGjBTMK/cTF+6cXRkbhcHcxIK9ZhmoCdkMXY9gcHwvP413yHpNvMg3QNcw4R+E6NztGs2msYCKONDDOApMJm1ejIt2y5YvHyZIzVE+zqgS6zMBuc+FuOLiOQUPYvqdcERn3r96+VtrBE6aVDJa7u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjfiFRaS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxGEO7RJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A700AC4CEC4;
-	Mon, 16 Sep 2024 12:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjfiFRaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82724C4CEC4;
+	Mon, 16 Sep 2024 12:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488484;
-	bh=IszvJnoDWFTgFdHiMpRUrTF0Q/D9gJ2vmJ6vVN7yb9I=;
+	s=korg; t=1726488486;
+	bh=MzogfVQc/xMoJRShvja2MHq68MoqdCnvO7r3EUiuJhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxGEO7RJLEv/jaPgh6EmNtz/VTBqHSRBKgeFweEk4yGhIwFL5M70skhijBYv2HqJ9
-	 SYClO7Uy9nlqf6h4YH0bOcFz0bUQfVaKQFZJTPtr8MWR4YAgFkoRXKsojI/BmP7Dgn
-	 lAOIxCjiLn1BWTSBX0309BhJlUE2WgWwrXSE5Apo=
+	b=LjfiFRaSGRdgNimVnzTg0aTFZubWnLXA+Ennr+YiEbH6878wYjjr++IHCxETj3DBk
+	 ohHPYFR5HGKR9lT0XQCuVGpaWAOq5GR/X/0ZZAi2PTV6dGPGmHdsgVtfnRaBwV8h5a
+	 cmS79NagNgz2k+WIB43aXOWOvNl9Q9b83UcjAJhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+02a42d9b1bd395cbcab4@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Lukasz Majewski <lukma@denx.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 093/121] net: hsr: prevent NULL pointer dereference in hsr_proxy_announce()
-Date: Mon, 16 Sep 2024 13:44:27 +0200
-Message-ID: <20240916114232.207314071@linuxfoundation.org>
+Subject: [PATCH 6.6 01/91] device property: Add cleanup.h based fwnode_handle_put() scope based cleanup.
+Date: Mon, 16 Sep 2024 13:43:37 +0200
+Message-ID: <20240916114224.556783854@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
-References: <20240916114228.914815055@linuxfoundation.org>
+In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
+References: <20240916114224.509743970@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,56 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit a7789fd4caaf96ecfed5e28c4cddb927e6bebadb ]
+[ Upstream commit 59ed5e2d505bf5f9b4af64d0021cd0c96aec1f7c ]
 
-In the function hsr_proxy_annouance() added in the previous commit
-5f703ce5c981 ("net: hsr: Send supervisory frames to HSR network
-with ProxyNodeTable data"), the return value of the hsr_port_get_hsr()
-function is not checked to be a NULL pointer, which causes a NULL
-pointer dereference.
+Useful where the fwnode_handle was obtained from a call such as
+fwnode_find_reference() as it will safely do nothing if IS_ERR() is true
+and will automatically release the reference on the variable leaving
+scope.
 
-To solve this, we need to add code to check whether the return value
-of hsr_port_get_hsr() is NULL.
-
-Reported-by: syzbot+02a42d9b1bd395cbcab4@syzkaller.appspotmail.com
-Fixes: 5f703ce5c981 ("net: hsr: Send supervisory frames to HSR network with ProxyNodeTable data")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Lukasz Majewski <lukma@denx.de>
-Link: https://patch.msgid.link/20240907190341.162289-1-aha310510@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240217164249.921878-3-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 61cbfb5368dd ("iio: adc: ad7124: fix DT configuration parsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/property.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index ac56784c327c..049e22bdaafb 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -414,6 +414,9 @@ static void hsr_proxy_announce(struct timer_list *t)
- 	 * of SAN nodes stored in ProxyNodeTable.
- 	 */
- 	interlink = hsr_port_get_hsr(hsr, HSR_PT_INTERLINK);
-+	if (!interlink)
-+		goto done;
-+
- 	list_for_each_entry_rcu(node, &hsr->proxy_node_db, mac_list) {
- 		if (hsr_addr_is_redbox(hsr, node->macaddress_A))
- 			continue;
-@@ -428,6 +431,7 @@ static void hsr_proxy_announce(struct timer_list *t)
- 		mod_timer(&hsr->announce_proxy_timer, jiffies + interval);
- 	}
+diff --git a/include/linux/property.h b/include/linux/property.h
+index 1684fca930f7..909416c701b8 100644
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -11,6 +11,7 @@
+ #define _LINUX_PROPERTY_H_
  
-+done:
- 	rcu_read_unlock();
- }
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/fwnode.h>
+ #include <linux/stddef.h>
+ #include <linux/types.h>
+@@ -175,6 +176,8 @@ struct fwnode_handle *device_get_named_child_node(const struct device *dev,
+ struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
+ void fwnode_handle_put(struct fwnode_handle *fwnode);
+ 
++DEFINE_FREE(fwnode_handle, struct fwnode_handle *, fwnode_handle_put(_T))
++
+ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
+ int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name);
  
 -- 
 2.43.0
