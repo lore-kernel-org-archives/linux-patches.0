@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C99C13DBA0;
-	Mon, 16 Sep 2024 12:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF50154BFB;
+	Mon, 16 Sep 2024 12:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488481; cv=none; b=uiQ4RvmapoYkCkFTU55hxQV8CRntuo9fMgUME0r/Dra0I3Rf9hf9Zk6bE29SUpCWuOwRRu2+cPAFFEB75nUFSKYYqfv7r7eQ3XgizWxvYy8tp/I/YY/C/oRWX/Th+zOuPkjF1FHuV09v4fdOoPM52RAYiYHhWNMK9wmkaN/7Ma4=
+	t=1726488484; cv=none; b=PT3FicM1MCUOfcczyJog89qhdvYZL6Ykfx7RG7VP5HEy5WNp9iUQXNEgVh1G7mp5VTAv2vydow+Fq0um0iZcXcAwXoV12jd1Z2/f+xQk+NWGmvsINYdmkg8LOxtcX45Mh+it9uDy9HcwlwrNDEW1fxmxgZLXkOxsivCFg4JJvOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488481; c=relaxed/simple;
-	bh=IpfzF2RuzOJLkTtSQYxKijihcb7Iw1TspsDhhA3M//A=;
+	s=arc-20240116; t=1726488484; c=relaxed/simple;
+	bh=IszvJnoDWFTgFdHiMpRUrTF0Q/D9gJ2vmJ6vVN7yb9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8zCTMkp+ngJVKzyg+tqAErYsNDlmx1VPPTid4fKQWRdmNJH4s0pHERDc9BR4Xx9pUvl62nrjsiSPBLPvAvcyOA7QSNtJiA1VVlgL/8/zh74WzYrrc60/N+VKewFFwhdXeAWYlNGrr6jZiq+u2WfeySjY6qbLkijnJBqb6n2AUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkFjDMRH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfgWFu8VON9ZDOoo8O2he8eOLe7pZNRP5dYztmvI98xOH/K2hkE2DHuqh0YcIrpcP50LWt+TWvemSiGoD7xBS23brI24QxVdWBdcfa4MckTQXD32XCDfLHH9oBpp1GpnIsi/yeywiEVWGRH9ddpnPvrRwWOcacYXfAmRXfX2zc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxGEO7RJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkFjDMRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97E0C4CEC4;
-	Mon, 16 Sep 2024 12:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxGEO7RJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A700AC4CEC4;
+	Mon, 16 Sep 2024 12:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488481;
-	bh=IpfzF2RuzOJLkTtSQYxKijihcb7Iw1TspsDhhA3M//A=;
+	s=korg; t=1726488484;
+	bh=IszvJnoDWFTgFdHiMpRUrTF0Q/D9gJ2vmJ6vVN7yb9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkFjDMRHsFQsZ28sMqnhb83iBqFZpO8/9BLkgtWp0M6vIBcjwYcKrK+iimpqGzX8O
-	 bddkYHs71voEi8R0Qj4R9HwMyvETJLUFi6akhPy6Xw71Hw7E8//0PdbMbLow0DmPzI
-	 H11YM0GbrE3ai6pcYhN9GcxfQ7Z8tMe8BEI5C/3Q=
+	b=RxGEO7RJLEv/jaPgh6EmNtz/VTBqHSRBKgeFweEk4yGhIwFL5M70skhijBYv2HqJ9
+	 SYClO7Uy9nlqf6h4YH0bOcFz0bUQfVaKQFZJTPtr8MWR4YAgFkoRXKsojI/BmP7Dgn
+	 lAOIxCjiLn1BWTSBX0309BhJlUE2WgWwrXSE5Apo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.10 102/121] drm/nouveau/fb: restore init() for ramgp102
-Date: Mon, 16 Sep 2024 13:44:36 +0200
-Message-ID: <20240916114232.494821754@linuxfoundation.org>
+	syzbot+02a42d9b1bd395cbcab4@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Lukasz Majewski <lukma@denx.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 093/121] net: hsr: prevent NULL pointer dereference in hsr_proxy_announce()
+Date: Mon, 16 Sep 2024 13:44:27 +0200
+Message-ID: <20240916114232.207314071@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -50,63 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Skeggs <bskeggs@nvidia.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 6db9df4f7055eb4ea339e7b83ca676edd9ec1277 upstream.
+[ Upstream commit a7789fd4caaf96ecfed5e28c4cddb927e6bebadb ]
 
-init() was removed from ramgp102 when reworking the memory detection, as
-it was thought that the code was only necessary when the driver performs
-mclk changes, which nouveau doesn't support on pascal.
+In the function hsr_proxy_annouance() added in the previous commit
+5f703ce5c981 ("net: hsr: Send supervisory frames to HSR network
+with ProxyNodeTable data"), the return value of the hsr_port_get_hsr()
+function is not checked to be a NULL pointer, which causes a NULL
+pointer dereference.
 
-However, it turns out that we still need to execute this on some GPUs to
-restore settings after DEVINIT, so revert to the original behaviour.
+To solve this, we need to add code to check whether the return value
+of hsr_port_get_hsr() is NULL.
 
-v2: fix tags in commit message, cc stable
-
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/319
-Fixes: 2c0c15a22fa0 ("drm/nouveau/fb/gp102-ga100: switch to simpler vram size detection method")
-Cc: stable@vger.kernel.org # 6.6+
-Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240904232418.8590-1-bskeggs@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+02a42d9b1bd395cbcab4@syzkaller.appspotmail.com
+Fixes: 5f703ce5c981 ("net: hsr: Send supervisory frames to HSR network with ProxyNodeTable data")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Lukasz Majewski <lukma@denx.de>
+Link: https://patch.msgid.link/20240907190341.162289-1-aha310510@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h      |    2 ++
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c |    1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ net/hsr/hsr_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
-@@ -46,6 +46,8 @@ u32 gm107_ram_probe_fbp(const struct nvk
- u32 gm200_ram_probe_fbp_amount(const struct nvkm_ram_func *, u32,
- 			       struct nvkm_device *, int, int *);
- 
-+int gp100_ram_init(struct nvkm_ram *);
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index ac56784c327c..049e22bdaafb 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -414,6 +414,9 @@ static void hsr_proxy_announce(struct timer_list *t)
+ 	 * of SAN nodes stored in ProxyNodeTable.
+ 	 */
+ 	interlink = hsr_port_get_hsr(hsr, HSR_PT_INTERLINK);
++	if (!interlink)
++		goto done;
 +
- /* RAM type-specific MR calculation routines */
- int nvkm_sddr2_calc(struct nvkm_ram *);
- int nvkm_sddr3_calc(struct nvkm_ram *);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
-@@ -27,7 +27,7 @@
- #include <subdev/bios/init.h>
- #include <subdev/bios/rammap.h>
+ 	list_for_each_entry_rcu(node, &hsr->proxy_node_db, mac_list) {
+ 		if (hsr_addr_is_redbox(hsr, node->macaddress_A))
+ 			continue;
+@@ -428,6 +431,7 @@ static void hsr_proxy_announce(struct timer_list *t)
+ 		mod_timer(&hsr->announce_proxy_timer, jiffies + interval);
+ 	}
  
--static int
-+int
- gp100_ram_init(struct nvkm_ram *ram)
- {
- 	struct nvkm_subdev *subdev = &ram->fb->subdev;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
-@@ -5,6 +5,7 @@
++done:
+ 	rcu_read_unlock();
+ }
  
- static const struct nvkm_ram_func
- gp102_ram = {
-+	.init = gp100_ram_init,
- };
- 
- int
+-- 
+2.43.0
+
 
 
