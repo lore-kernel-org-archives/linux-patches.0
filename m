@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EA81534FB;
-	Mon, 16 Sep 2024 12:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51C24B34;
+	Mon, 16 Sep 2024 12:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488396; cv=none; b=ngWOhF0SFIBpYmyw3XVdEBwYp3Ma9tWw+xHR3FpXEiFyowCfezTMxfTEZu5kwaXlcApL/s3dwSuoMgJkJTxg1/5d4idLYKvZMOEKrXeoYJRmPpnv9OZwb0yQHNh6D2xZsWLfqSSAUHYN5UlhSDeJ7SCIRGTAuDIprRv1VtRIQF4=
+	t=1726488399; cv=none; b=jc5cgpds+DUzVIRcjutqF42Tn36gOld74n6jsO2422/ueN+C3YeO08cMJf0iiEOaZ2yxIrZuTyBK8cr8Alxc7qF1kFrEjQbvTMMfCoDM24Nw15/tvA7Y4gv9SY3o6G4opuZlWg6EB3x7YiJTax/DZj09fXB6dV7+mCPRrH2DqAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488396; c=relaxed/simple;
-	bh=oKmKi34R3NrkPZJrmdvaWuSHp31GQcEwcD3YxB3KLKA=;
+	s=arc-20240116; t=1726488399; c=relaxed/simple;
+	bh=BmVlT2jIvUvfTPsW7mvuncWMqU8zVi41ExXt9MrInXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APb3nHer+nPCWY56vf/EJhETQCmQNPR5P9HqyyTCbOnSlvUuyQ5z+fLgLKEfnmoJSNHInqsq4WLr2DAmQLa4PM31BpkT1+ICBf2Ed8ndeqGIsI5mRGEw4Ghel5YQsXZ0f7xT4nHaRaMJPzi4Hlf2ZcVrwsZmX4TCqChtvhq/XSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maF2vhv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p8p4LIcT+huMqoVKShOebZL7tmZl38g7SuzjVgKRd24nlVM1IfoOMZlkLqZyvxfntulELScsQaZCId/DWDY+ZVDisftl8SdhXmDBhx+ww2bOTQWlCp22zfK3DNXBdMiBJ9Yf6OBQhhJitM0Oh/8iGE76LMTe9xxX8mypmABC7tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCcJsWu7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maF2vhv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88156C4CEC4;
-	Mon, 16 Sep 2024 12:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCcJsWu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668FFC4CEC4;
+	Mon, 16 Sep 2024 12:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488395;
-	bh=oKmKi34R3NrkPZJrmdvaWuSHp31GQcEwcD3YxB3KLKA=;
+	s=korg; t=1726488398;
+	bh=BmVlT2jIvUvfTPsW7mvuncWMqU8zVi41ExXt9MrInXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=maF2vhv91O53q3p6pt8JE51z7wpiH7r3yreGzkN7TDdIJOUQQI3r276fKk/y0a7ZW
-	 iDJNkf0dngXgN7CNv55f4ZjIluVqNkAZqcY1QHp704uigMd3rP9jWMJdTTxcsbbZPP
-	 ZmakgLLkOWVLGmHWqf4FLoufSv65MX59Da/XNoDI=
+	b=XCcJsWu7r0rByn4GRhb3e5b6RgSrp9/YDMXzGsE2OR2uaTbaphGn3rT87CSGfJnb+
+	 6anyW5W2WZ8fcGbkAf9uGyVRJ0BvTqVzTWnQ3drp3wAZydp6u+cXcKhXnZ3DhWzUsA
+	 u3r0YqQpVL2LnVuI+ebSyO+ZZjSnAfRxnTvMKPLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patryk Biel <pbiel7@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 071/121] hwmon: (pmbus) Conditionally clear individual status bits for pmbus rev >= 1.2
-Date: Mon, 16 Sep 2024 13:44:05 +0200
-Message-ID: <20240916114231.530557612@linuxfoundation.org>
+	=?UTF-8?q?Mat=C4=9Bj=20Gr=C3=A9gr?= <mgregr@netx.as>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.10 072/121] ice: Fix lldp packets dropping after changing the number of channels
+Date: Mon, 16 Sep 2024 13:44:06 +0200
+Message-ID: <20240916114231.556017826@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -45,102 +48,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patryk Biel <pbiel7@gmail.com>
+From: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
 
-[ Upstream commit 20471071f198c8626dbe3951ac9834055b387844 ]
+[ Upstream commit 9debb703e14939dfafa5d403f27c4feb2e9f6501 ]
 
-The current implementation of pmbus_show_boolean assumes that all devices
-support write-back operation of status register to clear pending warnings
-or faults. Since clearing individual bits in the status registers was only
-introduced in PMBus specification 1.2, this operation may not be supported
-by some older devices. This can result in an error while reading boolean
-attributes such as temp1_max_alarm.
+After vsi setup refactor commit 6624e780a577 ("ice: split ice_vsi_setup
+into smaller functions") ice_cfg_sw_lldp function which removes rx rule
+directing LLDP packets to vsi is moved from ice_vsi_release to
+ice_vsi_decfg function. ice_vsi_decfg is used in more cases than just in
+vsi_release resulting in unnecessary removal of rx lldp packets handling
+switch rule. This leads to lldp packets being dropped after a change number
+of channels via ethtool.
+This patch moves ice_cfg_sw_lldp function that removes rx lldp sw rule back
+to ice_vsi_release function.
 
-Fetch PMBus revision supported by the device and modify pmbus_show_boolean
-so that it only tries to clear individual status bits if the device is
-compliant with PMBus specs >= 1.2. Otherwise clear all fault indicators
-on the current page after a fault status was reported.
-
-Fixes: 35f165f08950a ("hwmon: (pmbus) Clear pmbus fault/warning bits after read")
-Signed-off-by: Patryk Biel <pbiel7@gmail.com>
-Message-ID: <20240909-pmbus-status-reg-clearing-v1-1-f1c0d68c6408@gmail.com>
-[groeck:
- Rewrote description
- Moved revision detection code ahead of clear faults command
- Assigned revision if return value from PMBUS_REVISION command is 0
- Improved return value check from calling _pmbus_write_byte_data()]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
+Reported-by: Matěj Grégr <mgregr@netx.as>
+Closes: https://lore.kernel.org/intel-wired-lan/1be45a76-90af-4813-824f-8398b69745a9@netx.as/T/#u
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus.h      |  6 ++++++
- drivers/hwmon/pmbus/pmbus_core.c | 17 ++++++++++++++---
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus.h b/drivers/hwmon/pmbus/pmbus.h
-index fb442fae7b3e..0bea603994e7 100644
---- a/drivers/hwmon/pmbus/pmbus.h
-+++ b/drivers/hwmon/pmbus/pmbus.h
-@@ -418,6 +418,12 @@ enum pmbus_sensor_classes {
- enum pmbus_data_format { linear = 0, ieee754, direct, vid };
- enum vrm_version { vr11 = 0, vr12, vr13, imvp9, amd625mv };
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 7076a7738864..c2ba58659347 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2413,13 +2413,6 @@ void ice_vsi_decfg(struct ice_vsi *vsi)
+ 	struct ice_pf *pf = vsi->back;
+ 	int err;
  
-+/* PMBus revision identifiers */
-+#define PMBUS_REV_10 0x00	/* PMBus revision 1.0 */
-+#define PMBUS_REV_11 0x11	/* PMBus revision 1.1 */
-+#define PMBUS_REV_12 0x22	/* PMBus revision 1.2 */
-+#define PMBUS_REV_13 0x33	/* PMBus revision 1.3 */
+-	/* The Rx rule will only exist to remove if the LLDP FW
+-	 * engine is currently stopped
+-	 */
+-	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
+-	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
+-		ice_cfg_sw_lldp(vsi, false, false);
+-
+ 	ice_rm_vsi_lan_cfg(vsi->port_info, vsi->idx);
+ 	err = ice_rm_vsi_rdma_cfg(vsi->port_info, vsi->idx);
+ 	if (err)
+@@ -2764,6 +2757,14 @@ int ice_vsi_release(struct ice_vsi *vsi)
+ 		ice_rss_clean(vsi);
+ 
+ 	ice_vsi_close(vsi);
 +
- struct pmbus_driver_info {
- 	int pages;		/* Total number of pages */
- 	u8 phases[PMBUS_PAGES];	/* Number of phases per page */
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index cb4c65a7f288..e592446b2665 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -85,6 +85,8 @@ struct pmbus_data {
- 
- 	u32 flags;		/* from platform data */
- 
-+	u8 revision;	/* The PMBus revision the device is compliant with */
++	/* The Rx rule will only exist to remove if the LLDP FW
++	 * engine is currently stopped
++	 */
++	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
++	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
++		ice_cfg_sw_lldp(vsi, false, false);
 +
- 	int exponent[PMBUS_PAGES];
- 				/* linear mode: exponent for output voltages */
+ 	ice_vsi_decfg(vsi);
  
-@@ -1095,9 +1097,14 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
- 
- 	regval = status & mask;
- 	if (regval) {
--		ret = _pmbus_write_byte_data(client, page, reg, regval);
--		if (ret)
--			goto unlock;
-+		if (data->revision >= PMBUS_REV_12) {
-+			ret = _pmbus_write_byte_data(client, page, reg, regval);
-+			if (ret)
-+				goto unlock;
-+		} else {
-+			pmbus_clear_fault_page(client, page);
-+		}
-+
- 	}
- 	if (s1 && s2) {
- 		s64 v1, v2;
-@@ -2640,6 +2647,10 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
- 			data->flags |= PMBUS_WRITE_PROTECTED | PMBUS_SKIP_STATUS_CHECK;
- 	}
- 
-+	ret = i2c_smbus_read_byte_data(client, PMBUS_REVISION);
-+	if (ret >= 0)
-+		data->revision = ret;
-+
- 	if (data->info->pages)
- 		pmbus_clear_faults(client);
- 	else
+ 	/* retain SW VSI data structure since it is needed to unregister and
 -- 
 2.43.0
 
