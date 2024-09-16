@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2C5158525;
-	Mon, 16 Sep 2024 12:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C125155393;
+	Mon, 16 Sep 2024 12:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488242; cv=none; b=EJ5J+xA/RhAqDbQocxZChcko4d8FiVIaQtuvOnKJVRzfEOAwN74IryCboJ00wUpqKgwIUadoV/vN9z5n8j43/uAsCkfivuv5NJjyJ8q+6tYUSgyXbjuJ1A4/1acg9gjKwoSVw+F8VHn+WqGV3oJaisVNXieYU7ZIgPdfyw3H3X4=
+	t=1726488245; cv=none; b=IJUPTIPcgyqr6bKBF5T9Oka7+38XWcbuSFCXrN27kplHWLDwvQXFZsbf9YMqB3KhoVjHYhEvurMFtwQLo35Kay2zZz+KRHuFtVHivoGkw83e3fO2dDE0tny+/lL0EHWT2XahT4jHy3hvaAdowo5LFRLVebwb/L8bLL+OiP9Ya6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488242; c=relaxed/simple;
-	bh=c7pUnpaIc8w8Lyh1DiM0+VTCqDPAQXkq6K+rA6fIvnQ=;
+	s=arc-20240116; t=1726488245; c=relaxed/simple;
+	bh=RCyeJsIaX2rTqyD4nAG9SmOa9Pz9C7NSbTC9QoXpjxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6j9q4wkx+5CEtkDJQ7j1ksNFzuiKqJABMkJswZy2PLY+2LvQFt0izdGlTK9dxTagy6xH1L3SK/uQbGzt+7MVDh9HfeoXLNcsokD547s8jcmw0qTqQI/niFxkv55Fqm28ybltpKc0kcWe+FLKCL08V57mwINdbRMhMBxuA0yWcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJgxuQZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o34yJlV2Q0VibVscaabsD/KQlX+pdTK2p7mdHIyfJK700LlXWNCMQFMxLpZJX5qJlzEpXM7C2hp35AguCFfU2c8uRJwbnwmQj34CUez2nsEJ/6N3K0ojk2lA7dDBXQdLNKQqpN2oYATo/KE62nTH/At9BrBIDbH36NP7K8gXbAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG5jmkdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJgxuQZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5858C4CEC4;
-	Mon, 16 Sep 2024 12:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG5jmkdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BD0C4CEC4;
+	Mon, 16 Sep 2024 12:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488242;
-	bh=c7pUnpaIc8w8Lyh1DiM0+VTCqDPAQXkq6K+rA6fIvnQ=;
+	s=korg; t=1726488245;
+	bh=RCyeJsIaX2rTqyD4nAG9SmOa9Pz9C7NSbTC9QoXpjxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJgxuQZrnSSN5GWc+PTRkdKpdqF29iFe0KPQfF6dJbn2uETPzoEP+4M+TYGZdbVcd
-	 XMxac9tus4/+vnUt3TEdZdHybq8J+QUZ7Ac7MvQm+ZJVu8331tjWk7kScePIUhhasK
-	 SPrKz4RBWHGeRB3q/xKd+GTF/1/WX5fTJORbXpSI=
+	b=UG5jmkdHffN07H1UEolUOZ64Y7INtHMsbeiedRqrTIScLVnalTpjArUiU6qwtugjk
+	 c/R0MRw4nc88ms7avRLgLqEvbEp6C/1T+6iny2EPXTeyC6Ut8yXZGIE8tn18PRsdx9
+	 tPC/g49rprEGG4RTQXCsKdROMEwK5m0glxoUaNU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Edward Adam Davis <eadavis@qq.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+f3a31fb909db9b2a5c4d@syzkaller.appspotmail.com
-Subject: [PATCH 6.10 045/121] mptcp: pm: Fix uaf in __timer_delete_sync
-Date: Mon, 16 Sep 2024 13:43:39 +0200
-Message-ID: <20240916114230.613170641@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 046/121] selftests: mptcp: join: restrict fullmesh endp on 1st sf
+Date: Mon, 16 Sep 2024 13:43:40 +0200
+Message-ID: <20240916114230.643742423@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,90 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit b4cd80b0338945a94972ac3ed54f8338d2da2076 upstream.
+commit 49ac6f05ace5bb0070c68a0193aa05d3c25d4c83 upstream.
 
-There are two paths to access mptcp_pm_del_add_timer, result in a race
-condition:
+A new endpoint using the IP of the initial subflow has been recently
+added to increase the code coverage. But it breaks the test when using
+old kernels not having commit 86e39e04482b ("mptcp: keep track of local
+endpoint still available for each msk"), e.g. on v5.15.
 
-     CPU1				CPU2
-     ====                               ====
-     net_rx_action
-     napi_poll                          netlink_sendmsg
-     __napi_poll                        netlink_unicast
-     process_backlog                    netlink_unicast_kernel
-     __netif_receive_skb                genl_rcv
-     __netif_receive_skb_one_core       netlink_rcv_skb
-     NF_HOOK                            genl_rcv_msg
-     ip_local_deliver_finish            genl_family_rcv_msg
-     ip_protocol_deliver_rcu            genl_family_rcv_msg_doit
-     tcp_v4_rcv                         mptcp_pm_nl_flush_addrs_doit
-     tcp_v4_do_rcv                      mptcp_nl_remove_addrs_list
-     tcp_rcv_established                mptcp_pm_remove_addrs_and_subflows
-     tcp_data_queue                     remove_anno_list_by_saddr
-     mptcp_incoming_options             mptcp_pm_del_add_timer
-     mptcp_pm_del_add_timer             kfree(entry)
+Similar to commit d4c81bbb8600 ("selftests: mptcp: join: support local
+endpoint being tracked or not"), it is possible to add the new endpoint
+conditionally, by checking if "mptcp_pm_subflow_check_next" is present
+in kallsyms: this is not directly linked to the commit introducing this
+symbol but for the parent one which is linked anyway. So we can know in
+advance what will be the expected behaviour, and add the new endpoint
+only when it makes sense to do so.
 
-In remove_anno_list_by_saddr(running on CPU2), after leaving the critical
-zone protected by "pm.lock", the entry will be released, which leads to the
-occurrence of uaf in the mptcp_pm_del_add_timer(running on CPU1).
-
-Keeping a reference to add_timer inside the lock, and calling
-sk_stop_timer_sync() with this reference, instead of "entry->add_timer".
-
-Move list_del(&entry->list) to mptcp_pm_del_add_timer and inside the pm lock,
-do not directly access any members of the entry outside the pm lock, which
-can avoid similar "entry->x" uaf.
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Fixes: 4878f9f8421f ("selftests: mptcp: join: validate fullmesh endp on 1st sf")
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: syzbot+f3a31fb909db9b2a5c4d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f3a31fb909db9b2a5c4d
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/tencent_7142963A37944B4A74EF76CD66EA3C253609@qq.com
+Link: https://patch.msgid.link/20240910-net-selftests-mptcp-fix-install-v1-1-8f124aa9156d@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -334,15 +334,21 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- {
- 	struct mptcp_pm_add_entry *entry;
- 	struct sock *sk = (struct sock *)msk;
-+	struct timer_list *add_timer = NULL;
- 
- 	spin_lock_bh(&msk->pm.lock);
- 	entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
--	if (entry && (!check_id || entry->addr.id == addr->id))
-+	if (entry && (!check_id || entry->addr.id == addr->id)) {
- 		entry->retrans_times = ADD_ADDR_RETRANS_MAX;
-+		add_timer = &entry->add_timer;
-+	}
-+	if (!check_id && entry)
-+		list_del(&entry->list);
- 	spin_unlock_bh(&msk->pm.lock);
- 
--	if (entry && (!check_id || entry->addr.id == addr->id))
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	/* no lock, because sk_stop_timer_sync() is calling del_timer_sync() */
-+	if (add_timer)
-+		sk_stop_timer_sync(sk, add_timer);
- 
- 	return entry;
- }
-@@ -1462,7 +1468,6 @@ static bool remove_anno_list_by_saddr(st
- 
- 	entry = mptcp_pm_del_add_timer(msk, addr, false);
- 	if (entry) {
--		list_del(&entry->list);
- 		kfree(entry);
- 		return true;
- 	}
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3064,7 +3064,9 @@ fullmesh_tests()
+ 		pm_nl_set_limits $ns1 1 3
+ 		pm_nl_set_limits $ns2 1 3
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+-		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
++		if mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
++			pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
++		fi
+ 		fullmesh=1 speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1
+ 		chk_join_nr 3 3 3
 
 
