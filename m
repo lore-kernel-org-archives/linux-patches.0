@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD25156228;
-	Mon, 16 Sep 2024 12:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70D715667E;
+	Mon, 16 Sep 2024 12:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488009; cv=none; b=F1jj/y1499negaRd6HCk7MLrmoV6mfGkUDNVqy3hKdsAAGwbde8z08y6s3M1KgJ5Rk5+jJtZ+dX1rkHxSUWdlSu5mFiuw+9CuYTply6Xd/U4Exu34L/MzYSc0TfRdMb/O/hOozKLENQoIkb05GHuuyjeOyPDh8FERwlymcw2aKc=
+	t=1726488011; cv=none; b=gEYhcatvnZqbslm8MLK7q+FCw5HCUH2dNUH7gCyNWZMl6PYLMzogFFCja/SzjT103hf8QgVgcYO0zY6Etnp6yyPGUTOq5PWv5MVTF/fBk7EMJUN0X4GaVfkIbOKgYZCDZZ5c4iTDgTT93jZUlS7Z6yn4L1houPf7ah6THZwM/Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488009; c=relaxed/simple;
-	bh=9JZgga4TPqUrkN3ETz+NWmH3wjsuGsjwKXvPgjTkbdw=;
+	s=arc-20240116; t=1726488011; c=relaxed/simple;
+	bh=INGJk12e3mBv4m6QOm86Ag38mtjUkOXk7IHkroGvIMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwASB9pU0+6vTOnQ9tD00MRH+VLfpoU9E4ohX+enntlU0zq3CyaViPWeDNupBIe+opegmTcSCiyox1HWilCWpJsNUAfpqet9i+ubSxhDpU+hIvhmpr799ziJgm7tX7DUccGN4d2vpTyiBMhBiEwstUneiqvSAD93cpOj+vnwq8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hsrk4Ou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAUELEwKlcRZnd1yxlhCcwRereIBNVEU5IxBYStnXUCFCMi89IA1vrueMwtVjkzc6MKaIqLonN7SC99Htii3pdtDCRQO1wt35luAeO1Id9uhmiUnTcTySVg+AOqEsnglW20K6cOL8/YKId2ROG2t/89qz6pn0w284BzcyG91WZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgHRsiDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hsrk4Ou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66676C4CEC7;
-	Mon, 16 Sep 2024 12:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgHRsiDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4F6C4CEC4;
+	Mon, 16 Sep 2024 12:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488008;
-	bh=9JZgga4TPqUrkN3ETz+NWmH3wjsuGsjwKXvPgjTkbdw=;
+	s=korg; t=1726488011;
+	bh=INGJk12e3mBv4m6QOm86Ag38mtjUkOXk7IHkroGvIMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hsrk4Ouu+rMdBv1OSWYi6iFbV3wJDFvQitbLEystrC2RUc65KYqg/7UzvL9pnUFQ
-	 DGx6tpv4babRlXFBkEHhnmGt3rHKNZ/1SMhvCkirnUiSj7mMgcgKUGHJ/izMakjAHb
-	 x8dJPMzUAXi9LZ6O2X2eCoK8kYDxh6haqfjpxJ+U=
+	b=VgHRsiDh7+WJXQWLsBCSvwqj+QZoEXIsaqnX2USNb4g8HP2z1b3bmux6YbGBA93Xx
+	 Bi3vB4Sik3sJ8fwXQIlUksyP96+cBfPzIn5dRFN7oZt4IltxPn9GjtZQpOMbvPLURc
+	 ozeVxViXF5iKH5Goog8WvXdfnKa/ULis7dzcsg0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Narron <richard@aaazen.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 26/63] minmax: reduce min/max macro expansion in atomisp driver
-Date: Mon, 16 Sep 2024 13:44:05 +0200
-Message-ID: <20240916114222.002551709@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 27/63] net: tighten bad gso csum offset check in virtio_net_hdr
+Date: Mon, 16 Sep 2024 13:44:06 +0200
+Message-ID: <20240916114222.036740955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,68 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 7c6a3a65ace70f12b27b1a27c9a69cb791dc6e91 upstream.
+commit 6513eb3d3191574b58859ef2d6dc26c0277c6f81 upstream.
 
-Avoid unnecessary nested min()/max() which results in egregious macro
-expansion.
+The referenced commit drops bad input, but has false positives.
+Tighten the check to avoid these.
 
-Use clamp_t() as this introduces the least possible expansion, and turn
-the {s,u}DIGIT_FITTING() macros into inline functions to avoid the
-nested expansion.
+The check detects illegal checksum offload requests, which produce
+csum_start/csum_off beyond end of packet after segmentation.
 
-This resolves an issue with slackware 15.0 32-bit compilation as
-reported by Richard Narron.
+But it is based on two incorrect assumptions:
 
-Presumably the min/max fixups would be difficult to backport, this patch
-should be easier and fix's Richard's problem in 5.15.
+1. virtio_net_hdr_to_skb with VIRTIO_NET_HDR_GSO_TCP[46] implies GSO.
+True in callers that inject into the tx path, such as tap.
+But false in callers that inject into rx, like virtio-net.
+Here, the flags indicate GRO, and CHECKSUM_UNNECESSARY or
+CHECKSUM_NONE without VIRTIO_NET_HDR_F_NEEDS_CSUM is normal.
 
-Reported-by: Richard Narron <richard@aaazen.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/all/4a5321bd-b1f-1832-f0c-cea8694dc5aa@aaazen.com/
-Fixes: 867046cc7027 ("minmax: relax check to allow comparison between unsigned arguments and signed constants")
+2. TSO requires checksum offload, i.e., ip_summed == CHECKSUM_PARTIAL.
+False, as tcp[46]_gso_segment will fix up csum_start and offset for
+all other ip_summed by calling __tcp_v4_send_check.
+
+Because of 2, we can limit the scope of the fix to virtio_net_hdr
+that do try to set these fields, with a bogus value.
+
+Link: https://lore.kernel.org/netdev/20240909094527.GA3048202@port70.net/
+Fixes: 89add40066f9 ("net: drop bad gso csum_start and offset in virtio_net_hdr")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://patch.msgid.link/20240910213553.839926-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css_frac.h |   26 +++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ include/linux/virtio_net.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/media/atomisp/pci/sh_css_frac.h
-+++ b/drivers/staging/media/atomisp/pci/sh_css_frac.h
-@@ -30,12 +30,24 @@
- #define uISP_VAL_MAX		      ((unsigned int)((1 << uISP_REG_BIT) - 1))
- 
- /* a:fraction bits for 16bit precision, b:fraction bits for ISP precision */
--#define sDIGIT_FITTING(v, a, b) \
--	min_t(int, max_t(int, (((v) >> sSHIFT) >> max(sFRACTION_BITS_FITTING(a) - (b), 0)), \
--	  sISP_VAL_MIN), sISP_VAL_MAX)
--#define uDIGIT_FITTING(v, a, b) \
--	min((unsigned int)max((unsigned)(((v) >> uSHIFT) \
--	>> max((int)(uFRACTION_BITS_FITTING(a) - (b)), 0)), \
--	  uISP_VAL_MIN), uISP_VAL_MAX)
-+static inline int sDIGIT_FITTING(int v, int a, int b)
-+{
-+	int fit_shift = sFRACTION_BITS_FITTING(a) - b;
-+
-+	v >>= sSHIFT;
-+	v >>= fit_shift > 0 ? fit_shift : 0;
-+
-+	return clamp_t(int, v, sISP_VAL_MIN, sISP_VAL_MAX);
-+}
-+
-+static inline unsigned int uDIGIT_FITTING(unsigned int v, int a, int b)
-+{
-+	int fit_shift = uFRACTION_BITS_FITTING(a) - b;
-+
-+	v >>= uSHIFT;
-+	v >>= fit_shift > 0 ? fit_shift : 0;
-+
-+	return clamp_t(unsigned int, v, uISP_VAL_MIN, uISP_VAL_MAX);
-+}
- 
- #endif /* __SH_CSS_FRAC_H */
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -161,7 +161,8 @@ retry:
+ 			break;
+ 		case SKB_GSO_TCPV4:
+ 		case SKB_GSO_TCPV6:
+-			if (skb->csum_offset != offsetof(struct tcphdr, check))
++			if (skb->ip_summed == CHECKSUM_PARTIAL &&
++			    skb->csum_offset != offsetof(struct tcphdr, check))
+ 				return -EINVAL;
+ 			break;
+ 		}
 
 
