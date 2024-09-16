@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E614B094;
-	Mon, 16 Sep 2024 12:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089C6142903;
+	Mon, 16 Sep 2024 12:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488684; cv=none; b=NZNEYhXHTsgNDOgt+kQC0EfDJdqttthxw8c3MBUQ4XPhcNZp7EzsMhaZfERywso48kh0Q+Yr4OvTRLCjL7HWXi+E+gvjp3TLMDoQgIf95dkYlrK0qbZ6w2mGa2iRHYIX02vql8Mtv7+CI4LjIdGpVrKEhLQlfwtRb8we5NMaBgU=
+	t=1726488687; cv=none; b=Ut9lVb8GsUtIUm+G6z/Yr/deEJ4m9jIMrhRD56JWn9P8vwU5iwKwX5cBe5mVryz2x3CIaptqb6ve6X5cQX7hWSaLJ6ftc/xiST8nXval4yBUFq4Mryly4GzUmwo7HlB5OftrLVcEcHflCq9yc4guC5LXPnqqZpe+jHcdIELebbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488684; c=relaxed/simple;
-	bh=XVnDoaI3UMouNnGqaEgESryWQESTHmay8tcMxrGGFxc=;
+	s=arc-20240116; t=1726488687; c=relaxed/simple;
+	bh=O1QdZVQGT3MN1ZahrRL+XEDIpdqh7QRK1Z72kSubhmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qd3zsrTVjoru3i94mT3hjZcYadIJCmK825TEhN2EFeMRueEJAl92IGLIcYiTzrMutpLgolPsp7BJL/xDmwckb9jVKKoA0iG6lCinkglXa1M3OnD1xmaMx7OXMCk7e2aq6YWxPThhKNa52uMvOYnDlxy4mbMrPhQdYpKuUXzI6Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IEZW4Ca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rkS45t05O5ExHqWfqSp7TAzroTBTo9L/mf+Td0YZFpgnoMkeVVhnyOIEBHGonfysSIyRW2WHMUFcPOV+Ja6jD228expdnZYif49qBoCqkfSzMw6BNaxNgC9qjJCGaWtvuqVdSXfUnkvddFuyz4Rjxg0qMRephjA85/ROV4wECqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhOn1mOG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IEZW4Ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A904FC4CEC4;
-	Mon, 16 Sep 2024 12:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhOn1mOG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F4C4CEC4;
+	Mon, 16 Sep 2024 12:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488684;
-	bh=XVnDoaI3UMouNnGqaEgESryWQESTHmay8tcMxrGGFxc=;
+	s=korg; t=1726488686;
+	bh=O1QdZVQGT3MN1ZahrRL+XEDIpdqh7QRK1Z72kSubhmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IEZW4Ca6bEGV7P/XpDtRcf2fHHZ7XUIMJXa2hBUGmKP/5hfwA837dY/A04djcbRB
-	 kA/gDU95Vj0mrGOPI6DhyTM2BfjjJrVTuAWv2xqP106nC1fO5C0i8Bb/KOUerY08/S
-	 S677pqgqxJZEX4kfkvBmwMSrZrTCZ2HHM9xVmnbw=
+	b=UhOn1mOGJb0Gbt/U+8dS9xdInR3OsCVMjHqjJDrBhQxpxgNgPWMqLru7XUnBNBsQF
+	 RBFsSDXzDCx9UUNngEaoXIrdBNbJc2uAnKKSx5iTaGE7tTXuAvcS+eMamhe4KCv/UO
+	 5chGmXnXuk4IcHbS152LkDq2vYI1cm00ePCB/mMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Ilya Bakoulin <ilya.bakoulin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 50/91] drm/amd/display: Fix FEC_READY write on DP LT
-Date: Mon, 16 Sep 2024 13:44:26 +0200
-Message-ID: <20240916114226.159094345@linuxfoundation.org>
+Subject: [PATCH 6.6 51/91] eeprom: digsy_mtc: Fix 93xx46 driver probe failure
+Date: Mon, 16 Sep 2024 13:44:27 +0200
+Message-ID: <20240916114226.191917179@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -55,55 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Bakoulin <ilya.bakoulin@amd.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a8baec4623aedf36d50767627f6eae5ebf07c6fb ]
+[ Upstream commit 2b82641ad0620b2d71dc05024b20f82db7e1c0b6 ]
 
-[Why/How]
-We can miss writing FEC_READY in some cases before LT start, which
-violates DP spec. Remove the condition guarding the DPCD write so that
-the write happens unconditionally.
+The update to support other (bigger) types of EEPROMs broke
+the driver loading due to removal of the default size.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by adding the respective (new) flag to the platform data.
+
+Fixes: 14374fbb3f06 ("misc: eeprom_93xx46: Add new 93c56 and 93c66 compatible strings")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240508184905.2102633-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/link/protocols/link_dp_phy.c    | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/misc/eeprom/digsy_mtc_eeprom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-index f06f708ba5c8..9bde0c8bf914 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-@@ -147,16 +147,14 @@ enum dc_status dp_set_fec_ready(struct dc_link *link, const struct link_resource
- 		return DC_NOT_SUPPORTED;
+diff --git a/drivers/misc/eeprom/digsy_mtc_eeprom.c b/drivers/misc/eeprom/digsy_mtc_eeprom.c
+index f1f766b70965..4eddc5ba1af9 100644
+--- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
++++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
+@@ -42,7 +42,7 @@ static void digsy_mtc_op_finish(void *p)
+ }
  
- 	if (ready && dp_should_enable_fec(link)) {
--		if (link->fec_state == dc_link_fec_not_ready) {
--			fec_config = 1;
-+		fec_config = 1;
- 
--			status = core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
--					&fec_config, sizeof(fec_config));
-+		status = core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
-+				&fec_config, sizeof(fec_config));
- 
--			if (status == DC_OK) {
--				link_enc->funcs->fec_set_ready(link_enc, true);
--				link->fec_state = dc_link_fec_ready;
--			}
-+		if (status == DC_OK) {
-+			link_enc->funcs->fec_set_ready(link_enc, true);
-+			link->fec_state = dc_link_fec_ready;
- 		}
- 	} else {
- 		if (link->fec_state == dc_link_fec_ready) {
+ struct eeprom_93xx46_platform_data digsy_mtc_eeprom_data = {
+-	.flags		= EE_ADDR8,
++	.flags		= EE_ADDR8 | EE_SIZE1K,
+ 	.prepare	= digsy_mtc_op_prepare,
+ 	.finish		= digsy_mtc_op_finish,
+ };
 -- 
 2.43.0
 
