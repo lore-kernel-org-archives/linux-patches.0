@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C318153573;
-	Mon, 16 Sep 2024 12:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664CF146A79;
+	Mon, 16 Sep 2024 12:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488698; cv=none; b=guCGQ+LaBZat/ntKW+zyfp9V4zsVAgycq87UMGxML7DOKKPX2HcPx0A2LsbFcmXHSNNqBYMZ/G47pRR126+sfm4MFWerN7CpnUF2Vp2Xf6xqzgm8YZwamGOJhITpfjCzOQLXxl8HB1IpZWJb1HLeYx7dkcKxz2Pc2cehXqqIbCY=
+	t=1726488701; cv=none; b=dW6pUJJRrC4DIATHPUYahVeyXYN5QrttjDGotf2rciMASVQcCAdXf9O+w3xokeqqW/XYifhzkOYa+JqAcefcebHKo5VfMyP9mN3qoeKJo7Kz04jnQ/QCoLU/5R5Z6ADuW67XMfsbaqBpAAtnoKN/OnLE4kXyadlGlxyVXLSFTcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488698; c=relaxed/simple;
-	bh=6/jEvzPku4kYe8q74mshnRje3VibUQAHoPuAU23OSO8=;
+	s=arc-20240116; t=1726488701; c=relaxed/simple;
+	bh=MRPZvCFTQYxZBQQHQjPCATzYs19vvjWS47MhC+AF5Nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bxjy0azD2Mj2afH7rgy27cJmOt5ZoNw6Vu0EDKGB6nzlNWkWJQtVeeHGMfaVNsf7iPwiz/rQJQP1IL2DELtYrCfbx70ppGx+zLgLbhLoE72VP4Tp+iOSv7iHorf6EkoqUDqzl+cPvWFztvd+FxHkRjALBl76DSdqbtg4JRpLlX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHygHbCP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4DTMJLD0sAqgqfrM9rgkMAKibGVDXGTSMuEDxmTlqYREM2B85hB/XOjDF2Lr4U+jPegsNygeqlPqfLEYlhPLOHwi8bvhOzNFN6J2EBr8ZrQrCPiis9bYxjH4nyEgWzip8PUZ2ki/QVSI80O5FD8r93RsuQ///IXrUGQeCPWD5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSkGBfuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHygHbCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA49BC4CEC4;
-	Mon, 16 Sep 2024 12:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSkGBfuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CA2C4CEC4;
+	Mon, 16 Sep 2024 12:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488698;
-	bh=6/jEvzPku4kYe8q74mshnRje3VibUQAHoPuAU23OSO8=;
+	s=korg; t=1726488701;
+	bh=MRPZvCFTQYxZBQQHQjPCATzYs19vvjWS47MhC+AF5Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHygHbCPScBGcdl0so+9cZIiZZU4Qidb3BuH8MEY+RlzDJOHUoVQHrk+XZgkCbYPl
-	 l34XcEQcGcieruC9BOJC0uu5TpZAlHT5skK3Hrt/CJz75DcNpGPX3ylJ8u3Nbj6UE/
-	 lsmXh0GXNA1iXeoTUQQimEuGFYmMHLhaqEG3zX48=
+	b=mSkGBfuhYYaqrEBqm53QarSRWku6Tk0zvCVsrnFOqXDGRvAK1rlUc6GArU8Ff9tXe
+	 uhPd3JtHbpipLGT7HqPbz/25fP4xSMtD3m9v0IblUQCrbRykeogRKvgFEJr3T5vFn0
+	 TzgdOckHKIJeqZDYpkyI2m+T57ecp/aZVao+Sfmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.6 45/91] x86/hyperv: fix kexec crash due to VP assist page corruption
-Date: Mon, 16 Sep 2024 13:44:21 +0200
-Message-ID: <20240916114225.988231382@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Helena Anna" <helena.anna.dubel@intel.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Bityutskiy, Artem" <artem.bityutskiy@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 76/91] tracing/osnoise: Fix build when timerlat is not enabled
+Date: Mon, 16 Sep 2024 13:44:52 +0200
+Message-ID: <20240916114226.980226511@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,95 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit b9af6418279c4cf73ca073f8ea024992b38be8ab upstream.
+commit af178143343028fdec9d5960a22d17f5587fd3f5 upstream.
 
-commit 9636be85cc5b ("x86/hyperv: Fix hyperv_pcpu_input_arg handling when
-CPUs go online/offline") introduces a new cpuhp state for hyperv
-initialization.
+To fix some critical section races, the interface_lock was added to a few
+locations. One of those locations was above where the interface_lock was
+declared, so the declaration was moved up before that usage.
+Unfortunately, where it was placed was inside a CONFIG_TIMERLAT_TRACER
+ifdef block. As the interface_lock is used outside that config, this broke
+the build when CONFIG_OSNOISE_TRACER was enabled but
+CONFIG_TIMERLAT_TRACER was not.
 
-cpuhp_setup_state() returns the state number if state is
-CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN and 0 for all other states.
-For the hyperv case, since a new cpuhp state was introduced it would
-return 0. However, in hv_machine_shutdown(), the cpuhp_remove_state() call
-is conditioned upon "hyperv_init_cpuhp > 0". This will never be true and
-so hv_cpu_die() won't be called on all CPUs. This means the VP assist page
-won't be reset. When the kexec kernel tries to setup the VP assist page
-again, the hypervisor corrupts the memory region of the old VP assist page
-causing a panic in case the kexec kernel is using that memory elsewhere.
-This was originally fixed in commit dfe94d4086e4 ("x86/hyperv: Fix kexec
-panic/hang issues").
-
-Get rid of hyperv_init_cpuhp entirely since we are no longer using a
-dynamic cpuhp state and use CPUHP_AP_HYPERV_ONLINE directly with
-cpuhp_remove_state().
-
-Cc: stable@vger.kernel.org
-Fixes: 9636be85cc5b ("x86/hyperv: Fix hyperv_pcpu_input_arg handling when CPUs go online/offline")
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20240828112158.3538342-1-anirudh@anirudhrb.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240828112158.3538342-1-anirudh@anirudhrb.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: "Helena Anna" <helena.anna.dubel@intel.com>
+Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Link: https://lore.kernel.org/20240909103231.23a289e2@gandalf.local.home
+Fixes: e6a53481da29 ("tracing/timerlat: Only clear timer if a kthread exists")
+Reported-by: "Bityutskiy, Artem" <artem.bityutskiy@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/hyperv/hv_init.c       |    5 +----
- arch/x86/include/asm/mshyperv.h |    1 -
- arch/x86/kernel/cpu/mshyperv.c  |    4 ++--
- 3 files changed, 3 insertions(+), 7 deletions(-)
+ kernel/trace/trace_osnoise.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -35,7 +35,6 @@
- #include <clocksource/hyperv_timer.h>
- #include <linux/highmem.h>
- 
--int hyperv_init_cpuhp;
- u64 hv_current_partition_id = ~0ull;
- EXPORT_SYMBOL_GPL(hv_current_partition_id);
- 
-@@ -607,8 +606,6 @@ skip_hypercall_pg_init:
- 
- 	register_syscore_ops(&hv_syscore_ops);
- 
--	hyperv_init_cpuhp = cpuhp;
--
- 	if (cpuid_ebx(HYPERV_CPUID_FEATURES) & HV_ACCESS_PARTITION_ID)
- 		hv_get_partition_id();
- 
-@@ -637,7 +634,7 @@ skip_hypercall_pg_init:
- clean_guest_os_id:
- 	wrmsrl(HV_X64_MSR_GUEST_OS_ID, 0);
- 	hv_ivm_msr_write(HV_X64_MSR_GUEST_OS_ID, 0);
--	cpuhp_remove_state(cpuhp);
-+	cpuhp_remove_state(CPUHP_AP_HYPERV_ONLINE);
- free_ghcb_page:
- 	free_percpu(hv_ghcb_pg);
- free_vp_assist_page:
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -40,7 +40,6 @@ static inline unsigned char hv_get_nmi_r
+diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
+index bbe47781617e..7e75c1214b36 100644
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -228,6 +228,11 @@ static inline struct osnoise_variables *this_cpu_osn_var(void)
+ 	return this_cpu_ptr(&per_cpu_osnoise_var);
  }
  
- #if IS_ENABLED(CONFIG_HYPERV)
--extern int hyperv_init_cpuhp;
- extern bool hyperv_paravisor_present;
++/*
++ * Protect the interface.
++ */
++static struct mutex interface_lock;
++
+ #ifdef CONFIG_TIMERLAT_TRACER
+ /*
+  * Runtime information for the timer mode.
+@@ -252,11 +257,6 @@ static inline struct timerlat_variables *this_cpu_tmr_var(void)
+ 	return this_cpu_ptr(&per_cpu_timerlat_var);
+ }
  
- extern void *hv_hypercall_pg;
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -199,8 +199,8 @@ static void hv_machine_shutdown(void)
- 	 * Call hv_cpu_die() on all the CPUs, otherwise later the hypervisor
- 	 * corrupts the old VP Assist Pages and can crash the kexec kernel.
- 	 */
--	if (kexec_in_progress && hyperv_init_cpuhp > 0)
--		cpuhp_remove_state(hyperv_init_cpuhp);
-+	if (kexec_in_progress)
-+		cpuhp_remove_state(CPUHP_AP_HYPERV_ONLINE);
- 
- 	/* The function calls stop_other_cpus(). */
- 	native_machine_shutdown();
+-/*
+- * Protect the interface.
+- */
+-static struct mutex interface_lock;
+-
+ /*
+  * tlat_var_reset - Reset the values of the given timerlat_variables
+  */
+-- 
+2.46.0
+
 
 
