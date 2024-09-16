@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC7814AD19;
-	Mon, 16 Sep 2024 12:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AFA155A4E;
+	Mon, 16 Sep 2024 12:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488550; cv=none; b=kSLDVQYEIgLmtfIIlljWuxdr45fWjZEj5RJv9LSkMhCc35LIUOOWDOez2zDj+F08arsIwrmQBF3dfZAT3DAYkTGkAlKM4O+0pvLem+TfWLYh/DzKCY2qBT85fm0cbouua7p6JRgy2lXaY7tBbkH4Z2vjJkXHGeNjT3/b2bNVaA0=
+	t=1726488553; cv=none; b=CxVa3G1flGHAkg1IVTwp5a0Zd8UoJ2OW2dGUtQiMzrdEFob6MBhXPIP9VC/utDcVC+TfH7K1GA2dO+FtTLXQ6sVIOqy9v6ercz56rCmftUE7qqVd20QpPFhnKcVyj1CwwiH/G7JMIUAgVDIwf/9WtiXs1tsCOpme07XNexQOyVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488550; c=relaxed/simple;
-	bh=tMKOq/lNvN80djiOQ/kG0kMCUvS788OgevL1dm0nIfM=;
+	s=arc-20240116; t=1726488553; c=relaxed/simple;
+	bh=rHrGDHhdH+oCybKV5VaZxH4OYzrgMfTsYTnP3MhA6w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuP3wy2z8cLxcE9XqHJ7p2hpKdZoQ5ADxvqzjxpcTvrK+zoKc0Fp21fijt7ySnTV2u58AQ0ki35HNxFvdVIPCiYnnFMnKvDMwbBoD/EwcHCkvYFEbPSbbhDIYTtrsYXk84HcRpoLcHmNwM/lP/HxwqWRs1aKlpBoVHqwU9fB7/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt9jDpxH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Di+t1JbJfMufVvQL+RZQgx7dbDGCE5Kq2dnQlQtMhqbMdYWtGZBvKNlL32SmYjtLcNADbqHobv4hewsXZMW8CPR3GdhZwh+BnpUaeAGmyCoLM6LxXzfEyVL2RlYCerwzk6H/0SeuZotJEd3eRi+K7A/FJwXvwmxxkjVWDXR1Hx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4ErDFe3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt9jDpxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90CCC4CEC4;
-	Mon, 16 Sep 2024 12:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4ErDFe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88E6C4CEC4;
+	Mon, 16 Sep 2024 12:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488550;
-	bh=tMKOq/lNvN80djiOQ/kG0kMCUvS788OgevL1dm0nIfM=;
+	s=korg; t=1726488553;
+	bh=rHrGDHhdH+oCybKV5VaZxH4OYzrgMfTsYTnP3MhA6w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vt9jDpxHzLAWCF3Ib4KQSKk5bbcP02/PE12cYI/tFSYvNV4JiSOUw44o58+ARqPsI
-	 F6kIj5LSBsjGk+9UGc+0+RvR46knwgY6HRS4tEU00Pkr9ACEq6r4yi06a0G8MN341E
-	 Lh+Oc91D7iimf0Nb3kQkdIz1RqBQSE3ZrlcODHFI=
+	b=b4ErDFe3ERjzYKL6+ZNsm5RRm8fBcgh7M2jV37CH4gCBDobDoDD34+TWzkzccTpBL
+	 NJaQLCHOb80C+SM9P+wt7UJkuLt3vsYM2hHXM/iVBxxhMa8g961COUX8UcrhQQhMWV
+	 sfZ6sKOA1ToFvk68u03Tqzfmg7ReQHqa/NggTVLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/91] Input: i8042 - add Fujitsu Lifebook E756 to i8042 quirk table
-Date: Mon, 16 Sep 2024 13:44:07 +0200
-Message-ID: <20240916114225.535888493@linuxfoundation.org>
+Subject: [PATCH 6.6 32/91] s390/mm: Prevent lowcore vs identity mapping overlap
+Date: Mon, 16 Sep 2024 13:44:08 +0200
+Message-ID: <20240916114225.569160063@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -51,42 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit 7ce7c2283fa6843ab3c2adfeb83dcc504a107858 ]
+[ Upstream commit a3ca27c405faad584af6e8e38cdafe5be73230a1 ]
 
-Yet another quirk entry for Fujitsu laptop.  Lifebook E756 requires
-i8041.nomux for keeping the touchpad working after suspend/resume.
+The identity mapping position in virtual memory is randomized
+together with the kernel mapping. That position can never
+overlap with the lowcore even when the lowcore is relocated.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1229056
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240814100630.2048-1-tiwai@suse.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Prevent overlapping with the lowcore to allow independent
+positioning of the identity mapping. With the current value
+of the alternative lowcore address of 0x70000 the overlap
+could happen in case the identity mapping is placed at zero.
+
+This is a prerequisite for uncoupling of randomization base
+of kernel image and identity mapping in virtual memory.
+
+Acked-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/s390/kernel/setup.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
-index e9eb9554dd7b..bad238f69a7a 100644
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -627,6 +627,15 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
- 	},
-+	{
-+		/* Fujitsu Lifebook E756 */
-+		/* https://bugzilla.suse.com/show_bug.cgi?id=1229056 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E756"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
- 	{
- 		/* Fujitsu Lifebook E5411 */
- 		.matches = {
+diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
+index d48c7afe97e6..89fe0764af84 100644
+--- a/arch/s390/kernel/setup.c
++++ b/arch/s390/kernel/setup.c
+@@ -741,7 +741,23 @@ static void __init memblock_add_physmem_info(void)
+ }
+ 
+ /*
+- * Reserve memory used for lowcore/command line/kernel image.
++ * Reserve memory used for lowcore.
++ */
++static void __init reserve_lowcore(void)
++{
++	void *lowcore_start = get_lowcore();
++	void *lowcore_end = lowcore_start + sizeof(struct lowcore);
++	void *start, *end;
++
++	if ((void *)__identity_base < lowcore_end) {
++		start = max(lowcore_start, (void *)__identity_base);
++		end = min(lowcore_end, (void *)(__identity_base + ident_map_size));
++		memblock_reserve(__pa(start), __pa(end));
++	}
++}
++
++/*
++ * Reserve memory used for absolute lowcore/command line/kernel image.
+  */
+ static void __init reserve_kernel(void)
+ {
+@@ -939,6 +955,7 @@ void __init setup_arch(char **cmdline_p)
+ 
+ 	/* Do some memory reservations *before* memory is added to memblock */
+ 	reserve_pgtables();
++	reserve_lowcore();
+ 	reserve_kernel();
+ 	reserve_initrd();
+ 	reserve_certificate_list();
 -- 
 2.43.0
 
