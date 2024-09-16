@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949A0155300;
-	Mon, 16 Sep 2024 12:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EDF14B094;
+	Mon, 16 Sep 2024 12:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488627; cv=none; b=hpmDxQBPWNN37WGq8Sua5YYAvA02dwakAgqLDDceCYple5st47iCTTUOxF9lndcZYfpir2bxHtOENUlgB6eTRlsnrzJybs3uZTEapiXHCOni9taRYa9h+Q/Q2OXJ3rrNf5RFKldK+uB4MRzi+qmd3WIf+25+4zLz8nmYJWE75kY=
+	t=1726488630; cv=none; b=CBwXdxYFfbzv7ahcBZJ26HWwMeQq27jdVlnqgUoF4M7tLtEAjKZlc2HfGNMmqllHLFPEp64J4UISKbkoW+0HFdMaEchyWTaiXGzCsIQrU9WSAmqNsi104U8BMwLsR6Dh7K34FG4oAqU5VNl1+Tx2gv4sT6Z/1vkmVeqn4k0/xaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488627; c=relaxed/simple;
-	bh=+axg6C5jjfXyvV9OrFyf75ugmmfbWrcmZlgtRpHwlIM=;
+	s=arc-20240116; t=1726488630; c=relaxed/simple;
+	bh=uENX6u9PvkdhiphK/U+R/FoiQ67lyevQZ/uU+pyKOp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrThF0Yprt1BTdhCVbJvsEXGljz7+m16Qg6mpeVN0Eq+sg3rY4q5ZrlVR6NcRt7HdWTF1ZGwtxAdGPwagLftRoCd9BFb1uq4Kx6cj90QnAzz6FrtIUinBtT/at8wj0i/TjDXSao9owDbDtz/vom14ffePsWGbPSkkdwRMdTMzMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6fsW9qI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/cbkZjHFO4lGIlRg924Arq+0Xa689Bdg6i4zno7tAj9hN3Oy0ROwTudhEsy57L0+4iw4WfZ/63ftuxUFjm5n3sA4gZJT5ignzZO9r2wyom54bJ+kzgOtqAQdvHxwnVdVYGfr29/1V3bTbjNPH5nsbkrERv2m+tIxuQhr+Oq4U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiDXGTmZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6fsW9qI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1793EC4CEC4;
-	Mon, 16 Sep 2024 12:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiDXGTmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A21C4CEC4;
+	Mon, 16 Sep 2024 12:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488627;
-	bh=+axg6C5jjfXyvV9OrFyf75ugmmfbWrcmZlgtRpHwlIM=;
+	s=korg; t=1726488630;
+	bh=uENX6u9PvkdhiphK/U+R/FoiQ67lyevQZ/uU+pyKOp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I6fsW9qIGOfy9oGnecd6uRAp5S+5sBsSthXGqouQreIRAuEq9wFrD3qISMofjeSBh
-	 6T07n2SpYcyu0AE0rem2ltEcqW0CNN4L8s9GC5LKSLBI8jbniQYdFKQw1mHuywO2rw
-	 198yrnhUJa3p0tVwUZO8mfjisRwvP3lpDTqS+RTs=
+	b=iiDXGTmZ98/xQj2rHzW4IOue73FuYfJRv2vlIE7QiXxFhJ6O793/Z1YHXVQ8YurlA
+	 40tIXGrIZCujD10PQxbPcFHd6qMJooW5ZYJPMpqKYRWMLABn6323TbWxCFJDi4WWJS
+	 5IjSeBPuyc7EG2wHncSMIae6cEfCZR53QUDig3MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	George Kuruvinakunnel <george.kuruvinakunnel@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 58/91] igb: Always call igb_xdp_ring_update_tail() under Tx lock
-Date: Mon, 16 Sep 2024 13:44:34 +0200
-Message-ID: <20240916114226.410334787@linuxfoundation.org>
+Subject: [PATCH 6.6 59/91] net/mlx5: Update the list of the PCI supported devices
+Date: Mon, 16 Sep 2024 13:44:35 +0200
+Message-ID: <20240916114226.443019890@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -54,93 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 27717f8b17c098c4373ddb8fe89e1a1899c7779d ]
+[ Upstream commit 7472d157cb8014103105433bcc0705af2e6f7184 ]
 
-Always call igb_xdp_ring_update_tail() under __netif_tx_lock, add a comment
-and lockdep assert to indicate that. This is needed to share the same TX
-ring between XDP, XSK and slow paths. Furthermore, the current XDP
-implementation is racy on tail updates.
+Add the upcoming ConnectX-9 device ID to the table of supported
+PCI device IDs.
 
-Fixes: 9cbc948b5a20 ("igb: add XDP support")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-[Kurt: Add lockdep assert and fixes tag]
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: George Kuruvinakunnel <george.kuruvinakunnel@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: f908a35b2218 ("net/mlx5: Update the list of the PCI supported devices")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index fa268d7bd1bc..986bcbf0a6ab 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -33,6 +33,7 @@
- #include <linux/bpf_trace.h>
- #include <linux/pm_runtime.h>
- #include <linux/etherdevice.h>
-+#include <linux/lockdep.h>
- #ifdef CONFIG_IGB_DCA
- #include <linux/dca.h>
- #endif
-@@ -2939,8 +2940,11 @@ static int igb_xdp(struct net_device *dev, struct netdev_bpf *xdp)
- 	}
- }
- 
-+/* This function assumes __netif_tx_lock is held by the caller. */
- static void igb_xdp_ring_update_tail(struct igb_ring *ring)
- {
-+	lockdep_assert_held(&txring_txq(ring)->_xmit_lock);
-+
- 	/* Force memory writes to complete before letting h/w know there
- 	 * are new descriptors to fetch.
- 	 */
-@@ -3025,11 +3029,11 @@ static int igb_xdp_xmit(struct net_device *dev, int n,
- 		nxmit++;
- 	}
- 
--	__netif_tx_unlock(nq);
--
- 	if (unlikely(flags & XDP_XMIT_FLUSH))
- 		igb_xdp_ring_update_tail(tx_ring);
- 
-+	__netif_tx_unlock(nq);
-+
- 	return nxmit;
- }
- 
-@@ -8889,12 +8893,14 @@ static void igb_put_rx_buffer(struct igb_ring *rx_ring,
- 
- static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
- {
-+	unsigned int total_bytes = 0, total_packets = 0;
- 	struct igb_adapter *adapter = q_vector->adapter;
- 	struct igb_ring *rx_ring = q_vector->rx.ring;
--	struct sk_buff *skb = rx_ring->skb;
--	unsigned int total_bytes = 0, total_packets = 0;
- 	u16 cleaned_count = igb_desc_unused(rx_ring);
-+	struct sk_buff *skb = rx_ring->skb;
-+	int cpu = smp_processor_id();
- 	unsigned int xdp_xmit = 0;
-+	struct netdev_queue *nq;
- 	struct xdp_buff xdp;
- 	u32 frame_sz = 0;
- 	int rx_buf_pgcnt;
-@@ -9022,7 +9028,10 @@ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
- 	if (xdp_xmit & IGB_XDP_TX) {
- 		struct igb_ring *tx_ring = igb_xdp_tx_queue_mapping(adapter);
- 
-+		nq = txring_txq(tx_ring);
-+		__netif_tx_lock(nq, cpu);
- 		igb_xdp_ring_update_tail(tx_ring);
-+		__netif_tx_unlock(nq);
- 	}
- 
- 	u64_stats_update_begin(&rx_ring->rx_syncp);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 11f11248feb8..96136229b1b0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -2205,6 +2205,7 @@ static const struct pci_device_id mlx5_core_pci_table[] = {
+ 	{ PCI_VDEVICE(MELLANOX, 0x101f) },			/* ConnectX-6 LX */
+ 	{ PCI_VDEVICE(MELLANOX, 0x1021) },			/* ConnectX-7 */
+ 	{ PCI_VDEVICE(MELLANOX, 0x1023) },			/* ConnectX-8 */
++	{ PCI_VDEVICE(MELLANOX, 0x1025) },			/* ConnectX-9 */
+ 	{ PCI_VDEVICE(MELLANOX, 0xa2d2) },			/* BlueField integrated ConnectX-5 network controller */
+ 	{ PCI_VDEVICE(MELLANOX, 0xa2d3), MLX5_PCI_DEV_IS_VF},	/* BlueField integrated ConnectX-5 network controller VF */
+ 	{ PCI_VDEVICE(MELLANOX, 0xa2d6) },			/* BlueField-2 integrated ConnectX-6 Dx network controller */
 -- 
 2.43.0
 
