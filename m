@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAF614B946;
-	Mon, 16 Sep 2024 12:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCBD149E0B;
+	Mon, 16 Sep 2024 12:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488113; cv=none; b=e3uU0tfH1ypUChyniXSLrpie6+uZ1HbYtnxuSTtPieYpoD6PL4z3DVaD+uvavcNO7xBlnbDEtU2rgs6W2IiBO4HWaFnw0WU9xeZOvKw66tRqwiNFCL5KZEfF2RgcxRX7gKMuW3Eas43aVh2tlOZl6V5fI7zxgCud2uqdbCEfjns=
+	t=1726488116; cv=none; b=rLalMycpsJUoSIEFdDdevZ9rr25JoHfxJ1wv45Yqu2GT90TtfRje9xaARmSnFKJSWjuFPF6GQt+QoeZ88tMIYfGur+GKOzLCK4MgJpxzyavJIilk3wyr1nwhcK8fKvXvZkZIclv+HbkMWHjGBBmQeGcDqRgNlEOK6b+lZfDqvO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488113; c=relaxed/simple;
-	bh=OdDwz0vCpqioyEA8ohuxvmZ7U7mTireM7ta4ycBlQG8=;
+	s=arc-20240116; t=1726488116; c=relaxed/simple;
+	bh=uXSKo+s/OqQgMr0k5phw5JOSD9ak3akD5N0VbiShKOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8A6qjitOVzPGgYHVi87xBgXicS+vv3hcHNEV4ewrYZEypk39LyKHqu6He8m09Xge+3VsxbxNoh+eAlPsl4mkhPmmq9BfB85erLX4EAmNn6ap+yHI2vTeAcyzWCD10DIt5gbBRwImuu0WWyRMJXz9fVEJRtWzQm1Gy4x1lW9xdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rULvj0d1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlW7XB29mThJ5zCpvuF3IClB9YvTgqyIAfJgZFmU5Qg8sC0CR88W0q73bTLnVhIDFbRZDGZH/o63dmyPeFqJ5GHBcKCF/pvQASpCqfbD61Mjv3qak4U5Lqa5UZvwXz2Zo5cFdFgYP76RGGOH7uFhR4cdnqJObOAhpW8Z97nnpxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kay5/3MN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rULvj0d1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578ABC4CEC4;
-	Mon, 16 Sep 2024 12:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kay5/3MN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2589EC4CEC4;
+	Mon, 16 Sep 2024 12:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488113;
-	bh=OdDwz0vCpqioyEA8ohuxvmZ7U7mTireM7ta4ycBlQG8=;
+	s=korg; t=1726488116;
+	bh=uXSKo+s/OqQgMr0k5phw5JOSD9ak3akD5N0VbiShKOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rULvj0d1VeSyAgz/nAl/Kd4gY/G72YKHGff8fB2eoVBva64dxSqJDSYwgs3GNpoBo
-	 NCpcIoNG5/uN+Dnqgr+FEEFaqq4TYURefwVRv1unIL0gER4VmMZMiv5OScn4ZqY3Rv
-	 txqAu1/JmOgiS5CP7nTaHqAzE83B4FbUgMyI2xsM=
+	b=kay5/3MNh8Xa+DwR4cuZJWMaeIfRSyG9omLmIstzwcTRIGb78AnGscFMPC7aTnhes
+	 1XrtPUeajAP8pw+YZHJ1OZcSOsTLkQPi5mzu3cAyi8v2kfhJHFb05rW8M/GtZB2knP
+	 Zu5U9aCPX+RIMnicBSM8bwM6bvzUuB1tPKwu1/qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 63/63] ASoC: meson: axg-card: fix use-after-free
-Date: Mon, 16 Sep 2024 13:44:42 +0200
-Message-ID: <20240916114223.257494742@linuxfoundation.org>
+	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	George Kuruvinakunnel <george.kuruvinakunnel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 39/63] igb: Always call igb_xdp_ring_update_tail() under Tx lock
+Date: Mon, 16 Sep 2024 13:44:18 +0200
+Message-ID: <20240916114222.442484304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,82 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
 
-commit 4f9a71435953f941969a4f017e2357db62d85a86 upstream.
+[ Upstream commit 27717f8b17c098c4373ddb8fe89e1a1899c7779d ]
 
-Buffer 'card->dai_link' is reallocated in 'meson_card_reallocate_links()',
-so move 'pad' pointer initialization after this function when memory is
-already reallocated.
+Always call igb_xdp_ring_update_tail() under __netif_tx_lock, add a comment
+and lockdep assert to indicate that. This is needed to share the same TX
+ring between XDP, XSK and slow paths. Furthermore, the current XDP
+implementation is racy on tail updates.
 
-Kasan bug report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in axg_card_add_link+0x76c/0x9bc
-Read of size 8 at addr ffff000000e8b260 by task modprobe/356
-
-CPU: 0 PID: 356 Comm: modprobe Tainted: G O 6.9.12-sdkernel #1
-Call trace:
- dump_backtrace+0x94/0xec
- show_stack+0x18/0x24
- dump_stack_lvl+0x78/0x90
- print_report+0xfc/0x5c0
- kasan_report+0xb8/0xfc
- __asan_load8+0x9c/0xb8
- axg_card_add_link+0x76c/0x9bc [snd_soc_meson_axg_sound_card]
- meson_card_probe+0x344/0x3b8 [snd_soc_meson_card_utils]
- platform_probe+0x8c/0xf4
- really_probe+0x110/0x39c
- __driver_probe_device+0xb8/0x18c
- driver_probe_device+0x108/0x1d8
- __driver_attach+0xd0/0x25c
- bus_for_each_dev+0xe0/0x154
- driver_attach+0x34/0x44
- bus_add_driver+0x134/0x294
- driver_register+0xa8/0x1e8
- __platform_driver_register+0x44/0x54
- axg_card_pdrv_init+0x20/0x1000 [snd_soc_meson_axg_sound_card]
- do_one_initcall+0xdc/0x25c
- do_init_module+0x10c/0x334
- load_module+0x24c4/0x26cc
- init_module_from_file+0xd4/0x128
- __arm64_sys_finit_module+0x1f4/0x41c
- invoke_syscall+0x60/0x188
- el0_svc_common.constprop.0+0x78/0x13c
- do_el0_svc+0x30/0x40
- el0_svc+0x38/0x78
- el0t_64_sync_handler+0x100/0x12c
- el0t_64_sync+0x190/0x194
-
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20240911142425.598631-1-avkrasnov@salutedevices.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9cbc948b5a20 ("igb: add XDP support")
+Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+[Kurt: Add lockdep assert and fixes tag]
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: George Kuruvinakunnel <george.kuruvinakunnel@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-card.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/sound/soc/meson/axg-card.c
-+++ b/sound/soc/meson/axg-card.c
-@@ -104,7 +104,7 @@ static int axg_card_add_tdm_loopback(str
- 				     int *index)
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 76bd41058f3a..f2f719a952f8 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -34,6 +34,7 @@
+ #include <linux/bpf_trace.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/etherdevice.h>
++#include <linux/lockdep.h>
+ #ifdef CONFIG_IGB_DCA
+ #include <linux/dca.h>
+ #endif
+@@ -2915,8 +2916,11 @@ static int igb_xdp(struct net_device *dev, struct netdev_bpf *xdp)
+ 	}
+ }
+ 
++/* This function assumes __netif_tx_lock is held by the caller. */
+ static void igb_xdp_ring_update_tail(struct igb_ring *ring)
  {
- 	struct meson_card *priv = snd_soc_card_get_drvdata(card);
--	struct snd_soc_dai_link *pad = &card->dai_link[*index];
-+	struct snd_soc_dai_link *pad;
- 	struct snd_soc_dai_link *lb;
- 	struct snd_soc_dai_link_component *dlc;
- 	int ret;
-@@ -114,6 +114,7 @@ static int axg_card_add_tdm_loopback(str
- 	if (ret)
- 		return ret;
++	lockdep_assert_held(&txring_txq(ring)->_xmit_lock);
++
+ 	/* Force memory writes to complete before letting h/w know there
+ 	 * are new descriptors to fetch.
+ 	 */
+@@ -3001,11 +3005,11 @@ static int igb_xdp_xmit(struct net_device *dev, int n,
+ 		nxmit++;
+ 	}
  
-+	pad = &card->dai_link[*index];
- 	lb = &card->dai_link[*index + 1];
+-	__netif_tx_unlock(nq);
+-
+ 	if (unlikely(flags & XDP_XMIT_FLUSH))
+ 		igb_xdp_ring_update_tail(tx_ring);
  
- 	lb->name = devm_kasprintf(card->dev, GFP_KERNEL, "%s-lb", pad->name);
++	__netif_tx_unlock(nq);
++
+ 	return nxmit;
+ }
+ 
+@@ -8829,12 +8833,14 @@ static void igb_put_rx_buffer(struct igb_ring *rx_ring,
+ 
+ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
+ {
++	unsigned int total_bytes = 0, total_packets = 0;
+ 	struct igb_adapter *adapter = q_vector->adapter;
+ 	struct igb_ring *rx_ring = q_vector->rx.ring;
+-	struct sk_buff *skb = rx_ring->skb;
+-	unsigned int total_bytes = 0, total_packets = 0;
+ 	u16 cleaned_count = igb_desc_unused(rx_ring);
++	struct sk_buff *skb = rx_ring->skb;
++	int cpu = smp_processor_id();
+ 	unsigned int xdp_xmit = 0;
++	struct netdev_queue *nq;
+ 	struct xdp_buff xdp;
+ 	u32 frame_sz = 0;
+ 	int rx_buf_pgcnt;
+@@ -8962,7 +8968,10 @@ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
+ 	if (xdp_xmit & IGB_XDP_TX) {
+ 		struct igb_ring *tx_ring = igb_xdp_tx_queue_mapping(adapter);
+ 
++		nq = txring_txq(tx_ring);
++		__netif_tx_lock(nq, cpu);
+ 		igb_xdp_ring_update_tail(tx_ring);
++		__netif_tx_unlock(nq);
+ 	}
+ 
+ 	u64_stats_update_begin(&rx_ring->rx_syncp);
+-- 
+2.43.0
+
 
 
