@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D14149C57;
-	Mon, 16 Sep 2024 12:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE051146A79;
+	Mon, 16 Sep 2024 12:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488673; cv=none; b=IjqzL4N9IajvX+udPersw8F4ydt0BJyDApTY1UcxGsB6+44qutU5O7D++ANR+BOz99LGKLwdhGeyVlCCRny7yAxxRFqbT5DmxUK+q3dHbQ7DEh06Hn7zFuBWTjdD0oyaXNzvefAwgatlOVhTBP4ukdmSGzA8Fji06KdLiaFXOWg=
+	t=1726488675; cv=none; b=pCDPMKWzpE5+4VnmUfHSrBjVe4dnBbnr3UkO2RZja3D1CfAoc9Uh2vYevLNAsZH5Ce3Vg49BzuBFewuHswlkj4Dg9QxlyMwx3lDBBK5xxORY6m6lEyeJpxngyxWoivW1eeC09FGoTcMzudRmZmvnbFIWr+BCSycBXh24p0voDEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488673; c=relaxed/simple;
-	bh=KF9V7WAKGEGo2sWoJRZr2rSfu6ylnZ/czmDbtV3+NuM=;
+	s=arc-20240116; t=1726488675; c=relaxed/simple;
+	bh=DnaxPdYtel76XLph+gaSO3w2l6Ki9yEGdI0Pahg1HQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1ki8RfssdIer3CmIIlgDo4tBa9cv+yT3O+cZrvCq2F5xlOJfOBrC6lmoKQ1QVN6/cJYfG3U5qDoeiZdxVYjx0TXHqsIrV/7kSQKJXhKdkzhTbSIAh237T1BZNgrbZ0fMJ5precGoufzS6+DCPmLHJBrn0Gsj0O+C0hpWtXjXtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLYNvfuN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eIfs8sn0gqYQV/OzDPkPXRUDABnx9Yhwzo9caJy4S/LisxKCbkHhHDxGqF2HlIIOspqQ+IYwWZ11/FOvilKhkr3/IHWDWNzA41A1B6wXfhP/8ELCIPDXdFus29lyNfx8bKNpL/odeO2POhnw8l885bDWE5mo3St+Vx8o8c9+ku8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi0DB3mR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLYNvfuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70345C4CEC4;
-	Mon, 16 Sep 2024 12:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi0DB3mR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41518C4CEC4;
+	Mon, 16 Sep 2024 12:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488672;
-	bh=KF9V7WAKGEGo2sWoJRZr2rSfu6ylnZ/czmDbtV3+NuM=;
+	s=korg; t=1726488675;
+	bh=DnaxPdYtel76XLph+gaSO3w2l6Ki9yEGdI0Pahg1HQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLYNvfuNaX79BLvbx/w7aPIaJ3zn9U4ql1S6620qUF7fO+lK2+btvb59dFpmQqabc
-	 h20zxoCCCiiHlffyv3i2A1QeMmxd3zd37vCdbsuhN5DfxbuakLrvMsc75hhbD9o6UU
-	 0T5G1/8hfBYTAv2Eka3dmGo4w8aBB1GpBbrC0uZA=
+	b=Mi0DB3mRUPi8mfGf4oNeF3Oul357Ah+DzSEYbKxc76OLe01yG7A86k9DRDsWpnnl3
+	 MnmybGXQlK07hqiHVVNTid5CQOwnpxvSJ9cDlSRiEqY5o6mc27zETA88AenWjaZSEB
+	 5mXZ0J8GNtVy8Py+cwxwOwx+yXeGFHmbbytbDIS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cgroups@vger.kernel.org,
-	Nadia Pinaeva <n.m.pinaeva@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiaoliang Yang <xiaoliang.yang_1@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 73/91] netfilter: nft_socket: make cgroupsv2 matching work with namespaces
-Date: Mon, 16 Sep 2024 13:44:49 +0200
-Message-ID: <20240916114226.881382740@linuxfoundation.org>
+Subject: [PATCH 6.6 74/91] net: dsa: felix: ignore pending status of TAS module when its disabled
+Date: Mon, 16 Sep 2024 13:44:50 +0200
+Message-ID: <20240916114226.915670759@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -53,147 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
 
-[ Upstream commit 7f3287db654395f9c5ddd246325ff7889f550286 ]
+[ Upstream commit 70654f4c212e83898feced125d91ebb3695950d8 ]
 
-When running in container environmment, /sys/fs/cgroup/ might not be
-the real root node of the sk-attached cgroup.
+The TAS module could not be configured when it's running in pending
+status. We need disable the module and configure it again. However, the
+pending status is not cleared after the module disabled. TC taprio set
+will always return busy even it's disabled.
 
-Example:
+For example, a user uses tc-taprio to configure Qbv and a future
+basetime. The TAS module will run in a pending status. There is no way
+to reconfigure Qbv, it always returns busy.
 
-In container:
-% stat /sys//fs/cgroup/
-Device: 0,21    Inode: 2214  ..
-% stat /sys/fs/cgroup/foo
-Device: 0,21    Inode: 2264  ..
+Actually the TAS module can be reconfigured when it's disabled. So it
+doesn't need to check the pending status if the TAS module is disabled.
 
-The expectation would be for:
+After the patch, user can delete the tc taprio configuration to disable
+Qbv and reconfigure it again.
 
-  nft add rule .. socket cgroupv2 level 1 "foo" counter
-
-to match traffic from a process that got added to "foo" via
-"echo $pid > /sys/fs/cgroup/foo/cgroup.procs".
-
-However, 'level 3' is needed to make this work.
-
-Seen from initial namespace, the complete hierarchy is:
-
-% stat /sys/fs/cgroup/system.slice/docker-.../foo
-  Device: 0,21    Inode: 2264 ..
-
-i.e. hierarchy is
-0    1               2              3
-/ -> system.slice -> docker-1... -> foo
-
-... but the container doesn't know that its "/" is the "docker-1.."
-cgroup.  Current code will retrieve the 'system.slice' cgroup node
-and store its kn->id in the destination register, so compare with
-2264 ("foo" cgroup id) will not match.
-
-Fetch "/" cgroup from ->init() and add its level to the level we try to
-extract.  cgroup root-level is 0 for the init-namespace or the level
-of the ancestor that is exposed as the cgroup root inside the container.
-
-In the above case, cgrp->level of "/" resolved in the container is 2
-(docker-1...scope/) and request for 'level 1' will get adjusted
-to fetch the actual level (3).
-
-v2: use CONFIG_SOCK_CGROUP_DATA, eval function depends on it.
-    (kernel test robot)
-
-Cc: cgroups@vger.kernel.org
-Fixes: e0bb96db96f8 ("netfilter: nft_socket: add support for cgroupsv2")
-Reported-by: Nadia Pinaeva <n.m.pinaeva@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: de143c0e274b ("net: dsa: felix: Configure Time-Aware Scheduler via taprio offload")
+Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+Link: https://patch.msgid.link/20240906093550.29985-1-xiaoliang.yang_1@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_socket.c | 41 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ drivers/net/dsa/ocelot/felix_vsc9959.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
-index 765ffd6e06bc..12cdff640492 100644
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -9,7 +9,8 @@
+diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
+index 3c5509e75a54..afb5dae4439c 100644
+--- a/drivers/net/dsa/ocelot/felix_vsc9959.c
++++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
+@@ -1474,10 +1474,13 @@ static int vsc9959_qos_port_tas_set(struct ocelot *ocelot, int port,
+ 	/* Hardware errata -  Admin config could not be overwritten if
+ 	 * config is pending, need reset the TAS module
+ 	 */
+-	val = ocelot_read(ocelot, QSYS_PARAM_STATUS_REG_8);
+-	if (val & QSYS_PARAM_STATUS_REG_8_CONFIG_PENDING) {
+-		ret = -EBUSY;
+-		goto err_reset_tc;
++	val = ocelot_read_rix(ocelot, QSYS_TAG_CONFIG, port);
++	if (val & QSYS_TAG_CONFIG_ENABLE) {
++		val = ocelot_read(ocelot, QSYS_PARAM_STATUS_REG_8);
++		if (val & QSYS_PARAM_STATUS_REG_8_CONFIG_PENDING) {
++			ret = -EBUSY;
++			goto err_reset_tc;
++		}
+ 	}
  
- struct nft_socket {
- 	enum nft_socket_keys		key:8;
--	u8				level;
-+	u8				level;		/* cgroupv2 level to extract */
-+	u8				level_user;	/* cgroupv2 level provided by userspace */
- 	u8				len;
- 	union {
- 		u8			dreg;
-@@ -53,6 +54,28 @@ nft_sock_get_eval_cgroupv2(u32 *dest, struct sock *sk, const struct nft_pktinfo
- 	memcpy(dest, &cgid, sizeof(u64));
- 	return true;
- }
-+
-+/* process context only, uses current->nsproxy. */
-+static noinline int nft_socket_cgroup_subtree_level(void)
-+{
-+	struct cgroup *cgrp = cgroup_get_from_path("/");
-+	int level;
-+
-+	if (!cgrp)
-+		return -ENOENT;
-+
-+	level = cgrp->level;
-+
-+	cgroup_put(cgrp);
-+
-+	if (WARN_ON_ONCE(level > 255))
-+		return -ERANGE;
-+
-+	if (WARN_ON_ONCE(level < 0))
-+		return -EINVAL;
-+
-+	return level;
-+}
- #endif
- 
- static struct sock *nft_socket_do_lookup(const struct nft_pktinfo *pkt)
-@@ -174,9 +197,10 @@ static int nft_socket_init(const struct nft_ctx *ctx,
- 	case NFT_SOCKET_MARK:
- 		len = sizeof(u32);
- 		break;
--#ifdef CONFIG_CGROUPS
-+#ifdef CONFIG_SOCK_CGROUP_DATA
- 	case NFT_SOCKET_CGROUPV2: {
- 		unsigned int level;
-+		int err;
- 
- 		if (!tb[NFTA_SOCKET_LEVEL])
- 			return -EINVAL;
-@@ -185,6 +209,17 @@ static int nft_socket_init(const struct nft_ctx *ctx,
- 		if (level > 255)
- 			return -EOPNOTSUPP;
- 
-+		err = nft_socket_cgroup_subtree_level();
-+		if (err < 0)
-+			return err;
-+
-+		priv->level_user = level;
-+
-+		level += err;
-+		/* Implies a giant cgroup tree */
-+		if (WARN_ON_ONCE(level > 255))
-+			return -EOPNOTSUPP;
-+
- 		priv->level = level;
- 		len = sizeof(u64);
- 		break;
-@@ -209,7 +244,7 @@ static int nft_socket_dump(struct sk_buff *skb,
- 	if (nft_dump_register(skb, NFTA_SOCKET_DREG, priv->dreg))
- 		return -1;
- 	if (priv->key == NFT_SOCKET_CGROUPV2 &&
--	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level)))
-+	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level_user)))
- 		return -1;
- 	return 0;
- }
+ 	ocelot_rmw_rix(ocelot,
 -- 
 2.43.0
 
