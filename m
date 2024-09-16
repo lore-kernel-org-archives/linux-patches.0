@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A21156F21;
-	Mon, 16 Sep 2024 12:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42428156F54;
+	Mon, 16 Sep 2024 12:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488533; cv=none; b=I5oaj7IhgXN74a4PsriIpV0rRt8SSKe7kWhGIvDoZHjU60us8j6m4DpkKRsV/a1f5Dbk2wiJP8EGgjCjq11CuiDdSql14iwVHJr7qASTvQ9vu3pruNBXc+Tx+/zldnjP+0aBQc3ugRq05nNKzuu2IM4rXs5I8P1GVTa7M/A+lPk=
+	t=1726488536; cv=none; b=R9t91hzpaBlfFIrT/z91r7TJsY3IJRZVW0t4wMH6bYDm0BoFVS+JDjIY9sygjBR23G3OJ7U+soNIzhDcOHISbPPRjFyLukhwS5dnY4UdI9HnJQyCRWTkjS79ZQWI8kJCfU1k2KRiEChEHauI/6Y/M1YsFyYGbeW7fNgd+dTNsL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488533; c=relaxed/simple;
-	bh=INbGkbWhhpXXozGGK1M4YRgoO8NxMkFQsJOdXLH4PKQ=;
+	s=arc-20240116; t=1726488536; c=relaxed/simple;
+	bh=EIS/BnTIdz6ErpHUD5kXzzMcvDSQJgQyXF2r+/qdS9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChoaFMkrksvxi7S5LDNpE4zCr31FHRa8aHNyn6wFgZqmpTHGOt9k71eLY23O1HVD5GLRNqUtS7AUkiiKZHFAOnS+0+k4FmhU0Sa5IddYIMfGABduWJ7sg68QXbVdyjmGH45h9sDiVu1E1I8RfWAwc7Jx/PBKepyJKMERz1DuQpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WX/W0jga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wekq9nQLSpSDR4pY5Bz2r0H7A7oeSqpAn0TzTeFdgDwpeFY5ns/9Cod0drc2cH3GrELmGkJ+q3jOlCS9WPBe5FC+tjtcgTASP+bgbXzV2zeM524mcMufGfLEj3GkjZuJk59vEnVuXfraZMdJtGi4VkzMhkHDgk1wr8CAlWER1/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLuknb45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WX/W0jga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C7EC4CEC4;
-	Mon, 16 Sep 2024 12:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLuknb45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C090AC4CEC4;
+	Mon, 16 Sep 2024 12:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488533;
-	bh=INbGkbWhhpXXozGGK1M4YRgoO8NxMkFQsJOdXLH4PKQ=;
+	s=korg; t=1726488536;
+	bh=EIS/BnTIdz6ErpHUD5kXzzMcvDSQJgQyXF2r+/qdS9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WX/W0jgaajLzPORP91XDXsP+Gri5Rs3P8LBDDOnR5JKtBnDFVAWb7WYGRyOABGfHe
-	 l2YmO7tQ161NWh79RFh8tuPVzyLeJp0NISt1QQIFLv5yxBCG5KrgZGHp/D5VNaoFXv
-	 7rbB47hlJ66kjLeUwsatx9H0B2wwXEdLxhmUe47E=
+	b=dLuknb455dVDzh38nQpMe3o2MDEnFrbR3NU7xE0b0g4nsc7QpxoXDUL3QwoJ7AJJ3
+	 5z+S3tULJDLJDXdTM5RHTXlufWjKMzk3wF1K1/0VGISFZfn4ek8oqUF/2tJspXB7sk
+	 JudEujytTzimbY9ENIwQVjmlgch8PcY/FerD++hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Denose <jdenose@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Dmitry Savin <envelsavinds@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 25/91] Input: synaptics - enable SMBus for HP Elitebook 840 G2
-Date: Mon, 16 Sep 2024 13:44:01 +0200
-Message-ID: <20240916114225.345365655@linuxfoundation.org>
+Subject: [PATCH 6.6 26/91] HID: multitouch: Add support for GT7868Q
+Date: Mon, 16 Sep 2024 13:44:02 +0200
+Message-ID: <20240916114225.375352066@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -51,36 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Denose <jdenose@google.com>
+From: Dmitry Savin <envelsavinds@gmail.com>
 
-[ Upstream commit da897484557b34a54fabb81f6c223c19a69e546d ]
+[ Upstream commit c8000deb68365b461b324d68c7ea89d730f0bb85 ]
 
-The kernel reports that the touchpad for this device can support a
-different bus.
+GT7868Q has incorrect data in the report and needs a fixup.
+The change enables haptic touchpad on Lenovo ThinkBook 13x Gen 4
+and has been tested on the device.
 
-With SMBus enabled the touchpad movement is smoother and three-finger
-gestures are recognized.
-
-Signed-off-by: Jonathan Denose <jdenose@google.com>
-Link: https://lore.kernel.org/r/20240719180612.1.Ib652dd808c274076f32cd7fc6c1160d2cf71753b@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Dmitry Savin <envelsavinds@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h        |  2 ++
+ drivers/hid/hid-multitouch.c | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index 7a303a9d6bf7..cff3393f0dd0 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -189,6 +189,7 @@ static const char * const smbus_pnp_ids[] = {
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
- 	"LEN2068", /* T14 Gen 1 */
-+	"SYN3015", /* HP EliteBook 840 G2 */
- 	"SYN3052", /* HP EliteBook 840 G4 */
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 4246348ca16e..a5987fafbedd 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -515,6 +515,8 @@
+ #define USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PIT_E100 0xe100
+ 
+ #define I2C_VENDOR_ID_GOODIX		0x27c6
++#define I2C_DEVICE_ID_GOODIX_01E8	0x01e8
++#define I2C_DEVICE_ID_GOODIX_01E9	0x01e9
+ #define I2C_DEVICE_ID_GOODIX_01F0	0x01f0
+ 
+ #define USB_VENDOR_ID_GOODTOUCH		0x1aad
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 17efe6e2a1a4..8ef41d6e71d4 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1442,6 +1442,30 @@ static int mt_event(struct hid_device *hid, struct hid_field *field,
+ 	return 0;
+ }
+ 
++static __u8 *mt_report_fixup(struct hid_device *hdev, __u8 *rdesc,
++			     unsigned int *size)
++{
++	if (hdev->vendor == I2C_VENDOR_ID_GOODIX &&
++	    (hdev->product == I2C_DEVICE_ID_GOODIX_01E8 ||
++	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9)) {
++		if (rdesc[607] == 0x15) {
++			rdesc[607] = 0x25;
++			dev_info(
++				&hdev->dev,
++				"GT7868Q report descriptor fixup is applied.\n");
++		} else {
++			dev_info(
++				&hdev->dev,
++				"The byte is not expected for fixing the report descriptor. \
++It's possible that the touchpad firmware is not suitable for applying the fix. \
++got: %x\n",
++				rdesc[607]);
++		}
++	}
++
++	return rdesc;
++}
++
+ static void mt_report(struct hid_device *hid, struct hid_report *report)
+ {
+ 	struct mt_device *td = hid_get_drvdata(hid);
+@@ -2038,6 +2062,14 @@ static const struct hid_device_id mt_devices[] = {
+ 		MT_BT_DEVICE(USB_VENDOR_ID_FRUCTEL,
+ 			USB_DEVICE_ID_GAMETEL_MT_MODE) },
+ 
++	/* Goodix GT7868Q devices */
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
++	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
++		     I2C_DEVICE_ID_GOODIX_01E8) },
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
++	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
++		     I2C_DEVICE_ID_GOODIX_01E8) },
++
+ 	/* GoodTouch panels */
+ 	{ .driver_data = MT_CLS_NSMU,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_GOODTOUCH,
+@@ -2273,6 +2305,7 @@ static struct hid_driver mt_driver = {
+ 	.feature_mapping = mt_feature_mapping,
+ 	.usage_table = mt_grabbed_usages,
+ 	.event = mt_event,
++	.report_fixup = mt_report_fixup,
+ 	.report = mt_report,
+ #ifdef CONFIG_PM
+ 	.suspend = mt_suspend,
 -- 
 2.43.0
 
