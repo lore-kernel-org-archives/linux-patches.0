@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E8A1547FF;
-	Mon, 16 Sep 2024 12:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029D3153573;
+	Mon, 16 Sep 2024 12:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488721; cv=none; b=hbf6ZrwrVmXKWyKDxSAy1dvJeDv6ktUxJUuu6yWXwcup1pGl/wYytFAik638qKPaDclrWnckob9vg5xuNV7JKunJF7glieB/WmN9L4DhTs7l2Cx2nYKBVLNqAW7RQtliiqoJbXjqu1C0y6puonzE0lCX47BeH6lBdwCfDCJgehE=
+	t=1726488724; cv=none; b=dMDI4Zn6F9JL7IAZN0iK4WEgzunjk0uphSHG1WRTsWmwFJ022tQZ25ebgRpsCZHDkmA+omUKF9ZhnEorUDRZidwK/rn7Yb7xCztN94nnDugv8NsO1GYFlEnwtNPPKJtmRJJ2DK1b0zXal9tCWeh39a9PQV7l63+P4JJrrW8HJiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488721; c=relaxed/simple;
-	bh=L/RJCC9TrPjzZkjXH/49/mIiRoGI6G04nx3wia55/jM=;
+	s=arc-20240116; t=1726488724; c=relaxed/simple;
+	bh=vnK4Z2Z6MQCUffp0jGk1ilQlkx2DdqRzLHydtcBAOJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYxphSH0VK4fzQFG9ifKD1PVlE5cJZH6R2dqb4vhZP2N7orNCun+WNSaugJE2Fqw2yjeElnvqAS4tW1N2iX8vxKv1PHnK9YObfRenn6CzlHk/FPwvPzbx3LjY4+ev0pqeLjzF2THVMVktAfy0d4X1cNXxOhpxKpNuT/VAXKkcLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEPycz4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PqDLusi07XaA2an8fY+STjyo3a3n2swsDlHcTaFhDqXS2707i85nrm/E79CfWgCefGOu9/Q6EknWucifCt+oCEy2SrDguQViCr3Wd6i6C1yNi6npkxcz1CznLNXZS9tTrg8mxKjOkThA0/xQKIMNLI0cxYu77TCMJ+KnUz2iiPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eZ3Nid1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEPycz4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEE9C4CEC7;
-	Mon, 16 Sep 2024 12:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eZ3Nid1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83070C4CEC4;
+	Mon, 16 Sep 2024 12:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488721;
-	bh=L/RJCC9TrPjzZkjXH/49/mIiRoGI6G04nx3wia55/jM=;
+	s=korg; t=1726488723;
+	bh=vnK4Z2Z6MQCUffp0jGk1ilQlkx2DdqRzLHydtcBAOJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEPycz4yTIwrVp/2Q+pdEHnGuC0sQqWnLGa5Kb5Y5kMLf76z4AAneUMebQFD1UB4k
-	 7MKE+2TpQgekpqw6/utCyW4GlLkS5HzRW6jrQahwczLEZjUZaEh5/Onw9G/VSoDdBN
-	 nMHiSa6VyUtYPEcva6YppuiEXMIrhaQTFdew3sgQ=
+	b=2eZ3Nid1Z/N7gWMcQKPpp+lnyB0jNGJUlcJmWOpxzt2KjbyeVBPCqWG0Xg8JL0uhl
+	 K7Ia01Cdz0Dqg3PPRq/696jz9dDBH5b4FQ5G6AIQPPUBTfRAgyY6aOANn2/vcIIdxZ
+	 J2YPYzlJiNeXCnfCMBv2omEdmJNGm6p4GEq8eYqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Qiu <william.qiu@starfivetech.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	WangYuli <wangyuli@uniontech.com>
-Subject: [PATCH 6.6 91/91] riscv: dts: starfive: add assigned-clock* to limit frquency
-Date: Mon, 16 Sep 2024 13:45:07 +0200
-Message-ID: <20240916114227.452304586@linuxfoundation.org>
+	stable@kernel.org,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 77/91] spi: nxp-fspi: fix the KASAN report out-of-bounds bug
+Date: Mon, 16 Sep 2024 13:44:53 +0200
+Message-ID: <20240916114227.005846121@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,41 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Qiu <william.qiu@starfivetech.com>
+From: Han Xu <han.xu@nxp.com>
 
-commit af571133f7ae028ec9b5fdab78f483af13bf28d3 upstream.
+commit 2a8787c1cdc7be24fdd8953ecd1a8743a1006235 upstream.
 
-In JH7110 SoC, we need to go by-pass mode, so we need add the
-assigned-clock* properties to limit clock frquency.
+Change the memcpy length to fix the out-of-bounds issue when writing the
+data that is not 4 byte aligned to TX FIFO.
 
-Signed-off-by: William Qiu <william.qiu@starfivetech.com>
-Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
+To reproduce the issue, write 3 bytes data to NOR chip.
+
+dd if=3b of=/dev/mtd0
+[   36.926103] ==================================================================
+[   36.933409] BUG: KASAN: slab-out-of-bounds in nxp_fspi_exec_op+0x26ec/0x2838
+[   36.940514] Read of size 4 at addr ffff00081037c2a0 by task dd/455
+[   36.946721]
+[   36.948235] CPU: 3 UID: 0 PID: 455 Comm: dd Not tainted 6.11.0-rc5-gc7b0e37c8434 #1070
+[   36.956185] Hardware name: Freescale i.MX8QM MEK (DT)
+[   36.961260] Call trace:
+[   36.963723]  dump_backtrace+0x90/0xe8
+[   36.967414]  show_stack+0x18/0x24
+[   36.970749]  dump_stack_lvl+0x78/0x90
+[   36.974451]  print_report+0x114/0x5cc
+[   36.978151]  kasan_report+0xa4/0xf0
+[   36.981670]  __asan_report_load_n_noabort+0x1c/0x28
+[   36.986587]  nxp_fspi_exec_op+0x26ec/0x2838
+[   36.990800]  spi_mem_exec_op+0x8ec/0xd30
+[   36.994762]  spi_mem_no_dirmap_read+0x190/0x1e0
+[   36.999323]  spi_mem_dirmap_write+0x238/0x32c
+[   37.003710]  spi_nor_write_data+0x220/0x374
+[   37.007932]  spi_nor_write+0x110/0x2e8
+[   37.011711]  mtd_write_oob_std+0x154/0x1f0
+[   37.015838]  mtd_write_oob+0x104/0x1d0
+[   37.019617]  mtd_write+0xb8/0x12c
+[   37.022953]  mtdchar_write+0x224/0x47c
+[   37.026732]  vfs_write+0x1e4/0x8c8
+[   37.030163]  ksys_write+0xec/0x1d0
+[   37.033586]  __arm64_sys_write+0x6c/0x9c
+[   37.037539]  invoke_syscall+0x6c/0x258
+[   37.041327]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.046244]  do_el0_svc+0x44/0x5c
+[   37.049589]  el0_svc+0x38/0x78
+[   37.052681]  el0t_64_sync_handler+0x13c/0x158
+[   37.057077]  el0t_64_sync+0x190/0x194
+[   37.060775]
+[   37.062274] Allocated by task 455:
+[   37.065701]  kasan_save_stack+0x2c/0x54
+[   37.069570]  kasan_save_track+0x20/0x3c
+[   37.073438]  kasan_save_alloc_info+0x40/0x54
+[   37.077736]  __kasan_kmalloc+0xa0/0xb8
+[   37.081515]  __kmalloc_noprof+0x158/0x2f8
+[   37.085563]  mtd_kmalloc_up_to+0x120/0x154
+[   37.089690]  mtdchar_write+0x130/0x47c
+[   37.093469]  vfs_write+0x1e4/0x8c8
+[   37.096901]  ksys_write+0xec/0x1d0
+[   37.100332]  __arm64_sys_write+0x6c/0x9c
+[   37.104287]  invoke_syscall+0x6c/0x258
+[   37.108064]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.112972]  do_el0_svc+0x44/0x5c
+[   37.116319]  el0_svc+0x38/0x78
+[   37.119401]  el0t_64_sync_handler+0x13c/0x158
+[   37.123788]  el0t_64_sync+0x190/0x194
+[   37.127474]
+[   37.128977] The buggy address belongs to the object at ffff00081037c2a0
+[   37.128977]  which belongs to the cache kmalloc-8 of size 8
+[   37.141177] The buggy address is located 0 bytes inside of
+[   37.141177]  allocated 3-byte region [ffff00081037c2a0, ffff00081037c2a3)
+[   37.153465]
+[   37.154971] The buggy address belongs to the physical page:
+[   37.160559] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x89037c
+[   37.168596] flags: 0xbfffe0000000000(node=0|zone=2|lastcpupid=0x1ffff)
+[   37.175149] page_type: 0xfdffffff(slab)
+[   37.179021] raw: 0bfffe0000000000 ffff000800002500 dead000000000122 0000000000000000
+[   37.186788] raw: 0000000000000000 0000000080800080 00000001fdffffff 0000000000000000
+[   37.194553] page dumped because: kasan: bad access detected
+[   37.200144]
+[   37.201647] Memory state around the buggy address:
+[   37.206460]  ffff00081037c180: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
+[   37.213701]  ffff00081037c200: fa fc fc fc 05 fc fc fc 03 fc fc fc 02 fc fc fc
+[   37.220946] >ffff00081037c280: 06 fc fc fc 03 fc fc fc fc fc fc fc fc fc fc fc
+[   37.228186]                                ^
+[   37.232473]  ffff00081037c300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.239718]  ffff00081037c380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.246962] ==================================================================
+[   37.254394] Disabling lock debugging due to kernel taint
+0+1 records in
+0+1 records out
+3 bytes copied, 0.335911 s, 0.0 kB/s
+
+Fixes: a5356aef6a90 ("spi: spi-mem: Add driver for NXP FlexSPI controller")
+Cc: stable@kernel.org
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://patch.msgid.link/20240911211146.3337068-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-nxp-fspi.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
-+++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
-@@ -204,6 +204,8 @@
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -805,14 +805,15 @@ static void nxp_fspi_fill_txfifo(struct
+ 	if (i < op->data.nbytes) {
+ 		u32 data = 0;
+ 		int j;
++		int remaining = op->data.nbytes - i;
+ 		/* Wait for TXFIFO empty */
+ 		ret = fspi_readl_poll_tout(f, f->iobase + FSPI_INTR,
+ 					   FSPI_INTR_IPTXWE, 0,
+ 					   POLL_TOUT, true);
+ 		WARN_ON(ret);
  
- &mmc0 {
- 	max-frequency = <100000000>;
-+	assigned-clocks = <&syscrg JH7110_SYSCLK_SDIO0_SDCARD>;
-+	assigned-clock-rates = <50000000>;
- 	bus-width = <8>;
- 	cap-mmc-highspeed;
- 	mmc-ddr-1_8v;
-@@ -220,6 +222,8 @@
- 
- &mmc1 {
- 	max-frequency = <100000000>;
-+	assigned-clocks = <&syscrg JH7110_SYSCLK_SDIO1_SDCARD>;
-+	assigned-clock-rates = <50000000>;
- 	bus-width = <4>;
- 	no-sdio;
- 	no-mmc;
+-		for (j = 0; j < ALIGN(op->data.nbytes - i, 4); j += 4) {
+-			memcpy(&data, buf + i + j, 4);
++		for (j = 0; j < ALIGN(remaining, 4); j += 4) {
++			memcpy(&data, buf + i + j, min_t(int, 4, remaining - j));
+ 			fspi_writel(f, data, base + FSPI_TFDR + j);
+ 		}
+ 		fspi_writel(f, FSPI_INTR_IPTXWE, base + FSPI_INTR);
 
 
