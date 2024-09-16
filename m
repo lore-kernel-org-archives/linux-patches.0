@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C266C155333;
-	Mon, 16 Sep 2024 12:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914A91581E1;
+	Mon, 16 Sep 2024 12:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488364; cv=none; b=a+fUfHwcotqs1vNmE2xsaNLxcbjkz/YRbPA1/x84odiPRdXA/ArxaQcD6oy0UI60DsVdCV3fFAjEO223Wu6ac2IQ1Zp1zYCUrvL0Gx65IYbPxKurdwCBA/hMgLSIQKGcJ2EZGxckmcVqWD+FIiXKIhivyyiIChWpG+cyaA28lMY=
+	t=1726488367; cv=none; b=X4SFFP6f9mE9JuasAQsXBQlBs9o+xOhjv97ObHXctvzWUXi4hvRx1pAYWM3jK67P2ygKSl1WQ+xEok+c4whiqJWXJlhJgXAx8EOc+ZXmEvtpqx9iGqZqLPko3wo514SQ+j4t7CyrNhs2oaFQyNp3/d8N4Kuw86hSpnlsXPAbwng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488364; c=relaxed/simple;
-	bh=SNyrMW/sEqFeMcFvrneXvRs22HP0vvORbBbD8VSY/VE=;
+	s=arc-20240116; t=1726488367; c=relaxed/simple;
+	bh=TqHnj9To1Sl7Ldm4hfQMYsvl840jCZSNxLdOb6P+q4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDVFCXaDQswaKpK1RpvxwFzy/HRkbaQRbIGFKmkYtSFDQFZhQpgg7xZhPF2FwOtl7p48aAcfZvO+ke9KBBKpQlOWvpygVPFyjslp2neoyyxxDWQ+oNWxmj4AxucDkO2tGeGyH4Rj1O0jFdp6VErWsfgbspmS1R7l6NHsp4uP3qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbphegK1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UFPmc5q/clQkKVQVHXobXlzDcVw+8+RanpocLUxGuS8uR3A0/OQs+HGvg0aN1rZb6YGn/tBejmwZ8o7q/2dbSexCqeAEJJlXB648gM5+mgHeEbDIiiFjuRz5ta5Kg1yJFys69tvNo/gruvbSFlrpmU0hU0YkSuj6neuEw0zT50E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjFmQrC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbphegK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BFCC4CECC;
-	Mon, 16 Sep 2024 12:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjFmQrC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B164C4CECC;
+	Mon, 16 Sep 2024 12:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488364;
-	bh=SNyrMW/sEqFeMcFvrneXvRs22HP0vvORbBbD8VSY/VE=;
+	s=korg; t=1726488367;
+	bh=TqHnj9To1Sl7Ldm4hfQMYsvl840jCZSNxLdOb6P+q4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbphegK1QkxqSr+ssvUMNuz9yUJ03TCp5nkUr76NeyvQOR7jkINcnkUC60TNvN54C
-	 cjydCByIjKD7NIm9AtcUVjG6yYUhCnXNWgwUV8lA4t5Nz6rV6csDK58+3jR+1whM6e
-	 2gZQ5n5iBxdkvB99vYMNsRDENhw2lPFcIneqBOe8=
+	b=gjFmQrC8iOAS6yuL59ihORljlKmF16CJiB/YXz1MnayTyNFK2y77bUvgO3N/4sXk1
+	 ex4m7jcM+EXil1Ej2hrY5BdjzakabzvbxErRELw9BWp23XKqiW1OqbasjszkzyjWDY
+	 O1nzJjxdi1qiCNeAHr91MTABmbwF5mCZNaXJzpLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Paukrt <tomaspaukrt@email.cz>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 087/121] net: phy: dp83822: Fix NULL pointer dereference on DP83825 devices
-Date: Mon, 16 Sep 2024 13:44:21 +0200
-Message-ID: <20240916114232.020786682@linuxfoundation.org>
+Subject: [PATCH 6.10 088/121] selftests: net: csum: Fix checksums for packets with non-zero padding
+Date: Mon, 16 Sep 2024 13:44:22 +0200
+Message-ID: <20240916114232.055888737@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -52,113 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Paukrt <tomaspaukrt@email.cz>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 3f62ea572b3e8e3f10c39a9cb4f04ca9ae5f2952 ]
+[ Upstream commit e8a63d473b49011a68a748aea1c8aefa046ebacf ]
 
-The probe() function is only used for DP83822 and DP83826 PHY,
-leaving the private data pointer uninitialized for the DP83825 models
-which causes a NULL pointer dereference in the recently introduced/changed
-functions dp8382x_config_init() and dp83822_set_wol().
+Padding is not included in UDP and TCP checksums. Therefore, reduce the
+length of the checksummed data to include only the data in the IP
+payload. This fixes spurious reported checksum failures like
 
-Add the dp8382x_probe() function, so all PHY models will have a valid
-private data pointer to fix this issue and also prevent similar issues
-in the future.
+rx: pkt: sport=33000 len=26 csum=0xc850 verify=0xf9fe
+pkt: bad csum
 
-Fixes: 9ef9ecfa9e9f ("net: phy: dp8382x: keep WOL settings across suspends")
-Signed-off-by: Tomas Paukrt <tomaspaukrt@email.cz>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/66w.ZbGt.65Ljx42yHo5.1csjxu@seznam.cz
+Technically it is possible for there to be trailing bytes after the UDP
+data but before the Ethernet padding (e.g. if sizeof(ip) + sizeof(udp) +
+udp.len < ip.len). However, we don't generate such packets.
+
+Fixes: 91a7de85600d ("selftests/net: add csum offload test")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240906210743.627413-1-sean.anderson@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83822.c | 35 ++++++++++++++++++++++-------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ tools/testing/selftests/net/lib/csum.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
-index efeb643c1373..fc247f479257 100644
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -271,8 +271,7 @@ static int dp83822_config_intr(struct phy_device *phydev)
- 				DP83822_ENERGY_DET_INT_EN |
- 				DP83822_LINK_QUAL_INT_EN);
+diff --git a/tools/testing/selftests/net/lib/csum.c b/tools/testing/selftests/net/lib/csum.c
+index b9f3fc3c3426..e0a34e5e8dd5 100644
+--- a/tools/testing/selftests/net/lib/csum.c
++++ b/tools/testing/selftests/net/lib/csum.c
+@@ -654,10 +654,16 @@ static int recv_verify_packet_ipv4(void *nh, int len)
+ {
+ 	struct iphdr *iph = nh;
+ 	uint16_t proto = cfg_encap ? IPPROTO_UDP : cfg_proto;
++	uint16_t ip_len;
  
--		/* Private data pointer is NULL on DP83825 */
--		if (!dp83822 || !dp83822->fx_enabled)
-+		if (!dp83822->fx_enabled)
- 			misr_status |= DP83822_ANEG_COMPLETE_INT_EN |
- 				       DP83822_DUP_MODE_CHANGE_INT_EN |
- 				       DP83822_SPEED_CHANGED_INT_EN;
-@@ -292,8 +291,7 @@ static int dp83822_config_intr(struct phy_device *phydev)
- 				DP83822_PAGE_RX_INT_EN |
- 				DP83822_EEE_ERROR_CHANGE_INT_EN);
+ 	if (len < sizeof(*iph) || iph->protocol != proto)
+ 		return -1;
  
--		/* Private data pointer is NULL on DP83825 */
--		if (!dp83822 || !dp83822->fx_enabled)
-+		if (!dp83822->fx_enabled)
- 			misr_status |= DP83822_ANEG_ERR_INT_EN |
- 				       DP83822_WOL_PKT_INT_EN;
++	ip_len = ntohs(iph->tot_len);
++	if (ip_len > len || ip_len < sizeof(*iph))
++		return -1;
++
++	len = ip_len;
+ 	iph_addr_p = &iph->saddr;
+ 	if (proto == IPPROTO_TCP)
+ 		return recv_verify_packet_tcp(iph + 1, len - sizeof(*iph));
+@@ -669,16 +675,22 @@ static int recv_verify_packet_ipv6(void *nh, int len)
+ {
+ 	struct ipv6hdr *ip6h = nh;
+ 	uint16_t proto = cfg_encap ? IPPROTO_UDP : cfg_proto;
++	uint16_t ip_len;
  
-@@ -691,10 +689,9 @@ static int dp83822_read_straps(struct phy_device *phydev)
- 	return 0;
+ 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
+ 		return -1;
+ 
++	ip_len = ntohs(ip6h->payload_len);
++	if (ip_len > len - sizeof(*ip6h))
++		return -1;
++
++	len = ip_len;
+ 	iph_addr_p = &ip6h->saddr;
+ 
+ 	if (proto == IPPROTO_TCP)
+-		return recv_verify_packet_tcp(ip6h + 1, len - sizeof(*ip6h));
++		return recv_verify_packet_tcp(ip6h + 1, len);
+ 	else
+-		return recv_verify_packet_udp(ip6h + 1, len - sizeof(*ip6h));
++		return recv_verify_packet_udp(ip6h + 1, len);
  }
  
--static int dp83822_probe(struct phy_device *phydev)
-+static int dp8382x_probe(struct phy_device *phydev)
- {
- 	struct dp83822_private *dp83822;
--	int ret;
- 
- 	dp83822 = devm_kzalloc(&phydev->mdio.dev, sizeof(*dp83822),
- 			       GFP_KERNEL);
-@@ -703,6 +700,20 @@ static int dp83822_probe(struct phy_device *phydev)
- 
- 	phydev->priv = dp83822;
- 
-+	return 0;
-+}
-+
-+static int dp83822_probe(struct phy_device *phydev)
-+{
-+	struct dp83822_private *dp83822;
-+	int ret;
-+
-+	ret = dp8382x_probe(phydev);
-+	if (ret)
-+		return ret;
-+
-+	dp83822 = phydev->priv;
-+
- 	ret = dp83822_read_straps(phydev);
- 	if (ret)
- 		return ret;
-@@ -717,14 +728,11 @@ static int dp83822_probe(struct phy_device *phydev)
- 
- static int dp83826_probe(struct phy_device *phydev)
- {
--	struct dp83822_private *dp83822;
--
--	dp83822 = devm_kzalloc(&phydev->mdio.dev, sizeof(*dp83822),
--			       GFP_KERNEL);
--	if (!dp83822)
--		return -ENOMEM;
-+	int ret;
- 
--	phydev->priv = dp83822;
-+	ret = dp8382x_probe(phydev);
-+	if (ret)
-+		return ret;
- 
- 	dp83826_of_init(phydev);
- 
-@@ -795,6 +803,7 @@ static int dp83822_resume(struct phy_device *phydev)
- 		PHY_ID_MATCH_MODEL(_id),			\
- 		.name		= (_name),			\
- 		/* PHY_BASIC_FEATURES */			\
-+		.probe          = dp8382x_probe,		\
- 		.soft_reset	= dp83822_phy_reset,		\
- 		.config_init	= dp8382x_config_init,		\
- 		.get_wol = dp83822_get_wol,			\
+ /* return whether auxdata includes TP_STATUS_CSUM_VALID */
 -- 
 2.43.0
 
