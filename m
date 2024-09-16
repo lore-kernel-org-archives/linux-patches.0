@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E74D1547F5;
-	Mon, 16 Sep 2024 12:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC89146A79;
+	Mon, 16 Sep 2024 12:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488619; cv=none; b=iJey90VO7duevzk7HgdqooRVmxvC0hw4dtNXed98XVMQQdpLlAgTB3ZhKfL5XZco1piujl4swMnaWANzRU9pJRTIW10C9zPR2deJIngS3gqK7MrRNvvucblXDfYgRV9VzUvuFtKA4LwYtJ+Vg14FDOYtzXH2w3gSHJqKv4hNHBg=
+	t=1726488622; cv=none; b=bvCJyVPHGYTr4PCCUe0TqLnaWE8nwrz1S5utBK9q6fhAaSv//e4u29mhd+YMHQdYeZDAcLFvPs7ouBMXZcMUQ9xpjrh3gwlGmmrxQqIAtX4kAf1zQ0UpQ26uVJLsHkakIXyZMGGMgcToRs8B4hylhw9YWj3Vkoe0/Rtz7YZBV9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488619; c=relaxed/simple;
-	bh=v7fl1c8Mt97BvRAhytzYQPWI9Mu0OdKlVDa2FWE6jxI=;
+	s=arc-20240116; t=1726488622; c=relaxed/simple;
+	bh=qHvJN4F/BWMcPXv/I2lH8+he1edA1FwEvfAbHQA7Dss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EaUje+RmZq+7HtmrTApBZGsJS/LmJ69OyMv8MrJMPU+SKg5JZHlnb2W9Hy+S4Zm8Rnr0VGz2qPOuEJtm0ib/OPhsFSbHhyLUYsxz4S/wGqgxPUvHS+4IZTFvJ9JhYolPnZZnpuUPxzmGIXlZ+MUW9cAM+RAXa9dBuB9MYAi8f+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtgFwcNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=esITiWj/owX22609QmvdBVlBxm/Ks5auUikpLJTShWPQmkv8QyZOD6KZ5yaaPMD+NFkpi3jlRdP4XerVpp/z3ubdX8LBsXUpLIyaUOYgYg3gRmGQSUad2ZEJShLUN95QHHs60rDGN+/z3IRHEhOyaYBdYZJh4EgYYbaYzaXViz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgGYEGSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtgFwcNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89775C4CEC4;
-	Mon, 16 Sep 2024 12:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgGYEGSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6385BC4CEC4;
+	Mon, 16 Sep 2024 12:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488618;
-	bh=v7fl1c8Mt97BvRAhytzYQPWI9Mu0OdKlVDa2FWE6jxI=;
+	s=korg; t=1726488621;
+	bh=qHvJN4F/BWMcPXv/I2lH8+he1edA1FwEvfAbHQA7Dss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtgFwcNoRDZ340fzgfj73JdMKCXYWI7AhrkS44SN4ReEwoUyiovQUGJa86v4fgnb2
-	 GzftD3fNPbEWA+3S1eFjESD4nuZxjpQPVihwz4ALtlqsoYVPifo11HU92ZZjGNVft5
-	 fKZOG2UKeo+02hVrDdG2MbOnpAjrz7hmvUKYMj7k=
+	b=YgGYEGSGdYMszRSwuH2wiRC8Ybio5RR/uIAN6yGRFBjPVEF9Ato6/w43UQIvB4N+5
+	 ogs3MWQktTcsDXfbpp1fRhwgVbOUsxmJg0+bDyebBgK67Mlop5sElGm0CXtXvjQQTQ
+	 P+0HrqIJ8TwGT7ILbT9HFf9f+v3BfbQtDMwxAOJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mat=C4=9Bj=20Gr=C3=A9gr?= <mgregr@netx.as>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 55/91] ice: Fix lldp packets dropping after changing the number of channels
-Date: Mon, 16 Sep 2024 13:44:31 +0200
-Message-ID: <20240916114226.324413114@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 56/91] ice: fix accounting for filters shared by multiple VSIs
+Date: Mon, 16 Sep 2024 13:44:32 +0200
+Message-ID: <20240916114226.357643645@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -48,72 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 9debb703e14939dfafa5d403f27c4feb2e9f6501 ]
+[ Upstream commit e843cf7b34fe2e0c1afc55e1f3057375c9b77a14 ]
 
-After vsi setup refactor commit 6624e780a577 ("ice: split ice_vsi_setup
-into smaller functions") ice_cfg_sw_lldp function which removes rx rule
-directing LLDP packets to vsi is moved from ice_vsi_release to
-ice_vsi_decfg function. ice_vsi_decfg is used in more cases than just in
-vsi_release resulting in unnecessary removal of rx lldp packets handling
-switch rule. This leads to lldp packets being dropped after a change number
-of channels via ethtool.
-This patch moves ice_cfg_sw_lldp function that removes rx lldp sw rule back
-to ice_vsi_release function.
+When adding a switch filter (such as a MAC or VLAN filter), it is expected
+that the driver will detect the case where the filter already exists, and
+return -EEXIST. This is used by calling code such as ice_vc_add_mac_addr,
+and ice_vsi_add_vlan to avoid incrementing the accounting fields such as
+vsi->num_vlan or vf->num_mac.
 
-Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
-Reported-by: Matěj Grégr <mgregr@netx.as>
-Closes: https://lore.kernel.org/intel-wired-lan/1be45a76-90af-4813-824f-8398b69745a9@netx.as/T/#u
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+This logic works correctly for the case where only a single VSI has added a
+given switch filter.
+
+When a second VSI adds the same switch filter, the driver converts the
+existing filter from an ICE_FWD_TO_VSI filter into an ICE_FWD_TO_VSI_LIST
+filter. This saves switch resources, by ensuring that multiple VSIs can
+re-use the same filter.
+
+The ice_add_update_vsi_list() function is responsible for doing this
+conversion. When first converting a filter from the FWD_TO_VSI into
+FWD_TO_VSI_LIST, it checks if the VSI being added is the same as the
+existing rule's VSI. In such a case it returns -EEXIST.
+
+However, when the switch rule has already been converted to a
+FWD_TO_VSI_LIST, the logic is different. Adding a new VSI in this case just
+requires extending the VSI list entry. The logic for checking if the rule
+already exists in this case returns 0 instead of -EEXIST.
+
+This breaks the accounting logic mentioned above, so the counters for how
+many MAC and VLAN filters exist for a given VF or VSI no longer accurately
+reflect the actual count. This breaks other code which relies on these
+counts.
+
+In typical usage this primarily affects such filters generally shared by
+multiple VSIs such as VLAN 0, or broadcast and multicast MAC addresses.
+
+Fix this by correctly reporting -EEXIST in the case of adding the same VSI
+to a switch rule already converted to ICE_FWD_TO_VSI_LIST.
+
+Fixes: 9daf8208dd4d ("ice: Add support for switch filter programming")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index b3010a53f1b4..3a0ef56d3edc 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2600,13 +2600,6 @@ void ice_vsi_decfg(struct ice_vsi *vsi)
- 	struct ice_pf *pf = vsi->back;
- 	int err;
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 88ee2491312a..1b48fa8c435d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -3072,7 +3072,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
  
--	/* The Rx rule will only exist to remove if the LLDP FW
--	 * engine is currently stopped
--	 */
--	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
--	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
--		ice_cfg_sw_lldp(vsi, false, false);
--
- 	ice_rm_vsi_lan_cfg(vsi->port_info, vsi->idx);
- 	err = ice_rm_vsi_rdma_cfg(vsi->port_info, vsi->idx);
- 	if (err)
-@@ -2953,6 +2946,14 @@ int ice_vsi_release(struct ice_vsi *vsi)
- 		ice_rss_clean(vsi);
+ 		/* A rule already exists with the new VSI being added */
+ 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
+-			return 0;
++			return -EEXIST;
  
- 	ice_vsi_close(vsi);
-+
-+	/* The Rx rule will only exist to remove if the LLDP FW
-+	 * engine is currently stopped
-+	 */
-+	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
-+	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
-+		ice_cfg_sw_lldp(vsi, false, false);
-+
- 	ice_vsi_decfg(vsi);
- 
- 	/* retain SW VSI data structure since it is needed to unregister and
+ 		/* Update the previously created VSI list set with
+ 		 * the new VSI ID passed in
 -- 
 2.43.0
 
