@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35ED14B967;
-	Mon, 16 Sep 2024 12:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7962C14B946;
+	Mon, 16 Sep 2024 12:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488051; cv=none; b=ljC670DTiRhhvwxrFb+LABCweAC5BqomWFyzyIc83AakspqIyE/8cYvrlFmzlV8KnS7tLLpNcpGUyzQhujAblUrZzAv6pw+7RvOWTy/4gYfjsER0qP28MjkQUQM2ZOeE0NpKoLSMl8WD+JNHxQHbKGSxJ9DF0AYt6i8auwX+fI8=
+	t=1726488054; cv=none; b=HGJk3aRUpmVuZAg4/HlBECKtGz6UJxyl1bu17fa7Y4xXlUqzRdYBnqLyUQtrDB6EvcwOc56FEflM6BBG+UZYRfG99oZRcxw7UuAL3CdEK2GQFT2ZnpRFkjWzdyYKwMLXveTQJGnIOSvwdGRR28gO1rhFWo2UQGatnRcTlvrTND0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488051; c=relaxed/simple;
-	bh=RTYGH/6Fsor/n3StNji8S/c955FDREdt9xXDfYzfuI0=;
+	s=arc-20240116; t=1726488054; c=relaxed/simple;
+	bh=oj2jFaP4S1gkyKnRNelLoW4roGHrWA5imHTQxEb/Pdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=au7pf8vIgt5OSxRy+hA1UzHQYbgSnU+OoKTFzJmX20zT6OCLNind26sQn8vhmadKDuTMXTc7HLyo8VxNKDywTn5p8TMnpOFWsPDUWXN92hMDQbPFeUJCs0GUO527IyHjJc/qwH3vAkCD81qpoW9fc3rJPcI1r79RnZ7LkBmesT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Das6YO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dvy+zlRdhoZRqjWz2hQWMMLoLtm54uGV8mFIUfu/XYeCy7SE9EFIJhMggVnIvNj7rIRrPht7WMToznD7+Y8nWGcjWomwGBxVPYxpFFK6+ePPLPQVHZU6oYUae1vtUaF9eyw7ASQeGq2FlBSAq+Ibrp7mirwLSJ4ZPQmaPmnZwdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=By88SxwP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Das6YO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F58CC4CEC4;
-	Mon, 16 Sep 2024 12:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="By88SxwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DB6C4CEC4;
+	Mon, 16 Sep 2024 12:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488051;
-	bh=RTYGH/6Fsor/n3StNji8S/c955FDREdt9xXDfYzfuI0=;
+	s=korg; t=1726488054;
+	bh=oj2jFaP4S1gkyKnRNelLoW4roGHrWA5imHTQxEb/Pdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Das6YO/ssgdzEkCYjzFOyEydOa4riW7a5VBvLO1ObAGqX8F6wVSZLnxXTq3rmirI
-	 3G1P3bWAzsU1JpyQEdMlv59se0ayk2jB6thGtrQ8zcV43txsChafaAclu3K2nYpBFc
-	 /xZvmOxJ0/8vyXRhVbbplKg7S7NL4uogAnk/iNdE=
+	b=By88SxwPlGQqZ6882dpuX54vTFsDq8vWQDT5AQV8l+ogKLxhWv7pJ0y93jzfQKRRH
+	 zAPYEUjdAcEEvWomYMBIxEkVfpHU/twykAIyT9bmYT6jhPLyaQ7EUxKIhi9RQ6itoQ
+	 Vzzzkb0PwX9FkjG2LdvT1U4J+O3GNu7pJ9y32SOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maximilian Luz <luzmaximilian@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 14/63] platform/surface: aggregator_registry: Add Support for Surface Pro 10
-Date: Mon, 16 Sep 2024 13:43:53 +0200
-Message-ID: <20240916114221.557209032@linuxfoundation.org>
+Subject: [PATCH 6.1 15/63] platform/surface: aggregator_registry: Add support for Surface Laptop Go 3
+Date: Mon, 16 Sep 2024 13:43:54 +0200
+Message-ID: <20240916114221.594705771@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -54,42 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit 9c8e022567bbec53bee8ae75c44b3d6cd2080d42 ]
+[ Upstream commit ed235163c3f02329d5e37ed4485bbc39ed2568d4 ]
 
-Add SAM client device nodes for the Surface Pro 10. It seems to use the
-same SAM client devices as the Surface Pro 9, so re-use its node group.
+Add SAM client device nodes for the Surface Laptop Go 3. It seems to use
+the same SAM client devices as the Surface Laptop Go 1 and 2, so re-use
+their node group.
 
 Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20240811131948.261806-2-luzmaximilian@gmail.com
+Link: https://lore.kernel.org/r/20240811131948.261806-3-luzmaximilian@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/surface_aggregator_registry.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/surface/surface_aggregator_registry.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
-index 023f126121d7..6882f32d239d 100644
+index 6882f32d239d..fafb0bb49f7f 100644
 --- a/drivers/platform/surface/surface_aggregator_registry.c
 +++ b/drivers/platform/surface/surface_aggregator_registry.c
-@@ -298,7 +298,7 @@ static const struct software_node *ssam_node_group_sp8[] = {
- 	NULL,
- };
+@@ -370,6 +370,9 @@ static const struct acpi_device_id ssam_platform_hub_match[] = {
+ 	/* Surface Laptop Go 2 */
+ 	{ "MSHW0290", (unsigned long)ssam_node_group_slg1 },
  
--/* Devices for Surface Pro 9 */
-+/* Devices for Surface Pro 9 and 10 */
- static const struct software_node *ssam_node_group_sp9[] = {
- 	&ssam_node_root,
- 	&ssam_node_hub_kip,
-@@ -337,6 +337,9 @@ static const struct acpi_device_id ssam_platform_hub_match[] = {
- 	/* Surface Pro 9 */
- 	{ "MSHW0343", (unsigned long)ssam_node_group_sp9 },
- 
-+	/* Surface Pro 10 */
-+	{ "MSHW0510", (unsigned long)ssam_node_group_sp9 },
++	/* Surface Laptop Go 3 */
++	{ "MSHW0440", (unsigned long)ssam_node_group_slg1 },
 +
- 	/* Surface Book 2 */
- 	{ "MSHW0107", (unsigned long)ssam_node_group_gen5 },
+ 	/* Surface Laptop Studio */
+ 	{ "MSHW0123", (unsigned long)ssam_node_group_sls },
  
 -- 
 2.43.0
