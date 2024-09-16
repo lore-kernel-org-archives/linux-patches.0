@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4E7156641;
-	Mon, 16 Sep 2024 12:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DCE142903;
+	Mon, 16 Sep 2024 12:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488447; cv=none; b=URPg7WZyUxVaSdhW6jjwcQPsicqKgSkFRYkmHb6ncCbJrZY0PIoJMWGeIwWzrccqWGx2jLlUuTLV5N87He/Kg8zVatU4JQtmddlCsVNp3dB0ODmEtSjhEF4FO+JRE7+jIT+z+wsHgE+6xS2giBBJISQYh60qrX1rKJ8sBHyCmhY=
+	t=1726488450; cv=none; b=ZMEwGNFyAtJuXjGwBW1sKgmq0tabTGuB9xSUAof20qbjlCehgwz0rvT8OBPfCNhlUPMb172fwTtjQP6wUP98DhsoHPYZopM+ZszPfSwQlOGKFGOLhIcRMM0qC2/T1tezDVCRGuNs38MaNU6Ljqjw6V5/XeKX8+x+xguVsvF3DyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488447; c=relaxed/simple;
-	bh=W/tL8KNzGXOiM98wJwhhxVIfhtNH9WbOymJmltjwyOo=;
+	s=arc-20240116; t=1726488450; c=relaxed/simple;
+	bh=m7zFGszEgoAXGQyGfO/LNUa8iwIFMXhKZRu7ZPwA6og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FyPGVtt3HqTl54h/10i/aCoZSfxXnxchi8zs8Rq5mbmZLbLD/uo8p/f4+Y7jw0xW/SueumGFxCAZRiUqaTSYGGa+Jc6N95OfI9OAsDiMxEpnsDztXoMVu+b7aPEgXbVK+q0ZhZfu++mFd6N7S6AZacW7aEeiJ2Znx01R20RuEGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+lCB4SF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyobttQNwAXAygElqTi9D6q5JyQpPtOBA21qGTzy7+j3gtOJgfqGdG5Rkgo4m8hAeE9Qf7ByhVvdYpYWQ4v0VhA/M117d4ATmekYOTws/w+WEgwCADn5BOLN2/1015A+lo0Vm6Y222r58zcAvw2bRr9XdvtKMW4VlZFpwu/H5VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9jBO31R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+lCB4SF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0C3C4CEC4;
-	Mon, 16 Sep 2024 12:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9jBO31R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E9C4CEC4;
+	Mon, 16 Sep 2024 12:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488447;
-	bh=W/tL8KNzGXOiM98wJwhhxVIfhtNH9WbOymJmltjwyOo=;
+	s=korg; t=1726488450;
+	bh=m7zFGszEgoAXGQyGfO/LNUa8iwIFMXhKZRu7ZPwA6og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+lCB4SFNx6MipKCnYj9nzr1vBfnzpiZD3GOVn1+TOT3SrZRc6lL+7OGE0wPi6gbp
-	 mYPauuafyLKsPrnE7ha3fN7MDGzPQ/wPmbmyA/qbJDkx0sLrsL3nlnoXMSIMEY2JKi
-	 YUnKDVzhHzVB+CsanhSsYp0OWFbFypOCRzLtlmd0=
+	b=p9jBO31RaGFsx4Kddq/cYaCf7n9wVXdS5BhpS6Upg5Dop4cS8ia0zDwDZkDMW33yb
+	 f3Qs/V+T23cbx4GGow83wgpocmuxGnbuj0KjzXWjqkWxuO38hNRlJ+hnesMvExtW2L
+	 4bDos6Hfe62sD/51Dsn7QXIYu+ptPCzdHjww68ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 116/121] ASoC: codecs: avoid possible garbage value in peb2466_reg_read()
-Date: Mon, 16 Sep 2024 13:44:50 +0200
-Message-ID: <20240916114232.945445206@linuxfoundation.org>
+Subject: [PATCH 6.10 117/121] drm/xe/display: fix compat IS_DISPLAY_STEP() range end
+Date: Mon, 16 Sep 2024 13:44:51 +0200
+Message-ID: <20240916114232.984676760@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -51,42 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 38cc0334baabc5baf08a1db753de521e016c0432 ]
+[ Upstream commit dd10595c3232d362f5a01e5d616434b2371ae8d4 ]
 
-Clang static checker (scan-build) warning:
-sound/soc/codecs/peb2466.c:232:8:
-Assigned value is garbage or undefined [core.uninitialized.Assign]
-  232 |                 *val = tmp;
-      |                      ^ ~~~
+It's supposed to be an open range at the end like in i915. Fingers
+crossed that nobody relies on this definition.
 
-When peb2466_read_byte() fails, 'tmp' will have a garbage value.
-Add a judgemnet to avoid this problem.
-
-Fixes: 227f609c7c0e ("ASoC: codecs: Add support for the Infineon PEB2466 codec")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://patch.msgid.link/20240911115448.277828-1-suhui@nfschina.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Acked-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/fe8743770694e429f6902491cdb306c97bdf701a.1724180287.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 453afb1a439994deeacb8d9ecbb48c1f2348ea0a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/peb2466.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/peb2466.c b/sound/soc/codecs/peb2466.c
-index 5dec69be0acb..06c83d2042f3 100644
---- a/sound/soc/codecs/peb2466.c
-+++ b/sound/soc/codecs/peb2466.c
-@@ -229,7 +229,8 @@ static int peb2466_reg_read(void *context, unsigned int reg, unsigned int *val)
- 	case PEB2466_CMD_XOP:
- 	case PEB2466_CMD_SOP:
- 		ret = peb2466_read_byte(peb2466, reg, &tmp);
--		*val = tmp;
-+		if (!ret)
-+			*val = tmp;
- 		break;
- 	default:
- 		dev_err(&peb2466->spi->dev, "Not a XOP or SOP command\n");
+diff --git a/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h b/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
+index cd4632276141..68ade1a05ca9 100644
+--- a/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
++++ b/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
+@@ -96,7 +96,7 @@ static inline struct drm_i915_private *kdev_to_i915(struct device *kdev)
+ #define HAS_GMD_ID(xe) GRAPHICS_VERx100(xe) >= 1270
+ 
+ /* Workarounds not handled yet */
+-#define IS_DISPLAY_STEP(xe, first, last) ({u8 __step = (xe)->info.step.display; first <= __step && __step <= last; })
++#define IS_DISPLAY_STEP(xe, first, last) ({u8 __step = (xe)->info.step.display; first <= __step && __step < last; })
+ 
+ #define IS_LP(xe) (0)
+ #define IS_GEN9_LP(xe) (0)
 -- 
 2.43.0
 
