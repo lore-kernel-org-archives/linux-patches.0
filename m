@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DCE142903;
-	Mon, 16 Sep 2024 12:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC615689A;
+	Mon, 16 Sep 2024 12:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488450; cv=none; b=ZMEwGNFyAtJuXjGwBW1sKgmq0tabTGuB9xSUAof20qbjlCehgwz0rvT8OBPfCNhlUPMb172fwTtjQP6wUP98DhsoHPYZopM+ZszPfSwQlOGKFGOLhIcRMM0qC2/T1tezDVCRGuNs38MaNU6Ljqjw6V5/XeKX8+x+xguVsvF3DyI=
+	t=1726488453; cv=none; b=ARs9/p3KV2UqbhAZAjS3KHyAQHoDvCNRy12LpK3z/yJCxepU5Co3PZ9voOaBIEASUuM4S2X49G0MRvEc7wkNHG8dRub9qkGWU5LG2SNw+/YaxJaEe7CPqV1BuRRHTSt7AGiY06RyKnf7VBsVEHVjX8eDA86GM+xm6mb0V4qv8iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488450; c=relaxed/simple;
-	bh=m7zFGszEgoAXGQyGfO/LNUa8iwIFMXhKZRu7ZPwA6og=;
+	s=arc-20240116; t=1726488453; c=relaxed/simple;
+	bh=2g2qgh/YrdTdc1RKgP8SZlonukH4nq0K664Z/dAXG9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyobttQNwAXAygElqTi9D6q5JyQpPtOBA21qGTzy7+j3gtOJgfqGdG5Rkgo4m8hAeE9Qf7ByhVvdYpYWQ4v0VhA/M117d4ATmekYOTws/w+WEgwCADn5BOLN2/1015A+lo0Vm6Y222r58zcAvw2bRr9XdvtKMW4VlZFpwu/H5VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9jBO31R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqwejfMJbFIx+EtXKesamoEqnfSvqhvp6FkUql5JhaGnmius3zTZEB+yKh8uGCzsAFfLRU0WxfY/7LvX88LTVPPRHR/niuKo+EHF/PeCY+czYh6cqcc0cN6w93C+5QZYXY06t7eXGUFcDDiElxHbET3Sxo1d0x0aULphLTlvViY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEY/jwn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9jBO31R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E9C4CEC4;
-	Mon, 16 Sep 2024 12:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEY/jwn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0FBC4CEC4;
+	Mon, 16 Sep 2024 12:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488450;
-	bh=m7zFGszEgoAXGQyGfO/LNUa8iwIFMXhKZRu7ZPwA6og=;
+	s=korg; t=1726488452;
+	bh=2g2qgh/YrdTdc1RKgP8SZlonukH4nq0K664Z/dAXG9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9jBO31RaGFsx4Kddq/cYaCf7n9wVXdS5BhpS6Upg5Dop4cS8ia0zDwDZkDMW33yb
-	 f3Qs/V+T23cbx4GGow83wgpocmuxGnbuj0KjzXWjqkWxuO38hNRlJ+hnesMvExtW2L
-	 4bDos6Hfe62sD/51Dsn7QXIYu+ptPCzdHjww68ro=
+	b=vEY/jwn9r/kdg5xtCb4iZixspunJAelQvP25wZhKyy1BMXBY21uabX3NLhko8qxVO
+	 CivW3J5D1aE9vWhXoIkTA8lKLgbnQbhRBVZz487G3E19gwIqnLUTJ/c3XGtwBmujhN
+	 o3CdV00B+z/pQuyEq7K/xKLO97ETUhnsx0OAFkVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Tom Talpey <tom@talpey.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Rohith Surabattula <rohiths.msft@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 117/121] drm/xe/display: fix compat IS_DISPLAY_STEP() range end
-Date: Mon, 16 Sep 2024 13:44:51 +0200
-Message-ID: <20240916114232.984676760@linuxfoundation.org>
+Subject: [PATCH 6.10 118/121] cifs: Fix signature miscalculation
+Date: Mon, 16 Sep 2024 13:44:52 +0200
+Message-ID: <20240916114233.022973853@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,39 +58,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit dd10595c3232d362f5a01e5d616434b2371ae8d4 ]
+[ Upstream commit 5a20b7cb0d8d3ee490a8e088dc2584aa782e3355 ]
 
-It's supposed to be an open range at the end like in i915. Fingers
-crossed that nobody relies on this definition.
+Fix the calculation of packet signatures by adding the offset into a page
+in the read or write data payload when hashing the pages from it.
 
-Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Acked-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/fe8743770694e429f6902491cdb306c97bdf701a.1724180287.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 453afb1a439994deeacb8d9ecbb48c1f2348ea0a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 39bc58203f04 ("cifs: Add a function to Hash the contents of an iterator")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Rohith Surabattula <rohiths.msft@gmail.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h | 2 +-
+ fs/smb/client/cifsencrypt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h b/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
-index cd4632276141..68ade1a05ca9 100644
---- a/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
-+++ b/drivers/gpu/drm/xe/compat-i915-headers/i915_drv.h
-@@ -96,7 +96,7 @@ static inline struct drm_i915_private *kdev_to_i915(struct device *kdev)
- #define HAS_GMD_ID(xe) GRAPHICS_VERx100(xe) >= 1270
- 
- /* Workarounds not handled yet */
--#define IS_DISPLAY_STEP(xe, first, last) ({u8 __step = (xe)->info.step.display; first <= __step && __step <= last; })
-+#define IS_DISPLAY_STEP(xe, first, last) ({u8 __step = (xe)->info.step.display; first <= __step && __step < last; })
- 
- #define IS_LP(xe) (0)
- #define IS_GEN9_LP(xe) (0)
+diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
+index 6322f0f68a17..b0473c2567fe 100644
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -129,7 +129,7 @@ static ssize_t cifs_shash_xarray(const struct iov_iter *iter, ssize_t maxsize,
+ 			for (j = foffset / PAGE_SIZE; j < npages; j++) {
+ 				len = min_t(size_t, maxsize, PAGE_SIZE - offset);
+ 				p = kmap_local_page(folio_page(folio, j));
+-				ret = crypto_shash_update(shash, p, len);
++				ret = crypto_shash_update(shash, p + offset, len);
+ 				kunmap_local(p);
+ 				if (ret < 0)
+ 					return ret;
 -- 
 2.43.0
 
