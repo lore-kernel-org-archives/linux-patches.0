@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4DF14AD19;
-	Mon, 16 Sep 2024 12:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AA71547C4;
+	Mon, 16 Sep 2024 12:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488128; cv=none; b=nitCG8CRriE2pmaCXFYljXcOGx5Ufd7S3471/F0jr3ix3pOrY9ceJRetB22nzZaBsCsBvOMniY2HP14I8bzR+EDQ2VyujiiDAgFgf5Jc6/Ggkm7v2G81kMpiQsbnvGVua4no2lHuIjTRRtszHNOrARhXLZhYPQ+EcV9aDBjF9Pg=
+	t=1726488130; cv=none; b=WkGAEvA1f3DUmfLzeXeXJQG4e062nl7056tgbwMivjMi+eRNo5iNKXc7CXiSp1V/nuUhBkgZyMqG7vlMFJzVhG4kfAeyAIMAp87lxQdYo9F8izPbfhNPOFAcLXK97uIOOmiqqmfWgpzq+5bP6kHJMpMuVX4XqgPHheb8n4iTjn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488128; c=relaxed/simple;
-	bh=I8z2L4wYtkFAijtNX7/MuXA1B+UOTJK38SOi3/Urw2U=;
+	s=arc-20240116; t=1726488130; c=relaxed/simple;
+	bh=N9X8GWgQkvb0Kdt0f1p05buNSWqOesx3FHTBf7S+Ogc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iRNuRgzicKp/osH7nek9J8jLfX0evfdjLx5LdkAE25TzPIoVQ0qVZH9SScSSuZilSpy6iasfJS9HKeIvrEVHpAiAnXwgrkrEbhwmjgP32Lh8dKn38rr2mGAtNlo2Ko7JgTTntZHEFPYZQrXfrXTPAc7TxdKrTPp1cKaI9Df4DBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3fOsAv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H1XpoaGR8urwPsaMQjKzrqYB91lAIxFe6gSnpAkvv8OfT7KzID/x4mXco/rNQfqZqd6bP0xIkmklQe9D2K0caNGTC/IcHJDBUy2A3Oj+KJirKFFt50Cn6dmK/SmOgl7joFo/732ykfPlUerKkIMv/dAZ1MVy3mkeUv+Z9/XgKD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWzUVAVJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3fOsAv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763B8C4CEC4;
-	Mon, 16 Sep 2024 12:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWzUVAVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1B3C4CEC4;
+	Mon, 16 Sep 2024 12:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488127;
-	bh=I8z2L4wYtkFAijtNX7/MuXA1B+UOTJK38SOi3/Urw2U=;
+	s=korg; t=1726488130;
+	bh=N9X8GWgQkvb0Kdt0f1p05buNSWqOesx3FHTBf7S+Ogc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3fOsAv958fu6j8BfnVI+YrjZQmJ5dpkp6y5H/peqQAWKKY5qCxd+UhdufentNc38
-	 I8JgRx1NQV6Qw31zF87wc/9JL9hFZIIlY4WGEOqJ5u6mcuzmO10UOC7boJ7NpDtsaJ
-	 sNpqU3VW56P32s9/hO6Jz2ZgcybtVlS9U+0CXuL0=
+	b=qWzUVAVJxoTsQqpIb+NFJvAvIQO9IXbgRR86KOvoV2qkYn5WbyYs26RnywDjb4JrW
+	 jKG3BlRdQbDvbEkmVUhA0+HiIUNE62SXy29MjJmZwMWyAhxIgfe/rXjgobwQhbHx85
+	 SYr8uZfqvffkz59t/rv64EeEk8gKBJSMiw+F3i1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
 	Cosmin Ratiu <cratiu@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 43/63] net/mlx5: Add missing masks and QoS bit masks for scheduling elements
-Date: Mon, 16 Sep 2024 13:44:22 +0200
-Message-ID: <20240916114222.581780673@linuxfoundation.org>
+Subject: [PATCH 6.1 44/63] net/mlx5: Correct TASR typo into TSAR
+Date: Mon, 16 Sep 2024 13:44:23 +0200
+Message-ID: <20240916114222.612953820@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,60 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 452ef7f86036392005940de54228d42ca0044192 ]
+[ Upstream commit e575d3a6dd22123888defb622b1742aa2d45b942 ]
 
-Add the missing masks for supported element types and Transmit
-Scheduling Arbiter (TSAR) types in scheduling elements.
+TSAR is the correct spelling (Transmit Scheduling ARbiter).
 
-Also, add the corresponding bit masks for these types in the QoS
-capabilities of a NIC scheduler.
-
-Fixes: 214baf22870c ("net/mlx5e: Support HTB offload")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240613210036.1125203-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 861cd9b9cb62 ("net/mlx5: Verify support for scheduling element and TSAR type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mlx5/mlx5_ifc.h | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c | 2 +-
+ include/linux/mlx5/mlx5_ifc.h                     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index b8bf98a0a80a..41d875066149 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -537,7 +537,7 @@ static bool esw_qos_element_type_supported(struct mlx5_core_dev *dev, int type)
+ 	switch (type) {
+ 	case SCHEDULING_CONTEXT_ELEMENT_TYPE_TSAR:
+ 		return MLX5_CAP_QOS(dev, esw_element_type) &
+-		       ELEMENT_TYPE_CAP_MASK_TASR;
++		       ELEMENT_TYPE_CAP_MASK_TSAR;
+ 	case SCHEDULING_CONTEXT_ELEMENT_TYPE_VPORT:
+ 		return MLX5_CAP_QOS(dev, esw_element_type) &
+ 		       ELEMENT_TYPE_CAP_MASK_VPORT;
 diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index b2aee17a34d7..64434a3b7e1a 100644
+index 64434a3b7e1a..271c5a87751f 100644
 --- a/include/linux/mlx5/mlx5_ifc.h
 +++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -973,7 +973,8 @@ struct mlx5_ifc_qos_cap_bits {
+@@ -3743,7 +3743,7 @@ enum {
+ };
  
- 	u8         max_tsar_bw_share[0x20];
- 
--	u8         reserved_at_100[0x20];
-+	u8         nic_element_type[0x10];
-+	u8         nic_tsar_type[0x10];
- 
- 	u8         reserved_at_120[0x3];
- 	u8         log_meter_aso_granularity[0x5];
-@@ -3746,6 +3747,7 @@ enum {
+ enum {
+-	ELEMENT_TYPE_CAP_MASK_TASR		= 1 << 0,
++	ELEMENT_TYPE_CAP_MASK_TSAR		= 1 << 0,
  	ELEMENT_TYPE_CAP_MASK_VPORT		= 1 << 1,
  	ELEMENT_TYPE_CAP_MASK_VPORT_TC		= 1 << 2,
  	ELEMENT_TYPE_CAP_MASK_PARA_VPORT_TC	= 1 << 3,
-+	ELEMENT_TYPE_CAP_MASK_QUEUE_GROUP	= 1 << 4,
- };
- 
- struct mlx5_ifc_scheduling_context_bits {
-@@ -4444,6 +4446,12 @@ enum {
- 	TSAR_ELEMENT_TSAR_TYPE_ETS = 0x2,
- };
- 
-+enum {
-+	TSAR_TYPE_CAP_MASK_DWRR		= 1 << 0,
-+	TSAR_TYPE_CAP_MASK_ROUND_ROBIN	= 1 << 1,
-+	TSAR_TYPE_CAP_MASK_ETS		= 1 << 2,
-+};
-+
- struct mlx5_ifc_tsar_element_bits {
- 	u8         reserved_at_0[0x8];
- 	u8         tsar_type[0x8];
 -- 
 2.43.0
 
