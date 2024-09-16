@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D23A145B0C;
-	Mon, 16 Sep 2024 12:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FE514B946;
+	Mon, 16 Sep 2024 12:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488074; cv=none; b=c0MbTq+K4ib/gb2/lffpUUlzn93452iKU5Dmx/BivEV5vtwrwJUYBIhW/LYU7VG2E7v7ubw2T4H66tubjARW4hSk3sF2XsU7QU/ctOviQq0wkCQul+RJ32Yf/dq8XwRE/MwFuAe2t+k5Xt/b6yA6b4RqCgxNLzTdzGCOrVXmoZk=
+	t=1726488077; cv=none; b=sn42jzQDgSDLG6WK9z+0GqP+ahS+Hs/f8MAvOdCgMyW3uFyVze+/0yF4JW/Toyl5Nd8AxToBTX6yWxnSIfwshYvUqcPcxSXnnrGcDjJMbZo/8p7kFXTAg85AA4HpK5QZL9YhlVNGebCCxAoshqvYjW0D59VYM4fPMjyIGwDTymQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488074; c=relaxed/simple;
-	bh=CljjYlB9YiO4F0r2/wU6C8NPrkmODtVQt1gXosSmoio=;
+	s=arc-20240116; t=1726488077; c=relaxed/simple;
+	bh=KqYQm5bQIpZ3VYzI6lVD9OKA7HiYU45E44x3KN49Uhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pO5h8+UqVf2J7btJ2/N06ReXbU3gyINZ4Csc4kEtbYMeNCEknA32mu1caQ2FtpnKD/5xFpzoVJxQOOsRWptBqcqHR9ufSRUDgV6foVOrCfAXVtVAIhcSx7TKJjRJ3pRwxGqLQOOpYWRdYQGhYQRwG/mUgRLER2XEIwqsQ0gf380=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9sELRJ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHlZnshF31/e4iy4lFnYUweSUQQHYzwydDAF2KdPvhWU3eDOJUL6Hdy50rlJTLAAE9n1w8lT2S8YDqIMVFn8Nik5YnXU62SgH37RNzgIz2ehnW84HIbd00E7eSoCo+HD5bSfkDGPNdIP9Y1ZqpGLCynZz8mPkc6YGWXVrKeNoxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuLjF6o/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9sELRJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD30CC4CEC4;
-	Mon, 16 Sep 2024 12:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuLjF6o/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14A9C4CEC4;
+	Mon, 16 Sep 2024 12:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488074;
-	bh=CljjYlB9YiO4F0r2/wU6C8NPrkmODtVQt1gXosSmoio=;
+	s=korg; t=1726488077;
+	bh=KqYQm5bQIpZ3VYzI6lVD9OKA7HiYU45E44x3KN49Uhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9sELRJ1EYUssDyGQib2iFNH1O0c7J7aKmCxB+I6H5IBBcZXjRi3emzrxrgRLNOZg
-	 iSUTTaKdRXlFZO9Kx4950ZoVxDQSrjy5z1AQiL2rPBXJ6zueqs7GELcmi0+OMvjOy8
-	 XA+LOMhtIsdaEX8wbAHnmwP0q+taJop5olKhcBWU=
+	b=CuLjF6o/FJYaDzaOTSylzlVt71q91bp2MBNGwx5TpML5in2K07k1Zxlh+nSUJ3cSi
+	 nbUqCFxtXn2VLiIhGnyUH8E09mMUXqQbKbpfx/AC7L11CZeQFQlgDLm3EixbU4xuzc
+	 E2vvmV+i8KKKx/X+cp/5QGST9YdFLNKp6lRHDKEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Chou <jacky_chou@aspeedtech.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 50/63] net: ftgmac100: Enable TX interrupt to avoid TX timeout
-Date: Mon, 16 Sep 2024 13:44:29 +0200
-Message-ID: <20240916114222.829771148@linuxfoundation.org>
+Subject: [PATCH 6.1 51/63] netfilter: nft_socket: fix sk refcount leaks
+Date: Mon, 16 Sep 2024 13:44:30 +0200
+Message-ID: <20240916114222.863406933@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -51,67 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Chou <jacky_chou@aspeedtech.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit fef2843bb49f414d1523ca007d088071dee0e055 ]
+[ Upstream commit 8b26ff7af8c32cb4148b3e147c52f9e4c695209c ]
 
-Currently, the driver only enables RX interrupt to handle RX
-packets and TX resources. Sometimes there is not RX traffic,
-so the TX resource needs to wait for RX interrupt to free.
-This situation will toggle the TX timeout watchdog when the MAC
-TX ring has no more resources to transmit packets.
-Therefore, enable TX interrupt to release TX resources at any time.
+We must put 'sk' reference before returning.
 
-When I am verifying iperf3 over UDP, the network hangs.
-Like the log below.
-
-root# iperf3 -c 192.168.100.100 -i1 -t10 -u -b0
-Connecting to host 192.168.100.100, port 5201
-[  4] local 192.168.100.101 port 35773 connected to 192.168.100.100 port 5201
-[ ID] Interval           Transfer     Bandwidth       Total Datagrams
-[  4]   0.00-20.42  sec   160 KBytes  64.2 Kbits/sec  20
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-[  4]  20.42-20.42  sec  0.00 Bytes  0.00 bits/sec  0
-- - - - - - - - - - - - - - - - - - - - - - - - -
-[ ID] Interval          Transfer    Bandwidth      Jitter   Lost/Total Datagrams
-[  4]   0.00-20.42  sec  160 KBytes 64.2 Kbits/sec 0.000 ms 0/20 (0%)
-[  4] Sent 20 datagrams
-iperf3: error - the server has terminated
-
-The network topology is FTGMAC connects directly to a PC.
-UDP does not need to wait for ACK, unlike TCP.
-Therefore, FTGMAC needs to enable TX interrupt to release TX resources instead
-of waiting for the RX interrupt.
-
-Fixes: 10cbd6407609 ("ftgmac100: Rework NAPI & interrupts handling")
-Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-Link: https://patch.msgid.link/20240906062831.2243399-1-jacky_chou@aspeedtech.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 039b1f4f24ec ("netfilter: nft_socket: fix erroneous socket assignment")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/faraday/ftgmac100.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_socket.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/faraday/ftgmac100.h b/drivers/net/ethernet/faraday/ftgmac100.h
-index 63b3e02fab16..4968f6f0bdbc 100644
---- a/drivers/net/ethernet/faraday/ftgmac100.h
-+++ b/drivers/net/ethernet/faraday/ftgmac100.h
-@@ -84,7 +84,7 @@
- 			    FTGMAC100_INT_RPKT_BUF)
+diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
+index f28324fd8d71..0f37738e4b26 100644
+--- a/net/netfilter/nft_socket.c
++++ b/net/netfilter/nft_socket.c
+@@ -110,13 +110,13 @@ static void nft_socket_eval(const struct nft_expr *expr,
+ 			*dest = READ_ONCE(sk->sk_mark);
+ 		} else {
+ 			regs->verdict.code = NFT_BREAK;
+-			return;
++			goto out_put_sk;
+ 		}
+ 		break;
+ 	case NFT_SOCKET_WILDCARD:
+ 		if (!sk_fullsock(sk)) {
+ 			regs->verdict.code = NFT_BREAK;
+-			return;
++			goto out_put_sk;
+ 		}
+ 		nft_socket_wildcard(pkt, regs, sk, dest);
+ 		break;
+@@ -124,7 +124,7 @@ static void nft_socket_eval(const struct nft_expr *expr,
+ 	case NFT_SOCKET_CGROUPV2:
+ 		if (!nft_sock_get_eval_cgroupv2(dest, sk, pkt, priv->level)) {
+ 			regs->verdict.code = NFT_BREAK;
+-			return;
++			goto out_put_sk;
+ 		}
+ 		break;
+ #endif
+@@ -133,6 +133,7 @@ static void nft_socket_eval(const struct nft_expr *expr,
+ 		regs->verdict.code = NFT_BREAK;
+ 	}
  
- /* All the interrupts we care about */
--#define FTGMAC100_INT_ALL (FTGMAC100_INT_RPKT_BUF  |  \
-+#define FTGMAC100_INT_ALL (FTGMAC100_INT_RXTX  |  \
- 			   FTGMAC100_INT_BAD)
- 
- /*
++out_put_sk:
+ 	if (sk != skb->sk)
+ 		sock_gen_put(sk);
+ }
 -- 
 2.43.0
 
