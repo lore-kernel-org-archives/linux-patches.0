@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5C6142903;
-	Mon, 16 Sep 2024 12:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A3A146A79;
+	Mon, 16 Sep 2024 12:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488692; cv=none; b=AjlDJ5aWygapsb0ecZsvYOvi3tBkodmgbysWqRygA8InKHgk4Y7htmfwqRakIMyihrvsGoOGtYG3F2TFv4u57nLr12ioIA9iihk9isgOjKsV205yF9S56dTrPwn/F1Idq/mzw/qVqk+KZ426FjGksefzn0avah2OeztJ3SegKk4=
+	t=1726488695; cv=none; b=C5l8A6f13IOECT6/D4ANq6+bcJuNxXtSWr6zEPsGNEJSAE02uUZkjmwJcOticCVDGA6pv8kbXN0uPMZqDDSZ4wbQrlHN93pLZJYfSFH9U0BYRVnqbWFMoA8X9pEoMVsfcUblzDJqmObQAYNR+g7g+2J0M66cVo/ogyWJwWwswuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488692; c=relaxed/simple;
-	bh=p0SWhdegiRX/cDvG4zJ2z5YmE+prU0MUMvExZNo7IKU=;
+	s=arc-20240116; t=1726488695; c=relaxed/simple;
+	bh=aHWwxyi/rzdMhwR9LbaIWa9WBX6duK9KMVHTFM/HhtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i78te92hVxUFky0gAX3loyHmcBTDCYNZJfvs/hvz8nc/SId5aMrMUJKhE+/XOtdn6CdPEYaGSPZlJcWbfdMUj4SVGOTW6c1fncR5qYRU5wH4PkIZHAIilM6aUX5I/jFcyE3ugJTQ0zC9EUOfza5JBSqoWToAiWjhrCE0VHFg2Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4dWC7eK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaK7SCg7shGpAiA3Mp5PeZCbKmJaHWp2iKgUMEcVFVDMR3J0XDR1YdHNiiGL71YeNl9R6aLOYFMQ9/YXhDH+A2rw6Dnj1IkdLXvWH/IhjAyXz4weN8vUPkMchpA4bh8UImostZINMVC/JRFsEDe3qSk9NKno2JZMHffUUxJW6so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNjE9IwT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4dWC7eK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6BCC4CEC4;
-	Mon, 16 Sep 2024 12:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNjE9IwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CE6C4CEC4;
+	Mon, 16 Sep 2024 12:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488692;
-	bh=p0SWhdegiRX/cDvG4zJ2z5YmE+prU0MUMvExZNo7IKU=;
+	s=korg; t=1726488695;
+	bh=aHWwxyi/rzdMhwR9LbaIWa9WBX6duK9KMVHTFM/HhtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4dWC7eKxJAhaibWWbc4yQjyR9U9o2cc8Ga+ze7RxT4CMyykFTWap1w3rO1N/5IuT
-	 cz31DTrltsgOEgCiM3vH96CTPzXaLrPnp1lY6JNsnad/BdoEF8tD2NYP+KfhmG3eq+
-	 6Kar3Z+xRwHtbiLkxmgbTlbQ5Q13qzn1v6pQnUoM=
+	b=SNjE9IwTH1sA8iCFf6s7HW67H73nDQsKF9U3A1i0+HDUZ4YN52XijSFBf6IMiDaOF
+	 WhOOkRsjbMrONGdfWr8pxnIRDD6/VayKFQEwiFF9+S73TqBUUi1k4W4g1qN7EXNZXO
+	 o0ZuMCJUVJayTVeNmI0F9gOh29/vl9U8uqSe89nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Patryk Biel <pbiel7@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 53/91] selftests/bpf: Support SOCK_STREAM in unix_inet_redir_to_connected()
-Date: Mon, 16 Sep 2024 13:44:29 +0200
-Message-ID: <20240916114226.260760291@linuxfoundation.org>
+Subject: [PATCH 6.6 54/91] hwmon: (pmbus) Conditionally clear individual status bits for pmbus rev >= 1.2
+Date: Mon, 16 Sep 2024 13:44:30 +0200
+Message-ID: <20240916114226.292663669@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,46 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Patryk Biel <pbiel7@gmail.com>
 
-[ Upstream commit 1b0ad43177c097d38b967b99c2b71d8be28b0223 ]
+[ Upstream commit 20471071f198c8626dbe3951ac9834055b387844 ]
 
-Function ignores the AF_UNIX socket type argument, SOCK_DGRAM is hardcoded.
-Fix to respect the argument provided.
+The current implementation of pmbus_show_boolean assumes that all devices
+support write-back operation of status register to clear pending warnings
+or faults. Since clearing individual bits in the status registers was only
+introduced in PMBus specification 1.2, this operation may not be supported
+by some older devices. This can result in an error while reading boolean
+attributes such as temp1_max_alarm.
 
-Fixes: 75e0e27db6cf ("selftest/bpf: Change udp to inet in some function names")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20240713200218.2140950-3-mhal@rbox.co
+Fetch PMBus revision supported by the device and modify pmbus_show_boolean
+so that it only tries to clear individual status bits if the device is
+compliant with PMBus specs >= 1.2. Otherwise clear all fault indicators
+on the current page after a fault status was reported.
+
+Fixes: 35f165f08950a ("hwmon: (pmbus) Clear pmbus fault/warning bits after read")
+Signed-off-by: Patryk Biel <pbiel7@gmail.com>
+Message-ID: <20240909-pmbus-status-reg-clearing-v1-1-f1c0d68c6408@gmail.com>
+[groeck:
+ Rewrote description
+ Moved revision detection code ahead of clear faults command
+ Assigned revision if return value from PMBUS_REVISION command is 0
+ Improved return value check from calling _pmbus_write_byte_data()]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sockmap_listen.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hwmon/pmbus/pmbus.h      |  6 ++++++
+ drivers/hwmon/pmbus/pmbus_core.c | 17 ++++++++++++++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-index 8df8cbb447f1..84d59419e4eb 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-@@ -1841,7 +1841,7 @@ static void unix_inet_redir_to_connected(int family, int type, int sock_mapfd,
- 	if (err)
- 		return;
+diff --git a/drivers/hwmon/pmbus/pmbus.h b/drivers/hwmon/pmbus/pmbus.h
+index b0832a4c690d..76c2b364c3fe 100644
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -409,6 +409,12 @@ enum pmbus_sensor_classes {
+ enum pmbus_data_format { linear = 0, ieee754, direct, vid };
+ enum vrm_version { vr11 = 0, vr12, vr13, imvp9, amd625mv };
  
--	if (socketpair(AF_UNIX, SOCK_DGRAM | SOCK_NONBLOCK, 0, sfd))
-+	if (socketpair(AF_UNIX, type | SOCK_NONBLOCK, 0, sfd))
- 		goto close_cli0;
- 	c1 = sfd[0], p1 = sfd[1];
++/* PMBus revision identifiers */
++#define PMBUS_REV_10 0x00	/* PMBus revision 1.0 */
++#define PMBUS_REV_11 0x11	/* PMBus revision 1.1 */
++#define PMBUS_REV_12 0x22	/* PMBus revision 1.2 */
++#define PMBUS_REV_13 0x33	/* PMBus revision 1.3 */
++
+ struct pmbus_driver_info {
+ 	int pages;		/* Total number of pages */
+ 	u8 phases[PMBUS_PAGES];	/* Number of phases per page */
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 1363d9f89181..728c07c42651 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -85,6 +85,8 @@ struct pmbus_data {
  
-@@ -1876,7 +1876,6 @@ static void unix_inet_redir_to_connected(int family, int type, int sock_mapfd,
- close_cli0:
- 	xclose(c0);
- 	xclose(p0);
--
- }
+ 	u32 flags;		/* from platform data */
  
- static void unix_inet_skb_redir_to_connected(struct test_sockmap_listen *skel,
++	u8 revision;	/* The PMBus revision the device is compliant with */
++
+ 	int exponent[PMBUS_PAGES];
+ 				/* linear mode: exponent for output voltages */
+ 
+@@ -1095,9 +1097,14 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 
+ 	regval = status & mask;
+ 	if (regval) {
+-		ret = _pmbus_write_byte_data(client, page, reg, regval);
+-		if (ret)
+-			goto unlock;
++		if (data->revision >= PMBUS_REV_12) {
++			ret = _pmbus_write_byte_data(client, page, reg, regval);
++			if (ret)
++				goto unlock;
++		} else {
++			pmbus_clear_fault_page(client, page);
++		}
++
+ 	}
+ 	if (s1 && s2) {
+ 		s64 v1, v2;
+@@ -2640,6 +2647,10 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
+ 			data->flags |= PMBUS_WRITE_PROTECTED | PMBUS_SKIP_STATUS_CHECK;
+ 	}
+ 
++	ret = i2c_smbus_read_byte_data(client, PMBUS_REVISION);
++	if (ret >= 0)
++		data->revision = ret;
++
+ 	if (data->info->pages)
+ 		pmbus_clear_faults(client);
+ 	else
 -- 
 2.43.0
 
