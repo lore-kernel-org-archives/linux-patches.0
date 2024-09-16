@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D952F158DA0;
-	Mon, 16 Sep 2024 12:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBBF159571;
+	Mon, 16 Sep 2024 12:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488301; cv=none; b=ANx8LazO/obdRZIUpsMunOh+A6uQ3RTecDN4XgytY063wCDAzd6nV/rLZQ4SVUYz4o+A/hP1I29Ql7aLEkkJRvq94fQ9HZENxFDgLRBM3UnLqfkmNm64BjkwglZFkQJ6z0IjSUlKSvY9qJ57F+4PFPWdA+G3NWUbND2GimyINdM=
+	t=1726488304; cv=none; b=I+LusH6G+h8hcJj57qS5qHAuLMA4DOWRm4f8BQLc6KD67jQR7HbFrzK5OpJtqlZFWaFf6IvSybf00xciTyuaU/LCJI1NJ+/MQGrpdpMpn8io2+QnDQ9+VySLOMu6Ow0RAY3qLI6waXRuXdVTFC3ZmylrtfrOGmEGsGUEHxFO1GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488301; c=relaxed/simple;
-	bh=bYmTKpKrnGVaz9jHcxUn6NbJmOSaeFpgCJ8orA+bpkc=;
+	s=arc-20240116; t=1726488304; c=relaxed/simple;
+	bh=KmYgaJO8GqAec7gULTF/ccVi7db2CdSUVxE0L67nYno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rxqh+/T89LhOxSDhCCwOBTF8stQBgcifax2uhZOn7BzxpW9EmTq6HzLrMEsqPQ1dPCM3e+cY0drEf+dlbb1RVC2ClzXZ6nENZhswzILsYtIZc66GH9GBncT8U5kUravvN31jV5Qpp6zfJpCSmeOA1dCgOv8MOsvOM+8Ulpps5EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqLsRHrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C87Jg06KFkn4Eg0R0w10ziRB30SloDGOzrtZ8n/5ymDBoRUvtdRs6X2J0sqrBHwSYXO+lNYn+f3rwdFC9u0GCoLEvF6mqu/OXIHPKQ/Yh2yjXmiqMi3piPKuO4/13tAqlKZqmNvnr9r24d0GAQ1agajgpUhmdFDurniFitpDi8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkaC7+iI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqLsRHrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FEFCC4CEC4;
-	Mon, 16 Sep 2024 12:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkaC7+iI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3103EC4CEC4;
+	Mon, 16 Sep 2024 12:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488301;
-	bh=bYmTKpKrnGVaz9jHcxUn6NbJmOSaeFpgCJ8orA+bpkc=;
+	s=korg; t=1726488304;
+	bh=KmYgaJO8GqAec7gULTF/ccVi7db2CdSUVxE0L67nYno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqLsRHrANWKB+9qwjHAf6mh7gGDFMjcGquE9hSB+EYQZY3WUg70Fluzakjw/uUUzg
-	 IDaSP7mZUboPtD46F98jQlCz3+mnHoPxQdARDjdjdKDcvtzM3I4meFxlaW3lTTFm/5
-	 EkhHH4V+SBGCVGliUW1MfAtFqltZVfQFtvUfPhzE=
+	b=WkaC7+iIOO1nCiv/PeV+GYLyQ3KeXQqbptTeLXcciGiXwqOOmOVUZ2lnMlita3yTp
+	 JEEBoMCSnADrE5y0WJ+7wH2DRNc112Uq+nKU7eYdsnOZb7nYFq0MQzXB0f7aDaCqzo
+	 kxJkWtO5CeKAL68Vkn7vpC38REdmlJGmfnZnKDf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 039/121] s390/mm: Pin identity mapping base to zero
-Date: Mon, 16 Sep 2024 13:43:33 +0200
-Message-ID: <20240916114230.417611803@linuxfoundation.org>
+Subject: [PATCH 6.10 040/121] smb/server: fix return value of smb2_open()
+Date: Mon, 16 Sep 2024 13:43:34 +0200
+Message-ID: <20240916114230.456841118@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -52,64 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 32db401965f165f7c44447d0508097f070c8f576 ]
+[ Upstream commit 2186a116538a715b20e15f84fdd3545e5fe0a39b ]
 
-SIE instruction performs faster when the virtual address of
-SIE block matches the physical one. Pin the identity mapping
-base to zero for the benefit of SIE and other instructions
-that have similar performance impact. Still, randomize the
-base when DEBUG_VM kernel configuration option is enabled.
+In most error cases, error code is not returned in smb2_open(),
+__process_request() will not print error message.
 
-Suggested-by: Vasily Gorbik <gor@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fix this by returning the correct value at the end of smb2_open().
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig        | 13 +++++++++++++
- arch/s390/boot/startup.c |  3 ++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index c59d2b54df49..4f7ed0cd12cc 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -602,6 +602,19 @@ config RANDOMIZE_BASE
- 	  as a security feature that deters exploit attempts relying on
- 	  knowledge of the location of kernel internals.
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 0687083bcc3f..adfd6046275a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3714,7 +3714,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	kfree(name);
+ 	kfree(lc);
  
-+config RANDOMIZE_IDENTITY_BASE
-+	bool "Randomize the address of the identity mapping base"
-+	depends on RANDOMIZE_BASE
-+	default DEBUG_VM
-+	help
-+	  The identity mapping base address is pinned to zero by default.
-+	  Allow randomization of that base to expose otherwise missed
-+	  notion of physical and virtual addresses of data structures.
-+	  That does not have any impact on the base address at which the
-+	  kernel image is loaded.
-+
-+	  If unsure, say N
-+
- config KERNEL_IMAGE_BASE
- 	hex "Kernel image base address"
- 	range 0x100000 0x1FFFFFE0000000 if !KASAN
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 66ee97ac803d..90c51368f933 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -333,7 +333,8 @@ static unsigned long setup_kernel_memory_layout(unsigned long kernel_size)
- 	BUILD_BUG_ON(MAX_DCSS_ADDR > (1UL << MAX_PHYSMEM_BITS));
- 	max_mappable = max(ident_map_size, MAX_DCSS_ADDR);
- 	max_mappable = min(max_mappable, vmemmap_start);
--	__identity_base = round_down(vmemmap_start - max_mappable, rte_size);
-+	if (IS_ENABLED(CONFIG_RANDOMIZE_IDENTITY_BASE))
-+		__identity_base = round_down(vmemmap_start - max_mappable, rte_size);
- 
- 	return asce_limit;
+-	return 0;
++	return rc;
  }
+ 
+ static int readdir_info_level_struct_sz(int info_level)
 -- 
 2.43.0
 
