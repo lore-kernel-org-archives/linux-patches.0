@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E056156222;
-	Mon, 16 Sep 2024 12:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34483156222;
+	Mon, 16 Sep 2024 12:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488559; cv=none; b=SPV0WconTMWUm/rziWjR6s7ZFJbNLWHtX7SoTvsGKzcVOufaOrIvEjAlkRK64QZg/tFNe4RruIZhhf1AdrVf3hkdlAaBLi3kxfaSoeD62TaNIkKN734zFQpls87h4bcOMWqYg5dd1vqaKmnRU9fdhsOBkrDxNf1L74qXqYLS4ww=
+	t=1726488562; cv=none; b=u7m3TsUQAIhyocW75JZNH0ROsY4ENZGeruiE/loSOHXQa1vnlF0niNiGWyKKBsffypFQe4JPlkMtvvRJZXOGFxMddR1oCIVnnF+Mrncb5d05qR5z7O3xA4mXlap0efcIQAjKmnVpvrYIjT+baZ/ONq5GFOMthbndi9FTUPbofLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488559; c=relaxed/simple;
-	bh=ZL/sLatXinr9DessbpTwzpw9w/cdOb4GGhdnPHCthkQ=;
+	s=arc-20240116; t=1726488562; c=relaxed/simple;
+	bh=RiXSV+mM7hJiwVUmy28ZIEWSgwMFXYUoQRasJoGeTYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kw9UpCn+fMfkwaFHGsVdzvSdAL0IWyVWX6JeUqGHSHGqXIpqgRot2fORE7lfwlgszzehrUETUNXe63zAhehJdym0py60q95bpNrUQZru0o3QvIKRwIvwk+Y7C4S7NOeYGd40lmnIpluhtvUL/+0SwA2kP5UAz74ezDDOTNVaaq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iOilcW3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLfFkDXvfmYVrUopjgDqzKJqYtkW+7MnPM15tgUYIoLFEhhSiuH/vcamilMTXlbsHP+p8rVe674+iNmzbq3KRIls64uZIL9LP950WzzkvvZIjmalcoB8o/Sdrk4o7R0/EQ/gYlGRfqTORTLcIRg8VevR3Wrn5SyKoCVvKzAdMxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrtwlrW1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iOilcW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD1AC4CEC4;
-	Mon, 16 Sep 2024 12:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrtwlrW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D35C4CEC7;
+	Mon, 16 Sep 2024 12:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488559;
-	bh=ZL/sLatXinr9DessbpTwzpw9w/cdOb4GGhdnPHCthkQ=;
+	s=korg; t=1726488562;
+	bh=RiXSV+mM7hJiwVUmy28ZIEWSgwMFXYUoQRasJoGeTYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iOilcW3LzoLFoL7YbqCFd2LoGfxw8P5n4DB4y072qFuNmaKtVQhe2UZfUX8IZTOt
-	 sVf/bGBkyZ1zvIe8hzajvESu6vnKwErN0EasfsEUAnDQ2iZXZwA86CS34x6w7Xqnrs
-	 10qZotZv8dVraMjb4wOdazhrjVcEwKfi5vVEh3tc=
+	b=PrtwlrW1K0bFvtgZig44gFv4NPIeJS6HCnkg0ZqyoZuFsnr4C3jGatcFAmNGE/1zM
+	 IzFLL8Lo5o85Q3Em0eBuOdZhhTvEEjCfGHPU8r4HqFZZ9DJNDkHsXuhzZ01wbC+OES
+	 UhvcU9Ac3irrvJBF8mnLzEKA8CgWdiwGcL2YFlNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Bouke Sybren Haarsma <boukehaarsma23@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 34/91] NFSv4: Fix clearing of layout segments in layoutreturn
-Date: Mon, 16 Sep 2024 13:44:10 +0200
-Message-ID: <20240916114225.636756523@linuxfoundation.org>
+Subject: [PATCH 6.6 17/91] drm: panel-orientation-quirks: Add quirk for Ayn Loki Zero
+Date: Mon, 16 Sep 2024 13:43:53 +0200
+Message-ID: <20240916114225.093707714@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,63 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
 
-[ Upstream commit d72b7963115bea971a28eaa2cb76722c023f9fdf ]
+[ Upstream commit b86aa4140f6a8f01f35bfb05af60e01a55b48803 ]
 
-Make sure that we clear the layout segments in cases where we see a
-fatal error, and also in the case where the layout is invalid.
+Add quirk orientation for the Ayn Loki Zero.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+This also has been tested/used by the JELOS team.
+
+Signed-off-by: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240728124731.168452-2-boukehaarsma23@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 9 ++++++---
- fs/nfs/pnfs.c     | 5 ++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index e7ac249df1ad..299ea2b86df6 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -9845,13 +9845,16 @@ static void nfs4_layoutreturn_done(struct rpc_task *task, void *calldata)
- 		fallthrough;
- 	default:
- 		task->tk_status = 0;
-+		lrp->res.lrs_present = 0;
- 		fallthrough;
- 	case 0:
- 		break;
- 	case -NFS4ERR_DELAY:
--		if (nfs4_async_handle_error(task, server, NULL, NULL) != -EAGAIN)
--			break;
--		goto out_restart;
-+		if (nfs4_async_handle_error(task, server, NULL, NULL) ==
-+		    -EAGAIN)
-+			goto out_restart;
-+		lrp->res.lrs_present = 0;
-+		break;
- 	}
- 	return;
- out_restart:
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 664d3128e730..3d1a9f8634a9 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1172,10 +1172,9 @@ void pnfs_layoutreturn_free_lsegs(struct pnfs_layout_hdr *lo,
- 	LIST_HEAD(freeme);
- 
- 	spin_lock(&inode->i_lock);
--	if (!pnfs_layout_is_valid(lo) ||
--	    !nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
-+	if (!nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
- 		goto out_unlock;
--	if (stateid) {
-+	if (stateid && pnfs_layout_is_valid(lo)) {
- 		u32 seq = be32_to_cpu(arg_stateid->seqid);
- 
- 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 039da0d1a613..79ccf4959df4 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -208,6 +208,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
+ 		},
+ 		.driver_data = (void *)&lcd1600x2560_rightside_up,
++	}, {	/* AYN Loki Zero */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki Zero"),
++		},
++		.driver_data = (void *)&lcd1080x1920_leftside_up,
+ 	}, {	/* Chuwi HiBook (CWI514) */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
 -- 
 2.43.0
 
