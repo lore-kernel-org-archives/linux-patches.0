@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AF9155335;
-	Mon, 16 Sep 2024 12:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A33015687C;
+	Mon, 16 Sep 2024 12:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488017; cv=none; b=QwOH+yVHIXqwD0qa9CKnGKafIVCUfGiILT3hWudjrspj1ppqDLssTFHRRPwQG4o+xnOSTHbJek6NkK82qLXSm5YLyxPLmt9JeyukeuhAWkhz9yaqIeymk0P4mKf3FZOpkCV82v9H8eNuQocud7l2u1eXF/cjWlWT4I9twtXbzwo=
+	t=1726488021; cv=none; b=X1oX2vCGOEYFdyHrMghVAHml7NrtFlBc221K+0WiUiBzGBC9MpQyoiIK1i9t2MUPC8656HDPtPWXIzkH98Ks3mhgjGyQLo449P+bLYt4VKcgkEcjw0G5gZ8UsNKFIGGPbB8oeFDoM7cH0qaGUpksbyJxGjJBNkEcyxns3lgWp/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488017; c=relaxed/simple;
-	bh=VSK3IaqqqPo/KYe0AOWuEL6E7oguYlme9Kl5AAsp5mc=;
+	s=arc-20240116; t=1726488021; c=relaxed/simple;
+	bh=tvsPvwa1bIHOx2x/9VaEeRpd8JwUg7mfyIgdMx1N+Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cl7kH4DiszkBe8HyAAg4IG0wUx2jka0anhbVrCQyKCeCDIadFA6ivlHxkjK73Zj03yG6uUYkD0UNtaT+3NufNGK+/tBF9LeSL4CxpUgCpO9xrnVYzTQvogn5HW4GKcuCyOy2CtuERlg2KADJHOaThD5+sG8Swg50GsLcJAmgTSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU30cWOY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hb4MhsnXsu7SPDIlNXPeIpRSB5o12NslWf43doC/v7mm0mmeDPEywvgE/RN2R/6MO+CPdRy4gN4EslX2UFVh4dKu0cLL8nT0qs6JlhMK11abL83k5GLXyb/a8RZ4eXsWhrbEhtDLqBRK5HB09x4C5Y9LTIdyVhvCZqvlKvRnjBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGHk7VyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU30cWOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA9CC4CEC4;
-	Mon, 16 Sep 2024 12:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGHk7VyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD177C4CEC7;
+	Mon, 16 Sep 2024 12:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488017;
-	bh=VSK3IaqqqPo/KYe0AOWuEL6E7oguYlme9Kl5AAsp5mc=;
+	s=korg; t=1726488020;
+	bh=tvsPvwa1bIHOx2x/9VaEeRpd8JwUg7mfyIgdMx1N+Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU30cWOYCH/FSjqtuyxFau8eqFgwRstKccVPalXeHdy8kxpkd2zf1UTaHW9nVUAGe
-	 TAfjyneMytONQW8ObG1PkYL+nUiFqFzOLojT8eGEuMXVQSqdSfzR3kmczCLaqM/Sk+
-	 jsiQypvBzHvPjZjzlTCH7c7rpbBOhtcVvTucdYF8=
+	b=iGHk7VyWf/Nayw0omPtj4aIqoRe6OywH+cF0HFZT6RaVdIJNTzHxz+gyBs9apN5IL
+	 I7/cWTHge/z+W+YAYhWubtf24dQSRMiDWgSEHzQ6NdU9MEMRtFvls0Yaqq9tUF3RBy
+	 x1F5xO4epkXo33VXfjwYEhjp3Olk/UsSITRy+WS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.1 29/63] mm: avoid leaving partial pfn mappings around in error case
-Date: Mon, 16 Sep 2024 13:44:08 +0200
-Message-ID: <20240916114222.104749406@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 30/63] net: xilinx: axienet: Fix race in axienet_stop
+Date: Mon, 16 Sep 2024 13:44:09 +0200
+Message-ID: <20240916114222.137598743@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -53,80 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit 79a61cc3fc0466ad2b7b89618a6157785f0293b3 upstream.
+commit 858430db28a5f5a11f8faa3a6fa805438e6f0851 upstream.
 
-As Jann points out, PFN mappings are special, because unlike normal
-memory mappings, there is no lifetime information associated with the
-mapping - it is just a raw mapping of PFNs with no reference counting of
-a 'struct page'.
+axienet_dma_err_handler can race with axienet_stop in the following
+manner:
 
-That's all very much intentional, but it does mean that it's easy to
-mess up the cleanup in case of errors.  Yes, a failed mmap() will always
-eventually clean up any partial mappings, but without any explicit
-lifetime in the page table mapping itself, it's very easy to do the
-error handling in the wrong order.
+CPU 1                       CPU 2
+======================      ==================
+axienet_stop()
+    napi_disable()
+    axienet_dma_stop()
+                            axienet_dma_err_handler()
+                                napi_disable()
+                                axienet_dma_stop()
+                                axienet_dma_start()
+                                napi_enable()
+    cancel_work_sync()
+    free_irq()
 
-In particular, it's easy to mistakenly free the physical backing store
-before the page tables are actually cleaned up and (temporarily) have
-stale dangling PTE entries.
+Fix this by setting a flag in axienet_stop telling
+axienet_dma_err_handler not to bother doing anything. I chose not to use
+disable_work_sync to allow for easier backporting.
 
-To make this situation less error-prone, just make sure that any partial
-pfn mapping is torn down early, before any other error handling.
-
-Reported-and-tested-by: Jann Horn <jannh@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Link: https://patch.msgid.link/20240903175141.4132898-1-sean.anderson@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjusted to apply before dmaengine support ]
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet.h      |    3 +++
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c |    8 ++++++++
+ 2 files changed, 11 insertions(+)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2480,11 +2480,7 @@ static inline int remap_p4d_range(struct
- 	return 0;
- }
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
+@@ -419,6 +419,8 @@ struct axidma_bd {
+  * @tx_bytes:	TX byte count for statistics
+  * @tx_stat_sync: Synchronization object for TX stats
+  * @dma_err_task: Work structure to process Axi DMA errors
++ * @stopping:   Set when @dma_err_task shouldn't do anything because we are
++ *              about to stop the device.
+  * @tx_irq:	Axidma TX IRQ number
+  * @rx_irq:	Axidma RX IRQ number
+  * @eth_irq:	Ethernet core IRQ number
+@@ -481,6 +483,7 @@ struct axienet_local {
+ 	struct u64_stats_sync tx_stat_sync;
  
--/*
-- * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
-- * must have pre-validated the caching bits of the pgprot_t.
-- */
--int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
-+static int remap_pfn_range_internal(struct vm_area_struct *vma, unsigned long addr,
- 		unsigned long pfn, unsigned long size, pgprot_t prot)
- {
- 	pgd_t *pgd;
-@@ -2537,6 +2533,27 @@ int remap_pfn_range_notrack(struct vm_ar
- 	return 0;
- }
+ 	struct work_struct dma_err_task;
++	bool stopping;
  
-+/*
-+ * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
-+ * must have pre-validated the caching bits of the pgprot_t.
-+ */
-+int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
-+		unsigned long pfn, unsigned long size, pgprot_t prot)
-+{
-+	int error = remap_pfn_range_internal(vma, addr, pfn, size, prot);
+ 	int tx_irq;
+ 	int rx_irq;
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -1161,6 +1161,7 @@ static int axienet_open(struct net_devic
+ 	phylink_start(lp->phylink);
+ 
+ 	/* Enable worker thread for Axi DMA error handling */
++	lp->stopping = false;
+ 	INIT_WORK(&lp->dma_err_task, axienet_dma_err_handler);
+ 
+ 	napi_enable(&lp->napi_rx);
+@@ -1216,6 +1217,9 @@ static int axienet_stop(struct net_devic
+ 
+ 	dev_dbg(&ndev->dev, "axienet_close()\n");
+ 
++	WRITE_ONCE(lp->stopping, true);
++	flush_work(&lp->dma_err_task);
 +
-+	if (!error)
-+		return 0;
+ 	napi_disable(&lp->napi_tx);
+ 	napi_disable(&lp->napi_rx);
+ 
+@@ -1760,6 +1764,10 @@ static void axienet_dma_err_handler(stru
+ 						dma_err_task);
+ 	struct net_device *ndev = lp->ndev;
+ 
++	/* Don't bother if we are going to stop anyway */
++	if (READ_ONCE(lp->stopping))
++		return;
 +
-+	/*
-+	 * A partial pfn range mapping is dangerous: it does not
-+	 * maintain page reference counts, and callers may free
-+	 * pages due to the error. So zap it early.
-+	 */
-+	zap_page_range_single(vma, addr, size, NULL);
-+	return error;
-+}
-+
- /**
-  * remap_pfn_range - remap kernel memory to userspace
-  * @vma: user vma to map to
+ 	napi_disable(&lp->napi_tx);
+ 	napi_disable(&lp->napi_rx);
+ 
 
 
