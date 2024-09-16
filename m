@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E439D14B967;
-	Mon, 16 Sep 2024 12:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4C014AD19;
+	Mon, 16 Sep 2024 12:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488038; cv=none; b=sKj/pv2V9jgcmpvDfdgKcy5WE0bvx0xj7hGVSunIkGmpRvQqZouw+Mkm8HSJZQIpvatDqjUTW1tvBMjrg0yk3YAmSJ7uTkTPBejdarlrbOWqr8Pj7481Umdh3S7UghqOX4TXG8afaJe7OxrQRPAKbvVb1ScnscGQcUHxnCel3nQ=
+	t=1726488040; cv=none; b=DXk6/p3FtdS8UaDSDDKG/BXbMWzYjLZXyxuI6dTzG6ba7r+Koq5717XT55wNJkNLaNkI9LDEe1+C8BApragqLK8mNf03JeNuJ7FkO7WlCSXyirsLjwjcmz5405fgR60O4xQVrf1JLLrScABDW/dtYhO+o2Om6lvxFtHW5xEKD4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488038; c=relaxed/simple;
-	bh=0zqz7jUdP+kOOer6NX025mgQzu17b5V8ZTF+A/DGVFQ=;
+	s=arc-20240116; t=1726488040; c=relaxed/simple;
+	bh=adQJ5SHNS8rMz2O5xvhJm70l4/qzTZBZM1ZoJjM5Ezc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFPiEBaBBA3I3EyAB+dF9Dy8JXTTtEa9MS7qmFSs2CpSynk+uY7BqAAiIvYKd3QraH4dobNJl/N71ygY3oRsX0jafjSUdzrnJr7i35eXq8g3WY2+uo/K8emSn/x3lp4z96O1vE0Az2ocGMOtE5JkJzGdDNdxzKOjdd+Wsaq7r3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRvIn+iN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ptpKrGgLrKEfCaynekuXyRsvTqkyOGiJknaKC6DKq/0JcXTVRCHZ9Y3PD1A9lazFwiUmj9gEf8dHPvPJdKezW1C9TuI5KBVOQGvBL9LwY/Idsoxq62YgQq1lGkHhpu3g0p+7yGOe+mH6nayHh6GL6sbDwj2GSErUd8iHTqK6OPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pocc/bT2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRvIn+iN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056EFC4CEC4;
-	Mon, 16 Sep 2024 12:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pocc/bT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC111C4CEC4;
+	Mon, 16 Sep 2024 12:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488037;
-	bh=0zqz7jUdP+kOOer6NX025mgQzu17b5V8ZTF+A/DGVFQ=;
+	s=korg; t=1726488040;
+	bh=adQJ5SHNS8rMz2O5xvhJm70l4/qzTZBZM1ZoJjM5Ezc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRvIn+iNHvknjsbtbm8ArO0WTtI7Hm7J65nFkUVxPLk+wtVCNj/FXfVprx7RF/H5H
-	 bEaFVZfW5atQQ/UKpKhWKwv/1bJGv2S4A2zMihfzNJXYjRd3ww5HxuzvXAT+w3nzFg
-	 v1ZKIiHuhN5jJDFP/1tn4pRW+wzpK9Ijd16vthLg=
+	b=pocc/bT2O+T4Zz7oWrLaTpHclTi4Dea3M9cG11N1gOnXlL2yCPriq90KMy8BNSRtM
+	 cHOyiFKmDtiG7IortUP1lp++ylgjrnuTbsjFRSt2Xxoil7eWHJDaUz84ul7vNtwsh7
+	 6sqrcXmDhvBCNqpLNk5KMWDutMY4HmnTDptkVb0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	David Sterba <dsterba@suse.com>,
+	Marek Vasut <marex@denx.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/63] btrfs: update target inodes ctime on unlink
-Date: Mon, 16 Sep 2024 13:43:48 +0200
-Message-ID: <20240916114221.369542460@linuxfoundation.org>
+Subject: [PATCH 6.1 10/63] Input: ads7846 - ratelimit the spi_sync error message
+Date: Mon, 16 Sep 2024 13:43:49 +0200
+Message-ID: <20240916114221.407361399@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -51,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 3bc2ac2f8f0b78a13140fc72022771efe0c9b778 ]
+[ Upstream commit ccbfea78adf75d3d9e87aa739dab83254f5333fa ]
 
-Unlink changes the link count on the target inode. POSIX mandates that
-the ctime must also change when this occurs.
+In case the touch controller is not connected, this message keeps scrolling
+on the console indefinitelly. Ratelimit it to avoid filling kernel logs.
 
-According to https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html:
+"
+ads7846 spi2.1: spi_sync --> -22
+"
 
-"Upon successful completion, unlink() shall mark for update the last data
- modification and last file status change timestamps of the parent
- directory. Also, if the file's link count is not 0, the last file status
- change timestamp of the file shall be marked for update."
-
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ add link to the opengroup docs ]
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20240708211913.171243-1-marex@denx.de
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/touchscreen/ads7846.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index e5017b2ade57..894887640c43 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4379,6 +4379,7 @@ static int __btrfs_unlink_inode(struct btrfs_trans_handle *trans,
- 
- 	btrfs_i_size_write(dir, dir->vfs_inode.i_size - name->len * 2);
- 	inode_inc_iversion(&inode->vfs_inode);
-+	inode_set_ctime_current(&inode->vfs_inode);
- 	inode_inc_iversion(&dir->vfs_inode);
- 	inode->vfs_inode.i_ctime = current_time(&inode->vfs_inode);
- 	dir->vfs_inode.i_mtime = inode->vfs_inode.i_ctime;
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index bed68a68f330..1f206c75c6cf 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -810,7 +810,7 @@ static void ads7846_read_state(struct ads7846 *ts)
+ 		m = &ts->msg[msg_idx];
+ 		error = spi_sync(ts->spi, m);
+ 		if (error) {
+-			dev_err(&ts->spi->dev, "spi_sync --> %d\n", error);
++			dev_err_ratelimited(&ts->spi->dev, "spi_sync --> %d\n", error);
+ 			packet->ignore = true;
+ 			return;
+ 		}
 -- 
 2.43.0
 
