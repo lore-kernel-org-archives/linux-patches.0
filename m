@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4002C156676;
-	Mon, 16 Sep 2024 12:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104DC155732;
+	Mon, 16 Sep 2024 12:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488182; cv=none; b=PdiTIZfgkRP0b5NtgShTRAMJpHNBA886JFa/qow8NgHAHE6nhF7dqx/vCoxIx+7fFUXXzWRtCe5zJmRyOMkK7oMsgjA0Y1zHkfi0H0bqaJCZEAbIVea/LxjyIdqc5mIjaEHNEz4xAYsL4YwrrH6CmkYhZgRnYgJTCn8hKzYrQy4=
+	t=1726488185; cv=none; b=D5iuhfZV4Z24UolqudTcqzcFaO9R2cNP/DsE5Cn3lm4eVVtYSeEEJJCNOG/aKE+pSeMWpO9Tw72BDDCcacRWA7WttIFS8+Vtfam8aoSyJezjhMVJxE8TQXwqh1w3bo0Ywky9wunzY4TrF1/KJhGvJX4TUS+Wz1ewSuT8PlY6bFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488182; c=relaxed/simple;
-	bh=EgTnqhuYG7BE32cuNrVBMfVdIqkF6wCLuXPLtrzSwb8=;
+	s=arc-20240116; t=1726488185; c=relaxed/simple;
+	bh=siRCnTcuZ6MR0tvaUs+9qZ3HwG2DjyW8XpSdmgcP1Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9d5OYX46anfbJhxJOZZym8V9OJLeGGO22IPT9UnV9vlAbPaFJ8f18uZBoCN8uqwMA9HfswaICf85PtHpRCbdyvZ9KQgbHh5FGNL2osAmhQrf9LW5Ic986luWxZ1dD6PGH4sPXyZWSZ6z21exubvwjHsDDd0Hd7hUl/abmRicTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5KFdAQt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFEn379binVQAReAgx2EFLwyMdOaOpIGQLQilR525x6IgeEgWQusAaUZm7aUwy6/lyxT5n/AUH23aUjy3awQUgrHilhRVKZXSfgg9haTtOUKFNCktGIcXdL90uglj6OfmM/mAEy5YcaRRUGWpIzvtcwSydM89pkrhURfPRKM7MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2WnRRPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5KFdAQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB03C4CEC4;
-	Mon, 16 Sep 2024 12:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2WnRRPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C62C4CEC4;
+	Mon, 16 Sep 2024 12:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488181;
-	bh=EgTnqhuYG7BE32cuNrVBMfVdIqkF6wCLuXPLtrzSwb8=;
+	s=korg; t=1726488184;
+	bh=siRCnTcuZ6MR0tvaUs+9qZ3HwG2DjyW8XpSdmgcP1Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5KFdAQtmwRt5LpD3mZUpzfO+Sxw81rgz8cCo0jcahX+5162qN0BmuSllWqs0fl2h
-	 G4/qyUGQvl5g7Au3XkfCQveSUPtWDA2fuZAoSwpbY20fcfnAbDamflu3EpDQao3Q5E
-	 d/Iwve+A5uOqbTZLOoWRX0eZ3yE3HHoxFNqGPWdM=
+	b=a2WnRRPI26cUAtEMihtqxBB9S8yoJ7J3b9HiwipwoHRBsKrV8rw5YKOYbhdA7HrqN
+	 jy1AX3AqWZdtgh7z6MxN735NDHBQ4vm/7tN63tD9o/28CzMQibpRJS/c0O/aC3f7hM
+	 8xfcDG276mLSLQ/NSy1nlG6HBpsiRHfRE+sqjSj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Foster Snowhill <forst@pen.gy>,
-	Georgi Valkov <gvalkov@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 006/121] usbnet: ipheth: remove extraneous rx URB length check
-Date: Mon, 16 Sep 2024 13:43:00 +0200
-Message-ID: <20240916114229.141578920@linuxfoundation.org>
+Subject: [PATCH 6.10 024/121] cgroup/cpuset: Eliminate unncessary sched domains rebuilds in hotplug
+Date: Mon, 16 Sep 2024 13:43:18 +0200
+Message-ID: <20240916114229.798019521@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -52,54 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Foster Snowhill <forst@pen.gy>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 655b46d7a39ac6f049698b27c1568c0f7ff85d1e ]
+[ Upstream commit ff0ce721ec213499ec5a532041fb3a1db2dc5ecb ]
 
-Rx URB length was already checked in ipheth_rcvbulk_callback_legacy()
-and ipheth_rcvbulk_callback_ncm(), depending on the current mode.
-The check in ipheth_rcvbulk_callback() was thus mostly a duplicate.
+It was found that some hotplug operations may cause multiple
+rebuild_sched_domains_locked() calls. Some of those intermediate calls
+may use cpuset states not in the final correct form leading to incorrect
+sched domain setting.
 
-The only place in ipheth_rcvbulk_callback() where we care about the URB
-length is for the initial control frame. These frames are always 4 bytes
-long. This has been checked as far back as iOS 4.2.1 on iPhone 3G.
+Fix this problem by using the existing force_rebuild flag to inhibit
+immediate rebuild_sched_domains_locked() calls if set and only doing
+one final call at the end. Also renaming the force_rebuild flag to
+force_sd_rebuild to make its meaning for clear.
 
-Remove the extraneous URB length check. For control frames, check for
-the specific 4-byte length instead.
-
-Signed-off-by: Foster Snowhill <forst@pen.gy>
-Tested-by: Georgi Valkov <gvalkov@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ipheth.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ kernel/cgroup/cpuset.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index 6eeef10edada..017255615508 100644
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -286,11 +286,6 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
- 		return;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index e8f24483e05f..c03a2bc106d4 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -223,6 +223,13 @@ static cpumask_var_t	isolated_cpus;
+ /* List of remote partition root children */
+ static struct list_head remote_children;
+ 
++/*
++ * A flag to force sched domain rebuild at the end of an operation while
++ * inhibiting it in the intermediate stages when set. Currently it is only
++ * set in hotplug code.
++ */
++static bool force_sd_rebuild;
++
+ /*
+  * Partition root states:
+  *
+@@ -1442,7 +1449,7 @@ static void update_partition_sd_lb(struct cpuset *cs, int old_prs)
+ 			clear_bit(CS_SCHED_LOAD_BALANCE, &cs->flags);
  	}
  
--	if (urb->actual_length <= IPHETH_IP_ALIGN) {
--		dev->net->stats.rx_length_errors++;
--		return;
--	}
+-	if (rebuild_domains)
++	if (rebuild_domains && !force_sd_rebuild)
+ 		rebuild_sched_domains_locked();
+ }
+ 
+@@ -1805,7 +1812,7 @@ static void remote_partition_check(struct cpuset *cs, struct cpumask *newmask,
+ 			remote_partition_disable(child, tmp);
+ 			disable_cnt++;
+ 		}
+-	if (disable_cnt)
++	if (disable_cnt && !force_sd_rebuild)
+ 		rebuild_sched_domains_locked();
+ }
+ 
+@@ -2415,7 +2422,8 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 	}
+ 	rcu_read_unlock();
+ 
+-	if (need_rebuild_sched_domains && !(flags & HIER_NO_SD_REBUILD))
++	if (need_rebuild_sched_domains && !(flags & HIER_NO_SD_REBUILD) &&
++	    !force_sd_rebuild)
+ 		rebuild_sched_domains_locked();
+ }
+ 
+@@ -3077,7 +3085,8 @@ static int update_flag(cpuset_flagbits_t bit, struct cpuset *cs,
+ 	cs->flags = trialcs->flags;
+ 	spin_unlock_irq(&callback_lock);
+ 
+-	if (!cpumask_empty(trialcs->cpus_allowed) && balance_flag_changed)
++	if (!cpumask_empty(trialcs->cpus_allowed) && balance_flag_changed &&
++	    !force_sd_rebuild)
+ 		rebuild_sched_domains_locked();
+ 
+ 	if (spread_flag_changed)
+@@ -4478,11 +4487,9 @@ hotplug_update_tasks(struct cpuset *cs,
+ 		update_tasks_nodemask(cs);
+ }
+ 
+-static bool force_rebuild;
 -
- 	/* RX URBs starting with 0x00 0x01 do not encapsulate Ethernet frames,
- 	 * but rather are control frames. Their purpose is not documented, and
- 	 * they don't affect driver functionality, okay to drop them.
-@@ -298,7 +293,8 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
- 	 * URB received from the bulk IN endpoint.
- 	 */
- 	if (unlikely
--		(((char *)urb->transfer_buffer)[0] == 0 &&
-+		(urb->actual_length == 4 &&
-+		 ((char *)urb->transfer_buffer)[0] == 0 &&
- 		 ((char *)urb->transfer_buffer)[1] == 1))
- 		goto rx_submit;
+ void cpuset_force_rebuild(void)
+ {
+-	force_rebuild = true;
++	force_sd_rebuild = true;
+ }
+ 
+ /**
+@@ -4630,15 +4637,9 @@ static void cpuset_handle_hotplug(void)
+ 		       !cpumask_empty(subpartitions_cpus);
+ 	mems_updated = !nodes_equal(top_cpuset.effective_mems, new_mems);
+ 
+-	/*
+-	 * In the rare case that hotplug removes all the cpus in
+-	 * subpartitions_cpus, we assumed that cpus are updated.
+-	 */
+-	if (!cpus_updated && !cpumask_empty(subpartitions_cpus))
+-		cpus_updated = true;
+-
+ 	/* For v1, synchronize cpus_allowed to cpu_active_mask */
+ 	if (cpus_updated) {
++		cpuset_force_rebuild();
+ 		spin_lock_irq(&callback_lock);
+ 		if (!on_dfl)
+ 			cpumask_copy(top_cpuset.cpus_allowed, &new_cpus);
+@@ -4694,8 +4695,8 @@ static void cpuset_handle_hotplug(void)
+ 	}
+ 
+ 	/* rebuild sched domains if cpus_allowed has changed */
+-	if (cpus_updated || force_rebuild) {
+-		force_rebuild = false;
++	if (force_sd_rebuild) {
++		force_sd_rebuild = false;
+ 		rebuild_sched_domains_cpuslocked();
+ 	}
  
 -- 
 2.43.0
