@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339D214B094;
-	Mon, 16 Sep 2024 12:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E311547F5;
+	Mon, 16 Sep 2024 12:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488599; cv=none; b=gdz/Nn6qs1l5HBjlbZ/qBQ30SDU1y4x98dG0s7nAMgdkqIm6Fsgu1DsrH/QC9zRxjkPbkNmy7JruzcvZG39VVW+YF4JVOQfsSZYu7KAFKnM7YjS6QTJ6zcev9FqtjgeP03fIz1H4PtNnIER8+a7jkuzREbOlTTh47Ln97ebyanc=
+	t=1726488602; cv=none; b=dDKGjKXWL8xQBcaVbUMd66YiYuYFjatW5g1jXmj+lwHhrnvWPWDZDoUg4nbrjCp7duTG0OrluhOJDGlOI7TB8/QTvkMs8AvnnPGhOeSiDygsbHM4gwtXxOb18KV+GR1dwXSjXjxF8WxBdtrYatZBlWzohBo58i+By/ds9PO7QqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488599; c=relaxed/simple;
-	bh=IMJYoWW7MgPYil8f46RMV7Bi0LP2SrH5EWhzEEgdPfM=;
+	s=arc-20240116; t=1726488602; c=relaxed/simple;
+	bh=/LuoSL5w9LRmRK4ek5+e8xZrRhzDVG/MYgiij2w9SFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hx5clNTZIPJhpxcYFG8d9TkwqwCqxO7ENGxR8lWc+XKmtk73vqQ4Acm44blegrtpQGsDAd2GXPK7B5DwTV0lQDK1p3sEpL4zfFpByPaz9Jj0hBcxviB5gS6xhGoXEVvHvGGWKLgMIOyzkkGQanSx38cr7o/7cbTkzIPqpjOrUY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFUv+HqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LT2aOqVVC18pfrKWvqYst3l+zpsoCzvNJTd3RO1kLunyer6F7lQM5aEkfeuTBe7DKv1Nru6EhXAJSrdqy0TpjFXQI+gvvIkLILKSKw5L3c0tRKW7y1iebVoU2ytYUTptBvnjph5eKmEZdx8s8yJ7+BsD0POD8ouyEK0zNEa5O7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIv6kZTy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFUv+HqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3E4C4CEC4;
-	Mon, 16 Sep 2024 12:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIv6kZTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F0FC4CECF;
+	Mon, 16 Sep 2024 12:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488599;
-	bh=IMJYoWW7MgPYil8f46RMV7Bi0LP2SrH5EWhzEEgdPfM=;
+	s=korg; t=1726488601;
+	bh=/LuoSL5w9LRmRK4ek5+e8xZrRhzDVG/MYgiij2w9SFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFUv+HqMsR1MlsLjbmmGjAptVhSFxDFxOUXFXkXbTTK9YlQkpw+UFeacrIV1xzdco
-	 g97x1EmzNPxxOKY+mLbzb1aoumutVztcQ5g6P6pbf6vL5WhPsZpAFmBre8BjJ44B6l
-	 lWAfzWiG9lwQ4S9VaP/C0WTzMrOKlVXiB06W+Jag=
+	b=AIv6kZTyKS8ojeZNHV46lmqcRpQ1jGFKUnLu5wRXtnudCNkM0CvjUrnZnsSXW9EEg
+	 ut0YaiPVLWvtFpjlKb31otcxeMg6tFWa9Rd+xAI+W3aa1UQD6yle45vmSXUZu3LnaD
+	 CiIiQVbmuKQr7oxb7/GoCmjNCxfbVrDgkJrFsSso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Felix Fietkau <nbd@nbd.name>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/91] powerpc/mm: Fix boot warning with hugepages and CONFIG_DEBUG_VIRTUAL
-Date: Mon, 16 Sep 2024 13:43:56 +0200
-Message-ID: <20240916114225.189388084@linuxfoundation.org>
+Subject: [PATCH 6.6 21/91] wifi: mt76: mt7921: fix NULL pointer access in mt7921_ipv6_addr_change
+Date: Mon, 16 Sep 2024 13:43:57 +0200
+Message-ID: <20240916114225.221567327@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -51,83 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Bert Karwatzki <spasswolf@web.de>
 
-[ Upstream commit e7e846dc6c73fbc94ae8b4ec20d05627646416f2 ]
+[ Upstream commit 479ffee68d59c599f8aed8fa2dcc8e13e7bd13c3 ]
 
-Booting with CONFIG_DEBUG_VIRTUAL leads to following warning when
-passing hugepage reservation on command line:
+When disabling wifi mt7921_ipv6_addr_change() is called as a notifier.
+At this point mvif->phy is already NULL so we cannot use it here.
 
-  Kernel command line: hugepagesz=1g hugepages=1 hugepagesz=64m hugepages=1 hugepagesz=256m hugepages=1 noreboot
-  HugeTLB: allocating 1 of page size 1.00 GiB failed.  Only allocated 0 hugepages.
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at arch/powerpc/include/asm/io.h:948 __alloc_bootmem_huge_page+0xd4/0x284
-  Modules linked in:
-  CPU: 0 PID: 0 Comm: swapper Not tainted 6.10.0-rc6-00396-g6b0e82791bd0-dirty #936
-  Hardware name: MPC8544DS e500v2 0x80210030 MPC8544 DS
-  NIP:  c1020240 LR: c10201d0 CTR: 00000000
-  REGS: c13fdd30 TRAP: 0700   Not tainted  (6.10.0-rc6-00396-g6b0e82791bd0-dirty)
-  MSR:  00021000 <CE,ME>  CR: 44084288  XER: 20000000
-
-  GPR00: c10201d0 c13fde20 c130b560 e8000000 e8001000 00000000 00000000 c1420000
-  GPR08: 00000000 00028001 00000000 00000004 44084282 01066ac0 c0eb7c9c efffe149
-  GPR16: c0fc4228 0000005f ffffffff c0eb7d0c c0eb7cc0 c0eb7ce0 ffffffff 00000000
-  GPR24: c1441cec efffe153 e8001000 c14240c0 00000000 c1441d64 00000000 e8000000
-  NIP [c1020240] __alloc_bootmem_huge_page+0xd4/0x284
-  LR [c10201d0] __alloc_bootmem_huge_page+0x64/0x284
-  Call Trace:
-  [c13fde20] [c10201d0] __alloc_bootmem_huge_page+0x64/0x284 (unreliable)
-  [c13fde50] [c10207b8] hugetlb_hstate_alloc_pages+0x8c/0x3e8
-  [c13fdeb0] [c1021384] hugepages_setup+0x240/0x2cc
-  [c13fdef0] [c1000574] unknown_bootoption+0xfc/0x280
-  [c13fdf30] [c0078904] parse_args+0x200/0x4c4
-  [c13fdfa0] [c1000d9c] start_kernel+0x238/0x7d0
-  [c13fdff0] [c0000434] set_ivor+0x12c/0x168
-  Code: 554aa33e 7c042840 3ce0c142 80a7427c 5109a016 50caa016 7c9a2378 7fdcf378 4180000c 7c052040 41810160 7c095040 <0fe00000> 38c00000 40800108 3c60c0eb
-  ---[ end trace 0000000000000000 ]---
-
-This is due to virt_addr_valid() using high_memory before it is set.
-
-high_memory is set in mem_init() using max_low_pfn, but max_low_pfn
-is available long before, it is set in mem_topology_setup(). So just
-like commit daa9ada2093e ("powerpc/mm: Fix boot crash with FLATMEM")
-moved the setting of max_mapnr immediately after the call to
-mem_topology_setup(), the same can be done for high_memory.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/62b69c4baad067093f39e7e60df0fe27a86b8d2a.1723100702.git.christophe.leroy@csgroup.eu
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240812104542.80760-1-spasswolf@web.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/setup-common.c | 1 +
- arch/powerpc/mm/mem.c              | 2 --
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index 20f72cd1d813..03eaad5949f1 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -950,6 +950,7 @@ void __init setup_arch(char **cmdline_p)
- 	mem_topology_setup();
- 	/* Set max_mapnr before paging_init() */
- 	set_max_mapnr(max_pfn);
-+	high_memory = (void *)__va(max_low_pfn * PAGE_SIZE);
- 
- 	/*
- 	 * Release secondary cpus out of their spinloops at 0x60 now that
-diff --git a/arch/powerpc/mm/mem.c b/arch/powerpc/mm/mem.c
-index 07e8f4f1e07f..9dbef559af4c 100644
---- a/arch/powerpc/mm/mem.c
-+++ b/arch/powerpc/mm/mem.c
-@@ -287,8 +287,6 @@ void __init mem_init(void)
- 	swiotlb_init(ppc_swiotlb_enable, ppc_swiotlb_flags);
- #endif
- 
--	high_memory = (void *) __va(max_low_pfn * PAGE_SIZE);
--
- 	kasan_late_init();
- 
- 	memblock_free_all();
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 6a5c2cae087d..6dec54431312 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -1095,7 +1095,7 @@ static void mt7921_ipv6_addr_change(struct ieee80211_hw *hw,
+ 				    struct inet6_dev *idev)
+ {
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+-	struct mt792x_dev *dev = mvif->phy->dev;
++	struct mt792x_dev *dev = mt792x_hw_dev(hw);
+ 	struct inet6_ifaddr *ifa;
+ 	struct in6_addr ns_addrs[IEEE80211_BSS_ARP_ADDR_LIST_LEN];
+ 	struct sk_buff *skb;
 -- 
 2.43.0
 
