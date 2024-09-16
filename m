@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3FE14AD19;
-	Mon, 16 Sep 2024 12:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5D9154C04;
+	Mon, 16 Sep 2024 12:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488097; cv=none; b=ZvNZeZ2Voe7F7g2XmWKwU2LSks+gHL4bM3paNvMDeJuM4Y2gRvTkdKuqCkovf55TKKrl4j7W4PY9dIKI/3v7zWMRhO5bgbj78V9sgOkopAvziyL/jG/oU8EP5/P4irMPHJqszUglqPyDQyss/84xXZB0gb/XEa6j7hBXqjQIBeo=
+	t=1726488099; cv=none; b=HuUT+Kvtsr6KVRUxX2dEc4ankE9Fwasv2IFb4CAKhgX9WZ27PuUaV+E2YoRpr9QgcUZc/5QEf+VurFcrx3TylRQ8GGqNwic5+ovmh64FV2vewkieov4sl6EUPD6LIc9gcixisoZ57yYchlIIX06uyPtZTY6D7kj8OZZ/CWEh1No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488097; c=relaxed/simple;
-	bh=0ngpE6t8k8Vp5iIxQ96zV7xvagS988eUk0sxSno4D3M=;
+	s=arc-20240116; t=1726488099; c=relaxed/simple;
+	bh=OYEMRUei5le+ZOlaMmEMPP7nsled3pCLxezaVLhiqj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yen/YeK5mfxtLAgxwZeuFmOy9W/2zCKDbw67VtKBlcJ0aBs3gnR1bjLG8ZDACR+RSPFUqRkfUYfZUFjzt/2b1P5oeSauDhRdjxtJ68Umer+nQNnyDhPXEt1H7aqa7NXcWba+W1X/w4mlIFOs05s2E8DU200e9Vq8W118rkuAxDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiZbnnz6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rBKckN1V7AxJQq/HqjyL1alIg0pQa74Dbg4QH12icHmvJSW4gqZ0i9axqi2WL0nQ7/BI7KNvt11OmWkAVQ9M1FTcL/I76l61X+zA6fPyQurA/T1hWZk9+/LRGcIVrHmF+IKKdkVn6R97oVPIvc0EHBD4jhoR6vPJO88U67j/6vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afn5Xx5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiZbnnz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB6EC4CEC4;
-	Mon, 16 Sep 2024 12:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afn5Xx5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4B9C4CEC4;
+	Mon, 16 Sep 2024 12:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488096;
-	bh=0ngpE6t8k8Vp5iIxQ96zV7xvagS988eUk0sxSno4D3M=;
+	s=korg; t=1726488099;
+	bh=OYEMRUei5le+ZOlaMmEMPP7nsled3pCLxezaVLhiqj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiZbnnz6/siTpITcKAfvKysEO5V9etYOf+wEbJfY+7foq7YWsf8sjD9OA+J1oqOeh
-	 YK/3X4vAw9TQfjUIzCWLplIh1tSMUWBKJOqAlel2KNT3RM7Vy4ZdKWVJhpMiHBe7TB
-	 kgtC8rM/e49X3OdL2CITOrKVp8DVD0IOyeFWnqU8=
+	b=Afn5Xx5PqQLDTOrE46C+dY4x9N0qxfCSXUX90K0ewZEdTpY98wdirzXXdDx/u+kKv
+	 VYjnZfj4gQekADtAzD3J5LkOjQ1XwpFd0UM9FtCqw8a3kMN3bC6g6+jVHcxYLcK8dm
+	 d4vmz/wpK+/WcjD/7sISV2CPSAMyBmcMzswZ5lZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 57/63] drm/amdgpu/atomfirmware: Silence UBSAN warning
-Date: Mon, 16 Sep 2024 13:44:36 +0200
-Message-ID: <20240916114223.064244433@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 58/63] spi: geni-qcom: Convert to platform remove callback returning void
+Date: Mon, 16 Sep 2024 13:44:37 +0200
+Message-ID: <20240916114223.096602472@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -44,47 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 17ea4383649fdeaff3181ddcf1ff03350d42e591 upstream.
+[ Upstream commit d0b52f6539e008a0d42bf673486bd21b7d2dc191 ]
 
-Per the comments, these are variable sized arrays.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3613
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 81f7804ba84ee617ed594de934ed87bcc4f83531)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230303172041.2103336-30-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 89e362c883c6 ("spi: geni-qcom: Undo runtime PM changes at driver exit time")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/atomfirmware.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -1005,7 +1005,7 @@ struct display_object_info_table_v1_4
-   uint16_t  supporteddevices;
-   uint8_t   number_of_path;
-   uint8_t   reserved;
--  struct    atom_display_object_path_v2 display_path[8];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
-+  struct    atom_display_object_path_v2 display_path[];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
- };
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 7b76dcd11e2b..ac5a581d1e5e 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -1003,7 +1003,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- struct display_object_info_table_v1_5 {
-@@ -1015,7 +1015,7 @@ struct display_object_info_table_v1_5 {
- 	uint8_t reserved;
- 	// the real number of this included in the structure is calculated by using the
- 	// (whole structure size - the header size- number_of_path)/size of atom_display_object_path
--	struct atom_display_object_path_v3 display_path[8];
-+	struct atom_display_object_path_v3 display_path[];
- };
+-static int spi_geni_remove(struct platform_device *pdev)
++static void spi_geni_remove(struct platform_device *pdev)
+ {
+ 	struct spi_master *spi = platform_get_drvdata(pdev);
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+@@ -1015,7 +1015,6 @@ static int spi_geni_remove(struct platform_device *pdev)
  
- /* 
+ 	free_irq(mas->irq, spi);
+ 	pm_runtime_disable(&pdev->dev);
+-	return 0;
+ }
+ 
+ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
+@@ -1097,7 +1096,7 @@ MODULE_DEVICE_TABLE(of, spi_geni_dt_match);
+ 
+ static struct platform_driver spi_geni_driver = {
+ 	.probe  = spi_geni_probe,
+-	.remove = spi_geni_remove,
++	.remove_new = spi_geni_remove,
+ 	.driver = {
+ 		.name = "geni_spi",
+ 		.pm = &spi_geni_pm_ops,
+-- 
+2.43.0
+
 
 
