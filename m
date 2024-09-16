@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C78114D439;
-	Mon, 16 Sep 2024 12:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB0314AD19;
+	Mon, 16 Sep 2024 12:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488370; cv=none; b=BgIeklpceov/wrT72qrg3bQNDHxkLjPcCANzrND3D/lZmgZFi/yFeRTUzSdBmZ9tc6d/TajwoJgR6sdiI+50am6domKm55chTtvpLJtL/c5lPHhk1QH+BWULIunLeB+HvYawC/0jTU+/3GWPhkrXQ0+O/X71DjUAge0ON9iquHg=
+	t=1726488373; cv=none; b=Ck7Ay/SgvCZpR1Aew917rtJDOc4znc13z2VqOguWKasHZQmXxSLlHOCXQm79cYv+wsnLPt7bZCN2iYBt461YVNtstgKXi47UnxBYQORs/bM+qTi0r+reN+LUdapy4zlwM18SmROi+RvABO5vm9voAU43j/Iw2s5opIfLPbAL0ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488370; c=relaxed/simple;
-	bh=HVLKDCHvscOm1sKOa5Mz6gTewVKnO2kbkYfjm2fU2YI=;
+	s=arc-20240116; t=1726488373; c=relaxed/simple;
+	bh=tcU+PKAaeQrSh2Rdnr/zfOpK2j5/PQjB6lGgTeWxi7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIIwB5bwyT6e12yd9BubgF3qvfGbbvMs0lVXXFd1TeBHQr4jmmRS2n3Fi4x0Shx7lSapY/oBkoEfZcUJT25m8+AYlfTjthd0q3YbPFkQ2A8s6G4Q93lKL4ZoTTm9wcQcqR8D4b4EdXjpQl+oR9/Ab1XtbGj7u6d46GaXRXD/g88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukNd8r7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FBMAAqMzrIn2ahzSibhTg4YHEJLn/9Cok+a0tQMUjEa5Vyqp1D+fkLUlD67TFCsIEiARf8MXEDIJEldHtJAf3d0k7WRFX6W4A/oY5nBeUkwYiWWBeE2xRD+UDHnNYzeKLicRikfXfQ8+6+rhgDHBjcVx98aXV4nzN2Ckst769oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIBk1hBI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukNd8r7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9F6C4CEC4;
-	Mon, 16 Sep 2024 12:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIBk1hBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C764BC4CEC4;
+	Mon, 16 Sep 2024 12:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488370;
-	bh=HVLKDCHvscOm1sKOa5Mz6gTewVKnO2kbkYfjm2fU2YI=;
+	s=korg; t=1726488373;
+	bh=tcU+PKAaeQrSh2Rdnr/zfOpK2j5/PQjB6lGgTeWxi7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukNd8r7dtJSaTl1oVXwzdufsuUt5fjXx4dT+m4sNbrzuBGFcubWeFijEKrEDMY9jS
-	 RgpiH44Rnm4fCwVqYsVa/Hddg7BAPyHsgdOJiYq6aG1u9gnlGKnX8r6I1qr2K2QfmX
-	 6i6a3pmMpdSENJZ3xL0jz8EAlOKfhdgYRarlsv8s=
+	b=QIBk1hBItuWQy3iLS1+Do4cEsuRg+YGsZ5FH8uEM1INTQbbuJFGiCrK/bIjLpMEDN
+	 DnmOAHL3jcUMSwqf13QOHxdHa6CbuxH6fOPJezhBYzipKGj0pscTK4z59L6Btf2Tix
+	 nC5mD+kDeLjaX7r+nWu9xQHKY9OPLX50U9+Z3hcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Andrea Parri <parri.andrea@gmail.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 089/121] drivers: perf: Fix smp_processor_id() use in preemptible code
-Date: Mon, 16 Sep 2024 13:44:23 +0200
-Message-ID: <20240916114232.093364599@linuxfoundation.org>
+Subject: [PATCH 6.10 090/121] riscv: Disable preemption while handling PR_RISCV_CTX_SW_FENCEI_OFF
+Date: Mon, 16 Sep 2024 13:44:24 +0200
+Message-ID: <20240916114232.120682646@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -54,58 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Charlie Jenkins <charlie@rivosinc.com>
 
-[ Upstream commit 2840dadf0dde92638d13b97998026c5fcddbdceb ]
+[ Upstream commit 7c1e5b9690b0e14acead4ff98d8a6c40f2dff54b ]
 
-As reported in [1], the use of smp_processor_id() in
-pmu_sbi_device_probe() must be protected by disabling the preemption, so
-simple use get_cpu()/put_cpu() instead.
+The icache will be flushed in switch_to() if force_icache_flush is true,
+or in flush_icache_deferred() if icache_stale_mask is set. Between
+setting force_icache_flush to false and calculating the new
+icache_stale_mask, preemption needs to be disabled. There are two
+reasons for this:
 
-Reported-by: Nam Cao <namcao@linutronix.de>
-Closes: https://lore.kernel.org/linux-riscv/20240820074925.ReMKUPP3@linutronix.de/ [1]
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Tested-by: Nam Cao <namcao@linutronix.de>
-Fixes: a8625217a054 ("drivers/perf: riscv: Implement SBI PMU snapshot function")
-Reported-by: Andrea Parri <parri.andrea@gmail.com>
-Tested-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://lore.kernel.org/r/20240826165210.124696-1-alexghiti@rivosinc.com
+1. If CPU migration happens between force_icache_flush = false, and the
+   icache_stale_mask is set, an icache flush will not be emitted.
+2. smp_processor_id() is used in set_icache_stale_mask() to mark the
+   current CPU as not needing another flush since a flush will have
+   happened either by userspace or by the kernel when performing the
+   migration. smp_processor_id() is currently called twice with preemption
+   enabled which causes a race condition. It allows
+   icache_stale_mask to be populated with inconsistent CPU ids.
+
+Resolve these two issues by setting the icache_stale_mask before setting
+force_icache_flush to false, and using get_cpu()/put_cpu() to obtain the
+smp_processor_id().
+
+Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
+Fixes: 6b9391b581fd ("riscv: Include riscv_set_icache_flush_ctx prctl")
+Link: https://lore.kernel.org/r/20240903-fix_fencei_optimization-v2-1-8025f20171fc@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_sbi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/riscv/mm/cacheflush.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 11c7c85047ed..765bda7924f7 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -1368,11 +1368,15 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
+diff --git a/arch/riscv/mm/cacheflush.c b/arch/riscv/mm/cacheflush.c
+index a03c994eed3b..b81672729887 100644
+--- a/arch/riscv/mm/cacheflush.c
++++ b/arch/riscv/mm/cacheflush.c
+@@ -158,6 +158,7 @@ void __init riscv_init_cbo_blocksizes(void)
+ #ifdef CONFIG_SMP
+ static void set_icache_stale_mask(void)
+ {
++	int cpu = get_cpu();
+ 	cpumask_t *mask;
+ 	bool stale_cpu;
  
- 	/* SBI PMU Snapsphot is only available in SBI v2.0 */
- 	if (sbi_v2_available) {
-+		int cpu;
-+
- 		ret = pmu_sbi_snapshot_alloc(pmu);
- 		if (ret)
- 			goto out_unregister;
+@@ -168,10 +169,11 @@ static void set_icache_stale_mask(void)
+ 	 * concurrently on different harts.
+ 	 */
+ 	mask = &current->mm->context.icache_stale_mask;
+-	stale_cpu = cpumask_test_cpu(smp_processor_id(), mask);
++	stale_cpu = cpumask_test_cpu(cpu, mask);
  
--		ret = pmu_sbi_snapshot_setup(pmu, smp_processor_id());
-+		cpu = get_cpu();
-+
-+		ret = pmu_sbi_snapshot_setup(pmu, cpu);
- 		if (ret) {
- 			/* Snapshot is an optional feature. Continue if not available */
- 			pmu_sbi_snapshot_free(pmu);
-@@ -1386,6 +1390,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
- 			 */
- 			static_branch_enable(&sbi_pmu_snapshot_available);
- 		}
-+		put_cpu();
- 	}
+ 	cpumask_setall(mask);
+-	cpumask_assign_cpu(smp_processor_id(), mask, stale_cpu);
++	cpumask_assign_cpu(cpu, mask, stale_cpu);
++	put_cpu();
+ }
+ #endif
  
- 	register_sysctl("kernel", sbi_pmu_sysctl_table);
+@@ -239,14 +241,12 @@ int riscv_set_icache_flush_ctx(unsigned long ctx, unsigned long scope)
+ 	case PR_RISCV_CTX_SW_FENCEI_OFF:
+ 		switch (scope) {
+ 		case PR_RISCV_SCOPE_PER_PROCESS:
+-			current->mm->context.force_icache_flush = false;
+-
+ 			set_icache_stale_mask();
++			current->mm->context.force_icache_flush = false;
+ 			break;
+ 		case PR_RISCV_SCOPE_PER_THREAD:
+-			current->thread.force_icache_flush = false;
+-
+ 			set_icache_stale_mask();
++			current->thread.force_icache_flush = false;
+ 			break;
+ 		default:
+ 			return -EINVAL;
 -- 
 2.43.0
 
