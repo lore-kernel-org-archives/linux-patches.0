@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31C4155A3C;
-	Mon, 16 Sep 2024 12:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B769156F36;
+	Mon, 16 Sep 2024 12:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488509; cv=none; b=mhxfJREXWVzuINNImFbc7XjHrRl7yrhmiFG8S/hqTX01nzkjq7JKHwVnCdSdNkYMxWa9CJ2nyAVjoHZYjdFXJzTUrFIaXlAHGeVXcFt3uzvWV/Yn1TxYcxXHe/rvW4aj8R21+HIjTbD+wrwL4pIX+FGE8Wf1VwrFAukpEW8acRk=
+	t=1726488512; cv=none; b=sE6kyHzhP6qdwU3eJO+FkBHgUt4PstcgbQxNRiaLnJyCnYbLkyuchwPerbO2LToBJsccEtBRvq+OHbP7WcdARAvuLoiK4+cur1QCC0o/yN/s0YPtau4XA0sb52r1XedLNiZzsBQt9TTEcEApHfM5BuGVm59pcjydHURrykP6nFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488509; c=relaxed/simple;
-	bh=6O0S07BSYH2gXJw8doMUQARbR0JF9b3wOcBBSb12SO4=;
+	s=arc-20240116; t=1726488512; c=relaxed/simple;
+	bh=+GoVzwJE4rNb+jyzXs6nfYquBNkQ+ma80jQwSbVMYXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aR6nD9HuVA3ynNCNbgLakLns8LKhHIPo70MXovnbPXj8BULuK1+KhOCCjDXCC/yDm9dtJtpOcn4b/RGjMfuflApA7mBJG2e2i+109p/70emcFWUsyYu8rwqnmLCbU5xO2sRSgx3ru926mD1GcfDRnnOLYZ7G6vXRnXmakjxKSdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPBremsd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TX+N0CzcrbrpU6FJp6i3MAKqcefTG9GPlivVnMzZqcL/OS3KRGsItEXE13W29GvFFQrKACqRt/kguaw/kUDs5wbZg3eDbW7UXn7Em0mVPmviQHQ2G5WVuAxjy2agtxeT0ZHBNWvJts0AFi6hNUyTMGTJ5JLhSZPwEq6AbyWKDo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeIKW+Ri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPBremsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42546C4CECE;
-	Mon, 16 Sep 2024 12:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeIKW+Ri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14787C4CECE;
+	Mon, 16 Sep 2024 12:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488509;
-	bh=6O0S07BSYH2gXJw8doMUQARbR0JF9b3wOcBBSb12SO4=;
+	s=korg; t=1726488512;
+	bh=+GoVzwJE4rNb+jyzXs6nfYquBNkQ+ma80jQwSbVMYXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPBremsdxCSV2W7vE7qLDG10RSpf8g57Eq3yjpHfnJ1jZQqV+BOOVMUeF/kPwBym1
-	 snCrMEcVknoz/W998YFl6CyNv2u8C2rZw+PaICrpGuiElEsWjx8vUS42IIVkUbHfXh
-	 HwDaUoFqOG5Z4I8iO4DqnGxjdyztO0nQBc86D7L8=
+	b=IeIKW+RiqPSl+qp1/ozclqrWGHZ9QGNeOsCZduy7XoUvsiuRrlXrwBhxvnmYfB2nB
+	 gPn4SBILhs+hmj1MPiq5PqzcI9+HI7Kuk0/xcjcB389zPX+ZCbbxfwcHZ9Ckpp8R8v
+	 NmDJBdFG1+/Oauy0wAH3Nl0RCUDe/oqBi70wMx5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dumitru Ceclan <dumitru.ceclan@analog.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 04/91] iio: adc: ad7124: fix DT configuration parsing
-Date: Mon, 16 Sep 2024 13:43:40 +0200
-Message-ID: <20240916114224.656385094@linuxfoundation.org>
+Subject: [PATCH 6.6 05/91] nvmem: core: add nvmem_dev_size() helper
+Date: Mon, 16 Sep 2024 13:43:41 +0200
+Message-ID: <20240916114224.692502557@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -47,56 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dumitru Ceclan <mitrutzceclan@gmail.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 61cbfb5368dd50ed0d65ce21d305aa923581db2b ]
+[ Upstream commit 33cf42e68efc8ff529a7eee08a4f0ba8c8d0a207 ]
 
-The cfg pointer is set before reading the channel number that the
-configuration should point to. This causes configurations to be shifted
-by one channel.
-For example setting bipolar to the first channel defined in the DT will
-cause bipolar mode to be active on the second defined channel.
+This is required by layouts that need to read whole NVMEM content. It's
+especially useful for NVMEM devices without hardcoded layout (like
+U-Boot environment data block).
 
-Fix by moving the cfg pointer setting after reading the channel number.
-
-Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
-Signed-off-by: Dumitru Ceclan <dumitru.ceclan@analog.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20240806085133.114547-1-dumitru.ceclan@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20231221173421.13737-2-zajec5@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8679e8b4a1eb ("nvmem: u-boot-env: error if NVMEM device is too small")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvmem/core.c           | 13 +++++++++++++
+ include/linux/nvmem-consumer.h |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index bd323c6bd756..d2fe0269b6d3 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -842,8 +842,6 @@ static int ad7124_parse_channel_config(struct iio_dev *indio_dev,
- 	st->channels = channels;
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index e7fd1315d7ed..f28c005c2bb2 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -2131,6 +2131,19 @@ const char *nvmem_dev_name(struct nvmem_device *nvmem)
+ }
+ EXPORT_SYMBOL_GPL(nvmem_dev_name);
  
- 	device_for_each_child_node_scoped(dev, child) {
--		cfg = &st->channels[channel].cfg;
--
- 		ret = fwnode_property_read_u32(child, "reg", &channel);
- 		if (ret)
- 			return ret;
-@@ -861,6 +859,7 @@ static int ad7124_parse_channel_config(struct iio_dev *indio_dev,
- 		st->channels[channel].ain = AD7124_CHANNEL_AINP(ain[0]) |
- 						  AD7124_CHANNEL_AINM(ain[1]);
++/**
++ * nvmem_dev_size() - Get the size of a given nvmem device.
++ *
++ * @nvmem: nvmem device.
++ *
++ * Return: size of the nvmem device.
++ */
++size_t nvmem_dev_size(struct nvmem_device *nvmem)
++{
++	return nvmem->size;
++}
++EXPORT_SYMBOL_GPL(nvmem_dev_size);
++
+ static int __init nvmem_init(void)
+ {
+ 	return bus_register(&nvmem_bus_type);
+diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
+index 4523e4e83319..526025561df1 100644
+--- a/include/linux/nvmem-consumer.h
++++ b/include/linux/nvmem-consumer.h
+@@ -81,6 +81,7 @@ int nvmem_device_cell_write(struct nvmem_device *nvmem,
+ 			    struct nvmem_cell_info *info, void *buf);
  
-+		cfg = &st->channels[channel].cfg;
- 		cfg->bipolar = fwnode_property_read_bool(child, "bipolar");
+ const char *nvmem_dev_name(struct nvmem_device *nvmem);
++size_t nvmem_dev_size(struct nvmem_device *nvmem);
  
- 		ret = fwnode_property_read_u32(child, "adi,reference-select", &tmp);
+ void nvmem_add_cell_lookups(struct nvmem_cell_lookup *entries,
+ 			    size_t nentries);
 -- 
 2.43.0
 
