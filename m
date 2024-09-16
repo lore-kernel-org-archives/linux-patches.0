@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED64156F36;
-	Mon, 16 Sep 2024 12:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1644155730;
+	Mon, 16 Sep 2024 12:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488539; cv=none; b=V+w8bPo/YRIlYcmIBEZe2wJNMRkRwy7ZBdMB50PY6y0EOsYnKc2kuei0cEc3GCBn2pPGrfn22oYXJ55WoNWoENGpWsuZym/Y3BvQci935+xX+gmlZV7QkfGhbtQ787qy4UXCT6wyu+feQ4pHqa8SBwZiiuFDMAjUbKBR0tspBKw=
+	t=1726488542; cv=none; b=emUozNmj6aFgKC/Bhjk1zNFcc8ZlO4cWqT5zbm6I7qvSelrk1/dbanDttQhum02R1yZ8Vda13f/VL6BacN15kg2P4Fmol2d9DeOP/Ti0fcxwIMbGGK9XtgaWkF4FoqftLmuNEKj7Y0vYNIytVlsz18F++CrAr7wVpnZaqhbh5lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488539; c=relaxed/simple;
-	bh=ZEHdcTcumX4KLBxjqMbqkYu4/F0n1i+oexBV8fuWw8c=;
+	s=arc-20240116; t=1726488542; c=relaxed/simple;
+	bh=1san2o4+8uOU4aeTCe9w/mmdQ4gRMjjiV45or9w9kR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4KuQUB1bZhGjbKdPJv2q6tPaAQxR/sP2SyFrrTiAXDih8vB+/jnCH/dJ7DX11gSkbGjvHFHuiAhkktImQJfPHdxwVVF2JqHbrwTuPEeIgqcd6ROzFhHZWRcpEupElDh8rx9bbM+02qfYAs8oR/rJd70SkDxsQeJKIe0Y7OO62k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYa2yWSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YM2NNrdXMihigRLIGfiwIMMjzipBu1dHhHmPppRvWb2S3t16parxXZRjXRU/fpbKQJZ/ULhA87IUSmmT3iGqLSOgaml/itobVST2UzCT4aPQNrpP8jCu+CbTB9jHmg/SbnxaSje17UsyJM+0F1ZTRXRNAlIXPHXhkEa/1DU3v3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1MQG5It; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYa2yWSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB1AC4CEC4;
-	Mon, 16 Sep 2024 12:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1MQG5It"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB27C4CEC4;
+	Mon, 16 Sep 2024 12:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488539;
-	bh=ZEHdcTcumX4KLBxjqMbqkYu4/F0n1i+oexBV8fuWw8c=;
+	s=korg; t=1726488541;
+	bh=1san2o4+8uOU4aeTCe9w/mmdQ4gRMjjiV45or9w9kR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYa2yWSdTEWtr1PGToeaaOAgX0PeTVUUnrTqhIqs7F9QSDjMi3AlkT66KW2rWepcb
-	 +gWvyjHCtCZ2DhcPnohpGDYPBHmx8Jqc/DqgulqKtdoRr8vvI+hSSoQfrimJXN1Pe0
-	 1n4wMq3sKGf2Oc0aj3QvxONxo5ldr5A3qVuhWS9o=
+	b=r1MQG5ItQCqsYL6HGXmaLSkXRWPv/ZtPb1V+oK4S0KAUpfsbNM8GBWT8jBS7HCLpa
+	 t0RlhIIiJbUINDNf7B8LYfXI27K3M8Fr1VjjbbzwFKf7/rTotwhB8KWZX/Dl2uZM1q
+	 QzYJfpDmhBBNcDiciI3g5/e1UQPY+LJu+xPG3WyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 27/91] scripts: kconfig: merge_config: config files: add a trailing newline
-Date: Mon, 16 Sep 2024 13:44:03 +0200
-Message-ID: <20240916114225.406784950@linuxfoundation.org>
+Subject: [PATCH 6.6 28/91] platform/surface: aggregator_registry: Add Support for Surface Pro 10
+Date: Mon, 16 Sep 2024 13:44:04 +0200
+Message-ID: <20240916114225.441013872@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -45,51 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anders Roxell <anders.roxell@linaro.org>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit 33330bcf031818e60a816db0cfd3add9eecc3b28 ]
+[ Upstream commit 9c8e022567bbec53bee8ae75c44b3d6cd2080d42 ]
 
-When merging files without trailing newlines at the end of the file, two
-config fragments end up at the same row if file1.config doens't have a
-trailing newline at the end of the file.
+Add SAM client device nodes for the Surface Pro 10. It seems to use the
+same SAM client devices as the Surface Pro 9, so re-use its node group.
 
-file1.config "CONFIG_1=y"
-file2.config "CONFIG_2=y"
-./scripts/kconfig/merge_config.sh -m .config file1.config file2.config
-
-This will generate a .config looking like this.
-cat .config
-...
-CONFIG_1=yCONFIG_2=y"
-
-Making sure so we add a newline at the end of every config file that is
-passed into the script.
-
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20240811131948.261806-2-luzmaximilian@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/merge_config.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/surface/surface_aggregator_registry.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/merge_config.sh b/scripts/kconfig/merge_config.sh
-index 902eb429b9db..0b7952471c18 100755
---- a/scripts/kconfig/merge_config.sh
-+++ b/scripts/kconfig/merge_config.sh
-@@ -167,6 +167,8 @@ for ORIG_MERGE_FILE in $MERGE_LIST ; do
- 			sed -i "/$CFG[ =]/d" $MERGE_FILE
- 		fi
- 	done
-+	# In case the previous file lacks a new line at the end
-+	echo >> $TMP_FILE
- 	cat $MERGE_FILE >> $TMP_FILE
- done
+diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
+index 0fe5be539652..c2651599685e 100644
+--- a/drivers/platform/surface/surface_aggregator_registry.c
++++ b/drivers/platform/surface/surface_aggregator_registry.c
+@@ -298,7 +298,7 @@ static const struct software_node *ssam_node_group_sp8[] = {
+ 	NULL,
+ };
+ 
+-/* Devices for Surface Pro 9 */
++/* Devices for Surface Pro 9 and 10 */
+ static const struct software_node *ssam_node_group_sp9[] = {
+ 	&ssam_node_root,
+ 	&ssam_node_hub_kip,
+@@ -337,6 +337,9 @@ static const struct acpi_device_id ssam_platform_hub_match[] = {
+ 	/* Surface Pro 9 */
+ 	{ "MSHW0343", (unsigned long)ssam_node_group_sp9 },
+ 
++	/* Surface Pro 10 */
++	{ "MSHW0510", (unsigned long)ssam_node_group_sp9 },
++
+ 	/* Surface Book 2 */
+ 	{ "MSHW0107", (unsigned long)ssam_node_group_gen5 },
  
 -- 
 2.43.0
