@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718B8156C40;
-	Mon, 16 Sep 2024 12:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A21156F21;
+	Mon, 16 Sep 2024 12:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488530; cv=none; b=hvKpa+7QtqoZgV+KzxKeqVHkMBxLzwmpfAMBh7F0mM+L49toj4xzyU27Xlp1BjWryGq7SiBHmUHYzmtiD+HFH7+uc5UUWaLWBpuIi0+b4GknnldS2JrHyVfxE2NYE5ynzTmUdCKUr85dP2nC8DbMG6DnT9HcdfF0jf7DvP+praI=
+	t=1726488533; cv=none; b=I5oaj7IhgXN74a4PsriIpV0rRt8SSKe7kWhGIvDoZHjU60us8j6m4DpkKRsV/a1f5Dbk2wiJP8EGgjCjq11CuiDdSql14iwVHJr7qASTvQ9vu3pruNBXc+Tx+/zldnjP+0aBQc3ugRq05nNKzuu2IM4rXs5I8P1GVTa7M/A+lPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488530; c=relaxed/simple;
-	bh=U/1RJmhci2gZUf38P7j8c5mkA6h9xXFuLScxDCBmroo=;
+	s=arc-20240116; t=1726488533; c=relaxed/simple;
+	bh=INbGkbWhhpXXozGGK1M4YRgoO8NxMkFQsJOdXLH4PKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuhXgDReHkjwLJfABkW9eNuehDYK+0dqCNLHbD+DsmZ75F+WOQmJvo0qXf3cOApQcbLeRU151faGEiJl/9clBrxMMUknvgjfYZ6brV1yqWLw/AmpJDHVbAAZVukUiF5khuAra10Hm0+IOoNhuOZFIA+n8oWMXpbWxpwrHgy7Biw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAobL2wo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ChoaFMkrksvxi7S5LDNpE4zCr31FHRa8aHNyn6wFgZqmpTHGOt9k71eLY23O1HVD5GLRNqUtS7AUkiiKZHFAOnS+0+k4FmhU0Sa5IddYIMfGABduWJ7sg68QXbVdyjmGH45h9sDiVu1E1I8RfWAwc7Jx/PBKepyJKMERz1DuQpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WX/W0jga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAobL2wo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE84C4CEC4;
-	Mon, 16 Sep 2024 12:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WX/W0jga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C7EC4CEC4;
+	Mon, 16 Sep 2024 12:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488530;
-	bh=U/1RJmhci2gZUf38P7j8c5mkA6h9xXFuLScxDCBmroo=;
+	s=korg; t=1726488533;
+	bh=INbGkbWhhpXXozGGK1M4YRgoO8NxMkFQsJOdXLH4PKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAobL2wocooI6Vxw859z22de63iFIGT3GfeCchgsAUAC+5q6jlzhKSPPtLqXfSD2K
-	 phVcgDb1rYuc/WwxlhSL8Rl03eO2eO/EWUWg3wDDBnnyAjgf7zlAVqulpceOBzL1na
-	 ORNx0qOtJp6baspUosFngFB/Eo3VZuPF5Gxn4Qt4=
+	b=WX/W0jgaajLzPORP91XDXsP+Gri5Rs3P8LBDDOnR5JKtBnDFVAWb7WYGRyOABGfHe
+	 l2YmO7tQ161NWh79RFh8tuPVzyLeJp0NISt1QQIFLv5yxBCG5KrgZGHp/D5VNaoFXv
+	 7rbB47hlJ66kjLeUwsatx9H0B2wwXEdLxhmUe47E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jonathan Denose <jdenose@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/91] net: ethernet: use ip_hdrlen() instead of bit shift
-Date: Mon, 16 Sep 2024 13:43:52 +0200
-Message-ID: <20240916114225.065655928@linuxfoundation.org>
+Subject: [PATCH 6.6 25/91] Input: synaptics - enable SMBus for HP Elitebook 840 G2
+Date: Mon, 16 Sep 2024 13:44:01 +0200
+Message-ID: <20240916114225.345365655@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Jonathan Denose <jdenose@google.com>
 
-[ Upstream commit 9a039eeb71a42c8b13408a1976e300f3898e1be0 ]
+[ Upstream commit da897484557b34a54fabb81f6c223c19a69e546d ]
 
-`ip_hdr(skb)->ihl << 2` is the same as `ip_hdrlen(skb)`
-Therefore, we should use a well-defined function not a bit shift
-to find the header length.
+The kernel reports that the touchpad for this device can support a
+different bus.
 
-It also compresses two lines to a single line.
+With SMBus enabled the touchpad movement is smoother and three-finger
+gestures are recognized.
 
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Reviewed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jonathan Denose <jdenose@google.com>
+Link: https://lore.kernel.org/r/20240719180612.1.Ib652dd808c274076f32cd7fc6c1160d2cf71753b@changeid
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/jme.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/input/mouse/synaptics.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
-index 1732ec3c3dbd..a718207988f2 100644
---- a/drivers/net/ethernet/jme.c
-+++ b/drivers/net/ethernet/jme.c
-@@ -946,15 +946,13 @@ jme_udpsum(struct sk_buff *skb)
- 	if (skb->protocol != htons(ETH_P_IP))
- 		return csum;
- 	skb_set_network_header(skb, ETH_HLEN);
--	if ((ip_hdr(skb)->protocol != IPPROTO_UDP) ||
--	    (skb->len < (ETH_HLEN +
--			(ip_hdr(skb)->ihl << 2) +
--			sizeof(struct udphdr)))) {
-+
-+	if (ip_hdr(skb)->protocol != IPPROTO_UDP ||
-+	    skb->len < (ETH_HLEN + ip_hdrlen(skb) + sizeof(struct udphdr))) {
- 		skb_reset_network_header(skb);
- 		return csum;
- 	}
--	skb_set_transport_header(skb,
--			ETH_HLEN + (ip_hdr(skb)->ihl << 2));
-+	skb_set_transport_header(skb, ETH_HLEN + ip_hdrlen(skb));
- 	csum = udp_hdr(skb)->check;
- 	skb_reset_transport_header(skb);
- 	skb_reset_network_header(skb);
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index 7a303a9d6bf7..cff3393f0dd0 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -189,6 +189,7 @@ static const char * const smbus_pnp_ids[] = {
+ 	"LEN2054", /* E480 */
+ 	"LEN2055", /* E580 */
+ 	"LEN2068", /* T14 Gen 1 */
++	"SYN3015", /* HP EliteBook 840 G2 */
+ 	"SYN3052", /* HP EliteBook 840 G4 */
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
 -- 
 2.43.0
 
