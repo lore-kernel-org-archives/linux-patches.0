@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98CD154429;
-	Mon, 16 Sep 2024 11:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464C6156864;
+	Mon, 16 Sep 2024 11:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487980; cv=none; b=mVYyU6Y3qMxR9QnWMO5NjqYftwwHCO+nzoc8MZdMuvT1Sm8XjwONBnxPawSVpxJEdELouHjbP4qXDuLqTayAgkBDJDWfLyNYCl7BklGQD/q4PdkTywtXOE5RiQL4BMa9zyZ+dTefS/SB5ojdFZTtq0NhcQ8VJtRIxZcAE/M00OQ=
+	t=1726487983; cv=none; b=erMNTmSs0GhiMpI4zfeh3lamndyAN8MN2bHi3pFk37qYK3EJwe782uhA0pvkoeNu4Q2EHw0K2yt0vzCvnV33bPgWp6FJFme5YR3dyVLRO965TQy3N1GSJ2/x7c0oXlvHGM1HjeITaSSibuBLU7Z0v7M9G7xKy9G5fCUGhMvDlLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487980; c=relaxed/simple;
-	bh=4HhcTeMIfYiUOIkQAUUJ7ebNFJ0LwJY9S0tVdU2rJ8w=;
+	s=arc-20240116; t=1726487983; c=relaxed/simple;
+	bh=7yPmjvbLv6f71I84eL5ZmyaKu1pWzxDKEMqm0Q1kHB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MI6CbZ9rCoTdIz9qbMzLasTDW1LsX9R8gsqKSG4nJHh4ez/FRycBh7mBSA3vtMJPH19G6bi9gc7s1NsnpqpiOHJyOxCak/1w0+AeutsFA7Xmo/6iibBbOGxwXRlSB2rzyTP/UmV4HKvJCfli3wGiBTcrlKBJFWab1A43t81UIbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9TMobHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATR7tc8vN6MGywIP0XHaCKXSl/K5GHbSJ4oVrX3BodRXFsy1GVz2yNKq3HoKH8nOOu8zZroWHNMCcClPY3k0jb5n57dwnjJML8nwa8S7bUfqvWyDGruM3K18JIzwVueNi2wNmldnM3wRdMJS/yQTi7JvskgagTb1eHTFrGzRaIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1Hy4SHb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9TMobHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB2BC4CEC4;
-	Mon, 16 Sep 2024 11:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1Hy4SHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C66C4CEC4;
+	Mon, 16 Sep 2024 11:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726487980;
-	bh=4HhcTeMIfYiUOIkQAUUJ7ebNFJ0LwJY9S0tVdU2rJ8w=;
+	s=korg; t=1726487983;
+	bh=7yPmjvbLv6f71I84eL5ZmyaKu1pWzxDKEMqm0Q1kHB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9TMobHDHeCCQqIeBj3qZ8JmlJxq3xcUDASUMmJlBjlVTipFZ2CEvOt3gnq3qEGT6
-	 l4KBH28Q4EZvWPwgyYZsgR/rVzuXWeInHIAh6eKPPPzktAImuRYZjtoyDBxTgNTXhY
-	 O0O3dzZWHqwIyeVMKtg24M5rK8Ibwt/5dGWErhd8=
+	b=E1Hy4SHbXZF1DkCUfjdwxJoVJD44rLBZ3QLFvjCZo9s8gbtl1v02CWFv2Ch5plo7/
+	 ASd2aHWhqCJra4IVFvNQL5+X9JNVrR4gzcsUzwr+HbmU4TlX9gHN5ytov1U4ASyzLC
+	 oPENlQCP3DxhBqfWPGPqhZuwadZR0ei2nVyCn41Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/63] Input: i8042 - add Fujitsu Lifebook E756 to i8042 quirk table
-Date: Mon, 16 Sep 2024 13:43:56 +0200
-Message-ID: <20240916114221.664647497@linuxfoundation.org>
+Subject: [PATCH 6.1 18/63] smb/server: fix return value of smb2_open()
+Date: Mon, 16 Sep 2024 13:43:57 +0200
+Message-ID: <20240916114221.704997961@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -51,42 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 7ce7c2283fa6843ab3c2adfeb83dcc504a107858 ]
+[ Upstream commit 2186a116538a715b20e15f84fdd3545e5fe0a39b ]
 
-Yet another quirk entry for Fujitsu laptop.  Lifebook E756 requires
-i8041.nomux for keeping the touchpad working after suspend/resume.
+In most error cases, error code is not returned in smb2_open(),
+__process_request() will not print error message.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1229056
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240814100630.2048-1-tiwai@suse.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fix this by returning the correct value at the end of smb2_open().
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
-index e9eb9554dd7b..bad238f69a7a 100644
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -627,6 +627,15 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
- 	},
-+	{
-+		/* Fujitsu Lifebook E756 */
-+		/* https://bugzilla.suse.com/show_bug.cgi?id=1229056 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E756"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
- 	{
- 		/* Fujitsu Lifebook E5411 */
- 		.matches = {
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 808c62d7ff3e..dc8f1e7ce2fa 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3482,7 +3482,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	kfree(name);
+ 	kfree(lc);
+ 
+-	return 0;
++	return rc;
+ }
+ 
+ static int readdir_info_level_struct_sz(int info_level)
 -- 
 2.43.0
 
