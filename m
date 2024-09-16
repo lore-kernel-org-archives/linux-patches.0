@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033A3156250;
-	Mon, 16 Sep 2024 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D6A156238;
+	Mon, 16 Sep 2024 12:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488024; cv=none; b=lZb6K2ciT61XhNdiKZnXsVF6nSZfTDdbcswKoCnc1keSCdOEcAEeuzqwcQYE0mJXTjRf6o21+nCy6CsMMTFRADuMumHhXsNit4ystGsg2n/RUzkeAaOYDmAMdSr+qrcnh+nDg6m5DbiBLkK0zvLzaRHSnODZlLX5vplH2DhSZoI=
+	t=1726488027; cv=none; b=O0is6ch3BsP8ee8OmdNS9+s6l50cQKVYrHr/npnCg1pzIFySvgz9ukmZoGuz9u/uFQjLUAcVr8QsJCXr5lHmTUpgVS+VScImgrXR72iV5+17d4FVOyEoXAfK93QhViTqM2zo25MnI34Kg67RiNu5Bk0tOpsT03dbsU1X0Hhyqks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488024; c=relaxed/simple;
-	bh=yMuaUndqguj4++tLkGX/4dBEd2R8kPFQWRC9aExHIW4=;
+	s=arc-20240116; t=1726488027; c=relaxed/simple;
+	bh=oVbttgLz8i3k3BrEr1bJruxpen+kMNUhng4yvaloj2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utitudnADO+SF0HR4Wyiyb5q59J9OrHPs5/1pwXh4ia3YLiGBjuPCG/6g8sNiUy+HT02sZf0LaJSgoE2Q2yE76cvNa3kDXUUaxL5m/V+2XhXj5HVzCqDt1Z3AdfRqbMgmzGm1wZincMc4xXxb/9eXxBqbg3C8jJf/pFbzHgHHO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZpHaYb4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lr6VQrMPZU4/F9YM8ihzN5EvyeGHIYULWkVHgWgVs0Fo0gfwmcowAHAbvyaZALLh1dZSiObzGWbfUedOziff/EGLUuNtaI+3SYK3bnZtONZonqW2z2QLmj3VDP4kHzn4HTMAL1p+dakwWaImHVX651H9m0/Rr+A4+YWOhST7OhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soTpJ5Xj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZpHaYb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A457CC4CEC4;
-	Mon, 16 Sep 2024 12:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soTpJ5Xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80494C4CEC4;
+	Mon, 16 Sep 2024 12:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488023;
-	bh=yMuaUndqguj4++tLkGX/4dBEd2R8kPFQWRC9aExHIW4=;
+	s=korg; t=1726488025;
+	bh=oVbttgLz8i3k3BrEr1bJruxpen+kMNUhng4yvaloj2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZpHaYb4mfh44woSEiWWQyfhbOU5ypGQPOJ/7LgvZCwovlJvSeujLuc6PnZtQt/Yi
-	 7W51ZE35by7STIcDfj5e88BwSHa64N+o/wBnvYOouQGycUQ/up9vv/ugttZ9nUQj5M
-	 CjW07r3630XY3PjOUHFUD8aIexHlWJ5mD5zAjgw4=
+	b=soTpJ5XjJQknyYQ7gcbE+3owq2AD0cuqLmaxnLG/I8VXUXY+Z/gZV7ixfYaXi/4vT
+	 a33Vuhhfa6DAqf6dMUqY1KIgIynCKjBuL9KFKl2jdESNynGmxQYiHm9OVIKBLmMpTY
+	 C5tuq/eiV5/BtcfIuQQe+lgbM1AFPDBnE19hlVmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 31/63] pmdomain: ti: Add a null pointer check to the omap_prm_domain_init
-Date: Mon, 16 Sep 2024 13:44:10 +0200
-Message-ID: <20240916114222.174986682@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 32/63] fs/ntfs3: Use kvfree to free memory allocated by kvmalloc
+Date: Mon, 16 Sep 2024 13:44:11 +0200
+Message-ID: <20240916114222.210184156@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -51,34 +49,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 5d7f58ee08434a33340f75ac7ac5071eea9673b3 upstream.
+commit ddb17dc880eeaac37b5a6e984de07b882de7d78d upstream.
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
-
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20240118054257.200814-1-chentao@kylinos.cn
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-[Xiangyu: Modified to apply on 6.1.y]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ti/omap_prm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/attrlist.c |    4 ++--
+ fs/ntfs3/bitmap.c   |    4 ++--
+ fs/ntfs3/frecord.c  |    4 ++--
+ fs/ntfs3/super.c    |    2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/soc/ti/omap_prm.c
-+++ b/drivers/soc/ti/omap_prm.c
-@@ -696,6 +696,8 @@ static int omap_prm_domain_init(struct d
- 	data = prm->data;
- 	name = devm_kasprintf(dev, GFP_KERNEL, "prm_%s",
- 			      data->name);
-+	if (!name)
-+		return -ENOMEM;
+--- a/fs/ntfs3/attrlist.c
++++ b/fs/ntfs3/attrlist.c
+@@ -29,7 +29,7 @@ static inline bool al_is_valid_le(const
+ void al_destroy(struct ntfs_inode *ni)
+ {
+ 	run_close(&ni->attr_list.run);
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.size = 0;
+ 	ni->attr_list.dirty = false;
+@@ -318,7 +318,7 @@ int al_add_le(struct ntfs_inode *ni, enu
+ 		memcpy(ptr, al->le, off);
+ 		memcpy(Add2Ptr(ptr, off + sz), le, old_size - off);
+ 		le = Add2Ptr(ptr, off);
+-		kfree(al->le);
++		kvfree(al->le);
+ 		al->le = ptr;
+ 	} else {
+ 		memmove(Add2Ptr(le, sz), le, old_size - off);
+--- a/fs/ntfs3/bitmap.c
++++ b/fs/ntfs3/bitmap.c
+@@ -124,7 +124,7 @@ void wnd_close(struct wnd_bitmap *wnd)
+ {
+ 	struct rb_node *node, *next;
  
- 	prmd->dev = dev;
- 	prmd->prm = prm;
+-	kfree(wnd->free_bits);
++	kvfree(wnd->free_bits);
+ 	run_close(&wnd->run);
+ 
+ 	node = rb_first(&wnd->start_tree);
+@@ -1333,7 +1333,7 @@ int wnd_extend(struct wnd_bitmap *wnd, s
+ 		memcpy(new_free, wnd->free_bits, wnd->nwnd * sizeof(short));
+ 		memset(new_free + wnd->nwnd, 0,
+ 		       (new_wnd - wnd->nwnd) * sizeof(short));
+-		kfree(wnd->free_bits);
++		kvfree(wnd->free_bits);
+ 		wnd->free_bits = new_free;
+ 	}
+ 
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -773,7 +773,7 @@ static int ni_try_remove_attr_list(struc
+ 	run_deallocate(sbi, &ni->attr_list.run, true);
+ 	run_close(&ni->attr_list.run);
+ 	ni->attr_list.size = 0;
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.dirty = false;
+ 
+@@ -924,7 +924,7 @@ int ni_create_attr_list(struct ntfs_inod
+ 	goto out;
+ 
+ out1:
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.size = 0;
+ 	return err;
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -441,7 +441,7 @@ static noinline void put_ntfs(struct ntf
+ {
+ 	kfree(sbi->new_rec);
+ 	kvfree(ntfs_put_shared(sbi->upcase));
+-	kfree(sbi->def_table);
++	kvfree(sbi->def_table);
+ 
+ 	wnd_close(&sbi->mft.bitmap);
+ 	wnd_close(&sbi->used.bitmap);
 
 
