@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C35513DBA0;
-	Mon, 16 Sep 2024 12:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238D414D2B3;
+	Mon, 16 Sep 2024 12:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488139; cv=none; b=HfR4JLfoduhAMe50T5iDVMWXyCMa6QAjA+7+HahR9msfafkIatPWJL3zcvgrSVhWbMcblKQp/Ar368fZyAzhC0FnkoV30pPk2bWu2LSDH4u+ZqM86EdhaRW/eUw14K5JiS7Atb5tavBIw1lWGiv5iPDmqdldOgq8Wc68qp4SfUE=
+	t=1726488142; cv=none; b=Cv26yRYSwlKQm2xe+hLeMbclQh3+4ri/UzHAoSwoZa6BwtOA8Z1SBDXCieb6m6C6V3eq0rGOYh/cNh/FTAyNWR6Dprmrhyr+puBQBFQykfSpR4wm7hW+CITlSfAq85gwaGEl1U0KgBELdRFuw5rHRMOF6ewJzEDDed563kQB5KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488139; c=relaxed/simple;
-	bh=ydubZR61342tWmNasa7WmuQ/SB8yYGy2IYlZBVmhfic=;
+	s=arc-20240116; t=1726488142; c=relaxed/simple;
+	bh=ayjqT1sLOncLw9PSBRIyEPI4eiHNL1541qn5n3d/o0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdvAn1r0L1P2ScwNY/qHeOUbwci4XcWTbZuD+1k0BK2gg7zqSIUnCTDz7FAlCOaMwqT6OglPfKl0Jbip4JO09egybXicPjq8d6hb2S/kCFtnrqR1pNEM5Q5FV7z+0VD238v//Hy8Tw6HBLRqdmtHv3pKSGJPcjc5MKfv+d5d6HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsLFluLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7Uv6TChzMsyoZOt/zhxVp8G9vB54HxpT4CNdJl7OgnCY/lmxKEMQs4fiJie1YuIHTI6/UbGkGBZqYIRQge9iUym0FiCakogF1x1y2i+9OOqY3HfCp8H8f87DWgMi9N4ztHyhuEHHCqxr/sq/K2TXFJw7uHdN3uKTcVaZ+XYKxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnuN5DAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsLFluLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7842C4CEC4;
-	Mon, 16 Sep 2024 12:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnuN5DAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D6EC4CEC4;
+	Mon, 16 Sep 2024 12:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488139;
-	bh=ydubZR61342tWmNasa7WmuQ/SB8yYGy2IYlZBVmhfic=;
+	s=korg; t=1726488142;
+	bh=ayjqT1sLOncLw9PSBRIyEPI4eiHNL1541qn5n3d/o0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsLFluLapcseH3ESFgPMsb0lw1PIF/E54KRZ7XyhR995sRvHM9/ZcmcncBqKsNE9E
-	 afw+BpGU5mpRhdI8jJ4AzDdSZ2G+hlAKSUid2PBDgdH5BNiclyR/52cSTIEuK/uGkB
-	 mXDkDEQEvdElOWf+F/ZnmQyt7PAb7PeEvDtmDiQQ=
+	b=CnuN5DARAprdZrYaVREJUVssljLK/FTam7oiaCfqmBJw66vgmKXZKjRtXJcVrhLgC
+	 DhMBsR7lp7fQDJ2iNk0fFhL6xEg5yTV034sKpRfXGh83ahecXl5Dzy+LI5YZcwfkP+
+	 l08TYrgnC68O4ZXbGHbPpwlKQXxai+r435fffZOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 001/121] usb: typec: ucsi: Always set number of alternate modes
-Date: Mon, 16 Sep 2024 13:42:55 +0200
-Message-ID: <20240916114228.980195556@linuxfoundation.org>
+Subject: [PATCH 6.10 002/121] usb: typec: ucsi: Fix cable registration
+Date: Mon, 16 Sep 2024 13:42:56 +0200
+Message-ID: <20240916114229.012895816@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,68 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[ Upstream commit c313a44ac9cda60431bdc7dcdb4b135eaef31785 ]
+[ Upstream commit 87eb3cb4ec619299cd5572e1d5eb68aef4074ac2 ]
 
-Providing the number of known alternate modes allows user space to
-determine when device registration has completed. Always register a
-number of known alternate modes for the partner and cable plug, even
-when the number of supported alternate modes is 0.
+The Cable PD Revision field in GET_CABLE_PROPERTY was
+introduced in UCSI v2.1, so adding check for that.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Signed-off-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240510201244.2968152-5-jthies@google.com
+The cable properties are also not used anywhere after the
+cable is registered, so removing the cable_prop member
+from struct ucsi_connector while at it.
+
+Fixes: 38ca416597b0 ("usb: typec: ucsi: Register cables based on GET_CABLE_PROPERTY")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240903130945.3395291-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 87eb3cb4ec61 ("usb: typec: ucsi: Fix cable registration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 30 +++++++++++++++---------------
+ drivers/usb/typec/ucsi/ucsi.h |  1 -
+ 2 files changed, 15 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 45e91d065b3b..7a127ea57b5a 100644
+index 7a127ea57b5a..bf349ad95dcd 100644
 --- a/drivers/usb/typec/ucsi/ucsi.c
 +++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -817,10 +817,11 @@ static int ucsi_check_altmodes(struct ucsi_connector *con)
- 	/* Ignoring the errors in this case. */
- 	if (con->partner_altmode[0]) {
- 		num_partner_am = ucsi_get_num_altmode(con->partner_altmode);
--		if (num_partner_am > 0)
--			typec_partner_set_num_altmodes(con->partner, num_partner_am);
-+		typec_partner_set_num_altmodes(con->partner, num_partner_am);
- 		ucsi_altmode_update_active(con);
- 		return 0;
-+	} else {
-+		typec_partner_set_num_altmodes(con->partner, 0);
+@@ -915,10 +915,20 @@ static void ucsi_unregister_plug(struct ucsi_connector *con)
+ 
+ static int ucsi_register_cable(struct ucsi_connector *con)
+ {
++	struct ucsi_cable_property cable_prop;
+ 	struct typec_cable *cable;
+ 	struct typec_cable_desc desc = {};
++	u64 command;
++	int ret;
++
++	command = UCSI_GET_CABLE_PROPERTY | UCSI_CONNECTOR_NUMBER(con->num);
++	ret = ucsi_send_command(con->ucsi, command, &cable_prop, sizeof(cable_prop));
++	if (ret < 0) {
++		dev_err(con->ucsi->dev, "GET_CABLE_PROPERTY failed (%d)\n", ret);
++		return ret;
++	}
+ 
+-	switch (UCSI_CABLE_PROP_FLAG_PLUG_TYPE(con->cable_prop.flags)) {
++	switch (UCSI_CABLE_PROP_FLAG_PLUG_TYPE(cable_prop.flags)) {
+ 	case UCSI_CABLE_PROPERTY_PLUG_TYPE_A:
+ 		desc.type = USB_PLUG_TYPE_A;
+ 		break;
+@@ -934,10 +944,10 @@ static int ucsi_register_cable(struct ucsi_connector *con)
  	}
  
- 	return ret;
-@@ -1143,7 +1144,7 @@ static int ucsi_check_connection(struct ucsi_connector *con)
+ 	desc.identity = &con->cable_identity;
+-	desc.active = !!(UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE &
+-			 con->cable_prop.flags);
+-	desc.pd_revision = UCSI_CABLE_PROP_FLAG_PD_MAJOR_REV_AS_BCD(
+-	    con->cable_prop.flags);
++	desc.active = !!(UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE & cable_prop.flags);
++
++	if (con->ucsi->version >= UCSI_VERSION_2_1)
++		desc.pd_revision = UCSI_CABLE_PROP_FLAG_PD_MAJOR_REV_AS_BCD(cable_prop.flags);
+ 
+ 	cable = typec_register_cable(con->port, &desc);
+ 	if (IS_ERR(cable)) {
+@@ -1143,21 +1153,11 @@ static int ucsi_check_connection(struct ucsi_connector *con)
+ 
  static int ucsi_check_cable(struct ucsi_connector *con)
  {
- 	u64 command;
--	int ret;
-+	int ret, num_plug_am;
+-	u64 command;
+ 	int ret, num_plug_am;
  
  	if (con->cable)
  		return 0;
-@@ -1177,6 +1178,13 @@ static int ucsi_check_cable(struct ucsi_connector *con)
- 			return ret;
- 	}
  
-+	if (con->plug_altmode[0]) {
-+		num_plug_am = ucsi_get_num_altmode(con->plug_altmode);
-+		typec_plug_set_num_altmodes(con->plug, num_plug_am);
-+	} else {
-+		typec_plug_set_num_altmodes(con->plug, 0);
-+	}
-+
- 	return 0;
- }
+-	command = UCSI_GET_CABLE_PROPERTY | UCSI_CONNECTOR_NUMBER(con->num);
+-	ret = ucsi_send_command(con->ucsi, command, &con->cable_prop,
+-				sizeof(con->cable_prop));
+-	if (ret < 0) {
+-		dev_err(con->ucsi->dev, "GET_CABLE_PROPERTY failed (%d)\n",
+-			ret);
+-		return ret;
+-	}
+-
+ 	ret = ucsi_register_cable(con);
+ 	if (ret < 0)
+ 		return ret;
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index f66224a270bc..46c37643b59c 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -444,7 +444,6 @@ struct ucsi_connector {
  
+ 	struct ucsi_connector_status status;
+ 	struct ucsi_connector_capability cap;
+-	struct ucsi_cable_property cable_prop;
+ 	struct power_supply *psy;
+ 	struct power_supply_desc psy_desc;
+ 	u32 rdo;
 -- 
 2.43.0
 
