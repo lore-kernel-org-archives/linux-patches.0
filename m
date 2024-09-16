@@ -1,45 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC615689A;
-	Mon, 16 Sep 2024 12:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7105149C57;
+	Mon, 16 Sep 2024 12:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488453; cv=none; b=ARs9/p3KV2UqbhAZAjS3KHyAQHoDvCNRy12LpK3z/yJCxepU5Co3PZ9voOaBIEASUuM4S2X49G0MRvEc7wkNHG8dRub9qkGWU5LG2SNw+/YaxJaEe7CPqV1BuRRHTSt7AGiY06RyKnf7VBsVEHVjX8eDA86GM+xm6mb0V4qv8iM=
+	t=1726488455; cv=none; b=Ke6wSpAFmcmflQDFNQ+OUyJjP6FuqNX+Jef2W3q2Dp8/VYymOHI2TUdEqdK38dSOapdHSsAK5e4u76Byw7OYRaHLRM6Fh3yFeSIJFGlGLhplZFGKr85OY+b277KYqGFnLUPoJXX5x0PsTFM9mxOrVbJbNNpbTtcBaX0uv9en5Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488453; c=relaxed/simple;
-	bh=2g2qgh/YrdTdc1RKgP8SZlonukH4nq0K664Z/dAXG9Q=;
+	s=arc-20240116; t=1726488455; c=relaxed/simple;
+	bh=nyehhbTS5i2ZGXw7NgQ8quPqnsKxnQ2YP13FZzRh97o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqwejfMJbFIx+EtXKesamoEqnfSvqhvp6FkUql5JhaGnmius3zTZEB+yKh8uGCzsAFfLRU0WxfY/7LvX88LTVPPRHR/niuKo+EHF/PeCY+czYh6cqcc0cN6w93C+5QZYXY06t7eXGUFcDDiElxHbET3Sxo1d0x0aULphLTlvViY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEY/jwn9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTDMvaoDJLFo6CQSiHGZ8yZHn2rkU0uHAtoO7HgaV5FVBL5LSMGCmYBPCeXkjWeNjNhGeBtmGPwS2w9ODolXJL0IFRWWsyo1uRgSwvASKWRAXX3b/u6Qy5L+WZUf/MGwf3K9nP9nUKeTv3/hbqoNuCZVx12cwsTBbPSJzwKYhNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ54HKaj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEY/jwn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0FBC4CEC4;
-	Mon, 16 Sep 2024 12:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ54HKaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50637C4CEC4;
+	Mon, 16 Sep 2024 12:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488452;
-	bh=2g2qgh/YrdTdc1RKgP8SZlonukH4nq0K664Z/dAXG9Q=;
+	s=korg; t=1726488455;
+	bh=nyehhbTS5i2ZGXw7NgQ8quPqnsKxnQ2YP13FZzRh97o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEY/jwn9r/kdg5xtCb4iZixspunJAelQvP25wZhKyy1BMXBY21uabX3NLhko8qxVO
-	 CivW3J5D1aE9vWhXoIkTA8lKLgbnQbhRBVZz487G3E19gwIqnLUTJ/c3XGtwBmujhN
-	 o3CdV00B+z/pQuyEq7K/xKLO97ETUhnsx0OAFkVE=
+	b=HZ54HKaj+u6vtFow4IuooQ+zARmcF0GeNXPsTXd/NsUID3TbIPFtokmEIeoAwP3N4
+	 V3nT4SdgengPCRdpVpi4Wvx9ix4YMffl+MwFC4ObOLn4gdt/TeRxh2mJ6CCprNwd40
+	 0VqgzIq6UTh+rDKJy3F0JgWEX0Ty4rhr9hVEIzSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 118/121] cifs: Fix signature miscalculation
-Date: Mon, 16 Sep 2024 13:44:52 +0200
-Message-ID: <20240916114233.022973853@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.10 119/121] pinctrl: meteorlake: Add Arrow Lake-H/U ACPI ID
+Date: Mon, 16 Sep 2024 13:44:53 +0200
+Message-ID: <20240916114233.056420729@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -58,43 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 5a20b7cb0d8d3ee490a8e088dc2584aa782e3355 ]
+commit a366e46da10d7bfa1a52c3bd31f342a3d0e8e7fe upstream.
 
-Fix the calculation of packet signatures by adding the offset into a page
-in the read or write data payload when hashing the pages from it.
+Intel Arrow Lake-H/U has the same GPIO hardware than Meteor Lake-P but
+the ACPI ID is different. Add this new ACPI ID to the list of supported
+devices.
 
-Fixes: 39bc58203f04 ("cifs: Add a function to Hash the contents of an iterator")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsencrypt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/intel/pinctrl-meteorlake.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
-index 6322f0f68a17..b0473c2567fe 100644
---- a/fs/smb/client/cifsencrypt.c
-+++ b/fs/smb/client/cifsencrypt.c
-@@ -129,7 +129,7 @@ static ssize_t cifs_shash_xarray(const struct iov_iter *iter, ssize_t maxsize,
- 			for (j = foffset / PAGE_SIZE; j < npages; j++) {
- 				len = min_t(size_t, maxsize, PAGE_SIZE - offset);
- 				p = kmap_local_page(folio_page(folio, j));
--				ret = crypto_shash_update(shash, p, len);
-+				ret = crypto_shash_update(shash, p + offset, len);
- 				kunmap_local(p);
- 				if (ret < 0)
- 					return ret;
--- 
-2.43.0
-
+--- a/drivers/pinctrl/intel/pinctrl-meteorlake.c
++++ b/drivers/pinctrl/intel/pinctrl-meteorlake.c
+@@ -584,6 +584,7 @@ static const struct intel_pinctrl_soc_da
+ };
+ 
+ static const struct acpi_device_id mtl_pinctrl_acpi_match[] = {
++	{ "INTC105E", (kernel_ulong_t)&mtlp_soc_data },
+ 	{ "INTC1083", (kernel_ulong_t)&mtlp_soc_data },
+ 	{ "INTC1082", (kernel_ulong_t)&mtls_soc_data },
+ 	{ }
 
 
