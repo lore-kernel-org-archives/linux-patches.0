@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B48B156864;
-	Mon, 16 Sep 2024 12:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3FE14AD19;
+	Mon, 16 Sep 2024 12:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488094; cv=none; b=s6b8yRAGu+rp+kFLEfM8FWeK8wVMYXWo4E+P8i9JwTX0qvJPKVQqm6Tex339HvfqqEkq0RzWiuCAL30LNfsXysQQ2SQCGjbv+f+F+lPXDXlNc2AdXpfRT58pGq7r7npgXsRd7BHGo/gc/qSPqO/z2hTOPYORfrxvX1CfhD04Jdg=
+	t=1726488097; cv=none; b=ZvNZeZ2Voe7F7g2XmWKwU2LSks+gHL4bM3paNvMDeJuM4Y2gRvTkdKuqCkovf55TKKrl4j7W4PY9dIKI/3v7zWMRhO5bgbj78V9sgOkopAvziyL/jG/oU8EP5/P4irMPHJqszUglqPyDQyss/84xXZB0gb/XEa6j7hBXqjQIBeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488094; c=relaxed/simple;
-	bh=WvuRTYig0usgMf5rMBPZqr/wF8mzGgbpos7YGDxxR80=;
+	s=arc-20240116; t=1726488097; c=relaxed/simple;
+	bh=0ngpE6t8k8Vp5iIxQ96zV7xvagS988eUk0sxSno4D3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYWuuPHpApKsMu/h20eKXyyLCHM8kgM3pRYh3rF+ipOffIWnJRKAKvXvc2x68omg/ktAXB1L+ozCho2wpz9hLWIQXG84J8BJLIeAEq6ZrA1yynEPEU3PC3oPWUQRM96BnDDK9m7A2pmaQrcmjhMtkk/LkRwnHkdEZFKYRJza3gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXjwUN4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yen/YeK5mfxtLAgxwZeuFmOy9W/2zCKDbw67VtKBlcJ0aBs3gnR1bjLG8ZDACR+RSPFUqRkfUYfZUFjzt/2b1P5oeSauDhRdjxtJ68Umer+nQNnyDhPXEt1H7aqa7NXcWba+W1X/w4mlIFOs05s2E8DU200e9Vq8W118rkuAxDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiZbnnz6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXjwUN4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981C6C4CECC;
-	Mon, 16 Sep 2024 12:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiZbnnz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB6EC4CEC4;
+	Mon, 16 Sep 2024 12:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488094;
-	bh=WvuRTYig0usgMf5rMBPZqr/wF8mzGgbpos7YGDxxR80=;
+	s=korg; t=1726488096;
+	bh=0ngpE6t8k8Vp5iIxQ96zV7xvagS988eUk0sxSno4D3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXjwUN4u1dul0UkdAwHlYDYt0hJtVRJrC0sz4ov+usbFyegrQb1WlrzDFeWvOy+jp
-	 sTSY9kGvQJQSFk8WMtdTmQTz886ESBMLcnAH7Z0D/sH5o7XtCIzu3SQdTIKadqAWlT
-	 TYxdUIaE99gkudxnUwA+JPMPXqV+Pq4BotSxFsfQ=
+	b=UiZbnnz6/siTpITcKAfvKysEO5V9etYOf+wEbJfY+7foq7YWsf8sjD9OA+J1oqOeh
+	 YK/3X4vAw9TQfjUIzCWLplIh1tSMUWBKJOqAlel2KNT3RM7Vy4ZdKWVJhpMiHBe7TB
+	 kgtC8rM/e49X3OdL2CITOrKVp8DVD0IOyeFWnqU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	John Stultz <jstultz@google.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 6.1 56/63] dma-buf: heaps: Fix off-by-one in CMA heap fault handler
-Date: Mon, 16 Sep 2024 13:44:35 +0200
-Message-ID: <20240916114223.035736106@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 57/63] drm/amdgpu/atomfirmware: Silence UBSAN warning
+Date: Mon, 16 Sep 2024 13:44:36 +0200
+Message-ID: <20240916114223.064244433@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,41 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ea5ff5d351b520524019f7ff7f9ce418de2dad87 upstream.
+commit 17ea4383649fdeaff3181ddcf1ff03350d42e591 upstream.
 
-Until VM_DONTEXPAND was added in commit 1c1914d6e8c6 ("dma-buf: heaps:
-Don't track CMA dma-buf pages under RssFile") it was possible to obtain
-a mapping larger than the buffer size via mremap and bypass the overflow
-check in dma_buf_mmap_internal. When using such a mapping to attempt to
-fault past the end of the buffer, the CMA heap fault handler also checks
-the fault offset against the buffer size, but gets the boundary wrong by
-1. Fix the boundary check so that we don't read off the end of the pages
-array and insert an arbitrary page in the mapping.
+Per the comments, these are variable sized arrays.
 
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Fixes: a5d2d29e24be ("dma-buf: heaps: Move heap-helper logic into the cma_heap implementation")
-Cc: stable@vger.kernel.org # Applicable >= 5.10. Needs adjustments only for 5.10.
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: John Stultz <jstultz@google.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240830192627.2546033-1-tjmercier@google.com
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3613
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 81f7804ba84ee617ed594de934ed87bcc4f83531)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/heaps/cma_heap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/include/atomfirmware.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/dma-buf/heaps/cma_heap.c
-+++ b/drivers/dma-buf/heaps/cma_heap.c
-@@ -165,7 +165,7 @@ static vm_fault_t cma_heap_vm_fault(stru
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct cma_heap_buffer *buffer = vma->vm_private_data;
+--- a/drivers/gpu/drm/amd/include/atomfirmware.h
++++ b/drivers/gpu/drm/amd/include/atomfirmware.h
+@@ -1005,7 +1005,7 @@ struct display_object_info_table_v1_4
+   uint16_t  supporteddevices;
+   uint8_t   number_of_path;
+   uint8_t   reserved;
+-  struct    atom_display_object_path_v2 display_path[8];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
++  struct    atom_display_object_path_v2 display_path[];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
+ };
  
--	if (vmf->pgoff > buffer->pagecount)
-+	if (vmf->pgoff >= buffer->pagecount)
- 		return VM_FAULT_SIGBUS;
+ struct display_object_info_table_v1_5 {
+@@ -1015,7 +1015,7 @@ struct display_object_info_table_v1_5 {
+ 	uint8_t reserved;
+ 	// the real number of this included in the structure is calculated by using the
+ 	// (whole structure size - the header size- number_of_path)/size of atom_display_object_path
+-	struct atom_display_object_path_v3 display_path[8];
++	struct atom_display_object_path_v3 display_path[];
+ };
  
- 	vmf->page = buffer->pages[vmf->pgoff];
+ /* 
 
 
