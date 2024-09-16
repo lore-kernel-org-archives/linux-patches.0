@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7938B142903;
-	Mon, 16 Sep 2024 12:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A03146A79;
+	Mon, 16 Sep 2024 12:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488732; cv=none; b=ccyLrVfBnJ9cXdcFdfLHpk0UPrgtkGjPlm/jFoWGmmzMjDozotRtzgWtlqaRPm3gXk1UiwfyiFQbX3b9LWMq1We+cVIuwJTZyDj143PlLQoTkdnd8RC8rxSDL0yuHFOFcJJCg7rpxCITL4jp9H35AChSZJuCed6beoiGa1sLcKw=
+	t=1726488735; cv=none; b=aeMSfAt9nIBoMTVPIh1M6DBIlOaLRP0IzIV1YnREhFvJqr5a8fL0M4ZdGrRut61tcOv0p6uAKdP7BYfKy+4QnLMPz9dhrN96CGQM3WmZ/8lGxGHZW2eXb4RoSFML0dPYcbVuNbhVDKIi9oNBAuVAuF4piahWZHmArSG/qAsYaXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488732; c=relaxed/simple;
-	bh=wCJAMPzJT4MMQ6HuEUUdq+7YO2GUHyj/yJrDLBt1hgE=;
+	s=arc-20240116; t=1726488735; c=relaxed/simple;
+	bh=qOtxUj/RJPBGE2fXUfxW6OMMzFEQAhyCILG7Abug9eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0S0M+QZWrEMDEqZoVJSPmJpcH7pWs8SHMZpn+k0+LRI8bHsa/t9/2HlV3Q+ApT0UsCZO3SoT18T0bBE4/Sy6Lgx7X45TTpZfDS9BIqIQ0e+4WgqCTOVsyQilfKmmzx0lnKJaFLm1jVQNwm8smNiqMyO60DAbNHbEIAcBGSDnsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFGK3yvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XaGJ2uX7GUBCi+q2W3ZSzeUsecSbI0LEnB8OSTmPB/P5BYXjaQiuugJ9TE6O51ttc49SOwJ6FwWIU912mRdxZI8VClwGqryRHuSt+uYE0fkC91KsFCRjogjfpduJlAPY6RPlAUx7z7wkp6aB1fhqvdbIMc+yi020YI1zAup9dTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYoMfFmJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFGK3yvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B65C4CEC4;
-	Mon, 16 Sep 2024 12:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYoMfFmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CC8C4CEC4;
+	Mon, 16 Sep 2024 12:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488732;
-	bh=wCJAMPzJT4MMQ6HuEUUdq+7YO2GUHyj/yJrDLBt1hgE=;
+	s=korg; t=1726488735;
+	bh=qOtxUj/RJPBGE2fXUfxW6OMMzFEQAhyCILG7Abug9eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFGK3yvf89mIKFTvmQ0oJDxHNMAlfsKJf86kZkCZii1ldnhqw/K6HVNYpQHZ24dPQ
-	 P5I+bVgY+PqxK28F3QC6rggy05QInixFI4rcpqAUOa1TaJCsGkdYylatIEOXJWyPtS
-	 xvltXnVRbk47AjMPmYX4a3pGXdDMrBWlqnPSTztI=
+	b=mYoMfFmJ4Z71GteEx3en0j+L9x4CJ6CmzPCW2xtHrwnABdk4gtov8DdDKoz4B5P12
+	 cW4UMxCGjDhLINucOlWG1cuXdPqPXRRo69Z3l8qTZgG3UqssFAzzC0tcJlXKOyqbDf
+	 s6jYFfwLegINiCkjkzs6L7G3Yv9teolw3q4yWLXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	John Stultz <jstultz@google.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 6.6 80/91] dma-buf: heaps: Fix off-by-one in CMA heap fault handler
-Date: Mon, 16 Sep 2024 13:44:56 +0200
-Message-ID: <20240916114227.096883445@linuxfoundation.org>
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 81/91] drm/nouveau/fb: restore init() for ramgp102
+Date: Mon, 16 Sep 2024 13:44:57 +0200
+Message-ID: <20240916114227.128997770@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,41 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Ben Skeggs <bskeggs@nvidia.com>
 
-commit ea5ff5d351b520524019f7ff7f9ce418de2dad87 upstream.
+commit 6db9df4f7055eb4ea339e7b83ca676edd9ec1277 upstream.
 
-Until VM_DONTEXPAND was added in commit 1c1914d6e8c6 ("dma-buf: heaps:
-Don't track CMA dma-buf pages under RssFile") it was possible to obtain
-a mapping larger than the buffer size via mremap and bypass the overflow
-check in dma_buf_mmap_internal. When using such a mapping to attempt to
-fault past the end of the buffer, the CMA heap fault handler also checks
-the fault offset against the buffer size, but gets the boundary wrong by
-1. Fix the boundary check so that we don't read off the end of the pages
-array and insert an arbitrary page in the mapping.
+init() was removed from ramgp102 when reworking the memory detection, as
+it was thought that the code was only necessary when the driver performs
+mclk changes, which nouveau doesn't support on pascal.
 
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Fixes: a5d2d29e24be ("dma-buf: heaps: Move heap-helper logic into the cma_heap implementation")
-Cc: stable@vger.kernel.org # Applicable >= 5.10. Needs adjustments only for 5.10.
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: John Stultz <jstultz@google.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240830192627.2546033-1-tjmercier@google.com
+However, it turns out that we still need to execute this on some GPUs to
+restore settings after DEVINIT, so revert to the original behaviour.
+
+v2: fix tags in commit message, cc stable
+
+Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/319
+Fixes: 2c0c15a22fa0 ("drm/nouveau/fb/gp102-ga100: switch to simpler vram size detection method")
+Cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240904232418.8590-1-bskeggs@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/heaps/cma_heap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h      |    2 ++
+ drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c |    2 +-
+ drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c |    1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/dma-buf/heaps/cma_heap.c
-+++ b/drivers/dma-buf/heaps/cma_heap.c
-@@ -165,7 +165,7 @@ static vm_fault_t cma_heap_vm_fault(stru
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct cma_heap_buffer *buffer = vma->vm_private_data;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
+@@ -46,6 +46,8 @@ u32 gm107_ram_probe_fbp(const struct nvk
+ u32 gm200_ram_probe_fbp_amount(const struct nvkm_ram_func *, u32,
+ 			       struct nvkm_device *, int, int *);
  
--	if (vmf->pgoff > buffer->pagecount)
-+	if (vmf->pgoff >= buffer->pagecount)
- 		return VM_FAULT_SIGBUS;
++int gp100_ram_init(struct nvkm_ram *);
++
+ /* RAM type-specific MR calculation routines */
+ int nvkm_sddr2_calc(struct nvkm_ram *);
+ int nvkm_sddr3_calc(struct nvkm_ram *);
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
+@@ -27,7 +27,7 @@
+ #include <subdev/bios/init.h>
+ #include <subdev/bios/rammap.h>
  
- 	vmf->page = buffer->pages[vmf->pgoff];
+-static int
++int
+ gp100_ram_init(struct nvkm_ram *ram)
+ {
+ 	struct nvkm_subdev *subdev = &ram->fb->subdev;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
+@@ -5,6 +5,7 @@
+ 
+ static const struct nvkm_ram_func
+ gp102_ram = {
++	.init = gp100_ram_init,
+ };
+ 
+ int
 
 
