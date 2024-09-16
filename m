@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE080158525;
-	Mon, 16 Sep 2024 12:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7F1158525;
+	Mon, 16 Sep 2024 12:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488233; cv=none; b=L4a1ZDd9TEU5dZSTkyT6HMnVgO/O+OuD7LQB6B4j9tyQNNTop7pHwtja3+yqzuxFewieC5ccLhHHXI/k52sKMgvBgLHJWNna3SavarwFEVZILdSqbolYg/gbNzrnVwUevEBYDKZx8nGvKsNSNlYb8FrJdXO8MwFoP0P9K1yioPw=
+	t=1726488236; cv=none; b=eEIGaT9DA1PFaPcR22uSgVWFYcgPRPElAIjPMMuHtDl26pbOiZUyxwEMQVdHWpnMQWNZKFlew847Teyg/EUoZi9ueI62eQpRL7sEvx615q65c8cDGKAfJ5Z4fQepiVTHz0KKOdGUYt+tG3cYMoxQuhfsRP94+GtqQdIOYJ/46uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488233; c=relaxed/simple;
-	bh=jwxmNiMN0M/o/zZCVbeje+ay+e1fOiX0xGly/XQpPM8=;
+	s=arc-20240116; t=1726488236; c=relaxed/simple;
+	bh=Xih8Y19YpIX5vJPayhzyGfVs/NWCUR9lzN6G7IONClI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIzGLBTs4dbJRtPR5nx0bXaUfsQgRBy6bQD5mYDdzikkG39BHDd2zPqn1tCjXu487esrO15+sgp3qguOeUoQcttVUfeTvr/RJl83EagrTvantKUjGpIQL7zihBbzcTgr/njcW2WjmTL3PmFqCljZzERTEiidRUV6s2TVpBYR3Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEbaS06s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hHhuOOPhL25+Nds2DpyrhnofcB8o/aFTFszhwp/XcnUmTbZ72H0HY++P2AALJFpwmw6q7Gado2LsJPu7avwhKBM3QK53CBM/x90C6phAv6eAvy6Yx+O6PTWmlqNvEBJxfov5vipYCzccibBXDCnb9Z4e+CYH/MMLEvGRk+41iJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sp+PUVSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEbaS06s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BEDC4CEC4;
-	Mon, 16 Sep 2024 12:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sp+PUVSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27456C4CEC4;
+	Mon, 16 Sep 2024 12:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488233;
-	bh=jwxmNiMN0M/o/zZCVbeje+ay+e1fOiX0xGly/XQpPM8=;
+	s=korg; t=1726488236;
+	bh=Xih8Y19YpIX5vJPayhzyGfVs/NWCUR9lzN6G7IONClI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEbaS06sBszgshkMlOdKmaT27crmLTy3dBCmBPrcAJCzr560wkTeu/3v8eaRp/Elz
-	 h2N+Bl/bb7JPOzl5QiomPZfa5ivf5BTa+wLwFrx0diUUGDSfmsOTjhlHDULwT/37Gg
-	 L3not5KUAsi2MoohDp0EFk+3joQ9+sjJgxv44/xQ=
+	b=Sp+PUVSABumkJ6iszS55b6+zI5kbHU82vhMGWGkuJWF4vwX/9HJ8Za9c3xpVhXJD1
+	 98EInO270pewF7SmM5Zk2PJo5SzVoOaEB56SYjnKAolhRuLp4it+z6OzdVS5Z5ueqk
+	 TGifejumweca0sluYE6/f9lUwqpMwFGS/en22FOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangsoo Lee <constant.lee@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Ngai-Mint Kwan <ngai-mint.kwan@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 004/121] ksmbd: override fsids for share path check
-Date: Mon, 16 Sep 2024 13:42:58 +0200
-Message-ID: <20240916114229.080015612@linuxfoundation.org>
+Subject: [PATCH 6.10 035/121] drm/xe/xe2lpm: Extend Wa_16021639441
+Date: Mon, 16 Sep 2024 13:43:29 +0200
+Message-ID: <20240916114230.289977338@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -52,222 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ngai-Mint Kwan <ngai-mint.kwan@linux.intel.com>
 
-[ Upstream commit a018c1b636e79b60149b41151ded7c2606d8606e ]
+[ Upstream commit 03a2dc84f5c4ef31ac0112b29d51ff103f7c8dd4 ]
 
-Sangsoo reported that a DAC denial error occurred when accessing
-files through the ksmbd thread. This patch override fsids for share
-path check.
+Wa_16021639441 applies to Xe2_LPM.
 
-Reported-by: Sangsoo Lee <constant.lee@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Ngai-Mint Kwan <ngai-mint.kwan@linux.intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240701184637.531794-1-ngai-mint.kwan@linux.intel.com
+(cherry picked from commit 74e3076800067c6dc0dcff5b75344cec064c20eb)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/share_config.c | 15 ++++++++++++---
- fs/smb/server/mgmt/share_config.h |  4 +++-
- fs/smb/server/mgmt/tree_connect.c |  9 +++++----
- fs/smb/server/mgmt/tree_connect.h |  4 ++--
- fs/smb/server/smb2pdu.c           |  2 +-
- fs/smb/server/smb_common.c        |  9 +++++++--
- fs/smb/server/smb_common.h        |  2 ++
- 7 files changed, 32 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/xe/xe_wa.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index e0a6b758094f..d8d03070ae44 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -15,6 +15,7 @@
- #include "share_config.h"
- #include "user_config.h"
- #include "user_session.h"
-+#include "../connection.h"
- #include "../transport_ipc.h"
- #include "../misc.h"
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index 66dafe980b9c..1f7699d7fffb 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -542,6 +542,16 @@ static const struct xe_rtp_entry_sr engine_was[] = {
+ 	  XE_RTP_ACTIONS(SET(HALF_SLICE_CHICKEN7, CLEAR_OPTIMIZATION_DISABLE))
+ 	},
  
-@@ -120,12 +121,13 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 	return 0;
- }
- 
--static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
-+static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 						       const char *name)
- {
- 	struct ksmbd_share_config_response *resp;
- 	struct ksmbd_share_config *share = NULL;
- 	struct ksmbd_share_config *lookup;
-+	struct unicode_map *um = work->conn->um;
- 	int ret;
- 
- 	resp = ksmbd_ipc_share_config_request(name);
-@@ -181,7 +183,14 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
- 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
- 				      resp->veto_list_sz);
- 		if (!ret && share->path) {
-+			if (__ksmbd_override_fsids(work, share)) {
-+				kill_share(share);
-+				share = NULL;
-+				goto out;
-+			}
++	/* Xe2_LPM */
 +
- 			ret = kern_path(share->path, 0, &share->vfs_path);
-+			ksmbd_revert_fsids(work);
- 			if (ret) {
- 				ksmbd_debug(SMB, "failed to access '%s'\n",
- 					    share->path);
-@@ -214,7 +223,7 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
- 	return share;
- }
- 
--struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
-+struct ksmbd_share_config *ksmbd_share_config_get(struct ksmbd_work *work,
- 						  const char *name)
- {
- 	struct ksmbd_share_config *share;
-@@ -227,7 +236,7 @@ struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
- 
- 	if (share)
- 		return share;
--	return share_config_request(um, name);
-+	return share_config_request(work, name);
- }
- 
- bool ksmbd_share_veto_filename(struct ksmbd_share_config *share,
-diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
-index 5f591751b923..d4ac2dd4de20 100644
---- a/fs/smb/server/mgmt/share_config.h
-+++ b/fs/smb/server/mgmt/share_config.h
-@@ -11,6 +11,8 @@
- #include <linux/path.h>
- #include <linux/unicode.h>
- 
-+struct ksmbd_work;
++	{ XE_RTP_NAME("16021639441"),
++	  XE_RTP_RULES(MEDIA_VERSION(2000)),
++	  XE_RTP_ACTIONS(SET(CSFE_CHICKEN1(0),
++			     GHWSP_CSB_REPORT_DIS |
++			     PPHWSP_CSB_AND_TIMESTAMP_REPORT_DIS,
++			     XE_RTP_ACTION_FLAG(ENGINE_BASE)))
++	},
 +
- struct ksmbd_share_config {
- 	char			*name;
- 	char			*path;
-@@ -68,7 +70,7 @@ static inline void ksmbd_share_config_put(struct ksmbd_share_config *share)
- 	__ksmbd_share_config_put(share);
- }
+ 	/* Xe2_HPM */
  
--struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
-+struct ksmbd_share_config *ksmbd_share_config_get(struct ksmbd_work *work,
- 						  const char *name);
- bool ksmbd_share_veto_filename(struct ksmbd_share_config *share,
- 			       const char *filename);
-diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
-index d2c81a8a11dd..94a52a75014a 100644
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -16,17 +16,18 @@
- #include "user_session.h"
- 
- struct ksmbd_tree_conn_status
--ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
--			const char *share_name)
-+ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- {
- 	struct ksmbd_tree_conn_status status = {-ENOENT, NULL};
- 	struct ksmbd_tree_connect_response *resp = NULL;
- 	struct ksmbd_share_config *sc;
- 	struct ksmbd_tree_connect *tree_conn = NULL;
- 	struct sockaddr *peer_addr;
-+	struct ksmbd_conn *conn = work->conn;
-+	struct ksmbd_session *sess = work->sess;
- 	int ret;
- 
--	sc = ksmbd_share_config_get(conn->um, share_name);
-+	sc = ksmbd_share_config_get(work, share_name);
- 	if (!sc)
- 		return status;
- 
-@@ -61,7 +62,7 @@ ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 		struct ksmbd_share_config *new_sc;
- 
- 		ksmbd_share_config_del(sc);
--		new_sc = ksmbd_share_config_get(conn->um, share_name);
-+		new_sc = ksmbd_share_config_get(work, share_name);
- 		if (!new_sc) {
- 			pr_err("Failed to update stale share config\n");
- 			status.ret = -ESTALE;
-diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
-index 6377a70b811c..a42cdd051041 100644
---- a/fs/smb/server/mgmt/tree_connect.h
-+++ b/fs/smb/server/mgmt/tree_connect.h
-@@ -13,6 +13,7 @@
- struct ksmbd_share_config;
- struct ksmbd_user;
- struct ksmbd_conn;
-+struct ksmbd_work;
- 
- enum {
- 	TREE_NEW = 0,
-@@ -50,8 +51,7 @@ static inline int test_tree_conn_flag(struct ksmbd_tree_connect *tree_conn,
- struct ksmbd_session;
- 
- struct ksmbd_tree_conn_status
--ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
--			const char *share_name);
-+ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name);
- void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon);
- 
- int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 39dfecf082ba..65cb35ed36c6 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1959,7 +1959,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
- 	ksmbd_debug(SMB, "tree connect request for tree %s treename %s\n",
- 		    name, treename);
- 
--	status = ksmbd_tree_conn_connect(conn, sess, name);
-+	status = ksmbd_tree_conn_connect(work, name);
- 	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
- 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
- 	else
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index 474dadf6b7b8..13818ecb6e1b 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -732,10 +732,10 @@ bool is_asterisk(char *p)
- 	return p && p[0] == '*';
- }
- 
--int ksmbd_override_fsids(struct ksmbd_work *work)
-+int __ksmbd_override_fsids(struct ksmbd_work *work,
-+		struct ksmbd_share_config *share)
- {
- 	struct ksmbd_session *sess = work->sess;
--	struct ksmbd_share_config *share = work->tcon->share_conf;
- 	struct cred *cred;
- 	struct group_info *gi;
- 	unsigned int uid;
-@@ -775,6 +775,11 @@ int ksmbd_override_fsids(struct ksmbd_work *work)
- 	return 0;
- }
- 
-+int ksmbd_override_fsids(struct ksmbd_work *work)
-+{
-+	return __ksmbd_override_fsids(work, work->tcon->share_conf);
-+}
-+
- void ksmbd_revert_fsids(struct ksmbd_work *work)
- {
- 	const struct cred *cred;
-diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
-index f1092519c0c2..4a3148b0167f 100644
---- a/fs/smb/server/smb_common.h
-+++ b/fs/smb/server/smb_common.h
-@@ -447,6 +447,8 @@ int ksmbd_extract_shortname(struct ksmbd_conn *conn,
- int ksmbd_smb_negotiate_common(struct ksmbd_work *work, unsigned int command);
- 
- int ksmbd_smb_check_shared_mode(struct file *filp, struct ksmbd_file *curr_fp);
-+int __ksmbd_override_fsids(struct ksmbd_work *work,
-+			   struct ksmbd_share_config *share);
- int ksmbd_override_fsids(struct ksmbd_work *work);
- void ksmbd_revert_fsids(struct ksmbd_work *work);
- 
+ 	{ XE_RTP_NAME("16021639441"),
 -- 
 2.43.0
 
