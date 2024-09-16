@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67031149E0B;
-	Mon, 16 Sep 2024 12:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD8613DBA0;
+	Mon, 16 Sep 2024 12:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488122; cv=none; b=hR+EUaETBjN+PNAbkJRIoeeB+Zf2AvgYwLr9sy3knPAo3Cj+mSRMhD9uXuPLe0i6UPH86nwj+O2BzkVpNBkZhz4RLIB81bwruD0lm/vhKxzJz7Q07H7TG6NtTDjrF4u9HeYoMwCx6Q+ZOLrdFurkubot9+Ogh+j5/tIju+dZIso=
+	t=1726488125; cv=none; b=kaSd65SAqf0SrAPyK6DuGrdlpN2AL4jvf/TA0DwXcEcL8aYwkcL5aHdOE9CdVk8CBrmWsty2d//M7JLVLVknf4o96S3VX8JGp4SErYrngWGt4t1u6rp+w1uOVOekRjwL26lfi2AdTNMqjOJ8Pto9c2Rs7aTBbw3qEklc+is24PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488122; c=relaxed/simple;
-	bh=DrDqNB2JbOL6bXOoIs+tK3quBOZDkDsMnZt5fok4DsQ=;
+	s=arc-20240116; t=1726488125; c=relaxed/simple;
+	bh=3jz2K+W0srCoRgvaL6Mmojh+9hw1W1RUCtc8M0Q1ci8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETqkpuS4GetDNGlURUeMcNiWs7EragyqfDV+zvJxmllx39Q/MKeV4EcM0xztwZnRI8tVojlyzbpsI161Uy855kCDKLb4hQJM8+q6l3KDGujgIgWWfd3cXmwXlEH3bRvVd9VehwjD6/7EXxjPo6Loc8AYhOq5rad3Slv+PAq8pZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr9W1wUu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQIXUAYKrU2M0i+TV8VUqy2t6sshHi3MIBJrriDbM98mK/tu5WX8LGmR7od7x7S9Uyr8eLdWrjrgz7T8FgOwDH6k3zrS+QGbzGFwgmxB6QYotuoDPdK+ImljpEmSsrnuc4gmr/lv0jbFTSfpjGpa3Wuu1raUwMvSv9Ip70iJwVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YioeOJqc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr9W1wUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8CAC4CEC4;
-	Mon, 16 Sep 2024 12:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YioeOJqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95E4C4CEC4;
+	Mon, 16 Sep 2024 12:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488122;
-	bh=DrDqNB2JbOL6bXOoIs+tK3quBOZDkDsMnZt5fok4DsQ=;
+	s=korg; t=1726488125;
+	bh=3jz2K+W0srCoRgvaL6Mmojh+9hw1W1RUCtc8M0Q1ci8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pr9W1wUumcrjG/wG3D9EFrHy6BOVQ5ocykymS09kJIA8LJaK/N3Z1RpNhKn6/WJ3D
-	 dSpywKKCfyhHVqKHuRNRdP+9Oap5uNXhN83R/sr11KVr/BApTzTdOIriPQpUsU4pms
-	 Vu55tERA725GqCfkqyGmK6TjokMEcA+dcoyoYxLM=
+	b=YioeOJqcqcYIcN4c7t3IzlUD/Dfcrs8aeZuVaFI6o9Wq+KfY62L+MYL8vJR1Q4eKO
+	 3gBwsZBqPWStpjDTf+DU/4KxkZWx4CgXaBFAZcGEHrdVHIZ6WaBz92nTRM33XV9/9O
+	 KYYAvXQTR2uxdFw6lcPkILeH/OogVsioYctFHsJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
 	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 41/63] net/mlx5e: Add missing link modes to ptys2ethtool_map
-Date: Mon, 16 Sep 2024 13:44:20 +0200
-Message-ID: <20240916114222.513926295@linuxfoundation.org>
+Subject: [PATCH 6.1 42/63] net/mlx5: Explicitly set scheduling element and TSAR type
+Date: Mon, 16 Sep 2024 13:44:21 +0200
+Message-ID: <20240916114222.543696544@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -53,38 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 7617d62cba4a8a3ff3ed3fda0171c43f135c142e ]
+[ Upstream commit c88146abe4d0f8cf659b2b8883fdc33936d2e3b8 ]
 
-Add MLX5E_1000BASE_T and MLX5E_100BASE_TX to the legacy
-modes in ptys2legacy_ethtool_table, since they were missing.
+Ensure the scheduling element type and TSAR type are explicitly
+initialized in the QoS rate group creation.
 
-Fixes: 665bc53969d7 ("net/mlx5e: Use new ethtool get/set link ksettings API")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+This prevents potential issues due to default values.
+
+Fixes: 1ae258f8b343 ("net/mlx5: E-switch, Introduce rate limiting groups API")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 3ee61987266c..8cb127a6fabf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -136,6 +136,10 @@ void mlx5e_build_ptys2ethtool_map(void)
- 				       ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100GBASE_LR4, legacy,
- 				       ETHTOOL_LINK_MODE_100000baseLR4_ER4_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100BASE_TX, legacy,
-+				       ETHTOOL_LINK_MODE_100baseT_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_1000BASE_T, legacy,
-+				       ETHTOOL_LINK_MODE_1000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_10GBASE_T, legacy,
- 				       ETHTOOL_LINK_MODE_10000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_25GBASE_CR, legacy,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index 75015d370922..b8bf98a0a80a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -420,6 +420,7 @@ __esw_qos_create_rate_group(struct mlx5_eswitch *esw, struct netlink_ext_ack *ex
+ {
+ 	u32 tsar_ctx[MLX5_ST_SZ_DW(scheduling_context)] = {};
+ 	struct mlx5_esw_rate_group *group;
++	__be32 *attr;
+ 	u32 divider;
+ 	int err;
+ 
+@@ -427,6 +428,12 @@ __esw_qos_create_rate_group(struct mlx5_eswitch *esw, struct netlink_ext_ack *ex
+ 	if (!group)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	MLX5_SET(scheduling_context, tsar_ctx, element_type,
++		 SCHEDULING_CONTEXT_ELEMENT_TYPE_TSAR);
++
++	attr = MLX5_ADDR_OF(scheduling_context, tsar_ctx, element_attributes);
++	*attr = cpu_to_be32(TSAR_ELEMENT_TSAR_TYPE_DWRR << 16);
++
+ 	MLX5_SET(scheduling_context, tsar_ctx, parent_element_id,
+ 		 esw->qos.root_tsar_ix);
+ 	err = mlx5_create_scheduling_element_cmd(esw->dev,
 -- 
 2.43.0
 
