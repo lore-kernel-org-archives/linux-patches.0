@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3950154BF5;
-	Mon, 16 Sep 2024 12:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AC3156F4C;
+	Mon, 16 Sep 2024 12:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488207; cv=none; b=mi48nZ7iF896G1YHHh4NsrdzC8+5xkqMkSHaSTOn2ULFbAmA9Y9uN3yBETdb+JZyInRCx/5dSNeOI0Hb2Iw0Z5C8c9j+2Sd306u6Ox00i2Q/sCuPqLgss6IHTLXxgIhNJxE+o9KKIDBYDuDa2303Fp8RP44PDQFInXuIBq8360M=
+	t=1726488210; cv=none; b=HSXv4SDQ3gSQJBw/4n46afwVnrt7YTs7PIt9Ua5QaItXx8e1xlkKt7dF9QtUNFDVxBqZSihSaua7zPfUxrNsaI9DMmmrUuCmKJAlB7/Uivo3rLNY/t4q7hrMHAjXc9L63ZNOKRbopvwd6irBgCdfeMYCYJegbzudx1phbDQfwRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488207; c=relaxed/simple;
-	bh=IZ2gRsNEW2cCBSGI7UyO/q/MFFeW9SbNFwXk9WPvvJY=;
+	s=arc-20240116; t=1726488210; c=relaxed/simple;
+	bh=i0o1/9JEA9Sm81MGBsrzH6xRdp0nOfxW61lhFJeGum4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSbUBPoG2H2977EJEuqFPe+wvG64MGkU+QpZcEy1nK0CegZY+Bh0gTyPUVyVYzL1AetM3uGK8nV9wgA13mECECGO352LcDAJejdkAre6WQKupBwbGk/04dv+wsPQSE0aiuCBjcnirbaUTt6mJ1cz25oyIWWbJH+ZxkRBdzMisig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQGN9D2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uC9Ujj9Vt8uLi1MTbPxEqP8+37iYWtpB3yR5h7UlVSf2Q4fPv58rzOL2zZXFOU5W15+fDp22yGm7+7oPH3PKlEgkUxvTJuCOpWDhAjaB4n9skgDCXvSU3bZcQ99TxWoMbTqe6MNpbYuaduDlsbK1j5QQYGHURtT/whIyXFHKv48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIl0H4o5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQGN9D2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC4FC4CEC4;
-	Mon, 16 Sep 2024 12:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIl0H4o5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0F5C4CECC;
+	Mon, 16 Sep 2024 12:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488207;
-	bh=IZ2gRsNEW2cCBSGI7UyO/q/MFFeW9SbNFwXk9WPvvJY=;
+	s=korg; t=1726488210;
+	bh=i0o1/9JEA9Sm81MGBsrzH6xRdp0nOfxW61lhFJeGum4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQGN9D2ToxKz1BzNktGr9DGjOkQlDiK6r49Nf4/Wi+SqKs0CBeEbxE3ogagbHb0NC
-	 THNBPPaXIwSF1UG/8wYybfZsc95/BJCuNoO/vPdtTWrBFPy31I7mjPGQTzfWUE0wE1
-	 ci5ru2JMz8g2ttCNELJyjS30pJkz9kzLTCXpbBIw=
+	b=EIl0H4o5F97kTsqa0xK1UDnT3OB5v+PINKvB6HjjltwzTeSphyDCglebnGNeikkEb
+	 nsVhZOq5rjzommGxt4GG9hh7poipUXKRhaIBm2fMuuRkHJ5+HNgdOzbWC+6nDSBCfe
+	 Aru1Hxzxg89VUC52v4inCMeYLLnAGHEpxY2g09cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 032/121] spi: zynqmp-gqspi: Scale timeout by data size
-Date: Mon, 16 Sep 2024 13:43:26 +0200
-Message-ID: <20240916114230.090212925@linuxfoundation.org>
+Subject: [PATCH 6.10 033/121] drm/msm/adreno: Fix error return if missing firmware-name
+Date: Mon, 16 Sep 2024 13:43:27 +0200
+Message-ID: <20240916114230.126164778@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -51,91 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 5d61841c74db8b5bbbf9403f1bd4879f614617d2 ]
+[ Upstream commit 624ab9cde26a9f150b4fd268b0f3dae3184dc40c ]
 
-Large blocks of data time out when reading because we don't wait long
-enough for the transfer to complete. Scale our timeouts based on the
-amount of data we are tranferring, with a healthy dose of pessimism.
+-ENODEV is used to signify that there is no zap shader for the platform,
+and the CPU can directly take the GPU out of secure mode.  We want to
+use this return code when there is no zap-shader node.  But not when
+there is, but without a firmware-name property.  This case we want to
+treat as-if the needed fw is not found.
 
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20240809201540.3363243-1-sean.anderson@linux.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/604564/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 99524a3c9f38..558c466135a5 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1033,6 +1033,18 @@ static int __maybe_unused zynqmp_runtime_resume(struct device *dev)
- 	return 0;
- }
- 
-+static unsigned long zynqmp_qspi_timeout(struct zynqmp_qspi *xqspi, u8 bits,
-+					 unsigned long bytes)
-+{
-+	unsigned long timeout;
-+
-+	/* Assume we are at most 2x slower than the nominal bus speed */
-+	timeout = mult_frac(bytes, 2 * 8 * MSEC_PER_SEC,
-+			    bits * xqspi->speed_hz);
-+	/* And add 100 ms for scheduling delays */
-+	return msecs_to_jiffies(timeout + 100);
-+}
-+
- /**
-  * zynqmp_qspi_exec_op() - Initiates the QSPI transfer
-  * @mem: The SPI memory
-@@ -1049,6 +1061,7 @@ static int zynqmp_qspi_exec_op(struct spi_mem *mem,
- {
- 	struct zynqmp_qspi *xqspi = spi_controller_get_devdata
- 				    (mem->spi->controller);
-+	unsigned long timeout;
- 	int err = 0, i;
- 	u32 genfifoentry = 0;
- 	u16 opcode = op->cmd.opcode;
-@@ -1077,8 +1090,10 @@ static int zynqmp_qspi_exec_op(struct spi_mem *mem,
- 		zynqmp_gqspi_write(xqspi, GQSPI_IER_OFST,
- 				   GQSPI_IER_GENFIFOEMPTY_MASK |
- 				   GQSPI_IER_TXNOT_FULL_MASK);
--		if (!wait_for_completion_timeout
--		    (&xqspi->data_completion, msecs_to_jiffies(1000))) {
-+		timeout = zynqmp_qspi_timeout(xqspi, op->cmd.buswidth,
-+					      op->cmd.nbytes);
-+		if (!wait_for_completion_timeout(&xqspi->data_completion,
-+						 timeout)) {
- 			err = -ETIMEDOUT;
- 			goto return_err;
- 		}
-@@ -1104,8 +1119,10 @@ static int zynqmp_qspi_exec_op(struct spi_mem *mem,
- 				   GQSPI_IER_TXEMPTY_MASK |
- 				   GQSPI_IER_GENFIFOEMPTY_MASK |
- 				   GQSPI_IER_TXNOT_FULL_MASK);
--		if (!wait_for_completion_timeout
--		    (&xqspi->data_completion, msecs_to_jiffies(1000))) {
-+		timeout = zynqmp_qspi_timeout(xqspi, op->addr.buswidth,
-+					      op->addr.nbytes);
-+		if (!wait_for_completion_timeout(&xqspi->data_completion,
-+						 timeout)) {
- 			err = -ETIMEDOUT;
- 			goto return_err;
- 		}
-@@ -1173,8 +1190,9 @@ static int zynqmp_qspi_exec_op(struct spi_mem *mem,
- 						   GQSPI_IER_RXEMPTY_MASK);
- 			}
- 		}
--		if (!wait_for_completion_timeout
--		    (&xqspi->data_completion, msecs_to_jiffies(1000)))
-+		timeout = zynqmp_qspi_timeout(xqspi, op->data.buswidth,
-+					      op->data.nbytes);
-+		if (!wait_for_completion_timeout(&xqspi->data_completion, timeout))
- 			err = -ETIMEDOUT;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 074fb498706f..b93ed15f04a3 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -99,7 +99,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		 * was a bad idea, and is only provided for backwards
+ 		 * compatibility for older targets.
+ 		 */
+-		return -ENODEV;
++		return -ENOENT;
  	}
  
+ 	if (IS_ERR(fw)) {
 -- 
 2.43.0
 
