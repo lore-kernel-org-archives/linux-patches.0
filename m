@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00754142903;
-	Mon, 16 Sep 2024 12:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13C2154429;
+	Mon, 16 Sep 2024 12:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488741; cv=none; b=JzUG2/1UReupN9IK9THLdPCkonGZn5mz3XJvmKqvCU33GnGXJk1O60T2ZS/CL/a52aReYiNiTITsNBRAyhRuUI4mPo5yA7jYS5aN/iVCbdoKDbJIlogQzetV/tiMCA+0zpzDgBZ3c1EBcvN5vrM4IIqfyLxKWCAg3cqALvpb9o8=
+	t=1726488743; cv=none; b=tf++XgFsMvlriSUFJdO4L2FJfwr3ImoB6INvzW836g64OF+jNcqXUnxWhp0jWukjKYL6gNSqFuvwmZ8hCbZkBk1lBmkta52xdkURqtr3UHIl++uSaUJW2tehfmUY9BjpO653aGQxNa7i9gECEyb59bTUwv4MpZEf5GP9oOmx0O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488741; c=relaxed/simple;
-	bh=sCS/tDuK8kMCSF9284n951rYFqiJL3CUa+EU/wT5Dd4=;
+	s=arc-20240116; t=1726488743; c=relaxed/simple;
+	bh=XTwwS1bP/CNlmNm9O7vGm5pu6kQt/evxldkHeyEJOZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBhTyJTOekNVpp2YgFOOgndVZMGG6nJf6pLgxZ7hGhwyrIdPJvWVyP8X4PQWmoq1XetcjDbveG60lWm6ypVSqGpN5wirVKNP1psdKF/pzOVA5yTo6m95ICTm8eEPa8v1GNEVymNVSslrxw8ewx2ZLBvdcC1NZKG2dTp+PwSYvFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju5Hb0bf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W5guVqLq5T8tAOINYtEIS09T13WeNPVWImLMOXKmJzhDZpfzNZbod784Xj5kmN5kPOJYLwWw/8IE8YK6bpJda4pdiPTM5AQzCVGDD0Vg3KMW9qkSppT8x3Lf8Qy+fcAEojObS3W0/Iv2E/RWwCwsk1PfUWGy/zv4x2ZLbgtvtoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOs5RFGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju5Hb0bf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA70C4CEC4;
-	Mon, 16 Sep 2024 12:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOs5RFGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49324C4CEC4;
+	Mon, 16 Sep 2024 12:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488740;
-	bh=sCS/tDuK8kMCSF9284n951rYFqiJL3CUa+EU/wT5Dd4=;
+	s=korg; t=1726488743;
+	bh=XTwwS1bP/CNlmNm9O7vGm5pu6kQt/evxldkHeyEJOZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ju5Hb0bfpBLUeNQk+8usEmnrgbh1uzHAllxpivNM9bTMscb6/5qAkzwNuSNWMkUOA
-	 9Ks93sFVqOA3hKeGnCQ62gD0m+N0FKCFaRzBdS0jXqwbaE3T+7fH/VXQBCkQa34n8a
-	 YwpyKO6s8GN1VhRLz0UMASD/zamMkjYIFTpt3VN8=
+	b=lOs5RFGH3k/0ZU79w/BHgvO97INUjd3IGMq3DR2ZzxxTH910fH3zHMLbWHFg9+Ccw
+	 cyCX5F/lVUrj7Xv6L4sDdzYMUymF0eJ0soKpXnA6CU35RtKb9shxWv3ad2uJBPOdTI
+	 /kklj93PILZQ7+o1xUDKOUjeJeOzPZnSw6GclXVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>
-Subject: [PATCH 6.6 83/91] drm/amd/amdgpu: apply command submission parser for JPEG v1
-Date: Mon, 16 Sep 2024 13:44:59 +0200
-Message-ID: <20240916114227.189409750@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 84/91] spi: geni-qcom: Undo runtime PM changes at driver exit time
+Date: Mon, 16 Sep 2024 13:45:00 +0200
+Message-ID: <20240916114227.219729066@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -50,151 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David (Ming Qiang) Wu <David.Wu3@amd.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 8409fb50ce48d66cf9dc5391f03f05c56c430605 upstream.
+[ Upstream commit 89e362c883c65ff94b76b9862285f63545fb5274 ]
 
-Similar to jpeg_v2_dec_ring_parse_cs() but it has different
-register ranges and a few other registers access.
+It's important to undo pm_runtime_use_autosuspend() with
+pm_runtime_dont_use_autosuspend() at driver exit time unless driver
+initially enabled pm_runtime with devm_pm_runtime_enable()
+(which handles it for you).
 
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3d5adbdf1d01708777f2eda375227cbf7a98b9fe)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Hence, switch to devm_pm_runtime_enable() to fix it, so the
+pm_runtime_disable() in probe error path and remove function
+can be removed.
+
+Fixes: cfdab2cd85ec ("spi: spi-geni-qcom: Set an autosuspend delay of 250 ms")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patch.msgid.link/20240909073141.951494-2-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c |   76 ++++++++++++++++++++++++++++++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h |   11 ++++
- 2 files changed, 86 insertions(+), 1 deletion(-)
+ drivers/spi/spi-geni-qcom.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
-@@ -23,6 +23,7 @@
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index f4f376a8351b..983c4896c8cf 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -1110,25 +1110,27 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	spin_lock_init(&mas->lock);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
  
- #include "amdgpu.h"
- #include "amdgpu_jpeg.h"
-+#include "amdgpu_cs.h"
- #include "soc15.h"
- #include "soc15d.h"
- #include "vcn_v1_0.h"
-@@ -34,6 +35,9 @@
- static void jpeg_v1_0_set_dec_ring_funcs(struct amdgpu_device *adev);
- static void jpeg_v1_0_set_irq_funcs(struct amdgpu_device *adev);
- static void jpeg_v1_0_ring_begin_use(struct amdgpu_ring *ring);
-+static int jpeg_v1_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
-+				     struct amdgpu_job *job,
-+				     struct amdgpu_ib *ib);
+ 	if (device_property_read_bool(&pdev->dev, "spi-slave"))
+ 		spi->slave = true;
  
- static void jpeg_v1_0_decode_ring_patch_wreg(struct amdgpu_ring *ring, uint32_t *ptr, uint32_t reg_offset, uint32_t val)
- {
-@@ -300,7 +304,10 @@ static void jpeg_v1_0_decode_ring_emit_i
+ 	ret = geni_icc_get(&mas->se, NULL);
+ 	if (ret)
+-		goto spi_geni_probe_runtime_disable;
++		return ret;
+ 	/* Set the bus quota to a reasonable value for register access */
+ 	mas->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
+ 	mas->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
  
- 	amdgpu_ring_write(ring,
- 		PACKETJ(SOC15_REG_OFFSET(JPEG, 0, mmUVD_LMI_JRBC_IB_VMID), 0, 0, PACKETJ_TYPE0));
--	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
-+	if (ring->funcs->parse_cs)
-+		amdgpu_ring_write(ring, 0);
-+	else
-+		amdgpu_ring_write(ring, (vmid | (vmid << 4)));
+ 	ret = geni_icc_set_bw(&mas->se);
+ 	if (ret)
+-		goto spi_geni_probe_runtime_disable;
++		return ret;
  
- 	amdgpu_ring_write(ring,
- 		PACKETJ(SOC15_REG_OFFSET(JPEG, 0, mmUVD_LMI_JPEG_VMID), 0, 0, PACKETJ_TYPE0));
-@@ -554,6 +561,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v1_0_decode_ring_get_rptr,
- 	.get_wptr = jpeg_v1_0_decode_ring_get_wptr,
- 	.set_wptr = jpeg_v1_0_decode_ring_set_wptr,
-+	.parse_cs = jpeg_v1_dec_ring_parse_cs,
- 	.emit_frame_size =
- 		6 + 6 + /* hdp invalidate / flush */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
-@@ -612,3 +620,69 @@ static void jpeg_v1_0_ring_begin_use(str
+ 	ret = spi_geni_init(mas);
+ 	if (ret)
+-		goto spi_geni_probe_runtime_disable;
++		return ret;
  
- 	vcn_v1_0_set_pg_for_begin_use(ring, set_clocks);
+ 	/*
+ 	 * check the mode supported and set_cs for fifo mode only
+@@ -1157,8 +1159,6 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	free_irq(mas->irq, spi);
+ spi_geni_release_dma:
+ 	spi_geni_release_dma_chan(mas);
+-spi_geni_probe_runtime_disable:
+-	pm_runtime_disable(dev);
+ 	return ret;
  }
-+
-+/**
-+ * jpeg_v1_dec_ring_parse_cs - command submission parser
-+ *
-+ * @parser: Command submission parser context
-+ * @job: the job to parse
-+ * @ib: the IB to parse
-+ *
-+ * Parse the command stream, return -EINVAL for invalid packet,
-+ * 0 otherwise
-+ */
-+static int jpeg_v1_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
-+				     struct amdgpu_job *job,
-+				     struct amdgpu_ib *ib)
-+{
-+	u32 i, reg, res, cond, type;
-+	int ret = 0;
-+	struct amdgpu_device *adev = parser->adev;
-+
-+	for (i = 0; i < ib->length_dw ; i += 2) {
-+		reg  = CP_PACKETJ_GET_REG(ib->ptr[i]);
-+		res  = CP_PACKETJ_GET_RES(ib->ptr[i]);
-+		cond = CP_PACKETJ_GET_COND(ib->ptr[i]);
-+		type = CP_PACKETJ_GET_TYPE(ib->ptr[i]);
-+
-+		if (res || cond != PACKETJ_CONDITION_CHECK0) /* only allow 0 for now */
-+			return -EINVAL;
-+
-+		if (reg >= JPEG_V1_REG_RANGE_START && reg <= JPEG_V1_REG_RANGE_END)
-+			continue;
-+
-+		switch (type) {
-+		case PACKETJ_TYPE0:
-+			if (reg != JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_HIGH &&
-+			    reg != JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_LOW &&
-+			    reg != JPEG_V1_LMI_JPEG_READ_64BIT_BAR_HIGH &&
-+			    reg != JPEG_V1_LMI_JPEG_READ_64BIT_BAR_LOW &&
-+			    reg != JPEG_V1_REG_CTX_INDEX &&
-+			    reg != JPEG_V1_REG_CTX_DATA) {
-+				ret = -EINVAL;
-+			}
-+			break;
-+		case PACKETJ_TYPE1:
-+			if (reg != JPEG_V1_REG_CTX_DATA)
-+				ret = -EINVAL;
-+			break;
-+		case PACKETJ_TYPE3:
-+			if (reg != JPEG_V1_REG_SOFT_RESET)
-+				ret = -EINVAL;
-+			break;
-+		case PACKETJ_TYPE6:
-+			if (ib->ptr[i] != CP_PACKETJ_NOP)
-+				ret = -EINVAL;
-+			break;
-+		default:
-+			ret = -EINVAL;
-+		}
-+
-+		if (ret) {
-+			dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
-+			break;
-+		}
-+	}
-+
-+	return ret;
-+}
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h
-@@ -29,4 +29,15 @@ int jpeg_v1_0_sw_init(void *handle);
- void jpeg_v1_0_sw_fini(void *handle);
- void jpeg_v1_0_start(struct amdgpu_device *adev, int mode);
  
-+#define JPEG_V1_REG_RANGE_START	0x8000
-+#define JPEG_V1_REG_RANGE_END	0x803f
-+
-+#define JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_HIGH	0x8238
-+#define JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_LOW	0x8239
-+#define JPEG_V1_LMI_JPEG_READ_64BIT_BAR_HIGH	0x825a
-+#define JPEG_V1_LMI_JPEG_READ_64BIT_BAR_LOW	0x825b
-+#define JPEG_V1_REG_CTX_INDEX			0x8328
-+#define JPEG_V1_REG_CTX_DATA			0x8329
-+#define JPEG_V1_REG_SOFT_RESET			0x83a0
-+
- #endif /*__JPEG_V1_0_H__*/
+@@ -1173,7 +1173,6 @@ static void spi_geni_remove(struct platform_device *pdev)
+ 	spi_geni_release_dma_chan(mas);
+ 
+ 	free_irq(mas->irq, spi);
+-	pm_runtime_disable(&pdev->dev);
+ }
+ 
+ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
+-- 
+2.43.0
+
 
 
