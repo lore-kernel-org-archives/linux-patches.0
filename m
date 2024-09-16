@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC89146A79;
-	Mon, 16 Sep 2024 12:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF17B149C57;
+	Mon, 16 Sep 2024 12:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488622; cv=none; b=bvCJyVPHGYTr4PCCUe0TqLnaWE8nwrz1S5utBK9q6fhAaSv//e4u29mhd+YMHQdYeZDAcLFvPs7ouBMXZcMUQ9xpjrh3gwlGmmrxQqIAtX4kAf1zQ0UpQ26uVJLsHkakIXyZMGGMgcToRs8B4hylhw9YWj3Vkoe0/Rtz7YZBV9E=
+	t=1726488624; cv=none; b=DgDK85X4dVNvtHYcDlth9MZelWwio3JEFtsLULGq6pvI+YcK7/KU4OFviteaYNUKAjS3HHnIKlZjgn74hjd8z9j5IH5CSLlQQxZ/FUuVSK+eewlK+JC3QvttNf0QDIRurXvL4h8SMsh15t6wTS7xkBik2ozmLcLDJDsZTE35gHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488622; c=relaxed/simple;
-	bh=qHvJN4F/BWMcPXv/I2lH8+he1edA1FwEvfAbHQA7Dss=;
+	s=arc-20240116; t=1726488624; c=relaxed/simple;
+	bh=AmQYWwsiMxmWtlnHhaBcHsUmGZhAaELSpBl6ZRrVQCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esITiWj/owX22609QmvdBVlBxm/Ks5auUikpLJTShWPQmkv8QyZOD6KZ5yaaPMD+NFkpi3jlRdP4XerVpp/z3ubdX8LBsXUpLIyaUOYgYg3gRmGQSUad2ZEJShLUN95QHHs60rDGN+/z3IRHEhOyaYBdYZJh4EgYYbaYzaXViz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgGYEGSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SWA01TCr/pWlcb5r/uXr26jRP6e88kr5wbVZW/OjPpzo8KGUWBwvL53OQXq2I4SQG7ZEDP8HwljUUiHtQHV/FEH7zjqbnuI5oO+F0Fgvs02NeeeNmKpfGsYE5lmPA8VImyinb/WcV4BgpU5EcWWDvDw1+e0SpvC7bcUvm0adXGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1U36oBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgGYEGSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6385BC4CEC4;
-	Mon, 16 Sep 2024 12:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1U36oBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374D5C4CEC4;
+	Mon, 16 Sep 2024 12:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488621;
-	bh=qHvJN4F/BWMcPXv/I2lH8+he1edA1FwEvfAbHQA7Dss=;
+	s=korg; t=1726488624;
+	bh=AmQYWwsiMxmWtlnHhaBcHsUmGZhAaELSpBl6ZRrVQCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgGYEGSGdYMszRSwuH2wiRC8Ybio5RR/uIAN6yGRFBjPVEF9Ato6/w43UQIvB4N+5
-	 ogs3MWQktTcsDXfbpp1fRhwgVbOUsxmJg0+bDyebBgK67Mlop5sElGm0CXtXvjQQTQ
-	 P+0HrqIJ8TwGT7ILbT9HFf9f+v3BfbQtDMwxAOJ4=
+	b=R1U36oBtVd95vgku0pQanaxqFRHjxE105cSaot+3PwM7Li8DkX/djAwkVz5B8c6h5
+	 0+yIlmvRp31p0WWm9QG+Z8h5sUApP82qzL3EanXbHLa3bomJX749Tc4MzOQvmk97U4
+	 aOOg0LOy62Aa62k8NLxK3EMZBJT5RcUmSpjp+uFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Dave Ertman <David.m.ertman@intel.com>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 56/91] ice: fix accounting for filters shared by multiple VSIs
-Date: Mon, 16 Sep 2024 13:44:32 +0200
-Message-ID: <20240916114226.357643645@linuxfoundation.org>
+Subject: [PATCH 6.6 57/91] ice: fix VSI lists confusion when adding VLANs
+Date: Mon, 16 Sep 2024 13:44:33 +0200
+Message-ID: <20240916114226.382579864@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,47 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit e843cf7b34fe2e0c1afc55e1f3057375c9b77a14 ]
+[ Upstream commit d2940002b0aa42898de815a1453b29d440292386 ]
 
-When adding a switch filter (such as a MAC or VLAN filter), it is expected
-that the driver will detect the case where the filter already exists, and
-return -EEXIST. This is used by calling code such as ice_vc_add_mac_addr,
-and ice_vsi_add_vlan to avoid incrementing the accounting fields such as
-vsi->num_vlan or vf->num_mac.
+The description of function ice_find_vsi_list_entry says:
+  Search VSI list map with VSI count 1
 
-This logic works correctly for the case where only a single VSI has added a
-given switch filter.
+However, since the blamed commit (see Fixes below), the function no
+longer checks vsi_count. This causes a problem in ice_add_vlan_internal,
+where the decision to share VSI lists between filter rules relies on the
+vsi_count of the found existing VSI list being 1.
 
-When a second VSI adds the same switch filter, the driver converts the
-existing filter from an ICE_FWD_TO_VSI filter into an ICE_FWD_TO_VSI_LIST
-filter. This saves switch resources, by ensuring that multiple VSIs can
-re-use the same filter.
+The reproducing steps:
+1. Have a PF and two VFs.
+   There will be a filter rule for VLAN 0, referring to a VSI list
+   containing VSIs: 0 (PF), 2 (VF#0), 3 (VF#1).
+2. Add VLAN 1234 to VF#0.
+   ice will make the wrong decision to share the VSI list with the new
+   rule. The wrong behavior may not be immediately apparent, but it can
+   be observed with debug prints.
+3. Add VLAN 1234 to VF#1.
+   ice will unshare the VSI list for the VLAN 1234 rule. Due to the
+   earlier bad decision, the newly created VSI list will contain
+   VSIs 0 (PF) and 3 (VF#1), instead of expected 2 (VF#0) and 3 (VF#1).
+4. Try pinging a network peer over the VLAN interface on VF#0.
+   This fails.
 
-The ice_add_update_vsi_list() function is responsible for doing this
-conversion. When first converting a filter from the FWD_TO_VSI into
-FWD_TO_VSI_LIST, it checks if the VSI being added is the same as the
-existing rule's VSI. In such a case it returns -EEXIST.
+Reproducer script at:
+https://gitlab.com/mschmidt2/repro/-/blob/master/RHEL-46814/test-vlan-vsi-list-confusion.sh
+Commented debug trace:
+https://gitlab.com/mschmidt2/repro/-/blob/master/RHEL-46814/ice-vlan-vsi-lists-debug.txt
+Patch adding the debug prints:
+https://gitlab.com/mschmidt2/linux/-/commit/f8a8814623944a45091a77c6094c40bfe726bfdb
+(Unsafe, by the way. Lacks rule_lock when dumping in ice_remove_vlan.)
 
-However, when the switch rule has already been converted to a
-FWD_TO_VSI_LIST, the logic is different. Adding a new VSI in this case just
-requires extending the VSI list entry. The logic for checking if the rule
-already exists in this case returns 0 instead of -EEXIST.
+Michal Swiatkowski added to the explanation that the bug is caused by
+reusing a VSI list created for VLAN 0. All created VFs' VSIs are added
+to VLAN 0 filter. When a non-zero VLAN is created on a VF which is already
+in VLAN 0 (normal case), the VSI list from VLAN 0 is reused.
+It leads to a problem because all VFs (VSIs to be specific) that are
+subscribed to VLAN 0 will now receive a new VLAN tag traffic. This is
+one bug, another is the bug described above. Removing filters from
+one VF will remove VLAN filter from the previous VF. It happens a VF is
+reset. Example:
+- creation of 3 VFs
+- we have VSI list (used for VLAN 0) [0 (pf), 2 (vf1), 3 (vf2), 4 (vf3)]
+- we are adding VLAN 100 on VF1, we are reusing the previous list
+  because 2 is there
+- VLAN traffic works fine, but VLAN 100 tagged traffic can be received
+  on all VSIs from the list (for example broadcast or unicast)
+- trust is turning on VF2, VF2 is resetting, all filters from VF2 are
+  removed; the VLAN 100 filter is also removed because 3 is on the list
+- VLAN traffic to VF1 isn't working anymore, there is a need to recreate
+  VLAN interface to readd VLAN filter
 
-This breaks the accounting logic mentioned above, so the counters for how
-many MAC and VLAN filters exist for a given VF or VSI no longer accurately
-reflect the actual count. This breaks other code which relies on these
-counts.
+One thing I'm not certain about is the implications for the LAG feature,
+which is another caller of ice_find_vsi_list_entry. I don't have a
+LAG-capable card at hand to test.
 
-In typical usage this primarily affects such filters generally shared by
-multiple VSIs such as VLAN 0, or broadcast and multicast MAC addresses.
-
-Fix this by correctly reporting -EEXIST in the case of adding the same VSI
-to a switch rule already converted to ICE_FWD_TO_VSI_LIST.
-
-Fixes: 9daf8208dd4d ("ice: Add support for switch filter programming")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Fixes: 23ccae5ce15f ("ice: changes to the interface with the HW and FW for SRIOV_VF+LAG")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Dave Ertman <David.m.ertman@intel.com>
 Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -101,18 +125,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 88ee2491312a..1b48fa8c435d 100644
+index 1b48fa8c435d..355716e6bcc8 100644
 --- a/drivers/net/ethernet/intel/ice/ice_switch.c
 +++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -3072,7 +3072,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
+@@ -3142,7 +3142,7 @@ ice_find_vsi_list_entry(struct ice_hw *hw, u8 recp_id, u16 vsi_handle,
  
- 		/* A rule already exists with the new VSI being added */
- 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
--			return 0;
-+			return -EEXIST;
- 
- 		/* Update the previously created VSI list set with
- 		 * the new VSI ID passed in
+ 	list_head = &sw->recp_list[recp_id].filt_rules;
+ 	list_for_each_entry(list_itr, list_head, list_entry) {
+-		if (list_itr->vsi_list_info) {
++		if (list_itr->vsi_count == 1 && list_itr->vsi_list_info) {
+ 			map_info = list_itr->vsi_list_info;
+ 			if (test_bit(vsi_handle, map_info->vsi_map)) {
+ 				*vsi_list_id = map_info->vsi_list_id;
 -- 
 2.43.0
 
