@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B24915747A;
-	Mon, 16 Sep 2024 12:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25731157A67;
+	Mon, 16 Sep 2024 12:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488353; cv=none; b=XTIdlUXfD+D4EgaoJOysEVIDc+BeFkCPC7Cap8M9KUNZEbTQjBKkAG3bERcKeOhGLCpQnxhdf8sUCtfkJ3ZGj+V7fOkKV7UmzEaHZTWwe3IPubTawrcfoW9jjTfVbfCODiECjf0mqkaRTU4SyXq42eWWhElKJghHZIRPrkAXkx8=
+	t=1726488356; cv=none; b=X35ODaAm2J2l5XT1DVkuzlfnh8qBVs9Jb2b6xenmzw3YOuEXJge32AVrEUGMvd//zxecGf+WQOR4moPdya8o4BTuEWQOHE2i0/fy1R1fk17abYYWGjxAy3x6jOsHN775IE1WnbtiVz6wPWksrvL2KKVWgkspWhEmu7+hwMDNICI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488353; c=relaxed/simple;
-	bh=KxRdqDsw0Fh4wUBwusUHg9EbsijuYQ2NDAGuK24q/1E=;
+	s=arc-20240116; t=1726488356; c=relaxed/simple;
+	bh=DGTuhztM5LuDjTu+x87m2AHjwHWNJn+n1HIcQOJheds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Umc/nHX0wzhhBESOKVgQ1lhTI8w600+R7p4k1uvabE85mosk3XHsylQmY0A96yU1WuoGheivUIM8DKQ6i4/2v/oy9slK7spw0/aqvOmsUPmzL0nCP92rR2GA5ogQC1+A+3g5xzC0cLJpyAMBch6bEFgU6Sw6J3RrdWbje82+XZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCC4lP+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BPNpxhk/YxyukZmw2XJSJJZvuZnwK1qg8/zBv0OYjhBny49CPS6+1X71z/otF3bq0U4eV+JySyLQAxcGof8mXhtOQioSdU9Vtd9lN/jahjGvgd2MXDsFz2l+DVounPqwD1Xy87ZaciLyojGAjk2GDUhztnq1OIfUxcQqDeTaPgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNlYLKai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCC4lP+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C91C4CEC4;
-	Mon, 16 Sep 2024 12:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNlYLKai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B07C4CEC4;
+	Mon, 16 Sep 2024 12:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488353;
-	bh=KxRdqDsw0Fh4wUBwusUHg9EbsijuYQ2NDAGuK24q/1E=;
+	s=korg; t=1726488356;
+	bh=DGTuhztM5LuDjTu+x87m2AHjwHWNJn+n1HIcQOJheds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCC4lP+Xcjllrsx0MkpqVjCN+z1qu93RXj+XcUY1fofldj3pUvXTeBmFFPuoDkhe0
-	 TAS+1pVoTJzX0jPalRlBMxjKwCFHdND9XG6VZPoFY0Q7CNx47h9Jb3mqY2bTQHdX5m
-	 5FcrnNzxN152ZWUgiQYouamgHpfYANuoXpsX3d8w=
+	b=UNlYLKaiuN9dmF9/7iiDn7VZxsuk1TwTx4Tj4zSWp8fPzCBuQtYroC1xVDzbzvp50
+	 93gc/7oss4Q7jj2RWo6yNdRI+PcAD0Q5vP0QUKEmnpM12v8+uq7+HhUdCtDY7ptXdw
+	 AsZtwRIrPm9sFH0rN675SpusWQSIoVCvOEXdkN5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 083/121] net/mlx5: Fix bridge mode operations when there are no VFs
-Date: Mon, 16 Sep 2024 13:44:17 +0200
-Message-ID: <20240916114231.892700273@linuxfoundation.org>
+Subject: [PATCH 6.10 084/121] fou: fix initialization of grc
+Date: Mon, 16 Sep 2024 13:44:18 +0200
+Message-ID: <20240916114231.926492587@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -52,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit b1d305abef4640af1b4f1b4774d513cd81b10cfc ]
+[ Upstream commit 4c8002277167125078e6b9b90137bdf443ebaa08 ]
 
-Currently, trying to set the bridge mode attribute when numvfs=0 leads to a
-crash:
+The grc must be initialize first. There can be a condition where if
+fou is NULL, goto out will be executed and grc would be used
+uninitialized.
 
-bridge link set dev eth2 hwmode vepa
-
-[  168.967392] BUG: kernel NULL pointer dereference, address: 0000000000000030
-[...]
-[  168.969989] RIP: 0010:mlx5_add_flow_rules+0x1f/0x300 [mlx5_core]
-[...]
-[  168.976037] Call Trace:
-[  168.976188]  <TASK>
-[  168.978620]  _mlx5_eswitch_set_vepa_locked+0x113/0x230 [mlx5_core]
-[  168.979074]  mlx5_eswitch_set_vepa+0x7f/0xa0 [mlx5_core]
-[  168.979471]  rtnl_bridge_setlink+0xe9/0x1f0
-[  168.979714]  rtnetlink_rcv_msg+0x159/0x400
-[  168.980451]  netlink_rcv_skb+0x54/0x100
-[  168.980675]  netlink_unicast+0x241/0x360
-[  168.980918]  netlink_sendmsg+0x1f6/0x430
-[  168.981162]  ____sys_sendmsg+0x3bb/0x3f0
-[  168.982155]  ___sys_sendmsg+0x88/0xd0
-[  168.985036]  __sys_sendmsg+0x59/0xa0
-[  168.985477]  do_syscall_64+0x79/0x150
-[  168.987273]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  168.987773] RIP: 0033:0x7f8f7950f917
-
-(esw->fdb_table.legacy.vepa_fdb is null)
-
-The bridge mode is only relevant when there are multiple functions per
-port. Therefore, prevent setting and getting this setting when there are no
-VFs.
-
-Note that after this change, there are no settings to change on the PF
-interface using `bridge link` when there are no VFs, so the interface no
-longer appears in the `bridge link` output.
-
-Fixes: 4b89251de024 ("net/mlx5: Support ndo bridge_setlink and getlink")
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 7e4196935069 ("fou: Fix null-ptr-deref in GRO.")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240906102839.202798-1-usama.anjum@collabora.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c | 4 ++--
+ net/ipv4/fou_core.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
-index 255bc8b749f9..8587cd572da5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
-@@ -319,7 +319,7 @@ int mlx5_eswitch_set_vepa(struct mlx5_eswitch *esw, u8 setting)
- 		return -EPERM;
+diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
+index 78b869b31492..3e30745e2c09 100644
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -336,11 +336,11 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
+ 	struct gro_remcsum grc;
+ 	u8 proto;
  
- 	mutex_lock(&esw->state_lock);
--	if (esw->mode != MLX5_ESWITCH_LEGACY) {
-+	if (esw->mode != MLX5_ESWITCH_LEGACY || !mlx5_esw_is_fdb_created(esw)) {
- 		err = -EOPNOTSUPP;
++	skb_gro_remcsum_init(&grc);
++
+ 	if (!fou)
  		goto out;
- 	}
-@@ -339,7 +339,7 @@ int mlx5_eswitch_get_vepa(struct mlx5_eswitch *esw, u8 *setting)
- 	if (!mlx5_esw_allowed(esw))
- 		return -EPERM;
  
--	if (esw->mode != MLX5_ESWITCH_LEGACY)
-+	if (esw->mode != MLX5_ESWITCH_LEGACY || !mlx5_esw_is_fdb_created(esw))
- 		return -EOPNOTSUPP;
+-	skb_gro_remcsum_init(&grc);
+-
+ 	off = skb_gro_offset(skb);
+ 	len = off + sizeof(*guehdr);
  
- 	*setting = esw->fdb_table.legacy.vepa_uplink_rule ? 1 : 0;
 -- 
 2.43.0
 
