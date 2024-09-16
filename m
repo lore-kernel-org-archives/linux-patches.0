@@ -1,106 +1,275 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE7315B119;
-	Mon, 16 Sep 2024 11:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F21847A62;
+	Mon, 16 Sep 2024 11:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726484978; cv=none; b=m9OZFgnXIS6tklPmfn+vcqszrsB4/xfmzdzgjyC8bW5RDwswYXV6r1Vv/MUL6diweGpnQdOnEvSY8z/v5b6kHWkmzqdqL4Rw4QCDkyW2M+I1lvpJOMpmL6L97LFMCF2PPHs3TwmWwEYC5+uAPktLCe3bWFe1MeaS9PmfwExQ9ZQ=
+	t=1726487956; cv=none; b=kkoAla1JpBxUJx+baNdpKFq1zqkLSPEMS0UXWBjr+r8Opxc+9OSike3bPwQedSKdNo5L6A8YNdhmU6AE49ZYBqlRP4YwMk9C3OUlHNAuemuQc0NU/zKIhAWPIyO9xBYbeB6hTIO08g5ybpYQLEQn99rNJ4YAtkkW8j0qvEHEb4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726484978; c=relaxed/simple;
-	bh=ESu+Y3NLrw6nKtLSnksNQ2p6EDkLCi+HsWc7u+Z6WTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=djCGzwUolaej4h4JoGQm52mo/x/I9NyU/zCHUQrOEz89/5PUAY9GINtXqnwjfO6zV2CVTGIblSy4AQYLXEcrASIuFGhK7QXIB/heAG2JJwchbbN4LE5PcHXPcC3iRCzfwNy6KO7ftjq/0QDDqsq8oX4878vtY6tj3+Qzpu6kcNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l5bqhJlQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1726487956; c=relaxed/simple;
+	bh=TFvM0+6swkycrKyQ4DjvF1UWpHn4dErDTWIGD1rfQVs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TgjM8udFW6yG89tKP8sz1dTZR8lF+8US0oua9xztyDsbcHmT6tSsMPmcv2+5VtdYnMvNpsFA11wXuLiKrXVn3O3FSLRN2pL6Krx8AhBuL+n1g9fr4XHloxH7tlTwma8pnSXdvh5an9je0LRMuv3vQ3DkjR10kYanZv95dW5n6XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DceXspK2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l5bqhJlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7718C4CECF;
-	Mon, 16 Sep 2024 11:09:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726484978;
-	bh=ESu+Y3NLrw6nKtLSnksNQ2p6EDkLCi+HsWc7u+Z6WTs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=l5bqhJlQQGDTcvead/WTHbt1AguDOLjEIb1zPTeDP1V2TuiM+cO1ZpHqDNhcB2w2I
-	 XRLikS6azFs4aCk+Jfw4bqhRaxmTTTiYgPM8qYwre0pf1UXsvFEmoSzThC+dLtyNtE
-	 8NVnV0ptk/lJAqx+cbS+8fIHeakq2IWV3SgEDak1s4J5U6rGjKhovkDcTos9icKzyy
-	 uD4aZxg6RhAmnn1zEgeJrlYv9OWHaOM0GDH7OuvfHBAEYoFKjyu/yWcZAgX+OiBLYE
-	 +o3xtoux9IPvhlqMGIhn40tDYBXfaY3tGb1eIc3dL+P7WNkMKaioQM5hxQMlQpX7R5
-	 iUpgudL+mAo7w==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 16 Sep 2024 04:09:31 -0700
-Subject: [PATCH] LoongArch: KVM: Ensure ret is always initialized in
- kvm_eiointc_{read,write}()
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DceXspK2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F7FC4CEC4;
+	Mon, 16 Sep 2024 11:59:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1726487955;
+	bh=TFvM0+6swkycrKyQ4DjvF1UWpHn4dErDTWIGD1rfQVs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DceXspK2tLpTFyulvPTiJiF1MYnby1R3Fgpy/COn/m0js+tKl8U3g16d+UPPuNQUT
+	 QXujig0Qs6wcvcZWP5FtShkZwal37t64AkEVFdaBETgSjr5NW6eI8f+NwhfA1IuKmM
+	 uGj5jpBDzake+L7iTngmEa0OUqpJyCUb4+4gMWAg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Sangsoo Lee <constant.lee@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/63] ksmbd: override fsids for share path check
+Date: Mon, 16 Sep 2024 13:43:40 +0200
+Message-ID: <20240916114221.071369898@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
+References: <20240916114221.021192667@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-v1-1-85142dcb2274@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOoR6GYC/x2NQQrCMBQFr1Ky9kOSilqvIl3E5Ns+bH4kiUUsv
- bvB5cAws6nCGVzUtdtU5hUFSRqYQ6f87GRiQmisrLZHPZgTLSnJ5LKf6blGYiRI9fTAh0qKXBG
- 50FsgqHALvhyIzfmu+yHYi+lV674yN/3/vI37/gNDAhrSgwAAAA==
-X-Change-ID: 20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-e17b039d2813
-To: Tianrui Zhao <zhaotianrui@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>
-Cc: Xianglai Li <lixianglai@loongson.cn>, kvm@vger.kernel.org, 
- loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1823; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ESu+Y3NLrw6nKtLSnksNQ2p6EDkLCi+HsWc7u+Z6WTs=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGkvBD9+zKpiZPCZ9I318oWF/9dznjG8xRNy+UXEmtsXz
- r0WE+3c1VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAm4tzDyHCF9b+/u9pko0j5
- 3efdSo19y8SrfVMTP8+1WDyzTcnuxCWG/6kz3h9I9F/OYHPYKF7j05o9YUWz73/V/r4wQOpGiMF
- UbX4A
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-Clang warns (or errors with CONFIG_WERROR=y):
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-  arch/loongarch/kvm/intc/eiointc.c:512:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-    512 |         default:
-        |         ^~~~~~~
-  arch/loongarch/kvm/intc/eiointc.c:716:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-    716 |         default:
-        |         ^~~~~~~
+------------------
 
-Set ret to -EINVAL in the default case to resolve the warning, as len
-was not a valid value for the functions to handle.
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-Fixes: f810ef038c66 ("LoongArch: KVM: Add EIOINTC read and write functions")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+[ Upstream commit a018c1b636e79b60149b41151ded7c2606d8606e ]
+
+Sangsoo reported that a DAC denial error occurred when accessing
+files through the ksmbd thread. This patch override fsids for share
+path check.
+
+Reported-by: Sangsoo Lee <constant.lee@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/mgmt/share_config.c | 15 ++++++++++++---
+ fs/smb/server/mgmt/share_config.h |  4 +++-
+ fs/smb/server/mgmt/tree_connect.c |  9 +++++----
+ fs/smb/server/mgmt/tree_connect.h |  4 ++--
+ fs/smb/server/smb2pdu.c           |  2 +-
+ fs/smb/server/smb_common.c        |  9 +++++++--
+ fs/smb/server/smb_common.h        |  2 ++
+ 7 files changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/arch/loongarch/kvm/intc/eiointc.c b/arch/loongarch/kvm/intc/eiointc.c
-index 414e4ffd69173dc248ba0042bed3bebdc11700e3..e5d23f0da055c97c0e4ba6705f6b71d89846f42a 100644
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -512,6 +512,7 @@ static int kvm_eiointc_write(struct kvm_vcpu *vcpu,
- 	default:
- 		WARN_ONCE(1, "%s: Abnormal address access:addr 0x%llx,size %d\n",
- 						__func__, addr, len);
-+		ret = -EINVAL;
- 	}
- 	loongarch_ext_irq_unlock(eiointc, flags);
- 	return ret;
-@@ -716,6 +717,7 @@ static int kvm_eiointc_read(struct kvm_vcpu *vcpu,
- 	default:
- 		WARN_ONCE(1, "%s: Abnormal address access:addr 0x%llx,size %d\n",
- 						__func__, addr, len);
-+		ret = -EINVAL;
- 	}
- 	loongarch_ext_irq_unlock(eiointc, flags);
- 	return ret;
-
----
-base-commit: 357da696640e1db8fc8829a4dd1bb2d0402169b5
-change-id: 20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-e17b039d2813
-
-Best regards,
+diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
+index e0a6b758094f..d8d03070ae44 100644
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -15,6 +15,7 @@
+ #include "share_config.h"
+ #include "user_config.h"
+ #include "user_session.h"
++#include "../connection.h"
+ #include "../transport_ipc.h"
+ #include "../misc.h"
+ 
+@@ -120,12 +121,13 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 	return 0;
+ }
+ 
+-static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
++static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 						       const char *name)
+ {
+ 	struct ksmbd_share_config_response *resp;
+ 	struct ksmbd_share_config *share = NULL;
+ 	struct ksmbd_share_config *lookup;
++	struct unicode_map *um = work->conn->um;
+ 	int ret;
+ 
+ 	resp = ksmbd_ipc_share_config_request(name);
+@@ -181,7 +183,14 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
+ 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
+ 				      resp->veto_list_sz);
+ 		if (!ret && share->path) {
++			if (__ksmbd_override_fsids(work, share)) {
++				kill_share(share);
++				share = NULL;
++				goto out;
++			}
++
+ 			ret = kern_path(share->path, 0, &share->vfs_path);
++			ksmbd_revert_fsids(work);
+ 			if (ret) {
+ 				ksmbd_debug(SMB, "failed to access '%s'\n",
+ 					    share->path);
+@@ -214,7 +223,7 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
+ 	return share;
+ }
+ 
+-struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
++struct ksmbd_share_config *ksmbd_share_config_get(struct ksmbd_work *work,
+ 						  const char *name)
+ {
+ 	struct ksmbd_share_config *share;
+@@ -227,7 +236,7 @@ struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
+ 
+ 	if (share)
+ 		return share;
+-	return share_config_request(um, name);
++	return share_config_request(work, name);
+ }
+ 
+ bool ksmbd_share_veto_filename(struct ksmbd_share_config *share,
+diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
+index 5f591751b923..d4ac2dd4de20 100644
+--- a/fs/smb/server/mgmt/share_config.h
++++ b/fs/smb/server/mgmt/share_config.h
+@@ -11,6 +11,8 @@
+ #include <linux/path.h>
+ #include <linux/unicode.h>
+ 
++struct ksmbd_work;
++
+ struct ksmbd_share_config {
+ 	char			*name;
+ 	char			*path;
+@@ -68,7 +70,7 @@ static inline void ksmbd_share_config_put(struct ksmbd_share_config *share)
+ 	__ksmbd_share_config_put(share);
+ }
+ 
+-struct ksmbd_share_config *ksmbd_share_config_get(struct unicode_map *um,
++struct ksmbd_share_config *ksmbd_share_config_get(struct ksmbd_work *work,
+ 						  const char *name);
+ bool ksmbd_share_veto_filename(struct ksmbd_share_config *share,
+ 			       const char *filename);
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index d2c81a8a11dd..94a52a75014a 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -16,17 +16,18 @@
+ #include "user_session.h"
+ 
+ struct ksmbd_tree_conn_status
+-ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+-			const char *share_name)
++ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ {
+ 	struct ksmbd_tree_conn_status status = {-ENOENT, NULL};
+ 	struct ksmbd_tree_connect_response *resp = NULL;
+ 	struct ksmbd_share_config *sc;
+ 	struct ksmbd_tree_connect *tree_conn = NULL;
+ 	struct sockaddr *peer_addr;
++	struct ksmbd_conn *conn = work->conn;
++	struct ksmbd_session *sess = work->sess;
+ 	int ret;
+ 
+-	sc = ksmbd_share_config_get(conn->um, share_name);
++	sc = ksmbd_share_config_get(work, share_name);
+ 	if (!sc)
+ 		return status;
+ 
+@@ -61,7 +62,7 @@ ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 		struct ksmbd_share_config *new_sc;
+ 
+ 		ksmbd_share_config_del(sc);
+-		new_sc = ksmbd_share_config_get(conn->um, share_name);
++		new_sc = ksmbd_share_config_get(work, share_name);
+ 		if (!new_sc) {
+ 			pr_err("Failed to update stale share config\n");
+ 			status.ret = -ESTALE;
+diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
+index 6377a70b811c..a42cdd051041 100644
+--- a/fs/smb/server/mgmt/tree_connect.h
++++ b/fs/smb/server/mgmt/tree_connect.h
+@@ -13,6 +13,7 @@
+ struct ksmbd_share_config;
+ struct ksmbd_user;
+ struct ksmbd_conn;
++struct ksmbd_work;
+ 
+ enum {
+ 	TREE_NEW = 0,
+@@ -50,8 +51,7 @@ static inline int test_tree_conn_flag(struct ksmbd_tree_connect *tree_conn,
+ struct ksmbd_session;
+ 
+ struct ksmbd_tree_conn_status
+-ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+-			const char *share_name);
++ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name);
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon);
+ 
+ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 898622b52b48..386f1f039883 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1975,7 +1975,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	ksmbd_debug(SMB, "tree connect request for tree %s treename %s\n",
+ 		    name, treename);
+ 
+-	status = ksmbd_tree_conn_connect(conn, sess, name);
++	status = ksmbd_tree_conn_connect(work, name);
+ 	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
+ 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
+ 	else
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index e90a1e8c1951..bdcdc0fc9cad 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -729,10 +729,10 @@ bool is_asterisk(char *p)
+ 	return p && p[0] == '*';
+ }
+ 
+-int ksmbd_override_fsids(struct ksmbd_work *work)
++int __ksmbd_override_fsids(struct ksmbd_work *work,
++		struct ksmbd_share_config *share)
+ {
+ 	struct ksmbd_session *sess = work->sess;
+-	struct ksmbd_share_config *share = work->tcon->share_conf;
+ 	struct cred *cred;
+ 	struct group_info *gi;
+ 	unsigned int uid;
+@@ -772,6 +772,11 @@ int ksmbd_override_fsids(struct ksmbd_work *work)
+ 	return 0;
+ }
+ 
++int ksmbd_override_fsids(struct ksmbd_work *work)
++{
++	return __ksmbd_override_fsids(work, work->tcon->share_conf);
++}
++
+ void ksmbd_revert_fsids(struct ksmbd_work *work)
+ {
+ 	const struct cred *cred;
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index f1092519c0c2..4a3148b0167f 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -447,6 +447,8 @@ int ksmbd_extract_shortname(struct ksmbd_conn *conn,
+ int ksmbd_smb_negotiate_common(struct ksmbd_work *work, unsigned int command);
+ 
+ int ksmbd_smb_check_shared_mode(struct file *filp, struct ksmbd_file *curr_fp);
++int __ksmbd_override_fsids(struct ksmbd_work *work,
++			   struct ksmbd_share_config *share);
+ int ksmbd_override_fsids(struct ksmbd_work *work);
+ void ksmbd_revert_fsids(struct ksmbd_work *work);
+ 
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.43.0
+
+
 
