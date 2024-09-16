@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C6647A62;
-	Mon, 16 Sep 2024 11:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33161150980;
+	Mon, 16 Sep 2024 12:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487997; cv=none; b=U9uKAS6QrTzVkFuRU+7zmeIOWCkqox6Mr5jOol/kD78LxjpYDGc/naSIlisH95A1MlzRZ2iI5fz8b7IMpPpja7H4nP9KnNGlMhXSfaPTHrW6CAFPWxQ0MlETq1ECrfxGxf4GiMqkX+vj3wU9Hca/ANYg6Kj+LwlCAygeUyJqA98=
+	t=1726488000; cv=none; b=Pn4hc07FhTFIPq9k/oOy8KoRGtTVs1uS6GEcuvl1+FFY41jAKavjeKiJ0onPiS2rWK16BrLNi8flnhzb/YC+KLn4QImRkgJgwVGUTXLO1yhRhxa7yNuagxXCDZ3C5P6J7i8Z1aHr2q68YP9GkIM3jfR/wf4VK++DUM8VhoD4654=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487997; c=relaxed/simple;
-	bh=XfSw/SnaA5Qyp9WjPorYGSqVQF26Nrohd0xmQQYHMZU=;
+	s=arc-20240116; t=1726488000; c=relaxed/simple;
+	bh=Wc+mDW0lCtXPEsNdbjOSgy+tYe4VFRdEwXmCzgTCYs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lgg6c8b7HpaDlpZLG5iv5IHCRcFMsHA0B/50SOj/0cpRbQ00uDYibs/3982envBWQ3VdmFvsSRathw5kJsGyaUpptlWshATlT0ti5xA9LaaxbpvnW6A1Q0cSgQl3rbMlJt5bT+trBcNA8PMROYFt3+Z0nw8iTKJ83RGrEd9GsaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFQv5AJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWRoJvovTraf2jfj3v9Xnbii4L1jbHlO4Kk8WfdR6QdZWcbgHgLpJrX1xPntbFZhwnMZDTbylw3W4cyX8fsi8+yMoxIgu5cl8yRFMF0liH7dby5XSJ3YiphKfxl3cdClAPGXv585Xqe7wdqtWf1ArJX8CyTL+b4v7E6YNCsRDEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hW1+gzZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFQv5AJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DA9C4CEC4;
-	Mon, 16 Sep 2024 11:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hW1+gzZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABC8C4CEC4;
+	Mon, 16 Sep 2024 11:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726487997;
-	bh=XfSw/SnaA5Qyp9WjPorYGSqVQF26Nrohd0xmQQYHMZU=;
+	s=korg; t=1726488000;
+	bh=Wc+mDW0lCtXPEsNdbjOSgy+tYe4VFRdEwXmCzgTCYs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFQv5AJKwuRcqkzfncnpyqR2pQQJW6qvlrSbXLQ96tuf45BS3EWNO8w5A1ae6wOPV
-	 1dGneNzUZkbrywV1glKV4NqbEzAALIAEoKWhNL37biU1j260r8FeSX91oQ0kvuK3GZ
-	 IeyQaAhcmUekLCBHNUx7GMSeWZT5sWuE1v7ARcCg=
+	b=hW1+gzZhjAn5Z8RPUdi7zMlw5i/zEul4Ebisl1hoauBQpKS0GHuxxLn+a8ZzSIuyd
+	 hUwzwS6wP3MM3qYSAl1Gagknq4GoI5SJJzR9tW0v/hc0v74AGEibvkinYZobjxa4b2
+	 a0McuCbrgzIjmHmSBzt73+K7YAx/SXbFffoE4u+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Edward Adam Davis <eadavis@qq.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+f3a31fb909db9b2a5c4d@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 23/63] mptcp: pm: Fix uaf in __timer_delete_sync
-Date: Mon, 16 Sep 2024 13:44:02 +0200
-Message-ID: <20240916114221.888873612@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.1 24/63] arm64: dts: rockchip: fix eMMC/SPI corruption when audio has been used on RK3399 Puma
+Date: Mon, 16 Sep 2024 13:44:03 +0200
+Message-ID: <20240916114221.922071592@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -53,90 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-commit b4cd80b0338945a94972ac3ed54f8338d2da2076 upstream.
+commit bb94a157b37ec23f53906a279320f6ed64300eba upstream.
 
-There are two paths to access mptcp_pm_del_add_timer, result in a race
-condition:
+In commit 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch
+on rk3399"), an additional pinctrl state was added whose default pinmux
+is for 8ch i2s0. However, Puma only has 2ch i2s0. It's been overriding
+the pinctrl-0 property but the second property override was missed in
+the aforementioned commit.
 
-     CPU1				CPU2
-     ====                               ====
-     net_rx_action
-     napi_poll                          netlink_sendmsg
-     __napi_poll                        netlink_unicast
-     process_backlog                    netlink_unicast_kernel
-     __netif_receive_skb                genl_rcv
-     __netif_receive_skb_one_core       netlink_rcv_skb
-     NF_HOOK                            genl_rcv_msg
-     ip_local_deliver_finish            genl_family_rcv_msg
-     ip_protocol_deliver_rcu            genl_family_rcv_msg_doit
-     tcp_v4_rcv                         mptcp_pm_nl_flush_addrs_doit
-     tcp_v4_do_rcv                      mptcp_nl_remove_addrs_list
-     tcp_rcv_established                mptcp_pm_remove_addrs_and_subflows
-     tcp_data_queue                     remove_anno_list_by_saddr
-     mptcp_incoming_options             mptcp_pm_del_add_timer
-     mptcp_pm_del_add_timer             kfree(entry)
+On Puma, a hardware slider called "BIOS Disable/Normal Boot" can disable
+eMMC and SPI to force booting from SD card. Another software-controlled
+GPIO is then configured to override this behavior to make eMMC and SPI
+available without human intervention. This is currently done in U-Boot
+and it was enough until the aforementioned commit.
 
-In remove_anno_list_by_saddr(running on CPU2), after leaving the critical
-zone protected by "pm.lock", the entry will be released, which leads to the
-occurrence of uaf in the mptcp_pm_del_add_timer(running on CPU1).
+Indeed, because of this additional not-yet-overridden property, this
+software-controlled GPIO is now muxed in a state that does not override
+this hardware slider anymore, rendering SPI and eMMC flashes unusable.
 
-Keeping a reference to add_timer inside the lock, and calling
-sk_stop_timer_sync() with this reference, instead of "entry->add_timer".
+Let's override the property with the 2ch pinmux to fix this.
 
-Move list_del(&entry->list) to mptcp_pm_del_add_timer and inside the pm lock,
-do not directly access any members of the entry outside the pm lock, which
-can avoid similar "entry->x" uaf.
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Fixes: 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: syzbot+f3a31fb909db9b2a5c4d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f3a31fb909db9b2a5c4d
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/tencent_7142963A37944B4A74EF76CD66EA3C253609@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://lore.kernel.org/r/20240731-puma-emmc-6-v1-1-4e28eadf32d0@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -349,15 +349,21 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- {
- 	struct mptcp_pm_add_entry *entry;
- 	struct sock *sk = (struct sock *)msk;
-+	struct timer_list *add_timer = NULL;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -374,6 +374,7 @@
  
- 	spin_lock_bh(&msk->pm.lock);
- 	entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
--	if (entry && (!check_id || entry->addr.id == addr->id))
-+	if (entry && (!check_id || entry->addr.id == addr->id)) {
- 		entry->retrans_times = ADD_ADDR_RETRANS_MAX;
-+		add_timer = &entry->add_timer;
-+	}
-+	if (!check_id && entry)
-+		list_del(&entry->list);
- 	spin_unlock_bh(&msk->pm.lock);
+ &i2s0 {
+ 	pinctrl-0 = <&i2s0_2ch_bus>;
++	pinctrl-1 = <&i2s0_2ch_bus_bclk_off>;
+ 	rockchip,playback-channels = <2>;
+ 	rockchip,capture-channels = <2>;
+ 	status = "okay";
+@@ -382,8 +383,8 @@
+ /*
+  * As Q7 does not specify neither a global nor a RX clock for I2S these
+  * signals are not used. Furthermore I2S0_LRCK_RX is used as GPIO.
+- * Therefore we have to redefine the i2s0_2ch_bus definition to prevent
+- * conflicts.
++ * Therefore we have to redefine the i2s0_2ch_bus and i2s0_2ch_bus_bclk_off
++ * definitions to prevent conflicts.
+  */
+ &i2s0_2ch_bus {
+ 	rockchip,pins =
+@@ -391,6 +392,14 @@
+ 		<3 RK_PD2 1 &pcfg_pull_none>,
+ 		<3 RK_PD3 1 &pcfg_pull_none>,
+ 		<3 RK_PD7 1 &pcfg_pull_none>;
++};
++
++&i2s0_2ch_bus_bclk_off {
++	rockchip,pins =
++		<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
++		<3 RK_PD2 1 &pcfg_pull_none>,
++		<3 RK_PD3 1 &pcfg_pull_none>,
++		<3 RK_PD7 1 &pcfg_pull_none>;
+ };
  
--	if (entry && (!check_id || entry->addr.id == addr->id))
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	/* no lock, because sk_stop_timer_sync() is calling del_timer_sync() */
-+	if (add_timer)
-+		sk_stop_timer_sync(sk, add_timer);
- 
- 	return entry;
- }
-@@ -1488,7 +1494,6 @@ static bool remove_anno_list_by_saddr(st
- 
- 	entry = mptcp_pm_del_add_timer(msk, addr, false);
- 	if (entry) {
--		list_del(&entry->list);
- 		kfree(entry);
- 		return true;
- 	}
+ &io_domains {
 
 
