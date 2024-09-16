@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51C24B34;
-	Mon, 16 Sep 2024 12:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B637524B34;
+	Mon, 16 Sep 2024 12:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488399; cv=none; b=jc5cgpds+DUzVIRcjutqF42Tn36gOld74n6jsO2422/ueN+C3YeO08cMJf0iiEOaZ2yxIrZuTyBK8cr8Alxc7qF1kFrEjQbvTMMfCoDM24Nw15/tvA7Y4gv9SY3o6G4opuZlWg6EB3x7YiJTax/DZj09fXB6dV7+mCPRrH2DqAE=
+	t=1726488401; cv=none; b=W6ew54GOYzUji6z8Xg/BOwo/7fLYg2KXmuYedsbqftOJRS+XcsCKhfLpVGZNYS5tN9wTsP+qF20rWLWkbv1xPPcLuQy+mliUn4mnLg3rs9qFa+nAtUKDTrCd1qcDx0Uyu68sx/9NhlPIAdcIJJo2oEl+KEeVzxJa76whkSRgJ/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488399; c=relaxed/simple;
-	bh=BmVlT2jIvUvfTPsW7mvuncWMqU8zVi41ExXt9MrInXk=;
+	s=arc-20240116; t=1726488401; c=relaxed/simple;
+	bh=B1AUYOzDGakSBFziZzZZYTqZ3MjiwNdyDLL0XQQL5mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p8p4LIcT+huMqoVKShOebZL7tmZl38g7SuzjVgKRd24nlVM1IfoOMZlkLqZyvxfntulELScsQaZCId/DWDY+ZVDisftl8SdhXmDBhx+ww2bOTQWlCp22zfK3DNXBdMiBJ9Yf6OBQhhJitM0Oh/8iGE76LMTe9xxX8mypmABC7tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCcJsWu7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZeSCknM0s670YqFHbcpS6q2c1pSv4C9jihpQaIhR3fzYJX4GSgppYCBgjtqYjoEBV1feG5AeJ3uzM7nUt089HiRo4v+TOh9U17htNsvzbrLbEVpvLouddNm1cFNt8k/O9QayLsmGIOEIVCWMSEszO40SL3KS+xHYWoXW4OR8OhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7ewphPL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCcJsWu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668FFC4CEC4;
-	Mon, 16 Sep 2024 12:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7ewphPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F251C4CEC4;
+	Mon, 16 Sep 2024 12:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488398;
-	bh=BmVlT2jIvUvfTPsW7mvuncWMqU8zVi41ExXt9MrInXk=;
+	s=korg; t=1726488401;
+	bh=B1AUYOzDGakSBFziZzZZYTqZ3MjiwNdyDLL0XQQL5mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCcJsWu7r0rByn4GRhb3e5b6RgSrp9/YDMXzGsE2OR2uaTbaphGn3rT87CSGfJnb+
-	 6anyW5W2WZ8fcGbkAf9uGyVRJ0BvTqVzTWnQ3drp3wAZydp6u+cXcKhXnZ3DhWzUsA
-	 u3r0YqQpVL2LnVuI+ebSyO+ZZjSnAfRxnTvMKPLQ=
+	b=e7ewphPL8Rqqysd4gSjH7JU2vHNVYgNUuT5WpgpOyOFqR1sQEXAlvvkh8G/qqbJIB
+	 RS/wmQU4wt7U7ngOavhuLY1z6fIqg6ftgePW8c0Cj5femsPZaTcDWOjMylO32Jnej6
+	 LDxwY7DPAyakosR77Ltiylo2c4rVrjsMkD3c7cMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mat=C4=9Bj=20Gr=C3=A9gr?= <mgregr@netx.as>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.10 072/121] ice: Fix lldp packets dropping after changing the number of channels
-Date: Mon, 16 Sep 2024 13:44:06 +0200
-Message-ID: <20240916114231.556017826@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ilya Bakoulin <ilya.bakoulin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 063/121] drm/amd/display: Fix FEC_READY write on DP LT
+Date: Mon, 16 Sep 2024 13:43:57 +0200
+Message-ID: <20240916114231.252377973@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -48,72 +49,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+From: Ilya Bakoulin <ilya.bakoulin@amd.com>
 
-[ Upstream commit 9debb703e14939dfafa5d403f27c4feb2e9f6501 ]
+[ Upstream commit a8baec4623aedf36d50767627f6eae5ebf07c6fb ]
 
-After vsi setup refactor commit 6624e780a577 ("ice: split ice_vsi_setup
-into smaller functions") ice_cfg_sw_lldp function which removes rx rule
-directing LLDP packets to vsi is moved from ice_vsi_release to
-ice_vsi_decfg function. ice_vsi_decfg is used in more cases than just in
-vsi_release resulting in unnecessary removal of rx lldp packets handling
-switch rule. This leads to lldp packets being dropped after a change number
-of channels via ethtool.
-This patch moves ice_cfg_sw_lldp function that removes rx lldp sw rule back
-to ice_vsi_release function.
+[Why/How]
+We can miss writing FEC_READY in some cases before LT start, which
+violates DP spec. Remove the condition guarding the DPCD write so that
+the write happens unconditionally.
 
-Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
-Reported-by: Matěj Grégr <mgregr@netx.as>
-Closes: https://lore.kernel.org/intel-wired-lan/1be45a76-90af-4813-824f-8398b69745a9@netx.as/T/#u
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ .../amd/display/dc/link/protocols/link_dp_phy.c    | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 7076a7738864..c2ba58659347 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2413,13 +2413,6 @@ void ice_vsi_decfg(struct ice_vsi *vsi)
- 	struct ice_pf *pf = vsi->back;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
+index 5cbf5f93e584..bafa52a0165a 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
+@@ -151,16 +151,14 @@ enum dc_status dp_set_fec_ready(struct dc_link *link, const struct link_resource
+ 		return DC_NOT_SUPPORTED;
  
--	/* The Rx rule will only exist to remove if the LLDP FW
--	 * engine is currently stopped
--	 */
--	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
--	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
--		ice_cfg_sw_lldp(vsi, false, false);
--
- 	ice_rm_vsi_lan_cfg(vsi->port_info, vsi->idx);
- 	err = ice_rm_vsi_rdma_cfg(vsi->port_info, vsi->idx);
- 	if (err)
-@@ -2764,6 +2757,14 @@ int ice_vsi_release(struct ice_vsi *vsi)
- 		ice_rss_clean(vsi);
+ 	if (ready && dp_should_enable_fec(link)) {
+-		if (link->fec_state == dc_link_fec_not_ready) {
+-			fec_config = 1;
++		fec_config = 1;
  
- 	ice_vsi_close(vsi);
-+
-+	/* The Rx rule will only exist to remove if the LLDP FW
-+	 * engine is currently stopped
-+	 */
-+	if (!ice_is_safe_mode(pf) && vsi->type == ICE_VSI_PF &&
-+	    !test_bit(ICE_FLAG_FW_LLDP_AGENT, pf->flags))
-+		ice_cfg_sw_lldp(vsi, false, false);
-+
- 	ice_vsi_decfg(vsi);
+-			status = core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
+-					&fec_config, sizeof(fec_config));
++		status = core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
++				&fec_config, sizeof(fec_config));
  
- 	/* retain SW VSI data structure since it is needed to unregister and
+-			if (status == DC_OK) {
+-				link_enc->funcs->fec_set_ready(link_enc, true);
+-				link->fec_state = dc_link_fec_ready;
+-			}
++		if (status == DC_OK) {
++			link_enc->funcs->fec_set_ready(link_enc, true);
++			link->fec_state = dc_link_fec_ready;
+ 		}
+ 	} else {
+ 		if (link->fec_state == dc_link_fec_ready) {
 -- 
 2.43.0
 
