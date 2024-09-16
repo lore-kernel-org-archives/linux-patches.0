@@ -1,118 +1,202 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ganesha.gnumonks.org (ganesha.gnumonks.org [213.95.27.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CF0158527
-	for <patches@lists.linux.dev>; Mon, 16 Sep 2024 14:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E4715749A;
+	Mon, 16 Sep 2024 15:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.95.27.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726495824; cv=none; b=MJUrK4Lwp9lClcv8iV0AGLrnSWvZMhpfHy8TF5rbiJn7pVXLB7LImZD4zrS7jkdvpRXhb7fDR8Yz+tMEVV+9bA4AS3r6ELh7JtmuobB3mfQmgHFsB2/biVD0clEhi41QVx044M4Nqrm4Ciau8Mjw7n943wHIK8DbiKHaSphil60=
+	t=1726500822; cv=none; b=pPqyb5SNM2zuSmLyRJgcPfyGaUZ3J0wpvHwGNQTBWi0uqjGYI0K6kV8RNY1PmHTda1gAzPL4rfRVcti4ZRIHEK57DMbswq8vdOeltTzAHxcg/EgcmwgI/uaP7lHEWLuWLczDzvp+cbXjJz5c5XHYI72MLDFK/8263AOehjq14EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726495824; c=relaxed/simple;
-	bh=Z+VVMYEinWZISnatS9m7WZOCo5cTANY4O5vrS2RyMg0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e9RpidWW7VdDmYhmjvdhP2+Kj9sswRqehNmPRtTIBaEBTiG2fSG8T+hNf3jktG81D/mA1NeFsvgTTLcmaFL+hp4IAHSDs95li5FZyqeHHP083PV8dTr6QPqxfss2vrn5sQlSW1ShYrhH3Wo37cMjBoWojMMSiDBh0n0x+Zl61ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=l5H8HQDI; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="l5H8HQDI"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42cd46f3a26so26780345e9.2
-        for <patches@lists.linux.dev>; Mon, 16 Sep 2024 07:10:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1726495821; x=1727100621; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qf3XwMadpbdi02w8khiprAJxJ2YHAsadcr9JrJBY/mQ=;
-        b=l5H8HQDIx67ggZtk6tdhfujNzWgW6YSxi+FRYXmSWf2mnSKCyaaREsHRQsx+CUxFRq
-         sp9sp95roUBaxXaBF6v4Kaxj7F7L0wJpJjkp0xPi442AvU9DY6S7SsHE8iOIdvb/YnvD
-         BObJKYSAv5d7Aq4WV5d8FSdtgZHPz1T3KzZ/1d92T055iStRwM4ro5wZcXF4MB+Qonc9
-         t63nyWeFEJ6mDzvFIsyg18zMIBaxjd9a52uNG0/eSws1AFahkB/b44OZmd7PmM40Pny2
-         gIsb4EBopYIxuOvvOchCF6+QwTYlvpRm0OIUvsHhakYgB2fjOdd2E9cUczhctBoMFurw
-         XdlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726495821; x=1727100621;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qf3XwMadpbdi02w8khiprAJxJ2YHAsadcr9JrJBY/mQ=;
-        b=fgzI/PLXXskUT53ew0+hUTGrun02VvOH2iJsj2+TaFP1+kzmbbofq4towXO4U98Qtw
-         ClceWQJvk2wYTCZPdsfGeWHVza2abLkP1faRYM/gQxSKyulXdyF64IguFJIAHVv+YPUc
-         aSejQHRZkEBFLeimpyxAL1TfIKH2lqMOSQ7nEllX+5e3KOgrB9czZI14UaRLYjF6fthM
-         hP3tu2m3IQEA01Fm1oGB2pGWpZYIUQ0+hgs7fHjfNx7oWGYhYS+Jfmrj3C2IDdVdDzIk
-         wd9oJgeXFKSj1Uloaj0qpVNxgQFw3V+q/TB5WS5DCtytBzXblomoAIqhY1z6vhC6eFQf
-         hFcw==
-X-Forwarded-Encrypted: i=1; AJvYcCVsxazWlOvUXZRI2pQeM4jV64XQuBpC4LH29mTvBTh9z8I4mmLo/5gfd75wV8uM0yi7ZUYvBL9l@lists.linux.dev
-X-Gm-Message-State: AOJu0YyAc+78SZM4+uMImxILbnEzaIfP6Dw4kFXgi2ElExwStG50DmHd
-	Dey9BT7yzVaVPqED59oqzql32rhGxamE3C1kpNnrhbpVvjW9ZlA7yuZYqrdK6Rkgn9uwshOm76U
-	KAKUGyRTQBV3UFcoae/vPOkbhinXaalLP7d2LZw==
-X-Google-Smtp-Source: AGHT+IGNe9zsNe9IEEFt6FK/qfeqEqaQ+brEvCCBY98xBgyALI4wNUeQsrdsVTt0cieNkT1+Kekc7iDWS736YTEtFyQ=
-X-Received: by 2002:a5d:58d4:0:b0:36b:aa9d:785c with SMTP id
- ffacd0b85a97d-378d625a662mr6649923f8f.52.1726495820589; Mon, 16 Sep 2024
- 07:10:20 -0700 (PDT)
+	s=arc-20240116; t=1726500822; c=relaxed/simple;
+	bh=un/i0gViPPSEFoEji7kwMkqEV659V7f5pGJSsTREtm8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GBHRqj3wAC5TvFZ9X/yOWfFVWq/onGkB4HeVzMa5eCix5hAkSx69Z+DED6fsAwJvxBFs703m0iBdoZj9S9Y/AvfiBOoCA6Ov064VjIE1QWU063MKtuWXxn2olguOPCSIfLYv/n8FMvkI6b97GXUyqaajV1DkAPB9fFQ24cFOinU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org; spf=pass smtp.mailfrom=gnumonks.org; arc=none smtp.client-ip=213.95.27.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gnumonks.org
+Received: from [78.30.37.63] (port=38220 helo=gnumonks.org)
+	by ganesha.gnumonks.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <pablo@gnumonks.org>)
+	id 1sqDjJ-00FzvZ-RV; Mon, 16 Sep 2024 17:33:35 +0200
+Date: Mon, 16 Sep 2024 17:33:33 +0200
+From: Pablo Neira Ayuso <pablo@netfilter.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	cgroups@vger.kernel.org, Nadia Pinaeva <n.m.pinaeva@gmail.com>,
+	Florian Westphal <fw@strlen.de>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.10 092/121] netfilter: nft_socket: make cgroupsv2
+ matching work with namespaces
+Message-ID: <ZuhPzTZxBLBU6Vx5@calendula>
+References: <20240916114228.914815055@linuxfoundation.org>
+ <20240916114232.178821333@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240916114224.509743970@linuxfoundation.org>
-In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Mon, 16 Sep 2024 23:10:08 +0900
-Message-ID: <CAKL4bV4JAGKpTZ_=jOX2npUwe598AbSM9gOekgzRVAhaa0xgLw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 00/91] 6.6.52-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240916114232.178821333@linuxfoundation.org>
+X-Spam-Score: -1.9 (-)
 
-Hi Greg
+Hi Greg,
 
-On Mon, Sep 16, 2024 at 9:09=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.52 release.
-> There are 91 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.52-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+This needs a follow up incremental fix. Please, hold on with it.
 
-6.6.52-rc1 tested.
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.6.52-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
-Binutils) 2.43.0) #1 SMP PREEMPT_DYNAMIC Mon Sep 16 22:24:01 JST 2024
+I will ping you back once it is there.
 
 Thanks
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+On Mon, Sep 16, 2024 at 01:44:26PM +0200, Greg Kroah-Hartman wrote:
+> 6.10-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Florian Westphal <fw@strlen.de>
+> 
+> [ Upstream commit 7f3287db654395f9c5ddd246325ff7889f550286 ]
+> 
+> When running in container environmment, /sys/fs/cgroup/ might not be
+> the real root node of the sk-attached cgroup.
+> 
+> Example:
+> 
+> In container:
+> % stat /sys//fs/cgroup/
+> Device: 0,21    Inode: 2214  ..
+> % stat /sys/fs/cgroup/foo
+> Device: 0,21    Inode: 2264  ..
+> 
+> The expectation would be for:
+> 
+>   nft add rule .. socket cgroupv2 level 1 "foo" counter
+> 
+> to match traffic from a process that got added to "foo" via
+> "echo $pid > /sys/fs/cgroup/foo/cgroup.procs".
+> 
+> However, 'level 3' is needed to make this work.
+> 
+> Seen from initial namespace, the complete hierarchy is:
+> 
+> % stat /sys/fs/cgroup/system.slice/docker-.../foo
+>   Device: 0,21    Inode: 2264 ..
+> 
+> i.e. hierarchy is
+> 0    1               2              3
+> / -> system.slice -> docker-1... -> foo
+> 
+> ... but the container doesn't know that its "/" is the "docker-1.."
+> cgroup.  Current code will retrieve the 'system.slice' cgroup node
+> and store its kn->id in the destination register, so compare with
+> 2264 ("foo" cgroup id) will not match.
+> 
+> Fetch "/" cgroup from ->init() and add its level to the level we try to
+> extract.  cgroup root-level is 0 for the init-namespace or the level
+> of the ancestor that is exposed as the cgroup root inside the container.
+> 
+> In the above case, cgrp->level of "/" resolved in the container is 2
+> (docker-1...scope/) and request for 'level 1' will get adjusted
+> to fetch the actual level (3).
+> 
+> v2: use CONFIG_SOCK_CGROUP_DATA, eval function depends on it.
+>     (kernel test robot)
+> 
+> Cc: cgroups@vger.kernel.org
+> Fixes: e0bb96db96f8 ("netfilter: nft_socket: add support for cgroupsv2")
+> Reported-by: Nadia Pinaeva <n.m.pinaeva@gmail.com>
+> Signed-off-by: Florian Westphal <fw@strlen.de>
+> Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/netfilter/nft_socket.c | 41 +++++++++++++++++++++++++++++++++++---
+>  1 file changed, 38 insertions(+), 3 deletions(-)
+> 
+> diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
+> index 765ffd6e06bc..12cdff640492 100644
+> --- a/net/netfilter/nft_socket.c
+> +++ b/net/netfilter/nft_socket.c
+> @@ -9,7 +9,8 @@
+>  
+>  struct nft_socket {
+>  	enum nft_socket_keys		key:8;
+> -	u8				level;
+> +	u8				level;		/* cgroupv2 level to extract */
+> +	u8				level_user;	/* cgroupv2 level provided by userspace */
+>  	u8				len;
+>  	union {
+>  		u8			dreg;
+> @@ -53,6 +54,28 @@ nft_sock_get_eval_cgroupv2(u32 *dest, struct sock *sk, const struct nft_pktinfo
+>  	memcpy(dest, &cgid, sizeof(u64));
+>  	return true;
+>  }
+> +
+> +/* process context only, uses current->nsproxy. */
+> +static noinline int nft_socket_cgroup_subtree_level(void)
+> +{
+> +	struct cgroup *cgrp = cgroup_get_from_path("/");
+> +	int level;
+> +
+> +	if (!cgrp)
+> +		return -ENOENT;
+> +
+> +	level = cgrp->level;
+> +
+> +	cgroup_put(cgrp);
+> +
+> +	if (WARN_ON_ONCE(level > 255))
+> +		return -ERANGE;
+> +
+> +	if (WARN_ON_ONCE(level < 0))
+> +		return -EINVAL;
+> +
+> +	return level;
+> +}
+>  #endif
+>  
+>  static struct sock *nft_socket_do_lookup(const struct nft_pktinfo *pkt)
+> @@ -174,9 +197,10 @@ static int nft_socket_init(const struct nft_ctx *ctx,
+>  	case NFT_SOCKET_MARK:
+>  		len = sizeof(u32);
+>  		break;
+> -#ifdef CONFIG_CGROUPS
+> +#ifdef CONFIG_SOCK_CGROUP_DATA
+>  	case NFT_SOCKET_CGROUPV2: {
+>  		unsigned int level;
+> +		int err;
+>  
+>  		if (!tb[NFTA_SOCKET_LEVEL])
+>  			return -EINVAL;
+> @@ -185,6 +209,17 @@ static int nft_socket_init(const struct nft_ctx *ctx,
+>  		if (level > 255)
+>  			return -EOPNOTSUPP;
+>  
+> +		err = nft_socket_cgroup_subtree_level();
+> +		if (err < 0)
+> +			return err;
+> +
+> +		priv->level_user = level;
+> +
+> +		level += err;
+> +		/* Implies a giant cgroup tree */
+> +		if (WARN_ON_ONCE(level > 255))
+> +			return -EOPNOTSUPP;
+> +
+>  		priv->level = level;
+>  		len = sizeof(u64);
+>  		break;
+> @@ -209,7 +244,7 @@ static int nft_socket_dump(struct sk_buff *skb,
+>  	if (nft_dump_register(skb, NFTA_SOCKET_DREG, priv->dreg))
+>  		return -1;
+>  	if (priv->key == NFT_SOCKET_CGROUPV2 &&
+> -	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level)))
+> +	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level_user)))
+>  		return -1;
+>  	return 0;
+>  }
+> -- 
+> 2.43.0
+> 
+> 
+> 
