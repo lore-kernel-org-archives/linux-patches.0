@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392824B34;
-	Mon, 16 Sep 2024 12:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25A783CDA;
+	Mon, 16 Sep 2024 12:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488379; cv=none; b=GkAEbbCum9TRp1MAKMwlYrMK334tGUjMdVOzjUw5hyV140xSlwv1nSsOqEXJIzeNXAaXQsYH6MIHG5gKlQePsOF8K1E2C1HR9fxVP1KTkKV2wHcMocWg9G8W80usLRv9cg3MH7E322zrxlXQiPeAcXcKOY94JmMvqH0/3NRxr1U=
+	t=1726488382; cv=none; b=bJ0cot/Rrsq9XJx2T18u1paZKKaTm53K4gTMtqoPTxXlazs7gionM7XRpeHaLuhvleACkMRAQpBbJscIrHFDU8qApFRoQCgw6PwnD/aj5TxG+fP6hM3kPM7nxoA4HyM6g96QJHh6X+QUDslMJ09RVc7J8dyurvwUBxRTU36+BGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488379; c=relaxed/simple;
-	bh=CXRSjx3uTy3Yx6L2BDnNBTf42WUNpgaGOs564PLGtJU=;
+	s=arc-20240116; t=1726488382; c=relaxed/simple;
+	bh=fRCOFHd8ZYU+D4vPuz651jBccxtQu/qX7ivmrjYZVAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlX/xF7Sz2Lanq0jc1SVHA1xvSytHTiFca6PnqLYI7VEwSkAV6uKoqdeQBbeg5zLDZtWt3ZHCVZf05lzEU8NNIby0VM32Vad44sdjuPaHTcBApylJ/wkHvqmcBfKvCOb0WZMfVLkp+GtdBuH8OwQkUZOlrsVyjYB6BrahvcF/4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+TJNShL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmXjkAAdki696iE8T2/5xocuxWJGkd5Ah40TIOro6cDAxTDjRb2PFlGREqv1FAX+7zXcM/mdqOFeNXCDoRpQfSFWxSILATytt/SRXnI13p0bvpb9T1QfICHyqYNKh3fFrd6FeOuLSdovCCZiIxEUJp4r+fvxAWuk6I1sl6rAhE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrERhg4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+TJNShL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB17C4CEC4;
-	Mon, 16 Sep 2024 12:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrERhg4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E471C4CEC4;
+	Mon, 16 Sep 2024 12:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488378;
-	bh=CXRSjx3uTy3Yx6L2BDnNBTf42WUNpgaGOs564PLGtJU=;
+	s=korg; t=1726488381;
+	bh=fRCOFHd8ZYU+D4vPuz651jBccxtQu/qX7ivmrjYZVAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+TJNShLIkMVVj9ahCSF3fjbSHxBsp9Uc4W7PxLR8TB91aN9qr1j8xN9nhXdwOPrz
-	 Zn6LEJxoRKKxZpLw5M5NxK/D6sy3r9jE2dVPN4oeRwUEOlmAYzjic09cAMxbZrV+Du
-	 YJAKbctduMWNIcDkhfHVaQ+Mpo+qfSQhNeqC2Y0k=
+	b=DrERhg4AZWwStfr+iArAaAFTsU1vEmiyv//mcmuxLZ/5E4IGlhSmj1XOjYJeuldul
+	 6JxTgM50PdCNoowWMHmiCihBqPobfGwbeOuRgd+VHWovSfexmae5LT+5icVfJ8HDBV
+	 P2iI8rpCiqZqhxwlVBqDtt9ZV+dQShBAbLaxV8S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cgroups@vger.kernel.org,
-	Nadia Pinaeva <n.m.pinaeva@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	peng guo <engguopeng@buaa.edu.cn>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 092/121] netfilter: nft_socket: make cgroupsv2 matching work with namespaces
-Date: Mon, 16 Sep 2024 13:44:26 +0200
-Message-ID: <20240916114232.178821333@linuxfoundation.org>
+Subject: [PATCH 6.10 066/121] cxl/core: Fix incorrect vendor debug UUID define
+Date: Mon, 16 Sep 2024 13:44:00 +0200
+Message-ID: <20240916114231.352939974@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,147 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: peng guo <engguopeng@buaa.edu.cn>
 
-[ Upstream commit 7f3287db654395f9c5ddd246325ff7889f550286 ]
+[ Upstream commit 8ecef8e01a08c7e3e4ffc8f08d9f9663984f334b ]
 
-When running in container environmment, /sys/fs/cgroup/ might not be
-the real root node of the sk-attached cgroup.
+When user send a mbox command whose opcode is CXL_MBOX_OP_CLEAR_LOG and
+the in_payload is normal vendor debug log UUID according to
+the CXL specification cxl_payload_from_user_allowed() will return
+false unexpectedly, Sending mbox cmd operation fails and the kernel
+log will print:
+Clear Log: input payload not allowed.
 
-Example:
+All CXL devices that support a debug log shall support the Vendor Debug
+Log to allow the log to be accessed through a common host driver, for any
+device, all versions of the CXL specification define the same value with
+Log Identifier of: 5e1819d9-11a9-400c-811f-d60719403d86
 
-In container:
-% stat /sys//fs/cgroup/
-Device: 0,21    Inode: 2214  ..
-% stat /sys/fs/cgroup/foo
-Device: 0,21    Inode: 2264  ..
+Refer to CXL spec r3.1 Table 8-71
 
-The expectation would be for:
+Fix the definition value of DEFINE_CXL_VENDOR_DEBUG_UUID to match the
+CXL specification.
 
-  nft add rule .. socket cgroupv2 level 1 "foo" counter
-
-to match traffic from a process that got added to "foo" via
-"echo $pid > /sys/fs/cgroup/foo/cgroup.procs".
-
-However, 'level 3' is needed to make this work.
-
-Seen from initial namespace, the complete hierarchy is:
-
-% stat /sys/fs/cgroup/system.slice/docker-.../foo
-  Device: 0,21    Inode: 2264 ..
-
-i.e. hierarchy is
-0    1               2              3
-/ -> system.slice -> docker-1... -> foo
-
-... but the container doesn't know that its "/" is the "docker-1.."
-cgroup.  Current code will retrieve the 'system.slice' cgroup node
-and store its kn->id in the destination register, so compare with
-2264 ("foo" cgroup id) will not match.
-
-Fetch "/" cgroup from ->init() and add its level to the level we try to
-extract.  cgroup root-level is 0 for the init-namespace or the level
-of the ancestor that is exposed as the cgroup root inside the container.
-
-In the above case, cgrp->level of "/" resolved in the container is 2
-(docker-1...scope/) and request for 'level 1' will get adjusted
-to fetch the actual level (3).
-
-v2: use CONFIG_SOCK_CGROUP_DATA, eval function depends on it.
-    (kernel test robot)
-
-Cc: cgroups@vger.kernel.org
-Fixes: e0bb96db96f8 ("netfilter: nft_socket: add support for cgroupsv2")
-Reported-by: Nadia Pinaeva <n.m.pinaeva@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 472b1ce6e9d6 ("cxl/mem: Enable commands via CEL")
+Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20240710023112.8063-1-engguopeng@buaa.edu.cn
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_socket.c | 41 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ drivers/cxl/cxlmem.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
-index 765ffd6e06bc..12cdff640492 100644
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -9,7 +9,8 @@
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index af8169ccdbc0..feb1106559d2 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -563,7 +563,7 @@ enum cxl_opcode {
+ 		  0x3b, 0x3f, 0x17)
  
- struct nft_socket {
- 	enum nft_socket_keys		key:8;
--	u8				level;
-+	u8				level;		/* cgroupv2 level to extract */
-+	u8				level_user;	/* cgroupv2 level provided by userspace */
- 	u8				len;
- 	union {
- 		u8			dreg;
-@@ -53,6 +54,28 @@ nft_sock_get_eval_cgroupv2(u32 *dest, struct sock *sk, const struct nft_pktinfo
- 	memcpy(dest, &cgid, sizeof(u64));
- 	return true;
- }
-+
-+/* process context only, uses current->nsproxy. */
-+static noinline int nft_socket_cgroup_subtree_level(void)
-+{
-+	struct cgroup *cgrp = cgroup_get_from_path("/");
-+	int level;
-+
-+	if (!cgrp)
-+		return -ENOENT;
-+
-+	level = cgrp->level;
-+
-+	cgroup_put(cgrp);
-+
-+	if (WARN_ON_ONCE(level > 255))
-+		return -ERANGE;
-+
-+	if (WARN_ON_ONCE(level < 0))
-+		return -EINVAL;
-+
-+	return level;
-+}
- #endif
+ #define DEFINE_CXL_VENDOR_DEBUG_UUID                                           \
+-	UUID_INIT(0xe1819d9, 0x11a9, 0x400c, 0x81, 0x1f, 0xd6, 0x07, 0x19,     \
++	UUID_INIT(0x5e1819d9, 0x11a9, 0x400c, 0x81, 0x1f, 0xd6, 0x07, 0x19,     \
+ 		  0x40, 0x3d, 0x86)
  
- static struct sock *nft_socket_do_lookup(const struct nft_pktinfo *pkt)
-@@ -174,9 +197,10 @@ static int nft_socket_init(const struct nft_ctx *ctx,
- 	case NFT_SOCKET_MARK:
- 		len = sizeof(u32);
- 		break;
--#ifdef CONFIG_CGROUPS
-+#ifdef CONFIG_SOCK_CGROUP_DATA
- 	case NFT_SOCKET_CGROUPV2: {
- 		unsigned int level;
-+		int err;
- 
- 		if (!tb[NFTA_SOCKET_LEVEL])
- 			return -EINVAL;
-@@ -185,6 +209,17 @@ static int nft_socket_init(const struct nft_ctx *ctx,
- 		if (level > 255)
- 			return -EOPNOTSUPP;
- 
-+		err = nft_socket_cgroup_subtree_level();
-+		if (err < 0)
-+			return err;
-+
-+		priv->level_user = level;
-+
-+		level += err;
-+		/* Implies a giant cgroup tree */
-+		if (WARN_ON_ONCE(level > 255))
-+			return -EOPNOTSUPP;
-+
- 		priv->level = level;
- 		len = sizeof(u64);
- 		break;
-@@ -209,7 +244,7 @@ static int nft_socket_dump(struct sk_buff *skb,
- 	if (nft_dump_register(skb, NFTA_SOCKET_DREG, priv->dreg))
- 		return -1;
- 	if (priv->key == NFT_SOCKET_CGROUPV2 &&
--	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level)))
-+	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level_user)))
- 		return -1;
- 	return 0;
- }
+ struct cxl_mbox_get_supported_logs {
 -- 
 2.43.0
 
