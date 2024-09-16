@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F08155322;
-	Mon, 16 Sep 2024 12:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3310C1547F5;
+	Mon, 16 Sep 2024 12:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488613; cv=none; b=V8AFm0KClNDMzCj7FTDDe8a2nhzA5zJLCmI4sunQk6CZSCe6ltx0ZiBjG7BYrQ8IPTyZEZ10yaygGsnw/Og34pz1zCPlvCD7qoe9uO0hHvmFlMI4qdPismerCv7h6GvTkgsyt3rgj5iV7AU7Wu5Jt09dvyU871oesZ0/seA7QBw=
+	t=1726488616; cv=none; b=KwtZyfsiKXYr4lYbwezAlY1qEWngP6yufAl4VdNmal4Z63740Iwwr219YGkFVSP0QKssjaWuzDTINrAEIi/zPNBdiCzK5PUHxrhzS5L0ZS8M7Bs267GO0gBKwUodjVwBAPe4c/hzCd+VuxBxhe62VCaUsUlPPdg7MY9X5uRhau4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488613; c=relaxed/simple;
-	bh=RKmFHfuPSWXRqtdwdbf6AUbdeAm+db3b9F85AYQxL5U=;
+	s=arc-20240116; t=1726488616; c=relaxed/simple;
+	bh=nJpOfDU8B0ps+Mj9Z5LqTpYSs8oVZbqfXWY3FB36M2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etmSKs1cNPy/0vr3ID1irh283b6XqjJOdWTwtKtICMv9FoFHOSvZbXsJQlZRxhrhxwBZnoibdEiMU+FRY1/VhIBZizCbU8caSUSJZjGYou1W9D6nf8s0Z5ooMnQF8cWmsfu+U91J3nHOaf80SAa0BfGkRlHx12UFqt1RZQh42GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFufLdqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5jMpjgh/GJJfWw1buS+1CpWezIHDE4+UIPceG6z5rgo2aUCCDguFHI8uahaF2B2il4K7dWYi125kwnUi/5cpwrPP9TqMcn1Pa9xtsSOMSiPt5rv/VKEsRTlmo60FXJDei3BQJlkFQZS9D5VvfrAdUD94NGbvpGEezpA39vNlk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+d+9TBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFufLdqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC48C4CEC4;
-	Mon, 16 Sep 2024 12:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+d+9TBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DDDC4CEC4;
+	Mon, 16 Sep 2024 12:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488613;
-	bh=RKmFHfuPSWXRqtdwdbf6AUbdeAm+db3b9F85AYQxL5U=;
+	s=korg; t=1726488616;
+	bh=nJpOfDU8B0ps+Mj9Z5LqTpYSs8oVZbqfXWY3FB36M2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFufLdqk8ExoTUY+Etw9gOPbmlAIAFo6YxzdL+XZY3pFdZADPB4Ma2zoH3QgEsXTM
-	 Vvxbzo24L5MGCin99DzkcqiJdsPD8d8K7k+NGPa0rDkYTgTaQJOWlB/igPsBW3tsTf
-	 Y9NTKPamQ71Q1EFAhIZIoKcfi3LC1BaTaJuuSmvI=
+	b=o+d+9TBUp7uDILtOZwkF/+d4FkrS8Q2zBtDk9aqOs1X6AKCKFc3EYOLQ8udWsxojS
+	 i6df29661OMkdQfdLmnr6+SUwW4YeYfdsRnKLEf/2BeYA720ZGfJqBgtO1WwP1I7GE
+	 kJtlyStomF+/Dyq5vXdc6CVtIkH0eqM4GASm5800=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Foster Snowhill <forst@pen.gy>,
-	Georgi Valkov <gvalkov@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 15/91] usbnet: ipheth: fix carrier detection in modes 1 and 4
-Date: Mon, 16 Sep 2024 13:43:51 +0200
-Message-ID: <20240916114225.034710872@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.6 46/91] mm: avoid leaving partial pfn mappings around in error case
+Date: Mon, 16 Sep 2024 13:44:22 +0200
+Message-ID: <20240916114226.017097211@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,80 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Foster Snowhill <forst@pen.gy>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 67927a1b255d883881be9467508e0af9a5e0be9d ]
+commit 79a61cc3fc0466ad2b7b89618a6157785f0293b3 upstream.
 
-Apart from the standard "configurations", "interfaces" and "alternate
-interface settings" in USB, iOS devices also have a notion of
-"modes". In different modes, the device exposes a different set of
-available configurations.
+As Jann points out, PFN mappings are special, because unlike normal
+memory mappings, there is no lifetime information associated with the
+mapping - it is just a raw mapping of PFNs with no reference counting of
+a 'struct page'.
 
-Depending on the iOS version, and depending on the current mode, the
-length and contents of the carrier state control message differs:
+That's all very much intentional, but it does mean that it's easy to
+mess up the cleanup in case of errors.  Yes, a failed mmap() will always
+eventually clean up any partial mappings, but without any explicit
+lifetime in the page table mapping itself, it's very easy to do the
+error handling in the wrong order.
 
-* 1 byte (seen on iOS 4.2.1, 8.4):
-    * 03: carrier off (mode 0)
-    * 04: carrier on (mode 0)
-* 3 bytes (seen on iOS 10.3.4, 15.7.6):
-    * 03 03 03: carrier off (mode 0)
-    * 04 04 03: carrier on (mode 0)
-* 4 bytes (seen on iOS 16.5, 17.6):
-    * 03 03 03 00: carrier off (mode 0)
-    * 04 03 03 00: carrier off (mode 1)
-    * 06 03 03 00: carrier off (mode 4)
-    * 04 04 03 04: carrier on (mode 0 and 1)
-    * 06 04 03 04: carrier on (mode 4)
+In particular, it's easy to mistakenly free the physical backing store
+before the page tables are actually cleaned up and (temporarily) have
+stale dangling PTE entries.
 
-Before this change, the driver always used the first byte of the
-response to determine carrier state.
+To make this situation less error-prone, just make sure that any partial
+pfn mapping is torn down early, before any other error handling.
 
->From this larger sample, the first byte seems to indicate the number of
-available USB configurations in the current mode (with the exception of
-the default mode 0), and in some cases (namely mode 1 and 4) does not
-correlate with the carrier state.
-
-Previous logic erroneously counted `04 03 03 00` as "carrier on" and
-`06 04 03 04` as "carrier off" on iOS versions that support mode 1 and
-mode 4 respectively.
-
-Only modes 0, 1 and 4 expose the USB Ethernet interfaces necessary for
-the ipheth driver.
-
-Check the second byte of the control message where possible, and fall
-back to checking the first byte on older iOS versions.
-
-Signed-off-by: Foster Snowhill <forst@pen.gy>
-Tested-by: Georgi Valkov <gvalkov@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: Jann Horn <jannh@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/memory.c |   27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index cdc72559790a..46afb95ffabe 100644
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -355,13 +355,14 @@ static int ipheth_carrier_set(struct ipheth_device *dev)
- 			0x02, /* index */
- 			dev->ctrl_buf, IPHETH_CTRL_BUF_SIZE,
- 			IPHETH_CTRL_TIMEOUT);
--	if (retval < 0) {
-+	if (retval <= 0) {
- 		dev_err(&dev->intf->dev, "%s: usb_control_msg: %d\n",
- 			__func__, retval);
- 		return retval;
- 	}
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2424,11 +2424,7 @@ static inline int remap_p4d_range(struct
+ 	return 0;
+ }
  
--	if (dev->ctrl_buf[0] == IPHETH_CARRIER_ON) {
-+	if ((retval == 1 && dev->ctrl_buf[0] == IPHETH_CARRIER_ON) ||
-+	    (retval >= 2 && dev->ctrl_buf[1] == IPHETH_CARRIER_ON)) {
- 		netif_carrier_on(dev->net);
- 		if (dev->tx_urb->status != -EINPROGRESS)
- 			netif_wake_queue(dev->net);
--- 
-2.43.0
-
+-/*
+- * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
+- * must have pre-validated the caching bits of the pgprot_t.
+- */
+-int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
++static int remap_pfn_range_internal(struct vm_area_struct *vma, unsigned long addr,
+ 		unsigned long pfn, unsigned long size, pgprot_t prot)
+ {
+ 	pgd_t *pgd;
+@@ -2481,6 +2477,27 @@ int remap_pfn_range_notrack(struct vm_ar
+ 	return 0;
+ }
+ 
++/*
++ * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
++ * must have pre-validated the caching bits of the pgprot_t.
++ */
++int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
++		unsigned long pfn, unsigned long size, pgprot_t prot)
++{
++	int error = remap_pfn_range_internal(vma, addr, pfn, size, prot);
++
++	if (!error)
++		return 0;
++
++	/*
++	 * A partial pfn range mapping is dangerous: it does not
++	 * maintain page reference counts, and callers may free
++	 * pages due to the error. So zap it early.
++	 */
++	zap_page_range_single(vma, addr, size, NULL);
++	return error;
++}
++
+ /**
+  * remap_pfn_range - remap kernel memory to userspace
+  * @vma: user vma to map to
 
 
