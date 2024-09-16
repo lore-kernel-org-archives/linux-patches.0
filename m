@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844E914AD19;
-	Mon, 16 Sep 2024 12:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E730154C04;
+	Mon, 16 Sep 2024 12:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488088; cv=none; b=dPfn9GXo60V7Sv5/UU9liWomr4XwaZeerN8EKM9QceJgUhMcBdlrVioLvqlEh3MaoAs+MAz8YOUfZhlOVmdx2m05eyZpw0c3rt9dDouqgWPuYjzqdZxwc/DWRtVPN84dK4UgXMZSrbW45pMjSqe9byaytoKAH0gUkangEyDiNpk=
+	t=1726488091; cv=none; b=D8JKWTHA6PfDS0QE7U6QmgAo81Q++CgpNgPy53gfgcOjLDwsZKg8xOXUs0rAYm/geyZTJUMJ4KUVq3HSgSyG6eV6X3HABqvvEH7Ice3Aq3GloonafTyQ4Fhh7VEvxtC9z3MlmW6uMQ5b5w+T5sJebT3ZiERamhEK6ZtSOdJyYJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488088; c=relaxed/simple;
-	bh=sMJgYUBRtTBorl+awTEn/9CJ0yqriJ96nxu2NgJ9cCA=;
+	s=arc-20240116; t=1726488091; c=relaxed/simple;
+	bh=ITvW5htVREudHmWjPwRZ/zNK1cS+X/yzWNHJpRgNDTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oRxeRURZ031mxrBEioP/PX8as0EEqbAjdjLZ5FWFsRk9sR1kWwwmxyJRwtLK38LetIOVl7ysUbUnlo+fAnSwMtYr+fFz7+4IHOP/l4eFnBpC/uzlcyd8PJmx64ZADv+RlrB9Ho8ubW8fATmEYAT9qTOGfuX6sEOXTSAYj8f2S7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmDjSMRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tj1mpULFraADJxIyqVGTSb6+KciWtcNBXDtHLLZk3ex5266wGIgZeoyCmoPdWme64y3vxLkOUVKldF0/GGRkiQ3eurUlshMZNkOgDSVxMa7n8vax653BkhMZvTdYwwktAOAhJgOdLcMWdnflgo9vXRR/bqAshLZuPKpgEtKsQP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ppb1nxNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmDjSMRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F85C4CEC4;
-	Mon, 16 Sep 2024 12:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ppb1nxNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC05DC4CEC4;
+	Mon, 16 Sep 2024 12:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488088;
-	bh=sMJgYUBRtTBorl+awTEn/9CJ0yqriJ96nxu2NgJ9cCA=;
+	s=korg; t=1726488091;
+	bh=ITvW5htVREudHmWjPwRZ/zNK1cS+X/yzWNHJpRgNDTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmDjSMRr4kWOSA/torxxVDtAVC/cdT94CmEHvbwJNAJphSJnW5SQllgeY2RFbkXjM
-	 589iHMM4J3RsEY2qhPmxxzOAPHxBi9JUVtJGHKxaLKsDb5NsTtLR7Ax08bWA4Ikpdr
-	 5nuGVZhVkcqs+aQfBu1yN6LWHs7b/4kAQjdY604E=
+	b=Ppb1nxNAycFOW12EEThP6B7RfhQf5llnJQiCkVZQD+8nP7Sf2JNPE/rmg0Y27r+5D
+	 i/lMNMLMXtPKVDaxZSznga/WGtDemUfu7X9R1zA5F+AgNrR1/9StQ51TEs2EOCG3S5
+	 cXwXC2LXDFMxO8N2AF9l9q+zG35+MauCM69RSp50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 55/63] soundwire: stream: Revert "soundwire: stream: fix programming slave ports for non-continous port maps"
-Date: Mon, 16 Sep 2024 13:44:34 +0200
-Message-ID: <20240916114223.004014441@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 38/63] ice: fix accounting for filters shared by multiple VSIs
+Date: Mon, 16 Sep 2024 13:44:17 +0200
+Message-ID: <20240916114222.411493070@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -53,58 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-commit 233a95fd574fde1c375c486540a90304a2d2d49f upstream.
+[ Upstream commit e843cf7b34fe2e0c1afc55e1f3057375c9b77a14 ]
 
-This reverts commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 because it
-breaks codecs using non-continuous masks in source and sink ports.  The
-commit missed the point that port numbers are not used as indices for
-iterating over prop.sink_ports or prop.source_ports.
+When adding a switch filter (such as a MAC or VLAN filter), it is expected
+that the driver will detect the case where the filter already exists, and
+return -EEXIST. This is used by calling code such as ice_vc_add_mac_addr,
+and ice_vsi_add_vlan to avoid incrementing the accounting fields such as
+vsi->num_vlan or vf->num_mac.
 
-Soundwire core and existing codecs expect that the array passed as
-prop.sink_ports and prop.source_ports is continuous.  The port mask still
-might be non-continuous, but that's unrelated.
+This logic works correctly for the case where only a single VSI has added a
+given switch filter.
 
-Reported-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Closes: https://lore.kernel.org/all/b6c75eee-761d-44c8-8413-2a5b34ee2f98@linux.intel.com/
-Fixes: ab8d66d132bc ("soundwire: stream: fix programming slave ports for non-continous port maps")
-Acked-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20240909164746.136629-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When a second VSI adds the same switch filter, the driver converts the
+existing filter from an ICE_FWD_TO_VSI filter into an ICE_FWD_TO_VSI_LIST
+filter. This saves switch resources, by ensuring that multiple VSIs can
+re-use the same filter.
+
+The ice_add_update_vsi_list() function is responsible for doing this
+conversion. When first converting a filter from the FWD_TO_VSI into
+FWD_TO_VSI_LIST, it checks if the VSI being added is the same as the
+existing rule's VSI. In such a case it returns -EEXIST.
+
+However, when the switch rule has already been converted to a
+FWD_TO_VSI_LIST, the logic is different. Adding a new VSI in this case just
+requires extending the VSI list entry. The logic for checking if the rule
+already exists in this case returns 0 instead of -EEXIST.
+
+This breaks the accounting logic mentioned above, so the counters for how
+many MAC and VLAN filters exist for a given VF or VSI no longer accurately
+reflect the actual count. This breaks other code which relies on these
+counts.
+
+In typical usage this primarily affects such filters generally shared by
+multiple VSIs such as VLAN 0, or broadcast and multicast MAC addresses.
+
+Fix this by correctly reporting -EEXIST in the case of adding the same VSI
+to a switch rule already converted to ICE_FWD_TO_VSI_LIST.
+
+Fixes: 9daf8208dd4d ("ice: Add support for switch filter programming")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1272,18 +1272,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
- 					    unsigned int port_num)
- {
- 	struct sdw_dpn_prop *dpn_prop;
--	unsigned long mask;
-+	u8 num_ports;
- 	int i;
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 735f995a3a68..dc4ce3bd412d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -3061,7 +3061,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
  
- 	if (direction == SDW_DATA_DIR_TX) {
--		mask = slave->prop.source_ports;
-+		num_ports = hweight32(slave->prop.source_ports);
- 		dpn_prop = slave->prop.src_dpn_prop;
- 	} else {
--		mask = slave->prop.sink_ports;
-+		num_ports = hweight32(slave->prop.sink_ports);
- 		dpn_prop = slave->prop.sink_dpn_prop;
- 	}
+ 		/* A rule already exists with the new VSI being added */
+ 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
+-			return 0;
++			return -EEXIST;
  
--	for_each_set_bit(i, &mask, 32) {
-+	for (i = 0; i < num_ports; i++) {
- 		if (dpn_prop[i].num == port_num)
- 			return &dpn_prop[i];
- 	}
+ 		/* Update the previously created VSI list set with
+ 		 * the new VSI ID passed in
+-- 
+2.43.0
+
 
 
