@@ -1,59 +1,59 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACE72AEEE
-	for <patches@lists.linux.dev>; Tue, 17 Sep 2024 21:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA48F186E51
+	for <patches@lists.linux.dev>; Tue, 17 Sep 2024 21:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726609454; cv=none; b=uzwVfiXY95IU4aW3uKC9DY5dEXmlkAK89mkmWeKzagUOyBRY6ImOFKNr61oFGxl6xyycWHzi/9WOJsBjKXzGtGBbBfsQbqlOU0czGdMqNr2yTVuDLTqWKl2WyEKrDqzTrGT9JqDJqkrE1qf08IhXP+6pMwR1Si8hOM5H28W0gQU=
+	t=1726610243; cv=none; b=qn4jfk7bEBjpnpUCNNQDgCV8Ms0w5LU17ovrdfRM/8tfvoGmh1Ur1KvwgZHn+9PYbi3BxB5wqyqKQL6349K4Lju6RunUwLiK0uUUvGl0sKk/DixZ1VS5maLScxMXz4kDqSNseVE0z1eHSmc4lPV6xMV1MByNfLWl6X59xXyaluo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726609454; c=relaxed/simple;
-	bh=7N1BDLZ2Hw2Ih69xLhnLRuzIjeIwOEMnsNj3wLctgS4=;
+	s=arc-20240116; t=1726610243; c=relaxed/simple;
+	bh=hFlmpTWnyybhl7hlaDnjaHuk/xz5CLJJI8OxXLuvOSE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PzkvDcK3l8Ci+PJ0ikJ4sRcqnk0NkSVxu6axmpVPsXAi4/TU3ItXLTmTlhkMsPrFNISaCuJZE9GlhNXUp7v2VAoJrdJG7qo3s0E+AWz73fWjQ8cPmn57QAiVKMZ8KgJt1YwNqYjuOsfPMxnBfmk3ofjm+4yc0vPloOOahLVnZyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aGqPR7ow; arc=none smtp.client-ip=209.85.222.180
+	 In-Reply-To:Content-Type; b=MK/Y/8Mao4+0CCrAcXA1HEFHuUs0ACil/iGTu6qEITwd877qYN+O2l8BdQDPu3GKDaLM963FN0/XZtqHLczMbl2S2j2CO32ZZeZAlfMWLClOHEbwO6r2arl6NgIkLsmkzSPmNe6oj2nKEasl6EEJzpkiBb1+dj4mgAU03G/p/QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T/rJYGCw; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGqPR7ow"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7a9ad15d11bso519005985a.0
-        for <patches@lists.linux.dev>; Tue, 17 Sep 2024 14:44:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T/rJYGCw"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20570b42f24so65534285ad.1
+        for <patches@lists.linux.dev>; Tue, 17 Sep 2024 14:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726609452; x=1727214252; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1726610241; x=1727215041; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LLm6Tz/RxDmOJ4MExUq9RFzyS6STGghL0Dwapo5TV3U=;
-        b=aGqPR7owWUwDMykDZJVLnEvCNPqxwfvQIfZxjyicItq1+lxcObZmZXp+J9MrSJBOy3
-         YYIPjYagazLd31+OBvUrCqBb7rEqdjlHbDK/QKa+/rMleLWOsJlG3/pEq/pEZkv+35hm
-         3zuqQvQE9UwkG0vNX7xOq830iVloKBNndGeN2QGCiDmlf8LwzHbpL6N+i1Q2rEgAb5lq
-         ZNml8RM9GW9XNehvw20qPfOKsFTR1U2+SYfQFdUonU8zoYF34FIQ0ZnTDP89NUAClnRC
-         n5QoTBTEg3089r2sNMjd1xpIlaDF/GWW4DmJu1OKAQi14a3U+RYQbiKI5nk1IDxkMSCi
-         EaZg==
+        bh=+IGgBEW9RL8xHUotH57V+NXA5SJXFjWvsNu+pEDVbjk=;
+        b=T/rJYGCwbGX7oEwKXPCcPMVG5LRwC+gJYA822MXMJQ/Ud84UihyYeKZOreKxrK2ff+
+         51qIHiKlDgMdzXc0hSpcb/2w/g/IBD67jdfMy9/oRKpzVU4sPGGZQDLGwA8Sod5OHkFT
+         mJJGZq2nfvWJS4fVAwc9SpT+JZJpbU0TJnzgI+/yTZRs7aSFo70CfcAN8S3SqJ3Pk5Nq
+         DMZjv43wqTiVsT+Ks95BZIGZNU1fvN4d3rUHZsmb0RNsnIhOtijCE4rw3B/5e/AL4NSF
+         VFTNc0dak5C+XOfi+cBIRQzbczXJDinje06njUSSbjduTB6Nm0BeHCKsVYrLYTBh9cuw
+         6GlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726609452; x=1727214252;
+        d=1e100.net; s=20230601; t=1726610241; x=1727215041;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LLm6Tz/RxDmOJ4MExUq9RFzyS6STGghL0Dwapo5TV3U=;
-        b=LHEFoF78gQao6yaHXuxZVEGZGmeodzfZjN6R0T08aVV+bf9DMlwmJbAz/PsZReoWp7
-         WGkPqE3epiRaeB6ZwXdryggUGKApe0mBPbel4xsqRSSqz3UQpvLHID5RoCLUrYgE8p3c
-         arpdPBnUDR6gqrET4+dShV8SKo+8A26osp3UsInn1qtyEWUNuwWohIa5K5BYixebifRk
-         GpIx24wSXFoiqaLSOH9yg/DHGdwylZRUjSm55vbrb4IuvPbjNbV8AK4f0JHJM8NgRrok
-         tsBtbeZgPs/iamRvPZ00MG1KnKxlH4vDceIEvuo38Y3XnsmY0IpvkRgaioTZi6gdh+UD
-         KPqg==
-X-Gm-Message-State: AOJu0YzKUka03xOU4YLEiXS6jILYwj10VHx+y/Zn57wH4v9f4+nSu+Iw
-	rkpj5Z9VnTJZMaR/Vq7YGkpCW4DwC/MvqnpqO24bBGJQKok+XuSf
-X-Google-Smtp-Source: AGHT+IFP7+sZPljq3WwKBZcfXMXk5ibtuVW5Motu3Etbp1q4vsLGRlUe0SeAXmJS2Op32l8v/PQHuA==
-X-Received: by 2002:a05:620a:46aa:b0:7a1:c40d:7573 with SMTP id af79cd13be357-7a9e5fa1d85mr3062532785a.49.1726609451611;
-        Tue, 17 Sep 2024 14:44:11 -0700 (PDT)
+        bh=+IGgBEW9RL8xHUotH57V+NXA5SJXFjWvsNu+pEDVbjk=;
+        b=bIkHpdF04rLG6syK8NOrPJsIk315U3UyrB7QgN2gP1YxYefqPkWW/Bj796WKV8O2kX
+         abmAwFpnRNdA8wgi1s5rFNxnUb/JvmXxhdNiiQSeiUu2PHarYJ9X95W5SDlntON4GsT2
+         qjGtEr8B4UBHgP8QBRfxdb/4wp14UOBd0Z35dDGL34/hB/2OXSGATv4XIo/YgY9PC0lE
+         I2G/ApGyjx8GKJ9gGqFhViQJ0fSR1yGshT9yXEcdjxq9/jA+FvrzrCvb3g26oLrR7UIj
+         NeIDKikrKawWgco3bmiL5RKRIIGzQ1PicTzZfOq/LONhgs9e7VcdOTKDyAqOlHcORGPj
+         UtjQ==
+X-Gm-Message-State: AOJu0Yws19rbiNFrEUaI4PC/tDr3G+/pyFkWSqnil92OzTihdTqBSgTJ
+	zaBxEpbpyBioNwRqaNlup8o9m4Re1rM8zThXx6rVCZoUvfuxcQXE
+X-Google-Smtp-Source: AGHT+IFA9w7IiS4cU8ZJaYaS+KbMJPZbx482us08hi9Ex8yg0JkLXF9fbd1HbU4pIutl9ArvYDPHQQ==
+X-Received: by 2002:a17:902:e852:b0:202:49e:6a35 with SMTP id d9443c01a7336-2076e33e935mr314661045ad.19.1726610240740;
+        Tue, 17 Sep 2024 14:57:20 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ab3eb585d1sm400560485a.85.2024.09.17.14.44.07
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-207946d19c0sm54563355ad.146.2024.09.17.14.57.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Sep 2024 14:44:10 -0700 (PDT)
-Message-ID: <531351b9-7972-4936-8c55-b44aec0cfe58@gmail.com>
-Date: Tue, 17 Sep 2024 14:44:06 -0700
+        Tue, 17 Sep 2024 14:57:19 -0700 (PDT)
+Message-ID: <30bb27e0-4569-4581-9a50-1fe7d5334c29@gmail.com>
+Date: Tue, 17 Sep 2024 14:57:16 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,7 +62,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.6 00/91] 6.6.52-rc1 review
+Subject: Re: [PATCH 6.10 000/121] 6.10.11-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -70,7 +70,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240916114224.509743970@linuxfoundation.org>
+References: <20240916114228.914815055@linuxfoundation.org>
 Content-Language: en-US
 Autocrypt: addr=f.fainelli@gmail.com; keydata=
  xsDiBEjPuBIRBACW9MxSJU9fvEOCTnRNqG/13rAGsj+vJqontvoDSNxRgmafP8d3nesnqPyR
@@ -105,13 +105,13 @@ Autocrypt: addr=f.fainelli@gmail.com; keydata=
  y5arMQorqTFWlEOgRA8OP47L9knl9i4xuR0euV6DChDrguup2aJVU8JPBBgRAgAPAhsMBQJU
  X9LxBQkeXB3fAAoJEGFXmRW1Y3YOj4UAn3nrFLPZekMeqX5aD/aq/dsbXSfyAKC45Go0YyxV
  HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
+In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/16/24 04:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.52 release.
-> There are 91 patches in this series, all will be posted as a response
+On 9/16/24 04:42, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.11 release.
+> There are 121 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -119,9 +119,9 @@ On 9/16/24 04:43, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.52-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.11-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
 > and the diffstat can be found below.
 > 
 > thanks,
