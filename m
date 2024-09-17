@@ -1,181 +1,159 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C455F17107F
-	for <patches@lists.linux.dev>; Tue, 17 Sep 2024 10:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D097E1547F8;
+	Tue, 17 Sep 2024 11:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726569030; cv=none; b=NQx3oiiUEHsa3HBFqk/pFSyKvsAFyS74lUyiRcU7pnSWmzY4oJDZCZAeruPABiwSlO79eTGQoGCDkgmUppDHPkEC8UyOQXmrAmQK8gvc88GnJPBvMkrNfGVgI+i+ovCsDB3DDT90ef7fZXg+PHJwdClV3eEYAZXr0mU+3TyFylY=
+	t=1726571228; cv=none; b=gXxlBMpKSRQE+6E7kftFJtuqZEZ+dx2TeAF9/duGjjfshl7Mz0T2GTdfNexQrlX4XsFqRTAe2vE2HDAavNMcW7KOB5Fvjc2QGDpn4Pm+cYAZsk+Cb6jJ7IaKIU9wP9E1DsC3ZoBNZbKGLSQ4W10itcqVLdvhEotRx5AwgWZXfLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726569030; c=relaxed/simple;
-	bh=rAUoQ4nus9+gGnXZO4GR16ay3famp7WL4FkpgBIVWUg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i7YwXiO8VmH72XOBvld9As4AYctLhvwiDmRspaQB749oiGILObGwOPtN7j4IGjmJeilRdqHMAw8coGUvBqdHgjjI5RDaSN/btdmMFNSQp/0NyuTC/Kz4yrSQ4eft3UP8MmCTIe3Uov4KvIq3sIwA9j3bNebJjc8Vh2e758QKlw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X809GcIf; arc=none smtp.client-ip=209.85.217.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1726571228; c=relaxed/simple;
+	bh=4TzgfNzU4X7Llu0Ur+J1tTSGJc+SZrOy4FB+uAHhS6U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lmxYncRHy0MulcKSrY0mJyYgVwiBOgw2hvZQIc6bd5N9huuileOYadZKaGMJDdcpcIT6OO+xhgCKGzIZdqpXYzhvwSizVNFVcYrKtZWfcmkMxrT0y7Zj2LdSox44953FAgCQMOZXc+t6IxZIDcBzcC4+9pd3rKPoBhZviXp4tcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=X5kSIzfe; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X809GcIf"
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-49bd76face1so2994342137.0
-        for <patches@lists.linux.dev>; Tue, 17 Sep 2024 03:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726569023; x=1727173823; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TiSL4J7L8lMiEUKJ3FGpFS/7E/wv/Xs1VRoLh25eebs=;
-        b=X809GcIfQUu0M1sv1NcDoDcw4ksU2ru+UrgGfUdfyWZH3YouQWGR8CoO0ROCKAqHEK
-         oCnUkPiHqc9119XK23djXwo62p1Ei0AyyiQUw0YZ9+4py3/1ET5Ap9w0/0DpE5+RcUNG
-         dI0iNbQVVY/e0m64GR/S92WhSp+uNoKkmBmiAirQZLbSdHjhXodGctTeLaQ2clH8ihFO
-         9lJ+SBZTHwvlqMl4ngf1jAxSHWZJ0tc+lbsYXp2R3ca1K9FBL+0Dt1Mbue4QPMTg+FPO
-         fdotLQbjDb/lr7bMYLbZCYHPAJKgORd9568JibgaukOwiWvlTJLCJ11g25XaLnOuF2a8
-         t50A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726569023; x=1727173823;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TiSL4J7L8lMiEUKJ3FGpFS/7E/wv/Xs1VRoLh25eebs=;
-        b=hCxzL2/e/50C0dIQFV6C318nQHY/Bk43rXB0gnm75/K9HKLVrJpXDpl2Qs5f+U7u28
-         2zYhCp07V7bn2yeWuqo8FGx15n6h3LR8/oHJk2SeliujPa4lfGKFbffP1m6+98PRdJam
-         uT0BrTGfTGoFgOK2rVqfvAdiXMg0zsdgZz5E9oMJX/pt4yGrKIAVJ9FXxQ38z7Hm3YNJ
-         bb3d90MpvJnW4EsAruliJ6ZQDexQlfO+9rIQtGB0z5UwunFqX8JOapFtLkNKyAEmXVt6
-         t5HAmoR3G/QuseRT2JWzHgPxx+X/Suc+0x6HsNouJgukYdiYnriYF4EfdH05FwYScOOd
-         AKOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXrfp31Oglj0S0a7qOMeXZUtRmTiR945XplTcDQZucQbraQvHPnxo6rktqsibkDtaER+OjRuSLa@lists.linux.dev
-X-Gm-Message-State: AOJu0YzjX0MtTlv44Yw3ZBDERCfMU3Z/sB67+xZR3nJpyYVQ280PEN+Z
-	P5W7ynrbg7f1Elt2xn0bX9DO4B2uc75mrJKd+nB81o2j2dYHmxOBsLDAMiLixcQaz/tpnoEUnWt
-	Tp2/dYN7jHwde3AL+PkB5QwPFjwgailuhHnsDzA==
-X-Google-Smtp-Source: AGHT+IEVb9UtvU3qIrJ3hyC4983sMEXpKsLF/53bfiXaTkarBvujHfkK9GFkmBvRc6GUz54Xmq2wvMJKl1xR3mITQ20=
-X-Received: by 2002:a05:6102:b0d:b0:493:c261:1a9c with SMTP id
- ada2fe7eead31-49d42165fe1mr12824423137.5.1726569022577; Tue, 17 Sep 2024
- 03:30:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="X5kSIzfe"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48H8LQWw031824;
+	Tue, 17 Sep 2024 11:06:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
+	:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=pp1; bh=uFk2CZ9i+fQ2hNEQA/VA4OdDwxn
+	NB6sKXFr9zpdKM0w=; b=X5kSIzfeSTP4CxaX2d/mrglrTkrvkqA/IzUfj8kEsHy
+	iauq5tnmD/ffB1AZIJI1pS8/1FohiA1qM9f6LRonuh3ppXl+//E9X8mksZ36AE05
+	tcprvHQ4/XTwsNbKridJJyoM4VjdjeW5/lRtqG1u1/o2rRzAtubpS+ixe8qua5PV
+	54p8HcNqnXKGnwtVlq0VnOJOg8c8PayYazofRAm6vcBN4/yvj9FonWaG/kl2NDvi
+	Z0Jy7Mmf56RcmtqYNM2X5RY+nQBQo2NbHD0qbdUHA3Rb2G+vj/Mtqf9elXYfb4J+
+	JjnzjRotontn3YESr4H2QOuZCo/BPUKoGzEOXGl6Cdg==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3uj7nvh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Sep 2024 11:06:55 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48HALncT024672;
+	Tue, 17 Sep 2024 11:06:54 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41nq1mvhsn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Sep 2024 11:06:54 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 48HB6rfG49742212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 17 Sep 2024 11:06:53 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0277520043;
+	Tue, 17 Sep 2024 11:06:53 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C84772004B;
+	Tue, 17 Sep 2024 11:06:52 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.152.85.9])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 17 Sep 2024 11:06:52 +0000 (GMT)
+Date: Tue, 17 Sep 2024 13:06:51 +0200
+From: Alexander Gordeev <agordeev@linux.ibm.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+        Vasily Gorbik <gor@linux.ibm.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 32/91] s390/mm: Prevent lowcore vs identity mapping
+ overlap
+Message-ID: <Zuliy6DOi47cD-cZ@tuxmaker.boeblingen.de.ibm.com>
+References: <20240916114224.509743970@linuxfoundation.org>
+ <20240916114225.569160063@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240916114224.509743970@linuxfoundation.org>
-In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 17 Sep 2024 16:00:10 +0530
-Message-ID: <CA+G9fYv+OXhNPn87X4O9w8-HzGP04USge-et0b3Y4ncU9tussg@mail.gmail.com>
-Subject: Re: [PATCH 6.6 00/91] 6.6.52-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Vasily Gorbik <gor@linux.ibm.com>, 
-	Christian Borntraeger <borntraeger@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, 
-	Anders Roxell <anders.roxell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240916114225.569160063@linuxfoundation.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: UMwGydxAuuitSA5cPk3xqlH68mJwCYCi
+X-Proofpoint-GUID: UMwGydxAuuitSA5cPk3xqlH68mJwCYCi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-17_02,2024-09-16_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=997 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1011 bulkscore=0 suspectscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409170079
 
-On Mon, 16 Sept 2024 at 17:38, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.52 release.
-> There are 91 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.52-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, Sep 16, 2024 at 01:44:08PM +0200, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 
+Hi Greg,
 
-The s390 builds failed on the Linux stable-rc linux-6.6.y and linux-6.10.y due
-to following build warnings / errors with gcc-13 and clang-19 with defconfig.
+Could you please drop this commit from 6.6-stable?
 
-* s390, build
-  - clang-19-allnoconfig
-  - clang-19-defconfig
-  - clang-19-tinyconfig
-  - clang-nightly-allnoconfig
-  - clang-nightly-defconfig
-  - clang-nightly-tinyconfig
-  - gcc-13-allmodconfig
-  - gcc-13-allnoconfig
-  - gcc-13-defconfig
-  - gcc-13-tinyconfig
-  - gcc-8-allnoconfig
-  - gcc-8-defconfig-fe40093d
-  - gcc-8-tinyconfig
+Thanks!
 
-
-First seen on v6.6.51-92-gfd49ddc1e5f8
-  Good: v6.6.51
-  BAD:  v6.6.51-92-gfd49ddc1e5f8
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-build log:
---------
-arch/s390/kernel/setup.c: In function 'reserve_lowcore':
-arch/s390/kernel/setup.c:748:31: error: implicit declaration of
-function 'get_lowcore'; did you mean 'setup_lowcore'?
-[-Werror=implicit-function-declaration]
-  748 |         void *lowcore_start = get_lowcore();
-      |                               ^~~~~~~~~~~
-      |                               setup_lowcore
-arch/s390/kernel/setup.c:748:31: warning: initialization of 'void *'
-from 'int' makes pointer from integer without a cast
-[-Wint-conversion]
-arch/s390/kernel/setup.c:752:21: error: '__identity_base' undeclared
-(first use in this function)
-  752 |         if ((void *)__identity_base < lowcore_end) {
-      |                     ^~~~~~~~~~~~~~~
-arch/s390/kernel/setup.c:752:21: note: each undeclared identifier is
-reported only once for each function it appears in
-In file included from include/linux/bits.h:21,
-                 from arch/s390/include/asm/ptrace.h:10,
-                 from arch/s390/include/asm/lowcore.h:13,
-                 from arch/s390/include/asm/current.h:13,
-                 from include/linux/sched.h:12,
-                 from arch/s390/kernel/setup.c:21:
-include/linux/minmax.h:31:9: error: first argument to
-'__builtin_choose_expr' not a constant
-   31 |
-__builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),
- \
-      |         ^~~~~~~~~~~~~~~~~~~~~
-
-Build Log links,
---------
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.51-92-gfd49ddc1e5f8/testrun/25153617/suite/build/test/gcc-13-defconfig/log
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2m9YUHx7PsQwr4lBdvjITAfP9Pp/
-
-Build failed comparison:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.51-92-gfd49ddc1e5f8/testrun/25153617/suite/build/test/gcc-13-defconfig/history/
-
-metadata:
-----
-  git describe: v6.6.51-92-gfd49ddc1e5f8
-  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-  git sha: fd49ddc1e5f8121355db23e04b94f6df460a5051
-  kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2m9YUHx7PsQwr4lBdvjITAfP9Pp/config
-  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2m9YUHx7PsQwr4lBdvjITAfP9Pp/
-  toolchain: gcc-13, gcc-8 and clang-19
-  config: defconfig
-  arch: s390
-
-Steps to reproduce:
----------
- - # tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
---kconfig defconfig
-
---
-Linaro LKFT
-https://lkft.linaro.org
+> ------------------
+> 
+> From: Alexander Gordeev <agordeev@linux.ibm.com>
+> 
+> [ Upstream commit a3ca27c405faad584af6e8e38cdafe5be73230a1 ]
+> 
+> The identity mapping position in virtual memory is randomized
+> together with the kernel mapping. That position can never
+> overlap with the lowcore even when the lowcore is relocated.
+> 
+> Prevent overlapping with the lowcore to allow independent
+> positioning of the identity mapping. With the current value
+> of the alternative lowcore address of 0x70000 the overlap
+> could happen in case the identity mapping is placed at zero.
+> 
+> This is a prerequisite for uncoupling of randomization base
+> of kernel image and identity mapping in virtual memory.
+> 
+> Acked-by: Vasily Gorbik <gor@linux.ibm.com>
+> Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+> Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/s390/kernel/setup.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
+> index d48c7afe97e6..89fe0764af84 100644
+> --- a/arch/s390/kernel/setup.c
+> +++ b/arch/s390/kernel/setup.c
+> @@ -741,7 +741,23 @@ static void __init memblock_add_physmem_info(void)
+>  }
+>  
+>  /*
+> - * Reserve memory used for lowcore/command line/kernel image.
+> + * Reserve memory used for lowcore.
+> + */
+> +static void __init reserve_lowcore(void)
+> +{
+> +	void *lowcore_start = get_lowcore();
+> +	void *lowcore_end = lowcore_start + sizeof(struct lowcore);
+> +	void *start, *end;
+> +
+> +	if ((void *)__identity_base < lowcore_end) {
+> +		start = max(lowcore_start, (void *)__identity_base);
+> +		end = min(lowcore_end, (void *)(__identity_base + ident_map_size));
+> +		memblock_reserve(__pa(start), __pa(end));
+> +	}
+> +}
+> +
+> +/*
+> + * Reserve memory used for absolute lowcore/command line/kernel image.
+>   */
+>  static void __init reserve_kernel(void)
+>  {
+> @@ -939,6 +955,7 @@ void __init setup_arch(char **cmdline_p)
+>  
+>  	/* Do some memory reservations *before* memory is added to memblock */
+>  	reserve_pgtables();
+> +	reserve_lowcore();
+>  	reserve_kernel();
+>  	reserve_initrd();
+>  	reserve_certificate_list();
+> -- 
+> 2.43.0
