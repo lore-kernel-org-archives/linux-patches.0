@@ -1,115 +1,116 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B71D158522
-	for <patches@lists.linux.dev>; Tue, 17 Sep 2024 22:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 442C419A;
+	Wed, 18 Sep 2024 02:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726612966; cv=none; b=U3gQ96OZDhvkoldH+A9SNs45OgBwainvHHWZZXLAiSeMGCgI+xgYD6kaKaXpR50Eprgc6ShGft5a0BzSn/AV36xet/BA6anD3GiQQw38XMDnDpgE2l1IU31xgultOhPoRXf+z2HkQEkOrWNbE7hwQ8KAxqORjraSz7JcEJvnyo0=
+	t=1726625146; cv=none; b=eDwgvXBTwcNkFmRRQcMqrgqF1g3I2URnB/N0IbzL9Xq9YDnk/99Rz4Yk7XtyAn0C/DdnHxb1Mos5uZLusuWQRT/AetzPA/2j4iWSiY4EWcbktaK+3WNb0eodDhTezxxxRZLpCEuJI644lrbgqw1swkmYbtpWoXFU5nF16WopPpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726612966; c=relaxed/simple;
-	bh=BBNjmIWBCsZNu1/uEkhu7oFp65Vm/I1f1NhL7x6AVzI=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=DbwLZC8o+MDRIveWrgR1p///Ke1pGanvz9uA2CW2eYlhOdAzgBKr9cvibmhi3H4KBn2LwTGC/YjGgrCqsstsPbkUlCmVsnXyr3SwQr52u573VKQh4AApP6uMsMvCsQw4RcmFPJXheUjV7WDqK/Hjf+Hd2r+K1PQHbeFnWkBwvYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=goBsZDet; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="goBsZDet"
-Received: from eig-obgw-5008a.ext.cloudfilter.net ([10.0.29.246])
-	by cmsmtp with ESMTPS
-	id qY3UsyqyynNFGqguAsJ702; Tue, 17 Sep 2024 22:42:42 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id qguAsqx9cXr83qguAsxae1; Tue, 17 Sep 2024 22:42:42 +0000
-X-Authority-Analysis: v=2.4 cv=ZYMbNNVA c=1 sm=1 tr=0 ts=66ea05e2
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=q+ziK1mF6ooGl3p53okCzUyZN3QRERL/Rrdkp5DpIBc=; b=goBsZDeteaj1eoCk66Bb8V7Nw5
-	kxAkMdismO6qKyKOMUj3VkbadDCg/KRhiDck9Qu9G64WIlpXXIXa4cpqYT2O3FlHMVrg93RzigKnE
-	gCpVhNsah4avA8ulhnJXRPzwdWibWjUQrlp3ayEItL6IwRtzJp8nVexHPWR8kXHI8b2KNqzFlP3VA
-	DlZacYRysM73x/tAAuGqg6Z1rwNM4ecsBeFkQb5c4d+lrGR5eKuukXfHxjYIbYkgrn+dOLW6/xAL8
-	VT0UEtRmrsklgxXKdc+52e3Deb8yUohzQ01KY1CT4qwBSU4TuT3ukD/VxIVf7+T4WHx6T3G+pYhwV
-	fy/tS4Qw==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:41188 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1sqgu8-001ahl-0b;
-	Tue, 17 Sep 2024 16:42:40 -0600
-Subject: Re: [PATCH 6.1 00/63] 6.1.111-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240916114221.021192667@linuxfoundation.org>
-In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <7b8639b8-43b8-47d6-8506-d1ce9409f492@w6rz.net>
-Date: Tue, 17 Sep 2024 15:42:37 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	s=arc-20240116; t=1726625146; c=relaxed/simple;
+	bh=ja0bMnkN4tal4/Qm2vECx9zbDlKn9vDet4Fh//EDTdM=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=PcC3yAgPeuHhoT+TAHAUDvs2WIw8qy9gqsYfV1Las8aE2ybr4US9v+qY6O7E75DajEABynoUXObso+n/ejJXRk7hINYEPWEzzCjF/WgdKcXuhEtpgCV7e79xUHE8pbv9O2r/t7rA1Pu+1TpzE1hXObHTFMUVhUJqlgaQxvsWZKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.184])
+	by gateway (Coremail) with SMTP id _____8BxfeptNepmmmUKAA--.24559S3;
+	Wed, 18 Sep 2024 10:05:34 +0800 (CST)
+Received: from [10.20.42.184] (unknown [10.20.42.184])
+	by front1 (Coremail) with SMTP id qMiowMBxHeRpNepmN0EJAA--.53205S3;
+	Wed, 18 Sep 2024 10:05:32 +0800 (CST)
+Subject: Re: [PATCH] LoongArch: KVM: Ensure ret is always initialized in
+ kvm_eiointc_{read,write}()
+To: Nathan Chancellor <nathan@kernel.org>,
+ Tianrui Zhao <zhaotianrui@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>
+Cc: kvm@vger.kernel.org, loongarch@lists.linux.dev, llvm@lists.linux.dev,
+ patches@lists.linux.dev
+References: <20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-v1-1-85142dcb2274@kernel.org>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <9c7e4360-3f77-035f-edb9-61dcfe239a29@loongson.cn>
+Date: Wed, 18 Sep 2024 10:05:10 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-v1-1-85142dcb2274@kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1sqgu8-001ahl-0b
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:41188
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 41
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfPrzRkbl6/7IlFIv1wSv2Rt36rvMSSjU85IHM/0vesuyrAEPYKnhOTwE9IEfts+0xQNvSZS5ZNAi8rPsi+HDS79y/WHGnSfJNW9SzsuDS3cemcAMfHgy
- IcBloPK2fKs/GDs7qULaRPmoJ2jW44brZ/tpIqu5UnBqnc6lGt6hGQKNlofktp8dRPyshZNPyawRgg==
+X-CM-TRANSID:qMiowMBxHeRpNepmN0EJAA--.53205S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZFW7KrykZw4xJFyxurW3urX_yoW8ZrW5pF
+	1UZw4kCrs5Xrykta4Dt3WrWF4jqa95Gr17uFyYqFW2kF4UZF9xZ340yrZIgFyYkws7Jr40
+	qF1F93WYvan0y3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIx
+	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+	wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
+	UUU==
 
-On 9/16/24 4:43 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.111 release.
-> There are 63 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.111-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi Nathan Chancellor :
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Thank you very much for pointing out the problem,
+I will integrate this patch in the next version.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks!
+Xianglai.
+
+> Clang warns (or errors with CONFIG_WERROR=y):
+>
+>    arch/loongarch/kvm/intc/eiointc.c:512:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>      512 |         default:
+>          |         ^~~~~~~
+>    arch/loongarch/kvm/intc/eiointc.c:716:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>      716 |         default:
+>          |         ^~~~~~~
+>
+> Set ret to -EINVAL in the default case to resolve the warning, as len
+> was not a valid value for the functions to handle.
+>
+> Fixes: f810ef038c66 ("LoongArch: KVM: Add EIOINTC read and write functions")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>   arch/loongarch/kvm/intc/eiointc.c | 2 ++
+>   1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/loongarch/kvm/intc/eiointc.c b/arch/loongarch/kvm/intc/eiointc.c
+> index 414e4ffd69173dc248ba0042bed3bebdc11700e3..e5d23f0da055c97c0e4ba6705f6b71d89846f42a 100644
+> --- a/arch/loongarch/kvm/intc/eiointc.c
+> +++ b/arch/loongarch/kvm/intc/eiointc.c
+> @@ -512,6 +512,7 @@ static int kvm_eiointc_write(struct kvm_vcpu *vcpu,
+>   	default:
+>   		WARN_ONCE(1, "%s: Abnormal address access:addr 0x%llx,size %d\n",
+>   						__func__, addr, len);
+> +		ret = -EINVAL;
+>   	}
+>   	loongarch_ext_irq_unlock(eiointc, flags);
+>   	return ret;
+> @@ -716,6 +717,7 @@ static int kvm_eiointc_read(struct kvm_vcpu *vcpu,
+>   	default:
+>   		WARN_ONCE(1, "%s: Abnormal address access:addr 0x%llx,size %d\n",
+>   						__func__, addr, len);
+> +		ret = -EINVAL;
+>   	}
+>   	loongarch_ext_irq_unlock(eiointc, flags);
+>   	return ret;
+>
+> ---
+> base-commit: 357da696640e1db8fc8829a4dd1bb2d0402169b5
+> change-id: 20240916-loongarch-kvm-eiointc-fix-sometimes-uninitialized-e17b039d2813
+>
+> Best regards,
 
