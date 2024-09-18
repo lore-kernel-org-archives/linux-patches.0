@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68104C81;
-	Wed, 18 Sep 2024 06:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAB24C81;
+	Wed, 18 Sep 2024 06:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726640230; cv=none; b=gTs/eEow24EYEiTjEu/v05s2BwbfVPEsVtZO1JkTXxdONRIiWbp27HWzHe9mwfnQ+kIT5SNhw0SBj/4wAm/ERBRXPL21Maav03JAYC/fXp21hVEKnnQC98YjTzlmaRxHyE23D2iVZxgrq5dQcCEt+XMQpF2K6FHxoEt1yCdBh0o=
+	t=1726640273; cv=none; b=LuejiAJl7sa+YbYbxmvR08zfwTL+Mot6Slhjb3M2CiOW2xRVRsdeSIQgjrlf1s9rkFk89ZPvU3WRze7hoTcrQ5ZSy6bR8mAJd1axO410GhECEerxPaPWbDmFV+unn1NyqnV5dBvdIrMzlBWxCssmQQ8uoM0vER7q3By7ixM8ZGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726640230; c=relaxed/simple;
-	bh=DCayEJGyzIxJwqWRFflxI0n03tSHQnbqdCjHQlBPOwM=;
+	s=arc-20240116; t=1726640273; c=relaxed/simple;
+	bh=mnz9j2x2YzhnswsUfHWRaw2A7mM5nYT9gnsWg81ILYo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=URQcGtG1Cld/gFoX5C9ViggqdJP5OboeGlZyhpWbC8HktOxhkuz5PnbWHl/gSjKaBR0BrKbKjLpILmOKx1Nqdn7VlKYwU2AREIoy/XBRm6kb9rgDCZWIHMj3+NKKOYsB4IAgkcABJ4NKinPn+NqRYLqjZBBLFRNidXw8EGbyAPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaRnEY0w; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=k8T7mIwXJn/Cptb56hjwyADoLfyFHjwouUT+pfgLwhE+SDNMRhpBznbWjIRX6JWOiPrhxffbLkfPpfrFOy5NbiShIdNcaBOe9dL0CxCOThAdExGX4lUn+KYw3YUEV/TXrU9yIH105sAOnuYzMaGboPyk2hbhTztGAwBC40MTTlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIWxKYy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaRnEY0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF22C4CEC3;
-	Wed, 18 Sep 2024 06:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIWxKYy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C2FC4CEC3;
+	Wed, 18 Sep 2024 06:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726640230;
-	bh=DCayEJGyzIxJwqWRFflxI0n03tSHQnbqdCjHQlBPOwM=;
+	s=korg; t=1726640272;
+	bh=mnz9j2x2YzhnswsUfHWRaw2A7mM5nYT9gnsWg81ILYo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JaRnEY0wNjEVds+y9Xcp16bAEKIiJY7vQTLcvnFOvGS2JzvSIyUXtXzoh7nrkJcr0
-	 qxaxrNYv9o7pC0i4cFPL43tzzQqjrsMxNxs0HXm16kaHkltZJCk1OiAs6e4mWywwko
-	 oo+HNmxfcuL2io9hjBZFS2Rz2gMZYEb4ZvoDjc4k=
-Date: Wed, 18 Sep 2024 08:17:07 +0200
+	b=pIWxKYy1rLtC4LqQekTtJkUeSfJKDEgi/Vnc26jgJM6yAxn+SeDptOlmSznDlLDjG
+	 FHwGL455Vet2FK0ghCSzVIUUNCfADFisC4do7Nu942KehQhkCEKUA6W9Wu3z2tZC+R
+	 1OGvA4xcdGpwSnj87jSQatzpQWJnC6yUxM2WmJZk=
+Date: Wed, 18 Sep 2024 08:17:50 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
+To: Alexander Gordeev <agordeev@linux.ibm.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 6.6 00/91] 6.6.52-rc1 review
-Message-ID: <2024091853-thickness-plexiglas-5e83@gregkh>
+	Vasily Gorbik <gor@linux.ibm.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 32/91] s390/mm: Prevent lowcore vs identity mapping
+ overlap
+Message-ID: <2024091833-maturely-mushiness-a97d@gregkh>
 References: <20240916114224.509743970@linuxfoundation.org>
- <CA+G9fYv+OXhNPn87X4O9w8-HzGP04USge-et0b3Y4ncU9tussg@mail.gmail.com>
+ <20240916114225.569160063@linuxfoundation.org>
+ <Zuliy6DOi47cD-cZ@tuxmaker.boeblingen.de.ibm.com>
+ <2024091750-upwind-shaking-6fa2@gregkh>
+ <ZumdjDsZoGlVSMDr@li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,87 +44,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYv+OXhNPn87X4O9w8-HzGP04USge-et0b3Y4ncU9tussg@mail.gmail.com>
+In-Reply-To: <ZumdjDsZoGlVSMDr@li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com>
 
-On Tue, Sep 17, 2024 at 04:00:10PM +0530, Naresh Kamboju wrote:
-> On Mon, 16 Sept 2024 at 17:38, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.6.52 release.
-> > There are 91 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.52-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On Tue, Sep 17, 2024 at 05:17:32PM +0200, Alexander Gordeev wrote:
+> On Tue, Sep 17, 2024 at 01:15:10PM +0200, Greg Kroah-Hartman wrote:
+> > > Could you please drop this commit from 6.6-stable?
+> > Why just this one?  What about 6.10.y?  6.11?
 > 
+> Thanks for pointing out!
 > 
-> The s390 builds failed on the Linux stable-rc linux-6.6.y and linux-6.10.y due
-> to following build warnings / errors with gcc-13 and clang-19 with defconfig.
-> 
-> * s390, build
->   - clang-19-allnoconfig
->   - clang-19-defconfig
->   - clang-19-tinyconfig
->   - clang-nightly-allnoconfig
->   - clang-nightly-defconfig
->   - clang-nightly-tinyconfig
->   - gcc-13-allmodconfig
->   - gcc-13-allnoconfig
->   - gcc-13-defconfig
->   - gcc-13-tinyconfig
->   - gcc-8-allnoconfig
->   - gcc-8-defconfig-fe40093d
->   - gcc-8-tinyconfig
-> 
-> 
-> First seen on v6.6.51-92-gfd49ddc1e5f8
->   Good: v6.6.51
->   BAD:  v6.6.51-92-gfd49ddc1e5f8
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> build log:
-> --------
-> arch/s390/kernel/setup.c: In function 'reserve_lowcore':
-> arch/s390/kernel/setup.c:748:31: error: implicit declaration of
-> function 'get_lowcore'; did you mean 'setup_lowcore'?
-> [-Werror=implicit-function-declaration]
->   748 |         void *lowcore_start = get_lowcore();
->       |                               ^~~~~~~~~~~
->       |                               setup_lowcore
-> arch/s390/kernel/setup.c:748:31: warning: initialization of 'void *'
-> from 'int' makes pointer from integer without a cast
-> [-Wint-conversion]
-> arch/s390/kernel/setup.c:752:21: error: '__identity_base' undeclared
-> (first use in this function)
->   752 |         if ((void *)__identity_base < lowcore_end) {
->       |                     ^~~~~~~~~~~~~~~
-> arch/s390/kernel/setup.c:752:21: note: each undeclared identifier is
-> reported only once for each function it appears in
-> In file included from include/linux/bits.h:21,
->                  from arch/s390/include/asm/ptrace.h:10,
->                  from arch/s390/include/asm/lowcore.h:13,
->                  from arch/s390/include/asm/current.h:13,
->                  from include/linux/sched.h:12,
->                  from arch/s390/kernel/setup.c:21:
-> include/linux/minmax.h:31:9: error: first argument to
-> '__builtin_choose_expr' not a constant
->    31 |
-> __builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),
->  \
->       |         ^~~~~~~~~~~~~~~~~~~~~
+> Yes, please drop it from 6.10 as well. There is no relocatable lowcore
+> support in 6.10, which this patch fixes up. And it is already included
+> in 6.11, starting from v6.11-rc5.
 
-Offending commit now removed from 6.6.y and 6.10.y, thanks!
+Great, it turned out to also break the build, so that's a good reason to
+drop it :)
+
+now removed,
 
 greg k-h
