@@ -1,54 +1,54 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C28018A944
-	for <patches@lists.linux.dev>; Wed, 18 Sep 2024 13:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2047B18B480
+	for <patches@lists.linux.dev>; Wed, 18 Sep 2024 13:56:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726667674; cv=none; b=bpiYdMj2Klaeyuhj83rinyVyXz/tdfEqzfCwAEt85m5F7LXk0VryEvjMYkvDzBHRpmPBj8SgazzdCnhG0D9wJvTW4/W4vl3l6W/KO064xCaxv3hWa7IPekQCUpM/uDw1k/hFptkr6FE56PexIsr4CmYk26ftU8d+Wvo2KgU6I/Q=
+	t=1726667816; cv=none; b=FmSvQ0ULXHrSM0YyhrYHYp7wgDSDnxLweM4FbnDTUDuvKIm7QoHKcTFvcrsDdBpC+id8t94GFMOHZvrqFUBs7ETgte0gB1VFEn2PexBic67PB5HEl+9LPL6fNORZsg2Bb593sFl4jMruFxfMpgKYiWiyGhhiMfzJSteqgj2ocjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726667674; c=relaxed/simple;
-	bh=PwjhJ6aL25amCFnR6nPwf/YUl8QTgG+wSy1oaJ2bEvE=;
+	s=arc-20240116; t=1726667816; c=relaxed/simple;
+	bh=Un2CpSQCiHNEr3UbbA5gyZY9xS4xpVWZnm2yAKESHS8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YBUL14wd1+4libOKECG20fZFVTqPqerdUduL7mf293TgNbiZI3wbUwxMQqOSKth6tnHAGHwsz4i1wS796FaPUx5ddqiXPxyNBzdMgB+6UaSMsEf9/eAx/L9DdO083hrZ4Omfbp/MFue7hgLnGVFKqTqjLxVyhTPkpeB5xeNIVPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YLxTiutH; arc=none smtp.client-ip=209.85.222.50
+	 To:Cc:Content-Type; b=e5JkWyQsmPkkSxX83QxplUBvU1typD7S82z258tjAcHP01sOfl5yKET6HW0OsGo/ebHHV+VZ7YFK808TYoSI4bK9HVBR6Yz12tDOgJ517oAFgQloOPQMjsE4Bj/Yq7PNTGUoXgr8PH/5b2EMXZ+/CaWcEGuCYFLQ7VNLWdWLy1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N1APpywV; arc=none smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YLxTiutH"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-846d1ba933eso1466707241.2
-        for <patches@lists.linux.dev>; Wed, 18 Sep 2024 06:54:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N1APpywV"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-846c452898cso466721241.1
+        for <patches@lists.linux.dev>; Wed, 18 Sep 2024 06:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726667670; x=1727272470; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1726667813; x=1727272613; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hIMeCl4bSafLlQW0rWA6MOrP/WItPaBFD6DWuM4YR94=;
-        b=YLxTiutHc2iGjDAXxOuRebh2AaBTKo6EKGtwbpDJh+pK2JHCK/wB8KtZ3YbxTrv7MH
-         5UKoZthw4xEQPcBHUpQu/Tw5Ux8QmjG4ssn3dHdwTWdhqKRf/H9HlJZ1ZeyY+8zV5Gqi
-         YniJm54TUOOGgohSitSU8NEyl7GGj/5mUIfVLxIVKPJBs9Nuf9/luelJBUORg9RCzkKD
-         WHK/DB3NY8gjFfqYirFDZIa1x+zpRRkuaU2U9QsUG8ZftDFBTG8kWPMCF2fD5/wSg6mB
-         Bu8aZH6qKGakAqOpKuIUwya4ULMAcOEAwXAkBxTcGf2z7v61sSfARvv66Wyk67rcQEBt
-         OGhg==
+        bh=Aka3S/nYStz6T+/jwM3rveUTQYGL9iujYXc5pju4yRE=;
+        b=N1APpywVckA3O/k/wG0LylQp5pfqWfsIrIIWF0WlTPGLXc0KuBUH4+PzIXEWPS1IR7
+         0M7rC1NDovomBauVnqc3rIDS/oZNQNZ/hfbgRisiX3Bg6qLDQn6+fhgdCaezj4oUfpo+
+         JiDocWQvrhc/w9prieoH/QCh9To0VbNCldaWt7+ON2fiLCe2KS2nRUu3eedGM3pza0Y6
+         3CuF3EKxpQadLmKz6BfKFnl2CU8IHHL51MltLwvg7k38tbQWbIa0fDgwMBCNJ1nWW0AV
+         yJJkVgpoK9pCIFQmjlQc1Np69WdpilDohfBfZOu/Z0ZSRYIM580yIaVG9R4qPzR0waLy
+         qrKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726667670; x=1727272470;
+        d=1e100.net; s=20230601; t=1726667813; x=1727272613;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hIMeCl4bSafLlQW0rWA6MOrP/WItPaBFD6DWuM4YR94=;
-        b=Jiu0Qfd2ohjLxsTHJFNEr51UMb/LzrAJoORtgLs9F5hnzK9sAdwY4Xb/wWk7m/HuMy
-         bwlM0q6rN0VNtZPE0OZlMkbOf1wn+zplTxiX5aVLbycrVe/TTo7e65OhgLD1K8tMPph7
-         KvqxQlUnrN1aIVlHzlIxK4ALdVBtNJ9M7Ew35s5+SFnxvDD4uHyTO2qQ6QTeGoElkIus
-         es5OcIRctlPuW8G8OOu2bVQpw/kUKXvLcvKn9Dshg5xAvkdJ6S8KJQRoo9feNL/h9jxC
-         mr/dWGnK2bGisjUXCOe0xfec6IJDtAA55/cWea+2dkdOBRCrPUc13Vi21pxlNIivFb7W
-         FaRA==
-X-Forwarded-Encrypted: i=1; AJvYcCV/mFuy4XH0MscnnwmXJFpIN+fe+LDi1QqYjxEHBUwbZwXlyFESgM6913lCTTTAsWu9m7fdGuDj@lists.linux.dev
-X-Gm-Message-State: AOJu0YxExrUwhNpjIcw4p1Rs0mXgheL5lsy++SRumMNYQ6R5bDli/c64
-	VffVThre94xOEMCayexJ6ePsN7+qmqv3IRBbvEKFvWx/SijuCJggDDgH0wbPTFMSAWn0ttad6QN
-	3x3rW93CRhf04/E0Pc6wHU533pMHwN/2voGuvRA==
-X-Google-Smtp-Source: AGHT+IHsRvjoxv7oG344mOEKI4OydT5RUPtI6fUUmhF8HAW4FEQ3U0a5TaC332VC2FIUrLc2R6/n6smMBWiKHopXJqU=
-X-Received: by 2002:a05:6102:3a0a:b0:49b:c414:8a98 with SMTP id
- ada2fe7eead31-49d4158028fmr16213119137.29.1726667669756; Wed, 18 Sep 2024
- 06:54:29 -0700 (PDT)
+        bh=Aka3S/nYStz6T+/jwM3rveUTQYGL9iujYXc5pju4yRE=;
+        b=UTfe49tl4YSHhhNWM1andlLrnddGeh0kGAdL66fXN+pIhSKg5skSN1Nt2mk4QEjKha
+         lbbRU2KN3ocdbXvapuYdNAG/IOIhS63ZgRAvo69HKqBS47wESdcrrGidFe+I+KN1qIEe
+         JXHwOVn7i6g2cQm/FS2aDZOfplPrdX3JG86FqwoGJ+CoUSAInNY6IDhOnRbZN+dPOeaI
+         ijER8ljpxz+rH6YsMS3n48+V+sZx5LNZ8WhD46LMfLLbZSF4T1RKD2YdJnSMU7gyiO/G
+         TEXfCCDzmpvLB7+c84ohnW2b9DaD1bqalENvRiVPRMODab4BhSf7nvw1I/Q71Xi/LAsc
+         D7Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCUlsjvvOdI39zBjG8pH4hxTw8v08ngGh7UPDkQ8rCrKgZ3kpWJuBVWPR7kDkugihKW5M4Hc1N7+@lists.linux.dev
+X-Gm-Message-State: AOJu0YxwBZdqDEpOVJBSsp/KH7ZpHDLNA09ln4aMtb34+i5KAFg7fnNO
+	7pSRXFd+X/nygvQpa2VVbVqhiF5yvAqd4yx0DOX894TWij7/ICcZpzlO3QUCRs1cej1ELagKYR3
+	UvdNNYQ5nOV+spnnzLq+Zw+AeV/WSospRUIjGuw==
+X-Google-Smtp-Source: AGHT+IEI+/lUbcyx/kYS9Uj1r3DkStR72VH5VqonpYpV+wHgje6LrGmf7IuKrlqPxS3/ijH/EpkDypQ8awI9s1gJcps=
+X-Received: by 2002:a05:6102:50a7:b0:49b:fd42:d30b with SMTP id
+ ada2fe7eead31-49c15ab61famr21373699137.14.1726667812824; Wed, 18 Sep 2024
+ 06:56:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,94 +56,59 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20240916114221.021192667@linuxfoundation.org> <CA+G9fYtsjFtddG8i+k-SpV8U6okL0p4zpsTiwGfNH5GUA8dWAA@mail.gmail.com>
- <b0dfa622-f4f7-4f76-9d67-621544cb2212@kernel.org>
-In-Reply-To: <b0dfa622-f4f7-4f76-9d67-621544cb2212@kernel.org>
+ <2024091821-rimless-ajar-5235@gregkh>
+In-Reply-To: <2024091821-rimless-ajar-5235@gregkh>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 18 Sep 2024 19:24:17 +0530
-Message-ID: <CA+G9fYtBHgb5m+yv+0bDH0435BMLnmiEHzXb2QP_TdLn43hwXg@mail.gmail.com>
+Date: Wed, 18 Sep 2024 19:26:40 +0530
+Message-ID: <CA+G9fYv2G2GU__zqTAwAtPwgbkS3dRzeZ0mOW39LuUUE-J4C8w@mail.gmail.com>
 Subject: Re: [PATCH 6.1 00/63] 6.1.111-rc1 review
-To: Georgi Djakov <djakov@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, 
-	Jinjie Ruan <ruanjinjie@huawei.com>, 
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Jinjie Ruan <ruanjinjie@huawei.com>, 
 	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
 	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
 	Dan Carpenter <dan.carpenter@linaro.org>, linux-spi@vger.kernel.org, 
-	Linux PM <linux-pm@vger.kernel.org>
+	Linux PM <linux-pm@vger.kernel.org>, Georgi Djakov <djakov@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 18 Sept 2024 at 17:38, Georgi Djakov <djakov@kernel.org> wrote:
+On Wed, 18 Sept 2024 at 11:49, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> On 17.09.24 17:43, Naresh Kamboju wrote:
+> On Tue, Sep 17, 2024 at 08:13:12PM +0530, Naresh Kamboju wrote:
 > > On Mon, 16 Sept 2024 at 17:29, Greg Kroah-Hartman
 > > <gregkh@linuxfoundation.org> wrote:
-> >>
-> >> This is the start of the stable review cycle for the 6.1.111 release.
-> >> There are 63 patches in this series, all will be posted as a response
-> >> to this one.  If anyone has any issues with these being applied, please
-> >> let me know.
-> >>
-> >> Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
-> >> Anything received after that time might be too late.
-> >>
-> >> The whole patch series can be found in one patch at:
-> >>          https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.111-rc1.gz
-> >> or in the git tree and branch at:
-> >>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> >> and the diffstat can be found below.
-> >>
-> >> thanks,
-> >>
-> >> greg k-h
+> > >
+> > > This is the start of the stable review cycle for the 6.1.111 release.
+> > > There are 63 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Wed, 18 Sep 2024 11:42:05 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.111-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
 > >
 > >
 > > The following kernel warnings have been noticed on a Qualcomm db845c device
 > > running stable-rc  6.1.111-rc1, 6.6.52-rc1 and 6.10.11-rc1 at boot time.
 > >
 > > First seen on 6.1.111-rc1
-> >    Good: v6.1.110
-> >    BAD:  6.1.111-rc1
+> >   Good: v6.1.110
+> >   BAD:  6.1.111-rc1
 > >
->
-> Hi Naresh,
->
-> Do you see this warning on every boot or only sometimes?
-
-Today I have found that the frequency of occurrence is low.
-
-
-> I am not able to
-> reproduce it on my db845c board even with your binaries.
->
-> I see however one geni runtime PM change that very likely triggers this
-> warning, so if you are doing a bisect, maybe try reverting that one first.
-
-Since this an intermittent issue and the bisection did not end up smooth.
-
-FYI,
-stable-rc /linux-6.10.y:
-----------
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.10.y/build/v6.10.10-122-ge9fde6b546b5/testrun/25159698/suite/log-parser-boot/test/check-kernel-exception-warning-cpu-pid-at-driversinterconnectcorec-__icc_enable/details/
-
-stable-rc /linux-6.1.y:
-----------
-- https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.110-64-gdc7da8d6f263/testrun/25159001/suite/log-parser-boot/test/check-kernel-exception-warning-cpu-pid-at-driversinterconnectcorec-__icc_enable/details/
-
-stable-rc /linux-6.6.y:
-----------
-- https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.51-92-gfd49ddc1e5f8/testrun/25161861/suite/log-parser-boot/test/check-kernel-exception-warning-cpu-pid-at-driversinterconnectcorec-__icc_enable/details/
-
-- Naresh
-
->
-> Thanks,
-> Georgi
->
 > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > >
 > > Warning log:
@@ -233,5 +198,24 @@ stable-rc /linux-6.6.y:
 > > [    7.841644] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
 > > [    7.841647] el0t_64_sync (arch/arm64/kernel/entry.S:585)
 > > [    7.841649] ---[ end trace 0000000000000000 ]---
+> >
+> > Warning Log links,
+> > --------
+> >  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.110-64-gdc7da8d6f263/testrun/25159001/suite/log-parser-boot/test/check-kernel-exception-warning-cpu-pid-at-driversinterconnectcorec-__icc_enable/log
+> >  - https://lkft.validation.linaro.org/scheduler/job/7868463#L4624
 >
+> This is odd, any chance you can use 'git bisect' to track down the
+> offending change?  There aren't any interconnect patches in here that I
+> can see that would cause this, but I might just be not recognizing
+> something.
+
+The reported kernel warning is an intermittent problem on the
+6.10, 6.6 and 6.1 kernel branches.
+
+Since it is an intermittent kernel warning, it is hard to do git bisect.
+
+- Naresh
+
+> thanks,
 >
+> greg k-h
