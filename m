@@ -1,161 +1,102 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203601B85DA
-	for <patches@lists.linux.dev>; Tue, 24 Sep 2024 02:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CE117966F
+	for <patches@lists.linux.dev>; Wed, 25 Sep 2024 13:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727145192; cv=none; b=Me2i+dyGlgCBzDOHJ8c1ZNEt0XhyyC57T3FYDELD95asjYFjh5Z6kJasLT0XeIR5dkZNFsRubd6nlU2TbGq+VKyWZxcBlciBWjV95MM7UY7cMg+FnIl3bEvb80vOYRJ4fiy2L7R+NnNzrnGfp+gs4splxNLfrqc2cphpeXbDJDo=
+	t=1727269598; cv=none; b=QcLXzNcK7cDyXwbXiXLLavAViLnGo+dfnzrQUd90fbO/VBOYLAdv5r5ReAwdaXNg5nTvyxckYdEZ6W/tx3eURieOURwkJIZ6Wa+bBzclMG3jYjeWYSqda+sPlRgFcMEUm3iRi2hfxH80B5tROwnzTBBbqM16EyjTIY5T+69JMcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727145192; c=relaxed/simple;
-	bh=fSWKpyrDtbfGlcyDOCQAati8/wwNmKaz4bBmsWzvIl4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t7iW+2zDKXkYGlZhxpAzuaF7L7qSBKBNMQMCBn4e5NCcYE2L7jRy1QfCfTvsbl6WoAJn+dO6SX40vq3y6BQtv5J+RXL+jBlGQ1O+Aq7+o3fNkTAKZgniMRHEg6dSJaHXPXBE45wphgCzOPaEYzA6+HHGI+Vg5x8pI9/V3viBR7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HC/i5l95; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	s=arc-20240116; t=1727269598; c=relaxed/simple;
+	bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ej1VdUCMXVvaMoA491oHE5pLssP9zosTK/DTzMCz2/7FvHN4D9ep2gfe+tDEx25yGK1RyYJeGyLRY3SbJbJvDLWknR/MZlunCOeqCro5QhNHAlLJaP0PuheqdrxO9npP5u4DsKG70kL99cMBRAuSkKaxGcLKOilECqgwp709/vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FTwUsKPN; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HC/i5l95"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7193010d386so4056257b3a.1
-        for <patches@lists.linux.dev>; Mon, 23 Sep 2024 19:33:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTwUsKPN"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2e0752be2d1so93940a91.1
+        for <patches@lists.linux.dev>; Wed, 25 Sep 2024 06:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727145190; x=1727749990; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9sz24t9DaFcJ/J9khgquQwJaacywf5cMp9UGIeKwXsA=;
-        b=HC/i5l95g21wqqXQM+ISda+DVuAqRJofbU/k29Y8sxyXSib8oY082LVbQN0zkTH788
-         eVrprfPVIFx2BvqOGMUkUlzgitlEhDyH0jMG8xPbDlr0jUtYvSXqWg3klRo5HbqZQ2Rf
-         NE+cKozpKQssD2GKy6N9IKu+2oRJg/Q/wDZIfDmWiSn5KL7BNtjk6E+vd6Rh5o+7/3ac
-         OPNPOWkt4kAE0vhA9rWbzXVGO+HNPXiFX3D2f95Q6ZLHX9wsCGvDNK9UjMGlki9ge4iv
-         iXcaaBh/ZaTicT82cI+XVmEwkuXskwTgjAFDdu2kFcZjPwwzg+356ixB1qj1Ql7/+f5z
-         yvbw==
+        d=gmail.com; s=20230601; t=1727269596; x=1727874396; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
+        b=FTwUsKPNQEScq5zAMLX7BNixboNOJDcfMJ7UKq/n2GJ9Nc25otLVpyJZf16TVDrE5p
+         f4IGxllBKIw5dW7J4edKiMK7sJip8Hr9S7vK6IQxqJm9yKst/Q+qGuFELGZssSbc812Y
+         cHVPC18iedt8XHWhvue32SCyizxY1LiopD4Hz6/FOoXYSOJ0oQTeQktl5gWStWY58xzz
+         DN7tF8r7BvDy1VF+xR7wKfFq7SVPqxsJlUk8vx6ZxKbM38gkWiCZ/ENxls9yR8RGgcQk
+         VHZbPWwsXCKGFuCfrtb1A7e8tPHcHKfAeTkqTBNYdtiqdZs6zyrMTMRoqJgInkt9l1UM
+         bjKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727145190; x=1727749990;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1727269596; x=1727874396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9sz24t9DaFcJ/J9khgquQwJaacywf5cMp9UGIeKwXsA=;
-        b=lDxQj2y+ggPHvmsMoKntJUkt1zBh+4SmHL/SCuPdBxjN8uU/Cg93y3R+IIG6lrC3nC
-         yLR7KgXu8FMDMNX7hkomzuSvxpkzNZKzOn+eDFZlOTp8cT5ll5ndJaMOM4THmC1pUihh
-         W9kVBtbQP6NA2l8S6Bs3Ve2KbTNpB4mzJ+qKIkPNv6NQ6eJ1Jpyqu0ZoLKuZcSpePjhN
-         ZOdeS1w1GBpyfguujoPiKoEGfIbStZ6e35a1X+VxeQegX5qJ7S1Wp+1hb8TM23d6hGtt
-         9TD05uHJ1vPD6tZIwIhBtCGNTcGScSj/ITTOrK963VEf0yULpaAVZZOho2NPi7Lul6pX
-         2qLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUGxl6krVu781+1fSX2WgxTWLsZlCJPjbpuBd973W7dSAsU65Pnjwe5cL6gHrD3OKr+/KOc2tYO@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2dnVi2wP/RgsW7CsS+KYMvAxgdzMuOvb4F+gMBGDllWpCRtDG
-	b3jsu3X4zgA1D4z0huOI8VsPTUlo00b3EIWD0e454ZMQbAUsbWDK
-X-Google-Smtp-Source: AGHT+IFff0oxYvwZTNJKVB9E1Su/vyAp8+fLbEvC4GJfDf6oLpmBS0eQHCHQefYBbC/olvp27zHs1A==
-X-Received: by 2002:a05:6a00:18a8:b0:717:87d6:fdd2 with SMTP id d2e1a72fcca58-7199c9392a8mr21643938b3a.4.1727145190308;
-        Mon, 23 Sep 2024 19:33:10 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e6b7c3f161sm214194a12.27.2024.09.23.19.33.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2024 19:33:09 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 23 Sep 2024 19:33:08 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Daniel Latypov <dlatypov@google.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: Re: [PATCH v8 5/8] platform: Add test managed platform_device/driver
- APIs
-Message-ID: <1ccfca2b-5f17-4f1e-92ae-1426c6d2352f@roeck-us.net>
-References: <20240718210513.3801024-1-sboyd@kernel.org>
- <20240718210513.3801024-6-sboyd@kernel.org>
+        bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
+        b=Sno1ZaWL8adAfD6Eyh9pp1uwPAYEKRLLRNY6ht8VxccvlomY89oH2PXmWql9MOTCFL
+         iyGwbLGTycz2Xc4I9BK8agRd0Vd34WE7VW1GWdOV6t59Y1j+Rq87t1vTkOXl1qwc15Rl
+         /FsSQ/ycc+b5Jhg58t7pEs1stYmNqAvWbQzilZtWPk13ivpIv61QdZIaF6Xlqj9FNYjz
+         i2dBgrYVKqZCQCJRLvobiLVnUfIvVlAXphfrnU8HqDjNwI6U9LKCNdz+Y+9AxBRVGcyQ
+         /lfTVJL8KLu0GqJmL1/mssJfvO+7vZ5Opn0M7uCf6N6nbqbtlnC86HbiwzhbE+qD+BQG
+         /kTA==
+X-Forwarded-Encrypted: i=1; AJvYcCWM4vN2srFSgTVnILydp6mrpyNLgkGw7b98KWrwXfn75auL9lDgcqlaz7WLGIwieLFLGWyUgqJE@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTTMYiXwWdCFjh/8cVNsrnb0Qwz/+l0B04JTqZtfCoXSzpFQ9e
+	g3B6FE18qc9AmKuX5SuTj3UTk4HsHMPI2IwUIMrPcC58BU38CJkMqrNRlrEDI80yzkDKRjb+gNn
+	oRlbeSH/nuU/KP3ndiwcVpYpSyjQ=
+X-Google-Smtp-Source: AGHT+IF7dd2wxaKwlXRqdkEhcjMFw4qV18UITJsIdeRTYuV2STRNWFgGJI/WJ2qnF1mkzpyinwhH0XCUdaEJWAefdRQ=
+X-Received: by 2002:a17:90b:30d7:b0:2e0:8c23:fe5a with SMTP id
+ 98e67ed59e1d1-2e08c240880mr232340a91.3.1727269596173; Wed, 25 Sep 2024
+ 06:06:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240718210513.3801024-6-sboyd@kernel.org>
+References: <20240816181545.45789-1-ojeda@kernel.org>
+In-Reply-To: <20240816181545.45789-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 25 Sep 2024 15:06:24 +0200
+Message-ID: <CANiq72=y3uy4ehCY-UHgywO8T_EOrh5da88sFt2Xg__E1VAHkw@mail.gmail.com>
+Subject: Re: [RFC PATCH] docs: rust: quick-start: add Ubuntu
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Zixing Liu <zixing.liu@canonical.com>, William Grant <wgrant@ubuntu.com>, 
+	Kees Cook <kees@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 18, 2024 at 02:05:04PM -0700, Stephen Boyd wrote:
-> Introduce KUnit resource wrappers around platform_driver_register(),
-> platform_device_alloc(), and platform_device_add() so that test authors
-> can register platform drivers/devices from their tests and have the
-> drivers/devices automatically be unregistered when the test is done.
-> 
-> This makes test setup code simpler when a platform driver or platform
-> device is needed. Add a few test cases at the same time to make sure the
-> APIs work as intended.
-> 
-> Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> Reviewed-by: David Gow <davidgow@google.com>
-> Cc: Rae Moar <rmoar@google.com>
-> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+On Fri, Aug 16, 2024 at 8:16=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> This is a potential patch for the future -- Ubuntu Oracular (future
+> release) works today, but the Rust versioned releases are not backported
+> (yet?). If Ubuntu ends up deciding to backport them, which would be
+> amazing, or at least when they start to appear in an actual release,
+> then we can apply this. Thanks William & Zixing!
 
-This patch adds another intentional warning traceback seen whenever
-CONFIG_KUNIT_TEST is enabled.
+An update on this: Ubuntu now provides the versioned `rustc-*`
+packages in older LTSs (the ones with standard support), which is
+great!
 
-sysfs: cannot create duplicate filename '/devices/platform/kunit-platform-add-2'
-CPU: 0 UID: 0 PID: 421 Comm: kunit_try_catch Tainted: G                 N 6.11.0-mac-09967-g2ece55614b92 #1
-Tainted: [N]=TEST
-Stack from 015a9de0:
-        015a9de0 006168ac 006168ac 0158c000 026e8ea0 00c4a6b8 004bbe32 006168ac
-        00166cd4 005fa210 0158c000 026e8ea0 ffffffef 00c4a6b8 0067a18c 00166dc0
-        00c4a6b8 026e8ea0 01a6ac0e 006cb3c8 01a6ac0a 006cb3c8 00000000 00000000
-        0049b6de 01a6ac0a 00000000 01a6ac0a 00000000 006cb3c8 01a6ac0a 006cb3c8
-        01a6ac0a 015a9e78 0049b8b4 01a6ac0a 01a6ac00 01a6ac0a 0001bbfa 00321592
-        01a6ac0a 006cb3c8 00000000 01a6ac00 00000000 0067a18c 0002d21c 00000000
-Call Trace: [<004bbe32>] dump_stack+0xc/0x10
- [<00166cd4>] sysfs_warn_dup+0x52/0x64
- [<00166dc0>] sysfs_create_dir_ns+0x9a/0xac
- [<0049b6de>] kobject_add_internal+0xdc/0x238
- [<0049b8b4>] kobject_add+0x7a/0x7e
- [<0001bbfa>] insert_resource+0x0/0x1a
- [<00321592>] device_add+0x104/0x588
- [<0002d21c>] list_del_init+0x0/0x2a
- [<0001bbfa>] insert_resource+0x0/0x1a
- [<00326358>] platform_device_add+0x58/0x180
- [<00326378>] platform_device_add+0x78/0x180
- [<00273234>] IS_ERR_OR_NULL+0x0/0x1c
- [<00270c58>] kunit_platform_device_add+0x14/0x118
- [<0002d21c>] list_del_init+0x0/0x2a
- [<00270c44>] kunit_platform_device_add+0x0/0x118
- [<00273234>] IS_ERR_OR_NULL+0x0/0x1c
- [<002733de>] kunit_platform_device_add_twice_fails_test+0x118/0x170
- [<00050e44>] ktime_get_ts64+0x0/0xd8
- [<00050e44>] ktime_get_ts64+0x0/0xd8
- [<004b04d0>] memset+0x0/0x8c
- [<0026cc3e>] kunit_try_run_case+0xa0/0x176
- [<0002d21c>] list_del_init+0x0/0x2a
- [<0002cfaa>] kthread_exit+0x0/0x14
- [<0026e3d0>] kunit_generic_run_threadfn_adapter+0x0/0x2a
- [<0026e3e6>] kunit_generic_run_threadfn_adapter+0x16/0x2a
- [<0002d2d6>] kthread+0x90/0x9a
- [<0002d246>] kthread+0x0/0x9a
- [<0000252c>] ret_from_kernel_thread+0xc/0x14
-kobject: kobject_add_internal failed for kunit-platform-add-2 with -EEXIST, don't try to register things with the same name in the same directory.
-    # kunit_platform_device_add_twice_fails_test: pass:1 fail:0 skip:0 total:1
-    ok 3 kunit_platform_device_add_twice_fails_test
-    # kunit_platform_device_add_cleans_up: pass:1 fail:0 skip:0 total:1
-    ok 4 kunit_platform_device_add_cleans_up
-# kunit_platform_device: pass:4 fail:0 skip:0 total:4
+I can confirm I can build the latest kernel in 20.04 LTS (using a
+newer LLVM), 22.04 LTS, 24.04 LTS and 24.10.
 
-I have said several times that my test system can and will not handle
-intentional warning backtraces. I strongly believe that it is wrong to
-expect that testbed maintainers have to keep track of intentional
-backtraces. That means that I now also disabled CONFIG_KUNIT_TEST
-in my testbed.
+The `bindgen-*` versioned packages are not backported (yet?) to the
+older LTSs, so users need to build `bindgen` manually in 20.04 LTS and
+22.04 LTS. For 24.04 LTS and 24.10, it works with the package. I will
+add a sentence about that and send the non-RFC patch.
 
-Guenter
+Link: https://packages.ubuntu.com/search?keywords=3Drustc-1
+Link: https://packages.ubuntu.com/search?keywords=3Dbindgen-0
+
+Cheers,
+Miguel
