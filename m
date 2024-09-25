@@ -1,102 +1,114 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CE117966F
-	for <patches@lists.linux.dev>; Wed, 25 Sep 2024 13:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE171922C6;
+	Wed, 25 Sep 2024 14:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727269598; cv=none; b=QcLXzNcK7cDyXwbXiXLLavAViLnGo+dfnzrQUd90fbO/VBOYLAdv5r5ReAwdaXNg5nTvyxckYdEZ6W/tx3eURieOURwkJIZ6Wa+bBzclMG3jYjeWYSqda+sPlRgFcMEUm3iRi2hfxH80B5tROwnzTBBbqM16EyjTIY5T+69JMcI=
+	t=1727273215; cv=none; b=kCasAGL+iedcT+agORyTfMaG3/xu305QlgUTBlVlh30o7NigL+Y70TZJuX27YAd6slbowN8q5CO7YXCEjA62hOGBCQyul2W8FPdHcxlqTh///gMbBStWXGEG2B9Ju/1OkFmtSwcHsEFVXHPDhYhQOM964jIzS8GDqkjqyNYEJUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727269598; c=relaxed/simple;
-	bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ej1VdUCMXVvaMoA491oHE5pLssP9zosTK/DTzMCz2/7FvHN4D9ep2gfe+tDEx25yGK1RyYJeGyLRY3SbJbJvDLWknR/MZlunCOeqCro5QhNHAlLJaP0PuheqdrxO9npP5u4DsKG70kL99cMBRAuSkKaxGcLKOilECqgwp709/vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FTwUsKPN; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727273215; c=relaxed/simple;
+	bh=3vvdp1yQQNf/xwOS6Vizv6KAU4OM+82E1VYtghgaJJ0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=p1u0x4RKqv0FKjh0C7g2478sn/ooiPkiL1qS2MnaWKsue1XGeW7cvLRSNMTGPNA/TPf5tcq/Q4oKCGcJ0yvq6gF7BdhiMIS+ar8SvY9CMqCiDf9WJUEJ0Perw4Go78hXBesTXqfcgZId+ZFKIrYPwmxn3pc8Sug14x+srXYmW/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SdCPP5vw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTwUsKPN"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2e0752be2d1so93940a91.1
-        for <patches@lists.linux.dev>; Wed, 25 Sep 2024 06:06:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727269596; x=1727874396; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
-        b=FTwUsKPNQEScq5zAMLX7BNixboNOJDcfMJ7UKq/n2GJ9Nc25otLVpyJZf16TVDrE5p
-         f4IGxllBKIw5dW7J4edKiMK7sJip8Hr9S7vK6IQxqJm9yKst/Q+qGuFELGZssSbc812Y
-         cHVPC18iedt8XHWhvue32SCyizxY1LiopD4Hz6/FOoXYSOJ0oQTeQktl5gWStWY58xzz
-         DN7tF8r7BvDy1VF+xR7wKfFq7SVPqxsJlUk8vx6ZxKbM38gkWiCZ/ENxls9yR8RGgcQk
-         VHZbPWwsXCKGFuCfrtb1A7e8tPHcHKfAeTkqTBNYdtiqdZs6zyrMTMRoqJgInkt9l1UM
-         bjKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727269596; x=1727874396;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iB6hdwxjFFfqGkel1dMY8vFpPFOXTTJKCe8eW4+Bi5c=;
-        b=Sno1ZaWL8adAfD6Eyh9pp1uwPAYEKRLLRNY6ht8VxccvlomY89oH2PXmWql9MOTCFL
-         iyGwbLGTycz2Xc4I9BK8agRd0Vd34WE7VW1GWdOV6t59Y1j+Rq87t1vTkOXl1qwc15Rl
-         /FsSQ/ycc+b5Jhg58t7pEs1stYmNqAvWbQzilZtWPk13ivpIv61QdZIaF6Xlqj9FNYjz
-         i2dBgrYVKqZCQCJRLvobiLVnUfIvVlAXphfrnU8HqDjNwI6U9LKCNdz+Y+9AxBRVGcyQ
-         /lfTVJL8KLu0GqJmL1/mssJfvO+7vZ5Opn0M7uCf6N6nbqbtlnC86HbiwzhbE+qD+BQG
-         /kTA==
-X-Forwarded-Encrypted: i=1; AJvYcCWM4vN2srFSgTVnILydp6mrpyNLgkGw7b98KWrwXfn75auL9lDgcqlaz7WLGIwieLFLGWyUgqJE@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTTMYiXwWdCFjh/8cVNsrnb0Qwz/+l0B04JTqZtfCoXSzpFQ9e
-	g3B6FE18qc9AmKuX5SuTj3UTk4HsHMPI2IwUIMrPcC58BU38CJkMqrNRlrEDI80yzkDKRjb+gNn
-	oRlbeSH/nuU/KP3ndiwcVpYpSyjQ=
-X-Google-Smtp-Source: AGHT+IF7dd2wxaKwlXRqdkEhcjMFw4qV18UITJsIdeRTYuV2STRNWFgGJI/WJ2qnF1mkzpyinwhH0XCUdaEJWAefdRQ=
-X-Received: by 2002:a17:90b:30d7:b0:2e0:8c23:fe5a with SMTP id
- 98e67ed59e1d1-2e08c240880mr232340a91.3.1727269596173; Wed, 25 Sep 2024
- 06:06:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SdCPP5vw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82DBC4CEC3;
+	Wed, 25 Sep 2024 14:06:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727273215;
+	bh=3vvdp1yQQNf/xwOS6Vizv6KAU4OM+82E1VYtghgaJJ0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=SdCPP5vw76qXysR37EwC5f0TZptfGY+fbumb14ld3aoPEJwrUgxjrz5CSUAjddzO+
+	 0u56l9TARvh40PdmXSoeeEyD2wZ59LXX6MaD1K7XFhbs5HMFYHaxhazlWcqf4WH8/k
+	 EMA1RVmYy7DbIagUx/IAlFRGZYVWHUwYOosukpvRAePJV2S4sFGfJSZLbIA/QZ+Cxf
+	 RRyKUUuT+W2l7Yek4xVSux02HACPjdmma47VlvY3ygIOt5dnIS/A2v9b34mprWsm/u
+	 6JutUtZrDepuUkal0ZHzLRS1OzAtW1bVthFfF6mfNM5v/OIUwjhQmwSlQDHFssuA98
+	 w8KRjn+OidfpQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Zixing Liu <zixing.liu@canonical.com>,
+	William Grant <wgrant@ubuntu.com>,
+	Kees Cook <kees@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] docs: rust: quick-start: add Ubuntu
+Date: Wed, 25 Sep 2024 16:06:00 +0200
+Message-ID: <20240925140600.275429-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240816181545.45789-1-ojeda@kernel.org>
-In-Reply-To: <20240816181545.45789-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 25 Sep 2024 15:06:24 +0200
-Message-ID: <CANiq72=y3uy4ehCY-UHgywO8T_EOrh5da88sFt2Xg__E1VAHkw@mail.gmail.com>
-Subject: Re: [RFC PATCH] docs: rust: quick-start: add Ubuntu
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Zixing Liu <zixing.liu@canonical.com>, William Grant <wgrant@ubuntu.com>, 
-	Kees Cook <kees@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 16, 2024 at 8:16=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> This is a potential patch for the future -- Ubuntu Oracular (future
-> release) works today, but the Rust versioned releases are not backported
-> (yet?). If Ubuntu ends up deciding to backport them, which would be
-> amazing, or at least when they start to appear in an actual release,
-> then we can apply this. Thanks William & Zixing!
+Ubuntu has changed their maintenance model for Rust toolchains and is
+now providing recent Rust releases in their releases, including both
+LTS and non-LTS (interim) releases.
 
-An update on this: Ubuntu now provides the versioned `rustc-*`
-packages in older LTSs (the ones with standard support), which is
-great!
+Therefore, add instructions to the Quick Start guide for Ubuntu, like
+it is done for the other distributions.
+
+Link: https://packages.ubuntu.com/search?keywords=rustc-1
+Link: https://packages.ubuntu.com/search?keywords=bindgen-0
+Cc: Zixing Liu <zixing.liu@canonical.com>
+Cc: William Grant <wgrant@ubuntu.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+RFC: https://lore.kernel.org/rust-for-linux/20240816181545.45789-1-ojeda@kernel.org/
+
+Compared to the RFC, Ubuntu now provides the versioned `rustc-*`
+packages in older LTSs (the ones with standard support), which is great!
 
 I can confirm I can build the latest kernel in 20.04 LTS (using a
 newer LLVM), 22.04 LTS, 24.04 LTS and 24.10.
 
 The `bindgen-*` versioned packages are not backported (yet?) to the
-older LTSs, so users need to build `bindgen` manually in 20.04 LTS and
-22.04 LTS. For 24.04 LTS and 24.10, it works with the package. I will
-add a sentence about that and send the non-RFC patch.
+older LTSs, so I added a note about that compared to the RFC patch.
 
-Link: https://packages.ubuntu.com/search?keywords=3Drustc-1
-Link: https://packages.ubuntu.com/search?keywords=3Dbindgen-0
+ Documentation/rust/quick-start.rst | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Cheers,
-Miguel
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index ed5af2b5339a..393b3e2f2a05 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -87,6 +87,23 @@ they should generally work out of the box, e.g.::
+ 	zypper install rust rust1.79-src rust-bindgen clang
+
+
++Ubuntu
++******
++
++Ubuntu LTS and non-LTS (interim) releases provide recent Rust releases and thus
++they should generally work out of the box, e.g.::
++
++	apt install rustc-1.80 rust-1.80-src bindgen-0.65 rustfmt-1.80 rust-1.80-clippy
++
++``RUST_LIB_SRC`` needs to be set when using the versioned packages, e.g.::
++
++	RUST_LIB_SRC=/usr/src/rustc-$(rustc-1.80 --version | cut -d' ' -f2)/library
++
++In addition, ``bindgen-0.65`` is available in newer releases (24.04 LTS and
++24.10), but it may not be available in older ones (20.04 LTS and 22.04 LTS),
++thus ``bindgen`` may need to be built manually (please see below).
++
++
+ Requirements: Building
+ ----------------------
+
+
+base-commit: a2f11547052001bd448ccec81dd1e68409078fbb
+--
+2.46.2
