@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79718C009;
-	Fri, 27 Sep 2024 12:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365C218C010;
+	Fri, 27 Sep 2024 12:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439989; cv=none; b=NKG3UZZO/zGSFfqnsFJTlg0DQKZdl1QUejCaG3jBkECyiNd0IcuqyasSGpMW5nR0XdpqL4LbfHHfuIi96AkW8PNYWN6DmMjEl+IcZGOcdP3oL4tL0ZPwXc9SSpTn6JN0wCqY5m2jb5QbBKBwLWX8t/6q/VezDuKG9b9TR6YUGbk=
+	t=1727439992; cv=none; b=lKBUQXVxFc0sFivsxYJj0aPUA6fOgK5rqgJ37wz4iVqTY4xbRAPC2G7zhoCc+8JLEv7nOfVtrPTtg7TKyD2NcdOj7yygaygXixqV3SRvGJRNr6yLHbAesJOvUlhg+u3nltjRmromQh3wySBwg/Q5Jfso8YVpiLUpihC77GpSzak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439989; c=relaxed/simple;
-	bh=7gGFpwwwQuGc/IOlQ5dGCVr8v6C/pkcTBLLeolsTda8=;
+	s=arc-20240116; t=1727439992; c=relaxed/simple;
+	bh=H8vgCAY3ZG1QSy85W6464KrXg0Mefee9w0hBP3vb0OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JftGAsTSKG5N/djjnmT4RT0FejYUa7TX8InI+UMCGUCFZBXYbc0YrT+mhq3yDBhxHBnrJ5WN6rhrmclfTJ0GKpiYG/yr3rOzZ4z3+Pa10wvRJn4YoVpEqw4iyOXIxajYFXBnKtNhw1RgzmTZODuz/twetwh72hR1OHG1UggjuNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3gp/v+h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmAx17OJZ9gxcnkyHAs8ZksLdflYIttas533UXcP8NlX1uAEH3186uGY2K40dHILk/3BTmrq+O3s8ArUd4Kr8FjPTy9Jvazcy9qDLrcJdyS1XnZVRkTMbEF+/D/F4VVS78RnaO8D7rPf2h+zZO0yXkqUu0xvpEB7jE7bSRtheWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG7mrr8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3gp/v+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCDFC4CEC4;
-	Fri, 27 Sep 2024 12:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG7mrr8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4811C4CEC4;
+	Fri, 27 Sep 2024 12:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439989;
-	bh=7gGFpwwwQuGc/IOlQ5dGCVr8v6C/pkcTBLLeolsTda8=;
+	s=korg; t=1727439992;
+	bh=H8vgCAY3ZG1QSy85W6464KrXg0Mefee9w0hBP3vb0OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O3gp/v+hfweEFaUaZx4Ehd/TsTL+MhdBFzaPLqBo9dbBVO0OKB8UKDjVYQIBBRiPq
-	 46BH9vuabKy6Fuo/sZnDbJOoCnUZl9zw4ba7Ys8epb1JSFM9FF0O9Boc1YTSf+I0ua
-	 7bwAa/WsmjnTdL9MGjY7RuApoKy/cWIfXBbv3NBQ=
+	b=QG7mrr8KPfmKXncz5mcmve/1TgSQtmyIx4LBOFNmnr5pJHY9I8jXxsx0Caadezyzf
+	 co65bwnuyoQdutpXorN7Lq9CQwdoTKmLUpmD1EeaV5jfVHsd6wT3WxodzNM/QXhBZT
+	 n1rEracG+nMVL8rmOhxLPtVkhNirDdK8ZkY+HEGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 48/54] gpiolib: cdev: Ignore reconfiguration without direction
-Date: Fri, 27 Sep 2024 14:23:40 +0200
-Message-ID: <20240927121721.737636555@linuxfoundation.org>
+	Robert Beckett <bob.beckett@collabora.com>,
+	Keith Busch <kbusch@kernel.org>,
+	"Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
+Subject: [PATCH 6.6 49/54] nvme-pci: qdepth 1 quirk
+Date: Fri, 27 Sep 2024 14:23:41 +0200
+Message-ID: <20240927121721.777083304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -50,68 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit b440396387418fe2feaacd41ca16080e7a8bc9ad upstream.
+commit 83bdfcbdbe5d901c5fa432decf12e1725a840a56 upstream.
 
-linereq_set_config() behaves badly when direction is not set.
-The configuration validation is borrowed from linereq_create(), where,
-to verify the intent of the user, the direction must be set to in order to
-effect a change to the electrical configuration of a line. But, when
-applied to reconfiguration, that validation does not allow for the unset
-direction case, making it possible to clear flags set previously without
-specifying the line direction.
+Another device has been reported to be unreliable if we have more than
+one outstanding command. In this new case, data corruption may occur.
+Since we have two devices now needing this quirky behavior, make a
+generic quirk flag.
 
-Adding to the inconsistency, those changes are not immediately applied by
-linereq_set_config(), but will take effect when the line value is next get
-or set.
+The same Apple quirk is clearly not "temporary", so update the comment
+while moving it.
 
-For example, by requesting a configuration with no flags set, an output
-line with GPIO_V2_LINE_FLAG_ACTIVE_LOW and GPIO_V2_LINE_FLAG_OPEN_DRAIN
-set could have those flags cleared, inverting the sense of the line and
-changing the line drive to push-pull on the next line value set.
-
-Skip the reconfiguration of lines for which the direction is not set, and
-only reconfigure the lines for which direction is set.
-
-Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Link: https://lore.kernel.org/r/20240626052925.174272-3-warthog618@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/linux-nvme/191d810a4e3.fcc6066c765804.973611676137075390@collabora.com/
+Reported-by: Robert Beckett <bob.beckett@collabora.com>
+Reviewed-by: Christoph Hellwig hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: "Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/nvme/host/nvme.h |    5 +++++
+ drivers/nvme/host/pci.c  |   18 +++++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1565,12 +1565,14 @@ static long linereq_set_config_unlocked(
- 		line = &lr->lines[i];
- 		desc = lr->lines[i].desc;
- 		flags = gpio_v2_line_config_flags(lc, i);
--		gpio_v2_line_config_flags_to_desc_flags(flags, &desc->flags);
--		edflags = flags & GPIO_V2_LINE_EDGE_DETECTOR_FLAGS;
- 		/*
--		 * Lines have to be requested explicitly for input
--		 * or output, else the line will be treated "as is".
-+		 * Lines not explicitly reconfigured as input or output
-+		 * are left unchanged.
- 		 */
-+		if (!(flags & GPIO_V2_LINE_DIRECTION_FLAGS))
-+			continue;
-+		gpio_v2_line_config_flags_to_desc_flags(flags, &desc->flags);
-+		edflags = flags & GPIO_V2_LINE_EDGE_DETECTOR_FLAGS;
- 		if (flags & GPIO_V2_LINE_FLAG_OUTPUT) {
- 			int val = gpio_v2_line_config_output_value(lc, i);
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -89,6 +89,11 @@ enum nvme_quirks {
+ 	NVME_QUIRK_NO_DEEPEST_PS		= (1 << 5),
  
-@@ -1578,7 +1580,7 @@ static long linereq_set_config_unlocked(
- 			ret = gpiod_direction_output(desc, val);
- 			if (ret)
- 				return ret;
--		} else if (flags & GPIO_V2_LINE_FLAG_INPUT) {
-+		} else {
- 			ret = gpiod_direction_input(desc);
- 			if (ret)
- 				return ret;
+ 	/*
++	 *  Problems seen with concurrent commands
++	 */
++	NVME_QUIRK_QDEPTH_ONE			= (1 << 6),
++
++	/*
+ 	 * Set MEDIUM priority on SQ creation
+ 	 */
+ 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2526,15 +2526,8 @@ static int nvme_pci_enable(struct nvme_d
+ 	else
+ 		dev->io_sqes = NVME_NVM_IOSQES;
+ 
+-	/*
+-	 * Temporary fix for the Apple controller found in the MacBook8,1 and
+-	 * some MacBook7,1 to avoid controller resets and data loss.
+-	 */
+-	if (pdev->vendor == PCI_VENDOR_ID_APPLE && pdev->device == 0x2001) {
++	if (dev->ctrl.quirks & NVME_QUIRK_QDEPTH_ONE) {
+ 		dev->q_depth = 2;
+-		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
+-			"set queue depth=%u to work around controller resets\n",
+-			dev->q_depth);
+ 	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
+ 		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
+ 		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
+@@ -3399,6 +3392,8 @@ static const struct pci_device_id nvme_i
+ 				NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
++		.driver_data = NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
+@@ -3531,7 +3526,12 @@ static const struct pci_device_id nvme_i
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0xcd02),
+ 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
+-		.driver_data = NVME_QUIRK_SINGLE_VECTOR },
++		/*
++		 * Fix for the Apple controller found in the MacBook8,1 and
++		 * some MacBook7,1 to avoid controller resets and data loss.
++		 */
++		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
++				NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
+ 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
 
 
