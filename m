@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A47618453A;
-	Fri, 27 Sep 2024 12:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19C218BC23;
+	Fri, 27 Sep 2024 12:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440323; cv=none; b=q9h5Eblo53YKmWSjQh4MHpvay03wAGP+PxRroOmBjhGu8T3CJIbPG/SN6vZrh+ivE5fdInUzmdVFaclwRLYsb4qXGvmASKxPb/hBE21A86DNTa555HEugPC8dx0O/7fUDzGJqCiUxhHUwRpPY/fpRAx2EArudDIXYagrBoKy3g8=
+	t=1727440325; cv=none; b=gi08l2ScY4zD764hoiPVJijNf3uaJrEQK1Hx0uLxjoKQR8ocW20J3trLMVkozablvNYJbpGvP2wRDo88s/WWhCgaWAjH1Ldr4uBVqO3MC57lR43TCl8kQRUgQ1v7SDmEjjX1m8Im0sLx33VSgPiwQswSTthYSSH8S8brhFetItM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440323; c=relaxed/simple;
-	bh=rP9uf2O6Nc/RMdQwQkbhYWpBF3GjpSgaovFr3IHjS3s=;
+	s=arc-20240116; t=1727440325; c=relaxed/simple;
+	bh=KvIbccWkkUwE0BR2MT9dd5/83USdDIdMkeULt30kLTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iT9kyNDMSp5EEs95mcuuOIyNeJ4EJP2yqk0fwr1jrlvLOaDAOD6QimmsrRvUomKF1aWCUqhhSGYB8bAvyrJCs0yX4mlVE5Y4Cw8kTokG40n0LlQQqDgUduqK+Ht1ZyKkxSGU6HYfpEu7bENq9fB29NjTDJ8XwEUkH4b/V+ySUCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3YLiWVr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLFLpjImpYOFO/3WszyLpNa2EzZYgHcHLfhPZl/paRj5See4JiFi8mj1psY69JIjcfaoDz0/Ka6ZFDk6FIQ0ZYJw7UqfIZYYNabDgSE0uh0ZLOWM8If8YiXpgcHQnkmX4miaaDd5Gsmm4Rcmz30UmH5eSmGImbTDyLbKaxRqs9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeJHHPm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3YLiWVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A662C4CECD;
-	Fri, 27 Sep 2024 12:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeJHHPm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C479C4CEC4;
+	Fri, 27 Sep 2024 12:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440323;
-	bh=rP9uf2O6Nc/RMdQwQkbhYWpBF3GjpSgaovFr3IHjS3s=;
+	s=korg; t=1727440325;
+	bh=KvIbccWkkUwE0BR2MT9dd5/83USdDIdMkeULt30kLTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3YLiWVrSz7vPxbhgYSvY+vuN4vgmkJVR4rC6pQeQBgZFRkNetjXj/W0RIf5UgxH9
-	 VZ3IahWlnXrthaRu+7jeDTGpRQh7+yG+97JRtH8gcKFDLSv/BvRkhs7ElZ/aORcfBl
-	 HZb/y4DTcOhwXpWRVl186W94TbtSIkDIwOBIPXV0=
+	b=BeJHHPm5Uba/l/mLJ0v5hVsA7Qqd8/W40wVb146JumKqZaYk0EFedUZHEbcTipwIl
+	 aWmJ++yC24BUQFTdR/0rDPP5cDxzGuuBK3GwtL0RnxBuzp1n5i5xTshc5DiDgG+8P8
+	 OxwZ6g88SqhrlH/C9yfYIUPghIIR0y26fJa/+Js0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Guanghao <wuguanghao3@huawei.com>,
+	yangerkun <yangerkun@huawei.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <david@fromorbit.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.1 33/73] xfs: Fix deadlock on xfs_inodegc_worker
-Date: Fri, 27 Sep 2024 14:23:44 +0200
-Message-ID: <20240927121721.240958826@linuxfoundation.org>
+Subject: [PATCH 6.1 42/73] xfs: buffer pins need to hold a buffer reference
+Date: Fri, 27 Sep 2024 14:23:53 +0200
+Message-ID: <20240927121721.634842794@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -52,138 +55,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wu Guanghao <wuguanghao3@huawei.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 4da112513c01d7d0acf1025b8764349d46e177d6 ]
+[ Upstream commit 89a4bf0dc3857569a77061d3d5ea2ac85f7e13c6 ]
 
-We are doing a test about deleting a large number of files
-when memory is low. A deadlock problem was found.
+When a buffer is unpinned by xfs_buf_item_unpin(), we need to access
+the buffer after we've dropped the buffer log item reference count.
+This opens a window where we can have two racing unpins for the
+buffer item (e.g. shutdown checkpoint context callback processing
+racing with journal IO iclog completion processing) and both attempt
+to access the buffer after dropping the BLI reference count.  If we
+are unlucky, the "BLI freed" context wins the race and frees the
+buffer before the "BLI still active" case checks the buffer pin
+count.
 
-[ 1240.279183] -> #1 (fs_reclaim){+.+.}-{0:0}:
-[ 1240.280450]        lock_acquire+0x197/0x460
-[ 1240.281548]        fs_reclaim_acquire.part.0+0x20/0x30
-[ 1240.282625]        kmem_cache_alloc+0x2b/0x940
-[ 1240.283816]        xfs_trans_alloc+0x8a/0x8b0
-[ 1240.284757]        xfs_inactive_ifree+0xe4/0x4e0
-[ 1240.285935]        xfs_inactive+0x4e9/0x8a0
-[ 1240.286836]        xfs_inodegc_worker+0x160/0x5e0
-[ 1240.287969]        process_one_work+0xa19/0x16b0
-[ 1240.289030]        worker_thread+0x9e/0x1050
-[ 1240.290131]        kthread+0x34f/0x460
-[ 1240.290999]        ret_from_fork+0x22/0x30
-[ 1240.291905]
-[ 1240.291905] -> #0 ((work_completion)(&gc->work)){+.+.}-{0:0}:
-[ 1240.293569]        check_prev_add+0x160/0x2490
-[ 1240.294473]        __lock_acquire+0x2c4d/0x5160
-[ 1240.295544]        lock_acquire+0x197/0x460
-[ 1240.296403]        __flush_work+0x6bc/0xa20
-[ 1240.297522]        xfs_inode_mark_reclaimable+0x6f0/0xdc0
-[ 1240.298649]        destroy_inode+0xc6/0x1b0
-[ 1240.299677]        dispose_list+0xe1/0x1d0
-[ 1240.300567]        prune_icache_sb+0xec/0x150
-[ 1240.301794]        super_cache_scan+0x2c9/0x480
-[ 1240.302776]        do_shrink_slab+0x3f0/0xaa0
-[ 1240.303671]        shrink_slab+0x170/0x660
-[ 1240.304601]        shrink_node+0x7f7/0x1df0
-[ 1240.305515]        balance_pgdat+0x766/0xf50
-[ 1240.306657]        kswapd+0x5bd/0xd20
-[ 1240.307551]        kthread+0x34f/0x460
-[ 1240.308346]        ret_from_fork+0x22/0x30
-[ 1240.309247]
-[ 1240.309247] other info that might help us debug this:
-[ 1240.309247]
-[ 1240.310944]  Possible unsafe locking scenario:
-[ 1240.310944]
-[ 1240.312379]        CPU0                    CPU1
-[ 1240.313363]        ----                    ----
-[ 1240.314433]   lock(fs_reclaim);
-[ 1240.315107]                                lock((work_completion)(&gc->work));
-[ 1240.316828]                                lock(fs_reclaim);
-[ 1240.318088]   lock((work_completion)(&gc->work));
-[ 1240.319203]
-[ 1240.319203]  *** DEADLOCK ***
-...
-[ 2438.431081] Workqueue: xfs-inodegc/sda xfs_inodegc_worker
-[ 2438.432089] Call Trace:
-[ 2438.432562]  __schedule+0xa94/0x1d20
-[ 2438.435787]  schedule+0xbf/0x270
-[ 2438.436397]  schedule_timeout+0x6f8/0x8b0
-[ 2438.445126]  wait_for_completion+0x163/0x260
-[ 2438.448610]  __flush_work+0x4c4/0xa40
-[ 2438.455011]  xfs_inode_mark_reclaimable+0x6ef/0xda0
-[ 2438.456695]  destroy_inode+0xc6/0x1b0
-[ 2438.457375]  dispose_list+0xe1/0x1d0
-[ 2438.458834]  prune_icache_sb+0xe8/0x150
-[ 2438.461181]  super_cache_scan+0x2b3/0x470
-[ 2438.461950]  do_shrink_slab+0x3cf/0xa50
-[ 2438.462687]  shrink_slab+0x17d/0x660
-[ 2438.466392]  shrink_node+0x87e/0x1d40
-[ 2438.467894]  do_try_to_free_pages+0x364/0x1300
-[ 2438.471188]  try_to_free_pages+0x26c/0x5b0
-[ 2438.473567]  __alloc_pages_slowpath.constprop.136+0x7aa/0x2100
-[ 2438.482577]  __alloc_pages+0x5db/0x710
-[ 2438.485231]  alloc_pages+0x100/0x200
-[ 2438.485923]  allocate_slab+0x2c0/0x380
-[ 2438.486623]  ___slab_alloc+0x41f/0x690
-[ 2438.490254]  __slab_alloc+0x54/0x70
-[ 2438.491692]  kmem_cache_alloc+0x23e/0x270
-[ 2438.492437]  xfs_trans_alloc+0x88/0x880
-[ 2438.493168]  xfs_inactive_ifree+0xe2/0x4e0
-[ 2438.496419]  xfs_inactive+0x4eb/0x8b0
-[ 2438.497123]  xfs_inodegc_worker+0x16b/0x5e0
-[ 2438.497918]  process_one_work+0xbf7/0x1a20
-[ 2438.500316]  worker_thread+0x8c/0x1060
-[ 2438.504938]  ret_from_fork+0x22/0x30
+This results in a use after free that can only be triggered
+in active filesystem shutdown situations.
 
-When the memory is insufficient, xfs_inonodegc_worker will trigger memory
-reclamation when memory is allocated, then flush_work() may be called to
-wait for the work to complete. This causes a deadlock.
+To fix this, we need to ensure that buffer existence extends beyond
+the BLI reference count checks and until the unpin processing is
+complete. This implies that a buffer pin operation must also take a
+buffer reference to ensure that the buffer cannot be freed until the
+buffer unpin processing is complete.
 
-So use memalloc_nofs_save() to avoid triggering memory reclamation in
-xfs_inodegc_worker.
-
-Signed-off-by: Wu Guanghao <wuguanghao3@huawei.com>
+Reported-by: yangerkun <yangerkun@huawei.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icache.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/xfs/xfs_buf_item.c |   88 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 65 insertions(+), 23 deletions(-)
 
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -1858,6 +1858,7 @@ xfs_inodegc_worker(
- 						struct xfs_inodegc, work);
- 	struct llist_node	*node = llist_del_all(&gc->list);
- 	struct xfs_inode	*ip, *n;
-+	unsigned int		nofs_flag;
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -452,10 +452,18 @@ xfs_buf_item_format(
+  * This is called to pin the buffer associated with the buf log item in memory
+  * so it cannot be written out.
+  *
+- * We also always take a reference to the buffer log item here so that the bli
+- * is held while the item is pinned in memory. This means that we can
+- * unconditionally drop the reference count a transaction holds when the
+- * transaction is completed.
++ * We take a reference to the buffer log item here so that the BLI life cycle
++ * extends at least until the buffer is unpinned via xfs_buf_item_unpin() and
++ * inserted into the AIL.
++ *
++ * We also need to take a reference to the buffer itself as the BLI unpin
++ * processing requires accessing the buffer after the BLI has dropped the final
++ * BLI reference. See xfs_buf_item_unpin() for an explanation.
++ * If unpins race to drop the final BLI reference and only the
++ * BLI owns a reference to the buffer, then the loser of the race can have the
++ * buffer fgreed from under it (e.g. on shutdown). Taking a buffer reference per
++ * pin count ensures the life cycle of the buffer extends for as
++ * long as we hold the buffer pin reference in xfs_buf_item_unpin().
+  */
+ STATIC void
+ xfs_buf_item_pin(
+@@ -470,13 +478,30 @@ xfs_buf_item_pin(
  
- 	ASSERT(gc->cpu == smp_processor_id());
+ 	trace_xfs_buf_item_pin(bip);
  
-@@ -1866,6 +1867,13 @@ xfs_inodegc_worker(
- 	if (!node)
- 		return;
- 
-+	/*
-+	 * We can allocate memory here while doing writeback on behalf of
-+	 * memory reclaim.  To avoid memory allocation deadlocks set the
-+	 * task-wide nofs context for the following operations.
-+	 */
-+	nofs_flag = memalloc_nofs_save();
-+
- 	ip = llist_entry(node, struct xfs_inode, i_gclist);
- 	trace_xfs_inodegc_worker(ip->i_mount, READ_ONCE(gc->shrinker_hits));
- 
-@@ -1874,6 +1882,8 @@ xfs_inodegc_worker(
- 		xfs_iflags_set(ip, XFS_INACTIVATING);
- 		xfs_inodegc_inactivate(ip);
- 	}
-+
-+	memalloc_nofs_restore(nofs_flag);
++	xfs_buf_hold(bip->bli_buf);
+ 	atomic_inc(&bip->bli_refcount);
+ 	atomic_inc(&bip->bli_buf->b_pin_count);
  }
  
  /*
+- * This is called to unpin the buffer associated with the buf log item which
+- * was previously pinned with a call to xfs_buf_item_pin().
++ * This is called to unpin the buffer associated with the buf log item which was
++ * previously pinned with a call to xfs_buf_item_pin().  We enter this function
++ * with a buffer pin count, a buffer reference and a BLI reference.
++ *
++ * We must drop the BLI reference before we unpin the buffer because the AIL
++ * doesn't acquire a BLI reference whenever it accesses it. Therefore if the
++ * refcount drops to zero, the bli could still be AIL resident and the buffer
++ * submitted for I/O at any point before we return. This can result in IO
++ * completion freeing the buffer while we are still trying to access it here.
++ * This race condition can also occur in shutdown situations where we abort and
++ * unpin buffers from contexts other that journal IO completion.
++ *
++ * Hence we have to hold a buffer reference per pin count to ensure that the
++ * buffer cannot be freed until we have finished processing the unpin operation.
++ * The reference is taken in xfs_buf_item_pin(), and we must hold it until we
++ * are done processing the buffer state. In the case of an abort (remove =
++ * true) then we re-use the current pin reference as the IO reference we hand
++ * off to IO failure handling.
+  */
+ STATIC void
+ xfs_buf_item_unpin(
+@@ -493,24 +518,18 @@ xfs_buf_item_unpin(
+ 
+ 	trace_xfs_buf_item_unpin(bip);
+ 
+-	/*
+-	 * Drop the bli ref associated with the pin and grab the hold required
+-	 * for the I/O simulation failure in the abort case. We have to do this
+-	 * before the pin count drops because the AIL doesn't acquire a bli
+-	 * reference. Therefore if the refcount drops to zero, the bli could
+-	 * still be AIL resident and the buffer submitted for I/O (and freed on
+-	 * completion) at any point before we return. This can be removed once
+-	 * the AIL properly holds a reference on the bli.
+-	 */
+ 	freed = atomic_dec_and_test(&bip->bli_refcount);
+-	if (freed && !stale && remove)
+-		xfs_buf_hold(bp);
+ 	if (atomic_dec_and_test(&bp->b_pin_count))
+ 		wake_up_all(&bp->b_waiters);
+ 
+-	 /* nothing to do but drop the pin count if the bli is active */
+-	if (!freed)
++	/*
++	 * Nothing to do but drop the buffer pin reference if the BLI is
++	 * still active.
++	 */
++	if (!freed) {
++		xfs_buf_rele(bp);
+ 		return;
++	}
+ 
+ 	if (stale) {
+ 		ASSERT(bip->bli_flags & XFS_BLI_STALE);
+@@ -523,6 +542,15 @@ xfs_buf_item_unpin(
+ 		trace_xfs_buf_item_unpin_stale(bip);
+ 
+ 		/*
++		 * The buffer has been locked and referenced since it was marked
++		 * stale so we own both lock and reference exclusively here. We
++		 * do not need the pin reference any more, so drop it now so
++		 * that we only have one reference to drop once item completion
++		 * processing is complete.
++		 */
++		xfs_buf_rele(bp);
++
++		/*
+ 		 * If we get called here because of an IO error, we may or may
+ 		 * not have the item on the AIL. xfs_trans_ail_delete() will
+ 		 * take care of that situation. xfs_trans_ail_delete() drops
+@@ -538,16 +566,30 @@ xfs_buf_item_unpin(
+ 			ASSERT(bp->b_log_item == NULL);
+ 		}
+ 		xfs_buf_relse(bp);
+-	} else if (remove) {
++		return;
++	}
++
++	if (remove) {
+ 		/*
+-		 * The buffer must be locked and held by the caller to simulate
+-		 * an async I/O failure. We acquired the hold for this case
+-		 * before the buffer was unpinned.
++		 * We need to simulate an async IO failures here to ensure that
++		 * the correct error completion is run on this buffer. This
++		 * requires a reference to the buffer and for the buffer to be
++		 * locked. We can safely pass ownership of the pin reference to
++		 * the IO to ensure that nothing can free the buffer while we
++		 * wait for the lock and then run the IO failure completion.
+ 		 */
+ 		xfs_buf_lock(bp);
+ 		bp->b_flags |= XBF_ASYNC;
+ 		xfs_buf_ioend_fail(bp);
++		return;
+ 	}
++
++	/*
++	 * BLI has no more active references - it will be moved to the AIL to
++	 * manage the remaining BLI/buffer life cycle. There is nothing left for
++	 * us to do here so drop the pin reference to the buffer.
++	 */
++	xfs_buf_rele(bp);
+ }
+ 
+ STATIC uint
 
 
