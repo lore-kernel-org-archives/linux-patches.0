@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E318A6C3;
-	Fri, 27 Sep 2024 12:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51818A6C3;
+	Fri, 27 Sep 2024 12:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440136; cv=none; b=pl0kXubWy17ACPKNYjMQqw0Rs3pGv6G5aSWmZmh9mK917yqkewEi20hT22uCBvt5nsBgXFVz+r8VAWTBnmqHsbPshPYPLXeFC3FPyhOEgsxN64RIIIrOsfa8BSKw83nyLawzZEheg/b9PwEtjdscxo8Ly/5LzTp4UImDvTXcjcg=
+	t=1727440139; cv=none; b=XvZStuBDSt/QXyeD3ayWquUPfBQzoBQ3bfP4ynC7MrXiZzOSnE9cbJtKWC/yN1QMOo1YiRzki/FI/zNYw5rp5xPQaxrS4tU28VTwYgAi1tJTqXSdeIfy8ZEZK/t7TeAYQ44juRzq8551743M0WOQ0zUjzcissD04zC7H16rYQ1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440136; c=relaxed/simple;
-	bh=YrPKSwhU5w0vtjZEFjoQBqik5MPaPX+1xLNF/45I5Bw=;
+	s=arc-20240116; t=1727440139; c=relaxed/simple;
+	bh=cNA05tLkEWhjcAib+vxlNQDTGdWjHGPwjYW+z1bABzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0Vo4tCnro/ZEWoI0DOX6HOkkRacmXu9P938iB6OtlfwyfxBlMQpe2kUJJfXmOqrTT/eJmRtPmudljjcLF0j0blKdfMW7lYzguJERQj+8IND5q1Km1BQ81+L2eQi+vLevy2MxYxh3yhyN/s17kvmYLn8io8rROb9b7kYSBytpg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6TbTi+l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prfrlUNF/Ed9eSI7RYL0xtWTvpWWWFBTUAQDxCPFFwbhqA6QKCpE44eKsVhAP6rtBlZf92fT60526F2Nz1A4RXOuSW/eahWGcOFbF9ikWjyxgAPmPOQY+dJsbgT4wmw9QTBE3Q5QvmllsU5y1BOCuL699sSbET0oDxn5D9YdQG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYt8Ihg4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6TbTi+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238DFC4CEC4;
-	Fri, 27 Sep 2024 12:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYt8Ihg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22848C4CEC4;
+	Fri, 27 Sep 2024 12:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440136;
-	bh=YrPKSwhU5w0vtjZEFjoQBqik5MPaPX+1xLNF/45I5Bw=;
+	s=korg; t=1727440139;
+	bh=cNA05tLkEWhjcAib+vxlNQDTGdWjHGPwjYW+z1bABzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6TbTi+lPS82VI9+NX1Neow4/dSOD3AO0u6CKXiJp0QxZfHtMzfJMjvEtAmjsMMC2
-	 dC2NydBTGlvj/LiKoaDA03rWETj478si3m9YowUQWrZ0xGmNyrxJxeKZy4b+TzULhi
-	 vpX4w7gRdDjJPRL7Ac4yhVLT1qZkZFOV0ACAWJYI=
+	b=KYt8Ihg4lnlOQIX+GttZ5NkGXI1UCye1OQhingWxDkagAc+Uvy7V9ez7dWPGun6JO
+	 ADvivZEVyWZwv63kgTNDAKVxnahtXucnQmL4debsH+eEH/K5uij9GUs1dYZzJbITtF
+	 NqBw7Cci5pUhyFB6R9Qce8ZGjUQY/jQxv7Xfj6K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	lei lu <llfamsec@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 45/58] ocfs2: strict bound check before memcmp in ocfs2_xattr_find_entry()
-Date: Fri, 27 Sep 2024 14:23:47 +0200
-Message-ID: <20240927121720.625893960@linuxfoundation.org>
+Subject: [PATCH 6.10 20/58] wifi: iwlwifi: mvm: dont wait for tx queues if firmware is dead
+Date: Fri, 27 Sep 2024 14:23:22 +0200
+Message-ID: <20240927121719.626420013@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -59,65 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ferry Meng <mengferry@linux.alibaba.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit af77c4fc1871847b528d58b7fdafb4aa1f6a9262 ]
+[ Upstream commit 3a84454f5204718ca5b4ad2c1f0bf2031e2403d1 ]
 
-xattr in ocfs2 maybe 'non-indexed', which saved with additional space
-requested.  It's better to check if the memory is out of bound before
-memcmp, although this possibility mainly comes from crafted poisonous
-images.
+There is a WARNING in iwl_trans_wait_tx_queues_empty() (that was
+recently converted from just a message), that can be hit if we
+wait for TX queues to become empty after firmware died. Clearly,
+we can't expect anything from the firmware after it's declared dead.
 
-Link: https://lkml.kernel.org/r/20240520024024.1976129-2-joseph.qi@linux.alibaba.com
-Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: lei lu <llfamsec@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Don't call iwl_trans_wait_tx_queues_empty() in this case. While it could
+be a good idea to stop the flow earlier, the flush functions do some
+maintenance work that is not related to the firmware, so keep that part
+of the code running even when the firmware is not running.
+
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240825191257.a7cbd794cee9.I44a739fbd4ffcc46b83844dd1c7b2eb0c7b270f6@changeid
+[edit commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 8aea94c907397..35c0cc2a51af8 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -1068,7 +1068,7 @@ static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
- {
- 	struct ocfs2_xattr_entry *entry;
- 	size_t name_len;
--	int i, cmp = 1;
-+	int i, name_offset, cmp = 1;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 259afecd1a98d..83551d962a46c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -5819,6 +5819,10 @@ static void iwl_mvm_flush_no_vif(struct iwl_mvm *mvm, u32 queues, bool drop)
+ 	int i;
  
- 	if (name == NULL)
- 		return -EINVAL;
-@@ -1083,10 +1083,15 @@ static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
- 		cmp = name_index - ocfs2_xattr_get_type(entry);
- 		if (!cmp)
- 			cmp = name_len - entry->xe_name_len;
--		if (!cmp)
--			cmp = memcmp(name, (xs->base +
--				     le16_to_cpu(entry->xe_name_offset)),
--				     name_len);
-+		if (!cmp) {
-+			name_offset = le16_to_cpu(entry->xe_name_offset);
-+			if ((xs->base + name_offset + name_len) > xs->end) {
-+				ocfs2_error(inode->i_sb,
-+					    "corrupted xattr entries");
-+				return -EFSCORRUPTED;
-+			}
-+			cmp = memcmp(name, (xs->base + name_offset), name_len);
-+		}
- 		if (cmp == 0)
- 			break;
- 		entry += 1;
+ 	if (!iwl_mvm_has_new_tx_api(mvm)) {
++		/* we can't ask the firmware anything if it is dead */
++		if (test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
++			     &mvm->status))
++			return;
+ 		if (drop) {
+ 			mutex_lock(&mvm->mutex);
+ 			iwl_mvm_flush_tx_path(mvm,
+@@ -5914,8 +5918,11 @@ void iwl_mvm_mac_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 
+ 	/* this can take a while, and we may need/want other operations
+ 	 * to succeed while doing this, so do it without the mutex held
++	 * If the firmware is dead, this can't work...
+ 	 */
+-	if (!drop && !iwl_mvm_has_new_tx_api(mvm))
++	if (!drop && !iwl_mvm_has_new_tx_api(mvm) &&
++	    !test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
++		      &mvm->status))
+ 		iwl_trans_wait_tx_queues_empty(mvm->trans, msk);
+ }
+ 
 -- 
 2.43.0
 
