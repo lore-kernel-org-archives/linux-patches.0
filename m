@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D1A18A92A;
-	Fri, 27 Sep 2024 12:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2383C18C012;
+	Fri, 27 Sep 2024 12:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439942; cv=none; b=QstRbW550Bs9NWPthBWk/duKT5zY7sxUH22kV/ok3OeVqEiA+sp/UbTXRJs3qETJUk8yQm8zWIAACIzD25IYED9DrGFbBIQ9p2JDoEWidb/3GbH4MQEXg0X4sHcJDSDdHmcBDejvD/Z0V0zjd8C9D97MH4luCZHqqMyVjDkJKkE=
+	t=1727439945; cv=none; b=llvNWR/eLVtWGAcVAJ3O7icaDWGRPvNwAYj8vRm54O2QkOoGBkXmR2HmXFK80Uo3Uwu+fYXm8hKy5ZuJw4RReWGCaVLEfDiiJKEtUVawtSnaU+CT4jkfNmQW9ts7Ff5whD3Bs4nq8SxhCkdCxHFQCzyVV90a/M+erNDkaDiW0dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439942; c=relaxed/simple;
-	bh=6deYkbgcL4MfLyhWoohG15pGnqW3YY18/2dkizDpVoY=;
+	s=arc-20240116; t=1727439945; c=relaxed/simple;
+	bh=6TA1cGDLsWZ9+A6n1blhEqG8lRYTFMn6+3K5ceSZn9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UObx4clsPHF2q4gPmcI85xwXTkADqudHVorSx2vFNqmaDR3n/cQnerhQ4qcMC9AAtxsg7kIrbe8b5J18eW04WQaR72jh+JMaowPZzibG0SGk2C/rT0AvafTjaOVq6azv31r/dfE0ssagEymA2F+LR3j50V/mC2P9HUQxg9ILqU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVL6ZNwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lkmpLrXD/zkD3sqjJ2B4SEd701urbF+BRXYRfOmxL4buEWOynsb8wlMA+6+7tM+BwAlitAFWnvDIk51/hC0iYu7RHiOYRwv5uXISADT32xlQC25cRNRuYR990idfd6IK68Ax2a8w5Uuhf3N4kIuBKwHDrsd7Mf+Z19D8rUf463Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrKnpa6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVL6ZNwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946C3C4CEC4;
-	Fri, 27 Sep 2024 12:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrKnpa6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62EDC4CED0;
+	Fri, 27 Sep 2024 12:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439942;
-	bh=6deYkbgcL4MfLyhWoohG15pGnqW3YY18/2dkizDpVoY=;
+	s=korg; t=1727439945;
+	bh=6TA1cGDLsWZ9+A6n1blhEqG8lRYTFMn6+3K5ceSZn9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVL6ZNwbjgTlPFuKqFJ98Oi8GeW4/+dGMFaRqBPnreZDozsz3eZDnRiX0MwpgJlBa
-	 8BDIj3RfYW9P4P6BVrPoi5rE9i64NrOOQPeUg6myFxR9lB0sNjSuRJFWRVR96TwJU0
-	 1vMyxMMGB/AozBOrB1bQwl9UpHG4b6owIvmJ2qyQ=
+	b=QrKnpa6ruqXavshUN1stHNs9WGNWyxPbPJUXsPqqzXeO7izNedIxJUpS//WRzTXKx
+	 z4R64ErnThqFcUSBpg5JgutTIavAsgl5TTojLpKEJZpL6mkp3c8S0iNONzIOBtjfFO
+	 67Pbb8Vsy7rvj0qXBPeIFLhkeeyZAc9jM1iEpaaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hongchi.peng" <hongchi.peng@siengine.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 30/54] drm: komeda: Fix an issue related to normalized zpos
-Date: Fri, 27 Sep 2024 14:23:22 +0200
-Message-ID: <20240927121720.945151535@linuxfoundation.org>
+Subject: [PATCH 6.6 05/54] ALSA: hda/realtek - Fixed ALC256 headphone no sound
+Date: Fri, 27 Sep 2024 14:22:57 +0200
+Message-ID: <20240927121719.935910876@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -51,77 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hongchi.peng <hongchi.peng@siengine.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 258905cb9a6414be5c9ca4aa20ef855f8dc894d4 ]
+[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
 
-We use komeda_crtc_normalize_zpos to normalize zpos of affected planes
-to their blending zorder in CU. If there's only one slave plane in
-affected planes and its layer_split property is enabled, order++ for
-its split layer, so that when calculating the normalized_zpos
-of master planes, the split layer of the slave plane is included, but
-the max_slave_zorder does not include the split layer and keep zero
-because there's only one slave plane in affacted planes, although we
-actually use two slave layers in this commit.
+Dell platform, plug headphone or headset, it had a chance to get no
+sound from headphone.
+Replace depop procedure will solve this issue.
 
-In most cases, this bug does not result in a commit failure, but assume
-the following situation:
-    slave_layer 0: zpos = 0, layer split enabled, normalized_zpos =
-    0;(use slave_layer 2 as its split layer)
-    master_layer 0: zpos = 2, layer_split enabled, normalized_zpos =
-    2;(use master_layer 2 as its split layer)
-    master_layer 1: zpos = 4, normalized_zpos = 4;
-    master_layer 3: zpos = 5, normalized_zpos = 5;
-    kcrtc_st->max_slave_zorder = 0;
-When we use master_layer 3 as a input of CU in function
-komeda_compiz_set_input and check it with function
-komeda_component_check_input, the parameter idx is equal to
-normailzed_zpos minus max_slave_zorder, the value of idx is 5
-and is euqal to CU's max_active_inputs, so that
-komeda_component_check_input returns a -EINVAL value.
-
-To fix the bug described above, when calculating the max_slave_zorder
-with the layer_split enabled, count the split layer in this calculation
-directly.
-
-Signed-off-by: hongchi.peng <hongchi.peng@siengine.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240826024517.3739-1-hongchi.peng@siengine.com
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/komeda/komeda_kms.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_kms.c b/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-index 9299026701f34..1a5fa7df284de 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-@@ -160,6 +160,7 @@ static int komeda_crtc_normalize_zpos(struct drm_crtc *crtc,
- 	struct drm_plane *plane;
- 	struct list_head zorder_list;
- 	int order = 0, err;
-+	u32 slave_zpos = 0;
- 
- 	DRM_DEBUG_ATOMIC("[CRTC:%d:%s] calculating normalized zpos values\n",
- 			 crtc->base.id, crtc->name);
-@@ -199,10 +200,13 @@ static int komeda_crtc_normalize_zpos(struct drm_crtc *crtc,
- 				 plane_st->zpos, plane_st->normalized_zpos);
- 
- 		/* calculate max slave zorder */
--		if (has_bit(drm_plane_index(plane), kcrtc->slave_planes))
-+		if (has_bit(drm_plane_index(plane), kcrtc->slave_planes)) {
-+			slave_zpos = plane_st->normalized_zpos;
-+			if (to_kplane_st(plane_st)->layer_split)
-+				slave_zpos++;
- 			kcrtc_st->max_slave_zorder =
--				max(plane_st->normalized_zpos,
--				    kcrtc_st->max_slave_zorder);
-+				max(slave_zpos, kcrtc_st->max_slave_zorder);
-+		}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 6661fed2c2bbf..47e92185c6c52 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4931,6 +4931,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
  	}
+ }
  
- 	crtc_st->zpos_changed = true;
++static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++	msleep(delay);
++}
++
++static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++	msleep(delay);
++}
++
+ static const struct coef_fw alc225_pre_hsmode[] = {
+ 	UPDATE_COEF(0x4a, 1<<8, 0),
+ 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
+@@ -5032,6 +5056,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
++		alc_hp_mute_disable(codec, 75);
+ 		alc_process_coef_fw(codec, coef0256);
+ 		break;
+ 	case 0x10ec0234:
+@@ -5303,6 +5328,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x45, 0xc089);
+ 		msleep(50);
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5400,6 +5426,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5515,6 +5542,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5620,25 +5648,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x06, 0x6104);
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
+ 
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-
+ 		alc_process_coef_fw(codec, coef0255);
+ 		msleep(300);
+ 		val = alc_read_coef_idx(codec, 0x46);
+ 		is_ctia = (val & 0x0070) == 0x0070;
+-
++		if (!is_ctia) {
++			alc_write_coef_idx(codec, 0x45, 0xe089);
++			msleep(100);
++			val = alc_read_coef_idx(codec, 0x46);
++			if ((val & 0x0070) == 0x0070)
++				is_ctia = false;
++			else
++				is_ctia = true;
++		}
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
+ 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
+-
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
 -- 
 2.43.0
 
