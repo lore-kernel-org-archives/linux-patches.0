@@ -1,138 +1,100 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE12166F06
-	for <patches@lists.linux.dev>; Fri, 27 Sep 2024 16:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61A1C173C
+	for <patches@lists.linux.dev>; Fri, 27 Sep 2024 16:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727453975; cv=none; b=Z18efsiA7jArWb4PLEE8cWT5Mba5/NX+eNHT0QCeQF+rSbkcgcq2MjcuBqheGkdAfgDFYRNhYN8JMc6mcUFq6HSADAZ0L26rpxuiT09PqNagkFTcrQ6yy4PjElXTDSjSn5ZY0+E4kBNXpL6MxdOkmH5hubJtlioTvCmZeE4sAw8=
+	t=1727454899; cv=none; b=LXh23QVM9otA7kVaviBJP9p6187ZsH/6s7UDstu04nscLEYNSVqaaHnKzrYi9iw4ZSzo8gGACjDLr0/m7KwvABIqJRgzAL9gYZ1groikag1H16lozXV/U7N7tcBjd1v8gbPf/tRhUzZU6Kw3auYLytUeFkxke+VcV4JQXZOyGxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727453975; c=relaxed/simple;
-	bh=pAzoEG02XkyNylD/xCeTTggYxDtr6Z4lPRJGRWG8dn8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c6uD9NbH70lxmzflYYXmgnxxOxDyGd+AtUyyYPFgtscF3FIklke/h+p1XF6fx6rdacsGoX7lu/BxwQMpybRHnASvSJcV/MvETX1AlrCZ0bpAumkdHgTJ1yFNyhTk0RrwLOyY7Y0QXTtsEWcKW4uYNjvHV+3PYCof8Eh1DHWRn4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQyE8KeW; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727454899; c=relaxed/simple;
+	bh=LQoHedUqZJIVDPEPLGQOFF7BgCHqs2L4dazdLhVW6wE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YuEu6/yTvPllCZ0aydOlbexID1wHJJAnuj/N7nk7//wB9sNIJbZHFlCCblVjGFlkzIeKUa65zIhElBxi2/KrJVrAFkNvASpMdcjVh+e/EsbmlfPsDLZP73PA9pgo4BhuEJ8GqKgORJkDF4tCvTFi5oqBt871BTR7f1bJBDod6jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=eWJitSOY; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQyE8KeW"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20afdad26f5so30025265ad.1
-        for <patches@lists.linux.dev>; Fri, 27 Sep 2024 09:19:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="eWJitSOY"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42cb1e623d1so21846865e9.0
+        for <patches@lists.linux.dev>; Fri, 27 Sep 2024 09:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727453973; x=1728058773; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QZ4WJkOwGqqQgF3m1LaEUK/eck934Y5jldk45Shajf8=;
-        b=XQyE8KeWdrza916kW+/q0TU00Y4KCxQmsm7sDhgHmPBej2aW7Arh60MwS71kTrDMef
-         pYgIiPMWb6xgHEXCeOT3c2hE6u3XT1JKYrhfxXBiBDDpapod/pQEKvOcVOndJnFmZ9Bm
-         Z+RBit2iTCIp54Pf7M8Nnzybj10MdhsqyLVbWOr/Qh4Nvy3zcuh30UoKwk6Wh8zex6kM
-         ZVm8rhNx35487t1s/63LBqnfyPo4BU9LuBrD/1Xx8anL2GjPHDMgyR4W2w8F4VSMYLvv
-         vZBJetdTFUWt9YdEXoPzX/AOJqdTx1TPIwZJRGtqnCGX0A6V3v8jQHTeNzIQ3X7STQSh
-         EL+A==
+        d=googlemail.com; s=20230601; t=1727454896; x=1728059696; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fjW0SfXJHHMpF74jkLxhZJc4kDdjeQmRn27IgEhzY20=;
+        b=eWJitSOY4E8J6jmPOUPnqUmG3xyZgWV3lIroZp7O8/cynVjfvk5/lafnSp2YhdPM1y
+         TyhKw7f+oBEyG6s4fOUOZS74FAtVUwX6sbaRnTPFY6/kKKaljnbnWXASmMOnWBjP9X7/
+         Chufujcb1XNCsEFL//g8XtNDrZeFqWrPYSNppv6k5/YOVZFk2Cv8krKMEvXP0x4Vd/DE
+         O+mhTwUypRqflAxqWSEtjc8PRheYrqDIoLu3dHCKZXP/1io867vjVMkTCjqxSHr6JXE3
+         fbzSWiiKhZV0AjM86IHflJdPDmLu8jqgj71E4a7MuIWoiqCFoeiFfQOKRnaJWDPK/pDb
+         fwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727453973; x=1728058773;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QZ4WJkOwGqqQgF3m1LaEUK/eck934Y5jldk45Shajf8=;
-        b=D4u0704HFUDUx9bn4y5ISOk5Fju2FCZxr9q+tNp7r0PETd7eBjL4vXRQWSe6PXC/S1
-         /6X2eZuFMWR2gaoOCY/ecGmr2fv2kVllromT6rWYlldPfFcC7O0gdChVLdVEryG8l0Rp
-         MgZBuW+Pyaz+ETmhMbe2j7+xVoIuB6OD38kgwyHsDVxKm8gHE0gbix8PA0Kg1yrmqCrW
-         GOyfWYuJv4sg7CVGg1LM7gXFuBKKaB8CYxup3d4XTk9/Yquu+1DY1oQ1wtLTyhUWLEeh
-         eetmhLZpHpc/bfXeapXlPVgNq3qwJv6wlUU7t97K9CsN6tVkKSRJ09DZQ4PYymAySxkw
-         pwQw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtgSzfloKIVBencKb+Hul2BDHQ6Tf91vS2MQK1flUXlAq9Pdula1v832437VBgwjMnF3LJNH72@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywbpb7QuhWFtsJiIaR3tynoBAW+W5xHUchUQO6jo/6zF0QPHpgb
-	nYXhQ+YYxibIP9B0CTBQzc9OS4xo5a3VzCuMLCEIN5xOkH4quGZk
-X-Google-Smtp-Source: AGHT+IGgguNQ+PmgQVEgHdCC2FdrNHTusB4SH0YUBq4fzrALOkcJ5A6OlLQACGre8/CZZhcMd7mBvA==
-X-Received: by 2002:a17:902:d506:b0:205:7863:2dec with SMTP id d9443c01a7336-20b3729c7b2mr58096525ad.27.1727453972895;
-        Fri, 27 Sep 2024 09:19:32 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37e35ce7sm15258055ad.209.2024.09.27.09.19.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Sep 2024 09:19:31 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 27 Sep 2024 09:19:30 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Daniel Latypov <dlatypov@google.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with
- struct clk_parent_data
-Message-ID: <dcd8894f-1eb6-4b5c-9e6f-f6e584c601d2@roeck-us.net>
-References: <20240718210513.3801024-1-sboyd@kernel.org>
- <20240718210513.3801024-9-sboyd@kernel.org>
- <6cd337fb-38f0-41cb-b942-5844b84433db@roeck-us.net>
- <a339ec8c-38f6-425a-94d1-ad69b5ddbd88@roeck-us.net>
+        d=1e100.net; s=20230601; t=1727454896; x=1728059696;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fjW0SfXJHHMpF74jkLxhZJc4kDdjeQmRn27IgEhzY20=;
+        b=ILn13UtpDfKNYKstR4aTUHBUAFvRS85vNFNH/u/nAon9JadMlmj/gZEYYWSXpWjSmA
+         vsiarh3gxULPpUeSO/4l3lhnFM5Df5XvGMhXJIh6ARxZR9le3FNyxA1Dt2Z8DiXPaY4K
+         G/D5j4WEKpyD4bwkkodeSSQGkv4T7UbQSqLWk5znvl+d29r53wwhO9dpsZ+5WypkUuWq
+         DlSPSwufWoKjPTAy0Hv1naeu6oz6vtx3BRlUqTUNa04/RwMV/wRkgYRxwk9uLe8m4gC8
+         E2bStzu56mfw6MvbpuLcGAZzyb5eVvW978hK5KKQ2dTxqEfG+1PraN6L/ff2uDcYjYoM
+         fEww==
+X-Gm-Message-State: AOJu0YyrkUgSlKIH0wRdgI0HPrW6f03XrCTH77z0PofFiSh3J/ndiawe
+	HjyO3fZvkZ6acKySOU5ttxT2AnLsph18rYnXcgkZ90G5YxDV2pw=
+X-Google-Smtp-Source: AGHT+IFUSNu6KjgVPgBU386pEbCm/OnFQdf54/K7kJsZSt/nXBGa5NuN/1bR2Y85UYvAUiHKqYDdZQ==
+X-Received: by 2002:a05:600c:1c04:b0:428:10d7:a4b1 with SMTP id 5b1f17b1804b1-42f58497f61mr29413145e9.25.1727454895930;
+        Fri, 27 Sep 2024 09:34:55 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4a79.dip0.t-ipconnect.de. [91.43.74.121])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cd564d01esm3012052f8f.3.2024.09.27.09.34.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Sep 2024 09:34:55 -0700 (PDT)
+Message-ID: <4f07f599-ef6e-42a8-8b21-b1a69f9cfb7f@googlemail.com>
+Date: Fri, 27 Sep 2024 18:34:53 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a339ec8c-38f6-425a-94d1-ad69b5ddbd88@roeck-us.net>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 00/54] 6.6.53-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240927121719.714627278@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Copying devicetree maintainers.
+Am 27.09.2024 um 14:22 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.53 release.
+> There are 54 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-On Thu, Sep 26, 2024 at 09:39:38PM -0700, Guenter Roeck wrote:
-> On Thu, Sep 26, 2024 at 09:14:11PM -0700, Guenter Roeck wrote:
-> > Hi Stephen,
-> > 
-> > On Thu, Jul 18, 2024 at 02:05:07PM -0700, Stephen Boyd wrote:
-> > > Test that clks registered with 'struct clk_parent_data' work as
-> > > intended and can find their parents.
-> > > 
-> > 
-> > When testing this on arm64, I see the error below. The error is only
-> > seen if I boot through efi, i.e., with "-bios QEMU_EFI-aarch64.fd"
-> > qemu parameter.
-> > 
-> > Any idea what might cause the problem ?
-> > 
-> I noticed that the new overlay tests fail as well, also with "path '/' not
-> found".
-> 
-> [Maybe] answering my own question: I think the problem may be that there
-> is no devicetree file and thus no devicetree root when booting through
-> efi (in other words, of_root is NULL). Would it make sense to skip the
-> tests in that case ?
-> 
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-The problem is that of_root is not initialized in arm64 boots if ACPI
-is enabled.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-From arch/arm64/kernel/setup.c:setup_arch():
+Beste Grüße,
+Peter Schneider
 
-	if (acpi_disabled)
-		unflatten_device_tree();		// initializes of_root
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-ACPI is enabled if the system boots from EFI. This also affects
-CONFIG_OF_KUNIT_TEST, which explicitly checks if of_root exists and
-fails the test if it doesn't. 
-
-I think those tests need to add a check for this condition, or affected
-machines won't be able to run those unit tests. The obvious solution would
-be to check if of_root is set, but then the associated test case in
-CONFIG_OF_KUNIT_TEST would not make sense.
-
-Any suggestions ?
-
-Thanks,
-Guenter
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
