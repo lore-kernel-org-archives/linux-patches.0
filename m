@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B7B18C034;
-	Fri, 27 Sep 2024 12:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2325518C034;
+	Fri, 27 Sep 2024 12:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440215; cv=none; b=iliKidwembCkT9Yc8KpIfleNEIn2bnSxJBz6VhfNxzNb/ECJe5uW2mj7oEPrzYnlir3v9Sxv5pzaQgTmBrdQ057iSD8UPGH0WOCipdZCryOcwpD4Ya5DX4u83FOLg6452MkOLgwepNb7FwVYmw1Zjbq4JhNXbNwh3RrH0IrXbCk=
+	t=1727440218; cv=none; b=TOYFzeZYafO9/oZLPZyRsaMtC1CTKqrSGAf1r+8p4nR2vLNDQFA4F8RdraIOaQcFcsyzSWjiGRqf53ug/VQ34mlzBbGAAfeE/HHv//90sJ0fKsVPGwRWWtLWZzByxrXk1kMxHM89+0jm7bkkJdlGKLU9KZpz+11N54DytB/paRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440215; c=relaxed/simple;
-	bh=YiecAvrW3+lZtZMp2zfUMWu/Abw3LMehK588afuSsg4=;
+	s=arc-20240116; t=1727440218; c=relaxed/simple;
+	bh=y5BFmTeSe9/AM1d26bEYjjDSnWu3iWDJ6JiKpyZJQJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JheDaPC+5JGQE3KS2LiRjhnodZ++Y3uliI1CkUUrdMpLV1D4RUGqoJUw70VxVdFx8MSDGr2qaEtIFLr39FCTYtJiA8xsX3+UmXC7WQbRqshqfRiU5Ge5GZfGpPKachiOViGgisDoSOVg4FhrKq7Kz5fE+Pqaeudx3fejYgozx9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhcRUN76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HulINnWhlHDlPoeRpsatP/DDOA0LcRAKrvWtyvZnVhFOV+RvVTOr+wK8OIKIfURsNYpwVguW2f9piEBz3hK0DUgvpXkL7YfGYMQQvLPFDYU0mOnj+7LWDDE8VqaQrilUuC9pCHdM49z+e7Ptj7Pbgx5G9u3yWiE1Z856u08PvAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn+WzaeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhcRUN76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8C6C4CEC4;
-	Fri, 27 Sep 2024 12:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn+WzaeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D05C4CEC4;
+	Fri, 27 Sep 2024 12:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440214;
-	bh=YiecAvrW3+lZtZMp2zfUMWu/Abw3LMehK588afuSsg4=;
+	s=korg; t=1727440217;
+	bh=y5BFmTeSe9/AM1d26bEYjjDSnWu3iWDJ6JiKpyZJQJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhcRUN76setXgB0tfqRYX3RBL+HnCNSMG+jnKUvC+E/LYRZeQAWPWJvtG5hbv/pr/
-	 KVtBMW4C0I+xqw2vFYCAOk2cQxdZsTA8qMUNRYb8lCY0xHNa/PdXaBxMrGgOS2zTx+
-	 +Ax2SBtU5oOWqp3Z+VpdjcoUo3E0b2OLsCgC5Q1U=
+	b=vn+WzaeFs7138A7qNHUwp1+wOynfbXy7G7yJwaKBs8Am1FWzY2+Jd1jOOiPd/vFzE
+	 kndiRsoKzN5in+ENfNJzzjevJ5aYklFwrfnQZmfc0O2MUoONoHSVye0x+ESXdwXGaq
+	 WHYI+O3goV2sXBL2lXJqYdKOR7iBVWw/r0P69rPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Larabel <michael@michaellarabel.com>,
 	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 04/12] powercap/intel_rapl: Add support for AMD family 1Ah
-Date: Fri, 27 Sep 2024 14:24:07 +0200
-Message-ID: <20240927121715.410913930@linuxfoundation.org>
+Subject: [PATCH 6.11 05/12] powercap/intel_rapl: Fix the energy-pkg event for AMD CPUs
+Date: Fri, 27 Sep 2024 14:24:08 +0200
+Message-ID: <20240927121715.461646108@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
 References: <20240927121715.213013166@linuxfoundation.org>
@@ -54,32 +55,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit 166df51097a258a14fe9e946e2157f3b75eeb3c2 ]
+[ Upstream commit 26096aed255fbac9501718174dbb24c935d8854e ]
 
-AMD Family 1Ah's RAPL MSRs are identical to Family 19h's,
-extend Family 19h's support to Family 1Ah.
+After commit ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf"),
+on AMD processors that support extended CPUID leaf 0x80000026, the
+topology_logical_die_id() macros, no longer returns package id, instead it
+returns the CCD (Core Complex Die) id. This leads to the energy-pkg
+event scope to be modified to CCD instead of package.
 
+For more historical context, please refer to commit 32fb480e0a2c
+("powercap/intel_rapl: Support multi-die/package"), which initially changed
+the RAPL scope from package to die for all systems, as Intel systems
+with Die enumeration have RAPL scope as die, and those without die
+enumeration are not affected. So, all systems(Intel, AMD, Hygon), worked
+correctly with topology_logical_die_id() until recently, but this changed
+after the "0x80000026 leaf" commit mentioned above.
+
+Future multi-die Intel systems will have package scope RAPL counters,
+but they will be using TPMI RAPL interface, which is not affected by
+this change.
+
+Replacing topology_logical_die_id() with topology_physical_package_id()
+conditionally only for AMD and Hygon fixes the energy-pkg event.
+
+On an AMD 2 socket 8 CCD Zen4 server:
+
+Before:
+
+linux$ ls /sys/class/powercap/
+intel-rapl      intel-rapl:4    intel-rapl:8:0  intel-rapl:d
+intel-rapl:0    intel-rapl:4:0  intel-rapl:9    intel-rapl:d:0
+intel-rapl:0:0  intel-rapl:5    intel-rapl:9:0  intel-rapl:e
+intel-rapl:1    intel-rapl:5:0  intel-rapl:a    intel-rapl:e:0
+intel-rapl:1:0  intel-rapl:6    intel-rapl:a:0  intel-rapl:f
+intel-rapl:2    intel-rapl:6:0  intel-rapl:b    intel-rapl:f:0
+intel-rapl:2:0  intel-rapl:7    intel-rapl:b:0
+intel-rapl:3    intel-rapl:7:0  intel-rapl:c
+intel-rapl:3:0  intel-rapl:8    intel-rapl:c:0
+
+After:
+
+linux$ ls /sys/class/powercap/
+intel-rapl  intel-rapl:0  intel-rapl:0:0  intel-rapl:1  intel-rapl:1:0
+
+Only one sysfs entry per-event per-package is created after this change.
+
+Fixes: 63edbaa48a57 ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf")
+Reported-by: Michael Larabel <michael@michaellarabel.com>
 Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://patch.msgid.link/20240719101234.50827-1-Dhananjay.Ugwekar@amd.com
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://patch.msgid.link/20240730044917.4680-3-Dhananjay.Ugwekar@amd.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/powercap/intel_rapl_common.c | 34 ++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 3cffa6c795388..8b7a5a31e8c17 100644
+index 8b7a5a31e8c17..5a6d05bf847ce 100644
 --- a/drivers/powercap/intel_rapl_common.c
 +++ b/drivers/powercap/intel_rapl_common.c
-@@ -1285,6 +1285,7 @@ static const struct x86_cpu_id rapl_ids[] __initconst = {
+@@ -2129,6 +2129,21 @@ void rapl_remove_package(struct rapl_package *rp)
+ }
+ EXPORT_SYMBOL_GPL(rapl_remove_package);
  
- 	X86_MATCH_VENDOR_FAM(AMD, 0x17, &rapl_defaults_amd),
- 	X86_MATCH_VENDOR_FAM(AMD, 0x19, &rapl_defaults_amd),
-+	X86_MATCH_VENDOR_FAM(AMD, 0x1A, &rapl_defaults_amd),
- 	X86_MATCH_VENDOR_FAM(HYGON, 0x18, &rapl_defaults_amd),
- 	{}
- };
++/*
++ * RAPL Package energy counter scope:
++ * 1. AMD/HYGON platforms use per-PKG package energy counter
++ * 2. For Intel platforms
++ *	2.1 CLX-AP platform has per-DIE package energy counter
++ *	2.2 Other platforms that uses MSR RAPL are single die systems so the
++ *          package energy counter can be considered as per-PKG/per-DIE,
++ *          here it is considered as per-DIE.
++ *	2.3 New platforms that use TPMI RAPL doesn't care about the
++ *	    scope because they are not MSR/CPU based.
++ */
++#define rapl_msrs_are_pkg_scope()				\
++	(boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||	\
++	 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
++
+ /* caller to ensure CPU hotplug lock is held */
+ struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
+ 							 bool id_is_cpu)
+@@ -2136,8 +2151,14 @@ struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_
+ 	struct rapl_package *rp;
+ 	int uid;
+ 
+-	if (id_is_cpu)
+-		uid = topology_logical_die_id(id);
++	if (id_is_cpu) {
++		uid = rapl_msrs_are_pkg_scope() ?
++		      topology_physical_package_id(id) : topology_logical_die_id(id);
++		if (uid < 0) {
++			pr_err("topology_logical_(package/die)_id() returned a negative value");
++			return ERR_PTR(-EINVAL);
++		}
++	}
+ 	else
+ 		uid = id;
+ 
+@@ -2169,9 +2190,14 @@ struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *pr
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	if (id_is_cpu) {
+-		rp->id = topology_logical_die_id(id);
++		rp->id = rapl_msrs_are_pkg_scope() ?
++			 topology_physical_package_id(id) : topology_logical_die_id(id);
++		if ((int)(rp->id) < 0) {
++			pr_err("topology_logical_(package/die)_id() returned a negative value");
++			return ERR_PTR(-EINVAL);
++		}
+ 		rp->lead_cpu = id;
+-		if (topology_max_dies_per_package() > 1)
++		if (!rapl_msrs_are_pkg_scope() && topology_max_dies_per_package() > 1)
+ 			snprintf(rp->name, PACKAGE_DOMAIN_NAME_LENGTH, "package-%d-die-%d",
+ 				 topology_physical_package_id(id), topology_die_id(id));
+ 		else
 -- 
 2.43.0
 
