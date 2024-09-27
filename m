@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE0018A6C3;
-	Fri, 27 Sep 2024 12:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E10C18A6C3;
+	Fri, 27 Sep 2024 12:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440189; cv=none; b=lZINwq47HUDLk6TAdplFXdqC7qxh92Haf4de0sop8hDv1/MqnkXjvPF53TU8lZ7hhrk6P9aLODy8wmd2Iy9b+iRK1vIiRXebA6Us4XRDqg+YujHvpoOiNnefupo1EHL6VXtbCS+SFm5oV7M7Hf0m0WX8uZbth/7h+fu8pNdLncA=
+	t=1727440192; cv=none; b=DU2KtmTYOE1YfVILlSIVcQLV+ZkJ1re6QbFplgp8P9eAnefDespU9Bmt3Lx8K1afAASfjL8TUSwFqZJHhCcGl9n6NHHJO0navIXqGnmGMTXcUaxi5UJEgnqyT6tP4JIIa5YvWw5DPJj5Cr1Xh5u9OX7UbPXb4/04ojZSqj5VXOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440189; c=relaxed/simple;
-	bh=iqKLbNMTKd0pHXewOyu5j9Sf9WhnRjf96dTHXhNpr94=;
+	s=arc-20240116; t=1727440192; c=relaxed/simple;
+	bh=Kwfqw2krzGFA+pYUlc3YuI+r63k6SDkiRfXKiNRiwUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkZcEel+1U/LtKIVO0uQkY6ILmsGVDWi1U3xeuuiJK+GscIZHh6sYIaBBuL1EMdRpZq0hgYaRmcZtEEYF+rGS9Qa0oT8V8MEukZs7TGYCZd4imhxDcvTKeFkTgGiaU6Mr9Zbvf+fZ//JpNcFJvSGW928Pq1/qqGS+nOozloZMgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzWIL9li; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PyMqnysFQaOQgvdvt9DIWCLE+ThQLmpoooFmxtizYeWZmSHiXYBroSjj7xuzhyzyQU4b3PItQf9M3TgnxWGkCghwvf7nq/MnwMc5STEtuIR55z2425xnS+94t5YEwkbbSEgjZ/kavbmWsr9YM0RcsiMX7flJjEBQIlr9pVqogpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7hFgcvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzWIL9li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8D8C4CEC4;
-	Fri, 27 Sep 2024 12:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7hFgcvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD693C4CEC4;
+	Fri, 27 Sep 2024 12:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440189;
-	bh=iqKLbNMTKd0pHXewOyu5j9Sf9WhnRjf96dTHXhNpr94=;
+	s=korg; t=1727440192;
+	bh=Kwfqw2krzGFA+pYUlc3YuI+r63k6SDkiRfXKiNRiwUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzWIL9liStZHJFpH1AgqMrFh0KkPvbuAMt0nzgyLxbjDdBFCudo4iRNZqjCIbWKlv
-	 jth2A30ALzLtFJbrWNMfMpEirdutVReQCNLpacg/Wra8HF67DJcIMTfPzawZ2Y8EVE
-	 MeZR9R9PKB8FHUIYn9y5upHqpaPqvU94rRFeLbgw=
+	b=n7hFgcvfiOsiR6VSgbY7DbF815VGRHFVoonbXPOIe/frNp+nb4PqPEjeluDHg2BDd
+	 fYS+aFvewi5zoGVjjODCOPjOsydhbJWgECIHBAE29W7o07XYsLr3hSPZgmHNwgJhl1
+	 VBEuXlOd7pF5A1SiAWWIvalj/351Z0PnOwd/2g+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Beckett <bob.beckett@collabora.com>,
-	Keith Busch <kbusch@kernel.org>,
-	"Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.10 54/58] nvme-pci: qdepth 1 quirk
-Date: Fri, 27 Sep 2024 14:23:56 +0200
-Message-ID: <20240927121721.031312062@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.10 55/58] can: mcp251xfd: properly indent labels
+Date: Fri, 27 Sep 2024 14:23:57 +0200
+Message-ID: <20240927121721.079241669@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -51,84 +49,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 83bdfcbdbe5d901c5fa432decf12e1725a840a56 upstream.
+commit 51b2a721612236335ddec4f3fb5f59e72a204f3a upstream.
 
-Another device has been reported to be unreliable if we have more than
-one outstanding command. In this new case, data corruption may occur.
-Since we have two devices now needing this quirky behavior, make a
-generic quirk flag.
+To fix the coding style, remove the whitespace in front of labels.
 
-The same Apple quirk is clearly not "temporary", so update the comment
-while moving it.
-
-Link: https://lore.kernel.org/linux-nvme/191d810a4e3.fcc6066c765804.973611676137075390@collabora.com/
-Reported-by: Robert Beckett <bob.beckett@collabora.com>
-Reviewed-by: Christoph Hellwig hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Cc: "Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/nvme.h |    5 +++++
- drivers/nvme/host/pci.c  |   18 +++++++++---------
- 2 files changed, 14 insertions(+), 9 deletions(-)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c   |   34 +++++++++++------------
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c   |    2 -
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c |    2 -
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c    |    2 -
+ 4 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -90,6 +90,11 @@ enum nvme_quirks {
- 	NVME_QUIRK_NO_DEEPEST_PS		= (1 << 5),
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+@@ -791,7 +791,7 @@ static int mcp251xfd_chip_start(struct m
  
- 	/*
-+	 *  Problems seen with concurrent commands
-+	 */
-+	NVME_QUIRK_QDEPTH_ONE			= (1 << 6),
-+
-+	/*
- 	 * Set MEDIUM priority on SQ creation
- 	 */
- 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2528,15 +2528,8 @@ static int nvme_pci_enable(struct nvme_d
- 	else
- 		dev->io_sqes = NVME_NVM_IOSQES;
+ 	return 0;
  
--	/*
--	 * Temporary fix for the Apple controller found in the MacBook8,1 and
--	 * some MacBook7,1 to avoid controller resets and data loss.
--	 */
--	if (pdev->vendor == PCI_VENDOR_ID_APPLE && pdev->device == 0x2001) {
-+	if (dev->ctrl.quirks & NVME_QUIRK_QDEPTH_ONE) {
- 		dev->q_depth = 2;
--		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
--			"set queue depth=%u to work around controller resets\n",
--			dev->q_depth);
- 	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
- 		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
- 		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
-@@ -3401,6 +3394,8 @@ static const struct pci_device_id nvme_i
- 				NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
-+		.driver_data = NVME_QUIRK_QDEPTH_ONE },
- 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
- 				NVME_QUIRK_BOGUS_NID, },
-@@ -3535,7 +3530,12 @@ static const struct pci_device_id nvme_i
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0xcd02),
- 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
--		.driver_data = NVME_QUIRK_SINGLE_VECTOR },
-+		/*
-+		 * Fix for the Apple controller found in the MacBook8,1 and
-+		 * some MacBook7,1 to avoid controller resets and data loss.
-+		 */
-+		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
-+				NVME_QUIRK_QDEPTH_ONE },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
- 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
+- out_chip_stop:
++out_chip_stop:
+ 	mcp251xfd_dump(priv);
+ 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
+ 
+@@ -1576,7 +1576,7 @@ static irqreturn_t mcp251xfd_irq(int irq
+ 		handled = IRQ_HANDLED;
+ 	} while (1);
+ 
+- out_fail:
++out_fail:
+ 	can_rx_offload_threaded_irq_finish(&priv->offload);
+ 
+ 	netdev_err(priv->ndev, "IRQ handler returned %d (intf=0x%08x).\n",
+@@ -1641,22 +1641,22 @@ static int mcp251xfd_open(struct net_dev
+ 
+ 	return 0;
+ 
+- out_free_irq:
++out_free_irq:
+ 	free_irq(spi->irq, priv);
+- out_destroy_workqueue:
++out_destroy_workqueue:
+ 	destroy_workqueue(priv->wq);
+- out_can_rx_offload_disable:
++out_can_rx_offload_disable:
+ 	can_rx_offload_disable(&priv->offload);
+ 	set_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
+ 	mcp251xfd_timestamp_stop(priv);
+- out_transceiver_disable:
++out_transceiver_disable:
+ 	mcp251xfd_transceiver_disable(priv);
+- out_mcp251xfd_ring_free:
++out_mcp251xfd_ring_free:
+ 	mcp251xfd_ring_free(priv);
+- out_pm_runtime_put:
++out_pm_runtime_put:
+ 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
+ 	pm_runtime_put(ndev->dev.parent);
+- out_close_candev:
++out_close_candev:
+ 	close_candev(ndev);
+ 
+ 	return err;
+@@ -1820,9 +1820,9 @@ mcp251xfd_register_get_dev_id(const stru
+ 	*effective_speed_hz_slow = xfer[0].effective_speed_hz;
+ 	*effective_speed_hz_fast = xfer[1].effective_speed_hz;
+ 
+- out_kfree_buf_tx:
++out_kfree_buf_tx:
+ 	kfree(buf_tx);
+- out_kfree_buf_rx:
++out_kfree_buf_rx:
+ 	kfree(buf_rx);
+ 
+ 	return err;
+@@ -1936,13 +1936,13 @@ static int mcp251xfd_register(struct mcp
+ 
+ 	return 0;
+ 
+- out_unregister_candev:
++out_unregister_candev:
+ 	unregister_candev(ndev);
+- out_chip_sleep:
++out_chip_sleep:
+ 	mcp251xfd_chip_sleep(priv);
+- out_runtime_disable:
++out_runtime_disable:
+ 	pm_runtime_disable(ndev->dev.parent);
+- out_runtime_put_noidle:
++out_runtime_put_noidle:
+ 	pm_runtime_put_noidle(ndev->dev.parent);
+ 	mcp251xfd_clks_and_vdd_disable(priv);
+ 
+@@ -2162,9 +2162,9 @@ static int mcp251xfd_probe(struct spi_de
+ 
+ 	return 0;
+ 
+- out_can_rx_offload_del:
++out_can_rx_offload_del:
+ 	can_rx_offload_del(&priv->offload);
+- out_free_candev:
++out_free_candev:
+ 	spi->max_speed_hz = priv->spi_max_speed_hz_orig;
+ 
+ 	free_candev(ndev);
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c
+@@ -94,7 +94,7 @@ static void mcp251xfd_dump_registers(con
+ 		kfree(buf);
+ 	}
+ 
+- out:
++out:
+ 	mcp251xfd_dump_header(iter, MCP251XFD_DUMP_OBJECT_TYPE_REG, reg);
+ }
+ 
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c
+@@ -397,7 +397,7 @@ mcp251xfd_regmap_crc_read(void *context,
+ 
+ 		return err;
+ 	}
+- out:
++out:
+ 	memcpy(val_buf, buf_rx->data, val_len);
+ 
+ 	return 0;
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
+@@ -219,7 +219,7 @@ int mcp251xfd_handle_tefif(struct mcp251
+ 		total_frame_len += frame_len;
+ 	}
+ 
+- out_netif_wake_queue:
++out_netif_wake_queue:
+ 	len = i;	/* number of handled goods TEFs */
+ 	if (len) {
+ 		struct mcp251xfd_tef_ring *ring = priv->tef;
 
 
