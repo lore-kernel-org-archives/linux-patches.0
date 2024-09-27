@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B12818A955;
-	Fri, 27 Sep 2024 12:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422C518C02A;
+	Fri, 27 Sep 2024 12:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440195; cv=none; b=rz/Rioa6MtIartxKNN/2Ogh4NOL3wOTlkp5yUy8Lm1fAwsfb9347jSfSxkIU0uOFZMQ9UnJ0TQhdCu/f1uEsBd8Vzi/xkPV7ZHAVJ0wA72HTh4+4tzFiRGoNe7RzM2ydiizvweWOHfUF45XuyX0/obK+foniCoB+EyLGh4vba7g=
+	t=1727440198; cv=none; b=ggiXDwqc9difoTnXmW6jQfVnY+qaWTPLpkxyHnnz+2OeUfEeXLtj9Et1RwdpbULEb646szB7Esbz06eckA6i8xe8LFJC7CiZV4klerwE6hUoN3oWVBR/H+vCXIADsLo3oLPYE8Kvnx56idG4EgoeDrE4EvRecomf4NVnmJq3cIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440195; c=relaxed/simple;
-	bh=otEUc5xKqe09hTzASdKEadP7xLP8frPyeaWnv+3G1fw=;
+	s=arc-20240116; t=1727440198; c=relaxed/simple;
+	bh=5Vf/j5PTcMHsWyaHEEhZ5mYlncKJhSaatW/iTyLA/GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I2OrybDfdnOqQmg5rrnhrsbFe8fN9M3DBCiWGlYcdcjtiumYXFSTBTfPM9sP9k9GoPhHxn3KatKsM7o09GSDTSQ1OZHv+oHjBr83yFkwWTNjKWh55lwGDWJOA9XBbFhAT+xwd87+3haRZxCkOq174x41Xn8/sfzfP6o+1QrTCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsS5M1pE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qNcCjCvpYkdeYuTcIELbjVS70zNFSngnEVgW6ZD1g8MEKCRfJLCdSfUxpigFyVUD46QDcJysd5FtKXboPKK083Wq2G2hwHURAWrt99mlB+1S9gkNDyUl/eVwyp76T0xXRLTrN3SUEcRrSRnLno7NwvzmZWnn1bxCFXSBAK4n8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5GbdQKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsS5M1pE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA45EC4CECD;
-	Fri, 27 Sep 2024 12:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5GbdQKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A8C4CEC6;
+	Fri, 27 Sep 2024 12:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440195;
-	bh=otEUc5xKqe09hTzASdKEadP7xLP8frPyeaWnv+3G1fw=;
+	s=korg; t=1727440197;
+	bh=5Vf/j5PTcMHsWyaHEEhZ5mYlncKJhSaatW/iTyLA/GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsS5M1pEtWC1VYDlDOm80Uu2jDufdblgTAh9tB0u+/HeNp5+oYrwrOf2H9H89aWGw
-	 dD1Xxd2K1mURIEum7MidAHmgP4H05KL5VsiWJHSfz1QGr3/rX7ygA5MzamGx3OBCUZ
-	 BcIpMSpgErpjy56Sl2W4TRkfpkpUZLqDvnKPIou0=
+	b=J5GbdQKkYZxa3dJpz39sN4eVWAnAsgd3Bh+DARNuRz+ec/2JxnPZgeq2QeMuaF1Zs
+	 tFEyBYrae+HHSCqKEggrXe0YoEoVgq7WUuXaTu0Ekn4s9/fat2Pt8bPPspILxK8eJ8
+	 hiGAjsWZjTfdoQo1Vxc34POJ7FzdoHiLhEJVjoBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Zhu <James.Zhu@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 46/58] drm: Use XArray instead of IDR for minors
-Date: Fri, 27 Sep 2024 14:23:48 +0200
-Message-ID: <20240927121720.669180089@linuxfoundation.org>
+Subject: [PATCH 6.11 01/12] drm: Use XArray instead of IDR for minors
+Date: Fri, 27 Sep 2024 14:24:04 +0200
+Message-ID: <20240927121715.266510250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
-References: <20240927121718.789211866@linuxfoundation.org>
+In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
+References: <20240927121715.213013166@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,7 +50,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -75,7 +75,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 25 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 535b624d4c9da..40cd4faca2b1e 100644
+index 93543071a5008..ae675a588a1df 100644
 --- a/drivers/gpu/drm/drm_drv.c
 +++ b/drivers/gpu/drm/drm_drv.c
 @@ -34,6 +34,7 @@
