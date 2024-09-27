@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DD018BBA0;
-	Fri, 27 Sep 2024 12:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEA618C33C;
+	Fri, 27 Sep 2024 12:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440209; cv=none; b=Xsbj9kPt3kgnVhn+sg9DFkRwEEaL5MYhT2ZrKyAsXiA/4wZyriVZH7ScqV7jirrEnNWV2/H6HLd9MHpDKEpMfb422T36Fev2OPC7FoEtQAME9XgKdJgtf2Mtih3Qn+tPX2LVee4k3CVJ5YGv6Vk1Gvy7mlGIBxHDUQt4QTPgsFQ=
+	t=1727440212; cv=none; b=NZ974KqBtWz08YWJtPVv8Y337+cny/st75QkU92StzrheqX66FFKmXLncUv9RLKGqJyMtNLr7qNbFbYHMN74mV/6uZZsG4HCE9IsswElwZhiWAMBGIxY3HP6fJpqRfNUjc/jj1PFKD21bjaFyTfyaqSxk+C97ZL5AghJvXwZ2Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440209; c=relaxed/simple;
-	bh=dTY1P4ZV0OOU1sKHjabYGSOtUg/iLfN/XimoPi4NggU=;
+	s=arc-20240116; t=1727440212; c=relaxed/simple;
+	bh=IuqfRS136alpo8UOMYv9ZGuZNdQs6I2o/WIMwpvKIBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s0/Swlb1lSVhL/m81q/wRJi+mB5Fw6ngG3UlCmj1ckuM9hwg+MbWAlU/g0VrirlKxw7JCJTGkN04kbmGfxrST7ptPDeGmXAJv4zUzoKjqIcr5kuExtlh4JITzByFtgXoH5Yu5c9rW3C8VkXBSA94cjBlvJFzDvnZxLOVVsq3ZPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcv8pGGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dq8c4SYYvOhIloDpwaGWkjRVriqTsLLp02l+LWlA7ePqoVdTtBuMUhG7pHrZCOPr9Ka6Qm32YqlRlE4+RrLSzM4tia1CEkCur3NDmsclNDZB61zh1A4Zfs/98CZlMV/d0C0U/hWUR2Q0R4HU+b0Jhwoo+oxc9i9l5YRYu71kFsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlDzuyhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcv8pGGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95FAC4CEC4;
-	Fri, 27 Sep 2024 12:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlDzuyhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709ECC4CECE;
+	Fri, 27 Sep 2024 12:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440209;
-	bh=dTY1P4ZV0OOU1sKHjabYGSOtUg/iLfN/XimoPi4NggU=;
+	s=korg; t=1727440211;
+	bh=IuqfRS136alpo8UOMYv9ZGuZNdQs6I2o/WIMwpvKIBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcv8pGGwOVCWz7GE64GcO7r+jXyQTj9fQwL8USNNbhifvnQffov7XJzXuijWJlh8u
-	 BQ5sqFJP7UJM7cdCrypPP2/OQ3JUfH0/Zl80w04KqHT2CJmQK3XRmWdenzC2/2Zc9S
-	 mAHx5M24BycTZrPnERBlx/uxxKXU+kS8k989tCXI=
+	b=jlDzuyhBG6h+TYuyfm1fYOa+jp0rzrH3KnOv3YPFYveClDHW8udPwBCo+Hz+7hxcr
+	 ahdEiLwT95SxCCgkx28SDdJrdHHNwG3Q0hXrNNnrDgUwbbPABdzTWHJyuaD0gL5dDz
+	 L22xdcLTWBjchFLnzEQTleDSsWEwrgGpj9mrZGy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Zhu <James.Zhu@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 02/12] accel: Use XArray instead of IDR for minors
-Date: Fri, 27 Sep 2024 14:24:05 +0200
-Message-ID: <20240927121715.315024263@linuxfoundation.org>
+Subject: [PATCH 6.11 03/12] drm: Expand max DRM device number to full MINORBITS
+Date: Fri, 27 Sep 2024 14:24:06 +0200
+Message-ID: <20240927121715.363220876@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
 References: <20240927121715.213013166@linuxfoundation.org>
@@ -55,435 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Michał Winiarski <michal.winiarski@intel.com>
 
-[ Upstream commit 45c4d994b82b08f0ce5eb50f8da29379c92a391e ]
+[ Upstream commit 071d583e01c88272f6ff216d4f867f8f35e94d7d ]
 
-Accel minor management is based on DRM (and is also using struct
-drm_minor internally), since DRM is using XArray for minors, it makes
-sense to also convert accel.
-As the two implementations are identical (only difference being the
-underlying xarray), move the accel_minor_* functionality to DRM.
+Having a limit of 64 DRM devices is not good enough for modern world
+where we have multi-GPU servers, SR-IOV virtual functions and virtual
+devices used for testing.
+Let's utilize full minor range for DRM devices.
+To avoid regressing the existing userspace, we're still maintaining the
+numbering scheme where 0-63 is used for primary, 64-127 is reserved
+(formerly for control) and 128-191 is used for render.
+For minors >= 192, we're allocating minors dynamically on a first-come,
+first-served basis.
 
 Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-4-michal.winiarski@intel.com
 Acked-by: James Zhu <James.Zhu@amd.com>
 Acked-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-3-michal.winiarski@intel.com
 Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/drm_accel.c      | 110 +++------------------------------
- drivers/gpu/drm/drm_drv.c      |  66 ++++++++++----------
- drivers/gpu/drm/drm_file.c     |   2 +-
- drivers/gpu/drm/drm_internal.h |   4 --
- include/drm/drm_accel.h        |  18 +-----
- include/drm/drm_file.h         |   5 ++
- 6 files changed, 47 insertions(+), 158 deletions(-)
+ drivers/gpu/drm/drm_drv.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/accel/drm_accel.c b/drivers/accel/drm_accel.c
-index 16c3edb8c46ee..aa826033b0ceb 100644
---- a/drivers/accel/drm_accel.c
-+++ b/drivers/accel/drm_accel.c
-@@ -8,7 +8,7 @@
- 
- #include <linux/debugfs.h>
- #include <linux/device.h>
--#include <linux/idr.h>
-+#include <linux/xarray.h>
- 
- #include <drm/drm_accel.h>
- #include <drm/drm_auth.h>
-@@ -18,8 +18,7 @@
- #include <drm/drm_ioctl.h>
- #include <drm/drm_print.h>
- 
--static DEFINE_SPINLOCK(accel_minor_lock);
--static struct idr accel_minors_idr;
-+DEFINE_XARRAY_ALLOC(accel_minors_xa);
- 
- static struct dentry *accel_debugfs_root;
- 
-@@ -117,99 +116,6 @@ void accel_set_device_instance_params(struct device *kdev, int index)
- 	kdev->type = &accel_sysfs_device_minor;
- }
- 
--/**
-- * accel_minor_alloc() - Allocates a new accel minor
-- *
-- * This function access the accel minors idr and allocates from it
-- * a new id to represent a new accel minor
-- *
-- * Return: A new id on success or error code in case idr_alloc failed
-- */
--int accel_minor_alloc(void)
--{
--	unsigned long flags;
--	int r;
--
--	spin_lock_irqsave(&accel_minor_lock, flags);
--	r = idr_alloc(&accel_minors_idr, NULL, 0, ACCEL_MAX_MINORS, GFP_NOWAIT);
--	spin_unlock_irqrestore(&accel_minor_lock, flags);
--
--	return r;
--}
--
--/**
-- * accel_minor_remove() - Remove an accel minor
-- * @index: The minor id to remove.
-- *
-- * This function access the accel minors idr and removes from
-- * it the member with the id that is passed to this function.
-- */
--void accel_minor_remove(int index)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&accel_minor_lock, flags);
--	idr_remove(&accel_minors_idr, index);
--	spin_unlock_irqrestore(&accel_minor_lock, flags);
--}
--
--/**
-- * accel_minor_replace() - Replace minor pointer in accel minors idr.
-- * @minor: Pointer to the new minor.
-- * @index: The minor id to replace.
-- *
-- * This function access the accel minors idr structure and replaces the pointer
-- * that is associated with an existing id. Because the minor pointer can be
-- * NULL, we need to explicitly pass the index.
-- *
-- * Return: 0 for success, negative value for error
-- */
--void accel_minor_replace(struct drm_minor *minor, int index)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&accel_minor_lock, flags);
--	idr_replace(&accel_minors_idr, minor, index);
--	spin_unlock_irqrestore(&accel_minor_lock, flags);
--}
--
--/*
-- * Looks up the given minor-ID and returns the respective DRM-minor object. The
-- * refence-count of the underlying device is increased so you must release this
-- * object with accel_minor_release().
-- *
-- * The object can be only a drm_minor that represents an accel device.
-- *
-- * As long as you hold this minor, it is guaranteed that the object and the
-- * minor->dev pointer will stay valid! However, the device may get unplugged and
-- * unregistered while you hold the minor.
-- */
--static struct drm_minor *accel_minor_acquire(unsigned int minor_id)
--{
--	struct drm_minor *minor;
--	unsigned long flags;
--
--	spin_lock_irqsave(&accel_minor_lock, flags);
--	minor = idr_find(&accel_minors_idr, minor_id);
--	if (minor)
--		drm_dev_get(minor->dev);
--	spin_unlock_irqrestore(&accel_minor_lock, flags);
--
--	if (!minor) {
--		return ERR_PTR(-ENODEV);
--	} else if (drm_dev_is_unplugged(minor->dev)) {
--		drm_dev_put(minor->dev);
--		return ERR_PTR(-ENODEV);
--	}
--
--	return minor;
--}
--
--static void accel_minor_release(struct drm_minor *minor)
--{
--	drm_dev_put(minor->dev);
--}
--
- /**
-  * accel_open - open method for ACCEL file
-  * @inode: device inode
-@@ -227,7 +133,7 @@ int accel_open(struct inode *inode, struct file *filp)
- 	struct drm_minor *minor;
- 	int retcode;
- 
--	minor = accel_minor_acquire(iminor(inode));
-+	minor = drm_minor_acquire(&accel_minors_xa, iminor(inode));
- 	if (IS_ERR(minor))
- 		return PTR_ERR(minor);
- 
-@@ -246,7 +152,7 @@ int accel_open(struct inode *inode, struct file *filp)
- 
- err_undo:
- 	atomic_dec(&dev->open_count);
--	accel_minor_release(minor);
-+	drm_minor_release(minor);
- 	return retcode;
- }
- EXPORT_SYMBOL_GPL(accel_open);
-@@ -257,7 +163,7 @@ static int accel_stub_open(struct inode *inode, struct file *filp)
- 	struct drm_minor *minor;
- 	int err;
- 
--	minor = accel_minor_acquire(iminor(inode));
-+	minor = drm_minor_acquire(&accel_minors_xa, iminor(inode));
- 	if (IS_ERR(minor))
- 		return PTR_ERR(minor);
- 
-@@ -274,7 +180,7 @@ static int accel_stub_open(struct inode *inode, struct file *filp)
- 		err = 0;
- 
- out:
--	accel_minor_release(minor);
-+	drm_minor_release(minor);
- 
- 	return err;
- }
-@@ -290,15 +196,13 @@ void accel_core_exit(void)
- 	unregister_chrdev(ACCEL_MAJOR, "accel");
- 	debugfs_remove(accel_debugfs_root);
- 	accel_sysfs_destroy();
--	idr_destroy(&accel_minors_idr);
-+	WARN_ON(!xa_empty(&accel_minors_xa));
- }
- 
- int __init accel_core_init(void)
- {
- 	int ret;
- 
--	idr_init(&accel_minors_idr);
--
- 	ret = accel_sysfs_init();
- 	if (ret < 0) {
- 		DRM_ERROR("Cannot create ACCEL class: %d\n", ret);
 diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index ae675a588a1df..7e0fa5a2a3182 100644
+index 7e0fa5a2a3182..c734e6a1c4ce2 100644
 --- a/drivers/gpu/drm/drm_drv.c
 +++ b/drivers/gpu/drm/drm_drv.c
-@@ -55,7 +55,7 @@ MODULE_AUTHOR("Gareth Hughes, Leif Delgass, José Fonseca, Jon Smirl");
- MODULE_DESCRIPTION("DRM shared core routines");
- MODULE_LICENSE("GPL and additional rights");
- 
--static DEFINE_XARRAY_ALLOC(drm_minors_xa);
-+DEFINE_XARRAY_ALLOC(drm_minors_xa);
- 
- /*
-  * If the drm core fails to init for whatever reason,
-@@ -83,6 +83,18 @@ DEFINE_STATIC_SRCU(drm_unplug_srcu);
-  * registered and unregistered dynamically according to device-state.
-  */
- 
-+static struct xarray *drm_minor_get_xa(enum drm_minor_type type)
-+{
-+	if (type == DRM_MINOR_PRIMARY || type == DRM_MINOR_RENDER)
-+		return &drm_minors_xa;
-+#if IS_ENABLED(CONFIG_DRM_ACCEL)
-+	else if (type == DRM_MINOR_ACCEL)
-+		return &accel_minors_xa;
-+#endif
-+	else
-+		return ERR_PTR(-EOPNOTSUPP);
-+}
-+
- static struct drm_minor **drm_minor_get_slot(struct drm_device *dev,
- 					     enum drm_minor_type type)
- {
-@@ -106,18 +118,18 @@ static void drm_minor_alloc_release(struct drm_device *dev, void *data)
- 
- 	put_device(minor->kdev);
- 
--	if (minor->type == DRM_MINOR_ACCEL)
--		accel_minor_remove(minor->index);
--	else
--		xa_erase(&drm_minors_xa, minor->index);
-+	xa_erase(drm_minor_get_xa(minor->type), minor->index);
+@@ -121,10 +121,19 @@ static void drm_minor_alloc_release(struct drm_device *dev, void *data)
+ 	xa_erase(drm_minor_get_xa(minor->type), minor->index);
  }
  
--#define DRM_MINOR_LIMIT(t) ({ typeof(t) _t = (t); XA_LIMIT(64 * _t, 64 * _t + 63); })
-+#define DRM_MINOR_LIMIT(t) ({ \
-+	typeof(t) _t = (t); \
-+	_t == DRM_MINOR_ACCEL ? XA_LIMIT(0, ACCEL_MAX_MINORS) : XA_LIMIT(64 * _t, 64 * _t + 63); \
-+})
++/*
++ * DRM used to support 64 devices, for backwards compatibility we need to maintain the
++ * minor allocation scheme where minors 0-63 are primary nodes, 64-127 are control nodes,
++ * and 128-191 are render nodes.
++ * After reaching the limit, we're allocating minors dynamically - first-come, first-serve.
++ * Accel nodes are using a distinct major, so the minors are allocated in continuous 0-MAX
++ * range.
++ */
+ #define DRM_MINOR_LIMIT(t) ({ \
+ 	typeof(t) _t = (t); \
+ 	_t == DRM_MINOR_ACCEL ? XA_LIMIT(0, ACCEL_MAX_MINORS) : XA_LIMIT(64 * _t, 64 * _t + 63); \
+ })
++#define DRM_EXTENDED_MINOR_LIMIT XA_LIMIT(192, (1 << MINORBITS) - 1)
  
  static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
  {
- 	struct drm_minor *minor;
--	int index, r;
-+	int r;
+@@ -140,6 +149,9 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
  
- 	minor = drmm_kzalloc(dev, sizeof(*minor), GFP_KERNEL);
- 	if (!minor)
-@@ -126,18 +138,11 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- 	minor->type = type;
- 	minor->dev = dev;
- 
--	if (type == DRM_MINOR_ACCEL) {
--		r = accel_minor_alloc();
--		index = r;
--	} else {
--		r = xa_alloc(&drm_minors_xa, &index, NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
--	}
--
-+	r = xa_alloc(drm_minor_get_xa(type), &minor->index,
-+		     NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
+ 	r = xa_alloc(drm_minor_get_xa(type), &minor->index,
+ 		     NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
++	if (r == -EBUSY && (type == DRM_MINOR_PRIMARY || type == DRM_MINOR_RENDER))
++		r = xa_alloc(&drm_minors_xa, &minor->index,
++			     NULL, DRM_EXTENDED_MINOR_LIMIT, GFP_KERNEL);
  	if (r < 0)
  		return r;
  
--	minor->index = index;
--
- 	r = drmm_add_action_or_reset(dev, drm_minor_alloc_release, minor);
- 	if (r)
- 		return r;
-@@ -176,16 +181,12 @@ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
- 		goto err_debugfs;
- 
- 	/* replace NULL with @minor so lookups will succeed from now on */
--	if (minor->type == DRM_MINOR_ACCEL) {
--		accel_minor_replace(minor, minor->index);
--	} else {
--		entry = xa_store(&drm_minors_xa, minor->index, minor, GFP_KERNEL);
--		if (xa_is_err(entry)) {
--			ret = xa_err(entry);
--			goto err_debugfs;
--		}
--		WARN_ON(entry);
-+	entry = xa_store(drm_minor_get_xa(type), minor->index, minor, GFP_KERNEL);
-+	if (xa_is_err(entry)) {
-+		ret = xa_err(entry);
-+		goto err_debugfs;
- 	}
-+	WARN_ON(entry);
- 
- 	DRM_DEBUG("new minor registered %d\n", minor->index);
- 	return 0;
-@@ -204,10 +205,7 @@ static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type typ
- 		return;
- 
- 	/* replace @minor with NULL so lookups will fail from now on */
--	if (minor->type == DRM_MINOR_ACCEL)
--		accel_minor_replace(NULL, minor->index);
--	else
--		xa_store(&drm_minors_xa, minor->index, NULL, GFP_KERNEL);
-+	xa_store(drm_minor_get_xa(type), minor->index, NULL, GFP_KERNEL);
- 
- 	device_del(minor->kdev);
- 	dev_set_drvdata(minor->kdev, NULL); /* safety belt */
-@@ -223,15 +221,15 @@ static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type typ
-  * minor->dev pointer will stay valid! However, the device may get unplugged and
-  * unregistered while you hold the minor.
-  */
--struct drm_minor *drm_minor_acquire(unsigned int minor_id)
-+struct drm_minor *drm_minor_acquire(struct xarray *minor_xa, unsigned int minor_id)
- {
- 	struct drm_minor *minor;
- 
--	xa_lock(&drm_minors_xa);
--	minor = xa_load(&drm_minors_xa, minor_id);
-+	xa_lock(minor_xa);
-+	minor = xa_load(minor_xa, minor_id);
- 	if (minor)
- 		drm_dev_get(minor->dev);
--	xa_unlock(&drm_minors_xa);
-+	xa_unlock(minor_xa);
- 
- 	if (!minor) {
- 		return ERR_PTR(-ENODEV);
-@@ -1024,7 +1022,7 @@ static int drm_stub_open(struct inode *inode, struct file *filp)
- 
- 	DRM_DEBUG("\n");
- 
--	minor = drm_minor_acquire(iminor(inode));
-+	minor = drm_minor_acquire(&drm_minors_xa, iminor(inode));
- 	if (IS_ERR(minor))
- 		return PTR_ERR(minor);
- 
-diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-index 714e42b051080..f917b259b3342 100644
---- a/drivers/gpu/drm/drm_file.c
-+++ b/drivers/gpu/drm/drm_file.c
-@@ -364,7 +364,7 @@ int drm_open(struct inode *inode, struct file *filp)
- 	struct drm_minor *minor;
- 	int retcode;
- 
--	minor = drm_minor_acquire(iminor(inode));
-+	minor = drm_minor_acquire(&drm_minors_xa, iminor(inode));
- 	if (IS_ERR(minor))
- 		return PTR_ERR(minor);
- 
-diff --git a/drivers/gpu/drm/drm_internal.h b/drivers/gpu/drm/drm_internal.h
-index 690505a1f7a5d..12acf44c4e240 100644
---- a/drivers/gpu/drm/drm_internal.h
-+++ b/drivers/gpu/drm/drm_internal.h
-@@ -81,10 +81,6 @@ void drm_prime_destroy_file_private(struct drm_prime_file_private *prime_fpriv);
- void drm_prime_remove_buf_handle(struct drm_prime_file_private *prime_fpriv,
- 				 uint32_t handle);
- 
--/* drm_drv.c */
--struct drm_minor *drm_minor_acquire(unsigned int minor_id);
--void drm_minor_release(struct drm_minor *minor);
--
- /* drm_managed.c */
- void drm_managed_release(struct drm_device *dev);
- void drmm_add_final_kfree(struct drm_device *dev, void *container);
-diff --git a/include/drm/drm_accel.h b/include/drm/drm_accel.h
-index f4d3784b1dce0..8867ce0be94cd 100644
---- a/include/drm/drm_accel.h
-+++ b/include/drm/drm_accel.h
-@@ -51,11 +51,10 @@
- 
- #if IS_ENABLED(CONFIG_DRM_ACCEL)
- 
-+extern struct xarray accel_minors_xa;
-+
- void accel_core_exit(void);
- int accel_core_init(void);
--void accel_minor_remove(int index);
--int accel_minor_alloc(void);
--void accel_minor_replace(struct drm_minor *minor, int index);
- void accel_set_device_instance_params(struct device *kdev, int index);
- int accel_open(struct inode *inode, struct file *filp);
- void accel_debugfs_init(struct drm_device *dev);
-@@ -73,19 +72,6 @@ static inline int __init accel_core_init(void)
- 	return 0;
- }
- 
--static inline void accel_minor_remove(int index)
--{
--}
--
--static inline int accel_minor_alloc(void)
--{
--	return -EOPNOTSUPP;
--}
--
--static inline void accel_minor_replace(struct drm_minor *minor, int index)
--{
--}
--
- static inline void accel_set_device_instance_params(struct device *kdev, int index)
- {
- }
-diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-index ab230d3af138d..8c0030c773081 100644
---- a/include/drm/drm_file.h
-+++ b/include/drm/drm_file.h
-@@ -45,6 +45,8 @@ struct drm_printer;
- struct device;
- struct file;
- 
-+extern struct xarray drm_minors_xa;
-+
- /*
-  * FIXME: Not sure we want to have drm_minor here in the end, but to avoid
-  * header include loops we need it here for now.
-@@ -434,6 +436,9 @@ static inline bool drm_is_accel_client(const struct drm_file *file_priv)
- 
- void drm_file_update_pid(struct drm_file *);
- 
-+struct drm_minor *drm_minor_acquire(struct xarray *minors_xa, unsigned int minor_id);
-+void drm_minor_release(struct drm_minor *minor);
-+
- int drm_open(struct inode *inode, struct file *filp);
- int drm_open_helper(struct file *filp, struct drm_minor *minor);
- ssize_t drm_read(struct file *filp, char __user *buffer,
 -- 
 2.43.0
 
