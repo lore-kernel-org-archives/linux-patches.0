@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F411E507;
-	Fri, 27 Sep 2024 12:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9103C18453A;
+	Fri, 27 Sep 2024 12:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440383; cv=none; b=psZroH6e4hifJHgvw3wJDlvleTEziPGXe1Vf0rmJX7cK3SbH/zmm/cCZ/EJ+oh1Ie+PevG9efYGLvU+cdbxCXlbfWzYtNj2A2/oxGETD9aJSQW4APFbFCshXSfQrurd77Rrq6Kz5j1Az+TykxTs1u+4sz9UsOjhgsMi9FOsWRfU=
+	t=1727440386; cv=none; b=jgF062D/+To4dBFLtQt+lB586bnjM9HBxPYdO8q214z1S9Qxo6oMv2O7VnAZHIK4pRMKbuqchY4gRi3W4UrFai/9SZGJs8H3rjIIGg2F2Tcm50hTaaNXBSJ36HOBDAfKlTeWgz01QlmRCS+35n1SOj6P+Pmy/ekcgl3o0r4sqmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440383; c=relaxed/simple;
-	bh=ZsFV+plJ5d4VtN7tBtYUc8y8D2NkgsLmnlOPWRzr1Oo=;
+	s=arc-20240116; t=1727440386; c=relaxed/simple;
+	bh=Ne400X+2CQrPzZ4tLV4a3rRkTpvJ8p35LUI3Xe4bIqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1dCjzX6zEvvOxbHU/66oIWI7l+59fcYY+gbMDpKFw6f/UskLsDDGBUQYFpR+b9+s7XAkn9I9YjsFA8X1bp6EFcdU0yCgAm/pmn9JpyjeaHhWrpHTrc/5tvzRjWhVFfiNHajE3Zobl62yVbOse5S1l/BwQWHVgqYxo6WaTF9i0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEwhP0vm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBOGV6K2JPH3pz9sFMyt1aY0EQFZiKwNkvxRDBUnSoj/2YJr+XV/DFPBoNa3OG5AmkGPrfMybiF9Qn0hKTX0Qxqtwrey9TJzHw87SkLEngUQFaz/h2E8u/CRObxH374a7p4wnzGgPVLEvjCSZimQDfz8oIBXD+WZ4LyE2sOKcO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn/H+30C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEwhP0vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F68C4CEC4;
-	Fri, 27 Sep 2024 12:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn/H+30C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3EFC4CEC4;
+	Fri, 27 Sep 2024 12:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440383;
-	bh=ZsFV+plJ5d4VtN7tBtYUc8y8D2NkgsLmnlOPWRzr1Oo=;
+	s=korg; t=1727440386;
+	bh=Ne400X+2CQrPzZ4tLV4a3rRkTpvJ8p35LUI3Xe4bIqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEwhP0vmp7JbetzSLRXe+sIZsR/8VZH6yB2eykf3H66Gm0xuUqAE4wJ4pWToQzefe
-	 NYWYMQcYRDOOvt6ztomGhdonnn7o/69YT83Kw4tDkCmyijgrvJAlcd04EhSl0mHLXz
-	 GZiqPXHUvQzfx/LQmNGgoNqaOBF56QblV3anaejA=
+	b=Wn/H+30CxSQpymzFa+oi8SQ8arTcYHcQHesBQXa5vOstUQsQLEnMRzBp9SRWh2cxR
+	 N0DL+OE5+c63jIeVrodef59mQeIENWI4A1W96IA82gO9GCEmp9okH6YO2wS6QfcTb9
+	 ujnS7mQnlP6faffuNwYbB9apmBhfSaqllEey7IO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.1 37/73] xfs: prefer free inodes at ENOSPC over chunk allocation
-Date: Fri, 27 Sep 2024 14:23:48 +0200
-Message-ID: <20240927121721.418832829@linuxfoundation.org>
+Subject: [PATCH 6.1 38/73] xfs: block reservation too large for minleft allocation
+Date: Fri, 27 Sep 2024 14:23:49 +0200
+Message-ID: <20240927121721.469292951@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -55,40 +55,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit f08f984c63e9980614ae3a0a574b31eaaef284b2 ]
+[ Upstream commit d5753847b216db0e553e8065aa825cfe497ad143 ]
 
-When an XFS filesystem has free inodes in chunks already allocated
-on disk, it will still allocate new inode chunks if the target AG
-has no free inodes in it. Normally, this is a good idea as it
-preserves locality of all the inodes in a given directory.
+When we enter xfs_bmbt_alloc_block() without having first allocated
+a data extent (i.e. tp->t_firstblock == NULLFSBLOCK) because we
+are doing something like unwritten extent conversion, the transaction
+block reservation is used as the minleft value.
 
-However, at ENOSPC this can lead to using the last few remaining
-free filesystem blocks to allocate a new chunk when there are many,
-many free inodes that could be allocated without consuming free
-space. This results in speeding up the consumption of the last few
-blocks and inode create operations then returning ENOSPC when there
-free inodes available because we don't have enough block left in the
-filesystem for directory creation reservations to proceed.
+This works for operations like unwritten extent conversion, but it
+assumes that the block reservation is only for a BMBT split. THis is
+not always true, and sometimes results in larger than necessary
+minleft values being set. We only actually need enough space for a
+btree split, something we already handle correctly in
+xfs_bmapi_write() via the xfs_bmapi_minleft() calculation.
 
-Hence when we are near ENOSPC, we should be attempting to preserve
-the remaining blocks for directory block allocation rather than
-using them for unnecessary inode chunk creation.
-
-This particular behaviour is exposed by xfs/294, when it drives to
-ENOSPC on empty file creation whilst there are still thousands of
-free inodes available for allocation in other AGs in the filesystem.
-
-Hence, when we are within 1% of ENOSPC, change the inode allocation
-behaviour to prefer to use existing free inodes over allocating new
-inode chunks, even though it results is poorer locality of the data
-set. It is more important for the allocations to be space efficient
-near ENOSPC than to have optimal locality for performance, so lets
-modify the inode AG selection code to reflect that fact.
-
-This allows generic/294 to not only pass with this allocator rework
-patchset, but to increase the number of post-ENOSPC empty inode
-allocations to from ~600 to ~9080 before we hit ENOSPC on the
-directory create transaction reservation.
+We should use xfs_bmapi_minleft() in xfs_bmbt_alloc_block() to
+calculate the number of blocks a BMBT split on this inode is going to
+require, not use the transaction block reservation that contains the
+maximum number of blocks this transaction may consume in it...
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
@@ -97,48 +81,69 @@ Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ialloc.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/xfs/libxfs/xfs_bmap.c       |    2 +-
+ fs/xfs/libxfs/xfs_bmap.h       |    2 ++
+ fs/xfs/libxfs/xfs_bmap_btree.c |   19 +++++++++----------
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_ialloc.c
-+++ b/fs/xfs/libxfs/xfs_ialloc.c
-@@ -1737,6 +1737,7 @@ xfs_dialloc(
- 	struct xfs_perag	*pag;
- 	struct xfs_ino_geometry	*igeo = M_IGEO(mp);
- 	bool			ok_alloc = true;
-+	bool			low_space = false;
- 	int			flags;
- 	xfs_ino_t		ino;
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -4242,7 +4242,7 @@ xfs_bmapi_convert_unwritten(
+ 	return 0;
+ }
  
-@@ -1768,6 +1769,20 @@ xfs_dialloc(
- 	}
+-static inline xfs_extlen_t
++xfs_extlen_t
+ xfs_bmapi_minleft(
+ 	struct xfs_trans	*tp,
+ 	struct xfs_inode	*ip,
+--- a/fs/xfs/libxfs/xfs_bmap.h
++++ b/fs/xfs/libxfs/xfs_bmap.h
+@@ -220,6 +220,8 @@ int	xfs_bmap_add_extent_unwritten_real(s
+ 		struct xfs_inode *ip, int whichfork,
+ 		struct xfs_iext_cursor *icur, struct xfs_btree_cur **curp,
+ 		struct xfs_bmbt_irec *new, int *logflagsp);
++xfs_extlen_t xfs_bmapi_minleft(struct xfs_trans *tp, struct xfs_inode *ip,
++		int fork);
  
- 	/*
-+	 * If we are near to ENOSPC, we want to prefer allocation from AGs that
-+	 * have free inodes in them rather than use up free space allocating new
-+	 * inode chunks. Hence we turn off allocation for the first non-blocking
-+	 * pass through the AGs if we are near ENOSPC to consume free inodes
-+	 * that we can immediately allocate, but then we allow allocation on the
-+	 * second pass if we fail to find an AG with free inodes in it.
-+	 */
-+	if (percpu_counter_read_positive(&mp->m_fdblocks) <
-+			mp->m_low_space[XFS_LOWSP_1_PCNT]) {
-+		ok_alloc = false;
-+		low_space = true;
-+	}
+ enum xfs_bmap_intent_type {
+ 	XFS_BMAP_MAP = 1,
+--- a/fs/xfs/libxfs/xfs_bmap_btree.c
++++ b/fs/xfs/libxfs/xfs_bmap_btree.c
+@@ -213,18 +213,16 @@ xfs_bmbt_alloc_block(
+ 	if (args.fsbno == NULLFSBLOCK) {
+ 		args.fsbno = be64_to_cpu(start->l);
+ 		args.type = XFS_ALLOCTYPE_START_BNO;
 +
-+	/*
- 	 * Loop until we find an allocation group that either has free inodes
- 	 * or in which we can allocate some inodes.  Iterate through the
- 	 * allocation groups upward, wrapping at the end.
-@@ -1795,6 +1810,8 @@ xfs_dialloc(
- 				break;
- 			}
- 			flags = 0;
-+			if (low_space)
-+				ok_alloc = true;
- 		}
- 		xfs_perag_put(pag);
- 	}
+ 		/*
+-		 * Make sure there is sufficient room left in the AG to
+-		 * complete a full tree split for an extent insert.  If
+-		 * we are converting the middle part of an extent then
+-		 * we may need space for two tree splits.
+-		 *
+-		 * We are relying on the caller to make the correct block
+-		 * reservation for this operation to succeed.  If the
+-		 * reservation amount is insufficient then we may fail a
+-		 * block allocation here and corrupt the filesystem.
++		 * If we are coming here from something like unwritten extent
++		 * conversion, there has been no data extent allocation already
++		 * done, so we have to ensure that we attempt to locate the
++		 * entire set of bmbt allocations in the same AG, as
++		 * xfs_bmapi_write() would have reserved.
+ 		 */
+-		args.minleft = args.tp->t_blk_res;
++		args.minleft = xfs_bmapi_minleft(cur->bc_tp, cur->bc_ino.ip,
++						cur->bc_ino.whichfork);
+ 	} else if (cur->bc_tp->t_flags & XFS_TRANS_LOWMODE) {
+ 		args.type = XFS_ALLOCTYPE_START_BNO;
+ 	} else {
+@@ -248,6 +246,7 @@ xfs_bmbt_alloc_block(
+ 		 * successful activate the lowspace algorithm.
+ 		 */
+ 		args.fsbno = 0;
++		args.minleft = 0;
+ 		args.type = XFS_ALLOCTYPE_FIRST_AG;
+ 		error = xfs_alloc_vextent(&args);
+ 		if (error)
 
 
