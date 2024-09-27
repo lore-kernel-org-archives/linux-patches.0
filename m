@@ -1,109 +1,114 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAEC18859F
-	for <patches@lists.linux.dev>; Thu, 26 Sep 2024 21:19:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A20139D04
+	for <patches@lists.linux.dev>; Fri, 27 Sep 2024 01:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727385560; cv=none; b=d8t5XRSt2BvqBSTQVSb3aSYdsqIIUO9EAYEM3u5UZrYuzOPkqTBoxWa8BE5uORhx5BK7IsO8wyvwtg+Yvf2BF0SKrY2JKY7Lz9tkatrlbZBWrJzOoUNC90KgCKSqMe0LkVXtOpxGsBu/sUucMKEIWFtybdwW980xcj1+On+njDk=
+	t=1727402141; cv=none; b=q+0TcGqrTdGfjWNoc1VdJMR4xuUSfOy7yHkVhDJol5TCpR+rSLQi8y4tFi+BEyMS7ytPS/6qXGhbFJwrY6mEUJugvUXnuCEY29ksAnHTts1ftqT8FwchG4CCUvk0jvA91p95XOO0iUUTYN7nR9/R5aBeoIdta254hmOBFCO9POw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727385560; c=relaxed/simple;
-	bh=kDsArXBf6a8j6EERJV+eipbquN7VuWFS+lqT9h5+qQc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MeAx7yQqx957TF/5Fm9dLD5pe2NtdTWDYrisVDfoRdsVRxe4LzTo5e/mbIr3Zo3G6moSpGkG0hT8EKRKCFZq3Om3GLvWERzgNc51Rq48sKex8Vqc2eHDt4IvNhIbvZbsLtk14FGtWdsfXtH/kBRJTJSMq/sSaNy0I7XxOaI3yAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UgY2cLwK; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UgY2cLwK"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7191f1875d3so186143b3a.0
-        for <patches@lists.linux.dev>; Thu, 26 Sep 2024 14:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727385558; x=1727990358; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZT6vThl0w6DW/3vNhpd4p3yZrCiKGVkkePEpwNafr6M=;
-        b=UgY2cLwK0joM/Ju9kVlwp4T+Zmrx1o2ml/rUhLtr1HEm+/56lvcPIyRa6Wb1wHNGW3
-         zFd+Bm/VmI597qlH0PZ20wawfXGBYcgffEWqK01rMdtG0Pg89qxsK/zLRSUXlC4EtsMF
-         2DFwMKM+D7JaLzAULMOlbbGT3xN6RGX9NIXiLm88YeMu+WfNlY7GYSGpup8S2whbufIO
-         YADopiyKlKnNOve5YD0PudmWR7TirThg+MnvPLZHJFJxh9TuW7wTF0H37kWx91S6BKfx
-         O5YXdlPrII6ivDJedjVit6G2Hhiu1veSjpw9wQ6DJEGag3QyHKVAEqrkTAKa059VZAr0
-         enKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727385558; x=1727990358;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZT6vThl0w6DW/3vNhpd4p3yZrCiKGVkkePEpwNafr6M=;
-        b=T7qEmMOOatX49VWLfR6+dNLFomG2x3LRw9pKrU7Cr5+Qbh7Z5JzDKBMeulW8TDaEq9
-         +aimbndCh7XFFJg2IYRXL1yho0eci644/KMSqFZY8f59r5OZTKX7qQ2FTVXNDkoB2d4/
-         l0kFW0Iq7/zKgb1wP2+2wgPSs9x5cCE4u3Tlis8o2AbDTqSXVVTUEEqurCHURnVrE6NG
-         hp6jisuAKg2bvVOH8O8Dq/dT0h6+QaHgGyT1tPN2/K3YiR2XDa4V3bAFUnXaXwVEb1Fp
-         vo2SWVnKz200Nd9OiCxE9QOXW5OjRZ5nIFebSyU1GHW/dQxtv2H28ORl35w0iiI1eAIo
-         9znQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV3juBqw7HgkhNQqgcvjPIjcdQyBlP5Y9L0EcgxZiWri9z8njvnjJQinqk7vZf7ihvlLFB2s3iJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBvA53YcBKODbDBGUKOzJDXoPQV1/KiQLlaTdtjaVDlKu1CnoM
-	AksmP271e2EFKzn892Udfjycxq3YRu8L/n/FTuqy/EIYSbQwDVOLyUI3fFC/jC1cBmtGd560kBP
-	RAQFWgh4+UpjfTT6VDbnti7jBtNo=
-X-Google-Smtp-Source: AGHT+IE4+BdZ3LfDobLEZiEw+lXACKHY9OjSMU9qsH6bL5zXt19ZyY2VBI87QSoBXPl6FJAr1a79Q74C+/jwv3zPANU=
-X-Received: by 2002:a05:6a20:6a20:b0:1cf:672e:cf08 with SMTP id
- adf61e73a8af0-1d4fa78e967mr800601637.8.1727385558266; Thu, 26 Sep 2024
- 14:19:18 -0700 (PDT)
+	s=arc-20240116; t=1727402141; c=relaxed/simple;
+	bh=WEKM0tZRZyMJ4M2yhKVLV3egv5nh5cKgSsXJM8WYyro=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IeipRaOaZnKl87twyMPh25KMVCPS6jvt9gEgEYwgrqBji44fAfEWFsEQrv+5V/RMVsunjfhKYsDkN2ukV/dpZXj7Dc0db7W0BSA1FJTAFRsYLc5KyTx51NUi8WF2YbbX0q4z9XOFiER/mnjrQSeiS/H+TO/e7GMwZ/YSwoKus90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=net-swift.com; spf=pass smtp.mailfrom=net-swift.com; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=net-swift.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=net-swift.com
+X-QQ-mid:Yeas9t1727402078t874t41467
+Received: from 73E00E8BC808433CB9DB281092DFBE6B (duanqiangwen@net-swift.com [60.186.242.192])
+X-QQ-SSF:00400000000000F0FI4000000000000
+From: duanqiangwen@net-swift.com
+X-BIZMAIL-ID: 15219018867057488817
+To: "'Greg Kroah-Hartman'" <gregkh@linuxfoundation.org>,
+	<stable@vger.kernel.org>
+Cc: <patches@lists.linux.dev>,
+	"'David S. Miller'" <davem@davemloft.net>,
+	"'Sasha Levin'" <sashal@kernel.org>
+References: <20240430103058.010791820@linuxfoundation.org> <20240430103059.311606449@linuxfoundation.org>
+In-Reply-To: <20240430103059.311606449@linuxfoundation.org>
+Subject: =?gb2312?B?tPC4tDogW1BBVENIIDYuNiAwNDQvMTg2XSBuZXQ6IGxpYnd4OiBmaQ==?=
+	=?gb2312?B?eCBhbGxvYyBtc2l4IHZlY3RvcnMgZmFpbGVk?=
+Date: Fri, 27 Sep 2024 09:54:37 +0800
+Message-ID: <029801db1080$35d213e0$a1763ba0$@net-swift.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240926093849.1192264-1-aliceryhl@google.com>
-In-Reply-To: <20240926093849.1192264-1-aliceryhl@google.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 26 Sep 2024 23:19:06 +0200
-Message-ID: <CANiq72k9ihcNNRkiGW4us1F_cQuotRFA9_8iJuCMUJnEjbKzrw@mail.gmail.com>
-Subject: Re: [PATCH] rust: KASAN+RETHUNK requires rustc 1.83.0
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: ojeda@kernel.org, a.hindborg@samsung.com, alex.gaynor@gmail.com, 
-	benno.lossin@proton.me, bjorn3_gh@protonmail.com, boqun.feng@gmail.com, 
-	bp@alien8.de, dave.hansen@linux.intel.com, gary@garyguo.net, hpa@zytor.com, 
-	jpoimboe@kernel.org, linux-kernel@vger.kernel.org, masahiroy@kernel.org, 
-	mingo@redhat.com, nathan@kernel.org, nicolas@fjasle.eu, 
-	patches@lists.linux.dev, peterz@infradead.org, rust-for-linux@vger.kernel.org, 
-	tglx@linutronix.de, x86@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="gb2312"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: zh-cn
+Thread-Index: AQFOC2zPFGIL1BJCPg2TAnlAJkwjuwHfHi+Qs3XvmwA=
+X-QQ-SENDSIZE: 520
+Feedback-ID: Yeas:net-swift.com:qybglogicsvrgz:qybglogicsvrgz7a-0
 
-On Thu, Sep 26, 2024 at 11:39=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
-wrote:
->
-> When enabling both KASAN and RETHUNK, objtool emits the following
-> warnings:
->
->     rust/core.o: warning: objtool: asan.module_ctor+0x13: 'naked' return =
-found in MITIGATION_RETHUNK build
->     rust/core.o: warning: objtool: asan.module_dtor+0x13: 'naked' return =
-found in MITIGATION_RETHUNK build
->
-> This is caused by the -Zfunction-return=3Dthunk-extern flag in rustc not
-> properly informing LLVM about the mitigation, which means that the KASAN
-> functions asan.module_ctor and asan.module_dtor are generated without
-> the rethunk mitigation.
->
-> The other mitigations that we enabled for Rust (SLS, RETPOLINE) do not
-> have the same bug, as they're being applied through the target-feature
-> functionality instead.
->
-> This is being fixed for rustc 1.83.0, so update Kconfig to reject this
-> configuration on older compilers.
->
-> Link: https://github.com/rust-lang/rust/pull/130824
-> Fixes: d7868550d573 ("x86/rust: support MITIGATION_RETHUNK")
-> Reported-by: Miguel Ojeda <ojeda@kernel.org>
-> Closes: https://lore.kernel.org/all/CANiq72myZL4_poCMuNFevtpYYc0V0embjSuK=
-b7y=3DC+m3vVA_8g@mail.gmail.com/
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> -----=D3=CA=BC=FE=D4=AD=BC=FE-----
+> =B7=A2=BC=FE=C8=CB: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> =B7=A2=CB=CD=CA=B1=BC=E4: 2024=C4=EA4=D4=C230=C8=D5 18:38
+> =CA=D5=BC=FE=C8=CB: stable@vger.kernel.org
+> =B3=AD=CB=CD: Greg Kroah-Hartman <gregkh@linuxfoundation.org>;
+> patches@lists.linux.dev; Duanqiang Wen <duanqiangwen@net-swift.com>;
+> David S. Miller <davem@davemloft.net>; Sasha Levin <sashal@kernel.org>
+> =D6=F7=CC=E2: [PATCH 6.6 044/186] net: libwx: fix alloc msix vectors =
+failed
+>=20
+> 6.6-stable review patch.  If anyone has any objections, please let me
+know.
+>=20
+> ------------------
+>=20
+> From: Duanqiang Wen <duanqiangwen@net-swift.com>
+>=20
+> [ Upstream commit 69197dfc64007b5292cc960581548f41ccd44828 ]
+>=20
+> driver needs queue msix vectors and one misc irq vector, but only =
+queue
+vectors
+> need irq affinity.
+> when num_online_cpus is less than chip max msix vectors, driver will
+acquire
+> (num_online_cpus + 1) vecotrs, and call pci_alloc_irq_vectors_affinity
+functions
+> with affinity params without setting pre_vectors or post_vectors, it =
+will
+cause
+> return error code -ENOSPC.
+> Misc irq vector is vector 0, driver need to set affinity params
+.pre_vectors =3D 1.
+>=20
+> Fixes: 3f703186113f ("net: libwx: Add irq flow functions")
+> Signed-off-by: Duanqiang Wen <duanqiangwen@net-swift.com>
+> Signed-off-by: David S. Miller <davem@davemloft.net>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/net/ethernet/wangxun/libwx/wx_lib.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+> b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+> index e078f4071dc23..be434c833c69c 100644
+> --- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+> +++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+> @@ -1585,7 +1585,7 @@ static void wx_set_num_queues(struct wx *wx)
+>   */
+>  static int wx_acquire_msix_vectors(struct wx *wx)  {
+> -	struct irq_affinity affd =3D {0, };
+> +	struct irq_affinity affd =3D { .pre_vectors =3D 1 };
+>  	int nvecs, i;
+>=20
+>  	nvecs =3D min_t(int, num_online_cpus(), wx->mac.max_msix_vectors);
+> --
+> 2.43.0
+>=20
+>=20
+This patch in kernel-6.6 and kernel 6.7 will cause problems. In =
+kernel-6.6
+and kernel 6.7,
+Wangxun txgbe & ngbe driver adjust misc irq to vector 0 not yet.  How to
+revert it in=20
+kernel-6.6 and kernel-6.7 stable?
+>=20
 
-Applied to `rust-fixes` -- thanks!
-
-Cheers,
-Miguel
