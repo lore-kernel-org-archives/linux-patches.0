@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D9E18C90F;
-	Fri, 27 Sep 2024 12:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3E818C02B;
+	Fri, 27 Sep 2024 12:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440303; cv=none; b=ReXDAg9uXWd7uX0gXNL8+RkRPK+lrM4mRnTPLfdiWdhfbLFiOk7dcx/0yGjb6H3fza7q1UMwlaGCDximTf5kHPB9eFiPMVavNxev1b3y/dambxCNBBHXzrS4PUj24C9drU4i7wbCV6LaCrHswe3LCUUbWe+ZuFxYof+WThdyOC0=
+	t=1727440306; cv=none; b=D571Y3xttfQ0vcROX25YaKq2DdCym9d+7tZxIRpgpDbc7g/wDHUX8woQ5wzxtWKILPUlUgPGVnjK0zQoMO9PKTlUoqtXrxcKyzC+HK89Dp0hia6vqiTcXmMDQfbBzbeB5inT1HLHa18iVE3Jt1yZzkv/VPzUyaVQxmJT+T+ulAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440303; c=relaxed/simple;
-	bh=KTPUwqtxrDpbp5TRrq2pCDJqy1bidgeziiCzANLHBUI=;
+	s=arc-20240116; t=1727440306; c=relaxed/simple;
+	bh=unjbsM1e5RW0c4y+kF3MWl7TimJJrPrHqcqg2XV1H9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riEs8XfMQRQecEPABRbkS2qCPuqM5iiV7vPCxMn5Kh/KhTbJrBNPBgWct/8jRDyRZz7+GsPzH2qx9IcDQxpywMJ5r1TBukA38ShSUCuZZiTRt8et++UvK5ugg4dv5C5CfWiIiLN7QZB65n5b8dXCs6wdOqJsWhf/ynYACVBmIfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYp+dKW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TcpTTMqknuOnpi1wupfshw5pPQT44NtdEfRTFJZ40194/v+3Hzjtj+Zd/9jHLIp1nll6LKgQvNMMQgkR0oXZAWXr5f+U1k7rHxXyxX/HpYthIF7TjeYzz5J3SpcPq7P3Jbv3Avs7FUHqCKlunc/c/6a8AKir76qKIV6Zly0/lfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoOGAWJm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYp+dKW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62396C4CEC4;
-	Fri, 27 Sep 2024 12:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoOGAWJm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27528C4CEC4;
+	Fri, 27 Sep 2024 12:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440303;
-	bh=KTPUwqtxrDpbp5TRrq2pCDJqy1bidgeziiCzANLHBUI=;
+	s=korg; t=1727440306;
+	bh=unjbsM1e5RW0c4y+kF3MWl7TimJJrPrHqcqg2XV1H9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYp+dKW+5OcoUo07oQZZUCzaXm18v0zVjdB2G7PtcfWWsxvMmXxmkjag5Md0YH06i
-	 0HQFoMQm4WuIFUn624A8glgeOR+Jy7gY+gBWGmzm+34jO/W+ctExB34fydOEQb/b2p
-	 YzepsXACNvTBHg8bebKq/FlkwYMK+OvVwQjFJqhU=
+	b=GoOGAWJm/Zq6IquFi4WMuF8yJx9MkgL+5G+jRfpPdlWfQAekOJWjR/y9yjUFIe850
+	 +Bgd0Cms4YcWTs3UIpdoaw0/EuJ6VQQNCT3GAmfkfi4V2G5zrFrmvvSlIn7IrzzQiA
+	 HtVTWNpI02Faa0Oc95FZRXmKT9DBsNA24pfROedQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Blocher <thomas.blocher@ek-dev.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Ross Brown <true.robot.ross@gmail.com>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/73] pinctrl: at91: make it work with current gpiolib
-Date: Fri, 27 Sep 2024 14:23:18 +0200
-Message-ID: <20240927121720.179583877@linuxfoundation.org>
+Subject: [PATCH 6.1 08/73] hwmon: (asus-ec-sensors) remove VRM temp X570-E GAMING
+Date: Fri, 27 Sep 2024 14:23:19 +0200
+Message-ID: <20240927121720.220728100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -51,49 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Blocher <thomas.blocher@ek-dev.de>
+From: Ross Brown <true.robot.ross@gmail.com>
 
-[ Upstream commit 752f387faaae0ae2e84d3f496922524785e77d60 ]
+[ Upstream commit 9efaebc0072b8e95505544bf385c20ee8a29d799 ]
 
-pinctrl-at91 currently does not support the gpio-groups devicetree
-property and has no pin-range.
-Because of this at91 gpios stopped working since patch
-commit 2ab73c6d8323fa1e ("gpio: Support GPIO controllers without pin-ranges")
-This was discussed in the patches
-commit fc328a7d1fcce263 ("gpio: Revert regression in sysfs-gpio (gpiolib.c)")
-commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
+X570-E GAMING does not have VRM temperature sensor.
 
-As a workaround manually set pin-range via gpiochip_add_pin_range() until
-a) pinctrl-at91 is reworked to support devicetree gpio-groups
-b) another solution as mentioned in
-commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
-is found
-
-Signed-off-by: Thomas Blocher <thomas.blocher@ek-dev.de>
-Link: https://lore.kernel.org/5b992862-355d-f0de-cd3d-ff99e67a4ff1@ek-dev.de
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Ross Brown <true.robot.ross@gmail.com>
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20240730062320.5188-2-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwmon/asus-ec-sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
-index ff3b6a8a0b170..333f9d70c7f48 100644
---- a/drivers/pinctrl/pinctrl-at91.c
-+++ b/drivers/pinctrl/pinctrl-at91.c
-@@ -1420,8 +1420,11 @@ static int at91_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index b4d65916b3c00..d893cfd1cb829 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -369,7 +369,7 @@ static const struct ec_board_info board_info_strix_b550_i_gaming = {
  
- 	/* We will handle a range of GPIO pins */
- 	for (i = 0; i < gpio_banks; i++)
--		if (gpio_chips[i])
-+		if (gpio_chips[i]) {
- 			pinctrl_add_gpio_range(info->pctl, &gpio_chips[i]->range);
-+			gpiochip_add_pin_range(&gpio_chips[i]->chip, dev_name(info->pctl->dev), 0,
-+				gpio_chips[i]->range.pin_base, gpio_chips[i]->range.npins);
-+		}
- 
- 	dev_info(&pdev->dev, "initialized AT91 pinctrl driver\n");
- 
+ static const struct ec_board_info board_info_strix_x570_e_gaming = {
+ 	.sensors = SENSOR_SET_TEMP_CHIPSET_CPU_MB |
+-		SENSOR_TEMP_T_SENSOR | SENSOR_TEMP_VRM |
++		SENSOR_TEMP_T_SENSOR |
+ 		SENSOR_FAN_CHIPSET | SENSOR_CURR_CPU |
+ 		SENSOR_IN_CPU_CORE,
+ 	.mutex_path = ASUS_HW_ACCESS_MUTEX_ASMX,
 -- 
 2.43.0
 
