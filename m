@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAED17B515;
-	Fri, 27 Sep 2024 12:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A5B1865ED;
+	Fri, 27 Sep 2024 12:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440131; cv=none; b=b3xAtZthvnd7I/1VMot5jEqIO2ICQiwH7+XPsMFYPTjZqeuj+U4xIEu3TOzqRwowlbEQvxYjQ41tpyl1cMlaq5usoWcOD4rv1XtHgaa7C6A6DuXJtEqmr7Ewpe1bq2iwC1DJs3bT80Mzk7j9BNWzZA85DC8JD6zJoj98sLYSu/w=
+	t=1727440134; cv=none; b=hgvDh1ak7z2DVu6zCfjTkodA3Ae4h5/PygKeWN8hNtRupui9CBqx4Hg1LMmcJFyoCjNuYVk6bwy6Vdff0N2+5gQ4eFyAn+pQSiEJ0DismmGsHzd2UZdrg+Xiy9Om8YkVtj0wg7+7NNAiOm9X0pk4E28TqFZetx3mSJwF48u5FAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440131; c=relaxed/simple;
-	bh=cr6/K5W3yTFs07cfLNXiql7lb4G6sheLYZ6Q3R4YPFU=;
+	s=arc-20240116; t=1727440134; c=relaxed/simple;
+	bh=2+Fd22rBISrWLXu0YmdCx1wO87cc3n2YCx209sGJzzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEzR9PAvfrQhspegra3GHQ5uiVGg2ImOg6hvaECTXvDYIRCVWoJ944ixOo/tq8q5IbA+jgAg9RpvfJ16shneAMN9GnGfKPBs2qGXT3IDPsSdBx0NsQ8ouanqBdUJi6YcLm9QAzwlS1xxPkMVsQdzGmDudXpzBaLJJq0Bc+2rfDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqdwuUPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxomfswBPvzrZQtB7esnBOhSfK0hLH4SNx9GBMFlb3wxX4obvWoiagFnhE1GUI5jtxVakIhpUmoH2LrE/XO7FDdy4I2yPw83mHRY9LJzIK3zv8Fb5Ey0DTRpDsy9MRkxG5uCq/FSxnXNZqxV/txTy9UmM3bQd1GcSZNxb6t6dUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWf7fz7d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqdwuUPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2037C4CEC4;
-	Fri, 27 Sep 2024 12:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWf7fz7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E08C4CEC4;
+	Fri, 27 Sep 2024 12:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440131;
-	bh=cr6/K5W3yTFs07cfLNXiql7lb4G6sheLYZ6Q3R4YPFU=;
+	s=korg; t=1727440133;
+	bh=2+Fd22rBISrWLXu0YmdCx1wO87cc3n2YCx209sGJzzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqdwuUPYNK6L4+tvsXux8zvvH8lG9lvx+1j6ArWIiKAf9X9KLxpsI8A/ppeWkSxNn
-	 aCmVStvLlnKag/HkPJlluK4hpiYMDzwbNYLFq0Nl74oRX9YGpMKk2RJBO++RGou5Ke
-	 MevINptMO6jP7gokpS2ZU+bpcaQxzjFVsAohsn1I=
+	b=aWf7fz7dWpBxcrTz6w0F03S1ObsrwdHLOOP6Jv6A/iGZmIrZUAem3dfYCTDlu1Q5P
+	 4bWXM+X2Cx1tAW2AlxhzW6hOtsxz8VaDGU3Ijbso5vaxjEyhJWZoLDZUb/r7RTobyi
+	 ywXpzyal9wvVVvnnmR3mN4P5O25tXUHcJaZy19Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Ferry Meng <mengferry@linux.alibaba.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	lei lu <llfamsec@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 43/58] spi: spidev: Add missing spi_device_id for jg10309-01
-Date: Fri, 27 Sep 2024 14:23:45 +0200
-Message-ID: <20240927121720.525891249@linuxfoundation.org>
+Subject: [PATCH 6.10 44/58] ocfs2: add bounds checking to ocfs2_xattr_find_entry()
+Date: Fri, 27 Sep 2024 14:23:46 +0200
+Message-ID: <20240927121720.579940141@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -51,40 +59,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ferry Meng <mengferry@linux.alibaba.com>
 
-[ Upstream commit 5478a4f7b94414def7b56d2f18bc2ed9b0f3f1f2 ]
+[ Upstream commit 9e3041fecdc8f78a5900c3aa51d3d756e73264d6 ]
 
-When the of_device_id entry for "elgin,jg10309-01" was added, the
-corresponding spi_device_id was forgotten, causing a warning message
-during boot-up:
+Add a paranoia check to make sure it doesn't stray beyond valid memory
+region containing ocfs2 xattr entries when scanning for a match.  It will
+prevent out-of-bound access in case of crafted images.
 
-    SPI driver spidev has no spi_device_id for elgin,jg10309-01
-
-Fix module autoloading and shut up the warning by adding the missing
-entry.
-
-Fixes: 5f3eee1eef5d0edd ("spi: spidev: Add an entry for elgin,jg10309-01")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/54bbb9d8a8db7e52d13e266f2d4a9bcd8b42a98a.1725366625.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20240520024024.1976129-1-joseph.qi@linux.alibaba.com
+Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: lei lu <llfamsec@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: af77c4fc1871 ("ocfs2: strict bound check before memcmp in ocfs2_xattr_find_entry()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 14bf0fa65befe..face93a9cf203 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -702,6 +702,7 @@ static const struct class spidev_class = {
- static const struct spi_device_id spidev_spi_ids[] = {
- 	{ .name = "bh2228fv" },
- 	{ .name = "dh2228fv" },
-+	{ .name = "jg10309-01" },
- 	{ .name = "ltc2488" },
- 	{ .name = "sx1301" },
- 	{ .name = "bk4" },
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 3b81213ed7b85..8aea94c907397 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -1062,7 +1062,7 @@ ssize_t ocfs2_listxattr(struct dentry *dentry,
+ 	return i_ret + b_ret;
+ }
+ 
+-static int ocfs2_xattr_find_entry(int name_index,
++static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
+ 				  const char *name,
+ 				  struct ocfs2_xattr_search *xs)
+ {
+@@ -1076,6 +1076,10 @@ static int ocfs2_xattr_find_entry(int name_index,
+ 	name_len = strlen(name);
+ 	entry = xs->here;
+ 	for (i = 0; i < le16_to_cpu(xs->header->xh_count); i++) {
++		if ((void *)entry >= xs->end) {
++			ocfs2_error(inode->i_sb, "corrupted xattr entries");
++			return -EFSCORRUPTED;
++		}
+ 		cmp = name_index - ocfs2_xattr_get_type(entry);
+ 		if (!cmp)
+ 			cmp = name_len - entry->xe_name_len;
+@@ -1166,7 +1170,7 @@ static int ocfs2_xattr_ibody_get(struct inode *inode,
+ 	xs->base = (void *)xs->header;
+ 	xs->here = xs->header->xh_entries;
+ 
+-	ret = ocfs2_xattr_find_entry(name_index, name, xs);
++	ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 	if (ret)
+ 		return ret;
+ 	size = le64_to_cpu(xs->here->xe_value_size);
+@@ -2698,7 +2702,7 @@ static int ocfs2_xattr_ibody_find(struct inode *inode,
+ 
+ 	/* Find the named attribute. */
+ 	if (oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL) {
+-		ret = ocfs2_xattr_find_entry(name_index, name, xs);
++		ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 		if (ret && ret != -ENODATA)
+ 			return ret;
+ 		xs->not_found = ret;
+@@ -2833,7 +2837,7 @@ static int ocfs2_xattr_block_find(struct inode *inode,
+ 		xs->end = (void *)(blk_bh->b_data) + blk_bh->b_size;
+ 		xs->here = xs->header->xh_entries;
+ 
+-		ret = ocfs2_xattr_find_entry(name_index, name, xs);
++		ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 	} else
+ 		ret = ocfs2_xattr_index_block_find(inode, blk_bh,
+ 						   name_index,
 -- 
 2.43.0
 
