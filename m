@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B80A18BC29;
-	Fri, 27 Sep 2024 12:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85E51779BD;
+	Fri, 27 Sep 2024 12:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439970; cv=none; b=SjOighIbvCL4WMGTkmCgC+btCWNRI1rOGbtNX8zDJ7hQBkK6UdA50fq4XEqRauCuLezd/qY1SUvef4viZZTmgDDFYxLxX3SfUJf9qS8aOgEX2JOm3KM1J8xjwwnjK4Cng1qrI1o72gDOgyu1yVrn1WdHtUrgDq3fW2zjoXWefqA=
+	t=1727439972; cv=none; b=ihW0p9/I3PxDnQPL0v8y7wbAM+9/DCtz5HzXCy2aVPqYmszThW3+ntLZYMXTYH/mWr57jcQmuvLSkK/gr9WOrDW5UpZ8G6Lax059seJ+ZAG2nKLoeR53RK1LsqooD+f61lO76/Rjx5VmpFDoOZoLxY4pA1wgYGSVX3qFHsbTW14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439970; c=relaxed/simple;
-	bh=7M3q52nj+Us4SF25XSdcX8JLHGxrkdkm4diDK1YJe0g=;
+	s=arc-20240116; t=1727439972; c=relaxed/simple;
+	bh=3NVQBYcb2hjHHrLUTMCEJDKOiIXCNARVAq0flGbR16Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oLSflDQCJFpvBBs2X8RgOB58ieOt9vdtpvEt0KtZ46WxJd4OYT70OTvR+ck04R/gFliBQGb+nfCvJiE3ZrC0gZKpmnhPbXVPt4bphIZeZcmj+AhdrSOpClmj/U6Gj5LJSzPWLPZ/AQE0SbihvNv9DojRah6FC5lctoMNtFkUOh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwMkCEnS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=isRp3VLhBao+6uqFzUYEZbGGmFkSPGH1iye38cxBaUZnosk3zBcsQ17arknBGgZ/VD6f24uBQy2k2aFgXXTxwTjkEWFt3icZXSixA6b+IqJ1M7O4Pk0DIQXCfUmkTN5tWnEyibxnGC1kRZ/0jyKEqUa4VPh+3QKsr4plEPdCG58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vbzcJxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwMkCEnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA11C4CEC4;
-	Fri, 27 Sep 2024 12:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vbzcJxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4650DC4CEC4;
+	Fri, 27 Sep 2024 12:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439969;
-	bh=7M3q52nj+Us4SF25XSdcX8JLHGxrkdkm4diDK1YJe0g=;
+	s=korg; t=1727439972;
+	bh=3NVQBYcb2hjHHrLUTMCEJDKOiIXCNARVAq0flGbR16Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwMkCEnSfa/DYUBFiWclSMOziquHUUUSBALYeBvZTWrS/ZI5ljac+UAOf1nhq2b8o
-	 9AuRQ3IWm/Vm08R3PQ3lvrs5oO0AMSrdhKgACJtvc47LP08y63cDxn4YsocEfFy1i/
-	 HIvpUrziIAXdLEkEJqWBzl5oPJcKQyxEWaWUWFZo=
+	b=1vbzcJxPZeRFM9ocduwV41Jb7o9GJxH97VeA9nmQcnyz1TWXTP00+Z+zvdMYFGL2j
+	 3joUd0xHVrxQ64T0xrvvO2ijdArg+6y6RXLEyeOFteUqVhUSDV+B73Zq1lACe+g/CZ
+	 OczVO8DjzvyOQrKQx4t6pXNeZxRgV1QL9OmcJJ5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	James Zhu <James.Zhu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 41/54] drm: Expand max DRM device number to full MINORBITS
-Date: Fri, 27 Sep 2024 14:23:33 +0200
-Message-ID: <20240927121721.452490160@linuxfoundation.org>
+Subject: [PATCH 6.6 42/54] powercap/intel_rapl: Add support for AMD family 1Ah
+Date: Fri, 27 Sep 2024 14:23:34 +0200
+Message-ID: <20240927121721.506656152@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -46,71 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Winiarski <michal.winiarski@intel.com>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit 071d583e01c88272f6ff216d4f867f8f35e94d7d ]
+[ Upstream commit 166df51097a258a14fe9e946e2157f3b75eeb3c2 ]
 
-Having a limit of 64 DRM devices is not good enough for modern world
-where we have multi-GPU servers, SR-IOV virtual functions and virtual
-devices used for testing.
-Let's utilize full minor range for DRM devices.
-To avoid regressing the existing userspace, we're still maintaining the
-numbering scheme where 0-63 is used for primary, 64-127 is reserved
-(formerly for control) and 128-191 is used for render.
-For minors >= 192, we're allocating minors dynamically on a first-come,
-first-served basis.
+AMD Family 1Ah's RAPL MSRs are identical to Family 19h's,
+extend Family 19h's support to Family 1Ah.
 
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-4-michal.winiarski@intel.com
-Acked-by: James Zhu <James.Zhu@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Link: https://patch.msgid.link/20240719101234.50827-1-Dhananjay.Ugwekar@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_drv.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/powercap/intel_rapl_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 63219695233f0..d453d710ef0c1 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -121,10 +121,19 @@ static void drm_minor_alloc_release(struct drm_device *dev, void *data)
- 	xa_erase(drm_minor_get_xa(minor->type), minor->index);
- }
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index 9d3e102f1a76b..3dfe45ac300aa 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -1280,6 +1280,7 @@ static const struct x86_cpu_id rapl_ids[] __initconst = {
  
-+/*
-+ * DRM used to support 64 devices, for backwards compatibility we need to maintain the
-+ * minor allocation scheme where minors 0-63 are primary nodes, 64-127 are control nodes,
-+ * and 128-191 are render nodes.
-+ * After reaching the limit, we're allocating minors dynamically - first-come, first-serve.
-+ * Accel nodes are using a distinct major, so the minors are allocated in continuous 0-MAX
-+ * range.
-+ */
- #define DRM_MINOR_LIMIT(t) ({ \
- 	typeof(t) _t = (t); \
- 	_t == DRM_MINOR_ACCEL ? XA_LIMIT(0, ACCEL_MAX_MINORS) : XA_LIMIT(64 * _t, 64 * _t + 63); \
- })
-+#define DRM_EXTENDED_MINOR_LIMIT XA_LIMIT(192, (1 << MINORBITS) - 1)
- 
- static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- {
-@@ -140,6 +149,9 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- 
- 	r = xa_alloc(drm_minor_get_xa(type), &minor->index,
- 		     NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
-+	if (r == -EBUSY && (type == DRM_MINOR_PRIMARY || type == DRM_MINOR_RENDER))
-+		r = xa_alloc(&drm_minors_xa, &minor->index,
-+			     NULL, DRM_EXTENDED_MINOR_LIMIT, GFP_KERNEL);
- 	if (r < 0)
- 		return r;
- 
+ 	X86_MATCH_VENDOR_FAM(AMD, 0x17, &rapl_defaults_amd),
+ 	X86_MATCH_VENDOR_FAM(AMD, 0x19, &rapl_defaults_amd),
++	X86_MATCH_VENDOR_FAM(AMD, 0x1A, &rapl_defaults_amd),
+ 	X86_MATCH_VENDOR_FAM(HYGON, 0x18, &rapl_defaults_amd),
+ 	{}
+ };
 -- 
 2.43.0
 
