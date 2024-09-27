@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D457C1865ED;
-	Fri, 27 Sep 2024 12:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF4C1865ED;
+	Fri, 27 Sep 2024 12:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440122; cv=none; b=bNnTGmqPewmyZdHoKu7CEDpgPRdiLQVT2yorORlBGyuprwXBRltOWApsCjrvw0nuZza/NyyhT0epD9inoKeT3gfZpCdPBpJ3fCYelImVF4x4G6g1L2d5QPtKeKNplO2+8KS8GcP/IxqIfk0xV4dVhnEe31/qDvxBHhgfvGmUJac=
+	t=1727440125; cv=none; b=A+0eSZCkirqDINNk5eTQcbMUbOKrLuOHyE6qauNRacSztIYDAAXaRVhbiyuZQ9DInP6LuwxXI0I7eZukplE8etHFYTjmyctML6EE2O+Re+6uW3ljromflQu53h3gbF9035K/ANLOYcEwPVXji/6GDNp9ETvvldu7s5gloIxZ5L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440122; c=relaxed/simple;
-	bh=Q5RJATS4uWmtpcbOa6T+h6qv/6gdRQCZQYJJ+J+wxio=;
+	s=arc-20240116; t=1727440125; c=relaxed/simple;
+	bh=cKAeM39MKKWNH9a19xM+mwpLy6eaB7MPJ52naojCo8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDWiuZtR1H6GE8EmfP5iwksVchNeuhMfXxJccdmeQc89aSZOUouMzZ0CbF6tdDCZVP1tWcrvmT6elfW9p9Nrc/RjDcf9LvKOW4+abhJ5ta5u8MMcOb3o2FEqav5e54hZL8AC6NKOJG1tK61k+p6C1rg00uITcQ6+JCaV0gddSX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA2/yBDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDp9PyT5mR9dxcIOlkGfBcl9hataSFtbH1O3J1Sc8YF7Kk2xMrhz35mC447/iUorwLFcDz5JYHWLUEmBi9EyqdO+T5rEx3c3sOiJU1hM5V/UTRmRoq3/cjc0ZGIs52V9sgH3JQVD6axfKcHE2AZqqXeAQ9VlXmMQXcZ5UpiORqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYAVw7le; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA2/yBDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61793C4CEC4;
-	Fri, 27 Sep 2024 12:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYAVw7le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0ADC4CEC4;
+	Fri, 27 Sep 2024 12:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440122;
-	bh=Q5RJATS4uWmtpcbOa6T+h6qv/6gdRQCZQYJJ+J+wxio=;
+	s=korg; t=1727440125;
+	bh=cKAeM39MKKWNH9a19xM+mwpLy6eaB7MPJ52naojCo8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tA2/yBDfICxBZLcHWNo4G22/NyjoUsKZMy3PHBY7lOkcQsOWkPcsATBsEVRHTZO6N
-	 1KRuxfhZyrYwe4Mr3eqOOssStov0RHayuYcCdhBPpYQBcfQh1E7jkA3x3AQRie6mh+
-	 sR4u+2a5lsL7y58K+jiwL1BhKKKNSoVj9AR/LxgA=
+	b=lYAVw7leatxM8AG4xJrEbp944LwVKWW163sX5c3CuVgWghK9uLDYoffz0FnbOEsyr
+	 TKcSs5nHdJIPd+KV3lijyD8hjiqkuJYBrMmf31bjjqrMkV5UuD60I5gUZS8LgPX35N
+	 Q8XbZ5hKTOfHQ/Rzcz1JYCoV4H1AYGCkgUYibpmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Roman Kisel <romank@linux.microsoft.com>,
+	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 40/58] x86/hyperv: Set X86_FEATURE_TSC_KNOWN_FREQ when Hyper-V provides frequency
-Date: Fri, 27 Sep 2024 14:23:42 +0200
-Message-ID: <20240927121720.390541428@linuxfoundation.org>
+Subject: [PATCH 6.10 41/58] tools: hv: rm .*.cmd when make clean
+Date: Fri, 27 Sep 2024 14:23:43 +0200
+Message-ID: <20240927121720.425964615@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,46 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
 
-[ Upstream commit 8fcc514809de41153b43ccbe1a0cdf7f72b78e7e ]
+[ Upstream commit 5e5cc1eb65256e6017e3deec04f9806f2f317853 ]
 
-A Linux guest on Hyper-V gets the TSC frequency from a synthetic MSR, if
-available. In this case, set X86_FEATURE_TSC_KNOWN_FREQ so that Linux
-doesn't unnecessarily do refined TSC calibration when setting up the TSC
-clocksource.
+rm .*.cmd when make clean
 
-With this change, a message such as this is no longer output during boot
-when the TSC is used as the clocksource:
-
-[    1.115141] tsc: Refined TSC clocksource calibration: 2918.408 MHz
-
-Furthermore, the guest and host will have exactly the same view of the
-TSC frequency, which is important for features such as the TSC deadline
-timer that are emulated by the Hyper-V host.
-
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240606025559.1631-1-mhklinux@outlook.com
+Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20240902042103.5867-1-zhangjiao2@cmss.chinamobile.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240606025559.1631-1-mhklinux@outlook.com>
+Message-ID: <20240902042103.5867-1-zhangjiao2@cmss.chinamobile.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mshyperv.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/hv/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index 41632fb57796d..ead967479fa63 100644
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -424,6 +424,7 @@ static void __init ms_hyperv_init_platform(void)
- 	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
- 		x86_platform.calibrate_tsc = hv_get_tsc_khz;
- 		x86_platform.calibrate_cpu = hv_get_tsc_khz;
-+		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
- 	}
+diff --git a/tools/hv/Makefile b/tools/hv/Makefile
+index 2e60e2c212cd9..34ffcec264ab0 100644
+--- a/tools/hv/Makefile
++++ b/tools/hv/Makefile
+@@ -52,7 +52,7 @@ $(OUTPUT)hv_fcopy_uio_daemon: $(HV_FCOPY_UIO_DAEMON_IN)
  
- 	if (ms_hyperv.priv_high & HV_ISOLATION) {
+ clean:
+ 	rm -f $(ALL_PROGRAMS)
+-	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete
++	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete -o -name '\.*.cmd' -delete
+ 
+ install: $(ALL_PROGRAMS)
+ 	install -d -m 755 $(DESTDIR)$(sbindir); \
 -- 
 2.43.0
 
