@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422C518C02A;
-	Fri, 27 Sep 2024 12:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C029218BC30;
+	Fri, 27 Sep 2024 12:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440198; cv=none; b=ggiXDwqc9difoTnXmW6jQfVnY+qaWTPLpkxyHnnz+2OeUfEeXLtj9Et1RwdpbULEb646szB7Esbz06eckA6i8xe8LFJC7CiZV4klerwE6hUoN3oWVBR/H+vCXIADsLo3oLPYE8Kvnx56idG4EgoeDrE4EvRecomf4NVnmJq3cIE=
+	t=1727440200; cv=none; b=Tt1fePDiiquE/Ole0UUeNIRRg6aS/6wvclJWljJMrK9AvYSA8/hjwHJrAuZQc4i0aNs6GY3qEhYTXqTzMuK9ylc0HpIq7hpBcxODGwx12zUTKnoTG6ekumuQsH4LcgUzJYyH1v1kx+1J1zOIuk9cZaKow+6/0g4NUdCCsG7D13g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440198; c=relaxed/simple;
-	bh=5Vf/j5PTcMHsWyaHEEhZ5mYlncKJhSaatW/iTyLA/GQ=;
+	s=arc-20240116; t=1727440200; c=relaxed/simple;
+	bh=dfUaSWzTHVDHWR/0VyDE5LNs1JgG22Y6NdG4x9gBCq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNcCjCvpYkdeYuTcIELbjVS70zNFSngnEVgW6ZD1g8MEKCRfJLCdSfUxpigFyVUD46QDcJysd5FtKXboPKK083Wq2G2hwHURAWrt99mlB+1S9gkNDyUl/eVwyp76T0xXRLTrN3SUEcRrSRnLno7NwvzmZWnn1bxCFXSBAK4n8o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5GbdQKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5KAuF0BpIWTs4WlFsv7PqSRgCixRUPIQl+w0tnOD6we222PVzJ0ZTAtiCqgx9Fe2c/qG6/7tKjMj/Ik1SVMgaedtxXD8kuAT0lsISRiP3WVNHsqAMGJ5oF16jTtMTJMC8+3hvGWAeEu5bYFmWT32/cirOqUpoBh/7Pnkf11VPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1HWd7Jf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5GbdQKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A8C4CEC6;
-	Fri, 27 Sep 2024 12:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1HWd7Jf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0DBC4CEC4;
+	Fri, 27 Sep 2024 12:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440197;
-	bh=5Vf/j5PTcMHsWyaHEEhZ5mYlncKJhSaatW/iTyLA/GQ=;
+	s=korg; t=1727440200;
+	bh=dfUaSWzTHVDHWR/0VyDE5LNs1JgG22Y6NdG4x9gBCq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5GbdQKkYZxa3dJpz39sN4eVWAnAsgd3Bh+DARNuRz+ec/2JxnPZgeq2QeMuaF1Zs
-	 tFEyBYrae+HHSCqKEggrXe0YoEoVgq7WUuXaTu0Ekn4s9/fat2Pt8bPPspILxK8eJ8
-	 hiGAjsWZjTfdoQo1Vxc34POJ7FzdoHiLhEJVjoBM=
+	b=G1HWd7JfNwU723kEuiibQVksqYNSIV9fWQcwXi+IrIc7c/FJuGuddIx21i2bKfdku
+	 /vo8G1wVXoHtjViqAhM1/BRHA8HuZ9iugVHc4UCXEKO4PqDsB/B7b9g20pe2qD0Jjr
+	 fQrWgdjKZj4T35dsCwg2UL7GW2RM+xRAfSMxWsd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	James Zhu <James.Zhu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 01/12] drm: Use XArray instead of IDR for minors
-Date: Fri, 27 Sep 2024 14:24:04 +0200
-Message-ID: <20240927121715.266510250@linuxfoundation.org>
+	Robert Beckett <bob.beckett@collabora.com>,
+	Keith Busch <kbusch@kernel.org>,
+	"Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
+Subject: [PATCH 6.11 10/12] nvme-pci: qdepth 1 quirk
+Date: Fri, 27 Sep 2024 14:24:13 +0200
+Message-ID: <20240927121715.682431643@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
 References: <20240927121715.213013166@linuxfoundation.org>
@@ -47,201 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Winiarski <michal.winiarski@intel.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 5fbca8b48b3050ae7fb611a8b09af60012ed6de1 ]
+commit 83bdfcbdbe5d901c5fa432decf12e1725a840a56 upstream.
 
-IDR is deprecated, and since XArray manages its own state with internal
-locking, it simplifies the locking on DRM side.
-Additionally, don't use the IRQ-safe variant, since operating on drm
-minor is not done in IRQ context.
+Another device has been reported to be unreliable if we have more than
+one outstanding command. In this new case, data corruption may occur.
+Since we have two devices now needing this quirky behavior, make a
+generic quirk flag.
 
-Suggested-by: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-Acked-by: James Zhu <James.Zhu@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-2-michal.winiarski@intel.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The same Apple quirk is clearly not "temporary", so update the comment
+while moving it.
+
+Link: https://lore.kernel.org/linux-nvme/191d810a4e3.fcc6066c765804.973611676137075390@collabora.com/
+Reported-by: Robert Beckett <bob.beckett@collabora.com>
+Reviewed-by: Christoph Hellwig hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: "Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c | 63 ++++++++++++++++-----------------------
- 1 file changed, 25 insertions(+), 38 deletions(-)
+ drivers/nvme/host/nvme.h |    5 +++++
+ drivers/nvme/host/pci.c  |   18 +++++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 93543071a5008..ae675a588a1df 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -34,6 +34,7 @@
- #include <linux/pseudo_fs.h>
- #include <linux/slab.h>
- #include <linux/srcu.h>
-+#include <linux/xarray.h>
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -91,6 +91,11 @@ enum nvme_quirks {
+ 	NVME_QUIRK_NO_DEEPEST_PS		= (1 << 5),
  
- #include <drm/drm_accel.h>
- #include <drm/drm_cache.h>
-@@ -54,8 +55,7 @@ MODULE_AUTHOR("Gareth Hughes, Leif Delgass, José Fonseca, Jon Smirl");
- MODULE_DESCRIPTION("DRM shared core routines");
- MODULE_LICENSE("GPL and additional rights");
- 
--static DEFINE_SPINLOCK(drm_minor_lock);
--static struct idr drm_minors_idr;
-+static DEFINE_XARRAY_ALLOC(drm_minors_xa);
- 
- /*
-  * If the drm core fails to init for whatever reason,
-@@ -101,26 +101,23 @@ static struct drm_minor **drm_minor_get_slot(struct drm_device *dev,
- static void drm_minor_alloc_release(struct drm_device *dev, void *data)
- {
- 	struct drm_minor *minor = data;
--	unsigned long flags;
- 
- 	WARN_ON(dev != minor->dev);
- 
- 	put_device(minor->kdev);
- 
--	if (minor->type == DRM_MINOR_ACCEL) {
-+	if (minor->type == DRM_MINOR_ACCEL)
- 		accel_minor_remove(minor->index);
--	} else {
--		spin_lock_irqsave(&drm_minor_lock, flags);
--		idr_remove(&drm_minors_idr, minor->index);
--		spin_unlock_irqrestore(&drm_minor_lock, flags);
--	}
-+	else
-+		xa_erase(&drm_minors_xa, minor->index);
- }
- 
-+#define DRM_MINOR_LIMIT(t) ({ typeof(t) _t = (t); XA_LIMIT(64 * _t, 64 * _t + 63); })
+ 	/*
++	 *  Problems seen with concurrent commands
++	 */
++	NVME_QUIRK_QDEPTH_ONE			= (1 << 6),
 +
- static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- {
- 	struct drm_minor *minor;
--	unsigned long flags;
--	int r;
-+	int index, r;
++	/*
+ 	 * Set MEDIUM priority on SQ creation
+ 	 */
+ 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2563,15 +2563,8 @@ static int nvme_pci_enable(struct nvme_d
+ 	else
+ 		dev->io_sqes = NVME_NVM_IOSQES;
  
- 	minor = drmm_kzalloc(dev, sizeof(*minor), GFP_KERNEL);
- 	if (!minor)
-@@ -129,24 +126,17 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- 	minor->type = type;
- 	minor->dev = dev;
- 
--	idr_preload(GFP_KERNEL);
- 	if (type == DRM_MINOR_ACCEL) {
- 		r = accel_minor_alloc();
-+		index = r;
- 	} else {
--		spin_lock_irqsave(&drm_minor_lock, flags);
--		r = idr_alloc(&drm_minors_idr,
--			NULL,
--			64 * type,
--			64 * (type + 1),
--			GFP_NOWAIT);
--		spin_unlock_irqrestore(&drm_minor_lock, flags);
-+		r = xa_alloc(&drm_minors_xa, &index, NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
- 	}
--	idr_preload_end();
- 
- 	if (r < 0)
- 		return r;
- 
--	minor->index = r;
-+	minor->index = index;
- 
- 	r = drmm_add_action_or_reset(dev, drm_minor_alloc_release, minor);
- 	if (r)
-@@ -163,7 +153,7 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
- static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
- {
- 	struct drm_minor *minor;
--	unsigned long flags;
-+	void *entry;
- 	int ret;
- 
- 	DRM_DEBUG("\n");
-@@ -189,9 +179,12 @@ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
- 	if (minor->type == DRM_MINOR_ACCEL) {
- 		accel_minor_replace(minor, minor->index);
- 	} else {
--		spin_lock_irqsave(&drm_minor_lock, flags);
--		idr_replace(&drm_minors_idr, minor, minor->index);
--		spin_unlock_irqrestore(&drm_minor_lock, flags);
-+		entry = xa_store(&drm_minors_xa, minor->index, minor, GFP_KERNEL);
-+		if (xa_is_err(entry)) {
-+			ret = xa_err(entry);
-+			goto err_debugfs;
-+		}
-+		WARN_ON(entry);
- 	}
- 
- 	DRM_DEBUG("new minor registered %d\n", minor->index);
-@@ -205,20 +198,16 @@ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
- static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type type)
- {
- 	struct drm_minor *minor;
--	unsigned long flags;
- 
- 	minor = *drm_minor_get_slot(dev, type);
- 	if (!minor || !device_is_registered(minor->kdev))
- 		return;
- 
- 	/* replace @minor with NULL so lookups will fail from now on */
--	if (minor->type == DRM_MINOR_ACCEL) {
-+	if (minor->type == DRM_MINOR_ACCEL)
- 		accel_minor_replace(NULL, minor->index);
--	} else {
--		spin_lock_irqsave(&drm_minor_lock, flags);
--		idr_replace(&drm_minors_idr, NULL, minor->index);
--		spin_unlock_irqrestore(&drm_minor_lock, flags);
--	}
-+	else
-+		xa_store(&drm_minors_xa, minor->index, NULL, GFP_KERNEL);
- 
- 	device_del(minor->kdev);
- 	dev_set_drvdata(minor->kdev, NULL); /* safety belt */
-@@ -237,13 +226,12 @@ static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type typ
- struct drm_minor *drm_minor_acquire(unsigned int minor_id)
- {
- 	struct drm_minor *minor;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&drm_minor_lock, flags);
--	minor = idr_find(&drm_minors_idr, minor_id);
-+	xa_lock(&drm_minors_xa);
-+	minor = xa_load(&drm_minors_xa, minor_id);
- 	if (minor)
- 		drm_dev_get(minor->dev);
--	spin_unlock_irqrestore(&drm_minor_lock, flags);
-+	xa_unlock(&drm_minors_xa);
- 
- 	if (!minor) {
- 		return ERR_PTR(-ENODEV);
-@@ -1071,7 +1059,7 @@ static void drm_core_exit(void)
- 	unregister_chrdev(DRM_MAJOR, "drm");
- 	debugfs_remove(drm_debugfs_root);
- 	drm_sysfs_destroy();
--	idr_destroy(&drm_minors_idr);
-+	WARN_ON(!xa_empty(&drm_minors_xa));
- 	drm_connector_ida_destroy();
- }
- 
-@@ -1080,7 +1068,6 @@ static int __init drm_core_init(void)
- 	int ret;
- 
- 	drm_connector_ida_init();
--	idr_init(&drm_minors_idr);
- 	drm_memcpy_init_early();
- 
- 	ret = drm_sysfs_init();
--- 
-2.43.0
-
+-	/*
+-	 * Temporary fix for the Apple controller found in the MacBook8,1 and
+-	 * some MacBook7,1 to avoid controller resets and data loss.
+-	 */
+-	if (pdev->vendor == PCI_VENDOR_ID_APPLE && pdev->device == 0x2001) {
++	if (dev->ctrl.quirks & NVME_QUIRK_QDEPTH_ONE) {
+ 		dev->q_depth = 2;
+-		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
+-			"set queue depth=%u to work around controller resets\n",
+-			dev->q_depth);
+ 	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
+ 		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
+ 		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
+@@ -3442,6 +3435,8 @@ static const struct pci_device_id nvme_i
+ 				NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
++		.driver_data = NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
+@@ -3576,7 +3571,12 @@ static const struct pci_device_id nvme_i
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0xcd02),
+ 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
+-		.driver_data = NVME_QUIRK_SINGLE_VECTOR },
++		/*
++		 * Fix for the Apple controller found in the MacBook8,1 and
++		 * some MacBook7,1 to avoid controller resets and data loss.
++		 */
++		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
++				NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
+ 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
 
 
