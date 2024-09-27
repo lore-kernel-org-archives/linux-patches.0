@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365C218C010;
-	Fri, 27 Sep 2024 12:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01CC18C011;
+	Fri, 27 Sep 2024 12:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439992; cv=none; b=lKBUQXVxFc0sFivsxYJj0aPUA6fOgK5rqgJ37wz4iVqTY4xbRAPC2G7zhoCc+8JLEv7nOfVtrPTtg7TKyD2NcdOj7yygaygXixqV3SRvGJRNr6yLHbAesJOvUlhg+u3nltjRmromQh3wySBwg/Q5Jfso8YVpiLUpihC77GpSzak=
+	t=1727439995; cv=none; b=TY8bhxzyQMmQlXO8wQr3mO/8ZevUyRRrad3KKvYGbFy9MaC7h1Dj8UZ/ne8NFqN3ScyZX1X0oXptR07kOEHAGjDjtMBftZWfbo2WdgomGIg/BkkCjXxfEZJ1O0ovmlN8AM3EtqacfitqDs2jlLvbqH577sHajdzAdetpXUocsqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439992; c=relaxed/simple;
-	bh=H8vgCAY3ZG1QSy85W6464KrXg0Mefee9w0hBP3vb0OM=;
+	s=arc-20240116; t=1727439995; c=relaxed/simple;
+	bh=ZdbI8R2DH4H4W/PTTWNf0GkH3SfnqbhmIpnYQNQk0yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmAx17OJZ9gxcnkyHAs8ZksLdflYIttas533UXcP8NlX1uAEH3186uGY2K40dHILk/3BTmrq+O3s8ArUd4Kr8FjPTy9Jvazcy9qDLrcJdyS1XnZVRkTMbEF+/D/F4VVS78RnaO8D7rPf2h+zZO0yXkqUu0xvpEB7jE7bSRtheWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG7mrr8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ym0+7JM0FUDegJAYzZpxfr0UlA8fMhaTwQ11Z7ZptYGfzs1keZrYQpvPQr69+Q9dqjO4xDBdwvlvKG5fTbqah8ACD+edXuV0RmE2KqF2gxr4JAep2Q5K9ViQqPaicXaa5n7HfwQmdeEJGY0UtXEEc4Ma8GtYO86GYALEtVlS2B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEfGpk1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG7mrr8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4811C4CEC4;
-	Fri, 27 Sep 2024 12:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEfGpk1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF84C4CEC4;
+	Fri, 27 Sep 2024 12:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439992;
-	bh=H8vgCAY3ZG1QSy85W6464KrXg0Mefee9w0hBP3vb0OM=;
+	s=korg; t=1727439994;
+	bh=ZdbI8R2DH4H4W/PTTWNf0GkH3SfnqbhmIpnYQNQk0yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QG7mrr8KPfmKXncz5mcmve/1TgSQtmyIx4LBOFNmnr5pJHY9I8jXxsx0Caadezyzf
-	 co65bwnuyoQdutpXorN7Lq9CQwdoTKmLUpmD1EeaV5jfVHsd6wT3WxodzNM/QXhBZT
-	 n1rEracG+nMVL8rmOhxLPtVkhNirDdK8ZkY+HEGI=
+	b=HEfGpk1MdiuU47YFy2cNaWQLTCo2prQeD3oDT3+vZp3jGCi/nsn1CYkB04oZqONsj
+	 +2pC5VV0EaH4r58456Cha/EfcYiWYrl0QPM75Bs3tWNpunW17JXZT3TFGVHswnxvOV
+	 6ijtIlN1yktO5WxsQtviMYhZLtMMevEcCT6hbQ7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Beckett <bob.beckett@collabora.com>,
-	Keith Busch <kbusch@kernel.org>,
-	"Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.6 49/54] nvme-pci: qdepth 1 quirk
-Date: Fri, 27 Sep 2024 14:23:41 +0200
-Message-ID: <20240927121721.777083304@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Subject: [PATCH 6.6 50/54] x86/mm: Switch to new Intel CPU model defines
+Date: Fri, 27 Sep 2024 14:23:42 +0200
+Message-ID: <20240927121721.823822179@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -51,84 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Tony Luck <tony.luck@intel.com>
 
-commit 83bdfcbdbe5d901c5fa432decf12e1725a840a56 upstream.
+commit 2eda374e883ad297bd9fe575a16c1dc850346075 upstream.
 
-Another device has been reported to be unreliable if we have more than
-one outstanding command. In this new case, data corruption may occur.
-Since we have two devices now needing this quirky behavior, make a
-generic quirk flag.
+New CPU #defines encode vendor and family as well as model.
 
-The same Apple quirk is clearly not "temporary", so update the comment
-while moving it.
+[ dhansen: vertically align 0's in invlpg_miss_ids[] ]
 
-Link: https://lore.kernel.org/linux-nvme/191d810a4e3.fcc6066c765804.973611676137075390@collabora.com/
-Reported-by: Robert Beckett <bob.beckett@collabora.com>
-Reviewed-by: Christoph Hellwig hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Cc: "Gagniuc, Alexandru" <alexandru.gagniuc@hp.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/all/20240424181518.41946-1-tony.luck%40intel.com
+[ Ricardo: I used the old match macro X86_MATCH_INTEL_FAM6_MODEL()
+  instead of X86_MATCH_VFM() as in the upstream commit. ]
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/nvme.h |    5 +++++
- drivers/nvme/host/pci.c  |   18 +++++++++---------
- 2 files changed, 14 insertions(+), 9 deletions(-)
+ arch/x86/mm/init.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -89,6 +89,11 @@ enum nvme_quirks {
- 	NVME_QUIRK_NO_DEEPEST_PS		= (1 << 5),
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -261,21 +261,17 @@ static void __init probe_page_size_mask(
+ 	}
+ }
  
- 	/*
-+	 *  Problems seen with concurrent commands
-+	 */
-+	NVME_QUIRK_QDEPTH_ONE			= (1 << 6),
-+
-+	/*
- 	 * Set MEDIUM priority on SQ creation
- 	 */
- 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2526,15 +2526,8 @@ static int nvme_pci_enable(struct nvme_d
- 	else
- 		dev->io_sqes = NVME_NVM_IOSQES;
+-#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
+-			      .family  = 6,			\
+-			      .model = _model,			\
+-			    }
+ /*
+  * INVLPG may not properly flush Global entries
+  * on these CPUs when PCIDs are enabled.
+  */
+ static const struct x86_cpu_id invlpg_miss_ids[] = {
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
+-	INTEL_MATCH(INTEL_FAM6_ATOM_GRACEMONT ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
++	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GRACEMONT, 0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
+ 	{}
+ };
  
--	/*
--	 * Temporary fix for the Apple controller found in the MacBook8,1 and
--	 * some MacBook7,1 to avoid controller resets and data loss.
--	 */
--	if (pdev->vendor == PCI_VENDOR_ID_APPLE && pdev->device == 0x2001) {
-+	if (dev->ctrl.quirks & NVME_QUIRK_QDEPTH_ONE) {
- 		dev->q_depth = 2;
--		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
--			"set queue depth=%u to work around controller resets\n",
--			dev->q_depth);
- 	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
- 		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
- 		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
-@@ -3399,6 +3392,8 @@ static const struct pci_device_id nvme_i
- 				NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
-+		.driver_data = NVME_QUIRK_QDEPTH_ONE },
- 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
- 				NVME_QUIRK_BOGUS_NID, },
-@@ -3531,7 +3526,12 @@ static const struct pci_device_id nvme_i
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0xcd02),
- 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
--		.driver_data = NVME_QUIRK_SINGLE_VECTOR },
-+		/*
-+		 * Fix for the Apple controller found in the MacBook8,1 and
-+		 * some MacBook7,1 to avoid controller resets and data loss.
-+		 */
-+		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
-+				NVME_QUIRK_QDEPTH_ONE },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
- 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
 
 
