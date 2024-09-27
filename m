@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B9018A95D;
-	Fri, 27 Sep 2024 12:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C930118A955;
+	Fri, 27 Sep 2024 12:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440184; cv=none; b=djt0IFaBs6sKEpP+97njJbB4Y8g4YsVJ/mbDIBylZnMZ8SbDyUdF1avGsi4pdWXkYfwjMGfIQDo0UfXGXOC3Fa1VEjKZKG+FUxDmODNErMaLBPn3DbJW2S7+IPIErzY4/UZG+Ws3CHcY7jP6Mi2GdUqBLNynrm/69SosgfmcC4M=
+	t=1727440186; cv=none; b=Tr1zmZ8ofLqajJAMa+QKvJurv0ZMtJqHwg5oxJUZjXgjxJVWohQi+eeyEmVWKo7I/O1L6N81r84FWYApRV63VaJwciSNMjwKyHLY37CCmpBxT5zE3bmySL+O7XcY47yfS118JbuTc/UAcEjNKXlQwKDOOipaHdRZdD29Rl3r+X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440184; c=relaxed/simple;
-	bh=Ok5/FAiZoR0VEQ7q6Vhp9Q83Mnykclf49bYV2aCWZKk=;
+	s=arc-20240116; t=1727440186; c=relaxed/simple;
+	bh=rYmgIAd/NHk98Fo3oUFYRNFMkS65cPuuczcaxWNkuRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9FwpcsjUYjbXKEnk7A7Gj9vUmyRIcnfAR1f9roY7wnhsxl4lcDZKnl5pK7jUoh4A/CFfio2IGoo5gflPXm7jWAXi0cuWrMpS9uIY8AwgXhjHwUEgegNorx75n8BmMYHOEZSyQJIHe7O9vz33VSsyNMOa/OPRBwjiBp8ThEFloM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dzm0moc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gnoc1QGNxIJP+aksBuaSWvit+i6TvDFPbw9Ip8Bqy7iW90GjyNBMJMP2QbVuvOf+PxBhkJZVO43QS1FUPt0NzwjiuJEto7ES/5JT/dSKtNXZhsFtmk20JzqtDYv+2vMm/yGFCgTW+2Xc7YZNlxZWDNEwhtJRLE/R9++5YGgVE6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwKyZAey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dzm0moc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8DEC4CEC4;
-	Fri, 27 Sep 2024 12:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwKyZAey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53878C4CEC4;
+	Fri, 27 Sep 2024 12:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440183;
-	bh=Ok5/FAiZoR0VEQ7q6Vhp9Q83Mnykclf49bYV2aCWZKk=;
+	s=korg; t=1727440186;
+	bh=rYmgIAd/NHk98Fo3oUFYRNFMkS65cPuuczcaxWNkuRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dzm0moc9Q+EN2Wwb/eoaQQn25GlT9TyqAT4FVNlyvM6JqtJF8kIeiHDuFbI2IPld3
-	 6+wYcucpfEky5wcHY94eAINnHqmhfxlHOH48zUz7sjYLB3iwasxaw8H5NvqwGndzBi
-	 QMrq4YJ5onvZJqae0DnHpjt0MPauMs66DeYM45ac=
+	b=IwKyZAeyVkBmL4s3lVKLSuwVYnr84MAF8hAlADOg9uDzm/pU+/E55HKeDW9fXGAUD
+	 bPu9XZzykaX+lJ3upuiHo388yTKBf2ccogXPZfci3fRKap8vc/LIjo0xvq5Ocl6roB
+	 dtr/dlLA6BhUdZZwqEr3jXxQlON8E3w4vzcCCI8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 52/58] netfilter: nft_socket: Fix a NULL vs IS_ERR() bug in nft_socket_cgroup_subtree_level()
-Date: Fri, 27 Sep 2024 14:23:54 +0200
-Message-ID: <20240927121720.949712124@linuxfoundation.org>
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thomas Leroy <thomas.leroy@suse.com>
+Subject: [PATCH 6.10 53/58] Bluetooth: btintel_pcie: Allocate memory for driver private data
+Date: Fri, 27 Sep 2024 14:23:55 +0200
+Message-ID: <20240927121720.991833250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,36 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kiran K <kiran.k@intel.com>
 
-commit 7052622fccb1efb850c6b55de477f65d03525a30 upstream.
+commit 7ffaa200251871980af12e57649ad57c70bf0f43 upstream.
 
-The cgroup_get_from_path() function never returns NULL, it returns error
-pointers.  Update the error handling to match.
+Fix driver not allocating memory for struct btintel_data which is used
+to store internal data.
 
-Fixes: 7f3287db6543 ("netfilter: nft_socket: make cgroupsv2 matching work with namespaces")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Florian Westphal <fw@strlen.de>
-Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/bbc0c4e0-05cc-4f44-8797-2f4b3920a820@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Thomas Leroy <thomas.leroy@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_socket.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btintel_pcie.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -61,8 +61,8 @@ static noinline int nft_socket_cgroup_su
- 	struct cgroup *cgrp = cgroup_get_from_path("/");
- 	int level;
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1208,7 +1208,7 @@ static int btintel_pcie_setup_hdev(struc
+ 	int err;
+ 	struct hci_dev *hdev;
  
--	if (!cgrp)
--		return -ENOENT;
-+	if (IS_ERR(cgrp))
-+		return PTR_ERR(cgrp);
- 
- 	level = cgrp->level;
+-	hdev = hci_alloc_dev();
++	hdev = hci_alloc_dev_priv(sizeof(struct btintel_data));
+ 	if (!hdev)
+ 		return -ENOMEM;
  
 
 
