@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D79617B515;
-	Fri, 27 Sep 2024 12:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8189318BC0D;
+	Fri, 27 Sep 2024 12:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440112; cv=none; b=HlTroYUHU/iuSvj1WwLMEXN2DwzsFgE5gQ02iSBQmNkjFdR/9bZcP+HJPAKCs9TIGjb1H7Xi05MJyFrO35dPnpWExAk3iZemZiSyxGBYFcEWsY9Y+Ngn7fUJztetICe8x/Qv9zyBRvJXlFaLjU4vlFUiUjd/LWkqhThiddoaTd4=
+	t=1727440114; cv=none; b=rmiOltFwU+DmtxJePj2R9Ld5iLr4iqt/qYdjrYEU0iLl4PNy1M6o1mkb72c9WfN3AGjbv83a2NBZvWYXr3mS+1EfGYNGXP8fUupsYyvAbMOY2f8Rqk/obiphwUqKVCpT2FDzgGbGTri9K2dEZ66Jkb487hirdcjK39gTGjOaWTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440112; c=relaxed/simple;
-	bh=nj2N539WVoabIzyqbgPiQ9dkIhB0QH4nC9BRn91cdBA=;
+	s=arc-20240116; t=1727440114; c=relaxed/simple;
+	bh=DL9gNP4/VSkOhIC5rqvEH4J2Xh0ZLFd7itwe/kl7E0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAKq7tHSRM6l1/7fcxi4x4ci1HOK+9PSqvqPVrgfC0Z45s9V/S6PZg0Vz155mEtgpRoJt3ZmqNhgmRTkPDo4LCqyizOVGuNwAfNlNjoUX6Oggwv1FzY2xe5ZMHzMWZZlFgOxW3dmZ+08EUJXLBm7q1X0R3yTPhGHIh8pkvS5/3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TG9+yxfq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1hja809IUElCYDCruUVyZm9N4OK2PYq8bFFWifYfo1NHTn6F+BATYB/jYiUWbfFzbEv2Fu9JwOA1M+OBCWx5fjkcr/BEFnPX4drC2RZL2xZnRI/RVy6PmqCnLMicLIJq0+xovT51toMJgvY5BPg7++a53FoWOfeTSW5qpssZ40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYwrjahS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TG9+yxfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40238C4CEC4;
-	Fri, 27 Sep 2024 12:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYwrjahS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAE9C4CEC4;
+	Fri, 27 Sep 2024 12:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440111;
-	bh=nj2N539WVoabIzyqbgPiQ9dkIhB0QH4nC9BRn91cdBA=;
+	s=korg; t=1727440114;
+	bh=DL9gNP4/VSkOhIC5rqvEH4J2Xh0ZLFd7itwe/kl7E0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TG9+yxfq9kRQ3WcLMhhchLa1/7qRXfVlcmj6yCFLxiQMpasRDg4JCN5RSEBIQm3wG
-	 mzdFJUEQWZMnhb0ph1h9nsSOHvOf9/wbldrrYU/IZzoIQPGi2FYCrsjvx8+8DKo0ym
-	 y8YiWeumi4bGXOR7APbCv8TvylBw0MRSMuDajz1E=
+	b=VYwrjahSG6GTUG3pcyyWcPkuW/V2bPv7Raodp2gKM4iVDNiRvDHzUb3IHKlJZqT9M
+	 H0LN1UZy1UbYoTpodmo+lwBEK7U+KlDZ9Cn61wtHdyb+J5f/lU+JjPvUq0IbM/uUcP
+	 F3OTgXHdw4S6ybNQU5EBGPM/k6d0UbO2nFrKSXWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rickard Andersson <rickaran@axis.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 19/58] wifi: iwlwifi: mvm: pause TCM when the firmware is stopped
-Date: Fri, 27 Sep 2024 14:23:21 +0200
-Message-ID: <20240927121719.594231935@linuxfoundation.org>
+Subject: [PATCH 6.10 37/58] smb: client: fix hang in wait_for_response() for negproto
+Date: Fri, 27 Sep 2024 14:23:39 +0200
+Message-ID: <20240927121720.287693134@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,51 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 0668ebc8c2282ca1e7eb96092a347baefffb5fe7 ]
+[ Upstream commit 7ccc1465465d78e6411b7bd730d06e7435802b5c ]
 
-Not doing so will make us send a host command to the transport while the
-firmware is not alive, which will trigger a WARNING.
+Call cifs_reconnect() to wake up processes waiting on negotiate
+protocol to handle the case where server abruptly shut down and had no
+chance to properly close the socket.
 
-bad state = 0
-WARNING: CPU: 2 PID: 17434 at drivers/net/wireless/intel/iwlwifi/iwl-trans.c:115 iwl_trans_send_cmd+0x1cb/0x1e0 [iwlwifi]
-RIP: 0010:iwl_trans_send_cmd+0x1cb/0x1e0 [iwlwifi]
-Call Trace:
- <TASK>
- iwl_mvm_send_cmd+0x40/0xc0 [iwlmvm]
- iwl_mvm_config_scan+0x198/0x260 [iwlmvm]
- iwl_mvm_recalc_tcm+0x730/0x11d0 [iwlmvm]
- iwl_mvm_tcm_work+0x1d/0x30 [iwlmvm]
- process_one_work+0x29e/0x640
- worker_thread+0x2df/0x690
- ? rescuer_thread+0x540/0x540
- kthread+0x192/0x1e0
- ? set_kthread_struct+0x90/0x90
- ret_from_fork+0x22/0x30
+Simple reproducer:
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.5abe71ca1b6b.I97a968cb8be1f24f94652d9b110ecbf6af73f89e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  ssh 192.168.2.100 pkill -STOP smbd
+  mount.cifs //192.168.2.100/test /mnt -o ... [never returns]
+
+Cc: Rickard Andersson <rickaran@axis.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/connect.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index 498afbe4ee6be..6375cc3c48f3c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1521,6 +1521,8 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
- 
- 	clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status);
- 
-+	iwl_mvm_pause_tcm(mvm, false);
-+
- 	iwl_fw_dbg_stop_sync(&mvm->fwrt);
- 	iwl_trans_stop_device(mvm->trans);
- 	iwl_free_fw_paging(&mvm->fwrt);
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index d2307162a2de1..e325e06357ffb 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -656,6 +656,19 @@ allocate_buffers(struct TCP_Server_Info *server)
+ static bool
+ server_unresponsive(struct TCP_Server_Info *server)
+ {
++	/*
++	 * If we're in the process of mounting a share or reconnecting a session
++	 * and the server abruptly shut down (e.g. socket wasn't closed, packet
++	 * had been ACK'ed but no SMB response), don't wait longer than 20s to
++	 * negotiate protocol.
++	 */
++	spin_lock(&server->srv_lock);
++	if (server->tcpStatus == CifsInNegotiate &&
++	    time_after(jiffies, server->lstrp + 20 * HZ)) {
++		spin_unlock(&server->srv_lock);
++		cifs_reconnect(server, false);
++		return true;
++	}
+ 	/*
+ 	 * We need to wait 3 echo intervals to make sure we handle such
+ 	 * situations right:
+@@ -667,7 +680,6 @@ server_unresponsive(struct TCP_Server_Info *server)
+ 	 * 65s kernel_recvmsg times out, and we see that we haven't gotten
+ 	 *     a response in >60s.
+ 	 */
+-	spin_lock(&server->srv_lock);
+ 	if ((server->tcpStatus == CifsGood ||
+ 	    server->tcpStatus == CifsNeedNegotiate) &&
+ 	    (!server->ops->can_echo || server->ops->can_echo(server)) &&
 -- 
 2.43.0
 
