@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D15718BC0D;
-	Fri, 27 Sep 2024 12:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1366718BC33;
+	Fri, 27 Sep 2024 12:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440003; cv=none; b=FckR04E/o04q1IjVauB+j0MaEpVUp4fFMiAysNXbLcvnrSjrZv8qP59f51pHfYzwOSt5nxFarvG7u1RBbvfcZR9avylbVZRrSgwnxssQ+m6uFXiZIrGGHIC7yekzsPMQgRt22Ez2cjJipLbrtGTVTfWZ7xIKuJ7XNZd9wsraDP0=
+	t=1727440006; cv=none; b=cfvYqu0nv7mph8F3GGTH8DvzYDKk1sMw1xoBTwubeiGqmClVHW3LNkZFt7iMWp5PY3mW3tul2y4AywIqRvJ5YLsNXQNYrBFIZ4yd3ElaHiBuQACDUI2XVzChkgLFNErW4cdBlj2dcDaa2BA3A9gSfgOu0vLrD7achvA7YXbCeHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440003; c=relaxed/simple;
-	bh=iKij7GScScDtJxsufbJUvQEJg3cM9vAzosqIb0XYBEU=;
+	s=arc-20240116; t=1727440006; c=relaxed/simple;
+	bh=YTw9Q8oI28GVkBaWJrqEPrc/D79QRjdVp0shAvuRXfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dftkvpC+1gBl7Uc4BKGZsY9f6Zy+ZibYCcmT2s2EyIKsRk5LCBUfV/C2MFFJbid4Y9hkBelD/Sl/wuwlzc7gsvRbyjZHBs8oIuvWjIyzxYeCZGQNSrhWYmRMXG9xdRzkIobvD/5ugBRucXMqnz4GP8AGjAQLSMOkx+dJsjcH3js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFA695rT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JmXLo6H6Yj6919VrGapcd6yD8imseCrew1Ql0eT4thFrJUeVO15nO+ytMe1jyPV/xnvKX2erb7BkhGScFs7KDxeabNnXFGp6w0yG0mX/wS1ZR8cRjr5gNakwCQEzQC8TwQuZvXZOjZagRUyvDzJ3h/6fyp8MPI6Jvs5+E32f0xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okA63Mf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFA695rT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8600C4CEC4;
-	Fri, 27 Sep 2024 12:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okA63Mf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DABC4CEC4;
+	Fri, 27 Sep 2024 12:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440003;
-	bh=iKij7GScScDtJxsufbJUvQEJg3cM9vAzosqIb0XYBEU=;
+	s=korg; t=1727440006;
+	bh=YTw9Q8oI28GVkBaWJrqEPrc/D79QRjdVp0shAvuRXfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFA695rTalhfOVdom8zSSi1LjKQA/PkCUMTm4oEod+BZuBWfTTd8OYL0U5ye9b6Bd
-	 u+aJszUCQvfiiPPUXrL6WV8bZKF7PfabxfZ7NqPYYp8hl/33n7XLO/1GKMnPV7LQZF
-	 fulkLFnRCzBIDPlbTYwu49zuAGnShXjdhdU6tcV4=
+	b=okA63Mf+TkGYW0juthqmUT54Vo9aIYMYaVqeQ8XSRgEQBRCbLtGpDlBjTQsXw37Rt
+	 ea21ZsWPFbDRSNnCsB6YM8KqhB9sgHXLwMTqWeC7O6CqyciKyS4JNx7PXl68sAVoWj
+	 yHyWLljFDPctWxKj6GVTg9z17icWSwxLHTSasnT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 52/54] can: mcp251xfd: move mcp251xfd_timestamp_start()/stop() into mcp251xfd_chip_start/stop()
-Date: Fri, 27 Sep 2024 14:23:44 +0200
-Message-ID: <20240927121721.894588441@linuxfoundation.org>
+	Junhao Xie <bigfoot@classfun.cn>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 53/54] USB: serial: pl2303: add device id for Macrosilicon MS3020
+Date: Fri, 27 Sep 2024 14:23:45 +0200
+Message-ID: <20240927121721.939595689@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -49,106 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Junhao Xie <bigfoot@classfun.cn>
 
-commit a7801540f325d104de5065850a003f1d9bdc6ad3 upstream.
+commit 7d47d22444bb7dc1b6d768904a22070ef35e1fc0 upstream.
 
-The mcp251xfd wakes up from Low Power or Sleep Mode when SPI activity
-is detected. To avoid this, make sure that the timestamp worker is
-stopped before shutting down the chip.
+Add the device id for the Macrosilicon MS3020 which is a
+PL2303HXN based device.
 
-Split the starting of the timestamp worker out of
-mcp251xfd_timestamp_init() into the separate function
-mcp251xfd_timestamp_start().
-
-Call mcp251xfd_timestamp_init() before mcp251xfd_chip_start(), move
-mcp251xfd_timestamp_start() to mcp251xfd_chip_start(). In this way,
-mcp251xfd_timestamp_stop() can be called unconditionally by
-mcp251xfd_chip_stop().
-
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Junhao Xie <bigfoot@classfun.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c      |    8 +++++---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c |    7 +++++--
- drivers/net/can/spi/mcp251xfd/mcp251xfd.h           |    1 +
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/usb/serial/pl2303.c |    1 +
+ drivers/usb/serial/pl2303.h |    4 ++++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-@@ -744,6 +744,7 @@ static void mcp251xfd_chip_stop(struct m
+--- a/drivers/usb/serial/pl2303.c
++++ b/drivers/usb/serial/pl2303.c
+@@ -118,6 +118,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(SMART_VENDOR_ID, SMART_PRODUCT_ID) },
+ 	{ USB_DEVICE(AT_VENDOR_ID, AT_VTKIT3_PRODUCT_ID) },
+ 	{ USB_DEVICE(IBM_VENDOR_ID, IBM_PRODUCT_ID) },
++	{ USB_DEVICE(MACROSILICON_VENDOR_ID, MACROSILICON_MS3020_PRODUCT_ID) },
+ 	{ }					/* Terminating entry */
+ };
  
- 	mcp251xfd_chip_interrupts_disable(priv);
- 	mcp251xfd_chip_rx_int_disable(priv);
-+	mcp251xfd_timestamp_stop(priv);
- 	mcp251xfd_chip_sleep(priv);
- }
- 
-@@ -763,6 +764,8 @@ static int mcp251xfd_chip_start(struct m
- 	if (err)
- 		goto out_chip_stop;
- 
-+	mcp251xfd_timestamp_start(priv);
+--- a/drivers/usb/serial/pl2303.h
++++ b/drivers/usb/serial/pl2303.h
+@@ -171,3 +171,7 @@
+ /* Allied Telesis VT-Kit3 */
+ #define AT_VENDOR_ID		0x0caa
+ #define AT_VTKIT3_PRODUCT_ID	0x3001
 +
- 	err = mcp251xfd_set_bittiming(priv);
- 	if (err)
- 		goto out_chip_stop;
-@@ -1610,11 +1613,12 @@ static int mcp251xfd_open(struct net_dev
- 	if (err)
- 		goto out_mcp251xfd_ring_free;
- 
-+	mcp251xfd_timestamp_init(priv);
-+
- 	err = mcp251xfd_chip_start(priv);
- 	if (err)
- 		goto out_transceiver_disable;
- 
--	mcp251xfd_timestamp_init(priv);
- 	clear_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
- 	can_rx_offload_enable(&priv->offload);
- 
-@@ -1648,7 +1652,6 @@ out_destroy_workqueue:
- out_can_rx_offload_disable:
- 	can_rx_offload_disable(&priv->offload);
- 	set_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
--	mcp251xfd_timestamp_stop(priv);
- out_transceiver_disable:
- 	mcp251xfd_transceiver_disable(priv);
- out_mcp251xfd_ring_free:
-@@ -1674,7 +1677,6 @@ static int mcp251xfd_stop(struct net_dev
- 	free_irq(ndev->irq, priv);
- 	destroy_workqueue(priv->wq);
- 	can_rx_offload_disable(&priv->offload);
--	mcp251xfd_timestamp_stop(priv);
- 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
- 	mcp251xfd_transceiver_disable(priv);
- 	mcp251xfd_ring_free(priv);
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
-@@ -48,9 +48,12 @@ void mcp251xfd_timestamp_init(struct mcp
- 	cc->shift = 1;
- 	cc->mult = clocksource_hz2mult(priv->can.clock.freq, cc->shift);
- 
--	timecounter_init(&priv->tc, &priv->cc, ktime_get_real_ns());
--
- 	INIT_DELAYED_WORK(&priv->timestamp, mcp251xfd_timestamp_work);
-+}
-+
-+void mcp251xfd_timestamp_start(struct mcp251xfd_priv *priv)
-+{
-+	timecounter_init(&priv->tc, &priv->cc, ktime_get_real_ns());
- 	schedule_delayed_work(&priv->timestamp,
- 			      MCP251XFD_TIMESTAMP_WORK_DELAY_SEC * HZ);
- }
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-@@ -957,6 +957,7 @@ int mcp251xfd_ring_alloc(struct mcp251xf
- int mcp251xfd_handle_rxif(struct mcp251xfd_priv *priv);
- int mcp251xfd_handle_tefif(struct mcp251xfd_priv *priv);
- void mcp251xfd_timestamp_init(struct mcp251xfd_priv *priv);
-+void mcp251xfd_timestamp_start(struct mcp251xfd_priv *priv);
- void mcp251xfd_timestamp_stop(struct mcp251xfd_priv *priv);
- 
- void mcp251xfd_tx_obj_write_sync(struct work_struct *work);
++/* Macrosilicon MS3020 */
++#define MACROSILICON_VENDOR_ID		0x345f
++#define MACROSILICON_MS3020_PRODUCT_ID	0x3020
 
 
