@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C4618453A;
-	Fri, 27 Sep 2024 12:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2712D18A95D;
+	Fri, 27 Sep 2024 12:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440411; cv=none; b=p68Zlk5JNiknOcVURN3r4Jnqx/2rNdNz8JbaC7+fVhBalHXmZlpfpdbf/gWTudbRZzYC3IiX0hdBCa0jvK7d9/3xxzvzH3bKCD0EZkv7IdythEtBTTenBbT88WnJoI+x+O1vHUVKq8p/UAWaxBXKp/IPR/HlWo/kKEc6nbt84Zw=
+	t=1727440414; cv=none; b=G8/G1l1WKW2eJSxsKZU1oHSb+mXaJb8Rdhbegxgd9xP3/0TrBHmO7UsqzX5LYr+QSycRfJVGyPbm8leihneL8MhTe+qPbpVUr5SpFWc/LqEIaBifFrfvLOJMUo2Sx1MdBRiQiYjbj4/ZWBuoNklcXnuXGnHy8Amz9rHC/A7VL9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440411; c=relaxed/simple;
-	bh=n3QWQXbyJDxVEdaoyxXcfs2c6x5zjZl6rqfV44xJz60=;
+	s=arc-20240116; t=1727440414; c=relaxed/simple;
+	bh=fdH3+ko3784gDVdBlyQFs0j5GZd0sXXkYa3etqYxTtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmECuBNMZPUpPrhu2Q2ywbO+CDaaslTDvjX3//wxAWdQW3HFRRKW+xe+cQMDrTbAT1dG3srAR62u5vSHnBRnQm6BUIDb4I2mF7G4K2NzeYC1uGNwf7G5HZ8NDrQ7gWLAtlt4VbZ6bGMyvk1jIlx0fIq8SoXGRYdd5gc/oVsL+78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBbREi3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tzcr4H3ZTfQjnzwrNVISxaaylbZjmEzq54ND6F25BGw8YTcs+LVXkDMYQDnIn3DDtv7hjPDKiMpkf1QlKxbXyxnkv+5dWaOVjP9HslxeL4OCdUTdaK2b2uAQ0Mx7XEJNd2aYVhagWNDhJ6WbeR6USXz1BrzByqpwSNdl5uDeeuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpZ0iw4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBbREi3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CCAC4CEC4;
-	Fri, 27 Sep 2024 12:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpZ0iw4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA757C4CEC6;
+	Fri, 27 Sep 2024 12:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440411;
-	bh=n3QWQXbyJDxVEdaoyxXcfs2c6x5zjZl6rqfV44xJz60=;
+	s=korg; t=1727440414;
+	bh=fdH3+ko3784gDVdBlyQFs0j5GZd0sXXkYa3etqYxTtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBbREi3l9c3J/4foBrte1FpEzGB0UL0jSqB0osc6IQagm/o11/R41NHTHmmKaTBzE
-	 MD9j0tCMNE3bSAc6bco3QR6vhgmOjc7E3lgB8pUSXulc5GV+JRE/fhuLTPzO6tUHww
-	 +woG5TDnOLVGFu6GiOmukNT+W7EoZLiN4tptQM0Y=
+	b=qpZ0iw4VO+XxWDq6kZlK3sqvNeyBBPCk3e57K1TBCjc1HD8sKHJOrItc1JfeoTmEh
+	 SrocQRAQqJ7rqC2m3rxsF6CYEIZT4ci5uqhQqT2KP0Z7yNy6P9GPU6pe//vlZNuOA9
+	 oVRq9liR4hVuhsZ0xD12dRf50HZ0xS4Lgh+BqR+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	stable <stable@kernel.org>,
-	syzbot+9d34f80f841e948c3fdb@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 73/73] USB: usbtmc: prevent kernel-usb-infoleak
-Date: Fri, 27 Sep 2024 14:24:24 +0200
-Message-ID: <20240927121722.780157952@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 62/73] netfilter: nf_tables: missing iterator type in lookup walk
+Date: Fri, 27 Sep 2024 14:24:13 +0200
+Message-ID: <20240927121722.408052007@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -51,34 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 625fa77151f00c1bd00d34d60d6f2e710b3f9aad upstream.
+commit efefd4f00c967d00ad7abe092554ffbb70c1a793 upstream.
 
-The syzbot reported a kernel-usb-infoleak in usbtmc_write,
-we need to clear the structure before filling fields.
+Add missing decorator type to lookup expression and tighten WARN_ON_ONCE
+check in pipapo to spot earlier that this is unset.
 
-Fixes: 4ddc645f40e9 ("usb: usbtmc: Add ioctl for vendor specific write")
-Reported-and-tested-by: syzbot+9d34f80f841e948c3fdb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9d34f80f841e948c3fdb
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/tencent_9649AA6EC56EDECCA8A7D106C792D1C66B06@qq.com
+Fixes: 29b359cf6d95 ("netfilter: nft_set_pipapo: walk over current view on netlink dump")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_lookup.c     |    1 +
+ net/netfilter/nft_set_pipapo.c |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -754,7 +754,7 @@ static struct urb *usbtmc_create_urb(voi
- 	if (!urb)
- 		return NULL;
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -211,6 +211,7 @@ static int nft_lookup_validate(const str
+ 		return 0;
  
--	dmabuf = kmalloc(bufsize, GFP_KERNEL);
-+	dmabuf = kzalloc(bufsize, GFP_KERNEL);
- 	if (!dmabuf) {
- 		usb_free_urb(urb);
- 		return NULL;
+ 	iter.genmask	= nft_genmask_next(ctx->net);
++	iter.type	= NFT_ITER_UPDATE;
+ 	iter.skip	= 0;
+ 	iter.count	= 0;
+ 	iter.err	= 0;
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2046,7 +2046,8 @@ static void nft_pipapo_walk(const struct
+ 	const struct nft_pipapo_field *f;
+ 	int i, r;
+ 
+-	WARN_ON_ONCE(iter->type == NFT_ITER_UNSPEC);
++	WARN_ON_ONCE(iter->type != NFT_ITER_READ &&
++		     iter->type != NFT_ITER_UPDATE);
+ 
+ 	rcu_read_lock();
+ 	if (iter->type == NFT_ITER_READ)
 
 
