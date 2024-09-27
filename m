@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3E818C02B;
-	Fri, 27 Sep 2024 12:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80B18BC32;
+	Fri, 27 Sep 2024 12:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440306; cv=none; b=D571Y3xttfQ0vcROX25YaKq2DdCym9d+7tZxIRpgpDbc7g/wDHUX8woQ5wzxtWKILPUlUgPGVnjK0zQoMO9PKTlUoqtXrxcKyzC+HK89Dp0hia6vqiTcXmMDQfbBzbeB5inT1HLHa18iVE3Jt1yZzkv/VPzUyaVQxmJT+T+ulAI=
+	t=1727440309; cv=none; b=pDOHHXDwxZjsrCaDc1QazQ8AYUJCECVlgST0+HI3ZPy1kIwA0qg7WgbZX8wYNpRzsTww0P99irc2TO/nHp1Px0YVCMU7JU79WDiT+jmqUz6RDEqc43452tqKImTy5XptdALP9qMA6i6N6tdPbTeliPrysrY7WTVt0mvY+o34i4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440306; c=relaxed/simple;
-	bh=unjbsM1e5RW0c4y+kF3MWl7TimJJrPrHqcqg2XV1H9s=;
+	s=arc-20240116; t=1727440309; c=relaxed/simple;
+	bh=yG/eWdyJqG8xHl461WP3WRx+lMqCt8k+AZyBhLEFLf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcpTTMqknuOnpi1wupfshw5pPQT44NtdEfRTFJZ40194/v+3Hzjtj+Zd/9jHLIp1nll6LKgQvNMMQgkR0oXZAWXr5f+U1k7rHxXyxX/HpYthIF7TjeYzz5J3SpcPq7P3Jbv3Avs7FUHqCKlunc/c/6a8AKir76qKIV6Zly0/lfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoOGAWJm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPdxVw7ID26uaRcXF8d/cQT6kC+W3PG4UBXnuZVuuyezHPvBXiRKi3FpHhPpPWJrETsQj0Z/c0RGf5o3toY3WSYAsU7Ja9pz3mCryXt7/ugIdVwmjFTfnHI1her9H0CgTBLwhcN99GkxC/Jl+UD+m2O2SDvnlRn9kt7zkdBR2fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZHDwgh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoOGAWJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27528C4CEC4;
-	Fri, 27 Sep 2024 12:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZHDwgh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E117DC4CEC4;
+	Fri, 27 Sep 2024 12:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440306;
-	bh=unjbsM1e5RW0c4y+kF3MWl7TimJJrPrHqcqg2XV1H9s=;
+	s=korg; t=1727440309;
+	bh=yG/eWdyJqG8xHl461WP3WRx+lMqCt8k+AZyBhLEFLf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoOGAWJm/Zq6IquFi4WMuF8yJx9MkgL+5G+jRfpPdlWfQAekOJWjR/y9yjUFIe850
-	 +Bgd0Cms4YcWTs3UIpdoaw0/EuJ6VQQNCT3GAmfkfi4V2G5zrFrmvvSlIn7IrzzQiA
-	 HtVTWNpI02Faa0Oc95FZRXmKT9DBsNA24pfROedQ=
+	b=BZHDwgh695cf7za1ds0ln+OTDCEzJO7U7Z6xvnzwI+ZsAFZ0jtiB3U7oBOPbjBw97
+	 b13RUxHCDwgh2tMMcNIkhJwu4eXqftiRZ3KjQPn0VaQ69zmUxfjYGTlebp5ZrJzy17
+	 6ULM1s3lvPSJSkyachasMBjvqAtLUCyoKwWFAjP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Brown <true.robot.ross@gmail.com>,
-	Eugene Shalygin <eugene.shalygin@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
+	Mike Rapoport <rppt@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/73] hwmon: (asus-ec-sensors) remove VRM temp X570-E GAMING
-Date: Fri, 27 Sep 2024 14:23:19 +0200
-Message-ID: <20240927121720.220728100@linuxfoundation.org>
+Subject: [PATCH 6.1 09/73] microblaze: dont treat zero reserved memory regions as error
+Date: Fri, 27 Sep 2024 14:23:20 +0200
+Message-ID: <20240927121720.253765453@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -52,34 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ross Brown <true.robot.ross@gmail.com>
+From: Mike Rapoport <rppt@kernel.org>
 
-[ Upstream commit 9efaebc0072b8e95505544bf385c20ee8a29d799 ]
+[ Upstream commit 0075df288dd8a7abfe03b3766176c393063591dd ]
 
-X570-E GAMING does not have VRM temperature sensor.
+Before commit 721f4a6526da ("mm/memblock: remove empty dummy entry") the
+check for non-zero of memblock.reserved.cnt in mmu_init() would always
+be true either because  memblock.reserved.cnt is initialized to 1 or
+because there were memory reservations earlier.
 
-Signed-off-by: Ross Brown <true.robot.ross@gmail.com>
-Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
-Link: https://lore.kernel.org/r/20240730062320.5188-2-eugene.shalygin@gmail.com
+The removal of dummy empty entry in memblock caused this check to fail
+because now memblock.reserved.cnt is initialized to 0.
+
+Remove the check for non-zero of memblock.reserved.cnt because it's
+perfectly fine to have an empty memblock.reserved array that early in
+boot.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Mike Rapoport <rppt@kernel.org>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240729053327.4091459-1-rppt@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/microblaze/mm/init.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index b4d65916b3c00..d893cfd1cb829 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -369,7 +369,7 @@ static const struct ec_board_info board_info_strix_b550_i_gaming = {
+diff --git a/arch/microblaze/mm/init.c b/arch/microblaze/mm/init.c
+index 353fabdfcbc54..2a3248194d505 100644
+--- a/arch/microblaze/mm/init.c
++++ b/arch/microblaze/mm/init.c
+@@ -193,11 +193,6 @@ asmlinkage void __init mmu_init(void)
+ {
+ 	unsigned int kstart, ksize;
  
- static const struct ec_board_info board_info_strix_x570_e_gaming = {
- 	.sensors = SENSOR_SET_TEMP_CHIPSET_CPU_MB |
--		SENSOR_TEMP_T_SENSOR | SENSOR_TEMP_VRM |
-+		SENSOR_TEMP_T_SENSOR |
- 		SENSOR_FAN_CHIPSET | SENSOR_CURR_CPU |
- 		SENSOR_IN_CPU_CORE,
- 	.mutex_path = ASUS_HW_ACCESS_MUTEX_ASMX,
+-	if (!memblock.reserved.cnt) {
+-		pr_emerg("Error memory count\n");
+-		machine_restart(NULL);
+-	}
+-
+ 	if ((u32) memblock.memory.regions[0].size < 0x400000) {
+ 		pr_emerg("Memory must be greater than 4MB\n");
+ 		machine_restart(NULL);
 -- 
 2.43.0
 
