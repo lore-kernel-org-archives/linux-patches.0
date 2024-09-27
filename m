@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ADC17B515;
-	Fri, 27 Sep 2024 12:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AB018BB91;
+	Fri, 27 Sep 2024 12:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440089; cv=none; b=B9sgcOmKAWwt40NQuajI4sfEvUb2mTtZCDg9gX6AWQnGcGZ4Q8/R3GStxvnXv3YpCtQ60KlyCx4XSwS4m3mYzM33BpfSXkeHROYTaZJWpW9vrn/WavSlCbsc1IEt37Chs7wpZ2JqMajtRaAhtLWMQA9sVDWjxQSls1f0WDElvEc=
+	t=1727440092; cv=none; b=KY7iHI2nQyZLx/wRWIT6vSsxKEC6tUWTY2Vx14v8elpq/Y0d1Fe0EaLUA0OSblIO4sR/qRO8XL8oYIEgPAeVONRHtkNEMkhC3CmCr/tuiF33LimA0/Gcn4NZDp2SrrNDNyduwdmHq4pBkpXW2gT76qIMBkS/lbz22FtEJiJjMI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440089; c=relaxed/simple;
-	bh=IVzuxtCt0gRg0HM80+dkp99AlJ6OOvj8gXD6BO+zDEg=;
+	s=arc-20240116; t=1727440092; c=relaxed/simple;
+	bh=YmWiBkSp7MHMTWdM8BjsECkBdMnCjOxNU3NiMzFtWR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AY3kZyaFye6pRuWOxYbzLAhG14q19k//H+7gcOlIAJ74c2p9A8VACModGLV61T8uGyOQC6s/vHk/rO2pZcSp7PJnMmKhh0vGrDI60qAi2m9nJKXWjGX/j9Rg11pepURoUqQAhwmasAxMBDmBnYLwNVGgwRPjjrBVzCCGHCtq1UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIbUc1yD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpM1S68adGxThE8lyu2iJC+LUl+z5hh1j56YMHEwmfnvNnW96aOnNusYZzmKTeZQSzzJijUPLcXokLLIgu59N17N6EgSzbFZVseI2ZXzUg7R7iW+dtBccnxKQfaqlwcG3+vU0pZa/tS3REb8chv7ZXcM7i/pEFt7bB6dFlK1ceg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwTg9Os8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIbUc1yD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D356C4CEC4;
-	Fri, 27 Sep 2024 12:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwTg9Os8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE00EC4CEC4;
+	Fri, 27 Sep 2024 12:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440089;
-	bh=IVzuxtCt0gRg0HM80+dkp99AlJ6OOvj8gXD6BO+zDEg=;
+	s=korg; t=1727440092;
+	bh=YmWiBkSp7MHMTWdM8BjsECkBdMnCjOxNU3NiMzFtWR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIbUc1yD5h+xZQubaaXIePM/Z0xXagmdTfYZz6HnmTrrE5NYGDeznjCbaEXDC89+O
-	 BakLWbFOctHzlJ218U6Z05JIS+//P1Y3MKSw3C2LdHvb+VYYvfvPRFeVQpbeMnuznP
-	 4ZMpXp6GFmSB3DNVEk4QLU8uZeCsv3Z1CCp9LObk=
+	b=wwTg9Os8qYdntPbS6nkRcEsHsIWdC1BIPhN1FbhMvVKqOgV98xQP/h1JxkelOEYpn
+	 J5HVgMWymAHsa8HikWLJwkdYZeMHPhU5jQrzeCgIOtg2vwwepUk1Gqvxii19UswTnL
+	 jWr5T0doJ5su/p0vIWquLKBXZfuFrOffQE7P1NQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chen <liaochen4@huawei.com>,
+	Zhang Yi <zhangyi@everest-semi.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 29/58] ASoC: fix module autoloading
-Date: Fri, 27 Sep 2024 14:23:31 +0200
-Message-ID: <20240927121719.977038367@linuxfoundation.org>
+Subject: [PATCH 6.10 30/58] ASoC: mediatek: mt8188-mt6359: Modify key
+Date: Fri, 27 Sep 2024 14:23:32 +0200
+Message-ID: <20240927121720.016629841@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -51,33 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chen <liaochen4@huawei.com>
+From: Zhang Yi <zhangyi@everest-semi.com>
 
-[ Upstream commit 6ba20539ac6b12ea757b3bfe11adf8de1672d7b8 ]
+[ Upstream commit 5325b96769a5b282e330023e1d0881018e89e266 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from of_device_id table.
+In order to get the correct keys when using the ES8326.We will associate
+SND_JACK_BTN_1 to KEY_VOLUMEUP and SND_JACK_BTN_2 to KEY_VOLUMEDOWN
+when the ES8326 flag is recognized.
 
-Signed-off-by: Liao Chen <liaochen4@huawei.com>
-Link: https://patch.msgid.link/20240826084924.368387-5-liaochen4@huawei.com
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+Link: https://patch.msgid.link/20240816114921.48913-1-zhangyi@everest-semi.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/chv3-codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/mediatek/mt8188/mt8188-mt6359.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/chv3-codec.c b/sound/soc/codecs/chv3-codec.c
-index ab99effa68748..40020500b1fe8 100644
---- a/sound/soc/codecs/chv3-codec.c
-+++ b/sound/soc/codecs/chv3-codec.c
-@@ -26,6 +26,7 @@ static const struct of_device_id chv3_codec_of_match[] = {
- 	{ .compatible = "google,chv3-codec", },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, chv3_codec_of_match);
+diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+index eba6f4c445ffb..08ae962afeb92 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
++++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+@@ -734,6 +734,7 @@ static int mt8188_headset_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 	struct mtk_soc_card_data *soc_card_data = snd_soc_card_get_drvdata(rtd->card);
+ 	struct snd_soc_jack *jack = &soc_card_data->card_data->jacks[MT8188_JACK_HEADSET];
+ 	struct snd_soc_component *component = snd_soc_rtd_to_codec(rtd, 0)->component;
++	struct mtk_platform_card_data *card_data = soc_card_data->card_data;
+ 	int ret;
  
- static struct platform_driver chv3_codec_platform_driver = {
- 	.driver = {
+ 	ret = snd_soc_dapm_new_controls(&card->dapm, mt8188_nau8825_widgets,
+@@ -762,10 +763,18 @@ static int mt8188_headset_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 		return ret;
+ 	}
+ 
+-	snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+-	snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
+-	snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+-	snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
++	if (card_data->flags & ES8326_HS_PRESENT) {
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOLUMEUP);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEDOWN);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOICECOMMAND);			
++	} else {
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
++		snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);	
++	}
++	
+ 	ret = snd_soc_component_set_jack(component, jack, NULL);
+ 
+ 	if (ret) {
 -- 
 2.43.0
 
