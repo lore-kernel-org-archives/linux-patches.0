@@ -1,93 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE03C14D43D;
-	Fri, 27 Sep 2024 21:29:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230F918A92F
+	for <patches@lists.linux.dev>; Fri, 27 Sep 2024 22:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727472543; cv=none; b=FpZMVjdY7kdgYRbA5cZ5+QlymMt/NZ+Ds2M41CHlYbI+T9cf1tydP+QOz+Exkye7K12/l1Z4AnNum9qCspi/p8UOTpOyPV1hhFiN9Xu3xNR445n541ktY+Yscfi8VIHCfN7n/8os4zyGmIXLhyjLCTNdR5IOUUmjwy//yIgxkQo=
+	t=1727476248; cv=none; b=f9EaU70ny2OQplKlg2awzw2Stall+xYnvxx51slDqey2q+2Vsmnhjfw1ziLKrUL/F3UJtjyLUJmLiIxbPq8a8N3AKkCsNPtKLo/FVGgm8hA7kRGMsP3F9rK/IUTVYst2ofAZa1iPpcKlEVR+i10CtXUfA0LdyV0Q3P8QUUrzIV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727472543; c=relaxed/simple;
-	bh=pH33JBA1XiLy2oH0ddyRqN1FptJn9l9jJKHzfLHfq0w=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=GNrDctKYjDyYN1eDvsvN+6mILtEFeYCqxqSdEMl8bvArclQmEbcTW3CryO8OHwXkCztI4QjA3zPnZAe/BDzVSQlJ1SXY3z4LMkqpg7hHlgCgpTyf+5Dvl9LlD1I37bwwaQJ+v9auLAoB526PeBTfvG2SkWzrKFjRG40OOy1TrK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G8Ah7msH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727476248; c=relaxed/simple;
+	bh=ttrfHsONvmaa5Z7pnzmIoVPeEJfe4KJEl+ZE4aGApVc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gCWMgiuUc1JX8lgOsRuf0kAqb9recXSCCwa1SykB1bmujc7mSn31sTi327U7/h9p3Z185EerL9E3WwAKYxQoxXloTxjuQKhIY56ODiQe6Xtk+Pfyjx9xiNzv/forhFQRlM/j5F9wV9TwWXpyKFojW0V8mArGrCYT+KAYTfvibgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KH7tfbX6; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G8Ah7msH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEF7C4CEC4;
-	Fri, 27 Sep 2024 21:29:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727472542;
-	bh=pH33JBA1XiLy2oH0ddyRqN1FptJn9l9jJKHzfLHfq0w=;
-	h=Date:From:To:Cc:Subject:From;
-	b=G8Ah7msHY/Yh9Vhmqa7j32k1LcmH7052ZB2GYCv4MU2KF/zg75r5/O56XEKBAQz2I
-	 JDY04yPKVbQXWYHY5fS5lUfAyWF8Arth/73KnUF0eLppnfdMEWDbJRLSc4FXTPTTFC
-	 Xq1qccZeEi2Nd10HZt4lIM78xZ84v3/gxdl0cuJet5GMo1/WxvBKfNpkxoATtEB0yk
-	 68pAl1fEYyiFNeaM5ZEo4qr96PBIH7Kjd0942To6NstglINSZntdpdJX+m5DEckzlf
-	 TZMfH2tsFS4VyaYCfs5xBryctjSUhX8iVmWpVqw0w079nPXeR2f7nJyQCxzK+n4gE5
-	 uGXgguFUDs0Lg==
-Date: Fri, 27 Sep 2024 14:29:00 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>, samitolvanen@google.com,
-	petr.pavlu@suse.com, da.gomez@samsung.com,
-	linux-modules@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	vdonnefort@google.com, song@kernel.org, catalin.marinas@arm.com,
-	chunhui.li@mediatek.com, xion.wang@mediatek.com,
-	masahiroy@kernel.org, mcgrof@kernel.org
-Subject: [GIT PULL] Modules changes for v6.12-rc1
-Message-ID: <ZvcjnE9Me0hCy4yK@bombadil.infradead.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KH7tfbX6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727476247; x=1759012247;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ttrfHsONvmaa5Z7pnzmIoVPeEJfe4KJEl+ZE4aGApVc=;
+  b=KH7tfbX6ecoEfcqESwhmaD2S3Ef85iqfpYvrJSDJtEoD6A9CZigPuZAp
+   bZPKcz+blY/PuvBSWYdzFCFA4JvsKQiaepJIKUUn9qibS/9w5m3If2ixP
+   uy9PFG5pgX0kjEQDlxaY93PYD8G1VAjjhTaxhkI00BcAbzMKRkzV3hLzl
+   8FsyxL3Ma8iJUczzXEJiou5Li87WHCby/VPoKgblCh8a7B18gIQY0JmHv
+   GmHhRSGyJYe+/Q9n/LKfDuziBrMXGukNqxPbzlJMBjM+NniuGrtx9Mvrg
+   mrV26q1Sf6pMsRe+QZjt3mmTSjy1LZAE+kzTGfVsU79URCyiESAv2MMYs
+   Q==;
+X-CSE-ConnectionGUID: LUWFaoh5QJOKiUSEZVgrZA==
+X-CSE-MsgGUID: UL+/dsJBRsOZhzLj8LxjgA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11208"; a="26733562"
+X-IronPort-AV: E=Sophos;i="6.11,159,1725346800"; 
+   d="scan'208";a="26733562"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Sep 2024 15:30:47 -0700
+X-CSE-ConnectionGUID: EDYsaBfWRfma+gVyaA/j8g==
+X-CSE-MsgGUID: 2xMw5I4ETv2h88eUbwe7dg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,159,1725346800"; 
+   d="scan'208";a="72643552"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Sep 2024 15:30:46 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/resctrl: Do not round up mba_MBps values in schemata file
+Date: Fri, 27 Sep 2024 15:30:38 -0700
+Message-ID: <20240927223038.41198-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.46.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-The following changes since commit 47ac09b91befbb6a235ab620c32af719f8208399:
+When the mba_MBps mount option is used Linux initializes the
+MBA control values in the schemata file to MBA_MAX_MBPS (which
+is defined as U32_MAX). So the schemata file contains this line:
 
-  Linux 6.11-rc4 (2024-08-18 13:17:27 -0700)
+ MB:0=4294967295;1=4294967295
 
-are available in the Git repository at:
+If a user edits the schemata file with vi(1) (or other editor) and
+simply writes that line back, it gets changed to:
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.12-rc1
+  MB:0=   4;1=   4
 
-for you to fetch changes up to b319cea80539df9bea0ad98cb5e4b2fcb7e1a34b:
+which sets maximum bandwidth to a very low value.
 
-  module: Refine kmemleak scanned areas (2024-09-13 09:55:17 -0700)
+This happens because bw_validate() unconditionally rounds user supplied
+values up to next multiple of r->membw.bw_gran. That results in a value
+that will not fit into d->mbps_val[closid].
 
-----------------------------------------------------------------
-Modules changes for v6.12-rc1
+Rounding up only makes sense when mba_MBps is not enabled and control
+values are expressed as percentage values.
 
-There are a few fixes / cleanups from Vincent, Chunhui, and Petr, but the
-most important part of this pull request is the Rust community stepping
-up to help maintain both C / Rust code for future Rust module support. We
-grow the set of modules maintainers by 3 now, and with this hope to scale to
-help address what's needed to properly support future Rust module support.
+Skip the roundup() when mba_MBps is enabled.
 
-A lot of exciting stuff coming in future kernel releases.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This has been on linux-next for ~ 3 weeks now with no issues.
+diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+index 50fa1fe9a073..ac636366c0cb 100644
+--- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
++++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+@@ -55,7 +55,7 @@ static bool bw_validate(char *buf, unsigned long *data, struct rdt_resource *r)
+ 		return false;
+ 	}
+ 
+-	*data = roundup(bw, (unsigned long)r->membw.bw_gran);
++	*data = is_mba_sc(r) ? bw : roundup(bw, (unsigned long)r->membw.bw_gran);
+ 	return true;
+ }
+ 
+-- 
+2.46.1
 
-----------------------------------------------------------------
-Chunhui Li (1):
-      module: abort module loading when sysfs setup suffer errors
-
-Luis Chamberlain (1):
-      MAINTAINERS: scale modules with more reviewers
-
-Petr Pavlu (2):
-      module: Split modules_install compression and in-kernel decompression
-      module: Clean up the description of MODULE_SIG_<type>
-
-Vincent Donnefort (1):
-      module: Refine kmemleak scanned areas
-
- MAINTAINERS                    |  3 ++
- kernel/module/Kconfig          | 77 +++++++++++++++++++++---------------------
- kernel/module/debug_kmemleak.c | 18 +++-------
- kernel/module/sysfs.c          | 63 ++++++++++++++++++++++------------
- scripts/Makefile.modinst       |  2 ++
- 5 files changed, 90 insertions(+), 73 deletions(-)
