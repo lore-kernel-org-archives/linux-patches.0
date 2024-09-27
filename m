@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D444187331;
-	Fri, 27 Sep 2024 12:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64668136352;
+	Fri, 27 Sep 2024 12:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440397; cv=none; b=WdvAgM4A5JCpecvIHvCNYLfIc18XHu5+/VvWTfr5UwUsnLxze7N0slkrqmqq4TLJ3RU7N9sGX/9wSrqATzQs0e/ZWAn3AkJG16K/aqDQbKXBma1QfMXSMJm6gnzj136NNgrd8BDrCEYawId7ciVNSImMjqFL3Tz4Wt7V9RtsITI=
+	t=1727440400; cv=none; b=Eeo5srSY+CWOQP5rWBXQgX6Hd2Zt1FNwctSS3r3b/1kRXFN6LgUSdYeNs/k7MPFeNA4s+zqcVoj7Xx5ttQngqz5P0j5LMW+8ffg/IZL9VrBAXxJWIxiM4CRQijUyP0NPk9nPy3SpuS5poNhvb+7GsfQcxAGoIwsidcRXRwETAeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440397; c=relaxed/simple;
-	bh=T9sXm3hgEd+Ijftop4+LX1GKj1HEGneKS9irEqtf6nA=;
+	s=arc-20240116; t=1727440400; c=relaxed/simple;
+	bh=R//a2faMPgL3WN80s/82l31bNV5jCaYK7GWr4+v3s1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIa9eeKSZvV1TkqILDy7aSPOkrT6TpNSQScfJXBICsPpuVay8WjUe9hkzl3LVLAeWv2kcAmDOszJhKycqHTSdKMs6DVBDjh86YFTecDG/50j6vqlQJHqaCLggieZF3TvosCDUIJyK++8V2FfKtLewyt1OKwXXc4wwNlXeFTMzPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkWDBtpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JX8fokbZ4ju7AbOFplviQ42Vfv+yYY7PuQ25P0RcYWYW4JRwJYjktynJ0PiO5bxdS7JuHrC1Wi/lQwgJOIkzBGL6MJ6xZt4n6fQFwt7g5UrO0IKw/mjHsaunGthxwthoxXMvl2EtIMmTPyegSRQNx6p5BYDgKzyA6okcsDaeCKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a42dmstC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkWDBtpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D341C4CEC4;
-	Fri, 27 Sep 2024 12:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a42dmstC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96F0C4CEC6;
+	Fri, 27 Sep 2024 12:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440397;
-	bh=T9sXm3hgEd+Ijftop4+LX1GKj1HEGneKS9irEqtf6nA=;
+	s=korg; t=1727440400;
+	bh=R//a2faMPgL3WN80s/82l31bNV5jCaYK7GWr4+v3s1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkWDBtpTHIknnJvk19KV06Kc2PXrAqE23/E23fxBcNg1K5PISFl4HbMK84+aGMJmH
-	 vUcPvCNtKQskG5yCQsQ9TOdQAwuhd1Sfsj2g7vafuPvM2iXjPpQdfq2KU4CPl11Mqi
-	 5ITiwPUK7ObpNCsrB5grIPBAWkxtLOSSO+q9PdFs=
+	b=a42dmstCGRURFkkrCWUm+rTU5o+BU7Tjg/c6c+9d4ITkP19avp800bilYhunwRGSo
+	 yKZ7ZmP9eeLFUwuDhvRvqLcWXBoInppPjgdtG6lVyoNfPD8D2y1siFwEGWSc4hBj92
+	 iwiJE7vCAFDT3KQI3sDu6HrdOrRDV02reqygmuBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+912776840162c13db1a3@syzkaller.appspotmail.com,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.1 32/73] xfs: dquot shrinker doesnt check for XFS_DQFLAG_FREEING
-Date: Fri, 27 Sep 2024 14:23:43 +0200
-Message-ID: <20240927121721.202973508@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 61/73] netfilter: nft_set_pipapo: walk over current view on netlink dump
+Date: Fri, 27 Sep 2024 14:24:12 +0200
+Message-ID: <20240927121722.372865628@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -53,64 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 52f31ed228212ba572c44e15e818a3a5c74122c0 ]
+commit 29b359cf6d95fd60730533f7f10464e95bd17c73 upstream.
 
-Resulting in a UAF if the shrinker races with some other dquot
-freeing mechanism that sets XFS_DQFLAG_FREEING before the dquot is
-removed from the LRU. This can occur if a dquot purge races with
-drop_caches.
+The generation mask can be updated while netlink dump is in progress.
+The pipapo set backend walk iterator cannot rely on it to infer what
+view of the datastructure is to be used. Add notation to specify if user
+wants to read/update the set.
 
-Reported-by: syzbot+912776840162c13db1a3@syzkaller.appspotmail.com
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Chandan Babu R <chandanbabu@kernel.org>
+Based on patch from Florian Westphal.
+
+Fixes: 2b84e215f874 ("netfilter: nft_set_pipapo: .walk does not deal with generations")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_qm.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_tables.h |   13 +++++++++++++
+ net/netfilter/nf_tables_api.c     |    5 +++++
+ net/netfilter/nft_set_pipapo.c    |    5 +++--
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -423,6 +423,14 @@ xfs_qm_dquot_isolate(
- 		goto out_miss_busy;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -296,9 +296,22 @@ struct nft_set_elem {
+ 	void			*priv;
+ };
  
- 	/*
-+	 * If something else is freeing this dquot and hasn't yet removed it
-+	 * from the LRU, leave it for the freeing task to complete the freeing
-+	 * process rather than risk it being free from under us here.
-+	 */
-+	if (dqp->q_flags & XFS_DQFLAG_FREEING)
-+		goto out_miss_unlock;
++/**
++ * enum nft_iter_type - nftables set iterator type
++ *
++ * @NFT_ITER_READ: read-only iteration over set elements
++ * @NFT_ITER_UPDATE: iteration under mutex to update set element state
++ */
++enum nft_iter_type {
++	NFT_ITER_UNSPEC,
++	NFT_ITER_READ,
++	NFT_ITER_UPDATE,
++};
 +
-+	/*
- 	 * This dquot has acquired a reference in the meantime remove it from
- 	 * the freelist and try again.
- 	 */
-@@ -441,10 +449,8 @@ xfs_qm_dquot_isolate(
- 	 * skip it so there is time for the IO to complete before we try to
- 	 * reclaim it again on the next LRU pass.
- 	 */
--	if (!xfs_dqflock_nowait(dqp)) {
--		xfs_dqunlock(dqp);
--		goto out_miss_busy;
--	}
-+	if (!xfs_dqflock_nowait(dqp))
-+		goto out_miss_unlock;
+ struct nft_set;
+ struct nft_set_iter {
+ 	u8		genmask;
++	enum nft_iter_type type:8;
+ 	unsigned int	count;
+ 	unsigned int	skip;
+ 	int		err;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -628,6 +628,7 @@ static void nft_map_deactivate(const str
+ {
+ 	struct nft_set_iter iter = {
+ 		.genmask	= nft_genmask_next(ctx->net),
++		.type		= NFT_ITER_UPDATE,
+ 		.fn		= nft_mapelem_deactivate,
+ 	};
  
- 	if (XFS_DQ_IS_DIRTY(dqp)) {
- 		struct xfs_buf	*bp = NULL;
-@@ -478,6 +484,8 @@ xfs_qm_dquot_isolate(
- 	XFS_STATS_INC(dqp->q_mount, xs_qm_dqreclaims);
- 	return LRU_REMOVED;
+@@ -5143,6 +5144,7 @@ int nf_tables_bind_set(const struct nft_
+ 		}
  
-+out_miss_unlock:
-+	xfs_dqunlock(dqp);
- out_miss_busy:
- 	trace_xfs_dqreclaim_busy(dqp);
- 	XFS_STATS_INC(dqp->q_mount, xs_qm_dqreclaim_misses);
+ 		iter.genmask	= nft_genmask_next(ctx->net);
++		iter.type	= NFT_ITER_UPDATE;
+ 		iter.skip 	= 0;
+ 		iter.count	= 0;
+ 		iter.err	= 0;
+@@ -5218,6 +5220,7 @@ static void nft_map_activate(const struc
+ {
+ 	struct nft_set_iter iter = {
+ 		.genmask	= nft_genmask_next(ctx->net),
++		.type		= NFT_ITER_UPDATE,
+ 		.fn		= nft_mapelem_activate,
+ 	};
+ 
+@@ -5574,6 +5577,7 @@ static int nf_tables_dump_set(struct sk_
+ 	args.cb			= cb;
+ 	args.skb		= skb;
+ 	args.iter.genmask	= nft_genmask_cur(net);
++	args.iter.type		= NFT_ITER_READ;
+ 	args.iter.skip		= cb->args[0];
+ 	args.iter.count		= 0;
+ 	args.iter.err		= 0;
+@@ -6957,6 +6961,7 @@ static int nft_set_flush(struct nft_ctx
+ {
+ 	struct nft_set_iter iter = {
+ 		.genmask	= genmask,
++		.type		= NFT_ITER_UPDATE,
+ 		.fn		= nft_setelem_flush,
+ 	};
+ 
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2042,13 +2042,14 @@ static void nft_pipapo_walk(const struct
+ 			    struct nft_set_iter *iter)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct net *net = read_pnet(&set->net);
+ 	const struct nft_pipapo_match *m;
+ 	const struct nft_pipapo_field *f;
+ 	int i, r;
+ 
++	WARN_ON_ONCE(iter->type == NFT_ITER_UNSPEC);
++
+ 	rcu_read_lock();
+-	if (iter->genmask == nft_genmask_cur(net))
++	if (iter->type == NFT_ITER_READ)
+ 		m = rcu_dereference(priv->match);
+ 	else
+ 		m = priv->clone;
 
 
