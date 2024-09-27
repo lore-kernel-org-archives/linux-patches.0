@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AB018BB91;
-	Fri, 27 Sep 2024 12:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCD01865ED;
+	Fri, 27 Sep 2024 12:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440092; cv=none; b=KY7iHI2nQyZLx/wRWIT6vSsxKEC6tUWTY2Vx14v8elpq/Y0d1Fe0EaLUA0OSblIO4sR/qRO8XL8oYIEgPAeVONRHtkNEMkhC3CmCr/tuiF33LimA0/Gcn4NZDp2SrrNDNyduwdmHq4pBkpXW2gT76qIMBkS/lbz22FtEJiJjMI8=
+	t=1727440095; cv=none; b=CADBWPRdu3ejxaWyY0Z1gTNLaaqCpGD39PECXSV6nlAdQ2Q3hFhk+AKL6+OU0I3hcZkwESBFfIEGQBt9XEfyNEsUAiOTVq5WibCOw9jP1vqFkVYZHt30l4xcYYwLxqa0sHpqo+LrOHsOo9ky95m7QiYvI9NrKakll/jHgtj9s5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440092; c=relaxed/simple;
-	bh=YmWiBkSp7MHMTWdM8BjsECkBdMnCjOxNU3NiMzFtWR4=;
+	s=arc-20240116; t=1727440095; c=relaxed/simple;
+	bh=ztYn2/xQuJtdOgwRk8IfcifkFQpNgGAm8SE1m3xjru8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpM1S68adGxThE8lyu2iJC+LUl+z5hh1j56YMHEwmfnvNnW96aOnNusYZzmKTeZQSzzJijUPLcXokLLIgu59N17N6EgSzbFZVseI2ZXzUg7R7iW+dtBccnxKQfaqlwcG3+vU0pZa/tS3REb8chv7ZXcM7i/pEFt7bB6dFlK1ceg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwTg9Os8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSNYdt/9j83cHsLs/DlNXtlmnFhWx8OSM1LUn+GZouGdGXOFgF6D4pTWWkwt1AV2pL2jz/S+NIveXV3tTpBG6KvCzx0FGFm4u2O4eAuD3tOQE62jHNHOdTjLHysH0xQJZkf3RVafbJbBor8RamGs70U/F1FfbjE0OsXUYWy9Knw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQfkRumW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwTg9Os8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE00EC4CEC4;
-	Fri, 27 Sep 2024 12:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQfkRumW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE462C4CECD;
+	Fri, 27 Sep 2024 12:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440092;
-	bh=YmWiBkSp7MHMTWdM8BjsECkBdMnCjOxNU3NiMzFtWR4=;
+	s=korg; t=1727440095;
+	bh=ztYn2/xQuJtdOgwRk8IfcifkFQpNgGAm8SE1m3xjru8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwTg9Os8qYdntPbS6nkRcEsHsIWdC1BIPhN1FbhMvVKqOgV98xQP/h1JxkelOEYpn
-	 J5HVgMWymAHsa8HikWLJwkdYZeMHPhU5jQrzeCgIOtg2vwwepUk1Gqvxii19UswTnL
-	 jWr5T0doJ5su/p0vIWquLKBXZfuFrOffQE7P1NQE=
+	b=ZQfkRumWvAbgKSC2CfcDdPd4AeZs8hqcf1I13OmuIyR5zjb7mUzCZZX7Mev+2nlTV
+	 lRqbDkmS+1hUgvzMERrAVcj7e+sRFWrvsY8OvoyqzE5BJM43jBPtrXBUyc8B+irKF0
+	 vfs9+tVX38T2ZKH0a9ubdXizgoZXNOQW5xJVfeRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <zhangyi@everest-semi.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 30/58] ASoC: mediatek: mt8188-mt6359: Modify key
-Date: Fri, 27 Sep 2024 14:23:32 +0200
-Message-ID: <20240927121720.016629841@linuxfoundation.org>
+Subject: [PATCH 6.10 31/58] spi: spidev: Add an entry for elgin,jg10309-01
+Date: Fri, 27 Sep 2024 14:23:33 +0200
+Message-ID: <20240927121720.055317252@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -51,57 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <zhangyi@everest-semi.com>
+From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit 5325b96769a5b282e330023e1d0881018e89e266 ]
+[ Upstream commit 5f3eee1eef5d0edd23d8ac0974f56283649a1512 ]
 
-In order to get the correct keys when using the ES8326.We will associate
-SND_JACK_BTN_1 to KEY_VOLUMEUP and SND_JACK_BTN_2 to KEY_VOLUMEDOWN
-when the ES8326 flag is recognized.
+The rv1108-elgin-r1 board has an LCD controlled via SPI in userspace.
+The marking on the LCD is JG10309-01.
 
-Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
-Link: https://patch.msgid.link/20240816114921.48913-1-zhangyi@everest-semi.com
+Add the "elgin,jg10309-01" compatible string.
+
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20240828180057.3167190-2-festevam@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-mt6359.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-index eba6f4c445ffb..08ae962afeb92 100644
---- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-@@ -734,6 +734,7 @@ static int mt8188_headset_codec_init(struct snd_soc_pcm_runtime *rtd)
- 	struct mtk_soc_card_data *soc_card_data = snd_soc_card_get_drvdata(rtd->card);
- 	struct snd_soc_jack *jack = &soc_card_data->card_data->jacks[MT8188_JACK_HEADSET];
- 	struct snd_soc_component *component = snd_soc_rtd_to_codec(rtd, 0)->component;
-+	struct mtk_platform_card_data *card_data = soc_card_data->card_data;
- 	int ret;
- 
- 	ret = snd_soc_dapm_new_controls(&card->dapm, mt8188_nau8825_widgets,
-@@ -762,10 +763,18 @@ static int mt8188_headset_codec_init(struct snd_soc_pcm_runtime *rtd)
- 		return ret;
- 	}
- 
--	snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
--	snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
--	snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
--	snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
-+	if (card_data->flags & ES8326_HS_PRESENT) {
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOLUMEUP);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEDOWN);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOICECOMMAND);			
-+	} else {
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
-+		snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);	
-+	}
-+	
- 	ret = snd_soc_component_set_jack(component, jack, NULL);
- 
- 	if (ret) {
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 5304728c68c20..14bf0fa65befe 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -731,6 +731,7 @@ static int spidev_of_check(struct device *dev)
+ static const struct of_device_id spidev_dt_ids[] = {
+ 	{ .compatible = "cisco,spi-petra", .data = &spidev_of_check },
+ 	{ .compatible = "dh,dhcom-board", .data = &spidev_of_check },
++	{ .compatible = "elgin,jg10309-01", .data = &spidev_of_check },
+ 	{ .compatible = "lineartechnology,ltc2488", .data = &spidev_of_check },
+ 	{ .compatible = "lwn,bk4", .data = &spidev_of_check },
+ 	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
 -- 
 2.43.0
 
