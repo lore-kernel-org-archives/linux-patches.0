@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C55E1779BD;
-	Fri, 27 Sep 2024 12:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8D01779BD;
+	Fri, 27 Sep 2024 12:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439917; cv=none; b=XCwd/EPIYlreP6ZyQEAI7Au9/GTc+NNvDndQYchbWFPKj6VTwXZDDB+sYP1cwbM8HWFuEUbuK3t+9/2VKY3sUs4Cf5FhS4qPlkPxer8vge4T7wq217ahUr3IjoPjpWNVovj06smhBykBB8YaLJoutDH6nyT22yzxUseVZhVcwls=
+	t=1727439919; cv=none; b=nrUht1ImlGLzoNlXJWwxmobpBM+eJkMn6YcjLbvUh6B6kbGvht600Vvh43xgLpXETV0BrzdHdHfmU58Cooa7m+aRsZew3vbp5rM7icXFRA4ipojrB7u3UavvNyNJMtcauAjdWj2fhlxkmhy6639i5d7tDx1D7RNsi3Eug4p4NR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439917; c=relaxed/simple;
-	bh=3vywFbZsOPiwids/kZUxiDKIzKHchPzHB9MqN5B9wEE=;
+	s=arc-20240116; t=1727439919; c=relaxed/simple;
+	bh=PTKj0pibnGKAVKLulylxOUF01a8XLZud3Wuqk79F2+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4IDDHETIBAW14iKLPKAp9+bjkALEyNfeETtWdKgSaZWJY3gfV3g6wQNo+lVZWq+W60xDpK1YyR2vDYDTcRWxQNMRDl05Fsmg/B7JLCmXRZnDle8rqBFywRliXOJeR5EVO18GEXIDK81BbuMJ135s17wt8QhcL2ncLD6lNisctw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3i65SYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFaTTIaE/QhHBw7C9KTbjbuVipJN6QsjUxPmJwRpLHbvxS2wfCrVRNc2f3BOISaJC7Itew1FkFHvyWYWIcZLQOXSzjv+0/FjP9GEVsoLQLCztcKvErP+4RGLaP5VnSM9Dm5wqZPruY3xlNgQ1UT+Ubs8GiWxMHDtaWSRvURRbrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+Be3Jfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3i65SYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D483C4CEC4;
-	Fri, 27 Sep 2024 12:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+Be3Jfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208A8C4CEC4;
+	Fri, 27 Sep 2024 12:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439916;
-	bh=3vywFbZsOPiwids/kZUxiDKIzKHchPzHB9MqN5B9wEE=;
+	s=korg; t=1727439919;
+	bh=PTKj0pibnGKAVKLulylxOUF01a8XLZud3Wuqk79F2+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3i65SYd/nf+Yu4Lrhk02OUHurZP9hbrpcwkCp9gYuAvoDZwpOW3hZyDgTB+alih2
-	 kHl3NHThi7+ZV5b3Hac7XOhV3Ls+6HfWAEjzS3zWbZ1s3c5kYTOL/ylt3tf1bWBKvJ
-	 4o/6ibVPIPhgzWwGSuUI3RibHs9pRYXcMV/bsa20=
+	b=D+Be3JfnThRLGoZ1RiCvHE1wtk6Rbxey3n5j+TrTn+vSHmsmxmajtRDtWmTj+ofjd
+	 URJtyhjev8cbTcUDod601JM0A2BJPAHxQA0lU6u8q8G+6Zwo6yhnpKfrJeqL2bTqDz
+	 vpWlrebKfsqjAhvDEz7hy9r5LFaa1WDeVSd7o0ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Li <lihongbo22@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 04/54] ASoC: allow module autoloading for table board_ids
-Date: Fri, 27 Sep 2024 14:22:56 +0200
-Message-ID: <20240927121719.897227460@linuxfoundation.org>
+Subject: [PATCH 6.6 22/54] ASoC: Intel: soc-acpi-cht: Make Lenovo Yoga Tab 3 X90F DMI match less strict
+Date: Fri, 27 Sep 2024 14:23:14 +0200
+Message-ID: <20240927121720.603911675@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -51,34 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongbo Li <lihongbo22@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5f7c98b7519a3a847d9182bd99d57ea250032ca1 ]
+[ Upstream commit 839a4ec06f75cec8fec2cc5fc14e921d0c3f7369 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly
-autoloaded based on the alias from platform_device_id table.
+There are 2G and 4G RAM versions of the Lenovo Yoga Tab 3 X90F and it
+turns out that the 2G version has a DMI product name of
+"CHERRYVIEW D1 PLATFORM" where as the 4G version has
+"CHERRYVIEW C0 PLATFORM". The sys-vendor + product-version check are
+unique enough that the product-name check is not necessary.
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://patch.msgid.link/20240821061955.2273782-3-lihongbo22@huawei.com
+Drop the product-name check so that the existing DMI match for the 4G
+RAM version also matches the 2G RAM version.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://patch.msgid.link/20240823074305.16873-1-hdegoede@redhat.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sof-mach.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/intel/common/soc-acpi-intel-cht-match.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/acp-sof-mach.c b/sound/soc/amd/acp/acp-sof-mach.c
-index 354d0fc55299b..0c5254c52b794 100644
---- a/sound/soc/amd/acp/acp-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sof-mach.c
-@@ -162,6 +162,8 @@ static const struct platform_device_id board_ids[] = {
+diff --git a/sound/soc/intel/common/soc-acpi-intel-cht-match.c b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
+index 5e2ec60e2954b..e4c3492a0c282 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-cht-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
+@@ -84,7 +84,6 @@ static const struct dmi_system_id lenovo_yoga_tab3_x90[] = {
+ 		/* Lenovo Yoga Tab 3 Pro YT3-X90, codec missing from DSDT */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
+ 		},
  	},
- 	{ }
- };
-+MODULE_DEVICE_TABLE(platform, board_ids);
-+
- static struct platform_driver acp_asoc_audio = {
- 	.driver = {
- 		.name = "sof_mach",
 -- 
 2.43.0
 
