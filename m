@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E10C18A6C3;
-	Fri, 27 Sep 2024 12:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B12818A955;
+	Fri, 27 Sep 2024 12:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440192; cv=none; b=DU2KtmTYOE1YfVILlSIVcQLV+ZkJ1re6QbFplgp8P9eAnefDespU9Bmt3Lx8K1afAASfjL8TUSwFqZJHhCcGl9n6NHHJO0navIXqGnmGMTXcUaxi5UJEgnqyT6tP4JIIa5YvWw5DPJj5Cr1Xh5u9OX7UbPXb4/04ojZSqj5VXOU=
+	t=1727440195; cv=none; b=rz/Rioa6MtIartxKNN/2Ogh4NOL3wOTlkp5yUy8Lm1fAwsfb9347jSfSxkIU0uOFZMQ9UnJ0TQhdCu/f1uEsBd8Vzi/xkPV7ZHAVJ0wA72HTh4+4tzFiRGoNe7RzM2ydiizvweWOHfUF45XuyX0/obK+foniCoB+EyLGh4vba7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440192; c=relaxed/simple;
-	bh=Kwfqw2krzGFA+pYUlc3YuI+r63k6SDkiRfXKiNRiwUA=;
+	s=arc-20240116; t=1727440195; c=relaxed/simple;
+	bh=otEUc5xKqe09hTzASdKEadP7xLP8frPyeaWnv+3G1fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyMqnysFQaOQgvdvt9DIWCLE+ThQLmpoooFmxtizYeWZmSHiXYBroSjj7xuzhyzyQU4b3PItQf9M3TgnxWGkCghwvf7nq/MnwMc5STEtuIR55z2425xnS+94t5YEwkbbSEgjZ/kavbmWsr9YM0RcsiMX7flJjEBQIlr9pVqogpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7hFgcvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I2OrybDfdnOqQmg5rrnhrsbFe8fN9M3DBCiWGlYcdcjtiumYXFSTBTfPM9sP9k9GoPhHxn3KatKsM7o09GSDTSQ1OZHv+oHjBr83yFkwWTNjKWh55lwGDWJOA9XBbFhAT+xwd87+3haRZxCkOq174x41Xn8/sfzfP6o+1QrTCQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsS5M1pE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7hFgcvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD693C4CEC4;
-	Fri, 27 Sep 2024 12:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsS5M1pE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA45EC4CECD;
+	Fri, 27 Sep 2024 12:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440192;
-	bh=Kwfqw2krzGFA+pYUlc3YuI+r63k6SDkiRfXKiNRiwUA=;
+	s=korg; t=1727440195;
+	bh=otEUc5xKqe09hTzASdKEadP7xLP8frPyeaWnv+3G1fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7hFgcvfiOsiR6VSgbY7DbF815VGRHFVoonbXPOIe/frNp+nb4PqPEjeluDHg2BDd
-	 fYS+aFvewi5zoGVjjODCOPjOsydhbJWgECIHBAE29W7o07XYsLr3hSPZgmHNwgJhl1
-	 VBEuXlOd7pF5A1SiAWWIvalj/351Z0PnOwd/2g+E=
+	b=UsS5M1pEtWC1VYDlDOm80Uu2jDufdblgTAh9tB0u+/HeNp5+oYrwrOf2H9H89aWGw
+	 dD1Xxd2K1mURIEum7MidAHmgP4H05KL5VsiWJHSfz1QGr3/rX7ygA5MzamGx3OBCUZ
+	 BcIpMSpgErpjy56Sl2W4TRkfpkpUZLqDvnKPIou0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.10 55/58] can: mcp251xfd: properly indent labels
-Date: Fri, 27 Sep 2024 14:23:57 +0200
-Message-ID: <20240927121721.079241669@linuxfoundation.org>
+	Matthew Wilcox <willy@infradead.org>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	James Zhu <James.Zhu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 46/58] drm: Use XArray instead of IDR for minors
+Date: Fri, 27 Sep 2024 14:23:48 +0200
+Message-ID: <20240927121720.669180089@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -43,151 +47,201 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Michał Winiarski <michal.winiarski@intel.com>
 
-commit 51b2a721612236335ddec4f3fb5f59e72a204f3a upstream.
+[ Upstream commit 5fbca8b48b3050ae7fb611a8b09af60012ed6de1 ]
 
-To fix the coding style, remove the whitespace in front of labels.
+IDR is deprecated, and since XArray manages its own state with internal
+locking, it simplifies the locking on DRM side.
+Additionally, don't use the IRQ-safe variant, since operating on drm
+minor is not done in IRQ context.
 
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+Acked-by: James Zhu <James.Zhu@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-2-michal.winiarski@intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c   |   34 +++++++++++------------
- drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c   |    2 -
- drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c |    2 -
- drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c    |    2 -
- 4 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/drm_drv.c | 63 ++++++++++++++++-----------------------
+ 1 file changed, 25 insertions(+), 38 deletions(-)
 
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-@@ -791,7 +791,7 @@ static int mcp251xfd_chip_start(struct m
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index 535b624d4c9da..40cd4faca2b1e 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -34,6 +34,7 @@
+ #include <linux/pseudo_fs.h>
+ #include <linux/slab.h>
+ #include <linux/srcu.h>
++#include <linux/xarray.h>
  
- 	return 0;
+ #include <drm/drm_accel.h>
+ #include <drm/drm_cache.h>
+@@ -54,8 +55,7 @@ MODULE_AUTHOR("Gareth Hughes, Leif Delgass, José Fonseca, Jon Smirl");
+ MODULE_DESCRIPTION("DRM shared core routines");
+ MODULE_LICENSE("GPL and additional rights");
  
-- out_chip_stop:
-+out_chip_stop:
- 	mcp251xfd_dump(priv);
- 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
+-static DEFINE_SPINLOCK(drm_minor_lock);
+-static struct idr drm_minors_idr;
++static DEFINE_XARRAY_ALLOC(drm_minors_xa);
  
-@@ -1576,7 +1576,7 @@ static irqreturn_t mcp251xfd_irq(int irq
- 		handled = IRQ_HANDLED;
- 	} while (1);
+ /*
+  * If the drm core fails to init for whatever reason,
+@@ -101,26 +101,23 @@ static struct drm_minor **drm_minor_get_slot(struct drm_device *dev,
+ static void drm_minor_alloc_release(struct drm_device *dev, void *data)
+ {
+ 	struct drm_minor *minor = data;
+-	unsigned long flags;
  
-- out_fail:
-+out_fail:
- 	can_rx_offload_threaded_irq_finish(&priv->offload);
+ 	WARN_ON(dev != minor->dev);
  
- 	netdev_err(priv->ndev, "IRQ handler returned %d (intf=0x%08x).\n",
-@@ -1641,22 +1641,22 @@ static int mcp251xfd_open(struct net_dev
+ 	put_device(minor->kdev);
  
- 	return 0;
- 
-- out_free_irq:
-+out_free_irq:
- 	free_irq(spi->irq, priv);
-- out_destroy_workqueue:
-+out_destroy_workqueue:
- 	destroy_workqueue(priv->wq);
-- out_can_rx_offload_disable:
-+out_can_rx_offload_disable:
- 	can_rx_offload_disable(&priv->offload);
- 	set_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
- 	mcp251xfd_timestamp_stop(priv);
-- out_transceiver_disable:
-+out_transceiver_disable:
- 	mcp251xfd_transceiver_disable(priv);
-- out_mcp251xfd_ring_free:
-+out_mcp251xfd_ring_free:
- 	mcp251xfd_ring_free(priv);
-- out_pm_runtime_put:
-+out_pm_runtime_put:
- 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
- 	pm_runtime_put(ndev->dev.parent);
-- out_close_candev:
-+out_close_candev:
- 	close_candev(ndev);
- 
- 	return err;
-@@ -1820,9 +1820,9 @@ mcp251xfd_register_get_dev_id(const stru
- 	*effective_speed_hz_slow = xfer[0].effective_speed_hz;
- 	*effective_speed_hz_fast = xfer[1].effective_speed_hz;
- 
-- out_kfree_buf_tx:
-+out_kfree_buf_tx:
- 	kfree(buf_tx);
-- out_kfree_buf_rx:
-+out_kfree_buf_rx:
- 	kfree(buf_rx);
- 
- 	return err;
-@@ -1936,13 +1936,13 @@ static int mcp251xfd_register(struct mcp
- 
- 	return 0;
- 
-- out_unregister_candev:
-+out_unregister_candev:
- 	unregister_candev(ndev);
-- out_chip_sleep:
-+out_chip_sleep:
- 	mcp251xfd_chip_sleep(priv);
-- out_runtime_disable:
-+out_runtime_disable:
- 	pm_runtime_disable(ndev->dev.parent);
-- out_runtime_put_noidle:
-+out_runtime_put_noidle:
- 	pm_runtime_put_noidle(ndev->dev.parent);
- 	mcp251xfd_clks_and_vdd_disable(priv);
- 
-@@ -2162,9 +2162,9 @@ static int mcp251xfd_probe(struct spi_de
- 
- 	return 0;
- 
-- out_can_rx_offload_del:
-+out_can_rx_offload_del:
- 	can_rx_offload_del(&priv->offload);
-- out_free_candev:
-+out_free_candev:
- 	spi->max_speed_hz = priv->spi_max_speed_hz_orig;
- 
- 	free_candev(ndev);
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-dump.c
-@@ -94,7 +94,7 @@ static void mcp251xfd_dump_registers(con
- 		kfree(buf);
- 	}
- 
-- out:
-+out:
- 	mcp251xfd_dump_header(iter, MCP251XFD_DUMP_OBJECT_TYPE_REG, reg);
+-	if (minor->type == DRM_MINOR_ACCEL) {
++	if (minor->type == DRM_MINOR_ACCEL)
+ 		accel_minor_remove(minor->index);
+-	} else {
+-		spin_lock_irqsave(&drm_minor_lock, flags);
+-		idr_remove(&drm_minors_idr, minor->index);
+-		spin_unlock_irqrestore(&drm_minor_lock, flags);
+-	}
++	else
++		xa_erase(&drm_minors_xa, minor->index);
  }
  
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-regmap.c
-@@ -397,7 +397,7 @@ mcp251xfd_regmap_crc_read(void *context,
++#define DRM_MINOR_LIMIT(t) ({ typeof(t) _t = (t); XA_LIMIT(64 * _t, 64 * _t + 63); })
++
+ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
+ {
+ 	struct drm_minor *minor;
+-	unsigned long flags;
+-	int r;
++	int index, r;
  
- 		return err;
+ 	minor = drmm_kzalloc(dev, sizeof(*minor), GFP_KERNEL);
+ 	if (!minor)
+@@ -129,24 +126,17 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
+ 	minor->type = type;
+ 	minor->dev = dev;
+ 
+-	idr_preload(GFP_KERNEL);
+ 	if (type == DRM_MINOR_ACCEL) {
+ 		r = accel_minor_alloc();
++		index = r;
+ 	} else {
+-		spin_lock_irqsave(&drm_minor_lock, flags);
+-		r = idr_alloc(&drm_minors_idr,
+-			NULL,
+-			64 * type,
+-			64 * (type + 1),
+-			GFP_NOWAIT);
+-		spin_unlock_irqrestore(&drm_minor_lock, flags);
++		r = xa_alloc(&drm_minors_xa, &index, NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
  	}
-- out:
-+out:
- 	memcpy(val_buf, buf_rx->data, val_len);
+-	idr_preload_end();
  
- 	return 0;
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
-@@ -219,7 +219,7 @@ int mcp251xfd_handle_tefif(struct mcp251
- 		total_frame_len += frame_len;
+ 	if (r < 0)
+ 		return r;
+ 
+-	minor->index = r;
++	minor->index = index;
+ 
+ 	r = drmm_add_action_or_reset(dev, drm_minor_alloc_release, minor);
+ 	if (r)
+@@ -163,7 +153,7 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
+ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
+ {
+ 	struct drm_minor *minor;
+-	unsigned long flags;
++	void *entry;
+ 	int ret;
+ 
+ 	DRM_DEBUG("\n");
+@@ -189,9 +179,12 @@ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
+ 	if (minor->type == DRM_MINOR_ACCEL) {
+ 		accel_minor_replace(minor, minor->index);
+ 	} else {
+-		spin_lock_irqsave(&drm_minor_lock, flags);
+-		idr_replace(&drm_minors_idr, minor, minor->index);
+-		spin_unlock_irqrestore(&drm_minor_lock, flags);
++		entry = xa_store(&drm_minors_xa, minor->index, minor, GFP_KERNEL);
++		if (xa_is_err(entry)) {
++			ret = xa_err(entry);
++			goto err_debugfs;
++		}
++		WARN_ON(entry);
  	}
  
-- out_netif_wake_queue:
-+out_netif_wake_queue:
- 	len = i;	/* number of handled goods TEFs */
- 	if (len) {
- 		struct mcp251xfd_tef_ring *ring = priv->tef;
+ 	DRM_DEBUG("new minor registered %d\n", minor->index);
+@@ -205,20 +198,16 @@ static int drm_minor_register(struct drm_device *dev, enum drm_minor_type type)
+ static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type type)
+ {
+ 	struct drm_minor *minor;
+-	unsigned long flags;
+ 
+ 	minor = *drm_minor_get_slot(dev, type);
+ 	if (!minor || !device_is_registered(minor->kdev))
+ 		return;
+ 
+ 	/* replace @minor with NULL so lookups will fail from now on */
+-	if (minor->type == DRM_MINOR_ACCEL) {
++	if (minor->type == DRM_MINOR_ACCEL)
+ 		accel_minor_replace(NULL, minor->index);
+-	} else {
+-		spin_lock_irqsave(&drm_minor_lock, flags);
+-		idr_replace(&drm_minors_idr, NULL, minor->index);
+-		spin_unlock_irqrestore(&drm_minor_lock, flags);
+-	}
++	else
++		xa_store(&drm_minors_xa, minor->index, NULL, GFP_KERNEL);
+ 
+ 	device_del(minor->kdev);
+ 	dev_set_drvdata(minor->kdev, NULL); /* safety belt */
+@@ -237,13 +226,12 @@ static void drm_minor_unregister(struct drm_device *dev, enum drm_minor_type typ
+ struct drm_minor *drm_minor_acquire(unsigned int minor_id)
+ {
+ 	struct drm_minor *minor;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&drm_minor_lock, flags);
+-	minor = idr_find(&drm_minors_idr, minor_id);
++	xa_lock(&drm_minors_xa);
++	minor = xa_load(&drm_minors_xa, minor_id);
+ 	if (minor)
+ 		drm_dev_get(minor->dev);
+-	spin_unlock_irqrestore(&drm_minor_lock, flags);
++	xa_unlock(&drm_minors_xa);
+ 
+ 	if (!minor) {
+ 		return ERR_PTR(-ENODEV);
+@@ -1071,7 +1059,7 @@ static void drm_core_exit(void)
+ 	unregister_chrdev(DRM_MAJOR, "drm");
+ 	debugfs_remove(drm_debugfs_root);
+ 	drm_sysfs_destroy();
+-	idr_destroy(&drm_minors_idr);
++	WARN_ON(!xa_empty(&drm_minors_xa));
+ 	drm_connector_ida_destroy();
+ }
+ 
+@@ -1080,7 +1068,6 @@ static int __init drm_core_init(void)
+ 	int ret;
+ 
+ 	drm_connector_ida_init();
+-	idr_init(&drm_minors_idr);
+ 	drm_memcpy_init_early();
+ 
+ 	ret = drm_sysfs_init();
+-- 
+2.43.0
+
 
 
