@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DB118C00D;
-	Fri, 27 Sep 2024 12:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA3418BB91;
+	Fri, 27 Sep 2024 12:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439959; cv=none; b=ogenVCMI3qsuLzpUPk8+nAG6Yc94WZHnU/3keIp069Q3B0YEJu8nskiQX1vznIjIDkffF91BSKtBYRK0nHj0GrLHFvUmR/S3vlpGbl4TcScN0kiFlaG674AgusJlKD+q/d6Vo/Io1kYcJodZE6pnf64mSEW2dL3IZacf5enzcmY=
+	t=1727439961; cv=none; b=gRVBIqf8h3LOtHPUc7FbwJuh9jClRnIvD5ImFwmyvdEaSHo20qPXcAN1VZZl53qjjwkxVuEhhSje7a2Jn4HPWNiTTZXnRs/3N+u38G+dMwudFTDgkiTayLk2m0rqobsQEssKUiYoIdhGS5LKcwNutb13nkHh3XFpbLymYoxUycA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439959; c=relaxed/simple;
-	bh=+3/gE7wk3rQhXNEKmf+qZltU+xBaWtnBqQrz1aH2aQY=;
+	s=arc-20240116; t=1727439961; c=relaxed/simple;
+	bh=ZgkiKObFnZIvt6McmVJYN6fYLEKU44sZvRywobf9uPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwTFgcx1J0vD4liet9kNGN9J0COMuMKeRzeplFk4XIOM1MXBkW/pAAdT7ZHkBjweM85nFESlhtGCCJoVhQPkrKFEGWdr77VRzeDdXHzgB8bXcvB6H3JJQp8rHnIzKEagbKoroxuzXNTPwhscj9WA+lRr5DBMCUOUCI0GvSAb2X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjcg6Ooo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tqmDSUSrU9vH/ryGl5LA2VvB/huCFe/67OxZyPejxsPnUCYSn1UF1k8We52QiOfvFzZrkdpn3j/gX5fIH+ztmrj2eMj0X5kJi4Whlmunk28fKkFX5AJVc0ud/bUY+tsLHEB4N/1tgOLG3CvXikt6xw8bB39JYiU/ZEfAs+pZX6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4MtHJO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjcg6Ooo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DD3C4CEC4;
-	Fri, 27 Sep 2024 12:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4MtHJO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CF8C4CEC4;
+	Fri, 27 Sep 2024 12:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439958;
-	bh=+3/gE7wk3rQhXNEKmf+qZltU+xBaWtnBqQrz1aH2aQY=;
+	s=korg; t=1727439961;
+	bh=ZgkiKObFnZIvt6McmVJYN6fYLEKU44sZvRywobf9uPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjcg6Oooa6kx0lOV+BXqBWQhD+KaO1Hiz3tz2/NfzDhSUdYgruKsqtMfFWa9oTS+j
-	 NyV35TKX4sbP42EQOgpkkX9CjxQqqYGjPU88QYw8BhUmfgtyFTsmc8+I2pPRSymh3E
-	 o+JL7xtJ03nOuxbY88PR7J/360SCY/jNAqEV01ik=
+	b=G4MtHJO7isivouPfj/9RAJBFzHck196iqMdGLA3Odu5ngJrbzF/nmV9qSuvirU+ie
+	 AZxWTc4QSfq3uPtN4UOdBkAeRaXRBXpBfcwxoJ3Bvgbx9P87QoKpy+hlBLzK9WuenU
+	 5xG+OuEB+F/COJZRNk3hafoho5ffrw5iOfGfNeq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Mike Rapoport <rppt@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 10/54] microblaze: dont treat zero reserved memory regions as error
-Date: Fri, 27 Sep 2024 14:23:02 +0200
-Message-ID: <20240927121720.129442670@linuxfoundation.org>
+Subject: [PATCH 6.6 11/54] platform/x86: x86-android-tablets: Make Lenovo Yoga Tab 3 X90F DMI match less strict
+Date: Fri, 27 Sep 2024 14:23:03 +0200
+Message-ID: <20240927121720.163876451@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -46,55 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Rapoport <rppt@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 0075df288dd8a7abfe03b3766176c393063591dd ]
+[ Upstream commit a3379eca24a7da5118a7d090da6f8eb8611acac8 ]
 
-Before commit 721f4a6526da ("mm/memblock: remove empty dummy entry") the
-check for non-zero of memblock.reserved.cnt in mmu_init() would always
-be true either because  memblock.reserved.cnt is initialized to 1 or
-because there were memory reservations earlier.
+There are 2G and 4G RAM versions of the Lenovo Yoga Tab 3 X90F and it
+turns out that the 2G version has a DMI product name of
+"CHERRYVIEW D1 PLATFORM" where as the 4G version has
+"CHERRYVIEW C0 PLATFORM". The sys-vendor + product-version check are
+unique enough that the product-name check is not necessary.
 
-The removal of dummy empty entry in memblock caused this check to fail
-because now memblock.reserved.cnt is initialized to 0.
+Drop the product-name check so that the existing DMI match for the 4G
+RAM version also matches the 2G RAM version.
 
-Remove the check for non-zero of memblock.reserved.cnt because it's
-perfectly fine to have an empty memblock.reserved array that early in
-boot.
-
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Mike Rapoport <rppt@kernel.org>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240729053327.4091459-1-rppt@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240825132415.8307-1-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/mm/init.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/platform/x86/x86-android-tablets/dmi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/microblaze/mm/init.c b/arch/microblaze/mm/init.c
-index 3827dc76edd82..4520c57415797 100644
---- a/arch/microblaze/mm/init.c
-+++ b/arch/microblaze/mm/init.c
-@@ -193,11 +193,6 @@ asmlinkage void __init mmu_init(void)
- {
- 	unsigned int kstart, ksize;
- 
--	if (!memblock.reserved.cnt) {
--		pr_emerg("Error memory count\n");
--		machine_restart(NULL);
--	}
--
- 	if ((u32) memblock.memory.regions[0].size < 0x400000) {
- 		pr_emerg("Memory must be greater than 4MB\n");
- 		machine_restart(NULL);
+diff --git a/drivers/platform/x86/x86-android-tablets/dmi.c b/drivers/platform/x86/x86-android-tablets/dmi.c
+index 5d6c12494f082..0c9d9caf074cb 100644
+--- a/drivers/platform/x86/x86-android-tablets/dmi.c
++++ b/drivers/platform/x86/x86-android-tablets/dmi.c
+@@ -122,7 +122,6 @@ const struct dmi_system_id x86_android_tablet_ids[] __initconst = {
+ 		/* Lenovo Yoga Tab 3 Pro YT3-X90F */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
+ 		},
+ 		.driver_data = (void *)&lenovo_yt3_info,
 -- 
 2.43.0
 
