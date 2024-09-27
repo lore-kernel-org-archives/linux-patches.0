@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B190187331;
-	Fri, 27 Sep 2024 12:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F7C1802AB;
+	Fri, 27 Sep 2024 12:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440312; cv=none; b=nBAQIrKB2CNuDDyE8vauv0sQDW1IooJVyqXWom4Hy7q1Gf/xFnixDv9ApoWh4TMoppNDLPXnnuja2XAdHwPWgIUwbeyTZ2eCitTmK/Zt47Pb2y1HYd/Bqqt73njhHRMXIg68qMA0Ugca5DLRAXRyjIi1Uqmqk1QDvBH+YB1cwZI=
+	t=1727440314; cv=none; b=R3QFJvrzykAhxDrX2jas2NXD9i/TrkCYuMN1PJFXLVD984XMRmJqQFA81T+1zukl/cQ0oAIA7BqY+rEm5a2WTCokxhj2ILwAh9In5mML6UsFmJwf3czzsO7IsViWA3UN4ySiJDhchOy2uebql369hlXVdnUux59mkgI+5GMwBa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440312; c=relaxed/simple;
-	bh=upwqtgL9AnnDlM/MbFlujsunfUTuICNzGctKC25uC9w=;
+	s=arc-20240116; t=1727440314; c=relaxed/simple;
+	bh=thLzb6kuaS2+OuHhD2FEn0w7HPKTQobgcLQy1uiQ6Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGwjDiQsbo17PwyvT/EfTGbcjp32Sgi2gyLCj1igrShUww/mQiq4a0L6S/HBczF+kPprb7n11Vx/gy6DP8KcXHVE3Vu7gqaZtchW6SsDlO+sL/wsLesq4QcXdos0gM4WezZ4CnyCNt/uq3eJLLYpepd61XzVteO20QGoc1cokpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyrOgId5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ADMQctLtvl8caFNDhpUQQnqpAGjS6fJSLpt39cQDbng1/maQCuPGXXI342fo2WemUPXriut/MwB9WQfrL7YvzI544ZQakNY9l2kTS/+BK28WZnOa2S4QSE6r1Ezw0UFaRHwkZF0zOTyi7+8Kq2+MHhT+G6r9pkbZapWe40r3Ii4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leWNWVrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyrOgId5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6ECC4CEC4;
-	Fri, 27 Sep 2024 12:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leWNWVrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65513C4CEC4;
+	Fri, 27 Sep 2024 12:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440312;
-	bh=upwqtgL9AnnDlM/MbFlujsunfUTuICNzGctKC25uC9w=;
+	s=korg; t=1727440314;
+	bh=thLzb6kuaS2+OuHhD2FEn0w7HPKTQobgcLQy1uiQ6Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyrOgId5BjskUgTvVM+fsrJQEOMZNJDYbrWbJgl6RgPzj2DzkQFVLA2+dnKpu0F/X
-	 iMTl0cQgj4N4yZb43Rh1SilAlCPWnQ84n4s4O7xfbg203WMRqUpme4QU/pA8WjXpom
-	 R4c81d87fCAhD+/hn45uM2OE0T16ukbzCOl5sSe8=
+	b=leWNWVrzyhEFYi8SDQOnyzJ5E8dzOAkV1IIfl0FOaxq4YfXYF/35WOGTVjdpCz4gG
+	 IzpjFBGox40UmHSnZCpVbiWZeWlaP0cVv8Y7ykGbO200wCe1vQ2/ow4CxupBsFHd4f
+	 zjgJ9k9HLP2jp1uA3Oj0EAHtpE0NZhcigCP0Hsls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Chou <jacky_chou@aspeedtech.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/73] net: ftgmac100: Ensure tx descriptor updates are visible
-Date: Fri, 27 Sep 2024 14:23:21 +0200
-Message-ID: <20240927121720.287106372@linuxfoundation.org>
+Subject: [PATCH 6.1 11/73] LoongArch: Define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE
+Date: Fri, 27 Sep 2024 14:23:22 +0200
+Message-ID: <20240927121720.323285468@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -51,107 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Chou <jacky_chou@aspeedtech.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 4186c8d9e6af57bab0687b299df10ebd47534a0a ]
+[ Upstream commit 274ea3563e5ab9f468c15bfb9d2492803a66d9be ]
 
-The driver must ensure TX descriptor updates are visible
-before updating TX pointer and TX clear pointer.
+Currently we call irq_set_noprobe() in a loop for all IRQs, but indeed
+it only works for IRQs below NR_IRQS_LEGACY because at init_IRQ() only
+legacy interrupts have been allocated.
 
-This resolves TX hangs observed on AST2600 when running
-iperf3.
+Instead, we can define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE in asm/hwirq.h
+and the core will automatically set the flag for all interrupts.
 
-Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/faraday/ftgmac100.c | 26 ++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ arch/loongarch/include/asm/hw_irq.h | 2 ++
+ arch/loongarch/kernel/irq.c         | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
-index a03879a27b041..7adc46aa75e66 100644
---- a/drivers/net/ethernet/faraday/ftgmac100.c
-+++ b/drivers/net/ethernet/faraday/ftgmac100.c
-@@ -566,7 +566,7 @@ static bool ftgmac100_rx_packet(struct ftgmac100 *priv, int *processed)
- 	(*processed)++;
- 	return true;
+diff --git a/arch/loongarch/include/asm/hw_irq.h b/arch/loongarch/include/asm/hw_irq.h
+index af4f4e8fbd858..8156ffb674159 100644
+--- a/arch/loongarch/include/asm/hw_irq.h
++++ b/arch/loongarch/include/asm/hw_irq.h
+@@ -9,6 +9,8 @@
  
-- drop:
-+drop:
- 	/* Clean rxdes0 (which resets own bit) */
- 	rxdes->rxdes0 = cpu_to_le32(status & priv->rxdes0_edorr_mask);
- 	priv->rx_pointer = ftgmac100_next_rx_pointer(priv, pointer);
-@@ -650,6 +650,11 @@ static bool ftgmac100_tx_complete_packet(struct ftgmac100 *priv)
- 	ftgmac100_free_tx_packet(priv, pointer, skb, txdes, ctl_stat);
- 	txdes->txdes0 = cpu_to_le32(ctl_stat & priv->txdes0_edotr_mask);
+ extern atomic_t irq_err_count;
  
-+	/* Ensure the descriptor config is visible before setting the tx
-+	 * pointer.
-+	 */
-+	smp_wmb();
++#define ARCH_IRQ_INIT_FLAGS	IRQ_NOPROBE
 +
- 	priv->tx_clean_pointer = ftgmac100_next_tx_pointer(priv, pointer);
+ /*
+  * interrupt-retrigger: NOP for now. This may not be appropriate for all
+  * machines, we'll see ...
+diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
+index 0524bf1169b74..4496649c9e68b 100644
+--- a/arch/loongarch/kernel/irq.c
++++ b/arch/loongarch/kernel/irq.c
+@@ -122,9 +122,6 @@ void __init init_IRQ(void)
+ 		panic("IPI IRQ request failed\n");
+ #endif
  
- 	return true;
-@@ -803,6 +808,11 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
- 	dma_wmb();
- 	first->txdes0 = cpu_to_le32(f_ctl_stat);
+-	for (i = 0; i < NR_IRQS; i++)
+-		irq_set_noprobe(i);
+-
+ 	for_each_possible_cpu(i) {
+ 		page = alloc_pages_node(cpu_to_node(i), GFP_KERNEL, order);
  
-+	/* Ensure the descriptor config is visible before setting the tx
-+	 * pointer.
-+	 */
-+	smp_wmb();
-+
- 	/* Update next TX pointer */
- 	priv->tx_pointer = pointer;
- 
-@@ -823,7 +833,7 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
- 
- 	return NETDEV_TX_OK;
- 
-- dma_err:
-+dma_err:
- 	if (net_ratelimit())
- 		netdev_err(netdev, "map tx fragment failed\n");
- 
-@@ -845,7 +855,7 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
- 	 * last fragment, so we know ftgmac100_free_tx_packet()
- 	 * hasn't freed the skb yet.
- 	 */
-- drop:
-+drop:
- 	/* Drop the packet */
- 	dev_kfree_skb_any(skb);
- 	netdev->stats.tx_dropped++;
-@@ -1338,7 +1348,7 @@ static void ftgmac100_reset(struct ftgmac100 *priv)
- 	ftgmac100_init_all(priv, true);
- 
- 	netdev_dbg(netdev, "Reset done !\n");
-- bail:
-+bail:
- 	if (priv->mii_bus)
- 		mutex_unlock(&priv->mii_bus->mdio_lock);
- 	if (netdev->phydev)
-@@ -1537,15 +1547,15 @@ static int ftgmac100_open(struct net_device *netdev)
- 
- 	return 0;
- 
-- err_ncsi:
-+err_ncsi:
- 	napi_disable(&priv->napi);
- 	netif_stop_queue(netdev);
-- err_alloc:
-+err_alloc:
- 	ftgmac100_free_buffers(priv);
- 	free_irq(netdev->irq, netdev);
-- err_irq:
-+err_irq:
- 	netif_napi_del(&priv->napi);
-- err_hw:
-+err_hw:
- 	iowrite32(0, priv->base + FTGMAC100_OFFSET_IER);
- 	ftgmac100_free_rings(priv);
- 	return err;
 -- 
 2.43.0
 
