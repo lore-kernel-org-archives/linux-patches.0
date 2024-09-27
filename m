@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB5318453A;
-	Fri, 27 Sep 2024 12:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4B718893F;
+	Fri, 27 Sep 2024 12:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440375; cv=none; b=qvDTNjwrzWtqGBurmx+G1jro46sh1x+iAijez7Kvyzn8wJ4UeYYA9yRC5KxN8VCRa+3YELzNC2M4M9/PiYeHbBaAH3dvRFBcPzkyGeK/k8wqJ9JRsQwJmm8YZ/uJgE2qA0Z/9N71nCr60u/4e/0yZovfc9FRol4cYMounr9sEi4=
+	t=1727440378; cv=none; b=aZmssZTMIn+N3SNpoSJYi4FZHo7wD/NS5oxMyJSxmvWapEHcNqwqLrQnURdFBmJaKf4gvVvYQCNYxWfDBeCgB+SbIq6w/0LAWOpIPZKuix0lSXyGl/dZgGwMgULdfUecTJ8PXdFyTBEHiGe7kLHzLNt6umsVvkjvGLtvTGZZgGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440375; c=relaxed/simple;
-	bh=BmLm9Ck2vLzz9dBaGkDvCEv3/VSsD5YmocZDezR19lA=;
+	s=arc-20240116; t=1727440378; c=relaxed/simple;
+	bh=0GLgpx6K9wYVQFtFGoycL3rImaAWZ3EqjeAOAITbXgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auGDjTzKRIYBLSBz0YjIDPD30Z0lFvjMC1lDuJDjWwmuCc/+Lda/nhwY/IEKC2VDYNQ0gQBRp5yvDtVZfpIbcO6SFN7yp8iCtxP+uQLyRt27wblAvyOIPvmXs1bj1FaJVBK7SBEIWFcbvsyDXurDsBJFr3nHxv5QPLCOpi7E/EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtgWGRyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SibavxGDiOC4fgZlBAimLUNGp7RUqj6TT3Ezlm8h7bwzy8+mXQLnhMQqjQKreDYzDJnETaS7gw4ygePgGKXZTrslONY+W0DyafQNOlyC9ood8xigtlOO7RDqu5M/bkbMdV5CtrM8ZTwIV8hLjMo+fs5WnRnZT1iNC4f4PJOT/tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHg4GuaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtgWGRyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E974C4CEC4;
-	Fri, 27 Sep 2024 12:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHg4GuaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC30CC4CEC4;
+	Fri, 27 Sep 2024 12:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440375;
-	bh=BmLm9Ck2vLzz9dBaGkDvCEv3/VSsD5YmocZDezR19lA=;
+	s=korg; t=1727440378;
+	bh=0GLgpx6K9wYVQFtFGoycL3rImaAWZ3EqjeAOAITbXgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtgWGRyyZn6gNoQ7HuPDjBdw/ZK+OV8BthjTV4xWVgwB3TQyH33XYdjSjilc05suS
-	 omB/E4rRcybH1dOzNuTs7OUzMowng/UFv03umBURS+14Frgv/5FNWFL+ajasWlNYBz
-	 RzGJJa4nkk0bHwyaC429FONxqeZPqJ4uDeDYfAZU=
+	b=HHg4GuaRlz9Guy66w5z9VkdfsVHN51m4GG75HoJxOrs3t+Oh7HkyyAV0cJ1J3xmAi
+	 Y0D70qCdO/pXKiKE/Y+e1h0vuc3BPn5i6xsjteTyvKwtCK/3lz4R6ZbBr9t2Gj0WOt
+	 PDYwUbqt8wH5qaXmLTwVFNMwgwRilt2ID2YzSYxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cgroups@vger.kernel.org,
-	Nadia Pinaeva <n.m.pinaeva@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 59/73] netfilter: nft_socket: make cgroupsv2 matching work with namespaces
-Date: Fri, 27 Sep 2024 14:24:10 +0200
-Message-ID: <20240927121722.306751308@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
+	Chandan Babu R <chandanbabu@kernel.org>
+Subject: [PATCH 6.1 35/73] xfs: dont use BMBT btree split workers for IO completion
+Date: Fri, 27 Sep 2024 14:23:46 +0200
+Message-ID: <20240927121721.331166118@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -52,144 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Dave Chinner <dchinner@redhat.com>
 
-commit 7f3287db654395f9c5ddd246325ff7889f550286 upstream.
+[ Upstream commit c85007e2e3942da1f9361e4b5a9388ea3a8dcc5b ]
 
-When running in container environmment, /sys/fs/cgroup/ might not be
-the real root node of the sk-attached cgroup.
+When we split a BMBT due to record insertion, we offload it to a
+worker thread because we can be deep in the stack when we try to
+allocate a new block for the BMBT. Allocation can use several
+kilobytes of stack (full memory reclaim, swap and/or IO path can
+end up on the stack during allocation) and we can already be several
+kilobytes deep in the stack when we need to split the BMBT.
 
-Example:
+A recent workload demonstrated a deadlock in this BMBT split
+offload. It requires several things to happen at once:
 
-In container:
-% stat /sys//fs/cgroup/
-Device: 0,21    Inode: 2214  ..
-% stat /sys/fs/cgroup/foo
-Device: 0,21    Inode: 2264  ..
+1. two inodes need a BMBT split at the same time, one must be
+unwritten extent conversion from IO completion, the other must be
+from extent allocation.
 
-The expectation would be for:
+2. there must be a no available xfs_alloc_wq worker threads
+available in the worker pool.
 
-  nft add rule .. socket cgroupv2 level 1 "foo" counter
+3. There must be sustained severe memory shortages such that new
+kworker threads cannot be allocated to the xfs_alloc_wq pool for
+both threads that need split work to be run
 
-to match traffic from a process that got added to "foo" via
-"echo $pid > /sys/fs/cgroup/foo/cgroup.procs".
+4. The split work from the unwritten extent conversion must run
+first.
 
-However, 'level 3' is needed to make this work.
+5. when the BMBT block allocation runs from the split work, it must
+loop over all AGs and not be able to either trylock an AGF
+successfully, or each AGF is is able to lock has no space available
+for a single block allocation.
 
-Seen from initial namespace, the complete hierarchy is:
+6. The BMBT allocation must then attempt to lock the AGF that the
+second task queued to the rescuer thread already has locked before
+it finds an AGF it can allocate from.
 
-% stat /sys/fs/cgroup/system.slice/docker-.../foo
-  Device: 0,21    Inode: 2264 ..
+At this point, we have an ABBA deadlock between tasks queued on the
+xfs_alloc_wq rescuer thread and a locked AGF. i.e. The queued task
+holding the AGF lock can't be run by the rescuer thread until the
+task the rescuer thread is runing gets the AGF lock....
 
-i.e. hierarchy is
-0    1               2              3
-/ -> system.slice -> docker-1... -> foo
+This is a highly improbably series of events, but there it is.
 
-... but the container doesn't know that its "/" is the "docker-1.."
-cgroup.  Current code will retrieve the 'system.slice' cgroup node
-and store its kn->id in the destination register, so compare with
-2264 ("foo" cgroup id) will not match.
+There's a couple of ways to fix this, but the easiest way to ensure
+that we only punt tasks with a locked AGF that holds enough space
+for the BMBT block allocations to the worker thread.
 
-Fetch "/" cgroup from ->init() and add its level to the level we try to
-extract.  cgroup root-level is 0 for the init-namespace or the level
-of the ancestor that is exposed as the cgroup root inside the container.
+This works for unwritten extent conversion in IO completion (which
+doesn't have a locked AGF and space reservations) because we have
+tight control over the IO completion stack. It is typically only 6
+functions deep when xfs_btree_split() is called because we've
+already offloaded the IO completion work to a worker thread and
+hence we don't need to worry about stack overruns here.
 
-In the above case, cgrp->level of "/" resolved in the container is 2
-(docker-1...scope/) and request for 'level 1' will get adjusted
-to fetch the actual level (3).
+The other place we can be called for a BMBT split without a
+preceeding allocation is __xfs_bunmapi() when punching out the
+center of an existing extent. We don't remove extents in the IO
+path, so these operations don't tend to be called with a lot of
+stack consumed. Hence we don't really need to ship the split off to
+a worker thread in these cases, either.
 
-v2: use CONFIG_SOCK_CGROUP_DATA, eval function depends on it.
-    (kernel test robot)
-
-Cc: cgroups@vger.kernel.org
-Fixes: e0bb96db96f8 ("netfilter: nft_socket: add support for cgroupsv2")
-Reported-by: Nadia Pinaeva <n.m.pinaeva@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_socket.c |   41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ fs/xfs/libxfs/xfs_btree.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -9,7 +9,8 @@
- 
- struct nft_socket {
- 	enum nft_socket_keys		key:8;
--	u8				level;
-+	u8				level;		/* cgroupv2 level to extract */
-+	u8				level_user;	/* cgroupv2 level provided by userspace */
- 	u8				len;
- 	union {
- 		u8			dreg;
-@@ -53,6 +54,28 @@ nft_sock_get_eval_cgroupv2(u32 *dest, st
- 	memcpy(dest, &cgid, sizeof(u64));
- 	return true;
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -2913,9 +2913,22 @@ xfs_btree_split_worker(
  }
-+
-+/* process context only, uses current->nsproxy. */
-+static noinline int nft_socket_cgroup_subtree_level(void)
-+{
-+	struct cgroup *cgrp = cgroup_get_from_path("/");
-+	int level;
-+
-+	if (!cgrp)
-+		return -ENOENT;
-+
-+	level = cgrp->level;
-+
-+	cgroup_put(cgrp);
-+
-+	if (WARN_ON_ONCE(level > 255))
-+		return -ERANGE;
-+
-+	if (WARN_ON_ONCE(level < 0))
-+		return -EINVAL;
-+
-+	return level;
-+}
- #endif
  
- static struct sock *nft_socket_do_lookup(const struct nft_pktinfo *pkt)
-@@ -174,9 +197,10 @@ static int nft_socket_init(const struct
- 	case NFT_SOCKET_MARK:
- 		len = sizeof(u32);
- 		break;
--#ifdef CONFIG_CGROUPS
-+#ifdef CONFIG_SOCK_CGROUP_DATA
- 	case NFT_SOCKET_CGROUPV2: {
- 		unsigned int level;
-+		int err;
+ /*
+- * BMBT split requests often come in with little stack to work on. Push
++ * BMBT split requests often come in with little stack to work on so we push
+  * them off to a worker thread so there is lots of stack to use. For the other
+  * btree types, just call directly to avoid the context switch overhead here.
++ *
++ * Care must be taken here - the work queue rescuer thread introduces potential
++ * AGF <> worker queue deadlocks if the BMBT block allocation has to lock new
++ * AGFs to allocate blocks. A task being run by the rescuer could attempt to
++ * lock an AGF that is already locked by a task queued to run by the rescuer,
++ * resulting in an ABBA deadlock as the rescuer cannot run the lock holder to
++ * release it until the current thread it is running gains the lock.
++ *
++ * To avoid this issue, we only ever queue BMBT splits that don't have an AGF
++ * already locked to allocate from. The only place that doesn't hold an AGF
++ * locked is unwritten extent conversion at IO completion, but that has already
++ * been offloaded to a worker thread and hence has no stack consumption issues
++ * we have to worry about.
+  */
+ STATIC int					/* error */
+ xfs_btree_split(
+@@ -2929,7 +2942,8 @@ xfs_btree_split(
+ 	struct xfs_btree_split_args	args;
+ 	DECLARE_COMPLETION_ONSTACK(done);
  
- 		if (!tb[NFTA_SOCKET_LEVEL])
- 			return -EINVAL;
-@@ -185,6 +209,17 @@ static int nft_socket_init(const struct
- 		if (level > 255)
- 			return -EOPNOTSUPP;
+-	if (cur->bc_btnum != XFS_BTNUM_BMAP)
++	if (cur->bc_btnum != XFS_BTNUM_BMAP ||
++	    cur->bc_tp->t_firstblock == NULLFSBLOCK)
+ 		return __xfs_btree_split(cur, level, ptrp, key, curp, stat);
  
-+		err = nft_socket_cgroup_subtree_level();
-+		if (err < 0)
-+			return err;
-+
-+		priv->level_user = level;
-+
-+		level += err;
-+		/* Implies a giant cgroup tree */
-+		if (WARN_ON_ONCE(level > 255))
-+			return -EOPNOTSUPP;
-+
- 		priv->level = level;
- 		len = sizeof(u64);
- 		break;
-@@ -209,7 +244,7 @@ static int nft_socket_dump(struct sk_buf
- 	if (nft_dump_register(skb, NFTA_SOCKET_DREG, priv->dreg))
- 		return -1;
- 	if (priv->key == NFT_SOCKET_CGROUPV2 &&
--	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level)))
-+	    nla_put_be32(skb, NFTA_SOCKET_LEVEL, htonl(priv->level_user)))
- 		return -1;
- 	return 0;
- }
+ 	args.cur = cur;
 
 
