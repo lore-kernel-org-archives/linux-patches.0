@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9742518C32C;
-	Fri, 27 Sep 2024 12:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1C718C02B;
+	Fri, 27 Sep 2024 12:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440298; cv=none; b=Xh0Wzfp7QSgETToa0Ez4MvL2XtQZ01JtNtbU1vqGEqA6MeXAL2De0axxq5XdTCKOF9LtxrtvTET8UrRhD2Rkds4nl1oeJzPVDwE/lhVRNHUbh6RGAlywEaNT6MEOE0V+HNt/UPRyUdMMryAfCyjHI74wGLO6ukCfvheibmchl8E=
+	t=1727440302; cv=none; b=k4EXeCtImW7A1uEpiz4ay7b4VGsF2rA6TwFzF7xlFt+O0kURRU7wA5B+mRs3b2QZpBmmkiDceWrAqe3sG/gIgOrUPoZQ27GhLsZJeTUyLViMbh2kDWjeuxQsVyL13ctc375tlB7sfyn72Ft2Fj69RBSfnj2djvkiBPya7fJaOJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440298; c=relaxed/simple;
-	bh=Z8zny9JLgtOvSR46/VgCRxIxiTKVfjZhmuqIC4VhH+E=;
+	s=arc-20240116; t=1727440302; c=relaxed/simple;
+	bh=gMTSSFKMrWLfqJKAi+bZ1nNOg8B0046rEcbKew6xEf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ibGSKbN+NeUxxZ62Aph0K4tArvHRKN7ZUGYBPZMN7TpkOkznVdrFqhXHkz+1fYxDBY88xrGUhe1lWktQ0GD9WGym2RnjU3aYpr4Tu7nGSjsATuzn0BS/ZjBmjkc5cq/TtILqn2fhIWHU2uECYt0VdtDSYj1mg7JbkqMFbZoZXBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCbQxQq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rqs0qUD11L0qjeQwIC5ePmOasONjHEl+B7U0SA0agCNKPdTO2mwZ/+CTocOtIFN2bciYoRf76KB6uCHMbcDNhDMu8sBH2CWLBzl3bTwZScVV/G1mbRlMv0GF4mGAM+VrPAjdH003Bcubwkgn1jKNW6I4iG7+Ed0DmxR2XdM1sko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsotxTbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCbQxQq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C76C4CEC6;
-	Fri, 27 Sep 2024 12:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsotxTbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E71C4CEC4;
+	Fri, 27 Sep 2024 12:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440298;
-	bh=Z8zny9JLgtOvSR46/VgCRxIxiTKVfjZhmuqIC4VhH+E=;
+	s=korg; t=1727440301;
+	bh=gMTSSFKMrWLfqJKAi+bZ1nNOg8B0046rEcbKew6xEf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCbQxQq4Xb2KGS+2Orn9n5cPy3RoWaSjsnAwxSMOwVdba9V0212F9wtSgckoAdwZc
-	 1PppfFu88fewru1Wp2raN/n8Lx7EbgAzCSvRelavjuyhqa6iAotvG8B3eHY9DqT9Yg
-	 cL/I0VkmzBQVEwj/JluVDUdUr7ur3IAOV51bQht0=
+	b=SsotxTbRNLyjM8j8NOHpPBiPOtvNNMl0/sBfmz8HABdExTRpEKxc7zIDOmzj2/Xwu
+	 /IhaRGFEhLmty7Jbyp8TwmTlwoZvN5zE+J6uQAhzrUB9cDSZU46sATgEdouNOV8d6P
+	 sSQEXmYQJ91xuEKHZsDJU+KkJU2/yACHH98KcCzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	lei lu <llfamsec@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sherry Yang <sherry.yang@oracle.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/73] ocfs2: strict bound check before memcmp in ocfs2_xattr_find_entry()
-Date: Fri, 27 Sep 2024 14:23:42 +0200
-Message-ID: <20240927121721.163902825@linuxfoundation.org>
+Subject: [PATCH 6.1 06/73] scsi: lpfc: Fix overflow build issue
+Date: Fri, 27 Sep 2024 14:23:17 +0200
+Message-ID: <20240927121720.139412759@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -59,65 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ferry Meng <mengferry@linux.alibaba.com>
+From: Sherry Yang <sherry.yang@oracle.com>
 
-[ Upstream commit af77c4fc1871847b528d58b7fdafb4aa1f6a9262 ]
+[ Upstream commit 3417c9574e368f0330637505f00d3814ca8854d2 ]
 
-xattr in ocfs2 maybe 'non-indexed', which saved with additional space
-requested.  It's better to check if the memory is out of bound before
-memcmp, although this possibility mainly comes from crafted poisonous
-images.
+Build failed while enabling "CONFIG_GCOV_KERNEL=y" and
+"CONFIG_GCOV_PROFILE_ALL=y" with following error:
 
-Link: https://lkml.kernel.org/r/20240520024024.1976129-2-joseph.qi@linux.alibaba.com
-Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: lei lu <llfamsec@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+BUILDSTDERR: drivers/scsi/lpfc/lpfc_bsg.c: In function 'lpfc_get_cgnbuf_info':
+BUILDSTDERR: ./include/linux/fortify-string.h:114:33: error: '__builtin_memcpy' accessing 18446744073709551615 bytes at offsets 0 and 0 overlaps 9223372036854775807 bytes at offset -9223372036854775808 [-Werror=restrict]
+BUILDSTDERR:   114 | #define __underlying_memcpy     __builtin_memcpy
+BUILDSTDERR:       |                                 ^
+BUILDSTDERR: ./include/linux/fortify-string.h:637:9: note: in expansion of macro '__underlying_memcpy'
+BUILDSTDERR:   637 |         __underlying_##op(p, q, __fortify_size);                        \
+BUILDSTDERR:       |         ^~~~~~~~~~~~~
+BUILDSTDERR: ./include/linux/fortify-string.h:682:26: note: in expansion of macro '__fortify_memcpy_chk'
+BUILDSTDERR:   682 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
+BUILDSTDERR:       |                          ^~~~~~~~~~~~~~~~~~~~
+BUILDSTDERR: drivers/scsi/lpfc/lpfc_bsg.c:5468:9: note: in expansion of macro 'memcpy'
+BUILDSTDERR:  5468 |         memcpy(cgn_buff, cp, cinfosz);
+BUILDSTDERR:       |         ^~~~~~
+
+This happens from the commit 06bb7fc0feee ("kbuild: turn on -Wrestrict by
+default"). Address this issue by using size_t type.
+
+Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+Link: https://lore.kernel.org/r/20240821065131.1180791-1-sherry.yang@oracle.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/scsi/lpfc/lpfc_bsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 61213b7e4dfbe..3ba40f16ef056 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -1072,7 +1072,7 @@ static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
- {
- 	struct ocfs2_xattr_entry *entry;
- 	size_t name_len;
--	int i, cmp = 1;
-+	int i, name_offset, cmp = 1;
+diff --git a/drivers/scsi/lpfc/lpfc_bsg.c b/drivers/scsi/lpfc/lpfc_bsg.c
+index 2373dad016033..fc300febe9140 100644
+--- a/drivers/scsi/lpfc/lpfc_bsg.c
++++ b/drivers/scsi/lpfc/lpfc_bsg.c
+@@ -5409,7 +5409,7 @@ lpfc_get_cgnbuf_info(struct bsg_job *job)
+ 	struct get_cgnbuf_info_req *cgnbuf_req;
+ 	struct lpfc_cgn_info *cp;
+ 	uint8_t *cgn_buff;
+-	int size, cinfosz;
++	size_t size, cinfosz;
+ 	int  rc = 0;
  
- 	if (name == NULL)
- 		return -EINVAL;
-@@ -1087,10 +1087,15 @@ static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
- 		cmp = name_index - ocfs2_xattr_get_type(entry);
- 		if (!cmp)
- 			cmp = name_len - entry->xe_name_len;
--		if (!cmp)
--			cmp = memcmp(name, (xs->base +
--				     le16_to_cpu(entry->xe_name_offset)),
--				     name_len);
-+		if (!cmp) {
-+			name_offset = le16_to_cpu(entry->xe_name_offset);
-+			if ((xs->base + name_offset + name_len) > xs->end) {
-+				ocfs2_error(inode->i_sb,
-+					    "corrupted xattr entries");
-+				return -EFSCORRUPTED;
-+			}
-+			cmp = memcmp(name, (xs->base + name_offset), name_len);
-+		}
- 		if (cmp == 0)
- 			break;
- 		entry += 1;
+ 	if (job->request_len < sizeof(struct fc_bsg_request) +
 -- 
 2.43.0
 
