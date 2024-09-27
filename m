@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF7118A95D;
-	Fri, 27 Sep 2024 12:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E951E18A6C3;
+	Fri, 27 Sep 2024 12:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440170; cv=none; b=MfRJCVrGNaCz+zYmMtimfqDIQS29/zANFboByYNu0a60LHc2kh2R4dgiskWT/MTl92unNA7inkvXL6ToLZBPNWDBLea8hN8HDmFR1dz7AQh58yQRKUBXswusi0Qn7PDGAC/h6g/LdJltXj/MAATi4n55oQK2dXInIgxJpH3GaIA=
+	t=1727440173; cv=none; b=TzkXfVKcz9MlsTxrECPQ8AS5H3RySX3KB469lQ4GD75rw4l7PZz97eGfDzwK2t37Dce0tALUeocO+86biBBWOb9IpITJLlFtpxAheqEUWUKmTOxvSZ2s0tfmJvLXelFkCW1ECdIJHvKpbemFoLZH00RKyJKaTVgZDiudvD/Cv0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440170; c=relaxed/simple;
-	bh=PK2/dzW5kivFXfejHxvV1iA6J9DTlAiF18g+cdlDFl4=;
+	s=arc-20240116; t=1727440173; c=relaxed/simple;
+	bh=tZH+YV2Xm5FdPECf5iCsxCIdjlLFpQ2ca6UzutXHa/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWSLmFj6vi3uWAT5DAnUgiYxOYWIvmrGD6GGbH7WnaL8qTq5vMr+XwVUFIILcDPvuuUUgizRbFIr+34Ql4qLCSJdGadhAY9GZ/7ZgbXrk7L9WdO2HDhXYArjVO998WT3L8cNoSP62gbtiDW2ay7O0aBuCSbOrW1wWSi3Bcxay+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4/PJQS6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dDr5936V/QA5iRQ4vQHD280UTnY/kNo/kMPUg6qwJ4JjD4K3WiC4A/QLiQ18cXAmYYhVJUEjEkuvDgizAs9A0+oINdDHIIUr1JLaxUimc0bnQbHHqIoBluILN1zVrkxuhN1vD8Y72UH7AwyASOP0I3ZMS8b/lwPj1NT4AoRIX9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIyeCb2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4/PJQS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAE9C4CEC4;
-	Fri, 27 Sep 2024 12:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIyeCb2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DDAC4CEC4;
+	Fri, 27 Sep 2024 12:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440170;
-	bh=PK2/dzW5kivFXfejHxvV1iA6J9DTlAiF18g+cdlDFl4=;
+	s=korg; t=1727440172;
+	bh=tZH+YV2Xm5FdPECf5iCsxCIdjlLFpQ2ca6UzutXHa/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4/PJQS6+L3jQviQk1E2Ysn52Yc30NiTqnRpG17sNJmBZGJBFHMpKNdWE/TsXv5kj
-	 YYPOzSBLCd0NBboqEEvhFBA/JTrXw5ZGuBQQYYnbF/86oydyydHTf9FEO4r/SeqEIV
-	 qHU6roHYUJbV0QCXFXN0F1tjZzcNvNr9q0M0W8hI=
+	b=eIyeCb2tlODY/09tUjDGlpNMSaXfCx+twFt1Nu1y6iGs6uvepx9X/5zO8/qime4Sk
+	 6nqThZwTIRCP5LUDjImKnCDrJ/lGE83WMgo1pdLwckNNgC3T6psep3lOonXadMFlcc
+	 1uTSv0QX3JSfd/Bcya+l4kRFlmk5Bi9iN5786n1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	stable <stable@kernel.org>,
-	syzbot+9d34f80f841e948c3fdb@syzkaller.appspotmail.com
-Subject: [PATCH 6.10 58/58] USB: usbtmc: prevent kernel-usb-infoleak
-Date: Fri, 27 Sep 2024 14:24:00 +0200
-Message-ID: <20240927121721.202300761@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	James Zhu <James.Zhu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 48/58] drm: Expand max DRM device number to full MINORBITS
+Date: Fri, 27 Sep 2024 14:23:50 +0200
+Message-ID: <20240927121720.750640543@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -45,40 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Michał Winiarski <michal.winiarski@intel.com>
 
-commit 625fa77151f00c1bd00d34d60d6f2e710b3f9aad upstream.
+[ Upstream commit 071d583e01c88272f6ff216d4f867f8f35e94d7d ]
 
-The syzbot reported a kernel-usb-infoleak in usbtmc_write,
-we need to clear the structure before filling fields.
+Having a limit of 64 DRM devices is not good enough for modern world
+where we have multi-GPU servers, SR-IOV virtual functions and virtual
+devices used for testing.
+Let's utilize full minor range for DRM devices.
+To avoid regressing the existing userspace, we're still maintaining the
+numbering scheme where 0-63 is used for primary, 64-127 is reserved
+(formerly for control) and 128-191 is used for render.
+For minors >= 192, we're allocating minors dynamically on a first-come,
+first-served basis.
 
-Fixes: 4ddc645f40e9 ("usb: usbtmc: Add ioctl for vendor specific write")
-Reported-and-tested-by: syzbot+9d34f80f841e948c3fdb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9d34f80f841e948c3fdb
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/tencent_9649AA6EC56EDECCA8A7D106C792D1C66B06@qq.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240823163048.2676257-4-michal.winiarski@intel.com
+Acked-by: James Zhu <James.Zhu@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/usbtmc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_drv.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -754,7 +754,7 @@ static struct urb *usbtmc_create_urb(voi
- 	if (!urb)
- 		return NULL;
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index a5f7b24324e30..928824b919456 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -121,10 +121,19 @@ static void drm_minor_alloc_release(struct drm_device *dev, void *data)
+ 	xa_erase(drm_minor_get_xa(minor->type), minor->index);
+ }
  
--	dmabuf = kmalloc(bufsize, GFP_KERNEL);
-+	dmabuf = kzalloc(bufsize, GFP_KERNEL);
- 	if (!dmabuf) {
- 		usb_free_urb(urb);
- 		return NULL;
++/*
++ * DRM used to support 64 devices, for backwards compatibility we need to maintain the
++ * minor allocation scheme where minors 0-63 are primary nodes, 64-127 are control nodes,
++ * and 128-191 are render nodes.
++ * After reaching the limit, we're allocating minors dynamically - first-come, first-serve.
++ * Accel nodes are using a distinct major, so the minors are allocated in continuous 0-MAX
++ * range.
++ */
+ #define DRM_MINOR_LIMIT(t) ({ \
+ 	typeof(t) _t = (t); \
+ 	_t == DRM_MINOR_ACCEL ? XA_LIMIT(0, ACCEL_MAX_MINORS) : XA_LIMIT(64 * _t, 64 * _t + 63); \
+ })
++#define DRM_EXTENDED_MINOR_LIMIT XA_LIMIT(192, (1 << MINORBITS) - 1)
+ 
+ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
+ {
+@@ -140,6 +149,9 @@ static int drm_minor_alloc(struct drm_device *dev, enum drm_minor_type type)
+ 
+ 	r = xa_alloc(drm_minor_get_xa(type), &minor->index,
+ 		     NULL, DRM_MINOR_LIMIT(type), GFP_KERNEL);
++	if (r == -EBUSY && (type == DRM_MINOR_PRIMARY || type == DRM_MINOR_RENDER))
++		r = xa_alloc(&drm_minors_xa, &minor->index,
++			     NULL, DRM_EXTENDED_MINOR_LIMIT, GFP_KERNEL);
+ 	if (r < 0)
+ 		return r;
+ 
+-- 
+2.43.0
+
 
 
