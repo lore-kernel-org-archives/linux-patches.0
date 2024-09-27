@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C285D1779BD;
-	Fri, 27 Sep 2024 12:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3621779BD;
+	Fri, 27 Sep 2024 12:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439894; cv=none; b=GAHg8OkRVttffTlgyBr5LSY8cnDrp7OoXOjzDxg4+Ncc6RSflgYLagmkN7aq297NWJwbHejXjU3EKFYpVElyECWMulkIznve9cbf5XGQ0lP9NW3mW3Zu1bfz7QO4qIo15/cFbdyAy2nUhfBnXXuyOHqKaTCh9MWVMwkTvXH5dWY=
+	t=1727439897; cv=none; b=V7B4pOJcX7RSyJcA1b/y/tGHTe+2V71JGcMo56Bee+83krsDUSHmIrTLBOklQZtA17i/QHynhggMqzIB5QfQjhiHhG7Ggz68/fDbvTO+TWhnwmloaxQ7GiFDR84GdTL/j4ppj92KVdhQgw+FNz630Oij5u5NciJ5JIUybu8lkhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439894; c=relaxed/simple;
-	bh=t3kteypcZf0ZQulsexH7H/xW3w6+9l4QDN15UhOsRs8=;
+	s=arc-20240116; t=1727439897; c=relaxed/simple;
+	bh=IVDplkoSsoFNWzYHfysuEgRtNweYsAQPs9ffMuBx8A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+9430ToZpp0yjSExICMOBaMMq/MMikN2tptWBo6Av7qJjoHkXT95GY0yQHP/wRWxScJzbanJJCWDY314mCRNc6dQeOCK6G+ZlEZKk7REP9UzWFFwXrgDhxppV/vYFV7vmhlzMqdG0EziRbaT+q9eSf7yowmh4YabwxpqNOQCRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mpr1/9YH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jh+H2ItthTdgCBtc02NOc9vE+0olyqC35m+rv7Wdm8SBvdjUw19SFiSBfMiTyD37NmaLbruWFz7PkLMLeYwQ4A/d2XN/iv10orHkNlLWCuDzrJOiTN8MdxCN+4jEV+IndYUwbmZKivJAHZYb2vLmt/RdfwkRKnypD0wjesGfKXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek7trO+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mpr1/9YH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3842C4CEC4;
-	Fri, 27 Sep 2024 12:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek7trO+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C026CC4CEC4;
+	Fri, 27 Sep 2024 12:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439894;
-	bh=t3kteypcZf0ZQulsexH7H/xW3w6+9l4QDN15UhOsRs8=;
+	s=korg; t=1727439897;
+	bh=IVDplkoSsoFNWzYHfysuEgRtNweYsAQPs9ffMuBx8A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mpr1/9YHpJuIxbu25IwNwolBk58v7FaV752Pq4OXTHGb6UJRem7AP0bfxiKitVqTM
-	 R+I/Ds+pfLh1QPLB1fd+9c/BN76hji2jGVrqWZ/FDzhOiHIb20O9urwb+Kb3/Igx/c
-	 QEGP27bept9Vk5ZjLZ+jL3uAQ4j+YuqH+3FDNzxg=
+	b=ek7trO+5eUcs1B7C44Kp+ErxjCFkV3HRQE7mzU2762bLGBW0/aToB5sR0RFY60C42
+	 osok0j6vM2w3mvRdG+aRyw5z7Av87fknv2se4YKiabgJhBFW+6QcqHhoJma1rxfNZR
+	 PjvDciA1T2PZZU01R1gQrGWISQW1WxrlTouvAH0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <lenb@kernel.org>,
-	Benjamin Berg <benjamin.berg@intel.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 14/54] wifi: iwlwifi: lower message level for FW buffer destination
-Date: Fri, 27 Sep 2024 14:23:06 +0200
-Message-ID: <20240927121720.281910554@linuxfoundation.org>
+Subject: [PATCH 6.6 15/54] wifi: iwlwifi: mvm: fix iwl_mvm_scan_fits() calculation
+Date: Fri, 27 Sep 2024 14:23:07 +0200
+Message-ID: <20240927121720.314942062@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -53,39 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit f8a129c1e10256c785164ed5efa5d17d45fbd81b ]
+[ Upstream commit d44162280899c3fc2c6700e21e491e71c3c96e3d ]
 
-An invalid buffer destination is not a problem for the driver and it
-does not make sense to report it with the KERN_ERR message level. As
-such, change the message to use IWL_DEBUG_FW.
+The calculation should consider also the 6GHz IE's len, fix that.
+In addition, in iwl_mvm_sched_scan_start() the scan_fits helper is
+called only in case non_psc_incldued is true, but it should be called
+regardless, fix that as well.
 
-Reported-by: Len Brown <lenb@kernel.org>
-Closes: https://lore.kernel.org/r/CAJvTdKkcxJss=DM2sxgv_MR5BeZ4_OC-3ad6tA40TYH2yqHCWw@mail.gmail.com
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.20abf78f05bc.Ifbcecc2ae9fb40b9698302507dcba8b922c8d856@changeid
+Link: https://patch.msgid.link/20240825191257.7db825442fd2.I99f4d6587709de02072fd57957ec7472331c6b1d@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 23 ++++++++++---------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c b/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
-index fa4a145468601..9be41673650ee 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
-@@ -68,7 +68,8 @@ iwl_pcie_ctxt_info_dbg_enable(struct iwl_trans *trans,
- 		}
- 		break;
- 	default:
--		IWL_ERR(trans, "WRT: Invalid buffer destination\n");
-+		IWL_DEBUG_FW(trans, "WRT: Invalid buffer destination (%d)\n",
-+			     le32_to_cpu(fw_mon_cfg->buf_location));
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 9ca90c0806c0f..c61068144c638 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -830,8 +830,8 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,
+ 	return ((n_ssids <= PROBE_OPTION_MAX) &&
+ 		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &
+ 		(ies->common_ie_len +
+-		 ies->len[NL80211_BAND_2GHZ] +
+-		 ies->len[NL80211_BAND_5GHZ] <=
++		 ies->len[NL80211_BAND_2GHZ] + ies->len[NL80211_BAND_5GHZ] +
++		 ies->len[NL80211_BAND_6GHZ] <=
+ 		 iwl_mvm_max_scan_ie_fw_cmd_room(mvm)));
+ }
+ 
+@@ -3118,18 +3118,16 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
+ 		params.n_channels = j;
  	}
- out:
- 	if (dbg_flags)
+ 
+-	if (non_psc_included &&
+-	    !iwl_mvm_scan_fits(mvm, req->n_ssids, ies, params.n_channels)) {
+-		kfree(params.channels);
+-		return -ENOBUFS;
++	if (!iwl_mvm_scan_fits(mvm, req->n_ssids, ies, params.n_channels)) {
++		ret = -ENOBUFS;
++		goto out;
+ 	}
+ 
+ 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
+-
+-	if (non_psc_included)
+-		kfree(params.channels);
+-	if (uid < 0)
+-		return uid;
++	if (uid < 0) {
++		ret = uid;
++		goto out;
++	}
+ 
+ 	ret = iwl_mvm_send_cmd(mvm, &hcmd);
+ 	if (!ret) {
+@@ -3146,6 +3144,9 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
+ 		mvm->sched_scan_pass_all = SCHED_SCAN_PASS_ALL_DISABLED;
+ 	}
+ 
++out:
++	if (non_psc_included)
++		kfree(params.channels);
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
