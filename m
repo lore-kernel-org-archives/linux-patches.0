@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2557517B515;
-	Fri, 27 Sep 2024 12:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3678D17B515;
+	Fri, 27 Sep 2024 12:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440145; cv=none; b=hKETVjZFzPwzpYMMYSVJFCuPibHfegYvY5AUVqQVjwMrv9menV3r/YmN7U5XVGujhvuRFzyc3u0iEKQuhXgCopKAh9upjFs0bGNAe9fkbKuPMipzXvtD+w5WHqUPYR0kONV1AueA3hTgE3OyISa9EWfo9LApxCgiuCDtLAR+ako=
+	t=1727440148; cv=none; b=vF52zMB/9InpsvWJE9zyASDa48r3ZOQTW4NdKn5lCl2witIE+MOE0XIgmslDrKYDx3d0HYOZ0n4XwPQ+x7I2754hK1el9sY1H0evXc6NmYeRHhBWt0lA7Ed1pOJsSZuJ4S941u8IcfZAqyv4jp2f/U/4gE/aflYite5L5mAqBFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440145; c=relaxed/simple;
-	bh=b4q7oW1S515MvJ0RU0zZ5ZV65ZrwDc4ylC/5WjjfVX4=;
+	s=arc-20240116; t=1727440148; c=relaxed/simple;
+	bh=8VHwLrbK9y5j60dx+h4oeWvNqvyRq7NpMvBMJxhtKAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsI08y1edN8wQbIFUbo0xpp++32t9IqSPZQhSQnQHm+EXLnKaog8o0oUZl6t5pC/RDc0wVdkon+tPEQrdSjuDF6VyRvCCH2LF3yJR70zNdA40R6UVhEbqYYrMeiTx9sWwgNMBHDYpvQ4wh/4ZreJKYjv7za/54konmQ9HvjognU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5Mi9Ipw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R37aBJBC5eCjchNpRZ1OaHccQn8BRnRLkoJ8H6WLDEoPpiLfshqfCRhBXJpneOG8WWiVi0Ejuudq/p9hkR61V76MbgQNgQdjwjypDH6fqufYYI/KeaLkUF6wdRAafPcHmcBp/SNVJYtQPTeU7GCjXT0EnhMpw3PExzu9Qb93v0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofq8ir1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5Mi9Ipw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EAFC4CEC4;
-	Fri, 27 Sep 2024 12:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofq8ir1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B52DC4CEC4;
+	Fri, 27 Sep 2024 12:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440145;
-	bh=b4q7oW1S515MvJ0RU0zZ5ZV65ZrwDc4ylC/5WjjfVX4=;
+	s=korg; t=1727440147;
+	bh=8VHwLrbK9y5j60dx+h4oeWvNqvyRq7NpMvBMJxhtKAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5Mi9IpwaSYcePEBVuGl2vfUB+xho/ohoPvjX2y8Ns8XZOCP3YXB7C15yBWW+kR7p
-	 OkYyNfeZAc6dSR23rKuNIO5/HRvel4zFA93Wp01GsZL+ODHNvXtvI5qNImL5no5EkZ
-	 qMPlbXQR/DIgSVq3JpAUOJsocCVrAtIWkRsrYhKI=
+	b=ofq8ir1pn8+9Wwqulx/qb1YpH0zFsxu8rSKQvg+pBVlyGmDxIghU0APVRB0+G4qTE
+	 CtYzX0opYn3H8Wh9yIK/kpMUyvlwB9Ds4HlrU8NktyUfiL0OeFgWnuBDp0GzFBeR8W
+	 8a7tZv/tQGbMSzLry6olD+Yb2D2ybD6QQLPu94PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 22/58] wifi: iwlwifi: clear trans->state earlier upon error
-Date: Fri, 27 Sep 2024 14:23:24 +0200
-Message-ID: <20240927121719.697179905@linuxfoundation.org>
+Subject: [PATCH 6.10 23/58] can: m_can: Limit coalescing to peripheral instances
+Date: Fri, 27 Sep 2024 14:23:25 +0200
+Message-ID: <20240927121719.737748965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,70 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit 094513f8a2fbddee51b055d8035f995551f98fce ]
+[ Upstream commit e443d15b949952ee039b731d5c35bcbafa300024 ]
 
-When the firmware crashes, we first told the op_mode and only then,
-changed the transport's state. This is a problem if the op_mode's
-nic_error() handler needs to send a host command: it'll see that the
-transport's state still reflects that the firmware is alive.
+The use of coalescing for non-peripheral chips in the current
+implementation is limited to non-existing. Disable the possibility to
+set coalescing through ethtool.
 
-Today, this has no consequences since we set the STATUS_FW_ERROR bit and
-that will prevent sending host commands. iwl_fw_dbg_stop_restart_recording
-looks at this bit to know not to send a host command for example.
-
-To fix the hibernation, we needed to reset the firmware without having
-an error and checking STATUS_FW_ERROR to see whether the firmware is
-alive will no longer hold, so this change is necessary as well.
-
-Change the flow a bit.
-Change trans->state before calling the op_mode's nic_error() method and
-check trans->state instead of STATUS_FW_ERROR. This will keep the
-current behavior of iwl_fw_dbg_stop_restart_recording upon firmware
-error, and it'll allow us to call iwl_fw_dbg_stop_restart_recording
-safely even if STATUS_FW_ERROR is clear, but yet, the firmware is not
-alive.
-
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.9d7427fbdfd7.Ia056ca57029a382c921d6f7b6a6b28fc480f2f22@changeid
-[I missed this was a dependency for the hibernation fix, changed
- the commit message a bit accordingly]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20240805183047.305630-8-msp@baylibre.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c    | 2 +-
- drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/m_can/m_can.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index 945ffc083d25c..79fffa82cfd92 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -3352,7 +3352,7 @@ void iwl_fw_dbg_stop_restart_recording(struct iwl_fw_runtime *fwrt,
- {
- 	int ret __maybe_unused = 0;
- 
--	if (test_bit(STATUS_FW_ERROR, &fwrt->trans->status))
-+	if (!iwl_trans_fw_running(fwrt->trans))
- 		return;
- 
- 	if (fw_has_capa(&fwrt->fw->ucode_capa,
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index b93cef7b23301..4c56dccb18a9b 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -1579,8 +1579,8 @@ static inline void iwl_trans_fw_error(struct iwl_trans *trans, bool sync)
- 
- 	/* prevent double restarts due to the same erroneous FW */
- 	if (!test_and_set_bit(STATUS_FW_ERROR, &trans->status)) {
--		iwl_op_mode_nic_error(trans->op_mode, sync);
- 		trans->state = IWL_TRANS_NO_FW;
-+		iwl_op_mode_nic_error(trans->op_mode, sync);
- 	}
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index e4f0a382c2165..ddde067f593fc 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -2141,7 +2141,7 @@ static int m_can_set_coalesce(struct net_device *dev,
+ 	return 0;
  }
  
+-static const struct ethtool_ops m_can_ethtool_ops = {
++static const struct ethtool_ops m_can_ethtool_ops_coalescing = {
+ 	.supported_coalesce_params = ETHTOOL_COALESCE_RX_USECS_IRQ |
+ 		ETHTOOL_COALESCE_RX_MAX_FRAMES_IRQ |
+ 		ETHTOOL_COALESCE_TX_USECS_IRQ |
+@@ -2152,18 +2152,20 @@ static const struct ethtool_ops m_can_ethtool_ops = {
+ 	.set_coalesce = m_can_set_coalesce,
+ };
+ 
+-static const struct ethtool_ops m_can_ethtool_ops_polling = {
++static const struct ethtool_ops m_can_ethtool_ops = {
+ 	.get_ts_info = ethtool_op_get_ts_info,
+ };
+ 
+-static int register_m_can_dev(struct net_device *dev)
++static int register_m_can_dev(struct m_can_classdev *cdev)
+ {
++	struct net_device *dev = cdev->net;
++
+ 	dev->flags |= IFF_ECHO;	/* we support local echo */
+ 	dev->netdev_ops = &m_can_netdev_ops;
+-	if (dev->irq)
+-		dev->ethtool_ops = &m_can_ethtool_ops;
++	if (dev->irq && cdev->is_peripheral)
++		dev->ethtool_ops = &m_can_ethtool_ops_coalescing;
+ 	else
+-		dev->ethtool_ops = &m_can_ethtool_ops_polling;
++		dev->ethtool_ops = &m_can_ethtool_ops;
+ 
+ 	return register_candev(dev);
+ }
+@@ -2349,7 +2351,7 @@ int m_can_class_register(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		goto rx_offload_del;
+ 
+-	ret = register_m_can_dev(cdev->net);
++	ret = register_m_can_dev(cdev);
+ 	if (ret) {
+ 		dev_err(cdev->dev, "registering %s failed (err=%d)\n",
+ 			cdev->net->name, ret);
 -- 
 2.43.0
 
