@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2325518C034;
-	Fri, 27 Sep 2024 12:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44393C3C;
+	Fri, 27 Sep 2024 12:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440218; cv=none; b=TOYFzeZYafO9/oZLPZyRsaMtC1CTKqrSGAf1r+8p4nR2vLNDQFA4F8RdraIOaQcFcsyzSWjiGRqf53ug/VQ34mlzBbGAAfeE/HHv//90sJ0fKsVPGwRWWtLWZzByxrXk1kMxHM89+0jm7bkkJdlGKLU9KZpz+11N54DytB/paRA=
+	t=1727440220; cv=none; b=o9DJRWTKNNfr55DF1pQilgLdutrslL3/dAQGAMpQR3ImjO3LosYew4pbDScXemFYQtveQ0qTr9Lv8L8RsdeksgI1uhBS/Hb4WKt6mFgWiNEIVZKZYf6dKle/+32tTsEskWd+1m2JibS5UJqffqUO8H5mKa49k6cxjV1Nja92L04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440218; c=relaxed/simple;
-	bh=y5BFmTeSe9/AM1d26bEYjjDSnWu3iWDJ6JiKpyZJQJc=;
+	s=arc-20240116; t=1727440220; c=relaxed/simple;
+	bh=wwXpkahE1se0ITZQiKkjM3/p1KshPmqJv/170WYS6mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HulINnWhlHDlPoeRpsatP/DDOA0LcRAKrvWtyvZnVhFOV+RvVTOr+wK8OIKIfURsNYpwVguW2f9piEBz3hK0DUgvpXkL7YfGYMQQvLPFDYU0mOnj+7LWDDE8VqaQrilUuC9pCHdM49z+e7Ptj7Pbgx5G9u3yWiE1Z856u08PvAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn+WzaeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sr+/1HxlIKfLsLgDksbFzlsd+/NPMBUKlWhC+VfjsHFYzD3bl32S+gyuPUsmgPsFw7YKOCIgwumBdcva8UWZzjOOf0mGqB8rCwhVzfryBB0EmM+CpFbaNaXxxoWpz3G2hAQTfj3n3J6fI56zFmPgFMi9CSs0mVINFIxKrJBtgP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTxd/kYD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn+WzaeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D05C4CEC4;
-	Fri, 27 Sep 2024 12:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTxd/kYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7C3C4CEC6;
+	Fri, 27 Sep 2024 12:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440217;
-	bh=y5BFmTeSe9/AM1d26bEYjjDSnWu3iWDJ6JiKpyZJQJc=;
+	s=korg; t=1727440220;
+	bh=wwXpkahE1se0ITZQiKkjM3/p1KshPmqJv/170WYS6mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vn+WzaeFs7138A7qNHUwp1+wOynfbXy7G7yJwaKBs8Am1FWzY2+Jd1jOOiPd/vFzE
-	 kndiRsoKzN5in+ENfNJzzjevJ5aYklFwrfnQZmfc0O2MUoONoHSVye0x+ESXdwXGaq
-	 WHYI+O3goV2sXBL2lXJqYdKOR7iBVWw/r0P69rPA=
+	b=aTxd/kYDHykofj5Y3l2cXGVBEEl0xiuHxE9ySfnTJIm2iT+Nxty1ltXi9dsw+lrmp
+	 PT9zaU26vmq/d1aobptJEVKzKuONnr0NpiVTozJgHADSZ9YCr5ZLge/KpIgSPuurnF
+	 KQhh15oFaC1KhAdgy6Pu8r3X9d2T78sH2exEnm5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Larabel <michael@michaellarabel.com>,
 	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 05/12] powercap/intel_rapl: Fix the energy-pkg event for AMD CPUs
-Date: Fri, 27 Sep 2024 14:24:08 +0200
-Message-ID: <20240927121715.461646108@linuxfoundation.org>
+Subject: [PATCH 6.11 06/12] cpufreq/amd-pstate: Add the missing cpufreq_cpu_put()
+Date: Fri, 27 Sep 2024 14:24:09 +0200
+Message-ID: <20240927121715.501920915@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
 References: <20240927121715.213013166@linuxfoundation.org>
@@ -55,122 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit 26096aed255fbac9501718174dbb24c935d8854e ]
+[ Upstream commit 49243adc715e6ae34d6cc003827e63bcf5b3a21d ]
 
-After commit ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf"),
-on AMD processors that support extended CPUID leaf 0x80000026, the
-topology_logical_die_id() macros, no longer returns package id, instead it
-returns the CCD (Core Complex Die) id. This leads to the energy-pkg
-event scope to be modified to CCD instead of package.
+Fix the reference counting of cpufreq_policy object in amd_pstate_update()
+function by adding the missing cpufreq_cpu_put().
 
-For more historical context, please refer to commit 32fb480e0a2c
-("powercap/intel_rapl: Support multi-die/package"), which initially changed
-the RAPL scope from package to die for all systems, as Intel systems
-with Die enumeration have RAPL scope as die, and those without die
-enumeration are not affected. So, all systems(Intel, AMD, Hygon), worked
-correctly with topology_logical_die_id() until recently, but this changed
-after the "0x80000026 leaf" commit mentioned above.
-
-Future multi-die Intel systems will have package scope RAPL counters,
-but they will be using TPMI RAPL interface, which is not affected by
-this change.
-
-Replacing topology_logical_die_id() with topology_physical_package_id()
-conditionally only for AMD and Hygon fixes the energy-pkg event.
-
-On an AMD 2 socket 8 CCD Zen4 server:
-
-Before:
-
-linux$ ls /sys/class/powercap/
-intel-rapl      intel-rapl:4    intel-rapl:8:0  intel-rapl:d
-intel-rapl:0    intel-rapl:4:0  intel-rapl:9    intel-rapl:d:0
-intel-rapl:0:0  intel-rapl:5    intel-rapl:9:0  intel-rapl:e
-intel-rapl:1    intel-rapl:5:0  intel-rapl:a    intel-rapl:e:0
-intel-rapl:1:0  intel-rapl:6    intel-rapl:a:0  intel-rapl:f
-intel-rapl:2    intel-rapl:6:0  intel-rapl:b    intel-rapl:f:0
-intel-rapl:2:0  intel-rapl:7    intel-rapl:b:0
-intel-rapl:3    intel-rapl:7:0  intel-rapl:c
-intel-rapl:3:0  intel-rapl:8    intel-rapl:c:0
-
-After:
-
-linux$ ls /sys/class/powercap/
-intel-rapl  intel-rapl:0  intel-rapl:0:0  intel-rapl:1  intel-rapl:1:0
-
-Only one sysfs entry per-event per-package is created after this change.
-
-Fixes: 63edbaa48a57 ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf")
-Reported-by: Michael Larabel <michael@michaellarabel.com>
+Fixes: e8f555daacd3 ("cpufreq/amd-pstate: fix setting policy current frequency value")
 Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20240730044917.4680-3-Dhananjay.Ugwekar@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Perry Yuan <perry.yuan@amd.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c | 34 ++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 8b7a5a31e8c17..5a6d05bf847ce 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -2129,6 +2129,21 @@ void rapl_remove_package(struct rapl_package *rp)
- }
- EXPORT_SYMBOL_GPL(rapl_remove_package);
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 259a917da75f3..073ca9caf52ac 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -554,12 +554,15 @@ static void amd_pstate_update(struct amd_cpudata *cpudata, u32 min_perf,
+ 	}
  
-+/*
-+ * RAPL Package energy counter scope:
-+ * 1. AMD/HYGON platforms use per-PKG package energy counter
-+ * 2. For Intel platforms
-+ *	2.1 CLX-AP platform has per-DIE package energy counter
-+ *	2.2 Other platforms that uses MSR RAPL are single die systems so the
-+ *          package energy counter can be considered as per-PKG/per-DIE,
-+ *          here it is considered as per-DIE.
-+ *	2.3 New platforms that use TPMI RAPL doesn't care about the
-+ *	    scope because they are not MSR/CPU based.
-+ */
-+#define rapl_msrs_are_pkg_scope()				\
-+	(boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||	\
-+	 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
+ 	if (value == prev)
+-		return;
++		goto cpufreq_policy_put;
+ 
+ 	WRITE_ONCE(cpudata->cppc_req_cached, value);
+ 
+ 	amd_pstate_update_perf(cpudata, min_perf, des_perf,
+ 			       max_perf, fast_switch);
 +
- /* caller to ensure CPU hotplug lock is held */
- struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
- 							 bool id_is_cpu)
-@@ -2136,8 +2151,14 @@ struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_
- 	struct rapl_package *rp;
- 	int uid;
++cpufreq_policy_put:
++	cpufreq_cpu_put(policy);
+ }
  
--	if (id_is_cpu)
--		uid = topology_logical_die_id(id);
-+	if (id_is_cpu) {
-+		uid = rapl_msrs_are_pkg_scope() ?
-+		      topology_physical_package_id(id) : topology_logical_die_id(id);
-+		if (uid < 0) {
-+			pr_err("topology_logical_(package/die)_id() returned a negative value");
-+			return ERR_PTR(-EINVAL);
-+		}
-+	}
- 	else
- 		uid = id;
- 
-@@ -2169,9 +2190,14 @@ struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *pr
- 		return ERR_PTR(-ENOMEM);
- 
- 	if (id_is_cpu) {
--		rp->id = topology_logical_die_id(id);
-+		rp->id = rapl_msrs_are_pkg_scope() ?
-+			 topology_physical_package_id(id) : topology_logical_die_id(id);
-+		if ((int)(rp->id) < 0) {
-+			pr_err("topology_logical_(package/die)_id() returned a negative value");
-+			return ERR_PTR(-EINVAL);
-+		}
- 		rp->lead_cpu = id;
--		if (topology_max_dies_per_package() > 1)
-+		if (!rapl_msrs_are_pkg_scope() && topology_max_dies_per_package() > 1)
- 			snprintf(rp->name, PACKAGE_DOMAIN_NAME_LENGTH, "package-%d-die-%d",
- 				 topology_physical_package_id(id), topology_die_id(id));
- 		else
+ static int amd_pstate_verify(struct cpufreq_policy_data *policy)
 -- 
 2.43.0
 
