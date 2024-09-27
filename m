@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B3318BC29;
-	Fri, 27 Sep 2024 12:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFD318A95D;
+	Fri, 27 Sep 2024 12:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440011; cv=none; b=M6RWC9MFSv082/Au1zq6/E1deXE5oFUKrJE9MRCowMvBXA+CEktqN57vlkPBrPHVvDc6DE3scE9mfT2LQiAYdRypsgJv3QnfvONc7CkmlxbcThg4N+vXHWYTwqZQcMkuVNf7RtKOw1/Ze5npbneI51coNG5pUULAI5MXMmcJVXI=
+	t=1727440014; cv=none; b=gGOH7NsIlHvrgBOFkVfQGrYgpBZV5sFd4V65V4vc07/kdoPzsCUe+0RCD246kydgOEP3QyVDdDw2HZ7Rm14GvV18101vbpoM7bAz1S5TPnFr2BrJdzcWL11rwTkyl0eeJewET2jBnDlIIoLK9wFnNBxb3gSQaNa1Fn8TV/2InXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440011; c=relaxed/simple;
-	bh=p7a3UZJq26pqK/yVpD6c2J7YyURpGC9NhRsY1HGt9kU=;
+	s=arc-20240116; t=1727440014; c=relaxed/simple;
+	bh=jHZVW6jPse82CY2XbrfXtYQp+bnb2TCCEEaxYC0n/rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffGhKREF0wZvWeFhnjK+3ej1EXxQKvJ4NWFykr/Z9FmVrbtE58VuBzx/Tdp87Bv3PEvu51wlPoxew6hMki1OJTMmzxuumKerlIZRVcIGyCRqpsP9wFujyHXwS+VpsAzY+YCdlX0KIzwJwskXteoHVUQT+H0lsQncvzqu2gF2frI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+xWn0Ed; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lUSLiybIFSUMg7xQM+cc3gV91JcbitbujRZP1XmJr6r66QlYwAKG2LrQm0bBxjrXOEZ+E5GxqS/agvv1FhN9xY6wpCXf51DB8+O1NeMq45SL4qPkhknglEe3VuIIlwqVJxZSVMQ6dJu1txzvrBPAMpSOQPkhs+Vjb4Ok5xsiIus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhJHzMya; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+xWn0Ed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AD6C4CEC4;
-	Fri, 27 Sep 2024 12:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhJHzMya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1114C4CEC4;
+	Fri, 27 Sep 2024 12:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440011;
-	bh=p7a3UZJq26pqK/yVpD6c2J7YyURpGC9NhRsY1HGt9kU=;
+	s=korg; t=1727440014;
+	bh=jHZVW6jPse82CY2XbrfXtYQp+bnb2TCCEEaxYC0n/rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+xWn0Ed52i3yQYk1mpwbsiKT1qsgCGtyMg5sQUDZgTQLh4sELxq0YPkyF2mIVles
-	 3KsTQwiLA8GQ07PxhXSrsgl4z0mLGBl+jklftMW1pwAOpsQaUdNArbEB6O9Gfw6Xgz
-	 WXrmr8PC692ODLNzhTkgEFHTNNtjdEnN00HaQ5OM=
+	b=uhJHzMyazsSk9FpJGmF/pFM/2mq/O07kzWdv+kb3ancfYYB55rquAU16XNGRhnIXm
+	 yqvd8bV2kw3i6WrpVFWxJ/JDyLZJWkRMVnARhMQ/kSrLa3m+lGcQqsWhVG1i8w0ify
+	 5Yo8WOQ9v2gC4tpEeKaoNZXJVvDhWYWam/IA1agE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhang jiao <zhangjiao2@cmss.chinamobile.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Yibin Ding <yibin.ding@unisoc.com>,
+	Hongyu Jin <hongyu.jin@unisoc.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 34/54] tools: hv: rm .*.cmd when make clean
-Date: Fri, 27 Sep 2024 14:23:26 +0200
-Message-ID: <20240927121721.128097678@linuxfoundation.org>
+Subject: [PATCH 6.6 35/54] block: Fix where bio IO priority gets set
+Date: Fri, 27 Sep 2024 14:23:27 +0200
+Message-ID: <20240927121721.162565262@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -52,35 +56,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+From: Hongyu Jin <hongyu.jin@unisoc.com>
 
-[ Upstream commit 5e5cc1eb65256e6017e3deec04f9806f2f317853 ]
+[ Upstream commit f3c89983cb4fc00be64eb0d5cbcfcdf2cacb965e ]
 
-rm .*.cmd when make clean
+Commit 82b74cac2849 ("blk-ioprio: Convert from rqos policy to direct
+call") pushed setting bio I/O priority down into blk_mq_submit_bio()
+-- which is too low within block core's submit_bio() because it
+skips setting I/O priority for block drivers that implement
+fops->submit_bio() (e.g. DM, MD, etc).
 
-Signed-off-by: zhang jiao <zhangjiao2@cmss.chinamobile.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240902042103.5867-1-zhangjiao2@cmss.chinamobile.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240902042103.5867-1-zhangjiao2@cmss.chinamobile.com>
+Fix this by moving bio_set_ioprio() up from blk-mq.c to blk-core.c and
+call it from submit_bio().  This ensures all block drivers call
+bio_set_ioprio() during initial bio submission.
+
+Fixes: a78418e6a04c ("block: Always initialize bio IO priority on submit")
+Co-developed-by: Yibin Ding <yibin.ding@unisoc.com>
+Signed-off-by: Yibin Ding <yibin.ding@unisoc.com>
+Signed-off-by: Hongyu Jin <hongyu.jin@unisoc.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+[snitzer: revised commit header]
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240130202638.62600-2-snitzer@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/hv/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-core.c | 10 ++++++++++
+ block/blk-mq.c   | 10 ----------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/hv/Makefile b/tools/hv/Makefile
-index fe770e679ae8f..5643058e2d377 100644
---- a/tools/hv/Makefile
-+++ b/tools/hv/Makefile
-@@ -47,7 +47,7 @@ $(OUTPUT)hv_fcopy_daemon: $(HV_FCOPY_DAEMON_IN)
+diff --git a/block/blk-core.c b/block/blk-core.c
+index bf058cea9016a..4f25d2c4bc705 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -49,6 +49,7 @@
+ #include "blk-pm.h"
+ #include "blk-cgroup.h"
+ #include "blk-throttle.h"
++#include "blk-ioprio.h"
  
- clean:
- 	rm -f $(ALL_PROGRAMS)
--	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete
-+	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete -o -name '\.*.cmd' -delete
+ struct dentry *blk_debugfs_root;
  
- install: $(ALL_PROGRAMS)
- 	install -d -m 755 $(DESTDIR)$(sbindir); \
+@@ -819,6 +820,14 @@ void submit_bio_noacct(struct bio *bio)
+ }
+ EXPORT_SYMBOL(submit_bio_noacct);
+ 
++static void bio_set_ioprio(struct bio *bio)
++{
++	/* Nobody set ioprio so far? Initialize it based on task's nice value */
++	if (IOPRIO_PRIO_CLASS(bio->bi_ioprio) == IOPRIO_CLASS_NONE)
++		bio->bi_ioprio = get_current_ioprio();
++	blkcg_set_ioprio(bio);
++}
++
+ /**
+  * submit_bio - submit a bio to the block device layer for I/O
+  * @bio: The &struct bio which describes the I/O
+@@ -841,6 +850,7 @@ void submit_bio(struct bio *bio)
+ 		count_vm_events(PGPGOUT, bio_sectors(bio));
+ 	}
+ 
++	bio_set_ioprio(bio);
+ 	submit_bio_noacct(bio);
+ }
+ EXPORT_SYMBOL(submit_bio);
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 7cc315527a44c..733d72f4d1cc9 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -40,7 +40,6 @@
+ #include "blk-stat.h"
+ #include "blk-mq-sched.h"
+ #include "blk-rq-qos.h"
+-#include "blk-ioprio.h"
+ 
+ static DEFINE_PER_CPU(struct llist_head, blk_cpu_done);
+ static DEFINE_PER_CPU(call_single_data_t, blk_cpu_csd);
+@@ -2956,14 +2955,6 @@ static bool blk_mq_can_use_cached_rq(struct request *rq, struct blk_plug *plug,
+ 	return true;
+ }
+ 
+-static void bio_set_ioprio(struct bio *bio)
+-{
+-	/* Nobody set ioprio so far? Initialize it based on task's nice value */
+-	if (IOPRIO_PRIO_CLASS(bio->bi_ioprio) == IOPRIO_CLASS_NONE)
+-		bio->bi_ioprio = get_current_ioprio();
+-	blkcg_set_ioprio(bio);
+-}
+-
+ /**
+  * blk_mq_submit_bio - Create and send a request to block device.
+  * @bio: Bio pointer.
+@@ -2988,7 +2979,6 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	blk_status_t ret;
+ 
+ 	bio = blk_queue_bounce(bio, q);
+-	bio_set_ioprio(bio);
+ 
+ 	if (plug) {
+ 		rq = rq_list_peek(&plug->cached_rq);
 -- 
 2.43.0
 
