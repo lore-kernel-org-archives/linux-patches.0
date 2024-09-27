@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC501779BD;
-	Fri, 27 Sep 2024 12:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C863C3C;
+	Fri, 27 Sep 2024 12:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440428; cv=none; b=eW+XJ5ywOp2JnYhgxutXgWE3LUIPG2YPbVqM+LomkdaovkJS28H4xCpVT7hHccOECqlApem/0eYLnGHbbd+umwM+Re7ldriVwNVex8TB2FGCUk/Gne1knBucS+GL+cjQiZJnCYNqO5hwH0evx05RTNNBnVhtq/UPI/KIBa6v56w=
+	t=1727440430; cv=none; b=A+YMnJW0uGbWE6MBKnFnHakkYGKxBuwCiI7Ua4vs6atSRcsl0c1PwLNEqpGmUzGM5riEjihHwJNEwdA7Zhg2hkWkPt/V72Yd4XdrVj5NOaXbvtnHgs96KwVHOgSp2uFXdtGWoPElxI2PTOrKG5eIvOoggenTgMmnoxPEO2AH+dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440428; c=relaxed/simple;
-	bh=wz28Rewg+mBIGQalQGablL9ycQlcingi/h2rSyNOuZ4=;
+	s=arc-20240116; t=1727440430; c=relaxed/simple;
+	bh=j6MH+HLc48dDUWoM+ZbACpJ5J36c10M3ag/Zk/rhnL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQ/LR+VaCNhJ1w7ccBFC/nsG41MDb7yCYZKBp/ecYmV1EKO1+wKExHlQW7S0ThB8L3xHnJHmDzNtr2YHK1atDPvaE6E20dyRIDFvFWqfmKsMgwq/le/TEs6STC/Qlaw9DZ1GbE3MejylItu1mcR1OzrTvIUCJoI26ES9VTLtqZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cteP3iJb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WaUTUQ2+cG6DBWArljz5oC68SwLiiUt7+/o9e1M8dNTmOV7zbHtl35JNRUpMvNw8kAwHUm+reVDq8r6aDsWwFHmjtxHP7gouwIhtNfsOSSb2Dq3+6mDUh29kxV3ZoSvi/MHq28HADr0zESEhcUR87RMN6gqQ/yPK2MJRo+VoH9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRhjW6Rv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cteP3iJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7D1C4CEC4;
-	Fri, 27 Sep 2024 12:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRhjW6Rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54403C4CEC4;
+	Fri, 27 Sep 2024 12:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440427;
-	bh=wz28Rewg+mBIGQalQGablL9ycQlcingi/h2rSyNOuZ4=;
+	s=korg; t=1727440430;
+	bh=j6MH+HLc48dDUWoM+ZbACpJ5J36c10M3ag/Zk/rhnL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cteP3iJbOvy1oa1heh3SWvF9C+ICIFZtYE5hyGO9XvN2CUfh8Npf5gm9CQvCMKm82
-	 PTFxyNjjmh5ZHEfO8sE9KIY0lL7ALZjgel0Tc1eWE9HhPQMSdKVGsDpAcvX9BFSFve
-	 SzxveIyGh5bqEt2Rg9pqDV8Epf3u1sucR6pagYKo=
+	b=vRhjW6Rv7QeVkfUaFPNDl+8x8Q8tTMEAYjjR1rq9pAYd7iUbgZrRtWXIY9TWTG0TH
+	 QgHTOJO52khmDwmkhruaqPzWJD0eG2NK5YDMoD5HG8mu5dKlpqwzNt6KWArjC2WGVt
+	 uonfJBT5+HpXtjHhscvIGCUTzn3LChU/2pvEeU5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 67/73] can: mcp251xfd: move mcp251xfd_timestamp_start()/stop() into mcp251xfd_chip_start/stop()
-Date: Fri, 27 Sep 2024 14:24:18 +0200
-Message-ID: <20240927121722.567647069@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 68/73] selftests: mptcp: join: restrict fullmesh endp on 1st sf
+Date: Fri, 27 Sep 2024 14:24:19 +0200
+Message-ID: <20240927121722.597842645@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -49,106 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit a7801540f325d104de5065850a003f1d9bdc6ad3 upstream.
+commit 49ac6f05ace5bb0070c68a0193aa05d3c25d4c83 upstream.
 
-The mcp251xfd wakes up from Low Power or Sleep Mode when SPI activity
-is detected. To avoid this, make sure that the timestamp worker is
-stopped before shutting down the chip.
+A new endpoint using the IP of the initial subflow has been recently
+added to increase the code coverage. But it breaks the test when using
+old kernels not having commit 86e39e04482b ("mptcp: keep track of local
+endpoint still available for each msk"), e.g. on v5.15.
 
-Split the starting of the timestamp worker out of
-mcp251xfd_timestamp_init() into the separate function
-mcp251xfd_timestamp_start().
+Similar to commit d4c81bbb8600 ("selftests: mptcp: join: support local
+endpoint being tracked or not"), it is possible to add the new endpoint
+conditionally, by checking if "mptcp_pm_subflow_check_next" is present
+in kallsyms: this is not directly linked to the commit introducing this
+symbol but for the parent one which is linked anyway. So we can know in
+advance what will be the expected behaviour, and add the new endpoint
+only when it makes sense to do so.
 
-Call mcp251xfd_timestamp_init() before mcp251xfd_chip_start(), move
-mcp251xfd_timestamp_start() to mcp251xfd_chip_start(). In this way,
-mcp251xfd_timestamp_stop() can be called unconditionally by
-mcp251xfd_chip_stop().
-
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 4878f9f8421f ("selftests: mptcp: join: validate fullmesh endp on 1st sf")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240910-net-selftests-mptcp-fix-install-v1-1-8f124aa9156d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in mptcp_join.sh, because the 'run_tests' helper has been
+  modified in multiple commits that are not in this version, e.g. commit
+  e571fb09c893 ("selftests: mptcp: add speed env var"). The conflict was
+  in the context, the new lines can still be added at the same place. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c      |    8 +++++---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c |    7 +++++--
- drivers/net/can/spi/mcp251xfd/mcp251xfd.h           |    1 +
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
-@@ -744,6 +744,7 @@ static void mcp251xfd_chip_stop(struct m
- 
- 	mcp251xfd_chip_interrupts_disable(priv);
- 	mcp251xfd_chip_rx_int_disable(priv);
-+	mcp251xfd_timestamp_stop(priv);
- 	mcp251xfd_chip_sleep(priv);
- }
- 
-@@ -763,6 +764,8 @@ static int mcp251xfd_chip_start(struct m
- 	if (err)
- 		goto out_chip_stop;
- 
-+	mcp251xfd_timestamp_start(priv);
-+
- 	err = mcp251xfd_set_bittiming(priv);
- 	if (err)
- 		goto out_chip_stop;
-@@ -1610,11 +1613,12 @@ static int mcp251xfd_open(struct net_dev
- 	if (err)
- 		goto out_mcp251xfd_ring_free;
- 
-+	mcp251xfd_timestamp_init(priv);
-+
- 	err = mcp251xfd_chip_start(priv);
- 	if (err)
- 		goto out_transceiver_disable;
- 
--	mcp251xfd_timestamp_init(priv);
- 	clear_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
- 	can_rx_offload_enable(&priv->offload);
- 
-@@ -1648,7 +1652,6 @@ out_destroy_workqueue:
- out_can_rx_offload_disable:
- 	can_rx_offload_disable(&priv->offload);
- 	set_bit(MCP251XFD_FLAGS_DOWN, priv->flags);
--	mcp251xfd_timestamp_stop(priv);
- out_transceiver_disable:
- 	mcp251xfd_transceiver_disable(priv);
- out_mcp251xfd_ring_free:
-@@ -1674,7 +1677,6 @@ static int mcp251xfd_stop(struct net_dev
- 	free_irq(ndev->irq, priv);
- 	destroy_workqueue(priv->wq);
- 	can_rx_offload_disable(&priv->offload);
--	mcp251xfd_timestamp_stop(priv);
- 	mcp251xfd_chip_stop(priv, CAN_STATE_STOPPED);
- 	mcp251xfd_transceiver_disable(priv);
- 	mcp251xfd_ring_free(priv);
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
-@@ -48,9 +48,12 @@ void mcp251xfd_timestamp_init(struct mcp
- 	cc->shift = 1;
- 	cc->mult = clocksource_hz2mult(priv->can.clock.freq, cc->shift);
- 
--	timecounter_init(&priv->tc, &priv->cc, ktime_get_real_ns());
--
- 	INIT_DELAYED_WORK(&priv->timestamp, mcp251xfd_timestamp_work);
-+}
-+
-+void mcp251xfd_timestamp_start(struct mcp251xfd_priv *priv)
-+{
-+	timecounter_init(&priv->tc, &priv->cc, ktime_get_real_ns());
- 	schedule_delayed_work(&priv->timestamp,
- 			      MCP251XFD_TIMESTAMP_WORK_DELAY_SEC * HZ);
- }
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-@@ -939,6 +939,7 @@ int mcp251xfd_ring_alloc(struct mcp251xf
- int mcp251xfd_handle_rxif(struct mcp251xfd_priv *priv);
- int mcp251xfd_handle_tefif(struct mcp251xfd_priv *priv);
- void mcp251xfd_timestamp_init(struct mcp251xfd_priv *priv);
-+void mcp251xfd_timestamp_start(struct mcp251xfd_priv *priv);
- void mcp251xfd_timestamp_stop(struct mcp251xfd_priv *priv);
- 
- void mcp251xfd_tx_obj_write_sync(struct work_struct *work);
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3048,7 +3048,9 @@ fullmesh_tests()
+ 		pm_nl_set_limits $ns1 1 3
+ 		pm_nl_set_limits $ns2 1 3
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+-		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
++		if mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
++			pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
++		fi
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 fullmesh_1 slow
+ 		chk_join_nr 3 3 3
+ 		chk_add_nr 1 1
 
 
