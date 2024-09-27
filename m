@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2383C18C012;
-	Fri, 27 Sep 2024 12:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD84A1779BD;
+	Fri, 27 Sep 2024 12:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439945; cv=none; b=llvNWR/eLVtWGAcVAJ3O7icaDWGRPvNwAYj8vRm54O2QkOoGBkXmR2HmXFK80Uo3Uwu+fYXm8hKy5ZuJw4RReWGCaVLEfDiiJKEtUVawtSnaU+CT4jkfNmQW9ts7Ff5whD3Bs4nq8SxhCkdCxHFQCzyVV90a/M+erNDkaDiW0dA=
+	t=1727439948; cv=none; b=IDZgYsV1YPfWtcetVzmmCTas5awsC/jIuRfwfDNJAXGSR/1ZWXd0qja84E2oR9L76gesoXXIyeeqwCspDKOfTGBLeflP6oln95sDD2XWwyE+DKDWuSHouCyXPpIZZHR8J9Pe09xMu/4MAFCLUaY6nXcbKKHM71T8teIPWcUvDI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439945; c=relaxed/simple;
-	bh=6TA1cGDLsWZ9+A6n1blhEqG8lRYTFMn6+3K5ceSZn9A=;
+	s=arc-20240116; t=1727439948; c=relaxed/simple;
+	bh=O1PUXk84fixmxpMHrdfCpcO5iApYTGzmbJpe9RlRgz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkmpLrXD/zkD3sqjJ2B4SEd701urbF+BRXYRfOmxL4buEWOynsb8wlMA+6+7tM+BwAlitAFWnvDIk51/hC0iYu7RHiOYRwv5uXISADT32xlQC25cRNRuYR990idfd6IK68Ax2a8w5Uuhf3N4kIuBKwHDrsd7Mf+Z19D8rUf463Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrKnpa6r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pz+nhj+1Lp5DPefUQ4yoUSlARXfSq5KgL/OAip4pCtlDN5YBqyBaIa8CUouIJHc6Z+OYGZAf4tVgqPpcCjyH7KARjc1n224Qk8SlLllwcjmhUyXWonedGyXeAaesWdTPxhDHnM9SS+1K2FurYGxSMNcr2Y1jsdYPaQ+tkCtqTuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hnnh5Vpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrKnpa6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62EDC4CED0;
-	Fri, 27 Sep 2024 12:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hnnh5Vpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68577C4CEC6;
+	Fri, 27 Sep 2024 12:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439945;
-	bh=6TA1cGDLsWZ9+A6n1blhEqG8lRYTFMn6+3K5ceSZn9A=;
+	s=korg; t=1727439947;
+	bh=O1PUXk84fixmxpMHrdfCpcO5iApYTGzmbJpe9RlRgz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrKnpa6ruqXavshUN1stHNs9WGNWyxPbPJUXsPqqzXeO7izNedIxJUpS//WRzTXKx
-	 z4R64ErnThqFcUSBpg5JgutTIavAsgl5TTojLpKEJZpL6mkp3c8S0iNONzIOBtjfFO
-	 67Pbb8Vsy7rvj0qXBPeIFLhkeeyZAc9jM1iEpaaA=
+	b=Hnnh5VpnpTkPt8EspwGpeoeuGu8LeViyKt7k4iPavdAHEuWEPUuutcqEsIqzWrHTM
+	 YdGlTo3kP4huGQ/T5I8B56jhcaGa2EqfXuP6r26UqddZOCTRXdlotc243Tl8DmhvpB
+	 Ck+PpqnyoLRen9B0MVZkXyMEp8leH2Ko1tu1YSBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 05/54] ALSA: hda/realtek - Fixed ALC256 headphone no sound
-Date: Fri, 27 Sep 2024 14:22:57 +0200
-Message-ID: <20240927121719.935910876@linuxfoundation.org>
+Subject: [PATCH 6.6 06/54] ALSA: hda/realtek - FIxed ALC285 headphone no sound
+Date: Fri, 27 Sep 2024 14:22:58 +0200
+Message-ID: <20240927121719.981747157@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -53,113 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
+[ Upstream commit 1fa7b099d60ad64f559bd3b8e3f0d94b2e015514 ]
 
-Dell platform, plug headphone or headset, it had a chance to get no
-sound from headphone.
+Dell platform with ALC215 ALC285 ALC289 ALC225 ALC295 ALC299, plug
+headphone or headset.
+It had a chance to get no sound from headphone.
 Replace depop procedure will solve this issue.
 
 Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
+Link: https://lore.kernel.org/d0de1b03fd174520945dde216d765223@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ sound/pci/hda/patch_realtek.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 6661fed2c2bbf..47e92185c6c52 100644
+index 47e92185c6c52..130508f5ad9c8 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -4931,6 +4931,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
- 	}
- }
- 
-+static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+	msleep(delay);
-+}
-+
-+static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+	msleep(delay);
-+}
-+
- static const struct coef_fw alc225_pre_hsmode[] = {
- 	UPDATE_COEF(0x4a, 1<<8, 0),
- 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
-@@ -5032,6 +5056,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
- 	case 0x10ec0236:
- 	case 0x10ec0256:
- 	case 0x19e58326:
+@@ -5091,6 +5091,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
+ 	case 0x10ec0295:
+ 	case 0x10ec0289:
+ 	case 0x10ec0299:
 +		alc_hp_mute_disable(codec, 75);
- 		alc_process_coef_fw(codec, coef0256);
+ 		alc_process_coef_fw(codec, alc225_pre_hsmode);
+ 		alc_process_coef_fw(codec, coef0225);
  		break;
- 	case 0x10ec0234:
-@@ -5303,6 +5328,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x45, 0xc089);
- 		msleep(50);
- 		alc_process_coef_fw(codec, coef0256);
+@@ -5316,6 +5317,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
+ 	case 0x10ec0299:
+ 		alc_process_coef_fw(codec, alc225_pre_hsmode);
+ 		alc_process_coef_fw(codec, coef0225);
 +		alc_hp_enable_unmute(codec, 75);
  		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5400,6 +5426,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
+ 	case 0x10ec0255:
+ 		alc_process_coef_fw(codec, coef0255);
+@@ -5475,6 +5477,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
+ 			alc_process_coef_fw(codec, coef0225_2);
+ 		else
+ 			alc_process_coef_fw(codec, coef0225_1);
 +		alc_hp_enable_unmute(codec, 75);
  		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5515,6 +5542,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
+ 	case 0x10ec0867:
+ 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
+@@ -5580,6 +5583,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
+ 	case 0x10ec0289:
+ 	case 0x10ec0299:
+ 		alc_process_coef_fw(codec, coef0225);
 +		alc_hp_enable_unmute(codec, 75);
  		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5620,25 +5648,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x06, 0x6104);
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
- 
+ 	}
+ 	codec_dbg(codec, "Headset jack set to Nokia-style headset mode.\n");
+@@ -5739,12 +5743,6 @@ static void alc_determine_headset_type(struct hda_codec *codec)
+ 	case 0x10ec0295:
+ 	case 0x10ec0289:
+ 	case 0x10ec0299:
 -		snd_hda_codec_write(codec, 0x21, 0,
 -			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
 -		msleep(80);
 -		snd_hda_codec_write(codec, 0x21, 0,
 -			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
 -
- 		alc_process_coef_fw(codec, coef0255);
- 		msleep(300);
- 		val = alc_read_coef_idx(codec, 0x46);
- 		is_ctia = (val & 0x0070) == 0x0070;
--
+ 		alc_process_coef_fw(codec, alc225_pre_hsmode);
+ 		alc_update_coef_idx(codec, 0x67, 0xf000, 0x1000);
+ 		val = alc_read_coef_idx(codec, 0x45);
+@@ -5761,15 +5759,19 @@ static void alc_determine_headset_type(struct hda_codec *codec)
+ 			val = alc_read_coef_idx(codec, 0x46);
+ 			is_ctia = (val & 0x00f0) == 0x00f0;
+ 		}
 +		if (!is_ctia) {
-+			alc_write_coef_idx(codec, 0x45, 0xe089);
++			alc_update_coef_idx(codec, 0x45, 0x3f<<10, 0x38<<10);
++			alc_update_coef_idx(codec, 0x49, 3<<8, 1<<8);
 +			msleep(100);
 +			val = alc_read_coef_idx(codec, 0x46);
-+			if ((val & 0x0070) == 0x0070)
++			if ((val & 0x00f0) == 0x00f0)
 +				is_ctia = false;
 +			else
 +				is_ctia = true;
 +		}
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
- 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
+ 		alc_update_coef_idx(codec, 0x4a, 7<<6, 7<<6);
+ 		alc_update_coef_idx(codec, 0x4a, 3<<4, 3<<4);
+ 		alc_update_coef_idx(codec, 0x67, 0xf000, 0x3000);
 -
 -		snd_hda_codec_write(codec, 0x21, 0,
 -			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
@@ -167,8 +141,8 @@ index 6661fed2c2bbf..47e92185c6c52 100644
 -		snd_hda_codec_write(codec, 0x21, 0,
 -			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
  		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
+ 	case 0x10ec0867:
+ 		is_ctia = true;
 -- 
 2.43.0
 
