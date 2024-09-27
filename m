@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6190D136352;
-	Fri, 27 Sep 2024 12:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA50F3C3C;
+	Fri, 27 Sep 2024 12:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440334; cv=none; b=pO/cbQNjPhQgyIcwF0Mw3/hBK6lm6HYdS607ie647bf+TTtnJpa2ybvDKlnw2HYmVTy5eUBI3CGs+LYlJVc+NTWlWAxfaB3i6mSPXKRWa9oHdFP7a947C5ytUNX3GdlvPTz+V36uVV/7d8YrYqSyjCyVkf9qxD0CVxlF2Tmf8oU=
+	t=1727440336; cv=none; b=fshujdxrmsGGu8pynUys3khLXpFuRuHn6xje5Bbzxpzlo8Rq2+ckOJthYOoeq+uqb5a/AeNjYLvi2gX8AlCHVqwbTdNhgvvjviH02mwi6yQEQXgPo3w8bmqFAbEjF0CwTHIBny3KVMhLLglDa4ej/r5hLIFYWCrEZU+FTeVk/pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440334; c=relaxed/simple;
-	bh=vTljDYVH4Z1nT5C3bJo2EWcC4bZqFfjMvWosQkFv2dg=;
+	s=arc-20240116; t=1727440336; c=relaxed/simple;
+	bh=R180KTU1Ja9qVTw9Q4FYxQSeTdRO1rVAOsZbj2Wurwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXEgbQUas6jO6fO8WxHVNapNxQTsS8P2m959NSV9WedrZWUc6JTLAL81Jn5dRvmC8URDmGlk4w3fA/EfYBnr7RTBmM14YOVO536LW+/sftzh8iLML5wj3rTA79wXFHC2J91chfW8D+AOQJOjZHqBd2hdswmG/LXduB8dXD1Wm8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ylrUh2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmXsV2T/NeKEqOywWC7G74+E2Yq4dHnwH8VBvxKuj3gegvjbijwcAsnj3ArcbgxpbSfi7WCKvUTZE79IXFYms4DJFsRqUpzsqh6qsvUvpfhiSpsXJ9nU3z8Mzj/7bITwYYlaFJSBbfsxcvGlYWZIv1oyzLG2tpJsF5iyiaQmILs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbWnwZTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ylrUh2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49A7C4CEC4;
-	Fri, 27 Sep 2024 12:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbWnwZTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B1C4CEC4;
+	Fri, 27 Sep 2024 12:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440334;
-	bh=vTljDYVH4Z1nT5C3bJo2EWcC4bZqFfjMvWosQkFv2dg=;
+	s=korg; t=1727440336;
+	bh=R180KTU1Ja9qVTw9Q4FYxQSeTdRO1rVAOsZbj2Wurwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ylrUh2CueZWMN7NtgdDb7LW38albK28ScvCMThQ/crsYR2lEaQHw6jY+1NecQkZ+
-	 hUes1x3IEzZhZlhHcNMz2pNa8gdnfQ+QdaalaK+LWtiM3gDMjv3cfsj0vs8+Vwogpv
-	 xZQhw6kzMnydmW1DkhTAo+oA1twFbeLTc+30awIw=
+	b=BbWnwZTpnYWi6MI4MOTv2bVgyTVn8jCn7hMC8J/g9sEI/1r+jdb/2aCm7ukP9R+dU
+	 C2s/9nChmWK8gb9dQaJiSjfMHQSEpiGBgW9fBZZaQ29oAhcslFk365+bcf14eWZE7N
+	 5uWj1tnZWmbziiYhjRmMzObKuxxhmFrFXuL7abFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
+	Long Li <leo.lilong@huawei.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.1 45/73] xfs: collect errors from inodegc for unlinked inode recovery
-Date: Fri, 27 Sep 2024 14:23:56 +0200
-Message-ID: <20240927121721.748274024@linuxfoundation.org>
+Subject: [PATCH 6.1 46/73] xfs: fix ag count overflow during growfs
+Date: Fri, 27 Sep 2024 14:23:57 +0200
+Message-ID: <20240927121721.786303025@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.897851549@linuxfoundation.org>
 References: <20240927121719.897851549@linuxfoundation.org>
@@ -53,337 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Long Li <leo.lilong@huaweicloud.com>
 
-[ Upstream commit d4d12c02bf5f768f1b423c7ae2909c5afdfe0d5f ]
+[ Upstream commit c3b880acadc95d6e019eae5d669e072afda24f1b ]
 
-Unlinked list recovery requires errors removing the inode the from
-the unlinked list get fed back to the main recovery loop. Now that
-we offload the unlinking to the inodegc work, we don't get errors
-being fed back when we trip over a corruption that prevents the
-inode from being removed from the unlinked list.
+I found a corruption during growfs:
 
-This means we never clear the corrupt unlinked list bucket,
-resulting in runtime operations eventually tripping over it and
-shutting down.
+ XFS (loop0): Internal error agbno >= mp->m_sb.sb_agblocks at line 3661 of
+   file fs/xfs/libxfs/xfs_alloc.c.  Caller __xfs_free_extent+0x28e/0x3c0
+ CPU: 0 PID: 573 Comm: xfs_growfs Not tainted 6.3.0-rc7-next-20230420-00001-gda8c95746257
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x50/0x70
+  xfs_corruption_error+0x134/0x150
+  __xfs_free_extent+0x2c1/0x3c0
+  xfs_ag_extend_space+0x291/0x3e0
+  xfs_growfs_data+0xd72/0xe90
+  xfs_file_ioctl+0x5f9/0x14a0
+  __x64_sys_ioctl+0x13e/0x1c0
+  do_syscall_64+0x39/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ XFS (loop0): Corruption detected. Unmount and run xfs_repair
+ XFS (loop0): Internal error xfs_trans_cancel at line 1097 of file
+   fs/xfs/xfs_trans.c.  Caller xfs_growfs_data+0x691/0xe90
+ CPU: 0 PID: 573 Comm: xfs_growfs Not tainted 6.3.0-rc7-next-20230420-00001-gda8c95746257
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x50/0x70
+  xfs_error_report+0x93/0xc0
+  xfs_trans_cancel+0x2c0/0x350
+  xfs_growfs_data+0x691/0xe90
+  xfs_file_ioctl+0x5f9/0x14a0
+  __x64_sys_ioctl+0x13e/0x1c0
+  do_syscall_64+0x39/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x7f2d86706577
 
-Fix this by collecting inodegc worker errors and feed them
-back to the flush caller. This is largely best effort - the only
-context that really cares is log recovery, and it only flushes a
-single inode at a time so we don't need complex synchronised
-handling. Essentially the inodegc workers will capture the first
-error that occurs and the next flush will gather them and clear
-them. The flush itself will only report the first gathered error.
+The bug can be reproduced with the following sequence:
 
-In the cases where callers can return errors, propagate the
-collected inodegc flush error up the error handling chain.
+ # truncate -s  1073741824 xfs_test.img
+ # mkfs.xfs -f -b size=1024 -d agcount=4 xfs_test.img
+ # truncate -s 2305843009213693952  xfs_test.img
+ # mount -o loop xfs_test.img /mnt/test
+ # xfs_growfs -D  1125899907891200  /mnt/test
 
-In the case of inode unlinked list recovery, there are several
-superfluous calls to flush queued unlinked inodes -
-xlog_recover_iunlink_bucket() guarantees that it has flushed the
-inodegc and collected errors before it returns. Hence nothing in the
-calling path needs to run a flush, even when an error is returned.
+The root cause is that during growfs, user space passed in a large value
+of newblcoks to xfs_growfs_data_private(), due to current sb_agblocks is
+too small, new AG count will exceed UINT_MAX. Because of AG number type
+is unsigned int and it would overflow, that caused nagcount much smaller
+than the actual value. During AG extent space, delta blocks in
+xfs_resizefs_init_new_ags() will much larger than the actual value due to
+incorrect nagcount, even exceed UINT_MAX. This will cause corruption and
+be detected in __xfs_free_extent. Fix it by growing the filesystem to up
+to the maximally allowed AGs and not return EINVAL when new AG count
+overflow.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icache.c      |   46 +++++++++++++++++++++++++++++++++++++---------
- fs/xfs/xfs_icache.h      |    4 ++--
- fs/xfs/xfs_inode.c       |   20 ++++++--------------
- fs/xfs/xfs_inode.h       |    2 +-
- fs/xfs/xfs_log_recover.c |   19 +++++++++----------
- fs/xfs/xfs_mount.h       |    1 +
- fs/xfs/xfs_super.c       |    1 +
- fs/xfs/xfs_trans.c       |    4 +++-
- 8 files changed, 60 insertions(+), 37 deletions(-)
+ fs/xfs/libxfs/xfs_fs.h |    2 ++
+ fs/xfs/xfs_fsops.c     |   13 +++++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -454,6 +454,27 @@ xfs_inodegc_queue_all(
- 	return ret;
- }
+--- a/fs/xfs/libxfs/xfs_fs.h
++++ b/fs/xfs/libxfs/xfs_fs.h
+@@ -257,6 +257,8 @@ typedef struct xfs_fsop_resblks {
+ #define XFS_MAX_AG_BLOCKS	(XFS_MAX_AG_BYTES / XFS_MIN_BLOCKSIZE)
+ #define XFS_MAX_CRC_AG_BLOCKS	(XFS_MAX_AG_BYTES / XFS_MIN_CRC_BLOCKSIZE)
  
-+/* Wait for all queued work and collect errors */
-+static int
-+xfs_inodegc_wait_all(
-+	struct xfs_mount	*mp)
-+{
-+	int			cpu;
-+	int			error = 0;
++#define XFS_MAX_AGNUMBER	((xfs_agnumber_t)(NULLAGNUMBER - 1))
 +
-+	flush_workqueue(mp->m_inodegc_wq);
-+	for_each_online_cpu(cpu) {
-+		struct xfs_inodegc	*gc;
-+
-+		gc = per_cpu_ptr(mp->m_inodegc, cpu);
-+		if (gc->error && !error)
-+			error = gc->error;
-+		gc->error = 0;
-+	}
-+
-+	return error;
-+}
-+
- /*
-  * Check the validity of the inode we just found it the cache
-  */
-@@ -1490,15 +1511,14 @@ xfs_blockgc_free_space(
- 	if (error)
- 		return error;
+ /* keep the maximum size under 2^31 by a small amount */
+ #define XFS_MAX_LOG_BYTES \
+ 	((2 * 1024 * 1024 * 1024ULL) - XFS_MIN_LOG_BYTES)
+--- a/fs/xfs/xfs_fsops.c
++++ b/fs/xfs/xfs_fsops.c
+@@ -115,11 +115,16 @@ xfs_growfs_data_private(
  
--	xfs_inodegc_flush(mp);
--	return 0;
-+	return xfs_inodegc_flush(mp);
- }
- 
- /*
-  * Reclaim all the free space that we can by scheduling the background blockgc
-  * and inodegc workers immediately and waiting for them all to clear.
-  */
--void
-+int
- xfs_blockgc_flush_all(
- 	struct xfs_mount	*mp)
- {
-@@ -1519,7 +1539,7 @@ xfs_blockgc_flush_all(
- 	for_each_perag_tag(mp, agno, pag, XFS_ICI_BLOCKGC_TAG)
- 		flush_delayed_work(&pag->pag_blockgc_work);
- 
--	xfs_inodegc_flush(mp);
-+	return xfs_inodegc_flush(mp);
- }
- 
- /*
-@@ -1841,13 +1861,17 @@ xfs_inodegc_set_reclaimable(
-  * This is the last chance to make changes to an otherwise unreferenced file
-  * before incore reclamation happens.
-  */
--static void
-+static int
- xfs_inodegc_inactivate(
- 	struct xfs_inode	*ip)
- {
-+	int			error;
+ 	nb_div = nb;
+ 	nb_mod = do_div(nb_div, mp->m_sb.sb_agblocks);
+-	nagcount = nb_div + (nb_mod != 0);
+-	if (nb_mod && nb_mod < XFS_MIN_AG_BLOCKS) {
+-		nagcount--;
+-		nb = (xfs_rfsblock_t)nagcount * mp->m_sb.sb_agblocks;
++	if (nb_mod && nb_mod >= XFS_MIN_AG_BLOCKS)
++		nb_div++;
++	else if (nb_mod)
++		nb = nb_div * mp->m_sb.sb_agblocks;
 +
- 	trace_xfs_inode_inactivating(ip);
--	xfs_inactive(ip);
-+	error = xfs_inactive(ip);
- 	xfs_inodegc_set_reclaimable(ip);
-+	return error;
-+
- }
- 
- void
-@@ -1879,8 +1903,12 @@ xfs_inodegc_worker(
- 
- 	WRITE_ONCE(gc->shrinker_hits, 0);
- 	llist_for_each_entry_safe(ip, n, node, i_gclist) {
-+		int	error;
-+
- 		xfs_iflags_set(ip, XFS_INACTIVATING);
--		xfs_inodegc_inactivate(ip);
-+		error = xfs_inodegc_inactivate(ip);
-+		if (error && !gc->error)
-+			gc->error = error;
++	if (nb_div > XFS_MAX_AGNUMBER + 1) {
++		nb_div = XFS_MAX_AGNUMBER + 1;
++		nb = nb_div * mp->m_sb.sb_agblocks;
  	}
- 
- 	memalloc_nofs_restore(nofs_flag);
-@@ -1904,13 +1932,13 @@ xfs_inodegc_push(
-  * Force all currently queued inode inactivation work to run immediately and
-  * wait for the work to finish.
-  */
--void
-+int
- xfs_inodegc_flush(
- 	struct xfs_mount	*mp)
- {
- 	xfs_inodegc_push(mp);
- 	trace_xfs_inodegc_flush(mp, __return_address);
--	flush_workqueue(mp->m_inodegc_wq);
-+	return xfs_inodegc_wait_all(mp);
- }
- 
- /*
---- a/fs/xfs/xfs_icache.h
-+++ b/fs/xfs/xfs_icache.h
-@@ -59,7 +59,7 @@ int xfs_blockgc_free_dquots(struct xfs_m
- 		unsigned int iwalk_flags);
- int xfs_blockgc_free_quota(struct xfs_inode *ip, unsigned int iwalk_flags);
- int xfs_blockgc_free_space(struct xfs_mount *mp, struct xfs_icwalk *icm);
--void xfs_blockgc_flush_all(struct xfs_mount *mp);
-+int xfs_blockgc_flush_all(struct xfs_mount *mp);
- 
- void xfs_inode_set_eofblocks_tag(struct xfs_inode *ip);
- void xfs_inode_clear_eofblocks_tag(struct xfs_inode *ip);
-@@ -77,7 +77,7 @@ void xfs_blockgc_start(struct xfs_mount
- 
- void xfs_inodegc_worker(struct work_struct *work);
- void xfs_inodegc_push(struct xfs_mount *mp);
--void xfs_inodegc_flush(struct xfs_mount *mp);
-+int xfs_inodegc_flush(struct xfs_mount *mp);
- void xfs_inodegc_stop(struct xfs_mount *mp);
- void xfs_inodegc_start(struct xfs_mount *mp);
- void xfs_inodegc_cpu_dead(struct xfs_mount *mp, unsigned int cpu);
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1620,16 +1620,7 @@ xfs_inactive_ifree(
- 	 */
- 	xfs_trans_mod_dquot_byino(tp, ip, XFS_TRANS_DQ_ICOUNT, -1);
- 
--	/*
--	 * Just ignore errors at this point.  There is nothing we can do except
--	 * to try to keep going. Make sure it's not a silent error.
--	 */
--	error = xfs_trans_commit(tp);
--	if (error)
--		xfs_notice(mp, "%s: xfs_trans_commit returned error %d",
--			__func__, error);
--
--	return 0;
-+	return xfs_trans_commit(tp);
- }
- 
- /*
-@@ -1696,12 +1687,12 @@ xfs_inode_needs_inactive(
-  * now be truncated.  Also, we clear all of the read-ahead state
-  * kept for the inode here since the file is now closed.
-  */
--void
-+int
- xfs_inactive(
- 	xfs_inode_t	*ip)
- {
- 	struct xfs_mount	*mp;
--	int			error;
-+	int			error = 0;
- 	int			truncate = 0;
- 
++	nagcount = nb_div;
+ 	delta = nb - mp->m_sb.sb_dblocks;
  	/*
-@@ -1742,7 +1733,7 @@ xfs_inactive(
- 		 * reference to the inode at this point anyways.
- 		 */
- 		if (xfs_can_free_eofblocks(ip, true))
--			xfs_free_eofblocks(ip);
-+			error = xfs_free_eofblocks(ip);
- 
- 		goto out;
- 	}
-@@ -1779,7 +1770,7 @@ xfs_inactive(
- 	/*
- 	 * Free the inode.
- 	 */
--	xfs_inactive_ifree(ip);
-+	error = xfs_inactive_ifree(ip);
- 
- out:
- 	/*
-@@ -1787,6 +1778,7 @@ out:
- 	 * the attached dquots.
- 	 */
- 	xfs_qm_dqdetach(ip);
-+	return error;
- }
- 
- /*
---- a/fs/xfs/xfs_inode.h
-+++ b/fs/xfs/xfs_inode.h
-@@ -470,7 +470,7 @@ enum layout_break_reason {
- 	(xfs_has_grpid((pip)->i_mount) || (VFS_I(pip)->i_mode & S_ISGID))
- 
- int		xfs_release(struct xfs_inode *ip);
--void		xfs_inactive(struct xfs_inode *ip);
-+int		xfs_inactive(struct xfs_inode *ip);
- int		xfs_lookup(struct xfs_inode *dp, const struct xfs_name *name,
- 			   struct xfs_inode **ipp, struct xfs_name *ci_name);
- int		xfs_create(struct user_namespace *mnt_userns,
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2711,7 +2711,9 @@ xlog_recover_iunlink_bucket(
- 			 * just to flush the inodegc queue and wait for it to
- 			 * complete.
- 			 */
--			xfs_inodegc_flush(mp);
-+			error = xfs_inodegc_flush(mp);
-+			if (error)
-+				break;
- 		}
- 
- 		prev_agino = agino;
-@@ -2719,10 +2721,15 @@ xlog_recover_iunlink_bucket(
- 	}
- 
- 	if (prev_ip) {
-+		int	error2;
-+
- 		ip->i_prev_unlinked = prev_agino;
- 		xfs_irele(prev_ip);
-+
-+		error2 = xfs_inodegc_flush(mp);
-+		if (error2 && !error)
-+			return error2;
- 	}
--	xfs_inodegc_flush(mp);
- 	return error;
- }
- 
-@@ -2789,7 +2796,6 @@ xlog_recover_iunlink_ag(
- 			 * bucket and remaining inodes on it unreferenced and
- 			 * unfreeable.
- 			 */
--			xfs_inodegc_flush(pag->pag_mount);
- 			xlog_recover_clear_agi_bucket(pag, bucket);
- 		}
- 	}
-@@ -2806,13 +2812,6 @@ xlog_recover_process_iunlinks(
- 
- 	for_each_perag(log->l_mp, agno, pag)
- 		xlog_recover_iunlink_ag(pag);
--
--	/*
--	 * Flush the pending unlinked inodes to ensure that the inactivations
--	 * are fully completed on disk and the incore inodes can be reclaimed
--	 * before we signal that recovery is complete.
--	 */
--	xfs_inodegc_flush(log->l_mp);
- }
- 
- STATIC void
---- a/fs/xfs/xfs_mount.h
-+++ b/fs/xfs/xfs_mount.h
-@@ -62,6 +62,7 @@ struct xfs_error_cfg {
- struct xfs_inodegc {
- 	struct llist_head	list;
- 	struct delayed_work	work;
-+	int			error;
- 
- 	/* approximate count of inodes in the list */
- 	unsigned int		items;
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -1089,6 +1089,7 @@ xfs_inodegc_init_percpu(
- #endif
- 		init_llist_head(&gc->list);
- 		gc->items = 0;
-+		gc->error = 0;
- 		INIT_DELAYED_WORK(&gc->work, xfs_inodegc_worker);
- 	}
- 	return 0;
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -290,7 +290,9 @@ retry:
- 		 * Do not perform a synchronous scan because callers can hold
- 		 * other locks.
- 		 */
--		xfs_blockgc_flush_all(mp);
-+		error = xfs_blockgc_flush_all(mp);
-+		if (error)
-+			return error;
- 		want_retry = false;
- 		goto retry;
- 	}
+ 	 * Reject filesystems with a single AG because they are not
 
 
