@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CE017B515;
-	Fri, 27 Sep 2024 12:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35751865ED;
+	Fri, 27 Sep 2024 12:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440048; cv=none; b=QrdXCzzP4a5NM1P1f8Qrne8vjVcYChooMVujHe65yDFzWmrw+2MlRKLyNHNLLLwtpwcUMCI4akuMKTpk/pe0kHZoLZWKu1OEL74W6z17ulDk6Nv574Yrx1W910cVjE+MMKR7Cr/piQS2asa1nrvBDmE3KIE8JKMvtdGUJQLtYnE=
+	t=1727440050; cv=none; b=s7ioyJ/EjjKHMqCUtqlN6cvfSZyRnqTuW5VZg8ru3hkbfVyQowOwY1RTLieZpHLL3Ay0HQsoBHJ8LsJSMUkJ2qyhx/JYBhmD51PbRwywSl1CKmxBmu+cM1pM3xJdxxBi5U08fw4ePd9FJhTM2ym8a6r1RsbLbX3DUVY+Ot5kDgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440048; c=relaxed/simple;
-	bh=ETtNj2dNofSHjM/On2PytW5YCpPwX8V4GAbcQbBj6FQ=;
+	s=arc-20240116; t=1727440050; c=relaxed/simple;
+	bh=WXACQRx5mi7zB+vj97I90XYVzWeTcrpzn2si4wmQvMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riYOI10KovHGN/xaZgwqm5Mon4vthC14EqK9bHErDLvRycCm15h+oKUaTbApm/+GIuU+lPL9Pup5cKV3qQSmKYIihYzhftfHc2QbgFSHxArKd539MjLGm+Z7O4uR7qpJwS4PxIW00fxABneKM9QHNmNuUFB28fCqn/M0jwY9rMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCw4LBbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCeIFrkVudYIoh1B1mnn2nZel3C80xhViBaUVgqYl2t3fUiMxiOqJa+cgIthl4BjLV5BrrVo3NDCaLm/WAFBoIqAZED/yP7cqTaKUqaEQfWUZgr8GnuKzb8JD/sd8Q4fekAeHlDIabhsjrViGchrn7a3fIFOu+Czonu93L9SNfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyBKF9If; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCw4LBbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746CAC4CEC4;
-	Fri, 27 Sep 2024 12:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyBKF9If"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DB4C4CEC4;
+	Fri, 27 Sep 2024 12:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440047;
-	bh=ETtNj2dNofSHjM/On2PytW5YCpPwX8V4GAbcQbBj6FQ=;
+	s=korg; t=1727440050;
+	bh=WXACQRx5mi7zB+vj97I90XYVzWeTcrpzn2si4wmQvMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCw4LBbmq9PajvACdhnT7sysZBrp+mr+0ks6WRIxWdXhVTB/wqFoxfLcqvXsC6agP
-	 k7hLNUCL8Q8C8pzNY1KvVWYqeFlMHpZ6DcrpZwhKQTM7nY8HpwWWmGQwo9V3KjPOQD
-	 kioUG+1/XH2qytplIWwn1Ahth7InjGFCKySfJx7E=
+	b=FyBKF9If/QG542zNX3r+6Ts3ol6ps1T2VfrAZNF/DI0VP3DawwaNl/ZSqX9sCreBE
+	 hYgizDSfRdEzougCLYyPfyOaRgrwZwyF+IZB6Lqgn3oMXfgd2qutDfAQWEJMsQiAVg
+	 6tf7hPvIVLSr7jmZxbKUfioKHTH+dF+XYBH0CVAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 14/58] LoongArch: Define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE
-Date: Fri, 27 Sep 2024 14:23:16 +0200
-Message-ID: <20240927121719.393481803@linuxfoundation.org>
+Subject: [PATCH 6.10 15/58] LoongArch: KVM: Invalidate guest steal time address on vCPU reset
+Date: Fri, 27 Sep 2024 14:23:17 +0200
+Message-ID: <20240927121719.436164314@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,53 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit 274ea3563e5ab9f468c15bfb9d2492803a66d9be ]
+[ Upstream commit 4956e07f05e239b274d042618a250c9fa3e92629 ]
 
-Currently we call irq_set_noprobe() in a loop for all IRQs, but indeed
-it only works for IRQs below NR_IRQS_LEGACY because at init_IRQ() only
-legacy interrupts have been allocated.
+If ParaVirt steal time feature is enabled, there is a percpu gpa address
+passed from guest vCPU and host modifies guest memory space with this gpa
+address. When vCPU is reset normally, it will notify host and invalidate
+gpa address.
 
-Instead, we can define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE in asm/hwirq.h
-and the core will automatically set the flag for all interrupts.
+However if VM is crashed and VMM reboots VM forcely, the vCPU reboot
+notification callback will not be called in VM. Host needs invalidate
+the gpa address, else host will modify guest memory during VM reboots.
+Here it is invalidated from the vCPU KVM_REG_LOONGARCH_VCPU_RESET ioctl
+interface.
 
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Also funciton kvm_reset_timer() is removed at vCPU reset stage, since SW
+emulated timer is only used in vCPU block state. When a vCPU is removed
+from the block waiting queue, kvm_restore_timer() is called and SW timer
+is cancelled. And the timer register is also cleared at VMM when a vCPU
+is reset.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/hw_irq.h | 2 ++
- arch/loongarch/kernel/irq.c         | 3 ---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ arch/loongarch/include/asm/kvm_vcpu.h | 1 -
+ arch/loongarch/kvm/timer.c            | 7 -------
+ arch/loongarch/kvm/vcpu.c             | 2 +-
+ 3 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/hw_irq.h b/arch/loongarch/include/asm/hw_irq.h
-index af4f4e8fbd858..8156ffb674159 100644
---- a/arch/loongarch/include/asm/hw_irq.h
-+++ b/arch/loongarch/include/asm/hw_irq.h
-@@ -9,6 +9,8 @@
- 
- extern atomic_t irq_err_count;
- 
-+#define ARCH_IRQ_INIT_FLAGS	IRQ_NOPROBE
-+
- /*
-  * interrupt-retrigger: NOP for now. This may not be appropriate for all
-  * machines, we'll see ...
-diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
-index f4991c03514f4..adac8fcbb2aca 100644
---- a/arch/loongarch/kernel/irq.c
-+++ b/arch/loongarch/kernel/irq.c
-@@ -102,9 +102,6 @@ void __init init_IRQ(void)
- 	mp_ops.init_ipi();
+diff --git a/arch/loongarch/include/asm/kvm_vcpu.h b/arch/loongarch/include/asm/kvm_vcpu.h
+index 590a92cb54165..d741c3e9933a5 100644
+--- a/arch/loongarch/include/asm/kvm_vcpu.h
++++ b/arch/loongarch/include/asm/kvm_vcpu.h
+@@ -76,7 +76,6 @@ static inline void kvm_restore_lasx(struct loongarch_fpu *fpu) { }
  #endif
  
--	for (i = 0; i < NR_IRQS; i++)
--		irq_set_noprobe(i);
--
- 	for_each_possible_cpu(i) {
- 		page = alloc_pages_node(cpu_to_node(i), GFP_KERNEL, order);
+ void kvm_init_timer(struct kvm_vcpu *vcpu, unsigned long hz);
+-void kvm_reset_timer(struct kvm_vcpu *vcpu);
+ void kvm_save_timer(struct kvm_vcpu *vcpu);
+ void kvm_restore_timer(struct kvm_vcpu *vcpu);
  
+diff --git a/arch/loongarch/kvm/timer.c b/arch/loongarch/kvm/timer.c
+index bcc6b6d063d91..74a4b5c272d60 100644
+--- a/arch/loongarch/kvm/timer.c
++++ b/arch/loongarch/kvm/timer.c
+@@ -188,10 +188,3 @@ void kvm_save_timer(struct kvm_vcpu *vcpu)
+ 	kvm_save_hw_gcsr(csr, LOONGARCH_CSR_ESTAT);
+ 	preempt_enable();
+ }
+-
+-void kvm_reset_timer(struct kvm_vcpu *vcpu)
+-{
+-	write_gcsr_timercfg(0);
+-	kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_TCFG, 0);
+-	hrtimer_cancel(&vcpu->arch.swtimer);
+-}
+diff --git a/arch/loongarch/kvm/vcpu.c b/arch/loongarch/kvm/vcpu.c
+index 9e8030d451290..0b53f4d9fddf9 100644
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -572,7 +572,7 @@ static int kvm_set_one_reg(struct kvm_vcpu *vcpu,
+ 				vcpu->kvm->arch.time_offset = (signed long)(v - drdtime());
+ 			break;
+ 		case KVM_REG_LOONGARCH_VCPU_RESET:
+-			kvm_reset_timer(vcpu);
++			vcpu->arch.st.guest_addr = 0;
+ 			memset(&vcpu->arch.irq_pending, 0, sizeof(vcpu->arch.irq_pending));
+ 			memset(&vcpu->arch.irq_clear, 0, sizeof(vcpu->arch.irq_clear));
+ 			break;
 -- 
 2.43.0
 
