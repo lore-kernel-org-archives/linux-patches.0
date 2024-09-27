@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F781779BD;
-	Fri, 27 Sep 2024 12:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C285D1779BD;
+	Fri, 27 Sep 2024 12:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439892; cv=none; b=o2Q1tw8MSZuPhy7wuml19bGf/6XwoRVZE8gHFPbzbvNaQEtVXAv9sIJeMPfqydbihc/m+lNyfFdRNZashS4U0enU8imRjHFckyBjYClCStq6B+wL/Rq1EyyLZk3eeYGOaAp8awkaR84pzEJrEcO3i9DVhJ4sT5noGJ7uWkop4cw=
+	t=1727439894; cv=none; b=GAHg8OkRVttffTlgyBr5LSY8cnDrp7OoXOjzDxg4+Ncc6RSflgYLagmkN7aq297NWJwbHejXjU3EKFYpVElyECWMulkIznve9cbf5XGQ0lP9NW3mW3Zu1bfz7QO4qIo15/cFbdyAy2nUhfBnXXuyOHqKaTCh9MWVMwkTvXH5dWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439892; c=relaxed/simple;
-	bh=7asTXdZQTnmY3uG77tR9Altm7ZV97hGWLnUpuRQpNKk=;
+	s=arc-20240116; t=1727439894; c=relaxed/simple;
+	bh=t3kteypcZf0ZQulsexH7H/xW3w6+9l4QDN15UhOsRs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUY737v/TqsLSQy/lA0UNjzND2iBhHnrrAm/KE0xs+CSIB7fdah1U0xM4561xWSOhh8K0LJ1Yt4jcqSRRgFrSj3uRkz6B/nlw734qQ2Bk0u3Aoq/IQaht+zYdyb+va/ExvRuUnXt/7y1BU1G4g0Chx2DCDCxvlu6QFN6zIwmE2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxxYP9YM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+9430ToZpp0yjSExICMOBaMMq/MMikN2tptWBo6Av7qJjoHkXT95GY0yQHP/wRWxScJzbanJJCWDY314mCRNc6dQeOCK6G+ZlEZKk7REP9UzWFFwXrgDhxppV/vYFV7vmhlzMqdG0EziRbaT+q9eSf7yowmh4YabwxpqNOQCRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mpr1/9YH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxxYP9YM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368ACC4CEC4;
-	Fri, 27 Sep 2024 12:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mpr1/9YH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3842C4CEC4;
+	Fri, 27 Sep 2024 12:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727439891;
-	bh=7asTXdZQTnmY3uG77tR9Altm7ZV97hGWLnUpuRQpNKk=;
+	s=korg; t=1727439894;
+	bh=t3kteypcZf0ZQulsexH7H/xW3w6+9l4QDN15UhOsRs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxxYP9YMGqq8yBHKq5jl3j/gENaRHmSP7b54e4maWCwkFxZ64ZZ0aUMRhf2L3KfYe
-	 YiYa9kg+8QKUI6dgjms/9gFvLRtKTUj1w6LqPFLMxcGOp6Fnf4FwscOd6sS1avlsLC
-	 raonnCeJxNYtHL1FXEgsPsPNP25Z5Oapr4TeuQF0=
+	b=Mpr1/9YHpJuIxbu25IwNwolBk58v7FaV752Pq4OXTHGb6UJRem7AP0bfxiKitVqTM
+	 R+I/Ds+pfLh1QPLB1fd+9c/BN76hji2jGVrqWZ/FDzhOiHIb20O9urwb+Kb3/Igx/c
+	 QEGP27bept9Vk5ZjLZ+jL3uAQ4j+YuqH+3FDNzxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Len Brown <lenb@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 13/54] LoongArch: Define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE
-Date: Fri, 27 Sep 2024 14:23:05 +0200
-Message-ID: <20240927121720.243238986@linuxfoundation.org>
+Subject: [PATCH 6.6 14/54] wifi: iwlwifi: lower message level for FW buffer destination
+Date: Fri, 27 Sep 2024 14:23:06 +0200
+Message-ID: <20240927121720.281910554@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121719.714627278@linuxfoundation.org>
 References: <20240927121719.714627278@linuxfoundation.org>
@@ -52,53 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 274ea3563e5ab9f468c15bfb9d2492803a66d9be ]
+[ Upstream commit f8a129c1e10256c785164ed5efa5d17d45fbd81b ]
 
-Currently we call irq_set_noprobe() in a loop for all IRQs, but indeed
-it only works for IRQs below NR_IRQS_LEGACY because at init_IRQ() only
-legacy interrupts have been allocated.
+An invalid buffer destination is not a problem for the driver and it
+does not make sense to report it with the KERN_ERR message level. As
+such, change the message to use IWL_DEBUG_FW.
 
-Instead, we can define ARCH_IRQ_INIT_FLAGS as IRQ_NOPROBE in asm/hwirq.h
-and the core will automatically set the flag for all interrupts.
-
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Reported-by: Len Brown <lenb@kernel.org>
+Closes: https://lore.kernel.org/r/CAJvTdKkcxJss=DM2sxgv_MR5BeZ4_OC-3ad6tA40TYH2yqHCWw@mail.gmail.com
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240825191257.20abf78f05bc.Ifbcecc2ae9fb40b9698302507dcba8b922c8d856@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/hw_irq.h | 2 ++
- arch/loongarch/kernel/irq.c         | 3 ---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/include/asm/hw_irq.h b/arch/loongarch/include/asm/hw_irq.h
-index af4f4e8fbd858..8156ffb674159 100644
---- a/arch/loongarch/include/asm/hw_irq.h
-+++ b/arch/loongarch/include/asm/hw_irq.h
-@@ -9,6 +9,8 @@
- 
- extern atomic_t irq_err_count;
- 
-+#define ARCH_IRQ_INIT_FLAGS	IRQ_NOPROBE
-+
- /*
-  * interrupt-retrigger: NOP for now. This may not be appropriate for all
-  * machines, we'll see ...
-diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
-index 883e5066ae445..df42c063f6c43 100644
---- a/arch/loongarch/kernel/irq.c
-+++ b/arch/loongarch/kernel/irq.c
-@@ -122,9 +122,6 @@ void __init init_IRQ(void)
- 		panic("IPI IRQ request failed\n");
- #endif
- 
--	for (i = 0; i < NR_IRQS; i++)
--		irq_set_noprobe(i);
--
- 	for_each_possible_cpu(i) {
- 		page = alloc_pages_node(cpu_to_node(i), GFP_KERNEL, order);
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c b/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
+index fa4a145468601..9be41673650ee 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/ctxt-info-gen3.c
+@@ -68,7 +68,8 @@ iwl_pcie_ctxt_info_dbg_enable(struct iwl_trans *trans,
+ 		}
+ 		break;
+ 	default:
+-		IWL_ERR(trans, "WRT: Invalid buffer destination\n");
++		IWL_DEBUG_FW(trans, "WRT: Invalid buffer destination (%d)\n",
++			     le32_to_cpu(fw_mon_cfg->buf_location));
+ 	}
+ out:
+ 	if (dbg_flags)
 -- 
 2.43.0
 
