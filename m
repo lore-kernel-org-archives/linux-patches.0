@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937F018A6C3;
-	Fri, 27 Sep 2024 12:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A126017B515;
+	Fri, 27 Sep 2024 12:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440039; cv=none; b=noxnlgauDh7yPOix+/vWXXzcAfdy82jvKQC1K8PHjVDjfSiDQnt5oneMB6U25lmkpLnKbHOqtH94wV19je+4Pb7wDvjHU9v4Z35dCBNknpEpB+b1FJg4uZZKd831RoR+Ba09Oy8DzhnZ5GyvQxczmlhgVNBfQS/HYIvTbGUVJJg=
+	t=1727440042; cv=none; b=oij7eDpBbjUl2Ch8uxB+P9e6Z32URMsS/kQno8KBm88Gdn3rbaCKiVi3H+tRNO2LcM1Eg9EkMKBDLjuBNgWx91THl7N2ZXTYh2f9VraqCYJdPsmkmBQvAT9S3cZauwBplY6zLM8Lrbb1ZavzahU8n+KYfueYsG0eARHnuHvEWiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440039; c=relaxed/simple;
-	bh=Mb35LydMRHdu566M4v0yyAM4mAoLee8pmvB5zrL2fWs=;
+	s=arc-20240116; t=1727440042; c=relaxed/simple;
+	bh=S0QegfBZWRD0ouawBjdum1NclEDf+6qDeNwtsf35v4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UYpLMpzd6bjkUXkgeCXdWNuyTiGzzSl37t4g4rs9aLbnmYvbEDi6HUAIaMd8HsfEa11IqA/XtYtDSnJjFf0eid3T65JUe9HBCt2wBID6uFUA3B3KNIYfs+Bi0D6TPRAc/XJ4uOv/GVkXlh8wn9FLRitmvOxzu+FcHle55YO0sKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gt0Xn99N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A3E0a+80xyChkKFE7tmbENLk9clZNRwbfu9dHLaBP3DIQ6lVtHzGFBUom1gOvKfk/Miem7lIys/o/ipJb04eLJXRJqv3qdaK2iVJoeK6Lt22RE2BM6xqHqxKfqePDyG6xeM0ch5ez5pHv/jL/TWO9ky0QJclP1Q3mwV0952wsYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+P0jF48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gt0Xn99N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF49C4CEC4;
-	Fri, 27 Sep 2024 12:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+P0jF48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1A2C4CEC4;
+	Fri, 27 Sep 2024 12:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727440039;
-	bh=Mb35LydMRHdu566M4v0yyAM4mAoLee8pmvB5zrL2fWs=;
+	s=korg; t=1727440042;
+	bh=S0QegfBZWRD0ouawBjdum1NclEDf+6qDeNwtsf35v4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gt0Xn99NLDbDg1HhDRaGbirJ9x9pEvjNjooqXZrxBOAd6F1MMa/afpuTmgmTXucTE
-	 oQVeD14/WWpA93uhgti8CzJC4WK3p/oKQyQmxH2HR2vG83k0DKP0iajOwllSigrfrH
-	 BNemUyuz8QZHSty6hkd4bzeiTwLYkgR7nLWt4j3c=
+	b=1+P0jF48mPwHtoWcm8UDt3nVj3V7GdKcRSXw+j5li4XhsaVrPy3suMFI0hgHWa9gT
+	 3S8YpJLhQmmGIFm14k2jn4YumzEdSymn+zpoLAgpS/ku5dYWIJVO6GzMXcN4L0hbLk
+	 ciwWjUxBZGOCPSknMRZ0qbhaQXJo5VqH4GkRWigE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Fenniak <mathieu@fenniak.net>,
+	Hans de Goede <hdegoede@redhat.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 11/58] platform/x86: asus-wmi: Fix spurious rfkill on UX8406MA
-Date: Fri, 27 Sep 2024 14:23:13 +0200
-Message-ID: <20240927121719.248996451@linuxfoundation.org>
+Subject: [PATCH 6.10 12/58] platform/x86: x86-android-tablets: Make Lenovo Yoga Tab 3 X90F DMI match less strict
+Date: Fri, 27 Sep 2024 14:23:14 +0200
+Message-ID: <20240927121719.298295929@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20240927121718.789211866@linuxfoundation.org>
 References: <20240927121718.789211866@linuxfoundation.org>
@@ -52,91 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Fenniak <mathieu@fenniak.net>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9286dfd5735b9cceb6a14bdf15e13400ccb60fe7 ]
+[ Upstream commit a3379eca24a7da5118a7d090da6f8eb8611acac8 ]
 
-The Asus Zenbook Duo (UX8406MA) has a keyboard which can be
-placed on the laptop to connect it via USB, or can be removed from the
-laptop to reveal a hidden secondary display in which case the keyboard
-operates via Bluetooth.
+There are 2G and 4G RAM versions of the Lenovo Yoga Tab 3 X90F and it
+turns out that the 2G version has a DMI product name of
+"CHERRYVIEW D1 PLATFORM" where as the 4G version has
+"CHERRYVIEW C0 PLATFORM". The sys-vendor + product-version check are
+unique enough that the product-name check is not necessary.
 
-When it is placed on the secondary display to connect via USB, it emits
-a keypress for a wireless disable. This causes the rfkill system to be
-activated disconnecting the current wifi connection, which doesn't
-reflect the user's true intention.
+Drop the product-name check so that the existing DMI match for the 4G
+RAM version also matches the 2G RAM version.
 
-Detect this hardware and suppress any wireless switches from the
-keyboard; this keyboard does not have a wireless toggle capability so
-these presses are always spurious.
-
-Signed-off-by: Mathieu Fenniak <mathieu@fenniak.net>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240825132415.8307-1-hdegoede@redhat.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240823135630.128447-1-mathieu@fenniak.net
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 20 +++++++++++++++++++-
- drivers/platform/x86/asus-wmi.h    |  1 +
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ drivers/platform/x86/x86-android-tablets/dmi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index fceffe2082ec5..ed3633c5955d9 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -145,6 +145,10 @@ static struct quirk_entry quirk_asus_ignore_fan = {
- 	.wmi_ignore_fan = true,
- };
- 
-+static struct quirk_entry quirk_asus_zenbook_duo_kbd = {
-+	.ignore_key_wlan = true,
-+};
-+
- static int dmi_matched(const struct dmi_system_id *dmi)
- {
- 	pr_info("Identified laptop model '%s'\n", dmi->ident);
-@@ -516,6 +520,15 @@ static const struct dmi_system_id asus_quirks[] = {
+diff --git a/drivers/platform/x86/x86-android-tablets/dmi.c b/drivers/platform/x86/x86-android-tablets/dmi.c
+index 141a2d25e83be..387dd092c4dd0 100644
+--- a/drivers/platform/x86/x86-android-tablets/dmi.c
++++ b/drivers/platform/x86/x86-android-tablets/dmi.c
+@@ -140,7 +140,6 @@ const struct dmi_system_id x86_android_tablet_ids[] __initconst = {
+ 		/* Lenovo Yoga Tab 3 Pro YT3-X90F */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
  		},
- 		.driver_data = &quirk_asus_ignore_fan,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS Zenbook Duo UX8406MA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "UX8406MA"),
-+		},
-+		.driver_data = &quirk_asus_zenbook_duo_kbd,
-+	},
- 	{},
- };
- 
-@@ -630,7 +643,12 @@ static void asus_nb_wmi_key_filter(struct asus_wmi_driver *asus_wmi, int *code,
- 	case 0x32: /* Volume Mute */
- 		if (atkbd_reports_vol_keys)
- 			*code = ASUS_WMI_KEY_IGNORE;
--
-+		break;
-+	case 0x5D: /* Wireless console Toggle */
-+	case 0x5E: /* Wireless console Enable */
-+	case 0x5F: /* Wireless console Disable */
-+		if (quirks->ignore_key_wlan)
-+			*code = ASUS_WMI_KEY_IGNORE;
- 		break;
- 	}
- }
-diff --git a/drivers/platform/x86/asus-wmi.h b/drivers/platform/x86/asus-wmi.h
-index cc30f18538472..d02f15fd3482f 100644
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -40,6 +40,7 @@ struct quirk_entry {
- 	bool wmi_force_als_set;
- 	bool wmi_ignore_fan;
- 	bool filter_i8042_e1_extended_codes;
-+	bool ignore_key_wlan;
- 	enum asus_wmi_tablet_switch_mode tablet_switch_mode;
- 	int wapf;
- 	/*
+ 		.driver_data = (void *)&lenovo_yt3_info,
 -- 
 2.43.0
 
