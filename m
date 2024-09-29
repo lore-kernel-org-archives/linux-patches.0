@@ -1,101 +1,110 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C27817BEAC
-	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 15:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470994C62E
+	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 20:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727624166; cv=none; b=khuFNpm1h85knj270/YjsFwaEmu8hwNOVAaBw1lIJyPk0gExb0ygYo81ZPr6yL/6nNJgNAXlE385ZpQnTi/+1uN6JjvczyJwVnNeP1ARMP0ryiCw8aFufpv+JQrTnsK/8ghT2IwiwkGJt51mNP7J92asY0Bvg7iET07ry1Yvp+g=
+	t=1727641264; cv=none; b=kcEcMyid5nqJTxZk0gmsinEgE5tsU0F3sLjK3+fypyfDFbEmfCjjzcm7khxyZIiYFeJZe+2EUPTLyM+0+aD30ILLaahs06262uJn6jpYavjIxZmW6DRTyUHOZh4cgRZ5F7NWmWptfIvJgG8dTLaEQCHjdD/PJ2yehjMthbY4HxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727624166; c=relaxed/simple;
-	bh=Z24+oNbwDBYDjUFeXrH3yiHjyPp8DkpOlh8f85DEeEI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pL0ld46IDzQvStnU18O5U4f7UUzw4k6uxpigGinoTf2jguBv9ldqy0bh4YFvdDzGgjIUc/MKc4JeUPauinRdkiszNIeNkrmpW6aTGWOOD7YSEzoX64Sl14z4+IymoBD42zR8iwPkj0+Zk+LDez14ObJ3jqu0xxRxNoW4aWc4iEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=DWGfdiqM; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1727641264; c=relaxed/simple;
+	bh=NCMujOi7gIknHs127h5m38WVgd6G0xciBwWlyhI04G4=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=r00MQ+cRbKgfXA1/Z5yVTsjxdUvPgWTCYtdQEXfGxO7XnM0tD1WNQZ3CGjHIJpkUWgFU50HrKR51nq+5vke0ggx1aedQZg8RTfeBGFIN7JFh/IYgbDZvR7PSNRRpDVYG/FKR32wcSZpYW/4QOduSOWJKhOsr86p20HjPWg/EBCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=AaUjqH+5; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="DWGfdiqM"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8d2daa2262so412209566b.1
-        for <patches@lists.linux.dev>; Sun, 29 Sep 2024 08:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="AaUjqH+5"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7acd7d9dbefso470674285a.3
+        for <patches@lists.linux.dev>; Sun, 29 Sep 2024 13:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1727624163; x=1728228963; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7aEO2yZHG3E/MlCpO8gpWwrr+WlYuH7Zy33FEPXBtWU=;
-        b=DWGfdiqMw8/7CFs62tx2umtmKbAYI0mf90+YXcieG8VrwgsolkJn8MdaigLH5yAvOd
-         a+M7hO2jaJ62ROumefajvmwc8+Wstw7JgHk6+0ukI97WEFlM8j46h+TPcTjnFo0eRkxl
-         QpTTwRhtoSpPGq/0qwtM8J/g2fHBIOU9SJ4ro=
+        d=paul-moore.com; s=google; t=1727641262; x=1728246062; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j730t5RgznBmQZu3lvSO1ELFYrR4fxxSXPbfDnOL7lc=;
+        b=AaUjqH+5baq5UJgylxuHkIlPbyrj3ELWOP5KAdTfvbMCA5pwVUN2S8/cExLoJJmsbw
+         dZt4cR2mP0ZqF3qGHyJi2d81lfe+fvTrzsMXEgV5ZVjSQjQ2t4Qp20KKtDyvfNUdnjmv
+         kSHibU6EZF+d4I9udxFYQKQnsox5pNugsPbyZ0H0wztZXrFAkDbH6iQUQ579m6raW1ZC
+         B1Pqo04RKyMUHoMcoHXcyeAvBP5Nwm4RUQCnQxAa+YcLqoBNet6mIHbEwoUEx57Wc1uS
+         QeDRpNH+dnc4t9YtL+wrJ3tU5mKLhaRXPHtLUstMzLGbPWdBbWpWkXq2PuMIA2lQSAwo
+         m3JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727624163; x=1728228963;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7aEO2yZHG3E/MlCpO8gpWwrr+WlYuH7Zy33FEPXBtWU=;
-        b=L5tlWMdb/h+tJZ2rJKuCNEYW6y+Z6DjdXK4SJDAQFstG5hkC7ZoO6QQZNjexY1UxLm
-         mhRPBQQF5Yf2qTJfk4HRlUbcpg8mMnIHOnjDA/yPxp4yRVY0xYGbzBXK0mhQ41M4RckB
-         rGPie7Ym15X76RDOcdLMKMTwvlCLvPEn82EOeyvy6ehDmDRX2aVzKlfMPr7uTRrn/59L
-         86uEiSyPPaBouhWH6uGW44QxpRKfdy1mPGbHuBDxctNo7WfMN94y1+5MGrVOV7Oksk/7
-         4MGJAbkdbR8Tl24RK9FAmadYn7ETX98ksdpr+H+GgI21FhDMCI1q/dM1X7W2jQ8uVoxU
-         wK/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV3NaYnVlou5amfQCVKD7GE2Jtdd5TZx1W6AeAU8Ro8zO0RHzFWR9Q2FHWYDHJqgR88DUgXzyk2@lists.linux.dev
-X-Gm-Message-State: AOJu0Yymyvk5SIV+Qw8z8+zPo3bjD9/I6of9Bl5yoMYB4OGhAxx0gz54
-	2x/YGT/iIDjlUv2nRpLA8SmGaVjEaW51z6vmvxH4hpIyKmoWmoLLdfMY8FWpOvZYl1tbHgiJgO5
-	EXsE=
-X-Google-Smtp-Source: AGHT+IHxFvASG93zrWn6DfqLeBsXuuGAgX5uG6UI0tTfYmWvEfR7RWkdHP1C7EsfRksSO3G8nsHHPw==
-X-Received: by 2002:a17:906:794f:b0:a80:f840:9004 with SMTP id a640c23a62f3a-a93c48eea6emr1044355166b.12.1727624162546;
-        Sun, 29 Sep 2024 08:36:02 -0700 (PDT)
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com. [209.85.218.45])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2998634sm384861366b.206.2024.09.29.08.36.00
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Sep 2024 08:36:01 -0700 (PDT)
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a93c1cc74fdso493319166b.3
-        for <patches@lists.linux.dev>; Sun, 29 Sep 2024 08:36:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWl+qi0I3SkWNnGX0qK61yM2faNx8bR+ZmJn4NOKy7BJzn6R7s5dUxFVw99DVHt0l2ZNCdscPan@lists.linux.dev
-X-Received: by 2002:a17:907:8692:b0:a8d:44a5:1c2f with SMTP id
- a640c23a62f3a-a93c48f089bmr904801366b.6.1727624160624; Sun, 29 Sep 2024
- 08:36:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727641262; x=1728246062;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j730t5RgznBmQZu3lvSO1ELFYrR4fxxSXPbfDnOL7lc=;
+        b=GQfiq+rIef886+qNYcl6LC0CURUpRl8TLT+weFCdZ0otynQ8og9KON/gtw3U4iP40V
+         t2uejPR0pyw55dUVyNqP2++s49hPVBeuiLndq1SfIuXPMC0aVLod2EJO44M0KoKL+Cr7
+         O8f4dr5kUzn+KSaplqpepaMxH0j/oYf391jQKusUu2TbucjoYezVKM+9a5XxR2uYUOwd
+         z4vOIxtEDvg0RS1hNXw8ZXrPgsMzKoUGjGmH96sb9rmFiVLq9/uL06HWaX5hI2YFMzNQ
+         cNARXdKFrO5qFeIn0L8gwp1OLUqLNgqS8/KWp8VTPI6bYD9pbymd/+fGzdJtBdA4fxqN
+         u5gQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYnsV+zet2gKHVuBZ/Ph9E5zs5Xe0TiLIzJY1wFD8Ns0CQwiT5mwbgyOX0OND5aHk2tWE7YMID@lists.linux.dev
+X-Gm-Message-State: AOJu0YyeLCKJaTSdr7Fk844XdDeDi2YRED/c+Hl7gWpMSSMONqEVCO5K
+	xuQ0tm2LbouGmOubONb4zPU4WLbTeCxdDXPkCeQs7XEgAGT1Xed64XvJk88Rrg==
+X-Google-Smtp-Source: AGHT+IE3rPnUiHlGZpJAiiSi2r8ITRz1wB3lhzsgmG3CaQpGo6aFcM3Rt59tO+884CFfrtoXeBewRA==
+X-Received: by 2002:a05:620a:24d3:b0:7a9:b114:4704 with SMTP id af79cd13be357-7ae3783849dmr1387092785a.22.1727641262161;
+        Sun, 29 Sep 2024 13:21:02 -0700 (PDT)
+Received: from [192.168.22.104] ([62.156.169.180])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45c9f33a4c9sm31021261cf.73.2024.09.29.13.21.00
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 29 Sep 2024 13:21:01 -0700 (PDT)
+From: Paul Moore <paul@paul-moore.com>
+To: Nathan Chancellor <nathan@kernel.org>, Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>
+CC: <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+Date: Sun, 29 Sep 2024 22:20:59 +0200
+Message-ID: <1923f716100.28a7.85c95baa4474aabc7814e68940a78392@paul-moore.com>
+In-Reply-To: <20240928-maintainers-security-kconfig-hardening-v1-1-c8c64071cc02@kernel.org>
+References: <20240928-maintainers-security-kconfig-hardening-v1-1-c8c64071cc02@kernel.org>
+User-Agent: AquaMail/1.52.0 (build: 105200518)
+Subject: Re: [PATCH] MAINTAINERS: Add security/Kconfig.hardening to hardening section
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240928-fix-randstruct-modversions-kconfig-warning-v1-1-27d3edc8571e@kernel.org>
-In-Reply-To: <20240928-fix-randstruct-modversions-kconfig-warning-v1-1-27d3edc8571e@kernel.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Sun, 29 Sep 2024 08:35:44 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgdQ5TjbXX0D568GZebYnt5ZuhTW5-ffeim-aoyT9LnbA@mail.gmail.com>
-Message-ID: <CAHk-=wgdQ5TjbXX0D568GZebYnt5ZuhTW5-ffeim-aoyT9LnbA@mail.gmail.com>
-Subject: Re: [PATCH] hardening: Adjust dependencies in selection of MODVERSIONS
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
 
-On Sat, 28 Sept 2024 at 11:13, Nathan Chancellor <nathan@kernel.org> wrote:
+On September 28, 2024 8:26:28 PM Nathan Chancellor <nathan@kernel.org> wrote:
+> When running get_maintainer.pl on security/Kconfig.hardening, only the
+> security subsystem folks show up, even though they have never taken
+> patches to this file:
 >
-> MODVERSIONS recently grew a dependency on !COMPILE_TEST so that Rust
-> could be more easily tested. However, this introduces a Kconfig warning
-> when building allmodconfig with a clang version that supports RANDSTRUCT
-> natively because RANDSTRUCT_FULL and RANDSTRUCT_PERFORMANCE select
-> MODVERSIONS when MODULES is enabled, bypassing the !COMPILE_TEST
-> dependency:
+>  $ scripts/get_maintainer.pl security/Kconfig.hardening
+>  Paul Moore <...> (supporter:SECURITY SUBSYSTEM)
+>  James Morris <...> (supporter:SECURITY SUBSYSTEM)
+>  "Serge E. Hallyn" <...> (supporter:SECURITY SUBSYSTEM)
+>  linux-security-module@vger.kernel.org (open list:SECURITY SUBSYSTEM)
+>  linux-kernel@vger.kernel.org (open list)
+>
+>  $ git log --format=%cn --no-merges security/Kconfig.hardening | sort | uniq -c
+>        3 Andrew Morton
+>        1 Greg Kroah-Hartman
+>       18 Kees Cook
+>        2 Linus Torvald
+>
+> Add it to the hardening section so that the KSPP folks are also shown,
+> which matches reality over who should comment on and take said patches
+> if necessary.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> MAINTAINERS | 1 +
+> 1 file changed, 1 insertion(+)
 
-Argh. I should have checked, but I didn't think anybody would 'select'
-MODVERSIONS.
+For the sake of casual observers, the reason James, Serge, or I haven't 
+merged anything in Kconfig.hardening isn't due to any malicious intent or 
+lack of appreciation, rather it is out of respect for KSPP and not wanting 
+to step on Kees' toes.  I've happily merged KSPP related patches to those 
+subsystems which I'm tasked with looking after and I plan to continue to do so.
 
-That's such an odd thing to do in general, but I guess for RANDSTRUCT
-it actually makes sense (since a plain version check is nonsensical).
+--
+paul-moore.com
 
-Now that 'select' statement is truly crazy and another level of odd
-duck, but I guess it still makes perfect sense ("give me the build
-coverage, but this is never going to be run, so don't bother with
-MODVERSIONS").
 
-So Ack on the patch. And now I did check that there doesn't seem to be
-anything else with odd MODVERSIONS Kconfig rules.
 
-            Linus
