@@ -1,67 +1,67 @@
 Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E883F33981
-	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 04:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288FA224F6
+	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 04:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727584923; cv=none; b=E2FwJz2yeQ4NN0kdyEsk+OwDiLr3rfqjeQmnYiIQaHd2RKl3TrmrSP7Zm9e8Md7HQBSN0K6ivKB28b9+MQs5b3xNc2jcUU8ABr8nkiaVEs+hrE3IEUYOl1rV519TkOK38TUhTfTvF7lYjBfsQjtVHeiZvEZQJWhnWCFpGlobU8Y=
+	t=1727585308; cv=none; b=BbX6bOLcJuusj7b68D9RZZQSngeJzCrf8i6gLvJe6oarNTp9sQcagqHT8Y45WpoRRzN9mX9rVfWc3R6Tu7/pWIuC/7NRJwoHHrtjQFRNrgCnr7tf9ks2EsOAxfRAAYVyIXPa9uq+xHvzjxPcJRBl+94G5Ltcfnc8C+RoTduZioM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727584923; c=relaxed/simple;
-	bh=vHzOMj9jD9kuxpfdw0bcPVwZ1W+/Pn85ztnlnrksZHk=;
+	s=arc-20240116; t=1727585308; c=relaxed/simple;
+	bh=CIZA0W2qEjnnGnJknm1V6/RmDT3YVjysHtUxWt9fnhA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O9d0zSN0cBSJpiPucLEGFGaUspvgBA3zo1d2e8wWY7yqXkcx/HzgBJ/o5JKBX/62HuNsyWFp+SSfUaVpntrn8y+A8bkcd3QUWaOlKvv3wIJysAi0/qNOzhqdmQ4RRK6cAnwjDZLgfHBYVOOZPvLWhajN97+4dnjIolUjFmNnuyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=Z7m32CLl; arc=none smtp.client-ip=209.85.128.181
+	 To:Cc:Content-Type; b=VdGjivLMXnmW/MR/7uhktRQmD0V+H83WKUuq0NL7+rMKCDab0tJ1AT20hk6Sxkmkl8slg6mHCFW+iQ+IroQ4nP54oPpCozq+cDMzMyBu55nR7DcjUpHHnRjBGu3jZDbL/kSuPXy9JO+V/ermzrdOC4qaxOmisGR2BnpyS7yC0Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=eGbe+gHl; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="Z7m32CLl"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6dbc5db8a31so25582217b3.1
-        for <patches@lists.linux.dev>; Sat, 28 Sep 2024 21:42:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="eGbe+gHl"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e20a8141c7so32004017b3.0
+        for <patches@lists.linux.dev>; Sat, 28 Sep 2024 21:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1727584921; x=1728189721; darn=lists.linux.dev;
+        d=umich.edu; s=google-2016-06-03; t=1727585304; x=1728190104; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vHzOMj9jD9kuxpfdw0bcPVwZ1W+/Pn85ztnlnrksZHk=;
-        b=Z7m32CLlInTHftvL9jK8zO/futBa1nqvPPxZZPwvboCra/iwoCEWeXLy28YyYiwjgW
-         PHgJDaYugTVwHLFAPqo+TbfmWQBps2S+F031w7/QPQ75gtiuGssZOXX/tDLxNJcX8mOy
-         KzbKnPm2LQWCCUqlC3zG4LOsjJNGZivEF29d2h003IrzmZtTlHzhI/mbzLXw0nk+zjcX
-         VOM/0Wr7jm4zBXYanLyf9ZBs+6GV+Uc6Ka3W+8QtD04QAWVgRiV8/b6QPhnbiPpB4ap8
-         vI8CnD1Nr1AB/AlOBb2z5M8oXJaSRrhTMpqhITfgOMQlzt03rmyMh0kPJbPIK2Cy506c
-         Eoqw==
+        bh=CIZA0W2qEjnnGnJknm1V6/RmDT3YVjysHtUxWt9fnhA=;
+        b=eGbe+gHl6e4eHu/9Cmy3A8FXssW+gX+n3TLNZDU1UhlOh2kul3HXbI6kCTZ+pmx4ty
+         dR4rlMwSA2NeRcAeMnV5UCvHXnHD9/Zmo2KYMChjh75k43qpiTotZTybjaL1PNdKhk6W
+         4L/U/atLnLkugqoK29kIGtGzV6h2zXg+0+kCM/XMFldL8a2R/K1M4B15/Cg1pqlv7XeJ
+         b52N4DUcke3CPJiJKLBsBpUgwlhmx68zCxGW47q4Gq5NEeldb9259g3HLAUoTm2Ccukf
+         h54OvOj+kt0xRODjNLOcgZYq6NhwoGeU4TWLNMR4+caDYJNWswyAM9LkBd0Limy2NDAw
+         MXXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727584921; x=1728189721;
+        d=1e100.net; s=20230601; t=1727585304; x=1728190104;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vHzOMj9jD9kuxpfdw0bcPVwZ1W+/Pn85ztnlnrksZHk=;
-        b=T0J6ppjv9SzZMV4njszQ8xKgitn9wdNxO93D/Hf3/myLUtevOuaY4sUJhzmlktEzBH
-         7ksyQczYycZmQ1j+ZtPhpN8DSZgglh6wgcJgG1E3YrPGsjyBlayjUgiDBUq0hZNPwUtN
-         DzTHdG4hI3Xbsh8dixHu8sOb+ZaZsXWB8HxhMyBtWDHlq7D7zf9bppPoCKKQsKVVsSfF
-         Wr31lVW5edZpAkfsCZG7rUbWr66i94g45NDJIT/lFFkBNj3NE3QYv/Ax5QrOPO/d/RXB
-         4cTl8sT68MRO+qa82N9YU8Oo+RW3I9nJiWrvcP0cvE7IknOebW4n1c6S6VV9SYoqwho6
-         PWXA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+xqb7yFu2tmQCaiD0x/inuGsFISDptxSTmynI0G7ig700StrBbpDmxf4fQZywy+YQ1KdoZzSW@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywz2BKUYQpa07/orgUhbBZkAHpOkVVZJsA0PnH1k7qy5V2lVPSy
-	zIm1KwykCrT5WlRaIpMh/rKBgB6VjDX43EW2vEf6IVGYHsHjXmkcnesb/84zTfhyxA/0r49MGfZ
-	K7yhAaXJp+8brhyWz9r9/KWGYfzjB3fFrMynVVA==
-X-Google-Smtp-Source: AGHT+IFvrDAqZx5NgF8LGfqkqSWrF6ZyKve0RQW2JLbiFzouK/e4QQP+LYMhrvl/TomKpgf5kQZo16BsN5iCCk3XejQ=
-X-Received: by 2002:a05:690c:700f:b0:6e2:2e8e:7a20 with SMTP id
- 00721157ae682-6e22edded73mr82279697b3.13.1727584920951; Sat, 28 Sep 2024
- 21:42:00 -0700 (PDT)
+        bh=CIZA0W2qEjnnGnJknm1V6/RmDT3YVjysHtUxWt9fnhA=;
+        b=vnrmoJf2iY3moq+Xm4QDA1hg62uzp+phCqmsIoPAM18GDAKwjxX4GAxwBnECdwXxKf
+         xvjbpNwmNJn7Girn8Sodi2AhorllSlM8Lviy2yLB4IFohTUshFVacf049u6u9nenzgSs
+         sv60Urif3LHBif00jYxdoRjrq+PPcNE64jXeIRPG8jcafF5sOmJTIWR2U9ZdCJ+I1GuQ
+         Dqf+rVKAF27nN2eEjVaFgbK79PVdWGeP97ZPBO8Jq08f/ee8mx0aqDn5r0mUstP4Fbq6
+         zvk/C4ur+kl5RFgl4TNAhk5m4udMMKNwvNMHEppvD3rQOuIlF9geM1ho6ldmTVx7wO65
+         6bGw==
+X-Forwarded-Encrypted: i=1; AJvYcCWiIqHbiToLCRwe9RHLcLqZTCEsTDVEfljthrXS0wPse1Ev+bG4czQd2YFG1LahQi465cvEHt/O@lists.linux.dev
+X-Gm-Message-State: AOJu0YxAvD0HsmjQjnePt7U00en+aCgN2AfzvdXuqu8eFFtt0jCK9Ilg
+	o2+Y8GJhYHn0v3bkhb5Qb7rRrQr3oDvArMg1S0Rit0qsEOURUI5QXiNcOnoZLwknp3SpZwk87Qm
+	JxNYcG/YGC94y3mS2T9Ztg/ZsVm17mLEFvMJgvw==
+X-Google-Smtp-Source: AGHT+IHGLO8uFKk01lj+pc7xi5cN1UQcwjFwWI2vcUjxYujvaZ74Wt6ytZjstIUhVrZVb5X2wsWMAZgBbiwyKHg0/l0=
+X-Received: by 2002:a05:690c:112:b0:6dc:d556:aef7 with SMTP id
+ 00721157ae682-6e24dc9c77bmr42360427b3.41.1727585303663; Sat, 28 Sep 2024
+ 21:48:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-11-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-11-ojeda@kernel.org>
+References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-12-ojeda@kernel.org>
+In-Reply-To: <20240904204347.168520-12-ojeda@kernel.org>
 From: Trevor Gross <tmgross@umich.edu>
-Date: Sun, 29 Sep 2024 00:41:50 -0400
-Message-ID: <CALNs47srxg41krbHiZmv0cVuHNj-SQ8_NFzxpnnHM8GeBFKhhg@mail.gmail.com>
-Subject: Re: [PATCH 10/19] rust: sync: remove unneeded `#[allow(clippy::non_send_fields_in_send_ty)]`
+Date: Sun, 29 Sep 2024 00:48:12 -0400
+Message-ID: <CALNs47uFsnrqetzZp58d_j4VO5y-LkiLejwp-NKAXQg7pPct7w@mail.gmail.com>
+Subject: Re: [PATCH 11/19] rust: introduce `.clippy.toml`
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -75,29 +75,18 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Sep 4, 2024 at 4:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
 e:
 >
-> Rust 1.58.0 (before Rust was merged into the kernel) made Clippy's
-> `non_send_fields_in_send_ty` lint part of the `suspicious` lint group for
-> a brief window of time [1] until the minor version 1.58.1 got released
-> a week after, where the lint was moved back to `nursery`.
+> Some Clippy lints can be configured/tweaked. We will use these knobs to
+> our advantage in later commits.
 >
-> By that time, we had already upgraded to that Rust version, and thus we
-> had `allow`ed the lint here for `CondVar`.
+> This is done via a configuration file, `.clippy.toml` [1]. The file is
+> currently unstable. This may be a problem in the future, but we can adapt
+> as needed. In addition, we proposed adding Clippy to the Rust CI's RFL
+> job [2], so we should be able to catch issues pre-merge.
 >
-> Nowadays, Clippy's `non_send_fields_in_send_ty` would still trigger here
-> if it were enabled.
+> Thus introduce the file.
 >
-> Moreover, if enabled, `Lock<T, B>` and `Task` would also require an
-> `allow`. Therefore, it does not seem like someone is actually enabling it
-> (in, e.g., a custom flags build).
->
-> Finally, the lint does not appear to have had major improvements since
-> then [2].
->
-> Thus remove the `allow` since it is unneeded.
->
-> Link: https://github.com/rust-lang/rust/blob/master/RELEASES.md#version-1=
-581-2022-01-20 [1]
-> Link: https://github.com/rust-lang/rust-clippy/issues/8045 [2]
+> Link: https://doc.rust-lang.org/clippy/configuration.html [1]
+> Link: https://github.com/rust-lang/rust/pull/128928 [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Trevor Gross <tmgross@umich.edu>
