@@ -1,80 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681788F6D;
-	Sun, 29 Sep 2024 21:10:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2739343155
+	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 23:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727644248; cv=none; b=SJSSpyUKlUy3QYvF6mzNmYyXyk/eWWJJE/06gQVuKEyLNKF34RNoOdKbspbmyX468ze4TyNtwI2tRE5lwLSxLfejRMW/1M9BqlJEVxgp7f372HtnbcH32U8bG8nLafuyvMQ1EIGVbyHDdwYoh6DZ+gxLywqaJZF3D+d7iIf/veg=
+	t=1727653449; cv=none; b=fs0bTNnHSZkulYa6hn2LvgqlWD0/AoB88rWGfy63JK4zzER4S9prj1ix6Hm94F+LpJqhq/PPLRVFY3woI5z8cf+rk1bMOEV8ij89YocDAfuiQDEqlzbz4TTRsW6Bv9vpLYU3BqUXk5IVLsOpLStRf6KKTZlU2afZOBxePTfpBic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727644248; c=relaxed/simple;
-	bh=wMsGjuR25mp/aKLm5jdecrsXtweYnx1xsGjy980bAAc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pGaYsodOr8oYGRcVrEQeKDakLvk2oVVIJtLBu1WDevQZiMTzLTY/NPqL1h5NzoO5hzol6Lxf5V9XgsNstGUG+VcbgQ4i3E3kPIUIbUDPkPpXIpSDY/wDfIxZBqYj9RHDD0tS8npUGaojfGktitE2I5eA0mYXn3Dcuu6d6fUdVaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ailfhA+n; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727653449; c=relaxed/simple;
+	bh=FVrhM8NHC5GS5UTOWegUXKC6RupKovE6Otom9uQ+Jjo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oGEzPCQb29t5umPmCOjtjCNbbNtDoqtakH9wVwgpyzmuOLVRpBBE8QtjUjawZtTvcSJ1L2sBaC6GN65A9be0S6e2dBzzGxeJnYx0cCv+o3hKUH0FsmaY4on17Ow90uelL9xaJjS6P86ocJQKGipqOOXXmFYKHVOA5XNVyU7BQew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=gU+686P1; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ailfhA+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7716AC4CEC5;
-	Sun, 29 Sep 2024 21:10:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727644247;
-	bh=wMsGjuR25mp/aKLm5jdecrsXtweYnx1xsGjy980bAAc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ailfhA+nrSea6SElDG0U/Cc1y+oPS+KYgI+z5SL2gEArxGC5LYugpzbRJJatos/9Z
-	 S/i0zrIfP+kphjMaWAPypt+P2VwT11EqYV0l4iANf1gioqO55SKUBfSD3hCvjhjE9o
-	 tDQkJqa28yMR47oW74Sk+gnh6mDUKkBJwwD60DbpWCbnZMQT8522dL15l/tev4KYnc
-	 wcI6/of5M1WrUVWEA1oMrpd96WHHlaHKbGRPJ6rlaBVZl3RvXwEEPYfG9a2eq2A3c2
-	 7vRPYtY883MHedfVVovhDSvwxWm6LJxXtEApVM9hvE1mjjHcol+WslyETsRNIuj51n
-	 O9laykBPzogXQ==
-Date: Sun, 29 Sep 2024 14:10:45 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Kees Cook <kees@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] hardening: Adjust dependencies in selection of
- MODVERSIONS
-Message-ID: <20240929211045.GA2111654@thelio-3990X>
-References: <20240928-fix-randstruct-modversions-kconfig-warning-v1-1-27d3edc8571e@kernel.org>
- <CAHk-=wgdQ5TjbXX0D568GZebYnt5ZuhTW5-ffeim-aoyT9LnbA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="gU+686P1"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6e21b4d7236so31443877b3.2
+        for <patches@lists.linux.dev>; Sun, 29 Sep 2024 16:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03; t=1727653447; x=1728258247; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tNjCSozQpyjhKHt8noJZBVS5dOtxOJ5KLOb5B891m4w=;
+        b=gU+686P16dmqZEUxx2bpX/pWOYqdw1bUkROzu21OZ7P2WTSpaMsReQIxbHxLPnzGnK
+         41VUow+19bTbZtaMp+8LO3HtN7FdCdpryY/25SErMegdBXiBOwxzJxiEYmYE0wtC1IQ6
+         vLwtnD94bihQUUiSS9Aw7CmtOioPRL/kdUNKhbr6nlypnzMc9jy1d3SOwWhl53OgBJcZ
+         +++Poxl34r4bGTjZvBAu2Zm03ar/8u8mVcYvlw8D4LQpTR72yFkO5nUFqukhO1XCj2K4
+         ylg1MSTKfDMqyxl1Mw1W59FbUyQF3wC+ns3mKDC8shQJ9zprsF9GAa58S4F8yMR5zRIX
+         qR8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727653447; x=1728258247;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tNjCSozQpyjhKHt8noJZBVS5dOtxOJ5KLOb5B891m4w=;
+        b=Kyxz5s71T7snPblv+oBR2zF25cvx5eJXqy9XmIyXlzhlejEi2+DeMWVv8hf/y/FuHE
+         ESHIUBf/mxt2mvXXU+KV3uZncSUYEkPYCafinuf7ot16EGaVk7syl5Mrris9WvscsEez
+         et2VA8Il9K5ZvDjRAzR7a7KuXDAZzPwy82agff8gwj5BPLZ2My1nY5GMpdHCyVTprIV5
+         uMCquDp3xdHJkSkeKfH0QPHvz8fpNkff5KQkWMdgYQcyWqLMV4x5gH7v/rEHnwGvh/0a
+         GdRKgLhvdFXqpEpAceP0765niEYK5dcI1WHLamV4+Ed/bpgSNY+qOzBBTNRAibJMsYOq
+         pGVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWClMwgSUnFlIoZqTz3XOiEqaASoJzTSvGzQrrVcXcul3FCrBBA29A+eSNncG5Hh5WDODXDJGLU@lists.linux.dev
+X-Gm-Message-State: AOJu0YwY1ZoydKvL+H5A9wfLGvsYNG+7/cPkWv7D24C6kSHw6Hfb0uaG
+	vu1DAu3tiyQCz6PrCfBd4A30wVQEkc/GyHhg3ntNW3aE9COaTu3EPD3GrAGNGG1OJQp312feVUm
+	8uM8vxhOzK9trvpEjvvt1gxoMGGZt6cKQUa2AHg==
+X-Google-Smtp-Source: AGHT+IHVbKuHDSIp8LlUP5X8+oAC4L1kn9ulGZiSovJ1012be+27o8GOlOPN94mq1QBLToyjhF5KtnAbvafSANnc8Cs=
+X-Received: by 2002:a05:690c:340a:b0:6d3:be51:6d03 with SMTP id
+ 00721157ae682-6e24757225cmr53231907b3.23.1727653447032; Sun, 29 Sep 2024
+ 16:44:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wgdQ5TjbXX0D568GZebYnt5ZuhTW5-ffeim-aoyT9LnbA@mail.gmail.com>
+References: <20240927164414.560906-1-ojeda@kernel.org>
+In-Reply-To: <20240927164414.560906-1-ojeda@kernel.org>
+From: Trevor Gross <tmgross@umich.edu>
+Date: Sun, 29 Sep 2024 19:43:56 -0400
+Message-ID: <CALNs47syDKaJcAZ=PF6vWHgSEg-f3m5Tmm_H2C40TfoAtVPezQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: kunit: use C-string literals to clean warning
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 29, 2024 at 08:35:44AM -0700, Linus Torvalds wrote:
-> On Sat, 28 Sept 2024 at 11:13, Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > MODVERSIONS recently grew a dependency on !COMPILE_TEST so that Rust
-> > could be more easily tested. However, this introduces a Kconfig warning
-> > when building allmodconfig with a clang version that supports RANDSTRUCT
-> > natively because RANDSTRUCT_FULL and RANDSTRUCT_PERFORMANCE select
-> > MODVERSIONS when MODULES is enabled, bypassing the !COMPILE_TEST
-> > dependency:
-> 
-> Argh. I should have checked, but I didn't think anybody would 'select'
-> MODVERSIONS.
-> 
-> That's such an odd thing to do in general, but I guess for RANDSTRUCT
-> it actually makes sense (since a plain version check is nonsensical).
-> 
-> Now that 'select' statement is truly crazy and another level of odd
-> duck, but I guess it still makes perfect sense ("give me the build
-> coverage, but this is never going to be run, so don't bother with
-> MODVERSIONS").
+On Fri, Sep 27, 2024 at 12:44=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
+ote:
+>
+> Starting with upstream Rust commit a5e3a3f9b6bd ("move
+> `manual_c_str_literals` to complexity"), to be released in Rust 1.83.0
+> [1], Clippy now warns on `manual_c_str_literals` by default, e.g.:
+>
+>     error: manually constructing a nul-terminated string
+>       --> rust/kernel/kunit.rs:21:13
+>        |
+>     21 |             b"\x013%pA\0".as_ptr() as _,
+>        |             ^^^^^^^^^^^^^ help: use a `c""` literal: `c"\x013%pA=
+"`
+>        |
+>        =3D help: for further information visit https://rust-lang.github.i=
+o/rust-clippy/master/index.html#manual_c_str_literals
+>        =3D note: `-D clippy::manual-c-str-literals` implied by `-D warnin=
+gs`
+>        =3D help: to override `-D warnings` add `#[allow(clippy::manual_c_=
+str_literals)]`
+>
+> Apply the suggestion to clean up the warnings.
+>
+> Link: https://github.com/rust-lang/rust-clippy/pull/13263 [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Yeah, I came to the same conclusion on both fronts (perhaps I should
-have actually put that in the patch description).
-
-> So Ack on the patch. And now I did check that there doesn't seem to be
-> anything else with odd MODVERSIONS Kconfig rules.
-
-Thanks, it looks like you'll get this via Kees soon.
-
-Cheers,
-Nathan
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
