@@ -1,87 +1,115 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105896A332
-	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 05:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12192770B
+	for <patches@lists.linux.dev>; Sun, 29 Sep 2024 08:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727586667; cv=none; b=p6od4vFZjncVjRyWnApPZvAZkyHsy1I9RlLwF1tkgsErFl6a44TGo6xRsAUjZB5pEheq/MrBcL2qf0Z2cbCE+PHjjSBCA1wDq/rQQPhDYqp4+/cqMpXZDOqhJzLNYozBBCy/Hgb8xnBTmR/Dp/ItlhUoZV3xeBAQQTYZhsoDWb0=
+	t=1727598029; cv=none; b=C+59UP3/NUq6n0YoqqL/OK4ZUVSDy1YtOgh1jSSEhLX3gpipNdpvWPn9rvpuCZF3MIhbh9nL5i5aNKyR5XSVLrDxmOyW6XNpVBQtRE30DrRAdNRAQ7n4Gur1w3MqYp00ggNntUPg6lQp8YTcDe+ODhhF1etbys8jn24QPKNvThM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727586667; c=relaxed/simple;
-	bh=RuRZYVvei28eDcQ036NK5OQHIXSS5Y8RpN9am0sKM4c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HpJGx2rPvah+MLCG3u3OutNR3UJ+qTK0eGWPd0zpW8klx2puFNUCgksdTr4kZLatm7sutNO6CZoQmIHH31NaM0w1KTZu/TzVn8MWcmO40MOD6JbURmMgC6Wind1CCfX+BdZKTy+Og1F/9KAYg58pWkmna/DIDXFKAcL10bveevk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=R9QnFunJ; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+	s=arc-20240116; t=1727598029; c=relaxed/simple;
+	bh=I13Fpw5uTMenjXWyGuatTrgB1UAtuVzq60jSYiuNPGQ=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=aXZQgBKpiiBO5yfk/BY2uDBHb4OTGb18njX1TQkYnxEIhBIRW9BFJdjbGDOGYpj6a7Z+uufR3qtcOOzG7tybh6oqbFNWbb+kRT9DzDo/8+4Onnlo3MMZOR1ap9ElXa0BP7cuI12b/KE6iBAiH3H7AF7i+NG7e6BhX8koSBLD0Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=agxaYVdc; arc=none smtp.client-ip=44.202.169.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="R9QnFunJ"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ddfdeed0c9so26736397b3.2
-        for <patches@lists.linux.dev>; Sat, 28 Sep 2024 22:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1727586665; x=1728191465; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RuRZYVvei28eDcQ036NK5OQHIXSS5Y8RpN9am0sKM4c=;
-        b=R9QnFunJIzmDMTwC4XoWiEBW84pgYoKVHZAdh6aLaL4zn6uTz1wXs7w0NbPVtaodD8
-         pGBrOmxjeC66R9oNCFz9+/exh578bypswt6Fut45UrrgdQekBV6CyEsFYaxtb001VMS2
-         yG5yPBJ2QGCRXL6iLQPzoMmxDil4guESvfwqKgT4BvLKUqL+Yip7/gqXXSIl/gFiVkmV
-         Df28bhHp+9IghlFVVaOVnFOsuGNi7+BeiXSK5MdoKq2qE1p41iUngjO2xM7ylN6mxtpk
-         RFYLl634ydhMfJkTxyQwlTYbk+84ldoXSOGMA3n1J31Tic32ibhYARSWnkOyo8zFWu2i
-         d43A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727586665; x=1728191465;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RuRZYVvei28eDcQ036NK5OQHIXSS5Y8RpN9am0sKM4c=;
-        b=iH8TFBAd72d7fCD6wl5o2yG5ul36P7iVj5ZFkMLPUsw4V9BHI0yttPFzYro5nHkRpZ
-         y5kF3pndqrcj04CBlzP6v7KL4EmSUJprtRwvd0LIhqTAGkRzYsydoDmkl8CfarkhCEOe
-         L3nu38XXSf2I7U45PmGfWM1hdJiwBE31rhS7HcM2MwTv3NgTM0AAULkBJRYOYmfHeUJ2
-         i3cRJJ3/SCFZWmG1hajrUFzlkkpanN86Gxd1DYmfdgtVPBTzpJcXJpxY7Gx6kbBmOmXO
-         yiJ0b8ht0+ne+l6xPjH6pymDtDcxOxOAthWz53UCCelS2OEg85rki3aAoqbN6qzvcarQ
-         d0NQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUQWMWLnhScSJFi7IMtuWMceoRb4Oz9GLVnjvh905ErqDae6XnEn4tYKMnsXgEahQYofF8X4fWy@lists.linux.dev
-X-Gm-Message-State: AOJu0YyE08njbHaujHTD9iU+YRFdQF/idb/UG2NWQQO3BoIhjNqQ1Dmi
-	qXo92U2L9SS9pU4TWuILW2NR5Yx4mluDhyjd8V/7eFrIACBjLQfmbeCRlN/P9J9sRt4K5AG7tWv
-	JkX1DP9WauPOhNqIRVu/dPUOo31roLWIwBU03ROvXZvkXJlQ5IxNajQ==
-X-Google-Smtp-Source: AGHT+IEbuPLIS0r0UAYXOL55sJ7MsrTfAySS4mECInBKGc5OhJ5B2QgDR/M498wdGIiCmNjzbtv73pF/ogEFQj1XJkw=
-X-Received: by 2002:a05:690c:26c5:b0:6b4:e3ca:3a76 with SMTP id
- 00721157ae682-6e247571063mr46680857b3.19.1727586665054; Sat, 28 Sep 2024
- 22:11:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="agxaYVdc"
+Received: from eig-obgw-6008a.ext.cloudfilter.net ([10.0.30.227])
+	by cmsmtp with ESMTPS
+	id uVWis4T7UiA19upACsTk6H; Sun, 29 Sep 2024 08:20:20 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id upAAs37wVFyvuupABsn3X2; Sun, 29 Sep 2024 08:20:19 +0000
+X-Authority-Analysis: v=2.4 cv=TZeQtwQh c=1 sm=1 tr=0 ts=66f90dc3
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=apkkSM20mLLOJUAzT4/TLg3b+haxaagzswG122a304E=; b=agxaYVdcA/n6n+2JXHxQ90sX0K
+	NmtNyqreQRy41nE+RizH/RmqiSQ8Iv/WUTH7tBlS/jUxLAfnL7jkBapc0XRMru4yikC1Nrav/pR+p
+	F2tB8GUbsRYtCdf8aPtpnIqpojDbw6EyDM/TbZYZ5Mb1TGgG4ReM/ZgYe5zhmjBcLpOPST+J0J9BX
+	rCEYZfaS6MDP+aMfkOdsCFPmftMLHosVCxOZHYCdiMaNvkSe4Okt+f0LYWA2AvrIpvQM/SuuWLZC7
+	//05hlrcmijbvJt3rRFSl4kg1RSZDgPLih9cyf5405YP3/erCMZBqyCCSoCwX/fZu/bLTXzy5isyk
+	mq0eCfoQ==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:43234 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1supA8-003kLV-1z;
+	Sun, 29 Sep 2024 02:20:16 -0600
+Subject: Re: [PATCH 6.11 00/12] 6.11.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240927121715.213013166@linuxfoundation.org>
+In-Reply-To: <20240927121715.213013166@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <7e51fe90-d666-1b82-5b5e-e97cabc95ff4@w6rz.net>
+Date: Sun, 29 Sep 2024 01:20:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-19-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-19-ojeda@kernel.org>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Sun, 29 Sep 2024 01:10:54 -0400
-Message-ID: <CALNs47vPzH7CSjRh=jW0xNTh9=oajUs4SAkTE2OHLd5M2e065A@mail.gmail.com>
-Subject: Re: [PATCH 18/19] Documentation: rust: discuss `#[expect(...)]` in
- the guidelines
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1supA8-003kLV-1z
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:43234
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfHBDzv/Zh6E7ZJ7NdC5Ebo8SqSMqZRZeO8TcQiLQj2/BHWbMIFKQ4cUgh35XmwLiS+dh+Nrjps0FF9bqfmqTC9lwDzbMHQP+Bwi14WEzK6epU6DKo9tr
+ CrLkgxpd44JdtpUGPPUMfX7yqB/C2h4tY6pkTy8N9eiwdLM8eiZHCVyLKpk5ncwbzl32JXnV40lBvA==
 
-On Wed, Sep 4, 2024 at 4:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
+On 9/27/24 5:24 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.1 release.
+> There are 12 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Discuss `#[expect(...)]` in the Lints sections of the coding guidelines
-> document, which is an upcoming feature in Rust 1.81.0, and explain that
-> it is generally to be preferred over `allow` unless there is a reason
-> not to use it (e.g. conditional compilation being involved).
+> Responses should be made by Sun, 29 Sep 2024 12:17:00 +0000.
+> Anything received after that time might be too late.
 >
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.1-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Would it be good to mention that a reason can be specified with
-`reason =3D "..."`? I don't think we use this anywhere yet.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
