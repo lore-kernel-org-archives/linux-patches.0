@@ -1,101 +1,135 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0490138396;
-	Tue,  1 Oct 2024 08:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B959F1CBEBF
+	for <patches@lists.linux.dev>; Tue,  1 Oct 2024 14:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727771097; cv=none; b=IcxIPzyt9GG74rJsw5AGYL5DY5AFWs0xLhGZUrXHZBuLyyOGhE8U1Dyq2byreby4buZ7NRbG4gytdZaVWkTcpAZMska5JZZI1ra3BD+jdDD18u/oq9ix9ZjBzR9riU3NYGztPen9ou310IUn5IjDDMHVjUW7FnAqraqpnGE4MTY=
+	t=1727792041; cv=none; b=OidVqxbB1HGJ5PW4Dcq93Ej7PncZmIuj+Clx6aKPdfpZQ6lO1KGFeecVWby1tqq7nUlzw3Ys7t5HTtsg/PDa/U/SqRPDNdThj48O9XcFSxJOEZAqLkgoHY98m9S86EMJn04xRL7KP9qKrA7RJcEFPk6TCbWXmdARRREzIUzf4dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727771097; c=relaxed/simple;
-	bh=jjKt8LVt24y6tOoj2LzH+0HxT7QfFbaYDPX8SaFuQvY=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=owARg1/xweSqPAPUYhEyqr5q6aZ6jGj93g1+3Osysc1TvB5FVD+B0fT3gJT0esfNWB8p3Fb4VUP/yuJuGTIvl/sxVPeRL8yoWWf7OThp3Ai6JjGjWandJhkFj9K8vgVJHB9ENQZj7ZXYoQh4dB1y1g0PE993qF9Dt5kZ3hEpVC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pYI7hjN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727792041; c=relaxed/simple;
+	bh=+FKUddij/gxQNpHjW2/b65NyFWE/k6zemBV6DcE0H+k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G8yQFqCUkUCMzR8I9Zua/N4r49cLpRh2Uph9Uk5eDI32EczKodyjPvh3KTJEA7Xu8AYIlIDBXKn/65XvQbtsO9OojhrEDVkYCDN+0IX37YyJRfyYtWEmpe84koD4qoTtoQwxFW681ulOA4tKXX8z7xFaJ2kpXrDZGArmTq1eu1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=H/9exhTP; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pYI7hjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842DAC4CEC6;
-	Tue,  1 Oct 2024 08:24:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727771096;
-	bh=jjKt8LVt24y6tOoj2LzH+0HxT7QfFbaYDPX8SaFuQvY=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=0pYI7hjNY/bdZ/VTVu8ycMYdFSZ4Uk6xnZqlritFZGftU6OPcOrWjYbQ38AWvC/ZS
-	 fQY672iYjSLn+ldJFQY+FbdSpQNBbTLGsbYA2O5tdaE6FcWpOMJOGglobFHBhsHCpV
-	 +Glg4FxoHVIUUouUYl2Z3vzyLJ/QeCTdR/OWcFxA=
-Subject: Patch "[PATCH net] Revert "net: libwx: fix alloc msix vectors failed"" has been added to the 6.6-stable tree
-To: davem@davemloft.net,duanqiangwen@net-swift.com,gregkh@linuxfoundation.org,patches@lists.linux.dev
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Tue, 01 Oct 2024 10:20:55 +0200
-In-Reply-To: <20240930073327.130343-1-duanqiangwen@net-swift.com>
-Message-ID: <2024100155-igloo-willing-518f@gregkh>
+	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="H/9exhTP"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-2689e7a941fso2677463fac.3
+        for <patches@lists.linux.dev>; Tue, 01 Oct 2024 07:13:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paul-moore.com; s=google; t=1727792038; x=1728396838; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GXNRv4R5VmvPOl/Xct8Si1vB9z90P2avYuEV2rget7M=;
+        b=H/9exhTPbG/U02uGY9by0fUf7UXIPyktl66pUqQmn0UP3yEr1TvTrlwpfNEurw0/iM
+         HsbxOcey0Ai1BPXCuAHdemgfc4UkfjF0DCQrBU1cNgGWvxH8BDBZmIRxO8NFsCvxDr+l
+         mGVST2ZTpwUZDH1fPNuXzR9/+wmNcxb2rWW9Tbo5PrqdEA+gtXjfLWlts/JPOc1vHjXV
+         pzhsfrZd0BycGucsX2oWzOJl5GV3nEDzC/uAUESpE0d1j5pjrW98rscZSoyW+uRva62H
+         sbO/pw1qbmA1G8mSn890B/n+sioiKEHDRSOUtBd8P2g1TM60K5odi47r/SfqZ+sZVW5Z
+         w/9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727792038; x=1728396838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GXNRv4R5VmvPOl/Xct8Si1vB9z90P2avYuEV2rget7M=;
+        b=fI0A+9QaA3S/Zzz3pjOeBYhvYcviZD/cGQ3lphJoIqwOl7ot7eG0HUE+FphWwsdURI
+         9q/Dl+iTASvLJ9Wm9/kNmmninhoJQA6PJWzliGCSBuQ++2lrXhMlNtOsOItn4X/PdBPr
+         1GgRn7TG3bBAAHl2piy+pZdmAvdsg/GgcoyQZprhPLcK1a5QLqNt/dI+CDxZRbSEWUFm
+         NTPnkLJWmr7jlFIll+903En2zLk4kacd80o2VVVSZkgYhdxlUIvBiQJFPbKme0JriWpZ
+         bUcZHeDd9P4nQGsxlXchwqSnGgya87OkLu37OelO9k5PYpvfd/j9WnKThlGy09lHPNbh
+         gbnw==
+X-Forwarded-Encrypted: i=1; AJvYcCXQoOCIIHyjBGWX0vzwYatybSW+f9AgnwQobzoCJRo0aXygD/grpZu0ED6xJX0ekfTHZIDwAysI@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw/qTi+PCt9z/H0jhGR4+9chSJXiZgBetPxLe3Nr0Y7+bxk6RuO
+	R6yBsWwJVgDqLHZqDNp7LsX/R6QMTLuVc45wkGpklfh2N6h2SS7P/IIkwWb5/HgfymqLNxj59iE
+	+4YIY2pLr/3GCHv27h4X503+FkFNs4wYSRHnR
+X-Google-Smtp-Source: AGHT+IFMGvyp3IY12n2ve9jQjiLs86OcN1H193F2bZNg+PAFq+kScDkFEWvxGnsgYNZpsi7YFM4vdBKzpoYT5KslJgA=
+X-Received: by 2002:a05:6870:5b88:b0:261:1f7d:cf6e with SMTP id
+ 586e51a60fabf-28710c45c43mr8810649fac.41.1727792037867; Tue, 01 Oct 2024
+ 07:13:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+References: <20240928-maintainers-security-kconfig-hardening-v1-1-c8c64071cc02@kernel.org>
+ <1923f716100.28a7.85c95baa4474aabc7814e68940a78392@paul-moore.com> <20240929210004.GA1300946@thelio-3990X>
+In-Reply-To: <20240929210004.GA1300946@thelio-3990X>
+From: Paul Moore <paul@paul-moore.com>
+Date: Tue, 1 Oct 2024 10:13:43 -0400
+Message-ID: <CAHC9VhRqevog8t4+D=t+d7+bvMs9jrW99Kvd_JF-1LSH0YN2VA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add security/Kconfig.hardening to hardening section
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Sep 29, 2024 at 5:00=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+> On Sun, Sep 29, 2024 at 10:20:59PM +0200, Paul Moore wrote:
+> > On September 28, 2024 8:26:28 PM Nathan Chancellor <nathan@kernel.org> =
+wrote:
+> > > When running get_maintainer.pl on security/Kconfig.hardening, only th=
+e
+> > > security subsystem folks show up, even though they have never taken
+> > > patches to this file:
+> > >
+> > >  $ scripts/get_maintainer.pl security/Kconfig.hardening
+> > >  Paul Moore <...> (supporter:SECURITY SUBSYSTEM)
+> > >  James Morris <...> (supporter:SECURITY SUBSYSTEM)
+> > >  "Serge E. Hallyn" <...> (supporter:SECURITY SUBSYSTEM)
+> > >  linux-security-module@vger.kernel.org (open list:SECURITY SUBSYSTEM)
+> > >  linux-kernel@vger.kernel.org (open list)
+> > >
+> > >  $ git log --format=3D%cn --no-merges security/Kconfig.hardening | so=
+rt | uniq -c
+> > >        3 Andrew Morton
+> > >        1 Greg Kroah-Hartman
+> > >       18 Kees Cook
+> > >        2 Linus Torvald
+> > >
+> > > Add it to the hardening section so that the KSPP folks are also shown=
+,
+> > > which matches reality over who should comment on and take said patche=
+s
+> > > if necessary.
+> > >
+> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > > ---
+> > > MAINTAINERS | 1 +
+> > > 1 file changed, 1 insertion(+)
+> >
+> > For the sake of casual observers, the reason James, Serge, or I haven't
+> > merged anything in Kconfig.hardening isn't due to any malicious intent =
+or
+> > lack of appreciation, rather it is out of respect for KSPP and not want=
+ing
+> > to step on Kees' toes.
+>
+> Right, I did not mean for this to come off in an accusatory way, so my
+> apologies if it did. I merely wanted to codify this arrangement so that
+> patches get picked up or acked by the correct people in the future since
+> I had to send one earlier and I noticed it did not match reality (with
+> the data to prove it heh) ...
 
-This is a note to let you know that I've just added the patch titled
+No worries, I had hoped to make it clear I wasn't too bothered by this
+with the 'for casual observers' remark, but I guess I should have been
+more explicit.  I wrote my original reply simply because I've seen
+people take snippets out of context far too many times and I didn't
+want anyone to think there was a problem here.
 
-    [PATCH net] Revert "net: libwx: fix alloc msix vectors failed"
+> > I've happily merged KSPP related patches to those subsystems which I'm
+> > tasked with looking after and I plan to continue to do so.
+>
+> Always happy to have as many KSPP allies as possible :)
 
-to the 6.6-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Hopefully the LSM folks can consider KSPP as an ally too ;)
 
-The filename of the patch is:
-     revert-net-libwx-fix-alloc-msix-vectors-failed.patch
-and it can be found in the queue-6.6 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From duanqiangwen@net-swift.com  Tue Oct  1 10:14:13 2024
-From: Duanqiang Wen <duanqiangwen@net-swift.com>
-Date: Mon, 30 Sep 2024 15:33:27 +0800
-Subject: [PATCH net] Revert "net: libwx: fix alloc msix vectors failed"
-To: stable@vger.kernel.org, patches@lists.linux.dev, gregkh@linuxfoundation.org, davem@davemloft.net, ashal@kernel.org
-Cc: Duanqiang Wen <duanqiangwen@net-swift.com>
-Message-ID: <20240930073327.130343-1-duanqiangwen@net-swift.com>
-
-From: Duanqiang Wen <duanqiangwen@net-swift.com>
-
-This reverts commit 69197dfc64007b5292cc960581548f41ccd44828.
-commit 937d46ecc5f9 ("net: wangxun: add ethtool_ops for
-channel number") changed NIC misc irq from most significant
-bit to least significant bit, the former condition is not
-required to apply this patch, because we only need to set
-irq affinity for NIC queue irq vectors.
-this patch is required after commit 937d46ecc5f9 ("net: wangxun:
-add ethtool_ops for channel number") was applied, so this is only
-relevant to 6.6.y branch.
-
-Signed-off-by: Duanqiang Wen <duanqiangwen@net-swift.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/wangxun/libwx/wx_lib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1585,7 +1585,7 @@ static void wx_set_num_queues(struct wx
-  */
- static int wx_acquire_msix_vectors(struct wx *wx)
- {
--	struct irq_affinity affd = { .pre_vectors = 1 };
-+	struct irq_affinity affd = {0, };
- 	int nvecs, i;
- 
- 	nvecs = min_t(int, num_online_cpus(), wx->mac.max_msix_vectors);
-
-
-Patches currently in stable-queue which might be from duanqiangwen@net-swift.com are
-
-queue-6.6/revert-net-libwx-fix-alloc-msix-vectors-failed.patch
+--=20
+paul-moore.com
