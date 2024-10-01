@@ -1,103 +1,96 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF13319F411
-	for <patches@lists.linux.dev>; Tue,  1 Oct 2024 22:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F711CDA31
+	for <patches@lists.linux.dev>; Tue,  1 Oct 2024 22:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727820755; cv=none; b=lo1yjtrCr9VsAwpDAtua4UNl8MLMnfOSaPtRZBuQpm8teySr0xMbEL2yK4sqDVmYwr6rL0Ecb3g3ZFOL+GqynZPO0Thvv2rrw4lCYKGosGljCAOBWnvhMqtQXaDMRkTQ3yP1HQGRCdiDzJfBRhxxpzMIb6dMuE81DIXSQu1ejl0=
+	t=1727823521; cv=none; b=n01zkjt3Q54i5bk3avs6zr+L9d3FD6aOa4Fwvdu1M4rnLT1HWji9huGCYh7F6kWZy+oCwDqRn6OGQJyeID2UfwSci6mUU4wlLSypOg8+W97PRNFo89NsfkY5KIgDVvZQe25Q461nqDlqV3YmsMhcybdKXaNpaBu0Shy2vnbpO1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727820755; c=relaxed/simple;
-	bh=+Y4UDQ0SBLFXK+EKaoLuBpz9TvjY4PQlfPV4NBauuBw=;
+	s=arc-20240116; t=1727823521; c=relaxed/simple;
+	bh=GcCXpoXuLQ65zsvFzzvLaNncg0Knqr7CMFRJpjt6oO4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dFYYDu5Fl15QB9eUHV7JhSHq63mnbZnbwjyCl4ZeikjwG/obacEanZbL1X5s88276ieHpdWChcmWm8jM/tBBqWiauDxW35T4/liFXFNFww9P7yCMo8SHOigIOJPklv9LHQAGKvEqdhFODWcC/BJ3gZI2ESP1pKNBmBq6g1R2ULg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bfjvg3DW; arc=none smtp.client-ip=209.85.210.169
+	 To:Cc:Content-Type; b=tv8C98bGiPRsHLL+UN1xhLZ9GV5ypwuZlTSgzuebRj02OcMVcbSGJ3RW30pZ77zk20K4lX6CVq2Y8IPaGBjRNywpGdBtqOuUCXdh3pz0MYai3XQBGCvjTw0pgwS5T3MgKCuyXKCbBVTLE+SkOTImM/zddL0XfFEEmUzTO/J6uvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O9HWMrV0; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bfjvg3DW"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-71790698b22so856639b3a.1
-        for <patches@lists.linux.dev>; Tue, 01 Oct 2024 15:12:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O9HWMrV0"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2e0ad414718so1126960a91.2
+        for <patches@lists.linux.dev>; Tue, 01 Oct 2024 15:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727820753; x=1728425553; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1727823519; x=1728428319; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Frfh6hBj6DUTGEMrubT/n9jUTuny2AERvO+Dq7ZfqEA=;
-        b=bfjvg3DWjYuhghB3n6eXirwhsR6g6fhxiNp9iBVcZ17/H7rybJiFw57FFotxTSYEkn
-         qSZfYcZp+kpJcRUYFl4RHTSMcLlK7kJeUNiIUnl9LKosVx4Eho+ujSbMT+Z6bdU/wnGZ
-         V0XuMeIAlwA+yYyW3E0DBYl2f6LZ3J6Fv9EYaoAfeUB6FboLJG6DoC1THgFTyDkAvhfd
-         wsWM8XZhUf/cGsMXxyU/7GT9iAE8HySAcw5eMF+yIM/p+zWy46knEetFNf43A2jmlzxm
-         WG748/0hQYece8UQKBu+L+T1nJAb8s9OWVGd7UtCNQfjkS5Aes5calZRZoJgDSd17VEb
-         +HvQ==
+        bh=GcCXpoXuLQ65zsvFzzvLaNncg0Knqr7CMFRJpjt6oO4=;
+        b=O9HWMrV0yVtZ7whzy2mDEJuuE5GGf3w5s00KJyMO8pVnNSzQptMX5kRWEVbMrZscoL
+         meGWKYqDEO7xLQju1jHLWtxSEo4ZITMDfUd/S+ubqaFXKCXr5dM2ibrNRheuJ8qpWpNe
+         WRP1s9DxTKnUnREBqepJWJ1wihLLWpLTwggO0QU9mKWj/5h3b/tYL0FMHUk+CW3j5XqS
+         bQYh5yAZBFcw+R14KCVQeph3pwdnpMjaypVvP6WvRCjLFbMtOUsRWyhkdneKoCyLFRVI
+         lYn71z76KXdCxv2CQ9BxcrptNYAt0g71JYDW6tZQPhThSfMClQjj9C0fH5JLY537flJS
+         fbYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727820753; x=1728425553;
+        d=1e100.net; s=20230601; t=1727823519; x=1728428319;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Frfh6hBj6DUTGEMrubT/n9jUTuny2AERvO+Dq7ZfqEA=;
-        b=d0AJjuearwRNTLp9PfWe7OyAH5K6f+8b+S+VR8Qy8YOPEmdHeMI3zpU6XybBiLbvqE
-         cR7lQo7UPduQ9DO8ISoAJZSqG93qNVWm7koCms+HtrQA3QhnuDFH5UHSU+hvXK6u+ASL
-         DnS6+vFEfYzLtCHyyY/VPVRKSNUa2yzj2MVvD9xmflzCiLUCd66tLbVTJLrBrUYtiuJh
-         bq6sHKtCTL8kH/fDCfgOqZlIOO6XfTOjbfWmz2TBLSC0OHpNkPtCnPY3zsav44ccgwo+
-         p+V6L7tEXk0sFaqCVUGLrP+A16CGquijtog5e4HIAgHpbk70HCVTWefiUpisb8Ze9I0o
-         0Tow==
-X-Forwarded-Encrypted: i=1; AJvYcCVvNEKlEWKS8WbsUl4TD/7sL8+z6cjzXr8Ea3KHjA1Uy5VoKvPbZ12XMP/DqXxnVTN2AvYt/tow@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxs5qqC2epVWzLfp+aJzxyUW1kKlSijwfnTG+pEi+FSm0HSzUT0
-	l60AXjsTMVsswszmOjmmkyGwcfiGLwwAg4AAyHzfUR1bqt7potbxZuzl0BgW1YrRlcu1MwC/RT5
-	zdoqEG0p8IbZxYBp8OiECIsXilSY=
-X-Google-Smtp-Source: AGHT+IHSa0R4OQIO3Y/6fLRRBq/Xo5ODccew70DFb/Dr7Z1Sg3pF8k4ffLa067F2mmhJkkeuuAW91uzXNwCGzvJB800=
-X-Received: by 2002:a05:6a00:23c9:b0:718:e49f:246e with SMTP id
- d2e1a72fcca58-71dc5d5cce5mr771264b3a.6.1727820752956; Tue, 01 Oct 2024
- 15:12:32 -0700 (PDT)
+        bh=GcCXpoXuLQ65zsvFzzvLaNncg0Knqr7CMFRJpjt6oO4=;
+        b=lThsnvJ7DSHDN2C8SEYToDTQFYIVhjOTwLEFR7VS1BwxfkSAJx/XVLHe8yHcc7L2wB
+         iU31AUfFkififYGMUYLCofDdSTxhbCRVYZC7LC4JlCCTduykUk/H19gGoCWMBUThYOZC
+         Zob5I8dcYp2vrRukA9Db+gpx6LcB/maluF5c/YO8T62xkn8crbYVbNz3MGWvrH2FcR67
+         /U/xnrQqzGw7lD6ZVqNyzW+sgH4KriS5BrjSlzVIgBSb9kprBgp1VEv6q9eQAdlaarOK
+         GPgZQZArjLddhKcek/Nwo2BxBNYK0nfjS83GjX/nX7xWrajvCfklOW+ORWX1oI0tJSzc
+         CB3g==
+X-Forwarded-Encrypted: i=1; AJvYcCW4Gwb1ZLk9gACmRvjRhgP6suoLoBX/dOmTy5TpmB9fdTANbuN2/kofVCoUXNcKkmahOu0HXQkh@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/wJh0ejj6Wkc4OAFIEWPNScDNdHhH75COf2pBMOGWl4ojUi3J
+	ayt2kmoSyBjxK5IVhGn48kd5hmBFz5CGfmatz+ZzFpor3vDavQCoUM1RZSJ4luD+v6Kbf2A80Zd
+	Uu4J20jkqnJHD8mhpMMRVch4mehEeZdeDl23SKg==
+X-Google-Smtp-Source: AGHT+IHpaFbsZOabANZ/CJzRes6xXXQciJO4D+GF2dnFUH6bN7daLXhvMWbeLXhJOcjuqRLGFQ7VvzUeXuMcEWXDeSI=
+X-Received: by 2002:a05:6a20:a129:b0:1cf:2be2:6525 with SMTP id
+ adf61e73a8af0-1d5e2d25ea7mr965934637.11.1727823519000; Tue, 01 Oct 2024
+ 15:58:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240927164414.560906-1-ojeda@kernel.org>
-In-Reply-To: <20240927164414.560906-1-ojeda@kernel.org>
+References: <20240925140600.275429-1-ojeda@kernel.org>
+In-Reply-To: <20240925140600.275429-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 2 Oct 2024 00:12:20 +0200
-Message-ID: <CANiq72k7ttdioXrto8VRJL+q2F9EjuPxhOR9HgpwdM+ZySM_+g@mail.gmail.com>
-Subject: Re: [PATCH] rust: kunit: use C-string literals to clean warning
+Date: Wed, 2 Oct 2024 00:58:26 +0200
+Message-ID: <CANiq72mPN51iHAzEk-Bn59X+ZhzzsioLoVPD7nDJ3wbPpDa0Ug@mail.gmail.com>
+Subject: Re: [PATCH] docs: rust: quick-start: add Ubuntu
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Zixing Liu <zixing.liu@canonical.com>, William Grant <wgrant@ubuntu.com>, 
+	Kees Cook <kees@kernel.org>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 27, 2024 at 6:44=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Wed, Sep 25, 2024 at 4:06=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> Starting with upstream Rust commit a5e3a3f9b6bd ("move
-> `manual_c_str_literals` to complexity"), to be released in Rust 1.83.0
-> [1], Clippy now warns on `manual_c_str_literals` by default, e.g.:
+> Ubuntu has changed their maintenance model for Rust toolchains and is
+> now providing recent Rust releases in their releases, including both
+> LTS and non-LTS (interim) releases.
 >
->     error: manually constructing a nul-terminated string
->       --> rust/kernel/kunit.rs:21:13
->        |
->     21 |             b"\x013%pA\0".as_ptr() as _,
->        |             ^^^^^^^^^^^^^ help: use a `c""` literal: `c"\x013%pA=
-"`
->        |
->        =3D help: for further information visit https://rust-lang.github.i=
-o/rust-clippy/master/index.html#manual_c_str_literals
->        =3D note: `-D clippy::manual-c-str-literals` implied by `-D warnin=
-gs`
->        =3D help: to override `-D warnings` add `#[allow(clippy::manual_c_=
-str_literals)]`
+> Therefore, add instructions to the Quick Start guide for Ubuntu, like
+> it is done for the other distributions.
 >
-> Apply the suggestion to clean up the warnings.
->
-> Link: https://github.com/rust-lang/rust-clippy/pull/13263 [1]
+> Link: https://packages.ubuntu.com/search?keywords=3Drustc-1
+> Link: https://packages.ubuntu.com/search?keywords=3Dbindgen-0
+> Cc: Zixing Liu <zixing.liu@canonical.com>
+> Cc: William Grant <wgrant@ubuntu.com>
+> Reviewed-by: Kees Cook <kees@kernel.org>
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Applied to `rust-fixes` -- thanks everyone!
+Applied to `rust-next` -- thanks everyone!
 
 Cheers,
 Miguel
