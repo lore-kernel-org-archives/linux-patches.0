@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691F41D015C;
-	Wed,  2 Oct 2024 13:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1EF29CE7;
+	Wed,  2 Oct 2024 13:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876937; cv=none; b=pNBrTs9JEQbMyxBeJwwMDsBf3ut17WzNNo2tecz7jjLl03xUBd74Vy85kjPAPhnufn/Bmvd3nmA5a6+rZQY2pvEmzdbPNR9YGTRXCwEQxGYEZ3qenoaaqif+MbiuKKhHFidKYRV4WNeaSmxCgSwfd1j33Xl3xtVbbeDLWewZXsI=
+	t=1727876940; cv=none; b=Qh85nIBoaXEEW0ot6cUUu53CvW1eVLdy8KZU0nlpF0DmaVl8vmA0brLVVKTWRfUDlV/hvDxig9WAwz3otERGgQo3MWA2vnMHg6A0Z8x05C7tkgBrhYO7g+ds/+mK//XR9kcrN1dnwOzII8CpFS/XBppyqbc7288IwkZ0fNuW734=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876937; c=relaxed/simple;
-	bh=ph9WiRJs8a129ktBp/7b4VFk3oMzDKfTFOQXPpxOoxc=;
+	s=arc-20240116; t=1727876940; c=relaxed/simple;
+	bh=fk/M+HGG0IhK7TRKcn2tdJifL3IRa6BDTssLVy6XgaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZXtlpBlmy25QeN0jJbGkChKZbB6sw7xakBlyu25VY9eROsd8KiLdrH2jDji6E7Iq+eo6wZ0E4os/+gFL6XRs02Dc0debisz01MfTPdY/i6R07lB22UbaTbSqnGkDNKBr0EV/AIsQk6aRKc3NbWV6YldGYbp089wqOh7HAetrlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2RMXH7/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWsXfFSJPJvryl59iAVaE3H104dF6dO/hxSe9N1wEzGfBA6Vj4++PRfy49ImkeKOqdFwZXkNi0upJkRvbPY2b25wrj3UX/hFg3vxY/axuoz1HSBU/UKQKsRmLIQAOqgqzQiM9WWZgKNfuhyj2oHlMS3OguA/AziRLHEg+e8ZpIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ra/mO2zu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2RMXH7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C899C4CEC2;
-	Wed,  2 Oct 2024 13:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ra/mO2zu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A5EC4CEC2;
+	Wed,  2 Oct 2024 13:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876937;
-	bh=ph9WiRJs8a129ktBp/7b4VFk3oMzDKfTFOQXPpxOoxc=;
+	s=korg; t=1727876939;
+	bh=fk/M+HGG0IhK7TRKcn2tdJifL3IRa6BDTssLVy6XgaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2RMXH7/LGoEDTV4UZEhK9jGmyYY9z4T5OKc2QlP9utBJYcsatwbIRknEok77uFNN
-	 WqZC2JXH53Qw4hYbmWSq3pvs80QxCW4q0O4iqrlppjwhkb7p/oJNZ2dp5FaHriKF57
-	 75x+e2WWsOZaQ6cF4+6oA7XM5hQoTOFfE+NWmYQM=
+	b=Ra/mO2zuQpnltygKTABb+WhrCnPhG/hNxL1OAIro46ITeHRLPd2I6ufeAZ1/vjDS1
+	 UFgH00zQHuj7gOYoR8idQRWScLfr+z62qk99IY3fTp0fVBHa6Sb2OdQsE/RtG024bw
+	 Iqy+mUBJF8sRNRqS7MRTpTEXNEC7ceLYkqxqhLjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.11 593/695] firmware_loader: Block path traversal
-Date: Wed,  2 Oct 2024 14:59:51 +0200
-Message-ID: <20241002125846.181841837@linuxfoundation.org>
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.11 611/695] perf/x86/intel: Allow to setup LBR for counting event for BPF
+Date: Wed,  2 Oct 2024 15:00:09 +0200
+Message-ID: <20241002125846.903382310@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,106 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit f0e5311aa8022107d63c54e2f03684ec097d1394 upstream.
+commit ef493f4b122d6b14a6de111d1acac1eab1d673b0 upstream.
 
-Most firmware names are hardcoded strings, or are constructed from fairly
-constrained format strings where the dynamic parts are just some hex
-numbers or such.
+The BPF subsystem may capture LBR data on a counting event. However, the
+current implementation assumes that LBR can/should only be used with
+sampling events.
 
-However, there are a couple codepaths in the kernel where firmware file
-names contain string components that are passed through from a device or
-semi-privileged userspace; the ones I could find (not counting interfaces
-that require root privileges) are:
+For instance, retsnoop tool ([0]) makes an extensive use of this
+functionality and sets up perf event as follows:
 
- - lpfc_sli4_request_firmware_update() seems to construct the firmware
-   filename from "ModelName", a string that was previously parsed out of
-   some descriptor ("Vital Product Data") in lpfc_fill_vpd()
- - nfp_net_fw_find() seems to construct a firmware filename from a model
-   name coming from nfp_hwinfo_lookup(pf->hwinfo, "nffw.partno"), which I
-   think parses some descriptor that was read from the device.
-   (But this case likely isn't exploitable because the format string looks
-   like "netronome/nic_%s", and there shouldn't be any *folders* starting
-   with "netronome/nic_". The previous case was different because there,
-   the "%s" is *at the start* of the format string.)
- - module_flash_fw_schedule() is reachable from the
-   ETHTOOL_MSG_MODULE_FW_FLASH_ACT netlink command, which is marked as
-   GENL_UNS_ADMIN_PERM (meaning CAP_NET_ADMIN inside a user namespace is
-   enough to pass the privilege check), and takes a userspace-provided
-   firmware name.
-   (But I think to reach this case, you need to have CAP_NET_ADMIN over a
-   network namespace that a special kind of ethernet device is mapped into,
-   so I think this is not a viable attack path in practice.)
+	struct perf_event_attr attr;
 
-Fix it by rejecting any firmware names containing ".." path components.
+	memset(&attr, 0, sizeof(attr));
+	attr.size = sizeof(attr);
+	attr.type = PERF_TYPE_HARDWARE;
+	attr.config = PERF_COUNT_HW_CPU_CYCLES;
+	attr.sample_type = PERF_SAMPLE_BRANCH_STACK;
+	attr.branch_sample_type = PERF_SAMPLE_BRANCH_KERNEL;
 
-For what it's worth, I went looking and haven't found any USB device
-drivers that use the firmware loader dangerously.
+To limit the LBR for a sampling event is to avoid unnecessary branch
+stack setup for a counting event in the sample read. Because LBR is only
+read in the sampling event's overflow.
 
+Although in most cases LBR is used in sampling, there is no HW limit to
+bind LBR to the sampling mode. Allow an LBR setup for a counting event
+unless in the sample read mode.
+
+Fixes: 85846b27072d ("perf/x86: Add PERF_X86_EVENT_NEEDS_BRANCH_STACK flag")
+Closes: https://lore.kernel.org/lkml/20240905180055.1221620-1-andrii@kernel.org/
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Fixes: abb139e75c2c ("firmware: teach the kernel to load firmware files directly from the filesystem")
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20240828-firmware-traversal-v3-1-c76529c63b5f@google.com
+Link: https://lore.kernel.org/r/20240909155848.326640-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/firmware_loader/main.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/x86/events/intel/core.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -849,6 +849,26 @@ static void fw_log_firmware_info(const s
- {}
- #endif
- 
-+/*
-+ * Reject firmware file names with ".." path components.
-+ * There are drivers that construct firmware file names from device-supplied
-+ * strings, and we don't want some device to be able to tell us "I would like to
-+ * be sent my firmware from ../../../etc/shadow, please".
-+ *
-+ * Search for ".." surrounded by either '/' or start/end of string.
-+ *
-+ * This intentionally only looks at the firmware name, not at the firmware base
-+ * directory or at symlink contents.
-+ */
-+static bool name_contains_dotdot(const char *name)
-+{
-+	size_t name_len = strlen(name);
-+
-+	return strcmp(name, "..") == 0 || strncmp(name, "../", 3) == 0 ||
-+	       strstr(name, "/../") != NULL ||
-+	       (name_len >= 3 && strcmp(name+name_len-3, "/..") == 0);
-+}
-+
- /* called from request_firmware() and request_firmware_work_func() */
- static int
- _request_firmware(const struct firmware **firmware_p, const char *name,
-@@ -869,6 +889,14 @@ _request_firmware(const struct firmware
- 		goto out;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3972,8 +3972,12 @@ static int intel_pmu_hw_config(struct pe
+ 			x86_pmu.pebs_aliases(event);
  	}
  
-+	if (name_contains_dotdot(name)) {
-+		dev_warn(device,
-+			 "Firmware load for '%s' refused, path contains '..' component\n",
-+			 name);
-+		ret = -EINVAL;
-+		goto out;
+-	if (needs_branch_stack(event) && is_sampling_event(event))
+-		event->hw.flags  |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
++	if (needs_branch_stack(event)) {
++		/* Avoid branch stack setup for counting events in SAMPLE READ */
++		if (is_sampling_event(event) ||
++		    !(event->attr.sample_type & PERF_SAMPLE_READ))
++			event->hw.flags |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
 +	}
-+
- 	ret = _request_firmware_prepare(&fw, name, device, buf, size,
- 					offset, opt_flags);
- 	if (ret <= 0) /* error or already assigned */
-@@ -946,6 +974,8 @@ out:
-  *      @name will be used as $FIRMWARE in the uevent environment and
-  *      should be distinctive enough not to be confused with any other
-  *      firmware image for this or any other device.
-+ *	It must not contain any ".." path components - "foo/bar..bin" is
-+ *	allowed, but "foo/../bar.bin" is not.
-  *
-  *	Caller must hold the reference count of @device.
-  *
+ 
+ 	if (branch_sample_counters(event)) {
+ 		struct perf_event *leader, *sibling;
 
 
