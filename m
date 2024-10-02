@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5669529CE7;
-	Wed,  2 Oct 2024 13:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096551CF5C6;
+	Wed,  2 Oct 2024 13:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876101; cv=none; b=NPbVF6V2eSWaCyGaUvmAVIttfzHXSQQHj866G2xlMrAWUfD87Qv/79XvlaqTFCAdmDpZUxd5nxTuTOfVkDvNeyQqe2dS2AiCGRslsgHUzukxOJDgtGic4xxvTcVFFuStIR+u1/t4co6YX4kHIbspTTh0cDel4KFh/uwubNpEFGo=
+	t=1727876104; cv=none; b=jkPLakW8oLtsbWCOrDOZtvaQjh/lJRXiAwwLlZgw7hey9n5FMqhHAmrz6syiqB/dgmkgmdvhR0wjRRLbksRK+IEe847YgMjognXgkyWZ7er1Rv3cTDdxYZivIMFFNby1sgScQWWQOV1tOW6oBpCUqxYb56Luu/L1L+t/FFoX4hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876101; c=relaxed/simple;
-	bh=OJi9dahKttWvgKiB1soLnlJ062fOQq9qlmy3xkIuCV4=;
+	s=arc-20240116; t=1727876104; c=relaxed/simple;
+	bh=mnbS+/UvbprTw9xXFMqEBs4A9JKO4lN9cDt/8d+K5Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHHsGl+TjF8m916E4RXchG7z0HJlUQkZDiTEKuci/0rYubLKYjV7/LiPY/yCsfnlGZNxKkBkMrLWOPRaso87VCSKVXyBpj24ovvB4TYuiIOrnIj4CEvbnKDYqmNfrN4ORSYNIe+BDV4BGkasaQc7D21k6jLi3FYZVvtITrNOA5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rm3IAbv/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7rYkdeu79drYAX8rReooDX0FxmpbhIsH0tD5BlAcXQyMN0tMznThbmfiBzgOYtlKMNQNTc++TMiTjbn4+12eC2laOOMb7d35oXgdvzB4AvlGRmyR1l0D7G2d4f45iKTZ76NB89pNdVsMnILX2MylsBvTV/EKjTm2MyFapyTJjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJYvtsnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rm3IAbv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E671C4CEC5;
-	Wed,  2 Oct 2024 13:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJYvtsnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50154C4CEC5;
+	Wed,  2 Oct 2024 13:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876100;
-	bh=OJi9dahKttWvgKiB1soLnlJ062fOQq9qlmy3xkIuCV4=;
+	s=korg; t=1727876103;
+	bh=mnbS+/UvbprTw9xXFMqEBs4A9JKO4lN9cDt/8d+K5Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rm3IAbv/gdT9/2ygbuXvTKo4Z11XJHP98AcGRbtt886HGSUMWJi4v/9RUznZTgDSC
-	 1LhpXEfn4zdt0qgYjij579dpfVMjpX50HBJdhMEqZP5uF0zwLiZGHDl1z/pGfxUmMH
-	 f6bKhc+/CSuEQ5RRWSt5ViFVSAr/N34PYTcnSkQ0=
+	b=nJYvtsnGnOtvQzQPl5W3u0eRBpk9W8lo4OVqUX4Il6iBzrba07ynJY+JOA3jdILpa
+	 FzlTJCNspYJtvQxhXKDInrxRD6n5ruVdpM3vgulTXKuy4iX9agSv3tqKOMry2OtBcg
+	 qubWk8poqMvtL650HXbxSEowPoFiEYbqw20XS7UU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jin Yao <yao.jin@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 321/695] bpf: Improve check_raw_mode_ok test for MEM_UNINIT-tagged types
-Date: Wed,  2 Oct 2024 14:55:19 +0200
-Message-ID: <20241002125835.263015844@linuxfoundation.org>
+Subject: [PATCH 6.11 330/695] perf report: Fix --total-cycles --stdio output error
+Date: Wed,  2 Oct 2024 14:55:28 +0200
+Message-ID: <20241002125835.622603569@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,78 +59,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 18752d73c1898fd001569195ba4b0b8c43255f4a ]
+[ Upstream commit 3ef44458071a19e5b5832cdfe6f75273aa521b6e ]
 
-When checking malformed helper function signatures, also take other argument
-types into account aside from just ARG_PTR_TO_UNINIT_MEM.
+The --total-cycles may output wrong information with the --stdio.
 
-This concerns (formerly) ARG_PTR_TO_{INT,LONG} given uninitialized memory can
-be passed there, too.
+For example:
 
-The func proto sanity check goes back to commit 435faee1aae9 ("bpf, verifier:
-add ARG_PTR_TO_RAW_STACK type"), and its purpose was to detect wrong func protos
-which had more than just one MEM_UNINIT-tagged type as arguments.
+  # perf record -e "{cycles,instructions}",cache-misses -b sleep 1
+  # perf report --total-cycles --stdio
 
-The reason more than one is currently not supported is as we mark stack slots with
-STACK_MISC in check_helper_call() in case of raw mode based on meta.access_size to
-allow uninitialized stack memory to be passed to helpers when they just write into
-the buffer.
+The total cycles output of {cycles,instructions} and cache-misses are
+almost the same.
 
-Probing for base type as well as MEM_UNINIT tagging ensures that other types do not
-get missed (as it used to be the case for ARG_PTR_TO_{INT,LONG}).
+  # Samples: 938  of events 'anon group { cycles, instructions }'
+  # Event count (approx.): 938
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+            11.19%            2.6K        0.10%           21  [perf_iterate_ctx+48 -> >
+             5.79%            1.4K        0.45%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+             5.11%            1.2K        0.33%           71  [native_write_msr+0 ->>
 
-Fixes: 57c3bb725a3d ("bpf: Introduce ARG_PTR_TO_{INT,LONG} arg types")
-Reported-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20240913191754.13290-4-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  # Samples: 293  of event 'cache-misses'
+  # Event count (approx.): 293
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+            11.19%            2.6K        0.13%           21  [perf_iterate_ctx+48 -> >
+             5.79%            1.4K        0.59%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+             5.11%            1.2K        0.43%           71  [native_write_msr+0 ->>
+
+With the symbol_conf.event_group, the 'perf report' should only report the
+block information of the leader event in a group.
+
+However, the current implementation retrieves the next event's block
+information, rather than the next group leader's block information.
+
+Make sure the index is updated even if the event is skipped.
+
+With the patch,
+
+  # Samples: 293  of event 'cache-misses'
+  # Event count (approx.): 293
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+           37.98%            9.0K        4.05%           299  [perf_event_addr_filters_exec+0 -> perf_event_a>
+           11.19%            2.6K        0.28%            21  [perf_iterate_ctx+48 -> >
+            5.79%            1.4K        1.32%            97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+
+Fixes: 6f7164fa231a5f36 ("perf report: Sort by sampled cycles percent per block for stdio")
+Reviewed-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jin Yao <yao.jin@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20240813160208.2493643-2-kan.liang@linux.intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ tools/perf/builtin-report.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e3abf560e405f..8c07efa3905b9 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8170,6 +8170,12 @@ static bool arg_type_is_mem_size(enum bpf_arg_type type)
- 	       type == ARG_CONST_SIZE_OR_ZERO;
- }
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index 6edc0d4ce6fbe..40826f825c9c2 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -565,6 +565,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
+ 		struct hists *hists = evsel__hists(pos);
+ 		const char *evname = evsel__name(pos);
  
-+static bool arg_type_is_raw_mem(enum bpf_arg_type type)
-+{
-+	return base_type(type) == ARG_PTR_TO_MEM &&
-+	       type & MEM_UNINIT;
-+}
-+
- static bool arg_type_is_release(enum bpf_arg_type type)
- {
- 	return type & OBJ_RELEASE;
-@@ -9212,15 +9218,15 @@ static bool check_raw_mode_ok(const struct bpf_func_proto *fn)
- {
- 	int count = 0;
++		i++;
+ 		if (symbol_conf.event_group && !evsel__is_group_leader(pos))
+ 			continue;
  
--	if (fn->arg1_type == ARG_PTR_TO_UNINIT_MEM)
-+	if (arg_type_is_raw_mem(fn->arg1_type))
- 		count++;
--	if (fn->arg2_type == ARG_PTR_TO_UNINIT_MEM)
-+	if (arg_type_is_raw_mem(fn->arg2_type))
- 		count++;
--	if (fn->arg3_type == ARG_PTR_TO_UNINIT_MEM)
-+	if (arg_type_is_raw_mem(fn->arg3_type))
- 		count++;
--	if (fn->arg4_type == ARG_PTR_TO_UNINIT_MEM)
-+	if (arg_type_is_raw_mem(fn->arg4_type))
- 		count++;
--	if (fn->arg5_type == ARG_PTR_TO_UNINIT_MEM)
-+	if (arg_type_is_raw_mem(fn->arg5_type))
- 		count++;
+@@ -574,7 +575,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
+ 		hists__fprintf_nr_sample_events(hists, rep, evname, stdout);
  
- 	/* We only support one arg being in raw mode at the moment,
+ 		if (rep->total_cycles_mode) {
+-			report__browse_block_hists(&rep->block_reports[i++].hist,
++			report__browse_block_hists(&rep->block_reports[i - 1].hist,
+ 						   rep->min_percent, pos, NULL);
+ 			continue;
+ 		}
 -- 
 2.43.0
 
