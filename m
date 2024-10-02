@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DDA1D172E;
-	Wed,  2 Oct 2024 14:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25321D172E;
+	Wed,  2 Oct 2024 14:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878071; cv=none; b=dU8G9XuTuMALzgLMcVKLqfqFeXAizimqntwl9aVCDU4evaRUG2A2RIw8OmnXZ1uH0zkOwt1kWosvzXxDCqCgE4vCXriIeNVldsdQOPz62QBo5VmrdhDRfGaPrGh8g1jWrFFkGdTKXzRtkJVLXpge5kU6Zt3i3F1WHwRRMn4n7As=
+	t=1727878074; cv=none; b=EQ9vCnhaaZr5WI6Sos/GcdNVtt+eYGSA+rZbA74kBn3jBjD+6Jr8Mz0I47XLe0jCZ9kvpc6biq4kk4//aJET/QBmme2aUauqywrmgqhPwFts6GmfHNxFlQeaM7OePsyiu/mvpSwuti2CXKY4eF5SppFp8Y2yi9ueBxfDxjfM0uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878071; c=relaxed/simple;
-	bh=u6yiu6geDmZKonabiO+bkefgCwWGWmxt/fVmcko69gk=;
+	s=arc-20240116; t=1727878074; c=relaxed/simple;
+	bh=KoTFAteWV4sheTpo66zy0nbw5WnXODK+k8kv77BM0XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hngl1FkD36rEmfna0AhvGNm2VxReFSa4dWmRIxyzKj3oFeiAQJ02za8/e6ivrvvgFuuBFndVArlBzEcjIlqSybLwdh/ZVtsvdim2y4MR8vrXbvTB6lQpohRPMavy25585R0J8PIV1/y7TJ1SfI8yeeB2+Msaxhnd1T2UKfdEvc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uysQvB3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m94zApXaH+0n5kJYIVCrLYVbZI4EvGJCZl8imIzyw/gSvEtUww5w6jKL0UzUWikh1FFwEX1TiIbx+BX+gyRWcG0LsED5Q/ZFsplHOV+PpLkkO3vn7zOKJUpAaU/68zCpxznLm6fx5xJFhbe3hDE2lJ4VFmP+gZLa15dfPLj3B+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vg51lpdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uysQvB3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBBC4CEC5;
-	Wed,  2 Oct 2024 14:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vg51lpdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA15C4CEC2;
+	Wed,  2 Oct 2024 14:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878070;
-	bh=u6yiu6geDmZKonabiO+bkefgCwWGWmxt/fVmcko69gk=;
+	s=korg; t=1727878073;
+	bh=KoTFAteWV4sheTpo66zy0nbw5WnXODK+k8kv77BM0XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uysQvB3KF1w3faysAFMnuvbMCkrJt4gpVYWC0J77lJ5k1mgBSX2/tJsBYUX0UrWlZ
-	 qUuLpQyjWbwAi1X0S8SrCids5cuNfCFl4lLozh2Ky6a+bSst4+sDucJshtqfiGtCuV
-	 veuqkN9g+gE/RyQUinEQe+GKBOGHFf6uVDcLbXQo=
+	b=vg51lpdYlaDoxxDxsrVRCgGKRtago7OZUGTkH3GQeAwuSCs6F/Gv2gbVwkDPytkZB
+	 j4CQvIxkC8+l1mptdU8rfGiQBgpA3hwH90xTO0HbttdPNZxUdgXHabmaaNePxG64Ck
+	 FG5+gr6AxH7wtpuyV2Iak4mBThJwi1kDrFHHvHg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	coresight@lists.linaro.org,
+	gankulkarni@os.amperecomputing.com,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Suzuki Poulouse <suzuki.poulose@arm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 291/634] bpf: Zero former ARG_PTR_TO_{LONG,INT} args in case of error
-Date: Wed,  2 Oct 2024 14:56:31 +0200
-Message-ID: <20241002125822.597611521@linuxfoundation.org>
+Subject: [PATCH 6.10 292/634] perf scripts python cs-etm: Restore first sample log in verbose mode
+Date: Wed,  2 Oct 2024 14:56:32 +0200
+Message-ID: <20241002125822.637226547@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,167 +66,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 4b3786a6c5397dc220b1483d8e2f4867743e966f ]
+[ Upstream commit ae8e4f4048b839c1cb333d9e3d20e634b430139e ]
 
-For all non-tracing helpers which formerly had ARG_PTR_TO_{LONG,INT} as input
-arguments, zero the value for the case of an error as otherwise it could leak
-memory. For tracing, it is not needed given CAP_PERFMON can already read all
-kernel memory anyway hence bpf_get_func_arg() and bpf_get_func_ret() is skipped
-in here.
+The linked commit moved the early return on the first sample to before
+the verbose log, so move the log earlier too. Now the first sample is
+also logged and not skipped.
 
-Also, the MTU helpers mtu_len pointer value is being written but also read.
-Technically, the MEM_UNINIT should not be there in order to always force init.
-Removing MEM_UNINIT needs more verifier rework though: MEM_UNINIT right now
-implies two things actually: i) write into memory, ii) memory does not have
-to be initialized. If we lift MEM_UNINIT, it then becomes: i) read into memory,
-ii) memory must be initialized. This means that for bpf_*_check_mtu() we're
-readding the issue we're trying to fix, that is, it would then be able to
-write back into things like .rodata BPF maps. Follow-up work will rework the
-MEM_UNINIT semantics such that the intent can be better expressed. For now
-just clear the *mtu_len on error path which can be lifted later again.
-
-Fixes: 8a67f2de9b1d ("bpf: expose bpf_strtol and bpf_strtoul to all program types")
-Fixes: d7a4cb9b6705 ("bpf: Introduce bpf_strtol and bpf_strtoul helpers")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/e5edd241-59e7-5e39-0ee5-a51e31b6840a@iogearbox.net
-Link: https://lore.kernel.org/r/20240913191754.13290-5-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2d98dbb4c9c5b09c ("perf scripts python arm-cs-trace-disasm.py: Do not ignore disam first sample")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Benjamin Gray <bgray@linux.ibm.com>
+Cc: coresight@lists.linaro.org
+Cc: gankulkarni@os.amperecomputing.com
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20240723132858.12747-1-james.clark@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c |  2 ++
- kernel/bpf/syscall.c |  1 +
- net/core/filter.c    | 44 +++++++++++++++++++++++---------------------
- 3 files changed, 26 insertions(+), 21 deletions(-)
+ tools/perf/scripts/python/arm-cs-trace-disasm.py | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 3155ea611c94d..a9ae8f8e61807 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -522,6 +522,7 @@ BPF_CALL_4(bpf_strtol, const char *, buf, size_t, buf_len, u64, flags,
- 	long long _res;
- 	int err;
+diff --git a/tools/perf/scripts/python/arm-cs-trace-disasm.py b/tools/perf/scripts/python/arm-cs-trace-disasm.py
+index d973c2baed1c8..7aff02d84ffb3 100755
+--- a/tools/perf/scripts/python/arm-cs-trace-disasm.py
++++ b/tools/perf/scripts/python/arm-cs-trace-disasm.py
+@@ -192,17 +192,16 @@ def process_event(param_dict):
+ 	ip = sample["ip"]
+ 	addr = sample["addr"]
  
-+	*res = 0;
- 	err = __bpf_strtoll(buf, buf_len, flags, &_res);
- 	if (err < 0)
- 		return err;
-@@ -549,6 +550,7 @@ BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
- 	bool is_negative;
- 	int err;
++	if (options.verbose == True):
++		print("Event type: %s" % name)
++		print_sample(sample)
++
+ 	# Initialize CPU data if it's empty, and directly return back
+ 	# if this is the first tracing event for this CPU.
+ 	if (cpu_data.get(str(cpu) + 'addr') == None):
+ 		cpu_data[str(cpu) + 'addr'] = addr
+ 		return
  
-+	*res = 0;
- 	err = __bpf_strtoull(buf, buf_len, flags, &_res, &is_negative);
- 	if (err < 0)
- 		return err;
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index d813abc86d12e..f6b6d297fad6e 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5910,6 +5910,7 @@ static const struct bpf_func_proto bpf_sys_close_proto = {
- 
- BPF_CALL_4(bpf_kallsyms_lookup_name, const char *, name, int, name_sz, int, flags, u64 *, res)
- {
-+	*res = 0;
- 	if (flags)
- 		return -EINVAL;
- 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 45a6b61f759fa..61da5512cd4d2 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6258,20 +6258,25 @@ BPF_CALL_5(bpf_skb_check_mtu, struct sk_buff *, skb,
- 	int ret = BPF_MTU_CHK_RET_FRAG_NEEDED;
- 	struct net_device *dev = skb->dev;
- 	int skb_len, dev_len;
--	int mtu;
-+	int mtu = 0;
- 
--	if (unlikely(flags & ~(BPF_MTU_CHK_SEGS)))
--		return -EINVAL;
-+	if (unlikely(flags & ~(BPF_MTU_CHK_SEGS))) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
--	if (unlikely(flags & BPF_MTU_CHK_SEGS && (len_diff || *mtu_len)))
--		return -EINVAL;
-+	if (unlikely(flags & BPF_MTU_CHK_SEGS && (len_diff || *mtu_len))) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	dev = __dev_via_ifindex(dev, ifindex);
--	if (unlikely(!dev))
--		return -ENODEV;
-+	if (unlikely(!dev)) {
-+		ret = -ENODEV;
-+		goto out;
-+	}
- 
- 	mtu = READ_ONCE(dev->mtu);
 -
- 	dev_len = mtu + dev->hard_header_len;
- 
- 	/* If set use *mtu_len as input, L3 as iph->tot_len (like fib_lookup) */
-@@ -6289,15 +6294,12 @@ BPF_CALL_5(bpf_skb_check_mtu, struct sk_buff *, skb,
- 	 */
- 	if (skb_is_gso(skb)) {
- 		ret = BPF_MTU_CHK_RET_SUCCESS;
+-	if (options.verbose == True):
+-		print("Event type: %s" % name)
+-		print_sample(sample)
 -
- 		if (flags & BPF_MTU_CHK_SEGS &&
- 		    !skb_gso_validate_network_len(skb, mtu))
- 			ret = BPF_MTU_CHK_RET_SEGS_TOOBIG;
- 	}
- out:
--	/* BPF verifier guarantees valid pointer */
- 	*mtu_len = mtu;
--
- 	return ret;
- }
- 
-@@ -6307,19 +6309,21 @@ BPF_CALL_5(bpf_xdp_check_mtu, struct xdp_buff *, xdp,
- 	struct net_device *dev = xdp->rxq->dev;
- 	int xdp_len = xdp->data_end - xdp->data;
- 	int ret = BPF_MTU_CHK_RET_SUCCESS;
--	int mtu, dev_len;
-+	int mtu = 0, dev_len;
- 
- 	/* XDP variant doesn't support multi-buffer segment check (yet) */
--	if (unlikely(flags))
--		return -EINVAL;
-+	if (unlikely(flags)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	dev = __dev_via_ifindex(dev, ifindex);
--	if (unlikely(!dev))
--		return -ENODEV;
-+	if (unlikely(!dev)) {
-+		ret = -ENODEV;
-+		goto out;
-+	}
- 
- 	mtu = READ_ONCE(dev->mtu);
--
--	/* Add L2-header as dev MTU is L3 size */
- 	dev_len = mtu + dev->hard_header_len;
- 
- 	/* Use *mtu_len as input, L3 as iph->tot_len (like fib_lookup) */
-@@ -6329,10 +6333,8 @@ BPF_CALL_5(bpf_xdp_check_mtu, struct xdp_buff *, xdp,
- 	xdp_len += len_diff; /* minus result pass check */
- 	if (xdp_len > dev_len)
- 		ret = BPF_MTU_CHK_RET_FRAG_NEEDED;
--
--	/* BPF verifier guarantees valid pointer */
-+out:
- 	*mtu_len = mtu;
--
- 	return ret;
- }
- 
+ 	# If cannot find dso so cannot dump assembler, bail out
+ 	if (dso == '[unknown]'):
+ 		return
 -- 
 2.43.0
 
