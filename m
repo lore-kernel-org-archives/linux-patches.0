@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC501D096B;
-	Wed,  2 Oct 2024 14:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE6E1D040D;
+	Wed,  2 Oct 2024 14:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880390; cv=none; b=Rl7sYTWzS0GH2tlk4beEr0UUFL5/jiDz8oMftb1d+DxBBRtpmgaTusw/HM+HPDYWgSDfKcAqHbEL0szjWW43BGfqiE/q4gQREQZklWJkWDtLO7c+V5NZmu73s+237XOSBGfTDMZUqwE8X2ZMwTOHbLefaM9SFtnrJFa+48URmjM=
+	t=1727880393; cv=none; b=QKzvu9nvEQUDZhx03IsIJyiHO9gXNOiSpCJOGO4/S2V7l7CLtYM7/vcXhTIIWPeLxhGo3TTwEFGYQVxQexvrNa7zws1UrgtpAv7lhMYWed8LEQxVfVpU7/r/Ahw+RmhXBg2xyM84TvXNGOYgYuBGd9+8g9Xkxn4V4e0Df4K6ejA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880390; c=relaxed/simple;
-	bh=9mIvHmxda1j/4oOqn83C16RYwoy8sXze5RE/4OAJOQQ=;
+	s=arc-20240116; t=1727880393; c=relaxed/simple;
+	bh=Y2mintr9GgXWdPavxsmVKYsG7Da+qAmFBqcMGzPsZFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjlwySPH3EpbpyDsZLh1/v6yN5SIduTN4hS9Phs65DG2a/Ds4BpgMBt4NEU49Vh0zOK3z3ir7qqC306IgMchtGZEt++ajAmQcDA8phk5Nt6HNvlnkNmwYSDNddioq0QpKVetSfOHKHx8UaavZZHQNap8GKDidwyE3x2u5/WTa1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEjpt158; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sTO/VIc93pfeSNqdI3XSkwrG56LPtkYb1MVCpiB7EEA4o6clSUJQmSJMODA6cqOQriEHxG3jJvg/ruM87Lw/SzAqUOG5yCcKVeas4rLfyz8mZpGwwYsgOHYrMRppto2Pak+dWXfWVV6KsQ2YSXxBuVt7+TevHt5i/8EaSU2KAao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChnOasLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEjpt158"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF441C4CEC2;
-	Wed,  2 Oct 2024 14:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChnOasLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43F8C4CEC2;
+	Wed,  2 Oct 2024 14:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880390;
-	bh=9mIvHmxda1j/4oOqn83C16RYwoy8sXze5RE/4OAJOQQ=;
+	s=korg; t=1727880393;
+	bh=Y2mintr9GgXWdPavxsmVKYsG7Da+qAmFBqcMGzPsZFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEjpt1585GFY6+qVBDvh5CYTMXn3P9A44InKwtW6MuBLYM3ZGuGKpYxSY1rwt8Z8G
-	 aFcQBVd4M56kVDTB9aDUak/cXAfPrr/+oWd0NZIcZhV01C+rPZf03Q2kV1dWAQJUAZ
-	 6N6pbPv2fTMmJx7AI3MbDKKDBAw4ySBU+lISP+6k=
+	b=ChnOasLXtGkRHYWkJifcBgJwSstsBDOFEiLsa3IFnb83zg9g8EZg402GaVXgXjBmS
+	 NUbPWioHMm6bkmRzQSi2I4NZCtTjZeJftJ5IRZJvJOPKOR2BYUJPog92Krjd+LKpbQ
+	 XBR283HULM9IZj1pMegc2+SzEPuKsSrWCshAQFKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 443/538] xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.
-Date: Wed,  2 Oct 2024 15:01:22 +0200
-Message-ID: <20241002125809.926995043@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6.6 444/538] serial: qcom-geni: fix fifo polling timeout
+Date: Wed,  2 Oct 2024 15:01:23 +0200
+Message-ID: <20241002125809.966208271@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -43,59 +45,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit f81dfa3b57c624c56f2bff171c431bc7f5b558f2 upstream.
+commit c80ee36ac8f9e9c27d8e097a2eaaf198e7534c83 upstream.
 
-PCI xHC host should be stopped and xhci driver memory freed before putting
-host to PCI D3 state during PCI remove callback.
+The qcom_geni_serial_poll_bit() can be used to wait for events like
+command completion and is supposed to wait for the time it takes to
+clear a full fifo before timing out.
 
-Hosts with XHCI_SPURIOUS_WAKEUP quirk did this the wrong way around
-and set the host to D3 before calling usb_hcd_pci_remove(dev), which will
-access the host to stop it, and then free xhci.
+As noted by Doug, the current implementation does not account for start,
+stop and parity bits when determining the timeout. The helper also does
+not currently account for the shift register and the two-word
+intermediate transfer register.
 
-Fixes: f1f6d9a8b540 ("xhci: don't dereference a xhci member after removing xhci")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240905143300.1959279-12-mathias.nyman@linux.intel.com
+A too short timeout can specifically lead to lost characters when
+waiting for a transfer to complete as the transfer is cancelled on
+timeout.
+
+Instead of determining the poll timeout on every call, store the fifo
+timeout when updating it in set_termios() and make sure to take the
+shift and intermediate registers into account. Note that serial core has
+already added a 20 ms margin to the fifo timeout.
+
+Also note that the current uart_fifo_timeout() interface does
+unnecessary calculations on every call and did not exist in earlier
+kernels so only store its result once. This facilitates backports too as
+earlier kernels can derive the timeout from uport->timeout, which has
+since been removed.
+
+Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+Cc: stable@vger.kernel.org	# 4.17
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240906131336.23625-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -721,8 +721,10 @@ put_runtime_pm:
- static void xhci_pci_remove(struct pci_dev *dev)
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -124,7 +124,7 @@ struct qcom_geni_serial_port {
+ 	dma_addr_t tx_dma_addr;
+ 	dma_addr_t rx_dma_addr;
+ 	bool setup;
+-	unsigned int baud;
++	unsigned long poll_timeout_us;
+ 	unsigned long clk_rate;
+ 	void *rx_buf;
+ 	u32 loopback;
+@@ -270,22 +270,13 @@ static bool qcom_geni_serial_poll_bit(st
  {
- 	struct xhci_hcd *xhci;
-+	bool set_power_d3;
+ 	u32 reg;
+ 	struct qcom_geni_serial_port *port;
+-	unsigned int baud;
+-	unsigned int fifo_bits;
+ 	unsigned long timeout_us = 20000;
+ 	struct qcom_geni_private_data *private_data = uport->private_data;
  
- 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
-+	set_power_d3 = xhci->quirks & XHCI_SPURIOUS_WAKEUP;
- 
- 	xhci->xhc_state |= XHCI_STATE_REMOVING;
- 
-@@ -735,11 +737,11 @@ static void xhci_pci_remove(struct pci_d
- 		xhci->shared_hcd = NULL;
+ 	if (private_data->drv) {
+ 		port = to_dev_port(uport);
+-		baud = port->baud;
+-		if (!baud)
+-			baud = 115200;
+-		fifo_bits = port->tx_fifo_depth * port->tx_fifo_width;
+-		/*
+-		 * Total polling iterations based on FIFO worth of bytes to be
+-		 * sent at current baud. Add a little fluff to the wait.
+-		 */
+-		timeout_us = ((fifo_bits * USEC_PER_SEC) / baud) + 500;
++		if (port->poll_timeout_us)
++			timeout_us = port->poll_timeout_us;
  	}
  
-+	usb_hcd_pci_remove(dev);
-+
- 	/* Workaround for spurious wakeups at shutdown with HSW */
--	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
-+	if (set_power_d3)
- 		pci_set_power_state(dev, PCI_D3hot);
--
--	usb_hcd_pci_remove(dev);
- }
+ 	/*
+@@ -1223,11 +1214,11 @@ static void qcom_geni_serial_set_termios
+ 	unsigned long clk_rate;
+ 	u32 ver, sampling_rate;
+ 	unsigned int avg_bw_core;
++	unsigned long timeout;
  
- /*
+ 	qcom_geni_serial_stop_rx(uport);
+ 	/* baud rate */
+ 	baud = uart_get_baud_rate(uport, termios, old, 300, 4000000);
+-	port->baud = baud;
+ 
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+@@ -1305,9 +1296,21 @@ static void qcom_geni_serial_set_termios
+ 	else
+ 		tx_trans_cfg |= UART_CTS_MASK;
+ 
+-	if (baud)
++	if (baud) {
+ 		uart_update_timeout(uport, termios->c_cflag, baud);
+ 
++		/*
++		 * Make sure that qcom_geni_serial_poll_bitfield() waits for
++		 * the FIFO, two-word intermediate transfer register and shift
++		 * register to clear.
++		 *
++		 * Note that uart_fifo_timeout() also adds a 20 ms margin.
++		 */
++		timeout = jiffies_to_usecs(uart_fifo_timeout(uport));
++		timeout += 3 * timeout / port->tx_fifo_depth;
++		WRITE_ONCE(port->poll_timeout_us, timeout);
++	}
++
+ 	if (!uart_console(uport))
+ 		writel(port->loopback,
+ 				uport->membase + SE_UART_LOOPBACK_CFG);
 
 
