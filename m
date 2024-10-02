@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20D51D0954;
-	Wed,  2 Oct 2024 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2781D04B4;
+	Wed,  2 Oct 2024 13:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877479; cv=none; b=US0qp9/W8JQz4MKGv/RcrO15tQcnnUa6OKf4TMWst9G/n5gsrBAHG49h7sWgoDdo2Z30uETVNh+y1EfIzoIR4spuw/OfMgdh6Je4b/MbOEGYUjrDD12XcfztV+Bu9wptMbwsocqLodDldyTrXAGkjOrZPIl2NOu22m9HIEaEUYA=
+	t=1727877482; cv=none; b=Xdhr/hoVqTPAzTFnoeyzzNZcl30moqp2TSmsuYzkiajqsLA/w3JI05wOVUXytrtl4CQ9BB6h2sO1YUJo6whtGa61enMov4hP8iAFFmQN/rowBudbNSKa5F9tw0dx1ue5XfbQmdeJceEoT19S3fQFfNCLeu3X45TA1h6X3LtPHx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877479; c=relaxed/simple;
-	bh=zyGGevShtUrF6s+tnF29MPGnM6LTtStaSEmuhl1a1eY=;
+	s=arc-20240116; t=1727877482; c=relaxed/simple;
+	bh=1lIvZkWkWLHW8ppICaPEh8Cjr0f7rcUdnDS+1GjYf8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmQhq3z3TJtXBukrJofIqM40m2yZflRGa4wJZESpbfHwMJaMOJHnwqaIUyqTdvsPPn0S4+IO2QDVSqENQWA9OTfMtoaL0arwTu50So385YSS5wIZ7v+MZLt9VT+nvSjx/3aE07d/HkCKpKU2vbaWsWcflKI1EFb5LE8JeLaj82k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbMwl1W+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=huFDs+Z2UuVq5RkEX/M+nJjC725UJUpj50M3Lsf34pDCfHvTn5TiPfxo/4etW2AHMzlS9AVrEqOQmehXTBUyAYBf/JdFvAxQdTDstgb+LOxZGZwbE3VIuH5u6b06iegaJ2XjtV50UohyViTGEpCLFZW3MMu6E+yqVItweA365Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQb+blHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbMwl1W+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBC0C4AF55;
-	Wed,  2 Oct 2024 13:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQb+blHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4780BC4CECD;
+	Wed,  2 Oct 2024 13:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877479;
-	bh=zyGGevShtUrF6s+tnF29MPGnM6LTtStaSEmuhl1a1eY=;
+	s=korg; t=1727877482;
+	bh=1lIvZkWkWLHW8ppICaPEh8Cjr0f7rcUdnDS+1GjYf8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbMwl1W+PXY/SNDIgOwDmd2wNnlCrnS3xGR3eZ4ilESINQDssjtOb/yPr32///N3e
-	 P3qP1D8qj1hNuzXqZJ8JwGoyPBJpoIPX4WcW5uPlKyJAi8P6VIirNsSDTJ7P1tR92g
-	 DW2jVMPtnbp2NJqZ5Xu0hFsRVgFrEEmASz6sdw68=
+	b=DQb+blHX4nVOA9Zpn6b/bjQjQ1xGhl4CheNzwesrB+BnQPptdPr0/5Wv4kx6XrzA+
+	 tbx0nifAGDyppU9EKi8Tr0x8Yr/AsqUY4ERGzKU47hho4LhXulI10pb5FiScjiT4fL
+	 uxx0Jb08k7sIUC5rPnKbqCEam8cbEEb8MkGK2I+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Kiran K <kiran.k@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 092/634] Bluetooth: btusb: Fix not handling ZPL/short-transfer
-Date: Wed,  2 Oct 2024 14:53:12 +0200
-Message-ID: <20241002125814.741771967@linuxfoundation.org>
+Subject: [PATCH 6.10 066/634] wifi: mt76: mt7996: fix traffic delay when switching back to working channel
+Date: Wed,  2 Oct 2024 14:52:46 +0200
+Message-ID: <20241002125813.712710904@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,43 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 7b05933340f4490ef5b09e84d644d12484b05fdf ]
+[ Upstream commit 376200f095d0c3a7096199b336204698d7086279 ]
 
-Requesting transfers of the exact same size of wMaxPacketSize may result
-in ZPL/short-transfer since the USB stack cannot handle it as we are
-limiting the buffer size to be the same as wMaxPacketSize.
+During scanning, UNI_CHANNEL_RX_PATH tag is necessary for the firmware to
+properly stop and resume MAC TX queue. Without this tag, HW needs more time
+to resume traffic when switching back to working channel.
 
-Also, in terms of throughput this change has the same effect to
-interrupt endpoint as 290ba200815f "Bluetooth: Improve USB driver throughput
-by increasing the frame size" had for the bulk endpoint, so users of the
-advertisement bearer (e.g. BT Mesh) may benefit from this change.
-
-Fixes: 5e23b923da03 ("[Bluetooth] Add generic driver for Bluetooth USB devices")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Kiran K <kiran.k@intel.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20240816094635.2391-2-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 0927f51867c26..c41b86608ba86 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1393,7 +1393,10 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
- 	if (!urb)
- 		return -ENOMEM;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 7c97140d8255a..15d880ef0d922 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -307,6 +307,10 @@ int mt7996_set_channel(struct mt7996_phy *phy)
+ 	if (ret)
+ 		goto out;
  
--	size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
-+	/* Use maximum HCI Event size so the USB stack handles
-+	 * ZPL/short-transfer automatically.
-+	 */
-+	size = HCI_MAX_EVENT_SIZE;
++	ret = mt7996_mcu_set_chan_info(phy, UNI_CHANNEL_RX_PATH);
++	if (ret)
++		goto out;
++
+ 	ret = mt7996_dfs_init_radar_detector(phy);
+ 	mt7996_mac_cca_stats_reset(phy);
  
- 	buf = kmalloc(size, mem_flags);
- 	if (!buf) {
 -- 
 2.43.0
 
