@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5845A1D0403;
-	Wed,  2 Oct 2024 13:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3741D04B7;
+	Wed,  2 Oct 2024 13:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875713; cv=none; b=Dxsf7XgllJq7DeOc6yR+RW9QbLLNKzlev0A/GZyGEFh5NeGJDJqRFJexQxB1W6RSOCZ85FUBtAxeCuN3lASqkB90/HCN8On/4tq2ANM0dhqtz8g+O72qk1zYTx/OZz5dEBluI49UyHyEWDs1e/Uf0XaJd7htG9+HkJ25bUte+oY=
+	t=1727875716; cv=none; b=Igp1pmD5e+tRcfFOypiO5NAvWQqK3a1n+t9xzkAFaD7ceI5irG2UIHcw3GA6sZV55g5D165Bp2W3TNHxnYOcgr9HgK3rNGTyU+6pTHOejm4F8wo3yTzmDcQw9ssQzSkdBkfOeOgTvZE7/NkX8aX11Fku3Pb9Beb08tAEAMxH5BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875713; c=relaxed/simple;
-	bh=naa7/c2iezFPHihrbHcKVAotbBbSLebAkliqL24oWLs=;
+	s=arc-20240116; t=1727875716; c=relaxed/simple;
+	bh=Kg3TGJnuL5QEIC44Lch1yauoMn7I9F8P2XzkIddVONI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HitQl73t+OyrPbZYI6rHZ7dExtO++fWiIyrfOKWGBL7NmXaK8wQuOzqgnuUODqpUE/dIA8KhucD67FOEoSyZydt1y65ECJveOL9b9csCWIpOx3oDPbcSIyp3iLaUg267+/D7/rt8NmvE+teV90JHrMIiq1YUMEA3cUMfVKkTJyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQTFlg1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KynpvYnVQx1FBHVSWnEWBQs8zPJmgHLsa9ZoWL7HGfVd3PsVEkRqoHfMLpkMQwBoRedXprRDq9XwgDYGoAwULYzcTnNMkyeJT7XEIYb4GHweU3vQUhovSU4DGS26tj0PZfjKqm+EHrQZMiQXNSvoKCYa6Ngc2TEqo1W/iqA6QJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hr/VtxmZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQTFlg1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D454CC4CEC5;
-	Wed,  2 Oct 2024 13:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hr/VtxmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F1C4CECD;
+	Wed,  2 Oct 2024 13:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875713;
-	bh=naa7/c2iezFPHihrbHcKVAotbBbSLebAkliqL24oWLs=;
+	s=korg; t=1727875716;
+	bh=Kg3TGJnuL5QEIC44Lch1yauoMn7I9F8P2XzkIddVONI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQTFlg1OtnqYjk786JG+UrzlWSQuQxWSL/Ok1Qrvc3sbv+w26nALj0k6uFJqKFHGo
-	 jioUcF+id2vj6m4slPrfIsKyRPVKmqQCBrnukQwf43VGnD1WdxKiaQwFKXasPobu6Y
-	 Xd+EVQsICXgniddxUcbBFg4nkR+aCJDAxDftHxEM=
+	b=hr/VtxmZMurpv547zUIYqyQMSJrPot/C6jLtmumlw3mFhV+4uUATLSDdmphYK2MNw
+	 nPR1hFvhhZXJ6QllEfw7UQHCKmOBxC4B1tlJPcobBYTzzHCHHfhmTqXdq4AN4Cq2UW
+	 6VjR4p21HPYnRv88z9Pco2N6tcu0/8SSgm4/fEog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 196/695] pmdomain: core: Harden inter-column space in debug summary
-Date: Wed,  2 Oct 2024 14:53:14 +0200
-Message-ID: <20241002125830.289998530@linuxfoundation.org>
+Subject: [PATCH 6.11 197/695] pmdomain: core: Fix "managed by" alignment in debug summary
+Date: Wed,  2 Oct 2024 14:53:15 +0200
+Message-ID: <20241002125830.329286679@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,34 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 692c20c4d075bd452acfbbc68200fc226c7c9496 ]
+[ Upstream commit 987a43e89ec67cc68518c0558db42ba542581597 ]
 
-The inter-column space in the debug summary is two spaces.  However, in
-one case, the extra space is handled implicitly in a field width
-specifier.  Make inter-column space explicit to ease future maintenance.
+The "performance" column contains variable-width values.  Hence when
+their printed values contain more than one digit, all values in
+successive columns become misaligned.
 
-Fixes: 45fbc464b047 ("PM: domains: Add "performance" column to debug summary")
+Fix this by formatting it as a fixed-width field.  Adjust successive
+spaces and field widths to retain the exiting layout.
+
+Fixes: 0155aaf95a2a ("PM: domains: Add the domain HW-managed mode to the summary")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/ae61eb363621b981edde878e1e74d701702a579f.1725459707.git.geert+renesas@glider.be
+Link: https://lore.kernel.org/r/e004f9d2a75e9a49c269507bb8a4514001751e85.1725459707.git.geert+renesas@glider.be
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-index 7a61aa88c0614..6691b42eae476 100644
+index 6691b42eae476..acdc3e7b2eae2 100644
 --- a/drivers/pmdomain/core.c
 +++ b/drivers/pmdomain/core.c
-@@ -3226,7 +3226,7 @@ static int genpd_summary_one(struct seq_file *s,
- 	else
- 		snprintf(state, sizeof(state), "%s",
- 			 status_lookup[genpd->status]);
--	seq_printf(s, "%-30s  %-50s %u", genpd->name, state, genpd->performance_state);
-+	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
+@@ -3190,7 +3190,7 @@ static void mode_status_str(struct seq_file *s, struct device *dev)
  
- 	/*
- 	 * Modifications on the list require holding locks on both
+ 	gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+ 
+-	seq_printf(s, "%20s", gpd_data->hw_mode ? "HW" : "SW");
++	seq_printf(s, "%9s", gpd_data->hw_mode ? "HW" : "SW");
+ }
+ 
+ static void perf_status_str(struct seq_file *s, struct device *dev)
+@@ -3198,7 +3198,7 @@ static void perf_status_str(struct seq_file *s, struct device *dev)
+ 	struct generic_pm_domain_data *gpd_data;
+ 
+ 	gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+-	seq_put_decimal_ull(s, "", gpd_data->performance_state);
++	seq_printf(s, "%-10u  ", gpd_data->performance_state);
+ }
+ 
+ static int genpd_summary_one(struct seq_file *s,
 -- 
 2.43.0
 
