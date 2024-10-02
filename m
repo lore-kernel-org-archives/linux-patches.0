@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACDF1D0438;
-	Wed,  2 Oct 2024 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C3E1D14F8;
+	Wed,  2 Oct 2024 14:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880129; cv=none; b=Vyq3F+9tedfq9C4zyxVrrjLLYYVMLEfKrR0Yk8/V0F6/DwS9Ue3s0+8B967G6LjPCtWZJFY5A2HUeTeWjDtDbFyx8OKGTpTBa6R4c6vgVFQDWFfwr+bz3n3i5Q6kaKR1r2Z4dRm7un4egL4/OoysWaXJ7G4R2cofwxd2IQC1wsY=
+	t=1727880132; cv=none; b=akDqxLP8KHcvCqBRgW46aJ05pZtLLrBDURqNhl8y1DklqYcIiJoSzNy5G5Xu3FU8cuZ7mChydIsjeUIx50F+EyhIE8T1g6ctIxotcJxhSfq5DJjXspnxGCQNplC2jvYD0r807DkVOUkVFzE0+nGM90ubYYxJuNNyR547mM9Q5KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880129; c=relaxed/simple;
-	bh=GTcDYJvIhFaIcmfTKRhR3nc3g60Q+pL3pRAXj2PO3oI=;
+	s=arc-20240116; t=1727880132; c=relaxed/simple;
+	bh=aNUfL5iJ20FvS6+iZohuwFWRq7wWyYLhwq1un2MZfwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7vQf9ezmQLbl4Mk2GL7Hc0fYmw0fo1i+MP1B0Upjwmz/3uJ7ZI5Djq8pdYrF9qVd0p5LljFaiWKPW9vSPkHLoxaDMdde7OgKtU/xehGJzhqEEKYah2Pj5chEBbkya3K+BXM0J0Qr+2qKcszc8yamgzs3rXLUPe0RnyusbJFnLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpXVSbdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u16BWr2B2IcUpK9PqKtTf9dakNYsNP98TZhnqGVFekWJdvzWO/zulX71UdMlzTEJaw0vd3OQtDn6xmk8MQlK4KSL75dJYkANp1KI2zkSwJmk96pOgV8ejNBhe8VQPTdXEZVIoySwmfYj+oYHf+GAfi8phnMsUu7rlCOK8xSFOco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqriVk1L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpXVSbdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C831CC4CEC2;
-	Wed,  2 Oct 2024 14:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqriVk1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B389CC4CEC2;
+	Wed,  2 Oct 2024 14:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880129;
-	bh=GTcDYJvIhFaIcmfTKRhR3nc3g60Q+pL3pRAXj2PO3oI=;
+	s=korg; t=1727880132;
+	bh=aNUfL5iJ20FvS6+iZohuwFWRq7wWyYLhwq1un2MZfwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpXVSbdRIcwhkCtQhNn+fXr88l4Vh/+Ryba79PMf2UhynYEhgq/6QCyueWo9Qw+3d
-	 TOrqEwlsswvkvavTdoYz0EuFaCR4D1UZhVxSV4TkUsKXnaHYeTY9Fnl01KP8VSRvc9
-	 jAtnav9ifgLaP8MOmQT7hKC1YdPaNw8HBp/c2YiE=
+	b=xqriVk1LeOulyS5WG0dtHOcJxTTuQVz3fSSIlYBcRcyPAPWSx91yBUh4tsYJgD2f3
+	 Iwu6Kogw73hgMoz7Xp8fJdHK0QdpK/iEuqKlI2DEgcZscTjqp2tea3ZHac+aF1kN3l
+	 ooHY9xRwz3nf7M1hPLFNomkUYxjuMC6qFJ348eLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nuno Sa <nuno.sa@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 353/538] iio: adc: ad7606: fix oversampling gpio array
-Date: Wed,  2 Oct 2024 14:59:52 +0200
-Message-ID: <20241002125806.361995507@linuxfoundation.org>
+Subject: [PATCH 6.6 354/538] iio: adc: ad7606: fix standby gpio state to match the documentation
+Date: Wed,  2 Oct 2024 14:59:53 +0200
+Message-ID: <20241002125806.400978117@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -54,68 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Guillaume Stols <gstols@baylibre.com>
 
-[ Upstream commit 8dc4594b54dbaaba40dc8884ad3d42083de39434 ]
+[ Upstream commit 059fe4f8bbdf5cad212e1aeeb3e8968c80b9ff3b ]
 
-gpiod_set_array_value was misused here: the implementation relied on the
-assumption that an unsigned long was required for each gpio, while the
-function expects a bit array stored in "as much unsigned long as needed
-for storing one bit per GPIO", i.e it is using a bit field.
+The binding's documentation specifies that "As the line is active low, it
+should be marked GPIO_ACTIVE_LOW". However, in the driver, it was handled
+the opposite way. This commit sets the driver's behaviour in sync with the
+documentation
 
-This leaded to incorrect parameter passed to gpiod_set_array_value, that
-would set 1 value instead of 3.
-It also prevents to select the software mode correctly for the AD7606B.
-
-Fixes: d2a415c86c6b ("iio: adc: ad7606: Add support for AD7606B ADC")
-Fixes: 41f71e5e7daf ("staging: iio: adc: ad7606: Use find_closest() macro")
+Fixes: 722407a4e8c0 ("staging:iio:ad7606: Use GPIO descriptor API")
 Signed-off-by: Guillaume Stols <gstols@baylibre.com>
 Reviewed-by: Nuno Sa <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7606.c     | 4 ++--
- drivers/iio/adc/ad7606_spi.c | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7606.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
-index 1c08c0921ee71..8c66b1e364014 100644
+index 8c66b1e364014..4d755ffc3f414 100644
 --- a/drivers/iio/adc/ad7606.c
 +++ b/drivers/iio/adc/ad7606.c
-@@ -215,9 +215,9 @@ static int ad7606_write_os_hw(struct iio_dev *indio_dev, int val)
- 	struct ad7606_state *st = iio_priv(indio_dev);
- 	DECLARE_BITMAP(values, 3);
+@@ -422,7 +422,7 @@ static int ad7606_request_gpios(struct ad7606_state *st)
+ 		return PTR_ERR(st->gpio_range);
  
--	values[0] = val;
-+	values[0] = val & GENMASK(2, 0);
+ 	st->gpio_standby = devm_gpiod_get_optional(dev, "standby",
+-						   GPIOD_OUT_HIGH);
++						   GPIOD_OUT_LOW);
+ 	if (IS_ERR(st->gpio_standby))
+ 		return PTR_ERR(st->gpio_standby);
  
--	gpiod_set_array_value(ARRAY_SIZE(values), st->gpio_os->desc,
-+	gpiod_set_array_value(st->gpio_os->ndescs, st->gpio_os->desc,
- 			      st->gpio_os->info, values);
+@@ -665,7 +665,7 @@ static int ad7606_suspend(struct device *dev)
  
- 	/* AD7616 requires a reset to update value */
-diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
-index 263a778bcf253..287a0591533b6 100644
---- a/drivers/iio/adc/ad7606_spi.c
-+++ b/drivers/iio/adc/ad7606_spi.c
-@@ -249,8 +249,9 @@ static int ad7616_sw_mode_config(struct iio_dev *indio_dev)
- static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
- {
- 	struct ad7606_state *st = iio_priv(indio_dev);
--	unsigned long os[3] = {1};
-+	DECLARE_BITMAP(os, 3);
- 
-+	bitmap_fill(os, 3);
- 	/*
- 	 * Software mode is enabled when all three oversampling
- 	 * pins are set to high. If oversampling gpios are defined
-@@ -258,7 +259,7 @@ static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
- 	 * otherwise, they must be hardwired to VDD
- 	 */
- 	if (st->gpio_os) {
--		gpiod_set_array_value(ARRAY_SIZE(os),
-+		gpiod_set_array_value(st->gpio_os->ndescs,
- 				      st->gpio_os->desc, st->gpio_os->info, os);
+ 	if (st->gpio_standby) {
+ 		gpiod_set_value(st->gpio_range, 1);
+-		gpiod_set_value(st->gpio_standby, 0);
++		gpiod_set_value(st->gpio_standby, 1);
  	}
- 	/* OS of 128 and 256 are available only in software mode */
+ 
+ 	return 0;
 -- 
 2.43.0
 
