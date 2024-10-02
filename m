@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960BE2F44;
-	Wed,  2 Oct 2024 14:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC051D07BC;
+	Wed,  2 Oct 2024 14:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880518; cv=none; b=L2+b14TJIPlQetDsBjNhr7gaoh1dU/DenIhUgHs61f6v7z8wsoJyrpslHxbzSERgkesx1Rbb6tciN9bQbywC1IzvaO5ZFiTe1i1W1BTSFH9XaCSE0/VizQfhqcUjXvjRsX+eckW80kzXxG2TZJgfDqr1U571qd4Fjq4EPtHaA7g=
+	t=1727880521; cv=none; b=sIDKRifke22k3uFE2X0kZsadM2ZRRzI0vFofebfia9jI4djKhVj+KQ+M47xhU//CnCGFK8+qMghBmM/vr2VUovT6xsU1nEe5Cs7P8XiFITxGp4mb3EAfgr10KWmK0+bEXyevCe11iKYXLtEZhAack66hTvZb12UorZWkyKGWa1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880518; c=relaxed/simple;
-	bh=BABd0vStzH3wkQXX5Q9v3tAD04WjjCefaz4HkwzG9Ck=;
+	s=arc-20240116; t=1727880521; c=relaxed/simple;
+	bh=jb9/D2pXSDXSzCcVP6XzCGrWlQNwxFZSip1CTxJ8Oe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFHeY8VXHJne1tHPTHawRTBhwD7dPYZJy81a2wgbprmWSvaZG993K/NQXrz427lZ2wkDaa/oSJIZUJEcW9Lds1qBrRcsQPUncrRBulX0nuajZz+wFnOyfq1FiFa93LN+8zvt+648AWoUYU9iqLujLbuppgo0IasATwWxmU+a69k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oomI6qSz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEm7S5TE1uEUODk2supAWHRzWjc3zoPMrogrKplJ7imSm94CYxIfY9Kdzwx/LGhJfQKB3znEeTDXLsENDOq2gqOlS9NnO3RoUa0XMuDH1nYGjJ4dOjiknocqCtcFxPK3V4BMfhAG/x/mR930xhzxZN4ljS8VnG2z/byQ4ri7J44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoQuTVTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oomI6qSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B734C4CEC2;
-	Wed,  2 Oct 2024 14:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoQuTVTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E46CC4CEC2;
+	Wed,  2 Oct 2024 14:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880518;
-	bh=BABd0vStzH3wkQXX5Q9v3tAD04WjjCefaz4HkwzG9Ck=;
+	s=korg; t=1727880521;
+	bh=jb9/D2pXSDXSzCcVP6XzCGrWlQNwxFZSip1CTxJ8Oe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oomI6qSzQbTli3lwVRP+dCy9JpAJuMykJA/Jh/roOqIokcGl7peiwukIx300st1uC
-	 VZ7uPC8J7p+29kygk9BKXq7THF0xEbor3rZERaDX9yLrniLaH3gzaEhCHIN1i2CXvm
-	 pqdxeIsxD93ssQ4DkAA8k6WdgnSAEsr2W3DFiug0=
+	b=XoQuTVTzZpG9NwGC7+7Gp3gG9CqH3pG5AyOP3r4jaoy5M+PczFwpnEnsjy4fhrx1A
+	 Z6xerLVmgHa4KaliLUlH1rwqCsNIZVM4OXkxTllNDJMEeYGmoPXgHegHg2ty2YDQF/
+	 hFU0uE6wj0TxwooZPcOjBB9744lq7JJU++vy2ZWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Daehwan Jung <dh10.jung@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 486/538] USB: misc: yurex: fix race between read and write
-Date: Wed,  2 Oct 2024 15:02:05 +0200
-Message-ID: <20241002125811.625631976@linuxfoundation.org>
+Subject: [PATCH 6.6 487/538] xhci: Add a quirk for writing ERST in high-low order
+Date: Wed,  2 Oct 2024 15:02:06 +0200
+Message-ID: <20241002125811.664900374@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,61 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Daehwan Jung <dh10.jung@samsung.com>
 
-[ Upstream commit 93907620b308609c72ba4b95b09a6aa2658bb553 ]
+[ Upstream commit bc162403e33e1d57e40994977acaf19f1434e460 ]
 
-The write code path touches the bbu member in a non atomic manner
-without taking the spinlock. Fix it.
+This quirk is for the controller that has a limitation in supporting
+separate ERSTBA_HI and ERSTBA_LO programming. It's supported when
+the ERSTBA is programmed ERSTBA_HI before ERSTBA_LO. That's because
+the internal initialization of event ring fetches the
+"Event Ring Segment Table Entry" based on the indication of ERSTBA_LO
+written.
 
-The bug is as old as the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912132126.1034743-1-oneukum@suse.com
+Signed-off-by: Daehwan Jung <dh10.jung@samsung.com>
+Link: https://lore.kernel.org/r/1718019553-111939-3-git-send-email-dh10.jung@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e5fa8db0be3e ("usb: xhci: fix loss of data on Cadence xHC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/yurex.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-mem.c | 5 ++++-
+ drivers/usb/host/xhci.h     | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/misc/yurex.c b/drivers/usb/misc/yurex.c
-index 5a13cddace0e6..44136989f6c6a 100644
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -404,7 +404,6 @@ static ssize_t yurex_read(struct file *file, char __user *buffer, size_t count,
- 	struct usb_yurex *dev;
- 	int len = 0;
- 	char in_buffer[MAX_S64_STRLEN];
--	unsigned long flags;
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index b1e3fa54c6397..54c47463c215c 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -2289,7 +2289,10 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
+ 	erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
+ 	erst_base &= ERST_BASE_RSVDP;
+ 	erst_base |= ir->erst.erst_dma_addr & ~ERST_BASE_RSVDP;
+-	xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
++	if (xhci->quirks & XHCI_WRITE_64_HI_LO)
++		hi_lo_writeq(erst_base, &ir->ir_set->erst_base);
++	else
++		xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
  
- 	dev = file->private_data;
+ 	/* Set the event ring dequeue address of this interrupter */
+ 	xhci_set_hc_event_deq(xhci, ir);
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index b29fe4716f34e..8e4d465b9dd66 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -17,6 +17,7 @@
+ #include <linux/kernel.h>
+ #include <linux/usb/hcd.h>
+ #include <linux/io-64-nonatomic-lo-hi.h>
++#include <linux/io-64-nonatomic-hi-lo.h>
  
-@@ -417,9 +416,9 @@ static ssize_t yurex_read(struct file *file, char __user *buffer, size_t count,
- 	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN))
- 		return -EIO;
+ /* Code sharing between pci-quirks and xhci hcd */
+ #include	"xhci-ext-caps.h"
+@@ -1913,6 +1914,7 @@ struct xhci_hcd {
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+ #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
+ #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
++#define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
  
--	spin_lock_irqsave(&dev->lock, flags);
-+	spin_lock_irq(&dev->lock);
- 	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
--	spin_unlock_irqrestore(&dev->lock, flags);
-+	spin_unlock_irq(&dev->lock);
- 	mutex_unlock(&dev->io_mutex);
- 
- 	return simple_read_from_buffer(buffer, count, ppos, in_buffer, len);
-@@ -509,8 +508,11 @@ static ssize_t yurex_write(struct file *file, const char __user *user_buffer,
- 			__func__, retval);
- 		goto error;
- 	}
--	if (set && timeout)
-+	if (set && timeout) {
-+		spin_lock_irq(&dev->lock);
- 		dev->bbu = c2;
-+		spin_unlock_irq(&dev->lock);
-+	}
- 	return timeout ? count : -EIO;
- 
- error:
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 -- 
 2.43.0
 
