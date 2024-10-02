@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CF729CE7;
-	Wed,  2 Oct 2024 13:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B070329CE7;
+	Wed,  2 Oct 2024 13:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876889; cv=none; b=BPXp4s1CME2+VLG4+5lvoUrJCkhvrK2GxKfOkDwekcGaZmYBV7l0VlUzFQPL9uwkPjnkJRb4L/iujqoByAB/asV3MOSxvUJ3vIp5FuiAcz6MFNp66gPpKkE13EKleC1hCSg8q4tS87az95yxzyxJ8liLAmb9d6sE3tk1N2PHXwE=
+	t=1727876892; cv=none; b=c4V4v87ZH1Ihp/9KMtJVycHZxdcfgIMLLF6Gbsohh2og3t6oYxqDE9Agkuj1/65hycenZyCU7ZSeJtcaaxOaBcpajZiFDDaLxtVsLlcFMvXetLVHLxkm/MrNXepix8xChmQQ6sLjjZbvwfUBFjdW+pzAiwMoopbOHB8M9UYmoww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876889; c=relaxed/simple;
-	bh=XAYMLoAet4Yu5k9xLRBfeizEuyjdq2rFn0YmdTFhCrw=;
+	s=arc-20240116; t=1727876892; c=relaxed/simple;
+	bh=Wh7XjSRBXGXPVkhQQWskJ3a3J76AmdBcrUbcQGhlwTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7msgmEco9Lrwch+aQ4rkNCQukwPUDNNut4brHB0qwmWP8dhmlwU/M/7wA8cl0ud6eYXOHnp7SqWPDIkWDyZMBcI3excP7WNCsB2bagJS41cAa/gEu/YVQKXhGx9ot/L0lMZZ0HWtIEJLof6ojHNjTrFi7Rm0QFh7KbzA8SwMrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9eZ9BSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gsFYgum0LTUqs/7Gdc2t1rkeBhzZj9+pl6DWiKUGAQTgeqrkcjC8XmgjgpCba+A+/dN3twdnlyVZftadcPpunxqF7vtxbVvERGJtXleSRV25FyWXjwaHc7CzC74MZ/qwagbYlcamying1rVG9L+cIvOKnDuIOVMvd7feTh6KHcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Myrf1JIL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9eZ9BSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502E6C4CEC2;
-	Wed,  2 Oct 2024 13:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Myrf1JIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3809DC4CEC2;
+	Wed,  2 Oct 2024 13:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876889;
-	bh=XAYMLoAet4Yu5k9xLRBfeizEuyjdq2rFn0YmdTFhCrw=;
+	s=korg; t=1727876892;
+	bh=Wh7XjSRBXGXPVkhQQWskJ3a3J76AmdBcrUbcQGhlwTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9eZ9BSyr0Q+StLUOwZym3Ri/NRL9KHGXe2HRSdi4rxVyiTwtmTVUP9fIRCXnFPNV
-	 K0XRVjvuiovUGA2DjU7c9TlSz+NbvRDH95taoPAQPRGVDdDLYOID1aueYPMIyLBP3V
-	 rF2K4UgKdPGl5QJ0cPYdqT7hKf/kpHBBrFvJLVYM=
+	b=Myrf1JILCAAGAYcxIXyYFupp2ECTFbs18mu6+YRKkBfnCPqSp3u/9UcY1a8e5SJCb
+	 OgGVC3kHb6QSqcRCijsdR5Vy1sUV+O3GUIdwzLdlTlpTHUivu7/qF7MJN9EgPOtDb7
+	 XVJnenIwrbOhtPKQu2uZdonFoeCy/QNyme7+MEag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey Gladkov (Intel)" <legion@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCH 6.11 563/695] x86/tdx: Fix "in-kernel MMIO" check
-Date: Wed,  2 Oct 2024 14:59:21 +0200
-Message-ID: <20241002125844.977230052@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.11 564/695] KEYS: prevent NULL pointer dereference in find_asymmetric_key()
+Date: Wed,  2 Oct 2024 14:59:22 +0200
+Message-ID: <20241002125845.016977078@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,55 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Gladkov (Intel) <legion@kernel.org>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-commit d4fc4d01471528da8a9797a065982e05090e1d81 upstream.
+commit 70fd1966c93bf3bfe3fe6d753eb3d83a76597eef upstream.
 
-TDX only supports kernel-initiated MMIO operations. The handle_mmio()
-function checks if the #VE exception occurred in the kernel and rejects
-the operation if it did not.
+In find_asymmetric_key(), if all NULLs are passed in the id_{0,1,2}
+arguments, the kernel will first emit WARN but then have an oops
+because id_2 gets dereferenced anyway.
 
-However, userspace can deceive the kernel into performing MMIO on its
-behalf. For example, if userspace can point a syscall to an MMIO address,
-syscall does get_user() or put_user() on it, triggering MMIO #VE. The
-kernel will treat the #VE as in-kernel MMIO.
+Add the missing id_2 check and move WARN_ON() to the final else branch
+to avoid duplicate NULL checks.
 
-Ensure that the target MMIO address is within the kernel before decoding
-instruction.
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-Fixes: 31d58c4e557d ("x86/tdx: Handle in-kernel MMIO")
-Signed-off-by: Alexey Gladkov (Intel) <legion@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/565a804b80387970460a4ebc67c88d1380f61ad1.1726237595.git.legion%40kernel.org
+Cc: stable@vger.kernel.org # v5.17+
+Fixes: 7d30198ee24f ("keys: X.509 public key issuer lookup without AKID")
+Suggested-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/tdx/tdx.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ crypto/asymmetric_keys/asymmetric_type.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -16,6 +16,7 @@
- #include <asm/insn-eval.h>
- #include <asm/pgtable.h>
- #include <asm/set_memory.h>
-+#include <asm/traps.h>
+--- a/crypto/asymmetric_keys/asymmetric_type.c
++++ b/crypto/asymmetric_keys/asymmetric_type.c
+@@ -60,17 +60,18 @@ struct key *find_asymmetric_key(struct k
+ 	char *req, *p;
+ 	int len;
  
- /* MMIO direction */
- #define EPT_READ	0
-@@ -433,6 +434,11 @@ static int handle_mmio(struct pt_regs *r
- 			return -EINVAL;
+-	WARN_ON(!id_0 && !id_1 && !id_2);
+-
+ 	if (id_0) {
+ 		lookup = id_0->data;
+ 		len = id_0->len;
+ 	} else if (id_1) {
+ 		lookup = id_1->data;
+ 		len = id_1->len;
+-	} else {
++	} else if (id_2) {
+ 		lookup = id_2->data;
+ 		len = id_2->len;
++	} else {
++		WARN_ON(1);
++		return ERR_PTR(-EINVAL);
  	}
  
-+	if (!fault_in_kernel_space(ve->gla)) {
-+		WARN_ONCE(1, "Access to userspace address is not supported");
-+		return -EINVAL;
-+	}
-+
- 	/*
- 	 * Reject EPT violation #VEs that split pages.
- 	 *
+ 	/* Construct an identifier "id:<keyid>". */
 
 
