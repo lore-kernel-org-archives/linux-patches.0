@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3351D0794;
-	Wed,  2 Oct 2024 14:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3FC1D04A8;
+	Wed,  2 Oct 2024 14:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879314; cv=none; b=rZeYoLrN3aSHFE5MhOEoiGu54fxyAHwDGDdEgIf+TkpJ6SC+7GcWOxd1wFpHkbWDP33QgUw5MU63LwbwX5dbdNgZlpsowoKmlvLZpGN1tBw60/SZr9fNAK72hAqig87QcALM/ta2ExNUkjr4OudVMV8Vm0JjSXlCEspnzbE497M=
+	t=1727879317; cv=none; b=CjaODlWGMXcD3OECFYPkiHLfguMBSv8O1YWRAdXQComND4jHkBIeKh9WNSif4fa2daHmr3/MyWGsbR9PjIwR0iOzt0veVcdB1B+8df8Orti4bMh4lGIU6DRUTygUCqhflESzpXo2fJFE9QzRW17osk+Mq2PqBYyNFVuBj2Oq5CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879314; c=relaxed/simple;
-	bh=ILCgJmItzwa/BEHK26Pu33036KO2U594b45+8PlB2XY=;
+	s=arc-20240116; t=1727879317; c=relaxed/simple;
+	bh=g06iMQIDoGAdNQQPRiMEd24jS+8cXi1JTLrX+UWP+jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SiXDwi/ziDTvDjesCkfSbXJIJo122hSQgZqmC/Q37Rvl9ueD4DGF6bnKWC9CFx/KKipb2CwTeBMKyOGzOpjIQLiUs15dv5SmucW+fCWKmJ6sHp9ezFL530r/cJeD60N4WtHyNeek0yYfbYi1ib5MksCaF1nUNxhKxKZIZRSFr/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITDXjQzw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhPJrPCj3gPpNUil0Of4VJ5Jj2fGFWLb/n+NzCMCtEmYqg1f13JzEFI5bPmvT8QO3xOdw0wgZvnQa0IJfhDanHHgdS1CzhpnXZix7q+uT4NHqKZPoY4PpEZpMnfAlvsXttHRML+P3oBkraCsswqbsFevNnONCnXuc/bhxlPYVdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkcXJ+MU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITDXjQzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335DEC4CEC2;
-	Wed,  2 Oct 2024 14:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkcXJ+MU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A24C4CEC2;
+	Wed,  2 Oct 2024 14:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879314;
-	bh=ILCgJmItzwa/BEHK26Pu33036KO2U594b45+8PlB2XY=;
+	s=korg; t=1727879317;
+	bh=g06iMQIDoGAdNQQPRiMEd24jS+8cXi1JTLrX+UWP+jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ITDXjQzwQzNhdl+50YFKyG6z3CFFfOhFvR5oVpTbXDYfdr585zqgzV1gfzl9y3Ch8
-	 Yvvd1ZpBWfLrehBar6Q37lll5Gwa/bZrYP3QeYCjvXE+zk7kU9RSQ+LSsuQRxbMCmY
-	 6m/LsAC47pnnRg2jVWRlJEoMbgyUG3zoN5uGxR2w=
+	b=CkcXJ+MUs9RoD7NhzWpqmQ5Vq6h3rnFuDx0JH28H7zAhzZ+T32eT/Sl3RoB8NOj/m
+	 n6oHfceIjpU2mg4RsRYqnyNNZC6e7Vh7sDsTceBV9g/YofrzyNeaDxZRO9DXfEnCiT
+	 7Tad9OEnZ6FKu4QjQ9gzCB3YrdZySeAm4qx7jirI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/538] nbd: fix race between timeout and normal completion
-Date: Wed,  2 Oct 2024 14:55:16 +0200
-Message-ID: <20241002125755.257345162@linuxfoundation.org>
+Subject: [PATCH 6.6 060/538] wifi: mac80211: use two-phase skb reclamation in ieee80211_do_stop()
+Date: Wed,  2 Oct 2024 14:54:59 +0200
+Message-ID: <20241002125754.575606778@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,62 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit c9ea57c91f03bcad415e1a20113bdb2077bcf990 ]
+[ Upstream commit 9d301de12da6e1bb069a9835c38359b8e8135121 ]
 
-If request timetout is handled by nbd_requeue_cmd(), normal completion
-has to be stopped for avoiding to complete this requeued request, other
-use-after-free can be triggered.
+Since '__dev_queue_xmit()' should be called with interrupts enabled,
+the following backtrace:
 
-Fix the race by clearing NBD_CMD_INFLIGHT in nbd_requeue_cmd(), meantime
-make sure that cmd->lock is grabbed for clearing the flag and the
-requeue.
+ieee80211_do_stop()
+ ...
+ spin_lock_irqsave(&local->queue_stop_reason_lock, flags)
+ ...
+ ieee80211_free_txskb()
+  ieee80211_report_used_skb()
+   ieee80211_report_ack_skb()
+    cfg80211_mgmt_tx_status_ext()
+     nl80211_frame_tx_status()
+      genlmsg_multicast_netns()
+       genlmsg_multicast_netns_filtered()
+        nlmsg_multicast_filtered()
+	 netlink_broadcast_filtered()
+	  do_one_broadcast()
+	   netlink_broadcast_deliver()
+	    __netlink_sendskb()
+	     netlink_deliver_tap()
+	      __netlink_deliver_tap_skb()
+	       dev_queue_xmit()
+	        __dev_queue_xmit() ; with IRQS disabled
+ ...
+ spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags)
 
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Fixes: 2895f1831e91 ("nbd: don't clear 'NBD_CMD_INFLIGHT' flag if request is not completed")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240830034145.1827742-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+issues the warning (as reported by syzbot reproducer):
+
+WARNING: CPU: 2 PID: 5128 at kernel/softirq.c:362 __local_bh_enable_ip+0xc3/0x120
+
+Fix this by implementing a two-phase skb reclamation in
+'ieee80211_do_stop()', where actual work is performed
+outside of a section with interrupts disabled.
+
+Fixes: 5061b0c2b906 ("mac80211: cooperate more with network namespaces")
+Reported-by: syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20240906123151.351647-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/mac80211/iface.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 1089dc646b808..96b349148e578 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -181,6 +181,17 @@ static void nbd_requeue_cmd(struct nbd_cmd *cmd)
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index a7c39e895b1e5..fae701248f058 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -466,6 +466,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
  {
- 	struct request *req = blk_mq_rq_from_pdu(cmd);
+ 	struct ieee80211_local *local = sdata->local;
+ 	unsigned long flags;
++	struct sk_buff_head freeq;
+ 	struct sk_buff *skb, *tmp;
+ 	u32 hw_reconf_flags = 0;
+ 	int i, flushed;
+@@ -652,18 +653,32 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 		skb_queue_purge(&sdata->status_queue);
+ 	}
  
-+	lockdep_assert_held(&cmd->lock);
-+
 +	/*
-+	 * Clear INFLIGHT flag so that this cmd won't be completed in
-+	 * normal completion path
-+	 *
-+	 * INFLIGHT flag will be set when the cmd is queued to nbd next
-+	 * time.
++	 * Since ieee80211_free_txskb() may issue __dev_queue_xmit()
++	 * which should be called with interrupts enabled, reclamation
++	 * is done in two phases:
 +	 */
-+	__clear_bit(NBD_CMD_INFLIGHT, &cmd->flags);
++	__skb_queue_head_init(&freeq);
 +
- 	if (!test_and_set_bit(NBD_CMD_REQUEUED, &cmd->flags))
- 		blk_mq_requeue_request(req, true);
- }
-@@ -461,8 +472,8 @@ static enum blk_eh_timer_return nbd_xmit_timeout(struct request *req)
- 					nbd_mark_nsock_dead(nbd, nsock, 1);
- 				mutex_unlock(&nsock->tx_lock);
++	/* unlink from local queues... */
+ 	spin_lock_irqsave(&local->queue_stop_reason_lock, flags);
+ 	for (i = 0; i < IEEE80211_MAX_QUEUES; i++) {
+ 		skb_queue_walk_safe(&local->pending[i], skb, tmp) {
+ 			struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 			if (info->control.vif == &sdata->vif) {
+ 				__skb_unlink(skb, &local->pending[i]);
+-				ieee80211_free_txskb(&local->hw, skb);
++				__skb_queue_tail(&freeq, skb);
  			}
--			mutex_unlock(&cmd->lock);
- 			nbd_requeue_cmd(cmd);
-+			mutex_unlock(&cmd->lock);
- 			nbd_config_put(nbd);
- 			return BLK_EH_DONE;
  		}
+ 	}
+ 	spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags);
+ 
++	/* ... and perform actual reclamation with interrupts enabled. */
++	skb_queue_walk_safe(&freeq, skb, tmp) {
++		__skb_unlink(skb, &freeq);
++		ieee80211_free_txskb(&local->hw, skb);
++	}
++
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		ieee80211_txq_remove_vlan(local, sdata);
+ 
 -- 
 2.43.0
 
