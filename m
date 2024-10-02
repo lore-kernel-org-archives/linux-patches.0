@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB011D043E;
-	Wed,  2 Oct 2024 13:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566A1D043E;
+	Wed,  2 Oct 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876609; cv=none; b=VWBBUnDBRw8fU6vT/EVkKHWDPVFjVC6edS5WElw29V5G3LwsekERFi6TolqMlnZPCe3BHmLHXcGb9w3GecW17RO7dcnjCZFkE61MN8u1K4FliQ5E812w5YGipAbfETgbJaA0TdXmi5+LOkLAqtLzvtbZaQUUBgaGihCvULgQegg=
+	t=1727876613; cv=none; b=pc0w9yH7llxXmlY8qSn9iCLLQeQ/0Hw5aKq41qeIz5fGTqtUIq3Fv9KcWFT002XYlpqly4tSTMeq2bEeEiTZ1iCkRw7bnoERhaDvYxmoQuKz6mYm7yakXGlx+yWFs5u2RUwmlI4ozuaHxUHeVXSAy8OM6axic4mkZ8/IbJcsZkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876609; c=relaxed/simple;
-	bh=GnrRfY+fa8GwnrqX17Fu5n/l+f3JNCYqiEh72PDm2fs=;
+	s=arc-20240116; t=1727876613; c=relaxed/simple;
+	bh=+Huko3R/AU46ETzinEWQZO7s2gxr8xPypdFWtcu/PLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dc34zZnPaSAlybgPdMCXinh8PgxteJOe07TpaJI/MoE5NT9tl+tkrDiYwmHLtOVfFXT7v4Ki/tsjtpIjYTb1jIXg59zFw40FhZSt/UJokvs3FktWfWpMegDpR81OWediU38vNy/kppsgvUDboUQrhjG078eKWHwB+anKfvbtaig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5l+1QPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QZjb+AS2Q4wMrZwWGSPWSKN6FgIWB/aSH3QhPvuRn+7laBlie7pSn7fCAcmUEFRcBL0cm1D44iZDsYeHHVhs7ih/BTwK2i2j1pbWYk/BwaK20YQDD7l4lO/JiTnR5CLkdRw5hGBapQgGlr7qRxcvedh/f8igNZqb28sl80/FKjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaxDb4hU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5l+1QPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163EDC4CED2;
-	Wed,  2 Oct 2024 13:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaxDb4hU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CCFC4CECE;
+	Wed,  2 Oct 2024 13:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876609;
-	bh=GnrRfY+fa8GwnrqX17Fu5n/l+f3JNCYqiEh72PDm2fs=;
+	s=korg; t=1727876612;
+	bh=+Huko3R/AU46ETzinEWQZO7s2gxr8xPypdFWtcu/PLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5l+1QPn5riE9slTgZkkZ+byRI0kfhDhyQtnfnQALQQ4N/Cw+ht4MEysoH21SuMPi
-	 NvgppCFJhOGrVQ3iH3wAnLU9LEx/9/xAMCZaxZvelGzIsyOaEYJnWPtWVH5EyM+IY4
-	 biPSQTY6Y41vdZpB/sLPJkTMoL7RwvxG4e9hmKG4=
+	b=OaxDb4hU8UwnCz8JltQiWkZ2vOj8R0EdbTah2Wh5xYHMvw9fX8xDwNBSSPZvFaiSu
+	 MOgRr6l/qcPFPJ8GPFl0373iEkkgP3MC8mPkf8nz4zZRx9+iWqxL5LZEe+4GXnuBvD
+	 Fn1IHmC2gBXflymnS93uVFYKeBJadMV+7vKYGqmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <superm1@kernel.org>
-Subject: [PATCH 6.11 503/695] drm/amdgpu/display: Fix a mistake in revert commit
-Date: Wed,  2 Oct 2024 14:58:21 +0200
-Message-ID: <20241002125842.557647995@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>
+Subject: [PATCH 6.11 504/695] xen: move checks for e820 conflicts further up
+Date: Wed,  2 Oct 2024 14:58:22 +0200
+Message-ID: <20241002125842.598452343@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -46,42 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Juergen Gross <jgross@suse.com>
 
-commit 7745a1dee0a687044888179e6e7fcd6d704992a9 upstream.
+commit c4498ae316da5b5786ccd448fc555f3339b8e4ca upstream.
 
-[why]
-It is to fix in try_disable_dsc() due to misrevert of
-commit 338567d17627 ("drm/amd/display: Fix MST BW calculation Regression")
+Move the checks for e820 memory map conflicts using the
+xen_chk_is_e820_usable() helper further up in order to prepare
+resolving some of the possible conflicts by doing some e820 map
+modifications, which must happen before evaluating the RAM layout.
 
-[How]
-Fix restoring minimum compression bw by 'max_kbps', instead of native bw 'stream_kbps'
-
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Mario Limonciello <superm1@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/xen/setup.c |   44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1072,7 +1072,7 @@ static int try_disable_dsc(struct drm_at
- 			vars[next_index].bpp_x16 = 0;
- 		} else {
- 			DRM_DEBUG_DRIVER("MST_DSC index #%d, restore minimum compression\n", next_index);
--			vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
-+			vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.max_kbps, fec_overhead_multiplier_x1000);
- 			ret = drm_dp_atomic_find_time_slots(state,
- 							    params[next_index].port->mgr,
- 							    params[next_index].port,
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -854,6 +854,28 @@ char * __init xen_memory_setup(void)
+ 	/* Make sure the Xen-supplied memory map is well-ordered. */
+ 	e820__update_table(&xen_e820_table);
+ 
++	/*
++	 * Check whether the kernel itself conflicts with the target E820 map.
++	 * Failing now is better than running into weird problems later due
++	 * to relocating (and even reusing) pages with kernel text or data.
++	 */
++	xen_chk_is_e820_usable(__pa_symbol(_text),
++			       __pa_symbol(_end) - __pa_symbol(_text),
++			       "kernel");
++
++	/*
++	 * Check for a conflict of the xen_start_info memory with the target
++	 * E820 map.
++	 */
++	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
++			       "xen_start_info");
++
++	/*
++	 * Check for a conflict of the hypervisor supplied page tables with
++	 * the target E820 map.
++	 */
++	xen_pt_check_e820();
++
+ 	max_pages = xen_get_max_pages();
+ 
+ 	/* How many extra pages do we need due to remapping? */
+@@ -926,28 +948,6 @@ char * __init xen_memory_setup(void)
+ 
+ 	e820__update_table(e820_table);
+ 
+-	/*
+-	 * Check whether the kernel itself conflicts with the target E820 map.
+-	 * Failing now is better than running into weird problems later due
+-	 * to relocating (and even reusing) pages with kernel text or data.
+-	 */
+-	xen_chk_is_e820_usable(__pa_symbol(_text),
+-			       __pa_symbol(_end) - __pa_symbol(_text),
+-			       "kernel");
+-
+-	/*
+-	 * Check for a conflict of the xen_start_info memory with the target
+-	 * E820 map.
+-	 */
+-	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
+-			       "xen_start_info");
+-
+-	/*
+-	 * Check for a conflict of the hypervisor supplied page tables with
+-	 * the target E820 map.
+-	 */
+-	xen_pt_check_e820();
+-
+ 	xen_reserve_xen_mfnlist();
+ 
+ 	/* Check for a conflict of the initrd with the target E820 map. */
 
 
