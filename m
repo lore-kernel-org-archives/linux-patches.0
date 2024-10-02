@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2632C1D041D;
-	Wed,  2 Oct 2024 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA8C16F84F;
+	Wed,  2 Oct 2024 13:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876837; cv=none; b=OGG3MfVoygp1x+QAiCY+JXdFxgPNhn8B9LjnT0mmHrEJT6nnkKqatLL8XR63NPARwhYy2eACINtbBKEmdiakyurwSjmIkfUrjtiEc0/StphZkp/E8gyA2N0Abo0ciN+/aGov8aw48EDM21ESXdOrBYcwo1GX6DNZVn6qxNhgBqs=
+	t=1727876840; cv=none; b=I2WvO8wS0H9Y7Huyb9W9TWGLjhuvcBWzbooO37JBGbilK8y3gyugG3ZA9p67NGLh5lmUrC5CN4IGhL2DGosRs8liMPjkiyj34PDfR0WcczKq5ahGO/S7W3iCBjG/W4JI8AGT0DN0pdFGQ/8tHxOMZSvygdGZr+mRHXoQ8B0fPI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876837; c=relaxed/simple;
-	bh=iyKe4uTZLc2/Ls4cNlKix8cffdDLDdM7Gqkfn9hrBc8=;
+	s=arc-20240116; t=1727876840; c=relaxed/simple;
+	bh=rzZMKV4RbIFb+wdKybk8j/aIv+cPOfBzXskMEUEXqrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZQS/HcS/aiNTkOvlZax+lrsF5gONo+dmACUdnfj8qn9TVTZcRtb83Z6wNaCjOH+H+Slh65fTjIAA4gw0dn3KzoNu3LY5vhH4UvfCF/M9WkMesWGRfEioEFtxUqXQKbbalfyF4XRnzXbkMJ7jXuD2U8BACdzmh1WOh4n0T2dX5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sk3wZOnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uuKUmI2HHvMfKNnR4aZNrZ3lvlW7tjcf48E2uTNut5X0ZSWOxwqvud+S51c1AZPzCtW2C3O3UoRdV+Rn/KcFR46Ngrwqlu53jLnEHjjjIiK6pIAibjcct2cBjWxCNexln0O02wYL1KflkEIJLv3ZbNF0xuHN9/xUfXWM33RyERw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJoulpKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sk3wZOnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48ABC4CEC2;
-	Wed,  2 Oct 2024 13:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJoulpKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D37EC4CEC2;
+	Wed,  2 Oct 2024 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876837;
-	bh=iyKe4uTZLc2/Ls4cNlKix8cffdDLDdM7Gqkfn9hrBc8=;
+	s=korg; t=1727876839;
+	bh=rzZMKV4RbIFb+wdKybk8j/aIv+cPOfBzXskMEUEXqrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sk3wZOnmPXxTrunigyC4zrQexvds2MBVy6stIFX3qnspB9ieiFTamy5xPLmL6v5/o
-	 Hl218SqcYq+YP63xWSlYTK2xSKqem81LwvGEdPCmrFTpYKa6dwAeKluuwrkYJX6mNX
-	 SeL03FuX0WA0n7gdYLm0aN6uVYvaU6qkYRyfPEzk=
+	b=lJoulpKYPGiKILYneDqDGRgepKzKkhZCgfG9LUmKBGDB9v9+MQmRqMIM42foImWRu
+	 8iw9uPxhl2YlAsZBDewvu9v7Z1VzkuaaczkxlQEScqC+4ipuYdSAZDRL0zWxj32zAI
+	 OZCS7NoRTrGLngPHacYXiZrjIX61FgjVjpa/puD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Zhikai Zhai <zhikai.zhai@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.11 559/695] drm/amd/display: Skip to enable dsc if it has been off
-Date: Wed,  2 Oct 2024 14:59:17 +0200
-Message-ID: <20241002125844.815407721@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.11 577/695] wifi: rtw88: Fix USB/SDIO devices not transmitting beacons
+Date: Wed,  2 Oct 2024 14:59:35 +0200
+Message-ID: <20241002125845.543440309@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,81 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhikai Zhai <zhikai.zhai@amd.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 4bdc5b504af7de1f649004cfdd37445d36db6703 upstream.
+commit faa2e484b393c56bc1243dca6676a70bc485f775 upstream.
 
-[WHY]
-It makes DSC enable when we commit the stream which need
-keep power off, and then it will skip to disable DSC if
-pipe reset at this situation as power has been off. It may
-cause the DSC unexpected enable on the pipe with the
-next new stream which doesn't support DSC.
+All USB devices supported by rtw88 have the same problem: they don't
+transmit beacons in AP mode. (Some?) SDIO devices are also affected.
+The cause appears to be clearing BIT_EN_BCNQ_DL of REG_FWHW_TXQ_CTRL
+before uploading the beacon reserved page, so don't clear the bit for
+USB and SDIO devices.
 
-[HOW]
-Check the DSC used on current pipe status when update stream.
-Skip to enable if it has been off. The operation enable
-DSC should happen when set power on.
+Tested with RTL8811CU and RTL8723DU.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: <stable@vger.kernel.org> # 6.6.x
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/49de73b5-698f-4865-ab63-100e28dfc4a1@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c |   14 ++++++++++++++
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c |   13 +++++++++++++
- 2 files changed, 27 insertions(+)
+ drivers/net/wireless/realtek/rtw88/fw.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-@@ -1029,6 +1029,20 @@ void dcn32_update_dsc_on_stream(struct p
- 		struct dsc_config dsc_cfg;
- 		struct dsc_optc_config dsc_optc_cfg = {0};
- 		enum optc_dsc_mode optc_dsc_mode;
-+		struct dcn_dsc_state dsc_state = {0};
-+
-+		if (!dsc) {
-+			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+			return;
-+		}
-+
-+		if (dsc->funcs->dsc_read_state) {
-+			dsc->funcs->dsc_read_state(dsc, &dsc_state);
-+			if (!dsc_state.dsc_fw_en) {
-+				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+				return;
-+			}
-+		}
+--- a/drivers/net/wireless/realtek/rtw88/fw.c
++++ b/drivers/net/wireless/realtek/rtw88/fw.c
+@@ -1468,10 +1468,12 @@ int rtw_fw_write_data_rsvd_page(struct r
+ 	val |= BIT_ENSWBCN >> 8;
+ 	rtw_write8(rtwdev, REG_CR + 1, val);
  
- 		/* Enable DSC hw block */
- 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -375,7 +375,20 @@ static void update_dsc_on_stream(struct
- 		struct dsc_config dsc_cfg;
- 		struct dsc_optc_config dsc_optc_cfg = {0};
- 		enum optc_dsc_mode optc_dsc_mode;
-+		struct dcn_dsc_state dsc_state = {0};
+-	val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
+-	bckp[1] = val;
+-	val &= ~(BIT_EN_BCNQ_DL >> 16);
+-	rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, val);
++	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE) {
++		val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
++		bckp[1] = val;
++		val &= ~(BIT_EN_BCNQ_DL >> 16);
++		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, val);
++	}
  
-+		if (!dsc) {
-+			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+			return;
-+		}
-+
-+		if (dsc->funcs->dsc_read_state) {
-+			dsc->funcs->dsc_read_state(dsc, &dsc_state);
-+			if (!dsc_state.dsc_fw_en) {
-+				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+				return;
-+			}
-+		}
- 		/* Enable DSC hw block */
- 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
- 		dsc_cfg.pic_height = stream->timing.v_addressable + stream->timing.v_border_top + stream->timing.v_border_bottom;
+ 	ret = rtw_hci_write_data_rsvd_page(rtwdev, buf, size);
+ 	if (ret) {
+@@ -1496,7 +1498,8 @@ restore:
+ 	rsvd_pg_head = rtwdev->fifo.rsvd_boundary;
+ 	rtw_write16(rtwdev, REG_FIFOPAGE_CTRL_2,
+ 		    rsvd_pg_head | BIT_BCN_VALID_V1);
+-	rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
++	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE)
++		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
+ 	rtw_write8(rtwdev, REG_CR + 1, bckp[0]);
+ 
+ 	return ret;
 
 
