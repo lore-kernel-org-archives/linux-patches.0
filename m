@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52F31D04A8;
-	Wed,  2 Oct 2024 13:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886C01D04B4;
+	Wed,  2 Oct 2024 13:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876033; cv=none; b=SNBCDLsC76zaRTnp1HoFaacrxU0xupGpUNcTGH29jeuziUq7fx33PVbI6V83VuCvr9Oo2wCT4nsJpEjCaGb+0Ayzk1rKdjY4zKprXh0D/H+VXzgqUPWp6M5gZBRm2adubSrIn7detNvEhJ7wQHh0xb8sPBoabGIDTZ8krOQRcS8=
+	t=1727876036; cv=none; b=Spr8QugyDYT2a+EIyQTGzhSabELQzGKAo9pjwtEeQoS3QmaqV63qJ0QySMAowzxrgdF95DAgyRlIZ8BhCnSfl1Hnltr9q4pI50OQ+yCeNd06/zh9q3uc82vGb2fiVw0WD1IcGBdHF/NDncF+NMom1SQNzchCgivIvT0JWTPC2NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876033; c=relaxed/simple;
-	bh=Aul+LCi63dQ4oX6Hi8VwmuIvFrXH6JWBipZnWIWIG+s=;
+	s=arc-20240116; t=1727876036; c=relaxed/simple;
+	bh=YuB9nZfX40b25zvNjrD99XiOwR5bpp2Xr9hPOAjh/gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+1zdMkvRLMeK94lpccwPFm5tnFyHBLu0Nou4PsW4waw9qqJf27q0ycWX3o/71h6ebV6mzy0KvPN1VFRnrkcVyYH1DNC1YRqFnEicEUixIX797ALa4/FIO9UQoa5kXJ2SC/SHyo5OZk+fVOCfKJEMR4kl7OKkMsnuK+R4QMpY74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUqfjnPA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAhXcVzMVValGrLy/CQ5xWE7oyrX4y/KRgzZWHOjhzbvFDp/y199HyEuToDJ4IOJ4BLv/MugWEFlFxmp5Rv0vTDnN2nL5qTAB0LuV5ILZA1MhGRJSUCzN1t5BrXz0dGKHx9IqF2RabDBC3coyE4m9ZnkCKZm7HB2Bhgvg89U6Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqCHVHyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUqfjnPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB0AC4CEC5;
-	Wed,  2 Oct 2024 13:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqCHVHyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E49C4CEC5;
+	Wed,  2 Oct 2024 13:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876033;
-	bh=Aul+LCi63dQ4oX6Hi8VwmuIvFrXH6JWBipZnWIWIG+s=;
+	s=korg; t=1727876036;
+	bh=YuB9nZfX40b25zvNjrD99XiOwR5bpp2Xr9hPOAjh/gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUqfjnPAqpfGZaRfvASRX89T+IUKl8kVa53YC6++GFlKgN6mdyJ8QPFTwLbQSMqQE
-	 /48oTlEjyUY0hKUhjG0OhsYcZ2lvv5TypoZ/AyeyPxzP751xpwioX/RZ0M9UdrmIgP
-	 a24XN9k7uD/0oI07t5AjgUaIbnIli4MlKXnSKUPg=
+	b=sqCHVHyCyXfYjmlPzVga3F8CJaNKGIwTt9Ms3EQfc3fsO3K8t2UU89ufLt5rVj93P
+	 VTYfY3bqlnshcntJXTu7tqBH4hKJdjyje43eAARC8HCPzeJ1Qen/Nxo3t9l7oVWnyN
+	 522ltlLldEY0ftvaZ5epV2k7PlgfNr7GJwVXDdKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Shijie <shijie@os.amperecomputing.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 306/695] sched/deadline: Fix schedstats vs deadline servers
-Date: Wed,  2 Oct 2024 14:55:04 +0200
-Message-ID: <20241002125834.654856349@linuxfoundation.org>
+Subject: [PATCH 6.11 289/695] s390/entry: Make early program check handler relocated lowcore aware
+Date: Wed,  2 Oct 2024 14:54:47 +0200
+Message-ID: <20241002125833.977276102@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,101 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Shijie <shijie@os.amperecomputing.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 9c602adb799e72ee537c0c7ca7e828c3fe2acad6 ]
+[ Upstream commit f101b305a7b9513a8042a2cf09018de4ff371af2 ]
 
-In dl_server_start(), when schedstats is enabled, the following
-happens:
+Add the missing pieces so the early program check handler also works
+with a relocated lowcore. Right now the result of an early program
+check in case of a relocated lowcore would be a program check loop.
 
-  dl_server_start()
-    dl_se->dl_server = 1;
-    enqueue_dl_entity()
-      update_stats_enqueue_dl()
-        __schedstats_from_dl_se()
-          dl_task_of()
-            BUG_ON(dl_server(dl_se));
-
-Since only tasks have schedstats and internal entries do not, avoid
-trying to update stats in this case.
-
-Fixes: 63ba8422f876 ("sched/deadline: Introduce deadline servers")
-Signed-off-by: Huang Shijie <shijie@os.amperecomputing.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lkml.kernel.org/r/20240829031111.12142-1-shijie@os.amperecomputing.com
+Fixes: 8f1e70adb1a3 ("s390/boot: Add cmdline option to relocate lowcore")
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 38 ++++++++++++++++----------------------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ arch/s390/kernel/early.c |  7 +++++--
+ arch/s390/kernel/entry.S | 11 ++++++-----
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index f59e5c19d9445..c5a3691ba6cc1 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1599,46 +1599,40 @@ static inline bool __dl_less(struct rb_node *a, const struct rb_node *b)
- 	return dl_time_before(__node_2_dle(a)->deadline, __node_2_dle(b)->deadline);
- }
+diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
+index 14d324865e33f..ee051ad81c711 100644
+--- a/arch/s390/kernel/early.c
++++ b/arch/s390/kernel/early.c
+@@ -183,12 +183,15 @@ void __do_early_pgm_check(struct pt_regs *regs)
  
--static inline struct sched_statistics *
-+static __always_inline struct sched_statistics *
- __schedstats_from_dl_se(struct sched_dl_entity *dl_se)
+ static noinline __init void setup_lowcore_early(void)
  {
-+	if (!schedstat_enabled())
-+		return NULL;
-+
-+	if (dl_server(dl_se))
-+		return NULL;
-+
- 	return &dl_task_of(dl_se)->stats;
++	struct lowcore *lc = get_lowcore();
+ 	psw_t psw;
+ 
+ 	psw.addr = (unsigned long)early_pgm_check_handler;
+ 	psw.mask = PSW_KERNEL_BITS;
+-	get_lowcore()->program_new_psw = psw;
+-	get_lowcore()->preempt_count = INIT_PREEMPT_COUNT;
++	lc->program_new_psw = psw;
++	lc->preempt_count = INIT_PREEMPT_COUNT;
++	lc->return_lpswe = gen_lpswe(__LC_RETURN_PSW);
++	lc->return_mcck_lpswe = gen_lpswe(__LC_RETURN_MCCK_PSW);
  }
  
- static inline void
- update_stats_wait_start_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
- {
--	struct sched_statistics *stats;
--
--	if (!schedstat_enabled())
--		return;
--
--	stats = __schedstats_from_dl_se(dl_se);
--	__update_stats_wait_start(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
-+	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
-+	if (stats)
-+		__update_stats_wait_start(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
- }
+ static __init void detect_diag9c(void)
+diff --git a/arch/s390/kernel/entry.S b/arch/s390/kernel/entry.S
+index b01f4ac43f729..6539ec4800cd1 100644
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -600,18 +600,19 @@ SYM_CODE_START(restart_int_handler)
+ SYM_CODE_END(restart_int_handler)
  
- static inline void
- update_stats_wait_end_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
- {
--	struct sched_statistics *stats;
--
--	if (!schedstat_enabled())
--		return;
--
--	stats = __schedstats_from_dl_se(dl_se);
--	__update_stats_wait_end(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
-+	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
-+	if (stats)
-+		__update_stats_wait_end(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
- }
+ SYM_CODE_START(early_pgm_check_handler)
+-	stmg	%r8,%r15,__LC_SAVE_AREA_SYNC
++	STMG_LC %r8,%r15,__LC_SAVE_AREA_SYNC
++	GET_LC	%r13
+ 	aghi	%r15,-(STACK_FRAME_OVERHEAD+__PT_SIZE)
+ 	la	%r11,STACK_FRAME_OVERHEAD(%r15)
+ 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
+ 	stmg	%r0,%r7,__PT_R0(%r11)
+-	mvc	__PT_PSW(16,%r11),__LC_PGM_OLD_PSW
+-	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA_SYNC
++	mvc	__PT_PSW(16,%r11),__LC_PGM_OLD_PSW(%r13)
++	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA_SYNC(%r13)
+ 	lgr	%r2,%r11
+ 	brasl	%r14,__do_early_pgm_check
+-	mvc	__LC_RETURN_PSW(16),STACK_FRAME_OVERHEAD+__PT_PSW(%r15)
++	mvc	__LC_RETURN_PSW(16,%r13),STACK_FRAME_OVERHEAD+__PT_PSW(%r15)
+ 	lmg	%r0,%r15,STACK_FRAME_OVERHEAD+__PT_R0(%r15)
+-	lpswe	__LC_RETURN_PSW
++	LPSWEY	__LC_RETURN_PSW,__LC_RETURN_LPSWE
+ SYM_CODE_END(early_pgm_check_handler)
  
- static inline void
- update_stats_enqueue_sleeper_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
- {
--	struct sched_statistics *stats;
--
--	if (!schedstat_enabled())
--		return;
--
--	stats = __schedstats_from_dl_se(dl_se);
--	__update_stats_enqueue_sleeper(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
-+	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
-+	if (stats)
-+		__update_stats_enqueue_sleeper(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
- }
- 
- static inline void
+ 	.section .kprobes.text, "ax"
 -- 
 2.43.0
 
