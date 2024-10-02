@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ABF1D0427;
-	Wed,  2 Oct 2024 13:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600F51D0797;
+	Wed,  2 Oct 2024 13:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877227; cv=none; b=dP5N+D5ejmIkGVb4sLnmFNvLLXMReZHsP1K7zGqump2fHEI2wuo4uLB0H2wJZsE+Ehwr6GUJ4YsICZBwuw36E5vJ866cWeHLRC0mjmQQi7BFOYzjpS0itChqoFP7Hr0xxuQmOiEBE+crXhsAlGLfHJGjqnALu/CILDJbdv1nJxc=
+	t=1727877230; cv=none; b=pJFBn6fm8kn71DeDvn8Jo48lL3CDPvxFBwJSBg/jq/Yreibk8Zwt++PSTmHetqMzy4vwtngsWWKR1opjMcX7jfwEFp/LcS2IECE0h/c7Fdd63ucMgJuDOX8KoG3N1WlguOLyO65rVY63snAhqL9skrS7q0HQ2MMgODhMnKoRgVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877227; c=relaxed/simple;
-	bh=iooflxP0iIsHGz1lmAboJ7dGa3Ms0pqMgY2RkHd7fYU=;
+	s=arc-20240116; t=1727877230; c=relaxed/simple;
+	bh=IH5G0wn9ZO6+ijL3Dq0MgqENY2KpvChGd/SY3khDeYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0lww0JcCiQuF1C9gRnbBLjSbOA6P0BTv2ERGxnbH7fEwTUk3hPIs0qWaTqJqI9rJxEasjMcAm8xGWd0Bfbz5JZkgY9zGkfcbxQZr86BEqh1Lp4qxMhnQ9YMzBWzJFH48j1PtR/+LjU8qCwqO1or88jXotK3jQ35LrWGrqH+Ebk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PClADkf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngJOrpX35G/uPXiaSm5y0O47v4lhWz2d5Byezx6BmliWr2Y06PmmGYjr29ADEeTk8u7baa31X2aNcq7xGRV/GrUr8bJFVz/wPSp0IIsLtKA3c6LOLZAvdhzs0R8THhVgbL1OI1Ie0Q86ESHZMtm+cKzX4oSu5OKNDFpoB3s+1T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WESxv3qw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PClADkf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72A2C4CED3;
-	Wed,  2 Oct 2024 13:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WESxv3qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C02C4CED5;
+	Wed,  2 Oct 2024 13:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877227;
-	bh=iooflxP0iIsHGz1lmAboJ7dGa3Ms0pqMgY2RkHd7fYU=;
+	s=korg; t=1727877230;
+	bh=IH5G0wn9ZO6+ijL3Dq0MgqENY2KpvChGd/SY3khDeYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PClADkf9MX9nFojjx+oAwfm5GQHOS7QutCKmSsc+yBADrcS9DpTy1tviBL8HrDivI
-	 kgdwMGWkrpIfBE0rntnLd0XYBFy+rqCCeBjj3ul9cPVBMjCyJVSkb2B7+v6dWK1I8n
-	 FXyonWYyKdm9uDb3ODuABHKBtUA1uTz2FkxcO0dY=
+	b=WESxv3qwZ9Ak1x346GcrW7TW+zNYbL8cpR23I61O2x2AYIA6xyPbsC092CIgdN3QB
+	 Vpq+V8R0LI37tUP7IoNySQeiFzR0dL0IlG5ar3747DrkiISfaRhPa/q78NZbxHKH0c
+	 BMENHItW5sFN4gQBfg+v5WbUlEaBV2c1B83XLFWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 012/634] wifi: ath12k: fix BSS chan info request WMI command
-Date: Wed,  2 Oct 2024 14:51:52 +0200
-Message-ID: <20241002125811.577765477@linuxfoundation.org>
+Subject: [PATCH 6.10 013/634] wifi: ath12k: match WMI BSS chan info structure with firmware definition
+Date: Wed,  2 Oct 2024 14:51:53 +0200
+Message-ID: <20241002125811.617331543@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -55,19 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 59529c982f85047650fd473db903b23006a796c6 ]
+[ Upstream commit dd98d54db29fb553839f43ade5f547baa93392c8 ]
 
-Currently, the firmware returns incorrect pdev_id information in
-WMI_PDEV_BSS_CHAN_INFO_EVENTID, leading to incorrect filling of
-the pdev's survey information.
+struct wmi_pdev_bss_chan_info_event is not similar to the firmware
+struct definition, this will cause some random failures.
 
-To prevent this issue, when requesting BSS channel information
-through WMI_PDEV_BSS_CHAN_INFO_REQUEST_CMDID, firmware expects
-pdev_id as one of the arguments in this WMI command.
-
-Add pdev_id to the struct wmi_pdev_bss_chan_info_req_cmd and fill it
-during ath12k_wmi_pdev_bss_chan_info_request(). This resolves the
-issue of sending the correct pdev_id in WMI_PDEV_BSS_CHAN_INFO_EVENTID.
+Fix by matching the struct wmi_pdev_bss_chan_info_event with the
+firmware structure definition.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
@@ -76,37 +70,32 @@ Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
 Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
 Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240331183232.2158756-2-quic_kathirve@quicinc.com
+Link: https://patch.msgid.link/20240331183232.2158756-3-quic_kathirve@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 1 +
- drivers/net/wireless/ath/ath12k/wmi.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath12k/wmi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index ef775af25093c..55230dd00d0c7 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -1528,6 +1528,7 @@ int ath12k_wmi_pdev_bss_chan_info_request(struct ath12k *ar,
- 	cmd->tlv_header = ath12k_wmi_tlv_cmd_hdr(WMI_TAG_PDEV_BSS_CHAN_INFO_REQUEST,
- 						 sizeof(*cmd));
- 	cmd->req_type = cpu_to_le32(type);
-+	cmd->pdev_id = cpu_to_le32(ar->pdev->pdev_id);
- 
- 	ath12k_dbg(ar->ab, ATH12K_DBG_WMI,
- 		   "WMI bss chan info req type %d\n", type);
 diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
-index 742fe0b36cf20..e26fe504ce28b 100644
+index e26fe504ce28b..e947d646353c3 100644
 --- a/drivers/net/wireless/ath/ath12k/wmi.h
 +++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -3104,6 +3104,7 @@ struct wmi_pdev_bss_chan_info_req_cmd {
- 	__le32 tlv_header;
- 	/* ref wmi_bss_chan_info_req_type */
- 	__le32 req_type;
+@@ -4054,7 +4054,6 @@ struct wmi_vdev_stopped_event {
+ } __packed;
+ 
+ struct wmi_pdev_bss_chan_info_event {
+-	__le32 pdev_id;
+ 	__le32 freq;	/* Units in MHz */
+ 	__le32 noise_floor;	/* units are dBm */
+ 	/* rx clear - how often the channel was unused */
+@@ -4072,6 +4071,7 @@ struct wmi_pdev_bss_chan_info_event {
+ 	/*rx_cycle cnt for my bss in 64bits format */
+ 	__le32 rx_bss_cycle_count_low;
+ 	__le32 rx_bss_cycle_count_high;
 +	__le32 pdev_id;
  } __packed;
  
- struct wmi_ap_ps_peer_cmd {
+ #define WMI_VDEV_INSTALL_KEY_COMPL_STATUS_SUCCESS 0
 -- 
 2.43.0
 
