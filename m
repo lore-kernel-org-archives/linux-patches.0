@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623A01D095B;
-	Wed,  2 Oct 2024 13:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1171D04A0;
+	Wed,  2 Oct 2024 13:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875972; cv=none; b=IMEaeQWJYv+RU8fk812ILCnXxma9WnJ2oBo9b9deqxxj8WYf2C4465EC4jfl5TkVLyNJwVOdmqSpcAUpxSmsUSltaIfeL8785173GTXWvKDi6PzNtm/2j+ldFBcF1XtEZM7PTrlkZ42jnT9lLVSXwcDtqLKff6JYxTs0zt2JYU0=
+	t=1727875975; cv=none; b=mw1RoJvoIgITWkRKoD0Zpq6Ja0vwK8HRAuCfIQFyCG0uNJzlXOtbP8tnXkVVqJljrOZ2hHNFSZ+L7bu/Ssps6Yz/Syeo5kLye08sDW6Mu76izqi2QSIZq8zb/O3SLXcPRTRCsXxofRCwGIQHFxNMW2FHmI5IJvQQAHZ1NGHNFU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875972; c=relaxed/simple;
-	bh=EntWRBAGUSrnP1LIJ1yooZ1ouC/qLfNr9Xjj+f6ImTo=;
+	s=arc-20240116; t=1727875975; c=relaxed/simple;
+	bh=STmIuj3WUvUeRKIEpqCMI3j5Hj10t46Xx/f6XQXsdD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCKoN5W6gRpHnoOLXQ1mYH+xMqTXNEKNdfZsTHnYKdY55/b6GxneARVXM4p8O/o5S60w0MpGJAM3AHOHhpqp7DQIBd//idh/XXYd84R+4J6k/KO1X2QLzsLD0CziaFPPY932NFxhjph6oclFMFAgtwidYp/PKnKyTi6wKS8dfMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq28fQsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4sIb/ll34o0tCn72l4IJVKum3gumdxt1lm3pXDEwjcEHKBMmQux/hZ84BxgZsOZVuhxUi73YnJ9JjVfZTJvM47sDvDr7ZSyB2JDR/fO1LubKV3eWlGph5JrfUo5+HcVvOKVXkxr3ePEyAqmZw5h3VHPY0u+aqNIod64mL2cbZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2XOQGEp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq28fQsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5B0C4CEC5;
-	Wed,  2 Oct 2024 13:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2XOQGEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4459C4CEC5;
+	Wed,  2 Oct 2024 13:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875972;
-	bh=EntWRBAGUSrnP1LIJ1yooZ1ouC/qLfNr9Xjj+f6ImTo=;
+	s=korg; t=1727875975;
+	bh=STmIuj3WUvUeRKIEpqCMI3j5Hj10t46Xx/f6XQXsdD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yq28fQsi82TQ5fUT2MCGS1kBSXIcLpLn4M8ww26I77sPZaZDi5PdT6+GdTVrGemNb
-	 ngSLPfsPpSt+nd64RDEs5ICdsw1VM48sYJbkM8frC/BQ4GvZXmJyfd4c/M1Tbxc+Y8
-	 uJIXT3qb7DsUUpL77zN/6Ox+Qy2HGv2F0FVV5yAg=
+	b=W2XOQGEpIIn4an+Sj3KGOlTqc4exndFJdIDVAmUyersAVLRJqlfS/BE1zpTqDqkYs
+	 dIO5U1ykmxTRXH5aHgACeVi48bxvWc2R2rF8LUSODGa5rMNHdBERFQJxquF2qTMLr9
+	 pxWUxrsDnvk6vMqODahfTL0m7mYvTEDzdBs7+0Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 283/695] selftests/bpf: Fix error compiling test_lru_map.c
-Date: Wed,  2 Oct 2024 14:54:41 +0200
-Message-ID: <20241002125833.741896368@linuxfoundation.org>
+Subject: [PATCH 6.11 284/695] selftests/bpf: Fix C++ compile error from missing _Bool type
+Date: Wed,  2 Oct 2024 14:54:42 +0200
+Message-ID: <20241002125833.781231396@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,42 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit cacf2a5a78cd1f5f616eae043ebc6f024104b721 ]
+[ Upstream commit aa95073fd290b5b3e45f067fa22bb25e59e1ff7c ]
 
-Although the post-increment in macro 'CPU_SET(next++, &cpuset)' seems safe,
-the sequencing can raise compile errors, so move the increment outside the
-macro. This avoids an error seen using gcc 12.3.0 for mips64el/musl-libc:
+While building, bpftool makes a skeleton from test_core_extern.c, which
+itself includes <stdbool.h> and uses the 'bool' type. However, the skeleton
+test_core_extern.skel.h generated *does not* include <stdbool.h> or use the
+'bool' type, instead using the C-only '_Bool' type. Compiling test_cpp.cpp
+with g++ 12.3 for mips64el/musl-libc then fails with error:
 
-  In file included from test_lru_map.c:11:
-  test_lru_map.c: In function 'sched_next_online':
-  test_lru_map.c:129:29: error: operation on 'next' may be undefined [-Werror=sequence-point]
-    129 |                 CPU_SET(next++, &cpuset);
-        |                             ^
-  cc1: all warnings being treated as errors
+  In file included from test_cpp.cpp:9:
+  test_core_extern.skel.h:45:17: error: '_Bool' does not name a type
+     45 |                 _Bool CONFIG_BOOL;
+        |                 ^~~~~
 
-Fixes: 3fbfadce6012 ("bpf: Fix test_lru_sanity5() in test_lru_map.c")
+This was likely missed previously because glibc uses a GNU extension for
+<stdbool.h> with C++ (#define _Bool bool), not supported by musl libc.
+
+Normally, a C fragment would include <stdbool.h> and use the 'bool' type,
+and thus cleanly work after import by C++. The ideal fix would be for
+'bpftool gen skeleton' to output the correct type/include supporting C++,
+but in the meantime add a conditional define as above.
+
+Fixes: 7c8dce4b1661 ("bpftool: Make skeleton C code compilable with C++ compiler")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/22993dfb11ccf27925a626b32672fd3324cb76c4.1722244708.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/6fc1dd28b8bda49e51e4f610bdc9d22f4455632d.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_lru_map.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_cpp.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_lru_map.c b/tools/testing/selftests/bpf/test_lru_map.c
-index 4d0650cfb5cd8..fda7589c50236 100644
---- a/tools/testing/selftests/bpf/test_lru_map.c
-+++ b/tools/testing/selftests/bpf/test_lru_map.c
-@@ -126,7 +126,8 @@ static int sched_next_online(int pid, int *next_to_try)
+diff --git a/tools/testing/selftests/bpf/test_cpp.cpp b/tools/testing/selftests/bpf/test_cpp.cpp
+index dde0bb16e782e..abc2a56ab2616 100644
+--- a/tools/testing/selftests/bpf/test_cpp.cpp
++++ b/tools/testing/selftests/bpf/test_cpp.cpp
+@@ -6,6 +6,10 @@
+ #include <bpf/libbpf.h>
+ #include <bpf/bpf.h>
+ #include <bpf/btf.h>
++
++#ifndef _Bool
++#define _Bool bool
++#endif
+ #include "test_core_extern.skel.h"
+ #include "struct_ops_module.skel.h"
  
- 	while (next < nr_cpus) {
- 		CPU_ZERO(&cpuset);
--		CPU_SET(next++, &cpuset);
-+		CPU_SET(next, &cpuset);
-+		next++;
- 		if (!sched_setaffinity(pid, sizeof(cpuset), &cpuset)) {
- 			ret = 0;
- 			break;
 -- 
 2.43.0
 
