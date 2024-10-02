@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2781D04B4;
-	Wed,  2 Oct 2024 13:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81861D0E05;
+	Wed,  2 Oct 2024 13:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877482; cv=none; b=Xdhr/hoVqTPAzTFnoeyzzNZcl30moqp2TSmsuYzkiajqsLA/w3JI05wOVUXytrtl4CQ9BB6h2sO1YUJo6whtGa61enMov4hP8iAFFmQN/rowBudbNSKa5F9tw0dx1ue5XfbQmdeJceEoT19S3fQFfNCLeu3X45TA1h6X3LtPHx4=
+	t=1727877485; cv=none; b=HS00uzggRxX1xUCgdevnzGblh3GYMw3LrXNLQyZpPsdnbBw4GwcmEtCHa29kmRSLkMrYhonXFHCRMZ5lrkMxvnX257gccAnH9NKEt/fxOkg78t84wVU+TAEWmss5u8I+N6E3oCVE7Zegaa1rs0Fh+z3Te5Vckk8KOU0RYWfs4L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877482; c=relaxed/simple;
-	bh=1lIvZkWkWLHW8ppICaPEh8Cjr0f7rcUdnDS+1GjYf8s=;
+	s=arc-20240116; t=1727877485; c=relaxed/simple;
+	bh=DRoFljR7657MIbpdtjoaVIrJ/43i//PcEi4vr33Sgr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huFDs+Z2UuVq5RkEX/M+nJjC725UJUpj50M3Lsf34pDCfHvTn5TiPfxo/4etW2AHMzlS9AVrEqOQmehXTBUyAYBf/JdFvAxQdTDstgb+LOxZGZwbE3VIuH5u6b06iegaJ2XjtV50UohyViTGEpCLFZW3MMu6E+yqVItweA365Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQb+blHX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sgm5EfyGp3JkRMCO9DDo49FqdR0wE39paZPkyYcpAY3DwmhGF7qk7fde9zcCHGTtukv2Y4nZfp8qnG0C4Lsr9dRd6e8mtQUMPHwY9Po6O7dRXrBUUdzFk1/SYVIRqq0vZKrMbFDOhY04+nsZZYCHt3HFUn1gXrabqCoNvf3HaVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGbyLq3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQb+blHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4780BC4CECD;
-	Wed,  2 Oct 2024 13:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGbyLq3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A2FC4CEC5;
+	Wed,  2 Oct 2024 13:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877482;
-	bh=1lIvZkWkWLHW8ppICaPEh8Cjr0f7rcUdnDS+1GjYf8s=;
+	s=korg; t=1727877485;
+	bh=DRoFljR7657MIbpdtjoaVIrJ/43i//PcEi4vr33Sgr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQb+blHX4nVOA9Zpn6b/bjQjQ1xGhl4CheNzwesrB+BnQPptdPr0/5Wv4kx6XrzA+
-	 tbx0nifAGDyppU9EKi8Tr0x8Yr/AsqUY4ERGzKU47hho4LhXulI10pb5FiScjiT4fL
-	 uxx0Jb08k7sIUC5rPnKbqCEam8cbEEb8MkGK2I+s=
+	b=VGbyLq3E3c40m5gfV7qVR2+uOuczxPGhoowuPuzM+JTMGkQuAfAPJN/JXK2vErMqN
+	 suU6E2APcK5oTd4chYXhX7rpozuHGwXBWDjuAuy3pNp8VN23XaUP/aRPLEG7J+VyJb
+	 F22J5f6HM0zVFgZTX8hjltrPETXlCGKzo0P1qSYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Guillaume Nault <gnault@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 066/634] wifi: mt76: mt7996: fix traffic delay when switching back to working channel
-Date: Wed,  2 Oct 2024 14:52:46 +0200
-Message-ID: <20241002125813.712710904@linuxfoundation.org>
+Subject: [PATCH 6.10 093/634] bareudp: Pull inner IP header in bareudp_udp_encap_recv().
+Date: Wed,  2 Oct 2024 14:53:13 +0200
+Message-ID: <20241002125814.781463624@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,39 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 376200f095d0c3a7096199b336204698d7086279 ]
+[ Upstream commit 45fa29c85117170b0508790f878b13ec6593c888 ]
 
-During scanning, UNI_CHANNEL_RX_PATH tag is necessary for the firmware to
-properly stop and resume MAC TX queue. Without this tag, HW needs more time
-to resume traffic when switching back to working channel.
+Bareudp reads the inner IP header to get the ECN value. Therefore, it
+needs to ensure that it's part of the skb's linear data.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20240816094635.2391-2-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This is similar to the vxlan and geneve fixes for that same problem:
+  * commit f7789419137b ("vxlan: Pull inner IP header in vxlan_rcv().")
+  * commit 1ca1ba465e55 ("geneve: make sure to pull inner header in
+    geneve_rx()")
+
+Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/5205940067c40218a70fbb888080466b2fc288db.1726046181.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/bareudp.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 7c97140d8255a..15d880ef0d922 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -307,6 +307,10 @@ int mt7996_set_channel(struct mt7996_phy *phy)
- 	if (ret)
- 		goto out;
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 7aca0544fb29c..b4e820a123caf 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -68,6 +68,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 	__be16 proto;
+ 	void *oiph;
+ 	int err;
++	int nh;
  
-+	ret = mt7996_mcu_set_chan_info(phy, UNI_CHANNEL_RX_PATH);
-+	if (ret)
-+		goto out;
+ 	bareudp = rcu_dereference_sk_user_data(sk);
+ 	if (!bareudp)
+@@ -148,10 +149,25 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 	}
+ 	skb_dst_set(skb, &tun_dst->dst);
+ 	skb->dev = bareudp->dev;
+-	oiph = skb_network_header(skb);
+-	skb_reset_network_header(skb);
+ 	skb_reset_mac_header(skb);
+ 
++	/* Save offset of outer header relative to skb->head,
++	 * because we are going to reset the network header to the inner header
++	 * and might change skb->head.
++	 */
++	nh = skb_network_header(skb) - skb->head;
 +
- 	ret = mt7996_dfs_init_radar_detector(phy);
- 	mt7996_mac_cca_stats_reset(phy);
- 
++	skb_reset_network_header(skb);
++
++	if (!pskb_inet_may_pull(skb)) {
++		DEV_STATS_INC(bareudp->dev, rx_length_errors);
++		DEV_STATS_INC(bareudp->dev, rx_errors);
++		goto drop;
++	}
++
++	/* Get the outer header. */
++	oiph = skb->head + nh;
++
+ 	if (!ipv6_mod_enabled() || family == AF_INET)
+ 		err = IP_ECN_decapsulate(oiph, skb);
+ 	else
 -- 
 2.43.0
 
