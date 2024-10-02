@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBDB1D0488;
-	Wed,  2 Oct 2024 13:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAB61D016E;
+	Wed,  2 Oct 2024 13:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877376; cv=none; b=TkejEW74BsygHKFydHsesxTx/b1NxTeKDaH4EwK5/5ucL4Wb94twWUcsX3PHU3TCLJrk2f55R9Zx4jVY99Zd7CjsgyCJEAISjGR0W2/NhFQcF5Yq3mavaeMpav8ZzMzkfAWRYKAyAkYSDl9zlNFby59wC5/7UPcIvodEIxx6B4w=
+	t=1727877379; cv=none; b=Q5MNLQGJA6iJrMqGvYnMueDXJigK1rfdBsvGkWv1XFDIKOdjqstipPoDpFV4JP3eEkRpSfIP5lrRdV44A/Ftclqf8Rrr+UMTKAtBxBfQe9i2H4zHBT7PS5G0NJOj+PDD45Qn6Q1HTlPqSPNvvYaM8elWbS+5/QDVaNxcp0SBSEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877376; c=relaxed/simple;
-	bh=dQazX52KD1gWkf1fPIvwKuOgk7dE/EdUynB8uBv83v4=;
+	s=arc-20240116; t=1727877379; c=relaxed/simple;
+	bh=4pXRf0He6k3p4f1xDkZ0K/JycomVIXmuHiGRJPJBzk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8L0ovhYf/W2a1IOiUjXFMtn05AHbaTNl3OnTzhNSS3akMu8qlKq57xzms056bYphSpZQPpwhfS1+3vFW/NzvQLzdczV1hY/cHWu3cy5GbzLb6HLWj8uubRnlqiDItP8FGcNMFqSTnjprvyWSQD+tz/BefF46ZpTtKMekH6B3qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToBV4xO4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HC+gHJW0AZsAOSzQ5QYzv6VIBW0iDo8HHXNH8oFdnLA4lP4roBvquxLnweSNfoMETns/K0LuR+Pkrcm/lLkB8wlu70aupIriKFogJQQORgBjjDnj5NkE+bwDxY/hXRj/8673Zu7aAVcBfwW1v9KMClSW+fYNHNuMKHwkaMEOodM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2S+VV9G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToBV4xO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E1BC4CEC2;
-	Wed,  2 Oct 2024 13:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2S+VV9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB96FC4CEC2;
+	Wed,  2 Oct 2024 13:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877376;
-	bh=dQazX52KD1gWkf1fPIvwKuOgk7dE/EdUynB8uBv83v4=;
+	s=korg; t=1727877379;
+	bh=4pXRf0He6k3p4f1xDkZ0K/JycomVIXmuHiGRJPJBzk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToBV4xO4GauMMV8LE3zSZ7j+VlxzgaJSETzM0rQqbkywIy10UBxX9QQ4+dCMtrKvB
-	 eOZlR2NWY2Cf3oGeOetXdgG3HDSItwaFElCvr40I6SrlzttwEz7QxER/yNN1KTTQBz
-	 cGb6fIwCuXSSpqAmzTgXGhOl3p6h1aRWUqQOalHI=
+	b=N2S+VV9G9zF0rYSF9x8vL5oTIsAnJuqI/9qrwF3kJUy6Bc1/O3GrJyrE4FB0ltzlU
+	 OrrQ2sGbPZfO/MjOIcTDz9bJ/v5y5DeNViC9GZWRr0RjbmzbE/Zzuwn+BZHQ6Ogv4o
+	 ng+R3IiQ/9XFvZZ8TLhITp/ApaGDELIiPg6Jnr+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
 	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 059/634] perf/arm-cmn: Fix CCLA register offset
-Date: Wed,  2 Oct 2024 14:52:39 +0200
-Message-ID: <20241002125813.436995390@linuxfoundation.org>
+Subject: [PATCH 6.10 060/634] perf/arm-cmn: Ensure dtm_idx is big enough
+Date: Wed,  2 Oct 2024 14:52:40 +0200
+Message-ID: <20241002125813.476216259@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -55,60 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 88b63a82c84ed9bbcbdefb10cb6f75dd1dd04887 ]
+[ Upstream commit 359414b33e00bae91e4eabf3e4ef8e76024c7673 ]
 
-Apparently pmu_event_sel is offset by 8 for all CCLA nodes, not just
-the CCLA_RNI combination type.
+While CMN_MAX_DIMENSION was bumped to 12 for CMN-650, that only supports
+up to a 10x10 mesh, so bumping dtm_idx to 256 bits at the time worked
+out OK in practice. However CMN-700 did finally support up to 144 XPs,
+and thus needs a worst-case 288 bits of dtm_idx for an aggregated XP
+event on a maxed-out config. Oops.
 
 Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/6e7bb06fef6046f83e7647aad0e5be544139763f.1725296395.git.robin.murphy@arm.com
+Link: https://lore.kernel.org/r/e771b358526a0d7fc06efee2c3a2fdc0c9f51d44.1725296395.git.robin.murphy@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/perf/arm-cmn.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 6cd4fd9667aa6..f33fd110081c3 100644
+index f33fd110081c3..058ea798b669b 100644
 --- a/drivers/perf/arm-cmn.c
 +++ b/drivers/perf/arm-cmn.c
-@@ -70,7 +70,8 @@
- /* Technically this is 4 bits wide on DNs, but we only use 2 there anyway */
- #define CMN__PMU_OCCUP1_ID		GENMASK_ULL(34, 32)
+@@ -35,6 +35,9 @@
+ #define CMN_MAX_XPS			(CMN_MAX_DIMENSION * CMN_MAX_DIMENSION)
+ #define CMN_MAX_DTMS			(CMN_MAX_XPS + (CMN_MAX_DIMENSION - 1) * 4)
  
--/* HN-Ps are weird... */
-+/* Some types are designed to coexist with another device in the same node */
-+#define CMN_CCLA_PMU_EVENT_SEL		0x008
- #define CMN_HNP_PMU_EVENT_SEL		0x008
++/* Currently XPs are the node type we can have most of; others top out at 128 */
++#define CMN_MAX_NODES_PER_EVENT		CMN_MAX_XPS
++
+ /* The CFG node has various info besides the discovery tree */
+ #define CMN_CFGM_PERIPH_ID_01		0x0008
+ #define CMN_CFGM_PID0_PART_0		GENMASK_ULL(7, 0)
+@@ -565,7 +568,7 @@ static void arm_cmn_debugfs_init(struct arm_cmn *cmn, int id) {}
  
- /* DTMs live in the PMU space of XP registers */
-@@ -2323,10 +2324,13 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 			case CMN_TYPE_CXHA:
- 			case CMN_TYPE_CCRA:
- 			case CMN_TYPE_CCHA:
--			case CMN_TYPE_CCLA:
- 			case CMN_TYPE_HNS:
- 				dn++;
- 				break;
-+			case CMN_TYPE_CCLA:
-+				dn->pmu_base += CMN_CCLA_PMU_EVENT_SEL;
-+				dn++;
-+				break;
- 			/* Nothing to see here */
- 			case CMN_TYPE_MPAM_S:
- 			case CMN_TYPE_MPAM_NS:
-@@ -2344,7 +2348,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 			case CMN_TYPE_HNP:
- 			case CMN_TYPE_CCLA_RNI:
- 				dn[1] = dn[0];
--				dn[0].pmu_base += CMN_HNP_PMU_EVENT_SEL;
-+				dn[0].pmu_base += CMN_CCLA_PMU_EVENT_SEL;
- 				dn[1].type = arm_cmn_subtype(dn->type);
- 				dn += 2;
- 				break;
+ struct arm_cmn_hw_event {
+ 	struct arm_cmn_node *dn;
+-	u64 dtm_idx[4];
++	u64 dtm_idx[DIV_ROUND_UP(CMN_MAX_NODES_PER_EVENT * 2, 64)];
+ 	s8 dtc_idx[CMN_MAX_DTCS];
+ 	u8 num_dns;
+ 	u8 dtm_offset;
 -- 
 2.43.0
 
