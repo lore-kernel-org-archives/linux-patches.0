@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F33A1D2200;
-	Wed,  2 Oct 2024 14:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B3E1D0F57;
+	Wed,  2 Oct 2024 14:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878570; cv=none; b=qooFuDypPqPGB4aHyXpqTZUkYRXp+seVecSpJyXFNsLYmWn+SaieL844UbX3ksefnXV4ykZgHtVE249AIfotMhKdvK6lRuD6t3/T8y+nsXcR/s5g2QZVfezEXMP7gw69g7LKhUugTyTzyRvMvsh0iAsKR5KYLEnzbq0Bk1fX/io=
+	t=1727878572; cv=none; b=UyVfiWAQm46/dQ5kuoXcnUnXvWhyS/TsUjHSIwqWraDFgH1n0wkGtWnXel3Q6jLemcRFRDBlfzHkDaSECXZSjgsYgn1SavhCL9/rSxk/dWdHgn1q0WjI8EVrGuPyDBfo+JvUefOtS0htZhWwZH3oYZWBSntbHNnR6fnrAsk8gDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878570; c=relaxed/simple;
-	bh=Epwi4LNysfbyZjof2hw3OQCYJf3kO3t4th07S9SY5ak=;
+	s=arc-20240116; t=1727878572; c=relaxed/simple;
+	bh=pFgbD1A5O2VQrediRV6kv0GJhMNpos5toT6kz8u+B/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8RA1HeJYSSb+ZZiTrwxtA1BRPWXAgMo2ioYpjfL7KYSd9dmk2SWomGUSOjNC7AjwO4p+p0Os11nG6MadOPjiDk1Lg2rJ0uKh5vl87LAEBhslOYD+QS1REh4a4MOC5FvjOOlRD5v7M9Thn7EkWWELUYtZz9cQ+6DVGpE5Hy6tvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyPFmRt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQ8Sbc3erFqthsfHXrZjOG68O2yW3KpcxG4cbaTSseR0sdRYjJGmIwsMahF2aOkhhCD0S/7HLalvobv/AsR8OnUTUKPa2Mqht9D07b978mXAu1CApm/alLT8wnShdLUggFLKxTnaMFcttv8u0QScL33CnU/edUxFeZmUwZ8gNIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBN+/rQB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyPFmRt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32DDC4CEC2;
-	Wed,  2 Oct 2024 14:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBN+/rQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B488C4CEC2;
+	Wed,  2 Oct 2024 14:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878569;
-	bh=Epwi4LNysfbyZjof2hw3OQCYJf3kO3t4th07S9SY5ak=;
+	s=korg; t=1727878571;
+	bh=pFgbD1A5O2VQrediRV6kv0GJhMNpos5toT6kz8u+B/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyPFmRt5K3yF9KHvjwh5ZRNqSu27V+hepZ10CH6dodsKvAHpdRuXLYcWuMmhZcb13
-	 ww/POIwbIPzw7dQr8Lj5Nif3ZhCHTY1QsOCzLjwnDTahj1H3owuEo7rHOeIsKnrsyK
-	 g1yQRHb3Ekr6Bfzna2U9TRYxCL0Seom59wcqW8mE=
+	b=QBN+/rQBrzViTW3+RZXp4KmXIcFsgQjubiJtjOlthCXlXn6nvhBpeKW9UMCycq5vp
+	 GgH10O2UEPs7/JtPzaZocAe1UZyQ73TtKLEuZ1UoXLi0jNfyz67RFfyyfWBb/UlMh1
+	 095oUWb7w8TKYldmVgl9OTBjx9E3F+Iu2qoXxFF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>
-Subject: [PATCH 6.10 458/634] xen: allow mapping ACPI data using a different physical address
-Date: Wed,  2 Oct 2024 14:59:18 +0200
-Message-ID: <20241002125829.180609200@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 459/634] io_uring/sqpoll: retain test for whether the CPU is valid
+Date: Wed,  2 Oct 2024 14:59:19 +0200
+Message-ID: <20241002125829.220210746@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,192 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 9221222c717dbddac1e3c49906525475d87a3a44 upstream.
+commit a09c17240bdf2e9fa6d0591afa9448b59785f7d4 upstream.
 
-When running as a Xen PV dom0 the system needs to map ACPI data of the
-host using host physical addresses, while those addresses can conflict
-with the guest physical addresses of the loaded linux kernel. The same
-problem might apply in case a PV guest is configured to use the host
-memory map.
+A recent commit ensured that SQPOLL cannot be setup with a CPU that
+isn't in the current tasks cpuset, but it also dropped testing whether
+the CPU is valid in the first place. Without that, if a task passes in
+a CPU value that is too high, the following KASAN splat can get
+triggered:
 
-This conflict can be solved by mapping the ACPI data to a different
-guest physical address, but mapping the data via acpi_os_ioremap()
-must still be possible using the host physical address, as this
-address might be generated by AML when referencing some of the ACPI
-data.
+BUG: KASAN: stack-out-of-bounds in io_sq_offload_create+0x858/0xaa4
+Read of size 8 at addr ffff800089bc7b90 by task wq-aff.t/1391
 
-When configured to support running as a Xen PV domain, have an
-implementation of acpi_os_ioremap() being aware of the possibility to
-need above mentioned translation of a host physical address to the
-guest physical address.
+CPU: 4 UID: 1000 PID: 1391 Comm: wq-aff.t Not tainted 6.11.0-rc7-00227-g371c468f4db6 #7080
+Hardware name: linux,dummy-virt (DT)
+Call trace:
+ dump_backtrace.part.0+0xcc/0xe0
+ show_stack+0x14/0x1c
+ dump_stack_lvl+0x58/0x74
+ print_report+0x16c/0x4c8
+ kasan_report+0x9c/0xe4
+ __asan_report_load8_noabort+0x1c/0x24
+ io_sq_offload_create+0x858/0xaa4
+ io_uring_setup+0x1394/0x17c4
+ __arm64_sys_io_uring_setup+0x6c/0x180
+ invoke_syscall+0x6c/0x260
+ el0_svc_common.constprop.0+0x158/0x224
+ do_el0_svc+0x3c/0x5c
+ el0_svc+0x34/0x70
+ el0t_64_sync_handler+0x118/0x124
+ el0t_64_sync+0x168/0x16c
 
-This modification requires to #include linux/acpi.h in some sources
-which need to include asm/acpi.h directly.
+The buggy address belongs to stack of task wq-aff.t/1391
+ and is located at offset 48 in frame:
+ io_sq_offload_create+0x0/0xaa4
 
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+This frame has 1 object:
+ [32, 40) 'allowed_mask'
+
+The buggy address belongs to the virtual mapping at
+ [ffff800089bc0000, ffff800089bc9000) created by:
+ kernel_clone+0x124/0x7e0
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff0000d740af80 pfn:0x11740a
+memcg:ffff0000c2706f02
+flags: 0xbffe00000000000(node=0|zone=2|lastcpupid=0x1fff)
+raw: 0bffe00000000000 0000000000000000 dead000000000122 0000000000000000
+raw: ffff0000d740af80 0000000000000000 00000001ffffffff ffff0000c2706f02
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff800089bc7a80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff800089bc7b00: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
+>ffff800089bc7b80: 00 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+                         ^
+ ffff800089bc7c00: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
+ ffff800089bc7c80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f3
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202409161632.cbeeca0d-lkp@intel.com
+Fixes: f011c9cf04c0 ("io_uring/sqpoll: do not allow pinning outside of cpuset")
+Tested-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/acpi.h        |    8 ++++++++
- arch/x86/kernel/acpi/boot.c        |   11 +++++++++++
- arch/x86/kernel/jailhouse.c        |    1 +
- arch/x86/kernel/mmconf-fam10h_64.c |    1 +
- arch/x86/kernel/smpboot.c          |    1 +
- arch/x86/kernel/x86_init.c         |    1 +
- arch/x86/xen/p2m.c                 |   35 +++++++++++++++++++++++++++++++++++
- arch/x86/xen/setup.c               |    2 +-
- 8 files changed, 59 insertions(+), 1 deletion(-)
+ io_uring/sqpoll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/acpi.h
-+++ b/arch/x86/include/asm/acpi.h
-@@ -167,6 +167,14 @@ void acpi_generic_reduced_hw_init(void);
- void x86_default_set_root_pointer(u64 addr);
- u64 x86_default_get_root_pointer(void);
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -465,6 +465,8 @@ __cold int io_sq_offload_create(struct i
+ 			int cpu = p->sq_thread_cpu;
  
-+#ifdef CONFIG_XEN_PV
-+/* A Xen PV domain needs a special acpi_os_ioremap() handling. */
-+extern void __iomem * (*acpi_os_ioremap)(acpi_physical_address phys,
-+					 acpi_size size);
-+void __iomem *x86_acpi_os_ioremap(acpi_physical_address phys, acpi_size size);
-+#define acpi_os_ioremap acpi_os_ioremap
-+#endif
-+
- #else /* !CONFIG_ACPI */
- 
- #define acpi_lapic 0
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -1862,3 +1862,14 @@ u64 x86_default_get_root_pointer(void)
- {
- 	return boot_params.acpi_rsdp_addr;
- }
-+
-+#ifdef CONFIG_XEN_PV
-+void __iomem *x86_acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
-+{
-+	return ioremap_cache(phys, size);
-+}
-+
-+void __iomem * (*acpi_os_ioremap)(acpi_physical_address phys, acpi_size size) =
-+	x86_acpi_os_ioremap;
-+EXPORT_SYMBOL_GPL(acpi_os_ioremap);
-+#endif
---- a/arch/x86/kernel/jailhouse.c
-+++ b/arch/x86/kernel/jailhouse.c
-@@ -12,6 +12,7 @@
- #include <linux/kernel.h>
- #include <linux/reboot.h>
- #include <linux/serial_8250.h>
-+#include <linux/acpi.h>
- #include <asm/apic.h>
- #include <asm/io_apic.h>
- #include <asm/acpi.h>
---- a/arch/x86/kernel/mmconf-fam10h_64.c
-+++ b/arch/x86/kernel/mmconf-fam10h_64.c
-@@ -9,6 +9,7 @@
- #include <linux/pci.h>
- #include <linux/dmi.h>
- #include <linux/range.h>
-+#include <linux/acpi.h>
- 
- #include <asm/pci-direct.h>
- #include <linux/sort.h>
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -60,6 +60,7 @@
- #include <linux/stackprotector.h>
- #include <linux/cpuhotplug.h>
- #include <linux/mc146818rtc.h>
-+#include <linux/acpi.h>
- 
- #include <asm/acpi.h>
- #include <asm/cacheinfo.h>
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -8,6 +8,7 @@
- #include <linux/ioport.h>
- #include <linux/export.h>
- #include <linux/pci.h>
-+#include <linux/acpi.h>
- 
- #include <asm/acpi.h>
- #include <asm/bios_ebda.h>
---- a/arch/x86/xen/p2m.c
-+++ b/arch/x86/xen/p2m.c
-@@ -70,6 +70,7 @@
- #include <linux/memblock.h>
- #include <linux/slab.h>
- #include <linux/vmalloc.h>
-+#include <linux/acpi.h>
- 
- #include <asm/cache.h>
- #include <asm/setup.h>
-@@ -835,6 +836,34 @@ void __init xen_do_remap_nonram(void)
- 	pr_info("Remapped %u non-RAM page(s)\n", remapped);
- }
- 
-+#ifdef CONFIG_ACPI
-+/*
-+ * Xen variant of acpi_os_ioremap() taking potentially remapped non-RAM
-+ * regions into account.
-+ * Any attempt to map an area crossing a remap boundary will produce a
-+ * WARN() splat.
-+ * phys is related to remap->maddr on input and will be rebased to remap->paddr.
-+ */
-+static void __iomem *xen_acpi_os_ioremap(acpi_physical_address phys,
-+					 acpi_size size)
-+{
-+	unsigned int i;
-+	const struct nonram_remap *remap = xen_nonram_remap;
-+
-+	for (i = 0; i < nr_nonram_remap; i++) {
-+		if (phys + size > remap->maddr &&
-+		    phys < remap->maddr + remap->size) {
-+			WARN_ON(phys < remap->maddr ||
-+				phys + size > remap->maddr + remap->size);
-+			phys += remap->paddr - remap->maddr;
-+			break;
-+		}
-+	}
-+
-+	return x86_acpi_os_ioremap(phys, size);
-+}
-+#endif /* CONFIG_ACPI */
-+
- /*
-  * Add a new non-RAM remap entry.
-  * In case of no free entry found, just crash the system.
-@@ -849,6 +878,12 @@ void __init xen_add_remap_nonram(phys_ad
- 		BUG();
- 	}
- 
-+#ifdef CONFIG_ACPI
-+	/* Switch to the Xen acpi_os_ioremap() variant. */
-+	if (nr_nonram_remap == 0)
-+		acpi_os_ioremap = xen_acpi_os_ioremap;
-+#endif
-+
- 	xen_nonram_remap[nr_nonram_remap].maddr = maddr;
- 	xen_nonram_remap[nr_nonram_remap].paddr = paddr;
- 	xen_nonram_remap[nr_nonram_remap].size = size;
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -15,12 +15,12 @@
- #include <linux/cpuidle.h>
- #include <linux/cpufreq.h>
- #include <linux/memory_hotplug.h>
-+#include <linux/acpi.h>
- 
- #include <asm/elf.h>
- #include <asm/vdso.h>
- #include <asm/e820/api.h>
- #include <asm/setup.h>
--#include <asm/acpi.h>
- #include <asm/numa.h>
- #include <asm/idtentry.h>
- #include <asm/xen/hypervisor.h>
+ 			ret = -EINVAL;
++			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
++				goto err_sqpoll;
+ 			cpuset_cpus_allowed(current, &allowed_mask);
+ 			if (!cpumask_test_cpu(cpu, &allowed_mask))
+ 				goto err_sqpoll;
 
 
