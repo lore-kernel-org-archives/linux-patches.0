@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C2F1D1E89;
-	Wed,  2 Oct 2024 14:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD5C1D0E24;
+	Wed,  2 Oct 2024 14:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878808; cv=none; b=iCcjkFzvDBbFAMExqtmvq20Rn72OCbfwJwFPdr3LPPLCdaOT2+cA2Uro2KbRpuPl8+KRL4ZjUZZpVW1xaZqVAjegEjvX0VYSKo7G70ls2rwqTML5hWiUKK7c9I0NrCqRvA8u9dexIF3vgcfzHJScdMlymIRnF9XYy2WZMSUKNps=
+	t=1727878812; cv=none; b=OwHUs4h22Q9whmuuzANnrJ6seC5+7LfSXV+JPWk253HSXFE4fPIrjC7HTLb/gR/BgJwTIHNSux8ABdEBLmyn7Znu70Aavd01hr0syla09BO9cUJ47Jnz0DzhPCRe/xyRcZlhZ9uKv78ce3J78J7YFqE2lZGh/4Klb+qabjGdHvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878808; c=relaxed/simple;
-	bh=IaFIpnH6GlJqeoNIZRC/NvfQkN8Cj/umGnVFPS9UUw4=;
+	s=arc-20240116; t=1727878812; c=relaxed/simple;
+	bh=70XUcbSN/RtfdKwC8JwpfKPGXvvpVk1BwcpolGFeeEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TG5pm1JuIKlesqy6GEFD0Zeuq/QgPYzZYRMS1TO+7lj0jkNIli4l1cyuVVLWDbV4WCtsQ+L4J7HGNdg6sYbf9VpX6iFsDg8kWHY+oLb4OD91KUaAMlf8IYhh3NMSAmV8Y8DmTU1zSDR7cm3q6/bjzcxk2T0jxeXyv/Sh7nKKuS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWtSmkJO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p57XYXwczBxJv2dAfPyseS6aC+WU73mjje+16S1n6iD/rBPOLC83KVvs3iRlmtyJxpMORD2vzuD3mr79oWiKzCdBLDxlgUWFg5jHku+NyxN1XEj4b5PRL/lwvj+IOEmCaYc+tGPxfUs9yXCcOU5mAaC8ui55g7pzi4IzPyRTePc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C46Np6mP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWtSmkJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C203C4CECD;
-	Wed,  2 Oct 2024 14:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C46Np6mP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F764C4CEC2;
+	Wed,  2 Oct 2024 14:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878808;
-	bh=IaFIpnH6GlJqeoNIZRC/NvfQkN8Cj/umGnVFPS9UUw4=;
+	s=korg; t=1727878811;
+	bh=70XUcbSN/RtfdKwC8JwpfKPGXvvpVk1BwcpolGFeeEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWtSmkJO/V6mGt513dCGUKIfY9L/nj5hV+EU6rh2kXSIynAy4lb+1+D6TaXrDWGe3
-	 Acn9TESlCrBgnO5IiTEItaIMwMkkHsQ6GKCeirhqNA1tDD3UyYARLNrRAzOUvQM/h6
-	 tCuW/9HaeX8gU3TrAkhoOAJNG4tW7JeNcMoF/j7E=
+	b=C46Np6mP/w64fEzE/yvp+Wl9hT5cPqJr0W0PaqX0O9iMQaRfuseMXeIVIxBdSnw51
+	 X/bx4EivFUjmeEQ1dDoy+CZ3mfkHyeMljmY50r4ZX+SI/Tq9CSfBMCsvyYDmzoKBWe
+	 7n92e1g9yoGG42YsAyUxV2JzFxl8uDRi638DiiJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
+	Manish Pandey <quic_mapa@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 508/634] scsi: sd: Fix off-by-one error in sd_read_block_characteristics()
-Date: Wed,  2 Oct 2024 15:00:08 +0200
-Message-ID: <20241002125831.157098976@linuxfoundation.org>
+Subject: [PATCH 6.10 509/634] scsi: ufs: qcom: Update MODE_MAX cfg_bw value
+Date: Wed,  2 Oct 2024 15:00:09 +0200
+Message-ID: <20241002125831.195718519@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,34 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Manish Pandey <quic_mapa@quicinc.com>
 
-commit f81eaf08385ddd474a2f41595a7757502870c0eb upstream.
+commit 0c40f079f1c808e7e480c795a79009f200366eb1 upstream.
 
-Ff the device returns page 0xb1 with length 8 (happens with qemu v2.x, for
-example), sd_read_block_characteristics() may attempt an out-of-bounds
-memory access when accessing the zoned field at offset 8.
+Commit 8db8f6ce556a ("scsi: ufs: qcom: Add missing interconnect bandwidth
+values for Gear 5") updated the ufs_qcom_bw_table for Gear 5. However, it
+missed updating the cfg_bw value for the max mode.
 
-Fixes: 7fb019c46eee ("scsi: sd: Switch to using scsi_device VPD pages")
+Hence update the cfg_bw value for the max mode for UFS 4.x devices.
+
+Fixes: 8db8f6ce556a ("scsi: ufs: qcom: Add missing interconnect bandwidth values for Gear 5")
 Cc: stable@vger.kernel.org
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Link: https://lore.kernel.org/r/20240912134308.282824-1-mwilck@suse.com
+Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+Link: https://lore.kernel.org/r/20240903063709.4335-1-quic_mapa@quicinc.com
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    2 +-
+ drivers/ufs/host/ufs-qcom.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3283,7 +3283,7 @@ static void sd_read_block_characteristic
- 	rcu_read_lock();
- 	vpd = rcu_dereference(sdkp->device->vpd_pgb1);
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -93,7 +93,7 @@ static const struct __ufs_qcom_bw_table
+ 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
+ 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
+ 	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
+-	[MODE_MAX][0][0]		    = { 7643136,	307200 },
++	[MODE_MAX][0][0]		    = { 7643136,	819200 },
+ };
  
--	if (!vpd || vpd->len < 8) {
-+	if (!vpd || vpd->len <= 8) {
- 		rcu_read_unlock();
- 	        return;
- 	}
+ static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
 
 
