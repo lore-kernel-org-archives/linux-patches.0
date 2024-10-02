@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1581D18DF60;
-	Wed,  2 Oct 2024 13:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACC71D043F;
+	Wed,  2 Oct 2024 13:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876680; cv=none; b=VYeaFR18WyfbrlrHHuqkPLSUTpbYPL58CO6rz/eBFOquAKMf7WvHpkAGAhcjfiJPoJ0rlz9c/aWYVKa9MV9h8yOs01GY060ZwYAJycBUN9Lq2wLaDxXCTI0jM9gDXdGLtglJKDQuh988jzL5sPj9VzvEbSVC2CouZrlhdQcmZzE=
+	t=1727876683; cv=none; b=c8NjgNufyME51+5KcROlrJbc6CvpvhQkuj+F8SQX1D/395ZHx9WprQUMwPJIYJxef0dkvYUKcfWmt2A1Je94QYIkMYVJmigyL87AbEHKmKTgx882ksJju+lMwEFXniQBc0HpYccoHuNex4cUFPUu26JRZ/L1keOfk4iO2QxH3P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876680; c=relaxed/simple;
-	bh=CILjwlyM7lfqlO+G4WRpDh2N/zcGU4/4WECee8+fX0Y=;
+	s=arc-20240116; t=1727876683; c=relaxed/simple;
+	bh=2W/IiVTTKZuvfBAaCZ2ZQN0N4MMAEJzC0EvzfIRMGfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MabFoxWi1SoBxGJQJMymv87N9p+nO+ryaAvLbXRLJ3IdF3LFIuPd+uX/LaWhJXUAW5MvzipQD5v7wsnLx5OKPL8MS+nUROFKA9vToOpZjRY761fS6bADOvSUXfB4dKtUIdtrTXqOR/7i0laqed+xT6dyoHdvzS3hKT+ksSEMm+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUEqaxyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXtiO2HgnNADanuBOi8JsK9pws/Rhp44G9VxGH7EKpcBJyOwhxeH1xlZ4DH6NeVEkrDcO9td/5DuSLf2SEtyMtSrUqSS4JpvwL4gochi/r9be6OaSYemGNm1sMV8p+iicqVIGgvlgT5+eu20aXxC4NX4kQqXpW0Ak4WGT4JrHKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVkaekoq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUEqaxyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EF0C4CEC5;
-	Wed,  2 Oct 2024 13:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVkaekoq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3ACC4CEC5;
+	Wed,  2 Oct 2024 13:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876679;
-	bh=CILjwlyM7lfqlO+G4WRpDh2N/zcGU4/4WECee8+fX0Y=;
+	s=korg; t=1727876682;
+	bh=2W/IiVTTKZuvfBAaCZ2ZQN0N4MMAEJzC0EvzfIRMGfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUEqaxyhyM4G0kA8bVlh0JvtdHhdIrfTdVUybo1S93GP9VdPDDVH7KG9yBguI7VZd
-	 IQFsZEGBDgcEQf/sTHlYo5EPEcYHNbch8SUEx4jx7d9amhGAElq+ZT62CTv0J4cSsv
-	 hqMEnLcfhP6YInT2n9k34lyVc2vx1ouQthZZkeCY=
+	b=YVkaekoqnZEZHUTX1a/xn/DE+cKLE2ZqHipO6z4lOB1LceQKRWHxnnjhgb+Nvj5qM
+	 x3n/aYHzdvX6AUFrY93N2IFmgZkEh9jXi5jATdOeXVDrAEe31zDveTXykBPKKJdV/W
+	 EJ0v9xS7qNCugIPeoVE+upP8SCe4TU1PFevoCADY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Robert Sander <r.sander@heinlein-support.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 495/695] io_uring/sqpoll: do not allow pinning outside of cpuset
-Date: Wed,  2 Oct 2024 14:58:13 +0200
-Message-ID: <20241002125842.232952619@linuxfoundation.org>
+Subject: [PATCH 6.11 496/695] io_uring/rw: treat -EOPNOTSUPP for IOCB_NOWAIT like -EAGAIN
+Date: Wed,  2 Oct 2024 14:58:14 +0200
+Message-ID: <20241002125842.274049455@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,57 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Moessbauer <felix.moessbauer@siemens.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit f011c9cf04c06f16b24f583d313d3c012e589e50 upstream.
+commit c0a9d496e0fece67db777bd48550376cf2960c47 upstream.
 
-The submit queue polling threads are userland threads that just never
-exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
-the affinity of the poller thread is set to the cpu specified in
-sq_thread_cpu. However, this CPU can be outside of the cpuset defined
-by the cgroup cpuset controller. This violates the rules defined by the
-cpuset controller and is a potential issue for realtime applications.
+Some file systems, ocfs2 in this case, will return -EOPNOTSUPP for
+an IOCB_NOWAIT read/write attempt. While this can be argued to be
+correct, the usual return value for something that requires blocking
+issue is -EAGAIN.
 
-In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
-case no explicit pinning is required by inheriting the one of the
-creating task. In case of explicit pinning, the check is more
-complicated, as also a cpu outside of the parent cpumask is allowed.
-We implemented this by using cpuset_cpus_allowed (that has support for
-cgroup cpusets) and testing if the requested cpu is in the set.
+A refactoring io_uring commit dropped calling kiocb_done() for
+negative return values, which is otherwise where we already do that
+transformation. To ensure we catch it in both spots, check it in
+__io_read() itself as well.
 
-Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+Reported-by: Robert Sander <r.sander@heinlein-support.de>
+Link: https://fosstodon.org/@gurubert@mastodon.gurubert.de/113112431889638440
+Cc: stable@vger.kernel.org
+Fixes: a08d195b586a ("io_uring/rw: split io_read() into a helper")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ io_uring/rw.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -10,6 +10,7 @@
- #include <linux/slab.h>
- #include <linux/audit.h>
- #include <linux/security.h>
-+#include <linux/cpuset.h>
- #include <linux/io_uring.h>
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -855,6 +855,14 @@ static int __io_read(struct io_kiocb *re
  
- #include <uapi/linux/io_uring.h>
-@@ -460,10 +461,12 @@ __cold int io_sq_offload_create(struct i
- 			return 0;
+ 	ret = io_iter_do_read(rw, &io->iter);
  
- 		if (p->flags & IORING_SETUP_SQ_AFF) {
-+			struct cpumask allowed_mask;
- 			int cpu = p->sq_thread_cpu;
- 
- 			ret = -EINVAL;
--			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
-+			cpuset_cpus_allowed(current, &allowed_mask);
-+			if (!cpumask_test_cpu(cpu, &allowed_mask))
- 				goto err_sqpoll;
- 			sqd->sq_cpu = cpu;
- 		} else {
++	/*
++	 * Some file systems like to return -EOPNOTSUPP for an IOCB_NOWAIT
++	 * issue, even though they should be returning -EAGAIN. To be safe,
++	 * retry from blocking context for either.
++	 */
++	if (ret == -EOPNOTSUPP && force_nonblock)
++		ret = -EAGAIN;
++
+ 	if (ret == -EAGAIN || (req->flags & REQ_F_REISSUE)) {
+ 		req->flags &= ~REQ_F_REISSUE;
+ 		/* If we can poll, just do that. */
 
 
