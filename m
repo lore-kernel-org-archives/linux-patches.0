@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF8A1D12E4;
-	Wed,  2 Oct 2024 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C7F1D0940;
+	Wed,  2 Oct 2024 14:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879048; cv=none; b=SJ7DVezJPHx14gAcC0VH5FEtGkKnlkwHBdbrOujrv8+YnR+3Y6bOIBcVDnY9Xm20RCePFFDGxRNkF9Ef3BXWsDieBuP6WM3CHMTmOcrXCZcklhW3SYqKTxmGQZavEYdK34QJ9dldm8xaGbRuCSVynmA144+U+FUGopvbvZDS810=
+	t=1727879051; cv=none; b=McgGdYt2Ueq8qvjgUsJuJgi/UPh3av2lmSPb2buo5IlUB8eR9QGH5tySM+WLr2CjE1c0HIdJ4wOWuJgqVRpMMuViM+eDfqR6ewgQ1f9MRBC/gwkTseLdZwni8uAe6SvwXgpf21/9ivH41bA5iGxAu5JrFaZ2cjyk7HZEzJSb5cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879048; c=relaxed/simple;
-	bh=UdaVEj2VSMAo4o+go8Z/gP6j1Zw2vKIC7b/jCDuMKz8=;
+	s=arc-20240116; t=1727879051; c=relaxed/simple;
+	bh=kFdx23UqjXX7J247ZNE4gZGMiLbTA3CDX06aO2UvOUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rysM3iyqj5J3FVmS63ZyQ00JioasULVLMDsGNo+0xy34GAz1gYEtm5cXVClrfjNIZO11K+t7fa1udN9gLLo4HKFa1oJ6gJC1THj66/maMz1qeZL8OxxlmvLdzb7l7KUsKR5bVQN+Jn/zSEjOj1phjqTdryySpkG+Q9ZRyZSfxLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNLG5uuZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ih1RQkd6Y7YOvKVc9lfdtwtyKmW7HZrje3bcMupXbC2EWr8HsxVUkXRivqiEnlhn82yV7YqwlJXUOZ/rinWS7jSd3dWwzKcTRxFo/5C4U6njMqyiuopByLMBar75xB4UD9Vp1xXiyfqdBgVdPWls22n9OtNAhqMjrc32cWODAu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvFuhMNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNLG5uuZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71CCC4CEC2;
-	Wed,  2 Oct 2024 14:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvFuhMNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2B2C4CEC2;
+	Wed,  2 Oct 2024 14:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879048;
-	bh=UdaVEj2VSMAo4o+go8Z/gP6j1Zw2vKIC7b/jCDuMKz8=;
+	s=korg; t=1727879051;
+	bh=kFdx23UqjXX7J247ZNE4gZGMiLbTA3CDX06aO2UvOUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNLG5uuZLlWMClCGYTK0GNRy4NLGl6wv3rgMo4mkSildfFrqTzpRrUeiBLnMxVDzI
-	 1S3ZKMlcKQA4iY3NS93eZDpuh/xyAFaTZmO/rL6ikldW4CpcOnWIKOaZDAkjg6Swjz
-	 c1kDI6TGpu9y5vu815NqNnphLXI4GPYYdnsKjRB4=
+	b=nvFuhMNAhM4jr0bvYw2eyRgSAXHxKQHqCN/A/ij1o2G84Vdgw85iwKqTh/6H4ZZwy
+	 7o+m6dgiCdjGFHHpPR73r8g0Eo3+PDbp9f9sGB+W2qBkf16/EqTkRg4V9PbNUZUkQJ
+	 m3Hc9eE2bGKbJwi8vDof0raq8nfgBgQ8yAoKtb4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.10 621/634] s390/ftrace: Avoid calling unwinder in ftrace_return_address()
-Date: Wed,  2 Oct 2024 15:02:01 +0200
-Message-ID: <20241002125835.639217644@linuxfoundation.org>
+	David Gow <davidgow@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 622/634] mm: only enforce minimum stack gap size if its sensible
+Date: Wed,  2 Oct 2024 15:02:02 +0200
+Message-ID: <20241002125835.678363443@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,103 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: David Gow <davidgow@google.com>
 
-commit a84dd0d8ae24bdc6da341187fc4c1a0adfce2ccc upstream.
+commit 69b50d4351ed924f29e3d46b159e28f70dfc707f upstream.
 
-ftrace_return_address() is called extremely often from
-performance-critical code paths when debugging features like
-CONFIG_TRACE_IRQFLAGS are enabled. For example, with debug_defconfig,
-ftrace selftests on my LPAR currently execute ftrace_return_address()
-as follows:
+The generic mmap_base code tries to leave a gap between the top of the
+stack and the mmap base address, but enforces a minimum gap size (MIN_GAP)
+of 128MB, which is too large on some setups.  In particular, on arm tasks
+without ADDR_LIMIT_32BIT, the STACK_TOP value is less than 128MB, so it's
+impossible to fit such a gap in.
 
-ftrace_return_address(0) - 0 times (common code uses __builtin_return_address(0) instead)
-ftrace_return_address(1) - 2,986,805,401 times (with this patch applied)
-ftrace_return_address(2) - 140 times
-ftrace_return_address(>2) - 0 times
+Only enforce this minimum if MIN_GAP < MAX_GAP, as we'd prefer to honour
+MAX_GAP, which is defined proportionally, so scales better and always
+leaves us with both _some_ stack space and some room for mmap.
 
-The use of __builtin_return_address(n) was replaced by return_address()
-with an unwinder call by commit cae74ba8c295 ("s390/ftrace:
-Use unwinder instead of __builtin_return_address()") because
-__builtin_return_address(n) simply walks the stack backchain and doesn't
-check for reaching the stack top. For shallow stacks with fewer than
-"n" frames, this results in reads at low addresses and random
-memory accesses.
+This fixes the usercopy KUnit test suite on 32-bit arm, as it doesn't set
+any personality flags so gets the default (in this case 26-bit) task size.
+This test can be run with: ./tools/testing/kunit/kunit.py run --arch arm
+usercopy --make_options LLVM=1
 
-While calling the fully functional unwinder "works", it is very slow
-for this purpose. Moreover, potentially following stack switches and
-walking past IRQ context is simply wrong thing to do for
-ftrace_return_address().
-
-Reimplement return_address() to essentially be __builtin_return_address(n)
-with checks for reaching the stack top. Since the ftrace_return_address(n)
-argument is always a constant, keep the implementation in the header,
-allowing both GCC and Clang to unroll the loop and optimize it to the
-bare minimum.
-
-Fixes: cae74ba8c295 ("s390/ftrace: Use unwinder instead of __builtin_return_address()")
-Cc: stable@vger.kernel.org
-Reported-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20240803074642.1849623-2-davidgow@google.com
+Fixes: dba79c3df4a2 ("arm: use generic mmap top-down layout and brk randomization")
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/ftrace.h |   17 ++++++++++++++++-
- arch/s390/kernel/stacktrace.c  |   19 -------------------
- 2 files changed, 16 insertions(+), 20 deletions(-)
+ mm/util.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/include/asm/ftrace.h
-+++ b/arch/s390/include/asm/ftrace.h
-@@ -7,8 +7,23 @@
- #define MCOUNT_INSN_SIZE	6
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -451,7 +451,7 @@ static unsigned long mmap_base(unsigned
+ 	if (gap + pad > gap)
+ 		gap += pad;
  
- #ifndef __ASSEMBLY__
-+#include <asm/stacktrace.h>
- 
--unsigned long return_address(unsigned int n);
-+static __always_inline unsigned long return_address(unsigned int n)
-+{
-+	struct stack_frame *sf;
-+
-+	if (!n)
-+		return (unsigned long)__builtin_return_address(0);
-+
-+	sf = (struct stack_frame *)current_frame_address();
-+	do {
-+		sf = (struct stack_frame *)sf->back_chain;
-+		if (!sf)
-+			return 0;
-+	} while (--n);
-+	return sf->gprs[8];
-+}
- #define ftrace_return_address(n) return_address(n)
- 
- void ftrace_caller(void);
---- a/arch/s390/kernel/stacktrace.c
-+++ b/arch/s390/kernel/stacktrace.c
-@@ -162,22 +162,3 @@ void arch_stack_walk_user(stack_trace_co
- {
- 	arch_stack_walk_user_common(consume_entry, cookie, NULL, regs, false);
- }
--
--unsigned long return_address(unsigned int n)
--{
--	struct unwind_state state;
--	unsigned long addr;
--
--	/* Increment to skip current stack entry */
--	n++;
--
--	unwind_for_each_frame(&state, NULL, NULL, 0) {
--		addr = unwind_get_return_address(&state);
--		if (!addr)
--			break;
--		if (!n--)
--			return addr;
--	}
--	return 0;
--}
--EXPORT_SYMBOL_GPL(return_address);
+-	if (gap < MIN_GAP)
++	if (gap < MIN_GAP && MIN_GAP < MAX_GAP)
+ 		gap = MIN_GAP;
+ 	else if (gap > MAX_GAP)
+ 		gap = MAX_GAP;
 
 
