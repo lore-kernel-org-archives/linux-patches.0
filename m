@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0DC1D07B1;
-	Wed,  2 Oct 2024 13:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C3B1D0B98;
+	Wed,  2 Oct 2024 13:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876698; cv=none; b=kjfTLTAdGaKOnTpq26pfIz+MpjPq50fRugymjDSCPp1dj3ltQcOjtCcS/0YiO8JziZBmTJo50cOt1cWSwFxx5KBYL+O+iySjhD1MieRBw0GDOxwJtaGxT4fw+cKUG8A2igSqFzcJjMqSFcFfyqj/1V7GiQbPsyCqxSi47M/vwUw=
+	t=1727876700; cv=none; b=WplwC5gCZTMuIzad0G8fTOh9vZwAFrnBK5mzJNddTwCrcl4PWSYD2PWvmgvMpvrDBfnI7ZvdNhgB8rC2fVkifsWy/zKlZmY91w7A2y85Ypo9zCQh7+Tdxlc4Y7KcID4lYpKVhs26JcHAG6V7+Y7SWM5KydKtKYsvYeQnd3kdK/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876698; c=relaxed/simple;
-	bh=jQ/lMNifQcUH925wABrmBMXCXup8/0jrpo7dwamkQnA=;
+	s=arc-20240116; t=1727876700; c=relaxed/simple;
+	bh=/9G44BmGyWgHGyzO+AwUGefGRczmP8wMQ90/OH/q5zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Izfphwn44jxC6kYKZSZy9uR7QGkCF+M5Rp7Q8ESXJ2kfk3N7jvi5euclEkK9K3uBG3HFsJEgUpVY+ormUGJm6x4iu1T5JNEkedSwKCFgvpWY6dGo2CPUG+02mRSssxdLSRYT7L2EnxBP7YMfaA7hjqZ0/ibIplRd/9OwLfvoyXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2l8trlz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6gJAOeUtsIqdR6ATE9xwi680SiHhLJyE9Nb/fY5m2KiKEz3IfMUXsEhM68s0znSslZP9izvPYD9hBogkrth4U8z5P2WB6olZXZZ6V6TyH08TZK0MpPR79PzJII1f2wl64ismiqwxfjRgIRIs5ITJpjY1FK8/3d+IBa/NP6hwY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wohPo+xF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2l8trlz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D79BC4CECD;
-	Wed,  2 Oct 2024 13:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wohPo+xF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE78C4CEC5;
+	Wed,  2 Oct 2024 13:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876697;
-	bh=jQ/lMNifQcUH925wABrmBMXCXup8/0jrpo7dwamkQnA=;
+	s=korg; t=1727876700;
+	bh=/9G44BmGyWgHGyzO+AwUGefGRczmP8wMQ90/OH/q5zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2l8trlzSdL0a67UV2TimenXUWZPeOz/J0gA/JmNJ02RC+FABD8Z3UDegxfnfqn/+
-	 TyE9yRusQUjmHfz3KDdl0znDf4wJImy7GojekhehI3UTITfRRxEsm+GAjMdwsT7oOi
-	 NWTu8Fwm+VC/7ZPWwXDoSEiV0B0U9MLOMyVFm/wY=
+	b=wohPo+xFPVjrGbZZ4L6XpJJCbPngWJ9BMNxotdjg4wyNmRBjwpRhwzVBGIhMcsutM
+	 txbq09NYPB3vELRuFROmaDrmWDyUBq1OZlgOEkS2kG7lqH2Yny9TV+cxlnY9CtoCOZ
+	 jl/npQaPPySYWi1Skei4+3vVNSQ3Zdb6CIkqFj6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.11 533/695] Input: i8042 - add another board name for TUXEDO Stellaris Gen5 AMD line
-Date: Wed,  2 Oct 2024 14:58:51 +0200
-Message-ID: <20241002125843.776559661@linuxfoundation.org>
+	Sebastian Ene <sebastianene@google.com>,
+	Snehal Koukuntla <snehalreddy@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.11 534/695] KVM: arm64: Add memory length checks and remove inline in do_ffa_mem_xfer
+Date: Wed,  2 Oct 2024 14:58:52 +0200
+Message-ID: <20241002125843.815832529@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,39 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Snehal Koukuntla <snehalreddy@google.com>
 
-commit 01eed86d50af9fab27d876fd677b86259ebe9de3 upstream.
+commit f26a525b77e040d584e967369af1e018d2d59112 upstream.
 
-There might be devices out in the wild where the board name is GMxXGxx
-instead of GMxXGxX.
+When we share memory through FF-A and the description of the buffers
+exceeds the size of the mapped buffer, the fragmentation API is used.
+The fragmentation API allows specifying chunks of descriptors in subsequent
+FF-A fragment calls and no upper limit has been established for this.
+The entire memory region transferred is identified by a handle which can be
+used to reclaim the transferred memory.
+To be able to reclaim the memory, the description of the buffers has to fit
+in the ffa_desc_buf.
+Add a bounds check on the FF-A sharing path to prevent the memory reclaim
+from failing.
 
-Adding both to be on the safe side.
+Also do_ffa_mem_xfer() does not need __always_inline, except for the
+BUILD_BUG_ON() aspect, which gets moved to a macro.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+[maz: fixed the BUILD_BUG_ON() breakage with LLVM, thanks to Wei-Lin Chang
+ for the timely report]
+
+Fixes: 634d90cf0ac65 ("KVM: arm64: Handle FFA_MEM_LEND calls from the host")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240910094008.1601230-2-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Sebastian Ene <sebastianene@google.com>
+Signed-off-by: Snehal Koukuntla <snehalreddy@google.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240909180154.3267939-1-snehalreddy@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/kvm/hyp/nvhe/ffa.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1138,6 +1138,13 @@ static const struct dmi_system_id i8042_
- 	},
- 	{
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxx"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+	},
-+	{
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+--- a/arch/arm64/kvm/hyp/nvhe/ffa.c
++++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
+@@ -426,9 +426,9 @@ out:
+ 	return;
+ }
+ 
+-static __always_inline void do_ffa_mem_xfer(const u64 func_id,
+-					    struct arm_smccc_res *res,
+-					    struct kvm_cpu_context *ctxt)
++static void __do_ffa_mem_xfer(const u64 func_id,
++			      struct arm_smccc_res *res,
++			      struct kvm_cpu_context *ctxt)
+ {
+ 	DECLARE_REG(u32, len, ctxt, 1);
+ 	DECLARE_REG(u32, fraglen, ctxt, 2);
+@@ -440,9 +440,6 @@ static __always_inline void do_ffa_mem_x
+ 	u32 offset, nr_ranges;
+ 	int ret = 0;
+ 
+-	BUILD_BUG_ON(func_id != FFA_FN64_MEM_SHARE &&
+-		     func_id != FFA_FN64_MEM_LEND);
+-
+ 	if (addr_mbz || npages_mbz || fraglen > len ||
+ 	    fraglen > KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE) {
+ 		ret = FFA_RET_INVALID_PARAMETERS;
+@@ -461,6 +458,11 @@ static __always_inline void do_ffa_mem_x
+ 		goto out_unlock;
+ 	}
+ 
++	if (len > ffa_desc_buf.len) {
++		ret = FFA_RET_NO_MEMORY;
++		goto out_unlock;
++	}
++
+ 	buf = hyp_buffers.tx;
+ 	memcpy(buf, host_buffers.tx, fraglen);
+ 
+@@ -512,6 +514,13 @@ err_unshare:
+ 	goto out_unlock;
+ }
+ 
++#define do_ffa_mem_xfer(fid, res, ctxt)				\
++	do {							\
++		BUILD_BUG_ON((fid) != FFA_FN64_MEM_SHARE &&	\
++			     (fid) != FFA_FN64_MEM_LEND);	\
++		__do_ffa_mem_xfer((fid), (res), (ctxt));	\
++	} while (0);
++
+ static void do_ffa_mem_reclaim(struct arm_smccc_res *res,
+ 			       struct kvm_cpu_context *ctxt)
+ {
 
 
