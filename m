@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C521D016B;
-	Wed,  2 Oct 2024 13:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C978B1D016B;
+	Wed,  2 Oct 2024 13:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876142; cv=none; b=NQO/mRz34i/DO5oJaCWkTmx868Xzd6m9kTB0vyHumWDvAmP/gRwlGDzw+At5QSppOjHT1QPOh07Ezvv4TMSkiQd9oPoJlAvv/rsm7P8m+0rfUFTBOrJ/KdtSUnhu+5DDQMsmGHV4HrCI1byBq/5mDFb7jwLxY5A09ZsIGZ0qsso=
+	t=1727876144; cv=none; b=LuYMmGdSvuzp2nGKnkyqYa8SA46xQ0jlM/Ulmv6CB3iVQ1INVkDcYXK++En7JEv+rSpPe02IkdArB3kGOREcYJPU+wKx3G02ZC2bkU3xhpBjkGxQve8CeWJXva4IXhhqVF7Gv5PnJi7r9fEELp+chPo5Z94rNkVOOqbAK68vrF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876142; c=relaxed/simple;
-	bh=Ex+8TFRZcxJfI/ygAaVFzlzRVVtmlJOq/XstKYcTbBM=;
+	s=arc-20240116; t=1727876144; c=relaxed/simple;
+	bh=/imL9UneOEdzxN1BVJF0zA92Qjs76P/gxiDAqLvJU9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ti9D5ytHSEdgKdyxPhMVVKZucGcY3Bo9T8VnlBILy20d61gVDZgQqO+wMxPhTXe7FB+yIaYT/Qye9CGSCs6182ix6b1I1q82qeITRXZ33LdINpxZWH8BL4ZsbE2C9yjhWnhKhzJjzyUzK2Tw2HuA3SsRbfRIBN8M5fMXFKZ7g0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAkFWd0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwQhC4UiDGEOldjXevL2F9e4uS7aulSlF+Q9fA43z+9rERbi+RYZ3W/xDhoJZpuuoYTASWCCaofbspoMcETuM1vk9Zv83sI5mUh/hf13fmFATBH4RJ+ZCrrycf7Cq/QUnrDlqwFUXmBZaFhLg0BDkXvlCZn3PEyB6snlSnFgxrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBitFR6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAkFWd0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6908CC4CEC5;
-	Wed,  2 Oct 2024 13:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBitFR6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510B0C4CEC5;
+	Wed,  2 Oct 2024 13:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876141;
-	bh=Ex+8TFRZcxJfI/ygAaVFzlzRVVtmlJOq/XstKYcTbBM=;
+	s=korg; t=1727876144;
+	bh=/imL9UneOEdzxN1BVJF0zA92Qjs76P/gxiDAqLvJU9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAkFWd0OrjIcqFiz2nymEHZkKg3T+8ZXpTFptX8HWyNfPfmZ5lpXWnnb+z5W7ftA7
-	 sb2ucHAndDgtKyqUnXuvmNtH/wI0rP9gpW2OycXqBXnT0DH9f3tAsRes1RjPq5ZQUA
-	 pJg/x6P0cBftUbprbLj2b4nG+DKXuDW8PsnbUhzQ=
+	b=bBitFR6dE4Zwfn59C/iYYLL1fAB2/qZBzovRGFJV9tUIY/xqqWgkTzfVtdGu/ihT4
+	 AvUbzfNhfmZpaVsgbPjRE2IGwXCViuHpS3Xk2wzadxEXAzvCngHGs4Wl8iieGK1Rd+
+	 6FTaXCPbXwtgDJ8TjJk5QvweXH/f6zKLDtQJ3dAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Sebastien Laveze <slaveze@smartandconnective.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 342/695] clk: imx: clk-audiomix: Correct parent clock for earc_phy and audpll
-Date: Wed,  2 Oct 2024 14:55:40 +0200
-Message-ID: <20241002125836.102782170@linuxfoundation.org>
+Subject: [PATCH 6.11 343/695] clk: imx: imx6ul: fix default parent for enet*_ref_sel
+Date: Wed,  2 Oct 2024 14:55:41 +0200
+Message-ID: <20241002125836.141995929@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,63 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Sebastien Laveze <slaveze@smartandconnective.com>
 
-[ Upstream commit d40371a1c963db688b37826adaf5ffdafb0862a1 ]
+[ Upstream commit e52fd71333b4ed78fd5bb43094bdc46476614d25 ]
 
-According to Reference Manual of i.MX8MP
-The parent clock of "earc_phy" is "sai_pll_out_div2",
-The parent clock of "audpll" is "osc_24m".
+The clk_set_parent for "enet1_ref_sel" and  "enet2_ref_sel" are
+incorrect, therefore the original requirements to have "enet_clk_ref" as
+output sourced by iMX ENET PLL as a default config is not met.
 
-Add CLK_GATE_PARENT() macro for usage of specifying parent clock.
+Only "enet[1,2]_ref_125m" "enet[1,2]_ref_pad" are possible parents for
+"enet1_ref_sel" and "enet2_ref_sel".
 
-Fixes: 6cd95f7b151c ("clk: imx: imx8mp: Add audiomix block control")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/1718350923-21392-6-git-send-email-shengjiu.wang@nxp.com
+This was observed as a regression using a custom device tree which was
+expecting this default config.
+
+This can be fixed at the device tree level but having a default config
+matching the original behavior (before refclock mux) will avoid breaking
+existing configs.
+
+Fixes: 4e197ee880c2 ("clk: imx6ul: add ethernet refclock mux support")
+Link: https://lore.kernel.org/lkml/20230306020226.GC143566@dragon/T/
+Signed-off-by: Sebastien Laveze <slaveze@smartandconnective.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20240528151434.227602-1-slaveze@smartandconnective.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp-audiomix.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx6ul.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp-audiomix.c b/drivers/clk/imx/clk-imx8mp-audiomix.c
-index b381d6f784c89..0767d613b68b0 100644
---- a/drivers/clk/imx/clk-imx8mp-audiomix.c
-+++ b/drivers/clk/imx/clk-imx8mp-audiomix.c
-@@ -154,6 +154,15 @@ static const struct clk_parent_data clk_imx8mp_audiomix_pll_bypass_sels[] = {
- 		PDM_SEL, 2, 0						\
- 	}
+diff --git a/drivers/clk/imx/clk-imx6ul.c b/drivers/clk/imx/clk-imx6ul.c
+index f9394e94f69d7..05c7a82b751f3 100644
+--- a/drivers/clk/imx/clk-imx6ul.c
++++ b/drivers/clk/imx/clk-imx6ul.c
+@@ -542,8 +542,8 @@ static void __init imx6ul_clocks_init(struct device_node *ccm_node)
  
-+#define CLK_GATE_PARENT(gname, cname, pname)						\
-+	{								\
-+		gname"_cg",						\
-+		IMX8MP_CLK_AUDIOMIX_##cname,				\
-+		{ .fw_name = pname, .name = pname }, NULL, 1,		\
-+		CLKEN0 + 4 * !!(IMX8MP_CLK_AUDIOMIX_##cname / 32),	\
-+		1, IMX8MP_CLK_AUDIOMIX_##cname % 32			\
-+	}
-+
- struct clk_imx8mp_audiomix_sel {
- 	const char			*name;
- 	int				clkid;
-@@ -171,14 +180,14 @@ static struct clk_imx8mp_audiomix_sel sels[] = {
- 	CLK_GATE("earc", EARC_IPG),
- 	CLK_GATE("ocrama", OCRAMA_IPG),
- 	CLK_GATE("aud2htx", AUD2HTX_IPG),
--	CLK_GATE("earc_phy", EARC_PHY),
-+	CLK_GATE_PARENT("earc_phy", EARC_PHY, "sai_pll_out_div2"),
- 	CLK_GATE("sdma2", SDMA2_ROOT),
- 	CLK_GATE("sdma3", SDMA3_ROOT),
- 	CLK_GATE("spba2", SPBA2_ROOT),
- 	CLK_GATE("dsp", DSP_ROOT),
- 	CLK_GATE("dspdbg", DSPDBG_ROOT),
- 	CLK_GATE("edma", EDMA_ROOT),
--	CLK_GATE("audpll", AUDPLL_ROOT),
-+	CLK_GATE_PARENT("audpll", AUDPLL_ROOT, "osc_24m"),
- 	CLK_GATE("mu2", MU2_ROOT),
- 	CLK_GATE("mu3", MU3_ROOT),
- 	CLK_PDM,
+ 	clk_set_parent(hws[IMX6UL_CLK_ENFC_SEL]->clk, hws[IMX6UL_CLK_PLL2_PFD2]->clk);
+ 
+-	clk_set_parent(hws[IMX6UL_CLK_ENET1_REF_SEL]->clk, hws[IMX6UL_CLK_ENET_REF]->clk);
+-	clk_set_parent(hws[IMX6UL_CLK_ENET2_REF_SEL]->clk, hws[IMX6UL_CLK_ENET2_REF]->clk);
++	clk_set_parent(hws[IMX6UL_CLK_ENET1_REF_SEL]->clk, hws[IMX6UL_CLK_ENET1_REF_125M]->clk);
++	clk_set_parent(hws[IMX6UL_CLK_ENET2_REF_SEL]->clk, hws[IMX6UL_CLK_ENET2_REF_125M]->clk);
+ 
+ 	imx_register_uart_clocks();
+ }
 -- 
 2.43.0
 
