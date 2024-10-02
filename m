@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3F91BDA95;
-	Wed,  2 Oct 2024 13:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7CF17B421;
+	Wed,  2 Oct 2024 13:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876989; cv=none; b=n80BHG/tIRg/8kEmvrCsnXLAwvi3V9NmUopC8lntB6xIdza38nSMdts0P3A+JuezlhaHxZZIJ/wXAQii75dWdERi2QQKlIz28FZxNj1ihijc4WZSo5SFrLNU0CRQ1GqWgzzZaBbfwn6jMWxeknt1CqJRMHO94kO/seieK8d7Hvk=
+	t=1727876992; cv=none; b=QJgM88bxnFEXz53/Qsf930jlblkilZ5SMXawgl8ExKYpG8EUeDgQwcRz4owBVhusMJMSdBKOF5vfv7AdTWi7dP8zkeubucn5fx5JdlATBig97GO3hsH26LL5qJHw4VA3q8sTH1KFFZcSLfr53+LgAwgAv7i+D7wsQd00u54+5yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876989; c=relaxed/simple;
-	bh=0Kql4L1RZSAZzOWcB7nvlFEJwyytydj6PYZ9ctGMc1Y=;
+	s=arc-20240116; t=1727876992; c=relaxed/simple;
+	bh=Fa8AWgeoEqBXEIgpu3M+RqAlxP7a/Zv7+9iFkOW6FmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVS1W0DFC4YveH5X7iRMR8zrPBvb4qFCcmJE6lZ66IZKNxjSyWlAp7aKHa1ETpxEYGMv3FlbpLVyseveEDKTd+JlQYnWRgSc4YsmNoUFSPV50H6KhcPbi1v2QMORicIlfo6l2Y7QzMMyNWEF+o1i30E2tR4cPa2DloiiaMYLma8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+xRERlb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nSO9A9tZZEe0/UpfVK9um2MzW0vjwS4V71A/1lqo9UDvCPc+w80de9qd7tmMmSJJjKj4Fg5ANanw2N45LuWYGgQf/KEj7gBxTHiGggkU/UiUMalva0y6u+0lzqDlTco6uUDbxSM4eqf1AKHIUpkewpa7JY271TzQw+HE0D+sEzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZDJ36B3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+xRERlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39C0C4CEC2;
-	Wed,  2 Oct 2024 13:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZDJ36B3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A18C4CEC2;
+	Wed,  2 Oct 2024 13:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876989;
-	bh=0Kql4L1RZSAZzOWcB7nvlFEJwyytydj6PYZ9ctGMc1Y=;
+	s=korg; t=1727876992;
+	bh=Fa8AWgeoEqBXEIgpu3M+RqAlxP7a/Zv7+9iFkOW6FmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+xRERlbjfWyJX822VzOsIXVF8TP14xNm+M/VChIYBvu8Pve/F2GowDrA1GYNtMQd
-	 9U4o7ke53IWSv//qO8pbShA5xxSrqYZcPAdJ2vIKmGL/zzeWehEZVNFB18Qs5v2M7i
-	 a6WJEpy46ucv9Vw+M8SnCCv3+Ry25EkSqgull+C0=
+	b=BZDJ36B3x2UjDpVy5HmmofwJxW7ydm37rS5+pF1A/cGI6MaPDRl9leg09m29x1RjG
+	 Ttwov9XrVegaGkVCMRwLNp5U038+gribn/I3AXrdRs4DaTbYwiD7y6FGm1TBUDRIv0
+	 +Pc2B9OQj+v5QeB+LgBZrR1ZW4ZAU5HovE0HEyGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Rodolfo Giometti <giometti@enneenne.com>
-Subject: [PATCH 6.11 595/695] pps: add an error check in parport_attach
-Date: Wed,  2 Oct 2024 14:59:53 +0200
-Message-ID: <20241002125846.261531926@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.11 596/695] serial: dont use uninitialized value in uart_poll_init()
+Date: Wed,  2 Oct 2024 14:59:54 +0200
+Message-ID: <20241002125846.302125955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -44,64 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 upstream.
+commit d0009a32c9e4e083358092f3c97e3c6e803a8930 upstream.
 
-In parport_attach, the return value of ida_alloc is unchecked, witch leads
-to the use of an invalid index value.
+Coverity reports (as CID 1536978) that uart_poll_init() passes
+uninitialized pm_state to uart_change_pm(). It is in case the first 'if'
+takes the true branch (does "goto out;").
 
-To address this issue, index should be checked. When the index value is
-abnormal, the device should be freed.
+Fix this and simplify the function by simple guard(mutex). The code
+needs no labels after this at all. And it is pretty clear that the code
+has not fiddled with pm_state at that point.
 
-Found by code review, compile tested only.
-
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Fixes: 5e227ef2aa38 (serial: uart_poll_init() should power on the UART)
 Cc: stable@vger.kernel.org
-Fixes: fb56d97df70e ("pps: client: use new parport device model")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240805102046.307511-4-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pps/clients/pps_parport.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/tty/serial/serial_core.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/pps/clients/pps_parport.c
-+++ b/drivers/pps/clients/pps_parport.c
-@@ -149,6 +149,9 @@ static void parport_attach(struct parpor
- 	}
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -2696,14 +2696,13 @@ static int uart_poll_init(struct tty_dri
+ 	int ret = 0;
  
- 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
-+	if (index < 0)
-+		goto err_free_device;
+ 	tport = &state->port;
+-	mutex_lock(&tport->mutex);
 +
- 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
- 	pps_client_cb.private = device;
- 	pps_client_cb.irq_func = parport_irq;
-@@ -159,7 +162,7 @@ static void parport_attach(struct parpor
- 						    index);
- 	if (!device->pardev) {
- 		pr_err("couldn't register with %s\n", port->name);
--		goto err_free;
-+		goto err_free_ida;
- 	}
++	guard(mutex)(&tport->mutex);
  
- 	if (parport_claim_or_block(device->pardev) < 0) {
-@@ -187,8 +190,9 @@ err_release_dev:
- 	parport_release(device->pardev);
- err_unregister_dev:
- 	parport_unregister_device(device->pardev);
--err_free:
-+err_free_ida:
- 	ida_free(&pps_client_index, index);
-+err_free_device:
- 	kfree(device);
+ 	port = uart_port_check(state);
+ 	if (!port || port->type == PORT_UNKNOWN ||
+-	    !(port->ops->poll_get_char && port->ops->poll_put_char)) {
+-		ret = -1;
+-		goto out;
+-	}
++	    !(port->ops->poll_get_char && port->ops->poll_put_char))
++		return -1;
+ 
+ 	pm_state = state->pm_state;
+ 	uart_change_pm(state, UART_PM_STATE_ON);
+@@ -2723,10 +2722,10 @@ static int uart_poll_init(struct tty_dri
+ 		ret = uart_set_options(port, NULL, baud, parity, bits, flow);
+ 		console_list_unlock();
+ 	}
+-out:
++
+ 	if (ret)
+ 		uart_change_pm(state, pm_state);
+-	mutex_unlock(&tport->mutex);
++
+ 	return ret;
  }
  
 
