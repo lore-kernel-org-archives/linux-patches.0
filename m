@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335673232;
-	Wed,  2 Oct 2024 14:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EDE1D0E24;
+	Wed,  2 Oct 2024 14:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878838; cv=none; b=eujZElheJwa13/vdYa2FgnGY3mP6pcOYyCGfyV18Njmx9l0B78lppRJ/znq95+E6Es4jKF6DsHYOf3j6B93hE03xlnE7sd9U6Wnrv6ESS5hT01R1SRw/mCaKzSgVN8ND6kghn43IAQw1JcIg2uUTh+qVeM7R+bz/fsCyBWNWuRY=
+	t=1727878841; cv=none; b=I9Ta9HGs9dkR0yEGB3dayFTJZfb72g2bgp/hJGK9gwRrXllz/jN/ZBoWp093HoFRVPWaYEkP1K2Ai16s8Pjd09GN9PRvud2zJTEFoYIuwI97uXfoBTwpSbhL7nrZeYwOPZkd5UlI+XBHfIve8+sf/W2Vrr6U9l6O4V+cgZmeejY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878838; c=relaxed/simple;
-	bh=smvh3AxK6Ml9D98/tLic3BJ1ftlSpYaTlGuzfLda8Ro=;
+	s=arc-20240116; t=1727878841; c=relaxed/simple;
+	bh=GUUGqf/QBtjOfqicBZoqQokDbo0muPNKX26WKQa36L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXFaZgDWjKfsGfm00P3SpfUcH6njC4uptfFXPLHMfH0d58wYn7FxdfeAs2Y3Vq4SS32zoTqtkOVSfDc0VzaFf7SbFb8ZwC3ergMgkp+GP+1Mf+p8Qt56frIxqP2Oa3nSDYz356SVEwQJTBDDfgg10AhytIgkGLLuat9UxhaW6Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCdjErx2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JrAuoC/BWjENX79sKRt3iMZtIGQioAsnpJDd/YhOyyD9Gh3yH7EN7AgrqxLgQXxVSVeDUuigvo3i1bTj3P9vmjBifpSaAlUu8ZvtfWhue5HBFTlSVmIIZMGR5MzZ+wkx1fgiH0J6jLdJcD/RfbuvynucqCzFHAfpLeS5EU3KVgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z25jTyxR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCdjErx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE11BC4CEC2;
-	Wed,  2 Oct 2024 14:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z25jTyxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8859CC4CEC5;
+	Wed,  2 Oct 2024 14:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878838;
-	bh=smvh3AxK6Ml9D98/tLic3BJ1ftlSpYaTlGuzfLda8Ro=;
+	s=korg; t=1727878840;
+	bh=GUUGqf/QBtjOfqicBZoqQokDbo0muPNKX26WKQa36L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCdjErx2p2Gfo3zzRAruD2XU4udxY7KP9H0QiIuNV1RAT1H0pA79fNXqt9FpXxjBR
-	 VznoEb9nlUmRWWR87LTuD/F4JirbNeplW3N57XRD0+GGhitEJWD2x1kCgeMwiv/L+2
-	 P+0l8z7HeSiH4PbQYvY330GEKP/R53vS3QM0xLZM=
+	b=z25jTyxRw47U4dLE05beLK7EN+XKuK5F4AnI1d/vf9JLvk+Gi8CWseks7E8OdZaGy
+	 GsgFeYCUhYttSA6dSsvEgvXPYV7+XpsmEYK22bXKSd0v+vLXGfgQdUZC/+dqICL4QP
+	 GOyU1Q60/xLYI2lfCZrFkcQylgwHeZmnynaQo/oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.10 550/634] wifi: mt76: mt7996: fix NULL pointer dereference in mt7996_mcu_sta_bfer_he
-Date: Wed,  2 Oct 2024 15:00:50 +0200
-Message-ID: <20241002125832.820127591@linuxfoundation.org>
+Subject: [PATCH 6.10 551/634] wifi: mt76: mt7925: fix a potential array-index-out-of-bounds issue for clc
+Date: Wed,  2 Oct 2024 15:00:51 +0200
+Message-ID: <20241002125832.859356309@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,36 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-commit f503ae90c7355e8506e68498fe84c1357894cd5b upstream.
+commit 9679ca7326e52282cc923c4d71d81c999cb6cd55 upstream.
 
-Fix the NULL pointer dereference in mt7996_mcu_sta_bfer_he
-routine adding an sta interface to the mt7996 driver.
-
-Found by code review.
+Due to the lack of checks on the clc array, if the firmware supports
+more clc configuration, it will cause illegal memory access.
 
 Cc: stable@vger.kernel.org
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20240813081242.3991814-1-make24@iscas.ac.cn
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20240819015334.14580-1-mingyen.hsieh@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c |    3 +++
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1544,6 +1544,9 @@ mt7996_mcu_sta_bfer_he(struct ieee80211_
- 	u8 nss_mcs = mt7996_mcu_get_sta_nss(mcs_map);
- 	u8 snd_dim, sts;
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -613,6 +613,9 @@ static int mt7925_load_clc(struct mt792x
+ 	for (offset = 0; offset < len; offset += le32_to_cpu(clc->len)) {
+ 		clc = (const struct mt7925_clc *)(clc_base + offset);
  
-+	if (!vc)
-+		return;
++		if (clc->idx > ARRAY_SIZE(phy->clc))
++			break;
 +
- 	bf->tx_mode = MT_PHY_TYPE_HE_SU;
- 
- 	mt7996_mcu_sta_sounding_rate(bf);
+ 		/* do not init buf again if chip reset triggered */
+ 		if (phy->clc[clc->idx])
+ 			continue;
 
 
