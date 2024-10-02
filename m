@@ -1,41 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282B51D0173;
-	Wed,  2 Oct 2024 13:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087BB29CE7;
+	Wed,  2 Oct 2024 13:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876019; cv=none; b=tPzlqMtXOb13tQVJl9VyOA/Ye1pnk/CTz8z68zGD864dCc/9O0FjlWp9o4naKsvzAKn/vu5FBcCAAkZHbHxyACo+risC9gTQQW84ZJso3HDf7hJwJxBAF0uYtFjKfTmvdXH56DUvp0ODY4hO8iF9vNmIGaO4gYblPjDrPqbdCI4=
+	t=1727876022; cv=none; b=WI7iScrAHDqTOqQD3+XTXJXqn+nZ4u4qzlROjiyuRBAoYoItAE2XCgX8zAKArG+7uNKm7gbn39i+k0RO52nxjhz0XcCvVlQJ4mr93PpuSR/LzzkvXbtXk44TXUw9BBKYab0HYLlVF4XP1QAq76by7tJevxuX7p+g+pwkKVs4IMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876019; c=relaxed/simple;
-	bh=7Pk5eozPeidyJSYW9d9SsB34IClgTqGgB4vo1US+GKo=;
+	s=arc-20240116; t=1727876022; c=relaxed/simple;
+	bh=VfHZmFZwdpKcGs1RWlWtUPja4H7FiI02TcDeywRLvkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5k5I9b+9u2aRlFRFdecrzjYOpL82ucqIRgRHnbFIX/rbafQ0puhnWHDC/SoK/hzTiL+mxkci9x8MILkvTLmvekxI/WLeA2KSApcgD+aBkdDYEk5IdG9vkAaO2HTaMAFKqLaM7hWeiaJVRbyzE/57k+34liEJJpGJ4QKMP6FjQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJC8p3Qn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gs8WMYIv1G5e9LUKHSof4HjBWq3PstF++N+E6HpAX/K8iqTdpKYfw4J21YR97M1jM60u3+4pkgHv8AvICancpEd73a/NdelXWB02q10dySLSBZyC/76rZO4QL2tC+HnOpfnYv8jl6dFzotcWz2DaAb6n9hmLnZBaK2KABZcZ2y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1Ew9tg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJC8p3Qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DB0C4CECD;
-	Wed,  2 Oct 2024 13:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1Ew9tg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D1DC4CEC5;
+	Wed,  2 Oct 2024 13:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876018;
-	bh=7Pk5eozPeidyJSYW9d9SsB34IClgTqGgB4vo1US+GKo=;
+	s=korg; t=1727876021;
+	bh=VfHZmFZwdpKcGs1RWlWtUPja4H7FiI02TcDeywRLvkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJC8p3QntXkHJqyLEchY5bRrnqED4h5HZ5IZdVwXpLZvWw+MiJ9MthXGEAKFnK4jP
-	 VVc98MPpFCyNyVNm8+d5B9qNdanpZ2H8urCmapKII375AxZ9F+81iVSXku2zsYmees
-	 WHeYclu2gn1Xy1rMOgt8pn4NwTRj9CmeRzMdO1ZE=
+	b=k1Ew9tg1yEQMnvaXnqbBZQqLo6ZbRHHLo7WbYc04d9fslulD5Ap6p7QuUbfLvQt8Q
+	 Zv8YmwZaLfytvRnKDEDCKAL5gZR52J5FMUqY6PITz6xAboTywOk7yNJ3vxnZrt3wNR
+	 gFevdZTK0jl4r+M6GQESNTjpuhdkwbRKYYexW/CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 301/695] libbpf: Ensure new BTF objects inherit input endianness
-Date: Wed,  2 Oct 2024 14:54:59 +0200
-Message-ID: <20241002125834.454437394@linuxfoundation.org>
+	Lasse Collin <lasse.collin@tukaani.org>,
+	Sam James <sam@gentoo.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Joel Stanley <joel@jms.id.au>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Jubin Zhong <zhongjubin@huawei.com>,
+	Jules Maselbas <jmaselbas@zdiv.net>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Rui Li <me@lirui.org>,
+	Simon Glass <sjg@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.11 302/695] xz: cleanup CRC32 edits from 2018
+Date: Wed,  2 Oct 2024 14:55:00 +0200
+Message-ID: <20241002125834.493577643@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,54 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Lasse Collin <lasse.collin@tukaani.org>
 
-[ Upstream commit da18bfa59d403040d8bcba1284285916fe9e4425 ]
+[ Upstream commit 2ee96abef214550d9e92f5143ee3ac1fd1323e67 ]
 
-New split BTF needs to preserve base's endianness. Similarly, when
-creating a distilled BTF, we need to preserve original endianness.
+In 2018, a dependency on <linux/crc32poly.h> was added to avoid
+duplicating the same constant in multiple files.  Two months later it was
+found to be a bad idea and the definition of CRC32_POLY_LE macro was moved
+into xz_private.h to avoid including <linux/crc32poly.h>.
 
-Fix by updating libbpf's btf__distill_base() and btf_new_empty() to retain
-the byte order of any source BTF objects when creating new ones.
+xz_private.h is a wrong place for it too.  Revert back to the upstream
+version which has the poly in xz_crc32_init() in xz_crc32.c.
 
-Fixes: ba451366bf44 ("libbpf: Implement basic split BTF support")
-Fixes: 58e185a0dc35 ("libbpf: Add btf__distill_base() creating split BTF with distilled base BTF")
-Reported-by: Song Liu <song@kernel.org>
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Alan Maguire <alan.maguire@oracle.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/6358db36c5f68b07873a0a5be2d062b1af5ea5f8.camel@gmail.com/
-Link: https://lore.kernel.org/bpf/20240830095150.278881-1-tony.ambardar@gmail.com
+Link: https://lkml.kernel.org/r/20240721133633.47721-10-lasse.collin@tukaani.org
+Fixes: faa16bc404d7 ("lib: Use existing define with polynomial")
+Fixes: 242cdad873a7 ("lib/xz: Put CRC32_POLY_LE in xz_private.h")
+Signed-off-by: Lasse Collin <lasse.collin@tukaani.org>
+Reviewed-by: Sam James <sam@gentoo.org>
+Tested-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Joel Stanley <joel@jms.id.au>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Jubin Zhong <zhongjubin@huawei.com>
+Cc: Jules Maselbas <jmaselbas@zdiv.net>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Rui Li <me@lirui.org>
+Cc: Simon Glass <sjg@chromium.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ lib/xz/xz_crc32.c   | 2 +-
+ lib/xz/xz_private.h | 4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 32c00db3b91b9..40aae244e35f7 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -996,6 +996,7 @@ static struct btf *btf_new_empty(struct btf *base_btf)
- 		btf->base_btf = base_btf;
- 		btf->start_id = btf__type_cnt(base_btf);
- 		btf->start_str_off = base_btf->hdr->str_len;
-+		btf->swapped_endian = base_btf->swapped_endian;
- 	}
+diff --git a/lib/xz/xz_crc32.c b/lib/xz/xz_crc32.c
+index 88a2c35e1b597..5627b00fca296 100644
+--- a/lib/xz/xz_crc32.c
++++ b/lib/xz/xz_crc32.c
+@@ -29,7 +29,7 @@ STATIC_RW_DATA uint32_t xz_crc32_table[256];
  
- 	/* +1 for empty string at offset 0 */
-@@ -5394,6 +5395,9 @@ int btf__distill_base(const struct btf *src_btf, struct btf **new_base_btf,
- 	new_base = btf__new_empty();
- 	if (!new_base)
- 		return libbpf_err(-ENOMEM);
-+
-+	btf__set_endianness(new_base, btf__endianness(src_btf));
-+
- 	dist.id_map = calloc(n, sizeof(*dist.id_map));
- 	if (!dist.id_map) {
- 		err = -ENOMEM;
+ XZ_EXTERN void xz_crc32_init(void)
+ {
+-	const uint32_t poly = CRC32_POLY_LE;
++	const uint32_t poly = 0xEDB88320;
+ 
+ 	uint32_t i;
+ 	uint32_t j;
+diff --git a/lib/xz/xz_private.h b/lib/xz/xz_private.h
+index bf1e94ec7873c..d9fd49b45fd75 100644
+--- a/lib/xz/xz_private.h
++++ b/lib/xz/xz_private.h
+@@ -105,10 +105,6 @@
+ #	endif
+ #endif
+ 
+-#ifndef CRC32_POLY_LE
+-#define CRC32_POLY_LE 0xedb88320
+-#endif
+-
+ /*
+  * Allocate memory for LZMA2 decoder. xz_dec_lzma2_reset() must be used
+  * before calling xz_dec_lzma2_run().
 -- 
 2.43.0
 
