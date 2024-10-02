@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B431D016B;
-	Wed,  2 Oct 2024 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E411D016B;
+	Wed,  2 Oct 2024 13:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876162; cv=none; b=CRI+Nd66o+HPCZ7XCg+e+AHeoTYczo9Q7qeto6IZTOLfSdEPzIa254hpL/l6HaVzJJStHV6VvMiKeimsuVpF79qXZKfKF61IXcJqQjNtNMLQEDlqco6p1zaTqb5Z4QCbgztqmkB6lnEbyNsJG6Z6a66J1SMqAFlOhAtZ5EfaH0s=
+	t=1727876165; cv=none; b=Zf4nvoYpNEg/WaIKT6gXlJ+Dma/No8HNBdzKUEpFDrsn1VFxlvpMRNC7912AAg54+/jzdtahRIGckMr+t9cUd87tD/s6amfOh40yz8LXBx/Czc7UQhqp7IE/pjSx8WgXTBUCs0yn3KRD7GHN02m2ejjEIoD7X8Q7NBAyAedyaoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876162; c=relaxed/simple;
-	bh=yXF8L3sqLLcg4FLp2NVJxPUGhoOyPjjATbDzxj8EY18=;
+	s=arc-20240116; t=1727876165; c=relaxed/simple;
+	bh=DrMot4/nbh5kgg3dffevCT4Aw7SEp9orF6zbTjs9SQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7E5OB7R69US9n8iBe7X+kkhtxyn/rJ7gHfq41/VdjyuiHWFewLybqdawwJCQIXvwTWOVoXisR6QYRAL53ZLMGpQcKMwWqQEwkXXeqGOLPf/QH3iXHIhQcRLm3LRfrHqGZ6tLutr4JKmsE7v78GmcjdfoYPOxjQuldtwb1BqMz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awjw8jOc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmlJS0VDeBSEzTD/E0v2AqAaksk4csD9hG6YmQlPpETFUt8rXsLCiYAWpMILNgUy0YfbUQsjg7T7zQzJ1TkrXAS2ZxIkNt2uGu8fkWhiikA0xWorwArz797y8J0cZcQPSfmZydb+ccG5AaV1tXz0tMq+32MqYr9koOUb450B1ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPaP1e8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awjw8jOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB631C4CEC5;
-	Wed,  2 Oct 2024 13:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPaP1e8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978A4C4CEC5;
+	Wed,  2 Oct 2024 13:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876162;
-	bh=yXF8L3sqLLcg4FLp2NVJxPUGhoOyPjjATbDzxj8EY18=;
+	s=korg; t=1727876165;
+	bh=DrMot4/nbh5kgg3dffevCT4Aw7SEp9orF6zbTjs9SQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awjw8jOcudOgISHttwt2/JYAzDjpwhKF+rCalVMv6FVVwXDqEbH8I0FtLA4qgDiQs
-	 QplhRnWjCqns6i6k5wRwWWBqJCKFULvEySxp/spcZnxc4GDqPVE2BawyYlgJjfWpJe
-	 4B8Fh9W5wsTTAPwMC0HLxLn0MNFnx457EOiFvHuo=
+	b=DPaP1e8wTDvwHLKJReqVawJefAeJDrsV2UzNI0Vdlqa0kWd5aXiiMxnyauwH/ve6j
+	 2P4yTSy934FecgMtPRtXbgZAC3jjz/DMHhw5AbcZQUePgQ/p9mSzqG5QZ02hRjkCKp
+	 dZJNADfw4m8nbfMlHQU6HCcPSKGw09gs7aJHkhTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	coresight@lists.linaro.org,
+	gankulkarni@os.amperecomputing.com,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Suzuki Poulouse <suzuki.poulose@arm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 349/695] clk: imx: imx8qxp: Register dc0_bypass0_clk before disp clk
-Date: Wed,  2 Oct 2024 14:55:47 +0200
-Message-ID: <20241002125836.378701732@linuxfoundation.org>
+Subject: [PATCH 6.11 323/695] perf scripts python cs-etm: Restore first sample log in verbose mode
+Date: Wed,  2 Oct 2024 14:55:21 +0200
+Message-ID: <20241002125835.342572484@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,44 +66,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit e61352d5ecdc0da2e7253121c15d9a3e040f78a1 ]
+[ Upstream commit ae8e4f4048b839c1cb333d9e3d20e634b430139e ]
 
-The initialization order of SCU clocks affects the sequence of SCU clock
-resume. If there are no other effects, the earlier the initialization,
-the earlier the resume. During SCU clock resume, the clock rate is
-restored. As SCFW guidelines, configure the parent clock rate before
-configuring the child rate.
+The linked commit moved the early return on the first sample to before
+the verbose log, so move the log earlier too. Now the first sample is
+also logged and not skipped.
 
-Fixes: 91e916771de0 ("clk: imx: scu: remove legacy scu clock binding support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-14-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 2d98dbb4c9c5b09c ("perf scripts python arm-cs-trace-disasm.py: Do not ignore disam first sample")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Benjamin Gray <bgray@linux.ibm.com>
+Cc: coresight@lists.linaro.org
+Cc: gankulkarni@os.amperecomputing.com
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20240723132858.12747-1-james.clark@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/scripts/python/arm-cs-trace-disasm.py | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index 7d8883916cacd..16710eef641ba 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -206,11 +206,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu("usb3_lpm_div", IMX_SC_R_USB_2, IMX_SC_PM_CLK_MISC);
+diff --git a/tools/perf/scripts/python/arm-cs-trace-disasm.py b/tools/perf/scripts/python/arm-cs-trace-disasm.py
+index d973c2baed1c8..7aff02d84ffb3 100755
+--- a/tools/perf/scripts/python/arm-cs-trace-disasm.py
++++ b/tools/perf/scripts/python/arm-cs-trace-disasm.py
+@@ -192,17 +192,16 @@ def process_event(param_dict):
+ 	ip = sample["ip"]
+ 	addr = sample["addr"]
  
- 	/* Display controller SS */
--	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
--	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_pll0_clk", IMX_SC_R_DC_0_PLL_0, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc0_pll1_clk", IMX_SC_R_DC_0_PLL_1, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc0_bypass0_clk", IMX_SC_R_DC_0_VIDEO0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
-+	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
++	if (options.verbose == True):
++		print("Event type: %s" % name)
++		print_sample(sample)
++
+ 	# Initialize CPU data if it's empty, and directly return back
+ 	# if this is the first tracing event for this CPU.
+ 	if (cpu_data.get(str(cpu) + 'addr') == None):
+ 		cpu_data[str(cpu) + 'addr'] = addr
+ 		return
  
- 	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
+-
+-	if (options.verbose == True):
+-		print("Event type: %s" % name)
+-		print_sample(sample)
+-
+ 	# If cannot find dso so cannot dump assembler, bail out
+ 	if (dso == '[unknown]'):
+ 		return
 -- 
 2.43.0
 
