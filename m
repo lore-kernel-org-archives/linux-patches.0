@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDE51D0493;
-	Wed,  2 Oct 2024 14:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFE71CCEDA;
+	Wed,  2 Oct 2024 14:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879098; cv=none; b=cgOMJhzkrK4jd18g8loKbq0su37NkKw6oAgIqrXNA2UW0fiWlG+2Quw4OvyEplHOX3VJetKF3Oavj9LilKGQOtUoVbIIImKkFOuzULIyGBH/v73+Jvyg8y8IRyfBgYkSeW+sjuh4u5fobJ3Y+5v5YRFbNFIAPWrB+xuggIwVHrs=
+	t=1727879101; cv=none; b=VDho113SFGPIQqR3/dlvZfKSI9Y3VBpsaTRlccbILMbeHnDyIsKhc0/VOSJ49JsqKcJbR3HUiiKVOZT3KixsoUuaNxnyZG3NcdaHEgzfxKcOVWPdUSWT8wKtHeR7mJcKlUCPGQnOhfJMaDxCIVC5oG06rjGx6uR4jt8sU8Ue2co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879098; c=relaxed/simple;
-	bh=fWn9gL+u1KSYKEquw0j6Y5Apj/kMYVFErSyV04s7Oaw=;
+	s=arc-20240116; t=1727879101; c=relaxed/simple;
+	bh=4Rx/ymzpGp24IiWa7ymDal4rPSCEH6PO3EBXIpkh9zQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upH5KDPTL6tQOTqZu4sQQexnlYJCy1J2xNcyxE8F/42i8lMWKRqQnREZpfXO7pS594x9CLFFzGcotX98kA9guKRSYnuzJG7M/kcuw9FW37YSWlOinv7hrdOS5NQpRnscGNqkVjKjN595ldq3GPNg3mimpXshPTwpXTNpt/bh0L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhzDpYL4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7PURV/GlYVcAiLMC45MSQiFk1Fa534ynh1O4aUsvuxwV5PXe19081tCQBriUay8Yo5+bQcr3bhR/EalhQBZ4tgV1C8u9qBCYQt8boS1EWcfEgg3LtzSfjl/i3cvhKxYADlTpSt9Ye9WrgW5yxFmd+He2KIxgPq8WJ3RzvP5t2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhONMudu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhzDpYL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E383C4CEC2;
-	Wed,  2 Oct 2024 14:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhONMudu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6953C4CEC5;
+	Wed,  2 Oct 2024 14:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879098;
-	bh=fWn9gL+u1KSYKEquw0j6Y5Apj/kMYVFErSyV04s7Oaw=;
+	s=korg; t=1727879101;
+	bh=4Rx/ymzpGp24IiWa7ymDal4rPSCEH6PO3EBXIpkh9zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YhzDpYL4dnchwb2YdyAN+Wgd0hL7H5kJVRiGUSePwl8aiarn1vdFV8UBOHOC9ijGS
-	 DbSMqIzcYcmH5WxXw8L2RnjoXuy7MjmFpYbO1j9fbHr2UtrxtJylMx3TNclqomziFo
-	 Kiy2A0vDUf/IEEMjoUuoIG6U5h6mD+inOae4uWvQ=
+	b=HhONMudua0BGS10AtE08XOep4w+XU/1w61/oZmIZNgtl+XwSW4LXnszQhsmwdvgNf
+	 PFQQK6X6R3pVbQ1R/ugOKnfwT5yfJlTN5LozMBWir1+Uh5EF2QZIBxZtQqMZTTZgHu
+	 1nYAB+C7pCJoSrMrJHf9wAxLqQXO9FuPc3H3dwQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Eric Sandeen <sandeen@sandeen.net>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 610/634] idpf: fix netdev Tx queue stop/wake
-Date: Wed,  2 Oct 2024 15:01:50 +0200
-Message-ID: <20241002125835.195558081@linuxfoundation.org>
+Subject: [PATCH 6.10 611/634] fs_parse: add uid & gid option option parsing helpers
+Date: Wed,  2 Oct 2024 15:01:51 +0200
+Message-ID: <20241002125835.235591914@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,143 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit e4b398dd82f5d5867bc5f442c43abc8fba30ed2c ]
+[ Upstream commit 9f111059e725f7ca79a136bfc734da3c8c1838b4 ]
 
-netif_txq_maybe_stop() returns -1, 0, or 1, while
-idpf_tx_maybe_stop_common() says it returns 0 or -EBUSY. As a result,
-there sometimes are Tx queue timeout warnings despite that the queue
-is empty or there is at least enough space to restart it.
-Make idpf_tx_maybe_stop_common() inline and returning true or false,
-handling the return of netif_txq_maybe_stop() properly. Use a correct
-goto in idpf_tx_maybe_stop_splitq() to avoid stopping the queue or
-incrementing the stops counter twice.
+Multiple filesystems take uid and gid as options, and the code to
+create the ID from an integer and validate it is standard boilerplate
+that can be moved into common helper functions, so do that for
+consistency and less cut&paste.
 
-Fixes: 6818c4d5b3c2 ("idpf: add splitq start_xmit")
-Fixes: a5ab9ee0df0b ("idpf: add singleq start_xmit and napi poll")
-Cc: stable@vger.kernel.org # 6.7+
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This also helps avoid the buggy pattern noted by Seth Jenkins at
+https://lore.kernel.org/lkml/CALxfFW4BXhEwxR0Q5LSkg-8Vb4r2MONKCcUCVioehXQKr35eHg@mail.gmail.com/
+because uid/gid parsing will fail before any assignment in most
+filesystems.
+
+Signed-off-by: Eric Sandeen <sandeen@sandeen.net>
+Link: https://lore.kernel.org/r/de859d0a-feb9-473d-a5e2-c195a3d47abb@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 3a987b88a425 ("debugfs show actual source in /proc/mounts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/idpf/idpf_singleq_txrx.c   |  4 +++
- drivers/net/ethernet/intel/idpf/idpf_txrx.c   | 35 +++++--------------
- drivers/net/ethernet/intel/idpf/idpf_txrx.h   |  9 ++++-
- 3 files changed, 21 insertions(+), 27 deletions(-)
+ Documentation/filesystems/mount_api.rst |  9 +++++--
+ fs/fs_parser.c                          | 34 +++++++++++++++++++++++++
+ include/linux/fs_parser.h               |  6 ++++-
+ 3 files changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-index 8630db24f63a7..5e5fa2d0aa4d1 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-@@ -369,6 +369,10 @@ netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- 				      IDPF_TX_DESCS_FOR_CTX)) {
- 		idpf_tx_buf_hw_update(tx_q, tx_q->next_to_use, false);
+diff --git a/Documentation/filesystems/mount_api.rst b/Documentation/filesystems/mount_api.rst
+index 9aaf6ef75eb53..317934c9e8fca 100644
+--- a/Documentation/filesystems/mount_api.rst
++++ b/Documentation/filesystems/mount_api.rst
+@@ -645,6 +645,8 @@ The members are as follows:
+ 	fs_param_is_blockdev	Blockdev path		* Needs lookup
+ 	fs_param_is_path	Path			* Needs lookup
+ 	fs_param_is_fd		File descriptor		result->int_32
++	fs_param_is_uid		User ID (u32)           result->uid
++	fs_param_is_gid		Group ID (u32)          result->gid
+ 	=======================	=======================	=====================
  
-+		u64_stats_update_begin(&tx_q->stats_sync);
-+		u64_stats_inc(&tx_q->q_stats.q_busy);
-+		u64_stats_update_end(&tx_q->stats_sync);
-+
- 		return NETDEV_TX_BUSY;
- 	}
+      Note that if the value is of fs_param_is_bool type, fs_parse() will try
+@@ -678,6 +680,8 @@ The members are as follows:
+ 	fsparam_bdev()		fs_param_is_blockdev
+ 	fsparam_path()		fs_param_is_path
+ 	fsparam_fd()		fs_param_is_fd
++	fsparam_uid()		fs_param_is_uid
++	fsparam_gid()		fs_param_is_gid
+ 	=======================	===============================================
  
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index 7b06ca7b9732a..9b7e67d0f38be 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -2149,29 +2149,6 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- 	desc->flow.qw1.compl_tag = cpu_to_le16(params->compl_tag);
+      all of which take two arguments, name string and option number - for
+@@ -784,8 +788,9 @@ process the parameters it is given.
+      option number (which it returns).
+ 
+      If successful, and if the parameter type indicates the result is a
+-     boolean, integer or enum type, the value is converted by this function and
+-     the result stored in result->{boolean,int_32,uint_32,uint_64}.
++     boolean, integer, enum, uid, or gid type, the value is converted by this
++     function and the result stored in
++     result->{boolean,int_32,uint_32,uint_64,uid,gid}.
+ 
+      If a match isn't initially made, the key is prefixed with "no" and no
+      value is present then an attempt will be made to look up the key with the
+diff --git a/fs/fs_parser.c b/fs/fs_parser.c
+index a4d6ca0b8971e..24727ec34e5aa 100644
+--- a/fs/fs_parser.c
++++ b/fs/fs_parser.c
+@@ -308,6 +308,40 @@ int fs_param_is_fd(struct p_log *log, const struct fs_parameter_spec *p,
  }
+ EXPORT_SYMBOL(fs_param_is_fd);
  
--/**
-- * idpf_tx_maybe_stop_common - 1st level check for common Tx stop conditions
-- * @tx_q: the queue to be checked
-- * @size: number of descriptors we want to assure is available
-- *
-- * Returns 0 if stop is not needed
-- */
--int idpf_tx_maybe_stop_common(struct idpf_tx_queue *tx_q, unsigned int size)
--{
--	struct netdev_queue *nq;
--
--	if (likely(IDPF_DESC_UNUSED(tx_q) >= size))
--		return 0;
--
--	u64_stats_update_begin(&tx_q->stats_sync);
--	u64_stats_inc(&tx_q->q_stats.q_busy);
--	u64_stats_update_end(&tx_q->stats_sync);
--
--	nq = netdev_get_tx_queue(tx_q->netdev, tx_q->idx);
--
--	return netif_txq_maybe_stop(nq, IDPF_DESC_UNUSED(tx_q), size, size);
--}
--
- /**
-  * idpf_tx_maybe_stop_splitq - 1st level check for Tx splitq stop conditions
-  * @tx_q: the queue to be checked
-@@ -2183,7 +2160,7 @@ static int idpf_tx_maybe_stop_splitq(struct idpf_tx_queue *tx_q,
- 				     unsigned int descs_needed)
- {
- 	if (idpf_tx_maybe_stop_common(tx_q, descs_needed))
--		goto splitq_stop;
-+		goto out;
- 
- 	/* If there are too many outstanding completions expected on the
- 	 * completion queue, stop the TX queue to give the device some time to
-@@ -2202,10 +2179,12 @@ static int idpf_tx_maybe_stop_splitq(struct idpf_tx_queue *tx_q,
- 	return 0;
- 
- splitq_stop:
-+	netif_stop_subqueue(tx_q->netdev, tx_q->idx);
-+
-+out:
- 	u64_stats_update_begin(&tx_q->stats_sync);
- 	u64_stats_inc(&tx_q->q_stats.q_busy);
- 	u64_stats_update_end(&tx_q->stats_sync);
--	netif_stop_subqueue(tx_q->netdev, tx_q->idx);
- 
- 	return -EBUSY;
- }
-@@ -2228,7 +2207,11 @@ void idpf_tx_buf_hw_update(struct idpf_tx_queue *tx_q, u32 val,
- 	nq = netdev_get_tx_queue(tx_q->netdev, tx_q->idx);
- 	tx_q->next_to_use = val;
- 
--	idpf_tx_maybe_stop_common(tx_q, IDPF_TX_DESC_NEEDED);
-+	if (idpf_tx_maybe_stop_common(tx_q, IDPF_TX_DESC_NEEDED)) {
-+		u64_stats_update_begin(&tx_q->stats_sync);
-+		u64_stats_inc(&tx_q->q_stats.q_busy);
-+		u64_stats_update_end(&tx_q->stats_sync);
-+	}
- 
- 	/* Force memory writes to complete before letting h/w
- 	 * know there are new descriptors to fetch.  (Only
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index 5b3f19200255a..214a24e684634 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -1148,7 +1148,6 @@ void idpf_tx_dma_map_error(struct idpf_tx_queue *txq, struct sk_buff *skb,
- 			   struct idpf_tx_buf *first, u16 ring_idx);
- unsigned int idpf_tx_desc_count_required(struct idpf_tx_queue *txq,
- 					 struct sk_buff *skb);
--int idpf_tx_maybe_stop_common(struct idpf_tx_queue *tx_q, unsigned int size);
- void idpf_tx_timeout(struct net_device *netdev, unsigned int txqueue);
- netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- 				  struct idpf_tx_queue *tx_q);
-@@ -1157,4 +1156,12 @@ bool idpf_rx_singleq_buf_hw_alloc_all(struct idpf_rx_queue *rxq,
- 				      u16 cleaned_count);
- int idpf_tso(struct sk_buff *skb, struct idpf_tx_offload_params *off);
- 
-+static inline bool idpf_tx_maybe_stop_common(struct idpf_tx_queue *tx_q,
-+					     u32 needed)
++int fs_param_is_uid(struct p_log *log, const struct fs_parameter_spec *p,
++		    struct fs_parameter *param, struct fs_parse_result *result)
 +{
-+	return !netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
-+					  IDPF_DESC_UNUSED(tx_q),
-+					  needed, needed);
-+}
++	kuid_t uid;
 +
- #endif /* !_IDPF_TXRX_H_ */
++	if (fs_param_is_u32(log, p, param, result) != 0)
++		return fs_param_bad_value(log, param);
++
++	uid = make_kuid(current_user_ns(), result->uint_32);
++	if (!uid_valid(uid))
++		return inval_plog(log, "Invalid uid '%s'", param->string);
++
++	result->uid = uid;
++	return 0;
++}
++EXPORT_SYMBOL(fs_param_is_uid);
++
++int fs_param_is_gid(struct p_log *log, const struct fs_parameter_spec *p,
++		    struct fs_parameter *param, struct fs_parse_result *result)
++{
++	kgid_t gid;
++
++	if (fs_param_is_u32(log, p, param, result) != 0)
++		return fs_param_bad_value(log, param);
++
++	gid = make_kgid(current_user_ns(), result->uint_32);
++	if (!gid_valid(gid))
++		return inval_plog(log, "Invalid gid '%s'", param->string);
++
++	result->gid = gid;
++	return 0;
++}
++EXPORT_SYMBOL(fs_param_is_gid);
++
+ int fs_param_is_blockdev(struct p_log *log, const struct fs_parameter_spec *p,
+ 		  struct fs_parameter *param, struct fs_parse_result *result)
+ {
+diff --git a/include/linux/fs_parser.h b/include/linux/fs_parser.h
+index d3350979115f0..6cf713a7e6c6f 100644
+--- a/include/linux/fs_parser.h
++++ b/include/linux/fs_parser.h
+@@ -28,7 +28,7 @@ typedef int fs_param_type(struct p_log *,
+  */
+ fs_param_type fs_param_is_bool, fs_param_is_u32, fs_param_is_s32, fs_param_is_u64,
+ 	fs_param_is_enum, fs_param_is_string, fs_param_is_blob, fs_param_is_blockdev,
+-	fs_param_is_path, fs_param_is_fd;
++	fs_param_is_path, fs_param_is_fd, fs_param_is_uid, fs_param_is_gid;
+ 
+ /*
+  * Specification of the type of value a parameter wants.
+@@ -57,6 +57,8 @@ struct fs_parse_result {
+ 		int		int_32;		/* For spec_s32/spec_enum */
+ 		unsigned int	uint_32;	/* For spec_u32{,_octal,_hex}/spec_enum */
+ 		u64		uint_64;	/* For spec_u64 */
++		kuid_t		uid;
++		kgid_t		gid;
+ 	};
+ };
+ 
+@@ -131,6 +133,8 @@ static inline bool fs_validate_description(const char *name,
+ #define fsparam_bdev(NAME, OPT)	__fsparam(fs_param_is_blockdev, NAME, OPT, 0, NULL)
+ #define fsparam_path(NAME, OPT)	__fsparam(fs_param_is_path, NAME, OPT, 0, NULL)
+ #define fsparam_fd(NAME, OPT)	__fsparam(fs_param_is_fd, NAME, OPT, 0, NULL)
++#define fsparam_uid(NAME, OPT) __fsparam(fs_param_is_uid, NAME, OPT, 0, NULL)
++#define fsparam_gid(NAME, OPT) __fsparam(fs_param_is_gid, NAME, OPT, 0, NULL)
+ 
+ /* String parameter that allows empty argument */
+ #define fsparam_string_empty(NAME, OPT) \
 -- 
 2.43.0
 
