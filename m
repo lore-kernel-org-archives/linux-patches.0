@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FEC1D040D;
-	Wed,  2 Oct 2024 14:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F2E1D040D;
+	Wed,  2 Oct 2024 14:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879576; cv=none; b=pSL4qeJ9fAanzMYHKVr8d3wuHTBphkqeUQYPwdRHlnwWQBT4/AEp4VNBlPYJ32ZYgxXT7xK+TwOzha1vwPKotyKDshTOPo2cu6g2PrPalj1hNjohe41Nx6y3tVVA3m3XisDjB8nwX29z/t2/BR/C2KvLrmsE80ONO5JYst1kczA=
+	t=1727879579; cv=none; b=mG8jE3K5/vj4djXLpsrQdfxsUXscsndO2IZ5CxDrWLEvDmq/UlMo2AH0qrM0siqcPXqbDUG0pqK+N67K1iRpQr7plCe3mREQBf+k7usBmQB7KBjC8QcjnZPkNXczntB1YUsGzm8Q6AAhP12txoChz9H7e6+7Ysmagm8rGNGkM7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879576; c=relaxed/simple;
-	bh=zF/sjf3zw3QkUats7a5oo/NwJg16ku0erAtUegOfL3g=;
+	s=arc-20240116; t=1727879579; c=relaxed/simple;
+	bh=8jV95sQH/Q+drLikJtkuBTUvwQaXFZTFNJ4exr7DD40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qpe7+9et46wbGgLzIBZiY4fbAV+J/BQP7i8ehIYzwT28wktEIvH2NCKzROEwt1wsXS6ryLwSLpfQeEd88o9FQYp2EUX8RH0AEmNrGArzuskkBfO42ciwSevNX/c/26c39k6PivWPFKlVftTHj/d3hxhspQc87jisUVDCFnr94ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzMTnzty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CVSe0XMcHCT4oecuGqv+6/DOWCgt2hmMvCWkF1JN4MHUjVXTI+U7vQmGWhiMpCe/fdrqAtReFQ4ulm3vT+u9iUOIsRApb9MB4mJZ7KB4zto/6jL8lRRf8axcN1ns1r2BPCvOBaF12uqAPDby4aRjbtWBB3jaYVEV5Sn+sdb8dIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn82X2Gd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzMTnzty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2734C4CECD;
-	Wed,  2 Oct 2024 14:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn82X2Gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C202C4CEC2;
+	Wed,  2 Oct 2024 14:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879576;
-	bh=zF/sjf3zw3QkUats7a5oo/NwJg16ku0erAtUegOfL3g=;
+	s=korg; t=1727879579;
+	bh=8jV95sQH/Q+drLikJtkuBTUvwQaXFZTFNJ4exr7DD40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzMTnztyTzs/GlCmsOYBf0vE2gn3OWSU6N+LCzRfCzWjBpMPU126pqKFNkQQhulEE
-	 y8oTXl7QK3g7qkLy1odZS5oNn4/qJxAqJq/16oU79whZmYbXuyJ8mPZ52wPllpScpF
-	 tA4aiWjuP2rExIvG8asH+1bB1l4GNqwWKtcijceM=
+	b=Jn82X2Gdd5GHYaDuhnxpCt2nup+UfLk24MWyCY64loLzLunfjIgnOuMpjd3RPY7oI
+	 /0R24rT3rblfBSbondLyNdX6T2Ea+QBOwxAEBKqw8KITcdoplPYEIksjdFojfwGqaJ
+	 nI2LOTsVg0hnJEKvhkqyyG6jgxz/tTdOqNR28YSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Henrik Grimler <henrik@grimler.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/538] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/ 16K pages
-Date: Wed,  2 Oct 2024 14:56:14 +0200
-Message-ID: <20241002125757.569381300@linuxfoundation.org>
+Subject: [PATCH 6.6 126/538] power: supply: max17042_battery: Fix SOC threshold calc w/ no current sense
+Date: Wed,  2 Oct 2024 14:56:05 +0200
+Message-ID: <20241002125757.218195938@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,68 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 2d42d3ba443706c9164fa0bef4e5fd1c36bc1bd9 ]
+[ Upstream commit 3a3acf839b2cedf092bdd1ff65b0e9895df1656b ]
 
-SDM845's Adreno SMMU is unique in that it actually advertizes support
-for 16K (and 32M) pages, which doesn't hold for newer SoCs.
+Commit 223a3b82834f ("power: supply: max17042_battery: use VFSOC for
+capacity when no rsns") made it so that capacity on systems without
+current sensing would be read from VFSOC instead of RepSOC. However,
+the SOC threshold calculation still read RepSOC to get the SOC
+regardless of the current sensing option state.
 
-This however, seems either broken in the hardware implementation, the
-hypervisor middleware that abstracts the SMMU, or there's a bug in the
-Linux kernel somewhere down the line that nobody managed to track down.
+Fix this by applying the same conditional to determine which register
+should be read.
 
-Booting SDM845 with 16K page sizes and drm/msm results in:
+This also seems to be the intended behavior as per the datasheet - SOC
+alert config value in MiscCFG on setups without current sensing is set
+to a value of 0b11, indicating SOC alerts being generated based on
+VFSOC, instead of 0b00 which indicates SOC alerts being generated based
+on RepSOC.
 
-*** gpu fault: ttbr0=0000000000000000 iova=000100000000c000 dir=READ
-type=TRANSLATION source=CP (0,0,0,0)
+This fixes an issue on the Galaxy S3/Midas boards, where the alert
+interrupt would be constantly retriggered, causing high CPU usage
+on idle (around ~12%-15%).
 
-right after loading the firmware. The GPU then starts spitting out
-illegal intstruction errors, as it's quite obvious that it got a
-bogus pointer.
-
-Moreover, it seems like this issue also concerns other implementations
-of SMMUv2 on Qualcomm SoCs, such as the one on SC7180.
-
-Hide 16K support on such instances to work around this.
-
-Reported-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240824-topic-845_gpu_smmu-v2-1-a302b8acc052@quicinc.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: 19eb465c969f ("iommu/arm-smmu-qcom: apply num_context_bank fixes for SDM630 / SDM660")
+Fixes: e5f3872d2044 ("max17042: Add support for signalling change in SOC")
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Reviewed-by: Henrik Grimler <henrik@grimler.se>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240817-max17042-soc-threshold-fix-v1-1-72b45899c3cc@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/power/supply/max17042_battery.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index b899a7b7fa935..db2092d5af5eb 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -341,6 +341,14 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
-+{
-+	/* Support for 16K pages is advertised on some SoCs, but it doesn't seem to work */
-+	smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
-+
-+	return 0;
-+}
-+
- static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
- {
- 	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
-@@ -431,6 +439,7 @@ static const struct arm_smmu_impl sdm845_smmu_500_impl = {
- 
- static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
- 	.init_context = qcom_adreno_smmu_init_context,
-+	.cfg_probe = qcom_adreno_smmuv2_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
- 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
+diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
+index 17ac2ab78c4e4..ab97dd7ca5cb6 100644
+--- a/drivers/power/supply/max17042_battery.c
++++ b/drivers/power/supply/max17042_battery.c
+@@ -853,7 +853,10 @@ static void max17042_set_soc_threshold(struct max17042_chip *chip, u16 off)
+ 	/* program interrupt thresholds such that we should
+ 	 * get interrupt for every 'off' perc change in the soc
+ 	 */
+-	regmap_read(map, MAX17042_RepSOC, &soc);
++	if (chip->pdata->enable_current_sense)
++		regmap_read(map, MAX17042_RepSOC, &soc);
++	else
++		regmap_read(map, MAX17042_VFSOC, &soc);
+ 	soc >>= 8;
+ 	soc_tr = (soc + off) << 8;
+ 	if (off < soc)
 -- 
 2.43.0
 
