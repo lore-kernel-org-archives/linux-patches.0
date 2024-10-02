@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE931D1F74;
-	Wed,  2 Oct 2024 14:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC771D26FE;
+	Wed,  2 Oct 2024 14:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877919; cv=none; b=fO7W7TWBNZkPkQdTLuHY8JtXb1pV5g783tuJ+p83iBL1pnvDQ3dWg/foSsJnH9UPeRmh+hfy4hdNyWNyEsjrkmX5+2D/75JmYBx3BLv73lGG5X+ylEr/90Bc1xEjGYupJfrdKmAWm7uNqDSU2v9pigx5zstiQd7BMVqaDeeyzbA=
+	t=1727877922; cv=none; b=lKdFckFwRVRO9/3h67bbgryXArNbUIeJvmoRgZBAH6fqmAQWSEik/INYO8vqQoVxzVA6cIc4pjTzfLT0u3knUw6RtY/pt/VQcUdYfXn/TIH2woXvYlmWmJNUhnqMZSJ1Uj3IjfMhzJAP7PGHH7OaD6ybNWpCWa/OH+0luPQlWNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877919; c=relaxed/simple;
-	bh=pnUxWqlhOS2Te6gO3uxsAypm8MBl8rv+eWbRTtdBrMM=;
+	s=arc-20240116; t=1727877922; c=relaxed/simple;
+	bh=f3R7qUrauKXJn+4t8heDqzHm2TF5QPB2lRZcUqj1b0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icYDp5g4aQhekc80YK/XmKBEdaF0b53V/4mr9zuaeY8X97Q3CRXSkJYGvGk+S+GV0v6x7WNguqVOy82iyd0av51qZvciAqQbwsB3I7P0yVffdqXyiFjJHkVfd/WW38VQq3IzHKYgiiOuBFaQ7S5PVteUAP/xKHUJ+nbtOyXwAWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbw/vGig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOs/KgV6tgaLcKDc6nzoc3hqXJUcV8PrTT/92Z0JTxbYJp3q5KbRJz5ux6OZArjRJJJRHpZIhHmqFWPgtHLEPkm4FBWsuHWNLLgM4tbRXpQ9wfUJOWe7RCB7hcvmwWp7v9jAxv2j7Q4yUgazvHFKH20OA6zCIb6LromgJr9wxdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJjs+hCM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbw/vGig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87565C4CEC2;
-	Wed,  2 Oct 2024 14:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJjs+hCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73749C4CEC2;
+	Wed,  2 Oct 2024 14:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877918;
-	bh=pnUxWqlhOS2Te6gO3uxsAypm8MBl8rv+eWbRTtdBrMM=;
+	s=korg; t=1727877921;
+	bh=f3R7qUrauKXJn+4t8heDqzHm2TF5QPB2lRZcUqj1b0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbw/vGiga//BJzmcLnVWJs3gIu1wT7f5MhNCH0m02JbDlrK2MglTfs4VH+m1Y/gyx
-	 oCb4/sFVPV8doBck6UsVuE171Rb2uVHUs12VXaB29yFDma30P23lduk4kqebmUkYad
-	 KQjv59TpKDcM+17ODv37bzaSim268VgODWbPgFsM=
+	b=vJjs+hCMJ6S8WLnLgST5iyL8NvOXgq5RyxnAipPrqbE4hHYkD6kjCpfdtzgPEwhmN
+	 BwUei8g5olsiUsJ3D+1ZTzedlmZLybTJm3xeX1Myf9YMDRXnQl4wO4mJ7IIMywmtVM
+	 FBJe4FHst1Xt+OKenvkJrn44SC9WJ0pPlFpvrX2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 208/634] drm/msm/dp: enable widebus on all relevant chipsets
-Date: Wed,  2 Oct 2024 14:55:08 +0200
-Message-ID: <20241002125819.315705262@linuxfoundation.org>
+Subject: [PATCH 6.10 199/634] drm/msm: Use a7xx family directly in gpu_state
+Date: Wed,  2 Oct 2024 14:54:59 +0200
+Message-ID: <20241002125818.960636457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,65 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Connor Abbott <cwabbott0@gmail.com>
 
-[ Upstream commit c7c412202623951dcfc22316f5255fd84fd56186 ]
+[ Upstream commit db75ef03d72ea75515f5282fe8a4925ae8373fe1 ]
 
-Hardware document indicates that widebus is recommended on DP on all
-MDSS chipsets starting version 5.x.x and above.
+With a7xx, we need to import a new header for each new generation and
+switch to a different list of registers, instead of making
+backwards-compatible changes. Using the helpers inadvertently made a750
+use the a740 list of registers, instead use the family directly to fix
+this.
 
-Follow the guideline and mark widebus support on all relevant
-chipsets for DP.
-
-Fixes: 766f705204a0 ("drm/msm/dp: Remove now unused connector_type from desc")
-Fixes: 1b2d98bdd7b7 ("drm/msm/dp: Add DisplayPort controller for SM8650")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
-Fixes: 1b2d98bdd7b7 ("drm/msm/dp: Add DisplayPort controller for SM8650")
-Patchwork: https://patchwork.freedesktop.org/patch/606556/
-Link: https://lore.kernel.org/r/20240730195012.2595980-1-quic_abhinavk@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f3f8207d8aed ("drm/msm: Add devcoredump support for a750")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/607392/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 41 ++++++++++-----------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 672a7ba52edad..9dc44ea85b7c6 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -119,7 +119,7 @@ struct msm_dp_desc {
- };
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 789a11416f7a4..f2030e521a03a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -388,18 +388,18 @@ static void a7xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 	const u32 *debugbus_blocks, *gbif_debugbus_blocks;
+ 	int i;
  
- static const struct msm_dp_desc sc7180_dp_descs[] = {
--	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
-+	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
- 	{}
- };
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		debugbus_blocks = gen7_0_0_debugbus_blocks;
+ 		debugbus_blocks_count = ARRAY_SIZE(gen7_0_0_debugbus_blocks);
+ 		gbif_debugbus_blocks = a7xx_gbif_debugbus_blocks;
+ 		gbif_debugbus_blocks_count = ARRAY_SIZE(a7xx_gbif_debugbus_blocks);
+-	} else if (adreno_is_a740_family(adreno_gpu)) {
++	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
+ 		debugbus_blocks = gen7_2_0_debugbus_blocks;
+ 		debugbus_blocks_count = ARRAY_SIZE(gen7_2_0_debugbus_blocks);
+ 		gbif_debugbus_blocks = a7xx_gbif_debugbus_blocks;
+ 		gbif_debugbus_blocks_count = ARRAY_SIZE(a7xx_gbif_debugbus_blocks);
+ 	} else {
+-		BUG_ON(!adreno_is_a750(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
+ 		debugbus_blocks = gen7_9_0_debugbus_blocks;
+ 		debugbus_blocks_count = ARRAY_SIZE(gen7_9_0_debugbus_blocks);
+ 		gbif_debugbus_blocks = gen7_9_0_gbif_debugbus_blocks;
+@@ -509,7 +509,7 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
+ 		const struct a6xx_debugbus_block *cx_debugbus_blocks;
  
-@@ -130,9 +130,9 @@ static const struct msm_dp_desc sc7280_dp_descs[] = {
- };
+ 		if (adreno_is_a7xx(adreno_gpu)) {
+-			BUG_ON(!(adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu)));
++			BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
+ 			cx_debugbus_blocks = a7xx_cx_debugbus_blocks;
+ 			nr_cx_debugbus_blocks = ARRAY_SIZE(a7xx_cx_debugbus_blocks);
+ 		} else {
+@@ -660,11 +660,11 @@ static void a7xx_get_dbgahb_clusters(struct msm_gpu *gpu,
+ 	const struct gen7_sptp_cluster_registers *dbgahb_clusters;
+ 	unsigned dbgahb_clusters_size;
  
- static const struct msm_dp_desc sc8180x_dp_descs[] = {
--	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
--	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1 },
--	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2 },
-+	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
-+	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
-+	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
- 	{}
- };
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		dbgahb_clusters = gen7_0_0_sptp_clusters;
+ 		dbgahb_clusters_size = ARRAY_SIZE(gen7_0_0_sptp_clusters);
+ 	} else {
+-		BUG_ON(!adreno_is_a740_family(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
+ 		dbgahb_clusters = gen7_2_0_sptp_clusters;
+ 		dbgahb_clusters_size = ARRAY_SIZE(gen7_2_0_sptp_clusters);
+ 	}
+@@ -818,14 +818,14 @@ static void a7xx_get_clusters(struct msm_gpu *gpu,
+ 	const struct gen7_cluster_registers *clusters;
+ 	unsigned clusters_size;
  
-@@ -149,7 +149,7 @@ static const struct msm_dp_desc sc8280xp_dp_descs[] = {
- };
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		clusters = gen7_0_0_clusters;
+ 		clusters_size = ARRAY_SIZE(gen7_0_0_clusters);
+-	} else if (adreno_is_a740_family(adreno_gpu)) {
++	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
+ 		clusters = gen7_2_0_clusters;
+ 		clusters_size = ARRAY_SIZE(gen7_2_0_clusters);
+ 	} else {
+-		BUG_ON(!adreno_is_a750(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
+ 		clusters = gen7_9_0_clusters;
+ 		clusters_size = ARRAY_SIZE(gen7_9_0_clusters);
+ 	}
+@@ -893,7 +893,7 @@ static void a7xx_get_shader_block(struct msm_gpu *gpu,
+ 	if (WARN_ON(datasize > A6XX_CD_DATA_SIZE))
+ 		return;
  
- static const struct msm_dp_desc sm8650_dp_descs[] = {
--	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0 },
-+	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
- 	{}
- };
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		gpu_rmw(gpu, REG_A7XX_SP_DBG_CNTL, GENMASK(1, 0), 3);
+ 	}
  
+@@ -923,7 +923,7 @@ static void a7xx_get_shader_block(struct msm_gpu *gpu,
+ 		datasize);
+ 
+ out:
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		gpu_rmw(gpu, REG_A7XX_SP_DBG_CNTL, GENMASK(1, 0), 0);
+ 	}
+ }
+@@ -956,14 +956,14 @@ static void a7xx_get_shaders(struct msm_gpu *gpu,
+ 	unsigned num_shader_blocks;
+ 	int i;
+ 
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		shader_blocks = gen7_0_0_shader_blocks;
+ 		num_shader_blocks = ARRAY_SIZE(gen7_0_0_shader_blocks);
+-	} else if (adreno_is_a740_family(adreno_gpu)) {
++	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
+ 		shader_blocks = gen7_2_0_shader_blocks;
+ 		num_shader_blocks = ARRAY_SIZE(gen7_2_0_shader_blocks);
+ 	} else {
+-		BUG_ON(!adreno_is_a750(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
+ 		shader_blocks = gen7_9_0_shader_blocks;
+ 		num_shader_blocks = ARRAY_SIZE(gen7_9_0_shader_blocks);
+ 	}
+@@ -1348,14 +1348,14 @@ static void a7xx_get_registers(struct msm_gpu *gpu,
+ 	const u32 *pre_crashdumper_regs;
+ 	const struct gen7_reg_list *reglist;
+ 
+-	if (adreno_is_a730(adreno_gpu)) {
++	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		reglist = gen7_0_0_reg_list;
+ 		pre_crashdumper_regs = gen7_0_0_pre_crashdumper_gpu_registers;
+-	} else if (adreno_is_a740_family(adreno_gpu)) {
++	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
+ 		reglist = gen7_2_0_reg_list;
+ 		pre_crashdumper_regs = gen7_0_0_pre_crashdumper_gpu_registers;
+ 	} else {
+-		BUG_ON(!adreno_is_a750(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
+ 		reglist = gen7_9_0_reg_list;
+ 		pre_crashdumper_regs = gen7_9_0_pre_crashdumper_gpu_registers;
+ 	}
+@@ -1405,8 +1405,7 @@ static void a7xx_get_post_crashdumper_registers(struct msm_gpu *gpu,
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	const u32 *regs;
+ 
+-	BUG_ON(!(adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu) ||
+-		 adreno_is_a750(adreno_gpu)));
++	BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
+ 	regs = gen7_0_0_post_crashdumper_registers;
+ 
+ 	a7xx_get_ahb_gpu_registers(gpu,
+@@ -1514,11 +1513,11 @@ static void a7xx_get_indexed_registers(struct msm_gpu *gpu,
+ 	const struct a6xx_indexed_registers *indexed_regs;
+ 	int i, indexed_count, mempool_count;
+ 
+-	if (adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu)) {
++	if (adreno_gpu->info->family <= ADRENO_7XX_GEN2) {
+ 		indexed_regs = a7xx_indexed_reglist;
+ 		indexed_count = ARRAY_SIZE(a7xx_indexed_reglist);
+ 	} else {
+-		BUG_ON(!adreno_is_a750(adreno_gpu));
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
+ 		indexed_regs = gen7_9_0_cp_indexed_reg_list;
+ 		indexed_count = ARRAY_SIZE(gen7_9_0_cp_indexed_reg_list);
+ 	}
 -- 
 2.43.0
 
