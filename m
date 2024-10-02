@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA6C1D0DC8;
-	Wed,  2 Oct 2024 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12761D175D;
+	Wed,  2 Oct 2024 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879465; cv=none; b=fLSB/IBXfwgz7LnTZERFML0EGkT1o9cCDIbjNph7Ivm3fhHb9F4xgB7v7/nHG3WHqyTRvM9RcskSpt6S0xAqiFi33vWggOwARMSSCnnimm78S1uo8YctvslKXrzYpevd/4RU9DQbPZkCw8SolmapKUc6Pa9nfnj6+hJBcBtKU4s=
+	t=1727879468; cv=none; b=rLJo1tJ0JtCjYWAiEJlMRAhD78UZRh4nUfWpG4LDPw7rQDKgJm+lq1TsqfqJ6dKm1FvIwiIwgNOUuICWlJ8q2PEIerok+G9vYi2feCUItZ/BaRsXx3mcv38MtY5txYa5ZffYdRIog/XvSLrllG/lpIqXWxvEFb5BaRrM675RWEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879465; c=relaxed/simple;
-	bh=nRhYUjcZChKndPjZr75JEeLnsCwABPd7QJF8cvJcc+A=;
+	s=arc-20240116; t=1727879468; c=relaxed/simple;
+	bh=udorMtG9Oyp9wggcZCVQA9JpCWNN6WhzQNxSuN/jmVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLtcFJEVdD4eVUlVFenOst4jW5LUHR7zEJVyW2qhzckBKeYjleLBbDkKpnGjXSF5THtYlBj6d/OouRrfwQhHqRGFvhvAt3ger1yxKsxkZ0pPvfQqc9Fr9WSpE7NJul1Ca0cRiCI+0L8aSXP0Kx5YLlfiXHmy+pdQCkiuBnFztfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCqYwBe+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pTqv/sGsVQCN5lu2TYcB6HdTZ01jyfUWQOs5qqcI0VaatmFmZJVTRFODUKU1vy+V4zoYjPnLhCNTAj0dZ9LXAKRhYANkTxr61TQjZ4V+KsW9rt/kbkark2xqO3VryRfpv32PV4Z1Eq7MD/2moBpo/xFrZU2+Lo7+0Pa0I3Eu+C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjJJgSap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCqYwBe+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0CCC4CEC5;
-	Wed,  2 Oct 2024 14:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjJJgSap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30910C4CEC2;
+	Wed,  2 Oct 2024 14:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879465;
-	bh=nRhYUjcZChKndPjZr75JEeLnsCwABPd7QJF8cvJcc+A=;
+	s=korg; t=1727879468;
+	bh=udorMtG9Oyp9wggcZCVQA9JpCWNN6WhzQNxSuN/jmVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCqYwBe+26Nd46GF5GZikzz02Hs8j7p9IbO/7huCKMk4M32dbN+6tmd+VglV9TOJR
-	 VrntA64bK3oR2WjRFgUVNPIGUWcyfOzcLmGEj6/FM6IRaqbZCpRxNS+Yo/mBiHqGRC
-	 XShKJwtqwNrCy5xYDfr636BPUsmL2znsWQQGjOLo=
+	b=qjJJgSapIfbg1/yLG1JM0Vrg3XJj9/1gCMXRRPcLLpcgAzir3RMaP0Qn+Sd4s4HX6
+	 3j5Icqd7/sChIq119Iz34k973QSNG4j6KfUEJNsaIz5Szb4S3FOFeVuHJejF24RlmB
+	 WR3yPkiK9LPnxU67KebVuJXGHPNAGJTDt+t68CBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexander Dahl <ada@thorsis.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/538] arm64: dts: renesas: r9a07g044: Correct GICD and GICR sizes
-Date: Wed,  2 Oct 2024 14:55:36 +0200
-Message-ID: <20241002125756.059615323@linuxfoundation.org>
+Subject: [PATCH 6.6 098/538] ARM: dts: microchip: sam9x60: Fix rtc/rtt clocks
+Date: Wed,  2 Oct 2024 14:55:37 +0200
+Message-ID: <20241002125756.099300198@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,38 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Alexander Dahl <ada@thorsis.com>
 
-[ Upstream commit 833948fb2b63155847ab691a54800f801555429b ]
+[ Upstream commit d355c895fa4ddd8bec15569eee540baeed7df8c5 ]
 
-The RZ/G2L(C) SoC is equipped with the GIC-600. The GICD is 64KiB +
-64KiB for the MBI alias (in total 128KiB), and the GICR is 128KiB per
-CPU.
+The RTC and RTT peripherals use the timing domain slow clock (TD_SLCK),
+sourced from the 32.768 kHz crystal oscillator or slow rc oscillator.
 
-Fixes: 68a45525297b2 ("arm64: dts: renesas: Add initial DTSI for RZ/G2{L,LC} SoC's")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/20240730122436.350013-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The previously used Monitoring domain slow clock (MD_SLCK) is sourced
+from an internal RC oscillator which is most probably not precise enough
+for real time clock purposes.
+
+Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
+Fixes: 5f6b33f46346 ("ARM: dts: sam9x60: add rtt")
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Link: https://lore.kernel.org/r/20240821055136.6858-1-ada@thorsis.com
+[claudiu.beznea: removed () around the last commit description paragraph,
+ removed " in front of "timing domain slow clock", described that
+ TD_SLCK can also be sourced from slow rc oscillator]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g044.dtsi | 4 ++--
+ arch/arm/boot/dts/microchip/sam9x60.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-index a877738c30484..edc942c846395 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-@@ -997,8 +997,8 @@ gic: interrupt-controller@11900000 {
- 			#interrupt-cells = <3>;
- 			#address-cells = <0>;
- 			interrupt-controller;
--			reg = <0x0 0x11900000 0 0x40000>,
--			      <0x0 0x11940000 0 0x60000>;
-+			reg = <0x0 0x11900000 0 0x20000>,
-+			      <0x0 0x11940000 0 0x40000>;
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_LOW>;
- 		};
+diff --git a/arch/arm/boot/dts/microchip/sam9x60.dtsi b/arch/arm/boot/dts/microchip/sam9x60.dtsi
+index 73d570a172690..1705c96f4221e 100644
+--- a/arch/arm/boot/dts/microchip/sam9x60.dtsi
++++ b/arch/arm/boot/dts/microchip/sam9x60.dtsi
+@@ -1312,7 +1312,7 @@ rtt: rtc@fffffe20 {
+ 				compatible = "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
+ 				reg = <0xfffffe20 0x20>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+-				clocks = <&clk32k 0>;
++				clocks = <&clk32k 1>;
+ 			};
  
+ 			pit: timer@fffffe40 {
+@@ -1338,7 +1338,7 @@ rtc: rtc@fffffea8 {
+ 				compatible = "microchip,sam9x60-rtc", "atmel,at91sam9x5-rtc";
+ 				reg = <0xfffffea8 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+-				clocks = <&clk32k 0>;
++				clocks = <&clk32k 1>;
+ 			};
+ 
+ 			watchdog: watchdog@ffffff80 {
 -- 
 2.43.0
 
