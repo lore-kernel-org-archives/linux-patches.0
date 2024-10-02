@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9A11D016B;
-	Wed,  2 Oct 2024 13:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7242D1D0429;
+	Wed,  2 Oct 2024 13:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876249; cv=none; b=mudHh4UEGXvwQT9U4kL8zgG+kPvWyJSwU1qclak7WB9zG2NIphvNQGKubxtjCXIQeR3zpZFmz/s6XeLlFyohPP48JKFMZuv0r7FH942VJLUsC0TehWpgb2b5q+TeUKFH6nv1cRA/FOMnzdr5lJJ0ijNOYeUnKQgZwMzxNRGoc0s=
+	t=1727876252; cv=none; b=lvppvVbAyMh5YJz709waWA+wGPbopYAxFTRytS73F1EgMCFw/MmU7irVArSWT/NLRvBo1JO3P4+hyxbuBhr17nODpiQI0owDC/vQfdTrPpfXmK6zZ0wNlV9ziR806yXsV+Ul32G1821YYiTb2WpceNsMbGvT9l37UYohhYnkPYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876249; c=relaxed/simple;
-	bh=+DGMvcNSLzcAC2jng+RZmVSBMuGaFtI15P8dJ9nvnk4=;
+	s=arc-20240116; t=1727876252; c=relaxed/simple;
+	bh=WmFsG3xcl+EGv244YNBvmBU7trj5CkGEXgcQpCU+DBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRNYl0tJGJ/Ni/r9Wx+0hrGbGkJdWdZ/oTNNX7VVQ9VAN2u1wCs+JoYHGmpKFhjoHqfyqohD/KrYKkJYV95LUlMLALe7sexyYCSA6kEWy6WtZvTixNVXKWq1FL376p6xSwsHfckuJnhRZ47rn2gdyt9msGUZL4xvL3ttkBhabn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niGaO8o3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8z9P0mkA3krFKVOj4mZIy9EkM1t8kwSV8tsIZ7TrQwVVxQUZEcX8ykL937rj1eHgRcQ7PaGdN/WRt/qA+Z3MgTZExBKUO0aIx3NXvmg7XJj4Tbv0emBiGQgPm5OKeichtwOrg0DmxEa6aX6tweJC19JuWbHwXM5SAyjOkrnWRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPS18yLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niGaO8o3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D337C4CEC5;
-	Wed,  2 Oct 2024 13:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPS18yLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBBCC4CECD;
+	Wed,  2 Oct 2024 13:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876249;
-	bh=+DGMvcNSLzcAC2jng+RZmVSBMuGaFtI15P8dJ9nvnk4=;
+	s=korg; t=1727876252;
+	bh=WmFsG3xcl+EGv244YNBvmBU7trj5CkGEXgcQpCU+DBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niGaO8o3ZJ4Sn/MnNawsr6msSuNcR+7Chp5rm/zjZjwhOaFpXK8UB9/m3947cGunJ
-	 Z/4N7L7BgRsL9Ahey4MZzfcDx2tkzmdv6ThG/9zJp3xP/hcqies2f5xO2s/z7LlxNi
-	 MkM+lhJ8BkPrbu/tIgSrtgMa3skCrYkwQ+0/L32k=
+	b=SPS18yLD/BXn/8ZkNo4DlI2mxyr5Qj8MzRkNwL79dendeGF9I3SPwFaOL2fbiYicx
+	 7LaFY8+gGjFDixCvizpWrDbrWJl3FvDVxOYSKerCCdd86ffPIETdsM+wJkuDQp78yC
+	 1aYFNO0ZnWxQbMTBlMWXBHAmOBVJSLf0kaPH/GwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 379/695] PCI: xilinx-nwl: Clean up clock on probe failure/removal
-Date: Wed,  2 Oct 2024 14:56:17 +0200
-Message-ID: <20241002125837.588319701@linuxfoundation.org>
+Subject: [PATCH 6.11 380/695] leds: gpio: Set num_leds after allocation
+Date: Wed,  2 Oct 2024 14:56:18 +0200
+Message-ID: <20241002125837.628010896@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,83 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit cfd67903977b13f63340a4eb5a1cc890994f2c62 ]
+[ Upstream commit 045391a02bd971d431c83ad03f7cc51b6e2fe331 ]
 
-Make sure we turn off the clock on probe failure and device removal.
+With the new __counted_by annotation, the "num_leds" variable needs to
+valid for accesses to the "leds" array. This requirement is not met in
+gpio_leds_create(), since "num_leds" starts at "0", so "leds" index "0"
+will not be considered valid (num_leds would need to be "1" to access
+index "0").
 
-Fixes: de0a01f52966 ("PCI: xilinx-nwl: Enable the clock through CCF")
-Link: https://lore.kernel.org/r/20240531161337.864994-6-sean.anderson@linux.dev
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fix this by setting the allocation size after allocation, and then update
+the final count based on how many were actually added to the array.
+
+Fixes: 52cd75108a42 ("leds: gpio: Annotate struct gpio_leds_priv with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20240716212455.work.809-kees@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/leds/leds-gpio.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-xilinx-nwl.c b/drivers/pci/controller/pcie-xilinx-nwl.c
-index 1e15852153d6c..2f1bb2e8a840e 100644
---- a/drivers/pci/controller/pcie-xilinx-nwl.c
-+++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -779,6 +779,7 @@ static int nwl_pcie_probe(struct platform_device *pdev)
- 		return -ENODEV;
+diff --git a/drivers/leds/leds-gpio.c b/drivers/leds/leds-gpio.c
+index 83fcd7b6afff7..4d1612d557c84 100644
+--- a/drivers/leds/leds-gpio.c
++++ b/drivers/leds/leds-gpio.c
+@@ -150,7 +150,7 @@ static struct gpio_leds_priv *gpio_leds_create(struct device *dev)
+ {
+ 	struct fwnode_handle *child;
+ 	struct gpio_leds_priv *priv;
+-	int count, ret;
++	int count, used, ret;
  
- 	pcie = pci_host_bridge_priv(bridge);
-+	platform_set_drvdata(pdev, pcie);
+ 	count = device_get_child_node_count(dev);
+ 	if (!count)
+@@ -159,9 +159,11 @@ static struct gpio_leds_priv *gpio_leds_create(struct device *dev)
+ 	priv = devm_kzalloc(dev, struct_size(priv, leds, count), GFP_KERNEL);
+ 	if (!priv)
+ 		return ERR_PTR(-ENOMEM);
++	priv->num_leds = count;
++	used = 0;
  
- 	pcie->dev = dev;
+ 	device_for_each_child_node(dev, child) {
+-		struct gpio_led_data *led_dat = &priv->leds[priv->num_leds];
++		struct gpio_led_data *led_dat = &priv->leds[used];
+ 		struct gpio_led led = {};
  
-@@ -801,13 +802,13 @@ static int nwl_pcie_probe(struct platform_device *pdev)
- 	err = nwl_pcie_bridge_init(pcie);
- 	if (err) {
- 		dev_err(dev, "HW Initialization failed\n");
--		return err;
-+		goto err_clk;
+ 		/*
+@@ -197,8 +199,9 @@ static struct gpio_leds_priv *gpio_leds_create(struct device *dev)
+ 		/* Set gpiod label to match the corresponding LED name. */
+ 		gpiod_set_consumer_name(led_dat->gpiod,
+ 					led_dat->cdev.dev->kobj.name);
+-		priv->num_leds++;
++		used++;
  	}
++	priv->num_leds = used;
  
- 	err = nwl_pcie_init_irq_domain(pcie);
- 	if (err) {
- 		dev_err(dev, "Failed creating IRQ Domain\n");
--		return err;
-+		goto err_clk;
- 	}
- 
- 	bridge->sysdata = pcie;
-@@ -817,11 +818,24 @@ static int nwl_pcie_probe(struct platform_device *pdev)
- 		err = nwl_pcie_enable_msi(pcie);
- 		if (err < 0) {
- 			dev_err(dev, "failed to enable MSI support: %d\n", err);
--			return err;
-+			goto err_clk;
- 		}
- 	}
- 
--	return pci_host_probe(bridge);
-+	err = pci_host_probe(bridge);
-+	if (!err)
-+		return 0;
-+
-+err_clk:
-+	clk_disable_unprepare(pcie->clk);
-+	return err;
-+}
-+
-+static void nwl_pcie_remove(struct platform_device *pdev)
-+{
-+	struct nwl_pcie *pcie = platform_get_drvdata(pdev);
-+
-+	clk_disable_unprepare(pcie->clk);
+ 	return priv;
  }
- 
- static struct platform_driver nwl_pcie_driver = {
-@@ -831,5 +845,6 @@ static struct platform_driver nwl_pcie_driver = {
- 		.of_match_table = nwl_pcie_of_match,
- 	},
- 	.probe = nwl_pcie_probe,
-+	.remove_new = nwl_pcie_remove,
- };
- builtin_platform_driver(nwl_pcie_driver);
 -- 
 2.43.0
 
