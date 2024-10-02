@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374AE1D1312;
-	Wed,  2 Oct 2024 14:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB211D14EF;
+	Wed,  2 Oct 2024 14:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879329; cv=none; b=iTyhwmKX7ldWhILGVFuCuWIwUog0d5HRRooKEQgYYxQLcuw21qdf8bZBecHa0V57Tk6rjMMcrn5+CZaXjqMGC/Ikxq02Pl9nMeKBgk0HjMdGjIdwuzHjPy/7W5QAU5V5SgNoVIsaTSAcd8oQLo0tpDb6POLTguyZetfZ5tpsrYA=
+	t=1727879332; cv=none; b=O7qz2jFtfu8gZahQw+Ln+SOSw+Q8vVlqcHpdftoyXZYDR3WEe0+/EpJ7snhLEC9nQh2wIZarbrEcYb90BjSKD3l7FG43t7UBqNIrr6gl/79b919Jo8OY8dPTCYr7GhcQ7dkqnjVXwXF7WBAU+bGCELX4898HCQ5lkgnkWMVHhAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879329; c=relaxed/simple;
-	bh=q3i+jh3J55NJ2YKPmphp1ZR3NNfS4eJnCqjvOtxmT18=;
+	s=arc-20240116; t=1727879332; c=relaxed/simple;
+	bh=qdLJSzjifFvNmi9dxOu1vfOMqM00xPPihZBPRU3YReg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUZcabd5awKTiRp+lzK+5a37bJthMO9DmgePOqEy8XgVuzdZ2l9+fziNWBS1W3BGzNHB9YAy6LqIQ9oK0JsXHN2DeVxrzPoX00v2ySRoYM+tEq8FDZTUsCJ23d/SiHMEenn91yQx2DjWKfuLvD7zzeVWaOMYpIKG5DiNyQF3cpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zk3ay2Jj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lohSwywedH+imSlTVtkrFsuNQOL5+SC94tpYslrNlY8Q34gK8NWdBlMb5Mbu5PBwzsvknd6WfEg/zywubJ6bUho8aCMrEzUiMFG4kLXCLS2r8DB+NXyrwisfCLpJUghHEAjY//+Jm7wJQLpLKD6lOzYnL/2Kf21qDs3zVTkICcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/Dc2Wik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zk3ay2Jj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A1BC4CEC2;
-	Wed,  2 Oct 2024 14:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/Dc2Wik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C34C4CEC2;
+	Wed,  2 Oct 2024 14:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879329;
-	bh=q3i+jh3J55NJ2YKPmphp1ZR3NNfS4eJnCqjvOtxmT18=;
+	s=korg; t=1727879332;
+	bh=qdLJSzjifFvNmi9dxOu1vfOMqM00xPPihZBPRU3YReg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zk3ay2JjJFdLcrl6nhhm2OfiNp1ABtROP2IsL4gHDmoy5abLtqvC++JYkrAx60pQd
-	 kCNuFG5WAZiDjwo5U/NNzArzlVsamRl9OqXXhAiKWoVxpCarCCGYrtzg8Dzoccmo2z
-	 MafR/74iPsA7d+QWg2Y2HkMVhtu0h9uQmVUMicSc=
+	b=R/Dc2WikcWoQk3k9uyTrEzGD12x3ZQKaQ1oGVmP3wns+cFdmvzFRmvAcH7wTXHa8Z
+	 gSNTvk7iK5ULODnqsFBkTDdPEp8RmDWpH7rxCmIUOOnT7z/H3u9FkJT7xZRmIqaY/W
+	 LfVyJ57St5rZlPjRzzSXyZ/Sbl/Qqxk2fUEBOLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
-	netfs@lists.linux.dev,
-	linux-erofs@lists.ozlabs.org,
-	linux-fsdevel@vger.kernel.org,
+	Colin Walters <walters@verbum.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/538] cachefiles: Fix non-taking of sb_writers around set/removexattr
-Date: Wed,  2 Oct 2024 14:55:20 +0200
-Message-ID: <20241002125755.416948368@linuxfoundation.org>
+Subject: [PATCH 6.6 082/538] erofs: fix incorrect symlink detection in fast symlink
+Date: Wed,  2 Oct 2024 14:55:21 +0200
+Message-ID: <20241002125755.456640594@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -49,94 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 80887f31672970abae3aaa9cf62ac72a124e7c89 ]
+[ Upstream commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 ]
 
-Unlike other vfs_xxxx() calls, vfs_setxattr() and vfs_removexattr() don't
-take the sb_writers lock, so the caller should do it for them.
+Fast symlink can be used if the on-disk symlink data is stored
+in the same block as the on-disk inode, so we don’t need to trigger
+another I/O for symlink data.  However, currently fs correction could be
+reported _incorrectly_ if inode xattrs are too large.
 
-Fix cachefiles to do this.
+In fact, these should be valid images although they cannot be handled as
+fast symlinks.
 
-Fixes: 9ae326a69004 ("CacheFiles: A cache that backs onto a mounted filesystem")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Christian Brauner <brauner@kernel.org>
-cc: Gao Xiang <xiang@kernel.org>
-cc: netfs@lists.linux.dev
-cc: linux-erofs@lists.ozlabs.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20240814203850.2240469-3-dhowells@redhat.com/ # v2
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Many thanks to Colin for reporting this!
+
+Reported-by: Colin Walters <walters@verbum.org>
+Reported-by: https://honggfuzz.dev/
+Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
+Fixes: 431339ba9042 ("staging: erofs: add inode operations")
+[ Note that it's a runtime misbehavior instead of a security issue. ]
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/xattr.c | 34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ fs/erofs/inode.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/fs/cachefiles/xattr.c b/fs/cachefiles/xattr.c
-index 4dd8a993c60a8..7c6f260a3be56 100644
---- a/fs/cachefiles/xattr.c
-+++ b/fs/cachefiles/xattr.c
-@@ -64,9 +64,15 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
- 		memcpy(buf->data, fscache_get_aux(object->cookie), len);
+diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
+index edc8ec7581b8f..9e40bee3682f7 100644
+--- a/fs/erofs/inode.c
++++ b/fs/erofs/inode.c
+@@ -205,12 +205,14 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
+ 			      unsigned int m_pofs)
+ {
+ 	struct erofs_inode *vi = EROFS_I(inode);
+-	unsigned int bsz = i_blocksize(inode);
++	loff_t off;
+ 	char *lnk;
  
- 	ret = cachefiles_inject_write_error();
--	if (ret == 0)
--		ret = vfs_setxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache,
--				   buf, sizeof(struct cachefiles_xattr) + len, 0);
-+	if (ret == 0) {
-+		ret = mnt_want_write_file(file);
-+		if (ret == 0) {
-+			ret = vfs_setxattr(&nop_mnt_idmap, dentry,
-+					   cachefiles_xattr_cache, buf,
-+					   sizeof(struct cachefiles_xattr) + len, 0);
-+			mnt_drop_write_file(file);
-+		}
-+	}
- 	if (ret < 0) {
- 		trace_cachefiles_vfs_error(object, file_inode(file), ret,
- 					   cachefiles_trace_setxattr_error);
-@@ -151,8 +157,14 @@ int cachefiles_remove_object_xattr(struct cachefiles_cache *cache,
- 	int ret;
+-	/* if it cannot be handled with fast symlink scheme */
+-	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
+-	    inode->i_size >= bsz || inode->i_size < 0) {
++	m_pofs += vi->xattr_isize;
++	/* check if it cannot be handled with fast symlink scheme */
++	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
++	    check_add_overflow(m_pofs, inode->i_size, &off) ||
++	    off > i_blocksize(inode)) {
+ 		inode->i_op = &erofs_symlink_iops;
+ 		return 0;
+ 	}
+@@ -219,16 +221,6 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
+ 	if (!lnk)
+ 		return -ENOMEM;
  
- 	ret = cachefiles_inject_remove_error();
--	if (ret == 0)
--		ret = vfs_removexattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache);
-+	if (ret == 0) {
-+		ret = mnt_want_write(cache->mnt);
-+		if (ret == 0) {
-+			ret = vfs_removexattr(&nop_mnt_idmap, dentry,
-+					      cachefiles_xattr_cache);
-+			mnt_drop_write(cache->mnt);
-+		}
-+	}
- 	if (ret < 0) {
- 		trace_cachefiles_vfs_error(object, d_inode(dentry), ret,
- 					   cachefiles_trace_remxattr_error);
-@@ -208,9 +220,15 @@ bool cachefiles_set_volume_xattr(struct cachefiles_volume *volume)
- 	memcpy(buf->data, p, volume->vcookie->coherency_len);
+-	m_pofs += vi->xattr_isize;
+-	/* inline symlink data shouldn't cross block boundary */
+-	if (m_pofs + inode->i_size > bsz) {
+-		kfree(lnk);
+-		erofs_err(inode->i_sb,
+-			  "inline data cross block boundary @ nid %llu",
+-			  vi->nid);
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
+-	}
+ 	memcpy(lnk, kaddr + m_pofs, inode->i_size);
+ 	lnk[inode->i_size] = '\0';
  
- 	ret = cachefiles_inject_write_error();
--	if (ret == 0)
--		ret = vfs_setxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache,
--				   buf, len, 0);
-+	if (ret == 0) {
-+		ret = mnt_want_write(volume->cache->mnt);
-+		if (ret == 0) {
-+			ret = vfs_setxattr(&nop_mnt_idmap, dentry,
-+					   cachefiles_xattr_cache,
-+					   buf, len, 0);
-+			mnt_drop_write(volume->cache->mnt);
-+		}
-+	}
- 	if (ret < 0) {
- 		trace_cachefiles_vfs_error(NULL, d_inode(dentry), ret,
- 					   cachefiles_trace_setxattr_error);
 -- 
 2.43.0
 
