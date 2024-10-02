@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8891017B421;
-	Wed,  2 Oct 2024 13:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BFD17B421;
+	Wed,  2 Oct 2024 13:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877018; cv=none; b=OnkxBFtxXGXd7NgE4+rbDgG+NNief3XG9py8N0n4qAofqF4a3OWBnbnPA2zl7/zx26qa2k1nSxSM+ZnsD+u2iPdSilD83WhsUKEVn0dvxVhmZuhMR61rCFjV9quD/v7eFbLjNtcqmaC1uH95HPyJ4os5SOhBYQiyQdXDxekHNQY=
+	t=1727877021; cv=none; b=Qe3mPHoJMrVYf4rhKwUPMKzH3yw4FejAH9Y4cA1ibXSbpldfQUwJKkwKyIkBCgF1vqICKXhuwPUXLGvEclBgteUAeqAxO7wMC/f57jyXy47Ykjr1cIJP8XLAHob/YhhIZJM+cq1Zta6V4eXij6lw8uhq0YHCu6djx0kIBSE3LsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877018; c=relaxed/simple;
-	bh=SFWiJzmL+NGbqGOZ2ZGTO9vcrYMK8cfMFlCnhqpc8CA=;
+	s=arc-20240116; t=1727877021; c=relaxed/simple;
+	bh=IqD3hnLiY7NMifP+WbubPYGFjExGvbac/SCBdEeGo2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePyBD36En9iEhBRSKXD2yY428FGUM8/nQngVEHeH82y9AMlh1qIZMOgab1Fs2KBWBOEzGeM8Ht8nB3EznlbxOzD3hPJMxlYlWfS/nS2Rx72XC4p5j87zo78rcndiMAN0UtVxW10XOe4LbO+524ejn/tY+KDvW+ogq+/hVZcbygE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDC7rM+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6uqQRFJ2l2R1Dyasm7JXZXFg896FPXJkNZigcLfzIjKpiaUAFDap612oQpLKShU5pzAASOSZkXNaN7GMzIIxS8mNTL1bA6ObbwfS8rlcsk/AAaxE4FmQ9hH7i/hyzTFlFyuClRwwoNiSNgftUphpCVXa06Q56DlzisOsMNHl34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwGVuV0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDC7rM+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127E3C4CEC2;
-	Wed,  2 Oct 2024 13:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwGVuV0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB60C4CED3;
+	Wed,  2 Oct 2024 13:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877018;
-	bh=SFWiJzmL+NGbqGOZ2ZGTO9vcrYMK8cfMFlCnhqpc8CA=;
+	s=korg; t=1727877021;
+	bh=IqD3hnLiY7NMifP+WbubPYGFjExGvbac/SCBdEeGo2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDC7rM+42ypw1kkJpCF7SLP0C+HUwyyargDXCFeldFKLovQJJGnHIA9spP866tsHd
-	 lGLkLjMoCmkdL+R9NSTRSFPx4o7/qLy4+HN6UzrVJ5YhAaS4WnsP47NFPBCZIVIEaE
-	 ZReTiUIDCZzh0aapnSjZkCymm4Pqkaw64ej5TTC4=
+	b=iwGVuV0ANz2oo8wW88cgh13VMiLArSHq6WYTbCdOGnqR2xupA/2DnRwzR0SaxtJq3
+	 t6VHHJttbiMtxWlPJVsgUVBuof5OdrTl902cbCByzOe3N7rwKyFWzIazynEL4cQAWJ
+	 WNSaNYFC9ULzb12SAsisw85jYsCA6rTZuMm64JgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.11 637/695] hwrng: bcm2835 - Add missing clk_disable_unprepare in bcm2835_rng_init
-Date: Wed,  2 Oct 2024 15:00:35 +0200
-Message-ID: <20241002125847.946557601@linuxfoundation.org>
+Subject: [PATCH 6.11 638/695] hwrng: cctrng - Add missing clk_disable_unprepare in cctrng_resume
+Date: Wed,  2 Oct 2024 15:00:36 +0200
+Message-ID: <20241002125847.985855689@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,34 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit d57e2f7cffd57fe2800332dec768ec1b67a4159f upstream.
+commit 4b7acc85de14ee8a2236f54445dc635d47eceac0 upstream.
 
 Add the missing clk_disable_unprepare() before return in
-bcm2835_rng_init().
+cctrng_resume().
 
-Fixes: e5f9f41d5e62 ("hwrng: bcm2835 - add reset support")
+Fixes: a583ed310bb6 ("hwrng: cctrng - introduce Arm CryptoCell driver")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/bcm2835-rng.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/cctrng.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/hw_random/bcm2835-rng.c
-+++ b/drivers/char/hw_random/bcm2835-rng.c
-@@ -94,8 +94,10 @@ static int bcm2835_rng_init(struct hwrng
- 		return ret;
+--- a/drivers/char/hw_random/cctrng.c
++++ b/drivers/char/hw_random/cctrng.c
+@@ -622,6 +622,7 @@ static int __maybe_unused cctrng_resume(
+ 	/* wait for Cryptocell reset completion */
+ 	if (!cctrng_wait_for_reset_completion(drvdata)) {
+ 		dev_err(dev, "Cryptocell reset not completed");
++		clk_disable_unprepare(drvdata->clk);
+ 		return -EBUSY;
+ 	}
  
- 	ret = reset_control_reset(priv->reset);
--	if (ret)
-+	if (ret) {
-+		clk_disable_unprepare(priv->clk);
- 		return ret;
-+	}
- 
- 	if (priv->mask_interrupts) {
- 		/* mask the interrupt */
 
 
