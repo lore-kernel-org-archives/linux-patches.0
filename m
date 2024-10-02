@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BCF1D04BA;
-	Wed,  2 Oct 2024 13:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28051D0B94;
+	Wed,  2 Oct 2024 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877468; cv=none; b=az166GD/n6IzdACYMXrS4n0sedUNPq2f4S5TSEGoMnbQu0Uz/JEkdv9Zxyz9hFDyboDz2yMqUC/t8B8itoKoTS0nmzHcCcZ5wt0uT1zurqc+O9T4+/C9idcpHu2DdraV10WqxHmxC20Qa6YLdqic3HdhEkkloBg4zQqBs/SjgxE=
+	t=1727877471; cv=none; b=hqyml72uHIrCZrZrzB5KgHEVRSReDtLtsjLrUyHvqM2prJa4GsixlwYeoQ+vHPHnCYdqgQ6QpuWNJopOQeV04Z2dQkOzmp/wWMwofb02rasNhBRfu/wElT9Rq14nfvQRxpzqm6/FpOauvylbMRD5xHd4onEl5f+4vwMTvj0rSQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877468; c=relaxed/simple;
-	bh=t09Nzovgu2SJBsdu/Ql0ZklBuEn5dF4F/jvIPsLqqBk=;
+	s=arc-20240116; t=1727877471; c=relaxed/simple;
+	bh=VTPyi4gQEZyStIVJlme+rl9AMhkJYxOiJOIZecDbRqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2xD7U7i1SR3Q2hXILUvDOqiZuzwjACvZFC647kzF07w4rvMa6ztFKPJB6ZQ/QeFRo2r8M4V5qXgZuQ61QjjwznF2KdEjmrY2Pb/c4cobFffOfD8ip9wOvOSL6PItfOq5GBGZt/9dB2Km8SUkYRAv00s4fblSWFxfxVvb6s4xMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC6x4cW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cw+RkkVf7Xs2fgf2c3jSGV9xbtL7cdvXm2a7lxURUu7HnEkTQlvSKZu+r6GGFW9ADp2XY2rJzkya7XyLYABd5IrpdUP0Dt684uw6IUO8PMKJcfl2r5dfJuvPo01nvdKvcSPjPbHUC1QiODr1Ewbc8eJWxjykZb0yS2DcQjw3SqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEgnXdw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC6x4cW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A8EC4AF19;
-	Wed,  2 Oct 2024 13:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEgnXdw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7922FC4AF53;
+	Wed,  2 Oct 2024 13:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877468;
-	bh=t09Nzovgu2SJBsdu/Ql0ZklBuEn5dF4F/jvIPsLqqBk=;
+	s=korg; t=1727877470;
+	bh=VTPyi4gQEZyStIVJlme+rl9AMhkJYxOiJOIZecDbRqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zC6x4cW+yj13jOM1BP2gCgJCvtCrz0UD4PTWqwwSgZs/aP60p9zvKvCqcikboAu4f
-	 cpdg8BCl9g/mOirVCD4FGUO2Ma7rECJaUGcbmi10B287fxABJNAN9joHBbIZqK0Z4w
-	 dGGokYdXyWwjxmNOnceXZ5Crrv6qEhbqHmFNC8NU=
+	b=EEgnXdw+sVHDBpfSCme+pEmLZd+8G8Q6c91r/iYgLUnsnkbdSV3ZI4t4yQ1qhCxvL
+	 cQtEKoactYcydLY8+aFZ4OJvYAwVJKxNVRhcxThh64+0UCRcthZbYvFZDprrBKW7lJ
+	 60TiIAFAmp52vU9LGDK73DwhlM/trVuKVdIRwrnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3d602af7549af539274e@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Lukasz Majewski <lukma@denx.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 088/634] net: hsr: Use the seqnr lock for frames received via interlink port.
-Date: Wed,  2 Oct 2024 14:53:08 +0200
-Message-ID: <20241002125814.584618155@linuxfoundation.org>
+Subject: [PATCH 6.10 089/634] can: bcm: Clear bo->bcm_proc_read after remove_proc_entry().
+Date: Wed,  2 Oct 2024 14:53:09 +0200
+Message-ID: <20241002125814.623960083@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,54 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 430d67bdcb04ee8502c2b10dcbaced4253649189 ]
+[ Upstream commit 94b0818fa63555a65f6ba107080659ea6bcca63e ]
 
-syzbot reported that the seqnr_lock is not acquire for frames received
-over the interlink port. In the interlink case a new seqnr is generated
-and assigned to the frame.
-Frames, which are received over the slave port have already a sequence
-number assigned so the lock is not required.
+syzbot reported a warning in bcm_release(). [0]
 
-Acquire the hsr_priv::seqnr_lock during in the invocation of
-hsr_forward_skb() if a packet has been received from the interlink port.
+The blamed change fixed another warning that is triggered when
+connect() is issued again for a socket whose connect()ed device has
+been unregistered.
 
-Reported-by: syzbot+3d602af7549af539274e@syzkaller.appspotmail.com
-Closes: https://groups.google.com/g/syzkaller-bugs/c/KppVvGviGg4/m/EItSdCZdBAAJ
-Fixes: 5055cccfc2d1c ("net: hsr: Provide RedBox support (HSR-SAN)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Lukasz Majewski <lukma@denx.de>
-Tested-by: Lukasz Majewski <lukma@denx.de>
-Link: https://patch.msgid.link/20240906132816.657485-2-bigeasy@linutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, if the socket is just close()d without the 2nd connect(), the
+remaining bo->bcm_proc_read triggers unnecessary remove_proc_entry()
+in bcm_release().
+
+Let's clear bo->bcm_proc_read after remove_proc_entry() in bcm_notify().
+
+[0]
+name '4986'
+WARNING: CPU: 0 PID: 5234 at fs/proc/generic.c:711 remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
+Modules linked in:
+CPU: 0 UID: 0 PID: 5234 Comm: syz-executor606 Not tainted 6.11.0-rc5-syzkaller-00178-g5517ae241919 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+RIP: 0010:remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
+Code: ff eb 05 e8 cb 1e 5e ff 48 8b 5c 24 10 48 c7 c7 e0 f7 aa 8e e8 2a 38 8e 09 90 48 c7 c7 60 3a 1b 8c 48 89 de e8 da 42 20 ff 90 <0f> 0b 90 90 48 8b 44 24 18 48 c7 44 24 40 0e 36 e0 45 49 c7 04 07
+RSP: 0018:ffffc9000345fa20 EFLAGS: 00010246
+RAX: 2a2d0aee2eb64600 RBX: ffff888032f1f548 RCX: ffff888029431e00
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffffc9000345fb08 R08: ffffffff8155b2f2 R09: 1ffff1101710519a
+R10: dffffc0000000000 R11: ffffed101710519b R12: ffff888011d38640
+R13: 0000000000000004 R14: 0000000000000000 R15: dffffc0000000000
+FS:  0000000000000000(0000) GS:ffff8880b8800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fcfb52722f0 CR3: 000000000e734000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ bcm_release+0x250/0x880 net/can/bcm.c:1578
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0xbc/0x240 net/socket.c:1421
+ __fput+0x24a/0x8a0 fs/file_table.c:422
+ task_work_run+0x24f/0x310 kernel/task_work.c:228
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0xa2f/0x27f0 kernel/exit.c:882
+ do_group_exit+0x207/0x2c0 kernel/exit.c:1031
+ __do_sys_exit_group kernel/exit.c:1042 [inline]
+ __se_sys_exit_group kernel/exit.c:1040 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1040
+ x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fcfb51ee969
+Code: Unable to access opcode bytes at 0x7fcfb51ee93f.
+RSP: 002b:00007ffce0109ca8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fcfb51ee969
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
+RBP: 00007fcfb526f3b0 R08: ffffffffffffffb8 R09: 0000555500000000
+R10: 0000555500000000 R11: 0000000000000246 R12: 00007fcfb526f3b0
+R13: 0000000000000000 R14: 00007fcfb5271ee0 R15: 00007fcfb51bf160
+ </TASK>
+
+Fixes: 76fe372ccb81 ("can: bcm: Remove proc entry when dev is unregistered.")
+Reported-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0532ac7a06fb1a03187e
+Tested-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20240905012237.79683-1-kuniyu@amazon.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/can/bcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index af6cf64a00e08..464f683e016db 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -67,7 +67,16 @@ static rx_handler_result_t hsr_handle_frame(struct sk_buff **pskb)
- 		skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
- 	skb_reset_mac_len(skb);
- 
--	hsr_forward_skb(skb, port);
-+	/* Only the frames received over the interlink port will assign a
-+	 * sequence number and require synchronisation vs other sender.
-+	 */
-+	if (port->type == HSR_PT_INTERLINK) {
-+		spin_lock_bh(&hsr->seqnr_lock);
-+		hsr_forward_skb(skb, port);
-+		spin_unlock_bh(&hsr->seqnr_lock);
-+	} else {
-+		hsr_forward_skb(skb, port);
-+	}
- 
- finish_consume:
- 	return RX_HANDLER_CONSUMED;
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 46d3ec3aa44b4..217049fa496e9 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1471,8 +1471,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
+ 		/* remove device reference, if this is our bound device */
+ 		if (bo->bound && bo->ifindex == dev->ifindex) {
+ #if IS_ENABLED(CONFIG_PROC_FS)
+-			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
++			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read) {
+ 				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
++				bo->bcm_proc_read = NULL;
++			}
+ #endif
+ 			bo->bound   = 0;
+ 			bo->ifindex = 0;
 -- 
 2.43.0
 
