@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B2D1EA80;
-	Wed,  2 Oct 2024 14:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901251EA80;
+	Wed,  2 Oct 2024 14:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880240; cv=none; b=OTjvicco3X5D6HLyythfjLwa1xpjPeWbUitDpCiV81bLy9U0lElCJPu/p8WsNzkbyCBqELUSHzvznPtyVaAsXPk9+Fm81DSWfTLX9mRrt9sJFlZYs/8qSRhSMLBpmB3n3xoDaVXudvRqof8BJTNQJv4iPp8/F0AJbgjrs/OWUQo=
+	t=1727880243; cv=none; b=s9ZdsGJTpp7FGpaR3qE2JCuoWwN2wgrF4Li2vn3mZM+obaeK72mZlqRc6xeIt54Kic+tBZ4L3KYms7zDxdASLl8rXQ0Xs/vQRWy4t4M2ueyw9NpA5t7KV2PyyinSlSqspgWzJrrHMMmFXVkTtbIlQKiOZxstxfSH6Fa6zFNVDoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880240; c=relaxed/simple;
-	bh=yJjjfylSHtK1Hv5fxIOimrVPSj5tdsoj8gFp3tIgSZA=;
+	s=arc-20240116; t=1727880243; c=relaxed/simple;
+	bh=g3ikejaAL49Vv3UrD+y3n4RbEhMUZbZSKw64ylCMhgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J480qm1aJAP/hvxOmwovnZpEDZfl3w5Mg0m2kDetS8v2iM+ImyiEoX0DmT9S/2v9Y2fS0ybrXhJw/ixGVBOehJYmQYXa4i315QpOsBYVsQ9TMB2s9kdno/KKk7hLBDkh/nAzny+IcOnXYUuhRWSFOTwQPmFN1HM/gS2OypAYjN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVpHxDQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jyecGh/H4jI8EHnyd+OPUs36Ez8Wj1tm/KIbt5SxYJQs2swXaiWuhiz1uxDiIwHYVbBplu6k5NeGLAl6xrJ+QTMr0s0+L2gWBddltZflJ0d8JcOmnViAWWESftmw1WfPjtNA4ts/5+VbISNJveBpvRdc2NEhixJxqFJ+ejAoF1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2rEulHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVpHxDQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA3BC4CEC2;
-	Wed,  2 Oct 2024 14:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2rEulHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC48C4CEC2;
+	Wed,  2 Oct 2024 14:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880240;
-	bh=yJjjfylSHtK1Hv5fxIOimrVPSj5tdsoj8gFp3tIgSZA=;
+	s=korg; t=1727880243;
+	bh=g3ikejaAL49Vv3UrD+y3n4RbEhMUZbZSKw64ylCMhgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVpHxDQYsmb8vjDCdBh2LAicJgz0FAXX47tTlUQwbV5whU0JZ7Fr3R2QiPvUXdYXV
-	 pUC4r3cm6/DLjicfQ8gR4aeT1YUt6nakWOfYlsTTfcVS7mq3uOEMi/eln5pKY+tQ9f
-	 uLW+x9HLrjafNFS2dEHnStruQ9mfBzPlx+0Gh+ys=
+	b=Q2rEulHCzD8D1phEl+fLopUaI89u8Tz32l6s5pyZlWw0/T9B+el7uAVb1VrBzevpO
+	 22d9CPNk7YIKdThmOw7p7xt3xd3Uvvj0IjCp7lmXJuNrTA1iidGskGrBnJtn2rFkxF
+	 AqtpzMaGAQeHIeTIEVLPD3elYVQUXCNm8hTeXkc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 391/538] io_uring/sqpoll: do not put cpumask on stack
-Date: Wed,  2 Oct 2024 15:00:30 +0200
-Message-ID: <20241002125807.866403362@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.6 392/538] Remove *.orig pattern from .gitignore
+Date: Wed,  2 Oct 2024 15:00:31 +0200
+Message-ID: <20241002125807.906205677@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,50 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Moessbauer <felix.moessbauer@siemens.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-commit 7f44beadcc11adb98220556d2ddbe9c97aa6d42d upstream.
+commit 76be4f5a784533c71afbbb1b8f2963ef9e2ee258 upstream.
 
-Putting the cpumask on the stack is deprecated for a long time (since
-2d3854a37e8), as these can be big. Given that, change the on-stack
-allocation of allowed_mask to be dynamically allocated.
+Commit 3f1b0e1f2875 (".gitignore update") added *.orig and *.rej
+patterns to .gitignore in v2.6.23. The commit message didn't give a
+rationale. Later on, commit 1f5d3a6b6532 ("Remove *.rej pattern from
+.gitignore") removed the *.rej pattern in v2.6.26, on the rationale that
+*.rej files indicated something went really wrong and should not be
+ignored.
 
-Fixes: f011c9cf04c0 ("io_uring/sqpoll: do not allow pinning outside of cpuset")
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Link: https://lore.kernel.org/r/20240916111150.1266191-1-felix.moessbauer@siemens.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The *.rej files are now shown by `git status`, which helps located
+conflicts when applying patches and lowers the probability that they
+will go unnoticed. It is however still easy to overlook the *.orig files
+which slowly polute the source tree. That's not as big of a deal as not
+noticing a conflict, but it's still not nice.
+
+Drop the *.orig pattern from .gitignore to avoid this and help keep the
+source tree clean.
+
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+[masahiroy@kernel.org:
+I do not have a strong opinion about this. Perhaps some people may have
+a different opinion.
+
+If you are someone who wants to ignore *.orig, it is likely you would
+want to do so across all projects. Then, $XDG_CONFIG_HOME/git/ignore
+would be more suitable for your needs. gitignore(5) suggests, "Patterns
+which a user wants Git to ignore in all situations generally go into a
+file specified by core.excludesFile in the user's ~/.gitconfig".
+
+Please note that you cannot do the opposite; if *.orig is ignored by
+the project's .gitignore, you cannot override the decision because
+$XDG_CONFIG_HOME/git/ignore has a lower priority.
+
+If *.orig is sitting on the fence, I'd leave it to the users. ]
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ .gitignore |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -402,15 +402,22 @@ __cold int io_sq_offload_create(struct i
- 			return 0;
+--- a/.gitignore
++++ b/.gitignore
+@@ -135,7 +135,6 @@ GTAGS
+ # id-utils files
+ ID
  
- 		if (p->flags & IORING_SETUP_SQ_AFF) {
--			struct cpumask allowed_mask;
-+			cpumask_var_t allowed_mask;
- 			int cpu = p->sq_thread_cpu;
+-*.orig
+ *~
+ \#*#
  
- 			ret = -EINVAL;
- 			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
- 				goto err_sqpoll;
--			cpuset_cpus_allowed(current, &allowed_mask);
--			if (!cpumask_test_cpu(cpu, &allowed_mask))
-+			ret = -ENOMEM;
-+			if (!alloc_cpumask_var(&allowed_mask, GFP_KERNEL))
- 				goto err_sqpoll;
-+			ret = -EINVAL;
-+			cpuset_cpus_allowed(current, allowed_mask);
-+			if (!cpumask_test_cpu(cpu, allowed_mask)) {
-+				free_cpumask_var(allowed_mask);
-+				goto err_sqpoll;
-+			}
-+			free_cpumask_var(allowed_mask);
- 			sqd->sq_cpu = cpu;
- 		} else {
- 			sqd->sq_cpu = -1;
 
 
