@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0B31D016B;
-	Wed,  2 Oct 2024 13:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5301D016B;
+	Wed,  2 Oct 2024 13:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876045; cv=none; b=ZYpcNtgv02xCHIL/e883hi0P29B+ZQKceXVMQyVWR5QanS8wRLPmP9w75/OrfjWWF7No3Ugm4ABqrItkfF+FvQ2jorBqEB4Cb1PR8H81kxzTDE2J3Rd47Pz69gVWXJ/OySIqjMUaxc4ap+wG2MHlBzF9v0Arba7fL38PITWdrVs=
+	t=1727876048; cv=none; b=EljvNEUhYOodwAM6DYqyxHWD1LxeznwCEz2yGPBlzcpQB9E3OXldV9/7380QRidV4imd18jumYVVVSO7umtvCyg/MsMu/MSQr3Jiqoxi6cLuX8e5dHbO4sTGD4HwiOwNIDtLdd4XXsWg3ua2ykL3S7MPjo64O5fa4mloblFfxf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876045; c=relaxed/simple;
-	bh=cCOT51SHwsG5fXbGRx7mjCWlxFMa9hxgERrSPFSBRTM=;
+	s=arc-20240116; t=1727876048; c=relaxed/simple;
+	bh=EpWsX0nwFawm41D4jQC7nNiwIvOSnpQk/912kP8OkHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bMv+IVX5Vjpv3mrvu+cOtGTfO37pMdd2h/LL6QbOP/xZOTYfz6cJwoCIPaxzF48kpSv+HmzZt7iHRYYyW0qhOD8hNJyBIPzuFaeYrc7RiwiMu7sJ1ckG4ftrL1/e8G7XlScSNo3oTNKK6wKO1uaDi90cTWQN9xW+zNji5QzHVdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pov0OM5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3d5ayvoHmT6DlPYUsBqvFcz87bIFxmluZNHTzMjuP3OLS89Hn5UNIfuDMxZ3ohLDp9RoPyvEYntXkskTWefOMzYwve17e3t2zRX3eiaMNLdd+j8d/5lFCjEu7ubTjK8iSVsq2MDauyJc+MCMUOhfGqNyKAcuiETSwXupEUqQak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCFfyXxo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pov0OM5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29C8C4CEC5;
-	Wed,  2 Oct 2024 13:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCFfyXxo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8227DC4CEC5;
+	Wed,  2 Oct 2024 13:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876045;
-	bh=cCOT51SHwsG5fXbGRx7mjCWlxFMa9hxgERrSPFSBRTM=;
+	s=korg; t=1727876047;
+	bh=EpWsX0nwFawm41D4jQC7nNiwIvOSnpQk/912kP8OkHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pov0OM5iFmt8G9p5vQPRojwTNgNihOX0qVePuxqjje5bRBSajWvdAX49kmubaFAvL
-	 DqV/rWo/tZth4YWyAzCfXGpmvxY4yz2LfWoavoBwIGdKXRAT9N6i75ZGTXKzOrOB9Q
-	 mx6RBEL4HIPyxs4FnIeytnW8MFJ2GO+uOSdH/0ek=
+	b=yCFfyXxogLaUrC9eEEXMaDWn/oG8+EwFqJJxdKX037/jGsD/3ysUFZw6Ak479KGTr
+	 dOpLJL0YTt5A+K47gPMtiZBTHPVArDLPDEASNnepvXU9Uyhkp8E6+PC+s6XwtqDLZP
+	 vHHEezHjNzAtIUjk7GWo4fq3ZoPwMCx02Co9emL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 309/695] ext4: avoid potential buffer_head leak in __ext4_new_inode()
-Date: Wed,  2 Oct 2024 14:55:07 +0200
-Message-ID: <20241002125834.782224237@linuxfoundation.org>
+Subject: [PATCH 6.11 310/695] ext4: avoid negative min_clusters in find_group_orlov()
+Date: Wed,  2 Oct 2024 14:55:08 +0200
+Message-ID: <20241002125834.823793660@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,45 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 227d31b9214d1b9513383cf6c7180628d4b3b61f ]
+[ Upstream commit bb0a12c3439b10d88412fd3102df5b9a6e3cd6dc ]
 
-If a group is marked EXT4_GROUP_INFO_IBITMAP_CORRUPT after it's inode
-bitmap buffer_head was successfully verified, then __ext4_new_inode()
-will get a valid inode_bitmap_bh of a corrupted group from
-ext4_read_inode_bitmap() in which case inode_bitmap_bh misses a release.
-Hnadle "IS_ERR(inode_bitmap_bh)" and group corruption separately like
-how ext4_free_inode() does to avoid buffer_head leak.
+min_clusters is signed integer and will be converted to unsigned
+integer when compared with unsigned number stats.free_clusters.
+If min_clusters is negative, it will be converted to a huge unsigned
+value in which case all groups may not meet the actual desired free
+clusters.
+Set negative min_clusters to 0 to avoid unexpected behavior.
 
-Fixes: 9008a58e5dce ("ext4: make the bitmap read routines return real error codes")
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
 Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://patch.msgid.link/20240820132234.2759926-3-shikemeng@huaweicloud.com
+Link: https://patch.msgid.link/20240820132234.2759926-4-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ialloc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ext4/ialloc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index ad7f13976dc60..9e2c08a8665f2 100644
+index 9e2c08a8665f2..81641be38c0e8 100644
 --- a/fs/ext4/ialloc.c
 +++ b/fs/ext4/ialloc.c
-@@ -1054,12 +1054,13 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
- 		brelse(inode_bitmap_bh);
- 		inode_bitmap_bh = ext4_read_inode_bitmap(sb, group);
- 		/* Skip groups with suspicious inode tables */
--		if (((!(sbi->s_mount_state & EXT4_FC_REPLAY))
--		     && EXT4_MB_GRP_IBITMAP_CORRUPT(grp)) ||
--		    IS_ERR(inode_bitmap_bh)) {
-+		if (IS_ERR(inode_bitmap_bh)) {
- 			inode_bitmap_bh = NULL;
- 			goto next_group;
- 		}
-+		if (!(sbi->s_mount_state & EXT4_FC_REPLAY) &&
-+		    EXT4_MB_GRP_IBITMAP_CORRUPT(grp))
-+			goto next_group;
+@@ -514,6 +514,8 @@ static int find_group_orlov(struct super_block *sb, struct inode *parent,
+ 	if (min_inodes < 1)
+ 		min_inodes = 1;
+ 	min_clusters = avefreec - EXT4_CLUSTERS_PER_GROUP(sb)*flex_size / 4;
++	if (min_clusters < 0)
++		min_clusters = 0;
  
- repeat_in_this_group:
- 		ret2 = find_inode_bit(sb, group, inode_bitmap_bh, &ino);
+ 	/*
+ 	 * Start looking in the flex group where we last allocated an
 -- 
 2.43.0
 
