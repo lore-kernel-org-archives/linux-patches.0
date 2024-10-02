@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2543232;
-	Wed,  2 Oct 2024 14:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECAC3232;
+	Wed,  2 Oct 2024 14:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879984; cv=none; b=dfSrC+Rd0T72r3fRPNqx41NbYJS7Eadn7OU+KKlilrtexnbnMaCr+jRLhbAmj5e0cLA4KVE13HZAeQSAKNYii0M0lJjxDFm6vNso3reWDua0fSmT3KzBjDWB2gvC79oIbD8uX4QZa3LpgAzQzR6Tjcr2HK95OAIa2D4bmSyvy0c=
+	t=1727879987; cv=none; b=u8hXQaLD8evOvw+QMDmzp1tGxS+7WR1IqmpMsuGmKcrBbAqTo+jVsUw/6b5F9UoJkB7aUIAUYJAlcyAjRTPzN4BG6I4jExFoKGbGZ8eg3NXmw4gbnyKZTxXuHSJxEvk7zP+UX2i7oCPH6ZDMsmp3jZIO3APXcu4PsrIHkQMjC0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879984; c=relaxed/simple;
-	bh=FoOAaoJdUeEXPH084RqWHn8XKqsJPQ1Z8HRVtldUp7s=;
+	s=arc-20240116; t=1727879987; c=relaxed/simple;
+	bh=vsk/DsB/D1cpD1YTaHxUY7rQ+TYDwdpYmYKHehdqRko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uL+iaSvyRBbiwxSmIkcemeQu8skXUvG6JghOXgPSq9+j47uflcCpBp92pq5eaiU+QVGIM6r+g/28ckRbIFmp1PCUeKPdUgPG3RT2SRQz52qfCQQgaUME9dzB8kg7fVaJCX2lqyq2tohza4fkjJBIRh3a4eleFAIWrD6C6t5kmIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cq2Hirmn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p++zA+doNEhPGrcSAHrdIeuP3pjOwiUN1tasKJCzasb8XvktyWeIBkvl/KLAHNJ0aI473eouOR+L2o8+J5Tzl0IERzV5AkQuff2Tp8x8U6F0parlqKLwAciQ7vL5yI73Z2ge9SvQ3y1Ws1mLLQLZjXTSvnlGBxZc5QETF2C6P3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VG1gEuKh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cq2Hirmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A68C4CEC5;
-	Wed,  2 Oct 2024 14:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VG1gEuKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C171C4CEC2;
+	Wed,  2 Oct 2024 14:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879984;
-	bh=FoOAaoJdUeEXPH084RqWHn8XKqsJPQ1Z8HRVtldUp7s=;
+	s=korg; t=1727879986;
+	bh=vsk/DsB/D1cpD1YTaHxUY7rQ+TYDwdpYmYKHehdqRko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cq2Hirmn0JOm8YhXLFulE3YVdx5iT9UrxHO1QJCTXY6HWQOF8bAvzXJdCvyS66qKF
-	 zt3f72TQEBzMlRTj38Biie7Dl0u8WgfjhS6EqAH4j9plnicEdfM8UcyxqYZ0P0LVGJ
-	 AVUcM1Kx9CvyGZhYrDtuiSRSWA9lEMQnCpK3YYMs=
+	b=VG1gEuKhxxfKOFDXSv6K6HA05v5x6Bm9MX266iYHvZ9UfA5FIF/QYlJf0B/rsO+jQ
+	 BKecZRmF94HXoP9Zh4+8JL93LalySvStoKuj6S8Q771BRm6RGnZR7Ilx7n9WQIPdwF
+	 79IiiFwpP007Kj6O4hzVfygzRr5tU1+XGFlgWLSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 297/538] pinctrl: single: fix missing error code in pcs_probe()
-Date: Wed,  2 Oct 2024 14:58:56 +0200
-Message-ID: <20241002125804.137991048@linuxfoundation.org>
+Subject: [PATCH 6.6 306/538] clk: rockchip: rk3588: Fix 32k clock name for pmu_24m_32k_100m_src_p
+Date: Wed,  2 Oct 2024 14:59:05 +0200
+Message-ID: <20241002125804.495760514@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-[ Upstream commit cacd8cf79d7823b07619865e994a7916fcc8ae91 ]
+[ Upstream commit 0d02e8d284a45bfa8997ebe8764437b8eb6b108b ]
 
-If pinctrl_enable() fails in pcs_probe(), it should return the error code.
+The 32kHz input clock is named "xin32k" in the driver,
+so the name "32k" appears to be a typo in this case. Lets fix this.
 
-Fixes: 8f773bfbdd42 ("pinctrl: single: fix possible memory leak when pinctrl_enable() fails")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/20240819024625.154441-1-yangyingliang@huaweicloud.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Fixes: f1c506d152ff ("clk: rockchip: add clock controller for the RK3588")
+Link: https://lore.kernel.org/r/20240829052820.3604-1-eagle.alexander923@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/rockchip/clk-rk3588.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index bbe7cc894b1a1..6c670203b3ac2 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1918,7 +1918,8 @@ static int pcs_probe(struct platform_device *pdev)
- 
- 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
- 
--	if (pinctrl_enable(pcs->pctl))
-+	ret = pinctrl_enable(pcs->pctl);
-+	if (ret)
- 		goto free;
- 
- 	return 0;
+diff --git a/drivers/clk/rockchip/clk-rk3588.c b/drivers/clk/rockchip/clk-rk3588.c
+index 6994165e03957..d8ffcaefa480b 100644
+--- a/drivers/clk/rockchip/clk-rk3588.c
++++ b/drivers/clk/rockchip/clk-rk3588.c
+@@ -526,7 +526,7 @@ PNAME(pmu_200m_100m_p)			= { "clk_pmu1_200m_src", "clk_pmu1_100m_src" };
+ PNAME(pmu_300m_24m_p)			= { "clk_300m_src", "xin24m" };
+ PNAME(pmu_400m_24m_p)			= { "clk_400m_src", "xin24m" };
+ PNAME(pmu_100m_50m_24m_src_p)		= { "clk_pmu1_100m_src", "clk_pmu1_50m_src", "xin24m" };
+-PNAME(pmu_24m_32k_100m_src_p)		= { "xin24m", "32k", "clk_pmu1_100m_src" };
++PNAME(pmu_24m_32k_100m_src_p)		= { "xin24m", "xin32k", "clk_pmu1_100m_src" };
+ PNAME(hclk_pmu1_root_p)			= { "clk_pmu1_200m_src", "clk_pmu1_100m_src", "clk_pmu1_50m_src", "xin24m" };
+ PNAME(hclk_pmu_cm0_root_p)		= { "clk_pmu1_400m_src", "clk_pmu1_200m_src", "clk_pmu1_100m_src", "xin24m" };
+ PNAME(mclk_pdm0_p)			= { "clk_pmu1_300m_src", "clk_pmu1_200m_src" };
 -- 
 2.43.0
 
