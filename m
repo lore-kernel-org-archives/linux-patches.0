@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3310B1D049A;
-	Wed,  2 Oct 2024 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1C61D0424;
+	Wed,  2 Oct 2024 13:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875241; cv=none; b=ErWSflj7N1uHs+3IkYP2+Nf0i6aXROKb6AL3GYN58PWqKgc3E32HaLaTd8E9NiFCZFQC8xJIy14Psx2zj7GDKaBMC4Huep+uh9Dh2NXC6aHL0hQixenh+SdBGa3/2TpnP0VIDIqzav2ZuN7lKbg9xlMzaQnzcSwuYlIk0DM1BTg=
+	t=1727875244; cv=none; b=d9XFXP6nOnJ1+w1aQ0pfvrXYY777TXCGRc/3qyEC1V0DWjcc1TJq3+iYhBwmDMySbbap02OCmimQLSfxjn/scOpF2CnTet3BFPq3YDTJs4a7Mbdcm9II8wQzKlesnT1sm7gEfAUQyHKycewWjJcuetDRfaM13fOobl1ycixtnkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875241; c=relaxed/simple;
-	bh=KQEmMlb7HitF5MBWJMQrhZC3vZ1XI4JuLvSTLoRNQoI=;
+	s=arc-20240116; t=1727875244; c=relaxed/simple;
+	bh=Ym82KCrNhUrZPEfZqIUkgSUhC+w3K5g2JGSKObuGPVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3PlBTQHnTVETeFjD7tVkRlFiql6N7UNKv3Sq/v1lsMhw2W4fhLrGBcmoWJJoxZX505ayVJ8WOlWyhguZfBtp/VnQn4uJkG6gi3E1be2zX1smXgkKJrHnCGJPtBs5E/qjD274BfEQQQIVY8acYT4s5QNh9Mtm2YCoS0J3Da2SlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUG60Zu/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upkA2iqFkh7DFjo19FmUe2DjQ4j2zmC+bOs5mi2/t4/xQfLPG/38o4FSvIAKjSNG4N9uymrphrrqJHxJVxYEUfnlK/z3FYRoguliH4Cdthkh48VoMTi3AyjPdSKwF3I5Gl0OVRjeB+8UxyzVU/Xyu9FJepcJfHK3VTaL9gwwXYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcT9kuNr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUG60Zu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7055C4CECF;
-	Wed,  2 Oct 2024 13:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcT9kuNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FCFC4CECE;
+	Wed,  2 Oct 2024 13:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875241;
-	bh=KQEmMlb7HitF5MBWJMQrhZC3vZ1XI4JuLvSTLoRNQoI=;
+	s=korg; t=1727875244;
+	bh=Ym82KCrNhUrZPEfZqIUkgSUhC+w3K5g2JGSKObuGPVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUG60Zu/OCM04pK13LK8W/nceinU1ORSVE+iESXpoQrW+SKw3g6ZUfKUnigrYxlHU
-	 zFjTzBFuE5+a52By7+vbfqEb9xhZnsSiUInuPj4Esas0dGh8FdZzoeBB9KRFezSwzQ
-	 D/37NVg1b3vv9ClUHRLGFpRmHKx0SLYOa6CNuoSs=
+	b=hcT9kuNrcGIq/xQ/cD21bX9OuO6gaSBM9/99MNqqvGZboMvoC4qxygcfJBylDy/de
+	 sT5ZfKOKpHCLPiRmmlY+vXBdc57ygD42oq9xPDES3KTmOibGowsDza+Hw/h4g+Ok+/
+	 fCitLu9/BXd7tIb3tjPi4j7Jmj8D8mSXNDxGcED0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 038/695] thermal: core: Fold two functions into their respective callers
-Date: Wed,  2 Oct 2024 14:50:36 +0200
-Message-ID: <20241002125824.012874745@linuxfoundation.org>
+Subject: [PATCH 6.11 039/695] thermal: core: Fix rounding of delay jiffies
+Date: Wed,  2 Oct 2024 14:50:37 +0200
+Message-ID: <20241002125824.052630261@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,116 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a8bbe6f10f78f85243ff821432c5d798a6d99ed4 ]
+[ Upstream commit 8144dbe68c493baa412d78f41a57e90a6461f6c3 ]
 
-Fold bind_cdev() into __thermal_cooling_device_register() and bind_tz()
-into thermal_zone_device_register_with_trips() to reduce code bloat and
-make it somewhat easier to follow the code flow.
+Using round_jiffies() in thermal_set_delay_jiffies() is invalid because
+its argument should be time in the future in absolute jiffies and it
+computes the result with respect to the current jiffies value at the
+invocation time.  Fortunately, in the majority of cases it does not
+make any difference due to the time_is_after_jiffies() check in
+round_jiffies_common().
 
-No intentional functional impact.
+While using round_jiffies_relative() instead of round_jiffies() might
+reflect the intent a bit better, it still would not be defensible
+because that function should be called when the timer is about to be
+set and it is not suitable for pre-computation of delay values.
 
+Accordingly, drop thermal_set_delay_jiffies() altogether, simply
+convert polling_delay and passive_delay to jiffies during thermal
+zone initialization and make thermal_zone_device_set_polling() call
+round_jiffies_relative() on the delay if it is greather than 1 second.
+
+Fixes: 17d399cd9c89 ("thermal/core: Precompute the delays from msecs to jiffies")
+Fixes: e5f2cda61d06 ("thermal/core: Move thermal_set_delay_jiffies to static")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
 Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/2962184.e9J7NaK4W3@rjwysocki.net
-Stable-dep-of: 8144dbe68c49 ("thermal: core: Fix rounding of delay jiffies")
+Link: https://patch.msgid.link/1994438.PYKUYFuaPT@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 55 ++++++++++++----------------------
- 1 file changed, 19 insertions(+), 36 deletions(-)
+ drivers/thermal/thermal_core.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index e6669aeda1fff..3ba8dd804026f 100644
+index 3ba8dd804026f..93c16aff0df20 100644
 --- a/drivers/thermal/thermal_core.c
 +++ b/drivers/thermal/thermal_core.c
-@@ -991,20 +991,6 @@ void print_bind_err_msg(struct thermal_zone_device *tz,
- 		tz->type, cdev->type, ret);
+@@ -323,11 +323,15 @@ static void thermal_zone_broken_disable(struct thermal_zone_device *tz)
+ static void thermal_zone_device_set_polling(struct thermal_zone_device *tz,
+ 					    unsigned long delay)
+ {
+-	if (delay)
+-		mod_delayed_work(system_freezable_power_efficient_wq,
+-				 &tz->poll_queue, delay);
+-	else
++	if (!delay) {
+ 		cancel_delayed_work(&tz->poll_queue);
++		return;
++	}
++
++	if (delay > HZ)
++		delay = round_jiffies_relative(delay);
++
++	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, delay);
  }
  
--static void bind_cdev(struct thermal_cooling_device *cdev)
--{
--	int ret;
--	struct thermal_zone_device *pos = NULL;
--
--	list_for_each_entry(pos, &thermal_tz_list, node) {
--		if (pos->ops.bind) {
--			ret = pos->ops.bind(pos, cdev);
--			if (ret)
--				print_bind_err_msg(pos, cdev, ret);
--		}
--	}
--}
--
- /**
-  * __thermal_cooling_device_register() - register a new thermal cooling device
-  * @np:		a pointer to a device tree node.
-@@ -1100,7 +1086,13 @@ __thermal_cooling_device_register(struct device_node *np,
- 	list_add(&cdev->node, &thermal_cdev_list);
- 
- 	/* Update binding information for 'this' new cdev */
--	bind_cdev(cdev);
-+	list_for_each_entry(pos, &thermal_tz_list, node) {
-+		if (pos->ops.bind) {
-+			ret = pos->ops.bind(pos, cdev);
-+			if (ret)
-+				print_bind_err_msg(pos, cdev, ret);
-+		}
-+	}
- 
- 	list_for_each_entry(pos, &thermal_tz_list, node)
- 		if (atomic_cmpxchg(&pos->need_update, 1, 0))
-@@ -1338,25 +1330,6 @@ void thermal_cooling_device_unregister(struct thermal_cooling_device *cdev)
+ static void thermal_zone_recheck(struct thermal_zone_device *tz, int error)
+@@ -1330,13 +1334,6 @@ void thermal_cooling_device_unregister(struct thermal_cooling_device *cdev)
  }
  EXPORT_SYMBOL_GPL(thermal_cooling_device_unregister);
  
--static void bind_tz(struct thermal_zone_device *tz)
+-static void thermal_set_delay_jiffies(unsigned long *delay_jiffies, int delay_ms)
 -{
--	int ret;
--	struct thermal_cooling_device *pos = NULL;
--
--	if (!tz->ops.bind)
--		return;
--
--	mutex_lock(&thermal_list_lock);
--
--	list_for_each_entry(pos, &thermal_cdev_list, node) {
--		ret = tz->ops.bind(tz, pos);
--		if (ret)
--			print_bind_err_msg(tz, pos, ret);
--	}
--
--	mutex_unlock(&thermal_list_lock);
+-	*delay_jiffies = msecs_to_jiffies(delay_ms);
+-	if (delay_ms > 1000)
+-		*delay_jiffies = round_jiffies(*delay_jiffies);
 -}
 -
- static void thermal_set_delay_jiffies(unsigned long *delay_jiffies, int delay_ms)
+ int thermal_zone_get_crit_temp(struct thermal_zone_device *tz, int *temp)
  {
- 	*delay_jiffies = msecs_to_jiffies(delay_ms);
-@@ -1554,13 +1527,23 @@ thermal_zone_device_register_with_trips(const char *type,
+ 	const struct thermal_trip_desc *td;
+@@ -1482,8 +1479,8 @@ thermal_zone_device_register_with_trips(const char *type,
+ 		td->threshold = INT_MAX;
  	}
  
- 	mutex_lock(&thermal_list_lock);
-+
- 	mutex_lock(&tz->lock);
- 	list_add_tail(&tz->node, &thermal_tz_list);
- 	mutex_unlock(&tz->lock);
--	mutex_unlock(&thermal_list_lock);
+-	thermal_set_delay_jiffies(&tz->passive_delay_jiffies, passive_delay);
+-	thermal_set_delay_jiffies(&tz->polling_delay_jiffies, polling_delay);
++	tz->polling_delay_jiffies = msecs_to_jiffies(polling_delay);
++	tz->passive_delay_jiffies = msecs_to_jiffies(passive_delay);
+ 	tz->recheck_delay_jiffies = THERMAL_RECHECK_DELAY;
  
- 	/* Bind cooling devices for this zone */
--	bind_tz(tz);
-+	if (tz->ops.bind) {
-+		struct thermal_cooling_device *cdev;
-+
-+		list_for_each_entry(cdev, &thermal_cdev_list, node) {
-+			result = tz->ops.bind(tz, cdev);
-+			if (result)
-+				print_bind_err_msg(tz, cdev, result);
-+		}
-+	}
-+
-+	mutex_unlock(&thermal_list_lock);
- 
- 	thermal_zone_device_init(tz);
- 	/* Update the new thermal zone and mark it as already updated. */
+ 	/* sys I/F */
 -- 
 2.43.0
 
