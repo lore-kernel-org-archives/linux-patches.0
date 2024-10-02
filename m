@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073C81D0BBB;
-	Wed,  2 Oct 2024 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356C11D1735;
+	Wed,  2 Oct 2024 14:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878711; cv=none; b=WPLEsJ35i717No44kmLhp6LxDhnUC27K+kru02FPaPilze4BrvMryeNg5EsxG9rBf4jzBchw6ElkfumNo+5hiFernrxwbk1uPrP0kZ3Oeq+aeF/ZQ4DuSTdiALMjmt7/+7Wf8XVpbIeIGfrAQc6EE+bWqoVs52Ws8ylXoolQ6yQ=
+	t=1727878714; cv=none; b=BAmFQ976yAbvzPoY1qkzQKC1KO4jOY8D4EqxO6DajUjSIyasGOU6RoaIW7ghyv8pKZMrzNdWMhlua1yJDOSLvr7zMXElk2rquA8zHRqRSI7eVgaqIhmmLHEMR3SaGHxPPbBx+iKywdZ+st+4jd2uPVvcl6H8/ohv9QT/xFjMN2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878711; c=relaxed/simple;
-	bh=etkAVL2bUxA7jXkgQ3rFh663seFk4s0fjeM+wvtpLOY=;
+	s=arc-20240116; t=1727878714; c=relaxed/simple;
+	bh=F5+yKkBNJbLl6SMCDQMlu2uNacDDe2Marmn20AgBMmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fx/WON71or9m7TCR+VLaMY+Ql8hfCnHtlp0dBs6ZT/cdb0D+h6hlYAetz3A1E8f6ufFPKoondXfvoOd5WygLzBfuy6QDFg9Vbjoz3rhre14OBAtdYqZQNdO/52JwRuqoHcsWKwOJf8WyoMOnpYXrETIg7GWtOysYrpGSzwjtkcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE1xpbd0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNradsc1zB4Lf1usi1pvjw8Epz0ZI/7NUbI26aaN78KUdAqy93WVMYNZx8zkMdk0ivvqwtRaJokRT3dchc/aaJUJRG/sT7IyFfxlUdn16G0fuXrYu1i7oSQNsdYAkPQ01sIeUXV7NeJfBi2FIn9houFDbSwhS5ZEX8DZp12lo3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mFBaXy9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE1xpbd0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D43C4CECD;
-	Wed,  2 Oct 2024 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mFBaXy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A936C4CEC5;
+	Wed,  2 Oct 2024 14:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878710;
-	bh=etkAVL2bUxA7jXkgQ3rFh663seFk4s0fjeM+wvtpLOY=;
+	s=korg; t=1727878713;
+	bh=F5+yKkBNJbLl6SMCDQMlu2uNacDDe2Marmn20AgBMmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aE1xpbd0iZqP3v0lTDYKmkLp6xBTpXfZdKCuIumRCIOcIiilj0fEQV5VEwPVAhvAG
-	 I2suWmGSFwtHujveJBJ9A/SDhh74zq8KdlAjY634Dq4IUHQO79577ebuO3J6Dl16Mz
-	 LQZT92yF1lrsZOCQB+FK+v3gns5L9xA/2fRDjKeM=
+	b=2mFBaXy9oK1BFzxUAel8jot0FIAPV6juexJUpnTA8qR/CgOREZ5Ky1LH6wHWn3P2U
+	 qhIMy74ArO1L5KU84cJyPf3Ms9/Lq+vTO3rcSbWYJRb4hmflmUvLd26du+EI8nheWV
+	 NFJT2sDfm1V9Ok5ZpF8UxZGVOv3NAaTBV8OEZT3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.10 476/634] soc: fsl: cpm1: tsa: Fix tsa_write8()
-Date: Wed,  2 Oct 2024 14:59:36 +0200
-Message-ID: <20241002125829.895135340@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.10 477/634] soc: versatile: integrator: fix OF node leak in probe() error path
+Date: Wed,  2 Oct 2024 14:59:37 +0200
+Message-ID: <20241002125829.934276620@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,36 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 47a347bae9a491b467ab3543e4725a3e4fbe30f5 upstream.
+commit 874c5b601856adbfda10846b9770a6c66c41e229 upstream.
 
-The tsa_write8() parameter is an u32 value. This is not consistent with
-the function itself. Indeed, tsa_write8() writes an 8bits value.
+Driver is leaking OF node reference obtained from
+of_find_matching_node().
 
-Be consistent and use an u8 parameter value.
-
-Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
+Fixes: f956a785a282 ("soc: move SoC driver for the ARM Integrator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/20240808071132.149251-4-herve.codina@bootlin.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-1-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/tsa.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/versatile/soc-integrator.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/soc/fsl/qe/tsa.c
-+++ b/drivers/soc/fsl/qe/tsa.c
-@@ -140,7 +140,7 @@ static inline void tsa_write32(void __io
- 	iowrite32be(val, addr);
- }
+--- a/drivers/soc/versatile/soc-integrator.c
++++ b/drivers/soc/versatile/soc-integrator.c
+@@ -113,6 +113,7 @@ static int __init integrator_soc_init(vo
+ 		return -ENODEV;
  
--static inline void tsa_write8(void __iomem *addr, u32 val)
-+static inline void tsa_write8(void __iomem *addr, u8 val)
- {
- 	iowrite8(val, addr);
- }
+ 	syscon_regmap = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
+ 
 
 
