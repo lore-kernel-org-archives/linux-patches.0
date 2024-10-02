@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF591D0DF7;
-	Wed,  2 Oct 2024 14:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6520E1D2785;
+	Wed,  2 Oct 2024 14:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879711; cv=none; b=FS6yg274nimt2lTf2eknohAavIvpfI/6Ny9JsVpQKTEBd9N7wJCVOtfioxGFnnRvfKXVOQAGA/R3ZX5/++R37ayVN7P63efJ50ocxDpM0v4uBJFjdgVJMaVF2hnUy/uEUpEHhWdf0dyxqeIcxsQC4mw03nxz8uFZcz0fIkCjsqs=
+	t=1727879714; cv=none; b=jmXEC8t+sxugDT/iU+cjxorPngLlbQk5PBlRDCzJJ/L8HfKbFf05UXjCK/2+AvEloIeB+MyqyIoUb9/FIy5r0oy/y/ud7ji6Q3UBWTeMm0Kw7O4mjTY0N7AHlWu2Fg4VpTRnM9Trl6G8JTNbce8HOGeHjl2zBTEUINC2lYMyOxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879711; c=relaxed/simple;
-	bh=iNc0j/d0Vf5a19I5iLT0qSRhDpLhnXLs0mZD/2bMzW8=;
+	s=arc-20240116; t=1727879714; c=relaxed/simple;
+	bh=dzWkA12PrFrNeVvfQ9tCL8iGRn4lPrxEmX6Dg85rL1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzLRBBaAx+p04/1YTyVR1OXtoQc743VthG8JtJ7CPnkErKrg0o5rFQW7ltmKJbl8mPhynsZupN8ALXmkencei9wfTzIq6hdX3NhJwEQLFrpZw2nlSA3BNuHmMC7gUg7YkiMqvRtNHtB38IXOaDcOdGnK9Sz8v4a+R2zkj65gE2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k++ohhYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXh7p1SFvIa8S75wVtfMdhkKx+MsqNWxhpAIjxgQtGdq/IWAitIcE6xT7jMJCRJhQUzRNYBOct5XAbey6MfujlET+yrevwi171Cv75XYkPXWZysgbWjKEqU044GmSN8Tn+2MNLVdY5rYKTd6uZz9UfhhrGwSJemhVKbqK5AJZH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnCXOKZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k++ohhYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0620DC4CEC5;
-	Wed,  2 Oct 2024 14:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnCXOKZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32BFC4CEC2;
+	Wed,  2 Oct 2024 14:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879711;
-	bh=iNc0j/d0Vf5a19I5iLT0qSRhDpLhnXLs0mZD/2bMzW8=;
+	s=korg; t=1727879714;
+	bh=dzWkA12PrFrNeVvfQ9tCL8iGRn4lPrxEmX6Dg85rL1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k++ohhYnIpEMimyXo3FelZuW3DFo1+1NMvh/1X0GnuvpyluQqFzACO/a2uSpvW/Lh
-	 7RFFlCBhhiatA2PaFsiHyNAvp/k1umi49CbflUw00RUWK49pwAv5Ht8SyZA0bU7tUY
-	 +EifmDQ7fVNFZvtEwN2nuKDQKjQqZOIJ/9mnAYiI=
+	b=TnCXOKZihJQQ7z7SsFdYZnJTm3juQkvFhloCqDlhpvgn20jJIp3XaMM4ahVQ2uqjb
+	 Ty83Btjq94eeaXHl7UMIRmoeOtTJyihE6osNgCj+KNHqC5AWeK0+UpXuH16yDGjoub
+	 Mf5mdfZDXAdqRAYIEmrNJ7I88brVaUfAZmvQ6b4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/538] selftests/bpf: Fix arg parsing in veristat, test_progs
-Date: Wed,  2 Oct 2024 14:57:32 +0200
-Message-ID: <20241002125800.665362856@linuxfoundation.org>
+Subject: [PATCH 6.6 196/538] selftests/bpf: Replace CHECK with ASSERT_* in ns_current_pid_tgid test
+Date: Wed,  2 Oct 2024 14:57:15 +0200
+Message-ID: <20241002125759.992864627@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,103 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 03bfcda1fbc37ef34aa21d2b9e09138335afc6ee ]
+[ Upstream commit 84239a24d10174fcfc7d6760cb120435a6ff69af ]
 
-Current code parses arguments with strtok_r() using a construct like
+Replace CHECK in selftest ns_current_pid_tgid with recommended ASSERT_* style.
+I also shortened subtest name as the prefix of subtest name is covered
+by the test name already.
 
-    char *state = NULL;
-    while ((next = strtok_r(state ? NULL : input, ",", &state))) {
-        ...
-    }
+This patch does fix a testing issue. Currently even if bss->user_{pid,tgid}
+is not correct, the test still passed since the clone func returns 0.
+I fixed it to return a non-zero value if bss->user_{pid,tgid} is incorrect.
 
-where logic assumes the 'state' var can distinguish between first and
-subsequent strtok_r() calls, and adjusts parameters accordingly. However,
-'state' is strictly internal context for strtok_r() and no such assumptions
-are supported in the man page. Moreover, the exact behaviour of 'state'
-depends on the libc implementation, making the above code fragile.
-
-Indeed, invoking "./test_progs -t <test_name>" on mips64el/musl will hang,
-with the above code in an infinite loop.
-
-Similarly, we see strange behaviour running 'veristat' on mips64el/musl:
-
-    $ ./veristat -e file,prog,verdict,insns -C two-ok add-failure
-    Can't specify more than 9 stats
-
-Rewrite code using a counter to distinguish between strtok_r() calls.
-
-Fixes: 61ddff373ffa ("selftests/bpf: Improve by-name subtest selection logic in prog_tests")
-Fixes: 394169b079b5 ("selftests/bpf: add comparison mode to veristat")
-Fixes: c8bc5e050976 ("selftests/bpf: Add veristat tool for mass-verifying BPF object files")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/392d8bf5559f85fa37926c1494e62312ef252c3d.1722244708.git.tony.ambardar@gmail.com
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20240315184859.2975543-1-yonghong.song@linux.dev
+Stable-dep-of: 21f0b0af9772 ("selftests/bpf: Fix include of <sys/fcntl.h>")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/testing_helpers.c | 4 ++--
- tools/testing/selftests/bpf/veristat.c        | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ .../bpf/prog_tests/ns_current_pid_tgid.c      | 36 ++++++++++---------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
-index 8d994884c7b44..6acffe0426f01 100644
---- a/tools/testing/selftests/bpf/testing_helpers.c
-+++ b/tools/testing/selftests/bpf/testing_helpers.c
-@@ -220,13 +220,13 @@ int parse_test_list(const char *s,
- 		    bool is_glob_pattern)
+diff --git a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+index 24d493482ffc7..3a0664a86243e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
++++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+@@ -20,19 +20,19 @@ static int test_current_pid_tgid(void *args)
  {
- 	char *input, *state = NULL, *test_spec;
--	int err = 0;
-+	int err = 0, cnt = 0;
+ 	struct test_ns_current_pid_tgid__bss  *bss;
+ 	struct test_ns_current_pid_tgid *skel;
+-	int err = -1, duration = 0;
++	int ret = -1, err;
+ 	pid_t tgid, pid;
+ 	struct stat st;
  
- 	input = strdup(s);
- 	if (!input)
- 		return -ENOMEM;
+ 	skel = test_ns_current_pid_tgid__open_and_load();
+-	if (CHECK(!skel, "skel_open_load", "failed to load skeleton\n"))
+-		goto cleanup;
++	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open_and_load"))
++		goto out;
  
--	while ((test_spec = strtok_r(state ? NULL : input, ",", &state))) {
-+	while ((test_spec = strtok_r(cnt++ ? NULL : input, ",", &state))) {
- 		err = insert_test(set, test_spec, is_glob_pattern);
- 		if (err)
- 			break;
-diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
-index 0ad98b6a8e6ef..611b5a0a6f7e3 100644
---- a/tools/testing/selftests/bpf/veristat.c
-+++ b/tools/testing/selftests/bpf/veristat.c
-@@ -753,13 +753,13 @@ static int parse_stat(const char *stat_name, struct stat_specs *specs)
- static int parse_stats(const char *stats_str, struct stat_specs *specs)
+ 	pid = syscall(SYS_gettid);
+ 	tgid = getpid();
+ 
+ 	err = stat("/proc/self/ns/pid", &st);
+-	if (CHECK(err, "stat", "failed /proc/self/ns/pid: %d\n", err))
++	if (!ASSERT_OK(err, "stat /proc/self/ns/pid"))
+ 		goto cleanup;
+ 
+ 	bss = skel->bss;
+@@ -42,24 +42,26 @@ static int test_current_pid_tgid(void *args)
+ 	bss->user_tgid = 0;
+ 
+ 	err = test_ns_current_pid_tgid__attach(skel);
+-	if (CHECK(err, "skel_attach", "skeleton attach failed: %d\n", err))
++	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__attach"))
+ 		goto cleanup;
+ 
+ 	/* trigger tracepoint */
+ 	usleep(1);
+-	ASSERT_EQ(bss->user_pid, pid, "pid");
+-	ASSERT_EQ(bss->user_tgid, tgid, "tgid");
+-	err = 0;
++	if (!ASSERT_EQ(bss->user_pid, pid, "pid"))
++		goto cleanup;
++	if (!ASSERT_EQ(bss->user_tgid, tgid, "tgid"))
++		goto cleanup;
++	ret = 0;
+ 
+ cleanup:
+-	 test_ns_current_pid_tgid__destroy(skel);
+-
+-	return err;
++	test_ns_current_pid_tgid__destroy(skel);
++out:
++	return ret;
+ }
+ 
+ static void test_ns_current_pid_tgid_new_ns(void)
  {
- 	char *input, *state = NULL, *next;
--	int err;
-+	int err, cnt = 0;
+-	int wstatus, duration = 0;
++	int wstatus;
+ 	pid_t cpid;
  
- 	input = strdup(stats_str);
- 	if (!input)
- 		return -ENOMEM;
+ 	/* Create a process in a new namespace, this process
+@@ -68,21 +70,21 @@ static void test_ns_current_pid_tgid_new_ns(void)
+ 	cpid = clone(test_current_pid_tgid, child_stack + STACK_SIZE,
+ 		     CLONE_NEWPID | SIGCHLD, NULL);
  
--	while ((next = strtok_r(state ? NULL : input, ",", &state))) {
-+	while ((next = strtok_r(cnt++ ? NULL : input, ",", &state))) {
- 		err = parse_stat(next, specs);
- 		if (err)
- 			return err;
-@@ -1444,7 +1444,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
- 	while (fgets(line, sizeof(line), f)) {
- 		char *input = line, *state = NULL, *next;
- 		struct verif_stats *st = NULL;
--		int col = 0;
-+		int col = 0, cnt = 0;
+-	if (CHECK(cpid == -1, "clone", "%s\n", strerror(errno)))
++	if (!ASSERT_NEQ(cpid, -1, "clone"))
+ 		return;
  
- 		if (!header) {
- 			void *tmp;
-@@ -1462,7 +1462,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
- 			*stat_cntp += 1;
- 		}
+-	if (CHECK(waitpid(cpid, &wstatus, 0) == -1, "waitpid", "%s\n", strerror(errno)))
++	if (!ASSERT_NEQ(waitpid(cpid, &wstatus, 0), -1, "waitpid"))
+ 		return;
  
--		while ((next = strtok_r(state ? NULL : input, ",\n", &state))) {
-+		while ((next = strtok_r(cnt++ ? NULL : input, ",\n", &state))) {
- 			if (header) {
- 				/* for the first line, set up spec stats */
- 				err = parse_stat(next, specs);
+-	if (CHECK(WEXITSTATUS(wstatus) != 0, "newns_pidtgid", "failed"))
++	if (!ASSERT_OK(WEXITSTATUS(wstatus), "newns_pidtgid"))
+ 		return;
+ }
+ 
+ /* TODO: use a different tracepoint */
+ void serial_test_ns_current_pid_tgid(void)
+ {
+-	if (test__start_subtest("ns_current_pid_tgid_root_ns"))
++	if (test__start_subtest("root_ns_tp"))
+ 		test_current_pid_tgid(NULL);
+-	if (test__start_subtest("ns_current_pid_tgid_new_ns"))
++	if (test__start_subtest("new_ns_tp"))
+ 		test_ns_current_pid_tgid_new_ns();
+ }
 -- 
 2.43.0
 
