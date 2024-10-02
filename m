@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9181D094C;
-	Wed,  2 Oct 2024 14:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057541CFEB3;
+	Wed,  2 Oct 2024 14:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878291; cv=none; b=D1BGkm/1+mDjlXRilGBn77Jgdxr6fJsmTCzESBxQpbZ89g+1mxl7XXA0TSta829nAek+zHU1h6xOVvKxlPqc53dR1m5HvT36t4bi/gYEf/zGEL4lxkBPHl4DnxOkBsmFE9HrUKHEzTD1PmKWpjKXwOX9RQC3Ecvw8pTHhiswB74=
+	t=1727878294; cv=none; b=Qr56ro/mocejdg8rtXZ64+WVOr1tiM+BI4nzXb2dxN92EOMUH4zjONyd3bWgNHnrravYfhPoYIlYIuDhYkMXQ4TxDsjLDrmmvhRXJAVuCiyCn2fPveg5rLXDniIjW5hH4v5O79uSXfW6qZBZonSUZO+YlfRFQyiW5Jy5kjDKkfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878291; c=relaxed/simple;
-	bh=J48q6aa0fIEyoHNkpgTSEUiGgZNh0QmVgxKAi0y2wzg=;
+	s=arc-20240116; t=1727878294; c=relaxed/simple;
+	bh=zqv3rQsE8P+cYsgNtwkr09ZxgI42ABdhfovUzxVIWSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrvQQIL9nEML4q2s/MqcH/z2wPNWNTUqDcER1Fzsjk8kq3J8NPvacf4I6nKC4HxXR/D86cN2s6baeQLZgI9UQf3qumtyibK+fR7e6UypzyGDEBY+Tk7ajMgX/4RdbnmpopTYPXEmZ999nUXvHIIABlrdXJEarOgqLU6xj21G1A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSzYVsDw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rG3jrsVTDDZsfS6jCwG9O2sholJU03K+juRlrB3ZBQEIFL6OgfEpvXfh3FcuzONSuvqLR6lkdrt46gsVLbUodm4+QDH1FRupwlB3K/WHqAVsUhzW2ASciDIN4qn+C3r07uHGKL/YOW2c/YzXhNShdznMxBJkbsLShs1syMYmEEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ft3kOIIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSzYVsDw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A0FC4CECD;
-	Wed,  2 Oct 2024 14:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft3kOIIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABA7C4CEC2;
+	Wed,  2 Oct 2024 14:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878291;
-	bh=J48q6aa0fIEyoHNkpgTSEUiGgZNh0QmVgxKAi0y2wzg=;
+	s=korg; t=1727878293;
+	bh=zqv3rQsE8P+cYsgNtwkr09ZxgI42ABdhfovUzxVIWSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSzYVsDw9ceZ8CVElXWmeh7u0FF1YTcP4+Ox/c+LCJM2ygQIUy/w13hWtsUULISKB
-	 h4OJo1pNn5uh1vHw1HyhFA9sEMGNtSpFFn6fvi3ezodfrKgrGHU0YbR+XvW9Zr27NA
-	 y6NLFV/rSwR4Q6Nh8yFMJU49pwed04GTB4Va2nzY=
+	b=Ft3kOIIXJcoBgTEnf0EAUcmAgMoPjxpdDYnrHrc9T5CId4Bq/95CADX+2vErQ/cra
+	 oT08UG/DxIcF5zq0HxiQxTpxEh/8/VyoVokfX/LJzVPdLKTxbw7Slzi0CfuhFDVJQl
+	 ezvXJ1VBAW1J9AC0cTZnYlT531+yrV3EGwhZb3ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 363/634] IB/core: Fix ib_cache_setup_one error flow cleanup
-Date: Wed,  2 Oct 2024 14:57:43 +0200
-Message-ID: <20241002125825.424873364@linuxfoundation.org>
+Subject: [PATCH 6.10 337/634] clk: qcom: ipq5332: Register gcc_qdss_tsctr_clk_src
+Date: Wed,  2 Oct 2024 14:57:17 +0200
+Message-ID: <20241002125824.405476311@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,100 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit 1403c8b14765eab805377dd3b75e96ace8747aed ]
+[ Upstream commit 0e1ac23dfa3f635e486fdeb08206b981cb0a2a6b ]
 
-When ib_cache_update return an error, we exit ib_cache_setup_one
-instantly with no proper cleanup, even though before this we had
-already successfully done gid_table_setup_one, that results in
-the kernel WARN below.
+gcc_qdss_tsctr_clk_src (enabled in the boot loaders and dependent
+on gpll4_main) was not registered as one of the ipq5332 clocks.
+Hence clk_disable_unused() disabled 'gpll4_main' assuming there
+were no consumers for 'gpll4_main' resulting in system freeze or
+reboots.
 
-Do proper cleanup using gid_table_cleanup_one before returning
-the err in order to fix the issue.
-
-WARNING: CPU: 4 PID: 922 at drivers/infiniband/core/cache.c:806 gid_table_release_one+0x181/0x1a0
-Modules linked in:
-CPU: 4 UID: 0 PID: 922 Comm: c_repro Not tainted 6.11.0-rc1+ #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:gid_table_release_one+0x181/0x1a0
-Code: 44 8b 38 75 0c e8 2f cb 34 ff 4d 8b b5 28 05 00 00 e8 23 cb 34 ff 44 89 f9 89 da 4c 89 f6 48 c7 c7 d0 58 14 83 e8 4f de 21 ff <0f> 0b 4c 8b 75 30 e9 54 ff ff ff 48 8    3 c4 10 5b 5d 41 5c 41 5d 41
-RSP: 0018:ffffc90002b835b0 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c8527
-RDX: 0000000000000000 RSI: ffffffff811c8534 RDI: 0000000000000001
-RBP: ffff8881011b3d00 R08: ffff88810b3abe00 R09: 205d303839303631
-R10: 666572207972746e R11: 72746e6520444947 R12: 0000000000000001
-R13: ffff888106390000 R14: ffff8881011f2110 R15: 0000000000000001
-FS:  00007fecc3b70800(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000340 CR3: 000000010435a001 CR4: 00000000003706b0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? show_regs+0x94/0xa0
- ? __warn+0x9e/0x1c0
- ? gid_table_release_one+0x181/0x1a0
- ? report_bug+0x1f9/0x340
- ? gid_table_release_one+0x181/0x1a0
- ? handle_bug+0xa2/0x110
- ? exc_invalid_op+0x31/0xa0
- ? asm_exc_invalid_op+0x16/0x20
- ? __warn_printk+0xc7/0x180
- ? __warn_printk+0xd4/0x180
- ? gid_table_release_one+0x181/0x1a0
- ib_device_release+0x71/0xe0
- ? __pfx_ib_device_release+0x10/0x10
- device_release+0x44/0xd0
- kobject_put+0x135/0x3d0
- put_device+0x20/0x30
- rxe_net_add+0x7d/0xa0
- rxe_newlink+0xd7/0x190
- nldev_newlink+0x1b0/0x2a0
- ? __pfx_nldev_newlink+0x10/0x10
- rdma_nl_rcv_msg+0x1ad/0x2e0
- rdma_nl_rcv_skb.constprop.0+0x176/0x210
- netlink_unicast+0x2de/0x400
- netlink_sendmsg+0x306/0x660
- __sock_sendmsg+0x110/0x120
- ____sys_sendmsg+0x30e/0x390
- ___sys_sendmsg+0x9b/0xf0
- ? kstrtouint+0x6e/0xa0
- ? kstrtouint_from_user+0x7c/0xb0
- ? get_pid_task+0xb0/0xd0
- ? proc_fail_nth_write+0x5b/0x140
- ? __fget_light+0x9a/0x200
- ? preempt_count_add+0x47/0xa0
- __sys_sendmsg+0x61/0xd0
- do_syscall_64+0x50/0x110
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 1901b91f9982 ("IB/core: Fix potential NULL pointer dereference in pkey cache")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Link: https://patch.msgid.link/79137687d829899b0b1c9835fcb4b258004c439a.1725273354.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Link: https://lore.kernel.org/r/20240730054817.1915652-4-quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-ipq5332.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 6791df64a5fe0..b7c078b7f7cfd 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -1640,8 +1640,10 @@ int ib_cache_setup_one(struct ib_device *device)
- 
- 	rdma_for_each_port (device, p) {
- 		err = ib_cache_update(device, p, true, true, true);
--		if (err)
-+		if (err) {
-+			gid_table_cleanup_one(device);
- 			return err;
-+		}
- 	}
- 
- 	return 0;
+diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+index f98591148a976..6a4877d888294 100644
+--- a/drivers/clk/qcom/gcc-ipq5332.c
++++ b/drivers/clk/qcom/gcc-ipq5332.c
+@@ -3388,6 +3388,7 @@ static struct clk_regmap *gcc_ipq5332_clocks[] = {
+ 	[GCC_QDSS_DAP_DIV_CLK_SRC] = &gcc_qdss_dap_div_clk_src.clkr,
+ 	[GCC_QDSS_ETR_USB_CLK] = &gcc_qdss_etr_usb_clk.clkr,
+ 	[GCC_QDSS_EUD_AT_CLK] = &gcc_qdss_eud_at_clk.clkr,
++	[GCC_QDSS_TSCTR_CLK_SRC] = &gcc_qdss_tsctr_clk_src.clkr,
+ 	[GCC_QPIC_AHB_CLK] = &gcc_qpic_ahb_clk.clkr,
+ 	[GCC_QPIC_CLK] = &gcc_qpic_clk.clkr,
+ 	[GCC_QPIC_IO_MACRO_CLK] = &gcc_qpic_io_macro_clk.clkr,
 -- 
 2.43.0
 
