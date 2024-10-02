@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA481D0DCB;
-	Wed,  2 Oct 2024 14:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BA51D0DE3;
+	Wed,  2 Oct 2024 14:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879998; cv=none; b=Z2xW6T4FRaxqetWSUL3E2q6zMuJGs3y2lGJRNZbz4m59jFi1yrV/KjxFtsHOlRlWuZYW3nQL4uypJPjK8OWHlwvSKQDs3F/+Cs35U+KmQbR0t8RWP8jPLZpnmrJug2P9h8fWwR45xhEbH/nxaeBc7ZBYAf9pYIOdpYhiVclJ9VE=
+	t=1727880001; cv=none; b=O2YIYR6n/YAxpqjBjGv508OOZ58brkJ1U7822Eo9nhj5FeqAnC+cifwyH+T6MQi8GO+taB56sBoFq839IU6UzU6RUK6AB5osR047ChUs01CdU+r5Cc4ew9rnVP4m85GZBApRF7XzolI4kzddva6nm61zg5VXDa2RZgJNOPeqlH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879998; c=relaxed/simple;
-	bh=csWWYWUqsHl7jI+1X2EeED8X0YH2peG0js1xQmicW+A=;
+	s=arc-20240116; t=1727880001; c=relaxed/simple;
+	bh=fsSEvDePjKJAFzndN4QvMv5jTw+bHLTqG/Oub76Iaew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nt+NNgDUlgbmeZ/3y+94PTibDNYZ0BQosah5ZJh6Vowr/l5DKwj70wGHLTKwUodAYtmzN6/WLsvOZPDVQskbdw4Sr41DJKOAa1A1DUJzRjEGiyFLEwE1v6jhcVwuJA/bQGuybZO/j62cXpnkjIHGNWIzDP7iljSB3Wttax6dVf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GD6Jasv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UFpmLSmksxHKUar238QfYVULmgXfgC0c0hP/JXCBLjlWcW3y1rfrrDlsQWid19pqcQcKpUhwDbO2yNZyAs0ImBe6XGzHA4KhwT5U0vRx0sgFRU2QHH5aJIRhKy29EGLhjq/KxCrpvD1XuXykbdl7Y/lZOvMdrsdxCpVtAWo9ZR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUWAm18b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GD6Jasv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37321C4CEC2;
-	Wed,  2 Oct 2024 14:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUWAm18b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296E8C4CEC2;
+	Wed,  2 Oct 2024 14:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879998;
-	bh=csWWYWUqsHl7jI+1X2EeED8X0YH2peG0js1xQmicW+A=;
+	s=korg; t=1727880001;
+	bh=fsSEvDePjKJAFzndN4QvMv5jTw+bHLTqG/Oub76Iaew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GD6JasvES0/Vlxk9/URly2dmL6VH3AK1mcooiOK8nC7+bLDVyD6EnML3htAbjY9B
-	 P+mRfEZqGloJDyzBJw5uh+yM2mRqMg82VgCN59LY3n4sePjxRkHs04F6sbNU/sHyYV
-	 il0X0pGggP1Di1tF9ICnhugFk7AJMN80ccM83vDs=
+	b=AUWAm18bP1mUDCW9f8sAcmQuHeC91xnFwoPhA4FHCKmJdttE75fj3g+H4k8Pc3f+c
+	 N2WO3bhlT2N68Gs5+YiIatjiC23mnZampWCpYk2iQxNn+GVadyXqMuwocyEXqaZFvE
+	 cvu33MYIE3c0+d1bRKOJHItttTClKWf5yWf9tShA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/538] IB/core: Fix ib_cache_setup_one error flow cleanup
-Date: Wed,  2 Oct 2024 14:59:09 +0200
-Message-ID: <20241002125804.654737944@linuxfoundation.org>
+Subject: [PATCH 6.6 311/538] PCI: kirin: Fix buffer overflow in kirin_pcie_parse_port()
+Date: Wed,  2 Oct 2024 14:59:10 +0200
+Message-ID: <20241002125804.693829163@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -46,106 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-[ Upstream commit 1403c8b14765eab805377dd3b75e96ace8747aed ]
+[ Upstream commit c500a86693a126c9393e602741e348f80f1b0fc5 ]
 
-When ib_cache_update return an error, we exit ib_cache_setup_one
-instantly with no proper cleanup, even though before this we had
-already successfully done gid_table_setup_one, that results in
-the kernel WARN below.
+Within kirin_pcie_parse_port(), the pcie->num_slots is compared to
+pcie->gpio_id_reset size (MAX_PCI_SLOTS) which is correct and would lead
+to an overflow.
 
-Do proper cleanup using gid_table_cleanup_one before returning
-the err in order to fix the issue.
+Thus, fix condition to pcie->num_slots + 1 >= MAX_PCI_SLOTS and move
+pcie->num_slots increment below the if-statement to avoid out-of-bounds
+array access.
 
-WARNING: CPU: 4 PID: 922 at drivers/infiniband/core/cache.c:806 gid_table_release_one+0x181/0x1a0
-Modules linked in:
-CPU: 4 UID: 0 PID: 922 Comm: c_repro Not tainted 6.11.0-rc1+ #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:gid_table_release_one+0x181/0x1a0
-Code: 44 8b 38 75 0c e8 2f cb 34 ff 4d 8b b5 28 05 00 00 e8 23 cb 34 ff 44 89 f9 89 da 4c 89 f6 48 c7 c7 d0 58 14 83 e8 4f de 21 ff <0f> 0b 4c 8b 75 30 e9 54 ff ff ff 48 8    3 c4 10 5b 5d 41 5c 41 5d 41
-RSP: 0018:ffffc90002b835b0 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c8527
-RDX: 0000000000000000 RSI: ffffffff811c8534 RDI: 0000000000000001
-RBP: ffff8881011b3d00 R08: ffff88810b3abe00 R09: 205d303839303631
-R10: 666572207972746e R11: 72746e6520444947 R12: 0000000000000001
-R13: ffff888106390000 R14: ffff8881011f2110 R15: 0000000000000001
-FS:  00007fecc3b70800(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000340 CR3: 000000010435a001 CR4: 00000000003706b0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? show_regs+0x94/0xa0
- ? __warn+0x9e/0x1c0
- ? gid_table_release_one+0x181/0x1a0
- ? report_bug+0x1f9/0x340
- ? gid_table_release_one+0x181/0x1a0
- ? handle_bug+0xa2/0x110
- ? exc_invalid_op+0x31/0xa0
- ? asm_exc_invalid_op+0x16/0x20
- ? __warn_printk+0xc7/0x180
- ? __warn_printk+0xd4/0x180
- ? gid_table_release_one+0x181/0x1a0
- ib_device_release+0x71/0xe0
- ? __pfx_ib_device_release+0x10/0x10
- device_release+0x44/0xd0
- kobject_put+0x135/0x3d0
- put_device+0x20/0x30
- rxe_net_add+0x7d/0xa0
- rxe_newlink+0xd7/0x190
- nldev_newlink+0x1b0/0x2a0
- ? __pfx_nldev_newlink+0x10/0x10
- rdma_nl_rcv_msg+0x1ad/0x2e0
- rdma_nl_rcv_skb.constprop.0+0x176/0x210
- netlink_unicast+0x2de/0x400
- netlink_sendmsg+0x306/0x660
- __sock_sendmsg+0x110/0x120
- ____sys_sendmsg+0x30e/0x390
- ___sys_sendmsg+0x9b/0xf0
- ? kstrtouint+0x6e/0xa0
- ? kstrtouint_from_user+0x7c/0xb0
- ? get_pid_task+0xb0/0xd0
- ? proc_fail_nth_write+0x5b/0x140
- ? __fget_light+0x9a/0x200
- ? preempt_count_add+0x47/0xa0
- __sys_sendmsg+0x61/0xd0
- do_syscall_64+0x50/0x110
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 1901b91f9982 ("IB/core: Fix potential NULL pointer dereference in pkey cache")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Link: https://patch.msgid.link/79137687d829899b0b1c9835fcb4b258004c439a.1725273354.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b22dbbb24571 ("PCI: kirin: Support PERST# GPIOs for HiKey970 external PEX 8606 bridge")
+Link: https://lore.kernel.org/linux-pci/20240903115823.30647-1-adiupina@astralinux.ru
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-kirin.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index b7251ed7a8dfb..0b88203720b05 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -1640,8 +1640,10 @@ int ib_cache_setup_one(struct ib_device *device)
+diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/controller/dwc/pcie-kirin.c
+index 2ee146767971c..421697ec7591d 100644
+--- a/drivers/pci/controller/dwc/pcie-kirin.c
++++ b/drivers/pci/controller/dwc/pcie-kirin.c
+@@ -415,12 +415,12 @@ static int kirin_pcie_parse_port(struct kirin_pcie *pcie,
+ 			if (pcie->gpio_id_reset[i] < 0)
+ 				continue;
  
- 	rdma_for_each_port (device, p) {
- 		err = ib_cache_update(device, p, true, true, true);
--		if (err)
-+		if (err) {
-+			gid_table_cleanup_one(device);
- 			return err;
-+		}
- 	}
+-			pcie->num_slots++;
+-			if (pcie->num_slots > MAX_PCI_SLOTS) {
++			if (pcie->num_slots + 1 >= MAX_PCI_SLOTS) {
+ 				dev_err(dev, "Too many PCI slots!\n");
+ 				ret = -EINVAL;
+ 				goto put_node;
+ 			}
++			pcie->num_slots++;
  
- 	return 0;
+ 			ret = of_pci_get_devfn(child);
+ 			if (ret < 0) {
 -- 
 2.43.0
 
