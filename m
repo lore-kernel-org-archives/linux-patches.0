@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25851D07A0;
-	Wed,  2 Oct 2024 14:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B821D07AB;
+	Wed,  2 Oct 2024 14:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879705; cv=none; b=i2zYxN4DpgEo7QzsBY1dbG/9eIz+kBXdU0C4+pAiJ/xI7guoxVfCUmwGiLGZRAUfWw8EzEM7VPlx1HBCaDxwN42yxh3Wca/B5GMwkye5CtcLAarCG9Hoq/91VKZUJFULIf52TTMsHWO31LOGvRW2uOMrWRbmXQ3PCwkSSZPO6og=
+	t=1727879708; cv=none; b=FLv9SD2ey+RX8KaoG01wslprDJRHo5Mh6SNxiYXfny6NJKg08cwm/+CvOXdCFaCY70fsBli6eYn4O+OL3Nq3hS/hM3UP0cqhv8XUlKn7KUc8XdSdcitox6wE7aXii65AW+O/aWZNQ8WjTx5gOMcHxKjSEmxznQr5dEaxde9L/MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879705; c=relaxed/simple;
-	bh=oYYn3LPF1zVtuxgJ18TqvyE/r8vwKsOsp5T4LbGJgNw=;
+	s=arc-20240116; t=1727879708; c=relaxed/simple;
+	bh=ntRZhy5M5ydOA9dduA63ijApxj5ypfUgYhinQX1Wb6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LiUcPNdBtZnf8VFl6Ah5IlfMoAWr6UaRJk+gwrK8j9U+6njZVh8X8vFTiHAb1kAv6NQ9L8qVoib3CM6YA+bOR/e10S7N3FlrWRBMcK4X32/bIX0X3xmJOsvZxJhDxYiVzeB2rWa9DOfrCqFLVhfuA95JYxyiSv0OWlPS456VU5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmKSUHoK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WEvzbicqQ73wK+gA08XYNnzcx3MPKDtNnKAJJSsWEBlZkzb3p/cUinLYZdqcQD4AhWhJzVAsaeKfSFoeYcZUQRqIbdH7E4A22C9vgGs+ce2Of0fNQfK45bap4V5oZst2GP7Ogj/lc0rw+TOExHLhdBV+ZGafHsE7a/57xAR2wi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5UPbZdn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmKSUHoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CF9C4CEC2;
-	Wed,  2 Oct 2024 14:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5UPbZdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAE2C4CEC2;
+	Wed,  2 Oct 2024 14:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879705;
-	bh=oYYn3LPF1zVtuxgJ18TqvyE/r8vwKsOsp5T4LbGJgNw=;
+	s=korg; t=1727879708;
+	bh=ntRZhy5M5ydOA9dduA63ijApxj5ypfUgYhinQX1Wb6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmKSUHoKSf/R1nhM/NTtzPvbI+BWa0wWtbECRYyHqxk2QMIVjTDPfyjD+OF3dCfsi
-	 GGBBzOTBntlATldflQZctj7EqGCGSkT4+A9zUdKZQXESMbcCbfyH+9QKyLzBsqG9uL
-	 ClrswtBjL0Lf1LzIk4Zi0oLeQmdQAWQNYq6F6uwQ=
+	b=j5UPbZdn1e8b3ZOuu/uraL9SIVQUsyBtdtsscrWWxt5iFEoHsU7TtmBWc+SZ349gk
+	 qC7Uo+D5l0EHfNVl6E9hg/DE2MSbNOwxvMT53UQFJsEYr8a3sG+0YrZoOd0wRnonxw
+	 c1JSQNEOi4lbbUWJ0FfyOWngE4mU6i+NVx/cu/0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	David Vernet <void@manifault.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/538] libbpf: Sync progs autoload with maps autocreate for struct_ops maps
-Date: Wed,  2 Oct 2024 14:57:30 +0200
-Message-ID: <20241002125800.587092087@linuxfoundation.org>
+Subject: [PATCH 6.6 212/538] libbpf: Dont take direct pointers into BTF data from st_ops
+Date: Wed,  2 Oct 2024 14:57:31 +0200
+Message-ID: <20241002125800.626515334@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,115 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: David Vernet <void@manifault.com>
 
-[ Upstream commit fe9d049c3da06373a1a35914b7f695509e4cb1fe ]
+[ Upstream commit 04a94133f1b3cccb19e056c26f056c50b4e5b3b1 ]
 
-Automatically select which struct_ops programs to load depending on
-which struct_ops maps are selected for automatic creation.
-E.g. for the BPF code below:
+In struct bpf_struct_ops, we have take a pointer to a BTF type name, and
+a struct btf_type. This was presumably done for convenience, but can
+actually result in subtle and confusing bugs given that BTF data can be
+invalidated before a program is loaded. For example, in sched_ext, we
+may sometimes resize a data section after a skeleton has been opened,
+but before the struct_ops scheduler map has been loaded. This may cause
+the BTF data to be realloc'd, which can then cause a UAF when loading
+the program because the struct_ops map has pointers directly into the
+BTF data.
 
-    SEC("struct_ops/test_1") int BPF_PROG(foo) { ... }
-    SEC("struct_ops/test_2") int BPF_PROG(bar) { ... }
+We're already storing the BTF type_id in struct bpf_struct_ops. Because
+type_id is stable, we can therefore just update the places where we were
+looking at those pointers to instead do the lookups we need from the
+type_id.
 
-    SEC(".struct_ops.link")
-    struct test_ops___v1 A = {
-        .foo = (void *)foo
-    };
-
-    SEC(".struct_ops.link")
-    struct test_ops___v2 B = {
-        .foo = (void *)foo,
-        .bar = (void *)bar,
-    };
-
-And the following libbpf API calls:
-
-    bpf_map__set_autocreate(skel->maps.A, true);
-    bpf_map__set_autocreate(skel->maps.B, false);
-
-The autoload would be enabled for program 'foo' and disabled for
-program 'bar'.
-
-During load, for each struct_ops program P, referenced from some
-struct_ops map M:
-- set P.autoload = true if M.autocreate is true for some M;
-- set P.autoload = false if M.autocreate is false for all M;
-- don't change P.autoload, if P is not referenced from any map.
-
-Do this after bpf_object__init_kern_struct_ops_maps()
-to make sure that shadow vars assignment is done.
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 590a00888250 ("bpf: libbpf: Add STRUCT_OPS support")
+Signed-off-by: David Vernet <void@manifault.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240306104529.6453-9-eddyz87@gmail.com
-Stable-dep-of: 04a94133f1b3 ("libbpf: Don't take direct pointers into BTF data from st_ops")
+Link: https://lore.kernel.org/bpf/20240724171459.281234-1-void@manifault.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 43 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ tools/lib/bpf/libbpf.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index c91917868b557..aeed9bc44247b 100644
+index aeed9bc44247b..bf1c4c69fd92d 100644
 --- a/tools/lib/bpf/libbpf.c
 +++ b/tools/lib/bpf/libbpf.c
-@@ -1007,6 +1007,48 @@ static bool is_valid_st_ops_program(struct bpf_object *obj,
- 	return false;
- }
+@@ -457,8 +457,6 @@ struct bpf_program {
+ };
  
-+/* For each struct_ops program P, referenced from some struct_ops map M,
-+ * enable P.autoload if there are Ms for which M.autocreate is true,
-+ * disable P.autoload if for all Ms M.autocreate is false.
-+ * Don't change P.autoload for programs that are not referenced from any maps.
-+ */
-+static int bpf_object_adjust_struct_ops_autoload(struct bpf_object *obj)
-+{
-+	struct bpf_program *prog, *slot_prog;
-+	struct bpf_map *map;
-+	int i, j, k, vlen;
+ struct bpf_struct_ops {
+-	const char *tname;
+-	const struct btf_type *type;
+ 	struct bpf_program **progs;
+ 	__u32 *kern_func_off;
+ 	/* e.g. struct tcp_congestion_ops in bpf_prog's btf format */
+@@ -1027,11 +1025,14 @@ static int bpf_object_adjust_struct_ops_autoload(struct bpf_object *obj)
+ 			continue;
+ 
+ 		for (j = 0; j < obj->nr_maps; ++j) {
++			const struct btf_type *type;
 +
-+	for (i = 0; i < obj->nr_programs; ++i) {
-+		int should_load = false;
-+		int use_cnt = 0;
-+
-+		prog = &obj->programs[i];
-+		if (prog->type != BPF_PROG_TYPE_STRUCT_OPS)
-+			continue;
-+
-+		for (j = 0; j < obj->nr_maps; ++j) {
-+			map = &obj->maps[j];
-+			if (!bpf_map__is_struct_ops(map))
-+				continue;
-+
-+			vlen = btf_vlen(map->st_ops->type);
-+			for (k = 0; k < vlen; ++k) {
-+				slot_prog = map->st_ops->progs[k];
-+				if (prog != slot_prog)
-+					continue;
-+
-+				use_cnt++;
-+				if (map->autocreate)
-+					should_load = true;
-+			}
-+		}
-+		if (use_cnt)
-+			prog->autoload = should_load;
-+	}
-+
-+	return 0;
-+}
-+
- /* Init the map's fields that depend on kern_btf */
- static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
+ 			map = &obj->maps[j];
+ 			if (!bpf_map__is_struct_ops(map))
+ 				continue;
+ 
+-			vlen = btf_vlen(map->st_ops->type);
++			type = btf__type_by_id(obj->btf, map->st_ops->type_id);
++			vlen = btf_vlen(type);
+ 			for (k = 0; k < vlen; ++k) {
+ 				slot_prog = map->st_ops->progs[k];
+ 				if (prog != slot_prog)
+@@ -1065,8 +1066,8 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
+ 	int err;
+ 
+ 	st_ops = map->st_ops;
+-	type = st_ops->type;
+-	tname = st_ops->tname;
++	type = btf__type_by_id(btf, st_ops->type_id);
++	tname = btf__name_by_offset(btf, type->name_off);
+ 	err = find_struct_ops_kern_types(obj, tname, &mod_btf,
+ 					 &kern_type, &kern_type_id,
+ 					 &kern_vtype, &kern_vtype_id,
+@@ -1298,8 +1299,6 @@ static int init_struct_ops_maps(struct bpf_object *obj, const char *sec_name,
+ 		memcpy(st_ops->data,
+ 		       data->d_buf + vsi->offset,
+ 		       type->size);
+-		st_ops->tname = tname;
+-		st_ops->type = type;
+ 		st_ops->type_id = type_id;
+ 
+ 		pr_debug("struct_ops init: struct %s(type_id=%u) %s found at offset %u\n",
+@@ -7995,11 +7994,13 @@ static int bpf_object__resolve_externs(struct bpf_object *obj,
+ 
+ static void bpf_map_prepare_vdata(const struct bpf_map *map)
  {
-@@ -8003,6 +8045,7 @@ static int bpf_object_load(struct bpf_object *obj, int extra_log_level, const ch
- 	err = err ? : bpf_object__sanitize_and_load_btf(obj);
- 	err = err ? : bpf_object__sanitize_maps(obj);
- 	err = err ? : bpf_object__init_kern_struct_ops_maps(obj);
-+	err = err ? : bpf_object_adjust_struct_ops_autoload(obj);
- 	err = err ? : bpf_object__relocate(obj, obj->btf_custom_path ? : target_btf_path);
- 	err = err ? : bpf_object__create_maps(obj);
- 	err = err ? : bpf_object__load_progs(obj, extra_log_level);
++	const struct btf_type *type;
+ 	struct bpf_struct_ops *st_ops;
+ 	__u32 i;
+ 
+ 	st_ops = map->st_ops;
+-	for (i = 0; i < btf_vlen(st_ops->type); i++) {
++	type = btf__type_by_id(map->obj->btf, st_ops->type_id);
++	for (i = 0; i < btf_vlen(type); i++) {
+ 		struct bpf_program *prog = st_ops->progs[i];
+ 		void *kern_data;
+ 		int prog_fd;
+@@ -9234,6 +9235,7 @@ static struct bpf_map *find_struct_ops_map_by_offset(struct bpf_object *obj,
+ static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
+ 					    Elf64_Shdr *shdr, Elf_Data *data)
+ {
++	const struct btf_type *type;
+ 	const struct btf_member *member;
+ 	struct bpf_struct_ops *st_ops;
+ 	struct bpf_program *prog;
+@@ -9293,13 +9295,14 @@ static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
+ 		}
+ 		insn_idx = sym->st_value / BPF_INSN_SZ;
+ 
+-		member = find_member_by_offset(st_ops->type, moff * 8);
++		type = btf__type_by_id(btf, st_ops->type_id);
++		member = find_member_by_offset(type, moff * 8);
+ 		if (!member) {
+ 			pr_warn("struct_ops reloc %s: cannot find member at moff %u\n",
+ 				map->name, moff);
+ 			return -EINVAL;
+ 		}
+-		member_idx = member - btf_members(st_ops->type);
++		member_idx = member - btf_members(type);
+ 		name = btf__name_by_offset(btf, member->name_off);
+ 
+ 		if (!resolve_func_ptr(btf, member->type, NULL)) {
 -- 
 2.43.0
 
