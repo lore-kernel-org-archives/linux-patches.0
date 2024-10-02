@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430AF376;
-	Wed,  2 Oct 2024 13:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74131D0426;
+	Wed,  2 Oct 2024 13:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876025; cv=none; b=uV/rj2KF+dulUOZUE1w9HQYvnRGCU83ZphXck2SWaV5UKdonPs3z5u5DwUE5LuaU0cp/bvIFPLENELq/gumiSgLde29kibktZDgsz0yrNaFUGv/8D3MNz2gErrSr776GDdaF92yJpbyBtEi6vcdgcuuOJVqJf/NUhXsm3W2rILo=
+	t=1727876027; cv=none; b=P4kZDEUwdEv7ylIKtUGrW28BgjQKbFNOkPCVvCKyOTwIr5CNT7NeZCfwlk6XaIVVCtug8IcCTWWSNTuIFRZVTC7wKf28cTgou3fmpT48PgPmg9rNYg3SROI7fWX5jYlMxf4uPTSNNMavKRSMt0uRtNpdrUtLqlehK3aNGNbHIVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876025; c=relaxed/simple;
-	bh=2+5bAMSOUO/57GxeqhAAjBs3E9kgmU9YHeYhstYQJnc=;
+	s=arc-20240116; t=1727876027; c=relaxed/simple;
+	bh=rd0DE/63k99mZvYyNMtfj9miKsgrIv74U0qzD0k/vR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PyUNYQaJT/M94kCMAOtHnny+W0HmG8sjQ7ZhQh4bf4s35iVCrsKgMvskxslT85wWcd8MXukBX1egkbtT5cDCBC46sgk/rRTNhMFvkazmxc8S+jVMnPdFkE9or04gxDfwn4m/SLsGq5fX2RWOD2fpB3vvzbVCNxLxvvhsZgeMp/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7pNG+TU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7oR5Tz7DBgvQ7pVdmCU4jm/kVquOSVeqXHeYcXzenavFRDIMASW6EQLyHQ58K4Tp1oC+iAvP2pN4uqjdUiGsxrsFD0WHoH1QADMhi/iwE3TNaMJyaQdrXHMAZSe24B8JeYStuByGCGOtgq/hTrr9bZXEJ7+mHGudnivtFGckRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0xWHQbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7pNG+TU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F019C4CEC5;
-	Wed,  2 Oct 2024 13:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0xWHQbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55429C4CECD;
+	Wed,  2 Oct 2024 13:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876024;
-	bh=2+5bAMSOUO/57GxeqhAAjBs3E9kgmU9YHeYhstYQJnc=;
+	s=korg; t=1727876027;
+	bh=rd0DE/63k99mZvYyNMtfj9miKsgrIv74U0qzD0k/vR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7pNG+TUxFKpJsyhNItOI6MAEWSbc6nxpgiLHosH4MbEdOPzK+xYlViqtOF7NK9d1
-	 GcUJZKKurkDMA41gkYqrcBmKZq3NqP4CSb5D+6cv7tABSMzt60/ZX9XB0km/uAeFC6
-	 Bws7Q5cLmLkEcfgeBQX2+yztuXV08OaGLejevOpA=
+	b=O0xWHQbTn7H4cR8BTcxHYYaNc/WaLgGCncD8DqUpbsVVWGxZoaCSiTQFQc2tCkaZH
+	 gROcz/LyqvcCuOEwXTWbYQTWctmDo+kWgmkeCpmhV1SXM19qFnntpcOXQueq+r5ESp
+	 xH9LjCweNUXb4wvDMdHShm8ALmlj8BKV0o7OOMYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yu <yu.c.chen@intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	David Gow <davidgow@google.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Tejun Heo <tj@kernel.org>,
+	yangerkun <yangerkun@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 303/695] kthread: fix task state in kthread worker if being frozen
-Date: Wed,  2 Oct 2024 14:55:01 +0200
-Message-ID: <20241002125834.535950380@linuxfoundation.org>
+Subject: [PATCH 6.11 304/695] ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard
+Date: Wed,  2 Oct 2024 14:55:02 +0200
+Message-ID: <20241002125834.575412647@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,93 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: yangerkun <yangerkun@huawei.com>
 
-[ Upstream commit e16c7b07784f3fb03025939c4590b9a7c64970a7 ]
+[ Upstream commit 20cee68f5b44fdc2942d20f3172a262ec247b117 ]
 
-When analyzing a kernel waring message, Peter pointed out that there is a
-race condition when the kworker is being frozen and falls into
-try_to_freeze() with TASK_INTERRUPTIBLE, which could trigger a
-might_sleep() warning in try_to_freeze().  Although the root cause is not
-related to freeze()[1], it is still worthy to fix this issue ahead.
+Commit 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in
+ext4_group_info") speed up fstrim by skipping trim trimmed group. We
+also has the chance to clear trimmed once there exists some block free
+for this group(mount without discard), and the next trim for this group
+will work well too.
 
-One possible race scenario:
+For mount with discard, we will issue dicard when we free blocks, so
+leave trimmed flag keep alive to skip useless trim trigger from
+userspace seems reasonable. But for some case like ext4 build on
+dm-thinpool(ext4 blocksize 4K, pool blocksize 128K), discard from ext4
+maybe unaligned for dm thinpool, and thinpool will just finish this
+discard(see process_discard_bio when begein equals to end) without
+actually process discard. For this case, trim from userspace can really
+help us to free some thinpool block.
 
-        CPU 0                                           CPU 1
-        -----                                           -----
+So convert to clear trimmed flag for all case no matter mounted with
+discard or not.
 
-        // kthread_worker_fn
-        set_current_state(TASK_INTERRUPTIBLE);
-                                                       suspend_freeze_processes()
-                                                         freeze_processes
-                                                           static_branch_inc(&freezer_active);
-                                                         freeze_kernel_threads
-                                                           pm_nosig_freezing = true;
-        if (work) { //false
-          __set_current_state(TASK_RUNNING);
-
-        } else if (!freezing(current)) //false, been frozen
-
-                      freezing():
-                      if (static_branch_unlikely(&freezer_active))
-                        if (pm_nosig_freezing)
-                          return true;
-          schedule()
-	}
-
-        // state is still TASK_INTERRUPTIBLE
-        try_to_freeze()
-          might_sleep() <--- warning
-
-Fix this by explicitly set the TASK_RUNNING before entering
-try_to_freeze().
-
-Link: https://lore.kernel.org/lkml/Zs2ZoAcUsZMX2B%2FI@chenyu5-mobl2/ [1]
-Link: https://lkml.kernel.org/r/20240827112308.181081-1-yu.c.chen@intel.com
-Fixes: b56c0d8937e6 ("kthread: implement kthread_worker")
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Mickaël Salaün <mic@digikod.net>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in ext4_group_info")
+Signed-off-by: yangerkun <yangerkun@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240817085510.2084444-1-yangerkun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kthread.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/kthread.c b/kernel/kthread.c
-index f7be976ff88af..db4ceb0f503cc 100644
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -845,8 +845,16 @@ int kthread_worker_fn(void *worker_ptr)
- 		 * event only cares about the address.
- 		 */
- 		trace_sched_kthread_work_execute_end(work, func);
--	} else if (!freezing(current))
-+	} else if (!freezing(current)) {
- 		schedule();
-+	} else {
-+		/*
-+		 * Handle the case where the current remains
-+		 * TASK_INTERRUPTIBLE. try_to_freeze() expects
-+		 * the current to be TASK_RUNNING.
-+		 */
-+		__set_current_state(TASK_RUNNING);
-+	}
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 9dda9cd68ab2f..dfecd25cee4ea 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3887,11 +3887,8 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
+ 	/*
+ 	 * Clear the trimmed flag for the group so that the next
+ 	 * ext4_trim_fs can trim it.
+-	 * If the volume is mounted with -o discard, online discard
+-	 * is supported and the free blocks will be trimmed online.
+ 	 */
+-	if (!test_opt(sb, DISCARD))
+-		EXT4_MB_GRP_CLEAR_TRIMMED(db);
++	EXT4_MB_GRP_CLEAR_TRIMMED(db);
  
- 	try_to_freeze();
- 	cond_resched();
+ 	if (!db->bb_free_root.rb_node) {
+ 		/* No more items in the per group rb tree
+@@ -6515,8 +6512,9 @@ static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
+ 					 " group:%u block:%d count:%lu failed"
+ 					 " with %d", block_group, bit, count,
+ 					 err);
+-		} else
+-			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
++		}
++
++		EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
+ 
+ 		ext4_lock_group(sb, block_group);
+ 		mb_free_blocks(inode, &e4b, bit, count_clusters);
 -- 
 2.43.0
 
