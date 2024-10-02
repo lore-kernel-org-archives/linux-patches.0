@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663AA1D04B8;
-	Wed,  2 Oct 2024 13:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FFA1D015C;
+	Wed,  2 Oct 2024 13:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877071; cv=none; b=sPIrcuyF6bVdXfNrQ5gCCyEeaO+dGCpECcQl9zW/Vox5uJA8mbATFkyNC+tx8c5qC5gzdu0eJCJsIbv5/dZ62klNOdcF6vGyAhPCqdjgX/roGSduL+ZFFBRYfh2Yx/Oeo7vCGK8xTh1wKunZO4t0jGGZz8+7hNoGYInXcMzOsUA=
+	t=1727877074; cv=none; b=WMSky9IALPwmFOKt347WchT1JLOb00Rv+3fWfLGjZNfVugvN+SdKg1pDdMTnGwOsHgzlbgwOPbtSNSh87t0QB09lICqRZLAIfOMcOV9Vp/mgXUHxmvHs0KkXYQOfNO+/RIfIpej2vj6mD4DukBrFf3hn+c57nMk9ykwSDjKTH24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877071; c=relaxed/simple;
-	bh=Tm1X6A0u+bw9FGwX0+bLc4DGqaogIdV0ZF+jc2JiAbk=;
+	s=arc-20240116; t=1727877074; c=relaxed/simple;
+	bh=qmBhEDTn5rCs4ld8A1p7cu48ZjFU7iXEJvd4EULYfgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoxeYv2YN5b7RcMk6SUK8hJbnDWuv42/IfDkc1xDd+QUTL9aSJJQuJtLXWYcozBtnVese5bXi/hkwyIVSdYQIsJ/m2fmZq+COHQBvu2h1872gVYURbM/gD56eDKRXOPVGu/3X8gHwZPE7oNFZ6E/uC7nF7B80Jj9C1vSBV1lz4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3B9UmO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z5ye+HCIw6t4gYwONnbExIvxGYMROUlRe51IR0fjDmKEWmrS+km6IfXs0qfEFrKEDsPP2TjNXI2mHSun6irdKE1NQJuTZhltyQOveaTLAzKpxIM7opzd2Nwy/sS+ukuCoXFNtWDFjFURvwnmDgdCNT8v6gYnTkJcSEmeDv/xqmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fYdOqab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3B9UmO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59ACC4CEC2;
-	Wed,  2 Oct 2024 13:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fYdOqab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EF8C4CEC2;
+	Wed,  2 Oct 2024 13:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877071;
-	bh=Tm1X6A0u+bw9FGwX0+bLc4DGqaogIdV0ZF+jc2JiAbk=;
+	s=korg; t=1727877074;
+	bh=qmBhEDTn5rCs4ld8A1p7cu48ZjFU7iXEJvd4EULYfgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3B9UmO2KDmafG2J5TjMd0tO/JpP2qjuuMvO+gAzSY7KBul/9PHkfeDEk523+hlEQ
-	 c7CCwH0XO0INt5+3m1amg0LJznr8T7f4R98/ipqQyLr5fWbC4IMTJnB/Jla6n4wu+5
-	 pweN7dLEx9I4iiQiqZvE6mYxtEALqtOiblHnZ6wI=
+	b=1fYdOqabD2GmULCZXYu5KscHpvSnhohHSEe8vpjahQ5szPQA80IPOTt1/zpfqCJ58
+	 7o7HVeG3xzo7xS9RRF1wuUTLFMZpBX2pgiLm9KgcROoC9akDq+Z5/Dn+9RZAn32/7L
+	 9d3RbPiztd0zREwZWhZd4mkryxfEY7aec7C7VdP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gafert <christian.gafert@rohde-schwarz.com>,
-	Max Ferger <max.ferger@rohde-schwarz.com>,
-	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.11 654/695] padata: use integer wrap around to prevent deadlock on seq_nr overflow
-Date: Wed,  2 Oct 2024 15:00:52 +0200
-Message-ID: <20241002125848.618139100@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Luca Stefani <luca.stefani.ge1@gmail.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.11 628/695] btrfs: always update fstrim_range on failure in FITRIM ioctl
+Date: Wed,  2 Oct 2024 15:00:26 +0200
+Message-ID: <20241002125847.583153183@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,46 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+From: Luca Stefani <luca.stefani.ge1@gmail.com>
 
-commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
+commit 3368597206dc3c6c3c2247ee146beada14c67380 upstream.
 
-When submitting more than 2^32 padata objects to padata_do_serial, the
-current sorting implementation incorrectly sorts padata objects with
-overflowed seq_nr, causing them to be placed before existing objects in
-the reorder list. This leads to a deadlock in the serialization process
-as padata_find_next cannot match padata->seq_nr and pd->processed
-because the padata instance with overflowed seq_nr will be selected
-next.
+Even in case of failure we could've discarded some data and userspace
+should be made aware of it, so copy fstrim_range to userspace
+regardless.
 
-To fix this, we use an unsigned integer wrap around to correctly sort
-padata objects in scenarios with integer overflow.
+Also make sure to update the trimmed bytes amount even if
+btrfs_trim_free_extents fails.
 
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Cc: <stable@vger.kernel.org>
-Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Luca Stefani <luca.stefani.ge1@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/extent-tree.c |    4 ++--
+ fs/btrfs/ioctl.c       |    4 +---
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -404,7 +404,8 @@ void padata_do_serial(struct padata_priv
- 	/* Sort in ascending order of sequence number. */
- 	list_for_each_prev(pos, &reorder->list) {
- 		cur = list_entry(pos, struct padata_priv, list);
--		if (cur->seq_nr < padata->seq_nr)
-+		/* Compare by difference to consider integer wrap around */
-+		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6551,13 +6551,13 @@ int btrfs_trim_fs(struct btrfs_fs_info *
+ 			continue;
+ 
+ 		ret = btrfs_trim_free_extents(device, &group_trimmed);
++
++		trimmed += group_trimmed;
+ 		if (ret) {
+ 			dev_failed++;
+ 			dev_ret = ret;
  			break;
+ 		}
+-
+-		trimmed += group_trimmed;
  	}
- 	list_add(&padata->list, pos);
+ 	mutex_unlock(&fs_devices->device_list_mutex);
+ 
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -543,13 +543,11 @@ static noinline int btrfs_ioctl_fitrim(s
+ 
+ 	range.minlen = max(range.minlen, minlen);
+ 	ret = btrfs_trim_fs(fs_info, &range);
+-	if (ret < 0)
+-		return ret;
+ 
+ 	if (copy_to_user(arg, &range, sizeof(range)))
+ 		return -EFAULT;
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int __pure btrfs_is_empty_uuid(const u8 *uuid)
 
 
