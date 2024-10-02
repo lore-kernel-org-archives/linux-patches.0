@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105FA1974F4;
-	Wed,  2 Oct 2024 14:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F326E1D0B99;
+	Wed,  2 Oct 2024 14:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879145; cv=none; b=WH5aCmwQkQPKT74TJFwBu5C7PZdCGv1sQAaguuUKHz2Rr+a7DEsH3iKkjHEXx3gOX2Z8nB2JBiUPrKckXTaR64IMhrFSnhpltwSUXC5RIbgln+II9elQp4ZciASZv6D5APdScIgOEY/icsNI3B09R+c3On+siaHA7r7CKsJfAjI=
+	t=1727879148; cv=none; b=aldr32e4KPLEjFvqu1M6o2A3fm7N4gaL82CR7FAT3RjUZDthRN2jFanqoVNw8rYmHnkvCWWmf+69/pPsUkJuXUpMPvjxZhdpsEBIweyaWCNLX+R+iOMJFAw6085MQTwAtijiSn/x8dkVoMt1Yb7DGezPVY++EQBMfnnaNpEocRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879145; c=relaxed/simple;
-	bh=DhKr/qX1I2AoGHY5/p+7tORx/+ygpDWBincZb00TJ2Y=;
+	s=arc-20240116; t=1727879148; c=relaxed/simple;
+	bh=KMuZsSc5vyZT07+iYVyRFDeADnRq8qs7JsW3/KZ7TM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsvXKkrm6NMGKM8k9rdRW3wcBV0jqj9yLLmcq350G5iaB+/4JXiL06aHaZLJjHJnyLk/Tm4ih9bXvn6SNAyrui1zN71K9LS4YBcfUr/PfSSREjXWmT05aiqqhgbM5RWzPL6dwe1xFsA87TDzWFBco+HRnKdexdITNN65N2VTmQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWJbfpRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpYvkD3yDRPEbHit+uj/9uksTdn7qWNas16UvnO8xVIcVE1lT3tV+t+E7+meKMBhi9j/9xfZbCir0z56vtypBQn6BQB7R+7rLzWy0LRsBPyC+ok9dJ1cZRWcmt1YM+YYVXMhxUwa0QF66yt2zCnk8UHvnuYRLHG0C/fOC3jyhi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0chLq2a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWJbfpRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE71C4CEC2;
-	Wed,  2 Oct 2024 14:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0chLq2a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DDEC4CEC2;
+	Wed,  2 Oct 2024 14:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879144;
-	bh=DhKr/qX1I2AoGHY5/p+7tORx/+ygpDWBincZb00TJ2Y=;
+	s=korg; t=1727879147;
+	bh=KMuZsSc5vyZT07+iYVyRFDeADnRq8qs7JsW3/KZ7TM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWJbfpRPaRrcIe+lzoGqb50wFo7mQkZMQUBGFZmVyIjWcHMF2rUynndPKAOIE2TCZ
-	 L2gY1DWmKRrrYRw+r6I7SjDxjOoRqK6RCNbrnqRgeYRK5qJofQCHAMQNtShcEY4A27
-	 eE5aiGADUUAh8/KilEuopQY3cDFLa4I19ll8ZNes=
+	b=Z0chLq2aBzKAuQ1GPLPrF1DZnd/FHsE9Lfc0jPw7gskETie0rSM2vlu6UN89kykwp
+	 7+w7u8jE1nJlXjSIe0BqjmhIo66sU9J9M4azkygxUBfHhCtQRitvXmDkV7Tqeef5nz
+	 YMZtuMb3VhmFUA3W/dJPPIRoomkkQ6D6gGwpl1zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Owens <calvin@wbinvd.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/538] ARM: 9410/1: vfp: Use asm volatile in fmrx/fmxr macros
-Date: Wed,  2 Oct 2024 14:54:18 +0200
-Message-ID: <20241002125752.767300687@linuxfoundation.org>
+Subject: [PATCH 6.6 002/538] EDAC/synopsys: Fix error injection on Zynq UltraScale+
+Date: Wed,  2 Oct 2024 14:54:01 +0200
+Message-ID: <20241002125752.071134272@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,220 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
 
-[ Upstream commit 89a906dfa8c3b21b3e5360f73c49234ac1eb885b ]
+[ Upstream commit 35e6dbfe1846caeafabb49b7575adb36b0aa2269 ]
 
-Floating point instructions in userspace can crash some arm kernels
-built with clang/LLD 17.0.6:
+The Zynq UltraScale+ MPSoC DDR has a disjoint memory from 2GB to 32GB.
+The DDR host interface has a contiguous memory so while injecting
+errors, the driver should remove the hole else the injection fails as
+the address translation is incorrect.
 
-    BUG: unsupported FP instruction in kernel mode
-    FPEXC == 0xc0000780
-    Internal error: Oops - undefined instruction: 0 [#1] ARM
-    CPU: 0 PID: 196 Comm: vfp-reproducer Not tainted 6.10.0 #1
-    Hardware name: BCM2835
-    PC is at vfp_support_entry+0xc8/0x2cc
-    LR is at do_undefinstr+0xa8/0x250
-    pc : [<c0101d50>]    lr : [<c010a80c>]    psr: a0000013
-    sp : dc8d1f68  ip : 60000013  fp : bedea19c
-    r10: ec532b17  r9 : 00000010  r8 : 0044766c
-    r7 : c0000780  r6 : ec532b17  r5 : c1c13800  r4 : dc8d1fb0
-    r3 : c10072c4  r2 : c0101c88  r1 : ec532b17  r0 : 0044766c
-    Flags: NzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-    Control: 00c5387d  Table: 0251c008  DAC: 00000051
-    Register r0 information: non-paged memory
-    Register r1 information: vmalloc memory
-    Register r2 information: non-slab/vmalloc memory
-    Register r3 information: non-slab/vmalloc memory
-    Register r4 information: 2-page vmalloc region
-    Register r5 information: slab kmalloc-cg-2k
-    Register r6 information: vmalloc memory
-    Register r7 information: non-slab/vmalloc memory
-    Register r8 information: non-paged memory
-    Register r9 information: zero-size pointer
-    Register r10 information: vmalloc memory
-    Register r11 information: non-paged memory
-    Register r12 information: non-paged memory
-    Process vfp-reproducer (pid: 196, stack limit = 0x61aaaf8b)
-    Stack: (0xdc8d1f68 to 0xdc8d2000)
-    1f60:                   0000081f b6f69300 0000000f c10073f4 c10072c4 dc8d1fb0
-    1f80: ec532b17 0c532b17 0044766c b6f9ccd8 00000000 c010a80c 00447670 60000010
-    1fa0: ffffffff c1c13800 00c5387d c0100f10 b6f68af8 00448fc0 00000000 bedea188
-    1fc0: bedea314 00000001 00448ebc b6f9d000 00447608 b6f9ccd8 00000000 bedea19c
-    1fe0: bede9198 bedea188 b6e1061c 0044766c 60000010 ffffffff 00000000 00000000
-    Call trace:
-    [<c0101d50>] (vfp_support_entry) from [<c010a80c>] (do_undefinstr+0xa8/0x250)
-    [<c010a80c>] (do_undefinstr) from [<c0100f10>] (__und_usr+0x70/0x80)
-    Exception stack(0xdc8d1fb0 to 0xdc8d1ff8)
-    1fa0:                                     b6f68af8 00448fc0 00000000 bedea188
-    1fc0: bedea314 00000001 00448ebc b6f9d000 00447608 b6f9ccd8 00000000 bedea19c
-    1fe0: bede9198 bedea188 b6e1061c 0044766c 60000010 ffffffff
-    Code: 0a000061 e3877202 e594003c e3a09010 (eef16a10)
-    ---[ end trace 0000000000000000 ]---
-    Kernel panic - not syncing: Fatal exception in interrupt
-    ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+Introduce a get_mem_info() function pointer and set it for Zynq
+UltraScale+ platform to return host address.
 
-This is a minimal userspace reproducer on a Raspberry Pi Zero W:
-
-    #include <stdio.h>
-    #include <math.h>
-
-    int main(void)
-    {
-            double v = 1.0;
-            printf("%fn", NAN + *(volatile double *)&v);
-            return 0;
-    }
-
-Another way to consistently trigger the oops is:
-
-    calvin@raspberry-pi-zero-w ~$ python -c "import json"
-
-The bug reproduces only when the kernel is built with DYNAMIC_DEBUG=n,
-because the pr_debug() calls act as barriers even when not activated.
-
-This is the output from the same kernel source built with the same
-compiler and DYNAMIC_DEBUG=y, where the userspace reproducer works as
-expected:
-
-    VFP: bounce: trigger ec532b17 fpexc c0000780
-    VFP: emulate: INST=0xee377b06 SCR=0x00000000
-    VFP: bounce: trigger eef1fa10 fpexc c0000780
-    VFP: emulate: INST=0xeeb40b40 SCR=0x00000000
-    VFP: raising exceptions 30000000
-
-    calvin@raspberry-pi-zero-w ~$ ./vfp-reproducer
-    nan
-
-Crudely grepping for vmsr/vmrs instructions in the otherwise nearly
-idential text for vfp_support_entry() makes the problem obvious:
-
-    vmlinux.llvm.good [0xc0101cb8] <+48>:  vmrs   r7, fpexc
-    vmlinux.llvm.good [0xc0101cd8] <+80>:  vmsr   fpexc, r0
-    vmlinux.llvm.good [0xc0101d20] <+152>: vmsr   fpexc, r7
-    vmlinux.llvm.good [0xc0101d38] <+176>: vmrs   r4, fpexc
-    vmlinux.llvm.good [0xc0101d6c] <+228>: vmrs   r0, fpscr
-    vmlinux.llvm.good [0xc0101dc4] <+316>: vmsr   fpexc, r0
-    vmlinux.llvm.good [0xc0101dc8] <+320>: vmrs   r0, fpsid
-    vmlinux.llvm.good [0xc0101dcc] <+324>: vmrs   r6, fpscr
-    vmlinux.llvm.good [0xc0101e10] <+392>: vmrs   r10, fpinst
-    vmlinux.llvm.good [0xc0101eb8] <+560>: vmrs   r10, fpinst2
-
-    vmlinux.llvm.bad  [0xc0101cb8] <+48>:  vmrs   r7, fpexc
-    vmlinux.llvm.bad  [0xc0101cd8] <+80>:  vmsr   fpexc, r0
-    vmlinux.llvm.bad  [0xc0101d20] <+152>: vmsr   fpexc, r7
-    vmlinux.llvm.bad  [0xc0101d30] <+168>: vmrs   r0, fpscr
-    vmlinux.llvm.bad  [0xc0101d50] <+200>: vmrs   r6, fpscr  <== BOOM!
-    vmlinux.llvm.bad  [0xc0101d6c] <+228>: vmsr   fpexc, r0
-    vmlinux.llvm.bad  [0xc0101d70] <+232>: vmrs   r0, fpsid
-    vmlinux.llvm.bad  [0xc0101da4] <+284>: vmrs   r10, fpinst
-    vmlinux.llvm.bad  [0xc0101df8] <+368>: vmrs   r4, fpexc
-    vmlinux.llvm.bad  [0xc0101e5c] <+468>: vmrs   r10, fpinst2
-
-I think LLVM's reordering is valid as the code is currently written: the
-compiler doesn't know the instructions have side effects in hardware.
-
-Fix by using "asm volatile" in fmxr() and fmrx(), so they cannot be
-reordered with respect to each other. The original compiler now produces
-working kernels on my hardware with DYNAMIC_DEBUG=n.
-
-This is the relevant piece of the diff of the vfp_support_entry() text,
-from the original oopsing kernel to a working kernel with this patch:
-
-         vmrs r0, fpscr
-         tst r0, #4096
-         bne 0xc0101d48
-         tst r0, #458752
-         beq 0xc0101ecc
-         orr r7, r7, #536870912
-         ldr r0, [r4, #0x3c]
-         mov r9, #16
-        -vmrs r6, fpscr
-         orr r9, r9, #251658240
-         add r0, r0, #4
-         str r0, [r4, #0x3c]
-         mvn r0, #159
-         sub r0, r0, #-1207959552
-         and r0, r7, r0
-         vmsr fpexc, r0
-         vmrs r0, fpsid
-        +vmrs r6, fpscr
-         and r0, r0, #983040
-         cmp r0, #65536
-         bne 0xc0101d88
-
-Fixes: 4708fb041346 ("ARM: vfp: Reimplement VFP exception entry in C code")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 1a81361f75d8 ("EDAC, synopsys: Add Error Injection support for ZynqMP DDR controller")
+Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240711100656.31376-1-shubhrajyoti.datta@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/vfp/vfpinstr.h | 48 ++++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 22 deletions(-)
+ drivers/edac/synopsys_edac.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/vfp/vfpinstr.h b/arch/arm/vfp/vfpinstr.h
-index 3c7938fd40aad..32090b0fb250b 100644
---- a/arch/arm/vfp/vfpinstr.h
-+++ b/arch/arm/vfp/vfpinstr.h
-@@ -64,33 +64,37 @@
+diff --git a/drivers/edac/synopsys_edac.c b/drivers/edac/synopsys_edac.c
+index 1ab2f737e4f16..6ddc90d7ba7c2 100644
+--- a/drivers/edac/synopsys_edac.c
++++ b/drivers/edac/synopsys_edac.c
+@@ -10,6 +10,7 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/spinlock.h>
++#include <linux/sizes.h>
+ #include <linux/interrupt.h>
+ #include <linux/of.h>
  
- #ifdef CONFIG_AS_VFP_VMRS_FPINST
+@@ -337,6 +338,7 @@ struct synps_edac_priv {
+  * @get_mtype:		Get mtype.
+  * @get_dtype:		Get dtype.
+  * @get_ecc_state:	Get ECC state.
++ * @get_mem_info:	Get EDAC memory info
+  * @quirks:		To differentiate IPs.
+  */
+ struct synps_platform_data {
+@@ -344,6 +346,9 @@ struct synps_platform_data {
+ 	enum mem_type (*get_mtype)(const void __iomem *base);
+ 	enum dev_type (*get_dtype)(const void __iomem *base);
+ 	bool (*get_ecc_state)(void __iomem *base);
++#ifdef CONFIG_EDAC_DEBUG
++	u64 (*get_mem_info)(struct synps_edac_priv *priv);
++#endif
+ 	int quirks;
+ };
  
--#define fmrx(_vfp_) ({			\
--	u32 __v;			\
--	asm(".fpu	vfpv2\n"	\
--	    "vmrs	%0, " #_vfp_	\
--	    : "=r" (__v) : : "cc");	\
--	__v;				\
-- })
--
--#define fmxr(_vfp_,_var_)		\
--	asm(".fpu	vfpv2\n"	\
--	    "vmsr	" #_vfp_ ", %0"	\
--	   : : "r" (_var_) : "cc")
-+#define fmrx(_vfp_) ({				\
-+	u32 __v;				\
-+	asm volatile (".fpu	vfpv2\n"	\
-+		      "vmrs	%0, " #_vfp_	\
-+		     : "=r" (__v) : : "cc");	\
-+	__v;					\
-+})
+@@ -402,6 +407,25 @@ static int zynq_get_error_info(struct synps_edac_priv *priv)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_EDAC_DEBUG
++/**
++ * zynqmp_get_mem_info - Get the current memory info.
++ * @priv:	DDR memory controller private instance data.
++ *
++ * Return: host interface address.
++ */
++static u64 zynqmp_get_mem_info(struct synps_edac_priv *priv)
++{
++	u64 hif_addr = 0, linear_addr;
 +
-+#define fmxr(_vfp_, _var_) ({			\
-+	asm volatile (".fpu	vfpv2\n"	\
-+		      "vmsr	" #_vfp_ ", %0"	\
-+		     : : "r" (_var_) : "cc");	\
-+})
- 
- #else
- 
- #define vfpreg(_vfp_) #_vfp_
- 
--#define fmrx(_vfp_) ({			\
--	u32 __v;			\
--	asm("mrc p10, 7, %0, " vfpreg(_vfp_) ", cr0, 0 @ fmrx	%0, " #_vfp_	\
--	    : "=r" (__v) : : "cc");	\
--	__v;				\
-- })
--
--#define fmxr(_vfp_,_var_)		\
--	asm("mcr p10, 7, %0, " vfpreg(_vfp_) ", cr0, 0 @ fmxr	" #_vfp_ ", %0"	\
--	   : : "r" (_var_) : "cc")
-+#define fmrx(_vfp_) ({						\
-+	u32 __v;						\
-+	asm volatile ("mrc p10, 7, %0, " vfpreg(_vfp_) ","	\
-+		      "cr0, 0 @ fmrx	%0, " #_vfp_		\
-+		     : "=r" (__v) : : "cc");			\
-+	__v;							\
-+})
++	linear_addr = priv->poison_addr;
++	if (linear_addr >= SZ_32G)
++		linear_addr = linear_addr - SZ_32G + SZ_2G;
++	hif_addr = linear_addr >> 3;
++	return hif_addr;
++}
++#endif
 +
-+#define fmxr(_vfp_, _var_) ({					\
-+	asm volatile ("mcr p10, 7, %0, " vfpreg(_vfp_) ","	\
-+		      "cr0, 0 @ fmxr	" #_vfp_ ", %0"		\
-+		     : : "r" (_var_) : "cc");			\
-+})
+ /**
+  * zynqmp_get_error_info - Get the current ECC error info.
+  * @priv:	DDR memory controller private instance data.
+@@ -922,6 +946,9 @@ static const struct synps_platform_data zynqmp_edac_def = {
+ 	.get_mtype	= zynqmp_get_mtype,
+ 	.get_dtype	= zynqmp_get_dtype,
+ 	.get_ecc_state	= zynqmp_get_ecc_state,
++#ifdef CONFIG_EDAC_DEBUG
++	.get_mem_info	= zynqmp_get_mem_info,
++#endif
+ 	.quirks         = (DDR_ECC_INTR_SUPPORT
+ #ifdef CONFIG_EDAC_DEBUG
+ 			  | DDR_ECC_DATA_POISON_SUPPORT
+@@ -975,10 +1002,16 @@ MODULE_DEVICE_TABLE(of, synps_edac_match);
+ static void ddr_poison_setup(struct synps_edac_priv *priv)
+ {
+ 	int col = 0, row = 0, bank = 0, bankgrp = 0, rank = 0, regval;
++	const struct synps_platform_data *p_data;
+ 	int index;
+ 	ulong hif_addr = 0;
  
- #endif
+-	hif_addr = priv->poison_addr >> 3;
++	p_data = priv->p_data;
++
++	if (p_data->get_mem_info)
++		hif_addr = p_data->get_mem_info(priv);
++	else
++		hif_addr = priv->poison_addr >> 3;
  
+ 	for (index = 0; index < DDR_MAX_ROW_SHIFT; index++) {
+ 		if (priv->row_shift[index])
 -- 
 2.43.0
 
