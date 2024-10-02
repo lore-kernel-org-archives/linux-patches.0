@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28051D0B94;
-	Wed,  2 Oct 2024 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95FD1D0788;
+	Wed,  2 Oct 2024 13:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877471; cv=none; b=hqyml72uHIrCZrZrzB5KgHEVRSReDtLtsjLrUyHvqM2prJa4GsixlwYeoQ+vHPHnCYdqgQ6QpuWNJopOQeV04Z2dQkOzmp/wWMwofb02rasNhBRfu/wElT9Rq14nfvQRxpzqm6/FpOauvylbMRD5xHd4onEl5f+4vwMTvj0rSQA=
+	t=1727877473; cv=none; b=Q29u+9CD4F02ZD5ymRm7tJZdkOWzqOV3R7R6MLotFnMFmAfTcK0JMXhlsYkMCxpb/VAP0vpP4yL5iu8LK+NAkeQESB2IMb673KCtezlqxwy5BorM+37h0jBOkfP8OEVcb1Oe34KReutzIGe7S/sxyl2UdlNTMw1L8G1PcPrkUIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877471; c=relaxed/simple;
-	bh=VTPyi4gQEZyStIVJlme+rl9AMhkJYxOiJOIZecDbRqU=;
+	s=arc-20240116; t=1727877473; c=relaxed/simple;
+	bh=eWr8+Ir/AjGfduZ46CRJwvUBFhD+cNunGEJZJAHvJyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw+RkkVf7Xs2fgf2c3jSGV9xbtL7cdvXm2a7lxURUu7HnEkTQlvSKZu+r6GGFW9ADp2XY2rJzkya7XyLYABd5IrpdUP0Dt684uw6IUO8PMKJcfl2r5dfJuvPo01nvdKvcSPjPbHUC1QiODr1Ewbc8eJWxjykZb0yS2DcQjw3SqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEgnXdw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4OtFhtwYpcPdIJzyrKu/wqadF8bmV11tz7ugCTSv1lvr//RVVeOnBCCGIa6cHi15slz0Xvk13xH42Jts5V7eK124RM4YlkmgGQEyU9C5noKIGKfSMDDqeni6UpjQacQwU6qmfA2HNHgZhaoNAwqz4h9llgGk5e+jMgN5I6M9Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEGS8kDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEgnXdw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7922FC4AF53;
-	Wed,  2 Oct 2024 13:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEGS8kDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E33AC4AF61;
+	Wed,  2 Oct 2024 13:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877470;
-	bh=VTPyi4gQEZyStIVJlme+rl9AMhkJYxOiJOIZecDbRqU=;
+	s=korg; t=1727877473;
+	bh=eWr8+Ir/AjGfduZ46CRJwvUBFhD+cNunGEJZJAHvJyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEgnXdw+sVHDBpfSCme+pEmLZd+8G8Q6c91r/iYgLUnsnkbdSV3ZI4t4yQ1qhCxvL
-	 cQtEKoactYcydLY8+aFZ4OJvYAwVJKxNVRhcxThh64+0UCRcthZbYvFZDprrBKW7lJ
-	 60TiIAFAmp52vU9LGDK73DwhlM/trVuKVdIRwrnk=
+	b=BEGS8kDgDxeYuwmFltPRWWYZlxuW7BQi2LQYy011bERMfGdVKnp58nTj0jY6b6poi
+	 yetQ6bB0IPfQhkxrbb9to7UieQzHyP0JeJ+n9bhVSrhNzW6R3jBtajzf7F75moeMgH
+	 urs6f8bCm3yy6Irt+rrP+WIWKljo4BwfaCtpCFnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Jake Hamby <Jake.Hamby@Teledyne.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 089/634] can: bcm: Clear bo->bcm_proc_read after remove_proc_entry().
-Date: Wed,  2 Oct 2024 14:53:09 +0200
-Message-ID: <20241002125814.623960083@linuxfoundation.org>
+Subject: [PATCH 6.10 090/634] can: m_can: enable NAPI before enabling interrupts
+Date: Wed,  2 Oct 2024 14:53:10 +0200
+Message-ID: <20241002125814.664008416@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,97 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jake Hamby <Jake.Hamby@Teledyne.com>
 
-[ Upstream commit 94b0818fa63555a65f6ba107080659ea6bcca63e ]
+[ Upstream commit 801ad2f87b0c6d0c34a75a4efd6bfd3a2d9f9298 ]
 
-syzbot reported a warning in bcm_release(). [0]
+If an interrupt (RX-complete or error flag) is set when bringing up
+the CAN device, e.g. due to CAN bus traffic before initializing the
+device, when m_can_start() is called and interrupts are enabled,
+m_can_isr() is called immediately, which disables all CAN interrupts
+and calls napi_schedule().
 
-The blamed change fixed another warning that is triggered when
-connect() is issued again for a socket whose connect()ed device has
-been unregistered.
+Because napi_enable() isn't called until later in m_can_open(), the
+call to napi_schedule() never schedules the m_can_poll() callback and
+the device is left with interrupts disabled and can't receive any CAN
+packets until rebooted.
 
-However, if the socket is just close()d without the 2nd connect(), the
-remaining bo->bcm_proc_read triggers unnecessary remove_proc_entry()
-in bcm_release().
+This can be verified by running "cansend" from another device before
+setting the bitrate and calling "ip link set up can0" on the test
+device. Adding debug lines to m_can_isr() shows it's called with flags
+(IR_EP | IR_EW | IR_CRCE), which calls m_can_disable_all_interrupts()
+and napi_schedule(), and then m_can_poll() is never called.
 
-Let's clear bo->bcm_proc_read after remove_proc_entry() in bcm_notify().
+Move the call to napi_enable() above the call to m_can_start() to
+enable any initial interrupt flags to be handled by m_can_poll() so
+that interrupts are reenabled. Add a call to napi_disable() in the
+error handling section of m_can_open(), to handle the case where later
+functions return errors.
 
-[0]
-name '4986'
-WARNING: CPU: 0 PID: 5234 at fs/proc/generic.c:711 remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Modules linked in:
-CPU: 0 UID: 0 PID: 5234 Comm: syz-executor606 Not tainted 6.11.0-rc5-syzkaller-00178-g5517ae241919 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-RIP: 0010:remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Code: ff eb 05 e8 cb 1e 5e ff 48 8b 5c 24 10 48 c7 c7 e0 f7 aa 8e e8 2a 38 8e 09 90 48 c7 c7 60 3a 1b 8c 48 89 de e8 da 42 20 ff 90 <0f> 0b 90 90 48 8b 44 24 18 48 c7 44 24 40 0e 36 e0 45 49 c7 04 07
-RSP: 0018:ffffc9000345fa20 EFLAGS: 00010246
-RAX: 2a2d0aee2eb64600 RBX: ffff888032f1f548 RCX: ffff888029431e00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000345fb08 R08: ffffffff8155b2f2 R09: 1ffff1101710519a
-R10: dffffc0000000000 R11: ffffed101710519b R12: ffff888011d38640
-R13: 0000000000000004 R14: 0000000000000000 R15: dffffc0000000000
-FS:  0000000000000000(0000) GS:ffff8880b8800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fcfb52722f0 CR3: 000000000e734000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- bcm_release+0x250/0x880 net/can/bcm.c:1578
- __sock_release net/socket.c:659 [inline]
- sock_close+0xbc/0x240 net/socket.c:1421
- __fput+0x24a/0x8a0 fs/file_table.c:422
- task_work_run+0x24f/0x310 kernel/task_work.c:228
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xa2f/0x27f0 kernel/exit.c:882
- do_group_exit+0x207/0x2c0 kernel/exit.c:1031
- __do_sys_exit_group kernel/exit.c:1042 [inline]
- __se_sys_exit_group kernel/exit.c:1040 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1040
- x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fcfb51ee969
-Code: Unable to access opcode bytes at 0x7fcfb51ee93f.
-RSP: 002b:00007ffce0109ca8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fcfb51ee969
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-RBP: 00007fcfb526f3b0 R08: ffffffffffffffb8 R09: 0000555500000000
-R10: 0000555500000000 R11: 0000000000000246 R12: 00007fcfb526f3b0
-R13: 0000000000000000 R14: 00007fcfb5271ee0 R15: 00007fcfb51bf160
- </TASK>
+Also, in m_can_close(), move the call to napi_disable() below the call
+to m_can_stop() to ensure all interrupts are handled when bringing
+down the device. This race condition is much less likely to occur.
 
-Fixes: 76fe372ccb81 ("can: bcm: Remove proc entry when dev is unregistered.")
-Reported-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0532ac7a06fb1a03187e
-Tested-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20240905012237.79683-1-kuniyu@amazon.com
+Tested on a Microchip SAMA7G54 MPU. The fix should be applicable to
+any SoC with a Bosch M_CAN controller.
+
+Signed-off-by: Jake Hamby <Jake.Hamby@Teledyne.com>
+Fixes: e0d1f4816f2a ("can: m_can: add Bosch M_CAN controller support")
+Link: https://patch.msgid.link/20240910-can-m_can-fix-ifup-v3-1-6c1720ba45ce@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 46d3ec3aa44b4..217049fa496e9 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1471,8 +1471,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
- 		/* remove device reference, if this is our bound device */
- 		if (bo->bound && bo->ifindex == dev->ifindex) {
- #if IS_ENABLED(CONFIG_PROC_FS)
--			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
-+			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read) {
- 				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
-+				bo->bcm_proc_read = NULL;
-+			}
- #endif
- 			bo->bound   = 0;
- 			bo->ifindex = 0;
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index ddde067f593fc..2baf4451a9b5e 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -1720,9 +1720,6 @@ static int m_can_close(struct net_device *dev)
+ 
+ 	netif_stop_queue(dev);
+ 
+-	if (!cdev->is_peripheral)
+-		napi_disable(&cdev->napi);
+-
+ 	m_can_stop(dev);
+ 	m_can_clk_stop(cdev);
+ 	free_irq(dev->irq, dev);
+@@ -1733,6 +1730,8 @@ static int m_can_close(struct net_device *dev)
+ 		destroy_workqueue(cdev->tx_wq);
+ 		cdev->tx_wq = NULL;
+ 		can_rx_offload_disable(&cdev->offload);
++	} else {
++		napi_disable(&cdev->napi);
+ 	}
+ 
+ 	close_candev(dev);
+@@ -1987,6 +1986,8 @@ static int m_can_open(struct net_device *dev)
+ 
+ 	if (cdev->is_peripheral)
+ 		can_rx_offload_enable(&cdev->offload);
++	else
++		napi_enable(&cdev->napi);
+ 
+ 	/* register interrupt handler */
+ 	if (cdev->is_peripheral) {
+@@ -2020,9 +2021,6 @@ static int m_can_open(struct net_device *dev)
+ 	if (err)
+ 		goto exit_start_fail;
+ 
+-	if (!cdev->is_peripheral)
+-		napi_enable(&cdev->napi);
+-
+ 	netif_start_queue(dev);
+ 
+ 	return 0;
+@@ -2036,6 +2034,8 @@ static int m_can_open(struct net_device *dev)
+ out_wq_fail:
+ 	if (cdev->is_peripheral)
+ 		can_rx_offload_disable(&cdev->offload);
++	else
++		napi_disable(&cdev->napi);
+ 	close_candev(dev);
+ exit_disable_clks:
+ 	m_can_clk_stop(cdev);
 -- 
 2.43.0
 
