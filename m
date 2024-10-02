@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390491D04A8;
-	Wed,  2 Oct 2024 13:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8B01C9B7E;
+	Wed,  2 Oct 2024 13:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876007; cv=none; b=Aatd24ncsE99uZUHRr0CfEhPeAc0CBPryKHd20nqypdx+TAnX+xikmQ9TlmIo5aSpXHJfW9s1gEaXPGXF9F4Y15slrJZSPgpWpl+4ieHU32zQHYaleNxlEjoP7mXm6SZ44yFhTz8OJn5+UlUdXANyIgqsQwazTmE40qQ56srmV0=
+	t=1727876010; cv=none; b=GwqCttC+2pIBjB3AClRNrCrD2FlbLxpEoVWyahg6ANxyNv4A+/xAJNPiZDHMFz+8bP09wcC7NXhQKFEKh5BLdzkcSTJ1oZ1UTFOgZHZJt8ckyuNy+lecyJsrGcAGFJnGUOn6ai7XHQQHIt9OZNOOjKCcppZkwe4ZDC5D4yD9aF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876007; c=relaxed/simple;
-	bh=G3XwklZq6t+1vLAXNRKPeWYUCLaHBUjovODRW5qjiPY=;
+	s=arc-20240116; t=1727876010; c=relaxed/simple;
+	bh=9gQYmkmgZVXIhz9PyKURx7Y9AK67/DLhRwlPrfp7MUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dT/ZVS4Och8VjDglyOxTPWBHwytEsch4klpRDbgh9ZKCkCqRh7YUpYMcVJq2/ncTqw/+4CVVp6WIB7hC3C43GgxCAPjERR0vnOVxsiTKN64qC1ULZjEDivIRUHtMuqoBP9ajNzLtiJjgh+4SyoH9jiYolkgDtEXCgOzRHHI7Ezc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUIy7T43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXO/gmqVcXKU18pkKUJj+PnOjKAM3Jvvrrx/rXK1SbOxK9nPIeYc0Sn+/m3J2J11RtD++afYLDe06d0hAM1BLhUC+jPZNosif6b5us2Gzlx5qSThkIQvsDYpdExejJ2ao8slxPTVtST2aDMwQngYywTb9Sd9EidFXM66YH685lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMGQeahB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUIy7T43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5431C4CEC5;
-	Wed,  2 Oct 2024 13:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMGQeahB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8F9C4CEC5;
+	Wed,  2 Oct 2024 13:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876007;
-	bh=G3XwklZq6t+1vLAXNRKPeWYUCLaHBUjovODRW5qjiPY=;
+	s=korg; t=1727876009;
+	bh=9gQYmkmgZVXIhz9PyKURx7Y9AK67/DLhRwlPrfp7MUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUIy7T43D/2SKTLk0nUkVw58MF1rnVNtDrkTHgOZZXdtfOIkQYj05qlfc/LQF1Dv8
-	 6nWYKMEpk5LpfnJrQpFM+JVwLCYK9DzUeh/qqLJQNFtd2RkO/Bcu9mj/ewhBeEBJKT
-	 uPmUeyWunKZefU3IAYVpu9yHSwI7Aqh6QNZhbfnE=
+	b=BMGQeahBJwWztppf7zKsa2DARFZt7YiAb6TRD6vjfty/PcTb1+Ti5FlpOZaMFsiYe
+	 i+EsJAFPYcq+hylopbzAaymw6LSVdCLvEPZ0pn+RcSZ50hQYLrCxWIjilsMq2lReGG
+	 H01lHuJwaaSe/r2+5/OZhN7iBYdbPbM91435hj6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu RuiTong <cnitlrt@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hao Ge <gehao@kylinos.cn>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 297/695] bpf: correctly handle malformed BPF_CORE_TYPE_ID_LOCAL relos
-Date: Wed,  2 Oct 2024 14:54:55 +0200
-Message-ID: <20241002125834.296475375@linuxfoundation.org>
+Subject: [PATCH 6.11 298/695] selftests/bpf: Fix incorrect parameters in NULL pointer checking
+Date: Wed,  2 Oct 2024 14:54:56 +0200
+Message-ID: <20241002125834.336149621@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,69 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-[ Upstream commit 3d2786d65aaa954ebd3fcc033ada433e10da21c4 ]
+[ Upstream commit c264487e5410e5a72db8a414566ab7d144223e6c ]
 
-In case of malformed relocation record of kind BPF_CORE_TYPE_ID_LOCAL
-referencing a non-existing BTF type, function bpf_core_calc_relo_insn
-would cause a null pointer deference.
+Smatch reported the following warning:
+    ./tools/testing/selftests/bpf/testing_helpers.c:455 get_xlated_program()
+    warn: variable dereferenced before check 'buf' (see line 454)
 
-Fix this by adding a proper check upper in call stack, as malformed
-relocation records could be passed from user space.
+It seems correct,so let's modify it based on it's suggestion.
 
-Simplest reproducer is a program:
+Actually,commit b23ed4d74c4d ("selftests/bpf: Fix invalid pointer
+check in get_xlated_program()") fixed an issue in the test_verifier.c
+once,but it was reverted this time.
 
-    r0 = 0
-    exit
+Let's solve this issue with the minimal changes possible.
 
-With a single relocation record:
-
-    .insn_off = 0,          /* patch first instruction */
-    .type_id = 100500,      /* this type id does not exist */
-    .access_str_off = 6,    /* offset of string "0" */
-    .kind = BPF_CORE_TYPE_ID_LOCAL,
-
-See the link for original reproducer or next commit for a test case.
-
-Fixes: 74753e1462e7 ("libbpf: Replace btf__type_by_id() with btf_type_by_id().")
-Reported-by: Liu RuiTong <cnitlrt@gmail.com>
-Closes: https://lore.kernel.org/bpf/CAK55_s6do7C+DVwbwY_7nKfUz0YLDoiA1v6X3Y9+p0sWzipFSA@mail.gmail.com/
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240822080124.2995724-2-eddyz87@gmail.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/1eb3732f-605a-479d-ba64-cd14250cbf91@stanley.mountain/
+Fixes: b4b7a4099b8c ("selftests/bpf: Factor out get_xlated_program() helper")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Link: https://lore.kernel.org/r/20240820023622.29190-1-hao.ge@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/bpf/testing_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 249c94c996150..7783b16b87cfe 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -8891,6 +8891,7 @@ int bpf_core_apply(struct bpf_core_ctx *ctx, const struct bpf_core_relo *relo,
- 	struct bpf_core_cand_list cands = {};
- 	struct bpf_core_relo_res targ_res;
- 	struct bpf_core_spec *specs;
-+	const struct btf_type *type;
- 	int err;
+diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
+index 4230420ef2940..680e452583a78 100644
+--- a/tools/testing/selftests/bpf/testing_helpers.c
++++ b/tools/testing/selftests/bpf/testing_helpers.c
+@@ -451,7 +451,7 @@ int get_xlated_program(int fd_prog, struct bpf_insn **buf, __u32 *cnt)
  
- 	/* ~4k of temp memory necessary to convert LLVM spec like "0:1:0:5"
-@@ -8900,6 +8901,13 @@ int bpf_core_apply(struct bpf_core_ctx *ctx, const struct bpf_core_relo *relo,
- 	if (!specs)
+ 	*cnt = xlated_prog_len / buf_element_size;
+ 	*buf = calloc(*cnt, buf_element_size);
+-	if (!buf) {
++	if (!*buf) {
+ 		perror("can't allocate xlated program buffer");
  		return -ENOMEM;
- 
-+	type = btf_type_by_id(ctx->btf, relo->type_id);
-+	if (!type) {
-+		bpf_log(ctx->log, "relo #%u: bad type id %u\n",
-+			relo_idx, relo->type_id);
-+		return -EINVAL;
-+	}
-+
- 	if (need_cands) {
- 		struct bpf_cand_cache *cc;
- 		int i;
+ 	}
 -- 
 2.43.0
 
