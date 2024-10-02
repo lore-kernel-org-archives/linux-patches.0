@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306571D04A0;
-	Wed,  2 Oct 2024 13:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3A01D04A2;
+	Wed,  2 Oct 2024 13:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875909; cv=none; b=l7dMr89IjSRsv+7k7xn+FLzKGj27MNG2smPUa4oRIkZF3tNYTga+epZqkBVHYkJ3AWI/a9+hAmvSIeqke/Nfj3Lu3Di1Fey/6M1q2eKwe6s27TMWZPNQEB9iILlUl2eNSF/u+fVIiefVMuHHjvRNJWGnJy1WghTpy8sZrAHw8eU=
+	t=1727875911; cv=none; b=ed85e32FOjLn/83oaD1OR3r+ZnV16V+m3tfl+3htLc3d/l4TlxDKNDAeD5yptGhmT/CN7bP/33649y6U0nM7Mk67apgL7KZOo4H1a/2wFjnMs5EQown5JYBPMilC1PNx22AHosM1+XD0fx2GyupAvFacOCm5pjLcop6jy2zw3yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875909; c=relaxed/simple;
-	bh=QbM5/z3X05G98qPemHghlfIR5e94c2M00k+l2JihVq0=;
+	s=arc-20240116; t=1727875911; c=relaxed/simple;
+	bh=gO9iyBCGcNdB1qTTaBR/gg8l2D+9D2AQbErgToHuaqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FthwyXdzakrMt8GMN6BPOkCoB0VFG80abYwGPby1P+kxyWcogFcnZnOcEruqcORnFJ9jRUo43cfeIk1KIgtgkTj5uN//NcpGomV2HItLVkC11H30cfteeudQL/E+m2YSQFmIgL9JSSg+RgNer5hU3x+l0oG5eBQ0r8LDtLpgsRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HepS9NKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gim2tnQy8EtgIH6IwsBIXDFAIy/C7Tcb+M+53QYfHCHplqO36xoChpQob39QZkgq+GRsRO0UGJ5F4nC8GJBm1YOrEgxg++I2PHaoklo1jvzdaAZCXyjR7Ppch1UkE7i44YtfM6y3i2j7aFo71sg9O/KtZGyOLn1iUvxffa8Q6zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E04SyyXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HepS9NKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50919C4CEC5;
-	Wed,  2 Oct 2024 13:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E04SyyXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33262C4CED4;
+	Wed,  2 Oct 2024 13:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875908;
-	bh=QbM5/z3X05G98qPemHghlfIR5e94c2M00k+l2JihVq0=;
+	s=korg; t=1727875911;
+	bh=gO9iyBCGcNdB1qTTaBR/gg8l2D+9D2AQbErgToHuaqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HepS9NKZe2UyFV4Fn6nwl41AMeXi5kAMUrw/j7fiYlCAp6y+PdC6w2+c1a0tYh8AI
-	 b5IXFJMWw/XgIosymn/JTY7XbsE5eogbUjrczmmE92CBjZggVsJc6b5c1F4w0QpUyM
-	 DJPT0IuXKfM7IZBQbg3AzoB/Vxs5bLdafc1AKgS0=
+	b=E04SyyXWonP60AZhm38moVf8i7hSRw+6iItXzlMt+FQIlGJjN7WLyJvPTNzN0fp7r
+	 nTLk8iuqNXWgdSo5+ArzmJ1ypofa0uJGBDAthChdiLGixXolviAgEEsSkg6jqUqej4
+	 gp9KapfqyQ4oK9C0LK/MtYA3cMbn8CdZZq4cUaV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ad9ec60c8eaf69e6f99c@syzkaller.appspotmail.com,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 263/695] bpf: Fail verification for sign-extension of packet data/data_end/data_meta
-Date: Wed,  2 Oct 2024 14:54:21 +0200
-Message-ID: <20241002125832.945430944@linuxfoundation.org>
+Subject: [PATCH 6.11 264/695] selftests/bpf: Use pid_t consistently in test_progs.c
+Date: Wed,  2 Oct 2024 14:54:22 +0200
+Message-ID: <20241002125832.984581763@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,177 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 92de36080c93296ef9005690705cba260b9bd68a ]
+[ Upstream commit ec4fe2f0fa12fd2d0115df7e58414dc26899cc5e ]
 
-syzbot reported a kernel crash due to
-  commit 1f1e864b6555 ("bpf: Handle sign-extenstin ctx member accesses").
-The reason is due to sign-extension of 32-bit load for
-packet data/data_end/data_meta uapi field.
+Use pid_t rather than __pid_t when allocating memory for 'worker_pids' in
+'struct test_env', as this is its declared type and also avoids compile
+errors seen building against musl libc on mipsel64:
 
-The original code looks like:
-        r2 = *(s32 *)(r1 + 76) /* load __sk_buff->data */
-        r3 = *(u32 *)(r1 + 80) /* load __sk_buff->data_end */
-        r0 = r2
-        r0 += 8
-        if r3 > r0 goto +1
-        ...
-Note that __sk_buff->data load has 32-bit sign extension.
+  test_progs.c:1738:49: error: '__pid_t' undeclared (first use in this function); did you mean 'pid_t'?
+   1738 |                 env.worker_pids = calloc(sizeof(__pid_t), env.workers);
+        |                                                 ^~~~~~~
+        |                                                 pid_t
+  test_progs.c:1738:49: note: each undeclared identifier is reported only once for each function it appears in
 
-After verification and convert_ctx_accesses(), the final asm code looks like:
-        r2 = *(u64 *)(r1 +208)
-        r2 = (s32)r2
-        r3 = *(u64 *)(r1 +80)
-        r0 = r2
-        r0 += 8
-        if r3 > r0 goto pc+1
-        ...
-Note that 'r2 = (s32)r2' may make the kernel __sk_buff->data address invalid
-which may cause runtime failure.
-
-Currently, in C code, typically we have
-        void *data = (void *)(long)skb->data;
-        void *data_end = (void *)(long)skb->data_end;
-        ...
-and it will generate
-        r2 = *(u64 *)(r1 +208)
-        r3 = *(u64 *)(r1 +80)
-        r0 = r2
-        r0 += 8
-        if r3 > r0 goto pc+1
-
-If we allow sign-extension,
-        void *data = (void *)(long)(int)skb->data;
-        void *data_end = (void *)(long)skb->data_end;
-        ...
-the generated code looks like
-        r2 = *(u64 *)(r1 +208)
-        r2 <<= 32
-        r2 s>>= 32
-        r3 = *(u64 *)(r1 +80)
-        r0 = r2
-        r0 += 8
-        if r3 > r0 goto pc+1
-and this will cause verification failure since "r2 <<= 32" is not allowed
-as "r2" is a packet pointer.
-
-To fix this issue for case
-  r2 = *(s32 *)(r1 + 76) /* load __sk_buff->data */
-this patch added additional checking in is_valid_access() callback
-function for packet data/data_end/data_meta access. If those accesses
-are with sign-extenstion, the verification will fail.
-
-  [1] https://lore.kernel.org/bpf/000000000000c90eee061d236d37@google.com/
-
-Reported-by: syzbot+ad9ec60c8eaf69e6f99c@syzkaller.appspotmail.com
-Fixes: 1f1e864b6555 ("bpf: Handle sign-extenstin ctx member accesses")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20240723153439.2429035-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 91b2c0afd00c ("selftests/bpf: Add parallelism to test_progs")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Geliang Tang <geliang@kernel.org>
+Link: https://lore.kernel.org/bpf/c6447da51a94babc1931711a43e2ceecb135c93d.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h   |  1 +
- kernel/bpf/verifier.c |  5 +++--
- net/core/filter.c     | 21 ++++++++++++++++-----
- 3 files changed, 20 insertions(+), 7 deletions(-)
+ tools/testing/selftests/bpf/test_progs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 71ccd39011ed0..b051122f62a4f 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -919,6 +919,7 @@ static_assert(__BPF_REG_TYPE_MAX <= BPF_BASE_TYPE_LIMIT);
-  */
- struct bpf_insn_access_aux {
- 	enum bpf_reg_type reg_type;
-+	bool is_ldsx;
- 	union {
- 		int ctx_field_size;
- 		struct {
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4a528afb20620..62cd315984042 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5606,12 +5606,13 @@ static int check_packet_access(struct bpf_verifier_env *env, u32 regno, int off,
- /* check access to 'struct bpf_context' fields.  Supports fixed offsets only */
- static int check_ctx_access(struct bpf_verifier_env *env, int insn_idx, int off, int size,
- 			    enum bpf_access_type t, enum bpf_reg_type *reg_type,
--			    struct btf **btf, u32 *btf_id, bool *is_retval)
-+			    struct btf **btf, u32 *btf_id, bool *is_retval, bool is_ldsx)
- {
- 	struct bpf_insn_access_aux info = {
- 		.reg_type = *reg_type,
- 		.log = &env->log,
- 		.is_retval = false,
-+		.is_ldsx = is_ldsx,
- 	};
- 
- 	if (env->ops->is_valid_access &&
-@@ -6925,7 +6926,7 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
- 			return err;
- 
- 		err = check_ctx_access(env, insn_idx, off, size, t, &reg_type, &btf,
--				       &btf_id, &is_retval);
-+				       &btf_id, &is_retval, is_ldsx);
- 		if (err)
- 			verbose_linfo(env, insn_idx, "; ");
- 		if (!err && t == BPF_READ && value_regno >= 0) {
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f3c72cf860997..78a6f746ea0ba 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -8579,13 +8579,16 @@ static bool bpf_skb_is_valid_access(int off, int size, enum bpf_access_type type
- 		if (off + size > offsetofend(struct __sk_buff, cb[4]))
- 			return false;
- 		break;
-+	case bpf_ctx_range(struct __sk_buff, data):
-+	case bpf_ctx_range(struct __sk_buff, data_meta):
-+	case bpf_ctx_range(struct __sk_buff, data_end):
-+		if (info->is_ldsx || size != size_default)
-+			return false;
-+		break;
- 	case bpf_ctx_range_till(struct __sk_buff, remote_ip6[0], remote_ip6[3]):
- 	case bpf_ctx_range_till(struct __sk_buff, local_ip6[0], local_ip6[3]):
- 	case bpf_ctx_range_till(struct __sk_buff, remote_ip4, remote_ip4):
- 	case bpf_ctx_range_till(struct __sk_buff, local_ip4, local_ip4):
--	case bpf_ctx_range(struct __sk_buff, data):
--	case bpf_ctx_range(struct __sk_buff, data_meta):
--	case bpf_ctx_range(struct __sk_buff, data_end):
- 		if (size != size_default)
- 			return false;
- 		break;
-@@ -9029,6 +9032,14 @@ static bool xdp_is_valid_access(int off, int size,
- 			}
- 		}
- 		return false;
-+	} else {
-+		switch (off) {
-+		case offsetof(struct xdp_md, data_meta):
-+		case offsetof(struct xdp_md, data):
-+		case offsetof(struct xdp_md, data_end):
-+			if (info->is_ldsx)
-+				return false;
-+		}
- 	}
- 
- 	switch (off) {
-@@ -9354,12 +9365,12 @@ static bool flow_dissector_is_valid_access(int off, int size,
- 
- 	switch (off) {
- 	case bpf_ctx_range(struct __sk_buff, data):
--		if (size != size_default)
-+		if (info->is_ldsx || size != size_default)
- 			return false;
- 		info->reg_type = PTR_TO_PACKET;
- 		return true;
- 	case bpf_ctx_range(struct __sk_buff, data_end):
--		if (size != size_default)
-+		if (info->is_ldsx || size != size_default)
- 			return false;
- 		info->reg_type = PTR_TO_PACKET_END;
- 		return true;
+diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
+index 89ff704e9dad5..60c5ec0f6abf6 100644
+--- a/tools/testing/selftests/bpf/test_progs.c
++++ b/tools/testing/selftests/bpf/test_progs.c
+@@ -1731,7 +1731,7 @@ int main(int argc, char **argv)
+ 	/* launch workers if requested */
+ 	env.worker_id = -1; /* main process */
+ 	if (env.workers) {
+-		env.worker_pids = calloc(sizeof(__pid_t), env.workers);
++		env.worker_pids = calloc(sizeof(pid_t), env.workers);
+ 		env.worker_socks = calloc(sizeof(int), env.workers);
+ 		if (env.debug)
+ 			fprintf(stdout, "Launching %d workers.\n", env.workers);
 -- 
 2.43.0
 
