@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467AE1CF7D4;
-	Wed,  2 Oct 2024 14:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442F51D0E12;
+	Wed,  2 Oct 2024 14:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878767; cv=none; b=u+CpZpCzkF45o2tIzGi4s76MOXvj6B4oHLU34rK3OmMc5D4IydJXJVLTueET7UlsdD2315woxQ1G9/JMIRhPueLlV/0oVaSR1v1rEXcNXuiJKr6jhbZzMfSWOfsrf/WH2vsBFmNQXHh4MYAQtx/qLamS25b4XdyScIH+LUf2Z3c=
+	t=1727878770; cv=none; b=t0FBLY0K8kZWlCLFgoEiIvBo+rvwWB6VetiPbv6+Cg3hYwsqONNrueumD1BQVVa4DlFCZY74zRKhxABckhuq4LGLsJdfTkNg9PzDnohtfdC7ZmGsU9MM8ELVkTwY56RpiaPPIXR9NBvoem2/dN1+cU6q4UWdX59yusdfzmurkBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878767; c=relaxed/simple;
-	bh=YHv3TFC4qpVdrTs79ljA0nKbW5z+RyrpinTUITLVLp8=;
+	s=arc-20240116; t=1727878770; c=relaxed/simple;
+	bh=Fw/tS6atXG/tPCgmHWUOP5LnmZfWVF9vf+PojPhqo7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=No1Kf4w9j/4b1sRhf70jfI6FL2Z3jru+27T+01BL/Khh+k3HLXoWsyr+eNxjjjXIturXgFAN+6+SJyEKYa1HWs4BjlltXMwkvuxX6duWVit4rXK/z5wQ5iOq+X4slGn27WPKy2+Gl6AzjRwRVNpKChfAgxXk153B1UDR1a49sA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgSHJuwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brCBzSNndhV1Lve7JqPDDtMOhSwCKwHrQnOjoWuaqNNAdFpeifBLj1NatWbKrk2B3tuWn7N3bHqa5SmvZWLMtn085DVGlJU1wneX4tgLGH9+bN1j7sMcOeIA0YU+TC3EQ0WFQU6sTLrzBckdyMDAPj8f7MImK4eDdazua474F/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6aZd86+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgSHJuwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D71C4CEC2;
-	Wed,  2 Oct 2024 14:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6aZd86+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C21C4CEC2;
+	Wed,  2 Oct 2024 14:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878767;
-	bh=YHv3TFC4qpVdrTs79ljA0nKbW5z+RyrpinTUITLVLp8=;
+	s=korg; t=1727878769;
+	bh=Fw/tS6atXG/tPCgmHWUOP5LnmZfWVF9vf+PojPhqo7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgSHJuwHVrfEZM6m8RwXQBvHkBv7AXqEATHDRCg10ZnxP5NJVK6ZisTwKlFlF0lef
-	 Lrk31jGNfo8X/pXbIJyN/TC8lJdfBbpAigmlo0NGuTYsLOAHFJuJ2VEL/pdvTXwrGa
-	 u5pdfMz9P+RtAQu5gvbTZSFVNGGyoQlYr9uLtfnc=
+	b=n6aZd86+cM5XZClb4OqPRHJiZwe8GtnqQ357cLpb7JPW8VxD/w9LKy8p+cKUg9r0E
+	 8QE8om3d15bRuXvMkEDofjLyMYPV917gt8bypxAuzGSw7tLN92dyBQPfalPlXF5mtu
+	 udjUgL2LW3pu3xaVtGWhlOgkysfLyQdonQ6UreRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com,
-	syzbot+17ca2339e34a1d863aad@syzkaller.appspotmail.com,
-	syzbot+c793a7eca38803212c61@syzkaller.appspotmail.com,
-	syzbot+1e6e0b916b211bee1bd6@syzkaller.appspotmail.com,
-	kernel test robot <oliver.sang@intel.com>,
-	Marcello Sylvester Bauer <sylv@sylv.io>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com
-Subject: [PATCH 6.10 525/634] usb: gadget: dummy_hcd: execute hrtimer callback in softirq context
-Date: Wed,  2 Oct 2024 15:00:25 +0200
-Message-ID: <20241002125831.827738540@linuxfoundation.org>
+	Tomas Marek <tomas.marek@elrest.cz>
+Subject: [PATCH 6.10 526/634] usb: dwc2: drd: fix clock gating on USB role switch
+Date: Wed,  2 Oct 2024 15:00:26 +0200
+Message-ID: <20241002125831.866592432@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -56,117 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Tomas Marek <tomas.marek@elrest.cz>
 
-commit 9313d139aa25e572d860f6f673b73a20f32d7f93 upstream.
+commit 2c6b6afa59e78bebcb65bbc8a76b3459f139547c upstream.
 
-Commit a7f3813e589f ("usb: gadget: dummy_hcd: Switch to hrtimer transfer
-scheduler") switched dummy_hcd to use hrtimer and made the timer's
-callback be executed in the hardirq context.
+The dwc2_handle_usb_suspend_intr() function disables gadget clocks in USB
+peripheral mode when no other power-down mode is available (introduced by
+commit 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")).
+However, the dwc2_drd_role_sw_set() USB role update handler attempts to
+read DWC2 registers if the USB role has changed while the USB is in suspend
+mode (when the clocks are gated). This causes the system to hang.
 
-With that change, __usb_hcd_giveback_urb now gets executed in the hardirq
-context, which causes problems for KCOV and KMSAN.
+Release the gadget clocks before handling the USB role update.
 
-One problem is that KCOV now is unable to collect coverage from
-the USB code that gets executed from the dummy_hcd's timer callback,
-as KCOV cannot collect coverage in the hardirq context.
-
-Another problem is that the dummy_hcd hrtimer might get triggered in the
-middle of a softirq with KCOV remote coverage collection enabled, and that
-causes a WARNING in KCOV, as reported by syzbot. (I sent a separate patch
-to shut down this WARNING, but that doesn't fix the other two issues.)
-
-Finally, KMSAN appears to ignore tracking memory copying operations
-that happen in the hardirq context, which causes false positive
-kernel-infoleaks, as reported by syzbot.
-
-Change the hrtimer in dummy_hcd to execute the callback in the softirq
-context.
-
-Reported-by: syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2388cdaeb6b10f0c13ac
-Reported-by: syzbot+17ca2339e34a1d863aad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=17ca2339e34a1d863aad
-Reported-by: syzbot+c793a7eca38803212c61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c793a7eca38803212c61
-Reported-by: syzbot+1e6e0b916b211bee1bd6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1e6e0b916b211bee1bd6
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202406141323.413a90d2-lkp@intel.com
-Fixes: a7f3813e589f ("usb: gadget: dummy_hcd: Switch to hrtimer transfer scheduler")
+Fixes: 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")
 Cc: stable@vger.kernel.org
-Acked-by: Marcello Sylvester Bauer <sylv@sylv.io>
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=edd9fe0d3a65b14588d5
-Link: https://lore.kernel.org/r/20240904013051.4409-1-andrey.konovalov@linux.dev
+Signed-off-by: Tomas Marek <tomas.marek@elrest.cz>
+Link: https://lore.kernel.org/r/20240906055025.25057-1-tomas.marek@elrest.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/usb/dwc2/drd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
-index f37b0d8386c1..ff7bee78bcc4 100644
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -1304,7 +1304,8 @@ static int dummy_urb_enqueue(
- 
- 	/* kick the scheduler, it'll do the rest */
- 	if (!hrtimer_active(&dum_hcd->timer))
--		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS), HRTIMER_MODE_REL);
-+		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS),
-+				HRTIMER_MODE_REL_SOFT);
- 
-  done:
- 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
-@@ -1325,7 +1326,7 @@ static int dummy_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
- 	rc = usb_hcd_check_unlink_urb(hcd, urb, status);
- 	if (!rc && dum_hcd->rh_state != DUMMY_RH_RUNNING &&
- 			!list_empty(&dum_hcd->urbp_list))
--		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
-+		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL_SOFT);
- 
- 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
- 	return rc;
-@@ -1995,7 +1996,8 @@ static enum hrtimer_restart dummy_timer(struct hrtimer *t)
- 		dum_hcd->udev = NULL;
- 	} else if (dum_hcd->rh_state == DUMMY_RH_RUNNING) {
- 		/* want a 1 msec delay here */
--		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS), HRTIMER_MODE_REL);
-+		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS),
-+				HRTIMER_MODE_REL_SOFT);
+--- a/drivers/usb/dwc2/drd.c
++++ b/drivers/usb/dwc2/drd.c
+@@ -127,6 +127,15 @@ static int dwc2_drd_role_sw_set(struct u
+ 			role = USB_ROLE_DEVICE;
  	}
  
- 	spin_unlock_irqrestore(&dum->lock, flags);
-@@ -2389,7 +2391,7 @@ static int dummy_bus_resume(struct usb_hcd *hcd)
- 		dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 		set_link_state(dum_hcd);
- 		if (!list_empty(&dum_hcd->urbp_list))
--			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
-+			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL_SOFT);
- 		hcd->state = HC_STATE_RUNNING;
- 	}
- 	spin_unlock_irq(&dum_hcd->dum->lock);
-@@ -2467,7 +2469,7 @@ static DEVICE_ATTR_RO(urbs);
- 
- static int dummy_start_ss(struct dummy_hcd *dum_hcd)
- {
--	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-+	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	dum_hcd->timer.function = dummy_timer;
- 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 	dum_hcd->stream_en_ep = 0;
-@@ -2497,7 +2499,7 @@ static int dummy_start(struct usb_hcd *hcd)
- 		return dummy_start_ss(dum_hcd);
- 
- 	spin_lock_init(&dum_hcd->dum->lock);
--	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-+	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	dum_hcd->timer.function = dummy_timer;
- 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 
--- 
-2.46.2
-
++	if ((IS_ENABLED(CONFIG_USB_DWC2_PERIPHERAL) ||
++	     IS_ENABLED(CONFIG_USB_DWC2_DUAL_ROLE)) &&
++	     dwc2_is_device_mode(hsotg) &&
++	     hsotg->lx_state == DWC2_L2 &&
++	     hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
++	     hsotg->bus_suspended &&
++	     !hsotg->params.no_clock_gating)
++		dwc2_gadget_exit_clock_gating(hsotg, 0);
++
+ 	if (role == USB_ROLE_HOST) {
+ 		already = dwc2_ovr_avalid(hsotg, true);
+ 	} else if (role == USB_ROLE_DEVICE) {
 
 
