@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ED81D0414;
-	Wed,  2 Oct 2024 14:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C91D040D;
+	Wed,  2 Oct 2024 14:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879585; cv=none; b=GpnMIz87jWRE4DYrw0ruFs7kq7tTtHYBSgXqy58CyzyRhdpiaD68pc9UpUwjAXl+Ji9aYh1cpkCFX52y3D08mmGpRyR8vx44aJx/E1hu9fDnv4aaFVY3TGjazyOw1UdHYMK+JBw4s23RgLHMLzVJlotnMCjSx1TUuRo1JswaITk=
+	t=1727879588; cv=none; b=eHQKs10S4yU53wHWNUJIsdRpoSqwn1O9kp5EXTR0gm3MsNJ+50zRaraMY0QQV7nSyhJTqYr7fuz5uS9Y4/Dic9ZddwIaqGfAb+VCqC/ATksV2K3j9xRmDhv+rdBY4G584TmyfgWCw8d9b7Yir+gcCIOLrLZTJbl8TiKDknEq+WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879585; c=relaxed/simple;
-	bh=VFIu3Eva/nvOjzai3otejv0QPSBRQCt1WENz5kzzzmE=;
+	s=arc-20240116; t=1727879588; c=relaxed/simple;
+	bh=StVlStby0O32JQCKN5l3p+1vXrc7LRVj3DOFjFgixTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bk9r5gE+XsFDTxw2fSGSbXB2IEe6+73wctSjbgVe6p5W8IxMlJOdMcTyMpHRZGyChlHMNcZR9JsAXEqRhI3l+VGHDLmgPAY1Q8OoDjq9RKbrIADWj66UKbNV7913+0PGEdbfo8z7nZmG9LFOMeNUSPP9pjKOIH73kqsTf+wyjBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgABY1Pj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZW5ZxQ9lZQvJ7m3yZZaIAh+Q/Fixw1jUwTmxkMPoOwWtRKUw/YXDeMRPy3HQm0grK5YV99Vr3JxFunHsijX9NMvaVa503p9HqvHzZBN3MjTgCGIp5TeECrJIASqkTNNj15jo+UzE+vO9WUgKof13nvK/JbVQlmtEKokDGzJ5pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgZaaPK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgABY1Pj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79369C4CEC2;
-	Wed,  2 Oct 2024 14:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgZaaPK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E9FC4CEC2;
+	Wed,  2 Oct 2024 14:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879584;
-	bh=VFIu3Eva/nvOjzai3otejv0QPSBRQCt1WENz5kzzzmE=;
+	s=korg; t=1727879587;
+	bh=StVlStby0O32JQCKN5l3p+1vXrc7LRVj3DOFjFgixTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgABY1PjunL7V49xZ9AWXikejHPAOGYd12zL0Opmaxevw38I3c6kXZ4yLNdJ1Ol4X
-	 qqo+Tgnw6AzOJZjrU4n9lCqn3V9wq8t/kGuZDtQkJFwPaL7u4Mu0PaiDXKeBVGQFMQ
-	 ZOHPpgiIYiCdELOe3DrM+vw/idD0XSzWhLCJMAxw=
+	b=YgZaaPK1GkMUpf02kow8URKVip13Ks3L6ctC2KxdpkVobeGPADlcYn0NEi5fFxozP
+	 Lc8cJd2lZshKzr4J3fFEiPf38UCIGK0Ii0rHNzO9JauMYHjOwtmdwXRsiS7qbpS3oh
+	 O+ugySgdJIWi+dP1BXaq9JD217lTg1a8FXREUMAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 170/538] ata: libata: Clear DID_TIME_OUT for ATA PT commands with sense data
-Date: Wed,  2 Oct 2024 14:56:49 +0200
-Message-ID: <20241002125758.964089132@linuxfoundation.org>
+	David Laight <David.Laight@aculab.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 6.6 171/538] minmax: avoid overly complex min()/max() macro arguments in xen
+Date: Wed,  2 Oct 2024 14:56:50 +0200
+Message-ID: <20241002125759.005508366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,98 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit e5dd410acb34c7341a0a93b429dcf3dabf9e3323 ]
+[ Upstream commit e8432ac802a028eaee6b1e86383d7cd8e9fb8431 ]
 
-When ata_qc_complete() schedules a command for EH using
-ata_qc_schedule_eh(), blk_abort_request() will be called, which leads to
-req->q->mq_ops->timeout() / scsi_timeout() being called.
+We have some very fancy min/max macros that have tons of sanity checking
+to warn about mixed signedness etc.
 
-scsi_timeout(), if the LLDD has no abort handler (libata has no abort
-handler), will set host byte to DID_TIME_OUT, and then call
-scsi_eh_scmd_add() to add the command to EH.
+This is all things that a sane compiler should warn about, but there are
+no sane compiler interfaces for this, and '-Wsign-compare' is broken [1]
+and not useful.
 
-Thus, when commands first enter libata's EH strategy_handler, all the
-commands that have been added to EH will have DID_TIME_OUT set.
+So then we compensate (some would say over-compensate) by doing the
+checks manually with some truly horrid macro games.
 
-libata has its own flag (AC_ERR_TIMEOUT), that it sets for commands that
-have not received a completion at the time of entering EH.
+And no, we can't just use __builtin_types_compatible_p(), because the
+whole question of "does it make sense to compare these two values" is a
+lot more complicated than that.
 
-Thus, libata doesn't really care about DID_TIME_OUT at all, and currently
-clears the host byte at the end of EH, in ata_scsi_qc_complete(), before
-scsi_eh_finish_cmd() is called.
+For example, it makes a ton of sense to compare unsigned values with
+simple constants like "5", even if that is indeed a signed type.  So we
+have these very strange macros to try to make sensible type checking
+decisions on the arguments to 'min()' and 'max()'.
 
-However, this clearing in ata_scsi_qc_complete() is currently only done
-for commands that are not ATA passthrough commands.
+But that can cause enormous code expansion if the min()/max() macros are
+used with complicated expressions, and particularly if you nest these
+things so that you get the first big expansion then expanded again.
 
-Since the host byte is visible in the completion that we return to user
-space for ATA passthrough commands, for ATA passthrough commands that got
-completed via EH (commands with sense data), the user will incorrectly see:
-ATA pass-through(16): transport error: Host_status=0x03 [DID_TIME_OUT]
+The xen setup.c file ended up ballooning to over 50MB of preprocessed
+noise that takes 15s to compile (obviously depending on the build host),
+largely due to one single line.
 
-Fix this by moving the clearing of the host byte (which is currently only
-done for commands that are not ATA passthrough commands) from
-ata_scsi_qc_complete() to the start of EH (regardless if the command is
-ATA passthrough or not).
+So let's split that one single line to just be simpler.  I think it ends
+up being more legible to humans too at the same time.  Now that single
+file compiles in under a second.
 
-While at it, use the proper helper function to clear the host byte, rather
-than open coding the clearing.
-
-This will make sure that we:
--Correctly clear DID_TIME_OUT for both ATA passthrough commands and
- commands that are not ATA passthrough commands.
--Do not needlessly clear the host byte for commands that did not go via EH.
- ata_scsi_qc_complete() is called both for commands that are completed
- normally (without going via EH), and for commands that went via EH,
- however, only commands that went via EH will have DID_TIME_OUT set.
-
-Fixes: 24aeebbf8ea9 ("scsi: ata: libata: Change ata_eh_request_sense() to not set CHECK_CONDITION")
-Reported-by: Igor Pylypiv <ipylypiv@google.com>
-Closes: https://lore.kernel.org/linux-ide/ZttIN8He8TOZ7Lct@google.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Tested-by: Igor Pylypiv <ipylypiv@google.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reported-and-reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Link: https://lore.kernel.org/all/c83c17bb-be75-4c67-979d-54eee38774c6@lucifer.local/
+Link: https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/ [1]
+Cc: David Laight <David.Laight@aculab.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c   | 8 ++++++++
- drivers/ata/libata-scsi.c | 3 ---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/xen/setup.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 1168e29cae86e..cd87457375454 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -618,6 +618,14 @@ void ata_scsi_cmd_error_handler(struct Scsi_Host *host, struct ata_port *ap,
- 	list_for_each_entry_safe(scmd, tmp, eh_work_q, eh_entry) {
- 		struct ata_queued_cmd *qc;
+diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
+index d44d6d8b33195..d2073df5c5624 100644
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -691,6 +691,7 @@ char * __init xen_memory_setup(void)
+ 	struct xen_memory_map memmap;
+ 	unsigned long max_pages;
+ 	unsigned long extra_pages = 0;
++	unsigned long maxmem_pages;
+ 	int i;
+ 	int op;
  
-+		/*
-+		 * If the scmd was added to EH, via ata_qc_schedule_eh() ->
-+		 * scsi_timeout() -> scsi_eh_scmd_add(), scsi_timeout() will
-+		 * have set DID_TIME_OUT (since libata does not have an abort
-+		 * handler). Thus, to clear DID_TIME_OUT, clear the host byte.
-+		 */
-+		set_host_byte(scmd, DID_OK);
-+
- 		ata_qc_for_each_raw(ap, qc, i) {
- 			if (qc->flags & ATA_QCFLAG_ACTIVE &&
- 			    qc->scsicmd == scmd)
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index c91f8746289f4..7a71add807a3a 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1725,9 +1725,6 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
- 			set_status_byte(qc->scsicmd, SAM_STAT_CHECK_CONDITION);
- 	} else if (is_error && !have_sense) {
- 		ata_gen_ata_sense(qc);
--	} else {
--		/* Keep the SCSI ML and status byte, clear host byte. */
--		cmd->result &= 0x0000ffff;
- 	}
- 
- 	ata_qc_done(qc);
+@@ -762,8 +763,8 @@ char * __init xen_memory_setup(void)
+ 	 * Make sure we have no memory above max_pages, as this area
+ 	 * isn't handled by the p2m management.
+ 	 */
+-	extra_pages = min3(EXTRA_MEM_RATIO * min(max_pfn, PFN_DOWN(MAXMEM)),
+-			   extra_pages, max_pages - max_pfn);
++	maxmem_pages = EXTRA_MEM_RATIO * min(max_pfn, PFN_DOWN(MAXMEM));
++	extra_pages = min3(maxmem_pages, extra_pages, max_pages - max_pfn);
+ 	i = 0;
+ 	addr = xen_e820_table.entries[0].addr;
+ 	size = xen_e820_table.entries[0].size;
 -- 
 2.43.0
 
