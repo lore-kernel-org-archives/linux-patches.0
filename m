@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB551CFEB3;
-	Wed,  2 Oct 2024 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC9A1D0E1C;
+	Wed,  2 Oct 2024 14:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878888; cv=none; b=Q1hzevlohIswqaUo3F0/vRBPytuo0uhANEndg3moPVud/ulslKtl1XxfQdX0IJNOmnMAhgx2I3VcoqaBEEuo4WhR2Ie1tCezyCESnPs/PoUp9jO3SGHPVFew8f+gq3lhkveq7Jk8VyDSFkLoLiZtAem130QsbBog0AHX3Ro6erE=
+	t=1727878891; cv=none; b=oWdl4dIox/78CZ60dsnC/si+DVKU1T0L4YG5v4LhTdkGqqWLcspEXARPXOv8ipOS7TBK796DpHtJaPk0K/OlTuzsJ4f0hu7Am1m6z5mThca/9F4SacrfyUNHww1vnxcRBKIJZcv2EM4n4qsYzKpbefDkDFcCoIAYFI2dPgWY62Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878888; c=relaxed/simple;
-	bh=jB+LR2fGKcLrzUgEo/xrQqzn26qMtImwoIhAVRERY1c=;
+	s=arc-20240116; t=1727878891; c=relaxed/simple;
+	bh=QaW/ebcYO1wT+nz50cTmAacXIQPWkbV7SKrdzftsNNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tgi2p+Na2r6R4Q27REGUXAO6C4lRhk3lG9YE+g86W4c4rGbLfFZcu26OcVjIbRMu+32cASl3kDcJWJRtb8AvnLywmX6TQ0W0byh6Ajq8S9ovqPHNBFeJv2TY9c1hM5azjv/hjAnYFAzbHb75PyNnu1YX7u0jZ1Yky8Xs2gnjUMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa8rwwNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N2BHy1S216WUW0xPkZaLHdiVnzZe+PandaK5XYc641j+d0psQyRmAxo0mQiNpkdyRy6kiocOXT3Ezd7LTwgg34GCcZTzgvdOY3fEF5EMw2posjvt3gr85KR5kwwVnL2rd6KkaXTyVSd/urakKBWtgTo9ZvNWbR79fimSabCsvsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4tbgRag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa8rwwNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D41C4CEC5;
-	Wed,  2 Oct 2024 14:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4tbgRag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728F4C4CEC5;
+	Wed,  2 Oct 2024 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878887;
-	bh=jB+LR2fGKcLrzUgEo/xrQqzn26qMtImwoIhAVRERY1c=;
+	s=korg; t=1727878890;
+	bh=QaW/ebcYO1wT+nz50cTmAacXIQPWkbV7SKrdzftsNNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qa8rwwNak1007VORzwodoI8MG4nKiaORJGMqymT+Qf2KrJODw5kvcgncM2ZKrzQ91
-	 qsv3FafRe/OOCGwZQEldPYtQRxIJw+7V0C9CWLxXBDj3TMRcgqmS5IJUZEZ7j9ES9a
-	 lOTntantQO7+A2GjEpBOoy15724h1kCLkBXOJqEM=
+	b=a4tbgRagrhZK6rM2Kl0gawFz62UTOFb95Mmi74grbp5LaFumg9oAR/PgsNwXwBxnm
+	 7fEkblUxzDynmhaSrlT4C8UbbMoEJvKNOi1n68DRvnemyXjQPFwq3R+JF2UfDRQusS
+	 37/Ixa6SKTB3wu0iCTwturUqb8dfaDuMYTzjxRa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Guoqing Jiang <guoqing.jiang@canonical.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.10 566/634] hwrng: mtk - Use devm_pm_runtime_enable
-Date: Wed,  2 Oct 2024 15:01:06 +0200
-Message-ID: <20241002125833.456631791@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.10 540/634] ACPI: sysfs: validate return type of _STR method
+Date: Wed,  2 Oct 2024 15:00:40 +0200
+Message-ID: <20241002125832.424244107@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -45,43 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@canonical.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 78cb66caa6ab5385ac2090f1aae5f3c19e08f522 upstream.
+commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
 
-Replace pm_runtime_enable with the devres-enabled version which
-can trigger pm_runtime_disable.
+Only buffer objects are valid return values of _STR.
 
-Otherwise, the below appears during reload driver.
+If something else is returned description_show() will access invalid
+memory.
 
-mtk_rng 1020f000.rng: Unbalanced pm_runtime_enable!
-
-Fixes: 81d2b34508c6 ("hwrng: mtk - add runtime PM support")
-Cc: <stable@vger.kernel.org>
-Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/mtk-rng.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/device_sysfs.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/char/hw_random/mtk-rng.c
-+++ b/drivers/char/hw_random/mtk-rng.c
-@@ -142,7 +142,7 @@ static int mtk_rng_probe(struct platform
- 	dev_set_drvdata(&pdev->dev, priv);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
--	pm_runtime_enable(&pdev->dev);
-+	devm_pm_runtime_enable(&pdev->dev);
- 
- 	dev_info(&pdev->dev, "registered RNG driver\n");
- 
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -540,8 +540,9 @@ int acpi_device_setup_files(struct acpi_
+ 	 * If device has _STR, 'description' file is created
+ 	 */
+ 	if (acpi_has_method(dev->handle, "_STR")) {
+-		status = acpi_evaluate_object(dev->handle, "_STR",
+-					NULL, &buffer);
++		status = acpi_evaluate_object_typed(dev->handle, "_STR",
++						    NULL, &buffer,
++						    ACPI_TYPE_BUFFER);
+ 		if (ACPI_FAILURE(status))
+ 			buffer.pointer = NULL;
+ 		dev->pnp.str_obj = buffer.pointer;
 
 
