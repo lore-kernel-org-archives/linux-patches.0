@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9150B1D0DC0;
-	Wed,  2 Oct 2024 14:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE931D1F74;
+	Wed,  2 Oct 2024 14:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877916; cv=none; b=jQS0Z+++HKhVRttRCEA0mPf+3n9WRiTSCWy2cGbKX9TdNThtqOSFJjbxzZ1QxnD2OnyISzdCLQF9RP+1tT4OdNv+yjtDc+cVY68u+sRUepoj0J2Yont+QcuVn/SD3HQOxhTudysdYr4wPIpekdyTkegRBNg71a0m0LAa9rFxlrs=
+	t=1727877919; cv=none; b=fO7W7TWBNZkPkQdTLuHY8JtXb1pV5g783tuJ+p83iBL1pnvDQ3dWg/foSsJnH9UPeRmh+hfy4hdNyWNyEsjrkmX5+2D/75JmYBx3BLv73lGG5X+ylEr/90Bc1xEjGYupJfrdKmAWm7uNqDSU2v9pigx5zstiQd7BMVqaDeeyzbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877916; c=relaxed/simple;
-	bh=oN9W2561/zzq92LlsMnyFumnH1J31Ye9c2pq56RyzEU=;
+	s=arc-20240116; t=1727877919; c=relaxed/simple;
+	bh=pnUxWqlhOS2Te6gO3uxsAypm8MBl8rv+eWbRTtdBrMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vbw9+AdxE/DkDiG1lci4KykBWLM9IHjmj9Na4x+pStA9/fOfQIgFFRnkwI7VoApX2MWhjyDcIXbT3S6ubbyRFRV9C2Ge5k8kPVMD0BMJEjVP/DbNdv0K2rVp07dckvP0ODFyWwa+a0+Ez4oWyWA2Bt4jfqb7KyTbDp8av/OefMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaAOOwF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icYDp5g4aQhekc80YK/XmKBEdaF0b53V/4mr9zuaeY8X97Q3CRXSkJYGvGk+S+GV0v6x7WNguqVOy82iyd0av51qZvciAqQbwsB3I7P0yVffdqXyiFjJHkVfd/WW38VQq3IzHKYgiiOuBFaQ7S5PVteUAP/xKHUJ+nbtOyXwAWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbw/vGig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaAOOwF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E95DC4CEC2;
-	Wed,  2 Oct 2024 14:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbw/vGig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87565C4CEC2;
+	Wed,  2 Oct 2024 14:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877916;
-	bh=oN9W2561/zzq92LlsMnyFumnH1J31Ye9c2pq56RyzEU=;
+	s=korg; t=1727877918;
+	bh=pnUxWqlhOS2Te6gO3uxsAypm8MBl8rv+eWbRTtdBrMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaAOOwF4eWADPNqNBsPqK7g2oGq5PmnYNGVWuQlqtXiZIwTbQDrVLQY6dNtruORO4
-	 kMkQnN5EYixiME57NEUxtLrJ8yQio4TNNF0Abz9nRfX+Aa7KHCNop1UH+5Yh7oe6Qy
-	 BbyXPhglIANh2M0R9+pfc80m7UDPC54thqqZ8elA=
+	b=bbw/vGiga//BJzmcLnVWJs3gIu1wT7f5MhNCH0m02JbDlrK2MglTfs4VH+m1Y/gyx
+	 oCb4/sFVPV8doBck6UsVuE171Rb2uVHUs12VXaB29yFDma30P23lduk4kqebmUkYad
+	 KQjv59TpKDcM+17ODv37bzaSim268VgODWbPgFsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Corey Minyard <corey@minyard.net>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 207/634] ipmi: docs: dont advertise deprecated sysfs entries
-Date: Wed,  2 Oct 2024 14:55:07 +0200
-Message-ID: <20241002125819.276855570@linuxfoundation.org>
+Subject: [PATCH 6.10 208/634] drm/msm/dp: enable widebus on all relevant chipsets
+Date: Wed,  2 Oct 2024 14:55:08 +0200
+Message-ID: <20241002125819.315705262@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,37 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 64dce81f8c373c681e62d5ffe0397c45a35d48a2 ]
+[ Upstream commit c7c412202623951dcfc22316f5255fd84fd56186 ]
 
-"i2c-adapter" class entries are deprecated since 2009. Switch to the
-proper location.
+Hardware document indicates that widebus is recommended on DP on all
+MDSS chipsets starting version 5.x.x and above.
 
-Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
-Closes: https://lore.kernel.org/r/80c4a898-5867-4162-ac85-bdf7c7c68746@gmail.com
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Message-Id: <20240901090211.3797-2-wsa+renesas@sang-engineering.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Follow the guideline and mark widebus support on all relevant
+chipsets for DP.
+
+Fixes: 766f705204a0 ("drm/msm/dp: Remove now unused connector_type from desc")
+Fixes: 1b2d98bdd7b7 ("drm/msm/dp: Add DisplayPort controller for SM8650")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
+Fixes: 1b2d98bdd7b7 ("drm/msm/dp: Add DisplayPort controller for SM8650")
+Patchwork: https://patchwork.freedesktop.org/patch/606556/
+Link: https://lore.kernel.org/r/20240730195012.2595980-1-quic_abhinavk@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/ipmi.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/driver-api/ipmi.rst b/Documentation/driver-api/ipmi.rst
-index e224e47b6b094..dfa021eacd63c 100644
---- a/Documentation/driver-api/ipmi.rst
-+++ b/Documentation/driver-api/ipmi.rst
-@@ -540,7 +540,7 @@ at module load time (for a module) with::
- 	alerts_broken
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 672a7ba52edad..9dc44ea85b7c6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -119,7 +119,7 @@ struct msm_dp_desc {
+ };
  
- The addresses are normal I2C addresses.  The adapter is the string
--name of the adapter, as shown in /sys/class/i2c-adapter/i2c-<n>/name.
-+name of the adapter, as shown in /sys/bus/i2c/devices/i2c-<n>/name.
- It is *NOT* i2c-<n> itself.  Also, the comparison is done ignoring
- spaces, so if the name is "This is an I2C chip" you can say
- adapter_name=ThisisanI2cchip.  This is because it's hard to pass in
+ static const struct msm_dp_desc sc7180_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -130,9 +130,9 @@ static const struct msm_dp_desc sc7280_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sc8180x_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+-	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1 },
+-	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2 },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
++	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
++	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -149,7 +149,7 @@ static const struct msm_dp_desc sc8280xp_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sm8650_dp_descs[] = {
+-	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0 },
++	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
+ 
 -- 
 2.43.0
 
