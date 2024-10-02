@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1652198837;
-	Wed,  2 Oct 2024 13:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C25F1D0793;
+	Wed,  2 Oct 2024 13:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877450; cv=none; b=To4w/3Yv4sYveo+LvLD9LYlFP4Zf8vLWL/rndDx6exAnTQbOH0lxFov5JSAVj6OATKJ3s8dczCeuGhpqMXLBfnJ5Y9xcK6hPymhHziIKiXxDJ6Qskj4QAXk9WtmcRWoy7VbaRHOiCPOYhb4Dw2+21O2wmnPjZWpKL0M8VI2P5/o=
+	t=1727877453; cv=none; b=b8CQOp6gX3Tc5Gkr/R8x4f/+1Piw7xRCt343JsDNtLke3MGfyV2msM5vGD7l/rq0YwZ+0YOyIIGhX5mVT7jpjoeu9yrkckezCqVVRneVOfcTOKTzr5oC4wg2S5slA1dSUFyxUmj7tY+aF2Wp61bgUtB9+J0z/VakAXVWc4uLEw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877450; c=relaxed/simple;
-	bh=oRvfH7DQkBIgGeRFNxhWwrx6+D1czkncSdY3Vxrpkgw=;
+	s=arc-20240116; t=1727877453; c=relaxed/simple;
+	bh=oEgJHIo3FCVezkir5A0bEsPUsfVU9m9qCsa4dSFL8Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fol6Q+MQp5zt4vCB8Jy3KKSK7pqJgZltjr5cWRWinrxc04ccGsth7wzDYjxDyFU3v2haulJI2h5rU/6PgX60n7xxuMrHBvRDeDihsVX0H9V1yR0p9O/oiIgJ3LaVdkZf7DazSFWzCp1UPp+rcrOeNLUo4PLSDR+pjrcboszEMAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/OOX7MO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxVOywxZjOX3+GrWrI4dT86+M9mReZFLqBpM758p495mRiWrsMaAfxkGc4H5JXP0dbKDPNy+z/62+baGn0jKxic0MnsnoM9nQRMm5t5LhOgZ0lq/sC0fhzaWuRdNdXE7gTkxOAN8St/xtimSpQ3Jj02H+Xmbqdh9mmJNzjZI0tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwaqX6S9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/OOX7MO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296B5C4AF09;
-	Wed,  2 Oct 2024 13:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwaqX6S9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12477C4AF0E;
+	Wed,  2 Oct 2024 13:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877450;
-	bh=oRvfH7DQkBIgGeRFNxhWwrx6+D1czkncSdY3Vxrpkgw=;
+	s=korg; t=1727877453;
+	bh=oEgJHIo3FCVezkir5A0bEsPUsfVU9m9qCsa4dSFL8Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/OOX7MObJ9aY9iNhud+hLPNWdp8MkX50QoHeAquSrWw1tS8EXzSUSVUET0NqXdEc
-	 5BR02Ojo9u06E8URo5cIGwztiqwzs7Ki7K2t+Dj7/UqGNb0fR8/YcHSmLpHMoQoL6B
-	 jrZ7uL5gxK8x+O/ADdZgz5X/r0O6i/fXOZmNHosI=
+	b=OwaqX6S9hDkgztgAhN1A5xTz+2GZFhA25iujAurp7fYPrmj97u+5UyTr8wuEby7Xj
+	 j8v5x+zbMvtpZg/qwyAKUwjO3PMEutOF741xUcfD78wUhqGE1tyWd2+ORpRRIXMHxD
+	 o+07HmnnyeJySsx4nt5yhxWGojL+/dr/IUG/SMVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 065/634] wifi: mt76: mt7996: use hweight16 to get correct tx antenna
-Date: Wed,  2 Oct 2024 14:52:45 +0200
-Message-ID: <20241002125813.674122121@linuxfoundation.org>
+Subject: [PATCH 6.10 083/634] wifi: mac80211: use two-phase skb reclamation in ieee80211_do_stop()
+Date: Wed,  2 Oct 2024 14:53:03 +0200
+Message-ID: <20241002125814.388045664@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,38 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit f98c3de92bb05dac4a4969df8a4595ed380b4604 ]
+[ Upstream commit 9d301de12da6e1bb069a9835c38359b8e8135121 ]
 
-The chainmask is u16 so using hweight8 cannot get correct tx_ant.
-Without this patch, the tx_ant of band 2 would be -1 and lead to the
-following issue:
-BUG: KASAN: stack-out-of-bounds in mt7996_mcu_add_sta+0x12e0/0x16e0 [mt7996e]
+Since '__dev_queue_xmit()' should be called with interrupts enabled,
+the following backtrace:
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20240816094635.2391-1-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+ieee80211_do_stop()
+ ...
+ spin_lock_irqsave(&local->queue_stop_reason_lock, flags)
+ ...
+ ieee80211_free_txskb()
+  ieee80211_report_used_skb()
+   ieee80211_report_ack_skb()
+    cfg80211_mgmt_tx_status_ext()
+     nl80211_frame_tx_status()
+      genlmsg_multicast_netns()
+       genlmsg_multicast_netns_filtered()
+        nlmsg_multicast_filtered()
+	 netlink_broadcast_filtered()
+	  do_one_broadcast()
+	   netlink_broadcast_deliver()
+	    __netlink_sendskb()
+	     netlink_deliver_tap()
+	      __netlink_deliver_tap_skb()
+	       dev_queue_xmit()
+	        __dev_queue_xmit() ; with IRQS disabled
+ ...
+ spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags)
+
+issues the warning (as reported by syzbot reproducer):
+
+WARNING: CPU: 2 PID: 5128 at kernel/softirq.c:362 __local_bh_enable_ip+0xc3/0x120
+
+Fix this by implementing a two-phase skb reclamation in
+'ieee80211_do_stop()', where actual work is performed
+outside of a section with interrupts disabled.
+
+Fixes: 5061b0c2b906 ("mac80211: cooperate more with network namespaces")
+Reported-by: syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20240906123151.351647-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/iface.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 2c85786778009..7220bcee6fae9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1653,7 +1653,7 @@ mt7996_mcu_sta_bfer_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index b935bb5d8ed1f..3e3814076006e 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -462,6 +462,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
  {
- 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
- 	struct mt7996_phy *phy = mvif->phy;
--	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
-+	int tx_ant = hweight16(phy->mt76->chainmask) - 1;
- 	struct sta_rec_bf *bf;
- 	struct tlv *tlv;
- 	static const u8 matrix[4][4] = {
+ 	struct ieee80211_local *local = sdata->local;
+ 	unsigned long flags;
++	struct sk_buff_head freeq;
+ 	struct sk_buff *skb, *tmp;
+ 	u32 hw_reconf_flags = 0;
+ 	int i, flushed;
+@@ -641,18 +642,32 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 		skb_queue_purge(&sdata->status_queue);
+ 	}
+ 
++	/*
++	 * Since ieee80211_free_txskb() may issue __dev_queue_xmit()
++	 * which should be called with interrupts enabled, reclamation
++	 * is done in two phases:
++	 */
++	__skb_queue_head_init(&freeq);
++
++	/* unlink from local queues... */
+ 	spin_lock_irqsave(&local->queue_stop_reason_lock, flags);
+ 	for (i = 0; i < IEEE80211_MAX_QUEUES; i++) {
+ 		skb_queue_walk_safe(&local->pending[i], skb, tmp) {
+ 			struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 			if (info->control.vif == &sdata->vif) {
+ 				__skb_unlink(skb, &local->pending[i]);
+-				ieee80211_free_txskb(&local->hw, skb);
++				__skb_queue_tail(&freeq, skb);
+ 			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags);
+ 
++	/* ... and perform actual reclamation with interrupts enabled. */
++	skb_queue_walk_safe(&freeq, skb, tmp) {
++		__skb_unlink(skb, &freeq);
++		ieee80211_free_txskb(&local->hw, skb);
++	}
++
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		ieee80211_txq_remove_vlan(local, sdata);
+ 
 -- 
 2.43.0
 
