@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6728E1D0DE2;
-	Wed,  2 Oct 2024 14:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508081D1305;
+	Wed,  2 Oct 2024 14:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877689; cv=none; b=ZGVmPQbwbEKn5DXbuVF+1YtyeAcxuUbIOFnxERC8sJirV3KDkZb8K3q8iVp9KS+TcdtnsHd2dpRHRx8zvy8JKPxbbG1cI/mpqL6eN0EWPMlkifXlIXIsE/Av2yuzAmKmuOMYZBU7yIyqevrSSQ7hu7/jslE5xRsGgm+kU1fv3vU=
+	t=1727877692; cv=none; b=smO1vrZeIbLdUiO6jwIv23X9sY12e4OfNhSXwT/4Obk8LlllHVbxblFBvC69wDS2hJQKPjvsr3wf+u300HaxlB3dspfc4bS8DnPkjXOYEJB6yWJL8UYbTlGWVZ2CgPTKuX7ZOMUCtNqjGCgXiUJ+8tda1Q+fqOqhUP4vdxUbbh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877689; c=relaxed/simple;
-	bh=sjYkRy7MZ3Um2ChfE2YIpEfCY5pEFyANFFFSoumOCiY=;
+	s=arc-20240116; t=1727877692; c=relaxed/simple;
+	bh=t2SCqB+m4gUt3fmvROzN3dO7K1TT7CB65vsYLz4spB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBfHuo9MYKW+w3WZMCYUw4TaIjni+dWh5hCGaD8qKs6fRLGeFYmqx4+8kPTSyBIcjbjtp4gzckXiXYKnw7j+AIdqDyeKVhnO0ShbZ3Nps1Tj5dUFEv3yUW5CrcuQIxAlAB7vPRSnf7GP819Pe/fY/b+MV/3bCOpQSRwu/Dc9NrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmjU0F/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gk9hxyH/VPmhaFakp49q5j6nQNtqRPN5Kouvx5C++EnOvEIYvmjHPBuSQA2xIKIX1jJaFRj5zOeA2eCcj7l/y+VnUAbdsdG4UvfF73Fjg4hMttlDgXvr60EPMjEdFpaxDa+w28goiDRArFJ5DWEOsT9TXNHm9MYGgrZTGcRoHD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG+/CCts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmjU0F/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6932C4CEC2;
-	Wed,  2 Oct 2024 14:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG+/CCts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA816C4CEC2;
+	Wed,  2 Oct 2024 14:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877689;
-	bh=sjYkRy7MZ3Um2ChfE2YIpEfCY5pEFyANFFFSoumOCiY=;
+	s=korg; t=1727877692;
+	bh=t2SCqB+m4gUt3fmvROzN3dO7K1TT7CB65vsYLz4spB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmjU0F/uC5Y1/qTz7srE8D/jSGdBvcp5hnVUj7dag4r5LXlo4qnygLKr+ffSLMxJr
-	 gj3rwHhDy3uf0lnf2cPaoloqcKdl4L6jPih53ImT4N4BWxA54NmV4X3ivvduKAWYJZ
-	 bV/sEhxhC6VsMBGMjdBUiizYIltUIo5Ulx7BJJhE=
+	b=tG+/CCtssfGK+/X5CqYmNOXjFhyh+SwvxoOhTwqUeDbe2AxH96KCbe7VE2tdcMSay
+	 KMESXS3XsWd4f4+V0EgQ9uemcOdiHT8L8pj+5bHgsFfPPYxZzx5Xqta86rD8F1BIzB
+	 ffU48vmpjVQI9DOtSz52jbCcvGlG6g/kYD6mFs7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Liu <liuyuntao12@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 160/634] hwmon: (ntc_thermistor) fix module autoloading
-Date: Wed,  2 Oct 2024 14:54:20 +0200
-Message-ID: <20241002125817.427705456@linuxfoundation.org>
+Subject: [PATCH 6.10 134/634] arm64: dts: qcom: x1e80100: Fix PHY for DP2
+Date: Wed,  2 Oct 2024 14:53:54 +0200
+Message-ID: <20241002125816.398286084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,34 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Liu <liuyuntao12@huawei.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit b6964d66a07a9003868e428a956949e17ab44d7e ]
+[ Upstream commit ba728bda663b0e812cb20450d18af5d0edd803a2 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from of_device_id table.
+The actual PHY used by MDSS DP2 is the USB SS2 QMP one. So switch to it
+instead. This is needed to get external DP support on boards like CRD
+where the 3rd Type-C USB port (right-hand side) is connected to DP2.
 
-Fixes: 9e8269de100d ("hwmon: (ntc_thermistor) Add DT with IIO support to NTC thermistor driver")
-Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
-Message-ID: <20240815083021.756134-1-liuyuntao12@huawei.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Link: https://lore.kernel.org/r/20240829-x1e80100-dts-dp2-use-qmpphy-ss2-v1-1-9ba3dca61ccc@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ntc_thermistor.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/ntc_thermistor.c b/drivers/hwmon/ntc_thermistor.c
-index ef75b63f5894e..b5352900463fb 100644
---- a/drivers/hwmon/ntc_thermistor.c
-+++ b/drivers/hwmon/ntc_thermistor.c
-@@ -62,6 +62,7 @@ static const struct platform_device_id ntc_thermistor_id[] = {
- 	[NTC_SSG1404001221]   = { "ssg1404_001221",  TYPE_NCPXXWB473 },
- 	[NTC_LAST]            = { },
- };
-+MODULE_DEVICE_TABLE(platform, ntc_thermistor_id);
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 36c398e5fe501..64d5f6e4c0b01 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -3998,14 +3998,14 @@
  
- /*
-  * A compensation table should be sorted by the values of .ohm
+ 				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX2_LINK_CLK_SRC>,
+ 						  <&dispcc DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dp2_phy 0>,
+-							 <&mdss_dp2_phy 1>;
++				assigned-clock-parents = <&usb_1_ss2_qmpphy QMP_USB43DP_DP_LINK_CLK>,
++							 <&usb_1_ss2_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+ 
+ 				operating-points-v2 = <&mdss_dp2_opp_table>;
+ 
+ 				power-domains = <&rpmhpd RPMHPD_MMCX>;
+ 
+-				phys = <&mdss_dp2_phy>;
++				phys = <&usb_1_ss2_qmpphy QMP_USB43DP_DP_PHY>;
+ 				phy-names = "dp";
+ 
+ 				#sound-dai-cells = <0>;
+@@ -4189,8 +4189,8 @@
+ 				 <&usb_1_ss0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+ 				 <&usb_1_ss1_qmpphy QMP_USB43DP_DP_LINK_CLK>, /* dp1 */
+ 				 <&usb_1_ss1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+-				 <&mdss_dp2_phy 0>, /* dp2 */
+-				 <&mdss_dp2_phy 1>,
++				 <&usb_1_ss2_qmpphy QMP_USB43DP_DP_LINK_CLK>, /* dp2 */
++				 <&usb_1_ss2_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+ 				 <&mdss_dp3_phy 0>, /* dp3 */
+ 				 <&mdss_dp3_phy 1>;
+ 			power-domains = <&rpmhpd RPMHPD_MMCX>;
 -- 
 2.43.0
 
