@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDFC29CE7;
-	Wed,  2 Oct 2024 13:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691F41D015C;
+	Wed,  2 Oct 2024 13:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876934; cv=none; b=TLknpkY/1N9/7oH3+HWIhP0j/PyQPah2o/hEuno/IJRyAmKt6nM6x98smLUX1N+AbtHhStvd7DzjmfEKtF/XREAzYJQP52/5hQo61Kd9HY/5YOe09/oFncnG3Fn781fEWx5jP0j8EceDKbzik8QQ+84EaQ6ZLjvqAV3n6x0HNtc=
+	t=1727876937; cv=none; b=pNBrTs9JEQbMyxBeJwwMDsBf3ut17WzNNo2tecz7jjLl03xUBd74Vy85kjPAPhnufn/Bmvd3nmA5a6+rZQY2pvEmzdbPNR9YGTRXCwEQxGYEZ3qenoaaqif+MbiuKKhHFidKYRV4WNeaSmxCgSwfd1j33Xl3xtVbbeDLWewZXsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876934; c=relaxed/simple;
-	bh=d762km2HoXILoYDQQtU7STAtdIxZYDT+ibo5iDfNkzI=;
+	s=arc-20240116; t=1727876937; c=relaxed/simple;
+	bh=ph9WiRJs8a129ktBp/7b4VFk3oMzDKfTFOQXPpxOoxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYlgo8hLnDL7AKSVxCZeHiC3xPzovGLQRlXZ9UfO9ZHsKO83BPkXnSLrV4SNM2ZpKM5GyVBJ5gA0KNMR3wEfe5+FbHwkMxpGzUh2RKb/rY6qlCkHARq55yGSyLJrx6zBOdFLJ2fnVzT/3/s3XC4x5SmIr/ThMER42UAdrUi80OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWITZia1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZXtlpBlmy25QeN0jJbGkChKZbB6sw7xakBlyu25VY9eROsd8KiLdrH2jDji6E7Iq+eo6wZ0E4os/+gFL6XRs02Dc0debisz01MfTPdY/i6R07lB22UbaTbSqnGkDNKBr0EV/AIsQk6aRKc3NbWV6YldGYbp089wqOh7HAetrlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2RMXH7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWITZia1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE88C4CEC2;
-	Wed,  2 Oct 2024 13:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2RMXH7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C899C4CEC2;
+	Wed,  2 Oct 2024 13:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876933;
-	bh=d762km2HoXILoYDQQtU7STAtdIxZYDT+ibo5iDfNkzI=;
+	s=korg; t=1727876937;
+	bh=ph9WiRJs8a129ktBp/7b4VFk3oMzDKfTFOQXPpxOoxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWITZia1XDTJKsiDk2diq6sN3PW2vxAYA6yKMmRe0tCbfHao+/lvG9HjXZEKF6SBz
-	 v9DPt3AaIkpyac7J0a1AJeevNnvAPjcxAusN4QgPQD88yXki41T8AjLqJZpK8oEfkt
-	 ErFoUPJ2wvZMyafbKlCVhagAHx6jSXzQPcDJc670=
+	b=z2RMXH7/LGoEDTV4UZEhK9jGmyYY9z4T5OKc2QlP9utBJYcsatwbIRknEok77uFNN
+	 WqZC2JXH53Qw4hYbmWSq3pvs80QxCW4q0O4iqrlppjwhkb7p/oJNZ2dp5FaHriKF57
+	 75x+e2WWsOZaQ6cF4+6oA7XM5hQoTOFfE+NWmYQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alexander Potapenko <glider@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.11 610/695] x86/entry: Remove unwanted instrumentation in common_interrupt()
-Date: Wed,  2 Oct 2024 15:00:08 +0200
-Message-ID: <20241002125846.864838477@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.11 593/695] firmware_loader: Block path traversal
+Date: Wed,  2 Oct 2024 14:59:51 +0200
+Message-ID: <20241002125846.181841837@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,105 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Vyukov <dvyukov@google.com>
+From: Jann Horn <jannh@google.com>
 
-commit 477d81a1c47a1b79b9c08fc92b5dea3c5143800b upstream.
+commit f0e5311aa8022107d63c54e2f03684ec097d1394 upstream.
 
-common_interrupt() and related variants call kvm_set_cpu_l1tf_flush_l1d(),
-which is neither marked noinstr nor __always_inline.
+Most firmware names are hardcoded strings, or are constructed from fairly
+constrained format strings where the dynamic parts are just some hex
+numbers or such.
 
-So compiler puts it out of line and adds instrumentation to it.  Since the
-call is inside of instrumentation_begin/end(), objtool does not warn about
-it.
+However, there are a couple codepaths in the kernel where firmware file
+names contain string components that are passed through from a device or
+semi-privileged userspace; the ones I could find (not counting interfaces
+that require root privileges) are:
 
-The manifestation is that KCOV produces spurious coverage in
-kvm_set_cpu_l1tf_flush_l1d() in random places because the call happens when
-preempt count is not yet updated to say that the kernel is in an interrupt.
+ - lpfc_sli4_request_firmware_update() seems to construct the firmware
+   filename from "ModelName", a string that was previously parsed out of
+   some descriptor ("Vital Product Data") in lpfc_fill_vpd()
+ - nfp_net_fw_find() seems to construct a firmware filename from a model
+   name coming from nfp_hwinfo_lookup(pf->hwinfo, "nffw.partno"), which I
+   think parses some descriptor that was read from the device.
+   (But this case likely isn't exploitable because the format string looks
+   like "netronome/nic_%s", and there shouldn't be any *folders* starting
+   with "netronome/nic_". The previous case was different because there,
+   the "%s" is *at the start* of the format string.)
+ - module_flash_fw_schedule() is reachable from the
+   ETHTOOL_MSG_MODULE_FW_FLASH_ACT netlink command, which is marked as
+   GENL_UNS_ADMIN_PERM (meaning CAP_NET_ADMIN inside a user namespace is
+   enough to pass the privilege check), and takes a userspace-provided
+   firmware name.
+   (But I think to reach this case, you need to have CAP_NET_ADMIN over a
+   network namespace that a special kind of ethernet device is mapped into,
+   so I think this is not a viable attack path in practice.)
 
-Mark kvm_set_cpu_l1tf_flush_l1d() as __always_inline and move it out of the
-instrumentation_begin/end() section.  It only calls __this_cpu_write()
-which is already safe to call in noinstr contexts.
+Fix it by rejecting any firmware names containing ".." path components.
 
-Fixes: 6368558c3710 ("x86/entry: Provide IDTENTRY_SYSVEC")
-Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+For what it's worth, I went looking and haven't found any USB device
+drivers that use the firmware loader dangerously.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/3f9a1de9e415fcb53d07dc9e19fa8481bb021b1b.1718092070.git.dvyukov@google.com
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: abb139e75c2c ("firmware: teach the kernel to load firmware files directly from the filesystem")
+Signed-off-by: Jann Horn <jannh@google.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20240828-firmware-traversal-v3-1-c76529c63b5f@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/hardirq.h  |    8 ++++++--
- arch/x86/include/asm/idtentry.h |    6 +++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/base/firmware_loader/main.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/arch/x86/include/asm/hardirq.h
-+++ b/arch/x86/include/asm/hardirq.h
-@@ -69,7 +69,11 @@ extern u64 arch_irq_stat(void);
- #define local_softirq_pending_ref       pcpu_hot.softirq_pending
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -849,6 +849,26 @@ static void fw_log_firmware_info(const s
+ {}
+ #endif
  
- #if IS_ENABLED(CONFIG_KVM_INTEL)
--static inline void kvm_set_cpu_l1tf_flush_l1d(void)
 +/*
-+ * This function is called from noinstr interrupt contexts
-+ * and must be inlined to not get instrumentation.
++ * Reject firmware file names with ".." path components.
++ * There are drivers that construct firmware file names from device-supplied
++ * strings, and we don't want some device to be able to tell us "I would like to
++ * be sent my firmware from ../../../etc/shadow, please".
++ *
++ * Search for ".." surrounded by either '/' or start/end of string.
++ *
++ * This intentionally only looks at the firmware name, not at the firmware base
++ * directory or at symlink contents.
 + */
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void)
- {
- 	__this_cpu_write(irq_stat.kvm_cpu_l1tf_flush_l1d, 1);
- }
-@@ -84,7 +88,7 @@ static __always_inline bool kvm_get_cpu_
- 	return __this_cpu_read(irq_stat.kvm_cpu_l1tf_flush_l1d);
- }
- #else /* !IS_ENABLED(CONFIG_KVM_INTEL) */
--static inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
- #endif /* IS_ENABLED(CONFIG_KVM_INTEL) */
++static bool name_contains_dotdot(const char *name)
++{
++	size_t name_len = strlen(name);
++
++	return strcmp(name, "..") == 0 || strncmp(name, "../", 3) == 0 ||
++	       strstr(name, "/../") != NULL ||
++	       (name_len >= 3 && strcmp(name+name_len-3, "/..") == 0);
++}
++
+ /* called from request_firmware() and request_firmware_work_func() */
+ static int
+ _request_firmware(const struct firmware **firmware_p, const char *name,
+@@ -869,6 +889,14 @@ _request_firmware(const struct firmware
+ 		goto out;
+ 	}
  
- #endif /* _ASM_X86_HARDIRQ_H */
---- a/arch/x86/include/asm/idtentry.h
-+++ b/arch/x86/include/asm/idtentry.h
-@@ -212,8 +212,8 @@ __visible noinstr void func(struct pt_re
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 	u32 vector = (u32)(u8)error_code;				\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_irq_on_irqstack_cond(__##func, regs, vector);		\
- 	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
-@@ -250,7 +250,6 @@ static void __##func(struct pt_regs *reg
- 									\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_sysvec_on_irqstack_cond(__##func, regs);			\
- }									\
- 									\
-@@ -258,6 +257,7 @@ __visible noinstr void func(struct pt_re
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
-@@ -288,7 +288,6 @@ static __always_inline void __##func(str
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
- 	__irq_enter_raw();						\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	__##func (regs);						\
- 	__irq_exit_raw();						\
- }									\
-@@ -297,6 +296,7 @@ __visible noinstr void func(struct pt_re
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
++	if (name_contains_dotdot(name)) {
++		dev_warn(device,
++			 "Firmware load for '%s' refused, path contains '..' component\n",
++			 name);
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	ret = _request_firmware_prepare(&fw, name, device, buf, size,
+ 					offset, opt_flags);
+ 	if (ret <= 0) /* error or already assigned */
+@@ -946,6 +974,8 @@ out:
+  *      @name will be used as $FIRMWARE in the uevent environment and
+  *      should be distinctive enough not to be confused with any other
+  *      firmware image for this or any other device.
++ *	It must not contain any ".." path components - "foo/bar..bin" is
++ *	allowed, but "foo/../bar.bin" is not.
+  *
+  *	Caller must hold the reference count of @device.
+  *
 
 
