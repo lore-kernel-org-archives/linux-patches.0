@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CC71D0438;
-	Wed,  2 Oct 2024 14:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11A61D0488;
+	Wed,  2 Oct 2024 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879732; cv=none; b=McjXr0h6u1sDFBUBjTVHLp//upzfAqeEhFjSyH1iO+8z6T3wNgrxjdA4/O7d7vJJ1IqGkCYtBfd6Dq1gTnJB/FcfsyS4XGEVl+9Bid89R1fJZpJK86HeGbYvX+gNY/fyoerRrCx4DPflzRtJCHAtA1aIrNTJdi+dIdHkQCovSdo=
+	t=1727879735; cv=none; b=Ryq+GcgdfcgpewfdheX8QcHvLpLrKAydSaSKAuQTpKvjN91FdIJkNSipHoOEaDoyBs6f653eqjnFzUryyCC/JfLZbYeon2tMX2q4thP4QC/StI09hQRhkPA8EnEMN9vxZEQOa3xLkoRAuJt7rvYnQRhuF0g4tOl9Zj+Nuo08BvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879732; c=relaxed/simple;
-	bh=JLwAqmTN2pWxTvqRsLjxgG6xTxIbVZ8yY2VKNaeibSo=;
+	s=arc-20240116; t=1727879735; c=relaxed/simple;
+	bh=/0MoFEsEH5C6B42JeJ/tmT7sS0TrlSk5oDStbRoCVNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sF8OD0i9wiDbWX7gVmHo4pY3qsqHzbAAkoshbt3n/JzSlCLzx1oJEoIBbkUalG6k+Tj3gpB0UPIg1YnwuWxF/qqzHQXUz92lZdC1HD3GyAIA9jXXFNXumQWuVQPo8NxImWMHpo1DRB7G6nAJmep+eisNjtpekq6NBjjVKCdtfqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlT6v7ZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JHX/rfv0tXjWYcwhXkDaXODnpuOpGJnPjsTSRL2w7EL0XX2szBeL8CVQsIiKbC6wyEVczRq348qLeCtfYLVtxNee20ITLmovcLh5CL8e5wTBjqKlUlUwAk4jV4CRldGkUic9Ooa6uOCJdnjZpTZDhLX85oVwrnJkOm7UhSsH5Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5BmFDQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlT6v7ZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729AEC4CEC2;
-	Wed,  2 Oct 2024 14:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5BmFDQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6719FC4CEC2;
+	Wed,  2 Oct 2024 14:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879731;
-	bh=JLwAqmTN2pWxTvqRsLjxgG6xTxIbVZ8yY2VKNaeibSo=;
+	s=korg; t=1727879734;
+	bh=/0MoFEsEH5C6B42JeJ/tmT7sS0TrlSk5oDStbRoCVNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlT6v7ZRrOYhNIbI691VzObOPV+M9/32iTuJjGOvqvItoCKr2pR95PrsFPiTEya3t
-	 WyH2DdruHP7DdH+8OYvn9/DKFPmH5pVJFTst2ny1y+CsPUem3XRGs6L9E7MMGBuHlR
-	 DsWuUTYGfybT5qezSrF+6pGKIT/ayYU9u8YXIcbU=
+	b=S5BmFDQNbMXiZ5ZqsholT/pv6k92w2/Y1UUpUjWNVxVWqTHxkhSP3I4L7tnnSP1GI
+	 c7MSgeTIVy+m8RmzVgyYl4rp/lR4Ozt88EwSVyWAF8M0F8LaLFdhYy47XAJaL0y49K
+	 7A/L4sEBrByx0h0eIgi/iaJ1pEVn0OIGcAK+KUlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Qiang Wang <wangqiang1@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 219/538] selftests/bpf: Fix error compiling tc_redirect.c with musl libc
-Date: Wed,  2 Oct 2024 14:57:38 +0200
-Message-ID: <20241002125800.901202725@linuxfoundation.org>
+Subject: [PATCH 6.6 220/538] samples/bpf: Fix compilation errors with cf-protection option
+Date: Wed,  2 Oct 2024 14:57:39 +0200
+Message-ID: <20241002125800.940299224@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,104 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 21c5f4f55da759c7444a1ef13e90b6e6f674eeeb ]
+[ Upstream commit fdf1c728fac541891ef1aa773bfd42728626769c ]
 
-Linux 5.1 implemented 64-bit time types and related syscalls to address the
-Y2038 problem generally across archs. Userspace handling of Y2038 varies
-with the libc however. While musl libc uses 64-bit time across all 32-bit
-and 64-bit platforms, GNU glibc uses 64-bit time on 64-bit platforms but
-defaults to 32-bit time on 32-bit platforms unless they "opt-in" to 64-bit
-time or explicitly use 64-bit syscalls and time structures.
+Currently, compiling the bpf programs will result the compilation errors
+with the cf-protection option as follows in arm64 and loongarch64 machine
+when using gcc 12.3.1 and clang 17.0.6. This commit fixes the compilation
+errors by limited the cf-protection option only used in x86 platform.
 
-One specific area is the standard setsockopt() call, SO_TIMESTAMPNS option
-used for timestamping, and the related output 'struct timespec'. GNU glibc
-defaults as above, also exposing the SO_TIMESTAMPNS_NEW flag to explicitly
-use a 64-bit call and 'struct __kernel_timespec'. Since these are not
-exposed or needed with musl libc, their use in tc_redirect.c leads to
-compile errors building for mips64el/musl:
+[root@localhost linux]# make M=samples/bpf
+	......
+  CLANG-bpf  samples/bpf/xdp2skb_meta_kern.o
+error: option 'cf-protection=return' cannot be specified on this target
+error: option 'cf-protection=branch' cannot be specified on this target
+2 errors generated.
+  CLANG-bpf  samples/bpf/syscall_tp_kern.o
+error: option 'cf-protection=return' cannot be specified on this target
+error: option 'cf-protection=branch' cannot be specified on this target
+2 errors generated.
+	......
 
-  tc_redirect.c: In function 'rcv_tstamp':
-  tc_redirect.c:425:32: error: 'SO_TIMESTAMPNS_NEW' undeclared (first use in this function); did you mean 'SO_TIMESTAMPNS'?
-    425 |             cmsg->cmsg_type == SO_TIMESTAMPNS_NEW)
-        |                                ^~~~~~~~~~~~~~~~~~
-        |                                SO_TIMESTAMPNS
-  tc_redirect.c:425:32: note: each undeclared identifier is reported only once for each function it appears in
-  tc_redirect.c: In function 'test_inet_dtime':
-  tc_redirect.c:491:49: error: 'SO_TIMESTAMPNS_NEW' undeclared (first use in this function); did you mean 'SO_TIMESTAMPNS'?
-    491 |         err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
-        |                                                 ^~~~~~~~~~~~~~~~~~
-        |                                                 SO_TIMESTAMPNS
-
-However, using SO_TIMESTAMPNS_NEW isn't strictly needed, nor is Y2038 being
-explicitly tested. The timestamp checks in tc_redirect.c are simple: the
-packet receive timestamp is non-zero and processed/handled in less than 5
-seconds.
-
-Switch to using the standard setsockopt() call and SO_TIMESTAMPNS option to
-ensure compatibility across glibc and musl libc. In the worst-case, there
-is a 5-second window 14 years from now where tc_redirect tests may fail on
-32-bit systems. However, we should reasonably expect glibc to adopt a
-64-bit mandate rather than the current "opt-in" policy before the Y2038
-roll-over.
-
-Fixes: ce6f6cffaeaa ("selftests/bpf: Wait for the netstamp_needed_key static key to be turned on")
-Fixes: c803475fd8dd ("bpf: selftests: test skb->tstamp in redirect_neigh")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Fixes: 34f6e38f58db ("samples/bpf: fix warning with ignored-attributes")
+Reported-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/031d656c058b4e55ceae56ef49c4e1729b5090f3.1722244708.git.tony.ambardar@gmail.com
+Tested-by: Qiang Wang <wangqiang1@kylinos.cn>
+Link: https://lore.kernel.org/bpf/20240815135524.140675-1-13667453960@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/tc_redirect.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ samples/bpf/Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/tc_redirect.c b/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
-index af3c31f82a8ae..5a64017335875 100644
---- a/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
-@@ -421,7 +421,7 @@ static int set_forwarding(bool enable)
+diff --git a/samples/bpf/Makefile b/samples/bpf/Makefile
+index 4ccf4236031c1..3fa16412db15c 100644
+--- a/samples/bpf/Makefile
++++ b/samples/bpf/Makefile
+@@ -166,6 +166,10 @@ BPF_EXTRA_CFLAGS += -I$(srctree)/arch/mips/include/asm/mach-generic
+ endif
+ endif
  
- static int __rcv_tstamp(int fd, const char *expected, size_t s, __u64 *tstamp)
- {
--	struct __kernel_timespec pkt_ts = {};
-+	struct timespec pkt_ts = {};
- 	char ctl[CMSG_SPACE(sizeof(pkt_ts))];
- 	struct timespec now_ts;
- 	struct msghdr msg = {};
-@@ -445,7 +445,7 @@ static int __rcv_tstamp(int fd, const char *expected, size_t s, __u64 *tstamp)
- 
- 	cmsg = CMSG_FIRSTHDR(&msg);
- 	if (cmsg && cmsg->cmsg_level == SOL_SOCKET &&
--	    cmsg->cmsg_type == SO_TIMESTAMPNS_NEW)
-+	    cmsg->cmsg_type == SO_TIMESTAMPNS)
- 		memcpy(&pkt_ts, CMSG_DATA(cmsg), sizeof(pkt_ts));
- 
- 	pkt_ns = pkt_ts.tv_sec * NSEC_PER_SEC + pkt_ts.tv_nsec;
-@@ -487,9 +487,9 @@ static int wait_netstamp_needed_key(void)
- 	if (!ASSERT_GE(srv_fd, 0, "start_server"))
- 		goto done;
- 
--	err = setsockopt(srv_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
-+	err = setsockopt(srv_fd, SOL_SOCKET, SO_TIMESTAMPNS,
- 			 &opt, sizeof(opt));
--	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS_NEW)"))
-+	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS)"))
- 		goto done;
- 
- 	cli_fd = connect_to_fd(srv_fd, TIMEOUT_MILLIS);
-@@ -571,9 +571,9 @@ static void test_inet_dtime(int family, int type, const char *addr, __u16 port)
- 		return;
- 
- 	/* Ensure the kernel puts the (rcv) timestamp for all skb */
--	err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
-+	err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS,
- 			 &opt, sizeof(opt));
--	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS_NEW)"))
-+	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS)"))
- 		goto done;
- 
- 	if (type == SOCK_STREAM) {
++ifeq ($(ARCH), x86)
++BPF_EXTRA_CFLAGS += -fcf-protection
++endif
++
+ TPROGS_CFLAGS += -Wall -O2
+ TPROGS_CFLAGS += -Wmissing-prototypes
+ TPROGS_CFLAGS += -Wstrict-prototypes
+@@ -394,7 +398,7 @@ $(obj)/%.o: $(src)/%.c
+ 		-Wno-gnu-variable-sized-type-not-at-end \
+ 		-Wno-address-of-packed-member -Wno-tautological-compare \
+ 		-Wno-unknown-warning-option $(CLANG_ARCH_ARGS) \
+-		-fno-asynchronous-unwind-tables -fcf-protection \
++		-fno-asynchronous-unwind-tables \
+ 		-I$(srctree)/samples/bpf/ -include asm_goto_workaround.h \
+ 		-O2 -emit-llvm -Xclang -disable-llvm-passes -c $< -o - | \
+ 		$(OPT) -O2 -mtriple=bpf-pc-linux | $(LLVM_DIS) | \
 -- 
 2.43.0
 
