@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BD11D12F0;
-	Wed,  2 Oct 2024 14:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95651D1302;
+	Wed,  2 Oct 2024 14:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879656; cv=none; b=BChliYqw/nq4miNP35bZwzCQEKjqJzOmd4OZqWYa42W7F8HwkZq9bz2p7/MFaJNMSK8kwnAu9cyDQ3BueLUptVGHyNalAmUYnTKu7kijInl4PsmY3YklbDrZxNqvGrh/LxQD0wkOL9dZ9YJOdt70oom450K6AEXPMBnZJ+QX5kY=
+	t=1727879658; cv=none; b=aI6Fid6U2Fvro843APuBS6OWZhcD/eZp6FS+ezMUp/rv8q126HmyGsCHbETZd07j3Ae25jWsQ361ej/Q/EI4bbb2eL8p3ubYOxcN2XlbNO9zq/b4Oc7HIFk/68cMRYY7BsoWLK7sCHROuUHMhWoPf75TzgOX4uBA54JFPiSuE5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879656; c=relaxed/simple;
-	bh=+KFuDCn7F+kt1/DSPeobm0e9bgj15RD/K5W+XShCpzU=;
+	s=arc-20240116; t=1727879658; c=relaxed/simple;
+	bh=qqDTZmpHvUh4vHTQ20uFYL3eY1Be6CDGmEcXkoFHRho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSy42fXYi8P/KIHyN70p+cA0JPYLQalaHsr8mOdBB9mT+FrfqtZ4Z8EJixkDeUAA2fKfCMTsMr4e277DuMKeW0Yi8BKE1hC8oFfYoFGa7ZlKNbEgfUFkosi6TxIOr0/oDauZEnWbFzeQlB6mELim7ai0GicQGqB6KbDnRRuQjUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwv8VP1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACoa+e/+Wv+beXHlUImonm7cqAkZvVKSVTXOODERyQIRO/cReULII9yqp1OShyeTXPDuzOPrVbWK3iEdM/3+mPCSFC03KubixEP1ggPhvtkkqQsWfD8UyiD3bOX/ZsLGgYHZDStzubflhbU5U6RndAquKnzHVOILQ4ubsv7dGjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4y1xDX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwv8VP1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606A1C4CEC2;
-	Wed,  2 Oct 2024 14:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4y1xDX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B39C4CEC5;
+	Wed,  2 Oct 2024 14:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879655;
-	bh=+KFuDCn7F+kt1/DSPeobm0e9bgj15RD/K5W+XShCpzU=;
+	s=korg; t=1727879658;
+	bh=qqDTZmpHvUh4vHTQ20uFYL3eY1Be6CDGmEcXkoFHRho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwv8VP1OIGay9eR4/FYzjxgkkgeoHR4XkN/CChDNGl9iYWmK9WF22uksPaG0FZaZd
-	 L6BZv3Lgs56ioZXST11XDdtzkhHJin5qPdghssDepCCeD32grAVt/TODSzOOOLHtUZ
-	 mpCSBkVQZdsjsLI6QGi6hVTOEAT47o8Olscxa9pA=
+	b=g4y1xDX5rXjkULJaTVTPX9rDVwAZtxvY5cBlkNaKAGJpsSUKnZFZuOOiU9BvxNNug
+	 V+T3x10rNC1GfZHo0YTuDENGmEMo0oanKRXbEyTtVfZ05+CeBvWTX510K4ov9Bfwbz
+	 6F3qZnyaSwE7oNOiAwHsPTDYOyfmEORfUJ1S8Cmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/538] selftests/bpf: Drop unneeded error.h includes
-Date: Wed,  2 Oct 2024 14:57:11 +0200
-Message-ID: <20241002125759.835768963@linuxfoundation.org>
+Subject: [PATCH 6.6 193/538] selftests/bpf: Fix missing ARRAY_SIZE() definition in bench.c
+Date: Wed,  2 Oct 2024 14:57:12 +0200
+Message-ID: <20241002125759.874423936@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,65 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 69f409469c9b1515a5db40d5a36fda372376fa2d ]
+[ Upstream commit d44c93fc2f5a0c47b23fa03d374e45259abd92d2 ]
 
-The addition of general support for unprivileged tests in test_loader.c
-breaks building test_verifier on non-glibc (e.g. musl) systems, due to the
-inclusion of glibc extension '<error.h>' in 'unpriv_helpers.c'. However,
-the header is actually not needed, so remove it to restore building.
+Add a "bpf_util.h" include to avoid the following error seen compiling for
+mips64el with musl libc:
 
-Similarly for sk_lookup.c and flow_dissector.c, error.h is not necessary
-and causes problems, so drop them.
+  bench.c: In function 'find_benchmark':
+  bench.c:590:25: error: implicit declaration of function 'ARRAY_SIZE' [-Werror=implicit-function-declaration]
+    590 |         for (i = 0; i < ARRAY_SIZE(benchs); i++) {
+        |                         ^~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-Fixes: 1d56ade032a4 ("selftests/bpf: Unprivileged tests for test_loader.c")
-Fixes: 0ab5539f8584 ("selftests/bpf: Tests for BPF_SK_LOOKUP attach point")
-Fixes: 0905beec9f52 ("selftests/bpf: run flow dissector tests in skb-less mode")
+Fixes: 8e7c2a023ac0 ("selftests/bpf: Add benchmark runner infrastructure")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/5664367edf5fea4f3f4b4aec3b182bcfc6edff9c.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/bc4dde77dfcd17a825d8f28f72f3292341966810.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/flow_dissector.c | 1 -
- tools/testing/selftests/bpf/prog_tests/sk_lookup.c      | 1 -
- tools/testing/selftests/bpf/unpriv_helpers.c            | 1 -
- 3 files changed, 3 deletions(-)
+ tools/testing/selftests/bpf/bench.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
-index 9e5f38739104b..9625e6d217913 100644
---- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
-+++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <test_progs.h>
- #include <network_helpers.h>
--#include <error.h>
- #include <linux/if_tun.h>
- #include <sys/uio.h>
+diff --git a/tools/testing/selftests/bpf/bench.c b/tools/testing/selftests/bpf/bench.c
+index 73ce11b0547da..b705cbabe1e2f 100644
+--- a/tools/testing/selftests/bpf/bench.c
++++ b/tools/testing/selftests/bpf/bench.c
+@@ -10,6 +10,7 @@
+ #include <sys/sysinfo.h>
+ #include <signal.h>
+ #include "bench.h"
++#include "bpf_util.h"
+ #include "testing_helpers.h"
  
-diff --git a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-index de2466547efe0..a1ab0af004549 100644
---- a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-@@ -18,7 +18,6 @@
- #include <arpa/inet.h>
- #include <assert.h>
- #include <errno.h>
--#include <error.h>
- #include <fcntl.h>
- #include <sched.h>
- #include <stdio.h>
-diff --git a/tools/testing/selftests/bpf/unpriv_helpers.c b/tools/testing/selftests/bpf/unpriv_helpers.c
-index 2a6efbd0401e5..762e4b5ec9557 100644
---- a/tools/testing/selftests/bpf/unpriv_helpers.c
-+++ b/tools/testing/selftests/bpf/unpriv_helpers.c
-@@ -2,7 +2,6 @@
- 
- #include <stdbool.h>
- #include <stdlib.h>
--#include <error.h>
- #include <stdio.h>
- 
- #include "unpriv_helpers.h"
+ struct env env = {
 -- 
 2.43.0
 
