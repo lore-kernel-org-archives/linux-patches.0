@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C227916F84F;
-	Wed,  2 Oct 2024 13:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6E01D041D;
+	Wed,  2 Oct 2024 13:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876802; cv=none; b=jqYfLgBsC/BBiIMEMYzomcJS0V3hSrqYSmvuOr0VYVD2Y4pg0eEPpq9scooxuPv/yYKkaXDswVLpYJFZLqy0WYNJam7jI0Fc9gJo2N+F5/d65Ucm/tT144Wmn6zRyqTFdEhxTsM6hB1ktoWvhuHYYsu/aUmsLQYoL64WUchsn10=
+	t=1727876805; cv=none; b=m1Za+qyZ9jWjs8R4rRFoL9B8ZMehtPMfJGlh4CIOGDCnSDlfJrygViCeX+EYygeb74aW6rAy75RAgviGwrJQp5icvjcZ+NkTs6TXXIX6iqhctycGMVR5fpZl1wYZDAqTAPoym094BOgZLvdS3mg929KJl9iFlJ9eir5IjDuv4U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876802; c=relaxed/simple;
-	bh=MWB28fb43WxBodkxFlNH/dPlEumOLkWkmDYPnhbv48k=;
+	s=arc-20240116; t=1727876805; c=relaxed/simple;
+	bh=ut43l1CmkYj9ZUpG5WzOfYgsRd2vt5sLNkgo6X0sEWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npyHZ3tRCpOkQbB+uLh9wKJCI7ClmOtyOji5QRPw5S+Zn4HSb0Z/eRZfst5+9YnLdZXPEOdjnPmkZWOxn5mLWU8L8dyb0U7fORb4H9hmMPZuqPb+N+SBCH5Z/jtZHb98OvfoHZJXCi5W1KnrH80hhpdtUSgbrrQIjJ/h5drY3/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0EBtbwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffT+4KjlVvWV01P5yJKGGtMvd7cIcQ6Q8kNvg48CUnD/Z7ggVd8ypmoUC1HFrR9XhAcqwmNi/l9gyjAW1e6vDrnm4eCbEIcmc2ivZ54UOPfVK4otkB66EVGlxN5SXQl3dXIuT+Hg2yYtzCeXetNWzttfhCcalKEpOoJwaENhYAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lomjZbiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0EBtbwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A5DC4CECD;
-	Wed,  2 Oct 2024 13:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lomjZbiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A07C4CECD;
+	Wed,  2 Oct 2024 13:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876802;
-	bh=MWB28fb43WxBodkxFlNH/dPlEumOLkWkmDYPnhbv48k=;
+	s=korg; t=1727876805;
+	bh=ut43l1CmkYj9ZUpG5WzOfYgsRd2vt5sLNkgo6X0sEWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0EBtbwg+R+P3+4dQcI64S6tec5S7eNeX+20b6sQgnLEeR2/TA/EFqa55o9AqrvlG
-	 HMZt+UspI8PqBjAL/rbKk/ie3eecp1ujrXK6j2/b8MYkinsgEZxMA7MLEOpZ0yXmIE
-	 tR4OzfDO0zNEFCVA/9axAVsBowgK5leVBoyXoh6Y=
+	b=lomjZbiYoG80K0e+09RF1iI8Ke7pU4ZgryHwFJh65UU9hbe1FVQ5OWUgg/n7MbwQo
+	 gNAIPhHOMyYHJqdcQQAYLM/jDnfva+1bFwWcNky3FVjks42e0VGaMPCjB5GJDLPqKs
+	 BYIEgHqF4+jPgFM+w5zUwI/Sq+TjT5zhezc2fkOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ray Zhang <zhanglei002@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 567/695] ksmbd: allow write with FILE_APPEND_DATA
-Date: Wed,  2 Oct 2024 14:59:25 +0200
-Message-ID: <20241002125845.139689860@linuxfoundation.org>
+Subject: [PATCH 6.11 568/695] ksmbd: handle caseless file creation
+Date: Wed,  2 Oct 2024 14:59:26 +0200
+Message-ID: <20241002125845.180254489@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,34 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 2fb9b5dc80cabcee636a6ccd020740dd925b4580 upstream.
+commit c5a709f08d40b1a082e44ffcde1aea4d2822ddd5 upstream.
 
-Windows client write with FILE_APPEND_DATA when using git.
-ksmbd should allow write it with this flags.
+Ray Zhang reported ksmbd can not create file if parent filename is
+caseless.
 
-Z:\test>git commit -m "test"
-fatal: cannot update the ref 'HEAD': unable to append to
- '.git/logs/HEAD': Bad file descriptor
+Y:\>mkdir A
+Y:\>echo 123 >a\b.txt
+The system cannot find the path specified.
+Y:\>echo 123 >A\b.txt
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+This patch convert name obtained by caseless lookup to parent name.
+
 Cc: stable@vger.kernel.org # v5.15+
+Reported-by: Ray Zhang <zhanglei002@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/vfs.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 --- a/fs/smb/server/vfs.c
 +++ b/fs/smb/server/vfs.c
-@@ -496,7 +496,7 @@ int ksmbd_vfs_write(struct ksmbd_work *w
- 	int err = 0;
+@@ -1167,7 +1167,7 @@ static bool __caseless_lookup(struct dir
+ 	if (cmp < 0)
+ 		cmp = strncasecmp((char *)buf->private, name, namlen);
+ 	if (!cmp) {
+-		memcpy((char *)buf->private, name, namlen);
++		memcpy((char *)buf->private, name, buf->used);
+ 		buf->dirent_count = 1;
+ 		return false;
+ 	}
+@@ -1235,10 +1235,7 @@ int ksmbd_vfs_kern_path_locked(struct ks
+ 		char *filepath;
+ 		size_t path_len, remain_len;
  
- 	if (work->conn->connection_type) {
--		if (!(fp->daccess & FILE_WRITE_DATA_LE)) {
-+		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE))) {
- 			pr_err("no right to write(%pD)\n", fp->filp);
- 			err = -EACCES;
- 			goto out;
+-		filepath = kstrdup(name, GFP_KERNEL);
+-		if (!filepath)
+-			return -ENOMEM;
+-
++		filepath = name;
+ 		path_len = strlen(filepath);
+ 		remain_len = path_len;
+ 
+@@ -1281,10 +1278,9 @@ int ksmbd_vfs_kern_path_locked(struct ks
+ 		err = -EINVAL;
+ out2:
+ 		path_put(parent_path);
+-out1:
+-		kfree(filepath);
+ 	}
+ 
++out1:
+ 	if (!err) {
+ 		err = mnt_want_write(parent_path->mnt);
+ 		if (err) {
 
 
