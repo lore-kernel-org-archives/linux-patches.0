@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A022D1D049A;
-	Wed,  2 Oct 2024 13:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861691D07BA;
+	Wed,  2 Oct 2024 13:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875966; cv=none; b=ES15vfLQX74MpTW+ssPjwfwBrRaVvyTl+HFv/Oz3/0ZCi1LEeLqCHN3eJmeY+CQv1UD/rYK5k7/VCYR0f14RV3GXTrRrDNrpyFQw4HcXEu89ObZtiiGzljNrdYRK3+pzcN6sGwJNSDPvWL1j1X48huyjVdIqUKvFxQAnCgnvQaw=
+	t=1727875969; cv=none; b=uHoE3oem3xFG+teSxJ3czFzKlSxg+cCTtvS3HZAXNMbJe7XnxzkQWAhsoCbaCijkid90rD4bGZLM9OwiMam+K25I/u9O5+kTkAJ3zVFv44JrlPnwISfvwNLX+jnT+K+1lHHM+8AVDVVZN12TDoy26pBDFqnfx5G8K7cN7d37OV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875966; c=relaxed/simple;
-	bh=ppLV3Pfswbm5O8mPvJYPhT5Q7NDjq6L4GDYlJg4pulY=;
+	s=arc-20240116; t=1727875969; c=relaxed/simple;
+	bh=F0okHFGgZo65OM4RR85yxZt+xjnkULxNOegIXg87Tsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuMan1lJsSwy563VlE/CRJLAoSd7dkmTkEJCEHDTh2xPPYJqFcdYUbGZtbVWlcjnBN6w3GV9fszQM/c1S6J4JnKGvH2fmvcG/FbYyKQG6k/9VV/YmVVanWQNt3JZQGuiuocGBLStp9rLQnP/t8x8kiZ831nOBSM1alkJ0TSEX4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ7YXmMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQrgt0eaLUtQbea/zfbhYD7wpZB+JoDXrb46JrBIJTAgkGkRxhfU+EeiOt/z5lAaXMajA0HPUSli3yQeym12seJjSVO1sPC+lePjdwvfdIy2B7c/gbIeLtjd8O7BKhmEZV6+4BKZyqCti8gIpAbfvnpF0/fXgf6d1gIhAb04rJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTmBUBM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ7YXmMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C05C4CEC5;
-	Wed,  2 Oct 2024 13:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTmBUBM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B25C4CECF;
+	Wed,  2 Oct 2024 13:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875966;
-	bh=ppLV3Pfswbm5O8mPvJYPhT5Q7NDjq6L4GDYlJg4pulY=;
+	s=korg; t=1727875969;
+	bh=F0okHFGgZo65OM4RR85yxZt+xjnkULxNOegIXg87Tsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQ7YXmMZKnlExgznh/aor15Wkj8KQQBWeM9/zn77cGLe4bcMBP6AmBxy09WYOaPd5
-	 Y+h9Z3SZRnTOdenN3jKUHSl/5YEXke3P1dU8P9znj1ljG/CH881c0bJ2zS2oMEQAa2
-	 lVxr2+LONOghtqggZlcvHW4JGgqdSmuS7bnN24U0=
+	b=YTmBUBM58fwV2hRoBkVi90NqyUGBMF5QAtoMuxX2b5f42wo0TPZjvU1NeRIDB2Enr
+	 3C1sGsbGQ+u+LlSHKR8/Zm0itmjjnPcSvOC6VNie4fqrWiOzyWKytXfrhhQolnrgLu
+	 TUYOR8mSNl35cCdnQGWtczC2ek0yol6BSOSZuwZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Leon Hwang <hffilwlqm@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 282/695] selftests/bpf: Fix arg parsing in veristat, test_progs
-Date: Wed,  2 Oct 2024 14:54:40 +0200
-Message-ID: <20241002125833.702867718@linuxfoundation.org>
+Subject: [PATCH 6.11 256/695] bpf, arm64: Fix tailcall hierarchy
+Date: Wed,  2 Oct 2024 14:54:14 +0200
+Message-ID: <20241002125832.666485343@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,103 +53,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Leon Hwang <hffilwlqm@gmail.com>
 
-[ Upstream commit 03bfcda1fbc37ef34aa21d2b9e09138335afc6ee ]
+[ Upstream commit 66ff4d61dc124eafe9efaeaef696a09b7f236da2 ]
 
-Current code parses arguments with strtok_r() using a construct like
+This patch fixes a tailcall issue caused by abusing the tailcall in
+bpf2bpf feature on arm64 like the way of "bpf, x64: Fix tailcall
+hierarchy".
 
-    char *state = NULL;
-    while ((next = strtok_r(state ? NULL : input, ",", &state))) {
-        ...
-    }
+On arm64, when a tail call happens, it uses tail_call_cnt_ptr to
+increment tail_call_cnt, too.
 
-where logic assumes the 'state' var can distinguish between first and
-subsequent strtok_r() calls, and adjusts parameters accordingly. However,
-'state' is strictly internal context for strtok_r() and no such assumptions
-are supported in the man page. Moreover, the exact behaviour of 'state'
-depends on the libc implementation, making the above code fragile.
+At the prologue of main prog, it has to initialize tail_call_cnt and
+prepare tail_call_cnt_ptr.
 
-Indeed, invoking "./test_progs -t <test_name>" on mips64el/musl will hang,
-with the above code in an infinite loop.
+At the prologue of subprog, it pushes x26 register twice, and does not
+initialize tail_call_cnt.
 
-Similarly, we see strange behaviour running 'veristat' on mips64el/musl:
+At the epilogue, it pops x26 twice, no matter whether it is main prog or
+subprog.
 
-    $ ./veristat -e file,prog,verdict,insns -C two-ok add-failure
-    Can't specify more than 9 stats
-
-Rewrite code using a counter to distinguish between strtok_r() calls.
-
-Fixes: 61ddff373ffa ("selftests/bpf: Improve by-name subtest selection logic in prog_tests")
-Fixes: 394169b079b5 ("selftests/bpf: add comparison mode to veristat")
-Fixes: c8bc5e050976 ("selftests/bpf: Add veristat tool for mass-verifying BPF object files")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Fixes: d4609a5d8c70 ("bpf, arm64: Keep tail call count across bpf2bpf calls")
+Acked-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
+Link: https://lore.kernel.org/r/20240714123902.32305-3-hffilwlqm@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/392d8bf5559f85fa37926c1494e62312ef252c3d.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/testing_helpers.c | 4 ++--
- tools/testing/selftests/bpf/veristat.c        | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 57 +++++++++++++++++++++++++----------
+ 1 file changed, 41 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
-index d5379a0e6da80..4230420ef2940 100644
---- a/tools/testing/selftests/bpf/testing_helpers.c
-+++ b/tools/testing/selftests/bpf/testing_helpers.c
-@@ -220,13 +220,13 @@ int parse_test_list(const char *s,
- 		    bool is_glob_pattern)
- {
- 	char *input, *state = NULL, *test_spec;
--	int err = 0;
-+	int err = 0, cnt = 0;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index dd0bb069df4bb..59e05a7aea56a 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -26,7 +26,7 @@
  
- 	input = strdup(s);
- 	if (!input)
- 		return -ENOMEM;
+ #define TMP_REG_1 (MAX_BPF_JIT_REG + 0)
+ #define TMP_REG_2 (MAX_BPF_JIT_REG + 1)
+-#define TCALL_CNT (MAX_BPF_JIT_REG + 2)
++#define TCCNT_PTR (MAX_BPF_JIT_REG + 2)
+ #define TMP_REG_3 (MAX_BPF_JIT_REG + 3)
+ #define FP_BOTTOM (MAX_BPF_JIT_REG + 4)
+ #define ARENA_VM_START (MAX_BPF_JIT_REG + 5)
+@@ -63,8 +63,8 @@ static const int bpf2a64[] = {
+ 	[TMP_REG_1] = A64_R(10),
+ 	[TMP_REG_2] = A64_R(11),
+ 	[TMP_REG_3] = A64_R(12),
+-	/* tail_call_cnt */
+-	[TCALL_CNT] = A64_R(26),
++	/* tail_call_cnt_ptr */
++	[TCCNT_PTR] = A64_R(26),
+ 	/* temporary register for blinding constants */
+ 	[BPF_REG_AX] = A64_R(9),
+ 	[FP_BOTTOM] = A64_R(27),
+@@ -282,13 +282,35 @@ static bool is_lsi_offset(int offset, int scale)
+  *      mov x29, sp
+  *      stp x19, x20, [sp, #-16]!
+  *      stp x21, x22, [sp, #-16]!
+- *      stp x25, x26, [sp, #-16]!
++ *      stp x26, x25, [sp, #-16]!
++ *      stp x26, x25, [sp, #-16]!
+  *      stp x27, x28, [sp, #-16]!
+  *      mov x25, sp
+  *      mov tcc, #0
+  *      // PROLOGUE_OFFSET
+  */
  
--	while ((test_spec = strtok_r(state ? NULL : input, ",", &state))) {
-+	while ((test_spec = strtok_r(cnt++ ? NULL : input, ",", &state))) {
- 		err = insert_test(set, test_spec, is_glob_pattern);
- 		if (err)
- 			break;
-diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
-index b2854238d4a0e..fd9780082ff48 100644
---- a/tools/testing/selftests/bpf/veristat.c
-+++ b/tools/testing/selftests/bpf/veristat.c
-@@ -784,13 +784,13 @@ static int parse_stat(const char *stat_name, struct stat_specs *specs)
- static int parse_stats(const char *stats_str, struct stat_specs *specs)
- {
- 	char *input, *state = NULL, *next;
--	int err;
-+	int err, cnt = 0;
++static void prepare_bpf_tail_call_cnt(struct jit_ctx *ctx)
++{
++	const struct bpf_prog *prog = ctx->prog;
++	const bool is_main_prog = !bpf_is_subprog(prog);
++	const u8 ptr = bpf2a64[TCCNT_PTR];
++	const u8 fp = bpf2a64[BPF_REG_FP];
++	const u8 tcc = ptr;
++
++	emit(A64_PUSH(ptr, fp, A64_SP), ctx);
++	if (is_main_prog) {
++		/* Initialize tail_call_cnt. */
++		emit(A64_MOVZ(1, tcc, 0, 0), ctx);
++		emit(A64_PUSH(tcc, fp, A64_SP), ctx);
++		emit(A64_MOV(1, ptr, A64_SP), ctx);
++	} else {
++		emit(A64_PUSH(ptr, fp, A64_SP), ctx);
++		emit(A64_NOP, ctx);
++		emit(A64_NOP, ctx);
++	}
++}
++
+ #define BTI_INSNS (IS_ENABLED(CONFIG_ARM64_BTI_KERNEL) ? 1 : 0)
+ #define PAC_INSNS (IS_ENABLED(CONFIG_ARM64_PTR_AUTH_KERNEL) ? 1 : 0)
  
- 	input = strdup(stats_str);
- 	if (!input)
- 		return -ENOMEM;
+@@ -296,7 +318,7 @@ static bool is_lsi_offset(int offset, int scale)
+ #define POKE_OFFSET (BTI_INSNS + 1)
  
--	while ((next = strtok_r(state ? NULL : input, ",", &state))) {
-+	while ((next = strtok_r(cnt++ ? NULL : input, ",", &state))) {
- 		err = parse_stat(next, specs);
- 		if (err) {
- 			free(input);
-@@ -1493,7 +1493,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
- 	while (fgets(line, sizeof(line), f)) {
- 		char *input = line, *state = NULL, *next;
- 		struct verif_stats *st = NULL;
--		int col = 0;
-+		int col = 0, cnt = 0;
+ /* Tail call offset to jump into */
+-#define PROLOGUE_OFFSET (BTI_INSNS + 2 + PAC_INSNS + 8)
++#define PROLOGUE_OFFSET (BTI_INSNS + 2 + PAC_INSNS + 10)
  
- 		if (!header) {
- 			void *tmp;
-@@ -1511,7 +1511,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
- 			*stat_cntp += 1;
- 		}
+ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf,
+ 			  bool is_exception_cb, u64 arena_vm_start)
+@@ -308,7 +330,6 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf,
+ 	const u8 r8 = bpf2a64[BPF_REG_8];
+ 	const u8 r9 = bpf2a64[BPF_REG_9];
+ 	const u8 fp = bpf2a64[BPF_REG_FP];
+-	const u8 tcc = bpf2a64[TCALL_CNT];
+ 	const u8 fpb = bpf2a64[FP_BOTTOM];
+ 	const u8 arena_vm_base = bpf2a64[ARENA_VM_START];
+ 	const int idx0 = ctx->idx;
+@@ -359,7 +380,7 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf,
+ 		/* Save callee-saved registers */
+ 		emit(A64_PUSH(r6, r7, A64_SP), ctx);
+ 		emit(A64_PUSH(r8, r9, A64_SP), ctx);
+-		emit(A64_PUSH(fp, tcc, A64_SP), ctx);
++		prepare_bpf_tail_call_cnt(ctx);
+ 		emit(A64_PUSH(fpb, A64_R(28), A64_SP), ctx);
+ 	} else {
+ 		/*
+@@ -372,18 +393,15 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf,
+ 		 * callee-saved registers. The exception callback will not push
+ 		 * anything and re-use the main program's stack.
+ 		 *
+-		 * 10 registers are on the stack
++		 * 12 registers are on the stack
+ 		 */
+-		emit(A64_SUB_I(1, A64_SP, A64_FP, 80), ctx);
++		emit(A64_SUB_I(1, A64_SP, A64_FP, 96), ctx);
+ 	}
  
--		while ((next = strtok_r(state ? NULL : input, ",\n", &state))) {
-+		while ((next = strtok_r(cnt++ ? NULL : input, ",\n", &state))) {
- 			if (header) {
- 				/* for the first line, set up spec stats */
- 				err = parse_stat(next, specs);
+ 	/* Set up BPF prog stack base register */
+ 	emit(A64_MOV(1, fp, A64_SP), ctx);
+ 
+ 	if (!ebpf_from_cbpf && is_main_prog) {
+-		/* Initialize tail_call_cnt */
+-		emit(A64_MOVZ(1, tcc, 0, 0), ctx);
+-
+ 		cur_offset = ctx->idx - idx0;
+ 		if (cur_offset != PROLOGUE_OFFSET) {
+ 			pr_err_once("PROLOGUE_OFFSET = %d, expected %d!\n",
+@@ -432,7 +450,8 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx)
+ 
+ 	const u8 tmp = bpf2a64[TMP_REG_1];
+ 	const u8 prg = bpf2a64[TMP_REG_2];
+-	const u8 tcc = bpf2a64[TCALL_CNT];
++	const u8 tcc = bpf2a64[TMP_REG_3];
++	const u8 ptr = bpf2a64[TCCNT_PTR];
+ 	const int idx0 = ctx->idx;
+ #define cur_offset (ctx->idx - idx0)
+ #define jmp_offset (out_offset - (cur_offset))
+@@ -449,11 +468,12 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx)
+ 	emit(A64_B_(A64_COND_CS, jmp_offset), ctx);
+ 
+ 	/*
+-	 * if (tail_call_cnt >= MAX_TAIL_CALL_CNT)
++	 * if ((*tail_call_cnt_ptr) >= MAX_TAIL_CALL_CNT)
+ 	 *     goto out;
+-	 * tail_call_cnt++;
++	 * (*tail_call_cnt_ptr)++;
+ 	 */
+ 	emit_a64_mov_i64(tmp, MAX_TAIL_CALL_CNT, ctx);
++	emit(A64_LDR64I(tcc, ptr, 0), ctx);
+ 	emit(A64_CMP(1, tcc, tmp), ctx);
+ 	emit(A64_B_(A64_COND_CS, jmp_offset), ctx);
+ 	emit(A64_ADD_I(1, tcc, tcc, 1), ctx);
+@@ -469,6 +489,9 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx)
+ 	emit(A64_LDR64(prg, tmp, prg), ctx);
+ 	emit(A64_CBZ(1, prg, jmp_offset), ctx);
+ 
++	/* Update tail_call_cnt if the slot is populated. */
++	emit(A64_STR64I(tcc, ptr, 0), ctx);
++
+ 	/* goto *(prog->bpf_func + prologue_offset); */
+ 	off = offsetof(struct bpf_prog, bpf_func);
+ 	emit_a64_mov_i64(tmp, off, ctx);
+@@ -721,6 +744,7 @@ static void build_epilogue(struct jit_ctx *ctx, bool is_exception_cb)
+ 	const u8 r8 = bpf2a64[BPF_REG_8];
+ 	const u8 r9 = bpf2a64[BPF_REG_9];
+ 	const u8 fp = bpf2a64[BPF_REG_FP];
++	const u8 ptr = bpf2a64[TCCNT_PTR];
+ 	const u8 fpb = bpf2a64[FP_BOTTOM];
+ 
+ 	/* We're done with BPF stack */
+@@ -738,7 +762,8 @@ static void build_epilogue(struct jit_ctx *ctx, bool is_exception_cb)
+ 	/* Restore x27 and x28 */
+ 	emit(A64_POP(fpb, A64_R(28), A64_SP), ctx);
+ 	/* Restore fs (x25) and x26 */
+-	emit(A64_POP(fp, A64_R(26), A64_SP), ctx);
++	emit(A64_POP(ptr, fp, A64_SP), ctx);
++	emit(A64_POP(ptr, fp, A64_SP), ctx);
+ 
+ 	/* Restore callee-saved register */
+ 	emit(A64_POP(r8, r9, A64_SP), ctx);
 -- 
 2.43.0
 
