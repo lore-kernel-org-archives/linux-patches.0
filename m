@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4101974F4;
-	Wed,  2 Oct 2024 14:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E3C1EA80;
+	Wed,  2 Oct 2024 14:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880220; cv=none; b=am3NvAkksAIqd7rEA9vN+ESJs2jBk+tIzGqyMqv/DaauizsVLLGmcjbbBDQUDsEB2LDlx86rYShaha4dumzQuChfGl8YQi6rGWoCOtj8hd5JCJRpoSRFRM21XjK06BWwHKRZwQI/IQ+263jpSas83kDxAmQWxfoK/nM6164rgq8=
+	t=1727880223; cv=none; b=hu05kyIJCfBTtNd8ebLN0ea+/sSu4FGn5oE5zV3zF0ZqfXEo/oqIvz9n8THSI9hmGkexokvk4A+q/A0vIV/rVKVVmp5qdnZrbkvUtG7GECXAxG1oSC48qdT2d7E6LQ9/8oRdMdqGQI+yqJ/A5Yxyk3H+d2UADSOHQxv6JcS/1ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880220; c=relaxed/simple;
-	bh=XKxN/wnqBO+NDZxJVPFws6orc6cM4n1zH/TxSweV8Uo=;
+	s=arc-20240116; t=1727880223; c=relaxed/simple;
+	bh=I6nD897YVk+TqwEHNp2nkvL2YmXuXlnEigfk+dflyWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoOMf3rhsQFc8gQMdvKW/SUyn9XQyd5r2oh+t1lY+ibXVK0JcZ6yZPQX/liHTFnv+kjhc630PxhaLeSORjQNsMHFmC2hbqOjgtYwR76OVaDIRuYpmaLwtqpiyjDZ1R0Pu5IVYML/uFTQbd/x/z9hzuk8bmKipy2jx+LxQlo4Wjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFyMvHXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YFcL8ELSch0yC1zvysRqHTJoK+KFWRI/h4gX3aJLozi2f6zHz0GKd0tj374dVI/L/oPHfZgUGK9b0ATOGN9U+84O4ce7ycPJ1WOIzwRV6oXMuvzOrr57v+xg8K9GgJFLjW7vgGu0OoEaYZParO2QnXEPt+KkmyrGD3szCOjzl0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zy8JCGBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFyMvHXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B78C4CEC2;
-	Wed,  2 Oct 2024 14:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zy8JCGBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF186C4CEC2;
+	Wed,  2 Oct 2024 14:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880220;
-	bh=XKxN/wnqBO+NDZxJVPFws6orc6cM4n1zH/TxSweV8Uo=;
+	s=korg; t=1727880223;
+	bh=I6nD897YVk+TqwEHNp2nkvL2YmXuXlnEigfk+dflyWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFyMvHXqXZbpnBPkJc1sXcyULgSoOUW/1vnaSy6RTQqslUBs5BqCSisiOFqFD9IUF
-	 qqOoCKUcS4ZPwmKtyvfiVjDnfT6M27buuDuWy8Da0GTiUu2cFyycGwd/de04beMCV+
-	 4NHWraTu4H5yuWv7x5nXZo2K/Dcz5lKKDwME/hLg=
+	b=Zy8JCGBVMt8Or4IdiwyPtqqIy9rqADeG3vcHkaf000HcWIS4cu0wehRA62Iy4IJJK
+	 wWVqwD3syXjnFG8uqXhzTx4H4zzAHLte+UgYvsteD4zNH2BgL8o6e/iTnoNnzCdNdq
+	 vV38r6+91kqsAAT9x3QxojdwHKxd2o+4q9Fz+Cas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shu Han <ebpqwerty472123@gmail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 384/538] mm: call the security_mmap_file() LSM hook in remap_file_pages()
-Date: Wed,  2 Oct 2024 15:00:23 +0200
-Message-ID: <20241002125807.588416884@linuxfoundation.org>
+	Roman Li <roman.li@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <superm1@kernel.org>
+Subject: [PATCH 6.6 385/538] drm/amd/display: Fix Synaptics Cascaded Panamera DSC Determination
+Date: Wed,  2 Oct 2024 15:00:24 +0200
+Message-ID: <20241002125807.628069782@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,77 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shu Han <ebpqwerty472123@gmail.com>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
+commit 4437936c6b696b98f3fe1d8679a2788c41b4df77 upstream.
 
-The remap_file_pages syscall handler calls do_mmap() directly, which
-doesn't contain the LSM security check. And if the process has called
-personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
-RW pages, this will actually result in remapping the pages to RWX,
-bypassing a W^X policy enforced by SELinux.
+Synaptics Cascaded Panamera topology needs to unconditionally
+acquire root aux for dsc decoding.
 
-So we should check prot by security_mmap_file LSM hook in the
-remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
-potentially permits an attacker to bypass a W^X policy enforced by
-SELinux.
-
-The bypass is similar to CVE-2016-10044, which bypass the same thing via
-AIO and can be found in [1].
-
-The PoC:
-
-$ cat > test.c
-
-int main(void) {
-	size_t pagesz = sysconf(_SC_PAGE_SIZE);
-	int mfd = syscall(SYS_memfd_create, "test", 0);
-	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
-		MAP_SHARED, mfd, 0);
-	unsigned int old = syscall(SYS_personality, 0xffffffff);
-	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
-	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
-	syscall(SYS_personality, old);
-	// show the RWX page exists even if W^X policy is enforced
-	int fd = open("/proc/self/maps", O_RDONLY);
-	unsigned char buf2[1024];
-	while (1) {
-		int ret = read(fd, buf2, 1024);
-		if (ret <= 0) break;
-		write(1, buf2, ret);
-	}
-	close(fd);
-}
-
-$ gcc test.c -o test
-$ ./test | grep rwx
-7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
-
-Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: subject line tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3025,8 +3025,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
- 		flags |= MAP_LOCKED;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -246,7 +246,7 @@ static bool validate_dsc_caps_on_connect
+ 		aconnector->dsc_aux = &aconnector->mst_root->dm_dp_aux.aux;
  
- 	file = get_file(vma->vm_file);
-+	ret = security_mmap_file(vma->vm_file, prot, flags);
-+	if (ret)
-+		goto out_fput;
- 	ret = do_mmap(vma->vm_file, start, size,
- 			prot, flags, 0, pgoff, &populate, NULL);
-+out_fput:
- 	fput(file);
- out:
- 	mmap_write_unlock(mm);
+ 	/* synaptics cascaded MST hub case */
+-	if (!aconnector->dsc_aux && is_synaptics_cascaded_panamera(aconnector->dc_link, port))
++	if (is_synaptics_cascaded_panamera(aconnector->dc_link, port))
+ 		aconnector->dsc_aux = port->mgr->aux;
+ 
+ 	if (!aconnector->dsc_aux)
 
 
