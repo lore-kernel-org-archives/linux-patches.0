@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A37A1D1F56;
-	Wed,  2 Oct 2024 14:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC11D1F7A;
+	Wed,  2 Oct 2024 14:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880674; cv=none; b=f6ndX4UBaNb91gQevHvK6GLOj2Ah38fhM/5XfhpYg5NcKENVfgenoUQ4MOlY3ehCw4p6lyUXYmwxrraOJpZ4//qu55nsVtMZYttEoAnMy01QfBQg3tbGCCb4TOSPV99sdmSU/LPY1ZjD8sLPgdC8R7P+katgBjckkpmdq21HDY4=
+	t=1727880677; cv=none; b=hifJzERZYD2thdwiqX6L/qjZ59gRT9MfigI3aXb5LnC9cNnGaOFjPPJiNbdADG22WQk0R1qbSuvXgUq6HZ6SqPdDvHJNwNPOVM5pkO5IKIiTO0LMbI3Xw0B38XMyrMiF0KbwohX2fGvkAKZlcXg3i2Za/kZZzqCEOEasmSlmUts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880674; c=relaxed/simple;
-	bh=nli6/Fk4GPjnVprbLc7V3mlCU5l7jTG/GBQwcCn6FBY=;
+	s=arc-20240116; t=1727880677; c=relaxed/simple;
+	bh=LQ2PZ6uV+zXAa1JVIpFukyu9tsaUOjuAHx7nI0lazjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvpaH+ppDvJGcOD/we4Y9OxftYsyD737iz7or/tUy3Bu7P4i+kRZZJfg8RCuCoG3d6OSgjYss/eISArf/PHObs1F0RNFMl83aberXwRaeUFh4xPOkDXI/8ewx0XnERtaPb7ogIi7B/hbZbQh9zwaIBnnwxjF24WSYaWYYVZoWB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCMD12vn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKLihxnQhjrYcf2k6pGkLEo/7vNShkS4ydC+iXoC4AD8M13+8AqFg285/ZJN1cHe/PtNeEJMw09hGtpeYIGgd8mxlMGRV0IcBRH2S4aPwTocPK0CHZMpIgXPkXORfK5VTEA+5WuwHhp4FUAXa3rucwmZpOveBvaGXBI8iJpUO/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWE4EjRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCMD12vn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B25C4CEC2;
-	Wed,  2 Oct 2024 14:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWE4EjRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69762C4CECF;
+	Wed,  2 Oct 2024 14:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880673;
-	bh=nli6/Fk4GPjnVprbLc7V3mlCU5l7jTG/GBQwcCn6FBY=;
+	s=korg; t=1727880676;
+	bh=LQ2PZ6uV+zXAa1JVIpFukyu9tsaUOjuAHx7nI0lazjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCMD12vnfDc63pLBynbypyw0dnJJSR3MNZVJm6i+9ALJ6bucuqsZfyOvNbFf0G0ni
-	 GvqRZAc5h/Fh9ElUa9lZ293oge+Y4+dyNNLVa/C+HSY/mdXz93C5r2epzYVcBXDrJn
-	 p9U64MologCfwfwzM5Hxpr7WzkorerLTsBM4vHPg=
+	b=jWE4EjREJT2wj1EqlVz9XIy9hQoJH+wI0uvInGvpXqPHQNBvwszm7WfquNhEx9qzU
+	 WreTmYGTFW0PJxkWPDDflQPp2H4tzozFfPIPnfcCPXNMqXh5KyYaSd6XeGvJi+b5vV
+	 m1MyKmXc6nOr+f6OKSq82FP3tQ8t8yZi0Ku4UuxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Qin Wan <qin.wan@hp.com>,
-	Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.6 508/538] thunderbolt: Make is_gen4_link() available to the rest of the driver
-Date: Wed,  2 Oct 2024 15:02:27 +0200
-Message-ID: <20241002125812.494308139@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 499/538] btrfs: fix race setting file private on concurrent lseek using same fd
+Date: Wed,  2 Oct 2024 15:02:18 +0200
+Message-ID: <20241002125812.136504973@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,99 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit aa673d606078da36ebc379f041c794228ac08cb5 ]
+[ Upstream commit 7ee85f5515e86a4e2a2f51969795920733912bad ]
 
-Rework the function to return the link generation, update the name to
-tb_port_get_link_generation(), and make available to the rest of the
-driver. This is needed in the subsequent patches.
+When doing concurrent lseek(2) system calls against the same file
+descriptor, using multiple threads belonging to the same process, we have
+a short time window where a race happens and can result in a memory leak.
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Qin Wan <qin.wan@hp.com>
-Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The race happens like this:
+
+1) A program opens a file descriptor for a file and then spawns two
+   threads (with the pthreads library for example), lets call them
+   task A and task B;
+
+2) Task A calls lseek with SEEK_DATA or SEEK_HOLE and ends up at
+   file.c:find_desired_extent() while holding a read lock on the inode;
+
+3) At the start of find_desired_extent(), it extracts the file's
+   private_data pointer into a local variable named 'private', which has
+   a value of NULL;
+
+4) Task B also calls lseek with SEEK_DATA or SEEK_HOLE, locks the inode
+   in shared mode and enters file.c:find_desired_extent(), where it also
+   extracts file->private_data into its local variable 'private', which
+   has a NULL value;
+
+5) Because it saw a NULL file private, task A allocates a private
+   structure and assigns to the file structure;
+
+6) Task B also saw a NULL file private so it also allocates its own file
+   private and then assigns it to the same file structure, since both
+   tasks are using the same file descriptor.
+
+   At this point we leak the private structure allocated by task A.
+
+Besides the memory leak, there's also the detail that both tasks end up
+using the same cached state record in the private structure (struct
+btrfs_file_private::llseek_cached_state), which can result in a
+use-after-free problem since one task can free it while the other is
+still using it (only one task took a reference count on it). Also, sharing
+the cached state is not a good idea since it could result in incorrect
+results in the future - right now it should not be a problem because it
+end ups being used only in extent-io-tree.c:count_range_bits() where we do
+range validation before using the cached state.
+
+Fix this by protecting the private assignment and check of a file while
+holding the inode's spinlock and keep track of the task that allocated
+the private, so that it's used only by that task in order to prevent
+user-after-free issues with the cached state record as well as potentially
+using it incorrectly in the future.
+
+Fixes: 3c32c7212f16 ("btrfs: use cached state when looking for delalloc ranges with lseek")
+CC: stable@vger.kernel.org # 6.6+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/switch.c |   36 +++++++++++++++++++++++++++++-------
- drivers/thunderbolt/tb.h     |    1 +
- 2 files changed, 30 insertions(+), 7 deletions(-)
+ fs/btrfs/btrfs_inode.h |  1 +
+ fs/btrfs/ctree.h       |  2 ++
+ fs/btrfs/file.c        | 34 +++++++++++++++++++++++++++++++---
+ 3 files changed, 34 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -922,6 +922,32 @@ int tb_port_get_link_speed(struct tb_por
- }
+diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
+index e9a979d0a9585..ec6679a538c1d 100644
+--- a/fs/btrfs/btrfs_inode.h
++++ b/fs/btrfs/btrfs_inode.h
+@@ -85,6 +85,7 @@ struct btrfs_inode {
+ 	 * logged_trans), to access/update delalloc_bytes, new_delalloc_bytes,
+ 	 * defrag_bytes, disk_i_size, outstanding_extents, csum_bytes and to
+ 	 * update the VFS' inode number of bytes used.
++	 * Also protects setting struct file::private_data.
+ 	 */
+ 	spinlock_t lock;
  
- /**
-+ * tb_port_get_link_generation() - Returns link generation
-+ * @port: Lane adapter
-+ *
-+ * Returns link generation as number or negative errno in case of
-+ * failure. Does not distinguish between Thunderbolt 1 and Thunderbolt 2
-+ * links so for those always returns 2.
-+ */
-+int tb_port_get_link_generation(struct tb_port *port)
-+{
-+	int ret;
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 06333a74d6c4c..f7bb4c34b984b 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -445,6 +445,8 @@ struct btrfs_file_private {
+ 	void *filldir_buf;
+ 	u64 last_index;
+ 	struct extent_state *llseek_cached_state;
++	/* Task that allocated this structure. */
++	struct task_struct *owner_task;
+ };
+ 
+ static inline u32 BTRFS_LEAF_DATA_SIZE(const struct btrfs_fs_info *info)
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 15fd8c00f4c08..fc6c91773bc89 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -3481,7 +3481,7 @@ static bool find_desired_extent_in_hole(struct btrfs_inode *inode, int whence,
+ static loff_t find_desired_extent(struct file *file, loff_t offset, int whence)
+ {
+ 	struct btrfs_inode *inode = BTRFS_I(file->f_mapping->host);
+-	struct btrfs_file_private *private = file->private_data;
++	struct btrfs_file_private *private;
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct extent_state *cached_state = NULL;
+ 	struct extent_state **delalloc_cached_state;
+@@ -3509,7 +3509,19 @@ static loff_t find_desired_extent(struct file *file, loff_t offset, int whence)
+ 	    inode_get_bytes(&inode->vfs_inode) == i_size)
+ 		return i_size;
+ 
+-	if (!private) {
++	spin_lock(&inode->lock);
++	private = file->private_data;
++	spin_unlock(&inode->lock);
 +
-+	ret = tb_port_get_link_speed(port);
-+	if (ret < 0)
-+		return ret;
++	if (private && private->owner_task != current) {
++		/*
++		 * Not allocated by us, don't use it as its cached state is used
++		 * by the task that allocated it and we don't want neither to
++		 * mess with it nor get incorrect results because it reflects an
++		 * invalid state for the current task.
++		 */
++		private = NULL;
++	} else if (!private) {
+ 		private = kzalloc(sizeof(*private), GFP_KERNEL);
+ 		/*
+ 		 * No worries if memory allocation failed.
+@@ -3517,7 +3529,23 @@ static loff_t find_desired_extent(struct file *file, loff_t offset, int whence)
+ 		 * lseek SEEK_HOLE/DATA calls to a file when there's delalloc,
+ 		 * so everything will still be correct.
+ 		 */
+-		file->private_data = private;
++		if (private) {
++			bool free = false;
 +
-+	switch (ret) {
-+	case 40:
-+		return 4;
-+	case 20:
-+		return 3;
-+	default:
-+		return 2;
-+	}
-+}
++			private->owner_task = current;
 +
-+/**
-  * tb_port_get_link_width() - Get current link width
-  * @port: Port to check (USB4 or CIO)
-  *
-@@ -966,11 +992,6 @@ static bool tb_port_is_width_supported(s
- 	return widths & width_mask;
- }
++			spin_lock(&inode->lock);
++			if (file->private_data)
++				free = true;
++			else
++				file->private_data = private;
++			spin_unlock(&inode->lock);
++
++			if (free) {
++				kfree(private);
++				private = NULL;
++			}
++		}
+ 	}
  
--static bool is_gen4_link(struct tb_port *port)
--{
--	return tb_port_get_link_speed(port) > 20;
--}
--
- /**
-  * tb_port_set_link_width() - Set target link width of the lane adapter
-  * @port: Lane adapter
-@@ -998,7 +1019,7 @@ int tb_port_set_link_width(struct tb_por
- 	switch (width) {
- 	case TB_LINK_WIDTH_SINGLE:
- 		/* Gen 4 link cannot be single */
--		if (is_gen4_link(port))
-+		if (tb_port_get_link_generation(port) >= 4)
- 			return -EOPNOTSUPP;
- 		val |= LANE_ADP_CS_1_TARGET_WIDTH_SINGLE <<
- 			LANE_ADP_CS_1_TARGET_WIDTH_SHIFT;
-@@ -1147,7 +1168,8 @@ int tb_port_wait_for_link_width(struct t
- 	int ret;
- 
- 	/* Gen 4 link does not support single lane */
--	if ((width_mask & TB_LINK_WIDTH_SINGLE) && is_gen4_link(port))
-+	if ((width_mask & TB_LINK_WIDTH_SINGLE) &&
-+	    tb_port_get_link_generation(port) >= 4)
- 		return -EOPNOTSUPP;
- 
- 	do {
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -1062,6 +1062,7 @@ static inline bool tb_port_use_credit_al
- 	     (p) = tb_next_port_on_path((src), (dst), (p)))
- 
- int tb_port_get_link_speed(struct tb_port *port);
-+int tb_port_get_link_generation(struct tb_port *port);
- int tb_port_get_link_width(struct tb_port *port);
- int tb_port_set_link_width(struct tb_port *port, enum tb_link_width width);
- int tb_port_lane_bonding_enable(struct tb_port *port);
+ 	if (private)
+-- 
+2.43.0
+
 
 
