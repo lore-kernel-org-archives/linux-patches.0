@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E37D1EA80;
-	Wed,  2 Oct 2024 14:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DC71974F4;
+	Wed,  2 Oct 2024 14:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880211; cv=none; b=T/3GCpQVilZoFjZiTlHzXyeR60xJR0x4jhx69QNnYzj/HYbGmqQb7nycCb9XYos3lYZt9tFqQ19Y264e07aZr59XoGqlG6glsOAQDCHbp9M4MoljGgbKH8x8ngyr3yCbBhVUFPp3E9zYj56O13KQzlavY6nb9RKdLCzTRY3U5Y8=
+	t=1727880214; cv=none; b=k/391gDGR2rBnTak+s3Eraa0cVrulJt+c/hiMxCwJQ9FgI49sHsltRjB6sJXT+DbxhPCvDq/I2EzPXv4sg0CA+h9HAnD2wVOVRMnbBKcKbjm7p2BoUDThQb/6jBT4Bm5ABhE4qG2fKOnSxm/8jQ/PJULrDtrxwU9pvY49Tzv4b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880211; c=relaxed/simple;
-	bh=xrAJnKyBATPLR/3nj9hwT3JWTRconBk3EtbuMM9BHKA=;
+	s=arc-20240116; t=1727880214; c=relaxed/simple;
+	bh=kS5mLZ/Zv7cKL7Ky5OGIJss0rXoz8LbWhuRAs7DnyHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWNjTOBhdk9igqUYBGa7dRFoclMsR/vgaKZRjkSkCq01rpYcPVyUOrcHiNv2G/Vtj7oebirLi1E4fcFYTvPxiM8AujyDzocBp83gAuY5uCYzhu7TV+Rr3A70G3BP1CjgQBuOGtWyNdUgX2yi6DDe94/+jyPLT5nhLLFsLEjgXBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBBr2pOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QeQYVnWIJDL1XpAG/yBE6A8c5pa5Sv2SlB8G12MCEMddNLXw8HaRP5bwzCGqaBkgQbifRSEqTerBMaxVOtuISk95Mv6sCqw5OJtDxu7VEf0TOwBmWiO/LsuyPNuE/g3sj4ef7Xkoa9T7+eXluaUuoeBIWyZLuq8C/5Kbppdu/NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1DnKo0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBBr2pOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B213C4CEC2;
-	Wed,  2 Oct 2024 14:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1DnKo0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C47DC4CEC2;
+	Wed,  2 Oct 2024 14:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880210;
-	bh=xrAJnKyBATPLR/3nj9hwT3JWTRconBk3EtbuMM9BHKA=;
+	s=korg; t=1727880213;
+	bh=kS5mLZ/Zv7cKL7Ky5OGIJss0rXoz8LbWhuRAs7DnyHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBBr2pObKksYWTUoSqVlzW+Mq95iT3Yy3P7u1Cwg2lEtmXxnILFf+jW9uxBSnQvSn
-	 oPovX3bEOwhQmeofZXWBTjC03Cfrws3L2AydESEe2gNHdhi3N5yMmWQ0yRsD7M3yLX
-	 9T8RlVLOk/kKvg2RWQPbGX5OUJZxTVpF4BJG9wBQ=
+	b=v1DnKo0dNUDGRCeT/+cpIKalMpWgnFuxyIkQKFPgo8uT1ZOPPMi9q6Osjz8VbMZAQ
+	 1IPfCZ/x7gYUZo/JX+bNO1L/ev4CQAlYUJ+0zNOSQEWKd46vz6aODohlZ1/glBwiFW
+	 +PKmLAst8cwtodkpjy7bps3ZMbhxY3G2UKjDX3Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jan Hendrik Farr <kernel@jfarr.cc>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 382/538] io_uring/sqpoll: do not allow pinning outside of cpuset
-Date: Wed,  2 Oct 2024 15:00:21 +0200
-Message-ID: <20241002125807.508966804@linuxfoundation.org>
+Subject: [PATCH 6.6 383/538] io_uring: check for presence of task_work rather than TIF_NOTIFY_SIGNAL
+Date: Wed,  2 Oct 2024 15:00:22 +0200
+Message-ID: <20241002125807.549575663@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,57 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Moessbauer <felix.moessbauer@siemens.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit f011c9cf04c06f16b24f583d313d3c012e589e50 upstream.
+commit 04beb6e0e08c30c6f845f50afb7d7953603d7a6f upstream.
 
-The submit queue polling threads are userland threads that just never
-exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
-the affinity of the poller thread is set to the cpu specified in
-sq_thread_cpu. However, this CPU can be outside of the cpuset defined
-by the cgroup cpuset controller. This violates the rules defined by the
-cpuset controller and is a potential issue for realtime applications.
+If some part of the kernel adds task_work that needs executing, in terms
+of signaling it'll generally use TWA_SIGNAL or TWA_RESUME. Those two
+directly translate to TIF_NOTIFY_SIGNAL or TIF_NOTIFY_RESUME, and can
+be used for a variety of use case outside of task_work.
 
-In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
-case no explicit pinning is required by inheriting the one of the
-creating task. In case of explicit pinning, the check is more
-complicated, as also a cpu outside of the parent cpumask is allowed.
-We implemented this by using cpuset_cpus_allowed (that has support for
-cgroup cpusets) and testing if the requested cpu is in the set.
+However, io_cqring_wait_schedule() only tests explicitly for
+TIF_NOTIFY_SIGNAL. This means it can miss if task_work got added for
+the task, but used a different kind of signaling mechanism (or none at
+all). Normally this doesn't matter as any task_work will be run once
+the task exits to userspace, except if:
 
-Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+1) The ring is setup with DEFER_TASKRUN
+2) The local work item may generate normal task_work
+
+For condition 2, this can happen when closing a file and it's the final
+put of that file, for example. This can cause stalls where a task is
+waiting to make progress inside io_cqring_wait(), but there's nothing else
+that will wake it up. Hence change the "should we schedule or loop around"
+check to check for the presence of task_work explicitly, rather than just
+TIF_NOTIFY_SIGNAL as the mechanism. While in there, also change the
+ordering of what type of task_work first in terms of ordering, to both
+make it consistent with other task_work runs in io_uring, but also to
+better handle the case of defer task_work generating normal task_work,
+like in the above example.
+
+Reported-by: Jan Hendrik Farr <kernel@jfarr.cc>
+Link: https://github.com/axboe/liburing/issues/1235
+Cc: stable@vger.kernel.org
+Fixes: 846072f16eed ("io_uring: mimimise io_cqring_wait_schedule")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -10,6 +10,7 @@
- #include <linux/slab.h>
- #include <linux/audit.h>
- #include <linux/security.h>
-+#include <linux/cpuset.h>
- #include <linux/io_uring.h>
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2514,7 +2514,7 @@ static inline int io_cqring_wait_schedul
+ 		return 1;
+ 	if (unlikely(!llist_empty(&ctx->work_llist)))
+ 		return 1;
+-	if (unlikely(test_thread_flag(TIF_NOTIFY_SIGNAL)))
++	if (unlikely(task_work_pending(current)))
+ 		return 1;
+ 	if (unlikely(task_sigpending(current)))
+ 		return -EINTR;
+@@ -2610,9 +2610,9 @@ static int io_cqring_wait(struct io_ring
+ 		 * If we got woken because of task_work being processed, run it
+ 		 * now rather than let the caller do another wait loop.
+ 		 */
+-		io_run_task_work();
+ 		if (!llist_empty(&ctx->work_llist))
+ 			io_run_local_work(ctx, nr_wait);
++		io_run_task_work();
  
- #include <uapi/linux/io_uring.h>
-@@ -401,10 +402,12 @@ __cold int io_sq_offload_create(struct i
- 			return 0;
- 
- 		if (p->flags & IORING_SETUP_SQ_AFF) {
-+			struct cpumask allowed_mask;
- 			int cpu = p->sq_thread_cpu;
- 
- 			ret = -EINVAL;
--			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
-+			cpuset_cpus_allowed(current, &allowed_mask);
-+			if (!cpumask_test_cpu(cpu, &allowed_mask))
- 				goto err_sqpoll;
- 			sqd->sq_cpu = cpu;
- 		} else {
+ 		/*
+ 		 * Non-local task_work will be run on exit to userspace, but
 
 
