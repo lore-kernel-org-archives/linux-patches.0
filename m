@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D625F1CF7D4;
-	Wed,  2 Oct 2024 13:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB36D1CFEB6;
+	Wed,  2 Oct 2024 13:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876217; cv=none; b=VhZ7rsVf46qhoNWM0chbSm9R3s/eZRpgAlMHwy/qozdV1Ju3Jn6pcIiQLK9kWIBvSm6uYtNp6imNA0f12qEUTT8gCMGDlADFWz0d7enoyccn8ok8InlRwMbdr6JjYhb263d4wYM6ld4VokZ5MPfciS2HVBPWZ8McWp2ubC9hcyc=
+	t=1727876220; cv=none; b=qad7PH6hGcUrxNUIAXlmapqE/zH1xZupnI5ghbXNebTur0U3iXB+gBOiHf8A2Xjz014jO4Mdq6k2x1ZlPJsviyDsLOMlwD4NfX1w8lIvTArVOnG0lciuxG6c/jokjDpLa1QDT60ie9Cmqo37Ts46IDnU33oBPy5HhI10yo6VYRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876217; c=relaxed/simple;
-	bh=2Gsp9EJwcV+fUKZ4D/OfStu8rFujvT/O06LlrSOUUEI=;
+	s=arc-20240116; t=1727876220; c=relaxed/simple;
+	bh=nrrmMEF/Zz1+0UMiCRn3RxCKCiulWTKxhVEi5i1uS0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCN+gPhwlYQBtS6dBcl9j0eOjeqZvqFLtquACrUFq5yaGPVKnZWmhYyA1s4fthuTYuu7p79BTSt2tWa5HPnNeeNisnRbNuWrVArRaWPfqi3w8xi7gTuebNBkPbFNsaW2lddwF37dtG39S7rx8O7r+w8gYUA7oEVSHLxW6QcRR1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHiY1Q9P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gl+AfeAP4yJTcDwzMKJxpHvy2x0CLerG7kXQVbOZBhqFzL6EF+Bu5LigzsKD03+g3gelO6B7zGrmPgilzGOz/dZtBQD+9ImG/co6MeUaw3O6WIF0+BW/5JLh/sWMx4EfBMb5yxKASu1ryGOnRqD/k9LAOBE7LYTPk1ZCUyO4Vl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/xWd3LX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHiY1Q9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CA0C4CEC5;
-	Wed,  2 Oct 2024 13:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/xWd3LX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3F0C4CEC5;
+	Wed,  2 Oct 2024 13:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876217;
-	bh=2Gsp9EJwcV+fUKZ4D/OfStu8rFujvT/O06LlrSOUUEI=;
+	s=korg; t=1727876220;
+	bh=nrrmMEF/Zz1+0UMiCRn3RxCKCiulWTKxhVEi5i1uS0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHiY1Q9PD9yT2yAWvXJtfWGLzr1y9oTYdX+06jwQtWNKsxHjTN1jfr4EaNr6WadEt
-	 +MDgpChtQntox3Elx60dZb6D9D3JgDaLpm4NjRdR50bBySzmEJlxWPYcLMFRFr/w6p
-	 0/dDA7V7yMfKDtuM3Y1iq4sUruxlXuZpuC7aCvQE=
+	b=k/xWd3LXBScoer+dqSqAUyzIl9BS15W09DsAs5O4TZDtUFJeMGM0obEy2mL6JHwe5
+	 rIdakZ1qmzIZaSmDpSGXitjD1xFSG1vyGmfR0gtvJuVfSgJESXfcLTwuu0sQrR357b
+	 0mOBO5WQl26b7S1fyPsJUlHGcbwAvRcOz446yVvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 369/695] firewire: core: correct range of block for case of switch statement
-Date: Wed,  2 Oct 2024 14:56:07 +0200
-Message-ID: <20241002125837.177723059@linuxfoundation.org>
+Subject: [PATCH 6.11 370/695] PCI: keystone: Fix if-statement expression in ks_pcie_quirk()
+Date: Wed,  2 Oct 2024 14:56:08 +0200
+Message-ID: <20241002125837.217609954@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -44,51 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ebb9d3ca8f7efc1b6a2f1750d1058eda444883d0 ]
+[ Upstream commit 6188a1c762eb9bbd444f47696eda77a5eae6207a ]
 
-A commit d8527cab6c31 ("firewire: cdev: implement new event to notify
-response subaction with time stamp") adds an additional case,
-FW_CDEV_EVENT_RESPONSE2, into switch statement in complete_transaction().
-However, the range of block is beyond to the case label and reaches
-neibour default label.
+This code accidentally uses && where || was intended.  It potentially
+results in a NULL dereference.
 
-This commit corrects the range of block. Fortunately, it has few impacts
-in practice since the local variable in the scope under the label is not
-used in codes under default label.
+Thus, fix the if-statement expression to use the correct condition.
 
-Fixes: d8527cab6c31 ("firewire: cdev: implement new event to notify response subaction with time stamp")
-Link: https://lore.kernel.org/r/20240810070403.36801-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: 86f271f22bbb ("PCI: keystone: Add workaround for Errata #i2037 (AM65x SR 1.0)")
+Link: https://lore.kernel.org/linux-pci/1b762a93-e1b2-4af3-8c04-c8843905c279@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-cdev.c | 2 +-
+ drivers/pci/controller/dwc/pci-keystone.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
-index 9a7dc90330a35..a888a001bedb1 100644
---- a/drivers/firewire/core-cdev.c
-+++ b/drivers/firewire/core-cdev.c
-@@ -599,11 +599,11 @@ static void complete_transaction(struct fw_card *card, int rcode, u32 request_ts
- 		queue_event(client, &e->event, rsp, sizeof(*rsp) + rsp->length, NULL, 0);
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 52c6420ae2003..95a471d6a586d 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -577,7 +577,7 @@ static void ks_pcie_quirk(struct pci_dev *dev)
+ 	 */
+ 	if (pci_match_id(am6_pci_devids, bridge)) {
+ 		bridge_dev = pci_get_host_bridge_device(dev);
+-		if (!bridge_dev && !bridge_dev->parent)
++		if (!bridge_dev || !bridge_dev->parent)
+ 			return;
  
- 		break;
-+	}
- 	default:
- 		WARN_ON(1);
- 		break;
- 	}
--	}
- 
- 	/* Drop the idr's reference */
- 	client_put(client);
+ 		ks_pcie = dev_get_drvdata(bridge_dev->parent);
 -- 
 2.43.0
 
