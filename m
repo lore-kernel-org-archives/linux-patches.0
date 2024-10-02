@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBF21D1302;
-	Wed,  2 Oct 2024 14:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B21D07BA;
+	Wed,  2 Oct 2024 14:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878016; cv=none; b=HAMtrUTd5AMi+Cf06WHkifQK9lXgVOimhdhfKr6lTXQ/SuumnwdX7bRXiXNgp/FC534+wT/chPq18goXiel+Dio8tobxlHlMg0je8TDl8K9+TgWgUrQc4/ZcO8JVnpy49sCwwt2knwqavYqIPS9hh9SBjySiWfAB1g8mxRtay1s=
+	t=1727878018; cv=none; b=Qc3OMD+EeV18hKTKiKjgsGqvKWAeJo7zFpT+TlpoUnaFDMq43zjHEw2ZZzBaQaVocAREV935cpHCT/eQ/74Bw+1LE1J7C7isqdGet1JeeADSYhrpzToEDL5a8ZR7i0aCzFPbYt5ZnoU89npkBqA3GjgmNwifRl0MsRC/jtScPwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878016; c=relaxed/simple;
-	bh=hPGqaxhLI537nNSHojhXs+jAo7eXflYF6UFiyh471F0=;
+	s=arc-20240116; t=1727878018; c=relaxed/simple;
+	bh=/F9XEFYkYZh40ShTC+oyP/ppXEkp9bXstotJUt0HxRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDi2ffSMBB7LVexTfGABdsoMMsvrhHARNe3uufb04JzVMg6p1ONNY8/HsURF2dmnt/SPhdEacw4ILovuokKp5M5vD11owEFrAVsdZGuKRciKv8j48lJkFghbIqrsV3UeF+hC1jIlqYuLD+h1BsYpBN+5IokBZ9amgaUONRvZF0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6IQ6RPm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAERDd2ZDUlA/C9Bl/JpW+JN7dAnr4fe2Dyq+ziTiJRgnFFYzIOl3Rdm+I2Nk9R+X8gysZh6xbHVfVk6cQmo1CN2J9gfqUvp2/3aAabikR+94l8QLFM7mL4jrConG2XBMmsvKYWXYqLpGpBuXWye4F408g4TR1PmAYJm75HjJak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtugO22U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6IQ6RPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C64BC4CECE;
-	Wed,  2 Oct 2024 14:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtugO22U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055D4C4CEC5;
+	Wed,  2 Oct 2024 14:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878015;
-	bh=hPGqaxhLI537nNSHojhXs+jAo7eXflYF6UFiyh471F0=;
+	s=korg; t=1727878018;
+	bh=/F9XEFYkYZh40ShTC+oyP/ppXEkp9bXstotJUt0HxRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6IQ6RPmcSQLrzVuJI3DXNXvdfvY7wP8lFc2J+B6dF4f2nzg8gTU8aSZPdeDfOYrr
-	 q9xLub0MmQwa9MuBhxR1GfE5CTLbfp1ZLdjfpjpEHmn6ErIUFHeo6AZNKO/ZRACPbw
-	 e2ac96H0zQI+AoW2Alct+G2RNq34bRIyYATXaULU=
+	b=LtugO22UXDBD7eOGqrGnOE+EMInv9ZfdZfqtcKE0xWEYwPA+8VqbuzEJ7tatYeK8r
+	 Cqu/Wz07grr8IhY3vvnV70O9K4ZL+7+eKByg2ugyOzIsJjksSvQ61yz61DUiPLWHZi
+	 TxLLf5Q4jjN2Hvl76IQGnH9U7vhON/T/eB1662SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 241/634] selftests/bpf: Fix missing ARRAY_SIZE() definition in bench.c
-Date: Wed,  2 Oct 2024 14:55:41 +0200
-Message-ID: <20241002125820.613059901@linuxfoundation.org>
+Subject: [PATCH 6.10 242/634] selftests/bpf: Fix missing UINT_MAX definitions in benchmarks
+Date: Wed,  2 Oct 2024 14:55:42 +0200
+Message-ID: <20241002125820.651845954@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,38 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit d44c93fc2f5a0c47b23fa03d374e45259abd92d2 ]
+[ Upstream commit a2c155131b710959beb508ca6a54769b6b1bd488 ]
 
-Add a "bpf_util.h" include to avoid the following error seen compiling for
-mips64el with musl libc:
+Include <limits.h> in 'bench.h' to provide a UINT_MAX definition and avoid
+multiple compile errors against mips64el/musl-libc like:
 
-  bench.c: In function 'find_benchmark':
-  bench.c:590:25: error: implicit declaration of function 'ARRAY_SIZE' [-Werror=implicit-function-declaration]
-    590 |         for (i = 0; i < ARRAY_SIZE(benchs); i++) {
-        |                         ^~~~~~~~~~
-  cc1: all warnings being treated as errors
+  benchs/bench_local_storage.c: In function 'parse_arg':
+  benchs/bench_local_storage.c:40:38: error: 'UINT_MAX' undeclared (first use in this function)
+     40 |                 if (ret < 1 || ret > UINT_MAX) {
+        |                                      ^~~~~~~~
+  benchs/bench_local_storage.c:11:1: note: 'UINT_MAX' is defined in header '<limits.h>'; did you forget to '#include <limits.h>'?
+     10 | #include <test_btf.h>
+    +++ |+#include <limits.h>
+     11 |
 
-Fixes: 8e7c2a023ac0 ("selftests/bpf: Add benchmark runner infrastructure")
+seen with bench_local_storage.c, bench_local_storage_rcu_tasks_trace.c, and
+bench_bpf_hashmap_lookup.c.
+
+Fixes: 73087489250d ("selftests/bpf: Add benchmark for local_storage get")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/bc4dde77dfcd17a825d8f28f72f3292341966810.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/8f64a9d9fcff40a7fca090a65a68a9b62a468e16.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/bench.c | 1 +
+ tools/testing/selftests/bpf/bench.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/bench.c b/tools/testing/selftests/bpf/bench.c
-index 627b74ae041b5..90dc3aca32bd8 100644
---- a/tools/testing/selftests/bpf/bench.c
-+++ b/tools/testing/selftests/bpf/bench.c
+diff --git a/tools/testing/selftests/bpf/bench.h b/tools/testing/selftests/bpf/bench.h
+index 68180d8f8558e..005c401b3e227 100644
+--- a/tools/testing/selftests/bpf/bench.h
++++ b/tools/testing/selftests/bpf/bench.h
 @@ -10,6 +10,7 @@
- #include <sys/sysinfo.h>
- #include <signal.h>
- #include "bench.h"
-+#include "bpf_util.h"
- #include "testing_helpers.h"
+ #include <math.h>
+ #include <time.h>
+ #include <sys/syscall.h>
++#include <limits.h>
  
- struct env env = {
+ struct cpu_set {
+ 	bool *cpus;
 -- 
 2.43.0
 
