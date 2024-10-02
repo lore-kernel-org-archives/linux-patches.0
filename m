@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA401D0957;
-	Wed,  2 Oct 2024 14:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CFB1D07BD;
+	Wed,  2 Oct 2024 14:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877808; cv=none; b=oTcLUOhr2sNPS4MKlmVclLwtzTbsJGacCc0QISsKA/B3VP4WxEzwDQo7yxiKyA0bV1WDFw8i0mHFqIwP2ia6ZWq9FE3UNnQrbG78HXTIxeS1rbQJ2FMzeRChfwILPay0i79c5JcynKefrQfPEx5d7YBOuQC1JXh40xEmSCQieh8=
+	t=1727877811; cv=none; b=JYfRnHcQ1rWEyYJojvHdp26Wm/z0DZkHgAROHyzjHxG55Lez7m4t1nx6b1jmjEH2eBrKjmOhw9xfNGGM4aPHL8KfBf9TGz7yb40JZ5h1BL+kSu/S5uVG0LC3ZkDwjtYj0fxZHikeUKJQJeat5gJsWLmv0Phw1cAN+i9jS3ueuq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877808; c=relaxed/simple;
-	bh=VrlQGIoDRX9hfNNglen4GROOUYMslZFqvQELuD4g284=;
+	s=arc-20240116; t=1727877811; c=relaxed/simple;
+	bh=6FWHoW7xwV9nb+DJ1C+uv04+X4TzAjlTcFU0k+L5/PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEwXMfx2sFhOwlgsduic/0ASONwBf0nsl2IzH5ZwRZbD19qSkGfD/ulHnNOBSx50nTUBwJ6mrjIWElX+AwMy93Uxs+QeJfpk6a3r1t3MYehWLlfFaZcYX+AMhqcyG3O5ljJdvYL92Msn6FQGkvod8fi62s1HhcRWVHr7cqEgmyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYg3xIra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oc2vksOO4Yq1xZ+iYuBIHWc8Xy4H/gJUS1oSMPMS+2pDyBjQGLPGQyRKVBMWzA2dGryjDGYQqZXZUlOepPQjk+0OWM6T3p/ov1PkknKYOg35XJBxMkIULmpAFJHDQyOhgGZfAfyVwiuJpn6w6OemGY5Szr1NGxlufi1HJow5iM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5U+gekz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYg3xIra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1642BC4CEC2;
-	Wed,  2 Oct 2024 14:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5U+gekz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D68C4CEC2;
+	Wed,  2 Oct 2024 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877808;
-	bh=VrlQGIoDRX9hfNNglen4GROOUYMslZFqvQELuD4g284=;
+	s=korg; t=1727877811;
+	bh=6FWHoW7xwV9nb+DJ1C+uv04+X4TzAjlTcFU0k+L5/PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYg3xIra5EH380JJDcZqNmxp9gOHVX2TkduRKP1PbDG3isLqGEJbJfuQ5cO6gYRAW
-	 NCCrLk/n6DQJ5Fq77UHIBaFLCWfMbFMo3iszQwkFEeI0NjIcpSOPm3CClngY+58ugE
-	 0lcbv0cvvCeBrnCoyY8+A2Y7ftvPVda4sbkMJLDk=
+	b=I5U+gekzwR70n9DX8QbXZg3/4PPtv7588thJLbF8yxR/6B7B+2NOhm8vHSIGqsMEa
+	 lFpkmr6Ii2Km0PyrcDm3lsejmOFtc05hGSf6FPE+jm/H9nlvKOmalfrcO5FeMR0v8/
+	 niJ0hlUvyewuEwljIv29m3QKzagWK8DEHKUCI8JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	=?UTF-8?q?Cheng-Jui=20Wang=20 ?= <Cheng-Jui.Wang@mediatek.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 170/634] mtd: powernv: Add check devm_kasprintf() returned value
-Date: Wed,  2 Oct 2024 14:54:30 +0200
-Message-ID: <20241002125817.820622949@linuxfoundation.org>
+Subject: [PATCH 6.10 171/634] rcu/nocb: Fix RT throttling hrtimer armed from offline CPU
+Date: Wed,  2 Oct 2024 14:54:31 +0200
+Message-ID: <20241002125817.859752668@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -45,42 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
+[ Upstream commit 9139f93209d1ffd7f489ab19dee01b7c3a1a43d2 ]
 
-devm_kasprintf() can return a NULL pointer on failure but this
-returned value is not checked.
+After a CPU is marked offline and until it reaches its final trip to
+idle, rcuo has several opportunities to be woken up, either because
+a callback has been queued in the meantime or because
+rcutree_report_cpu_dead() has issued the final deferred NOCB wake up.
 
-Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
+If RCU-boosting is enabled, RCU kthreads are set to SCHED_FIFO policy.
+And if RT-bandwidth is enabled, the related hrtimer might be armed.
+However this then happens after hrtimers have been migrated at the
+CPUHP_AP_HRTIMERS_DYING stage, which is broken as reported by the
+following warning:
+
+ Call trace:
+  enqueue_hrtimer+0x7c/0xf8
+  hrtimer_start_range_ns+0x2b8/0x300
+  enqueue_task_rt+0x298/0x3f0
+  enqueue_task+0x94/0x188
+  ttwu_do_activate+0xb4/0x27c
+  try_to_wake_up+0x2d8/0x79c
+  wake_up_process+0x18/0x28
+  __wake_nocb_gp+0x80/0x1a0
+  do_nocb_deferred_wakeup_common+0x3c/0xcc
+  rcu_report_dead+0x68/0x1ac
+  cpuhp_report_idle_dead+0x48/0x9c
+  do_idle+0x288/0x294
+  cpu_startup_entry+0x34/0x3c
+  secondary_start_kernel+0x138/0x158
+
+Fix this with waking up rcuo using an IPI if necessary. Since the
+existing API to deal with this situation only handles swait queue, rcuo
+is only woken up from offline CPUs if it's not already waiting on a
+grace period. In the worst case some callbacks will just wait for a
+grace period to complete before being assigned to a subsequent one.
+
+Reported-by: "Cheng-Jui Wang (王正睿)" <Cheng-Jui.Wang@mediatek.com>
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/devices/powernv_flash.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/rcu/tree_nocb.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
-index 66044f4f5bade..10cd1d9b48859 100644
---- a/drivers/mtd/devices/powernv_flash.c
-+++ b/drivers/mtd/devices/powernv_flash.c
-@@ -207,6 +207,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
- 	 * get them
- 	 */
- 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
-+	if (!mtd->name)
-+		return -ENOMEM;
-+
- 	mtd->type = MTD_NORFLASH;
- 	mtd->flags = MTD_WRITEABLE;
- 	mtd->size = size;
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 2d9eed2bf7509..9b485f1060c01 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -220,7 +220,10 @@ static bool __wake_nocb_gp(struct rcu_data *rdp_gp,
+ 	raw_spin_unlock_irqrestore(&rdp_gp->nocb_gp_lock, flags);
+ 	if (needwake) {
+ 		trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("DoWake"));
+-		wake_up_process(rdp_gp->nocb_gp_kthread);
++		if (cpu_is_offline(raw_smp_processor_id()))
++			swake_up_one_online(&rdp_gp->nocb_gp_wq);
++		else
++			wake_up_process(rdp_gp->nocb_gp_kthread);
+ 	}
+ 
+ 	return needwake;
 -- 
 2.43.0
 
