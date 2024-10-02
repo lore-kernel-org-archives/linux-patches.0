@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91CE1D0DE1;
-	Wed,  2 Oct 2024 14:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB6D1D0DE1;
+	Wed,  2 Oct 2024 14:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877654; cv=none; b=Ptht7YrKyjMXPzaITiTqje3nTwC3vDEDupoibdBRG2WzSmerId6rXVvjPYJPx5KzK4tK0uhnbfFh0SzEsFNTpEea2tySNTtobj8Guz96/tGe1fa1B7zAMBX2syDv0pOG3N+4QmurRX9npqBhs+GORJfLFj4OmjiGhUODqANF34w=
+	t=1727877657; cv=none; b=l2N1jwr0MIXCFOhzmAs+Kh5CAquSOcJTTPUa2KnJhbq1Xxw+6YO+XVEVcW9DQ0DQKiqmNXx2i6rATQHRTSmtbm1VbgNaayIGaK+QDW3+3duWtUlM7SJB9KsjXg1TKJEkrKBUpfh7mCNEPo49xJy8kty1Unod+Qz3+UemVQjEN0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877654; c=relaxed/simple;
-	bh=Auul3T/2fuOTnks+6mC7qSyvHRfbVe4VXFDqCbb2Ia4=;
+	s=arc-20240116; t=1727877657; c=relaxed/simple;
+	bh=vAHmIDZO+Myv1o3OwwsVDsM2XQiTNgIdtZ2HJ4M79fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNVbtKN78PTKBrB/VTO4HFUT/wWdAFrahjghWXfRvCyNXD3+PXQkM40DA5ImQPe6gfH190LLhLtpesfE3fb8Wmtvab1ovBvlJHg7Sk7jYKEmiJWwM/TJo3uLo9+wq+ZtNo3F8MYi8YgezjNoQ+LZ5Hex+211Y8L3k+z6lrGwwFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuUc1NKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aBVCouFQJlliFbnhWzDJw73y59Bez4cTVA89wV309ywlupM60SZeP3xXqSWpIs8VBmAuLqBqomDQl8XDjPqAdY73f0nACi38MpasDi/2z5I/7Q0O4/LYW8HxeFiowfWvGJlvSX1901njMUlMO2iaDKK9eHfsw3a+raiND8nhA3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSeP89Mu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuUc1NKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEEBC4CEC2;
-	Wed,  2 Oct 2024 14:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSeP89Mu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FFDC4CEC2;
+	Wed,  2 Oct 2024 14:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877654;
-	bh=Auul3T/2fuOTnks+6mC7qSyvHRfbVe4VXFDqCbb2Ia4=;
+	s=korg; t=1727877657;
+	bh=vAHmIDZO+Myv1o3OwwsVDsM2XQiTNgIdtZ2HJ4M79fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuUc1NKXvlE+ik9cy3AxOSI+LPEVbDGFQ5OsD1MH5vngWSQrol1VOwoBPgKS61k58
-	 h76BAcJeV8dpgq+FURACXsJxFyy1eNJs1bcA3H60TK1Y97BvkPeE2Sk2NkRKo4H108
-	 WuDk7sbCmRTcOndXZTIlhnuOfCkRJ8IVzonaCN6Y=
+	b=fSeP89Mui2e4zPVRHUrsCm69DkzBNI31kuO29SNKvz2I10Qnx+eE5EBH57hZU+llU
+	 H9gLimgOZbehdvxBaZg0nBc6+W3GgAEl0BhCGGpjwWawvskjV8FheRN36neWNLJCU4
+	 UEO5NFbueDzwDyJs8eelJ34JkP7Nqx9bBkJB0wf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Liu <liuyuntao12@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 149/634] ALSA: hda: cs35l41: fix module autoloading
-Date: Wed,  2 Oct 2024 14:54:09 +0200
-Message-ID: <20241002125816.992397136@linuxfoundation.org>
+Subject: [PATCH 6.10 150/634] selftests/ftrace: Fix test to handle both old and new kernels
+Date: Wed,  2 Oct 2024 14:54:10 +0200
+Message-ID: <20241002125817.031650924@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,34 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Liu <liuyuntao12@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 48f1434a4632c7da1a6a94e159512ebddbe13392 ]
+[ Upstream commit c049acee3c71cfc26c739f82617a84e13e471a45 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from spi_device_id table.
+The function "scheduler_tick" was renamed to "sched_tick" and a selftest
+that used that function for testing function trace filtering used that
+function as part of the test.
 
-Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
-Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
-Link: https://patch.msgid.link/20240815091312.757139-1-liuyuntao12@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+But the change causes it to fail when run on older kernels. As tests
+should not fail on older kernels, add a check to see which name is
+available before testing.
+
+Fixes: 86dd6c04ef9f ("sched/balancing: Rename scheduler_tick() => sched_tick()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda_spi.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../ftrace/test.d/ftrace/func_set_ftrace_file.tc         | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/cs35l41_hda_spi.c b/sound/pci/hda/cs35l41_hda_spi.c
-index b76c0dfd5fefc..f8c356ad0d340 100644
---- a/sound/pci/hda/cs35l41_hda_spi.c
-+++ b/sound/pci/hda/cs35l41_hda_spi.c
-@@ -38,6 +38,7 @@ static const struct spi_device_id cs35l41_hda_spi_id[] = {
- 	{ "cs35l41-hda", 0 },
- 	{}
- };
-+MODULE_DEVICE_TABLE(spi, cs35l41_hda_spi_id);
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_set_ftrace_file.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_set_ftrace_file.tc
+index 073a748b9380a..263f6b798c853 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func_set_ftrace_file.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_set_ftrace_file.tc
+@@ -19,7 +19,14 @@ fail() { # mesg
  
- static const struct acpi_device_id cs35l41_acpi_hda_match[] = {
- 	{ "CSC3551", 0 },
+ FILTER=set_ftrace_filter
+ FUNC1="schedule"
+-FUNC2="sched_tick"
++if grep '^sched_tick\b' available_filter_functions; then
++    FUNC2="sched_tick"
++elif grep '^scheduler_tick\b' available_filter_functions; then
++    FUNC2="scheduler_tick"
++else
++    exit_unresolved
++fi
++
+ 
+ ALL_FUNCS="#### all functions enabled ####"
+ 
 -- 
 2.43.0
 
