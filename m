@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158951D015C;
-	Wed,  2 Oct 2024 13:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1291D0438;
+	Wed,  2 Oct 2024 13:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877083; cv=none; b=CN9b+tL3jxuUY7XrAMmGTSxpwpvvCaGaGaLM3D653DLZNOghqo5yGSRFAUCQN29X3iO9HY+zD3oHHKUnjM0TAJOY2k9VA+crFvy/ljG6dwqbJSJGE8OiHjlJrY9R9XNAplH0iM8gRV3yGTFgLPHWuaiQC/YbgVNiqwpv54ysCog=
+	t=1727877086; cv=none; b=YCQwf+F4WwYo0zmckf4Ib/GVKOsgpmAwnLFhYPuJz7O7YB6WzAf1ulY+i6iNVvolDor3UDMTiIF25E3ltsoZGj6eRpmjvNMV4/xrqTYek/ifNT5AmMBAaxkfwQ9FOEWKSV6bGx5hcPSLkZDIBa9XCf72awO5ouimkrioJrsje+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877083; c=relaxed/simple;
-	bh=4M0MvWibybZtQK4gyZb4OFGyBpmajThfX0w13mT94pM=;
+	s=arc-20240116; t=1727877086; c=relaxed/simple;
+	bh=egZSNyze5HfnB5pJNl2WAdAoLLt8PDZ1b/WKskvXbwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCCTncdJ9qeI9ryrIFwIMZJ0Pgvgt3dZGl8lMf0WGalzSUlU9ytnT/KZPLOB5APc3a6x0wZgT6EARUrYuGCsfThMEDoSih6aOgJ6W5ui+QWxpjh3+/A2cOXR8e8vfvE3P8XxbSqm2RxokrBEwgPYoEH6wIb/9eH0fy9x7yCVtiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P12Scy//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pob6239fUJBWzg65Z5ygiXbcj7mjIKVlBqr7gZGDaiwgAGWJqZBoR52pWc9CPXR1lqZLiZ+ai/zHxgYaa5x3ES5Obx+AGK8y8B8mYIn0nHIw5dsJCVh9nOHeoyZBHeXs/ozeCL0Mc5UxgPjNULZSEciiegOtcMrXc6GsykgA2VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbXU31FX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P12Scy//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0A7C4CEC2;
-	Wed,  2 Oct 2024 13:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbXU31FX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86469C4CEC2;
+	Wed,  2 Oct 2024 13:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877083;
-	bh=4M0MvWibybZtQK4gyZb4OFGyBpmajThfX0w13mT94pM=;
+	s=korg; t=1727877085;
+	bh=egZSNyze5HfnB5pJNl2WAdAoLLt8PDZ1b/WKskvXbwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P12Scy//1t7t17XEKwEeBA6b765+DbJQm9ozcr9wuRATcaetgWvQK1Yq7/SKVRI0N
-	 HTj+T+o7z+QZjGcvTlkjdSCRAZO2ZErZoARYnHo4u17fFkwdToG4f5WYJGX02mirQ+
-	 4K+Y1Jyubxa+5nlOoQtrA26lbkNsTLjEX/D1HmEs=
+	b=FbXU31FXf61A8i/HkIKn5oQtKqp+e9qZ1s9tFT8CFiKWkct9Qg0rLQ0ICNomiou2K
+	 m9O9vn/X1vkK1iLcF6D7Jyyk/d4D7IK1qa2rMSqBGY/IqS+h2Djqc/bRC+pKyS9DbK
+	 ePbwZG5/z4Yx/6YdaReE9dkORibnpc9di0VJCcAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 657/695] dt-bindings: spi: nxp-fspi: add imx8ulp support
-Date: Wed,  2 Oct 2024 15:00:55 +0200
-Message-ID: <20241002125848.735576899@linuxfoundation.org>
+	Michael Trimarchi <michael@amarulasolutions.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.11 658/695] ARM: dts: imx6ul-geam: fix fsl,pins property in tscgrp pinctrl
+Date: Wed,  2 Oct 2024 15:00:56 +0200
+Message-ID: <20241002125848.775384033@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 12736adc43b7cd5cb83f274f8f37b0f89d107c97 upstream.
+commit 1b0e32753d8550908dff8982410357b5114be78c upstream.
 
-The flexspi on imx8ulp only has 16 number of LUTs, it is different
-with flexspi on other imx SoC which has 32 number of LUTs.
+The property is "fsl,pins", not "fsl,pin".  Wrong property means the pin
+configuration was not applied.  Fixes dtbs_check warnings:
 
-Fixes: ef89fd56bdfc ("arm64: dts: imx8ulp: add flexspi node")
-Cc: stable@kernel.org
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240905094338.1986871-2-haibo.chen@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  imx6ul-geam.dtb: pinctrl@20e0000: tscgrp: 'fsl,pins' is a required property
+  imx6ul-geam.dtb: pinctrl@20e0000: tscgrp: 'fsl,pin' does not match any of the regexes: 'pinctrl-[0-9]+'
+
+Cc: stable@vger.kernel.org
+Fixes: a58e4e608bc8 ("ARM: dts: imx6ul-geam: Add Engicam IMX6UL GEA M6UL initial support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Michael Trimarchi <michael@amarulasolutions.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml
-+++ b/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml
-@@ -21,6 +21,7 @@ properties:
-           - nxp,imx8mm-fspi
-           - nxp,imx8mp-fspi
-           - nxp,imx8qxp-fspi
-+          - nxp,imx8ulp-fspi
-           - nxp,lx2160a-fspi
-       - items:
-           - enum:
+--- a/arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts
+@@ -365,7 +365,7 @@
+ 	};
+ 
+ 	pinctrl_tsc: tscgrp {
+-		fsl,pin = <
++		fsl,pins = <
+ 			MX6UL_PAD_GPIO1_IO01__GPIO1_IO01	0xb0
+ 			MX6UL_PAD_GPIO1_IO02__GPIO1_IO02	0xb0
+ 			MX6UL_PAD_GPIO1_IO03__GPIO1_IO03	0xb0
 
 
