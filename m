@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D0B1D04BA;
-	Wed,  2 Oct 2024 14:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B93B9475;
+	Wed,  2 Oct 2024 14:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880542; cv=none; b=B559Q6i6/Q+qgynfAEy6wfxsSgIoCMd+4+n42gApof3s67d0MVU2zPWrSfApn2XV34Ei+GJ9ibaEkCzYd9m2+nj6o1ETrgV7NwjkMxPI4DdP2AD/3+c1MPCqlWwC19m5gNdt4Ju1eZQZPOCJ2ZToNdQz3fAsRCS3t7oN2j/92cY=
+	t=1727880545; cv=none; b=ASO4+KATlUytorlffBQAJVanIw/XmQH/YonBBvEqVnQd1oWHBGdbeI/EaIICce/EV7GvgVLkWBH5kwXgGXWD3a/OUmFihJj+adsMSnEFu/+5KbNVYZbLC8AoS+KJXHrTgQfQpa52CSo7v3OV4QWP9RUsZHmP19lWl+ENb1IJznw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880542; c=relaxed/simple;
-	bh=CQCiDmV3/aTYmfJRhG7WiFLluN/eGJabtfqYsislgrU=;
+	s=arc-20240116; t=1727880545; c=relaxed/simple;
+	bh=2ZGVH5u9bGxffknAm4x1w3632T1V/rEADPzNgcJJHGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNfqajvm4lrfpu4cTv8EtBZK3APm8Pd9OS1oS3oJeB+JuXhSt417A/R5SVD/xMqiyrxeKep9bjg3G/n6gGM7BccxQZSTdtuKL5jqeo2uDFaPCOKQYxNr+8RgDeXGGnpLhNMdn0Nx+TAFBsWV+EjTu1MeqFc5gEH59EYNiXdeutg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8yXzxch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxCLKmRHy+1mVRoec/MdF4BTkew0YgiW0H7sszKAu+BR96Z91SScqNmw+vZX4UHpjyIOYWLB7IO6c49tpha+culjpGQUcf/zFoKEsUfapcOuWY8xF3gVH7uzcaB227ie9bMHbsQNr4fhR3z9rVi6wsiepSdixeHEXgfFPvs9flg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASWjrJC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8yXzxch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76205C4CEC2;
-	Wed,  2 Oct 2024 14:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASWjrJC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A296C4CEC2;
+	Wed,  2 Oct 2024 14:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880541;
-	bh=CQCiDmV3/aTYmfJRhG7WiFLluN/eGJabtfqYsislgrU=;
+	s=korg; t=1727880545;
+	bh=2ZGVH5u9bGxffknAm4x1w3632T1V/rEADPzNgcJJHGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8yXzxch69GfbEvAVTL8gDlyhMqBCku0qJC+/nw5Wt6D9c5UHojJuBH7yr5t2yx5t
-	 vUibx7H3N2+qpXMgATVXPGRoi4upOMSxNkPdhPtCzPWPA7FviltlFsxoeJtGOt3S/2
-	 U/pgkuYeEzJDOy38LmzUZl5F35Qf3omqcT5QcLvg=
+	b=ASWjrJC7WEz1VMhW49KAQIf4NtiRyCTy9w1kESGS7aAUHPpTMAmLS3Ih8JBxBqaZc
+	 d/JGYjRFlgBJzd9oNY+u6MrHCde02IP6uJFB48lnWd6SJ4oe9zGGgj6GVkHhitMujA
+	 SH6pF1q18B1zcViTTYqL4JxuijC/sJY1Lu5g3xsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Syed Nayyar Waris <syednwaris@gmail.com>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Yury Norov <yury.norov@gmail.com>,
 	Alexander Potapenko <glider@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 494/538] x86/entry: Remove unwanted instrumentation in common_interrupt()
-Date: Wed,  2 Oct 2024 15:02:13 +0200
-Message-ID: <20241002125811.939707594@linuxfoundation.org>
+Subject: [PATCH 6.6 495/538] lib/bitmap: add bitmap_{read,write}()
+Date: Wed,  2 Oct 2024 15:02:14 +0200
+Message-ID: <20241002125811.979384170@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,110 +57,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Vyukov <dvyukov@google.com>
+From: Syed Nayyar Waris <syednwaris@gmail.com>
 
-[ Upstream commit 477d81a1c47a1b79b9c08fc92b5dea3c5143800b ]
+[ Upstream commit 63c15822b8dd02a2423cfd92232245ace3f7a11b ]
 
-common_interrupt() and related variants call kvm_set_cpu_l1tf_flush_l1d(),
-which is neither marked noinstr nor __always_inline.
+The two new functions allow reading/writing values of length up to
+BITS_PER_LONG bits at arbitrary position in the bitmap.
 
-So compiler puts it out of line and adds instrumentation to it.  Since the
-call is inside of instrumentation_begin/end(), objtool does not warn about
-it.
+The code was taken from "bitops: Introduce the for_each_set_clump macro"
+by Syed Nayyar Waris with a number of changes and simplifications:
+ - instead of using roundup(), which adds an unnecessary dependency
+   on <linux/math.h>, we calculate space as BITS_PER_LONG-offset;
+ - indentation is reduced by not using else-clauses (suggested by
+   checkpatch for bitmap_get_value());
+ - bitmap_get_value()/bitmap_set_value() are renamed to bitmap_read()
+   and bitmap_write();
+ - some redundant computations are omitted.
 
-The manifestation is that KCOV produces spurious coverage in
-kvm_set_cpu_l1tf_flush_l1d() in random places because the call happens when
-preempt count is not yet updated to say that the kernel is in an interrupt.
-
-Mark kvm_set_cpu_l1tf_flush_l1d() as __always_inline and move it out of the
-instrumentation_begin/end() section.  It only calls __this_cpu_write()
-which is already safe to call in noinstr contexts.
-
-Fixes: 6368558c3710 ("x86/entry: Provide IDTENTRY_SYSVEC")
-Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/3f9a1de9e415fcb53d07dc9e19fa8481bb021b1b.1718092070.git.dvyukov@google.com
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Syed Nayyar Waris <syednwaris@gmail.com>
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/lkml/fe12eedf3666f4af5138de0e70b67a07c7f40338.1592224129.git.syednwaris@gmail.com/
+Suggested-by: Yury Norov <yury.norov@gmail.com>
+Co-developed-by: Alexander Potapenko <glider@google.com>
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 77b0b98bb743 ("btrfs: subpage: fix the bitmap dump which can cause bitmap corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/hardirq.h  | 8 ++++++--
- arch/x86/include/asm/idtentry.h | 6 +++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ include/linux/bitmap.h | 77 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
 
-diff --git a/arch/x86/include/asm/hardirq.h b/arch/x86/include/asm/hardirq.h
-index 66837b8c67f1a..f2e245741afc2 100644
---- a/arch/x86/include/asm/hardirq.h
-+++ b/arch/x86/include/asm/hardirq.h
-@@ -63,7 +63,11 @@ extern u64 arch_irq_stat(void);
- #define local_softirq_pending_ref       pcpu_hot.softirq_pending
+diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
+index 3c8d2b87a9edc..729ec2453149f 100644
+--- a/include/linux/bitmap.h
++++ b/include/linux/bitmap.h
+@@ -77,6 +77,10 @@ struct device;
+  *  bitmap_to_arr64(buf, src, nbits)            Copy nbits from buf to u64[] dst
+  *  bitmap_get_value8(map, start)               Get 8bit value from map at start
+  *  bitmap_set_value8(map, value, start)        Set 8bit value to map at start
++ *  bitmap_read(map, start, nbits)              Read an nbits-sized value from
++ *                                              map at start
++ *  bitmap_write(map, value, start, nbits)      Write an nbits-sized value to
++ *                                              map at start
+  *
+  * Note, bitmap_zero() and bitmap_fill() operate over the region of
+  * unsigned longs, that is, bits behind bitmap till the unsigned long
+@@ -613,6 +617,79 @@ static inline void bitmap_set_value8(unsigned long *map, unsigned long value,
+ 	map[index] |= value << offset;
+ }
  
- #if IS_ENABLED(CONFIG_KVM_INTEL)
--static inline void kvm_set_cpu_l1tf_flush_l1d(void)
-+/*
-+ * This function is called from noinstr interrupt contexts
-+ * and must be inlined to not get instrumentation.
++/**
++ * bitmap_read - read a value of n-bits from the memory region
++ * @map: address to the bitmap memory region
++ * @start: bit offset of the n-bit value
++ * @nbits: size of value in bits, nonzero, up to BITS_PER_LONG
++ *
++ * Returns: value of @nbits bits located at the @start bit offset within the
++ * @map memory region. For @nbits = 0 and @nbits > BITS_PER_LONG the return
++ * value is undefined.
 + */
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void)
- {
- 	__this_cpu_write(irq_stat.kvm_cpu_l1tf_flush_l1d, 1);
- }
-@@ -78,7 +82,7 @@ static __always_inline bool kvm_get_cpu_l1tf_flush_l1d(void)
- 	return __this_cpu_read(irq_stat.kvm_cpu_l1tf_flush_l1d);
- }
- #else /* !IS_ENABLED(CONFIG_KVM_INTEL) */
--static inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
- #endif /* IS_ENABLED(CONFIG_KVM_INTEL) */
++static inline unsigned long bitmap_read(const unsigned long *map,
++					unsigned long start,
++					unsigned long nbits)
++{
++	size_t index = BIT_WORD(start);
++	unsigned long offset = start % BITS_PER_LONG;
++	unsigned long space = BITS_PER_LONG - offset;
++	unsigned long value_low, value_high;
++
++	if (unlikely(!nbits || nbits > BITS_PER_LONG))
++		return 0;
++
++	if (space >= nbits)
++		return (map[index] >> offset) & BITMAP_LAST_WORD_MASK(nbits);
++
++	value_low = map[index] & BITMAP_FIRST_WORD_MASK(start);
++	value_high = map[index + 1] & BITMAP_LAST_WORD_MASK(start + nbits);
++	return (value_low >> offset) | (value_high << space);
++}
++
++/**
++ * bitmap_write - write n-bit value within a memory region
++ * @map: address to the bitmap memory region
++ * @value: value to write, clamped to nbits
++ * @start: bit offset of the n-bit value
++ * @nbits: size of value in bits, nonzero, up to BITS_PER_LONG.
++ *
++ * bitmap_write() behaves as-if implemented as @nbits calls of __assign_bit(),
++ * i.e. bits beyond @nbits are ignored:
++ *
++ *   for (bit = 0; bit < nbits; bit++)
++ *           __assign_bit(start + bit, bitmap, val & BIT(bit));
++ *
++ * For @nbits == 0 and @nbits > BITS_PER_LONG no writes are performed.
++ */
++static inline void bitmap_write(unsigned long *map, unsigned long value,
++				unsigned long start, unsigned long nbits)
++{
++	size_t index;
++	unsigned long offset;
++	unsigned long space;
++	unsigned long mask;
++	bool fit;
++
++	if (unlikely(!nbits || nbits > BITS_PER_LONG))
++		return;
++
++	mask = BITMAP_LAST_WORD_MASK(nbits);
++	value &= mask;
++	offset = start % BITS_PER_LONG;
++	space = BITS_PER_LONG - offset;
++	fit = space >= nbits;
++	index = BIT_WORD(start);
++
++	map[index] &= (fit ? (~(mask << offset)) : ~BITMAP_FIRST_WORD_MASK(start));
++	map[index] |= value << offset;
++	if (fit)
++		return;
++
++	map[index + 1] &= BITMAP_FIRST_WORD_MASK(start + nbits);
++	map[index + 1] |= (value >> space);
++}
++
+ #endif /* __ASSEMBLY__ */
  
- #endif /* _ASM_X86_HARDIRQ_H */
-diff --git a/arch/x86/include/asm/idtentry.h b/arch/x86/include/asm/idtentry.h
-index e2585f61082cd..10603e185111d 100644
---- a/arch/x86/include/asm/idtentry.h
-+++ b/arch/x86/include/asm/idtentry.h
-@@ -212,8 +212,8 @@ __visible noinstr void func(struct pt_regs *regs,			\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 	u32 vector = (u32)(u8)error_code;				\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_irq_on_irqstack_cond(__##func, regs, vector);		\
- 	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
-@@ -250,7 +250,6 @@ static void __##func(struct pt_regs *regs);				\
- 									\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_sysvec_on_irqstack_cond(__##func, regs);			\
- }									\
- 									\
-@@ -258,6 +257,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
-@@ -288,7 +288,6 @@ static __always_inline void __##func(struct pt_regs *regs);		\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
- 	__irq_enter_raw();						\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	__##func (regs);						\
- 	__irq_exit_raw();						\
- }									\
-@@ -297,6 +296,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
+ #endif /* __LINUX_BITMAP_H */
 -- 
 2.43.0
 
