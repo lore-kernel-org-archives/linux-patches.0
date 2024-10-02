@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7F51EB21;
-	Wed,  2 Oct 2024 14:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360051EB21;
+	Wed,  2 Oct 2024 14:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880472; cv=none; b=rVZrfDLUdvr4jg6pba0Gc1qw4pme0+V5wm6u/Qa9FzXYnsnKV8dVdIXuAN44HnIEy21q4zACV7Z4W8d+ZFR5ZqFyfYH2k0Gz7U20/Yg1VihMow8eF08peXo1s3Bb52oPJg+mVFLWznfuuNoX8Xps1alz20mlM4Kj1SsZMhyAsnw=
+	t=1727880475; cv=none; b=HdqFxUsxzj8uj14S3ZOl6t1UC7Phvfd1W3dyjO4FeiZTsoc2FxHVpciNrfA0DA64W901JUMycodQ9JnZYU2IincinqgtF1d5axzGqrhq7C8f5cxXj2eKOGPIodisA5VgkLEHec10Pw/yJ9FMufKLBhzuBKbWO1l5D8n2DiYRGHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880472; c=relaxed/simple;
-	bh=+easFohQk2Whb/1xife9TrU+OKHyBX4dhNtHesBARQI=;
+	s=arc-20240116; t=1727880475; c=relaxed/simple;
+	bh=ClrtcBi4srdSPLcpbSoejTMO6luHopHRCOgvzGFy3RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYG4zs2FqGytRhjrifqp/zCFamYDStAoWFARLI+KhJoRkrWXE2dWBY9uCpuFoCfE2fIt6uuc0HP18JiuAmeuTQ2MO8VD26cypR4Rka1v5H0uoih7jNGtAM48irOBaOd9OT6BEs3hFHH/DajELe0Zm5/qA5AtRkaxXtusdEAQX7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoQe2cqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsbeDFR1RztIzBPHXXrOJ4mzjlogn3hMjOOXQlNnKlTF2KPL6gA9C3/c61TKSDnm9/13WWHExGGPYvhKb8m0AkZ7JFgmbO7jfQEP+awDbxNnQ7HOMN3jOqGC83nPlND1ErQI6QPmd5XEH9usOlBovrjTiGEnpBFvoOt1b/mrvsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1nmqTRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoQe2cqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B523C4CEC2;
-	Wed,  2 Oct 2024 14:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1nmqTRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C546C4CEC2;
+	Wed,  2 Oct 2024 14:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880471;
-	bh=+easFohQk2Whb/1xife9TrU+OKHyBX4dhNtHesBARQI=;
+	s=korg; t=1727880474;
+	bh=ClrtcBi4srdSPLcpbSoejTMO6luHopHRCOgvzGFy3RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoQe2cquhfeExIi393TMYeAHtsoopcFkUuKeKYE95jgl0kk624PWYx5EMM3tzGQIW
-	 s+rvkxwgLHJVMEsPEcPFT0dN6Fc0qPamtvgG8oRHkThXW+4//lfmv0i+LwDhp1vQ9h
-	 0ADi/KPSW+oOMzr7QFtYyB7xQfbb8cGth+v94eGQ=
+	b=i1nmqTRaHRCtultj0EDZFuEGKpggQ2/wzVWXPD9dhUvZzWX4xqiKuR1JI7T/OBbPy
+	 1qEb7gCnJXEZ5Bdsfko79k4OOwaozaoGmf4OOXROhlyCZqkP51XSvyy0fq2Lt+5jBg
+	 QaHm92rzVq8SqWDvwf6AEw7zDn8dD1l+DL2VuECI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Marek <tomas.marek@elrest.cz>
-Subject: [PATCH 6.6 438/538] usb: dwc2: drd: fix clock gating on USB role switch
-Date: Wed,  2 Oct 2024 15:01:17 +0200
-Message-ID: <20241002125809.727884959@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 439/538] bus: integrator-lm: fix OF node leak in probe()
+Date: Wed,  2 Oct 2024 15:01:18 +0200
+Message-ID: <20241002125809.766790770@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -49,45 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Marek <tomas.marek@elrest.cz>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 2c6b6afa59e78bebcb65bbc8a76b3459f139547c upstream.
+commit 15a62b81175885b5adfcaf49870466e3603f06c7 upstream.
 
-The dwc2_handle_usb_suspend_intr() function disables gadget clocks in USB
-peripheral mode when no other power-down mode is available (introduced by
-commit 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")).
-However, the dwc2_drd_role_sw_set() USB role update handler attempts to
-read DWC2 registers if the USB role has changed while the USB is in suspend
-mode (when the clocks are gated). This causes the system to hang.
+Driver code is leaking OF node reference from of_find_matching_node() in
+probe().
 
-Release the gadget clocks before handling the USB role update.
-
-Fixes: 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")
+Fixes: ccea5e8a5918 ("bus: Add driver for Integrator/AP logic modules")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tomas Marek <tomas.marek@elrest.cz>
-Link: https://lore.kernel.org/r/20240906055025.25057-1-tomas.marek@elrest.cz
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/20240826054934.10724-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/drd.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/bus/arm-integrator-lm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc2/drd.c
-+++ b/drivers/usb/dwc2/drd.c
-@@ -127,6 +127,15 @@ static int dwc2_drd_role_sw_set(struct u
- 			role = USB_ROLE_DEVICE;
+--- a/drivers/bus/arm-integrator-lm.c
++++ b/drivers/bus/arm-integrator-lm.c
+@@ -85,6 +85,7 @@ static int integrator_ap_lm_probe(struct
+ 		return -ENODEV;
  	}
- 
-+	if ((IS_ENABLED(CONFIG_USB_DWC2_PERIPHERAL) ||
-+	     IS_ENABLED(CONFIG_USB_DWC2_DUAL_ROLE)) &&
-+	     dwc2_is_device_mode(hsotg) &&
-+	     hsotg->lx_state == DWC2_L2 &&
-+	     hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
-+	     hsotg->bus_suspended &&
-+	     !hsotg->params.no_clock_gating)
-+		dwc2_gadget_exit_clock_gating(hsotg, 0);
-+
- 	if (role == USB_ROLE_HOST) {
- 		already = dwc2_ovr_avalid(hsotg, true);
- 	} else if (role == USB_ROLE_DEVICE) {
+ 	map = syscon_node_to_regmap(syscon);
++	of_node_put(syscon);
+ 	if (IS_ERR(map)) {
+ 		dev_err(dev,
+ 			"could not find Integrator/AP system controller\n");
 
 
