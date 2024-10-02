@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6422C1C9B7E;
-	Wed,  2 Oct 2024 13:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB311D0173;
+	Wed,  2 Oct 2024 13:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876089; cv=none; b=bf3dbXZ8Sp6Eew6uGsiiRNnoiqR9aoOB0Hik/Ldc2DvgE63JV0q9X0idb0OWz2r73uFUXRg1uzQuCCnmgmAlt8xNZtESpVRmfpkQ04vFMcD46GMguxaZcUQ9B0f8wsOma0qHYDpVrdL+OxSwPp/ICZGavT2HW8IRqF1yCm51CfU=
+	t=1727876092; cv=none; b=hGfO5PtC18Ie/+UbKtAfa8rviAARBee4zlV3qnKGF+cfeWHSDHx7iNsb3EtgnwKWL6bWAJzkXN35bmX5Dnys7TIO6pQFg4ylxwCB4jhDWOFJOUfxNziEWW+jeHhsblLz2Fi6FBnRY7ETBa5GUzprA6YwWjaNE7hEvS48ozgWXq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876089; c=relaxed/simple;
-	bh=eG5ohJjrZHevtdjnZFT+z1x2Ub+5yBnJs95tMm9mExQ=;
+	s=arc-20240116; t=1727876092; c=relaxed/simple;
+	bh=L7AkP0FruNefo3JdjcwGYss9wLqLQ59O5jtj6vOCLAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZXwoYIutN8vlL9AVovdK702QiOUmf1oKDrTxZBjM/FjS/2QIylniAIpU5M9f8ux8sPsgCFcDNpm9iP6Q5lOudSY1hVWa4oTHrOLOJFeYBtYY1DYX+UrMbiAEXAN6X5xqcPDVonm5mtN7ErhybWfUHceHJ4z+qYJ3q9sdQYJDVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuCZ36Pd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/YZG+wenf7gpKcFuaXdxS6HQ0T7YrPC4BRBgjq5sU/vxl1jIozl6iYz8SWj3iw9wNNWmSU4fC0l0K1xxK804HwylEDPXlQTFutl48OZ5kS4KaCtA04Th4J90KN7KveQhsN+lm02GjLwBZlQ0heA2w9IniLlGu10+E7z7uXNw/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+eYu43F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuCZ36Pd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFE4C4CEC5;
-	Wed,  2 Oct 2024 13:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+eYu43F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7818C4CECD;
+	Wed,  2 Oct 2024 13:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876089;
-	bh=eG5ohJjrZHevtdjnZFT+z1x2Ub+5yBnJs95tMm9mExQ=;
+	s=korg; t=1727876092;
+	bh=L7AkP0FruNefo3JdjcwGYss9wLqLQ59O5jtj6vOCLAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuCZ36Pd7n50pjlZxt1WP2qrDxeIbyu6zJ5twXZHqz9nj0KTH6U4bKNX1yWfRZEQt
-	 uquFYb/EewPJDw6jxLNyii39WlduIAZByYGeUnNRx+fMi1ny2fzCvj0IpGIosThx0+
-	 IAgThKV6OiLmhGrFsG6GoJCuzt6YP+6ikFIzngfM=
+	b=W+eYu43FAli0XopCy55STUqh8nDCzKroLoYBBl8o40VtwmUGErZelQ6cIJD0fhw0t
+	 k1lNruXa5NA9fkO1yxurYVSJU+JYalgEK3zNGQ312zkrKSwv/GtvR3OnSGa9KRg3Hi
+	 kJObgjBhRYDx8lEXuh555qVYnn/2PWW7dPRICemc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 294/695] selftests/bpf: allow checking xlated programs in verifier_* tests
-Date: Wed,  2 Oct 2024 14:54:52 +0200
-Message-ID: <20241002125834.177432368@linuxfoundation.org>
+Subject: [PATCH 6.11 295/695] selftests/bpf: __arch_* macro to limit test cases to specific archs
+Date: Wed,  2 Oct 2024 14:54:53 +0200
+Message-ID: <20241002125834.216187071@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,238 +54,178 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 9c9f7339131030949a8ef111080427ff1a8085b5 ]
+[ Upstream commit ee7fe84468b1732fe65c5af3836437d54ac4c419 ]
 
-Add a macro __xlated("...") for use with test_loader tests.
+Add annotations __arch_x86_64, __arch_arm64, __arch_riscv64
+to specify on which architecture the test case should be tested.
+Several __arch_* annotations could be specified at once.
+When test case is not run on current arch it is marked as skipped.
 
-When such annotations are present for the test case:
-- bpf_prog_get_info_by_fd() is used to get BPF program after all
-  rewrites are applied by verifier.
-- the program is disassembled and patterns specified in __xlated are
-  searched for in the disassembly text.
+For example, the following would be tested only on arm64 and riscv64:
 
-__xlated matching follows the same mechanics as __msg:
-each subsequent pattern is matched from the point where
-previous pattern ended.
+  SEC("raw_tp")
+  __arch_arm64
+  __arch_riscv64
+  __xlated("1: *(u64 *)(r10 - 16) = r1")
+  __xlated("2: call")
+  __xlated("3: r1 = *(u64 *)(r10 - 16);")
+  __success
+  __naked void canary_arm64_riscv64(void)
+  {
+  	asm volatile (
+  	"r1 = 1;"
+  	"*(u64 *)(r10 - 16) = r1;"
+  	"call %[bpf_get_smp_processor_id];"
+  	"r1 = *(u64 *)(r10 - 16);"
+  	"exit;"
+  	:
+  	: __imm(bpf_get_smp_processor_id)
+  	: __clobber_all);
+  }
 
-This allows to write tests like below, where the goal is to verify the
-behavior of one of the of the transformations applied by verifier:
+On x86 it would be skipped:
 
-    SEC("raw_tp")
-    __xlated("1: w0 = ")
-    __xlated("2: r0 = &(void __percpu *)(r0)")
-    __xlated("3: r0 = *(u32 *)(r0 +0)")
-    __xlated("4: exit")
-    __success __naked void simple(void)
-    {
-            asm volatile (
-            "call %[bpf_get_smp_processor_id];"
-            "exit;"
-            :
-            : __imm(bpf_get_smp_processor_id)
-            : __clobber_all);
-    }
+  #467/2   verifier_nocsr/canary_arm64_riscv64:SKIP
 
 Acked-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240722233844.1406874-9-eddyz87@gmail.com
+Link: https://lore.kernel.org/r/20240722233844.1406874-10-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Stable-dep-of: f00bb757ed63 ("selftests/bpf: fix to avoid __msg tag de-duplication by clang")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h |  5 ++
- tools/testing/selftests/bpf/test_loader.c    | 82 +++++++++++++++++++-
- 2 files changed, 84 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/progs/bpf_misc.h |  8 ++++
+ tools/testing/selftests/bpf/test_loader.c    | 43 ++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
 diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index 81097a3f15eb5..a70939c7bc26b 100644
+index a70939c7bc26b..a225cd87897c4 100644
 --- a/tools/testing/selftests/bpf/progs/bpf_misc.h
 +++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -26,6 +26,9 @@
-  *
-  * __regex           Same as __msg, but using a regular expression.
-  * __regex_unpriv    Same as __msg_unpriv but using a regular expression.
-+ * __xlated          Expect a line in a disassembly log after verifier applies rewrites.
-+ *                   Multiple __xlated attributes could be specified.
-+ * __xlated_unpriv   Same as __xlated but for unprivileged mode.
-  *
-  * __success         Expect program load success in privileged mode.
-  * __success_unpriv  Expect program load success in unprivileged mode.
-@@ -63,11 +66,13 @@
+@@ -63,6 +63,10 @@
+  * __auxiliary         Annotated program is not a separate test, but used as auxiliary
+  *                     for some other test cases and should always be loaded.
+  * __auxiliary_unpriv  Same, but load program in unprivileged mode.
++ *
++ * __arch_*          Specify on which architecture the test case should be tested.
++ *                   Several __arch_* annotations could be specified at once.
++ *                   When test case is not run on current arch it is marked as skipped.
   */
  #define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" msg)))
  #define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" regex)))
-+#define __xlated(msg)		__attribute__((btf_decl_tag("comment:test_expect_xlated=" msg)))
- #define __failure		__attribute__((btf_decl_tag("comment:test_expect_failure")))
- #define __success		__attribute__((btf_decl_tag("comment:test_expect_success")))
- #define __description(desc)	__attribute__((btf_decl_tag("comment:test_description=" desc)))
- #define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" msg)))
- #define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" regex)))
-+#define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" msg)))
- #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
- #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
- #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
+@@ -82,6 +86,10 @@
+ #define __auxiliary		__attribute__((btf_decl_tag("comment:test_auxiliary")))
+ #define __auxiliary_unpriv	__attribute__((btf_decl_tag("comment:test_auxiliary_unpriv")))
+ #define __btf_path(path)	__attribute__((btf_decl_tag("comment:test_btf_path=" path)))
++#define __arch(arch)		__attribute__((btf_decl_tag("comment:test_arch=" arch)))
++#define __arch_x86_64		__arch("X86_64")
++#define __arch_arm64		__arch("ARM64")
++#define __arch_riscv64		__arch("RISCV64")
+ 
+ /* Convenience macro for use with 'asm volatile' blocks */
+ #define __naked __attribute__((naked))
 diff --git a/tools/testing/selftests/bpf/test_loader.c b/tools/testing/selftests/bpf/test_loader.c
-index 3f84903558dd8..b44b6a2fc82ce 100644
+index b44b6a2fc82ce..12b0c41e8d64c 100644
 --- a/tools/testing/selftests/bpf/test_loader.c
 +++ b/tools/testing/selftests/bpf/test_loader.c
-@@ -7,6 +7,7 @@
- #include <bpf/btf.h>
+@@ -34,6 +34,7 @@
+ #define TEST_TAG_AUXILIARY "comment:test_auxiliary"
+ #define TEST_TAG_AUXILIARY_UNPRIV "comment:test_auxiliary_unpriv"
+ #define TEST_BTF_PATH "comment:test_btf_path="
++#define TEST_TAG_ARCH "comment:test_arch="
  
- #include "autoconf_helper.h"
-+#include "disasm_helpers.h"
- #include "unpriv_helpers.h"
- #include "cap_helpers.h"
- 
-@@ -19,10 +20,12 @@
- #define TEST_TAG_EXPECT_SUCCESS "comment:test_expect_success"
- #define TEST_TAG_EXPECT_MSG_PFX "comment:test_expect_msg="
- #define TEST_TAG_EXPECT_REGEX_PFX "comment:test_expect_regex="
-+#define TEST_TAG_EXPECT_XLATED_PFX "comment:test_expect_xlated="
- #define TEST_TAG_EXPECT_FAILURE_UNPRIV "comment:test_expect_failure_unpriv"
- #define TEST_TAG_EXPECT_SUCCESS_UNPRIV "comment:test_expect_success_unpriv"
- #define TEST_TAG_EXPECT_MSG_PFX_UNPRIV "comment:test_expect_msg_unpriv="
- #define TEST_TAG_EXPECT_REGEX_PFX_UNPRIV "comment:test_expect_regex_unpriv="
-+#define TEST_TAG_EXPECT_XLATED_PFX_UNPRIV "comment:test_expect_xlated_unpriv="
- #define TEST_TAG_LOG_LEVEL_PFX "comment:test_log_level="
- #define TEST_TAG_PROG_FLAGS_PFX "comment:test_prog_flags="
- #define TEST_TAG_DESCRIPTION_PFX "comment:test_description="
-@@ -64,6 +67,7 @@ struct test_subspec {
- 	char *name;
- 	bool expect_failure;
- 	struct expected_msgs expect_msgs;
-+	struct expected_msgs expect_xlated;
- 	int retval;
- 	bool execute;
+ /* Warning: duplicated in bpf_misc.h */
+ #define POINTER_VALUE	0xcafe4all
+@@ -80,6 +81,7 @@ struct test_spec {
+ 	int log_level;
+ 	int prog_flags;
+ 	int mode_mask;
++	int arch_mask;
+ 	bool auxiliary;
+ 	bool valid;
  };
-@@ -117,6 +121,8 @@ static void free_test_spec(struct test_spec *spec)
- 	/* Deallocate expect_msgs arrays. */
- 	free_msgs(&spec->priv.expect_msgs);
- 	free_msgs(&spec->unpriv.expect_msgs);
-+	free_msgs(&spec->priv.expect_xlated);
-+	free_msgs(&spec->unpriv.expect_xlated);
+@@ -213,6 +215,12 @@ static void update_flags(int *flags, int flag, bool clear)
+ 		*flags |= flag;
+ }
  
- 	free(spec->priv.name);
- 	free(spec->unpriv.name);
-@@ -299,6 +305,18 @@ static int parse_test_spec(struct test_loader *tester,
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= UNPRIV;
-+		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX)) {
-+			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX) - 1;
-+			err = push_msg(msg, NULL, &spec->priv.expect_xlated);
-+			if (err)
-+				goto cleanup;
-+			spec->mode_mask |= PRIV;
-+		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX_UNPRIV)) {
-+			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX_UNPRIV) - 1;
-+			err = push_msg(msg, NULL, &spec->unpriv.expect_xlated);
-+			if (err)
-+				goto cleanup;
-+			spec->mode_mask |= UNPRIV;
- 		} else if (str_has_pfx(s, TEST_TAG_RETVAL_PFX)) {
- 			val = s + sizeof(TEST_TAG_RETVAL_PFX) - 1;
- 			err = parse_retval(val, &spec->priv.retval, "__retval");
-@@ -402,6 +420,16 @@ static int parse_test_spec(struct test_loader *tester,
- 					goto cleanup;
- 			}
- 		}
-+		if (spec->unpriv.expect_xlated.cnt == 0) {
-+			for (i = 0; i < spec->priv.expect_xlated.cnt; i++) {
-+				struct expect_msg *msg = &spec->priv.expect_xlated.patterns[i];
++enum arch {
++	ARCH_X86_64	= 0x1,
++	ARCH_ARM64	= 0x2,
++	ARCH_RISCV64	= 0x4,
++};
 +
-+				err = push_msg(msg->substr, msg->regex_str,
-+					       &spec->unpriv.expect_xlated);
-+				if (err)
-+					goto cleanup;
+ /* Uses btf_decl_tag attributes to describe the expected test
+  * behavior, see bpf_misc.h for detailed description of each attribute
+  * and attribute combinations.
+@@ -226,6 +234,7 @@ static int parse_test_spec(struct test_loader *tester,
+ 	bool has_unpriv_result = false;
+ 	bool has_unpriv_retval = false;
+ 	int func_id, i, err = 0;
++	u32 arch_mask = 0;
+ 	struct btf *btf;
+ 
+ 	memset(spec, 0, sizeof(*spec));
+@@ -364,11 +373,26 @@ static int parse_test_spec(struct test_loader *tester,
+ 					goto cleanup;
+ 				update_flags(&spec->prog_flags, flags, clear);
+ 			}
++		} else if (str_has_pfx(s, TEST_TAG_ARCH)) {
++			val = s + sizeof(TEST_TAG_ARCH) - 1;
++			if (strcmp(val, "X86_64") == 0) {
++				arch_mask |= ARCH_X86_64;
++			} else if (strcmp(val, "ARM64") == 0) {
++				arch_mask |= ARCH_ARM64;
++			} else if (strcmp(val, "RISCV64") == 0) {
++				arch_mask |= ARCH_RISCV64;
++			} else {
++				PRINT_FAIL("bad arch spec: '%s'", val);
++				err = -EINVAL;
++				goto cleanup;
 +			}
-+		}
+ 		} else if (str_has_pfx(s, TEST_BTF_PATH)) {
+ 			spec->btf_custom_path = s + sizeof(TEST_BTF_PATH) - 1;
+ 		}
  	}
  
- 	spec->valid = true;
-@@ -449,7 +477,15 @@ static void emit_verifier_log(const char *log_buf, bool force)
- 	fprintf(stdout, "VERIFIER LOG:\n=============\n%s=============\n", log_buf);
++	spec->arch_mask = arch_mask;
++
+ 	if (spec->mode_mask == 0)
+ 		spec->mode_mask = PRIV;
+ 
+@@ -677,6 +701,20 @@ static int get_xlated_program_text(int prog_fd, char *text, size_t text_sz)
+ 	return err;
  }
  
--static void validate_msgs(char *log_buf, struct expected_msgs *msgs)
-+static void emit_xlated(const char *xlated, bool force)
++static bool run_on_current_arch(int arch_mask)
 +{
-+	if (!force && env.verbosity == VERBOSE_NONE)
-+		return;
-+	fprintf(stdout, "XLATED:\n=============\n%s=============\n", xlated);
-+}
-+
-+static void validate_msgs(char *log_buf, struct expected_msgs *msgs,
-+			  void (*emit_fn)(const char *buf, bool force))
- {
- 	regmatch_t reg_match[1];
- 	const char *log = log_buf;
-@@ -473,7 +509,7 @@ static void validate_msgs(char *log_buf, struct expected_msgs *msgs)
- 
- 		if (!ASSERT_OK_PTR(match, "expect_msg")) {
- 			if (env.verbosity == VERBOSE_NONE)
--				emit_verifier_log(log_buf, true /*force*/);
-+				emit_fn(log_buf, true /*force*/);
- 			for (j = 0; j <= i; j++) {
- 				msg = &msgs->patterns[j];
- 				fprintf(stderr, "%s %s: '%s'\n",
-@@ -610,6 +646,37 @@ static bool should_do_test_run(struct test_spec *spec, struct test_subspec *subs
- 	return true;
- }
- 
-+/* Get a disassembly of BPF program after verifier applies all rewrites */
-+static int get_xlated_program_text(int prog_fd, char *text, size_t text_sz)
-+{
-+	struct bpf_insn *insn_start = NULL, *insn, *insn_end;
-+	__u32 insns_cnt = 0, i;
-+	char buf[64];
-+	FILE *out = NULL;
-+	int err;
-+
-+	err = get_xlated_program(prog_fd, &insn_start, &insns_cnt);
-+	if (!ASSERT_OK(err, "get_xlated_program"))
-+		goto out;
-+	out = fmemopen(text, text_sz, "w");
-+	if (!ASSERT_OK_PTR(out, "open_memstream"))
-+		goto out;
-+	insn_end = insn_start + insns_cnt;
-+	insn = insn_start;
-+	while (insn < insn_end) {
-+		i = insn - insn_start;
-+		insn = disasm_insn(insn, buf, sizeof(buf));
-+		fprintf(out, "%d: %s\n", i, buf);
-+	}
-+	fflush(out);
-+
-+out:
-+	free(insn_start);
-+	if (out)
-+		fclose(out);
-+	return err;
++	if (arch_mask == 0)
++		return true;
++#if defined(__x86_64__)
++	return arch_mask & ARCH_X86_64;
++#elif defined(__aarch64__)
++	return arch_mask & ARCH_ARM64;
++#elif defined(__riscv) && __riscv_xlen == 64
++	return arch_mask & ARCH_RISCV64;
++#endif
++	return false;
 +}
 +
  /* this function is forced noinline and has short generic name to look better
   * in test_progs output (in case of a failure)
   */
-@@ -695,7 +762,16 @@ void run_subtest(struct test_loader *tester,
- 		}
- 	}
- 	emit_verifier_log(tester->log_buf, false /*force*/);
--	validate_msgs(tester->log_buf, &subspec->expect_msgs);
-+	validate_msgs(tester->log_buf, &subspec->expect_msgs, emit_verifier_log);
-+
-+	if (subspec->expect_xlated.cnt) {
-+		err = get_xlated_program_text(bpf_program__fd(tprog),
-+					      tester->log_buf, tester->log_buf_sz);
-+		if (err)
-+			goto tobj_cleanup;
-+		emit_xlated(tester->log_buf, false /*force*/);
-+		validate_msgs(tester->log_buf, &subspec->expect_xlated, emit_xlated);
-+	}
+@@ -701,6 +739,11 @@ void run_subtest(struct test_loader *tester,
+ 	if (!test__start_subtest(subspec->name))
+ 		return;
  
- 	if (should_do_test_run(spec, subspec)) {
- 		/* For some reason test_verifier executes programs
++	if (!run_on_current_arch(spec->arch_mask)) {
++		test__skip();
++		return;
++	}
++
+ 	if (unpriv) {
+ 		if (!can_execute_unpriv(tester, spec)) {
+ 			test__skip();
 -- 
 2.43.0
 
