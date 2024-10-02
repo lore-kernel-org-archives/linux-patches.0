@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746531D0438;
-	Wed,  2 Oct 2024 14:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACDF1D0438;
+	Wed,  2 Oct 2024 14:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880126; cv=none; b=h3gYNHFN6kDzE/RxTdhbaiJzJbDwbWwOraAEHIrIH38mW9SVOb20+88ZIs7C8OMdnncCwLbI8gJoDdP2EmCTRLHTL4mIICt+M7Ljml9EqkTWFu6GpZAbEQ/D0FkkeVJxqm0OzAXfo2khcsx/7fe2nGFricXkIWLhhWXVulJ/Oxw=
+	t=1727880129; cv=none; b=Vyq3F+9tedfq9C4zyxVrrjLLYYVMLEfKrR0Yk8/V0F6/DwS9Ue3s0+8B967G6LjPCtWZJFY5A2HUeTeWjDtDbFyx8OKGTpTBa6R4c6vgVFQDWFfwr+bz3n3i5Q6kaKR1r2Z4dRm7un4egL4/OoysWaXJ7G4R2cofwxd2IQC1wsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880126; c=relaxed/simple;
-	bh=h7uvZTaS0GAPG6wq7STjxN4U71j4rb3YssaT1vekxLU=;
+	s=arc-20240116; t=1727880129; c=relaxed/simple;
+	bh=GTcDYJvIhFaIcmfTKRhR3nc3g60Q+pL3pRAXj2PO3oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8TTy5RhXxKaBCNX1lQIn3E5P3fq0DM+A2pnEsYCS+ChzehPhA1lzpNHEym6fCFm8asS1Jdb5TY0WkWNwZ5wCYr8ApWhE4+z2iAfNXx7oAN1+5oTzL3rD6lR28AlFMjxU8IxnVcfiT4WsXruoIp2gV+csOhftdvVxMKcad2JZxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcVCdrzC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e7vQf9ezmQLbl4Mk2GL7Hc0fYmw0fo1i+MP1B0Upjwmz/3uJ7ZI5Djq8pdYrF9qVd0p5LljFaiWKPW9vSPkHLoxaDMdde7OgKtU/xehGJzhqEEKYah2Pj5chEBbkya3K+BXM0J0Qr+2qKcszc8yamgzs3rXLUPe0RnyusbJFnLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpXVSbdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcVCdrzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BEEC4CEC2;
-	Wed,  2 Oct 2024 14:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpXVSbdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C831CC4CEC2;
+	Wed,  2 Oct 2024 14:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880126;
-	bh=h7uvZTaS0GAPG6wq7STjxN4U71j4rb3YssaT1vekxLU=;
+	s=korg; t=1727880129;
+	bh=GTcDYJvIhFaIcmfTKRhR3nc3g60Q+pL3pRAXj2PO3oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcVCdrzCltK5RzJN8dVx0ZGBtYzP1Bh75TeqFXpdhhdsSeWiTp9XWVq3o+EXnyW7W
-	 D+iZRao1w7GjxYMwUQ0B0J5ZRM6HZ2w+WlfDsjAAgo8xwtCxTaJ1a2hCUOW8Z43JJ2
-	 xkTd9qbV1rUCS/ScgGfNLP1AJyWBUmzbQizI48Ik=
+	b=LpXVSbdRIcwhkCtQhNn+fXr88l4Vh/+Ryba79PMf2UhynYEhgq/6QCyueWo9Qw+3d
+	 TOrqEwlsswvkvavTdoYz0EuFaCR4D1UZhVxSV4TkUsKXnaHYeTY9Fnl01KP8VSRvc9
+	 jAtnav9ifgLaP8MOmQT7hKC1YdPaNw8HBp/c2YiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Guillaume Stols <gstols@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 352/538] nvme-multipath: system fails to create generic nvme device
-Date: Wed,  2 Oct 2024 14:59:51 +0200
-Message-ID: <20241002125806.322741788@linuxfoundation.org>
+Subject: [PATCH 6.6 353/538] iio: adc: ad7606: fix oversampling gpio array
+Date: Wed,  2 Oct 2024 14:59:52 +0200
+Message-ID: <20241002125806.361995507@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,40 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Guillaume Stols <gstols@baylibre.com>
 
-[ Upstream commit 63bcf9014e95a7d279d10d8e2caa5d88db2b1855 ]
+[ Upstream commit 8dc4594b54dbaaba40dc8884ad3d42083de39434 ]
 
-NVME_NSHEAD_DISK_LIVE is a flag for struct nvme_ns_head, not nvme_ns.
-The current code has a typo causing NVME_NSHEAD_DISK_LIVE never to
-be cleared once device_add_disk_fails, causing the system never to
-create the 'generic' character device. Even several rescan attempts
-will change the situation and the system has to be rebooted to fix
-the issue.
+gpiod_set_array_value was misused here: the implementation relied on the
+assumption that an unsigned long was required for each gpio, while the
+function expects a bit array stored in "as much unsigned long as needed
+for storing one bit per GPIO", i.e it is using a bit field.
 
-Fixes: 11384580e332 ("nvme-multipath: add error handling support for add_disk()")
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+This leaded to incorrect parameter passed to gpiod_set_array_value, that
+would set 1 value instead of 3.
+It also prevents to select the software mode correctly for the AD7606B.
+
+Fixes: d2a415c86c6b ("iio: adc: ad7606: Add support for AD7606B ADC")
+Fixes: 41f71e5e7daf ("staging: iio: adc: ad7606: Use find_closest() macro")
+Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ad7606.c     | 4 ++--
+ drivers/iio/adc/ad7606_spi.c | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 645a6b1322205..37ea0fa421da8 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -585,7 +585,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 		rc = device_add_disk(&head->subsys->dev, head->disk,
- 				     nvme_ns_id_attr_groups);
- 		if (rc) {
--			clear_bit(NVME_NSHEAD_DISK_LIVE, &ns->flags);
-+			clear_bit(NVME_NSHEAD_DISK_LIVE, &head->flags);
- 			return;
- 		}
- 		nvme_add_ns_head_cdev(head);
+diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+index 1c08c0921ee71..8c66b1e364014 100644
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -215,9 +215,9 @@ static int ad7606_write_os_hw(struct iio_dev *indio_dev, int val)
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+ 	DECLARE_BITMAP(values, 3);
+ 
+-	values[0] = val;
++	values[0] = val & GENMASK(2, 0);
+ 
+-	gpiod_set_array_value(ARRAY_SIZE(values), st->gpio_os->desc,
++	gpiod_set_array_value(st->gpio_os->ndescs, st->gpio_os->desc,
+ 			      st->gpio_os->info, values);
+ 
+ 	/* AD7616 requires a reset to update value */
+diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
+index 263a778bcf253..287a0591533b6 100644
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -249,8 +249,9 @@ static int ad7616_sw_mode_config(struct iio_dev *indio_dev)
+ static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
+ {
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+-	unsigned long os[3] = {1};
++	DECLARE_BITMAP(os, 3);
+ 
++	bitmap_fill(os, 3);
+ 	/*
+ 	 * Software mode is enabled when all three oversampling
+ 	 * pins are set to high. If oversampling gpios are defined
+@@ -258,7 +259,7 @@ static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
+ 	 * otherwise, they must be hardwired to VDD
+ 	 */
+ 	if (st->gpio_os) {
+-		gpiod_set_array_value(ARRAY_SIZE(os),
++		gpiod_set_array_value(st->gpio_os->ndescs,
+ 				      st->gpio_os->desc, st->gpio_os->info, os);
+ 	}
+ 	/* OS of 128 and 256 are available only in software mode */
 -- 
 2.43.0
 
