@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF521D0788;
-	Wed,  2 Oct 2024 13:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75BE199FC9;
+	Wed,  2 Oct 2024 13:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877347; cv=none; b=oNM6W+hXNrkV52/wpMgogv/NGdqePyUftINYlApw8QwcH5KjSDHcVPJ2cXIcTkqwAnQiwdwnOznLqc8RzDhvFyYy69biGA7QoCYVy2Jj3NvUu9rLOhFR3Tqr7q+cxf21zUInN+Me9sTRM3VLWnQpsdM9wob7eHiy/ltbL8+yodE=
+	t=1727877349; cv=none; b=SsKjh91C67DQlrZZfeNwHgVv8wndVHZIXJv2RKBAWYIt6FKYJBNanPtr8ihGAsgcaVMRDuw+RgzB8TsxxE21fFnKkD++r7A3h2sHtKzYYffrGfddbOYHISk7DtJpBpo5qwq3w7YLfM4sWFGBnXFUo7ch0OrsA/VGpZekSVKr4fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877347; c=relaxed/simple;
-	bh=BTP0N9iOp+ROtYf8H/Es9cjl8pOwD4ndjL9Y/yJaJLM=;
+	s=arc-20240116; t=1727877349; c=relaxed/simple;
+	bh=prS5xwa2mnJUfsq7qX1s2Ir7GHGcFmjeKeXXuDwXQYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loNetKzGzHRaHEV19buiPaAHF62D/9l9/18yhH05g/sug9ioDbjFidhUd1CXdG0O93HRbd0kAQqxWGgJnjsW6PImX1p7wP6PBDJ9wg1gM81tDNZF8PhCOWWuWpqmSL+ubqV+zGQHC/IDPbrli0eQ6BiF01ZnrkCRKr0+GQpRLfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkj3hths; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ir25OnKb8b/oFADi5a0Nro3/lKeuKPJ6uUVtYrJLZvH0iISw98rAhzQNY/nWWYtkAJsjiJZsy1b8z8C4koTbcoTphcrD+50UUt3qEWo1H6aC3WrrW5ARy1wqfNfey8uK2MZo/Zp4Y36HUGWQ9ijlDb/QBxuIDBVDuP/bAmRYHvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOlZP58S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkj3hths"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7303AC4CECD;
-	Wed,  2 Oct 2024 13:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOlZP58S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2BDC4CECE;
+	Wed,  2 Oct 2024 13:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877346;
-	bh=BTP0N9iOp+ROtYf8H/Es9cjl8pOwD4ndjL9Y/yJaJLM=;
+	s=korg; t=1727877349;
+	bh=prS5xwa2mnJUfsq7qX1s2Ir7GHGcFmjeKeXXuDwXQYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkj3hthsgHqdRKOR+L8dHku+mP62q28R6Fc8jGI+L0EUw6MNAZVWkbAYsFoa1DnGx
-	 7k9s+mOTWc/UqG50/TY8m/a8n6EWbr3pvBqC2pYyRHr9L475nWnYl+1huWlw0Z1itg
-	 rgP8BbPVKDWvB+o9et81sZyrQGjdtKeFzOt29r/4=
+	b=TOlZP58SSFrrzc8nKi3z35wYhvgtwSuMh3Y37r9f7LrbXzrZNO4TFm7O1fARLN4ex
+	 uMPf2IR5+wF/wTKtoKiVPaQJI08tdLz4qI6fGA2VHazqzJA2VWFtVZYv+KAviP4ZU9
+	 B/GfcpuwUCtdHybjp0kW96imfYfx8O+AZ8533MQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 050/634] kselftest/arm64: Actually test SME vector length changes via sigreturn
-Date: Wed,  2 Oct 2024 14:52:30 +0200
-Message-ID: <20241002125813.079664631@linuxfoundation.org>
+Subject: [PATCH 6.10 051/634] can: j1939: use correct function name in comment
+Date: Wed,  2 Oct 2024 14:52:31 +0200
+Message-ID: <20241002125813.118835630@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,69 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 6f0315330af7a57c1c00587fdfb69c7778bf1c50 ]
+[ Upstream commit dc2ddcd136fe9b6196a7dd01f75f824beb02d43f ]
 
-The test case for SME vector length changes via sigreturn use a bit too
-much cut'n'paste and only actually changed the SVE vector length in the
-test itself. Andre's recent factoring out of the initialisation code caused
-this to be exposed and the test to start failing. Fix the test to actually
-cover the thing it's supposed to test.
+The function j1939_cancel_all_active_sessions() was renamed to
+j1939_cancel_active_session() but name in comment wasn't updated.
 
-Fixes: 4963aeb35a9e ("kselftest/arm64: signal: Add SME signal handling tests")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Tested-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20240829-arm64-sme-signal-vl-change-test-v1-1-42d7534cb818@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Link: https://patch.msgid.link/1724935703-44621-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testcases/fake_sigreturn_sme_change_vl.c       | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/can/j1939/transport.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-index cb8c051b5c8f2..dfd6a2badf9fb 100644
---- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-@@ -35,30 +35,30 @@ static int fake_sigreturn_ssve_change_vl(struct tdescr *td,
- {
- 	size_t resv_sz, offset;
- 	struct _aarch64_ctx *head = GET_SF_RESV_HEAD(sf);
--	struct sve_context *sve;
-+	struct za_context *za;
- 
- 	/* Get a signal context with a SME ZA frame in it */
- 	if (!get_current_context(td, &sf.uc, sizeof(sf.uc)))
- 		return 1;
- 
- 	resv_sz = GET_SF_RESV_SIZE(sf);
--	head = get_header(head, SVE_MAGIC, resv_sz, &offset);
-+	head = get_header(head, ZA_MAGIC, resv_sz, &offset);
- 	if (!head) {
--		fprintf(stderr, "No SVE context\n");
-+		fprintf(stderr, "No ZA context\n");
- 		return 1;
- 	}
- 
--	if (head->size != sizeof(struct sve_context)) {
-+	if (head->size != sizeof(struct za_context)) {
- 		fprintf(stderr, "Register data present, aborting\n");
- 		return 1;
- 	}
- 
--	sve = (struct sve_context *)head;
-+	za = (struct za_context *)head;
- 
- 	/* No changes are supported; init left us at minimum VL so go to max */
- 	fprintf(stderr, "Attempting to change VL from %d to %d\n",
--		sve->vl, vls[0]);
--	sve->vl = vls[0];
-+		za->vl, vls[0]);
-+	za->vl = vls[0];
- 
- 	fake_sigreturn(&sf, sizeof(sf), 0);
- 
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 4be73de5033cb..319f47df33300 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1179,10 +1179,10 @@ static enum hrtimer_restart j1939_tp_txtimer(struct hrtimer *hrtimer)
+ 		break;
+ 	case -ENETDOWN:
+ 		/* In this case we should get a netdev_event(), all active
+-		 * sessions will be cleared by
+-		 * j1939_cancel_all_active_sessions(). So handle this as an
+-		 * error, but let j1939_cancel_all_active_sessions() do the
+-		 * cleanup including propagation of the error to user space.
++		 * sessions will be cleared by j1939_cancel_active_session().
++		 * So handle this as an error, but let
++		 * j1939_cancel_active_session() do the cleanup including
++		 * propagation of the error to user space.
+ 		 */
+ 		break;
+ 	case -EOVERFLOW:
 -- 
 2.43.0
 
