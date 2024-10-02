@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA391D0426;
-	Wed,  2 Oct 2024 14:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD47B1D1752;
+	Wed,  2 Oct 2024 14:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878737; cv=none; b=tiApBlrbsxB8ZebOVn5/HNbs+ojKj0ztAgBX1d6LgsYULqyP42iCY5ElvqNimb73ighWr+OD5O7B6b3IHoKV0BxLKvRzXoSovDna9M8j0+3aK9Bw2R77fgLCPPj1sI4G2o1FB4RTYqnwKiU1DZ1ye1xbellZVWFZvgCX2VJfC38=
+	t=1727878740; cv=none; b=eS2SiPhcQwoDhRrrzX3i4LuM1cfzjY6mwkpOboZWo4xaaFx1shp0q+uOaxeiF+tegk8jkHWW0h0FjF0zVEQu8FmXpzVu14DIJOwqCArbdOw+BGDwZkQZ3TwrPoS7yJqGeK6D+HAVIZWVPjLZi7FINouXTQ7IHN8FlopmPUy0R4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878737; c=relaxed/simple;
-	bh=HaOZ9HS9IVyGwJT75qT16zJB5IfnS9VniyI1bLdOTz0=;
+	s=arc-20240116; t=1727878740; c=relaxed/simple;
+	bh=Oy69riVdUbQltVhI7hoejnLjRIsARA5mC6nLiv2QiQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+4kD2xUYYspzGlOC95COuErg/J1fhtA0poLq74uvxQ1CrLHpXYBiMUnjlOb18QdX2ThrPWS5ABRIOUjLvRo3rsFrh0oe4elp1Wrv7OY/KxwDoFMTQ7mjjS6JtSdwPB19hcjJiykpzqftUi8X/9FSyDqW2hID1e12xz8/5TUaCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzdV2qEX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HMyMGPy1yTj9OzvcL76zZYcIy6IC2aAdr+aAd3E6LNmxnFTWmAYvNspc/hh2/PWrxkzFd3auGmi1C9sS6zjA87Ljs0v3WNn5/jxlOmXMUcwjgBCGCHDcRqgfPXZ5zh60nnGcSo//doyp4J1b3/cA5ZMVpoj8FXjwk7JLgAWikpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mz+hfQtJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzdV2qEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFF7C4CED2;
-	Wed,  2 Oct 2024 14:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mz+hfQtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5462EC4CEC2;
+	Wed,  2 Oct 2024 14:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878737;
-	bh=HaOZ9HS9IVyGwJT75qT16zJB5IfnS9VniyI1bLdOTz0=;
+	s=korg; t=1727878740;
+	bh=Oy69riVdUbQltVhI7hoejnLjRIsARA5mC6nLiv2QiQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EzdV2qEXNcXJKkTSjKdB6W1skro8JuuhpHGXL9g9YK7arz118ng5C0pFLqaIJv3Sd
-	 L66b34XTBPymrzqjf8qSikqma/UEie05LeQrJlTb8IJ8698sgoQvDqPKYgsho4gWb5
-	 7qOG2yrVj1tR2E3SMOamWxmEcn/wWswwcRk4cjyk=
+	b=mz+hfQtJjWv58MubSBLfMRwwMmxpxdeJBxrNQaa+dk4SPyZq+6ACZcHlMmeMHGNb9
+	 led2XpwibIozUoT7nf4uBI2jlY6VA+I7vJ4/UK0g8hHgbJc1RHGEkJeVaeqIVZuS/5
+	 euhB5vmOlvvTte+rhNLw/72p/xfZKHKnew7Yqbz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.10 516/634] usbnet: fix cyclical race on disconnect with work queue
-Date: Wed,  2 Oct 2024 15:00:16 +0200
-Message-ID: <20241002125831.477205853@linuxfoundation.org>
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= <nfraprado@collabora.com>
+Subject: [PATCH 6.10 517/634] arm64: dts: mediatek: mt8195-cherry: Mark USB 3.0 on xhci1 as disabled
+Date: Wed,  2 Oct 2024 15:00:17 +0200
+Message-ID: <20241002125831.516319313@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -44,146 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-commit 04e906839a053f092ef53f4fb2d610983412b904 upstream.
+commit 09d385679487c58f0859c1ad4f404ba3df2f8830 upstream.
 
-The work can submit URBs and the URBs can schedule the work.
-This cycle needs to be broken, when a device is to be stopped.
-Use a flag to do so.
-This is a design issue as old as the driver.
+USB 3.0 on xhci1 is not used, as the controller shares the same PHY as
+pcie1. The latter is enabled to support the M.2 PCIe WLAN card on this
+design.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240919123525.688065-1-oneukum@suse.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Mark USB 3.0 as disabled on this controller using the
+"mediatek,u3p-dis-msk" property.
+
+Reported-by: Nícolas F. R. A. Prado <nfraprado@collabora.com> #KernelCI
+Closes: https://lore.kernel.org/all/9fce9838-ef87-4d1b-b3df-63e1ddb0ec51@notapiano/
+Fixes: b6267a396e1c ("arm64: dts: mediatek: cherry: Enable T-PHYs and USB XHCI controllers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20240731034411.371178-2-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c   |   37 ++++++++++++++++++++++++++++---------
- include/linux/usb/usbnet.h |   15 +++++++++++++++
- 2 files changed, 43 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -464,10 +464,15 @@ static enum skb_state defer_bh(struct us
- void usbnet_defer_kevent (struct usbnet *dev, int work)
- {
- 	set_bit (work, &dev->flags);
--	if (!schedule_work (&dev->kevent))
--		netdev_dbg(dev->net, "kevent %s may have been dropped\n", usbnet_event_names[work]);
--	else
--		netdev_dbg(dev->net, "kevent %s scheduled\n", usbnet_event_names[work]);
-+	if (!usbnet_going_away(dev)) {
-+		if (!schedule_work(&dev->kevent))
-+			netdev_dbg(dev->net,
-+				   "kevent %s may have been dropped\n",
-+				   usbnet_event_names[work]);
-+		else
-+			netdev_dbg(dev->net,
-+				   "kevent %s scheduled\n", usbnet_event_names[work]);
-+	}
- }
- EXPORT_SYMBOL_GPL(usbnet_defer_kevent);
- 
-@@ -535,7 +540,8 @@ static int rx_submit (struct usbnet *dev
- 			tasklet_schedule (&dev->bh);
- 			break;
- 		case 0:
--			__usbnet_queue_skb(&dev->rxq, skb, rx_start);
-+			if (!usbnet_going_away(dev))
-+				__usbnet_queue_skb(&dev->rxq, skb, rx_start);
- 		}
- 	} else {
- 		netif_dbg(dev, ifdown, dev->net, "rx: stopped\n");
-@@ -843,9 +849,18 @@ int usbnet_stop (struct net_device *net)
- 
- 	/* deferred work (timer, softirq, task) must also stop */
- 	dev->flags = 0;
--	del_timer_sync (&dev->delay);
--	tasklet_kill (&dev->bh);
-+	del_timer_sync(&dev->delay);
-+	tasklet_kill(&dev->bh);
- 	cancel_work_sync(&dev->kevent);
-+
-+	/* We have cyclic dependencies. Those calls are needed
-+	 * to break a cycle. We cannot fall into the gaps because
-+	 * we have a flag
-+	 */
-+	tasklet_kill(&dev->bh);
-+	del_timer_sync(&dev->delay);
-+	cancel_work_sync(&dev->kevent);
-+
- 	if (!pm)
- 		usb_autopm_put_interface(dev->intf);
- 
-@@ -1171,7 +1186,8 @@ fail_halt:
- 					   status);
- 		} else {
- 			clear_bit (EVENT_RX_HALT, &dev->flags);
--			tasklet_schedule (&dev->bh);
-+			if (!usbnet_going_away(dev))
-+				tasklet_schedule(&dev->bh);
- 		}
- 	}
- 
-@@ -1196,7 +1212,8 @@ fail_halt:
- 			usb_autopm_put_interface(dev->intf);
- fail_lowmem:
- 			if (resched)
--				tasklet_schedule (&dev->bh);
-+				if (!usbnet_going_away(dev))
-+					tasklet_schedule(&dev->bh);
- 		}
- 	}
- 
-@@ -1559,6 +1576,7 @@ static void usbnet_bh (struct timer_list
- 	} else if (netif_running (dev->net) &&
- 		   netif_device_present (dev->net) &&
- 		   netif_carrier_ok(dev->net) &&
-+		   !usbnet_going_away(dev) &&
- 		   !timer_pending(&dev->delay) &&
- 		   !test_bit(EVENT_RX_PAUSED, &dev->flags) &&
- 		   !test_bit(EVENT_RX_HALT, &dev->flags)) {
-@@ -1606,6 +1624,7 @@ void usbnet_disconnect (struct usb_inter
- 	usb_set_intfdata(intf, NULL);
- 	if (!dev)
- 		return;
-+	usbnet_mark_going_away(dev);
- 
- 	xdev = interface_to_usbdev (intf);
- 
---- a/include/linux/usb/usbnet.h
-+++ b/include/linux/usb/usbnet.h
-@@ -76,8 +76,23 @@ struct usbnet {
- #		define EVENT_LINK_CHANGE	11
- #		define EVENT_SET_RX_MODE	12
- #		define EVENT_NO_IP_ALIGN	13
-+/* This one is special, as it indicates that the device is going away
-+ * there are cyclic dependencies between tasklet, timer and bh
-+ * that must be broken
-+ */
-+#		define EVENT_UNPLUG		31
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -1359,6 +1359,7 @@
+ 	rx-fifo-depth = <3072>;
+ 	vusb33-supply = <&mt6359_vusb_ldo_reg>;
+ 	vbus-supply = <&usb_vbus>;
++	mediatek,u3p-dis-msk = <1>;
  };
  
-+static inline bool usbnet_going_away(struct usbnet *ubn)
-+{
-+	return test_bit(EVENT_UNPLUG, &ubn->flags);
-+}
-+
-+static inline void usbnet_mark_going_away(struct usbnet *ubn)
-+{
-+	set_bit(EVENT_UNPLUG, &ubn->flags);
-+}
-+
- static inline struct usb_driver *driver_of(struct usb_interface *intf)
- {
- 	return to_usb_driver(intf->dev.driver);
+ &xhci2 {
 
 
