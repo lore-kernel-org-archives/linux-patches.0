@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A7D1D0968;
-	Wed,  2 Oct 2024 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C71E1D0968;
+	Wed,  2 Oct 2024 14:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879297; cv=none; b=kgAigQf/fpZW/SiL4+4p6RmFRVzlsxkZ8+3dkPLL1fYkYlGlGm/LGhwAg8LplxVGNfFaHIDr0CYWii3oOdDEYju191mUJkOw7RQPv4g+PWbWLlzyAv7xfEcrmEXcEaQwFRL+X31dax6ojM9TadpaRpHoubqbFF4fOIAGeU+SH5c=
+	t=1727879300; cv=none; b=Va3Wo+q0LvuJWtiEuqphY0Y1VsZJDfzdNCvP3p/+OY96Z7+AF2TC89b5q6sabP/5xw/NpD8+QSjLMiMMS4j1uaK/lYYE7Bo/gNEQUwIM42VTc1C+durCvYKLMB/gPQB1N45uo1KLWZA30xWSCSKWwLMt4gYuCjx149HYs20x2TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879297; c=relaxed/simple;
-	bh=v87+c3bVGhgQldx8OXu+cZISFY+SoKD72NrL3gz5du4=;
+	s=arc-20240116; t=1727879300; c=relaxed/simple;
+	bh=gTDnWCDjY/9FX1kZwM/3qkaoXNNkyaz0eDfwF0rlVQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5gckGGPsxoeFu5SAij36PU9aYmCpAHEuMLV2ZdTh1Sp0Tav0hDVeu22ePwnM7ZaxOD49XbVDHHSHM0k/H//8uZYpeTT5dZfOpYDLl0oQIYLyiAg1cdmvlcJBZY2WJOIcFl9EBK21T4jo5QIEEeDhXJSNtlsJek7U1yPucFzgBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVRl9yV/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXLWyNLf5wCqtKzx0bqRP1orsAMM4WF5wNbdxPmYtmmRavq5/+KMxIgyR+L5CeCvXJmjKUwapQ/WBb319qgL4COh3EaH2RzIpls1PRFbv6hmqHQa/GMXslrj1NPCV+C/W1P+Z3AqfXHj6+5ovUPTzmCpz3hupE0SiduClKosyas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxYKhIye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVRl9yV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FBEC4CEC2;
-	Wed,  2 Oct 2024 14:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxYKhIye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D16DC4CEC2;
+	Wed,  2 Oct 2024 14:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879297;
-	bh=v87+c3bVGhgQldx8OXu+cZISFY+SoKD72NrL3gz5du4=;
+	s=korg; t=1727879300;
+	bh=gTDnWCDjY/9FX1kZwM/3qkaoXNNkyaz0eDfwF0rlVQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVRl9yV/cSvPsTsd51SCmSPOorn1VqaXJ1893E0PJ71q1R+B8lQgMVA1sbYHMwS3u
-	 j4rG9cp/fiIwNAuHroWY+Q0FzC3TXJVq/6deLFzOcmTaQLGIDvF7lbLNzZjI4WeR9p
-	 fPp2bp+Sl0rKsSA20tyy/2crzrpKbNpGf6pZPJs0=
+	b=NxYKhIyeOq/8GqBbp2FnOMalkhHxxeXntOtiQw1zS8+ADDVxF7c8mOH28rWTE1Alu
+	 91hs27ioYnJGHfQfyXFzuTw3JYKSMBBqdTAHfmmxmxDRW5J3CZVUZftI9K9cQCJ7Kh
+	 WBrA1dqNecCu0lQEGOhHGhNJ7HyiDFABVMAsNuKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	En-Wei WU <en-wei.wu@canonical.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/538] net: enetc: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Wed,  2 Oct 2024 14:55:10 +0200
-Message-ID: <20241002125755.016734996@linuxfoundation.org>
+Subject: [PATCH 6.6 072/538] r8169: disable ALDPS per default for RTL8125
+Date: Wed,  2 Oct 2024 14:55:11 +0200
+Message-ID: <20241002125755.055708357@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,41 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 799a9225997799f7b1b579bc50a93b78b4fb2a01 ]
+[ Upstream commit b9c7ac4fe22c608acf6153a3329df2b6b6cd416c ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+En-Wei reported that traffic breaks if cable is unplugged for more
+than 3s and then re-plugged. This was supposed to be fixed by
+621735f59064 ("r8169: fix rare issue with broken rx after link-down on
+RTL8125"). But apparently this didn't fix the issue for everybody.
+The 3s threshold rang a bell, as this is the delay after which ALDPS
+kicks in. And indeed disabling ALDPS fixes the issue for this user.
+Maybe this fixes the issue in general. In a follow-up step we could
+remove the first fix attempt and see whether anybody complains.
 
-Fixes: bbb96dc7fa1a ("enetc: Factor out the traffic start/stop procedures")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240911094445.1922476-3-ruanjinjie@huawei.com
+Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
+Tested-by: En-Wei WU <en-wei.wu@canonical.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/778b9d86-05c4-4856-be59-cde4487b9e52@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/realtek/r8169_phy_config.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 0f5a4ec505ddb..18e3a9cd4fc01 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -2305,12 +2305,11 @@ static int enetc_setup_irqs(struct enetc_ndev_priv *priv)
+diff --git a/drivers/net/ethernet/realtek/r8169_phy_config.c b/drivers/net/ethernet/realtek/r8169_phy_config.c
+index b50f16786c246..6ab89f4782857 100644
+--- a/drivers/net/ethernet/realtek/r8169_phy_config.c
++++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
+@@ -1060,6 +1060,7 @@ static void rtl8125a_2_hw_phy_config(struct rtl8169_private *tp,
+ 	phy_modify_paged(phydev, 0xa86, 0x15, 0x0001, 0x0000);
+ 	rtl8168g_enable_gphy_10m(phydev);
  
- 		snprintf(v->name, sizeof(v->name), "%s-rxtx%d",
- 			 priv->ndev->name, i);
--		err = request_irq(irq, enetc_msix, 0, v->name, v);
-+		err = request_irq(irq, enetc_msix, IRQF_NO_AUTOEN, v->name, v);
- 		if (err) {
- 			dev_err(priv->dev, "request_irq() failed!\n");
- 			goto irq_err;
- 		}
--		disable_irq(irq);
++	rtl8168g_disable_aldps(phydev);
+ 	rtl8125a_config_eee_phy(phydev);
+ }
  
- 		v->tbier_base = hw->reg + ENETC_BDR(TX, 0, ENETC_TBIER);
- 		v->rbier = hw->reg + ENETC_BDR(RX, i, ENETC_RBIER);
+@@ -1099,6 +1100,7 @@ static void rtl8125b_hw_phy_config(struct rtl8169_private *tp,
+ 	phy_modify_paged(phydev, 0xbf8, 0x12, 0xe000, 0xa000);
+ 
+ 	rtl8125_legacy_force_mode(phydev);
++	rtl8168g_disable_aldps(phydev);
+ 	rtl8125b_config_eee_phy(phydev);
+ }
+ 
 -- 
 2.43.0
 
