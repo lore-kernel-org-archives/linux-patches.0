@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048431D1E61;
-	Wed,  2 Oct 2024 14:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA741D04A8;
+	Wed,  2 Oct 2024 14:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879814; cv=none; b=grqKx+GTa7H6eKFZlkVq9cxYKYos0zH9/VGB8WPYkx3rLpvCEoyRGHzQt8iXbJ25BiUYZJYM3b4KDFhEKT1zvs4sqN0CIH+5SP6P3MfRfC04Itg1hrkBvyhPsxS8MN/1wKHJIbIktOD1uqclX9H28rQEI/EzfI9OvxKwWTE7T8c=
+	t=1727879817; cv=none; b=koKXs+3gnpm3uNyyw32pb7KuSheDJ28O4uIBcmM9exXuDipqxBv1lvRI+JsObEnMJbpcippk2r4Eyr4cQgsvFU0X3QSx3D8Ousnr/HO0Jfo4uvynZ+9jkrRujNDxY12BHf+PTdFyWZap5k7DRdLQlEfwjaRA2F5W/A0/LgkQPoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879814; c=relaxed/simple;
-	bh=2aCJiPsQlyGBbwUn0+Ml4zzZ8t0YJUTtrK8ReLtcffM=;
+	s=arc-20240116; t=1727879817; c=relaxed/simple;
+	bh=hyw2oYbtI5MSEJUahrZI86IwhsT5jrtNmj8zRI+EY1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3ALzLqxAXCtSjmD2w7Chw0tcYDxsG63EF9XWTGFsaqq5sEv8SbaSQ5hUM9OjAAjNVgncr0yGM+afV0jfMpdCItVbz7vIxXmbfblPRN6h39LeY23gO3OPrdkX8Nh0t+C99SqCdt6MGTY3WNIYN3OuHIOP9UI78Aflx/1E+0xGWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYC1dwRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxvhrfO7V3JHNFCqbJOJcfEY6eiTG8bZvacP8ArpAe5zK/5UTTCMI/wTmHxhYwkY+M8CQjHfYV8LWMmcxVKXV3dVJTGzN+sLRVoUwl3aWUxriGZoOw/FctD4kmNEbPiX+HQtk4Yzutw+ybu4Xb7Vq25sMec6aQwHp8CGAJ/N8GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTxY5Hxb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYC1dwRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81273C4CEC2;
-	Wed,  2 Oct 2024 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTxY5Hxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44815C4CEC2;
+	Wed,  2 Oct 2024 14:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879813;
-	bh=2aCJiPsQlyGBbwUn0+Ml4zzZ8t0YJUTtrK8ReLtcffM=;
+	s=korg; t=1727879816;
+	bh=hyw2oYbtI5MSEJUahrZI86IwhsT5jrtNmj8zRI+EY1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYC1dwRc7ICaEiQoxRo6FlAhyR+TLPV03N3eXgK25Ow8pjUFkF4OcsZpQ5jpXnUhK
-	 zsysFVLBif5agDsxy+BpcQYkBZ3jAcOgjVvAJ/9VEm6mTsQo6qmdX6zfngoc0MiwR2
-	 dpbIhddTYhkQutmwhdGu8q7984AmTrv2M8pby5q0=
+	b=yTxY5HxbMuvN8ZkK2WOI2GMKW4u9jtcRmTQNX3bR9a7qYATS3iKGkl9RAb8emGc/n
+	 UnJN8zD8EFGidtlHNB5um9x5ZtlZ6kXh5tSr+G3Exn4F6+zKY4pgVtgbVXWW26GDlf
+	 B7VImXWj92EsqB6Q6N/dvxMWlVSrI4STfCbdzCcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c2508114d912a54ee79@syzkaller.appspotmail.com,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/538] ext4: avoid OOB when system.data xattr changes underneath the filesystem
-Date: Wed,  2 Oct 2024 14:57:49 +0200
-Message-ID: <20241002125801.330308687@linuxfoundation.org>
+Subject: [PATCH 6.6 248/538] perf inject: Fix leader sampling inserting additional samples
+Date: Wed,  2 Oct 2024 14:58:07 +0200
+Message-ID: <20241002125802.042552480@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,143 +61,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c6b72f5d82b1017bad80f9ebf502832fc321d796 ]
+[ Upstream commit 79bcd34e0f3da39fda841406ccc957405e724852 ]
 
-When looking up for an entry in an inlined directory, if e_value_offs is
-changed underneath the filesystem by some change in the block device, it
-will lead to an out-of-bounds access that KASAN detects as an UAF.
+The processing of leader samples would turn an individual sample with
+a group of read values into multiple samples. 'perf inject' would pass
+through the additional samples increasing the output data file size:
 
-EXT4-fs (loop0): mounted filesystem 00000000-0000-0000-0000-000000000000 r/w without journal. Quota mode: none.
-loop0: detected capacity change from 2048 to 2047
-==================================================================
-BUG: KASAN: use-after-free in ext4_search_dir+0xf2/0x1c0 fs/ext4/namei.c:1500
-Read of size 1 at addr ffff88803e91130f by task syz-executor269/5103
+  $ perf record -g -e "{instructions,cycles}:S" -o perf.orig.data true
+  $ perf script -D -i perf.orig.data | sed -e 's/perf.orig.data/perf.data/g' > orig.txt
+  $ perf inject -i perf.orig.data -o perf.new.data
+  $ perf script -D -i perf.new.data | sed -e 's/perf.new.data/perf.data/g' > new.txt
+  $ diff -u orig.txt new.txt
+  --- orig.txt    2024-07-29 14:29:40.606576769 -0700
+  +++ new.txt     2024-07-29 14:30:04.142737434 -0700
+  ...
+  -0xc550@perf.data [0x30]: event: 3
+  +0xc550@perf.data [0xd0]: event: 9
+  +.
+  +. ... raw event: size 208 bytes
+  +.  0000:  09 00 00 00 01 00 d0 00 fc 72 01 86 ff ff ff ff  .........r......
+  +.  0010:  74 7d 2c 00 74 7d 2c 00 fb c3 79 f9 ba d5 05 00  t},.t},...y.....
+  +.  0020:  e6 cb 1a 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
+  +.  0030:  02 00 00 00 00 00 00 00 76 01 00 00 00 00 00 00  ........v.......
+  +.  0040:  e6 cb 1a 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  +.  0050:  62 18 00 00 00 00 00 00 f6 cb 1a 00 00 00 00 00  b...............
+  +.  0060:  00 00 00 00 00 00 00 00 0c 00 00 00 00 00 00 00  ................
+  +.  0070:  80 ff ff ff ff ff ff ff fc 72 01 86 ff ff ff ff  .........r......
+  +.  0080:  f3 0e 6e 85 ff ff ff ff 0c cb 7f 85 ff ff ff ff  ..n.............
+  +.  0090:  bc f2 87 85 ff ff ff ff 44 af 7f 85 ff ff ff ff  ........D.......
+  +.  00a0:  bd be 7f 85 ff ff ff ff 26 d0 7f 85 ff ff ff ff  ........&.......
+  +.  00b0:  6d a4 ff 85 ff ff ff ff ea 00 20 86 ff ff ff ff  m......... .....
+  +.  00c0:  00 fe ff ff ff ff ff ff 57 14 4f 43 fc 7e 00 00  ........W.OC.~..
+  +
+  +1642373909693435 0xc550 [0xd0]: PERF_RECORD_SAMPLE(IP, 0x1): 2915700/2915700: 0xffffffff860172fc period: 1 addr: 0
+  +... FP chain: nr:12
+  +.....  0: ffffffffffffff80
+  +.....  1: ffffffff860172fc
+  +.....  2: ffffffff856e0ef3
+  +.....  3: ffffffff857fcb0c
+  +.....  4: ffffffff8587f2bc
+  +.....  5: ffffffff857faf44
+  +.....  6: ffffffff857fbebd
+  +.....  7: ffffffff857fd026
+  +.....  8: ffffffff85ffa46d
+  +.....  9: ffffffff862000ea
+  +..... 10: fffffffffffffe00
+  +..... 11: 00007efc434f1457
+  +... sample_read:
+  +.... group nr 2
+  +..... id 00000000001acbe6, value 0000000000000176, lost 0
+  +..... id 00000000001acbf6, value 0000000000001862, lost 0
+  +
+  +0xc620@perf.data [0x30]: event: 3
+  ...
 
-CPU: 0 UID: 0 PID: 5103 Comm: syz-executor269 Not tainted 6.11.0-rc4-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:93 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- ext4_search_dir+0xf2/0x1c0 fs/ext4/namei.c:1500
- ext4_find_inline_entry+0x4be/0x5e0 fs/ext4/inline.c:1697
- __ext4_find_entry+0x2b4/0x1b30 fs/ext4/namei.c:1573
- ext4_lookup_entry fs/ext4/namei.c:1727 [inline]
- ext4_lookup+0x15f/0x750 fs/ext4/namei.c:1795
- lookup_one_qstr_excl+0x11f/0x260 fs/namei.c:1633
- filename_create+0x297/0x540 fs/namei.c:3980
- do_symlinkat+0xf9/0x3a0 fs/namei.c:4587
- __do_sys_symlinkat fs/namei.c:4610 [inline]
- __se_sys_symlinkat fs/namei.c:4607 [inline]
- __x64_sys_symlinkat+0x95/0xb0 fs/namei.c:4607
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f3e73ced469
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 21 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fff4d40c258 EFLAGS: 00000246 ORIG_RAX: 000000000000010a
-RAX: ffffffffffffffda RBX: 0032656c69662f2e RCX: 00007f3e73ced469
-RDX: 0000000020000200 RSI: 00000000ffffff9c RDI: 00000000200001c0
-RBP: 0000000000000000 R08: 00007fff4d40c290 R09: 00007fff4d40c290
-R10: 0023706f6f6c2f76 R11: 0000000000000246 R12: 00007fff4d40c27c
-R13: 0000000000000003 R14: 431bde82d7b634db R15: 00007fff4d40c2b0
- </TASK>
+This behavior is incorrect as in the case above 'perf inject' should
+have done nothing. Fix this behavior by disabling separating samples
+for a tool that requests it. Only request this for `perf inject` so as
+to not affect other perf tools. With the patch and the test above
+there are no differences between the orig.txt and new.txt.
 
-Calling ext4_xattr_ibody_find right after reading the inode with
-ext4_get_inode_loc will lead to a check of the validity of the xattrs,
-avoiding this problem.
-
-Reported-by: syzbot+0c2508114d912a54ee79@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c2508114d912a54ee79
-Fixes: e8e948e7802a ("ext4: let ext4_find_entry handle inline data")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Link: https://patch.msgid.link/20240821152324.3621860-5-cascardo@igalia.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: e4caec0d1af3d608 ("perf evsel: Add PERF_SAMPLE_READ sample related processing")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Jiri Olsa <jolsa@redhat.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240729220620.2957754-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ tools/perf/builtin-inject.c | 1 +
+ tools/perf/util/session.c   | 3 +++
+ tools/perf/util/tool.h      | 1 +
+ 3 files changed, 5 insertions(+)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index 7adc6634d5234..cb65052ee3dec 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -1665,25 +1665,36 @@ struct buffer_head *ext4_find_inline_entry(struct inode *dir,
- 					struct ext4_dir_entry_2 **res_dir,
- 					int *has_inline_data)
- {
-+	struct ext4_xattr_ibody_find is = {
-+		.s = { .not_found = -ENODATA, },
-+	};
-+	struct ext4_xattr_info i = {
-+		.name_index = EXT4_XATTR_INDEX_SYSTEM,
-+		.name = EXT4_XATTR_SYSTEM_DATA,
-+	};
- 	int ret;
--	struct ext4_iloc iloc;
- 	void *inline_start;
- 	int inline_size;
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index eb3ef5c24b662..8aba056654679 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -2200,6 +2200,7 @@ int cmd_inject(int argc, const char **argv)
+ 			.finished_init	= perf_event__repipe_op2_synth,
+ 			.compressed	= perf_event__repipe_op4_synth,
+ 			.auxtrace	= perf_event__repipe_auxtrace,
++			.dont_split_sample_group = true,
+ 		},
+ 		.input_name  = "-",
+ 		.samples = LIST_HEAD_INIT(inject.samples),
+diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
+index c6afba7ab1a51..277b2cbd51861 100644
+--- a/tools/perf/util/session.c
++++ b/tools/perf/util/session.c
+@@ -1500,6 +1500,9 @@ static int deliver_sample_group(struct evlist *evlist,
+ 	int ret = -EINVAL;
+ 	struct sample_read_value *v = sample->read.group.values;
  
--	ret = ext4_get_inode_loc(dir, &iloc);
-+	ret = ext4_get_inode_loc(dir, &is.iloc);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
- 	down_read(&EXT4_I(dir)->xattr_sem);
++	if (tool->dont_split_sample_group)
++		return deliver_sample_value(evlist, tool, event, sample, v, machine);
 +
-+	ret = ext4_xattr_ibody_find(dir, &i, &is);
-+	if (ret)
-+		goto out;
-+
- 	if (!ext4_has_inline_data(dir)) {
- 		*has_inline_data = 0;
- 		goto out;
- 	}
+ 	sample_read_group__for_each(v, sample->read.group.nr, read_format) {
+ 		ret = deliver_sample_value(evlist, tool, event, sample, v,
+ 					   machine);
+diff --git a/tools/perf/util/tool.h b/tools/perf/util/tool.h
+index c957fb849ac63..62bbc9cec151b 100644
+--- a/tools/perf/util/tool.h
++++ b/tools/perf/util/tool.h
+@@ -85,6 +85,7 @@ struct perf_tool {
+ 	bool		namespace_events;
+ 	bool		cgroup_events;
+ 	bool		no_warn;
++	bool		dont_split_sample_group;
+ 	enum show_feature_header show_feat_hdr;
+ };
  
--	inline_start = (void *)ext4_raw_inode(&iloc)->i_block +
-+	inline_start = (void *)ext4_raw_inode(&is.iloc)->i_block +
- 						EXT4_INLINE_DOTDOT_SIZE;
- 	inline_size = EXT4_MIN_INLINE_DATA_SIZE - EXT4_INLINE_DOTDOT_SIZE;
--	ret = ext4_search_dir(iloc.bh, inline_start, inline_size,
-+	ret = ext4_search_dir(is.iloc.bh, inline_start, inline_size,
- 			      dir, fname, 0, res_dir);
- 	if (ret == 1)
- 		goto out_find;
-@@ -1693,23 +1704,23 @@ struct buffer_head *ext4_find_inline_entry(struct inode *dir,
- 	if (ext4_get_inline_size(dir) == EXT4_MIN_INLINE_DATA_SIZE)
- 		goto out;
- 
--	inline_start = ext4_get_inline_xattr_pos(dir, &iloc);
-+	inline_start = ext4_get_inline_xattr_pos(dir, &is.iloc);
- 	inline_size = ext4_get_inline_size(dir) - EXT4_MIN_INLINE_DATA_SIZE;
- 
--	ret = ext4_search_dir(iloc.bh, inline_start, inline_size,
-+	ret = ext4_search_dir(is.iloc.bh, inline_start, inline_size,
- 			      dir, fname, 0, res_dir);
- 	if (ret == 1)
- 		goto out_find;
- 
- out:
--	brelse(iloc.bh);
-+	brelse(is.iloc.bh);
- 	if (ret < 0)
--		iloc.bh = ERR_PTR(ret);
-+		is.iloc.bh = ERR_PTR(ret);
- 	else
--		iloc.bh = NULL;
-+		is.iloc.bh = NULL;
- out_find:
- 	up_read(&EXT4_I(dir)->xattr_sem);
--	return iloc.bh;
-+	return is.iloc.bh;
- }
- 
- int ext4_delete_inline_entry(handle_t *handle,
 -- 
 2.43.0
 
