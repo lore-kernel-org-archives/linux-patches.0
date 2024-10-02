@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB311D0173;
-	Wed,  2 Oct 2024 13:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374FE29CE7;
+	Wed,  2 Oct 2024 13:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876092; cv=none; b=hGfO5PtC18Ie/+UbKtAfa8rviAARBee4zlV3qnKGF+cfeWHSDHx7iNsb3EtgnwKWL6bWAJzkXN35bmX5Dnys7TIO6pQFg4ylxwCB4jhDWOFJOUfxNziEWW+jeHhsblLz2Fi6FBnRY7ETBa5GUzprA6YwWjaNE7hEvS48ozgWXq8=
+	t=1727876095; cv=none; b=PeaMkmBq6ryCnYN1wY3ZkddvDHO2W9HGY12Pcmw6WZIhBjXoL8uNr55yXMxk3tUzj9M4hUgDv4fhfJK+/yX6LQIGNosE5bgpTc1LKxCcrXN688pKYZQcwhXVdbcQKdSTplCxQ2GYKGnaBOOcAHXS1BgOlwfm5M9+ZfIA8zzPd1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876092; c=relaxed/simple;
-	bh=L7AkP0FruNefo3JdjcwGYss9wLqLQ59O5jtj6vOCLAE=;
+	s=arc-20240116; t=1727876095; c=relaxed/simple;
+	bh=SBpBNAL6Y3mJFnwjytMJdu9DF8ccXsingF32jl7n1vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/YZG+wenf7gpKcFuaXdxS6HQ0T7YrPC4BRBgjq5sU/vxl1jIozl6iYz8SWj3iw9wNNWmSU4fC0l0K1xxK804HwylEDPXlQTFutl48OZ5kS4KaCtA04Th4J90KN7KveQhsN+lm02GjLwBZlQ0heA2w9IniLlGu10+E7z7uXNw/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+eYu43F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pVXPOls0as2PZsgcjqHHC0KTLEkhnIESGaOepq6JyElH7gjbjOpiaXfSUrfrXlgzKFmwxiaIuyDdxV70mSVOdbpAd4g2UuhvZ/aZr+ZaxQ+RW1Ca5iJ1S9dsG6Z0/zPX22xIlYqfTzvNiI8xybPFqfYTDVxwXC/IrMsdqQd66/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfE1VcoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+eYu43F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7818C4CECD;
-	Wed,  2 Oct 2024 13:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfE1VcoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AA2C4CEC5;
+	Wed,  2 Oct 2024 13:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876092;
-	bh=L7AkP0FruNefo3JdjcwGYss9wLqLQ59O5jtj6vOCLAE=;
+	s=korg; t=1727876095;
+	bh=SBpBNAL6Y3mJFnwjytMJdu9DF8ccXsingF32jl7n1vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+eYu43FAli0XopCy55STUqh8nDCzKroLoYBBl8o40VtwmUGErZelQ6cIJD0fhw0t
-	 k1lNruXa5NA9fkO1yxurYVSJU+JYalgEK3zNGQ312zkrKSwv/GtvR3OnSGa9KRg3Hi
-	 kJObgjBhRYDx8lEXuh555qVYnn/2PWW7dPRICemc=
+	b=YfE1VcoXvhqD7MSm+BXoq42GsKBQr+OlayqIZRe1WJPROWYm/wWqlQilLzLxdXjTt
+	 MWitDynILafPw2C4lfuoiWPfJ1zB3HOlK5Yy1sGM3XTzPbL4PksyqSkMyUFVfjqGYb
+	 2vxHhp4HGjNM77YrvRQVvK4uH16CeFIiM3VkXi20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 295/695] selftests/bpf: __arch_* macro to limit test cases to specific archs
-Date: Wed,  2 Oct 2024 14:54:53 +0200
-Message-ID: <20241002125834.216187071@linuxfoundation.org>
+Subject: [PATCH 6.11 296/695] selftests/bpf: fix to avoid __msg tag de-duplication by clang
+Date: Wed,  2 Oct 2024 14:54:54 +0200
+Message-ID: <20241002125834.255651308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,178 +53,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit ee7fe84468b1732fe65c5af3836437d54ac4c419 ]
+[ Upstream commit f00bb757ed630affc951691ddaff206039cbb7ee ]
 
-Add annotations __arch_x86_64, __arch_arm64, __arch_riscv64
-to specify on which architecture the test case should be tested.
-Several __arch_* annotations could be specified at once.
-When test case is not run on current arch it is marked as skipped.
+__msg, __regex and __xlated tags are based on
+__attribute__((btf_decl_tag("..."))) annotations.
 
-For example, the following would be tested only on arm64 and riscv64:
+Clang de-duplicates such annotations, e.g. the following
+two sequences of tags are identical in final BTF:
 
-  SEC("raw_tp")
-  __arch_arm64
-  __arch_riscv64
-  __xlated("1: *(u64 *)(r10 - 16) = r1")
-  __xlated("2: call")
-  __xlated("3: r1 = *(u64 *)(r10 - 16);")
-  __success
-  __naked void canary_arm64_riscv64(void)
-  {
-  	asm volatile (
-  	"r1 = 1;"
-  	"*(u64 *)(r10 - 16) = r1;"
-  	"call %[bpf_get_smp_processor_id];"
-  	"r1 = *(u64 *)(r10 - 16);"
-  	"exit;"
-  	:
-  	: __imm(bpf_get_smp_processor_id)
-  	: __clobber_all);
-  }
+    /* seq A */            /* seq B */
+    __tag("foo")           __tag("foo")
+    __tag("bar")           __tag("bar")
+    __tag("foo")
 
-On x86 it would be skipped:
+Fix this by adding a unique suffix for each tag using __COUNTER__
+pre-processor macro. E.g. here is a new definition for __msg:
 
-  #467/2   verifier_nocsr/canary_arm64_riscv64:SKIP
+    #define __msg(msg) \
+      __attribute__((btf_decl_tag("comment:test_expect_msg=" XSTR(__COUNTER__) "=" msg)))
 
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Using this definition the "seq A" from example above is translated to
+BTF as follows:
+
+    [..] DECL_TAG 'comment:test_expect_msg=0=foo' type_id=X component_idx=-1
+    [..] DECL_TAG 'comment:test_expect_msg=1=bar' type_id=X component_idx=-1
+    [..] DECL_TAG 'comment:test_expect_msg=2=foo' type_id=X component_idx=-1
+
+Surprisingly, this bug affects a single existing test:
+verifier_spill_fill/old_stack_misc_vs_cur_ctx_ptr,
+where sequence of identical messages was expected in the log.
+
+Fixes: 537c3f66eac1 ("selftests/bpf: add generic BPF program tester-loader")
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240722233844.1406874-10-eddyz87@gmail.com
+Link: https://lore.kernel.org/r/20240820102357.3372779-4-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Stable-dep-of: f00bb757ed63 ("selftests/bpf: fix to avoid __msg tag de-duplication by clang")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h |  8 ++++
- tools/testing/selftests/bpf/test_loader.c    | 43 ++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ tools/testing/selftests/bpf/progs/bpf_misc.h  | 15 +++---
+ .../selftests/bpf/progs/verifier_spill_fill.c |  8 ++--
+ tools/testing/selftests/bpf/test_loader.c     | 47 ++++++++++++++-----
+ 3 files changed, 48 insertions(+), 22 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index a70939c7bc26b..a225cd87897c4 100644
+index a225cd87897c4..4f10297437341 100644
 --- a/tools/testing/selftests/bpf/progs/bpf_misc.h
 +++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -63,6 +63,10 @@
-  * __auxiliary         Annotated program is not a separate test, but used as auxiliary
-  *                     for some other test cases and should always be loaded.
-  * __auxiliary_unpriv  Same, but load program in unprivileged mode.
-+ *
-+ * __arch_*          Specify on which architecture the test case should be tested.
-+ *                   Several __arch_* annotations could be specified at once.
-+ *                   When test case is not run on current arch it is marked as skipped.
-  */
- #define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" msg)))
- #define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" regex)))
-@@ -82,6 +86,10 @@
- #define __auxiliary		__attribute__((btf_decl_tag("comment:test_auxiliary")))
- #define __auxiliary_unpriv	__attribute__((btf_decl_tag("comment:test_auxiliary_unpriv")))
- #define __btf_path(path)	__attribute__((btf_decl_tag("comment:test_btf_path=" path)))
-+#define __arch(arch)		__attribute__((btf_decl_tag("comment:test_arch=" arch)))
-+#define __arch_x86_64		__arch("X86_64")
-+#define __arch_arm64		__arch("ARM64")
-+#define __arch_riscv64		__arch("RISCV64")
+@@ -2,6 +2,9 @@
+ #ifndef __BPF_MISC_H__
+ #define __BPF_MISC_H__
  
- /* Convenience macro for use with 'asm volatile' blocks */
- #define __naked __attribute__((naked))
++#define XSTR(s) STR(s)
++#define STR(s) #s
++
+ /* This set of attributes controls behavior of the
+  * test_loader.c:test_loader__run_subtests().
+  *
+@@ -68,15 +71,15 @@
+  *                   Several __arch_* annotations could be specified at once.
+  *                   When test case is not run on current arch it is marked as skipped.
+  */
+-#define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" msg)))
+-#define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" regex)))
+-#define __xlated(msg)		__attribute__((btf_decl_tag("comment:test_expect_xlated=" msg)))
++#define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" XSTR(__COUNTER__) "=" msg)))
++#define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" XSTR(__COUNTER__) "=" regex)))
++#define __xlated(msg)		__attribute__((btf_decl_tag("comment:test_expect_xlated=" XSTR(__COUNTER__) "=" msg)))
+ #define __failure		__attribute__((btf_decl_tag("comment:test_expect_failure")))
+ #define __success		__attribute__((btf_decl_tag("comment:test_expect_success")))
+ #define __description(desc)	__attribute__((btf_decl_tag("comment:test_description=" desc)))
+-#define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" msg)))
+-#define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" regex)))
+-#define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" msg)))
++#define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" XSTR(__COUNTER__) "=" msg)))
++#define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" XSTR(__COUNTER__) "=" regex)))
++#define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" XSTR(__COUNTER__) "=" msg)))
+ #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
+ #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
+ #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
+diff --git a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+index 85e48069c9e61..d4b99c3b4719b 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
++++ b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+@@ -1213,10 +1213,10 @@ __success  __log_level(2)
+  * - once for path entry - label 2;
+  * - once for path entry - label 1 - label 2.
+  */
+-__msg("r1 = *(u64 *)(r10 -8)")
+-__msg("exit")
+-__msg("r1 = *(u64 *)(r10 -8)")
+-__msg("exit")
++__msg("8: (79) r1 = *(u64 *)(r10 -8)")
++__msg("9: (95) exit")
++__msg("from 2 to 7")
++__msg("8: safe")
+ __msg("processed 11 insns")
+ __flag(BPF_F_TEST_STATE_FREQ)
+ __naked void old_stack_misc_vs_cur_ctx_ptr(void)
 diff --git a/tools/testing/selftests/bpf/test_loader.c b/tools/testing/selftests/bpf/test_loader.c
-index b44b6a2fc82ce..12b0c41e8d64c 100644
+index 12b0c41e8d64c..0f59bc33a666c 100644
 --- a/tools/testing/selftests/bpf/test_loader.c
 +++ b/tools/testing/selftests/bpf/test_loader.c
-@@ -34,6 +34,7 @@
- #define TEST_TAG_AUXILIARY "comment:test_auxiliary"
- #define TEST_TAG_AUXILIARY_UNPRIV "comment:test_auxiliary_unpriv"
- #define TEST_BTF_PATH "comment:test_btf_path="
-+#define TEST_TAG_ARCH "comment:test_arch="
- 
- /* Warning: duplicated in bpf_misc.h */
- #define POINTER_VALUE	0xcafe4all
-@@ -80,6 +81,7 @@ struct test_spec {
- 	int log_level;
- 	int prog_flags;
- 	int mode_mask;
-+	int arch_mask;
- 	bool auxiliary;
- 	bool valid;
- };
-@@ -213,6 +215,12 @@ static void update_flags(int *flags, int flag, bool clear)
+@@ -215,6 +215,35 @@ static void update_flags(int *flags, int flag, bool clear)
  		*flags |= flag;
  }
  
-+enum arch {
-+	ARCH_X86_64	= 0x1,
-+	ARCH_ARM64	= 0x2,
-+	ARCH_RISCV64	= 0x4,
-+};
-+
- /* Uses btf_decl_tag attributes to describe the expected test
-  * behavior, see bpf_misc.h for detailed description of each attribute
-  * and attribute combinations.
-@@ -226,6 +234,7 @@ static int parse_test_spec(struct test_loader *tester,
- 	bool has_unpriv_result = false;
- 	bool has_unpriv_retval = false;
- 	int func_id, i, err = 0;
-+	u32 arch_mask = 0;
- 	struct btf *btf;
- 
- 	memset(spec, 0, sizeof(*spec));
-@@ -364,11 +373,26 @@ static int parse_test_spec(struct test_loader *tester,
- 					goto cleanup;
- 				update_flags(&spec->prog_flags, flags, clear);
- 			}
-+		} else if (str_has_pfx(s, TEST_TAG_ARCH)) {
-+			val = s + sizeof(TEST_TAG_ARCH) - 1;
-+			if (strcmp(val, "X86_64") == 0) {
-+				arch_mask |= ARCH_X86_64;
-+			} else if (strcmp(val, "ARM64") == 0) {
-+				arch_mask |= ARCH_ARM64;
-+			} else if (strcmp(val, "RISCV64") == 0) {
-+				arch_mask |= ARCH_RISCV64;
-+			} else {
-+				PRINT_FAIL("bad arch spec: '%s'", val);
-+				err = -EINVAL;
-+				goto cleanup;
-+			}
- 		} else if (str_has_pfx(s, TEST_BTF_PATH)) {
- 			spec->btf_custom_path = s + sizeof(TEST_BTF_PATH) - 1;
- 		}
- 	}
- 
-+	spec->arch_mask = arch_mask;
-+
- 	if (spec->mode_mask == 0)
- 		spec->mode_mask = PRIV;
- 
-@@ -677,6 +701,20 @@ static int get_xlated_program_text(int prog_fd, char *text, size_t text_sz)
- 	return err;
- }
- 
-+static bool run_on_current_arch(int arch_mask)
++/* Matches a string of form '<pfx>[^=]=.*' and returns it's suffix.
++ * Used to parse btf_decl_tag values.
++ * Such values require unique prefix because compiler does not add
++ * same __attribute__((btf_decl_tag(...))) twice.
++ * Test suite uses two-component tags for such cases:
++ *
++ *   <pfx> __COUNTER__ '='
++ *
++ * For example, two consecutive __msg tags '__msg("foo") __msg("foo")'
++ * would be encoded as:
++ *
++ *   [18] DECL_TAG 'comment:test_expect_msg=0=foo' type_id=15 component_idx=-1
++ *   [19] DECL_TAG 'comment:test_expect_msg=1=foo' type_id=15 component_idx=-1
++ *
++ * And the purpose of this function is to extract 'foo' from the above.
++ */
++static const char *skip_dynamic_pfx(const char *s, const char *pfx)
 +{
-+	if (arch_mask == 0)
-+		return true;
-+#if defined(__x86_64__)
-+	return arch_mask & ARCH_X86_64;
-+#elif defined(__aarch64__)
-+	return arch_mask & ARCH_ARM64;
-+#elif defined(__riscv) && __riscv_xlen == 64
-+	return arch_mask & ARCH_RISCV64;
-+#endif
-+	return false;
++	const char *msg;
++
++	if (strncmp(s, pfx, strlen(pfx)) != 0)
++		return NULL;
++	msg = s + strlen(pfx);
++	msg = strchr(msg, '=');
++	if (!msg)
++		return NULL;
++	return msg + 1;
 +}
 +
- /* this function is forced noinline and has short generic name to look better
-  * in test_progs output (in case of a failure)
-  */
-@@ -701,6 +739,11 @@ void run_subtest(struct test_loader *tester,
- 	if (!test__start_subtest(subspec->name))
- 		return;
- 
-+	if (!run_on_current_arch(spec->arch_mask)) {
-+		test__skip();
-+		return;
-+	}
-+
- 	if (unpriv) {
- 		if (!can_execute_unpriv(tester, spec)) {
- 			test__skip();
+ enum arch {
+ 	ARCH_X86_64	= 0x1,
+ 	ARCH_ARM64	= 0x2,
+@@ -290,38 +319,32 @@ static int parse_test_spec(struct test_loader *tester,
+ 		} else if (strcmp(s, TEST_TAG_AUXILIARY_UNPRIV) == 0) {
+ 			spec->auxiliary = true;
+ 			spec->mode_mask |= UNPRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_MSG_PFX))) {
+ 			err = push_msg(msg, NULL, &spec->priv.expect_msgs);
+ 			if (err)
+ 				goto cleanup;
+ 			spec->mode_mask |= PRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX_UNPRIV)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX_UNPRIV) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_MSG_PFX_UNPRIV))) {
+ 			err = push_msg(msg, NULL, &spec->unpriv.expect_msgs);
+ 			if (err)
+ 				goto cleanup;
+ 			spec->mode_mask |= UNPRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_REGEX_PFX))) {
+ 			err = push_msg(NULL, msg, &spec->priv.expect_msgs);
+ 			if (err)
+ 				goto cleanup;
+ 			spec->mode_mask |= PRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX_UNPRIV)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX_UNPRIV) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_REGEX_PFX_UNPRIV))) {
+ 			err = push_msg(NULL, msg, &spec->unpriv.expect_msgs);
+ 			if (err)
+ 				goto cleanup;
+ 			spec->mode_mask |= UNPRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_XLATED_PFX))) {
+ 			err = push_msg(msg, NULL, &spec->priv.expect_xlated);
+ 			if (err)
+ 				goto cleanup;
+ 			spec->mode_mask |= PRIV;
+-		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX_UNPRIV)) {
+-			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX_UNPRIV) - 1;
++		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_XLATED_PFX_UNPRIV))) {
+ 			err = push_msg(msg, NULL, &spec->unpriv.expect_xlated);
+ 			if (err)
+ 				goto cleanup;
 -- 
 2.43.0
 
