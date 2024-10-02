@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F76A1D1E8C;
-	Wed,  2 Oct 2024 14:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D53B1974F4;
+	Wed,  2 Oct 2024 14:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879130; cv=none; b=cK67+/dF6R3EcuO/1bWk3qg06YeYCeKOwhUUvs116el0rpCDm9HGBFMkxwkSGQWf0Z5ty1SrOEW8F8bGAFl7uYycsFvohcZHtjdqv4OEPRgfLJH1VtxzEoK02XnRVMbzVgvf5OkEbIh0/CKYmtlc4IaMiwFitTiivVIvydF/HJg=
+	t=1727879133; cv=none; b=npuWvdUV6kKtdorn7Hub2Adz1bFxLejG30PhV/0v50MO0PFdeOifpfgmeIOkZa73QW8MI8HlGy46WP3upb220vzLrz/mge8uo0KSk6eaaVDk9uTw1vgMY0ouVCPs8RiFZ5JMKDmggM3ok2HJX2kTrz7hzfOtbDAR34Jvh24Vkn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879130; c=relaxed/simple;
-	bh=29CoOAdFik36EYhaBTwqby7a0NQ7n5uFiRSdJHuPMBQ=;
+	s=arc-20240116; t=1727879133; c=relaxed/simple;
+	bh=vpQQRxMt8Np9KTFHa/krFXTNUorKOF95z0pBOZPO8HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+XwDaLxbiZ6fTMeLqoN4kARU15mXudPEq4LXkqNdylNcYrSkb+Z63SA0yzaEo3qeb0ksCNoHy6j6I7q4W03TB4iqs1UiVikP34uSqcG15M3gzyGhX2c9kzBLKV6SO+n4wq+lcC8ZQtW28UFfd8vNHoGXBTTrQXXPogVYf++mMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pzt1qjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JRgZybOJVILXn8TsvLa+geqNBWIkTDHI43fuyiVysRwlSORLMmUzVNF4/hcT1O3e4aSZdb0FZ4WKPpAmrSK5KI9Ed9Lg66lq8/ZGn6ZFk9lj4hYBjq5s5m/j+JRfzJq0jokavFO8rg7xFLoHiAUKCkMzLD2uMgqdHcdgZp0kTME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF4Y/Qkx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pzt1qjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21838C4CEC2;
-	Wed,  2 Oct 2024 14:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF4Y/Qkx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06504C4CEC2;
+	Wed,  2 Oct 2024 14:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879130;
-	bh=29CoOAdFik36EYhaBTwqby7a0NQ7n5uFiRSdJHuPMBQ=;
+	s=korg; t=1727879133;
+	bh=vpQQRxMt8Np9KTFHa/krFXTNUorKOF95z0pBOZPO8HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pzt1qjEMC55b44nTPXMSb/3k8Rv07M0m6RRRd4sedcXWvg1RfzqJkc3dha4Zh2C5
-	 0jntJ6QzNLJC+c37wecSQTYrkUcxlR5RQUk1X2X/ShfKOnBCvVD9fvClx5A42xOexs
-	 jpGoUX+kNha7xp6mdnex5dPpT6cSTtUQ3xEu3kuE=
+	b=XF4Y/Qkx9GY+AoeWQD6GKSUquCOcyisysJ2KuKv6521lr0Zmhh4vvaFNMMuoPtuns
+	 QIstvSb1NkmRvAgpLmDaZJpDUPbV1b5QrSzCQkZbS9KxiCbU6vr+pjm9zRl0g9zjoL
+	 ogSTvKAkO9fzdY9qZX1z9mCfKKTJKwxziQD9eJNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Kandybka <d.kandybka@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/538] wifi: rtw88: remove CPT execution branch never used
-Date: Wed,  2 Oct 2024 14:54:13 +0200
-Message-ID: <20241002125752.561967517@linuxfoundation.org>
+Subject: [PATCH 6.6 015/538] RISC-V: KVM: Fix sbiret init before forwarding to userspace
+Date: Wed,  2 Oct 2024 14:54:14 +0200
+Message-ID: <20241002125752.604534393@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,93 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Kandybka <d.kandybka@gmail.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-[ Upstream commit 77c977327dfaa9ae2e154964cdb89ceb5c7b7cf1 ]
+[ Upstream commit 6b7b282e6baea06ba65b55ae7d38326ceb79cebf ]
 
-In 'rtw_coex_action_bt_a2dp_pan', 'wl_cpt_test' and 'bt_cpt_test' are
-hardcoded to false, so corresponding 'table_case' and 'tdma_case'
-assignments are never met.
-Also 'rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[1])' is never
-executed. Assuming that CPT was never fully implemented, remove
-lookalike leftovers. Compile tested only.
+When forwarding SBI calls to userspace ensure sbiret.error is
+initialized to SBI_ERR_NOT_SUPPORTED first, in case userspace
+neglects to set it to anything. If userspace neglects it then we
+can't be sure it did anything else either, so we just report it
+didn't do or try anything. Just init sbiret.value to zero, which is
+the preferred value to return when nothing special is specified.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+KVM was already initializing both sbiret.error and sbiret.value, but
+the values used appear to come from a copy+paste of the __sbi_ecall()
+implementation, i.e. a0 and a1, which don't apply prior to the call
+being executed, nor at all when forwarding to userspace.
 
-Fixes: 76f631cb401f ("rtw88: coex: update the mechanism for A2DP + PAN")
-
-Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240809085310.10512-1-d.kandybka@gmail.com
+Fixes: dea8ee31a039 ("RISC-V: KVM: Add SBI v0.1 support")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240807154943.150540-2-ajones@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/coex.c | 38 ++++++-----------------
- 1 file changed, 10 insertions(+), 28 deletions(-)
+ arch/riscv/kvm/vcpu_sbi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/coex.c b/drivers/net/wireless/realtek/rtw88/coex.c
-index 86467d2f8888c..d35f26919806a 100644
---- a/drivers/net/wireless/realtek/rtw88/coex.c
-+++ b/drivers/net/wireless/realtek/rtw88/coex.c
-@@ -2194,7 +2194,6 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
- 	struct rtw_coex_stat *coex_stat = &coex->stat;
- 	struct rtw_efuse *efuse = &rtwdev->efuse;
- 	u8 table_case, tdma_case;
--	bool wl_cpt_test = false, bt_cpt_test = false;
- 
- 	rtw_dbg(rtwdev, RTW_DBG_COEX, "[BTCoex], %s()\n", __func__);
- 
-@@ -2202,29 +2201,16 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
- 	rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
- 	if (efuse->share_ant) {
- 		/* Shared-Ant */
--		if (wl_cpt_test) {
--			if (coex_stat->wl_gl_busy) {
--				table_case = 20;
--				tdma_case = 17;
--			} else {
--				table_case = 10;
--				tdma_case = 15;
--			}
--		} else if (bt_cpt_test) {
--			table_case = 26;
--			tdma_case = 26;
--		} else {
--			if (coex_stat->wl_gl_busy &&
--			    coex_stat->wl_noisy_level == 0)
--				table_case = 14;
--			else
--				table_case = 10;
-+		if (coex_stat->wl_gl_busy &&
-+		    coex_stat->wl_noisy_level == 0)
-+			table_case = 14;
-+		else
-+			table_case = 10;
- 
--			if (coex_stat->wl_gl_busy)
--				tdma_case = 15;
--			else
--				tdma_case = 20;
--		}
-+		if (coex_stat->wl_gl_busy)
-+			tdma_case = 15;
-+		else
-+			tdma_case = 20;
- 	} else {
- 		/* Non-Shared-Ant */
- 		table_case = 112;
-@@ -2235,11 +2221,7 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
- 			tdma_case = 120;
- 	}
- 
--	if (wl_cpt_test)
--		rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[1]);
--	else
--		rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
--
-+	rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
- 	rtw_coex_table(rtwdev, false, table_case);
- 	rtw_coex_tdma(rtwdev, false, tdma_case);
+diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
+index 9cd97091c7233..7a7fe40d0930b 100644
+--- a/arch/riscv/kvm/vcpu_sbi.c
++++ b/arch/riscv/kvm/vcpu_sbi.c
+@@ -91,8 +91,8 @@ void kvm_riscv_vcpu_sbi_forward(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 	run->riscv_sbi.args[3] = cp->a3;
+ 	run->riscv_sbi.args[4] = cp->a4;
+ 	run->riscv_sbi.args[5] = cp->a5;
+-	run->riscv_sbi.ret[0] = cp->a0;
+-	run->riscv_sbi.ret[1] = cp->a1;
++	run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
++	run->riscv_sbi.ret[1] = 0;
  }
+ 
+ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
 -- 
 2.43.0
 
