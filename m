@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B34C1D0E06;
-	Wed,  2 Oct 2024 14:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C231D0BB4;
+	Wed,  2 Oct 2024 14:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879361; cv=none; b=d8JnxrPtTNXnJKQjxU3de62DgK7MM6cbPONG0qtMKZcsAUV8jky0IhXy+UCGz3TV/Sm1KZ5g5KcoYUdqyGQPloZxMlSYuaT0MYIDksB+pXHt8YMSOj5YJAIMp5QrpeAdK/2IkpI1wD+TLIT2cPT3PawxNOsOVwUFfHi91XQh67s=
+	t=1727879364; cv=none; b=Bg2djH0tvd2I6LzuAfejMVDHCbV6lFQwHw7qAVqXdqvbIq/DRnI5l4gFVrVW8MGm2V0hRdBoIUlKdQDZLS2XG8o4IvhaKnaadm7IjU+/PrKrmSOl7NXjn/ydFivNbwSIowmhAE7nketfGF/PAAVzMOoF990aJLQgFHsZ2Xoa2aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879361; c=relaxed/simple;
-	bh=mRm5Wv+CahBG9SYqRVt8KX4FFwo2b8LDQWtYe+yi+NU=;
+	s=arc-20240116; t=1727879364; c=relaxed/simple;
+	bh=BHjS//TiHLU+teKB8bAQw9OUZu3gnK0yjX56Pnw0VYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBzKksiCKyShWUgAgL+2tB8nb//XJrJ4+9z6R02h5mQ/p8Y7dnhI02CJdX57MtG+qpBD68i6Fpl+JHIB5yu8jTU8tXrBBMSz10em8ukAqSJoLsqQ5SidvJA8aroSxSPGoN0z36otQzG5vJPv4uX6iQ8VTa6ACVYK0eWqKIABPmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPjE2Pv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3m04iPLUsMaZfD8PAzOt4PQ3nxPJRiDhaMGL/ypvLbPEYhhSJJRtlabZUpRSKiQZPuabOcd7i2+Lbdq8xuAJQwwftGvSueRuBSRb61S1vQXdtQ2kAvWlai2JdqwHUJQgOtB+ajn8tiJuzEFEL7mKVJV42XBnwOj2efXK/gm/0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vd4Znv+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPjE2Pv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FC5C4CEC5;
-	Wed,  2 Oct 2024 14:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vd4Znv+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BAEC4CEC2;
+	Wed,  2 Oct 2024 14:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879361;
-	bh=mRm5Wv+CahBG9SYqRVt8KX4FFwo2b8LDQWtYe+yi+NU=;
+	s=korg; t=1727879364;
+	bh=BHjS//TiHLU+teKB8bAQw9OUZu3gnK0yjX56Pnw0VYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPjE2Pv6d2YaACCJRtwTJ0Or1r0FkPBgTXcdrTLoDSIopN4FQNTRkNrHlbpC+4skq
-	 CVksAbdwq1dpj/fg3HkXTzMVpZSWZ3AGP0v4rCmoU9ZFMIufMHzrP7J21+H1Cnakki
-	 qDVxjat8OK0OkPffSUnSGjnJDoEpCTLwE5rsu1pk=
+	b=vd4Znv+ScB3z2ayyiJbS31Hl5DTyrCumuJNsqKLk6HLoJ9O2CoMI0nK0jiw877GEg
+	 0SCJOtSHm3HetyJznR42kjbFdKZZU+cdu7Ff9mYAe/aI4rNj3E5gB2OjM8Yc0shlOT
+	 yr3RVJguUgC7uPpw1omr+HntWLe0qhQknUwrjgJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/538] arm64: dts: mediatek: mt8186: Fix supported-hw mask for GPU OPPs
-Date: Wed,  2 Oct 2024 14:55:30 +0200
-Message-ID: <20241002125755.819629182@linuxfoundation.org>
+Subject: [PATCH 6.6 062/538] Bluetooth: hci_core: Fix sending MGMT_EV_CONNECT_FAILED
+Date: Wed,  2 Oct 2024 14:55:01 +0200
+Message-ID: <20241002125754.657823260@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,82 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2317d018b835842df0501d8f9e9efa843068a101 ]
+[ Upstream commit d47da6bd4cfa982fe903f33423b9e2ec541e9496 ]
 
-The speedbin eFuse reads a value 'x' from 0 to 7 and, in order to
-make that compatible with opp-supported-hw, it gets post processed
-as BIT(x).
+If HCI_CONN_MGMT_CONNECTED has been set then the event shall be
+HCI_CONN_MGMT_DISCONNECTED.
 
-Change all of the 0x30 supported-hw to 0x20 to avoid getting
-duplicate OPPs for speedbin 4, and also change all of the 0x8 to
-0xcf because speedbins different from 4 and 5 do support 900MHz,
-950MHz, 1000MHz with the higher voltage of 850mV, 900mV, 950mV
-respectively.
-
-Fixes: f38ea593ad0d ("arm64: dts: mediatek: mt8186: Wire up GPU voltage/frequency scaling")
-Link: https://lore.kernel.org/r/20240725072243.173104-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b644ba336997 ("Bluetooth: Update device_connected and device_found events to latest API")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/net/bluetooth/hci_core.h |  4 ++--
+ net/bluetooth/hci_conn.c         |  6 ++----
+ net/bluetooth/mgmt.c             | 13 +++++++++----
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186.dtsi b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-index 84ec6c1aa12b9..2c184f9e0fc39 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-@@ -731,7 +731,7 @@ opp-850000000 {
- 		opp-900000000-3 {
- 			opp-hz = /bits/ 64 <900000000>;
- 			opp-microvolt = <850000>;
--			opp-supported-hw = <0x8>;
-+			opp-supported-hw = <0xcf>;
- 		};
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 29f1549ee1114..0f50c0cefcb7d 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2224,8 +2224,8 @@ void mgmt_device_disconnected(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			      bool mgmt_connected);
+ void mgmt_disconnect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			    u8 link_type, u8 addr_type, u8 status);
+-void mgmt_connect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+-			 u8 addr_type, u8 status);
++void mgmt_connect_failed(struct hci_dev *hdev, struct hci_conn *conn,
++			 u8 status);
+ void mgmt_pin_code_request(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 secure);
+ void mgmt_pin_code_reply_complete(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 				  u8 status);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index d8a01eb016ad0..ed95a87ef9ab6 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -107,8 +107,7 @@ void hci_connect_le_scan_cleanup(struct hci_conn *conn, u8 status)
+ 	 * where a timeout + cancel does indicate an actual failure.
+ 	 */
+ 	if (status && status != HCI_ERROR_UNKNOWN_CONN_ID)
+-		mgmt_connect_failed(hdev, &conn->dst, conn->type,
+-				    conn->dst_type, status);
++		mgmt_connect_failed(hdev, conn, status);
  
- 		opp-900000000-4 {
-@@ -743,13 +743,13 @@ opp-900000000-4 {
- 		opp-900000000-5 {
- 			opp-hz = /bits/ 64 <900000000>;
- 			opp-microvolt = <825000>;
--			opp-supported-hw = <0x30>;
-+			opp-supported-hw = <0x20>;
- 		};
+ 	/* The connection attempt was doing scan for new RPA, and is
+ 	 * in scan phase. If params are not associated with any other
+@@ -1233,8 +1232,7 @@ void hci_conn_failed(struct hci_conn *conn, u8 status)
+ 		hci_le_conn_failed(conn, status);
+ 		break;
+ 	case ACL_LINK:
+-		mgmt_connect_failed(hdev, &conn->dst, conn->type,
+-				    conn->dst_type, status);
++		mgmt_connect_failed(hdev, conn, status);
+ 		break;
+ 	}
  
- 		opp-950000000-3 {
- 			opp-hz = /bits/ 64 <950000000>;
- 			opp-microvolt = <900000>;
--			opp-supported-hw = <0x8>;
-+			opp-supported-hw = <0xcf>;
- 		};
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 4ae9029b5785f..149aff29e5646 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9724,13 +9724,18 @@ void mgmt_disconnect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 	mgmt_pending_remove(cmd);
+ }
  
- 		opp-950000000-4 {
-@@ -761,13 +761,13 @@ opp-950000000-4 {
- 		opp-950000000-5 {
- 			opp-hz = /bits/ 64 <950000000>;
- 			opp-microvolt = <850000>;
--			opp-supported-hw = <0x30>;
-+			opp-supported-hw = <0x20>;
- 		};
+-void mgmt_connect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+-			 u8 addr_type, u8 status)
++void mgmt_connect_failed(struct hci_dev *hdev, struct hci_conn *conn, u8 status)
+ {
+ 	struct mgmt_ev_connect_failed ev;
  
- 		opp-1000000000-3 {
- 			opp-hz = /bits/ 64 <1000000000>;
- 			opp-microvolt = <950000>;
--			opp-supported-hw = <0x8>;
-+			opp-supported-hw = <0xcf>;
- 		};
+-	bacpy(&ev.addr.bdaddr, bdaddr);
+-	ev.addr.type = link_to_bdaddr(link_type, addr_type);
++	if (test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++		mgmt_device_disconnected(hdev, &conn->dst, conn->type,
++					 conn->dst_type, status, true);
++		return;
++	}
++
++	bacpy(&ev.addr.bdaddr, &conn->dst);
++	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
+ 	ev.status = mgmt_status(status);
  
- 		opp-1000000000-4 {
-@@ -779,7 +779,7 @@ opp-1000000000-4 {
- 		opp-1000000000-5 {
- 			opp-hz = /bits/ 64 <1000000000>;
- 			opp-microvolt = <875000>;
--			opp-supported-hw = <0x30>;
-+			opp-supported-hw = <0x20>;
- 		};
- 	};
- 
+ 	mgmt_event(MGMT_EV_CONNECT_FAILED, hdev, &ev, sizeof(ev), NULL);
 -- 
 2.43.0
 
