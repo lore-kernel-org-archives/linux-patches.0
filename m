@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35B029CE7;
-	Wed,  2 Oct 2024 13:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B061F29CE7;
+	Wed,  2 Oct 2024 13:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877147; cv=none; b=g4NzpSXadVhaoiRNzNlgdTlu/UUnBOc0m/9sPUruKDc7o7YcG8Pu+BUXMhjwDr6hUNNnx5GCLmhtnJjjFpmAT0c6xsGsnbMQXdiBmTB49tVSDE0rZnQLr6yqFcZUmcTgKRUX4IfsLe2JWZYKIuiXE4RpRJctD8xYdw7Ps0HYbzA=
+	t=1727877150; cv=none; b=WdFLSuEw0QW4GItxZ/yurDv5raR91uXpVP8CD/ycVeLenYRqyoV7F9NlfGgWGj8Vj4x0xbzrXH2ojAsah4bg1sqXYjz4JkmuotKhC4b6XIknww05Qb2LJ1dtIS8I4vpU5PkGxmHv99n/uddLIeDVobHORUtmo4TamI03SZvFO44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877147; c=relaxed/simple;
-	bh=0H4ocsIrc7LzutlHbzR3HrCIJfo5a8ym4DjPHzFQYHQ=;
+	s=arc-20240116; t=1727877150; c=relaxed/simple;
+	bh=eo2sAFevSS+wcdnonE6SKTseJ+wDnrX5/vpM6xh5tX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWLlevbixPLsPxO6IuDPdG4THZecW06KPVjE/F4Q09oOK/K3Dvnr7YNAufN1sgZC8ur58d980bHfP+tPd0SXWgBnYYPQv/LFX3ygpijIBANRlqrZeREJL0Yk4rWlrnvZu3elzsBoqGEwIyAUyYAmdWgTyTlZNJ5d6lXWquhsliE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAHHHWfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FozBsvJMtzu6X7VY5pnzYE3WVdz3i2R1fHKzBwk06ZOl0v4WLvbOyq0/gbzMS0gULFFj1MLV/w2xHejt+1VMyTnYDeU4bBAmoLR87FCYdKl/cYCNC/h5t63mJiqIqJTEFO7J9plFq7O4r3BmgOOlmB85emEwUyKQMgVw8bKCu/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8sEnM8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAHHHWfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A90C4CEC2;
-	Wed,  2 Oct 2024 13:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8sEnM8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA03C4CEC2;
+	Wed,  2 Oct 2024 13:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877147;
-	bh=0H4ocsIrc7LzutlHbzR3HrCIJfo5a8ym4DjPHzFQYHQ=;
+	s=korg; t=1727877150;
+	bh=eo2sAFevSS+wcdnonE6SKTseJ+wDnrX5/vpM6xh5tX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CAHHHWfmCh4JfXP4r2CYasPQs3SfgZokyGnqi4IodmA0QXf8Ab6ckzm1tdVcNZ7qG
-	 ZnXMv9uSxuK4z+t3wnYJ2wTYz+bgmzlt42cwMF52jwmy0eMtNpEKBc7kcYMXvGAGFM
-	 QCBeYdbwAgZLuCKSvjTmX9YkbOf1b/JN9WOpiCa8=
+	b=f8sEnM8j13CYHsu1RO4lthgSXSY7DsIm2igwp8xHx0lpOe67rTNt+/niZbm6hSrhO
+	 VQchxqfG1QP2DdlgUvvEWRHPNNGsOjzdGmytQuEhkhwQ5gOepg4hpq9scfRtAX8hk/
+	 sZ/xpYw2hiMVsMYtL4f9Mxj6bSj9hMcgIlwdNYkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.11 680/695] s390/ftrace: Avoid calling unwinder in ftrace_return_address()
-Date: Wed,  2 Oct 2024 15:01:18 +0200
-Message-ID: <20241002125849.661921347@linuxfoundation.org>
+	Jeff Xu <jeffxu@chromium.org>,
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 681/695] selftest mm/mseal: fix test_seal_mremap_move_dontunmap_anyaddr
+Date: Wed,  2 Oct 2024 15:01:19 +0200
+Message-ID: <20241002125849.702168658@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,103 +57,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Jeff Xu <jeffxu@chromium.org>
 
-commit a84dd0d8ae24bdc6da341187fc4c1a0adfce2ccc upstream.
+commit 072cd213b75eb01fcf40eff898f8d5c008ce1457 upstream.
 
-ftrace_return_address() is called extremely often from
-performance-critical code paths when debugging features like
-CONFIG_TRACE_IRQFLAGS are enabled. For example, with debug_defconfig,
-ftrace selftests on my LPAR currently execute ftrace_return_address()
-as follows:
+the syscall remap accepts following:
 
-ftrace_return_address(0) - 0 times (common code uses __builtin_return_address(0) instead)
-ftrace_return_address(1) - 2,986,805,401 times (with this patch applied)
-ftrace_return_address(2) - 140 times
-ftrace_return_address(>2) - 0 times
+mremap(src, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, dst)
 
-The use of __builtin_return_address(n) was replaced by return_address()
-with an unwinder call by commit cae74ba8c295 ("s390/ftrace:
-Use unwinder instead of __builtin_return_address()") because
-__builtin_return_address(n) simply walks the stack backchain and doesn't
-check for reaching the stack top. For shallow stacks with fewer than
-"n" frames, this results in reads at low addresses and random
-memory accesses.
+when the src is sealed, the call will fail with error code:
+EPERM
 
-While calling the fully functional unwinder "works", it is very slow
-for this purpose. Moreover, potentially following stack switches and
-walking past IRQ context is simply wrong thing to do for
-ftrace_return_address().
+Previously, the test uses hard-coded 0xdeaddead as dst, and it
+will fail on the system with newer glibc installed.
 
-Reimplement return_address() to essentially be __builtin_return_address(n)
-with checks for reaching the stack top. Since the ftrace_return_address(n)
-argument is always a constant, keep the implementation in the header,
-allowing both GCC and Clang to unroll the loop and optimize it to the
-bare minimum.
+This patch removes test's dependency on glibc for mremap(), also
+fix the test and remove the hardcoded address.
 
-Fixes: cae74ba8c295 ("s390/ftrace: Use unwinder instead of __builtin_return_address()")
-Cc: stable@vger.kernel.org
-Reported-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20240807212320.2831848-1-jeffxu@chromium.org
+Fixes: 4926c7a52de7 ("selftest mm/mseal memory sealing")
+Signed-off-by: Jeff Xu <jeffxu@chromium.org>
+Reported-by: Pedro Falcato <pedro.falcato@gmail.com>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/ftrace.h |   17 ++++++++++++++++-
- arch/s390/kernel/stacktrace.c  |   19 -------------------
- 2 files changed, 16 insertions(+), 20 deletions(-)
+ tools/testing/selftests/mm/mseal_test.c |   57 ++++++++++++++++++++------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
---- a/arch/s390/include/asm/ftrace.h
-+++ b/arch/s390/include/asm/ftrace.h
-@@ -6,8 +6,23 @@
- #define MCOUNT_INSN_SIZE	6
- 
- #ifndef __ASSEMBLY__
-+#include <asm/stacktrace.h>
- 
--unsigned long return_address(unsigned int n);
-+static __always_inline unsigned long return_address(unsigned int n)
-+{
-+	struct stack_frame *sf;
-+
-+	if (!n)
-+		return (unsigned long)__builtin_return_address(0);
-+
-+	sf = (struct stack_frame *)current_frame_address();
-+	do {
-+		sf = (struct stack_frame *)sf->back_chain;
-+		if (!sf)
-+			return 0;
-+	} while (--n);
-+	return sf->gprs[8];
-+}
- #define ftrace_return_address(n) return_address(n)
- 
- void ftrace_caller(void);
---- a/arch/s390/kernel/stacktrace.c
-+++ b/arch/s390/kernel/stacktrace.c
-@@ -162,22 +162,3 @@ void arch_stack_walk_user(stack_trace_co
- {
- 	arch_stack_walk_user_common(consume_entry, cookie, NULL, regs, false);
+--- a/tools/testing/selftests/mm/mseal_test.c
++++ b/tools/testing/selftests/mm/mseal_test.c
+@@ -99,6 +99,16 @@ static int sys_madvise(void *start, size
+ 	return sret;
  }
+ 
++static void *sys_mremap(void *addr, size_t old_len, size_t new_len,
++	unsigned long flags, void *new_addr)
++{
++	void *sret;
++
++	errno = 0;
++	sret = (void *) syscall(__NR_mremap, addr, old_len, new_len, flags, new_addr);
++	return sret;
++}
++
+ static int sys_pkey_alloc(unsigned long flags, unsigned long init_val)
+ {
+ 	int ret = syscall(__NR_pkey_alloc, flags, init_val);
+@@ -1104,12 +1114,12 @@ static void test_seal_mremap_shrink(bool
+ 	}
+ 
+ 	/* shrink from 4 pages to 2 pages. */
+-	ret2 = mremap(ptr, size, 2 * page_size, 0, 0);
++	ret2 = sys_mremap(ptr, size, 2 * page_size, 0, 0);
+ 	if (seal) {
+-		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
++		FAIL_TEST_IF_FALSE(ret2 == (void *) MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+ 	} else {
+-		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
++		FAIL_TEST_IF_FALSE(ret2 != (void *) MAP_FAILED);
+ 
+ 	}
+ 
+@@ -1136,7 +1146,7 @@ static void test_seal_mremap_expand(bool
+ 	}
+ 
+ 	/* expand from 2 page to 4 pages. */
+-	ret2 = mremap(ptr, 2 * page_size, 4 * page_size, 0, 0);
++	ret2 = sys_mremap(ptr, 2 * page_size, 4 * page_size, 0, 0);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+@@ -1169,7 +1179,7 @@ static void test_seal_mremap_move(bool s
+ 	}
+ 
+ 	/* move from ptr to fixed address. */
+-	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newPtr);
++	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newPtr);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+@@ -1288,7 +1298,7 @@ static void test_seal_mremap_shrink_fixe
+ 	}
+ 
+ 	/* mremap to move and shrink to fixed address */
+-	ret2 = mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
++	ret2 = sys_mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
+ 			newAddr);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+@@ -1319,7 +1329,7 @@ static void test_seal_mremap_expand_fixe
+ 	}
+ 
+ 	/* mremap to move and expand to fixed address */
+-	ret2 = mremap(ptr, page_size, size, MREMAP_MAYMOVE | MREMAP_FIXED,
++	ret2 = sys_mremap(ptr, page_size, size, MREMAP_MAYMOVE | MREMAP_FIXED,
+ 			newAddr);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+@@ -1350,7 +1360,7 @@ static void test_seal_mremap_move_fixed(
+ 	}
+ 
+ 	/* mremap to move to fixed address */
+-	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newAddr);
++	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newAddr);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+@@ -1379,14 +1389,13 @@ static void test_seal_mremap_move_fixed_
+ 	/*
+ 	 * MREMAP_FIXED can move the mapping to zero address
+ 	 */
+-	ret2 = mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
++	ret2 = sys_mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
+ 			0);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+ 	} else {
+ 		FAIL_TEST_IF_FALSE(ret2 == 0);
 -
--unsigned long return_address(unsigned int n)
--{
--	struct unwind_state state;
--	unsigned long addr;
+ 	}
+ 
+ 	REPORT_TEST_PASS();
+@@ -1409,13 +1418,13 @@ static void test_seal_mremap_move_dontun
+ 	}
+ 
+ 	/* mremap to move, and don't unmap src addr. */
+-	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, 0);
++	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, 0);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+ 	} else {
++		/* kernel will allocate a new address */
+ 		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
 -
--	/* Increment to skip current stack entry */
--	n++;
+ 	}
+ 
+ 	REPORT_TEST_PASS();
+@@ -1423,7 +1432,7 @@ static void test_seal_mremap_move_dontun
+ 
+ static void test_seal_mremap_move_dontunmap_anyaddr(bool seal)
+ {
+-	void *ptr;
++	void *ptr, *ptr2;
+ 	unsigned long page_size = getpagesize();
+ 	unsigned long size = 4 * page_size;
+ 	int ret;
+@@ -1438,24 +1447,30 @@ static void test_seal_mremap_move_dontun
+ 	}
+ 
+ 	/*
+-	 * The 0xdeaddead should not have effect on dest addr
+-	 * when MREMAP_DONTUNMAP is set.
++	 * The new address is any address that not allocated.
++	 * use allocate/free to similate that.
++	 */
++	setup_single_address(size, &ptr2);
++	FAIL_TEST_IF_FALSE(ptr2 != (void *)-1);
++	ret = sys_munmap(ptr2, size);
++	FAIL_TEST_IF_FALSE(!ret);
++
++	/*
++	 * remap to any address.
+ 	 */
+-	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP,
+-			0xdeaddead);
++	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP,
++			(void *) ptr2);
+ 	if (seal) {
+ 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
+ 		FAIL_TEST_IF_FALSE(errno == EPERM);
+ 	} else {
+-		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
+-		FAIL_TEST_IF_FALSE((long)ret2 != 0xdeaddead);
 -
--	unwind_for_each_frame(&state, NULL, NULL, 0) {
--		addr = unwind_get_return_address(&state);
--		if (!addr)
--			break;
--		if (!n--)
--			return addr;
--	}
--	return 0;
--}
--EXPORT_SYMBOL_GPL(return_address);
++		/* remap success and return ptr2 */
++		FAIL_TEST_IF_FALSE(ret2 ==  ptr2);
+ 	}
+ 
+ 	REPORT_TEST_PASS();
+ }
+ 
+-
+ static void test_seal_merge_and_split(void)
+ {
+ 	void *ptr;
 
 
