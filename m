@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD08C1D04BE;
-	Wed,  2 Oct 2024 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BF71D0493;
+	Wed,  2 Oct 2024 14:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878178; cv=none; b=EFAHOdOOjj5nDBWASvNl+v4rN1eHzr/cLNXgcCkLrBhwg+SikX7jmpzeA6r6Mw5GNV+kVTS+tvBpRN6VectM5Owob9JCeO7FTKj7K7RbYCLs88Pv3K/jGsPaKx78bwh7SDnY8DlfwydB0TGBAHvPa5hsFKzCwwIAZmyWM05PMw0=
+	t=1727878182; cv=none; b=i2WetYwjwPX3aTb0ZS1oWu0l5Wa/SZz8+0zb4TnJ34Xma5ANxFkf8swrOP91R5DCR/c5BhExR0yWzTu6aG8NU4enqWrxZAFdSf1lgQLvkhNgeSeSucqIwGGxvERisyFLnOR+EB1q6lvh/l8xueZPfX1lXvV+ThwL2zI0odCFKP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878178; c=relaxed/simple;
-	bh=WRCYKp4BOeV6cKO91NSA3rgz3NhDh9rfzzgHBLmIQlE=;
+	s=arc-20240116; t=1727878182; c=relaxed/simple;
+	bh=0ul/1+KjG7CBnuVBtq0vH13P7b4P2BYKeyYpgyynbd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNcuh/yaCWdXxblfd5Y2s/DGFJxb9IfKvAzH4oI6vhX7HL4AuaqpDQO7VGC9SRA1U9ohF8b3ZOE8ykqrcs7RF3vK9mVzq2qLrxwAydzC4NTnJhlR+A3pYuAwXxdrW6UaZctFYoD+B7CTtPnM5Alb6tjyoRA922OGbDKXiQRpNaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhEx0zxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IiQzaC3d7yk7gLjRkdIOj5r9GlQjDCFAMDrVAy8tMgLnGR+jV5DLA0AfD+PWRxb1kkw75oMNaoRJRF0je+/Whr1wj6nc0TZUUpSdtbJs+pwp132//NrdHDFSDzzG94AiUJzx24e0myezO/+zulXibRl4AAYiv5O1RQ+1XmxfX3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8GF99LQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhEx0zxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4404FC4CEC2;
-	Wed,  2 Oct 2024 14:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8GF99LQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C793C4CEC2;
+	Wed,  2 Oct 2024 14:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878178;
-	bh=WRCYKp4BOeV6cKO91NSA3rgz3NhDh9rfzzgHBLmIQlE=;
+	s=korg; t=1727878181;
+	bh=0ul/1+KjG7CBnuVBtq0vH13P7b4P2BYKeyYpgyynbd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhEx0zxuvJfqjUQA/2SUAcT4GzlgNJqcywy1KPEvz6z+qiQ5wQ/+O4BXjAHM+IoQv
-	 NIcDv+oyZjMOyWavCKcL9pQLzRGFG3X2Y6PKLnQZXben44nRCXEKA0Nqp+mFxOOJKD
-	 QjOCMVEakFr5DMVquxC8ir95br4Jft1ppvezkJMw=
+	b=Q8GF99LQKFVnBYhgJeBqRqtyj5VopMTvG09Dex1j1SGl5OA9Q4wfrm5Bly5LHB1yv
+	 BU9kOuL/Peykovw/0+Z9lOtFytsYCibg4lgBifzvRKFh0xTQL7H9pLwJd17brzWckr
+	 0mMlCO1/OlJfAwETdwfwj3E+yVpE9np1sfMacoaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 326/634] pinctrl: ti: iodelay: Use scope based of_node_put() cleanups
-Date: Wed,  2 Oct 2024 14:57:06 +0200
-Message-ID: <20241002125823.967978567@linuxfoundation.org>
+Subject: [PATCH 6.10 327/634] pinctrl: ti: ti-iodelay: Fix some error handling paths
+Date: Wed,  2 Oct 2024 14:57:07 +0200
+Message-ID: <20241002125824.006673659@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,116 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 791a8bb202a85f707c20ef04a471519e35f089dc ]
+[ Upstream commit a9f2b249adeef2b9744a884355fa8f5e581d507f ]
 
-Use scope based of_node_put() cleanup to simplify code.
+In the probe, if an error occurs after the ti_iodelay_pinconf_init_dev()
+call, it is likely that ti_iodelay_pinconf_deinit_dev() should be called,
+as already done in the remove function.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/20240627131721.678727-2-peng.fan@oss.nxp.com
+Also in ti_iodelay_pinconf_init_dev(), if an error occurs after the first
+regmap_update_bits() call, it is also likely that the deinit() function
+should be called.
+
+The easier way to fix it is to add a devm_add_action_or_reset() at the
+rigtht place to have ti_iodelay_pinconf_deinit_dev() called when needed.
+
+Doing so, the .remove() function can be removed, and the associated
+platform_set_drvdata() call in the probe as well.
+
+Fixes: 003910ebc83b ("pinctrl: Introduce TI IOdelay configuration driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/0220fa5b925bd08e361be8206a5438f6229deaac.1720556038.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: a9f2b249adee ("pinctrl: ti: ti-iodelay: Fix some error handling paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 43 +++++++++----------------
- 1 file changed, 15 insertions(+), 28 deletions(-)
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 52 ++++++++++---------------
+ 1 file changed, 21 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
-index ef97586385019..f5e5a23d22260 100644
+index f5e5a23d22260..451801acdc403 100644
 --- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
 +++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
-@@ -822,53 +822,48 @@ MODULE_DEVICE_TABLE(of, ti_iodelay_of_match);
- static int ti_iodelay_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *np = of_node_get(dev->of_node);
-+	struct device_node *np __free(device_node) = of_node_get(dev->of_node);
- 	struct resource *res;
- 	struct ti_iodelay_device *iod;
--	int ret = 0;
-+	int ret;
- 
- 	if (!np) {
--		ret = -EINVAL;
- 		dev_err(dev, "No OF node\n");
--		goto exit_out;
-+		return -EINVAL;
- 	}
- 
- 	iod = devm_kzalloc(dev, sizeof(*iod), GFP_KERNEL);
--	if (!iod) {
--		ret = -ENOMEM;
--		goto exit_out;
--	}
-+	if (!iod)
-+		return -ENOMEM;
-+
- 	iod->dev = dev;
- 	iod->reg_data = device_get_match_data(dev);
- 	if (!iod->reg_data) {
--		ret = -EINVAL;
- 		dev_err(dev, "No DATA match\n");
--		goto exit_out;
-+		return -EINVAL;
- 	}
- 
- 	/* So far We can assume there is only 1 bank of registers */
- 	iod->reg_base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
--	if (IS_ERR(iod->reg_base)) {
--		ret = PTR_ERR(iod->reg_base);
--		goto exit_out;
--	}
-+	if (IS_ERR(iod->reg_base))
-+		return PTR_ERR(iod->reg_base);
-+
- 	iod->phys_base = res->start;
- 
- 	iod->regmap = devm_regmap_init_mmio(dev, iod->reg_base,
- 					    iod->reg_data->regmap_config);
- 	if (IS_ERR(iod->regmap)) {
- 		dev_err(dev, "Regmap MMIO init failed.\n");
--		ret = PTR_ERR(iod->regmap);
--		goto exit_out;
-+		return PTR_ERR(iod->regmap);
- 	}
- 
- 	ret = ti_iodelay_pinconf_init_dev(iod);
- 	if (ret)
--		goto exit_out;
-+		return ret;
- 
- 	ret = ti_iodelay_alloc_pins(dev, iod, res->start);
- 	if (ret)
--		goto exit_out;
-+		return ret;
- 
- 	iod->desc.pctlops = &ti_iodelay_pinctrl_ops;
- 	/* no pinmux ops - we are pinconf */
-@@ -879,20 +874,12 @@ static int ti_iodelay_probe(struct platform_device *pdev)
- 	ret = devm_pinctrl_register_and_init(dev, &iod->desc, iod, &iod->pctl);
- 	if (ret) {
- 		dev_err(dev, "Failed to register pinctrl\n");
--		goto exit_out;
-+		return ret;
- 	}
- 
- 	platform_set_drvdata(pdev, iod);
- 
--	ret = pinctrl_enable(iod->pctl);
--	if (ret)
--		goto exit_out;
--
--	return 0;
--
--exit_out:
--	of_node_put(np);
--	return ret;
-+	return pinctrl_enable(iod->pctl);
+@@ -273,6 +273,22 @@ static int ti_iodelay_pinconf_set(struct ti_iodelay_device *iod,
+ 	return r;
  }
  
++/**
++ * ti_iodelay_pinconf_deinit_dev() - deinit the iodelay device
++ * @data:	IODelay device
++ *
++ * Deinitialize the IODelay device (basically just lock the region back up.
++ */
++static void ti_iodelay_pinconf_deinit_dev(void *data)
++{
++	struct ti_iodelay_device *iod = data;
++	const struct ti_iodelay_reg_data *reg = iod->reg_data;
++
++	/* lock the iodelay region back again */
++	regmap_update_bits(iod->regmap, reg->reg_global_lock_offset,
++			   reg->global_lock_mask, reg->global_lock_val);
++}
++
  /**
+  * ti_iodelay_pinconf_init_dev() - Initialize IODelay device
+  * @iod: iodelay device
+@@ -295,6 +311,11 @@ static int ti_iodelay_pinconf_init_dev(struct ti_iodelay_device *iod)
+ 	if (r)
+ 		return r;
+ 
++	r = devm_add_action_or_reset(iod->dev, ti_iodelay_pinconf_deinit_dev,
++				     iod);
++	if (r)
++		return r;
++
+ 	/* Read up Recalibration sequence done by bootloader */
+ 	r = regmap_read(iod->regmap, reg->reg_refclk_offset, &val);
+ 	if (r)
+@@ -353,21 +374,6 @@ static int ti_iodelay_pinconf_init_dev(struct ti_iodelay_device *iod)
+ 	return 0;
+ }
+ 
+-/**
+- * ti_iodelay_pinconf_deinit_dev() - deinit the iodelay device
+- * @iod:	IODelay device
+- *
+- * Deinitialize the IODelay device (basically just lock the region back up.
+- */
+-static void ti_iodelay_pinconf_deinit_dev(struct ti_iodelay_device *iod)
+-{
+-	const struct ti_iodelay_reg_data *reg = iod->reg_data;
+-
+-	/* lock the iodelay region back again */
+-	regmap_update_bits(iod->regmap, reg->reg_global_lock_offset,
+-			   reg->global_lock_mask, reg->global_lock_val);
+-}
+-
+ /**
+  * ti_iodelay_get_pingroup() - Find the group mapped by a group selector
+  * @iod: iodelay device
+@@ -877,27 +883,11 @@ static int ti_iodelay_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	platform_set_drvdata(pdev, iod);
+-
+ 	return pinctrl_enable(iod->pctl);
+ }
+ 
+-/**
+- * ti_iodelay_remove() - standard remove
+- * @pdev: platform device
+- */
+-static void ti_iodelay_remove(struct platform_device *pdev)
+-{
+-	struct ti_iodelay_device *iod = platform_get_drvdata(pdev);
+-
+-	ti_iodelay_pinconf_deinit_dev(iod);
+-
+-	/* Expect other allocations to be freed by devm */
+-}
+-
+ static struct platform_driver ti_iodelay_driver = {
+ 	.probe = ti_iodelay_probe,
+-	.remove_new = ti_iodelay_remove,
+ 	.driver = {
+ 		   .name = DRIVER_NAME,
+ 		   .of_match_table = ti_iodelay_of_match,
 -- 
 2.43.0
 
