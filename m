@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC98E1CF5FB;
-	Wed,  2 Oct 2024 14:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B6B1CF5FB;
+	Wed,  2 Oct 2024 14:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880014; cv=none; b=X5g+lwmbCSgb/DkLV5Uw54Sj+OGNilWj3S4ruM7sMI71LYMyZinSAdZfHuPY4Y/EN8FztCInjnIoqrSAFkRWz2320YDJv1HWzTyiT1Dz8G1PDgEI9JjpO5Zo9IzGSo1ZdObUY3yN4RJajLnk/RbvxoZkHtfuMew/F2NGhMxpLKM=
+	t=1727880017; cv=none; b=NgDvTvAp+GNdKne0MIa16C+Cr/Y8uQlICZe5uWx3+rupMF+tB90X3r8YSRqjXfG9/SPUQJdSC1qff8jZ3AT9QiZbdaS5W9yerqeAAd2Rrg2lbfbyooiCxMGZdDEzA2HWYwlTZgw4TfcJ7SLyuMVgC9DobDdtLMcdFNTA2AhzDvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880014; c=relaxed/simple;
-	bh=05bzBse2JurtSvf4GuttQBi1Ib8ejb0Bi8xUkUmmJo8=;
+	s=arc-20240116; t=1727880017; c=relaxed/simple;
+	bh=xF88x8Ue5+gN/rQM4THMa+ZfOy5Dr3sa5fWufRbsFmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7UQ0+vyD5l9Xl1dMEIPuTOIYUtSw9Cl+x4z22mDBn3Z9T4xfMwcA+pGA1c9jBTmNLfBfGXGZQYJ+SCH43MjwbOlaAIMIrGTlDvqM+UT7eplKTGZcrYCvKN6UZW2Xw6RF0K/kmFuJKFRL8EVDFne1LHtQwfy0sB6pPFM6Zb3RP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5unszj5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWzzbErjwmGjARqJQxPL3FucoQUuEyROAZRuurszMAAa7hnE5tsHYm1pPU7tZpnkFdgMDEpd56hH47XDtUICdiJRkZps4ZgVTmc75/1PH3YTRK3ltaLj7i+hs3Tf4S+Fxi0OYEJoJJKCAsw4HB4w6kWF0IYZjzPRsIMGkyDGYD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCLYYDYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5unszj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7CEC4CEC5;
-	Wed,  2 Oct 2024 14:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCLYYDYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445E8C4CEC2;
+	Wed,  2 Oct 2024 14:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880014;
-	bh=05bzBse2JurtSvf4GuttQBi1Ib8ejb0Bi8xUkUmmJo8=;
+	s=korg; t=1727880017;
+	bh=xF88x8Ue5+gN/rQM4THMa+ZfOy5Dr3sa5fWufRbsFmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5unszj5exDMpzLdBPb7tEVFkXdvAJ+lQlSK3BqNA4KsBbOHE4jBcEgg1K1YHDdKz
-	 QbwrjnL3HTEXY/sMa6hV5ZjIS39mg86hpmx78CwzNICfNY6CSx2N0kV8/OvIflrqS8
-	 qlID+VcDPqVaxmN4y3bouQyBKSu0ZNcma5LrywTo=
+	b=HCLYYDYyGzuXKWgixox+MC+I3Z8tN8uAV4aAJ+haj2HJiG89DB9ZJ649YZV/uQD72
+	 KKtMhn4/B88WUMQWFPcjcmXiFb+euX526Git5+yC3S1moao0TyfwQNQNbXl3PTAoe3
+	 eZquxfZvbLJmgFbE9gXXrA/eM/vQsqNjoaSIULSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 315/538] RDMA/hns: Dont modify rq next block addr in HIP09 QPC
-Date: Wed,  2 Oct 2024 14:59:14 +0200
-Message-ID: <20241002125804.858331856@linuxfoundation.org>
+Subject: [PATCH 6.6 298/538] clk: at91: sama7g5: Allocate only the needed amount of memory for PLLs
+Date: Wed,  2 Oct 2024 14:58:57 +0200
+Message-ID: <20241002125804.177560474@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-[ Upstream commit 6928d264e328e0cb5ee7663003a6e46e4cba0a7e ]
+[ Upstream commit 2d6e9ee7cb3e79b1713783c633b13af9aeffc90c ]
 
-The field 'rq next block addr' in QPC can be updated by driver only
-on HIP08. On HIP09 HW updates this field while driver is not allowed.
+The maximum number of PLL components on SAMA7G5 is 3 (one fractional
+part and 2 dividers). Allocate the needed amount of memory for
+sama7g5_plls 2d array. Previous code used to allocate 7 array entries for
+each PLL. While at it, replace 3 with PLL_COMPID_MAX in the loop which
+parses the sama7g5_plls 2d array.
 
-Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: cb783bbbcf54 ("clk: at91: sama7g5: add clock support for sama7g5")
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240714141315.19480-1-claudiu.beznea@tuxon.dev
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/clk/at91/sama7g5.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index a49280e2df8ca..8f93aacde4936 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -4391,12 +4391,14 @@ static int config_qp_rq_buf(struct hns_roce_dev *hr_dev,
- 		     upper_32_bits(to_hr_hw_page_addr(mtts[0])));
- 	hr_reg_clear(qpc_mask, QPC_RQ_CUR_BLK_ADDR_H);
+diff --git a/drivers/clk/at91/sama7g5.c b/drivers/clk/at91/sama7g5.c
+index 91b5c6f148196..4e9594714b142 100644
+--- a/drivers/clk/at91/sama7g5.c
++++ b/drivers/clk/at91/sama7g5.c
+@@ -66,6 +66,7 @@ enum pll_component_id {
+ 	PLL_COMPID_FRAC,
+ 	PLL_COMPID_DIV0,
+ 	PLL_COMPID_DIV1,
++	PLL_COMPID_MAX,
+ };
  
--	context->rq_nxt_blk_addr = cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
--	qpc_mask->rq_nxt_blk_addr = 0;
--
--	hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
--		     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
--	hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
-+		context->rq_nxt_blk_addr =
-+				cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
-+		qpc_mask->rq_nxt_blk_addr = 0;
-+		hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
-+			     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
-+		hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
-+	}
+ /*
+@@ -165,7 +166,7 @@ static struct sama7g5_pll {
+ 	u8 t;
+ 	u8 eid;
+ 	u8 safe_div;
+-} sama7g5_plls[][PLL_ID_MAX] = {
++} sama7g5_plls[][PLL_COMPID_MAX] = {
+ 	[PLL_ID_CPU] = {
+ 		[PLL_COMPID_FRAC] = {
+ 			.n = "cpupll_fracck",
+@@ -1038,7 +1039,7 @@ static void __init sama7g5_pmc_setup(struct device_node *np)
+ 	sama7g5_pmc->chws[PMC_MAIN] = hw;
  
- 	return 0;
- }
+ 	for (i = 0; i < PLL_ID_MAX; i++) {
+-		for (j = 0; j < 3; j++) {
++		for (j = 0; j < PLL_COMPID_MAX; j++) {
+ 			struct clk_hw *parent_hw;
+ 
+ 			if (!sama7g5_plls[i][j].n)
 -- 
 2.43.0
 
