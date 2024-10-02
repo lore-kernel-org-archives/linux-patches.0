@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9721CF28B;
-	Wed,  2 Oct 2024 13:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF801D040E;
+	Wed,  2 Oct 2024 13:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875450; cv=none; b=QTtsQAR/nkpajYqueUhFOFlMxtKXiXxSV9XiJGGItTxibsS3moT7XlJSiouDnQbGyUHCQwE9cO9gRdUfMin3PJpJb1k0taVbyttfn9wnOXVMF0DpXyVd5fcDEd/fC9VSome1XujEfmoTiuF+Fa9vqs13NGWbIKDyrdg5VYQFI9M=
+	t=1727875452; cv=none; b=rcsf3Aw5dYeGJwJ53Fo930D8ySnZJU3Y762p2/SE80cictt2kWzD1WNtII5pu5aSX2w8rm+Y7n9IDmQZBDRjlQgA9qxZ+lfIJC5IkP5o1cqGoXwhZDQZJ4gQ/nDbfz32nuR5/dhH6gNxZ/2/clKWCDJ6jeDkMV8cLCcKHob2oFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875450; c=relaxed/simple;
-	bh=yp5lKI+2Dnk9KoMirpVP5iumwoSpwS1dY/JtzUz1ZUg=;
+	s=arc-20240116; t=1727875452; c=relaxed/simple;
+	bh=sYCDW8lAUPJMLA8UM+JJArlq8YtkaRw2t4Y6ftJmNmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hi4/TlS5yzV6Gei21QJRkoaISbpB3pTNoEijtvMhoZMk+eZn7ey2VXhm1J6UImt3J36nqXRAeh38wX0M/yvVu/7kGBrdcT50Kn6d1+oxpLYo0qTiIHeTzpUngzSxhTSWliRG82+SK4LNrUfx/1h5JuMkAUfy+rJ4X64D/lfrGSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMIuPTX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rD8Gh2BQmfsC2N5uFlG7zJmNc+y2PiBuemI2oEicLwnNPRrp3OiJjkqcrkRBY/oDlyK7dw8bYplzNdbgKEWxglIC2XNU3XC3YLeFmlTwhTF93QtWm+pZFUursBvDd9pz8DG7T1AMtOPGg1SG2XH7GfCCEJz44V6GaGGXGjto3Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1GkACcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMIuPTX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67517C4CEC5;
-	Wed,  2 Oct 2024 13:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1GkACcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E56C4CEC5;
+	Wed,  2 Oct 2024 13:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875449;
-	bh=yp5lKI+2Dnk9KoMirpVP5iumwoSpwS1dY/JtzUz1ZUg=;
+	s=korg; t=1727875452;
+	bh=sYCDW8lAUPJMLA8UM+JJArlq8YtkaRw2t4Y6ftJmNmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMIuPTX3+7eFT7GmvulGYpqD+g7BDYMVgWwFMgWK/Z5mBxp4jysr9z/pnSxpFgIPm
-	 htfQC64ld+R2zY0wtZtfvsypdsdHkNfEmGZV0Zs59dTtARuJcM6E9relaCGtMhL773
-	 yEfNrWGEK5LdIxTNCpNrL3U150dOOO1n8Fw23uiw=
+	b=X1GkACcK9nlV46l9eU/DpQyntC1BJZiwE+BLs8Z/5hcCW26ZEKzOTIcGlqFUvUXRL
+	 DdFuQ4KpZt6KURB1RaQIKIpZgtQzUtq4C2X1SL4W4xplFSEwbRuzCxjmnXoNlbawBL
+	 al69yo9+k2OdBW59TvASkJqux8ubsxg4+MXkXrok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kiran K <kiran.k@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 105/695] can: m_can: m_can_close(): stop clocks after device has been shut down
-Date: Wed,  2 Oct 2024 14:51:43 +0200
-Message-ID: <20241002125826.666007924@linuxfoundation.org>
+Subject: [PATCH 6.11 106/695] Bluetooth: btusb: Fix not handling ZPL/short-transfer
+Date: Wed,  2 Oct 2024 14:51:44 +0200
+Message-ID: <20241002125826.705268482@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2c09b50efcad985cf920ca88baa9aa52b1999dcc ]
+[ Upstream commit 7b05933340f4490ef5b09e84d644d12484b05fdf ]
 
-After calling m_can_stop() an interrupt may be pending or NAPI might
-still be executed. This means the driver might still touch registers
-of the IP core after the clocks have been disabled. This is not good
-practice and might lead to aborts depending on the SoC integration.
+Requesting transfers of the exact same size of wMaxPacketSize may result
+in ZPL/short-transfer since the USB stack cannot handle it as we are
+limiting the buffer size to be the same as wMaxPacketSize.
 
-To avoid these potential problems, make m_can_close() symmetric to
-m_can_open(), i.e. stop the clocks at the end, right before shutting
-down the transceiver.
+Also, in terms of throughput this change has the same effect to
+interrupt endpoint as 290ba200815f "Bluetooth: Improve USB driver throughput
+by increasing the frame size" had for the bulk endpoint, so users of the
+advertisement bearer (e.g. BT Mesh) may benefit from this change.
 
-Fixes: e0d1f4816f2a ("can: m_can: add Bosch M_CAN controller support")
-Link: https://patch.msgid.link/20240910-can-m_can-fix-ifup-v3-2-6c1720ba45ce@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 5e23b923da03 ("[Bluetooth] Add generic driver for Bluetooth USB devices")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index c1a07013433eb..7fec04b024d5b 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1764,7 +1764,6 @@ static int m_can_close(struct net_device *dev)
- 	netif_stop_queue(dev);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 51d9d4532dda4..1ec71a2fb63ea 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1397,7 +1397,10 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
+ 	if (!urb)
+ 		return -ENOMEM;
  
- 	m_can_stop(dev);
--	m_can_clk_stop(cdev);
- 	free_irq(dev->irq, dev);
+-	size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
++	/* Use maximum HCI Event size so the USB stack handles
++	 * ZPL/short-transfer automatically.
++	 */
++	size = HCI_MAX_EVENT_SIZE;
  
- 	m_can_clean(dev);
-@@ -1779,6 +1778,7 @@ static int m_can_close(struct net_device *dev)
- 
- 	close_candev(dev);
- 
-+	m_can_clk_stop(cdev);
- 	phy_power_off(cdev->transceiver);
- 
- 	return 0;
+ 	buf = kmalloc(size, mem_flags);
+ 	if (!buf) {
 -- 
 2.43.0
 
