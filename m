@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5801D0F58;
-	Wed,  2 Oct 2024 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07361D0F74;
+	Wed,  2 Oct 2024 14:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880053; cv=none; b=OSSPW2kPwZNjMp0Ac272Anq2KGrB2QGThvnwUb4xqh7mRZntsCrzjpfpzWjscrmfxqJAirXzYS6WKfTGzRTT1PcryXcxKQ+SignKq5q9Ul7kQrRchDMkd4diLI8H6enIq7uJqryj1jSmSNS0r2qoIKCvUpVadjwwTaSxGi5HC44=
+	t=1727880055; cv=none; b=f1Ovb2t6RcxW7Ur40YDQbVQgEoA/eoJhwxp0kFLx06groXgEsO6+G+J71hZDsbO/B7iET1No7duK4+xTIg+gxAkBoJYLYHYULcesqpeujvufDdHN32T9/8wSsZyV7UxlE98zw7oxqXmuUA3Bx94s3cE6MsMGOcYUZtMqRhBKn4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880053; c=relaxed/simple;
-	bh=JgwZtXbYKQuM+ewMeQOYsD4qPvXE/5CjetsQQxtnTEE=;
+	s=arc-20240116; t=1727880055; c=relaxed/simple;
+	bh=pYw/1rUmoaUuSXzwY7JG/A8wbKYbp0CU2bFt95fuYDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVYK1HH7z07Zzz5xkTCx8/7uP7paA6pBsUu8GuBYZg+drfoTkIWkkUL4U1jpyCwWvkQbl2O1e8jGUFUmbVmoIhJ9c0hWZ0KYaoKCT8freA5Rd444NlomVo1wFyLk1HUPXRShdj1BCfU+J5pRSqzIhOF8ReFlkOdtFJuxnHR15g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oiMgnSPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRuIa1nFbreRDnMmmTF4XWmg4XgpLFHC7h7k9nkQJ7ciMIXUZBF5Kk++VVNYPuFsK/Lr/GrpsKCBgXRnp43S0YZgoalNIAkDo+pNLjYrVxJ4MoD6NZ/5apCs+4Gx6OB3En2ezOm7S7htgdoHd8gG2SmobPvMxBd5gBDiSfq1tK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4v/WX2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oiMgnSPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC3FC4CEC2;
-	Wed,  2 Oct 2024 14:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4v/WX2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C32C4CEC2;
+	Wed,  2 Oct 2024 14:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880052;
-	bh=JgwZtXbYKQuM+ewMeQOYsD4qPvXE/5CjetsQQxtnTEE=;
+	s=korg; t=1727880055;
+	bh=pYw/1rUmoaUuSXzwY7JG/A8wbKYbp0CU2bFt95fuYDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oiMgnSPgUi1XanzR0CWHON7oazZaJOlCI8f2MzBNaFld12Z6uTgu5rK4lD6ZB6bCb
-	 4sMgye1Wu+jxUjt+wgxagT97kypllxPM+RLrH2IQgn4O+BAQC86YcIk8aEM7zdbTMP
-	 nabZZaJ6h5Yb0BQ6pvGdklV5ll9SgtpW7Abebph8=
+	b=H4v/WX2uJD3m5CrQbLkPZYWEe77sLSHhSp91lyVoIAiRImP2GzGgktJoH7a23PT29
+	 3PCV1daOIYNz4q99KMq1+Y+gbZ6LxHG9FRUH+ChABFffntaaSTCXYYqmGQQ/CKEIG1
+	 G92LwfrLUeMmpDfUMLnZoN/oJ3hPYDS4InwElYZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaliy Shevtsov <v.shevtsov@maxima.ru>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/538] RDMA/irdma: fix error message in irdma_modify_qp_roce()
-Date: Wed,  2 Oct 2024 14:59:25 +0200
-Message-ID: <20241002125805.297791387@linuxfoundation.org>
+Subject: [PATCH 6.6 327/538] ntb: intel: Fix the NULL vs IS_ERR() bug for debugfs_create_dir()
+Date: Wed,  2 Oct 2024 14:59:26 +0200
+Message-ID: <20241002125805.338450666@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,38 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 9f0eafe86ea0a589676209d0cff1a1ed49a037d3 ]
+[ Upstream commit e229897d373a87ee09ec5cc4ecd4bb2f895fc16b ]
 
-Use a correct field max_dest_rd_atomic instead of max_rd_atomic for the
-error output.
+The debugfs_create_dir() function returns error pointers.
+It never returns NULL. So use IS_ERR() to check it.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
-Link: https://lore.kernel.org/stable/20240916165817.14691-1-v.shevtsov%40maxima.ru
-Link: https://patch.msgid.link/20240916165817.14691-1-v.shevtsov@maxima.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 2 +-
+ drivers/ntb/hw/intel/ntb_hw_gen1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index ca3e89909ecf4..38cecb28d322e 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -1347,7 +1347,7 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 		if (attr->max_dest_rd_atomic > dev->hw_attrs.max_hw_ird) {
- 			ibdev_err(&iwdev->ibdev,
- 				  "rd_atomic = %d, above max_hw_ird=%d\n",
--				   attr->max_rd_atomic,
-+				   attr->max_dest_rd_atomic,
- 				   dev->hw_attrs.max_hw_ird);
- 			return -EINVAL;
- 		}
+diff --git a/drivers/ntb/hw/intel/ntb_hw_gen1.c b/drivers/ntb/hw/intel/ntb_hw_gen1.c
+index 9ab836d0d4f12..079b8cd797857 100644
+--- a/drivers/ntb/hw/intel/ntb_hw_gen1.c
++++ b/drivers/ntb/hw/intel/ntb_hw_gen1.c
+@@ -778,7 +778,7 @@ static void ndev_init_debugfs(struct intel_ntb_dev *ndev)
+ 		ndev->debugfs_dir =
+ 			debugfs_create_dir(pci_name(ndev->ntb.pdev),
+ 					   debugfs_dir);
+-		if (!ndev->debugfs_dir)
++		if (IS_ERR(ndev->debugfs_dir))
+ 			ndev->debugfs_info = NULL;
+ 		else
+ 			ndev->debugfs_info =
 -- 
 2.43.0
 
