@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D386FB0;
-	Wed,  2 Oct 2024 14:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E456FB0;
+	Wed,  2 Oct 2024 14:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880149; cv=none; b=bWmptGsoaKEKa+MU6hp2ynL3ofdz2hmlBK2JTV+7hfb1pvmWBAR3EQPEinFOkTmJrzuCWPjo5OqRDIUW8oYhxnZM0acP+mL43LMDhw6qR/c+hpWrKJlAsGA1GmQQ78ZQCXi1ISzXCSRlJXsIJWGE2QPi0GfICLURnWxBQg6PxGI=
+	t=1727880152; cv=none; b=JD8H95wEcbHtqnqSyWKbfduxLXZ2b6WOM8ooLoLIW7+qau/7Jrrc0OHqRAFBkD5bHNFRWl+ddoNPAkxSq2dEASRpJzgwCLKW/uFws11St2H68eM7pfktsAByIuDhUXoAN5wbdH124p3DQTcpDiLRoy5QHo1QISn6P49Ym8Y2rHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880149; c=relaxed/simple;
-	bh=KrABpt9MLBelVRHFZeKqINhqQs33BYyeoTMahidCeXU=;
+	s=arc-20240116; t=1727880152; c=relaxed/simple;
+	bh=ae1wYl5s/4b20LFdbDF8pyw62c115C6RMVuZe2mflNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nR25z8Q9/y9DOdGKYneItudX3GrR75wZakXloRBSXJbYF0Pr8ihemJBShAs7OabE93ZquX/yH2TCPGqFjxIFninBV13bn2EdtcJJpk+5mIAI43bpa9al6J0ijHnZjDUYXnxHvcMDOl+jSu8nlqZt/Q7qVTUmdaAJ4QXcohdBd8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UstD8qKV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLICYK++ydiif9iuDsfaPqC4oUJ3gueZOppKtn/3EDxJmMPjbRHheFjkmHIKFioFoZXcUfJqJhaKPKgT4B4IiXuK1gg+3NcyYWyTYM+9ctAZgMfS89E8DTObusIK47eL5C3BTN8fB9MRt36yDnKJwXxIF6URx87KH0AevS6chCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lnp3XUet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UstD8qKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8E0C4CEC2;
-	Wed,  2 Oct 2024 14:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lnp3XUet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD27C4CEC2;
+	Wed,  2 Oct 2024 14:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880149;
-	bh=KrABpt9MLBelVRHFZeKqINhqQs33BYyeoTMahidCeXU=;
+	s=korg; t=1727880152;
+	bh=ae1wYl5s/4b20LFdbDF8pyw62c115C6RMVuZe2mflNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UstD8qKViV0iLGqYkwKBgUGOQ76d9XhTGeaZ5SV3hv8Px5rJnAgjicmFp2s91DR/4
-	 pS1WWfLygelWCEH++lTmO1Iv68zd5d1fLtey1IAXfsn6y3R3TMpgJ4S/dKKPG3uRmI
-	 Ej84b+7KT6sxLup0LUdHlpYU9le2oK2/tnv+mMbo=
+	b=Lnp3XUetFi9KkYqARimXt8IL3g9nMFmRfuZSnLJKoR87vPC+U8kNxiEBSHfmTlgwO
+	 TMDSsiNLfHf0d7D7S7URZ8GAGHq2vDwDrIJutMm1QoqS0IQ2WnKCyk4+GBYpofrvMm
+	 pFiAU9J3JFMFbFdYC6yOZ+dLM9Ye0/q40/ZGriQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 359/538] iio: magnetometer: ak8975: drop incorrect AK09116 compatible
-Date: Wed,  2 Oct 2024 14:59:58 +0200
-Message-ID: <20241002125806.597494198@linuxfoundation.org>
+Subject: [PATCH 6.6 360/538] dt-bindings: iio: asahi-kasei,ak8975: drop incorrect AK09116 compatible
+Date: Wed,  2 Oct 2024 14:59:59 +0200
+Message-ID: <20241002125806.637036825@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit da6e3160df230692bbd48a6d52318035f19595e2 ]
+[ Upstream commit c7668ac67bc21aebdd8e2d7f839bfffba31b7713 ]
 
 All compatibles in this binding without prefixes were deprecated, so
 adding a new deprecated one after some time is not allowed, because it
@@ -63,25 +64,26 @@ Drop the AK09916 vendorless compatible.
 
 Fixes: 76e28aa97fa0 ("iio: magnetometer: ak8975: add AK09116 support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240806053016.6401-1-krzysztof.kozlowski@linaro.org
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20240806053016.6401-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/ak8975.c | 1 -
+ .../devicetree/bindings/iio/magnetometer/asahi-kasei,ak8975.yaml | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
-index 104798549de11..a79a1d5b46394 100644
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -1083,7 +1083,6 @@ static const struct of_device_id ak8975_of_match[] = {
- 	{ .compatible = "asahi-kasei,ak09912", .data = &ak_def_array[AK09912] },
- 	{ .compatible = "ak09912", .data = &ak_def_array[AK09912] },
- 	{ .compatible = "asahi-kasei,ak09916", .data = &ak_def_array[AK09916] },
--	{ .compatible = "ak09916", .data = &ak_def_array[AK09916] },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, ak8975_of_match);
+diff --git a/Documentation/devicetree/bindings/iio/magnetometer/asahi-kasei,ak8975.yaml b/Documentation/devicetree/bindings/iio/magnetometer/asahi-kasei,ak8975.yaml
+index 9790f75fc669e..fe5145d3b73cf 100644
+--- a/Documentation/devicetree/bindings/iio/magnetometer/asahi-kasei,ak8975.yaml
++++ b/Documentation/devicetree/bindings/iio/magnetometer/asahi-kasei,ak8975.yaml
+@@ -23,7 +23,6 @@ properties:
+           - ak8963
+           - ak09911
+           - ak09912
+-          - ak09916
+         deprecated: true
+ 
+   reg:
 -- 
 2.43.0
 
