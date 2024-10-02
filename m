@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826BC16F84F;
-	Wed,  2 Oct 2024 13:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCA61CF28B;
+	Wed,  2 Oct 2024 13:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875646; cv=none; b=tRBmF5U7iRzaB0q02aeEQQlhKVu9jpQNmPAaIqMnrGBbUdFCOmE5JajlPC7Ga38Ljx9yO05itMpRJqQeB+98/GIyVP7FavMGjqrwTBGvJpIAHHNnUrfdL4tKWPXugSppOSahqHIB+/LigWsh2Z1uWS85qaq2HDHGOWlMMUV2UcQ=
+	t=1727875649; cv=none; b=szF0In270MoZz63MocNDpCVy1PPweI/WaTpunFKQZohfjTFw/HnWkaYJKORuVhMAICjmeHTawI9kI/N63C+F+tsrG3q8QenqwxfLj02CD0fmzwjQWvO4SbnK1jDDu+DdzZdippaXdAp0aWV3HBthx0qBcC6oyH2X1JD2NWgIn2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875646; c=relaxed/simple;
-	bh=hWJMOdBvjfu6KyizDCprh4deoo/X6oPvDt5sAWrG8SY=;
+	s=arc-20240116; t=1727875649; c=relaxed/simple;
+	bh=s/cBXKqtDKuA36yCe/dB8yyKKPc/W1p7K7g7rxlZ/jA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D4BGf97Jz6VBW3+ZZ3DM2TKCiXjBn9BLiseiZg5nXtqfNnIL1E+BZfiAQIAcy6SOqXv/hWgI6+EYqX9OK0FGC/30GHRMm39gIbJqs+TUFwJa2RTzXbP3wxKYGPxmvNijIxCPnyK8iPFKNVQU264IcQvxJRmqkDEOt5sT19Hi2yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5Ws3caX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzbNJ3AKNPO4rb380riXoaGT0urRluwHQGTO1Mg71RxOumGTfR5RsTLpkahf3rsawtnFCONjWHHJ4oUMTJ6nR7kwLM+xENasNC8KgYzsCwxy2WMn/R1S0g7Plaw3y1fwBhporkUM0uKSENUzQJMtLjOj0XTnm0NbIbfS050YBwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9lBVAhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5Ws3caX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53E0C4CEC5;
-	Wed,  2 Oct 2024 13:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9lBVAhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A51BC4CEC5;
+	Wed,  2 Oct 2024 13:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875646;
-	bh=hWJMOdBvjfu6KyizDCprh4deoo/X6oPvDt5sAWrG8SY=;
+	s=korg; t=1727875649;
+	bh=s/cBXKqtDKuA36yCe/dB8yyKKPc/W1p7K7g7rxlZ/jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5Ws3caXMJNUz8ENbqtJ77HEOod9effVfvqN3kNuHMYyvdPCxpew5mOJl7JoZ3HZk
-	 lOdtiykMbTesZH+fkWpkyK73Cx/Tm+TrH5AwqqTGQ6pYgwcgJPUAMuy05iriKUQfTL
-	 4HhGzrDGj0eBXoH1Cub+GrJ3p0ZJKHYA/ctAS8Gs=
+	b=n9lBVAhhIEWaODI2GOCqcbTWD/G+7FkH5LfklwBEx3nb6CcMOo88dlc5sb3rUKT2j
+	 dzFscHrkLYMbKLzzmxQSMLUZLnY04g4LmkkEwk/c+qz6X2Q6DlkNZHb0xvZwqa9HrO
+	 82li8c8VMs9Ie1V0I16deSchzq2zty03uXMNDWCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Reinette Chatre <reinette.chatre@intel.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 172/695] selftests:resctrl: Fix build failure on archs without __cpuid_count()
-Date: Wed,  2 Oct 2024 14:52:50 +0200
-Message-ID: <20241002125829.338091490@linuxfoundation.org>
+Subject: [PATCH 6.11 173/695] cgroup/pids: Avoid spurious event notification
+Date: Wed,  2 Oct 2024 14:52:51 +0200
+Message-ID: <20241002125829.376897713@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -47,114 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 7beaf1da074f7ea25454d6c11da142c3892d3c4e ]
+[ Upstream commit d72a00a8485d1cb11ac1a57bf89b02cbd3a405bf ]
 
-When resctrl is built on architectures without __cpuid_count()
-support, build fails. resctrl uses __cpuid_count() defined in
-kselftest.h.
+Currently when a process in a group forks and fails due to it's
+parent's max restriction, all the cgroups from 'pids_forking' to root
+will generate event notifications but only the cgroups from
+'pids_over_limit' to root will increase the counter of PIDCG_MAX.
 
-Even though the problem is seen while building resctrl on aarch64,
-this error can be seen on any platform that doesn't support CPUID.
+Consider this scenario: there are 4 groups A, B, C,and D, the
+relationships are as follows, and user is watching on C.pids.events.
 
-CPUID is a x86/x86-64 feature and code paths with CPUID asm commands
-will fail to build on all other architectures.
+root->A->B->C->D
 
-All others tests call __cpuid_count() do so from x86/x86_64 code paths
-when _i386__ or __x86_64__ are defined. resctrl is an exception.
+When a process in D forks and fails due to B.max restriction, the
+user will get a spurious event notification because when he wakes up
+and reads C.pids.events, he will find that the content has not changed.
 
-Fix the problem by defining __cpuid_count() only when __i386__ or
-__x86_64__ are defined in kselftest.h and changing resctrl to call
-__cpuid_count() only when __i386__ or __x86_64__ are defined.
+To address this issue, only the cgroups from 'pids_over_limit' to root
+will have their PIDCG_MAX counters increased and event notifications
+generated.
 
-In file included from resctrl.h:24,
-                 from cat_test.c:11:
-In function ‘arch_supports_noncont_cat’,
-    inlined from ‘noncont_cat_run_test’ at cat_test.c:326:6:
-../kselftest.h:74:9: error: impossible constraint in ‘asm’
-   74 |         __asm__ __volatile__ ("cpuid\n\t"                               \
-      |         ^~~~~~~
-cat_test.c:304:17: note: in expansion of macro ‘__cpuid_count’
-  304 |                 __cpuid_count(0x10, 1, eax, ebx, ecx, edx);
-      |                 ^~~~~~~~~~~~~
-../kselftest.h:74:9: error: impossible constraint in ‘asm’
-   74 |         __asm__ __volatile__ ("cpuid\n\t"                               \
-      |         ^~~~~~~
-cat_test.c:306:17: note: in expansion of macro ‘__cpuid_count’
-  306 |                 __cpuid_count(0x10, 2, eax, ebx, ecx, edx);
-
-Fixes: ae638551ab64 ("selftests/resctrl: Add non-contiguous CBMs CAT test")
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Closes: https://lore.kernel.org/lkml/20240809071059.265914-1-usama.anjum@collabora.com/
-Reported-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Acked-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 385a635cacfe ("cgroup/pids: Make event counters hierarchical")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest.h        | 2 ++
- tools/testing/selftests/resctrl/cat_test.c | 7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ kernel/cgroup/pids.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/kselftest.h b/tools/testing/selftests/kselftest.h
-index b8967b6e29d50..e195ec1568599 100644
---- a/tools/testing/selftests/kselftest.h
-+++ b/tools/testing/selftests/kselftest.h
-@@ -61,6 +61,7 @@
- #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
- #endif
- 
-+#if defined(__i386__) || defined(__x86_64__) /* arch */
- /*
-  * gcc cpuid.h provides __cpuid_count() since v4.4.
-  * Clang/LLVM cpuid.h provides  __cpuid_count() since v3.4.0.
-@@ -75,6 +76,7 @@
- 			      : "=a" (a), "=b" (b), "=c" (c), "=d" (d)	\
- 			      : "0" (level), "2" (count))
- #endif
-+#endif /* end arch */
- 
- /* define kselftest exit codes */
- #define KSFT_PASS  0
-diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
-index 742782438ca3b..94cfdba5308d8 100644
---- a/tools/testing/selftests/resctrl/cat_test.c
-+++ b/tools/testing/selftests/resctrl/cat_test.c
-@@ -290,12 +290,12 @@ static int cat_run_test(const struct resctrl_test *test, const struct user_param
- 
- static bool arch_supports_noncont_cat(const struct resctrl_test *test)
+diff --git a/kernel/cgroup/pids.c b/kernel/cgroup/pids.c
+index f5cb0ec45b9dd..34aa63d7c9c65 100644
+--- a/kernel/cgroup/pids.c
++++ b/kernel/cgroup/pids.c
+@@ -244,7 +244,6 @@ static void pids_event(struct pids_cgroup *pids_forking,
+ 		       struct pids_cgroup *pids_over_limit)
  {
--	unsigned int eax, ebx, ecx, edx;
--
- 	/* AMD always supports non-contiguous CBM. */
- 	if (get_vendor() == ARCH_AMD)
- 		return true;
+ 	struct pids_cgroup *p = pids_forking;
+-	bool limit = false;
  
-+#if defined(__i386__) || defined(__x86_64__) /* arch */
-+	unsigned int eax, ebx, ecx, edx;
- 	/* Intel support for non-contiguous CBM needs to be discovered. */
- 	if (!strcmp(test->resource, "L3"))
- 		__cpuid_count(0x10, 1, eax, ebx, ecx, edx);
-@@ -305,6 +305,9 @@ static bool arch_supports_noncont_cat(const struct resctrl_test *test)
- 		return false;
+ 	/* Only log the first time limit is hit. */
+ 	if (atomic64_inc_return(&p->events_local[PIDCG_FORKFAIL]) == 1) {
+@@ -252,20 +251,17 @@ static void pids_event(struct pids_cgroup *pids_forking,
+ 		pr_cont_cgroup_path(p->css.cgroup);
+ 		pr_cont("\n");
+ 	}
+-	cgroup_file_notify(&p->events_local_file);
+ 	if (!cgroup_subsys_on_dfl(pids_cgrp_subsys) ||
+-	    cgrp_dfl_root.flags & CGRP_ROOT_PIDS_LOCAL_EVENTS)
++	    cgrp_dfl_root.flags & CGRP_ROOT_PIDS_LOCAL_EVENTS) {
++		cgroup_file_notify(&p->events_local_file);
+ 		return;
++	}
  
- 	return ((ecx >> 3) & 1);
-+#endif /* end arch */
-+
-+	return false;
+-	for (; parent_pids(p); p = parent_pids(p)) {
+-		if (p == pids_over_limit) {
+-			limit = true;
+-			atomic64_inc(&p->events_local[PIDCG_MAX]);
+-			cgroup_file_notify(&p->events_local_file);
+-		}
+-		if (limit)
+-			atomic64_inc(&p->events[PIDCG_MAX]);
++	atomic64_inc(&pids_over_limit->events_local[PIDCG_MAX]);
++	cgroup_file_notify(&pids_over_limit->events_local_file);
+ 
++	for (p = pids_over_limit; parent_pids(p); p = parent_pids(p)) {
++		atomic64_inc(&p->events[PIDCG_MAX]);
+ 		cgroup_file_notify(&p->events_file);
+ 	}
  }
- 
- static int noncont_cat_run_test(const struct resctrl_test *test,
 -- 
 2.43.0
 
