@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9BF1D0DDC;
-	Wed,  2 Oct 2024 14:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A71D0792;
+	Wed,  2 Oct 2024 14:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877704; cv=none; b=kv6+lXKATj7fAydKVd9pw33+dqAYx/g4eLUpAdAwjYcgIKoFvLV969mGmxal79dX3GpuMF6nZArmjDq7QX52A9OWBleSJclnQm4aBDBRZbfYs6JXhvGpl3vh1M23dr0ukhQEUkNhn4p57yfkV/Q6aG7K3FmonSlUaDPThcGIXUs=
+	t=1727877706; cv=none; b=Fq+w8pr6MMJP+iuf4zzdpanvSSjXhLfKBkKanI78Ti9qFO/g4y5v005pi85r30TxStXwdxzT5ZkGcOaRcUrhijEw8z6Q7PJpDP+zXp0PnQi86wG53lKipCgA8CDSCYkgJYbOZGWEXdLzqEBcM9P1DstcpQ0nNxkCGCESlLqXleY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877704; c=relaxed/simple;
-	bh=TGkk7gB+pi/IxWbDb6qGLjGiIf33QLFPgdYMT948H5I=;
+	s=arc-20240116; t=1727877706; c=relaxed/simple;
+	bh=rlbL9dBtiyVMtx90eQUaKiRMoxf47BemxHdlORWzuEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgrk7pY+ymZG6d+N/ugB0H5O1suvyS6bWH2zSBU00osjTnsawAzgtdFMOWzHvuy0I8/p9zRFD02ZdZUrss3Uw/t/qMiKyisV0P+Db+7LXyxPYvMbfE9qw4rGMih7Mgl37+nULTzyl2uHsbepSFbgBRfbp0VtTegMETSP9Gys2fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcETLDMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv/z/83Pj4VNnuH6dL16fmZ1uZC5eXIjIawAgqAuxPWQ0AGtYfoY5yaGbG4VmCmecXAYqrTka/RyzAvcBMZ2sQ0lbDmOMCKZRsqieSjk0MQzgHvp2xz16utJQbkXzvZK4x42UrXUccl9O4JgPO+aSLeyyncDUPB9Kf2bX+VgWlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYrR5jAG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcETLDMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EEDC4CEC2;
-	Wed,  2 Oct 2024 14:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYrR5jAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D4FC4CEC5;
+	Wed,  2 Oct 2024 14:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877703;
-	bh=TGkk7gB+pi/IxWbDb6qGLjGiIf33QLFPgdYMT948H5I=;
+	s=korg; t=1727877706;
+	bh=rlbL9dBtiyVMtx90eQUaKiRMoxf47BemxHdlORWzuEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcETLDMdyNQRJs6bno5UTgCbuV++u12cb1orAHxKQUQK9myuyLssgpmB1DgcCCuA+
-	 qhx+XVTY+spfAOi99EkcVsoZ84BXLvMklpBfmliV4Srh2eTr+2cb+/iOiDocpon8LY
-	 dhUBspXQ2SG1WtjtU/GgYuqCq3YYObPxjmfwq0Og=
+	b=MYrR5jAG+tjUe4xZhvW2hl4as10jlQhtskhDY0D8lQuL1f2gdcp3Y0J066Bz9KAVz
+	 mCx0GT7iFMWzLty1RB0N6JKjLTKmAqxqL5HZnVVzEsRt3YJmcdGL6P4Ltjg5n3QK0T
+	 fKawsLzHl6r4ENHh0RoUa+o+zWuVlANzi9HFyIdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 164/634] iommu/amd: Handle error path in amd_iommu_probe_device()
-Date: Wed,  2 Oct 2024 14:54:24 +0200
-Message-ID: <20241002125817.584597521@linuxfoundation.org>
+Subject: [PATCH 6.10 135/634] ARM: dts: microchip: sama7g5: Fix RTT clock
+Date: Wed,  2 Oct 2024 14:53:55 +0200
+Message-ID: <20241002125816.437662372@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,50 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-[ Upstream commit 293aa9ec694e633bff83ab93715a2684e15fe214 ]
+[ Upstream commit 867bf1923200e6ad82bad0289f43bf20b4ac7ff9 ]
 
-Do not try to set max_pasids in error path as dev_data is not allocated.
+According to datasheet, Chapter 34. Clock Generator, section 34.2,
+Embedded characteristics, source clock for RTT is the TD_SLCK, registered
+with ID 1 by the slow clock controller driver. Fix RTT clock.
 
-Fixes: a0c47f233e68 ("iommu/amd: Introduce iommu_dev_data.max_pasids")
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/20240828111029.5429-5-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 7540629e2fc7 ("ARM: dts: at91: add sama7g5 SoC DT and sama7g5-ek")
+Link: https://lore.kernel.org/r/20240826165320.3068359-1-claudiu.beznea@tuxon.dev
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/microchip/sama7g5.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index b19e8c0f48fa2..fc660d4b10ac8 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2185,11 +2185,12 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
- 		dev_err(dev, "Failed to initialize - trying to proceed anyway\n");
- 		iommu_dev = ERR_PTR(ret);
- 		iommu_ignore_device(iommu, dev);
--	} else {
--		amd_iommu_set_pci_msi_domain(dev, iommu);
--		iommu_dev = &iommu->iommu;
-+		goto out_err;
- 	}
+diff --git a/arch/arm/boot/dts/microchip/sama7g5.dtsi b/arch/arm/boot/dts/microchip/sama7g5.dtsi
+index 75778be126a3d..17bcdcf0cf4a0 100644
+--- a/arch/arm/boot/dts/microchip/sama7g5.dtsi
++++ b/arch/arm/boot/dts/microchip/sama7g5.dtsi
+@@ -272,7 +272,7 @@
+ 			compatible = "microchip,sama7g5-rtt", "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
+ 			reg = <0xe001d020 0x30>;
+ 			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&clk32k 0>;
++			clocks = <&clk32k 1>;
+ 		};
  
-+	amd_iommu_set_pci_msi_domain(dev, iommu);
-+	iommu_dev = &iommu->iommu;
-+
- 	/*
- 	 * If IOMMU and device supports PASID then it will contain max
- 	 * supported PASIDs, else it will be zero.
-@@ -2201,6 +2202,7 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
- 					     pci_max_pasids(to_pci_dev(dev)));
- 	}
- 
-+out_err:
- 	iommu_completion_wait(iommu);
- 
- 	return iommu_dev;
+ 		clk32k: clock-controller@e001d050 {
 -- 
 2.43.0
 
