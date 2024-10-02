@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EB21D042F;
-	Wed,  2 Oct 2024 13:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DC61D042F;
+	Wed,  2 Oct 2024 13:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876756; cv=none; b=A13fiB440r6/ot6bGOhh8KJd18OfdkzaJxYob4n4eTdRwIi4GoiWfR4eQKGSdeObwAdQomL3gy0mAFW0ZfwTSzyEN2gRc8BZW/R+mFMn1vUxKp6i2xoOsamy/fbC0LsdNMLpqfrVDmiYj4TT3pTBTLDgsJktZRxTyAqw7jW09u8=
+	t=1727876759; cv=none; b=nIKgvakh6QfotFi9cTonUpmMdKyIokGWkw5YyjQKBjVje1xG6vTocNESin0Gd+kB045Ev//2FJ1fGqKtxv5yyysuO6tEfeIIEz3DnncBimsF2Ua3nfb/TL9LFI1N+akmhnnSErd2KOaGfwUxVrnNjYb+wsJvjorcHtkXYJkkovg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876756; c=relaxed/simple;
-	bh=BU+pohYJBy6SoK4oe2S0N/36Zzr7Jz6SSW0MQ2qXudg=;
+	s=arc-20240116; t=1727876759; c=relaxed/simple;
+	bh=1OoiIls1CqmSwAhkomeL39L5mzu6G1KEhxYwrGSPgzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXYPXCaeZ2vAKE7utumx6365pDdCXIEOQSnYpJB/vO+GpJPQqK72isNlJf7hm4h8CYItOQEdBSIfTMaNv4xsrsxvsHRx0kzmCXoDlc2JVN5GdvOJjAozatmoYgdGJaNHQoIzXm1ugGZCa08q2bDIjdr5USgSlTJ4OCaRngFZvQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPzKdvu3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edumh53WalLKC5vAoHiGKTmZBxAYVU8XC5LSpK/CID1Z5dJ4JwjFloXtHdCe8x4lhmTT6iBOGI2zjxQUNgg40En8YeKLgqh4JaQmIO2Pv1WzBD/vwTb6nfXqcc77gZ3RV/L9q65AxyXvWNAkqtN3zJyqxK/BM0IiF3cTdQvZN78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpQExj3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPzKdvu3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B24C4CEC2;
-	Wed,  2 Oct 2024 13:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpQExj3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6EA5C4CEC5;
+	Wed,  2 Oct 2024 13:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876756;
-	bh=BU+pohYJBy6SoK4oe2S0N/36Zzr7Jz6SSW0MQ2qXudg=;
+	s=korg; t=1727876759;
+	bh=1OoiIls1CqmSwAhkomeL39L5mzu6G1KEhxYwrGSPgzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zPzKdvu3PVvhrXcUNk98lq4B6FVkSkRk9VzC58v0k0NquhibRjGIHAg4TrONR2BCe
-	 V1iFGijjvhPsOusUc7JwGuQOuWNBq0kDC+oUXqg9jsVSDlvcw1hFY0cRBs9uUIhdSf
-	 gtAX8u04KSKJL9MmKjnH/m9lf1bAW3xB40NzTJFM=
+	b=RpQExj3Gri8/Yx0ZE2o3d98bwxaz3OyJAmv2wIopS5Slf7DCR1/bvytyfqSYsjwZx
+	 7syYGi3+srokPVb+VkqpyyDr/J/jkuK0tU4bUFUnUacifOR/wj2gr3pXIXfPd+su/U
+	 MkwLBbVdMd2rHpvgoeKvIfsSSl4gJYhstSShg4NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Anthony Koo <anthony.koo@amd.com>,
-	Robin Chen <robin.chen@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.11 552/695] drm/amd/display: Round calculated vtotal
-Date: Wed,  2 Oct 2024 14:59:10 +0200
-Message-ID: <20241002125844.538708253@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.11 526/695] soc: versatile: integrator: fix OF node leak in probe() error path
+Date: Wed,  2 Oct 2024 14:58:44 +0200
+Message-ID: <20241002125843.483747115@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,37 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Chen <robin.chen@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit c03fca619fc687338a3b6511fdbed94096abdf79 upstream.
+commit 874c5b601856adbfda10846b9770a6c66c41e229 upstream.
 
-[WHY]
-The calculated vtotal may has 1 line deviation. To get precisely
-vtotal number, round the vtotal result.
+Driver is leaking OF node reference obtained from
+of_find_matching_node().
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f956a785a282 ("soc: move SoC driver for the ARM Integrator")
 Cc: stable@vger.kernel.org
-Reviewed-by: Anthony Koo <anthony.koo@amd.com>
-Signed-off-by: Robin Chen <robin.chen@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-1-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/freesync/freesync.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/versatile/soc-integrator.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-+++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-@@ -134,7 +134,7 @@ unsigned int mod_freesync_calc_v_total_f
+--- a/drivers/soc/versatile/soc-integrator.c
++++ b/drivers/soc/versatile/soc-integrator.c
+@@ -113,6 +113,7 @@ static int __init integrator_soc_init(vo
+ 		return -ENODEV;
  
- 	v_total = div64_u64(div64_u64(((unsigned long long)(
- 			frame_duration_in_ns) * (stream->timing.pix_clk_100hz / 10)),
--			stream->timing.h_total), 1000000);
-+			stream->timing.h_total) + 500000, 1000000);
+ 	syscon_regmap = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
  
- 	/* v_total cannot be less than nominal */
- 	if (v_total < stream->timing.v_total) {
 
 
