@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B4E1D0787;
-	Wed,  2 Oct 2024 13:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1A71D0787;
+	Wed,  2 Oct 2024 13:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876668; cv=none; b=Q27EDxAdCw45I+hZ/sE15S/JqsIyqFj9OwswDrc2ZVVZSnl9orcHn4aBJUpCi5K2ZGfvx/6rp1biETKDWTRRc+s7+g3qmtZW09tgQvEkO0GZ+MEEMAj+9pxgYysUwGI/CLMXHoplQtcm6qAER05rGYkO2QFs251nFOyRhiySaVA=
+	t=1727876671; cv=none; b=ned222AY7heMf/igtz7d3peKAXBwqpOxfzTWTtTm4HkUm81iB6jOXbRwG+zYZXtWm3ZWC9Ta5QXGEVo8PiW8rUbwBbLVGkZ5xSw4MC2ysfD3SV80LQLtVmpVDq0P4fLZr4tgx0MdLxZHtivfJmCj0wRsOG/4ayMBh8r+caQ0++Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876668; c=relaxed/simple;
-	bh=pr0jZFUyyKjIxZrnR7yuDhxrCWyE7Pxzs/GI5RII3w4=;
+	s=arc-20240116; t=1727876671; c=relaxed/simple;
+	bh=q+WDcNqXpJylmxGxh6GmOa2NkHq4o7auefova5msee4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Itz5uuebfsw2t0cuzvEZ40m7U/LOA/BQVgwAyA1CixZX7+0jSVTx2jfeAOdxgJ4JGo7mtkfkuioKadP9rTBGJYSzr9RD+uA2hWddxwIeMN5ULuM2+dmpABzf1FhtgLPN9VlHyMvoriPFnjIWWlXDhaNNDIQ6PqE3aBSwvROGFqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0iWFggJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rRA50MH7A2jPy6cx9xettFhUELPSqzrUfPwtJ5s5hnxkoFrbquYH7hIwCeALpGO75fwglZlk1k0PabKJkusMgGKlwmwQYnS/m40giPoh8TscUxe6wn1mvQRcxjixitKg2Wj+4A9l05jtNu8pUD7B7JsRqp6hKOgQPJRvLbwNFa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbueE8oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0iWFggJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9282FC4CEC5;
-	Wed,  2 Oct 2024 13:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbueE8oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A57C4CEC5;
+	Wed,  2 Oct 2024 13:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876668;
-	bh=pr0jZFUyyKjIxZrnR7yuDhxrCWyE7Pxzs/GI5RII3w4=;
+	s=korg; t=1727876670;
+	bh=q+WDcNqXpJylmxGxh6GmOa2NkHq4o7auefova5msee4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0iWFggJzppgwmM9WeXk0qCHREnWRtzEVkLrBDYsrSWlmW+HhSzBgjYY7i4S2ujy7
-	 GYw0Ni/tFw7omxE9QZXvG+yaePWY+Wn2tB98O+8cdIfNLdRr9ma7Ehm2Kqh94mLSAk
-	 iizKVOKDxzCmgAsmePkQSHWNvGow4icSUISK5WoM=
+	b=MbueE8oMGZII2OUN9ub+MP4y2VDILdVIG/6cUyGtGzQ1tscELnx21hXDTtzkWQXCt
+	 iGOCaRKmbuCgXZyqQJ63AO5SOxHadUrpShLrU1S7ED3szHintZiMtpnhp24H9k62q/
+	 L0KfNQ891tnBhDX41GhS3dhkduNllRPBkhD+zMcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udit Kumar <u-kumar1@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.11 521/695] PCI: dra7xx: Fix error handling when IRQ request fails in probe
-Date: Wed,  2 Oct 2024 14:58:39 +0200
-Message-ID: <20241002125843.283059631@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.11 522/695] Revert "soc: qcom: smd-rpm: Match rpmsg channel instead of compatible"
+Date: Wed,  2 Oct 2024 14:58:40 +0200
+Message-ID: <20241002125843.321952692@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -47,61 +44,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 4d60f6d4b8fa4d7bad4aeb2b3ee5c10425bc60a4 upstream.
+commit b17155133391d7f6dd18d3fb94a7d492fdec18fa upstream.
 
-Commit d4c7d1a089d6 ("PCI: dwc: dra7xx: Push request_irq()
-call to the bottom of probe") moved the IRQ request for
-"dra7xx-pcie-main" towards the end of dra7xx_pcie_probe().
+The rpm_requests device nodes have the compatible node. As such the
+rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
+smd-rpm is built as a module, it doesn't get autoloaded for the device.
 
-However, the error handling does not take into account the
-initialization performed by either dra7xx_add_pcie_port() or
-dra7xx_add_pcie_ep(), depending on the mode of operation.
+Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
+instead of compatible")
 
-Fix the error handling to address this.
-
-Fixes: d4c7d1a089d6 ("PCI: dwc: dra7xx: Push request_irq() call to the bottom of probe")
-Link: https://lore.kernel.org/linux-pci/20240827122422.985547-3-s-vadapalli@ti.com
-Tested-by: Udit Kumar <u-kumar1@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
 Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/smd-rpm.c |   35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -854,11 +854,17 @@ static int dra7xx_pcie_probe(struct plat
- 					"dra7xx-pcie-main", dra7xx);
- 	if (ret) {
- 		dev_err(dev, "failed to request irq\n");
--		goto err_gpio;
-+		goto err_deinit;
- 	}
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -196,9 +196,6 @@ static int qcom_smd_rpm_probe(struct rpm
+ {
+ 	struct qcom_smd_rpm *rpm;
  
- 	return 0;
+-	if (!rpdev->dev.of_node)
+-		return -EINVAL;
+-
+ 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
+ 	if (!rpm)
+ 		return -ENOMEM;
+@@ -218,18 +215,38 @@ static void qcom_smd_rpm_remove(struct r
+ 	of_platform_depopulate(&rpdev->dev);
+ }
  
-+err_deinit:
-+	if (dra7xx->mode == DW_PCIE_RC_TYPE)
-+		dw_pcie_host_deinit(&dra7xx->pci->pp);
-+	else
-+		dw_pcie_ep_deinit(&dra7xx->pci->ep);
-+
- err_gpio:
- err_get_sync:
- 	pm_runtime_put(dev);
+-static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
+-	{ .name = "rpm_requests", },
+-	{ /* sentinel */ }
++static const struct of_device_id qcom_smd_rpm_of_match[] = {
++	{ .compatible = "qcom,rpm-apq8084" },
++	{ .compatible = "qcom,rpm-ipq6018" },
++	{ .compatible = "qcom,rpm-ipq9574" },
++	{ .compatible = "qcom,rpm-msm8226" },
++	{ .compatible = "qcom,rpm-msm8909" },
++	{ .compatible = "qcom,rpm-msm8916" },
++	{ .compatible = "qcom,rpm-msm8936" },
++	{ .compatible = "qcom,rpm-msm8953" },
++	{ .compatible = "qcom,rpm-msm8974" },
++	{ .compatible = "qcom,rpm-msm8976" },
++	{ .compatible = "qcom,rpm-msm8994" },
++	{ .compatible = "qcom,rpm-msm8996" },
++	{ .compatible = "qcom,rpm-msm8998" },
++	{ .compatible = "qcom,rpm-sdm660" },
++	{ .compatible = "qcom,rpm-sm6115" },
++	{ .compatible = "qcom,rpm-sm6125" },
++	{ .compatible = "qcom,rpm-sm6375" },
++	{ .compatible = "qcom,rpm-qcm2290" },
++	{ .compatible = "qcom,rpm-qcs404" },
++	{}
+ };
+-MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
++MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+ 
+ static struct rpmsg_driver qcom_smd_rpm_driver = {
+ 	.probe = qcom_smd_rpm_probe,
+ 	.remove = qcom_smd_rpm_remove,
+ 	.callback = qcom_smd_rpm_callback,
+-	.id_table = qcom_smd_rpm_id_table,
+-	.drv.name = "qcom_smd_rpm",
++	.drv  = {
++		.name  = "qcom_smd_rpm",
++		.of_match_table = qcom_smd_rpm_of_match,
++	},
+ };
+ 
+ static int __init qcom_smd_rpm_init(void)
 
 
