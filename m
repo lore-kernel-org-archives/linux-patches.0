@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58CD1D0E2A;
-	Wed,  2 Oct 2024 14:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C67B19F411;
+	Wed,  2 Oct 2024 14:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879267; cv=none; b=S9/EXOYoErr3FFwJa72kyLE32LdUK6L0jZDbMKd1QCw6CAJXCWTsWDAHWtcS64MiPv64OoRFZuTbzRuQ9HBuUUqLALaVo58onx4EHWRNJfykuSrygAcwXOAQ2TGvb2MGZ3OoVdJxrYP4ydnZeVkK+uc2UZuKa3MGbzotnyshwPg=
+	t=1727879270; cv=none; b=juLbj0y9dXGG/WK0GIEpbCl9Mab3jcyeqD3JbH2zRsEtTHXvAcrjYQxWzUuSP1MsXiVklnPL975BHF6tXDv48ROI+4qVlA/055bGxeqQa3QRRrj9YLUsKItxCidevYr1cUwb6Pg9R0QKzerU4DZ0n/EI0wfHHa3RI+S+nIkAUwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879267; c=relaxed/simple;
-	bh=fcllsbrtiuNVYIPyIDAxDSAXZbzklTqJhkuCExLvdw4=;
+	s=arc-20240116; t=1727879270; c=relaxed/simple;
+	bh=VR2UXzEDRR9A6BTa5Q71dV6IdHPh23yagvn/uvp82Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cuQPcrYYEgsVYb2RnncP5yVulKxi8RuH857x8Le1pwMel2J9/DiW4Z7qqeRmwfCadBZy3Jo6Rralue+LH60wrQ6AmWSGnC41SzuRg/2Y6AsPpxAQEOOU1+TpgimhujIMyS+PMCrqZ5gUZZ5wOim8BiXPJdSU9pvCscVBZ/ZiDPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjsg7ph4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6hJYENaGCmJ/UFJhoTZT9FftsyhosHmqgPwJM2/qZUEcK8LrFu3N73xBJrEaPjbUif1jM9rVNB4JGuG0rbgR5K/r8YvSoGdCznG3QrGgziy6xdvj05SsGLz7KMig5N4VUECPwqHTdsC3WrQhhkWOmdDhkl0NCIlnnn+haYdWlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkuhatJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjsg7ph4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2903DC4CEC2;
-	Wed,  2 Oct 2024 14:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkuhatJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138C3C4CEC2;
+	Wed,  2 Oct 2024 14:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879267;
-	bh=fcllsbrtiuNVYIPyIDAxDSAXZbzklTqJhkuCExLvdw4=;
+	s=korg; t=1727879270;
+	bh=VR2UXzEDRR9A6BTa5Q71dV6IdHPh23yagvn/uvp82Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjsg7ph4J8JLyr7/JRU6MdkDL6dWGDVVMuykgt/RL8rKaJAPXBR79cSMtUy5VeeLq
-	 mLn1BszDVPnweuubSFJmeO46vwyBn15VBNZW49mR5thJMyMFerzUKM/TKeYQJaS2xt
-	 gcV6rOM4sgNUFXFaU3MFmOccis5VxPLEq7wCrKjk=
+	b=VkuhatJ+z5XwYlhehEafXjrkpDs0zc1aVXUn2+hrnrvT5nnX39KCMeAA30QLSY4Uj
+	 AWTu2pJiIKh6OVhVJiN47+BiodZIgaeIm71NtFO1sH1ulgTbiBNi55rF0qu2AR72ov
+	 SeEydOLEYnfuuRifGN0ZS+YnCpB8Dyb3Oq66+7j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/538] drivers/perf: hisi_pcie: Fix TLP headers bandwidth counting
-Date: Wed,  2 Oct 2024 14:54:28 +0200
-Message-ID: <20241002125753.171631880@linuxfoundation.org>
+Subject: [PATCH 6.6 030/538] kselftest/arm64: Actually test SME vector length changes via sigreturn
+Date: Wed,  2 Oct 2024 14:54:29 +0200
+Message-ID: <20241002125753.211846852@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,39 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 17bf68aeb3642221e3e770399b5a52f370747ac1 ]
+[ Upstream commit 6f0315330af7a57c1c00587fdfb69c7778bf1c50 ]
 
-We make the initial value of event ctrl register as HISI_PCIE_INIT_SET
-and modify according to the user options. This will make TLP headers
-bandwidth only counting never take effect since HISI_PCIE_INIT_SET
-configures to count the TLP payloads bandwidth. Fix this by making
-the initial value of event ctrl register as 0.
+The test case for SME vector length changes via sigreturn use a bit too
+much cut'n'paste and only actually changed the SVE vector length in the
+test itself. Andre's recent factoring out of the initialisation code caused
+this to be exposed and the test to start failing. Fix the test to actually
+cover the thing it's supposed to test.
 
-Fixes: 17d573984d4d ("drivers/perf: hisi: Add TLP filter support")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240829090332.28756-3-yangyicong@huawei.com
+Fixes: 4963aeb35a9e ("kselftest/arm64: signal: Add SME signal handling tests")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Tested-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20240829-arm64-sme-signal-vl-change-test-v1-1-42d7534cb818@kernel.org
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hisi_pcie_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testcases/fake_sigreturn_sme_change_vl.c       | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-index 570ae69c38ec0..4a902da5c1d49 100644
---- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-@@ -221,7 +221,7 @@ static void hisi_pcie_pmu_config_filter(struct perf_event *event)
- 	struct hisi_pcie_pmu *pcie_pmu = to_pcie_pmu(event->pmu);
- 	struct hw_perf_event *hwc = &event->hw;
- 	u64 port, trig_len, thr_len, len_mode;
--	u64 reg = HISI_PCIE_INIT_SET;
-+	u64 reg = 0;
+diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
+index cb8c051b5c8f2..dfd6a2badf9fb 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
++++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
+@@ -35,30 +35,30 @@ static int fake_sigreturn_ssve_change_vl(struct tdescr *td,
+ {
+ 	size_t resv_sz, offset;
+ 	struct _aarch64_ctx *head = GET_SF_RESV_HEAD(sf);
+-	struct sve_context *sve;
++	struct za_context *za;
  
- 	/* Config HISI_PCIE_EVENT_CTRL according to event. */
- 	reg |= FIELD_PREP(HISI_PCIE_EVENT_M, hisi_pcie_get_real_event(event));
+ 	/* Get a signal context with a SME ZA frame in it */
+ 	if (!get_current_context(td, &sf.uc, sizeof(sf.uc)))
+ 		return 1;
+ 
+ 	resv_sz = GET_SF_RESV_SIZE(sf);
+-	head = get_header(head, SVE_MAGIC, resv_sz, &offset);
++	head = get_header(head, ZA_MAGIC, resv_sz, &offset);
+ 	if (!head) {
+-		fprintf(stderr, "No SVE context\n");
++		fprintf(stderr, "No ZA context\n");
+ 		return 1;
+ 	}
+ 
+-	if (head->size != sizeof(struct sve_context)) {
++	if (head->size != sizeof(struct za_context)) {
+ 		fprintf(stderr, "Register data present, aborting\n");
+ 		return 1;
+ 	}
+ 
+-	sve = (struct sve_context *)head;
++	za = (struct za_context *)head;
+ 
+ 	/* No changes are supported; init left us at minimum VL so go to max */
+ 	fprintf(stderr, "Attempting to change VL from %d to %d\n",
+-		sve->vl, vls[0]);
+-	sve->vl = vls[0];
++		za->vl, vls[0]);
++	za->vl = vls[0];
+ 
+ 	fake_sigreturn(&sf, sizeof(sf), 0);
+ 
 -- 
 2.43.0
 
