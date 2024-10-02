@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2431D0E12;
-	Wed,  2 Oct 2024 13:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F891D0418;
+	Wed,  2 Oct 2024 13:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876462; cv=none; b=gyPqmzorG3br9Uhvs5Rrwk026Ldw7yt0JFEHmIiIuPvTuLw8HF1nd4PhJ1mM8/Ii9Km5COw8nKjUhl1BSN9/sA/rwcb+3jN3HqEOe0+bYAyFT9Gut9I6hnewO13zAWyfIzdp06WWb+LEKfUJ6UnUdHJX5snAxtYDDxeN1gXR1Bk=
+	t=1727876465; cv=none; b=gGfQ80O2xwe1kZCWNIVVkdT/mcYpmmY7loA/4ktoRPz6uW4FpOgDVklI1Zod24MKakNqqOa+ZSx6KpxLzyxYJ4Vi4gEe+NPYVzgpmJnotyqW8CeGWE0UkVZp+XxDJnJqvitg9thXnf/h8cVWSRr7+RhQ9UFuLkMoELpMLvLSQeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876462; c=relaxed/simple;
-	bh=T/Aj1zYry4MIPJjQsD5ac7bg54jsOpBpD4mI7RhyxZc=;
+	s=arc-20240116; t=1727876465; c=relaxed/simple;
+	bh=WGvIOtpLoepWX2yuohpoTbrMK54dU4mBxT0wIB3qGvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSwUtnyD7bT2r7Yjrp/cA0O9Y7JkLLTDmDpwf64akY+0Vwz9NycD0os7w2fgUWon9gJQ5Ibe+umBHZzojoKxqyL11b73okdqBVXxbQN0R8u9cWkNOHg8xoE9Ig2utPkLgn0zUiyIiJVOns7h/IfQr/t/YwjWDFKN7oUZrqtm7u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZmj+112; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmC5+sW0gznmWIYZMWa539cKhe1IgOTNb2Hsl9mEY7AS73T233L3aaxjynpDOYv/uzojVmShDhumh1cdyBbDIrzIoalE7oeXM19Yqi+0oPl71Ab9Nw6nAavWR/LinjdViM4S/2Jgn7gl2dbNXGoIZnz3IvZyELjNBdKhKNfNCoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjWbD1vc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZmj+112"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7498C4CEC5;
-	Wed,  2 Oct 2024 13:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjWbD1vc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB95BC4CECD;
+	Wed,  2 Oct 2024 13:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876462;
-	bh=T/Aj1zYry4MIPJjQsD5ac7bg54jsOpBpD4mI7RhyxZc=;
+	s=korg; t=1727876465;
+	bh=WGvIOtpLoepWX2yuohpoTbrMK54dU4mBxT0wIB3qGvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZmj+112wkbMmpnmGeNTB/ZhvNW1KR91xYrSIzTzXr5FEmgB6/7XudtXQCS4Jvgvd
-	 BlgmyyWLlGLq3RagIYBFJs+FSSymViVQHVT7gDaUO/1Sw2e5ei2bhpDZdwgiRJHyqi
-	 Un/eE0SUsI1KUwNuOskZmxscYsHtEly3MjUB7Xe8=
+	b=DjWbD1vc2tLEds5SQR+EHGahxclTrul9p4f1aKco3te7/vlr8UYvnjI6+SPZq2lDY
+	 Pa97jwe4a0PU7b3LGD7WrBzRqA3Bk4hEc/PMOssZZCS1uPByBvpqW0PCUTHuHkToNg
+	 c6MoUuUw5SDH9uwYA/y7e543t3QTog743+mJjSqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	Mark Brown <broonie@kernel.org>,
+	Roi Azarzar <roi.azarzar@vastdata.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 451/695] spi: atmel-quadspi: Avoid overwriting delay register settings
-Date: Wed,  2 Oct 2024 14:57:29 +0200
-Message-ID: <20241002125840.462311087@linuxfoundation.org>
+Subject: [PATCH 6.11 452/695] NFSv4.2: Fix detection of "Proxying of Times" server support
+Date: Wed,  2 Oct 2024 14:57:30 +0200
+Message-ID: <20241002125840.501210177@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,78 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Roi Azarzar <roi.azarzar@vastdata.com>
 
-[ Upstream commit 329ca3eed4a9a161515a8714be6ba182321385c7 ]
+[ Upstream commit 615e693b14ba22e1332c3bd5a4e038284bbc3e07 ]
 
-Previously the MR and SCR registers were just set with the supposedly
-required values, from cached register values (cached reg content
-initialized to zero).
+According to draft-ietf-nfsv4-delstid-07:
+   If a server informs the client via the fattr4_open_arguments
+   attribute that it supports
+   OPEN_ARGS_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS and it returns a valid
+   delegation stateid for an OPEN operation which sets the
+   OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS flag, then it MUST query the
+   client via a CB_GETATTR for the fattr4_time_deleg_access (see
+   Section 5.2) attribute and fattr4_time_deleg_modify attribute (see
+   Section 5.2).
 
-All parts fixed here did not consider the current register (cache)
-content, which would make future support of cs_setup, cs_hold, and
-cs_inactive impossible.
+Thus, we should look that the server supports proxying of times via
+OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS.
 
-Setting SCBR in atmel_qspi_setup() erases a possible DLYBS setting from
-atmel_qspi_set_cs_timing().  The DLYBS setting is applied by ORing over
-the current setting, without resetting the bits first.  All writes to MR
-did not consider possible settings of DLYCS and DLYBCT.
+We want to be extra pedantic and continue to check that FATTR4_TIME_DELEG_ACCESS
+and FATTR4_TIME_DELEG_MODIFY are set. The server needs to expose both for the
+client to correctly detect "Proxying of Times" support.
 
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Fixes: f732646d0ccd ("spi: atmel-quadspi: Add support for configuring CS timing")
-Link: https://patch.msgid.link/20240918082744.379610-2-ada@thorsis.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Roi Azarzar <roi.azarzar@vastdata.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: dcb3c20f7419 ("NFSv4: Add a capability for delegated attributes")
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index 466c01b31123b..b557ce94da209 100644
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -375,9 +375,9 @@ static int atmel_qspi_set_cfg(struct atmel_qspi *aq,
- 	 * If the QSPI controller is set in regular SPI mode, set it in
- 	 * Serial Memory Mode (SMM).
- 	 */
--	if (aq->mr != QSPI_MR_SMM) {
--		atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
--		aq->mr = QSPI_MR_SMM;
-+	if (!(aq->mr & QSPI_MR_SMM)) {
-+		aq->mr |= QSPI_MR_SMM;
-+		atmel_qspi_write(aq->scr, aq, QSPI_MR);
- 	}
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index b8ffbe52ba15a..cd2fbde2e6d72 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3904,6 +3904,18 @@ static void nfs4_close_context(struct nfs_open_context *ctx, int is_sync)
+ #define FATTR4_WORD2_NFS41_MASK (2*FATTR4_WORD2_SUPPATTR_EXCLCREAT - 1UL)
+ #define FATTR4_WORD2_NFS42_MASK (2*FATTR4_WORD2_OPEN_ARGUMENTS - 1UL)
  
- 	/* Clear pending interrupts */
-@@ -501,7 +501,8 @@ static int atmel_qspi_setup(struct spi_device *spi)
- 	if (ret < 0)
- 		return ret;
++#define FATTR4_WORD2_NFS42_TIME_DELEG_MASK \
++	(FATTR4_WORD2_TIME_DELEG_MODIFY|FATTR4_WORD2_TIME_DELEG_ACCESS)
++static bool nfs4_server_delegtime_capable(struct nfs4_server_caps_res *res)
++{
++	u32 share_access_want = res->open_caps.oa_share_access_want[0];
++	u32 attr_bitmask = res->attr_bitmask[2];
++
++	return (share_access_want & NFS4_SHARE_WANT_DELEG_TIMESTAMPS) &&
++	       ((attr_bitmask & FATTR4_WORD2_NFS42_TIME_DELEG_MASK) ==
++					FATTR4_WORD2_NFS42_TIME_DELEG_MASK);
++}
++
+ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *fhandle)
+ {
+ 	u32 minorversion = server->nfs_client->cl_minorversion;
+@@ -3982,8 +3994,6 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ #endif
+ 		if (res.attr_bitmask[0] & FATTR4_WORD0_FS_LOCATIONS)
+ 			server->caps |= NFS_CAP_FS_LOCATIONS;
+-		if (res.attr_bitmask[2] & FATTR4_WORD2_TIME_DELEG_MODIFY)
+-			server->caps |= NFS_CAP_DELEGTIME;
+ 		if (!(res.attr_bitmask[0] & FATTR4_WORD0_FILEID))
+ 			server->fattr_valid &= ~NFS_ATTR_FATTR_FILEID;
+ 		if (!(res.attr_bitmask[1] & FATTR4_WORD1_MODE))
+@@ -4011,6 +4021,8 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ 		if (res.open_caps.oa_share_access_want[0] &
+ 		    NFS4_SHARE_WANT_OPEN_XOR_DELEGATION)
+ 			server->caps |= NFS_CAP_OPEN_XOR;
++		if (nfs4_server_delegtime_capable(&res))
++			server->caps |= NFS_CAP_DELEGTIME;
  
--	aq->scr = QSPI_SCR_SCBR(scbr);
-+	aq->scr &= ~QSPI_SCR_SCBR_MASK;
-+	aq->scr |= QSPI_SCR_SCBR(scbr);
- 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
- 
- 	pm_runtime_mark_last_busy(ctrl->dev.parent);
-@@ -534,6 +535,7 @@ static int atmel_qspi_set_cs_timing(struct spi_device *spi)
- 	if (ret < 0)
- 		return ret;
- 
-+	aq->scr &= ~QSPI_SCR_DLYBS_MASK;
- 	aq->scr |= QSPI_SCR_DLYBS(cs_setup);
- 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
- 
-@@ -549,8 +551,8 @@ static void atmel_qspi_init(struct atmel_qspi *aq)
- 	atmel_qspi_write(QSPI_CR_SWRST, aq, QSPI_CR);
- 
- 	/* Set the QSPI controller by default in Serial Memory Mode */
--	atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
--	aq->mr = QSPI_MR_SMM;
-+	aq->mr |= QSPI_MR_SMM;
-+	atmel_qspi_write(aq->mr, aq, QSPI_MR);
- 
- 	/* Enable the QSPI controller */
- 	atmel_qspi_write(QSPI_CR_QSPIEN, aq, QSPI_CR);
+ 		memcpy(server->cache_consistency_bitmask, res.attr_bitmask, sizeof(server->cache_consistency_bitmask));
+ 		server->cache_consistency_bitmask[0] &= FATTR4_WORD0_CHANGE|FATTR4_WORD0_SIZE;
 -- 
 2.43.0
 
