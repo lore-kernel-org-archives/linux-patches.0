@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E661D14F3;
-	Wed,  2 Oct 2024 14:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C631D1512;
+	Wed,  2 Oct 2024 14:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880659; cv=none; b=d8vcL1b6HZGPbImCdoK5Z4FwoWhwXBEtJkkV8fYjx8QBLN3fNi01RDa17KEKc70tniyGxEowfenPgUFxT7Cbq34j/6qVY7/2o0fQjTpo2vwq2n5cWQ7rlUAJJ/o3WXX/6cbhG7R7rT0RclY6wne0Afk+iQbtYCULLt7W+YehgSQ=
+	t=1727880662; cv=none; b=iCWIuscDZbjqm1HZJhgcml4PoG1TwgN1ZdaMiffgFbAswJHgfIc+CWSueLlcwzPqxs6JhllbZ52in88knQl9BjRw8lS68sOOaKIWJCkswywG/KdwpnQxNT/p0zsKcTnqK74sRM9gOJv1dygqk6CYUI1sYL0DBmNIFLfrSpLb8nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880659; c=relaxed/simple;
-	bh=dobRiKZnsTlHRDb50+ZohRXbv8Ev/tq0auVVcOfc2yU=;
+	s=arc-20240116; t=1727880662; c=relaxed/simple;
+	bh=/6dI35bbZ3Okv0i7rwVJ/mVZVOkVOQ3jJooU9UTYbUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWn4sUEkLycI86whttBipGINAdND5AD4MgF4AC5jZlLUigGdGXzLGo7wJ3m8wVfLQ3Ftl+w+uEcOzyXNZDhS8gxEdix0/msGCp8Ia7QCuG7amzQKDyEsiaJZO6aLQghzh5gOYkSTr6p8HjTwKG431WikIpVnv7/Q1u/nDueekko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYvj2Vq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpIf1bvSr2qLKU3yL6a+wfDjnuDwAYBfTaIpFwbX5oYvTgvJdwrpHGibtRmPkfisyj6CV0t9Rimph0+RapJN+0WnsZh7/CUjd+mVOx7yRFYk2l28HNZlkeB3JWM2IAD8gPOXJ/Pq+bLwF3gs49eoTA7uAON/KWQBbFf3IBgfyno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6AqyYpj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYvj2Vq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FA7C4CEC2;
-	Wed,  2 Oct 2024 14:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6AqyYpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6835C4CEC2;
+	Wed,  2 Oct 2024 14:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880659;
-	bh=dobRiKZnsTlHRDb50+ZohRXbv8Ev/tq0auVVcOfc2yU=;
+	s=korg; t=1727880662;
+	bh=/6dI35bbZ3Okv0i7rwVJ/mVZVOkVOQ3jJooU9UTYbUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYvj2Vq/mVKGyK00pXBY79T9cr431W2fSNUHAEP7L8uhIr4xJ4wZsN42LnxjhnfYW
-	 SSI/vFMYncbDcGhOyTUa7s+tl0RIvOvCtIa/9iD/VS9HPhtZmgvfNVAhIn7xHzLFdz
-	 g1lex9fgXiGKRU+rMkQfDBWzbIpY/BUUTsWxt3Nw=
+	b=t6AqyYpj+wvebJ/JeHRB8bqeTaE2UZzmDMND7aGdymY8gp+7sG0B9ZMe/8HBjB0DC
+	 OeW1qNEImotscq76/u+DXh0LNXLGcwlYeN/RNh/OBhX7J4zCtM4K3qlE7gZ3TgUp81
+	 /gjwc6RvS3eQuICWPPNRNHH8fyS1nn1qO8rz4hoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Qin Wan <qin.wan@hp.com>,
 	Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.6 503/538] thunderbolt: Use tb_tunnel_dbg() where possible to make logging more consistent
-Date: Wed,  2 Oct 2024 15:02:22 +0200
-Message-ID: <20241002125812.295154636@linuxfoundation.org>
+Subject: [PATCH 6.6 504/538] thunderbolt: Expose tb_tunnel_xxx() log macros to the rest of the driver
+Date: Wed,  2 Oct 2024 15:02:23 +0200
+Message-ID: <20241002125812.334856752@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -54,213 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit fe8a0293c922ee8bc1ff0cf9048075afb264004a ]
+[ Upstream commit d27bd2c37d4666bce25ec4d9ac8c6b169992f0f0 ]
 
-This makes it easier to find out the tunnel in question. Also drop a
-couple of lines that generate duplicate information.
+In order to allow more consistent logging of tunnel related information
+make these logging macros available to the rest of the driver.
 
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Qin Wan <qin.wan@hp.com>
 Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tunnel.c |   65 +++++++++++++++++++------------------------
- 1 file changed, 30 insertions(+), 35 deletions(-)
+ drivers/thunderbolt/tunnel.c |   26 +++++---------------------
+ drivers/thunderbolt/tunnel.h |   24 +++++++++++++++++++++++-
+ 2 files changed, 28 insertions(+), 22 deletions(-)
 
 --- a/drivers/thunderbolt/tunnel.c
 +++ b/drivers/thunderbolt/tunnel.c
-@@ -614,8 +614,9 @@ static int tb_dp_xchg_caps(struct tb_tun
+@@ -58,27 +58,6 @@ MODULE_PARM_DESC(bw_alloc_mode,
  
- 	in_rate = tb_dp_cap_get_rate(in_dp_cap);
- 	in_lanes = tb_dp_cap_get_lanes(in_dp_cap);
--	tb_port_dbg(in, "maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
--		    in_rate, in_lanes, tb_dp_bandwidth(in_rate, in_lanes));
-+	tb_tunnel_dbg(tunnel,
-+		      "DP IN maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      in_rate, in_lanes, tb_dp_bandwidth(in_rate, in_lanes));
+ static const char * const tb_tunnel_names[] = { "PCI", "DP", "DMA", "USB3" };
  
- 	/*
- 	 * If the tunnel bandwidth is limited (max_bw is set) then see
-@@ -624,8 +625,9 @@ static int tb_dp_xchg_caps(struct tb_tun
- 	out_rate = tb_dp_cap_get_rate(out_dp_cap);
- 	out_lanes = tb_dp_cap_get_lanes(out_dp_cap);
- 	bw = tb_dp_bandwidth(out_rate, out_lanes);
--	tb_port_dbg(out, "maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
--		    out_rate, out_lanes, bw);
-+	tb_tunnel_dbg(tunnel,
-+		      "DP OUT maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      out_rate, out_lanes, bw);
- 
- 	if (in->sw->config.depth < out->sw->config.depth)
- 		max_bw = tunnel->max_down;
-@@ -639,13 +641,14 @@ static int tb_dp_xchg_caps(struct tb_tun
- 					     out_rate, out_lanes, &new_rate,
- 					     &new_lanes);
- 		if (ret) {
--			tb_port_info(out, "not enough bandwidth for DP tunnel\n");
-+			tb_tunnel_info(tunnel, "not enough bandwidth\n");
- 			return ret;
- 		}
- 
- 		new_bw = tb_dp_bandwidth(new_rate, new_lanes);
--		tb_port_dbg(out, "bandwidth reduced to %u Mb/s x%u = %u Mb/s\n",
--			    new_rate, new_lanes, new_bw);
-+		tb_tunnel_dbg(tunnel,
-+			      "bandwidth reduced to %u Mb/s x%u = %u Mb/s\n",
-+			      new_rate, new_lanes, new_bw);
- 
- 		/*
- 		 * Set new rate and number of lanes before writing it to
-@@ -662,7 +665,7 @@ static int tb_dp_xchg_caps(struct tb_tun
- 	 */
- 	if (tb_route(out->sw) && tb_switch_is_titan_ridge(out->sw)) {
- 		out_dp_cap |= DP_COMMON_CAP_LTTPR_NS;
--		tb_port_dbg(out, "disabling LTTPR\n");
-+		tb_tunnel_dbg(tunnel, "disabling LTTPR\n");
- 	}
- 
- 	return tb_port_write(in, &out_dp_cap, TB_CFG_PORT,
-@@ -712,8 +715,8 @@ static int tb_dp_bandwidth_alloc_mode_en
- 	lanes = min(in_lanes, out_lanes);
- 	tmp = tb_dp_bandwidth(rate, lanes);
- 
--	tb_port_dbg(in, "non-reduced bandwidth %u Mb/s x%u = %u Mb/s\n", rate,
--		    lanes, tmp);
-+	tb_tunnel_dbg(tunnel, "non-reduced bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      rate, lanes, tmp);
- 
- 	ret = usb4_dp_port_set_nrd(in, rate, lanes);
- 	if (ret)
-@@ -728,15 +731,15 @@ static int tb_dp_bandwidth_alloc_mode_en
- 	rate = min(in_rate, out_rate);
- 	tmp = tb_dp_bandwidth(rate, lanes);
- 
--	tb_port_dbg(in,
--		    "maximum bandwidth through allocation mode %u Mb/s x%u = %u Mb/s\n",
--		    rate, lanes, tmp);
-+	tb_tunnel_dbg(tunnel,
-+		      "maximum bandwidth through allocation mode %u Mb/s x%u = %u Mb/s\n",
-+		      rate, lanes, tmp);
- 
- 	for (granularity = 250; tmp / granularity > 255 && granularity <= 1000;
- 	     granularity *= 2)
- 		;
- 
--	tb_port_dbg(in, "granularity %d Mb/s\n", granularity);
-+	tb_tunnel_dbg(tunnel, "granularity %d Mb/s\n", granularity);
- 
- 	/*
- 	 * Returns -EINVAL if granularity above is outside of the
-@@ -756,7 +759,7 @@ static int tb_dp_bandwidth_alloc_mode_en
- 	else
- 		estimated_bw = tunnel->max_up;
- 
--	tb_port_dbg(in, "estimated bandwidth %d Mb/s\n", estimated_bw);
-+	tb_tunnel_dbg(tunnel, "estimated bandwidth %d Mb/s\n", estimated_bw);
- 
- 	ret = usb4_dp_port_set_estimated_bandwidth(in, estimated_bw);
- 	if (ret)
-@@ -767,7 +770,7 @@ static int tb_dp_bandwidth_alloc_mode_en
- 	if (ret)
- 		return ret;
- 
--	tb_port_dbg(in, "bandwidth allocation mode enabled\n");
-+	tb_tunnel_dbg(tunnel, "bandwidth allocation mode enabled\n");
- 	return 0;
- }
- 
-@@ -788,7 +791,7 @@ static int tb_dp_init(struct tb_tunnel *
- 	if (!usb4_dp_port_bandwidth_mode_supported(in))
- 		return 0;
- 
--	tb_port_dbg(in, "bandwidth allocation mode supported\n");
-+	tb_tunnel_dbg(tunnel, "bandwidth allocation mode supported\n");
- 
- 	ret = usb4_dp_port_set_cm_id(in, tb->index);
- 	if (ret)
-@@ -805,7 +808,7 @@ static void tb_dp_deinit(struct tb_tunne
- 		return;
- 	if (usb4_dp_port_bandwidth_mode_enabled(in)) {
- 		usb4_dp_port_set_cm_bandwidth_mode_supported(in, false);
--		tb_port_dbg(in, "bandwidth allocation mode disabled\n");
-+		tb_tunnel_dbg(tunnel, "bandwidth allocation mode disabled\n");
- 	}
- }
- 
-@@ -921,9 +924,6 @@ static int tb_dp_bandwidth_mode_consumed
- 	if (allocated_bw == max_bw)
- 		allocated_bw = ret;
- 
--	tb_port_dbg(in, "consumed bandwidth through allocation mode %d Mb/s\n",
--		    allocated_bw);
+-#define __TB_TUNNEL_PRINT(level, tunnel, fmt, arg...)                   \
+-	do {                                                            \
+-		struct tb_tunnel *__tunnel = (tunnel);                  \
+-		level(__tunnel->tb, "%llx:%u <-> %llx:%u (%s): " fmt,   \
+-		      tb_route(__tunnel->src_port->sw),                 \
+-		      __tunnel->src_port->port,                         \
+-		      tb_route(__tunnel->dst_port->sw),                 \
+-		      __tunnel->dst_port->port,                         \
+-		      tb_tunnel_names[__tunnel->type],			\
+-		      ## arg);                                          \
+-	} while (0)
 -
- 	if (in->sw->config.depth < out->sw->config.depth) {
- 		*consumed_up = 0;
- 		*consumed_down = allocated_bw;
-@@ -1006,9 +1006,6 @@ static int tb_dp_alloc_bandwidth(struct
- 	/* Now we can use BW mode registers to figure out the bandwidth */
- 	/* TODO: need to handle discovery too */
- 	tunnel->bw_mode = true;
+-#define tb_tunnel_WARN(tunnel, fmt, arg...) \
+-	__TB_TUNNEL_PRINT(tb_WARN, tunnel, fmt, ##arg)
+-#define tb_tunnel_warn(tunnel, fmt, arg...) \
+-	__TB_TUNNEL_PRINT(tb_warn, tunnel, fmt, ##arg)
+-#define tb_tunnel_info(tunnel, fmt, arg...) \
+-	__TB_TUNNEL_PRINT(tb_info, tunnel, fmt, ##arg)
+-#define tb_tunnel_dbg(tunnel, fmt, arg...) \
+-	__TB_TUNNEL_PRINT(tb_dbg, tunnel, fmt, ##arg)
 -
--	tb_port_dbg(in, "allocated bandwidth through allocation mode %d Mb/s\n",
--		    tmp);
- 	return 0;
+ static inline unsigned int tb_usable_credits(const struct tb_port *port)
+ {
+ 	return port->total_credits - port->ctl_credits;
+@@ -2382,3 +2361,8 @@ void tb_tunnel_reclaim_available_bandwid
+ 		tunnel->reclaim_available_bandwidth(tunnel, available_up,
+ 						    available_down);
+ }
++
++const char *tb_tunnel_type_name(const struct tb_tunnel *tunnel)
++{
++	return tb_tunnel_names[tunnel->type];
++}
+--- a/drivers/thunderbolt/tunnel.h
++++ b/drivers/thunderbolt/tunnel.h
+@@ -137,5 +137,27 @@ static inline bool tb_tunnel_is_usb3(con
+ 	return tunnel->type == TB_TUNNEL_USB3;
  }
  
-@@ -1035,8 +1032,7 @@ static int tb_dp_read_dprx(struct tb_tun
- 			*rate = tb_dp_cap_get_rate(val);
- 			*lanes = tb_dp_cap_get_lanes(val);
+-#endif
++const char *tb_tunnel_type_name(const struct tb_tunnel *tunnel);
++
++#define __TB_TUNNEL_PRINT(level, tunnel, fmt, arg...)                   \
++	do {                                                            \
++		struct tb_tunnel *__tunnel = (tunnel);                  \
++		level(__tunnel->tb, "%llx:%u <-> %llx:%u (%s): " fmt,   \
++		      tb_route(__tunnel->src_port->sw),                 \
++		      __tunnel->src_port->port,                         \
++		      tb_route(__tunnel->dst_port->sw),                 \
++		      __tunnel->dst_port->port,                         \
++		      tb_tunnel_type_name(__tunnel),			\
++		      ## arg);                                          \
++	} while (0)
  
--			tb_port_dbg(in, "consumed bandwidth through DPRX %d Mb/s\n",
--				    tb_dp_bandwidth(*rate, *lanes));
-+			tb_tunnel_dbg(tunnel, "DPRX read done\n");
- 			return 0;
- 		}
- 		usleep_range(100, 150);
-@@ -1073,9 +1069,6 @@ static int tb_dp_read_cap(struct tb_tunn
- 
- 	*rate = tb_dp_cap_get_rate(val);
- 	*lanes = tb_dp_cap_get_lanes(val);
--
--	tb_port_dbg(in, "bandwidth from %#x capability %d Mb/s\n", cap,
--		    tb_dp_bandwidth(*rate, *lanes));
- 	return 0;
- }
- 
-@@ -1253,8 +1246,9 @@ static void tb_dp_dump(struct tb_tunnel
- 	rate = tb_dp_cap_get_rate(dp_cap);
- 	lanes = tb_dp_cap_get_lanes(dp_cap);
- 
--	tb_port_dbg(in, "maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
--		    rate, lanes, tb_dp_bandwidth(rate, lanes));
-+	tb_tunnel_dbg(tunnel,
-+		      "DP IN maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      rate, lanes, tb_dp_bandwidth(rate, lanes));
- 
- 	out = tunnel->dst_port;
- 
-@@ -1265,8 +1259,9 @@ static void tb_dp_dump(struct tb_tunnel
- 	rate = tb_dp_cap_get_rate(dp_cap);
- 	lanes = tb_dp_cap_get_lanes(dp_cap);
- 
--	tb_port_dbg(out, "maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
--		    rate, lanes, tb_dp_bandwidth(rate, lanes));
-+	tb_tunnel_dbg(tunnel,
-+		      "DP OUT maximum supported bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      rate, lanes, tb_dp_bandwidth(rate, lanes));
- 
- 	if (tb_port_read(in, &dp_cap, TB_CFG_PORT,
- 			 in->cap_adap + DP_REMOTE_CAP, 1))
-@@ -1275,8 +1270,8 @@ static void tb_dp_dump(struct tb_tunnel
- 	rate = tb_dp_cap_get_rate(dp_cap);
- 	lanes = tb_dp_cap_get_lanes(dp_cap);
- 
--	tb_port_dbg(in, "reduced bandwidth %u Mb/s x%u = %u Mb/s\n",
--		    rate, lanes, tb_dp_bandwidth(rate, lanes));
-+	tb_tunnel_dbg(tunnel, "reduced bandwidth %u Mb/s x%u = %u Mb/s\n",
-+		      rate, lanes, tb_dp_bandwidth(rate, lanes));
- }
- 
- /**
++#define tb_tunnel_WARN(tunnel, fmt, arg...) \
++	__TB_TUNNEL_PRINT(tb_WARN, tunnel, fmt, ##arg)
++#define tb_tunnel_warn(tunnel, fmt, arg...) \
++	__TB_TUNNEL_PRINT(tb_warn, tunnel, fmt, ##arg)
++#define tb_tunnel_info(tunnel, fmt, arg...) \
++	__TB_TUNNEL_PRINT(tb_info, tunnel, fmt, ##arg)
++#define tb_tunnel_dbg(tunnel, fmt, arg...) \
++	__TB_TUNNEL_PRINT(tb_dbg, tunnel, fmt, ##arg)
++
++#endif
 
 
