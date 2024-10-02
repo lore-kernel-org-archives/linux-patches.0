@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74131D0426;
-	Wed,  2 Oct 2024 13:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29F3376;
+	Wed,  2 Oct 2024 13:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876027; cv=none; b=P4kZDEUwdEv7ylIKtUGrW28BgjQKbFNOkPCVvCKyOTwIr5CNT7NeZCfwlk6XaIVVCtug8IcCTWWSNTuIFRZVTC7wKf28cTgou3fmpT48PgPmg9rNYg3SROI7fWX5jYlMxf4uPTSNNMavKRSMt0uRtNpdrUtLqlehK3aNGNbHIVk=
+	t=1727876030; cv=none; b=bHn8WBiz5g5WYEySOJBWRX/ZmEI8dRrcMC30XuYxYMJEcel+X2XdhyY4TlcW8Weg1Y1tVCHO3bTrpWsQugWbWWnAVnuqibGa1Nl6t1oat5u690I3BrFFUmdnZtGb+WX4p76zQVd3nmwV4AKhFCQcd3PLVnGYtAqtVPi1xIkghWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876027; c=relaxed/simple;
-	bh=rd0DE/63k99mZvYyNMtfj9miKsgrIv74U0qzD0k/vR0=;
+	s=arc-20240116; t=1727876030; c=relaxed/simple;
+	bh=+9tckckYmBl+P7eNLqe61V3y8CrpF0mhLmTEmmWnOj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7oR5Tz7DBgvQ7pVdmCU4jm/kVquOSVeqXHeYcXzenavFRDIMASW6EQLyHQ58K4Tp1oC+iAvP2pN4uqjdUiGsxrsFD0WHoH1QADMhi/iwE3TNaMJyaQdrXHMAZSe24B8JeYStuByGCGOtgq/hTrr9bZXEJ7+mHGudnivtFGckRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0xWHQbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bt1qbD3rKY4DIWELa+z0cFtNdQSjkefyMCPz3pW6nAju68XNjvVbt1ep2lqDpIUxRu4tnptV4qhNqBuqeqV5rVM5L+IhlomwBxq1+JY+ULDFkwu/menD48V2GrD6PSJWiwQkCqycycZYajl5VWeavWIT7XyjhwwUyjfe0gF3dWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MItm5zGa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0xWHQbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55429C4CECD;
-	Wed,  2 Oct 2024 13:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MItm5zGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC98C4CECD;
+	Wed,  2 Oct 2024 13:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876027;
-	bh=rd0DE/63k99mZvYyNMtfj9miKsgrIv74U0qzD0k/vR0=;
+	s=korg; t=1727876030;
+	bh=+9tckckYmBl+P7eNLqe61V3y8CrpF0mhLmTEmmWnOj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0xWHQbTn7H4cR8BTcxHYYaNc/WaLgGCncD8DqUpbsVVWGxZoaCSiTQFQc2tCkaZH
-	 gROcz/LyqvcCuOEwXTWbYQTWctmDo+kWgmkeCpmhV1SXM19qFnntpcOXQueq+r5ESp
-	 xH9LjCweNUXb4wvDMdHShm8ALmlj8BKV0o7OOMYE=
+	b=MItm5zGaPp7yd6+lyZVwbuaX7VHCQ93JTIO8hRj2JmnXowzTKIWWSr6QEeZfFeULk
+	 EU/g/nLCrZtCOHTccEav6QjUfqDPt89XEZ4h3HhGKlIl4hb2Ij1Cz7RruE6m+Aj42y
+	 QonIKaOGqQGrPYkYr9xyDLzQN9LpK3PaFx5GKp2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangerkun <yangerkun@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 304/695] ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard
-Date: Wed,  2 Oct 2024 14:55:02 +0200
-Message-ID: <20241002125834.575412647@linuxfoundation.org>
+Subject: [PATCH 6.11 305/695] bpftool: Fix handling enum64 in btf dump sorting
+Date: Wed,  2 Oct 2024 14:55:03 +0200
+Message-ID: <20241002125834.614803464@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,67 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangerkun <yangerkun@huawei.com>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit 20cee68f5b44fdc2942d20f3172a262ec247b117 ]
+[ Upstream commit b0222d1d9e6f8551a056b89b0bff38f515f3c9b5 ]
 
-Commit 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in
-ext4_group_info") speed up fstrim by skipping trim trimmed group. We
-also has the chance to clear trimmed once there exists some block free
-for this group(mount without discard), and the next trim for this group
-will work well too.
+Wrong function is used to access the first enum64 element. Substituting btf_enum(t)
+with btf_enum64(t) for BTF_KIND_ENUM64.
 
-For mount with discard, we will issue dicard when we free blocks, so
-leave trimmed flag keep alive to skip useless trim trigger from
-userspace seems reasonable. But for some case like ext4 build on
-dm-thinpool(ext4 blocksize 4K, pool blocksize 128K), discard from ext4
-maybe unaligned for dm thinpool, and thinpool will just finish this
-discard(see process_discard_bio when begein equals to end) without
-actually process discard. For this case, trim from userspace can really
-help us to free some thinpool block.
-
-So convert to clear trimmed flag for all case no matter mounted with
-discard or not.
-
-Fixes: 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in ext4_group_info")
-Signed-off-by: yangerkun <yangerkun@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240817085510.2084444-1-yangerkun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 94133cf24bb3 ("bpftool: Introduce btf c dump sorting")
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20240902171721.105253-1-mykyta.yatsenko5@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ tools/bpf/bpftool/btf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 9dda9cd68ab2f..dfecd25cee4ea 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3887,11 +3887,8 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
- 	/*
- 	 * Clear the trimmed flag for the group so that the next
- 	 * ext4_trim_fs can trim it.
--	 * If the volume is mounted with -o discard, online discard
--	 * is supported and the free blocks will be trimmed online.
- 	 */
--	if (!test_opt(sb, DISCARD))
--		EXT4_MB_GRP_CLEAR_TRIMMED(db);
-+	EXT4_MB_GRP_CLEAR_TRIMMED(db);
+diff --git a/tools/bpf/bpftool/btf.c b/tools/bpf/bpftool/btf.c
+index 6789c7a4d5ca1..3b57ba095ab61 100644
+--- a/tools/bpf/bpftool/btf.c
++++ b/tools/bpf/bpftool/btf.c
+@@ -561,9 +561,10 @@ static const char *btf_type_sort_name(const struct btf *btf, __u32 index, bool f
+ 	case BTF_KIND_ENUM64: {
+ 		int name_off = t->name_off;
  
- 	if (!db->bb_free_root.rb_node) {
- 		/* No more items in the per group rb tree
-@@ -6515,8 +6512,9 @@ static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
- 					 " group:%u block:%d count:%lu failed"
- 					 " with %d", block_group, bit, count,
- 					 err);
--		} else
--			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
-+		}
-+
-+		EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
+-		/* Use name of the first element for anonymous enums if allowed */
+-		if (!from_ref && !t->name_off && btf_vlen(t))
+-			name_off = btf_enum(t)->name_off;
++		if (!from_ref && !name_off && btf_vlen(t))
++			name_off = btf_kind(t) == BTF_KIND_ENUM64 ?
++				btf_enum64(t)->name_off :
++				btf_enum(t)->name_off;
  
- 		ext4_lock_group(sb, block_group);
- 		mb_free_blocks(inode, &e4b, bit, count_clusters);
+ 		return btf__name_by_offset(btf, name_off);
+ 	}
 -- 
 2.43.0
 
