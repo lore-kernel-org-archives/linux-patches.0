@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B4C25771;
-	Wed,  2 Oct 2024 13:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327CC16F84F;
+	Wed,  2 Oct 2024 13:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875185; cv=none; b=YbKeJzneVtK3B3FLk/BTx3cIDLPafL86sWXayaPx9jowe21eqsAviDkvCTzOvPPCqby48/pygUFoJyc85hRqmoz4k4tMIxjCFpXA2XeBzA4Yo/idVPTeO0lEAvEHkG75d0IUnmCfbRYpUd5HEJHuw0dy5NoCqz8fYWo2LXQvecA=
+	t=1727875188; cv=none; b=k7YQZ3n/JAGUYx5Nt7JmM2fWNNV/5PFg5lpZpH4bGHA44jr0B1BbV5PgtMyOtim/tNqgfavx5KuXPqk9BvIi00G4/CJMknp6Iw3AJG47QNTOi3Z+g1E5RKxyMS0BQVxbcsnF2kwLIS10DsHg3GUd0AUEioSboIaOFvsqTgjJ3Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875185; c=relaxed/simple;
-	bh=TmuZGRX8MAHhvddlxjoWnXyQxviE5xgPo8cvdqkWKIE=;
+	s=arc-20240116; t=1727875188; c=relaxed/simple;
+	bh=z9PCtrPTuYW0ttC4Q/PY40J3juCW6cdhgoG/l2580fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf/VzAmln3wEeF6kwJAu8SROoM8fGoVAU7WNJ8HgF4ypEzD9bFuMmadStWqBcM8GUxZZR4Ore1SloGjQdaG8SyY3jfBrqXFKuk9VTC12i5SeKAKWobNVjj/E9RKXqPMw9ictzMLvPmJdLfCyIpQPnd0uJkJrfrMJXYAnwTIfDSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6Ed1Ihe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMcXb3qRw218a/gyx7YPn6PB6UlqDQaa4tc6SfRpI/oMaVkOLccutueFq0b0h3zmnQZG1N+LfR49VANiJshZADTFjtZyi6eZ3Tqk0UXruRzZD2Dr/h5TZgqZu7kCDCGv44SgJRJz2114Pu2TVXR7HLnj8fgLtwOkeQ67C+903q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMFVYjbX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6Ed1Ihe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C095C4CEC5;
-	Wed,  2 Oct 2024 13:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMFVYjbX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66977C4CEC5;
+	Wed,  2 Oct 2024 13:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875184;
-	bh=TmuZGRX8MAHhvddlxjoWnXyQxviE5xgPo8cvdqkWKIE=;
+	s=korg; t=1727875187;
+	bh=z9PCtrPTuYW0ttC4Q/PY40J3juCW6cdhgoG/l2580fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6Ed1IhejOftNR+0fyDF6idsgWzDH2xdNGAABSqrwN493h63XS2gxQ9cwRlg2c7BB
-	 1QXkOc9VDXO6qh24sE6TtTKK+350l29JIjVV4PVNzB+W5ZCAYc8nLxhZuMAXS7NJaL
-	 l8LrbzKL+Nbb+Ky4y2g+W2SjdVTMlqtiWi/99YpA=
+	b=WMFVYjbXxpW335Etobb8BZdbZg6Tc6KcaBn17xhSFZuBpCRKJ03wNAAQcWq18QJTY
+	 1y0tltjCE3J1hizCY3i/IgDtF1heSrAvXirmFRqLbwmQlc/0fVOOwp20jf5yysY4Lr
+	 1DqI9QMSxJfZ8haKCU0Kuz7KK/NoJvsOA41V3VMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 008/695] crypto: iaa - Fix potential use after free bug
-Date: Wed,  2 Oct 2024 14:50:06 +0200
-Message-ID: <20241002125822.819170399@linuxfoundation.org>
+Subject: [PATCH 6.11 009/695] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
+Date: Wed,  2 Oct 2024 14:50:07 +0200
+Message-ID: <20241002125822.859190342@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,44 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit e0d3b845a1b10b7b5abdad7ecc69d45b2aab3209 ]
+[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
 
-The free_device_compression_mode(iaa_device, device_mode) function frees
-"device_mode" but it iss passed to iaa_compression_modes[i]->free() a few
-lines later resulting in a use after free.
+In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
+is useless.
 
-The good news is that, so far as I can tell, nothing implements the
-->free() function and the use after free happens in dead code.  But, with
-this fix, when something does implement it, we'll be ready.  :)
+Fix this issue by removing unneeded check.
 
-Fixes: b190447e0fa3 ("crypto: iaa - Add compression mode management along with fixed mode")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Tom Zanussi <tom.zanussi@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/iaa/iaa_crypto_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-index e810d286ee8c4..237f870000702 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-@@ -495,10 +495,10 @@ static void remove_device_compression_modes(struct iaa_device *iaa_device)
- 		if (!device_mode)
- 			continue;
+diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
+index ebd03e4729555..0d1a82eeb4b0b 100644
+--- a/drivers/acpi/pmic/tps68470_pmic.c
++++ b/drivers/acpi/pmic/tps68470_pmic.c
+@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
+ 	struct tps68470_pmic_opregion *opregion;
+ 	acpi_status status;
  
--		free_device_compression_mode(iaa_device, device_mode);
--		iaa_device->compression_modes[i] = NULL;
- 		if (iaa_compression_modes[i]->free)
- 			iaa_compression_modes[i]->free(device_mode);
-+		free_device_compression_mode(iaa_device, device_mode);
-+		iaa_device->compression_modes[i] = NULL;
- 	}
- }
+-	if (!dev || !tps68470_regmap) {
+-		dev_warn(dev, "dev or regmap is NULL\n");
+-		return -EINVAL;
+-	}
++	if (!tps68470_regmap)
++		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
  
+ 	if (!handle) {
+ 		dev_warn(dev, "acpi handle is NULL\n");
 -- 
 2.43.0
 
