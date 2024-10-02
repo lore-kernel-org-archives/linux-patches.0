@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA211D551;
-	Wed,  2 Oct 2024 14:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD861D0F4B;
+	Wed,  2 Oct 2024 14:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879945; cv=none; b=QU5Dek2DEIiEIUMxn6p9EB+j9fiStiMmBlvE7KoMb2D1C40GpCRl+hMK9yRMiERq4NpukFJ7geGAwlcqMIF9/+mea7XVFpElENzUpcUqWMC5Sdhzhwk6NFguydyivvIM4Udmv6le9gtG9VCYbZzaGRhrAL9oYnHlYZ4aD/mXrkY=
+	t=1727879948; cv=none; b=eHXkwCIxq9E+h89Uo4VveDNx62SfFOprjWhYxH0ylVfpEm5nf6V9zEyw6Z+b9GX53x2Y4M+pJgIlGPLT7KVS7wCJqxY85mNpuaFau3jfyzisSgSHpkcZdBohxyQl/XcHPwsWRVIBr4ohj7xK7vkpgj7L1XR36/asHgylJTkuQ3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879945; c=relaxed/simple;
-	bh=2+2LTS8McXzjqfqQuw/A5YZn2+aKiNJD1y2z3SewIqc=;
+	s=arc-20240116; t=1727879948; c=relaxed/simple;
+	bh=O8GOFF6cnHVvzzmlwk8fBzx84EP6TjwLQ6oqs6v6MSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VN3e9RzMcWV/Av7vMfTGeWNqfmcqX+zg6GOmzOvy8HCiAnft0+8hDmq3r6J0oS+5GfOIZaq3H30dQr1qioMAnpK0h56gZvR8B8Sq17TqFHFb/iopWcSHUb59GHGlMaw5vOMxQ6fKuCZTqWR5ETw2M4rf62ma+b3r9HmqFS0jv7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs3OR1VI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iw9axJZKldWAQ6o5B0nn/mN1RovA7xOBARrH7nfY5La497Ftyrh4N6V9VvrzHvQTLc9ueiRrL2XrWP8OGn/4YhGK4FFLAmqbMNmmvtYOYlJC2PPP1Y4wSS178M2Cnm9rFq6Pxkb1YRB4EknUg7JSml4X3vUqs9X/1llhfJJAs/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6XtbUpN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs3OR1VI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A30C4CEC2;
-	Wed,  2 Oct 2024 14:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6XtbUpN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E979AC4CEC2;
+	Wed,  2 Oct 2024 14:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879944;
-	bh=2+2LTS8McXzjqfqQuw/A5YZn2+aKiNJD1y2z3SewIqc=;
+	s=korg; t=1727879948;
+	bh=O8GOFF6cnHVvzzmlwk8fBzx84EP6TjwLQ6oqs6v6MSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fs3OR1VI5HmeoT1Q6dEuUl5e/2Rl0mXBxSscqYXMyjiIqvYnutWLchNayUKehzZQN
-	 lcIPg9AfmF/3u41C+Rxv+4lipyjECIc0hTdv1CLZFkFat4fWnfXxFqYwhpk2CNxnBU
-	 8yAib2v132nxQHI4LmTvac/DRc7ot5xdgQngvN7A=
+	b=d6XtbUpN+8ykm+EIdxCYM4IMYkjZNAqZ+voiBT9qLwAJRKpOsC9A4YXsZNDtR29uk
+	 39HSqxHNIjzGL9JRZgYXYbqVftexOLPs9ZlVfzqYejAauYsmn+zDJa9f2zc5TXUAAG
+	 /M3S/VzbzL9xeG9zV1Pu5YslDRLF+/rTkewt28mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 291/538] x86/PCI: Check pcie_find_root_port() return for NULL
-Date: Wed,  2 Oct 2024 14:58:50 +0200
-Message-ID: <20241002125803.743737084@linuxfoundation.org>
+Subject: [PATCH 6.6 265/538] clk: imx: imx8qxp: Register dc0_bypass0_clk before disp clk
+Date: Wed,  2 Oct 2024 14:58:24 +0200
+Message-ID: <20241002125802.716976846@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit dbc3171194403d0d40e4bdeae666f6e76e428b53 ]
+[ Upstream commit e61352d5ecdc0da2e7253121c15d9a3e040f78a1 ]
 
-If pcie_find_root_port() is unable to locate a Root Port, it will return
-NULL. Check the pointer for NULL before dereferencing it.
+The initialization order of SCU clocks affects the sequence of SCU clock
+resume. If there are no other effects, the earlier the initialization,
+the earlier the resume. During SCU clock resume, the clock rate is
+restored. As SCFW guidelines, configure the parent clock rate before
+configuring the child rate.
 
-This particular case is in a quirk for devices that are always below a Root
-Port, so this won't avoid a problem and doesn't need to be backported, but
-check as a matter of style and to prevent copy/paste mistakes.
-
-Link: https://lore.kernel.org/r/20240812202659.1649121-1-samasth.norway.ananda@oracle.com
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-[bhelgaas: drop Fixes: and explain why there's no problem in this case]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 91e916771de0 ("clk: imx: scu: remove legacy scu clock binding support")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20240607133347.3291040-14-peng.fan@oss.nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c | 4 ++--
+ drivers/clk/imx/clk-imx8qxp.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
-index b33afb240601b..98a9bb92d75c8 100644
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -980,7 +980,7 @@ static void amd_rp_pme_suspend(struct pci_dev *dev)
- 		return;
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 245761e018973..bc75e37d818d5 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -199,11 +199,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ 	imx_clk_scu("usb3_lpm_div", IMX_SC_R_USB_2, IMX_SC_PM_CLK_MISC);
  
- 	rp = pcie_find_root_port(dev);
--	if (!rp->pm_cap)
-+	if (!rp || !rp->pm_cap)
- 		return;
+ 	/* Display controller SS */
+-	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
+-	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_pll0_clk", IMX_SC_R_DC_0_PLL_0, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_pll1_clk", IMX_SC_R_DC_0_PLL_1, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_bypass0_clk", IMX_SC_R_DC_0_VIDEO0, IMX_SC_PM_CLK_BYPASS);
++	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
++	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
  
- 	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
-@@ -994,7 +994,7 @@ static void amd_rp_pme_resume(struct pci_dev *dev)
- 	u16 pmc;
- 
- 	rp = pcie_find_root_port(dev);
--	if (!rp->pm_cap)
-+	if (!rp || !rp->pm_cap)
- 		return;
- 
- 	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
+ 	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
 -- 
 2.43.0
 
