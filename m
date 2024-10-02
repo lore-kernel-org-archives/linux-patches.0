@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA64F1CF5EE;
-	Wed,  2 Oct 2024 13:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AD125771;
+	Wed,  2 Oct 2024 13:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875261; cv=none; b=hcvnaAv3ua0SbIYRtUa7vQEHsexgzOdoKbCJ/GyROEdhBKdn3sy1oFxHfOxCuTtXCPd/wtavhlmTHHojMc0GnYQFJBFSfyfvv+vgGlAduV7yWcfjNxp5LW7exPYumrSJ5oO6VmpusNQ/RmVBXonuPmHhxTLzgEAGDEgD0gcgduU=
+	t=1727875263; cv=none; b=LTxjoAdSlP3rcDPYkCqJqdHH8o0jMfztIQof1+93ZBlBZuvuTiSUsibw8N7PhLAUsqWhEhSp1BI5flHx83yXC2IaOHSHQrjjF7icVyhCfx20RMxOjPtpI8aOG1Jqu/TV0ohq47ukclyEbEXrOPbn082ZCDVABjWS69yjkv9jaiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875261; c=relaxed/simple;
-	bh=rcL5ZXqt8qTXcZ+qOeudJwkR93oYumYFLycef1OF1gs=;
+	s=arc-20240116; t=1727875263; c=relaxed/simple;
+	bh=JQfmt4UGtv1c+IdFr8BCgjq8Ye/7zcIMSIrUYrkgYvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKElhhPisjX50S7OICMKtVnyEWJcLZLen2J4xGGBUr2aZkrGKOLhiM174FV7CHyL9tRTqnxEZhxrEeQNuO+67ucLf0W5tb4nQpdzJYO31N5idzAs+KS6ue6iItQDus5tmKmnjh0WIkz3cA0dooXhdeBCUhJdKeEzZ9IVPoGmPEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ITIZ2KR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAIVrddeIAKJG0MSvdoytPMhnoq1TcDc5wfzXtlDlIE/sfSaePuxM5+TjXvv1o0ROE9bfu0SSetfeGP8PGpKjEA5j+z8vasGJ0r3L5neytXQNRpbedFFcmZkKFa5xfBbzCCbapySYgG8yYtfJCMfEES5/d46eLHbIPkyNLovOaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPyNY+yi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ITIZ2KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75611C4CEC5;
-	Wed,  2 Oct 2024 13:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPyNY+yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3B2C4CEC5;
+	Wed,  2 Oct 2024 13:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875260;
-	bh=rcL5ZXqt8qTXcZ+qOeudJwkR93oYumYFLycef1OF1gs=;
+	s=korg; t=1727875263;
+	bh=JQfmt4UGtv1c+IdFr8BCgjq8Ye/7zcIMSIrUYrkgYvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ITIZ2KRizf1r5nHa63Wnj/mpQ351DvOKVATGwR6hEnnQIdh+bBlZ3JSU+boVSwOM
-	 3O0Zt43dVG02UgttIbzF8Nml7NdxGL12kQLhweqwa33fET8MlqYShpthfbwTl6GVFU
-	 uT+rP2t/KQPy8T1Z0nQAeCI4o4JFB0+0o0LX2KNI=
+	b=iPyNY+yiVV1/QJCQ2SyW/UMQVmoQIY11MkFYxKP5O8JHvItqeVQ0rh86oHIplVUWQ
+	 n6DTkiPkpm5Mk42QH6X1VoX095hfFhF2F/OfvmgTOT84FG5nmxh6r9OWdPGPLm6lzb
+	 m/g63A1nUwUXifJR9nFg9PxmVvh/jYiKyQZ9GHzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>,
-	Xin Zeng <xin.zeng@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Eric Biggers <ebiggers@google.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 043/695] crypto: qat - fix "Full Going True" macro definition
-Date: Wed,  2 Oct 2024 14:50:41 +0200
-Message-ID: <20241002125824.208755421@linuxfoundation.org>
+Subject: [PATCH 6.11 017/695] crypto: x86/aes-gcm - fix PREEMPT_RT issue in gcm_crypt()
+Date: Wed,  2 Oct 2024 14:50:15 +0200
+Message-ID: <20241002125823.180109943@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,40 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 694a6f594817462942acbb1a35b1f7d61e2d49e7 ]
+[ Upstream commit 001412493e74d89166d2441b622eeaea00511bdc ]
 
-The macro `ADF_RP_INT_SRC_SEL_F_RISE_MASK` is currently set to the value
-`0100b` which means "Empty Going False". This might cause an incorrect
-restore of the bank state during live migration.
+On PREEMPT_RT, kfree() takes sleeping locks and must not be called with
+preemption disabled.  Therefore, on PREEMPT_RT skcipher_walk_done() must
+not be called from within a kernel_fpu_{begin,end}() pair, even when
+it's the last call which is guaranteed to not allocate memory.
 
-Fix the definition of the macro to properly represent the "Full Going
-True" state which is encoded as `0011b`.
+Therefore, move the last skcipher_walk_done() in gcm_crypt() to the end
+of the function so that it goes after the kernel_fpu_end().  To make
+this work cleanly, rework the data processing loop to handle only
+non-last data segments.
 
-Fixes: bbfdde7d195f ("crypto: qat - add bank save and restore flows")
-Signed-off-by: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
-Reviewed-by: Xin Zeng <xin.zeng@intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: b06affb1cb58 ("crypto: x86/aes-gcm - add VAES and AVX512 / AVX10 optimized AES-GCM")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-crypto/20240802102333.itejxOsJ@linutronix.de
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/crypto/aesni-intel_glue.c | 59 ++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-index 8b10926cedbac..e8c53bd76f1bd 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-@@ -83,7 +83,7 @@
- #define ADF_WQM_CSR_RPRESETSTS(bank)	(ADF_WQM_CSR_RPRESETCTL(bank) + 4)
+diff --git a/arch/x86/crypto/aesni-intel_glue.c b/arch/x86/crypto/aesni-intel_glue.c
+index cd37de5ec4046..d63ba9eaba3e4 100644
+--- a/arch/x86/crypto/aesni-intel_glue.c
++++ b/arch/x86/crypto/aesni-intel_glue.c
+@@ -1366,6 +1366,8 @@ gcm_crypt(struct aead_request *req, int flags)
+ 		err = skcipher_walk_aead_encrypt(&walk, req, false);
+ 	else
+ 		err = skcipher_walk_aead_decrypt(&walk, req, false);
++	if (err)
++		return err;
  
- /* Ring interrupt */
--#define ADF_RP_INT_SRC_SEL_F_RISE_MASK	BIT(2)
-+#define ADF_RP_INT_SRC_SEL_F_RISE_MASK	GENMASK(1, 0)
- #define ADF_RP_INT_SRC_SEL_F_FALL_MASK	GENMASK(2, 0)
- #define ADF_RP_INT_SRC_SEL_RANGE_WIDTH	4
- #define ADF_COALESCED_POLL_TIMEOUT_US	(1 * USEC_PER_SEC)
+ 	/*
+ 	 * Since the AES-GCM assembly code requires that at least three assembly
+@@ -1381,37 +1383,31 @@ gcm_crypt(struct aead_request *req, int flags)
+ 	gcm_process_assoc(key, ghash_acc, req->src, assoclen, flags);
+ 
+ 	/* En/decrypt the data and pass the ciphertext through GHASH. */
+-	while ((nbytes = walk.nbytes) != 0) {
+-		if (unlikely(nbytes < walk.total)) {
+-			/*
+-			 * Non-last segment.  In this case, the assembly
+-			 * function requires that the length be a multiple of 16
+-			 * (AES_BLOCK_SIZE) bytes.  The needed buffering of up
+-			 * to 16 bytes is handled by the skcipher_walk.  Here we
+-			 * just need to round down to a multiple of 16.
+-			 */
+-			nbytes = round_down(nbytes, AES_BLOCK_SIZE);
+-			aes_gcm_update(key, le_ctr, ghash_acc,
+-				       walk.src.virt.addr, walk.dst.virt.addr,
+-				       nbytes, flags);
+-			le_ctr[0] += nbytes / AES_BLOCK_SIZE;
+-			kernel_fpu_end();
+-			err = skcipher_walk_done(&walk, walk.nbytes - nbytes);
+-			kernel_fpu_begin();
+-		} else {
+-			/* Last segment: process all remaining data. */
+-			aes_gcm_update(key, le_ctr, ghash_acc,
+-				       walk.src.virt.addr, walk.dst.virt.addr,
+-				       nbytes, flags);
+-			err = skcipher_walk_done(&walk, 0);
+-			/*
+-			 * The low word of the counter isn't used by the
+-			 * finalize, so there's no need to increment it here.
+-			 */
+-		}
++	while (unlikely((nbytes = walk.nbytes) < walk.total)) {
++		/*
++		 * Non-last segment.  In this case, the assembly function
++		 * requires that the length be a multiple of 16 (AES_BLOCK_SIZE)
++		 * bytes.  The needed buffering of up to 16 bytes is handled by
++		 * the skcipher_walk.  Here we just need to round down to a
++		 * multiple of 16.
++		 */
++		nbytes = round_down(nbytes, AES_BLOCK_SIZE);
++		aes_gcm_update(key, le_ctr, ghash_acc, walk.src.virt.addr,
++			       walk.dst.virt.addr, nbytes, flags);
++		le_ctr[0] += nbytes / AES_BLOCK_SIZE;
++		kernel_fpu_end();
++		err = skcipher_walk_done(&walk, walk.nbytes - nbytes);
++		if (err)
++			return err;
++		kernel_fpu_begin();
+ 	}
+-	if (err)
+-		goto out;
++	/* Last segment: process all remaining data. */
++	aes_gcm_update(key, le_ctr, ghash_acc, walk.src.virt.addr,
++		       walk.dst.virt.addr, nbytes, flags);
++	/*
++	 * The low word of the counter isn't used by the finalize, so there's no
++	 * need to increment it here.
++	 */
+ 
+ 	/* Finalize */
+ 	taglen = crypto_aead_authsize(tfm);
+@@ -1439,8 +1435,9 @@ gcm_crypt(struct aead_request *req, int flags)
+ 				       datalen, tag, taglen, flags))
+ 			err = -EBADMSG;
+ 	}
+-out:
+ 	kernel_fpu_end();
++	if (nbytes)
++		skcipher_walk_done(&walk, 0);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
