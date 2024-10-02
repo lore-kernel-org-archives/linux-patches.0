@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888F41D04BA;
-	Wed,  2 Oct 2024 14:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E201D094A;
+	Wed,  2 Oct 2024 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878528; cv=none; b=bS9EOIiLCqGfF6eW2iPHgxa7HWJa1MaFOyXKw+z0eE/0VZajaIY2tW7GOIDHHueU2sVqNuJMgPfDfHo72seAmgySodGszSvDgykJDStozcAnIi6hDI/Kfco8/KmEHNSpO13w1prfdUQKB21TQ2nKRTEYfcAPV2FeAjZVto8I6c8=
+	t=1727878531; cv=none; b=UZRtte4pxFHc5PQgncxmWofw5oAKGyOrFSB2ScnxnjsITFY61ZTEwtEMHba6f1Yjg9I+CU/vFJSw4gCNj9bVgEXa8gho3SsDyu+iiXY53RlbLeCjLcffs80/hNJtp5h1nS5EdtvIxPdk7WFPpjfbamb8U2mvhaBIKH6ELEunqiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878528; c=relaxed/simple;
-	bh=qrSo5eRSnEQ4iJdUFNcXBkPNDUWa2OFqaJsPGRbCSBI=;
+	s=arc-20240116; t=1727878531; c=relaxed/simple;
+	bh=ditRNFRNKD6Rbb/lbzO8IESHHLOn4bebQ7IeTVNslt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpLnNVfFilsRmgqEwN5xK+W/+Pknc2dY3CNFLqV8mBdLaZd0DWy+5zkQH2igbegbWTnV81deQwwrt8vdZx4AEfDt6cl96HaFKeBhVpYL8kFswbFUa2iwUvl3cysuZkeuBBPdkYwGKmbzg3JNR4vYuoVKEQbtq10J4LrwLDPzjCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiyXhU+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/WRzcgLKilXH3yk9oyN5m90DiVuR1WcQsFyrWl0fqDJZemtpVrr/QzsOSfGLV2ZG+bfpYDqAhI0BBLFKnvSla0bMiPuqqIbySV3Bbi54nTyYW2mI+CnHYJ0s5jMiTz9hltme2xPISL8ReTc5LSsWOiyW8PnxqufFqJ78f+y6qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBzCYP0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiyXhU+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1434BC4CEC2;
-	Wed,  2 Oct 2024 14:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBzCYP0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E416CC4CEC2;
+	Wed,  2 Oct 2024 14:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878528;
-	bh=qrSo5eRSnEQ4iJdUFNcXBkPNDUWa2OFqaJsPGRbCSBI=;
+	s=korg; t=1727878531;
+	bh=ditRNFRNKD6Rbb/lbzO8IESHHLOn4bebQ7IeTVNslt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiyXhU+eOGZFh/V6NFcdlEiGmBZhmoXB3o/zvvH7K8Urrk0aqx17KtIo5eDKiUlfS
-	 /grJULHpdDhE6YwIJfk7dgFE++RHbJ0qaNe+2xCf4vsdg2acEQGcJntUbsNLSdU74n
-	 ka41SYxExi2sB1ZSgNFTvR2tbFIa012DvAY4eb88=
+	b=nBzCYP0NBOi92/yNQ626onqXhS2unGhTRZzFrmpzm83EHdUtGIICICTrXUsyBR+Gk
+	 BIhYiUHTuOUtGwRzH97mW4u/DgGHs0s624AfSz6btNnBymhi+F2z5ZZntgyOCFDkBC
+	 PmMXIn6fI+P8eAwJpxN56BxjaxYxJAsqM3x6t7Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 437/634] net: seeq: Fix use after free vulnerability in ether3 Driver Due to Race Condition
-Date: Wed,  2 Oct 2024 14:58:57 +0200
-Message-ID: <20241002125828.350879496@linuxfoundation.org>
+Subject: [PATCH 6.10 446/634] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
+Date: Wed,  2 Oct 2024 14:59:06 +0200
+Message-ID: <20241002125828.704937559@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,54 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit b5109b60ee4fcb2f2bb24f589575e10cc5283ad4 ]
+[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
 
-In the ether3_probe function, a timer is initialized with a callback
-function ether3_ledoff, bound to &prev(dev)->timer. Once the timer is
-started, there is a risk of a race condition if the module or device
-is removed, triggering the ether3_remove function to perform cleanup.
-The sequence of operations that may lead to a UAF bug is as follows:
+Only provide ctnetlink_label_size when it is used,
+which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
 
-CPU0                                    CPU1
+Flagged by clang-18 W=1 builds as:
 
-                      |  ether3_ledoff
-ether3_remove         |
-  free_netdev(dev);   |
-  put_devic           |
-  kfree(dev);         |
- |  ether3_outw(priv(dev)->regs.config2 |= CFG2_CTRLO, REG_CONFIG2);
-                      | // use dev
+.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
+  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
+      |                   ^~~~~~~~~~~~~~~~~~~~
 
-Fix it by ensuring that the timer is canceled before proceeding with
-the cleanup in ether3_remove.
+The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
+this patch guards compilation of non-trivial implementations
+of ctnetlink_dump_labels() and ctnetlink_label_size().
 
-Fixes: 6fd9c53f7186 ("net: seeq: Convert timers to use timer_setup()")
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Link: https://patch.msgid.link/20240915144045.451-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, this is not necessary as each of these functions
+will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
+as each function starts with the equivalent of:
+
+	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+
+	if (!labels)
+		return 0;
+
+And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
+is not enabled.  So I believe that the compiler optimises the code away
+in such cases anyway.
+
+Found by inspection.
+Compile tested only.
+
+Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
+added Fixes: tag.
+
+Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
+Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/seeq/ether3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_conntrack_netlink.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/seeq/ether3.c b/drivers/net/ethernet/seeq/ether3.c
-index c672f92d65e97..9319a2675e7b6 100644
---- a/drivers/net/ethernet/seeq/ether3.c
-+++ b/drivers/net/ethernet/seeq/ether3.c
-@@ -847,9 +847,11 @@ static void ether3_remove(struct expansion_card *ec)
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 4cbf71d0786b0..c55cf5bc36b2f 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -382,7 +382,7 @@ static int ctnetlink_dump_secctx(struct sk_buff *skb, const struct nf_conn *ct)
+ #define ctnetlink_dump_secctx(a, b) (0)
+ #endif
+ 
+-#ifdef CONFIG_NF_CONNTRACK_LABELS
++#ifdef CONFIG_NF_CONNTRACK_EVENTS
+ static inline int ctnetlink_label_size(const struct nf_conn *ct)
  {
- 	struct net_device *dev = ecard_get_drvdata(ec);
- 
-+	ether3_outw(priv(dev)->regs.config2 |= CFG2_CTRLO, REG_CONFIG2);
- 	ecard_set_drvdata(ec, NULL);
- 
- 	unregister_netdev(dev);
-+	del_timer_sync(&priv(dev)->timer);
- 	free_netdev(dev);
- 	ecard_release_resources(ec);
+ 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+@@ -391,6 +391,7 @@ static inline int ctnetlink_label_size(const struct nf_conn *ct)
+ 		return 0;
+ 	return nla_total_size(sizeof(labels->bits));
  }
++#endif
+ 
+ static int
+ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+@@ -411,10 +412,6 @@ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+ 
+ 	return 0;
+ }
+-#else
+-#define ctnetlink_dump_labels(a, b) (0)
+-#define ctnetlink_label_size(a)	(0)
+-#endif
+ 
+ #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
+ 
 -- 
 2.43.0
 
