@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EFD1D079C;
-	Wed,  2 Oct 2024 14:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EB61D079C;
+	Wed,  2 Oct 2024 14:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880073; cv=none; b=W8706OgvnIlUgOoOSwcChmr9SyQOY2yggmR8bJmM+Qqw52bD0JhIptlx/3fJCZTSEYY/vr9AXGELVuBiC1RTsz92xuFHEM4yEsOEGBb5xbkaW6THdO6JTMGJ2V+FY6+k4XYGcWin9wbmhvibuCdpiDeS9rxvdQ+yt6lWVpj2TNo=
+	t=1727880076; cv=none; b=gWI7wlDbFPJJqywjV+Kef3dwVVl2qPkzGoiv+7xnO8JORmKOzW/IkKYC8vKw++oSzSzHI0hJbsQHQn+zoRkxPx5Foa8h18B7kCLniBKp1POy3WFeADYHHnsQKFa7LeY5xsSMjECBlWwWKjsGmHzYxtg9lsvEoojiFA43M6UEp98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880073; c=relaxed/simple;
-	bh=WOnFDK+bikbZzLZ//Y/XlQnlcNNQlHlPiR8nxrfjiVI=;
+	s=arc-20240116; t=1727880076; c=relaxed/simple;
+	bh=KJcVRSf/YYc2gDewBLVkJnFnI6jZEPzbWb+QWFU1eYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVT2i5ZVkEoEjwib3f4S/qlOll7DCm2e2z48lyZIMjn0enSsvnZLJpaVnTTS1oLziSWFybMWwRiWJJ5vzD5yZBNrf9K6ymQl6cHbX0QugSFiiRJxKSZitN6A2A+/KzpeTy8SqGb+IvfezSy+O6aVPVrvZmx+rBLmpGGG/9ebKds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLhqdDhJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRStCQ1oWBUSC7Q70XiG9SaWNpulUnfX+jvCO+0X7NEQGLj9ITIP/5toF0iRJ9E7wk3El8oujOMrJrcXWT8uawVlwB036FsfYIAsHuTfR19DhwCUUQWtB29BXV8oIn1sTrIlFU+PRWyZvE/zJdEzaQ/5QSCtNL05IjHg7cWJQ4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my18wIOe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLhqdDhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15BAC4CEC2;
-	Wed,  2 Oct 2024 14:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my18wIOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8EAC4CEC2;
+	Wed,  2 Oct 2024 14:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880073;
-	bh=WOnFDK+bikbZzLZ//Y/XlQnlcNNQlHlPiR8nxrfjiVI=;
+	s=korg; t=1727880075;
+	bh=KJcVRSf/YYc2gDewBLVkJnFnI6jZEPzbWb+QWFU1eYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLhqdDhJGZMDnHOapxiKUCWFDR6CX/SuUHVdOq8KpqoMVd3kZo6yKFcEojFzAlmof
-	 57k7u2zRx90AHa0HitGEbEuFOQrNliyooPyTzLZu483leS5tykoaqkkcMRWdUioOcf
-	 NciGJJnvOdssGmf/vuA2Y+pDoy3j9sak98EXGHQM=
+	b=my18wIOe570tH4GrFinf0tdD/2s3w+SNiJ4W4rsToC3QnBc2Bo1rJQEnTP1fE8ll8
+	 47BbV8gGFslFddGVDo2Vh3pszP/m1KxTW9m8RcWYmTs1clK8+pDuEFzdy6gU5t1nSw
+	 muYIAQuevuMW4K2qrTnL50swznQh3WkKOD/XfDbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
+	Yuntao Liu <liuyuntao12@huawei.com>,
+	Xingyu Wu <xingyu.wu@starfivetech.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/538] clk: ti: dra7-atl: Fix leak of of_nodes
-Date: Wed,  2 Oct 2024 14:59:03 +0200
-Message-ID: <20241002125804.416388733@linuxfoundation.org>
+Subject: [PATCH 6.6 305/538] clk: starfive: Use pm_runtime_resume_and_get to fix pm_runtime_get_sync() usage
+Date: Wed,  2 Oct 2024 14:59:04 +0200
+Message-ID: <20241002125804.455541622@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Yuntao Liu <liuyuntao12@huawei.com>
 
-[ Upstream commit 9d6e9f10e2e031fb7bfb3030a7d1afc561a28fea ]
+[ Upstream commit 55c312c1b2be6d43e39c280ad6ab4b711e545b89 ]
 
-This fix leaking the of_node references in of_dra7_atl_clk_probe().
+We need to call pm_runtime_put_noidle() when pm_runtime_get_sync()
+fails, so use pm_runtime_resume_and_get() instead. this function
+will handle this.
 
-The docs for of_parse_phandle_with_args() say that the caller must call
-of_node_put() on the returned node. This adds the missing of_node_put()
-to fix the leak.
-
-Fixes: 9ac33b0ce81f ("CLK: TI: Driver for DRA7 ATL (Audio Tracking Logic)")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240826-clk-fix-leak-v1-1-f55418a13aa6@baylibre.com
+Fixes: dae5448a327ed ("clk: starfive: Add StarFive JH7110 Video-Output clock driver")
+Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
+Link: https://lore.kernel.org/r/20240815093853.757487-1-liuyuntao12@huawei.com
+Reviewed-by: Xingyu Wu <xingyu.wu@starfivetech.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/clk-dra7-atl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/starfive/clk-starfive-jh7110-vout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ti/clk-dra7-atl.c b/drivers/clk/ti/clk-dra7-atl.c
-index d964e3affd42c..0eab7f3e2eab9 100644
---- a/drivers/clk/ti/clk-dra7-atl.c
-+++ b/drivers/clk/ti/clk-dra7-atl.c
-@@ -240,6 +240,7 @@ static int of_dra7_atl_clk_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-vout.c b/drivers/clk/starfive/clk-starfive-jh7110-vout.c
+index 10cc1ec439251..36340ca42cc7e 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-vout.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-vout.c
+@@ -145,7 +145,7 @@ static int jh7110_voutcrg_probe(struct platform_device *pdev)
  
- 		clk = of_clk_get_from_provider(&clkspec);
-+		of_node_put(clkspec.np);
- 		if (IS_ERR(clk)) {
- 			pr_err("%s: failed to get atl clock %d from provider\n",
- 			       __func__, i);
+ 	/* enable power domain and clocks */
+ 	pm_runtime_enable(priv->dev);
+-	ret = pm_runtime_get_sync(priv->dev);
++	ret = pm_runtime_resume_and_get(priv->dev);
+ 	if (ret < 0)
+ 		return dev_err_probe(priv->dev, ret, "failed to turn on power\n");
+ 
 -- 
 2.43.0
 
