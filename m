@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D5F1D0DE2;
-	Wed,  2 Oct 2024 14:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D54A1D0DE2;
+	Wed,  2 Oct 2024 14:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877680; cv=none; b=a7k5bpOoFgu0JnpeiLF0ebO/0sqYzmnxmUhxbbVInFh8tKuA0waSFxe6z41FzCsFRpdqc1birm5Bvn1XbUO09GPgPFwUJ8CeR9TyE+t7fykMlKnnOtE/nJ6q1xWKTY4THXuYiFl6PNxmwZzpOogDlL4upCL84djVhd+vEbvHZ8E=
+	t=1727877683; cv=none; b=daiVap9Rp3L80qJBvQsSctjMoGtRe0ZPQz+qKu06zhUgCvKEWCzbCb2ZCViH72Z+i4eo/Exb7MDmGgawpTU/Lt8dE6cGFi8Sjwis2Y+mMPDl/uiuA/dUDAkFaVSeT+QrbV8B5HUisIf+X9fE5O9ZY6Ayufn4UhkFVHawW3zNGlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877680; c=relaxed/simple;
-	bh=qNmFLgq4/Da4FKKzsoTTbtLhPaO+9bd2DgVNcrLMPbY=;
+	s=arc-20240116; t=1727877683; c=relaxed/simple;
+	bh=pax0gG+FV3xWHRw0tgtq9R2lhfUG2ayk2rNPfckLku0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IU3jKGRVbApSWNJXHAdit8XK9Exr/syCINt5xiWt78DT06mQFe0P/x8ssx2zoDdIOnWRtZKO6ihz73/1WcfATLey0dtyiFRW6Mb7K4F3MnSzRIOqLBKFQU6oTCHFF8ExN/bQMAyP7KpGkjz9lB7ToJHlaDU0+Z4h+3XxQwLzlqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOYI2nSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pqUhzUlf5NIVd7ycDErlg9qaIxTHyZYOMGMPQKgX1I8gtOAOg91fODN14+RFyL6ludB4Xya2V7bOa8oCt8wMVLQIz5dT8DGqe7NxxuyZCyFev+G2S0thuVJmSBxyVRSybi0UX6aWVI69o3R9lx/i3lA3rKhT3gcKpgyXrScyBqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyqDOr1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOYI2nSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC02C4CEC5;
-	Wed,  2 Oct 2024 14:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyqDOr1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE4CC4CECD;
+	Wed,  2 Oct 2024 14:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877680;
-	bh=qNmFLgq4/Da4FKKzsoTTbtLhPaO+9bd2DgVNcrLMPbY=;
+	s=korg; t=1727877683;
+	bh=pax0gG+FV3xWHRw0tgtq9R2lhfUG2ayk2rNPfckLku0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOYI2nSszF1ai0sK2K/D+q/fwSTdBWKB71yyTWfVQQF8AOs3jMRShB4Vj5CXSOLiq
-	 nn6b5MvVILHqolIxOwoQtoZZXBbFVKNENFbx7W8SqZO3EhCMpA6xzVbCXhmNl9wKjf
-	 jqhOVeIwpasMYus3+FSoDRPwTzgAOuJV6HSg2SJk=
+	b=PyqDOr1SUE/ig4atWhrTzn5BqPjf6l9EbrXmLu6jjBtOcLkKKMim7WPkeYSSTrqbx
+	 ae6xnvm+oQVI6eNTKLodgoJazX163SOOiYBPDVHLRbQ+vpNFyCjjWrufiWv2Wsz6DN
+	 UYkijioNuDpLe2hmbtr76po+Kk35Bo5xbqcrtAIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 157/634] hwmon: (max16065) Remove use of i2c_match_id()
-Date: Wed,  2 Oct 2024 14:54:17 +0200
-Message-ID: <20241002125817.307865134@linuxfoundation.org>
+Subject: [PATCH 6.10 158/634] hwmon: (max16065) Fix alarm attributes
+Date: Wed,  2 Oct 2024 14:54:18 +0200
+Message-ID: <20241002125817.346942914@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,68 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 5a71654b398e3471f0169c266a3587cf09e1200c ]
+[ Upstream commit 119abf7d1815f098f7f91ae7abc84324a19943d7 ]
 
-The function i2c_match_id() is used to fetch the matching ID from
-the i2c_device_id table. This is often used to then retrieve the
-matching driver_data. This can be done in one step with the helper
-i2c_get_match_data().
+Chips reporting overcurrent alarms report it in the second alarm register.
+That means the second alarm register has to be read, even if the chip only
+supports 8 or fewer ADC channels.
 
-This helper has a couple other benefits:
- * It doesn't need the i2c_device_id passed in so we do not need
-   to have that forward declared, allowing us to remove those or
-   move the i2c_device_id table down to its more natural spot
-   with the other module info.
- * It also checks for device match data, which allows for OF and
-   ACPI based probing. That means we do not have to manually check
-   those first and can remove those checks.
+MAX16067 and MAX16068 report undervoltage and overvoltage alarms in
+separate registers. Fold register contents together to report both with
+the existing alarm attribute. This requires actually storing the chip type
+in struct max16065_data. Rename the variable 'chip' to match the variable
+name used in the probe function.
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240403203633.914389-20-afd@ti.com
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 119abf7d1815 ("hwmon: (max16065) Fix alarm attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/hwmon/max16065.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index e392529de098e..5b2a174c6bad3 100644
+index 5b2a174c6bad3..0ccb5eb596fc4 100644
 --- a/drivers/hwmon/max16065.c
 +++ b/drivers/hwmon/max16065.c
-@@ -494,8 +494,6 @@ static const struct attribute_group max16065_max_group = {
- 	.is_visible = max16065_secondary_is_visible,
+@@ -79,7 +79,7 @@ static const bool max16065_have_current[] = {
  };
  
--static const struct i2c_device_id max16065_id[];
--
- static int max16065_probe(struct i2c_client *client)
- {
- 	struct i2c_adapter *adapter = client->adapter;
-@@ -506,7 +504,7 @@ static int max16065_probe(struct i2c_client *client)
- 	bool have_secondary;		/* true if chip has secondary limits */
- 	bool secondary_is_max = false;	/* secondary limits reflect max */
- 	int groups = 0;
--	const struct i2c_device_id *id = i2c_match_id(max16065_id, client);
-+	enum chips chip = (uintptr_t)i2c_get_match_data(client);
+ struct max16065_data {
+-	enum chips type;
++	enum chips chip;
+ 	struct i2c_client *client;
+ 	const struct attribute_group *groups[4];
+ 	struct mutex update_lock;
+@@ -162,10 +162,17 @@ static struct max16065_data *max16065_update_device(struct device *dev)
+ 						     MAX16065_CURR_SENSE);
+ 		}
  
- 	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA
- 				     | I2C_FUNC_SMBUS_READ_WORD_DATA))
-@@ -519,9 +517,9 @@ static int max16065_probe(struct i2c_client *client)
+-		for (i = 0; i < DIV_ROUND_UP(data->num_adc, 8); i++)
++		for (i = 0; i < 2; i++)
+ 			data->fault[i]
+ 			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
+ 
++		/*
++		 * MAX16067 and MAX16068 have separate undervoltage and
++		 * overvoltage alarm bits. Squash them together.
++		 */
++		if (data->chip == max16067 || data->chip == max16068)
++			data->fault[0] |= data->fault[1];
++
+ 		data->last_updated = jiffies;
+ 		data->valid = true;
+ 	}
+@@ -514,6 +521,7 @@ static int max16065_probe(struct i2c_client *client)
+ 	if (unlikely(!data))
+ 		return -ENOMEM;
+ 
++	data->chip = chip;
  	data->client = client;
  	mutex_init(&data->update_lock);
  
--	data->num_adc = max16065_num_adc[id->driver_data];
--	data->have_current = max16065_have_current[id->driver_data];
--	have_secondary = max16065_have_secondary[id->driver_data];
-+	data->num_adc = max16065_num_adc[chip];
-+	data->have_current = max16065_have_current[chip];
-+	have_secondary = max16065_have_secondary[chip];
- 
- 	if (have_secondary) {
- 		val = i2c_smbus_read_byte_data(client, MAX16065_SW_ENABLE);
 -- 
 2.43.0
 
