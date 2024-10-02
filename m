@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDC81D097D;
-	Wed,  2 Oct 2024 14:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E781D0412;
+	Wed,  2 Oct 2024 14:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878967; cv=none; b=VeFFG7vSrP5AnVlnZjXdMGL2yLf+afkHSgq9fI3PN4raIBEe2qJLLaDkJAn6Cqlq8PmISqRK9VnkcRXo9e6DaJKYLC5z1auLT4VLEFlndJCOgxSgkoBC1pWXIlXHy2MeWTV+ZsaUXMJQIARZSok5nTy3eZkvvQH8VdFTnv6QyMw=
+	t=1727878970; cv=none; b=ZQygjV4ThtJG/jzC5+1EIs/F38jHp0gbu3JI+y3wY8cgVC/vRCUIYVVYTrS5C6YKs1KiUpxlqgg9KtCuKi4Ea/m5hLknfaRGR+3Fn7yDIVlWtSwFNTx9u/fWTy0ttKuU3sCyMsP3jPxrO8JTMjPEiHI7CaTEWyRafbdgG+LrLFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878967; c=relaxed/simple;
-	bh=RUkQb291UoTPK1pxTfEs/myJwHZaYJfXY/mhyeCVcPk=;
+	s=arc-20240116; t=1727878970; c=relaxed/simple;
+	bh=0gzWVT480RA/4pWlA2JbdnXbyBHvHJu4hMIb5LS5Jg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+xr3Ub5x8dQsTTLX3ILiHfqo9UHAFca0Lk/8O5V9nIe42p4NH5DuD9FgG2mo449G1nsYmruOk+Nii6a4qnC6SpHLdh9UfkhM6mo/p3X7pVU+3maoYSmOuR8v+DpMoseUr9TwJglAxCLCCcoHEwQDgIk2UdEx2B4748YyEvLky0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJLzCTqj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D0ADkDz1ZtVEtgiAREAYmcsdJK0FRhIFU8/AmUN7Zy7e/ySEBqk9cCTstQVphbCgzlZ/2RrZQXBtQYMCf85vUmYysqHz2rX2aoRtw/B7aJ3CYDY+N/Y5Usqj4V9+sts2EJHIXR+lDTlRt0DovL6IaVa3CZ+70INJ7GQSPhlsS8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwYCmH9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJLzCTqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8B8C4CEC2;
-	Wed,  2 Oct 2024 14:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwYCmH9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBC9C4CEC5;
+	Wed,  2 Oct 2024 14:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878967;
-	bh=RUkQb291UoTPK1pxTfEs/myJwHZaYJfXY/mhyeCVcPk=;
+	s=korg; t=1727878970;
+	bh=0gzWVT480RA/4pWlA2JbdnXbyBHvHJu4hMIb5LS5Jg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJLzCTqjRCBYVGjqNCG0dd/o7mTNRgr62M6D1QTe7NhlxHhhLe/qLvXInxHTfncjV
-	 rLOQr4rL6INoC60ncmBPQ0rU8IzFyqezI1qA/XN3utwRzrgXqKqSe7fXF3XbfzAP8o
-	 NBX88TqDgpjUpfsPAELlsdUqJgcK+cp3GGJsT5c4=
+	b=JwYCmH9nrBmkxOTe+5pKgMd577tKLsWc52DxU2sXqq0rhSj4Wrgm/nnMy1t7Kp5ci
+	 3jZehJfzTosqV/mXjyHc2zKKdTIZ8+d3iHNmOP9kZ3ucyXPSp6a8sAhU2cfCn9r1VT
+	 J6j7p3p4k7yAse/2kuGtclASYymUcxCjIQ4UY6Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Wenlong <houwenlong.hwl@antgroup.com>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Haoyu Wu <haoyuwu254@gmail.com>,
+	syzbot+545f1326f405db4e1c3e@syzkaller.appspotmail.com,
 	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 593/634] KVM: x86: Drop unused check_apicv_inhibit_reasons() callback definition
-Date: Wed,  2 Oct 2024 15:01:33 +0200
-Message-ID: <20241002125834.520752735@linuxfoundation.org>
+Subject: [PATCH 6.10 594/634] KVM: x86: Make x2APIC ID 100% readonly
+Date: Wed,  2 Oct 2024 15:01:34 +0200
+Message-ID: <20241002125834.559298829@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,52 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Wenlong <houwenlong.hwl@antgroup.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c7d4c5f01961cdc4f1d29525e2b0d71f62c5bc33 ]
+[ Upstream commit 4b7c3f6d04bd53f2e5b228b6821fb8f5d1ba3071 ]
 
-The check_apicv_inhibit_reasons() callback implementation was dropped in
-the commit b3f257a84696 ("KVM: x86: Track required APICv inhibits with
-variable, not callback"), but the definition removal was missed in the
-final version patch (it was removed in the v4). Therefore, it should be
-dropped, and the vmx_check_apicv_inhibit_reasons() function declaration
-should also be removed.
+Ignore the userspace provided x2APIC ID when fixing up APIC state for
+KVM_SET_LAPIC, i.e. make the x2APIC fully readonly in KVM.  Commit
+a92e2543d6a8 ("KVM: x86: use hardware-compatible format for APIC ID
+register"), which added the fixup, didn't intend to allow userspace to
+modify the x2APIC ID.  In fact, that commit is when KVM first started
+treating the x2APIC ID as readonly, apparently to fix some race:
 
-Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Link: https://lore.kernel.org/r/54abd1d0ccaba4d532f81df61259b9c0e021fbde.1714977229.git.houwenlong.hwl@antgroup.com
+ static inline u32 kvm_apic_id(struct kvm_lapic *apic)
+ {
+-       return (kvm_lapic_get_reg(apic, APIC_ID) >> 24) & 0xff;
++       /* To avoid a race between apic_base and following APIC_ID update when
++        * switching to x2apic_mode, the x2apic mode returns initial x2apic id.
++        */
++       if (apic_x2apic_mode(apic))
++               return apic->vcpu->vcpu_id;
++
++       return kvm_lapic_get_reg(apic, APIC_ID) >> 24;
+ }
+
+Furthermore, KVM doesn't support delivering interrupts to vCPUs with a
+modified x2APIC ID, but KVM *does* return the modified value on a guest
+RDMSR and for KVM_GET_LAPIC.  I.e. no remotely sane setup can actually
+work with a modified x2APIC ID.
+
+Making the x2APIC ID fully readonly fixes a WARN in KVM's optimized map
+calculation, which expects the LDR to align with the x2APIC ID.
+
+  WARNING: CPU: 2 PID: 958 at arch/x86/kvm/lapic.c:331 kvm_recalculate_apic_map+0x609/0xa00 [kvm]
+  CPU: 2 PID: 958 Comm: recalc_apic_map Not tainted 6.4.0-rc3-vanilla+ #35
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.2-1-1 04/01/2014
+  RIP: 0010:kvm_recalculate_apic_map+0x609/0xa00 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_apic_set_state+0x1cf/0x5b0 [kvm]
+   kvm_arch_vcpu_ioctl+0x1806/0x2100 [kvm]
+   kvm_vcpu_ioctl+0x663/0x8a0 [kvm]
+   __x64_sys_ioctl+0xb8/0xf0
+   do_syscall_64+0x56/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+  RIP: 0033:0x7fade8b9dd6f
+
+Unfortunately, the WARN can still trigger for other CPUs than the current
+one by racing against KVM_SET_LAPIC, so remove it completely.
+
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Closes: https://lore.kernel.org/all/814baa0c-1eaa-4503-129f-059917365e80@rbox.co
+Reported-by: Haoyu Wu <haoyuwu254@gmail.com>
+Closes: https://lore.kernel.org/all/20240126161633.62529-1-haoyuwu254@gmail.com
+Reported-by: syzbot+545f1326f405db4e1c3e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000c2a6b9061cbca3c3@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20240802202941.344889-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: 73b42dc69be8 ("KVM: x86: Re-split x2APIC ICR into ICR+ICR2 for AMD (x2AVIC)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h | 1 -
- arch/x86/kvm/vmx/x86_ops.h      | 1 -
- 2 files changed, 2 deletions(-)
+ arch/x86/kvm/lapic.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index d0274b3be2c40..a571f89db6977 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1708,7 +1708,6 @@ struct kvm_x86_ops {
- 	void (*enable_nmi_window)(struct kvm_vcpu *vcpu);
- 	void (*enable_irq_window)(struct kvm_vcpu *vcpu);
- 	void (*update_cr8_intercept)(struct kvm_vcpu *vcpu, int tpr, int irr);
--	bool (*check_apicv_inhibit_reasons)(enum kvm_apicv_inhibit reason);
- 	const unsigned long required_apicv_inhibits;
- 	bool allow_apicv_in_x2apic_without_x2apic_virtualization;
- 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
-diff --git a/arch/x86/kvm/vmx/x86_ops.h b/arch/x86/kvm/vmx/x86_ops.h
-index d404227c164d6..e46aba18600e7 100644
---- a/arch/x86/kvm/vmx/x86_ops.h
-+++ b/arch/x86/kvm/vmx/x86_ops.h
-@@ -46,7 +46,6 @@ bool vmx_apic_init_signal_blocked(struct kvm_vcpu *vcpu);
- void vmx_migrate_timers(struct kvm_vcpu *vcpu);
- void vmx_set_virtual_apic_mode(struct kvm_vcpu *vcpu);
- void vmx_apicv_pre_state_restore(struct kvm_vcpu *vcpu);
--bool vmx_check_apicv_inhibit_reasons(enum kvm_apicv_inhibit reason);
- void vmx_hwapic_irr_update(struct kvm_vcpu *vcpu, int max_irr);
- void vmx_hwapic_isr_update(int max_isr);
- int vmx_sync_pir_to_irr(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index f1f54218b0603..9392d6e3d8e37 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -351,10 +351,8 @@ static void kvm_recalculate_logical_map(struct kvm_apic_map *new,
+ 	 * reversing the LDR calculation to get cluster of APICs, i.e. no
+ 	 * additional work is required.
+ 	 */
+-	if (apic_x2apic_mode(apic)) {
+-		WARN_ON_ONCE(ldr != kvm_apic_calc_x2apic_ldr(kvm_x2apic_id(apic)));
++	if (apic_x2apic_mode(apic))
+ 		return;
+-	}
+ 
+ 	if (WARN_ON_ONCE(!kvm_apic_map_get_logical_dest(new, ldr,
+ 							&cluster, &mask))) {
+@@ -2987,18 +2985,28 @@ static int kvm_apic_state_fixup(struct kvm_vcpu *vcpu,
+ 		struct kvm_lapic_state *s, bool set)
+ {
+ 	if (apic_x2apic_mode(vcpu->arch.apic)) {
++		u32 x2apic_id = kvm_x2apic_id(vcpu->arch.apic);
+ 		u32 *id = (u32 *)(s->regs + APIC_ID);
+ 		u32 *ldr = (u32 *)(s->regs + APIC_LDR);
+ 		u64 icr;
+ 
+ 		if (vcpu->kvm->arch.x2apic_format) {
+-			if (*id != vcpu->vcpu_id)
++			if (*id != x2apic_id)
+ 				return -EINVAL;
+ 		} else {
++			/*
++			 * Ignore the userspace value when setting APIC state.
++			 * KVM's model is that the x2APIC ID is readonly, e.g.
++			 * KVM only supports delivering interrupts to KVM's
++			 * version of the x2APIC ID.  However, for backwards
++			 * compatibility, don't reject attempts to set a
++			 * mismatched ID for userspace that hasn't opted into
++			 * x2apic_format.
++			 */
+ 			if (set)
+-				*id >>= 24;
++				*id = x2apic_id;
+ 			else
+-				*id <<= 24;
++				*id = x2apic_id << 24;
+ 		}
+ 
+ 		/*
+@@ -3007,7 +3015,7 @@ static int kvm_apic_state_fixup(struct kvm_vcpu *vcpu,
+ 		 * split to ICR+ICR2 in userspace for backwards compatibility.
+ 		 */
+ 		if (set) {
+-			*ldr = kvm_apic_calc_x2apic_ldr(*id);
++			*ldr = kvm_apic_calc_x2apic_ldr(x2apic_id);
+ 
+ 			icr = __kvm_lapic_get_reg(s->regs, APIC_ICR) |
+ 			      (u64)__kvm_lapic_get_reg(s->regs, APIC_ICR2) << 32;
 -- 
 2.43.0
 
