@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA921CFECF;
-	Wed,  2 Oct 2024 13:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A361D042F;
+	Wed,  2 Oct 2024 13:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875769; cv=none; b=W1XRmwDFnrIgQjS28mN1gmDH3wUx6EF8xaAbzr7k+0hPdms8e8nuuNtb529622jcnMCu5cAXxFmnv9lTuoV97drJAsZP2OKJigj2oK0Qx4sgSzuc8nF1Qg/j+pm1qorZXnG/SgPNond5A6f5NDxVL+Wg/MEr6SsxXosyrcas4lM=
+	t=1727875772; cv=none; b=jyUwPZsoJmWjBxBUwwR3pLcvqTLAB+oNJXIXZp1kOrSAj/C3unNo7pxbBJEj5OTL9XcX9Yvoywufvwc+RzqC/sqhNl8M0TcimdgH6IohtsGhbC42aiY4pYrSVKOO+VXJlU/+aNg5oB33DmyzKMJCiMgFCGGmnGnsBTiU2ztzg5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875769; c=relaxed/simple;
-	bh=yNs49o6hbi7HYL7HzfCm7Llhf2PBsq/3Y987jEQtI2w=;
+	s=arc-20240116; t=1727875772; c=relaxed/simple;
+	bh=5k9I4ZqmwhiBgm6309ClYRFWNhEWWI6jNDmSWSYKvSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YrczYe4BblwAL6sJW2sGVbPaYAOG3ZXpyZvYLuUyGYeDXdzIaqR4SnVfpjbVApoYsrj+N7QbVsYsgQdNAxfWt6noyYQYtfw/IFT3ibgIh/u6bo3Sa79gcJV0cme3OOLdsuGnLl/nBYwDAZWVd3HQg4f3SGlicq7KMO9ie6kDhFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugzA5ChE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzVuZ19n19IFs92DQSqZfdQVXkQ2ErllfVOnmkxkvJA77sUHABmb3x6+Jrn6LyLD7yags2rq7K/9I+xbuahhJ6kA50Z5QHFRX8BpTblZ+yz1K52K2Ms62isNlVJBLfDYf5tWwh6Kxu9XnjoS5xoIHAbXxPuMohUI54WLVhEHFa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MF6xQWm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugzA5ChE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C492C4CEC5;
-	Wed,  2 Oct 2024 13:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MF6xQWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C2FC4CEC5;
+	Wed,  2 Oct 2024 13:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875768;
-	bh=yNs49o6hbi7HYL7HzfCm7Llhf2PBsq/3Y987jEQtI2w=;
+	s=korg; t=1727875771;
+	bh=5k9I4ZqmwhiBgm6309ClYRFWNhEWWI6jNDmSWSYKvSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugzA5ChEGAtUoOxp45XZmHX+PGiouMFZa0F67fXUZfKByngmlD12D/oiih+flEbDG
-	 qrvUBW/6z1BXBxn3oE3NT6mLbPKHDjcvuz6Utc+shK4nNFjZ+rV1vcRMUwOoLcwgOy
-	 2UJVBaByVMqOe+sc7YVgBWGJueylvts8hVNowEf8=
+	b=0MF6xQWmWP2IwoMk1gkHY9ine+jCTaDITBkIonzteuEmWkZtQ/BKoTqd8QktXMEec
+	 8oFSkuoEHyYKLncJxmhnP9IDj503GG8475S8PqSgS5CHVoAr9F/i2bEJAsI++dXGHt
+	 SRcqgnAZl4+0hS9oNQJwrKGS070Wk33iHV6B63/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Charles Han <hanchunchao@inspur.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 214/695] drm/radeon/evergreen_cs: fix int overflow errors in cs track offsets
-Date: Wed,  2 Oct 2024 14:53:32 +0200
-Message-ID: <20241002125831.004937399@linuxfoundation.org>
+Subject: [PATCH 6.11 188/695] mtd: powernv: Add check devm_kasprintf() returned value
+Date: Wed,  2 Oct 2024 14:53:06 +0200
+Message-ID: <20241002125829.974934849@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,223 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 3fbaf475a5b8361ebee7da18964db809e37518b7 ]
+[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
 
-Several cs track offsets (such as 'track->db_s_read_offset')
-either are initialized with or plainly take big enough values that,
-once shifted 8 bits left, may be hit with integer overflow if the
-resulting values end up going over u32 limit.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value is not checked.
 
-Same goes for a few instances of 'surf.layer_size * mslice'
-multiplications that are added to 'offset' variable - they may
-potentially overflow as well and need to be validated properly.
-
-While some debug prints in this code section take possible overflow
-issues into account, simply casting to (unsigned long) may be
-erroneous in its own way, as depending on CPU architecture one is
-liable to get different results.
-
-Fix said problems by:
- - casting 'offset' to fixed u64 data type instead of
- ambiguous unsigned long.
- - casting one of the operands in vulnerable to integer
- overflow cases to u64.
- - adjust format specifiers in debug prints to properly
- represent 'offset' values.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 285484e2d55e ("drm/radeon: add support for evergreen/ni tiling informations v11")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen_cs.c | 62 +++++++++++++--------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ drivers/mtd/devices/powernv_flash.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen_cs.c b/drivers/gpu/drm/radeon/evergreen_cs.c
-index e5577d2a19ef4..a466132833936 100644
---- a/drivers/gpu/drm/radeon/evergreen_cs.c
-+++ b/drivers/gpu/drm/radeon/evergreen_cs.c
-@@ -397,7 +397,7 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
- 
- 	mslice = G_028C6C_SLICE_MAX(track->cb_color_view[id]) + 1;
-@@ -435,14 +435,14 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 		return r;
- 	}
- 
--	offset = track->cb_color_bo_offset[id] << 8;
-+	offset = (u64)track->cb_color_bo_offset[id] << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d cb[%d] bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d cb[%d] bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, id, offset, surf.base_align);
- 		return -EINVAL;
- 	}
- 
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->cb_color_bo[id])) {
- 		/* old ddx are broken they allocate bo with w*h*bpp but
- 		 * program slice with ALIGN(h, 8), catch this and patch
-@@ -450,14 +450,14 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 		 */
- 		if (!surf.mode) {
- 			uint32_t *ib = p->ib.ptr;
--			unsigned long tmp, nby, bsize, size, min = 0;
-+			u64 tmp, nby, bsize, size, min = 0;
- 
- 			/* find the height the ddx wants */
- 			if (surf.nby > 8) {
- 				min = surf.nby - 8;
- 			}
- 			bsize = radeon_bo_size(track->cb_color_bo[id]);
--			tmp = track->cb_color_bo_offset[id] << 8;
-+			tmp = (u64)track->cb_color_bo_offset[id] << 8;
- 			for (nby = surf.nby; nby > min; nby--) {
- 				size = nby * surf.nbx * surf.bpe * surf.nsamples;
- 				if ((tmp + size * mslice) <= bsize) {
-@@ -469,7 +469,7 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 				slice = ((nby * surf.nbx) / 64) - 1;
- 				if (!evergreen_surface_check(p, &surf, "cb")) {
- 					/* check if this one works */
--					tmp += surf.layer_size * mslice;
-+					tmp += (u64)surf.layer_size * mslice;
- 					if (tmp <= bsize) {
- 						ib[track->cb_color_slice_idx[id]] = slice;
- 						goto old_ddx_ok;
-@@ -478,9 +478,9 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 			}
- 		}
- 		dev_warn(p->dev, "%s:%d cb[%d] bo too small (layer size %d, "
--			 "offset %d, max layer %d, bo size %ld, slice %d)\n",
-+			 "offset %llu, max layer %d, bo size %ld, slice %d)\n",
- 			 __func__, __LINE__, id, surf.layer_size,
--			track->cb_color_bo_offset[id] << 8, mslice,
-+			(u64)track->cb_color_bo_offset[id] << 8, mslice,
- 			radeon_bo_size(track->cb_color_bo[id]), slice);
- 		dev_warn(p->dev, "%s:%d problematic surf: (%d %d) (%d %d %d %d %d %d %d)\n",
- 			 __func__, __LINE__, surf.nbx, surf.nby,
-@@ -564,7 +564,7 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
- 
- 	mslice = G_028008_SLICE_MAX(track->db_depth_view) + 1;
-@@ -610,18 +610,18 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 		return r;
- 	}
- 
--	offset = track->db_s_read_offset << 8;
-+	offset = (u64)track->db_s_read_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil read bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil read bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_s_read_bo)) {
- 		dev_warn(p->dev, "%s:%d stencil read bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_s_read_offset << 8, mslice,
-+			(u64)track->db_s_read_offset << 8, mslice,
- 			radeon_bo_size(track->db_s_read_bo));
- 		dev_warn(p->dev, "%s:%d stencil invalid (0x%08x 0x%08x 0x%08x 0x%08x)\n",
- 			 __func__, __LINE__, track->db_depth_size,
-@@ -629,18 +629,18 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 		return -EINVAL;
- 	}
- 
--	offset = track->db_s_write_offset << 8;
-+	offset = (u64)track->db_s_write_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil write bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil write bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_s_write_bo)) {
- 		dev_warn(p->dev, "%s:%d stencil write bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_s_write_offset << 8, mslice,
-+			(u64)track->db_s_write_offset << 8, mslice,
- 			radeon_bo_size(track->db_s_write_bo));
- 		return -EINVAL;
- 	}
-@@ -661,7 +661,7 @@ static int evergreen_cs_track_validate_depth(struct radeon_cs_parser *p)
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
- 
- 	mslice = G_028008_SLICE_MAX(track->db_depth_view) + 1;
-@@ -708,34 +708,34 @@ static int evergreen_cs_track_validate_depth(struct radeon_cs_parser *p)
- 		return r;
- 	}
- 
--	offset = track->db_z_read_offset << 8;
-+	offset = (u64)track->db_z_read_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil read bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil read bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_z_read_bo)) {
- 		dev_warn(p->dev, "%s:%d depth read bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_z_read_offset << 8, mslice,
-+			(u64)track->db_z_read_offset << 8, mslice,
- 			radeon_bo_size(track->db_z_read_bo));
- 		return -EINVAL;
- 	}
- 
--	offset = track->db_z_write_offset << 8;
-+	offset = (u64)track->db_z_write_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil write bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil write bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_z_write_bo)) {
- 		dev_warn(p->dev, "%s:%d depth write bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_z_write_offset << 8, mslice,
-+			(u64)track->db_z_write_offset << 8, mslice,
- 			radeon_bo_size(track->db_z_write_bo));
- 		return -EINVAL;
- 	}
+diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
+index 66044f4f5bade..10cd1d9b48859 100644
+--- a/drivers/mtd/devices/powernv_flash.c
++++ b/drivers/mtd/devices/powernv_flash.c
+@@ -207,6 +207,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
+ 	 * get them
+ 	 */
+ 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
++	if (!mtd->name)
++		return -ENOMEM;
++
+ 	mtd->type = MTD_NORFLASH;
+ 	mtd->flags = MTD_WRITEABLE;
+ 	mtd->size = size;
 -- 
 2.43.0
 
