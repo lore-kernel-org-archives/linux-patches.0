@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B38C29CE7;
-	Wed,  2 Oct 2024 13:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837E71CDFBC;
+	Wed,  2 Oct 2024 13:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876153; cv=none; b=gDqPPAn/owdQXUYaMHnl7fqmdGZDsOeb3HOZ7m8b5rap53Id2VsAa8ylsymHpg3ANDg47ni1BQDMCZxJ0A/vFO1XkVr+/xxT5wgFo7ufTfOFqPzLB5XU+DSPYOXdeWVqRmByEHNnBj6X/xBqh5UWQly2uD/ub7WF5nh8nw4mMUw=
+	t=1727876156; cv=none; b=e1bdsIMm0Z8OwxisRpjeaQ3K4Ticngb35p/ysFzMMc6NfP6HJxwRHffSjgrXXXDJsO0wM/4H85kjliYTk6UvS9Fgayhj9GGd/C3dsYa9P2G/w5Y960cLKYFl+DThR9E+qL5mKM9OpE9E7kvEUt1JpoSwBFRM9PbNMmWmluPsA98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876153; c=relaxed/simple;
-	bh=B6mCnqFvFmEg/+1WinqP6ffmqByt3sT+GlCSsd7hiQc=;
+	s=arc-20240116; t=1727876156; c=relaxed/simple;
+	bh=17XUkSK2MDk+p57i7MaRLEbziwGywU5ESvwIdSf5fkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUndzcIdOPrnZW8u+7xhGJkf3yDgnE9DYy/5zszrsjQRRD1vQ4XWoaAqE4g7liYUCfSEEO4nDLeQac4Q0gP9Jmoxl98oBd1c4O6caJxiaR6o8xc/i8+bnoKCwD476PdXJYPubG0oy3T3rMNVWEduWAQS8Olmbqcdk+H4jj8EDPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y22sgb/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tru67Lh49pWaMqSVt8QtFyncBpH3ln2SOvE//Gz+Vxe2qDPROjC4p7PmEA7PMkQkIIllKSiz4olFjPwXMdePUOE/sY2uW8tx4jpWfOb81vpbW+OtoIpOSeUIwPdSIq3i2ljH5fCycyK/ZQu2/WB4HyhvNTowUMeNes3MXDCziBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTBFF3IT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y22sgb/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D3EC4CEC5;
-	Wed,  2 Oct 2024 13:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTBFF3IT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098E2C4CEC5;
+	Wed,  2 Oct 2024 13:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876153;
-	bh=B6mCnqFvFmEg/+1WinqP6ffmqByt3sT+GlCSsd7hiQc=;
+	s=korg; t=1727876156;
+	bh=17XUkSK2MDk+p57i7MaRLEbziwGywU5ESvwIdSf5fkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y22sgb/mp0x+d7xTOJVwFMWIRNs46lhhipKHmxA87j7aXIH1OALtDtp3hU0/UulY9
-	 pE2/PeWzxE9/2pU/VHKS8n2hRZjSWRdHb+bcZed68Mx3kJ+iaK0n2ckUp1tQ+lZEcc
-	 Sp0OYLCM9YAe0E4jlSBu+GQuG9NPgExM2pShz5S4=
+	b=UTBFF3ITxVjfLkQ49kJqNSpJ3tZdlvlcMBEtaCYyS3cZ01sy3BgTJtXMPXhfP73rq
+	 6D0u7Vu46lgBdobeoB2zRDbBw4au2JadAeqkTN1xtt8SkUjcLUlqg9fxHl3fL/p7q8
+	 4Tg6ulVCzAxPApTu6sS23+6CCE9iQAz2m78NIAAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pengfei Li <pengfei.li_1@nxp.com>,
+	Jacky Bai <ping.bai@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Ye Li <ye.li@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 346/695] clk: imx: composite-7ulp: Check the PCC present bit
-Date: Wed,  2 Oct 2024 14:55:44 +0200
-Message-ID: <20241002125836.260025082@linuxfoundation.org>
+Subject: [PATCH 6.11 347/695] clk: imx: fracn-gppll: fix fractional part of PLL getting lost
+Date: Wed,  2 Oct 2024 14:55:45 +0200
+Message-ID: <20241002125836.300189366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,50 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Li <ye.li@nxp.com>
+From: Pengfei Li <pengfei.li_1@nxp.com>
 
-[ Upstream commit 4717ccadb51e2630790dddd222830702de17f090 ]
+[ Upstream commit 7622f888fca125ae46f695edf918798ebc0506c5 ]
 
-When some module is disabled by fuse, its PCC PR bit is default 0 and
-PCC is not operational. Any write to this PCC will cause SError.
+Fractional part of PLL gets lost after re-enabling the PLL. the
+MFN can NOT be automatically loaded when doing frac PLL enable/disable,
+So when re-enable PLL, configure mfn explicitly.
 
-Fixes: b40ba8065347 ("clk: imx: Update the compsite driver to support imx8ulp")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Ye Li <ye.li@nxp.com>
+Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
+Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
+Reviewed-by: Jacky Bai <ping.bai@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-4-peng.fan@oss.nxp.com
+Link: https://lore.kernel.org/r/20240607133347.3291040-5-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-7ulp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/imx/clk-fracn-gppll.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-composite-7ulp.c b/drivers/clk/imx/clk-composite-7ulp.c
-index e208ddc511339..db7f40b07d1ab 100644
---- a/drivers/clk/imx/clk-composite-7ulp.c
-+++ b/drivers/clk/imx/clk-composite-7ulp.c
-@@ -14,6 +14,7 @@
- #include "../clk-fractional-divider.h"
- #include "clk.h"
+diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
+index 44462ab50e513..1becba2b62d0b 100644
+--- a/drivers/clk/imx/clk-fracn-gppll.c
++++ b/drivers/clk/imx/clk-fracn-gppll.c
+@@ -291,6 +291,10 @@ static int clk_fracn_gppll_prepare(struct clk_hw *hw)
+ 	if (val & POWERUP_MASK)
+ 		return 0;
  
-+#define PCG_PR_MASK		BIT(31)
- #define PCG_PCS_SHIFT	24
- #define PCG_PCS_MASK	0x7
- #define PCG_CGC_SHIFT	30
-@@ -78,6 +79,12 @@ static struct clk_hw *imx_ulp_clk_hw_composite(const char *name,
- 	struct clk_hw *hw;
- 	u32 val;
- 
-+	val = readl(reg);
-+	if (!(val & PCG_PR_MASK)) {
-+		pr_info("PCC PR is 0 for clk:%s, bypass\n", name);
-+		return 0;
-+	}
++	if (pll->flags & CLK_FRACN_GPPLL_FRACN)
++		writel_relaxed(readl_relaxed(pll->base + PLL_NUMERATOR),
++			       pll->base + PLL_NUMERATOR);
 +
- 	if (mux_present) {
- 		mux = kzalloc(sizeof(*mux), GFP_KERNEL);
- 		if (!mux)
+ 	val |= CLKMUX_BYPASS;
+ 	writel_relaxed(val, pll->base + PLL_CTRL);
+ 
 -- 
 2.43.0
 
