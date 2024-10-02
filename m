@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D989376;
-	Wed,  2 Oct 2024 13:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F323F1CF5C6;
+	Wed,  2 Oct 2024 13:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876110; cv=none; b=VYwBUgqCuzgUnBqqB1J4ojzKMxdSpMlcP1m7tLjXI0Q0qXv+C84oKisEDSPZ5n6+c8Jp/8winSErgt6U0X3zhIgDgQ4Pddr4yYeIAjffXYr8dr0gnQqBjAuGOrrjvu64MfLJoMKZju5zGWAmYDUw9nDlCk547a15OvKpjRThSDw=
+	t=1727876113; cv=none; b=D//frenZlV90GKHmtD7J3WenxHHkNvRmIfnnRg4CTxgpHZlVqn68cCkUdB+Z8rVEcEELhleabOGoj+h58OFMu444eQDvCGvlieDJW7vnSrwwtKU8BZliL2oWR2wzHx2QLRReAWIEsjPg05BxzMwEkMK+N7Q7Oh96Vl/vPsy3g8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876110; c=relaxed/simple;
-	bh=C5uPzb9Cgz9mleIjK8ulWRllVvA+MEDpPyfbjGUrgzs=;
+	s=arc-20240116; t=1727876113; c=relaxed/simple;
+	bh=VGPU86GDBvBononjDPfPhTxEjZ/DlC4A5nPyESPQRTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eAcuVOR+Zq1hHTYz6gbGrmE8ocQXFd3JGzSxrnhSXpEFTLdxmJ5WligSYEYi5pXOA438HmlSDoc75jX/v5mFWvjfuR+V8akj0ay0G7rlz/X0sUJKk+XVHLBKRQfWnxnTpBQokwNgnDpOpjAv1XwAoFk+ywECFM4F/bP4Ec92X+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5oA/2GT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mf2un+2sL65SpcA+acQdX3wvRkLlxTnZb9OFv6IyTDRnstrA6BTziD5GJ+f6n674xY9xQ1q6ymXTNsXzSLIvZQO78/rhTuss/Z2Z78a+utw6jPJn0w5fyg2ecgw2vkru9vRi+/9kHwrAw3ULAzZrwuYnOpRwflP4N60mFI4GP8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcpJ/S78; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5oA/2GT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596B2C4CEC5;
-	Wed,  2 Oct 2024 13:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcpJ/S78"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDC2C4CEC5;
+	Wed,  2 Oct 2024 13:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876109;
-	bh=C5uPzb9Cgz9mleIjK8ulWRllVvA+MEDpPyfbjGUrgzs=;
+	s=korg; t=1727876112;
+	bh=VGPU86GDBvBononjDPfPhTxEjZ/DlC4A5nPyESPQRTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5oA/2GT6J4nVtLkvlFAtJN1pIsPVCY3BpV+Yl+9rpnN0j8Ro21J1G4y3ySYd+FYi
-	 ljymN0cxPcfheE/tbBEgYGPKZNjYBLUIacj0CJuAqTZWhULLsKFLlM5WwjC1pjnplF
-	 2Kvh7WC+C1Wn+WWFNlruHPz6dFnjCsbe0YFW+Ayk=
+	b=hcpJ/S78wKOHa3ngSSD3ih1rzF+wc+8GWhGC+2v17/lPfUJHUTZKf1hd81VFWCX3L
+	 Bv1TnRN5m6srwW16xn4l42Czl2E+UTZQxtmcZ5+9/oSjssWgrpkmPkRsBzj+auzB8K
+	 YOrBRYs3FdPNUN6m/QA66SlKKASrnJlalVfsNoEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong@bytedance.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	David Ahern <dsa@cumulusnetworks.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Junhao He <hejunhao3@huawei.com>,
+	linuxarm@huawei.com,
 	Mark Rutland <mark.rutland@arm.com>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+	Zeng Tao <prime.zeng@hisilicon.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 332/695] perf sched timehist: Fix missing free of session in perf_sched__timehist()
-Date: Wed,  2 Oct 2024 14:55:30 +0200
-Message-ID: <20241002125835.703025803@linuxfoundation.org>
+Subject: [PATCH 6.11 333/695] perf stat: Display iostat headers correctly
+Date: Wed,  2 Oct 2024 14:55:31 +0200
+Message-ID: <20241002125835.744212678@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -61,46 +61,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Jihong <yangjihong@bytedance.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit 6bdf5168b6fb19541b0c1862bdaa596d116c7bfb ]
+[ Upstream commit 2615639352420e6e3115952c5b8f46846e1c6d0e ]
 
-When perf_time__parse_str() fails in perf_sched__timehist(),
-need to free session that was previously created, fix it.
+Currently we'll only print metric headers for metric leader in
+aggregration mode. This will make `perf iostat` header not shown
+since it'll aggregrated globally but don't have metric events:
 
-Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
-Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
+  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
+   Performance counter stats for 'system wide':
+      port
+  0000:00                    0                    0                    0                    0
+  0000:80                    0                    0                    0                    0
+  [...]
+
+Fix this by excluding the iostat in the check of printing metric
+headers. Then we can see the headers:
+
+  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
+   Performance counter stats for 'system wide':
+      port             Inbound Read(MB)    Inbound Write(MB)    Outbound Read(MB)   Outbound Write(MB)
+  0000:00                    0                    0                    0                    0
+  0000:80                    0                    0                    0                    0
+  [...]
+
+Fixes: 193a9e30207f5477 ("perf stat: Don't display metric header for non-leader uncore events")
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Junhao He <hejunhao3@huawei.com>
+Cc: linuxarm@huawei.com
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240806023533.1316348-1-yangjihong@bytedance.com
+Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: Zeng Tao <prime.zeng@hisilicon.com>
+Link: https://lore.kernel.org/r/20240802065800.48774-1-yangyicong@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 3 ++-
+ tools/perf/util/stat-display.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 8750b5f2d49b4..928b9041535d3 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -3121,7 +3121,8 @@ static int perf_sched__timehist(struct perf_sched *sched)
+diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
+index c38bcb6f4c78e..ea96e4ebad8c8 100644
+--- a/tools/perf/util/stat-display.c
++++ b/tools/perf/util/stat-display.c
+@@ -1237,7 +1237,8 @@ static void print_metric_headers(struct perf_stat_config *config,
  
- 	if (perf_time__parse_str(&sched->ptime, sched->time_str) != 0) {
- 		pr_err("Invalid time string\n");
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto out;
- 	}
+ 	/* Print metrics headers only */
+ 	evlist__for_each_entry(evlist, counter) {
+-		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
++		if (!config->iostat_run &&
++		    config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
+ 			continue;
  
- 	if (timehist_check_attr(sched, evlist) != 0)
+ 		os.evsel = counter;
 -- 
 2.43.0
 
