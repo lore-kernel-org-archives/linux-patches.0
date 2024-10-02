@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00431D12F0;
-	Wed,  2 Oct 2024 14:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF4C1D04B8;
+	Wed,  2 Oct 2024 14:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880082; cv=none; b=eJ97oTQQDUP7/G1caBHgZLb3OvwJfEN2T1emgTEgc6f9bHBKaM+jE0YhscrUTXgacVVgBbQBO4DCygUGl4VHXuG/jXcjlV9dhZMOczicWHw2soY1aN7xyHdgEuKHBN0gydVnoSIXcID7aL8tRwdN6p/saOJVG2Qe/YeuSR7te/4=
+	t=1727880085; cv=none; b=WUTS1EW7amjo5Bn2tl4+u36OIlkmgL0+bmmUITbAsJ7ypd6Zo4enZnzaGcSWxd3XPMRu/6sa/k0pqMegceV14vpnhV/VOk3lijKMqwxXzQl5NstJqKkTfPkAE3VRJaTyBz4OY80BRAEZj6OIvK9Yz1Lf2f1kQGwzbC73PXqpj9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880082; c=relaxed/simple;
-	bh=XW85F5RZSzNj4blBEpGXVZnlwlXA52G+pBgI/0JxQTY=;
+	s=arc-20240116; t=1727880085; c=relaxed/simple;
+	bh=jw+p8tug60tD2/pKrKmnuSjk0H6Y/Pl7tGh2FBI32/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuqFTC2PNxqxWZZLslfyZoj0Q6qDfdNPz+jHYRKv9FHmcxH9MresZee5/OyhCmXCdbwsTlpZjhLWW/HFTru0yX7MNAtkEoLtK6B7oXTlsat+QhmwOif+l/Uc1Aq/irKxz14yrTkWOHjlSePGdAKHK+hIDsKF/5DG48RG3V69d40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cftdh03w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0pk0J2wKBRTF05J69V/C/0LURRhAo8QMjqH8cwDAbGSFjUCVOP2djU60bCGj1EgI05TVVWKfQBBZ8Rl/uZX+RHbbhDXuyCkhbFWY5gIvnf+AxOHN3m7GdwBK4Q2cLiVnqtAAQeOKDTiRlY2KpEW51qQ08y1sUh7nfHO2f7O2dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0FRzOxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cftdh03w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755B8C4CEC2;
-	Wed,  2 Oct 2024 14:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0FRzOxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63899C4CEC2;
+	Wed,  2 Oct 2024 14:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880081;
-	bh=XW85F5RZSzNj4blBEpGXVZnlwlXA52G+pBgI/0JxQTY=;
+	s=korg; t=1727880084;
+	bh=jw+p8tug60tD2/pKrKmnuSjk0H6Y/Pl7tGh2FBI32/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cftdh03wGG5bgW+KXw6gEtn2FXHcuOCbPVI1e3fhs6dFOTh51bc2eW2OfZY5TrGlV
-	 mJ1++n2S77wzSBlhT3jg7JQcxSBVSjYNXSH+SRc1Bqj0jYQAf6euVIDfHNJICqGSIo
-	 B4wNHhlMMmrFI35NomAS43jjrl++90jVIb29zG9E=
+	b=F0FRzOxPqE4C+7UzDOwm0CjKWOo5U6OpuLLG+TSCExzz4T/UtU8FNWTlOigttjDBG
+	 +2paCihrGUL0jmawzp/fMmsfL2gq984OhRy11pcoHrCQu451WMck4UV9fqCDg+3KWn
+	 uIARGTLCcdJaGikBhYfICDzE5S+2NxiB+nAT9exw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 6.6 330/538] nfsd: call cache_put if xdr_reserve_space returns NULL
-Date: Wed,  2 Oct 2024 14:59:29 +0200
-Message-ID: <20241002125805.456417329@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 339/538] f2fs: atomic: fix to truncate pagecache before on-disk metadata truncation
+Date: Wed,  2 Oct 2024 14:59:38 +0200
+Message-ID: <20241002125805.812305978@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,56 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d078cbf5c38de83bc31f83c47dcd2184c04a50c7 ]
+[ Upstream commit ebd3309aec6271c4616573b0cb83ea25e623070a ]
 
-If not enough buffer space available, but idmap_lookup has triggered
-lookup_fn which calls cache_get and returns successfully. Then we
-missed to call cache_put here which pairs with cache_get.
+We should always truncate pagecache while truncating on-disk data.
 
-Fixes: ddd1ea563672 ("nfsd4: use xdr_reserve_space in attribute encoding")
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Reviwed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: a46bebd502fe ("f2fs: synchronize atomic write aborts")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4idmap.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/f2fs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
-index 7a806ac13e317..8cca1329f3485 100644
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -581,6 +581,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		.id = id,
- 		.type = type,
- 	};
-+	__be32 status = nfs_ok;
- 	__be32 *p;
- 	int ret;
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
-@@ -593,12 +594,16 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		return nfserrno(ret);
- 	ret = strlen(item->name);
- 	WARN_ON_ONCE(ret > IDMAP_NAMESZ);
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index e04f4dcb76d1f..2f08bf7f29621 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2161,6 +2161,10 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		F2FS_I(fi->cow_inode)->atomic_inode = inode;
+ 	} else {
+ 		/* Reuse the already created COW inode */
++		f2fs_bug_on(sbi, get_dirty_pages(fi->cow_inode));
 +
- 	p = xdr_reserve_space(xdr, ret + 4);
--	if (!p)
--		return nfserr_resource;
--	p = xdr_encode_opaque(p, item->name, ret);
-+	if (unlikely(!p)) {
-+		status = nfserr_resource;
-+		goto out_put;
-+	}
-+	xdr_encode_opaque(p, item->name, ret);
-+out_put:
- 	cache_put(&item->h, nn->idtoname_cache);
--	return 0;
-+	return status;
- }
- 
- static bool
++		invalidate_mapping_pages(fi->cow_inode->i_mapping, 0, -1);
++
+ 		ret = f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
+ 		if (ret) {
+ 			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
 -- 
 2.43.0
 
