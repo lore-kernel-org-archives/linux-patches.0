@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D0E1D07A3;
-	Wed,  2 Oct 2024 13:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5EA1D043E;
+	Wed,  2 Oct 2024 13:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876507; cv=none; b=sJoM1DozajEr6CjIPPoZ+PiCOt0zKtTGkFygP9VD2WXZNDQ/Cs+q86Bg8WicQXG2ZTjEnAVsGLH56sfnsJ1TJeQ9xB6vG2vTJXGz2cdzGTZctslHtAHN8S+G/d6cf6fQQ6dBpRLiNh1fMAtpkVhGzOD7rVmCIgKhHrsVx9EPLLI=
+	t=1727876509; cv=none; b=fVPSbUppUAjWo4iV79YR2dVr0i3y6inj+Y/ObU+eTALnQqRNoSmrw1nv08Qr5OY7/v0qr6cRiyhxXhD9Qv9toBwjWIEzF+rgqn96Kb6KCvFQW5Fk5rBuDs2XRH/11EBLFk9/JmX9zzn2ivLEPAM/umZ7UoU0C01BMIuNUtyIf3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876507; c=relaxed/simple;
-	bh=v8N1v1P9Jq2MN/GqKO4gzW9BvccMfwau4l9NWLH/f8A=;
+	s=arc-20240116; t=1727876509; c=relaxed/simple;
+	bh=HYzYCzMxJzAiJkNyAkoMqtDb+BbgbTXCL/zfk/QQhrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzV6f5FUeL4mwvAxIR5Cl8ebyXCF+aARx9pDL3nSFQujfY7MRzNvgvG1X0GcmK4qcPLLds7yEJ7tjgsgLisyt8YJJJ0814BtMrDM8sGilsmgqD2jfZMloybivcqB9/gznYlVBT3UmBbRQjcic4RI864GUZ5esMRc6GLt0ro4RC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fK9upcOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZStJqL+eQJWpzX2bv5hTAGszaASQsNgllR94q288EYNr4atAVHcsRSZI7bV+HJ5FdVBWdjgxvVyiBMK4nh6mDYf0sdT5qyJA8QTgGoq4gO5WmUGNiv3kMc0y7mVIyDJNHIeACEqRaQSVleujcegd0KlyMH5K9WRAgIq956Utwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0GEB8EQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK9upcOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE18C4CEC5;
-	Wed,  2 Oct 2024 13:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0GEB8EQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F59BC4CEC5;
+	Wed,  2 Oct 2024 13:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876506;
-	bh=v8N1v1P9Jq2MN/GqKO4gzW9BvccMfwau4l9NWLH/f8A=;
+	s=korg; t=1727876509;
+	bh=HYzYCzMxJzAiJkNyAkoMqtDb+BbgbTXCL/zfk/QQhrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fK9upcOXso/HyV4x4pi+aBRswMKe+AkDs+rgfmDBP2a5wO1VAVFh6jFJ/ybfQBNYn
-	 sDXfqXb3oMRQkoFY5f/ub3OwKVTpnX2iU2/QFe2quofto282/ajCfKK3oiewHCEFPz
-	 n7jawjy0zX/eE8gy1DS75Spp3bHwQX3GXm6z7mFI=
+	b=V0GEB8EQBYCbDMDrFThh0uAynlJSgn0JwqeJLtK3yc80TDwNLrEwkOnCbk/PKA9/d
+	 1RvSqoAXmUedLg0oeYJ8G5QVCndRK6MRrwaqi5n/75Jz8w7rGAz6zBvFbhjIDXWKlB
+	 9X4YXYsi4Zfvs2Y9h/x1KOqACKeVfSDMMnV68GPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yanfei Xu <yanfei.xu@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 468/695] dm integrity: fix gcc 5 warning
-Date: Wed,  2 Oct 2024 14:57:46 +0200
-Message-ID: <20241002125841.144360373@linuxfoundation.org>
+Subject: [PATCH 6.11 469/695] cxl/pci: Fix to record only non-zero ranges
+Date: Wed,  2 Oct 2024 14:57:47 +0200
+Message-ID: <20241002125841.193546192@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,49 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Yanfei Xu <yanfei.xu@intel.com>
 
-[ Upstream commit a8fa6483b40943a6c8feea803a2dc8e9982cc766 ]
+[ Upstream commit 55e268694e8b07026c88191f9b6949b6887d9ce3 ]
 
-This commit fixes gcc 5 warning "logical not is only applied to the left
-hand side of comparison"
+The function cxl_dvsec_rr_decode() retrieves and records DVSEC ranges
+into info->dvsec_range[], regardless of whether it is non-zero range,
+and the variable info->ranges indicates the number of non-zero ranges.
+However, in cxl_hdm_decode_init(), the validation for
+info->dvsec_range[] occurs in a for loop that iterates based on
+info->ranges. It may result in zero range to be validated but non-zero
+range not be validated, in turn, the number of allowed ranges is to be
+0. Address it by only record non-zero ranges.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Fixes: fb0987682c62 ("dm-integrity: introduce the Inline mode")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+This fix is not urgent as it requires a configuration that zeroes out
+the first dvsec range while populating the second. This has not been
+observed, but it is theoretically possible. If this gets picked up for
+-stable, no harm done, but there is no urgency to backport.
+
+Fixes: 560f78559006 ("cxl/pci: Retrieve CXL DVSEC memory info")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Yanfei Xu <yanfei.xu@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20240828084231.1378789-2-yanfei.xu@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/cxl/core/pci.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index acff2f64f251f..4545d934f73d3 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4717,13 +4717,18 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 		ti->error = "Block size doesn't match the information in superblock";
- 		goto bad;
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 51132a575b276..73b6498d5e5ca 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -390,10 +390,6 @@ int cxl_dvsec_rr_decode(struct device *dev, int d,
+ 
+ 		size |= temp & CXL_DVSEC_MEM_SIZE_LOW_MASK;
+ 		if (!size) {
+-			info->dvsec_range[i] = (struct range) {
+-				.start = 0,
+-				.end = CXL_RESOURCE_NONE,
+-			};
+ 			continue;
+ 		}
+ 
+@@ -411,12 +407,10 @@ int cxl_dvsec_rr_decode(struct device *dev, int d,
+ 
+ 		base |= temp & CXL_DVSEC_MEM_BASE_LOW_MASK;
+ 
+-		info->dvsec_range[i] = (struct range) {
++		info->dvsec_range[ranges++] = (struct range) {
+ 			.start = base,
+ 			.end = base + size - 1
+ 		};
+-
+-		ranges++;
  	}
--	if (!le32_to_cpu(ic->sb->journal_sections) != (ic->mode == 'I')) {
--		r = -EINVAL;
--		if (ic->mode != 'I')
-+	if (ic->mode != 'I') {
-+		if (!le32_to_cpu(ic->sb->journal_sections)) {
-+			r = -EINVAL;
- 			ti->error = "Corrupted superblock, journal_sections is 0";
--		else
-+			goto bad;
-+		}
-+	} else {
-+		if (le32_to_cpu(ic->sb->journal_sections)) {
-+			r = -EINVAL;
- 			ti->error = "Corrupted superblock, journal_sections is not 0";
--		goto bad;
-+			goto bad;
-+		}
- 	}
- 	/* make sure that ti->max_io_len doesn't overflow */
- 	if (!ic->meta_dev) {
+ 
+ 	info->ranges = ranges;
 -- 
 2.43.0
 
