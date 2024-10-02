@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4011D1E65;
-	Wed,  2 Oct 2024 14:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3621D04BE;
+	Wed,  2 Oct 2024 14:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877788; cv=none; b=TLoqeKgfJ+GT1JhO9o9cSeMWsLTHqpRwPbyH5AmPOQH/Oi8OhwbGpQLSdpPPnl6smUElN3OhnjB5G5efpjV1/rx2O0tUpHkldIr+QoTL9MBFBwGEElQ79OzzYqIKgTcGR45fWQtfzpaz9IZ7/qQNQlpjS9ONiRNcSux0SkQfM1g=
+	t=1727877791; cv=none; b=uKPes3RMgQxHe0HaHc1tv7BQtx8klRSZcAsJlE7/7IzmLUMSn+BrvOJKOrIQyxAtsvdGY/rLJqu57GtREbOlP11NIEUORHjXZv2MNMBaPz8eBQQ1FjksIH4qdjGIVvPzyqf8aKVIMwAdIj2sbRi1l7XbemHztBJ2UNUsTXNfNX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877788; c=relaxed/simple;
-	bh=6zJ4DuG0uxaLoWqWA3sOHSTwLHMgOQXhe4h2AN4G88g=;
+	s=arc-20240116; t=1727877791; c=relaxed/simple;
+	bh=9hc6e392OpQsjou00FXVbMHHJu8IwUx0F3t3j6Lu2WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8U2o/Ckvogvpg4cMBFICyJOjrlMp6FetB03nen9X8tLbaQ6mz1DGs6R683L0Qh50/aekoUcApHWBVUNj2NzDKCPBJzQv5XHpf9w8JVV8iGX3sQsEbXNDF6Qgjz6H7qZZUgMV8xCW/c2IS4V+fzPC6Ng/pArdEMPX6Cw7Vj3vKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQ0YtILI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S08V1ySmkCh8iQP7ViNNkSH5gIRFe/+RuOAnNX3MvzssEBztS6evMkH1ly57mWTtf9VZQZTzoCEy1WgyvNVKyCozB6LK/ITwz6iemEBhB79IO8F3t9Dd8Skx9hedh4gYUbtCptbM+sd5AiR8r8Ly/7BjhhdYcT6qMSph/vJIryM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHZwfWGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQ0YtILI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18C9C4CEC2;
-	Wed,  2 Oct 2024 14:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHZwfWGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8A5C4CEC2;
+	Wed,  2 Oct 2024 14:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877788;
-	bh=6zJ4DuG0uxaLoWqWA3sOHSTwLHMgOQXhe4h2AN4G88g=;
+	s=korg; t=1727877790;
+	bh=9hc6e392OpQsjou00FXVbMHHJu8IwUx0F3t3j6Lu2WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQ0YtILIHnvCDDdgieYO92cpm/omJ+gQJUdRqJG3nk0JlW3ujo7G0Jpw49a9EbSQ+
-	 SBt5TpU+ttxAVwIGkWq04M1Ishj0m3fhrkFtIruMoX+hbnLazaCGKIowVidAiLLKi4
-	 7As4m9uTvjfu5/bESJkVe/cF9Raw0RUgaK3NAkyA=
+	b=VHZwfWGUoCfp7OivUPXfmCtzH8Sazq/m5/vrdsAujI9mB7+TlpP12zddsUBc68gOs
+	 w11WpWn4BGL5MuOkuGYFnL/3QcnfgolaxsRbOG92mo7EPe1vG1h6T6SP/5SUyFXsuK
+	 OTq5y2mzF7Rfrp295rh9E/Uzk2WAW5/aUQ6/oh3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Fei Shao <fshao@chromium.org>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 194/634] drm/mediatek: Fix missing configuration flags in mtk_crtc_ddp_config()
-Date: Wed,  2 Oct 2024 14:54:54 +0200
-Message-ID: <20241002125818.762683895@linuxfoundation.org>
+Subject: [PATCH 6.10 168/634] iommu/amd: Set the pgsize_bitmap correctly
+Date: Wed,  2 Oct 2024 14:54:28 +0200
+Message-ID: <20241002125817.740293935@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,140 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit fe30bae552ce27b9fefe0b12db1544e73d07325f ]
+[ Upstream commit 7a41dcb52f9de6079621fc31c3b84c7fc290934b ]
 
-In mtk_crtc_ddp_config(), mtk_crtc will use some configuration flags to
-generate instructions to cmdq_handle, such as:
-  state->pending_config
-  mtk_crtc->pending_planes
-  plane_state->pending.config
-  mtk_crtc->pending_async_planes
-  plane_state->pending.async_config
+When using io_pgtable the correct pgsize_bitmap is stored in the cfg, both
+v1_alloc_pgtable() and v2_alloc_pgtable() set it correctly.
 
-These configuration flags may be set to false when a GCE IRQ comes calling
-ddp_cmdq_cb(). This may result in missing prepare instructions,
-especially if mtk_crtc_update_config() with the flase need_vblank (no need
-to wait for vblank) cases.
+This fixes a bug where the v2 pgtable had the wrong pgsize as
+protection_domain_init_v2() would set it and then do_iommu_domain_alloc()
+immediately resets it.
 
-Therefore, the mtk_crtc->config_updating flag is set at the beginning of
-mtk_crtc_update_config() to ensure that these configuration flags won't be
-changed when the mtk_crtc_ddp_config() is preparing instructions.
-But somehow the ddp_cmdq_cb() didn't use the mtk_crtc->config_updating
-flag to prevent those pending config flags from being cleared.
+Remove the confusing ops.pgsize_bitmap since that is not used if the
+driver sets domain.pgsize_bitmap.
 
-To avoid missing the configuration when generating the config instruction,
-the config_updating flag should be added into ddp_cmdq_cb() and be
-protected with spin_lock.
-
-Fixes: 7f82d9c43879 ("drm/mediatek: Clear pending flag when cmdq packet is done")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240827-drm-fixup-0819-v3-1-4761005211ec@mediatek.com/
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240827-drm-fixup-0819-v3-2-4761005211ec@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 134288158a41 ("iommu/amd: Add domain_alloc_user based domain allocation")
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/3-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_crtc.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/iommu/amd/iommu.c | 28 ++++------------------------
+ 1 file changed, 4 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
-index 6f34f573e127e..d7f0926f896d6 100644
---- a/drivers/gpu/drm/mediatek/mtk_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
-@@ -69,6 +69,8 @@ struct mtk_crtc {
- 	/* lock for display hardware access */
- 	struct mutex			hw_lock;
- 	bool				config_updating;
-+	/* lock for config_updating to cmd buffer */
-+	spinlock_t			config_lock;
- };
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index edbd4ca1451a8..833637ffae39f 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2271,26 +2271,11 @@ void protection_domain_free(struct protection_domain *domain)
+ 	kfree(domain);
+ }
  
- struct mtk_crtc_state {
-@@ -106,11 +108,16 @@ static void mtk_crtc_finish_page_flip(struct mtk_crtc *mtk_crtc)
- 
- static void mtk_drm_finish_page_flip(struct mtk_crtc *mtk_crtc)
+-static int protection_domain_init_v1(struct protection_domain *domain)
+-{
+-	domain->pd_mode = PD_MODE_V1;
+-	return 0;
+-}
+-
+-static int protection_domain_init_v2(struct protection_domain *pdom)
+-{
+-	pdom->pd_mode = PD_MODE_V2;
+-	pdom->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
+-
+-	return 0;
+-}
+-
+ struct protection_domain *protection_domain_alloc(unsigned int type)
  {
-+	unsigned long flags;
-+
- 	drm_crtc_handle_vblank(&mtk_crtc->base);
-+
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	if (!mtk_crtc->config_updating && mtk_crtc->pending_needs_vblank) {
- 		mtk_crtc_finish_page_flip(mtk_crtc);
- 		mtk_crtc->pending_needs_vblank = false;
- 	}
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
- }
+ 	struct io_pgtable_ops *pgtbl_ops;
+ 	struct protection_domain *domain;
+ 	int pgtable;
+-	int ret;
  
- #if IS_REACHABLE(CONFIG_MTK_CMDQ)
-@@ -308,12 +315,19 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 	struct mtk_crtc *mtk_crtc = container_of(cmdq_cl, struct mtk_crtc, cmdq_client);
- 	struct mtk_crtc_state *state;
- 	unsigned int i;
-+	unsigned long flags;
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+ 	if (!domain)
+@@ -2326,18 +2311,14 @@ struct protection_domain *protection_domain_alloc(unsigned int type)
  
- 	if (data->sta < 0)
- 		return;
- 
- 	state = to_mtk_crtc_state(mtk_crtc->base.state);
- 
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
-+	if (mtk_crtc->config_updating) {
-+		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+		goto ddp_cmdq_cb_out;
+ 	switch (pgtable) {
+ 	case AMD_IOMMU_V1:
+-		ret = protection_domain_init_v1(domain);
++		domain->pd_mode = PD_MODE_V1;
+ 		break;
+ 	case AMD_IOMMU_V2:
+-		ret = protection_domain_init_v2(domain);
++		domain->pd_mode = PD_MODE_V2;
+ 		break;
+ 	default:
+-		ret = -EINVAL;
+-		break;
+-	}
+-
+-	if (ret)
+ 		goto out_err;
 +	}
-+
- 	state->pending_config = false;
  
- 	if (mtk_crtc->pending_planes) {
-@@ -340,6 +354,10 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 		mtk_crtc->pending_async_planes = false;
- 	}
+ 	pgtbl_ops = alloc_io_pgtable_ops(pgtable, &domain->iop.pgtbl_cfg, domain);
+ 	if (!pgtbl_ops)
+@@ -2390,10 +2371,10 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 	domain->domain.geometry.aperture_start = 0;
+ 	domain->domain.geometry.aperture_end   = dma_max_address();
+ 	domain->domain.geometry.force_aperture = true;
++	domain->domain.pgsize_bitmap = domain->iop.iop.cfg.pgsize_bitmap;
  
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
-+ddp_cmdq_cb_out:
-+
- 	mtk_crtc->cmdq_vblank_cnt = 0;
- 	wake_up(&mtk_crtc->cb_blocking_queue);
- }
-@@ -569,9 +587,14 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
- 	struct mtk_drm_private *priv = crtc->dev->dev_private;
- 	unsigned int pending_planes = 0, pending_async_planes = 0;
- 	int i;
-+	unsigned long flags;
+ 	if (iommu) {
+ 		domain->domain.type = type;
+-		domain->domain.pgsize_bitmap = iommu->iommu.ops->pgsize_bitmap;
+ 		domain->domain.ops = iommu->iommu.ops->default_domain_ops;
  
- 	mutex_lock(&mtk_crtc->hw_lock);
-+
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	mtk_crtc->config_updating = true;
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 	if (needs_vblank)
- 		mtk_crtc->pending_needs_vblank = true;
- 
-@@ -625,7 +648,10 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
- 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
- 	}
- #endif
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	mtk_crtc->config_updating = false;
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 	mutex_unlock(&mtk_crtc->hw_lock);
- }
- 
-@@ -1068,6 +1094,7 @@ int mtk_crtc_create(struct drm_device *drm_dev, const unsigned int *path,
- 		drm_mode_crtc_set_gamma_size(&mtk_crtc->base, gamma_lut_size);
- 	drm_crtc_enable_color_mgmt(&mtk_crtc->base, 0, has_ctm, gamma_lut_size);
- 	mutex_init(&mtk_crtc->hw_lock);
-+	spin_lock_init(&mtk_crtc->config_lock);
- 
- #if IS_REACHABLE(CONFIG_MTK_CMDQ)
- 	i = priv->mbox_index++;
+ 		if (dirty_tracking)
+@@ -2852,7 +2833,6 @@ const struct iommu_ops amd_iommu_ops = {
+ 	.device_group = amd_iommu_device_group,
+ 	.get_resv_regions = amd_iommu_get_resv_regions,
+ 	.is_attach_deferred = amd_iommu_is_attach_deferred,
+-	.pgsize_bitmap	= AMD_IOMMU_PGSIZES,
+ 	.def_domain_type = amd_iommu_def_domain_type,
+ 	.dev_enable_feat = amd_iommu_dev_enable_feature,
+ 	.dev_disable_feat = amd_iommu_dev_disable_feature,
 -- 
 2.43.0
 
