@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494811E52C;
-	Wed,  2 Oct 2024 14:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BBD1E52C;
+	Wed,  2 Oct 2024 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878876; cv=none; b=dZVdq2irYIE/SQjIoKD6i70LMovRC7tXUzKGQf7+oqXAJovW5vEh8rvhZwpHudcmuW9QdH5otNodOCsSYDSvffIzpXUCLxK8oZA3lZUvVlErStSnwEB2WBvQ7uMPnvOJfEiScKm/qSgI+s8XxCVZ9VggDz44AAeDkODjo8E8BfE=
+	t=1727878879; cv=none; b=TNScBAlZv5+Hav92spKNmNDELW0nC3vsPff2AIFdr4SOsmmgs2Wl4lSGILy+tmCdOozOqUzykvqhaThkL/Jwh8CKX7Mp2ZLJhnt0BRoxA3ZfPq3xoJ64UKjWjzJJUtPbbKlxDFSqJfBBSBKO45HBqJiVOtUuWLnoGRyBbz7JZKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878876; c=relaxed/simple;
-	bh=iYVpp+ZGtTkqmvBeW/EsUNA1tvF/3bbbBfkwQjUOHS8=;
+	s=arc-20240116; t=1727878879; c=relaxed/simple;
+	bh=hUfEkIWzE0QnqZTsR/uzzE37+T2PASmyMZfHfZxjkS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUkDBssu8q5Ds835lmNPOs7lzuNCR3ZAaG+RlNWLbOYnCmq+3SJnNDpJn3H4jAq+TNzjPzFZZmyMEMRlaJ0xE2tIXo9xxebcLi0kU+GpfoMfWgu/RAn8Y96T18rZYjSW7fs9cHDylvmOctX+DtJCDiTQsQLFXeJ306AqqsDPrvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0a4v4hX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cHCcAznWz57gig1IgoP3EQlZRCTSYaWi5q+gDbB+61ooBZTebxM5qyZgvlEbkFfljiqZZ9Gnm0WPYeDVmox2CN6BKPB042t1Whj7t57vFNGZyC5ZMtgck4nLFjEh5Fwo3K51JvsBCq/pI2d4ospgkuHHeg1+ARFZYGX0ky1abW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxr086wt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0a4v4hX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B72C4CEC5;
-	Wed,  2 Oct 2024 14:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxr086wt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B0AC4CECE;
+	Wed,  2 Oct 2024 14:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878876;
-	bh=iYVpp+ZGtTkqmvBeW/EsUNA1tvF/3bbbBfkwQjUOHS8=;
+	s=korg; t=1727878879;
+	bh=hUfEkIWzE0QnqZTsR/uzzE37+T2PASmyMZfHfZxjkS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0a4v4hXRMi7gcPdX+hHgjGb+sd7AhqzGL5YQaz4y7kGRWBLCseg0HYJpwpGTnkg/
-	 P2clAQnfN1xVblP2q8nSQIZry71uryz4TqdAkNd9c/cbwHVNhucCW2ogcUVhfuGA+7
-	 YePuWpNnRAUDab7oEAvnfOMXm4Xm18LRiRiOJJPo=
+	b=oxr086wt0DzCrhYEP/fs+VU5uaMnnwDkeqA/Fz7j8E//FTlHFPNfZf6kxPSnzWeTR
+	 WaUBFnSY+LZg6ri6dUYSJgybHWvaWfngCUKD7CseC8iPCVuHSmrI2pPuMK63BjZK41
+	 2JEfrsMCySIfwQzkXhmDtYEEGuw5DVq/DYmiyWk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jann Horn <jannh@google.com>,
 	Chao Yu <chao@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.10 562/634] f2fs: avoid potential int overflow in sanity_check_area_boundary()
-Date: Wed,  2 Oct 2024 15:01:02 +0200
-Message-ID: <20241002125833.299014000@linuxfoundation.org>
+Subject: [PATCH 6.10 563/634] f2fs: Require FMODE_WRITE for atomic write ioctls
+Date: Wed,  2 Oct 2024 15:01:03 +0200
+Message-ID: <20241002125833.338557387@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,43 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Jann Horn <jannh@google.com>
 
-commit 50438dbc483ca6a133d2bce9d5d6747bcee38371 upstream.
+commit 4f5a100f87f32cb65d4bb1ad282a08c92f6f591e upstream.
 
-While calculating the end addresses of main area and segment 0, u32
-may be not enough to hold the result without the danger of int
-overflow.
+The F2FS ioctls for starting and committing atomic writes check for
+inode_owner_or_capable(), but this does not give LSMs like SELinux or
+Landlock an opportunity to deny the write access - if the caller's FSUID
+matches the inode's UID, inode_owner_or_capable() immediately returns true.
 
-Just in case, play it safe and cast one of the operands to a
-wider type (u64).
+There are scenarios where LSMs want to deny a process the ability to write
+particular files, even files that the FSUID of the process owns; but this
+can currently partially be bypassed using atomic write ioctls in two ways:
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+ - F2FS_IOC_START_ATOMIC_REPLACE + F2FS_IOC_COMMIT_ATOMIC_WRITE can
+   truncate an inode to size 0
+ - F2FS_IOC_START_ATOMIC_WRITE + F2FS_IOC_ABORT_ATOMIC_WRITE can revert
+   changes another process concurrently made to a file
 
-Fixes: fd694733d523 ("f2fs: cover large section in sanity check of super")
+Fix it by requiring FMODE_WRITE for these operations, just like for
+F2FS_IOC_MOVE_RANGE. Since any legitimate caller should only be using these
+ioctls when intending to write into the file, that seems unlikely to break
+anything.
+
+Fixes: 88b88a667971 ("f2fs: support atomic writes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Jann Horn <jannh@google.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3366,9 +3366,9 @@ static inline bool sanity_check_area_bou
- 	u32 segment_count = le32_to_cpu(raw_super->segment_count);
- 	u32 log_blocks_per_seg = le32_to_cpu(raw_super->log_blocks_per_seg);
- 	u64 main_end_blkaddr = main_blkaddr +
--				(segment_count_main << log_blocks_per_seg);
-+				((u64)segment_count_main << log_blocks_per_seg);
- 	u64 seg_end_blkaddr = segment0_blkaddr +
--				(segment_count << log_blocks_per_seg);
-+				((u64)segment_count << log_blocks_per_seg);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2123,6 +2123,9 @@ static int f2fs_ioc_start_atomic_write(s
+ 	loff_t isize;
+ 	int ret;
  
- 	if (segment0_blkaddr != cp_blkaddr) {
- 		f2fs_info(sbi, "Mismatch start address, segment0(%u) cp_blkaddr(%u)",
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(idmap, inode))
+ 		return -EACCES;
+ 
+@@ -2230,6 +2233,9 @@ static int f2fs_ioc_commit_atomic_write(
+ 	struct mnt_idmap *idmap = file_mnt_idmap(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(idmap, inode))
+ 		return -EACCES;
+ 
+@@ -2262,6 +2268,9 @@ static int f2fs_ioc_abort_atomic_write(s
+ 	struct mnt_idmap *idmap = file_mnt_idmap(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(idmap, inode))
+ 		return -EACCES;
+ 
 
 
