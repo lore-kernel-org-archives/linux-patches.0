@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B950729CE7;
-	Wed,  2 Oct 2024 13:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6832B29CE7;
+	Wed,  2 Oct 2024 13:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876860; cv=none; b=sCt1lRdGbFefT9e20JNOOQ7qZoEWPMGOGz6zwvCzB9TdC8XL7KIVnrtLV4rf6HNUrB+ENUOFi9yDNAF+wmUpX0Rrh8hpiHYkF1PCnocJgfoWkMM0VD19H+7lRV4mmh1wFN+0neg5VHHwAQUs1OVaZjwxlWz79dJK2jFNTb0QsL4=
+	t=1727876863; cv=none; b=K4b70E70sKxaw/gyfWwzXrAL3OO61CHW0a54+7F3K//V3LoTiufXnTOFm3CYMQsISWA9i0ICLmaq+iMTA1f4eYjVgA5YZsRjDzq/ogE216s/qpJZEs3Te6JfkB6uAs2A0J4DK7q0BT24cf3d791rjyU7ZHPjTqjNY+8kZHRGhg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876860; c=relaxed/simple;
-	bh=ebXeZZvtodCVH7vZeMBQs8uJVVUYr7+VH/YUqUbmq3U=;
+	s=arc-20240116; t=1727876863; c=relaxed/simple;
+	bh=unxIOkyD0jg/Ph5ThfyNq0b+toVIf62F8b6+i8IzQT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWViT7TZRvzWt9AwFm161XXFTPS4bhBFaIeSqXA5dlgmP2EndcuQXfELvgTuYqaXURWZ38XcTTawZxKnCySy0iaSLQ5b1ho1szKIHH+q7KY6Lyd9JYxspGaTubGvFvou7S6arNI6/BpKfqH9UCYdyjmXoX6FhRMEE6TAWl5jvUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+NznNB3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlAKzeIieB+1wm1AjnRu8b8ytQ+t1GAo5DUhHTeNKBXkU7bS9EmzKH9hkaVh/HRBj6nOpENvI7royUWJck8Ylsbgf2u5pBhaRbR2CQt2iiQHXJWa1kcyqH8j4wXQq9QkL52gCyvlBGmbPl7lnZZbmVz9qkiKlOxePyJNc7StiLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKVhLYMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+NznNB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96E2C4CEC2;
-	Wed,  2 Oct 2024 13:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKVhLYMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7462C4CEC2;
+	Wed,  2 Oct 2024 13:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876860;
-	bh=ebXeZZvtodCVH7vZeMBQs8uJVVUYr7+VH/YUqUbmq3U=;
+	s=korg; t=1727876863;
+	bh=unxIOkyD0jg/Ph5ThfyNq0b+toVIf62F8b6+i8IzQT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+NznNB3M7mUsVF9Q+oYl7sVL4fGcFSKFn6mJ5X2riXsbTTxYIsZxxtKRB2QkMMQj
-	 MeuAb7DscWkLdiGW88CxSPZC3SHYeM9nmJdRxfBKwHYpud7Tq05uRJfPrY5KoCDGwZ
-	 ZbjPLJJcQgKLAPV+VITUEXUQ1Vvd68s2NQ5JsPmU=
+	b=EKVhLYMNfAN6Pe/zuV5ZT5JDpK4jCaJNbnpypqd9D1FeH5K0dVz2yzsBIzxXUsBtO
+	 72Zg633dIsQu+cw/z482JtpLApjB52KNE1vDKKhW2wZmcX1I9XP4u9MTJMSdgfnuSc
+	 a7d13tCC6in2JCVO/qslRAuCYMMvENoIkadJL7SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.11 584/695] USB: misc: yurex: fix race between read and write
-Date: Wed,  2 Oct 2024 14:59:42 +0200
-Message-ID: <20241002125845.824442928@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.11 585/695] usb: xhci: fix loss of data on Cadence xHC
+Date: Wed,  2 Oct 2024 14:59:43 +0200
+Message-ID: <20241002125845.863852525@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -49,57 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit 93907620b308609c72ba4b95b09a6aa2658bb553 upstream.
+commit e5fa8db0be3e8757e8641600c518425a4589b85c upstream.
 
-The write code path touches the bbu member in a non atomic manner
-without taking the spinlock. Fix it.
+Streams should flush their TRB cache, re-read TRBs, and start executing
+TRBs from the beginning of the new dequeue pointer after a 'Set TR Dequeue
+Pointer' command.
 
-The bug is as old as the driver.
+Cadence controllers may fail to start from the beginning of the dequeue
+TRB as it doesn't clear the Opaque 'RsvdO' field of the stream context
+during 'Set TR Dequeue' command. This stream context area is where xHC
+stores information about the last partially executed TD when a stream
+is stopped. xHC uses this information to resume the transfer where it left
+mid TD, when the stream is restarted.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912132126.1034743-1-oneukum@suse.com
+Patch fixes this by clearing out all RsvdO fields before initializing new
+Stream transfer using a 'Set TR Dequeue Pointer' command.
+
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB95386A40146E3EC64086F409DD9D2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/yurex.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/usb/cdns3/host.c     |    4 +++-
+ drivers/usb/host/xhci-pci.c  |    7 +++++++
+ drivers/usb/host/xhci-ring.c |   14 ++++++++++++++
+ drivers/usb/host/xhci.h      |    1 +
+ 4 files changed, 25 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -404,7 +404,6 @@ static ssize_t yurex_read(struct file *f
- 	struct usb_yurex *dev;
- 	int len = 0;
- 	char in_buffer[MAX_S64_STRLEN];
--	unsigned long flags;
+--- a/drivers/usb/cdns3/host.c
++++ b/drivers/usb/cdns3/host.c
+@@ -62,7 +62,9 @@ static const struct xhci_plat_priv xhci_
+ 	.resume_quirk = xhci_cdns3_resume_quirk,
+ };
  
- 	dev = file->private_data;
+-static const struct xhci_plat_priv xhci_plat_cdnsp_xhci;
++static const struct xhci_plat_priv xhci_plat_cdnsp_xhci = {
++	.quirks = XHCI_CDNS_SCTX_QUIRK,
++};
  
-@@ -419,9 +418,9 @@ static ssize_t yurex_read(struct file *f
- 		return -EIO;
+ static int __cdns_host_init(struct cdns *cdns)
+ {
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -78,6 +78,9 @@
+ #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
+ #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
+ 
++#define PCI_DEVICE_ID_CADENCE				0x17CD
++#define PCI_DEVICE_ID_CADENCE_SSP			0x0200
++
+ static const char hcd_name[] = "xhci_hcd";
+ 
+ static struct hc_driver __read_mostly xhci_pci_hc_driver;
+@@ -473,6 +476,10 @@ static void xhci_pci_quirks(struct devic
+ 			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
  	}
  
--	spin_lock_irqsave(&dev->lock, flags);
-+	spin_lock_irq(&dev->lock);
- 	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
--	spin_unlock_irqrestore(&dev->lock, flags);
-+	spin_unlock_irq(&dev->lock);
- 	mutex_unlock(&dev->io_mutex);
++	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
++	    pdev->device == PCI_DEVICE_ID_CADENCE_SSP)
++		xhci->quirks |= XHCI_CDNS_SCTX_QUIRK;
++
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1399,6 +1399,20 @@ static void xhci_handle_cmd_set_deq(stru
+ 			struct xhci_stream_ctx *ctx =
+ 				&ep->stream_info->stream_ctx_array[stream_id];
+ 			deq = le64_to_cpu(ctx->stream_ring) & SCTX_DEQ_MASK;
++
++			/*
++			 * Cadence xHCI controllers store some endpoint state
++			 * information within Rsvd0 fields of Stream Endpoint
++			 * context. This field is not cleared during Set TR
++			 * Dequeue Pointer command which causes XDMA to skip
++			 * over transfer ring and leads to data loss on stream
++			 * pipe.
++			 * To fix this issue driver must clear Rsvd0 field.
++			 */
++			if (xhci->quirks & XHCI_CDNS_SCTX_QUIRK) {
++				ctx->reserved[0] = 0;
++				ctx->reserved[1] = 0;
++			}
+ 		} else {
+ 			deq = le64_to_cpu(ep_ctx->deq) & ~EP_CTX_CYCLE_MASK;
+ 		}
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1628,6 +1628,7 @@ struct xhci_hcd {
+ #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
+ #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
+ #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
++#define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
  
- 	return simple_read_from_buffer(buffer, count, ppos, in_buffer, len);
-@@ -511,8 +510,11 @@ static ssize_t yurex_write(struct file *
- 			__func__, retval);
- 		goto error;
- 	}
--	if (set && timeout)
-+	if (set && timeout) {
-+		spin_lock_irq(&dev->lock);
- 		dev->bbu = c2;
-+		spin_unlock_irq(&dev->lock);
-+	}
- 	return timeout ? count : -EIO;
- 
- error:
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 
 
