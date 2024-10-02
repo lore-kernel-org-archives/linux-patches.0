@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A9D17B421;
-	Wed,  2 Oct 2024 13:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677E517B421;
+	Wed,  2 Oct 2024 13:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876817; cv=none; b=IgprOmkd2etAEW0KXEpaJPZByspDzMS6GQa5S/nm822I7H8cX0VL8jzMJ5Uv6N5IeI+jeECSgSZi4IY0dZB3F11IWRbW85jFd4DdnFzDjjG80RvZUJsFpjbXFv7OZGRPR/Ob69rmeqBxDwEGL7NzWujmgbs5h6UBG0NnmSrf4Ao=
+	t=1727876825; cv=none; b=R9Z3P9Cgm1fGHsF61Kc9BMuT/RNubk4HwEmbLpLswKxOfR+MqJna+x6ORMRVLQC/KfyIhtWbtnqJx6/XPbpMRVozmSG5Khy6ZKD6eCKJGubhtiIK6bJfLOHFpHp6E9WL7m7M7uIKk7YxsktfmITmfqqqllGJjSqhV0RxkkJcPB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876817; c=relaxed/simple;
-	bh=PZ96dgHmDSKwZLEfT3Um3xeQIqHPEEp0uF8QG+ej3hI=;
+	s=arc-20240116; t=1727876825; c=relaxed/simple;
+	bh=WCmg2kbkiDgR49JIuyAq9JBFmMJiek1zZqtezsCroEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B92qcfXthu5tXj7mrqxj0Um89yjfnqnBwUYc7CDl+WHL+6JYSZe1V+WxFSpz+A+pZDlVdPkMhtfFyc0yNCUSHMy5PLEXAKzofN0Fhh56zpkZ7brH2hEfVluPfunR7WvjGoXsjzth86wzl4VCL0qSYe1o9NoqZOl8nv4/VkkCY/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CXYu/Fc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ai7cb/W9ZD6Ioqs1TcWU5mnA/Zi4mSDTyfJTcnDXLGulD+J5/pY7UzT5ndxKqtZ0YNL6cG83f228CjBGbWYYY0wQmxf2ER4TgxeXKTiLcteKBgKH+6uvjHwih9kSqrlmCVgj1XlfeOyMzY9Xl/EhQRrOoaiI/tKZXVUTvwkGMCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQSE/Ln9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CXYu/Fc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E6FC4CEC2;
-	Wed,  2 Oct 2024 13:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQSE/Ln9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0A1C4CEC2;
+	Wed,  2 Oct 2024 13:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876817;
-	bh=PZ96dgHmDSKwZLEfT3Um3xeQIqHPEEp0uF8QG+ej3hI=;
+	s=korg; t=1727876825;
+	bh=WCmg2kbkiDgR49JIuyAq9JBFmMJiek1zZqtezsCroEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2CXYu/FcZU9CoW8nVDtdbwtXWXS3qTUTdmLtrgLPOo/mcKW80G5E6j6X2ZLOkrB3E
-	 r9OKICcYw7sun/B3n4b4sxg9alpKBgUwjP8//2oqmhm0UDpzYf50fbD2HoHW7jUewl
-	 v1iOh076OpsBEqjQ2AX2QC8pdzdXQ5MNQCc0T0mI=
+	b=pQSE/Ln9NaHFibneayEBI4AZ6uX5tjL0XvrtoEoRWF9IykHZt6eUnB0C3nUA8zgK1
+	 QQy2eU8bfaxaVW9A7RZ5MUI8WWDVp7d2KtUrV6qKvRvLgJI0dx/UlM/PqNAsX9BK4R
+	 EP14TaI6kywPeUBiA0+mJerdFw/XofdtXT8XlGA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.11 572/695] scsi: lpfc: Restrict support for 32 byte CDBs to specific HBAs
-Date: Wed,  2 Oct 2024 14:59:30 +0200
-Message-ID: <20241002125845.340335993@linuxfoundation.org>
+Subject: [PATCH 6.11 573/695] scsi: mac_scsi: Revise printk(KERN_DEBUG ...) messages
+Date: Wed,  2 Oct 2024 14:59:31 +0200
+Message-ID: <20241002125845.381092151@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,103 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit 05ab4e7846f1103377133c00295a9a910cc6dfc2 upstream.
+commit 5ec4f820cb9766e4583df947150a6febce8da794 upstream.
 
-An older generation of HBAs are failing FCP discovery due to usage of an
-outdated field in FCP command WQEs.
+After a bus fault, capture and log the chip registers immediately, if the
+NDEBUG_PSEUDO_DMA macro is defined. Remove some printk(KERN_DEBUG ...)
+messages that aren't needed any more.  Don't skip the debug message when
+bytes == 0. Show all of the byte counters in the debug messages.
 
-Fix by checking the SLI Interface Type register for applicable support of
-32 Byte CDB commands, and restore a setting for a WQE path using normal 16
-byte CDBs.
-
-Fixes: af20bb73ac25 ("scsi: lpfc: Add support for 32 byte CDBs")
-Cc: stable@vger.kernel.org # v6.10+
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240912232447.45607-4-justintee8345@gmail.com
+Cc: stable@vger.kernel.org # 5.15+
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/7573c79f4e488fc00af2b8a191e257ca945e0409.1723001788.git.fthain@linux-m68k.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_hw4.h  |    3 +++
- drivers/scsi/lpfc/lpfc_init.c |   21 ++++++++++++++++++---
- drivers/scsi/lpfc/lpfc_scsi.c |    2 +-
- 3 files changed, 22 insertions(+), 4 deletions(-)
+ drivers/scsi/mac_scsi.c |   42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
 
---- a/drivers/scsi/lpfc/lpfc_hw4.h
-+++ b/drivers/scsi/lpfc/lpfc_hw4.h
-@@ -4847,6 +4847,7 @@ struct fcp_iwrite64_wqe {
- #define	cmd_buff_len_SHIFT  16
- #define	cmd_buff_len_MASK  0x00000ffff
- #define	cmd_buff_len_WORD  word3
-+/* Note: payload_offset_len field depends on ASIC support */
- #define payload_offset_len_SHIFT 0
- #define payload_offset_len_MASK 0x0000ffff
- #define payload_offset_len_WORD word3
-@@ -4863,6 +4864,7 @@ struct fcp_iread64_wqe {
- #define	cmd_buff_len_SHIFT  16
- #define	cmd_buff_len_MASK  0x00000ffff
- #define	cmd_buff_len_WORD  word3
-+/* Note: payload_offset_len field depends on ASIC support */
- #define payload_offset_len_SHIFT 0
- #define payload_offset_len_MASK 0x0000ffff
- #define payload_offset_len_WORD word3
-@@ -4879,6 +4881,7 @@ struct fcp_icmnd64_wqe {
- #define	cmd_buff_len_SHIFT  16
- #define	cmd_buff_len_MASK  0x00000ffff
- #define	cmd_buff_len_WORD  word3
-+/* Note: payload_offset_len field depends on ASIC support */
- #define payload_offset_len_SHIFT 0
- #define payload_offset_len_MASK 0x0000ffff
- #define payload_offset_len_WORD word3
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -4699,6 +4699,7 @@ lpfc_create_port(struct lpfc_hba *phba,
- 	uint64_t wwn;
- 	bool use_no_reset_hba = false;
- 	int rc;
-+	u8 if_type;
+--- a/drivers/scsi/mac_scsi.c
++++ b/drivers/scsi/mac_scsi.c
+@@ -286,13 +286,14 @@ static inline int macscsi_pread(struct N
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
  
- 	if (lpfc_no_hba_reset_cnt) {
- 		if (phba->sli_rev < LPFC_SLI_REV4 &&
-@@ -4773,10 +4774,24 @@ lpfc_create_port(struct lpfc_hba *phba,
- 	shost->max_id = LPFC_MAX_TARGET;
- 	shost->max_lun = vport->cfg_max_luns;
- 	shost->this_id = -1;
--	if (phba->sli_rev == LPFC_SLI_REV4)
--		shost->max_cmd_len = LPFC_FCP_CDB_LEN_32;
--	else
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
+ 
+-		bytes = mac_pdma_recv(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_recv(s, d, chunk_bytes);
+ 
+ 		if (bytes > 0) {
+ 			d += bytes;
+@@ -302,23 +303,23 @@ static inline int macscsi_pread(struct N
+ 		if (hostdata->pdma_residual == 0)
+ 			goto out;
+ 
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, d - dst, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, d - dst, len, bytes, chunk_bytes);
 +
-+	/* Set max_cmd_len applicable to ASIC support */
-+	if (phba->sli_rev == LPFC_SLI_REV4) {
-+		if_type = bf_get(lpfc_sli_intf_if_type,
-+				 &phba->sli4_hba.sli_intf);
-+		switch (if_type) {
-+		case LPFC_SLI_INTF_IF_TYPE_2:
-+			fallthrough;
-+		case LPFC_SLI_INTF_IF_TYPE_6:
-+			shost->max_cmd_len = LPFC_FCP_CDB_LEN_32;
-+			break;
-+		default:
-+			shost->max_cmd_len = LPFC_FCP_CDB_LEN;
-+			break;
-+		}
-+	} else {
- 		shost->max_cmd_len = LPFC_FCP_CDB_LEN;
-+	}
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
+ 	}
+@@ -345,13 +346,14 @@ static inline int macscsi_pwrite(struct
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
  
- 	if (phba->sli_rev == LPFC_SLI_REV4) {
- 		if (!phba->cfg_fcp_mq_threshold ||
---- a/drivers/scsi/lpfc/lpfc_scsi.c
-+++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -4760,7 +4760,7 @@ static int lpfc_scsi_prep_cmnd_buf_s4(st
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
  
- 	 /* Word 3 */
- 	bf_set(payload_offset_len, &wqe->fcp_icmd,
--	       sizeof(struct fcp_cmnd32) + sizeof(struct fcp_rsp));
-+	       sizeof(struct fcp_cmnd) + sizeof(struct fcp_rsp));
+-		bytes = mac_pdma_send(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_send(s, d, chunk_bytes);
  
- 	/* Word 6 */
- 	bf_set(wqe_ctxt_tag, &wqe->generic.wqe_com,
+ 		if (bytes > 0) {
+ 			s += bytes;
+@@ -370,23 +372,23 @@ static inline int macscsi_pwrite(struct
+ 			goto out;
+ 		}
+ 
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, s - src, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, s - src, len, bytes, chunk_bytes);
++
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
+ 	}
 
 
