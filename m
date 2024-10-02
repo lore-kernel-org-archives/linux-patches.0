@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0C61CF28B;
-	Wed,  2 Oct 2024 13:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AD31CF28B;
+	Wed,  2 Oct 2024 13:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875620; cv=none; b=u6V1Wh9ODmcbUYnmq52K9KY+9xTyTUnv1FSCFiNWikVU9hhNnv40EmSKPP/RMReQ9HA4K3Jd/dVM4WMpbGDv1Dl4pavRJqchxt/7LVLI5XQUVhzfejmbyi5KiuTTvU7p+SUrd+cWfGQkdegNrP1NGpdqKpG8fNtwQfgjPEMM0ZI=
+	t=1727875623; cv=none; b=BEFHldWEkozdjrIcMSPB3CpzsHC3uK21hn/ULes7DTRFqMJw4CjEmGv9O5mso2xsyqnB8xwURMaIxD4g0pEIHGJqfTqslr200Vy9WQOgALSj0d2AjdZzcBeV8t94gFyTpxsTNxte1It3L/8h1wLlVJD2zCCvB+sJ8mgFRHO+fhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875620; c=relaxed/simple;
-	bh=C3n+OMMLxjtmJZ7taEI5bRFTHiIE1e5l37uYIaBIeXY=;
+	s=arc-20240116; t=1727875623; c=relaxed/simple;
+	bh=46UbYPEyaBgOlqnhARdVUoNiAY+rETeza/+gtp8ZkOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ROQNnYIq1olup6Tc1xxEb93YLON3GjuIhPV9aWcsp0nJ4jnYihWgKEUzuXHt0suW0YMrhDWCvkjmOipcbcINR4cEb7MEtFE84K67R6RDBai8Vgu1HeeEYk8Ws4YqaFNzm2EgOW+rhO/XDFOCt5j2mcJLDziC0vvmBWCVLfmE0gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJ6DVOIo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrt5BOH5DHLtStRCZsgHzgpR2NerqSq+kcWCRrdx7Whm4uQWijphkLGFoRXz3mcwESa3UBbi3oKBS2hVQsFxmT3RHb2YIBM5oXm6cdtYKclY0O5BCyHYQBPsb9tqX4XKj9yH9T8Jz1Rf0QMUmlphYmTbLS47zB8vfZZz+zFtMjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQWYtrY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJ6DVOIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A50C4CEC5;
-	Wed,  2 Oct 2024 13:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQWYtrY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813F0C4CEC5;
+	Wed,  2 Oct 2024 13:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875620;
-	bh=C3n+OMMLxjtmJZ7taEI5bRFTHiIE1e5l37uYIaBIeXY=;
+	s=korg; t=1727875622;
+	bh=46UbYPEyaBgOlqnhARdVUoNiAY+rETeza/+gtp8ZkOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJ6DVOIoNJLZlPmSvFnTXesY+lRabsYKs4SxnEy4mRdHq78Vt8qZCv3uKUxNd5DkN
-	 QCmI/MPZbQ0rfFfRq1ilXEFnDcbC+Q6nm92OVhmyZcxc0aViBEy85+q7ZjuS4F5zxX
-	 o+JAB8SCxTwk1fun2nRZaHXUzgJUgF50OEP8vXyA=
+	b=lQWYtrY4NV3ehUzhbsXAUyjpToz681EG6teN+Ji9t8vsYL9mV9loJnjCmFstLxkPF
+	 CVWGk1W9VJVMA7i733cmEP5fZjM8jpZWvlTq80MdC1vB5rItNwW2ZF+QtYzBDlhXxV
+	 5+GAHMNAjwSH9fOE64FE8v+968S606guMJy2hlSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 164/695] ASoC: tas2781-i2c: Get the right GPIO line
-Date: Wed,  2 Oct 2024 14:52:42 +0200
-Message-ID: <20241002125829.021789088@linuxfoundation.org>
+Subject: [PATCH 6.11 165/695] selftests/ftrace: Add required dependency for kprobe tests
+Date: Wed,  2 Oct 2024 14:52:43 +0200
+Message-ID: <20241002125829.061662292@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,40 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 1c4b509edad15192bfb64c81d3c305bbae8070db ]
+[ Upstream commit 41f37c852ac3fbfd072a00281b60dc7ba056be8c ]
 
-The code is obtaining a GPIO reset using the reset GPIO
-name "reset-gpios", but the gpiolib is already adding the
-suffix "-gpios" to anything passed to this function and
-will be looking for "reset-gpios-gpios" which is most
-certainly not what the author desired.
+kprobe_args_{char,string}.tc are using available_filter_functions file
+which is provided by function tracer. Thus if function tracer is disabled,
+these tests are failed on recent kernels because tracefs_create_dir is
+not raised events by adding a dynamic event.
+Add available_filter_functions to requires line.
 
-Fix it up.
-
-Fixes: ef3bcde75d06 ("ASoC: tas2781: Add tas2781 driver")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patch.msgid.link/20240807-asoc-tas-gpios-v2-2-bd0f2705d58b@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7c1130ea5cae ("test: ftrace: Fix kprobe test for eventfs")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2781-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc  | 2 +-
+ .../selftests/ftrace/test.d/kprobe/kprobe_args_string.tc        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index 5856a68d60d39..ea9c6bafa1c3a 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -794,7 +794,7 @@ static void tasdevice_parse_dt(struct tasdevice_priv *tas_priv)
- 		tas_priv->tasdevice[i].dev_addr = dev_addrs[i];
+diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
+index e21c9c27ece47..77f4c07cdcb89 100644
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ # description: Kprobe event char type argument
+-# requires: kprobe_events
++# requires: kprobe_events available_filter_functions
  
- 	tas_priv->reset = devm_gpiod_get_optional(&client->dev,
--			"reset-gpios", GPIOD_OUT_HIGH);
-+			"reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(tas_priv->reset))
- 		dev_err(tas_priv->dev, "%s Can't get reset GPIO\n",
- 			__func__);
+ case `uname -m` in
+ x86_64)
+diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
+index 93217d4595563..39001073f7ed5 100644
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ # description: Kprobe event string type argument
+-# requires: kprobe_events
++# requires: kprobe_events available_filter_functions
+ 
+ case `uname -m` in
+ x86_64)
 -- 
 2.43.0
 
