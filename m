@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97E91D0BAE;
-	Wed,  2 Oct 2024 14:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC1D0B9D;
+	Wed,  2 Oct 2024 14:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877829; cv=none; b=SGijLvj3Xhi4eQn4h+mc7Hh7BZi/9u3pDQCMfmlOmW3sg4AE3d0iFG4C6N0HERAwT0LKMB410H+P8H6eNcghqYrKnMhFRYWK9BUAxkL5vLtm5DNyGWBJYuHQZtxB9E5h7moXc2hzX2VhN2XOvu0W+6ncYjTZDn1vD4pv0xedXaA=
+	t=1727877831; cv=none; b=NdT3TTz0pTkTPhN3jqabX8B53HKvpgq16ZOLldifhx/ddvB5tsGREBvmL/EbAek9p9c3GBNbP675bQFbyp7jxjvLQ5PP9WCZal8/f1HlpQ/zCPWGQPeqX1w66B4VLWA3477qCxe6BqfIociQPfQOjRbcrpPZgbK2+ISeSH4YCD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877829; c=relaxed/simple;
-	bh=VA/qLN5H4O2a9zlk7oGh/PQZ+iUXPv+K8RwyFT8xtCE=;
+	s=arc-20240116; t=1727877831; c=relaxed/simple;
+	bh=xr9ldIci/n66YeJSrXTfwNMvhBnnoOhVO4qcll8aaFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+i5mZTL+YKtttKpCFqGdUWWPDOI9c60GFf58qT3970WybJHt2p7wgwvxIHC3qqRYiGUjhqeJFLSW+jewEPReKc9uuzr/3y4/InVE7AENIuY6exIqXQiD5CrKCiH+sWdyTOTe7sj5uii9q0i0uATC9J7Zc0W61qA+M0r873/IRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gK3mklg4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EySLSpu8AAuTDkhrv0ZX3h9Bx6PDcpHTOvfUs2fSyTfiP9AJh118Rl7GYojDVXvg7E4tFLZAUBUajotzuo4H6rpk1ogh7vd6HFmcgHnbLKmSpJ7W+jb2/bwRvHyCIi7plVVv+oQfoyf+1eC/AwCMFZMOR5YNJ8jmtYi0GxqfWmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWsNpsgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK3mklg4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60263C4CEC5;
-	Wed,  2 Oct 2024 14:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWsNpsgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55203C4CEC2;
+	Wed,  2 Oct 2024 14:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877828;
-	bh=VA/qLN5H4O2a9zlk7oGh/PQZ+iUXPv+K8RwyFT8xtCE=;
+	s=korg; t=1727877831;
+	bh=xr9ldIci/n66YeJSrXTfwNMvhBnnoOhVO4qcll8aaFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gK3mklg4t+wPhsjFpAd5Mnudt+vmxMWHa/e5UeYsO2/fsj+NxRMBqNEox7ByZrVLC
-	 rfa/UU4J59EgVrgm2rH1QU/pEKuxnI1dxk02XaTlkWjbWzmJeAEsRIohTgiWLujT6L
-	 hmDlrHtY4wGP4qQh/fgm5E4mTtN+moDs6o3oc3/8=
+	b=bWsNpsgiPX0Oq+1cDoDoptrr8UCYv3TM8sbZ3jx3XuLgR/OO7KeoTUYA7rzJDpD7z
+	 8J+4AN6/iTLpjaZbXfpOJ9UFlXRPR4YlPGNrqULxYgnfi3nqo1JTa8DpRJa33+xEsw
+	 i17tylg3bv/ZFVzLSOwweeZHFt0pJ1pT2Mr2ePhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sherry Yang <sherry.yang@oracle.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 209/634] drm/msm/dsi: correct programming sequence for SM8350 / SM8450
-Date: Wed,  2 Oct 2024 14:55:09 +0200
-Message-ID: <20241002125819.354767502@linuxfoundation.org>
+Subject: [PATCH 6.10 210/634] drm/msm: fix %s null argument error
+Date: Wed,  2 Oct 2024 14:55:10 +0200
+Message-ID: <20241002125819.393841402@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,54 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Sherry Yang <sherry.yang@oracle.com>
 
-[ Upstream commit 1328cb7c34bf6d056df9ff694ee5194537548258 ]
+[ Upstream commit 25b85075150fe8adddb096db8a4b950353045ee1 ]
 
-According to the display-drivers, 5nm DSI PLL (v4.2, v4.3) have
-different boundaries for pll_clock_inverters programming. Follow the
-vendor code and use correct values.
+The following build error was triggered because of NULL string argument:
 
-Fixes: 2f9ae4e395ed ("drm/msm/dsi: add support for DSI-PHY on SM8350 and SM8450")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c: In function 'mdp5_smp_dump':
+BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
+BUILDSTDERR:   352 |                         drm_printf(p, "%s:%d\t%d\t%s\n",
+BUILDSTDERR:       |                                                   ^~
+BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
+
+This happens from the commit a61ddb4393ad ("drm: enable (most) W=1
+warnings by default across the subsystem"). Using "(null)" instead
+to fix it.
+
+Fixes: bc5289eed481 ("drm/msm/mdp5: add debugfs to show smp block status")
+Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/606947/
-Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-3-1149dd8399fe@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/611071/
+Link: https://lore.kernel.org/r/20240827165337.1075904-1-sherry.yang@oracle.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 82d015aa2d634..29aa91238bc47 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -135,7 +135,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
- 			config->pll_clock_inverters = 0x00;
- 		else
- 			config->pll_clock_inverters = 0x40;
--	} else {
-+	} else if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
- 		if (pll_freq <= 1000000000ULL)
- 			config->pll_clock_inverters = 0xa0;
- 		else if (pll_freq <= 2500000000ULL)
-@@ -144,6 +144,16 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
- 			config->pll_clock_inverters = 0x00;
- 		else
- 			config->pll_clock_inverters = 0x40;
-+	} else {
-+		/* 4.2, 4.3 */
-+		if (pll_freq <= 1000000000ULL)
-+			config->pll_clock_inverters = 0xa0;
-+		else if (pll_freq <= 2500000000ULL)
-+			config->pll_clock_inverters = 0x20;
-+		else if (pll_freq <= 3500000000ULL)
-+			config->pll_clock_inverters = 0x00;
-+		else
-+			config->pll_clock_inverters = 0x40;
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
+index 3a7f7edda96b2..500b7dc895d05 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
+@@ -351,7 +351,7 @@ void mdp5_smp_dump(struct mdp5_smp *smp, struct drm_printer *p,
  
- 	config->decimal_div_start = dec;
+ 			drm_printf(p, "%s:%d\t%d\t%s\n",
+ 				pipe2name(pipe), j, inuse,
+-				plane ? plane->name : NULL);
++				plane ? plane->name : "(null)");
+ 
+ 			total += inuse;
+ 		}
 -- 
 2.43.0
 
