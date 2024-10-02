@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C631D1512;
-	Wed,  2 Oct 2024 14:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371B61D1727;
+	Wed,  2 Oct 2024 14:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880662; cv=none; b=iCWIuscDZbjqm1HZJhgcml4PoG1TwgN1ZdaMiffgFbAswJHgfIc+CWSueLlcwzPqxs6JhllbZ52in88knQl9BjRw8lS68sOOaKIWJCkswywG/KdwpnQxNT/p0zsKcTnqK74sRM9gOJv1dygqk6CYUI1sYL0DBmNIFLfrSpLb8nI=
+	t=1727880665; cv=none; b=QjAnv/nFVPS1XOTRehjACgAEab/KzW52W3onAssMcc9zzIIgRFuWePRkBL5y6hqgp8L61XngBHvvDO6c8HG2poDXnIV5kL5efuYh7q4Y/Q+ssdryDrEp7hBojF64gRXelLW/f6g6sPKOnIXZ6150lDjlQnWpU1eWX7T994nmh7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880662; c=relaxed/simple;
-	bh=/6dI35bbZ3Okv0i7rwVJ/mVZVOkVOQ3jJooU9UTYbUc=;
+	s=arc-20240116; t=1727880665; c=relaxed/simple;
+	bh=FJHOsy5iku1+rQlylrL3k8UPOPPVoJtU6A23WVgT1vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpIf1bvSr2qLKU3yL6a+wfDjnuDwAYBfTaIpFwbX5oYvTgvJdwrpHGibtRmPkfisyj6CV0t9Rimph0+RapJN+0WnsZh7/CUjd+mVOx7yRFYk2l28HNZlkeB3JWM2IAD8gPOXJ/Pq+bLwF3gs49eoTA7uAON/KWQBbFf3IBgfyno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6AqyYpj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AoUuXhIvsQI8RfPKo7ShB6wkGHZrau4I3jQXnLpJc8IrzcJLJeWoojbN501KyDI1/NnNw4CrpeuOzPtUOqqOQ2i3ruX+SeQC+Ip3+/NC1Tf9byHKegF2JaCa0Egl/VobPwmMZTAEm8/JAc+KmedOWXD04sAcEWcyEZsaoKrJ8H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MABrHyLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6AqyYpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6835C4CEC2;
-	Wed,  2 Oct 2024 14:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MABrHyLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66A0C4CECD;
+	Wed,  2 Oct 2024 14:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880662;
-	bh=/6dI35bbZ3Okv0i7rwVJ/mVZVOkVOQ3jJooU9UTYbUc=;
+	s=korg; t=1727880665;
+	bh=FJHOsy5iku1+rQlylrL3k8UPOPPVoJtU6A23WVgT1vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6AqyYpj+wvebJ/JeHRB8bqeTaE2UZzmDMND7aGdymY8gp+7sG0B9ZMe/8HBjB0DC
-	 OeW1qNEImotscq76/u+DXh0LNXLGcwlYeN/RNh/OBhX7J4zCtM4K3qlE7gZ3TgUp81
-	 /gjwc6RvS3eQuICWPPNRNHH8fyS1nn1qO8rz4hoU=
+	b=MABrHyLqH676d2uZQLXUq9K/rb1LO0lWbZAK2OKXd604EYvgyro5smsdYs0BJ4YJr
+	 PETPJdtvTbHwP/FxCtHtjW29RXGltDG1lTWjA2w9e9dnGppSGsw58JDgysTpKCRzgj
+	 XLvIyr8kAG0bQ3p7quMOrPp43pVOFE+YA0KaZeew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"qin.wan@hp.com, andreas.noever@gmail.com, michael.jamet@intel.com, mika.westerberg@linux.intel.com, YehezkelShB@gmail.com, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, Alexandru Gagniuc" <alexandru.gagniuc@hp.com>,
+	Gil Fine <gil.fine@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Qin Wan <qin.wan@hp.com>,
 	Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.6 504/538] thunderbolt: Expose tb_tunnel_xxx() log macros to the rest of the driver
-Date: Wed,  2 Oct 2024 15:02:23 +0200
-Message-ID: <20241002125812.334856752@linuxfoundation.org>
+Subject: [PATCH 6.6 505/538] thunderbolt: Create multiple DisplayPort tunnels if there are more DP IN/OUT pairs
+Date: Wed,  2 Oct 2024 15:02:24 +0200
+Message-ID: <20241002125812.374244099@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,91 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit d27bd2c37d4666bce25ec4d9ac8c6b169992f0f0 ]
+[ Upstream commit 8648c6465c025c488e2855c209c0dea1a1a15184 ]
 
-In order to allow more consistent logging of tunnel related information
-make these logging macros available to the rest of the driver.
+Currently we only create one DisplayPort tunnel even if there would be
+more DP IN/OUT pairs available. Specifically this happens when a router
+is unplugged and we check if a new DisplayPort tunnel can be created. To
+cover this create tunnels as long as we find suitable DP IN/OUT pairs.
 
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Qin Wan <qin.wan@hp.com>
 Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tunnel.c |   26 +++++---------------------
- drivers/thunderbolt/tunnel.h |   24 +++++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 22 deletions(-)
+ drivers/thunderbolt/tb.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/thunderbolt/tunnel.c
-+++ b/drivers/thunderbolt/tunnel.c
-@@ -58,27 +58,6 @@ MODULE_PARM_DESC(bw_alloc_mode,
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -1282,18 +1282,13 @@ static struct tb_port *tb_find_dp_out(st
+ 	return NULL;
+ }
  
- static const char * const tb_tunnel_names[] = { "PCI", "DP", "DMA", "USB3" };
- 
--#define __TB_TUNNEL_PRINT(level, tunnel, fmt, arg...)                   \
--	do {                                                            \
--		struct tb_tunnel *__tunnel = (tunnel);                  \
--		level(__tunnel->tb, "%llx:%u <-> %llx:%u (%s): " fmt,   \
--		      tb_route(__tunnel->src_port->sw),                 \
--		      __tunnel->src_port->port,                         \
--		      tb_route(__tunnel->dst_port->sw),                 \
--		      __tunnel->dst_port->port,                         \
--		      tb_tunnel_names[__tunnel->type],			\
--		      ## arg);                                          \
--	} while (0)
--
--#define tb_tunnel_WARN(tunnel, fmt, arg...) \
--	__TB_TUNNEL_PRINT(tb_WARN, tunnel, fmt, ##arg)
--#define tb_tunnel_warn(tunnel, fmt, arg...) \
--	__TB_TUNNEL_PRINT(tb_warn, tunnel, fmt, ##arg)
--#define tb_tunnel_info(tunnel, fmt, arg...) \
--	__TB_TUNNEL_PRINT(tb_info, tunnel, fmt, ##arg)
--#define tb_tunnel_dbg(tunnel, fmt, arg...) \
--	__TB_TUNNEL_PRINT(tb_dbg, tunnel, fmt, ##arg)
--
- static inline unsigned int tb_usable_credits(const struct tb_port *port)
+-static void tb_tunnel_dp(struct tb *tb)
++static bool tb_tunnel_one_dp(struct tb *tb)
  {
- 	return port->total_credits - port->ctl_credits;
-@@ -2382,3 +2361,8 @@ void tb_tunnel_reclaim_available_bandwid
- 		tunnel->reclaim_available_bandwidth(tunnel, available_up,
- 						    available_down);
- }
+ 	int available_up, available_down, ret, link_nr;
+ 	struct tb_cm *tcm = tb_priv(tb);
+ 	struct tb_port *port, *in, *out;
+ 	struct tb_tunnel *tunnel;
+ 
+-	if (!tb_acpi_may_tunnel_dp()) {
+-		tb_dbg(tb, "DP tunneling disabled, not creating tunnel\n");
+-		return;
+-	}
+-
+ 	/*
+ 	 * Find pair of inactive DP IN and DP OUT adapters and then
+ 	 * establish a DP tunnel between them.
+@@ -1321,11 +1316,11 @@ static void tb_tunnel_dp(struct tb *tb)
+ 
+ 	if (!in) {
+ 		tb_dbg(tb, "no suitable DP IN adapter available, not tunneling\n");
+-		return;
++		return false;
+ 	}
+ 	if (!out) {
+ 		tb_dbg(tb, "no suitable DP OUT adapter available, not tunneling\n");
+-		return;
++		return false;
+ 	}
+ 
+ 	/*
+@@ -1398,7 +1393,7 @@ static void tb_tunnel_dp(struct tb *tb)
+ 	 * TMU mode to HiFi for CL0s to work.
+ 	 */
+ 	tb_increase_tmu_accuracy(tunnel);
+-	return;
++	return true;
+ 
+ err_free:
+ 	tb_tunnel_free(tunnel);
+@@ -1413,6 +1408,19 @@ err_rpm_put:
+ 	pm_runtime_put_autosuspend(&out->sw->dev);
+ 	pm_runtime_mark_last_busy(&in->sw->dev);
+ 	pm_runtime_put_autosuspend(&in->sw->dev);
 +
-+const char *tb_tunnel_type_name(const struct tb_tunnel *tunnel)
-+{
-+	return tb_tunnel_names[tunnel->type];
++	return false;
 +}
---- a/drivers/thunderbolt/tunnel.h
-+++ b/drivers/thunderbolt/tunnel.h
-@@ -137,5 +137,27 @@ static inline bool tb_tunnel_is_usb3(con
- 	return tunnel->type == TB_TUNNEL_USB3;
++
++static void tb_tunnel_dp(struct tb *tb)
++{
++	if (!tb_acpi_may_tunnel_dp()) {
++		tb_dbg(tb, "DP tunneling disabled, not creating tunnel\n");
++		return;
++	}
++
++	while (tb_tunnel_one_dp(tb))
++		;
  }
  
--#endif
-+const char *tb_tunnel_type_name(const struct tb_tunnel *tunnel);
-+
-+#define __TB_TUNNEL_PRINT(level, tunnel, fmt, arg...)                   \
-+	do {                                                            \
-+		struct tb_tunnel *__tunnel = (tunnel);                  \
-+		level(__tunnel->tb, "%llx:%u <-> %llx:%u (%s): " fmt,   \
-+		      tb_route(__tunnel->src_port->sw),                 \
-+		      __tunnel->src_port->port,                         \
-+		      tb_route(__tunnel->dst_port->sw),                 \
-+		      __tunnel->dst_port->port,                         \
-+		      tb_tunnel_type_name(__tunnel),			\
-+		      ## arg);                                          \
-+	} while (0)
- 
-+#define tb_tunnel_WARN(tunnel, fmt, arg...) \
-+	__TB_TUNNEL_PRINT(tb_WARN, tunnel, fmt, ##arg)
-+#define tb_tunnel_warn(tunnel, fmt, arg...) \
-+	__TB_TUNNEL_PRINT(tb_warn, tunnel, fmt, ##arg)
-+#define tb_tunnel_info(tunnel, fmt, arg...) \
-+	__TB_TUNNEL_PRINT(tb_info, tunnel, fmt, ##arg)
-+#define tb_tunnel_dbg(tunnel, fmt, arg...) \
-+	__TB_TUNNEL_PRINT(tb_dbg, tunnel, fmt, ##arg)
-+
-+#endif
+ static void tb_enter_redrive(struct tb_port *port)
 
 
