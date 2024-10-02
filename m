@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECA91D04A5;
-	Wed,  2 Oct 2024 13:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B702A29CE7;
+	Wed,  2 Oct 2024 13:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876960; cv=none; b=OiJ+1KP2Y6zQsUe3tfO73+c8AboV61BCkcyidgLJkcC0dnsdEqZGASskCA5PMxqE6vIIN3nPb381k9zJCv39tH4iOu1L0WkLdDrUBkVt6tYaJWfFavIt+wynZb1DQbZF2n+v6i8rJpaI1Em4nlOJGsVWLFtx5yGn5MB++4Ft1S4=
+	t=1727876963; cv=none; b=B8CpcZxURCLjZbLssnxdaNfPxVh2fTac/XO6dM7P//WSjfEwpTMU69C5E35viXt7pAzIlXwo0/+W4BfnKna7lAV8h3gAeXNoobR+1teil+0VFrIYZTj9MW2EEUhJnTheVcHalhGoumLfGgjA/SAfJ2ZFve8n9KplYzZxbpl9Q8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876960; c=relaxed/simple;
-	bh=XktvzyGYpc7AWxQKydlT/6zsBEA3AiqII+YEZjxYLr0=;
+	s=arc-20240116; t=1727876963; c=relaxed/simple;
+	bh=rsB72sXJgXGzufp/pIrUggGc1g26NCPftYQ0ZSmep1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGTMU2OlieFWhF934rsexQL4jIhdQc2ixt77twWptTPEgrsUQYpm5MW7fkL67chxgbx4tOG8Qu8fs93yfErpX45cTW3wOPAHz+9RCSuu1zUre7P9mycbmiviW7sj0/gy8fotoEYTHSGtH8BEfePQq8EiwVuGuFPYj1cd3IKpV8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mA1NXNZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSd58LNrh8CFqtFt05iKN5vIikDpBwOXlM5pCXnKsGxqWSCUUaNsRYSND+z3nSchtUFbT9ldsvzreUXtxVz8p0+4fu59LrcqtHHKwp45zXOclGMcEteXNA4/gvcjNpb/2EJY6V7P6Zz8GQjUqoOQf+2IzdNmeqHBf3PpQSu6e8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXkwN3pL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA1NXNZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B82EC4CECD;
-	Wed,  2 Oct 2024 13:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXkwN3pL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF2DC4CEC2;
+	Wed,  2 Oct 2024 13:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876960;
-	bh=XktvzyGYpc7AWxQKydlT/6zsBEA3AiqII+YEZjxYLr0=;
+	s=korg; t=1727876963;
+	bh=rsB72sXJgXGzufp/pIrUggGc1g26NCPftYQ0ZSmep1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mA1NXNZGibsxXW4ImJVsoqxCXfu9goStZHEvPw6jOPnu+iPbPnMpGq4cESdxiig9a
-	 gC4w5gs7DdvG5+sHW/bJAUJxMe2Pp8OBfbcF1cPfg6+16UhxcWCEVjm9hqDwcB+r+r
-	 MxUPsGAnPxmTjq0ZXoBcAZ7l5fli3ZSITRTfi/oc=
+	b=bXkwN3pLJb4F+unWDjVZXDkzc9rWYeZKrRoiM6kTy8w+tCA4WCAaObC8mzmGuanX2
+	 2QDk+PQtdjEjiOwSxE8OD0DAxmf1sOLFQxad3/ZT4+F8oA/cXJg1Bg304hrSd9qkNx
+	 KmOakD73be07K9YusIpak5cswJFFdMm9QGs1mMcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.11 618/695] wifi: mt76: mt7925: fix a potential array-index-out-of-bounds issue for clc
-Date: Wed,  2 Oct 2024 15:00:16 +0200
-Message-ID: <20241002125847.181835087@linuxfoundation.org>
+	Nick Morrow <morrownr@gmail.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.11 619/695] wifi: rtw88: 8821cu: Remove VID/PID 0bda:c82c
+Date: Wed,  2 Oct 2024 15:00:17 +0200
+Message-ID: <20241002125847.222034279@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,34 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Nick Morrow <morrownr@gmail.com>
 
-commit 9679ca7326e52282cc923c4d71d81c999cb6cd55 upstream.
+commit 0af8cd2822f31ed8363223329e5cff2a7ed01961 upstream.
 
-Due to the lack of checks on the clc array, if the firmware supports
-more clc configuration, it will cause illegal memory access.
+Remove VID/PID 0bda:c82c as it was inadvertently added to the device
+list in driver rtw8821cu. This VID/PID is for the rtw8822cu device
+and it is already in the appropriate place for that device.
 
 Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20240819015334.14580-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Nick Morrow <morrownr@gmail.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/335d7fa1-0ba5-4b86-bba5-f98834ace1f8@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw88/rtw8821cu.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -638,6 +638,9 @@ static int mt7925_load_clc(struct mt792x
- 	for (offset = 0; offset < len; offset += le32_to_cpu(clc->len)) {
- 		clc = (const struct mt7925_clc *)(clc_base + offset);
- 
-+		if (clc->idx > ARRAY_SIZE(phy->clc))
-+			break;
-+
- 		/* do not init buf again if chip reset triggered */
- 		if (phy->clc[clc->idx])
- 			continue;
+--- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
+@@ -31,8 +31,6 @@ static const struct usb_device_id rtw_88
+ 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82b, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82c, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331d, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* D-Link */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xc811, 0xff, 0xff, 0xff),
 
 
