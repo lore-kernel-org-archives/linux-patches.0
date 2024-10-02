@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94031D0B8E;
-	Wed,  2 Oct 2024 14:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDF81D0B8E;
+	Wed,  2 Oct 2024 14:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877834; cv=none; b=borDmphzX+a15Xk8VUxtT4rMRW0OfJnRbcxlLal00/oOoutI2V2HyMRWRaCx5WgUEn12unJzdZOMa3HQ2KuZaSQiXkJrRu/jt3smZHgFYjF1HQAQFwUNTkYEhLqKioYPmlZOY53fH1tAKfKWdPRk8Cnxs4UcaUBbSvM/wCAqhNk=
+	t=1727877837; cv=none; b=ll42yw3X8sRjyceWO+BnLPAHUCCZCfc4FPYZMQvQ6HSpyA540w9JXajmkIWjDN7hoLHtq3CuIpfmtyCHBr8ypbewxYzszoCStYt8Tnr9fVQpTEDfUKxZr+4l79BCM9FTy/6nkACRwPb8RKtsfWD5qca4a79nZvYzLqN7JgLfTbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877834; c=relaxed/simple;
-	bh=8XGBvRM+/Gq7UKE2Ycm+D8rzWS1c+njYVPWX+LxQXSU=;
+	s=arc-20240116; t=1727877837; c=relaxed/simple;
+	bh=Wy6X+sLeHMjHCSzunhYiHf3PKEgbHRzumg5Oloi7DgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gp/IUDbJ7JWGyUfFE5PNWimDLB2Dfos81L/2az/ePEXELKKXUjJ3HrEOZ/R+k+BlgLKrWH2O+Jp/yhGnzynaBJ6jz3IHTBDuRZSxtvpgbP4AQ/qITB105+1X59Y5rkyMvyGCZOSsSWbe7Xe8li//BjI16tpm3G4kvu37RdJgIm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILcrYELs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sQZHGm1BNW1rNaBtv2W+4JWmjHOXJaT+W9Znx9/1PmFaTrIK7aPPJOizw8QcS7bqi3LwCxSijowvREtIqa5N4yfM/n25xwRf+MS5zfbUiAGGr6tA1lWm15hikzQ/yEuZbFRXLetoqrPKLtXyPkO6FUgmYXOFqVGI6W43impuMDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3xU0Aaa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILcrYELs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C1FC4CEC2;
-	Wed,  2 Oct 2024 14:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3xU0Aaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF9FC4CEC2;
+	Wed,  2 Oct 2024 14:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877834;
-	bh=8XGBvRM+/Gq7UKE2Ycm+D8rzWS1c+njYVPWX+LxQXSU=;
+	s=korg; t=1727877837;
+	bh=Wy6X+sLeHMjHCSzunhYiHf3PKEgbHRzumg5Oloi7DgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILcrYELs19t1MWYimUxQ3mMrJIfh6tj0EK+0+SO/F5at4SaUOOCR6a3l/1eqh40Vt
-	 73co8EzPM5caTAI26I+6rAs1Al+Ipq+2si7XAtU9lCQTdRmsJQveWAvSFg3vKnz8uu
-	 2HxB/R+/Uo6z0yDpYARfT6Kc0i7P1FXDKNmEYCoY=
+	b=D3xU0AaaRr9XkhFGXcgVt0J32x/psgWvgW63ml0CYBkC0wrn3DrtVJlKZEQxy34ox
+	 3gPPPwJQ4xTDv+QZXuuLQVLwK6JckMId71wRpKoLIFyAGdE1DZVEyUpojvsMiRcZR2
+	 AIYvKQUotcywM1wQfKpOBZTrM56r1F2R1d7JJr6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 211/634] platform/x86: ideapad-laptop: Make the scope_guard() clear of its scope
-Date: Wed,  2 Oct 2024 14:55:11 +0200
-Message-ID: <20241002125819.433123550@linuxfoundation.org>
+Subject: [PATCH 6.10 212/634] kselftest: dt: Ignore nodes that have ancestors disabled
+Date: Wed,  2 Oct 2024 14:55:12 +0200
+Message-ID: <20241002125819.472172219@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -46,157 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit a093cb667c3ff5eadd4b23ddf996d9ccae9b7ac6 ]
+[ Upstream commit 05144ab7b7eaf531fc728fcb79dcf36b621ff42d ]
 
-First of all, it's a bit counterintuitive to have something like
+Filter out nodes that have one of its ancestors disabled as they aren't
+expected to probe.
 
-	int err;
-	...
-	scoped_guard(...)
-		err = foo(...);
-	if (err)
-		return err;
+This removes the following false-positive failures on the
+sc7180-trogdor-lazor-limozeen-nots-r5 platform:
 
-Second, with a particular kernel configuration and compiler version in
-one of such cases the objtool is not happy:
+/soc@0/geniqup@8c0000/i2c@894000/proximity@28
+/soc@0/geniqup@ac0000/spi@a90000/ec@0
+/soc@0/remoteproc@62400000/glink-edge/apr
+/soc@0/remoteproc@62400000/glink-edge/apr/service@3
+/soc@0/remoteproc@62400000/glink-edge/apr/service@4
+/soc@0/remoteproc@62400000/glink-edge/apr/service@4/clock-controller
+/soc@0/remoteproc@62400000/glink-edge/apr/service@4/dais
+/soc@0/remoteproc@62400000/glink-edge/apr/service@7
+/soc@0/remoteproc@62400000/glink-edge/apr/service@7/dais
+/soc@0/remoteproc@62400000/glink-edge/apr/service@8
+/soc@0/remoteproc@62400000/glink-edge/apr/service@8/routing
+/soc@0/remoteproc@62400000/glink-edge/fastrpc
+/soc@0/remoteproc@62400000/glink-edge/fastrpc/compute-cb@3
+/soc@0/remoteproc@62400000/glink-edge/fastrpc/compute-cb@4
+/soc@0/remoteproc@62400000/glink-edge/fastrpc/compute-cb@5
+/soc@0/spmi@c440000/pmic@0/pon@800/pwrkey
 
-  ideapad-laptop.o: warning: objtool: .text.fan_mode_show: unexpected end of section
-
-I'm not an expert on all this, but the theory is that compiler and
-linker in this case can't understand that 'result' variable will be
-always initialized as long as no error has been returned. Assigning
-'result' to a dummy value helps with this. Note, that fixing the
-scoped_guard() scope (as per above) does not make issue gone.
-
-That said, assign dummy value and make the scope_guard() clear of its scope.
-For the sake of consistency do it in the entire file.
-
-Fixes: 7cc06e729460 ("platform/x86: ideapad-laptop: add a mutex to synchronize VPC commands")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408290219.BrPO8twi-lkp@intel.com/
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240829165105.1609180-1-andriy.shevchenko@linux.intel.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 14571ab1ad21 ("kselftest: Add new test for detecting unprobed Devicetree devices")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20240729-dt-kselftest-parent-disabled-v2-1-d7a001c4930d@collabora.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ideapad-laptop.c | 48 +++++++++++++++------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ .../testing/selftests/dt/test_unprobed_devices.sh | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
-index 490815917adec..32293df50bb1c 100644
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -422,13 +422,14 @@ static ssize_t camera_power_show(struct device *dev,
- 				 char *buf)
- {
- 	struct ideapad_private *priv = dev_get_drvdata(dev);
--	unsigned long result;
-+	unsigned long result = 0;
- 	int err;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = read_ec_data(priv->adev->handle, VPCCMD_R_CAMERA, &result);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	return sysfs_emit(buf, "%d\n", !!result);
- }
-@@ -445,10 +446,11 @@ static ssize_t camera_power_store(struct device *dev,
- 	if (err)
- 		return err;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_CAMERA, state);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	return count;
- }
-@@ -496,13 +498,14 @@ static ssize_t fan_mode_show(struct device *dev,
- 			     char *buf)
- {
- 	struct ideapad_private *priv = dev_get_drvdata(dev);
--	unsigned long result;
-+	unsigned long result = 0;
- 	int err;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = read_ec_data(priv->adev->handle, VPCCMD_R_FAN, &result);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	return sysfs_emit(buf, "%lu\n", result);
- }
-@@ -522,10 +525,11 @@ static ssize_t fan_mode_store(struct device *dev,
- 	if (state > 4 || state == 3)
- 		return -EINVAL;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_FAN, state);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	return count;
- }
-@@ -605,13 +609,14 @@ static ssize_t touchpad_show(struct device *dev,
- 			     char *buf)
- {
- 	struct ideapad_private *priv = dev_get_drvdata(dev);
--	unsigned long result;
-+	unsigned long result = 0;
- 	int err;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = read_ec_data(priv->adev->handle, VPCCMD_R_TOUCHPAD, &result);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	priv->r_touchpad_val = result;
- 
-@@ -630,10 +635,11 @@ static ssize_t touchpad_store(struct device *dev,
- 	if (err)
- 		return err;
- 
--	scoped_guard(mutex, &priv->vpc_mutex)
-+	scoped_guard(mutex, &priv->vpc_mutex) {
- 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_TOUCHPAD, state);
--	if (err)
--		return err;
-+		if (err)
-+			return err;
-+	}
- 
- 	priv->r_touchpad_val = state;
- 
+diff --git a/tools/testing/selftests/dt/test_unprobed_devices.sh b/tools/testing/selftests/dt/test_unprobed_devices.sh
+index 2d7e70c5ad2d3..5e3f42ef249ee 100755
+--- a/tools/testing/selftests/dt/test_unprobed_devices.sh
++++ b/tools/testing/selftests/dt/test_unprobed_devices.sh
+@@ -34,8 +34,21 @@ nodes_compatible=$(
+ 		# Check if node is available
+ 		if [[ -e "${node}"/status ]]; then
+ 			status=$(tr -d '\000' < "${node}"/status)
+-			[[ "${status}" != "okay" && "${status}" != "ok" ]] && continue
++			if [[ "${status}" != "okay" && "${status}" != "ok" ]]; then
++				if [ -n "${disabled_nodes_regex}" ]; then
++					disabled_nodes_regex="${disabled_nodes_regex}|${node}"
++				else
++					disabled_nodes_regex="${node}"
++				fi
++				continue
++			fi
+ 		fi
++
++		# Ignore this node if one of its ancestors was disabled
++		if [ -n "${disabled_nodes_regex}" ]; then
++			echo "${node}" | grep -q -E "${disabled_nodes_regex}" && continue
++		fi
++
+ 		echo "${node}" | sed -e 's|\/proc\/device-tree||'
+ 	done | sort
+ 	)
 -- 
 2.43.0
 
