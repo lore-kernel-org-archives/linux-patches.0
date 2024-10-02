@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007A01D0F76;
-	Wed,  2 Oct 2024 14:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7A51D0E28;
+	Wed,  2 Oct 2024 14:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878323; cv=none; b=AZRTU51mlqz7KfWPqqw26qhpYx/pzB7tB4jq3q3rYwaQTOrKGVsVpUfo0RVOE/dKSFeZJMjyx4QQo0ubHtQl7KLebUhyCgi02HZQC9vU3UjeZ6gP+0+9344LKWamI5mjeX2ZRothzAtjVrx07sWHc8bWBKVGSeZIwnn6Q+H2cAg=
+	t=1727878325; cv=none; b=QSSami64THJQnsq/j1+JNb+95LccmdebXNiBdwvq7KKWulKEc6exNeIuz5bzcvi002GRjAW7alydIqWjjfwRKUOoQjYLmjAoPihk4GH67AALZeUbs+MIwkq5/UMa4sa9yLJ2/WezNmrL8K+KeXAn2LHo18KpqWZhGrvpOZ6lpdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878323; c=relaxed/simple;
-	bh=iwSGbPbwdvqMfOyBYyPD22M9udA4wYFY7+E8kC/Hduw=;
+	s=arc-20240116; t=1727878325; c=relaxed/simple;
+	bh=mZywu8NCO8Nl8x6fzkzfKcQ1ObnqnJsh/I13P+HDgSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZRzfFq7bN3VoJW88dfOActSc0honoKlt/HSwEQGO4sisTQxwdcCCpk/fFTElZxJe6r9DrJiVXypo7nPBk4VxAxvQRITfbCEUisXRQi/4s2PH/TXG0U7cOJWihmfsIJuIMsfCgggnR2/ItmMnbTLmU8qPNiae9RazH3xY3o5eco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHTGSu2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FxXJa2ur1R8ZEu2XFm/+3+ocj71oDOG47MW7BRYyuWyluR2qVAHGHi3YwMJsTJ7cZ0ifLYX/kkyFCybAv+oMufMlOgV9vEq0g0E3bZZ8UXQtWbD1D4vDdxDkLNghNfgm8ZdjhygnG8thbNqCB8Urcq8G/Ilv0xgqIy3pxFWmqiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhnhrs5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHTGSu2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7447DC4CEC2;
-	Wed,  2 Oct 2024 14:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhnhrs5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6287CC4CEC2;
+	Wed,  2 Oct 2024 14:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878322;
-	bh=iwSGbPbwdvqMfOyBYyPD22M9udA4wYFY7+E8kC/Hduw=;
+	s=korg; t=1727878325;
+	bh=mZywu8NCO8Nl8x6fzkzfKcQ1ObnqnJsh/I13P+HDgSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHTGSu2GycMMQdiJUcJIC2tMpI7ECKCtbsJkPYgK1La/agjfbrt67ZOhy/mgWNkCr
-	 yhhNrP7JtShMkvCEidrz4BmTWB90M2I78u/keV6I41toDgvo1Ye6O9nbQO06y4Mw23
-	 EKkUH9v+yS3GB9icN3s0ADvJVv7wfOnu+ZE1EB10=
+	b=bhnhrs5ntDMvBOY02Zs1rvH0kIti3gU+hjXA9a8khoBCNiUfiEviQyPCJwrVC94oH
+	 /zwkFW2bTvsYT3USqN1PBtWbDyASAAbRzgmvaBculbBStr/O0JDpGEisZ/c2UWoywd
+	 laoxVYWDFP+UFnEraiRwHXK0WS+ZFVx0bjoSU9E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Li Zhijian <lizhijian@fujitsu.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 343/634] nvdimm: Fix devs leaks in scan_labels()
-Date: Wed,  2 Oct 2024 14:57:23 +0200
-Message-ID: <20241002125824.639356355@linuxfoundation.org>
+Subject: [PATCH 6.10 334/634] firewire: core: correct range of block for case of switch statement
+Date: Wed,  2 Oct 2024 14:57:14 +0200
+Message-ID: <20241002125824.286445305@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,125 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 62c2aa6b1f565d2fc1ec11a6e9e8336ce37a6426 ]
+[ Upstream commit ebb9d3ca8f7efc1b6a2f1750d1058eda444883d0 ]
 
-scan_labels() leaks memory when label scanning fails and it falls back
-to just creating a default "seed" namespace for userspace to configure.
-Root can force the kernel to leak memory.
+A commit d8527cab6c31 ("firewire: cdev: implement new event to notify
+response subaction with time stamp") adds an additional case,
+FW_CDEV_EVENT_RESPONSE2, into switch statement in complete_transaction().
+However, the range of block is beyond to the case label and reaches
+neibour default label.
 
-Allocate the minimum resources unconditionally and release them when
-unneeded to avoid the memory leak.
+This commit corrects the range of block. Fortunately, it has few impacts
+in practice since the local variable in the scope under the label is not
+used in codes under default label.
 
-A kmemleak reports:
-unreferenced object 0xffff88800dda1980 (size 16):
-  comm "kworker/u10:5", pid 69, jiffies 4294671781
-  hex dump (first 16 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    [<00000000c5dea560>] __kmalloc+0x32c/0x470
-    [<000000009ed43c83>] nd_region_register_namespaces+0x6fb/0x1120 [libnvdimm]
-    [<000000000e07a65c>] nd_region_probe+0xfe/0x210 [libnvdimm]
-    [<000000007b79ce5f>] nvdimm_bus_probe+0x7a/0x1e0 [libnvdimm]
-    [<00000000a5f3da2e>] really_probe+0xc6/0x390
-    [<00000000129e2a69>] __driver_probe_device+0x78/0x150
-    [<000000002dfed28b>] driver_probe_device+0x1e/0x90
-    [<00000000e7048de2>] __device_attach_driver+0x85/0x110
-    [<0000000032dca295>] bus_for_each_drv+0x85/0xe0
-    [<00000000391c5a7d>] __device_attach+0xbe/0x1e0
-    [<0000000026dabec0>] bus_probe_device+0x94/0xb0
-    [<00000000c590d936>] device_add+0x656/0x870
-    [<000000003d69bfaa>] nd_async_device_register+0xe/0x50 [libnvdimm]
-    [<000000003f4c52a4>] async_run_entry_fn+0x2e/0x110
-    [<00000000e201f4b0>] process_one_work+0x1ee/0x600
-    [<000000006d90d5a9>] worker_thread+0x183/0x350
-
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Fixes: 1b40e09a1232 ("libnvdimm: blk labels and namespace instantiation")
-Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20240819062045.1481298-1-lizhijian@fujitsu.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: d8527cab6c31 ("firewire: cdev: implement new event to notify response subaction with time stamp")
+Link: https://lore.kernel.org/r/20240810070403.36801-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/namespace_devs.c | 34 ++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ drivers/firewire/core-cdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvdimm/namespace_devs.c b/drivers/nvdimm/namespace_devs.c
-index d6d558f94d6bb..35d9f3cc2efab 100644
---- a/drivers/nvdimm/namespace_devs.c
-+++ b/drivers/nvdimm/namespace_devs.c
-@@ -1937,12 +1937,16 @@ static int cmp_dpa(const void *a, const void *b)
- static struct device **scan_labels(struct nd_region *nd_region)
- {
- 	int i, count = 0;
--	struct device *dev, **devs = NULL;
-+	struct device *dev, **devs;
- 	struct nd_label_ent *label_ent, *e;
- 	struct nd_mapping *nd_mapping = &nd_region->mapping[0];
- 	struct nvdimm_drvdata *ndd = to_ndd(nd_mapping);
- 	resource_size_t map_end = nd_mapping->start + nd_mapping->size - 1;
+diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
+index 9a7dc90330a35..a888a001bedb1 100644
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -599,11 +599,11 @@ static void complete_transaction(struct fw_card *card, int rcode, u32 request_ts
+ 		queue_event(client, &e->event, rsp, sizeof(*rsp) + rsp->length, NULL, 0);
  
-+	devs = kcalloc(2, sizeof(dev), GFP_KERNEL);
-+	if (!devs)
-+		return NULL;
-+
- 	/* "safe" because create_namespace_pmem() might list_move() label_ent */
- 	list_for_each_entry_safe(label_ent, e, &nd_mapping->labels, list) {
- 		struct nd_namespace_label *nd_label = label_ent->label;
-@@ -1961,12 +1965,14 @@ static struct device **scan_labels(struct nd_region *nd_region)
- 			goto err;
- 		if (i < count)
- 			continue;
--		__devs = kcalloc(count + 2, sizeof(dev), GFP_KERNEL);
--		if (!__devs)
--			goto err;
--		memcpy(__devs, devs, sizeof(dev) * count);
--		kfree(devs);
--		devs = __devs;
-+		if (count) {
-+			__devs = kcalloc(count + 2, sizeof(dev), GFP_KERNEL);
-+			if (!__devs)
-+				goto err;
-+			memcpy(__devs, devs, sizeof(dev) * count);
-+			kfree(devs);
-+			devs = __devs;
-+		}
- 
- 		dev = create_namespace_pmem(nd_region, nd_mapping, nd_label);
- 		if (IS_ERR(dev)) {
-@@ -1993,11 +1999,6 @@ static struct device **scan_labels(struct nd_region *nd_region)
- 
- 		/* Publish a zero-sized namespace for userspace to configure. */
- 		nd_mapping_free_labels(nd_mapping);
--
--		devs = kcalloc(2, sizeof(dev), GFP_KERNEL);
--		if (!devs)
--			goto err;
--
- 		nspm = kzalloc(sizeof(*nspm), GFP_KERNEL);
- 		if (!nspm)
- 			goto err;
-@@ -2036,11 +2037,10 @@ static struct device **scan_labels(struct nd_region *nd_region)
- 	return devs;
- 
-  err:
--	if (devs) {
--		for (i = 0; devs[i]; i++)
--			namespace_pmem_release(devs[i]);
--		kfree(devs);
+ 		break;
++	}
+ 	default:
+ 		WARN_ON(1);
+ 		break;
+ 	}
 -	}
-+	for (i = 0; devs[i]; i++)
-+		namespace_pmem_release(devs[i]);
-+	kfree(devs);
-+
- 	return NULL;
- }
  
+ 	/* Drop the idr's reference */
+ 	client_put(client);
 -- 
 2.43.0
 
