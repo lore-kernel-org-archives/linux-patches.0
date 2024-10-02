@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B841D0E17;
-	Wed,  2 Oct 2024 14:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F00D1D1F46;
+	Wed,  2 Oct 2024 14:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878820; cv=none; b=nE8gfK69lBAfKLlkfkeFRWXWWv/U9vu3wOvHIc39UrphIyaSqWBYZbmWjckZvGE3wZh0f5hMiyJmhwLmTiIffRuhiP5edPDlerVxURas6Ldx5hSPPbDYHI7pG1W/1RcMNy0mF5k//TaAlD75Zu2zWWJySXSV6oblQ/uyVpdOwto=
+	t=1727878823; cv=none; b=Hi+B19D8p6lUzlf58YsAXx85X/Gwfr0zYSzO8i+exqmYgNF2IZx7Z3ferdnWP4tq4SbnCYKcZEyRvN6JXuJjdE6gOKS/ywrnYZGI6jatF+RUXKD0bppEjn8l2yKjCvg/JmiUB8pJlT1LM1jpSw8/Dxb4IqWoUrtDPI4GLgcSDz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878820; c=relaxed/simple;
-	bh=emoxkLko99186gYkA+xb/qAwTQL2c2FUmlF22axZo+k=;
+	s=arc-20240116; t=1727878823; c=relaxed/simple;
+	bh=gbnr4WbhBrVUZwT8eYoWlpx3UDotpenTU9IBpDuBY8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOUoqd702vTBOA0RCgWZc4bZ0VybeC6M3XDNrSkzxZpO8DpneC/PYZr6Ym1ynt8hWat4IFZmLb0MzrZH9haqbC2BmJKettv24No2eajwXeOVeCajq5EGr9fsO8FHm5NIpbU/0ta39OqMYmwGTQOZGQ2IolCXLP2wgiUDThPS80I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SplvdZc2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mEqMl1gnsR/6PCHqysMHvPFmGt/1RU38Vt3OwNN6sPZqO1TYMauPyec5KadjJOKugmItapgVHYmam9o7dwtfAFpYpyQJ6dHUP2BdNNMGZxLBvoel25w0mPbrXCl7ihmvcQ4oM/I7pHPhFulC2NeF4P59auQbq5XZ9vSRka5icRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFGeJn14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SplvdZc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E12C4CEC2;
-	Wed,  2 Oct 2024 14:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFGeJn14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A129C4CEC2;
+	Wed,  2 Oct 2024 14:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878820;
-	bh=emoxkLko99186gYkA+xb/qAwTQL2c2FUmlF22axZo+k=;
+	s=korg; t=1727878823;
+	bh=gbnr4WbhBrVUZwT8eYoWlpx3UDotpenTU9IBpDuBY8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SplvdZc22mPbhJ2pcwN1aq9+FNygIX3gngG1QBWzSOkRZQdhxAn73Xgi3CLB++Cb8
-	 +M+JpNheEqVIjfRC9adcn6Uw8V1wZu/NIRbGg8klSPUK5KozjxsT9d+3mf/HDvNOIw
-	 T+9gU6ktzfqVhFawsbPT6Z2HEooHIcPkrGze4a34=
+	b=SFGeJn14NOHH3NQv2JAkrd55he9YLx2zDC28d2ULm5hUQpTFplO1ZrD9G5R7rX0D8
+	 lQVbeFl72qyv9GyESv7WeY9rLDrZwku9FsizrHAM6JGVUdlUf2S8JbEvCmiBZhQPDp
+	 ffiTOlHczCZqXv2IK9reA51Og49aSDf3iJKajQE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 512/634] scsi: mac_scsi: Refactor polling loop
-Date: Wed,  2 Oct 2024 15:00:12 +0200
-Message-ID: <20241002125831.316742933@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Mina Almasry <almasrymina@google.com>,
+	Segher Boessenkool <segher@kernel.crashing.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.10 503/634] powerpc/atomic: Use YZ constraints for DS-form instructions
+Date: Wed,  2 Oct 2024 15:00:03 +0200
+Message-ID: <20241002125830.954740176@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,180 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 5545c3165cbc98615fe65a44f41167cbb557e410 upstream.
+commit 39190ac7cff1fd15135fa8e658030d9646fdb5f2 upstream.
 
-Before the error handling can be revised, some preparation is needed.
-Refactor the polling loop with a new function, macscsi_wait_for_drq().
-This function will gain more call sites in the next patch.
+The 'ld' and 'std' instructions require a 4-byte aligned displacement
+because they are DS-form instructions. But the "m" asm constraint
+doesn't enforce that.
 
-Cc: stable@vger.kernel.org # 5.15+
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/6a5ffabb4290c0d138c6d285fda8fa3902e926f0.1723001788.git.fthain@linux-m68k.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+That can lead to build errors if the compiler chooses a non-aligned
+displacement, as seen with GCC 14:
+
+  /tmp/ccuSzwiR.s: Assembler messages:
+  /tmp/ccuSzwiR.s:2579: Error: operand out of domain (39 is not a multiple of 4)
+  make[5]: *** [scripts/Makefile.build:229: net/core/page_pool.o] Error 1
+
+Dumping the generated assembler shows:
+
+  ld 8,39(8)       # MEM[(const struct atomic64_t *)_29].counter, t
+
+Use the YZ constraints to tell the compiler either to generate a DS-form
+displacement, or use an X-form instruction, either of which prevents the
+build error.
+
+See commit 2d43cc701b96 ("powerpc/uaccess: Fix build errors seen with
+GCC 13/14") for more details on the constraint letters.
+
+Fixes: 9f0cbea0d8cc ("[POWERPC] Implement atomic{, 64}_{read, write}() without volatile")
+Cc: stable@vger.kernel.org # v2.6.24+
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20240913125302.0a06b4c7@canb.auug.org.au
+Tested-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Segher Boessenkool <segher@kernel.crashing.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240916120510.2017749-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mac_scsi.c |   80 +++++++++++++++++++++++++-----------------------
- 1 file changed, 42 insertions(+), 38 deletions(-)
+ arch/powerpc/include/asm/asm-compat.h |    6 ++++++
+ arch/powerpc/include/asm/atomic.h     |    5 +++--
+ arch/powerpc/include/asm/uaccess.h    |    7 +------
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/scsi/mac_scsi.c
-+++ b/drivers/scsi/mac_scsi.c
-@@ -208,8 +208,6 @@ __setup("mac5380=", mac_scsi_setup);
- 		".previous                     \n" \
- 		: "+a" (addr), "+r" (n), "+r" (result) : "a" (io))
+--- a/arch/powerpc/include/asm/asm-compat.h
++++ b/arch/powerpc/include/asm/asm-compat.h
+@@ -39,6 +39,12 @@
+ #define STDX_BE	stringify_in_c(stdbrx)
+ #endif
  
--#define MAC_PDMA_DELAY		32
--
- static inline int mac_pdma_recv(void __iomem *io, unsigned char *start, int n)
- {
- 	unsigned char *addr = start;
-@@ -274,6 +272,36 @@ static inline void write_ctrl_reg(struct
- 	out_be32(hostdata->io + (CTRL_REG << 4), value);
++#ifdef CONFIG_CC_IS_CLANG
++#define DS_FORM_CONSTRAINT "Z<>"
++#else
++#define DS_FORM_CONSTRAINT "YZ<>"
++#endif
++
+ #else /* 32-bit */
+ 
+ /* operations for longs and pointers */
+--- a/arch/powerpc/include/asm/atomic.h
++++ b/arch/powerpc/include/asm/atomic.h
+@@ -11,6 +11,7 @@
+ #include <asm/cmpxchg.h>
+ #include <asm/barrier.h>
+ #include <asm/asm-const.h>
++#include <asm/asm-compat.h>
+ 
+ /*
+  * Since *_return_relaxed and {cmp}xchg_relaxed are implemented with
+@@ -197,7 +198,7 @@ static __inline__ s64 arch_atomic64_read
+ 	if (IS_ENABLED(CONFIG_PPC_KERNEL_PREFIXED))
+ 		__asm__ __volatile__("ld %0,0(%1)" : "=r"(t) : "b"(&v->counter));
+ 	else
+-		__asm__ __volatile__("ld%U1%X1 %0,%1" : "=r"(t) : "m<>"(v->counter));
++		__asm__ __volatile__("ld%U1%X1 %0,%1" : "=r"(t) : DS_FORM_CONSTRAINT (v->counter));
+ 
+ 	return t;
+ }
+@@ -208,7 +209,7 @@ static __inline__ void arch_atomic64_set
+ 	if (IS_ENABLED(CONFIG_PPC_KERNEL_PREFIXED))
+ 		__asm__ __volatile__("std %1,0(%2)" : "=m"(v->counter) : "r"(i), "b"(&v->counter));
+ 	else
+-		__asm__ __volatile__("std%U0%X0 %1,%0" : "=m<>"(v->counter) : "r"(i));
++		__asm__ __volatile__("std%U0%X0 %1,%0" : "=" DS_FORM_CONSTRAINT (v->counter) : "r"(i));
  }
  
-+static inline int macscsi_wait_for_drq(struct NCR5380_hostdata *hostdata)
-+{
-+	unsigned int n = 1; /* effectively multiplies NCR5380_REG_POLL_TIME */
-+	unsigned char basr;
-+
-+again:
-+	basr = NCR5380_read(BUS_AND_STATUS_REG);
-+
-+	if (!(basr & BASR_PHASE_MATCH))
-+		return 1;
-+
-+	if (basr & BASR_IRQ)
-+		return -1;
-+
-+	if (basr & BASR_DRQ)
-+		return 0;
-+
-+	if (n-- == 0) {
-+		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
-+		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
-+			 "%s: DRQ timeout\n", __func__);
-+		return -1;
-+	}
-+
-+	NCR5380_poll_politely2(hostdata,
-+			       BUS_AND_STATUS_REG, BASR_DRQ, BASR_DRQ,
-+			       BUS_AND_STATUS_REG, BASR_PHASE_MATCH, 0, 0);
-+	goto again;
-+}
-+
- static inline int macscsi_pread(struct NCR5380_hostdata *hostdata,
-                                 unsigned char *dst, int len)
- {
-@@ -283,9 +311,7 @@ static inline int macscsi_pread(struct N
+ #define ATOMIC64_OP(op, asm_op)						\
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -6,6 +6,7 @@
+ #include <asm/page.h>
+ #include <asm/extable.h>
+ #include <asm/kup.h>
++#include <asm/asm-compat.h>
  
- 	hostdata->pdma_residual = len;
+ #ifdef __powerpc64__
+ /* We use TASK_SIZE_USER64 as TASK_SIZE is not constant */
+@@ -92,12 +93,6 @@ __pu_failed:							\
+ 		: label)
+ #endif
  
--	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
--	                              BASR_DRQ | BASR_PHASE_MATCH,
--	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
-+	while (macscsi_wait_for_drq(hostdata) == 0) {
- 		int bytes, chunk_bytes;
- 
- 		if (macintosh_config->ident == MAC_MODEL_IIFX)
-@@ -295,19 +321,16 @@ static inline int macscsi_pread(struct N
- 		chunk_bytes = min(hostdata->pdma_residual, 512);
- 		bytes = mac_pdma_recv(s, d, chunk_bytes);
- 
-+		if (macintosh_config->ident == MAC_MODEL_IIFX)
-+			write_ctrl_reg(hostdata, CTRL_INTERRUPTS_ENABLE);
-+
- 		if (bytes > 0) {
- 			d += bytes;
- 			hostdata->pdma_residual -= bytes;
- 		}
- 
- 		if (hostdata->pdma_residual == 0)
--			goto out;
+-#ifdef CONFIG_CC_IS_CLANG
+-#define DS_FORM_CONSTRAINT "Z<>"
+-#else
+-#define DS_FORM_CONSTRAINT "YZ<>"
+-#endif
 -
--		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
--			goto out;
--
--		if (bytes == 0)
--			udelay(MAC_PDMA_DELAY);
-+			break;
- 
- 		if (bytes > 0)
- 			continue;
-@@ -321,16 +344,9 @@ static inline int macscsi_pread(struct N
- 			continue;
- 
- 		result = -1;
--		goto out;
-+		break;
- 	}
- 
--	scmd_printk(KERN_ERR, hostdata->connected,
--	            "%s: phase mismatch or !DRQ\n", __func__);
--	NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
--	result = -1;
--out:
--	if (macintosh_config->ident == MAC_MODEL_IIFX)
--		write_ctrl_reg(hostdata, CTRL_INTERRUPTS_ENABLE);
- 	return result;
- }
- 
-@@ -343,9 +359,7 @@ static inline int macscsi_pwrite(struct
- 
- 	hostdata->pdma_residual = len;
- 
--	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
--	                              BASR_DRQ | BASR_PHASE_MATCH,
--	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
-+	while (macscsi_wait_for_drq(hostdata) == 0) {
- 		int bytes, chunk_bytes;
- 
- 		if (macintosh_config->ident == MAC_MODEL_IIFX)
-@@ -355,6 +369,9 @@ static inline int macscsi_pwrite(struct
- 		chunk_bytes = min(hostdata->pdma_residual, 512);
- 		bytes = mac_pdma_send(s, d, chunk_bytes);
- 
-+		if (macintosh_config->ident == MAC_MODEL_IIFX)
-+			write_ctrl_reg(hostdata, CTRL_INTERRUPTS_ENABLE);
-+
- 		if (bytes > 0) {
- 			s += bytes;
- 			hostdata->pdma_residual -= bytes;
-@@ -369,15 +386,9 @@ static inline int macscsi_pwrite(struct
- 				            "%s: Last Byte Sent timeout\n", __func__);
- 				result = -1;
- 			}
--			goto out;
-+			break;
- 		}
- 
--		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
--			goto out;
--
--		if (bytes == 0)
--			udelay(MAC_PDMA_DELAY);
--
- 		if (bytes > 0)
- 			continue;
- 
-@@ -390,16 +401,9 @@ static inline int macscsi_pwrite(struct
- 			continue;
- 
- 		result = -1;
--		goto out;
-+		break;
- 	}
- 
--	scmd_printk(KERN_ERR, hostdata->connected,
--	            "%s: phase mismatch or !DRQ\n", __func__);
--	NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
--	result = -1;
--out:
--	if (macintosh_config->ident == MAC_MODEL_IIFX)
--		write_ctrl_reg(hostdata, CTRL_INTERRUPTS_ENABLE);
- 	return result;
- }
- 
+ #ifdef __powerpc64__
+ #ifdef CONFIG_PPC_KERNEL_PREFIXED
+ #define __put_user_asm2_goto(x, ptr, label)			\
 
 
