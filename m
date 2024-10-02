@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F45C29CE7;
-	Wed,  2 Oct 2024 13:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ABF1D0427;
+	Wed,  2 Oct 2024 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877224; cv=none; b=MK4RJUHnIvNlAAUpQy8vaGPHxIpl4b2ZgjPdveZztuJuIx5INolY7UiZUyyFoew8FiTZ7YUqbneApiBZMlVKvY88NZ404qsmhefS4vYcYBACkeitx73hxwp4VJuMVZD+/eAkm0/BqU+bQ5Rjpj3k2Mo9fiYBE7rK7cfLqakBLFQ=
+	t=1727877227; cv=none; b=dP5N+D5ejmIkGVb4sLnmFNvLLXMReZHsP1K7zGqump2fHEI2wuo4uLB0H2wJZsE+Ehwr6GUJ4YsICZBwuw36E5vJ866cWeHLRC0mjmQQi7BFOYzjpS0itChqoFP7Hr0xxuQmOiEBE+crXhsAlGLfHJGjqnALu/CILDJbdv1nJxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877224; c=relaxed/simple;
-	bh=tywfhx3bppqJq3tyc2VusZhYmnGMoziwmf5Y+AgDoDU=;
+	s=arc-20240116; t=1727877227; c=relaxed/simple;
+	bh=iooflxP0iIsHGz1lmAboJ7dGa3Ms0pqMgY2RkHd7fYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q5HIwwRRcgzGHVKD8pfcK/sgQLlEGpKp6dRtZGzApAdwqpSAPHF6DjgLOiqAXhTDA3tKk5bha44AVy38l3BDKJNikzhIbVnFTs69jtlRGtvqOcDgP40E0qJ1G1kNNTXOtgnlPiex/205Pqdk6rWDkpdxBgAbzMWN+zK3bE5LeKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LArfEecf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0lww0JcCiQuF1C9gRnbBLjSbOA6P0BTv2ERGxnbH7fEwTUk3hPIs0qWaTqJqI9rJxEasjMcAm8xGWd0Bfbz5JZkgY9zGkfcbxQZr86BEqh1Lp4qxMhnQ9YMzBWzJFH48j1PtR/+LjU8qCwqO1or88jXotK3jQ35LrWGrqH+Ebk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PClADkf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LArfEecf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD99CC4CEC2;
-	Wed,  2 Oct 2024 13:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PClADkf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72A2C4CED3;
+	Wed,  2 Oct 2024 13:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877224;
-	bh=tywfhx3bppqJq3tyc2VusZhYmnGMoziwmf5Y+AgDoDU=;
+	s=korg; t=1727877227;
+	bh=iooflxP0iIsHGz1lmAboJ7dGa3Ms0pqMgY2RkHd7fYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LArfEecfk+I3M2CPkYTeizYLGPgFuxlQZptou0xBaEkoxUU5A+IsJcTdLUvxEMlqO
-	 sw3aNtCao9hO5HRSLYiRlJ8ZbhFAkVPAn/zv/GDcXRY8OkldP41PlJPmJiAiab/0t9
-	 kwk3pUuOL0VKgm7NSD713Bkomnz6grIi9vY4WQgo=
+	b=PClADkf9MX9nFojjx+oAwfm5GQHOS7QutCKmSsc+yBADrcS9DpTy1tviBL8HrDivI
+	 kgdwMGWkrpIfBE0rntnLd0XYBFy+rqCCeBjj3ul9cPVBMjCyJVSkb2B7+v6dWK1I8n
+	 FXyonWYyKdm9uDb3ODuABHKBtUA1uTz2FkxcO0dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Tobias <dan.g.tob@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Karthikeyan Kathirvel <quic_kathirve@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 011/634] wifi: ath9k: Remove error checks when creating debugfs entries
-Date: Wed,  2 Oct 2024 14:51:51 +0200
-Message-ID: <20241002125811.538230681@linuxfoundation.org>
+Subject: [PATCH 6.10 012/634] wifi: ath12k: fix BSS chan info request WMI command
+Date: Wed,  2 Oct 2024 14:51:52 +0200
+Message-ID: <20241002125811.577765477@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -46,70 +47,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit f6ffe7f0184792c2f99aca6ae5b916683973d7d3 ]
+[ Upstream commit 59529c982f85047650fd473db903b23006a796c6 ]
 
-We should not be checking the return values from debugfs creation at all: the
-debugfs functions are designed to handle errors of previously called functions
-and just transparently abort the creation of debugfs entries when debugfs is
-disabled. If we check the return value and abort driver initialisation, we break
-the driver if debugfs is disabled (such as when booting with debugfs=off).
+Currently, the firmware returns incorrect pdev_id information in
+WMI_PDEV_BSS_CHAN_INFO_EVENTID, leading to incorrect filling of
+the pdev's survey information.
 
-Earlier versions of ath9k accidentally did the right thing by checking the
-return value, but only for NULL, not for IS_ERR(). This was "fixed" by the two
-commits referenced below, breaking ath9k with debugfs=off starting from the 6.6
-kernel (as reported in the Bugzilla linked below).
+To prevent this issue, when requesting BSS channel information
+through WMI_PDEV_BSS_CHAN_INFO_REQUEST_CMDID, firmware expects
+pdev_id as one of the arguments in this WMI command.
 
-Restore functionality by just getting rid of the return value check entirely.
+Add pdev_id to the struct wmi_pdev_bss_chan_info_req_cmd and fill it
+during ath12k_wmi_pdev_bss_chan_info_request(). This resolves the
+issue of sending the correct pdev_id in WMI_PDEV_BSS_CHAN_INFO_EVENTID.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219122
-Fixes: 1e4134610d93 ("wifi: ath9k: use IS_ERR() with debugfs_create_dir()")
-Fixes: 6edb4ba6fb5b ("wifi: ath9k: fix parameter check in ath9k_init_debug()")
-Reported-by: Daniel Tobias <dan.g.tob@gmail.com>
-Tested-by: Daniel Tobias <dan.g.tob@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240805110225.19690-1-toke@toke.dk
+Link: https://patch.msgid.link/20240331183232.2158756-2-quic_kathirve@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/debug.c         | 2 --
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 1 +
+ drivers/net/wireless/ath/ath12k/wmi.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
-index d84e3ee7b5d90..bf3da631c69fd 100644
---- a/drivers/net/wireless/ath/ath9k/debug.c
-+++ b/drivers/net/wireless/ath/ath9k/debug.c
-@@ -1380,8 +1380,6 @@ int ath9k_init_debug(struct ath_hw *ah)
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index ef775af25093c..55230dd00d0c7 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -1528,6 +1528,7 @@ int ath12k_wmi_pdev_bss_chan_info_request(struct ath12k *ar,
+ 	cmd->tlv_header = ath12k_wmi_tlv_cmd_hdr(WMI_TAG_PDEV_BSS_CHAN_INFO_REQUEST,
+ 						 sizeof(*cmd));
+ 	cmd->req_type = cpu_to_le32(type);
++	cmd->pdev_id = cpu_to_le32(ar->pdev->pdev_id);
  
- 	sc->debug.debugfs_phy = debugfs_create_dir("ath9k",
- 						   sc->hw->wiphy->debugfsdir);
--	if (IS_ERR(sc->debug.debugfs_phy))
--		return -ENOMEM;
+ 	ath12k_dbg(ar->ab, ATH12K_DBG_WMI,
+ 		   "WMI bss chan info req type %d\n", type);
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index 742fe0b36cf20..e26fe504ce28b 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -3104,6 +3104,7 @@ struct wmi_pdev_bss_chan_info_req_cmd {
+ 	__le32 tlv_header;
+ 	/* ref wmi_bss_chan_info_req_type */
+ 	__le32 req_type;
++	__le32 pdev_id;
+ } __packed;
  
- #ifdef CONFIG_ATH_DEBUG
- 	debugfs_create_file("debug", 0600, sc->debug.debugfs_phy,
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index f7c6d9bc93119..9437d69877cc5 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -486,8 +486,6 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
- 
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (IS_ERR(priv->debug.debugfs_phy))
--		return -ENOMEM;
- 
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
- 
+ struct wmi_ap_ps_peer_cmd {
 -- 
 2.43.0
 
