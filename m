@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02FB1D0BBC;
-	Wed,  2 Oct 2024 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B642F1D0792;
+	Wed,  2 Oct 2024 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880143; cv=none; b=aTwNl8nwXXwkO/bJjAHYx+mn0+8vC/IViHq6XZNaOGZQcqZnELMegwuFzmHg8zUDlhhYBDU5EFg4OcK9Y2uLXr5Hh72rBUhbuYnW4/9xWh/q4zjJAvFTWoHcWLxJ9aEr4crAVSrM2vjC1OPTLRfw7mcK1Ze/TOPd0t4yQFidyeo=
+	t=1727880146; cv=none; b=lC0udt8XM0QIKaIwa3Wj896KDgxkKc6ZF88IGcqKjLy977/5JpYQPWqxw8Nee5NIdfx5dGUcXEU3ZX+kmQ8fgatKpTIY/frExUieoNf+pPnrOgrcavXjRywKIWPEuiFIaYchwBUUUJ7cp7nkHqozavdTpXJresYV6rZ/TzJwW28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880143; c=relaxed/simple;
-	bh=YtbwWg4E9AYeaLf5e6rHGYcASo/3Yll+B1GYuWLzj8Y=;
+	s=arc-20240116; t=1727880146; c=relaxed/simple;
+	bh=FxSJCWH62K/MtQDMOq7E6QfvVPtKqejAx/nq+Dp0nvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7Rc/DJQwshmAplwSUVmS+m8mfXp7SqZey5TtNXwy+l39H0d/WD/0EHzAFiqdb4+AAKgbwyMxRYxdfNXxh+oHBxbHTkBxKEoONZpNE8c1Oy1Qr0iTrbjAanlbRK3osnJfcCsWaot8vh26IkIq2Xeywi6NhOiW/5Vj4bVZgMC9Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH3sowOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UXWLEZBRg3qvvEBFI946j9Osep2y3208j0JS2umCB6NvjGQU8HDNHL7hdL6e+Scoj+F7r5Mxo3DsEWfDReVGm5NnihKzPkieSXlEeIpP823SP2yW45YcCQ9/ADf8Er+m91BPu0ns6VylUVlFpPFnGLvlYwJlJvZgEvt3ORECh5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01hepeKT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH3sowOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D35C4CECD;
-	Wed,  2 Oct 2024 14:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01hepeKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409B4C4CEC2;
+	Wed,  2 Oct 2024 14:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880143;
-	bh=YtbwWg4E9AYeaLf5e6rHGYcASo/3Yll+B1GYuWLzj8Y=;
+	s=korg; t=1727880146;
+	bh=FxSJCWH62K/MtQDMOq7E6QfvVPtKqejAx/nq+Dp0nvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GH3sowOlGrzVIBmNz7+GC0kLlvlPqiAsOPkpbOvxSZGv3k4IXOg6pSaDBsqWUoyfs
-	 XiQJdOjdEw/l1PSDZgUez+wq4qaEvSyFZhPi/tiThKAHgvzwKwe6ncLDWh/feewToP
-	 Yvw0UbdyveJGa6Fhs4h3cF09CcDZYeTvVz09TqdQ=
+	b=01hepeKT6GPoizfxCbfa9yqS+6VEEl3qW3Ms32ioxgVvNMNFVzA+UpWztij2bvRil
+	 7V481ahckEz8DsLk6NEwXJ9MglShqcc05p5jRd83LlaQWoAL/6c44zKurKhK/0z5rM
+	 wNOatvDGTmNPhSAg2A3BdVm1+qm5BGz9VyW/IO4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 358/538] iio: magnetometer: ak8975: Convert enum->pointer for data in the match tables
-Date: Wed,  2 Oct 2024 14:59:57 +0200
-Message-ID: <20241002125806.558478478@linuxfoundation.org>
+Subject: [PATCH 6.6 332/538] crypto: caam - Pad SG length when allocating hash edesc
+Date: Wed,  2 Oct 2024 14:59:31 +0200
+Message-ID: <20241002125805.536773284@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,140 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 4f9ea93afde190a0f906ee624fc9a45cf784551b ]
+[ Upstream commit 5124bc96162667766f6120b19f57a640c2eccb2a ]
 
-Convert enum->pointer for data in the match tables to simplify the probe()
-by replacing device_get_match_data() and i2c_client_get_device_id by
-i2c_get_match_data() as we have similar I2C, ACPI and DT matching table.
+Because hardware will read in multiples of 4 SG entries, ensure
+the allocated length is always padded.  This was already done
+by some callers of ahash_edesc_alloc, but ahash_digest was conspicuously
+missing.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230818075600.24277-2-biju.das.jz@bp.renesas.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: da6e3160df23 ("iio: magnetometer: ak8975: drop incorrect AK09116 compatible")
+In any case, doing it in the allocation function ensures that the
+memory is always there.
+
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Fixes: a5e5c13398f3 ("crypto: caam - fix S/G table passing page boundary")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/ak8975.c | 75 +++++++++++++------------------
- 1 file changed, 30 insertions(+), 45 deletions(-)
+ drivers/crypto/caam/caamhash.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
-index eb706d0bf70bc..104798549de11 100644
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -813,13 +813,13 @@ static const struct iio_info ak8975_info = {
- };
+diff --git a/drivers/crypto/caam/caamhash.c b/drivers/crypto/caam/caamhash.c
+index 290c8500c247f..65785dc5b73b2 100644
+--- a/drivers/crypto/caam/caamhash.c
++++ b/drivers/crypto/caam/caamhash.c
+@@ -708,6 +708,7 @@ static struct ahash_edesc *ahash_edesc_alloc(struct ahash_request *req,
+ 		       GFP_KERNEL : GFP_ATOMIC;
+ 	struct ahash_edesc *edesc;
  
- static const struct acpi_device_id ak_acpi_match[] = {
--	{"AK8975", AK8975},
--	{"AK8963", AK8963},
--	{"INVN6500", AK8963},
--	{"AK009911", AK09911},
--	{"AK09911", AK09911},
--	{"AKM9911", AK09911},
--	{"AK09912", AK09912},
-+	{"AK8975", (kernel_ulong_t)&ak_def_array[AK8975] },
-+	{"AK8963", (kernel_ulong_t)&ak_def_array[AK8963] },
-+	{"INVN6500", (kernel_ulong_t)&ak_def_array[AK8963] },
-+	{"AK009911", (kernel_ulong_t)&ak_def_array[AK09911] },
-+	{"AK09911", (kernel_ulong_t)&ak_def_array[AK09911] },
-+	{"AKM9911", (kernel_ulong_t)&ak_def_array[AK09911] },
-+	{"AK09912", (kernel_ulong_t)&ak_def_array[AK09912] },
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, ak_acpi_match);
-@@ -883,10 +883,7 @@ static int ak8975_probe(struct i2c_client *client)
- 	struct iio_dev *indio_dev;
- 	struct gpio_desc *eoc_gpiod;
- 	struct gpio_desc *reset_gpiod;
--	const void *match;
--	unsigned int i;
- 	int err;
--	enum asahi_compass_chipset chipset;
- 	const char *name = NULL;
- 
- 	/*
-@@ -928,27 +925,15 @@ static int ak8975_probe(struct i2c_client *client)
- 		return err;
- 
- 	/* id will be NULL when enumerated via ACPI */
--	match = device_get_match_data(&client->dev);
--	if (match) {
--		chipset = (uintptr_t)match;
--		name = dev_name(&client->dev);
--	} else if (id) {
--		chipset = (enum asahi_compass_chipset)(id->driver_data);
--		name = id->name;
--	} else
--		return -ENOSYS;
--
--	for (i = 0; i < ARRAY_SIZE(ak_def_array); i++)
--		if (ak_def_array[i].type == chipset)
--			break;
--
--	if (i == ARRAY_SIZE(ak_def_array)) {
--		dev_err(&client->dev, "AKM device type unsupported: %d\n",
--			chipset);
-+	data->def = i2c_get_match_data(client);
-+	if (!data->def)
- 		return -ENODEV;
--	}
- 
--	data->def = &ak_def_array[i];
-+	/* If enumerated via firmware node, fix the ABI */
-+	if (dev_fwnode(&client->dev))
-+		name = dev_name(&client->dev);
-+	else
-+		name = id->name;
- 
- 	/* Fetch the regulators */
- 	data->vdd = devm_regulator_get(&client->dev, "vdd");
-@@ -1077,28 +1062,28 @@ static DEFINE_RUNTIME_DEV_PM_OPS(ak8975_dev_pm_ops, ak8975_runtime_suspend,
- 				 ak8975_runtime_resume, NULL);
- 
- static const struct i2c_device_id ak8975_id[] = {
--	{"ak8975", AK8975},
--	{"ak8963", AK8963},
--	{"AK8963", AK8963},
--	{"ak09911", AK09911},
--	{"ak09912", AK09912},
--	{"ak09916", AK09916},
-+	{"ak8975", (kernel_ulong_t)&ak_def_array[AK8975] },
-+	{"ak8963", (kernel_ulong_t)&ak_def_array[AK8963] },
-+	{"AK8963", (kernel_ulong_t)&ak_def_array[AK8963] },
-+	{"ak09911", (kernel_ulong_t)&ak_def_array[AK09911] },
-+	{"ak09912", (kernel_ulong_t)&ak_def_array[AK09912] },
-+	{"ak09916", (kernel_ulong_t)&ak_def_array[AK09916] },
- 	{}
- };
- 
- MODULE_DEVICE_TABLE(i2c, ak8975_id);
- 
- static const struct of_device_id ak8975_of_match[] = {
--	{ .compatible = "asahi-kasei,ak8975", },
--	{ .compatible = "ak8975", },
--	{ .compatible = "asahi-kasei,ak8963", },
--	{ .compatible = "ak8963", },
--	{ .compatible = "asahi-kasei,ak09911", },
--	{ .compatible = "ak09911", },
--	{ .compatible = "asahi-kasei,ak09912", },
--	{ .compatible = "ak09912", },
--	{ .compatible = "asahi-kasei,ak09916", },
--	{ .compatible = "ak09916", },
-+	{ .compatible = "asahi-kasei,ak8975", .data = &ak_def_array[AK8975] },
-+	{ .compatible = "ak8975", .data = &ak_def_array[AK8975] },
-+	{ .compatible = "asahi-kasei,ak8963", .data = &ak_def_array[AK8963] },
-+	{ .compatible = "ak8963", .data = &ak_def_array[AK8963] },
-+	{ .compatible = "asahi-kasei,ak09911", .data = &ak_def_array[AK09911] },
-+	{ .compatible = "ak09911", .data = &ak_def_array[AK09911] },
-+	{ .compatible = "asahi-kasei,ak09912", .data = &ak_def_array[AK09912] },
-+	{ .compatible = "ak09912", .data = &ak_def_array[AK09912] },
-+	{ .compatible = "asahi-kasei,ak09916", .data = &ak_def_array[AK09916] },
-+	{ .compatible = "ak09916", .data = &ak_def_array[AK09916] },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, ak8975_of_match);
++	sg_num = pad_sg_nents(sg_num);
+ 	edesc = kzalloc(struct_size(edesc, sec4_sg, sg_num), flags);
+ 	if (!edesc)
+ 		return NULL;
 -- 
 2.43.0
 
