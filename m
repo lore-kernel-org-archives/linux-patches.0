@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC5B1EA80;
-	Wed,  2 Oct 2024 14:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3121D172B;
+	Wed,  2 Oct 2024 14:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880199; cv=none; b=gJbk9sYmP3qV/0olPl7wQK6gb65t79Z3s8AybqknS5eUVx9zDGHUvo54cw9SNMah/AO9Bzx5z3kneHnzEI/DKl4O56TTzhTo5DZp4HNOGfHxhIdQwHUOUwPvS0s6LPf8d5SeFMytqt6rrobuLOACw5SRIxcP3BnUNSE5FXrjoqA=
+	t=1727880202; cv=none; b=f40k9v4faXByJlpVHLquTdUweExXx1iVXw0+psvwXX0gTBymZBOdA3yx+WX87qXgwqzySxFPR1o4DFWlZXAVfW0dFemda0pM6/ctXVZPvbClssJV2x78Xcf/IuiZ+Mjt9n8jEDXl50eIuJZ9KOjZuPyNRrIaYDWreDxEp20nMx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880199; c=relaxed/simple;
-	bh=44Qk29Rq6y1fkUBd4/KfB5dHztCg2AsXPRpd28f213w=;
+	s=arc-20240116; t=1727880202; c=relaxed/simple;
+	bh=eKcb/qe3V8zO0g5TfZqWygzTuNtGqidhWF6Dr47bQ84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5FfRupMBspaL99QCwBeIQKdbQU7yoLFj1AlA4/f/MVV5Vmu0fXhyTRWY4ZkZYb2zF/3aq8cJydIsRLWE+a2u1DfUtB1Jn1vkpmuD0CYSMRn5BkHldH/3L+vnEwPxxevolN1w0I8BpwIQKuAbTJTelsewC7XFdzmwvDem3hLVls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsB5ZP0K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8GQ1yUuMGk0tk16GEAIVLXf+JhnRycBVjOfIgWCWXeyh3Xml6U2JLlUxbEiO2ezkBMaHR7Xdx41h0jHeGqjtSJFjbhFF91O3WVjrN1A49qAfQhDFSsVfsaUMDFgXtRVY3RrZ1ooeugAMBC2Nlqfjd4l9k7l+pB7XbllRe9K4z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXo1K1sj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsB5ZP0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7389C4CEC2;
-	Wed,  2 Oct 2024 14:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXo1K1sj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94D6C4CEC2;
+	Wed,  2 Oct 2024 14:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880199;
-	bh=44Qk29Rq6y1fkUBd4/KfB5dHztCg2AsXPRpd28f213w=;
+	s=korg; t=1727880202;
+	bh=eKcb/qe3V8zO0g5TfZqWygzTuNtGqidhWF6Dr47bQ84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsB5ZP0K6x96291m3/9EJMHiu83FyjNm/G0nVEDzB5K8wdZUmFlpCBVQPeOar/MDM
-	 P42FHHPRVmNDoaG+M2z1AZlVBRGe51P//n/ojn82xlq9jSJxJZ4QihAKEseaL3xcQl
-	 owfAJK5c/YV+hJlOcxcsgSnulwYREV6HxGYQd46o=
+	b=TXo1K1sjNYmAQhkv36DNmWkn70I3B6JWIsF3b52H5q3SOHWSrMMJXuH6LnzUE3hpV
+	 +f/KE9KGFHSS8+wrF8V2R9nHuZqHroF4KGU9SalkNL5sJme6UHzUSSLonbmxbmOC+T
+	 pU+LJm6Pln6EueSvv2sHeTB3Xwd+nY2EKFr0+Xe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Furong Xu <0x1207@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 378/538] net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled
-Date: Wed,  2 Oct 2024 15:00:17 +0200
-Message-ID: <20241002125807.351975150@linuxfoundation.org>
+Subject: [PATCH 6.6 379/538] netfilter: nf_tables: Keep deleted flowtable hooks until after RCU
+Date: Wed,  2 Oct 2024 15:00:18 +0200
+Message-ID: <20241002125807.391493967@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit b514c47ebf41a6536551ed28a05758036e6eca7c ]
+[ Upstream commit 642c89c475419b4d0c0d90e29d9c1a0e4351f379 ]
 
-Commit 5fabb01207a2 ("net: stmmac: Add initial XDP support") sets
-PP_FLAG_DMA_SYNC_DEV flag for page_pool unconditionally,
-page_pool_recycle_direct() will call page_pool_dma_sync_for_device()
-on every page even the page is not going to be reused by XDP program.
+Documentation of list_del_rcu() warns callers to not immediately free
+the deleted list item. While it seems not necessary to use the
+RCU-variant of list_del() here in the first place, doing so seems to
+require calling kfree_rcu() on the deleted item as well.
 
-When XDP is not enabled, the page which holds the received buffer
-will be recycled once the buffer is copied into new SKB by
-skb_copy_to_linear_data(), then the MAC core will never reuse this
-page any longer. Always setting PP_FLAG_DMA_SYNC_DEV wastes CPU cycles
-on unnecessary calling of page_pool_dma_sync_for_device().
-
-After this patch, up to 9% noticeable performance improvement was observed
-on certain platforms.
-
-Fixes: 5fabb01207a2 ("net: stmmac: Add initial XDP support")
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/20240919121028.1348023-1-0x1207@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3f0465a9ef02 ("netfilter: nf_tables: dynamically allocate hooks per net_device in flowtables")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ net/netfilter/nf_tables_api.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index d6167a7b19f21..89a80e3e8bb88 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2018,7 +2018,7 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
- 	rx_q->queue_index = queue;
- 	rx_q->priv_data = priv;
- 
--	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
-+	pp_params.flags = PP_FLAG_DMA_MAP | (xdp_prog ? PP_FLAG_DMA_SYNC_DEV : 0);
- 	pp_params.pool_size = dma_conf->dma_rx_size;
- 	num_pages = DIV_ROUND_UP(dma_conf->dma_buf_sz, PAGE_SIZE);
- 	pp_params.order = ilog2(num_pages);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 6b6c16c5fc9ae..935e953b8e1bf 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -8943,7 +8943,7 @@ static void nf_tables_flowtable_destroy(struct nft_flowtable *flowtable)
+ 		flowtable->data.type->setup(&flowtable->data, hook->ops.dev,
+ 					    FLOW_BLOCK_UNBIND);
+ 		list_del_rcu(&hook->list);
+-		kfree(hook);
++		kfree_rcu(hook, rcu);
+ 	}
+ 	kfree(flowtable->name);
+ 	module_put(flowtable->data.type->owner);
 -- 
 2.43.0
 
