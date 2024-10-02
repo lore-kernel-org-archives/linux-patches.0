@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10B31D0F41;
-	Wed,  2 Oct 2024 14:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707951D278E;
+	Wed,  2 Oct 2024 14:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877626; cv=none; b=qLLcn1389ZBOpdb+DtJpigczIsKsJ9V83btE/d6ibCACGdUDZPkv9Im7e5PPqN63VdTACJZX+53Njs/xKLzEMkr1LV4QET6O2gt/7QMsrW2xk0F4GSbXcAYNy1P7jjXS7eglKoFoqRNME5reIRhMC1H9q2sES7D7hF/+Chuf7KU=
+	t=1727877628; cv=none; b=b4tOxj97xmGUFlDeB8pQGMr888anPVbiSecFJaXiQPd1WeFtiySAxZJWAxHziTR0YeNlmxkwvjPawg/Z71aRRrNjVqdF55CNe4UkDgjHudXds9vJjT3plLQqitIoiPYUc3VSKV3TS0nEQeYr53OJEkdhoW+6SPzo+WfQNlyGIRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877626; c=relaxed/simple;
-	bh=4JL2rOLu6x6kBlN1a+XuwuM4b38vayZyj9plswc0bvw=;
+	s=arc-20240116; t=1727877628; c=relaxed/simple;
+	bh=f5/wgYfeRLqQ38C4qHvRQ5oiAt2xDHWKA121s4upv0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6TEvSVLE59H1mY/UnkM2QO2tp/ZlCB/ALpIhuIM0Unafuxne/pxcqTORyk4zLKtzJmasKZQ/vxYw0xkheuzvxuxlHu9EQYQIxCpCAZNUrIs/p+rXkeT2rdKr9dxBpejAvVJX6odMdf7hVOjwSJN4H1Z7utpGvTnh1M+WQuNH58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm1gXXDv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o02SdCYKot7XzocgxLacuZyXXjIHqc+AqnzauAOycWac6VwHl/DRWtfJN8a+0bHIhBUagi3EkRJSLm29TGrr6GZwnD5esPmMg7l5g1QuPNGY6Is5AXbvBir43C4uVQbNbu1DogFzBH5pzQ+sClsI24T6FL9hCjjXud/UnoOJqvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhIpQTWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm1gXXDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1595DC4CEC5;
-	Wed,  2 Oct 2024 14:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhIpQTWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDD4C4CEC5;
+	Wed,  2 Oct 2024 14:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877625;
-	bh=4JL2rOLu6x6kBlN1a+XuwuM4b38vayZyj9plswc0bvw=;
+	s=korg; t=1727877628;
+	bh=f5/wgYfeRLqQ38C4qHvRQ5oiAt2xDHWKA121s4upv0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm1gXXDvxNJI1qNPqmFTFP8Z7Pm2qGz5Fo5VjRR/U6WsnqnTw35Js4///FD7HLQOk
-	 G5qhVufz34YjSCTVga3jnB2uywuEAnJIf/k7ovv+OsG/rsKhaZOfWdqE+haBlu8XN/
-	 2r0uQgNh1HhFKEWg6HEpbM6h19Va/+6Z4U9uQZic=
+	b=EhIpQTWVlrMHT9d/I0QQWXogStjxTmiMU0+ZqEEjoCYbKf1XYC2a2t4NS1ZVbwRSD
+	 MJWV8g1eiQ9yT3OOSHYink7vsLnkDnOt7/40BUerAERNKIQb+s23ZF6dSx4QZj/ztj
+	 XUwwVkQ9vRRCqDJRvV0PR8ONoA6lLv2PTEzXenc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dries De Winter <ddewinter@synamedia.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 097/634] xsk: fix batch alloc API on non-coherent systems
-Date: Wed,  2 Oct 2024 14:53:17 +0200
-Message-ID: <20241002125814.938605417@linuxfoundation.org>
+Subject: [PATCH 6.10 132/634] arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations
+Date: Wed,  2 Oct 2024 14:53:52 +0200
+Message-ID: <20241002125816.319825086@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,80 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 4144a1059b47e821c82c3c82eb23a4c7312dce3a ]
+[ Upstream commit 1a314099b7559690fe23cdf3300dfff6e830ecb1 ]
 
-In cases when synchronizing DMA operations is necessary,
-xsk_buff_alloc_batch() returns a single buffer instead of the requested
-count. This puts the pressure on drivers that use batch API as they have
-to check for this corner case on their side and take care of allocations
-by themselves, which feels counter productive. Let us improve the core
-by looping over xp_alloc() @max times when slow path needs to be taken.
+The DMA carveout for the C6x core 0 is at 0xa6000000 and core 1 is at
+0xa7000000. These are reversed in DT. While both C6x can access either
+region, so this is not normally a problem, but if we start restricting
+the memory each core can access (such as with firewalls) the cores
+accessing the regions for the wrong core will not work. Fix this here.
 
-Another issue with current interface, as spotted and fixed by Dries, was
-that when driver called xsk_buff_alloc_batch() with @max == 0, for slow
-path case it still allocated and returned a single buffer, which should
-not happen. By introducing the logic from first paragraph we kill two
-birds with one stone and address this problem as well.
-
-Fixes: 47e4075df300 ("xsk: Batched buffer allocation for the pool")
-Reported-and-tested-by: Dries De Winter <ddewinter@synamedia.com>
-Co-developed-by: Dries De Winter <ddewinter@synamedia.com>
-Signed-off-by: Dries De Winter <ddewinter@synamedia.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20240911191019.296480-1-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fae14a1cb8dd ("arm64: dts: ti: Add k3-j721e-beagleboneai64")
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20240801181232.55027-2-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_buff_pool.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index c0e0204b96304..b0f24ebd05f0b 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -623,20 +623,31 @@ static u32 xp_alloc_reused(struct xsk_buff_pool *pool, struct xdp_buff **xdp, u3
- 	return nb_entries;
- }
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+index a2925555fe818..fb899c99753ec 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+@@ -123,7 +123,7 @@
+ 			no-map;
+ 		};
  
--u32 xp_alloc_batch(struct xsk_buff_pool *pool, struct xdp_buff **xdp, u32 max)
-+static u32 xp_alloc_slow(struct xsk_buff_pool *pool, struct xdp_buff **xdp,
-+			 u32 max)
- {
--	u32 nb_entries1 = 0, nb_entries2;
-+	int i;
+-		c66_1_dma_memory_region: c66-dma-memory@a6000000 {
++		c66_0_dma_memory_region: c66-dma-memory@a6000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0x00 0xa6000000 0x00 0x100000>;
+ 			no-map;
+@@ -135,7 +135,7 @@
+ 			no-map;
+ 		};
  
--	if (unlikely(pool->dev && dma_dev_need_sync(pool->dev))) {
-+	for (i = 0; i < max; i++) {
- 		struct xdp_buff *buff;
- 
--		/* Slow path */
- 		buff = xp_alloc(pool);
--		if (buff)
--			*xdp = buff;
--		return !!buff;
-+		if (unlikely(!buff))
-+			return i;
-+		*xdp = buff;
-+		xdp++;
- 	}
- 
-+	return max;
-+}
-+
-+u32 xp_alloc_batch(struct xsk_buff_pool *pool, struct xdp_buff **xdp, u32 max)
-+{
-+	u32 nb_entries1 = 0, nb_entries2;
-+
-+	if (unlikely(pool->dev && dma_dev_need_sync(pool->dev)))
-+		return xp_alloc_slow(pool, xdp, max);
-+
- 	if (unlikely(pool->free_list_cnt)) {
- 		nb_entries1 = xp_alloc_reused(pool, xdp, max);
- 		if (nb_entries1 == max)
+-		c66_0_dma_memory_region: c66-dma-memory@a7000000 {
++		c66_1_dma_memory_region: c66-dma-memory@a7000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0x00 0xa7000000 0x00 0x100000>;
+ 			no-map;
 -- 
 2.43.0
 
