@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636D21D1E66;
-	Wed,  2 Oct 2024 14:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24C1D04BE;
+	Wed,  2 Oct 2024 14:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877782; cv=none; b=TW81D2z7M+XzvI4RDlZMNePWOOrgl9tCeu3hpsyXHEUMUqSvZD1HQhKcPk/1Pl/Bt17QcIsXsHNEcU4PTXU/zsAlLweAwTT0qeKZxixrQjJ7nxlOPYboT5Q1OwWpC+LRiSwHYShvRsGXi+T4LuKKnqu4IVbm2N2BLzEfF/Ya2uA=
+	t=1727877785; cv=none; b=tNWGZvCFNXizwbaWGBCYUoljQTyi8AwbGsHXaQzKMeyHnjxNc8BPg8qM1S7lhs/wS14wdt5iH44HKaT3HAWfybck+/Lom9y4vx74/V93GZ5ZLYOyKLpKIfEt9jlYR4NHcup/SDCbhrtfY71jIj9scBnca5NST3yqC0m6iYQaP/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877782; c=relaxed/simple;
-	bh=EEwXYWXMWpjmbRkaVsEmwC2gTCR5N/x4WTP+2ANGVfg=;
+	s=arc-20240116; t=1727877785; c=relaxed/simple;
+	bh=W/VsAF18/Gz1pjNiRRpZFmSip3NWgw/mRjlT8aSGDY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbG0jX7i4ARG46e8cM1j/KJ5gY7RIVojNx/UPHc9Ni0WQbmhoNI++63EmRNOR8pAbr9qAyLBSXOCh4YL6dJ2Wa7Vpwjq3KBPP1vRKXN6w/A/vnTp2XknnwDkUBzUT4fhpzM1fr+Sa/qwl8g3XPQfriAWj2mNVc3SsudkNXIhGo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No2TwwGa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNDvCv6iR8oz2170nZWJPeAvONFOzEZUQ4q4BkUVAfTmJEvod2zdue5Sri32S6QKxsLRCJZ2uImkbcbTP0oVUUOAjL/qtVJ6PCEvDGkBmV+7vM47f0LfZIRsgHfrYuLjNrYm23FX+LrE7VFmdvkbIPJ6wWR6KKdZJ0CE6oomY2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1IwC9gx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No2TwwGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5D5C4CECD;
-	Wed,  2 Oct 2024 14:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1IwC9gx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFD4C4CEC2;
+	Wed,  2 Oct 2024 14:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877782;
-	bh=EEwXYWXMWpjmbRkaVsEmwC2gTCR5N/x4WTP+2ANGVfg=;
+	s=korg; t=1727877785;
+	bh=W/VsAF18/Gz1pjNiRRpZFmSip3NWgw/mRjlT8aSGDY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=No2TwwGaYZk2wldLBvwmE6Ug6b3RLdwhsujviDcmSdWU1/F0uoM7PYlGhEvk+9Bc3
-	 4ZtDCArBRRIRoWsiH6tB1t+R6nBQQYmQFgqK1JrrzkF6L7So/zKJaGFEYzrZOm53w/
-	 uNAX/t1SC4K46Lnpgeb86+Uc1N24tC/Qwlfa6/pk=
+	b=g1IwC9gxNjMKoQPxirAlgCvbjxs5/yVbTVD/YMdl0XBHfRQWC6LbaM2X6sxTycRQC
+	 TzibdeP9L/SeLCyFrMhuVIfR5H24kwgqw1QDFZYBi9jXxhSBa1z4s7qmqmYJVr7ag3
+	 zItoOekGk5ziafgj1CvENSUvQt/jLyyKXwnl6ODY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 192/634] scsi: elx: libefc: Fix potential use after free in efc_nport_vport_del()
-Date: Wed,  2 Oct 2024 14:54:52 +0200
-Message-ID: <20241002125818.683518863@linuxfoundation.org>
+Subject: [PATCH 6.10 193/634] jfs: fix out-of-bounds in dbNextAG() and diAlloc()
+Date: Wed,  2 Oct 2024 14:54:53 +0200
+Message-ID: <20241002125818.723577196@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,40 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 2e4b02fad094976763af08fec2c620f4f8edd9ae ]
+[ Upstream commit e63866a475562810500ea7f784099bfe341e761a ]
 
-The kref_put() function will call nport->release if the refcount drops to
-zero.  The nport->release release function is _efc_nport_free() which frees
-"nport".  But then we dereference "nport" on the next line which is a use
-after free.  Re-order these lines to avoid the use after free.
+In dbNextAG() , there is no check for the case where bmp->db_numag is
+greater or same than MAXAG due to a polluted image, which causes an
+out-of-bounds. Therefore, a bounds check should be added in dbMount().
 
-Fixes: fcd427303eb9 ("scsi: elx: libefc: SLI and FC PORT state machine interfaces")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/b666ab26-6581-4213-9a3d-32a9147f0399@stanley.mountain
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+And in dbNextAG(), a check for the case where agpref is greater than
+bmp->db_numag should be added, so an out-of-bounds exception should be
+prevented.
+
+Additionally, a check for the case where agno is greater or same than
+MAXAG should be added in diAlloc() to prevent out-of-bounds.
+
+Reported-by: Jeongjun Park <aha310510@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/libefc/efc_nport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 4 ++--
+ fs/jfs/jfs_imap.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/elx/libefc/efc_nport.c b/drivers/scsi/elx/libefc/efc_nport.c
-index 2e83a667901fe..1a7437f4328e8 100644
---- a/drivers/scsi/elx/libefc/efc_nport.c
-+++ b/drivers/scsi/elx/libefc/efc_nport.c
-@@ -705,9 +705,9 @@ efc_nport_vport_del(struct efc *efc, struct efc_domain *domain,
- 	spin_lock_irqsave(&efc->lock, flags);
- 	list_for_each_entry(nport, &domain->nport_list, list_entry) {
- 		if (nport->wwpn == wwpn && nport->wwnn == wwnn) {
--			kref_put(&nport->ref, nport->release);
- 			/* Shutdown this NPORT */
- 			efc_sm_post_event(&nport->sm, EFC_EVT_SHUTDOWN, NULL);
-+			kref_put(&nport->ref, nport->release);
- 			break;
- 		}
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 5713994328cbc..0625d1c0d0649 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -187,7 +187,7 @@ int dbMount(struct inode *ipbmap)
  	}
+ 
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag) {
++	if (!bmp->db_numag || bmp->db_numag >= MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
+@@ -652,7 +652,7 @@ int dbNextAG(struct inode *ipbmap)
+ 	 * average free space.
+ 	 */
+ 	for (i = 0 ; i < bmp->db_numag; i++, agpref++) {
+-		if (agpref == bmp->db_numag)
++		if (agpref >= bmp->db_numag)
+ 			agpref = 0;
+ 
+ 		if (atomic_read(&bmp->db_active[agpref]))
+diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
+index 1407feccbc2d0..a360b24ed320c 100644
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -1360,7 +1360,7 @@ int diAlloc(struct inode *pip, bool dir, struct inode *ip)
+ 	/* get the ag number of this iag */
+ 	agno = BLKTOAG(JFS_IP(pip)->agstart, JFS_SBI(pip->i_sb));
+ 	dn_numag = JFS_SBI(pip->i_sb)->bmap->db_numag;
+-	if (agno < 0 || agno > dn_numag)
++	if (agno < 0 || agno > dn_numag || agno >= MAXAG)
+ 		return -EIO;
+ 
+ 	if (atomic_read(&JFS_SBI(pip->i_sb)->bmap->db_active[agno])) {
 -- 
 2.43.0
 
