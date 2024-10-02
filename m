@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358DF1974F4;
-	Wed,  2 Oct 2024 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE41974F4;
+	Wed,  2 Oct 2024 14:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879139; cv=none; b=h4qiuYfLvhqliAkiavEN9QmEtF1vDGwagNrnEj2y+SWIh6ptQy8DLNZkUUzTJPLYLiIZAgedq6W1wCOhNmaMnqqPShhlFiw7TCskx9+8kUcCR/eOVAyQDCluKOdzp9hVR7WTEw96QeZYis0joSYTTSUUwV3DY7k3Uwjg3lch0q0=
+	t=1727879142; cv=none; b=COhsnbmLWn8Gid47gOM+/iadfm4kKtA7QNWEfWhTrw0XGk2f2Khm8gtMG4gsvuCG3g6XqNOYvukxVHw2gl5cvWAor0cjgi9neQYz/1Fw/3yjiPYpzse+xyH48V0ZEHqdpEJH3oa/P6lVncmISXq28zZg7qs48RFAoZ3cNba71Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879139; c=relaxed/simple;
-	bh=gi6WZXR5qlRUNqwWxijwY6scloadbk6T69lGAQOnF6E=;
+	s=arc-20240116; t=1727879142; c=relaxed/simple;
+	bh=7FKeW/rhC3UUV2Qjn93iLvCjZhu0Hzuz+KdowheLKjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S41Bt4BhLtSb1dWv9qijfU1mK13aXkLg65/2Tdopmi9RKT95n4vUAkn7kVNlc9sdg3/Y8KGsHIZqLzFHrQkqnKMj4lcV7kmYbJPEeYE3T4TokmmnNy9Y5H1BQBcvfEgGVsbUEWUa7HYMlkOV0yIcYY0AboSwH/wLUZChWC0FdP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flbfgz8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJIOQJqJk4Z4zDTBbg5DGUvP7eztM/8BiHwpFdANqDGfV1JMeVFkyj88Hw5Y7KkpeAyFh1F+igEsUhK2u9ULaLbDq6nHiBuI73MiLpdOF3DgFxXOuEhogEMwfC9rDheMl8hyIT9KRDHBwLOBh+qbtJvLZ6gZuNsRVSIpkQFmoIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+XUHJrQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flbfgz8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50EFC4CEC2;
-	Wed,  2 Oct 2024 14:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+XUHJrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D29C4CEC2;
+	Wed,  2 Oct 2024 14:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879139;
-	bh=gi6WZXR5qlRUNqwWxijwY6scloadbk6T69lGAQOnF6E=;
+	s=korg; t=1727879142;
+	bh=7FKeW/rhC3UUV2Qjn93iLvCjZhu0Hzuz+KdowheLKjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Flbfgz8YHDhgW9WLOZULIpTEx+5hFtjZ5ZAfJC3w50LfwhibAXZTNqJ11J2luYnqW
-	 ce4Y97RBT5O7hSk/APOhm0tfk6UvqTB3sOkcNliimXuX90qk3ugyF7wC99wsQLzi2r
-	 DqZ14LEvqMbKmd+RsHyArKRARz66xVOAFPnclvk8=
+	b=b+XUHJrQeZ1DjUrl0Z0OjW88U06NqOH3gHMw8JEbFjle+iIRd9GjNXAu0p14qeCOO
+	 anE5g9QLqxWzGKaCdUXWM4Og0+J+aOcNx5bhiLb8MTVDlD/DmoEUUxWndAFCkgCicN
+	 XHP85MbNys8UmBEMUEGvyE62gV8tZnaJBrhVt7JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <anup@brainfault.org>,
+	Olaf Hering <olaf@aepfle.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/538] RISC-V: KVM: Fix to allow hpmcounter31 from the guest
-Date: Wed,  2 Oct 2024 14:54:16 +0200
-Message-ID: <20241002125752.684939736@linuxfoundation.org>
+Subject: [PATCH 6.6 018/538] mount: handle OOM on mnt_warn_timestamp_expiry
+Date: Wed,  2 Oct 2024 14:54:17 +0200
+Message-ID: <20241002125752.724885100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,42 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@rivosinc.com>
+From: Olaf Hering <olaf@aepfle.de>
 
-[ Upstream commit 5aa09297a3dcc798d038bd7436f8c90f664045a6 ]
+[ Upstream commit 4bcda1eaf184e308f07f9c61d3a535f9ce477ce8 ]
 
-The csr_fun defines a count parameter which defines the total number
-CSRs emulated in KVM starting from the base. This value should be
-equal to total number of counters possible for trap/emulation (32).
+If no page could be allocated, an error pointer was used as format
+string in pr_warn.
 
-Fixes: a9ac6c37521f ("RISC-V: KVM: Implement trap & emulate for hpmcounters")
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20240816-kvm_pmu_fixes-v1-2-cdfce386dd93@rivosinc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Rearrange the code to return early in case of OOM. Also add a check
+for the return value of d_path.
+
+Fixes: f8b92ba67c5d ("mount: Add mount warning for impending timestamp expiry")
+Signed-off-by: Olaf Hering <olaf@aepfle.de>
+Link: https://lore.kernel.org/r/20240730085856.32385-1-olaf@aepfle.de
+[brauner: rewrite commit and commit message]
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/kvm_vcpu_pmu.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/namespace.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kvm_vcpu_pmu.h b/arch/riscv/include/asm/kvm_vcpu_pmu.h
-index 6823271bce322..a50a1d23523fe 100644
---- a/arch/riscv/include/asm/kvm_vcpu_pmu.h
-+++ b/arch/riscv/include/asm/kvm_vcpu_pmu.h
-@@ -58,11 +58,11 @@ struct kvm_pmu {
+diff --git a/fs/namespace.c b/fs/namespace.c
+index e6c61d4997ccf..b4385e2413d59 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2796,8 +2796,15 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
+ 	if (!__mnt_is_readonly(mnt) &&
+ 	   (!(sb->s_iflags & SB_I_TS_EXPIRY_WARNED)) &&
+ 	   (ktime_get_real_seconds() + TIME_UPTIME_SEC_MAX > sb->s_time_max)) {
+-		char *buf = (char *)__get_free_page(GFP_KERNEL);
+-		char *mntpath = buf ? d_path(mountpoint, buf, PAGE_SIZE) : ERR_PTR(-ENOMEM);
++		char *buf, *mntpath;
++
++		buf = (char *)__get_free_page(GFP_KERNEL);
++		if (buf)
++			mntpath = d_path(mountpoint, buf, PAGE_SIZE);
++		else
++			mntpath = ERR_PTR(-ENOMEM);
++		if (IS_ERR(mntpath))
++			mntpath = "(unknown)";
  
- #if defined(CONFIG_32BIT)
- #define KVM_RISCV_VCPU_HPMCOUNTER_CSR_FUNCS \
--{.base = CSR_CYCLEH,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm }, \
--{.base = CSR_CYCLE,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm },
-+{.base = CSR_CYCLEH,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm }, \
-+{.base = CSR_CYCLE,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm },
- #else
- #define KVM_RISCV_VCPU_HPMCOUNTER_CSR_FUNCS \
--{.base = CSR_CYCLE,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm },
-+{.base = CSR_CYCLE,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm },
- #endif
+ 		pr_warn("%s filesystem being %s at %s supports timestamps until %ptTd (0x%llx)\n",
+ 			sb->s_type->name,
+@@ -2805,8 +2812,9 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
+ 			mntpath, &sb->s_time_max,
+ 			(unsigned long long)sb->s_time_max);
  
- int kvm_riscv_vcpu_pmu_incr_fw(struct kvm_vcpu *vcpu, unsigned long fid);
+-		free_page((unsigned long)buf);
+ 		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
++		if (buf)
++			free_page((unsigned long)buf);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
