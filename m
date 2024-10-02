@@ -1,56 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788BB1D26E3;
-	Wed,  2 Oct 2024 14:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB141D0BBE;
+	Wed,  2 Oct 2024 14:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879840; cv=none; b=CVRMQswTATxGnLT+TVY2+waO9chntUtDp/Nb+xXik3cEm28Dg8mphdSD1n4/445tjCgW4C+tQ6Sc9SpDMDcNigVVJmeOAHKmuihLLw4qm1nhwBtTRqdac1bZtGEdh7NbYZewlj3ww3IbvL9eRKmRUsvVa6WX/FLl+7MMxQXr23Q=
+	t=1727879843; cv=none; b=CGHgFRx1w7HfoCkx4l5PIrJGcUS68JJ0ziLMrxta/WynpSU1jHq+EBsJUurhFkm5HyS/1mfyv8NEv05gMGA4kqdIfZ5GXA7iSovVfkaEeccP1CwEq0hUlNiKzGCDtKLuouJIDcw7QwTPOFtV9VoUfCRkJtzy9b+1XUFl4hjsh3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879840; c=relaxed/simple;
-	bh=f32Fkn9uy5RYS1/H79l+tpJGpByw8ELLikoAOCkTHOI=;
+	s=arc-20240116; t=1727879843; c=relaxed/simple;
+	bh=D/i7FqgLfmgsVzY/rwv+zUxaJJWsUNoTiQWhomwgsaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOO0gwFyD/tw4qkfx2eZNS0b3qx2lzuy6DKcXMBQCgSGe+Q2Wpp0F82Mj79YxT85fIRCc6N0493ptwUcYQe3bJQa/GmyLROTdBT+TzIZ+eKXQVZercQUJDKACtCCc3fO5ExizeX5ZOOk/F16MwNvqbk5QoQyKZeV1zulLucAbr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU1P8wHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lr2jlKDpVa6bmAy7OvPWEwdIz/Jge5s8dpWBild2+yC7TL9o+77xRwjylREQDF4EzcxO3+CDx49VnGzunc7DoBxBa5hdXQz9HzQFvhnTuiKb7HY7amqXyTcvulMu0QAOO/ITqEoWp1eMD2YHKtNRSbPHipOFzEOyTs54ZfHZQ+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZRdEoMU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU1P8wHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8A8C4CEC2;
-	Wed,  2 Oct 2024 14:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZRdEoMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90B9C4CEC2;
+	Wed,  2 Oct 2024 14:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879840;
-	bh=f32Fkn9uy5RYS1/H79l+tpJGpByw8ELLikoAOCkTHOI=;
+	s=korg; t=1727879843;
+	bh=D/i7FqgLfmgsVzY/rwv+zUxaJJWsUNoTiQWhomwgsaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU1P8wHSdQM3nDj7LF1iEl4MnedBACck7X73KsXC5vOA4Mou6tGsvMAzHy/0AnI3y
-	 Ne/9eNMtUFJSril55DG60cvOFkZDVVUSwb0hMWkMcZSBgkrk/NNRPnSWWW2KC8eTbb
-	 SQzAuAn0Es/fv0nC72RnwU85R1jR/seCH+qpvOSc=
+	b=xZRdEoMUYRN4KqdPvWnr4T/nCvpQ1f2jiRfwnYHZQ2MVuRlGbTKgFyqNK2p/xcjAX
+	 EoaZGCwaM35ur43KME8J2CANJiKQIIaorzra1q8VeCh0qhcaPdntCIwuoZNObUsYi9
+	 O1WlRlzuRQiqV8bHsF26zY+FRGPv+/YIIlST2HF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Chaitanya S Prakash <chaitanyas.prakash@arm.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	David Ahern <dsa@cumulusnetworks.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 256/538] perf time-utils: Fix 32-bit nsec parsing
-Date: Wed,  2 Oct 2024 14:58:15 +0200
-Message-ID: <20241002125802.362280458@linuxfoundation.org>
+Subject: [PATCH 6.6 257/538] clk: imx: clk-audiomix: Correct parent clock for earc_phy and audpll
+Date: Wed,  2 Oct 2024 14:58:16 +0200
+Message-ID: <20241002125802.401073340@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -69,68 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 38e2648a81204c9fc5b4c87a8ffce93a6ed91b65 ]
+[ Upstream commit d40371a1c963db688b37826adaf5ffdafb0862a1 ]
 
-The "time utils" test fails in 32-bit builds:
-  ...
-  parse_nsec_time("18446744073.709551615")
-  Failed. ptime 4294967295709551615 expected 18446744073709551615
-  ...
+According to Reference Manual of i.MX8MP
+The parent clock of "earc_phy" is "sai_pll_out_div2",
+The parent clock of "audpll" is "osc_24m".
 
-Switch strtoul to strtoull as an unsigned long in 32-bit build isn't
-64-bits.
+Add CLK_GATE_PARENT() macro for usage of specifying parent clock.
 
-Fixes: c284d669a20d408b ("perf tools: Move parse_nsec_time to time-utils.c")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Chaitanya S Prakash <chaitanyas.prakash@arm.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Yang Jihong <yangjihong@bytedance.com>
-Link: https://lore.kernel.org/r/20240831070415.506194-3-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 6cd95f7b151c ("clk: imx: imx8mp: Add audiomix block control")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/1718350923-21392-6-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/time-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx8mp-audiomix.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/time-utils.c b/tools/perf/util/time-utils.c
-index 3024439216816..1b91ccd4d5234 100644
---- a/tools/perf/util/time-utils.c
-+++ b/tools/perf/util/time-utils.c
-@@ -20,7 +20,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
- 	u64 time_sec, time_nsec;
- 	char *end;
+diff --git a/drivers/clk/imx/clk-imx8mp-audiomix.c b/drivers/clk/imx/clk-imx8mp-audiomix.c
+index 55ed211a5e0b1..ab2a028b3027d 100644
+--- a/drivers/clk/imx/clk-imx8mp-audiomix.c
++++ b/drivers/clk/imx/clk-imx8mp-audiomix.c
+@@ -146,6 +146,15 @@ static const struct clk_parent_data clk_imx8mp_audiomix_pll_bypass_sels[] = {
+ 		PDM_SEL, 2, 0						\
+ 	}
  
--	time_sec = strtoul(str, &end, 10);
-+	time_sec = strtoull(str, &end, 10);
- 	if (*end != '.' && *end != '\0')
- 		return -1;
- 
-@@ -38,7 +38,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
- 		for (i = strlen(nsec_buf); i < 9; i++)
- 			nsec_buf[i] = '0';
- 
--		time_nsec = strtoul(nsec_buf, &end, 10);
-+		time_nsec = strtoull(nsec_buf, &end, 10);
- 		if (*end != '\0')
- 			return -1;
- 	} else
++#define CLK_GATE_PARENT(gname, cname, pname)						\
++	{								\
++		gname"_cg",						\
++		IMX8MP_CLK_AUDIOMIX_##cname,				\
++		{ .fw_name = pname, .name = pname }, NULL, 1,		\
++		CLKEN0 + 4 * !!(IMX8MP_CLK_AUDIOMIX_##cname / 32),	\
++		1, IMX8MP_CLK_AUDIOMIX_##cname % 32			\
++	}
++
+ struct clk_imx8mp_audiomix_sel {
+ 	const char			*name;
+ 	int				clkid;
+@@ -163,14 +172,14 @@ static struct clk_imx8mp_audiomix_sel sels[] = {
+ 	CLK_GATE("earc", EARC_IPG),
+ 	CLK_GATE("ocrama", OCRAMA_IPG),
+ 	CLK_GATE("aud2htx", AUD2HTX_IPG),
+-	CLK_GATE("earc_phy", EARC_PHY),
++	CLK_GATE_PARENT("earc_phy", EARC_PHY, "sai_pll_out_div2"),
+ 	CLK_GATE("sdma2", SDMA2_ROOT),
+ 	CLK_GATE("sdma3", SDMA3_ROOT),
+ 	CLK_GATE("spba2", SPBA2_ROOT),
+ 	CLK_GATE("dsp", DSP_ROOT),
+ 	CLK_GATE("dspdbg", DSPDBG_ROOT),
+ 	CLK_GATE("edma", EDMA_ROOT),
+-	CLK_GATE("audpll", AUDPLL_ROOT),
++	CLK_GATE_PARENT("audpll", AUDPLL_ROOT, "osc_24m"),
+ 	CLK_GATE("mu2", MU2_ROOT),
+ 	CLK_GATE("mu3", MU3_ROOT),
+ 	CLK_PDM,
 -- 
 2.43.0
 
