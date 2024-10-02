@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2734198837;
-	Wed,  2 Oct 2024 13:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1652198837;
+	Wed,  2 Oct 2024 13:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877447; cv=none; b=HH/uUYqrhGIdF+nkuUtaBWnaGD+ckpF+XKRGfO3XtR4nAuh9aiySAlb33qxxwPIzWjeH1nJbZOOgAQN5YnCTTd+/Z/0N63RrKO5M8cAoXxQiFyo2VgNTDp0Le+PdWR6ghTspY6izRTj8I4yJ9AaLudPlTiHWp73i/O0O2DGcOvk=
+	t=1727877450; cv=none; b=To4w/3Yv4sYveo+LvLD9LYlFP4Zf8vLWL/rndDx6exAnTQbOH0lxFov5JSAVj6OATKJ3s8dczCeuGhpqMXLBfnJ5Y9xcK6hPymhHziIKiXxDJ6Qskj4QAXk9WtmcRWoy7VbaRHOiCPOYhb4Dw2+21O2wmnPjZWpKL0M8VI2P5/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877447; c=relaxed/simple;
-	bh=RRH5zolsG2/AJC6HOJwq+zoRtUcnj564GLsOlBtNur8=;
+	s=arc-20240116; t=1727877450; c=relaxed/simple;
+	bh=oRvfH7DQkBIgGeRFNxhWwrx6+D1czkncSdY3Vxrpkgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb/NT30aI3ktp9vv3hALmwdsNrset0myy1VuRtlmGAy5oJgEE9gv1N7zEOtdJ7GTI5wu0NwEbwc/g7TbAHFQ/HaK61K4zTrBDU/8hrSMZELH0/Kg298o16KRJma/+fJBkEL5bmP8oWnHEAiOA+YQukrFZTFw/kSdm2Ow5Dsk9Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjrMjDQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fol6Q+MQp5zt4vCB8Jy3KKSK7pqJgZltjr5cWRWinrxc04ccGsth7wzDYjxDyFU3v2haulJI2h5rU/6PgX60n7xxuMrHBvRDeDihsVX0H9V1yR0p9O/oiIgJ3LaVdkZf7DazSFWzCp1UPp+rcrOeNLUo4PLSDR+pjrcboszEMAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/OOX7MO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjrMjDQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBE3C4AF0B;
-	Wed,  2 Oct 2024 13:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/OOX7MO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296B5C4AF09;
+	Wed,  2 Oct 2024 13:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877447;
-	bh=RRH5zolsG2/AJC6HOJwq+zoRtUcnj564GLsOlBtNur8=;
+	s=korg; t=1727877450;
+	bh=oRvfH7DQkBIgGeRFNxhWwrx6+D1czkncSdY3Vxrpkgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjrMjDQyyecwB7+lN3Ncu0t3IVEtwpaMh8HiJYq46Xnjd9Gjix/Hh273bM42xHm1d
-	 T2A9ickMX6jHdYXWEUTyYvwS2vB28dkuhEA/wmKH2ggZNAS+PPEFfljNq/HMuSH8aw
-	 bAzLX6BGsgV+nJwXbhQyf/Hni5GM3ESIo4aFO2kw=
+	b=f/OOX7MObJ9aY9iNhud+hLPNWdp8MkX50QoHeAquSrWw1tS8EXzSUSVUET0NqXdEc
+	 5BR02Ojo9u06E8URo5cIGwztiqwzs7Ki7K2t+Dj7/UqGNb0fR8/YcHSmLpHMoQoL6B
+	 jrZ7uL5gxK8x+O/ADdZgz5X/r0O6i/fXOZmNHosI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 082/634] wifi: cfg80211: fix two more possible UBSAN-detected off-by-one errors
-Date: Wed,  2 Oct 2024 14:53:02 +0200
-Message-ID: <20241002125814.348924505@linuxfoundation.org>
+Subject: [PATCH 6.10 065/634] wifi: mt76: mt7996: use hweight16 to get correct tx antenna
+Date: Wed,  2 Oct 2024 14:52:45 +0200
+Message-ID: <20241002125813.674122121@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 15ea13b1b1fbf6364d4cd568e65e4c8479632999 ]
+[ Upstream commit f98c3de92bb05dac4a4969df8a4595ed380b4604 ]
 
-Although not reproduced in practice, these two cases may be
-considered by UBSAN as off-by-one errors. So fix them in the
-same way as in commit a26a5107bc52 ("wifi: cfg80211: fix UBSAN
-noise in cfg80211_wext_siwscan()").
+The chainmask is u16 so using hweight8 cannot get correct tx_ant.
+Without this patch, the tx_ant of band 2 would be -1 and lead to the
+following issue:
+BUG: KASAN: stack-out-of-bounds in mt7996_mcu_add_sta+0x12e0/0x16e0 [mt7996e]
 
-Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
-Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20240909090806.1091956-1-dmantipov@yandex.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20240816094635.2391-1-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 3 ++-
- net/wireless/sme.c     | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 967bc4935b4ed..e3bf14e489c5d 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -9658,7 +9658,8 @@ nl80211_parse_sched_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
- 		return ERR_PTR(-ENOMEM);
- 
- 	if (n_ssids)
--		request->ssids = (void *)&request->channels[n_channels];
-+		request->ssids = (void *)request +
-+			struct_size(request, channels, n_channels);
- 	request->n_ssids = n_ssids;
- 	if (ie_len) {
- 		if (n_ssids)
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index 1cfe673bc52f3..4b80af0edbe97 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -115,7 +115,8 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
- 		n_channels = i;
- 	}
- 	request->n_channels = n_channels;
--	request->ssids = (void *)&request->channels[n_channels];
-+	request->ssids = (void *)request +
-+		struct_size(request, channels, n_channels);
- 	request->n_ssids = 1;
- 
- 	memcpy(request->ssids[0].ssid, wdev->conn->params.ssid,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 2c85786778009..7220bcee6fae9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1653,7 +1653,7 @@ mt7996_mcu_sta_bfer_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
+ {
+ 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
+ 	struct mt7996_phy *phy = mvif->phy;
+-	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
++	int tx_ant = hweight16(phy->mt76->chainmask) - 1;
+ 	struct sta_rec_bf *bf;
+ 	struct tlv *tlv;
+ 	static const u8 matrix[4][4] = {
 -- 
 2.43.0
 
