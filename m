@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AFB29CE7;
-	Wed,  2 Oct 2024 13:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD70629CE7;
+	Wed,  2 Oct 2024 13:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877141; cv=none; b=n/3jS9opVtH1LHX1CnU5rpBNe32SarPFi0YsUWWB9P8xn8LSVG4GoWPMHo/yUJ3uSx+N/xMKIMRD3ikAO58ZhpJKbTrL/wMLER9QvIip7C+QjV6eiY5uQl7m2FksfW74EUJiWelTXH0d0ArXD20S6DyZEQIZdxi7vq/dNMel7SQ=
+	t=1727877144; cv=none; b=eeNXGk5VaKnNOLRmZRtInnFVksldA8p20pr09n1WfV+UnIde4xfXo19JZLZxhcsGfWG7D11mBJC2tlFnj7yjiZRFqP2yh0L7bnz8/mdbjd2tHhGhiFdM/xXaRnvfDZ8LQGwWvEK9L2lqQIuARhv5eKPIRc/6jr3XkBEvjN8Y0i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877141; c=relaxed/simple;
-	bh=jJKV48uNLl+13YX23yE80sei8GzIF92w8m05xqkZCsU=;
+	s=arc-20240116; t=1727877144; c=relaxed/simple;
+	bh=K8lZHbETEWWNoON7+ebc2hoo2sFdmrBoDysDC0q1d+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovPLdfyreVlrejmq5DIp9QU/tzC8jUOWnvrV5JgHpoHNJjfjLauzWIDQYsgVAiUEM8CmDu28923TgCkVt8XYHF5QQpCZwL5F/HHz5NuLTzQfHARsfy8AL0VUjemdZPYGdP7Gt61znppMTiKYv5xUsDmCGUNayz7SBjnekXZIAHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI/fx7Jg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjyPZ0zg7UYfbh5Du2O4EQU/Lm7vmd+/6mWkKgGMRjNgiPcuk5+Myrh28Gql013egj7bvpkx49EPt6J4bG0cwFbMlXUMyywx3gEKPbKhCheRFcW8NRuOu3P6BBtkQOqH5N6LcnZ2UQlQQH64FExqI8fN8gpCKk57F0SRB2xkexM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z23r6YVa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI/fx7Jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB97C4CEC2;
-	Wed,  2 Oct 2024 13:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z23r6YVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45793C4CEC2;
+	Wed,  2 Oct 2024 13:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877141;
-	bh=jJKV48uNLl+13YX23yE80sei8GzIF92w8m05xqkZCsU=;
+	s=korg; t=1727877144;
+	bh=K8lZHbETEWWNoON7+ebc2hoo2sFdmrBoDysDC0q1d+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YI/fx7JgvaPLXImp7fucQh95bQvGzxdi8n1e+GgqhPhV21uwCsP4CWc9JlDCI52tF
-	 V1AtbycI1BkphUJchUZQmlkTrm/Ir1lySBnAJE8fOvYNGC5qqAk+dkvuNICXo5O/77
-	 fleU+USSj4UCdXQjtL4hzmLhNmNZhzQmThJjYTfA=
+	b=z23r6YVaBleA0c99dHxGOs1AzJ1PpsNHcyrEj1NOdm3H9kMvfYmk5XemshHj4qeim
+	 lF4JqCLi8mkvR/UDJf/wwcD5yM7PFTooAFt+k0uewtizQJMOpLNe0a4X4p6F27OnBf
+	 h27rSHUK5aFh7uEoXQTSSHukb892Siz+NSgRK5Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 661/695] soc: versatile: realview: fix memory leak during device remove
-Date: Wed,  2 Oct 2024 15:00:59 +0200
-Message-ID: <20241002125848.894421411@linuxfoundation.org>
+	Yu Zhao <yuzhao@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 679/695] mm/hugetlb_vmemmap: batch HVO work when demoting
+Date: Wed,  2 Oct 2024 15:01:17 +0200
+Message-ID: <20241002125849.620782341@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,50 +51,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yu Zhao <yuzhao@google.com>
 
-[ Upstream commit 1c4f26a41f9d052f334f6ae629e01f598ed93508 ]
+commit c0f398c3b2cf67976bca216f80668b9c93368385 upstream.
 
-If device is unbound, the memory allocated for soc_dev_attr should be
-freed to prevent leaks.
+Batch the HVO work, including de-HVO of the source and HVO of the
+destination hugeTLB folios, to speed up demotion.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-2-ff4b35abed83@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: c774f2564c00 ("soc: versatile: realview: fix soc_dev leak during device remove")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After commit bd225530a4c7 ("mm/hugetlb_vmemmap: fix race with speculative
+PFN walkers"), each request of HVO or de-HVO, batched or not, invokes
+synchronize_rcu() once.  For example, when not batched, demoting one 1GB
+hugeTLB folio to 512 2MB hugeTLB folios invokes synchronize_rcu() 513
+times (1 de-HVO plus 512 HVO requests), whereas when batched, only twice
+(1 de-HVO plus 1 HVO request).  And the performance difference between the
+two cases is significant, e.g.,
+
+  echo 2048kB >/sys/kernel/mm/hugepages/hugepages-1048576kB/demote_size
+  time echo 100 >/sys/kernel/mm/hugepages/hugepages-1048576kB/demote
+
+Before this patch:
+  real     8m58.158s
+  user     0m0.009s
+  sys      0m5.900s
+
+After this patch:
+  real     0m0.900s
+  user     0m0.000s
+  sys      0m0.851s
+
+Note that this patch changes the behavior of the `demote` interface when
+de-HVO fails.  Before, the interface aborts immediately upon failure; now,
+it tries to finish an entire batch, meaning it can make extra progress if
+the rest of the batch contains folios that do not need to de-HVO.
+
+Link: https://lkml.kernel.org/r/20240812224823.3914837-1-yuzhao@google.com
+Fixes: bd225530a4c7 ("mm/hugetlb_vmemmap: fix race with speculative PFN walkers")
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/versatile/soc-realview.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/hugetlb.c |  156 ++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 92 insertions(+), 64 deletions(-)
 
-diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
-index c6876d232d8fd..d304ee69287af 100644
---- a/drivers/soc/versatile/soc-realview.c
-+++ b/drivers/soc/versatile/soc-realview.c
-@@ -93,7 +93,7 @@ static int realview_soc_probe(struct platform_device *pdev)
- 	if (IS_ERR(syscon_regmap))
- 		return PTR_ERR(syscon_regmap);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3921,101 +3921,125 @@ out:
+ 	return 0;
+ }
  
--	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
-+	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr), GFP_KERNEL);
- 	if (!soc_dev_attr)
- 		return -ENOMEM;
+-static int demote_free_hugetlb_folio(struct hstate *h, struct folio *folio)
++static long demote_free_hugetlb_folios(struct hstate *src, struct hstate *dst,
++				       struct list_head *src_list)
+ {
+-	int i, nid = folio_nid(folio);
+-	struct hstate *target_hstate;
+-	struct page *subpage;
+-	struct folio *inner_folio;
+-	int rc = 0;
++	long rc;
++	struct folio *folio, *next;
++	LIST_HEAD(dst_list);
++	LIST_HEAD(ret_list);
  
-@@ -106,10 +106,9 @@ static int realview_soc_probe(struct platform_device *pdev)
- 	soc_dev_attr->family = "Versatile";
- 	soc_dev_attr->custom_attr_group = realview_groups[0];
- 	soc_dev = soc_device_register(soc_dev_attr);
--	if (IS_ERR(soc_dev)) {
--		kfree(soc_dev_attr);
-+	if (IS_ERR(soc_dev))
- 		return -ENODEV;
+-	target_hstate = size_to_hstate(PAGE_SIZE << h->demote_order);
+-
+-	remove_hugetlb_folio(h, folio, false);
+-	spin_unlock_irq(&hugetlb_lock);
+-
+-	/*
+-	 * If vmemmap already existed for folio, the remove routine above would
+-	 * have cleared the hugetlb folio flag.  Hence the folio is technically
+-	 * no longer a hugetlb folio.  hugetlb_vmemmap_restore_folio can only be
+-	 * passed hugetlb folios and will BUG otherwise.
+-	 */
+-	if (folio_test_hugetlb(folio)) {
+-		rc = hugetlb_vmemmap_restore_folio(h, folio);
+-		if (rc) {
+-			/* Allocation of vmemmmap failed, we can not demote folio */
+-			spin_lock_irq(&hugetlb_lock);
+-			add_hugetlb_folio(h, folio, false);
+-			return rc;
+-		}
 -	}
+-
+-	/*
+-	 * Use destroy_compound_hugetlb_folio_for_demote for all huge page
+-	 * sizes as it will not ref count folios.
+-	 */
+-	destroy_compound_hugetlb_folio_for_demote(folio, huge_page_order(h));
++	rc = hugetlb_vmemmap_restore_folios(src, src_list, &ret_list);
++	list_splice_init(&ret_list, src_list);
+ 
+ 	/*
+ 	 * Taking target hstate mutex synchronizes with set_max_huge_pages.
+ 	 * Without the mutex, pages added to target hstate could be marked
+ 	 * as surplus.
+ 	 *
+-	 * Note that we already hold h->resize_lock.  To prevent deadlock,
++	 * Note that we already hold src->resize_lock.  To prevent deadlock,
+ 	 * use the convention of always taking larger size hstate mutex first.
+ 	 */
+-	mutex_lock(&target_hstate->resize_lock);
+-	for (i = 0; i < pages_per_huge_page(h);
+-				i += pages_per_huge_page(target_hstate)) {
+-		subpage = folio_page(folio, i);
+-		inner_folio = page_folio(subpage);
+-		if (hstate_is_gigantic(target_hstate))
+-			prep_compound_gigantic_folio_for_demote(inner_folio,
+-							target_hstate->order);
+-		else
+-			prep_compound_page(subpage, target_hstate->order);
+-		folio_change_private(inner_folio, NULL);
+-		prep_new_hugetlb_folio(target_hstate, inner_folio, nid);
+-		free_huge_folio(inner_folio);
++	mutex_lock(&dst->resize_lock);
 +
- 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
- 			  &realview_coreid);
- 	if (ret)
--- 
-2.43.0
-
++	list_for_each_entry_safe(folio, next, src_list, lru) {
++		int i;
++
++		if (folio_test_hugetlb_vmemmap_optimized(folio))
++			continue;
++
++		list_del(&folio->lru);
++		/*
++		 * Use destroy_compound_hugetlb_folio_for_demote for all huge page
++		 * sizes as it will not ref count folios.
++		 */
++		destroy_compound_hugetlb_folio_for_demote(folio, huge_page_order(src));
++
++		for (i = 0; i < pages_per_huge_page(src); i += pages_per_huge_page(dst)) {
++			struct page *page = folio_page(folio, i);
++
++			if (hstate_is_gigantic(dst))
++				prep_compound_gigantic_folio_for_demote(page_folio(page),
++									dst->order);
++			else
++				prep_compound_page(page, dst->order);
++			set_page_private(page, 0);
++
++			init_new_hugetlb_folio(dst, page_folio(page));
++			list_add(&page->lru, &dst_list);
++		}
+ 	}
+-	mutex_unlock(&target_hstate->resize_lock);
+ 
+-	spin_lock_irq(&hugetlb_lock);
++	prep_and_add_allocated_folios(dst, &dst_list);
+ 
+-	/*
+-	 * Not absolutely necessary, but for consistency update max_huge_pages
+-	 * based on pool changes for the demoted page.
+-	 */
+-	h->max_huge_pages--;
+-	target_hstate->max_huge_pages +=
+-		pages_per_huge_page(h) / pages_per_huge_page(target_hstate);
++	mutex_unlock(&dst->resize_lock);
+ 
+ 	return rc;
+ }
+ 
+-static int demote_pool_huge_page(struct hstate *h, nodemask_t *nodes_allowed)
++static long demote_pool_huge_page(struct hstate *src, nodemask_t *nodes_allowed,
++				  unsigned long nr_to_demote)
+ 	__must_hold(&hugetlb_lock)
+ {
+ 	int nr_nodes, node;
+-	struct folio *folio;
++	struct hstate *dst;
++	long rc = 0;
++	long nr_demoted = 0;
+ 
+ 	lockdep_assert_held(&hugetlb_lock);
+ 
+ 	/* We should never get here if no demote order */
+-	if (!h->demote_order) {
++	if (!src->demote_order) {
+ 		pr_warn("HugeTLB: NULL demote order passed to demote_pool_huge_page.\n");
+ 		return -EINVAL;		/* internal error */
+ 	}
++	dst = size_to_hstate(PAGE_SIZE << src->demote_order);
+ 
+-	for_each_node_mask_to_free(h, nr_nodes, node, nodes_allowed) {
+-		list_for_each_entry(folio, &h->hugepage_freelists[node], lru) {
++	for_each_node_mask_to_free(src, nr_nodes, node, nodes_allowed) {
++		LIST_HEAD(list);
++		struct folio *folio, *next;
++
++		list_for_each_entry_safe(folio, next, &src->hugepage_freelists[node], lru) {
+ 			if (folio_test_hwpoison(folio))
+ 				continue;
+-			return demote_free_hugetlb_folio(h, folio);
++
++			remove_hugetlb_folio(src, folio, false);
++			list_add(&folio->lru, &list);
++
++			if (++nr_demoted == nr_to_demote)
++				break;
++		}
++
++		spin_unlock_irq(&hugetlb_lock);
++
++		rc = demote_free_hugetlb_folios(src, dst, &list);
++
++		spin_lock_irq(&hugetlb_lock);
++
++		list_for_each_entry_safe(folio, next, &list, lru) {
++			list_del(&folio->lru);
++			add_hugetlb_folio(src, folio, false);
++
++			nr_demoted--;
+ 		}
++
++		if (rc < 0 || nr_demoted == nr_to_demote)
++			break;
+ 	}
+ 
+ 	/*
++	 * Not absolutely necessary, but for consistency update max_huge_pages
++	 * based on pool changes for the demoted page.
++	 */
++	src->max_huge_pages -= nr_demoted;
++	dst->max_huge_pages += nr_demoted << (huge_page_order(src) - huge_page_order(dst));
++
++	if (rc < 0)
++		return rc;
++
++	if (nr_demoted)
++		return nr_demoted;
++	/*
+ 	 * Only way to get here is if all pages on free lists are poisoned.
+ 	 * Return -EBUSY so that caller will not retry.
+ 	 */
+@@ -4249,6 +4273,8 @@ static ssize_t demote_store(struct kobje
+ 	spin_lock_irq(&hugetlb_lock);
+ 
+ 	while (nr_demote) {
++		long rc;
++
+ 		/*
+ 		 * Check for available pages to demote each time thorough the
+ 		 * loop as demote_pool_huge_page will drop hugetlb_lock.
+@@ -4261,11 +4287,13 @@ static ssize_t demote_store(struct kobje
+ 		if (!nr_available)
+ 			break;
+ 
+-		err = demote_pool_huge_page(h, n_mask);
+-		if (err)
++		rc = demote_pool_huge_page(h, n_mask, nr_demote);
++		if (rc < 0) {
++			err = rc;
+ 			break;
++		}
+ 
+-		nr_demote--;
++		nr_demote -= rc;
+ 	}
+ 
+ 	spin_unlock_irq(&hugetlb_lock);
 
 
