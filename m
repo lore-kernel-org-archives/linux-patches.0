@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB831D04B4;
-	Wed,  2 Oct 2024 13:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C021D04B4;
+	Wed,  2 Oct 2024 13:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877065; cv=none; b=oYbsGPI3iW857R0DluUohwbwAFOUVNUb5vM62EcRLTn3c34aOQNcYMmmJCtpXTdRNIaGM/tXSTpylVoLVcnWvfOlK3EmAcm7JAmEKZu6xSKBBzAlZHopY3lLvqFZXFEMDc+HPWn2mRgTBqqz2W44cILvNX2NvVHERAa1syo82Zc=
+	t=1727877068; cv=none; b=QNZ28Ipp04u8ekh+P3FHp0r5OIBczhB7eSKKlPK8tN3T0rhLukmp5SOkrtam0l2JRyQdd71nh2rO8bnGAJCL5/eKIYYHKCIJ8Ff2lbTdFMCapEPNQeI8Mq09EaX8ZCoV2LpRIUlpMxQvYlWfvwkHCICav8u4xfdqrJEPloDwKoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877065; c=relaxed/simple;
-	bh=IIiY1fneqRkwvbNqRO8oODhUYkT5v+oRQhqAdz4hiKw=;
+	s=arc-20240116; t=1727877068; c=relaxed/simple;
+	bh=26xLzh1VjeXtCtr/FHAenO5fRFnFpMgCH2vqImxitwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBnsLHeCy6M9d1DLX1etVzXE8m36YXdgYMRrX05vuKvToj52irwnwZroIC8Y74E36kPyKj+8piedGU8lZQWjreBGGzDEAAyc+axWz+7Q6SlYScXG/uvwcFHJWQkm9it3Z9T12ReLiANKboAL5jJW5EYZCRoRoIHGvApNDUPXTLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdhDVN5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7VunxU+QL0ClgrFBaDMIQUalh2pCxwMURUqOH5IDUUfLNE6tMJ+A+Fp+eocbq1lZ/oLVuqWdcG5ldgfBuuBrJamjSHP/hCm4cohxkRyd/Swgt7HMcWwOKfxhP0hSZNNRNba6arOW+I2szUmFhuPGDAdKX/H3DLHkLcNIJAmtAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jY1M8if8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdhDVN5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD42C4CEC2;
-	Wed,  2 Oct 2024 13:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jY1M8if8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5923C4CEC2;
+	Wed,  2 Oct 2024 13:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877065;
-	bh=IIiY1fneqRkwvbNqRO8oODhUYkT5v+oRQhqAdz4hiKw=;
+	s=korg; t=1727877068;
+	bh=26xLzh1VjeXtCtr/FHAenO5fRFnFpMgCH2vqImxitwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdhDVN5Ju3cIeUSXgSU+vVf1mhpetCpCUPWFk2AuwaXyIgyVI2/hTvrEj05WTtrz7
-	 9c9C0Y7qj5Ro0vZaynTkcgpB5+gmy1ZkNgomafCMryzofQeVkgXra86rexJO6L5iyx
-	 k7+IhIF3+VCI5H6FfYvToao3DpraR+1GrSsm/HUs=
+	b=jY1M8if8abrPYEO3iUlpUak18Zi9sCfFMTmQJcVL/6IMk+eZGQjCRrye/bgiqDW5P
+	 VxShCr0XVLUmbnJ5Nk6BR14Wh01Q0zZnual5DopFFDMwQT0WdCn1LRQ0kpD/KQOqEB
+	 EbWZtopWftw7IU63R41OeCoottP4UT1X6D9/peTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.11 652/695] md: Dont flush sync_work in md_write_start()
-Date: Wed,  2 Oct 2024 15:00:50 +0200
-Message-ID: <20241002125848.536831252@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Anup Patel <anup@brainfault.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.11 653/695] cpuidle: riscv-sbi: Use scoped device node handling to fix missing of_node_put
+Date: Wed,  2 Oct 2024 15:00:51 +0200
+Message-ID: <20241002125848.577628740@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,35 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 86ad4cda79e0dade87d4bb0d32e1fe541d4a63e8 upstream.
+commit a309320ddbac6b1583224fcb6bacd424bcf8637f upstream.
 
-Because flush sync_work may trigger mddev_suspend() if there are spares,
-and this should never be done in IO path because mddev_suspend() is used
-to wait for IO.
+Two return statements in sbi_cpuidle_dt_init_states() did not drop the
+OF node reference count.  Solve the issue and simplify entire error
+handling with scoped/cleanup.h.
 
-This problem is found by code review.
-
-Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240801124746.242558-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 6abf32f1d9c5 ("cpuidle: Add RISC-V SBI CPU idle driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://patch.msgid.link/20240820094023.61155-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/cpuidle/cpuidle-riscv-sbi.c |   21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8668,7 +8668,6 @@ void md_write_start(struct mddev *mddev,
- 	BUG_ON(mddev->ro == MD_RDONLY);
- 	if (mddev->ro == MD_AUTO_READ) {
- 		/* need to switch to read/write */
--		flush_work(&mddev->sync_work);
- 		mddev->ro = MD_RDWR;
- 		set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
- 		md_wakeup_thread(mddev->thread);
+--- a/drivers/cpuidle/cpuidle-riscv-sbi.c
++++ b/drivers/cpuidle/cpuidle-riscv-sbi.c
+@@ -8,6 +8,7 @@
+ 
+ #define pr_fmt(fmt) "cpuidle-riscv-sbi: " fmt
+ 
++#include <linux/cleanup.h>
+ #include <linux/cpuhotplug.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpumask.h>
+@@ -236,19 +237,16 @@ static int sbi_cpuidle_dt_init_states(st
+ {
+ 	struct sbi_cpuidle_data *data = per_cpu_ptr(&sbi_cpuidle_data, cpu);
+ 	struct device_node *state_node;
+-	struct device_node *cpu_node;
+ 	u32 *states;
+ 	int i, ret;
+ 
+-	cpu_node = of_cpu_device_node_get(cpu);
++	struct device_node *cpu_node __free(device_node) = of_cpu_device_node_get(cpu);
+ 	if (!cpu_node)
+ 		return -ENODEV;
+ 
+ 	states = devm_kcalloc(dev, state_count, sizeof(*states), GFP_KERNEL);
+-	if (!states) {
+-		ret = -ENOMEM;
+-		goto fail;
+-	}
++	if (!states)
++		return -ENOMEM;
+ 
+ 	/* Parse SBI specific details from state DT nodes */
+ 	for (i = 1; i < state_count; i++) {
+@@ -264,10 +262,8 @@ static int sbi_cpuidle_dt_init_states(st
+ 
+ 		pr_debug("sbi-state %#x index %d\n", states[i], i);
+ 	}
+-	if (i != state_count) {
+-		ret = -ENODEV;
+-		goto fail;
+-	}
++	if (i != state_count)
++		return -ENODEV;
+ 
+ 	/* Initialize optional data, used for the hierarchical topology. */
+ 	ret = sbi_dt_cpu_init_topology(drv, data, state_count, cpu);
+@@ -277,10 +273,7 @@ static int sbi_cpuidle_dt_init_states(st
+ 	/* Store states in the per-cpu struct. */
+ 	data->states = states;
+ 
+-fail:
+-	of_node_put(cpu_node);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ static void sbi_cpuidle_deinit_cpu(int cpu)
 
 
