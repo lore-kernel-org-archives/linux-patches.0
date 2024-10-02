@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A551D2B29;
-	Wed,  2 Oct 2024 14:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3611CEEAF;
+	Wed,  2 Oct 2024 14:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879154; cv=none; b=qTa0IsgipbJle6gBUFKdkYE18kLZ+QgfrvLA1Xio+AIixc8M8tPdUt40FbuyiRrq4BgIZcOOVdru/7wTl2S5tWoo6k3G7o4FM6QjgEvp1V49fyKY87WpPTAJX8F87hvoaj+gEi/rDDVuttxm68snXD8ejQXxVLRnDlzs6wYngO0=
+	t=1727879156; cv=none; b=BQPgaKkwGfHrG9YM4lPwL+vWE/05JAcpknonE6W4KTrlAtABmZ1LMhS8ZU41d+0J4/PxiWUgyJwlYxikWV1eLwHMCm10pEBPIL42kJCkdSUyBeNJ4sdWFwNbJkGsmk699gyMOL14KNadwU6MxAOtJurH+tv//1LWRNFAJbhJbew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879154; c=relaxed/simple;
-	bh=ubgZfYL3AtxtGf9L8e6RH2YSSQf8npntYu3l8XddVxo=;
+	s=arc-20240116; t=1727879156; c=relaxed/simple;
+	bh=K0vJ5fIXDR24nLQ8oDG01vcSJHJsubETK4M3kOxQ/Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gVtDkKrveQN9xGfFq3KTyeR0HrwCue1rlKzJBXAAUlpYZkbBxz2+hY9CQ17lOpA3kGT3Brcyj0OzTkZPSIbKd91u11lqpghzAi/sfbH8ylIdVybX4u3QYeTYXywvsZpAI8zc/PcPIMZ1zFiUEbguVsl/pKw8j5yNPObRBsnjoCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smO58719; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXZW31q0Q8EDy49iP0zx7UonAkMJrRTl+jYC/AJ3L1TWhi3bqC9d9DypoHA8EVs2nP5I3+hWKe/SjmBXLLhgZKCCaZhN9n6zYb+RaqfS500oggBkpCYo07H9ERxIxjniPB9msmhnn+Hslcu9eYTtKPUC7xeLyaoOXUBArtHmyn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynzSC9SX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smO58719"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B8AC4CEC2;
-	Wed,  2 Oct 2024 14:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynzSC9SX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AE7C4CECD;
+	Wed,  2 Oct 2024 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879153;
-	bh=ubgZfYL3AtxtGf9L8e6RH2YSSQf8npntYu3l8XddVxo=;
+	s=korg; t=1727879156;
+	bh=K0vJ5fIXDR24nLQ8oDG01vcSJHJsubETK4M3kOxQ/Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smO58719QVE18yHRMzQUfSJDtD1EzhBMU5Q28oJXX5/41//MA6KFOafMtHVNO9r2V
-	 0TtGEA8R0IkQD4owQFm8Vlmh1O2SazQ1qTfQxyNCsrB47zbROZ4433thmUtE2D74OS
-	 OjuWnQTIXuTj1J11CwbR6gCdD5t5M60iivOTAZ00=
+	b=ynzSC9SXiBC5kcpwyGqybZsN9w0qD83Dzm8NEF2d+JxfsH/YW45IKr8nWum8Y0GQC
+	 R4Ii+v2FMNUGIEx+VtLAGIrICnW0RXfMQ784c4SfO/HSuhf3+f9HN+kgMA9P2y93fJ
+	 10mseb/oCwAxNAz/4swRo46fC9CaOiGFrGj1izXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/538] kselftest/arm64: signal: fix/refactor SVE vector length enumeration
-Date: Wed,  2 Oct 2024 14:54:20 +0200
-Message-ID: <20241002125752.847175134@linuxfoundation.org>
+Subject: [PATCH 6.6 022/538] drivers/perf: Fix ali_drw_pmu driver interrupt status clearing
+Date: Wed,  2 Oct 2024 14:54:21 +0200
+Message-ID: <20241002125752.889351792@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,568 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Jing Zhang <renyu.zj@linux.alibaba.com>
 
-[ Upstream commit 5225b6562b9a7dc808d5a1e465aaf5e2ebb220cd ]
+[ Upstream commit a3dd920977dccc453c550260c4b7605b280b79c3 ]
 
-Currently a number of SVE/SME related tests have almost identical
-functions to enumerate all supported vector lengths. However over time
-the copy&pasted code has diverged, allowing some bugs to creep in:
-- fake_sigreturn_sme_change_vl reports a failure, not a SKIP if only
-  one vector length is supported (but the SVE version is fine)
-- fake_sigreturn_sme_change_vl tries to set the SVE vector length, not
-  the SME one (but the other SME tests are fine)
-- za_no_regs keeps iterating forever if only one vector length is
-  supported (but za_regs is correct)
+The alibaba_uncore_pmu driver forgot to clear all interrupt status
+in the interrupt processing function. After the PMU counter overflow
+interrupt occurred, an interrupt storm occurred, causing the system
+to hang.
 
-Since those bugs seem to be mostly copy&paste ones, let's consolidate
-the enumeration loop into one shared function, and just call that from
-each test. That should fix the above bugs, and prevent similar issues
-from happening again.
+Therefore, clear the correct interrupt status in the interrupt handling
+function to fix it.
 
-Fixes: 4963aeb35a9e ("kselftest/arm64: signal: Add SME signal handling tests")
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240821164401.3598545-1-andre.przywara@arm.com
+Fixes: cf7b61073e45 ("drivers/perf: add DDR Sub-System Driveway PMU driver for Yitian 710 SoC")
+Signed-off-by: Jing Zhang <renyu.zj@linux.alibaba.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/1724297611-20686-1-git-send-email-renyu.zj@linux.alibaba.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/signal/Makefile |  2 +-
- .../selftests/arm64/signal/sve_helpers.c      | 56 +++++++++++++++++++
- .../selftests/arm64/signal/sve_helpers.h      | 21 +++++++
- .../testcases/fake_sigreturn_sme_change_vl.c  | 32 +++--------
- .../testcases/fake_sigreturn_sve_change_vl.c  | 30 ++--------
- .../arm64/signal/testcases/ssve_regs.c        | 36 +++---------
- .../arm64/signal/testcases/ssve_za_regs.c     | 36 +++---------
- .../arm64/signal/testcases/sve_regs.c         | 32 +++--------
- .../arm64/signal/testcases/za_no_regs.c       | 32 +++--------
- .../arm64/signal/testcases/za_regs.c          | 36 +++---------
- 10 files changed, 132 insertions(+), 181 deletions(-)
- create mode 100644 tools/testing/selftests/arm64/signal/sve_helpers.c
- create mode 100644 tools/testing/selftests/arm64/signal/sve_helpers.h
+ drivers/perf/alibaba_uncore_drw_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/signal/Makefile b/tools/testing/selftests/arm64/signal/Makefile
-index 8f5febaf1a9a2..edb3613513b8a 100644
---- a/tools/testing/selftests/arm64/signal/Makefile
-+++ b/tools/testing/selftests/arm64/signal/Makefile
-@@ -23,7 +23,7 @@ $(TEST_GEN_PROGS): $(PROGS)
- # Common test-unit targets to build common-layout test-cases executables
- # Needs secondary expansion to properly include the testcase c-file in pre-reqs
- COMMON_SOURCES := test_signals.c test_signals_utils.c testcases/testcases.c \
--	signals.S
-+	signals.S sve_helpers.c
- COMMON_HEADERS := test_signals.h test_signals_utils.h testcases/testcases.h
+diff --git a/drivers/perf/alibaba_uncore_drw_pmu.c b/drivers/perf/alibaba_uncore_drw_pmu.c
+index 19d459a36be55..818ce4424d34d 100644
+--- a/drivers/perf/alibaba_uncore_drw_pmu.c
++++ b/drivers/perf/alibaba_uncore_drw_pmu.c
+@@ -408,7 +408,7 @@ static irqreturn_t ali_drw_pmu_isr(int irq_num, void *data)
+ 			}
  
- .SECONDEXPANSION:
-diff --git a/tools/testing/selftests/arm64/signal/sve_helpers.c b/tools/testing/selftests/arm64/signal/sve_helpers.c
-new file mode 100644
-index 0000000000000..0acc121af3062
---- /dev/null
-+++ b/tools/testing/selftests/arm64/signal/sve_helpers.c
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2024 ARM Limited
-+ *
-+ * Common helper functions for SVE and SME functionality.
-+ */
-+
-+#include <stdbool.h>
-+#include <kselftest.h>
-+#include <asm/sigcontext.h>
-+#include <sys/prctl.h>
-+
-+unsigned int vls[SVE_VQ_MAX];
-+unsigned int nvls;
-+
-+int sve_fill_vls(bool use_sme, int min_vls)
-+{
-+	int vq, vl;
-+	int pr_set_vl = use_sme ? PR_SME_SET_VL : PR_SVE_SET_VL;
-+	int len_mask = use_sme ? PR_SME_VL_LEN_MASK : PR_SVE_VL_LEN_MASK;
-+
-+	/*
-+	 * Enumerate up to SVE_VQ_MAX vector lengths
-+	 */
-+	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
-+		vl = prctl(pr_set_vl, vq * 16);
-+		if (vl == -1)
-+			return KSFT_FAIL;
-+
-+		vl &= len_mask;
-+
-+		/*
-+		 * Unlike SVE, SME does not require the minimum vector length
-+		 * to be implemented, or the VLs to be consecutive, so any call
-+		 * to the prctl might return the single implemented VL, which
-+		 * might be larger than 16. So to avoid this loop never
-+		 * terminating,  bail out here when we find a higher VL than
-+		 * we asked for.
-+		 * See the ARM ARM, DDI 0487K.a, B1.4.2: I_QQRNR and I_NWYBP.
-+		 */
-+		if (vq < sve_vq_from_vl(vl))
-+			break;
-+
-+		/* Skip missing VLs */
-+		vq = sve_vq_from_vl(vl);
-+
-+		vls[nvls++] = vl;
-+	}
-+
-+	if (nvls < min_vls) {
-+		fprintf(stderr, "Only %d VL supported\n", nvls);
-+		return KSFT_SKIP;
-+	}
-+
-+	return KSFT_PASS;
-+}
-diff --git a/tools/testing/selftests/arm64/signal/sve_helpers.h b/tools/testing/selftests/arm64/signal/sve_helpers.h
-new file mode 100644
-index 0000000000000..50948ce471cc6
---- /dev/null
-+++ b/tools/testing/selftests/arm64/signal/sve_helpers.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (C) 2024 ARM Limited
-+ *
-+ * Common helper functions for SVE and SME functionality.
-+ */
-+
-+#ifndef __SVE_HELPERS_H__
-+#define __SVE_HELPERS_H__
-+
-+#include <stdbool.h>
-+
-+#define VLS_USE_SVE	false
-+#define VLS_USE_SME	true
-+
-+extern unsigned int vls[];
-+extern unsigned int nvls;
-+
-+int sve_fill_vls(bool use_sme, int min_vls);
-+
-+#endif
-diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-index ebd5815b54bba..cb8c051b5c8f2 100644
---- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-@@ -6,44 +6,28 @@
-  * handler, this is not supported and is expected to segfault.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- struct fake_sigframe sf;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sme_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SME, 2);
- 
--	/*
--	 * Enumerate up to SVE_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SVE_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
-+	if (!res)
-+		return true;
- 
--		vl &= PR_SME_VL_LEN_MASK;
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
--
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least two VLs */
--	if (nvls < 2) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
--
--	return true;
-+	return false;
- }
- 
- static int fake_sigreturn_ssve_change_vl(struct tdescr *td,
-diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
-index e2a452190511f..e1ccf8f85a70c 100644
---- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
-@@ -12,40 +12,22 @@
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- struct fake_sigframe sf;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sve_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SVE, 2);
- 
--	/*
--	 * Enumerate up to SVE_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SVE_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
-+	if (!res)
-+		return true;
- 
--		vl &= PR_SVE_VL_LEN_MASK;
--
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
--
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least two VLs */
--	if (nvls < 2) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
-+	if (res == KSFT_SKIP)
- 		td->result = KSFT_SKIP;
--		return false;
--	}
- 
--	return true;
-+	return false;
- }
- 
- static int fake_sigreturn_sve_change_vl(struct tdescr *td,
-diff --git a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
-index 3d37daafcff51..6dbe48cf8b09e 100644
---- a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
-@@ -6,51 +6,31 @@
-  * set up as expected.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- static union {
- 	ucontext_t uc;
- 	char buf[1024 * 64];
- } context;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sme_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SME, 1);
- 
--	/*
--	 * Enumerate up to SVE_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SME_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
--
--		vl &= PR_SME_VL_LEN_MASK;
--
--		/* Did we find the lowest supported VL? */
--		if (vq < sve_vq_from_vl(vl))
--			break;
-+	if (!res)
-+		return true;
- 
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
--
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least one VL */
--	if (nvls < 1) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--	return true;
-+	return false;
- }
- 
- static void setup_ssve_regs(void)
-diff --git a/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c b/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
-index 9dc5f128bbc0d..5557e116e9736 100644
---- a/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
-@@ -6,51 +6,31 @@
-  * signal frames is set up as expected when enabled simultaneously.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- static union {
- 	ucontext_t uc;
- 	char buf[1024 * 128];
- } context;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sme_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SME, 1);
- 
--	/*
--	 * Enumerate up to SVE_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SME_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
--
--		vl &= PR_SME_VL_LEN_MASK;
--
--		/* Did we find the lowest supported VL? */
--		if (vq < sve_vq_from_vl(vl))
--			break;
-+	if (!res)
-+		return true;
- 
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
--
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least one VL */
--	if (nvls < 1) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--	return true;
-+	return false;
- }
- 
- static void setup_regs(void)
-diff --git a/tools/testing/selftests/arm64/signal/testcases/sve_regs.c b/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
-index 8b16eabbb7697..8143eb1c58c18 100644
---- a/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
-@@ -6,47 +6,31 @@
-  * expected.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- static union {
- 	ucontext_t uc;
- 	char buf[1024 * 64];
- } context;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sve_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SVE, 1);
- 
--	/*
--	 * Enumerate up to SVE_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SVE_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
--
--		vl &= PR_SVE_VL_LEN_MASK;
--
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
-+	if (!res)
-+		return true;
- 
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least one VL */
--	if (nvls < 1) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--	return true;
-+	return false;
- }
- 
- static void setup_sve_regs(void)
-diff --git a/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c b/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
-index 4d6f94b6178f3..ce26e9c2fa5e3 100644
---- a/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
-@@ -6,47 +6,31 @@
-  * expected.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- static union {
- 	ucontext_t uc;
- 	char buf[1024 * 128];
- } context;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sme_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SME, 1);
- 
--	/*
--	 * Enumerate up to SME_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SME_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
--
--		vl &= PR_SME_VL_LEN_MASK;
--
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
-+	if (!res)
-+		return true;
- 
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least one VL */
--	if (nvls < 1) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--	return true;
-+	return false;
- }
- 
- static int do_one_sme_vl(struct tdescr *td, siginfo_t *si, ucontext_t *uc,
-diff --git a/tools/testing/selftests/arm64/signal/testcases/za_regs.c b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
-index 174ad66566964..b9e13f27f1f9a 100644
---- a/tools/testing/selftests/arm64/signal/testcases/za_regs.c
-+++ b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
-@@ -6,51 +6,31 @@
-  * expected.
-  */
- 
-+#include <kselftest.h>
- #include <signal.h>
- #include <ucontext.h>
- #include <sys/prctl.h>
- 
- #include "test_signals_utils.h"
-+#include "sve_helpers.h"
- #include "testcases.h"
- 
- static union {
- 	ucontext_t uc;
- 	char buf[1024 * 128];
- } context;
--static unsigned int vls[SVE_VQ_MAX];
--unsigned int nvls = 0;
- 
- static bool sme_get_vls(struct tdescr *td)
- {
--	int vq, vl;
-+	int res = sve_fill_vls(VLS_USE_SME, 1);
- 
--	/*
--	 * Enumerate up to SME_VQ_MAX vector lengths
--	 */
--	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
--		vl = prctl(PR_SME_SET_VL, vq * 16);
--		if (vl == -1)
--			return false;
--
--		vl &= PR_SME_VL_LEN_MASK;
--
--		/* Did we find the lowest supported VL? */
--		if (vq < sve_vq_from_vl(vl))
--			break;
-+	if (!res)
-+		return true;
- 
--		/* Skip missing VLs */
--		vq = sve_vq_from_vl(vl);
--
--		vls[nvls++] = vl;
--	}
--
--	/* We need at least one VL */
--	if (nvls < 1) {
--		fprintf(stderr, "Only %d VL supported\n", nvls);
--		return false;
--	}
-+	if (res == KSFT_SKIP)
-+		td->result = KSFT_SKIP;
- 
--	return true;
-+	return false;
- }
- 
- static void setup_za_regs(void)
+ 			/* clear common counter intr status */
+-			clr_status = FIELD_PREP(ALI_DRW_PMCOM_CNT_OV_INTR_MASK, 1);
++			clr_status = FIELD_PREP(ALI_DRW_PMCOM_CNT_OV_INTR_MASK, status);
+ 			writel(clr_status,
+ 			       drw_pmu->cfg_base + ALI_DRW_PMU_OV_INTR_CLR);
+ 		}
 -- 
 2.43.0
 
