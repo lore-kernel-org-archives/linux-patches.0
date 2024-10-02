@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B821D07AB;
-	Wed,  2 Oct 2024 14:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF591D0DF7;
+	Wed,  2 Oct 2024 14:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879708; cv=none; b=FLv9SD2ey+RX8KaoG01wslprDJRHo5Mh6SNxiYXfny6NJKg08cwm/+CvOXdCFaCY70fsBli6eYn4O+OL3Nq3hS/hM3UP0cqhv8XUlKn7KUc8XdSdcitox6wE7aXii65AW+O/aWZNQ8WjTx5gOMcHxKjSEmxznQr5dEaxde9L/MI=
+	t=1727879711; cv=none; b=FS6yg274nimt2lTf2eknohAavIvpfI/6Ny9JsVpQKTEBd9N7wJCVOtfioxGFnnRvfKXVOQAGA/R3ZX5/++R37ayVN7P63efJ50ocxDpM0v4uBJFjdgVJMaVF2hnUy/uEUpEHhWdf0dyxqeIcxsQC4mw03nxz8uFZcz0fIkCjsqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879708; c=relaxed/simple;
-	bh=ntRZhy5M5ydOA9dduA63ijApxj5ypfUgYhinQX1Wb6w=;
+	s=arc-20240116; t=1727879711; c=relaxed/simple;
+	bh=iNc0j/d0Vf5a19I5iLT0qSRhDpLhnXLs0mZD/2bMzW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WEvzbicqQ73wK+gA08XYNnzcx3MPKDtNnKAJJSsWEBlZkzb3p/cUinLYZdqcQD4AhWhJzVAsaeKfSFoeYcZUQRqIbdH7E4A22C9vgGs+ce2Of0fNQfK45bap4V5oZst2GP7Ogj/lc0rw+TOExHLhdBV+ZGafHsE7a/57xAR2wi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5UPbZdn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzLRBBaAx+p04/1YTyVR1OXtoQc743VthG8JtJ7CPnkErKrg0o5rFQW7ltmKJbl8mPhynsZupN8ALXmkencei9wfTzIq6hdX3NhJwEQLFrpZw2nlSA3BNuHmMC7gUg7YkiMqvRtNHtB38IXOaDcOdGnK9Sz8v4a+R2zkj65gE2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k++ohhYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5UPbZdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAE2C4CEC2;
-	Wed,  2 Oct 2024 14:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k++ohhYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0620DC4CEC5;
+	Wed,  2 Oct 2024 14:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879708;
-	bh=ntRZhy5M5ydOA9dduA63ijApxj5ypfUgYhinQX1Wb6w=;
+	s=korg; t=1727879711;
+	bh=iNc0j/d0Vf5a19I5iLT0qSRhDpLhnXLs0mZD/2bMzW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5UPbZdn1e8b3ZOuu/uraL9SIVQUsyBtdtsscrWWxt5iFEoHsU7TtmBWc+SZ349gk
-	 qC7Uo+D5l0EHfNVl6E9hg/DE2MSbNOwxvMT53UQFJsEYr8a3sG+0YrZoOd0wRnonxw
-	 c1JSQNEOi4lbbUWJ0FfyOWngE4mU6i+NVx/cu/0Y=
+	b=k++ohhYnIpEMimyXo3FelZuW3DFo1+1NMvh/1X0GnuvpyluQqFzACO/a2uSpvW/Lh
+	 7RFFlCBhhiatA2PaFsiHyNAvp/k1umi49CbflUw00RUWK49pwAv5Ht8SyZA0bU7tUY
+	 +EifmDQ7fVNFZvtEwN2nuKDQKjQqZOIJ/9mnAYiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Vernet <void@manifault.com>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/538] libbpf: Dont take direct pointers into BTF data from st_ops
-Date: Wed,  2 Oct 2024 14:57:31 +0200
-Message-ID: <20241002125800.626515334@linuxfoundation.org>
+Subject: [PATCH 6.6 213/538] selftests/bpf: Fix arg parsing in veristat, test_progs
+Date: Wed,  2 Oct 2024 14:57:32 +0200
+Message-ID: <20241002125800.665362856@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,123 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Vernet <void@manifault.com>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 04a94133f1b3cccb19e056c26f056c50b4e5b3b1 ]
+[ Upstream commit 03bfcda1fbc37ef34aa21d2b9e09138335afc6ee ]
 
-In struct bpf_struct_ops, we have take a pointer to a BTF type name, and
-a struct btf_type. This was presumably done for convenience, but can
-actually result in subtle and confusing bugs given that BTF data can be
-invalidated before a program is loaded. For example, in sched_ext, we
-may sometimes resize a data section after a skeleton has been opened,
-but before the struct_ops scheduler map has been loaded. This may cause
-the BTF data to be realloc'd, which can then cause a UAF when loading
-the program because the struct_ops map has pointers directly into the
-BTF data.
+Current code parses arguments with strtok_r() using a construct like
 
-We're already storing the BTF type_id in struct bpf_struct_ops. Because
-type_id is stable, we can therefore just update the places where we were
-looking at those pointers to instead do the lookups we need from the
-type_id.
+    char *state = NULL;
+    while ((next = strtok_r(state ? NULL : input, ",", &state))) {
+        ...
+    }
 
-Fixes: 590a00888250 ("bpf: libbpf: Add STRUCT_OPS support")
-Signed-off-by: David Vernet <void@manifault.com>
+where logic assumes the 'state' var can distinguish between first and
+subsequent strtok_r() calls, and adjusts parameters accordingly. However,
+'state' is strictly internal context for strtok_r() and no such assumptions
+are supported in the man page. Moreover, the exact behaviour of 'state'
+depends on the libc implementation, making the above code fragile.
+
+Indeed, invoking "./test_progs -t <test_name>" on mips64el/musl will hang,
+with the above code in an infinite loop.
+
+Similarly, we see strange behaviour running 'veristat' on mips64el/musl:
+
+    $ ./veristat -e file,prog,verdict,insns -C two-ok add-failure
+    Can't specify more than 9 stats
+
+Rewrite code using a counter to distinguish between strtok_r() calls.
+
+Fixes: 61ddff373ffa ("selftests/bpf: Improve by-name subtest selection logic in prog_tests")
+Fixes: 394169b079b5 ("selftests/bpf: add comparison mode to veristat")
+Fixes: c8bc5e050976 ("selftests/bpf: Add veristat tool for mass-verifying BPF object files")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240724171459.281234-1-void@manifault.com
+Link: https://lore.kernel.org/bpf/392d8bf5559f85fa37926c1494e62312ef252c3d.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ tools/testing/selftests/bpf/testing_helpers.c | 4 ++--
+ tools/testing/selftests/bpf/veristat.c        | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index aeed9bc44247b..bf1c4c69fd92d 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -457,8 +457,6 @@ struct bpf_program {
- };
- 
- struct bpf_struct_ops {
--	const char *tname;
--	const struct btf_type *type;
- 	struct bpf_program **progs;
- 	__u32 *kern_func_off;
- 	/* e.g. struct tcp_congestion_ops in bpf_prog's btf format */
-@@ -1027,11 +1025,14 @@ static int bpf_object_adjust_struct_ops_autoload(struct bpf_object *obj)
- 			continue;
- 
- 		for (j = 0; j < obj->nr_maps; ++j) {
-+			const struct btf_type *type;
-+
- 			map = &obj->maps[j];
- 			if (!bpf_map__is_struct_ops(map))
- 				continue;
- 
--			vlen = btf_vlen(map->st_ops->type);
-+			type = btf__type_by_id(obj->btf, map->st_ops->type_id);
-+			vlen = btf_vlen(type);
- 			for (k = 0; k < vlen; ++k) {
- 				slot_prog = map->st_ops->progs[k];
- 				if (prog != slot_prog)
-@@ -1065,8 +1066,8 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
- 	int err;
- 
- 	st_ops = map->st_ops;
--	type = st_ops->type;
--	tname = st_ops->tname;
-+	type = btf__type_by_id(btf, st_ops->type_id);
-+	tname = btf__name_by_offset(btf, type->name_off);
- 	err = find_struct_ops_kern_types(obj, tname, &mod_btf,
- 					 &kern_type, &kern_type_id,
- 					 &kern_vtype, &kern_vtype_id,
-@@ -1298,8 +1299,6 @@ static int init_struct_ops_maps(struct bpf_object *obj, const char *sec_name,
- 		memcpy(st_ops->data,
- 		       data->d_buf + vsi->offset,
- 		       type->size);
--		st_ops->tname = tname;
--		st_ops->type = type;
- 		st_ops->type_id = type_id;
- 
- 		pr_debug("struct_ops init: struct %s(type_id=%u) %s found at offset %u\n",
-@@ -7995,11 +7994,13 @@ static int bpf_object__resolve_externs(struct bpf_object *obj,
- 
- static void bpf_map_prepare_vdata(const struct bpf_map *map)
+diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
+index 8d994884c7b44..6acffe0426f01 100644
+--- a/tools/testing/selftests/bpf/testing_helpers.c
++++ b/tools/testing/selftests/bpf/testing_helpers.c
+@@ -220,13 +220,13 @@ int parse_test_list(const char *s,
+ 		    bool is_glob_pattern)
  {
-+	const struct btf_type *type;
- 	struct bpf_struct_ops *st_ops;
- 	__u32 i;
+ 	char *input, *state = NULL, *test_spec;
+-	int err = 0;
++	int err = 0, cnt = 0;
  
- 	st_ops = map->st_ops;
--	for (i = 0; i < btf_vlen(st_ops->type); i++) {
-+	type = btf__type_by_id(map->obj->btf, st_ops->type_id);
-+	for (i = 0; i < btf_vlen(type); i++) {
- 		struct bpf_program *prog = st_ops->progs[i];
- 		void *kern_data;
- 		int prog_fd;
-@@ -9234,6 +9235,7 @@ static struct bpf_map *find_struct_ops_map_by_offset(struct bpf_object *obj,
- static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
- 					    Elf64_Shdr *shdr, Elf_Data *data)
+ 	input = strdup(s);
+ 	if (!input)
+ 		return -ENOMEM;
+ 
+-	while ((test_spec = strtok_r(state ? NULL : input, ",", &state))) {
++	while ((test_spec = strtok_r(cnt++ ? NULL : input, ",", &state))) {
+ 		err = insert_test(set, test_spec, is_glob_pattern);
+ 		if (err)
+ 			break;
+diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
+index 0ad98b6a8e6ef..611b5a0a6f7e3 100644
+--- a/tools/testing/selftests/bpf/veristat.c
++++ b/tools/testing/selftests/bpf/veristat.c
+@@ -753,13 +753,13 @@ static int parse_stat(const char *stat_name, struct stat_specs *specs)
+ static int parse_stats(const char *stats_str, struct stat_specs *specs)
  {
-+	const struct btf_type *type;
- 	const struct btf_member *member;
- 	struct bpf_struct_ops *st_ops;
- 	struct bpf_program *prog;
-@@ -9293,13 +9295,14 @@ static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
- 		}
- 		insn_idx = sym->st_value / BPF_INSN_SZ;
+ 	char *input, *state = NULL, *next;
+-	int err;
++	int err, cnt = 0;
  
--		member = find_member_by_offset(st_ops->type, moff * 8);
-+		type = btf__type_by_id(btf, st_ops->type_id);
-+		member = find_member_by_offset(type, moff * 8);
- 		if (!member) {
- 			pr_warn("struct_ops reloc %s: cannot find member at moff %u\n",
- 				map->name, moff);
- 			return -EINVAL;
- 		}
--		member_idx = member - btf_members(st_ops->type);
-+		member_idx = member - btf_members(type);
- 		name = btf__name_by_offset(btf, member->name_off);
+ 	input = strdup(stats_str);
+ 	if (!input)
+ 		return -ENOMEM;
  
- 		if (!resolve_func_ptr(btf, member->type, NULL)) {
+-	while ((next = strtok_r(state ? NULL : input, ",", &state))) {
++	while ((next = strtok_r(cnt++ ? NULL : input, ",", &state))) {
+ 		err = parse_stat(next, specs);
+ 		if (err)
+ 			return err;
+@@ -1444,7 +1444,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
+ 	while (fgets(line, sizeof(line), f)) {
+ 		char *input = line, *state = NULL, *next;
+ 		struct verif_stats *st = NULL;
+-		int col = 0;
++		int col = 0, cnt = 0;
+ 
+ 		if (!header) {
+ 			void *tmp;
+@@ -1462,7 +1462,7 @@ static int parse_stats_csv(const char *filename, struct stat_specs *specs,
+ 			*stat_cntp += 1;
+ 		}
+ 
+-		while ((next = strtok_r(state ? NULL : input, ",\n", &state))) {
++		while ((next = strtok_r(cnt++ ? NULL : input, ",\n", &state))) {
+ 			if (header) {
+ 				/* for the first line, set up spec stats */
+ 				err = parse_stat(next, specs);
 -- 
 2.43.0
 
