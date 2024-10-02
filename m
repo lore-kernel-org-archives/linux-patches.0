@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A71D0792;
-	Wed,  2 Oct 2024 14:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441DE19F411;
+	Wed,  2 Oct 2024 14:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877706; cv=none; b=Fq+w8pr6MMJP+iuf4zzdpanvSSjXhLfKBkKanI78Ti9qFO/g4y5v005pi85r30TxStXwdxzT5ZkGcOaRcUrhijEw8z6Q7PJpDP+zXp0PnQi86wG53lKipCgA8CDSCYkgJYbOZGWEXdLzqEBcM9P1DstcpQ0nNxkCGCESlLqXleY=
+	t=1727877710; cv=none; b=bwiNjTWSOVrhZcLamglf2p5YWyMOPwFTStVsP/kl7P1vx3m3hqp0Ynkreo9SVZIJSj5crchBrqQGhoAlvrZgojPD6sZ6fGNMTMsJXG+tS/ku9YhCOv3god+mx1hgW9+yFLOGNAv4CDY+dEkONvKIq4ljIRHRVP2hTm6BMSuVPt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877706; c=relaxed/simple;
-	bh=rlbL9dBtiyVMtx90eQUaKiRMoxf47BemxHdlORWzuEQ=;
+	s=arc-20240116; t=1727877710; c=relaxed/simple;
+	bh=jaF8KKF7PBOP7axcJCrDSZ7ur3LX/bxhqwshOW5tF0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cv/z/83Pj4VNnuH6dL16fmZ1uZC5eXIjIawAgqAuxPWQ0AGtYfoY5yaGbG4VmCmecXAYqrTka/RyzAvcBMZ2sQ0lbDmOMCKZRsqieSjk0MQzgHvp2xz16utJQbkXzvZK4x42UrXUccl9O4JgPO+aSLeyyncDUPB9Kf2bX+VgWlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYrR5jAG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cLuK+qcMM1SYYB1LNWiN4ZxoOYpaBnR3iWAk3N111QOMDFFkFE/yOeYvhP7Nk4VpMwZF+Pi0D/7F5X4LaRhnAvr/oo5EDJuCSpWRK6E0VwipblJ48pXZrWK1b7+qAFMr7ZLoyY7h21NMogm4acHiPnU+j0VPd2Hu9xeMOdyJ/ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzZtyPsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYrR5jAG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D4FC4CEC5;
-	Wed,  2 Oct 2024 14:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzZtyPsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52443C4CEC2;
+	Wed,  2 Oct 2024 14:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877706;
-	bh=rlbL9dBtiyVMtx90eQUaKiRMoxf47BemxHdlORWzuEQ=;
+	s=korg; t=1727877709;
+	bh=jaF8KKF7PBOP7axcJCrDSZ7ur3LX/bxhqwshOW5tF0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYrR5jAG+tjUe4xZhvW2hl4as10jlQhtskhDY0D8lQuL1f2gdcp3Y0J066Bz9KAVz
-	 mCx0GT7iFMWzLty1RB0N6JKjLTKmAqxqL5HZnVVzEsRt3YJmcdGL6P4Ltjg5n3QK0T
-	 fKawsLzHl6r4ENHh0RoUa+o+zWuVlANzi9HFyIdQ=
+	b=LzZtyPsJh1hyUk++MW3v974GDqLckebOXT1jl+Rw94DzeyzFFm6yFrmptSN8pEUdq
+	 eBe6AxxUYKm1cmfAbBr9uWDTM2nAuxZH3I7w3+oI3u2fbZ+o450iiDQPo592q4PTqG
+	 Spol6xmN76zMQSWUvjG3Mrg0k/dy1Dm9fcfT32wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 135/634] ARM: dts: microchip: sama7g5: Fix RTT clock
-Date: Wed,  2 Oct 2024 14:53:55 +0200
-Message-ID: <20241002125816.437662372@linuxfoundation.org>
+Subject: [PATCH 6.10 136/634] ARM: dts: imx7d-zii-rmu2: fix Ethernet PHY pinctrl property
+Date: Wed,  2 Oct 2024 14:53:56 +0200
+Message-ID: <20241002125816.477067699@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 867bf1923200e6ad82bad0289f43bf20b4ac7ff9 ]
+[ Upstream commit 0e49cfe364dea4345551516eb2fe53135a10432b ]
 
-According to datasheet, Chapter 34. Clock Generator, section 34.2,
-Embedded characteristics, source clock for RTT is the TD_SLCK, registered
-with ID 1 by the slow clock controller driver. Fix RTT clock.
+There is no "fsl,phy" property in pin controller pincfg nodes:
 
-Fixes: 7540629e2fc7 ("ARM: dts: at91: add sama7g5 SoC DT and sama7g5-ek")
-Link: https://lore.kernel.org/r/20240826165320.3068359-1-claudiu.beznea@tuxon.dev
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,pins' is a required property
+  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,phy' does not match any of the regexes: 'pinctrl-[0-9]+'
+
+Fixes: f496e6750083 ("ARM: dts: Add ZII support for ZII i.MX7 RMU2 board")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/sama7g5.dtsi | 2 +-
+ arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/microchip/sama7g5.dtsi b/arch/arm/boot/dts/microchip/sama7g5.dtsi
-index 75778be126a3d..17bcdcf0cf4a0 100644
---- a/arch/arm/boot/dts/microchip/sama7g5.dtsi
-+++ b/arch/arm/boot/dts/microchip/sama7g5.dtsi
-@@ -272,7 +272,7 @@
- 			compatible = "microchip,sama7g5-rtt", "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
- 			reg = <0xe001d020 0x30>;
- 			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
--			clocks = <&clk32k 0>;
-+			clocks = <&clk32k 1>;
- 		};
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
+index 521493342fe97..8f5566027c25a 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
+@@ -350,7 +350,7 @@
  
- 		clk32k: clock-controller@e001d050 {
+ &iomuxc_lpsr {
+ 	pinctrl_enet1_phy_interrupt: enet1phyinterruptgrp {
+-		fsl,phy = <
++		fsl,pins = <
+ 			MX7D_PAD_LPSR_GPIO1_IO02__GPIO1_IO2	0x08
+ 		>;
+ 	};
 -- 
 2.43.0
 
