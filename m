@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50F11D0954;
-	Wed,  2 Oct 2024 14:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4C01D0954;
+	Wed,  2 Oct 2024 14:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878085; cv=none; b=HGqJn3O94HxK/pO498PwUMhHSSq7Axg2RrJoo78ML+Cf3SXkKo0EKI6KPoMdhCFjuW39JDs/NsgcAd6s6ixyDqdPiuQdudlin/CbAtbWsn004TtXxXzgmFNFAxlWLQzQh6BqfKNOZtgmffhz6qErkKPItde6uxADoKcayW3sQ7Y=
+	t=1727878088; cv=none; b=lRGSm0r7W6OJF6DZY37w8oENVSKNa4o5zNY8LIph7fdTTYPm2pJwSzymr6O3jvCpTznhSPrf71qpKJnR85D/W/nOPr6uDWkCSJtQWHVI7xUdRX5kLzWPPoulhfNl9TTlZomXxDjG8286uO/eqX795fWXKIQ+r5noCXBlFhb5nt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878085; c=relaxed/simple;
-	bh=G7nfEtc9nTjuHJv4z0SBXLNqsQuz3xUIl/Vv0QclGrk=;
+	s=arc-20240116; t=1727878088; c=relaxed/simple;
+	bh=4iKxJiYaw1xIWh6s694KIzpGrZyqi4CYig87hUv2ivE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwgvKGtG1clcMGJC+g7hSAlbFYrsraXXeNkrj3+MUuw6MXN0wnQmQ6x9Fz5x4hh+Qfv9M9ZITE8xrTYghPyKJhST/Mj0Q7agm46x/iN7sgNg4HiOAa/H3Zx/cWQUQ6FA6+oUbJB3BYUUJTR22cC5+kjHFVt//8LOhykiQvtOT8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvS5uSpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dE5iwnOvpIMLPTQ5FdRfOvufPkO8yyeFOHY3saH5s2kOGMwWzzlgzSpdojw0UZRT6cbBXCS+GMXuscidEVREtMps0UQQ9y/kt67a/6sXhiwmnARgpCD6t0YLJNDge/X39Gm1oaxt2UwJoWKPkOJ+FCwXgwzNVk6ZZx9Xye9zW2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pb/JXyfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvS5uSpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1760C4CED4;
-	Wed,  2 Oct 2024 14:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pb/JXyfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9920C4CEC2;
+	Wed,  2 Oct 2024 14:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878085;
-	bh=G7nfEtc9nTjuHJv4z0SBXLNqsQuz3xUIl/Vv0QclGrk=;
+	s=korg; t=1727878088;
+	bh=4iKxJiYaw1xIWh6s694KIzpGrZyqi4CYig87hUv2ivE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvS5uSpL4DqWL62FruQMlnov64KB35Bh7q2PqTEjt/cNKi+EvqipDmbnvoXPJZmXu
-	 Q+qOx8r97tuqAnrdeTcDvhZ/VXPVst/rZMp6LmyuHZ9HbDHl0q/EZxYgg7/iYaCGtg
-	 YwBpJ0H9N2yJVqzT6xM280AUANSMeYbLoy1yu508=
+	b=pb/JXyfaaY8Lmur6cGr8I/FdYNYXRBRWXN3HLOd/R0TwnjdDRBPb5SCUtf/Wy+OOe
+	 ZU3qVEdcdpiemvPFZQAHz+vC0Fixm8MIdOUarEWUnot08TWxdHGjb5TxusyeRfA3yj
+	 nmI4enWg15EVn3BfJa22KHs4HBnqGI996AnKzNpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 296/634] perf inject: Fix leader sampling inserting additional samples
-Date: Wed,  2 Oct 2024 14:56:36 +0200
-Message-ID: <20241002125822.796315576@linuxfoundation.org>
+Subject: [PATCH 6.10 270/634] libbpf: Fix bpf_object__open_skeleton()s mishandling of options
+Date: Wed,  2 Oct 2024 14:56:10 +0200
+Message-ID: <20241002125821.757583368@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -55,132 +47,155 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 79bcd34e0f3da39fda841406ccc957405e724852 ]
+[ Upstream commit c634d6f4e12d00c954410ba11db45799a8c77b5b ]
 
-The processing of leader samples would turn an individual sample with
-a group of read values into multiple samples. 'perf inject' would pass
-through the additional samples increasing the output data file size:
+We do an ugly copying of options in bpf_object__open_skeleton() just to
+be able to set object name from skeleton's recorded name (while still
+allowing user to override it through opts->object_name).
 
-  $ perf record -g -e "{instructions,cycles}:S" -o perf.orig.data true
-  $ perf script -D -i perf.orig.data | sed -e 's/perf.orig.data/perf.data/g' > orig.txt
-  $ perf inject -i perf.orig.data -o perf.new.data
-  $ perf script -D -i perf.new.data | sed -e 's/perf.new.data/perf.data/g' > new.txt
-  $ diff -u orig.txt new.txt
-  --- orig.txt    2024-07-29 14:29:40.606576769 -0700
-  +++ new.txt     2024-07-29 14:30:04.142737434 -0700
-  ...
-  -0xc550@perf.data [0x30]: event: 3
-  +0xc550@perf.data [0xd0]: event: 9
-  +.
-  +. ... raw event: size 208 bytes
-  +.  0000:  09 00 00 00 01 00 d0 00 fc 72 01 86 ff ff ff ff  .........r......
-  +.  0010:  74 7d 2c 00 74 7d 2c 00 fb c3 79 f9 ba d5 05 00  t},.t},...y.....
-  +.  0020:  e6 cb 1a 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
-  +.  0030:  02 00 00 00 00 00 00 00 76 01 00 00 00 00 00 00  ........v.......
-  +.  0040:  e6 cb 1a 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  +.  0050:  62 18 00 00 00 00 00 00 f6 cb 1a 00 00 00 00 00  b...............
-  +.  0060:  00 00 00 00 00 00 00 00 0c 00 00 00 00 00 00 00  ................
-  +.  0070:  80 ff ff ff ff ff ff ff fc 72 01 86 ff ff ff ff  .........r......
-  +.  0080:  f3 0e 6e 85 ff ff ff ff 0c cb 7f 85 ff ff ff ff  ..n.............
-  +.  0090:  bc f2 87 85 ff ff ff ff 44 af 7f 85 ff ff ff ff  ........D.......
-  +.  00a0:  bd be 7f 85 ff ff ff ff 26 d0 7f 85 ff ff ff ff  ........&.......
-  +.  00b0:  6d a4 ff 85 ff ff ff ff ea 00 20 86 ff ff ff ff  m......... .....
-  +.  00c0:  00 fe ff ff ff ff ff ff 57 14 4f 43 fc 7e 00 00  ........W.OC.~..
-  +
-  +1642373909693435 0xc550 [0xd0]: PERF_RECORD_SAMPLE(IP, 0x1): 2915700/2915700: 0xffffffff860172fc period: 1 addr: 0
-  +... FP chain: nr:12
-  +.....  0: ffffffffffffff80
-  +.....  1: ffffffff860172fc
-  +.....  2: ffffffff856e0ef3
-  +.....  3: ffffffff857fcb0c
-  +.....  4: ffffffff8587f2bc
-  +.....  5: ffffffff857faf44
-  +.....  6: ffffffff857fbebd
-  +.....  7: ffffffff857fd026
-  +.....  8: ffffffff85ffa46d
-  +.....  9: ffffffff862000ea
-  +..... 10: fffffffffffffe00
-  +..... 11: 00007efc434f1457
-  +... sample_read:
-  +.... group nr 2
-  +..... id 00000000001acbe6, value 0000000000000176, lost 0
-  +..... id 00000000001acbf6, value 0000000000001862, lost 0
-  +
-  +0xc620@perf.data [0x30]: event: 3
-  ...
+This is not just ugly, but it also is broken due to memcpy() that
+doesn't take into account potential skel_opts' and user-provided opts'
+sizes differences due to backward and forward compatibility. This leads
+to copying over extra bytes and then failing to validate options
+properly. It could, technically, lead also to SIGSEGV, if we are unlucky.
 
-This behavior is incorrect as in the case above 'perf inject' should
-have done nothing. Fix this behavior by disabling separating samples
-for a tool that requests it. Only request this for `perf inject` so as
-to not affect other perf tools. With the patch and the test above
-there are no differences between the orig.txt and new.txt.
+So just get rid of that memory copy completely and instead pass
+default object name into bpf_object_open() directly, simplifying all
+this significantly. The rule now is that obj_name should be non-NULL for
+bpf_object_open() when called with in-memory buffer, so validate that
+explicitly as well.
 
-Fixes: e4caec0d1af3d608 ("perf evsel: Add PERF_SAMPLE_READ sample related processing")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jiri Olsa <jolsa@redhat.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240729220620.2957754-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+We adopt bpf_object__open_mem() to this as well and generate default
+name (based on buffer memory address and size) outside of bpf_object_open().
+
+Fixes: d66562fba1ce ("libbpf: Add BPF object skeleton support")
+Reported-by: Daniel Müller <deso@posteo.net>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Daniel Müller <deso@posteo.net>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20240827203721.1145494-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-inject.c | 1 +
- tools/perf/util/session.c   | 3 +++
- tools/perf/util/tool.h      | 1 +
- 3 files changed, 5 insertions(+)
+ tools/lib/bpf/libbpf.c | 52 +++++++++++++++---------------------------
+ 1 file changed, 19 insertions(+), 33 deletions(-)
 
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index a212678d47beb..c80fb0f60e611 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -2204,6 +2204,7 @@ int cmd_inject(int argc, const char **argv)
- 			.finished_init	= perf_event__repipe_op2_synth,
- 			.compressed	= perf_event__repipe_op4_synth,
- 			.auxtrace	= perf_event__repipe_auxtrace,
-+			.dont_split_sample_group = true,
- 		},
- 		.input_name  = "-",
- 		.samples = LIST_HEAD_INIT(inject.samples),
-diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-index a10343b9dcd41..1457cd5288abc 100644
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -1511,6 +1511,9 @@ static int deliver_sample_group(struct evlist *evlist,
- 	int ret = -EINVAL;
- 	struct sample_read_value *v = sample->read.group.values;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 31f58e3c4059c..3ecb33188336f 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -7866,16 +7866,19 @@ static int bpf_object_init_progs(struct bpf_object *obj, const struct bpf_object
+ }
  
-+	if (tool->dont_split_sample_group)
-+		return deliver_sample_value(evlist, tool, event, sample, v, machine);
+ static struct bpf_object *bpf_object_open(const char *path, const void *obj_buf, size_t obj_buf_sz,
++					  const char *obj_name,
+ 					  const struct bpf_object_open_opts *opts)
+ {
+-	const char *obj_name, *kconfig, *btf_tmp_path, *token_path;
++	const char *kconfig, *btf_tmp_path, *token_path;
+ 	struct bpf_object *obj;
+-	char tmp_name[64];
+ 	int err;
+ 	char *log_buf;
+ 	size_t log_size;
+ 	__u32 log_level;
+ 
++	if (obj_buf && !obj_name)
++		return ERR_PTR(-EINVAL);
 +
- 	sample_read_group__for_each(v, sample->read.group.nr, read_format) {
- 		ret = deliver_sample_value(evlist, tool, event, sample, v,
- 					   machine);
-diff --git a/tools/perf/util/tool.h b/tools/perf/util/tool.h
-index c957fb849ac63..62bbc9cec151b 100644
---- a/tools/perf/util/tool.h
-+++ b/tools/perf/util/tool.h
-@@ -85,6 +85,7 @@ struct perf_tool {
- 	bool		namespace_events;
- 	bool		cgroup_events;
- 	bool		no_warn;
-+	bool		dont_split_sample_group;
- 	enum show_feature_header show_feat_hdr;
- };
+ 	if (elf_version(EV_CURRENT) == EV_NONE) {
+ 		pr_warn("failed to init libelf for %s\n",
+ 			path ? : "(mem buf)");
+@@ -7885,16 +7888,12 @@ static struct bpf_object *bpf_object_open(const char *path, const void *obj_buf,
+ 	if (!OPTS_VALID(opts, bpf_object_open_opts))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	obj_name = OPTS_GET(opts, object_name, NULL);
++	obj_name = OPTS_GET(opts, object_name, NULL) ?: obj_name;
+ 	if (obj_buf) {
+-		if (!obj_name) {
+-			snprintf(tmp_name, sizeof(tmp_name), "%lx-%lx",
+-				 (unsigned long)obj_buf,
+-				 (unsigned long)obj_buf_sz);
+-			obj_name = tmp_name;
+-		}
+ 		path = obj_name;
+ 		pr_debug("loading object '%s' from buffer\n", obj_name);
++	} else {
++		pr_debug("loading object from %s\n", path);
+ 	}
+ 
+ 	log_buf = OPTS_GET(opts, kernel_log_buf, NULL);
+@@ -7978,9 +7977,7 @@ bpf_object__open_file(const char *path, const struct bpf_object_open_opts *opts)
+ 	if (!path)
+ 		return libbpf_err_ptr(-EINVAL);
+ 
+-	pr_debug("loading %s\n", path);
+-
+-	return libbpf_ptr(bpf_object_open(path, NULL, 0, opts));
++	return libbpf_ptr(bpf_object_open(path, NULL, 0, NULL, opts));
+ }
+ 
+ struct bpf_object *bpf_object__open(const char *path)
+@@ -7992,10 +7989,15 @@ struct bpf_object *
+ bpf_object__open_mem(const void *obj_buf, size_t obj_buf_sz,
+ 		     const struct bpf_object_open_opts *opts)
+ {
++	char tmp_name[64];
++
+ 	if (!obj_buf || obj_buf_sz == 0)
+ 		return libbpf_err_ptr(-EINVAL);
+ 
+-	return libbpf_ptr(bpf_object_open(NULL, obj_buf, obj_buf_sz, opts));
++	/* create a (quite useless) default "name" for this memory buffer object */
++	snprintf(tmp_name, sizeof(tmp_name), "%lx-%zx", (unsigned long)obj_buf, obj_buf_sz);
++
++	return libbpf_ptr(bpf_object_open(NULL, obj_buf, obj_buf_sz, tmp_name, opts));
+ }
+ 
+ static int bpf_object_unload(struct bpf_object *obj)
+@@ -13718,29 +13720,13 @@ static int populate_skeleton_progs(const struct bpf_object *obj,
+ int bpf_object__open_skeleton(struct bpf_object_skeleton *s,
+ 			      const struct bpf_object_open_opts *opts)
+ {
+-	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, skel_opts,
+-		.object_name = s->name,
+-	);
+ 	struct bpf_object *obj;
+ 	int err;
+ 
+-	/* Attempt to preserve opts->object_name, unless overriden by user
+-	 * explicitly. Overwriting object name for skeletons is discouraged,
+-	 * as it breaks global data maps, because they contain object name
+-	 * prefix as their own map name prefix. When skeleton is generated,
+-	 * bpftool is making an assumption that this name will stay the same.
+-	 */
+-	if (opts) {
+-		memcpy(&skel_opts, opts, sizeof(*opts));
+-		if (!opts->object_name)
+-			skel_opts.object_name = s->name;
+-	}
+-
+-	obj = bpf_object__open_mem(s->data, s->data_sz, &skel_opts);
+-	err = libbpf_get_error(obj);
+-	if (err) {
+-		pr_warn("failed to initialize skeleton BPF object '%s': %d\n",
+-			s->name, err);
++	obj = bpf_object_open(NULL, s->data, s->data_sz, s->name, opts);
++	if (IS_ERR(obj)) {
++		err = PTR_ERR(obj);
++		pr_warn("failed to initialize skeleton BPF object '%s': %d\n", s->name, err);
+ 		return libbpf_err(err);
+ 	}
  
 -- 
 2.43.0
