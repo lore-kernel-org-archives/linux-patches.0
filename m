@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5CF1D2B27;
-	Wed,  2 Oct 2024 14:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8254A1D2B1E;
+	Wed,  2 Oct 2024 14:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879882; cv=none; b=USol9/PoTYlfxQLcIsyBOgqKICzZ13uyxr1OZvDqIvZBuB+vYKEKKUj12falvqhkOmzrr+JuKaKYBAgwpMWO+AC54D4oiNZr22+ji/hYKMjeSwpuYRwDw+/yYPm/wFjoR8QHHZb1wkHnOkAiXmRZmfPdqjHUQxBmouIbD2Odq34=
+	t=1727879885; cv=none; b=hw7AphyfAXWZyWGrYhdKBDvntbi19hF5VM7fHWiO+VCS5KwVQqYLijt8BfU9oKiTtYvzjOSyU+VT0M8D76/UlbABdTZBhnd33YjzY/N2d4xOdeScTOIypLoTk+VNEy7P84qx8wE/LcbtLL/T373z9kJG/HwqZ7F2yOP31+WPxH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879882; c=relaxed/simple;
-	bh=9Nhb3fCzLLDDzzyUfYURFDkqBQ5tC3tQG92PqIKhbeo=;
+	s=arc-20240116; t=1727879885; c=relaxed/simple;
+	bh=KxhOdn1cgVFxex8rXFHlWOLq2jV8hW8hbw7nrKIwcOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMoEdBDeFGm1NzKxDwSAV/8uEyuESUgivpnfkx7nQ9n9B5t2QjmiDAZFlFRTSRTvxT+QliOiLU2b4iWU7jkIjnyWltnG3+OoJLdEGP4+WlbVQqOhh4h4xBl/ZNLyOMlZPaF5rZY1iNmzYr2BaFMu3Ed2OWSIxQI0KV5AEsRkrVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBe7UPqN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aBKijrGfIlOPc8DBM+kDo3w4IHToTWELXICPCpfUYzPbl162SKBMosSbXBJHM+RSCaX046sptrfenWLMagNkmlEOaNyBVHklu0uxrMsvjW/f5k6RCFL5fQvPq9POCPrw/uuVNlGHdajBCy3jR6VSEMaedbAwTumT2o0i+iz+kcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+EoL/QS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBe7UPqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF22C4CECD;
-	Wed,  2 Oct 2024 14:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+EoL/QS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0995EC4CEC2;
+	Wed,  2 Oct 2024 14:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879881;
-	bh=9Nhb3fCzLLDDzzyUfYURFDkqBQ5tC3tQG92PqIKhbeo=;
+	s=korg; t=1727879885;
+	bh=KxhOdn1cgVFxex8rXFHlWOLq2jV8hW8hbw7nrKIwcOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBe7UPqNko1CFRT3upLvtTa589KNx+lZdZkAvYWbgd2N63x/ZWjsNjR/5F/zCarf5
-	 Cclv/VFaUStcPs8asTW95Y+lpguSRK3zI4IWdjsYOcoxbfpyGTVqVRWspRkUtp6xFi
-	 W0HS5jBChON27K/1T9dTWfpmU6R4vcGLfDX224hI=
+	b=h+EoL/QSWeJmQxmDC9QWpVfItyCRlmithDp0bYRanpKI3D40XlAS3P8ibxkb6AH0V
+	 6rxKhC/G8vdoZ7P2T/kaf3a32BLWXYne0b5ikOtY7WaBviVkkQEpprfnkUSdh9z3ig
+	 +Wnx38ed1Ut0fsxWJBFIYpNdSMjnBTmXjNi53e+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Li <pengfei.li_1@nxp.com>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/538] clk: imx: fracn-gppll: fix fractional part of PLL getting lost
-Date: Wed,  2 Oct 2024 14:58:22 +0200
-Message-ID: <20241002125802.638870056@linuxfoundation.org>
+Subject: [PATCH 6.6 272/538] clk: qcom: dispcc-sm8650: Update the GDSC flags
+Date: Wed,  2 Oct 2024 14:58:31 +0200
+Message-ID: <20241002125802.993610222@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,41 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengfei Li <pengfei.li_1@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7622f888fca125ae46f695edf918798ebc0506c5 ]
+[ Upstream commit 7de10ddbdb9d03651cff5fbdc8cf01837c698526 ]
 
-Fractional part of PLL gets lost after re-enabling the PLL. the
-MFN can NOT be automatically loaded when doing frac PLL enable/disable,
-So when re-enable PLL, configure mfn explicitly.
+Add missing POLL_CFG_GDSCR to the MDSS GDSC flags.
 
-Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
-Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-5-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240717-dispcc-sm8550-fixes-v2-4-5c4a3128c40b@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-fracn-gppll.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/dispcc-sm8550.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
-index 44462ab50e513..1becba2b62d0b 100644
---- a/drivers/clk/imx/clk-fracn-gppll.c
-+++ b/drivers/clk/imx/clk-fracn-gppll.c
-@@ -291,6 +291,10 @@ static int clk_fracn_gppll_prepare(struct clk_hw *hw)
- 	if (val & POWERUP_MASK)
- 		return 0;
+diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+index 72558ef25e9e8..9b63d62057ed5 100644
+--- a/drivers/clk/qcom/dispcc-sm8550.c
++++ b/drivers/clk/qcom/dispcc-sm8550.c
+@@ -1611,7 +1611,7 @@ static struct gdsc mdss_gdsc = {
+ 		.name = "mdss_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL | RETAIN_FF_ENABLE,
++	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
-+	if (pll->flags & CLK_FRACN_GPPLL_FRACN)
-+		writel_relaxed(readl_relaxed(pll->base + PLL_NUMERATOR),
-+			       pll->base + PLL_NUMERATOR);
-+
- 	val |= CLKMUX_BYPASS;
- 	writel_relaxed(val, pll->base + PLL_CTRL);
+ static struct gdsc mdss_int2_gdsc = {
+@@ -1620,7 +1620,7 @@ static struct gdsc mdss_int2_gdsc = {
+ 		.name = "mdss_int2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = HW_CTRL | RETAIN_FF_ENABLE,
++	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
+ static struct clk_regmap *disp_cc_sm8550_clocks[] = {
 -- 
 2.43.0
 
