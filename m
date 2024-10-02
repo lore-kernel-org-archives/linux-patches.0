@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647DD1D1302;
-	Wed,  2 Oct 2024 14:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E541D1302;
+	Wed,  2 Oct 2024 14:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878021; cv=none; b=pkPCyZUxlw6RvmDx+YwiR7BrJN451PHmM7KcNf4lBF5eM0fSqkYcUzH27LcqMjKx23kEqKelPCXTmWxrTVdpJA2XHpAduh/NrZKBZqacGBxcO73BINzCvwfrX916TD2hKv/fo0sKxB7R/yvNe5/WInSob6H98GM/w47ofg0Q1Os=
+	t=1727878024; cv=none; b=csXjHzKuGYR/NnvHsT7lObrjCrW4odCfuqnY6+VDABSDGYnKNq2cC1/q5YMN09dYwjUCz4/XlOFlJh1ICRI6vT9MHs/4utwouDwHwoCnVn9gK4otHd71SIdHf1yqKk6LzqxnhbmRre13cvi8IimFmmwCmRFjm87++q15FTE0Jro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878021; c=relaxed/simple;
-	bh=wKcBeuhblnlVZZ3iypzKmDwiUPVPQWI+TFvJ/GKh018=;
+	s=arc-20240116; t=1727878024; c=relaxed/simple;
+	bh=ykck98d/9+d4Ta+Dq8vKPfsJV5Af4tkHJj7vWpYnr+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DE8hiqebGQzi1JQ4YZb2fMbzZoCGn8TZ5r/PqHni6sw/IJ7UTXVOHMEAUEedG/8S9SdYuYgr3fac50JnjLqGas+8aN/1GCarnpH3f0fX/GJYaLysdcF8IPH85R9DOndt3Z6ngYz8Xl8plCdRrtZsXFEljBsWTjdHtcrQbvkZwJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGG9Ulx/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uN2NrdLjQ6VmDhMUFHH1q8sH/D2sYfjeZSM+UjdBWM1ejyH7eLn4JXHU9dqc1nRD53uclRvn4JePiGFTKm+hZmMq02GXeHT1Zvsa0lBYn9r5RWktslE4AmVWN+XHG49/M7irh4WoEZFPhjEiInR230rbk4CgAs3PvLHrupDY6YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VANJc4KN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGG9Ulx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6F4C4CEC2;
-	Wed,  2 Oct 2024 14:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VANJc4KN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C768FC4CEC2;
+	Wed,  2 Oct 2024 14:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878021;
-	bh=wKcBeuhblnlVZZ3iypzKmDwiUPVPQWI+TFvJ/GKh018=;
+	s=korg; t=1727878024;
+	bh=ykck98d/9+d4Ta+Dq8vKPfsJV5Af4tkHJj7vWpYnr+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGG9Ulx/dWHRHXK4vYp3I6vWPlXekAEEIeOiL5dt+thgQ3tvEWYsQDK9u5Dq/B8wV
-	 dGLJzUq1tjML0u42Lcvp1Xna2Ba66yfjde5Ab2K16kX1CwHjlcVKVBjHAlV6tPlblH
-	 risB+zuGVtoz6o1682OLN56bGmvArxZXxCiTTsYI=
+	b=VANJc4KNBJj0nhjrXwGhImfvdqUrYUZel5JCqgE6r9DqI+/5gsYo22czaeOjdtd4M
+	 BEMEE5Wl+hAcGoyb47nbfxZojzeG5bOs91LlBEqanxbCYd4d7X/LdZWxj71cui61S2
+	 KEVjsP40d7vEX8RW7oNL+HZTT1Wxa5yf2Fie2zA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Liu RuiTong <cnitlrt@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 233/634] selftests/bpf: Fix error linking uprobe_multi on mips
-Date: Wed,  2 Oct 2024 14:55:33 +0200
-Message-ID: <20241002125820.296014583@linuxfoundation.org>
+Subject: [PATCH 6.10 268/634] bpf: correctly handle malformed BPF_CORE_TYPE_ID_LOCAL relos
+Date: Wed,  2 Oct 2024 14:56:08 +0200
+Message-ID: <20241002125821.679203971@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,43 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit a5f40d596bff182b4b47547712f540885e8fb17b ]
+[ Upstream commit 3d2786d65aaa954ebd3fcc033ada433e10da21c4 ]
 
-Linking uprobe_multi.c on mips64el fails due to relocation overflows, when
-the GOT entries required exceeds the default maximum. Add a specific CFLAGS
-(-mxgot) for uprobe_multi.c on MIPS that allows using a larger GOT and
-avoids errors such as:
+In case of malformed relocation record of kind BPF_CORE_TYPE_ID_LOCAL
+referencing a non-existing BTF type, function bpf_core_calc_relo_insn
+would cause a null pointer deference.
 
-  /tmp/ccBTNQzv.o: in function `bench':
-  uprobe_multi.c:49:(.text+0x1d7720): relocation truncated to fit: R_MIPS_GOT_DISP against `uprobe_multi_func_08188'
-  uprobe_multi.c:49:(.text+0x1d7730): relocation truncated to fit: R_MIPS_GOT_DISP against `uprobe_multi_func_08189'
-  ...
-  collect2: error: ld returned 1 exit status
+Fix this by adding a proper check upper in call stack, as malformed
+relocation records could be passed from user space.
 
-Fixes: 519dfeaf5119 ("selftests/bpf: Add uprobe_multi test program")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/14eb7b70f8ccef9834874d75eb373cb9292129da.1721692479.git.tony.ambardar@gmail.com
+Simplest reproducer is a program:
+
+    r0 = 0
+    exit
+
+With a single relocation record:
+
+    .insn_off = 0,          /* patch first instruction */
+    .type_id = 100500,      /* this type id does not exist */
+    .access_str_off = 6,    /* offset of string "0" */
+    .kind = BPF_CORE_TYPE_ID_LOCAL,
+
+See the link for original reproducer or next commit for a test case.
+
+Fixes: 74753e1462e7 ("libbpf: Replace btf__type_by_id() with btf_type_by_id().")
+Reported-by: Liu RuiTong <cnitlrt@gmail.com>
+Closes: https://lore.kernel.org/bpf/CAK55_s6do7C+DVwbwY_7nKfUz0YLDoiA1v6X3Y9+p0sWzipFSA@mail.gmail.com/
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20240822080124.2995724-2-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/btf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index dd49c1d23a604..2cca4913f2d45 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -762,6 +762,8 @@ $(OUTPUT)/veristat: $(OUTPUT)/veristat.o
- 	$(call msg,BINARY,,$@)
- 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o $@
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 49aba8e507996..96e8596a76cea 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -8718,6 +8718,7 @@ int bpf_core_apply(struct bpf_core_ctx *ctx, const struct bpf_core_relo *relo,
+ 	struct bpf_core_cand_list cands = {};
+ 	struct bpf_core_relo_res targ_res;
+ 	struct bpf_core_spec *specs;
++	const struct btf_type *type;
+ 	int err;
  
-+# Linking uprobe_multi can fail due to relocation overflows on mips.
-+$(OUTPUT)/uprobe_multi: CFLAGS += $(if $(filter mips, $(ARCH)),-mxgot)
- $(OUTPUT)/uprobe_multi: uprobe_multi.c
- 	$(call msg,BINARY,,$@)
- 	$(Q)$(CC) $(CFLAGS) -O0 $(LDFLAGS) $^ $(LDLIBS) -o $@
+ 	/* ~4k of temp memory necessary to convert LLVM spec like "0:1:0:5"
+@@ -8727,6 +8728,13 @@ int bpf_core_apply(struct bpf_core_ctx *ctx, const struct bpf_core_relo *relo,
+ 	if (!specs)
+ 		return -ENOMEM;
+ 
++	type = btf_type_by_id(ctx->btf, relo->type_id);
++	if (!type) {
++		bpf_log(ctx->log, "relo #%u: bad type id %u\n",
++			relo_idx, relo->type_id);
++		return -EINVAL;
++	}
++
+ 	if (need_cands) {
+ 		struct bpf_cand_cache *cc;
+ 		int i;
 -- 
 2.43.0
 
