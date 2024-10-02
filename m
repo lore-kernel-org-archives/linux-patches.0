@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B93B9475;
-	Wed,  2 Oct 2024 14:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1D81D1E68;
+	Wed,  2 Oct 2024 14:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880545; cv=none; b=ASO4+KATlUytorlffBQAJVanIw/XmQH/YonBBvEqVnQd1oWHBGdbeI/EaIICce/EV7GvgVLkWBH5kwXgGXWD3a/OUmFihJj+adsMSnEFu/+5KbNVYZbLC8AoS+KJXHrTgQfQpa52CSo7v3OV4QWP9RUsZHmP19lWl+ENb1IJznw=
+	t=1727880548; cv=none; b=s/ZbDet/abjs5sSOS6IASreOFcpkZIQ7lFrPCWSJ6MMMPYjMmUfvWTsnDVmcVMx3LZPlYqIl0sgEbH51KMLnhs3cmhyfvygdojnW9C/8W+QeE93i7VbSEXMsEnYGsIqiHnH1vx5W6yQEvUA32eLjwDxWZ7tIj9pvyBq9v45mUSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880545; c=relaxed/simple;
-	bh=2ZGVH5u9bGxffknAm4x1w3632T1V/rEADPzNgcJJHGk=;
+	s=arc-20240116; t=1727880548; c=relaxed/simple;
+	bh=FkfVtVAYzEfwOQhqQ1kXT9EHjdMWCXdCdeqGxy4JCF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxCLKmRHy+1mVRoec/MdF4BTkew0YgiW0H7sszKAu+BR96Z91SScqNmw+vZX4UHpjyIOYWLB7IO6c49tpha+culjpGQUcf/zFoKEsUfapcOuWY8xF3gVH7uzcaB227ie9bMHbsQNr4fhR3z9rVi6wsiepSdixeHEXgfFPvs9flg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASWjrJC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qirPDRWV06iNkIIyS5TRlU85RMktGvk/RvChmPqGCPEVKCYOt+yKfIJkhDoJPbJGGGgP/GqoA2D7gTYXifYfIec6a742rI1C2GZhcfB0gJLPQRD8Ky6LilxB6z5tSWIDLd774ooXaL73aWh59yhOF4U5Kj0+izQ1l+fx6V+yITo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbIv+2kJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASWjrJC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A296C4CEC2;
-	Wed,  2 Oct 2024 14:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbIv+2kJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA12C4CEC2;
+	Wed,  2 Oct 2024 14:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880545;
-	bh=2ZGVH5u9bGxffknAm4x1w3632T1V/rEADPzNgcJJHGk=;
+	s=korg; t=1727880547;
+	bh=FkfVtVAYzEfwOQhqQ1kXT9EHjdMWCXdCdeqGxy4JCF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASWjrJC7WEz1VMhW49KAQIf4NtiRyCTy9w1kESGS7aAUHPpTMAmLS3Ih8JBxBqaZc
-	 d/JGYjRFlgBJzd9oNY+u6MrHCde02IP6uJFB48lnWd6SJ4oe9zGGgj6GVkHhitMujA
-	 SH6pF1q18B1zcViTTYqL4JxuijC/sJY1Lu5g3xsE=
+	b=nbIv+2kJ4y/7ywv7AidS7hR8zpl2L36+DfI9E04E2qd8YpPxnWVoRB2fqoSA0KK2C
+	 uqCljSlTkjnOoNnGTK+39n+4XGL3ao5hnQw6vZRT2r0iKquMm17+IlPVtT2hWjUSfG
+	 X46vHojxR4EF2++6ieu9INZMRxVaV3mpMF4RWdAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Syed Nayyar Waris <syednwaris@gmail.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 495/538] lib/bitmap: add bitmap_{read,write}()
-Date: Wed,  2 Oct 2024 15:02:14 +0200
-Message-ID: <20241002125811.979384170@linuxfoundation.org>
+	Anastasia Belova <abelova@astralinux.ru>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 469/538] arm64: esr: Define ESR_ELx_EC_* constants as UL
+Date: Wed,  2 Oct 2024 15:01:48 +0200
+Message-ID: <20241002125810.955908377@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -57,138 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Syed Nayyar Waris <syednwaris@gmail.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit 63c15822b8dd02a2423cfd92232245ace3f7a11b ]
+commit b6db3eb6c373b97d9e433530d748590421bbeea7 upstream.
 
-The two new functions allow reading/writing values of length up to
-BITS_PER_LONG bits at arbitrary position in the bitmap.
+Add explicit casting to prevent expantion of 32th bit of
+u32 into highest half of u64 in several places.
 
-The code was taken from "bitops: Introduce the for_each_set_clump macro"
-by Syed Nayyar Waris with a number of changes and simplifications:
- - instead of using roundup(), which adds an unnecessary dependency
-   on <linux/math.h>, we calculate space as BITS_PER_LONG-offset;
- - indentation is reduced by not using else-clauses (suggested by
-   checkpatch for bitmap_get_value());
- - bitmap_get_value()/bitmap_set_value() are renamed to bitmap_read()
-   and bitmap_write();
- - some redundant computations are omitted.
+For example, in inject_abt64:
+ESR_ELx_EC_DABT_LOW << ESR_ELx_EC_SHIFT = 0x24 << 26.
+This operation's result is int with 1 in 32th bit.
+While casting this value into u64 (esr is u64) 1
+fills 32 highest bits.
 
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Syed Nayyar Waris <syednwaris@gmail.com>
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/lkml/fe12eedf3666f4af5138de0e70b67a07c7f40338.1592224129.git.syednwaris@gmail.com/
-Suggested-by: Yury Norov <yury.norov@gmail.com>
-Co-developed-by: Alexander Potapenko <glider@google.com>
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 77b0b98bb743 ("btrfs: subpage: fix the bitmap dump which can cause bitmap corruption")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Cc: <stable@vger.kernel.org>
+Fixes: aa8eff9bfbd5 ("arm64: KVM: fault injection into a guest")
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/stable/20240910085016.32120-1-abelova%40astralinux.ru
+Link: https://lore.kernel.org/r/20240910085016.32120-1-abelova@astralinux.ru
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bitmap.h | 77 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+ arch/arm64/include/asm/esr.h |   88 +++++++++++++++++++++----------------------
+ 1 file changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
-index 3c8d2b87a9edc..729ec2453149f 100644
---- a/include/linux/bitmap.h
-+++ b/include/linux/bitmap.h
-@@ -77,6 +77,10 @@ struct device;
-  *  bitmap_to_arr64(buf, src, nbits)            Copy nbits from buf to u64[] dst
-  *  bitmap_get_value8(map, start)               Get 8bit value from map at start
-  *  bitmap_set_value8(map, value, start)        Set 8bit value to map at start
-+ *  bitmap_read(map, start, nbits)              Read an nbits-sized value from
-+ *                                              map at start
-+ *  bitmap_write(map, value, start, nbits)      Write an nbits-sized value to
-+ *                                              map at start
-  *
-  * Note, bitmap_zero() and bitmap_fill() operate over the region of
-  * unsigned longs, that is, bits behind bitmap till the unsigned long
-@@ -613,6 +617,79 @@ static inline void bitmap_set_value8(unsigned long *map, unsigned long value,
- 	map[index] |= value << offset;
- }
+--- a/arch/arm64/include/asm/esr.h
++++ b/arch/arm64/include/asm/esr.h
+@@ -10,63 +10,63 @@
+ #include <asm/memory.h>
+ #include <asm/sysreg.h>
  
-+/**
-+ * bitmap_read - read a value of n-bits from the memory region
-+ * @map: address to the bitmap memory region
-+ * @start: bit offset of the n-bit value
-+ * @nbits: size of value in bits, nonzero, up to BITS_PER_LONG
-+ *
-+ * Returns: value of @nbits bits located at the @start bit offset within the
-+ * @map memory region. For @nbits = 0 and @nbits > BITS_PER_LONG the return
-+ * value is undefined.
-+ */
-+static inline unsigned long bitmap_read(const unsigned long *map,
-+					unsigned long start,
-+					unsigned long nbits)
-+{
-+	size_t index = BIT_WORD(start);
-+	unsigned long offset = start % BITS_PER_LONG;
-+	unsigned long space = BITS_PER_LONG - offset;
-+	unsigned long value_low, value_high;
-+
-+	if (unlikely(!nbits || nbits > BITS_PER_LONG))
-+		return 0;
-+
-+	if (space >= nbits)
-+		return (map[index] >> offset) & BITMAP_LAST_WORD_MASK(nbits);
-+
-+	value_low = map[index] & BITMAP_FIRST_WORD_MASK(start);
-+	value_high = map[index + 1] & BITMAP_LAST_WORD_MASK(start + nbits);
-+	return (value_low >> offset) | (value_high << space);
-+}
-+
-+/**
-+ * bitmap_write - write n-bit value within a memory region
-+ * @map: address to the bitmap memory region
-+ * @value: value to write, clamped to nbits
-+ * @start: bit offset of the n-bit value
-+ * @nbits: size of value in bits, nonzero, up to BITS_PER_LONG.
-+ *
-+ * bitmap_write() behaves as-if implemented as @nbits calls of __assign_bit(),
-+ * i.e. bits beyond @nbits are ignored:
-+ *
-+ *   for (bit = 0; bit < nbits; bit++)
-+ *           __assign_bit(start + bit, bitmap, val & BIT(bit));
-+ *
-+ * For @nbits == 0 and @nbits > BITS_PER_LONG no writes are performed.
-+ */
-+static inline void bitmap_write(unsigned long *map, unsigned long value,
-+				unsigned long start, unsigned long nbits)
-+{
-+	size_t index;
-+	unsigned long offset;
-+	unsigned long space;
-+	unsigned long mask;
-+	bool fit;
-+
-+	if (unlikely(!nbits || nbits > BITS_PER_LONG))
-+		return;
-+
-+	mask = BITMAP_LAST_WORD_MASK(nbits);
-+	value &= mask;
-+	offset = start % BITS_PER_LONG;
-+	space = BITS_PER_LONG - offset;
-+	fit = space >= nbits;
-+	index = BIT_WORD(start);
-+
-+	map[index] &= (fit ? (~(mask << offset)) : ~BITMAP_FIRST_WORD_MASK(start));
-+	map[index] |= value << offset;
-+	if (fit)
-+		return;
-+
-+	map[index + 1] &= BITMAP_FIRST_WORD_MASK(start + nbits);
-+	map[index + 1] |= (value >> space);
-+}
-+
- #endif /* __ASSEMBLY__ */
+-#define ESR_ELx_EC_UNKNOWN	(0x00)
+-#define ESR_ELx_EC_WFx		(0x01)
++#define ESR_ELx_EC_UNKNOWN	UL(0x00)
++#define ESR_ELx_EC_WFx		UL(0x01)
+ /* Unallocated EC: 0x02 */
+-#define ESR_ELx_EC_CP15_32	(0x03)
+-#define ESR_ELx_EC_CP15_64	(0x04)
+-#define ESR_ELx_EC_CP14_MR	(0x05)
+-#define ESR_ELx_EC_CP14_LS	(0x06)
+-#define ESR_ELx_EC_FP_ASIMD	(0x07)
+-#define ESR_ELx_EC_CP10_ID	(0x08)	/* EL2 only */
+-#define ESR_ELx_EC_PAC		(0x09)	/* EL2 and above */
++#define ESR_ELx_EC_CP15_32	UL(0x03)
++#define ESR_ELx_EC_CP15_64	UL(0x04)
++#define ESR_ELx_EC_CP14_MR	UL(0x05)
++#define ESR_ELx_EC_CP14_LS	UL(0x06)
++#define ESR_ELx_EC_FP_ASIMD	UL(0x07)
++#define ESR_ELx_EC_CP10_ID	UL(0x08)	/* EL2 only */
++#define ESR_ELx_EC_PAC		UL(0x09)	/* EL2 and above */
+ /* Unallocated EC: 0x0A - 0x0B */
+-#define ESR_ELx_EC_CP14_64	(0x0C)
+-#define ESR_ELx_EC_BTI		(0x0D)
+-#define ESR_ELx_EC_ILL		(0x0E)
++#define ESR_ELx_EC_CP14_64	UL(0x0C)
++#define ESR_ELx_EC_BTI		UL(0x0D)
++#define ESR_ELx_EC_ILL		UL(0x0E)
+ /* Unallocated EC: 0x0F - 0x10 */
+-#define ESR_ELx_EC_SVC32	(0x11)
+-#define ESR_ELx_EC_HVC32	(0x12)	/* EL2 only */
+-#define ESR_ELx_EC_SMC32	(0x13)	/* EL2 and above */
++#define ESR_ELx_EC_SVC32	UL(0x11)
++#define ESR_ELx_EC_HVC32	UL(0x12)	/* EL2 only */
++#define ESR_ELx_EC_SMC32	UL(0x13)	/* EL2 and above */
+ /* Unallocated EC: 0x14 */
+-#define ESR_ELx_EC_SVC64	(0x15)
+-#define ESR_ELx_EC_HVC64	(0x16)	/* EL2 and above */
+-#define ESR_ELx_EC_SMC64	(0x17)	/* EL2 and above */
+-#define ESR_ELx_EC_SYS64	(0x18)
+-#define ESR_ELx_EC_SVE		(0x19)
+-#define ESR_ELx_EC_ERET		(0x1a)	/* EL2 only */
++#define ESR_ELx_EC_SVC64	UL(0x15)
++#define ESR_ELx_EC_HVC64	UL(0x16)	/* EL2 and above */
++#define ESR_ELx_EC_SMC64	UL(0x17)	/* EL2 and above */
++#define ESR_ELx_EC_SYS64	UL(0x18)
++#define ESR_ELx_EC_SVE		UL(0x19)
++#define ESR_ELx_EC_ERET		UL(0x1a)	/* EL2 only */
+ /* Unallocated EC: 0x1B */
+-#define ESR_ELx_EC_FPAC		(0x1C)	/* EL1 and above */
+-#define ESR_ELx_EC_SME		(0x1D)
++#define ESR_ELx_EC_FPAC		UL(0x1C)	/* EL1 and above */
++#define ESR_ELx_EC_SME		UL(0x1D)
+ /* Unallocated EC: 0x1E */
+-#define ESR_ELx_EC_IMP_DEF	(0x1f)	/* EL3 only */
+-#define ESR_ELx_EC_IABT_LOW	(0x20)
+-#define ESR_ELx_EC_IABT_CUR	(0x21)
+-#define ESR_ELx_EC_PC_ALIGN	(0x22)
++#define ESR_ELx_EC_IMP_DEF	UL(0x1f)	/* EL3 only */
++#define ESR_ELx_EC_IABT_LOW	UL(0x20)
++#define ESR_ELx_EC_IABT_CUR	UL(0x21)
++#define ESR_ELx_EC_PC_ALIGN	UL(0x22)
+ /* Unallocated EC: 0x23 */
+-#define ESR_ELx_EC_DABT_LOW	(0x24)
+-#define ESR_ELx_EC_DABT_CUR	(0x25)
+-#define ESR_ELx_EC_SP_ALIGN	(0x26)
+-#define ESR_ELx_EC_MOPS		(0x27)
+-#define ESR_ELx_EC_FP_EXC32	(0x28)
++#define ESR_ELx_EC_DABT_LOW	UL(0x24)
++#define ESR_ELx_EC_DABT_CUR	UL(0x25)
++#define ESR_ELx_EC_SP_ALIGN	UL(0x26)
++#define ESR_ELx_EC_MOPS		UL(0x27)
++#define ESR_ELx_EC_FP_EXC32	UL(0x28)
+ /* Unallocated EC: 0x29 - 0x2B */
+-#define ESR_ELx_EC_FP_EXC64	(0x2C)
++#define ESR_ELx_EC_FP_EXC64	UL(0x2C)
+ /* Unallocated EC: 0x2D - 0x2E */
+-#define ESR_ELx_EC_SERROR	(0x2F)
+-#define ESR_ELx_EC_BREAKPT_LOW	(0x30)
+-#define ESR_ELx_EC_BREAKPT_CUR	(0x31)
+-#define ESR_ELx_EC_SOFTSTP_LOW	(0x32)
+-#define ESR_ELx_EC_SOFTSTP_CUR	(0x33)
+-#define ESR_ELx_EC_WATCHPT_LOW	(0x34)
+-#define ESR_ELx_EC_WATCHPT_CUR	(0x35)
++#define ESR_ELx_EC_SERROR	UL(0x2F)
++#define ESR_ELx_EC_BREAKPT_LOW	UL(0x30)
++#define ESR_ELx_EC_BREAKPT_CUR	UL(0x31)
++#define ESR_ELx_EC_SOFTSTP_LOW	UL(0x32)
++#define ESR_ELx_EC_SOFTSTP_CUR	UL(0x33)
++#define ESR_ELx_EC_WATCHPT_LOW	UL(0x34)
++#define ESR_ELx_EC_WATCHPT_CUR	UL(0x35)
+ /* Unallocated EC: 0x36 - 0x37 */
+-#define ESR_ELx_EC_BKPT32	(0x38)
++#define ESR_ELx_EC_BKPT32	UL(0x38)
+ /* Unallocated EC: 0x39 */
+-#define ESR_ELx_EC_VECTOR32	(0x3A)	/* EL2 only */
++#define ESR_ELx_EC_VECTOR32	UL(0x3A)	/* EL2 only */
+ /* Unallocated EC: 0x3B */
+-#define ESR_ELx_EC_BRK64	(0x3C)
++#define ESR_ELx_EC_BRK64	UL(0x3C)
+ /* Unallocated EC: 0x3D - 0x3F */
+-#define ESR_ELx_EC_MAX		(0x3F)
++#define ESR_ELx_EC_MAX		UL(0x3F)
  
- #endif /* __LINUX_BITMAP_H */
--- 
-2.43.0
-
+ #define ESR_ELx_EC_SHIFT	(26)
+ #define ESR_ELx_EC_WIDTH	(6)
 
 
