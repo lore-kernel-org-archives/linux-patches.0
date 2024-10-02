@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689D31D04AD;
-	Wed,  2 Oct 2024 13:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5591917B421;
+	Wed,  2 Oct 2024 13:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877024; cv=none; b=eUEgOL+gfDlB28m1ugBDnPnVU2PNYIkMI4l/psNTn9AkivRRdim/feMPSUHWJoZ2ahFuoDVP/zvDJfVYiG+DrNx/qBQ4oy4hMZwjmERItpDgLjPOm3PpXmGf9EoAtY2i3h0GHKu39BjQ4qYPMs+AnaGl9sn35Za+gPtM0037iSU=
+	t=1727877027; cv=none; b=sIENCQ3dsi8iyKvXruUcb92AirLKNzJ6jhYhiMf71r67LJ8oZ31OlX3jzM4t4KrU8OXwthriHhB+b4OGXnmLxGIeFIzUnLQIRfrSanGuqSsejjdBk17BC30uvNBr1Q2i3zquv/NJB7PQqPx3XdkG8+vW/eyEbn97BrXmE2oqlc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877024; c=relaxed/simple;
-	bh=aMC0bibIVOn6zi3wcYPP/gjxotnd14J8nTsHbbnO7fM=;
+	s=arc-20240116; t=1727877027; c=relaxed/simple;
+	bh=vMpqLN9XE/YO+ruVtrdWAknogUJYEgSFuX9i4w/e7hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cj7YbcrEchsNmt506SjKq9xvf1j8NwVHIO0lMyHc2+Z3IrsUYmoz5ULGLaeOjMe8fFhMK17lrfwcdNTQ7RKMER8RAZrE92R4ZntWe1y+C9XCwHB2vhwDxj/qb299MoXZK6QhBBtwxPXQ5Y2opUcpid1qQ9q9zHBArztLaUnlFlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb/xXcew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACc9o5gntgUxD4lWrfo12oOFg6fU2SEWbPs+vQxkFznoYl8MbXJ0l71RlOce2VJmLf8cGo7bebE/2lQLZRIeU7g6L2hFpjwAtMcB6xKZU6N6ZGwU7ubuLlZyRI680DoUh0tBBskew350NpNGhe24VwZJlfYfgI2mJoVtSRk/y1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0McJc1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb/xXcew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F6DC4CEC5;
-	Wed,  2 Oct 2024 13:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0McJc1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA99C4CEC2;
+	Wed,  2 Oct 2024 13:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877024;
-	bh=aMC0bibIVOn6zi3wcYPP/gjxotnd14J8nTsHbbnO7fM=;
+	s=korg; t=1727877027;
+	bh=vMpqLN9XE/YO+ruVtrdWAknogUJYEgSFuX9i4w/e7hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vb/xXcew+8TJ7R5DFWjaWI0lrv1PVHwg4khHQiwTQdryggoQUKBmh1FAohgROPmKf
-	 uhFWuWXavUs/m5PNe+ZxwS+jikf1BWUDTskUx4c5KQv6xqm/tF3jeyb0j0LWccjMl3
-	 oBGl/7CQZzcKnD/krWXVeLA4+1nvfshb9AdBwngA=
+	b=G0McJc1nEQCp/EHBTZ8tkZPPi7S8AszgSeZzPoqfaWzrAl+nPPWDYulcwaTatrpQo
+	 +CRLvIhdVFlEGk0rHb8skikCbTZgRbFOWtVV0L/ca7dZ53iNeeFDuHrd4ib11HY18j
+	 rVFVh1v0dq45e+LRPApoSVDaLHj8IQIeXDWjYxO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Marc Zyngier <maz@kernel.org>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.11 639/695] arm64: esr: Define ESR_ELx_EC_* constants as UL
-Date: Wed,  2 Oct 2024 15:00:37 +0200
-Message-ID: <20241002125848.025657965@linuxfoundation.org>
+Subject: [PATCH 6.11 640/695] arm64: errata: Enable the AC03_CPU_38 workaround for ampere1a
+Date: Wed,  2 Oct 2024 15:00:38 +0200
+Message-ID: <20241002125848.064680515@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,142 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-commit b6db3eb6c373b97d9e433530d748590421bbeea7 upstream.
+commit db0d8a84348b876df7c4276f0cbce5df3b769f5f upstream.
 
-Add explicit casting to prevent expantion of 32th bit of
-u32 into highest half of u64 in several places.
-
-For example, in inject_abt64:
-ESR_ELx_EC_DABT_LOW << ESR_ELx_EC_SHIFT = 0x24 << 26.
-This operation's result is int with 1 in 32th bit.
-While casting this value into u64 (esr is u64) 1
-fills 32 highest bits.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The ampere1a cpu is affected by erratum AC04_CPU_10 which is the same
+bug as AC03_CPU_38. Add ampere1a to the AC03_CPU_38 workaround midr list.
 
 Cc: <stable@vger.kernel.org>
-Fixes: aa8eff9bfbd5 ("arm64: KVM: fault injection into a guest")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/stable/20240910085016.32120-1-abelova%40astralinux.ru
-Link: https://lore.kernel.org/r/20240910085016.32120-1-abelova@astralinux.ru
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Acked-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240827211701.2216719-1-scott@os.amperecomputing.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/esr.h |   88 +++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 44 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    2 ++
+ arch/arm64/Kconfig                          |    2 +-
+ arch/arm64/include/asm/cputype.h            |    2 ++
+ arch/arm64/kernel/cpu_errata.c              |   10 +++++++++-
+ 4 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/esr.h
-+++ b/arch/arm64/include/asm/esr.h
-@@ -10,63 +10,63 @@
- #include <asm/memory.h>
- #include <asm/sysreg.h>
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -55,6 +55,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Ampere         | AmpereOne       | AC03_CPU_38     | AMPERE_ERRATUM_AC03_CPU_38  |
+ +----------------+-----------------+-----------------+-----------------------------+
++| Ampere         | AmpereOne AC04  | AC04_CPU_10     | AMPERE_ERRATUM_AC03_CPU_38  |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A510     | #2457168        | ARM64_ERRATUM_2457168       |
+ +----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -423,7 +423,7 @@ config AMPERE_ERRATUM_AC03_CPU_38
+ 	default y
+ 	help
+ 	  This option adds an alternative code sequence to work around Ampere
+-	  erratum AC03_CPU_38 on AmpereOne.
++	  errata AC03_CPU_38 and AC04_CPU_10 on AmpereOne.
  
--#define ESR_ELx_EC_UNKNOWN	(0x00)
--#define ESR_ELx_EC_WFx		(0x01)
-+#define ESR_ELx_EC_UNKNOWN	UL(0x00)
-+#define ESR_ELx_EC_WFx		UL(0x01)
- /* Unallocated EC: 0x02 */
--#define ESR_ELx_EC_CP15_32	(0x03)
--#define ESR_ELx_EC_CP15_64	(0x04)
--#define ESR_ELx_EC_CP14_MR	(0x05)
--#define ESR_ELx_EC_CP14_LS	(0x06)
--#define ESR_ELx_EC_FP_ASIMD	(0x07)
--#define ESR_ELx_EC_CP10_ID	(0x08)	/* EL2 only */
--#define ESR_ELx_EC_PAC		(0x09)	/* EL2 and above */
-+#define ESR_ELx_EC_CP15_32	UL(0x03)
-+#define ESR_ELx_EC_CP15_64	UL(0x04)
-+#define ESR_ELx_EC_CP14_MR	UL(0x05)
-+#define ESR_ELx_EC_CP14_LS	UL(0x06)
-+#define ESR_ELx_EC_FP_ASIMD	UL(0x07)
-+#define ESR_ELx_EC_CP10_ID	UL(0x08)	/* EL2 only */
-+#define ESR_ELx_EC_PAC		UL(0x09)	/* EL2 and above */
- /* Unallocated EC: 0x0A - 0x0B */
--#define ESR_ELx_EC_CP14_64	(0x0C)
--#define ESR_ELx_EC_BTI		(0x0D)
--#define ESR_ELx_EC_ILL		(0x0E)
-+#define ESR_ELx_EC_CP14_64	UL(0x0C)
-+#define ESR_ELx_EC_BTI		UL(0x0D)
-+#define ESR_ELx_EC_ILL		UL(0x0E)
- /* Unallocated EC: 0x0F - 0x10 */
--#define ESR_ELx_EC_SVC32	(0x11)
--#define ESR_ELx_EC_HVC32	(0x12)	/* EL2 only */
--#define ESR_ELx_EC_SMC32	(0x13)	/* EL2 and above */
-+#define ESR_ELx_EC_SVC32	UL(0x11)
-+#define ESR_ELx_EC_HVC32	UL(0x12)	/* EL2 only */
-+#define ESR_ELx_EC_SMC32	UL(0x13)	/* EL2 and above */
- /* Unallocated EC: 0x14 */
--#define ESR_ELx_EC_SVC64	(0x15)
--#define ESR_ELx_EC_HVC64	(0x16)	/* EL2 and above */
--#define ESR_ELx_EC_SMC64	(0x17)	/* EL2 and above */
--#define ESR_ELx_EC_SYS64	(0x18)
--#define ESR_ELx_EC_SVE		(0x19)
--#define ESR_ELx_EC_ERET		(0x1a)	/* EL2 only */
-+#define ESR_ELx_EC_SVC64	UL(0x15)
-+#define ESR_ELx_EC_HVC64	UL(0x16)	/* EL2 and above */
-+#define ESR_ELx_EC_SMC64	UL(0x17)	/* EL2 and above */
-+#define ESR_ELx_EC_SYS64	UL(0x18)
-+#define ESR_ELx_EC_SVE		UL(0x19)
-+#define ESR_ELx_EC_ERET		UL(0x1a)	/* EL2 only */
- /* Unallocated EC: 0x1B */
--#define ESR_ELx_EC_FPAC		(0x1C)	/* EL1 and above */
--#define ESR_ELx_EC_SME		(0x1D)
-+#define ESR_ELx_EC_FPAC		UL(0x1C)	/* EL1 and above */
-+#define ESR_ELx_EC_SME		UL(0x1D)
- /* Unallocated EC: 0x1E */
--#define ESR_ELx_EC_IMP_DEF	(0x1f)	/* EL3 only */
--#define ESR_ELx_EC_IABT_LOW	(0x20)
--#define ESR_ELx_EC_IABT_CUR	(0x21)
--#define ESR_ELx_EC_PC_ALIGN	(0x22)
-+#define ESR_ELx_EC_IMP_DEF	UL(0x1f)	/* EL3 only */
-+#define ESR_ELx_EC_IABT_LOW	UL(0x20)
-+#define ESR_ELx_EC_IABT_CUR	UL(0x21)
-+#define ESR_ELx_EC_PC_ALIGN	UL(0x22)
- /* Unallocated EC: 0x23 */
--#define ESR_ELx_EC_DABT_LOW	(0x24)
--#define ESR_ELx_EC_DABT_CUR	(0x25)
--#define ESR_ELx_EC_SP_ALIGN	(0x26)
--#define ESR_ELx_EC_MOPS		(0x27)
--#define ESR_ELx_EC_FP_EXC32	(0x28)
-+#define ESR_ELx_EC_DABT_LOW	UL(0x24)
-+#define ESR_ELx_EC_DABT_CUR	UL(0x25)
-+#define ESR_ELx_EC_SP_ALIGN	UL(0x26)
-+#define ESR_ELx_EC_MOPS		UL(0x27)
-+#define ESR_ELx_EC_FP_EXC32	UL(0x28)
- /* Unallocated EC: 0x29 - 0x2B */
--#define ESR_ELx_EC_FP_EXC64	(0x2C)
-+#define ESR_ELx_EC_FP_EXC64	UL(0x2C)
- /* Unallocated EC: 0x2D - 0x2E */
--#define ESR_ELx_EC_SERROR	(0x2F)
--#define ESR_ELx_EC_BREAKPT_LOW	(0x30)
--#define ESR_ELx_EC_BREAKPT_CUR	(0x31)
--#define ESR_ELx_EC_SOFTSTP_LOW	(0x32)
--#define ESR_ELx_EC_SOFTSTP_CUR	(0x33)
--#define ESR_ELx_EC_WATCHPT_LOW	(0x34)
--#define ESR_ELx_EC_WATCHPT_CUR	(0x35)
-+#define ESR_ELx_EC_SERROR	UL(0x2F)
-+#define ESR_ELx_EC_BREAKPT_LOW	UL(0x30)
-+#define ESR_ELx_EC_BREAKPT_CUR	UL(0x31)
-+#define ESR_ELx_EC_SOFTSTP_LOW	UL(0x32)
-+#define ESR_ELx_EC_SOFTSTP_CUR	UL(0x33)
-+#define ESR_ELx_EC_WATCHPT_LOW	UL(0x34)
-+#define ESR_ELx_EC_WATCHPT_CUR	UL(0x35)
- /* Unallocated EC: 0x36 - 0x37 */
--#define ESR_ELx_EC_BKPT32	(0x38)
-+#define ESR_ELx_EC_BKPT32	UL(0x38)
- /* Unallocated EC: 0x39 */
--#define ESR_ELx_EC_VECTOR32	(0x3A)	/* EL2 only */
-+#define ESR_ELx_EC_VECTOR32	UL(0x3A)	/* EL2 only */
- /* Unallocated EC: 0x3B */
--#define ESR_ELx_EC_BRK64	(0x3C)
-+#define ESR_ELx_EC_BRK64	UL(0x3C)
- /* Unallocated EC: 0x3D - 0x3F */
--#define ESR_ELx_EC_MAX		(0x3F)
-+#define ESR_ELx_EC_MAX		UL(0x3F)
+ 	  The affected design reports FEAT_HAFDBS as not implemented in
+ 	  ID_AA64MMFR1_EL1.HAFDBS, but (V)TCR_ELx.{HA,HD} are not RES0
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -143,6 +143,7 @@
+ #define APPLE_CPU_PART_M2_AVALANCHE_MAX	0x039
  
- #define ESR_ELx_EC_SHIFT	(26)
- #define ESR_ELx_EC_WIDTH	(6)
+ #define AMPERE_CPU_PART_AMPERE1		0xAC3
++#define AMPERE_CPU_PART_AMPERE1A	0xAC4
+ 
+ #define MICROSOFT_CPU_PART_AZURE_COBALT_100	0xD49 /* Based on r0p0 of ARM Neoverse N2 */
+ 
+@@ -212,6 +213,7 @@
+ #define MIDR_APPLE_M2_BLIZZARD_MAX MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M2_BLIZZARD_MAX)
+ #define MIDR_APPLE_M2_AVALANCHE_MAX MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M2_AVALANCHE_MAX)
+ #define MIDR_AMPERE1 MIDR_CPU_MODEL(ARM_CPU_IMP_AMPERE, AMPERE_CPU_PART_AMPERE1)
++#define MIDR_AMPERE1A MIDR_CPU_MODEL(ARM_CPU_IMP_AMPERE, AMPERE_CPU_PART_AMPERE1A)
+ #define MIDR_MICROSOFT_AZURE_COBALT_100 MIDR_CPU_MODEL(ARM_CPU_IMP_MICROSOFT, MICROSOFT_CPU_PART_AZURE_COBALT_100)
+ 
+ /* Fujitsu Erratum 010001 affects A64FX 1.0 and 1.1, (v0r0 and v1r0) */
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -456,6 +456,14 @@ static const struct midr_range erratum_s
+ };
+ #endif
+ 
++#ifdef CONFIG_AMPERE_ERRATUM_AC03_CPU_38
++static const struct midr_range erratum_ac03_cpu_38_list[] = {
++	MIDR_ALL_VERSIONS(MIDR_AMPERE1),
++	MIDR_ALL_VERSIONS(MIDR_AMPERE1A),
++	{},
++};
++#endif
++
+ const struct arm64_cpu_capabilities arm64_errata[] = {
+ #ifdef CONFIG_ARM64_WORKAROUND_CLEAN_CACHE
+ 	{
+@@ -772,7 +780,7 @@ const struct arm64_cpu_capabilities arm6
+ 	{
+ 		.desc = "AmpereOne erratum AC03_CPU_38",
+ 		.capability = ARM64_WORKAROUND_AMPERE_AC03_CPU_38,
+-		ERRATA_MIDR_ALL_VERSIONS(MIDR_AMPERE1),
++		ERRATA_MIDR_RANGE_LIST(erratum_ac03_cpu_38_list),
+ 	},
+ #endif
+ 	{
 
 
