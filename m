@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F431D2F5A;
-	Wed,  2 Oct 2024 14:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14E71D0434;
+	Wed,  2 Oct 2024 14:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879908; cv=none; b=OPY7QbmS8KGq/MFoznV963YEhkyt6orIPaOOEHOA/Hf/rXevjeBb0mIl95IeXNDWokUq2rGT3LdWOzjXQDHVHsCTZO5Eb/0/pQ/zT3Bb1uH3/JECvea+FFJddjxHmnow+izeruI42f75P4KjHbyCSFJ/ENlPCUYmLhkzts6yiO0=
+	t=1727879911; cv=none; b=NoNpBc/Q4M+ytTW7X2yliGZ6ByGs5cwPcGuZ3ZJ0e0a7bvmua9jR1r/z6BTQGlP8QdPCxJgAKL6BwcW2LlclNHOiIuPHoOdgjobHy7QCJwLPGUK1uBa5RFR1Ohb7gf3yxVE8htGHWMJjT7Z5vVXT/EjzL7SQjoJJV1E7m/C7dvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879908; c=relaxed/simple;
-	bh=nYn0vwjqi3rycosunMplcXJ8VTRYHKUJJ6SEjQg2vLo=;
+	s=arc-20240116; t=1727879911; c=relaxed/simple;
+	bh=JvIXgDaaD7uVEVQKKICDFOKdiIPo10LgkWVspCUp1GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+aR92bSpg4whcIKHnRCzwsejlBkwbcy1jFESelO1YzxPhyHZ9ZMsa2ayY4U+Y4zJZXXzymPEawF70yharbR2BQ1zFdh7zEPwBCC8qzk2pghOv+j4Ki4hDLIBjwatYM+HIIUHccxPMTgb2ucCwbY790Ir1mDNnYwa/y3IoPAEFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yE4cTCMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZtaPNRw6jx0u+FvqGykxmZ4gBjMOcyfYz5KQ/kAF1W0BPTz23iKr8DC0VYUhBtrU9HP+R5Qfy4jfvC7qvUFo7k9uKXq5yK219tJ9q3J6+s+ubpxs+Gm0UEiG84zqmeQyU5zmpBEF0CntJCeV3o2guSO3ktZ0jucl2yEIk3n570=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb3DSd75; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yE4cTCMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C2C4CEC2;
-	Wed,  2 Oct 2024 14:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb3DSd75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B886C4CEC5;
+	Wed,  2 Oct 2024 14:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879908;
-	bh=nYn0vwjqi3rycosunMplcXJ8VTRYHKUJJ6SEjQg2vLo=;
+	s=korg; t=1727879911;
+	bh=JvIXgDaaD7uVEVQKKICDFOKdiIPo10LgkWVspCUp1GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yE4cTCMoDPMHto2qe5shBeUcIgcHCjorlO6N9pA5fJuUY+SNbfeuueVBqAQNS0Flw
-	 lfErDfHBguIl0df4ILkuNNDRgkY0MISIbXKhSlGiKXGpUhrSfyl2Y96hbeelufA/29
-	 Tha8YPp7aIVEMBV/S/qVpcJJCEAag6kkaFe1I+uo=
+	b=Fb3DSd75mEh/L/hZ2IBC7JeMFmTR61vtoRN5/1wKGkYUdS5WqxnbFBSlktS/u6Ubw
+	 izamrh5252ingJsBmx0j6qjAnambHfj6HG/hSJkBVg22aBhti8Bo2dAoc8jsdLlPoa
+	 KaTRgYsXp2crLasnGFFWg3YrJzomYAbR8vvLukOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Junlin Li <make24@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 280/538] Input: ilitek_ts_i2c - add report id message validation
-Date: Wed,  2 Oct 2024 14:58:39 +0200
-Message-ID: <20241002125803.309164330@linuxfoundation.org>
+Subject: [PATCH 6.6 281/538] drivers: media: dvb-frontends/rtl2832: fix an out-of-bounds write error
+Date: Wed,  2 Oct 2024 14:58:40 +0200
+Message-ID: <20241002125803.347456365@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,48 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Junlin Li <make24@iscas.ac.cn>
 
-[ Upstream commit 208989744a6f01bed86968473312d4e650e600b3 ]
+[ Upstream commit 8ae06f360cfaca2b88b98ca89144548b3186aab1 ]
 
-Ensure that the touchscreen response has correct "report id" byte
-before processing the touch data and discard other messages.
+Ensure index in rtl2832_pid_filter does not exceed 31 to prevent
+out-of-bounds access.
 
-Fixes: 42370681bd46 ("Input: Add support for ILITEK Lego Series")
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240805085511.43955-3-francesco@dolcini.it
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+dev->filters is a 32-bit value, so set_bit and clear_bit functions should
+only operate on indices from 0 to 31. If index is 32, it will attempt to
+access a non-existent 33rd bit, leading to out-of-bounds access.
+Change the boundary check from index > 32 to index >= 32 to resolve this
+issue.
+
+Signed-off-by: Junlin Li <make24@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4b01e01a81b6 ("[media] rtl2832: implement PID filter")
+[hverkuil: added fixes tag, rtl2830_pid_filter -> rtl2832_pid_filter in logmsg]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/ilitek_ts_i2c.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/dvb-frontends/rtl2832.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/ilitek_ts_i2c.c b/drivers/input/touchscreen/ilitek_ts_i2c.c
-index f70af5a173b34..e719f5da68bf5 100644
---- a/drivers/input/touchscreen/ilitek_ts_i2c.c
-+++ b/drivers/input/touchscreen/ilitek_ts_i2c.c
-@@ -37,6 +37,8 @@
- #define ILITEK_TP_CMD_GET_MCU_VER			0x61
- #define ILITEK_TP_CMD_GET_IC_MODE			0xC0
+diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
+index 601cf45c39358..e6a7877a98541 100644
+--- a/drivers/media/dvb-frontends/rtl2832.c
++++ b/drivers/media/dvb-frontends/rtl2832.c
+@@ -983,7 +983,7 @@ static int rtl2832_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid,
+ 		index, pid, onoff, dev->slave_ts);
  
-+#define ILITEK_TP_I2C_REPORT_ID				0x48
-+
- #define REPORT_COUNT_ADDRESS				61
- #define ILITEK_SUPPORT_MAX_POINT			40
+ 	/* skip invalid PIDs (0x2000) */
+-	if (pid > 0x1fff || index > 32)
++	if (pid > 0x1fff || index >= 32)
+ 		return 0;
  
-@@ -163,6 +165,11 @@ static int ilitek_process_and_report_v6(struct ilitek_ts_data *ts)
- 		return error;
- 	}
- 
-+	if (buf[0] != ILITEK_TP_I2C_REPORT_ID) {
-+		dev_err(dev, "get touch info failed. Wrong id: 0x%02X\n", buf[0]);
-+		return -EINVAL;
-+	}
-+
- 	report_max_point = buf[REPORT_COUNT_ADDRESS];
- 	if (report_max_point > ts->max_tp) {
- 		dev_err(dev, "FW report max point:%d > panel info. max:%d\n",
+ 	if (onoff)
 -- 
 2.43.0
 
