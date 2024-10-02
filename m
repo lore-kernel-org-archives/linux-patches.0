@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1301D07AD;
-	Wed,  2 Oct 2024 14:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A281D0B86;
+	Wed,  2 Oct 2024 14:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877945; cv=none; b=qtmHXIXqK/1j2EymHmcIVjXub8WsTiRdZqMV0VYB76iWovj/ifx6kfaYovcgRohXstvPydZ+TrtyqGUO7v7OsL6pcqamXv5QjnLedqrgwR0wv4sUWMpNXfgUyT7DNa/D1Gtm1sxBDsT1Ktr7Q/FbUDVejPiS71s+XmelYbEquNI=
+	t=1727877948; cv=none; b=PIDZ6ZZetrepaFnMI4rBvyur+0cKG9ul/0YrIkfqJ0lt+zWgF8eMoqHed++/M0npaHWO2oE7vXQ8zQMfVCsB7P6ipjXlUZesNoatGaBwTwonilPTiPKv4ghHTmMA86IvyBx4BekjvwP2hZ/UUui6DPDApaojol6+1f/qiH6wOhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877945; c=relaxed/simple;
-	bh=0L+lUWGbzSbuoy5sUloEMyt1UR+69W0wPAS+Qr9TluE=;
+	s=arc-20240116; t=1727877948; c=relaxed/simple;
+	bh=eoMsS4+rcl6+y5wODGM7kuRrsgRpFegyRx5SWqu6qpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIgV74xtJnCYIY9+O8pjQtdJ1ZPn4nxvm7jg2APdqEpFyPZzJtlgxHVQIV/WjE9OAZLJ8xakyfhnR63QnQssj4ZKWSPi5R8MVSFOU4t7EDo/ozpTDKJOvuoGE8FVTfMVHGr4eMyV6W0fWDHwwYFYb1ShpLQ+10ccTXZiRedShMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7iP9RMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5fi0T0fDef12zEqVtkoZ7z6DgC8VkDZpCZYmcZrxssQJvB26USNdMBbrPUTHYBPvAiWVpgLWR7yIN3nmy+xDG2oa8tMz0YgdgyvOpRWu4OvOVZ0+je0DrmBAz/AZHRosNIeeaM/6sA3W5gA+8lVYV80I/8t5E0mQF1STGHq61s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQx2OhU8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7iP9RMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E9C4CEC2;
-	Wed,  2 Oct 2024 14:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQx2OhU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CD2C4CEC2;
+	Wed,  2 Oct 2024 14:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877945;
-	bh=0L+lUWGbzSbuoy5sUloEMyt1UR+69W0wPAS+Qr9TluE=;
+	s=korg; t=1727877948;
+	bh=eoMsS4+rcl6+y5wODGM7kuRrsgRpFegyRx5SWqu6qpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7iP9RMoctldIArxygsKAWTQ4BqAVAL7egmO5fP2Zkz+Hczw9yGuct3A4Cur5jCoY
-	 r8IwOEE+I0S9fPGeRwLsyBDE4Ql5NG2u4SX60mL26N6/zqnD4cr34ZGgqohHc9r4RS
-	 52i+VgS5k2TtgTkcUIKTXSI2ueuCmZfn7hLqQ9mg=
+	b=aQx2OhU8+sTlE3RL2O/SrfXNY+3d5P1EP+5ED82mIeXMZ/OZIWhmL73VJcm4Hx0k2
+	 87apz7ey4VfKt3YtpsL2jYcpO0ZKk9KdAMDcwlpBIvFgpPYTWMnj+qKe89hadzyRpR
+	 4TNDml7HE0gyxvLKhI2EH9SSSqPiixBkFw7kOArY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 249/634] selftests/bpf: Fix compiling core_reloc.c with musl-libc
-Date: Wed,  2 Oct 2024 14:55:49 +0200
-Message-ID: <20241002125820.926823282@linuxfoundation.org>
+Subject: [PATCH 6.10 250/634] selftests/bpf: Fix errors compiling lwt_redirect.c with musl libc
+Date: Wed,  2 Oct 2024 14:55:50 +0200
+Message-ID: <20241002125820.966193650@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,39 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit debfa4f628f271f72933bf38d581cc53cfe1def5 ]
+[ Upstream commit 27c4797ce51c8dd51e35e68e9024a892f62d78b2 ]
 
-The type 'loff_t' is a GNU extension and not exposed by the musl 'fcntl.h'
-header unless _GNU_SOURCE is defined. Add this definition to fix errors
-seen compiling for mips64el/musl-libc:
+Remove a redundant include of '<linux/icmp.h>' which is already provided in
+'lwt_helpers.h'. This avoids errors seen compiling for mips64el/musl-libc:
 
-  In file included from tools/testing/selftests/bpf/prog_tests/core_reloc.c:4:
-  ./bpf_testmod/bpf_testmod.h:10:9: error: unknown type name 'loff_t'
-     10 |         loff_t off;
-        |         ^~~~~~
-  ./bpf_testmod/bpf_testmod.h:16:9: error: unknown type name 'loff_t'
-     16 |         loff_t off;
-        |         ^~~~~~
+  In file included from .../arpa/inet.h:9,
+                   from lwt_redirect.c:51:
+  .../netinet/in.h:23:8: error: redefinition of 'struct in6_addr'
+     23 | struct in6_addr {
+        |        ^~~~~~~~
+  In file included from .../linux/icmp.h:24,
+                   from lwt_redirect.c:50:
+  .../linux/in6.h:33:8: note: originally defined here
+     33 | struct in6_addr {
+        |        ^~~~~~~~
+  .../netinet/in.h:34:8: error: redefinition of 'struct sockaddr_in6'
+     34 | struct sockaddr_in6 {
+        |        ^~~~~~~~~~~~
+  .../linux/in6.h:50:8: note: originally defined here
+     50 | struct sockaddr_in6 {
+        |        ^~~~~~~~~~~~
+  .../netinet/in.h:42:8: error: redefinition of 'struct ipv6_mreq'
+     42 | struct ipv6_mreq {
+        |        ^~~~~~~~~
+  .../linux/in6.h:60:8: note: originally defined here
+     60 | struct ipv6_mreq {
+        |        ^~~~~~~~~
 
-Fixes: 6bcd39d366b6 ("selftests/bpf: Add CO-RE relocs selftest relying on kernel module BTF")
+Fixes: 43a7c3ef8a15 ("selftests/bpf: Add lwt_xmit tests for BPF_REDIRECT")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/11c3af75a7eb6bcb7ad9acfae6a6f470c572eb82.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/3869dda876d5206d2f8d4dd67331c739ceb0c7f8.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/core_reloc.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/prog_tests/lwt_redirect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/core_reloc.c b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
-index 47f42e6801056..26019313e1fc2 100644
---- a/tools/testing/selftests/bpf/prog_tests/core_reloc.c
-+++ b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#define _GNU_SOURCE
- #include <test_progs.h>
- #include "progs/core_reloc_types.h"
- #include "bpf_testmod/bpf_testmod.h"
+diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c b/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
+index 835a1d756c166..b6e8d822e8e95 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
++++ b/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
+@@ -47,7 +47,6 @@
+ #include <linux/if_ether.h>
+ #include <linux/if_packet.h>
+ #include <linux/if_tun.h>
+-#include <linux/icmp.h>
+ #include <arpa/inet.h>
+ #include <unistd.h>
+ #include <errno.h>
 -- 
 2.43.0
 
