@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C731D0949;
-	Wed,  2 Oct 2024 13:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3279D1D049A;
+	Wed,  2 Oct 2024 13:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876395; cv=none; b=g4XeWVWOwFlhgnfKW6rs5nCaSqGiScCwsEarEsMUg09Sd+uhJbKGcH7fw3ooiyhUojpgEfFF+i287BESISsNwWD5lyMEmyjXfQKEt/Lglo3RRn+ruedfxp26htU/mdhj3vH8TmtX48c8AasliQGMae64raFVP/0yZLNQZ9jLeYY=
+	t=1727876398; cv=none; b=vEtkVcMx7rVExiLXg2GwAZ4NDoQKAZeuGDaucrfvBiULFO4SO0O5QHQC38FAk+M00JaXFP58/B+bGxj94oTAKEjL35G/8vLjhDJ6fuK9Y4mqzKaHFrdMzaE6uGWgFqDRQRlQ21Ji2D0012l105mk6ukqe07+qY5R6mKQkQlThhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876395; c=relaxed/simple;
-	bh=c6vnXjBvZgAELsSsXN5WoWPyNwJOhskYveqgLr/3sTU=;
+	s=arc-20240116; t=1727876398; c=relaxed/simple;
+	bh=S2JbjjXBqHg8Og6y0pFZQstAWVncrEfvHd0IIbCWep4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsU6Ly5ztsJ84hXeGfKrDpxf+Kz7KjVL7+wlkjvbeG1G6gtymJah9Ie4emBANeFXETu6yNa4XC1Dh+3IOusqId6asAvvtcFGZBbQwH4Etaf1F3zKEq2Tni4O+gdI2OanUPP/hiVEKtjqYujTHv3o7O9xRuyiipgE+bs7IEE1ink=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkvz4cFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+E61VxRZbdhP5lE7yDxSWuqfFLt0773krpbq9XbL7s3KTc7BbGfzuCpfNobqbjrPU321OXb/SLHL4XIuOiM206Mzu8aiMZPWgI9tj9Xqr0AQZWZdNfi5e6kCg/9vjfTmjMuiAzDQanK8nmpIoDLhhroaPSp41JzVpzogZIdSYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNKzpQd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkvz4cFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59A6C4CECE;
-	Wed,  2 Oct 2024 13:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNKzpQd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD696C4CEC5;
+	Wed,  2 Oct 2024 13:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876395;
-	bh=c6vnXjBvZgAELsSsXN5WoWPyNwJOhskYveqgLr/3sTU=;
+	s=korg; t=1727876398;
+	bh=S2JbjjXBqHg8Og6y0pFZQstAWVncrEfvHd0IIbCWep4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jkvz4cFtqko21U3geTuAAZxlaZOZ295FZRtl9oMLwsYMoBaMH9ci1gcyTaC3oPadM
-	 1ax6CG11wUXHHkse0scFycpFiqmXF1ODi+TDIGtDPcBTTYxCqWlTQufR/2QI/TzvHO
-	 Zx1g3D2h/SjKKSngdScqMIOL3ye6C5HaU+qKsNCw=
+	b=bNKzpQd2kls72sqUboceZjnO2ztTOVM8253e4unwvXq5wa8SYoPqG99lP+U1dvsxa
+	 8sAz5o6xsc9/+wpi4k5ANwfOADqqcNLGmpBokcW46wsd+wh6fdiHvyIBqjQ/mdtnLu
+	 GzfIM/8QmjHPGqPGhaJPIwkQ9rxCCW3cs607/gqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 422/695] RDMA/hns: Fix ah error counter in sw stat not increasing
-Date: Wed,  2 Oct 2024 14:57:00 +0200
-Message-ID: <20241002125839.297943704@linuxfoundation.org>
+Subject: [PATCH 6.11 431/695] nfsd: fix initial getattr on write delegation
+Date: Wed,  2 Oct 2024 14:57:09 +0200
+Message-ID: <20241002125839.667098813@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,63 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 39c047d4047a1242aeefa87513174b56a91080ab ]
+[ Upstream commit bf92e5008b17f935a6de8b708551e02c2294121c ]
 
-There are several error cases where hns_roce_create_ah() returns
-directly without jumping to sw stat path, thus leading to a problem
-that the ah error counter does not increase.
+At this point in compound processing, currentfh refers to the parent of
+the file, not the file itself. Get the correct dentry from the delegation
+stateid instead.
 
-Fixes: ee20cc17e9d8 ("RDMA/hns: Support DSCP")
-Fixes: eb7854d63db5 ("RDMA/hns: Support SW stats with debugfs")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240912115700.2016443-1-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_ah.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c | 33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_ah.c b/drivers/infiniband/hw/hns/hns_roce_ah.c
-index 3e02c474f59fe..4fc5b9d5fea87 100644
---- a/drivers/infiniband/hw/hns/hns_roce_ah.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_ah.c
-@@ -64,8 +64,10 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
- 	u8 tc_mode = 0;
- 	int ret;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 29c11714ac3db..fe06779ea527a 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5912,6 +5912,28 @@ static void nfsd4_open_deleg_none_ext(struct nfsd4_open *open, int status)
+ 	}
+ }
  
--	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08 && udata)
--		return -EOPNOTSUPP;
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08 && udata) {
-+		ret = -EOPNOTSUPP;
-+		goto err_out;
-+	}
++static bool
++nfs4_delegation_stat(struct nfs4_delegation *dp, struct svc_fh *currentfh,
++		     struct kstat *stat)
++{
++	struct nfsd_file *nf = find_rw_file(dp->dl_stid.sc_file);
++	struct path path;
++	int rc;
++
++	if (!nf)
++		return false;
++
++	path.mnt = currentfh->fh_export->ex_path.mnt;
++	path.dentry = file_dentry(nf->nf_file);
++
++	rc = vfs_getattr(&path, stat,
++			 (STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
++			 AT_STATX_SYNC_AS_STAT);
++
++	nfsd_file_put(nf);
++	return rc == 0;
++}
++
+ /*
+  * The Linux NFS server does not offer write delegations to NFSv4.0
+  * clients in order to avoid conflicts between write delegations and
+@@ -5947,7 +5969,6 @@ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+ 	int cb_up;
+ 	int status = 0;
+ 	struct kstat stat;
+-	struct path path;
  
- 	ah->av.port = rdma_ah_get_port_num(ah_attr);
- 	ah->av.gid_index = grh->sgid_index;
-@@ -83,7 +85,7 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
- 		ret = 0;
+ 	cb_up = nfsd4_cb_channel_good(oo->oo_owner.so_client);
+ 	open->op_recall = false;
+@@ -5983,20 +6004,16 @@ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+ 	memcpy(&open->op_delegate_stateid, &dp->dl_stid.sc_stateid, sizeof(dp->dl_stid.sc_stateid));
  
- 	if (ret && grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
--		return ret;
-+		goto err_out;
- 
- 	if (tc_mode == HNAE3_TC_MAP_MODE_DSCP &&
- 	    grh->sgid_attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP)
-@@ -91,8 +93,10 @@ int hns_roce_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
- 	else
- 		ah->av.sl = rdma_ah_get_sl(ah_attr);
- 
--	if (!check_sl_valid(hr_dev, ah->av.sl))
--		return -EINVAL;
-+	if (!check_sl_valid(hr_dev, ah->av.sl)) {
-+		ret = -EINVAL;
-+		goto err_out;
-+	}
- 
- 	memcpy(ah->av.dgid, grh->dgid.raw, HNS_ROCE_GID_SIZE);
- 	memcpy(ah->av.mac, ah_attr->roce.dmac, ETH_ALEN);
+ 	if (open->op_share_access & NFS4_SHARE_ACCESS_WRITE) {
+-		open->op_delegate_type = NFS4_OPEN_DELEGATE_WRITE;
+-		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
+-		path.mnt = currentfh->fh_export->ex_path.mnt;
+-		path.dentry = currentfh->fh_dentry;
+-		if (vfs_getattr(&path, &stat,
+-				(STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
+-				AT_STATX_SYNC_AS_STAT)) {
++		if (!nfs4_delegation_stat(dp, currentfh, &stat)) {
+ 			nfs4_put_stid(&dp->dl_stid);
+ 			destroy_delegation(dp);
+ 			goto out_no_deleg;
+ 		}
++		open->op_delegate_type = NFS4_OPEN_DELEGATE_WRITE;
+ 		dp->dl_cb_fattr.ncf_cur_fsize = stat.size;
+ 		dp->dl_cb_fattr.ncf_initial_cinfo =
+ 			nfsd4_change_attribute(&stat, d_inode(currentfh->fh_dentry));
++		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
+ 	} else {
+ 		open->op_delegate_type = NFS4_OPEN_DELEGATE_READ;
+ 		trace_nfsd_deleg_read(&dp->dl_stid.sc_stateid);
 -- 
 2.43.0
 
