@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8AB1D0412;
-	Wed,  2 Oct 2024 13:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2632C1D041D;
+	Wed,  2 Oct 2024 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876834; cv=none; b=AgP0RnTvBOZirFw7mWV22pFBQB3xGiz1qdH5T/5UjHhqUVQ5mMG/ozXgioxbUyXTFJNjEbflYA7xXxSS1gndr3AyZ5ftnBbanrLg1DvoKbIGKeAORyFK1tJwSD6QKDtLMi78/VMmCgazJ0iVEEGjR7nDdUs0R/SCAft9EJLiPn0=
+	t=1727876837; cv=none; b=OGG3MfVoygp1x+QAiCY+JXdFxgPNhn8B9LjnT0mmHrEJT6nnkKqatLL8XR63NPARwhYy2eACINtbBKEmdiakyurwSjmIkfUrjtiEc0/StphZkp/E8gyA2N0Abo0ciN+/aGov8aw48EDM21ESXdOrBYcwo1GX6DNZVn6qxNhgBqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876834; c=relaxed/simple;
-	bh=E4/bkMvEKNn+CEYFUxOGm6amHXI1MBEzR2t+8P/eFsg=;
+	s=arc-20240116; t=1727876837; c=relaxed/simple;
+	bh=iyKe4uTZLc2/Ls4cNlKix8cffdDLDdM7Gqkfn9hrBc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dBc6S5JfrMfZ3hZVvdnhaYsgwoi3Go75Jw/I8pUvBvyqgEjx590TopfYXUOu9/n+01WH7qIzsSQrUrkqanuSR2q09ezPmP62qd5n+vHpN5DUWYoxcU4icLJrRNTlS7zHTDM2Dn6tR6mGj99tt3oAJ3CEHJpNrrYkMT9dMiVIh10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFnhGjxF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZQS/HcS/aiNTkOvlZax+lrsF5gONo+dmACUdnfj8qn9TVTZcRtb83Z6wNaCjOH+H+Slh65fTjIAA4gw0dn3KzoNu3LY5vhH4UvfCF/M9WkMesWGRfEioEFtxUqXQKbbalfyF4XRnzXbkMJ7jXuD2U8BACdzmh1WOh4n0T2dX5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sk3wZOnm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFnhGjxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC457C4CEC2;
-	Wed,  2 Oct 2024 13:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sk3wZOnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48ABC4CEC2;
+	Wed,  2 Oct 2024 13:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876834;
-	bh=E4/bkMvEKNn+CEYFUxOGm6amHXI1MBEzR2t+8P/eFsg=;
+	s=korg; t=1727876837;
+	bh=iyKe4uTZLc2/Ls4cNlKix8cffdDLDdM7Gqkfn9hrBc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFnhGjxF3vCbqXrpFEwi30yuq/F17CTNFoq/PTSbwsxbCIMABEU9g1nbgQEinzDWd
-	 +055x4R1j0xFVL1kvH65h79TA2boN4o4Rq3nv7f2XNdTnqT1Q0N52Wm+wmZQ2y6BGB
-	 l/nMlDLC0wj9qyMlIUCdXNZHylDv7TCA5ql5lFwU=
+	b=sk3wZOnmPXxTrunigyC4zrQexvds2MBVy6stIFX3qnspB9ieiFTamy5xPLmL6v5/o
+	 Hl218SqcYq+YP63xWSlYTK2xSKqem81LwvGEdPCmrFTpYKa6dwAeKluuwrkYJX6mNX
+	 SeL03FuX0WA0n7gdYLm0aN6uVYvaU6qkYRyfPEzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Stefan=20M=C3=A4tje?= <stefan.maetje@esd.eu>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.11 576/695] can: esd_usb: Remove CAN_CTRLMODE_3_SAMPLES for CAN-USB/3-FD
-Date: Wed,  2 Oct 2024 14:59:34 +0200
-Message-ID: <20241002125845.504565968@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Zhikai Zhai <zhikai.zhai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.11 559/695] drm/amd/display: Skip to enable dsc if it has been off
+Date: Wed,  2 Oct 2024 14:59:17 +0200
+Message-ID: <20241002125844.815407721@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,63 +48,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Mätje <stefan.maetje@esd.eu>
+From: Zhikai Zhai <zhikai.zhai@amd.com>
 
-commit 75b3189540578f96b4996e4849b6649998f49455 upstream.
+commit 4bdc5b504af7de1f649004cfdd37445d36db6703 upstream.
 
-Remove the CAN_CTRLMODE_3_SAMPLES announcement for CAN-USB/3-FD devices
-because these devices don't support it.
+[WHY]
+It makes DSC enable when we commit the stream which need
+keep power off, and then it will skip to disable DSC if
+pipe reset at this situation as power has been off. It may
+cause the DSC unexpected enable on the pipe with the
+next new stream which doesn't support DSC.
 
-The hardware has a Microchip SAM E70 microcontroller that uses a Bosch
-MCAN IP core as CAN FD controller. But this MCAN core doesn't support
-triple sampling.
+[HOW]
+Check the DSC used on current pipe status when update stream.
+Skip to enable if it has been off. The operation enable
+DSC should happen when set power on.
 
-Fixes: 80662d943075 ("can: esd_usb: Add support for esd CAN-USB/3")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefan Mätje <stefan.maetje@esd.eu>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20240904222740.2985864-2-stefan.maetje@esd.eu
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c |   14 ++++++++++++++
+ drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c |   13 +++++++++++++
+ 2 files changed, 27 insertions(+)
 
---- a/drivers/net/can/usb/esd_usb.c
-+++ b/drivers/net/can/usb/esd_usb.c
-@@ -3,7 +3,7 @@
-  * CAN driver for esd electronics gmbh CAN-USB/2, CAN-USB/3 and CAN-USB/Micro
-  *
-  * Copyright (C) 2010-2012 esd electronic system design gmbh, Matthias Fuchs <socketcan@esd.eu>
-- * Copyright (C) 2022-2023 esd electronics gmbh, Frank Jungclaus <frank.jungclaus@esd.eu>
-+ * Copyright (C) 2022-2024 esd electronics gmbh, Frank Jungclaus <frank.jungclaus@esd.eu>
-  */
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -1029,6 +1029,20 @@ void dcn32_update_dsc_on_stream(struct p
+ 		struct dsc_config dsc_cfg;
+ 		struct dsc_optc_config dsc_optc_cfg = {0};
+ 		enum optc_dsc_mode optc_dsc_mode;
++		struct dcn_dsc_state dsc_state = {0};
++
++		if (!dsc) {
++			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
++			return;
++		}
++
++		if (dsc->funcs->dsc_read_state) {
++			dsc->funcs->dsc_read_state(dsc, &dsc_state);
++			if (!dsc_state.dsc_fw_en) {
++				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
++				return;
++			}
++		}
  
- #include <linux/can.h>
-@@ -1116,9 +1116,6 @@ static int esd_usb_3_set_bittiming(struc
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_LISTENONLY)
- 		flags |= ESD_USB_3_BAUDRATE_FLAG_LOM;
+ 		/* Enable DSC hw block */
+ 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -375,7 +375,20 @@ static void update_dsc_on_stream(struct
+ 		struct dsc_config dsc_cfg;
+ 		struct dsc_optc_config dsc_optc_cfg = {0};
+ 		enum optc_dsc_mode optc_dsc_mode;
++		struct dcn_dsc_state dsc_state = {0};
  
--	if (priv->can.ctrlmode & CAN_CTRLMODE_3_SAMPLES)
--		flags |= ESD_USB_3_BAUDRATE_FLAG_TRS;
--
- 	baud_x->nom.brp = cpu_to_le16(nom_bt->brp & (nom_btc->brp_max - 1));
- 	baud_x->nom.sjw = cpu_to_le16(nom_bt->sjw & (nom_btc->sjw_max - 1));
- 	baud_x->nom.tseg1 = cpu_to_le16((nom_bt->prop_seg + nom_bt->phase_seg1)
-@@ -1219,7 +1216,6 @@ static int esd_usb_probe_one_net(struct
- 	switch (le16_to_cpu(dev->udev->descriptor.idProduct)) {
- 	case ESD_USB_CANUSB3_PRODUCT_ID:
- 		priv->can.clock.freq = ESD_USB_3_CAN_CLOCK;
--		priv->can.ctrlmode_supported |= CAN_CTRLMODE_3_SAMPLES;
- 		priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD;
- 		priv->can.bittiming_const = &esd_usb_3_nom_bittiming_const;
- 		priv->can.data_bittiming_const = &esd_usb_3_data_bittiming_const;
++		if (!dsc) {
++			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
++			return;
++		}
++
++		if (dsc->funcs->dsc_read_state) {
++			dsc->funcs->dsc_read_state(dsc, &dsc_state);
++			if (!dsc_state.dsc_fw_en) {
++				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
++				return;
++			}
++		}
+ 		/* Enable DSC hw block */
+ 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
+ 		dsc_cfg.pic_height = stream->timing.v_addressable + stream->timing.v_border_top + stream->timing.v_border_bottom;
 
 
