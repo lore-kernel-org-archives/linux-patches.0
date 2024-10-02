@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753C125771;
-	Wed,  2 Oct 2024 13:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980371D0416;
+	Wed,  2 Oct 2024 13:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875220; cv=none; b=pjm3Mt60qmsji7CZaTmarBW4ZhLQk+9tHS4QAw65ui9Iu0SRJImeaCO7M9xjNXPglKxm0XzUa0FfrttiG/6PHYE1hc0CpYytueyjITvMeBLXOo+JpdHnFV3mLtERXw8enCZEuiliCM+/5G7aTQgtLad3lW69VRrY+o65HoKpGUs=
+	t=1727875223; cv=none; b=oXuUDUDp71myduYMDwor6b8lva14EYwGeB7LT773vWXgL+2cOhEHGQBmxfoqmCzsP/NnBe+Caop7wv86Tkqn8QVLVc2zPHC1HbL86/x2bdYW2JNouf0WxtC9mqTXlV8Fe5cv7SW9yTmKs5OMV3pC2me7pOMUOw6pZ2WrE3ilb2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875220; c=relaxed/simple;
-	bh=rY+6kHR5fMQi18nD/8yo9gjnKi+2obeGaextNckbvTQ=;
+	s=arc-20240116; t=1727875223; c=relaxed/simple;
+	bh=MVGLFpeE9F0pceDHDyzcuXDR9/by3EqQGZnRK4QdUvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoC/Ml14RSdlMtdCS0IIagPEZn5RRaKeSc9gD3Pc8QX2NW+k4mCgjpWpfyXnyDpR3r7ihVXCgl0u9+ajgy280WPNK7eGkCXd1NrPR5OVoH8TNnPvW/6fg1yAqPfMrQRs0uZsq7adzJvFLFzg5w41FaD0iDY4istKwCSwuGzmbX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JV4gPR/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkZZFtqe2VZlq24V3L1osd1Kby3Zr7r2EoUGjYjaV77FNjklN1ownfUkqjybNLvk4QP1dCM16/sIqllIDFZaPYtAt0rkW+IgrnrcfFloknvH+uYkJF5nNXw54RJo3myvZzwWd7ctGwDmpFubW5iwaPQekV5WiLYcd/fZAwUwi3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjxfpp2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JV4gPR/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFDEC4CEC5;
-	Wed,  2 Oct 2024 13:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjxfpp2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE256C4CEC5;
+	Wed,  2 Oct 2024 13:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875220;
-	bh=rY+6kHR5fMQi18nD/8yo9gjnKi+2obeGaextNckbvTQ=;
+	s=korg; t=1727875223;
+	bh=MVGLFpeE9F0pceDHDyzcuXDR9/by3EqQGZnRK4QdUvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JV4gPR/3cEwoCUl/bkLSFHZ8LeCwSjpVOTslGXG55Tl+tASXVeP2Sz5KXzJf24EoV
-	 f5qAFtqCVV2WczLonphnLqmGEUHOb2plCkor3hLPCZwhcYbSxLidccaV6fgNWU3TwP
-	 Xp+xqNHC84fb90320/12vV14Hv0LZ6wSl+iJQfh4=
+	b=gjxfpp2bhFprjzWVqJdSrSD1pcqWjJOV6hJp++NpkDKxfYQ6whwnwnYfLly2L6NhX
+	 ltb7EB9hn6P3SJKuBRiqi4QAI7ono+4Nxwpd6lPy484alPaWfzLpT3WDwegINBa0XC
+	 BJbgw42n3/jhsRbTHuIZbSdiFzUc1IXDyKMh9xLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nadia Pinaeva <n.m.pinaeva@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Calvin Owens <calvin@wbinvd.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 032/695] netfilter: nf_tables: store new sets in dedicated list
-Date: Wed,  2 Oct 2024 14:50:30 +0200
-Message-ID: <20241002125823.774338784@linuxfoundation.org>
+Subject: [PATCH 6.11 033/695] ARM: 9410/1: vfp: Use asm volatile in fmrx/fmxr macros
+Date: Wed,  2 Oct 2024 14:50:31 +0200
+Message-ID: <20241002125823.813905012@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,164 +51,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Calvin Owens <calvin@wbinvd.org>
 
-[ Upstream commit c1aa38866b9c58dc6cf7a5fc6a3e1ca75565169e ]
+[ Upstream commit 89a906dfa8c3b21b3e5360f73c49234ac1eb885b ]
 
-nft_set_lookup_byid() is very slow when transaction becomes large, due to
-walk of the transaction list.
+Floating point instructions in userspace can crash some arm kernels
+built with clang/LLD 17.0.6:
 
-Add a dedicated list that contains only the new sets.
+    BUG: unsupported FP instruction in kernel mode
+    FPEXC == 0xc0000780
+    Internal error: Oops - undefined instruction: 0 [#1] ARM
+    CPU: 0 PID: 196 Comm: vfp-reproducer Not tainted 6.10.0 #1
+    Hardware name: BCM2835
+    PC is at vfp_support_entry+0xc8/0x2cc
+    LR is at do_undefinstr+0xa8/0x250
+    pc : [<c0101d50>]    lr : [<c010a80c>]    psr: a0000013
+    sp : dc8d1f68  ip : 60000013  fp : bedea19c
+    r10: ec532b17  r9 : 00000010  r8 : 0044766c
+    r7 : c0000780  r6 : ec532b17  r5 : c1c13800  r4 : dc8d1fb0
+    r3 : c10072c4  r2 : c0101c88  r1 : ec532b17  r0 : 0044766c
+    Flags: NzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+    Control: 00c5387d  Table: 0251c008  DAC: 00000051
+    Register r0 information: non-paged memory
+    Register r1 information: vmalloc memory
+    Register r2 information: non-slab/vmalloc memory
+    Register r3 information: non-slab/vmalloc memory
+    Register r4 information: 2-page vmalloc region
+    Register r5 information: slab kmalloc-cg-2k
+    Register r6 information: vmalloc memory
+    Register r7 information: non-slab/vmalloc memory
+    Register r8 information: non-paged memory
+    Register r9 information: zero-size pointer
+    Register r10 information: vmalloc memory
+    Register r11 information: non-paged memory
+    Register r12 information: non-paged memory
+    Process vfp-reproducer (pid: 196, stack limit = 0x61aaaf8b)
+    Stack: (0xdc8d1f68 to 0xdc8d2000)
+    1f60:                   0000081f b6f69300 0000000f c10073f4 c10072c4 dc8d1fb0
+    1f80: ec532b17 0c532b17 0044766c b6f9ccd8 00000000 c010a80c 00447670 60000010
+    1fa0: ffffffff c1c13800 00c5387d c0100f10 b6f68af8 00448fc0 00000000 bedea188
+    1fc0: bedea314 00000001 00448ebc b6f9d000 00447608 b6f9ccd8 00000000 bedea19c
+    1fe0: bede9198 bedea188 b6e1061c 0044766c 60000010 ffffffff 00000000 00000000
+    Call trace:
+    [<c0101d50>] (vfp_support_entry) from [<c010a80c>] (do_undefinstr+0xa8/0x250)
+    [<c010a80c>] (do_undefinstr) from [<c0100f10>] (__und_usr+0x70/0x80)
+    Exception stack(0xdc8d1fb0 to 0xdc8d1ff8)
+    1fa0:                                     b6f68af8 00448fc0 00000000 bedea188
+    1fc0: bedea314 00000001 00448ebc b6f9d000 00447608 b6f9ccd8 00000000 bedea19c
+    1fe0: bede9198 bedea188 b6e1061c 0044766c 60000010 ffffffff
+    Code: 0a000061 e3877202 e594003c e3a09010 (eef16a10)
+    ---[ end trace 0000000000000000 ]---
+    Kernel panic - not syncing: Fatal exception in interrupt
+    ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
 
-Before: nft -f ruleset 0.07s user 0.00s system 0% cpu 1:04.84 total
-After: nft -f ruleset 0.07s user 0.00s system 0% cpu 30.115 total
+This is a minimal userspace reproducer on a Raspberry Pi Zero W:
 
-.. where ruleset contains ~10 sets with ~100k elements.
-The above number is for a combined flush+reload of the ruleset.
+    #include <stdio.h>
+    #include <math.h>
 
-With previous flush, even the first NEWELEM has to walk through a few
-hundred thousands of DELSET(ELEM) transactions before the first NEWSET
-object. To cope with random-order-newset-newsetelem we'd need to replace
-commit_set_list with a hashtable.
+    int main(void)
+    {
+            double v = 1.0;
+            printf("%fn", NAN + *(volatile double *)&v);
+            return 0;
+    }
 
-Expectation is that a NEWELEM operation refers to the most recently added
-set, so last entry of the dedicated list should be the set we want.
+Another way to consistently trigger the oops is:
 
-NB: This is not a bug fix per se (functionality is fine), but with
-larger transaction batches list search takes forever, so it would be
-nice to speed this up for -stable too, hence adding a "fixes" tag.
+    calvin@raspberry-pi-zero-w ~$ python -c "import json"
 
-Fixes: 958bee14d071 ("netfilter: nf_tables: use new transaction infrastructure to handle sets")
-Reported-by: Nadia Pinaeva <n.m.pinaeva@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The bug reproduces only when the kernel is built with DYNAMIC_DEBUG=n,
+because the pr_debug() calls act as barriers even when not activated.
+
+This is the output from the same kernel source built with the same
+compiler and DYNAMIC_DEBUG=y, where the userspace reproducer works as
+expected:
+
+    VFP: bounce: trigger ec532b17 fpexc c0000780
+    VFP: emulate: INST=0xee377b06 SCR=0x00000000
+    VFP: bounce: trigger eef1fa10 fpexc c0000780
+    VFP: emulate: INST=0xeeb40b40 SCR=0x00000000
+    VFP: raising exceptions 30000000
+
+    calvin@raspberry-pi-zero-w ~$ ./vfp-reproducer
+    nan
+
+Crudely grepping for vmsr/vmrs instructions in the otherwise nearly
+idential text for vfp_support_entry() makes the problem obvious:
+
+    vmlinux.llvm.good [0xc0101cb8] <+48>:  vmrs   r7, fpexc
+    vmlinux.llvm.good [0xc0101cd8] <+80>:  vmsr   fpexc, r0
+    vmlinux.llvm.good [0xc0101d20] <+152>: vmsr   fpexc, r7
+    vmlinux.llvm.good [0xc0101d38] <+176>: vmrs   r4, fpexc
+    vmlinux.llvm.good [0xc0101d6c] <+228>: vmrs   r0, fpscr
+    vmlinux.llvm.good [0xc0101dc4] <+316>: vmsr   fpexc, r0
+    vmlinux.llvm.good [0xc0101dc8] <+320>: vmrs   r0, fpsid
+    vmlinux.llvm.good [0xc0101dcc] <+324>: vmrs   r6, fpscr
+    vmlinux.llvm.good [0xc0101e10] <+392>: vmrs   r10, fpinst
+    vmlinux.llvm.good [0xc0101eb8] <+560>: vmrs   r10, fpinst2
+
+    vmlinux.llvm.bad  [0xc0101cb8] <+48>:  vmrs   r7, fpexc
+    vmlinux.llvm.bad  [0xc0101cd8] <+80>:  vmsr   fpexc, r0
+    vmlinux.llvm.bad  [0xc0101d20] <+152>: vmsr   fpexc, r7
+    vmlinux.llvm.bad  [0xc0101d30] <+168>: vmrs   r0, fpscr
+    vmlinux.llvm.bad  [0xc0101d50] <+200>: vmrs   r6, fpscr  <== BOOM!
+    vmlinux.llvm.bad  [0xc0101d6c] <+228>: vmsr   fpexc, r0
+    vmlinux.llvm.bad  [0xc0101d70] <+232>: vmrs   r0, fpsid
+    vmlinux.llvm.bad  [0xc0101da4] <+284>: vmrs   r10, fpinst
+    vmlinux.llvm.bad  [0xc0101df8] <+368>: vmrs   r4, fpexc
+    vmlinux.llvm.bad  [0xc0101e5c] <+468>: vmrs   r10, fpinst2
+
+I think LLVM's reordering is valid as the code is currently written: the
+compiler doesn't know the instructions have side effects in hardware.
+
+Fix by using "asm volatile" in fmxr() and fmrx(), so they cannot be
+reordered with respect to each other. The original compiler now produces
+working kernels on my hardware with DYNAMIC_DEBUG=n.
+
+This is the relevant piece of the diff of the vfp_support_entry() text,
+from the original oopsing kernel to a working kernel with this patch:
+
+         vmrs r0, fpscr
+         tst r0, #4096
+         bne 0xc0101d48
+         tst r0, #458752
+         beq 0xc0101ecc
+         orr r7, r7, #536870912
+         ldr r0, [r4, #0x3c]
+         mov r9, #16
+        -vmrs r6, fpscr
+         orr r9, r9, #251658240
+         add r0, r0, #4
+         str r0, [r4, #0x3c]
+         mvn r0, #159
+         sub r0, r0, #-1207959552
+         and r0, r7, r0
+         vmsr fpexc, r0
+         vmrs r0, fpsid
+        +vmrs r6, fpscr
+         and r0, r0, #983040
+         cmp r0, #65536
+         bne 0xc0101d88
+
+Fixes: 4708fb041346 ("ARM: vfp: Reimplement VFP exception entry in C code")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     | 29 ++++++++++++++++++++---------
- 2 files changed, 22 insertions(+), 9 deletions(-)
+ arch/arm/vfp/vfpinstr.h | 48 ++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 22 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 1bfdd16890fac..2be4738eae1cc 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1674,6 +1674,7 @@ struct nft_trans_rule {
+diff --git a/arch/arm/vfp/vfpinstr.h b/arch/arm/vfp/vfpinstr.h
+index 3c7938fd40aad..32090b0fb250b 100644
+--- a/arch/arm/vfp/vfpinstr.h
++++ b/arch/arm/vfp/vfpinstr.h
+@@ -64,33 +64,37 @@
  
- struct nft_trans_set {
- 	struct nft_trans_binding	nft_trans_binding;
-+	struct list_head		list_trans_newset;
- 	struct nft_set			*set;
- 	u32				set_id;
- 	u32				gc_int;
-@@ -1875,6 +1876,7 @@ static inline int nft_request_module(struct net *net, const char *fmt, ...) { re
- struct nftables_pernet {
- 	struct list_head	tables;
- 	struct list_head	commit_list;
-+	struct list_head	commit_set_list;
- 	struct list_head	binding_list;
- 	struct list_head	module_list;
- 	struct list_head	notify_list;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 0a2f793469589..3ea5d01635107 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -393,6 +393,7 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct nft_trans_binding *binding;
-+	struct nft_trans_set *trans_set;
+ #ifdef CONFIG_AS_VFP_VMRS_FPINST
  
- 	list_add_tail(&trans->list, &nft_net->commit_list);
- 
-@@ -402,9 +403,13 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- 
- 	switch (trans->msg_type) {
- 	case NFT_MSG_NEWSET:
-+		trans_set = nft_trans_container_set(trans);
+-#define fmrx(_vfp_) ({			\
+-	u32 __v;			\
+-	asm(".fpu	vfpv2\n"	\
+-	    "vmrs	%0, " #_vfp_	\
+-	    : "=r" (__v) : : "cc");	\
+-	__v;				\
+- })
+-
+-#define fmxr(_vfp_,_var_)		\
+-	asm(".fpu	vfpv2\n"	\
+-	    "vmsr	" #_vfp_ ", %0"	\
+-	   : : "r" (_var_) : "cc")
++#define fmrx(_vfp_) ({				\
++	u32 __v;				\
++	asm volatile (".fpu	vfpv2\n"	\
++		      "vmrs	%0, " #_vfp_	\
++		     : "=r" (__v) : : "cc");	\
++	__v;					\
++})
 +
- 		if (!nft_trans_set_update(trans) &&
- 		    nft_set_is_anonymous(nft_trans_set(trans)))
- 			list_add_tail(&binding->binding_list, &nft_net->binding_list);
++#define fmxr(_vfp_, _var_) ({			\
++	asm volatile (".fpu	vfpv2\n"	\
++		      "vmsr	" #_vfp_ ", %0"	\
++		     : : "r" (_var_) : "cc");	\
++})
+ 
+ #else
+ 
+ #define vfpreg(_vfp_) #_vfp_
+ 
+-#define fmrx(_vfp_) ({			\
+-	u32 __v;			\
+-	asm("mrc p10, 7, %0, " vfpreg(_vfp_) ", cr0, 0 @ fmrx	%0, " #_vfp_	\
+-	    : "=r" (__v) : : "cc");	\
+-	__v;				\
+- })
+-
+-#define fmxr(_vfp_,_var_)		\
+-	asm("mcr p10, 7, %0, " vfpreg(_vfp_) ", cr0, 0 @ fmxr	" #_vfp_ ", %0"	\
+-	   : : "r" (_var_) : "cc")
++#define fmrx(_vfp_) ({						\
++	u32 __v;						\
++	asm volatile ("mrc p10, 7, %0, " vfpreg(_vfp_) ","	\
++		      "cr0, 0 @ fmrx	%0, " #_vfp_		\
++		     : "=r" (__v) : : "cc");			\
++	__v;							\
++})
 +
-+		list_add_tail(&trans_set->list_trans_newset, &nft_net->commit_set_list);
- 		break;
- 	case NFT_MSG_NEWCHAIN:
- 		if (!nft_trans_chain_update(trans) &&
-@@ -611,6 +616,7 @@ static int __nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
++#define fmxr(_vfp_, _var_) ({					\
++	asm volatile ("mcr p10, 7, %0, " vfpreg(_vfp_) ","	\
++		      "cr0, 0 @ fmxr	" #_vfp_ ", %0"		\
++		     : : "r" (_var_) : "cc");			\
++})
  
- 	trans_set = nft_trans_container_set(trans);
- 	INIT_LIST_HEAD(&trans_set->nft_trans_binding.binding_list);
-+	INIT_LIST_HEAD(&trans_set->list_trans_newset);
+ #endif
  
- 	if (msg_type == NFT_MSG_NEWSET && ctx->nla[NFTA_SET_ID] && !desc) {
- 		nft_trans_set_id(trans) =
-@@ -4485,17 +4491,16 @@ static struct nft_set *nft_set_lookup_byid(const struct net *net,
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	u32 id = ntohl(nla_get_be32(nla));
--	struct nft_trans *trans;
-+	struct nft_trans_set *trans;
- 
--	list_for_each_entry(trans, &nft_net->commit_list, list) {
--		if (trans->msg_type == NFT_MSG_NEWSET) {
--			struct nft_set *set = nft_trans_set(trans);
-+	/* its likely the id we need is at the tail, not at start */
-+	list_for_each_entry_reverse(trans, &nft_net->commit_set_list, list_trans_newset) {
-+		struct nft_set *set = trans->set;
- 
--			if (id == nft_trans_set_id(trans) &&
--			    set->table == table &&
--			    nft_active_genmask(set, genmask))
--				return set;
--		}
-+		if (id == trans->set_id &&
-+		    set->table == table &&
-+		    nft_active_genmask(set, genmask))
-+			return set;
- 	}
- 	return ERR_PTR(-ENOENT);
- }
-@@ -10447,6 +10452,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 				nft_flow_rule_destroy(nft_trans_flow_rule(trans));
- 			break;
- 		case NFT_MSG_NEWSET:
-+			list_del(&nft_trans_container_set(trans)->list_trans_newset);
- 			if (nft_trans_set_update(trans)) {
- 				struct nft_set *set = nft_trans_set(trans);
- 
-@@ -10755,6 +10761,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 			nft_trans_destroy(trans);
- 			break;
- 		case NFT_MSG_NEWSET:
-+			list_del(&nft_trans_container_set(trans)->list_trans_newset);
- 			if (nft_trans_set_update(trans)) {
- 				nft_trans_destroy(trans);
- 				break;
-@@ -10850,6 +10857,8 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 		}
- 	}
- 
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_set_list));
-+
- 	nft_set_abort_update(&set_update_list);
- 
- 	synchronize_rcu();
-@@ -11519,6 +11528,7 @@ static int __net_init nf_tables_init_net(struct net *net)
- 
- 	INIT_LIST_HEAD(&nft_net->tables);
- 	INIT_LIST_HEAD(&nft_net->commit_list);
-+	INIT_LIST_HEAD(&nft_net->commit_set_list);
- 	INIT_LIST_HEAD(&nft_net->binding_list);
- 	INIT_LIST_HEAD(&nft_net->module_list);
- 	INIT_LIST_HEAD(&nft_net->notify_list);
-@@ -11549,6 +11559,7 @@ static void __net_exit nf_tables_exit_net(struct net *net)
- 	gc_seq = nft_gc_seq_begin(nft_net);
- 
- 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_set_list));
- 
- 	if (!list_empty(&nft_net->module_list))
- 		nf_tables_module_autoload_cleanup(net);
 -- 
 2.43.0
 
