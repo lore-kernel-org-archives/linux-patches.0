@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997F81D043E;
-	Wed,  2 Oct 2024 13:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34DE1D0B8A;
+	Wed,  2 Oct 2024 13:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877326; cv=none; b=UnSjOGGwm/Xxd3rY33adQp4ljSN9L+oLoITLCWrBlT2OSYru5KlTBrYTwbWLSUoMEaugN/7RFKSL1KjTMY6ddwz5dE6mgCT5GaolgZe/p3s3BTXXJgEXKyMpkb02+zNCqmKZ/RVkIvs/8ZnNN4lPcEA1w1tiSbxeBf1r0KgY9+s=
+	t=1727877329; cv=none; b=QRX/4IwfeH5vCPlD+Hnkm84wXihCXYqqT8VVPSO0+ovm4hu9gjpdL/6T9QSQIrimIUT5GambzrGu/OFT3tDNGA6/fhHHugor43uWKLXpOcxup1zg2atmxz0jKZPvhmKXfcSI/eHWnYuq9GYR7zuNgOKnXZRlvCG1TAgZNLXUSpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877326; c=relaxed/simple;
-	bh=eu+neNZs/HjtvEDU0vZNM5fNBKJn9X/46IgeE865+fA=;
+	s=arc-20240116; t=1727877329; c=relaxed/simple;
+	bh=/zXMkF6+ywu7APOMuxg49zYH+5eIZaxBk3ipeCMfpO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elwsOl7ENIvArPZvJeoBgt/r+L0O1AfRibzROsuHFdjQ5dYC7Gkp2LZfn5UsSzNjy6uGRTWERqRynovs4Ut3F1z3FI0HdIPy1YXq5DQZP4sIcjp0AIIcKfzRN4eDevLM9URiGgVvD7p31bgJdpSnEXHiHXg0mJ2XOVJsFo0xQ3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3kwEe/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bn4DoGACC2crXvWdzgxAKWF0QtNmDEPSe068TUL1VdVoImNbHAuDtatqFr7LoIvSmQpajU/seSyrVhh45SBPKJoSzecSlNwE/lRquYt3mV3XbzZLv+zauOpPS1RiaZ++aitSE6kyIomZ+57DgWjg9lzlX907bFQX2t/85nIL90k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+Z7p4y7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3kwEe/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FC7C4CECE;
-	Wed,  2 Oct 2024 13:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+Z7p4y7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040BCC4CECE;
+	Wed,  2 Oct 2024 13:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877326;
-	bh=eu+neNZs/HjtvEDU0vZNM5fNBKJn9X/46IgeE865+fA=;
+	s=korg; t=1727877329;
+	bh=/zXMkF6+ywu7APOMuxg49zYH+5eIZaxBk3ipeCMfpO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3kwEe/rJGixHbqQO9cJzl+VJC1UH2YbVb3r+jwS+7dqMsEx7WA8FMDF+pY1MFmoQ
-	 bgRmhbzn+CdLEjWUgHGvyimuWu8bVma+4a7riyVTewicozB00WreM1vk0v8BnX8da5
-	 2KV1PlR3J789gNo+cvNAYv/h3Gi4NducDnXpz1Oc=
+	b=m+Z7p4y7FFkEdiKVQMEk1+0lDObJtnEVNQ5NZMUVHQhJ2siiavN7+31lU8S/QnJT3
+	 Xd515glOz5+cxVDw7v4IkvHucF3Z/LqA+AMHQKUE4CKz2lCLvPiLiqY7LLXRKwK/Lo
+	 ltxEpNS0yvVtTfsEukmrUBMAEksZ1n6q/ip0MNXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 044/634] wifi: mac80211: Check for missing VHT elements only for 5 GHz
-Date: Wed,  2 Oct 2024 14:52:24 +0200
-Message-ID: <20241002125812.841987455@linuxfoundation.org>
+Subject: [PATCH 6.10 045/634] ACPICA: Implement ACPI_WARNING_ONCE and ACPI_ERROR_ONCE
+Date: Wed,  2 Oct 2024 14:52:25 +0200
+Message-ID: <20241002125812.881758569@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,71 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-[ Upstream commit 67bb124cd9ae38870667e4f9c876ef8e0f82ec44 ]
+[ Upstream commit 632b746b108e3c62e0795072d00ed597371c738a ]
 
-Check for missing VHT Capabilities and VHT Operation elements in
-association response frame only for 5 GHz links.
+ACPICA commit 2ad4e6e7c4118f4cdfcad321c930b836cec77406
 
-Fixes: 310c8387c638 ("wifi: mac80211: clean up connection process")
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240827103920.dd711282d543.Iaba245cebc52209b0499d5bab7d8a8ef1df9dd65@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+In some cases it is not practical nor useful to nag user about some
+firmware errors that they cannot fix. Add a macro that will print a
+warning or error only once to be used in these cases.
+
+Link: https://github.com/acpica/acpica/commit/2ad4e6e7
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: c82c507126c9 ("ACPICA: executer/exsystem: Don't nag user about every Stall() violating the spec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ include/acpi/acoutput.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 51b00ff7edf15..1faf4d7c115f0 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4317,7 +4317,7 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
- 	    ((assoc_data->wmm && !elems->wmm_param) ||
- 	     (link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_HT &&
- 	      (!elems->ht_cap_elem || !elems->ht_operation)) ||
--	     (link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT &&
-+	     (is_5ghz && link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT &&
- 	      (!elems->vht_cap_elem || !elems->vht_operation)))) {
- 		const struct cfg80211_bss_ies *ies;
- 		struct ieee802_11_elems *bss_elems;
-@@ -4365,19 +4365,22 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
- 			sdata_info(sdata,
- 				   "AP bug: HT operation missing from AssocResp\n");
- 		}
--		if (!elems->vht_cap_elem && bss_elems->vht_cap_elem &&
--		    link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT) {
--			elems->vht_cap_elem = bss_elems->vht_cap_elem;
--			sdata_info(sdata,
--				   "AP bug: VHT capa missing from AssocResp\n");
--		}
--		if (!elems->vht_operation && bss_elems->vht_operation &&
--		    link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT) {
--			elems->vht_operation = bss_elems->vht_operation;
--			sdata_info(sdata,
--				   "AP bug: VHT operation missing from AssocResp\n");
--		}
+diff --git a/include/acpi/acoutput.h b/include/acpi/acoutput.h
+index b1571dd96310a..5e0346142f983 100644
+--- a/include/acpi/acoutput.h
++++ b/include/acpi/acoutput.h
+@@ -193,6 +193,7 @@
+  */
+ #ifndef ACPI_NO_ERROR_MESSAGES
+ #define AE_INFO                         _acpi_module_name, __LINE__
++#define ACPI_ONCE(_fn, _plist)                  { static char _done; if (!_done) { _done = 1; _fn _plist; } }
  
-+		if (is_5ghz) {
-+			if (!elems->vht_cap_elem && bss_elems->vht_cap_elem &&
-+			    link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT) {
-+				elems->vht_cap_elem = bss_elems->vht_cap_elem;
-+				sdata_info(sdata,
-+					   "AP bug: VHT capa missing from AssocResp\n");
-+			}
-+
-+			if (!elems->vht_operation && bss_elems->vht_operation &&
-+			    link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT) {
-+				elems->vht_operation = bss_elems->vht_operation;
-+				sdata_info(sdata,
-+					   "AP bug: VHT operation missing from AssocResp\n");
-+			}
-+		}
- 		kfree(bss_elems);
- 	}
+ /*
+  * Error reporting. Callers module and line number are inserted by AE_INFO,
+@@ -201,8 +202,10 @@
+  */
+ #define ACPI_INFO(plist)                acpi_info plist
+ #define ACPI_WARNING(plist)             acpi_warning plist
++#define ACPI_WARNING_ONCE(plist)        ACPI_ONCE(acpi_warning, plist)
+ #define ACPI_EXCEPTION(plist)           acpi_exception plist
+ #define ACPI_ERROR(plist)               acpi_error plist
++#define ACPI_ERROR_ONCE(plist)          ACPI_ONCE(acpi_error, plist)
+ #define ACPI_BIOS_WARNING(plist)        acpi_bios_warning plist
+ #define ACPI_BIOS_EXCEPTION(plist)      acpi_bios_exception plist
+ #define ACPI_BIOS_ERROR(plist)          acpi_bios_error plist
+@@ -214,8 +217,10 @@
  
+ #define ACPI_INFO(plist)
+ #define ACPI_WARNING(plist)
++#define ACPI_WARNING_ONCE(plist)
+ #define ACPI_EXCEPTION(plist)
+ #define ACPI_ERROR(plist)
++#define ACPI_ERROR_ONCE(plist)
+ #define ACPI_BIOS_WARNING(plist)
+ #define ACPI_BIOS_EXCEPTION(plist)
+ #define ACPI_BIOS_ERROR(plist)
 -- 
 2.43.0
 
