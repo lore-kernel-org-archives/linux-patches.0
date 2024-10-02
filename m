@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD7C1D07A6;
-	Wed,  2 Oct 2024 13:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15531D079F;
+	Wed,  2 Oct 2024 13:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876553; cv=none; b=LTISS5W7dE9VQ+gb7bqY0zBVcVwz2+ZUieaLKiEBM9SvehHTxgMU0B4S1fXeoYSyXn4+WX/kSvb6/YY4LiF268Q7LNB8AR+eifw4RWVjyuSGgKUIw7IqbxlURMDxWHmZHZz69xpMcrwQju3353Tt5P67PYKT6abc3JC7pHjUQ5A=
+	t=1727876556; cv=none; b=DPgJmpOszPl2gsr0Z0iQljveIgizkd041Gh35dmbL8XROVQBRgwF9n6hn2qJBeWOhy+DoWAX/X0tp0o8Bn1QMTQHy06FaiOQwRCXR2j7L3DOPGZHsgbU3nFqsooANrbY65hpMNOxqFOqeSMwyuD433OsDFr6gO2BbpbrVmnRI0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876553; c=relaxed/simple;
-	bh=c53//+4YNvci6+q+XPlh81uQqdbqHwZ5AORfsIW7OZE=;
+	s=arc-20240116; t=1727876556; c=relaxed/simple;
+	bh=MxeOZjjDIunHkLZ3OLM/wn9WItA/C/4Wq8b68/CC+xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DchzrW8reUiNnICvMM/ycg54ABxTb5F1aUc7NUO4RKy6RHsAckzwhzb6mwgQQ7Qro81axV+sMiUJHCSCaMQZy4/jUCX/ZthtuJYYp3grtw+S2RrRsy4xOZ04EHTRC4R1noP3e6mNxqYm/2/hL7cS2ZA3yflL0QTS9xpGSN9c3uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=di4TnCFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CykvSdikiHuPBb+2DBo66V5NXrJU8pE5anyl+PFjP1vkRaeERrvHWjT3bU+ywTWnul49T9RkD6zRNl22ez6qcTdU+bTwL9pwPg07PGHVGOurJapLJID7ZiD4na1iuRsOzXegRBT/c/BcbkEOfOin7J6wR94nF6diH+hv0Or9XTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evCINygi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="di4TnCFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45850C4CEC5;
-	Wed,  2 Oct 2024 13:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evCINygi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39252C4CECE;
+	Wed,  2 Oct 2024 13:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876553;
-	bh=c53//+4YNvci6+q+XPlh81uQqdbqHwZ5AORfsIW7OZE=;
+	s=korg; t=1727876556;
+	bh=MxeOZjjDIunHkLZ3OLM/wn9WItA/C/4Wq8b68/CC+xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=di4TnCFe4LWN/9kpeRLg04ts5mO6ZrTFXZ0KQ/3OTdiib3WDo9MGl7yH98TNb52b4
-	 GJXdSGmqm6TdYp2FvsTZKcmRWHXFfx3XkXpwoS7f29MGQwYii3UzLAuLFzbSiEavoS
-	 yPDRvAORdBBMkTeNijviF2qStGLRe0e9tMtc7+PI=
+	b=evCINygiifPNGxXTH7wcRmZhhKwgfvgaRTjo4jvcqQ45sJmd0W3zv6UATxkwS96vL
+	 VyVtlAXfZSNv0EFI4MUGSZIg/jkWuwfunucp0SbZhY6bhVPaS0tQpk147CcN2MKv01
+	 oVB1KX7EijTl09bFYxSa3qkec/aYY0gWdBmi8Pdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 483/695] net: phy: aquantia: fix setting active_low bit
-Date: Wed,  2 Oct 2024 14:58:01 +0200
-Message-ID: <20241002125841.750534653@linuxfoundation.org>
+Subject: [PATCH 6.11 484/695] net: phy: aquantia: fix applying active_low bit after reset
+Date: Wed,  2 Oct 2024 14:58:02 +0200
+Message-ID: <20241002125841.789831281@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,36 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit d2b366c43443a21d9bcf047f3ee1f09cf9792dc4 ]
+[ Upstream commit 6f9defaf99122d1af9c2562181c77bc99be0672d ]
 
-phy_modify_mmd was used wrongly in aqr_phy_led_active_low_set() resulting
-in a no-op instead of setting the VEND1_GLOBAL_LED_DRIVE_VDD bit.
-Correctly set VEND1_GLOBAL_LED_DRIVE_VDD bit.
+for_each_set_bit was used wrongly in aqr107_config_init() when iterating
+over LEDs. Drop misleading 'index' variable and call
+aqr_phy_led_active_low_set() for each set bit representing an LED which
+is driven by VDD instead of GND pin.
 
 Fixes: 61578f679378 ("net: phy: aquantia: add support for PHY LEDs")
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
 Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/ab963584b0a7e3b4dac39472a4b82ca264d79630.1726580902.git.daniel@makrotopia.org
+Link: https://patch.msgid.link/9b1f0cd91f4cda54c8be56b4fe780480baf4aa0f.1726580902.git.daniel@makrotopia.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/aquantia/aquantia_leds.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/aquantia/aquantia_main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/aquantia/aquantia_leds.c b/drivers/net/phy/aquantia/aquantia_leds.c
-index 0516ac02c3f81..201c8df93fad9 100644
---- a/drivers/net/phy/aquantia/aquantia_leds.c
-+++ b/drivers/net/phy/aquantia/aquantia_leds.c
-@@ -120,7 +120,8 @@ int aqr_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
- int aqr_phy_led_active_low_set(struct phy_device *phydev, int index, bool enable)
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 57b8b8f400fd4..4d156d406bab9 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -489,7 +489,7 @@ static int aqr107_config_init(struct phy_device *phydev)
  {
- 	return phy_modify_mmd(phydev, MDIO_MMD_VEND1, AQR_LED_DRIVE(index),
--			      VEND1_GLOBAL_LED_DRIVE_VDD, enable);
-+			      VEND1_GLOBAL_LED_DRIVE_VDD,
-+			      enable ? VEND1_GLOBAL_LED_DRIVE_VDD : 0);
- }
+ 	struct aqr107_priv *priv = phydev->priv;
+ 	u32 led_active_low;
+-	int ret, index = 0;
++	int ret;
  
- int aqr_phy_led_polarity_set(struct phy_device *phydev, int index, unsigned long modes)
+ 	/* Check that the PHY interface type is compatible */
+ 	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
+@@ -516,10 +516,9 @@ static int aqr107_config_init(struct phy_device *phydev)
+ 
+ 	/* Restore LED polarity state after reset */
+ 	for_each_set_bit(led_active_low, &priv->leds_active_low, AQR_MAX_LEDS) {
+-		ret = aqr_phy_led_active_low_set(phydev, index, led_active_low);
++		ret = aqr_phy_led_active_low_set(phydev, led_active_low, true);
+ 		if (ret)
+ 			return ret;
+-		index++;
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
