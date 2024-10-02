@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95651D1302;
-	Wed,  2 Oct 2024 14:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7791D1302;
+	Wed,  2 Oct 2024 14:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879658; cv=none; b=aI6Fid6U2Fvro843APuBS6OWZhcD/eZp6FS+ezMUp/rv8q126HmyGsCHbETZd07j3Ae25jWsQ361ej/Q/EI4bbb2eL8p3ubYOxcN2XlbNO9zq/b4Oc7HIFk/68cMRYY7BsoWLK7sCHROuUHMhWoPf75TzgOX4uBA54JFPiSuE5o=
+	t=1727879661; cv=none; b=n9UmSLXChKKQbLqHQnldsTyLfLIJ/KwKiKftjo8V8qnuWBJ31dSgrLEIn6LWx+zKLuOm6NGOKbxpLAk/fu9M25Us/MdHldzrh/B5dPhnNS5gzCq8GRzM5sRVvT8kT5ODE+vV08QAILBJ5i6tdm7cETyPeQHexA5WFq6wd6fmTW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879658; c=relaxed/simple;
-	bh=qqDTZmpHvUh4vHTQ20uFYL3eY1Be6CDGmEcXkoFHRho=;
+	s=arc-20240116; t=1727879661; c=relaxed/simple;
+	bh=3n6oSA7WKHEPEX/tnwG7gY8+flshe/6kOqG2XOMKZzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACoa+e/+Wv+beXHlUImonm7cqAkZvVKSVTXOODERyQIRO/cReULII9yqp1OShyeTXPDuzOPrVbWK3iEdM/3+mPCSFC03KubixEP1ggPhvtkkqQsWfD8UyiD3bOX/ZsLGgYHZDStzubflhbU5U6RndAquKnzHVOILQ4ubsv7dGjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4y1xDX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WEOMR0g4pSX5TXoR4xjkc0Ra0lJNBNJ9BgHkcD9D6L2Do9+x9U3Sceb8JRMvmv6qNGLfR45zhLtFBC7TVqYcBpR5m5ngavoCfFQJCc7OqhbjRzFHTiZ8uTHr6FHC6N5Of5lFU8o0e6RHN+qVphBN2SFZAzT4s9oj+ewRZtTDTW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbI4zauC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4y1xDX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B39C4CEC5;
-	Wed,  2 Oct 2024 14:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbI4zauC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479FAC4CEC2;
+	Wed,  2 Oct 2024 14:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879658;
-	bh=qqDTZmpHvUh4vHTQ20uFYL3eY1Be6CDGmEcXkoFHRho=;
+	s=korg; t=1727879661;
+	bh=3n6oSA7WKHEPEX/tnwG7gY8+flshe/6kOqG2XOMKZzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4y1xDX5rXjkULJaTVTPX9rDVwAZtxvY5cBlkNaKAGJpsSUKnZFZuOOiU9BvxNNug
-	 V+T3x10rNC1GfZHo0YTuDENGmEMo0oanKRXbEyTtVfZ05+CeBvWTX510K4ov9Bfwbz
-	 6F3qZnyaSwE7oNOiAwHsPTDYOyfmEORfUJ1S8Cmo=
+	b=wbI4zauCWsJccs6pUf4Jubs7whhLhRDUiKgd1U/Ysd6H7bWnZc5IFyVtWn67xWrwT
+	 aetgVchI46NNeC7WQ5MWpTblB6PCtnvjsKM5CcSlbYKz8NMTx7lnCY0y1bkcsaNv69
+	 kBXW3X2nrJRsBdEbgJBbP4D8zlEHS2cx6UcD1Ooo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/538] selftests/bpf: Fix missing ARRAY_SIZE() definition in bench.c
-Date: Wed,  2 Oct 2024 14:57:12 +0200
-Message-ID: <20241002125759.874423936@linuxfoundation.org>
+Subject: [PATCH 6.6 164/538] drm/msm/dsi: correct programming sequence for SM8350 / SM8450
+Date: Wed,  2 Oct 2024 14:56:43 +0200
+Message-ID: <20241002125758.727700148@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,40 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d44c93fc2f5a0c47b23fa03d374e45259abd92d2 ]
+[ Upstream commit 1328cb7c34bf6d056df9ff694ee5194537548258 ]
 
-Add a "bpf_util.h" include to avoid the following error seen compiling for
-mips64el with musl libc:
+According to the display-drivers, 5nm DSI PLL (v4.2, v4.3) have
+different boundaries for pll_clock_inverters programming. Follow the
+vendor code and use correct values.
 
-  bench.c: In function 'find_benchmark':
-  bench.c:590:25: error: implicit declaration of function 'ARRAY_SIZE' [-Werror=implicit-function-declaration]
-    590 |         for (i = 0; i < ARRAY_SIZE(benchs); i++) {
-        |                         ^~~~~~~~~~
-  cc1: all warnings being treated as errors
-
-Fixes: 8e7c2a023ac0 ("selftests/bpf: Add benchmark runner infrastructure")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/bc4dde77dfcd17a825d8f28f72f3292341966810.1721713597.git.tony.ambardar@gmail.com
+Fixes: 2f9ae4e395ed ("drm/msm/dsi: add support for DSI-PHY on SM8350 and SM8450")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606947/
+Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-3-1149dd8399fe@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/bench.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/bench.c b/tools/testing/selftests/bpf/bench.c
-index 73ce11b0547da..b705cbabe1e2f 100644
---- a/tools/testing/selftests/bpf/bench.c
-+++ b/tools/testing/selftests/bpf/bench.c
-@@ -10,6 +10,7 @@
- #include <sys/sysinfo.h>
- #include <signal.h>
- #include "bench.h"
-+#include "bpf_util.h"
- #include "testing_helpers.h"
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 89a6344bc8653..f72ce6a3c456d 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -135,7 +135,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+ 			config->pll_clock_inverters = 0x00;
+ 		else
+ 			config->pll_clock_inverters = 0x40;
+-	} else {
++	} else if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+ 		if (pll_freq <= 1000000000ULL)
+ 			config->pll_clock_inverters = 0xa0;
+ 		else if (pll_freq <= 2500000000ULL)
+@@ -144,6 +144,16 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+ 			config->pll_clock_inverters = 0x00;
+ 		else
+ 			config->pll_clock_inverters = 0x40;
++	} else {
++		/* 4.2, 4.3 */
++		if (pll_freq <= 1000000000ULL)
++			config->pll_clock_inverters = 0xa0;
++		else if (pll_freq <= 2500000000ULL)
++			config->pll_clock_inverters = 0x20;
++		else if (pll_freq <= 3500000000ULL)
++			config->pll_clock_inverters = 0x00;
++		else
++			config->pll_clock_inverters = 0x40;
+ 	}
  
- struct env env = {
+ 	config->decimal_div_start = dec;
 -- 
 2.43.0
 
