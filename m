@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961301D0789;
-	Wed,  2 Oct 2024 13:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8634218DF60;
+	Wed,  2 Oct 2024 13:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876275; cv=none; b=EJcVjMSxrxxUwfVkmd5uXmDwu/nM9RD5v3I7sKZ5Sdo39SRQPCHtQTuWLjwUYcCqfVRod9pRTDun1kb5GeSya8brHJdjXO6gCIG3S48gUSDrRrTyCCnmzMoBWOUUNCwAdUTxcxLkGDCgumow5oEoLDMRW81OiZJamYlQ/fSMBdM=
+	t=1727876278; cv=none; b=NfOp6Kf1So3HJBSF94+Gd6GP3rC6EzHqGZL2TAkTVyaZ/zKiWcvtrfd7qEvMt6KV5r4iN3MplMEVUDaLUxQgkkjgUc6KHWZNWKfj/NZ85SgjhwCrsoD2JK00HY3g01LcHUeTnIB3OQARdb02j9i3Irlh2UFrU3mVrd0FfBw0bEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876275; c=relaxed/simple;
-	bh=qC0qacO9b/IbczpszvGAqOYeu/+5Nngl5yI5LKYDrc0=;
+	s=arc-20240116; t=1727876278; c=relaxed/simple;
+	bh=lpH6awnpzZrXg/pvQ34FGUcyd/fmrlyjjhBuG9RjEYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeRYkykRIWwug310cyKzsWpAzsVwnDTYiYLf2ipHgiOxWj5ig1d2c1E/MmaULQFiReOrOmwH+tQo5BmLiEFs0VXbKJ5CBeeVvQ7UnghOsUprTXccUhz/fm9mZXGgju+rGcb4yyroE2DlX+KpvcRIq19pYetfEWjNGMICwazWRm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I89ujQrS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oNZiQUttOLBboScuOdeL1mIPSMDEccHFQXwDOA2hJIV2wuEtiBaATQ4Eszoxodti72CC7vaAaHNeqlE35Ycs0/JBP4W6XWC0aNfAt5mMrt4cWmD8x8VK3/kxzvjq6ZQqo0QP65/B2K3RelrtTtwwycrfWriUAN64Y98ItbECbEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tst/bNAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I89ujQrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF77C4CECD;
-	Wed,  2 Oct 2024 13:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tst/bNAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD20C4CECD;
+	Wed,  2 Oct 2024 13:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876275;
-	bh=qC0qacO9b/IbczpszvGAqOYeu/+5Nngl5yI5LKYDrc0=;
+	s=korg; t=1727876278;
+	bh=lpH6awnpzZrXg/pvQ34FGUcyd/fmrlyjjhBuG9RjEYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I89ujQrSkeXSAnqgWLcKp4Ru3yMJ20sbQorpEhBwK981SumuBhv0XW94ndFbii2HP
-	 C7F+8vdOJMMDcA6nlBPKSvxAbuImhWvAu7Haxanikbc1PLkgZEJyh5JbgrvI68kkf6
-	 igS5Bl+DDeBQ8bQxrRwVWoWDtTgB2jTiWFQfiohg=
+	b=Tst/bNAurNyDUKIgUIwH4exFHCLWXVZs9y2LE+gioZ7sRYIqVuvUKAPnoGVxi9mR/
+	 bAxiszzjfBr35oVfrYk892EbxLpnJv62yjrYMhO8hH++LcQ0LJk4y0iNdhyNwqY94x
+	 uUciF91aL4HTOqp4zLEXbwUiUpAkAm6lc8/4tTho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 357/695] clk: qcom: dispcc-sm8650: Update the GDSC flags
-Date: Wed,  2 Oct 2024 14:55:55 +0200
-Message-ID: <20241002125836.694383010@linuxfoundation.org>
+Subject: [PATCH 6.11 358/695] clk: qcom: dispcc-sm8550: use rcg2_shared_ops for ESC RCGs
+Date: Wed,  2 Oct 2024 14:55:56 +0200
+Message-ID: <20241002125836.734023016@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,14 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7de10ddbdb9d03651cff5fbdc8cf01837c698526 ]
+[ Upstream commit c8bee3ff6c9220092b646ff929f9c832c1adab6d ]
 
-Add missing POLL_CFG_GDSCR to the MDSS GDSC flags.
+Follow the recommendations and park disp_cc_mdss_esc[01]_clk_src to the
+XO instead of disabling the clocks by using the clk_rcg2_shared_ops.
 
 Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240717-dispcc-sm8550-fixes-v2-4-5c4a3128c40b@linaro.org
+Link: https://lore.kernel.org/r/20240717-dispcc-sm8550-fixes-v2-5-5c4a3128c40b@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -69,27 +70,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
-index a98230540782c..eb7e432d9eeed 100644
+index eb7e432d9eeed..19066ea58224e 100644
 --- a/drivers/clk/qcom/dispcc-sm8550.c
 +++ b/drivers/clk/qcom/dispcc-sm8550.c
-@@ -1611,7 +1611,7 @@ static struct gdsc mdss_gdsc = {
- 		.name = "mdss_gdsc",
+@@ -562,7 +562,7 @@ static struct clk_rcg2 disp_cc_mdss_esc0_clk_src = {
+ 		.parent_data = disp_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-+	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
  };
  
- static struct gdsc mdss_int2_gdsc = {
-@@ -1620,7 +1620,7 @@ static struct gdsc mdss_int2_gdsc = {
- 		.name = "mdss_int2_gdsc",
+@@ -577,7 +577,7 @@ static struct clk_rcg2 disp_cc_mdss_esc1_clk_src = {
+ 		.parent_data = disp_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-+	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
  };
  
- static struct clk_regmap *disp_cc_sm8550_clocks[] = {
 -- 
 2.43.0
 
