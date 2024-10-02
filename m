@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3EC1CFEDA;
-	Wed,  2 Oct 2024 13:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F61D040E;
+	Wed,  2 Oct 2024 13:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875194; cv=none; b=HShn+PyiWVNOUYNB/8mGtNlmYDTGMXM0Yjf1WKvTL3bOsjjNX2XH885D3S/aHOZH3BWTl+63L/qZ1x6ImEKxRcy87/Ood6661DubB8cAckTS0YZ9p48X2mCVUpn95fEE5QaWu+RkND/Ci/sKoABWy+3V+hDS3odqKd0NuS/yTcU=
+	t=1727875197; cv=none; b=uF7vIvkpD2HTIPPQxecOePmSVsZ4U5T/ORF+uHITckUqN1m0s+OLBxmS7TrwfbxW66y5z3EaJmPCeM3pS5nyujTmCR4JtSk4yvz4ojRZuAb/ZGaWtQJv6byjAU6n42dvvxR867vv33Ye7QskIfUpOvVLQ6mcw+yHirRrxBY00kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875194; c=relaxed/simple;
-	bh=/RsZufGKoepoaheSv8E5lvetTGKD1gDj1V9EkxFJs7g=;
+	s=arc-20240116; t=1727875197; c=relaxed/simple;
+	bh=ckpU5O5hpWAaCat/imvUhq3tX884iKGLzlYEZ1uTjQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g052yl8d9KzYcQLed9FVivrbmZJnQE2FSey/zPvtzad8KFZ7Nrx3IiJnSxwpdPTk7i5BXa/cxowBhVUv/g7zkiJC4qEBcjQ3YHKfr44sXScA8pjFxtX1x8zBDikZNEfqaIt0iRx0FQmZoJtVdNYG1LBwR13fTCn+T4Bb/avO2fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBJK4D8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTImFlzsneKidNNjp7NOTWbepaTKa5FIML5McIFW163CGoTLz8ovhr8O/vW90HuQWBVS2ZVMl0TvOyBV4Rj5dQTRmdoaDocX0haHZBmDTPGRZ7Xa0qcAIF2TGfh3k7/7stoCDuAtoSU9G4wKtg9Nuk4mUsGdj1EtRdNE2NKS97c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+CyxfEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBJK4D8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8783CC4CEC5;
-	Wed,  2 Oct 2024 13:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+CyxfEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6726FC4CECD;
+	Wed,  2 Oct 2024 13:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875193;
-	bh=/RsZufGKoepoaheSv8E5lvetTGKD1gDj1V9EkxFJs7g=;
+	s=korg; t=1727875197;
+	bh=ckpU5O5hpWAaCat/imvUhq3tX884iKGLzlYEZ1uTjQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBJK4D8T48klyQjeud5AFiHRq3JCQKaQ80YjnWpBsAUilLhkNz6KMJFrzbbCQYeFl
-	 DfUVAgsmdF3s6Q0Nr0NbRknN7dj7vwjKCJeNWu4Yr8SX5f0q/RHD6FYoZmbNfNbVIA
-	 SfwQRjrIzSh2x0DHqiL0wI3adwmYhBkpovPxnbJI=
+	b=x+CyxfEn/FLjeTbBGK7hMteSoZ7rey96FcBQo0lRWs6WWTmwwRGNiT9uJgDOxwPzd
+	 ypfXO4uGL/ClZhVBfKo5tq4mhyyrF7rh1qsS3jb0KYBwIRo7r8SlJQtrX/ZcMhBlNh
+	 0/w8f0ZJtryVuI0wBs6Vzu0fcHjXuqKVWbWnxHuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 015/695] wifi: ath12k: fix invalid AMPDU factor calculation in ath12k_peer_assoc_h_he()
-Date: Wed,  2 Oct 2024 14:50:13 +0200
-Message-ID: <20241002125823.099716029@linuxfoundation.org>
+Subject: [PATCH 6.11 024/695] wifi: rtw89: remove unused C2H event ID RTW89_MAC_C2H_FUNC_READ_WOW_CAM to prevent out-of-bounds reading
+Date: Wed,  2 Oct 2024 14:50:22 +0200
+Message-ID: <20241002125823.458843056@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,41 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit a66de2d0f22b1740f3f9777776ad98c4bee62dff ]
+[ Upstream commit 56310ddb50b190b3390fdc974aec455d0a516bd2 ]
 
-Currently ampdu_factor is wrongly calculated in ath12k_peer_assoc_h_he(), fix it.
+The handler of firmware C2H event RTW89_MAC_C2H_FUNC_READ_WOW_CAM isn't
+implemented, but driver expects number of handlers is
+NUM_OF_RTW89_MAC_C2H_FUNC_WOW causing out-of-bounds access. Fix it by
+removing ID.
 
-This is found during code review.
+Addresses-Coverity-ID: 1598775 ("Out-of-bounds read")
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240710021819.87216-1-quic_bqiang@quicinc.com
+Fixes: ff53fce5c78b ("wifi: rtw89: wow: update latest PTK GTK info to mac80211 after resume")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240809072012.84152-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index ce41c8153080c..a3248d9775329 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -2196,9 +2196,8 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
- 	 * request, then use MAX_AMPDU_LEN_FACTOR as 16 to calculate max_ampdu
- 	 * length.
- 	 */
--	ampdu_factor = (he_cap->he_cap_elem.mac_cap_info[3] &
--			IEEE80211_HE_MAC_CAP3_MAX_AMPDU_LEN_EXP_MASK) >>
--			IEEE80211_HE_MAC_CAP3_MAX_AMPDU_LEN_EXP_MASK;
-+	ampdu_factor = u8_get_bits(he_cap->he_cap_elem.mac_cap_info[3],
-+				   IEEE80211_HE_MAC_CAP3_MAX_AMPDU_LEN_EXP_MASK);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index d5895516b3ed5..4c619cec602fc 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -421,7 +421,6 @@ enum rtw89_mac_c2h_mrc_func {
  
- 	if (ampdu_factor) {
- 		if (sta->deflink.vht_cap.vht_supported)
+ enum rtw89_mac_c2h_wow_func {
+ 	RTW89_MAC_C2H_FUNC_AOAC_REPORT,
+-	RTW89_MAC_C2H_FUNC_READ_WOW_CAM,
+ 
+ 	NUM_OF_RTW89_MAC_C2H_FUNC_WOW,
+ };
 -- 
 2.43.0
 
