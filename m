@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E441D0493;
-	Wed,  2 Oct 2024 14:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9DC1D174A;
+	Wed,  2 Oct 2024 14:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879440; cv=none; b=qasadYR0VzrQPXQlIaNLi904/IZQ5DrOmEdanpdwv0EK49b2mZ26u6VpZ75xpyEjn5Q0EWwastXkEnePHFpEyhTFvwTqbJhkxV0GyBwGYd1n/DbzUYrLP6PziZmE7RIz9CoGGIC8lzlpIq5baITDH+i4Qbbih/I469xFqpEznQk=
+	t=1727879442; cv=none; b=E9hY9dzbEf135l8H1Ph7myNuhh0nEpyc7O0NggxS9ULWqpNf4jsymKyp8l0OIGNcfi1t4fLsxvp1aBXBYHwMXrItsURPp3RWKoXOaMcrMHBM0yQuHkS29DAOvpL9aLQcKefNXQCY/PZIWcR682mMskC4DxZhsGkoUqdpzzjCV60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879440; c=relaxed/simple;
-	bh=Ldy1VtWrHE0TVOQY/nFfZoTX224+46yOJcLXggGKWno=;
+	s=arc-20240116; t=1727879442; c=relaxed/simple;
+	bh=EiXTvfT4ZHuuHZ6TmloK0zOyMJzqKlqo7XglJVJdcuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzRIIzfRfK/Chbn/ekboQ7BvqaJUUf/B0Cxh7HrW0Y6TSfaWL+3tF2QbJpUMCyfHNYZDiLzfICJnuCwuGvMpjvEzKd5vMWBHF7Mz17kEAf797Ki8Plv9jeNYD1l0a8ECWlUI8ThuIv097pw7Pui6WRwHMC1zdfflLHxc8OCTtGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhWAMYBk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ru1a5RF+j4GgbOVfUbQ+kWEKmCTl0t6DYfg34p7lEOSyIwPn/20kt5I146NP3bwET52iqTf18NDC4E6m1EPol9r8X3ZdR3u1HBfORm7xsSD5BTPtcePBYAvQ/0FqxcegDB2gwxJA1rxGeKc5rZX5yIy4fVaVoLksZeeOA+H8LPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygB1Ddts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhWAMYBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6381CC4CEC2;
-	Wed,  2 Oct 2024 14:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygB1Ddts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B530C4CEC2;
+	Wed,  2 Oct 2024 14:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879439;
-	bh=Ldy1VtWrHE0TVOQY/nFfZoTX224+46yOJcLXggGKWno=;
+	s=korg; t=1727879442;
+	bh=EiXTvfT4ZHuuHZ6TmloK0zOyMJzqKlqo7XglJVJdcuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhWAMYBkiVD0QT8NX2OrFX3yt4nhB3v7RWuNQTA87IABR/gFMT5wIrl3rhPPwyI5m
-	 Sa4nnatqcnsLbyhu4OILcYfmBKGU2yPs5VT1V5ll3SEtfEMBKlZ4Tb9RlNfkMoM1s7
-	 EzPIZQsz1916D/l3b37jzjzHZ9Kt6/3GuLvs55Uo=
+	b=ygB1DdtsWIXWF9g6pJxkGFy1upl459ivdR4Rgyv7+wzFVAtS3f56swzCHVkIBbYGm
+	 zKCXq75H6GkXqY+IskiF9VH9LSHhery91znFnDoO1RotbQwXdrgNLrmnv95tTMeVjq
+	 +DDR2VE0XwzNUdsCSyxaPINo5VDcbTg7UX8rChOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tangbin <tangbin@cmss.chinamobile.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/538] ASoC: loongson: fix error release
-Date: Wed,  2 Oct 2024 14:55:58 +0200
-Message-ID: <20241002125756.943877737@linuxfoundation.org>
+Subject: [PATCH 6.6 120/538] hwmon: (max16065) Fix overflows seen when writing limits
+Date: Wed,  2 Oct 2024 14:55:59 +0200
+Message-ID: <20241002125756.982937766@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tangbin <tangbin@cmss.chinamobile.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 97688a9c5b1fd2b826c682cdfa36d411a5c99828 ]
+[ Upstream commit 744ec4477b11c42e2c8de9eb8364675ae7a0bd81 ]
 
-In function loongson_card_parse_of(), when get device_node
-'codec' failed, the function of_node_put(codec) should not
-be invoked, thus fix error release.
+Writing large limits resulted in overflows as reported by module tests.
 
-Fixes: d24028606e76 ("ASoC: loongson: Add Loongson ASoC Sound Card Support")
-Signed-off-by: tangbin <tangbin@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240903090620.6276-1-tangbin@cmss.chinamobile.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+in0_lcrit: Suspected overflow: [max=5538, read 0, written 2147483647]
+in0_crit: Suspected overflow: [max=5538, read 0, written 2147483647]
+in0_min: Suspected overflow: [max=5538, read 0, written 2147483647]
+
+Fix the problem by clamping prior to multiplications and the use of
+DIV_ROUND_CLOSEST, and by using consistent variable types.
+
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/loongson/loongson_card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/max16065.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/loongson/loongson_card.c b/sound/soc/loongson/loongson_card.c
-index 406ee8db1a3c5..8cc54aedd0024 100644
---- a/sound/soc/loongson/loongson_card.c
-+++ b/sound/soc/loongson/loongson_card.c
-@@ -127,8 +127,8 @@ static int loongson_card_parse_of(struct loongson_card_data *data)
- 	codec = of_get_child_by_name(dev->of_node, "codec");
- 	if (!codec) {
- 		dev_err(dev, "audio-codec property missing or invalid\n");
--		ret = -EINVAL;
--		goto err;
-+		of_node_put(cpu);
-+		return -EINVAL;
- 	}
+diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
+index aa38c45adc09e..e392529de098e 100644
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -114,9 +114,10 @@ static inline int LIMIT_TO_MV(int limit, int range)
+ 	return limit * range / 256;
+ }
  
- 	for (i = 0; i < card->num_links; i++) {
+-static inline int MV_TO_LIMIT(int mv, int range)
++static inline int MV_TO_LIMIT(unsigned long mv, int range)
+ {
+-	return clamp_val(DIV_ROUND_CLOSEST(mv * 256, range), 0, 255);
++	mv = clamp_val(mv, 0, ULONG_MAX / 256);
++	return DIV_ROUND_CLOSEST(clamp_val(mv * 256, 0, range * 255), range);
+ }
+ 
+ static inline int ADC_TO_CURR(int adc, int gain)
 -- 
 2.43.0
 
