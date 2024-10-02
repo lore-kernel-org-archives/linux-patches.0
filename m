@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3279D1D049A;
-	Wed,  2 Oct 2024 13:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6947D1D049A;
+	Wed,  2 Oct 2024 13:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876398; cv=none; b=vEtkVcMx7rVExiLXg2GwAZ4NDoQKAZeuGDaucrfvBiULFO4SO0O5QHQC38FAk+M00JaXFP58/B+bGxj94oTAKEjL35G/8vLjhDJ6fuK9Y4mqzKaHFrdMzaE6uGWgFqDRQRlQ21Ji2D0012l105mk6ukqe07+qY5R6mKQkQlThhg=
+	t=1727876401; cv=none; b=b7qIUi3nleQ5KQ428B9GLqFoJ2s61XLHA0ZbjdozL8MJmyX7cayVICqGGIlmj/Ixab1s0HTQCyyriI5suQ3F3tlA6npqPYpRiXami0B0MuZZsZag7MxPWo+W/ffroHOJ46hthQ84SIlp/GKejcuSQQBxwmM5sVZ0FQbysWl3oOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876398; c=relaxed/simple;
-	bh=S2JbjjXBqHg8Og6y0pFZQstAWVncrEfvHd0IIbCWep4=;
+	s=arc-20240116; t=1727876401; c=relaxed/simple;
+	bh=Vss2kL3T/w2hVaM0dDHOtdnAgv18pSY5o7+twQei6tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+E61VxRZbdhP5lE7yDxSWuqfFLt0773krpbq9XbL7s3KTc7BbGfzuCpfNobqbjrPU321OXb/SLHL4XIuOiM206Mzu8aiMZPWgI9tj9Xqr0AQZWZdNfi5e6kCg/9vjfTmjMuiAzDQanK8nmpIoDLhhroaPSp41JzVpzogZIdSYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNKzpQd2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1yLm+1mwTNckc4dkRg6qilXpDa9IbalT+CkoTVoifMi8LA4mmpZNuuL2Zi8YIugATHHwtdOVABO0OmO0URLw4jH4Wt8A7xXvoztxIfKTCJUSXpGxrxZgScu0np4WadvSgtRTB//Z9NUXtMl3ARKwlzJzoyxt8eVi4PnZ36e3dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6AnhFGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNKzpQd2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD696C4CEC5;
-	Wed,  2 Oct 2024 13:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6AnhFGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916C9C4CEC5;
+	Wed,  2 Oct 2024 13:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876398;
-	bh=S2JbjjXBqHg8Og6y0pFZQstAWVncrEfvHd0IIbCWep4=;
+	s=korg; t=1727876401;
+	bh=Vss2kL3T/w2hVaM0dDHOtdnAgv18pSY5o7+twQei6tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNKzpQd2kls72sqUboceZjnO2ztTOVM8253e4unwvXq5wa8SYoPqG99lP+U1dvsxa
-	 8sAz5o6xsc9/+wpi4k5ANwfOADqqcNLGmpBokcW46wsd+wh6fdiHvyIBqjQ/mdtnLu
-	 GzfIM/8QmjHPGqPGhaJPIwkQ9rxCCW3cs607/gqo=
+	b=k6AnhFGjjomDc9qOLGPRM77TFE0gzkHAIiIJnXIEXXHAyn/r2rvwinu5udcRF3dGL
+	 JHhMBoPWqX1R7X+i+jVikmzSeX1L8WI8O6+Kxek6skcrjSNabJhTIToWG0uTi49dUu
+	 e1x5a6FtjenKMVCBY0ZHM2TuNXDmFpzAEpIt7qZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 431/695] nfsd: fix initial getattr on write delegation
-Date: Wed,  2 Oct 2024 14:57:09 +0200
-Message-ID: <20241002125839.667098813@linuxfoundation.org>
+Subject: [PATCH 6.11 432/695] crypto: caam - Pad SG length when allocating hash edesc
+Date: Wed,  2 Oct 2024 14:57:10 +0200
+Message-ID: <20241002125839.706328142@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,87 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit bf92e5008b17f935a6de8b708551e02c2294121c ]
+[ Upstream commit 5124bc96162667766f6120b19f57a640c2eccb2a ]
 
-At this point in compound processing, currentfh refers to the parent of
-the file, not the file itself. Get the correct dentry from the delegation
-stateid instead.
+Because hardware will read in multiples of 4 SG entries, ensure
+the allocated length is always padded.  This was already done
+by some callers of ahash_edesc_alloc, but ahash_digest was conspicuously
+missing.
 
-Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+In any case, doing it in the allocation function ensures that the
+memory is always there.
+
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Fixes: a5e5c13398f3 ("crypto: caam - fix S/G table passing page boundary")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 33 +++++++++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ drivers/crypto/caam/caamhash.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 29c11714ac3db..fe06779ea527a 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5912,6 +5912,28 @@ static void nfsd4_open_deleg_none_ext(struct nfsd4_open *open, int status)
- 	}
- }
+diff --git a/drivers/crypto/caam/caamhash.c b/drivers/crypto/caam/caamhash.c
+index fdd724228c2fa..25c02e2672585 100644
+--- a/drivers/crypto/caam/caamhash.c
++++ b/drivers/crypto/caam/caamhash.c
+@@ -708,6 +708,7 @@ static struct ahash_edesc *ahash_edesc_alloc(struct ahash_request *req,
+ 		       GFP_KERNEL : GFP_ATOMIC;
+ 	struct ahash_edesc *edesc;
  
-+static bool
-+nfs4_delegation_stat(struct nfs4_delegation *dp, struct svc_fh *currentfh,
-+		     struct kstat *stat)
-+{
-+	struct nfsd_file *nf = find_rw_file(dp->dl_stid.sc_file);
-+	struct path path;
-+	int rc;
-+
-+	if (!nf)
-+		return false;
-+
-+	path.mnt = currentfh->fh_export->ex_path.mnt;
-+	path.dentry = file_dentry(nf->nf_file);
-+
-+	rc = vfs_getattr(&path, stat,
-+			 (STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
-+			 AT_STATX_SYNC_AS_STAT);
-+
-+	nfsd_file_put(nf);
-+	return rc == 0;
-+}
-+
- /*
-  * The Linux NFS server does not offer write delegations to NFSv4.0
-  * clients in order to avoid conflicts between write delegations and
-@@ -5947,7 +5969,6 @@ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 	int cb_up;
- 	int status = 0;
- 	struct kstat stat;
--	struct path path;
- 
- 	cb_up = nfsd4_cb_channel_good(oo->oo_owner.so_client);
- 	open->op_recall = false;
-@@ -5983,20 +6004,16 @@ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 	memcpy(&open->op_delegate_stateid, &dp->dl_stid.sc_stateid, sizeof(dp->dl_stid.sc_stateid));
- 
- 	if (open->op_share_access & NFS4_SHARE_ACCESS_WRITE) {
--		open->op_delegate_type = NFS4_OPEN_DELEGATE_WRITE;
--		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
--		path.mnt = currentfh->fh_export->ex_path.mnt;
--		path.dentry = currentfh->fh_dentry;
--		if (vfs_getattr(&path, &stat,
--				(STATX_SIZE | STATX_CTIME | STATX_CHANGE_COOKIE),
--				AT_STATX_SYNC_AS_STAT)) {
-+		if (!nfs4_delegation_stat(dp, currentfh, &stat)) {
- 			nfs4_put_stid(&dp->dl_stid);
- 			destroy_delegation(dp);
- 			goto out_no_deleg;
- 		}
-+		open->op_delegate_type = NFS4_OPEN_DELEGATE_WRITE;
- 		dp->dl_cb_fattr.ncf_cur_fsize = stat.size;
- 		dp->dl_cb_fattr.ncf_initial_cinfo =
- 			nfsd4_change_attribute(&stat, d_inode(currentfh->fh_dentry));
-+		trace_nfsd_deleg_write(&dp->dl_stid.sc_stateid);
- 	} else {
- 		open->op_delegate_type = NFS4_OPEN_DELEGATE_READ;
- 		trace_nfsd_deleg_read(&dp->dl_stid.sc_stateid);
++	sg_num = pad_sg_nents(sg_num);
+ 	edesc = kzalloc(struct_size(edesc, sec4_sg, sg_num), flags);
+ 	if (!edesc)
+ 		return NULL;
 -- 
 2.43.0
 
