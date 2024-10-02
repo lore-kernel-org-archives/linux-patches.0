@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB5217B421;
-	Wed,  2 Oct 2024 13:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8DC1D0781;
+	Wed,  2 Oct 2024 13:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877103; cv=none; b=b8pjLkeb2XmaiBbgn1diRnkhhQaPv9FhMh37iNg6vV88cbomertiHBtylZ5371BwpJDQwC/yO0CP1RgNf45Youq76lxC9oYEErl3bhQMrjRhj/ZLmih3emSF0RVAZXXXNOBDrUbnMrkFbMOohMgGZWUHhFdwkPkfOQfOGS6OgkI=
+	t=1727877106; cv=none; b=GuQcZfQcm35gi+6nBNcwoxeYTe1OBjmZmMSajOT1pY9MnezuZgwgjx2DOv9eN8TUgeN5dMp5tD4OA9yjpQ5IWYZWsEPagSQ4m89ougSvotAopmDUZffnlOkXDoe3xvt+BmxRqlq/CnyBluHcie5H3azBDmTtWC7egeCw/uIFN30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877103; c=relaxed/simple;
-	bh=PUR+CE+inA4NfmHM5b/Rbkyj7c28+drytj/ugnttZCk=;
+	s=arc-20240116; t=1727877106; c=relaxed/simple;
+	bh=dpuer8eqspx51IOhSvX2pbBC0PWvLROEZpdfXuS7XXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5uVzHk/Fc4G7zzmMXagmOx+1UtSiOVd1cssAqAd8Z/e+Dckk+DopJtGvpGxuBqi+94BZkhKq86hmjBtm+ecLZok5/8x3lS23inFoWH4QclxJBpxeym3rl1Ud4k0zervQws/4YAVyMVIjI7YwhfnxRsr06Wf3B78YuxSJsmu6to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0+7YhBJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nYxi2vnUUW5svCjKBfc+ea8VBIP3nZLAiVUHMXjSIxSwJC/aR9qSkrWhzaswZ5J2MnDNdVTFNgq6+0SOi32UYjVRc7KIK8eQ1GexIxyGnDBN0gA6Y3PvPyxG5WXz2GcYQD1hrvKXes/KEQJMkU2aMt+3BSRS0CywrhWEcZ0Edm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gB+fplJv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0+7YhBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00436C4CEC2;
-	Wed,  2 Oct 2024 13:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gB+fplJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0947C4CEC2;
+	Wed,  2 Oct 2024 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877103;
-	bh=PUR+CE+inA4NfmHM5b/Rbkyj7c28+drytj/ugnttZCk=;
+	s=korg; t=1727877106;
+	bh=dpuer8eqspx51IOhSvX2pbBC0PWvLROEZpdfXuS7XXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0+7YhBJoTxTZMrsoA7F9daU1TPNy0XI1JQ4Am98JYp3c2Xn8bXx4GDq2vFZkMjTk
-	 x1O4OdoioLcPz8oaUKzDnr8yam1XebwkvpXX/cFQUeEDYCO2QrSxJKKg3QdHBHPfcz
-	 eMfd1rBNyxz1qcNESlH3srSgi5mfN61Ugr8/UCRk=
+	b=gB+fplJvTB07sDderto1KXERr3hmEsjngbDOw2dB5uxY8ZJEyP68HfLiXTy0gu0cm
+	 ENgtvcZr6lR0wGmKEmFXhMkhRKvNNcNzg0R2hcYH9dRR3YsouuJihXzOOIxFrhSBxk
+	 im2bj+DGg95hUN3aqQeDsLVr0figO3CwfFgOmHpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.11 634/695] f2fs: check discard support for conventional zones
-Date: Wed,  2 Oct 2024 15:00:32 +0200
-Message-ID: <20241002125847.823234814@linuxfoundation.org>
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.11 625/695] debugobjects: Fix conditions in fill_pool()
+Date: Wed,  2 Oct 2024 15:00:23 +0200
+Message-ID: <20241002125847.460426861@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,68 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-commit 43aec4d01bd2ce961817a777b3846f8318f398e4 upstream.
+commit 684d28feb8546d1e9597aa363c3bfcf52fe250b7 upstream.
 
-As the helper function f2fs_bdev_support_discard() shows, f2fs checks if
-the target block devices support discard by calling
-bdev_max_discard_sectors() and bdev_is_zoned(). This check works well
-for most cases, but it does not work for conventional zones on zoned
-block devices. F2fs assumes that zoned block devices support discard,
-and calls __submit_discard_cmd(). When __submit_discard_cmd() is called
-for sequential write required zones, it works fine since
-__submit_discard_cmd() issues zone reset commands instead of discard
-commands. However, when __submit_discard_cmd() is called for
-conventional zones, __blkdev_issue_discard() is called even when the
-devices do not support discard.
+fill_pool() uses 'obj_pool_min_free' to decide whether objects should be
+handed back to the kmem cache. But 'obj_pool_min_free' records the lowest
+historical value of the number of objects in the object pool and not the
+minimum number of objects which should be kept in the pool.
 
-The inappropriate __blkdev_issue_discard() call was not a problem before
-the commit 30f1e7241422 ("block: move discard checks into the ioctl
-handler") because __blkdev_issue_discard() checked if the target devices
-support discard or not. If not, it returned EOPNOTSUPP. After the
-commit, __blkdev_issue_discard() no longer checks it. It always returns
-zero and sets NULL to the given bio pointer. This NULL pointer triggers
-f2fs_bug_on() in __submit_discard_cmd(). The BUG is recreated with the
-commands below at the umount step, where /dev/nullb0 is a zoned null_blk
-with 5GB total size, 128MB zone size and 10 conventional zones.
+Use 'debug_objects_pool_min_level' instead, which holds the minimum number
+which was scaled to the number of CPUs at boot time.
 
-$ mkfs.f2fs -f -m /dev/nullb0
-$ mount /dev/nullb0 /mnt
-$ for ((i=0;i<5;i++)); do dd if=/dev/zero of=/mnt/test bs=65536 count=1600 conv=fsync; done
-$ umount /mnt
+[ tglx: Massage change log ]
 
-To fix the BUG, avoid the inappropriate __blkdev_issue_discard() call.
-When discard is requested for conventional zones, check if the device
-supports discard or not. If not, return EOPNOTSUPP.
-
-Fixes: 30f1e7241422 ("block: move discard checks into the ioctl handler")
+Fixes: d26bf5056fc0 ("debugobjects: Reduce number of pool_lock acquisitions in fill_pool()")
+Fixes: 36c4ead6f6df ("debugobjects: Add global free list and the counter")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/all/20240904133944.2124-3-thunder.leizhen@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ lib/debugobjects.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1290,6 +1290,13 @@ static int __submit_discard_cmd(struct f
- 						wait_list, issued);
- 			return 0;
- 		}
-+
-+		/*
-+		 * Issue discard for conventional zones only if the device
-+		 * supports discard.
-+		 */
-+		if (!bdev_max_discard_sectors(bdev))
-+			return -EOPNOTSUPP;
- 	}
- #endif
- 
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -142,13 +142,14 @@ static void fill_pool(void)
+ 	 * READ_ONCE()s pair with the WRITE_ONCE()s in pool_lock critical
+ 	 * sections.
+ 	 */
+-	while (READ_ONCE(obj_nr_tofree) && (READ_ONCE(obj_pool_free) < obj_pool_min_free)) {
++	while (READ_ONCE(obj_nr_tofree) &&
++	       READ_ONCE(obj_pool_free) < debug_objects_pool_min_level) {
+ 		raw_spin_lock_irqsave(&pool_lock, flags);
+ 		/*
+ 		 * Recheck with the lock held as the worker thread might have
+ 		 * won the race and freed the global free list already.
+ 		 */
+-		while (obj_nr_tofree && (obj_pool_free < obj_pool_min_free)) {
++		while (obj_nr_tofree && (obj_pool_free < debug_objects_pool_min_level)) {
+ 			obj = hlist_entry(obj_to_free.first, typeof(*obj), node);
+ 			hlist_del(&obj->node);
+ 			WRITE_ONCE(obj_nr_tofree, obj_nr_tofree - 1);
 
 
