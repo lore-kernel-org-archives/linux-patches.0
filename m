@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E91D0940;
-	Wed,  2 Oct 2024 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6A1D0940;
+	Wed,  2 Oct 2024 14:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879065; cv=none; b=q+cyEDYOPSBiOm+3ySQdK0aw3H3f2TzN3X55O9SzZCmh2C7uTje99nGIfEoEw/KUfaIlcaTFDHxtv7Ds9XXzf6uYdxJiGhgRoujOiVrftAYicMp2DdNbYMnP/0iiLcLzZ1K3F+9+8rUdLS3vS5xg3v/QEAej3DkFOYiRHnQE6qU=
+	t=1727879068; cv=none; b=juS6ofM8ASczNeMj44Anb7gUa+J+XwVcGeV9glV52rfaEYsbZsX0KY/q32gwkqQPb+FXnZ1P7OwvurAkQtgWra47Gj5liXTP8p8/Q9/ByoEHkbU1QeXfAPFidZXsWJKSRNXhzGOjY5kk9bJICFyMSiEF+c3XXJbnvZvHT71N4PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879065; c=relaxed/simple;
-	bh=flgrD24pWeuoAntMIUJy0i8CcBV5wW3DRU3O0qpbbSE=;
+	s=arc-20240116; t=1727879068; c=relaxed/simple;
+	bh=OpEB67nDhZ7xcj07RuuuNUjHhI0lcwIp9ETcYfmUuAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIvDgj4vTEZ1Sfb9WyU5vbtA51nQk9A+tQgsr5x6f+N1XlqlDWFfRC2g2L+ZSj7+sszzvY5zoFK/i0/hXeDO8ijYC1ZTQ9bd7OQc+chYxlA4rcFEEzDdvG2tGCxV11Y8wCezoA4CDmxy+bLSpMTiUHHF+S+/w5YBox59qHh10xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMQD5iHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwSA/a2A0A3V63Bv6Me64rlt/1e5iU2P9eKycCTKcIhebGwM9YzcfuZ1dMSJ9MT3qK4yRjDe/IG8FlVT+wXlSvDvZFgKyLuQz8GQ0byCweKObbiOebr2DldIB0IwSV76SFjCXwaZAPjTz5Le6JESPQXig4LT9NasgMkIr4oSPCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNTiHnQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMQD5iHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55998C4CEC2;
-	Wed,  2 Oct 2024 14:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNTiHnQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B3C4CEC2;
+	Wed,  2 Oct 2024 14:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879065;
-	bh=flgrD24pWeuoAntMIUJy0i8CcBV5wW3DRU3O0qpbbSE=;
+	s=korg; t=1727879068;
+	bh=OpEB67nDhZ7xcj07RuuuNUjHhI0lcwIp9ETcYfmUuAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMQD5iHM8PsbjGLxs4ygSNp9e9kLxtRu5D/HJbRgF9vWi38Z3eM4XRiR42hfT6a+x
-	 6T7ZgqAWI8Zmb+K8S6x64/XwLd/3qBqa11CV1cwKU2hl6sATn3zvZWmwLhVp6QP6sn
-	 AdMu9scUdjY4xBSFplubMjLEYmcAtWyBpIIU+Vi8=
+	b=aNTiHnQSyo9FZLSjn7a3yBXcVQ86aWxa+Lvuq/SlBLNlyMQtUl5qyl62JpJHkaI8+
+	 CJB1KSJJ4rYPMl5eYwzOA8eYkkEQ3CFTuMpndTlXzf4Q+rmTlMroNqaCFThhLu2Azh
+	 GRDY5mGxMsdWyLBRgT+seFOXk4jy+G2dakSuNd4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kexy Biscuit <kexybiscuit@aosc.io>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.10 626/634] tpm: export tpm2_sessions_init() to fix ibmvtpm building
-Date: Wed,  2 Oct 2024 15:02:06 +0200
-Message-ID: <20241002125835.833759959@linuxfoundation.org>
+	syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 627/634] mm/hugetlb.c: fix UAF of vma in hugetlb fault pathway
+Date: Wed,  2 Oct 2024 15:02:07 +0200
+Message-ID: <20241002125835.874491007@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,45 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kexy Biscuit <kexybiscuit@aosc.io>
+From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-commit f168c000d27f8134160d4a52dfc474a948a3d7e9 upstream.
+commit 98b74bb4d7e96b4da5ef3126511febe55b76b807 upstream.
 
-Commit 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to
-initialize session support") adds call to tpm2_sessions_init() in ibmvtpm,
-which could be built as a module. However, tpm2_sessions_init() wasn't
-exported, causing libmvtpm to fail to build as a module:
+Syzbot reports a UAF in hugetlb_fault().  This happens because
+vmf_anon_prepare() could drop the per-VMA lock and allow the current VMA
+to be freed before hugetlb_vma_unlock_read() is called.
 
-ERROR: modpost: "tpm2_sessions_init" [drivers/char/tpm/tpm_ibmvtpm.ko] undefined!
+We can fix this by using a modified version of vmf_anon_prepare() that
+doesn't release the VMA lock on failure, and then release it ourselves
+after hugetlb_vma_unlock_read().
 
-Export tpm2_sessions_init() to resolve the issue.
-
-Cc: stable@vger.kernel.org # v6.10+
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408051735.ZJkAPQ3b-lkp@intel.com/
-Fixes: 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to initialize session support")
-Signed-off-by: Kexy Biscuit <kexybiscuit@aosc.io>
-Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lkml.kernel.org/r/20240914194243.245-2-vishal.moola@gmail.com
+Fixes: 9acad7ba3e25 ("hugetlb: use vmf_anon_prepare() instead of anon_vma_prepare()")
+Reported-by: syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/00000000000067c20b06219fbc26@google.com/
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-sessions.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/hugetlb.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
-index d3521aadd43e..44f60730cff4 100644
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -1362,4 +1362,5 @@ int tpm2_sessions_init(struct tpm_chip *chip)
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6075,7 +6075,7 @@ retry_avoidcopy:
+ 	 * When the original hugepage is shared one, it does not have
+ 	 * anon_vma prepared.
+ 	 */
+-	ret = vmf_anon_prepare(vmf);
++	ret = __vmf_anon_prepare(vmf);
+ 	if (unlikely(ret))
+ 		goto out_release_all;
  
- 	return rc;
- }
-+EXPORT_SYMBOL(tpm2_sessions_init);
- #endif /* CONFIG_TCG_TPM2_HMAC */
--- 
-2.46.2
-
+@@ -6274,7 +6274,7 @@ static vm_fault_t hugetlb_no_page(struct
+ 		}
+ 
+ 		if (!(vma->vm_flags & VM_MAYSHARE)) {
+-			ret = vmf_anon_prepare(vmf);
++			ret = __vmf_anon_prepare(vmf);
+ 			if (unlikely(ret))
+ 				goto out;
+ 		}
+@@ -6406,6 +6406,14 @@ static vm_fault_t hugetlb_no_page(struct
+ 	folio_unlock(folio);
+ out:
+ 	hugetlb_vma_unlock_read(vma);
++
++	/*
++	 * We must check to release the per-VMA lock. __vmf_anon_prepare() is
++	 * the only way ret can be set to VM_FAULT_RETRY.
++	 */
++	if (unlikely(ret & VM_FAULT_RETRY))
++		vma_end_read(vma);
++
+ 	mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 	return ret;
+ 
+@@ -6627,6 +6635,14 @@ out_ptl:
+ 	}
+ out_mutex:
+ 	hugetlb_vma_unlock_read(vma);
++
++	/*
++	 * We must check to release the per-VMA lock. __vmf_anon_prepare() in
++	 * hugetlb_wp() is the only way ret can be set to VM_FAULT_RETRY.
++	 */
++	if (unlikely(ret & VM_FAULT_RETRY))
++		vma_end_read(vma);
++
+ 	mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 	/*
+ 	 * Generally it's safe to hold refcount during waiting page lock. But
 
 
