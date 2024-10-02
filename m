@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB9D1D094A;
-	Wed,  2 Oct 2024 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1301D07AD;
+	Wed,  2 Oct 2024 14:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877942; cv=none; b=NdMHpY2K6G2N2FijO0c6JkzrZQ5Pi5aF+DEz2bWikSEy9M/rcpk+8wWGk5hCVEQzUlaYyu9sKw4xE1iirJ1QEJCS8wG1XPN13BIlxe5LeIAs1o0xiSF5XSpawL3zFA9p1T884vkrk3EJxcowByTrbxDeBIybuGzRWV62GMBwCmg=
+	t=1727877945; cv=none; b=qtmHXIXqK/1j2EymHmcIVjXub8WsTiRdZqMV0VYB76iWovj/ifx6kfaYovcgRohXstvPydZ+TrtyqGUO7v7OsL6pcqamXv5QjnLedqrgwR0wv4sUWMpNXfgUyT7DNa/D1Gtm1sxBDsT1Ktr7Q/FbUDVejPiS71s+XmelYbEquNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877942; c=relaxed/simple;
-	bh=TeVGkDiBVR+SO6Mbgh+1/3xxDDzqN+vJlGd8cvIEY2E=;
+	s=arc-20240116; t=1727877945; c=relaxed/simple;
+	bh=0L+lUWGbzSbuoy5sUloEMyt1UR+69W0wPAS+Qr9TluE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4qW7e8+g2oFqK0selCoV+vOdwVa9iwRLGhmtHiSwDzamMdMXsTbVxtlLO7mGG+evod72/6odvta/+h98SPOGvGfihNp9yBN1jCvK/Z6CwF9ohUlYu/bXCJO7VNADdkzQOGGU79JkxWGOZuaLFY2se/2eEEz/NErreglqvwcGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzWgLgBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIgV74xtJnCYIY9+O8pjQtdJ1ZPn4nxvm7jg2APdqEpFyPZzJtlgxHVQIV/WjE9OAZLJ8xakyfhnR63QnQssj4ZKWSPi5R8MVSFOU4t7EDo/ozpTDKJOvuoGE8FVTfMVHGr4eMyV6W0fWDHwwYFYb1ShpLQ+10ccTXZiRedShMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7iP9RMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzWgLgBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B85C4CEC2;
-	Wed,  2 Oct 2024 14:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7iP9RMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E9C4CEC2;
+	Wed,  2 Oct 2024 14:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877942;
-	bh=TeVGkDiBVR+SO6Mbgh+1/3xxDDzqN+vJlGd8cvIEY2E=;
+	s=korg; t=1727877945;
+	bh=0L+lUWGbzSbuoy5sUloEMyt1UR+69W0wPAS+Qr9TluE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzWgLgBu4vI9OWG4HwbIjqF9sQiNX4pw2DAMZXbOYdiBeq1LmRufktaO1AYVoYmFJ
-	 HK/FlJeJI9w2IjdqPdYHUYxlu12dq3ESe7IUBY39MTxlwgZVt5Lo6JB0DDKBlWOCO8
-	 W2dEJYZPhYR6jFpsfhevDF8HeU1NGlWf6xJhCYkI=
+	b=O7iP9RMoctldIArxygsKAWTQ4BqAVAL7egmO5fP2Zkz+Hczw9yGuct3A4Cur5jCoY
+	 r8IwOEE+I0S9fPGeRwLsyBDE4Ql5NG2u4SX60mL26N6/zqnD4cr34ZGgqohHc9r4RS
+	 52i+VgS5k2TtgTkcUIKTXSI2ueuCmZfn7hLqQ9mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 248/634] selftests/bpf: Fix compiling tcp_rtt.c with musl-libc
-Date: Wed,  2 Oct 2024 14:55:48 +0200
-Message-ID: <20241002125820.887048818@linuxfoundation.org>
+Subject: [PATCH 6.10 249/634] selftests/bpf: Fix compiling core_reloc.c with musl-libc
+Date: Wed,  2 Oct 2024 14:55:49 +0200
+Message-ID: <20241002125820.926823282@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,39 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 18826fb0b79c3c3cd1fe765d85f9c6f1a902c722 ]
+[ Upstream commit debfa4f628f271f72933bf38d581cc53cfe1def5 ]
 
-The GNU version of 'struct tcp_info' in 'netinet/tcp.h' is not exposed by
-musl headers unless _GNU_SOURCE is defined.
+The type 'loff_t' is a GNU extension and not exposed by the musl 'fcntl.h'
+header unless _GNU_SOURCE is defined. Add this definition to fix errors
+seen compiling for mips64el/musl-libc:
 
-Add this definition to fix errors seen compiling for mips64el/musl-libc:
+  In file included from tools/testing/selftests/bpf/prog_tests/core_reloc.c:4:
+  ./bpf_testmod/bpf_testmod.h:10:9: error: unknown type name 'loff_t'
+     10 |         loff_t off;
+        |         ^~~~~~
+  ./bpf_testmod/bpf_testmod.h:16:9: error: unknown type name 'loff_t'
+     16 |         loff_t off;
+        |         ^~~~~~
 
-  tcp_rtt.c: In function 'wait_for_ack':
-  tcp_rtt.c:24:25: error: storage size of 'info' isn't known
-     24 |         struct tcp_info info;
-        |                         ^~~~
-  tcp_rtt.c:24:25: error: unused variable 'info' [-Werror=unused-variable]
-  cc1: all warnings being treated as errors
-
-Fixes: 1f4f80fed217 ("selftests/bpf: test_progs: convert test_tcp_rtt")
+Fixes: 6bcd39d366b6 ("selftests/bpf: Add CO-RE relocs selftest relying on kernel module BTF")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/f2329767b15df206f08a5776d35a47c37da855ae.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/11c3af75a7eb6bcb7ad9acfae6a6f470c572eb82.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/tcp_rtt.c | 1 +
+ tools/testing/selftests/bpf/prog_tests/core_reloc.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/tcp_rtt.c b/tools/testing/selftests/bpf/prog_tests/tcp_rtt.c
-index f2b99d95d9160..c38784c1c066e 100644
---- a/tools/testing/selftests/bpf/prog_tests/tcp_rtt.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tcp_rtt.c
+diff --git a/tools/testing/selftests/bpf/prog_tests/core_reloc.c b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
+index 47f42e6801056..26019313e1fc2 100644
+--- a/tools/testing/selftests/bpf/prog_tests/core_reloc.c
++++ b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
 @@ -1,4 +1,5 @@
  // SPDX-License-Identifier: GPL-2.0
 +#define _GNU_SOURCE
  #include <test_progs.h>
- #include "cgroup_helpers.h"
- #include "network_helpers.h"
+ #include "progs/core_reloc_types.h"
+ #include "bpf_testmod/bpf_testmod.h"
 -- 
 2.43.0
 
