@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5531D0DDD;
-	Wed,  2 Oct 2024 14:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2351D0F47;
+	Wed,  2 Oct 2024 14:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877660; cv=none; b=IRvGLVSmbYFuhecBu5NiyD8ON9pwbqG9TbxMMnfj7wHwT8Ej8tg0zZtrlglTMd5vA6r4Qop8Szl9tIeEy2fn+P3DIqhOEBszpKwFgxN4mnPgEs/3uXbmbFf1je85U7tjQNuX1+qPz6MZHDavi8VMludnVEPbh+DzYwwnZU50EM8=
+	t=1727877663; cv=none; b=ZxIGf9Fl7O1tIHszwtzdgIlUdNmLUtRQ3HcKuq2JVghpijf9qMyBXHg/ZMtP31msvd33rH/x0Llu7HxzIfG/e+mzvYhGqlGLPM8di4efu+dookef8iQY/RPFkc8RXpfOPS6daK19VdOE9DUAJD8P4b/eqiwCRCuK3h3nJAgnMak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877660; c=relaxed/simple;
-	bh=Qv/d1HcJm0jS649KXDCq3m/0q7YqgTy/FSvgsIBAh58=;
+	s=arc-20240116; t=1727877663; c=relaxed/simple;
+	bh=FA+PJbYrEKVvbneZ8Xkds+A/MQU0sdNT2ryL8bNxmEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFa+cpdJEDvn0GErvbfNHlFyzY56MSXw2N3Q9WXhlrTWs+i3mFkmV5pw9CZDAXHeR7yGvGD+xYaoTmuFoTchiaKW45yl2NLIod5UqticOSMwxvmhzHSeOHYCATqY1WoiK4HKmD2G/fmZ2XDuLmi+IjgPzwqB9hikLaxYZfaqydg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmaAM+//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TKPKIpPu26A04VN+shKwzC/TM0FExqK8jmvAqMtvI5yfnV1AtzB9l5b+7Kyg5ArTBtwlOS6PktepVR9Mmz+L6rtikl3AZ1n/MsDK6k5xqoQjS8E6Sf/u2yHCUox+BwVvHEu+jTHyG4dzRD9INel6z8iUc7F/5mT1mr8YLX7ockw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAjSNLQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmaAM+//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC633C4CEC2;
-	Wed,  2 Oct 2024 14:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAjSNLQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C933FC4CEC2;
+	Wed,  2 Oct 2024 14:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877660;
-	bh=Qv/d1HcJm0jS649KXDCq3m/0q7YqgTy/FSvgsIBAh58=;
+	s=korg; t=1727877663;
+	bh=FA+PJbYrEKVvbneZ8Xkds+A/MQU0sdNT2ryL8bNxmEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmaAM+//63zcK/TtT9c/mpO4lZ3slAIYV2QwTUU0hCLKwpH1BayNyehN/YwK4i4Ln
-	 /10VuPgtr9Oojp2AyAKqBH8EUuMDjRGcyUZsmE/2zM2C4Dsw3GsT/g5RdNTkp5nCtO
-	 XZtMK6sywHn9Gnmt3zMV5dYzTGBvzEqeB30PTqdg=
+	b=NAjSNLQE2tbfTwgzjUhnMaA/T24LnGSj3XpvmRhgG5yxMJuvwV82TfpxdPNIdQX26
+	 djVtIeNLH368LDYcn1Pgprx08IomKKi5DCCbVb9clQDPuWA3OS+SgKnO4ti+k/sWlu
+	 bn6v2boAw7OJBOdGXqsY6t2rBtbizl7KpbnRWEKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 133/634] spi: bcmbca-hsspi: Fix missing pm_runtime_disable()
-Date: Wed,  2 Oct 2024 14:53:53 +0200
-Message-ID: <20241002125816.359357633@linuxfoundation.org>
+Subject: [PATCH 6.10 151/634] x86/boot/64: Strip percpu address space when setting up GDT descriptors
+Date: Wed,  2 Oct 2024 14:54:11 +0200
+Message-ID: <20241002125817.070554225@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,54 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 4439a2e92cb89028b22c5d7ba1b99e75d7d889f6 ]
+[ Upstream commit b51207dc02ec3aeaa849e419f79055d7334845b6 ]
 
-The pm_runtime_disable() is missing in remove function, use
-devm_pm_runtime_enable() to fix it. So the pm_runtime_disable() in
-the probe error path can also be removed.
+init_per_cpu_var() returns a pointer in the percpu address space while
+rip_rel_ptr() expects a pointer in the generic address space.
 
-Fixes: a38a2233f23b ("spi: bcmbca-hsspi: Add driver for newer HSSPI controller")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Link: https://patch.msgid.link/20240826124903.3429235-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+When strict address space checks are enabled, GCC's named address space
+checks fail:
+
+  asm.h:124:63: error: passing argument 1 of 'rip_rel_ptr' from
+                       pointer to non-enclosed address space
+
+Add a explicit cast to remove address space of the returned pointer.
+
+Fixes: 11e36b0f7c21 ("x86/boot/64: Load the final kernel GDT during early boot directly, remove startup_gdt[]")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240819083334.148536-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcmbca-hsspi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/head64.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcmbca-hsspi.c b/drivers/spi/spi-bcmbca-hsspi.c
-index 9f64afd8164ea..4965bc86d7f52 100644
---- a/drivers/spi/spi-bcmbca-hsspi.c
-+++ b/drivers/spi/spi-bcmbca-hsspi.c
-@@ -546,12 +546,14 @@ static int bcmbca_hsspi_probe(struct platform_device *pdev)
- 			goto out_put_host;
- 	}
+diff --git a/arch/x86/kernel/head64.c b/arch/x86/kernel/head64.c
+index a817ed0724d1e..4b9d4557fc94a 100644
+--- a/arch/x86/kernel/head64.c
++++ b/arch/x86/kernel/head64.c
+@@ -559,10 +559,11 @@ void early_setup_idt(void)
+  */
+ void __head startup_64_setup_gdt_idt(void)
+ {
++	struct desc_struct *gdt = (void *)(__force unsigned long)init_per_cpu_var(gdt_page.gdt);
+ 	void *handler = NULL;
  
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		goto out_put_host;
+ 	struct desc_ptr startup_gdt_descr = {
+-		.address = (unsigned long)&RIP_REL_REF(init_per_cpu_var(gdt_page.gdt)),
++		.address = (unsigned long)&RIP_REL_REF(*gdt),
+ 		.size    = GDT_SIZE - 1,
+ 	};
  
- 	ret = sysfs_create_group(&pdev->dev.kobj, &bcmbca_hsspi_group);
- 	if (ret) {
- 		dev_err(&pdev->dev, "couldn't register sysfs group\n");
--		goto out_pm_disable;
-+		goto out_put_host;
- 	}
- 
- 	/* register and we are done */
-@@ -565,8 +567,6 @@ static int bcmbca_hsspi_probe(struct platform_device *pdev)
- 
- out_sysgroup_disable:
- 	sysfs_remove_group(&pdev->dev.kobj, &bcmbca_hsspi_group);
--out_pm_disable:
--	pm_runtime_disable(&pdev->dev);
- out_put_host:
- 	spi_controller_put(host);
- out_disable_pll_clk:
 -- 
 2.43.0
 
