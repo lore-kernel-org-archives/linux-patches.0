@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1C11E892;
-	Wed,  2 Oct 2024 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154D11E892;
+	Wed,  2 Oct 2024 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880381; cv=none; b=Rvvw4K7BLt91dEm1b0sN8McpowTbdwsr096yxUzPM6MEmS0NXQxITC/DN3gcuxOM5Icw3/PdE91m1YvFA7iOnGEyZwQ20Z+YZ66Id0GQa/Dhx/00qIDNXW2Gi9f5BNJjAw+fgNttHTWbAfry0ofGfDAtcae14HCD5OiahxfvCLc=
+	t=1727880384; cv=none; b=YIDC6AWxdfRFqTtNYhBFJDtKT9lcq63jMg2lGawkM5QU1J+gDghXo+Cg3Gyspd6uGJXLLZsntM69app8t37PiniQ+go8pPo+95fVrmzg67a8+jJ/fnSsh5IKi8QbevTqaoSnMgRGG06KuoCXh1ycQl1HHOxiXnfZBvZB81x+l20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880381; c=relaxed/simple;
-	bh=qscSwTWx9A+5hogXvyq3asQq/oSPRKTbME92byQcW9I=;
+	s=arc-20240116; t=1727880384; c=relaxed/simple;
+	bh=WbDkYdPF8xEw8ZECU/Ht9y6Np5UoVBpZCaMvZzIFwG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWZz4A7qK1FiUn1XoNPgrY0f4xeC0W9mIDOHIrB7fswcXrFKFA2P4l+H1OFkON9VLlBEMzrB+zhH1z6+GGOMNDr7/Dh7kWDMRjzBjzcOYmqhWR32nbBhWLq0W11HvB8a5/Euamn0B6PCVLdNZNsLaTaVhJ/C99HwXpsHzuY5+/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oX/Ah1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gh2QFbtaGERy07mIhlPMgKATMASpna5yx101UJxNBpLpH9/NF94fElHkhFiMVe/USOeruJBwDzo6yI5RSB6/UIdrh5LJCCBN2aU6Jved3L6o/zi2sDefZZrD9HhtnIlmEP1wThEPJgIoWwCeHFkLNrh2ewdqVNa/cAaeTV/MuVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFfrBI/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oX/Ah1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1B0C4CEC2;
-	Wed,  2 Oct 2024 14:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFfrBI/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9098DC4CEC2;
+	Wed,  2 Oct 2024 14:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880381;
-	bh=qscSwTWx9A+5hogXvyq3asQq/oSPRKTbME92byQcW9I=;
+	s=korg; t=1727880384;
+	bh=WbDkYdPF8xEw8ZECU/Ht9y6Np5UoVBpZCaMvZzIFwG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0oX/Ah1/8rKGcd/ZiwcxTcP+UDkQdHlpLFcLFssGyWWR9uaFhWDZkSJBQx6PrRBfS
-	 W5nvKKDTrE3xPp5HpHgKi08zV+eomQ9reTIIjWTR9vPypvNtoWFYsjNPRPBMkbgcDd
-	 VKQ85+oN+hPsdPU42Y9fIbhBt2v3O06ZkKd5UODM=
+	b=lFfrBI/bqIKjK13Y6Ft/Ng9SYMQmLS9+vGx+PKoy88vGH6fgHOXknK3YwI9Y7mtj/
+	 rElrw5TZUqdks8iYvv2HOkzElb/hviigZKXaOAqEcv0UDTocLlT+xpJU7EQYlKfFEG
+	 ojWLrfrUsN0CUUQbAxkEo2bBSfnnTXJDCAuYBNGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 432/538] usbnet: fix cyclical race on disconnect with work queue
-Date: Wed,  2 Oct 2024 15:01:11 +0200
-Message-ID: <20241002125809.492023021@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.6 441/538] firmware_loader: Block path traversal
+Date: Wed,  2 Oct 2024 15:01:20 +0200
+Message-ID: <20241002125809.848146189@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,140 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Jann Horn <jannh@google.com>
 
-commit 04e906839a053f092ef53f4fb2d610983412b904 upstream.
+commit f0e5311aa8022107d63c54e2f03684ec097d1394 upstream.
 
-The work can submit URBs and the URBs can schedule the work.
-This cycle needs to be broken, when a device is to be stopped.
-Use a flag to do so.
-This is a design issue as old as the driver.
+Most firmware names are hardcoded strings, or are constructed from fairly
+constrained format strings where the dynamic parts are just some hex
+numbers or such.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240919123525.688065-1-oneukum@suse.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, there are a couple codepaths in the kernel where firmware file
+names contain string components that are passed through from a device or
+semi-privileged userspace; the ones I could find (not counting interfaces
+that require root privileges) are:
+
+ - lpfc_sli4_request_firmware_update() seems to construct the firmware
+   filename from "ModelName", a string that was previously parsed out of
+   some descriptor ("Vital Product Data") in lpfc_fill_vpd()
+ - nfp_net_fw_find() seems to construct a firmware filename from a model
+   name coming from nfp_hwinfo_lookup(pf->hwinfo, "nffw.partno"), which I
+   think parses some descriptor that was read from the device.
+   (But this case likely isn't exploitable because the format string looks
+   like "netronome/nic_%s", and there shouldn't be any *folders* starting
+   with "netronome/nic_". The previous case was different because there,
+   the "%s" is *at the start* of the format string.)
+ - module_flash_fw_schedule() is reachable from the
+   ETHTOOL_MSG_MODULE_FW_FLASH_ACT netlink command, which is marked as
+   GENL_UNS_ADMIN_PERM (meaning CAP_NET_ADMIN inside a user namespace is
+   enough to pass the privilege check), and takes a userspace-provided
+   firmware name.
+   (But I think to reach this case, you need to have CAP_NET_ADMIN over a
+   network namespace that a special kind of ethernet device is mapped into,
+   so I think this is not a viable attack path in practice.)
+
+Fix it by rejecting any firmware names containing ".." path components.
+
+For what it's worth, I went looking and haven't found any USB device
+drivers that use the firmware loader dangerously.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: abb139e75c2c ("firmware: teach the kernel to load firmware files directly from the filesystem")
+Signed-off-by: Jann Horn <jannh@google.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20240828-firmware-traversal-v3-1-c76529c63b5f@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c   |   37 ++++++++++++++++++++++++++++---------
- include/linux/usb/usbnet.h |   15 +++++++++++++++
- 2 files changed, 43 insertions(+), 9 deletions(-)
+ drivers/base/firmware_loader/main.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -464,10 +464,15 @@ static enum skb_state defer_bh(struct us
- void usbnet_defer_kevent (struct usbnet *dev, int work)
- {
- 	set_bit (work, &dev->flags);
--	if (!schedule_work (&dev->kevent))
--		netdev_dbg(dev->net, "kevent %s may have been dropped\n", usbnet_event_names[work]);
--	else
--		netdev_dbg(dev->net, "kevent %s scheduled\n", usbnet_event_names[work]);
-+	if (!usbnet_going_away(dev)) {
-+		if (!schedule_work(&dev->kevent))
-+			netdev_dbg(dev->net,
-+				   "kevent %s may have been dropped\n",
-+				   usbnet_event_names[work]);
-+		else
-+			netdev_dbg(dev->net,
-+				   "kevent %s scheduled\n", usbnet_event_names[work]);
-+	}
- }
- EXPORT_SYMBOL_GPL(usbnet_defer_kevent);
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -844,6 +844,26 @@ static void fw_log_firmware_info(const s
+ {}
+ #endif
  
-@@ -535,7 +540,8 @@ static int rx_submit (struct usbnet *dev
- 			tasklet_schedule (&dev->bh);
- 			break;
- 		case 0:
--			__usbnet_queue_skb(&dev->rxq, skb, rx_start);
-+			if (!usbnet_going_away(dev))
-+				__usbnet_queue_skb(&dev->rxq, skb, rx_start);
- 		}
- 	} else {
- 		netif_dbg(dev, ifdown, dev->net, "rx: stopped\n");
-@@ -843,9 +849,18 @@ int usbnet_stop (struct net_device *net)
- 
- 	/* deferred work (timer, softirq, task) must also stop */
- 	dev->flags = 0;
--	del_timer_sync (&dev->delay);
--	tasklet_kill (&dev->bh);
-+	del_timer_sync(&dev->delay);
-+	tasklet_kill(&dev->bh);
- 	cancel_work_sync(&dev->kevent);
-+
-+	/* We have cyclic dependencies. Those calls are needed
-+	 * to break a cycle. We cannot fall into the gaps because
-+	 * we have a flag
-+	 */
-+	tasklet_kill(&dev->bh);
-+	del_timer_sync(&dev->delay);
-+	cancel_work_sync(&dev->kevent);
-+
- 	if (!pm)
- 		usb_autopm_put_interface(dev->intf);
- 
-@@ -1171,7 +1186,8 @@ fail_halt:
- 					   status);
- 		} else {
- 			clear_bit (EVENT_RX_HALT, &dev->flags);
--			tasklet_schedule (&dev->bh);
-+			if (!usbnet_going_away(dev))
-+				tasklet_schedule(&dev->bh);
- 		}
- 	}
- 
-@@ -1196,7 +1212,8 @@ fail_halt:
- 			usb_autopm_put_interface(dev->intf);
- fail_lowmem:
- 			if (resched)
--				tasklet_schedule (&dev->bh);
-+				if (!usbnet_going_away(dev))
-+					tasklet_schedule(&dev->bh);
- 		}
- 	}
- 
-@@ -1559,6 +1576,7 @@ static void usbnet_bh (struct timer_list
- 	} else if (netif_running (dev->net) &&
- 		   netif_device_present (dev->net) &&
- 		   netif_carrier_ok(dev->net) &&
-+		   !usbnet_going_away(dev) &&
- 		   !timer_pending(&dev->delay) &&
- 		   !test_bit(EVENT_RX_PAUSED, &dev->flags) &&
- 		   !test_bit(EVENT_RX_HALT, &dev->flags)) {
-@@ -1606,6 +1624,7 @@ void usbnet_disconnect (struct usb_inter
- 	usb_set_intfdata(intf, NULL);
- 	if (!dev)
- 		return;
-+	usbnet_mark_going_away(dev);
- 
- 	xdev = interface_to_usbdev (intf);
- 
---- a/include/linux/usb/usbnet.h
-+++ b/include/linux/usb/usbnet.h
-@@ -76,8 +76,23 @@ struct usbnet {
- #		define EVENT_LINK_CHANGE	11
- #		define EVENT_SET_RX_MODE	12
- #		define EVENT_NO_IP_ALIGN	13
-+/* This one is special, as it indicates that the device is going away
-+ * there are cyclic dependencies between tasklet, timer and bh
-+ * that must be broken
++/*
++ * Reject firmware file names with ".." path components.
++ * There are drivers that construct firmware file names from device-supplied
++ * strings, and we don't want some device to be able to tell us "I would like to
++ * be sent my firmware from ../../../etc/shadow, please".
++ *
++ * Search for ".." surrounded by either '/' or start/end of string.
++ *
++ * This intentionally only looks at the firmware name, not at the firmware base
++ * directory or at symlink contents.
 + */
-+#		define EVENT_UNPLUG		31
- };
++static bool name_contains_dotdot(const char *name)
++{
++	size_t name_len = strlen(name);
++
++	return strcmp(name, "..") == 0 || strncmp(name, "../", 3) == 0 ||
++	       strstr(name, "/../") != NULL ||
++	       (name_len >= 3 && strcmp(name+name_len-3, "/..") == 0);
++}
++
+ /* called from request_firmware() and request_firmware_work_func() */
+ static int
+ _request_firmware(const struct firmware **firmware_p, const char *name,
+@@ -864,6 +884,14 @@ _request_firmware(const struct firmware
+ 		goto out;
+ 	}
  
-+static inline bool usbnet_going_away(struct usbnet *ubn)
-+{
-+	return test_bit(EVENT_UNPLUG, &ubn->flags);
-+}
++	if (name_contains_dotdot(name)) {
++		dev_warn(device,
++			 "Firmware load for '%s' refused, path contains '..' component\n",
++			 name);
++		ret = -EINVAL;
++		goto out;
++	}
 +
-+static inline void usbnet_mark_going_away(struct usbnet *ubn)
-+{
-+	set_bit(EVENT_UNPLUG, &ubn->flags);
-+}
-+
- static inline struct usb_driver *driver_of(struct usb_interface *intf)
- {
- 	return to_usb_driver(intf->dev.driver);
+ 	ret = _request_firmware_prepare(&fw, name, device, buf, size,
+ 					offset, opt_flags);
+ 	if (ret <= 0) /* error or already assigned */
+@@ -941,6 +969,8 @@ out:
+  *      @name will be used as $FIRMWARE in the uevent environment and
+  *      should be distinctive enough not to be confused with any other
+  *      firmware image for this or any other device.
++ *	It must not contain any ".." path components - "foo/bar..bin" is
++ *	allowed, but "foo/../bar.bin" is not.
+  *
+  *	Caller must hold the reference count of @device.
+  *
 
 
