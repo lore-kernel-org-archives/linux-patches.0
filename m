@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F1B1D0F46;
-	Wed,  2 Oct 2024 14:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655221D07BC;
+	Wed,  2 Oct 2024 14:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878917; cv=none; b=nh30wuGCNVWOS3kCm0wviPtXEj08kcq6dH86rKdUMzbFze4p71Ghz0TWBF/BbQZEs+u8US+mV8f2H8qQmPUjZ0vi0VYwfG1UWCPjx6HBm8jr1SdrOMltTDcWjGn6YMavGPeA0M84UlB53NrG08ZzV42MfrsrsWFpTzKsWJ2BX1k=
+	t=1727878920; cv=none; b=T/msyUKxmi3DfLKqYGcqPGj9xwC9W+w5sLnKy/JR9r0UCDL22IGE99kGY0085gVx2gN4OP/+xtkn0a3czG3U1UWG5kgEfNkeSdnam6NlOYAgjM+WY2VkS5hGqJZ6z2XRGXujrfGHFPsr5KRayI8OvyqJT4BymmWoTwn0HOzQGqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878917; c=relaxed/simple;
-	bh=b3kL94vaT015T6POcEaNWIouC54DJmMw/YxMUXWjHLg=;
+	s=arc-20240116; t=1727878920; c=relaxed/simple;
+	bh=ZnC0FZdV4D3lhkQ9UGLL+f+2wWnxN16No//GhLXgpZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2Mn358fln+l1F4VUcJj8McTlbwt0aZLi0giGWbyf3X2oNUEJryOZ5ln/LhnUOAcFsl2U0xTB1TWI3LLVruTuirJYOAJxj2tSvjb8HBNV/1uVeP/a6Px6GeRL8fnN2gAOlHWs3AT7POpzHSvH4p5JT828Fr0wOOb/MaDDsU6PrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAUtKygC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=piInBXyQa/NZCHgnXEHgo3L8esKzMmQVrDpf4imnHFgw1YNDQ8NjDl4sJgMZFvVS/euajwYKfDla5VHK8l0t7Wobzi48bjM7WhEDlAGDa0cBXmt65TvIAo3fmUVHDKLJgsb2O30ppBVhlxTccic8u4NvQ7ozM7fcGV2wWNXpDsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZQHa6Cf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAUtKygC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26BCC4CEC2;
-	Wed,  2 Oct 2024 14:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZQHa6Cf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE75DC4CEC2;
+	Wed,  2 Oct 2024 14:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878917;
-	bh=b3kL94vaT015T6POcEaNWIouC54DJmMw/YxMUXWjHLg=;
+	s=korg; t=1727878920;
+	bh=ZnC0FZdV4D3lhkQ9UGLL+f+2wWnxN16No//GhLXgpZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kAUtKygCxq3kWHoG0MFgPmFh1KxKRS9YUFFO8qAbrn2VZcUdfnuT2uNtBe/qQeMA+
-	 eR4f6miDtocXLI3BnLYm4yX1+mpzeFxzlxfZliwMF6fWxhY5rezYOJH2+tdXqjUvh0
-	 /HvwOn6sozDh/dBrGUsHc46Vy12HfOvLGrE+h4G0=
+	b=QZQHa6Cf3oVZgH4T7/RRnyhoBAeOh2+sKtDUJfy8fL0oG1VNiunV3v4VhJNZPY1As
+	 MKY/sjJujTti2iijGV79jFn1qJEWtMEPD7tzIhUtYiYeD9HrcsQyr7SNFUNs1iuuTZ
+	 i9xHD3nLuYNs0/2nmf0/LqQcywBHZUcX5rcF6gn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.10 545/634] perf/x86/intel: Allow to setup LBR for counting event for BPF
-Date: Wed,  2 Oct 2024 15:00:45 +0200
-Message-ID: <20241002125832.621627303@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.10 546/634] perf/x86/intel/pt: Fix sampling synchronization
+Date: Wed,  2 Oct 2024 15:00:46 +0200
+Message-ID: <20241002125832.660370535@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,64 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit ef493f4b122d6b14a6de111d1acac1eab1d673b0 upstream.
+commit d92792a4b26e50b96ab734cbe203d8a4c932a7a9 upstream.
 
-The BPF subsystem may capture LBR data on a counting event. However, the
-current implementation assumes that LBR can/should only be used with
-sampling events.
+pt_event_snapshot_aux() uses pt->handle_nmi to determine if tracing
+needs to be stopped, however tracing can still be going because
+pt->handle_nmi is set to zero before tracing is stopped in pt_event_stop,
+whereas pt_event_snapshot_aux() requires that tracing must be stopped in
+order to copy a sample of trace from the buffer.
 
-For instance, retsnoop tool ([0]) makes an extensive use of this
-functionality and sets up perf event as follows:
+Instead call pt_config_stop() always, which anyway checks config for
+RTIT_CTL_TRACEEN and does nothing if it is already clear.
 
-	struct perf_event_attr attr;
+Note pt_event_snapshot_aux() can continue to use pt->handle_nmi to
+determine if the trace needs to be restarted afterwards.
 
-	memset(&attr, 0, sizeof(attr));
-	attr.size = sizeof(attr);
-	attr.type = PERF_TYPE_HARDWARE;
-	attr.config = PERF_COUNT_HW_CPU_CYCLES;
-	attr.sample_type = PERF_SAMPLE_BRANCH_STACK;
-	attr.branch_sample_type = PERF_SAMPLE_BRANCH_KERNEL;
-
-To limit the LBR for a sampling event is to avoid unnecessary branch
-stack setup for a counting event in the sample read. Because LBR is only
-read in the sampling event's overflow.
-
-Although in most cases LBR is used in sampling, there is no HW limit to
-bind LBR to the sampling mode. Allow an LBR setup for a counting event
-unless in the sample read mode.
-
-Fixes: 85846b27072d ("perf/x86: Add PERF_X86_EVENT_NEEDS_BRANCH_STACK flag")
-Closes: https://lore.kernel.org/lkml/20240905180055.1221620-1-andrii@kernel.org/
-Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Fixes: 25e8920b301c ("perf/x86/intel/pt: Add sampling support")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240909155848.326640-1-kan.liang@linux.intel.com
+Link: https://lkml.kernel.org/r/20240715160712.127117-2-adrian.hunter@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/pt.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3912,8 +3912,12 @@ static int intel_pmu_hw_config(struct pe
- 			x86_pmu.pebs_aliases(event);
- 	}
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1606,6 +1606,7 @@ static void pt_event_stop(struct perf_ev
+ 	 * see comment in intel_pt_interrupt().
+ 	 */
+ 	WRITE_ONCE(pt->handle_nmi, 0);
++	barrier();
  
--	if (needs_branch_stack(event) && is_sampling_event(event))
--		event->hw.flags  |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
-+	if (needs_branch_stack(event)) {
-+		/* Avoid branch stack setup for counting events in SAMPLE READ */
-+		if (is_sampling_event(event) ||
-+		    !(event->attr.sample_type & PERF_SAMPLE_READ))
-+			event->hw.flags |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
-+	}
+ 	pt_config_stop(event);
  
- 	if (branch_sample_counters(event)) {
- 		struct perf_event *leader, *sibling;
+@@ -1657,11 +1658,10 @@ static long pt_event_snapshot_aux(struct
+ 		return 0;
+ 
+ 	/*
+-	 * Here, handle_nmi tells us if the tracing is on
++	 * There is no PT interrupt in this mode, so stop the trace and it will
++	 * remain stopped while the buffer is copied.
+ 	 */
+-	if (READ_ONCE(pt->handle_nmi))
+-		pt_config_stop(event);
+-
++	pt_config_stop(event);
+ 	pt_read_offset(buf);
+ 	pt_update_head(pt);
+ 
+@@ -1673,11 +1673,10 @@ static long pt_event_snapshot_aux(struct
+ 	ret = perf_output_copy_aux(&pt->handle, handle, from, to);
+ 
+ 	/*
+-	 * If the tracing was on when we turned up, restart it.
+-	 * Compiler barrier not needed as we couldn't have been
+-	 * preempted by anything that touches pt->handle_nmi.
++	 * Here, handle_nmi tells us if the tracing was on.
++	 * If the tracing was on, restart it.
+ 	 */
+-	if (pt->handle_nmi)
++	if (READ_ONCE(pt->handle_nmi))
+ 		pt_config_start(event);
+ 
+ 	return ret;
 
 
