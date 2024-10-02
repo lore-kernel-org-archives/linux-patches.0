@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B618419752C;
-	Wed,  2 Oct 2024 14:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928DB1D0DC3;
+	Wed,  2 Oct 2024 14:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879159; cv=none; b=rjxGQ1KL8I1+NAFwX0ZGVe8SbLdbVNXfZSnNl9Wfy0juPjzZ1QpUJMQoWaIvS9xgxUoCR2ZOTZy6U/Xe5N3LZdmS8Y6pWA1o6PMw8dCTUjwF0v417Aw8a0IG97wl2NpKj47muwpZt25lwSi/85P0gk2sPC+VtvwDu8DktRjZoAw=
+	t=1727879162; cv=none; b=MIYfzULYOQPgSJCw/dtGS/q2lIF13WTbzCglVAoLpDSB9D6jUzDRdfdzVrXOpQVA/mANbapwjt7RLOg3y/I6DSqM734yfsEoAB2FzzqjysEHWDZbJ4fT/h+hRc3b4C2BafjSZAgbX+m2H42z9H+bRZNEvkuOfdfQ6SBn/vkJH04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879159; c=relaxed/simple;
-	bh=a1YgrOW9MIIuXdp89HtqjOycoHaQgJoTr0qnGGr1m4U=;
+	s=arc-20240116; t=1727879162; c=relaxed/simple;
+	bh=mJyOtXFIb3kAarlhvJ7iBsNr5fGRIuOG7o0ls2lI9iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSg+ijE1r9jnmqRJ16lCs6Hm4SkifRVHyfbLTReYCfojWYHD+hHeqYpS9ixf/IpNXR0FPy/zZHeS8vlcM/MPaO7nQCun9/eXB/fAAllfbJTyRzNI2tbAop3j0NKnHtW3W0EBe1oa2HZillHV22/J1v9lPx3kEc9NLNyOvovmf80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1PuIXTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRckhKhYMT6yvgcqZ2gKfSu1NWjYp3afFDXidLrbdgqInByshpA0y3QnPSQa3QV2rGseW5F+sar1s9cWmJGWZZcQ2uWj054jt8yJq95Su6OhVE3E0JOGSHSdiIsa/YLxNbjWZSVIIrVyz9rAf107YrQqMmO3Z/MMeTfhoVV27aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqL8Cun2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1PuIXTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382D6C4CEC2;
-	Wed,  2 Oct 2024 14:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqL8Cun2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D10C4CEC2;
+	Wed,  2 Oct 2024 14:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879159;
-	bh=a1YgrOW9MIIuXdp89HtqjOycoHaQgJoTr0qnGGr1m4U=;
+	s=korg; t=1727879162;
+	bh=mJyOtXFIb3kAarlhvJ7iBsNr5fGRIuOG7o0ls2lI9iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1PuIXTndBVc8s/a7Xcnz7MfO9V58NyVEClVbBk7ZRgDKAXYvpQEmnkpjj7lnRI8E
-	 KaVHHypumn0HcgcJ4VY6A4lbMJP4pfvdbNLcj2/jdks08KAnfDSQruVK/fdG1O9JaG
-	 4o6Nxbo470I69OnXZiIbghlTA5Zu/Eg1KuMNJhXQ=
+	b=HqL8Cun28l3+kVnNDefZ1qY2AuJw5Y2ClHL79fdGwVsz5tvnn30vAxhTa649GxidN
+	 99XQWGJ1w1DqrMbXkObEfKeK9rO8YbntvKZyM49MAyzzfHOWIfrtfm/kTp2oLjsRHg
+	 IaS+j/92cN2kGeXAjxuMfKEiveDRSaPVMHuFSVd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8dd98a9e98ee28dc484a@syzkaller.appspotmail.com,
+	syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Ping-Ke Shih <pkshih@realtek.com>,
-	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/538] wifi: mac80211: dont use rate mask for offchannel TX either
-Date: Wed,  2 Oct 2024 14:54:22 +0200
-Message-ID: <20241002125752.929311136@linuxfoundation.org>
+Subject: [PATCH 6.6 003/538] wifi: rtw88: always wait for both firmware loading attempts
+Date: Wed,  2 Oct 2024 14:54:02 +0200
+Message-ID: <20241002125752.111817701@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,115 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit e7a7ef9a0742dbd0818d5b15fba2c5313ace765b ]
+[ Upstream commit 0e735a4c6137262bcefe45bb52fde7b1f5fc6c4d ]
 
-Like the commit ab9177d83c04 ("wifi: mac80211: don't use rate mask for
-scanning"), ignore incorrect settings to avoid no supported rate warning
-reported by syzbot.
+In 'rtw_wait_firmware_completion()', always wait for both (regular and
+wowlan) firmware loading attempts. Otherwise if 'rtw_usb_intf_init()'
+has failed in 'rtw_usb_probe()', 'rtw_usb_disconnect()' may issue
+'ieee80211_free_hw()' when one of 'rtw_load_firmware_cb()' (usually
+the wowlan one) is still in progress, causing UAF detected by KASAN.
 
-The syzbot did bisect and found cause is commit 9df66d5b9f45 ("cfg80211:
-fix default HE tx bitrate mask in 2G band"), which however corrects
-bitmask of HE MCS and recognizes correctly settings of empty legacy rate
-plus HE MCS rate instead of returning -EINVAL.
-
-As suggestions [1], follow the change of SCAN TX to consider this case of
-offchannel TX as well.
-
-[1] https://lore.kernel.org/linux-wireless/6ab2dc9c3afe753ca6fdcdd1421e7a1f47e87b84.camel@sipsolutions.net/T/#m2ac2a6d2be06a37c9c47a3d8a44b4f647ed4f024
-
-Reported-by: syzbot+8dd98a9e98ee28dc484a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-wireless/000000000000fdef8706191a3f7b@google.com/
-Fixes: 9df66d5b9f45 ("cfg80211: fix default HE tx bitrate mask in 2G band")
+Fixes: c8e5695eae99 ("rtw88: load wowlan firmware if wowlan is supported")
+Reported-by: syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6c6c08700f9480c41fe3
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240729074816.20323-1-pkshih@realtek.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20240726114657.25396-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h    | 7 ++++---
- net/mac80211/offchannel.c | 1 +
- net/mac80211/rate.c       | 2 +-
- net/mac80211/scan.c       | 2 +-
- net/mac80211/tx.c         | 2 +-
- 5 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index a39bd4169f292..47ade676565db 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -936,8 +936,9 @@ enum mac80211_tx_info_flags {
-  *	of their QoS TID or other priority field values.
-  * @IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX: first MLO TX, used mostly internally
-  *	for sequence number assignment
-- * @IEEE80211_TX_CTRL_SCAN_TX: Indicates that this frame is transmitted
-- *	due to scanning, not in normal operation on the interface.
-+ * @IEEE80211_TX_CTRL_DONT_USE_RATE_MASK: Don't use rate mask for this frame
-+ *	which is transmitted due to scanning or offchannel TX, not in normal
-+ *	operation on the interface.
-  * @IEEE80211_TX_CTRL_MLO_LINK: If not @IEEE80211_LINK_UNSPECIFIED, this
-  *	frame should be transmitted on the specific link. This really is
-  *	only relevant for frames that do not have data present, and is
-@@ -958,7 +959,7 @@ enum mac80211_tx_control_flags {
- 	IEEE80211_TX_CTRL_NO_SEQNO		= BIT(7),
- 	IEEE80211_TX_CTRL_DONT_REORDER		= BIT(8),
- 	IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX	= BIT(9),
--	IEEE80211_TX_CTRL_SCAN_TX		= BIT(10),
-+	IEEE80211_TX_CTRL_DONT_USE_RATE_MASK	= BIT(10),
- 	IEEE80211_TX_CTRL_MLO_LINK		= 0xf0000000,
- };
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index 63673005c2fb1..b90ea6c88b15d 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -1314,20 +1314,21 @@ static int rtw_wait_firmware_completion(struct rtw_dev *rtwdev)
+ {
+ 	const struct rtw_chip_info *chip = rtwdev->chip;
+ 	struct rtw_fw_state *fw;
++	int ret = 0;
  
-diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
-index 5bedd9cef414d..2517a5521a578 100644
---- a/net/mac80211/offchannel.c
-+++ b/net/mac80211/offchannel.c
-@@ -940,6 +940,7 @@ int ieee80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	fw = &rtwdev->fw;
+ 	wait_for_completion(&fw->completion);
+ 	if (!fw->firmware)
+-		return -EINVAL;
++		ret = -EINVAL;
+ 
+ 	if (chip->wow_fw_name) {
+ 		fw = &rtwdev->wow_fw;
+ 		wait_for_completion(&fw->completion);
+ 		if (!fw->firmware)
+-			return -EINVAL;
++			ret = -EINVAL;
  	}
  
- 	IEEE80211_SKB_CB(skb)->flags = flags;
-+	IEEE80211_SKB_CB(skb)->control.flags |= IEEE80211_TX_CTRL_DONT_USE_RATE_MASK;
- 
- 	skb->dev = sdata->dev;
- 
-diff --git a/net/mac80211/rate.c b/net/mac80211/rate.c
-index 3cf252418bd38..78e7ac6c0af0b 100644
---- a/net/mac80211/rate.c
-+++ b/net/mac80211/rate.c
-@@ -890,7 +890,7 @@ void ieee80211_get_tx_rates(struct ieee80211_vif *vif,
- 	if (ieee80211_is_tx_data(skb))
- 		rate_control_apply_mask(sdata, sta, sband, dest, max_rates);
- 
--	if (!(info->control.flags & IEEE80211_TX_CTRL_SCAN_TX))
-+	if (!(info->control.flags & IEEE80211_TX_CTRL_DONT_USE_RATE_MASK))
- 		mask = sdata->rc_rateidx_mask[info->band];
- 
- 	if (dest[0].idx < 0)
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 3d68db738cde4..b58d061333c52 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -636,7 +636,7 @@ static void ieee80211_send_scan_probe_req(struct ieee80211_sub_if_data *sdata,
- 				cpu_to_le16(IEEE80211_SN_TO_SEQ(sn));
- 		}
- 		IEEE80211_SKB_CB(skb)->flags |= tx_flags;
--		IEEE80211_SKB_CB(skb)->control.flags |= IEEE80211_TX_CTRL_SCAN_TX;
-+		IEEE80211_SKB_CB(skb)->control.flags |= IEEE80211_TX_CTRL_DONT_USE_RATE_MASK;
- 		ieee80211_tx_skb_tid_band(sdata, skb, 7, channel->band);
- 	}
+-	return 0;
++	return ret;
  }
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 415e951e4138a..45a093d3f1fa7 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -706,7 +706,7 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
- 	txrc.skb = tx->skb;
- 	txrc.reported_rate.idx = -1;
  
--	if (unlikely(info->control.flags & IEEE80211_TX_CTRL_SCAN_TX)) {
-+	if (unlikely(info->control.flags & IEEE80211_TX_CTRL_DONT_USE_RATE_MASK)) {
- 		txrc.rate_idx_mask = ~0;
- 	} else {
- 		txrc.rate_idx_mask = tx->sdata->rc_rateidx_mask[info->band];
+ static enum rtw_lps_deep_mode rtw_update_lps_deep_mode(struct rtw_dev *rtwdev,
 -- 
 2.43.0
 
