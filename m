@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583431D07BC;
-	Wed,  2 Oct 2024 14:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A9F1D07BC;
+	Wed,  2 Oct 2024 14:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878929; cv=none; b=T6m3IVtBvj3xeHp2Mv+J7+W+aBapb6k4e65azvgeOLG8KS8bSJ4SebZ9KCoQw8SW+Cf8+uelx7R6cC66OvhZLdA+5usczSN30aSPcAGenZNZ0aPHquWi47A/kqjnsTAzFl+2yaLl1mPM9GLdYERUEgiaIHVUoW0I+OOlBaUr1yI=
+	t=1727878932; cv=none; b=mwA1YiO1L/zbatOMDseRNevVCNobFvrsEQAbvBE0xbxSXZv9w+reZc6dtTSFVTliA04G0egU3UFQD6IZBa/HxYFdzx6EfMRlZd9Kz2eN9O/oXxXoR33YweSIC998/VP1IO/Yr4Qtlhsts2njqjBqH94BNCQUCa/Ih7UFXvL+INE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878929; c=relaxed/simple;
-	bh=8K+sl8h0yWRTy8U/t4iCP7//WBbRT+HVRTXpOxjFDLw=;
+	s=arc-20240116; t=1727878932; c=relaxed/simple;
+	bh=MEDSQ86bp9MAW7CT+UXtLYPKFLcsu57+ADct6DWvx4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aq3GNuzos6EJ1QA34JIgQBxzO0W8t+N6auYsKs8nphTk8GrxWx35+ZSDc0Beuf/egnt/sztkS8ppOQcPW9G5H2tpFpzckQVb/htuHI5xi9nY+j2bjllb684C3O5oHA8Avlo2sxONAXJyEZlQW3BBZWKJ0RLRjSYsdePD/D3UtRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/VtM1D5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCCVI/E2BLwiNx/9hNBPTjlGv6ylOF8Kzcic8VaIkI2UtbLy/a5/JkFFqSOmy4uLyZzrA30EgKD2Nm/2vxTCNuvGYJDD7SoEYpxjasGf9LtrUoYOc7Ff6D07eIcAcP5v3526t+GL61cOwt6OXo6PO8orN3h+MHflKhRrMRoA670=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfHAwihn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/VtM1D5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71A5C4CEC2;
-	Wed,  2 Oct 2024 14:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfHAwihn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6103C4CEC2;
+	Wed,  2 Oct 2024 14:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878929;
-	bh=8K+sl8h0yWRTy8U/t4iCP7//WBbRT+HVRTXpOxjFDLw=;
+	s=korg; t=1727878932;
+	bh=MEDSQ86bp9MAW7CT+UXtLYPKFLcsu57+ADct6DWvx4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/VtM1D5RV45/XJP6XIFKp7K7PM3gY3gB40Xsu0a//gzG7lrx2TPJNWJdt4x3f04h
-	 3L+mBPTbUjylfH+l3dmyIak2IDFt1Mz8TGxE0d3kxRdscx8hW4Z9sKr8vuMh9BMTiP
-	 RDeg+DlZRI7J0P95Gmio8lLeWKWu3c5nTOtiwjt0=
+	b=gfHAwihnMH3mRlhb/C+eSf1/eCHWuD3mT91erGaCK44/oOkKfq/g6Mgp2yeL2OPeY
+	 hBVvJ2ku0ijGI8JRsKfi3geSdDzWZNgAq+iLYm5EhUn0AGcdWuOnu1sFPVuB1xm3D/
+	 yAIi6emxDagYsPxec+tSYqHNX5SgTkNv6nDsQkGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Karsten <mkarsten@uwaterloo.ca>,
-	Joe Damato <jdamato@fastly.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.10 581/634] eventpoll: Annotate data-race of busy_poll_usecs
-Date: Wed,  2 Oct 2024 15:01:21 +0200
-Message-ID: <20241002125834.049870160@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.10 582/634] md: Dont flush sync_work in md_write_start()
+Date: Wed,  2 Oct 2024 15:01:22 +0200
+Message-ID: <20241002125834.089572956@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Karsten <mkarsten@uwaterloo.ca>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit b9ca079dd6b09e08863aa998edf5c47597806c05 upstream.
+commit 86ad4cda79e0dade87d4bb0d32e1fe541d4a63e8 upstream.
 
-A struct eventpoll's busy_poll_usecs field can be modified via a user
-ioctl at any time. All reads of this field should be annotated with
-READ_ONCE.
+Because flush sync_work may trigger mddev_suspend() if there are spares,
+and this should never be done in IO path because mddev_suspend() is used
+to wait for IO.
 
-Fixes: 85455c795c07 ("eventpoll: support busy poll per epoll instance")
+This problem is found by code review.
+
+Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Martin Karsten <mkarsten@uwaterloo.ca>
-Link: https://lore.kernel.org/r/20240806123301.167557-1-jdamato@fastly.com
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240801124746.242558-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 6c0a1e9715ea..145f5349c612 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -420,7 +420,7 @@ static bool busy_loop_ep_timeout(unsigned long start_time,
- 
- static bool ep_busy_loop_on(struct eventpoll *ep)
- {
--	return !!ep->busy_poll_usecs || net_busy_loop_on();
-+	return !!READ_ONCE(ep->busy_poll_usecs) || net_busy_loop_on();
- }
- 
- static bool ep_busy_loop_end(void *p, unsigned long start_time)
--- 
-2.46.2
-
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -8648,7 +8648,6 @@ void md_write_start(struct mddev *mddev,
+ 	BUG_ON(mddev->ro == MD_RDONLY);
+ 	if (mddev->ro == MD_AUTO_READ) {
+ 		/* need to switch to read/write */
+-		flush_work(&mddev->sync_work);
+ 		mddev->ro = MD_RDWR;
+ 		set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
+ 		md_wakeup_thread(mddev->thread);
 
 
