@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15581D048C;
-	Wed,  2 Oct 2024 13:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E639D1D0412;
+	Wed,  2 Oct 2024 13:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875693; cv=none; b=r5aXmeBpWerwUkhHwlkUZtYHeSVqwmfWGF2iJtiBgUi/Gh6GosDkPhOwlH+m2qADc2AvnzC3q7cQWzB02/SSRfmmZUru+wV1DMV0ftRROo91r/MBVqNLKmt/VlrJ9mEfhzGq2RmgaAHY8V7FWWI8vSSZgWGnqkthsQsBcMq24+c=
+	t=1727875696; cv=none; b=ciajIvClusv4PHORbW+mvrC/VwajUpuEn+Ii0lm3UbjeEbGobHJG/qDci8r4Xy3nFn9ZY/6o4vSJcqfo3kSVmyzu50AX1Zx7rGRVhvLEKHsflvlN5h+uTVpXVkN5MPz/qeqKx9AlsYpls+RiRCcbNmmiD9qeDRrFkC1Mw+/Fpp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875693; c=relaxed/simple;
-	bh=fCG1SFxMAnznGJEmb1p53n2kcvHQT+ZNnoMBQFPDZmA=;
+	s=arc-20240116; t=1727875696; c=relaxed/simple;
+	bh=g4AKidmB15uD7JJG91fvE/qTy1re+reosvqUZZL4JGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t0CQjHBVLEMwSAt0XQM9j0NuurTUb0OlIygOGw4GdfwbcF0ZnTZOHzi1EpZa95IbwuTgc44y8HoAhpvfObs4nbLUWGHYp68hLKk8/5P60KFUi639u0jNCJ9AjSEYQVFZCp2eoN3yZBddsYBfTe9sy3mYUoIIwL9QS2nPPMIZKVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb8FnWZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prLNSIoWv8qGtfVnK1CAVEinfmk3yn7gA82Y2MHyZZQ+bgmFzAccxdjmPYvBU4qFgKJpa/aQGeWkL6MBtg5GYZAABSA74Bd9DKEBd87j9lWeTine4caLchKYcqdDBH/Wuo7aLDyXcWHxG25qgsOZvEw4xYPjP+mImbSRo9IFNXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rN09U4/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb8FnWZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE06C4CEC5;
-	Wed,  2 Oct 2024 13:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rN09U4/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB68C4CEC5;
+	Wed,  2 Oct 2024 13:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875692;
-	bh=fCG1SFxMAnznGJEmb1p53n2kcvHQT+ZNnoMBQFPDZmA=;
+	s=korg; t=1727875695;
+	bh=g4AKidmB15uD7JJG91fvE/qTy1re+reosvqUZZL4JGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sb8FnWZ6bYKWAoJ4DGM5J/JjnvldxP/G/gj3jc7o8FAQnVxMu6vjAzxEnqrukZvMO
-	 4M+kulQk0Ywr3F8xZo6wBt+ecxMGfk3r0eWsxxbxn96i62pSknVGVgLmMm4e8HLo2q
-	 eCJQ7ya4rNzrYAlSCpo5JQekao1D2e02/lwhWMAU=
+	b=rN09U4/U9H7ICxnTGLH+gM8WQB6SHPR3+fFGfTFUKoVzSanKshHmjHwquT2mosoY7
+	 s7cQO5gyKW7cRUhE8U9odMm3edgZRCt+35nJ/MKjVJZbijPseKId/sGvusJPXac6m4
+	 rtLidSCpw4HXSOukCxu8C17od/zunI+LpdCAnqgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Ankit Agrawal <agrawal.ag.ankit@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 157/695] platform: cznic: turris-omnia-mcu: Fix error check in omnia_mcu_register_trng()
-Date: Wed,  2 Oct 2024 14:52:35 +0200
-Message-ID: <20241002125828.745558307@linuxfoundation.org>
+Subject: [PATCH 6.11 158/695] clocksource/drivers/qcom: Add missing iounmap() on errors in msm_dt_timer_init()
+Date: Wed,  2 Oct 2024 14:52:36 +0200
+Message-ID: <20241002125828.784835596@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -46,45 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
 
-[ Upstream commit 2d516b8fc0f18ce9c0347a1aea6edb3d8ca1d692 ]
+[ Upstream commit ca140a0dc0a18acd4653b56db211fec9b2339986 ]
 
-The gpiod_to_irq() function never returns zero.  It returns negative
-error codes or a positive IRQ number.  Update the checking to check
-for negatives.
+Add the missing iounmap() when clock frequency fails to get read by the
+of_property_read_u32() call, or if the call to msm_timer_init() fails.
 
-Fixes: 41bb142a4028 ("platform: cznic: turris-omnia-mcu: Add support for MCU provided TRNG")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 6e3321631ac2 ("ARM: msm: Add DT support to msm_timer")
+Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240713095713.GA430091@bnew-VirtualBox
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/cznic/turris-omnia-mcu-trng.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clocksource/timer-qcom.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/cznic/turris-omnia-mcu-trng.c b/drivers/platform/cznic/turris-omnia-mcu-trng.c
-index ad953fb3c37af..9a1d9292dc9ad 100644
---- a/drivers/platform/cznic/turris-omnia-mcu-trng.c
-+++ b/drivers/platform/cznic/turris-omnia-mcu-trng.c
-@@ -70,8 +70,8 @@ int omnia_mcu_register_trng(struct omnia_mcu *mcu)
+diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+index b4afe3a675835..eac4c95c6127f 100644
+--- a/drivers/clocksource/timer-qcom.c
++++ b/drivers/clocksource/timer-qcom.c
+@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	}
  
- 	irq_idx = omnia_int_to_gpio_idx[__bf_shf(OMNIA_INT_TRNG)];
- 	irq = gpiod_to_irq(gpio_device_get_desc(mcu->gc.gpiodev, irq_idx));
--	if (!irq)
--		return dev_err_probe(dev, -ENXIO, "Cannot get TRNG IRQ\n");
-+	if (irq < 0)
-+		return dev_err_probe(dev, irq, "Cannot get TRNG IRQ\n");
+ 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
++		iounmap(cpu0_base);
+ 		pr_err("Unknown frequency\n");
+ 		return -EINVAL;
+ 	}
+@@ -243,7 +244,11 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	freq /= 4;
+ 	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
  
- 	/*
- 	 * If someone else cleared the TRNG interrupt but did not read the
+-	return msm_timer_init(freq, 32, irq, !!percpu_offset);
++	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
++	if (ret)
++		iounmap(cpu0_base);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
+ TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
 -- 
 2.43.0
 
