@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BBD1E52C;
-	Wed,  2 Oct 2024 14:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2BB1E52C;
+	Wed,  2 Oct 2024 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878879; cv=none; b=TNScBAlZv5+Hav92spKNmNDELW0nC3vsPff2AIFdr4SOsmmgs2Wl4lSGILy+tmCdOozOqUzykvqhaThkL/Jwh8CKX7Mp2ZLJhnt0BRoxA3ZfPq3xoJ64UKjWjzJJUtPbbKlxDFSqJfBBSBKO45HBqJiVOtUuWLnoGRyBbz7JZKg=
+	t=1727878882; cv=none; b=nJK4l2Zk0ZezC3ZkfBViC0DX9dOdAEB2eHC4Qz4Uuexm0ZrFGLr2Vs0I/PBU45MG1WeZnaDKB5susVRMUK4LLmfkoYHFfF794E1yC7/vQBZ6Y2tjeirYgT8O7slTJHd9CARbX+L7E6DfvfR/M7Rwj1M1sRkNa+172v+7OyJ8W6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878879; c=relaxed/simple;
-	bh=hUfEkIWzE0QnqZTsR/uzzE37+T2PASmyMZfHfZxjkS4=;
+	s=arc-20240116; t=1727878882; c=relaxed/simple;
+	bh=eQfZafVj3JFBWK3HfrNQQh6GEEqfPIFeB5zrN4HaqYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHCcAznWz57gig1IgoP3EQlZRCTSYaWi5q+gDbB+61ooBZTebxM5qyZgvlEbkFfljiqZZ9Gnm0WPYeDVmox2CN6BKPB042t1Whj7t57vFNGZyC5ZMtgck4nLFjEh5Fwo3K51JvsBCq/pI2d4ospgkuHHeg1+ARFZYGX0ky1abW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxr086wt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MJKTYUNgWVxRvSe85IZGhtz8w7lCRJhtvm8n1Ac5HxhHu4Z88Uo8BrzdRox8C0GlgluWT2H8I7ee066SVR3AhqZEffFkmW5WUnkq6Nupe93ozd+24Jee2rj9HKna4rWwuzQluN0uHtsaQ2KfLhSqC982zo4HbJruPrcUZ2wIG0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbDiWALt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxr086wt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B0AC4CECE;
-	Wed,  2 Oct 2024 14:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbDiWALt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8853C4CEC5;
+	Wed,  2 Oct 2024 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878879;
-	bh=hUfEkIWzE0QnqZTsR/uzzE37+T2PASmyMZfHfZxjkS4=;
+	s=korg; t=1727878882;
+	bh=eQfZafVj3JFBWK3HfrNQQh6GEEqfPIFeB5zrN4HaqYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxr086wt0DzCrhYEP/fs+VU5uaMnnwDkeqA/Fz7j8E//FTlHFPNfZf6kxPSnzWeTR
-	 WaUBFnSY+LZg6ri6dUYSJgybHWvaWfngCUKD7CseC8iPCVuHSmrI2pPuMK63BjZK41
-	 2JEfrsMCySIfwQzkXhmDtYEEGuw5DVq/DYmiyWk8=
+	b=mbDiWALtIEgjRuz4TFcaaBYldfWj3HO8MFg+yKRbWyVaRigg71MFkacsHEFuOEdou
+	 rSpRXHDPtMSeFhqUOl6UysidNRwR9bGVpuKtoySsVFX2+8FHwnkn7e+ZHP0h+N51PL
+	 0G8R2D4eaiiwEUXY26bfSziolWUFOaFqBmwl6rmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Chao Yu <chao@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.10 563/634] f2fs: Require FMODE_WRITE for atomic write ioctls
-Date: Wed,  2 Oct 2024 15:01:03 +0200
-Message-ID: <20241002125833.338557387@linuxfoundation.org>
+Subject: [PATCH 6.10 564/634] f2fs: check discard support for conventional zones
+Date: Wed,  2 Oct 2024 15:01:04 +0200
+Message-ID: <20241002125833.378137523@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,71 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit 4f5a100f87f32cb65d4bb1ad282a08c92f6f591e upstream.
+commit 43aec4d01bd2ce961817a777b3846f8318f398e4 upstream.
 
-The F2FS ioctls for starting and committing atomic writes check for
-inode_owner_or_capable(), but this does not give LSMs like SELinux or
-Landlock an opportunity to deny the write access - if the caller's FSUID
-matches the inode's UID, inode_owner_or_capable() immediately returns true.
+As the helper function f2fs_bdev_support_discard() shows, f2fs checks if
+the target block devices support discard by calling
+bdev_max_discard_sectors() and bdev_is_zoned(). This check works well
+for most cases, but it does not work for conventional zones on zoned
+block devices. F2fs assumes that zoned block devices support discard,
+and calls __submit_discard_cmd(). When __submit_discard_cmd() is called
+for sequential write required zones, it works fine since
+__submit_discard_cmd() issues zone reset commands instead of discard
+commands. However, when __submit_discard_cmd() is called for
+conventional zones, __blkdev_issue_discard() is called even when the
+devices do not support discard.
 
-There are scenarios where LSMs want to deny a process the ability to write
-particular files, even files that the FSUID of the process owns; but this
-can currently partially be bypassed using atomic write ioctls in two ways:
+The inappropriate __blkdev_issue_discard() call was not a problem before
+the commit 30f1e7241422 ("block: move discard checks into the ioctl
+handler") because __blkdev_issue_discard() checked if the target devices
+support discard or not. If not, it returned EOPNOTSUPP. After the
+commit, __blkdev_issue_discard() no longer checks it. It always returns
+zero and sets NULL to the given bio pointer. This NULL pointer triggers
+f2fs_bug_on() in __submit_discard_cmd(). The BUG is recreated with the
+commands below at the umount step, where /dev/nullb0 is a zoned null_blk
+with 5GB total size, 128MB zone size and 10 conventional zones.
 
- - F2FS_IOC_START_ATOMIC_REPLACE + F2FS_IOC_COMMIT_ATOMIC_WRITE can
-   truncate an inode to size 0
- - F2FS_IOC_START_ATOMIC_WRITE + F2FS_IOC_ABORT_ATOMIC_WRITE can revert
-   changes another process concurrently made to a file
+$ mkfs.f2fs -f -m /dev/nullb0
+$ mount /dev/nullb0 /mnt
+$ for ((i=0;i<5;i++)); do dd if=/dev/zero of=/mnt/test bs=65536 count=1600 conv=fsync; done
+$ umount /mnt
 
-Fix it by requiring FMODE_WRITE for these operations, just like for
-F2FS_IOC_MOVE_RANGE. Since any legitimate caller should only be using these
-ioctls when intending to write into the file, that seems unlikely to break
-anything.
+To fix the BUG, avoid the inappropriate __blkdev_issue_discard() call.
+When discard is requested for conventional zones, check if the device
+supports discard or not. If not, return EOPNOTSUPP.
 
-Fixes: 88b88a667971 ("f2fs: support atomic writes")
+Fixes: 30f1e7241422 ("block: move discard checks into the ioctl handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/f2fs/segment.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2123,6 +2123,9 @@ static int f2fs_ioc_start_atomic_write(s
- 	loff_t isize;
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1290,6 +1290,13 @@ static int __submit_discard_cmd(struct f
+ 						wait_list, issued);
+ 			return 0;
+ 		}
 +
- 	if (!inode_owner_or_capable(idmap, inode))
- 		return -EACCES;
- 
-@@ -2230,6 +2233,9 @@ static int f2fs_ioc_commit_atomic_write(
- 	struct mnt_idmap *idmap = file_mnt_idmap(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(idmap, inode))
- 		return -EACCES;
- 
-@@ -2262,6 +2268,9 @@ static int f2fs_ioc_abort_atomic_write(s
- 	struct mnt_idmap *idmap = file_mnt_idmap(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(idmap, inode))
- 		return -EACCES;
++		/*
++		 * Issue discard for conventional zones only if the device
++		 * supports discard.
++		 */
++		if (!bdev_max_discard_sectors(bdev))
++			return -EOPNOTSUPP;
+ 	}
+ #endif
  
 
 
