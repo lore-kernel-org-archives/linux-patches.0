@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B71B1D0425;
-	Wed,  2 Oct 2024 13:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4341CFECF;
+	Wed,  2 Oct 2024 13:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875707; cv=none; b=l30qMtxdaDoivjeaQKRMPiirkPhoY4iG+H6SO8p1kQlSyqfEOj+PoBd5d76Diqs58FKjQ+TLXCpoRpQQxrhe5WY4XcVNzHd4kWaP6/6Obnu8unCAcmD19VmqoSEcbdUHTIIQaOtnbsPKy0Ipnz/WUY3qfXVOX6XGUzdZEoH+Jdg=
+	t=1727875710; cv=none; b=SjoR6QCPtr1qsXaMBWYnCbTJHBJyWyoxfDCCNMwDOJYm+MAWobqeoJEiI3u/FwfC4UjA2tiaqjvydRwB5R7rW946MOSztcWLuMfUjMN21R47kWpwHbC61nIenwdc+aF10j4QxMBketTE1SI6cGZWlaLlz9uRtyKvo9ehBCsA3nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875707; c=relaxed/simple;
-	bh=hGNS01z/1PAVPu5TRdCvVBd1GoPkTvpWvW1ebBp+1Q0=;
+	s=arc-20240116; t=1727875710; c=relaxed/simple;
+	bh=e0QJNLyVozIwIvKUwWApVI2/47TH1MRqrJs4JYfkbjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTvwDQMaGCeXf0NbainnHOfpFnJCMYQmR5jCykdnoyb2qpQgGPlwKzVyVnaP8fleEC6p2mv+grrp+IxNNseRJ+9KOYErPy5dtS0ootAf1M5bSZu6jhvrjnsvv1hEH9LBDvkGl5cvI2/hgZbY8hpWYeHHuZ8XgfrMcjBW4O1EriM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsBGo998; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YJKLkET3/VylRFKZtywxh+80KSxlIalzzP19bIPmqyw8rzzDhnugD5ik4Vv6TaRwYG8hplyq84/2HXirme9Oc2Z1C0DGk224xowj8sLskbmDZ1N7/78bTgkR8VsZf8WXW2KRYmChiRwpjtM59BGOCDmoh0UbDqrIjimJoMs/ztQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PE15B0g3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsBGo998"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0103FC4CEC5;
-	Wed,  2 Oct 2024 13:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PE15B0g3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63FFC4CEC5;
+	Wed,  2 Oct 2024 13:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875707;
-	bh=hGNS01z/1PAVPu5TRdCvVBd1GoPkTvpWvW1ebBp+1Q0=;
+	s=korg; t=1727875710;
+	bh=e0QJNLyVozIwIvKUwWApVI2/47TH1MRqrJs4JYfkbjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsBGo998Jt3fsxd13PxVFQpr36J2QCqiRAQlD6IfJIDWhiec5VLOoZDRraQC8cy6d
-	 BQOevC8G/vFIq4GWit1v8vlue43b67rDND0+jE4IYB1pemASoe/oTemCnMK822dxLL
-	 o4nQbZe3WdDUdme2vFFMnFYiXah8M9KLHldvW7pI=
+	b=PE15B0g3Qlcmaujs5ZZvsrPr7Dhb9tixxbwEyNGKqTBdFctbfmaAokhwLigNCltAN
+	 yHQH+Mo1pHv7K1AONBJQ3humTVeNltgAa/20BNZb3ZkOZQgde9Nt9q7/LERW7AXe+r
+	 NqTn2INCdI0T0v64c2NFhx8Bdg3AimURr0Re9Xyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 186/695] iommu/amd: Set the pgsize_bitmap correctly
-Date: Wed,  2 Oct 2024 14:53:04 +0200
-Message-ID: <20241002125829.896179413@linuxfoundation.org>
+Subject: [PATCH 6.11 195/695] iommu/arm-smmu-qcom: apply num_context_bank fixes for SDM630 / SDM660
+Date: Wed,  2 Oct 2024 14:53:13 +0200
+Message-ID: <20241002125830.250676122@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,103 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7a41dcb52f9de6079621fc31c3b84c7fc290934b ]
+[ Upstream commit 19eb465c969f3d6ed1b98506d3e470e863b41e16 ]
 
-When using io_pgtable the correct pgsize_bitmap is stored in the cfg, both
-v1_alloc_pgtable() and v2_alloc_pgtable() set it correctly.
+The Qualcomm SDM630 / SDM660 platform requires the same kind of
+workaround as MSM8998: some IOMMUs have context banks reserved by
+firmware / TZ, touching those banks resets the board.
 
-This fixes a bug where the v2 pgtable had the wrong pgsize as
-protection_domain_init_v2() would set it and then do_iommu_domain_alloc()
-immediately resets it.
+Apply the num_context_bank workaround to those two SMMU devices in order
+to allow them to be used by Linux.
 
-Remove the confusing ops.pgsize_bitmap since that is not used if the
-driver sets domain.pgsize_bitmap.
-
-Fixes: 134288158a41 ("iommu/amd: Add domain_alloc_user based domain allocation")
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/3-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: b812834b5329 ("iommu: arm-smmu-qcom: Add sdm630/msm8998 compatibles for qcom quirks")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20240907-sdm660-wifi-v1-1-e316055142f8@linaro.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 28 ++++------------------------
- 1 file changed, 4 insertions(+), 24 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index edbd4ca1451a8..833637ffae39f 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2271,26 +2271,11 @@ void protection_domain_free(struct protection_domain *domain)
- 	kfree(domain);
- }
- 
--static int protection_domain_init_v1(struct protection_domain *domain)
--{
--	domain->pd_mode = PD_MODE_V1;
--	return 0;
--}
--
--static int protection_domain_init_v2(struct protection_domain *pdom)
--{
--	pdom->pd_mode = PD_MODE_V2;
--	pdom->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
--
--	return 0;
--}
--
- struct protection_domain *protection_domain_alloc(unsigned int type)
- {
- 	struct io_pgtable_ops *pgtbl_ops;
- 	struct protection_domain *domain;
- 	int pgtable;
--	int ret;
- 
- 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
- 	if (!domain)
-@@ -2326,18 +2311,14 @@ struct protection_domain *protection_domain_alloc(unsigned int type)
- 
- 	switch (pgtable) {
- 	case AMD_IOMMU_V1:
--		ret = protection_domain_init_v1(domain);
-+		domain->pd_mode = PD_MODE_V1;
- 		break;
- 	case AMD_IOMMU_V2:
--		ret = protection_domain_init_v2(domain);
-+		domain->pd_mode = PD_MODE_V2;
- 		break;
- 	default:
--		ret = -EINVAL;
--		break;
--	}
--
--	if (ret)
- 		goto out_err;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 087fb4f6f4d3d..6372f3e25c4bc 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -286,8 +286,15 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 	 * MSM8998 LPASS SMMU reports 13 context banks, but accessing
+ 	 * the last context bank crashes the system.
+ 	 */
+-	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") && smmu->num_context_banks == 13)
++	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") &&
++	    smmu->num_context_banks == 13) {
+ 		smmu->num_context_banks = 12;
++	} else if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm630-smmu-v2")) {
++		if (smmu->num_context_banks == 21) /* SDM630 / SDM660 A2NOC SMMU */
++			smmu->num_context_banks = 7;
++		else if (smmu->num_context_banks == 14) /* SDM630 / SDM660 LPASS SMMU */
++			smmu->num_context_banks = 13;
 +	}
  
- 	pgtbl_ops = alloc_io_pgtable_ops(pgtable, &domain->iop.pgtbl_cfg, domain);
- 	if (!pgtbl_ops)
-@@ -2390,10 +2371,10 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
- 	domain->domain.geometry.aperture_start = 0;
- 	domain->domain.geometry.aperture_end   = dma_max_address();
- 	domain->domain.geometry.force_aperture = true;
-+	domain->domain.pgsize_bitmap = domain->iop.iop.cfg.pgsize_bitmap;
+ 	/*
+ 	 * Some platforms support more than the Arm SMMU architected maximum of
+@@ -350,6 +357,11 @@ static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
+ 	/* Support for 16K pages is advertised on some SoCs, but it doesn't seem to work */
+ 	smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
  
- 	if (iommu) {
- 		domain->domain.type = type;
--		domain->domain.pgsize_bitmap = iommu->iommu.ops->pgsize_bitmap;
- 		domain->domain.ops = iommu->iommu.ops->default_domain_ops;
++	/* TZ protects several last context banks, hide them from Linux */
++	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm630-smmu-v2") &&
++	    smmu->num_context_banks == 5)
++		smmu->num_context_banks = 2;
++
+ 	return 0;
+ }
  
- 		if (dirty_tracking)
-@@ -2852,7 +2833,6 @@ const struct iommu_ops amd_iommu_ops = {
- 	.device_group = amd_iommu_device_group,
- 	.get_resv_regions = amd_iommu_get_resv_regions,
- 	.is_attach_deferred = amd_iommu_is_attach_deferred,
--	.pgsize_bitmap	= AMD_IOMMU_PGSIZES,
- 	.def_domain_type = amd_iommu_def_domain_type,
- 	.dev_enable_feat = amd_iommu_dev_enable_feature,
- 	.dev_disable_feat = amd_iommu_dev_disable_feature,
 -- 
 2.43.0
 
