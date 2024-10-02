@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DB01D1745;
-	Wed,  2 Oct 2024 14:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9A01D0DE9;
+	Wed,  2 Oct 2024 14:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878123; cv=none; b=mhF6PVQX4UCjrvlLZQdL2+yetqv9Nd8sV643dCkFDRWBEzbvSHtAXTEChlUsIM0+MAGgG6eIw9wVOeAIuGpz/zUST8512b/lym5oYnc0E2OTkqsZx4skGguCHJhTQPNH9Fs3NQYzm6b+JTOc0ZUC+9hjWBaMfpXt+JxdobY4i3U=
+	t=1727878126; cv=none; b=stLLQsI2OKFBZwrvHZmH7Z6nz5qEACq4THlcoo/dL8DKFHkg+cowcEGz1qP9TjRjS3L8paNoKqcVlCaSrc/lk5n44KvVWtMQLpWAphPk9tL8+Hjx5RnYm07z17Fbdw6iz9oXdKcQ4nmPdnSsBZyOrfS548JE5RSSxEf822uka+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878123; c=relaxed/simple;
-	bh=v/i9abZ4KiWZlI0xf4+EvRN1kYYPldr9khXiqluXHv0=;
+	s=arc-20240116; t=1727878126; c=relaxed/simple;
+	bh=DphxnEGc/4vacRonEo+F1Y3OnAFg425ljvPHPYVChkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYzzmUrLGGGSyVvmrTQ1bmHgdHqSukhNZj1wIaGS/vy8Sn/7HwU7qGXrBqSuCofXPu8pY5bkBVJeDRXmh0eisoDzleQf7+l0LTm0KXCeuok4+EPp6WW78/uWidRvGUiL0TF3p7PlC8JANJojtbWRsuCvGxltv8vN4gIkHuOL5fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOIQ/kxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUmsDlbk1ELUUOynkcfSSpiJg0PXwEL8c/oApcX+mMoPKiDcZnmofxnXH42oCuImJYBa6tDjlQDJY6WTRXudmIToHjTWYnXsY4mOKAJRUUH/7r0w+LN/J8ygzZzuCTuK4ZiGiYyB+H2Nv5GUMTw5OmGv0aFYk7t//6p2Oe3CIRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCHYtIFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOIQ/kxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29258C4CEC2;
-	Wed,  2 Oct 2024 14:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCHYtIFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A0FC4CEC2;
+	Wed,  2 Oct 2024 14:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878123;
-	bh=v/i9abZ4KiWZlI0xf4+EvRN1kYYPldr9khXiqluXHv0=;
+	s=korg; t=1727878126;
+	bh=DphxnEGc/4vacRonEo+F1Y3OnAFg425ljvPHPYVChkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOIQ/kxwR1pi77YGVOCh4pwEcllkJ6EhAzW+6SpcGUsY/Sa+us3t5OkkYWh6O1p0s
-	 LH6JuxzGch4cUzk2HiJAy7tsGPYUUGbOPAlnO0B206zdsPXNMH0DHdM0vm38Oa0LvV
-	 WFN+2kzhDK/JMXSjqnEuRDH2lKf1AE0b9qGulwLw=
+	b=lCHYtIFOZR/EkNVHDuKi70Qufw9yRvK4g7T22FJ/17GdKCL+/e8kEKVPn5bTiSBhK
+	 fZN3tLJuOJm4Od5Xwdd+VcgCedQdQOTsSj22hJ7uD0ORc0hl51wfymLT8H034pvOwH
+	 5st2s0abHoutvSPotN3RHxC7/tPe0bleiwnp8BOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Li <ye.li@nxp.com>,
 	Jacky Bai <ping.bai@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 310/634] clk: imx: composite-8m: Enable gate clk with mcore_booted
-Date: Wed,  2 Oct 2024 14:56:50 +0200
-Message-ID: <20241002125823.344242918@linuxfoundation.org>
+Subject: [PATCH 6.10 311/634] clk: imx: composite-93: keep root clock on when mcore enabled
+Date: Wed,  2 Oct 2024 14:56:51 +0200
+Message-ID: <20241002125823.383031031@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,111 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Jacky Bai <ping.bai@nxp.com>
 
-[ Upstream commit 8f32e9dd0916eb3fd4bcf550ed1d04542a65cb9e ]
+[ Upstream commit d342df11726bfac9c3a9d2037afa508ac0e9e44e ]
 
-Bootloader might disable some CCM ROOT Slices. So if mcore_booted set with
-display CCM ROOT disabled by Bootloader, kernel display BLK CTRL driver
-imx8m_blk_ctrl_driver_init may hang the system because the BUS clk is
-disabled.
+Previously we assumed that the root clock slice is enabled
+by default when kernel boot up. But the bootloader may disable
+the clocks before jump into kernel. The gate ops should be registered
+rather than NULL to make sure the disabled clock can be enabled
+when kernel boot up.  Refine the code to skip disable the clock
+if mcore booted.
 
-Add back gate ops, but with disable doing nothing, then the CCM ROOT
-will be enabled when used.
-
-Fixes: bb7e897b002a ("clk: imx8m: check mcore_booted before register clk")
-Reviewed-by: Ye Li <ye.li@nxp.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
+Fixes: a740d7350ff7 ("clk: imx: imx93: add mcore_booted module paratemter")
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Tested-by: Chancel Liu <chancel.liu@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-2-peng.fan@oss.nxp.com
+Link: https://lore.kernel.org/r/20240607133347.3291040-3-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 53 +++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 11 deletions(-)
+ drivers/clk/imx/clk-composite-93.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index 8cc07d056a838..f187582ba4919 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -204,6 +204,34 @@ static const struct clk_ops imx8m_clk_composite_mux_ops = {
- 	.determine_rate = imx8m_clk_composite_mux_determine_rate,
- };
+diff --git a/drivers/clk/imx/clk-composite-93.c b/drivers/clk/imx/clk-composite-93.c
+index 81164bdcd6cc9..6c6c5a30f3282 100644
+--- a/drivers/clk/imx/clk-composite-93.c
++++ b/drivers/clk/imx/clk-composite-93.c
+@@ -76,6 +76,13 @@ static int imx93_clk_composite_gate_enable(struct clk_hw *hw)
  
-+static int imx8m_clk_composite_gate_enable(struct clk_hw *hw)
-+{
-+	struct clk_gate *gate = to_clk_gate(hw);
-+	unsigned long flags;
-+	u32 val;
+ static void imx93_clk_composite_gate_disable(struct clk_hw *hw)
+ {
++	/*
++	 * Skip disable the root clock gate if mcore enabled.
++	 * The root clock may be used by the mcore.
++	 */
++	if (mcore_booted)
++		return;
 +
-+	spin_lock_irqsave(gate->lock, flags);
-+
-+	val = readl(gate->reg);
-+	val |= BIT(gate->bit_idx);
-+	writel(val, gate->reg);
-+
-+	spin_unlock_irqrestore(gate->lock, flags);
-+
-+	return 0;
-+}
-+
-+static void imx8m_clk_composite_gate_disable(struct clk_hw *hw)
-+{
-+	/* composite clk requires the disable hook */
-+}
-+
-+static const struct clk_ops imx8m_clk_composite_gate_ops = {
-+	.enable = imx8m_clk_composite_gate_enable,
-+	.disable = imx8m_clk_composite_gate_disable,
-+	.is_enabled = clk_gate_is_enabled,
-+};
-+
- struct clk_hw *__imx8m_clk_hw_composite(const char *name,
- 					const char * const *parent_names,
- 					int num_parents, void __iomem *reg,
-@@ -217,6 +245,7 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
- 	struct clk_mux *mux;
- 	const struct clk_ops *divider_ops;
- 	const struct clk_ops *mux_ops;
-+	const struct clk_ops *gate_ops;
+ 	imx93_clk_composite_gate_endisable(hw, 0);
+ }
  
- 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
- 	if (!mux)
-@@ -257,20 +286,22 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
- 	div->flags = CLK_DIVIDER_ROUND_CLOSEST;
+@@ -222,7 +229,7 @@ struct clk_hw *imx93_clk_composite_flags(const char *name, const char * const *p
+ 		hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
+ 					       mux_hw, &clk_mux_ro_ops, div_hw,
+ 					       &clk_divider_ro_ops, NULL, NULL, flags);
+-	} else if (!mcore_booted) {
++	} else {
+ 		gate = kzalloc(sizeof(*gate), GFP_KERNEL);
+ 		if (!gate)
+ 			goto fail;
+@@ -238,12 +245,6 @@ struct clk_hw *imx93_clk_composite_flags(const char *name, const char * const *p
+ 					       &imx93_clk_composite_divider_ops, gate_hw,
+ 					       &imx93_clk_composite_gate_ops,
+ 					       flags | CLK_SET_RATE_NO_REPARENT);
+-	} else {
+-		hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
+-					       mux_hw, &imx93_clk_composite_mux_ops, div_hw,
+-					       &imx93_clk_composite_divider_ops, NULL,
+-					       &imx93_clk_composite_gate_ops,
+-					       flags | CLK_SET_RATE_NO_REPARENT);
+ 	}
  
- 	/* skip registering the gate ops if M4 is enabled */
--	if (!mcore_booted) {
--		gate = kzalloc(sizeof(*gate), GFP_KERNEL);
--		if (!gate)
--			goto free_div;
--
--		gate_hw = &gate->hw;
--		gate->reg = reg;
--		gate->bit_idx = PCG_CGC_SHIFT;
--		gate->lock = &imx_ccm_lock;
--	}
-+	gate = kzalloc(sizeof(*gate), GFP_KERNEL);
-+	if (!gate)
-+		goto free_div;
-+
-+	gate_hw = &gate->hw;
-+	gate->reg = reg;
-+	gate->bit_idx = PCG_CGC_SHIFT;
-+	gate->lock = &imx_ccm_lock;
-+	if (!mcore_booted)
-+		gate_ops = &clk_gate_ops;
-+	else
-+		gate_ops = &imx8m_clk_composite_gate_ops;
- 
- 	hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
- 			mux_hw, mux_ops, div_hw,
--			divider_ops, gate_hw, &clk_gate_ops, flags);
-+			divider_ops, gate_hw, gate_ops, flags);
  	if (IS_ERR(hw))
- 		goto free_gate;
- 
 -- 
 2.43.0
 
