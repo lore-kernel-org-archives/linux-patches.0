@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F2E1D040D;
-	Wed,  2 Oct 2024 14:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167C71D0414;
+	Wed,  2 Oct 2024 14:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879579; cv=none; b=mG8jE3K5/vj4djXLpsrQdfxsUXscsndO2IZ5CxDrWLEvDmq/UlMo2AH0qrM0siqcPXqbDUG0pqK+N67K1iRpQr7plCe3mREQBf+k7usBmQB7KBjC8QcjnZPkNXczntB1YUsGzm8Q6AAhP12txoChz9H7e6+7Ysmagm8rGNGkM7M=
+	t=1727879582; cv=none; b=WjQgs1dDV6cDEO6JPGp0MOO37aH99iS2kAN+gfi4APfiDTzvybPQadlVwk+SwNZvDT45IohbSVHq7SVBoaCkXJSNUMrBNt23+cHx9TJ8sYz7hImuXdUxwWwgSTF/OEWYuan+5IsnHDdM/BpavPoirfb+rFykpg1c9HzghJRTvv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879579; c=relaxed/simple;
-	bh=8jV95sQH/Q+drLikJtkuBTUvwQaXFZTFNJ4exr7DD40=;
+	s=arc-20240116; t=1727879582; c=relaxed/simple;
+	bh=yXuWeFGGnHmEre115vhq3Sj3pg3wwlMBBkleT1ty/78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVSe0XMcHCT4oecuGqv+6/DOWCgt2hmMvCWkF1JN4MHUjVXTI+U7vQmGWhiMpCe/fdrqAtReFQ4ulm3vT+u9iUOIsRApb9MB4mJZ7KB4zto/6jL8lRRf8axcN1ns1r2BPCvOBaF12uqAPDby4aRjbtWBB3jaYVEV5Sn+sdb8dIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn82X2Gd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h7gQwG/w+wCbdPH733HXq9T3c3TwocwagX0bp8CcWtYcuGTP2KSfECDELBzxIEZbhtRAOaqN74YCm0OS1pKmyNSQ7n74RGHgB8T8FDfv3HMrr3tm5fac+WBfCFv38UkGvff/YHO7c/1s2tZYlLz8fwEspcGBT6oDDlc2Y303+js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thfwW+P3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn82X2Gd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C202C4CEC2;
-	Wed,  2 Oct 2024 14:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thfwW+P3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2A8C4CEC2;
+	Wed,  2 Oct 2024 14:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879579;
-	bh=8jV95sQH/Q+drLikJtkuBTUvwQaXFZTFNJ4exr7DD40=;
+	s=korg; t=1727879581;
+	bh=yXuWeFGGnHmEre115vhq3Sj3pg3wwlMBBkleT1ty/78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jn82X2Gdd5GHYaDuhnxpCt2nup+UfLk24MWyCY64loLzLunfjIgnOuMpjd3RPY7oI
-	 /0R24rT3rblfBSbondLyNdX6T2Ea+QBOwxAEBKqw8KITcdoplPYEIksjdFojfwGqaJ
-	 nI2LOTsVg0hnJEKvhkqyyG6jgxz/tTdOqNR28YSg=
+	b=thfwW+P3XbBKuNBxzmDPCSR1uHG6jnrqkoZ3xji3sGXUIW6YgS4YxrqpAu6uvB1KC
+	 qjgMQKdgCX1bNrh+7ZKRBdbYvXTNYrxFm6uc3WtlVmuJ5xuiIwmHfFAcdtdlEnRxz0
+	 q9kRBGKIG9pk6az0FSGMQ5soIEC3sAKM7Mg3ZPOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Henrik Grimler <henrik@grimler.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Vladimir Lypak <vladimir.lypak@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/538] power: supply: max17042_battery: Fix SOC threshold calc w/ no current sense
-Date: Wed,  2 Oct 2024 14:56:05 +0200
-Message-ID: <20241002125757.218195938@linuxfoundation.org>
+Subject: [PATCH 6.6 161/538] drm/msm/a5xx: fix races in preemption evaluation stage
+Date: Wed,  2 Oct 2024 14:56:40 +0200
+Message-ID: <20241002125758.609547055@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,56 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Vladimir Lypak <vladimir.lypak@gmail.com>
 
-[ Upstream commit 3a3acf839b2cedf092bdd1ff65b0e9895df1656b ]
+[ Upstream commit ce050f307ad93bcc5958d0dd35fc276fd394d274 ]
 
-Commit 223a3b82834f ("power: supply: max17042_battery: use VFSOC for
-capacity when no rsns") made it so that capacity on systems without
-current sensing would be read from VFSOC instead of RepSOC. However,
-the SOC threshold calculation still read RepSOC to get the SOC
-regardless of the current sensing option state.
+On A5XX GPUs when preemption is used it's invietable to enter a soft
+lock-up state in which GPU is stuck at empty ring-buffer doing nothing.
+This appears as full UI lockup and not detected as GPU hang (because
+it's not). This happens due to not triggering preemption when it was
+needed. Sometimes this state can be recovered by some new submit but
+generally it won't happen because applications are waiting for old
+submits to retire.
 
-Fix this by applying the same conditional to determine which register
-should be read.
+One of the reasons why this happens is a race between a5xx_submit and
+a5xx_preempt_trigger called from IRQ during submit retire. Former thread
+updates ring->cur of previously empty and not current ring right after
+latter checks it for emptiness. Then both threads can just exit because
+for first one preempt_state wasn't NONE yet and for second one all rings
+appeared to be empty.
 
-This also seems to be the intended behavior as per the datasheet - SOC
-alert config value in MiscCFG on setups without current sensing is set
-to a value of 0b11, indicating SOC alerts being generated based on
-VFSOC, instead of 0b00 which indicates SOC alerts being generated based
-on RepSOC.
+To prevent such situations from happening we need to establish guarantee
+for preempt_trigger to make decision after each submit or retire. To
+implement this we serialize preemption initiation using spinlock. If
+switch is already in progress we need to re-trigger preemption when it
+finishes.
 
-This fixes an issue on the Galaxy S3/Midas boards, where the alert
-interrupt would be constantly retriggered, causing high CPU usage
-on idle (around ~12%-15%).
-
-Fixes: e5f3872d2044 ("max17042: Add support for signalling change in SOC")
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Henrik Grimler <henrik@grimler.se>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240817-max17042-soc-threshold-fix-v1-1-72b45899c3cc@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/612045/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max17042_battery.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  1 +
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 24 +++++++++++++++++++++--
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
-index 17ac2ab78c4e4..ab97dd7ca5cb6 100644
---- a/drivers/power/supply/max17042_battery.c
-+++ b/drivers/power/supply/max17042_battery.c
-@@ -853,7 +853,10 @@ static void max17042_set_soc_threshold(struct max17042_chip *chip, u16 off)
- 	/* program interrupt thresholds such that we should
- 	 * get interrupt for every 'off' perc change in the soc
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
+index c7187bcc5e908..b4d06ca3e499d 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
+@@ -36,6 +36,7 @@ struct a5xx_gpu {
+ 	uint64_t preempt_iova[MSM_GPU_MAX_RINGS];
+ 
+ 	atomic_t preempt_state;
++	spinlock_t preempt_start_lock;
+ 	struct timer_list preempt_timer;
+ 
+ 	struct drm_gem_object *shadow_bo;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index 67a8ef4adf6b6..c65b34a4a8cc2 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -97,12 +97,19 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
+ 	if (gpu->nr_rings == 1)
+ 		return;
+ 
++	/*
++	 * Serialize preemption start to ensure that we always make
++	 * decision on latest state. Otherwise we can get stuck in
++	 * lower priority or empty ring.
++	 */
++	spin_lock_irqsave(&a5xx_gpu->preempt_start_lock, flags);
++
+ 	/*
+ 	 * Try to start preemption by moving from NONE to START. If
+ 	 * unsuccessful, a preemption is already in flight
  	 */
--	regmap_read(map, MAX17042_RepSOC, &soc);
-+	if (chip->pdata->enable_current_sense)
-+		regmap_read(map, MAX17042_RepSOC, &soc);
-+	else
-+		regmap_read(map, MAX17042_VFSOC, &soc);
- 	soc >>= 8;
- 	soc_tr = (soc + off) << 8;
- 	if (off < soc)
+ 	if (!try_preempt_state(a5xx_gpu, PREEMPT_NONE, PREEMPT_START))
+-		return;
++		goto out;
+ 
+ 	/* Get the next ring to preempt to */
+ 	ring = get_next_ring(gpu);
+@@ -127,9 +134,11 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
+ 		set_preempt_state(a5xx_gpu, PREEMPT_ABORT);
+ 		update_wptr(gpu, a5xx_gpu->cur_ring);
+ 		set_preempt_state(a5xx_gpu, PREEMPT_NONE);
+-		return;
++		goto out;
+ 	}
+ 
++	spin_unlock_irqrestore(&a5xx_gpu->preempt_start_lock, flags);
++
+ 	/* Make sure the wptr doesn't update while we're in motion */
+ 	spin_lock_irqsave(&ring->preempt_lock, flags);
+ 	a5xx_gpu->preempt[ring->id]->wptr = get_wptr(ring);
+@@ -152,6 +161,10 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
+ 
+ 	/* And actually start the preemption */
+ 	gpu_write(gpu, REG_A5XX_CP_CONTEXT_SWITCH_CNTL, 1);
++	return;
++
++out:
++	spin_unlock_irqrestore(&a5xx_gpu->preempt_start_lock, flags);
+ }
+ 
+ void a5xx_preempt_irq(struct msm_gpu *gpu)
+@@ -188,6 +201,12 @@ void a5xx_preempt_irq(struct msm_gpu *gpu)
+ 	update_wptr(gpu, a5xx_gpu->cur_ring);
+ 
+ 	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
++
++	/*
++	 * Try to trigger preemption again in case there was a submit or
++	 * retire during ring switch
++	 */
++	a5xx_preempt_trigger(gpu);
+ }
+ 
+ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+@@ -300,5 +319,6 @@ void a5xx_preempt_init(struct msm_gpu *gpu)
+ 		}
+ 	}
+ 
++	spin_lock_init(&a5xx_gpu->preempt_start_lock);
+ 	timer_setup(&a5xx_gpu->preempt_timer, a5xx_preempt_timer, 0);
+ }
 -- 
 2.43.0
 
