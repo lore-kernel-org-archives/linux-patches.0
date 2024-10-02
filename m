@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB891D0488;
-	Wed,  2 Oct 2024 13:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE51D0B87;
+	Wed,  2 Oct 2024 13:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875902; cv=none; b=Vt6mppDePE4+95tVvwsf9LxbmSKcHO/5HQBLeO/cxbPTTIiaePbJGTZfGBxmYtacup8ZEOq/FNWT7cllDJrCq0FC0BUWIAmYTSnNcInGLVrOCMfVZOuXWirrr4oeois2YKC06KY0uO2i4WzStIiGXNnt7psnktolK5qoRm++7IU=
+	t=1727875906; cv=none; b=hi40JxaM1MhJOwz+uqneChhVcGFSAUvgs/+NkNZxknKqayjnVDC27J8H/7KKZunHHxpd+5qN+Bs/N4jS8JH2dTXvDQ3bnRAf1GoUzpDqW2KYByin9sICm8+dj79bcRcp7tg4HIhxRkhF/HQMPFYSqv44BgIqX/MpKUn09z/7w0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875902; c=relaxed/simple;
-	bh=pMkwREKYvcj9tQbQHANJF5MDLlzvGqsWtbOIEHiTSwI=;
+	s=arc-20240116; t=1727875906; c=relaxed/simple;
+	bh=kUvUDoGBs4TBGfwJF9iWwR5AuEXv+n2rOEGKWADvsA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFBUeloQ3Zpmjz6lTKVfc7FqBIBFWny4xAzExyqR98RZ9TCKSP8sVXAIQTXO6RBtfqtl5PLnYHjMStV3QOypYUxvk7rRPVbJSdcxJxGpalwJP9mYc7eTJHtVIYwnM0wX6ryns+hrHcw308KvOjN4QEZtIbctM83b2SbRueY0tkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OL0dSygO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snbH0CI8Fw+1RuDOEZqp3mWLJhG2T26vS0Xn7JLzl8dN3xZWeedRozMwWxL21ey0INpNAzJcRjS68CVkIArqrqtJxIASEOZ61oNApZVYJtwyeIhQ+hu1TUGMgMSAGjFF8QATPPafny/xNC6a62gB1taYeWzfCHX/TxRIR+G3bVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7LTUFPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OL0dSygO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F48EC4CEC5;
-	Wed,  2 Oct 2024 13:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7LTUFPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE5CC4CECE;
+	Wed,  2 Oct 2024 13:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875902;
-	bh=pMkwREKYvcj9tQbQHANJF5MDLlzvGqsWtbOIEHiTSwI=;
+	s=korg; t=1727875905;
+	bh=kUvUDoGBs4TBGfwJF9iWwR5AuEXv+n2rOEGKWADvsA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OL0dSygOX8gQdG0HjzRvSQN+8PKI7RfYus1/NWMQgAjuAP7OdpTR3gynfb8l+AOw2
-	 KtvQ+NYGFgO9L0FFRPxDVrlV3rmZ5bAlYY+yXOsmwxA7gaLWz7azbJFZatfhStAEae
-	 VYYMX7cUb55ZgydgWaqwPxPspwqkOhfSl3ZPWrjM=
+	b=Y7LTUFPC7l/raB4yCk7lBB1+l1QX/yf/pYs02faKtnrMx74Z4hMJG3VT3Vkrz2RkM
+	 k4Si9l0BvSaT/hYQDqHzE9//AjsgbrJw+5vQ/i63C1vLxGUoDzyYCfP11DTdLiFrKe
+	 MFvY0dCgbiWoXhtl7eEvIKbjuupdlht051EUHt1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Don <joshdon@google.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 219/695] scsi: elx: libefc: Fix potential use after free in efc_nport_vport_del()
-Date: Wed,  2 Oct 2024 14:53:37 +0200
-Message-ID: <20241002125831.202587822@linuxfoundation.org>
+Subject: [PATCH 6.11 254/695] sched/fair: Make SCHED_IDLE entity be preempted in strict hierarchy
+Date: Wed,  2 Oct 2024 14:54:12 +0200
+Message-ID: <20241002125832.586420546@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,40 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Tianchen Ding <dtcccc@linux.alibaba.com>
 
-[ Upstream commit 2e4b02fad094976763af08fec2c620f4f8edd9ae ]
+[ Upstream commit faa42d29419def58d3c3e5b14ad4037f0af3b496 ]
 
-The kref_put() function will call nport->release if the refcount drops to
-zero.  The nport->release release function is _efc_nport_free() which frees
-"nport".  But then we dereference "nport" on the next line which is a use
-after free.  Re-order these lines to avoid the use after free.
+Consider the following cgroup:
 
-Fixes: fcd427303eb9 ("scsi: elx: libefc: SLI and FC PORT state machine interfaces")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/b666ab26-6581-4213-9a3d-32a9147f0399@stanley.mountain
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+                       root
+                        |
+             ------------------------
+             |                      |
+       normal_cgroup            idle_cgroup
+             |                      |
+   SCHED_IDLE task_A           SCHED_NORMAL task_B
+
+According to the cgroup hierarchy, A should preempt B. But current
+check_preempt_wakeup_fair() treats cgroup se and task separately, so B
+will preempt A unexpectedly.
+Unify the wakeup logic by {c,p}se_is_idle only. This makes SCHED_IDLE of
+a task a relative policy that is effective only within its own cgroup,
+similar to the behavior of NICE.
+
+Also fix se_is_idle() definition when !CONFIG_FAIR_GROUP_SCHED.
+
+Fixes: 304000390f88 ("sched: Cgroup SCHED_IDLE support")
+Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Josh Don <joshdon@google.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20240626023505.1332596-1-dtcccc@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/libefc/efc_nport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/scsi/elx/libefc/efc_nport.c b/drivers/scsi/elx/libefc/efc_nport.c
-index 2e83a667901fe..1a7437f4328e8 100644
---- a/drivers/scsi/elx/libefc/efc_nport.c
-+++ b/drivers/scsi/elx/libefc/efc_nport.c
-@@ -705,9 +705,9 @@ efc_nport_vport_del(struct efc *efc, struct efc_domain *domain,
- 	spin_lock_irqsave(&efc->lock, flags);
- 	list_for_each_entry(nport, &domain->nport_list, list_entry) {
- 		if (nport->wwpn == wwpn && nport->wwnn == wwnn) {
--			kref_put(&nport->ref, nport->release);
- 			/* Shutdown this NPORT */
- 			efc_sm_post_event(&nport->sm, EFC_EVT_SHUTDOWN, NULL);
-+			kref_put(&nport->ref, nport->release);
- 			break;
- 		}
- 	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 9057584ec06de..82ff874953b55 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -511,7 +511,7 @@ static int cfs_rq_is_idle(struct cfs_rq *cfs_rq)
+ 
+ static int se_is_idle(struct sched_entity *se)
+ {
+-	return 0;
++	return task_has_idle_policy(task_of(se));
+ }
+ 
+ #endif	/* CONFIG_FAIR_GROUP_SCHED */
+@@ -8381,16 +8381,7 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
+ 	if (test_tsk_need_resched(curr))
+ 		return;
+ 
+-	/* Idle tasks are by definition preempted by non-idle tasks. */
+-	if (unlikely(task_has_idle_policy(curr)) &&
+-	    likely(!task_has_idle_policy(p)))
+-		goto preempt;
+-
+-	/*
+-	 * Batch and idle tasks do not preempt non-idle tasks (their preemption
+-	 * is driven by the tick):
+-	 */
+-	if (unlikely(p->policy != SCHED_NORMAL) || !sched_feat(WAKEUP_PREEMPTION))
++	if (!sched_feat(WAKEUP_PREEMPTION))
+ 		return;
+ 
+ 	find_matching_se(&se, &pse);
+@@ -8400,7 +8391,7 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
+ 	pse_is_idle = se_is_idle(pse);
+ 
+ 	/*
+-	 * Preempt an idle group in favor of a non-idle group (and don't preempt
++	 * Preempt an idle entity in favor of a non-idle entity (and don't preempt
+ 	 * in the inverse case).
+ 	 */
+ 	if (cse_is_idle && !pse_is_idle)
+@@ -8408,9 +8399,14 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
+ 	if (cse_is_idle != pse_is_idle)
+ 		return;
+ 
++	/*
++	 * BATCH and IDLE tasks do not preempt others.
++	 */
++	if (unlikely(p->policy != SCHED_NORMAL))
++		return;
++
+ 	cfs_rq = cfs_rq_of(se);
+ 	update_curr(cfs_rq);
+-
+ 	/*
+ 	 * XXX pick_eevdf(cfs_rq) != se ?
+ 	 */
 -- 
 2.43.0
 
