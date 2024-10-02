@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4341CFECF;
-	Wed,  2 Oct 2024 13:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5845A1D0403;
+	Wed,  2 Oct 2024 13:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875710; cv=none; b=SjoR6QCPtr1qsXaMBWYnCbTJHBJyWyoxfDCCNMwDOJYm+MAWobqeoJEiI3u/FwfC4UjA2tiaqjvydRwB5R7rW946MOSztcWLuMfUjMN21R47kWpwHbC61nIenwdc+aF10j4QxMBketTE1SI6cGZWlaLlz9uRtyKvo9ehBCsA3nA=
+	t=1727875713; cv=none; b=Dxsf7XgllJq7DeOc6yR+RW9QbLLNKzlev0A/GZyGEFh5NeGJDJqRFJexQxB1W6RSOCZ85FUBtAxeCuN3lASqkB90/HCN8On/4tq2ANM0dhqtz8g+O72qk1zYTx/OZz5dEBluI49UyHyEWDs1e/Uf0XaJd7htG9+HkJ25bUte+oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875710; c=relaxed/simple;
-	bh=e0QJNLyVozIwIvKUwWApVI2/47TH1MRqrJs4JYfkbjc=;
+	s=arc-20240116; t=1727875713; c=relaxed/simple;
+	bh=naa7/c2iezFPHihrbHcKVAotbBbSLebAkliqL24oWLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJKLkET3/VylRFKZtywxh+80KSxlIalzzP19bIPmqyw8rzzDhnugD5ik4Vv6TaRwYG8hplyq84/2HXirme9Oc2Z1C0DGk224xowj8sLskbmDZ1N7/78bTgkR8VsZf8WXW2KRYmChiRwpjtM59BGOCDmoh0UbDqrIjimJoMs/ztQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PE15B0g3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HitQl73t+OyrPbZYI6rHZ7dExtO++fWiIyrfOKWGBL7NmXaK8wQuOzqgnuUODqpUE/dIA8KhucD67FOEoSyZydt1y65ECJveOL9b9csCWIpOx3oDPbcSIyp3iLaUg267+/D7/rt8NmvE+teV90JHrMIiq1YUMEA3cUMfVKkTJyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQTFlg1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PE15B0g3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63FFC4CEC5;
-	Wed,  2 Oct 2024 13:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQTFlg1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D454CC4CEC5;
+	Wed,  2 Oct 2024 13:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875710;
-	bh=e0QJNLyVozIwIvKUwWApVI2/47TH1MRqrJs4JYfkbjc=;
+	s=korg; t=1727875713;
+	bh=naa7/c2iezFPHihrbHcKVAotbBbSLebAkliqL24oWLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PE15B0g3Qlcmaujs5ZZvsrPr7Dhb9tixxbwEyNGKqTBdFctbfmaAokhwLigNCltAN
-	 yHQH+Mo1pHv7K1AONBJQ3humTVeNltgAa/20BNZb3ZkOZQgde9Nt9q7/LERW7AXe+r
-	 NqTn2INCdI0T0v64c2NFhx8Bdg3AimURr0Re9Xyc=
+	b=MQTFlg1OtnqYjk786JG+UrzlWSQuQxWSL/Ok1Qrvc3sbv+w26nALj0k6uFJqKFHGo
+	 jioUcF+id2vj6m4slPrfIsKyRPVKmqQCBrnukQwf43VGnD1WdxKiaQwFKXasPobu6Y
+	 Xd+EVQsICXgniddxUcbBFg4nkR+aCJDAxDftHxEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 195/695] iommu/arm-smmu-qcom: apply num_context_bank fixes for SDM630 / SDM660
-Date: Wed,  2 Oct 2024 14:53:13 +0200
-Message-ID: <20241002125830.250676122@linuxfoundation.org>
+Subject: [PATCH 6.11 196/695] pmdomain: core: Harden inter-column space in debug summary
+Date: Wed,  2 Oct 2024 14:53:14 +0200
+Message-ID: <20241002125830.289998530@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,60 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 19eb465c969f3d6ed1b98506d3e470e863b41e16 ]
+[ Upstream commit 692c20c4d075bd452acfbbc68200fc226c7c9496 ]
 
-The Qualcomm SDM630 / SDM660 platform requires the same kind of
-workaround as MSM8998: some IOMMUs have context banks reserved by
-firmware / TZ, touching those banks resets the board.
+The inter-column space in the debug summary is two spaces.  However, in
+one case, the extra space is handled implicitly in a field width
+specifier.  Make inter-column space explicit to ease future maintenance.
 
-Apply the num_context_bank workaround to those two SMMU devices in order
-to allow them to be used by Linux.
-
-Fixes: b812834b5329 ("iommu: arm-smmu-qcom: Add sdm630/msm8998 compatibles for qcom quirks")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20240907-sdm660-wifi-v1-1-e316055142f8@linaro.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 45fbc464b047 ("PM: domains: Add "performance" column to debug summary")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ae61eb363621b981edde878e1e74d701702a579f.1725459707.git.geert+renesas@glider.be
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/pmdomain/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 087fb4f6f4d3d..6372f3e25c4bc 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -286,8 +286,15 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	 * MSM8998 LPASS SMMU reports 13 context banks, but accessing
- 	 * the last context bank crashes the system.
- 	 */
--	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") && smmu->num_context_banks == 13)
-+	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") &&
-+	    smmu->num_context_banks == 13) {
- 		smmu->num_context_banks = 12;
-+	} else if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm630-smmu-v2")) {
-+		if (smmu->num_context_banks == 21) /* SDM630 / SDM660 A2NOC SMMU */
-+			smmu->num_context_banks = 7;
-+		else if (smmu->num_context_banks == 14) /* SDM630 / SDM660 LPASS SMMU */
-+			smmu->num_context_banks = 13;
-+	}
+diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
+index 7a61aa88c0614..6691b42eae476 100644
+--- a/drivers/pmdomain/core.c
++++ b/drivers/pmdomain/core.c
+@@ -3226,7 +3226,7 @@ static int genpd_summary_one(struct seq_file *s,
+ 	else
+ 		snprintf(state, sizeof(state), "%s",
+ 			 status_lookup[genpd->status]);
+-	seq_printf(s, "%-30s  %-50s %u", genpd->name, state, genpd->performance_state);
++	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
  
  	/*
- 	 * Some platforms support more than the Arm SMMU architected maximum of
-@@ -350,6 +357,11 @@ static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
- 	/* Support for 16K pages is advertised on some SoCs, but it doesn't seem to work */
- 	smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
- 
-+	/* TZ protects several last context banks, hide them from Linux */
-+	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm630-smmu-v2") &&
-+	    smmu->num_context_banks == 5)
-+		smmu->num_context_banks = 2;
-+
- 	return 0;
- }
- 
+ 	 * Modifications on the list require holding locks on both
 -- 
 2.43.0
 
