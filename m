@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F381D1F54;
-	Wed,  2 Oct 2024 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667B71D095D;
+	Wed,  2 Oct 2024 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879917; cv=none; b=VdNk0Pwebc9iI6EqMh+OY7BSNVUmNo4qcR0twmucSeH9arFtpi7nA0e7bFAV6FONllm0NXExpeoWtYWxRJHwxNHcSk+Ve4MO2j32ra9lsVK4pMFQXZRZAaPOh5qsjpUvTXK6X1Ix/b/X9/iKmzM4I5mtyIcaAJP3KadTm6jNW5s=
+	t=1727879920; cv=none; b=NJSf/iFppVf4aawW31pEavxNEFMZUpKLdZr8j8IJUn4J1aG0/2ZEhaB+x0N+nhAdYGJCMBDfGbB9uWcfw1rN69yXM8ZSC+BhyLBjdLDSffrnkGvIkkfudvDdBMTwSzL0Pw19uI36x662kgzJKVbu4Iock+soe7XK/AwrMkIMdOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879917; c=relaxed/simple;
-	bh=GT3lJMhD9XQAlzMlt6IEizNoL42Ttqdz4uIwH2f13UE=;
+	s=arc-20240116; t=1727879920; c=relaxed/simple;
+	bh=LgPzmxJPapMGuvk5N2ReX9RlrFbQhInLo0o8CKV9CEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbsMQt8MM43DgDb4US1cSDn8BD1oAqi40zXfs4Xc8UT6WKlmZPEAAtLVFjgI1bwnGdjwK/u+vHbJY92idiKOv7U9RICoNdt+LbcI+/H5pvhoZhQ+jcxZJJJau++095PyLnPbl/a+8kQsr10JFCwRszGUU/4uzNhksmfsLs5JcDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+NeYvGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LcEiFZnqmhhY83hnbOypwb0J/npBRoX4HDGUCnHHrU2+zRghJsLhznzp6dAHu7wmPAr5qzCVGWgDQrAsB0BSO9q8YqVdqeiuxBkzfRVw/W1WiTLK+Lf/jfH/GxwF4AEOlDyhEePhkielJg40suyQVAjQWp3oXFT3UHMjx7Irt54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5ZWpx7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+NeYvGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8DCC4CEC2;
-	Wed,  2 Oct 2024 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5ZWpx7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2555C4CEC2;
+	Wed,  2 Oct 2024 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879917;
-	bh=GT3lJMhD9XQAlzMlt6IEizNoL42Ttqdz4uIwH2f13UE=;
+	s=korg; t=1727879920;
+	bh=LgPzmxJPapMGuvk5N2ReX9RlrFbQhInLo0o8CKV9CEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+NeYvGuylgFbCdDn/3x69rX3xIFaU7429Ov8x23qYNfAWkaFkvoEpR5rHFG+8lxw
-	 pF/BPPyh9jAOvJojNS9mo3r+B2j3szzIolyQgJbcoeS6/3DMhYe42vavHyuShRLdIG
-	 uakNlUeW06+Llq9k8uWiBua//V44odGcO2ARZ3Vc=
+	b=Z5ZWpx7i4E44+kEo2syYg0vNAvG/n+Oqn3EwojZZW5QRqHLFm+Xe5uwq4bdlUbnuq
+	 Jl2ggBZKIZrOyKk+s3uhjLeJdStw56im6D3mChdo3ztn6xv2iX5n03NUUoDe19rzsl
+	 tiGTm//w3qYJ5sZoN1BGmPAWj5K7WKGF8kzsrBAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junlin Li <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 282/538] drivers: media: dvb-frontends/rtl2830: fix an out-of-bounds write error
-Date: Wed,  2 Oct 2024 14:58:41 +0200
-Message-ID: <20241002125803.386762093@linuxfoundation.org>
+Subject: [PATCH 6.6 283/538] PCI: Wait for Link before restoring Downstream Buses
+Date: Wed,  2 Oct 2024 14:58:42 +0200
+Message-ID: <20241002125803.426101031@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -45,46 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junlin Li <make24@iscas.ac.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 46d7ebfe6a75a454a5fa28604f0ef1491f9d8d14 ]
+[ Upstream commit 3e40aa29d47e231a54640addf6a09c1f64c5b63f ]
 
-Ensure index in rtl2830_pid_filter does not exceed 31 to prevent
-out-of-bounds access.
+__pci_reset_bus() calls pci_bridge_secondary_bus_reset() to perform the
+reset and also waits for the Secondary Bus to become again accessible.
+__pci_reset_bus() then calls pci_bus_restore_locked() that restores the PCI
+devices connected to the bus, and if necessary, recursively restores also
+the subordinate buses and their devices.
 
-dev->filters is a 32-bit value, so set_bit and clear_bit functions should
-only operate on indices from 0 to 31. If index is 32, it will attempt to
-access a non-existent 33rd bit, leading to out-of-bounds access.
-Change the boundary check from index > 32 to index >= 32 to resolve this
-issue.
+The logic in pci_bus_restore_locked() does not take into account that after
+restoring a device on one level, there might be another Link Downstream
+that can only start to come up after restore has been performed for its
+Downstream Port device. That is, the Link may require additional wait until
+it becomes accessible.
 
-Fixes: df70ddad81b4 ("[media] rtl2830: implement PID filter")
-Signed-off-by: Junlin Li <make24@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Similarly, pci_slot_restore_locked() lacks wait.
+
+Amend pci_bus_restore_locked() and pci_slot_restore_locked() to wait for
+the Secondary Bus before recursively performing the restore of that bus.
+
+Fixes: 090a3c5322e9 ("PCI: Add pci_reset_slot() and pci_reset_bus()")
+Link: https://lore.kernel.org/r/20240808121708.2523-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/rtl2830.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
-index 35c969fd2cb5e..4e59734ec53e2 100644
---- a/drivers/media/dvb-frontends/rtl2830.c
-+++ b/drivers/media/dvb-frontends/rtl2830.c
-@@ -609,7 +609,7 @@ static int rtl2830_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid, int on
- 		index, pid, onoff);
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 53e9e9788bd54..da52f98d8f7f3 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5875,8 +5875,10 @@ static void pci_bus_restore_locked(struct pci_bus *bus)
  
- 	/* skip invalid PIDs (0x2000) */
--	if (pid > 0x1fff || index > 32)
-+	if (pid > 0x1fff || index >= 32)
- 		return 0;
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+ 		pci_dev_restore(dev);
+-		if (dev->subordinate)
++		if (dev->subordinate) {
++			pci_bridge_wait_for_secondary_bus(dev, "bus reset");
+ 			pci_bus_restore_locked(dev->subordinate);
++		}
+ 	}
+ }
  
- 	if (onoff)
+@@ -5910,8 +5912,10 @@ static void pci_slot_restore_locked(struct pci_slot *slot)
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+ 		pci_dev_restore(dev);
+-		if (dev->subordinate)
++		if (dev->subordinate) {
++			pci_bridge_wait_for_secondary_bus(dev, "slot reset");
+ 			pci_bus_restore_locked(dev->subordinate);
++		}
+ 	}
+ }
+ 
 -- 
 2.43.0
 
