@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB37F1EA80;
-	Wed,  2 Oct 2024 14:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9519D19752C;
+	Wed,  2 Oct 2024 14:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880272; cv=none; b=kYbDxlY9cmkhGLaKu4seXBHRhHNA5V+BPmK4nFoKqjl0AZYahKccK/hxgq10ckwRl4oeWTGkS4aW0cH8zXZCzeAFneASI64kiAXpSfUofh9I+U3wqFqTYbYEno7evpSSzOwPKLgnRsYqbEKXAgdW6KzcM22IiAVix4lQeF8IWTk=
+	t=1727880275; cv=none; b=bAE1bic2EiKbR7LGAw5+nwLjCvvz25O/lBk37cA0PLk1/0OgwEsPL2m/+df7ga5vRxSuSqTD8wuy1eQTv5i15kuu2TMM2sEC38Z+f+PO9ixVU3dtQOW335zgOv0QraTDGT9v4ZEdIrZm5ifrU7RJ3LqNVIYsGjh9FIibcBK8ckg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880272; c=relaxed/simple;
-	bh=QxpEGR9iwpczMkHUNdcLS3wzxgnG+Y1ACDEYl2Dn8VI=;
+	s=arc-20240116; t=1727880275; c=relaxed/simple;
+	bh=qR4mFNSZPgAtycAUgnATYkQt7VYAb1zB23DR3GxDpYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPAFczoG4KTgzRhRVwyWPV2Tu2sz5AiY3vTRtF/BOWMV0tr+J/+HzwHM3DgkjhAZxVgI4tDX6idSpjhARdEPmSojNPNZbibbj7whR28obJoi5eQyV6LZsl3imAcuryv4yPNyanc4Dst3QwyjlrejHeB69uEQSBGwp/tPcWYO/pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDOjSOuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gi+evY0SSRidHEi1j749EIHXVsHxTcS4lb+e6e0X/xAbseslmSYNFT+brmEy0lIJn44lbaUeIQX9aZKznVBrfCIVmFxJYrPn/p0Hb2dBzJJ+AYJteNrVTZL1vOvZG82JlMrrtIzwUZQkbDvdJZpIqw771wGI39/x7XeomNKJCUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOOMl4ht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDOjSOuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCFAC4CEC2;
-	Wed,  2 Oct 2024 14:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOOMl4ht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFCDC4CEC2;
+	Wed,  2 Oct 2024 14:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880272;
-	bh=QxpEGR9iwpczMkHUNdcLS3wzxgnG+Y1ACDEYl2Dn8VI=;
+	s=korg; t=1727880275;
+	bh=qR4mFNSZPgAtycAUgnATYkQt7VYAb1zB23DR3GxDpYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDOjSOuAm8Cg5Z6NET0X6PQvlzuYXDX/VugxJE6GradaPrpNkDKfQvcKCbuyOILxj
-	 a2yc39Omibw53ZImfV0LDj0rp/SkbLxQGdcPdlwFtRrAeKVDj+bBxMVYfWqB75G019
-	 qdTIYtLaGblMk5eaejGBPoDD9Ieay5HUW6PC99Zs=
+	b=iOOMl4hth97wgMC9X8ggNFQYKEvQWzMk3fbgrIA0G0Zv+H8RV+ZifNlUu/LjIZCCN
+	 XNfEw3CEJ0apwiP8szf1UfcmRtjmulsHqqXTBgeYin7XgXocBA4X1SRHBVDO5UEqRo
+	 /ddYVsE0oZUxcviSxur+f9rFVXlG5Hs27Oe3933s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 372/538] net: seeq: Fix use after free vulnerability in ether3 Driver Due to Race Condition
-Date: Wed,  2 Oct 2024 15:00:11 +0200
-Message-ID: <20241002125807.113834727@linuxfoundation.org>
+Subject: [PATCH 6.6 373/538] net: ipv6: select DST_CACHE from IPV6_RPL_LWTUNNEL
+Date: Wed,  2 Oct 2024 15:00:12 +0200
+Message-ID: <20241002125807.153749881@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -45,60 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit b5109b60ee4fcb2f2bb24f589575e10cc5283ad4 ]
+[ Upstream commit 93c21077bb9ba08807c459982d440dbbee4c7af3 ]
 
-In the ether3_probe function, a timer is initialized with a callback
-function ether3_ledoff, bound to &prev(dev)->timer. Once the timer is
-started, there is a risk of a race condition if the module or device
-is removed, triggering the ether3_remove function to perform cleanup.
-The sequence of operations that may lead to a UAF bug is as follows:
+The rpl sr tunnel code contains calls to dst_cache_*() which are
+only present when the dst cache is built.
+Select DST_CACHE to build the dst cache, similar to other kconfig
+options in the same file.
+Compiling the rpl sr tunnel without DST_CACHE will lead to linker
+errors.
 
-CPU0                                    CPU1
-
-                      |  ether3_ledoff
-ether3_remove         |
-  free_netdev(dev);   |
-  put_devic           |
-  kfree(dev);         |
- |  ether3_outw(priv(dev)->regs.config2 |= CFG2_CTRLO, REG_CONFIG2);
-                      | // use dev
-
-Fix it by ensuring that the timer is canceled before proceeding with
-the cleanup in ether3_remove.
-
-Fixes: 6fd9c53f7186 ("net: seeq: Convert timers to use timer_setup()")
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Link: https://patch.msgid.link/20240915144045.451-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/seeq/ether3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/seeq/ether3.c b/drivers/net/ethernet/seeq/ether3.c
-index c672f92d65e97..9319a2675e7b6 100644
---- a/drivers/net/ethernet/seeq/ether3.c
-+++ b/drivers/net/ethernet/seeq/ether3.c
-@@ -847,9 +847,11 @@ static void ether3_remove(struct expansion_card *ec)
- {
- 	struct net_device *dev = ecard_get_drvdata(ec);
- 
-+	ether3_outw(priv(dev)->regs.config2 |= CFG2_CTRLO, REG_CONFIG2);
- 	ecard_set_drvdata(ec, NULL);
- 
- 	unregister_netdev(dev);
-+	del_timer_sync(&priv(dev)->timer);
- 	free_netdev(dev);
- 	ecard_release_resources(ec);
- }
+diff --git a/net/ipv6/Kconfig b/net/ipv6/Kconfig
+index 08d4b7132d4c4..1c9c686d9522f 100644
+--- a/net/ipv6/Kconfig
++++ b/net/ipv6/Kconfig
+@@ -323,6 +323,7 @@ config IPV6_RPL_LWTUNNEL
+ 	bool "IPv6: RPL Source Routing Header support"
+ 	depends on IPV6
+ 	select LWTUNNEL
++	select DST_CACHE
+ 	help
+ 	  Support for RFC6554 RPL Source Routing Header using the lightweight
+ 	  tunnels mechanism.
 -- 
 2.43.0
 
