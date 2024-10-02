@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8911D040E;
-	Wed,  2 Oct 2024 13:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A917316F84F;
+	Wed,  2 Oct 2024 13:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875208; cv=none; b=dEN06YGj0m2Q8KqsfBBfHZXMmuT7Znj6lsnhUSnbRBbWDQU/kA6efDg++K3UTpP5cW0WAWu32lkfr3ZBxnsmv9QTLJvmbrBeqJoec2dPnwB3dlGP5vyYnvfKv9KgaG9rN0N9R+ehmr1GslrzMyhcCj+wwSdmbIB0K87KIByW96Q=
+	t=1727875211; cv=none; b=Ajn/b5zho/9sAC/099/JlkejWSh/dmGg9s/LqTPQU4zJ9bLwZk8vof44R3KFSPsRWIAH1GDqBkEuFnEpRgddsM+CEXkWdaLLCKMtX+13j8+DJaZ/Z19cSk0MazsjZge5RRKQheWo8EZAslkU3aRLFiRdBCvWfVIBSC01ChRTBWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875208; c=relaxed/simple;
-	bh=RYZsxYfptpifgVsUNIi7bJGUjSIH4sexl+nuF6eqnGQ=;
+	s=arc-20240116; t=1727875211; c=relaxed/simple;
+	bh=/8Ohzzro/0VVnkku4ix9S8i6BrQszWFa/5QgKGGVSUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wi7glg91aqekHHvXnzbTCfWJMtgJ6S3jQxJHM203kSZfQmBdNrinhZ9s2RKiyY8J2LIcA3bfdUeZ2b1BE5coPClzsJJapdCFoadji9iGZfOty7HduSD5A6VE8N00SqKJ24Z5HKIKLkXP3qAxy2FzJI1ZpSHcN3XKatVZW+I/LAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRH70c1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JgSeg0y9vbRa6u+q5VM4XJjA6QqJwKLtf/J90RywAikuoyGho3gM1p4WeSG6pHitc/AeGYmIewwxMhOI4MN2090mhaCqIqGnTKB3Nw7r8LAE9Uzz7egwpMEJeegGB5hvkzvwZHTtjl4iXdnwd5fhd7zaFWeteJz7FknM3fBUTAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L01+f4TO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRH70c1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421B6C4CEC5;
-	Wed,  2 Oct 2024 13:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L01+f4TO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3058AC4CECE;
+	Wed,  2 Oct 2024 13:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875208;
-	bh=RYZsxYfptpifgVsUNIi7bJGUjSIH4sexl+nuF6eqnGQ=;
+	s=korg; t=1727875211;
+	bh=/8Ohzzro/0VVnkku4ix9S8i6BrQszWFa/5QgKGGVSUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRH70c1q+rl+PEEZVxNxWuX0eZbBIKeeR6L1kmDYb/GH99STgiwwfAYquYYXzezKv
-	 DJx/oqxTnqsjxREHwj6zx6FLjr0oYjJFqMF2WzkCkXS5JahAWkqzt0DxND4Q8GnsAg
-	 /9JkYPLMCegtZAwO+t2Jnsf3Tl0zhzA/mP7l2keY=
+	b=L01+f4TOz+EZd8IQGxpBM7DvMTRLbUyUYeaSPNVuDK3PPJonxzt+9tDuwwXPxg18P
+	 gWTzfoBH/p5y64Wnih7kZSLupxx5ek2S/bH1jSSb182YWvMc3EtmI+rOAo42XDaJD1
+	 as51Iv4DnW1rp1aEr9wRsjK78F8GaifNOOSpgB04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Atish Patra <atishp@rivosinc.com>,
 	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 028/695] RISC-V: KVM: Allow legacy PMU access from guest
-Date: Wed,  2 Oct 2024 14:50:26 +0200
-Message-ID: <20241002125823.617220842@linuxfoundation.org>
+Subject: [PATCH 6.11 029/695] RISC-V: KVM: Fix to allow hpmcounter31 from the guest
+Date: Wed,  2 Oct 2024 14:50:27 +0200
+Message-ID: <20241002125823.656601009@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,63 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit 7d1ffc8b087e97dbe1985912c7a2d00e53cea169 ]
+[ Upstream commit 5aa09297a3dcc798d038bd7436f8c90f664045a6 ]
 
-Currently, KVM traps & emulates PMU counter access only if SBI PMU
-is available as the guest can only configure/read PMU counters via
-SBI only. However, if SBI PMU is not enabled in the host, the
-guest will fallback to the legacy PMU which will try to access
-cycle/instret and result in an illegal instruction trap which
-is not desired.
-
-KVM can allow dummy emulation of cycle/instret only for the guest
-if SBI PMU is not enabled in the host. The dummy emulation will
-still return zero as we don't to expose the host counter values
-from a guest using legacy PMU.
+The csr_fun defines a count parameter which defines the total number
+CSRs emulated in KVM starting from the base. This value should be
+equal to total number of counters possible for trap/emulation (32).
 
 Fixes: a9ac6c37521f ("RISC-V: KVM: Implement trap & emulate for hpmcounters")
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20240816-kvm_pmu_fixes-v1-1-cdfce386dd93@rivosinc.com
+Link: https://lore.kernel.org/r/20240816-kvm_pmu_fixes-v1-2-cdfce386dd93@rivosinc.com
 Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/kvm_vcpu_pmu.h | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/kvm_vcpu_pmu.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/riscv/include/asm/kvm_vcpu_pmu.h b/arch/riscv/include/asm/kvm_vcpu_pmu.h
-index fa0f535bbbf02..c309daa2d75a8 100644
+index c309daa2d75a8..1d85b66175088 100644
 --- a/arch/riscv/include/asm/kvm_vcpu_pmu.h
 +++ b/arch/riscv/include/asm/kvm_vcpu_pmu.h
-@@ -10,6 +10,7 @@
- #define __KVM_VCPU_RISCV_PMU_H
+@@ -65,11 +65,11 @@ struct kvm_pmu {
  
- #include <linux/perf/riscv_pmu.h>
-+#include <asm/kvm_vcpu_insn.h>
- #include <asm/sbi.h>
- 
- #ifdef CONFIG_RISCV_PMU_SBI
-@@ -104,8 +105,20 @@ void kvm_riscv_vcpu_pmu_reset(struct kvm_vcpu *vcpu);
- struct kvm_pmu {
- };
- 
-+static inline int kvm_riscv_vcpu_pmu_read_legacy(struct kvm_vcpu *vcpu, unsigned int csr_num,
-+						 unsigned long *val, unsigned long new_val,
-+						 unsigned long wr_mask)
-+{
-+	if (csr_num == CSR_CYCLE || csr_num == CSR_INSTRET) {
-+		*val = 0;
-+		return KVM_INSN_CONTINUE_NEXT_SEPC;
-+	} else {
-+		return KVM_INSN_ILLEGAL_TRAP;
-+	}
-+}
-+
+ #if defined(CONFIG_32BIT)
  #define KVM_RISCV_VCPU_HPMCOUNTER_CSR_FUNCS \
--{.base = 0,	.count = 0,	.func = NULL },
-+{.base = CSR_CYCLE,	.count = 3,	.func = kvm_riscv_vcpu_pmu_read_legacy },
+-{.base = CSR_CYCLEH,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm }, \
+-{.base = CSR_CYCLE,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm },
++{.base = CSR_CYCLEH,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm }, \
++{.base = CSR_CYCLE,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm },
+ #else
+ #define KVM_RISCV_VCPU_HPMCOUNTER_CSR_FUNCS \
+-{.base = CSR_CYCLE,	.count = 31,	.func = kvm_riscv_vcpu_pmu_read_hpm },
++{.base = CSR_CYCLE,	.count = 32,	.func = kvm_riscv_vcpu_pmu_read_hpm },
+ #endif
  
- static inline void kvm_riscv_vcpu_pmu_init(struct kvm_vcpu *vcpu) {}
- static inline int kvm_riscv_vcpu_pmu_incr_fw(struct kvm_vcpu *vcpu, unsigned long fid)
+ int kvm_riscv_vcpu_pmu_incr_fw(struct kvm_vcpu *vcpu, unsigned long fid);
 -- 
 2.43.0
 
