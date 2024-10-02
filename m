@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1651D0438;
-	Wed,  2 Oct 2024 14:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B876B1D0438;
+	Wed,  2 Oct 2024 14:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879379; cv=none; b=BasupNFFUF7MiCSm3BR/hRHdUnZ6eY2epXlyw34n+mm5gBOu+2AWmryvu0g0mB0AeFikTzYy7u/4bcUunKfHbI3gQFmqJVn0uWMLPvgHNaoB6uM6ugRA7ft9ibUf67b8DqmYx8oS1FECdgNC10HSXQZKYDn+kXTwvbb9UzmYs/g=
+	t=1727879381; cv=none; b=YYOpqoInlb/Jz38EzJFnkRhDTD5UUGg7bOoK2Vfh2BaGA4CIXW2eXhi+yGrpVx6a9nGi3oEqKZpYa70PdKbOzhT4wqciOtisA+xKjNwrKlbgbx3koHxu0eFhF5+buhDztmrr1waJcxF4e+ilReug7dgalJcAkgeUKrr0VyuJtk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879379; c=relaxed/simple;
-	bh=UkUFlm8qOG4tx6omc+j7fh2Hg0XpFSGTUOn5mBhOCjc=;
+	s=arc-20240116; t=1727879381; c=relaxed/simple;
+	bh=XpIrk0rhbQim73QgHh9eh6tOORqa4Ri8N187UIR0QAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3AmIt8rwNu4OiM6zUFIx2iHdtIa0S8yb2+GvVFj23xREeFs7CsB6HvAiDsIKTg+VCWU/gZwhebEnuLNcsF/rZIlWFkVds25UgKzYlcPdM33ZBC5Vjd4NtVZp4BNlT6iAcdFIReh/JtjvhE/+rE3z7xLMrEBVAI5y7gh35r6xQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpLodng7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDf6IuNox6pe6WqgFuAZayQySCxY+AX1bmX0xA3fOg9dbFkk2n6PjUCot4TyZBuseIBdgexsdwFUyo3dljpaS4uUxb8mR5cARumrNfBAlhMkwXdygNLRJdrqSSJF50S4/kFLnVhfzkPHZUgcRXIXik0ro16lASdGGMB7S6IZ6fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqXGcn81; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpLodng7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CAFC4CEC2;
-	Wed,  2 Oct 2024 14:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqXGcn81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6C4C4CEC2;
+	Wed,  2 Oct 2024 14:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879378;
-	bh=UkUFlm8qOG4tx6omc+j7fh2Hg0XpFSGTUOn5mBhOCjc=;
+	s=korg; t=1727879381;
+	bh=XpIrk0rhbQim73QgHh9eh6tOORqa4Ri8N187UIR0QAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpLodng7Q8uUnAo/yexa5qiKitRBg88WBgrGG2FXTdOA9+HoZevMRq5ZjBZocLQE1
-	 illUjnlZrktsFSTGaPuvNS0NgaOHbrbhsHaP5TpZYzNTwEjq9MnzeiYomln9RW4xVu
-	 SK2ZhbrGkj+/j8tba7j/wOHfD/N1SZsBkYA2uyws=
+	b=ZqXGcn81iyMsienSoP08nuvnC77kD+AuSN9Wys4rDzTnkHseUEZixHpaBm7ei8r2h
+	 LZHUolJK7jSb7eOc9rsYb1Og3FAlN+PcXwD/r+tl+eS6N0g2eIRomGeSJzqlP0BObw
+	 pCtyGkfntaoZ6UjfJMDETydT2kacG7BKiSOvaUUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/538] can: m_can: m_can_close(): stop clocks after device has been shut down
-Date: Wed,  2 Oct 2024 14:55:06 +0200
-Message-ID: <20241002125754.855340773@linuxfoundation.org>
+Subject: [PATCH 6.6 058/538] wifi: mt76: mt7996: fix uninitialized TLV data
+Date: Wed,  2 Oct 2024 14:54:57 +0200
+Message-ID: <20241002125754.494886376@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,47 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 2c09b50efcad985cf920ca88baa9aa52b1999dcc ]
+[ Upstream commit 9e461f4a2329109571f4b10f9bcad28d07e6ebb3 ]
 
-After calling m_can_stop() an interrupt may be pending or NAPI might
-still be executed. This means the driver might still touch registers
-of the IP core after the clocks have been disabled. This is not good
-practice and might lead to aborts depending on the SoC integration.
+Use skb_put_zero instead of skb_put
 
-To avoid these potential problems, make m_can_close() symmetric to
-m_can_open(), i.e. stop the clocks at the end, right before shutting
-down the transceiver.
-
-Fixes: e0d1f4816f2a ("can: m_can: add Bosch M_CAN controller support")
-Link: https://patch.msgid.link/20240910-can-m_can-fix-ifup-v3-2-6c1720ba45ce@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20240827093011.18621-23-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 66221fdf785f8..97666a7595959 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1600,7 +1600,6 @@ static int m_can_close(struct net_device *dev)
- 	netif_stop_queue(dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 6d9a92cafe484..b50743f7e030b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -520,7 +520,7 @@ void mt7996_mcu_rx_event(struct mt7996_dev *dev, struct sk_buff *skb)
+ static struct tlv *
+ mt7996_mcu_add_uni_tlv(struct sk_buff *skb, u16 tag, u16 len)
+ {
+-	struct tlv *ptlv = skb_put(skb, len);
++	struct tlv *ptlv = skb_put_zero(skb, len);
  
- 	m_can_stop(dev);
--	m_can_clk_stop(cdev);
- 	free_irq(dev->irq, dev);
- 
- 	if (cdev->is_peripheral) {
-@@ -1614,6 +1613,7 @@ static int m_can_close(struct net_device *dev)
- 
- 	close_candev(dev);
- 
-+	m_can_clk_stop(cdev);
- 	phy_power_off(cdev->transceiver);
- 
- 	return 0;
+ 	ptlv->tag = cpu_to_le16(tag);
+ 	ptlv->len = cpu_to_le16(len);
 -- 
 2.43.0
 
