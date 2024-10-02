@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177DF1D0F4F;
-	Wed,  2 Oct 2024 13:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04351D0BB1;
+	Wed,  2 Oct 2024 13:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876375; cv=none; b=mL6R2vRD7jRfYh0HebAEoCWo+biacIhCVA9MKOPXddxwozxHHeCBvp/VFYOWW7tUnk1mYRVu+JhgQpBEozshw1Y93aExFsQ+qruoZZZGJpydnWZPTIVRWMQ/eHKkKRjV1xjcuyv5GulWH64oqCyeKDd3g85JprOfjlFI33jvTKc=
+	t=1727876377; cv=none; b=MryD9OIjK6Nlrc5SxbUr8FP492ya5yS4YiwO1shyttnQB+50Rsc1CnbSL2Gi2VBLENH2EReRWY5hiB5Sp1oZWDSUZhhpKvU95GA4MZ5xgx+Rv3+DtTT/5XmiZhScOOxtLX1eRVML5TcbbwfODUlkLbK/doVxtIiIdQ8HFfGQS6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876375; c=relaxed/simple;
-	bh=1YAYCSVcR4sdxXsem9bMgze5lUF6T6AEvNNHAsMfbwM=;
+	s=arc-20240116; t=1727876377; c=relaxed/simple;
+	bh=soCiNiwcPT6CAFGb9p/5lr0s0d7ifN6uwAx1q1wzafg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poYm49Q7tt5/RWndKu07z0F3FFgpgl+S55lrszRvYXI1vxsOgvcG6jEvlCrsuOSvRFtCuAvjxaEq/mdE3FXq6v3GexfLw32K/YtzaOzQP14j22Vlz1bNuqH/T6YVlO8KaMEzL46xX7g567VykJYDvdRKOvpGSgPNOq4P0cWvHQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AB0dx5rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h18FTkaYUvOtoqcfaL+vn9xBmIGwbuqSVTR9ON1SKNlMEBD3KA1eufcCle8LqdDnCcRFpThmFygJSzusabZEJTSsDI1e40WaHJSbMq8f6G+KLSXiwQ/JZXPuDV9cYjB+k4ALpyg1X5n/wdjttMUQeD4iJNI9MrD28OYrj2JpZkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei0MQm9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AB0dx5rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A73EC4CECD;
-	Wed,  2 Oct 2024 13:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei0MQm9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C23C4CEC5;
+	Wed,  2 Oct 2024 13:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876374;
-	bh=1YAYCSVcR4sdxXsem9bMgze5lUF6T6AEvNNHAsMfbwM=;
+	s=korg; t=1727876377;
+	bh=soCiNiwcPT6CAFGb9p/5lr0s0d7ifN6uwAx1q1wzafg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AB0dx5rjJkZjG0MJ5AWMTSMOR6UuP0aR44q9gI3aveBeZ+8+mzFTvCT9OL4yOH3PR
-	 X13uSUA0gsrOIfgFL5In+kxr8z/1t5ADtUVbm3JrTdj5BRF6/NFBBpgG3p2qPtQwZD
-	 qTO4vByxyK4W3djfuBtZI9dJvvDr1Tsshs2TN7Fo=
+	b=ei0MQm9PQ1AXWapvGMgth65wkiTY/FxnLeAy4XP7y0XMMlvng7XndtFzZhCOFdyHO
+	 lc41ypf7CMw6p+6I91iDbjrCGSZpUywDiHitkgwNfUi2dJoWZ8sCij5L65OdRQDWEo
+	 iEi+tpDXk3kWizUyRQdGDpdlSRNyirj5m/NMAiF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wang <jinpu.wang@ionos.com>,
 	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
 	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 391/695] RDMA/rtrs: Reset hb_missed_cnt after receiving other traffic from peer
-Date: Wed,  2 Oct 2024 14:56:29 +0200
-Message-ID: <20241002125838.061635980@linuxfoundation.org>
+Subject: [PATCH 6.11 392/695] RDMA/rtrs-clt: Reset cid to con_num - 1 to stay in bounds
+Date: Wed,  2 Oct 2024 14:56:30 +0200
+Message-ID: <20241002125838.103207883@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,65 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Md Haris Iqbal <haris.iqbal@ionos.com>
 
-[ Upstream commit 3258cbbd86deaa2675e1799bc3d18bd1ef472641 ]
+[ Upstream commit 3e4289b29e216a55d08a89e126bc0b37cbad9f38 ]
 
-Reset hb_missed_cnt after receiving traffic from other peer, so
-hb is more robust again high load on host or network.
+In the function init_conns(), after the create_con() and create_cm() for
+loop if something fails. In the cleanup for loop after the destroy tag, we
+access out of bound memory because cid is set to clt_path->s.con_num.
+
+This commits resets the cid to clt_path->s.con_num - 1, to stay in bounds
+in the cleanup loop later.
 
 Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://patch.msgid.link/20240821112217.41827-5-haris.iqbal@ionos.com
+Link: https://patch.msgid.link/20240821112217.41827-7-haris.iqbal@ionos.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 3 ++-
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 88106cf5ce550..9936a3354b478 100644
+index 9936a3354b478..84d2dfcd20af6 100644
 --- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
 +++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -626,6 +626,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
- 		 */
- 		if (WARN_ON(wc->wr_cqe->done != rtrs_clt_rdma_done))
- 			return;
-+		clt_path->s.hb_missed_cnt = 0;
- 		rtrs_from_imm(be32_to_cpu(wc->ex.imm_data),
- 			       &imm_type, &imm_payload);
- 		if (imm_type == RTRS_IO_RSP_IMM ||
-@@ -643,7 +644,6 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
- 				return  rtrs_clt_recv_done(con, wc);
- 		} else if (imm_type == RTRS_HB_ACK_IMM) {
- 			WARN_ON(con->c.cid);
--			clt_path->s.hb_missed_cnt = 0;
- 			clt_path->s.hb_cur_latency =
- 				ktime_sub(ktime_get(), clt_path->s.hb_last_sent);
- 			if (clt_path->flags & RTRS_MSG_NEW_RKEY_F)
-@@ -670,6 +670,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
- 		/*
- 		 * Key invalidations from server side
- 		 */
-+		clt_path->s.hb_missed_cnt = 0;
- 		WARN_ON(!(wc->wc_flags & IB_WC_WITH_INVALIDATE ||
- 			  wc->wc_flags & IB_WC_WITH_IMM));
- 		WARN_ON(wc->wr_cqe->done != rtrs_clt_rdma_done);
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 1d33efb8fb03b..94ac99a4f696e 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1229,6 +1229,7 @@ static void rtrs_srv_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
- 		 */
- 		if (WARN_ON(wc->wr_cqe != &io_comp_cqe))
- 			return;
-+		srv_path->s.hb_missed_cnt = 0;
- 		err = rtrs_post_recv_empty(&con->c, &io_comp_cqe);
- 		if (err) {
- 			rtrs_err(s, "rtrs_post_recv(), err: %d\n", err);
+@@ -2347,6 +2347,12 @@ static int init_conns(struct rtrs_clt_path *clt_path)
+ 		if (err)
+ 			goto destroy;
+ 	}
++
++	/*
++	 * Set the cid to con_num - 1, since if we fail later, we want to stay in bounds.
++	 */
++	cid = clt_path->s.con_num - 1;
++
+ 	err = alloc_path_reqs(clt_path);
+ 	if (err)
+ 		goto destroy;
 -- 
 2.43.0
 
