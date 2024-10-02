@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4C01D0954;
-	Wed,  2 Oct 2024 14:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385CF1D2706;
+	Wed,  2 Oct 2024 14:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878088; cv=none; b=lRGSm0r7W6OJF6DZY37w8oENVSKNa4o5zNY8LIph7fdTTYPm2pJwSzymr6O3jvCpTznhSPrf71qpKJnR85D/W/nOPr6uDWkCSJtQWHVI7xUdRX5kLzWPPoulhfNl9TTlZomXxDjG8286uO/eqX795fWXKIQ+r5noCXBlFhb5nt0=
+	t=1727878091; cv=none; b=DExORWKbQ/FnElZHlvgIepPd8KWe0js+TFO8GaIQ0PuNyKsZmyCgx6lO0aB7Z0BTZqTPRu/8gfalNomos3NiAnhv7U0p+3bE0m/LNPQAw1sfVYuImdDRBAa00RVQpGpV3wqJOEcYU97XX2jCfS7CBv92U+NJWygKdNCnpUiByLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878088; c=relaxed/simple;
-	bh=4iKxJiYaw1xIWh6s694KIzpGrZyqi4CYig87hUv2ivE=;
+	s=arc-20240116; t=1727878091; c=relaxed/simple;
+	bh=EIA6FtvU8un3CEPGp2VUdu32RJKLL3x30gdHrx46LK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dE5iwnOvpIMLPTQ5FdRfOvufPkO8yyeFOHY3saH5s2kOGMwWzzlgzSpdojw0UZRT6cbBXCS+GMXuscidEVREtMps0UQQ9y/kt67a/6sXhiwmnARgpCD6t0YLJNDge/X39Gm1oaxt2UwJoWKPkOJ+FCwXgwzNVk6ZZx9Xye9zW2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pb/JXyfa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvBzSBnYZFmZJ/jinRvBOQ0DJU77kDPP99488OMe4QKkTrlfk5SCReSnONlaghCz3omQMX8RyjxekZ9oZHPJJC/DGuqcZsUI/EzqsLUHTIygi7lJhTlxuJQcs42c3jHCp/yE2dQaOlyWnMG8ERSigPG19OPwUi4dvw6GYtl7uts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnG6yE8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pb/JXyfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9920C4CEC2;
-	Wed,  2 Oct 2024 14:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnG6yE8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BED9C4CEC2;
+	Wed,  2 Oct 2024 14:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878088;
-	bh=4iKxJiYaw1xIWh6s694KIzpGrZyqi4CYig87hUv2ivE=;
+	s=korg; t=1727878091;
+	bh=EIA6FtvU8un3CEPGp2VUdu32RJKLL3x30gdHrx46LK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pb/JXyfaaY8Lmur6cGr8I/FdYNYXRBRWXN3HLOd/R0TwnjdDRBPb5SCUtf/Wy+OOe
-	 ZU3qVEdcdpiemvPFZQAHz+vC0Fixm8MIdOUarEWUnot08TWxdHGjb5TxusyeRfA3yj
-	 nmI4enWg15EVn3BfJa22KHs4HBnqGI996AnKzNpU=
+	b=YnG6yE8rHRGWS/Oe2tcxQqTzzO9xZOAepcc5aC0yelFpVe9KQ2KLiXX3BbjEC3Nq+
+	 uisVXHuswfDpRbGo9hoJQFpEGbu+e3GUZfeJYXFk1pvl7f823Bky9fnBAe8MeDguQX
+	 5r7iEKlS/3eDZOIDwCo5BjFhY+WZfUJUT0zEyVxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jin Yao <yao.jin@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 270/634] libbpf: Fix bpf_object__open_skeleton()s mishandling of options
-Date: Wed,  2 Oct 2024 14:56:10 +0200
-Message-ID: <20241002125821.757583368@linuxfoundation.org>
+Subject: [PATCH 6.10 297/634] perf report: Fix --total-cycles --stdio output error
+Date: Wed,  2 Oct 2024 14:56:37 +0200
+Message-ID: <20241002125822.835558866@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -47,156 +53,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit c634d6f4e12d00c954410ba11db45799a8c77b5b ]
+[ Upstream commit 3ef44458071a19e5b5832cdfe6f75273aa521b6e ]
 
-We do an ugly copying of options in bpf_object__open_skeleton() just to
-be able to set object name from skeleton's recorded name (while still
-allowing user to override it through opts->object_name).
+The --total-cycles may output wrong information with the --stdio.
 
-This is not just ugly, but it also is broken due to memcpy() that
-doesn't take into account potential skel_opts' and user-provided opts'
-sizes differences due to backward and forward compatibility. This leads
-to copying over extra bytes and then failing to validate options
-properly. It could, technically, lead also to SIGSEGV, if we are unlucky.
+For example:
 
-So just get rid of that memory copy completely and instead pass
-default object name into bpf_object_open() directly, simplifying all
-this significantly. The rule now is that obj_name should be non-NULL for
-bpf_object_open() when called with in-memory buffer, so validate that
-explicitly as well.
+  # perf record -e "{cycles,instructions}",cache-misses -b sleep 1
+  # perf report --total-cycles --stdio
 
-We adopt bpf_object__open_mem() to this as well and generate default
-name (based on buffer memory address and size) outside of bpf_object_open().
+The total cycles output of {cycles,instructions} and cache-misses are
+almost the same.
 
-Fixes: d66562fba1ce ("libbpf: Add BPF object skeleton support")
-Reported-by: Daniel Müller <deso@posteo.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Daniel Müller <deso@posteo.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20240827203721.1145494-1-andrii@kernel.org
+  # Samples: 938  of events 'anon group { cycles, instructions }'
+  # Event count (approx.): 938
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+            11.19%            2.6K        0.10%           21  [perf_iterate_ctx+48 -> >
+             5.79%            1.4K        0.45%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+             5.11%            1.2K        0.33%           71  [native_write_msr+0 ->>
+
+  # Samples: 293  of event 'cache-misses'
+  # Event count (approx.): 293
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+            11.19%            2.6K        0.13%           21  [perf_iterate_ctx+48 -> >
+             5.79%            1.4K        0.59%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+             5.11%            1.2K        0.43%           71  [native_write_msr+0 ->>
+
+With the symbol_conf.event_group, the 'perf report' should only report the
+block information of the leader event in a group.
+
+However, the current implementation retrieves the next event's block
+information, rather than the next group leader's block information.
+
+Make sure the index is updated even if the event is skipped.
+
+With the patch,
+
+  # Samples: 293  of event 'cache-misses'
+  # Event count (approx.): 293
+  #
+  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
+  # ...............  ..............  ...........  ..........  ..................................................>
+  #
+           37.98%            9.0K        4.05%           299  [perf_event_addr_filters_exec+0 -> perf_event_a>
+           11.19%            2.6K        0.28%            21  [perf_iterate_ctx+48 -> >
+            5.79%            1.4K        1.32%            97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+
+Fixes: 6f7164fa231a5f36 ("perf report: Sort by sampled cycles percent per block for stdio")
+Reviewed-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jin Yao <yao.jin@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20240813160208.2493643-2-kan.liang@linux.intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 52 +++++++++++++++---------------------------
- 1 file changed, 19 insertions(+), 33 deletions(-)
+ tools/perf/builtin-report.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 31f58e3c4059c..3ecb33188336f 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -7866,16 +7866,19 @@ static int bpf_object_init_progs(struct bpf_object *obj, const struct bpf_object
- }
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index 69618fb0110b6..8bebaba56bc3f 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -565,6 +565,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
+ 		struct hists *hists = evsel__hists(pos);
+ 		const char *evname = evsel__name(pos);
  
- static struct bpf_object *bpf_object_open(const char *path, const void *obj_buf, size_t obj_buf_sz,
-+					  const char *obj_name,
- 					  const struct bpf_object_open_opts *opts)
- {
--	const char *obj_name, *kconfig, *btf_tmp_path, *token_path;
-+	const char *kconfig, *btf_tmp_path, *token_path;
- 	struct bpf_object *obj;
--	char tmp_name[64];
- 	int err;
- 	char *log_buf;
- 	size_t log_size;
- 	__u32 log_level;
++		i++;
+ 		if (symbol_conf.event_group && !evsel__is_group_leader(pos))
+ 			continue;
  
-+	if (obj_buf && !obj_name)
-+		return ERR_PTR(-EINVAL);
-+
- 	if (elf_version(EV_CURRENT) == EV_NONE) {
- 		pr_warn("failed to init libelf for %s\n",
- 			path ? : "(mem buf)");
-@@ -7885,16 +7888,12 @@ static struct bpf_object *bpf_object_open(const char *path, const void *obj_buf,
- 	if (!OPTS_VALID(opts, bpf_object_open_opts))
- 		return ERR_PTR(-EINVAL);
+@@ -574,7 +575,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
+ 		hists__fprintf_nr_sample_events(hists, rep, evname, stdout);
  
--	obj_name = OPTS_GET(opts, object_name, NULL);
-+	obj_name = OPTS_GET(opts, object_name, NULL) ?: obj_name;
- 	if (obj_buf) {
--		if (!obj_name) {
--			snprintf(tmp_name, sizeof(tmp_name), "%lx-%lx",
--				 (unsigned long)obj_buf,
--				 (unsigned long)obj_buf_sz);
--			obj_name = tmp_name;
--		}
- 		path = obj_name;
- 		pr_debug("loading object '%s' from buffer\n", obj_name);
-+	} else {
-+		pr_debug("loading object from %s\n", path);
- 	}
- 
- 	log_buf = OPTS_GET(opts, kernel_log_buf, NULL);
-@@ -7978,9 +7977,7 @@ bpf_object__open_file(const char *path, const struct bpf_object_open_opts *opts)
- 	if (!path)
- 		return libbpf_err_ptr(-EINVAL);
- 
--	pr_debug("loading %s\n", path);
--
--	return libbpf_ptr(bpf_object_open(path, NULL, 0, opts));
-+	return libbpf_ptr(bpf_object_open(path, NULL, 0, NULL, opts));
- }
- 
- struct bpf_object *bpf_object__open(const char *path)
-@@ -7992,10 +7989,15 @@ struct bpf_object *
- bpf_object__open_mem(const void *obj_buf, size_t obj_buf_sz,
- 		     const struct bpf_object_open_opts *opts)
- {
-+	char tmp_name[64];
-+
- 	if (!obj_buf || obj_buf_sz == 0)
- 		return libbpf_err_ptr(-EINVAL);
- 
--	return libbpf_ptr(bpf_object_open(NULL, obj_buf, obj_buf_sz, opts));
-+	/* create a (quite useless) default "name" for this memory buffer object */
-+	snprintf(tmp_name, sizeof(tmp_name), "%lx-%zx", (unsigned long)obj_buf, obj_buf_sz);
-+
-+	return libbpf_ptr(bpf_object_open(NULL, obj_buf, obj_buf_sz, tmp_name, opts));
- }
- 
- static int bpf_object_unload(struct bpf_object *obj)
-@@ -13718,29 +13720,13 @@ static int populate_skeleton_progs(const struct bpf_object *obj,
- int bpf_object__open_skeleton(struct bpf_object_skeleton *s,
- 			      const struct bpf_object_open_opts *opts)
- {
--	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, skel_opts,
--		.object_name = s->name,
--	);
- 	struct bpf_object *obj;
- 	int err;
- 
--	/* Attempt to preserve opts->object_name, unless overriden by user
--	 * explicitly. Overwriting object name for skeletons is discouraged,
--	 * as it breaks global data maps, because they contain object name
--	 * prefix as their own map name prefix. When skeleton is generated,
--	 * bpftool is making an assumption that this name will stay the same.
--	 */
--	if (opts) {
--		memcpy(&skel_opts, opts, sizeof(*opts));
--		if (!opts->object_name)
--			skel_opts.object_name = s->name;
--	}
--
--	obj = bpf_object__open_mem(s->data, s->data_sz, &skel_opts);
--	err = libbpf_get_error(obj);
--	if (err) {
--		pr_warn("failed to initialize skeleton BPF object '%s': %d\n",
--			s->name, err);
-+	obj = bpf_object_open(NULL, s->data, s->data_sz, s->name, opts);
-+	if (IS_ERR(obj)) {
-+		err = PTR_ERR(obj);
-+		pr_warn("failed to initialize skeleton BPF object '%s': %d\n", s->name, err);
- 		return libbpf_err(err);
- 	}
- 
+ 		if (rep->total_cycles_mode) {
+-			report__browse_block_hists(&rep->block_reports[i++].hist,
++			report__browse_block_hists(&rep->block_reports[i - 1].hist,
+ 						   rep->min_percent, pos, NULL);
+ 			continue;
+ 		}
 -- 
 2.43.0
 
