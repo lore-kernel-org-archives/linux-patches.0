@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CB91D0499;
-	Wed,  2 Oct 2024 14:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97E91D0BAE;
+	Wed,  2 Oct 2024 14:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877826; cv=none; b=Tf+tevFf3/AhFZARdnfAZ/YX7Q9k2ODIAgflE3idecm2mFmUmMHmdh468o8lkgWvNtu1O09To2BZtw+haO5zNWrZxW/qkz+FtsIFvO7ZS5RDtZ/+mu9DT0h5AgEEPMI98MENTvV+rg1q8Q5qwXS6y66/kFBUYXSO/oaqKMZ/MFM=
+	t=1727877829; cv=none; b=SGijLvj3Xhi4eQn4h+mc7Hh7BZi/9u3pDQCMfmlOmW3sg4AE3d0iFG4C6N0HERAwT0LKMB410H+P8H6eNcghqYrKnMhFRYWK9BUAxkL5vLtm5DNyGWBJYuHQZtxB9E5h7moXc2hzX2VhN2XOvu0W+6ncYjTZDn1vD4pv0xedXaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877826; c=relaxed/simple;
-	bh=vk3q1Szd9z+x6abnbe789c1Vitk7h/XqF3crGm2GBEk=;
+	s=arc-20240116; t=1727877829; c=relaxed/simple;
+	bh=VA/qLN5H4O2a9zlk7oGh/PQZ+iUXPv+K8RwyFT8xtCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdZ5WbciNG+BzttIp0QkCGuJxO7C0nl0zoXDkNzyq4D3laemdvQqAObPhh4o1zkLropx+Q+6hLkzRTDalFE6KVZtBlyBrA4ECxFAzpHnRPmkGFevpADCNEAQuu038hCwPEFk4vHGFu+0Hy0IbFuP5PYTq+9IGYDOfyTRzL3Mq1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/Uv2aGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J+i5mZTL+YKtttKpCFqGdUWWPDOI9c60GFf58qT3970WybJHt2p7wgwvxIHC3qqRYiGUjhqeJFLSW+jewEPReKc9uuzr/3y4/InVE7AENIuY6exIqXQiD5CrKCiH+sWdyTOTe7sj5uii9q0i0uATC9J7Zc0W61qA+M0r873/IRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gK3mklg4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/Uv2aGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72708C4CEC2;
-	Wed,  2 Oct 2024 14:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK3mklg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60263C4CEC5;
+	Wed,  2 Oct 2024 14:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877825;
-	bh=vk3q1Szd9z+x6abnbe789c1Vitk7h/XqF3crGm2GBEk=;
+	s=korg; t=1727877828;
+	bh=VA/qLN5H4O2a9zlk7oGh/PQZ+iUXPv+K8RwyFT8xtCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/Uv2aGqo44OeIomZV78U/LpiZhHDCPVqzaP11qHEG7Y17uS7W08RWqG1s/a9n5gj
-	 zi30iuxoUzX/KrT3Bkb0pO59LlOqEBxohBZCXx2+8bqqBKtfkuXOAyImOJ0kc7KPDj
-	 BWiG2SrIvd29hkREmk08YYYzXu2kxvfLLH0mDESE=
+	b=gK3mklg4t+wPhsjFpAd5Mnudt+vmxMWHa/e5UeYsO2/fsj+NxRMBqNEox7ByZrVLC
+	 rfa/UU4J59EgVrgm2rH1QU/pEKuxnI1dxk02XaTlkWjbWzmJeAEsRIohTgiWLujT6L
+	 hmDlrHtY4wGP4qQh/fgm5E4mTtN+moDs6o3oc3/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 200/634] drm/msm: Dump correct dbgahb clusters on a750
-Date: Wed,  2 Oct 2024 14:55:00 +0200
-Message-ID: <20241002125818.999798826@linuxfoundation.org>
+Subject: [PATCH 6.10 209/634] drm/msm/dsi: correct programming sequence for SM8350 / SM8450
+Date: Wed,  2 Oct 2024 14:55:09 +0200
+Message-ID: <20241002125819.354767502@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,41 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Connor Abbott <cwabbott0@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d8c17d7aadc2463a395f9340f44c7c34399f1d48 ]
+[ Upstream commit 1328cb7c34bf6d056df9ff694ee5194537548258 ]
 
-This was missed thanks to the family mixup fixed in the previous commit.
+According to the display-drivers, 5nm DSI PLL (v4.2, v4.3) have
+different boundaries for pll_clock_inverters programming. Follow the
+vendor code and use correct values.
 
-Fixes: f3f8207d8aed ("drm/msm: Add devcoredump support for a750")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/607393/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 2f9ae4e395ed ("drm/msm/dsi: add support for DSI-PHY on SM8350 and SM8450")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606947/
+Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-3-1149dd8399fe@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index f2030e521a03a..0fcae53c0b140 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -663,10 +663,13 @@ static void a7xx_get_dbgahb_clusters(struct msm_gpu *gpu,
- 	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
- 		dbgahb_clusters = gen7_0_0_sptp_clusters;
- 		dbgahb_clusters_size = ARRAY_SIZE(gen7_0_0_sptp_clusters);
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 82d015aa2d634..29aa91238bc47 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -135,7 +135,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+ 			config->pll_clock_inverters = 0x00;
+ 		else
+ 			config->pll_clock_inverters = 0x40;
 -	} else {
--		BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
-+	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
- 		dbgahb_clusters = gen7_2_0_sptp_clusters;
- 		dbgahb_clusters_size = ARRAY_SIZE(gen7_2_0_sptp_clusters);
++	} else if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+ 		if (pll_freq <= 1000000000ULL)
+ 			config->pll_clock_inverters = 0xa0;
+ 		else if (pll_freq <= 2500000000ULL)
+@@ -144,6 +144,16 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+ 			config->pll_clock_inverters = 0x00;
+ 		else
+ 			config->pll_clock_inverters = 0x40;
 +	} else {
-+		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
-+		dbgahb_clusters = gen7_9_0_sptp_clusters;
-+		dbgahb_clusters_size = ARRAY_SIZE(gen7_9_0_sptp_clusters);
++		/* 4.2, 4.3 */
++		if (pll_freq <= 1000000000ULL)
++			config->pll_clock_inverters = 0xa0;
++		else if (pll_freq <= 2500000000ULL)
++			config->pll_clock_inverters = 0x20;
++		else if (pll_freq <= 3500000000ULL)
++			config->pll_clock_inverters = 0x00;
++		else
++			config->pll_clock_inverters = 0x40;
  	}
  
- 	a6xx_state->dbgahb_clusters = state_kcalloc(a6xx_state,
+ 	config->decimal_div_start = dec;
 -- 
 2.43.0
 
