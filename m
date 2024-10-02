@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9681D0940;
-	Wed,  2 Oct 2024 14:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECCB1D040D;
+	Wed,  2 Oct 2024 14:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880577; cv=none; b=dA+ZJu6SqQGVGXXwvIkJQs+wpol0jMf98xDog2oBbxDQF0E98QuFDdZ+zVG3LXDCAQ1udlPrFhz5CWo7eVftn6kq6/vMkkvvQkiTXtkU3IN6KSijyuSS5Umf0QviRjUxxkg4iCFv4fX8mu38DgxMze4CZSXRlyzbsmZsenqULD0=
+	t=1727880580; cv=none; b=olSIDYZilbD7zhWy61oKoMUEXUsMJksbolCIpIYpLb40BwvN5GYkef77OePz0cN1K4fXOZFMdNioHuKBYaKNKhVVyYT/nnJ9OliGLrCM/IyAFll21TIHWqr3JVk+jd/Rzw+nm0IXpLRrlXR28cAPR41z/bcjtMWXOYPmoC1mtA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880577; c=relaxed/simple;
-	bh=W7wy2HMo1scUK37UCAIHNCFf62qlMj+/CpYApjIh/HI=;
+	s=arc-20240116; t=1727880580; c=relaxed/simple;
+	bh=kIjRvqnnEC3kETJPKb6N7L9Qk/ohn6YIUcjmuqS2gOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtQuwRHXSqNN728c4ERrvgsQQDoWzIX2zqvQ12nJy/zBOR50dOnvZxmEdE6mGj5DDHjjf8uvSOzgOSyp4GmofZYVwYcu4aKfvbaPWtTXceRHh6dgEKHVhpOxd7le4oIZi2lLf42uwQmeN7m/poMqgmCIYOBwa5q00UMZjLRH4ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdcD9k8E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PliiWo7A3XePu619sbaTiLtHDBSCsdwW/zFoPFSP+mE/88ziQxvBtLxh8tkzLZafJfQTRp3zGHkO2er2JIS7uwqZgSJmf2Bi9xBjt3u3/7dTByT6+H3iVRVqi7KLOlp+XHvMg0hkYZFjRKND8y2p1dP24rsQDYbKE/6fLyacd4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/izECPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdcD9k8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52FC4CEC2;
-	Wed,  2 Oct 2024 14:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/izECPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15F9C4CEC2;
+	Wed,  2 Oct 2024 14:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880577;
-	bh=W7wy2HMo1scUK37UCAIHNCFf62qlMj+/CpYApjIh/HI=;
+	s=korg; t=1727880580;
+	bh=kIjRvqnnEC3kETJPKb6N7L9Qk/ohn6YIUcjmuqS2gOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdcD9k8EdmWHnWxcTp2AQUTjbrTpvc/73ApOBFPpU0kXoloWx6bhattU9adtfBLhD
-	 0C6b3cBISgwM01+eKWB++rRWA1kEFW5+Khd49F6mFoGfy+R42N9BDpAvlx4pT34oQM
-	 MZ/1U/LqkB1jLU5Rp6Or2WWM5s6ivhs4QQTR152w=
+	b=O/izECPdhKrrOZJ6DSela++rcgHoHr8moTo+eiKSIm4P73FUxZ0tRC4+LsWbIz7yu
+	 FJ/stNhEh1ZkYRpjESCsZ34ONvOgkRnDU6ofJlnB+qbvTSm3z61PIVGmeFqthKhu7L
+	 GL4Qi4vTZpnnoQiCB9URpKNeVgXC+WyemyezfjAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Guoqing Jiang <guoqing.jiang@canonical.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 466/538] hwrng: mtk - Use devm_pm_runtime_enable
-Date: Wed,  2 Oct 2024 15:01:45 +0200
-Message-ID: <20241002125810.838033142@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Han Xu <han.xu@nxp.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 500/538] dt-bindings: spi: nxp-fspi: support i.MX93 and i.MX95
+Date: Wed,  2 Oct 2024 15:02:19 +0200
+Message-ID: <20241002125812.177119782@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,37 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@canonical.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 78cb66caa6ab5385ac2090f1aae5f3c19e08f522 upstream.
+[ Upstream commit 18ab9e9e8889ecba23a5e8b7f8924f09284e33d8 ]
 
-Replace pm_runtime_enable with the devres-enabled version which
-can trigger pm_runtime_disable.
+Add i.MX93/95 flexspi compatible strings, which are compatible with
+i.MX8MM
 
-Otherwise, the below appears during reload driver.
-
-mtk_rng 1020f000.rng: Unbalanced pm_runtime_enable!
-
-Fixes: 81d2b34508c6 ("hwrng: mtk - add runtime PM support")
-Cc: <stable@vger.kernel.org>
-Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Han Xu <han.xu@nxp.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://msgid.link/r/20240122091510.2077498-2-peng.fan@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 12736adc43b7 ("dt-bindings: spi: nxp-fspi: add imx8ulp support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/mtk-rng.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/spi/spi-nxp-fspi.yaml  | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/char/hw_random/mtk-rng.c
-+++ b/drivers/char/hw_random/mtk-rng.c
-@@ -142,7 +142,7 @@ static int mtk_rng_probe(struct platform
- 	dev_set_drvdata(&pdev->dev, priv);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
--	pm_runtime_enable(&pdev->dev);
-+	devm_pm_runtime_enable(&pdev->dev);
+diff --git a/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml b/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml
+index 7fd5911454800..4a5f41bde00f3 100644
+--- a/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml
++++ b/Documentation/devicetree/bindings/spi/spi-nxp-fspi.yaml
+@@ -15,12 +15,18 @@ allOf:
  
- 	dev_info(&pdev->dev, "registered RNG driver\n");
+ properties:
+   compatible:
+-    enum:
+-      - nxp,imx8dxl-fspi
+-      - nxp,imx8mm-fspi
+-      - nxp,imx8mp-fspi
+-      - nxp,imx8qxp-fspi
+-      - nxp,lx2160a-fspi
++    oneOf:
++      - enum:
++          - nxp,imx8dxl-fspi
++          - nxp,imx8mm-fspi
++          - nxp,imx8mp-fspi
++          - nxp,imx8qxp-fspi
++          - nxp,lx2160a-fspi
++      - items:
++          - enum:
++              - nxp,imx93-fspi
++              - nxp,imx95-fspi
++          - const: nxp,imx8mm-fspi
  
+   reg:
+     items:
+-- 
+2.43.0
+
 
 
