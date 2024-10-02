@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344701D0F55;
-	Wed,  2 Oct 2024 14:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245E01D07A3;
+	Wed,  2 Oct 2024 14:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879247; cv=none; b=PF2eAQwPrrGyQl8tnu1Wfo09pFGBXNJnNvbkfUnz3wzRwDJ1gU56nNTxd1WKImc1JDtM7eH2Cf5+VICoElplmRee8zVMVFLAVsl6ixfjjua02bcaxiZl9EfXTqrgWVHZQSMrOB3yeC9hn+I2zBcGoc6PwS43hegdjMSKnUKs5/g=
+	t=1727879250; cv=none; b=KOU6CPID0EVrp9M3npsBWeFMzknB0MkByx2WUQ8IJQCNX8sC7yJS5grC7YbtTlFIpDOvHn1m4Q7ZS0nLYBsfYJzjXdCdjbSbqRgcMQp87TCLrkD0kXOgBGy7uGBVbJIFYTC+g5FcLNWBYWjZ/4ZqzFAlLEBIQ8nL19EVn6hxLCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879247; c=relaxed/simple;
-	bh=Hp5sbPYAO02Iom9S98S9RSuIROo2q3yJARGD8klVjAU=;
+	s=arc-20240116; t=1727879250; c=relaxed/simple;
+	bh=Bi16uHbI22TnRZM6HB2rJNMU00eTQaAPws4O7hUBbAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XENkfY8ZPKJIAALc7DCXV1sRan0UcRRiAqvqD74ltnYxTUpdzPFcMKQDaN0W51DgHcgdqxlPEkTiB6OrGXAS1lGOGvzqIJhlg2pOtoU1D8n4pGx9YCQYQuRMJSv3WGro2xGGdVXxH0ZCMliK6YKo/HSeLgFQTYJwLa4CND/0YeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A74iBM5B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fTwtd/YEqJrOvAmWYlSdn9wwjke7RRZg7+5G2JkemGPotaeRTx9RjD5m7S6HEEb7DfR08QSIbbm+al37iELncPgquSTLAord1/lCQ97uJxdPmsqYdq49J8fmInFVe/CvGuSaAK1e6i/ALxy2Ee1eqMknphc1S8XlpfMaTJaqF5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qf8wfHGJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A74iBM5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2230C4CEC2;
-	Wed,  2 Oct 2024 14:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf8wfHGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F290C4CEC2;
+	Wed,  2 Oct 2024 14:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879247;
-	bh=Hp5sbPYAO02Iom9S98S9RSuIROo2q3yJARGD8klVjAU=;
+	s=korg; t=1727879250;
+	bh=Bi16uHbI22TnRZM6HB2rJNMU00eTQaAPws4O7hUBbAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A74iBM5B8UdR7RASplbIOmF+BatR7v9SlRlwtVGL0ie+md/XNrPyvq+DomquRQYlG
-	 nc8bkeJK0nNx91T4Rn+zM87s5FSqQWl9mqtRs3x8+9Ix+ZtDmaRMmHiDe1cxbdrHor
-	 S5KGDeYFl1DOgEHfSONuZVbLZjrTJ6HlhRly0YWY=
+	b=Qf8wfHGJx0GkufW0K17fciKMFVIQAshAqATwGroBmL0i8Zom7ZCW7D/K6I5j21ON5
+	 2jFs4AliiiEAc2CyiGJcvIw2oMdrTzZou3ZKfMN1XWfQBG5z0iAR9NlKRONfBPzeX4
+	 XqRtmCCftZm3/Ao57otNd4IIJAxn8Ziyunb2D2Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
+	Kamlesh Gurudasani <kamlesh@ti.com>,
+	=?UTF-8?q?=C2=A0=20Waiman=20Long?= <longman@redhat.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/538] crypto: hisilicon/qm - inject error before stopping queue
-Date: Wed,  2 Oct 2024 14:54:52 +0200
-Message-ID: <20241002125754.294239674@linuxfoundation.org>
+Subject: [PATCH 6.6 027/538] padata: Honor the callers alignment in case of chunk_size 0
+Date: Wed,  2 Oct 2024 14:54:26 +0200
+Message-ID: <20241002125753.090936299@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -45,112 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Kamlesh Gurudasani <kamlesh@ti.com>
 
-[ Upstream commit b04f06fc0243600665b3b50253869533b7938468 ]
+[ Upstream commit 24cc57d8faaa4060fd58adf810b858fcfb71a02f ]
 
-The master ooo cannot be completely closed when the
-accelerator core reports memory error. Therefore, the driver
-needs to inject the qm error to close the master ooo. Currently,
-the qm error is injected after stopping queue, memory may be
-released immediately after stopping queue, causing the device to
-access the released memory. Therefore, error is injected to close master
-ooo before stopping queue to ensure that the device does not access
-the released memory.
+In the case where we are forcing the ps.chunk_size to be at least 1,
+we are ignoring the caller's alignment.
 
-Fixes: 6c6dd5802c2d ("crypto: hisilicon/qm - add controller reset interface")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
+Move the forcing of ps.chunk_size to be at least 1 before rounding it
+up to caller's alignment, so that caller's alignment is honored.
+
+While at it, use max() to force the ps.chunk_size to be at least 1 to
+improve readability.
+
+Fixes: 6d45e1c948a8 ("padata: Fix possible divide-by-0 panic in padata_mt_helper()")
+Signed-off-by: Kamlesh Gurudasani <kamlesh@ti.com>
+Acked-by:  Waiman Long <longman@redhat.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 47 ++++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 23 deletions(-)
+ kernel/padata.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 2a6ea3815cfb7..1b00edbbfe26a 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -4106,6 +4106,28 @@ static int qm_set_vf_mse(struct hisi_qm *qm, bool set)
- 	return -ETIMEDOUT;
- }
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 29545dd6dd53d..da788a58d19cf 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -511,9 +511,12 @@ void __init padata_do_multithreaded(struct padata_mt_job *job)
+ 	 * thread function.  Load balance large jobs between threads by
+ 	 * increasing the number of chunks, guarantee at least the minimum
+ 	 * chunk size from the caller, and honor the caller's alignment.
++	 * Ensure chunk_size is at least 1 to prevent divide-by-0
++	 * panic in padata_mt_helper().
+ 	 */
+ 	ps.chunk_size = job->size / (ps.nworks * load_balance_factor);
+ 	ps.chunk_size = max(ps.chunk_size, job->min_chunk);
++	ps.chunk_size = max(ps.chunk_size, 1ul);
+ 	ps.chunk_size = roundup(ps.chunk_size, job->align);
  
-+static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
-+{
-+	u32 nfe_enb = 0;
-+
-+	/* Kunpeng930 hardware automatically close master ooo when NFE occurs */
-+	if (qm->ver >= QM_HW_V3)
-+		return;
-+
-+	if (!qm->err_status.is_dev_ecc_mbit &&
-+	    qm->err_status.is_qm_ecc_mbit &&
-+	    qm->err_ini->close_axi_master_ooo) {
-+		qm->err_ini->close_axi_master_ooo(qm);
-+	} else if (qm->err_status.is_dev_ecc_mbit &&
-+		   !qm->err_status.is_qm_ecc_mbit &&
-+		   !qm->err_ini->close_axi_master_ooo) {
-+		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
-+		       qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
-+	}
-+}
-+
- static int qm_vf_reset_prepare(struct hisi_qm *qm,
- 			       enum qm_stop_reason stop_reason)
- {
-@@ -4170,6 +4192,8 @@ static int qm_controller_reset_prepare(struct hisi_qm *qm)
- 		return ret;
- 	}
- 
-+	qm_dev_ecc_mbit_handle(qm);
-+
- 	/* PF obtains the information of VF by querying the register. */
- 	qm_cmd_uninit(qm);
- 
-@@ -4216,28 +4240,6 @@ static int qm_master_ooo_check(struct hisi_qm *qm)
- 	return ret;
- }
- 
--static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
--{
--	u32 nfe_enb = 0;
--
--	/* Kunpeng930 hardware automatically close master ooo when NFE occurs */
--	if (qm->ver >= QM_HW_V3)
--		return;
--
--	if (!qm->err_status.is_dev_ecc_mbit &&
--	    qm->err_status.is_qm_ecc_mbit &&
--	    qm->err_ini->close_axi_master_ooo) {
--		qm->err_ini->close_axi_master_ooo(qm);
--	} else if (qm->err_status.is_dev_ecc_mbit &&
--		   !qm->err_status.is_qm_ecc_mbit &&
--		   !qm->err_ini->close_axi_master_ooo) {
--		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
--		       qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
--	}
--}
--
- static int qm_soft_reset_prepare(struct hisi_qm *qm)
- {
- 	struct pci_dev *pdev = qm->pdev;
-@@ -4262,7 +4264,6 @@ static int qm_soft_reset_prepare(struct hisi_qm *qm)
- 		return ret;
- 	}
- 
--	qm_dev_ecc_mbit_handle(qm);
- 	ret = qm_master_ooo_check(qm);
- 	if (ret)
- 		return ret;
+ 	/*
 -- 
 2.43.0
 
