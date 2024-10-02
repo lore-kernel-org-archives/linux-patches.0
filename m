@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030B41D551;
-	Wed,  2 Oct 2024 14:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C84C1D0F48;
+	Wed,  2 Oct 2024 14:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880361; cv=none; b=I/THrzK5H0W8rFOnWBlt73n28PxceWp126tsOjf0keYMVaArkxc8u37meweHkwYpYIck2v0CmO9SiGpSlbXUhzTf0ps3be5zTtnzcVNjeSjIz01OP3I6nbzkPAwiMORNIE72Li90fcvgfY/cDllcVmXFBfiWINwz/4u0Sftz7m4=
+	t=1727880364; cv=none; b=dQ3XeEnO4HQ32zJsn56nvDPlJ+jPOKZC6rYQJcwlgrelEc3HuxuXzaEJvaAzGxcv/42NZfmNY5WzUHbimbr/qkoKO8xEafNT2V4gC4NY+svkn6j3TyGBE9Mg8Brg+Re5P62u5Hk7e5Jg1/8R6UR5u5ZH+BHPgf/z9+ZJ9HQ1clE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880361; c=relaxed/simple;
-	bh=0NZxAJguEuNtBzlAH/plIsbZSKaFNzvgMtDETtRUsBM=;
+	s=arc-20240116; t=1727880364; c=relaxed/simple;
+	bh=5zUXb6Mn5rQNUyiY19MMjU1t5p8f7X9dlUpRYs0GkX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqV5L/5uHhTlEx5xT7OjInMZRqKknigxyPLhWfCpxnqQazPiTNcubfwQRduxNbjTL5a87p3YzcRI2f/xEIPsBN9Ytb9bkPKzGx7ut3xoZio4MA2O8OuBVbQLF0+MnBZlFDu1FCPnGahcz6dPbo3+QZJ0Vxdhdvs81h+h2hRZjlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng72p6b8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sC+zz6fhTurTeQHK9c24QLnQ87DzHojAanx8Yq1ddc0N4f4+Rj4cywFGc7MCcRsOguOBwAaRdpnCR9tTyUgBeNaCdM3XqHcIS5mD01adftKR6veUppNDuyftkMvMR2l1cooNzcdR0ZRYxddwaKLP1f6ygTdtHjg8Zj+kVqP5eDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2UUlcD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng72p6b8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DDAC4CEC2;
-	Wed,  2 Oct 2024 14:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2UUlcD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BC3C4CEC2;
+	Wed,  2 Oct 2024 14:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880360;
-	bh=0NZxAJguEuNtBzlAH/plIsbZSKaFNzvgMtDETtRUsBM=;
+	s=korg; t=1727880363;
+	bh=5zUXb6Mn5rQNUyiY19MMjU1t5p8f7X9dlUpRYs0GkX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ng72p6b8zPrAvnTmmAxHENyCq+JJehrxEpkj19MqR9wDO7SLkTgXw4qBb179zoJzn
-	 1yzE0DialNuYOywiYAEyth4zGWV4ALzSiVWxDb4MJ7UDSmuuS4oVgUlGm8qil/uQIs
-	 bKhTDpkxSB+4NaMfCx5sEruDygWh8pCQn3s4w4QQ=
+	b=P2UUlcD0SoDMyJiAZes8CWmMJnlAlANuTcNhrVN5RXKBj/OjgPm2hcMhBkLknf9ty
+	 6ZT2mGQOMd0re6ZDrQdXKRvIJwQcEM9oT+41+CU+Dr1gkMIEns3+93BIEDsuwefIvD
+	 oICqE4SRltmdeh0IXHPDDF3+17F2jpw2FCYjs6ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 401/538] ASoC: rt5682: Return devm_of_clk_add_hw_provider to transfer the error
-Date: Wed,  2 Oct 2024 15:00:40 +0200
-Message-ID: <20241002125808.266792894@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.6 402/538] soc: fsl: cpm1: tsa: Fix tsa_write8()
+Date: Wed,  2 Oct 2024 15:00:41 +0200
+Message-ID: <20241002125808.306266001@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,37 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit fcca6d05ef49d5650514ea1dcfd12e4ae3ff2be6 upstream.
+commit 47a347bae9a491b467ab3543e4725a3e4fbe30f5 upstream.
 
-Return devm_of_clk_add_hw_provider() in order to transfer the error, if it
-fails due to resource allocation failure or device tree clock provider
-registration failure.
+The tsa_write8() parameter is an u32 value. This is not consistent with
+the function itself. Indeed, tsa_write8() writes an 8bits value.
 
+Be consistent and use an u8 parameter value.
+
+Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
 Cc: stable@vger.kernel.org
-Fixes: ebbfabc16d23 ("ASoC: rt5682: Add CCF usage for providing I2S clks")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20240830143154.3448004-1-make24@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/20240808071132.149251-4-herve.codina@bootlin.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5682.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/qe/tsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/rt5682.c
-+++ b/sound/soc/codecs/rt5682.c
-@@ -2903,8 +2903,10 @@ int rt5682_register_dai_clks(struct rt56
- 		}
+diff --git a/drivers/soc/fsl/qe/tsa.c b/drivers/soc/fsl/qe/tsa.c
+index 6c5741cf5e9d..53968ea84c88 100644
+--- a/drivers/soc/fsl/qe/tsa.c
++++ b/drivers/soc/fsl/qe/tsa.c
+@@ -140,7 +140,7 @@ static inline void tsa_write32(void __iomem *addr, u32 val)
+ 	iowrite32be(val, addr);
+ }
  
- 		if (dev->of_node) {
--			devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-+			ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
- 						    dai_clk_hw);
-+			if (ret)
-+				return ret;
- 		} else {
- 			ret = devm_clk_hw_register_clkdev(dev, dai_clk_hw,
- 							  init.name,
+-static inline void tsa_write8(void __iomem *addr, u32 val)
++static inline void tsa_write8(void __iomem *addr, u8 val)
+ {
+ 	iowrite8(val, addr);
+ }
+-- 
+2.46.2
+
 
 
