@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBBF1D0425;
-	Wed,  2 Oct 2024 13:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15581D048C;
+	Wed,  2 Oct 2024 13:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875690; cv=none; b=UAZ4LReLMySRCxI3EZyOXSl+va3Y/L3oKUzCJOktvaMUNeEC2zOXSM9vjzg3yf43xrNYyAOui+PqOEIhxnf5lmJgtDUlZpLWcPn5dNWHNh+FDIFIR0lY9Lm1wKI88iS6l+bmN+xpFAAO9PxfnC8TQ5MS9dyBQp/jR6WCKMN/VWM=
+	t=1727875693; cv=none; b=r5aXmeBpWerwUkhHwlkUZtYHeSVqwmfWGF2iJtiBgUi/Gh6GosDkPhOwlH+m2qADc2AvnzC3q7cQWzB02/SSRfmmZUru+wV1DMV0ftRROo91r/MBVqNLKmt/VlrJ9mEfhzGq2RmgaAHY8V7FWWI8vSSZgWGnqkthsQsBcMq24+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875690; c=relaxed/simple;
-	bh=7cZsu2pN4ZbFNW/1ZEU0Y0gslQQsxZsh3KTa1ZnbSp8=;
+	s=arc-20240116; t=1727875693; c=relaxed/simple;
+	bh=fCG1SFxMAnznGJEmb1p53n2kcvHQT+ZNnoMBQFPDZmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IT2oeNn96WeXv5RjfjmLslrTooC659yxkrmX49Lp7wSY8wJkHD59IulqBN0VS56MtEo52vO2NE2/N3T54q3kcw5NSwWG75JN734/HgoBzznvnVrWl2Ge7xmmzDN9jS/FbYpTD6ikvN/VXSPGNRe8XqF3TMaytXFyhfNB+DF8bjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LES6eYlQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t0CQjHBVLEMwSAt0XQM9j0NuurTUb0OlIygOGw4GdfwbcF0ZnTZOHzi1EpZa95IbwuTgc44y8HoAhpvfObs4nbLUWGHYp68hLKk8/5P60KFUi639u0jNCJ9AjSEYQVFZCp2eoN3yZBddsYBfTe9sy3mYUoIIwL9QS2nPPMIZKVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb8FnWZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LES6eYlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97893C4CEC5;
-	Wed,  2 Oct 2024 13:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb8FnWZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE06C4CEC5;
+	Wed,  2 Oct 2024 13:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875690;
-	bh=7cZsu2pN4ZbFNW/1ZEU0Y0gslQQsxZsh3KTa1ZnbSp8=;
+	s=korg; t=1727875692;
+	bh=fCG1SFxMAnznGJEmb1p53n2kcvHQT+ZNnoMBQFPDZmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LES6eYlQDI1a6hU+ucMG/KMt5VQR455y/0TLmFLTj5HgZB+fV/BcHGWLJ3+v3bQaA
-	 8ZPQC8J33wKdHggHtIF4BMme85Xq1lPxwFHXii2Ik3ok5mXRAfiKKTBkhacdbjUTVC
-	 wvsNC8PeBuKiFrMwlew1q0HvPIPPgsx+oippi+VA=
+	b=Sb8FnWZ6bYKWAoJ4DGM5J/JjnvldxP/G/gj3jc7o8FAQnVxMu6vjAzxEnqrukZvMO
+	 4M+kulQk0Ywr3F8xZo6wBt+ecxMGfk3r0eWsxxbxn96i62pSknVGVgLmMm4e8HLo2q
+	 eCJQ7ya4rNzrYAlSCpo5JQekao1D2e02/lwhWMAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 156/695] reset: k210: fix OF node leak in probe() error path
-Date: Wed,  2 Oct 2024 14:52:34 +0200
-Message-ID: <20241002125828.706591797@linuxfoundation.org>
+Subject: [PATCH 6.11 157/695] platform: cznic: turris-omnia-mcu: Fix error check in omnia_mcu_register_trng()
+Date: Wed,  2 Oct 2024 14:52:35 +0200
+Message-ID: <20241002125828.745558307@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -46,51 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b14e40f5dc7cd0dd7e958010e6ca9ad32ff2ddad ]
+[ Upstream commit 2d516b8fc0f18ce9c0347a1aea6edb3d8ca1d692 ]
 
-Driver is leaking OF node reference on memory allocation failure.
-Acquire the OF node reference after memory allocation to fix this and
-keep it simple.
+The gpiod_to_irq() function never returns zero.  It returns negative
+error codes or a positive IRQ number.  Update the checking to check
+for negatives.
 
-Fixes: 5a2308da9f60 ("riscv: Add Canaan Kendryte K210 reset controller")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240825-reset-cleanup-scoped-v1-2-03f6d834f8c0@linaro.org
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Fixes: 41bb142a4028 ("platform: cznic: turris-omnia-mcu: Add support for MCU provided TRNG")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/reset-k210.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/cznic/turris-omnia-mcu-trng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/reset/reset-k210.c b/drivers/reset/reset-k210.c
-index b62a2fd44e4e4..e77e4cca377dc 100644
---- a/drivers/reset/reset-k210.c
-+++ b/drivers/reset/reset-k210.c
-@@ -90,7 +90,7 @@ static const struct reset_control_ops k210_rst_ops = {
- static int k210_rst_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *parent_np = of_get_parent(dev->of_node);
-+	struct device_node *parent_np;
- 	struct k210_rst *ksr;
+diff --git a/drivers/platform/cznic/turris-omnia-mcu-trng.c b/drivers/platform/cznic/turris-omnia-mcu-trng.c
+index ad953fb3c37af..9a1d9292dc9ad 100644
+--- a/drivers/platform/cznic/turris-omnia-mcu-trng.c
++++ b/drivers/platform/cznic/turris-omnia-mcu-trng.c
+@@ -70,8 +70,8 @@ int omnia_mcu_register_trng(struct omnia_mcu *mcu)
  
- 	dev_info(dev, "K210 reset controller\n");
-@@ -99,6 +99,7 @@ static int k210_rst_probe(struct platform_device *pdev)
- 	if (!ksr)
- 		return -ENOMEM;
+ 	irq_idx = omnia_int_to_gpio_idx[__bf_shf(OMNIA_INT_TRNG)];
+ 	irq = gpiod_to_irq(gpio_device_get_desc(mcu->gc.gpiodev, irq_idx));
+-	if (!irq)
+-		return dev_err_probe(dev, -ENXIO, "Cannot get TRNG IRQ\n");
++	if (irq < 0)
++		return dev_err_probe(dev, irq, "Cannot get TRNG IRQ\n");
  
-+	parent_np = of_get_parent(dev->of_node);
- 	ksr->map = syscon_node_to_regmap(parent_np);
- 	of_node_put(parent_np);
- 	if (IS_ERR(ksr->map))
+ 	/*
+ 	 * If someone else cleared the TRNG interrupt but did not read the
 -- 
 2.43.0
 
