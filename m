@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680D41D0434;
-	Wed,  2 Oct 2024 13:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09161D0794;
+	Wed,  2 Oct 2024 13:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875471; cv=none; b=MZGrT7Pk7PMfvuUM5T4A2A3IOARDxgexjRkF4aXh4Eiwn4KihwXXLOAk4r49EA29u5rvcTBim86j+xQshw5UGBj2+iARzyItOOtAGbRoa9Tw9+x2VqyQOWEiFBob6QgdDbmBO1DIKBV5yyXUQ0i3sO2w9EATFxte3Fn1+lTDuAo=
+	t=1727875474; cv=none; b=XBWIyRM3zxcrwNdSXm5myZ8XDTwAxQcY2sMI3IkAP0SaySg85fRnXFCAQWchKzNcDfNTgYLEMtKIo98VvUyzHFPLwHpY07f2EZkhkrlCCWzxoaIZZTqx1ENf38hEW3B/BajHGfDGe3cWEOWXhr1mgio2r4eUDB7XFyyq42f8IyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875471; c=relaxed/simple;
-	bh=Jx6wZHv1MhWCEqfYOVWu0T2d7zNSvgJSDbLbQmV6DpE=;
+	s=arc-20240116; t=1727875474; c=relaxed/simple;
+	bh=w8NuzBhNwe8FyJeXm+JUYXqpiBRCG1UQ98+TgzLPt/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGeWu85bzrz6lvFLew1JbzmR/BclSnu7HgkIWPzgJW7mzghZlMjK6CoQZe+IBVnRygUYBZysKEgFeNnAuJLWmKX76cRtNGLxwVoV21zl8K+PwJlKTOSKjYHRHX/hFo6Y2wAkWXurrQIr6Ocvlra2xlI4p5Lpct45+1CIfx18PyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FydeEMzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mST9BQTtxuyk/YrQ+oTHxspf93eu6zUpza4/2tmu4thWPhcxRs/EhnAtTZneLVVT693Ric7cz51+i144amtrXuoN1jYuLrz0oviy/uPN8k+LUkIiCwCdXyzbdigFtoLkv/fszIRtzwY2D1OOOPzQUDjEsAf6M3Z2X7pxx+slC7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X00d+fEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FydeEMzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4288C4CECD;
-	Wed,  2 Oct 2024 13:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X00d+fEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D369FC4CEC5;
+	Wed,  2 Oct 2024 13:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875471;
-	bh=Jx6wZHv1MhWCEqfYOVWu0T2d7zNSvgJSDbLbQmV6DpE=;
+	s=korg; t=1727875474;
+	bh=w8NuzBhNwe8FyJeXm+JUYXqpiBRCG1UQ98+TgzLPt/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FydeEMzRq3Lo1DgHSLxc2i8E6f8IAyu0d9ySvN28NYhN7b5aM/jFHj3IVfCDScIzM
-	 dpUzwr7WtSAswo7vYshcqa2Zd/xOXnoMD5QVEsoSQyMKfBmj6O/XS+AqA/xy5q6Lpl
-	 Osoe+GdZUgKitWxDJn2hWjqv7eruflAqQlO5iQLM=
+	b=X00d+fEa3pJ79NDtmaGOwoym/0tmT27kkZlgXhwzVqFm1xFx2Z462TfRGr0Sc9zKG
+	 AOPcbWaOb9tPs7hPrrpAGQE6upHyOr/sghoEm1ygbBZ3ESguewJgEOwFtsZt3o8puh
+	 Bey2USPmRtsYHKNaseUXghFFx6nFL9guNzfi48VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 085/695] crypto: hisilicon/qm - inject error before stopping queue
-Date: Wed,  2 Oct 2024 14:51:23 +0200
-Message-ID: <20241002125825.873443363@linuxfoundation.org>
+Subject: [PATCH 6.11 112/695] netkit: Assign missing bpf_net_context
+Date: Wed,  2 Oct 2024 14:51:50 +0200
+Message-ID: <20241002125826.943560475@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,112 +50,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit b04f06fc0243600665b3b50253869533b7938468 ]
+[ Upstream commit 157f29152b61ca41809dd7ead29f5733adeced19 ]
 
-The master ooo cannot be completely closed when the
-accelerator core reports memory error. Therefore, the driver
-needs to inject the qm error to close the master ooo. Currently,
-the qm error is injected after stopping queue, memory may be
-released immediately after stopping queue, causing the device to
-access the released memory. Therefore, error is injected to close master
-ooo before stopping queue to ensure that the device does not access
-the released memory.
+During the introduction of struct bpf_net_context handling for
+XDP-redirect, the netkit driver has been missed, which also requires it
+because NETKIT_REDIRECT invokes skb_do_redirect() which is accessing the
+per-CPU variables. Otherwise we see the following crash:
 
-Fixes: 6c6dd5802c2d ("crypto: hisilicon/qm - add controller reset interface")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+	BUG: kernel NULL pointer dereference, address: 0000000000000038
+	bpf_redirect()
+	netkit_xmit()
+	dev_hard_start_xmit()
+
+Set the bpf_net_context before invoking netkit_xmit() program within the
+netkit driver.
+
+Fixes: 401cb7dae813 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20240912155620.1334587-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 47 ++++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 23 deletions(-)
+ drivers/net/netkit.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index b2b5f15abdf72..07983af9e3e22 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -4015,6 +4015,28 @@ static int qm_set_vf_mse(struct hisi_qm *qm, bool set)
- 	return -ETIMEDOUT;
+diff --git a/drivers/net/netkit.c b/drivers/net/netkit.c
+index 16789cd446e9e..3f4187102e773 100644
+--- a/drivers/net/netkit.c
++++ b/drivers/net/netkit.c
+@@ -65,6 +65,7 @@ static struct netkit *netkit_priv(const struct net_device *dev)
+ 
+ static netdev_tx_t netkit_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
++	struct bpf_net_context __bpf_net_ctx, *bpf_net_ctx;
+ 	struct netkit *nk = netkit_priv(dev);
+ 	enum netkit_action ret = READ_ONCE(nk->policy);
+ 	netdev_tx_t ret_dev = NET_XMIT_SUCCESS;
+@@ -72,6 +73,7 @@ static netdev_tx_t netkit_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct net_device *peer;
+ 	int len = skb->len;
+ 
++	bpf_net_ctx = bpf_net_ctx_set(&__bpf_net_ctx);
+ 	rcu_read_lock();
+ 	peer = rcu_dereference(nk->peer);
+ 	if (unlikely(!peer || !(peer->flags & IFF_UP) ||
+@@ -110,6 +112,7 @@ static netdev_tx_t netkit_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		break;
+ 	}
+ 	rcu_read_unlock();
++	bpf_net_ctx_clear(bpf_net_ctx);
+ 	return ret_dev;
  }
  
-+static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
-+{
-+	u32 nfe_enb = 0;
-+
-+	/* Kunpeng930 hardware automatically close master ooo when NFE occurs */
-+	if (qm->ver >= QM_HW_V3)
-+		return;
-+
-+	if (!qm->err_status.is_dev_ecc_mbit &&
-+	    qm->err_status.is_qm_ecc_mbit &&
-+	    qm->err_ini->close_axi_master_ooo) {
-+		qm->err_ini->close_axi_master_ooo(qm);
-+	} else if (qm->err_status.is_dev_ecc_mbit &&
-+		   !qm->err_status.is_qm_ecc_mbit &&
-+		   !qm->err_ini->close_axi_master_ooo) {
-+		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
-+		       qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
-+	}
-+}
-+
- static int qm_vf_reset_prepare(struct hisi_qm *qm,
- 			       enum qm_stop_reason stop_reason)
- {
-@@ -4079,6 +4101,8 @@ static int qm_controller_reset_prepare(struct hisi_qm *qm)
- 		return ret;
- 	}
- 
-+	qm_dev_ecc_mbit_handle(qm);
-+
- 	/* PF obtains the information of VF by querying the register. */
- 	qm_cmd_uninit(qm);
- 
-@@ -4125,28 +4149,6 @@ static int qm_master_ooo_check(struct hisi_qm *qm)
- 	return ret;
- }
- 
--static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
--{
--	u32 nfe_enb = 0;
--
--	/* Kunpeng930 hardware automatically close master ooo when NFE occurs */
--	if (qm->ver >= QM_HW_V3)
--		return;
--
--	if (!qm->err_status.is_dev_ecc_mbit &&
--	    qm->err_status.is_qm_ecc_mbit &&
--	    qm->err_ini->close_axi_master_ooo) {
--		qm->err_ini->close_axi_master_ooo(qm);
--	} else if (qm->err_status.is_dev_ecc_mbit &&
--		   !qm->err_status.is_qm_ecc_mbit &&
--		   !qm->err_ini->close_axi_master_ooo) {
--		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
--		       qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
--	}
--}
--
- static int qm_soft_reset_prepare(struct hisi_qm *qm)
- {
- 	struct pci_dev *pdev = qm->pdev;
-@@ -4171,7 +4173,6 @@ static int qm_soft_reset_prepare(struct hisi_qm *qm)
- 		return ret;
- 	}
- 
--	qm_dev_ecc_mbit_handle(qm);
- 	ret = qm_master_ooo_check(qm);
- 	if (ret)
- 		return ret;
 -- 
 2.43.0
 
