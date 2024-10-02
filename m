@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A111E892;
-	Wed,  2 Oct 2024 14:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5F21D016D;
+	Wed,  2 Oct 2024 14:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880375; cv=none; b=K3SSvNuoVnYsSHsJR1HJP2Ho6l3APbGZwsn0cwt2PBG7fvW/VxuVHyMnxJRiT6g4gbqvBH6zjkbywqp1t4e5wfedaDp5riFeB5RQdPU4GNHqvNqORlRIDDDwil9Daa3FjhsXSuwHVOsyvD0tsj1oUHL15Npjb4cEwfRK1DdfRMg=
+	t=1727880378; cv=none; b=fusOyL6C3IA5kWYWcyaw/gseAap/SrymEEM4YzStNh8ScdxabeQEC0m1d6pWz5mb6zVYXMOpMpdWDo++tUyHCvvABn4ZCowbQf6tFKW+Gq3jn4vUIEGNrJJ21seHjcT//JwExOvOvDH0A6xLueRgMytoYXaFCgydjhitdABJoT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880375; c=relaxed/simple;
-	bh=gHt8nUA8dkQk/Hx/36J2KCQl+zGG41+bPI/nthl9GB8=;
+	s=arc-20240116; t=1727880378; c=relaxed/simple;
+	bh=11FPwlqi8go07Sqb3ohxRkI8WlOpWS1zsjlquWCdscM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8Amp2OfRIzBrgrxyL0KgKeupEUmxQ6ZlJOKek/tVWWuSr54Ie4Hn1jv/oj3y21XFVLJzSN0EMP+ZE1wy7X8fqUyZxI+H9YuoSg+wbfiYWpMU4bWuCSPhTRssHdt4OoK8StdyXh8d4LFScGBvywK8ebh/zRrbh53PQVxe71a5fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPRUywKx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mZHFt+xdLocH4TWasjgm4/M4fXVs8WG23vdCRuN8RYrarmgZrdhG9Lu3Hh+gbLfSTFgtVaI/lAOyIGqJ+zZaXO8uIdiSKYfx39+yHXjvr4yQLkpRfkmLr+ys9s+cJuOw7coMKEDsp4Mdw6tufoFj2dXkMXGHYHPEVItlPzP7+cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn+e2Q+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPRUywKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E88C4CEC2;
-	Wed,  2 Oct 2024 14:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn+e2Q+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26BFC4CEC2;
+	Wed,  2 Oct 2024 14:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880375;
-	bh=gHt8nUA8dkQk/Hx/36J2KCQl+zGG41+bPI/nthl9GB8=;
+	s=korg; t=1727880378;
+	bh=11FPwlqi8go07Sqb3ohxRkI8WlOpWS1zsjlquWCdscM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPRUywKxLigRxd2CQwSfbx8x3krHTJwV6lubIqhCjH0X/YX73keQArUTiCOLgQcjN
-	 DyGH2ueGUwx8qVva7g9oUY7fpAA6s7H5JsH2QAJ7GbAJKU7xXJvmlfo8RU0jsJNnOD
-	 kbRBgqHGqJL50rDne0xn2OzYO6Ec2rt0Xa+OJ2d4=
+	b=Zn+e2Q+h2alMUr/Bxcs68FL/LGXkfGtqEBtTodSbY8aMV7V7Bo7uVEQqqy7cTERK6
+	 3F/JuoxudwUyE9ps5BEeO84JrCEYtUkyDZCuZvu/HnV5OlwBLkkZUkIzzMRUd4Ksl8
+	 EwlrQi17TNaWmNKirwahHCP8CxZuX+xDVHfLpotQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 406/538] Input: adp5588-keys - fix check on return code
-Date: Wed,  2 Oct 2024 15:00:45 +0200
-Message-ID: <20241002125808.462205513@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.6 397/538] PCI: Correct error reporting with PCIe failed link retraining
+Date: Wed,  2 Oct 2024 15:00:36 +0200
+Message-ID: <20241002125808.106403763@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -44,42 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit eb017f4ea13b1a5ad7f4332279f2e4c67b44bdea upstream.
+commit 712e49c967064a3a7a5738c6f65ac540a3f6a1df upstream.
 
-During adp5588_setup(), we read all the events to clear the event FIFO.
-However, adp5588_read() just calls i2c_smbus_read_byte_data() which
-returns the byte read in case everything goes well. Hence, we need to
-explicitly check for a negative error code instead of checking for
-something different than 0.
+Only return successful completion status from pcie_failed_link_retrain() if
+retraining has actually been done, preventing excessive delays from being
+triggered at call sites in a hope that communication will finally be
+established with the downstream device where in fact nothing has been done
+about the link in question that would justify such a hope.
 
-Fixes: e960309ce318 ("Input: adp5588-keys - bail out on returned error")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240920-fix-adp5588-err-check-v1-1-81f6e957ef24@analog.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: a89c82249c37 ("PCI: Work around PCIe link training failures")
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2408091133260.61955@angie.orcam.me.uk
+Reported-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/aa2d1c4e-9961-d54a-00c7-ddf8e858a9b0@linux.intel.com/
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.5+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/adp5588-keys.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/quirks.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/input/keyboard/adp5588-keys.c
-+++ b/drivers/input/keyboard/adp5588-keys.c
-@@ -627,7 +627,7 @@ static int adp5588_setup(struct adp5588_
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -78,7 +78,8 @@
+  * again to remove any residual state, ignoring the result as it's supposed
+  * to fail anyway.
+  *
+- * Return TRUE if the link has been successfully retrained, otherwise FALSE.
++ * Return TRUE if the link has been successfully retrained.  Return FALSE
++ * if retraining was not needed or we attempted a retrain and it failed.
+  */
+ bool pcie_failed_link_retrain(struct pci_dev *dev)
+ {
+@@ -87,6 +88,7 @@ bool pcie_failed_link_retrain(struct pci
+ 		{}
+ 	};
+ 	u16 lnksta, lnkctl2;
++	bool ret = false;
  
- 	for (i = 0; i < KEYP_MAX_EVENT; i++) {
- 		ret = adp5588_read(client, KEY_EVENTA);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
+ 	if (!pci_is_pcie(dev) || !pcie_downstream_port(dev) ||
+ 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
+@@ -104,7 +106,8 @@ bool pcie_failed_link_retrain(struct pci
+ 		lnkctl2 |= PCI_EXP_LNKCTL2_TLS_2_5GT;
+ 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
+ 
+-		if (pcie_retrain_link(dev, false)) {
++		ret = pcie_retrain_link(dev, false) == 0;
++		if (!ret) {
+ 			pci_info(dev, "retraining failed\n");
+ 			pcie_capability_write_word(dev, PCI_EXP_LNKCTL2,
+ 						   oldlnkctl2);
+@@ -126,13 +129,14 @@ bool pcie_failed_link_retrain(struct pci
+ 		lnkctl2 |= lnkcap & PCI_EXP_LNKCAP_SLS;
+ 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
+ 
+-		if (pcie_retrain_link(dev, false)) {
++		ret = pcie_retrain_link(dev, false) == 0;
++		if (!ret) {
+ 			pci_info(dev, "retraining failed\n");
+ 			return false;
+ 		}
  	}
  
+-	return true;
++	return ret;
+ }
+ 
+ static ktime_t fixup_debug_start(struct pci_dev *dev,
 
 
