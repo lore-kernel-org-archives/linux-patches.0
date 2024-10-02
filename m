@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3A41D0433;
-	Wed,  2 Oct 2024 13:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911BD1D0964;
+	Wed,  2 Oct 2024 13:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875547; cv=none; b=YEEXfFJBDybHv2OAsUhgfURIRcay1as7Lp+wRZkIVmzvBFyfNxLOnfZtv2s4iHvfKfwc0XGKvuWo+RwjVvbM3kUMC/fd0cGTtvvl2VvgZdYMyGB1kSFIsGnnR0QYeoESlX7usQSA1aW2XSi+JsEiW5akRovHlKA79su4V8fojbg=
+	t=1727875550; cv=none; b=hPcODFtTow/ww2xrXgpIMO1eNf5FxVlHYpX4yEeRxdc8wuO9CvPh1KwKXmuQK3Rao2nGB1v+JHl/9YrIhneBFjNKPm793h4XcjrCOscqImR9kw1cxn//n80yzAf2ctg9CppoRI1x5am4kYEaTuDZiw3UCUV4bWnkY3OHv1A0asc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875547; c=relaxed/simple;
-	bh=ojqZEsnbaNNh8I7bNcMl6Ls0KOOUrt2MmEZafJgiZBU=;
+	s=arc-20240116; t=1727875550; c=relaxed/simple;
+	bh=PmypqS5L7Zhv3wafuTYJ1mK5F0JZncGqxzC5z/sNqfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4IUB5i7nER5edHU/iX3u8RKKT8GJGJgAM0+bMi6Bcf3XZco5js5FbqYyL2JT0Ox5KIH0cV+d/R9HjTTVWfRnEmiJ3bSEasrNrG8xiNFp9dzXyjo1kWzgAuKH2w1IHv3Y0HlvVAtn+sbrvd1oLy/geMz9Ke1rjLU5bZojJbJlGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTmhzW8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxdmrbCsNAuh0uPVtNXkRZrUusLX8XakZkDRZFSh/YTz/kSTmWDerxKeD+omYtyKEK33Ge3ba8H+6h2zjMm7y3Bg5sRpu/6XvcLsm/V9NzYZTnK9q1JSro8f5mewjtU5REWntON6cNXamZKpHSk/d5l1XHmP4G39OXjtdmKVoAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MJPh3ks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTmhzW8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EEEC4CEC5;
-	Wed,  2 Oct 2024 13:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MJPh3ks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA05C4CECD;
+	Wed,  2 Oct 2024 13:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875547;
-	bh=ojqZEsnbaNNh8I7bNcMl6Ls0KOOUrt2MmEZafJgiZBU=;
+	s=korg; t=1727875550;
+	bh=PmypqS5L7Zhv3wafuTYJ1mK5F0JZncGqxzC5z/sNqfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTmhzW8P0kTi+zS5E0Ep/fDGUCPDHGYf9J1j5ep+akdoVFbIJMXkh4y6T7rTRlGAT
-	 HzaSR/Ccrg3GCAYsjt7qQUBgkQ/w89LiddFz2sa7cOrZuAfcU+iCrp5R0jxAJmSjvi
-	 m8xMjBjqMBcs46Sn6JxhgDI/bNX6Q2zcP5G8w7TI=
+	b=0MJPh3ksKJoZsaC7oQ//iQUwUYi6t44VdfrCMcul9UsG/atFFawQu6Z6DqZY6ZiGU
+	 jeSEHurWZ8LUJ0234z84Uqi927QW84Hsdha10zAXcA3Gn6R7R+QiiUNA2Xfp/bQtDq
+	 e8MynmT/L31HCZhp9rmr/rwyqbjFDuFo34PpVlLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 138/695] firmware: qcom: scm: Disable SDI and write no dump to dump mode
-Date: Wed,  2 Oct 2024 14:52:16 +0200
-Message-ID: <20241002125827.995591032@linuxfoundation.org>
+Subject: [PATCH 6.11 139/695] regulator: Return actual error in of_regulator_bulk_get_all()
+Date: Wed,  2 Oct 2024 14:52:17 +0200
+Message-ID: <20241002125828.034538652@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,63 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 79cb2cb8d89b7eca87e8dac031dadea4aeafeaa7 ]
+[ Upstream commit 395a41a1d3e377462f3eea8a205ee72be8885ff6 ]
 
-SDI is enabled for most of the Qualcomm SoCs and as per commit
-ff4aa3bc9825 ("firmware: qcom_scm: disable SDI if required")
-it was recommended to disable SDI by mentioning it in device tree
-to avoid hang during watchdog or during reboot.
+If regulator_get() in of_regulator_bulk_get_all() returns an error, that
+error gets overridden and -EINVAL is always passed out. This masks probe
+deferral requests and likely won't work properly in all cases.
 
-However, for some cases if download mode tcsr register already
-configured from boot firmware to collect dumps and if SDI is
-disabled via means of mentioning it in device tree we could
-still end up with dump collection. Disabling SDI alone is
-not completely enough to disable dump mode and we also need to
-zero out the bits download bits from tcsr register.
+Fix this by letting of_regulator_bulk_get_all() return the original
+error code.
 
-Current commit now, unconditionally call qcom_scm_set_download_mode()
-based on download_mode flag, at max if TCSR register is not mentioned
-or available for a SoC it will fallback to legacy way of setting
-download mode through command which may be no-ops or return error
-in case current firmware does not implements QCOM_SCM_INFO_IS_CALL_AVAIL
-so, at worst it does nothing if it fails.
-
-It also does to call SDI disable call if dload mode is disabled, which
-looks fine to do as intention is to disable dump collection even if
-system crashes.
-
-Fixes: ff4aa3bc9825 ("firmware: qcom_scm: disable SDI if required")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Link: https://lore.kernel.org/r/20240708155332.4056479-1-quic_mojha@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 27b9ecc7a9ba ("regulator: Add of_regulator_bulk_get_all")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20240822072047.3097740-3-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/regulator/of_regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 00c379a3ccebe..0f5ac346bda43 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1954,14 +1954,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	 * will cause the boot stages to enter download mode, unless
- 	 * disabled below by a clean shutdown/reboot.
- 	 */
--	if (download_mode)
--		qcom_scm_set_download_mode(true);
--
-+	qcom_scm_set_download_mode(download_mode);
- 
- 	/*
- 	 * Disable SDI if indicated by DT that it is enabled by default.
- 	 */
--	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
-+	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled") || !download_mode)
- 		qcom_scm_disable_sdi();
- 
- 	ret = of_reserved_mem_device_init(__scm->dev);
+diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
+index 03afc160fc72c..86b680adbf01c 100644
+--- a/drivers/regulator/of_regulator.c
++++ b/drivers/regulator/of_regulator.c
+@@ -777,7 +777,7 @@ int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
+ 			name[i] = '\0';
+ 			tmp = regulator_get(dev, name);
+ 			if (IS_ERR(tmp)) {
+-				ret = -EINVAL;
++				ret = PTR_ERR(tmp);
+ 				goto error;
+ 			}
+ 			(*consumers)[n].consumer = tmp;
 -- 
 2.43.0
 
