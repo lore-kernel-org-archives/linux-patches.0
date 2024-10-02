@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F51D07B8;
-	Wed,  2 Oct 2024 13:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0DC1D07B1;
+	Wed,  2 Oct 2024 13:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876695; cv=none; b=d5/8/Dsjjb7zPXDcKAWPTL6FX/tLSlcJetdgwQ2VKcgnm0oTmSLZ5yRYdmSrqm335SksjFfQeOTNySieaRLBHebXPl7I7akcOPgcJ45LXrUrr4Pw+Awv+ocYkT7CKQZzqlishWNri8q3ZcxyMYg2LTH1aKaS0bdTdS7F4+IccGU=
+	t=1727876698; cv=none; b=kjfTLTAdGaKOnTpq26pfIz+MpjPq50fRugymjDSCPp1dj3ltQcOjtCcS/0YiO8JziZBmTJo50cOt1cWSwFxx5KBYL+O+iySjhD1MieRBw0GDOxwJtaGxT4fw+cKUG8A2igSqFzcJjMqSFcFfyqj/1V7GiQbPsyCqxSi47M/vwUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876695; c=relaxed/simple;
-	bh=p7i+sRGHxG/9uMgTtfAclRHvlnZRNCmqOjmCz9lN6I4=;
+	s=arc-20240116; t=1727876698; c=relaxed/simple;
+	bh=jQ/lMNifQcUH925wABrmBMXCXup8/0jrpo7dwamkQnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBrmfyxH1DYj1ZBogRK7BJPQrj/oyOk65EkyyZrsFjR99+DLNfUaRVzf6hLOBQhcwivib0FoZNYuIYRQPGmt2A5dZ+FyjYBjLImoCoXxh4wASPCK3W7Ia5f6cj4lHwA1yfQaMhQP4A/1YpGDGa2LaI3UVJzqyJ/gB3r9UMFNDRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VedPq4N1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Izfphwn44jxC6kYKZSZy9uR7QGkCF+M5Rp7Q8ESXJ2kfk3N7jvi5euclEkK9K3uBG3HFsJEgUpVY+ormUGJm6x4iu1T5JNEkedSwKCFgvpWY6dGo2CPUG+02mRSssxdLSRYT7L2EnxBP7YMfaA7hjqZ0/ibIplRd/9OwLfvoyXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2l8trlz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VedPq4N1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72038C4CECD;
-	Wed,  2 Oct 2024 13:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2l8trlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D79BC4CECD;
+	Wed,  2 Oct 2024 13:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876694;
-	bh=p7i+sRGHxG/9uMgTtfAclRHvlnZRNCmqOjmCz9lN6I4=;
+	s=korg; t=1727876697;
+	bh=jQ/lMNifQcUH925wABrmBMXCXup8/0jrpo7dwamkQnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VedPq4N1pWTH4+88sYz4JGIzeAbwTcLdP5PKOfd2V8L2gZbz7sWzKIrwfchTVJB8a
-	 1L19jCvqn1Uu+s8j3ynYgkwliwIT+pJnWF7Xi8OJZxb7C5nn3XrQMq9mSviEdAwfX+
-	 6HXRYmDPqAPAt8OS/ReNR62S8/hwWF5iLsBp66hA=
+	b=P2l8trlzSdL0a67UV2TimenXUWZPeOz/J0gA/JmNJ02RC+FABD8Z3UDegxfnfqn/+
+	 TyE9yRusQUjmHfz3KDdl0znDf4wJImy7GojekhehI3UTITfRRxEsm+GAjMdwsT7oOi
+	 NWTu8Fwm+VC/7ZPWwXDoSEiV0B0U9MLOMyVFm/wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.11 524/695] soc: fsl: cpm1: qmc: Update TRNSYNC only in transparent mode
-Date: Wed,  2 Oct 2024 14:58:42 +0200
-Message-ID: <20241002125843.402479456@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.11 533/695] Input: i8042 - add another board name for TUXEDO Stellaris Gen5 AMD line
+Date: Wed,  2 Oct 2024 14:58:51 +0200
+Message-ID: <20241002125843.776559661@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,71 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit c3cc3e69b33fee3d276895e0e2d1a8fb37ea5d0e upstream.
+commit 01eed86d50af9fab27d876fd677b86259ebe9de3 upstream.
 
-The TRNSYNC feature is available (and enabled) only in transparent mode.
+There might be devices out in the wild where the board name is GMxXGxx
+instead of GMxXGxX.
 
-Since commit 7cc9bda9c163 ("soc: fsl: cpm1: qmc: Handle timeslot entries
-at channel start() and stop()") TRNSYNC register is updated in
-transparent and hdlc mode. In hdlc mode, the address of the TRNSYNC
-register is used by the QMC for other internal purpose. Even if no weird
-results were observed in hdlc mode, touching this register in this mode
-is wrong.
+Adding both to be on the safe side.
 
-Update TRNSYNC only in transparent mode.
-
-Fixes: 7cc9bda9c163 ("soc: fsl: cpm1: qmc: Handle timeslot entries at channel start() and stop()")
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/20240808071132.149251-2-herve.codina@bootlin.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/20240910094008.1601230-2-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/qmc.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/soc/fsl/qe/qmc.c
-+++ b/drivers/soc/fsl/qe/qmc.c
-@@ -940,11 +940,13 @@ static int qmc_chan_start_rx(struct qmc_
- 		goto end;
- 	}
- 
--	ret = qmc_setup_chan_trnsync(chan->qmc, chan);
--	if (ret) {
--		dev_err(chan->qmc->dev, "chan %u: setup TRNSYNC failed (%d)\n",
--			chan->id, ret);
--		goto end;
-+	if (chan->mode == QMC_TRANSPARENT) {
-+		ret = qmc_setup_chan_trnsync(chan->qmc, chan);
-+		if (ret) {
-+			dev_err(chan->qmc->dev, "chan %u: setup TRNSYNC failed (%d)\n",
-+				chan->id, ret);
-+			goto end;
-+		}
- 	}
- 
- 	/* Restart the receiver */
-@@ -982,11 +984,13 @@ static int qmc_chan_start_tx(struct qmc_
- 		goto end;
- 	}
- 
--	ret = qmc_setup_chan_trnsync(chan->qmc, chan);
--	if (ret) {
--		dev_err(chan->qmc->dev, "chan %u: setup TRNSYNC failed (%d)\n",
--			chan->id, ret);
--		goto end;
-+	if (chan->mode == QMC_TRANSPARENT) {
-+		ret = qmc_setup_chan_trnsync(chan->qmc, chan);
-+		if (ret) {
-+			dev_err(chan->qmc->dev, "chan %u: setup TRNSYNC failed (%d)\n",
-+				chan->id, ret);
-+			goto end;
-+		}
- 	}
- 
- 	/*
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1138,6 +1138,13 @@ static const struct dmi_system_id i8042_
+ 	},
+ 	{
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxx"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
 
 
