@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C71E1D0968;
-	Wed,  2 Oct 2024 14:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AD51D0BB4;
+	Wed,  2 Oct 2024 14:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879300; cv=none; b=Va3Wo+q0LvuJWtiEuqphY0Y1VsZJDfzdNCvP3p/+OY96Z7+AF2TC89b5q6sabP/5xw/NpD8+QSjLMiMMS4j1uaK/lYYE7Bo/gNEQUwIM42VTc1C+durCvYKLMB/gPQB1N45uo1KLWZA30xWSCSKWwLMt4gYuCjx149HYs20x2TE=
+	t=1727879303; cv=none; b=fgr9Eme01gG9fO/p+d2gQzPGKs/Vk1MIzAlcTUqib588nvpVAvZMZPtVvktJEzqAVdK5nDrUAKzmO+4pSttMKODpRmHGuQayjD3URBWLlo/k3xO3HGkYYZU5+ekHsbE0SapC65zqcAkCHIaMUuu0mrtskK7XZlyCGsrcvOaw52o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879300; c=relaxed/simple;
-	bh=gTDnWCDjY/9FX1kZwM/3qkaoXNNkyaz0eDfwF0rlVQ8=;
+	s=arc-20240116; t=1727879303; c=relaxed/simple;
+	bh=mbXKjQ9RM3jHzY8u3ohX1yb8I4oZUncit+//1QJXIJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXLWyNLf5wCqtKzx0bqRP1orsAMM4WF5wNbdxPmYtmmRavq5/+KMxIgyR+L5CeCvXJmjKUwapQ/WBb319qgL4COh3EaH2RzIpls1PRFbv6hmqHQa/GMXslrj1NPCV+C/W1P+Z3AqfXHj6+5ovUPTzmCpz3hupE0SiduClKosyas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxYKhIye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FbxJoC5SWl6/4FvR08WdI/CcmtCNpAg82HuNrKe5MTCHMqT9i6kzew5yYZ9+vfRtBYElYW3BOGCkpS3X72/laMNYM8/PjEIV9RtCS9zFT+pJAkeWyAE7smqRJkyr4ekbOcN098uU79qPdyxMiCLgQPJUh4sgG7DLOOCjr0NXqnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1nqWhn0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxYKhIye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D16DC4CEC2;
-	Wed,  2 Oct 2024 14:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1nqWhn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84006C4CEC2;
+	Wed,  2 Oct 2024 14:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879300;
-	bh=gTDnWCDjY/9FX1kZwM/3qkaoXNNkyaz0eDfwF0rlVQ8=;
+	s=korg; t=1727879302;
+	bh=mbXKjQ9RM3jHzY8u3ohX1yb8I4oZUncit+//1QJXIJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxYKhIyeOq/8GqBbp2FnOMalkhHxxeXntOtiQw1zS8+ADDVxF7c8mOH28rWTE1Alu
-	 91hs27ioYnJGHfQfyXFzuTw3JYKSMBBqdTAHfmmxmxDRW5J3CZVUZftI9K9cQCJ7Kh
-	 WBrA1dqNecCu0lQEGOhHGhNJ7HyiDFABVMAsNuKY=
+	b=O1nqWhn0N+NXbZzn6rgOoM/Ed7+i1IkV2zuIJN4KiWmJ+0VSnvInQJs/P2AutSCNN
+	 snfNR/1U+xF2Gc0UTUn3jWqRxtu8QQsSdfMiNpiORclUnY46Jh/IduIcD1OXHBU/+d
+	 IgiyqoM/9eGTLycTVi5jI+DgARvNzie50a85gi2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	En-Wei WU <en-wei.wu@canonical.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/538] r8169: disable ALDPS per default for RTL8125
-Date: Wed,  2 Oct 2024 14:55:11 +0200
-Message-ID: <20241002125755.055708357@linuxfoundation.org>
+Subject: [PATCH 6.6 073/538] net: ipv6: rpl_iptunnel: Fix memory leak in rpl_input
+Date: Wed,  2 Oct 2024 14:55:12 +0200
+Message-ID: <20241002125755.095624551@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,49 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit b9c7ac4fe22c608acf6153a3329df2b6b6cd416c ]
+[ Upstream commit 2c84b0aa28b9e73e8c4b4ce038269469434ae372 ]
 
-En-Wei reported that traffic breaks if cable is unplugged for more
-than 3s and then re-plugged. This was supposed to be fixed by
-621735f59064 ("r8169: fix rare issue with broken rx after link-down on
-RTL8125"). But apparently this didn't fix the issue for everybody.
-The 3s threshold rang a bell, as this is the delay after which ALDPS
-kicks in. And indeed disabling ALDPS fixes the issue for this user.
-Maybe this fixes the issue in general. In a follow-up step we could
-remove the first fix attempt and see whether anybody complains.
+Free the skb before returning from rpl_input when skb_cow_head() fails.
+Use a "drop" label and goto instructions.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
-Tested-by: En-Wei WU <en-wei.wu@canonical.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/778b9d86-05c4-4856-be59-cde4487b9e52@gmail.com
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240911174557.11536-1-justin.iurman@uliege.be
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_phy_config.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/rpl_iptunnel.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_phy_config.c b/drivers/net/ethernet/realtek/r8169_phy_config.c
-index b50f16786c246..6ab89f4782857 100644
---- a/drivers/net/ethernet/realtek/r8169_phy_config.c
-+++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
-@@ -1060,6 +1060,7 @@ static void rtl8125a_2_hw_phy_config(struct rtl8169_private *tp,
- 	phy_modify_paged(phydev, 0xa86, 0x15, 0x0001, 0x0000);
- 	rtl8168g_enable_gphy_10m(phydev);
+diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
+index 2c83b7586422d..db3c19a42e1ca 100644
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -263,10 +263,8 @@ static int rpl_input(struct sk_buff *skb)
+ 	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
  
-+	rtl8168g_disable_aldps(phydev);
- 	rtl8125a_config_eee_phy(phydev);
+ 	err = rpl_do_srh(skb, rlwt);
+-	if (unlikely(err)) {
+-		kfree_skb(skb);
+-		return err;
+-	}
++	if (unlikely(err))
++		goto drop;
+ 
+ 	local_bh_disable();
+ 	dst = dst_cache_get(&rlwt->cache);
+@@ -286,9 +284,13 @@ static int rpl_input(struct sk_buff *skb)
+ 
+ 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 	if (unlikely(err))
+-		return err;
++		goto drop;
+ 
+ 	return dst_input(skb);
++
++drop:
++	kfree_skb(skb);
++	return err;
  }
  
-@@ -1099,6 +1100,7 @@ static void rtl8125b_hw_phy_config(struct rtl8169_private *tp,
- 	phy_modify_paged(phydev, 0xbf8, 0x12, 0xe000, 0xa000);
- 
- 	rtl8125_legacy_force_mode(phydev);
-+	rtl8168g_disable_aldps(phydev);
- 	rtl8125b_config_eee_phy(phydev);
- }
- 
+ static int nla_put_rpl_srh(struct sk_buff *skb, int attrtype,
 -- 
 2.43.0
 
