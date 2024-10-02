@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4BC16F84F;
-	Wed,  2 Oct 2024 13:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FF616F84F;
+	Wed,  2 Oct 2024 13:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875637; cv=none; b=UnQSLjCn6IfDcAQOUUNttQsyfDoLxVklNhyHoPC3Af0awJXbRRRjULUmy0zJ/jqcWPH7cZ8a1R4g4eXbKYQ72QBYTSevnDxEQ4sp71XQ5KJMeQ8bIQG9Rvy+P885jbkjgP3U7juQuJ4hANjerLj5HCXaVQ9M7ibOSnI2CssqkH4=
+	t=1727875640; cv=none; b=eZ3xMfDQGt2Wtp7/IygEeC5zKppYpT9cF4b39uSrgRNjPuGDfYrZ9Ip02IkEhmI9ExNSlx84X/MhEM8neYIUxmMK6juN901iXo5M4ziXlZuK1vOfHm83WbWwNpMs5YVhqXxvA/W/yRrjrssu4Y/gdi28FE1yWu6r0XeIirRtPQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875637; c=relaxed/simple;
-	bh=K4pdssGvvT0MrhsnoZ7iZNED1fHD/rtTKMZ3qXmXT3Q=;
+	s=arc-20240116; t=1727875640; c=relaxed/simple;
+	bh=Vi2M/WLaUcxj+96UyUh/jWJ28EQoTLMyTqVJYEQOxtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FG+vTh+hGvHm0zaHynF+NLmzo2lVEQM+NxwGQqoTNCxw7HX15JG7RZw1VjR9Go0d9GqnuMFNgVdXs7n62QppAZuMdz9f+2hV6Z5U7eA0WM6LKInZLZi8hGc5tu3raYgkxPrISniIrjnWqeqs3uStcJRHX+QzRwvHBUUwYDteAr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+CRgPuY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejgWNf8HvlNHTwoD3xhhlpdbpFZc/Xh+U3rqoFE+fWs2pA7VCG/sUc/R/53FQPI0s8ERZ1xeKgnrfXVLd2jGbYQzWvi4Ehzy1vaUenc3lrPdhyUhgieO7hwmtZZsZR+Zp8ZTXQMZcUwMEF8lU3DHvwEatDJ2P6ePLdP9hyCeBfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwsLt85w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+CRgPuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FE2C4CEC5;
-	Wed,  2 Oct 2024 13:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwsLt85w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F043CC4CECD;
+	Wed,  2 Oct 2024 13:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875637;
-	bh=K4pdssGvvT0MrhsnoZ7iZNED1fHD/rtTKMZ3qXmXT3Q=;
+	s=korg; t=1727875640;
+	bh=Vi2M/WLaUcxj+96UyUh/jWJ28EQoTLMyTqVJYEQOxtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+CRgPuYnXfON5UlYMSLjScvz//2zQisE7nIP5BfC0vzGHubi2KTZ/S/uKiYI34WT
-	 IIr3eAK6jH86Yf71XIr24YAgT22WFj18Iet40VztJSIZvcchuv31Ypi30xoi12SfBJ
-	 /EGgadW+ShHpQ4Onr+/EMoA49krAxKd94CLlpYx4=
+	b=AwsLt85wm49qDLIEhQCJmsPsWzjPHiOvI1/f4R2k6hnZZ+X8OyHazXFNqSx58s3ZW
+	 chmAl7dkLJlo2MfkFttbNijz8kx89+o/aKi9CpSqHlOdRL6LSjQGXQoKDYkC6a81ur
+	 Fbh58gprCxqmu7AYt/Q8r4qaT499pmKbM+xfDDlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tangbin <tangbin@cmss.chinamobile.com>,
-	Mark Brown <broonie@kernel.org>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 170/695] ASoC: loongson: fix error release
-Date: Wed,  2 Oct 2024 14:52:48 +0200
-Message-ID: <20241002125829.259162877@linuxfoundation.org>
+Subject: [PATCH 6.11 153/695] arm64: dts: ti: k3-am654-idk: Fix dtbs_check warning in ICSSG dmas
+Date: Wed,  2 Oct 2024 14:52:31 +0200
+Message-ID: <20241002125828.587602519@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,38 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tangbin <tangbin@cmss.chinamobile.com>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 97688a9c5b1fd2b826c682cdfa36d411a5c99828 ]
+[ Upstream commit 2bea7920da8001172f54359395700616269ccb70 ]
 
-In function loongson_card_parse_of(), when get device_node
-'codec' failed, the function of_node_put(codec) should not
-be invoked, thus fix error release.
+ICSSG doesn't use mgmnt rsp dmas. But these are added in the dmas for
+icssg1-eth and icssg0-eth node.
 
-Fixes: d24028606e76 ("ASoC: loongson: Add Loongson ASoC Sound Card Support")
-Signed-off-by: tangbin <tangbin@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240903090620.6276-1-tangbin@cmss.chinamobile.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+These mgmnt rsp dmas result in below dtbs_check warnings.
+
+/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg1-eth: dmas: [[39, 49664], [39, 49665], [39, 49666], [39, 49667], [39, 49668], [39, 49669], [39, 49670], [39, 49671], [39, 16896], [39, 16897], [39, 16898], [39, 16899]] is too long
+	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
+/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg0-eth: dmas: [[39, 49408], [39, 49409], [39, 49410], [39, 49411], [39, 49412], [39, 49413], [39, 49414], [39, 49415], [39, 16640], [39, 16641], [39, 16642], [39, 16643]] is too long
+	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
+
+Fix these warnings by removing mgmnt rsp dmas from icssg1-eth and
+icssg0-eth nodes.
+
+Fixes: a4d5bc3214eb ("arm64: dts: ti: k3-am654-idk: Add ICSSG Ethernet ports")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240830111000.232028-1-danishanwar@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/loongson/loongson_card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am654-idk.dtso | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/loongson/loongson_card.c b/sound/soc/loongson/loongson_card.c
-index fae5e9312bf08..2c8dbdba27c5f 100644
---- a/sound/soc/loongson/loongson_card.c
-+++ b/sound/soc/loongson/loongson_card.c
-@@ -127,8 +127,8 @@ static int loongson_card_parse_of(struct loongson_card_data *data)
- 	codec = of_get_child_by_name(dev->of_node, "codec");
- 	if (!codec) {
- 		dev_err(dev, "audio-codec property missing or invalid\n");
--		ret = -EINVAL;
--		goto err;
-+		of_node_put(cpu);
-+		return -EINVAL;
- 	}
+diff --git a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
+index 8bdb87fcbde00..1674ad564be1f 100644
+--- a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
++++ b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
+@@ -58,9 +58,7 @@
+ 		       <&main_udmap 0xc107>, /* egress slice 1 */
  
- 	for (i = 0; i < card->num_links; i++) {
+ 		       <&main_udmap 0x4100>, /* ingress slice 0 */
+-		       <&main_udmap 0x4101>, /* ingress slice 1 */
+-		       <&main_udmap 0x4102>, /* mgmnt rsp slice 0 */
+-		       <&main_udmap 0x4103>; /* mgmnt rsp slice 1 */
++		       <&main_udmap 0x4101>; /* ingress slice 1 */
+ 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
+ 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
+ 			    "rx0", "rx1";
+@@ -126,9 +124,7 @@
+ 		       <&main_udmap 0xc207>, /* egress slice 1 */
+ 
+ 		       <&main_udmap 0x4200>, /* ingress slice 0 */
+-		       <&main_udmap 0x4201>, /* ingress slice 1 */
+-		       <&main_udmap 0x4202>, /* mgmnt rsp slice 0 */
+-		       <&main_udmap 0x4203>; /* mgmnt rsp slice 1 */
++		       <&main_udmap 0x4201>; /* ingress slice 1 */
+ 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
+ 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
+ 			    "rx0", "rx1";
 -- 
 2.43.0
 
