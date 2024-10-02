@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855429CE7;
-	Wed,  2 Oct 2024 13:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AFB29CE7;
+	Wed,  2 Oct 2024 13:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877139; cv=none; b=rFhmmrMCeTo0X6Z6WT6ScTC/SFnYjPTFq9wj5nlILrYciUjud6OU0VSaD1wFhz+31DW4gwCxAeSO0jL4utyjPX6TGDKRKMEKlTvC1/46r41aGb529O6wtYl5iIeRGYk2fTZ2HxXAJD23m8VGjd3K7QKrBzNzT1+2MdxYl2YgB+4=
+	t=1727877141; cv=none; b=n/3jS9opVtH1LHX1CnU5rpBNe32SarPFi0YsUWWB9P8xn8LSVG4GoWPMHo/yUJ3uSx+N/xMKIMRD3ikAO58ZhpJKbTrL/wMLER9QvIip7C+QjV6eiY5uQl7m2FksfW74EUJiWelTXH0d0ArXD20S6DyZEQIZdxi7vq/dNMel7SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877139; c=relaxed/simple;
-	bh=zcPcPilnXLMxMSAhfErT8EVwGuyjGjxFj2NFG5aLdRA=;
+	s=arc-20240116; t=1727877141; c=relaxed/simple;
+	bh=jJKV48uNLl+13YX23yE80sei8GzIF92w8m05xqkZCsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMiAlNifxMU03A+mKVPY7fQIZI3rbrVwpWPwF/uld20SzguuNBV+SXoiAFWwskHRnL7h790vG19imsDxaMTJypZvEY1H5EgP868EYteVogH3ROQ+G/mBvNEESkBiR+OLP8BV6fOKPfDH+XYOYG3hnQRYLFOGSBI3TvZjhNIblAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Qia9HYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovPLdfyreVlrejmq5DIp9QU/tzC8jUOWnvrV5JgHpoHNJjfjLauzWIDQYsgVAiUEM8CmDu28923TgCkVt8XYHF5QQpCZwL5F/HHz5NuLTzQfHARsfy8AL0VUjemdZPYGdP7Gt61znppMTiKYv5xUsDmCGUNayz7SBjnekXZIAHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI/fx7Jg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Qia9HYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71559C4CEC2;
-	Wed,  2 Oct 2024 13:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI/fx7Jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB97C4CEC2;
+	Wed,  2 Oct 2024 13:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877138;
-	bh=zcPcPilnXLMxMSAhfErT8EVwGuyjGjxFj2NFG5aLdRA=;
+	s=korg; t=1727877141;
+	bh=jJKV48uNLl+13YX23yE80sei8GzIF92w8m05xqkZCsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Qia9HYJDw3nvJBIMsfLBWhDgb6cg3bD4j46cMzUEXw6S+mgnOPdBDbAXZxwY8k5Q
-	 hSxtleZVT+YU2/CSvMGWHZhupRzIykAOF1hQXY706Q8rp6E80Ze3b8L11kL/0eJE+I
-	 G3hhH6vStI2qmPVWu+k22RzI06rKKEOmHcot1WKo=
+	b=YI/fx7JgvaPLXImp7fucQh95bQvGzxdi8n1e+GgqhPhV21uwCsP4CWc9JlDCI52tF
+	 V1AtbycI1BkphUJchUZQmlkTrm/Ir1lySBnAJE8fOvYNGC5qqAk+dkvuNICXo5O/77
+	 fleU+USSj4UCdXQjtL4hzmLhNmNZhzQmThJjYTfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e1c69cadec0f1a078e3d@syzkaller.appspotmail.com,
-	Daniel Yang <danielyangkang@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.11 678/695] exfat: resolve memory leak from exfat_create_upcase_table()
-Date: Wed,  2 Oct 2024 15:01:16 +0200
-Message-ID: <20241002125849.580106533@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 661/695] soc: versatile: realview: fix memory leak during device remove
+Date: Wed,  2 Oct 2024 15:00:59 +0200
+Message-ID: <20241002125848.894421411@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Yang <danielyangkang@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit c290fe508eee36df1640c3cb35dc8f89e073c8a8 upstream.
+[ Upstream commit 1c4f26a41f9d052f334f6ae629e01f598ed93508 ]
 
-If exfat_load_upcase_table reaches end and returns -EINVAL,
-allocated memory doesn't get freed and while
-exfat_load_default_upcase_table allocates more memory, leading to a
-memory leak.
+If device is unbound, the memory allocated for soc_dev_attr should be
+freed to prevent leaks.
 
-Here's link to syzkaller crash report illustrating this issue:
-https://syzkaller.appspot.com/text?tag=CrashReport&x=1406c201980000
-
-Reported-by: syzbot+e1c69cadec0f1a078e3d@syzkaller.appspotmail.com
-Fixes: a13d1a4de3b0 ("exfat: move freeing sbi, upcase table and dropping nls into rcu-delayed helper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Yang <danielyangkang@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-2-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: c774f2564c00 ("soc: versatile: realview: fix soc_dev leak during device remove")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soc/versatile/soc-realview.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -779,8 +779,11 @@ int exfat_create_upcase_table(struct sup
- 				le32_to_cpu(ep->dentry.upcase.checksum));
+diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
+index c6876d232d8fd..d304ee69287af 100644
+--- a/drivers/soc/versatile/soc-realview.c
++++ b/drivers/soc/versatile/soc-realview.c
+@@ -93,7 +93,7 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
  
- 			brelse(bh);
--			if (ret && ret != -EIO)
-+			if (ret && ret != -EIO) {
-+				/* free memory from exfat_load_upcase_table call */
-+				exfat_free_upcase_table(sbi);
- 				goto load_default;
-+			}
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
  
- 			/* load successfully */
- 			return ret;
+@@ -106,10 +106,9 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	soc_dev_attr->family = "Versatile";
+ 	soc_dev_attr->custom_attr_group = realview_groups[0];
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		kfree(soc_dev_attr);
++	if (IS_ERR(soc_dev))
+ 		return -ENODEV;
+-	}
++
+ 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
+ 			  &realview_coreid);
+ 	if (ret)
+-- 
+2.43.0
+
 
 
