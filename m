@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F271D079F;
-	Wed,  2 Oct 2024 13:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD7C1D07A6;
+	Wed,  2 Oct 2024 13:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876550; cv=none; b=YuNrRAYim40rTlQtHfK9pQFhZqPCpgeHblwLcTmJS2eSGAxXa+5KskUnp9mZEr4T6YKcUn6jnasuNNtstI3WXRZIgnFwU26qxXDulUaqM6d74xWajSf+a2naknpryP3Rr1Xoxt0eRZq9qKNPgJ15qOvH5YRfAyWWcpbPvIAscvQ=
+	t=1727876553; cv=none; b=LTISS5W7dE9VQ+gb7bqY0zBVcVwz2+ZUieaLKiEBM9SvehHTxgMU0B4S1fXeoYSyXn4+WX/kSvb6/YY4LiF268Q7LNB8AR+eifw4RWVjyuSGgKUIw7IqbxlURMDxWHmZHZz69xpMcrwQju3353Tt5P67PYKT6abc3JC7pHjUQ5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876550; c=relaxed/simple;
-	bh=/Tke32FRggsn+uYqyJ5HEB5FHoJku4ihNopH/ufbVP4=;
+	s=arc-20240116; t=1727876553; c=relaxed/simple;
+	bh=c53//+4YNvci6+q+XPlh81uQqdbqHwZ5AORfsIW7OZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MC7xYrivG/cbFQq5xAQD0/bBKmtsEM5Bx3NCTA/EJQpoqcjzX8UFMZYiLVGOpkVeKrscrV7uVNVGlGogZOw1+BiTTT1Bv+yj652KmizrRseWOhVydf/NBJ1JyhUtsZ2MLnpNr43FOLMf78hrCgvG3dM6WsNAJKcaRBAoJN2kDRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGDpVnKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DchzrW8reUiNnICvMM/ycg54ABxTb5F1aUc7NUO4RKy6RHsAckzwhzb6mwgQQ7Qro81axV+sMiUJHCSCaMQZy4/jUCX/ZthtuJYYp3grtw+S2RrRsy4xOZ04EHTRC4R1noP3e6mNxqYm/2/hL7cS2ZA3yflL0QTS9xpGSN9c3uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=di4TnCFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGDpVnKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619E4C4CEC5;
-	Wed,  2 Oct 2024 13:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="di4TnCFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45850C4CEC5;
+	Wed,  2 Oct 2024 13:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876550;
-	bh=/Tke32FRggsn+uYqyJ5HEB5FHoJku4ihNopH/ufbVP4=;
+	s=korg; t=1727876553;
+	bh=c53//+4YNvci6+q+XPlh81uQqdbqHwZ5AORfsIW7OZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGDpVnKYqandgaYaZBdwYmwgf2gnwaKwq2wHkLim4j8klZ1C2McN440T+WQtAO1gO
-	 1DSsd5PY99Uq/RL5QldVHo4oGXCxkl3HfR3pK7YAGpNsZCxUBPACGOB61Zlen/gJeq
-	 VvOkE6WkpWND4gJrkP7HzRLo+X3gcK7WwzcjgcUk=
+	b=di4TnCFe4LWN/9kpeRLg04ts5mO6ZrTFXZ0KQ/3OTdiib3WDo9MGl7yH98TNb52b4
+	 GJXdSGmqm6TdYp2FvsTZKcmRWHXFfx3XkXpwoS7f29MGQwYii3UzLAuLFzbSiEavoS
+	 yPDRvAORdBBMkTeNijviF2qStGLRe0e9tMtc7+PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Jeffery Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Chris Lew <quic_clew@quicinc.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 482/695] net: qrtr: Update packets cloning when broadcasting
-Date: Wed,  2 Oct 2024 14:58:00 +0200
-Message-ID: <20241002125841.710582769@linuxfoundation.org>
+Subject: [PATCH 6.11 483/695] net: phy: aquantia: fix setting active_low bit
+Date: Wed,  2 Oct 2024 14:58:01 +0200
+Message-ID: <20241002125841.750534653@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,47 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <quic_yabdulra@quicinc.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit f011b313e8ebd5b7abd8521b5119aecef403de45 ]
+[ Upstream commit d2b366c43443a21d9bcf047f3ee1f09cf9792dc4 ]
 
-When broadcasting data to multiple nodes via MHI, using skb_clone()
-causes all nodes to receive the same header data. This can result in
-packets being discarded by endpoints, leading to lost data.
+phy_modify_mmd was used wrongly in aqr_phy_led_active_low_set() resulting
+in a no-op instead of setting the VEND1_GLOBAL_LED_DRIVE_VDD bit.
+Correctly set VEND1_GLOBAL_LED_DRIVE_VDD bit.
 
-This issue occurs when a socket is closed, and a QRTR_TYPE_DEL_CLIENT
-packet is broadcasted. All nodes receive the same destination node ID,
-causing the node connected to the client to discard the packet and
-remain unaware of the client's deletion.
-
-Replace skb_clone() with pskb_copy(), to create a separate copy of
-the header for each sk_buff.
-
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Reviewed-by: Jeffery Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://patch.msgid.link/20240916170858.2382247-1-quic_yabdulra@quicinc.com
+Fixes: 61578f679378 ("net: phy: aquantia: add support for PHY LEDs")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/ab963584b0a7e3b4dac39472a4b82ca264d79630.1726580902.git.daniel@makrotopia.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/aquantia/aquantia_leds.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 41ece61eb57ab..00c51cf693f3d 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -884,7 +884,7 @@ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+diff --git a/drivers/net/phy/aquantia/aquantia_leds.c b/drivers/net/phy/aquantia/aquantia_leds.c
+index 0516ac02c3f81..201c8df93fad9 100644
+--- a/drivers/net/phy/aquantia/aquantia_leds.c
++++ b/drivers/net/phy/aquantia/aquantia_leds.c
+@@ -120,7 +120,8 @@ int aqr_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
+ int aqr_phy_led_active_low_set(struct phy_device *phydev, int index, bool enable)
+ {
+ 	return phy_modify_mmd(phydev, MDIO_MMD_VEND1, AQR_LED_DRIVE(index),
+-			      VEND1_GLOBAL_LED_DRIVE_VDD, enable);
++			      VEND1_GLOBAL_LED_DRIVE_VDD,
++			      enable ? VEND1_GLOBAL_LED_DRIVE_VDD : 0);
+ }
  
- 	mutex_lock(&qrtr_node_lock);
- 	list_for_each_entry(node, &qrtr_all_nodes, item) {
--		skbn = skb_clone(skb, GFP_KERNEL);
-+		skbn = pskb_copy(skb, GFP_KERNEL);
- 		if (!skbn)
- 			break;
- 		skb_set_owner_w(skbn, skb->sk);
+ int aqr_phy_led_polarity_set(struct phy_device *phydev, int index, unsigned long modes)
 -- 
 2.43.0
 
