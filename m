@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C40218DF60;
-	Wed,  2 Oct 2024 13:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207231D0488;
+	Wed,  2 Oct 2024 13:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876267; cv=none; b=ZcIMoOf29L+gOMg+DvvQO06mIlyWFJ7+6jGmm580nT5HMW8DTuGMf5ydNgUA9Bx+Wm8g4SIIKHpp5onOcHSwsdIEpC5GBZFWQZvbtKrE8cRCZwzPbUFJeNOkXFOgVo/T2QTWCzbpxvFBIIlQc94QtWW5HlTcYJ0QwGIjGsM44B8=
+	t=1727876270; cv=none; b=q/Ynx4ZKKpA9Km2axQRzbW5MlacN+IeuJNjvlF4RdwaBEYbTVjVaBAknUvxEfRQbcnW/4BJrsBQ5dRxqPS/cG5STKBlW6E5ZiRixscrP7bCW7eWUkbCLGXVFs+RIqMNFOH53/S/odYoBMcPCHTF/Fwfur8Q/NxvPLqJbhB3Dq1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876267; c=relaxed/simple;
-	bh=4LqQsKpZi/Jh1/G/mP94p3P9NdngHjWJzuAx7auA8n4=;
+	s=arc-20240116; t=1727876270; c=relaxed/simple;
+	bh=UgJT96ktfJgaTO8p/DA7v5khD3bOnuilpZMi2u0v+tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdT1FiFoRlJ8+IejA/jcMfu6gKvGJgFhhfBuARjImBflI+7Xi7KNfOfYK1XeqLrdkWJ0S0CRHywWtCyrv2NjEm5+YeDOvXaLIakUSzPpUwGA67P4wt92txbqVY4fyj8RJZFU3K8D0ENoWNcGBPDMJ/C/pB1MyPs+hMbdWQDi5JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcbrhWl3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcVpoFuq4AjgZA8AYrKAzJRRpi/Yd74KGEDPvY1sSFdxTrnYA1F0A+jPWIjQz+jlhAlMX/0Du/ku3IKYJnXcZapSA4nwgq97zXZrDnYkvd+HeV2OXWlyGvLsZ90l4DBwA4d824nHs4Ofau7s1hKHpeIuBuhLR9M1sj4nAGQOlXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+cfHWnb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcbrhWl3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72239C4CEC5;
-	Wed,  2 Oct 2024 13:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+cfHWnb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB78C4CECD;
+	Wed,  2 Oct 2024 13:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876266;
-	bh=4LqQsKpZi/Jh1/G/mP94p3P9NdngHjWJzuAx7auA8n4=;
+	s=korg; t=1727876269;
+	bh=UgJT96ktfJgaTO8p/DA7v5khD3bOnuilpZMi2u0v+tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcbrhWl3RrDGeXXavYH33NEN3IgEcMFsOQrQTWvrVtRjIaZX+2ZuGhm2mmrQq3iua
-	 /vO83RnDfQ6TyKGoTbZEQiOVfaQqbNIos8kWku9/yiC0CJbQLnsVq7kfbDBSUrZyVv
-	 ysucpFi44RUAh1FVcjfBPkEOnIQ2U4xI6rva+87s=
+	b=B+cfHWnbUA6hObgYH9eEh9IzogttnLBqYr0iqdLBuat9GXuTeN3HhBExLVR3xYAYD
+	 f9pOdzujIXYygA9oZzDqRQEhp5wXR5F1rri4rAXzZPqtqz6GBCchuo4WLqRm0R3xJi
+	 tV1BBNwxhcSJKS7E5pQjH/Kkhi3OeBhEjNc49hwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 384/695] clk: at91: sama7g5: Allocate only the needed amount of memory for PLLs
-Date: Wed,  2 Oct 2024 14:56:22 +0200
-Message-ID: <20241002125837.785595047@linuxfoundation.org>
+Subject: [PATCH 6.11 385/695] iommufd/selftest: Fix buffer read overrrun in the dirty test
+Date: Wed,  2 Oct 2024 14:56:23 +0200
+Message-ID: <20241002125837.825351414@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 2d6e9ee7cb3e79b1713783c633b13af9aeffc90c ]
+[ Upstream commit 79ea4a496ab5c970a3a793d863ed8893b1af107c ]
 
-The maximum number of PLL components on SAMA7G5 is 3 (one fractional
-part and 2 dividers). Allocate the needed amount of memory for
-sama7g5_plls 2d array. Previous code used to allocate 7 array entries for
-each PLL. While at it, replace 3 with PLL_COMPID_MAX in the loop which
-parses the sama7g5_plls 2d array.
+test_bit() is used to read the memory storing the bitmap, however
+test_bit() always uses a unsigned long 8 byte access.
 
-Fixes: cb783bbbcf54 ("clk: at91: sama7g5: add clock support for sama7g5")
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240714141315.19480-1-claudiu.beznea@tuxon.dev
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+If the bitmap is not an aligned size of 64 bits this will now trigger a
+KASAN warning reading past the end of the buffer.
+
+Properly round the buffer allocation to an unsigned long size. Continue to
+copy_from_user() using a byte granularity.
+
+Fixes: 9560393b830b ("iommufd/selftest: Fix iommufd_test_dirty() to handle <u8 bitmaps")
+Link: https://patch.msgid.link/r/0-v1-113e8d9e7861+5ae-iommufd_kasan_jgg@nvidia.com
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/sama7g5.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/selftest.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/at91/sama7g5.c b/drivers/clk/at91/sama7g5.c
-index 91b5c6f148196..4e9594714b142 100644
---- a/drivers/clk/at91/sama7g5.c
-+++ b/drivers/clk/at91/sama7g5.c
-@@ -66,6 +66,7 @@ enum pll_component_id {
- 	PLL_COMPID_FRAC,
- 	PLL_COMPID_DIV0,
- 	PLL_COMPID_DIV1,
-+	PLL_COMPID_MAX,
- };
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index 222cfc11ebfd0..4a279b8f02cb7 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -1342,7 +1342,7 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 			      unsigned long page_size, void __user *uptr,
+ 			      u32 flags)
+ {
+-	unsigned long bitmap_size, i, max;
++	unsigned long i, max;
+ 	struct iommu_test_cmd *cmd = ucmd->cmd;
+ 	struct iommufd_hw_pagetable *hwpt;
+ 	struct mock_iommu_domain *mock;
+@@ -1363,15 +1363,14 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 	}
  
- /*
-@@ -165,7 +166,7 @@ static struct sama7g5_pll {
- 	u8 t;
- 	u8 eid;
- 	u8 safe_div;
--} sama7g5_plls[][PLL_ID_MAX] = {
-+} sama7g5_plls[][PLL_COMPID_MAX] = {
- 	[PLL_ID_CPU] = {
- 		[PLL_COMPID_FRAC] = {
- 			.n = "cpupll_fracck",
-@@ -1038,7 +1039,7 @@ static void __init sama7g5_pmc_setup(struct device_node *np)
- 	sama7g5_pmc->chws[PMC_MAIN] = hw;
+ 	max = length / page_size;
+-	bitmap_size = DIV_ROUND_UP(max, BITS_PER_BYTE);
+-
+-	tmp = kvzalloc(bitmap_size, GFP_KERNEL_ACCOUNT);
++	tmp = kvzalloc(DIV_ROUND_UP(max, BITS_PER_LONG) * sizeof(unsigned long),
++		       GFP_KERNEL_ACCOUNT);
+ 	if (!tmp) {
+ 		rc = -ENOMEM;
+ 		goto out_put;
+ 	}
  
- 	for (i = 0; i < PLL_ID_MAX; i++) {
--		for (j = 0; j < 3; j++) {
-+		for (j = 0; j < PLL_COMPID_MAX; j++) {
- 			struct clk_hw *parent_hw;
- 
- 			if (!sama7g5_plls[i][j].n)
+-	if (copy_from_user(tmp, uptr, bitmap_size)) {
++	if (copy_from_user(tmp, uptr,DIV_ROUND_UP(max, BITS_PER_BYTE))) {
+ 		rc = -EFAULT;
+ 		goto out_free;
+ 	}
 -- 
 2.43.0
 
