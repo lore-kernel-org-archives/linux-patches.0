@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2321D0945;
-	Wed,  2 Oct 2024 13:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421111D0945;
+	Wed,  2 Oct 2024 13:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876621; cv=none; b=qlipcqaw/jwIqstrYj0EFw3HTmE6MetnD7DZfpRB4PyHC15/Cn3z9ohhYGJGE72hgFYNvD2D+jI3TbtwF5dolFrwL4G5xoCVWRQzhk6CXYMOYZvgdBJ6p+p554uGig0WiGGHqfiKgkkFEkWkIjhfdB7lAVXV/FTxoM5EUy1Q/6g=
+	t=1727876624; cv=none; b=c+BvZWfvficimVg4bc/XFHAGyUQRiK3xL2yhai6pyNWeuKYkiYK2a3gj/+aCK/TJJ1JwU/NtdP7x3bm+soZv8llRwE5oUuY1FGSxlksYLsedj7U2l+hLuxcOWLUXVvpJIuERd2vm+offORJuTOJsiIFoVRMjEBXpYvvmXcAnqPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876621; c=relaxed/simple;
-	bh=tcMr3vDA9NZc9ilx/n8Y76Tysb1ePn867tcyvv7h/FE=;
+	s=arc-20240116; t=1727876624; c=relaxed/simple;
+	bh=IHeSiIDiWDO+qH9DiNLA6E5vLtfdBZd8G+Cg1ts4S+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2H96qJyKRj+huDCHjtDPSitapDhuXah5vhXDuPUc59138G+3uEE4wmPt/n53h0dBXiXVoEBeHXBV2BVYetg+nZjncomzSs9fKBPgIrMaAqRfzbhrb9B2jXE2sSdH0KZC0h/5vsDKCOQb2D/8W/RD/x9NxUziOb9qXiXX3vbzxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G59NrTeU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8bFb8hoI18rrSpHjkgIPuhg/I+WohhBmwIRGytaAu1b6Kj6mJQXPZ8FvJjuOVnGjECXFJsE3mfGRLqnbaofi8wDVaVkbHd4UeVykNJ4e8ye9dQ2ZyU5y3nYJg4F1U0TyUFcOa/wPXgHUDODEOaTYtX+271TeAXaDow6WNhMLKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAkunSrS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G59NrTeU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED51C4CEC5;
-	Wed,  2 Oct 2024 13:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAkunSrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CC8C4CEC5;
+	Wed,  2 Oct 2024 13:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876621;
-	bh=tcMr3vDA9NZc9ilx/n8Y76Tysb1ePn867tcyvv7h/FE=;
+	s=korg; t=1727876624;
+	bh=IHeSiIDiWDO+qH9DiNLA6E5vLtfdBZd8G+Cg1ts4S+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G59NrTeU20W2c8Pd9YT+BQe2nrjViTpXXTWHs+UjN5Oa5Led5NuAc3xhpmm2ZRmi2
-	 brrwXgq1+QPwzc/mUgu7UqNPf/LplyXQ+VBHFe+Fdb2Osdi9bPwfH7gtOfsqy4pqbS
-	 tH3/WWJrHVlpKtfauwIViNCVvBnCxvLua2d265gc=
+	b=cAkunSrSb5i/dCj1RqNchmOJSRjsQKfk1vGtK9xMM8HrXyl7YXDzlSR9FGQ65OplC
+	 7DAkrkOTSiSw59qpPOzT3nCspbHFDht9NlAqZG9s37JsI4HHmmoOG0QGbgw+rmkSHp
+	 HgibsMZ9Uk++w5c0gHc32Jq2JbF16Lb55IVBYTBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 507/695] drm/amd/display: disable_hpo_dp_link_output: Check link_res->hpo_dp_link_enc before using it
-Date: Wed,  2 Oct 2024 14:58:25 +0200
-Message-ID: <20241002125842.719172568@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Dominik Grzegorzek <dominik.grzegorzek@intel.com>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.11 508/695] drm/xe: fix engine_class bounds check again
+Date: Wed,  2 Oct 2024 14:58:26 +0200
+Message-ID: <20241002125842.759141762@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,40 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit d925c04d974c657d10471c0c2dba3bc9c7d994ee upstream.
+commit 23ab1cb6591dba7c97b65eb407cd71147bd878b8 upstream.
 
-[WHAT & HOW]
-Functions dp_enable_link_phy and dp_disable_link_phy can pass link_res
-without initializing hpo_dp_link_enc and it is necessary to check for
-null before dereferencing.
+This was fixed in commit b7dce525c4fc ("drm/xe/queue: fix engine_class
+bounds check"), but then re-introduced in commit 6f20fc09936e ("drm/xe:
+Move and export xe_hw_engine lookup.") which should only be simple code
+movement of the existing function.
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
-
-Fixes: 0beca868cde8 ("drm/amd/display: Check link_res->hpo_dp_link_enc before using it")
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 6f20fc09936e ("drm/xe: Move and export xe_hw_engine lookup.")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Dominik Grzegorzek <dominik.grzegorzek@intel.com>
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240812141331.729843-2-matthew.auld@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_hw_engine.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
-@@ -110,6 +110,11 @@ void enable_hpo_dp_link_output(struct dc
- 		enum clock_source_id clock_source,
- 		const struct dc_link_settings *link_settings)
+--- a/drivers/gpu/drm/xe/xe_hw_engine.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine.c
+@@ -1153,7 +1153,7 @@ xe_hw_engine_lookup(struct xe_device *xe
  {
-+	if (!link_res->hpo_dp_link_enc) {
-+		DC_LOG_ERROR("%s: invalid hpo_dp_link_enc\n", __func__);
-+		return;
-+	}
-+
- 	if (link->dc->res_pool->dccg->funcs->set_symclk32_le_root_clock_gating)
- 		link->dc->res_pool->dccg->funcs->set_symclk32_le_root_clock_gating(
- 				link->dc->res_pool->dccg,
+ 	unsigned int idx;
+ 
+-	if (eci.engine_class > ARRAY_SIZE(user_to_xe_engine_class))
++	if (eci.engine_class >= ARRAY_SIZE(user_to_xe_engine_class))
+ 		return NULL;
+ 
+ 	if (eci.gt_id >= xe->info.gt_count)
 
 
