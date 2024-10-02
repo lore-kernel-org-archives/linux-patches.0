@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096551CF5C6;
-	Wed,  2 Oct 2024 13:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCE91CF5C6;
+	Wed,  2 Oct 2024 13:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876104; cv=none; b=jkPLakW8oLtsbWCOrDOZtvaQjh/lJRXiAwwLlZgw7hey9n5FMqhHAmrz6syiqB/dgmkgmdvhR0wjRRLbksRK+IEe847YgMjognXgkyWZ7er1Rv3cTDdxYZivIMFFNby1sgScQWWQOV1tOW6oBpCUqxYb56Luu/L1L+t/FFoX4hs=
+	t=1727876107; cv=none; b=X7T9gc3OEaQfa7XZ1IVCFGT73geIpTeOxTFJyEzIZyD5AnUOEZrPEM49Gs01UyDakhMFkuTnhbJD7hBqhz2S5+Bd+xt3xRzzczBPIGWgODu07K1oMY/V6owKGLwDrxvIcooIvIjD+D9RKGlt9CuFgHiat2jwKoI/yM7BrHcWCC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876104; c=relaxed/simple;
-	bh=mnbS+/UvbprTw9xXFMqEBs4A9JKO4lN9cDt/8d+K5Dc=;
+	s=arc-20240116; t=1727876107; c=relaxed/simple;
+	bh=+Bg5RoCv0botVmo0MrFQNROLQfmd9XvztHHCQ82BtHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7rYkdeu79drYAX8rReooDX0FxmpbhIsH0tD5BlAcXQyMN0tMznThbmfiBzgOYtlKMNQNTc++TMiTjbn4+12eC2laOOMb7d35oXgdvzB4AvlGRmyR1l0D7G2d4f45iKTZ76NB89pNdVsMnILX2MylsBvTV/EKjTm2MyFapyTJjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJYvtsnG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ih6IP5isfCv6PpiHQcVfwfBR9qcCN1NgqONkbDnhbhXXL5DMao9hOSPY6imIKRbz9cvhOg2RhGWznKTOfQbXbj0BiWhGje8X71+NhEmcXXw8eJllWzBY9QQz+LXwasAyRYWZ/iIy/+lcn9lnm+NTavVwXBjdsP5NoK9XfK6bl30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFJurPA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJYvtsnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50154C4CEC5;
-	Wed,  2 Oct 2024 13:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFJurPA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FFFC4CEC5;
+	Wed,  2 Oct 2024 13:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876103;
-	bh=mnbS+/UvbprTw9xXFMqEBs4A9JKO4lN9cDt/8d+K5Dc=;
+	s=korg; t=1727876107;
+	bh=+Bg5RoCv0botVmo0MrFQNROLQfmd9XvztHHCQ82BtHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJYvtsnGnOtvQzQPl5W3u0eRBpk9W8lo4OVqUX4Il6iBzrba07ynJY+JOA3jdILpa
-	 FzlTJCNspYJtvQxhXKDInrxRD6n5ruVdpM3vgulTXKuy4iX9agSv3tqKOMry2OtBcg
-	 qubWk8poqMvtL650HXbxSEowPoFiEYbqw20XS7UU=
+	b=ZFJurPA31KUzr1ClvAyFOvKT1JNjScSndV6PwIafDaBIYLJxCNibatfjAF0hJmx1g
+	 JiqgBluP9ua3auH862+plw3bVjRQ8T/fFhEI7iliLEeddMd60WJwgT+k9iX4ZHUQft
+	 2Ry3UhqHwmcFitIBBfti6zCjysKgukYRMS1XPzgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Kleen <ak@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <andi@firstfloor.org>,
+	Changbin Du <changbin.du@huawei.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Kan Liang <kan.liang@linux.intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jin Yao <yao.jin@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 330/695] perf report: Fix --total-cycles --stdio output error
-Date: Wed,  2 Oct 2024 14:55:28 +0200
-Message-ID: <20241002125835.622603569@linuxfoundation.org>
+Subject: [PATCH 6.11 331/695] perf build: Fix up broken capstone feature detection fast path
+Date: Wed,  2 Oct 2024 14:55:29 +0200
+Message-ID: <20241002125835.662280245@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,104 +51,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 3ef44458071a19e5b5832cdfe6f75273aa521b6e ]
+[ Upstream commit 4c55560f23d19051adc7e76818687a88448bef83 ]
 
-The --total-cycles may output wrong information with the --stdio.
+The capstone devel headers define 'struct bpf_insn' in a way that clashes with
+what is in the libbpf devel headers, so we so far need to avoid including both.
 
-For example:
+This is happening on the tools/build/feature/test-all.c file, where we try
+building all the expected set of libraries to be normally available on a
+system:
 
-  # perf record -e "{cycles,instructions}",cache-misses -b sleep 1
-  # perf report --total-cycles --stdio
+  ⬢[acme@toolbox perf-tools-next]$ cat /tmp/build/perf-tools-next/feature/test-all.make.output
+  In file included from test-bpf.c:3,
+                   from test-all.c:150:
+  /home/acme/git/perf-tools-next/tools/include/uapi/linux/bpf.h:77:8: error: ‘bpf_insn’ defined as wrong kind of tag
+     77 | struct bpf_insn {
+        |        ^~~~~~~~
+  ⬢[acme@toolbox perf-tools-next]$ cat /tmp/build/perf-tools-next/feature/test-all.make.output
 
-The total cycles output of {cycles,instructions} and cache-misses are
-almost the same.
+When doing so there is a trick where we define main to be
+main_test_libcapstone, then include the individual
+tools/build/feture/test-libcapstone.c capability query test, and then we undef
+'main' because we'll do it all over again with the next expected library to
+be tested (at this time 'lzma').
 
-  # Samples: 938  of events 'anon group { cycles, instructions }'
-  # Event count (approx.): 938
-  #
-  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
-  # ...............  ..............  ...........  ..........  ..................................................>
-  #
-            11.19%            2.6K        0.10%           21  [perf_iterate_ctx+48 -> >
-             5.79%            1.4K        0.45%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
-             5.11%            1.2K        0.33%           71  [native_write_msr+0 ->>
+To complete this mechanism we need to, in test-all.c 'main' routine, to
+call main_test_libcapstone(), which isn't being done, so the effect of
+adding references to capstone in test-all.c are not achieved.
 
-  # Samples: 293  of event 'cache-misses'
-  # Event count (approx.): 293
-  #
-  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
-  # ...............  ..............  ...........  ..........  ..................................................>
-  #
-            11.19%            2.6K        0.13%           21  [perf_iterate_ctx+48 -> >
-             5.79%            1.4K        0.59%           97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
-             5.11%            1.2K        0.43%           71  [native_write_msr+0 ->>
+The only thing that is happening is that test-all.c is failing to build and thus
+all the tests will have to be done individually, which nullifies the test-all.c
+single build speedup.
 
-With the symbol_conf.event_group, the 'perf report' should only report the
-block information of the leader event in a group.
+So lets remove references to capstone from test-all.c to see if this makes it
+build again so that we get faster builds or go on fixing up whatever is
+preventing us to get that benefit.
 
-However, the current implementation retrieves the next event's block
-information, rather than the next group leader's block information.
+Nothing: after this fix we get a clean test-all.c build and get the build speedup back:
 
-Make sure the index is updated even if the event is skipped.
+  ⬢[acme@toolbox perf-tools-next]$ cat /tmp/build/perf-tools-next/feature/test-all.make.output
+  ⬢[acme@toolbox perf-tools-next]$ cat /tmp/build/perf-tools-next/feature/test-all.
+  test-all.bin          test-all.d            test-all.make.output
+  ⬢[acme@toolbox perf-tools-next]$ cat /tmp/build/perf-tools-next/feature/test-all.make.output
+  ⬢[acme@toolbox perf-tools-next]$ ldd /tmp/build/perf-tools-next/feature/test-all.bin
+  	linux-vdso.so.1 (0x00007f13277a1000)
+  	libpython3.12.so.1.0 => /lib64/libpython3.12.so.1.0 (0x00007f1326e00000)
+  	libm.so.6 => /lib64/libm.so.6 (0x00007f13274be000)
+  	libtraceevent.so.1 => /lib64/libtraceevent.so.1 (0x00007f1327496000)
+  	libtracefs.so.1 => /lib64/libtracefs.so.1 (0x00007f132746f000)
+  	libcrypto.so.3 => /lib64/libcrypto.so.3 (0x00007f1326800000)
+  	libunwind-x86_64.so.8 => /lib64/libunwind-x86_64.so.8 (0x00007f1327452000)
+  	libunwind.so.8 => /lib64/libunwind.so.8 (0x00007f1327436000)
+  	liblzma.so.5 => /lib64/liblzma.so.5 (0x00007f1327403000)
+  	libdw.so.1 => /lib64/libdw.so.1 (0x00007f1326d6f000)
+  	libz.so.1 => /lib64/libz.so.1 (0x00007f13273e2000)
+  	libelf.so.1 => /lib64/libelf.so.1 (0x00007f1326d53000)
+  	libnuma.so.1 => /lib64/libnuma.so.1 (0x00007f13273d4000)
+  	libslang.so.2 => /lib64/libslang.so.2 (0x00007f1326400000)
+  	libperl.so.5.38 => /lib64/libperl.so.5.38 (0x00007f1326000000)
+  	libc.so.6 => /lib64/libc.so.6 (0x00007f1325e0f000)
+  	libzstd.so.1 => /lib64/libzstd.so.1 (0x00007f1326741000)
+  	/lib64/ld-linux-x86-64.so.2 (0x00007f13277a3000)
+  	libbz2.so.1 => /lib64/libbz2.so.1 (0x00007f1326d3f000)
+  	libcrypt.so.2 => /lib64/libcrypt.so.2 (0x00007f1326d07000)
+  ⬢[acme@toolbox perf-tools-next]$
 
-With the patch,
+And when having capstone-devel installed we get it detected and linked with
+perf, allowing us to benefit from the features that it enables:
 
-  # Samples: 293  of event 'cache-misses'
-  # Event count (approx.): 293
-  #
-  # Sampled Cycles%  Sampled Cycles  Avg Cycles%  Avg Cycles  [Program Block Range]
-  # ...............  ..............  ...........  ..........  ..................................................>
-  #
-           37.98%            9.0K        4.05%           299  [perf_event_addr_filters_exec+0 -> perf_event_a>
-           11.19%            2.6K        0.28%            21  [perf_iterate_ctx+48 -> >
-            5.79%            1.4K        1.32%            97  [__intel_pmu_enable_all.constprop.0+80 -> __intel_>
+  ⬢[acme@toolbox perf-tools-next]$ rpm -q capstone-devel
+  capstone-devel-5.0.1-3.fc40.x86_64
+  ⬢[acme@toolbox perf-tools-next]$ ldd /tmp/build/perf-tools-next/perf | grep capstone
+  	libcapstone.so.5 => /lib64/libcapstone.so.5 (0x00007fe6a5c00000)
+  ⬢[acme@toolbox perf-tools-next]$ /tmp/build/perf-tools-next/perf -vv | grep cap
+             libcapstone: [ on  ]  # HAVE_LIBCAPSTONE_SUPPORT
+  ⬢[acme@toolbox perf-tools-next]$
 
-Fixes: 6f7164fa231a5f36 ("perf report: Sort by sampled cycles percent per block for stdio")
-Reviewed-by: Andi Kleen <ak@linux.intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8b767db3309595a2 ("perf: build: introduce the libcapstone")
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andi Kleen <andi@firstfloor.org>
+Cc: Changbin Du <changbin.du@huawei.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jin Yao <yao.jin@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/r/20240813160208.2493643-2-kan.liang@linux.intel.com
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/lkml/Zry0sepD5Ppa5YKP@x1
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-report.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/build/feature/test-all.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
-index 6edc0d4ce6fbe..40826f825c9c2 100644
---- a/tools/perf/builtin-report.c
-+++ b/tools/perf/builtin-report.c
-@@ -565,6 +565,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
- 		struct hists *hists = evsel__hists(pos);
- 		const char *evname = evsel__name(pos);
+diff --git a/tools/build/feature/test-all.c b/tools/build/feature/test-all.c
+index dd0a18c2ef8fc..6f4bf386a3b5c 100644
+--- a/tools/build/feature/test-all.c
++++ b/tools/build/feature/test-all.c
+@@ -134,10 +134,6 @@
+ #undef main
+ #endif
  
-+		i++;
- 		if (symbol_conf.event_group && !evsel__is_group_leader(pos))
- 			continue;
- 
-@@ -574,7 +575,7 @@ static int evlist__tty_browse_hists(struct evlist *evlist, struct report *rep, c
- 		hists__fprintf_nr_sample_events(hists, rep, evname, stdout);
- 
- 		if (rep->total_cycles_mode) {
--			report__browse_block_hists(&rep->block_reports[i++].hist,
-+			report__browse_block_hists(&rep->block_reports[i - 1].hist,
- 						   rep->min_percent, pos, NULL);
- 			continue;
- 		}
+-#define main main_test_libcapstone
+-# include "test-libcapstone.c"
+-#undef main
+-
+ #define main main_test_lzma
+ # include "test-lzma.c"
+ #undef main
 -- 
 2.43.0
 
