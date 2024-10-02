@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1D81D1E68;
-	Wed,  2 Oct 2024 14:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5581D0F48;
+	Wed,  2 Oct 2024 14:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880548; cv=none; b=s/ZbDet/abjs5sSOS6IASreOFcpkZIQ7lFrPCWSJ6MMMPYjMmUfvWTsnDVmcVMx3LZPlYqIl0sgEbH51KMLnhs3cmhyfvygdojnW9C/8W+QeE93i7VbSEXMsEnYGsIqiHnH1vx5W6yQEvUA32eLjwDxWZ7tIj9pvyBq9v45mUSw=
+	t=1727880551; cv=none; b=PoPxG7ENuBO26BVFi3c6f7D7Z11uKj+RGyTW1/J336018pQUnKMQYZIF764UxKhbsSAgPDFtGjq34PssNl6sBM8ggQ2YiZNad3kQUNRWvEFRBAd3Vq/IG8XvuHwJMZjR47Sp3pSyJxPnuIKbDpjpIQjgT9W2ys3fzW0/+BFvIAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880548; c=relaxed/simple;
-	bh=FkfVtVAYzEfwOQhqQ1kXT9EHjdMWCXdCdeqGxy4JCF8=;
+	s=arc-20240116; t=1727880551; c=relaxed/simple;
+	bh=MufoUWZoz4iwCqcpOvjlbCea8PIeSz42LMHXlBQh2Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qirPDRWV06iNkIIyS5TRlU85RMktGvk/RvChmPqGCPEVKCYOt+yKfIJkhDoJPbJGGGgP/GqoA2D7gTYXifYfIec6a742rI1C2GZhcfB0gJLPQRD8Ky6LilxB6z5tSWIDLd774ooXaL73aWh59yhOF4U5Kj0+izQ1l+fx6V+yITo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbIv+2kJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BlZ+GQapXlN30Rs/dqB2x9zOJdeHhUKmUryGtmtEl49qYWcBiwexy3kLsNOQsf8z7CFd/7mjfv7yb/s0PxaBWdZW7FvGN/j8EGX9tmqFXXR0lCGTJ36wuV5CWMibSNVknUy5tLvDtngfFomlWxTO8c0iT8i3kROLakiJ4q+LA4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFhzq9GW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbIv+2kJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA12C4CEC2;
-	Wed,  2 Oct 2024 14:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFhzq9GW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6942AC4CEC2;
+	Wed,  2 Oct 2024 14:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880547;
-	bh=FkfVtVAYzEfwOQhqQ1kXT9EHjdMWCXdCdeqGxy4JCF8=;
+	s=korg; t=1727880550;
+	bh=MufoUWZoz4iwCqcpOvjlbCea8PIeSz42LMHXlBQh2Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbIv+2kJ4y/7ywv7AidS7hR8zpl2L36+DfI9E04E2qd8YpPxnWVoRB2fqoSA0KK2C
-	 uqCljSlTkjnOoNnGTK+39n+4XGL3ao5hnQw6vZRT2r0iKquMm17+IlPVtT2hWjUSfG
-	 X46vHojxR4EF2++6ieu9INZMRxVaV3mpMF4RWdAQ=
+	b=MFhzq9GWgOEllvGdJ61Q7cT79rplomtEL61f7gMaLZeBNFxE0L1gxghA81XODSZHJ
+	 imHaD95L2uFxsUlXkXeDD0zC04Kq4D2U5N6CAYbM4L1R8tYQizbs7+dxTcGA84LveK
+	 v3uhL6bd3ZWfsxC4upyiNyyH60ZAdjs9iSoDpfhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Marc Zyngier <maz@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 469/538] arm64: esr: Define ESR_ELx_EC_* constants as UL
-Date: Wed,  2 Oct 2024 15:01:48 +0200
-Message-ID: <20241002125810.955908377@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 496/538] btrfs: subpage: fix the bitmap dump which can cause bitmap corruption
+Date: Wed,  2 Oct 2024 15:02:15 +0200
+Message-ID: <20241002125812.017741445@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,142 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Qu Wenruo <wqu@suse.com>
 
-commit b6db3eb6c373b97d9e433530d748590421bbeea7 upstream.
+[ Upstream commit 77b0b98bb743f5d04d8f995ba1936e1143689d4a ]
 
-Add explicit casting to prevent expantion of 32th bit of
-u32 into highest half of u64 in several places.
+In commit 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for
+debug") an internal macro GET_SUBPAGE_BITMAP() is introduced to grab the
+bitmap of each attribute.
 
-For example, in inject_abt64:
-ESR_ELx_EC_DABT_LOW << ESR_ELx_EC_SHIFT = 0x24 << 26.
-This operation's result is int with 1 in 32th bit.
-While casting this value into u64 (esr is u64) 1
-fills 32 highest bits.
+But that commit is using bitmap_cut() which will do the left shift of
+the larger bitmap, causing incorrect values.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Thankfully this bitmap_cut() is only called for debug usage, and so far
+it's not yet causing problem.
 
-Cc: <stable@vger.kernel.org>
-Fixes: aa8eff9bfbd5 ("arm64: KVM: fault injection into a guest")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/stable/20240910085016.32120-1-abelova%40astralinux.ru
-Link: https://lore.kernel.org/r/20240910085016.32120-1-abelova@astralinux.ru
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix it to use bitmap_read() to only grab the desired sub-bitmap.
+
+Fixes: 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for debug")
+CC: stable@vger.kernel.org # 6.6+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/esr.h |   88 +++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 44 deletions(-)
+ fs/btrfs/subpage.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/esr.h
-+++ b/arch/arm64/include/asm/esr.h
-@@ -10,63 +10,63 @@
- #include <asm/memory.h>
- #include <asm/sysreg.h>
+diff --git a/fs/btrfs/subpage.c b/fs/btrfs/subpage.c
+index 1b999c6e41930..b98d42ca55647 100644
+--- a/fs/btrfs/subpage.c
++++ b/fs/btrfs/subpage.c
+@@ -713,8 +713,14 @@ void btrfs_page_unlock_writer(struct btrfs_fs_info *fs_info, struct page *page,
+ }
  
--#define ESR_ELx_EC_UNKNOWN	(0x00)
--#define ESR_ELx_EC_WFx		(0x01)
-+#define ESR_ELx_EC_UNKNOWN	UL(0x00)
-+#define ESR_ELx_EC_WFx		UL(0x01)
- /* Unallocated EC: 0x02 */
--#define ESR_ELx_EC_CP15_32	(0x03)
--#define ESR_ELx_EC_CP15_64	(0x04)
--#define ESR_ELx_EC_CP14_MR	(0x05)
--#define ESR_ELx_EC_CP14_LS	(0x06)
--#define ESR_ELx_EC_FP_ASIMD	(0x07)
--#define ESR_ELx_EC_CP10_ID	(0x08)	/* EL2 only */
--#define ESR_ELx_EC_PAC		(0x09)	/* EL2 and above */
-+#define ESR_ELx_EC_CP15_32	UL(0x03)
-+#define ESR_ELx_EC_CP15_64	UL(0x04)
-+#define ESR_ELx_EC_CP14_MR	UL(0x05)
-+#define ESR_ELx_EC_CP14_LS	UL(0x06)
-+#define ESR_ELx_EC_FP_ASIMD	UL(0x07)
-+#define ESR_ELx_EC_CP10_ID	UL(0x08)	/* EL2 only */
-+#define ESR_ELx_EC_PAC		UL(0x09)	/* EL2 and above */
- /* Unallocated EC: 0x0A - 0x0B */
--#define ESR_ELx_EC_CP14_64	(0x0C)
--#define ESR_ELx_EC_BTI		(0x0D)
--#define ESR_ELx_EC_ILL		(0x0E)
-+#define ESR_ELx_EC_CP14_64	UL(0x0C)
-+#define ESR_ELx_EC_BTI		UL(0x0D)
-+#define ESR_ELx_EC_ILL		UL(0x0E)
- /* Unallocated EC: 0x0F - 0x10 */
--#define ESR_ELx_EC_SVC32	(0x11)
--#define ESR_ELx_EC_HVC32	(0x12)	/* EL2 only */
--#define ESR_ELx_EC_SMC32	(0x13)	/* EL2 and above */
-+#define ESR_ELx_EC_SVC32	UL(0x11)
-+#define ESR_ELx_EC_HVC32	UL(0x12)	/* EL2 only */
-+#define ESR_ELx_EC_SMC32	UL(0x13)	/* EL2 and above */
- /* Unallocated EC: 0x14 */
--#define ESR_ELx_EC_SVC64	(0x15)
--#define ESR_ELx_EC_HVC64	(0x16)	/* EL2 and above */
--#define ESR_ELx_EC_SMC64	(0x17)	/* EL2 and above */
--#define ESR_ELx_EC_SYS64	(0x18)
--#define ESR_ELx_EC_SVE		(0x19)
--#define ESR_ELx_EC_ERET		(0x1a)	/* EL2 only */
-+#define ESR_ELx_EC_SVC64	UL(0x15)
-+#define ESR_ELx_EC_HVC64	UL(0x16)	/* EL2 and above */
-+#define ESR_ELx_EC_SMC64	UL(0x17)	/* EL2 and above */
-+#define ESR_ELx_EC_SYS64	UL(0x18)
-+#define ESR_ELx_EC_SVE		UL(0x19)
-+#define ESR_ELx_EC_ERET		UL(0x1a)	/* EL2 only */
- /* Unallocated EC: 0x1B */
--#define ESR_ELx_EC_FPAC		(0x1C)	/* EL1 and above */
--#define ESR_ELx_EC_SME		(0x1D)
-+#define ESR_ELx_EC_FPAC		UL(0x1C)	/* EL1 and above */
-+#define ESR_ELx_EC_SME		UL(0x1D)
- /* Unallocated EC: 0x1E */
--#define ESR_ELx_EC_IMP_DEF	(0x1f)	/* EL3 only */
--#define ESR_ELx_EC_IABT_LOW	(0x20)
--#define ESR_ELx_EC_IABT_CUR	(0x21)
--#define ESR_ELx_EC_PC_ALIGN	(0x22)
-+#define ESR_ELx_EC_IMP_DEF	UL(0x1f)	/* EL3 only */
-+#define ESR_ELx_EC_IABT_LOW	UL(0x20)
-+#define ESR_ELx_EC_IABT_CUR	UL(0x21)
-+#define ESR_ELx_EC_PC_ALIGN	UL(0x22)
- /* Unallocated EC: 0x23 */
--#define ESR_ELx_EC_DABT_LOW	(0x24)
--#define ESR_ELx_EC_DABT_CUR	(0x25)
--#define ESR_ELx_EC_SP_ALIGN	(0x26)
--#define ESR_ELx_EC_MOPS		(0x27)
--#define ESR_ELx_EC_FP_EXC32	(0x28)
-+#define ESR_ELx_EC_DABT_LOW	UL(0x24)
-+#define ESR_ELx_EC_DABT_CUR	UL(0x25)
-+#define ESR_ELx_EC_SP_ALIGN	UL(0x26)
-+#define ESR_ELx_EC_MOPS		UL(0x27)
-+#define ESR_ELx_EC_FP_EXC32	UL(0x28)
- /* Unallocated EC: 0x29 - 0x2B */
--#define ESR_ELx_EC_FP_EXC64	(0x2C)
-+#define ESR_ELx_EC_FP_EXC64	UL(0x2C)
- /* Unallocated EC: 0x2D - 0x2E */
--#define ESR_ELx_EC_SERROR	(0x2F)
--#define ESR_ELx_EC_BREAKPT_LOW	(0x30)
--#define ESR_ELx_EC_BREAKPT_CUR	(0x31)
--#define ESR_ELx_EC_SOFTSTP_LOW	(0x32)
--#define ESR_ELx_EC_SOFTSTP_CUR	(0x33)
--#define ESR_ELx_EC_WATCHPT_LOW	(0x34)
--#define ESR_ELx_EC_WATCHPT_CUR	(0x35)
-+#define ESR_ELx_EC_SERROR	UL(0x2F)
-+#define ESR_ELx_EC_BREAKPT_LOW	UL(0x30)
-+#define ESR_ELx_EC_BREAKPT_CUR	UL(0x31)
-+#define ESR_ELx_EC_SOFTSTP_LOW	UL(0x32)
-+#define ESR_ELx_EC_SOFTSTP_CUR	UL(0x33)
-+#define ESR_ELx_EC_WATCHPT_LOW	UL(0x34)
-+#define ESR_ELx_EC_WATCHPT_CUR	UL(0x35)
- /* Unallocated EC: 0x36 - 0x37 */
--#define ESR_ELx_EC_BKPT32	(0x38)
-+#define ESR_ELx_EC_BKPT32	UL(0x38)
- /* Unallocated EC: 0x39 */
--#define ESR_ELx_EC_VECTOR32	(0x3A)	/* EL2 only */
-+#define ESR_ELx_EC_VECTOR32	UL(0x3A)	/* EL2 only */
- /* Unallocated EC: 0x3B */
--#define ESR_ELx_EC_BRK64	(0x3C)
-+#define ESR_ELx_EC_BRK64	UL(0x3C)
- /* Unallocated EC: 0x3D - 0x3F */
--#define ESR_ELx_EC_MAX		(0x3F)
-+#define ESR_ELx_EC_MAX		UL(0x3F)
+ #define GET_SUBPAGE_BITMAP(subpage, subpage_info, name, dst)		\
+-	bitmap_cut(dst, subpage->bitmaps, 0,				\
+-		   subpage_info->name##_offset, subpage_info->bitmap_nr_bits)
++{									\
++	const int bitmap_nr_bits = subpage_info->bitmap_nr_bits;	\
++									\
++	ASSERT(bitmap_nr_bits < BITS_PER_LONG);				\
++	*dst = bitmap_read(subpage->bitmaps,				\
++			   subpage_info->name##_offset,			\
++			   bitmap_nr_bits);				\
++}
  
- #define ESR_ELx_EC_SHIFT	(26)
- #define ESR_ELx_EC_WIDTH	(6)
+ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
+ 				      struct page *page, u64 start, u32 len)
+-- 
+2.43.0
+
 
 
