@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649511A08A4;
-	Wed,  2 Oct 2024 14:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435A11D12FF;
+	Wed,  2 Oct 2024 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880627; cv=none; b=dNeCyGJ0MM97xKsPXIYLKV4dqXemJ62lB+A2z0WcGfMYayyMcsXXPmcQXeefu9SEpgPx6ddgrEG/kRwmzK5pEM7XtxO0urLYtdYAsyQiGE96nb3qHhvaUO/sMGrt2Q4wOLmnYEvgD/thpbKOmVrHFmChbf1NN9Ly6+vMrrja1t8=
+	t=1727880630; cv=none; b=Y1GEFuWnb24j2Mj2mn2AKlZsZnvoJ0OFsuPB9Cj4F/TauYzQMy7JzOYy3uPPP601WFyoXNH8JUUgxh7gQILA84Jcp57bpyM0EfHKy6QDYyCPP2rgohOXbiZw8tNdXN2U45Fem4dAr2wZP/GHeMFmriPPD8CP1PcypcFAMa4jj5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880627; c=relaxed/simple;
-	bh=Hgr/0t7/REa+G6iyS2QXN5mE6ERVfepdBY0Kb+zSojc=;
+	s=arc-20240116; t=1727880630; c=relaxed/simple;
+	bh=5hE1GH2Ch4t4L1wlfYsav0KBPlstTAJspgWe0B8tEEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PypLzLYdXvmH76lgPVTJv6neifRZ+deX2dsQ0mTnwIi3ZicoZaU1qYn7L1UD5VSAvQ6+8fbQAdId+XP3DDSMIgoKDGbAneK+nw5PwF1fO+KDHE++/t6g1ocKr59nSvy5OfsO2srgqsiiuP1+B8VKLXoTmxPTygG42jrRBnGQz3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJ8AwwIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjtYO7Cx8uQ6mmqHe9SKcdVk3is3AtDrPPs/ZMREZ5XrrMAApp9MGkJCWRyGKfMB/fMiie4z68OswPGF/JIF9eOB2DfjSjyAeQoTGms6qF3YFhfq9fs9j+XxfY09Nyx1BVUpyvemf2iiTP6P1Se2okxFxGMS5sF2JHUI8Fz/XXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cp6t0nG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJ8AwwIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D529AC4CECD;
-	Wed,  2 Oct 2024 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cp6t0nG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE448C4CEC2;
+	Wed,  2 Oct 2024 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880627;
-	bh=Hgr/0t7/REa+G6iyS2QXN5mE6ERVfepdBY0Kb+zSojc=;
+	s=korg; t=1727880630;
+	bh=5hE1GH2Ch4t4L1wlfYsav0KBPlstTAJspgWe0B8tEEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJ8AwwILOIZhrmgR/ILAQkSwuA6d0Zj6kxERvcIXOkoATvBhpKgXlGVhHsT95K5kb
-	 PmzKNVQeSYiQsE6NkSkRDJRbzMHMUcPI+QPdhkskHJfNAQxC+/5EmxlYaGadY36dmd
-	 nzO8aaby61lEuN3LBmCo6R/dlMaOncTLcOYE7x14=
+	b=1cp6t0nGKNCs1npTpfBttJKmTnGosG74Lrw5l98LEoej4zhDjj/6JzLp0B7m5mpNS
+	 z5Hqv5F/lMp1AK1ayZ7r4XKTakCuWzvU4xH80JlxYH1sfv6bEDVB0DlbcGWxjcgUGe
+	 GMyDmTWmQJlzPvrR9Nc0fCL8ChWWTlUGEe/qaEaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 523/538] spi: fspi: add support for imx8ulp
-Date: Wed,  2 Oct 2024 15:02:42 +0200
-Message-ID: <20241002125813.091473580@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alexander Potapenko <glider@google.com>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.6 524/538] module: Fix KCOV-ignored file name
+Date: Wed,  2 Oct 2024 15:02:43 +0200
+Message-ID: <20241002125813.130077653@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,52 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-commit 9228956a620553d7fd17f703a37a26c91e4d92ab upstream.
+commit f34d086fb7102fec895fd58b9e816b981b284c17 upstream.
 
-The flexspi on imx8ulp only has 16 LUTs, different with others which
-have up to 32 LUTs.
+module.c was renamed to main.c, but the Makefile directive was copy-pasted
+verbatim with the old file name.  Fix up the file name.
 
-Add a separate compatible string and nxp_fspi_devtype_data to support
-flexspi on imx8ulp.
-
-Fixes: ef89fd56bdfc ("arm64: dts: imx8ulp: add flexspi node")
-Cc: stable@kernel.org
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240905094338.1986871-4-haibo.chen@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: cfc1d277891e ("module: Move all into module/")
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/bc0cf790b4839c5e38e2fafc64271f620568a39e.1718092070.git.dvyukov@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-nxp-fspi.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/module/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -371,6 +371,15 @@ static struct nxp_fspi_devtype_data imx8
- 	.little_endian = true,  /* little-endian    */
- };
+--- a/kernel/module/Makefile
++++ b/kernel/module/Makefile
+@@ -5,7 +5,7 @@
  
-+static struct nxp_fspi_devtype_data imx8ulp_data = {
-+	.rxfifo = SZ_512,       /* (64  * 64 bits)  */
-+	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
-+	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
-+	.quirks = 0,
-+	.lut_num = 16,
-+	.little_endian = true,  /* little-endian    */
-+};
-+
- struct nxp_fspi {
- 	void __iomem *iobase;
- 	void __iomem *ahb_addr;
-@@ -1297,6 +1306,7 @@ static const struct of_device_id nxp_fsp
- 	{ .compatible = "nxp,imx8mp-fspi", .data = (void *)&imx8mm_data, },
- 	{ .compatible = "nxp,imx8qxp-fspi", .data = (void *)&imx8qxp_data, },
- 	{ .compatible = "nxp,imx8dxl-fspi", .data = (void *)&imx8dxl_data, },
-+	{ .compatible = "nxp,imx8ulp-fspi", .data = (void *)&imx8ulp_data, },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, nxp_fspi_dt_ids);
+ # These are called from save_stack_trace() on slub debug path,
+ # and produce insane amounts of uninteresting coverage.
+-KCOV_INSTRUMENT_module.o := n
++KCOV_INSTRUMENT_main.o := n
+ 
+ obj-y += main.o
+ obj-y += strict_rwx.o
 
 
