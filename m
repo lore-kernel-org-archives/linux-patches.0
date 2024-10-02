@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1BB198A1A;
-	Wed,  2 Oct 2024 13:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F0D1D0DF2;
+	Wed,  2 Oct 2024 13:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877390; cv=none; b=hnEuGfpfxZ9PIYYb1DiQ/i4rVDVpL9fZGAyJsuaZpLxLe9u5qdpeUMVMCSMrfD17w7+2pa46WPAGoEYyg5a18B1JZtjcmb+BrhJYHW/FVHMSuKPvV5JKMbRUcyA1rdXPGGRXzb/3+AbYgWveFYRnzPek7CxILgd+5pOylMW6TpM=
+	t=1727877393; cv=none; b=O0mlIz97SMK4ztphdcdUjYqFuCqqj0NaxWm0B2MFhhB28in4FIJ99x76f8vkTxskYu1p7QE1UgVWnS17ShmT7JAivyaG1ZW3w++Hiyto3zSezTRo/1ic0MHN7B867WAevb4t1yZHPZ//WFEnUd4BzdOAl4+E/hqjkocL1cNuLtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877390; c=relaxed/simple;
-	bh=blGiKQktssYj6zCH3mZrRZFGnAXgv+IM4Z8q684gKUA=;
+	s=arc-20240116; t=1727877393; c=relaxed/simple;
+	bh=SS0WrtwyRv8DLAQT6OTT1RhU4jZxhhg2v7FqKOAlToA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uc3lxpr9xF5MTWwwIzy2UJw5+4C6zAfR0PwaTwKrlw0U24iMVHH7s2KvNAiQYTSmyIYoSApjSznD7haUjuDYAbID4RABVS4dPKfSkuvTsDxjblRg34RDikU9Hu4xCDQ0vwnkqquj5QVyP1NdVKv6s4R3Ap44oc1pW3T3+FqjDTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfE1hxnn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cRttJ/HVsAskZIa0AU9J35+1RgVUqAZLtwPyDwBY0TGAcF79RhPGovB4TkfWv2NUxfYs2Uch7PNCWNDyVy+HDugfHHh+jROP4TkADc17H1pqUlZ1P3505oXtelUa7NLVd7nzuRpj627w2KS9LxEeYpoHnk4q3SZ8ZbVmSeoueBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfxpfLbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfE1hxnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64808C4CEC5;
-	Wed,  2 Oct 2024 13:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfxpfLbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CB7C4CECD;
+	Wed,  2 Oct 2024 13:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877390;
-	bh=blGiKQktssYj6zCH3mZrRZFGnAXgv+IM4Z8q684gKUA=;
+	s=korg; t=1727877393;
+	bh=SS0WrtwyRv8DLAQT6OTT1RhU4jZxhhg2v7FqKOAlToA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfE1hxnn4ow/t6suGY22YA0c/26lR/jVXcF/kuMJ1xfY2bZDBsFDZk0YDN+cfDYfl
-	 rhsNI+EQFFNxKu1xhGzrTQcttiCuQ3c31TkDupefwzmArhDCqV8Ai71nGwljtTwhAd
-	 ulDsfS8nNmfHihsGc2lZK3Fxze2JEXjaindsS3vI=
+	b=sfxpfLbt8qXh1QD5P7SLTeIWoC7eTUBESwfI31RPgPrkOEKjvRIQH9liZI9r76hem
+	 F6Wn6ikAZzSoGrHvUktElP+2WKqUeHdGHG9zDIPFISoyQ0hpLxWaRtDpraaT9MJZ4f
+	 q1v0OJ6pcWvPCSKW9Q7b7PXmjPdzurIAmcba+cYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>,
-	Xin Zeng <xin.zeng@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Orlando Chamberlain <orlandoch.dev@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 034/634] crypto: qat - fix "Full Going True" macro definition
-Date: Wed,  2 Oct 2024 14:52:14 +0200
-Message-ID: <20241002125812.444156846@linuxfoundation.org>
+Subject: [PATCH 6.10 035/634] ACPI: video: force native for some T2 macbooks
+Date: Wed,  2 Oct 2024 14:52:15 +0200
+Message-ID: <20241002125812.483620513@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,40 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
+From: Orlando Chamberlain <orlandoch.dev@gmail.com>
 
-[ Upstream commit 694a6f594817462942acbb1a35b1f7d61e2d49e7 ]
+[ Upstream commit d010a0282e045f02895f88299e5442506585b46c ]
 
-The macro `ADF_RP_INT_SRC_SEL_F_RISE_MASK` is currently set to the value
-`0100b` which means "Empty Going False". This might cause an incorrect
-restore of the bank state during live migration.
+The intel backlight is needed for these, previously users had nothing in
+/sys/class/backlight.
 
-Fix the definition of the macro to properly represent the "Full Going
-True" state which is encoded as `0011b`.
-
-Fixes: bbfdde7d195f ("crypto: qat - add bank save and restore flows")
-Signed-off-by: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
-Reviewed-by: Xin Zeng <xin.zeng@intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/3DA0EAE3-9EB7-492B-96FC-988503BBDCCC@live.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 7dc918daaf29 ("ACPI: video: force native for Apple MacbookPro9,2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/video_detect.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-index 8b10926cedbac..e8c53bd76f1bd 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.h
-@@ -83,7 +83,7 @@
- #define ADF_WQM_CSR_RPRESETSTS(bank)	(ADF_WQM_CSR_RPRESETCTL(bank) + 4)
- 
- /* Ring interrupt */
--#define ADF_RP_INT_SRC_SEL_F_RISE_MASK	BIT(2)
-+#define ADF_RP_INT_SRC_SEL_F_RISE_MASK	GENMASK(1, 0)
- #define ADF_RP_INT_SRC_SEL_F_FALL_MASK	GENMASK(2, 0)
- #define ADF_RP_INT_SRC_SEL_RANGE_WIDTH	4
- #define ADF_COALESCED_POLL_TIMEOUT_US	(1 * USEC_PER_SEC)
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index ff6f260433a11..674b9db7a1ef8 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -541,6 +541,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "iMac12,2"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Apple MacBook Air 9,1 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "MacBookAir9,1"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1217249 */
+ 	 .callback = video_detect_force_native,
+@@ -550,6 +558,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "MacBookPro12,1"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Apple MacBook Pro 16,2 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "MacBookPro16,2"),
++		},
++	},
+ 	{
+ 	 .callback = video_detect_force_native,
+ 	 /* Dell Inspiron N4010 */
 -- 
 2.43.0
 
