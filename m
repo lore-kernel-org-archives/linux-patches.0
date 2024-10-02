@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DC61D042F;
-	Wed,  2 Oct 2024 13:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF3C1D0799;
+	Wed,  2 Oct 2024 13:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876759; cv=none; b=nIKgvakh6QfotFi9cTonUpmMdKyIokGWkw5YyjQKBjVje1xG6vTocNESin0Gd+kB045Ev//2FJ1fGqKtxv5yyysuO6tEfeIIEz3DnncBimsF2Ua3nfb/TL9LFI1N+akmhnnSErd2KOaGfwUxVrnNjYb+wsJvjorcHtkXYJkkovg=
+	t=1727876762; cv=none; b=jIwt6psod1LIWi8vfrKd00OPjbRazMQIpnEjwlNe+4nYqo2Zb/MaE0ecw8o1a7+XRT55EEhMY5b1peFG6vwrrJpjwlYGGQ1F/HebVdGA8fqp3yX+4Y5GczAqKgZOZ4cXhvvKG5xF8Vlo+ISfjT4yE1zLZV3wAevs90CSH6u2X08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876759; c=relaxed/simple;
-	bh=1OoiIls1CqmSwAhkomeL39L5mzu6G1KEhxYwrGSPgzQ=;
+	s=arc-20240116; t=1727876762; c=relaxed/simple;
+	bh=1vpVhZWPL3w645XtZxWA0JF6zSJR9tu/vJV8xmm4sYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edumh53WalLKC5vAoHiGKTmZBxAYVU8XC5LSpK/CID1Z5dJ4JwjFloXtHdCe8x4lhmTT6iBOGI2zjxQUNgg40En8YeKLgqh4JaQmIO2Pv1WzBD/vwTb6nfXqcc77gZ3RV/L9q65AxyXvWNAkqtN3zJyqxK/BM0IiF3cTdQvZN78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpQExj3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsxXvKrVoCtqH/Wd+6Ly20WJf9aWfMEWxIKzXpUaSYg3TZLjkajioc0qouV+qf81M5wVSX1hOnbcRWtmFmF2P/gyAgE+eE4yB0oyFDOcYYt/Ifkicv39HSlroGOFeqBSd27SfAbt4691DuoRoeohqQhuUfFMZxPQkBgda3/d7vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0Gi9gnp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpQExj3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6EA5C4CEC5;
-	Wed,  2 Oct 2024 13:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0Gi9gnp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A7DC4CEC5;
+	Wed,  2 Oct 2024 13:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876759;
-	bh=1OoiIls1CqmSwAhkomeL39L5mzu6G1KEhxYwrGSPgzQ=;
+	s=korg; t=1727876762;
+	bh=1vpVhZWPL3w645XtZxWA0JF6zSJR9tu/vJV8xmm4sYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpQExj3Gri8/Yx0ZE2o3d98bwxaz3OyJAmv2wIopS5Slf7DCR1/bvytyfqSYsjwZx
-	 7syYGi3+srokPVb+VkqpyyDr/J/jkuK0tU4bUFUnUacifOR/wj2gr3pXIXfPd+su/U
-	 MkwLBbVdMd2rHpvgoeKvIfsSSl4gJYhstSShg4NU=
+	b=W0Gi9gnpeAVrA3c03GEbcuUSER0SFhYDhTAIiIC5iYiMkrCxdgEOmtU/mZe9O8Sap
+	 Ft4ctqcgRi7m2lX8Zf3dxE1VWXYIQWlN997pX5ZEpUfz3bJkDc56EdvYRCo6g2QwLx
+	 iIUA/CPYSb1cwC4rVMHP4BBTtyjmN4CHTuhV+CVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.11 526/695] soc: versatile: integrator: fix OF node leak in probe() error path
-Date: Wed,  2 Oct 2024 14:58:44 +0200
-Message-ID: <20241002125843.483747115@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Martin Tsai <martin.tsai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.11 553/695] drm/amd/display: Clean up dsc blocks in accelerated mode
+Date: Wed,  2 Oct 2024 14:59:11 +0200
+Message-ID: <20241002125844.578597107@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,32 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Martin Tsai <martin.tsai@amd.com>
 
-commit 874c5b601856adbfda10846b9770a6c66c41e229 upstream.
+commit 3766a840e093d30e1a2522f650d8a6ac892a8719 upstream.
 
-Driver is leaking OF node reference obtained from
-of_find_matching_node().
+[WHY]
+DSC on eDP could be enabled during VBIOS post. The enabled
+DSC may not be disabled when enter to OS, once the system was
+in second screen only mode before entering to S4. In this
+case, OS will not send setTimings to reset eDP path again.
 
-Fixes: f956a785a282 ("soc: move SoC driver for the ARM Integrator")
+The enabled DSC HW will make a new stream without DSC cannot
+output normally if it reused this pipe with enabled DSC.
+
+[HOW]
+In accelerated mode, to clean up DSC blocks if eDP is on link
+but not active when we are not in fast boot and seamless boot.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-1-ff4b35abed83@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Martin Tsai <martin.tsai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/versatile/soc-integrator.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |   50 ++++++++++++++
+ 1 file changed, 50 insertions(+)
 
---- a/drivers/soc/versatile/soc-integrator.c
-+++ b/drivers/soc/versatile/soc-integrator.c
-@@ -113,6 +113,7 @@ static int __init integrator_soc_init(vo
- 		return -ENODEV;
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -57,6 +57,7 @@
+ #include "panel_cntl.h"
+ #include "dc_state_priv.h"
+ #include "dpcd_defs.h"
++#include "dsc.h"
+ /* include DCE11 register header files */
+ #include "dce/dce_11_0_d.h"
+ #include "dce/dce_11_0_sh_mask.h"
+@@ -1815,6 +1816,48 @@ static void get_edp_links_with_sink(
+ 	}
+ }
  
- 	syscon_regmap = syscon_node_to_regmap(np);
-+	of_node_put(np);
- 	if (IS_ERR(syscon_regmap))
- 		return PTR_ERR(syscon_regmap);
++static void clean_up_dsc_blocks(struct dc *dc)
++{
++	struct display_stream_compressor *dsc = NULL;
++	struct timing_generator *tg = NULL;
++	struct stream_encoder *se = NULL;
++	struct dccg *dccg = dc->res_pool->dccg;
++	struct pg_cntl *pg_cntl = dc->res_pool->pg_cntl;
++	int i;
++
++	if (dc->ctx->dce_version != DCN_VERSION_3_5 &&
++		dc->ctx->dce_version != DCN_VERSION_3_51)
++		return;
++
++	for (i = 0; i < dc->res_pool->res_cap->num_dsc; i++) {
++		struct dcn_dsc_state s  = {0};
++
++		dsc = dc->res_pool->dscs[i];
++		dsc->funcs->dsc_read_state(dsc, &s);
++		if (s.dsc_fw_en) {
++			/* disable DSC in OPTC */
++			if (i < dc->res_pool->timing_generator_count) {
++				tg = dc->res_pool->timing_generators[i];
++				tg->funcs->set_dsc_config(tg, OPTC_DSC_DISABLED, 0, 0);
++			}
++			/* disable DSC in stream encoder */
++			if (i < dc->res_pool->stream_enc_count) {
++				se = dc->res_pool->stream_enc[i];
++				se->funcs->dp_set_dsc_config(se, OPTC_DSC_DISABLED, 0, 0);
++				se->funcs->dp_set_dsc_pps_info_packet(se, false, NULL, true);
++			}
++			/* disable DSC block */
++			if (dccg->funcs->set_ref_dscclk)
++				dccg->funcs->set_ref_dscclk(dccg, dsc->inst);
++			dsc->funcs->dsc_disable(dsc);
++
++			/* power down DSC */
++			if (pg_cntl != NULL)
++				pg_cntl->funcs->dsc_pg_control(pg_cntl, dsc->inst, false);
++		}
++	}
++}
++
+ /*
+  * When ASIC goes from VBIOS/VGA mode to driver/accelerated mode we need:
+  *  1. Power down all DC HW blocks
+@@ -1917,6 +1960,13 @@ void dce110_enable_accelerated_mode(stru
+ 		clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
  
+ 		power_down_all_hw_blocks(dc);
++
++		/* DSC could be enabled on eDP during VBIOS post.
++		 * To clean up dsc blocks if eDP is in link but not active.
++		 */
++		if (edp_link_with_sink && (edp_stream_num == 0))
++			clean_up_dsc_blocks(dc);
++
+ 		disable_vga_and_power_gate_all_controllers(dc);
+ 		if (edp_link_with_sink && !keep_edp_vdd_on)
+ 			dc->hwss.edp_power_control(edp_link_with_sink, false);
 
 
