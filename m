@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E561D223D;
-	Wed,  2 Oct 2024 14:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42E41D0E25;
+	Wed,  2 Oct 2024 14:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879858; cv=none; b=K0pG+BvEy6umo2byUr5LDb7ZvCVYD1zR+yn4oyQTrNsbT+g2zD7UE+aL5C9m3rHhsoWsYExKKCd1+PzWCG2aLSsHbm04ngSFYd9t3IbsA8pBDsD1wFn/E+SDW/1loJ6UU4GdJ++GnUwqJaJp4zP4CuV+VBsSp1JRhsLD/Nj0TIw=
+	t=1727879861; cv=none; b=jI4NiJbmrB205niEFFqlsiqm8aRlUgKYAJZbJxfcT0XWJlfuIAb5PGOEAjrbf089ruiEBDQ5mYs+BBQZSUiQz0T8p0iCIZviEHocvW4iPysGE9NxeD0hH7swsPruAd8KvR+9oVSgexS3zva80/EoSVtch/AJ29qEW3LA49eKUTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879858; c=relaxed/simple;
-	bh=HN9iO5YZGq4qjXWbPCPlC3NfUry2lC7aU6IjvCT1/TE=;
+	s=arc-20240116; t=1727879861; c=relaxed/simple;
+	bh=kUjyTd0E2bexkUFSrz/NQSQIt4IHBxEeBJhxfC9LH5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPuZGIxV/H7IGtc8aD1S10lpRI6wtse+UUrhDxT+iRnQUzNvtMQ9cDdo+Q4KMF10vDvBx6W6LqVnwPtMlTtAPKDJZd4j0n7WIRMbbPLRKDS0RGV2CZ93jbvakkq+3LMljvXb+y0dbSZceHqz2xAvpbZho2qU45Ann4iEDu8cDpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzed92rv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZP8/sCRG8Eh5k4g8OA0mhFtSS2GUeANrcu2Qp3bN69+U1ZqNw7AtsL9T9o/JqLXfXZJukPhbUI8EHqghgpU3PorfebAp16kURgVaOvjQMfWkS/mh+/RgdCcNHF3HMmc1ySUYcIn0DINjISGdyu16dBbJjXwfJn06OUlD34Q+Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSkb02zT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzed92rv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7429DC4CEC2;
-	Wed,  2 Oct 2024 14:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSkb02zT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBAEC4CEC2;
+	Wed,  2 Oct 2024 14:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879857;
-	bh=HN9iO5YZGq4qjXWbPCPlC3NfUry2lC7aU6IjvCT1/TE=;
+	s=korg; t=1727879860;
+	bh=kUjyTd0E2bexkUFSrz/NQSQIt4IHBxEeBJhxfC9LH5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzed92rvQmN5AYTCBR8DUHjTQ3zWavyEP4bLP+3ik3H3jq3w50aoL0HxZBWFJwngP
-	 X+ihUjQLGnFPCfVmEdvS6j9/Il6pVsMpF+VkMLNeWhQrvxZU+CoCqxV/or+GeiF9gH
-	 05ezoih4A+lsgl7lHCKZcRS0IaQTGSICNNehU15M=
+	b=aSkb02zTQFRNAag6DSWEvIaRp+/9WG3JtIWgtPdiUr+Nbs3WFM/E1b4gSL9qI4akI
+	 SN0Lehn3UstpBCFLNzy06sTYeIq8SIjiiq65BDluDA5VnulFXWGH1dQZfNU5QCtuIW
+	 Dc9qTyZq+6knyPqVraCk7JJ5FYyNdELWLuv5j0kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 261/538] clk: imx: composite-93: keep root clock on when mcore enabled
-Date: Wed,  2 Oct 2024 14:58:20 +0200
-Message-ID: <20241002125802.560078871@linuxfoundation.org>
+Subject: [PATCH 6.6 232/538] sched/numa: Document vma_numab_state fields
+Date: Wed,  2 Oct 2024 14:57:51 +0200
+Message-ID: <20241002125801.410016025@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,70 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: Mel Gorman <mgorman@techsingularity.net>
 
-[ Upstream commit d342df11726bfac9c3a9d2037afa508ac0e9e44e ]
+[ Upstream commit 9ae5c00ea2e600a8b823f9b95606dd244f3096bf ]
 
-Previously we assumed that the root clock slice is enabled
-by default when kernel boot up. But the bootloader may disable
-the clocks before jump into kernel. The gate ops should be registered
-rather than NULL to make sure the disabled clock can be enabled
-when kernel boot up.  Refine the code to skip disable the clock
-if mcore booted.
+Document the intended usage of the fields.
 
-Fixes: a740d7350ff7 ("clk: imx: imx93: add mcore_booted module paratemter")
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Chancel Liu <chancel.liu@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-3-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+[ mingo: Reformatted to take less vertical space & tidied it up. ]
+
+Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20231010083143.19593-2-mgorman@techsingularity.net
+Stable-dep-of: f22cde4371f3 ("sched/numa: Fix the vma scan starving issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-93.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ include/linux/mm_types.h | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-composite-93.c b/drivers/clk/imx/clk-composite-93.c
-index 81164bdcd6cc9..6c6c5a30f3282 100644
---- a/drivers/clk/imx/clk-composite-93.c
-+++ b/drivers/clk/imx/clk-composite-93.c
-@@ -76,6 +76,13 @@ static int imx93_clk_composite_gate_enable(struct clk_hw *hw)
+diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+index ba25777ec0a71..b53a13d15bbae 100644
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -551,8 +551,29 @@ struct vma_lock {
+ };
  
- static void imx93_clk_composite_gate_disable(struct clk_hw *hw)
- {
+ struct vma_numab_state {
 +	/*
-+	 * Skip disable the root clock gate if mcore enabled.
-+	 * The root clock may be used by the mcore.
++	 * Initialised as time in 'jiffies' after which VMA
++	 * should be scanned.  Delays first scan of new VMA by at
++	 * least sysctl_numa_balancing_scan_delay:
 +	 */
-+	if (mcore_booted)
-+		return;
+ 	unsigned long next_scan;
 +
- 	imx93_clk_composite_gate_endisable(hw, 0);
- }
++	/*
++	 * Time in jiffies when access_pids[] is reset to
++	 * detect phase change behaviour:
++	 */
+ 	unsigned long next_pid_reset;
++
++	/*
++	 * Approximate tracking of PIDs that trapped a NUMA hinting
++	 * fault. May produce false positives due to hash collisions.
++	 *
++	 *   [0] Previous PID tracking
++	 *   [1] Current PID tracking
++	 *
++	 * Window moves after next_pid_reset has expired approximately
++	 * every VMA_PID_RESET_PERIOD jiffies:
++	 */
+ 	unsigned long access_pids[2];
+ };
  
-@@ -222,7 +229,7 @@ struct clk_hw *imx93_clk_composite_flags(const char *name, const char * const *p
- 		hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
- 					       mux_hw, &clk_mux_ro_ops, div_hw,
- 					       &clk_divider_ro_ops, NULL, NULL, flags);
--	} else if (!mcore_booted) {
-+	} else {
- 		gate = kzalloc(sizeof(*gate), GFP_KERNEL);
- 		if (!gate)
- 			goto fail;
-@@ -238,12 +245,6 @@ struct clk_hw *imx93_clk_composite_flags(const char *name, const char * const *p
- 					       &imx93_clk_composite_divider_ops, gate_hw,
- 					       &imx93_clk_composite_gate_ops,
- 					       flags | CLK_SET_RATE_NO_REPARENT);
--	} else {
--		hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
--					       mux_hw, &imx93_clk_composite_mux_ops, div_hw,
--					       &imx93_clk_composite_divider_ops, NULL,
--					       &imx93_clk_composite_gate_ops,
--					       flags | CLK_SET_RATE_NO_REPARENT);
- 	}
- 
- 	if (IS_ERR(hw))
 -- 
 2.43.0
 
