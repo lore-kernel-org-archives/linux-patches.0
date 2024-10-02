@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566A1D043E;
-	Wed,  2 Oct 2024 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706D71D043E;
+	Wed,  2 Oct 2024 13:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876613; cv=none; b=pc0w9yH7llxXmlY8qSn9iCLLQeQ/0Hw5aKq41qeIz5fGTqtUIq3Fv9KcWFT002XYlpqly4tSTMeq2bEeEiTZ1iCkRw7bnoERhaDvYxmoQuKz6mYm7yakXGlx+yWFs5u2RUwmlI4ozuaHxUHeVXSAy8OM6axic4mkZ8/IbJcsZkw=
+	t=1727876615; cv=none; b=nL/Ut/6fEdayt9nKSAPtxwrg+j/ilgbpSWnsV7tEpXDQpQnzA48dGt9OJ2PuAUd4+MoZybSRMin2WJznU8gu5oAo3KohWxj9SY+A4tjsUcxu+GheIDHg5DGRGw26NkkinEi5ShGCkeW8H6ijlf/ApZVNGQjfS/kB6vseQ6pUF1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876613; c=relaxed/simple;
-	bh=+Huko3R/AU46ETzinEWQZO7s2gxr8xPypdFWtcu/PLI=;
+	s=arc-20240116; t=1727876615; c=relaxed/simple;
+	bh=HQ7XmjG2A8ZerAHt2fLS0n6k0ubmXnw33wOKqjhMWJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QZjb+AS2Q4wMrZwWGSPWSKN6FgIWB/aSH3QhPvuRn+7laBlie7pSn7fCAcmUEFRcBL0cm1D44iZDsYeHHVhs7ih/BTwK2i2j1pbWYk/BwaK20YQDD7l4lO/JiTnR5CLkdRw5hGBapQgGlr7qRxcvedh/f8igNZqb28sl80/FKjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaxDb4hU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZGg3DFBMg4GBQDAzZMrGpCSr6HN9wzJ6UlRt7GfQUvG9uk+0LY4Ahz1Zxju/TqmzsuR/9peD91Ui9TTq9ZkmuubexI37++RFJln0qRysYPTrTqncTCTwF+HyuLxhngfwh0U+zUK1aLdd9mZA71IHX+3XCu9Ed/oRa+WsgY829DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8c1N7hT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaxDb4hU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CCFC4CECE;
-	Wed,  2 Oct 2024 13:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8c1N7hT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2D8C4CEC5;
+	Wed,  2 Oct 2024 13:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876612;
-	bh=+Huko3R/AU46ETzinEWQZO7s2gxr8xPypdFWtcu/PLI=;
+	s=korg; t=1727876615;
+	bh=HQ7XmjG2A8ZerAHt2fLS0n6k0ubmXnw33wOKqjhMWJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaxDb4hU8UwnCz8JltQiWkZ2vOj8R0EdbTah2Wh5xYHMvw9fX8xDwNBSSPZvFaiSu
-	 MOgRr6l/qcPFPJ8GPFl0373iEkkgP3MC8mPkf8nz4zZRx9+iWqxL5LZEe+4GXnuBvD
-	 Fn1IHmC2gBXflymnS93uVFYKeBJadMV+7vKYGqmg=
+	b=T8c1N7hTq3qrZmHnb3SerLXJgGt1tVwX1ziuVVI5ir2qEl8vCcU/jlJAdfVyCa9Ew
+	 38+jvfzfhxS1IHfPEIJaV6utGtTVoTIQAXgk/rSKXNzTnvzUJ+9MBUcQxOQTsI1bPr
+	 e00RwMdTMqfUoFsgtqe+pgGdUiGLFjQhhvUPg9ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Juergen Gross <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Jan Beulich <jbeulich@suse.com>
-Subject: [PATCH 6.11 504/695] xen: move checks for e820 conflicts further up
-Date: Wed,  2 Oct 2024 14:58:22 +0200
-Message-ID: <20241002125842.598452343@linuxfoundation.org>
+Subject: [PATCH 6.11 505/695] xen: allow mapping ACPI data using a different physical address
+Date: Wed,  2 Oct 2024 14:58:23 +0200
+Message-ID: <20241002125842.638316667@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
@@ -54,81 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-commit c4498ae316da5b5786ccd448fc555f3339b8e4ca upstream.
+commit 9221222c717dbddac1e3c49906525475d87a3a44 upstream.
 
-Move the checks for e820 memory map conflicts using the
-xen_chk_is_e820_usable() helper further up in order to prepare
-resolving some of the possible conflicts by doing some e820 map
-modifications, which must happen before evaluating the RAM layout.
+When running as a Xen PV dom0 the system needs to map ACPI data of the
+host using host physical addresses, while those addresses can conflict
+with the guest physical addresses of the loaded linux kernel. The same
+problem might apply in case a PV guest is configured to use the host
+memory map.
+
+This conflict can be solved by mapping the ACPI data to a different
+guest physical address, but mapping the data via acpi_os_ioremap()
+must still be possible using the host physical address, as this
+address might be generated by AML when referencing some of the ACPI
+data.
+
+When configured to support running as a Xen PV domain, have an
+implementation of acpi_os_ioremap() being aware of the possibility to
+need above mentioned translation of a host physical address to the
+guest physical address.
+
+This modification requires to #include linux/acpi.h in some sources
+which need to include asm/acpi.h directly.
 
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 Reviewed-by: Jan Beulich <jbeulich@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/setup.c |   44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ arch/x86/include/asm/acpi.h        |    8 ++++++++
+ arch/x86/kernel/acpi/boot.c        |   11 +++++++++++
+ arch/x86/kernel/jailhouse.c        |    1 +
+ arch/x86/kernel/mmconf-fam10h_64.c |    1 +
+ arch/x86/kernel/smpboot.c          |    1 +
+ arch/x86/kernel/x86_init.c         |    1 +
+ arch/x86/xen/p2m.c                 |   35 +++++++++++++++++++++++++++++++++++
+ arch/x86/xen/setup.c               |    2 +-
+ 8 files changed, 59 insertions(+), 1 deletion(-)
 
+--- a/arch/x86/include/asm/acpi.h
++++ b/arch/x86/include/asm/acpi.h
+@@ -174,6 +174,14 @@ void acpi_generic_reduced_hw_init(void);
+ void x86_default_set_root_pointer(u64 addr);
+ u64 x86_default_get_root_pointer(void);
+ 
++#ifdef CONFIG_XEN_PV
++/* A Xen PV domain needs a special acpi_os_ioremap() handling. */
++extern void __iomem * (*acpi_os_ioremap)(acpi_physical_address phys,
++					 acpi_size size);
++void __iomem *x86_acpi_os_ioremap(acpi_physical_address phys, acpi_size size);
++#define acpi_os_ioremap acpi_os_ioremap
++#endif
++
+ #else /* !CONFIG_ACPI */
+ 
+ #define acpi_lapic 0
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -1778,3 +1778,14 @@ u64 x86_default_get_root_pointer(void)
+ {
+ 	return boot_params.acpi_rsdp_addr;
+ }
++
++#ifdef CONFIG_XEN_PV
++void __iomem *x86_acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
++{
++	return ioremap_cache(phys, size);
++}
++
++void __iomem * (*acpi_os_ioremap)(acpi_physical_address phys, acpi_size size) =
++	x86_acpi_os_ioremap;
++EXPORT_SYMBOL_GPL(acpi_os_ioremap);
++#endif
+--- a/arch/x86/kernel/jailhouse.c
++++ b/arch/x86/kernel/jailhouse.c
+@@ -12,6 +12,7 @@
+ #include <linux/kernel.h>
+ #include <linux/reboot.h>
+ #include <linux/serial_8250.h>
++#include <linux/acpi.h>
+ #include <asm/apic.h>
+ #include <asm/io_apic.h>
+ #include <asm/acpi.h>
+--- a/arch/x86/kernel/mmconf-fam10h_64.c
++++ b/arch/x86/kernel/mmconf-fam10h_64.c
+@@ -9,6 +9,7 @@
+ #include <linux/pci.h>
+ #include <linux/dmi.h>
+ #include <linux/range.h>
++#include <linux/acpi.h>
+ 
+ #include <asm/pci-direct.h>
+ #include <linux/sort.h>
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -60,6 +60,7 @@
+ #include <linux/stackprotector.h>
+ #include <linux/cpuhotplug.h>
+ #include <linux/mc146818rtc.h>
++#include <linux/acpi.h>
+ 
+ #include <asm/acpi.h>
+ #include <asm/cacheinfo.h>
+--- a/arch/x86/kernel/x86_init.c
++++ b/arch/x86/kernel/x86_init.c
+@@ -8,6 +8,7 @@
+ #include <linux/ioport.h>
+ #include <linux/export.h>
+ #include <linux/pci.h>
++#include <linux/acpi.h>
+ 
+ #include <asm/acpi.h>
+ #include <asm/bios_ebda.h>
+--- a/arch/x86/xen/p2m.c
++++ b/arch/x86/xen/p2m.c
+@@ -70,6 +70,7 @@
+ #include <linux/memblock.h>
+ #include <linux/slab.h>
+ #include <linux/vmalloc.h>
++#include <linux/acpi.h>
+ 
+ #include <asm/cache.h>
+ #include <asm/setup.h>
+@@ -834,6 +835,34 @@ void __init xen_do_remap_nonram(void)
+ 	pr_info("Remapped %u non-RAM page(s)\n", remapped);
+ }
+ 
++#ifdef CONFIG_ACPI
++/*
++ * Xen variant of acpi_os_ioremap() taking potentially remapped non-RAM
++ * regions into account.
++ * Any attempt to map an area crossing a remap boundary will produce a
++ * WARN() splat.
++ * phys is related to remap->maddr on input and will be rebased to remap->paddr.
++ */
++static void __iomem *xen_acpi_os_ioremap(acpi_physical_address phys,
++					 acpi_size size)
++{
++	unsigned int i;
++	const struct nonram_remap *remap = xen_nonram_remap;
++
++	for (i = 0; i < nr_nonram_remap; i++) {
++		if (phys + size > remap->maddr &&
++		    phys < remap->maddr + remap->size) {
++			WARN_ON(phys < remap->maddr ||
++				phys + size > remap->maddr + remap->size);
++			phys += remap->paddr - remap->maddr;
++			break;
++		}
++	}
++
++	return x86_acpi_os_ioremap(phys, size);
++}
++#endif /* CONFIG_ACPI */
++
+ /*
+  * Add a new non-RAM remap entry.
+  * In case of no free entry found, just crash the system.
+@@ -848,6 +877,12 @@ void __init xen_add_remap_nonram(phys_ad
+ 		BUG();
+ 	}
+ 
++#ifdef CONFIG_ACPI
++	/* Switch to the Xen acpi_os_ioremap() variant. */
++	if (nr_nonram_remap == 0)
++		acpi_os_ioremap = xen_acpi_os_ioremap;
++#endif
++
+ 	xen_nonram_remap[nr_nonram_remap].maddr = maddr;
+ 	xen_nonram_remap[nr_nonram_remap].paddr = paddr;
+ 	xen_nonram_remap[nr_nonram_remap].size = size;
 --- a/arch/x86/xen/setup.c
 +++ b/arch/x86/xen/setup.c
-@@ -854,6 +854,28 @@ char * __init xen_memory_setup(void)
- 	/* Make sure the Xen-supplied memory map is well-ordered. */
- 	e820__update_table(&xen_e820_table);
+@@ -15,12 +15,12 @@
+ #include <linux/cpuidle.h>
+ #include <linux/cpufreq.h>
+ #include <linux/memory_hotplug.h>
++#include <linux/acpi.h>
  
-+	/*
-+	 * Check whether the kernel itself conflicts with the target E820 map.
-+	 * Failing now is better than running into weird problems later due
-+	 * to relocating (and even reusing) pages with kernel text or data.
-+	 */
-+	xen_chk_is_e820_usable(__pa_symbol(_text),
-+			       __pa_symbol(_end) - __pa_symbol(_text),
-+			       "kernel");
-+
-+	/*
-+	 * Check for a conflict of the xen_start_info memory with the target
-+	 * E820 map.
-+	 */
-+	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
-+			       "xen_start_info");
-+
-+	/*
-+	 * Check for a conflict of the hypervisor supplied page tables with
-+	 * the target E820 map.
-+	 */
-+	xen_pt_check_e820();
-+
- 	max_pages = xen_get_max_pages();
- 
- 	/* How many extra pages do we need due to remapping? */
-@@ -926,28 +948,6 @@ char * __init xen_memory_setup(void)
- 
- 	e820__update_table(e820_table);
- 
--	/*
--	 * Check whether the kernel itself conflicts with the target E820 map.
--	 * Failing now is better than running into weird problems later due
--	 * to relocating (and even reusing) pages with kernel text or data.
--	 */
--	xen_chk_is_e820_usable(__pa_symbol(_text),
--			       __pa_symbol(_end) - __pa_symbol(_text),
--			       "kernel");
--
--	/*
--	 * Check for a conflict of the xen_start_info memory with the target
--	 * E820 map.
--	 */
--	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
--			       "xen_start_info");
--
--	/*
--	 * Check for a conflict of the hypervisor supplied page tables with
--	 * the target E820 map.
--	 */
--	xen_pt_check_e820();
--
- 	xen_reserve_xen_mfnlist();
- 
- 	/* Check for a conflict of the initrd with the target E820 map. */
+ #include <asm/elf.h>
+ #include <asm/vdso.h>
+ #include <asm/e820/api.h>
+ #include <asm/setup.h>
+-#include <asm/acpi.h>
+ #include <asm/numa.h>
+ #include <asm/idtentry.h>
+ #include <asm/xen/hypervisor.h>
 
 
