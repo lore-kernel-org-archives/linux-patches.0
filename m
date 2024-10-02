@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9F41D07B1;
-	Wed,  2 Oct 2024 13:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FBD1D094A;
+	Wed,  2 Oct 2024 13:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876686; cv=none; b=PvW0Xds4/B/2oLNojehN/eOisFAjMFe2EvLAvR0RBa4wSxp2UyVxjztMu4SxhP89CrAbKqXYo+FGGjMz91yk0zc3D6DUqcz8uUdvoFQ9oaGBDrOS1T4aQbJqPtcgreCkYAnPHD9rz8USgF27kpmMO+X+AAYBZpH1/VCA6R3T6Hk=
+	t=1727876689; cv=none; b=hk0AsgXvPBRLPzzNq9cWs/4tPGRB9e0Joyq36QrZ2bYhjZ3zN80vT88X/N4UXWVpDDGCmNNfGmSZYQI4oZ6cMaJwSAslxy04fDLZwz0EHUBKKl8P3ZEGZqQOaq9N9aq9i8hkKhMVNgjHgF2nclQMkQ6Ltu72KmaiwpmUDubPMGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876686; c=relaxed/simple;
-	bh=KNK6UuQJSwsP39jW482kzEUJpICdBBM+6iOdbV6VtEY=;
+	s=arc-20240116; t=1727876689; c=relaxed/simple;
+	bh=4lAA3N3SkjijY1qQOCLhz2A7O2c8VHN5n2LmBZR4A3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNv36FMWX4wGWo0jz9tbN6p0pSBQfmEKorvIwypjl7wsHryxtxQDxgNBRqHNZOqBef1jm3MQ4uEfJ+CM3+DlZbX4Z7AWZcTEjP6BYdySqu5bjWq0BHW7TtTp5c6znTm0+xcMZx7r8X11U2c5CdZhA9WIL2DYq786GtkvJuGC/tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqSABj2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOVdJmMgkhCx/f98UtOhuC2c7sXROrGMkyVVeug6sVNbl+Ie10Dg1pyrb91vfEylH69mmca1LN4sRmMQsNLf+nzoLuQFOX3JepYNmWt/brz/fx2EP+1QnOpakCkHVSvYDx41JTIN29dS4+c5zzJnAUI1FIAdvo7jP9RkB6KtDI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWbn8NvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqSABj2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84160C4CECE;
-	Wed,  2 Oct 2024 13:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWbn8NvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A95EC4CEC5;
+	Wed,  2 Oct 2024 13:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876685;
-	bh=KNK6UuQJSwsP39jW482kzEUJpICdBBM+6iOdbV6VtEY=;
+	s=korg; t=1727876688;
+	bh=4lAA3N3SkjijY1qQOCLhz2A7O2c8VHN5n2LmBZR4A3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqSABj2KGnu9iRD0CSeOw+sS+7o6BG6MI6ikNXrwspjluJiaje9tYKBW3m6NgkoHo
-	 E8MHNtg3SHnlOwsYC2Nc52ssMivqebWk1du+A/bNC0c6SaMH4mfR3Od3NcDPUwvedd
-	 hXpbcXbBcvBU12E3HZn7NjIG4PBylSGPAzYjhqfA=
+	b=yWbn8NvUqyjfoJ2kXxA9fSn+rQOBYq/D7iywIemWs7ItWaOZMWoyQAokcBy8uXQHw
+	 3gRJIY3rbkdkm5PC+OLOKsp4Y8504vjRYx9HiOCQ1db4ovABTfSld9KRS1Da3Q471X
+	 1W/Qtwp5hju0W1UxCKc5zY2/CJQuDiiS44f+9Qt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hendrik Farr <kernel@jfarr.cc>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 497/695] io_uring: check for presence of task_work rather than TIF_NOTIFY_SIGNAL
-Date: Wed,  2 Oct 2024 14:58:15 +0200
-Message-ID: <20241002125842.313347473@linuxfoundation.org>
+	yangyun <yangyun50@huawei.com>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.11 498/695] fuse: use exclusive lock when FUSE_I_CACHE_IO_MODE is set
+Date: Wed,  2 Oct 2024 14:58:16 +0200
+Message-ID: <20241002125842.352137085@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,66 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: yangyun <yangyun50@huawei.com>
 
-commit 04beb6e0e08c30c6f845f50afb7d7953603d7a6f upstream.
+commit 2f3d8ff457982f4055fe8f7bf19d3821ba22c376 upstream.
 
-If some part of the kernel adds task_work that needs executing, in terms
-of signaling it'll generally use TWA_SIGNAL or TWA_RESUME. Those two
-directly translate to TIF_NOTIFY_SIGNAL or TIF_NOTIFY_RESUME, and can
-be used for a variety of use case outside of task_work.
+This may be a typo. The comment has said shared locks are
+not allowed when this bit is set. If using shared lock, the
+wait in `fuse_file_cached_io_open` may be forever.
 
-However, io_cqring_wait_schedule() only tests explicitly for
-TIF_NOTIFY_SIGNAL. This means it can miss if task_work got added for
-the task, but used a different kind of signaling mechanism (or none at
-all). Normally this doesn't matter as any task_work will be run once
-the task exits to userspace, except if:
-
-1) The ring is setup with DEFER_TASKRUN
-2) The local work item may generate normal task_work
-
-For condition 2, this can happen when closing a file and it's the final
-put of that file, for example. This can cause stalls where a task is
-waiting to make progress inside io_cqring_wait(), but there's nothing else
-that will wake it up. Hence change the "should we schedule or loop around"
-check to check for the presence of task_work explicitly, rather than just
-TIF_NOTIFY_SIGNAL as the mechanism. While in there, also change the
-ordering of what type of task_work first in terms of ordering, to both
-make it consistent with other task_work runs in io_uring, but also to
-better handle the case of defer task_work generating normal task_work,
-like in the above example.
-
-Reported-by: Jan Hendrik Farr <kernel@jfarr.cc>
-Link: https://github.com/axboe/liburing/issues/1235
-Cc: stable@vger.kernel.org
-Fixes: 846072f16eed ("io_uring: mimimise io_cqring_wait_schedule")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 205c1d802683 ("fuse: allow parallel dio writes with FUSE_DIRECT_IO_ALLOW_MMAP")
+CC: stable@vger.kernel.org # v6.9
+Signed-off-by: yangyun <yangyun50@huawei.com>
+Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fuse/file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2360,7 +2360,7 @@ static inline int io_cqring_wait_schedul
- 		return 1;
- 	if (unlikely(!llist_empty(&ctx->work_llist)))
- 		return 1;
--	if (unlikely(test_thread_flag(TIF_NOTIFY_SIGNAL)))
-+	if (unlikely(task_work_pending(current)))
- 		return 1;
- 	if (unlikely(task_sigpending(current)))
- 		return -EINTR;
-@@ -2463,9 +2463,9 @@ static int io_cqring_wait(struct io_ring
- 		 * If we got woken because of task_work being processed, run it
- 		 * now rather than let the caller do another wait loop.
- 		 */
--		io_run_task_work();
- 		if (!llist_empty(&ctx->work_llist))
- 			io_run_local_work(ctx, nr_wait);
-+		io_run_task_work();
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1345,7 +1345,7 @@ static bool fuse_dio_wr_exclusive_lock(s
  
- 		/*
- 		 * Non-local task_work will be run on exit to userspace, but
+ 	/* shared locks are not allowed with parallel page cache IO */
+ 	if (test_bit(FUSE_I_CACHE_IO_MODE, &fi->state))
+-		return false;
++		return true;
+ 
+ 	/* Parallel dio beyond EOF is not supported, at least for now. */
+ 	if (fuse_io_past_eof(iocb, from))
 
 
