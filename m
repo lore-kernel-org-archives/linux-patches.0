@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C96129CE7;
-	Wed,  2 Oct 2024 13:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FE129CE7;
+	Wed,  2 Oct 2024 13:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875865; cv=none; b=Qy5GnSH/pikCXB9kIKT4+8+tQ5NWXTZdAH+LpxQT9L/0Kfs653ZbiSKhnu+Q863oKRraB3G5dHMXvQdQlhNgFfS87RG/OBLb2SwiCLnQFgR2VWVm3ZMooemfEj/d47KprF7OESZ9iz/2DEh3+8UCWM+lOHy2NR75BT2M02G2eLw=
+	t=1727875868; cv=none; b=QQjMIJjosWtf4WN+mxQ6Dh0y/yDbIad89JznNrLFZmeyeDATGJPxTT83++lwLn2enyJV75NtZJeClK9Fil/uMQIvd7aGL02kGVC6cbu/UlIIkHfkWLEQpRJE2+gso//BxO4YrKoYxS13fCUaDAp7p/1QYpV6LjhvHkJaFGHrAvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875865; c=relaxed/simple;
-	bh=8O2bENdDjLZYl/DEOKiAwJYnDM01qgpXsj7qqbnqWkI=;
+	s=arc-20240116; t=1727875868; c=relaxed/simple;
+	bh=DdvuGUjkIVKUSTQmTxt4R/oIOFxcLgRLmQ6ue8Mt2lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fRp6NeEMOxFs/hNuPJheHdYKxyi6Dn1NvzHAGYv21SI2wlWMXur0zuNCDg8azZaVJJyhs+iKz28daFfsUXuSjEGnr44FvUOnMs/d89VVi+6dfZKyyowHlOa2e1B2JduWrwss1OgCgypSqZuqJGScmnKjjgDCjjvQ+8zBx6WluVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4fPdzkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAr6S+Cj7c1omaJw4Uj+0W7JHEnSQT8CQ9vXxTVBgwaNhrZNK5Zv2mZ+nomhCwpcwd876AZNuHfvdLbflFo9PveVi3hSNsXpWnUqsZm00SYijqt99rMQblouSprhWrjrt8u5cH+X2A35Qs2b5yIzD6Vj6hCJ4tna1RMJoQ2cwz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efiRz5RF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4fPdzkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBAEC4CEC5;
-	Wed,  2 Oct 2024 13:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efiRz5RF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704AEC4CEC5;
+	Wed,  2 Oct 2024 13:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875864;
-	bh=8O2bENdDjLZYl/DEOKiAwJYnDM01qgpXsj7qqbnqWkI=;
+	s=korg; t=1727875867;
+	bh=DdvuGUjkIVKUSTQmTxt4R/oIOFxcLgRLmQ6ue8Mt2lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4fPdzkEdo/BK7YytQrw6ADW4SCKL8H9JclQbyGJATO8t3AsGAhv0zvTp/G5g2UOi
-	 PA6fl2hoIbjV91AuNRf/rjx3f6yaT2+G+hDsqdm+Yy8EEEaThEj7UNLV4wOWJQ0IlI
-	 NTgOFWg3Hg5H7pLVQocyvzbJaELjIWtFRg9wyzP4=
+	b=efiRz5RFBOHoBiuwzt6VkwQuTDxNOHQsLThUPjjCJeaDkpKy85UHp37pE1cfqEsuN
+	 lTlonHTxQH9wcXTlknaf7JMmkq8cl4RJXWViBWnDFBVKGEYdvXtb2FBXAMzgNXjRNp
+	 CW1ns8zyfWtrdVfkFGpSe9HFMlPXGtpUYM1l/fyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Juergen Gross <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 247/695] xen: move max_pfn in xen_memory_setup() out of function scope
-Date: Wed,  2 Oct 2024 14:54:05 +0200
-Message-ID: <20241002125832.310784221@linuxfoundation.org>
+Subject: [PATCH 6.11 248/695] xen: add capability to remap non-RAM pages to different PFNs
+Date: Wed,  2 Oct 2024 14:54:06 +0200
+Message-ID: <20241002125832.349928300@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
@@ -55,188 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 43dc2a0f479b9cd30f6674986d7a40517e999d31 ]
+[ Upstream commit d05208cf7f05420ad10cc7f9550f91d485523659 ]
 
-Instead of having max_pfn as a local variable of xen_memory_setup(),
-make it a static variable in setup.c instead. This avoids having to
-pass it to subfunctions, which will be needed in more cases in future.
+When running as a Xen PV dom0 it can happen that the kernel is being
+loaded to a guest physical address conflicting with the host memory
+map.
 
-Rename it to ini_nr_pages, as the value denotes the currently usable
-number of memory pages as passed from the hypervisor at boot time.
+In order to be able to resolve this conflict, add the capability to
+remap non-RAM areas to different guest PFNs. A function to use this
+remapping information for other purposes than doing the remap will be
+added when needed.
+
+As the number of conflicts should be rather low (currently only
+machines with max. 1 conflict are known), save the remap data in a
+small statically allocated array.
 
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 Reviewed-by: Jan Beulich <jbeulich@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 52 ++++++++++++++++++++++----------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ arch/x86/xen/p2m.c     | 63 ++++++++++++++++++++++++++++++++++++++++++
+ arch/x86/xen/xen-ops.h |  3 ++
+ 2 files changed, 66 insertions(+)
 
-diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index 96765180514bd..4c18d8b1cdf10 100644
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -46,6 +46,9 @@ bool xen_pv_pci_possible;
- /* E820 map used during setting up memory. */
- static struct e820_table xen_e820_table __initdata;
+diff --git a/arch/x86/xen/p2m.c b/arch/x86/xen/p2m.c
+index 7c735b730acd2..2809bded30ea3 100644
+--- a/arch/x86/xen/p2m.c
++++ b/arch/x86/xen/p2m.c
+@@ -80,6 +80,7 @@
+ #include <asm/xen/hypervisor.h>
+ #include <xen/balloon.h>
+ #include <xen/grant_table.h>
++#include <xen/hvc-console.h>
  
-+/* Number of initially usable memory pages. */
-+static unsigned long ini_nr_pages __initdata;
+ #include "xen-ops.h"
+ 
+@@ -792,6 +793,68 @@ int clear_foreign_p2m_mapping(struct gnttab_unmap_grant_ref *unmap_ops,
+ 	return ret;
+ }
+ 
++/* Remapped non-RAM areas */
++#define NR_NONRAM_REMAP 4
++static struct nonram_remap {
++	phys_addr_t maddr;
++	phys_addr_t paddr;
++	size_t size;
++} xen_nonram_remap[NR_NONRAM_REMAP] __ro_after_init;
++static unsigned int nr_nonram_remap __ro_after_init;
 +
- /*
-  * Buffer used to remap identity mapped pages. We only need the virtual space.
-  * The physical page behind this address is remapped as needed to different
-@@ -212,7 +215,7 @@ static int __init xen_free_mfn(unsigned long mfn)
-  * as a fallback if the remapping fails.
-  */
- static void __init xen_set_identity_and_release_chunk(unsigned long start_pfn,
--			unsigned long end_pfn, unsigned long nr_pages)
-+						      unsigned long end_pfn)
- {
- 	unsigned long pfn, end;
- 	int ret;
-@@ -220,7 +223,7 @@ static void __init xen_set_identity_and_release_chunk(unsigned long start_pfn,
- 	WARN_ON(start_pfn > end_pfn);
++/*
++ * Do the real remapping of non-RAM regions as specified in the
++ * xen_nonram_remap[] array.
++ * In case of an error just crash the system.
++ */
++void __init xen_do_remap_nonram(void)
++{
++	unsigned int i;
++	unsigned int remapped = 0;
++	const struct nonram_remap *remap = xen_nonram_remap;
++	unsigned long pfn, mfn, end_pfn;
++
++	for (i = 0; i < nr_nonram_remap; i++) {
++		end_pfn = PFN_UP(remap->paddr + remap->size);
++		pfn = PFN_DOWN(remap->paddr);
++		mfn = PFN_DOWN(remap->maddr);
++		while (pfn < end_pfn) {
++			if (!set_phys_to_machine(pfn, mfn))
++				panic("Failed to set p2m mapping for pfn=%lx mfn=%lx\n",
++				       pfn, mfn);
++
++			pfn++;
++			mfn++;
++			remapped++;
++		}
++
++		remap++;
++	}
++
++	pr_info("Remapped %u non-RAM page(s)\n", remapped);
++}
++
++/*
++ * Add a new non-RAM remap entry.
++ * In case of no free entry found, just crash the system.
++ */
++void __init xen_add_remap_nonram(phys_addr_t maddr, phys_addr_t paddr,
++				 unsigned long size)
++{
++	BUG_ON((maddr & ~PAGE_MASK) != (paddr & ~PAGE_MASK));
++
++	if (nr_nonram_remap == NR_NONRAM_REMAP) {
++		xen_raw_console_write("Number of required E820 entry remapping actions exceed maximum value\n");
++		BUG();
++	}
++
++	xen_nonram_remap[nr_nonram_remap].maddr = maddr;
++	xen_nonram_remap[nr_nonram_remap].paddr = paddr;
++	xen_nonram_remap[nr_nonram_remap].size = size;
++
++	nr_nonram_remap++;
++}
++
+ #ifdef CONFIG_XEN_DEBUG_FS
+ #include <linux/debugfs.h>
+ static int p2m_dump_show(struct seq_file *m, void *v)
+diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
+index 9a27d1d653d3d..e1b782e823e6b 100644
+--- a/arch/x86/xen/xen-ops.h
++++ b/arch/x86/xen/xen-ops.h
+@@ -47,6 +47,9 @@ void xen_mm_unpin_all(void);
+ #ifdef CONFIG_X86_64
+ void __init xen_relocate_p2m(void);
+ #endif
++void __init xen_do_remap_nonram(void);
++void __init xen_add_remap_nonram(phys_addr_t maddr, phys_addr_t paddr,
++				 unsigned long size);
  
- 	/* Release pages first. */
--	end = min(end_pfn, nr_pages);
-+	end = min(end_pfn, ini_nr_pages);
- 	for (pfn = start_pfn; pfn < end; pfn++) {
- 		unsigned long mfn = pfn_to_mfn(pfn);
- 
-@@ -341,15 +344,14 @@ static void __init xen_do_set_identity_and_remap_chunk(
-  * to Xen and not remapped.
-  */
- static unsigned long __init xen_set_identity_and_remap_chunk(
--	unsigned long start_pfn, unsigned long end_pfn, unsigned long nr_pages,
--	unsigned long remap_pfn)
-+	unsigned long start_pfn, unsigned long end_pfn, unsigned long remap_pfn)
- {
- 	unsigned long pfn;
- 	unsigned long i = 0;
- 	unsigned long n = end_pfn - start_pfn;
- 
- 	if (remap_pfn == 0)
--		remap_pfn = nr_pages;
-+		remap_pfn = ini_nr_pages;
- 
- 	while (i < n) {
- 		unsigned long cur_pfn = start_pfn + i;
-@@ -358,19 +360,19 @@ static unsigned long __init xen_set_identity_and_remap_chunk(
- 		unsigned long remap_range_size;
- 
- 		/* Do not remap pages beyond the current allocation */
--		if (cur_pfn >= nr_pages) {
-+		if (cur_pfn >= ini_nr_pages) {
- 			/* Identity map remaining pages */
- 			set_phys_range_identity(cur_pfn, cur_pfn + size);
- 			break;
- 		}
--		if (cur_pfn + size > nr_pages)
--			size = nr_pages - cur_pfn;
-+		if (cur_pfn + size > ini_nr_pages)
-+			size = ini_nr_pages - cur_pfn;
- 
- 		remap_range_size = xen_find_pfn_range(&remap_pfn);
- 		if (!remap_range_size) {
- 			pr_warn("Unable to find available pfn range, not remapping identity pages\n");
- 			xen_set_identity_and_release_chunk(cur_pfn,
--						cur_pfn + left, nr_pages);
-+							   cur_pfn + left);
- 			break;
- 		}
- 		/* Adjust size to fit in current e820 RAM region */
-@@ -397,18 +399,18 @@ static unsigned long __init xen_set_identity_and_remap_chunk(
- }
- 
- static unsigned long __init xen_count_remap_pages(
--	unsigned long start_pfn, unsigned long end_pfn, unsigned long nr_pages,
-+	unsigned long start_pfn, unsigned long end_pfn,
- 	unsigned long remap_pages)
- {
--	if (start_pfn >= nr_pages)
-+	if (start_pfn >= ini_nr_pages)
- 		return remap_pages;
- 
--	return remap_pages + min(end_pfn, nr_pages) - start_pfn;
-+	return remap_pages + min(end_pfn, ini_nr_pages) - start_pfn;
- }
- 
--static unsigned long __init xen_foreach_remap_area(unsigned long nr_pages,
-+static unsigned long __init xen_foreach_remap_area(
- 	unsigned long (*func)(unsigned long start_pfn, unsigned long end_pfn,
--			      unsigned long nr_pages, unsigned long last_val))
-+			      unsigned long last_val))
- {
- 	phys_addr_t start = 0;
- 	unsigned long ret_val = 0;
-@@ -436,8 +438,7 @@ static unsigned long __init xen_foreach_remap_area(unsigned long nr_pages,
- 				end_pfn = PFN_UP(entry->addr);
- 
- 			if (start_pfn < end_pfn)
--				ret_val = func(start_pfn, end_pfn, nr_pages,
--					       ret_val);
-+				ret_val = func(start_pfn, end_pfn, ret_val);
- 			start = end;
- 		}
- 	}
-@@ -700,7 +701,7 @@ static void __init xen_reserve_xen_mfnlist(void)
-  **/
- char * __init xen_memory_setup(void)
- {
--	unsigned long max_pfn, pfn_s, n_pfns;
-+	unsigned long pfn_s, n_pfns;
- 	phys_addr_t mem_end, addr, size, chunk_size;
- 	u32 type;
- 	int rc;
-@@ -712,9 +713,8 @@ char * __init xen_memory_setup(void)
- 	int op;
- 
- 	xen_parse_512gb();
--	max_pfn = xen_get_pages_limit();
--	max_pfn = min(max_pfn, xen_start_info->nr_pages);
--	mem_end = PFN_PHYS(max_pfn);
-+	ini_nr_pages = min(xen_get_pages_limit(), xen_start_info->nr_pages);
-+	mem_end = PFN_PHYS(ini_nr_pages);
- 
- 	memmap.nr_entries = ARRAY_SIZE(xen_e820_table.entries);
- 	set_xen_guest_handle(memmap.buffer, xen_e820_table.entries);
-@@ -767,10 +767,10 @@ char * __init xen_memory_setup(void)
- 	max_pages = xen_get_max_pages();
- 
- 	/* How many extra pages do we need due to remapping? */
--	max_pages += xen_foreach_remap_area(max_pfn, xen_count_remap_pages);
-+	max_pages += xen_foreach_remap_area(xen_count_remap_pages);
- 
--	if (max_pages > max_pfn)
--		extra_pages += max_pages - max_pfn;
-+	if (max_pages > ini_nr_pages)
-+		extra_pages += max_pages - ini_nr_pages;
- 
- 	/*
- 	 * Clamp the amount of extra memory to a EXTRA_MEM_RATIO
-@@ -779,8 +779,8 @@ char * __init xen_memory_setup(void)
- 	 * Make sure we have no memory above max_pages, as this area
- 	 * isn't handled by the p2m management.
- 	 */
--	maxmem_pages = EXTRA_MEM_RATIO * min(max_pfn, PFN_DOWN(MAXMEM));
--	extra_pages = min3(maxmem_pages, extra_pages, max_pages - max_pfn);
-+	maxmem_pages = EXTRA_MEM_RATIO * min(ini_nr_pages, PFN_DOWN(MAXMEM));
-+	extra_pages = min3(maxmem_pages, extra_pages, max_pages - ini_nr_pages);
- 	i = 0;
- 	addr = xen_e820_table.entries[0].addr;
- 	size = xen_e820_table.entries[0].size;
-@@ -885,7 +885,7 @@ char * __init xen_memory_setup(void)
- 	 * Set identity map on non-RAM pages and prepare remapping the
- 	 * underlying RAM.
- 	 */
--	xen_foreach_remap_area(max_pfn, xen_set_identity_and_remap_chunk);
-+	xen_foreach_remap_area(xen_set_identity_and_remap_chunk);
- 
- 	pr_info("Released %ld page(s)\n", xen_released_pages);
- 
+ void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
+ 				   const char *component);
 -- 
 2.43.0
 
