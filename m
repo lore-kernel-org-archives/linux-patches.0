@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91B629CE7;
-	Wed,  2 Oct 2024 13:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA391D0164;
+	Wed,  2 Oct 2024 13:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876966; cv=none; b=iaiEbyAPfKIPCiAZi3OXHpQlLsCpoonsWw9gkRbfG131LTyi5Z8IGfATMp1YuRVFp04R9zJ82VwY+KcBoDLlPamxRMF3MlGkkvgOaamrJh+8vK3ioMsFDRP6UY/F7+6O39onH7oKxPbcY7cXIkYiUcqbfix4ZL3UzJeDoURXXag=
+	t=1727876969; cv=none; b=YARS6QrwgTPmDKilAycdjvHE55GoZ1boOrK45IcJ1bFT3CUrGoL78a9aPtRxi0ugHcBad49OJsqgc7PLrBHPj5VJuYbP0rgpEtmcCOs/E8f8gcX5KokYI8gkJA6bikoFh4KPaY+eCWxISwt5LYW8bEahPK+SLJruQqiB7pleKWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876966; c=relaxed/simple;
-	bh=ZCadafAj1yWB/3HKEr3y3ssU0nc03RD9ZJtD2BLduR4=;
+	s=arc-20240116; t=1727876969; c=relaxed/simple;
+	bh=KC1SE+4P3gJxStMMca+PmUZby+2zSXRwPwEu5aM8Egc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9H3lU5Dbj0NrN5NpcxydMCc9YXADN1gSA+YPnMzuNjRCwgHLMADcvZNZBB9+2uyqWyizgYK4yWaSxaVMmVMEquEQL02unFIs+94Mz2gWPYNhIBIW6ZA3xXTBbkPHx5KgxlbB7UzxeE6gScaq8VgjHcNYXvOcYx8AcWNJY4FQlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKc6xiWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anxEYkwIAe8f9xxAVlHu6C+3sakuW8sAXdJP5UX27fL+uwGwQbpBDUaUoBMl6YkF/+MoC0P5WmOa1w//Cp3xd3vMMgHGdjHKOwwNDSs6WDOupVX4EKOEhvUIKn+OMaDURlK2e50/bq4GipRCpIWzmeK96dMmFuI/FHG/EedjU8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhyMBb6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKc6xiWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3232CC4CEC2;
-	Wed,  2 Oct 2024 13:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhyMBb6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2ACC4CEC2;
+	Wed,  2 Oct 2024 13:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876966;
-	bh=ZCadafAj1yWB/3HKEr3y3ssU0nc03RD9ZJtD2BLduR4=;
+	s=korg; t=1727876969;
+	bh=KC1SE+4P3gJxStMMca+PmUZby+2zSXRwPwEu5aM8Egc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKc6xiWWZmx798p16pu9WEQrCPLxQSNBNjP1Qwz6E0Q0lMXmm2EImEEcg/Gfdd4oh
-	 vw5R95+ie6OkBk0DRAeSafYZS8koYc8OXKpuX6x0wP5sd9cw8uQoLlUeK3iNt96oKO
-	 XQfwo7zXXWtCOJ4ZCgXmO8PYeW/O2rrkY3NeZ7Tc=
+	b=AhyMBb6PudpThiPGCe1JlfrNvGM3whpXfnMnT3RQGHTi20I4+TTqLKiKTl7+omyw/
+	 CPnwlCcoOFvswuYqTC7akzHeDEwSiG8EMO4yyesL43ijpPwNEdHWgyG4ySBAHx/MX7
+	 z+ifIQ4sNulaPtyJHDdGg8B6m/ZqEch6VudvpvBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.11 620/695] wifi: rtw88: 8822c: Fix reported RX band width
-Date: Wed,  2 Oct 2024 15:00:18 +0200
-Message-ID: <20241002125847.260839990@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.11 594/695] tty: rp2: Fix reset with non forgiving PCIe host bridges
+Date: Wed,  2 Oct 2024 14:59:52 +0200
+Message-ID: <20241002125846.221868271@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
+commit f16dd10ba342c429b1e36ada545fb36d4d1f0e63 upstream.
 
-"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
+The write to RP2_GLOBAL_CMD followed by an immediate read of
+RP2_GLOBAL_CMD in rp2_reset_asic() is intented to flush out the write,
+however by then the device is already in reset and cannot respond to a
+memory cycle access.
 
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
+On platforms such as the Raspberry Pi 4 and others using the
+pcie-brcmstb.c driver, any memory access to a device that cannot respond
+is met with a fatal system error, rather than being substituted with all
+1s as is usually the case on PC platforms.
 
-This is because the RX band width is calculated incorrectly. Fix the
-calculation according to the phydm_rxsc_2_bw() function from the
-official drivers.
+Swapping the delay and the read ensures that the device has finished
+resetting before we attempt to read from it.
 
-After:
-
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
-
-It also works correctly with the AP configured for 20 MHz and 40 MHz.
-
-Tested with RTL8822CE.
-
-Cc: stable@vger.kernel.org
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
+Fixes: 7d9f49afa451 ("serial: rp2: New driver for Comtrol RocketPort 2 cards")
+Cc: stable <stable@kernel.org>
+Suggested-by: Jim Quinlan <james.quinlan@broadcom.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20240906225435.707837-1-florian.fainelli@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/tty/serial/rp2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -2611,12 +2611,14 @@ static void query_phy_status_page1(struc
- 	else
- 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
+--- a/drivers/tty/serial/rp2.c
++++ b/drivers/tty/serial/rp2.c
+@@ -577,8 +577,8 @@ static void rp2_reset_asic(struct rp2_ca
+ 	u32 clk_cfg;
  
--	if (rxsc >= 9 && rxsc <= 12)
-+	if (rxsc == 0)
-+		bw = rtwdev->hal.current_band_width;
-+	else if (rxsc >= 1 && rxsc <= 8)
-+		bw = RTW_CHANNEL_WIDTH_20;
-+	else if (rxsc >= 9 && rxsc <= 12)
- 		bw = RTW_CHANNEL_WIDTH_40;
--	else if (rxsc >= 13)
--		bw = RTW_CHANNEL_WIDTH_80;
- 	else
--		bw = RTW_CHANNEL_WIDTH_20;
-+		bw = RTW_CHANNEL_WIDTH_80;
+ 	writew(1, base + RP2_GLOBAL_CMD);
+-	readw(base + RP2_GLOBAL_CMD);
+ 	msleep(100);
++	readw(base + RP2_GLOBAL_CMD);
+ 	writel(0, base + RP2_CLK_PRESCALER);
  
- 	channel = GET_PHY_STAT_P1_CHANNEL(phy_status);
- 	rtw_set_rx_freq_band(pkt_stat, channel);
+ 	/* TDM clock configuration */
 
 
