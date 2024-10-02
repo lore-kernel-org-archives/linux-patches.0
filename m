@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C211D0E27;
-	Wed,  2 Oct 2024 14:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77C61D26F3;
+	Wed,  2 Oct 2024 14:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877904; cv=none; b=A+0QqxVMxNt2e6oqRXiBXfVoMwovJGevv40bGpHFTYbN9EzVrquouu1x/5EveM8xo3YPWKWawKKR3I3gdEIfSE6lmrS03XKrbds9KEFV6lD88XkCGkSaZPzjS8zMumIzHBnivLGAs8UD4Qo0aPhB3ju/n0m+LIH4KxDlL3wmMK8=
+	t=1727877907; cv=none; b=WDiwER/rtVGmwlvsIoDbtHE0b2iHJtwwMiATe2uEza6HJ43srn6ge7/NrFBwBb8NgCgxVK20I2dmAipN2Crp9nzR3cdDHxrqsDFWaam+PSo5lRN0VuZAWgQvAcyin9E4dpMd0loF0BVs8PPJ4cI/4P9gP13Q0bIxlesmX0jPyS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877904; c=relaxed/simple;
-	bh=wwXZhktZHAYWzusY+MduCi9gUZCvKzmAtiK33H4i2z8=;
+	s=arc-20240116; t=1727877907; c=relaxed/simple;
+	bh=BgA4oxFulte7abMbnYJdCtXTeRj80p2vNo+Q/+Ylg4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q754sb6qwHalWpfPcy3j+iXjrM0Hv7WAEiRycDlmwR7ELLhHu3bGv1CEdcX7zfVf0jfM0/RhTQvO9Ss2HOSsHmLaEvw8b4tKGXm1yJanniw4B8MCwlz0H6bifO404d35dMmFEQa9N4nsWTrbIHkNGYZ+yQ4ASFnYunHVuCwcquI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmyqoG33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=engCRSINhEvlDMLSh0gZQ06WSuamqogvBngCeLjvE8GodVRDWf3osnpIjjLoUi1+TDm7EShRXTPdDgHhzIjYnEVECiHOjCJN7oQyMTkiuZgX5CGshFH6d5Ij7Uzv8ZgMDhqzfVqxLeWM8oopSquon5oLB9+JtB0sCM0J7L7X9fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNZ5yk3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmyqoG33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A7BC4CEC5;
-	Wed,  2 Oct 2024 14:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNZ5yk3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54A1C4CEC2;
+	Wed,  2 Oct 2024 14:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877904;
-	bh=wwXZhktZHAYWzusY+MduCi9gUZCvKzmAtiK33H4i2z8=;
+	s=korg; t=1727877907;
+	bh=BgA4oxFulte7abMbnYJdCtXTeRj80p2vNo+Q/+Ylg4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmyqoG332H+mxgVeiEjlRoaQbivbkwLiUJslHMjGctkPJfDzSu3ztyawHk5YX3ED+
-	 Sh/ZMCquQbFS7IzgChOQx9PTu/srkzBeHDan/IsmFV2K2MSkE+7f6hLn6D40rumDhP
-	 7gf6isFXi3WnrLTt8gvJL9S3Hka3VXfUfhH0LDDM=
+	b=YNZ5yk3E6E7uWCCnLhEhfOuDQpF2iNB15UVVNJ4uIZP7uV/eHHE7ibFshG6nKgdSE
+	 9WBnI71Pdq+wojv4tRlLv9jACseeFqHgW5IhkjTrRANoGlwBCYDTW74I2Oc+x92SZB
+	 8ovtpFJgIDEKJ8fKNyb3zB211Tu8s8PGyhC29R80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vladimir Lypak <vladimir.lypak@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 203/634] drm/msm/a5xx: disable preemption in submits by default
-Date: Wed,  2 Oct 2024 14:55:03 +0200
-Message-ID: <20241002125819.119907015@linuxfoundation.org>
+Subject: [PATCH 6.10 204/634] drm/msm/a5xx: properly clear preemption records on resume
+Date: Wed,  2 Oct 2024 14:55:04 +0200
+Message-ID: <20241002125819.158597168@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,48 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Lypak <vladimir.lypak@gmail.com>
 
-[ Upstream commit db9dec2db76146d65e1cfbb6afb2e2bd5dab67f8 ]
+[ Upstream commit 64fd6d01a52904bdbda0ce810a45a428c995a4ca ]
 
-Fine grain preemption (switching from/to points within submits)
-requires extra handling in command stream of those submits, especially
-when rendering with tiling (using GMEM). However this handling is
-missing at this point in mesa (and always was). For this reason we get
-random GPU faults and hangs if more than one priority level is used
-because local preemption is enabled prior to executing command stream
-from submit.
-With that said it was ahead of time to enable local preemption by
-default considering the fact that even on downstream kernel it is only
-enabled if requested via UAPI.
+Two fields of preempt_record which are used by CP aren't reset on
+resume: "data" and "info". This is the reason behind faults which happen
+when we try to switch to the ring that was active last before suspend.
+In addition those faults can't be recovered from because we use suspend
+and resume to do so (keeping values of those fields again).
 
-Fixes: a7a4c19c36de ("drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register")
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
 Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/612041/
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/612043/
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index c003f970189b0..64466282689fd 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -150,9 +150,13 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
- 	OUT_RING(ring, 1);
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index f58dd564d122b..67a8ef4adf6b6 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -204,6 +204,8 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+ 		return;
  
--	/* Enable local preemption for finegrain preemption */
-+	/*
-+	 * Disable local preemption by default because it requires
-+	 * user-space to be aware of it and provide additional handling
-+	 * to restore rendering state or do various flushes on switch.
-+	 */
- 	OUT_PKT7(ring, CP_PREEMPT_ENABLE_LOCAL, 1);
--	OUT_RING(ring, 0x1);
-+	OUT_RING(ring, 0x0);
- 
- 	/* Allow CP_CONTEXT_SWITCH_YIELD packets in the IB2 */
- 	OUT_PKT7(ring, CP_YIELD_ENABLE, 1);
+ 	for (i = 0; i < gpu->nr_rings; i++) {
++		a5xx_gpu->preempt[i]->data = 0;
++		a5xx_gpu->preempt[i]->info = 0;
+ 		a5xx_gpu->preempt[i]->wptr = 0;
+ 		a5xx_gpu->preempt[i]->rptr = 0;
+ 		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
 -- 
 2.43.0
 
