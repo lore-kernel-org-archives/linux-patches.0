@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACE11EF1D;
-	Wed,  2 Oct 2024 14:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9941D0F7F;
+	Wed,  2 Oct 2024 14:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879617; cv=none; b=N8byZe9oF43/UrOySh/391YYHIe3FRn4LCenDoS0QAxVhkmDZ9LhzCIYFkQhf9GDst+2ruelcrboN1OnMTfv/2Y90njtb6LLD7osbZ8t+oFBaKEwJHWfgdhk3DYYpFo0snGSEGHiziMCj8pewOCGQtbnPDp4AYZduN7DchnnIrc=
+	t=1727879620; cv=none; b=h7v06YISjL6mxHKcD+hvON18xpNYFCsguAewcjTS1F1ppTrHsJ55KN2W4xU+M/buYXW4muOFAXNaUUmCTRqoJpQM1CJdVaZieNgmd41C1C3hV2e5gLctwHFuFuiTUav3NP/DbJ9yaT7LU200DSn5RAWgVWjUKWoUmUKqA51uufE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879617; c=relaxed/simple;
-	bh=kU0oLZhCcKqycGZsyMiA3xddJL0jtBx/OJV//PIsmpw=;
+	s=arc-20240116; t=1727879620; c=relaxed/simple;
+	bh=1bcJRlpIHkDs8pBsJUo5c4z4daakA8HLhG6FDcdYT+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCeLCbxRlASSdETTiRBPwqOi5pIj2HuF/RHdlMO0bm/m0DEk7BRx1GHjGEYurSzWCOXogKJZHeC6e0zsf5kh/n2cd8exS8iuetVyBC/aeI4Ll98odQHgkwmffPoG5Uq3kNRchJv/rppwsVhj+py3iRlzsgWbu2MOSogIVIxTfww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBSKgphQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwWBemUK+kifyvkJBJMG+C/GgsopUIybuAefUdzagA+tAqMyyocsXgNIAwXpDFjhJxacYLyAB4nv3GWCVGwCPRJTjKN2bJPiycxJa0MP/jDUXVzNB4K/LQmgpfpvRVQP8A1GtlN7KRqJxp06iFrI5QvPHC+/J7VVkx0Py7zFfuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPGBoB2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBSKgphQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D24C4CEC2;
-	Wed,  2 Oct 2024 14:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPGBoB2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706F9C4CEC5;
+	Wed,  2 Oct 2024 14:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879616;
-	bh=kU0oLZhCcKqycGZsyMiA3xddJL0jtBx/OJV//PIsmpw=;
+	s=korg; t=1727879619;
+	bh=1bcJRlpIHkDs8pBsJUo5c4z4daakA8HLhG6FDcdYT+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBSKgphQFMaUIw8WOvJ27hMz31roBlUo3F7g+bRDL4sezHl064yZgveLt7Lkm1lke
-	 /uvYkHoyFtg6uF67S/QQLYR+zrLodbF3sVV6HfK0OqkRbcN6erQGadbS4rfM4nyhGd
-	 xtNhw8gB5lLFS2eEUbhS7XmdF38a8zluvG0fZy9o=
+	b=ZPGBoB2i2BVnSDQtOECF22y6lNgms3+EFgexJZyE5uvQk1iZ8i+wWkXQjmddTiCjM
+	 gRZp+jzsUUvKppMMMYj5qxPcG+8BBotwBjw6f2i2/07FrZFVAsC/VxQgD4Ezst0NhL
+	 qiUWqRHbPQjRzENpZIE3lu/n/gfy7ubkzt1zrBV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/538] selftests/bpf: Workaround strict bpf_lsm return value check.
-Date: Wed,  2 Oct 2024 14:56:59 +0200
-Message-ID: <20241002125759.361184906@linuxfoundation.org>
+Subject: [PATCH 6.6 181/538] selftests/bpf: Fix error linking uprobe_multi on mips
+Date: Wed,  2 Oct 2024 14:57:00 +0200
+Message-ID: <20241002125759.401627536@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit aa8ebb270c66cea1f56a25d0f938036e91ad085a ]
+[ Upstream commit a5f40d596bff182b4b47547712f540885e8fb17b ]
 
-test_progs-no_alu32 -t libbpf_get_fd_by_id_opts
-is being rejected by the verifier with the following error
-due to compiler optimization:
+Linking uprobe_multi.c on mips64el fails due to relocation overflows, when
+the GOT entries required exceeds the default maximum. Add a specific CFLAGS
+(-mxgot) for uprobe_multi.c on MIPS that allows using a larger GOT and
+avoids errors such as:
 
-6: (67) r0 <<= 62                     ; R0_w=scalar(smax=0x4000000000000000,umax=0xc000000000000000,smin32=0,smax32=umax32=0,var_off=(0x0; 0xc000000000000000))
-7: (c7) r0 s>>= 63                    ; R0_w=scalar(smin=smin32=-1,smax=smax32=0)
-;  @ test_libbpf_get_fd_by_id_opts.c:0
-8: (57) r0 &= -13                     ; R0_w=scalar(smax=0x7ffffffffffffff3,umax=0xfffffffffffffff3,smax32=0x7ffffff3,umax32=0xfffffff3,var_off=(0x0; 0xfffffffffffffff3))
-; int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode) @ test_libbpf_get_fd_by_id_opts.c:27
-9: (95) exit
-At program exit the register R0 has smax=9223372036854775795 should have been in [-4095, 0]
+  /tmp/ccBTNQzv.o: in function `bench':
+  uprobe_multi.c:49:(.text+0x1d7720): relocation truncated to fit: R_MIPS_GOT_DISP against `uprobe_multi_func_08188'
+  uprobe_multi.c:49:(.text+0x1d7730): relocation truncated to fit: R_MIPS_GOT_DISP against `uprobe_multi_func_08189'
+  ...
+  collect2: error: ld returned 1 exit status
 
-Workaround by adding barrier().
-Eventually the verifier will be able to recognize it.
-
-Fixes: 5d99e198be27 ("bpf, lsm: Add check for BPF LSM return value")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 519dfeaf5119 ("selftests/bpf: Add uprobe_multi test program")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/14eb7b70f8ccef9834874d75eb373cb9292129da.1721692479.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c  | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
-index f5ac5f3e89196..568816307f712 100644
---- a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
-+++ b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
-@@ -31,6 +31,7 @@ int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode)
+diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+index caede9b574cb1..598cd118dfd65 100644
+--- a/tools/testing/selftests/bpf/Makefile
++++ b/tools/testing/selftests/bpf/Makefile
+@@ -702,6 +702,8 @@ $(OUTPUT)/veristat: $(OUTPUT)/veristat.o
+ 	$(call msg,BINARY,,$@)
+ 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS) $(filter %.a %.o,$^) $(LDLIBS) -o $@
  
- 	if (fmode & FMODE_WRITE)
- 		return -EACCES;
-+	barrier();
- 
- 	return 0;
- }
++# Linking uprobe_multi can fail due to relocation overflows on mips.
++$(OUTPUT)/uprobe_multi: CFLAGS += $(if $(filter mips, $(ARCH)),-mxgot)
+ $(OUTPUT)/uprobe_multi: uprobe_multi.c
+ 	$(call msg,BINARY,,$@)
+ 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 -- 
 2.43.0
 
