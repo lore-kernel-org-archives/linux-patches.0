@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D481D1E69;
-	Wed,  2 Oct 2024 14:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74951EA80;
+	Wed,  2 Oct 2024 14:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880264; cv=none; b=Z4weLLomjJTxIbijzYKr64z0WCkIHKBNoAZRDGduCspQj7alHIJFQHE36xJbmjX21pO3bTMLdj68h1SI14Aw6TQoMAAT9XWXqFVT4vKPOYeu+02SAs9KdYcJEP7aBEXCB47cmEn1PYHQR+6ouJ9wJJsjucqXcJLy2Ln/M+8G+KQ=
+	t=1727880266; cv=none; b=G6EZFgMWCpYooZLpnomjwZhMA+OyLq0f8GhxEsA6mHMdR1YRdjzTOYpm2iB8icQ9szOvqFr3+9HygIS2Pa78ETuGzpGhrYlCBG4VEkwcskS8Q4UziYZWlbNUYGob+UP1k4ECIHjimwM6Md22eK7G9C8MSOVSfyQmtzX7ubnlQxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880264; c=relaxed/simple;
-	bh=Lt1r2ZEewgPqEM1GJ+watjsDoDeq9tRa1ND25rcZaho=;
+	s=arc-20240116; t=1727880266; c=relaxed/simple;
+	bh=bYl6RRW5eFsKSDzRrFVyQFYWF7vhP7Ygh1iQFGRQ988=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMTuANUVSgJZ4cMbrDw0rlnUtf5GXNS2HzBBlJ/gTXbXM/aXYwcU7vP+oqFQQWKvkBsJBpQP6+oOmqEgBEczo2SYugnq7Ozn0+CTuU8Q6dFQPdWfM1LAKhpRN0MotsWMw63vkw4/uH6d8DIps11TqkYWtUL/nuVL1mUAHZXPxKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcvFD5/T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dt8lxdOe8EIC4zIbL8eer5iVyNpDFoO/nXth+90qveVr8OzFBHyuImOU3fQOPFb9HFGGIovY/Y/7RktAoDqECnA1smbGJBPOdMX0NzbXYs+kMMvtF6l48QeIyGV/BM41eyGTo0YGXTOd24LleZjhviTKTXfg4Hm2OuClsPxZ/XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaADlp3S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcvFD5/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0D0C4CEC2;
-	Wed,  2 Oct 2024 14:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaADlp3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D44C4CEC2;
+	Wed,  2 Oct 2024 14:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880263;
-	bh=Lt1r2ZEewgPqEM1GJ+watjsDoDeq9tRa1ND25rcZaho=;
+	s=korg; t=1727880266;
+	bh=bYl6RRW5eFsKSDzRrFVyQFYWF7vhP7Ygh1iQFGRQ988=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcvFD5/TNE3QoVSxrl6Q9PrLZaaHEzxAuK1pLFaoqnBwkQrWy3FlXtztLGEZ+B3BZ
-	 hctdSrR3cRhtBTeCReTqyEGBzIG/8Ab3c1iPH4cuR/9Q9vcqPLj02YgKFS4FZe0acO
-	 998qG4YAVpi52ATYpqBAhtC+0QH8ft25rh1QTqQ0=
+	b=oaADlp3SVQBgrmfLSmCo0qqF/v3nPK4JnK7LlvzlD8SlZOe2QoQFaUW4D1t/l/l5s
+	 3+4kjAeqzxvCsp7IbFXwcAyk5EgqkxmQDXCygERjSfN0C6sDTpYGLI4MmR4rHLfXJo
+	 lANy3Ybc4aJiEDidLr8i+mqfhBDL01TdBerqkRkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Anderson <sean.anderson@linux.dev>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 369/538] net: xilinx: axienet: Schedule NAPI in two steps
-Date: Wed,  2 Oct 2024 15:00:08 +0200
-Message-ID: <20241002125806.994204375@linuxfoundation.org>
+Subject: [PATCH 6.6 370/538] net: xilinx: axienet: Fix packet counting
+Date: Wed,  2 Oct 2024 15:00:09 +0200
+Message-ID: <20241002125807.033416563@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -55,56 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit ba0da2dc934ec5ac32bbeecbd0670da16ba03565 ]
+[ Upstream commit 5a6caa2cfabb559309b5ce29ee7c8e9ce1a9a9df ]
 
-As advised by Documentation/networking/napi.rst, masking IRQs after
-calling napi_schedule can be racy. Avoid this by only masking/scheduling
-if napi_schedule_prep returns true.
+axienet_free_tx_chain returns the number of DMA descriptors it's
+handled. However, axienet_tx_poll treats the return as the number of
+packets. When scatter-gather SKBs are enabled, a single packet may use
+multiple DMA descriptors, which causes incorrect packet counts. Fix this
+by explicitly keepting track of the number of packets processed as
+separate from the DMA descriptors.
 
-Fixes: 9e2bc267e780 ("net: axienet: Use NAPI for TX completion path")
-Fixes: cc37610caaf8 ("net: axienet: implement NAPI and GRO receive")
+Budget does not affect the number of Tx completions we can process for
+NAPI, so we use the ring size as the limit instead of budget. As we no
+longer return the number of descriptors processed to axienet_tx_poll, we
+now update tx_bd_ci in axienet_free_tx_chain.
+
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
 Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240913145711.2284295-1-sean.anderson@linux.dev
+Link: https://patch.msgid.link/20240913145156.2283067-1-sean.anderson@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ .../net/ethernet/xilinx/xilinx_axienet_main.c | 23 +++++++++++--------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 65d7aaad43fe9..f869d61e3b867 100644
+index f869d61e3b867..62c10eb4f0adf 100644
 --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
 +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -1042,9 +1042,10 @@ static irqreturn_t axienet_tx_irq(int irq, void *_ndev)
- 		u32 cr = lp->tx_dma_cr;
+@@ -652,15 +652,15 @@ static int axienet_device_reset(struct net_device *ndev)
+  *
+  * Would either be called after a successful transmit operation, or after
+  * there was an error when setting up the chain.
+- * Returns the number of descriptors handled.
++ * Returns the number of packets handled.
+  */
+ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 				 int nr_bds, bool force, u32 *sizep, int budget)
+ {
+ 	struct axidma_bd *cur_p;
+ 	unsigned int status;
++	int i, packets = 0;
+ 	dma_addr_t phys;
+-	int i;
  
- 		cr &= ~(XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_DELAY_MASK);
--		axienet_dma_out32(lp, XAXIDMA_TX_CR_OFFSET, cr);
--
--		napi_schedule(&lp->napi_tx);
-+		if (napi_schedule_prep(&lp->napi_tx)) {
-+			axienet_dma_out32(lp, XAXIDMA_TX_CR_OFFSET, cr);
-+			__napi_schedule(&lp->napi_tx);
+ 	for (i = 0; i < nr_bds; i++) {
+ 		cur_p = &lp->tx_bd_v[(first_bd + i) % lp->tx_bd_num];
+@@ -679,8 +679,10 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 				 (cur_p->cntrl & XAXIDMA_BD_CTRL_LENGTH_MASK),
+ 				 DMA_TO_DEVICE);
+ 
+-		if (cur_p->skb && (status & XAXIDMA_BD_STS_COMPLETE_MASK))
++		if (cur_p->skb && (status & XAXIDMA_BD_STS_COMPLETE_MASK)) {
+ 			napi_consume_skb(cur_p->skb, budget);
++			packets++;
 +		}
+ 
+ 		cur_p->app0 = 0;
+ 		cur_p->app1 = 0;
+@@ -696,7 +698,13 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 			*sizep += status & XAXIDMA_BD_STS_ACTUAL_LEN_MASK;
  	}
  
- 	return IRQ_HANDLED;
-@@ -1086,9 +1087,10 @@ static irqreturn_t axienet_rx_irq(int irq, void *_ndev)
- 		u32 cr = lp->rx_dma_cr;
+-	return i;
++	if (!force) {
++		lp->tx_bd_ci += i;
++		if (lp->tx_bd_ci >= lp->tx_bd_num)
++			lp->tx_bd_ci %= lp->tx_bd_num;
++	}
++
++	return packets;
+ }
  
- 		cr &= ~(XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_DELAY_MASK);
--		axienet_dma_out32(lp, XAXIDMA_RX_CR_OFFSET, cr);
+ /**
+@@ -747,13 +755,10 @@ static int axienet_tx_poll(struct napi_struct *napi, int budget)
+ 	u32 size = 0;
+ 	int packets;
+ 
+-	packets = axienet_free_tx_chain(lp, lp->tx_bd_ci, budget, false, &size, budget);
++	packets = axienet_free_tx_chain(lp, lp->tx_bd_ci, lp->tx_bd_num, false,
++					&size, budget);
+ 
+ 	if (packets) {
+-		lp->tx_bd_ci += packets;
+-		if (lp->tx_bd_ci >= lp->tx_bd_num)
+-			lp->tx_bd_ci %= lp->tx_bd_num;
 -
--		napi_schedule(&lp->napi_rx);
-+		if (napi_schedule_prep(&lp->napi_rx)) {
-+			axienet_dma_out32(lp, XAXIDMA_RX_CR_OFFSET, cr);
-+			__napi_schedule(&lp->napi_rx);
-+		}
- 	}
- 
- 	return IRQ_HANDLED;
+ 		u64_stats_update_begin(&lp->tx_stat_sync);
+ 		u64_stats_add(&lp->tx_packets, packets);
+ 		u64_stats_add(&lp->tx_bytes, size);
 -- 
 2.43.0
 
