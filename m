@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2BB1E52C;
-	Wed,  2 Oct 2024 14:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFAF1CFEB3;
+	Wed,  2 Oct 2024 14:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878882; cv=none; b=nJK4l2Zk0ZezC3ZkfBViC0DX9dOdAEB2eHC4Qz4Uuexm0ZrFGLr2Vs0I/PBU45MG1WeZnaDKB5susVRMUK4LLmfkoYHFfF794E1yC7/vQBZ6Y2tjeirYgT8O7slTJHd9CARbX+L7E6DfvfR/M7Rwj1M1sRkNa+172v+7OyJ8W6M=
+	t=1727878885; cv=none; b=P78NtYOLT8/3qhyaoc3tBB3mxKt533mldeuWooicLcp/y1m5LFUZ/LcV2BtxxjzZ3PetTYjZgWZFketyuesPtWSOkvejiHyVV0FOTvDQadeJcVHHcmuBySgVZQF8FKW2P7rwxpGbeAdJFw87EmxC5k+6LTvm7DijH1nnFnZTx8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878882; c=relaxed/simple;
-	bh=eQfZafVj3JFBWK3HfrNQQh6GEEqfPIFeB5zrN4HaqYM=;
+	s=arc-20240116; t=1727878885; c=relaxed/simple;
+	bh=Lx/muTC264hC1OWk8xVExKOsLoKpb0R+tVdyVLikRa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJKTYUNgWVxRvSe85IZGhtz8w7lCRJhtvm8n1Ac5HxhHu4Z88Uo8BrzdRox8C0GlgluWT2H8I7ee066SVR3AhqZEffFkmW5WUnkq6Nupe93ozd+24Jee2rj9HKna4rWwuzQluN0uHtsaQ2KfLhSqC982zo4HbJruPrcUZ2wIG0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbDiWALt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRQI/OJ7jlMHm2djuYlXZBD5sa7y+ZXji1KKa5HVy3zMLqYj4Kl8XTAqry0Pytxz7TYJsv8vYjzVAVckep/JNxKdWA6Ua7vzzH85pTml9U+hupo8I5YMPTbuRzJ//FYfyNImCZxc2K2EentGRiqVmpOaEJ7EPlbRhKgrBxsJHeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeXkL+Xt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbDiWALt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8853C4CEC5;
-	Wed,  2 Oct 2024 14:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeXkL+Xt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA2DC4CEC5;
+	Wed,  2 Oct 2024 14:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878882;
-	bh=eQfZafVj3JFBWK3HfrNQQh6GEEqfPIFeB5zrN4HaqYM=;
+	s=korg; t=1727878885;
+	bh=Lx/muTC264hC1OWk8xVExKOsLoKpb0R+tVdyVLikRa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mbDiWALtIEgjRuz4TFcaaBYldfWj3HO8MFg+yKRbWyVaRigg71MFkacsHEFuOEdou
-	 rSpRXHDPtMSeFhqUOl6UysidNRwR9bGVpuKtoySsVFX2+8FHwnkn7e+ZHP0h+N51PL
-	 0G8R2D4eaiiwEUXY26bfSziolWUFOaFqBmwl6rmc=
+	b=VeXkL+XtCHnLZGdocyz4GyEYtOLu5mEzv1XNSt6dtTo4ySLvZfzTFINlXzQTMN5oc
+	 syoxlmt2ZJI9OXTyAufbmaz1D+6FxeHM9qNskCPcOtQPxOcF9pINcV/Afx5s9W5aki
+	 gvkAyZYaF7XW+W5bcamMeFSYljHDCAquItCB6Z8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	Chao Yu <chao@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.10 564/634] f2fs: check discard support for conventional zones
-Date: Wed,  2 Oct 2024 15:01:04 +0200
-Message-ID: <20241002125833.378137523@linuxfoundation.org>
+Subject: [PATCH 6.10 565/634] f2fs: fix to check atomic_file in f2fs ioctl interfaces
+Date: Wed,  2 Oct 2024 15:01:05 +0200
+Message-ID: <20241002125833.417519660@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,68 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 43aec4d01bd2ce961817a777b3846f8318f398e4 upstream.
+commit bfe5c02654261bfb8bd9cb174a67f3279ea99e58 upstream.
 
-As the helper function f2fs_bdev_support_discard() shows, f2fs checks if
-the target block devices support discard by calling
-bdev_max_discard_sectors() and bdev_is_zoned(). This check works well
-for most cases, but it does not work for conventional zones on zoned
-block devices. F2fs assumes that zoned block devices support discard,
-and calls __submit_discard_cmd(). When __submit_discard_cmd() is called
-for sequential write required zones, it works fine since
-__submit_discard_cmd() issues zone reset commands instead of discard
-commands. However, when __submit_discard_cmd() is called for
-conventional zones, __blkdev_issue_discard() is called even when the
-devices do not support discard.
+Some f2fs ioctl interfaces like f2fs_ioc_set_pin_file(),
+f2fs_move_file_range(), and f2fs_defragment_range() missed to
+check atomic_write status, which may cause potential race issue,
+fix it.
 
-The inappropriate __blkdev_issue_discard() call was not a problem before
-the commit 30f1e7241422 ("block: move discard checks into the ioctl
-handler") because __blkdev_issue_discard() checked if the target devices
-support discard or not. If not, it returned EOPNOTSUPP. After the
-commit, __blkdev_issue_discard() no longer checks it. It always returns
-zero and sets NULL to the given bio pointer. This NULL pointer triggers
-f2fs_bug_on() in __submit_discard_cmd(). The BUG is recreated with the
-commands below at the umount step, where /dev/nullb0 is a zoned null_blk
-with 5GB total size, 128MB zone size and 10 conventional zones.
-
-$ mkfs.f2fs -f -m /dev/nullb0
-$ mount /dev/nullb0 /mnt
-$ for ((i=0;i<5;i++)); do dd if=/dev/zero of=/mnt/test bs=65536 count=1600 conv=fsync; done
-$ umount /mnt
-
-To fix the BUG, avoid the inappropriate __blkdev_issue_discard() call.
-When discard is requested for conventional zones, check if the device
-supports discard or not. If not, return EOPNOTSUPP.
-
-Fixes: 30f1e7241422 ("block: move discard checks into the ioctl handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/file.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1290,6 +1290,13 @@ static int __submit_discard_cmd(struct f
- 						wait_list, issued);
- 			return 0;
- 		}
-+
-+		/*
-+		 * Issue discard for conventional zones only if the device
-+		 * supports discard.
-+		 */
-+		if (!bdev_max_discard_sectors(bdev))
-+			return -EOPNOTSUPP;
- 	}
- #endif
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2704,7 +2704,8 @@ static int f2fs_defragment_range(struct
+ 				(range->start + range->len) >> PAGE_SHIFT,
+ 				DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE));
  
+-	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
++	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED) ||
++		f2fs_is_atomic_file(inode)) {
+ 		err = -EINVAL;
+ 		goto unlock_out;
+ 	}
+@@ -2937,6 +2938,11 @@ static int f2fs_move_file_range(struct f
+ 		goto out_unlock;
+ 	}
+ 
++	if (f2fs_is_atomic_file(src) || f2fs_is_atomic_file(dst)) {
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
+ 	ret = -EINVAL;
+ 	if (pos_in + len > src->i_size || pos_in + len < pos_in)
+ 		goto out_unlock;
+@@ -3320,6 +3326,11 @@ static int f2fs_ioc_set_pin_file(struct
+ 
+ 	inode_lock(inode);
+ 
++	if (f2fs_is_atomic_file(inode)) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	if (!pin) {
+ 		clear_inode_flag(inode, FI_PIN_FILE);
+ 		f2fs_i_gc_failures_write(inode, 0);
 
 
