@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB15F1D1313;
-	Wed,  2 Oct 2024 14:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C6E3D994;
+	Wed,  2 Oct 2024 14:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880642; cv=none; b=R0YwAV9TR0f/3Scro74/f2fakI3a1QYta8aF/kQGS+fuiJxv1aAiOE667Jyta1qsIm0qroQwndSwXF4aN2BleWPrwFpQEvB4Y142+3lGUMoPnak8zbqVz1pYo3VaCoEztbLfP+avIvP1LxQTBlRYtJswAvc27iPVa9RSV3gr4Aw=
+	t=1727880644; cv=none; b=JaC5hdqCJdbRhGPmuPbGICNBCAImEsVTOT5w8XBZAyyl2wPlij7xETK/lkn9qet5XQgf248KXYMkOZKUQVE3JIAr7tnt3yF2QIrTWZR6FodfDZ2fXHNx7W0jqPSeBEdokH8Nba/rmmJuFWm+tuDvQNJzzXRxzNiVac+X55H50Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880642; c=relaxed/simple;
-	bh=2QbgEd4K5NjxoLSekWuQCmQsJ1Jl9WoziYFQlKiVT9M=;
+	s=arc-20240116; t=1727880644; c=relaxed/simple;
+	bh=5Fu/ZOmHDzhGy/Qz6FVFXORErFYgbNJa40MCd8Ftiak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jELG/wtzCK5bdoQkoMnxr7X1oMA0fYnrY0lUJVf7aWqf/hb+Tnv4d5gULlp6am+KPyBgSg4/0ZdiLn3ZxiOCz0HG6UleD8Zq00lZBWUEfMXZps5LMA3p6oCTeOfvzYiEPtNnfIMZBVzD5EP15RQhN+rgFsr5Xgdad2GSfF7LhVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrvtrRRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HcolENDE549tllG46TNORKTjf3I2IqH4Zl/kWyRfp8kjk+EIDqrpxenDOb2Zc3bP85mnlirh+G10mqkA7UKcEJkqshe/n5EDwYJkU9fcYoU8FwRhl+jEzQ3N9/oVFwxMJqkjyi3Pm3Z/0djP/JV3Hxr0dk0vjunSSQ5VtkPGf9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3UlnCr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrvtrRRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A02C4CECE;
-	Wed,  2 Oct 2024 14:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3UlnCr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524E2C4CEC2;
+	Wed,  2 Oct 2024 14:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880641;
-	bh=2QbgEd4K5NjxoLSekWuQCmQsJ1Jl9WoziYFQlKiVT9M=;
+	s=korg; t=1727880644;
+	bh=5Fu/ZOmHDzhGy/Qz6FVFXORErFYgbNJa40MCd8Ftiak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrvtrRRCLjgHapbNwpsq67eVD4yLxNZ0vRbgN6fobIRpw0lzQE7pEh/s481QzY2eP
-	 Gm236RfjncWr7GdsUUSdwtJh2WgdZkCP4EW/FTFmJE9rAGoXcJIasHl3q1kpuz+nqU
-	 v/eVq0Hwk67egg/5lK7yXZs132v7OuO3517fCzC8=
+	b=R3UlnCr9XFVfVh9bejpGvtedSfJWr4vgfn89QviO00OeGYXQ7h941VOcWhXFde3az
+	 P3/AWTfDUw/m5AgEI+IoBYmc9QSobNRaakiU3o30cFhLexOrLMqNNTxG8X7x+bHZH2
+	 YYjLn/6x5t4PJDeQywjztQC4kq4JhyJhjkk4abXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 528/538] Documentation: KVM: fix warning in "make htmldocs"
-Date: Wed,  2 Oct 2024 15:02:47 +0200
-Message-ID: <20241002125813.288411938@linuxfoundation.org>
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Qin Wan <qin.wan@hp.com>,
+	Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+Subject: [PATCH 6.6 502/538] thunderbolt: Fix debug log when DisplayPort adapter not available for pairing
+Date: Wed,  2 Oct 2024 15:02:21 +0200
+Message-ID: <20241002125812.255070484@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -49,33 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-commit efbc6bd090f48ccf64f7a8dd5daea775821d57ec upstream.
+[ Upstream commit 6b8ac54f31f985d3abb0b4212187838dd8ea4227 ]
 
-The warning
+Fix debug log when looking for a DisplayPort adapter pair of DP IN and
+DP OUT. In case of no DP adapter available, log the type of the DP
+adapter that is not available.
 
- Documentation/virt/kvm/locking.rst:31: ERROR: Unexpected indentation.
-
-is caused by incorrectly treating a line as the continuation of a paragraph,
-rather than as the first line in a bullet list.
-
-Fixed: 44d174596260 ("KVM: Use dedicated mutex to protect kvm_usage_count to avoid deadlock")
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Qin Wan <qin.wan@hp.com>
+Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/virt/kvm/locking.rst |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/thunderbolt/tb.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/Documentation/virt/kvm/locking.rst
-+++ b/Documentation/virt/kvm/locking.rst
-@@ -25,6 +25,7 @@ The acquisition orders for mutexes are a
-   must not take either kvm->slots_lock or kvm->slots_arch_lock.
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -1311,13 +1311,12 @@ static void tb_tunnel_dp(struct tb *tb)
+ 			continue;
+ 		}
  
- cpus_read_lock() vs kvm_lock:
-+
- - Taking cpus_read_lock() outside of kvm_lock is problematic, despite that
-   being the official ordering, as it is quite easy to unknowingly trigger
-   cpus_read_lock() while holding kvm_lock.  Use caution when walking vm_list,
+-		tb_port_dbg(port, "DP IN available\n");
++		in = port;
++		tb_port_dbg(in, "DP IN available\n");
+ 
+ 		out = tb_find_dp_out(tb, port);
+-		if (out) {
+-			in = port;
++		if (out)
+ 			break;
+-		}
+ 	}
+ 
+ 	if (!in) {
 
 
