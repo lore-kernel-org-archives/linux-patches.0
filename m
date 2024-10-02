@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CB71D0B90;
-	Wed,  2 Oct 2024 14:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CB91D0499;
+	Wed,  2 Oct 2024 14:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877823; cv=none; b=oXVyFNNuVPFKyH14Nhc/QDM6nBxk6m9ifPFFtABLYk5e5//XIrplK5mzEBOVCCxmXSSL4HDTqmHI4ZNHEBMva03vhgqx5DMfiDbEK09py/fFuJOvGkDnCeL02fOe28f5DDs54hUjX8uoALEa4UhXY+xMXtdbQ5109cIgmgMb4GI=
+	t=1727877826; cv=none; b=Tf+tevFf3/AhFZARdnfAZ/YX7Q9k2ODIAgflE3idecm2mFmUmMHmdh468o8lkgWvNtu1O09To2BZtw+haO5zNWrZxW/qkz+FtsIFvO7ZS5RDtZ/+mu9DT0h5AgEEPMI98MENTvV+rg1q8Q5qwXS6y66/kFBUYXSO/oaqKMZ/MFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877823; c=relaxed/simple;
-	bh=PtLEVSJoWZxw70scaMHKn5kg0VBeAA4VgXHH7CP3Kkg=;
+	s=arc-20240116; t=1727877826; c=relaxed/simple;
+	bh=vk3q1Szd9z+x6abnbe789c1Vitk7h/XqF3crGm2GBEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRYpqmAwR2WcSR+jSHKd+WbLkWUYTFyBbkgkekhRQ7NyW4hESM4GtHen9niUJCGRBQ5YKrIWqIGOdtLs+EpsfID3LGjQ4SWrWyPcqawgWXXGnd/Hb1usF4pG+eeEZGVITplo0Vrtvq2PhXAM0EXh3YOcp7ronaqnUKuvWIITyAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0Nwz9rC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdZ5WbciNG+BzttIp0QkCGuJxO7C0nl0zoXDkNzyq4D3laemdvQqAObPhh4o1zkLropx+Q+6hLkzRTDalFE6KVZtBlyBrA4ECxFAzpHnRPmkGFevpADCNEAQuu038hCwPEFk4vHGFu+0Hy0IbFuP5PYTq+9IGYDOfyTRzL3Mq1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/Uv2aGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0Nwz9rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A2AC4CEC2;
-	Wed,  2 Oct 2024 14:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/Uv2aGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72708C4CEC2;
+	Wed,  2 Oct 2024 14:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877822;
-	bh=PtLEVSJoWZxw70scaMHKn5kg0VBeAA4VgXHH7CP3Kkg=;
+	s=korg; t=1727877825;
+	bh=vk3q1Szd9z+x6abnbe789c1Vitk7h/XqF3crGm2GBEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0Nwz9rC4jURRSdTotRAS9I9SskSJd5vckpuULJaDsRCjpqc2o5huy/n9YgGJbsKV
-	 B7gfaHbn6DwaEMgyCy5Ky4PvYdEuawFEvJJdMteFfI9Qnm5Iw9rUrGZigO77oTTo9X
-	 aUr4AkUFpF0rTVQEj82MxLcyuJcdgPdphURP4+j8=
+	b=u/Uv2aGqo44OeIomZV78U/LpiZhHDCPVqzaP11qHEG7Y17uS7W08RWqG1s/a9n5gj
+	 zi30iuxoUzX/KrT3Bkb0pO59LlOqEBxohBZCXx2+8bqqBKtfkuXOAyImOJ0kc7KPDj
+	 BWiG2SrIvd29hkREmk08YYYzXu2kxvfLLH0mDESE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 165/634] iommu/amd: Allocate the page table root using GFP_KERNEL
-Date: Wed,  2 Oct 2024 14:54:25 +0200
-Message-ID: <20241002125817.624369376@linuxfoundation.org>
+Subject: [PATCH 6.10 200/634] drm/msm: Dump correct dbgahb clusters on a750
+Date: Wed,  2 Oct 2024 14:55:00 +0200
+Message-ID: <20241002125818.999798826@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,37 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Connor Abbott <cwabbott0@gmail.com>
 
-[ Upstream commit b0a6c883bcd42eeb0850135e529b34b64d57673c ]
+[ Upstream commit d8c17d7aadc2463a395f9340f44c7c34399f1d48 ]
 
-Domain allocation is always done under a sleepable context, the v1 path
-and other drivers use GFP_KERNEL already. Fix the v2 path to also use
-GFP_KERNEL.
+This was missed thanks to the family mixup fixed in the previous commit.
 
-Fixes: 0d571dcbe7c6 ("iommu/amd: Allocate page table using numa locality info")
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/2-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: f3f8207d8aed ("drm/msm: Add devcoredump support for a750")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/607393/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/io_pgtable_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/io_pgtable_v2.c b/drivers/iommu/amd/io_pgtable_v2.c
-index 78ac37c5ccc1e..acfe79b326293 100644
---- a/drivers/iommu/amd/io_pgtable_v2.c
-+++ b/drivers/iommu/amd/io_pgtable_v2.c
-@@ -362,7 +362,7 @@ static struct io_pgtable *v2_alloc_pgtable(struct io_pgtable_cfg *cfg, void *coo
- 	struct protection_domain *pdom = (struct protection_domain *)cookie;
- 	int ias = IOMMU_IN_ADDR_BIT_SIZE;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index f2030e521a03a..0fcae53c0b140 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -663,10 +663,13 @@ static void a7xx_get_dbgahb_clusters(struct msm_gpu *gpu,
+ 	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
+ 		dbgahb_clusters = gen7_0_0_sptp_clusters;
+ 		dbgahb_clusters_size = ARRAY_SIZE(gen7_0_0_sptp_clusters);
+-	} else {
+-		BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
++	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
+ 		dbgahb_clusters = gen7_2_0_sptp_clusters;
+ 		dbgahb_clusters_size = ARRAY_SIZE(gen7_2_0_sptp_clusters);
++	} else {
++		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
++		dbgahb_clusters = gen7_9_0_sptp_clusters;
++		dbgahb_clusters_size = ARRAY_SIZE(gen7_9_0_sptp_clusters);
+ 	}
  
--	pgtable->pgd = iommu_alloc_page_node(pdom->nid, GFP_ATOMIC);
-+	pgtable->pgd = iommu_alloc_page_node(pdom->nid, GFP_KERNEL);
- 	if (!pgtable->pgd)
- 		return NULL;
- 
+ 	a6xx_state->dbgahb_clusters = state_kcalloc(a6xx_state,
 -- 
 2.43.0
 
