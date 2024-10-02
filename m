@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7CF17B421;
-	Wed,  2 Oct 2024 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A9317B421;
+	Wed,  2 Oct 2024 13:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876992; cv=none; b=QJgM88bxnFEXz53/Qsf930jlblkilZ5SMXawgl8ExKYpG8EUeDgQwcRz4owBVhusMJMSdBKOF5vfv7AdTWi7dP8zkeubucn5fx5JdlATBig97GO3hsH26LL5qJHw4VA3q8sTH1KFFZcSLfr53+LgAwgAv7i+D7wsQd00u54+5yk=
+	t=1727876995; cv=none; b=RuX9+QGUHnxXB7eG/xHK5/VTFxog4N3cZOLKwQVt20HwyWgVD4nJPJah1yZlOOTvQhuzeloZR4g8yxrsnnWiLlla/5CdGji6GoQq2q7yMmTS+P5PZFETllRfZ655JwCtjDjlt4aO0ugF9AApzYGxVDguWSALSnyDxTmNBcNNf7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876992; c=relaxed/simple;
-	bh=Fa8AWgeoEqBXEIgpu3M+RqAlxP7a/Zv7+9iFkOW6FmQ=;
+	s=arc-20240116; t=1727876995; c=relaxed/simple;
+	bh=idTk8TXN0HZy4jM3liLTJ4Wezmi2Z2hdbnmg0gAKCoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nSO9A9tZZEe0/UpfVK9um2MzW0vjwS4V71A/1lqo9UDvCPc+w80de9qd7tmMmSJJjKj4Fg5ANanw2N45LuWYGgQf/KEj7gBxTHiGggkU/UiUMalva0y6u+0lzqDlTco6uUDbxSM4eqf1AKHIUpkewpa7JY271TzQw+HE0D+sEzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZDJ36B3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YzT5qt+EQ4V5/cFwSR2yQlUkEAzPuTofCXMQ5JLG7QoxoWom6yH34EKgdDLL5q5newYa5ktvRv8AXiDMJY00ZTXNX36ckbAA9efZTPpWIx7rRybE6VQJUpWHR2y7DUNRlSSgQ1CfvWDQfv/dzaD+E8aSBILktvDh0s83sqWEKDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQhGDgwC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZDJ36B3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A18C4CEC2;
-	Wed,  2 Oct 2024 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQhGDgwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBEDC4CEC2;
+	Wed,  2 Oct 2024 13:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876992;
-	bh=Fa8AWgeoEqBXEIgpu3M+RqAlxP7a/Zv7+9iFkOW6FmQ=;
+	s=korg; t=1727876995;
+	bh=idTk8TXN0HZy4jM3liLTJ4Wezmi2Z2hdbnmg0gAKCoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZDJ36B3x2UjDpVy5HmmofwJxW7ydm37rS5+pF1A/cGI6MaPDRl9leg09m29x1RjG
-	 Ttwov9XrVegaGkVCMRwLNp5U038+gribn/I3AXrdRs4DaTbYwiD7y6FGm1TBUDRIv0
-	 +Pc2B9OQj+v5QeB+LgBZrR1ZW4ZAU5HovE0HEyGg=
+	b=wQhGDgwCqfoEw2pubPbFh4sxqI/Yz+53kVMF8SE+fScHo4FjvYWFlrLS3XT45qRso
+	 hPvO3uD4BV+ix6xjY7HXwwpPhYOu6ezOEYcsZg55awvlcSUp11Xg5GWG7lNZXBJiVn
+	 y0S2Bcmb4xc8xq84aqYqzNe3ISHc2ommBzsGJfkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.11 596/695] serial: dont use uninitialized value in uart_poll_init()
-Date: Wed,  2 Oct 2024 14:59:54 +0200
-Message-ID: <20241002125846.302125955@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.11 597/695] xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.
+Date: Wed,  2 Oct 2024 14:59:55 +0200
+Message-ID: <20241002125846.342624296@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,71 +43,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit d0009a32c9e4e083358092f3c97e3c6e803a8930 upstream.
+commit f81dfa3b57c624c56f2bff171c431bc7f5b558f2 upstream.
 
-Coverity reports (as CID 1536978) that uart_poll_init() passes
-uninitialized pm_state to uart_change_pm(). It is in case the first 'if'
-takes the true branch (does "goto out;").
+PCI xHC host should be stopped and xhci driver memory freed before putting
+host to PCI D3 state during PCI remove callback.
 
-Fix this and simplify the function by simple guard(mutex). The code
-needs no labels after this at all. And it is pretty clear that the code
-has not fiddled with pm_state at that point.
+Hosts with XHCI_SPURIOUS_WAKEUP quirk did this the wrong way around
+and set the host to D3 before calling usb_hcd_pci_remove(dev), which will
+access the host to stop it, and then free xhci.
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: 5e227ef2aa38 (serial: uart_poll_init() should power on the UART)
+Fixes: f1f6d9a8b540 ("xhci: don't dereference a xhci member after removing xhci")
 Cc: stable@vger.kernel.org
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240805102046.307511-4-jirislaby@kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240905143300.1959279-12-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/usb/host/xhci-pci.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -2696,14 +2696,13 @@ static int uart_poll_init(struct tty_dri
- 	int ret = 0;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -669,8 +669,10 @@ put_runtime_pm:
+ static void xhci_pci_remove(struct pci_dev *dev)
+ {
+ 	struct xhci_hcd *xhci;
++	bool set_power_d3;
  
- 	tport = &state->port;
--	mutex_lock(&tport->mutex);
-+
-+	guard(mutex)(&tport->mutex);
+ 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
++	set_power_d3 = xhci->quirks & XHCI_SPURIOUS_WAKEUP;
  
- 	port = uart_port_check(state);
- 	if (!port || port->type == PORT_UNKNOWN ||
--	    !(port->ops->poll_get_char && port->ops->poll_put_char)) {
--		ret = -1;
--		goto out;
--	}
-+	    !(port->ops->poll_get_char && port->ops->poll_put_char))
-+		return -1;
+ 	xhci->xhc_state |= XHCI_STATE_REMOVING;
  
- 	pm_state = state->pm_state;
- 	uart_change_pm(state, UART_PM_STATE_ON);
-@@ -2723,10 +2722,10 @@ static int uart_poll_init(struct tty_dri
- 		ret = uart_set_options(port, NULL, baud, parity, bits, flow);
- 		console_list_unlock();
+@@ -683,11 +685,11 @@ static void xhci_pci_remove(struct pci_d
+ 		xhci->shared_hcd = NULL;
  	}
--out:
+ 
++	usb_hcd_pci_remove(dev);
 +
- 	if (ret)
- 		uart_change_pm(state, pm_state);
--	mutex_unlock(&tport->mutex);
-+
- 	return ret;
+ 	/* Workaround for spurious wakeups at shutdown with HSW */
+-	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
++	if (set_power_d3)
+ 		pci_set_power_state(dev, PCI_D3hot);
+-
+-	usb_hcd_pci_remove(dev);
  }
  
+ /*
 
 
