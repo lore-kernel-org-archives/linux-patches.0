@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC051D07BC;
-	Wed,  2 Oct 2024 14:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59A81D0955;
+	Wed,  2 Oct 2024 14:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880521; cv=none; b=sIDKRifke22k3uFE2X0kZsadM2ZRRzI0vFofebfia9jI4djKhVj+KQ+M47xhU//CnCGFK8+qMghBmM/vr2VUovT6xsU1nEe5Cs7P8XiFITxGp4mb3EAfgr10KWmK0+bEXyevCe11iKYXLtEZhAack66hTvZb12UorZWkyKGWa1Y=
+	t=1727880524; cv=none; b=aHgqSio9WMDutTyKLYtIPYRijhNcIVyjKJpB6WwBaEYaDTEQQNMqkJtIbTaSVK/x3VhVEWtn/RYickowSR5zN9hjTvV6cgqK6vdGGIErtkJjB8qkXl0Cak2Gduujtz76vly9bqivI4TIBNNYU3Cbx9wbKM8Y/t6l7GP+VBbW1f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880521; c=relaxed/simple;
-	bh=jb9/D2pXSDXSzCcVP6XzCGrWlQNwxFZSip1CTxJ8Oe0=;
+	s=arc-20240116; t=1727880524; c=relaxed/simple;
+	bh=BxglscGZtWJYKy173rvFqcUDieJVWWdJE3Q4vgtAWsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEm7S5TE1uEUODk2supAWHRzWjc3zoPMrogrKplJ7imSm94CYxIfY9Kdzwx/LGhJfQKB3znEeTDXLsENDOq2gqOlS9NnO3RoUa0XMuDH1nYGjJ4dOjiknocqCtcFxPK3V4BMfhAG/x/mR930xhzxZN4ljS8VnG2z/byQ4ri7J44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoQuTVTz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2/yGBQ1725FNkQf1iZ6ZkUbDXvtlkrXjUeSSJYd3UYwzCXSDzB8KuLt0Am/1Ec5dcBKoz2bmzWLiD5h6cI2fTpjVElwzTw3/aNBDDAZWKRUqeTgrwpKC3wuFS/lMounkoJ9Ihz000odK530+YkH2QPdzQuZNHqda5R6EgDa6kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aloLPZwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoQuTVTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E46CC4CEC2;
-	Wed,  2 Oct 2024 14:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aloLPZwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F210DC4CEC2;
+	Wed,  2 Oct 2024 14:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880521;
-	bh=jb9/D2pXSDXSzCcVP6XzCGrWlQNwxFZSip1CTxJ8Oe0=;
+	s=korg; t=1727880524;
+	bh=BxglscGZtWJYKy173rvFqcUDieJVWWdJE3Q4vgtAWsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoQuTVTzZpG9NwGC7+7Gp3gG9CqH3pG5AyOP3r4jaoy5M+PczFwpnEnsjy4fhrx1A
-	 Z6xerLVmgHa4KaliLUlH1rwqCsNIZVM4OXkxTllNDJMEeYGmoPXgHegHg2ty2YDQF/
-	 hFU0uE6wj0TxwooZPcOjBB9744lq7JJU++vy2ZWw=
+	b=aloLPZwH0RV3g38E2KUS0c1jD4CK0HcxASIAANmst+yonZ/DSl+MIWcLqTGt9ltAl
+	 zQLZtsxYrDyxP1f74/fed4+vmgBWWxv68KD6N/9d3uSMfvL8ssgNemv4dW0DsfAWsz
+	 VzHrsZ52rtAjcnS4xsEvOS6dpXBne+esu7sE2G/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehwan Jung <dh10.jung@samsung.com>,
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 487/538] xhci: Add a quirk for writing ERST in high-low order
-Date: Wed,  2 Oct 2024 15:02:06 +0200
-Message-ID: <20241002125811.664900374@linuxfoundation.org>
+Subject: [PATCH 6.6 488/538] usb: xhci: fix loss of data on Cadence xHC
+Date: Wed,  2 Oct 2024 15:02:07 +0200
+Message-ID: <20241002125811.703948965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,60 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehwan Jung <dh10.jung@samsung.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit bc162403e33e1d57e40994977acaf19f1434e460 ]
+[ Upstream commit e5fa8db0be3e8757e8641600c518425a4589b85c ]
 
-This quirk is for the controller that has a limitation in supporting
-separate ERSTBA_HI and ERSTBA_LO programming. It's supported when
-the ERSTBA is programmed ERSTBA_HI before ERSTBA_LO. That's because
-the internal initialization of event ring fetches the
-"Event Ring Segment Table Entry" based on the indication of ERSTBA_LO
-written.
+Streams should flush their TRB cache, re-read TRBs, and start executing
+TRBs from the beginning of the new dequeue pointer after a 'Set TR Dequeue
+Pointer' command.
 
-Signed-off-by: Daehwan Jung <dh10.jung@samsung.com>
-Link: https://lore.kernel.org/r/1718019553-111939-3-git-send-email-dh10.jung@samsung.com
+Cadence controllers may fail to start from the beginning of the dequeue
+TRB as it doesn't clear the Opaque 'RsvdO' field of the stream context
+during 'Set TR Dequeue' command. This stream context area is where xHC
+stores information about the last partially executed TD when a stream
+is stopped. xHC uses this information to resume the transfer where it left
+mid TD, when the stream is restarted.
+
+Patch fixes this by clearing out all RsvdO fields before initializing new
+Stream transfer using a 'Set TR Dequeue Pointer' command.
+
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB95386A40146E3EC64086F409DD9D2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e5fa8db0be3e ("usb: xhci: fix loss of data on Cadence xHC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 5 ++++-
- drivers/usb/host/xhci.h     | 2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/host.c     |  4 +++-
+ drivers/usb/host/xhci-pci.c  |  7 +++++++
+ drivers/usb/host/xhci-ring.c | 14 ++++++++++++++
+ drivers/usb/host/xhci.h      |  1 +
+ 4 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index b1e3fa54c6397..54c47463c215c 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2289,7 +2289,10 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
- 	erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
- 	erst_base &= ERST_BASE_RSVDP;
- 	erst_base |= ir->erst.erst_dma_addr & ~ERST_BASE_RSVDP;
--	xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
-+	if (xhci->quirks & XHCI_WRITE_64_HI_LO)
-+		hi_lo_writeq(erst_base, &ir->ir_set->erst_base);
-+	else
-+		xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
+diff --git a/drivers/usb/cdns3/host.c b/drivers/usb/cdns3/host.c
+index ceca4d839dfd4..7ba760ee62e33 100644
+--- a/drivers/usb/cdns3/host.c
++++ b/drivers/usb/cdns3/host.c
+@@ -62,7 +62,9 @@ static const struct xhci_plat_priv xhci_plat_cdns3_xhci = {
+ 	.resume_quirk = xhci_cdns3_resume_quirk,
+ };
  
- 	/* Set the event ring dequeue address of this interrupter */
- 	xhci_set_hc_event_deq(xhci, ir);
+-static const struct xhci_plat_priv xhci_plat_cdnsp_xhci;
++static const struct xhci_plat_priv xhci_plat_cdnsp_xhci = {
++	.quirks = XHCI_CDNS_SCTX_QUIRK,
++};
+ 
+ static int __cdns_host_init(struct cdns *cdns)
+ {
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 5c6fb99582113..dd02b064ecd4b 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -75,6 +75,9 @@
+ #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
+ #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
+ 
++#define PCI_DEVICE_ID_CADENCE				0x17CD
++#define PCI_DEVICE_ID_CADENCE_SSP			0x0200
++
+ static const char hcd_name[] = "xhci_hcd";
+ 
+ static struct hc_driver __read_mostly xhci_pci_hc_driver;
+@@ -539,6 +542,10 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
+ 	}
+ 
++	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
++	    pdev->device == PCI_DEVICE_ID_CADENCE_SSP)
++		xhci->quirks |= XHCI_CDNS_SCTX_QUIRK;
++
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 8dd85221cd927..95d8cf24b0154 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1414,6 +1414,20 @@ static void xhci_handle_cmd_set_deq(struct xhci_hcd *xhci, int slot_id,
+ 			struct xhci_stream_ctx *ctx =
+ 				&ep->stream_info->stream_ctx_array[stream_id];
+ 			deq = le64_to_cpu(ctx->stream_ring) & SCTX_DEQ_MASK;
++
++			/*
++			 * Cadence xHCI controllers store some endpoint state
++			 * information within Rsvd0 fields of Stream Endpoint
++			 * context. This field is not cleared during Set TR
++			 * Dequeue Pointer command which causes XDMA to skip
++			 * over transfer ring and leads to data loss on stream
++			 * pipe.
++			 * To fix this issue driver must clear Rsvd0 field.
++			 */
++			if (xhci->quirks & XHCI_CDNS_SCTX_QUIRK) {
++				ctx->reserved[0] = 0;
++				ctx->reserved[1] = 0;
++			}
+ 		} else {
+ 			deq = le64_to_cpu(ep_ctx->deq) & ~EP_CTX_CYCLE_MASK;
+ 		}
 diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index b29fe4716f34e..8e4d465b9dd66 100644
+index 8e4d465b9dd66..f5efee06ff067 100644
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
-@@ -17,6 +17,7 @@
- #include <linux/kernel.h>
- #include <linux/usb/hcd.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
-+#include <linux/io-64-nonatomic-hi-lo.h>
- 
- /* Code sharing between pci-quirks and xhci hcd */
- #include	"xhci-ext-caps.h"
-@@ -1913,6 +1914,7 @@ struct xhci_hcd {
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+@@ -1915,6 +1915,7 @@ struct xhci_hcd {
  #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
  #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
-+#define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
+ #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
++#define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
  
  	unsigned int		num_active_eps;
  	unsigned int		limit_active_eps;
