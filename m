@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7E21D096E;
-	Wed,  2 Oct 2024 14:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D517E1D0956;
+	Wed,  2 Oct 2024 14:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878634; cv=none; b=D7jP8e3jMy0G4llsR+OghFdB1Z0vQ1tTVOwXeIOttPgd0W0dDmcnp1G5+X8xBWHr2t5tIUYalvAfoguE7zWCuv0OemOIjw9ZMuHZrGUGMBHwte5VVpysDVrdQEF8GdqLr8J7mSBEg5vzFFIJmm0/YAeTI85LJtobvFF0bngb9DM=
+	t=1727878637; cv=none; b=e8RAsq0f2r93bNeDn2qcc21g6vMf3KPzUGnVndS8KJqYwGTlnS3GnTpnGw8ihXEfZ3Foya1GKGSHbCZX2BconZM+dLdMULtVCzpWajq3OGo4Fts/AXE7PyJsSZZWbER47RVHH8/cTAG5hF0Sq8tG8F7NInClan9qx7zyFHOgnVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878634; c=relaxed/simple;
-	bh=28EfRgov9XIEWjlo2PDdseR+0ApKxNZuGhsLsvpRydk=;
+	s=arc-20240116; t=1727878637; c=relaxed/simple;
+	bh=QiaDtRPWLNMtFQD82UqbkxP5SjLexHMBDroAddK6H9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOh+UKFYZfaEBkKIQOH6f7TuZI7WkGTMPVwQzUIgTpBCkHZ/RMEHc/o4xAU3U0UJNJgUwaF55YzcV8ZRcg0s7tAlsc03ylkYEgmjJ/Gy7li7XJl543mm8CX4DYsDEvjVLjk3zrhxkmEDpHPiAxDPfTaywJqDqg3qooe4QeBRvM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1foo/fbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efj+Jfsucl9YYYPRfAymdxYvpA3huZtAgtRH/Uxh0wUb1F1BrqOTg9lz3MFMa/bbrrjw1Qf5WOdkxYD9l0C1I84ZsIjOlNKotWPRTV6c0BPY39J0woC8EHw+4U+QCs3kP1B2LJSGiijkgvPh+DM+FlKPsnT/XOxJ34k5DL7yjOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fa1Ujjq2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1foo/fbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64436C4CEC2;
-	Wed,  2 Oct 2024 14:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fa1Ujjq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C64FC4CEC2;
+	Wed,  2 Oct 2024 14:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878634;
-	bh=28EfRgov9XIEWjlo2PDdseR+0ApKxNZuGhsLsvpRydk=;
+	s=korg; t=1727878637;
+	bh=QiaDtRPWLNMtFQD82UqbkxP5SjLexHMBDroAddK6H9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1foo/fbmsBCWRmS5OlOKJfRwZJ325a4Q2o7qfl+/tMqYN4UrwYzrilXuMg8Mn8nE3
-	 vCROfYe5YDTAmIFT70sir8t+V8uzK6nsXszbfdVPxlU0QiP3HTNUl///FpxWQo/3ao
-	 /iR0+dqIV8bUfR+TlovlQrSM28vnW+NxIIM9FICs=
+	b=Fa1Ujjq2nNjackwQDbb6wA1N0zqWMfFi8OSooYrwZYR0lz85UpAcYrb/gFzR+E1J8
+	 D76Klt7R29vXP/QSHJS5jk0aIqNPqHRIXANGP6PHuOs8wXS9kzwycgBFHxSIwIBD5R
+	 7kOIzNbzArtdLv6wOJuLsPq9pCU+7ScaW7rKlgt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.10 481/634] Input: adp5588-keys - fix check on return code
-Date: Wed,  2 Oct 2024 14:59:41 +0200
-Message-ID: <20241002125830.090836968@linuxfoundation.org>
+Subject: [PATCH 6.10 482/634] Input: i8042 - add TUXEDO Stellaris 16 Gen5 AMD to i8042 quirk table
+Date: Wed,  2 Oct 2024 14:59:42 +0200
+Message-ID: <20241002125830.130076856@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,36 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit eb017f4ea13b1a5ad7f4332279f2e4c67b44bdea upstream.
+commit e06edf96dea065dd1d9df695bf8b92784992333e upstream.
 
-During adp5588_setup(), we read all the events to clear the event FIFO.
-However, adp5588_read() just calls i2c_smbus_read_byte_data() which
-returns the byte read in case everything goes well. Hence, we need to
-explicitly check for a negative error code instead of checking for
-something different than 0.
+Some TongFang barebones have touchpad and/or keyboard issues after
+suspend, fixable with nomux + reset + noloop + nopnp. Luckily, none of
+them have an external PS/2 port so this can safely be set for all of
+them.
 
-Fixes: e960309ce318 ("Input: adp5588-keys - bail out on returned error")
+I'm not entirely sure if every device listed really needs all four quirks,
+but after testing and production use, no negative effects could be
+observed when setting all four.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240920-fix-adp5588-err-check-v1-1-81f6e957ef24@analog.com
+Link: https://lore.kernel.org/r/20240905164851.771578-1-wse@tuxedocomputers.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/adp5588-keys.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/input/keyboard/adp5588-keys.c
-+++ b/drivers/input/keyboard/adp5588-keys.c
-@@ -627,7 +627,7 @@ static int adp5588_setup(struct adp5588_
- 
- 	for (i = 0; i < KEYP_MAX_EVENT; i++) {
- 		ret = adp5588_read(client, KEY_EVENTA);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
- 	}
- 
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1121,6 +1121,29 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOLOOP)
+ 	},
+ 	/*
++	 * Some TongFang barebones have touchpad and/or keyboard issues after
++	 * suspend fixable with nomux + reset + noloop + nopnp. Luckily, none of
++	 * them have an external PS/2 port so this can safely be set for all of
++	 * them.
++	 * TongFang barebones come with board_vendor and/or system_vendor set to
++	 * a different value for each individual reseller. The only somewhat
++	 * universal way to identify them is by board_name.
++	 */
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	/*
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with nomux + reset + noloop + nopnp. Luckily,
+ 	 * none of them have an external PS/2 port so this can safely be set for
 
 
