@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B681CF5FB;
-	Wed,  2 Oct 2024 13:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589531D0156;
+	Wed,  2 Oct 2024 13:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876921; cv=none; b=aLBnNrqaRzL27Pj9WAjKr6THpIXd4/ZkOqq7iG/IdpmcRMaEIVlnIJu/GQgSP7VpspaK2K+kfaXHi0RJC96gZA2XnN28LqxzJzGWKV5ThmeFUja6I6SzVft6AD+AUC+9hVpwE0scFrdy9HzCbdicmW1i0rERKv8oG3ddQBSBg+A=
+	t=1727876925; cv=none; b=rmGSJ9NPqTrdLSLdoVj8rfm4pG6AtgBxi78eHEQafLXoueCDY42MFAoFAbXAEItSs0pnfL8XEyx6FliG2Pk+W2dtsYOFdo1iKfxhVYBRs7mcQojpFPR2EhP4Ca6hqyFqw5OltL0kOVPnGF5jVYO9enlvf5oVg3F6kGNkZDD5n7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876921; c=relaxed/simple;
-	bh=Gzi+sNbXPO/m1BPg7lb4MAAuX4g9uZfjzFzTtRXMv8I=;
+	s=arc-20240116; t=1727876925; c=relaxed/simple;
+	bh=LH5lwcoUD9py9dPJVKJNVnsqPu7XmcE9JgeXYLXqsws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suSMrD3bKQV8WtHeOgyKKBKSh8niOLI4XDQ7KOM8jZ6IPt+sqxsPpQZjPv3BgTF6Dpz8CboKMwHX+rOzkIdSWEJEwN7htCtsq3iUFynP8Sb/Hp/g+Tx91Z1QvuntpzVnEgMPo2O3xieyB/H+qXmBTjqsYcFnppLbwkL76iESKkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjvapyIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XolQ9hOQeouD07BFOzsLlvs774v1xwgZXP5AkTLneTH8c+CsdCszWa32+vktikEhnnar/htQMai0nxzGZxL2szSYLX4HxB4PYRJPMLzl7j58fmgzBAzEnXwxJnZSgvIY0iQOXHoj6RaMK45UpKpWJ+t0tPf2TMYnN9dITXPAFsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1Ws3kz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjvapyIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49ECBC4CEC2;
-	Wed,  2 Oct 2024 13:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1Ws3kz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C1EC4CEC5;
+	Wed,  2 Oct 2024 13:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876921;
-	bh=Gzi+sNbXPO/m1BPg7lb4MAAuX4g9uZfjzFzTtRXMv8I=;
+	s=korg; t=1727876924;
+	bh=LH5lwcoUD9py9dPJVKJNVnsqPu7XmcE9JgeXYLXqsws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjvapyItOuv1Z45NDWXru81VtVYODYZfRw0BFsfX31sHA4nBLBM3C8PDN28b4jyS2
-	 vLgkVCQIBldxWwtdXLeAm++1fX5TIkwYHmGYmwlB3VbwRrRgSmt6y3TEgT301N3OX2
-	 Acu7wvDEWH/+gp9gdPPVbNOLSEsFgpvYRhHWbjJc=
+	b=q1Ws3kz7yvcMjK8k4ewSM/7CFGAPX5N4YngCpdKWasRnYhah4h+8RsDeOuh4iICeZ
+	 q6GEQ3d9YStEyuTeu2wYFf+k4AIOPHDy3ljfPbBHVntfpvkojly2DGpxzpccNRbQfV
+	 YOXAHRsxoeCYpzglSk7bi9Y3+6CtgsIetlWekHjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.11 606/695] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
-Date: Wed,  2 Oct 2024 15:00:04 +0200
-Message-ID: <20241002125846.703570291@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.11 607/695] efistub/tpm: Use ACPI reclaim memory for event log to avoid corruption
+Date: Wed,  2 Oct 2024 15:00:05 +0200
+Message-ID: <20241002125846.746253426@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,38 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit a98cfe6ff15b62f94a44d565607a16771c847bc6 upstream.
+commit 77d48d39e99170b528e4f2e9fc5d1d64cdedd386 upstream.
 
-Internal documentation suggest that the TUXEDO Polaris 15 Gen5 AMD might
-have GMxXGxX as the board name instead of GMxXGxx.
+The TPM event log table is a Linux specific construct, where the data
+produced by the GetEventLog() boot service is cached in memory, and
+passed on to the OS using an EFI configuration table.
 
-Adding both to be on the safe side.
+The use of EFI_LOADER_DATA here results in the region being left
+unreserved in the E820 memory map constructed by the EFI stub, and this
+is the memory description that is passed on to the incoming kernel by
+kexec, which is therefore unaware that the region should be reserved.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240910094008.1601230-1-wse@tuxedocomputers.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Even though the utility of the TPM2 event log after a kexec is
+questionable, any corruption might send the parsing code off into the
+weeds and crash the kernel. So let's use EFI_ACPI_RECLAIM_MEMORY
+instead, which is always treated as reserved by the E820 conversion
+logic.
+
+Cc: <stable@vger.kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Tested-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/efi/libstub/tpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -579,6 +579,12 @@ static const struct dmi_system_id irq1_e
- 		},
- 	},
- 	{
-+		/* TongFang GMxXGxX/TUXEDO Polaris 15 Gen5 AMD */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
-+		},
-+	},
-+	{
- 		/* TongFang GMxXGxx sold as Eluktronics Inc. RP-15 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
+--- a/drivers/firmware/efi/libstub/tpm.c
++++ b/drivers/firmware/efi/libstub/tpm.c
+@@ -96,7 +96,7 @@ static void efi_retrieve_tcg2_eventlog(i
+ 	}
+ 
+ 	/* Allocate space for the logs and copy them. */
+-	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA,
++	status = efi_bs_call(allocate_pool, EFI_ACPI_RECLAIM_MEMORY,
+ 			     sizeof(*log_tbl) + log_size, (void **)&log_tbl);
+ 
+ 	if (status != EFI_SUCCESS) {
 
 
