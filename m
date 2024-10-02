@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3BC1D040D;
-	Wed,  2 Oct 2024 14:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E141D0434;
+	Wed,  2 Oct 2024 14:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879165; cv=none; b=l6jZKpEHMirSAP5ls2KoyAd54Q7UCxO1TYl4flCVL+CkYjP7VD4mrgo0C2UcEJ6Sk3XyJP45tGUtsaTSYbO35nQACa9tJGtBZzUpmMqqTlDQFmz3ABiPtkTlInRBzP0AmHxn4A4syvIDDPOXcmIcQGkRVwA6GMJcxkZ4DOXXgwI=
+	t=1727879168; cv=none; b=lClrVHwrZF7QBF9yHRfxqCUjrxPei0GWDRciDsd9LCaMM54B8EWK1C8AESUEooPhuodCHQDQ8d9x3lUhFp+LkOJHY+uadvmGeDHhcxKtCvs58X647qgw+0OOr4kWw0Br1PrcxKTQALsEEZF2akJyrTn4u6zR2Fsivo0nGaPV5g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879165; c=relaxed/simple;
-	bh=6oGEqDB3GmakXsATepVlIdI8ASmLnHA0VdoVnq8jyEs=;
+	s=arc-20240116; t=1727879168; c=relaxed/simple;
+	bh=9qZQw8+lKCcaR+yz8qTEbPGc/68VyjSh/qfyprrLyRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ9OqS9Ssitsau76Zq50qKV69PfkhFBYEwXn9HrxoPR/pDNV+pe+6FCPA2/QSk2eGjnrtnxc7xiJHbCm+zDkO9PPCK5a/s8F2J+OAn0e/fAbhcm2gE9IdxrdeuK/Y/K0UcsMtMCCbMF1Mq/tIKrKKlloFMnTmh9jnhZkNT1Keos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeCiK/I9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=omzrJ0LL1dStPYbJj1K8EASpk86cXYms0AmMX0UwruTOa/Q4K8ipTnJtwd8MInxdbdM0Wh5BzGhGP6wgJEYJQeGMnPZMm+fn8+5jj/rYq7wKgsHX6fKYkchLpwQJrCJxlj/p9F4PeAHY/emtiLK/DJcX71teU+Z6URHImPExuEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mh31qvgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeCiK/I9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08795C4CEC2;
-	Wed,  2 Oct 2024 14:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mh31qvgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19FEC4CEC2;
+	Wed,  2 Oct 2024 14:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879165;
-	bh=6oGEqDB3GmakXsATepVlIdI8ASmLnHA0VdoVnq8jyEs=;
+	s=korg; t=1727879168;
+	bh=9qZQw8+lKCcaR+yz8qTEbPGc/68VyjSh/qfyprrLyRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeCiK/I976s4qvRb+JuH2jbVjQtupdGVooZkjbcHLb7W0V5ep6FfzDp0k32OeZyFY
-	 Jc4PMzWGBOhaI32oXoL51H1wstcFB6KMgVQKr12BLbz/raC4+AiWRKaJJ9qhWeeg8T
-	 Wdkj3srbg32Kn4VQYPDIozdP/gyogYvcHBrDZhVY=
+	b=Mh31qvgb5EtrFon9DP/OXalIrFBGd1/hhZr6vO7J9hP7FIq1QTPulH4U3AW56FclW
+	 48XXdSIeRZfTGsIQREfmVyd6QnqYllIOlxnQqbzF0NbnR1bCq4+kZLx6lhnFK4Y5T/
+	 9b36BeCH4IgAvOZGtXRRbL4tBhxy1Khv5Cd7q4Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	John David Anglin <dave.anglin@bell.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/538] crypto: xor - fix template benchmarking
-Date: Wed,  2 Oct 2024 14:54:03 +0200
-Message-ID: <20241002125752.150399564@linuxfoundation.org>
+Subject: [PATCH 6.6 005/538] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
+Date: Wed,  2 Oct 2024 14:54:04 +0200
+Message-ID: <20241002125752.193063769@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,103 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit ab9a244c396aae4aaa34b2399b82fc15ec2df8c1 ]
+[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
 
-Commit c055e3eae0f1 ("crypto: xor - use ktime for template benchmarking")
-switched from using jiffies to ktime-based performance benchmarking.
+In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
+is useless.
 
-This works nicely on machines which have a fine-grained ktime()
-clocksource as e.g. x86 machines with TSC.
-But other machines, e.g. my 4-way HP PARISC server, don't have such
-fine-grained clocksources, which is why it seems that 800 xor loops
-take zero seconds, which then shows up in the logs as:
+Fix this issue by removing unneeded check.
 
- xor: measuring software checksum speed
-    8regs           : -1018167296 MB/sec
-    8regs_prefetch  : -1018167296 MB/sec
-    32regs          : -1018167296 MB/sec
-    32regs_prefetch : -1018167296 MB/sec
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix this with some small modifications to the existing code to improve
-the algorithm to always produce correct results without introducing
-major delays for architectures with a fine-grained ktime()
-clocksource:
-a) Delay start of the timing until ktime() just advanced. On machines
-with a fast ktime() this should be just one additional ktime() call.
-b) Count the number of loops. Run at minimum 800 loops and finish
-earliest when the ktime() counter has progressed.
-
-With that the throughput can now be calculated more accurately under all
-conditions.
-
-Fixes: c055e3eae0f1 ("crypto: xor - use ktime for template benchmarking")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Tested-by: John David Anglin <dave.anglin@bell.net>
-
-v2:
-- clean up coding style (noticed & suggested by Herbert Xu)
-- rephrased & fixed typo in commit message
-
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/xor.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/xor.c b/crypto/xor.c
-index 8e72e5d5db0de..56aa3169e8717 100644
---- a/crypto/xor.c
-+++ b/crypto/xor.c
-@@ -83,33 +83,30 @@ static void __init
- do_xor_speed(struct xor_block_template *tmpl, void *b1, void *b2)
- {
- 	int speed;
--	int i, j;
--	ktime_t min, start, diff;
-+	unsigned long reps;
-+	ktime_t min, start, t0;
+diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
+index ebd03e4729555..0d1a82eeb4b0b 100644
+--- a/drivers/acpi/pmic/tps68470_pmic.c
++++ b/drivers/acpi/pmic/tps68470_pmic.c
+@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
+ 	struct tps68470_pmic_opregion *opregion;
+ 	acpi_status status;
  
- 	tmpl->next = template_list;
- 	template_list = tmpl;
- 
- 	preempt_disable();
- 
--	min = (ktime_t)S64_MAX;
--	for (i = 0; i < 3; i++) {
--		start = ktime_get();
--		for (j = 0; j < REPS; j++) {
--			mb(); /* prevent loop optimization */
--			tmpl->do_2(BENCH_SIZE, b1, b2);
--			mb();
--		}
--		diff = ktime_sub(ktime_get(), start);
--		if (diff < min)
--			min = diff;
+-	if (!dev || !tps68470_regmap) {
+-		dev_warn(dev, "dev or regmap is NULL\n");
+-		return -EINVAL;
 -	}
-+	reps = 0;
-+	t0 = ktime_get();
-+	/* delay start until time has advanced */
-+	while ((start = ktime_get()) == t0)
-+		cpu_relax();
-+	do {
-+		mb(); /* prevent loop optimization */
-+		tmpl->do_2(BENCH_SIZE, b1, b2);
-+		mb();
-+	} while (reps++ < REPS || (t0 = ktime_get()) == start);
-+	min = ktime_sub(t0, start);
++	if (!tps68470_regmap)
++		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
  
- 	preempt_enable();
- 
- 	// bytes/ns == GB/s, multiply by 1000 to get MB/s [not MiB/s]
--	if (!min)
--		min = 1;
--	speed = (1000 * REPS * BENCH_SIZE) / (unsigned int)ktime_to_ns(min);
-+	speed = (1000 * reps * BENCH_SIZE) / (unsigned int)ktime_to_ns(min);
- 	tmpl->speed = speed;
- 
- 	pr_info("   %-16s: %5d MB/sec\n", tmpl->name, speed);
+ 	if (!handle) {
+ 		dev_warn(dev, "acpi handle is NULL\n");
 -- 
 2.43.0
 
