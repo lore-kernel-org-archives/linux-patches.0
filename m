@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E6929CE7;
-	Wed,  2 Oct 2024 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BA629CE7;
+	Wed,  2 Oct 2024 13:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877168; cv=none; b=jeMnhPl5G+Heny9sKKQ5e7LyK19R0wYEvz6cKIKAyXoJ0EKAwywW9m74ijHRpAOEnei0XURvSQFFpKIpWfK7a5nfTfLITGhydJ/rdDTjC8U7DIja2oQqVLgH3p9YAKfvdNQkRARYIGTEWGcvmxk6TXeYKDJmgcJQWc3s9pfShDk=
+	t=1727877171; cv=none; b=l5YDNSzAFR1upiherzS4SN+7fucGDxsoL77exEGuotx7MBBOPjZQFCAA/BSoTbIpkN5LZusMI7bCnMpubg2m6ckkhDtL3miWUdcSAmCPuAe8X56RgeZar6ksOKqvkNuHNIy4w1ykXtiNCRloFFN4Us2fwOOxUy3kJ+pn0fV5ByM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877168; c=relaxed/simple;
-	bh=DSXprPDeVTSRQxAp41OMKVGIj41azk2/aTGsmCBIqKA=;
+	s=arc-20240116; t=1727877171; c=relaxed/simple;
+	bh=Tm0p6nI7pcnBgxpf1C5VNBfY6raeiPF5a8mgB7iQhiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFzrY0EekJmKkV0zaKfAb5tG9K+9rwa1nUugEVnRB0AxKz2GA3j2vvLWlRIDZzptbhEskCW8b1xRR2Km9eu+rc7fYm3C+x4FnWJYKLwT1YgZB9JsPEm4vwMeG0NbOBVpForanxlAeuxdR/Gt1YkiWX8RKTnsH11W3f3QIKplUDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDySYl2o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnAJ4YfP+HICqrW/ETU4A+H0ABY5OJuSEHhPtAN7oqhc0Y5zDrh8Y1myZ1+pHzPrfZ7s2aQzoIxc9JzJVVYzK3Fr7xpIpIGBKiEaR+oicYkyAyXekkYgkZcZORRpek267sv6/KK0cP6ivIOOlBdtzg+UAKDNnzQH+EjHZW4CMJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/KianC1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDySYl2o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05D2C4CEC2;
-	Wed,  2 Oct 2024 13:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/KianC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AACBC4CEC2;
+	Wed,  2 Oct 2024 13:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877168;
-	bh=DSXprPDeVTSRQxAp41OMKVGIj41azk2/aTGsmCBIqKA=;
+	s=korg; t=1727877171;
+	bh=Tm0p6nI7pcnBgxpf1C5VNBfY6raeiPF5a8mgB7iQhiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDySYl2oO5CpfzbSeKXkMDZTVt9Naqm8d70LcBpCNf63ZVEY4r5mwCzgH5svdMCCG
-	 txia0dv2w9O5m9eQwK+ofdZwFDZKOBV76AeSE1H6Z+EfaRzjJ/k2Qk/j88I5xsq9v3
-	 Rd2O8CT+OFRER2ngeaLqnbe68faAnmo7Jbe0+5ZE=
+	b=U/KianC1yTLloeMzZLPAFG7EcspvBuABE2XW6aaKqnZMiY+pggWtLeyDeEJjIKKEQ
+	 wKXz1bddISywftSeB1jPJ9GeFw82hXJpsg/NwzIng+3TdgdlJ3Nug1dl28kKFxdpaH
+	 sThNcumiqRv+eeo4MjFK0GdSeuelfVCdtJl/3a0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 687/695] mm/hugetlb.c: fix UAF of vma in hugetlb fault pathway
-Date: Wed,  2 Oct 2024 15:01:25 +0200
-Message-ID: <20241002125849.943374932@linuxfoundation.org>
+Subject: [PATCH 6.11 688/695] mm/huge_memory: ensure huge_zero_folio wont have large_rmappable flag set
+Date: Wed,  2 Oct 2024 15:01:26 +0200
+Message-ID: <20241002125849.982377233@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,80 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-commit 98b74bb4d7e96b4da5ef3126511febe55b76b807 upstream.
+commit 2a1b8648d9be9f37f808a36c0f74adb8c53d06e6 upstream.
 
-Syzbot reports a UAF in hugetlb_fault().  This happens because
-vmf_anon_prepare() could drop the per-VMA lock and allow the current VMA
-to be freed before hugetlb_vma_unlock_read() is called.
+Ensure huge_zero_folio won't have large_rmappable flag set.  So it can be
+reported as thp,zero correctly through stable_page_flags().
 
-We can fix this by using a modified version of vmf_anon_prepare() that
-doesn't release the VMA lock on failure, and then release it ourselves
-after hugetlb_vma_unlock_read().
-
-Link: https://lkml.kernel.org/r/20240914194243.245-2-vishal.moola@gmail.com
-Fixes: 9acad7ba3e25 ("hugetlb: use vmf_anon_prepare() instead of anon_vma_prepare()")
-Reported-by: syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-mm/00000000000067c20b06219fbc26@google.com/
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Muchun Song <muchun.song@linux.dev>
+Link: https://lkml.kernel.org/r/20240914015306.3656791-1-linmiaohe@huawei.com
+Fixes: 5691753d73a2 ("mm: convert huge_zero_page to huge_zero_folio")
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6076,7 +6076,7 @@ retry_avoidcopy:
- 	 * When the original hugepage is shared one, it does not have
- 	 * anon_vma prepared.
- 	 */
--	ret = vmf_anon_prepare(vmf);
-+	ret = __vmf_anon_prepare(vmf);
- 	if (unlikely(ret))
- 		goto out_release_all;
- 
-@@ -6275,7 +6275,7 @@ static vm_fault_t hugetlb_no_page(struct
- 		}
- 
- 		if (!(vma->vm_flags & VM_MAYSHARE)) {
--			ret = vmf_anon_prepare(vmf);
-+			ret = __vmf_anon_prepare(vmf);
- 			if (unlikely(ret))
- 				goto out;
- 		}
-@@ -6406,6 +6406,14 @@ static vm_fault_t hugetlb_no_page(struct
- 	folio_unlock(folio);
- out:
- 	hugetlb_vma_unlock_read(vma);
-+
-+	/*
-+	 * We must check to release the per-VMA lock. __vmf_anon_prepare() is
-+	 * the only way ret can be set to VM_FAULT_RETRY.
-+	 */
-+	if (unlikely(ret & VM_FAULT_RETRY))
-+		vma_end_read(vma);
-+
- 	mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 	return ret;
- 
-@@ -6627,6 +6635,14 @@ out_ptl:
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -220,6 +220,8 @@ retry:
+ 		count_vm_event(THP_ZERO_PAGE_ALLOC_FAILED);
+ 		return false;
  	}
- out_mutex:
- 	hugetlb_vma_unlock_read(vma);
-+
-+	/*
-+	 * We must check to release the per-VMA lock. __vmf_anon_prepare() in
-+	 * hugetlb_wp() is the only way ret can be set to VM_FAULT_RETRY.
-+	 */
-+	if (unlikely(ret & VM_FAULT_RETRY))
-+		vma_end_read(vma);
-+
- 	mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 	/*
- 	 * Generally it's safe to hold refcount during waiting page lock. But
++	/* Ensure zero folio won't have large_rmappable flag set. */
++	folio_clear_large_rmappable(zero_folio);
+ 	preempt_disable();
+ 	if (cmpxchg(&huge_zero_folio, NULL, zero_folio)) {
+ 		preempt_enable();
 
 
