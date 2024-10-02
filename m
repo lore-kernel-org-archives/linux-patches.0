@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FE31CFEB3;
-	Wed,  2 Oct 2024 14:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2491CFEB3;
+	Wed,  2 Oct 2024 14:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879218; cv=none; b=M7NCkF9V/VAqdz72eKcMcIgvu+0Dl9rp4QgMkWTynPDdPz3FfGHQdCMGdmtzvjG1f6D+5SucyomB15NsUWQHrtkU0PDPqslOXk4n7fQ6gWKloAd7Xu+QzX3AS9/K2HlMmN+sUIyTyp7yYtfbASsyM4kDLXBgzOJsihZtM72fg74=
+	t=1727879221; cv=none; b=R/d+0UCd1uhqeSoVUnK3azxt7ykwTzNl/z3/f2ZoX0W2IXJLjzC3TYLbCRJiLLdZ48Pv1mjhuGDpxhC6/frgoDtNDRqYA0KIhIIa0yq+3bVApRK4xT183z6y68wZD3dM7ep92Ti8JAGB17j+zmDpXAxIGX89py6mvCaPsWpuAok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879218; c=relaxed/simple;
-	bh=jeSjJVPKA3YC1qySXKmxDbebALpl4DZDhgAsWU5E+3Y=;
+	s=arc-20240116; t=1727879221; c=relaxed/simple;
+	bh=uiGVLCyzWKN4QIUETHx6/SojEHYQi01VG49MMlvpzWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPecpJUUMjOZ4QYpKwsvAWv+tafrnhOAfM2hAdzJv31GjBTGLt+qfTNdIVJ2POYB6I7BmT1aYXm4ga/28BENE4htSn/0Ai4qy0VY4UHRegBUC66LhkJl9WKBw2dGLX3+ornPhJRCqcHCfmi92RsYGDWyjsojrlwBsLMSpT67s9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kO7pfjv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lkxhK59txOm9g5GwKPkz6JC9QPcqLHLMLe+/epIehl28q0R48XBoEioC4NCW0yYS0SPSnJXjXnfV1GtdGPe3OR+38gTBvm6LEObEKKeAR8ceNwSVRu9io4NHzzIGipo/gxxAGRqaobFHMJuD8bnv8L9vnA7pHDyScn2t5cS6pUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhxYfl+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kO7pfjv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A16C4CEC2;
-	Wed,  2 Oct 2024 14:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhxYfl+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B60DC4CEC2;
+	Wed,  2 Oct 2024 14:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879218;
-	bh=jeSjJVPKA3YC1qySXKmxDbebALpl4DZDhgAsWU5E+3Y=;
+	s=korg; t=1727879221;
+	bh=uiGVLCyzWKN4QIUETHx6/SojEHYQi01VG49MMlvpzWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kO7pfjv9w07YiXkh2lR8xERC7iNrSkCBcQu5HQlEQXUq7cDJzdxHLvjpwemSRRhWB
-	 CxLfvHaiUgeDyZRQHxqv0ts79HCn2XEMzdV4tSS23ahIuPx9QXOxDuPN5tWYvMiDCX
-	 Mp+nuJgql5ExSZMFfQ30JWdrA304E2IPMlNsJx0U=
+	b=qhxYfl+A4DWSKDoJDwrIeS843Zs5jnPltnhFXwt1XsJOsbrZd5BIO8+hbWa/7Jt0z
+	 WKKaUp16TCFN0FjlpdJSPmCZVCFWHEJu0wd1j31tZkne/np1/4pn16giHtRHfMM/pk
+	 bSeKK9S2CbnNloMgcTMt8iXNV/6uNEuYueQm2HAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/538] wifi: iwlwifi: mvm: increase the time between ranging measurements
-Date: Wed,  2 Oct 2024 14:54:25 +0200
-Message-ID: <20241002125753.051862889@linuxfoundation.org>
+Subject: [PATCH 6.6 044/538] wifi: mt76: mt7996: use hweight16 to get correct tx antenna
+Date: Wed,  2 Oct 2024 14:54:43 +0200
+Message-ID: <20241002125753.769583753@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 3a7ee94559dfd640604d0265739e86dec73b64e8 ]
+[ Upstream commit f98c3de92bb05dac4a4969df8a4595ed380b4604 ]
 
-The algo running in fw may take a little longer than 5 milliseconds,
-(e.g. measurement on 80MHz while associated). Increase the minimum
-time between measurements to 7 milliseconds.
+The chainmask is u16 so using hweight8 cannot get correct tx_ant.
+Without this patch, the tx_ant of band 2 would be -1 and lead to the
+following issue:
+BUG: KASAN: stack-out-of-bounds in mt7996_mcu_add_sta+0x12e0/0x16e0 [mt7996e]
 
-Fixes: 830aa3e7d1ca ("iwlwifi: mvm: add support for range request command version 13")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240729201718.d3f3c26e00d9.I09e951290e8a3d73f147b88166fd9a678d1d69ed@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20240816094635.2391-1-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/constants.h | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/constants.h b/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-index 243eccc68cb05..f7bec6f3d7584 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-@@ -103,7 +103,7 @@
- #define IWL_MVM_FTM_INITIATOR_SECURE_LTF	false
- #define IWL_MVM_FTM_RESP_NDP_SUPPORT		true
- #define IWL_MVM_FTM_RESP_LMR_FEEDBACK_SUPPORT	true
--#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	5
-+#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	7
- #define IWL_MVM_FTM_NON_TB_MAX_TIME_BETWEEN_MSR	1000
- #define IWL_MVM_D3_DEBUG			false
- #define IWL_MVM_USE_TWT				true
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index b66f712e1b17b..1c3eec84892c2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1412,7 +1412,7 @@ mt7996_mcu_sta_bfer_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
+ {
+ 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
+ 	struct mt7996_phy *phy = mvif->phy;
+-	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
++	int tx_ant = hweight16(phy->mt76->chainmask) - 1;
+ 	struct sta_rec_bf *bf;
+ 	struct tlv *tlv;
+ 	const u8 matrix[4][4] = {
 -- 
 2.43.0
 
