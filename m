@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F021EA80;
-	Wed,  2 Oct 2024 14:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBAD1EA80;
+	Wed,  2 Oct 2024 14:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880229; cv=none; b=rWihprYWyRDoz9+8BqsDGA6nm/RKQtPXGvu5jieOgYER5EGMHGnB8Sl3UU3ApKdCtjvudg55opZjFL5nIYAvpFsTub/S96gMwLrmaUL49o9OCvjger8PSgwq5MZATLsuvx00/ELgP9hV/Hlm4Y9Mr10XbbLM7IZCcm3yhYCE5+Q=
+	t=1727880232; cv=none; b=RSbXWH69ikQPJ4sH8msJJ0AZRdoL5CwHrhqlIwJWOuLkX5/nSnP8ouXRoxtPU08xZRz4dbpanxAyUKv8v3KlTBKblZHgHFGRhgYzFwaK2uFnDQUOAI0EEK/vBi7DR53XU5qVynY08tt/p2Bv2pCBOsfJrPpAOAz4YmE1wcWe638=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880229; c=relaxed/simple;
-	bh=UJKzMlut2T3knkrXvh69WzYhDSsQ4kJqYFrklnEs20Y=;
+	s=arc-20240116; t=1727880232; c=relaxed/simple;
+	bh=fyV65lUCUz951zPZinbgqag2TrtBFrq6DNmckckeO6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDpCFbKEa7cx0AZb3iUwP1aGhHmvVPbT03EZtGoERJ40gz3DoAYBaSqtB91UFwDJXrVWmmK4H9f3QG/xJbJ/Lle6tGAeALKk4AEgq6RyxwMxvC9h4Q19oN8xkSyRkRkxJfyEschyo4wCVhC8JnoTOktcnQTBYiSrfsqBT22+98s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flVikb/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TVBKZVHCALzSyCVglkP8yidgo0zen0yZ7GpHMVgvjxzAmL/4pYXQoGcOhinKvFmskAt181t5FbKtWpaEm6Zmt5yJB517zvWcf0vYAc3mdqQ87TOthE6Hf+XKqAQTvJvU6ulozr2WfDZDRKuC+UQEeV3BuAjZEW5iQaVzaFYQHOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHFS+b9z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flVikb/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C94DC4CEC2;
-	Wed,  2 Oct 2024 14:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHFS+b9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690ABC4CECD;
+	Wed,  2 Oct 2024 14:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880228;
-	bh=UJKzMlut2T3knkrXvh69WzYhDSsQ4kJqYFrklnEs20Y=;
+	s=korg; t=1727880231;
+	bh=fyV65lUCUz951zPZinbgqag2TrtBFrq6DNmckckeO6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flVikb/E/ojMRKK5DkmE6wKxW8eHRIIv5P3NlM86/zvrD+xCBTgRdK6gMcqLz2ge1
-	 MlGKJtMQ0vzpOpkA0lraRbwhQdtZnwvYyn6pfFtZHOBpolavEv+c71cnR0SIqLNSj7
-	 FwSsTOW08g4c0jC78JUDZNVzQ/4HgYJ7KemRHYeU=
+	b=pHFS+b9zwjDbtj8ejOe+2g6DreX8Qx5Y0/UUAmUuBGTb99S+I9g00c1sbwHlnGRnm
+	 bLtf5i54zOR3CA6GgCsVYIH5hURjpQygXLUZeC+Ok7+wNYSh1kc3v98EtdmLYsC+Xi
+	 Oz8UoLZvQGz+R3vmwbjGeOJlawFlfyvLSceb8RJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duanqiang Wen <duanqiangwen@net-swift.com>
-Subject: [PATCH 6.6 387/538] [PATCH net] Revert "net: libwx: fix alloc msix vectors failed"
-Date: Wed,  2 Oct 2024 15:00:26 +0200
-Message-ID: <20241002125807.707245884@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>
+Subject: [PATCH 6.6 388/538] xen: move checks for e820 conflicts further up
+Date: Wed,  2 Oct 2024 15:00:27 +0200
+Message-ID: <20241002125807.747737174@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -43,40 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duanqiang Wen <duanqiangwen@net-swift.com>
+From: Juergen Gross <jgross@suse.com>
 
-This reverts commit 69197dfc64007b5292cc960581548f41ccd44828.
-commit 937d46ecc5f9 ("net: wangxun: add ethtool_ops for
-channel number") changed NIC misc irq from most significant
-bit to least significant bit, the former condition is not
-required to apply this patch, because we only need to set
-irq affinity for NIC queue irq vectors.
-this patch is required after commit 937d46ecc5f9 ("net: wangxun:
-add ethtool_ops for channel number") was applied, so this is only
-relevant to 6.6.y branch.
+commit c4498ae316da5b5786ccd448fc555f3339b8e4ca upstream.
 
-Signed-off-by: Duanqiang Wen <duanqiangwen@net-swift.com>
+Move the checks for e820 memory map conflicts using the
+xen_chk_is_e820_usable() helper further up in order to prepare
+resolving some of the possible conflicts by doing some e820 map
+modifications, which must happen before evaluating the RAM layout.
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/xen/setup.c |   44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1585,7 +1585,7 @@ static void wx_set_num_queues(struct wx
-  */
- static int wx_acquire_msix_vectors(struct wx *wx)
- {
--	struct irq_affinity affd = { .pre_vectors = 1 };
-+	struct irq_affinity affd = {0, };
- 	int nvecs, i;
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -855,6 +855,28 @@ char * __init xen_memory_setup(void)
+ 	/* Make sure the Xen-supplied memory map is well-ordered. */
+ 	e820__update_table(&xen_e820_table);
  
- 	nvecs = min_t(int, num_online_cpus(), wx->mac.max_msix_vectors);
++	/*
++	 * Check whether the kernel itself conflicts with the target E820 map.
++	 * Failing now is better than running into weird problems later due
++	 * to relocating (and even reusing) pages with kernel text or data.
++	 */
++	xen_chk_is_e820_usable(__pa_symbol(_text),
++			       __pa_symbol(_end) - __pa_symbol(_text),
++			       "kernel");
++
++	/*
++	 * Check for a conflict of the xen_start_info memory with the target
++	 * E820 map.
++	 */
++	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
++			       "xen_start_info");
++
++	/*
++	 * Check for a conflict of the hypervisor supplied page tables with
++	 * the target E820 map.
++	 */
++	xen_pt_check_e820();
++
+ 	max_pages = xen_get_max_pages();
+ 
+ 	/* How many extra pages do we need due to remapping? */
+@@ -927,28 +949,6 @@ char * __init xen_memory_setup(void)
+ 
+ 	e820__update_table(e820_table);
+ 
+-	/*
+-	 * Check whether the kernel itself conflicts with the target E820 map.
+-	 * Failing now is better than running into weird problems later due
+-	 * to relocating (and even reusing) pages with kernel text or data.
+-	 */
+-	xen_chk_is_e820_usable(__pa_symbol(_text),
+-			       __pa_symbol(_end) - __pa_symbol(_text),
+-			       "kernel");
+-
+-	/*
+-	 * Check for a conflict of the xen_start_info memory with the target
+-	 * E820 map.
+-	 */
+-	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
+-			       "xen_start_info");
+-
+-	/*
+-	 * Check for a conflict of the hypervisor supplied page tables with
+-	 * the target E820 map.
+-	 */
+-	xen_pt_check_e820();
+-
+ 	xen_reserve_xen_mfnlist();
+ 
+ 	/* Check for a conflict of the initrd with the target E820 map. */
 
 
