@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D66B1D07B8;
-	Wed,  2 Oct 2024 13:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EC01D0491;
+	Wed,  2 Oct 2024 13:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876212; cv=none; b=aKeugbBqroewqpQ6QGosZK7kHn90has3QjA3nphGSF0BXMB1o/CbM97++FW8quEJr4IU4t2VB9QOY1L5B0jrgf9X2Us7b5+CPhHKcMUMAE1Dfp+EiGT62qELRwRmDgj3pPGe4n3GOYIglireqENux0s3/YsbeXfrIZjTuh+0g/M=
+	t=1727876214; cv=none; b=rRoJDdt6bMUKubCRtC8bErZ2QdJKfLz63TdPGlmMXmIp++HtlvRtlXtjOXAN1TSSEUVTezjdTYJfwioHhLfAEYaiA2xd+ESNvdmtZXUbSgcDaQTuhyyPzct/GAXGwevyckv9Eaal/t6Y8V4IGxRgTnznPeSXLAA1dal/Pi+RrgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876212; c=relaxed/simple;
-	bh=8WpS7GA2QmRo5AcUnxvJy8H98dvAVp+D8olyT45zOQE=;
+	s=arc-20240116; t=1727876214; c=relaxed/simple;
+	bh=tiJL+PV6Q8UjPpOGd/t5wS8ACfEQiaqqGN0As5ztFTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7jCnClv9lB4xDJjFGS/UAF2un1TKmBAl+qlqnFFZEjjZhFvuxvfOm0HDVBnr0jkcPSgs0OuKeSr8kyTKWSPDTKIrxgsTyf6u0wlgEwq7s505K+wP+9/4jSnvTvINXdH6g+skE4ZpnOacerFk+Ks3Getp9+K2yStUggFuMpPV2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTMf3SuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bs/x69ow//g7B4G3M/o9vltK8gYbr0U96BB0dtqaNQ/Nvs8pRsBolNAuEA5m69rcSWZO/O/2izYIyq9WHBk/Y8IOlrFnYZGwA6SB3BQ69qLh76OVfWjxn597PVv4ufqx/zXOyLIGjIBAtaNV/+3wIUqRdta8ORdqPm2pO2I1/Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6NCzVPn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTMf3SuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9FFC4CEC5;
-	Wed,  2 Oct 2024 13:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6NCzVPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1D3C4CEC5;
+	Wed,  2 Oct 2024 13:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876211;
-	bh=8WpS7GA2QmRo5AcUnxvJy8H98dvAVp+D8olyT45zOQE=;
+	s=korg; t=1727876214;
+	bh=tiJL+PV6Q8UjPpOGd/t5wS8ACfEQiaqqGN0As5ztFTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTMf3SuUSBxjXVIvGKtxr71tc+2QDW4sHwDdPv/PaeR7jwCTUa7H4h780XUVSy2Uy
-	 AN9sdHf0ojGw2OptBp0m7B7m2guHVJjN18KgewLgxDnzTN7Hg+aDywoUWRdgH33TwF
-	 oyuStfmq+4QLF/gIxply8mmM9g4XDhZ4xPIloqms=
+	b=J6NCzVPn0uv9S+VO8aNb3QQgyBVIZj3DWJz8DK6gEJEwNSMdIOfV/quWWPNgNT0t2
+	 bBSRRUP1LGuGRA+7A5oDUfDbOSMMLjLwn10gkyT26ujoXRodCsXtbdMMThJvsuVY5g
+	 //CGHtZRprhY3EmskWLr7koqY4Ke6GoWgxLF/Zok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	FLorian Fainelli <florian.fainelli@broadcom.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 367/695] media: raspberrypi: VIDEO_RASPBERRYPI_PISP_BE should depend on ARCH_BCM2835
-Date: Wed,  2 Oct 2024 14:56:05 +0200
-Message-ID: <20241002125837.098240949@linuxfoundation.org>
+Subject: [PATCH 6.11 368/695] PCI: Wait for Link before restoring Downstream Buses
+Date: Wed,  2 Oct 2024 14:56:06 +0200
+Message-ID: <20241002125837.138543570@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -47,45 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit c8ad75010c5bafe014860f33fc73a887ab561209 ]
+[ Upstream commit 3e40aa29d47e231a54640addf6a09c1f64c5b63f ]
 
-Currently, the Raspberry Pi PiSP Backend (BE) ISP is only present on the
-Broadcom BCM2712-based Raspberry Pi 5.  Hence add a dependency on
-ARCH_BCM2835, to prevent asking the user about this driver when
-configuring a kernel without Broadcom BCM2835 family support.  The
-dependency can be relaxed if/when the encoder appears on other SoC
-families.
+__pci_reset_bus() calls pci_bridge_secondary_bus_reset() to perform the
+reset and also waits for the Secondary Bus to become again accessible.
+__pci_reset_bus() then calls pci_bus_restore_locked() that restores the PCI
+devices connected to the bus, and if necessary, recursively restores also
+the subordinate buses and their devices.
 
-Fixes: 12187bd5d4f8 ("media: raspberrypi: Add support for PiSP BE")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: FLorian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The logic in pci_bus_restore_locked() does not take into account that after
+restoring a device on one level, there might be another Link Downstream
+that can only start to come up after restore has been performed for its
+Downstream Port device. That is, the Link may require additional wait until
+it becomes accessible.
+
+Similarly, pci_slot_restore_locked() lacks wait.
+
+Amend pci_bus_restore_locked() and pci_slot_restore_locked() to wait for
+the Secondary Bus before recursively performing the restore of that bus.
+
+Fixes: 090a3c5322e9 ("PCI: Add pci_reset_slot() and pci_reset_bus()")
+Link: https://lore.kernel.org/r/20240808121708.2523-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/raspberrypi/pisp_be/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/raspberrypi/pisp_be/Kconfig b/drivers/media/platform/raspberrypi/pisp_be/Kconfig
-index 38c0f8305d620..46765a2e4c4d1 100644
---- a/drivers/media/platform/raspberrypi/pisp_be/Kconfig
-+++ b/drivers/media/platform/raspberrypi/pisp_be/Kconfig
-@@ -2,6 +2,7 @@ config VIDEO_RASPBERRYPI_PISP_BE
- 	tristate "Raspberry Pi PiSP Backend (BE) ISP driver"
- 	depends on V4L_PLATFORM_DRIVERS
- 	depends on VIDEO_DEV
-+	depends on ARCH_BCM2835 || COMPILE_TEST
- 	select VIDEO_V4L2_SUBDEV_API
- 	select MEDIA_CONTROLLER
- 	select VIDEOBUF2_DMA_CONTIG
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index ffaaca0978cbc..5c1d53398f95d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5672,8 +5672,10 @@ static void pci_bus_restore_locked(struct pci_bus *bus)
+ 
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+ 		pci_dev_restore(dev);
+-		if (dev->subordinate)
++		if (dev->subordinate) {
++			pci_bridge_wait_for_secondary_bus(dev, "bus reset");
+ 			pci_bus_restore_locked(dev->subordinate);
++		}
+ 	}
+ }
+ 
+@@ -5707,8 +5709,10 @@ static void pci_slot_restore_locked(struct pci_slot *slot)
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+ 		pci_dev_restore(dev);
+-		if (dev->subordinate)
++		if (dev->subordinate) {
++			pci_bridge_wait_for_secondary_bus(dev, "slot reset");
+ 			pci_bus_restore_locked(dev->subordinate);
++		}
+ 	}
+ }
+ 
 -- 
 2.43.0
 
