@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66201D14F6;
-	Wed,  2 Oct 2024 14:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10BE1D1512;
+	Wed,  2 Oct 2024 14:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877712; cv=none; b=TT+Fzr8bdHoRK0ebj2wtOsryQ7gJwmAhUFGz4YaTRXpwDzeq9EA6uHXcpXb816Ou0Y1+TL1u/7MObMJVNwQGOwCk8BBRRH6wbDnsBE0Sr/K2LXsUCyzWBESBLaYNQZ94qHYZ0DHHeD6625xgrBdfx9okFl5zJbe/1wlLzmQj2w8=
+	t=1727877715; cv=none; b=KGHIlwCmBQIuDqhRxmlDxeb1HyaPvKdSMEaYlS6c9Op1hjH4kdmO0qaeE4z95pQJ6/jstJJg7bbIPXilrq6kvdFXa2XWUL3c5cmrDZoJ8kEBE/UnhdH47Wesn0kPmTmKV+sWyQ4SKJiBe6Qz8Kv+Kts1nCr2g1BOUbMS0keyPmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877712; c=relaxed/simple;
-	bh=FuXekBt8NFQ3mBbuZSOe7k5FmzwKAmA1XlbCjRATY0A=;
+	s=arc-20240116; t=1727877715; c=relaxed/simple;
+	bh=vCWDj6so1pxb5d7EgzUkvVkLOwXk6Gmhx0rrrfbgkA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l35J0/9A9MnYwxhYJnCwxdQEuAV7bsC9v3ciJ1Rfi3YU+CgiwZhr4z/7fEAGE47LlEWVdxtlRub6DrP2SCZanlE2MstydilJgV7RH0KSe6inIpS2m92vbKTlsF3nBEsrED71KfLO6Cp5PItUe9gE/YnDOmrhPkI/FThPvLo8o1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s++Y/FTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkleja1xQet3brRrnQVWK1LvOg68TwUmnv+I7iY5B6i+lTAt0FqW96Wn494mB4H/ZscX9UCwJBB7OoAas3nWZ3kP0JjLe/WrtFFdwEWsJp8WIQbx67meo7Tch0aKDoRLz5ks3cn1SgdyOfVSLSa06C6n6iBiwYLDcHV5cJs4ajE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/T//Owc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s++Y/FTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB5AC4CECE;
-	Wed,  2 Oct 2024 14:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/T//Owc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C94C4CEC2;
+	Wed,  2 Oct 2024 14:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877712;
-	bh=FuXekBt8NFQ3mBbuZSOe7k5FmzwKAmA1XlbCjRATY0A=;
+	s=korg; t=1727877715;
+	bh=vCWDj6so1pxb5d7EgzUkvVkLOwXk6Gmhx0rrrfbgkA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s++Y/FTwYIL/gH29w3/Rxr5v90ifeg4iubMqs8SdRxhjmwaZ9F2NbDj4VaijrN4p+
-	 aIwW40CcHD4jKQX29T43hzIWYs8aX91jwOOovwSLAqpPXKByiPlmgA84uIV9nKMxRR
-	 uPia9016Rccrs3DDKC58TibozfZs76IJqdogJmrQ=
+	b=0/T//Owc09K0G+KO938/Cp4yWfRXQ2TGf1df0I8MwuxcQ3wFySF72PRi0lJh3ria6
+	 bNaHSXhLarywUf3gMapTtnWbEZ6kZaAoVHhHyLhVMMv94CWTGKz8Dw9fIjg7fr9aMB
+	 ZaS9uAQswbi3NeMpqUnYKi1GL8iX31iFGx1fqBUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Nishanth Menon <nm@ti.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 137/634] arm64: dts: ti: k3-am654-idk: Fix dtbs_check warning in ICSSG dmas
-Date: Wed,  2 Oct 2024 14:53:57 +0200
-Message-ID: <20241002125816.516323357@linuxfoundation.org>
+Subject: [PATCH 6.10 138/634] ARM: versatile: fix OF node leak in CPUs prepare
+Date: Wed,  2 Oct 2024 14:53:58 +0200
+Message-ID: <20241002125816.555203238@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,59 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2bea7920da8001172f54359395700616269ccb70 ]
+[ Upstream commit f2642d97f2105ed17b2ece0c597450f2ff95d704 ]
 
-ICSSG doesn't use mgmnt rsp dmas. But these are added in the dmas for
-icssg1-eth and icssg0-eth node.
+Machine code is leaking OF node reference from of_find_matching_node()
+in realview_smp_prepare_cpus().
 
-These mgmnt rsp dmas result in below dtbs_check warnings.
-
-/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg1-eth: dmas: [[39, 49664], [39, 49665], [39, 49666], [39, 49667], [39, 49668], [39, 49669], [39, 49670], [39, 49671], [39, 16896], [39, 16897], [39, 16898], [39, 16899]] is too long
-	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
-/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg0-eth: dmas: [[39, 49408], [39, 49409], [39, 49410], [39, 49411], [39, 49412], [39, 49413], [39, 49414], [39, 49415], [39, 16640], [39, 16641], [39, 16642], [39, 16643]] is too long
-	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
-
-Fix these warnings by removing mgmnt rsp dmas from icssg1-eth and
-icssg0-eth nodes.
-
-Fixes: a4d5bc3214eb ("arm64: dts: ti: k3-am654-idk: Add ICSSG Ethernet ports")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20240830111000.232028-1-danishanwar@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 5420b4b15617 ("ARM: realview: add an DT SMP boot method")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/20240826054934.10724-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am654-idk.dtso | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/arm/mach-versatile/platsmp-realview.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
-index 8bdb87fcbde00..1674ad564be1f 100644
---- a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
-@@ -58,9 +58,7 @@
- 		       <&main_udmap 0xc107>, /* egress slice 1 */
- 
- 		       <&main_udmap 0x4100>, /* ingress slice 0 */
--		       <&main_udmap 0x4101>, /* ingress slice 1 */
--		       <&main_udmap 0x4102>, /* mgmnt rsp slice 0 */
--		       <&main_udmap 0x4103>; /* mgmnt rsp slice 1 */
-+		       <&main_udmap 0x4101>; /* ingress slice 1 */
- 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
- 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
- 			    "rx0", "rx1";
-@@ -126,9 +124,7 @@
- 		       <&main_udmap 0xc207>, /* egress slice 1 */
- 
- 		       <&main_udmap 0x4200>, /* ingress slice 0 */
--		       <&main_udmap 0x4201>, /* ingress slice 1 */
--		       <&main_udmap 0x4202>, /* mgmnt rsp slice 0 */
--		       <&main_udmap 0x4203>; /* mgmnt rsp slice 1 */
-+		       <&main_udmap 0x4201>; /* ingress slice 1 */
- 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
- 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
- 			    "rx0", "rx1";
+diff --git a/arch/arm/mach-versatile/platsmp-realview.c b/arch/arm/mach-versatile/platsmp-realview.c
+index 6965a1de727b0..d38b2e174257e 100644
+--- a/arch/arm/mach-versatile/platsmp-realview.c
++++ b/arch/arm/mach-versatile/platsmp-realview.c
+@@ -70,6 +70,7 @@ static void __init realview_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
+ 	}
+ 	map = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(map)) {
+ 		pr_err("PLATSMP: No syscon regmap\n");
+ 		return;
 -- 
 2.43.0
 
