@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A85D17B421;
-	Wed,  2 Oct 2024 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267D1D043E;
+	Wed,  2 Oct 2024 13:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877109; cv=none; b=kenrknM+qO6tdJHvhqjjCwmhtWLBCrudbhRLobKdjtkYR1wszZ8kA8AzJTNmfGdCanp9lK14gxdoqNq3RtBm88DLD87Il3N0VhfrfvNx00CCXqKxT/lp8rCXkTWBo+KZTx27JvHxqDkmXmpfCzvqCzNMXjAsWpma1jY5anUjL/I=
+	t=1727877112; cv=none; b=ZbRGwBJZNx1YkLsolCGbUKd0BK4ajAfFCrgHLo3bGD8Yg5XcSFtAn8nvfLlsEOaPu9s5FZIiDPmlrI00uXntsAvG5gC8beqwDL+ijM4amrHVgCiEsX+WdaVKkfMJMR7/9H492dlKyJzTuHcRBg3UuattPeXJPAoKKdwgePFw83o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877109; c=relaxed/simple;
-	bh=ZSoqcysqR4kC7KXb8Hnkq9v9P7cPKEre++F38oweiRU=;
+	s=arc-20240116; t=1727877112; c=relaxed/simple;
+	bh=C3CQsRM5tPpiW6C5ars0VE053Aea42KYs/gXc2LyE7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C2ct7tfTMr64oEG9Pz/b44tS+4gLPgT4qSrHlpBBYkEWs3dbjWAC3KmUiSW12MSdRX6I5UCtECunpjGN6+s65j28W0uhuDapAVNP1lF7ckgtIIxzTbop6ZP72Pep+zXaFHbW8OW9BGdx6b/N4OjezShQb9IBuIAuCQGlAgRTRFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiYPR5Sw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDlPtpGx/kZNh1mwbHbNh6nHUPDgjZg5eSROz/NeGAmtxVNbwEtM8uBPNw0GjveO5rsUMAqwuBYnfX3OdQo4Q+nHYeOn8O+jRRqGvZ2aSGqkzmUQhX2uYyxTbyAVdh05nXwDpvaO5pTHXCWh5e9TrrJKqM58rROxYGZ1bnKQGQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAN430xq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiYPR5Sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F9C4CEC2;
-	Wed,  2 Oct 2024 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAN430xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF922C4CEC2;
+	Wed,  2 Oct 2024 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877109;
-	bh=ZSoqcysqR4kC7KXb8Hnkq9v9P7cPKEre++F38oweiRU=;
+	s=korg; t=1727877112;
+	bh=C3CQsRM5tPpiW6C5ars0VE053Aea42KYs/gXc2LyE7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YiYPR5SwpaqvX1g1etI426MeT5RefWsNrIMTCbUBVSXOTxLUlgZd+yY+yduS5nAhx
-	 RBcgaxJaeIw5V8cJ8LFzlExHhtuaMP86UGm3vCE4TwnYZiZBKfhsUUXRI1EGM4UpH9
-	 0Ws3RFL27gTv40dxGQr288kgAXSIeeekaVuyiJmo=
+	b=lAN430xqrR8uEimrhe71A82mpzLqS0wL+P8m6OI21mLbciLEqL1rqWtCaTJ3wPH8c
+	 5QNvlOPzY2iJzxcSEWq/8yHK0/SgRqHnwXL9cru5GjDVqJ3EgwrwFxKK3+tBVwvfDq
+	 WmH4MKXKpWFsGujADqXpVygIRejn/Dbs6QLzmKv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willy Tarreau <w@1wt.eu>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Subject: [PATCH 6.11 660/695] tools/nolibc: include arch.h from string.h
-Date: Wed,  2 Oct 2024 15:00:58 +0200
-Message-ID: <20241002125848.854872705@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 669/695] thermal: core: Store trip sysfs attributes in thermal_trip_desc
+Date: Wed,  2 Oct 2024 15:01:07 +0200
+Message-ID: <20241002125849.215366533@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -44,42 +44,230 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6ea2987c9a7b6c5f37d08a3eaa664c9ff7467670 upstream.
+[ Upstream commit 66b263306a86c0f2d3cdb44e3722db6cff3a32b3 ]
 
-string.h tests for the macros NOLIBC_ARCH_HAS_$FUNC to use the
-architecture-optimized function variants.
-However if string.h is included before arch.h header then that check
-does not work, leading to duplicate function definitions.
+Instead of allocating memory for trip point sysfs attributes separately,
+store them in struct thermal_trip_desc for each trip individually which
+allows a few extra memory allocations to be avoided.
 
-Fixes: 553845eebd60 ("tools/nolibc: x86-64: Use `rep movsb` for `memcpy()` and `memmove()`")
-Fixes: 12108aa8c1a1 ("tools/nolibc: x86-64: Use `rep stosb` for `memset()`")
-Cc: stable@vger.kernel.org
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://lore.kernel.org/r/20240725-arch-has-func-v1-1-5521ed354acd@weissschuh.net
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/46571375.fMDQidcC6G@rjwysocki.net
+Stable-dep-of: 874b6476fa88 ("thermal: sysfs: Add sanity checks for trip temperature and hysteresis")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/string.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/thermal_core.h  |  23 +++----
+ drivers/thermal/thermal_sysfs.c | 105 +++++++++++---------------------
+ 2 files changed, 46 insertions(+), 82 deletions(-)
 
---- a/tools/include/nolibc/string.h
-+++ b/tools/include/nolibc/string.h
-@@ -7,6 +7,7 @@
- #ifndef _NOLIBC_STRING_H
- #define _NOLIBC_STRING_H
+diff --git a/drivers/thermal/thermal_core.h b/drivers/thermal/thermal_core.h
+index 4cf2b7230d04b..5be8bef41b926 100644
+--- a/drivers/thermal/thermal_core.h
++++ b/drivers/thermal/thermal_core.h
+@@ -15,8 +15,20 @@
+ #include "thermal_netlink.h"
+ #include "thermal_debugfs.h"
  
-+#include "arch.h"
- #include "std.h"
++struct thermal_attr {
++	struct device_attribute attr;
++	char name[THERMAL_NAME_LENGTH];
++};
++
++struct thermal_trip_attrs {
++	struct thermal_attr type;
++	struct thermal_attr temp;
++	struct thermal_attr hyst;
++};
++
+ struct thermal_trip_desc {
+ 	struct thermal_trip trip;
++	struct thermal_trip_attrs trip_attrs;
+ 	struct list_head notify_list_node;
+ 	int notify_temp;
+ 	int threshold;
+@@ -56,9 +68,6 @@ struct thermal_governor {
+  * @device:	&struct device for this thermal zone
+  * @removal:	removal completion
+  * @resume:	resume completion
+- * @trip_temp_attrs:	attributes for trip points for sysfs: trip temperature
+- * @trip_type_attrs:	attributes for trip points for sysfs: trip type
+- * @trip_hyst_attrs:	attributes for trip points for sysfs: trip hysteresis
+  * @mode:		current mode of this thermal zone
+  * @devdata:	private pointer for device private data
+  * @num_trips:	number of trip points the thermal zone supports
+@@ -102,9 +111,6 @@ struct thermal_zone_device {
+ 	struct completion removal;
+ 	struct completion resume;
+ 	struct attribute_group trips_attribute_group;
+-	struct thermal_attr *trip_temp_attrs;
+-	struct thermal_attr *trip_type_attrs;
+-	struct thermal_attr *trip_hyst_attrs;
+ 	enum thermal_device_mode mode;
+ 	void *devdata;
+ 	int num_trips;
+@@ -188,11 +194,6 @@ int for_each_thermal_governor(int (*cb)(struct thermal_governor *, void *),
  
- static void *malloc(size_t len);
+ struct thermal_zone_device *thermal_zone_get_by_id(int id);
+ 
+-struct thermal_attr {
+-	struct device_attribute attr;
+-	char name[THERMAL_NAME_LENGTH];
+-};
+-
+ static inline bool cdev_is_power_actor(struct thermal_cooling_device *cdev)
+ {
+ 	return cdev->ops->get_requested_power && cdev->ops->state2power &&
+diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
+index 72b302bf914e3..f12d5d47da9bd 100644
+--- a/drivers/thermal/thermal_sysfs.c
++++ b/drivers/thermal/thermal_sysfs.c
+@@ -382,87 +382,55 @@ static const struct attribute_group *thermal_zone_attribute_groups[] = {
+  */
+ static int create_trip_attrs(struct thermal_zone_device *tz)
+ {
+-	const struct thermal_trip_desc *td;
++	struct thermal_trip_desc *td;
+ 	struct attribute **attrs;
+-
+-	/* This function works only for zones with at least one trip */
+-	if (tz->num_trips <= 0)
+-		return -EINVAL;
+-
+-	tz->trip_type_attrs = kcalloc(tz->num_trips, sizeof(*tz->trip_type_attrs),
+-				      GFP_KERNEL);
+-	if (!tz->trip_type_attrs)
+-		return -ENOMEM;
+-
+-	tz->trip_temp_attrs = kcalloc(tz->num_trips, sizeof(*tz->trip_temp_attrs),
+-				      GFP_KERNEL);
+-	if (!tz->trip_temp_attrs) {
+-		kfree(tz->trip_type_attrs);
+-		return -ENOMEM;
+-	}
+-
+-	tz->trip_hyst_attrs = kcalloc(tz->num_trips,
+-				      sizeof(*tz->trip_hyst_attrs),
+-				      GFP_KERNEL);
+-	if (!tz->trip_hyst_attrs) {
+-		kfree(tz->trip_type_attrs);
+-		kfree(tz->trip_temp_attrs);
+-		return -ENOMEM;
+-	}
++	int i;
+ 
+ 	attrs = kcalloc(tz->num_trips * 3 + 1, sizeof(*attrs), GFP_KERNEL);
+-	if (!attrs) {
+-		kfree(tz->trip_type_attrs);
+-		kfree(tz->trip_temp_attrs);
+-		kfree(tz->trip_hyst_attrs);
++	if (!attrs)
+ 		return -ENOMEM;
+-	}
+ 
++	i = 0;
+ 	for_each_trip_desc(tz, td) {
+-		int indx = thermal_zone_trip_id(tz, &td->trip);
++		struct thermal_trip_attrs *trip_attrs = &td->trip_attrs;
+ 
+ 		/* create trip type attribute */
+-		snprintf(tz->trip_type_attrs[indx].name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_type", indx);
++		snprintf(trip_attrs->type.name, THERMAL_NAME_LENGTH,
++			 "trip_point_%d_type", i);
+ 
+-		sysfs_attr_init(&tz->trip_type_attrs[indx].attr.attr);
+-		tz->trip_type_attrs[indx].attr.attr.name =
+-						tz->trip_type_attrs[indx].name;
+-		tz->trip_type_attrs[indx].attr.attr.mode = S_IRUGO;
+-		tz->trip_type_attrs[indx].attr.show = trip_point_type_show;
+-		attrs[indx] = &tz->trip_type_attrs[indx].attr.attr;
++		sysfs_attr_init(&trip_attrs->type.attr.attr);
++		trip_attrs->type.attr.attr.name = trip_attrs->type.name;
++		trip_attrs->type.attr.attr.mode = S_IRUGO;
++		trip_attrs->type.attr.show = trip_point_type_show;
++		attrs[i] = &trip_attrs->type.attr.attr;
+ 
+ 		/* create trip temp attribute */
+-		snprintf(tz->trip_temp_attrs[indx].name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_temp", indx);
+-
+-		sysfs_attr_init(&tz->trip_temp_attrs[indx].attr.attr);
+-		tz->trip_temp_attrs[indx].attr.attr.name =
+-						tz->trip_temp_attrs[indx].name;
+-		tz->trip_temp_attrs[indx].attr.attr.mode = S_IRUGO;
+-		tz->trip_temp_attrs[indx].attr.show = trip_point_temp_show;
++		snprintf(trip_attrs->temp.name, THERMAL_NAME_LENGTH,
++			 "trip_point_%d_temp", i);
++
++		sysfs_attr_init(&trip_attrs->temp.attr.attr);
++		trip_attrs->temp.attr.attr.name = trip_attrs->temp.name;
++		trip_attrs->temp.attr.attr.mode = S_IRUGO;
++		trip_attrs->temp.attr.show = trip_point_temp_show;
+ 		if (td->trip.flags & THERMAL_TRIP_FLAG_RW_TEMP) {
+-			tz->trip_temp_attrs[indx].attr.attr.mode |= S_IWUSR;
+-			tz->trip_temp_attrs[indx].attr.store =
+-							trip_point_temp_store;
++			trip_attrs->temp.attr.attr.mode |= S_IWUSR;
++			trip_attrs->temp.attr.store = trip_point_temp_store;
+ 		}
+-		attrs[indx + tz->num_trips] = &tz->trip_temp_attrs[indx].attr.attr;
++		attrs[i + tz->num_trips] = &trip_attrs->temp.attr.attr;
+ 
+-		snprintf(tz->trip_hyst_attrs[indx].name, THERMAL_NAME_LENGTH,
+-			 "trip_point_%d_hyst", indx);
++		snprintf(trip_attrs->hyst.name, THERMAL_NAME_LENGTH,
++			 "trip_point_%d_hyst", i);
+ 
+-		sysfs_attr_init(&tz->trip_hyst_attrs[indx].attr.attr);
+-		tz->trip_hyst_attrs[indx].attr.attr.name =
+-					tz->trip_hyst_attrs[indx].name;
+-		tz->trip_hyst_attrs[indx].attr.attr.mode = S_IRUGO;
+-		tz->trip_hyst_attrs[indx].attr.show = trip_point_hyst_show;
++		sysfs_attr_init(&trip_attrs->hyst.attr.attr);
++		trip_attrs->hyst.attr.attr.name = trip_attrs->hyst.name;
++		trip_attrs->hyst.attr.attr.mode = S_IRUGO;
++		trip_attrs->hyst.attr.show = trip_point_hyst_show;
+ 		if (td->trip.flags & THERMAL_TRIP_FLAG_RW_HYST) {
+-			tz->trip_hyst_attrs[indx].attr.attr.mode |= S_IWUSR;
+-			tz->trip_hyst_attrs[indx].attr.store =
+-					trip_point_hyst_store;
++			trip_attrs->hyst.attr.attr.mode |= S_IWUSR;
++			trip_attrs->hyst.attr.store = trip_point_hyst_store;
+ 		}
+-		attrs[indx + tz->num_trips * 2] =
+-					&tz->trip_hyst_attrs[indx].attr.attr;
++		attrs[i + 2 * tz->num_trips] = &trip_attrs->hyst.attr.attr;
++		i++;
+ 	}
+ 	attrs[tz->num_trips * 3] = NULL;
+ 
+@@ -479,13 +447,8 @@ static int create_trip_attrs(struct thermal_zone_device *tz)
+  */
+ static void destroy_trip_attrs(struct thermal_zone_device *tz)
+ {
+-	if (!tz)
+-		return;
+-
+-	kfree(tz->trip_type_attrs);
+-	kfree(tz->trip_temp_attrs);
+-	kfree(tz->trip_hyst_attrs);
+-	kfree(tz->trips_attribute_group.attrs);
++	if (tz)
++		kfree(tz->trips_attribute_group.attrs);
+ }
+ 
+ int thermal_zone_create_device_groups(struct thermal_zone_device *tz)
+-- 
+2.43.0
+
 
 
