@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEECF1D0414;
-	Wed,  2 Oct 2024 14:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291861D0414;
+	Wed,  2 Oct 2024 14:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879990; cv=none; b=p00emL9e0oVMqUnf+beVQOzyelTSGt817HkaXu+Nk82YXrzCDmPLMzgV3SaHWqEIc5ONfkKhp+7ay+fil1gzYJiqB3vgokYuWHvs89SeLskmnrPXht4jxy7mWtzUgzxbqrNcCjvm0YdDTzbVF+WHNwfvaMn8R68pRWbgjt1XYlI=
+	t=1727879993; cv=none; b=ePHdj0w0EgVKpPVkV55vHxDZmrzfH5gWKsFlXY/ZTTlSSpFsm9m96QJToCVD+y7xEPVo/QcvqnzSI8srg9H3N0V9MVbq9eLSoIqvhAY6Hw0yDb/i/WHU4DbOEStQuJaITzGv23TLs0kQRgPynJw1IoXHDVdkRh8S6KUgAoU0dhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879990; c=relaxed/simple;
-	bh=T6YB9E01xqAkaCWptIAJSCSw+kPosTqbkJeS8vDKOxE=;
+	s=arc-20240116; t=1727879993; c=relaxed/simple;
+	bh=qyXF1lDgsoGMA175oJXmg5DFRZPCJjz9cX4wf9OEitM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfPLtZfEajW4fM/9UUSHRASI70bz2courgBM0LB9YBMxrnJs16qft3x88bT+yXQcK1dSUOzG8K8fcdPs2EFRDNL7qIbiLbTj8qvyM/1zxXW7nenLLQdnp3L4hHAsFWX46UD9/wPT0ogkS/Mjk52pWIHsJ0Mpnvcaol2AMlD25+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eekZLKeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKFio7CXcdkvm4O53WUWqMg+rQ8FNcJ4y8qjVitZXo92uapP8ioMNthtUZ91aUTdmStQHKyYXplP/KpkamTXtMhIMgAvis7gZjVLKQUsQCyIT8+5uiKpMqOZ7RRZbabo/7WDExWM9QzTnVKHiGwTIVp673/yuTIbv+rZDiV2cYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxJsnSI0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eekZLKeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D0CC4CEC2;
-	Wed,  2 Oct 2024 14:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxJsnSI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66102C4CEC5;
+	Wed,  2 Oct 2024 14:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879989;
-	bh=T6YB9E01xqAkaCWptIAJSCSw+kPosTqbkJeS8vDKOxE=;
+	s=korg; t=1727879992;
+	bh=qyXF1lDgsoGMA175oJXmg5DFRZPCJjz9cX4wf9OEitM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eekZLKeL1Eq6m3BmejRLhyWlyjsf3f39O97JG7zM0TC8uyjqexG3H8VTpObUDe7gs
-	 0LArw9+pPNg1N95kefiZinBmaGhVQsnp4kf2pJ3ZmyFbFdz9zR1Gyd0VjsAnlCs/jA
-	 A1r1UIsA38vfVPz7hj7WGhiAU8I4/rTxeQLvI7/4=
+	b=DxJsnSI0EdNlbT3VOR6v2Lhmn3Lk6tYN46Gb4AWOuUnipkq0MgTeg/FG6UkYC4/lo
+	 IEMvNApmhIFAm88IF9VsIhNVBGmvrs4AG82LqrHsB+iFgRuvAbPzzRCtuPyvv3+SwS
+	 LtRiTQIimlg1C935beExmL6/hjqx76IY/eIhxm3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Youzhong Yang <youzhong@gmail.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 307/538] nfsd: remove unneeded EEXIST error check in nfsd_do_file_acquire
-Date: Wed,  2 Oct 2024 14:59:06 +0200
-Message-ID: <20241002125804.536023745@linuxfoundation.org>
+Subject: [PATCH 6.6 308/538] nfsd: fix refcount leak when file is unhashed after being found
+Date: Wed,  2 Oct 2024 14:59:07 +0200
+Message-ID: <20241002125804.574865356@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -54,10 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 81a95c2b1d605743220f28db04b8da13a65c4059 ]
+[ Upstream commit 8a7926176378460e0d91e02b03f0ff20a8709a60 ]
 
-Given that we do the search and insertion while holding the i_lock, I
-don't think it's possible for us to get EEXIST here. Remove this case.
+If we wait_for_construction and find that the file is no longer hashed,
+and we're going to retry the open, the old nfsd_file reference is
+currently leaked. Put the reference before retrying.
 
 Fixes: c6593366c0bf ("nfsd: don't kill nfsd_files because of lease break error")
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
@@ -65,22 +66,21 @@ Tested-by: Youzhong Yang <youzhong@gmail.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nfsd/filecache.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 07bf219f9ae48..88cefb630e171 100644
+index 88cefb630e171..5c9f8f8404d5b 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -1040,8 +1040,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (likely(ret == 0))
- 		goto open_file;
- 
--	if (ret == -EEXIST)
--		goto retry;
- 	trace_nfsd_file_insert_err(rqstp, inode, may_flags, ret);
- 	status = nfserr_jukebox;
- 	goto construction_err;
+@@ -1054,6 +1054,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 			status = nfserr_jukebox;
+ 			goto construction_err;
+ 		}
++		nfsd_file_put(nf);
+ 		open_retry = false;
+ 		fh_put(fhp);
+ 		goto retry;
 -- 
 2.43.0
 
