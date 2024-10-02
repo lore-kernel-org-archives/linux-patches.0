@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891361D014D;
-	Wed,  2 Oct 2024 14:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547C61D0E19;
+	Wed,  2 Oct 2024 14:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879448; cv=none; b=D36Hvi6Pb5xsM0Y7G9mnRL0trLsljy9QoIbDDEx7ZkHUUyBcDh9y+7QRfD4WhDNQxdUaSpQwOVsR+sSwTeULGcihTblTNCjViy4bHEHSVekfMSWs/vmv/uAaHUgiA4SO47YmSTctzODbbTa3VqwesslQ7rEvlkKcapMyJ8LuzOc=
+	t=1727879451; cv=none; b=OJItqhVCOHqyNTNqX9bqdCTPhsNfZOesSAsyCa8DfkzP3hs1L1gE3FroTybAh1f9AE1Xw1xomZIO9Hb7CJcmX6sMWIZGFjz9TfQwN958cpys9Dt/D6H0wbPGhjmAll3iSRy0ntYxR8hgcvA5Vut9hw3f7Rx0Q1a5zW7lJYgtoqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879448; c=relaxed/simple;
-	bh=jZdkfwoe1X/maDUUyyNT5/iT+Kgh75a58asOm0kmYmY=;
+	s=arc-20240116; t=1727879451; c=relaxed/simple;
+	bh=4zp5fgi9PYLs65KZw1VdMKe1ZQKWLPZMGihqCEqV5OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kocEZ4+4Jcr/QliO3qja0M4N/zDDP+24rtAtuP70W6KfKxzZePwGJ7ToXHB84To+dsf0D46bqo3M37m+RXXS1I2lgpPjqUka1C0jmCJ4lx+M7iYweXX87ixda1/XlnTSWfTY9EmpNltQqp0KgF51p/bIh/SpiHi0SBLDK9q0gc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fifQM3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o4aPsx9SdgfiEST5+BqGpFKZc/moflol69HkabU093jZJ3DA4w8QlspveNzUhYuql/VHKYloCsPwifPAf5LJMNtI2a4ey3pnwcWrGYSShdNjiVEE+fvqRtuzGOxWiQNYORC8LDQXJt7qiFnlq+1WOOyu0ipYDTPgwQr0yIAcXLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGuQ1byR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fifQM3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B235C4CEC5;
-	Wed,  2 Oct 2024 14:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGuQ1byR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E6BC4CECE;
+	Wed,  2 Oct 2024 14:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879448;
-	bh=jZdkfwoe1X/maDUUyyNT5/iT+Kgh75a58asOm0kmYmY=;
+	s=korg; t=1727879451;
+	bh=4zp5fgi9PYLs65KZw1VdMKe1ZQKWLPZMGihqCEqV5OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fifQM3lCrPJdTntjV9fgfbEK10ii1UR3WQ2vJXpmDS1GnnhZDK+HSlsffZNiAgZh
-	 kQZJttseCCW7EDZ8wiaaO8rPHKW3QPfHQqYljBsolp9LCHRFZBEi9WCBOnpu0g+rB1
-	 /PGj2yp6e0ioPmkb12iNKbiIyV5n5pKlnYij4euE=
+	b=PGuQ1byRTSWIqQiufRvv7tjnNAeuIolKi1bqsCwRLqhCZbyxLWxyp0oqx3WnFyx+/
+	 c+BiZNy9VCrTC4XkWtrWWswjrDSNpza2oF8ZaNGaRCvy045PPneNnJcohmdT6LIHiP
+	 /UKQDFYQ/dk+6agaGi/zIVvTLBq1YU63h8EU5kFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/538] arm64: dts: renesas: r9a07g043u: Correct GICD and GICR sizes
-Date: Wed,  2 Oct 2024 14:55:34 +0200
-Message-ID: <20241002125755.978854022@linuxfoundation.org>
+Subject: [PATCH 6.6 122/538] hwmon: (max16065) Fix alarm attributes
+Date: Wed,  2 Oct 2024 14:56:01 +0200
+Message-ID: <20241002125757.061012666@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,39 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ab39547f739236e7f16b8b0a51fdca95cc9cadd3 ]
+[ Upstream commit 119abf7d1815f098f7f91ae7abc84324a19943d7 ]
 
-The RZ/G2UL SoC is equipped with the GIC-600. The GICD is 64KiB + 64KiB
-for the MBI alias (in total 128KiB), and the GICR is 128KiB per CPU.
+Chips reporting overcurrent alarms report it in the second alarm register.
+That means the second alarm register has to be read, even if the chip only
+supports 8 or fewer ADC channels.
 
-Despite the RZ/G2UL SoC being single-core, it has two instances of GICR.
+MAX16067 and MAX16068 report undervoltage and overvoltage alarms in
+separate registers. Fold register contents together to report both with
+the existing alarm attribute. This requires actually storing the chip type
+in struct max16065_data. Rename the variable 'chip' to match the variable
+name used in the probe function.
 
-Fixes: cf40c9689e510 ("arm64: dts: renesas: Add initial DTSI for RZ/G2UL SoC")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/20240730122436.350013-3-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g043u.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/max16065.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi b/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
-index 4b72de43b71cc..71d51febabc1e 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
-@@ -145,8 +145,8 @@ gic: interrupt-controller@11900000 {
- 		#interrupt-cells = <3>;
- 		#address-cells = <0>;
- 		interrupt-controller;
--		reg = <0x0 0x11900000 0 0x40000>,
--		      <0x0 0x11940000 0 0x60000>;
-+		reg = <0x0 0x11900000 0 0x20000>,
-+		      <0x0 0x11940000 0 0x40000>;
- 		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_LOW>;
- 	};
+diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
+index 5b2a174c6bad3..0ccb5eb596fc4 100644
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -79,7 +79,7 @@ static const bool max16065_have_current[] = {
  };
+ 
+ struct max16065_data {
+-	enum chips type;
++	enum chips chip;
+ 	struct i2c_client *client;
+ 	const struct attribute_group *groups[4];
+ 	struct mutex update_lock;
+@@ -162,10 +162,17 @@ static struct max16065_data *max16065_update_device(struct device *dev)
+ 						     MAX16065_CURR_SENSE);
+ 		}
+ 
+-		for (i = 0; i < DIV_ROUND_UP(data->num_adc, 8); i++)
++		for (i = 0; i < 2; i++)
+ 			data->fault[i]
+ 			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
+ 
++		/*
++		 * MAX16067 and MAX16068 have separate undervoltage and
++		 * overvoltage alarm bits. Squash them together.
++		 */
++		if (data->chip == max16067 || data->chip == max16068)
++			data->fault[0] |= data->fault[1];
++
+ 		data->last_updated = jiffies;
+ 		data->valid = true;
+ 	}
+@@ -514,6 +521,7 @@ static int max16065_probe(struct i2c_client *client)
+ 	if (unlikely(!data))
+ 		return -ENOMEM;
+ 
++	data->chip = chip;
+ 	data->client = client;
+ 	mutex_init(&data->update_lock);
+ 
 -- 
 2.43.0
 
