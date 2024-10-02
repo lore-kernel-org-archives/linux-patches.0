@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280F51D0438;
-	Wed,  2 Oct 2024 14:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A6E1D0BBC;
+	Wed,  2 Oct 2024 14:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880135; cv=none; b=J9+8OpDX90DabgGxYUlu9VoqxfzfhXoQWFUwi8JXJXNpibCfPNMVKITcz9XemRFOeFLVBu14UxwA0c3s8fcVNaaP5lp096ptzy4rt+iCk/lUX5ui9nOntIi2kio+J5r7XKcnQ83LRKJkiehuDygMe1GoH1JDvZxmU+FZUeo+37U=
+	t=1727880138; cv=none; b=PonHW/IVfKwDcmXUMQMC5TBGKJ1QfaxgmZxbGfvC6+SdijFHzMMW7bs9oIJziHQ0eEgrrtEvOzgs5d0uOS+5qS5owS2BMaMk+yQ6sqoki0e5bT7vm0QcWJeM1HP8puJPMmcmI2GNWPiRHfQrpl/lIX5kQ6xzH6ilWQlBGXmXLTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880135; c=relaxed/simple;
-	bh=8cOmDY4IdBe5aFijQa4joQR3zCv6SE0zVKZPJQWf3VU=;
+	s=arc-20240116; t=1727880138; c=relaxed/simple;
+	bh=Svv0sFwkeUP+gI6UhtJVb165L6fNcpsi0bFZC35Xvmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0X3f9JMdRHd/d9iiWwwHpJAthlxGQMHFwXYMAmysS1LC7PgkSDKoaz+J4aQFAh9d9Hg5L3ZpxB0MAPcH2nIV1nCzX3ckLWG5Ls+0bDF0fyOkbzEm1iWKi4oZydJaXt8QzVPwODkWH4h4HPwNSbSEBz4XIiOXvpGaONVQt1S9BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUBPLApi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFZEwJin1vDyDoAMZVIlTwi1XVgeu1J8XJzNkUJ+1c45vlp7UEYolzMGCiUos9O17KlQcadceUfhuJG2D3ODmgW5hKBRxzdaVhiWy3YE00hSwTdgprrC8oaxZ6sxMQ4vmWPjze2R9CS4K73EPvB8P1466qfcna3jr7GnAF0ZeaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3ZqIfYv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUBPLApi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D64C4CEC2;
-	Wed,  2 Oct 2024 14:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3ZqIfYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4B0C4CEC2;
+	Wed,  2 Oct 2024 14:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880135;
-	bh=8cOmDY4IdBe5aFijQa4joQR3zCv6SE0zVKZPJQWf3VU=;
+	s=korg; t=1727880137;
+	bh=Svv0sFwkeUP+gI6UhtJVb165L6fNcpsi0bFZC35Xvmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUBPLApiK13o2+QhAdXvT3RS43Dmm07lXQuNFtn/t2NfuzzWoBtLJ6D5ZxbcJi+Y5
-	 3AQasSvxt9PVADt7ivM2/CnoNBj0dzfUTPYppc0EiLwy7UK6Kh7Wu8HaDGZIn913tG
-	 JPENt7jnr2YrMht4W8IZX7ahDstSIgzuQeeRURHk=
+	b=x3ZqIfYvl3dMulwx7fcAczSQg7T9Nzs4uf6sAfFR6zLpwdDuA3COH4iUl5IeH/C2R
+	 R/0/JaaT20v/sLQT1pwSdwSUq7atQcywYMTYSFhKgM4vwi5QjtM4cTdQc2aw1N1BP7
+	 DRcZ++aHWX8zWON6AusifCcs/HbIykO7qjBqCK2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 355/538] driver core: Fix error handling in driver API device_rename()
-Date: Wed,  2 Oct 2024 14:59:54 +0200
-Message-ID: <20241002125806.440489994@linuxfoundation.org>
+Subject: [PATCH 6.6 356/538] ABI: testing: fix admv8818 attr description
+Date: Wed,  2 Oct 2024 14:59:55 +0200
+Message-ID: <20241002125806.479083027@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,77 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 6d8249ac29bc23260dfa9747eb398ce76012d73c ]
+[ Upstream commit 7d34b4ad8cd2867b130b5b8d7d76d0d6092bd019 ]
 
-For class-device, device_rename() failure maybe cause unexpected link name
-within its class folder as explained below:
+Fix description of the filter_mode_available attribute by pointing to
+the correct name of the attribute that can be written with valid values.
 
-/sys/class/.../old_name -> /sys/devices/.../old_name
-device_rename(..., new_name) and failed
-/sys/class/.../new_name -> /sys/devices/.../old_name
-
-Fixed by undoing renaming link if renaming kobject failed.
-
-Fixes: f349cf34731c ("driver core: Implement ns directory support for device classes.")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240722-device_rename_fix-v2-1-77de1a6c6495@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bf92d87d7c67 ("iio:filter:admv8818: Add sysfs ABI documentation")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Link: https://patch.msgid.link/20240702081851.4663-1-antoniu.miclaus@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ Documentation/ABI/testing/sysfs-bus-iio-filter-admv8818 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index cb323700e952f..60a0a4630a5bb 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -4485,9 +4485,11 @@ EXPORT_SYMBOL_GPL(device_destroy);
-  */
- int device_rename(struct device *dev, const char *new_name)
- {
-+	struct subsys_private *sp = NULL;
- 	struct kobject *kobj = &dev->kobj;
- 	char *old_device_name = NULL;
- 	int error;
-+	bool is_link_renamed = false;
+diff --git a/Documentation/ABI/testing/sysfs-bus-iio-filter-admv8818 b/Documentation/ABI/testing/sysfs-bus-iio-filter-admv8818
+index 31dbb390573ff..c431f0a13cf50 100644
+--- a/Documentation/ABI/testing/sysfs-bus-iio-filter-admv8818
++++ b/Documentation/ABI/testing/sysfs-bus-iio-filter-admv8818
+@@ -3,7 +3,7 @@ KernelVersion:
+ Contact:	linux-iio@vger.kernel.org
+ Description:
+ 		Reading this returns the valid values that can be written to the
+-		on_altvoltage0_mode attribute:
++		filter_mode attribute:
  
- 	dev = get_device(dev);
- 	if (!dev)
-@@ -4502,7 +4504,7 @@ int device_rename(struct device *dev, const char *new_name)
- 	}
- 
- 	if (dev->class) {
--		struct subsys_private *sp = class_to_subsys(dev->class);
-+		sp = class_to_subsys(dev->class);
- 
- 		if (!sp) {
- 			error = -EINVAL;
-@@ -4511,16 +4513,19 @@ int device_rename(struct device *dev, const char *new_name)
- 
- 		error = sysfs_rename_link_ns(&sp->subsys.kobj, kobj, old_device_name,
- 					     new_name, kobject_namespace(kobj));
--		subsys_put(sp);
- 		if (error)
- 			goto out;
-+
-+		is_link_renamed = true;
- 	}
- 
- 	error = kobject_rename(kobj, new_name);
--	if (error)
--		goto out;
--
- out:
-+	if (error && is_link_renamed)
-+		sysfs_rename_link_ns(&sp->subsys.kobj, kobj, new_name,
-+				     old_device_name, kobject_namespace(kobj));
-+	subsys_put(sp);
-+
- 	put_device(dev);
- 
- 	kfree(old_device_name);
+ 		- auto -> Adjust bandpass filter to track changes in input clock rate.
+ 		- manual -> disable/unregister the clock rate notifier / input clock tracking.
 -- 
 2.43.0
 
