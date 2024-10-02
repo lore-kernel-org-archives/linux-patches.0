@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62BA1D14E3;
-	Wed,  2 Oct 2024 14:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2B21D07B7;
+	Wed,  2 Oct 2024 14:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878047; cv=none; b=WQ2LBHtVTRxYvo1zLpoqvAUvvjZnSqFkvfaRg3VqEuDf39RUIDs3lD8vJ1cQIdZV3HNhwxWBWFWQIb4bB/vLktk3BjaWHKLzXCTVJbfhybellFu+Uye2vKTgUJYzRu/Jozp7xGQDJNJ3HHkrF2gRJUk5UymTWTspcVg6ordNsh8=
+	t=1727878050; cv=none; b=pdV24uhTJFlMMALtQVHXw+G5wkYAzxaauAzLx//vsHZgtNTKlVWo+omOil/jWYdGS71dLZ/5XIxUr8KtocubralgV6p5VyHGwgxXctIbV5l4NOo2qgREsv+wUu/ot4pHbTGIHgUea+Uc4eUxJ1J+l1ZQBGsgdE6zQOzUTOcmZ4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878047; c=relaxed/simple;
-	bh=CA5XHJZFHtifi0HT6niwhQWCLMiZb4ygox/SpbyH7/4=;
+	s=arc-20240116; t=1727878050; c=relaxed/simple;
+	bh=SQygl5SZ8KkhnZ/ZsB/T+YMcydcsPydKjCA7reFeRHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvw7EFg3eWZvTb9pyUM4dTpS+iLHpxMz3FLxeifYR+lBH/R7mdFvhkJlbjzz3fJEjh7a41ItsKb/E0gmYNu2OPkAtXLaOLCY34Re4jd0tztPgZxpRv+MRO04H7YSWYNEnsWWgMpIYxm5r7RECM/51s4k7gyLvN0jQdAkOCiHpFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrNcrWEG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BvYn62amIIXV+VwnzPEjVHQ09YrHnyP5AB+4fNGPGGxrlM/xtij1feErl6H/B6LbYQKwz1sLf0pqM4ar0w3GNMqcVrLn/6mN6taOqwJfjS6wYj8QDGZrVLBbhoIETBfbbMacIea4U1KhpsP6rxS6AfUxOG1T8FwBAk1Zl/EVQwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3VgXe62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrNcrWEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC46C4CEC2;
-	Wed,  2 Oct 2024 14:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3VgXe62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E46C4CEC2;
+	Wed,  2 Oct 2024 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878047;
-	bh=CA5XHJZFHtifi0HT6niwhQWCLMiZb4ygox/SpbyH7/4=;
+	s=korg; t=1727878050;
+	bh=SQygl5SZ8KkhnZ/ZsB/T+YMcydcsPydKjCA7reFeRHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrNcrWEG1YLXiTWj7rmHp/BrZ5EU0GiqKqkj/ohZ3cymsVUWsXolCdMJIw5s/OIjG
-	 SRZGoq1gcl63Xg21jH3fcX/ntTy7ntCKuAH00xXlkUk0Gg45hW19D9xyIVMmu/frtC
-	 JDj2uGuNpY0L+VIw+d5N0X5WbYoBRuvHbHruUaLA=
+	b=L3VgXe62ZZkj86H3cj2qyp/Usn2Z5h9W99eRNp2Cyn5BwpCMauAx+Z03/F9BQVk+J
+	 QzGSci3bwBrU2sj06N8LrhGGVHIM+//dN9xXYd9RrD4fYLxw/8XAk0O9xPkVAU/tPZ
+	 61IpC3yWKPdvpv8+GlhHNJFryWRSozc2vM8QCWdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+9bff4c7b992038a7409f@syzkaller.appspotmail.com,
 	Lizhi Xu <lizhi.xu@windriver.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 284/634] nilfs2: fix potential null-ptr-deref in nilfs_btree_insert()
-Date: Wed,  2 Oct 2024 14:56:24 +0200
-Message-ID: <20241002125822.320613305@linuxfoundation.org>
+Subject: [PATCH 6.10 285/634] nilfs2: determine empty node blocks as corrupted
+Date: Wed,  2 Oct 2024 14:56:25 +0200
+Message-ID: <20241002125822.359977814@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -55,62 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 9403001ad65ae4f4c5de368bdda3a0636b51d51a ]
+[ Upstream commit 111b812d3662f3a1b831d19208f83aa711583fe6 ]
 
-Patch series "nilfs2: fix potential issues with empty b-tree nodes".
+Due to the nature of b-trees, nilfs2 itself and admin tools such as
+mkfs.nilfs2 will never create an intermediate b-tree node block with 0
+child nodes, nor will they delete (key, pointer)-entries that would result
+in such a state.  However, it is possible that a b-tree node block is
+corrupted on the backing device and is read with 0 child nodes.
 
-This series addresses three potential issues with empty b-tree nodes that
-can occur with corrupted filesystem images, including one recently
-discovered by syzbot.
+Because operation is not guaranteed if the number of child nodes is 0 for
+intermediate node blocks other than the root node, modify
+nilfs_btree_node_broken(), which performs sanity checks when reading a
+b-tree node block, so that such cases will be judged as metadata
+corruption.
 
-This patch (of 3):
-
-If a b-tree is broken on the device, and the b-tree height is greater than
-2 (the level of the root node is greater than 1) even if the number of
-child nodes of the b-tree root is 0, a NULL pointer dereference occurs in
-nilfs_btree_prepare_insert(), which is called from nilfs_btree_insert().
-
-This is because, when the number of child nodes of the b-tree root is 0,
-nilfs_btree_do_lookup() does not set the block buffer head in any of
-path[x].bp_bh, leaving it as the initial value of NULL, but if the level
-of the b-tree root node is greater than 1, nilfs_btree_get_nonroot_node(),
-which accesses the buffer memory of path[x].bp_bh, is called.
-
-Fix this issue by adding a check to nilfs_btree_root_broken(), which
-performs sanity checks when reading the root node from the device, to
-detect this inconsistency.
-
-Thanks to Lizhi Xu for trying to solve the bug and clarifying the cause
-early on.
-
-Link: https://lkml.kernel.org/r/20240904081401.16682-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20240902084101.138971-1-lizhi.xu@windriver.com
-Link: https://lkml.kernel.org/r/20240904081401.16682-2-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240904081401.16682-3-konishi.ryusuke@gmail.com
 Fixes: 17c76b0104e4 ("nilfs2: B-tree based block mapping")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+9bff4c7b992038a7409f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bff4c7b992038a7409f
 Cc: Lizhi Xu <lizhi.xu@windriver.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nilfs2/btree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
-index 862bdf23120e8..d390b8ba00d45 100644
+index d390b8ba00d45..dedd3c4808423 100644
 --- a/fs/nilfs2/btree.c
 +++ b/fs/nilfs2/btree.c
-@@ -381,7 +381,8 @@ static int nilfs_btree_root_broken(const struct nilfs_btree_node *node,
+@@ -350,7 +350,7 @@ static int nilfs_btree_node_broken(const struct nilfs_btree_node *node,
  	if (unlikely(level < NILFS_BTREE_LEVEL_NODE_MIN ||
  		     level >= NILFS_BTREE_LEVEL_MAX ||
- 		     nchildren < 0 ||
--		     nchildren > NILFS_BTREE_ROOT_NCHILDREN_MAX)) {
-+		     nchildren > NILFS_BTREE_ROOT_NCHILDREN_MAX ||
-+		     (nchildren == 0 && level > NILFS_BTREE_LEVEL_NODE_MIN))) {
+ 		     (flags & NILFS_BTREE_NODE_ROOT) ||
+-		     nchildren < 0 ||
++		     nchildren <= 0 ||
+ 		     nchildren > NILFS_BTREE_NODE_NCHILDREN_MAX(size))) {
  		nilfs_crit(inode->i_sb,
- 			   "bad btree root (ino=%lu): level = %d, flags = 0x%x, nchildren = %d",
- 			   inode->i_ino, level, flags, nchildren);
+ 			   "bad btree node (ino=%lu, blocknr=%llu): level = %d, flags = 0x%x, nchildren = %d",
 -- 
 2.43.0
 
