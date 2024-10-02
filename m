@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4811A1D07B8;
-	Wed,  2 Oct 2024 14:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9841D0F7D;
+	Wed,  2 Oct 2024 14:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877986; cv=none; b=p43XQoCyrs331AfPMQAGOccZjuXsV0GaxGchE5gQrzKArGw2YV7JLeZdxVD/injZJV+cuTXkKHwpp2/3yZ3d5K8twteYbDgQZP0Hq4H7lWYJKQ+KAs2XyHQX7o5Ux03pLXCQDHJrXwN/DlBo05B8/pizPI0OSJGwA/zjWli8Z6c=
+	t=1727877989; cv=none; b=UNQcIiuDHFJKqJWnFk1dOUk/rZ5kqqeK4G2L4E5v2BUZubu78vLKjfSTQT06CtdzqtTeJ7b1UT7mzeB4vxAKGz23cdPqVpHU3x4eVst11soVdSv2q0didRCKB2Ko3CLEFN7O+RDPfgeBcNit+iykRix/FAqKNKUrZOGz7warzwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877986; c=relaxed/simple;
-	bh=hY0xU5VvKB775OrroF81ajWImWGy//vxrYi52IZlrc4=;
+	s=arc-20240116; t=1727877989; c=relaxed/simple;
+	bh=QDftEfFzLeUxTOpZIHmoPAlHRMDqs/Vm+Ndtmcwp1YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdkEXhpX4cRDgzzneJsRBYk0RYZoNKNX+m8UA+8XIDun4qptEyeNs3FtGNHnNXzv5IhHZoC3UMvmSfe12uHH4W3vHkK7oj5bEKvosuXu2tNKichL27jgRXWgyRlKgemN2+AsXP0fNofK5UtLNVyILLIpO9pBHqwrhnH7qBH/Vaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMl3mz2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNbZxFHr2U2vySG+zRyABlQ6SiWvrtXi/F2/X0qBuVIZZCfSOYcYQV8rX6P6JshhJyq032KUelKfGQs6oDW0QaH2o+sDZtRxUk0qTMIq1CkEV5hIeDMHMY7eiNhWOVtqIUGvC/JDvwXml1TTAd2JaOqkEsRZL67WaXna0e8+lXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7cOw9+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMl3mz2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9782BC4CEC2;
-	Wed,  2 Oct 2024 14:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7cOw9+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B334AC4CEC2;
+	Wed,  2 Oct 2024 14:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877986;
-	bh=hY0xU5VvKB775OrroF81ajWImWGy//vxrYi52IZlrc4=;
+	s=korg; t=1727877989;
+	bh=QDftEfFzLeUxTOpZIHmoPAlHRMDqs/Vm+Ndtmcwp1YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMl3mz2vy5BEFRl+GLn8ahpKeTEZy96Iu47s6LMWkd87/vKEG3E26KVQV4U4q/Lcb
-	 yqkFCPS9u+Mt7o2xVRvAR0PlMz9pZWlf3Sp64OBPc3rqi7+JBjpFh29GNDF0E9LT3b
-	 0aJga/Rhacw2Oq7Hykej94XfzlqwgnqdbV4CthbA=
+	b=n7cOw9+sOqbOmcT++XnLln20CgXIiHgxoMcAGo+92EWE/HCgs7AwRtw7p1pdaFU9p
+	 SbmEuQddeHNfr1KMx/QELGuH3f4C4LuwnXRfUXZuf5iGvY8BoyEAb5urhYDA8qx17F
+	 07GQqc8xDaQdsfflksNTASDmggCbZ059kvzymRdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cupertino Miranda <cupertino.miranda@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+ad9ec60c8eaf69e6f99c@syzkaller.appspotmail.com,
 	Eduard Zingerman <eddyz87@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 262/634] selftests/bpf: Support checks against a regular expression
-Date: Wed,  2 Oct 2024 14:56:02 +0200
-Message-ID: <20241002125821.442987094@linuxfoundation.org>
+Subject: [PATCH 6.10 236/634] bpf: Fail verification for sign-extension of packet data/data_end/data_meta
+Date: Wed,  2 Oct 2024 14:55:36 +0200
+Message-ID: <20241002125820.413451072@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,270 +54,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cupertino Miranda <cupertino.miranda@oracle.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit f06ae6194f278444201e0b041a00192d794f83b6 ]
+[ Upstream commit 92de36080c93296ef9005690705cba260b9bd68a ]
 
-Add support for __regex and __regex_unpriv macros to check the test
-execution output against a regular expression. This is similar to __msg
-and __msg_unpriv, however those expect do substring matching.
+syzbot reported a kernel crash due to
+  commit 1f1e864b6555 ("bpf: Handle sign-extenstin ctx member accesses").
+The reason is due to sign-extension of 32-bit load for
+packet data/data_end/data_meta uapi field.
 
-Signed-off-by: Cupertino Miranda <cupertino.miranda@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+The original code looks like:
+        r2 = *(s32 *)(r1 + 76) /* load __sk_buff->data */
+        r3 = *(u32 *)(r1 + 80) /* load __sk_buff->data_end */
+        r0 = r2
+        r0 += 8
+        if r3 > r0 goto +1
+        ...
+Note that __sk_buff->data load has 32-bit sign extension.
+
+After verification and convert_ctx_accesses(), the final asm code looks like:
+        r2 = *(u64 *)(r1 +208)
+        r2 = (s32)r2
+        r3 = *(u64 *)(r1 +80)
+        r0 = r2
+        r0 += 8
+        if r3 > r0 goto pc+1
+        ...
+Note that 'r2 = (s32)r2' may make the kernel __sk_buff->data address invalid
+which may cause runtime failure.
+
+Currently, in C code, typically we have
+        void *data = (void *)(long)skb->data;
+        void *data_end = (void *)(long)skb->data_end;
+        ...
+and it will generate
+        r2 = *(u64 *)(r1 +208)
+        r3 = *(u64 *)(r1 +80)
+        r0 = r2
+        r0 += 8
+        if r3 > r0 goto pc+1
+
+If we allow sign-extension,
+        void *data = (void *)(long)(int)skb->data;
+        void *data_end = (void *)(long)skb->data_end;
+        ...
+the generated code looks like
+        r2 = *(u64 *)(r1 +208)
+        r2 <<= 32
+        r2 s>>= 32
+        r3 = *(u64 *)(r1 +80)
+        r0 = r2
+        r0 += 8
+        if r3 > r0 goto pc+1
+and this will cause verification failure since "r2 <<= 32" is not allowed
+as "r2" is a packet pointer.
+
+To fix this issue for case
+  r2 = *(s32 *)(r1 + 76) /* load __sk_buff->data */
+this patch added additional checking in is_valid_access() callback
+function for packet data/data_end/data_meta access. If those accesses
+are with sign-extenstion, the verification will fail.
+
+  [1] https://lore.kernel.org/bpf/000000000000c90eee061d236d37@google.com/
+
+Reported-by: syzbot+ad9ec60c8eaf69e6f99c@syzkaller.appspotmail.com
+Fixes: 1f1e864b6555 ("bpf: Handle sign-extenstin ctx member accesses")
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20240617141458.471620-2-cupertino.miranda@oracle.com
-Stable-dep-of: f00bb757ed63 ("selftests/bpf: fix to avoid __msg tag de-duplication by clang")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20240723153439.2429035-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h |  11 +-
- tools/testing/selftests/bpf/test_loader.c    | 115 ++++++++++++++-----
- 2 files changed, 96 insertions(+), 30 deletions(-)
+ include/linux/bpf.h   |  1 +
+ kernel/bpf/verifier.c |  5 +++--
+ net/core/filter.c     | 21 ++++++++++++++++-----
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index fb2f5513e29e1..c0280bd2f340d 100644
---- a/tools/testing/selftests/bpf/progs/bpf_misc.h
-+++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -7,9 +7,9 @@
-  *
-  * The test_loader sequentially loads each program in a skeleton.
-  * Programs could be loaded in privileged and unprivileged modes.
-- * - __success, __failure, __msg imply privileged mode;
-- * - __success_unpriv, __failure_unpriv, __msg_unpriv imply
-- *   unprivileged mode.
-+ * - __success, __failure, __msg, __regex imply privileged mode;
-+ * - __success_unpriv, __failure_unpriv, __msg_unpriv, __regex_unpriv
-+ *   imply unprivileged mode.
-  * If combination of privileged and unprivileged attributes is present
-  * both modes are used. If none are present privileged mode is implied.
-  *
-@@ -24,6 +24,9 @@
-  *                   Multiple __msg attributes could be specified.
-  * __msg_unpriv      Same as __msg but for unprivileged mode.
-  *
-+ * __regex           Same as __msg, but using a regular expression.
-+ * __regex_unpriv    Same as __msg_unpriv but using a regular expression.
-+ *
-  * __success         Expect program load success in privileged mode.
-  * __success_unpriv  Expect program load success in unprivileged mode.
-  *
-@@ -59,10 +62,12 @@
-  * __auxiliary_unpriv  Same, but load program in unprivileged mode.
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 42b998518038a..b13af44f20ada 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -919,6 +919,7 @@ static_assert(__BPF_REG_TYPE_MAX <= BPF_BASE_TYPE_LIMIT);
   */
- #define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" msg)))
-+#define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" regex)))
- #define __failure		__attribute__((btf_decl_tag("comment:test_expect_failure")))
- #define __success		__attribute__((btf_decl_tag("comment:test_expect_success")))
- #define __description(desc)	__attribute__((btf_decl_tag("comment:test_description=" desc)))
- #define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" msg)))
-+#define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" regex)))
- #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
- #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
- #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
-diff --git a/tools/testing/selftests/bpf/test_loader.c b/tools/testing/selftests/bpf/test_loader.c
-index 524c38e9cde48..f14e10b0de96e 100644
---- a/tools/testing/selftests/bpf/test_loader.c
-+++ b/tools/testing/selftests/bpf/test_loader.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2022 Meta Platforms, Inc. and affiliates. */
- #include <linux/capability.h>
- #include <stdlib.h>
-+#include <regex.h>
- #include <test_progs.h>
- #include <bpf/btf.h>
- 
-@@ -17,9 +18,11 @@
- #define TEST_TAG_EXPECT_FAILURE "comment:test_expect_failure"
- #define TEST_TAG_EXPECT_SUCCESS "comment:test_expect_success"
- #define TEST_TAG_EXPECT_MSG_PFX "comment:test_expect_msg="
-+#define TEST_TAG_EXPECT_REGEX_PFX "comment:test_expect_regex="
- #define TEST_TAG_EXPECT_FAILURE_UNPRIV "comment:test_expect_failure_unpriv"
- #define TEST_TAG_EXPECT_SUCCESS_UNPRIV "comment:test_expect_success_unpriv"
- #define TEST_TAG_EXPECT_MSG_PFX_UNPRIV "comment:test_expect_msg_unpriv="
-+#define TEST_TAG_EXPECT_REGEX_PFX_UNPRIV "comment:test_expect_regex_unpriv="
- #define TEST_TAG_LOG_LEVEL_PFX "comment:test_log_level="
- #define TEST_TAG_PROG_FLAGS_PFX "comment:test_prog_flags="
- #define TEST_TAG_DESCRIPTION_PFX "comment:test_description="
-@@ -46,10 +49,16 @@ enum mode {
- 	UNPRIV = 2
- };
- 
-+struct expect_msg {
-+	const char *substr; /* substring match */
-+	const char *regex_str; /* regex-based match */
-+	regex_t regex;
-+};
-+
- struct test_subspec {
- 	char *name;
- 	bool expect_failure;
--	const char **expect_msgs;
-+	struct expect_msg *expect_msgs;
- 	size_t expect_msg_cnt;
- 	int retval;
- 	bool execute;
-@@ -89,6 +98,16 @@ void test_loader_fini(struct test_loader *tester)
- 
- static void free_test_spec(struct test_spec *spec)
+ struct bpf_insn_access_aux {
+ 	enum bpf_reg_type reg_type;
++	bool is_ldsx;
+ 	union {
+ 		int ctx_field_size;
+ 		struct {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 203ce12e687d2..ed612052fc7ac 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5594,12 +5594,13 @@ static int check_packet_access(struct bpf_verifier_env *env, u32 regno, int off,
+ /* check access to 'struct bpf_context' fields.  Supports fixed offsets only */
+ static int check_ctx_access(struct bpf_verifier_env *env, int insn_idx, int off, int size,
+ 			    enum bpf_access_type t, enum bpf_reg_type *reg_type,
+-			    struct btf **btf, u32 *btf_id, bool *is_retval)
++			    struct btf **btf, u32 *btf_id, bool *is_retval, bool is_ldsx)
  {
-+	int i;
-+
-+	/* Deallocate expect_msgs arrays. */
-+	for (i = 0; i < spec->priv.expect_msg_cnt; i++)
-+		if (spec->priv.expect_msgs[i].regex_str)
-+			regfree(&spec->priv.expect_msgs[i].regex);
-+	for (i = 0; i < spec->unpriv.expect_msg_cnt; i++)
-+		if (spec->unpriv.expect_msgs[i].regex_str)
-+			regfree(&spec->unpriv.expect_msgs[i].regex);
-+
- 	free(spec->priv.name);
- 	free(spec->unpriv.name);
- 	free(spec->priv.expect_msgs);
-@@ -100,18 +119,38 @@ static void free_test_spec(struct test_spec *spec)
- 	spec->unpriv.expect_msgs = NULL;
- }
+ 	struct bpf_insn_access_aux info = {
+ 		.reg_type = *reg_type,
+ 		.log = &env->log,
+ 		.is_retval = false,
++		.is_ldsx = is_ldsx,
+ 	};
  
--static int push_msg(const char *msg, struct test_subspec *subspec)
-+static int push_msg(const char *substr, const char *regex_str, struct test_subspec *subspec)
- {
- 	void *tmp;
-+	int regcomp_res;
-+	char error_msg[100];
-+	struct expect_msg *msg;
+ 	if (env->ops->is_valid_access &&
+@@ -6913,7 +6914,7 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
+ 			return err;
  
--	tmp = realloc(subspec->expect_msgs, (1 + subspec->expect_msg_cnt) * sizeof(void *));
-+	tmp = realloc(subspec->expect_msgs,
-+		      (1 + subspec->expect_msg_cnt) * sizeof(struct expect_msg));
- 	if (!tmp) {
- 		ASSERT_FAIL("failed to realloc memory for messages\n");
- 		return -ENOMEM;
- 	}
- 	subspec->expect_msgs = tmp;
--	subspec->expect_msgs[subspec->expect_msg_cnt++] = msg;
-+	msg = &subspec->expect_msgs[subspec->expect_msg_cnt];
-+
-+	if (substr) {
-+		msg->substr = substr;
-+		msg->regex_str = NULL;
-+	} else {
-+		msg->regex_str = regex_str;
-+		msg->substr = NULL;
-+		regcomp_res = regcomp(&msg->regex, regex_str, REG_EXTENDED|REG_NEWLINE);
-+		if (regcomp_res != 0) {
-+			regerror(regcomp_res, &msg->regex, error_msg, sizeof(error_msg));
-+			PRINT_FAIL("Regexp compilation error in '%s': '%s'\n",
-+				   regex_str, error_msg);
-+			return -EINVAL;
-+		}
-+	}
- 
-+	subspec->expect_msg_cnt += 1;
- 	return 0;
- }
- 
-@@ -233,13 +272,25 @@ static int parse_test_spec(struct test_loader *tester,
- 			spec->mode_mask |= UNPRIV;
- 		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX)) {
- 			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX) - 1;
--			err = push_msg(msg, &spec->priv);
-+			err = push_msg(msg, NULL, &spec->priv);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= PRIV;
- 		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX_UNPRIV)) {
- 			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX_UNPRIV) - 1;
--			err = push_msg(msg, &spec->unpriv);
-+			err = push_msg(msg, NULL, &spec->unpriv);
-+			if (err)
-+				goto cleanup;
-+			spec->mode_mask |= UNPRIV;
-+		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX)) {
-+			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX) - 1;
-+			err = push_msg(NULL, msg, &spec->priv);
-+			if (err)
-+				goto cleanup;
-+			spec->mode_mask |= PRIV;
-+		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX_UNPRIV)) {
-+			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX_UNPRIV) - 1;
-+			err = push_msg(NULL, msg, &spec->unpriv);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= UNPRIV;
-@@ -337,16 +388,13 @@ static int parse_test_spec(struct test_loader *tester,
- 		}
- 
- 		if (!spec->unpriv.expect_msgs) {
--			size_t sz = spec->priv.expect_msg_cnt * sizeof(void *);
-+			for (i = 0; i < spec->priv.expect_msg_cnt; i++) {
-+				struct expect_msg *msg = &spec->priv.expect_msgs[i];
- 
--			spec->unpriv.expect_msgs = malloc(sz);
--			if (!spec->unpriv.expect_msgs) {
--				PRINT_FAIL("failed to allocate memory for unpriv.expect_msgs\n");
--				err = -ENOMEM;
--				goto cleanup;
-+				err = push_msg(msg->substr, msg->regex_str, &spec->unpriv);
-+				if (err)
-+					goto cleanup;
+ 		err = check_ctx_access(env, insn_idx, off, size, t, &reg_type, &btf,
+-				       &btf_id, &is_retval);
++				       &btf_id, &is_retval, is_ldsx);
+ 		if (err)
+ 			verbose_linfo(env, insn_idx, "; ");
+ 		if (!err && t == BPF_READ && value_regno >= 0) {
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 55b1d9de2334d..bbcce4ddfb7bf 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -8568,13 +8568,16 @@ static bool bpf_skb_is_valid_access(int off, int size, enum bpf_access_type type
+ 		if (off + size > offsetofend(struct __sk_buff, cb[4]))
+ 			return false;
+ 		break;
++	case bpf_ctx_range(struct __sk_buff, data):
++	case bpf_ctx_range(struct __sk_buff, data_meta):
++	case bpf_ctx_range(struct __sk_buff, data_end):
++		if (info->is_ldsx || size != size_default)
++			return false;
++		break;
+ 	case bpf_ctx_range_till(struct __sk_buff, remote_ip6[0], remote_ip6[3]):
+ 	case bpf_ctx_range_till(struct __sk_buff, local_ip6[0], local_ip6[3]):
+ 	case bpf_ctx_range_till(struct __sk_buff, remote_ip4, remote_ip4):
+ 	case bpf_ctx_range_till(struct __sk_buff, local_ip4, local_ip4):
+-	case bpf_ctx_range(struct __sk_buff, data):
+-	case bpf_ctx_range(struct __sk_buff, data_meta):
+-	case bpf_ctx_range(struct __sk_buff, data_end):
+ 		if (size != size_default)
+ 			return false;
+ 		break;
+@@ -9018,6 +9021,14 @@ static bool xdp_is_valid_access(int off, int size,
  			}
--			memcpy(spec->unpriv.expect_msgs, spec->priv.expect_msgs, sz);
--			spec->unpriv.expect_msg_cnt = spec->priv.expect_msg_cnt;
  		}
- 	}
- 
-@@ -402,27 +450,40 @@ static void validate_case(struct test_loader *tester,
- 			  struct bpf_program *prog,
- 			  int load_err)
- {
--	int i, j;
-+	int i, j, err;
-+	char *match;
-+	regmatch_t reg_match[1];
- 
- 	for (i = 0; i < subspec->expect_msg_cnt; i++) {
--		char *match;
--		const char *expect_msg;
--
--		expect_msg = subspec->expect_msgs[i];
-+		struct expect_msg *msg = &subspec->expect_msgs[i];
-+
-+		if (msg->substr) {
-+			match = strstr(tester->log_buf + tester->next_match_pos, msg->substr);
-+			if (match)
-+				tester->next_match_pos = match - tester->log_buf + strlen(msg->substr);
-+		} else {
-+			err = regexec(&msg->regex,
-+				      tester->log_buf + tester->next_match_pos, 1, reg_match, 0);
-+			if (err == 0) {
-+				match = tester->log_buf + tester->next_match_pos + reg_match[0].rm_so;
-+				tester->next_match_pos += reg_match[0].rm_eo;
-+			} else {
-+				match = NULL;
-+			}
+ 		return false;
++	} else {
++		switch (off) {
++		case offsetof(struct xdp_md, data_meta):
++		case offsetof(struct xdp_md, data):
++		case offsetof(struct xdp_md, data_end):
++			if (info->is_ldsx)
++				return false;
 +		}
- 
--		match = strstr(tester->log_buf + tester->next_match_pos, expect_msg);
- 		if (!ASSERT_OK_PTR(match, "expect_msg")) {
--			/* if we are in verbose mode, we've already emitted log */
- 			if (env.verbosity == VERBOSE_NONE)
- 				emit_verifier_log(tester->log_buf, true /*force*/);
--			for (j = 0; j < i; j++)
--				fprintf(stderr,
--					"MATCHED  MSG: '%s'\n", subspec->expect_msgs[j]);
--			fprintf(stderr, "EXPECTED MSG: '%s'\n", expect_msg);
-+			for (j = 0; j <= i; j++) {
-+				msg = &subspec->expect_msgs[j];
-+				fprintf(stderr, "%s %s: '%s'\n",
-+					j < i ? "MATCHED " : "EXPECTED",
-+					msg->substr ? "SUBSTR" : " REGEX",
-+					msg->substr ?: msg->regex_str);
-+			}
- 			return;
- 		}
--
--		tester->next_match_pos = match - tester->log_buf + strlen(expect_msg);
  	}
- }
  
+ 	switch (off) {
+@@ -9343,12 +9354,12 @@ static bool flow_dissector_is_valid_access(int off, int size,
+ 
+ 	switch (off) {
+ 	case bpf_ctx_range(struct __sk_buff, data):
+-		if (size != size_default)
++		if (info->is_ldsx || size != size_default)
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET;
+ 		return true;
+ 	case bpf_ctx_range(struct __sk_buff, data_end):
+-		if (size != size_default)
++		if (info->is_ldsx || size != size_default)
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET_END;
+ 		return true;
 -- 
 2.43.0
 
