@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC71F1D078B;
-	Wed,  2 Oct 2024 14:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E111D0DF5;
+	Wed,  2 Oct 2024 14:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879279; cv=none; b=u4J3l3HiSdjFJqF5bzC21CskkEgGexVhCgWvJ5cxfNlxHl7F7KfnhWmBhHMPQdKVpElww3pFB5QRS5ByjQTbyuC4TR9+d1aaUrwn8qq1KHsyVobSYsFN6HKgrZmxkR9XhSCWTD62MHwuJgdmXgo8dWcUWo6wclywsebP0X1k+2E=
+	t=1727879282; cv=none; b=gadSkdrKTdDBuph0wLmzHFUiitMYrmu0gFK+6yHZfLxEQbMaxVpSw6duglbj4vwHYt5SVS9HExPmM26rF3QOnimqqe6/SIyJ+JSxs2XF7QDPz8viBwDIwW8OYlbQvoKbZSZFrS33f1Ucuoh6le397hnpHtDLmglElPmfFZ55fjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879279; c=relaxed/simple;
-	bh=54esUmjSEtQhQkA4Ee5BlLBHqmBRzpdKuSljRLPeHqI=;
+	s=arc-20240116; t=1727879282; c=relaxed/simple;
+	bh=4or7EhgzLpDRsy4Y7jH2ojaGACWywkZheakL3YWNqXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahNQILT71le7lEvRjJq1ZCsrM4Aw02S0I8S+onrCoyKaV+10vytOODIYX8XPlsxSMTeRmHniMOxU3l8k8JXMlMk/80j+yqRcD7AUAaIcSxRCZLbCYfc58TzIS7Kiii49j4yh5bLPGHqdBs/AbHgIYQzD7a6j+fAzAhoLhZjQyaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I46zxR6x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6DEJwafJ0ljgNxG/VyHXQWtaTWCp4Zojkgmy0bj5Y/YXrpzuMSrXizT6KFAUQqW0u8RM79G4V0MBcVHzDx7StOMkQdFxy0C6XqgRrhK/K3fzzT8RF3jIT79/TSsAkn8s6Die9rxmLN62abMg7ywafUgpnCtl2QMZOsN9r/0skw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KL0q9ieL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I46zxR6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7BAC4CEC2;
-	Wed,  2 Oct 2024 14:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KL0q9ieL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34293C4CEC2;
+	Wed,  2 Oct 2024 14:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879279;
-	bh=54esUmjSEtQhQkA4Ee5BlLBHqmBRzpdKuSljRLPeHqI=;
+	s=korg; t=1727879282;
+	bh=4or7EhgzLpDRsy4Y7jH2ojaGACWywkZheakL3YWNqXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I46zxR6xY2FhKXVqT7kBwSA2mS96pXbS51R7e4DNEokiH8ERm6e2yXdw7zrYnAEG7
-	 X2cLRi8e6zAdnLC0tiFnO7debiWIOeBYpSkL6SYR8/N8RMXKN/PjwQzW4z6JAsnMQ1
-	 w6h3/SpxDyFOiG7WPCGnJZBufDl3Kfc+zDo6XOwk=
+	b=KL0q9ieL8hWCsCwjViBwapgICgcUx4C63+AjVVz5NeOB5IFEXf7PgtBZGxF6EQ3Ih
+	 pqf42MF9ELy7y3+uJf1BSfj0Hcz7lVO77otdxnsLZeylIdaxv9AdwQ4Ma2jm7HJ/aZ
+	 LnTt/ZPQ2BBiDXG/z3d7ab1egGwAnPgLyG0lSqPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Golan Ben Ami <golan.ben.ami@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/538] netfilter: nf_tables: elements with timeout below CONFIG_HZ never expire
-Date: Wed,  2 Oct 2024 14:54:32 +0200
-Message-ID: <20241002125753.331976781@linuxfoundation.org>
+Subject: [PATCH 6.6 024/538] wifi: iwlwifi: remove AX101, AX201 and AX203 support from LNL
+Date: Wed,  2 Oct 2024 14:54:23 +0200
+Message-ID: <20241002125752.970948907@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,34 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Golan Ben Ami <golan.ben.ami@intel.com>
 
-[ Upstream commit e0c47281723f301894c14e6f5cd5884fdfb813f9 ]
+[ Upstream commit 6adae0b081454393ca5f7363fd3c7379c8e2a7a1 ]
 
-Element timeout that is below CONFIG_HZ never expires because the
-timeout extension is not allocated given that nf_msecs_to_jiffies64()
-returns 0. Set timeout to the minimum value to honor timeout.
+LNL is the codename for the upcoming Series 2 Core Ultra
+processors designed by Intel. AX101, AX201 and AX203 devices
+are not shiped on LNL platforms, so don't support them.
 
-Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Golan Ben Ami <golan.ben.ami@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240613171043.f24a228dfd96.I989a2d3f1513211bc49ac8143ee4e9e341e1ee67@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 8131dd52810d ("wifi: iwlwifi: config: label 'gl' devices as discrete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 32 ++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index da5684e3fd08c..b28acdaaf9709 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4462,7 +4462,7 @@ int nf_msecs_to_jiffies64(const struct nlattr *nla, u64 *result)
- 		return -ERANGE;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index dea4d6478b4f4..365e19314f2ca 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -504,7 +504,37 @@ static const struct pci_device_id iwl_hw_card_ids[] = {
+ 	{IWL_PCI_DEVICE(0x2727, PCI_ANY_ID, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0x272D, PCI_ANY_ID, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0x272b, PCI_ANY_ID, iwl_bz_trans_cfg)},
+-	{IWL_PCI_DEVICE(0xA840, PCI_ANY_ID, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0000, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0090, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0094, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0098, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x009C, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00C0, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00C4, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00E0, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00E4, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00E8, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x00EC, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0100, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0110, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0114, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0118, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x011C, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0310, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0314, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0510, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x0A10, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1671, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1672, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1771, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1772, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1791, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x1792, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x4090, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x40C4, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x40E0, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x4110, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0xA840, 0x4314, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0x7740, PCI_ANY_ID, iwl_bz_trans_cfg)},
  
- 	ms *= NSEC_PER_MSEC;
--	*result = nsecs_to_jiffies64(ms);
-+	*result = nsecs_to_jiffies64(ms) ? : !!ms;
- 	return 0;
- }
- 
+ /* Sc devices */
 -- 
 2.43.0
 
