@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E76FB0;
-	Wed,  2 Oct 2024 14:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E301A08A4;
+	Wed,  2 Oct 2024 14:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880158; cv=none; b=CrzijKyEBAnZfj0Jzt5KCeYwBC3cDeFG8Iz2CUwb2f9S/sTJRy6h/0fEjZW2MnCv2mxSDcWLd5jkEYJuT9fx6F07/WR8aqmt+ATt5ePDFBE1zcO/ET28PcYXOB5M6zPhnbl35JByCzSR6VhSg9bDHfdNKggxk2Kom6eU1ftk7+I=
+	t=1727880161; cv=none; b=XO4U56GCvQAUqUS9uRVHamNlLzoMlJHyUIGKOfOczfcBRs4as/eRtxrQb7ABYd3fmOKbX+19YY/Vn2JGxbZ1fxdO7kBMYXoU2YL0osbTsd7V70JA1xqwFvIr8b01xCKMk7U3xB0TLwjXr3AZWhn0M0Wev5hJTt6nWJNh+yh1/r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880158; c=relaxed/simple;
-	bh=E17Df4wX4NOxka3vBVsF8TXXxQ1wzEuI3ivB9gIyc08=;
+	s=arc-20240116; t=1727880161; c=relaxed/simple;
+	bh=+32ao5fuwwFVzb4B+DGvu67ccmSQrX9IootC+0RRX5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1RIfe+n8WLm7eV3E9mKqukN7NhhNkiQMQ0b5GR/jc/oinYt73uPAtNjHuQ7duGtDagqT98SOmvs5cwX1hNS/36MEFDISVpcOjzejTzVEHZ1VntN1zA8NooS//Ypbgo89GlMClyEFxqCWogDzC+YIya89wmt7bfveP4zdRU2fCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5yYzTz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSckHWKxjOM5qaPnCc4ZCbr586gzsKMfUMNncJlZzFdqjMQg3hmZqTT+LodD/Mf5uAlrQWESaTAlzO/3f9453H6H5Ds5GZLhpY2I3Kez3igiFCac61bZAnC0gViT8uhaeaGnPtTaYgTkPQ8QMcBdRMd/M7RbSaAQNnb0VyMXecE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0ndeXDF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5yYzTz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09779C4CEC2;
-	Wed,  2 Oct 2024 14:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0ndeXDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0836C4CEC2;
+	Wed,  2 Oct 2024 14:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880158;
-	bh=E17Df4wX4NOxka3vBVsF8TXXxQ1wzEuI3ivB9gIyc08=;
+	s=korg; t=1727880161;
+	bh=+32ao5fuwwFVzb4B+DGvu67ccmSQrX9IootC+0RRX5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5yYzTz/77dAoSnJ5y998H5oclt5KVVsO9nj0Bu2I+QRTYiJI2BpGNZyKqto55aK8
-	 rWsWIG86zlpLpURjMUZb9TOGOxrl1kO+8BFiCHsSZHVFOyX9VTH6Ndu3FbTn5k3x0y
-	 GXLoqo1A+k8MWwp/XMpCbsU2rTJ45q4McQe8tDKc=
+	b=z0ndeXDFVVbzTczbsMJzbnGdCssJU/3NsDLYuss5Jz0/vMbsSfzUjXG8ogYkbtlzw
+	 GFzu4uk4gtbDx7upFXurjOz+v3v93DC8WJ8thOXgVB+KKlfom0FpPB7ZFRYTzczZfK
+	 TxHOgIza6Y2lHuufoyVhLrrFtC6aK4vTKIbkQnPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 362/538] serial: 8250: omap: Cleanup on error in request_irq
-Date: Wed,  2 Oct 2024 15:00:01 +0200
-Message-ID: <20241002125806.715946368@linuxfoundation.org>
+Subject: [PATCH 6.6 363/538] coresight: tmc: sg: Do not leak sg_table
+Date: Wed,  2 Oct 2024 15:00:02 +0200
+Message-ID: <20241002125806.754758750@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,37 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit 35e648a16018b747897be2ccc3ce95ff23237bb5 ]
+[ Upstream commit c58dc5a1f886f2fcc1133746d0cbaa1fe7fd44ff ]
 
-If devm_request_irq fails, the code does not cleanup many things that
-were setup before. Instead of directly returning ret we should jump to
-err.
+Running perf with cs_etm on Juno triggers the following kmemleak warning !
 
-Fixes: fef4f600319e ("serial: 8250: omap: Fix life cycle issues for interrupt handlers")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20240807141227.1093006-4-msp@baylibre.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+:~# cat /sys/kernel/debug/kmemleak
+ unreferenced object 0xffffff8806b6d720 (size 96):
+ comm "perf", pid 562, jiffies 4297810960
+ hex dump (first 32 bytes):
+ 38 d8 13 07 88 ff ff ff 00 d0 9e 85 c0 ff ff ff  8...............
+ 00 10 00 88 c0 ff ff ff 00 f0 ff f7 ff 00 00 00  ................
+ backtrace (crc 1dbf6e00):
+ [<ffffffc08107381c>] kmemleak_alloc+0xbc/0xd8
+ [<ffffffc0802f9798>] kmalloc_trace_noprof+0x220/0x2e8
+ [<ffffffc07bb71948>] tmc_alloc_sg_table+0x48/0x208 [coresight_tmc]
+ [<ffffffc07bb71cbc>] tmc_etr_alloc_sg_buf+0xac/0x240 [coresight_tmc]
+ [<ffffffc07bb72538>] tmc_alloc_etr_buf.constprop.0+0x1f0/0x260 [coresight_tmc]
+ [<ffffffc07bb7280c>] alloc_etr_buf.constprop.0.isra.0+0x74/0xa8 [coresight_tmc]
+ [<ffffffc07bb72950>] tmc_alloc_etr_buffer+0x110/0x260 [coresight_tmc]
+ [<ffffffc07bb38afc>] etm_setup_aux+0x204/0x3b0 [coresight]
+ [<ffffffc08025837c>] rb_alloc_aux+0x20c/0x318
+ [<ffffffc08024dd84>] perf_mmap+0x2e4/0x7a0
+ [<ffffffc0802cceb0>] mmap_region+0x3b0/0xa08
+ [<ffffffc0802cd8a8>] do_mmap+0x3a0/0x500
+ [<ffffffc080295328>] vm_mmap_pgoff+0x100/0x1d0
+ [<ffffffc0802cadf8>] ksys_mmap_pgoff+0xb8/0x110
+ [<ffffffc080020688>] __arm64_sys_mmap+0x38/0x58
+ [<ffffffc080028fc0>] invoke_syscall.constprop.0+0x58/0x100
+
+This due to the fact that we do not free the "sg_table" itself while
+freeing up  the SG table and data pages. Fix this by freeing the sg_table
+in tmc_free_sg_table().
+
+Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: James Clark <james.clark@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20240702132846.1677261-1-suzuki.poulose@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 +-
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 8f472a2080ffa..4caecc3525bfd 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1567,7 +1567,7 @@ static int omap8250_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(&pdev->dev, irq, omap8250_irq, 0,
- 			       dev_name(&pdev->dev), priv);
- 	if (ret < 0)
--		return ret;
-+		goto err;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index 8311e1028ddb0..f3312fbcdc0f8 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -255,6 +255,7 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
+ {
+ 	tmc_free_table_pages(sg_table);
+ 	tmc_free_data_pages(sg_table);
++	kfree(sg_table);
+ }
+ EXPORT_SYMBOL_GPL(tmc_free_sg_table);
  
- 	priv->wakeirq = irq_of_parse_and_map(np, 1);
+@@ -336,7 +337,6 @@ struct tmc_sg_table *tmc_alloc_sg_table(struct device *dev,
+ 		rc = tmc_alloc_table_pages(sg_table);
+ 	if (rc) {
+ 		tmc_free_sg_table(sg_table);
+-		kfree(sg_table);
+ 		return ERR_PTR(rc);
+ 	}
  
 -- 
 2.43.0
