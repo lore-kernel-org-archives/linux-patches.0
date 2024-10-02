@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8DB1CF5FB;
-	Wed,  2 Oct 2024 13:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885FD1C9B91;
+	Wed,  2 Oct 2024 13:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876721; cv=none; b=nzLBl5Nk81bk6/PL1xwliLNBLEJU0glQD0IwvNrIg38ZFfqb/54HZeEEFC9IyYYdMdPGAMze6OSVu5cdIBgxBTKz6hz4Z2JF3EDeDluDWMWmCnG3jiutoz9W1CtXUyRrNpi6D4RZXUQSkkt7El4bo9QRgVv42UX5y2ip6e3xU8o=
+	t=1727876724; cv=none; b=C6ihXXu3KoONUXzqmkFkb1BrDued1uKGmiytwgtRpJuxzdatzmVaCQyyawoWGvI3a4eeDmzSVVvAfTb8ZdbnLUk7BQYb3dCortkVm+1LvQe4iGfMHxRztVjyiOxqB+idl0QVp6XsPq7pkUARli4e/ERTIjl5G5TiglmYOGJCYmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876721; c=relaxed/simple;
-	bh=Q/0xjOVq8+c+g0kI61+rQQKqWKDB9Wj/h8aI8Rv4s+c=;
+	s=arc-20240116; t=1727876724; c=relaxed/simple;
+	bh=27EdFsYUJ7YkjIHtr/B4Zv+A/w3WZPvABUQ2f13W2qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OTB9kv8CtqH5R/HEN2sRCT57aDcgjUEfhXP1RjcHdC30SmfYi7VZuWZ/hMh5qq6ZABdehrSrWHwtmTBTOemVOJ4UBrnj6JcRm7CPEuSOsydMolEC5aSEHl/zmYNZBpQdKwGmlzSdBrRjs4X61Fbtp3zmEh8ayhMYWYUGqBEhfr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhjK9Nqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NXOxp2DdSzdUdigi5iEn0T9jx8NZOFTrKEyAnnJAabadiGebNPXIxKGXECpQVXQrteAU5QoNYb7YicFmuW1IoLenUKIl8hplyFz7GVZ/MDORgr05siGCguvHtZM9Gs86Vzh0ZtBT2MUCGgoXNZ3RX0hkfBLL3IRu94+ATuwg9RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWdxa9GO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhjK9Nqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9513C4CEC2;
-	Wed,  2 Oct 2024 13:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWdxa9GO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B468AC4CEC2;
+	Wed,  2 Oct 2024 13:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876721;
-	bh=Q/0xjOVq8+c+g0kI61+rQQKqWKDB9Wj/h8aI8Rv4s+c=;
+	s=korg; t=1727876724;
+	bh=27EdFsYUJ7YkjIHtr/B4Zv+A/w3WZPvABUQ2f13W2qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhjK9Nqu7F2WWoZ/jHQEn45MFv+dyg4GwTndcnFpsCBBCODdaDeRUEI2q0EhcckTX
-	 5tdwjOkvVzTpmh/vh53QC5ZehsGq/0e4QefoXAXMYwFHCLZAVGMCbKaUGOA+2LeE9W
-	 qt987jzOXrTdGRbXnQCCJK1zpWoY8Sf2Vt5yYLWA=
+	b=LWdxa9GO4QC28RS6xEyAx5JlED67m21CN1w6IOIaDN346si/wINFIkwhju6qmF6pC
+	 NO58XRYpL7Zsmz7P4NgPHETGbGC/NkCZynTFfrwJwrfPdAeA/EqQUd2GS8vOwbUOUT
+	 VLseOlTMUq+C+5LFd+KSaUxlnMibMzxE1XIV01Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sreekant Somasekharan <sreekant.somasekharan@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 541/695] drm/amdgpu/mes11: reduce timeout
-Date: Wed,  2 Oct 2024 14:58:59 +0200
-Message-ID: <20241002125844.093435340@linuxfoundation.org>
+Subject: [PATCH 6.11 542/695] drm/amdkfd: Add SDMA queue quantum support for GFX12
+Date: Wed,  2 Oct 2024 14:59:00 +0200
+Message-ID: <20241002125844.134463247@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -44,40 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Sreekant Somasekharan <sreekant.somasekharan@amd.com>
 
-commit 856265caa94a3c78feaa23ec1acd799fe1989201 upstream.
+commit d52ac79053a2f3eba04c1e7b56334df84d1d289f upstream.
 
-The firmware timeout is 2s.  Reduce the driver timeout to
-2.1 seconds to avoid back pressure on queue submissions.
+program SDMAx_QUEUEx_SCHEDULE_CNTL for context switch due to
+quantum in KFD for GFX12.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3627
-Fixes: f7c161a4c250 ("drm/amdgpu: increase mes submission timeout")
-Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sreekant Somasekharan <sreekant.somasekharan@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -160,7 +160,7 @@ static int mes_v11_0_submit_pkt_and_poll
- 						    int api_status_off)
- {
- 	union MESAPI__QUERY_MES_STATUS mes_status_pkt;
--	signed long timeout = 3000000; /* 3000 ms */
-+	signed long timeout = 2100000; /* 2100 ms */
- 	struct amdgpu_device *adev = mes->adev;
- 	struct amdgpu_ring *ring = &mes->ring[0];
- 	struct MES_API_STATUS *api_status;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
+@@ -341,6 +341,10 @@ static void update_mqd_sdma(struct mqd_m
+ 	m->sdmax_rlcx_doorbell_offset =
+ 		q->doorbell_off << SDMA0_QUEUE0_DOORBELL_OFFSET__OFFSET__SHIFT;
+ 
++	m->sdmax_rlcx_sched_cntl = (amdgpu_sdma_phase_quantum
++		<< SDMA0_QUEUE0_SCHEDULE_CNTL__CONTEXT_QUANTUM__SHIFT)
++		 & SDMA0_QUEUE0_SCHEDULE_CNTL__CONTEXT_QUANTUM_MASK;
++
+ 	m->sdma_engine_id = q->sdma_engine_id;
+ 	m->sdma_queue_id = q->sdma_queue_id;
+ 
 
 
