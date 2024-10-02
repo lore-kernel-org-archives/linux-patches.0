@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A27C1D0E1A;
-	Wed,  2 Oct 2024 14:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F6F1D1F4B;
+	Wed,  2 Oct 2024 14:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877878; cv=none; b=IyBK0S9rKJH7YBepV7qPemPBNJh1MZ944E0+33MVTPzL5PLAQTqxHsqnbPuFxJaxN5cjwjOKu7ibK8Jd3QAcGMPrM27/45Gbi5zmBrZLE3UOmGqn79oyE+wHq385YHrxP6MHwnebMFjwfn1G0jW8nLDEb4Zm3VwaQNrU+KK+SkU=
+	t=1727877881; cv=none; b=A1ytwQdfmVxuHocwZpVhOQorpa+yaed+oqybDeopgwHylGwdwkY0O3ZnudlpHeZ4skQf7p3LcKyGJR4tMOaM2aK/hXYsihf8m+mWhgVc4ChBt+kObId0t4YTrGYpqTWMK/aIdBJcqhWhFuBQL2wHHsOhgPAm3fpuwhbK7I+oDuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877878; c=relaxed/simple;
-	bh=X2+KYgL4E7tW54xDwWfNIrIEGuD7hYXw/exO9Se+Pt4=;
+	s=arc-20240116; t=1727877881; c=relaxed/simple;
+	bh=j5V+QpZ74sY61fVzfgzTxBubwqeiiNj/o1WhLzgC2zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJ4XoMUsZC2lXmUiM2tghgPMu2vBgZepKa9KSUnpfPOh8D4HnEM+XF6pyOVnfG3/IVziDQ4vu/k/qzdX+NxCkJA6z3Z7xu2DAinP+kjElZmCGoUWKi1JA7NsxsCZT1ATUT9IcajKQqg5/EfCE53zgIV+elYt2iADbrIvu9TqUMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XR6GmH0K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoXhyTU91MI7cH+wCGT+XER8OZfOUdm/IPlK65iMEKD1mAiR/4jQAjIllbWB9kYTD5wuUMiYd74uTMs4joJkMD6OuoCzbS962I7FaHPRdtBHiD3dPFq3195IKsw74LdNxBDvpN3x2wWzy6g4RDjOmYLyMGoKL/h90XpXsRzDnJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NAVY2BV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XR6GmH0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA82BC4CEC2;
-	Wed,  2 Oct 2024 14:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NAVY2BV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F15DC4CECE;
+	Wed,  2 Oct 2024 14:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877878;
-	bh=X2+KYgL4E7tW54xDwWfNIrIEGuD7hYXw/exO9Se+Pt4=;
+	s=korg; t=1727877881;
+	bh=j5V+QpZ74sY61fVzfgzTxBubwqeiiNj/o1WhLzgC2zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XR6GmH0KLXbXI9jDs00/pcK/vvkWhlWTZ/xaMfOjOHzjqVdTArR1FO2PFxFjsYgMU
-	 6VA8krWtApiSHC5n6sMQPC5D4wrPi/XAVgp8qrJcn1nFj+KAUHb93zJPTusl/AWQgk
-	 7AJNeFFtzhjKcikQ+hRE+hcAi2EaG2EFGOD3JEEw=
+	b=1NAVY2BVWKrlvRE9OR6B85bRtZTDAZG/v5j5xV0DcdBdUd8BLgCiPNIc3dedizjCf
+	 urGwzEW/eQWYIspIQ84HpCFXfutbbO9Dg2uRHtsT+vA0ZHqxDF9OjFSZLezk/a9dmS
+	 gUM+cwbKSl/gBKQBwI+C5HA+mhoFWiaxBaCWTJys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
+	Jonathan McDowell <noodles@meta.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 225/634] xen/swiotlb: fix allocated size
-Date: Wed,  2 Oct 2024 14:55:25 +0200
-Message-ID: <20241002125819.980522955@linuxfoundation.org>
+Subject: [PATCH 6.10 226/634] tpm: Clean up TPM space after command failure
+Date: Wed,  2 Oct 2024 14:55:26 +0200
+Message-ID: <20241002125820.019905123@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Jonathan McDowell <noodles@meta.com>
 
-[ Upstream commit c3dea3d54f4d399f8044547f0f1abdccbdfb0fee ]
+[ Upstream commit e3aaebcbb7c6b403416f442d1de70d437ce313a7 ]
 
-The allocated size in xen_swiotlb_alloc_coherent() and
-xen_swiotlb_free_coherent() is calculated wrong for the case of
-XEN_PAGE_SIZE not matching PAGE_SIZE. Fix that.
+tpm_dev_transmit prepares the TPM space before attempting command
+transmission. However if the command fails no rollback of this
+preparation is done. This can result in transient handles being leaked
+if the device is subsequently closed with no further commands performed.
 
-Fixes: 7250f422da04 ("xen-swiotlb: use actually allocated size on check physical continuous")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fix this by flushing the space in the event of command transmission
+failure.
+
+Fixes: 745b361e989a ("tpm: infrastructure for TPM spaces")
+Signed-off-by: Jonathan McDowell <noodles@meta.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/swiotlb-xen.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm-dev-common.c | 2 ++
+ drivers/char/tpm/tpm2-space.c     | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
-index 7a6f1f007527c..5e83d1e0bd184 100644
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -146,7 +146,7 @@ xen_swiotlb_alloc_coherent(struct device *dev, size_t size,
- 	void *ret;
+diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
+index 30b4c288c1bbc..c3fbbf4d3db79 100644
+--- a/drivers/char/tpm/tpm-dev-common.c
++++ b/drivers/char/tpm/tpm-dev-common.c
+@@ -47,6 +47,8 @@ static ssize_t tpm_dev_transmit(struct tpm_chip *chip, struct tpm_space *space,
  
- 	/* Align the allocation to the Xen page size */
--	size = 1UL << (order + XEN_PAGE_SHIFT);
-+	size = ALIGN(size, XEN_PAGE_SIZE);
- 
- 	ret = (void *)__get_free_pages(flags, get_order(size));
  	if (!ret)
-@@ -178,7 +178,7 @@ xen_swiotlb_free_coherent(struct device *dev, size_t size, void *vaddr,
- 	int order = get_order(size);
+ 		ret = tpm2_commit_space(chip, space, buf, &len);
++	else
++		tpm2_flush_space(chip);
  
- 	/* Convert the size to actually allocated. */
--	size = 1UL << (order + XEN_PAGE_SHIFT);
-+	size = ALIGN(size, XEN_PAGE_SIZE);
+ out_rc:
+ 	return ret ? ret : len;
+diff --git a/drivers/char/tpm/tpm2-space.c b/drivers/char/tpm/tpm2-space.c
+index 4892d491da8da..25a66870c165c 100644
+--- a/drivers/char/tpm/tpm2-space.c
++++ b/drivers/char/tpm/tpm2-space.c
+@@ -169,6 +169,9 @@ void tpm2_flush_space(struct tpm_chip *chip)
+ 	struct tpm_space *space = &chip->work_space;
+ 	int i;
  
- 	if (WARN_ON_ONCE(dma_handle + size - 1 > dev->coherent_dma_mask) ||
- 	    WARN_ON_ONCE(range_straddles_page_boundary(phys, size)))
++	if (!space)
++		return;
++
+ 	for (i = 0; i < ARRAY_SIZE(space->context_tbl); i++)
+ 		if (space->context_tbl[i] && ~space->context_tbl[i])
+ 			tpm2_flush_context(chip, space->context_tbl[i]);
 -- 
 2.43.0
 
