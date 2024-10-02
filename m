@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885FD1C9B91;
-	Wed,  2 Oct 2024 13:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D071C9B91;
+	Wed,  2 Oct 2024 13:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876724; cv=none; b=C6ihXXu3KoONUXzqmkFkb1BrDued1uKGmiytwgtRpJuxzdatzmVaCQyyawoWGvI3a4eeDmzSVVvAfTb8ZdbnLUk7BQYb3dCortkVm+1LvQe4iGfMHxRztVjyiOxqB+idl0QVp6XsPq7pkUARli4e/ERTIjl5G5TiglmYOGJCYmw=
+	t=1727876727; cv=none; b=Q6tU/KbvjjMKIU9VC2ncYN/3qaCbarekXhnXauPfQ2zY85PxIra4gVcRWZoJZxpCdSc8qiVflt/N1XxiUgwt98cKVdXMZ6308igwz8bMj61ZRp1Ndxu59amcuStayydI74s6bm/T/jhwLvycHQMhN1CGp/hloOutDPhoZ8q+LRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876724; c=relaxed/simple;
-	bh=27EdFsYUJ7YkjIHtr/B4Zv+A/w3WZPvABUQ2f13W2qw=;
+	s=arc-20240116; t=1727876727; c=relaxed/simple;
+	bh=Lzl5KWL1OO31ROKNIbaozRq7HtPm6JP2iSOlCXnPS2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXOxp2DdSzdUdigi5iEn0T9jx8NZOFTrKEyAnnJAabadiGebNPXIxKGXECpQVXQrteAU5QoNYb7YicFmuW1IoLenUKIl8hplyFz7GVZ/MDORgr05siGCguvHtZM9Gs86Vzh0ZtBT2MUCGgoXNZ3RX0hkfBLL3IRu94+ATuwg9RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWdxa9GO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=naIhbnRtaXQqhEuBirFzMyKYHe9Mt8HnduxcRbWBBPNYztahSXZyiLbzG5zWK4jOawJaDGJDtcsIbCy2zPxiVSIDO8DK40xua/igOzP2tfD7wWFvRpS758dqBy228tFJlZ+j+3hs5AL0DXGsb4GefSzBOktjRnHy41BnCgx+rqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAw8aU4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWdxa9GO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B468AC4CEC2;
-	Wed,  2 Oct 2024 13:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAw8aU4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0F6C4CEC5;
+	Wed,  2 Oct 2024 13:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876724;
-	bh=27EdFsYUJ7YkjIHtr/B4Zv+A/w3WZPvABUQ2f13W2qw=;
+	s=korg; t=1727876727;
+	bh=Lzl5KWL1OO31ROKNIbaozRq7HtPm6JP2iSOlCXnPS2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWdxa9GO4QC28RS6xEyAx5JlED67m21CN1w6IOIaDN346si/wINFIkwhju6qmF6pC
-	 NO58XRYpL7Zsmz7P4NgPHETGbGC/NkCZynTFfrwJwrfPdAeA/EqQUd2GS8vOwbUOUT
-	 VLseOlTMUq+C+5LFd+KSaUxlnMibMzxE1XIV01Ds=
+	b=SAw8aU4g+yw1kuTDPo4BMXyULI/tTsroMxt7Bu6v/+fCKXB1YWQwoxu57zZEjrT/Q
+	 cz40Z3SZrXHY2WqKNsLtiEN6cO2vr2e32ZZkdcPiSraXp14DQO1BWGUxmHQ/6UD+np
+	 zjLvlMP7tE9RzFgIASKw9MgJ561gS4T0sUX1l7n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sreekant Somasekharan <sreekant.somasekharan@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 542/695] drm/amdkfd: Add SDMA queue quantum support for GFX12
-Date: Wed,  2 Oct 2024 14:59:00 +0200
-Message-ID: <20241002125844.134463247@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.11 525/695] soc: fsl: cpm1: tsa: Fix tsa_write8()
+Date: Wed,  2 Oct 2024 14:58:43 +0200
+Message-ID: <20241002125843.443298634@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,34 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sreekant Somasekharan <sreekant.somasekharan@amd.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit d52ac79053a2f3eba04c1e7b56334df84d1d289f upstream.
+commit 47a347bae9a491b467ab3543e4725a3e4fbe30f5 upstream.
 
-program SDMAx_QUEUEx_SCHEDULE_CNTL for context switch due to
-quantum in KFD for GFX12.
+The tsa_write8() parameter is an u32 value. This is not consistent with
+the function itself. Indeed, tsa_write8() writes an 8bits value.
 
-Signed-off-by: Sreekant Somasekharan <sreekant.somasekharan@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.11.x
+Be consistent and use an u8 parameter value.
+
+Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/20240808071132.149251-4-herve.codina@bootlin.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/soc/fsl/qe/tsa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
-@@ -341,6 +341,10 @@ static void update_mqd_sdma(struct mqd_m
- 	m->sdmax_rlcx_doorbell_offset =
- 		q->doorbell_off << SDMA0_QUEUE0_DOORBELL_OFFSET__OFFSET__SHIFT;
+--- a/drivers/soc/fsl/qe/tsa.c
++++ b/drivers/soc/fsl/qe/tsa.c
+@@ -140,7 +140,7 @@ static inline void tsa_write32(void __io
+ 	iowrite32be(val, addr);
+ }
  
-+	m->sdmax_rlcx_sched_cntl = (amdgpu_sdma_phase_quantum
-+		<< SDMA0_QUEUE0_SCHEDULE_CNTL__CONTEXT_QUANTUM__SHIFT)
-+		 & SDMA0_QUEUE0_SCHEDULE_CNTL__CONTEXT_QUANTUM_MASK;
-+
- 	m->sdma_engine_id = q->sdma_engine_id;
- 	m->sdma_queue_id = q->sdma_queue_id;
- 
+-static inline void tsa_write8(void __iomem *addr, u32 val)
++static inline void tsa_write8(void __iomem *addr, u8 val)
+ {
+ 	iowrite8(val, addr);
+ }
 
 
