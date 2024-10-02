@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018F1CF5C6;
-	Wed,  2 Oct 2024 13:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551E71D015C;
+	Wed,  2 Oct 2024 13:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877118; cv=none; b=JqtWPIaBdrnMFtWlVcwiDHt2qKJsv+s0Q2Dr+Ph+lVk47RRQVZQBpYh+spFqPQsZ9BE23CQ9npQh7Y/ieymSdWuIxh9QjlmSqNiSDzIIYUoFUMziGrHXLHJE1NTNRXNDku2DCxhNIK0yRVOasJnklzATtNghZJ9/rXzPucLeUC0=
+	t=1727877121; cv=none; b=q5l/JsxUKjsyRMnMAhfgrt8hV529VZDb513YBYJWIT1LCJZzCBwZqCNhby7BprBuF1R0zsp5zuNiDC2zP7l8RCdyN0mE1SP6eydw0QVt+kuXJO77LJSdGerb8JK7a0yxycmxrCaEsW8SDINa2xlZMoq8iWq5R23h2IpluYXftFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877118; c=relaxed/simple;
-	bh=AGsGrPNZaJWQq/rDqWzFpa2M7dDtx+KVYLKKrxW+b1A=;
+	s=arc-20240116; t=1727877121; c=relaxed/simple;
+	bh=YffQKji9eW3Lbd6RVmUrkck7R6g99YErQjhu5Mm0+Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0JF85C+a/0eN47MSv6cPrVP+IGAHmJ71giei2ft3HNLzD+V2j+kiJ/8KtlDhYuYZHqaiv8Z5SS3sgNAsp409kVGY1ZaSs4EbVBKnr019KbWuDi7upfA51XnTA86++ln5QXONJ4TPg0HlpRclOR+Ce2UHUldSMU3pfiW9WS3hSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPVQUgNr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ws44wLs+9kpYM0pfSbEEIh7HweVwIgBSLVv3HfVwuBnh9LQNm203Bq873tzn9dTmPxas0QKxP1o55tLwaRTIYHfEX2ZW9+KyTBjl+UoWJxZcblf7anRrWZkxLTlvYtZOTN2BQo/eLBI5nMvau1hjYGr/J0pKqYGGdjSqfOi9JD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTIE7Jzy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPVQUgNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA30AC4CEC2;
-	Wed,  2 Oct 2024 13:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTIE7Jzy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5C8C4CEC2;
+	Wed,  2 Oct 2024 13:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877118;
-	bh=AGsGrPNZaJWQq/rDqWzFpa2M7dDtx+KVYLKKrxW+b1A=;
+	s=korg; t=1727877121;
+	bh=YffQKji9eW3Lbd6RVmUrkck7R6g99YErQjhu5Mm0+Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JPVQUgNrkZeqXCcz42KM7TPZZCEyyTwtgnzmfLx+g9zYI/xBjzqwD/sEU5r8B7Hv+
-	 QeuTF8mGR5zWXe5Aywe/idFIeOIPkjm29w3BcNgQYsQ61ZPTYNW8yZV+YpwSlLxoVZ
-	 2BT9+Hgk3lUKfk4ClsMxhW8Wk62RKKVq1jRVBB/U=
+	b=TTIE7JzyniGQ6pce1xDfDP0Ik2QdKTC13NuFa8giEAMqO1Z1HOmykWPvn4kfrob63
+	 v3tbg+rrhlbq3Sih5xrCySEiPZsvHXsuKH9/X3SmTEtvUsY9abDLJrbBK9VyJumPfg
+	 61ttNmatt2NZR2NtDY5JlXNBBRLRLKIXIQpFf6Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 671/695] thermal: sysfs: Refine the handling of trip hysteresis changes
-Date: Wed,  2 Oct 2024 15:01:09 +0200
-Message-ID: <20241002125849.294282988@linuxfoundation.org>
+Subject: [PATCH 6.11 672/695] thermal: sysfs: Add sanity checks for trip temperature and hysteresis
+Date: Wed,  2 Oct 2024 15:01:10 +0200
+Message-ID: <20241002125849.334663608@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,77 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 107280e1371f1ba183be1ac88e91ec60cad33c18 ]
+[ Upstream commit 874b6476fa888e79e41daf7653384c8d70927b90 ]
 
-Change trip_point_hyst_store() and replace thermal_zone_trip_updated()
-with thermal_zone_set_trip_hyst() to follow the trip_point_temp_store()
-code pattern for more consistency.
+Add sanity checks for new trip temperature and hysteresis values to
+trip_point_temp_store() and trip_point_hyst_store() to prevent trip
+point threshold from falling below THERMAL_TEMP_INVALID.
 
-No intentional functional impact.
+However, still allow user space to pass THERMAL_TEMP_INVALID as the
+new trip temperature value to invalidate the trip if necessary.
 
+Also allow the hysteresis to be updated when the temperature is invalid
+to allow user space to avoid having to adjust hysteresis after a valid
+temperature has been set, but in that case just change the value and do
+nothing else.
+
+Fixes: be0a3600aa1e ("thermal: sysfs: Rework the handling of trip point updates")
+Cc: 6.8+ <stable@vger.kernel.org> # 6.8+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5508466.Sb9uPGUboI@rjwysocki.net
-Stable-dep-of: 874b6476fa88 ("thermal: sysfs: Add sanity checks for trip temperature and hysteresis")
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/12528772.O9o76ZdvQC@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.h  | 4 ++--
- drivers/thermal/thermal_sysfs.c | 4 ++--
- drivers/thermal/thermal_trip.c  | 6 +++---
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/thermal/thermal_sysfs.c | 50 +++++++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.h b/drivers/thermal/thermal_core.h
-index 5be8bef41b926..3c8e2bca87f2d 100644
---- a/drivers/thermal/thermal_core.h
-+++ b/drivers/thermal/thermal_core.h
-@@ -263,11 +263,11 @@ const char *thermal_trip_type_name(enum thermal_trip_type trip_type);
- void thermal_zone_set_trips(struct thermal_zone_device *tz);
- int thermal_zone_trip_id(const struct thermal_zone_device *tz,
- 			 const struct thermal_trip *trip);
--void thermal_zone_trip_updated(struct thermal_zone_device *tz,
--			       const struct thermal_trip *trip);
- int __thermal_zone_get_temp(struct thermal_zone_device *tz, int *temp);
- void thermal_zone_trip_down(struct thermal_zone_device *tz,
- 			    const struct thermal_trip *trip);
-+void thermal_zone_set_trip_hyst(struct thermal_zone_device *tz,
-+				struct thermal_trip *trip, int hyst);
- 
- /* sysfs I/F */
- int thermal_zone_create_device_groups(struct thermal_zone_device *tz);
 diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
-index 11a34b9fe153d..2709455486776 100644
+index 2709455486776..d628dd67be5cc 100644
 --- a/drivers/thermal/thermal_sysfs.c
 +++ b/drivers/thermal/thermal_sysfs.c
-@@ -153,9 +153,9 @@ trip_point_hyst_store(struct device *dev, struct device_attribute *attr,
+@@ -111,18 +111,26 @@ trip_point_temp_store(struct device *dev, struct device_attribute *attr,
+ 
  	mutex_lock(&tz->lock);
  
- 	if (hyst != trip->hysteresis) {
--		WRITE_ONCE(trip->hysteresis, hyst);
-+		thermal_zone_set_trip_hyst(tz, trip, hyst);
+-	if (temp != trip->temperature) {
+-		if (tz->ops.set_trip_temp) {
+-			ret = tz->ops.set_trip_temp(tz, trip, temp);
+-			if (ret)
+-				goto unlock;
+-		}
++	if (temp == trip->temperature)
++		goto unlock;
  
--		thermal_zone_trip_updated(tz, trip);
-+		__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
+-		thermal_zone_set_trip_temp(tz, trip, temp);
++	/* Arrange the condition to avoid integer overflows. */
++	if (temp != THERMAL_TEMP_INVALID &&
++	    temp <= trip->hysteresis + THERMAL_TEMP_INVALID) {
++		ret = -EINVAL;
++		goto unlock;
++	}
+ 
+-		__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
++	if (tz->ops.set_trip_temp) {
++		ret = tz->ops.set_trip_temp(tz, trip, temp);
++		if (ret)
++			goto unlock;
  	}
  
++	thermal_zone_set_trip_temp(tz, trip, temp);
++
++	__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
++
+ unlock:
  	mutex_unlock(&tz->lock);
-diff --git a/drivers/thermal/thermal_trip.c b/drivers/thermal/thermal_trip.c
-index 06a0554ddc389..fa5ac9b512312 100644
---- a/drivers/thermal/thermal_trip.c
-+++ b/drivers/thermal/thermal_trip.c
-@@ -138,11 +138,11 @@ int thermal_zone_trip_id(const struct thermal_zone_device *tz,
- 	return trip_to_trip_desc(trip) - tz->trips;
+ 
+@@ -152,15 +160,33 @@ trip_point_hyst_store(struct device *dev, struct device_attribute *attr,
+ 
+ 	mutex_lock(&tz->lock);
+ 
+-	if (hyst != trip->hysteresis) {
+-		thermal_zone_set_trip_hyst(tz, trip, hyst);
++	if (hyst == trip->hysteresis)
++		goto unlock;
++
++	/*
++	 * Allow the hysteresis to be updated when the temperature is invalid
++	 * to allow user space to avoid having to adjust hysteresis after a
++	 * valid temperature has been set, but in that case just change the
++	 * value and do nothing else.
++	 */
++	if (trip->temperature == THERMAL_TEMP_INVALID) {
++		WRITE_ONCE(trip->hysteresis, hyst);
++		goto unlock;
++	}
+ 
+-		__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
++	if (trip->temperature - hyst <= THERMAL_TEMP_INVALID) {
++		ret = -EINVAL;
++		goto unlock;
+ 	}
+ 
++	thermal_zone_set_trip_hyst(tz, trip, hyst);
++
++	__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
++
++unlock:
+ 	mutex_unlock(&tz->lock);
+ 
+-	return count;
++	return ret ? ret : count;
  }
  
--void thermal_zone_trip_updated(struct thermal_zone_device *tz,
--			       const struct thermal_trip *trip)
-+void thermal_zone_set_trip_hyst(struct thermal_zone_device *tz,
-+				struct thermal_trip *trip, int hyst)
- {
-+	WRITE_ONCE(trip->hysteresis, hyst);
- 	thermal_notify_tz_trip_change(tz, trip);
--	__thermal_zone_device_update(tz, THERMAL_TRIP_CHANGED);
- }
- 
- void thermal_zone_set_trip_temp(struct thermal_zone_device *tz,
+ static ssize_t
 -- 
 2.43.0
 
