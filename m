@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24851D0412;
-	Wed,  2 Oct 2024 13:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832C51CDFBC;
+	Wed,  2 Oct 2024 13:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876304; cv=none; b=mnk7kjwlTXrG+5R5qyPrGu0CejzGm954ZqddP7Vq8+PIst4HMr5mpr1YGQhmVEmhnzLy2D0bkjOhFpCHqsTIKQTc2FPUJYFKKcrRKixqcHe8my4XhlGjn5RyPQ5HBhIrwkIObxAVKHXVxOmMCNTAS6MdmIQySb7qWz5Bjx4Kw18=
+	t=1727876307; cv=none; b=QQDeiwdMkDX14glRvZv0IKPOUJzqDdk2hUFX5uZ3q6N8u9A2KLxuvEURmBeo/sejZGayYplU8cBV5WR+Mn1yh4vaW2V+Z4MloFZ0m2i18CbBM1JcBymqr9xkb4lzuLVTx2k8ioM6669pij/V3bBbL26K87cb8P3oDk33VSfQLEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876304; c=relaxed/simple;
-	bh=hFmBU5IgRV10Ag+cq5EF83MeGsdOHJlHoBgBnjt4zn0=;
+	s=arc-20240116; t=1727876307; c=relaxed/simple;
+	bh=PMipS/i/n9y+1ug+lJlVHmeze163Rt5gpIBMKyBB2O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5ORtodRjE0uPNvIJKx6uTVGHCyssfVjm2XCaJmD/jCEpDy+ZFNPzZCt3dhddGZyk2c2JKUwmBYJooAaJDWmSsoaeelHSeb9mc5+2HmSGg/shfG2BgidWa+sOUcI4tgSPHvmrqqBhM3vl/cJJuW48oW1mj6SaH4779Lov2boo+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dblgZwn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E7JlFdQaLD3Co1UnedRC57um00bURCiTd3vg6ZR9OfCZO/70kyUoZR6Rbh6cuz9U3S0IisBIHcLqs6LO4HcU+nvj/oAAqi6nok0VdmLigr+uJvECf/eFj3unVA9dcLEFGSHdZSIfCFDiF1ErSKpFZmcKrAFkOUCxdQBa3Vyke0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eszR4/us; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dblgZwn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF41C4CEC5;
-	Wed,  2 Oct 2024 13:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eszR4/us"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C366C4CEC5;
+	Wed,  2 Oct 2024 13:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876304;
-	bh=hFmBU5IgRV10Ag+cq5EF83MeGsdOHJlHoBgBnjt4zn0=;
+	s=korg; t=1727876307;
+	bh=PMipS/i/n9y+1ug+lJlVHmeze163Rt5gpIBMKyBB2O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dblgZwn2VTm/MZIQF3qDNuMmVm6QVMnJwzTtzARzoUiZAnO6HeFzTQMvS/Z2Z7yEp
-	 MWINEnXoGfm1d1TPpZK23YSu39fMvd7oBEA0Cv4Mt5lR/VwGUznWK6ASS04vaiOlKX
-	 j7n0uQ7zDQA3it0LjcLwIQfZafYPLu4x83V3rU28=
+	b=eszR4/us12ITFKNlcR6C7IhfroSF4uUEcMhMjrA3+Dmx9zT6LkIBw7TRx3nCsWCIW
+	 w2vUCMvnygcrSGQ+VrtwtLh4ZFfA/7+FGg6vrkxA9vZYS3NLmSRTVYJdJzfbNh8sm6
+	 h1lIxm7o2nvL+yDCOvoEYc3kHOK7cuWLOCLi54mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 399/695] IB/mlx5: Fix UMR pd cleanup on error flow of driver init
-Date: Wed,  2 Oct 2024 14:56:37 +0200
-Message-ID: <20241002125838.385088764@linuxfoundation.org>
+Subject: [PATCH 6.11 400/695] IB/core: Fix ib_cache_setup_one error flow cleanup
+Date: Wed,  2 Oct 2024 14:56:38 +0200
+Message-ID: <20241002125838.424023785@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,94 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 112e6e83a894260cc7efe79a1fc47d4d51461742 ]
+[ Upstream commit 1403c8b14765eab805377dd3b75e96ace8747aed ]
 
-The cited commit moves the pd allocation from function
-mlx5r_umr_resource_cleanup() to a new function mlx5r_umr_cleanup().
-So the fix in commit [1] is broken. In error flow, will hit panic [2].
+When ib_cache_update return an error, we exit ib_cache_setup_one
+instantly with no proper cleanup, even though before this we had
+already successfully done gid_table_setup_one, that results in
+the kernel WARN below.
 
-Fix it by checking pd pointer to avoid panic if it is NULL;
+Do proper cleanup using gid_table_cleanup_one before returning
+the err in order to fix the issue.
 
-[1] RDMA/mlx5: Fix UMR cleanup on error flow of driver init
-[2]
- [  347.567063] infiniband mlx5_0: Couldn't register device with driver model
- [  347.591382] BUG: kernel NULL pointer dereference, address: 0000000000000020
- [  347.593438] #PF: supervisor read access in kernel mode
- [  347.595176] #PF: error_code(0x0000) - not-present page
- [  347.596962] PGD 0 P4D 0
- [  347.601361] RIP: 0010:ib_dealloc_pd_user+0x12/0xc0 [ib_core]
- [  347.604171] RSP: 0018:ffff888106293b10 EFLAGS: 00010282
- [  347.604834] RAX: 0000000000000000 RBX: 000000000000000e RCX: 0000000000000000
- [  347.605672] RDX: ffff888106293ad0 RSI: 0000000000000000 RDI: 0000000000000000
- [  347.606529] RBP: 0000000000000000 R08: ffff888106293ae0 R09: ffff888106293ae0
- [  347.607379] R10: 0000000000000a06 R11: 0000000000000000 R12: 0000000000000000
- [  347.608224] R13: ffffffffa0704dc0 R14: 0000000000000001 R15: 0000000000000001
- [  347.609067] FS:  00007fdc720cd9c0(0000) GS:ffff88852c880000(0000) knlGS:0000000000000000
- [  347.610094] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- [  347.610727] CR2: 0000000000000020 CR3: 0000000103012003 CR4: 0000000000370eb0
- [  347.611421] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- [  347.612113] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- [  347.612804] Call Trace:
- [  347.613130]  <TASK>
- [  347.613417]  ? __die+0x20/0x60
- [  347.613793]  ? page_fault_oops+0x150/0x3e0
- [  347.614243]  ? free_msg+0x68/0x80 [mlx5_core]
- [  347.614840]  ? cmd_exec+0x48f/0x11d0 [mlx5_core]
- [  347.615359]  ? exc_page_fault+0x74/0x130
- [  347.615808]  ? asm_exc_page_fault+0x22/0x30
- [  347.616273]  ? ib_dealloc_pd_user+0x12/0xc0 [ib_core]
- [  347.616801]  mlx5r_umr_cleanup+0x23/0x90 [mlx5_ib]
- [  347.617365]  mlx5_ib_stage_pre_ib_reg_umr_cleanup+0x36/0x40 [mlx5_ib]
- [  347.618025]  __mlx5_ib_add+0x96/0xd0 [mlx5_ib]
- [  347.618539]  mlx5r_probe+0xe9/0x310 [mlx5_ib]
- [  347.619032]  ? kernfs_add_one+0x107/0x150
- [  347.619478]  ? __mlx5_ib_add+0xd0/0xd0 [mlx5_ib]
- [  347.619984]  auxiliary_bus_probe+0x3e/0x90
- [  347.620448]  really_probe+0xc5/0x3a0
- [  347.620857]  __driver_probe_device+0x80/0x160
- [  347.621325]  driver_probe_device+0x1e/0x90
- [  347.621770]  __driver_attach+0xec/0x1c0
- [  347.622213]  ? __device_attach_driver+0x100/0x100
- [  347.622724]  bus_for_each_dev+0x71/0xc0
- [  347.623151]  bus_add_driver+0xed/0x240
- [  347.623570]  driver_register+0x58/0x100
- [  347.623998]  __auxiliary_driver_register+0x6a/0xc0
- [  347.624499]  ? driver_register+0xae/0x100
- [  347.624940]  ? 0xffffffffa0893000
- [  347.625329]  mlx5_ib_init+0x16a/0x1e0 [mlx5_ib]
- [  347.625845]  do_one_initcall+0x4a/0x2a0
- [  347.626273]  ? gcov_event+0x2e2/0x3a0
- [  347.626706]  do_init_module+0x8a/0x260
- [  347.627126]  init_module_from_file+0x8b/0xd0
- [  347.627596]  __x64_sys_finit_module+0x1ca/0x2f0
- [  347.628089]  do_syscall_64+0x4c/0x100
+WARNING: CPU: 4 PID: 922 at drivers/infiniband/core/cache.c:806 gid_table_release_one+0x181/0x1a0
+Modules linked in:
+CPU: 4 UID: 0 PID: 922 Comm: c_repro Not tainted 6.11.0-rc1+ #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:gid_table_release_one+0x181/0x1a0
+Code: 44 8b 38 75 0c e8 2f cb 34 ff 4d 8b b5 28 05 00 00 e8 23 cb 34 ff 44 89 f9 89 da 4c 89 f6 48 c7 c7 d0 58 14 83 e8 4f de 21 ff <0f> 0b 4c 8b 75 30 e9 54 ff ff ff 48 8    3 c4 10 5b 5d 41 5c 41 5d 41
+RSP: 0018:ffffc90002b835b0 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c8527
+RDX: 0000000000000000 RSI: ffffffff811c8534 RDI: 0000000000000001
+RBP: ffff8881011b3d00 R08: ffff88810b3abe00 R09: 205d303839303631
+R10: 666572207972746e R11: 72746e6520444947 R12: 0000000000000001
+R13: ffff888106390000 R14: ffff8881011f2110 R15: 0000000000000001
+FS:  00007fecc3b70800(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000340 CR3: 000000010435a001 CR4: 00000000003706b0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? show_regs+0x94/0xa0
+ ? __warn+0x9e/0x1c0
+ ? gid_table_release_one+0x181/0x1a0
+ ? report_bug+0x1f9/0x340
+ ? gid_table_release_one+0x181/0x1a0
+ ? handle_bug+0xa2/0x110
+ ? exc_invalid_op+0x31/0xa0
+ ? asm_exc_invalid_op+0x16/0x20
+ ? __warn_printk+0xc7/0x180
+ ? __warn_printk+0xd4/0x180
+ ? gid_table_release_one+0x181/0x1a0
+ ib_device_release+0x71/0xe0
+ ? __pfx_ib_device_release+0x10/0x10
+ device_release+0x44/0xd0
+ kobject_put+0x135/0x3d0
+ put_device+0x20/0x30
+ rxe_net_add+0x7d/0xa0
+ rxe_newlink+0xd7/0x190
+ nldev_newlink+0x1b0/0x2a0
+ ? __pfx_nldev_newlink+0x10/0x10
+ rdma_nl_rcv_msg+0x1ad/0x2e0
+ rdma_nl_rcv_skb.constprop.0+0x176/0x210
+ netlink_unicast+0x2de/0x400
+ netlink_sendmsg+0x306/0x660
+ __sock_sendmsg+0x110/0x120
+ ____sys_sendmsg+0x30e/0x390
+ ___sys_sendmsg+0x9b/0xf0
+ ? kstrtouint+0x6e/0xa0
+ ? kstrtouint_from_user+0x7c/0xb0
+ ? get_pid_task+0xb0/0xd0
+ ? proc_fail_nth_write+0x5b/0x140
+ ? __fget_light+0x9a/0x200
+ ? preempt_count_add+0x47/0xa0
+ __sys_sendmsg+0x61/0xd0
+ do_syscall_64+0x50/0x110
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 638420115cc4 ("IB/mlx5: Create UMR QP just before first reg_mr occurs")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Link: https://patch.msgid.link/778c40c60287992da5d6ec92bb07b67f7bb5e6ef.1725273295.git.leon@kernel.org
+Fixes: 1901b91f9982 ("IB/core: Fix potential NULL pointer dereference in pkey cache")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/79137687d829899b0b1c9835fcb4b258004c439a.1725273354.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/umr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/cache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
-index ffc31b01f6905..8823ecc84e60e 100644
---- a/drivers/infiniband/hw/mlx5/umr.c
-+++ b/drivers/infiniband/hw/mlx5/umr.c
-@@ -224,6 +224,9 @@ int mlx5r_umr_init(struct mlx5_ib_dev *dev)
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 6791df64a5fe0..b7c078b7f7cfd 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -1640,8 +1640,10 @@ int ib_cache_setup_one(struct ib_device *device)
  
- void mlx5r_umr_cleanup(struct mlx5_ib_dev *dev)
- {
-+	if (!dev->umrc.pd)
-+		return;
-+
- 	mutex_destroy(&dev->umrc.init_lock);
- 	ib_dealloc_pd(dev->umrc.pd);
- }
+ 	rdma_for_each_port (device, p) {
+ 		err = ib_cache_update(device, p, true, true, true);
+-		if (err)
++		if (err) {
++			gid_table_cleanup_one(device);
+ 			return err;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
