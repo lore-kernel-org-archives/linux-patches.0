@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98B11D042F;
-	Wed,  2 Oct 2024 13:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48511D07B7;
+	Wed,  2 Oct 2024 13:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876498; cv=none; b=GFuKUcvWMWi8kICqhg9+rpmqvWPhkN8+yR5+YccPjU7AEkR7lUhEPKUmOVWaBmiMiqaq9MtvvtVTd2+OKwJXpjzmXlA4HtieRIXaE1H4T7B/P0TVLtGCHqcp0QMg4ZfFevIwKRMRkWdG5ULb6S8nlu3s/KRfgLrUyC0Se/Y8wac=
+	t=1727876501; cv=none; b=jJzz8CYyqG3boWoyteWgnr0+sCfIt4kojq05PjbbPemwqiRMcHyHKJOCrnt7hd7hXKnQ2fvDnKB6Z10TlqkuIGOiOF63PSnDmUOq29cT/ndNmEgsZinDzSj/6KCRMtWvqHWDi+z3r2ocjJ5dKG2nOStthi1p6Q3lIcT1B7JIUbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876498; c=relaxed/simple;
-	bh=JNiZL+ti5tbMKc4v0qHTO9mEmwX14eKV4lSaGLm74pk=;
+	s=arc-20240116; t=1727876501; c=relaxed/simple;
+	bh=XLqQb+VDihZjcR5EPkndDn7kRvn8hxzREgAAUq+XrQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KppI0wOxlnNT5h1MmDP2SZ1UfFj54hFatoUlMI89oPNFAOXRYKdLuX9bawpmZPJ1rEwyQzJft83pc9HktZnIFm7A/s9B3O8MZmLBvux/LcERN738TD4lHQaInITnfJHcXxTjHgLPHU5rehs/xxPCK2rgKcAO+GCbIQxwhyOSiuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kxo9YXso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Um8Csg4P/p92/9V9D9h2qf+la4XHuac07RTIQw5+pEngUeh7dH69fEzc28SASTqxtHGy6A+0vUhFZ5waYI/ir8j5lJ8C+sJtarqUano6wmjDoZZFT/ABjToiyG1iBH5DjDe8EK6ewZZkosqd4spkPXIjCepmmvxlZzFkjRjrS48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIYFHxQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kxo9YXso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B34C4CECD;
-	Wed,  2 Oct 2024 13:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIYFHxQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB50C4CEC5;
+	Wed,  2 Oct 2024 13:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876497;
-	bh=JNiZL+ti5tbMKc4v0qHTO9mEmwX14eKV4lSaGLm74pk=;
+	s=korg; t=1727876500;
+	bh=XLqQb+VDihZjcR5EPkndDn7kRvn8hxzREgAAUq+XrQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kxo9YXsoSZrrEqijgbFGmF7R9dj5OjCOQIIDdQaDRN915ml0F3Qrg1VOdnhAlOcMI
-	 AFDxoyvHm++FOoGmrl9AmvgW3w6jJBIDtESJMKoAkttqMAuFccDGSvYu9ks9GjtOGy
-	 rh+3S7jfbYQMR9Y/YXDgERA406uh9nVf9nEgS1OY=
+	b=uIYFHxQCOM1ivMIC+KT3LbUrb8zb2F83o5cqDhVB/lKuzd12nTiREZ77sj0fWeb4B
+	 z9/HUdoZCXVMjfFu6wmp1wgtZ6zj7JpWcXipiV+pftZ2Se68DC6sNVPWZRlDoWb71H
+	 85O6KVCrn8rARGH8Xwb7Y53Gw7fpI1XWNjrce+zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 465/695] coresight: tmc: sg: Do not leak sg_table
-Date: Wed,  2 Oct 2024 14:57:43 +0200
-Message-ID: <20241002125841.019682735@linuxfoundation.org>
+Subject: [PATCH 6.11 466/695] interconnect: icc-clk: Add missed num_nodes initialization
+Date: Wed,  2 Oct 2024 14:57:44 +0200
+Message-ID: <20241002125841.058601645@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,71 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit c58dc5a1f886f2fcc1133746d0cbaa1fe7fd44ff ]
+[ Upstream commit c801ed86840ec38b2a9bcafeee3d7c9e14c743f3 ]
 
-Running perf with cs_etm on Juno triggers the following kmemleak warning !
+With the new __counted_by annotation, the "num_nodes" struct member must
+be set before accessing the "nodes" array. This initialization was done
+in other places where a new struct icc_onecell_data is allocated, but this
+case in icc_clk_register() was missed. Set "num_nodes" after allocation.
 
-:~# cat /sys/kernel/debug/kmemleak
- unreferenced object 0xffffff8806b6d720 (size 96):
- comm "perf", pid 562, jiffies 4297810960
- hex dump (first 32 bytes):
- 38 d8 13 07 88 ff ff ff 00 d0 9e 85 c0 ff ff ff  8...............
- 00 10 00 88 c0 ff ff ff 00 f0 ff f7 ff 00 00 00  ................
- backtrace (crc 1dbf6e00):
- [<ffffffc08107381c>] kmemleak_alloc+0xbc/0xd8
- [<ffffffc0802f9798>] kmalloc_trace_noprof+0x220/0x2e8
- [<ffffffc07bb71948>] tmc_alloc_sg_table+0x48/0x208 [coresight_tmc]
- [<ffffffc07bb71cbc>] tmc_etr_alloc_sg_buf+0xac/0x240 [coresight_tmc]
- [<ffffffc07bb72538>] tmc_alloc_etr_buf.constprop.0+0x1f0/0x260 [coresight_tmc]
- [<ffffffc07bb7280c>] alloc_etr_buf.constprop.0.isra.0+0x74/0xa8 [coresight_tmc]
- [<ffffffc07bb72950>] tmc_alloc_etr_buffer+0x110/0x260 [coresight_tmc]
- [<ffffffc07bb38afc>] etm_setup_aux+0x204/0x3b0 [coresight]
- [<ffffffc08025837c>] rb_alloc_aux+0x20c/0x318
- [<ffffffc08024dd84>] perf_mmap+0x2e4/0x7a0
- [<ffffffc0802cceb0>] mmap_region+0x3b0/0xa08
- [<ffffffc0802cd8a8>] do_mmap+0x3a0/0x500
- [<ffffffc080295328>] vm_mmap_pgoff+0x100/0x1d0
- [<ffffffc0802cadf8>] ksys_mmap_pgoff+0xb8/0x110
- [<ffffffc080020688>] __arm64_sys_mmap+0x38/0x58
- [<ffffffc080028fc0>] invoke_syscall.constprop.0+0x58/0x100
-
-This due to the fact that we do not free the "sg_table" itself while
-freeing up  the SG table and data pages. Fix this by freeing the sg_table
-in tmc_free_sg_table().
-
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20240702132846.1677261-1-suzuki.poulose@arm.com
+Fixes: dd4904f3b924 ("interconnect: qcom: Annotate struct icc_onecell_data with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20240716214819.work.328-kees@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/icc-clk.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index e75428fa1592a..610ad51cda656 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -261,6 +261,7 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
- {
- 	tmc_free_table_pages(sg_table);
- 	tmc_free_data_pages(sg_table);
-+	kfree(sg_table);
- }
- EXPORT_SYMBOL_GPL(tmc_free_sg_table);
+diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+index f788db15cd76a..b956e4050f381 100644
+--- a/drivers/interconnect/icc-clk.c
++++ b/drivers/interconnect/icc-clk.c
+@@ -87,6 +87,7 @@ struct icc_provider *icc_clk_register(struct device *dev,
+ 	onecell = devm_kzalloc(dev, struct_size(onecell, nodes, 2 * num_clocks), GFP_KERNEL);
+ 	if (!onecell)
+ 		return ERR_PTR(-ENOMEM);
++	onecell->num_nodes = 2 * num_clocks;
  
-@@ -342,7 +343,6 @@ struct tmc_sg_table *tmc_alloc_sg_table(struct device *dev,
- 		rc = tmc_alloc_table_pages(sg_table);
- 	if (rc) {
- 		tmc_free_sg_table(sg_table);
--		kfree(sg_table);
- 		return ERR_PTR(rc);
+ 	qp = devm_kzalloc(dev, struct_size(qp, clocks, num_clocks), GFP_KERNEL);
+ 	if (!qp)
+@@ -133,8 +134,6 @@ struct icc_provider *icc_clk_register(struct device *dev,
+ 		onecell->nodes[j++] = node;
  	}
  
+-	onecell->num_nodes = j;
+-
+ 	ret = icc_provider_register(provider);
+ 	if (ret)
+ 		goto err;
 -- 
 2.43.0
 
