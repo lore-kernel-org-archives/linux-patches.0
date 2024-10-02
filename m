@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074EF1D0F69;
-	Wed,  2 Oct 2024 14:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007A01D0F76;
+	Wed,  2 Oct 2024 14:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878320; cv=none; b=B/N6aeZjF7fzV0a7e1ArSMVIDjv/6F7YF5qubdrnHvalibAzokfW6GL6YL7RBhsZqvkDMIlOe6wR/GhFijz1H7BszOtvMI0JoiG5cvdwem76Xe8B8F+25cUZ1rvESelXuYrm3uFz7CW2AmGL5B2RjGq2I0dfpodLNryuCAPFttM=
+	t=1727878323; cv=none; b=AZRTU51mlqz7KfWPqqw26qhpYx/pzB7tB4jq3q3rYwaQTOrKGVsVpUfo0RVOE/dKSFeZJMjyx4QQo0ubHtQl7KLebUhyCgi02HZQC9vU3UjeZ6gP+0+9344LKWamI5mjeX2ZRothzAtjVrx07sWHc8bWBKVGSeZIwnn6Q+H2cAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878320; c=relaxed/simple;
-	bh=mOoBD6NWXVNY6zPjQU6q0ZnTjb7RLqNPGtT+SFoW7Gk=;
+	s=arc-20240116; t=1727878323; c=relaxed/simple;
+	bh=iwSGbPbwdvqMfOyBYyPD22M9udA4wYFY7+E8kC/Hduw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhiZfXP4BIm219Y8V0Ik0aVc5ZdV8jozltJTfRcAltASJ+8gQH22e44UETR/BIlvFHtPw/HFs22yVT1bcQX2rrTV0B8WMJrZVr8PjtyoRHiGEFs9h8wenPjTCqBrIuQ4qNdkQBUDiZGTN81crqn/OGhLk1HDw1YbxoAFawKoJHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuzIE+ld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LZRzfFq7bN3VoJW88dfOActSc0honoKlt/HSwEQGO4sisTQxwdcCCpk/fFTElZxJe6r9DrJiVXypo7nPBk4VxAxvQRITfbCEUisXRQi/4s2PH/TXG0U7cOJWihmfsIJuIMsfCgggnR2/ItmMnbTLmU8qPNiae9RazH3xY3o5eco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHTGSu2G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuzIE+ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DDAC4CEC2;
-	Wed,  2 Oct 2024 14:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHTGSu2G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7447DC4CEC2;
+	Wed,  2 Oct 2024 14:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878319;
-	bh=mOoBD6NWXVNY6zPjQU6q0ZnTjb7RLqNPGtT+SFoW7Gk=;
+	s=korg; t=1727878322;
+	bh=iwSGbPbwdvqMfOyBYyPD22M9udA4wYFY7+E8kC/Hduw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuzIE+ld5xfzn6Ekc5ROWa6jqOfE8GZZTjBBpe72OLlS9II7MgrGd+bU8BErbqe5d
-	 5byW8mouR1+1eBYETckvIOdOTxg9mUca8Fe73LwBYYffhKuumLQNPnZxjVyxdCoERX
-	 GNc/sfI0odxq+oEIFTWlT2BYV7lX+vPy1mCN/yQI=
+	b=oHTGSu2GycMMQdiJUcJIC2tMpI7ECKCtbsJkPYgK1La/agjfbrt67ZOhy/mgWNkCr
+	 yhhNrP7JtShMkvCEidrz4BmTWB90M2I78u/keV6I41toDgvo1Ye6O9nbQO06y4Mw23
+	 EKkUH9v+yS3GB9icN3s0ADvJVv7wfOnu+ZE1EB10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 342/634] x86/PCI: Check pcie_find_root_port() return for NULL
-Date: Wed,  2 Oct 2024 14:57:22 +0200
-Message-ID: <20241002125824.600624462@linuxfoundation.org>
+Subject: [PATCH 6.10 343/634] nvdimm: Fix devs leaks in scan_labels()
+Date: Wed,  2 Oct 2024 14:57:23 +0200
+Message-ID: <20241002125824.639356355@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,49 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit dbc3171194403d0d40e4bdeae666f6e76e428b53 ]
+[ Upstream commit 62c2aa6b1f565d2fc1ec11a6e9e8336ce37a6426 ]
 
-If pcie_find_root_port() is unable to locate a Root Port, it will return
-NULL. Check the pointer for NULL before dereferencing it.
+scan_labels() leaks memory when label scanning fails and it falls back
+to just creating a default "seed" namespace for userspace to configure.
+Root can force the kernel to leak memory.
 
-This particular case is in a quirk for devices that are always below a Root
-Port, so this won't avoid a problem and doesn't need to be backported, but
-check as a matter of style and to prevent copy/paste mistakes.
+Allocate the minimum resources unconditionally and release them when
+unneeded to avoid the memory leak.
 
-Link: https://lore.kernel.org/r/20240812202659.1649121-1-samasth.norway.ananda@oracle.com
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-[bhelgaas: drop Fixes: and explain why there's no problem in this case]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+A kmemleak reports:
+unreferenced object 0xffff88800dda1980 (size 16):
+  comm "kworker/u10:5", pid 69, jiffies 4294671781
+  hex dump (first 16 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    [<00000000c5dea560>] __kmalloc+0x32c/0x470
+    [<000000009ed43c83>] nd_region_register_namespaces+0x6fb/0x1120 [libnvdimm]
+    [<000000000e07a65c>] nd_region_probe+0xfe/0x210 [libnvdimm]
+    [<000000007b79ce5f>] nvdimm_bus_probe+0x7a/0x1e0 [libnvdimm]
+    [<00000000a5f3da2e>] really_probe+0xc6/0x390
+    [<00000000129e2a69>] __driver_probe_device+0x78/0x150
+    [<000000002dfed28b>] driver_probe_device+0x1e/0x90
+    [<00000000e7048de2>] __device_attach_driver+0x85/0x110
+    [<0000000032dca295>] bus_for_each_drv+0x85/0xe0
+    [<00000000391c5a7d>] __device_attach+0xbe/0x1e0
+    [<0000000026dabec0>] bus_probe_device+0x94/0xb0
+    [<00000000c590d936>] device_add+0x656/0x870
+    [<000000003d69bfaa>] nd_async_device_register+0xe/0x50 [libnvdimm]
+    [<000000003f4c52a4>] async_run_entry_fn+0x2e/0x110
+    [<00000000e201f4b0>] process_one_work+0x1ee/0x600
+    [<000000006d90d5a9>] worker_thread+0x183/0x350
+
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Fixes: 1b40e09a1232 ("libnvdimm: blk labels and namespace instantiation")
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20240819062045.1481298-1-lizhijian@fujitsu.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvdimm/namespace_devs.c | 34 ++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
-index b33afb240601b..98a9bb92d75c8 100644
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -980,7 +980,7 @@ static void amd_rp_pme_suspend(struct pci_dev *dev)
- 		return;
+diff --git a/drivers/nvdimm/namespace_devs.c b/drivers/nvdimm/namespace_devs.c
+index d6d558f94d6bb..35d9f3cc2efab 100644
+--- a/drivers/nvdimm/namespace_devs.c
++++ b/drivers/nvdimm/namespace_devs.c
+@@ -1937,12 +1937,16 @@ static int cmp_dpa(const void *a, const void *b)
+ static struct device **scan_labels(struct nd_region *nd_region)
+ {
+ 	int i, count = 0;
+-	struct device *dev, **devs = NULL;
++	struct device *dev, **devs;
+ 	struct nd_label_ent *label_ent, *e;
+ 	struct nd_mapping *nd_mapping = &nd_region->mapping[0];
+ 	struct nvdimm_drvdata *ndd = to_ndd(nd_mapping);
+ 	resource_size_t map_end = nd_mapping->start + nd_mapping->size - 1;
  
- 	rp = pcie_find_root_port(dev);
--	if (!rp->pm_cap)
-+	if (!rp || !rp->pm_cap)
- 		return;
++	devs = kcalloc(2, sizeof(dev), GFP_KERNEL);
++	if (!devs)
++		return NULL;
++
+ 	/* "safe" because create_namespace_pmem() might list_move() label_ent */
+ 	list_for_each_entry_safe(label_ent, e, &nd_mapping->labels, list) {
+ 		struct nd_namespace_label *nd_label = label_ent->label;
+@@ -1961,12 +1965,14 @@ static struct device **scan_labels(struct nd_region *nd_region)
+ 			goto err;
+ 		if (i < count)
+ 			continue;
+-		__devs = kcalloc(count + 2, sizeof(dev), GFP_KERNEL);
+-		if (!__devs)
+-			goto err;
+-		memcpy(__devs, devs, sizeof(dev) * count);
+-		kfree(devs);
+-		devs = __devs;
++		if (count) {
++			__devs = kcalloc(count + 2, sizeof(dev), GFP_KERNEL);
++			if (!__devs)
++				goto err;
++			memcpy(__devs, devs, sizeof(dev) * count);
++			kfree(devs);
++			devs = __devs;
++		}
  
- 	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
-@@ -994,7 +994,7 @@ static void amd_rp_pme_resume(struct pci_dev *dev)
- 	u16 pmc;
+ 		dev = create_namespace_pmem(nd_region, nd_mapping, nd_label);
+ 		if (IS_ERR(dev)) {
+@@ -1993,11 +1999,6 @@ static struct device **scan_labels(struct nd_region *nd_region)
  
- 	rp = pcie_find_root_port(dev);
--	if (!rp->pm_cap)
-+	if (!rp || !rp->pm_cap)
- 		return;
+ 		/* Publish a zero-sized namespace for userspace to configure. */
+ 		nd_mapping_free_labels(nd_mapping);
+-
+-		devs = kcalloc(2, sizeof(dev), GFP_KERNEL);
+-		if (!devs)
+-			goto err;
+-
+ 		nspm = kzalloc(sizeof(*nspm), GFP_KERNEL);
+ 		if (!nspm)
+ 			goto err;
+@@ -2036,11 +2037,10 @@ static struct device **scan_labels(struct nd_region *nd_region)
+ 	return devs;
  
- 	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
+  err:
+-	if (devs) {
+-		for (i = 0; devs[i]; i++)
+-			namespace_pmem_release(devs[i]);
+-		kfree(devs);
+-	}
++	for (i = 0; devs[i]; i++)
++		namespace_pmem_release(devs[i]);
++	kfree(devs);
++
+ 	return NULL;
+ }
+ 
 -- 
 2.43.0
 
