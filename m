@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317192BAF9;
-	Wed,  2 Oct 2024 13:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F171CFEB3;
+	Wed,  2 Oct 2024 13:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876779; cv=none; b=UwxGINTFqTonVDWW1+zxfu4CzAxqbiV04BKhTwdyKhRdaqJJFQ/HA35Kq4UrQEuEegzZQPlbjCe8gwB6GSMgw7SCX7mgtFik2+t4kocm5pAFvjcFhqG0NB9RHiGM5Biou4Lg+2cajzDc6MkN31F16IhCWmIsw2bDSI3x3KMAs+w=
+	t=1727876782; cv=none; b=OT8yEoUNYEt4E3BKr2ZOzCNJ5aZEj851ewZw9Ps++uXHxZ609t4jj9A4VGX/X9tuybNTYyvxkmOw8RR4j+/CXKg7CcJK6+LbVItcRQFYQcin1JW0fWFFIqItdOGxFT9KoZ8nNSzUdRE/H+TtjGcl9AK4zVtDk3N7PVmt9sNyqWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876779; c=relaxed/simple;
-	bh=ZuEvHSLEJYz26slqm6bDJmnR/gT2OJEKlHEjIpba8Bo=;
+	s=arc-20240116; t=1727876782; c=relaxed/simple;
+	bh=DQNPnmzzriAWRbAFauxLlvupCDVxRWc+zi8Jn6/+hs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THZosFnlXvgXZcbWFBnzjkBiOy/QFc4WtblHdfpnuRrnReUSHSJ1U8jPXlStl3TYCosVWFlD2/PJindZ2xJOmnz20tzSxEoWf7iWHKob4zPbziQolnIgBOpoXrVu+rK5viFfhxQp6fATFU5nigOIzJHD68Z2zZMbxcjK97cf/v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrSHY7Le; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2lVHeXhpbIBYGY2cuybBS8UcHQHSHA3byVL4f5bZWKnPUc50MDGma/JgN01XPUaePj4RWyTHHfXbriPbmNobZwe/QY7H38T7dRqKidb9C+7MebFxEud8lbg9KUT79b11mj7w3TznJPWVwoVw0WZ82PjgdNnQx2eTxspbCwKR1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRxceme2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrSHY7Le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC45C4CEC2;
-	Wed,  2 Oct 2024 13:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRxceme2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00A3C4CEC2;
+	Wed,  2 Oct 2024 13:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876779;
-	bh=ZuEvHSLEJYz26slqm6bDJmnR/gT2OJEKlHEjIpba8Bo=;
+	s=korg; t=1727876782;
+	bh=DQNPnmzzriAWRbAFauxLlvupCDVxRWc+zi8Jn6/+hs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrSHY7LezpNgXqNBStwTQWhWyEp1M5HflLBKq+JZY35mQNwGc94p2SZD+Wmm+4bX7
-	 vcDVupAwdHaQxT8Z1a+UxvKtN9SZYCtkOB9OSYX0WrBZ1Vmwoe3bHJlfopELaViF2H
-	 EsSO97xAipee8sScVAnkSs6nYUYvG++Up6KzaZIk=
+	b=dRxceme2ePOSUtSH3NDbrxT9y1fFGguxf2EiGQs/jT/MyYLm+h5+uG+cwYeQxYMrq
+	 6UKXMD/4fAzRk4RFBQMt0MyOqNcxvpXYq1+11ouXvDUBpFYwmzms525sGStEAzDlV0
+	 ouzlCnSrPT4VbbKcyX5tCbei9Suxfosha6qGcYI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Roman Smirnov <r.smirnov@omp.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.11 527/695] Revert "media: tuners: fix error return code of hybrid_tuner_request_state()"
-Date: Wed,  2 Oct 2024 14:58:45 +0200
-Message-ID: <20241002125843.532058100@linuxfoundation.org>
+	Eliav Bar-ilan <eliavb@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.11 528/695] iommu/amd: Fix argument order in amd_iommu_dev_flush_pasid_all()
+Date: Wed,  2 Oct 2024 14:58:46 +0200
+Message-ID: <20241002125843.572665959@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,39 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Eliav Bar-ilan <eliavb@nvidia.com>
 
-commit e25cc4be4616fcf5689622b3226d648aab253cdb upstream.
+commit 8386207f37e98453e1de3f51e50eeeea089103f9 upstream.
 
-This reverts commit b9302fa7ed979e84b454e4ca92192cf485a4ed41.
+An incorrect argument order calling amd_iommu_dev_flush_pasid_pages()
+causes improper flushing of the IOMMU, leaving the old value of GCR3 from
+a previous process attached to the same PASID.
 
-As Fedor Pchelkin pointed out, this commit violates the
-convention of using the macro return value, which causes errors.
-For example, in functions tda18271_attach(), xc5000_attach(),
-simple_tuner_attach().
+The function has the signature:
 
-Link: https://lore.kernel.org/linux-media/20240424202031.syigrtrtipbq5f2l@fpc/
-Suggested-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
+				     ioasid_t pasid, u64 address, size_t size)
+
+Correct the argument order.
+
+Cc: stable@vger.kernel.org
+Fixes: 474bf01ed9f0 ("iommu/amd: Add support for device based TLB invalidation")
+Signed-off-by: Eliav Bar-ilan <eliavb@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/0-v1-fc6bc37d8208+250b-amd_pasid_flush_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/tuners/tuner-i2c.h |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/iommu/amd/iommu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/tuners/tuner-i2c.h
-+++ b/drivers/media/tuners/tuner-i2c.h
-@@ -133,10 +133,8 @@ static inline int tuner_i2c_xfer_send_re
- 	}								\
- 	if (0 == __ret) {						\
- 		state = kzalloc(sizeof(type), GFP_KERNEL);		\
--		if (!state) {						\
--			__ret = -ENOMEM;				\
-+		if (NULL == state)					\
- 			goto __fail;					\
--		}							\
- 		state->i2c_props.addr = i2caddr;			\
- 		state->i2c_props.adap = i2cadap;			\
- 		state->i2c_props.name = devname;			\
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1550,8 +1550,8 @@ void amd_iommu_dev_flush_pasid_pages(str
+ void amd_iommu_dev_flush_pasid_all(struct iommu_dev_data *dev_data,
+ 				   ioasid_t pasid)
+ {
+-	amd_iommu_dev_flush_pasid_pages(dev_data, 0,
+-					CMD_INV_IOMMU_ALL_PAGES_ADDRESS, pasid);
++	amd_iommu_dev_flush_pasid_pages(dev_data, pasid, 0,
++					CMD_INV_IOMMU_ALL_PAGES_ADDRESS);
+ }
+ 
+ void amd_iommu_domain_flush_complete(struct protection_domain *domain)
 
 
