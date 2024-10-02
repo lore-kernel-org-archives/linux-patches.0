@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087911D0164;
-	Wed,  2 Oct 2024 13:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7491D0799;
+	Wed,  2 Oct 2024 13:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876328; cv=none; b=bWQWJwDN3bMOuNUjFuMRyUA5+E5FY0IIMOdEtcsmmC5EKyJ8slnvHYIVIZ2+N/fqm4u+LO2JBFFrucqiK+lx4T2bZjveMhvnV5ggHUQ9B3KZgKVeEmwJ473YFwfsLMJqvvbz/nBFa+jUe8CBNk62cIPtGuIWSqbpjAtj9BnWeiQ=
+	t=1727876331; cv=none; b=g8qbnvturgtWuqkHyyvm5Ikt5q2wwOdHGYH2vee2MsOGMC7tSZlf9YY6QudZpsFta+Qa7vXOLNqYKWskTKjEKEOUa+gubjP3WSDUcMTUOHzS8MOkFPIgvWrd95k57SQ4zm8w3cNet5XQCGn84Rq28laaq+l6rlig+Zni5v5NmnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876328; c=relaxed/simple;
-	bh=Fh9RsQerJk2U5kOOHe1ecxsVkkGz1o1M048vKfwTiDY=;
+	s=arc-20240116; t=1727876331; c=relaxed/simple;
+	bh=xeyIzIsIqcvdtfqLz5BNDWh4ca8RjEMGn3t/12FTwuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJMP1qqk9tUvJDJDTznDM1IZg5T9q46+grB5Tv35QJqKcxLEEd3lsQdV2hkPsGX91FW+D74pYEsdhXX/7EZvoaIGC5seyvMGbXhHRkOjt4dx51cQELWyyO1TqrkmIPe5gTPPqXHkZsEuWhAfp072Pmp6e9fh2Aei4OGJiO6kbi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfHOxhmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tB9UC3aX1p9UpLj95b6q09yIG8BMw1+XVAG/NYyh0ESclgOZopWeeOqqurzL1lLDtbQz1cj0qK4mfj6VX8TkDVCzvA2nsBJ25bM7MlpF/5ZMIpcQ6x/7ALyLBna+izMhnp71+ARUY8F0YkoJoDE7FN0crEVdzjHq/NEjS4yl/1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g39w95E3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfHOxhmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E47C4CEC5;
-	Wed,  2 Oct 2024 13:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g39w95E3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627CDC4CEC5;
+	Wed,  2 Oct 2024 13:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876327;
-	bh=Fh9RsQerJk2U5kOOHe1ecxsVkkGz1o1M048vKfwTiDY=;
+	s=korg; t=1727876330;
+	bh=xeyIzIsIqcvdtfqLz5BNDWh4ca8RjEMGn3t/12FTwuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfHOxhmzD7AKIxhSzWBwjLHuS6rQVOxPAIJUkFxHWsuwU9yHXxQt7SqqBjDhntd0Q
-	 baA0831qxw1JQgroPYmVa8USIJV4boTFbVmB3Vp1OByjTtxV7aEIFopnu646MRWYQu
-	 DlihHYpB69wdvFBwR4HruifxKhRn6oaZoduQjEVw=
+	b=g39w95E3gmSF3dx6Q0b/PK6OBDnHq1Bi/iFdmiUlZbsc2XqDyIOnmOLFCoRR7jJa1
+	 VqzaJ9oVRZtRSdEEN4rS0JFiE/jfV24SmbcoEFfzp1OM6Zfu7QNtXHqiQJqnFidQAB
+	 oNmuaxvwNEMt+IeWwVdpdtyQ4ma/fPbv+xuP3DZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 389/695] media: mediatek: vcodec: Fix H264 stateless decoder smatch warning
-Date: Wed,  2 Oct 2024 14:56:27 +0200
-Message-ID: <20241002125837.982551376@linuxfoundation.org>
+Subject: [PATCH 6.11 407/695] RDMA/mlx5: Drop redundant work canceling from clean_keys()
+Date: Wed,  2 Oct 2024 14:56:45 +0200
+Message-ID: <20241002125838.700091447@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 7878d3a385efab560dce793b595447867fb163f2 ]
+[ Upstream commit 30e6bd8d3b5639f8f4261e5e6c0917ce264b8dc2 ]
 
-Fix a smatch static checker warning on vdec_h264_req_if.c.
-Which leads to a kernel crash when fb is NULL.
+The canceling of dealyed work in clean_keys() is a leftover from years
+back and was added to prevent races in the cleanup process of MR cache.
+The cleanup process was rewritten a few years ago and the canceling of
+delayed work and flushing of workqueue was added before the call to
+clean_keys().
 
-Fixes: 06fa5f757dc5 ("media: mtk-vcodec: vdec: support stateless H.264 decoding")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/943d21f5a9dba7b98a3e1d531e3561ffe9745d71.1725362530.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 7ebb00cea49d ("RDMA/mlx5: Fix MR cache temp entries cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/decoder/vdec/vdec_h264_req_if.c      | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/mr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_if.c
-index 73d5cef33b2ab..1e1b32faac77b 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_if.c
-@@ -347,11 +347,16 @@ static int vdec_h264_slice_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 		return vpu_dec_reset(vpu);
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index ffe1b95ca6853..19f5e5957e180 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -779,7 +779,6 @@ static void clean_keys(struct mlx5_ib_dev *dev, struct mlx5_cache_ent *ent)
+ {
+ 	u32 mkey;
  
- 	fb = inst->ctx->dev->vdec_pdata->get_cap_buffer(inst->ctx);
-+	if (!fb) {
-+		mtk_vdec_err(inst->ctx, "fb buffer is NULL");
-+		return -ENOMEM;
-+	}
-+
- 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
- 	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
- 
--	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
--	c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
-+	y_fb_dma = fb->base_y.dma_addr;
-+	c_fb_dma = fb->base_c.dma_addr;
- 
- 	mtk_vdec_debug(inst->ctx, "+ [%d] FB y_dma=%llx c_dma=%llx va=%p",
- 		       inst->num_nalu, y_fb_dma, c_fb_dma, fb);
+-	cancel_delayed_work(&ent->dwork);
+ 	spin_lock_irq(&ent->mkeys_queue.lock);
+ 	while (ent->mkeys_queue.ci) {
+ 		mkey = pop_mkey_locked(ent);
 -- 
 2.43.0
 
