@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866EA1D0493;
-	Wed,  2 Oct 2024 14:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524D71CFECF;
+	Wed,  2 Oct 2024 14:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878690; cv=none; b=sL8kpDRyfrgVxI0P1Ciwj5NJJbwvvCS//fMNTS4RQqiH7pXR+XRJlr468SbJ7P1i/AsKTLgJMbNJ3UPLeE8yM/wr6g3zTPQUUVxWpOHKk1MplPiD1bQz3BylPUlJybrN3AJdDIl3Hbq25pohMHdf/RIAOGa9J9r3Oh0CCvJj65c=
+	t=1727878693; cv=none; b=qXlta5Ke5CaoiNmDmX+ABan+CZTL7BE2thBRuh9+V7oSzt7mugfXpTCoLhZGUn9TWP1hBuzyL7qLlxXtfCE6nZNQ4qPidPy9KJXJwtdssfypSzKjbleefTHxz9Ec+70EcktppKA2CRNoP0sw6DQ9Xgnz0KJ4h3idZ1ZtDbewFaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878690; c=relaxed/simple;
-	bh=iHcVNEl5rwKFjaglsoFa1wRMpJjopD/w2u3baj4U0zw=;
+	s=arc-20240116; t=1727878693; c=relaxed/simple;
+	bh=d/Ds/9G2IDsa/TOSl+x5T3RDetVWdIKPMV8GN0ONMj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5Le3ZX1yPNPiV77ZxtwvZA9M22vrNCFhxVC04kM0cKdV7yNF8tksj3tycLcjvWlC0OseFggLwGh5jevZLAQGGlATe4MC5tKi/qPedSIWLlx9cJi+LoarserNtj41uAY4wCcA4wczCKRnRK5wiCucUWx7MxA3zWV1W9L1N8mUCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBBTEv70; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QP1gztnmyQWz0PntfY9cj41FSzSPPl951xsAVnxEEIngpgQQUzo65ncwHLVL7ZxHAL/ztWpldij6BorXHBO8TaxmpXLBXDjB+mBR6KodG+o+06jj9q1DrO/tZ1M+31xatOla35YIJF8EwYfklcKtvtTHEP43W3/Y3ASQBILriCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcUCKsWc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBBTEv70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000DEC4CEC2;
-	Wed,  2 Oct 2024 14:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcUCKsWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB56C4CEC2;
+	Wed,  2 Oct 2024 14:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878690;
-	bh=iHcVNEl5rwKFjaglsoFa1wRMpJjopD/w2u3baj4U0zw=;
+	s=korg; t=1727878693;
+	bh=d/Ds/9G2IDsa/TOSl+x5T3RDetVWdIKPMV8GN0ONMj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LBBTEv70QG9RXoWLxxHgLSjqh2kptZI6mbW3w6m4/Bb7yy79bfGp/VEjgf9IFnVW3
-	 fPiWCWbB8NGxCAmv/wjgpjU9oCMEg29K32/lTQOsupGr4ALj0yYLak24K95M6V4Ie1
-	 RpWqeLC19949iOdFlnl3vqQg8qAA5woNoQrCaO2U=
+	b=GcUCKsWcBRqYdf4jjn+LBHMHlDvIqdvSfxU7Q20jVTwWVRfpVIVjr4lZiv3xuMv+F
+	 6AgDudaZ7UAY/Jnb89ebuFXfdSUiy6AK3MGLX8G+COehq0yyW8weAwux3G9jZOTEBq
+	 U2D0Rl6Cp6dkTcHz8RcBE/qwnqrkoanP1VL2xp3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Zhikai Zhai <zhikai.zhai@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.10 499/634] drm/amd/display: Skip to enable dsc if it has been off
-Date: Wed,  2 Oct 2024 14:59:59 +0200
-Message-ID: <20241002125830.794976280@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.10 473/634] Revert "soc: qcom: smd-rpm: Match rpmsg channel instead of compatible"
+Date: Wed,  2 Oct 2024 14:59:33 +0200
+Message-ID: <20241002125829.777922930@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,81 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhikai Zhai <zhikai.zhai@amd.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 4bdc5b504af7de1f649004cfdd37445d36db6703 upstream.
+commit b17155133391d7f6dd18d3fb94a7d492fdec18fa upstream.
 
-[WHY]
-It makes DSC enable when we commit the stream which need
-keep power off, and then it will skip to disable DSC if
-pipe reset at this situation as power has been off. It may
-cause the DSC unexpected enable on the pipe with the
-next new stream which doesn't support DSC.
+The rpm_requests device nodes have the compatible node. As such the
+rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
+smd-rpm is built as a module, it doesn't get autoloaded for the device.
 
-[HOW]
-Check the DSC used on current pipe status when update stream.
-Skip to enable if it has been off. The operation enable
-DSC should happen when set power on.
+Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
+instead of compatible")
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
 Cc: stable@vger.kernel.org
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c |   14 ++++++++++++++
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c |   13 +++++++++++++
- 2 files changed, 27 insertions(+)
+ drivers/soc/qcom/smd-rpm.c |   35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-@@ -991,6 +991,20 @@ static void update_dsc_on_stream(struct
- 		struct dsc_config dsc_cfg;
- 		struct dsc_optc_config dsc_optc_cfg = {0};
- 		enum optc_dsc_mode optc_dsc_mode;
-+		struct dcn_dsc_state dsc_state = {0};
-+
-+		if (!dsc) {
-+			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+			return;
-+		}
-+
-+		if (dsc->funcs->dsc_read_state) {
-+			dsc->funcs->dsc_read_state(dsc, &dsc_state);
-+			if (!dsc_state.dsc_fw_en) {
-+				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+				return;
-+			}
-+		}
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -196,9 +196,6 @@ static int qcom_smd_rpm_probe(struct rpm
+ {
+ 	struct qcom_smd_rpm *rpm;
  
- 		/* Enable DSC hw block */
- 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -375,7 +375,20 @@ static void update_dsc_on_stream(struct
- 		struct dsc_config dsc_cfg;
- 		struct dsc_optc_config dsc_optc_cfg = {0};
- 		enum optc_dsc_mode optc_dsc_mode;
-+		struct dcn_dsc_state dsc_state = {0};
+-	if (!rpdev->dev.of_node)
+-		return -EINVAL;
+-
+ 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
+ 	if (!rpm)
+ 		return -ENOMEM;
+@@ -218,18 +215,38 @@ static void qcom_smd_rpm_remove(struct r
+ 	of_platform_depopulate(&rpdev->dev);
+ }
  
-+		if (!dsc) {
-+			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+			return;
-+		}
-+
-+		if (dsc->funcs->dsc_read_state) {
-+			dsc->funcs->dsc_read_state(dsc, &dsc_state);
-+			if (!dsc_state.dsc_fw_en) {
-+				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+				return;
-+			}
-+		}
- 		/* Enable DSC hw block */
- 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
- 		dsc_cfg.pic_height = stream->timing.v_addressable + stream->timing.v_border_top + stream->timing.v_border_bottom;
+-static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
+-	{ .name = "rpm_requests", },
+-	{ /* sentinel */ }
++static const struct of_device_id qcom_smd_rpm_of_match[] = {
++	{ .compatible = "qcom,rpm-apq8084" },
++	{ .compatible = "qcom,rpm-ipq6018" },
++	{ .compatible = "qcom,rpm-ipq9574" },
++	{ .compatible = "qcom,rpm-msm8226" },
++	{ .compatible = "qcom,rpm-msm8909" },
++	{ .compatible = "qcom,rpm-msm8916" },
++	{ .compatible = "qcom,rpm-msm8936" },
++	{ .compatible = "qcom,rpm-msm8953" },
++	{ .compatible = "qcom,rpm-msm8974" },
++	{ .compatible = "qcom,rpm-msm8976" },
++	{ .compatible = "qcom,rpm-msm8994" },
++	{ .compatible = "qcom,rpm-msm8996" },
++	{ .compatible = "qcom,rpm-msm8998" },
++	{ .compatible = "qcom,rpm-sdm660" },
++	{ .compatible = "qcom,rpm-sm6115" },
++	{ .compatible = "qcom,rpm-sm6125" },
++	{ .compatible = "qcom,rpm-sm6375" },
++	{ .compatible = "qcom,rpm-qcm2290" },
++	{ .compatible = "qcom,rpm-qcs404" },
++	{}
+ };
+-MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
++MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+ 
+ static struct rpmsg_driver qcom_smd_rpm_driver = {
+ 	.probe = qcom_smd_rpm_probe,
+ 	.remove = qcom_smd_rpm_remove,
+ 	.callback = qcom_smd_rpm_callback,
+-	.id_table = qcom_smd_rpm_id_table,
+-	.drv.name = "qcom_smd_rpm",
++	.drv  = {
++		.name  = "qcom_smd_rpm",
++		.of_match_table = qcom_smd_rpm_of_match,
++	},
+ };
+ 
+ static int __init qcom_smd_rpm_init(void)
 
 
