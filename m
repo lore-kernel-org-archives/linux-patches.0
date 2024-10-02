@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FBE1D0BAD;
-	Wed,  2 Oct 2024 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB051D0DC3;
+	Wed,  2 Oct 2024 14:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877861; cv=none; b=uiLBko//yVYsbvEHTp+WcjsWP9N1BXghPIAmEvXJO1f17gudXAEhbtxeeaL5TAZVP53MJkDXP1/KqzJjbHBcFnhxsq/rkN+NlERssRO5vPvftXoZf2PHXcPQYWKo92GApgJuOtItUGjDdzEmvjprUN1CK2hjDeo07NvagJdRut4=
+	t=1727877863; cv=none; b=TvFXsAJSScOLCqH5lU3Kpe6FAnBa4FVy3y4uOO2VM163EHNfr6VZ/8RFl7fKVszRb29AO7ll1dotlwmhYF9CBrrwCwSwlwzGATHlPLWbrxuznE4e20qkAs/R1ED+D41wTA2/ME6J73HMq/xTnAF4sFSpduCmTCIa/UrnnBIVMGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877861; c=relaxed/simple;
-	bh=aaSanO8HtZOYp8JNsaSJciOgi8e18u6RaYmzbn+jYDA=;
+	s=arc-20240116; t=1727877863; c=relaxed/simple;
+	bh=ZctZ+BpgX1UHN+c8ZalYKlSDjI3FyrbTEqBaM5eBxwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbUEmuvMb1HlNoVcvTUZEFHKKcJOJ1GLq9HsHZSL4oqm0XzcxCb+4pHRS4mcE3oOTbPTlsh0YDoVN0QsbgkVPKa/dwATtnEbI3BskHb2V0bjKOJZF3FFEVGqIkBZrvCp6RJqiFZKSIs9OrBxn9VCRV9DXAeUDzEGazs20tNIbEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9iy40Qe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vCj13ngEx79woLLogGYS1n5f0rURSPuQnIIQ14n/ENtJy3pwA6OuObIb0WuirPh2ZkHO7h6iSsfNu/V/U1WyVwfqu+Gwy6ofUtnSokhpuWvonTHkjmEl2X3buF+PakozPQ31Og9c5ANxM7dXjMhFXgWewmf7gTBoy32FlwfOrNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4Oa0c84; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9iy40Qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5D8C4CEC2;
-	Wed,  2 Oct 2024 14:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4Oa0c84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2ABC4CEC2;
+	Wed,  2 Oct 2024 14:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877860;
-	bh=aaSanO8HtZOYp8JNsaSJciOgi8e18u6RaYmzbn+jYDA=;
+	s=korg; t=1727877863;
+	bh=ZctZ+BpgX1UHN+c8ZalYKlSDjI3FyrbTEqBaM5eBxwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9iy40QeFattsJN7doDrCX5AeGFa4NNP8xqUzY0xWSbEFTojddklNfgm2mhhnGm6e
-	 2fD0gFVz2HywNsQ3PeEFeogKMQp0jca6dM/tcgdlrw0f2Zw14KWXOAq5WUxSFTKJsy
-	 0drDy6eGbBHOCPmC4aRC7bzBv3P6fnrWi5P54+yI=
+	b=u4Oa0c84/AHZJDJqxofLiwplHiUq9HLCenWID5PVUVAmaRJfBZySkOYcTZ43RXYAt
+	 B6wDUywFgOcWeDyLWo749oMtKMAfibry9B09mVjgl13LhYWMI0LyS0gM0v+uF6zONs
+	 zIXPgleVfD0zidjOnkKZKKFiLWvUoN1TEn5ja1Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <David.Laight@aculab.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: [PATCH 6.10 219/634] minmax: avoid overly complex min()/max() macro arguments in xen
-Date: Wed,  2 Oct 2024 14:55:19 +0200
-Message-ID: <20241002125819.746272085@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 220/634] xen: introduce generic helper checking for memory map conflicts
+Date: Wed,  2 Oct 2024 14:55:20 +0200
+Message-ID: <20241002125819.785571123@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -46,81 +46,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit e8432ac802a028eaee6b1e86383d7cd8e9fb8431 ]
+[ Upstream commit ba88829706e2c5b7238638fc2b0713edf596495e ]
 
-We have some very fancy min/max macros that have tons of sanity checking
-to warn about mixed signedness etc.
+When booting as a Xen PV dom0 the memory layout of the dom0 is
+modified to match that of the host, as this requires less changes in
+the kernel for supporting Xen.
 
-This is all things that a sane compiler should warn about, but there are
-no sane compiler interfaces for this, and '-Wsign-compare' is broken [1]
-and not useful.
+There are some cases, though, which are problematic, as it is the Xen
+hypervisor selecting the kernel's load address plus some other data,
+which might conflict with the host's memory map.
 
-So then we compensate (some would say over-compensate) by doing the
-checks manually with some truly horrid macro games.
+These conflicts are detected at boot time and result in a boot error.
+In order to support handling at least some of these conflicts in
+future, introduce a generic helper function which will later gain the
+ability to adapt the memory layout when possible.
 
-And no, we can't just use __builtin_types_compatible_p(), because the
-whole question of "does it make sense to compare these two values" is a
-lot more complicated than that.
+Add the missing check for the xen_start_info area.
 
-For example, it makes a ton of sense to compare unsigned values with
-simple constants like "5", even if that is indeed a signed type.  So we
-have these very strange macros to try to make sensible type checking
-decisions on the arguments to 'min()' and 'max()'.
+Note that possible p2m map and initrd memory conflicts are handled
+already by copying the data to memory areas not conflicting with the
+memory map. The initial stack allocated by Xen doesn't need to be
+checked, as early boot code is switching to the statically allocated
+initial kernel stack. Initial page tables and the kernel itself will
+be handled later.
 
-But that can cause enormous code expansion if the min()/max() macros are
-used with complicated expressions, and particularly if you nest these
-things so that you get the first big expansion then expanded again.
-
-The xen setup.c file ended up ballooning to over 50MB of preprocessed
-noise that takes 15s to compile (obviously depending on the build host),
-largely due to one single line.
-
-So let's split that one single line to just be simpler.  I think it ends
-up being more legible to humans too at the same time.  Now that single
-file compiles in under a second.
-
-Reported-and-reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Link: https://lore.kernel.org/all/c83c17bb-be75-4c67-979d-54eee38774c6@lucifer.local/
-Link: https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/ [1]
-Cc: David Laight <David.Laight@aculab.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/xen/mmu_pv.c  |  5 +----
+ arch/x86/xen/setup.c   | 34 ++++++++++++++++++++++++++++------
+ arch/x86/xen/xen-ops.h |  3 ++-
+ 3 files changed, 31 insertions(+), 11 deletions(-)
 
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index 54e0d311dcc94..9e9a122c2bcfa 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -2019,10 +2019,7 @@ void __init xen_reserve_special_pages(void)
+ 
+ void __init xen_pt_check_e820(void)
+ {
+-	if (xen_is_e820_reserved(xen_pt_base, xen_pt_size)) {
+-		xen_raw_console_write("Xen hypervisor allocated page table memory conflicts with E820 map\n");
+-		BUG();
+-	}
++	xen_chk_is_e820_usable(xen_pt_base, xen_pt_size, "page table");
+ }
+ 
+ static unsigned char dummy_mapping[PAGE_SIZE] __page_aligned_bss;
 diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index d44d6d8b33195..d2073df5c5624 100644
+index d2073df5c5624..84cbc7ec55811 100644
 --- a/arch/x86/xen/setup.c
 +++ b/arch/x86/xen/setup.c
-@@ -691,6 +691,7 @@ char * __init xen_memory_setup(void)
- 	struct xen_memory_map memmap;
- 	unsigned long max_pages;
- 	unsigned long extra_pages = 0;
-+	unsigned long maxmem_pages;
- 	int i;
- 	int op;
+@@ -568,7 +568,7 @@ static void __init xen_ignore_unusable(void)
+ 	}
+ }
  
-@@ -762,8 +763,8 @@ char * __init xen_memory_setup(void)
- 	 * Make sure we have no memory above max_pages, as this area
- 	 * isn't handled by the p2m management.
+-bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size)
++static bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size)
+ {
+ 	struct e820_entry *entry;
+ 	unsigned mapcnt;
+@@ -625,6 +625,23 @@ phys_addr_t __init xen_find_free_area(phys_addr_t size)
+ 	return 0;
+ }
+ 
++/*
++ * Check for an area in physical memory to be usable for non-movable purposes.
++ * An area is considered to usable if the used E820 map lists it to be RAM.
++ * In case the area is not usable, crash the system with an error message.
++ */
++void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
++				   const char *component)
++{
++	if (!xen_is_e820_reserved(start, size))
++		return;
++
++	xen_raw_console_write("Xen hypervisor allocated ");
++	xen_raw_console_write(component);
++	xen_raw_console_write(" memory conflicts with E820 map\n");
++	BUG();
++}
++
+ /*
+  * Like memcpy, but with physical addresses for dest and src.
+  */
+@@ -825,11 +842,16 @@ char * __init xen_memory_setup(void)
+ 	 * Failing now is better than running into weird problems later due
+ 	 * to relocating (and even reusing) pages with kernel text or data.
  	 */
--	extra_pages = min3(EXTRA_MEM_RATIO * min(max_pfn, PFN_DOWN(MAXMEM)),
--			   extra_pages, max_pages - max_pfn);
-+	maxmem_pages = EXTRA_MEM_RATIO * min(max_pfn, PFN_DOWN(MAXMEM));
-+	extra_pages = min3(maxmem_pages, extra_pages, max_pages - max_pfn);
- 	i = 0;
- 	addr = xen_e820_table.entries[0].addr;
- 	size = xen_e820_table.entries[0].size;
+-	if (xen_is_e820_reserved(__pa_symbol(_text),
+-				 __pa_symbol(_end) - __pa_symbol(_text))) {
+-		xen_raw_console_write("Xen hypervisor allocated kernel memory conflicts with E820 map\n");
+-		BUG();
+-	}
++	xen_chk_is_e820_usable(__pa_symbol(_text),
++			       __pa_symbol(_end) - __pa_symbol(_text),
++			       "kernel");
++
++	/*
++	 * Check for a conflict of the xen_start_info memory with the target
++	 * E820 map.
++	 */
++	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
++			       "xen_start_info");
+ 
+ 	/*
+ 	 * Check for a conflict of the hypervisor supplied page tables with
+diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
+index 79cf93f2c92f1..f46a1dd3624da 100644
+--- a/arch/x86/xen/xen-ops.h
++++ b/arch/x86/xen/xen-ops.h
+@@ -44,7 +44,8 @@ void xen_mm_unpin_all(void);
+ void __init xen_relocate_p2m(void);
+ #endif
+ 
+-bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size);
++void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
++				   const char *component);
+ unsigned long __ref xen_chk_extra_mem(unsigned long pfn);
+ void __init xen_inv_extra_mem(void);
+ void __init xen_remap_memory(void);
 -- 
 2.43.0
 
