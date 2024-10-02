@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89741CFEA9;
-	Wed,  2 Oct 2024 14:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752561D094A;
+	Wed,  2 Oct 2024 14:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877937; cv=none; b=mVKm4UqOivpZTJhsHFCsfRrAhgTvaEgKyAZ6SppDQ6gy++Jlwzn7UDyUTDMOwNP5wFwT2pQzwY22vsW6zbVHWYnk2mMWpZ85HhCkTrbX27a5C3WAUdN9et8x5e4of4N9bhMKkDhyRo5t+2L4Bjlu+HO7dqZN+rGakGFB4ei3XGo=
+	t=1727877939; cv=none; b=UuLhl4k72ErbA08/SlU5qcK4U3TRAcHH3zn4VL7e0dEFtjrBun4qodi5wTp69CyDWBc0QKKU6ao5gF5jrpWkJzeS4VqzPQpH5eQZPLaf4Vqz1bRSd84Gj5pjSW2sq67wzrq60yAUszy42KRiBtuhyyyjZg5LzxuEJ7RBC2002PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877937; c=relaxed/simple;
-	bh=WjiOD1aLur9QCDxzw8PatcPUlnEEo7R3GIJsayB0X9g=;
+	s=arc-20240116; t=1727877939; c=relaxed/simple;
+	bh=8qixo2+qUwneiD+04CEWDsYFCg19hxw6O95JJTD0lgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eazoys6f62bCX/YJnSIygRPcfCD65rea8eekOdjoHnZZzx+eMVpjLFETQgs5xqWsZP2yv2KE8LqSgzVuvPFkP/LjMlYf56Tv+VnBNqwmYIinbTot4zffVnFj23uBeQmVMkbuwzNpEC4Fuf2WYd7AOUBSNjGp+VVSKio4By2i33c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmw/52N2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2iBGXS5ViSABTCmJdVwo6acgus7DspiivBdBhzMXq1LdVj/zdhLXyrCwuujuN0YObjWAmNRhh9eQ4XYMbUfb0vLowMi09Y4UIzCOX42Mr4dSGbRrKfIdBIGS0bXNJ1R01kSJA1g02LVa4x5BUVZhWFlC+xZKI9tjh3vkvTF4vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0Ym14FI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmw/52N2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F634C4CEC2;
-	Wed,  2 Oct 2024 14:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0Ym14FI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC67C4CEC2;
+	Wed,  2 Oct 2024 14:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877936;
-	bh=WjiOD1aLur9QCDxzw8PatcPUlnEEo7R3GIJsayB0X9g=;
+	s=korg; t=1727877939;
+	bh=8qixo2+qUwneiD+04CEWDsYFCg19hxw6O95JJTD0lgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmw/52N2o2lsj7kHtrZrQLpzfjXHHT1yYK7iVXUXXSHyDyyfqxwaEFFIDMk1S80on
-	 8SwJoZOodU8oNH2fgq8hlM1dXMRriOlHwAU9SXLxNzmml7DCQK0xhmQo5gZXtry8fL
-	 DsQnpOkK6YVD/V3G2JAYjLqidLbI9bEMawaJdILo=
+	b=r0Ym14FIR4Fb0Ja4aQUrFW/WFrHBJ3bUK34X/k0HXN+oK/E0EGZ+woQZodUanGQaj
+	 ZfKMZmX+5mkVLT6DlNK2s+4I5Wa7xyLaIjx3NIVC5/qI0h+ZG1FGZQU8EVddlul3uH
+	 zWVKCOULu28hcBLKhe3OGzwr5b7ue4s39s88bnDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 246/634] selftests/bpf: Fix compiling kfree_skb.c with musl-libc
-Date: Wed,  2 Oct 2024 14:55:46 +0200
-Message-ID: <20241002125820.808318771@linuxfoundation.org>
+Subject: [PATCH 6.10 247/634] selftests/bpf: Fix compiling flow_dissector.c with musl-libc
+Date: Wed,  2 Oct 2024 14:55:47 +0200
+Message-ID: <20241002125820.847951727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,37 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit bae9a5ce7d3a9b3a9e07b31ab9e9c58450e3e9fd ]
+[ Upstream commit 5e4c43bcb85973243d7274e0058b6e8f5810e4f7 ]
 
-The GNU version of 'struct tcphdr' with member 'doff' is not exposed by
-musl headers unless _GNU_SOURCE is defined. Add this definition to fix
-errors seen compiling for mips64el/musl-libc:
+The GNU version of 'struct tcphdr' has members 'doff', 'source' and 'dest',
+which are not exposed by musl libc headers unless _GNU_SOURCE is defined.
 
-  In file included from kfree_skb.c:2:
-  kfree_skb.c: In function 'on_sample':
-  kfree_skb.c:45:30: error: 'struct tcphdr' has no member named 'doff'
-     45 |         if (CHECK(pkt_v6->tcp.doff != 5, "check_tcp",
-        |                              ^
+Add this definition to fix errors seen compiling for mips64el/musl-libc:
 
-Fixes: 580d656d80cf ("selftests/bpf: Add kfree_skb raw_tp test")
+  flow_dissector.c:118:30: error: 'struct tcphdr' has no member named 'doff'
+    118 |                         .tcp.doff = 5,
+        |                              ^~~~
+  flow_dissector.c:119:30: error: 'struct tcphdr' has no member named 'source'
+    119 |                         .tcp.source = 80,
+        |                              ^~~~~~
+  flow_dissector.c:120:30: error: 'struct tcphdr' has no member named 'dest'
+    120 |                         .tcp.dest = 8080,
+        |                              ^~~~
+
+Fixes: ae173a915785 ("selftests/bpf: support BPF_FLOW_DISSECTOR_F_PARSE_1ST_FRAG")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/e2d8cedc790959c10d6822a51f01a7a3616bea1b.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/8f7ab21a73f678f9cebd32b26c444a686e57414d.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/kfree_skb.c | 1 +
+ tools/testing/selftests/bpf/prog_tests/flow_dissector.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/kfree_skb.c b/tools/testing/selftests/bpf/prog_tests/kfree_skb.c
-index c07991544a789..34f8822fd2219 100644
---- a/tools/testing/selftests/bpf/prog_tests/kfree_skb.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kfree_skb.c
+diff --git a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+index 9625e6d217913..3171047414a7d 100644
+--- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
++++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
 @@ -1,4 +1,5 @@
  // SPDX-License-Identifier: GPL-2.0
 +#define _GNU_SOURCE
  #include <test_progs.h>
  #include <network_helpers.h>
- #include "kfree_skb.skel.h"
+ #include <linux/if_tun.h>
 -- 
 2.43.0
 
