@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7761D0B8F;
-	Wed,  2 Oct 2024 14:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C7A1D042F;
+	Wed,  2 Oct 2024 14:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878344; cv=none; b=hAcRymrxsPPbOc/M+W0FB16LbA9W3RuiGorvGOXA3CW0JQa6iiIMZOhcghuj2RXXuknHDG6ewsEt+9FeEpcdvOgjPEh+hLp0umocGDA+hWOyGs7dmZkb+8NkH1I3KQiH19BYevN10rep/krHuJIq7XJKmrj87T9Yffr93TuwPvo=
+	t=1727878346; cv=none; b=h4yebdm5aahait+7tGPlO7LIKcJ9Rr+M+0rozrs05ccJN6bQd0PEE0M1cX/Yu4nKCVO32E+Bea5EsOs6gVX4mnbOhFcEjoKCURR4sx/VXhzzFAQw8utgqQUxtxkxOAJepCNqntKoqsrHJGsV4BiN1HQWXIjQkH9DzwCY3cc+Tv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878344; c=relaxed/simple;
-	bh=eA6VavolARTXhUf1Q/DlXGHHTAJZ6Z/BalCU92MrkDg=;
+	s=arc-20240116; t=1727878346; c=relaxed/simple;
+	bh=HZLeXjJUzP4adgiW6A3iVE1SSgpuRZ714pQGlrPhpsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PNPOsRO8YZNU8v4QGMys8/4nZpq9PGLDy3DIEqp3xwJfPrNmG+ouQnMe0ZCMqGybvgyz0lPK+glrEWf+JuCA0YnaiZ3Yw31G3nd+o/GHWlL57pJoSCsipxcaoSUlfIyaqjQfr9Cj7yV9aqxTHFCEb1pxPJPH2ZAfOZ5qbpgHOn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJ5VdRsa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mayYEp/5a4LURg091CZPx/sptQATZZk7v6AFtHGYEyTpy/2hirorUwYucM70oOJuT0/qS5NN5i6k740iIwxGbBlSAxiXnp/Q7skpASCpIqJhlj+6A9fwxr7rRPrHon1QDPr5tmiuzGgbu8BJzi9FmEe9bfZUAoT/S1LwOlSTcf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXD+IxiC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJ5VdRsa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577A0C4CEC2;
-	Wed,  2 Oct 2024 14:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXD+IxiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E1FC4CEC2;
+	Wed,  2 Oct 2024 14:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878343;
-	bh=eA6VavolARTXhUf1Q/DlXGHHTAJZ6Z/BalCU92MrkDg=;
+	s=korg; t=1727878346;
+	bh=HZLeXjJUzP4adgiW6A3iVE1SSgpuRZ714pQGlrPhpsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJ5VdRsa++2WPYVhaY28gHOte/v3BQpbPamY0bA2VJJzJFm8ScfjBtjpCpIA2giX3
-	 lf2IztFtJP2Pt7DEfaTQujzO8PJ+Gc3QpkTEdE5SAf+pOv33iPULx3sFDii0cICJym
-	 8RXFlbaCtODWe9AbPwaiRzFtaWRHnDnRu2ND4MX8=
+	b=jXD+IxiCnw/E75H06gkM/YS/YGItov9PygG2NiJQZujlvXP3EUUYUHfEdgEAYu0s6
+	 4XKTwnOgKh0O3PxOPwlbzhsV7fPF6L3BL2WSI/XZJtsAiSotIoBaEsQ6qjYlgDHOX8
+	 epEV6SNFDhadd45NnU2bgiLPgCfneh/nfmfUXZN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 382/634] PCI: qcom-ep: Enable controller resources like PHY only after refclk is available
-Date: Wed,  2 Oct 2024 14:58:02 +0200
-Message-ID: <20241002125826.179767015@linuxfoundation.org>
+Subject: [PATCH 6.10 383/634] riscv: Fix fp alignment bug in perf_callchain_user()
+Date: Wed,  2 Oct 2024 14:58:03 +0200
+Message-ID: <20241002125826.219113553@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,82 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit d3745e3ae6c0eec517d431be926742b6e8b9b64a ]
+[ Upstream commit 22ab08955ea13be04a8efd20cc30890e0afaa49c ]
 
-qcom_pcie_enable_resources() is called by qcom_pcie_ep_probe() and it
-enables the controller resources like clocks, regulator, PHY. On one of the
-new unreleased Qcom SoC, PHY enablement depends on the active refclk. And
-on all of the supported Qcom endpoint SoCs, refclk comes from the host
-(RC). So calling qcom_pcie_enable_resources() without refclk causes the
-NoC (Network On Chip) error in the endpoint SoC and in turn results in a
-whole SoC crash and rebooting into EDL (Emergency Download) mode which is
-an unrecoverable state.
+The standard RISC-V calling convention said:
+	"The stack grows downward and the stack pointer is always
+	kept 16-byte aligned".
 
-But qcom_pcie_enable_resources() is already called by
-qcom_pcie_perst_deassert() when PERST# is deasserted, and refclk is
-available at that time.
+So perf_callchain_user() should check whether 16-byte aligned for fp.
 
-Hence, remove the unnecessary call to qcom_pcie_enable_resources() from
-qcom_pcie_ep_probe() to prevent the above mentioned crash.
+Link: https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf
 
-It should be noted that this commit prevents the crash only under normal
-working condition (booting endpoint before host), but the crash may also
-occur if PERST# assert happens at the wrong time. For avoiding the crash
-completely, it is recommended to use SRIS mode which allows the endpoint
-SoC to generate its own refclk. The driver is not supporting SRIS mode
-currently, but will be added in the future.
-
-Fixes: 869bc5253406 ("PCI: dwc: ep: Fix DBI access failure for drivers requiring refclk from host")
-Link: https://lore.kernel.org/linux-pci/20240830082319.51387-1-manivannan.sadhasivam@linaro.org
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: dbeb90b0c1eb ("riscv: Add perf callchain support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/r/20240708032847.2998158-2-ruanjinjie@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ arch/riscv/kernel/perf_callchain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 50b1635e3cbb1..26cab226bccf4 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -816,21 +816,15 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+diff --git a/arch/riscv/kernel/perf_callchain.c b/arch/riscv/kernel/perf_callchain.c
+index 3348a61de7d99..2932791e93882 100644
+--- a/arch/riscv/kernel/perf_callchain.c
++++ b/arch/riscv/kernel/perf_callchain.c
+@@ -62,7 +62,7 @@ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 	perf_callchain_store(entry, regs->epc);
  
--	ret = qcom_pcie_enable_resources(pcie_ep);
--	if (ret) {
--		dev_err(dev, "Failed to enable resources: %d\n", ret);
--		return ret;
--	}
--
- 	ret = dw_pcie_ep_init(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize endpoint: %d\n", ret);
--		goto err_disable_resources;
-+		return ret;
- 	}
- 
- 	ret = qcom_pcie_ep_enable_irq_resources(pdev, pcie_ep);
- 	if (ret)
--		goto err_disable_resources;
-+		goto err_ep_deinit;
- 
- 	name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
- 	if (!name) {
-@@ -847,8 +841,8 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
- 	disable_irq(pcie_ep->global_irq);
- 	disable_irq(pcie_ep->perst_irq);
- 
--err_disable_resources:
--	qcom_pcie_disable_resources(pcie_ep);
-+err_ep_deinit:
-+	dw_pcie_ep_deinit(&pcie_ep->pci.ep);
- 
- 	return ret;
+ 	fp = user_backtrace(entry, fp, regs->ra);
+-	while (fp && !(fp & 0x3) && entry->nr < entry->max_stack)
++	while (fp && !(fp & 0x7) && entry->nr < entry->max_stack)
+ 		fp = user_backtrace(entry, fp, 0);
  }
+ 
 -- 
 2.43.0
 
