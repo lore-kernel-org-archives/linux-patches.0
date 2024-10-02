@@ -1,49 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4A71D0B99;
-	Wed,  2 Oct 2024 14:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788BB1D26E3;
+	Wed,  2 Oct 2024 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879837; cv=none; b=ZRtqwW96k0weNbnPSain9YD0JBm6yn98YfhBCUWFSko8uBxsmEFqzi9kaKjQ6wd/SwvttJOhWMIfGaJeodcI/7vjqhJzSblGe3+G/fnZ6W6VJenOyRYWGBjs1aVp2GBgj9tZ5cReHOvugYprA+x3JsPjgxiEKU6iKASmG82hz4s=
+	t=1727879840; cv=none; b=CVRMQswTATxGnLT+TVY2+waO9chntUtDp/Nb+xXik3cEm28Dg8mphdSD1n4/445tjCgW4C+tQ6Sc9SpDMDcNigVVJmeOAHKmuihLLw4qm1nhwBtTRqdac1bZtGEdh7NbYZewlj3ww3IbvL9eRKmRUsvVa6WX/FLl+7MMxQXr23Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879837; c=relaxed/simple;
-	bh=ZTj4a74VmxmBlFmSLE6t2dTMkRM+y7mY+NIzzMSb+Iw=;
+	s=arc-20240116; t=1727879840; c=relaxed/simple;
+	bh=f32Fkn9uy5RYS1/H79l+tpJGpByw8ELLikoAOCkTHOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RsvMjODLjzYXNJsRfE2onTCQpNcxJQMfXZEF18Z2anV2nj7+MhNfq7pUW/q9j2DAiMC81iaBR/+7I/aB1/kvi5rJC8k+iromgwyi5ws/GXqjRTbXbt0krMofwab7Z6rW9izLajhE2/rp56b1OszXFLSqZQ0p3okkUlw5EMDjKMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzuPaIa7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOO0gwFyD/tw4qkfx2eZNS0b3qx2lzuy6DKcXMBQCgSGe+Q2Wpp0F82Mj79YxT85fIRCc6N0493ptwUcYQe3bJQa/GmyLROTdBT+TzIZ+eKXQVZercQUJDKACtCCc3fO5ExizeX5ZOOk/F16MwNvqbk5QoQyKZeV1zulLucAbr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU1P8wHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzuPaIa7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDADC4CEC2;
-	Wed,  2 Oct 2024 14:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU1P8wHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8A8C4CEC2;
+	Wed,  2 Oct 2024 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879837;
-	bh=ZTj4a74VmxmBlFmSLE6t2dTMkRM+y7mY+NIzzMSb+Iw=;
+	s=korg; t=1727879840;
+	bh=f32Fkn9uy5RYS1/H79l+tpJGpByw8ELLikoAOCkTHOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzuPaIa7NkuKZM70wp23MNrsn9Yw+YlaHXvIkllBOMmJFUJwVv3iQDbmeW0lHCERl
-	 0/0yZLJE8XiHoHtuarl6EeQY56dHcNueDzQ8PpjvRUps6+6BJAs9ZyseGH5poIRf6z
-	 TVU2dyuR/IfUtHrP5Z0kzrvB1/VRTwUfmu39DuUw=
+	b=yU1P8wHSdQM3nDj7LF1iEl4MnedBACck7X73KsXC5vOA4Mou6tGsvMAzHy/0AnI3y
+	 Ne/9eNMtUFJSril55DG60cvOFkZDVVUSwb0hMWkMcZSBgkrk/NNRPnSWWW2KC8eTbb
+	 SQzAuAn0Es/fv0nC72RnwU85R1jR/seCH+qpvOSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Chaitanya S Prakash <chaitanyas.prakash@arm.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	David Ahern <dsa@cumulusnetworks.com>,
-	Ian Rogers <irogers@google.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Junhao He <hejunhao3@huawei.com>,
 	Kan Liang <kan.liang@linux.intel.com>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Yang Jihong <yangjihong@bytedance.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 255/538] perf sched timehist: Fixed timestamp error when unable to confirm event sched_in time
-Date: Wed,  2 Oct 2024 14:58:14 +0200
-Message-ID: <20241002125802.323179149@linuxfoundation.org>
+Subject: [PATCH 6.6 256/538] perf time-utils: Fix 32-bit nsec parsing
+Date: Wed,  2 Oct 2024 14:58:15 +0200
+Message-ID: <20241002125802.362280458@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -62,96 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Jihong <yangjihong@bytedance.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 39c243411bdb8fb35777adf49ee32549633c4e12 ]
+[ Upstream commit 38e2648a81204c9fc5b4c87a8ffce93a6ed91b65 ]
 
-If sched_in event for current task is not recorded, sched_in timestamp
-will be set to end_time of time window interest, causing an error in
-timestamp show. In this case, we choose to ignore this event.
+The "time utils" test fails in 32-bit builds:
+  ...
+  parse_nsec_time("18446744073.709551615")
+  Failed. ptime 4294967295709551615 expected 18446744073709551615
+  ...
 
-Test scenario:
+Switch strtoul to strtoull as an unsigned long in 32-bit build isn't
+64-bits.
 
-  perf[1229608] does not record the first sched_in event, run time and sch delay are both 0
-
-  # perf sched timehist
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-   2090450.763231 [0000]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763235 [0000]  migration/0[15]                     0.000      0.001      0.003
-   2090450.763263 [0001]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763268 [0001]  migration/1[21]                     0.000      0.001      0.004
-   2090450.763302 [0002]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763309 [0002]  migration/2[27]                     0.000      0.001      0.007
-   2090450.763338 [0003]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763343 [0003]  migration/3[33]                     0.000      0.001      0.004
-
-Before:
-
-  arbitrarily specify a time window of interest, timestamp will be set to an incorrect value
-
-  # perf sched timehist --time 100,200
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-       200.000000 [0000]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0001]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0002]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0003]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0004]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0005]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0006]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0007]  perf[1229608]                       0.000      0.000      0.000
-
- After:
-
-  # perf sched timehist --time 100,200
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-
-Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
-Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: c284d669a20d408b ("perf tools: Move parse_nsec_time to time-utils.c")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Chaitanya S Prakash <chaitanyas.prakash@arm.com>
+Cc: Colin Ian King <colin.i.king@gmail.com>
 Cc: David Ahern <dsa@cumulusnetworks.com>
-Cc: Ian Rogers <irogers@google.com>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
+Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Junhao He <hejunhao3@huawei.com>
 Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240819024720.2405244-1-yangjihong@bytedance.com
+Cc: Yang Jihong <yangjihong@bytedance.com>
+Link: https://lore.kernel.org/r/20240831070415.506194-3-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/time-utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 489a5ef2a25de..42185da0f000a 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -2633,9 +2633,12 @@ static int timehist_sched_change_event(struct perf_tool *tool,
- 	 * - previous sched event is out of window - we are done
- 	 * - sample time is beyond window user cares about - reset it
- 	 *   to close out stats for time window interest
-+	 * - If tprev is 0, that is, sched_in event for current task is
-+	 *   not recorded, cannot determine whether sched_in event is
-+	 *   within time window interest - ignore it
- 	 */
- 	if (ptime->end) {
--		if (tprev > ptime->end)
-+		if (!tprev || tprev > ptime->end)
- 			goto out;
+diff --git a/tools/perf/util/time-utils.c b/tools/perf/util/time-utils.c
+index 3024439216816..1b91ccd4d5234 100644
+--- a/tools/perf/util/time-utils.c
++++ b/tools/perf/util/time-utils.c
+@@ -20,7 +20,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
+ 	u64 time_sec, time_nsec;
+ 	char *end;
  
- 		if (t > ptime->end)
+-	time_sec = strtoul(str, &end, 10);
++	time_sec = strtoull(str, &end, 10);
+ 	if (*end != '.' && *end != '\0')
+ 		return -1;
+ 
+@@ -38,7 +38,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
+ 		for (i = strlen(nsec_buf); i < 9; i++)
+ 			nsec_buf[i] = '0';
+ 
+-		time_nsec = strtoul(nsec_buf, &end, 10);
++		time_nsec = strtoull(nsec_buf, &end, 10);
+ 		if (*end != '\0')
+ 			return -1;
+ 	} else
 -- 
 2.43.0
 
