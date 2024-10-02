@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2511D0B91;
-	Wed,  2 Oct 2024 13:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98821D0799;
+	Wed,  2 Oct 2024 13:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876474; cv=none; b=NsoAAKdTlH2wrJ99Y4NOsxH+gufpHcaZV/r9Mi4Zthuw1pCyB5Mo/0XS/Fch6cL5VC1zkK0aJSB39zR6zEK1rjPVOk5KjD4WCCBDXulJo9PKaLyOSp00yo5bZSuGxX/1nuRRvh9MCiJTKdy0wV4Q4xlf2cqs1Ds16FQhbhO0AXU=
+	t=1727876477; cv=none; b=VA7C6kfWbqjt5zGR9LxF5kqGMof/OXcWZvurA4nh6NstRfa1iiI66LgMB98wWFPLaZPU4poPV11x8GBS0qgHGA2rCIBkR9zoyNJfl+zmEGd3IxAKakcAIIN8cS0ZKNDisM9BITftOjvywwTUJNwEr6wLILAMdlkEaaNqQzlc9Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876474; c=relaxed/simple;
-	bh=m3UJU86oE6qp9+R43LVcezlzSMzLapK10ohy5b/hAYo=;
+	s=arc-20240116; t=1727876477; c=relaxed/simple;
+	bh=MqFKLycfPgclbMLZ77qiZN1XTyxK7X7Ev96bN4c3iY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpI7+ZKfmlSMZZlnLQveXvTqRXtLp4guBXAiUoJosgEBkRRdweiKPHhBX7lWFf2Y0lezgjFF1aaV0hLo/6TrL3xlxRdTr4RHd41fUG5wsBtzM/lVnmUNbflgrhkNoETugEdf4ahEGRax7H30oEoBVe3h/0X45/NC1RDd6TSZd28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSh7tLte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVNzVpqc5oTbmuD6UHYMKa9DxSeejgCUoC70kSkd3ofBG/2za/g+xVqm+MUZQqanrp8dp8ej0Zy6rkRfnhXwIps+iRzsUmhJJmWIKJKhlkm8obApARw+5nOTZPmN9zwvZR1kLxOsEXMFoRd6vIHcXWqwNn+Ks5eMs2nGqoeJn6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7sSDXw5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSh7tLte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859D4C4CEC5;
-	Wed,  2 Oct 2024 13:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7sSDXw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73960C4CEC5;
+	Wed,  2 Oct 2024 13:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876473;
-	bh=m3UJU86oE6qp9+R43LVcezlzSMzLapK10ohy5b/hAYo=;
+	s=korg; t=1727876476;
+	bh=MqFKLycfPgclbMLZ77qiZN1XTyxK7X7Ev96bN4c3iY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSh7tLte1FLMxd70TABVBPXbU4/T7B9eyqgym5lWilefYGWDJJDFXE9Uf4TCF8X3D
-	 ZmIqc7aeWEg6pduA442sYH/Mpfkw2ajF8hmkQ1LT2LzvMY4dZrFydWNmd/YBCaVMML
-	 1SxopVnGLxgNLOt2ynU37um/g1zuBtJtkQcoYaOY=
+	b=C7sSDXw51oCPZlNs/gr9Az2TvT4RW6H/dYDVrgEmfAA0wDnAE71PKuu1KMeWCifvj
+	 1h8Xrwe93T3ekdC4JzFw4UCOdyEgWok/VkjwF9yiZWdW37HjBZ2B5sG9Rm3lUA5fPE
+	 HMLCOEdfPHtBqGPL4Z7aDEUeLCmreFcZ3St17IIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Max Hawking <maxahawking@sonnenkinder.org>,
 	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 425/695] ntb: intel: Fix the NULL vs IS_ERR() bug for debugfs_create_dir()
-Date: Wed,  2 Oct 2024 14:57:03 +0200
-Message-ID: <20241002125839.421970648@linuxfoundation.org>
+Subject: [PATCH 6.11 426/695] ntb_perf: Fix printk format
+Date: Wed,  2 Oct 2024 14:57:04 +0200
+Message-ID: <20241002125839.464338655@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Max Hawking <maxahawking@sonnenkinder.org>
 
-[ Upstream commit e229897d373a87ee09ec5cc4ecd4bb2f895fc16b ]
+[ Upstream commit 1501ae7479c8d0f66efdbfdc9ae8d6136cefbd37 ]
 
-The debugfs_create_dir() function returns error pointers.
-It never returns NULL. So use IS_ERR() to check it.
+The correct printk format is %pa or %pap, but not %pa[p].
 
-Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 99a06056124d ("NTB: ntb_perf: Fix address err in perf_copy_chunk")
+Signed-off-by: Max Hawking <maxahawking@sonnenkinder.org>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/intel/ntb_hw_gen1.c | 2 +-
+ drivers/ntb/test/ntb_perf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ntb/hw/intel/ntb_hw_gen1.c b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-index 9ab836d0d4f12..079b8cd797857 100644
---- a/drivers/ntb/hw/intel/ntb_hw_gen1.c
-+++ b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-@@ -778,7 +778,7 @@ static void ndev_init_debugfs(struct intel_ntb_dev *ndev)
- 		ndev->debugfs_dir =
- 			debugfs_create_dir(pci_name(ndev->ntb.pdev),
- 					   debugfs_dir);
--		if (!ndev->debugfs_dir)
-+		if (IS_ERR(ndev->debugfs_dir))
- 			ndev->debugfs_info = NULL;
- 		else
- 			ndev->debugfs_info =
+diff --git a/drivers/ntb/test/ntb_perf.c b/drivers/ntb/test/ntb_perf.c
+index 553f1f46bc664..72bc1d017a46e 100644
+--- a/drivers/ntb/test/ntb_perf.c
++++ b/drivers/ntb/test/ntb_perf.c
+@@ -1227,7 +1227,7 @@ static ssize_t perf_dbgfs_read_info(struct file *filep, char __user *ubuf,
+ 			"\tOut buffer addr 0x%pK\n", peer->outbuf);
+ 
+ 		pos += scnprintf(buf + pos, buf_size - pos,
+-			"\tOut buff phys addr %pa[p]\n", &peer->out_phys_addr);
++			"\tOut buff phys addr %pap\n", &peer->out_phys_addr);
+ 
+ 		pos += scnprintf(buf + pos, buf_size - pos,
+ 			"\tOut buffer size %pa\n", &peer->outbuf_size);
 -- 
 2.43.0
 
