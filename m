@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875561D0DC3;
-	Wed,  2 Oct 2024 14:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB7E1D1E9D;
+	Wed,  2 Oct 2024 14:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877869; cv=none; b=bHn+cm5WzqbQeWwGVnfEaPq9UUqm4nrt1PFGFg1GK4TCOdeCVoKfRg7d9tc/FJti5WJsNftOcZn87nAmFI1CmrkUu548vw3yqmbSnwaXnG4FaTDc0NUnyuYaD+7MKLCwna4kq85Bna9I3BjTuUyni+JRGnqS2i/yieA+DFSjmnA=
+	t=1727877872; cv=none; b=RzkCwmH4FpfrQJJXTErQuHdx7Bdd4tqdN8tMSjxtT5UujNxNGU7l4DoVdUCSJ+/Mi87t31lHl6l4nRPQnyac9APs/2NfyVevA25FTvRcoAbff0VNbBMlXqxlERqdnsqHLngaWxjZdG1n1ctYX1X7nvXUjFNTaTHKim/vG0+By0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877869; c=relaxed/simple;
-	bh=2iblJSfDhavLNlcFc8pxKyWHrvSri+qlUOhY9PRevvY=;
+	s=arc-20240116; t=1727877872; c=relaxed/simple;
+	bh=tzCx+U0DNyDWOEXXSl/aQfAC5eUU3JTxtP269siRKaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJBSVFL5iuxAScye6aXiHtgyYoHoyNUGLLkVVXdgr0Vq5yo97TmQAgif+Ok+RlF9+5GW05tKO7glY1SPrHx1yMW7h/YsET86gOMhclJNK43vQS82QciZwll1VsGwtdX1UMu8eaTUiMkKyw/qBHofvaLRQI2aH3CfrQD7DNh4f4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lahOHIku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Bfr/FPqFpqoRalauVlRoEGJVXeemD2th4MnA8uVd2Zuq9gA3n9SkXYcnjONCWtrMWjXtkg15pfVQfxRuhlWx3Xk8w7/8d7XZTYJmZubkogxQmu4QbtEHAnjEM9gFhm8EtJrwDDXMLLF53N7hvRh1qEzegzApxy1fhM1xbJ9L2IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5tbRNZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lahOHIku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4C0C4CEC2;
-	Wed,  2 Oct 2024 14:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5tbRNZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96E4C4CEC2;
+	Wed,  2 Oct 2024 14:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877869;
-	bh=2iblJSfDhavLNlcFc8pxKyWHrvSri+qlUOhY9PRevvY=;
+	s=korg; t=1727877872;
+	bh=tzCx+U0DNyDWOEXXSl/aQfAC5eUU3JTxtP269siRKaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lahOHIkuhA4mBFOH2XEBGCrjmrEXjKfpkcQ/ltiq1/Gtdldl3YKu02+NjySnNgU8N
-	 wqq+jbirkJx1DHnZT5EsIXtbXJpISzhW074UvgWlgZRn2Ov9R4sipIeOjAcCxrRGw6
-	 kGO1NigKTRTLlgpFWqouvCfD7gH07JtHzdIgJKPQ=
+	b=h5tbRNZiHJkiuefNowx5lhHFH8m5tFxwBEonJGyEUc8UyCR7hWcB6jS6NcgQyercF
+	 80QxMsv3hIUZ4LHGr08urxD5e2TQqwYgFbMS8nWiTPyj+iWgJSSQeb9/vS6P6FxKRE
+	 eCjbvNW4twrjQMmqoHP0dBxXmhqn/T0Onh5mt/yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 222/634] xen: add capability to remap non-RAM pages to different PFNs
-Date: Wed,  2 Oct 2024 14:55:22 +0200
-Message-ID: <20241002125819.863191886@linuxfoundation.org>
+Subject: [PATCH 6.10 223/634] xen: tolerate ACPI NVS memory overlapping with Xen allocated memory
+Date: Wed,  2 Oct 2024 14:55:23 +0200
+Message-ID: <20241002125819.902260037@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
@@ -53,126 +55,154 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit d05208cf7f05420ad10cc7f9550f91d485523659 ]
+[ Upstream commit be35d91c8880650404f3bf813573222dfb106935 ]
 
-When running as a Xen PV dom0 it can happen that the kernel is being
-loaded to a guest physical address conflicting with the host memory
-map.
+In order to minimize required special handling for running as Xen PV
+dom0, the memory layout is modified to match that of the host. This
+requires to have only RAM at the locations where Xen allocated memory
+is living. Unfortunately there seem to be some machines, where ACPI
+NVS is located at 64 MB, resulting in a conflict with the loaded
+kernel or the initial page tables built by Xen.
 
-In order to be able to resolve this conflict, add the capability to
-remap non-RAM areas to different guest PFNs. A function to use this
-remapping information for other purposes than doing the remap will be
-added when needed.
+Avoid this conflict by swapping the ACPI NVS area in the memory map
+with unused RAM. This is possible via modification of the dom0 P2M map.
+Accesses to the ACPI NVS area are done either for saving and restoring
+it across suspend operations (this will work the same way as before),
+or by ACPI code when NVS memory is referenced from other ACPI tables.
+The latter case is handled by a Xen specific indirection of
+acpi_os_ioremap().
 
-As the number of conflicts should be rather low (currently only
-machines with max. 1 conflict are known), save the remap data in a
-small statically allocated array.
+While the E820 map can (and should) be modified right away, the P2M
+map can be updated only after memory allocation is working, as the P2M
+map might need to be extended.
 
+Fixes: 808fdb71936c ("xen: check for kernel memory conflicting with memory layout")
 Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 Reviewed-by: Jan Beulich <jbeulich@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Stable-dep-of: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/p2m.c     | 63 ++++++++++++++++++++++++++++++++++++++++++
- arch/x86/xen/xen-ops.h |  3 ++
- 2 files changed, 66 insertions(+)
+ arch/x86/xen/setup.c | 92 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 91 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/xen/p2m.c b/arch/x86/xen/p2m.c
-index 6bcbdf3b7999f..9a5e6a7c0729e 100644
---- a/arch/x86/xen/p2m.c
-+++ b/arch/x86/xen/p2m.c
-@@ -80,6 +80,7 @@
- #include <asm/xen/hypervisor.h>
- #include <xen/balloon.h>
- #include <xen/grant_table.h>
-+#include <xen/hvc-console.h>
+diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
+index 112b071bac9d4..989c14b1ff6c8 100644
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -496,6 +496,8 @@ void __init xen_remap_memory(void)
+ 	set_pte_mfn(buf, mfn_save, PAGE_KERNEL);
  
- #include "multicalls.h"
- #include "xen-ops.h"
-@@ -793,6 +794,68 @@ int clear_foreign_p2m_mapping(struct gnttab_unmap_grant_ref *unmap_ops,
- 	return ret;
+ 	pr_info("Remapped %ld page(s)\n", remapped);
++
++	xen_do_remap_nonram();
  }
  
-+/* Remapped non-RAM areas */
-+#define NR_NONRAM_REMAP 4
-+static struct nonram_remap {
-+	phys_addr_t maddr;
-+	phys_addr_t paddr;
-+	size_t size;
-+} xen_nonram_remap[NR_NONRAM_REMAP] __ro_after_init;
-+static unsigned int nr_nonram_remap __ro_after_init;
-+
+ static unsigned long __init xen_get_pages_limit(void)
+@@ -626,14 +628,102 @@ phys_addr_t __init xen_find_free_area(phys_addr_t size)
+ 	return 0;
+ }
+ 
 +/*
-+ * Do the real remapping of non-RAM regions as specified in the
-+ * xen_nonram_remap[] array.
-+ * In case of an error just crash the system.
++ * Swap a non-RAM E820 map entry with RAM above ini_nr_pages.
++ * Note that the E820 map is modified accordingly, but the P2M map isn't yet.
++ * The adaption of the P2M must be deferred until page allocation is possible.
 + */
-+void __init xen_do_remap_nonram(void)
++static void __init xen_e820_swap_entry_with_ram(struct e820_entry *swap_entry)
 +{
-+	unsigned int i;
-+	unsigned int remapped = 0;
-+	const struct nonram_remap *remap = xen_nonram_remap;
-+	unsigned long pfn, mfn, end_pfn;
++	struct e820_entry *entry;
++	unsigned int mapcnt;
++	phys_addr_t mem_end = PFN_PHYS(ini_nr_pages);
++	phys_addr_t swap_addr, swap_size, entry_end;
 +
-+	for (i = 0; i < nr_nonram_remap; i++) {
-+		end_pfn = PFN_UP(remap->paddr + remap->size);
-+		pfn = PFN_DOWN(remap->paddr);
-+		mfn = PFN_DOWN(remap->maddr);
-+		while (pfn < end_pfn) {
-+			if (!set_phys_to_machine(pfn, mfn))
-+				panic("Failed to set p2m mapping for pfn=%lx mfn=%lx\n",
-+				       pfn, mfn);
++	swap_addr = PAGE_ALIGN_DOWN(swap_entry->addr);
++	swap_size = PAGE_ALIGN(swap_entry->addr - swap_addr + swap_entry->size);
++	entry = xen_e820_table.entries;
 +
-+			pfn++;
-+			mfn++;
-+			remapped++;
++	for (mapcnt = 0; mapcnt < xen_e820_table.nr_entries; mapcnt++) {
++		entry_end = entry->addr + entry->size;
++		if (entry->type == E820_TYPE_RAM && entry->size >= swap_size &&
++		    entry_end - swap_size >= mem_end) {
++			/* Reduce RAM entry by needed space (whole pages). */
++			entry->size -= swap_size;
++
++			/* Add new entry at the end of E820 map. */
++			entry = xen_e820_table.entries +
++				xen_e820_table.nr_entries;
++			xen_e820_table.nr_entries++;
++
++			/* Fill new entry (keep size and page offset). */
++			entry->type = swap_entry->type;
++			entry->addr = entry_end - swap_size +
++				      swap_addr - swap_entry->addr;
++			entry->size = swap_entry->size;
++
++			/* Convert old entry to RAM, align to pages. */
++			swap_entry->type = E820_TYPE_RAM;
++			swap_entry->addr = swap_addr;
++			swap_entry->size = swap_size;
++
++			/* Remember PFN<->MFN relation for P2M update. */
++			xen_add_remap_nonram(swap_addr, entry_end - swap_size,
++					     swap_size);
++
++			/* Order E820 table and merge entries. */
++			e820__update_table(&xen_e820_table);
++
++			return;
 +		}
 +
-+		remap++;
++		entry++;
 +	}
 +
-+	pr_info("Remapped %u non-RAM page(s)\n", remapped);
++	xen_raw_console_write("No suitable area found for required E820 entry remapping action\n");
++	BUG();
 +}
 +
 +/*
-+ * Add a new non-RAM remap entry.
-+ * In case of no free entry found, just crash the system.
++ * Look for non-RAM memory types in a specific guest physical area and move
++ * those away if possible (ACPI NVS only for now).
 + */
-+void __init xen_add_remap_nonram(phys_addr_t maddr, phys_addr_t paddr,
-+				 unsigned long size)
++static void __init xen_e820_resolve_conflicts(phys_addr_t start,
++					      phys_addr_t size)
 +{
-+	BUG_ON((maddr & ~PAGE_MASK) != (paddr & ~PAGE_MASK));
++	struct e820_entry *entry;
++	unsigned int mapcnt;
++	phys_addr_t end;
 +
-+	if (nr_nonram_remap == NR_NONRAM_REMAP) {
-+		xen_raw_console_write("Number of required E820 entry remapping actions exceed maximum value\n");
-+		BUG();
++	if (!size)
++		return;
++
++	end = start + size;
++	entry = xen_e820_table.entries;
++
++	for (mapcnt = 0; mapcnt < xen_e820_table.nr_entries; mapcnt++) {
++		if (entry->addr >= end)
++			return;
++
++		if (entry->addr + entry->size > start &&
++		    entry->type == E820_TYPE_NVS)
++			xen_e820_swap_entry_with_ram(entry);
++
++		entry++;
 +	}
-+
-+	xen_nonram_remap[nr_nonram_remap].maddr = maddr;
-+	xen_nonram_remap[nr_nonram_remap].paddr = paddr;
-+	xen_nonram_remap[nr_nonram_remap].size = size;
-+
-+	nr_nonram_remap++;
 +}
 +
- #ifdef CONFIG_XEN_DEBUG_FS
- #include <linux/debugfs.h>
- #include "debugfs.h"
-diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
-index f46a1dd3624da..a6a21dd055270 100644
---- a/arch/x86/xen/xen-ops.h
-+++ b/arch/x86/xen/xen-ops.h
-@@ -43,6 +43,9 @@ void xen_mm_unpin_all(void);
- #ifdef CONFIG_X86_64
- void __init xen_relocate_p2m(void);
- #endif
-+void __init xen_do_remap_nonram(void);
-+void __init xen_add_remap_nonram(phys_addr_t maddr, phys_addr_t paddr,
-+				 unsigned long size);
- 
+ /*
+  * Check for an area in physical memory to be usable for non-movable purposes.
+- * An area is considered to usable if the used E820 map lists it to be RAM.
++ * An area is considered to usable if the used E820 map lists it to be RAM or
++ * some other type which can be moved to higher PFNs while keeping the MFNs.
+  * In case the area is not usable, crash the system with an error message.
+  */
  void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
- 				   const char *component);
+ 				   const char *component)
+ {
++	xen_e820_resolve_conflicts(start, size);
++
+ 	if (!xen_is_e820_reserved(start, size))
+ 		return;
+ 
 -- 
 2.43.0
 
