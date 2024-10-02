@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE6925771;
-	Wed,  2 Oct 2024 13:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B77425771;
+	Wed,  2 Oct 2024 13:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875332; cv=none; b=L3amzFWHkOKPeH5eC6qT5t/yFMtYd2gzvjqT1qaXkAOZhA1R1e3S2jAhJvSM6Dv7nSz98J+LNUmVjRf3Mjg6Ad/h4mDgCgu+mw1lcTMDvF4w6VDmbyIqOiYDTYLNx7MC99RjigGn7bMIIg7rY+/uucAhV9Ft0dFKAEu2SGwhMFQ=
+	t=1727875336; cv=none; b=B1YuMAskdAVWZknhzTySfFDIZkE5d/6PfX2eYQcY2nbhzD9al9TD4QmDaj+tsKkhh5eWiGP1tPeTRnQZZh2l2jdDaAS881cpHdcRs70MahvG28xW9LbWVGbLkGHFPFnQvXkJIXhHF2Vy6V0HFcyzK/vg+NqEo9y1eOAUAE9Bpmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875332; c=relaxed/simple;
-	bh=0y2LmRMo26t6NZnUm+Rq7ihfpu71XsMbTnDnGyhBpbI=;
+	s=arc-20240116; t=1727875336; c=relaxed/simple;
+	bh=EHpqAAj7chMRrVfZtB52gg2UYA/9jshacE48ZINU0W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeEpS+tR15Hw9iBp+pMUeF4EJr9I3rDF28WFL5kBmJbrFxFMV2KmqTa+YAO+dCLlKgdE8RQcXTcLcP+8gl4d9rQR5hsp51C2ruNGeRxM0rwdafYntnbJALaJSqSNuR7Scc2JhEsWal1Pg14JPd2p0zB9OsjiecEt26mCJWKQy7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zb1ZhAkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWaxzhJpYTnCk4VtKiOsp0k+wOzifDfYKyO/uwIu/SRoR2/EGrhlbmF83P7L/0hR5bAOCQKoM1kxdWFIteguiKmZ5yy4xGfkBhH8D8IeDMhtViuX2ZAa6jptSUvyPv0oLd3hZTVG4OpkFKNku+Qak4rxYBWWwRQoLzy2VbT/JLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouWElaVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zb1ZhAkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C4FC4CECE;
-	Wed,  2 Oct 2024 13:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouWElaVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457C9C4CEC5;
+	Wed,  2 Oct 2024 13:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875332;
-	bh=0y2LmRMo26t6NZnUm+Rq7ihfpu71XsMbTnDnGyhBpbI=;
+	s=korg; t=1727875335;
+	bh=EHpqAAj7chMRrVfZtB52gg2UYA/9jshacE48ZINU0W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zb1ZhAklIvU8gCuVsJZJ72KIJ7pLS+Ktm5NrH4eK1Q2uLCKwW/QmtPH8BDMhoG766
-	 sIm7HxsdfdoXLR72Szd941d3XlqwU/F0IBSnhWTU5zDOclMc2811x5yQmvx2/Lit+h
-	 KuoCyL4uIPYGmO71121EVSIsJV9QG+4vJhijNdZg=
+	b=ouWElaVTBFno04cZQVarzcebq/kONlDd4bqkyuWslI+rHYOIrOnPvrsOSytEumXqq
+	 mL9ceJhdrNTKpfrLdA4PFSGDhgLlOayXOwDKuf/sGDYi99w38wJuIc2WPNwQghaf7H
+	 eIywBMC1W8biVxR2GL0fysZn/bGiPExP9x+zBWfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	hhorace <hhoracehsu@gmail.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 067/695] netfilter: nft_dynset: annotate data-races around set timeout
-Date: Wed,  2 Oct 2024 14:51:05 +0200
-Message-ID: <20241002125825.159025991@linuxfoundation.org>
+Subject: [PATCH 6.11 050/695] wifi: cfg80211: fix bug of mapping AF3x to incorrect User Priority
+Date: Wed,  2 Oct 2024 14:50:48 +0200
+Message-ID: <20241002125824.485779507@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,51 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: hhorace <hhoracehsu@gmail.com>
 
-[ Upstream commit c5ad8ed61fa8410b272c077ec167c593602b4542 ]
+[ Upstream commit a68b22e2905b04f376e2fa116be5e48b948f81c8 ]
 
-set timeout can be read locklessly while being updated from control
-plane, add annotation.
+According to RFC8325 4.3, Multimedia Streaming: AF31(011010, 26),
+AF32(011100, 28), AF33(011110, 30) maps to User Priority = 4
+and AC_VI (Video).
 
-Fixes: 123b99619cca ("netfilter: nf_tables: honor set timeout and garbage collection updates")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+However, the original code remain the default three Most Significant
+Bits (MSBs) of the DSCP, which makes AF3x map to User Priority = 3
+and AC_BE (Best Effort).
+
+Fixes: 6fdb8b8781d5 ("wifi: cfg80211: Update the default DSCP-to-UP mapping")
+Signed-off-by: hhorace <hhoracehsu@gmail.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20240807082205.1369-1-hhoracehsu@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_dynset.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/wireless/util.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index b4ada3ab21679..489a9b34f1ecc 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -56,7 +56,7 @@ static struct nft_elem_priv *nft_dynset_new(struct nft_set *set,
- 	if (!atomic_add_unless(&set->nelems, 1, set->size))
- 		return NULL;
- 
--	timeout = priv->timeout ? : set->timeout;
-+	timeout = priv->timeout ? : READ_ONCE(set->timeout);
- 	elem_priv = nft_set_elem_init(set, &priv->tmpl,
- 				      &regs->data[priv->sreg_key], NULL,
- 				      &regs->data[priv->sreg_data],
-@@ -95,7 +95,7 @@ void nft_dynset_eval(const struct nft_expr *expr,
- 			     expr, regs, &ext)) {
- 		if (priv->op == NFT_DYNSET_OP_UPDATE &&
- 		    nft_set_ext_exists(ext, NFT_SET_EXT_EXPIRATION)) {
--			timeout = priv->timeout ? : set->timeout;
-+			timeout = priv->timeout ? : READ_ONCE(set->timeout);
- 			*nft_set_ext_expiration(ext) = get_jiffies_64() + timeout;
- 		}
- 
-@@ -313,7 +313,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 		nft_dynset_ext_add_expr(priv);
- 
- 	if (set->flags & NFT_SET_TIMEOUT) {
--		if (timeout || set->timeout) {
-+		if (timeout || READ_ONCE(set->timeout)) {
- 			nft_set_ext_add(&priv->tmpl, NFT_SET_EXT_TIMEOUT);
- 			nft_set_ext_add(&priv->tmpl, NFT_SET_EXT_EXPIRATION);
- 		}
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 9a7c3adc8a3bf..edeeb056fe4da 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -998,10 +998,10 @@ unsigned int cfg80211_classify8021d(struct sk_buff *skb,
+ 	 * Diffserv Service Classes no update is needed:
+ 	 * - Standard: DF
+ 	 * - Low Priority Data: CS1
+-	 * - Multimedia Streaming: AF31, AF32, AF33
+ 	 * - Multimedia Conferencing: AF41, AF42, AF43
+ 	 * - Network Control Traffic: CS7
+ 	 * - Real-Time Interactive: CS4
++	 * - Signaling: CS5
+ 	 */
+ 	switch (dscp >> 2) {
+ 	case 10:
+@@ -1026,9 +1026,11 @@ unsigned int cfg80211_classify8021d(struct sk_buff *skb,
+ 		/* Broadcasting video: CS3 */
+ 		ret = 4;
+ 		break;
+-	case 40:
+-		/* Signaling: CS5 */
+-		ret = 5;
++	case 26:
++	case 28:
++	case 30:
++		/* Multimedia Streaming: AF31, AF32, AF33 */
++		ret = 4;
+ 		break;
+ 	case 44:
+ 		/* Voice Admit: VA */
 -- 
 2.43.0
 
