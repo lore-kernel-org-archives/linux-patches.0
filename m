@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5711D0E24;
-	Wed,  2 Oct 2024 14:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7943232;
+	Wed,  2 Oct 2024 14:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878847; cv=none; b=WXjWOYIfHxXxBQ/78EmLxCnvozRwT1TMRnI/M8c3zNDa+3C1OdOQ0Y07ykRLX9fG5e/Iy6wyVLMHC7CFmYGAdVYrbvqEF4X+AHepga2mctQ6A1NrGV8O8aY4/ARbh2sPfewgKGFWhqDKKRv0h/T6EWae1qQlt0i/fv6KsGxuMjM=
+	t=1727878850; cv=none; b=vGrlzaW5BlrZ5yeY6aURX0WgEPdmzRi+86FpmSFOv2Q6wshwdfh+I3rtkHB9T7v8fK6c16e5vtakhDELWFLKo6qk7CGIXJo3NlaDrxKK/ccR6+ynuC+wutz8yHS2hpiF4PvRNBH6TTreQ8+GmktFSbulkJeLm7QKVx1QCoeesCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878847; c=relaxed/simple;
-	bh=GqvpvuU7k6bF80BsziqfAkZ92giUJlQ7y7yN5CeQ98o=;
+	s=arc-20240116; t=1727878850; c=relaxed/simple;
+	bh=uuRDCimW1atwgO281iUCuT/PoGDiE2ikmi3ZsemqhmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvdGbVvgjRjvbX4RiBVijyVvJI0dJHt2bOlGiNk/Fnr3Z3Vx4yiF8i+uXzC7mo0095GwW71p0lPrzPlQTAHe2DPmg7JudkTYb0Ye7LzGL8mzLjwfSyHRrzp01r8DY2Xm33cZ442V/lVnj8zCD4/oNtiImrFJSzR1OjwQ2/rmfvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omk10pG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HH7wBoMxptxcUxbzTr+NAoJcfojuwQQWFSGCk1bXAS0lA7rVhdApl7TS6EiS7aVq32MbaFBqo0QHWoNHIrp+DpLCwoGpQGSToHPEbDRUbcMrgDw6BgUMyeM/r6HxsB58EnavniVAC+jRGt9+3Pa9Sx6B94VkI/ZbacxRtBgL4hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqxUW0j0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omk10pG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A25C4CEC5;
-	Wed,  2 Oct 2024 14:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqxUW0j0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612A3C4CEC5;
+	Wed,  2 Oct 2024 14:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878846;
-	bh=GqvpvuU7k6bF80BsziqfAkZ92giUJlQ7y7yN5CeQ98o=;
+	s=korg; t=1727878849;
+	bh=uuRDCimW1atwgO281iUCuT/PoGDiE2ikmi3ZsemqhmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omk10pG3xggzbgs6L+E/cTu2AD96mEiUpqi62/jwYka9lAQB3NkAtZL3TF7M1LOhs
-	 8fuDrykfTY3VN7DWlf90l4kWqiiVlPstCvoqzgIOA9fC6pG+JYCMhTBDGrIIKk7QBv
-	 ut0AG84aCqUJBNjTx+A5ZvKSRdv/CduyNdbCEpOQ=
+	b=iqxUW0j0SSLs+a4dPNe7/0UtpFMATvZf0ko2zI1cXkW89ZtkDFUga2PLsRw2djxBL
+	 8GFWiic9JrPIE0Bvj8ep05+O61P8IXLg0ZHu0UxAnerD9KL4IuI1s83CpeW45OPtXR
+	 YyHnluSsBRpJjNjZOdDFg5JHolfv5Yl8vc6zmqUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Fiona Klute <fiona.klute@gmx.de>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.10 553/634] wifi: rtw88: 8822c: Fix reported RX band width
-Date: Wed,  2 Oct 2024 15:00:53 +0200
-Message-ID: <20241002125832.938249774@linuxfoundation.org>
+Subject: [PATCH 6.10 554/634] wifi: rtw88: 8703b: Fix reported RX band width
+Date: Wed,  2 Oct 2024 15:00:54 +0200
+Message-ID: <20241002125832.979891636@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,56 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
+commit 0129e5ff2842450f1426e312b5e580c0814e0de3 upstream.
 
-"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
+The definition of GET_RX_DESC_BW is incorrect. Fix it according to the
+GET_RX_STATUS_DESC_BW_8703B macro from the official driver.
 
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
-
-This is because the RX band width is calculated incorrectly. Fix the
-calculation according to the phydm_rxsc_2_bw() function from the
-official drivers.
-
-After:
-
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
-
-It also works correctly with the AP configured for 20 MHz and 40 MHz.
-
-Tested with RTL8822CE.
+Tested only with RTL8812AU, which uses the same bits.
 
 Cc: stable@vger.kernel.org
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Fixes: 9bb762b3a957 ("wifi: rtw88: Add definitions for 8703b chip")
 Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Tested-by: Fiona Klute <fiona.klute@gmx.de>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
+Link: https://patch.msgid.link/1cfed9d5-4304-4b96-84c5-c347f59fedb9@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rx.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -2611,12 +2611,14 @@ static void query_phy_status_page1(struc
- 	else
- 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
+diff --git a/drivers/net/wireless/realtek/rtw88/rx.h b/drivers/net/wireless/realtek/rtw88/rx.h
+index d3668c4efc24..8a072dd3d73c 100644
+--- a/drivers/net/wireless/realtek/rtw88/rx.h
++++ b/drivers/net/wireless/realtek/rtw88/rx.h
+@@ -41,7 +41,7 @@ enum rtw_rx_desc_enc {
+ #define GET_RX_DESC_TSFL(rxdesc)                                               \
+ 	le32_get_bits(*((__le32 *)(rxdesc) + 0x05), GENMASK(31, 0))
+ #define GET_RX_DESC_BW(rxdesc)                                                 \
+-	(le32_get_bits(*((__le32 *)(rxdesc) + 0x04), GENMASK(31, 24)))
++	(le32_get_bits(*((__le32 *)(rxdesc) + 0x04), GENMASK(5, 4)))
  
--	if (rxsc >= 9 && rxsc <= 12)
-+	if (rxsc == 0)
-+		bw = rtwdev->hal.current_band_width;
-+	else if (rxsc >= 1 && rxsc <= 8)
-+		bw = RTW_CHANNEL_WIDTH_20;
-+	else if (rxsc >= 9 && rxsc <= 12)
- 		bw = RTW_CHANNEL_WIDTH_40;
--	else if (rxsc >= 13)
--		bw = RTW_CHANNEL_WIDTH_80;
- 	else
--		bw = RTW_CHANNEL_WIDTH_20;
-+		bw = RTW_CHANNEL_WIDTH_80;
- 
- 	channel = GET_PHY_STAT_P1_CHANNEL(phy_status);
- 	rtw_set_rx_freq_band(pkt_stat, channel);
+ void rtw_rx_stats(struct rtw_dev *rtwdev, struct ieee80211_vif *vif,
+ 		  struct sk_buff *skb);
+-- 
+2.46.2
+
 
 
