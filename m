@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605CE1D0793;
-	Wed,  2 Oct 2024 13:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465D51D07AE;
+	Wed,  2 Oct 2024 13:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875719; cv=none; b=Qo3TPxX2LEph4kxQlEbqwGyR63gN9ESwzGNq8fRThSVYD4oZe5u3+EIwJ4eHpWTTFdSV0/EHsc5F2cgsFrIR82EpsD3iFhGCrUGubPfllmV3QR94jxwb0OG/SJjRF+kNiEZKVI8WnH+XDMzg8ivf5G6XK6ZmByE9m+44eT8Gw/I=
+	t=1727875722; cv=none; b=XV7jQYZJnEogdNdoIeur4j1obl7IzjR6mtLTa6BusRSA55itz2kJc0DsbrhRAjwx1kI10MMVbCMpQeK0VGs4fND+PrTALuuFcKggnZaqqgyMx6BvMpQj2vlZ2/Uy5b4bq8+KGUBon1kf0jqUdqW1ASEsmw/fV3OpJIRaXyoa+s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875719; c=relaxed/simple;
-	bh=yDP0KzAVKRFlSn/Ge5BnTEDHJZdE4OqPmmyJKhEcRJU=;
+	s=arc-20240116; t=1727875722; c=relaxed/simple;
+	bh=OvaLb3/c03vmXEg/1NF228PVrRpDY9LVde6YuquigO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpylqsRI+ovdpCYshgp/35LNcWj7o8NRItJ3L/ktxS6jA1prfq+gXFwjQlk0+aMH1GLl/RcoGSKHueJ77CYh3R0sXmlepbndz3HheRd4Vuw3lC9fXerQxS8Xla5KVY9nZmJPlVDSm6yI6Wu/voQxKWQPrv2d+z4mGZMDdggKpAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nH01zVao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lkcl93drN9IeFMYS+W1Ua/6dW6RKv1fS/l8Csc4nq4kkFxwhja0KH/0RZRw+nu0MO0EcROsVQx4y/eeY1UcTn3GyPsEr7P12vZIrF2uEBoqoRJGa2b0EuhvHqG2qtlrrjqokri16rrJliL21VrCw58D2LBJWnPAvY9qe9efKq50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiNsgHKr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nH01zVao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB86C4CECD;
-	Wed,  2 Oct 2024 13:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiNsgHKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43A2C4CEC5;
+	Wed,  2 Oct 2024 13:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875719;
-	bh=yDP0KzAVKRFlSn/Ge5BnTEDHJZdE4OqPmmyJKhEcRJU=;
+	s=korg; t=1727875722;
+	bh=OvaLb3/c03vmXEg/1NF228PVrRpDY9LVde6YuquigO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nH01zVaoC7/Xurd44RD+CmJXcAwN6sHpX8K0nndPBLsuPq4tVgC8cfqeOiVp6RWck
-	 1SPpepmnN/+4XBjQzlEiMlhLPNLwyXJI3AR8hFvZQdZQ6+sCA2JCIDlEpYZIHRrip/
-	 PIg/uEmynbvNB+5rzSUa3KM0OmkB1vNPTTx8zj9Q=
+	b=LiNsgHKrnRPiJW46XXGp7TLx7eremBVrarrL0HzhAKt51NvIve+c0n0SMaUtXhhMk
+	 Es87ogMOmZvYpJdMLYdHvcRYVy7ESKUBNFA5x9AW7rcXYNyWJLyd33/wC+qDF+Af//
+	 9xzTukGEplyEGIGpN/7rbbu58uqcJvQBRywxM1NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 198/695] drm/stm: Fix an error handling path in stm_drm_platform_probe()
-Date: Wed,  2 Oct 2024 14:53:16 +0200
-Message-ID: <20241002125830.368913475@linuxfoundation.org>
+Subject: [PATCH 6.11 199/695] drm/stm: ltdc: check memory returned by devm_kzalloc()
+Date: Wed,  2 Oct 2024 14:53:17 +0200
+Message-ID: <20241002125830.407480768@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit ce7c90bfda2656418c69ba0dd8f8a7536b8928d4 ]
+[ Upstream commit fd39730c58890cd7f0a594231e19bb357f28877c ]
 
-If drm_dev_register() fails, a call to drv_load() must be undone, as
-already done in the remove function.
+devm_kzalloc() can fail and return NULL pointer. Check its return status.
+Identified with Coccinelle (kmerr.cocci script).
 
-Fixes: b759012c5fa7 ("drm/stm: Add STM32 LTDC driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: 484e72d3146b ("drm/stm: ltdc: add support of ycbcr pixel formats")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20fff7f853f20a48a96db8ff186124470ec4d976.1704560028.git.christophe.jaillet@wanadoo.fr
+Link: https://patchwork.freedesktop.org/patch/msgid/20230531072854.142629-1-claudiu.beznea@microchip.com
 Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/stm/drv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/stm/ltdc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/stm/drv.c b/drivers/gpu/drm/stm/drv.c
-index e8523abef27a5..4d2db079ad4ff 100644
---- a/drivers/gpu/drm/stm/drv.c
-+++ b/drivers/gpu/drm/stm/drv.c
-@@ -203,12 +203,14 @@ static int stm_drm_platform_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
+index 5576fdae49623..5aec1e58c968c 100644
+--- a/drivers/gpu/drm/stm/ltdc.c
++++ b/drivers/gpu/drm/stm/ltdc.c
+@@ -1580,6 +1580,8 @@ static struct drm_plane *ltdc_plane_create(struct drm_device *ddev,
+ 			       ARRAY_SIZE(ltdc_drm_fmt_ycbcr_sp) +
+ 			       ARRAY_SIZE(ltdc_drm_fmt_ycbcr_fp)) *
+ 			       sizeof(*formats), GFP_KERNEL);
++	if (!formats)
++		return NULL;
  
- 	ret = drm_dev_register(ddev, 0);
- 	if (ret)
--		goto err_put;
-+		goto err_unload;
- 
- 	drm_fbdev_dma_setup(ddev, 16);
- 
- 	return 0;
- 
-+err_unload:
-+	drv_unload(ddev);
- err_put:
- 	drm_dev_put(ddev);
- 
+ 	for (i = 0; i < ldev->caps.pix_fmt_nb; i++) {
+ 		drm_fmt = ldev->caps.pix_fmt_drm[i];
 -- 
 2.43.0
 
