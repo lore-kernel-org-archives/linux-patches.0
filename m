@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15531D079F;
-	Wed,  2 Oct 2024 13:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A294D1D079E;
+	Wed,  2 Oct 2024 13:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876556; cv=none; b=DPgJmpOszPl2gsr0Z0iQljveIgizkd041Gh35dmbL8XROVQBRgwF9n6hn2qJBeWOhy+DoWAX/X0tp0o8Bn1QMTQHy06FaiOQwRCXR2j7L3DOPGZHsgbU3nFqsooANrbY65hpMNOxqFOqeSMwyuD433OsDFr6gO2BbpbrVmnRI0o=
+	t=1727876559; cv=none; b=uTe0Cdfj7tw4/hEq5+6dg2sApN5tvglIncJoBBkGpbdVwmQxsPq2RpLYKfy4Qtl71vEgUDYWCXwv5YaXln+qIGQbUMiVZ0h0jGbI/yFkk/F239vjjjKuyqhoZ5MpAvYCM5+TU6MpDI2gGfnKsAmhJosJcx8Cm8fuhGFcsSDToJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876556; c=relaxed/simple;
-	bh=MxeOZjjDIunHkLZ3OLM/wn9WItA/C/4Wq8b68/CC+xc=;
+	s=arc-20240116; t=1727876559; c=relaxed/simple;
+	bh=HA7xc5AfffQB3FkV+e5B3G1WmfhSey8mtFvm6wDGsVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CykvSdikiHuPBb+2DBo66V5NXrJU8pE5anyl+PFjP1vkRaeERrvHWjT3bU+ywTWnul49T9RkD6zRNl22ez6qcTdU+bTwL9pwPg07PGHVGOurJapLJID7ZiD4na1iuRsOzXegRBT/c/BcbkEOfOin7J6wR94nF6diH+hv0Or9XTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evCINygi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tmaarQ2aUrq/MwOTKuSbGl2pqqKQyGievW4j31j1gV5gbS3h+kmeVzJpE3JPHkx8NP9fGJmm5H2R2Ua2yIjfLN5yzmDV6ws4xAFSdQ1IhEP5QQU4D7VB6uR0bp8exZO6En0bNzT+rPFzdrIkcRxQ86IUEQ/0930Vqp+Ov0Zrbqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9V97djb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evCINygi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39252C4CECE;
-	Wed,  2 Oct 2024 13:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9V97djb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A48CC4CEC5;
+	Wed,  2 Oct 2024 13:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876556;
-	bh=MxeOZjjDIunHkLZ3OLM/wn9WItA/C/4Wq8b68/CC+xc=;
+	s=korg; t=1727876559;
+	bh=HA7xc5AfffQB3FkV+e5B3G1WmfhSey8mtFvm6wDGsVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evCINygiifPNGxXTH7wcRmZhhKwgfvgaRTjo4jvcqQ45sJmd0W3zv6UATxkwS96vL
-	 VyVtlAXfZSNv0EFI4MUGSZIg/jkWuwfunucp0SbZhY6bhVPaS0tQpk147CcN2MKv01
-	 oVB1KX7EijTl09bFYxSa3qkec/aYY0gWdBmi8Pdg=
+	b=a9V97djb+A3WofDWV5mP/bweAC4vSGfCnoo2dTqZFG74U4inHZeEy9EDdq96IiOB7
+	 rPbpAvKf2pzQ4Lx9rDccbix6ltBq7S2PuJm5xMFH2t+tlez/YqQEjh7rKbySHzOnEP
+	 WXsdtdxMdCmarhMSO8jJnq5dYnONUC9r7MZ1QHa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 484/695] net: phy: aquantia: fix applying active_low bit after reset
-Date: Wed,  2 Oct 2024 14:58:02 +0200
-Message-ID: <20241002125841.789831281@linuxfoundation.org>
+Subject: [PATCH 6.11 458/695] iio: chemical: bme680: Fix read/write ops to device by adding mutexes
+Date: Wed,  2 Oct 2024 14:57:36 +0200
+Message-ID: <20241002125840.738422719@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,50 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit 6f9defaf99122d1af9c2562181c77bc99be0672d ]
+[ Upstream commit 77641e5a477d428335cd094b88ac54e09ccb70f4 ]
 
-for_each_set_bit was used wrongly in aqr107_config_init() when iterating
-over LEDs. Drop misleading 'index' variable and call
-aqr_phy_led_active_low_set() for each set bit representing an LED which
-is driven by VDD instead of GND pin.
+Add mutexes in the {read/write}_raw() functions of the device to guard the
+read/write of data from/to the device. This is necessary because for any
+operation other than temperature, multiple reads need to take place from
+the device. Even though regmap has a locking by itself, it won't protect us
+from multiple applications trying to read at the same time temperature and
+pressure since the pressure reading includes an internal temperature
+reading and there is nothing to ensure that this temperature+pressure
+reading will happen sequentially without any other operation interfering
+in the meantime.
 
-Fixes: 61578f679378 ("net: phy: aquantia: add support for PHY LEDs")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/9b1f0cd91f4cda54c8be56b4fe780480baf4aa0f.1726580902.git.daniel@makrotopia.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://patch.msgid.link/20240609233826.330516-2-vassilisamir@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/aquantia/aquantia_main.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/chemical/bme680_core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 57b8b8f400fd4..4d156d406bab9 100644
---- a/drivers/net/phy/aquantia/aquantia_main.c
-+++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -489,7 +489,7 @@ static int aqr107_config_init(struct phy_device *phydev)
+diff --git a/drivers/iio/chemical/bme680_core.c b/drivers/iio/chemical/bme680_core.c
+index 500f56834b01f..a6bf689833dad 100644
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -10,6 +10,7 @@
+  */
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
+@@ -52,6 +53,7 @@ struct bme680_calib {
+ struct bme680_data {
+ 	struct regmap *regmap;
+ 	struct bme680_calib bme680;
++	struct mutex lock; /* Protect multiple serial R/W ops to device. */
+ 	u8 oversampling_temp;
+ 	u8 oversampling_press;
+ 	u8 oversampling_humid;
+@@ -827,6 +829,8 @@ static int bme680_read_raw(struct iio_dev *indio_dev,
  {
- 	struct aqr107_priv *priv = phydev->priv;
- 	u32 led_active_low;
--	int ret, index = 0;
-+	int ret;
+ 	struct bme680_data *data = iio_priv(indio_dev);
  
- 	/* Check that the PHY interface type is compatible */
- 	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
-@@ -516,10 +516,9 @@ static int aqr107_config_init(struct phy_device *phydev)
++	guard(mutex)(&data->lock);
++
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_PROCESSED:
+ 		switch (chan->type) {
+@@ -871,6 +875,8 @@ static int bme680_write_raw(struct iio_dev *indio_dev,
+ {
+ 	struct bme680_data *data = iio_priv(indio_dev);
  
- 	/* Restore LED polarity state after reset */
- 	for_each_set_bit(led_active_low, &priv->leds_active_low, AQR_MAX_LEDS) {
--		ret = aqr_phy_led_active_low_set(phydev, index, led_active_low);
-+		ret = aqr_phy_led_active_low_set(phydev, led_active_low, true);
- 		if (ret)
- 			return ret;
--		index++;
- 	}
++	guard(mutex)(&data->lock);
++
+ 	if (val2 != 0)
+ 		return -EINVAL;
  
- 	return 0;
+@@ -967,6 +973,7 @@ int bme680_core_probe(struct device *dev, struct regmap *regmap,
+ 		name = bme680_match_acpi_device(dev);
+ 
+ 	data = iio_priv(indio_dev);
++	mutex_init(&data->lock);
+ 	dev_set_drvdata(dev, indio_dev);
+ 	data->regmap = regmap;
+ 	indio_dev->name = name;
 -- 
 2.43.0
 
