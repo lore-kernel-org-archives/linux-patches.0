@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9667119F411;
-	Wed,  2 Oct 2024 14:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8A019F411;
+	Wed,  2 Oct 2024 14:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878009; cv=none; b=RhXGkf95QR1/UKgOgqsPZXpKL9X4NbSDsTyKu/VoSZCcwSa+kTo6tym09YyI5xWpJNcqerNTbNboit8S2lusQBQM5BCRn7Krit8LwVssfd/ptSGPjcacMW3HRwob4DkZTH0C8fwVBP72F3V0Z5if2zfeWR446RAnTnBbkwgwa1k=
+	t=1727878013; cv=none; b=T95zIsGZI5t+r6eGLj2EYhlj3HmlEPMpM05a3AQxX5LbYJx8XszACWcNW8SUC6NaBE210Uk57BOro1NvI2ZbiXIa03fEtHLC5ab/WvIQU5kNBsiZD2F3EmOJ0OXDscUPPZP5+/2icEVmydzwXABqLh7ZtwwMLXY0WYBiFZhGF2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878009; c=relaxed/simple;
-	bh=QWvRTreEEWbwk8ZwukEmUWVe/AZO1+nFeg3KJy95iKY=;
+	s=arc-20240116; t=1727878013; c=relaxed/simple;
+	bh=/AlohaC9M0xaWlzgvmGv/g58xFAXvBjgIaquBQocN1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZv7sduA/Xd6Ayr2E+itLSUm7Vi83DD7cH12iYaFDjt/+ivOCjtU8wz+mJ+ZGVDa+ag7l1BQIukZRqsJ8B38aPPgh8SeubeljGMfAroKVyangy7iYNowXedPpbpElCDQGSpN1EuJRPOKiF6fHaNMHunCfRRnyr0czn59g1VzzwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TK+OsgUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTpQi7bhy8wOC7jRiLV+wMGGA7Pj4W83rPyv9ESL2FUaAt3CvNHbNxN8tZuzuD7lHcrMZPg/x5p02o26Cd8S+Q/YWWGGwz8pibF2gfWV/TFDAFPi3r8CUfeNvYw6HvRJrR/q8V2cjPD5HF/Cwuu1SMrhqFRrmOUjm4mdShbHsgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNB9h3Lx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TK+OsgUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C6DC4CEC5;
-	Wed,  2 Oct 2024 14:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNB9h3Lx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0B6C4CECE;
+	Wed,  2 Oct 2024 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878009;
-	bh=QWvRTreEEWbwk8ZwukEmUWVe/AZO1+nFeg3KJy95iKY=;
+	s=korg; t=1727878012;
+	bh=/AlohaC9M0xaWlzgvmGv/g58xFAXvBjgIaquBQocN1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TK+OsgUQ2sPUru33gmyO8v8gFBgWgaCVs9zK/VB72BYF9RuqA3dAZwP64OBRyqRm5
-	 4M6+Y4ypkhgue6UbkngPfH9GfQnIoX8TiGcpwXKOwY+V2gIla/shxqEvlF6YZdtDdk
-	 0GHU2sMltOyW5c3M/Nv1rMbuYxaMu+EMpuHjCty4=
+	b=vNB9h3LxyTa/HSPkMTKlElT8/koV9NrgaUv9xAhEI1Rv338O8EZ0QJZgCi9pSifWD
+	 Yj0mFxmmx5RHjKokQ080zDQWxKk9y0xkg85vVYdyihlqdRY8ZMoi0ckdLgpMqfFZnf
+	 aM7L4pg+U38seLaafTgVc3/e2NocAegjeDhpN/+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Geliang Tang <geliang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 239/634] selftests/bpf: Fix error compiling bpf_iter_setsockopt.c with musl libc
-Date: Wed,  2 Oct 2024 14:55:39 +0200
-Message-ID: <20241002125820.534053158@linuxfoundation.org>
+Subject: [PATCH 6.10 240/634] selftests/bpf: Drop unneeded error.h includes
+Date: Wed,  2 Oct 2024 14:55:40 +0200
+Message-ID: <20241002125820.573081238@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,54 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 7b10f0c227ce3fa055d601f058dc411092a62a78 ]
+[ Upstream commit 69f409469c9b1515a5db40d5a36fda372376fa2d ]
 
-Existing code calls getsockname() with a 'struct sockaddr_in6 *' argument
-where a 'struct sockaddr *' argument is declared, yielding compile errors
-when building for mips64el/musl-libc:
+The addition of general support for unprivileged tests in test_loader.c
+breaks building test_verifier on non-glibc (e.g. musl) systems, due to the
+inclusion of glibc extension '<error.h>' in 'unpriv_helpers.c'. However,
+the header is actually not needed, so remove it to restore building.
 
-  bpf_iter_setsockopt.c: In function 'get_local_port':
-  bpf_iter_setsockopt.c:98:30: error: passing argument 2 of 'getsockname' from incompatible pointer type [-Werror=incompatible-pointer-types]
-     98 |         if (!getsockname(fd, &addr, &addrlen))
-        |                              ^~~~~
-        |                              |
-        |                              struct sockaddr_in6 *
-  In file included from .../netinet/in.h:10,
-                   from .../arpa/inet.h:9,
-                   from ./test_progs.h:17,
-                   from bpf_iter_setsockopt.c:5:
-  .../sys/socket.h:391:23: note: expected 'struct sockaddr * restrict' but argument is of type 'struct sockaddr_in6 *'
-    391 | int getsockname (int, struct sockaddr *__restrict, socklen_t *__restrict);
-        |                       ^
-  cc1: all warnings being treated as errors
+Similarly for sk_lookup.c and flow_dissector.c, error.h is not necessary
+and causes problems, so drop them.
 
-This compiled under glibc only because the argument is declared to be a
-"funky" transparent union which includes both types above. Explicitly cast
-the argument to allow compiling for both musl and glibc.
-
-Fixes: eed92afdd14c ("bpf: selftest: Test batching and bpf_(get|set)sockopt in bpf tcp iter")
+Fixes: 1d56ade032a4 ("selftests/bpf: Unprivileged tests for test_loader.c")
+Fixes: 0ab5539f8584 ("selftests/bpf: Tests for BPF_SK_LOOKUP attach point")
+Fixes: 0905beec9f52 ("selftests/bpf: run flow dissector tests in skb-less mode")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Geliang Tang <geliang@kernel.org>
-Link: https://lore.kernel.org/bpf/f41def0f17b27a23b1709080e4e3f37f4cc11ca9.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/5664367edf5fea4f3f4b4aec3b182bcfc6edff9c.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/flow_dissector.c | 1 -
+ tools/testing/selftests/bpf/prog_tests/sk_lookup.c      | 1 -
+ tools/testing/selftests/bpf/unpriv_helpers.c            | 1 -
+ 3 files changed, 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c b/tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c
-index b52ff8ce34db8..16bed9dd8e6a3 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c
-@@ -95,7 +95,7 @@ static unsigned short get_local_port(int fd)
- 	struct sockaddr_in6 addr;
- 	socklen_t addrlen = sizeof(addr);
+diff --git a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+index 9e5f38739104b..9625e6d217913 100644
+--- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
++++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+@@ -1,7 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <test_progs.h>
+ #include <network_helpers.h>
+-#include <error.h>
+ #include <linux/if_tun.h>
+ #include <sys/uio.h>
  
--	if (!getsockname(fd, &addr, &addrlen))
-+	if (!getsockname(fd, (struct sockaddr *)&addr, &addrlen))
- 		return ntohs(addr.sin6_port);
+diff --git a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
+index de2466547efe0..a1ab0af004549 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
++++ b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
+@@ -18,7 +18,6 @@
+ #include <arpa/inet.h>
+ #include <assert.h>
+ #include <errno.h>
+-#include <error.h>
+ #include <fcntl.h>
+ #include <sched.h>
+ #include <stdio.h>
+diff --git a/tools/testing/selftests/bpf/unpriv_helpers.c b/tools/testing/selftests/bpf/unpriv_helpers.c
+index b6d016461fb02..220f6a9638134 100644
+--- a/tools/testing/selftests/bpf/unpriv_helpers.c
++++ b/tools/testing/selftests/bpf/unpriv_helpers.c
+@@ -2,7 +2,6 @@
  
- 	return 0;
+ #include <stdbool.h>
+ #include <stdlib.h>
+-#include <error.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <unistd.h>
 -- 
 2.43.0
 
