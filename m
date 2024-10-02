@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643371D1E74;
-	Wed,  2 Oct 2024 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F441D223C;
+	Wed,  2 Oct 2024 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879474; cv=none; b=eTDpf3YK/Hu2AIigojcKz6T01oRNpfib1nf4HU4hXK2/FHnzCr6xDbdkDpq4R37Agre64OWqpmJzd24eZI0N5WY6+PeKFfg1xSsnFFbjKLHgXumAELbscBPDpLoKKYnfrQ2q6+1VluU15PNNDSgiycWcJoqIKP7iTI1BoVJkx9k=
+	t=1727879477; cv=none; b=O8BRbozyEjp/+FNV6IMImzt0URp6q7XQmi1EQO2IAbVxkP5y7c9ziP+sYQR7b8a21nQfKxu+7mn5yJxofD0/V/axEtdbUJfrSphRxGYpydxqYPQEa6ly0viVmCbVvBI5I9ygxzrPiqgfHzelg3zEHDo7PDlkmHpGTsndzXE8PQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879474; c=relaxed/simple;
-	bh=CqW/JoxyFPI+P28OrrS5925aNSfYCOzdR2tsu9Lxtow=;
+	s=arc-20240116; t=1727879477; c=relaxed/simple;
+	bh=c8vm5i/zZ13iM98a5JGfRoDowCHodDWT5cgIvajAg4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5LNMt+4H1h6wwcOd0KpVGIUUKJJUWjTN5supHyWWlLFruTYeqgTVZMOIF86SHOUV5V75Qe1w/uOMd1mXuS10XUGJeN2a9HejhYd1aIPR+d1o+tGo/YvKlptSAKXXUzqLaqmR8nhz/d0po7TDiBYwRzf+wWT2zTNQC3b2be4kpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qC3nsgfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buqWwW5E2VGZmsft7RCC9rghchfkN7dpEl6sUuhtDBKdqsM3tDAxLnsHufMn2nSCNrMyyOBcp24r7heVd1M3lZiAUHo8z2mt1c7wk482iom8qV11Gk+oYzZiUBizzuA9ILwLtfIBjm5cTERS7lbi9xo8cNIQ1zSvm90yRS6z2qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkf9IjaD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qC3nsgfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3441C4CEC2;
-	Wed,  2 Oct 2024 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkf9IjaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D1C4CEC2;
+	Wed,  2 Oct 2024 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879474;
-	bh=CqW/JoxyFPI+P28OrrS5925aNSfYCOzdR2tsu9Lxtow=;
+	s=korg; t=1727879477;
+	bh=c8vm5i/zZ13iM98a5JGfRoDowCHodDWT5cgIvajAg4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qC3nsgfzZbA93pKqj7ntvp0tBAPVWE0hrY1xLvwolTPZpLkX2v0Txw0Eh9buUpkmw
-	 ANptAfqfuatI8Pn459gEsWyXfF4Z3o88BinFlYsyDr+SbKSjfwd/IiptqttYBnZdPq
-	 Tw2L/F4oDqS3ZGxbZNjcpLfR0VVsxGrkEE/WL2v4=
+	b=hkf9IjaDNO6ir+lsddanXv5hBSUJd5KyqOwZHS4zIbupy6HHFcO8B4O/CIsQ5pZ58
+	 0O56Iaa1L4L+kPrA5buKpNKNTBnYNVLg5JFrVJRpjxPIWDBHPwyP6+3X/7ZSbsqQcd
+	 GYL/jDKJjsBrY5BU8//fxZrNRVWY4Mo6LNKfLS8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Davis <afd@ti.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/538] arm64: dts: ti: k3-j721e-sk: Fix reversed C6x carveout locations
-Date: Wed,  2 Oct 2024 14:55:39 +0200
-Message-ID: <20241002125756.179044337@linuxfoundation.org>
+Subject: [PATCH 6.6 101/538] arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations
+Date: Wed,  2 Oct 2024 14:55:40 +0200
+Message-ID: <20241002125756.218784422@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 9f3814a7c06b7c7296cf8c1622078ad71820454b ]
+[ Upstream commit 1a314099b7559690fe23cdf3300dfff6e830ecb1 ]
 
 The DMA carveout for the C6x core 0 is at 0xa6000000 and core 1 is at
 0xa7000000. These are reversed in DT. While both C6x can access either
@@ -61,20 +61,20 @@ region, so this is not normally a problem, but if we start restricting
 the memory each core can access (such as with firewalls) the cores
 accessing the regions for the wrong core will not work. Fix this here.
 
-Fixes: f46d16cf5b43 ("arm64: dts: ti: k3-j721e-sk: Add DDR carveout memory nodes")
+Fixes: fae14a1cb8dd ("arm64: dts: ti: Add k3-j721e-beagleboneai64")
 Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240801181232.55027-1-afd@ti.com
+Link: https://lore.kernel.org/r/20240801181232.55027-2-afd@ti.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk.dts | 4 ++--
+ arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-index 42fe8eee9ec8c..ccacb65683b5b 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-@@ -119,7 +119,7 @@ main_r5fss1_core1_memory_region: r5f-memory@a5100000 {
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+index 2f954729f3533..7897323376a5b 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+@@ -123,7 +123,7 @@ main_r5fss1_core1_memory_region: r5f-memory@a5100000 {
  			no-map;
  		};
  
@@ -83,7 +83,7 @@ index 42fe8eee9ec8c..ccacb65683b5b 100644
  			compatible = "shared-dma-pool";
  			reg = <0x00 0xa6000000 0x00 0x100000>;
  			no-map;
-@@ -131,7 +131,7 @@ c66_0_memory_region: c66-memory@a6100000 {
+@@ -135,7 +135,7 @@ c66_0_memory_region: c66-memory@a6100000 {
  			no-map;
  		};
  
