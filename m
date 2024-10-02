@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1801D0491;
-	Wed,  2 Oct 2024 13:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080EA376;
+	Wed,  2 Oct 2024 13:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876171; cv=none; b=aCCaaFH07PHEk34+S4yxb8J97DXBUb9RNJlBD4RAeBv1DQIM7KMcwnlAeMZadx3wwCmWQC5waUqA2I8lwB3icvkO0vEHz1zd3anP4TSfjE6tHzZufcyAy24O80Klh3lbFaEWK8gaEZu8vYQqAlFZJnfCvmuez14kwNPu+lgHZpo=
+	t=1727876174; cv=none; b=MaXBpBOinvY32OkgbiDYMTBbv1lLITlFikKp0koVhu4muO6GlgnZ8WMe97+hQ1FNxbiy4gdYycO3aUNSwAma+P90IouONWNuF7gI9oZTLoRbfWBJkSS5+gi4o/2DfQ3zjilku2YP/bIInSYZhF5vCEWy1zlfS1NXrvQfpTv4JWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876171; c=relaxed/simple;
-	bh=oPXHTIEI5jBAfilEuFi7Neo4/aebIIQbk73Xg0Pl3jM=;
+	s=arc-20240116; t=1727876174; c=relaxed/simple;
+	bh=Pc1p23Z7SFiYKt+T4zprHn6yXsmFfWOQpmOPpaZ0s9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NE893OUJvU64i/eAGUrF4DfAZ5g6IjTMci9AiHe5H2Auj8EQc3ELJ5Hiovc9TkWN4YKQzLhOlr5TKDcb0oeAAt+jbszAjvjNW5YblgDrzkib5K18Es+VTT5VHTui5DpetiaoFmAPrXZqQUy3h1TeTfigi5UToWNXCHrCLAB8qkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LynXxnGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WD7Jrq1SV2c2CllPMaAiI/HbEZt+zF6uottqjtKndJPs9u7kLe9TwaNegVhAG5TwSmTWlFjoC5pz3OfV7ubK8q7HrKBwXeSBuemR4on+EiI+mFebrl621HT2kKItHR5MYXm80kN76En45tfIV/GjGXDcvHMH2j9b1PznsC8Sy+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhVVLe+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LynXxnGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4894C4CEC5;
-	Wed,  2 Oct 2024 13:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhVVLe+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854AAC4CEC5;
+	Wed,  2 Oct 2024 13:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876171;
-	bh=oPXHTIEI5jBAfilEuFi7Neo4/aebIIQbk73Xg0Pl3jM=;
+	s=korg; t=1727876173;
+	bh=Pc1p23Z7SFiYKt+T4zprHn6yXsmFfWOQpmOPpaZ0s9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LynXxnGY5x07pGtbuJfhcwG/zZDTpGoISFDmARhJ1i59WViPcAOslrsTQJvB1aopL
-	 Tm63GnTlMiDIfrCx5d2jhf2Ncy6UNvcP6CKK+Dw9XbZvfNpFfd81KxvVrmu9LB/0sB
-	 N+6U8qzkCD4tmDt3UUZWtjzeT3wH29jg3AmkUqzo=
+	b=ZhVVLe+KtCdsDMv06dloHTeM3+FtTuQGA9HQxy1WB9EkSgkGjr27CGo9iwLtG4w2P
+	 EGOUT3O4WY5No6m295heMwVyh2gyfhs2VBvvAlUPDFEgzbB42MqqMWgnCSC65zHaF6
+	 4Z/jqvLYJQskda4TeaT8Fi7vwRDQZW5jkSHGkiYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
+	Terry Lv <terry.lv@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 351/695] quota: avoid missing put_quota_format when DQUOT_SUSPENDED is passed
-Date: Wed,  2 Oct 2024 14:55:49 +0200
-Message-ID: <20241002125836.459396995@linuxfoundation.org>
+Subject: [PATCH 6.11 352/695] remoteproc: imx_rproc: Correct ddr alias for i.MX8M
+Date: Wed,  2 Oct 2024 14:55:50 +0200
+Message-ID: <20241002125836.498998911@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,44 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit d16a5f852025be546b6e4ceef15899db3490f4d7 ]
+[ Upstream commit c901f817792822eda9cec23814a4621fa3e66695 ]
 
-Avoid missing put_quota_format when DQUOT_SUSPENDED is passed to
-dquot_load_quota_sb.
+The DDR Alias address should be 0x40000000 according to RM, so correct
+it.
 
-Link: https://patch.msgid.link/20240715130534.2112678-2-shikemeng@huaweicloud.com
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Fixes: d44c57663723 ("quota: Remove BUG_ON in dquot_load_quota_sb()")
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 4ab8f9607aad ("remoteproc: imx_rproc: support i.MX8MQ/M")
+Reported-by: Terry Lv <terry.lv@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-1-10d0268c7eb1@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/remoteproc/imx_rproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 7ae885e6d5d73..d533b58e21c28 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -2406,7 +2406,7 @@ static int vfs_setup_quota_inode(struct inode *inode, int type)
- int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
- 	unsigned int flags)
- {
--	struct quota_format_type *fmt = find_quota_format(format_id);
-+	struct quota_format_type *fmt;
- 	struct quota_info *dqopt = sb_dqopt(sb);
- 	int error;
- 
-@@ -2416,6 +2416,7 @@ int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
- 	if (WARN_ON_ONCE(flags & DQUOT_SUSPENDED))
- 		return -EINVAL;
- 
-+	fmt = find_quota_format(format_id);
- 	if (!fmt)
- 		return -ESRCH;
- 	if (!sb->dq_op || !sb->s_qcop ||
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 144c8e9a642e8..3c8b64db8823c 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -210,7 +210,7 @@ static const struct imx_rproc_att imx_rproc_att_imx8mq[] = {
+ 	/* QSPI Code - alias */
+ 	{ 0x08000000, 0x08000000, 0x08000000, 0 },
+ 	/* DDR (Code) - alias */
+-	{ 0x10000000, 0x80000000, 0x0FFE0000, 0 },
++	{ 0x10000000, 0x40000000, 0x0FFE0000, 0 },
+ 	/* TCML */
+ 	{ 0x1FFE0000, 0x007E0000, 0x00020000, ATT_OWN  | ATT_IOMEM},
+ 	/* TCMU */
 -- 
 2.43.0
 
