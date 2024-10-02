@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5551D0DCE;
-	Wed,  2 Oct 2024 13:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CA11D097B;
+	Wed,  2 Oct 2024 13:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876389; cv=none; b=lu0n0Ea6Igr1xKLAqexyVf+CzFx3bwSqev2UWSrQ1JKp6zj6L59rH3V80ecKV4bcWy80g1f70k8hfiqEZqqwGOfPLNHSa572UFbPQmxXQfgkA937ZdiPvkSr34a8P9rEEN+JyRNbBwIagXgE4HDyUE1VQ3FiyVB0o6x1YkuiMF0=
+	t=1727876392; cv=none; b=EWt8t/znGESugSS3l5XqJUnoaOpjmXuybImp+Pv46xvvaGLzhZHIywLAum3AHVZGVUQlrts+Gvf88l+cZMKf2a/7xP5u4qRQ9QPsptq/MmghJJ2BiviuIHLuVQCFehHEZt4kIvoyOWa1CQVdzLFXJtiwo/PbWRcBg7PQa6tlTUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876389; c=relaxed/simple;
-	bh=b2nXVYfmSr0hBljKTmG9awfXvFDcA8T8IPfMdcaqe9Q=;
+	s=arc-20240116; t=1727876392; c=relaxed/simple;
+	bh=vGNvC1yQhhLvcNtXJ+b9q+YyG1a1Rt2vt2vLUp9IVN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hp27nLn6qCUXU0A4AW6t++UIr3S14xBZWoMdzDjZzS+ENNeyVnZDIHTsPaaOeDzaRYcJiHLQWePbghesBD4qxpYK36a+LCpgl+gRIo5V6g72FMmCOY1jDWPKkHjEWKSNv2hfezelRziJtBRWJjxtxxZ7QjSAhzdJDuhN6jn9SZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InPN/DmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LzhLlPHa8wpq4YP/1M+9C5lI/uFjUQJmIuXrEC9z8J2u4I5s4Nuf+QAT75UvWDXS/eJStFFzKXP+ZoMUi5lL7+cpUpRuHicdWgco7wDJVSKb9zhQKQuTRQFDtUdcDaD/B9BBwZFN3ln+0a6w54+dkt/R9m39kzNwouViTBpNZaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm4PTpK6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InPN/DmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01246C4CEC5;
-	Wed,  2 Oct 2024 13:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm4PTpK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B96C4CEC5;
+	Wed,  2 Oct 2024 13:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876389;
-	bh=b2nXVYfmSr0hBljKTmG9awfXvFDcA8T8IPfMdcaqe9Q=;
+	s=korg; t=1727876392;
+	bh=vGNvC1yQhhLvcNtXJ+b9q+YyG1a1Rt2vt2vLUp9IVN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InPN/DmXbcxcjsnQjctNkg9UD9mUa+wharDAZeIrw14U4jxNAWMU8HdiIQmIuFSb8
-	 CR17x1FryuPEC31jjSgRD0S/iHHF9vrKLgnpb/+BbmqU1IKLgNEJmEJxgT0/0w8nMN
-	 82+LGDRb5EBzzqphL6aJs1iCKLLR1BpuWqqLzE/M=
+	b=Lm4PTpK6BY+OZUnwYwG+2cYHP918fhOzb33UThDXFhd6nGhksuHygAXzpjqQGgh+f
+	 KdQiuIQoSri83n9qaTDigwD4wakTQQCU8xJhx84AbMVZ29fU5LxhpKOaGf6L9RM4Wd
+	 +r59n6q1U5TQHQ0tnryj1FN6I5kp86PtjN6hCX8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Youzhong Yang <youzhong@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 396/695] nfsd: remove unneeded EEXIST error check in nfsd_do_file_acquire
-Date: Wed,  2 Oct 2024 14:56:34 +0200
-Message-ID: <20241002125838.263287616@linuxfoundation.org>
+Subject: [PATCH 6.11 387/695] media: mediatek: vcodec: Fix H264 multi stateless decoder smatch warning
+Date: Wed,  2 Oct 2024 14:56:25 +0200
+Message-ID: <20241002125837.902987456@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,35 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 81a95c2b1d605743220f28db04b8da13a65c4059 ]
+[ Upstream commit 9be85491619f1953b8a29590ca630be571941ffa ]
 
-Given that we do the search and insertion while holding the i_lock, I
-don't think it's possible for us to get EEXIST here. Remove this case.
+Fix a smatch static checker warning on vdec_h264_req_multi_if.c.
+Which leads to a kernel crash when fb is NULL.
 
-Fixes: c6593366c0bf ("nfsd: don't kill nfsd_files because of lease break error")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Youzhong Yang <youzhong@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 397edc703a10 ("media: mediatek: vcodec: add h264 decoder driver for mt8186")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../vcodec/decoder/vdec/vdec_h264_req_multi_if.c         | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index f4704f5d40867..f09d96ff20652 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -1035,8 +1035,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (likely(ret == 0))
- 		goto open_file;
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_multi_if.c
+index 2d4611e7fa0b2..1ed0ccec56655 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_multi_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_h264_req_multi_if.c
+@@ -724,11 +724,16 @@ static int vdec_h264_slice_single_decode(void *h_vdec, struct mtk_vcodec_mem *bs
+ 		return vpu_dec_reset(vpu);
  
--	if (ret == -EEXIST)
--		goto retry;
- 	trace_nfsd_file_insert_err(rqstp, inode, may_flags, ret);
- 	status = nfserr_jukebox;
- 	goto construction_err;
+ 	fb = inst->ctx->dev->vdec_pdata->get_cap_buffer(inst->ctx);
++	if (!fb) {
++		mtk_vdec_err(inst->ctx, "fb buffer is NULL");
++		return -ENOMEM;
++	}
++
+ 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
+ 	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
+ 
+-	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
+-	c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
++	y_fb_dma = fb->base_y.dma_addr;
++	c_fb_dma = fb->base_c.dma_addr;
+ 	mtk_vdec_debug(inst->ctx, "[h264-dec] [%d] y_dma=%llx c_dma=%llx",
+ 		       inst->ctx->decoded_frame_cnt, y_fb_dma, c_fb_dma);
+ 
 -- 
 2.43.0
 
