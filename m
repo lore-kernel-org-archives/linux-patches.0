@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4111D0B8E;
-	Wed,  2 Oct 2024 14:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CB71D0B90;
+	Wed,  2 Oct 2024 14:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877820; cv=none; b=aueIh3pGbuovzsi4OYX1kK7L1C+2q/9pSbEP+IaIIhO+aX1F99QYh4zhz4H07yVIl8G23Eauy5DWn50BdPI4pwqPasHYKf96SeG/urV1SKesMn1/tHkI78yEIn6ej5/cKsPQtwLsdsN4jnVA5Re5X/9IUT7Qn/CsZGNbTvBBiIY=
+	t=1727877823; cv=none; b=oXVyFNNuVPFKyH14Nhc/QDM6nBxk6m9ifPFFtABLYk5e5//XIrplK5mzEBOVCCxmXSSL4HDTqmHI4ZNHEBMva03vhgqx5DMfiDbEK09py/fFuJOvGkDnCeL02fOe28f5DDs54hUjX8uoALEa4UhXY+xMXtdbQ5109cIgmgMb4GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877820; c=relaxed/simple;
-	bh=i3JA2deXEnZeP0tPfNAX//oFNy47Z7yTOwPxxfRvzmU=;
+	s=arc-20240116; t=1727877823; c=relaxed/simple;
+	bh=PtLEVSJoWZxw70scaMHKn5kg0VBeAA4VgXHH7CP3Kkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSl0B4WTBSFa819SPt1mpI8wbgizrSJrwflCqnfFPaySjuVeBOCaL/4KnmyRB/UwO8zVErWDWoYcmGKQ4f4mKiKsc9DsjAE+bTHbN1vg7HcL6LNW5AeOrMEzixSsOIsSI59GNCAb1iuFLbX6l+SlonWfqF0XNKB6DhwZehHWB+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbXwkk1A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRYpqmAwR2WcSR+jSHKd+WbLkWUYTFyBbkgkekhRQ7NyW4hESM4GtHen9niUJCGRBQ5YKrIWqIGOdtLs+EpsfID3LGjQ4SWrWyPcqawgWXXGnd/Hb1usF4pG+eeEZGVITplo0Vrtvq2PhXAM0EXh3YOcp7ronaqnUKuvWIITyAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0Nwz9rC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbXwkk1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A124FC4CEC2;
-	Wed,  2 Oct 2024 14:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0Nwz9rC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A2AC4CEC2;
+	Wed,  2 Oct 2024 14:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877820;
-	bh=i3JA2deXEnZeP0tPfNAX//oFNy47Z7yTOwPxxfRvzmU=;
+	s=korg; t=1727877822;
+	bh=PtLEVSJoWZxw70scaMHKn5kg0VBeAA4VgXHH7CP3Kkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IbXwkk1AqFXUI5S7dGc2rpq0XhZ1W51RqY+ALmwLPIj9sqjS7B7CnDkD/Z4U1kvbe
-	 FvUD81D6ojj/BQbFPJ7ieYQjrC8QNqeNHnFn/2x/mg6p8TtDmbNS6OJ6v8YW/mu3cK
-	 bwBBcwFnHFsmBswJrRheb8uO/vyVx3So6sCXUgGw=
+	b=Q0Nwz9rC4jURRSdTotRAS9I9SskSJd5vckpuULJaDsRCjpqc2o5huy/n9YgGJbsKV
+	 B7gfaHbn6DwaEMgyCy5Ky4PvYdEuawFEvJJdMteFfI9Qnm5Iw9rUrGZigO77oTTo9X
+	 aUr4AkUFpF0rTVQEj82MxLcyuJcdgPdphURP4+j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Matthias Brugger <matthias.bgg@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 174/634] mtd: rawnand: mtk: Fix init error path
-Date: Wed,  2 Oct 2024 14:54:34 +0200
-Message-ID: <20241002125817.976576951@linuxfoundation.org>
+Subject: [PATCH 6.10 165/634] iommu/amd: Allocate the page table root using GFP_KERNEL
+Date: Wed,  2 Oct 2024 14:54:25 +0200
+Message-ID: <20241002125817.624369376@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 2073ae37d550ea32e8545edaa94ef10b4fef7235 ]
+[ Upstream commit b0a6c883bcd42eeb0850135e529b34b64d57673c ]
 
-Reviewing a series converting the for_each_chil_of_node() loops into
-their _scoped variants made me realize there was no cleanup of the
-already registered NAND devices upon error which may leak memory on
-systems with more than a chip when this error occurs. We should call the
-_nand_chips_cleanup() function when this happens.
+Domain allocation is always done under a sleepable context, the v1 path
+and other drivers use GFP_KERNEL already. Fix the v2 path to also use
+GFP_KERNEL.
 
-Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@kernel.org>
-Link: https://lore.kernel.org/linux-mtd/20240826153019.67106-2-miquel.raynal@bootlin.com
+Fixes: 0d571dcbe7c6 ("iommu/amd: Allocate page table using numa locality info")
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/2-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/mtk_nand.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/io_pgtable_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/mtk_nand.c b/drivers/mtd/nand/raw/mtk_nand.c
-index bf845dd167374..586868b4139f5 100644
---- a/drivers/mtd/nand/raw/mtk_nand.c
-+++ b/drivers/mtd/nand/raw/mtk_nand.c
-@@ -1453,8 +1453,10 @@ static int mtk_nfc_nand_chips_init(struct device *dev, struct mtk_nfc *nfc)
+diff --git a/drivers/iommu/amd/io_pgtable_v2.c b/drivers/iommu/amd/io_pgtable_v2.c
+index 78ac37c5ccc1e..acfe79b326293 100644
+--- a/drivers/iommu/amd/io_pgtable_v2.c
++++ b/drivers/iommu/amd/io_pgtable_v2.c
+@@ -362,7 +362,7 @@ static struct io_pgtable *v2_alloc_pgtable(struct io_pgtable_cfg *cfg, void *coo
+ 	struct protection_domain *pdom = (struct protection_domain *)cookie;
+ 	int ias = IOMMU_IN_ADDR_BIT_SIZE;
  
- 	for_each_child_of_node_scoped(np, nand_np) {
- 		ret = mtk_nfc_nand_chip_init(dev, nfc, nand_np);
--		if (ret)
-+		if (ret) {
-+			mtk_nfc_nand_chips_cleanup(nfc);
- 			return ret;
-+		}
- 	}
+-	pgtable->pgd = iommu_alloc_page_node(pdom->nid, GFP_ATOMIC);
++	pgtable->pgd = iommu_alloc_page_node(pdom->nid, GFP_KERNEL);
+ 	if (!pgtable->pgd)
+ 		return NULL;
  
- 	return 0;
 -- 
 2.43.0
 
