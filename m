@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B01D0499;
-	Wed,  2 Oct 2024 13:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC61D042F;
+	Wed,  2 Oct 2024 13:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877309; cv=none; b=U+mKmvbpF0VI3y8quj4aKKfO7VdW4NjtJhDteN0Um7u8zUq4Zrtjup7iVGS7ZdF5XTtoQGjfF8t6iLSVu8h2i5hnUuD6WvUusG3nsZg6zgRUYQZjmADQQd6igVD0nv3ZlyBxUUGc1SHdbuEug6VEBIUYzRgeYOWRjLohYVweMQc=
+	t=1727877312; cv=none; b=EZF0jmh4FQzZxKPP/GHs4PyqyiSmBkUlfJgTtosufXavMl28yvMdX17RXWXnUoY7dnxbjpWpmYow2B1mwAGDx8OGg8Xq2bp2zt6aWE6syyi2tKSAAwKVO7E/2j09/T43en19HqJ+sXXz+s6EI624V/vn8eDHnp7eqzUhtkcY9EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877309; c=relaxed/simple;
-	bh=UYmcXzp8B2aPWu6cUpJGKIvbFoS3E7oxHeUI9yFWwPQ=;
+	s=arc-20240116; t=1727877312; c=relaxed/simple;
+	bh=ifFzMqI/CSaYiukjJsCfupd/Zy1nrV3kfEtvI+rhYL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQhWzBa2nJhpXevyomkN6GA8lXjIEGkvIuQprIDmuWvZgpB61/zWCG00KFgLGrFdYJVbNBW3weNX3LX7oSu608toFSA2jd/ht4dtnoxT/bxY5MxU1gr/QK/jP4A5tNN7+H830T7HpXWvjOj6twH9LmH8YLLK7uBUblzUva37iko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiIHZmAy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrSqB3DP2FzM47BkutthdjVSNY17OtjWOqGEwuCkvuR4OeLFphoGf/b9oX7Du/VPzRVwtKLO8Wo4cKejpmqHpsHNKgZpVSIE4uyIoJbXvVQQIF/oKTqShh11vW1P6EwP+uJpTpcrbMSLAyN6XJNu7AVOP1MYMGBTMSXv9aVVPH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjDNRt8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiIHZmAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E936C4AF1D;
-	Wed,  2 Oct 2024 13:55:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjDNRt8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F074C4AF54;
+	Wed,  2 Oct 2024 13:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877309;
-	bh=UYmcXzp8B2aPWu6cUpJGKIvbFoS3E7oxHeUI9yFWwPQ=;
+	s=korg; t=1727877311;
+	bh=ifFzMqI/CSaYiukjJsCfupd/Zy1nrV3kfEtvI+rhYL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiIHZmAyDgjN5CVotT6Gzae2fACVIk919Y3idZy6tSO6TwESyVB4syUjfQe6yvije
-	 Bu/Kdjx09FztFkrmHzKQxSuzMr6EsdFw7YkePtTL1mAl1mpaADhB295MDZSIlhnT3N
-	 dLdCvCJHh+T6qs4Hy9fXsJDZHU2GFUF8+9mytuxY=
+	b=jjDNRt8aoShIhFJXaeXxN/H1BOMEJwJDS8EP/eYfVErxXAeVECD94kXZKuVNxJAL7
+	 mMlYmWyYGSeTHDGVQUSuE9QTeIoLJ8+2IXc2BOqB/2iFiAmIH1lhLrT6US8BC6LpTx
+	 2e/WgAA/i9Lbr1shZREsyCAP+BfJy5qzquROBxmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 030/634] thermal: core: Fix rounding of delay jiffies
-Date: Wed,  2 Oct 2024 14:52:10 +0200
-Message-ID: <20241002125812.286065359@linuxfoundation.org>
+Subject: [PATCH 6.10 039/634] wifi: iwlwifi: config: label gl devices as discrete
+Date: Wed,  2 Oct 2024 14:52:19 +0200
+Message-ID: <20241002125812.641691020@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,86 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8144dbe68c493baa412d78f41a57e90a6461f6c3 ]
+[ Upstream commit 8131dd52810dfcdb49fcdc78f5e18e1538b6c441 ]
 
-Using round_jiffies() in thermal_set_delay_jiffies() is invalid because
-its argument should be time in the future in absolute jiffies and it
-computes the result with respect to the current jiffies value at the
-invocation time.  Fortunately, in the majority of cases it does not
-make any difference due to the time_is_after_jiffies() check in
-round_jiffies_common().
+The 'gl' devices are in the bz family, but they're not,
+integrated, so should have their own trans config struct.
+Fix that, also necessitating the removal of LTR config,
+and while at it remove 0x2727 and 0x272D IDs that were
+only used for test chips.
 
-While using round_jiffies_relative() instead of round_jiffies() might
-reflect the intent a bit better, it still would not be defensible
-because that function should be called when the timer is about to be
-set and it is not suitable for pre-computation of delay values.
-
-Accordingly, drop thermal_set_delay_jiffies() altogether, simply
-convert polling_delay and passive_delay to jiffies during thermal
-zone initialization and make thermal_zone_device_set_polling() call
-round_jiffies_relative() on the delay if it is greather than 1 second.
-
-Fixes: 17d399cd9c89 ("thermal/core: Precompute the delays from msecs to jiffies")
-Fixes: e5f2cda61d06 ("thermal/core: Move thermal_set_delay_jiffies to static")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/1994438.PYKUYFuaPT@rjwysocki.net
+Fixes: c30a2a64788b ("wifi: iwlwifi: add a new PCI device ID for BZ device")ticket=none
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240729201718.95aed0620080.Ib9129512c95aa57acc9876bdff8b99dd41e1562c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/cfg/bz.c     | 11 +++++++++++
+ drivers/net/wireless/intel/iwlwifi/iwl-config.h |  1 +
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c   |  4 +---
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 99a8c06f6964d..d0e71698b3562 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -323,11 +323,15 @@ static void thermal_zone_broken_disable(struct thermal_zone_device *tz)
- static void thermal_zone_device_set_polling(struct thermal_zone_device *tz,
- 					    unsigned long delay)
- {
--	if (delay)
--		mod_delayed_work(system_freezable_power_efficient_wq,
--				 &tz->poll_queue, delay);
--	else
-+	if (!delay) {
- 		cancel_delayed_work(&tz->poll_queue);
-+		return;
-+	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/bz.c b/drivers/net/wireless/intel/iwlwifi/cfg/bz.c
+index bc98b87cf2a13..02a95bf72740b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/cfg/bz.c
++++ b/drivers/net/wireless/intel/iwlwifi/cfg/bz.c
+@@ -148,6 +148,17 @@ const struct iwl_cfg_trans_params iwl_bz_trans_cfg = {
+ 	.ltr_delay = IWL_CFG_TRANS_LTR_DELAY_2500US,
+ };
+ 
++const struct iwl_cfg_trans_params iwl_gl_trans_cfg = {
++	.device_family = IWL_DEVICE_FAMILY_BZ,
++	.base_params = &iwl_bz_base_params,
++	.mq_rx_supported = true,
++	.rf_id = true,
++	.gen2 = true,
++	.umac_prph_offset = 0x300000,
++	.xtal_latency = 12000,
++	.low_latency_xtal = true,
++};
 +
-+	if (delay > HZ)
-+		delay = round_jiffies_relative(delay);
-+
-+	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, delay);
- }
+ const char iwl_bz_name[] = "Intel(R) TBD Bz device";
+ const char iwl_fm_name[] = "Intel(R) Wi-Fi 7 BE201 320MHz";
+ const char iwl_gl_name[] = "Intel(R) Wi-Fi 7 BE200 320MHz";
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-config.h b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
+index 732889f96ca27..29a28b5c28114 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-config.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
+@@ -503,6 +503,7 @@ extern const struct iwl_cfg_trans_params iwl_so_long_latency_trans_cfg;
+ extern const struct iwl_cfg_trans_params iwl_so_long_latency_imr_trans_cfg;
+ extern const struct iwl_cfg_trans_params iwl_ma_trans_cfg;
+ extern const struct iwl_cfg_trans_params iwl_bz_trans_cfg;
++extern const struct iwl_cfg_trans_params iwl_gl_trans_cfg;
+ extern const struct iwl_cfg_trans_params iwl_sc_trans_cfg;
+ extern const char iwl9162_name[];
+ extern const char iwl9260_name[];
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 9863292fddde7..d93eec242204f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -500,9 +500,7 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
+ 	{IWL_PCI_DEVICE(0x7E40, PCI_ANY_ID, iwl_ma_trans_cfg)},
  
- static void thermal_zone_recheck(struct thermal_zone_device *tz, int error)
-@@ -1327,13 +1331,6 @@ void thermal_cooling_device_unregister(struct thermal_cooling_device *cdev)
- }
- EXPORT_SYMBOL_GPL(thermal_cooling_device_unregister);
- 
--static void thermal_set_delay_jiffies(unsigned long *delay_jiffies, int delay_ms)
--{
--	*delay_jiffies = msecs_to_jiffies(delay_ms);
--	if (delay_ms > 1000)
--		*delay_jiffies = round_jiffies(*delay_jiffies);
--}
--
- int thermal_zone_get_crit_temp(struct thermal_zone_device *tz, int *temp)
- {
- 	const struct thermal_trip_desc *td;
-@@ -1470,8 +1467,8 @@ thermal_zone_device_register_with_trips(const char *type,
- 		td->threshold = INT_MAX;
- 	}
- 
--	thermal_set_delay_jiffies(&tz->passive_delay_jiffies, passive_delay);
--	thermal_set_delay_jiffies(&tz->polling_delay_jiffies, polling_delay);
-+	tz->polling_delay_jiffies = msecs_to_jiffies(polling_delay);
-+	tz->passive_delay_jiffies = msecs_to_jiffies(passive_delay);
- 	tz->recheck_delay_jiffies = THERMAL_RECHECK_DELAY;
- 
- 	/* sys I/F */
+ /* Bz devices */
+-	{IWL_PCI_DEVICE(0x2727, PCI_ANY_ID, iwl_bz_trans_cfg)},
+-	{IWL_PCI_DEVICE(0x272D, PCI_ANY_ID, iwl_bz_trans_cfg)},
+-	{IWL_PCI_DEVICE(0x272b, PCI_ANY_ID, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0x272b, PCI_ANY_ID, iwl_gl_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0xA840, 0x0000, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0xA840, 0x0090, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0xA840, 0x0094, iwl_bz_trans_cfg)},
 -- 
 2.43.0
 
