@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B5E1D0F44;
-	Wed,  2 Oct 2024 14:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DCE1D07AD;
+	Wed,  2 Oct 2024 14:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877960; cv=none; b=pyP2vJ8B4//1NLYR+Qv9sNSV4bNEm7oo53BVc8hz/glnY2bXv+3PgD6xsWddtXK3wrkaGn30TEkXr8mzmurdY3q6vLVgLORIRtGCMuJM1BpVGjJLSzaXxnma3qKeY7wUxNzTEG/EXtlINZzGfRsDCAp4qQVOHa/7/Ghc8EDfrcE=
+	t=1727877962; cv=none; b=ExheqcoawJfyeFP714MYFvs+EuMycBn4Awq5cbIY3oy/uF/rs/PfvAroQ5lzTPUp7ktBVSGkLcNrFjgPK8nFYH0GUVLkK4MBi8pf36W2lHae+nDaXNsOIjmmrQ0ow+fbSlBh8KjNG00sLWs0moaL/e8RnVqLuWaJIuA3zpQ1wYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877960; c=relaxed/simple;
-	bh=EZ2BAjk3tO36NTgdw1b+PMdPwhuguQ5wPB27mi4KPUs=;
+	s=arc-20240116; t=1727877962; c=relaxed/simple;
+	bh=AfUHsa5R2x7Er5ykYffHeSHzQHL91uoSWXniqqGw2cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGXUcvLmAwN3GtQlR8bhRLWOOyRep8FCW7l6OyWoJxQpASLxt9OzoYU6c0ym+9ydz6Y7NPKKh1uafBUyxybnwYk0grt6Yv3rcLF1tLqeDr7nPz3uCnkMjrfx3d8wxCAEMqU7JJ3UYGAwlaYNmeDC7RdDtQYJKjTvRJNzoXMKfbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzHXQIZp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/uZ/cXeOXZuKKBxlGAmJkLzPrycuTscAa3qwxBhGj7+kBQxOaZ3JeAquy7cyl3Hh/8Y39cvofnBBKnKLBhr0qu5kRGjIEQfvtmoz0uCNgBj2mBD0aX/bquHbEJJLgeRqPSAZG3NpLBSl1STRnfVswgBQTU/5tEIbBZgKRSgqyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2yh0dCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzHXQIZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6872EC4CEC2;
-	Wed,  2 Oct 2024 14:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2yh0dCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52737C4CEC2;
+	Wed,  2 Oct 2024 14:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877959;
-	bh=EZ2BAjk3tO36NTgdw1b+PMdPwhuguQ5wPB27mi4KPUs=;
+	s=korg; t=1727877962;
+	bh=AfUHsa5R2x7Er5ykYffHeSHzQHL91uoSWXniqqGw2cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzHXQIZpWQpTsaQxWEYzxX2nPhyDiszQzSqKdzGuShsKxZODa1pGE61k6K8CIXGtC
-	 QTlPJmGWZeaR13niXoBDiLj2/DKpZhUMbK1vCo//18OU1sTku0Q92dnjCkNdcBGg4X
-	 HVlTospI8/ITC/69pODNNmPKtVe2/vvEzcKqc+yk=
+	b=i2yh0dCXrkArTUBDLyrtIFQXcd5LrNb3LmhB3WQLbD+R7gVf1YWdLOakhuYJCcb5W
+	 P+qzqINZIQLHbechUq4pyYfrrRtEfWN86s9Fj5YnqHzGeqvdhD8e6GLBsi9zO+kuvj
+	 RDMgeoVD+s/yB0I1CcH8ltDrOhlVVMCWam1p0+/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	David Vernet <void@manifault.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 253/634] selftests/bpf: Fix errors compiling cg_storage_multi.h with musl libc
-Date: Wed,  2 Oct 2024 14:55:53 +0200
-Message-ID: <20241002125821.085048628@linuxfoundation.org>
+Subject: [PATCH 6.10 254/634] libbpf: Dont take direct pointers into BTF data from st_ops
+Date: Wed,  2 Oct 2024 14:55:54 +0200
+Message-ID: <20241002125821.124250538@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,47 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: David Vernet <void@manifault.com>
 
-[ Upstream commit 730561d3c08d4a327cceaabf11365958a1c00cec ]
+[ Upstream commit 04a94133f1b3cccb19e056c26f056c50b4e5b3b1 ]
 
-Remove a redundant include of '<asm/types.h>', whose needed definitions are
-already included (via '<linux/types.h>') in cg_storage_multi_egress_only.c,
-cg_storage_multi_isolated.c, and cg_storage_multi_shared.c. This avoids
-redefinition errors seen compiling for mips64el/musl-libc like:
+In struct bpf_struct_ops, we have take a pointer to a BTF type name, and
+a struct btf_type. This was presumably done for convenience, but can
+actually result in subtle and confusing bugs given that BTF data can be
+invalidated before a program is loaded. For example, in sched_ext, we
+may sometimes resize a data section after a skeleton has been opened,
+but before the struct_ops scheduler map has been loaded. This may cause
+the BTF data to be realloc'd, which can then cause a UAF when loading
+the program because the struct_ops map has pointers directly into the
+BTF data.
 
-  In file included from progs/cg_storage_multi_egress_only.c:13:
-  In file included from progs/cg_storage_multi.h:6:
-  In file included from /usr/mips64el-linux-gnuabi64/include/asm/types.h:23:
-  /usr/include/asm-generic/int-l64.h:29:25: error: typedef redefinition with different types ('long' vs 'long long')
-     29 | typedef __signed__ long __s64;
-        |                         ^
-  /usr/include/asm-generic/int-ll64.h:30:44: note: previous definition is here
-     30 | __extension__ typedef __signed__ long long __s64;
-        |                                            ^
+We're already storing the BTF type_id in struct bpf_struct_ops. Because
+type_id is stable, we can therefore just update the places where we were
+looking at those pointers to instead do the lookups we need from the
+type_id.
 
-Fixes: 9e5bd1f7633b ("selftests/bpf: Test CGROUP_STORAGE map can't be used by multiple progs")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Fixes: 590a00888250 ("bpf: libbpf: Add STRUCT_OPS support")
+Signed-off-by: David Vernet <void@manifault.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/4f4702e9f6115b7f84fea01b2326ca24c6df7ba8.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/20240724171459.281234-1-void@manifault.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/cg_storage_multi.h | 2 --
- 1 file changed, 2 deletions(-)
+ tools/lib/bpf/libbpf.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/cg_storage_multi.h b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-index a0778fe7857a1..41d59f0ee606c 100644
---- a/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-+++ b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-@@ -3,8 +3,6 @@
- #ifndef __PROGS_CG_STORAGE_MULTI_H
- #define __PROGS_CG_STORAGE_MULTI_H
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 5edb717647847..31f58e3c4059c 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -473,8 +473,6 @@ struct bpf_program {
+ };
  
--#include <asm/types.h>
--
- struct cgroup_value {
- 	__u32 egress_pkts;
- 	__u32 ingress_pkts;
+ struct bpf_struct_ops {
+-	const char *tname;
+-	const struct btf_type *type;
+ 	struct bpf_program **progs;
+ 	__u32 *kern_func_off;
+ 	/* e.g. struct tcp_congestion_ops in bpf_prog's btf format */
+@@ -1059,11 +1057,14 @@ static int bpf_object_adjust_struct_ops_autoload(struct bpf_object *obj)
+ 			continue;
+ 
+ 		for (j = 0; j < obj->nr_maps; ++j) {
++			const struct btf_type *type;
++
+ 			map = &obj->maps[j];
+ 			if (!bpf_map__is_struct_ops(map))
+ 				continue;
+ 
+-			vlen = btf_vlen(map->st_ops->type);
++			type = btf__type_by_id(obj->btf, map->st_ops->type_id);
++			vlen = btf_vlen(type);
+ 			for (k = 0; k < vlen; ++k) {
+ 				slot_prog = map->st_ops->progs[k];
+ 				if (prog != slot_prog)
+@@ -1097,8 +1098,8 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
+ 	int err;
+ 
+ 	st_ops = map->st_ops;
+-	type = st_ops->type;
+-	tname = st_ops->tname;
++	type = btf__type_by_id(btf, st_ops->type_id);
++	tname = btf__name_by_offset(btf, type->name_off);
+ 	err = find_struct_ops_kern_types(obj, tname, &mod_btf,
+ 					 &kern_type, &kern_type_id,
+ 					 &kern_vtype, &kern_vtype_id,
+@@ -1398,8 +1399,6 @@ static int init_struct_ops_maps(struct bpf_object *obj, const char *sec_name,
+ 		memcpy(st_ops->data,
+ 		       data->d_buf + vsi->offset,
+ 		       type->size);
+-		st_ops->tname = tname;
+-		st_ops->type = type;
+ 		st_ops->type_id = type_id;
+ 
+ 		pr_debug("struct_ops init: struct %s(type_id=%u) %s found at offset %u\n",
+@@ -8406,11 +8405,13 @@ static int bpf_object__resolve_externs(struct bpf_object *obj,
+ 
+ static void bpf_map_prepare_vdata(const struct bpf_map *map)
+ {
++	const struct btf_type *type;
+ 	struct bpf_struct_ops *st_ops;
+ 	__u32 i;
+ 
+ 	st_ops = map->st_ops;
+-	for (i = 0; i < btf_vlen(st_ops->type); i++) {
++	type = btf__type_by_id(map->obj->btf, st_ops->type_id);
++	for (i = 0; i < btf_vlen(type); i++) {
+ 		struct bpf_program *prog = st_ops->progs[i];
+ 		void *kern_data;
+ 		int prog_fd;
+@@ -9673,6 +9674,7 @@ static struct bpf_map *find_struct_ops_map_by_offset(struct bpf_object *obj,
+ static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
+ 					    Elf64_Shdr *shdr, Elf_Data *data)
+ {
++	const struct btf_type *type;
+ 	const struct btf_member *member;
+ 	struct bpf_struct_ops *st_ops;
+ 	struct bpf_program *prog;
+@@ -9732,13 +9734,14 @@ static int bpf_object__collect_st_ops_relos(struct bpf_object *obj,
+ 		}
+ 		insn_idx = sym->st_value / BPF_INSN_SZ;
+ 
+-		member = find_member_by_offset(st_ops->type, moff * 8);
++		type = btf__type_by_id(btf, st_ops->type_id);
++		member = find_member_by_offset(type, moff * 8);
+ 		if (!member) {
+ 			pr_warn("struct_ops reloc %s: cannot find member at moff %u\n",
+ 				map->name, moff);
+ 			return -EINVAL;
+ 		}
+-		member_idx = member - btf_members(st_ops->type);
++		member_idx = member - btf_members(type);
+ 		name = btf__name_by_offset(btf, member->name_off);
+ 
+ 		if (!resolve_func_ptr(btf, member->type, NULL)) {
 -- 
 2.43.0
 
