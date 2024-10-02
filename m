@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892271D07B8;
-	Wed,  2 Oct 2024 14:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA5B1D07B8;
+	Wed,  2 Oct 2024 14:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877971; cv=none; b=s69w/EuOGI+onhbcQmR9wYkwS3F9qGv4PhAP3YxWWJe13j5fx6SKmhuxOblyTyd0EKoVXHHDMMAmMDmxJbbO5qlYehZ45CBk/uGDwldTl6bEcUUi5ulQyDP2Lrje9Qu0RFFFLM6oyR4OYmmtelEp9zeyU3tr+jnEaX9Mfh6k9js=
+	t=1727877974; cv=none; b=gacZXliPiM1nEnQbbflMsMSGRbn4Vh3n5MTG2RpNZPcWhyzFOo77D5mmJbvb9vUM1J5k3OSrJ+D35FqlW2sMtmp3x85yxtqr4LYiDgLXCNkdvdURjkKTuMkx84D7YTx7GzpUmQ68edNVJtFaJKDuLXxSQJZN4xoCRCpUHfKZ6Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877971; c=relaxed/simple;
-	bh=gZrEb5pu5chfO/GEBV/1+bYE5BoAL8k5ngCk1vZW/AE=;
+	s=arc-20240116; t=1727877974; c=relaxed/simple;
+	bh=ZPiXBQX7qIF6Xq+F8JLB4H0RDsvMnEmqa/mHASWnw60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ON/MdWhoyhvWAsX5TQKkj0QB4YTLPyryFJy1OxIZ6TRGUM8ZXtLDXbWuVJAO2mWjjlXULrQ8RCGD4/iTBoSSbDIDbDKy1UNB/aS6jtmNOHSBdVcT127UcMrRMw0VNvWHNP6a9/o3mWzZperLdXzOoan5RCvfl2Zkd4fwStjndZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYblVy+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BvIv5BmW9z9AwRhQIV2tloSUvv71C+eRNOm3cTC8DA51L7Hj/8W4EiDe/FB5nm23j7iyap1StOdCM1fLB2RqKB10LdUMjsSMGcsq2/bcDwB5EfcrjdeKP1KaIolzjT/XpDNMptNVg3ujoLzvuQHfHgamPBfDoV4CQwR9Tswd5EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsJQqqlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYblVy+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C0BC4CEC2;
-	Wed,  2 Oct 2024 14:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsJQqqlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052E6C4CEC2;
+	Wed,  2 Oct 2024 14:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877971;
-	bh=gZrEb5pu5chfO/GEBV/1+bYE5BoAL8k5ngCk1vZW/AE=;
+	s=korg; t=1727877974;
+	bh=ZPiXBQX7qIF6Xq+F8JLB4H0RDsvMnEmqa/mHASWnw60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYblVy+JEbQbzKFlcFJdymX9IPrCSn0hV+LIULE+kxzZTwvLTqpQXr65S9mutWUmE
-	 LYO5MSJ2eu1VOVFqAXhcZWbobodJbFyGfsBhF4esa+4o4QqARih5+Tme0him53Q+Ye
-	 ZlmzdSph3nxe11NWUCJkFK29giZDoCaF7He8L8jE=
+	b=tsJQqqlcUMcH15Ph0bNOs17DU9KM1uagR1MQJ4xRy+wWuv1QOy2FXInY0GXvI+8Ul
+	 nGkECCiOrSvLi6orizcdxE/uxrhmbBYCoIRxHaL9/Ha7k55zo6flp9Z82POmNRZgZR
+	 A0LySMopIPZCz4+pHfBZKQaHba9mxtxyoW+l/CnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 257/634] selftests/bpf: Fix C++ compile error from missing _Bool type
-Date: Wed,  2 Oct 2024 14:55:57 +0200
-Message-ID: <20241002125821.244647975@linuxfoundation.org>
+Subject: [PATCH 6.10 258/634] selftests/bpf: Fix redefinition errors compiling lwt_reroute.c
+Date: Wed,  2 Oct 2024 14:55:58 +0200
+Message-ID: <20241002125821.284441960@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,51 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit aa95073fd290b5b3e45f067fa22bb25e59e1ff7c ]
+[ Upstream commit 16b795cc59528cf280abc79af3c70bda42f715b9 ]
 
-While building, bpftool makes a skeleton from test_core_extern.c, which
-itself includes <stdbool.h> and uses the 'bool' type. However, the skeleton
-test_core_extern.skel.h generated *does not* include <stdbool.h> or use the
-'bool' type, instead using the C-only '_Bool' type. Compiling test_cpp.cpp
-with g++ 12.3 for mips64el/musl-libc then fails with error:
+Compiling lwt_reroute.c with GCC 12.3 for mips64el/musl-libc yields errors:
 
-  In file included from test_cpp.cpp:9:
-  test_core_extern.skel.h:45:17: error: '_Bool' does not name a type
-     45 |                 _Bool CONFIG_BOOL;
-        |                 ^~~~~
+In file included from .../include/arpa/inet.h:9,
+                 from ./test_progs.h:18,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_helpers.h:11,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_reroute.c:52:
+.../include/netinet/in.h:23:8: error: redefinition of 'struct in6_addr'
+   23 | struct in6_addr {
+      |        ^~~~~~~~
+In file included from .../include/linux/icmp.h:24,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_helpers.h:9:
+.../include/linux/in6.h:33:8: note: originally defined here
+   33 | struct in6_addr {
+      |        ^~~~~~~~
+.../include/netinet/in.h:34:8: error: redefinition of 'struct sockaddr_in6'
+   34 | struct sockaddr_in6 {
+      |        ^~~~~~~~~~~~
+.../include/linux/in6.h:50:8: note: originally defined here
+   50 | struct sockaddr_in6 {
+      |        ^~~~~~~~~~~~
+.../include/netinet/in.h:42:8: error: redefinition of 'struct ipv6_mreq'
+   42 | struct ipv6_mreq {
+      |        ^~~~~~~~~
+.../include/linux/in6.h:60:8: note: originally defined here
+   60 | struct ipv6_mreq {
+      |        ^~~~~~~~~
 
-This was likely missed previously because glibc uses a GNU extension for
-<stdbool.h> with C++ (#define _Bool bool), not supported by musl libc.
+These errors occur because <linux/in6.h> is included before <netinet/in.h>,
+bypassing the Linux uapi/libc compat mechanism's partial musl support. As
+described in [1] and [2], fix these errors by including <netinet/in.h> in
+lwt_reroute.c before any uapi headers.
 
-Normally, a C fragment would include <stdbool.h> and use the 'bool' type,
-and thus cleanly work after import by C++. The ideal fix would be for
-'bpftool gen skeleton' to output the correct type/include supporting C++,
-but in the meantime add a conditional define as above.
+[1]: commit c0bace798436 ("uapi libc compat: add fallback for unsupported libcs")
+[2]: https://git.musl-libc.org/cgit/musl/commit/?id=04983f227238
 
-Fixes: 7c8dce4b1661 ("bpftool: Make skeleton C code compilable with C++ compiler")
+Fixes: 6c77997bc639 ("selftests/bpf: Add lwt_xmit tests for BPF_REROUTE")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/6fc1dd28b8bda49e51e4f610bdc9d22f4455632d.1722244708.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/bd2908aec0755ba8b75f5dc41848b00585f5c73e.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_cpp.cpp | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/lwt_reroute.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/test_cpp.cpp b/tools/testing/selftests/bpf/test_cpp.cpp
-index dde0bb16e782e..abc2a56ab2616 100644
---- a/tools/testing/selftests/bpf/test_cpp.cpp
-+++ b/tools/testing/selftests/bpf/test_cpp.cpp
-@@ -6,6 +6,10 @@
- #include <bpf/libbpf.h>
- #include <bpf/bpf.h>
- #include <bpf/btf.h>
-+
-+#ifndef _Bool
-+#define _Bool bool
-+#endif
- #include "test_core_extern.skel.h"
- #include "struct_ops_module.skel.h"
- 
+diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c b/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
+index 03825d2b45a8b..6c50c0f63f436 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
++++ b/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
+@@ -49,6 +49,7 @@
+  *  is not crashed, it is considered successful.
+  */
+ #define NETNS "ns_lwt_reroute"
++#include <netinet/in.h>
+ #include "lwt_helpers.h"
+ #include "network_helpers.h"
+ #include <linux/net_tstamp.h>
 -- 
 2.43.0
 
