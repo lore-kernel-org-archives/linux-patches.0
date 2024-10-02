@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC62405FB;
-	Wed,  2 Oct 2024 14:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331BE405FB;
+	Wed,  2 Oct 2024 14:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880176; cv=none; b=cTXYUhQVVIPRa6Iz4S23UzjEDd7SKvHFpApbQ8y2VLK/TLvP7k8nwlG33pNoNAcf45dGVJ8wus2oMHHpaJCJMuw5/1bnFPxKmXL/GxN+H97Hb+GAdm/LqVVjRdW9w3RkABi78zh/SYodUcbZ8GOhm/5Lkz94DrBL471/eyYZRdA=
+	t=1727880179; cv=none; b=tWGHNMihg/Wfq/oFYfHLm/J+Ix3FJ4mWruXcxvgKKGB5PhjNPzt+ELZth7Ny2TtAKA+0POCSPR57b3JrvyQeUfasGL5DT8iXyHDkSHLxjQ1cAHSQ9wpR+JvmHwuY0u2UZml6DKgT0jHx0ZAmuNd7GttXjgpfGQcQG+saCXOSq/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880176; c=relaxed/simple;
-	bh=Z57eygbhfcLWqXvT+EBDa7uRz+xbduYDHnc4KOVYEDk=;
+	s=arc-20240116; t=1727880179; c=relaxed/simple;
+	bh=lnDJC3Rhry1Dg6t4lFeLVwhQ4jGdHE0ry7RD1xWEaQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eafi+NVBV36oJnBijLC9CVxuxM2/rGLnVktocdNAIMW59ZDkyO6al+HKc+/tjRe7a33sMu6go7EpWVBY+jfwZOl0WjyZ/2Enj/CaB3qBu3aU0W3/PzvH7o9hyMzGQu/gxfHpp7n2QY6jJyCEocCfkOvd2iAdeM5T74Ctpsg0Oe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxyuOHuu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnhs5axBy4MXYKqr784oEznugLFvCtz6xxRVF6qOZeeuwWIIATocC4921OIwRxHYLpE1Q7lKBb8tAGv0THt2EXcL8iCr016QG7f9rB1nj00pcWPCW3yrZ5JxD2WejNX2bwIF8j0/tu0989BqZq0K/vyJm38lRhCj1RxVmjWBPVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxrkJ1xX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxyuOHuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CBFC4CEC2;
-	Wed,  2 Oct 2024 14:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxrkJ1xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FDDC4CEC2;
+	Wed,  2 Oct 2024 14:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880175;
-	bh=Z57eygbhfcLWqXvT+EBDa7uRz+xbduYDHnc4KOVYEDk=;
+	s=korg; t=1727880178;
+	bh=lnDJC3Rhry1Dg6t4lFeLVwhQ4jGdHE0ry7RD1xWEaQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxyuOHuuUma+9YaomgeLOCP0FORhddHWeNc5JV9nGb35myXsR2w3zdYPXCbtKFOGM
-	 QGT9Jm75NbCmWYTaf9VwDaT7Qoo8VaGZapGJZGkrIQc+4e9PbvOTCJZN1uXqEELT5N
-	 A+V0fNZCvPH0qj9dL5ekAr28n9e8MrI9yUYe7W3Y=
+	b=gxrkJ1xXlmkOQjdUIiY2eFL48Yd0ErSNR/j7KOM4lPUv2c7e95ACUT4NEgG7dsyXw
+	 BOzEcCjtA6bEGzocwSRuYX+E5t2HTvtt6IhZUcZCdOKgPgjlyE/Sqv7fWvi4xlBtqP
+	 WLc5MV7hPFQZcp0MUP6vd9CdcRh0JoLnKEjor+fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 337/538] f2fs: Create COW inode from parent dentry for atomic write
-Date: Wed,  2 Oct 2024 14:59:36 +0200
-Message-ID: <20241002125805.733843931@linuxfoundation.org>
+Subject: [PATCH 6.6 338/538] f2fs: fix to wait page writeback before setting gcing flag
+Date: Wed,  2 Oct 2024 14:59:37 +0200
+Message-ID: <20241002125805.773505127@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -55,61 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeongjin Gil <youngjin.gil@samsung.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8c1b787938fd86bab27a1492fa887408c75fec2b ]
+[ Upstream commit a4d7f2b3238fd5f76b9e6434a0bd5d2e29049cff ]
 
-The i_pino in f2fs_inode_info has the previous parent's i_ino when inode
-was renamed, which may cause f2fs_ioc_start_atomic_write to fail.
-If file_wrong_pino is true and i_nlink is 1, then to find a valid pino,
-we should refer to the dentry from inode.
+Soft IRQ				Thread
+- f2fs_write_end_io
+					- f2fs_defragment_range
+					 - set_page_private_gcing
+ - type = WB_DATA_TYPE(page, false);
+ : assign type w/ F2FS_WB_CP_DATA
+ due to page_private_gcing() is true
+  - dec_page_count() w/ wrong type
+  - end_page_writeback()
 
-To resolve this issue, let's get parent inode using parent dentry
-directly.
+Value of F2FS_WB_CP_DATA reference count may become negative under above
+race condition, the root cause is we missed to wait page writeback before
+setting gcing page private flag, let's fix it.
 
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 2d1fe8a86bf5 ("f2fs: fix to tag gcing flag on page during file defragment")
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ fs/f2fs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 8c4c5c6c1ac64..a0d2e180f0ed7 100644
+index a0d2e180f0ed7..e04f4dcb76d1f 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -2097,7 +2097,6 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
- 	struct mnt_idmap *idmap = file_mnt_idmap(filp);
- 	struct f2fs_inode_info *fi = F2FS_I(inode);
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	struct inode *pinode;
- 	loff_t isize;
- 	int ret;
+@@ -2743,6 +2743,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+ 				goto clear_out;
+ 			}
  
-@@ -2146,15 +2145,10 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
- 	/* Check if the inode already has a COW inode */
- 	if (fi->cow_inode == NULL) {
- 		/* Create a COW inode for atomic write */
--		pinode = f2fs_iget(inode->i_sb, fi->i_pino);
--		if (IS_ERR(pinode)) {
--			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
--			ret = PTR_ERR(pinode);
--			goto out;
--		}
-+		struct dentry *dentry = file_dentry(filp);
-+		struct inode *dir = d_inode(dentry->d_parent);
++			f2fs_wait_on_page_writeback(page, DATA, true, true);
++
+ 			set_page_dirty(page);
+ 			set_page_private_gcing(page);
+ 			f2fs_put_page(page, 1);
+@@ -4137,6 +4139,8 @@ static int redirty_blocks(struct inode *inode, pgoff_t page_idx, int len)
+ 		/* It will never fail, when page has pinned above */
+ 		f2fs_bug_on(F2FS_I_SB(inode), !page);
  
--		ret = f2fs_get_tmpfile(idmap, pinode, &fi->cow_inode);
--		iput(pinode);
-+		ret = f2fs_get_tmpfile(idmap, dir, &fi->cow_inode);
- 		if (ret) {
- 			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
- 			goto out;
++		f2fs_wait_on_page_writeback(page, DATA, true, true);
++
+ 		set_page_dirty(page);
+ 		set_page_private_gcing(page);
+ 		f2fs_put_page(page, 1);
 -- 
 2.43.0
 
