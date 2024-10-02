@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7251D0E1B;
-	Wed,  2 Oct 2024 14:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EE81D014A;
+	Wed,  2 Oct 2024 14:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880495; cv=none; b=AKJoR4Kq0Kyqn9SiZiaI48mfg0aGHcjkA/fTRgGDuRzfDTAfe1DWJbcbp70MGf6j8JCf8pudwFwTpxNtLhTEvw2MNxDvmXs/tnea8nTIf4GcfvdXsLu/5vRz+gsGhXhC1elv6R6eIJJm3vbQF1ISJH3zXu9Y7ES3R9Q2seqTjqM=
+	t=1727880499; cv=none; b=GcfXtE38WMB+92Ja9rRcypMS9zD7JlbDUahNRYRMjMuTBL4z0mcyOw+qUz9N/UderpvUl742kOOIL+KEO7z2hMdxIKOGaq9PCrD2NBrQL+OUuhmydiffLxPnW3/dEQbKSKZh00OGxKL8Xw+NnQnvYx0imyZJJtqUU0QQEim+p6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880495; c=relaxed/simple;
-	bh=s37hLnuDMMTc178L14jcfwJ6+06pnY8Uw2+6R8QREOM=;
+	s=arc-20240116; t=1727880499; c=relaxed/simple;
+	bh=p1Vpmpg1qdqKZ5Ui3v7O+qVvQLiRyuxDpHyJG48GEOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1nWz4jsB4v1F41WNCIFzW2usIfrXX1e67wO4najEzcEDK/F70Ty8bsTdp8BP1vDaduELQ0Iem4+7p1UQBCxU2Rry23qQVqTGQEj25P4aeHdNdWD5DLTp/1G9+1VgGw+ijWNrzIWe+EqO0aOV2qOUxKctUOxu2huL9zX69ugmhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/LJCx5O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ms0HaqrXUyEz1UIbDxETik+/29AqLcpzoi9cQWN45zcby30xy3xW5QlB2JxGw6ZyCBufE7RQWTNATb3xGr1JpfzUs3aeJDfDPLub4Z8MfHsJZpV6nkbxW/GYfdP8cD3rwN4WI7j46aMkS7GFerx59vnR+0cGjbgRw0k1LUtL32M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZAM9SpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/LJCx5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C556DC4CEC2;
-	Wed,  2 Oct 2024 14:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZAM9SpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D56C4CEC2;
+	Wed,  2 Oct 2024 14:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880495;
-	bh=s37hLnuDMMTc178L14jcfwJ6+06pnY8Uw2+6R8QREOM=;
+	s=korg; t=1727880498;
+	bh=p1Vpmpg1qdqKZ5Ui3v7O+qVvQLiRyuxDpHyJG48GEOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/LJCx5O6IwKdpKdlJmtYG0fExF/QaEWqr7eCyiG/1iitkUL3JtoN8Pje1o554/Ws
-	 puFRb+iC69rWIe8Qse1xiP+amRlfT5a9N7ZPAUypALWRSoIcZJAG6o5O3KWwqArfOA
-	 aYow5b0chDgUUa9KUCsVgwuBWYWPda8cCbdiDMZo=
+	b=kZAM9SpWIdOZ0kuVxbH3tIIe8eMZ65Q7uyPo7k2kKlwu4pq/1z6qEVaixF3u8Csnh
+	 CJHAFIZuMWmud6PEeIjx0Aux0Jb8o6qdbSM7X24gk5ZeY5op/VmlMYhXxwDcKd89WI
+	 ZkoUaus4b8JKc1GVoTdePylk2nkTsdneYuKsOXug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Anup Patel <anup@brainfault.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 479/538] cpuidle: riscv-sbi: Use scoped device node handling to fix missing of_node_put
-Date: Wed,  2 Oct 2024 15:01:58 +0200
-Message-ID: <20241002125811.351984598@linuxfoundation.org>
+	Christian Gafert <christian.gafert@rohde-schwarz.com>,
+	Max Ferger <max.ferger@rohde-schwarz.com>,
+	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 480/538] padata: use integer wrap around to prevent deadlock on seq_nr overflow
+Date: Wed,  2 Oct 2024 15:01:59 +0200
+Message-ID: <20241002125811.391667434@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,82 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
 
-commit a309320ddbac6b1583224fcb6bacd424bcf8637f upstream.
+commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
 
-Two return statements in sbi_cpuidle_dt_init_states() did not drop the
-OF node reference count.  Solve the issue and simplify entire error
-handling with scoped/cleanup.h.
+When submitting more than 2^32 padata objects to padata_do_serial, the
+current sorting implementation incorrectly sorts padata objects with
+overflowed seq_nr, causing them to be placed before existing objects in
+the reorder list. This leads to a deadlock in the serialization process
+as padata_find_next cannot match padata->seq_nr and pd->processed
+because the padata instance with overflowed seq_nr will be selected
+next.
 
-Fixes: 6abf32f1d9c5 ("cpuidle: Add RISC-V SBI CPU idle driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/20240820094023.61155-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To fix this, we use an unsigned integer wrap around to correctly sort
+padata objects in scenarios with integer overflow.
+
+Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
+Cc: <stable@vger.kernel.org>
+Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
+Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
+Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
+Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
+Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-riscv-sbi.c |   21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ kernel/padata.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/cpuidle/cpuidle-riscv-sbi.c
-+++ b/drivers/cpuidle/cpuidle-riscv-sbi.c
-@@ -8,6 +8,7 @@
- 
- #define pr_fmt(fmt) "cpuidle-riscv-sbi: " fmt
- 
-+#include <linux/cleanup.h>
- #include <linux/cpuhotplug.h>
- #include <linux/cpuidle.h>
- #include <linux/cpumask.h>
-@@ -267,19 +268,16 @@ static int sbi_cpuidle_dt_init_states(st
- {
- 	struct sbi_cpuidle_data *data = per_cpu_ptr(&sbi_cpuidle_data, cpu);
- 	struct device_node *state_node;
--	struct device_node *cpu_node;
- 	u32 *states;
- 	int i, ret;
- 
--	cpu_node = of_cpu_device_node_get(cpu);
-+	struct device_node *cpu_node __free(device_node) = of_cpu_device_node_get(cpu);
- 	if (!cpu_node)
- 		return -ENODEV;
- 
- 	states = devm_kcalloc(dev, state_count, sizeof(*states), GFP_KERNEL);
--	if (!states) {
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	if (!states)
-+		return -ENOMEM;
- 
- 	/* Parse SBI specific details from state DT nodes */
- 	for (i = 1; i < state_count; i++) {
-@@ -295,10 +293,8 @@ static int sbi_cpuidle_dt_init_states(st
- 
- 		pr_debug("sbi-state %#x index %d\n", states[i], i);
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -404,7 +404,8 @@ void padata_do_serial(struct padata_priv
+ 	/* Sort in ascending order of sequence number. */
+ 	list_for_each_prev(pos, &reorder->list) {
+ 		cur = list_entry(pos, struct padata_priv, list);
+-		if (cur->seq_nr < padata->seq_nr)
++		/* Compare by difference to consider integer wrap around */
++		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
+ 			break;
  	}
--	if (i != state_count) {
--		ret = -ENODEV;
--		goto fail;
--	}
-+	if (i != state_count)
-+		return -ENODEV;
- 
- 	/* Initialize optional data, used for the hierarchical topology. */
- 	ret = sbi_dt_cpu_init_topology(drv, data, state_count, cpu);
-@@ -308,10 +304,7 @@ static int sbi_cpuidle_dt_init_states(st
- 	/* Store states in the per-cpu struct. */
- 	data->states = states;
- 
--fail:
--	of_node_put(cpu_node);
--
--	return ret;
-+	return 0;
- }
- 
- static void sbi_cpuidle_deinit_cpu(int cpu)
+ 	list_add(&padata->list, pos);
 
 
