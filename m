@@ -1,53 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25321D172E;
-	Wed,  2 Oct 2024 14:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2987198A1A;
+	Wed,  2 Oct 2024 14:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878074; cv=none; b=EQ9vCnhaaZr5WI6Sos/GcdNVtt+eYGSA+rZbA74kBn3jBjD+6Jr8Mz0I47XLe0jCZ9kvpc6biq4kk4//aJET/QBmme2aUauqywrmgqhPwFts6GmfHNxFlQeaM7OePsyiu/mvpSwuti2CXKY4eF5SppFp8Y2yi9ueBxfDxjfM0uQ=
+	t=1727878076; cv=none; b=a+tlpuYnvyRMlg6cpwc31khY5/oShxGfKfzvLG4LGbGY846fRSfw5GE6K+GvF8oAr0nU/FyfbtkP5k3m2q6nM7g7X5VAzmcEZ2hdfYzztURI9UBCWZseGgAzWujmWUgCFwDloVtWsW+RCrcH94/dJD7ZHXgfFW76mLKgwBgLxOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878074; c=relaxed/simple;
-	bh=KoTFAteWV4sheTpo66zy0nbw5WnXODK+k8kv77BM0XE=;
+	s=arc-20240116; t=1727878076; c=relaxed/simple;
+	bh=gp3WtIYJWMFUMkipk9J6lnPaNy5gGxlAykaLsPEAIm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m94zApXaH+0n5kJYIVCrLYVbZI4EvGJCZl8imIzyw/gSvEtUww5w6jKL0UzUWikh1FFwEX1TiIbx+BX+gyRWcG0LsED5Q/ZFsplHOV+PpLkkO3vn7zOKJUpAaU/68zCpxznLm6fx5xJFhbe3hDE2lJ4VFmP+gZLa15dfPLj3B+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vg51lpdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRe/WOKjGsCndhXUp3FzjLipR4iNRZXWUxbiWt35QUuqKrMNh0rNK/VVRYmnpTmSKQ+4e9veNQfgg8b0c09T6GZZu8nT64WtoQR2M74ZEuOEV18jrMVzMkn2eFvof+iI7AoXPUea6RhVpJRNgJC/tV3kRb3RAVKV0Y2YdkcTjOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDKOLPO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vg51lpdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA15C4CEC2;
-	Wed,  2 Oct 2024 14:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDKOLPO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E78C4CEC2;
+	Wed,  2 Oct 2024 14:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878073;
-	bh=KoTFAteWV4sheTpo66zy0nbw5WnXODK+k8kv77BM0XE=;
+	s=korg; t=1727878076;
+	bh=gp3WtIYJWMFUMkipk9J6lnPaNy5gGxlAykaLsPEAIm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vg51lpdYlaDoxxDxsrVRCgGKRtago7OZUGTkH3GQeAwuSCs6F/Gv2gbVwkDPytkZB
-	 j4CQvIxkC8+l1mptdU8rfGiQBgpA3hwH90xTO0HbttdPNZxUdgXHabmaaNePxG64Ck
-	 FG5+gr6AxH7wtpuyV2Iak4mBThJwi1kDrFHHvHg8=
+	b=gDKOLPO8s2Xrp6xKEn5Qxv20tcof85jcSmqt4luQDKbkgTGwE2+rdS2gIJrJoW7QE
+	 vpDvckQL0roTwUktuEcRUWffZGZpe2zTBNy7u/scB1o+rsbFWrihq66Iv14NZh82KR
+	 z5N6x2zGf43DANjbrRC5ZaiZTrfwo/OeReHmqS2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	coresight@lists.linaro.org,
-	gankulkarni@os.amperecomputing.com,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Suzuki Poulouse <suzuki.poulose@arm.com>,
+	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 292/634] perf scripts python cs-etm: Restore first sample log in verbose mode
-Date: Wed,  2 Oct 2024 14:56:32 +0200
-Message-ID: <20241002125822.637226547@linuxfoundation.org>
+Subject: [PATCH 6.10 293/634] perf mem: Free the allocated sort string, fixing a leak
+Date: Wed,  2 Oct 2024 14:56:33 +0200
+Message-ID: <20241002125822.676863363@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -66,64 +59,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit ae8e4f4048b839c1cb333d9e3d20e634b430139e ]
+[ Upstream commit 3da209bb1177462b6fe8e3021a5527a5a49a9336 ]
 
-The linked commit moved the early return on the first sample to before
-the verbose log, so move the log earlier too. Now the first sample is
-also logged and not skipped.
+The get_sort_order() returns either a new string (from strdup) or NULL
+but it never gets freed.
 
-Fixes: 2d98dbb4c9c5b09c ("perf scripts python arm-cs-trace-disasm.py: Do not ignore disam first sample")
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 2e7f545096f954a9 ("perf mem: Factor out a function to generate sort order")
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Benjamin Gray <bgray@linux.ibm.com>
-Cc: coresight@lists.linaro.org
-Cc: gankulkarni@os.amperecomputing.com
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240723132858.12747-1-james.clark@linaro.org
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20240731235505.710436-3-namhyung@kernel.org
+[ Added Fixes tag ]
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/scripts/python/arm-cs-trace-disasm.py | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ tools/perf/builtin-mem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/scripts/python/arm-cs-trace-disasm.py b/tools/perf/scripts/python/arm-cs-trace-disasm.py
-index d973c2baed1c8..7aff02d84ffb3 100755
---- a/tools/perf/scripts/python/arm-cs-trace-disasm.py
-+++ b/tools/perf/scripts/python/arm-cs-trace-disasm.py
-@@ -192,17 +192,16 @@ def process_event(param_dict):
- 	ip = sample["ip"]
- 	addr = sample["addr"]
+diff --git a/tools/perf/builtin-mem.c b/tools/perf/builtin-mem.c
+index 863fcd735daee..93413cfcd585a 100644
+--- a/tools/perf/builtin-mem.c
++++ b/tools/perf/builtin-mem.c
+@@ -372,6 +372,7 @@ static int report_events(int argc, const char **argv, struct perf_mem *mem)
+ 		rep_argv[i] = argv[j];
  
-+	if (options.verbose == True):
-+		print("Event type: %s" % name)
-+		print_sample(sample)
-+
- 	# Initialize CPU data if it's empty, and directly return back
- 	# if this is the first tracing event for this CPU.
- 	if (cpu_data.get(str(cpu) + 'addr') == None):
- 		cpu_data[str(cpu) + 'addr'] = addr
- 		return
- 
--
--	if (options.verbose == True):
--		print("Event type: %s" % name)
--		print_sample(sample)
--
- 	# If cannot find dso so cannot dump assembler, bail out
- 	if (dso == '[unknown]'):
- 		return
+ 	ret = cmd_report(i, rep_argv);
++	free(new_sort_order);
+ 	free(rep_argv);
+ 	return ret;
+ }
 -- 
 2.43.0
 
