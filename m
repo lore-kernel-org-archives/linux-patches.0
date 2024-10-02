@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0B01D0951;
-	Wed,  2 Oct 2024 14:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D061D0951;
+	Wed,  2 Oct 2024 14:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880035; cv=none; b=Mmtdzk+A3K98qthPuTio1C3FL8lWdnAc6xAgPMRmSgZR5U8SWB7nMK5AULvXiYIVqQ1NBfYwi/Kszk79w8FHwgVKUPTwxrRD26neDeJy0wNQje5azCdp/dj8m07xdPLh1XelVG75quRddtrsOF5Qavs0Oga7d3nh1aAHbmAC2+w=
+	t=1727880038; cv=none; b=sbN1yjTABpa+3/I+m7oUUhZd/GGalZe6LBk+LOXcTHnqs58H33NCxgBsJ4je15ktevojiXw0K6oFNQWx1+/D4YiJkVWS2xb5S3MtTGKZyCpgjOkHqxLrxlD92HXBa6NKF1wAOF9+bdpLS5+XS+xFZin9RO2hdprduzqp5pBXGvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880035; c=relaxed/simple;
-	bh=oUdvzIcr1Q+6E4cA6KR0qBNnSq/DH1LUmUIbbvMRFII=;
+	s=arc-20240116; t=1727880038; c=relaxed/simple;
+	bh=voLNUUMz/9riGRLA6OVQ3qgxEhephDOLveRXuQCy5KI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8ilja9xm6W8xHI0O5eLZxXW0JsYmPJ8lkoGr9ZLNvtuwu2Bi6J6FOsBmqCVlCOlzV4L5gxFPo27hEf1LOd8spMJHKqTPlBLC+Aqao/KiJfQuS1JQPvMc5BqWxAbMo+Tr4uIAP2WAPj2nr6GY+sGJ4/ImeX7vbtCU7wvSGR2RMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4tlrPzn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETNKT2yNd5GMseH+OAv86TrdwNHUw0fOPioINsSGT1zGlvP61q8R6W23Nsr+Zt+YbrChE0l3ahzELlLm3ea+YKUfq2g2HWodqM7xze6ZlPNp9gi9whbBHkmH/j2ae9/pHjewAmG8+Cma3pkFnYXNzYu0eu+ppa1LLEm2v4nkkMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHREtbFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4tlrPzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3B5C4CEC2;
-	Wed,  2 Oct 2024 14:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHREtbFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FA1C4CECD;
+	Wed,  2 Oct 2024 14:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880035;
-	bh=oUdvzIcr1Q+6E4cA6KR0qBNnSq/DH1LUmUIbbvMRFII=;
+	s=korg; t=1727880038;
+	bh=voLNUUMz/9riGRLA6OVQ3qgxEhephDOLveRXuQCy5KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4tlrPznBQyeyOjKq7GhBVdW7+I1zSWOVFqetjj57hOBbq9qcbmPGikye03grDsFe
-	 V/hBPboloE7/2SDsm9kDUcdIMHPjdiorpIyye5AiF+JBxRNB8xbyoNdZvhXs0mROD8
-	 87+4nyOF/EyE8yeav84pjqo+z4MFWtpiOFmSxcFA=
+	b=dHREtbFO263/TkN7WWWRbQHqaC8TQj5bIkh3oST5Qp7r+f5a0fbVQFsoG8hzM0iDt
+	 EDIyETyiOTkDNsPBQBmgtDYW6Gc0aZWN9gf4YPVpZZ0KIK6e5qmj/fAMnMOfg3Skwg
+	 PlHTHB3m34IHoUSE+Fjgyi9ZEXnpWfZ1dglKq1xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 321/538] RDMA/hns: Optimize hem allocation performance
-Date: Wed,  2 Oct 2024 14:59:20 +0200
-Message-ID: <20241002125805.099306890@linuxfoundation.org>
+Subject: [PATCH 6.6 322/538] RDMA/hns: Fix restricted __le16 degrades to integer issue
+Date: Wed,  2 Oct 2024 14:59:21 +0200
+Message-ID: <20241002125805.138661718@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,53 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit fe51f6254d81f5a69c31df16353d6539b2b51630 ]
+[ Upstream commit f4ccc0a2a0c5977540f519588636b5bc81aae2db ]
 
-When allocating MTT hem, for each hop level of each hem that is being
-allocated, the driver iterates the hem list to find out whether the
-bt page has been allocated in this hop level. If not, allocate a new
-one and splice it to the list. The time complexity is O(n^2) in worst
-cases.
+Fix sparse warnings: restricted __le16 degrades to integer.
 
-Currently the allocation for-loop uses 'unit' as the step size. This
-actually has taken into account the reuse of last-hop-level MTT bt
-pages by multiple buffer pages. Thus pages of last hop level will
-never have been allocated, so there is no need to iterate the hem list
-in last hop level.
-
-Removing this unnecessary iteration can reduce the time complexity to
-O(n).
-
-Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
+Fixes: 5a87279591a1 ("RDMA/hns: Support hns HW stats")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202409080508.g4mNSLwy-lkp@intel.com/
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-9-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20240909065331.3950268-1-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index a429d95a387cd..7ebf80504fd12 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -1191,10 +1191,12 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index d226081e1cc03..8066750afab90 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -1653,8 +1653,8 @@ static int hns_roce_hw_v2_query_counter(struct hns_roce_dev *hr_dev,
  
- 	/* config L1 bt to last bt and link them to corresponding parent */
- 	for (level = 1; level < hopnum; level++) {
--		cur = hem_list_search_item(&mid_bt[level], offset);
--		if (cur) {
--			hem_ptrs[level] = cur;
--			continue;
-+		if (!hem_list_is_bottom_bt(hopnum, level)) {
-+			cur = hem_list_search_item(&mid_bt[level], offset);
-+			if (cur) {
-+				hem_ptrs[level] = cur;
-+				continue;
-+			}
- 		}
+ 	for (i = 0; i < HNS_ROCE_HW_CNT_TOTAL && i < *num_counters; i++) {
+ 		bd_idx = i / CNT_PER_DESC;
+-		if (!(desc[bd_idx].flag & HNS_ROCE_CMD_FLAG_NEXT) &&
+-		    bd_idx != HNS_ROCE_HW_CNT_TOTAL / CNT_PER_DESC)
++		if (bd_idx != HNS_ROCE_HW_CNT_TOTAL / CNT_PER_DESC &&
++		    !(desc[bd_idx].flag & cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT)))
+ 			break;
  
- 		step = hem_list_calc_ba_range(hopnum, level, unit);
+ 		cnt_data = (__le64 *)&desc[bd_idx].data[0];
 -- 
 2.43.0
 
