@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB981474BC;
-	Wed,  2 Oct 2024 14:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9511474BC;
+	Wed,  2 Oct 2024 14:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879544; cv=none; b=SNmlfaETctjpLjSCUWnQfOMLmCPEvwx8ssM/DNPjS8E4lwnaqHhoW2Hb/ZO7xf9FkpwQhfU+X92lTiy7ooZVnbRCEIC33LaSd4fduqb/kaZ5X5Q+vGJFrsvL6CA/8HyoUyF8du89/MLTbKI3BmvX8OJgiFG4g6ei0QRkJ2f1jao=
+	t=1727879547; cv=none; b=OexKwLmu63oazFiW+yrScROxcf+7+HOs730OJTUR+lUpF0q+krqLs3OTRyYdxN/H9oQLRsWzAgQegc9E6kT+FFanhiEW+LuvGIKMtLWwuoNvcs371X0MW31/hlEi1qjcAGD2fXCvggJtjnUOtYMTUnA+tIf6e07CUZ7LXJvJaGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879544; c=relaxed/simple;
-	bh=UKZrsZwHGKlnJ7qwLSYtmZ94gIlIb5+wWIpZ1xywPzI=;
+	s=arc-20240116; t=1727879547; c=relaxed/simple;
+	bh=Ou78rOEFoWGf8dOKNVNvvDDxdV+gErF3IZZM2dSEPpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0IGpNZHLRdge8F0m6IpvPb36XUEqOdhfWJbMNvuTkdye0KmFlezhV24FBWXa4kt5jsNlTfJTxp87+QIfY0gB12YEaULMuIwt9B4/WCDYBxDZGLUW32OE0K1ywwfQjzWBGvawDPrXN0TGBec5aSOh/r1Mi3YLxhPwfVc+6P3GSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqBa0VvJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNQe9Ytw5+LuO+yawbHxKtVpp6jmedH4DsoW+Xb5/GXcu2FgUU3E82gPJebEnh8Y894rhsbfQanfWlgrZjrB3udYeltBgWgu+1tpZwOodsiOXD/jd1a8jJbtJLrHnr+AOd8D9SFu80MaO6dgAoSB+KPXOQrp9X409W8vmaUl78E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/xS3x0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqBa0VvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC253C4CEC2;
-	Wed,  2 Oct 2024 14:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/xS3x0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F76FC4CEC2;
+	Wed,  2 Oct 2024 14:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879544;
-	bh=UKZrsZwHGKlnJ7qwLSYtmZ94gIlIb5+wWIpZ1xywPzI=;
+	s=korg; t=1727879546;
+	bh=Ou78rOEFoWGf8dOKNVNvvDDxdV+gErF3IZZM2dSEPpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqBa0VvJAgxalgGV1FWoA6Dj6fx8yqoaqvugsJNQrxcJD+RA7nZ1jwbmrQem8xoV9
-	 cC/XXMQlnyoAJ+yGilnPMA/YMYi3J1GwMzD38ad8Qfl0KzUbckdJzk2Y/fOXbjNSOg
-	 0EDuDwCJL49z7fccB3g7RlUDnjecRYfr+JN/gwis=
+	b=C/xS3x0fL4ttws3DutnhJBaKLtO6iwdYJvO2JSQdXWw6Rl1i3De1/rlWIUkbfe+BH
+	 73xUIpqyIopcoBHkKYZ/coMd5I758MUJpwYTvk2CWQ6B7NIyjxoHyCf1I+nm+Ro1uD
+	 EjvXCysGJz+cAv6XSwdY5FLgDNrVxNSI9+uwcrAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Charles Han <hanchunchao@inspur.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/538] powerpc/8xx: Fix initial memory mapping
-Date: Wed,  2 Oct 2024 14:56:34 +0200
-Message-ID: <20241002125758.372673243@linuxfoundation.org>
+Subject: [PATCH 6.6 129/538] mtd: powernv: Add check devm_kasprintf() returned value
+Date: Wed,  2 Oct 2024 14:56:08 +0200
+Message-ID: <20241002125757.334456165@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit f9f2bff64c2f0dbee57be3d8c2741357ad3d05e6 ]
+[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
 
-Commit cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
-introduced an initial mapping of kernel TEXT using PAGE_KERNEL_TEXT,
-but the pages that contain kernel TEXT may also contain kernel RODATA,
-and depending on selected debug options PAGE_KERNEL_TEXT may be either
-RWX or ROX. RODATA must be writable during init because it also
-contains ro_after_init data.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value is not checked.
 
-So use PAGE_KERNEL_X instead to be sure it is RWX.
-
-Fixes: cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/dac7a828d8497c4548c91840575a706657baa4f1.1724173828.git.christophe.leroy@csgroup.eu
+Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/nohash/8xx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/devices/powernv_flash.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
-index 3245016302787..a947dff35d651 100644
---- a/arch/powerpc/mm/nohash/8xx.c
-+++ b/arch/powerpc/mm/nohash/8xx.c
-@@ -149,11 +149,11 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
- 
- 	mmu_mapin_immr();
- 
--	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_TEXT, true);
-+	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_X, true);
- 	if (debug_pagealloc_enabled_or_kfence()) {
- 		top = boundary;
- 	} else {
--		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_TEXT, true);
-+		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_X, true);
- 		mmu_mapin_ram_chunk(einittext8, top, PAGE_KERNEL, true);
- 	}
- 
+diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
+index 36e060386e59d..59e1b3a4406ed 100644
+--- a/drivers/mtd/devices/powernv_flash.c
++++ b/drivers/mtd/devices/powernv_flash.c
+@@ -207,6 +207,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
+ 	 * get them
+ 	 */
+ 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
++	if (!mtd->name)
++		return -ENOMEM;
++
+ 	mtd->type = MTD_NORFLASH;
+ 	mtd->flags = MTD_WRITEABLE;
+ 	mtd->size = size;
 -- 
 2.43.0
 
