@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E6817B421;
-	Wed,  2 Oct 2024 13:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDD929CE7;
+	Wed,  2 Oct 2024 13:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876866; cv=none; b=bDAu15QbnAendtZNHGznHernwHy96osmLzPW7R4uvhZhyFfKuc0h3XbZ7KeMrrcNpIQfvkHcEviuBowlB4lUsPZH5DoA80z3An7EPl5YhmcE6czs8qOHAolWOmuLxTMJlMn2KTb5/bDbhS9huLCdV6RNroe3S5qM57D1EGZzAXc=
+	t=1727876869; cv=none; b=n8b2hHd0yJjN9VfHCt0QLpU4YngvP3024nACnuQdnEKE0PgzDTDHs5TriyX0rNGqMjaTPIrMtwkv6sLIwOj44vj7u7H35kQWqY7U5EXd60fnyH07h9lWMaMNBaZHQY+6Sxye0sDUT70RoBWH/66sQzk33QmdG/g2/8lxaDMkGyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876866; c=relaxed/simple;
-	bh=1tz/5DA8pcUfi5bwHHnOMVW9iERM24B9ElIswByVjbc=;
+	s=arc-20240116; t=1727876869; c=relaxed/simple;
+	bh=KOwORQO0Iw1cWE4usm/Zsk67254Z2rPIzE9TjvAwvxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sj0Kh+MPto4hjVaNs+c8AncKmd8X2800Fc1VpbkmZPb8/I1ZbyJy83hC2/eryb14wmtOZftnH3oZWIXxz0OQhbtSS6fBlZzrMVSqGKvusEIUD5d88oP7tF9otJ6p0x2h9C+HASIUkl/eNQeGGGIUBVvOERP3KFxoJauLVDVRWd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVaXKdP+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qX5PnrtV4TVZykyeZArapwtjHtSjM7xId4Asach7IaV7fBLIRLRgzy08iLuvx6BZ0fclmX4RjNBonfSWD344Khu8nIgpUKygTf4/9UXTuq/fZHBnSDt43Qah5anmJkPy1rYNLvYGKckLfGxWYOMOLsRrojUTtpI931/F2IBZ7t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muSqCnsl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVaXKdP+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CD4C4CEC2;
-	Wed,  2 Oct 2024 13:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muSqCnsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAB9C4CEC2;
+	Wed,  2 Oct 2024 13:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876866;
-	bh=1tz/5DA8pcUfi5bwHHnOMVW9iERM24B9ElIswByVjbc=;
+	s=korg; t=1727876869;
+	bh=KOwORQO0Iw1cWE4usm/Zsk67254Z2rPIzE9TjvAwvxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVaXKdP+9qqmgWlyRtP/xsnrm2m2oXe9G9fYq4MLnrhmD6ihpO2irqDIpI0TM1rP4
-	 pWB9vhi3dYGR6CLc2ROUSTa2Fw3sKETUbeqeEub+UVrWZkc+GhwS1oaGVTd83FArQD
-	 f+w0CiY2QmwPxBuKFqz+c7BiD4NqOmLvl/ChRRYc=
+	b=muSqCnsljJSK8+r8W4BjNUCwNiNIvtfC4s3fXS0fIK2fkZYUIIwYnyiA0nE2PFLLZ
+	 kl3dm10jVFotSBJkZy9bNRO7a1ZmU+fL682qrqkNVkCLBYqhBWl739jD6eO6brMCuZ
+	 1p7JwItBFzuiAVZjaWta4OTAKJMQJWEvHvvtYieQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.11 586/695] usb: cdnsp: Fix incorrect usb_request status
-Date: Wed,  2 Oct 2024 14:59:44 +0200
-Message-ID: <20241002125845.902701266@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.11 560/695] drm/amd/display: Fix underflow when setting underscan on DCN401
+Date: Wed,  2 Oct 2024 14:59:18 +0200
+Message-ID: <20241002125844.855277145@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,54 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit 1702bec4477cc7d31adb4a760d14d33fac928b7a upstream.
+commit f510dd5c210bf8cc22e4be48cbbda3cb754219f5 upstream.
 
-Fix changes incorrect usb_request->status returned during disabling
-endpoints. Before fix the status returned during dequeuing requests
-while disabling endpoint was ECONNRESET.
-Patch change it to ESHUTDOWN.
+[WHY & HOW]
+When underscan is set through xrandr, it causes the stream destination
+rect to change in a way it becomes complicated to handle the calculations
+for subvp. Since this is a corner case, disable subvp when underscan is
+set.
 
-Patch fixes issue detected during testing UVC gadget.
-During stopping streaming the class starts dequeuing usb requests and
-controller driver returns the -ECONNRESET status. After completion
-requests the class or application "uvc-gadget" try to queue this
-request again. Changing this status to ESHUTDOWN cause that UVC assumes
-that endpoint is disabled, or device is disconnected and stops
-re-queuing usb requests.
+Fix the existing check that is supposed to catch this corner case by
+adding a check based on the parameters in the stream
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: stable@vger.kernel.org
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB9538E8CA7A2096AAF6A3718FDD9E2@PH7PR07MB9538.namprd07.prod.outlook.com
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -718,7 +718,8 @@ int cdnsp_remove_request(struct cdnsp_de
- 	seg = cdnsp_trb_in_td(pdev, cur_td->start_seg, cur_td->first_trb,
- 			      cur_td->last_trb, hw_deq);
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.c
+@@ -859,7 +859,9 @@ static void populate_dml21_plane_config_
  
--	if (seg && (pep->ep_state & EP_ENABLED))
-+	if (seg && (pep->ep_state & EP_ENABLED) &&
-+	    !(pep->ep_state & EP_DIS_IN_RROGRESS))
- 		cdnsp_find_new_dequeue_state(pdev, pep, preq->request.stream_id,
- 					     cur_td, &deq_state);
- 	else
-@@ -736,7 +737,8 @@ int cdnsp_remove_request(struct cdnsp_de
- 	 * During disconnecting all endpoint will be disabled so we don't
- 	 * have to worry about updating dequeue pointer.
- 	 */
--	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING) {
-+	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING ||
-+	    pep->ep_state & EP_DIS_IN_RROGRESS) {
- 		status = -ESHUTDOWN;
- 		ret = cdnsp_cmd_set_deq(pdev, pep, &deq_state);
- 	}
+ 	plane->immediate_flip = plane_state->flip_immediate;
+ 
+-	plane->composition.rect_out_height_spans_vactive = plane_state->dst_rect.height >= stream->timing.v_addressable;
++	plane->composition.rect_out_height_spans_vactive =
++		plane_state->dst_rect.height >= stream->timing.v_addressable &&
++		stream->dst.height >= stream->timing.v_addressable;
+ }
+ 
+ //TODO : Could be possibly moved to a common helper layer.
 
 
