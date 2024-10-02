@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1A71D0787;
-	Wed,  2 Oct 2024 13:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFF618DF60;
+	Wed,  2 Oct 2024 13:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876671; cv=none; b=ned222AY7heMf/igtz7d3peKAXBwqpOxfzTWTtTm4HkUm81iB6jOXbRwG+zYZXtWm3ZWC9Ta5QXGEVo8PiW8rUbwBbLVGkZ5xSw4MC2ysfD3SV80LQLtVmpVDq0P4fLZr4tgx0MdLxZHtivfJmCj0wRsOG/4ayMBh8r+caQ0++Y=
+	t=1727876674; cv=none; b=FyW0FOWwLXxgwF24kiM16ffHHZmdezIaadn9qnC2ev/gPNsiGoFluCXB7pv4l422DIzKMCxU+SBxAXQvWoYwlzz2RWwLiTYU69CqgquSC+GLdKU3dBOvkLNipxiQSmUqUfqPr4Jyjgsj3O0YRQVzlNctIZyMUTJvLScdz/OKKtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876671; c=relaxed/simple;
-	bh=q+WDcNqXpJylmxGxh6GmOa2NkHq4o7auefova5msee4=;
+	s=arc-20240116; t=1727876674; c=relaxed/simple;
+	bh=yZb7/jKZ3EqiEjpyPxgeW0Z6TShUw5odaXH7KCLk0qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRA50MH7A2jPy6cx9xettFhUELPSqzrUfPwtJ5s5hnxkoFrbquYH7hIwCeALpGO75fwglZlk1k0PabKJkusMgGKlwmwQYnS/m40giPoh8TscUxe6wn1mvQRcxjixitKg2Wj+4A9l05jtNu8pUD7B7JsRqp6hKOgQPJRvLbwNFa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbueE8oM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/WJWdgRSqcGfPUp7nBC+k0S93ysep581aM5tv0Oh5T9OdSyrPoghKL51lXj/k9dOwpK58UjIrVjXOLj6ZCcZrmP5OTzjOP7C2WYjM/XcI1qEQDMXRmxpUXdogM2UIdvTLfPTPblVs7sY1Vfd3oSLjPkaa3SSublVk9DjBDnUF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CN4/4eQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbueE8oM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A57C4CEC5;
-	Wed,  2 Oct 2024 13:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CN4/4eQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CE9C4CEC5;
+	Wed,  2 Oct 2024 13:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876670;
-	bh=q+WDcNqXpJylmxGxh6GmOa2NkHq4o7auefova5msee4=;
+	s=korg; t=1727876673;
+	bh=yZb7/jKZ3EqiEjpyPxgeW0Z6TShUw5odaXH7KCLk0qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbueE8oMGZII2OUN9ub+MP4y2VDILdVIG/6cUyGtGzQ1tscELnx21hXDTtzkWQXCt
-	 iGOCaRKmbuCgXZyqQJ63AO5SOxHadUrpShLrU1S7ED3szHintZiMtpnhp24H9k62q/
-	 L0KfNQ891tnBhDX41GhS3dhkduNllRPBkhD+zMcM=
+	b=0CN4/4eQ0cw605vj62LFSDx9r6Z9gTPwhTIFw99QORz8vqZ3dZ6cBeyhG2Wm2UNkv
+	 Xwdt9wkoc7S2hPRCHYl8cUMh98Gs58Y36jz3DVeZwhc6WwWvTG+VjY72XvlE5zz9T5
+	 xVwa7ePgV4Twcvzh3fRis7ck5Y0umSJ+GQoPebAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 522/695] Revert "soc: qcom: smd-rpm: Match rpmsg channel instead of compatible"
-Date: Wed,  2 Oct 2024 14:58:40 +0200
-Message-ID: <20241002125843.321952692@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 493/695] netfilter: nf_tables: missing objects with no memcg accounting
+Date: Wed,  2 Oct 2024 14:58:11 +0200
+Message-ID: <20241002125842.149589395@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,83 +50,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit b17155133391d7f6dd18d3fb94a7d492fdec18fa upstream.
+[ Upstream commit 69e687cea79fc99a17dfb0116c8644b9391b915e ]
 
-The rpm_requests device nodes have the compatible node. As such the
-rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
-smd-rpm is built as a module, it doesn't get autoloaded for the device.
+Several ruleset objects are still not using GFP_KERNEL_ACCOUNT for
+memory accounting, update them. This includes:
 
-Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
-instead of compatible")
+- catchall elements
+- compat match large info area
+- log prefix
+- meta secctx
+- numgen counters
+- pipapo set backend datastructure
+- tunnel private objects
 
-Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 33758c891479 ("memcg: enable accounting for nft objects")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/smd-rpm.c |   35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ net/netfilter/nf_tables_api.c  |  2 +-
+ net/netfilter/nft_compat.c     |  6 +++---
+ net/netfilter/nft_log.c        |  2 +-
+ net/netfilter/nft_meta.c       |  2 +-
+ net/netfilter/nft_numgen.c     |  2 +-
+ net/netfilter/nft_set_pipapo.c | 13 +++++++------
+ net/netfilter/nft_tunnel.c     |  5 +++--
+ 7 files changed, 17 insertions(+), 15 deletions(-)
 
---- a/drivers/soc/qcom/smd-rpm.c
-+++ b/drivers/soc/qcom/smd-rpm.c
-@@ -196,9 +196,6 @@ static int qcom_smd_rpm_probe(struct rpm
- {
- 	struct qcom_smd_rpm *rpm;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 02a8b863a151b..472f211472db4 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6679,7 +6679,7 @@ static int nft_setelem_catchall_insert(const struct net *net,
+ 		}
+ 	}
  
--	if (!rpdev->dev.of_node)
--		return -EINVAL;
--
- 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
- 	if (!rpm)
+-	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL);
++	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL_ACCOUNT);
+ 	if (!catchall)
  		return -ENOMEM;
-@@ -218,18 +215,38 @@ static void qcom_smd_rpm_remove(struct r
- 	of_platform_depopulate(&rpdev->dev);
- }
  
--static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
--	{ .name = "rpm_requests", },
--	{ /* sentinel */ }
-+static const struct of_device_id qcom_smd_rpm_of_match[] = {
-+	{ .compatible = "qcom,rpm-apq8084" },
-+	{ .compatible = "qcom,rpm-ipq6018" },
-+	{ .compatible = "qcom,rpm-ipq9574" },
-+	{ .compatible = "qcom,rpm-msm8226" },
-+	{ .compatible = "qcom,rpm-msm8909" },
-+	{ .compatible = "qcom,rpm-msm8916" },
-+	{ .compatible = "qcom,rpm-msm8936" },
-+	{ .compatible = "qcom,rpm-msm8953" },
-+	{ .compatible = "qcom,rpm-msm8974" },
-+	{ .compatible = "qcom,rpm-msm8976" },
-+	{ .compatible = "qcom,rpm-msm8994" },
-+	{ .compatible = "qcom,rpm-msm8996" },
-+	{ .compatible = "qcom,rpm-msm8998" },
-+	{ .compatible = "qcom,rpm-sdm660" },
-+	{ .compatible = "qcom,rpm-sm6115" },
-+	{ .compatible = "qcom,rpm-sm6125" },
-+	{ .compatible = "qcom,rpm-sm6375" },
-+	{ .compatible = "qcom,rpm-qcm2290" },
-+	{ .compatible = "qcom,rpm-qcs404" },
-+	{}
- };
--MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
-+MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index d3d11dede5450..85450f6011426 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -536,7 +536,7 @@ nft_match_large_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 	struct xt_match *m = expr->ops->data;
+ 	int ret;
  
- static struct rpmsg_driver qcom_smd_rpm_driver = {
- 	.probe = qcom_smd_rpm_probe,
- 	.remove = qcom_smd_rpm_remove,
- 	.callback = qcom_smd_rpm_callback,
--	.id_table = qcom_smd_rpm_id_table,
--	.drv.name = "qcom_smd_rpm",
-+	.drv  = {
-+		.name  = "qcom_smd_rpm",
-+		.of_match_table = qcom_smd_rpm_of_match,
-+	},
- };
+-	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL);
++	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->info)
+ 		return -ENOMEM;
  
- static int __init qcom_smd_rpm_init(void)
+@@ -810,7 +810,7 @@ nft_match_select_ops(const struct nft_ctx *ctx,
+ 		goto err;
+ 	}
+ 
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+@@ -900,7 +900,7 @@ nft_target_select_ops(const struct nft_ctx *ctx,
+ 		goto err;
+ 	}
+ 
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+diff --git a/net/netfilter/nft_log.c b/net/netfilter/nft_log.c
+index 5defe6e4fd982..e355881379957 100644
+--- a/net/netfilter/nft_log.c
++++ b/net/netfilter/nft_log.c
+@@ -163,7 +163,7 @@ static int nft_log_init(const struct nft_ctx *ctx,
+ 
+ 	nla = tb[NFTA_LOG_PREFIX];
+ 	if (nla != NULL) {
+-		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL);
++		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL_ACCOUNT);
+ 		if (priv->prefix == NULL)
+ 			return -ENOMEM;
+ 		nla_strscpy(priv->prefix, nla, nla_len(nla) + 1);
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index 9139ce38ea7b9..f23faf565b687 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -954,7 +954,7 @@ static int nft_secmark_obj_init(const struct nft_ctx *ctx,
+ 	if (tb[NFTA_SECMARK_CTX] == NULL)
+ 		return -EINVAL;
+ 
+-	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL);
++	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL_ACCOUNT);
+ 	if (!priv->ctx)
+ 		return -ENOMEM;
+ 
+diff --git a/net/netfilter/nft_numgen.c b/net/netfilter/nft_numgen.c
+index 7d29db7c2ac0f..bd058babfc820 100644
+--- a/net/netfilter/nft_numgen.c
++++ b/net/netfilter/nft_numgen.c
+@@ -66,7 +66,7 @@ static int nft_ng_inc_init(const struct nft_ctx *ctx,
+ 	if (priv->offset + priv->modulus - 1 < priv->offset)
+ 		return -EOVERFLOW;
+ 
+-	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL);
++	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->counter)
+ 		return -ENOMEM;
+ 
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index eb4c4a4ac7ace..7be342b495f5f 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -663,7 +663,7 @@ static int pipapo_realloc_mt(struct nft_pipapo_field *f,
+ 	    check_add_overflow(rules, extra, &rules_alloc))
+ 		return -EOVERFLOW;
+ 
+-	new_mt = kvmalloc_array(rules_alloc, sizeof(*new_mt), GFP_KERNEL);
++	new_mt = kvmalloc_array(rules_alloc, sizeof(*new_mt), GFP_KERNEL_ACCOUNT);
+ 	if (!new_mt)
+ 		return -ENOMEM;
+ 
+@@ -936,7 +936,7 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ 		return;
+ 	}
+ 
+-	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL);
++	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
+ 	if (!new_lt)
+ 		return;
+ 
+@@ -1212,7 +1212,7 @@ static int pipapo_realloc_scratch(struct nft_pipapo_match *clone,
+ 		scratch = kzalloc_node(struct_size(scratch, map,
+ 						   bsize_max * 2) +
+ 				       NFT_PIPAPO_ALIGN_HEADROOM,
+-				       GFP_KERNEL, cpu_to_node(i));
++				       GFP_KERNEL_ACCOUNT, cpu_to_node(i));
+ 		if (!scratch) {
+ 			/* On failure, there's no need to undo previous
+ 			 * allocations: this means that some scratch maps have
+@@ -1427,7 +1427,7 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 	struct nft_pipapo_match *new;
+ 	int i;
+ 
+-	new = kmalloc(struct_size(new, f, old->field_count), GFP_KERNEL);
++	new = kmalloc(struct_size(new, f, old->field_count), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return NULL;
+ 
+@@ -1457,7 +1457,7 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
+ 				  src->bsize * sizeof(*dst->lt) +
+ 				  NFT_PIPAPO_ALIGN_HEADROOM,
+-				  GFP_KERNEL);
++				  GFP_KERNEL_ACCOUNT);
+ 		if (!new_lt)
+ 			goto out_lt;
+ 
+@@ -1470,7 +1470,8 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 
+ 		if (src->rules > 0) {
+ 			dst->mt = kvmalloc_array(src->rules_alloc,
+-						 sizeof(*src->mt), GFP_KERNEL);
++						 sizeof(*src->mt),
++						 GFP_KERNEL_ACCOUNT);
+ 			if (!dst->mt)
+ 				goto out_mt;
+ 
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index 60a76e6e348e7..5c6ed68cc6e05 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -509,13 +509,14 @@ static int nft_tunnel_obj_init(const struct nft_ctx *ctx,
+ 			return err;
+ 	}
+ 
+-	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL, GFP_KERNEL);
++	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL,
++				GFP_KERNEL_ACCOUNT);
+ 	if (!md)
+ 		return -ENOMEM;
+ 
+ 	memcpy(&md->u.tun_info, &info, sizeof(info));
+ #ifdef CONFIG_DST_CACHE
+-	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL);
++	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL_ACCOUNT);
+ 	if (err < 0) {
+ 		metadata_dst_free(md);
+ 		return err;
+-- 
+2.43.0
+
 
 
