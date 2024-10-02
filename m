@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBCB1D078A;
-	Wed,  2 Oct 2024 13:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DE21D04BD;
+	Wed,  2 Oct 2024 13:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875596; cv=none; b=VO6kERUsnlpBCBkcSyYrBo3el2HQ54upyVSDen3EGziCjQLDnJxdhKWxj1ZNohyTXbbTlr5GA4QQbBB10ZyFYv5g3zypXfjGnjog9NSZEIveFwN7V387+xRpt5w88n/PCe0FSb9vYJ2iIoTNuAksR6ZYLntfLGrRHRyk/D2EaYg=
+	t=1727875599; cv=none; b=u3iuvKOM3AiN6lRvmpx4EWDgZiBylFIzClwIMOnOzkAZlWNWOUGWknY06v3zo/1GNvR+/SaJQRh3MwobDJZitgDexCxk08iaczi5GVTUxGEOaEqDcCl6xWpFkOLWRHrIUnkqWS5jfewJSe27RKF3/j4SEqxFOuPxQWaz4pp3lCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875596; c=relaxed/simple;
-	bh=e3iW9uBazJvSaXtsMxeoWM1UR/nyTVJe1BcUaE65+ks=;
+	s=arc-20240116; t=1727875599; c=relaxed/simple;
+	bh=XY+9xTf0MCX2kMKeIoNg2Yoxi9cA0dSVadLIBk7eMIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVToXrRDcJCGD+kCIJQRhtNodQ0ArQXR3ofvPsxWSUimJ12+bYG6hLq4UcMOFUGFUYQyKpcjChHnfEEdFTCyrxL72LGEqDp+6h4noGPh6A6K+FRpfFFwrv7DGqyoWjO8Lw8OP3n1Lkp+u2KMKoTJ0eiHteRljIMs5Vib00CyHB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWmO/OBt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H+1sd/Pk5PyPCuPQWF+HlJng1HSaL4EkqymCHiEemfjsPntAXOWDnulxuySoKV/8WQKFenIS8Ub4ita4ia7XlkarpFFNpC/w58wObX7G8eFEX9YXrPSz+ctnAXjp2xwc/iDfIH54hGkS6qzbMbZsKnBPAcbq4OhQu560VHujVF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWEFmu6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWmO/OBt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554F1C4CEC5;
-	Wed,  2 Oct 2024 13:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWEFmu6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF50C4CEC5;
+	Wed,  2 Oct 2024 13:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875596;
-	bh=e3iW9uBazJvSaXtsMxeoWM1UR/nyTVJe1BcUaE65+ks=;
+	s=korg; t=1727875599;
+	bh=XY+9xTf0MCX2kMKeIoNg2Yoxi9cA0dSVadLIBk7eMIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWmO/OBtIb9FF73wYqjA9DD46JUuooe+NPtBOg12CR+32p6mYqiLpAZLtzJBUkkow
-	 1ekY88drdkcW1hKyhWc44mzegMh+Hn5w66aG0wPRQ9TrMvFSlJU8k8m95q5zgHybc5
-	 Ngqu1dGPEL8+igZtO1Vnz3kVkmQDhsVja43juSlg=
+	b=wWEFmu6eRhgFUF5br4/QTC5rOyoNsi43KfgkRbX/Ca4TpYtppMm/L8uenY+EWnQak
+	 RfPvJNnBi5K1GjwCLBcgxuD28AY2yydoYlTz6AMPAKyMP+OFrSpFrIGPXlPJdq0tfW
+	 2RbIjuOMocnlCPw20lCyNYi2bbNLV+oQiR1+nD2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wouter Verhelst <w@uter.be>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Eric Blake <eblake@redhat.Com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Colin Walters <walters@verbum.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 124/695] nbd: correct the maximum value for discard sectors
-Date: Wed,  2 Oct 2024 14:52:02 +0200
-Message-ID: <20241002125827.421599369@linuxfoundation.org>
+Subject: [PATCH 6.11 125/695] erofs: fix incorrect symlink detection in fast symlink
+Date: Wed,  2 Oct 2024 14:52:03 +0200
+Message-ID: <20241002125827.461913262@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -47,47 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wouter Verhelst <w@uter.be>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 296dbc72d29085d5fc34430d0760423071e9e81d ]
+[ Upstream commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 ]
 
-The version of the NBD protocol implemented by the kernel driver
-currently has a 32 bit field for length values. As the NBD protocol uses
-bytes as a unit of length, length values larger than 2^32 bytes cannot
-be expressed.
+Fast symlink can be used if the on-disk symlink data is stored
+in the same block as the on-disk inode, so we don’t need to trigger
+another I/O for symlink data.  However, currently fs correction could be
+reported _incorrectly_ if inode xattrs are too large.
 
-Update the max_hw_discard_sectors field to match that.
+In fact, these should be valid images although they cannot be handled as
+fast symlinks.
 
-Signed-off-by: Wouter Verhelst <w@uter.be>
-Fixes: 268283244c0f ("nbd: use the atomic queue limits API in nbd_set_size")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: Eric Blake <eblake@redhat.Com>
-Link: https://lore.kernel.org/r/20240812133032.115134-8-w@uter.be
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Many thanks to Colin for reporting this!
+
+Reported-by: Colin Walters <walters@verbum.org>
+Reported-by: https://honggfuzz.dev/
+Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
+Fixes: 431339ba9042 ("staging: erofs: add inode operations")
+[ Note that it's a runtime misbehavior instead of a security issue. ]
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/inode.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 69b9851b67982..8b243144fd64f 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -350,7 +350,7 @@ static int __nbd_set_size(struct nbd_device *nbd, loff_t bytesize,
+diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
+index 419432be3223b..4e3ea6689cb4e 100644
+--- a/fs/erofs/inode.c
++++ b/fs/erofs/inode.c
+@@ -178,12 +178,14 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
+ 			      unsigned int m_pofs)
+ {
+ 	struct erofs_inode *vi = EROFS_I(inode);
+-	unsigned int bsz = i_blocksize(inode);
++	loff_t off;
+ 	char *lnk;
  
- 	lim = queue_limits_start_update(nbd->disk->queue);
- 	if (nbd->config->flags & NBD_FLAG_SEND_TRIM)
--		lim.max_hw_discard_sectors = UINT_MAX;
-+		lim.max_hw_discard_sectors = UINT_MAX >> SECTOR_SHIFT;
- 	else
- 		lim.max_hw_discard_sectors = 0;
- 	if (!(nbd->config->flags & NBD_FLAG_SEND_FLUSH)) {
+-	/* if it cannot be handled with fast symlink scheme */
+-	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
+-	    inode->i_size >= bsz || inode->i_size < 0) {
++	m_pofs += vi->xattr_isize;
++	/* check if it cannot be handled with fast symlink scheme */
++	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
++	    check_add_overflow(m_pofs, inode->i_size, &off) ||
++	    off > i_blocksize(inode)) {
+ 		inode->i_op = &erofs_symlink_iops;
+ 		return 0;
+ 	}
+@@ -192,16 +194,6 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
+ 	if (!lnk)
+ 		return -ENOMEM;
+ 
+-	m_pofs += vi->xattr_isize;
+-	/* inline symlink data shouldn't cross block boundary */
+-	if (m_pofs + inode->i_size > bsz) {
+-		kfree(lnk);
+-		erofs_err(inode->i_sb,
+-			  "inline data cross block boundary @ nid %llu",
+-			  vi->nid);
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
+-	}
+ 	memcpy(lnk, kaddr + m_pofs, inode->i_size);
+ 	lnk[inode->i_size] = '\0';
+ 
 -- 
 2.43.0
 
