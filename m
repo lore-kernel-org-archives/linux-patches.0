@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF571D042F;
-	Wed,  2 Oct 2024 13:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EC51D042F;
+	Wed,  2 Oct 2024 13:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876750; cv=none; b=G89RivdVFq5UzIxXwK4osPQvmdkofSRITpj1wewn2pKGe/02AHPqJniYmwkfyHKT92JFI9JyB3t667cvGZxZ5xI5DT58szoFpsShdjiUKRzbr8wokgPDFozwFQsKIwrL6XC7ThyUPUYNPbi5rHg2q2N3w/ktOT6/HuAj/urm6bU=
+	t=1727876753; cv=none; b=GJxItWMu72TR15CIhBPgFDDDpa/wgI2urbo/HwC8/opQXVhHeB5LL0WKDYRQAgKHF0C95gWI88oBgHDZXC7wD7H/Vsk/2D9a8q6xwsDGLZ8bLfz0DM6FldUe/folY+MZw0Kl4cAgPPLW4PCg3WG2kx4OraVjhCKFRieotWUX+/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876750; c=relaxed/simple;
-	bh=dlU4L09pQPfjdk25TQymzv2IgeKQOBfR3ginZk5SYEo=;
+	s=arc-20240116; t=1727876753; c=relaxed/simple;
+	bh=uy7Tj76UXUOS5zIBQt7aSG6b9wt52SN4WC9Q5tCC9L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/DOjOrzbuyCUJBg69DV8nP1cDLhisinHCb/UOonovKmiC7Lp/xm3kQnycB6aXXgo1AAyJysSAQQ8OEdweN4XMCYrh81qjbs2ODSrVnBcRg3YJTnAPnAsBz/GtJMOwacnnkRdqPCAb8GdczjVwcaV4Q6Oi9X/P/16kczGJN2D5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwVTVhbs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KScPdr/QRKjXTUIWkbtK8MI4UrF8L7vPYt3nLgv0z7GAZkFA7VWihE/bJeMRua3K4FXXT9SZnHd8SBjZl8YCh02BjU36oE4Bnfeckve/qys1FxW8OIW3zMy28aQlWLoRPaRwXeCzwgfMEW8E8Ml5Fvi+rFE5sgnPIvoHSyjd+C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q997YM8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwVTVhbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A7EC4CEC2;
-	Wed,  2 Oct 2024 13:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q997YM8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA37C4CEC2;
+	Wed,  2 Oct 2024 13:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876750;
-	bh=dlU4L09pQPfjdk25TQymzv2IgeKQOBfR3ginZk5SYEo=;
+	s=korg; t=1727876753;
+	bh=uy7Tj76UXUOS5zIBQt7aSG6b9wt52SN4WC9Q5tCC9L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwVTVhbseJR82jC7ut8T/vzVSGoz7VmIsCJpa9Hb1KSRWJdYT8axRr63DAeEOiEr6
-	 PAFFfaYAMnIT/y68gN+eIyuFVBJffZlq3xAxHYlZ1QU10AeflmCe696B7xXg9E8UtF
-	 xIQMadm/bCns8Y4QuMbugjFYBSiogYbN3KBIdlIM=
+	b=q997YM8cgm0mW7xNZX8JghUcmetMm72+6dwPUwHpvFNqtQ17iwmm1k+7gjXC+9t81
+	 tkywCJUY7mSZVHy/kvFy65daTfsdKikgMYkZ1uYIBlzeljnsSqBqf2knLNkA9ggCI0
+	 GMUkUUDMBAm+NkVXTplfmPcK80w8bAWPtXegikXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Belanger <david.belanger@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 550/695] drm/amdgpu: Fix selfring initialization sequence on soc24
-Date: Wed,  2 Oct 2024 14:59:08 +0200
-Message-ID: <20241002125844.459710919@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Park <chris.park@amd.com>,
+	Leo Ma <hanghong.ma@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.11 551/695] drm/amd/display: Add HDMI DSC native YCbCr422 support
+Date: Wed,  2 Oct 2024 14:59:09 +0200
+Message-ID: <20241002125844.500434018@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,83 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Belanger <david.belanger@amd.com>
+From: Leo Ma <hanghong.ma@amd.com>
 
-commit 03b5038c0ad069380fab7e251d2bf3f1540d20f4 upstream.
+commit 07bfa9cdbf3cd2daadfaaba0601f126f45951ffa upstream.
 
-Move enable_doorbell_selfring_aperture from common_hw_init
-to common_late_init in soc24, otherwise selfring aperture is
-initialized with an incorrect doorbell aperture base.
+[WHY && HOW]
+For some HDMI OVT timing, YCbCr422 encoding fails at the DSC
+bandwidth check. The root cause is our DSC policy for timing
+doesn't account for HDMI YCbCr422 native support.
 
-Port changes from this commit from soc21 to soc24:
-commit 1c312e816c40 ("drm/amdgpu: Enable doorbell selfring after resize FB BAR")
-
-Signed-off-by: David Belanger <david.belanger@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Chris Park <chris.park@amd.com>
+Signed-off-by: Leo Ma <hanghong.ma@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc24.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    4 ++--
+ drivers/gpu/drm/amd/display/dc/dc_dsc.h                     |    3 ++-
+ drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c                 |    5 +++--
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc24.c b/drivers/gpu/drm/amd/amdgpu/soc24.c
-index b0c3678cfb31..fd4c3d4f8387 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc24.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc24.c
-@@ -250,13 +250,6 @@ static void soc24_program_aspm(struct amdgpu_device *adev)
- 		adev->nbio.funcs->program_aspm(adev);
- }
- 
--static void soc24_enable_doorbell_aperture(struct amdgpu_device *adev,
--					   bool enable)
--{
--	adev->nbio.funcs->enable_doorbell_aperture(adev, enable);
--	adev->nbio.funcs->enable_doorbell_selfring_aperture(adev, enable);
--}
--
- const struct amdgpu_ip_block_version soc24_common_ip_block = {
- 	.type = AMD_IP_BLOCK_TYPE_COMMON,
- 	.major = 1,
-@@ -454,6 +447,11 @@ static int soc24_common_late_init(void *handle)
- 	if (amdgpu_sriov_vf(adev))
- 		xgpu_nv_mailbox_get_irq(adev);
- 
-+	/* Enable selfring doorbell aperture late because doorbell BAR
-+	 * aperture will change if resize BAR successfully in gmc sw_init.
-+	 */
-+	adev->nbio.funcs->enable_doorbell_selfring_aperture(adev, true);
-+
- 	return 0;
- }
- 
-@@ -491,7 +489,7 @@ static int soc24_common_hw_init(void *handle)
- 		adev->df.funcs->hw_init(adev);
- 
- 	/* enable the doorbell aperture */
--	soc24_enable_doorbell_aperture(adev, true);
-+	adev->nbio.funcs->enable_doorbell_aperture(adev, true);
- 
- 	return 0;
- }
-@@ -500,8 +498,13 @@ static int soc24_common_hw_fini(void *handle)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1147,7 +1147,7 @@ static int compute_mst_dsc_configs_for_l
+ 		params[count].num_slices_v = aconnector->dsc_settings.dsc_num_slices_v;
+ 		params[count].bpp_overwrite = aconnector->dsc_settings.dsc_bits_per_pixel;
+ 		params[count].compression_possible = stream->sink->dsc_caps.dsc_dec_caps.is_dsc_supported;
+-		dc_dsc_get_policy_for_timing(params[count].timing, 0, &dsc_policy);
++		dc_dsc_get_policy_for_timing(params[count].timing, 0, &dsc_policy, dc_link_get_highest_encoding_format(stream->link));
+ 		if (!dc_dsc_compute_bandwidth_range(
+ 				stream->sink->ctx->dc->res_pool->dscs[0],
+ 				stream->sink->ctx->dc->debug.dsc_min_slice_height_override,
+@@ -1684,7 +1684,7 @@ static bool is_dsc_common_config_possibl
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct dc_dsc_policy dsc_policy = {0};
  
--	/* disable the doorbell aperture */
--	soc24_enable_doorbell_aperture(adev, false);
-+	/* Disable the doorbell aperture and selfring doorbell aperture
-+	 * separately in hw_fini because soc21_enable_doorbell_aperture
-+	 * has been removed and there is no need to delay disabling
-+	 * selfring doorbell.
-+	 */
-+	adev->nbio.funcs->enable_doorbell_aperture(adev, false);
-+	adev->nbio.funcs->enable_doorbell_selfring_aperture(adev, false);
+-	dc_dsc_get_policy_for_timing(&stream->timing, 0, &dsc_policy);
++	dc_dsc_get_policy_for_timing(&stream->timing, 0, &dsc_policy, dc_link_get_highest_encoding_format(stream->link));
+ 	dc_dsc_compute_bandwidth_range(stream->sink->ctx->dc->res_pool->dscs[0],
+ 				       stream->sink->ctx->dc->debug.dsc_min_slice_height_override,
+ 				       dsc_policy.min_target_bpp * 16,
+--- a/drivers/gpu/drm/amd/display/dc/dc_dsc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dsc.h
+@@ -100,7 +100,8 @@ uint32_t dc_dsc_stream_bandwidth_overhea
+  */
+ void dc_dsc_get_policy_for_timing(const struct dc_crtc_timing *timing,
+ 		uint32_t max_target_bpp_limit_override_x16,
+-		struct dc_dsc_policy *policy);
++		struct dc_dsc_policy *policy,
++		const enum dc_link_encoding_format link_encoding);
  
- 	if (amdgpu_sriov_vf(adev))
- 		xgpu_nv_mailbox_put_irq(adev);
--- 
-2.46.2
-
+ void dc_dsc_policy_set_max_target_bpp_limit(uint32_t limit);
+ 
+--- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
++++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
+@@ -882,7 +882,7 @@ static bool setup_dsc_config(
+ 
+ 	memset(dsc_cfg, 0, sizeof(struct dc_dsc_config));
+ 
+-	dc_dsc_get_policy_for_timing(timing, options->max_target_bpp_limit_override_x16, &policy);
++	dc_dsc_get_policy_for_timing(timing, options->max_target_bpp_limit_override_x16, &policy, link_encoding);
+ 	pic_width = timing->h_addressable + timing->h_border_left + timing->h_border_right;
+ 	pic_height = timing->v_addressable + timing->v_border_top + timing->v_border_bottom;
+ 
+@@ -1171,7 +1171,8 @@ uint32_t dc_dsc_stream_bandwidth_overhea
+ 
+ void dc_dsc_get_policy_for_timing(const struct dc_crtc_timing *timing,
+ 		uint32_t max_target_bpp_limit_override_x16,
+-		struct dc_dsc_policy *policy)
++		struct dc_dsc_policy *policy,
++		const enum dc_link_encoding_format link_encoding)
+ {
+ 	uint32_t bpc = 0;
+ 
 
 
