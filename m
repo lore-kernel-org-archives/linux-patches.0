@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889391D0BA8;
-	Wed,  2 Oct 2024 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746531D0438;
+	Wed,  2 Oct 2024 14:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880123; cv=none; b=gXkls14A+Z44V/Ni2c+9a/jGODwyJqnzI1G4G5szra2xRx/2Gpo7DVK3p91uwRwpN7/R0ErPACfzTxbbTL+MBGDzkI988CIWw0qse+IFAgRnmaSclQ7uRGS/x/yClOgyZU1JhACyEG9hkdcMQIBkBYlYkQ4D+7Da6KjzKxOqE68=
+	t=1727880126; cv=none; b=h3gYNHFN6kDzE/RxTdhbaiJzJbDwbWwOraAEHIrIH38mW9SVOb20+88ZIs7C8OMdnncCwLbI8gJoDdP2EmCTRLHTL4mIICt+M7Ljml9EqkTWFu6GpZAbEQ/D0FkkeVJxqm0OzAXfo2khcsx/7fe2nGFricXkIWLhhWXVulJ/Oxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880123; c=relaxed/simple;
-	bh=UZyjfefq6mHRpDx7xfBjYwIrDuEKN3CgF0St63LJnZY=;
+	s=arc-20240116; t=1727880126; c=relaxed/simple;
+	bh=h7uvZTaS0GAPG6wq7STjxN4U71j4rb3YssaT1vekxLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjdzxruHON8RQRrQoyR99AwP5GupSljVL3UMXQG9SdHMVbUo+HXINQByfM/F827zTZpfauQ/QAegcl5rbngcIKX2oRZFxW26MK4+8heQ3kiQZuXouktvlUl8fEFZoUXO2JwIHnXiiIXCng2U2kdKlZdNC/WEbj54yBEL43f+Tn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdwE8P/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X8TTy5RhXxKaBCNX1lQIn3E5P3fq0DM+A2pnEsYCS+ChzehPhA1lzpNHEym6fCFm8asS1Jdb5TY0WkWNwZ5wCYr8ApWhE4+z2iAfNXx7oAN1+5oTzL3rD6lR28AlFMjxU8IxnVcfiT4WsXruoIp2gV+csOhftdvVxMKcad2JZxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcVCdrzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdwE8P/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1DBC4CECE;
-	Wed,  2 Oct 2024 14:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcVCdrzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BEEC4CEC2;
+	Wed,  2 Oct 2024 14:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880123;
-	bh=UZyjfefq6mHRpDx7xfBjYwIrDuEKN3CgF0St63LJnZY=;
+	s=korg; t=1727880126;
+	bh=h7uvZTaS0GAPG6wq7STjxN4U71j4rb3YssaT1vekxLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdwE8P/2pyuWCEIeI7hwFRAbea3C6IVWOlAby5LTgimhSKiaSgR8rMx9fTbZ7hWvK
-	 w1J0qRLBSTbXJ2HZrtIRqyTIZvF/DLjVzddcCrtCbJJmtJNW+9mBnYHKQuAdNOlidr
-	 5sh3jFlctTITk0WMOj41dR6HWE1eF1yOQbkrNqT4=
+	b=DcVCdrzCltK5RzJN8dVx0ZGBtYzP1Bh75TeqFXpdhhdsSeWiTp9XWVq3o+EXnyW7W
+	 D+iZRao1w7GjxYMwUQ0B0J5ZRM6HZ2w+WlfDsjAAgo8xwtCxTaJ1a2hCUOW8Z43JJ2
+	 xkTd9qbV1rUCS/ScgGfNLP1AJyWBUmzbQizI48Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 351/538] spi: atmel-quadspi: Avoid overwriting delay register settings
-Date: Wed,  2 Oct 2024 14:59:50 +0200
-Message-ID: <20241002125806.283289301@linuxfoundation.org>
+Subject: [PATCH 6.6 352/538] nvme-multipath: system fails to create generic nvme device
+Date: Wed,  2 Oct 2024 14:59:51 +0200
+Message-ID: <20241002125806.322741788@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,78 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 329ca3eed4a9a161515a8714be6ba182321385c7 ]
+[ Upstream commit 63bcf9014e95a7d279d10d8e2caa5d88db2b1855 ]
 
-Previously the MR and SCR registers were just set with the supposedly
-required values, from cached register values (cached reg content
-initialized to zero).
+NVME_NSHEAD_DISK_LIVE is a flag for struct nvme_ns_head, not nvme_ns.
+The current code has a typo causing NVME_NSHEAD_DISK_LIVE never to
+be cleared once device_add_disk_fails, causing the system never to
+create the 'generic' character device. Even several rescan attempts
+will change the situation and the system has to be rebooted to fix
+the issue.
 
-All parts fixed here did not consider the current register (cache)
-content, which would make future support of cs_setup, cs_hold, and
-cs_inactive impossible.
-
-Setting SCBR in atmel_qspi_setup() erases a possible DLYBS setting from
-atmel_qspi_set_cs_timing().  The DLYBS setting is applied by ORing over
-the current setting, without resetting the bits first.  All writes to MR
-did not consider possible settings of DLYCS and DLYBCT.
-
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Fixes: f732646d0ccd ("spi: atmel-quadspi: Add support for configuring CS timing")
-Link: https://patch.msgid.link/20240918082744.379610-2-ada@thorsis.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 11384580e332 ("nvme-multipath: add error handling support for add_disk()")
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/nvme/host/multipath.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index af0464999af1f..bf7999ac22c80 100644
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -375,9 +375,9 @@ static int atmel_qspi_set_cfg(struct atmel_qspi *aq,
- 	 * If the QSPI controller is set in regular SPI mode, set it in
- 	 * Serial Memory Mode (SMM).
- 	 */
--	if (aq->mr != QSPI_MR_SMM) {
--		atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
--		aq->mr = QSPI_MR_SMM;
-+	if (!(aq->mr & QSPI_MR_SMM)) {
-+		aq->mr |= QSPI_MR_SMM;
-+		atmel_qspi_write(aq->scr, aq, QSPI_MR);
- 	}
- 
- 	/* Clear pending interrupts */
-@@ -501,7 +501,8 @@ static int atmel_qspi_setup(struct spi_device *spi)
- 	if (ret < 0)
- 		return ret;
- 
--	aq->scr = QSPI_SCR_SCBR(scbr);
-+	aq->scr &= ~QSPI_SCR_SCBR_MASK;
-+	aq->scr |= QSPI_SCR_SCBR(scbr);
- 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
- 
- 	pm_runtime_mark_last_busy(ctrl->dev.parent);
-@@ -534,6 +535,7 @@ static int atmel_qspi_set_cs_timing(struct spi_device *spi)
- 	if (ret < 0)
- 		return ret;
- 
-+	aq->scr &= ~QSPI_SCR_DLYBS_MASK;
- 	aq->scr |= QSPI_SCR_DLYBS(cs_setup);
- 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
- 
-@@ -549,8 +551,8 @@ static void atmel_qspi_init(struct atmel_qspi *aq)
- 	atmel_qspi_write(QSPI_CR_SWRST, aq, QSPI_CR);
- 
- 	/* Set the QSPI controller by default in Serial Memory Mode */
--	atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
--	aq->mr = QSPI_MR_SMM;
-+	aq->mr |= QSPI_MR_SMM;
-+	atmel_qspi_write(aq->mr, aq, QSPI_MR);
- 
- 	/* Enable the QSPI controller */
- 	atmel_qspi_write(QSPI_CR_QSPIEN, aq, QSPI_CR);
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 645a6b1322205..37ea0fa421da8 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -585,7 +585,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
+ 		rc = device_add_disk(&head->subsys->dev, head->disk,
+ 				     nvme_ns_id_attr_groups);
+ 		if (rc) {
+-			clear_bit(NVME_NSHEAD_DISK_LIVE, &ns->flags);
++			clear_bit(NVME_NSHEAD_DISK_LIVE, &head->flags);
+ 			return;
+ 		}
+ 		nvme_add_ns_head_cdev(head);
 -- 
 2.43.0
 
