@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F111D0499;
-	Wed,  2 Oct 2024 14:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA401D0957;
+	Wed,  2 Oct 2024 14:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877805; cv=none; b=NzPJtSzxDIQ7CnY1m3GTXRKYNefWGcfe68Syu9cA98XDl1jPEVE7TEpZbTW8ivI3a9EaVoJUlb/U+ThY0cD2HAR4MatETUYHnyrE2B2xrz/+IrBOscUQKNHhxqkszM4rUeg9+C6d/M7J5f4MuxXiSZpWijv9R/il4I+gRHyL1JQ=
+	t=1727877808; cv=none; b=oTcLUOhr2sNPS4MKlmVclLwtzTbsJGacCc0QISsKA/B3VP4WxEzwDQo7yxiKyA0bV1WDFw8i0mHFqIwP2ia6ZWq9FE3UNnQrbG78HXTIxeS1rbQJ2FMzeRChfwILPay0i79c5JcynKefrQfPEx5d7YBOuQC1JXh40xEmSCQieh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877805; c=relaxed/simple;
-	bh=g9tDrD1UyJYRTv2Z5NVqMwqzZH7IGIWI9l+w5eGYr+0=;
+	s=arc-20240116; t=1727877808; c=relaxed/simple;
+	bh=VrlQGIoDRX9hfNNglen4GROOUYMslZFqvQELuD4g284=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+/x6Di+81VwbPezU0jzPzCnCl1d6ZAGrSI2b/stOfxphT9Nbp67SIjxCVMbaCQnL1LkcHfV8gdG5pV48LRhTyNaFJDlJnVBuKY8Vrhni3smtW9ZT40LWTQ9UEANfnejymm7APe/GJrEH71l5WL075evO/m4rofwI+hlqFfLvqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQf3FeHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEwXMfx2sFhOwlgsduic/0ASONwBf0nsl2IzH5ZwRZbD19qSkGfD/ulHnNOBSx50nTUBwJ6mrjIWElX+AwMy93Uxs+QeJfpk6a3r1t3MYehWLlfFaZcYX+AMhqcyG3O5ljJdvYL92Msn6FQGkvod8fi62s1HhcRWVHr7cqEgmyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYg3xIra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQf3FeHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30197C4CEC2;
-	Wed,  2 Oct 2024 14:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYg3xIra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1642BC4CEC2;
+	Wed,  2 Oct 2024 14:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877805;
-	bh=g9tDrD1UyJYRTv2Z5NVqMwqzZH7IGIWI9l+w5eGYr+0=;
+	s=korg; t=1727877808;
+	bh=VrlQGIoDRX9hfNNglen4GROOUYMslZFqvQELuD4g284=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQf3FeHM9XYqoDDxIu9adPzkamw56gRYZlAv0aX/X7Ttvn8+54ag6jqmq/1HA2zJb
-	 KHfH3pFcE3lU6eRWxbQ9O3QqxAVpeJFkPWmUunGb4yVyNc2GA/zrIaWbtmOk7XKnYb
-	 qR662DJdlizXTq/F+0Kb2taNPw2wCsncFNaiarBM=
+	b=CYg3xIra5EH380JJDcZqNmxp9gOHVX2TkduRKP1PbDG3isLqGEJbJfuQ5cO6gYRAW
+	 NCCrLk/n6DQJ5Fq77UHIBaFLCWfMbFMo3iszQwkFEeI0NjIcpSOPm3CClngY+58ugE
+	 0lcbv0cvvCeBrnCoyY8+A2Y7ftvPVda4sbkMJLDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Charles Han <hanchunchao@inspur.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 169/634] iommu/amd: Do not set the D bit on AMD v2 table entries
-Date: Wed,  2 Oct 2024 14:54:29 +0200
-Message-ID: <20241002125817.781029483@linuxfoundation.org>
+Subject: [PATCH 6.10 170/634] mtd: powernv: Add check devm_kasprintf() returned value
+Date: Wed,  2 Oct 2024 14:54:30 +0200
+Message-ID: <20241002125817.820622949@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 2910a7fa1be090fc7637cef0b2e70bcd15bf5469 ]
+[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
 
-The manual says that bit 6 is IGN for all Page-Table Base Address
-pointers, don't set it.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value is not checked.
 
-Fixes: aaac38f61487 ("iommu/amd: Initial support for AMD IOMMU v2 page table")
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/14-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/io_pgtable_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/devices/powernv_flash.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/amd/io_pgtable_v2.c b/drivers/iommu/amd/io_pgtable_v2.c
-index acfe79b326293..743f417b281d4 100644
---- a/drivers/iommu/amd/io_pgtable_v2.c
-+++ b/drivers/iommu/amd/io_pgtable_v2.c
-@@ -51,7 +51,7 @@ static inline u64 set_pgtable_attr(u64 *page)
- 	u64 prot;
- 
- 	prot = IOMMU_PAGE_PRESENT | IOMMU_PAGE_RW | IOMMU_PAGE_USER;
--	prot |= IOMMU_PAGE_ACCESS | IOMMU_PAGE_DIRTY;
-+	prot |= IOMMU_PAGE_ACCESS;
- 
- 	return (iommu_virt_to_phys(page) | prot);
- }
+diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
+index 66044f4f5bade..10cd1d9b48859 100644
+--- a/drivers/mtd/devices/powernv_flash.c
++++ b/drivers/mtd/devices/powernv_flash.c
+@@ -207,6 +207,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
+ 	 * get them
+ 	 */
+ 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
++	if (!mtd->name)
++		return -ENOMEM;
++
+ 	mtd->type = MTD_NORFLASH;
+ 	mtd->flags = MTD_WRITEABLE;
+ 	mtd->size = size;
 -- 
 2.43.0
 
