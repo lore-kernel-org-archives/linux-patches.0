@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98451D04A6;
-	Wed,  2 Oct 2024 13:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE2C1D04B6;
+	Wed,  2 Oct 2024 13:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875462; cv=none; b=LGuU+h7ysKtuXamNAKvwRGn5ahc8hZ2n6rhdJu+lkWj4nP/xJ7aTU0zLeRw5xrjbFDTH2bNUw09YC4/kMdzZFtA3hC3HjnBeAmQRskekONUXChh+Yd0urFN1StgO0hCTHqwfwbzk3nOlhrKDfdKt3PIQrx+hASjnSglk2k1ApHk=
+	t=1727875467; cv=none; b=Gda1u5escPbvJCs6vnDo7rZtuUmx5RDs0HS+VJUiDoS+DKdqzAXQ/nMxKRmcGFpcFdV4GkYS+8a07W53sQ9ypXI0VTPrI8uAv+JKbWEze+4nD9ulVOTcFHhwocyDuht99vV6yA4D+muEEeX7OejeP2bmlZVfyd+ltz3U92JUQnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875462; c=relaxed/simple;
-	bh=LjCYTI3J83ECB0535m9tgrgOlQLjabaROdSzW1mILAc=;
+	s=arc-20240116; t=1727875467; c=relaxed/simple;
+	bh=nTZpSdznELTNLY2NDLMpYHIj++KqG1exJTbqDLdRXSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrGnhzzn/grYEiFskXhP/NfIjKKsVFCz6IVDC8ZnrwZvUl9SKTmb+ammsvijSqv1/jZpi+ob4R9TNtj88aDc+uYo5Ggj+xGvId4wLfqYo64wsopr1jZ+UTSBDQ8LbfWWI3MKGGjdaQH/NO9inxt59jqfcMgAD1DpXPqlvNuysVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roJaN/ba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F5BpIc+6cBLf6sj53+vkcBkTSdp69n3eu9qTd7Kd02csKMh/l7cTUafCwRc6bA9NMNubbo4PHZuSxSe6kDTMBjqino+Nu1g+UZcFN6Qigxr+qQAXm6rwVpzzpf7MYa4YwosLf6SV8173M5/5qFz0n5hb+8w5Tj+a/7gbdZrzoS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15mgPAg5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roJaN/ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E73C4CECD;
-	Wed,  2 Oct 2024 13:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15mgPAg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245B6C4CECE;
+	Wed,  2 Oct 2024 13:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875462;
-	bh=LjCYTI3J83ECB0535m9tgrgOlQLjabaROdSzW1mILAc=;
+	s=korg; t=1727875465;
+	bh=nTZpSdznELTNLY2NDLMpYHIj++KqG1exJTbqDLdRXSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roJaN/baCu56EsggZ34WB/vYDFWQf9dfmZvGKkIIX7diGbRfaWIfaNYzD9+qEnS/X
-	 wHBjVEutNPAfSMBeu0VxhVREBsO/cqaQQl4Ub23LMDrWryTZGnUc2HVHLSM3yoE+Qy
-	 I1ePiCNYVhcZQtrKHZNzpzTZsKyVW0W+Bx/SqqzI=
+	b=15mgPAg5Dy8RAxc6phlrNYgdL19apwdb4iGbeMgjyCTCJRbvSxFvyRMVF6QiFh20M
+	 A5sfDT48D/6kCD1OloDlmPYTm1PJ+V1OnEnILAcN3wBRpfJaawSlywDxznuvkw7Uwh
+	 rdwV7khGOlMfnXDl5tmt6zynEV72OvKIAuzjhjxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 109/695] net: enetc: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Wed,  2 Oct 2024 14:51:47 +0200
-Message-ID: <20241002125826.823754653@linuxfoundation.org>
+Subject: [PATCH 6.11 110/695] crypto: n2 - Set err to EINVAL if snprintf fails for hmac
+Date: Wed,  2 Oct 2024 14:51:48 +0200
+Message-ID: <20241002125826.864423791@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 799a9225997799f7b1b579bc50a93b78b4fb2a01 ]
+[ Upstream commit ce212d2afca47acd366a2e74c76fe82c31f785ab ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Return EINVAL if the snprintf check fails when constructing the
+algorithm names.
 
-Fixes: bbb96dc7fa1a ("enetc: Factor out the traffic start/stop procedures")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240911094445.1922476-3-ruanjinjie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8c20982caca4 ("crypto: n2 - Silence gcc format-truncation false positive warnings")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202409090726.TP0WfY7p-lkp@intel.com/
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/crypto/n2_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 5c45f42232d32..f04f42ea60c0f 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -2305,12 +2305,11 @@ static int enetc_setup_irqs(struct enetc_ndev_priv *priv)
+diff --git a/drivers/crypto/n2_core.c b/drivers/crypto/n2_core.c
+index 251e088a53dff..b11545cc5cb79 100644
+--- a/drivers/crypto/n2_core.c
++++ b/drivers/crypto/n2_core.c
+@@ -1353,6 +1353,7 @@ static int __n2_register_one_hmac(struct n2_ahash_alg *n2ahash)
+ 	ahash->setkey = n2_hmac_async_setkey;
  
- 		snprintf(v->name, sizeof(v->name), "%s-rxtx%d",
- 			 priv->ndev->name, i);
--		err = request_irq(irq, enetc_msix, 0, v->name, v);
-+		err = request_irq(irq, enetc_msix, IRQF_NO_AUTOEN, v->name, v);
- 		if (err) {
- 			dev_err(priv->dev, "request_irq() failed!\n");
- 			goto irq_err;
- 		}
--		disable_irq(irq);
- 
- 		v->tbier_base = hw->reg + ENETC_BDR(TX, 0, ENETC_TBIER);
- 		v->rbier = hw->reg + ENETC_BDR(RX, i, ENETC_RBIER);
+ 	base = &ahash->halg.base;
++	err = -EINVAL;
+ 	if (snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "hmac(%s)",
+ 		     p->child_alg) >= CRYPTO_MAX_ALG_NAME)
+ 		goto out_free_p;
 -- 
 2.43.0
 
