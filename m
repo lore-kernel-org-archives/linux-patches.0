@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C07029CE7;
-	Wed,  2 Oct 2024 13:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228F329CE7;
+	Wed,  2 Oct 2024 13:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875859; cv=none; b=bD5cnsSTFWa6SJEgJAsr/tI1tQ7oIlFEiM0pr9fQYaC0ueEWS5OwbuJpK01oy71oBkXigan4dyaJ31uAva/dk+N7bcLrXcWVKy9lJke4aS/GxXqZuUbLIS/38EZdu0rn8J0YEMqIVLO+V2mEeJK/7ElLlLCsMmSbtNW2vXUM4/0=
+	t=1727875862; cv=none; b=cYQnoOWd/Cbk9TEEnYLL0G2dIAql/vWhRolI+dSaiLU+blQ2rNArdef471vomYVTGVOdRU3JQ0yOUokfZkgFAlK452UReZ+XdlXXbb/Uy5Ig+iyT7qHnRq+tRNJiqryhfPqb9QKKxaN2h6DqljvP26dRm57WrDpPikW6wGFboYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875859; c=relaxed/simple;
-	bh=G8PvboJzQ2U20ZHWldOTvTaUhm2nChbl8o9+DUaww00=;
+	s=arc-20240116; t=1727875862; c=relaxed/simple;
+	bh=hq1afBe5nFwfJq6+3Rzyg5u3UfxtOMT6N8AqLthl0BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjjaVph6iCzd8oz2vtPpVB2qPhQzu2uprhXkLjFiME3NOj69nFLSsvqdbv2INlqti5rvN1J53673gK7uWgUYtrBC/iQJN0IKF7J3uZr497w9mNfDiC6kxG+FrFaJCBg6zBu5U1V9hQMdCcg46wjBZgD8KFCDcl5KjBp4bYIaR2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xt0/kDeZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o/lr79zDumjMBFuuZZPs14OqWDZuzxosQ5rNa4jYZt9WL0YPjC6XgVlzcU9eCSKDWX07jkNpj1n4sH5S1JOu03Nqh13DxshrfrlWPhEzUxORe6w8qb2k+HNgG2HavGG0ymj7U8pavXd5+M2WuYFew3DKhzb50YHgAOm3VoAYDMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbwGknVh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xt0/kDeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3BCC4CEC5;
-	Wed,  2 Oct 2024 13:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbwGknVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECCCC4CEC5;
+	Wed,  2 Oct 2024 13:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875859;
-	bh=G8PvboJzQ2U20ZHWldOTvTaUhm2nChbl8o9+DUaww00=;
+	s=korg; t=1727875862;
+	bh=hq1afBe5nFwfJq6+3Rzyg5u3UfxtOMT6N8AqLthl0BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xt0/kDeZszVJj4ao7TNsNHmwlbidiqBPh8PPV1/qQtgbUjcTB1wk6NFh0Qo1TPeJj
-	 sdmjvXQ3322VV5di3zDL9qpQHAseYjsMpABVCTzZC4DgmfkIW1zk2dwc2/27aSKksU
-	 qJTb5nMG6jvrxu5y77ONmUtjVKpPs15/aIyrYPbA=
+	b=gbwGknVhjn8XUFEwaryv9bbr1JiIhyJjfXKiF+8AFy0tpiYSKgThTpAAZCUOXBwl6
+	 /2INtsuPZXwpAxlg8ejwfZXIeN90YXh+37MgQBrDD2yDRoxG8ApP0o1rhsO9gT6DZ3
+	 cesQPPaaPnWy9t58HHS6LfU0gagOZ5RpKQGsRhzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 245/695] ata: libata: Clear DID_TIME_OUT for ATA PT commands with sense data
-Date: Wed,  2 Oct 2024 14:54:03 +0200
-Message-ID: <20241002125832.231878137@linuxfoundation.org>
+Subject: [PATCH 6.11 246/695] xen: introduce generic helper checking for memory map conflicts
+Date: Wed,  2 Oct 2024 14:54:04 +0200
+Message-ID: <20241002125832.271056226@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -47,104 +46,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit e5dd410acb34c7341a0a93b429dcf3dabf9e3323 ]
+[ Upstream commit ba88829706e2c5b7238638fc2b0713edf596495e ]
 
-When ata_qc_complete() schedules a command for EH using
-ata_qc_schedule_eh(), blk_abort_request() will be called, which leads to
-req->q->mq_ops->timeout() / scsi_timeout() being called.
+When booting as a Xen PV dom0 the memory layout of the dom0 is
+modified to match that of the host, as this requires less changes in
+the kernel for supporting Xen.
 
-scsi_timeout(), if the LLDD has no abort handler (libata has no abort
-handler), will set host byte to DID_TIME_OUT, and then call
-scsi_eh_scmd_add() to add the command to EH.
+There are some cases, though, which are problematic, as it is the Xen
+hypervisor selecting the kernel's load address plus some other data,
+which might conflict with the host's memory map.
 
-Thus, when commands first enter libata's EH strategy_handler, all the
-commands that have been added to EH will have DID_TIME_OUT set.
+These conflicts are detected at boot time and result in a boot error.
+In order to support handling at least some of these conflicts in
+future, introduce a generic helper function which will later gain the
+ability to adapt the memory layout when possible.
 
-libata has its own flag (AC_ERR_TIMEOUT), that it sets for commands that
-have not received a completion at the time of entering EH.
+Add the missing check for the xen_start_info area.
 
-Thus, libata doesn't really care about DID_TIME_OUT at all, and currently
-clears the host byte at the end of EH, in ata_scsi_qc_complete(), before
-scsi_eh_finish_cmd() is called.
+Note that possible p2m map and initrd memory conflicts are handled
+already by copying the data to memory areas not conflicting with the
+memory map. The initial stack allocated by Xen doesn't need to be
+checked, as early boot code is switching to the statically allocated
+initial kernel stack. Initial page tables and the kernel itself will
+be handled later.
 
-However, this clearing in ata_scsi_qc_complete() is currently only done
-for commands that are not ATA passthrough commands.
-
-Since the host byte is visible in the completion that we return to user
-space for ATA passthrough commands, for ATA passthrough commands that got
-completed via EH (commands with sense data), the user will incorrectly see:
-ATA pass-through(16): transport error: Host_status=0x03 [DID_TIME_OUT]
-
-Fix this by moving the clearing of the host byte (which is currently only
-done for commands that are not ATA passthrough commands) from
-ata_scsi_qc_complete() to the start of EH (regardless if the command is
-ATA passthrough or not).
-
-While at it, use the proper helper function to clear the host byte, rather
-than open coding the clearing.
-
-This will make sure that we:
--Correctly clear DID_TIME_OUT for both ATA passthrough commands and
- commands that are not ATA passthrough commands.
--Do not needlessly clear the host byte for commands that did not go via EH.
- ata_scsi_qc_complete() is called both for commands that are completed
- normally (without going via EH), and for commands that went via EH,
- however, only commands that went via EH will have DID_TIME_OUT set.
-
-Fixes: 24aeebbf8ea9 ("scsi: ata: libata: Change ata_eh_request_sense() to not set CHECK_CONDITION")
-Reported-by: Igor Pylypiv <ipylypiv@google.com>
-Closes: https://lore.kernel.org/linux-ide/ZttIN8He8TOZ7Lct@google.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Tested-by: Igor Pylypiv <ipylypiv@google.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c   | 8 ++++++++
- drivers/ata/libata-scsi.c | 3 ---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/xen/mmu_pv.c  |  5 +----
+ arch/x86/xen/setup.c   | 34 ++++++++++++++++++++++++++++------
+ arch/x86/xen/xen-ops.h |  3 ++-
+ 3 files changed, 31 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 214b935c2ced7..7df9ec9f924c4 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -630,6 +630,14 @@ void ata_scsi_cmd_error_handler(struct Scsi_Host *host, struct ata_port *ap,
- 	list_for_each_entry_safe(scmd, tmp, eh_work_q, eh_entry) {
- 		struct ata_queued_cmd *qc;
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index f1ce39d6d32cb..839e6613753dd 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -2018,10 +2018,7 @@ void __init xen_reserve_special_pages(void)
  
-+		/*
-+		 * If the scmd was added to EH, via ata_qc_schedule_eh() ->
-+		 * scsi_timeout() -> scsi_eh_scmd_add(), scsi_timeout() will
-+		 * have set DID_TIME_OUT (since libata does not have an abort
-+		 * handler). Thus, to clear DID_TIME_OUT, clear the host byte.
-+		 */
-+		set_host_byte(scmd, DID_OK);
-+
- 		ata_qc_for_each_raw(ap, qc, i) {
- 			if (qc->flags & ATA_QCFLAG_ACTIVE &&
- 			    qc->scsicmd == scmd)
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 473e00a58a8b0..fc8d99ea2e581 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1691,9 +1691,6 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
- 			set_status_byte(qc->scsicmd, SAM_STAT_CHECK_CONDITION);
- 	} else if (is_error && !have_sense) {
- 		ata_gen_ata_sense(qc);
--	} else {
--		/* Keep the SCSI ML and status byte, clear host byte. */
--		cmd->result &= 0x0000ffff;
+ void __init xen_pt_check_e820(void)
+ {
+-	if (xen_is_e820_reserved(xen_pt_base, xen_pt_size)) {
+-		xen_raw_console_write("Xen hypervisor allocated page table memory conflicts with E820 map\n");
+-		BUG();
+-	}
++	xen_chk_is_e820_usable(xen_pt_base, xen_pt_size, "page table");
+ }
+ 
+ static unsigned char dummy_mapping[PAGE_SIZE] __page_aligned_bss;
+diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
+index 4bcc70a71b7d4..96765180514bd 100644
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -567,7 +567,7 @@ static void __init xen_ignore_unusable(void)
  	}
+ }
  
- 	ata_qc_done(qc);
+-bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size)
++static bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size)
+ {
+ 	struct e820_entry *entry;
+ 	unsigned mapcnt;
+@@ -624,6 +624,23 @@ phys_addr_t __init xen_find_free_area(phys_addr_t size)
+ 	return 0;
+ }
+ 
++/*
++ * Check for an area in physical memory to be usable for non-movable purposes.
++ * An area is considered to usable if the used E820 map lists it to be RAM.
++ * In case the area is not usable, crash the system with an error message.
++ */
++void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
++				   const char *component)
++{
++	if (!xen_is_e820_reserved(start, size))
++		return;
++
++	xen_raw_console_write("Xen hypervisor allocated ");
++	xen_raw_console_write(component);
++	xen_raw_console_write(" memory conflicts with E820 map\n");
++	BUG();
++}
++
+ /*
+  * Like memcpy, but with physical addresses for dest and src.
+  */
+@@ -824,11 +841,16 @@ char * __init xen_memory_setup(void)
+ 	 * Failing now is better than running into weird problems later due
+ 	 * to relocating (and even reusing) pages with kernel text or data.
+ 	 */
+-	if (xen_is_e820_reserved(__pa_symbol(_text),
+-				 __pa_symbol(_end) - __pa_symbol(_text))) {
+-		xen_raw_console_write("Xen hypervisor allocated kernel memory conflicts with E820 map\n");
+-		BUG();
+-	}
++	xen_chk_is_e820_usable(__pa_symbol(_text),
++			       __pa_symbol(_end) - __pa_symbol(_text),
++			       "kernel");
++
++	/*
++	 * Check for a conflict of the xen_start_info memory with the target
++	 * E820 map.
++	 */
++	xen_chk_is_e820_usable(__pa(xen_start_info), sizeof(*xen_start_info),
++			       "xen_start_info");
+ 
+ 	/*
+ 	 * Check for a conflict of the hypervisor supplied page tables with
+diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
+index 0cf16fc79e0bf..9a27d1d653d3d 100644
+--- a/arch/x86/xen/xen-ops.h
++++ b/arch/x86/xen/xen-ops.h
+@@ -48,7 +48,8 @@ void xen_mm_unpin_all(void);
+ void __init xen_relocate_p2m(void);
+ #endif
+ 
+-bool __init xen_is_e820_reserved(phys_addr_t start, phys_addr_t size);
++void __init xen_chk_is_e820_usable(phys_addr_t start, phys_addr_t size,
++				   const char *component);
+ unsigned long __ref xen_chk_extra_mem(unsigned long pfn);
+ void __init xen_inv_extra_mem(void);
+ void __init xen_remap_memory(void);
 -- 
 2.43.0
 
