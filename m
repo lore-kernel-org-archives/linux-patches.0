@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941FC1D1517;
-	Wed,  2 Oct 2024 13:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664AB1D0951;
+	Wed,  2 Oct 2024 13:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877538; cv=none; b=RDI+vocYe9j4kziLJU/leBxjoxRnLeFWpo8OStWPPePvsGShOujVi3FLFndnqTG+GnwfuClV6VLDG2TJ0WOM2dsyhcOOqsaf8K0Qq/x/448e32QFe4Hig5ktOjn4iBe+BTxpjJG1c+Rfn7xghdCOXqx5uTo5rpNBihorI4BhqEM=
+	t=1727877541; cv=none; b=FWLgtLJTCNn/yhyaxYIEANfxBvrpf0NRPKgFIaU+Db16PtGmue0ACSgH1uhMH8upjJxdme17TTjSrIIKlQ1QnARoEqc75cfmpboZe6N+QT5Ar3o2F2ARj3SPfx93yqffzKo4HoMkx57VGbuJbu+GE2bPZXvc/VbkdRibdSHZ5M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877538; c=relaxed/simple;
-	bh=fi34C3MJf5xLmHB1Q8lO/dvw23J9ehefXBIyOmLbl74=;
+	s=arc-20240116; t=1727877541; c=relaxed/simple;
+	bh=mnIEcCpG+Ppekfbx428r+cAx1bB/6te8q+8Q58Ye6Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=terYMzTbK2SUlxZ3Ak1mZVSsNH65Z5vrYiddUT8luTnZ5HYKbgmuhNS6gZ/QdnddUWb+bSdMEay3toWfW3hdVqWQU70z/nZT5AHhNvox3p5WYXkFR82R20yRF3AUppbFw8EqNH+UYD/wxAlYx7cT4Z8jzXQQjeYwe4W74N083nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPgTALtK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fgpsl+abcYvj7UkNwtuyV+VN8uVDlcvc1jwwTkMTmIyJ71Leq7CKu3RihhCFmLSCIM+ZKg9lPMp4Xwume+/TQn5TakjXxI+CVKsV9RK4ak8mR7wLI7otFqC7w2pRwYgDzAqYvmOkTyb4QoBzm1HZqv96g2YyXjmecOQ4K2cxmvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WK5yurP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPgTALtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA23C4CECD;
-	Wed,  2 Oct 2024 13:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WK5yurP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2487C4CEC2;
+	Wed,  2 Oct 2024 13:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877538;
-	bh=fi34C3MJf5xLmHB1Q8lO/dvw23J9ehefXBIyOmLbl74=;
+	s=korg; t=1727877541;
+	bh=mnIEcCpG+Ppekfbx428r+cAx1bB/6te8q+8Q58Ye6Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPgTALtKl3XCVCBRknAFgolKlf7YJog1gP/2NoYTpIyeINE4fUvBdcDkROQF+rUKX
-	 CCVeUOiXVR/EooxQbuMkbid7tfTmElhDeqLY/D+QPS34N3Jxb8axy6PVGwD7QsCwhW
-	 Ae/Ivl3GNguJVXRlZBXwkrfuIj8M3h0qsgJxJcPA=
+	b=WK5yurP7QwogEQZFsaxNqTDVonrox4imMpmJfi4U1oapSu8EFdlwVqNMifDr+YOTi
+	 gddlLyrPTTwYfkP+RaF2936zQKuV3Tj8WFlK8I9/wHhurI+NZJYq9G/hNO3WfVWXH+
+	 1RJ9XKWcEI7b0T2nIaZDTes4zoxik6BZKD0mJjyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com,
-	syzbot+de04e06b28cfecf2281c@syzkaller.appspotmail.com,
-	syzbot+c8c8238b394be4a1087d@syzkaller.appspotmail.com,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 111/634] erofs: handle overlapped pclusters out of crafted images properly
-Date: Wed,  2 Oct 2024 14:53:31 +0200
-Message-ID: <20241002125815.495527286@linuxfoundation.org>
+Subject: [PATCH 6.10 112/634] block, bfq: fix uaf for accessing waker_bfqq after splitting
+Date: Wed,  2 Oct 2024 14:53:32 +0200
+Message-ID: <20241002125815.534805144@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,199 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 9e2f9d34dd12e6e5b244ec488bcebd0c2d566c50 ]
+[ Upstream commit 1ba0403ac6447f2d63914fb760c44a3b19c44eaf ]
 
-syzbot reported a task hang issue due to a deadlock case where it is
-waiting for the folio lock of a cached folio that will be used for
-cache I/Os.
+After commit 42c306ed7233 ("block, bfq: don't break merge chain in
+bfq_split_bfqq()"), if the current procress is the last holder of bfqq,
+the bfqq can be freed after bfq_split_bfqq(). Hence recored the bfqq and
+then access bfqq->waker_bfqq may trigger UAF. What's more, the waker_bfqq
+may in the merge chain of bfqq, hence just recored waker_bfqq is still
+not safe.
 
-After looking into the crafted fuzzed image, I found it's formed with
-several overlapped big pclusters as below:
+Fix the problem by adding a helper bfq_waker_bfqq() to check if
+bfqq->waker_bfqq is in the merge chain, and current procress is the only
+holder.
 
- Ext:   logical offset   |  length :     physical offset    |  length
-   0:        0..   16384 |   16384 :     151552..    167936 |   16384
-   1:    16384..   32768 |   16384 :     155648..    172032 |   16384
-   2:    32768..   49152 |   16384 :  537223168.. 537239552 |   16384
-...
-
-Here, extent 0/1 are physically overlapped although it's entirely
-_impossible_ for normal filesystem images generated by mkfs.
-
-First, managed folios containing compressed data will be marked as
-up-to-date and then unlocked immediately (unlike in-place folios) when
-compressed I/Os are complete.  If physical blocks are not submitted in
-the incremental order, there should be separate BIOs to avoid dependency
-issues.  However, the current code mis-arranges z_erofs_fill_bio_vec()
-and BIO submission which causes unexpected BIO waits.
-
-Second, managed folios will be connected to their own pclusters for
-efficient inter-queries.  However, this is somewhat hard to implement
-easily if overlapped big pclusters exist.  Again, these only appear in
-fuzzed images so let's simply fall back to temporary short-lived pages
-for correctness.
-
-Additionally, it justifies that referenced managed folios cannot be
-truncated for now and reverts part of commit 2080ca1ed3e4 ("erofs: tidy
-up `struct z_erofs_bvec`") for simplicity although it shouldn't be any
-difference.
-
-Reported-by: syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com
-Reported-by: syzbot+de04e06b28cfecf2281c@syzkaller.appspotmail.com
-Reported-by: syzbot+c8c8238b394be4a1087d@syzkaller.appspotmail.com
-Tested-by: syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/0000000000002fda01061e334873@google.com
-Fixes: 8e6c8fa9f2e9 ("erofs: enable big pcluster feature")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240910070847.3356592-1-hsiangkao@linux.alibaba.com
+Fixes: 42c306ed7233 ("block, bfq: don't break merge chain in bfq_split_bfqq()")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240909134154.954924-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 71 ++++++++++++++++++++++++++----------------------
- 1 file changed, 38 insertions(+), 33 deletions(-)
+ block/bfq-iosched.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index d269b092c477f..2535479fb82db 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1416,6 +1416,7 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 	struct z_erofs_bvec zbv;
- 	struct address_space *mapping;
- 	struct folio *folio;
-+	struct page *page;
- 	int bs = i_blocksize(f->inode);
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 2b6fff39b9f4b..2423e25fc23ae 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6823,6 +6823,31 @@ static void bfq_prepare_request(struct request *rq)
+ 	rq->elv.priv[0] = rq->elv.priv[1] = NULL;
+ }
  
- 	/* Except for inplace folios, the entire folio can be used for I/Os */
-@@ -1438,7 +1439,6 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 	 * file-backed folios will be used instead.
- 	 */
- 	if (folio->private == (void *)Z_EROFS_PREALLOCATED_PAGE) {
--		folio->private = 0;
- 		tocache = true;
- 		goto out_tocache;
- 	}
-@@ -1456,7 +1456,7 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 	}
- 
- 	folio_lock(folio);
--	if (folio->mapping == mc) {
-+	if (likely(folio->mapping == mc)) {
- 		/*
- 		 * The cached folio is still in managed cache but without
- 		 * a valid `->private` pcluster hint.  Let's reconnect them.
-@@ -1466,41 +1466,44 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 			/* compressed_bvecs[] already takes a ref before */
- 			folio_put(folio);
- 		}
--
--		/* no need to submit if it is already up-to-date */
--		if (folio_test_uptodate(folio)) {
--			folio_unlock(folio);
--			bvec->bv_page = NULL;
-+		if (likely(folio->private == pcl))  {
-+			/* don't submit cache I/Os again if already uptodate */
-+			if (folio_test_uptodate(folio)) {
-+				folio_unlock(folio);
-+				bvec->bv_page = NULL;
-+			}
-+			return;
- 		}
--		return;
-+		/*
-+		 * Already linked with another pcluster, which only appears in
-+		 * crafted images by fuzzers for now.  But handle this anyway.
-+		 */
-+		tocache = false;	/* use temporary short-lived pages */
-+	} else {
-+		DBG_BUGON(1); /* referenced managed folios can't be truncated */
-+		tocache = true;
- 	}
--
--	/*
--	 * It has been truncated, so it's unsafe to reuse this one. Let's
--	 * allocate a new page for compressed data.
--	 */
--	DBG_BUGON(folio->mapping);
--	tocache = true;
- 	folio_unlock(folio);
- 	folio_put(folio);
- out_allocfolio:
--	zbv.page = erofs_allocpage(&f->pagepool, gfp | __GFP_NOFAIL);
-+	page = erofs_allocpage(&f->pagepool, gfp | __GFP_NOFAIL);
- 	spin_lock(&pcl->obj.lockref.lock);
--	if (pcl->compressed_bvecs[nr].page) {
--		erofs_pagepool_add(&f->pagepool, zbv.page);
-+	if (unlikely(pcl->compressed_bvecs[nr].page != zbv.page)) {
-+		erofs_pagepool_add(&f->pagepool, page);
- 		spin_unlock(&pcl->obj.lockref.lock);
- 		cond_resched();
- 		goto repeat;
- 	}
--	bvec->bv_page = pcl->compressed_bvecs[nr].page = zbv.page;
--	folio = page_folio(zbv.page);
--	/* first mark it as a temporary shortlived folio (now 1 ref) */
--	folio->private = (void *)Z_EROFS_SHORTLIVED_PAGE;
-+	bvec->bv_page = pcl->compressed_bvecs[nr].page = page;
-+	folio = page_folio(page);
- 	spin_unlock(&pcl->obj.lockref.lock);
- out_tocache:
- 	if (!tocache || bs != PAGE_SIZE ||
--	    filemap_add_folio(mc, folio, pcl->obj.index + nr, gfp))
-+	    filemap_add_folio(mc, folio, pcl->obj.index + nr, gfp)) {
-+		/* turn into a temporary shortlived folio (1 ref) */
-+		folio->private = (void *)Z_EROFS_SHORTLIVED_PAGE;
- 		return;
-+	}
- 	folio_attach_private(folio, pcl);
- 	/* drop a refcount added by allocpage (then 2 refs in total here) */
- 	folio_put(folio);
-@@ -1635,13 +1638,10 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 		cur = mdev.m_pa;
- 		end = cur + pcl->pclustersize;
- 		do {
--			z_erofs_fill_bio_vec(&bvec, f, pcl, i++, mc);
--			if (!bvec.bv_page)
--				continue;
--
-+			bvec.bv_page = NULL;
- 			if (bio && (cur != last_pa ||
- 				    bio->bi_bdev != mdev.m_bdev)) {
--io_retry:
-+drain_io:
- 				if (!erofs_is_fscache_mode(sb))
- 					submit_bio(bio);
- 				else
-@@ -1654,6 +1654,15 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 				bio = NULL;
- 			}
- 
-+			if (!bvec.bv_page) {
-+				z_erofs_fill_bio_vec(&bvec, f, pcl, i++, mc);
-+				if (!bvec.bv_page)
-+					continue;
-+				if (cur + bvec.bv_len > end)
-+					bvec.bv_len = end - cur;
-+				DBG_BUGON(bvec.bv_len < sb->s_blocksize);
-+			}
++static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
++{
++	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
++	struct bfq_queue *waker_bfqq = bfqq->waker_bfqq;
 +
- 			if (unlikely(PageWorkingset(bvec.bv_page)) &&
- 			    !memstall) {
- 				psi_memstall_enter(&pflags);
-@@ -1673,13 +1682,9 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 				++nr_bios;
- 			}
++	if (!waker_bfqq)
++		return NULL;
++
++	while (new_bfqq) {
++		if (new_bfqq == waker_bfqq) {
++			/*
++			 * If waker_bfqq is in the merge chain, and current
++			 * is the only procress.
++			 */
++			if (bfqq_process_refs(waker_bfqq) == 1)
++				return NULL;
++			break;
++		}
++
++		new_bfqq = new_bfqq->new_bfqq;
++	}
++
++	return waker_bfqq;
++}
++
+ /*
+  * If needed, init rq, allocate bfq data structures associated with
+  * rq, and increment reference counters in the destination bfq_queue
+@@ -6884,7 +6909,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 		/* If the queue was seeky for too long, break it apart. */
+ 		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq) &&
+ 			!bic->bfqq_data[a_idx].stably_merged) {
+-			struct bfq_queue *old_bfqq = bfqq;
++			struct bfq_queue *waker_bfqq = bfq_waker_bfqq(bfqq);
  
--			if (cur + bvec.bv_len > end)
--				bvec.bv_len = end - cur;
--			DBG_BUGON(bvec.bv_len < sb->s_blocksize);
- 			if (!bio_add_page(bio, bvec.bv_page, bvec.bv_len,
- 					  bvec.bv_offset))
--				goto io_retry;
--
-+				goto drain_io;
- 			last_pa = cur + bvec.bv_len;
- 			bypass = false;
- 		} while ((cur += bvec.bv_len) < end);
+ 			/* Update bic before losing reference to bfqq */
+ 			if (bfq_bfqq_in_large_burst(bfqq))
+@@ -6904,7 +6929,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				bfqq_already_existing = true;
+ 
+ 			if (!bfqq_already_existing) {
+-				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
++				bfqq->waker_bfqq = waker_bfqq;
+ 				bfqq->tentative_waker_bfqq = NULL;
+ 
+ 				/*
+@@ -6914,7 +6939,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				 * woken_list of the waker. See
+ 				 * bfq_check_waker for details.
+ 				 */
+-				if (bfqq->waker_bfqq)
++				if (waker_bfqq)
+ 					hlist_add_head(&bfqq->woken_list_node,
+ 						       &bfqq->waker_bfqq->woken_list);
+ 			}
 -- 
 2.43.0
 
