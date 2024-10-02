@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6611D0493;
-	Wed,  2 Oct 2024 13:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD71D0493;
+	Wed,  2 Oct 2024 13:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876659; cv=none; b=me5TZgcZvEX/sWsXRrYm9H0DZJHE5J5tC8/Ci5yeOfYMWFIToLl/p3BB3iCrzei8jAeIswLNTX5DXHR0mceOBVhCr63c4ABfneOMW16c/578f2axNwI/+SLuvdIlaPKbghNF0s679omjS3x5WdtWaPi/fgho2vcgqShDkXc2s4M=
+	t=1727876662; cv=none; b=fytmgXP21gUcHeOW91R8p/OBQGrGGmCULG0ebsKi63d7H/kYfpP4wKdRQRIfckAK53ChOL7x6itega5HWiUCtKKRi7A/LiFj9DsGYzGDB7H9B1AXELLxrXzQelfDeUhyd1uwa6AgUV4CRtbWAsiaKUB2GEMsVL2DlcOfW9X2lz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876659; c=relaxed/simple;
-	bh=jSFWvdN0819HI+1R5q7OeryA3o6r0HZK3N/UiDN3Le8=;
+	s=arc-20240116; t=1727876662; c=relaxed/simple;
+	bh=/NWruCxtWydxdC5wUgWgZSpcG1SFOiLqdEX4XxEOF2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNZ/zbJeIYom69ixVKaj/l43icEsISK4BFtRyCzr7g38DRe1RNHbc2fnFrOYdDJFr8ohLbj2jhGJgHD3JW0qH93+Ay/xk841oxjd/hg9RVnX88x0gmLUhpHzmoaWRAhvtVA8qkvXrdWzBsizK0JOuTDO+32q8NflywsYMG0tw7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlkrStiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RLPUvns5Ae5PTRA8ESlOPYnr1nlJ3zgeLvO0RZVvNfhZX6kH/HqnKyM4c/H87RJGtWNu8Cg5BWNYlvyNEmoztaXXiTCuoPb1rnl3xxoSjlref/5xdyMCOGNgOLd4lgi2blmk1fq6c89RsR4riu47e2vDrBOMnK6mkWRmRWiSXso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeeymPAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlkrStiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA099C4CEC5;
-	Wed,  2 Oct 2024 13:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeeymPAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DF3C4CECE;
+	Wed,  2 Oct 2024 13:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876659;
-	bh=jSFWvdN0819HI+1R5q7OeryA3o6r0HZK3N/UiDN3Le8=;
+	s=korg; t=1727876662;
+	bh=/NWruCxtWydxdC5wUgWgZSpcG1SFOiLqdEX4XxEOF2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlkrStiJdss0DNY62GMAggja8D4cB6Bwb+D0qWDqV9S8KAxQfpjY0jA6L89mw8cGL
-	 LB4sbXPgMmy8G3OsRTU1G+xj15abFQsEKeUzh/sHLvvdV9C1k06wIzwSqMO0VuGXPO
-	 zsJ+D6BbPnIGTV6G+3PUe5jnCiA7jwyubjKvg5rU=
+	b=WeeymPAhcCOusXSvBjNN6i8cWru2aurRhQlO69YEry7vIieuKVyocQCTP5kPQf9Oz
+	 7Tjz0mzbLtmG3g5NchSXMGmi0IClH3RhEgtbPd9L7JnNSV/ZIWIAi6J/ZPwi+TAFka
+	 pgUXNYGUDVgQZaEB0dFmeVkIA3v0BtgUw8fmFVJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 492/695] netfilter: nf_tables: use rcu chain hook list iterator from netlink dump path
-Date: Wed,  2 Oct 2024 14:58:10 +0200
-Message-ID: <20241002125842.108417730@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.11 519/695] PCI: Use an error code with PCIe failed link retraining
+Date: Wed,  2 Oct 2024 14:58:37 +0200
+Message-ID: <20241002125843.203100774@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,43 +46,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 4ffcf5ca81c3b83180473eb0d3c010a1a7c6c4de ]
+commit 59100eb248c0b15585affa546c7f6834b30eb5a4 upstream.
 
-Lockless iteration over hook list is possible from netlink dump path,
-use rcu variant to iterate over the hook list as is done with flowtable
-hooks.
+Given how the call place in pcie_wait_for_link_delay() got structured now,
+and that pcie_retrain_link() returns a potentially useful error code,
+convert pcie_failed_link_retrain() to return an error code rather than a
+boolean status, fixing handling at the call site mentioned.  Update the
+other call site accordingly.
 
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Reported-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1abb47390350 ("Merge branch 'pci/enumeration'")
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2408091156530.61955@angie.orcam.me.uk
+Reported-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/aa2d1c4e-9961-d54a-00c7-ddf8e858a9b0@linux.intel.com/
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.5+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c    |    2 +-
+ drivers/pci/pci.h    |    6 +++---
+ drivers/pci/quirks.c |   20 ++++++++++----------
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 4ceb3e0798dee..02a8b863a151b 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1847,7 +1847,7 @@ static int nft_dump_basechain_hook(struct sk_buff *skb, int family,
- 		if (!hook_list)
- 			hook_list = &basechain->hook_list;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1324,7 +1324,7 @@ static int pci_dev_wait(struct pci_dev *
+ 		if (delay > PCI_RESET_WAIT) {
+ 			if (retrain) {
+ 				retrain = false;
+-				if (pcie_failed_link_retrain(bridge)) {
++				if (pcie_failed_link_retrain(bridge) == 0) {
+ 					delay = 1;
+ 					continue;
+ 				}
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -606,7 +606,7 @@ void pci_acs_init(struct pci_dev *dev);
+ int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
+ int pci_dev_specific_enable_acs(struct pci_dev *dev);
+ int pci_dev_specific_disable_acs_redir(struct pci_dev *dev);
+-bool pcie_failed_link_retrain(struct pci_dev *dev);
++int pcie_failed_link_retrain(struct pci_dev *dev);
+ #else
+ static inline int pci_dev_specific_acs_enabled(struct pci_dev *dev,
+ 					       u16 acs_flags)
+@@ -621,9 +621,9 @@ static inline int pci_dev_specific_disab
+ {
+ 	return -ENOTTY;
+ }
+-static inline bool pcie_failed_link_retrain(struct pci_dev *dev)
++static inline int pcie_failed_link_retrain(struct pci_dev *dev)
+ {
+-	return false;
++	return -ENOTTY;
+ }
+ #endif
  
--		list_for_each_entry(hook, hook_list, list) {
-+		list_for_each_entry_rcu(hook, hook_list, list) {
- 			if (!first)
- 				first = hook;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -78,21 +78,21 @@
+  * again to remove any residual state, ignoring the result as it's supposed
+  * to fail anyway.
+  *
+- * Return TRUE if the link has been successfully retrained.  Return FALSE
++ * Return 0 if the link has been successfully retrained.  Return an error
+  * if retraining was not needed or we attempted a retrain and it failed.
+  */
+-bool pcie_failed_link_retrain(struct pci_dev *dev)
++int pcie_failed_link_retrain(struct pci_dev *dev)
+ {
+ 	static const struct pci_device_id ids[] = {
+ 		{ PCI_VDEVICE(ASMEDIA, 0x2824) }, /* ASMedia ASM2824 */
+ 		{}
+ 	};
+ 	u16 lnksta, lnkctl2;
+-	bool ret = false;
++	int ret = -ENOTTY;
  
--- 
-2.43.0
-
+ 	if (!pci_is_pcie(dev) || !pcie_downstream_port(dev) ||
+ 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
+-		return false;
++		return ret;
+ 
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+@@ -106,13 +106,13 @@ bool pcie_failed_link_retrain(struct pci
+ 		lnkctl2 |= PCI_EXP_LNKCTL2_TLS_2_5GT;
+ 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
+ 
+-		ret = pcie_retrain_link(dev, false) == 0;
+-		if (!ret) {
++		ret = pcie_retrain_link(dev, false);
++		if (ret) {
+ 			pci_info(dev, "retraining failed\n");
+ 			pcie_capability_write_word(dev, PCI_EXP_LNKCTL2,
+ 						   oldlnkctl2);
+ 			pcie_retrain_link(dev, true);
+-			return false;
++			return ret;
+ 		}
+ 
+ 		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+@@ -129,10 +129,10 @@ bool pcie_failed_link_retrain(struct pci
+ 		lnkctl2 |= lnkcap & PCI_EXP_LNKCAP_SLS;
+ 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
+ 
+-		ret = pcie_retrain_link(dev, false) == 0;
+-		if (!ret) {
++		ret = pcie_retrain_link(dev, false);
++		if (ret) {
+ 			pci_info(dev, "retraining failed\n");
+-			return false;
++			return ret;
+ 		}
+ 	}
+ 
 
 
