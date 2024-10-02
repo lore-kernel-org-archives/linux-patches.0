@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07461D0E3E;
-	Wed,  2 Oct 2024 14:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7421D07B5;
+	Wed,  2 Oct 2024 14:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880477; cv=none; b=XTEW8eiWZgtaHZp3O07s4llW8+t/XuQoXmwyJTic90d6m+dc1BVPHeqGKhRJH3MoHxAxncx/2Fl0nZXCWlVwG95WLnzDZI/vFjryf3jdtKNdPH04r+U7RqZpuz9I2SHelhqVc2qaNNnPZlK3Vhgbv0JhjrGwf6wcylaa6vE/Zsg=
+	t=1727880480; cv=none; b=n0kythA0GF3ULtrFzORTKdoa6sD55k6OpEwG+Oljb9LdVAOTFl4HMhnwhOKDsssZJjv9eQPYFwFOL4c3ZX+KGiInaSDpoosIVdelsUMmF44M+bvQBzC5ZIrzNuA2XT1or0E3NjJSeW9i1LmblcBP9oDajj9S8jOW2Ue4V60EiYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880477; c=relaxed/simple;
-	bh=l1bk/kbAfOVAFw1kafaNYi7jGIBzVnci7QAXoabBCpY=;
+	s=arc-20240116; t=1727880480; c=relaxed/simple;
+	bh=7XvoIITYLlCJWaCjskALd19nq7m6PoAo168WQOWwPU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPjN4GkpeQiLxiqIufldHvexK5Bpr0WRUuoVCP+tO3tgQA+LM+/R2EroWgUSy7G2uhHPIKPr899GZdqOACmZgAOK9mzyiOISGkmdlVDPAG9CciN8TBaSfVakoWVT3SHi5fCgEXykWbwd5aSPpsSzRMQH+UlbHM0G3dtnU+PlM/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHl/NzUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBZLwVvGGZXnmSFCRzvqwtfUZ1kHFTmrxUMkpSAfKMka5YYzbdfVNxZk5em9PvQSHsZFLBzPPTDkR1An2UKQhPllR3yo3kwf/g2or/mibyNuExAwtwsvsskV0WjcOwfQjHMfRURVJ7iyLQSfsEeKHTBpdA4y6bM8CiL7ow1cgnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaS1E7GZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHl/NzUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D40C4CECF;
-	Wed,  2 Oct 2024 14:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaS1E7GZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4376BC4CECE;
+	Wed,  2 Oct 2024 14:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880477;
-	bh=l1bk/kbAfOVAFw1kafaNYi7jGIBzVnci7QAXoabBCpY=;
+	s=korg; t=1727880480;
+	bh=7XvoIITYLlCJWaCjskALd19nq7m6PoAo168WQOWwPU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHl/NzUM4YrAk10tYPOBtkDRCAC75tN7jNRGevozSnq6kGkM8hMammFHYH3+nPvV+
-	 E3xNszlEjRadHk6aMZ9nKT3Ha023CYJ1qSrMhnq7HYFU5xcMexU42FSmotZ+UvMto5
-	 lIm9ZHjW4ndHpDlK2F+STnJRaBz5R+fZxSpc/ong=
+	b=yaS1E7GZ857RqIbpFYDGyW7Y06WlzbdN9LqjnRPVwzdOYCFAlSSrLIUf3hv5PI7kH
+	 Ua27pdCggwRtBjqceIkFU/pqh1eYw4Up6pvQqdEsh/jXXMsFx6V3Y3jysCPIMZTbFK
+	 yzZ4wPYWrz6g47T/SsxIaQzx4jqraTPbT+rPhH2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 440/538] bus: mhi: host: pci_generic: Fix the name for the Telit FE990A
-Date: Wed,  2 Oct 2024 15:01:19 +0200
-Message-ID: <20241002125809.807370519@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 431/538] wifi: rtw88: Fix USB/SDIO devices not transmitting beacons
+Date: Wed,  2 Oct 2024 15:01:10 +0200
+Message-ID: <20241002125809.451559140@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,53 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit bfc5ca0fd1ea7aceae0b682fa4bd8079c52f96c8 upstream.
+commit faa2e484b393c56bc1243dca6676a70bc485f775 upstream.
 
-Add a mhi_pci_dev_info struct specific for the Telit FE990A modem in
-order to use the correct product name.
+All USB devices supported by rtw88 have the same problem: they don't
+transmit beacons in AP mode. (Some?) SDIO devices are also affected.
+The cause appears to be clearing BIT_EN_BCNQ_DL of REG_FWHW_TXQ_CTRL
+before uploading the beacon reserved page, so don't clear the bit for
+USB and SDIO devices.
 
-Cc: stable@vger.kernel.org # 6.1+
-Fixes: 0724869ede9c ("bus: mhi: host: pci_generic: add support for Telit FE990 modem")
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240820080439.837666-1-fabio.porcedda@gmail.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested with RTL8811CU and RTL8723DU.
+
+Cc: <stable@vger.kernel.org> # 6.6.x
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/49de73b5-698f-4865-ab63-100e28dfc4a1@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/pci_generic.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/fw.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -578,6 +578,15 @@ static const struct mhi_pci_dev_info mhi
- 	.mru_default = 32768,
- };
+--- a/drivers/net/wireless/realtek/rtw88/fw.c
++++ b/drivers/net/wireless/realtek/rtw88/fw.c
+@@ -1388,10 +1388,12 @@ int rtw_fw_write_data_rsvd_page(struct r
+ 	val |= BIT_ENSWBCN >> 8;
+ 	rtw_write8(rtwdev, REG_CR + 1, val);
  
-+static const struct mhi_pci_dev_info mhi_telit_fe990a_info = {
-+	.name = "telit-fe990a",
-+	.config = &modem_telit_fn990_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+	.mru_default = 32768,
-+};
-+
- /* Keep the list sorted based on the PID. New VID should be added as the last entry */
- static const struct pci_device_id mhi_pci_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-@@ -595,9 +604,9 @@ static const struct pci_device_id mhi_pc
- 	/* Telit FN990 */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
--	/* Telit FE990 */
-+	/* Telit FE990A */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
--		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+-	val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
+-	bckp[1] = val;
+-	val &= ~(BIT_EN_BCNQ_DL >> 16);
+-	rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, val);
++	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE) {
++		val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
++		bckp[1] = val;
++		val &= ~(BIT_EN_BCNQ_DL >> 16);
++		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, val);
++	}
+ 
+ 	ret = rtw_hci_write_data_rsvd_page(rtwdev, buf, size);
+ 	if (ret) {
+@@ -1416,7 +1418,8 @@ restore:
+ 	rsvd_pg_head = rtwdev->fifo.rsvd_boundary;
+ 	rtw_write16(rtwdev, REG_FIFOPAGE_CTRL_2,
+ 		    rsvd_pg_head | BIT_BCN_VALID_V1);
+-	rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
++	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE)
++		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
+ 	rtw_write8(rtwdev, REG_CR + 1, bckp[0]);
+ 
+ 	return ret;
 
 
