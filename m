@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F881D0164;
-	Wed,  2 Oct 2024 13:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B05B1D016B;
+	Wed,  2 Oct 2024 13:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876589; cv=none; b=KMIF9Q9xBOFaFcKZaR8+nh6UmbXZmabv1vq6zpHEZRMNLhlbDzOPijycIuiqK9EXc4AZNSuj1Qsey1wjEBZrh7BcSPoeXuirgUAxdt7AvA53TZ5Ik7pR4itUR3e/yc0Vy5CQ30zwHl3huFXO2l2sFYNijeNxm1i4BZ2ur1zfJgM=
+	t=1727876592; cv=none; b=Zl6DrTaEAkVlO+47rm6qPYLfO3/OTs4ALspAiJ0AWl8E7wyGB0U35Ge6fGXiXtO4LfA2OpyNJ9Bj1JJWcSOux0d3AA1rQJO6u3wCfW+u6mqBUPRL2IwwlDB0wcS59J5C9Di5CnZc9cGwpw22IgWcVidlf/T3CKAUkg57RetM/v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876589; c=relaxed/simple;
-	bh=bqIAhEFa21Ynl1iFA9RpOJjp9+yWz1C9YYy4E4ETNQ0=;
+	s=arc-20240116; t=1727876592; c=relaxed/simple;
+	bh=vMhEhzSEddfBZbF4ZqzQsO6jD3KlTUS0o/SXxk4mLtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUBK8QN2LTKhf+9y2dwtJqMfS/rL5X23uvozm5zjBGvBe3i117dI0Q6Lm0WaUwwVXM9MvQj1aCBPBedGJPiEvYmH4Tjlz8VMjW7bJOKzEuhIh9DCusQRCKfxTNpmOAPmw7Nx1m7Fe99NiW+1AcyCYZY4ltDSnaJX9hnF3lRGpOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xp+2Ccrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZ8agDmd1jisYl5yWwShawOtGmpUwESPQPVS6LPmmi4vnf3b/y+exgL9a5w126A91zScN+OH1aUY9fjzjRye66nzh7YHHjXpqyRxlIEZQfLIX/h+8sB7urgz5eo0GwW4OvYsCCtabTF33YMfMzdsKfncW/ou3Ll7y6EUeTpVScg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFIRWQcI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xp+2Ccrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7213CC4CEC5;
-	Wed,  2 Oct 2024 13:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFIRWQcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D8EC4CEC5;
+	Wed,  2 Oct 2024 13:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876588;
-	bh=bqIAhEFa21Ynl1iFA9RpOJjp9+yWz1C9YYy4E4ETNQ0=;
+	s=korg; t=1727876591;
+	bh=vMhEhzSEddfBZbF4ZqzQsO6jD3KlTUS0o/SXxk4mLtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xp+2CcrrsZSPMLSw4S3ouTKZg63mgUd+90mgSXqY59PJVeJRs4jbJQkQhodieRQKI
-	 JAAnkl4gQWXPTmcdx5E6p579wg1l5ilCKVl2rZn7cKvQqZkrQD/zHogurNVcocm8Hh
-	 Eh67rUjwb0pilXLtJV/KGeo9qbr5Lretlu1v56d8=
+	b=jFIRWQcIM8aboyFw8fZgwTh5MXjQ3dQvXCSI8pMQ5voQx8YLVV0n5YEDo8L0Kc6mN
+	 EJo/U8afmync5ppz5neOzUh8q0ExIV1KkgKW66cY3HM1hU9ce/zl+kuPjZEfDWIP+L
+	 zZIgNztdsWDQs0FH7O6xkOtYRY+VvopDbX+0zdpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Gan <quic_jiegan@quicinc.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Guillaume Stols <gstols@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 464/695] Coresight: Set correct cs_mode for dummy source to fix disable issue
-Date: Wed,  2 Oct 2024 14:57:42 +0200
-Message-ID: <20241002125840.980705364@linuxfoundation.org>
+Subject: [PATCH 6.11 455/695] iio: adc: ad7606: fix standby gpio state to match the documentation
+Date: Wed,  2 Oct 2024 14:57:33 +0200
+Message-ID: <20241002125840.618364878@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Gan <quic_jiegan@quicinc.com>
+From: Guillaume Stols <gstols@baylibre.com>
 
-[ Upstream commit e6b64cda393efd84709ab3df2e42d36d36d7553e ]
+[ Upstream commit 059fe4f8bbdf5cad212e1aeeb3e8968c80b9ff3b ]
 
-The coresight_disable_source_sysfs function should verify the
-mode of the coresight device before disabling the source.
-However, the mode for the dummy source device is always set to
-CS_MODE_DISABLED, resulting in the check consistently failing.
-As a result, dummy source cannot be properly disabled.
+The binding's documentation specifies that "As the line is active low, it
+should be marked GPIO_ACTIVE_LOW". However, in the driver, it was handled
+the opposite way. This commit sets the driver's behaviour in sync with the
+documentation
 
-Configure CS_MODE_SYSFS/CS_MODE_PERF during the enablement.
-Configure CS_MODE_DISABLED during the disablement.
-
-Fixes: 9d3ba0b6c056 ("Coresight: Add coresight dummy driver")
-Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240812042844.2890115-1-quic_jiegan@quicinc.com
+Fixes: 722407a4e8c0 ("staging:iio:ad7606: Use GPIO descriptor API")
+Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-dummy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/adc/ad7606.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
-index ac70c0b491beb..dab389a5507c1 100644
---- a/drivers/hwtracing/coresight/coresight-dummy.c
-+++ b/drivers/hwtracing/coresight/coresight-dummy.c
-@@ -23,6 +23,9 @@ DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
- static int dummy_source_enable(struct coresight_device *csdev,
- 			       struct perf_event *event, enum cs_mode mode)
- {
-+	if (!coresight_take_mode(csdev, mode))
-+		return -EBUSY;
-+
- 	dev_dbg(csdev->dev.parent, "Dummy source enabled\n");
+diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+index a123a9e35b33f..8f9ee56c8bed2 100644
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -419,7 +419,7 @@ static int ad7606_request_gpios(struct ad7606_state *st)
+ 		return PTR_ERR(st->gpio_range);
+ 
+ 	st->gpio_standby = devm_gpiod_get_optional(dev, "standby",
+-						   GPIOD_OUT_HIGH);
++						   GPIOD_OUT_LOW);
+ 	if (IS_ERR(st->gpio_standby))
+ 		return PTR_ERR(st->gpio_standby);
+ 
+@@ -662,7 +662,7 @@ static int ad7606_suspend(struct device *dev)
+ 
+ 	if (st->gpio_standby) {
+ 		gpiod_set_value(st->gpio_range, 1);
+-		gpiod_set_value(st->gpio_standby, 0);
++		gpiod_set_value(st->gpio_standby, 1);
+ 	}
  
  	return 0;
-@@ -31,6 +34,7 @@ static int dummy_source_enable(struct coresight_device *csdev,
- static void dummy_source_disable(struct coresight_device *csdev,
- 				 struct perf_event *event)
- {
-+	coresight_set_mode(csdev, CS_MODE_DISABLED);
- 	dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
- }
- 
 -- 
 2.43.0
 
