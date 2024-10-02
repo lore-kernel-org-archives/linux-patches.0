@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B6B1CF5FB;
-	Wed,  2 Oct 2024 14:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F871CF5FB;
+	Wed,  2 Oct 2024 14:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880017; cv=none; b=NgDvTvAp+GNdKne0MIa16C+Cr/Y8uQlICZe5uWx3+rupMF+tB90X3r8YSRqjXfG9/SPUQJdSC1qff8jZ3AT9QiZbdaS5W9yerqeAAd2Rrg2lbfbyooiCxMGZdDEzA2HWYwlTZgw4TfcJ7SLyuMVgC9DobDdtLMcdFNTA2AhzDvw=
+	t=1727880020; cv=none; b=dwIVZiPRvrWLNIKyfI9u7N/qXAFglcvaLVzLAE+jVdvGOZXJK/825xOttLk8BQn+sWCKlF35eATC69HdwqSa2EURKEXmAgK2fnflL6A82SvpuehTBf7W1MRyprTFNEBrLhZ4xcBuJfLKxa623KPzja7ANzFSyaC533YmaW0bgr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880017; c=relaxed/simple;
-	bh=xF88x8Ue5+gN/rQM4THMa+ZfOy5Dr3sa5fWufRbsFmY=;
+	s=arc-20240116; t=1727880020; c=relaxed/simple;
+	bh=VwwZa5/2LucdNAepDjyu9Lf53KOHmkYJUoP3ORLYTIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWzzbErjwmGjARqJQxPL3FucoQUuEyROAZRuurszMAAa7hnE5tsHYm1pPU7tZpnkFdgMDEpd56hH47XDtUICdiJRkZps4ZgVTmc75/1PH3YTRK3ltaLj7i+hs3Tf4S+Fxi0OYEJoJJKCAsw4HB4w6kWF0IYZjzPRsIMGkyDGYD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCLYYDYy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qFW4L3BlA0HlNtzFBzzWcWIzfwd4rhDE0qnautnfhlBVHp09tQ/EthSEv4+yxn9UUm2Exc7dxaEfqw36136GMZkOa7DHiIYakqpiJKljwI6Qzb5Uwdv4te2H4voXzHISSF1Zdr4H7OhiLakMcxHvLiePsnMQUau0h9s9uiadQPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k91kZZeO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCLYYDYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445E8C4CEC2;
-	Wed,  2 Oct 2024 14:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k91kZZeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBAEC4CEC2;
+	Wed,  2 Oct 2024 14:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880017;
-	bh=xF88x8Ue5+gN/rQM4THMa+ZfOy5Dr3sa5fWufRbsFmY=;
+	s=korg; t=1727880020;
+	bh=VwwZa5/2LucdNAepDjyu9Lf53KOHmkYJUoP3ORLYTIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCLYYDYyGzuXKWgixox+MC+I3Z8tN8uAV4aAJ+haj2HJiG89DB9ZJ649YZV/uQD72
-	 KKtMhn4/B88WUMQWFPcjcmXiFb+euX526Git5+yC3S1moao0TyfwQNQNbXl3PTAoe3
-	 eZquxfZvbLJmgFbE9gXXrA/eM/vQsqNjoaSIULSk=
+	b=k91kZZeOPt+Nnk9SI+8v9nCyo3Gy4dSNrWHcYIWn75hnoqlSbZnWZGTyYvMGartXu
+	 5whqkRseWRw8VpFuDIR2MHbvsE8Hb8X0qdbbP4TmgO7cSqAvBkwrOQ8rfWbsf6tDvD
+	 uywEp0Tu6zDCrzF+nKn0JrnrrAi5tWukk7bJS4eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	wenglianfa <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 298/538] clk: at91: sama7g5: Allocate only the needed amount of memory for PLLs
-Date: Wed,  2 Oct 2024 14:58:57 +0200
-Message-ID: <20241002125804.177560474@linuxfoundation.org>
+Subject: [PATCH 6.6 316/538] RDMA/hns: Fix Use-After-Free of rsv_qp on HIP08
+Date: Wed,  2 Oct 2024 14:59:15 +0200
+Message-ID: <20241002125804.900813332@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,55 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit 2d6e9ee7cb3e79b1713783c633b13af9aeffc90c ]
+[ Upstream commit fd8489294dd2beefb70f12ec4f6132aeec61a4d0 ]
 
-The maximum number of PLL components on SAMA7G5 is 3 (one fractional
-part and 2 dividers). Allocate the needed amount of memory for
-sama7g5_plls 2d array. Previous code used to allocate 7 array entries for
-each PLL. While at it, replace 3 with PLL_COMPID_MAX in the loop which
-parses the sama7g5_plls 2d array.
+Currently rsv_qp is freed before ib_unregister_device() is called
+on HIP08. During the time interval, users can still dereg MR and
+rsv_qp will be used in this process, leading to a UAF. Move the
+release of rsv_qp after calling ib_unregister_device() to fix it.
 
-Fixes: cb783bbbcf54 ("clk: at91: sama7g5: add clock support for sama7g5")
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240714141315.19480-1-claudiu.beznea@tuxon.dev
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 70f92521584f ("RDMA/hns: Use the reserved loopback QPs to free MR before destroying MPT")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20240906093444.3571619-3-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/sama7g5.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/at91/sama7g5.c b/drivers/clk/at91/sama7g5.c
-index 91b5c6f148196..4e9594714b142 100644
---- a/drivers/clk/at91/sama7g5.c
-+++ b/drivers/clk/at91/sama7g5.c
-@@ -66,6 +66,7 @@ enum pll_component_id {
- 	PLL_COMPID_FRAC,
- 	PLL_COMPID_DIV0,
- 	PLL_COMPID_DIV1,
-+	PLL_COMPID_MAX,
- };
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 8f93aacde4936..908b4372bac95 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2932,6 +2932,9 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
  
- /*
-@@ -165,7 +166,7 @@ static struct sama7g5_pll {
- 	u8 t;
- 	u8 eid;
- 	u8 safe_div;
--} sama7g5_plls[][PLL_ID_MAX] = {
-+} sama7g5_plls[][PLL_COMPID_MAX] = {
- 	[PLL_ID_CPU] = {
- 		[PLL_COMPID_FRAC] = {
- 			.n = "cpupll_fracck",
-@@ -1038,7 +1039,7 @@ static void __init sama7g5_pmc_setup(struct device_node *np)
- 	sama7g5_pmc->chws[PMC_MAIN] = hw;
+ static void hns_roce_v2_exit(struct hns_roce_dev *hr_dev)
+ {
++	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
++		free_mr_exit(hr_dev);
++
+ 	hns_roce_function_clear(hr_dev);
  
- 	for (i = 0; i < PLL_ID_MAX; i++) {
--		for (j = 0; j < 3; j++) {
-+		for (j = 0; j < PLL_COMPID_MAX; j++) {
- 			struct clk_hw *parent_hw;
+ 	if (!hr_dev->is_vf)
+@@ -6779,9 +6782,6 @@ static void __hns_roce_hw_v2_uninit_instance(struct hnae3_handle *handle,
+ 	hr_dev->state = HNS_ROCE_DEVICE_STATE_UNINIT;
+ 	hns_roce_handle_device_err(hr_dev);
  
- 			if (!sama7g5_plls[i][j].n)
+-	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
+-		free_mr_exit(hr_dev);
+-
+ 	hns_roce_exit(hr_dev);
+ 	kfree(hr_dev->priv);
+ 	ib_dealloc_device(&hr_dev->ib_dev);
 -- 
 2.43.0
 
