@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3877F1D07B9;
-	Wed,  2 Oct 2024 14:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA211D551;
+	Wed,  2 Oct 2024 14:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879941; cv=none; b=MsqaTLuFb4vTWwogHIsWhwUywORWHvNU+V1EUIWR2Xth9Vi3scOGjHPAiTjNnh2eBKi1qpqp63cvBz0+1ZRj+xUYZhGdEl3DNGKpGKVVfmvVR0BoW7jF8R/OlQoiezK8gR4nSmI+NQVIid71tcdrP5PV/BZH+a+yL1yowfdcENg=
+	t=1727879945; cv=none; b=QU5Dek2DEIiEIUMxn6p9EB+j9fiStiMmBlvE7KoMb2D1C40GpCRl+hMK9yRMiERq4NpukFJ7geGAwlcqMIF9/+mea7XVFpElENzUpcUqWMC5Sdhzhwk6NFguydyivvIM4Udmv6le9gtG9VCYbZzaGRhrAL9oYnHlYZ4aD/mXrkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879941; c=relaxed/simple;
-	bh=1CWD6j7vY4sqKQgWsRhMfCX1RY7eO6pTFqvJcSuLXJI=;
+	s=arc-20240116; t=1727879945; c=relaxed/simple;
+	bh=2+2LTS8McXzjqfqQuw/A5YZn2+aKiNJD1y2z3SewIqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqqoLIaVWbNrVrmcKZEnNWr6BvUpVChoAa7nLzIrXGr141CZtHzHPQPFAny3171crSls7akKYCMxCSOo4Fww15ff+vpKTNvaSpxxBPZc1aQJ4/j2NECgsDV+x1lrvojCykETjDVkh2ppNrTSUj2hr2JvGcWGIcYHgtdj6UZk6YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqO3w3Qx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VN3e9RzMcWV/Av7vMfTGeWNqfmcqX+zg6GOmzOvy8HCiAnft0+8hDmq3r6J0oS+5GfOIZaq3H30dQr1qioMAnpK0h56gZvR8B8Sq17TqFHFb/iopWcSHUb59GHGlMaw5vOMxQ6fKuCZTqWR5ETw2M4rf62ma+b3r9HmqFS0jv7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs3OR1VI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqO3w3Qx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B32C4CEC2;
-	Wed,  2 Oct 2024 14:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs3OR1VI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A30C4CEC2;
+	Wed,  2 Oct 2024 14:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879941;
-	bh=1CWD6j7vY4sqKQgWsRhMfCX1RY7eO6pTFqvJcSuLXJI=;
+	s=korg; t=1727879944;
+	bh=2+2LTS8McXzjqfqQuw/A5YZn2+aKiNJD1y2z3SewIqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HqO3w3QxaN5BWPcS2/v/HONkX9qn5yGktLp/SKxdBs9ICDxqh7aMPn/Y1+de6xq6Q
-	 V0rN664pTxAbV9SjN95No89ipzWcoeUoUi9iAPlmg29zSPOrhqiDJ+bAiP/Yfe0rLV
-	 pxh3ph7S8AkGAmSNhOycSV1KubDAsETBViZQa7TA=
+	b=fs3OR1VI5HmeoT1Q6dEuUl5e/2Rl0mXBxSscqYXMyjiIqvYnutWLchNayUKehzZQN
+	 lcIPg9AfmF/3u41C+Rxv+4lipyjECIc0hTdv1CLZFkFat4fWnfXxFqYwhpk2CNxnBU
+	 8yAib2v132nxQHI4LmTvac/DRc7ot5xdgQngvN7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 290/538] leds: pca995x: Fix device child node usage in pca995x_probe()
-Date: Wed,  2 Oct 2024 14:58:49 +0200
-Message-ID: <20241002125803.704160018@linuxfoundation.org>
+Subject: [PATCH 6.6 291/538] x86/PCI: Check pcie_find_root_port() return for NULL
+Date: Wed,  2 Oct 2024 14:58:50 +0200
+Message-ID: <20241002125803.743737084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,79 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-[ Upstream commit 82c5ada1f9d05902a4ccb926c7ce34e2fe699283 ]
+[ Upstream commit dbc3171194403d0d40e4bdeae666f6e76e428b53 ]
 
-The current implementation accesses the `child` fwnode handle outside of
-device_for_each_child_node() without incrementing its refcount.
+If pcie_find_root_port() is unable to locate a Root Port, it will return
+NULL. Check the pointer for NULL before dereferencing it.
 
-Add the missing call to `fwnode_handle_get(child)`.
+This particular case is in a quirk for devices that are always below a Root
+Port, so this won't avoid a problem and doesn't need to be backported, but
+check as a matter of style and to prevent copy/paste mistakes.
 
-The cleanup process where `child` is accessed is not right either
-because a single call to `fwnode_handle_put()` is carried out in case of
-an error, ignoring unasigned nodes at the point when the error happens.
-
-Keep `child` inside of the first loop, and use the helper pointer that
-receives references via `fwnode_handle_get()` to handle the child nodes
-within the second loop. Keeping `child` inside the first node has also
-the advantage that the scoped version of the loop can be used.
-
-Fixes: ee4e80b2962e ("leds: pca995x: Add support for PCA995X chips")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20240807-leds-pca995x-fix-fwnode-usage-v1-1-8057c84dc583@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20240812202659.1649121-1-samasth.norway.ananda@oracle.com
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+[bhelgaas: drop Fixes: and explain why there's no problem in this case]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca995x.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/pci/fixup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-pca995x.c b/drivers/leds/leds-pca995x.c
-index 83bc9669544c3..11c7bb69573e8 100644
---- a/drivers/leds/leds-pca995x.c
-+++ b/drivers/leds/leds-pca995x.c
-@@ -120,12 +120,11 @@ static const struct regmap_config pca995x_regmap = {
- static int pca995x_probe(struct i2c_client *client)
- {
- 	struct fwnode_handle *led_fwnodes[PCA995X_MAX_OUTPUTS] = { 0 };
--	struct fwnode_handle *child;
- 	struct device *dev = &client->dev;
- 	const struct pca995x_chipdef *chipdef;
- 	struct pca995x_chip *chip;
- 	struct pca995x_led *led;
--	int i, reg, ret;
-+	int i, j, reg, ret;
+diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
+index b33afb240601b..98a9bb92d75c8 100644
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -980,7 +980,7 @@ static void amd_rp_pme_suspend(struct pci_dev *dev)
+ 		return;
  
- 	chipdef = device_get_match_data(&client->dev);
+ 	rp = pcie_find_root_port(dev);
+-	if (!rp->pm_cap)
++	if (!rp || !rp->pm_cap)
+ 		return;
  
-@@ -143,7 +142,7 @@ static int pca995x_probe(struct i2c_client *client)
+ 	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
+@@ -994,7 +994,7 @@ static void amd_rp_pme_resume(struct pci_dev *dev)
+ 	u16 pmc;
  
- 	i2c_set_clientdata(client, chip);
+ 	rp = pcie_find_root_port(dev);
+-	if (!rp->pm_cap)
++	if (!rp || !rp->pm_cap)
+ 		return;
  
--	device_for_each_child_node(dev, child) {
-+	device_for_each_child_node_scoped(dev, child) {
- 		ret = fwnode_property_read_u32(child, "reg", &reg);
- 		if (ret)
- 			return ret;
-@@ -152,7 +151,7 @@ static int pca995x_probe(struct i2c_client *client)
- 			return -EINVAL;
- 
- 		led = &chip->leds[reg];
--		led_fwnodes[reg] = child;
-+		led_fwnodes[reg] = fwnode_handle_get(child);
- 		led->chip = chip;
- 		led->led_no = reg;
- 		led->ldev.brightness_set_blocking = pca995x_brightness_set;
-@@ -171,7 +170,8 @@ static int pca995x_probe(struct i2c_client *client)
- 						     &chip->leds[i].ldev,
- 						     &init_data);
- 		if (ret < 0) {
--			fwnode_handle_put(child);
-+			for (j = i; j < PCA995X_MAX_OUTPUTS; j++)
-+				fwnode_handle_put(led_fwnodes[j]);
- 			return dev_err_probe(dev, ret,
- 					     "Could not register LED %s\n",
- 					     chip->leds[i].ldev.name);
+ 	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
 -- 
 2.43.0
 
