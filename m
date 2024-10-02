@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5581D0F48;
-	Wed,  2 Oct 2024 14:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B831D0F48;
+	Wed,  2 Oct 2024 14:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880551; cv=none; b=PoPxG7ENuBO26BVFi3c6f7D7Z11uKj+RGyTW1/J336018pQUnKMQYZIF764UxKhbsSAgPDFtGjq34PssNl6sBM8ggQ2YiZNad3kQUNRWvEFRBAd3Vq/IG8XvuHwJMZjR47Sp3pSyJxPnuIKbDpjpIQjgT9W2ys3fzW0/+BFvIAk=
+	t=1727880553; cv=none; b=UhXekp/xHZpUmR5TXROIWJpR5ZNlT23NnDxtrSgu0NjazdUZv0ijNP9eFAyqlHWvSW3s1Lf8v5P6ZCU6wlcMdjE65SM36XG2fH/BoT5qYrBJD33k5LLQUOVq9NaDIPUSY7hEzzDoqp0w3TLYlpEcLTFusZrVWOnPgRbuE4xmyn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880551; c=relaxed/simple;
-	bh=MufoUWZoz4iwCqcpOvjlbCea8PIeSz42LMHXlBQh2Ns=;
+	s=arc-20240116; t=1727880553; c=relaxed/simple;
+	bh=Bq73EZ733SOKR3FCetcel3RyaaUNbBHj9L6IE/Ey5Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlZ+GQapXlN30Rs/dqB2x9zOJdeHhUKmUryGtmtEl49qYWcBiwexy3kLsNOQsf8z7CFd/7mjfv7yb/s0PxaBWdZW7FvGN/j8EGX9tmqFXXR0lCGTJ36wuV5CWMibSNVknUy5tLvDtngfFomlWxTO8c0iT8i3kROLakiJ4q+LA4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFhzq9GW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OcDZUl84uUf5UkiqMr2J51TlOy9oivGbV+ouWeEI1JwxHy/RMks0UVqAqzRFCgx8fQwCwhzX8DqfvgTLlUv251dKOT1iPFSYC+Q8ORkBcKwxOXufuSnsheqTuIGTeFJyZLnA2iwEtDVauuuUAeOI99DVgbbpMvPL9SLDuQaguz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQw2aN15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFhzq9GW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6942AC4CEC2;
-	Wed,  2 Oct 2024 14:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQw2aN15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A665C4CEC2;
+	Wed,  2 Oct 2024 14:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880550;
-	bh=MufoUWZoz4iwCqcpOvjlbCea8PIeSz42LMHXlBQh2Ns=;
+	s=korg; t=1727880553;
+	bh=Bq73EZ733SOKR3FCetcel3RyaaUNbBHj9L6IE/Ey5Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFhzq9GWgOEllvGdJ61Q7cT79rplomtEL61f7gMaLZeBNFxE0L1gxghA81XODSZHJ
-	 imHaD95L2uFxsUlXkXeDD0zC04Kq4D2U5N6CAYbM4L1R8tYQizbs7+dxTcGA84LveK
-	 v3uhL6bd3ZWfsxC4upyiNyyH60ZAdjs9iSoDpfhw=
+	b=PQw2aN15Yp8fhEPSdzbcS8gLtIAApLJSImOfcxW/U8TVz6d7SciEUCxytbuacLE9c
+	 Tf8RKr5tjHWgBfjUcHm85Hax5EObycn3txOt/FgYLAv5Olfw9Hb6qek8MUPpjgv5nD
+	 sS9nWJHg6dm02oRimDcJvDTuN7//QwEEAM5GIyCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 496/538] btrfs: subpage: fix the bitmap dump which can cause bitmap corruption
-Date: Wed,  2 Oct 2024 15:02:15 +0200
-Message-ID: <20241002125812.017741445@linuxfoundation.org>
+Subject: [PATCH 6.6 497/538] btrfs: reorder btrfs_inode to fill gaps
+Date: Wed,  2 Oct 2024 15:02:16 +0200
+Message-ID: <20241002125812.058043706@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,53 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 77b0b98bb743f5d04d8f995ba1936e1143689d4a ]
+[ Upstream commit 398fb9131f31bd25aa187613c9942f4232e952b7 ]
 
-In commit 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for
-debug") an internal macro GET_SUBPAGE_BITMAP() is introduced to grab the
-bitmap of each attribute.
+Previous commit created a hole in struct btrfs_inode, we can move
+outstanding_extents there. This reduces size by 8 bytes from 1120 to
+1112 on a release config.
 
-But that commit is using bitmap_cut() which will do the left shift of
-the larger bitmap, causing incorrect values.
-
-Thankfully this bitmap_cut() is only called for debug usage, and so far
-it's not yet causing problem.
-
-Fix it to use bitmap_read() to only grab the desired sub-bitmap.
-
-Fixes: 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for debug")
-CC: stable@vger.kernel.org # 6.6+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 7ee85f5515e8 ("btrfs: fix race setting file private on concurrent lseek using same fd")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/subpage.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/btrfs/btrfs_inode.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/subpage.c b/fs/btrfs/subpage.c
-index 1b999c6e41930..b98d42ca55647 100644
---- a/fs/btrfs/subpage.c
-+++ b/fs/btrfs/subpage.c
-@@ -713,8 +713,14 @@ void btrfs_page_unlock_writer(struct btrfs_fs_info *fs_info, struct page *page,
- }
+diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
+index bda1fdbba666a..b75c7f5934780 100644
+--- a/fs/btrfs/btrfs_inode.h
++++ b/fs/btrfs/btrfs_inode.h
+@@ -102,6 +102,14 @@ struct btrfs_inode {
+ 	/* held while logging the inode in tree-log.c */
+ 	struct mutex log_mutex;
  
- #define GET_SUBPAGE_BITMAP(subpage, subpage_info, name, dst)		\
--	bitmap_cut(dst, subpage->bitmaps, 0,				\
--		   subpage_info->name##_offset, subpage_info->bitmap_nr_bits)
-+{									\
-+	const int bitmap_nr_bits = subpage_info->bitmap_nr_bits;	\
-+									\
-+	ASSERT(bitmap_nr_bits < BITS_PER_LONG);				\
-+	*dst = bitmap_read(subpage->bitmaps,				\
-+			   subpage_info->name##_offset,			\
-+			   bitmap_nr_bits);				\
-+}
++	/*
++	 * Counters to keep track of the number of extent item's we may use due
++	 * to delalloc and such.  outstanding_extents is the number of extent
++	 * items we think we'll end up using, and reserved_extents is the number
++	 * of extent items we've reserved metadata for.
++	 */
++	unsigned outstanding_extents;
++
+ 	/* used to order data wrt metadata */
+ 	struct btrfs_ordered_inode_tree ordered_tree;
  
- void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
- 				      struct page *page, u64 start, u32 len)
+@@ -223,14 +231,6 @@ struct btrfs_inode {
+ 	/* Read-only compatibility flags, upper half of inode_item::flags */
+ 	u32 ro_flags;
+ 
+-	/*
+-	 * Counters to keep track of the number of extent item's we may use due
+-	 * to delalloc and such.  outstanding_extents is the number of extent
+-	 * items we think we'll end up using, and reserved_extents is the number
+-	 * of extent items we've reserved metadata for.
+-	 */
+-	unsigned outstanding_extents;
+-
+ 	struct btrfs_block_rsv block_rsv;
+ 
+ 	/*
 -- 
 2.43.0
 
