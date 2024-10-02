@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31FA1474BC;
-	Wed,  2 Oct 2024 14:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3FD1D04BA;
+	Wed,  2 Oct 2024 14:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879529; cv=none; b=Mcmt2LseDA/JcF7NxP0fch0yltWY7JF/WokiUQYq3axcKlhnndVcihKgxe3jGTFGebugMgqYQV2gHJwBnuj0EOYan5DiZyq3BftfDhWOnSU+jv5MhvsJFM3ZubrCxz7TUuO0ArYXcaAtNT9f/wLVWKPfthVIkLaNdhPZf0JVK00=
+	t=1727879532; cv=none; b=VbtO1e5PwA8kl6LmphGEEiRj4uBg2nCqGdo1v4sBHv921sENO6pl/VTCpcdNQtDG3NlBXvEdRoym+Hw8ZqyIuh/dmiVja5bUXBvZrKfmp1zn92HwDIgTJ+EnFJtYWaDZqTMaZBu5BjCRA7xJAaNRv73OltqV81ubfBzR+uVudIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879529; c=relaxed/simple;
-	bh=IJ7A8TJEznEqhDHaEhrhf+ZSuLedJKUZJZ7AL35cwC8=;
+	s=arc-20240116; t=1727879532; c=relaxed/simple;
+	bh=WJfCVtTuScAFv75WzUvVxJFMc4xhECRLLVbT2du8snA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jX4jvb5ZpmzpD5+dXQHd7Z7VTsxa7LAaux8Swjm4KAemx5ZyqE+MBtPgyLf6ykqc2+KyVonp2/E8xJpHSO00SE5KN8kWMv7Bg2BORPRdjht0R+52DFN5Llz83C4C7aBHOOVKGnMCKWBOx7Ykv2fABO2vmQS1UdVThh4IANyLRTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1igP8nWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d/nI7fQ7ce96Vu4Yk8TnLnFZYiC91kSPE5I8E3w/iPvnTUXEz/uj409uTePll0vuajcpyUrdNffeE37DsH0MtgqV3qbmunSLY1glzJ0zdtJCmOWmjW7H9m18ePtwiUBrReS56ZmLkTTucMt34XaPb3PwyWOJLeSY8XiqsMlOMtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuVcuzTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1igP8nWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF1AC4CEC2;
-	Wed,  2 Oct 2024 14:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuVcuzTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEEFC4CEC2;
+	Wed,  2 Oct 2024 14:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879529;
-	bh=IJ7A8TJEznEqhDHaEhrhf+ZSuLedJKUZJZ7AL35cwC8=;
+	s=korg; t=1727879532;
+	bh=WJfCVtTuScAFv75WzUvVxJFMc4xhECRLLVbT2du8snA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1igP8nWM9UNEv7os3SYXt7qCjXzaBb+IlcSg6aWPos4kV928HXcbkEmSO7DiEYcNb
-	 A30uDsXSZTUNyaH96TGxTikSv2jCSzTYTe7R7tHUIkm/J/MSTO1+W0kqCnF/hdjIsE
-	 HB14Wpv0aP6Xmpqj9wGhKoeOHd4Hfc0e/S9fAxjc=
+	b=IuVcuzTVJVWa5rzOLEgd/dKw1WBU7k8b3MVc1RR1ZIu8VlMsoSCy07eZpjZs5YGhR
+	 U2wMFvP6z4H6YUqD7sk4DfpOZtmen2Fk84jo9epg+OQvs3rUq8jFkhPXfiq1+D2DKr
+	 vM3Mu8s9pr6TjnZtHi77TI/bWMLyzbfzmJgysq2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/538] drm/vc4: hdmi: Handle error case of pm_runtime_resume_and_get
-Date: Wed,  2 Oct 2024 14:56:29 +0200
-Message-ID: <20241002125758.175528977@linuxfoundation.org>
+Subject: [PATCH 6.6 151/538] scsi: elx: libefc: Fix potential use after free in efc_nport_vport_del()
+Date: Wed,  2 Oct 2024 14:56:30 +0200
+Message-ID: <20241002125758.214447418@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -46,63 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f1a54e860b1bc8d824925b5a77f510913880e8d6 ]
+[ Upstream commit 2e4b02fad094976763af08fec2c620f4f8edd9ae ]
 
-The commit 0f5251339eda ("drm/vc4: hdmi: Make sure the controller is
-powered in detect") introduced the necessary power management handling
-to avoid register access while controller is powered down.
-Unfortunately it just print a warning if pm_runtime_resume_and_get()
-fails and proceed anyway.
+The kref_put() function will call nport->release if the refcount drops to
+zero.  The nport->release release function is _efc_nport_free() which frees
+"nport".  But then we dereference "nport" on the next line which is a use
+after free.  Re-order these lines to avoid the use after free.
 
-This could happen during suspend to idle. So we must assume it is unsafe
-to access the HDMI register. So bail out properly.
-
-Fixes: 0f5251339eda ("drm/vc4: hdmi: Make sure the controller is powered in detect")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240821214052.6800-3-wahrenst@gmx.net
+Fixes: fcd427303eb9 ("scsi: elx: libefc: SLI and FC PORT state machine interfaces")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/b666ab26-6581-4213-9a3d-32a9147f0399@stanley.mountain
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/scsi/elx/libefc/efc_nport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 643754fa6a8ad..c6e986f71a26f 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -458,6 +458,7 @@ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
- {
- 	struct vc4_hdmi *vc4_hdmi = connector_to_vc4_hdmi(connector);
- 	enum drm_connector_status status = connector_status_disconnected;
-+	int ret;
- 
- 	/*
- 	 * NOTE: This function should really take vc4_hdmi->mutex, but
-@@ -470,7 +471,12 @@ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
- 	 * the lock for now.
- 	 */
- 
--	WARN_ON(pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev));
-+	ret = pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev);
-+	if (ret) {
-+		drm_err_once(connector->dev, "Failed to retain HDMI power domain: %d\n",
-+			     ret);
-+		return connector_status_unknown;
-+	}
- 
- 	if (vc4_hdmi->hpd_gpio) {
- 		if (gpiod_get_value_cansleep(vc4_hdmi->hpd_gpio))
+diff --git a/drivers/scsi/elx/libefc/efc_nport.c b/drivers/scsi/elx/libefc/efc_nport.c
+index 2e83a667901fe..1a7437f4328e8 100644
+--- a/drivers/scsi/elx/libefc/efc_nport.c
++++ b/drivers/scsi/elx/libefc/efc_nport.c
+@@ -705,9 +705,9 @@ efc_nport_vport_del(struct efc *efc, struct efc_domain *domain,
+ 	spin_lock_irqsave(&efc->lock, flags);
+ 	list_for_each_entry(nport, &domain->nport_list, list_entry) {
+ 		if (nport->wwpn == wwpn && nport->wwnn == wwnn) {
+-			kref_put(&nport->ref, nport->release);
+ 			/* Shutdown this NPORT */
+ 			efc_sm_post_event(&nport->sm, EFC_EVT_SHUTDOWN, NULL);
++			kref_put(&nport->ref, nport->release);
+ 			break;
+ 		}
+ 	}
 -- 
 2.43.0
 
