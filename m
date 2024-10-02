@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC1D0B9D;
-	Wed,  2 Oct 2024 14:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94031D0B8E;
+	Wed,  2 Oct 2024 14:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877831; cv=none; b=NdT3TTz0pTkTPhN3jqabX8B53HKvpgq16ZOLldifhx/ddvB5tsGREBvmL/EbAek9p9c3GBNbP675bQFbyp7jxjvLQ5PP9WCZal8/f1HlpQ/zCPWGQPeqX1w66B4VLWA3477qCxe6BqfIociQPfQOjRbcrpPZgbK2+ISeSH4YCD8=
+	t=1727877834; cv=none; b=borDmphzX+a15Xk8VUxtT4rMRW0OfJnRbcxlLal00/oOoutI2V2HyMRWRaCx5WgUEn12unJzdZOMa3HQ2KuZaSQiXkJrRu/jt3smZHgFYjF1HQAQFwUNTkYEhLqKioYPmlZOY53fH1tAKfKWdPRk8Cnxs4UcaUBbSvM/wCAqhNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877831; c=relaxed/simple;
-	bh=xr9ldIci/n66YeJSrXTfwNMvhBnnoOhVO4qcll8aaFs=;
+	s=arc-20240116; t=1727877834; c=relaxed/simple;
+	bh=8XGBvRM+/Gq7UKE2Ycm+D8rzWS1c+njYVPWX+LxQXSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EySLSpu8AAuTDkhrv0ZX3h9Bx6PDcpHTOvfUs2fSyTfiP9AJh118Rl7GYojDVXvg7E4tFLZAUBUajotzuo4H6rpk1ogh7vd6HFmcgHnbLKmSpJ7W+jb2/bwRvHyCIi7plVVv+oQfoyf+1eC/AwCMFZMOR5YNJ8jmtYi0GxqfWmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWsNpsgi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gp/IUDbJ7JWGyUfFE5PNWimDLB2Dfos81L/2az/ePEXELKKXUjJ3HrEOZ/R+k+BlgLKrWH2O+Jp/yhGnzynaBJ6jz3IHTBDuRZSxtvpgbP4AQ/qITB105+1X59Y5rkyMvyGCZOSsSWbe7Xe8li//BjI16tpm3G4kvu37RdJgIm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILcrYELs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWsNpsgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55203C4CEC2;
-	Wed,  2 Oct 2024 14:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILcrYELs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C1FC4CEC2;
+	Wed,  2 Oct 2024 14:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877831;
-	bh=xr9ldIci/n66YeJSrXTfwNMvhBnnoOhVO4qcll8aaFs=;
+	s=korg; t=1727877834;
+	bh=8XGBvRM+/Gq7UKE2Ycm+D8rzWS1c+njYVPWX+LxQXSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWsNpsgiPX0Oq+1cDoDoptrr8UCYv3TM8sbZ3jx3XuLgR/OO7KeoTUYA7rzJDpD7z
-	 8J+4AN6/iTLpjaZbXfpOJ9UFlXRPR4YlPGNrqULxYgnfi3nqo1JTa8DpRJa33+xEsw
-	 i17tylg3bv/ZFVzLSOwweeZHFt0pJ1pT2Mr2ePhM=
+	b=ILcrYELs19t1MWYimUxQ3mMrJIfh6tj0EK+0+SO/F5at4SaUOOCR6a3l/1eqh40Vt
+	 73co8EzPM5caTAI26I+6rAs1Al+Ipq+2si7XAtU9lCQTdRmsJQveWAvSFg3vKnz8uu
+	 2HxB/R+/Uo6z0yDpYARfT6Kc0i7P1FXDKNmEYCoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Yang <sherry.yang@oracle.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 210/634] drm/msm: fix %s null argument error
-Date: Wed,  2 Oct 2024 14:55:10 +0200
-Message-ID: <20241002125819.393841402@linuxfoundation.org>
+Subject: [PATCH 6.10 211/634] platform/x86: ideapad-laptop: Make the scope_guard() clear of its scope
+Date: Wed,  2 Oct 2024 14:55:11 +0200
+Message-ID: <20241002125819.433123550@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,46 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sherry Yang <sherry.yang@oracle.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 25b85075150fe8adddb096db8a4b950353045ee1 ]
+[ Upstream commit a093cb667c3ff5eadd4b23ddf996d9ccae9b7ac6 ]
 
-The following build error was triggered because of NULL string argument:
+First of all, it's a bit counterintuitive to have something like
 
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c: In function 'mdp5_smp_dump':
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
-BUILDSTDERR:   352 |                         drm_printf(p, "%s:%d\t%d\t%s\n",
-BUILDSTDERR:       |                                                   ^~
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
+	int err;
+	...
+	scoped_guard(...)
+		err = foo(...);
+	if (err)
+		return err;
 
-This happens from the commit a61ddb4393ad ("drm: enable (most) W=1
-warnings by default across the subsystem"). Using "(null)" instead
-to fix it.
+Second, with a particular kernel configuration and compiler version in
+one of such cases the objtool is not happy:
 
-Fixes: bc5289eed481 ("drm/msm/mdp5: add debugfs to show smp block status")
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/611071/
-Link: https://lore.kernel.org/r/20240827165337.1075904-1-sherry.yang@oracle.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+  ideapad-laptop.o: warning: objtool: .text.fan_mode_show: unexpected end of section
+
+I'm not an expert on all this, but the theory is that compiler and
+linker in this case can't understand that 'result' variable will be
+always initialized as long as no error has been returned. Assigning
+'result' to a dummy value helps with this. Note, that fixing the
+scoped_guard() scope (as per above) does not make issue gone.
+
+That said, assign dummy value and make the scope_guard() clear of its scope.
+For the sake of consistency do it in the entire file.
+
+Fixes: 7cc06e729460 ("platform/x86: ideapad-laptop: add a mutex to synchronize VPC commands")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408290219.BrPO8twi-lkp@intel.com/
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240829165105.1609180-1-andriy.shevchenko@linux.intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/ideapad-laptop.c | 48 +++++++++++++++------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-index 3a7f7edda96b2..500b7dc895d05 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-@@ -351,7 +351,7 @@ void mdp5_smp_dump(struct mdp5_smp *smp, struct drm_printer *p,
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index 490815917adec..32293df50bb1c 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -422,13 +422,14 @@ static ssize_t camera_power_show(struct device *dev,
+ 				 char *buf)
+ {
+ 	struct ideapad_private *priv = dev_get_drvdata(dev);
+-	unsigned long result;
++	unsigned long result = 0;
+ 	int err;
  
- 			drm_printf(p, "%s:%d\t%d\t%s\n",
- 				pipe2name(pipe), j, inuse,
--				plane ? plane->name : NULL);
-+				plane ? plane->name : "(null)");
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = read_ec_data(priv->adev->handle, VPCCMD_R_CAMERA, &result);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
  
- 			total += inuse;
- 		}
+ 	return sysfs_emit(buf, "%d\n", !!result);
+ }
+@@ -445,10 +446,11 @@ static ssize_t camera_power_store(struct device *dev,
+ 	if (err)
+ 		return err;
+ 
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_CAMERA, state);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
+ 
+ 	return count;
+ }
+@@ -496,13 +498,14 @@ static ssize_t fan_mode_show(struct device *dev,
+ 			     char *buf)
+ {
+ 	struct ideapad_private *priv = dev_get_drvdata(dev);
+-	unsigned long result;
++	unsigned long result = 0;
+ 	int err;
+ 
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = read_ec_data(priv->adev->handle, VPCCMD_R_FAN, &result);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
+ 
+ 	return sysfs_emit(buf, "%lu\n", result);
+ }
+@@ -522,10 +525,11 @@ static ssize_t fan_mode_store(struct device *dev,
+ 	if (state > 4 || state == 3)
+ 		return -EINVAL;
+ 
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_FAN, state);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
+ 
+ 	return count;
+ }
+@@ -605,13 +609,14 @@ static ssize_t touchpad_show(struct device *dev,
+ 			     char *buf)
+ {
+ 	struct ideapad_private *priv = dev_get_drvdata(dev);
+-	unsigned long result;
++	unsigned long result = 0;
+ 	int err;
+ 
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = read_ec_data(priv->adev->handle, VPCCMD_R_TOUCHPAD, &result);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
+ 
+ 	priv->r_touchpad_val = result;
+ 
+@@ -630,10 +635,11 @@ static ssize_t touchpad_store(struct device *dev,
+ 	if (err)
+ 		return err;
+ 
+-	scoped_guard(mutex, &priv->vpc_mutex)
++	scoped_guard(mutex, &priv->vpc_mutex) {
+ 		err = write_ec_cmd(priv->adev->handle, VPCCMD_W_TOUCHPAD, state);
+-	if (err)
+-		return err;
++		if (err)
++			return err;
++	}
+ 
+ 	priv->r_touchpad_val = state;
+ 
 -- 
 2.43.0
 
