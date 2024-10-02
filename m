@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245E11D12F5;
-	Wed,  2 Oct 2024 14:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E8D1D0B8C;
+	Wed,  2 Oct 2024 14:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880402; cv=none; b=UGKAAK5jbMQGwfFNv1k+S+IaYhUpH1V/f8caBU2NyXhTFeetXcHt0cdgnUA715LWu+wzmeGlEk6Aq82yxkMdiyu68SeoFbdSfj/BFgWr1TZIlP9aRjpfDsAK/k3Jm2TYvuhl9XKTcAispIdtGmv5MfAs2A78BLpgt8Cqok9zX30=
+	t=1727880405; cv=none; b=jEs6MEtLIqVXuUI1abCyll9ngRQVND+AY39tvZMCec4KoxrQsWrR48R5I3SsRscqAuI1YLy8BnRHbF85INPcVXXjsXbWM7chcguFCzhQVEF2XlRKs8l62aMhKuAnbjXWOKjGOVHoSQ5tJpve+xMrFBADp45MNbrkY69517By0Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880402; c=relaxed/simple;
-	bh=HT6QLV+AY/5whHC8RogS+BlQFHL4akmd2KOwoJ1FydA=;
+	s=arc-20240116; t=1727880405; c=relaxed/simple;
+	bh=7i5PAEVuA77Vw0N0PSORFwqJUTrc1qDFSDKxfXIgasc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWXhZQTqfNHdoV3EgycMF2eB72TyWZmeCBBnNHuLc1qSQpf9ETBeRg4jmd16pcCRYRqQD516UoKADFKf4ie2mE6VQWmx3jRsMAl9BmeJeDf0lEVrWGwl7KDs8FTIdmTHvDjsFTw97y9iHxndo6mqpHlUTpyRg9JmP9fSLfy+Sn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sy3Pr1jN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CL9R9kJYD/KOyUV8sHNKMa7Of9f+2MYhkdcffn6d4ou29aPxBY3KZLhCsTSQyOTMOrpoYJszzH6HN06D5UTStRDVdIeHPbKfnu8GFbJe/v3HN85h22qmLp/kFq9QivFBYjC14V5jBeRQnj/50XoJPylbeIZZtWKRHufje0dhPpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8fUVRRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sy3Pr1jN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF01C4CEC2;
-	Wed,  2 Oct 2024 14:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8fUVRRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC54C4CEC2;
+	Wed,  2 Oct 2024 14:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880402;
-	bh=HT6QLV+AY/5whHC8RogS+BlQFHL4akmd2KOwoJ1FydA=;
+	s=korg; t=1727880404;
+	bh=7i5PAEVuA77Vw0N0PSORFwqJUTrc1qDFSDKxfXIgasc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sy3Pr1jNdjWSvmo3tqVchXUdc8WLlfCske4nFM4O0grdlx62UiZus0TOMnkZUCjVN
-	 AsbIEmf3kZsSFLcnWygS/njrE+hMZeESC/8dXXjvdNF8Y4HNMm6074oPzUEs8dFFXd
-	 5+4y/6CYZ5kjaIdelAILBXxxTOdoI17xqDQf5kZc=
+	b=t8fUVRRSkeINxdTgGCRFLmKV5BegWo41Fk6xNiCTup8rrMv9oqNRfI33NqCMbuC6S
+	 djEM2sHHGhT4issVt8RfUvj3z0sTHwJPZuEjEqgr9QROuuoHlVsXiKk1hztDD7lMh2
+	 E01dDpuHb44L6NGvHfTlYYcUBmfLqON3k1DTEy4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 447/538] drbd: Add NULL check for net_conf to prevent dereference in state validation
-Date: Wed,  2 Oct 2024 15:01:26 +0200
-Message-ID: <20241002125810.086373490@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 448/538] ACPI: sysfs: validate return type of _STR method
+Date: Wed,  2 Oct 2024 15:01:27 +0200
+Message-ID: <20241002125810.125676448@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -44,42 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit a5e61b50c9f44c5edb6e134ede6fee8806ffafa9 upstream.
+commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
 
-If the net_conf pointer is NULL and the code attempts to access its
-fields without a check, it will lead to a null pointer dereference.
-Add a NULL check before dereferencing the pointer.
+Only buffer objects are valid return values of _STR.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+If something else is returned description_show() will access invalid
+memory.
 
-Fixes: 44ed167da748 ("drbd: rcu_read_lock() and rcu_dereference() for tconn->net_conf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Link: https://lore.kernel.org/r/20240909133740.84297-1-m.lobanov@rosalinux.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_state.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/device_sysfs.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/block/drbd/drbd_state.c
-+++ b/drivers/block/drbd/drbd_state.c
-@@ -876,7 +876,7 @@ is_valid_state(struct drbd_device *devic
- 		  ns.disk == D_OUTDATED)
- 		rv = SS_CONNECTED_OUTDATES;
- 
--	else if ((ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
-+	else if (nc && (ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
- 		 (nc->verify_alg[0] == 0))
- 		rv = SS_NO_VERIFY_ALG;
- 
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -544,8 +544,9 @@ int acpi_device_setup_files(struct acpi_
+ 	 * If device has _STR, 'description' file is created
+ 	 */
+ 	if (acpi_has_method(dev->handle, "_STR")) {
+-		status = acpi_evaluate_object(dev->handle, "_STR",
+-					NULL, &buffer);
++		status = acpi_evaluate_object_typed(dev->handle, "_STR",
++						    NULL, &buffer,
++						    ACPI_TYPE_BUFFER);
+ 		if (ACPI_FAILURE(status))
+ 			buffer.pointer = NULL;
+ 		dev->pnp.str_obj = buffer.pointer;
 
 
