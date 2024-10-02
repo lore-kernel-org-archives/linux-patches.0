@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD051D043C;
-	Wed,  2 Oct 2024 13:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BC01D0412;
+	Wed,  2 Oct 2024 13:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875564; cv=none; b=ONjbgLEFrXJkUdNOcMbqE15O1oCbxm7ojYRHvGc5eIw22e2W9q9pNH7LCgiaKiRH0iioMZE3LTvRZczDa1aqfqpcUD3+NyULz2LRN7g0+MK0mo18+P2QnoX5lTjyEpUqQITvXLpwfuob2emL3gfaWx5QdUL0t9JIGIVYhs50eEk=
+	t=1727875567; cv=none; b=CDvj7eULiOU9sUBII0eQOOwLc8nhNLx8SFPe+5IqcH++Ngm/d0bSZ1Neb/mMOhFqB16wq8ehSUc07A6+MSFXvsjOYAJmVYTkdWdJHjLy63j7owyHuTWg+imfuFzjQcWMZyPBQCvXaPfZuDSoOaVG/XfbGMv2DtDwxFtnGhR4m1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875564; c=relaxed/simple;
-	bh=r2tU+QP6MFaTAtf69PmoH3yS+wwaneaSDZAFp4jByY8=;
+	s=arc-20240116; t=1727875567; c=relaxed/simple;
+	bh=ng+8nlro/RSCGzMCAD8bchblk/qRS2vLM2HSyJIgc14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bMdqx9OdHgeBsHVmuhGYDvVRraAM6JwTbIGfrqfzD5t6t/98pish0oJXdqo8mtCgya7JZcaXbIheFOYKzQLWfObmvz/vVSRbfeoXXYmdS5E2GFCMk7fIP7KembZaChIRhfcgMk+PeagzYfl34n4/q+3ZcmeGHMLemZB4P6NdGzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmtDXMzJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fzWWqdWee8PVKA//MNysg/kPuz33jNTlgVBaLFh7Hkhc4BKEKdDx1qDRlQUrwRSufPR6pKQ9GFoRJydhr0RyT9/RHijPNwby6Y9gvgUnz1H9x8vQ24nYWd2qHR6WuGFWefSGSQQNBSEyrh/KIzif4y+ft1pT5hxGy+cksiWz6dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1EPq9ke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmtDXMzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E086C4CEC5;
-	Wed,  2 Oct 2024 13:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1EPq9ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A047C4CECE;
+	Wed,  2 Oct 2024 13:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875564;
-	bh=r2tU+QP6MFaTAtf69PmoH3yS+wwaneaSDZAFp4jByY8=;
+	s=korg; t=1727875567;
+	bh=ng+8nlro/RSCGzMCAD8bchblk/qRS2vLM2HSyJIgc14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmtDXMzJuzI/yh0jCCqnXJDX7MGzXAB/hWSbXRioSCBUTuqrRFJnKiC4pzc8pyUxF
-	 FysbnNLVwA8WezNmar0GZf8SKmEF3nLTduJwIvGDOEscnTpwO/8gZbyLQVRSsA48x+
-	 ISUJLd3lUfyVy1DFjkDCeTCVh8xSKegNp/r1OpKk=
+	b=Y1EPq9keBjJQNDdqqErm9LuMFA8U9p0nguJUCju3aR5U51/xwExJ6KloFvW8vU8GS
+	 +4GPVGlfyD7/lhVoJl+rFHHCc3iMMLYt7U6ZwG9MEittZOCxuJsXHYjalKyyFjiePq
+	 X+CSzY3mRDR2vwnKK7OX6Cb7IEvaptEV9s2RUTfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 144/695] ARM: dts: microchip: sam9x60: Fix rtc/rtt clocks
-Date: Wed,  2 Oct 2024 14:52:22 +0200
-Message-ID: <20241002125828.232136736@linuxfoundation.org>
+Subject: [PATCH 6.11 145/695] arm64: tegra: Correct location of power-sensors for IGX Orin
+Date: Wed,  2 Oct 2024 14:52:23 +0200
+Message-ID: <20241002125828.272247439@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,52 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit d355c895fa4ddd8bec15569eee540baeed7df8c5 ]
+[ Upstream commit b93679b8f165467e1584f9b23055db83f45c32ce ]
 
-The RTC and RTT peripherals use the timing domain slow clock (TD_SLCK),
-sourced from the 32.768 kHz crystal oscillator or slow rc oscillator.
+The power-sensors are located on the carrier board and not the
+module board and so update the IGX Orin device-tree files to fix this.
 
-The previously used Monitoring domain slow clock (MD_SLCK) is sourced
-from an internal RC oscillator which is most probably not precise enough
-for real time clock purposes.
-
-Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
-Fixes: 5f6b33f46346 ("ARM: dts: sam9x60: add rtt")
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Link: https://lore.kernel.org/r/20240821055136.6858-1-ada@thorsis.com
-[claudiu.beznea: removed () around the last commit description paragraph,
- removed " in front of "timing domain slow clock", described that
- TD_SLCK can also be sourced from slow rc oscillator]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 9152ed09309d ("arm64: tegra: Add power-sensors for Tegra234 boards")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/sam9x60.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../boot/dts/nvidia/tegra234-p3701-0008.dtsi  | 33 -------------------
+ .../boot/dts/nvidia/tegra234-p3740-0002.dtsi  | 33 +++++++++++++++++++
+ 2 files changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/arch/arm/boot/dts/microchip/sam9x60.dtsi b/arch/arm/boot/dts/microchip/sam9x60.dtsi
-index 291540e5d81e7..d077afd5024db 100644
---- a/arch/arm/boot/dts/microchip/sam9x60.dtsi
-+++ b/arch/arm/boot/dts/microchip/sam9x60.dtsi
-@@ -1312,7 +1312,7 @@
- 				compatible = "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
- 				reg = <0xfffffe20 0x20>;
- 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
--				clocks = <&clk32k 0>;
-+				clocks = <&clk32k 1>;
- 			};
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3701-0008.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3701-0008.dtsi
+index 553fa4ba1cd48..62c4fdad0b600 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3701-0008.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3701-0008.dtsi
+@@ -44,39 +44,6 @@
+ 			status = "okay";
+ 		};
  
- 			pit: timer@fffffe40 {
-@@ -1338,7 +1338,7 @@
- 				compatible = "microchip,sam9x60-rtc", "atmel,at91sam9x5-rtc";
- 				reg = <0xfffffea8 0x100>;
- 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
--				clocks = <&clk32k 0>;
-+				clocks = <&clk32k 1>;
- 			};
+-		i2c@c250000 {
+-			power-sensor@41 {
+-				compatible = "ti,ina3221";
+-				reg = <0x41>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				input@0 {
+-					reg = <0x0>;
+-					label = "CVB_ATX_12V";
+-					shunt-resistor-micro-ohms = <2000>;
+-				};
+-
+-				input@1 {
+-					reg = <0x1>;
+-					label = "CVB_ATX_3V3";
+-					shunt-resistor-micro-ohms = <2000>;
+-				};
+-
+-				input@2 {
+-					reg = <0x2>;
+-					label = "CVB_ATX_5V";
+-					shunt-resistor-micro-ohms = <2000>;
+-				};
+-			};
+-
+-			power-sensor@44 {
+-				compatible = "ti,ina219";
+-				reg = <0x44>;
+-				shunt-resistor = <2000>;
+-			};
+-		};
+-
+ 		rtc@c2a0000 {
+ 			status = "okay";
+ 		};
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002.dtsi
+index 527f2f3aee3ad..377f518bd3e57 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002.dtsi
+@@ -183,6 +183,39 @@
+ 			phy-names = "usb2-0", "usb2-1", "usb2-2", "usb2-3",
+ 				"usb3-0", "usb3-1", "usb3-2";
+ 		};
++
++		i2c@c250000 {
++			power-sensor@41 {
++				compatible = "ti,ina3221";
++				reg = <0x41>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				input@0 {
++					reg = <0x0>;
++					label = "CVB_ATX_12V";
++					shunt-resistor-micro-ohms = <2000>;
++				};
++
++				input@1 {
++					reg = <0x1>;
++					label = "CVB_ATX_3V3";
++					shunt-resistor-micro-ohms = <2000>;
++				};
++
++				input@2 {
++					reg = <0x2>;
++					label = "CVB_ATX_5V";
++					shunt-resistor-micro-ohms = <2000>;
++				};
++			};
++
++			power-sensor@44 {
++				compatible = "ti,ina219";
++				reg = <0x44>;
++				shunt-resistor = <2000>;
++			};
++		};
+ 	};
  
- 			watchdog: watchdog@ffffff80 {
+ 	vdd_3v3_dp: regulator-vdd-3v3-dp {
 -- 
 2.43.0
 
