@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902C11D1720;
-	Wed,  2 Oct 2024 14:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A971D279C;
+	Wed,  2 Oct 2024 14:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879746; cv=none; b=mgIRQFRqKzTqsDvUL4QHHSA/PYV1j6B4sUc3xyQeQCiXT2hiRThb3wFG+4vQVToB7TNmCYSPRRPdxN2FqHg53ro72Jkz4MFaOilNt+ZOL9iul3PcRGGjcLPUEWRoCo3g3p9U8WWygFCVSHNZReYWhmuFQyomb8Plj6X9OG0eIwU=
+	t=1727879749; cv=none; b=Eyt/hHoehx4YehnbSkiZRH54V/7I09MOlbnpS014kAcABN5WO5b70cKpY+22LkQ64TALzLbq5rZCLtEdfJNkaQ/jrP6v1VtflDQ3yFXwtJJ/qSYLpoEjU4N7cedxDnO8dDxNX9oGHDicTHEvD7C2Brms8xxIynGTmiuAj+LoM6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879746; c=relaxed/simple;
-	bh=+LgV3y8sOJ1EW16J30uOZGMNeHEaKLSqy64YQIH8oNo=;
+	s=arc-20240116; t=1727879749; c=relaxed/simple;
+	bh=1jkGWx35kJFxThBDYbptibBNC20k5PgS4RDRMpDL4gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q99Wv9c+lbZIJ+lQyn+ulboIUPdU/kx3oaPiJmkD9+LXz9oVgxDXt2dJOaEy0/dsa9zagjnPN7jKoU9O7wuCmKDgAjZ8svHjLacgDZ1WegpaPABrEvN34tfA0f5HwgeeQgw+to0H82k+yoCore1obQE76mWKmugauL3T/wZUAiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=po7d/P8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4tcZPmxkntfIO+nUAgeaxYgljPV1wcV8AvuJcdoArqt1iV73IbmDAd+SngBVb2uRQ678QWTI7I/KO0nnsJr1S8M0KfFaB9eZm1Xco0cjee7PuRyOFxg0h5YoyHNrktzI4UiMin7Uyce3Ej/X72ieQk9p/QvGSZxcBgCBpMic1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBK8PnVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="po7d/P8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0F6C4CEC2;
-	Wed,  2 Oct 2024 14:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBK8PnVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AD7C4CEC2;
+	Wed,  2 Oct 2024 14:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879746;
-	bh=+LgV3y8sOJ1EW16J30uOZGMNeHEaKLSqy64YQIH8oNo=;
+	s=korg; t=1727879749;
+	bh=1jkGWx35kJFxThBDYbptibBNC20k5PgS4RDRMpDL4gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=po7d/P8H+eKLsoWRGPxhRjq5LUTEUtSSYvckamYD0sd5f1Rw3ByRB1V6xjcvR23NI
-	 0Fi0Cr5aP3xy6GF+cPUJh7aO+y5cnfvth7KF9qrRIpLKrZpJ4ngkQgdr/GBQPRr4zP
-	 NvkSQCVtnr2989ZGwsNaQiszp8bJdqfnh5lgxCEI=
+	b=OBK8PnVDkFfY/C2GbO0fOTBOJTdJLp+gyIRJuCHdJosaNhLsTzUK6hSYlQPVesR43
+	 0ylj2L7Vh4SH2bFmn8rXz0KB4n+70Ttr8s+LMJ8F+3Dj47bz9DT4vUAIz9gdQF9dPV
+	 2HiHKBoIDjk6Cyz8g/0Y51UZWP70ELth0ikKcZuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	yangerkun <yangerkun@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 197/538] selftests/bpf: Refactor out some functions in ns_current_pid_tgid test
-Date: Wed,  2 Oct 2024 14:57:16 +0200
-Message-ID: <20241002125800.031546140@linuxfoundation.org>
+Subject: [PATCH 6.6 224/538] ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard
+Date: Wed,  2 Oct 2024 14:57:43 +0200
+Message-ID: <20241002125801.096039267@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,155 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: yangerkun <yangerkun@huawei.com>
 
-[ Upstream commit 4d4bd29e363c467752536f874a2cba10a5923c59 ]
+[ Upstream commit 20cee68f5b44fdc2942d20f3172a262ec247b117 ]
 
-Refactor some functions in both user space code and bpf program
-as these functions are used by later cgroup/sk_msg tests.
-Another change is to mark tp program optional loading as later
-patches will use optional loading as well since they have quite
-different attachment and testing logic.
+Commit 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in
+ext4_group_info") speed up fstrim by skipping trim trimmed group. We
+also has the chance to clear trimmed once there exists some block free
+for this group(mount without discard), and the next trim for this group
+will work well too.
 
-There is no functionality change.
+For mount with discard, we will issue dicard when we free blocks, so
+leave trimmed flag keep alive to skip useless trim trigger from
+userspace seems reasonable. But for some case like ext4 build on
+dm-thinpool(ext4 blocksize 4K, pool blocksize 128K), discard from ext4
+maybe unaligned for dm thinpool, and thinpool will just finish this
+discard(see process_discard_bio when begein equals to end) without
+actually process discard. For this case, trim from userspace can really
+help us to free some thinpool block.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240315184904.2976123-1-yonghong.song@linux.dev
-Stable-dep-of: 21f0b0af9772 ("selftests/bpf: Fix include of <sys/fcntl.h>")
+So convert to clear trimmed flag for all case no matter mounted with
+discard or not.
+
+Fixes: 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in ext4_group_info")
+Signed-off-by: yangerkun <yangerkun@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240817085510.2084444-1-yangerkun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/ns_current_pid_tgid.c      | 53 ++++++++++++-------
- .../bpf/progs/test_ns_current_pid_tgid.c      | 10 ++--
- 2 files changed, 41 insertions(+), 22 deletions(-)
+ fs/ext4/mballoc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-index 3a0664a86243e..847d7b70e2902 100644
---- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-+++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-@@ -16,30 +16,46 @@
- #define STACK_SIZE (1024 * 1024)
- static char child_stack[STACK_SIZE];
- 
--static int test_current_pid_tgid(void *args)
-+static int get_pid_tgid(pid_t *pid, pid_t *tgid,
-+			struct test_ns_current_pid_tgid__bss *bss)
- {
--	struct test_ns_current_pid_tgid__bss  *bss;
--	struct test_ns_current_pid_tgid *skel;
--	int ret = -1, err;
--	pid_t tgid, pid;
- 	struct stat st;
-+	int err;
- 
--	skel = test_ns_current_pid_tgid__open_and_load();
--	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open_and_load"))
--		goto out;
--
--	pid = syscall(SYS_gettid);
--	tgid = getpid();
-+	*pid = syscall(SYS_gettid);
-+	*tgid = getpid();
- 
- 	err = stat("/proc/self/ns/pid", &st);
- 	if (!ASSERT_OK(err, "stat /proc/self/ns/pid"))
--		goto cleanup;
-+		return err;
- 
--	bss = skel->bss;
- 	bss->dev = st.st_dev;
- 	bss->ino = st.st_ino;
- 	bss->user_pid = 0;
- 	bss->user_tgid = 0;
-+	return 0;
-+}
-+
-+static int test_current_pid_tgid_tp(void *args)
-+{
-+	struct test_ns_current_pid_tgid__bss  *bss;
-+	struct test_ns_current_pid_tgid *skel;
-+	int ret = -1, err;
-+	pid_t tgid, pid;
-+
-+	skel = test_ns_current_pid_tgid__open();
-+	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open"))
-+		return ret;
-+
-+	bpf_program__set_autoload(skel->progs.tp_handler, true);
-+
-+	err = test_ns_current_pid_tgid__load(skel);
-+	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__load"))
-+		goto cleanup;
-+
-+	bss = skel->bss;
-+	if (get_pid_tgid(&pid, &tgid, bss))
-+		goto cleanup;
- 
- 	err = test_ns_current_pid_tgid__attach(skel);
- 	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__attach"))
-@@ -55,11 +71,10 @@ static int test_current_pid_tgid(void *args)
- 
- cleanup:
- 	test_ns_current_pid_tgid__destroy(skel);
--out:
- 	return ret;
- }
- 
--static void test_ns_current_pid_tgid_new_ns(void)
-+static void test_ns_current_pid_tgid_new_ns(int (*fn)(void *), void *arg)
- {
- 	int wstatus;
- 	pid_t cpid;
-@@ -67,8 +82,8 @@ static void test_ns_current_pid_tgid_new_ns(void)
- 	/* Create a process in a new namespace, this process
- 	 * will be the init process of this new namespace hence will be pid 1.
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 870397f3de559..87ba7f58216f7 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3886,11 +3886,8 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
+ 	/*
+ 	 * Clear the trimmed flag for the group so that the next
+ 	 * ext4_trim_fs can trim it.
+-	 * If the volume is mounted with -o discard, online discard
+-	 * is supported and the free blocks will be trimmed online.
  	 */
--	cpid = clone(test_current_pid_tgid, child_stack + STACK_SIZE,
--		     CLONE_NEWPID | SIGCHLD, NULL);
-+	cpid = clone(fn, child_stack + STACK_SIZE,
-+		     CLONE_NEWPID | SIGCHLD, arg);
+-	if (!test_opt(sb, DISCARD))
+-		EXT4_MB_GRP_CLEAR_TRIMMED(db);
++	EXT4_MB_GRP_CLEAR_TRIMMED(db);
  
- 	if (!ASSERT_NEQ(cpid, -1, "clone"))
- 		return;
-@@ -84,7 +99,7 @@ static void test_ns_current_pid_tgid_new_ns(void)
- void serial_test_ns_current_pid_tgid(void)
- {
- 	if (test__start_subtest("root_ns_tp"))
--		test_current_pid_tgid(NULL);
-+		test_current_pid_tgid_tp(NULL);
- 	if (test__start_subtest("new_ns_tp"))
--		test_ns_current_pid_tgid_new_ns();
-+		test_ns_current_pid_tgid_new_ns(test_current_pid_tgid_tp, NULL);
- }
-diff --git a/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c b/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-index 0763d49f9c421..aa3ec7ca16d9b 100644
---- a/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-+++ b/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-@@ -10,17 +10,21 @@ __u64 user_tgid = 0;
- __u64 dev = 0;
- __u64 ino = 0;
+ 	if (!db->bb_free_root.rb_node) {
+ 		/* No more items in the per group rb tree
+@@ -6586,8 +6583,9 @@ static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
+ 					 " group:%u block:%d count:%lu failed"
+ 					 " with %d", block_group, bit, count,
+ 					 err);
+-		} else
+-			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
++		}
++
++		EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
  
--SEC("tracepoint/syscalls/sys_enter_nanosleep")
--int handler(const void *ctx)
-+static void get_pid_tgid(void)
- {
- 	struct bpf_pidns_info nsdata;
- 
- 	if (bpf_get_ns_current_pid_tgid(dev, ino, &nsdata, sizeof(struct bpf_pidns_info)))
--		return 0;
-+		return;
- 
- 	user_pid = nsdata.pid;
- 	user_tgid = nsdata.tgid;
-+}
- 
-+SEC("?tracepoint/syscalls/sys_enter_nanosleep")
-+int tp_handler(const void *ctx)
-+{
-+	get_pid_tgid();
- 	return 0;
- }
- 
+ 		ext4_lock_group(sb, block_group);
+ 		mb_clear_bits(bitmap_bh->b_data, bit, count_clusters);
 -- 
 2.43.0
 
