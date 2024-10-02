@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE4B1D0488;
-	Wed,  2 Oct 2024 14:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2560A1D0488;
+	Wed,  2 Oct 2024 14:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879723; cv=none; b=EwmW4YKNktzw5lvQH5oh+doqaZ9JjN3q/TShYFCwiEwPgpnBEGHmGAd8424KuQm4N2QTIKB+2fnpoWNadKv0GkXOOOEejRIKOh5C3pvfYl9IqAJIHVirQbzoWUC3EK5G7Rpezh+yZZVMwU9GZQLRQqln6/pIUgF/hqtD1VVDR7U=
+	t=1727879726; cv=none; b=Pg7Byj7rvbQB1QOj+OfN+jxyluP1NAXT8ZA/s2I4R1Z83km7tiaKqYQtW9x7l2htJkzLjtZ3ikyNxhudeBxbuoBfoXO1Pnv6uQtcD8D2klaSqP5twMhmKo8V9ZpaMBnUVpkkczxl/q1wlLzBbY38F6M8ypz3/QnBeUMyLowq7TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879723; c=relaxed/simple;
-	bh=C1NHnwJqqdShSDUnp+lgnzQ5Ca/yuaF/Jv5hrjHopUk=;
+	s=arc-20240116; t=1727879726; c=relaxed/simple;
+	bh=yfZcLkzCvEy7xp/G+R1dWjkjb7Kzk9mYqXDz908yXUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMkZ0QHSJ2xjXY6wO+yjP8YHlC8qSmcdMiWcCxeTeZ6jsIQb34Z83MHqJ7pYsvWjytqKGnjPqBJyaX3uQdT+GtQdAX1fRYwXaEE2ToucPDa1c/en1CvPT9/cDBLgmRxJk+Em7UwLfciU39Z00AYg4eOJAgOFphCDKpT0fyBun3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNpo1m9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c0kWm865qbwUTCOY+5sj/XkBs0zv1dIKdyrkSRGK9iuquUxWcGS8o7dx9Sf7dOE5zgyIqwp1uailrjZjhyQYTEB/lOcYGjBNHXAK5NrERo1jyILvgpfqvxxRUsMtP6aH4qa7cSAgRdwz2u5e3br4HtVWMHCtizADpT3PNad02bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/nonMkB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNpo1m9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7948C4CECD;
-	Wed,  2 Oct 2024 14:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/nonMkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E702C4CEC2;
+	Wed,  2 Oct 2024 14:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879723;
-	bh=C1NHnwJqqdShSDUnp+lgnzQ5Ca/yuaF/Jv5hrjHopUk=;
+	s=korg; t=1727879726;
+	bh=yfZcLkzCvEy7xp/G+R1dWjkjb7Kzk9mYqXDz908yXUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNpo1m9DsfEMFmHqrKv02+nsfSiz7FXf5E5loIWYuTj+usZEoagnlkIe6BNZgakMe
-	 13kPx1tkTC7ztcEqJWn0gAjrSa9+RMMY354vndZRotrfcNUivUywA8PKdKLh1gxkL5
-	 7Mkkq/fi0fdQOkoxqvVA7yIj0f8FRuw6J4V5Gmas=
+	b=B/nonMkBHZinYTYxpevRDiEmbNRXB4ZMIhgPEXpmyIpKFsUuP+B2FFjpQCssWnMw1
+	 jPYfJaA8hWLcUdpHWu+ZRCjmHLI/6ehIvWLpz2QHA5CQbFVkLI2vXlC1DfSm/hbvNC
+	 2Nm6HeuZUaSgxSQy6gOYzl7un+lzx/TW9S3q1JWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/538] selftests/bpf: Fix flaky selftest lwt_redirect/lwt_reroute
-Date: Wed,  2 Oct 2024 14:57:35 +0200
-Message-ID: <20241002125800.783269940@linuxfoundation.org>
+Subject: [PATCH 6.6 217/538] selftests/bpf: Fix redefinition errors compiling lwt_reroute.c
+Date: Wed,  2 Oct 2024 14:57:36 +0200
+Message-ID: <20241002125800.821619625@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,99 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit e7f31873176a345d72ca77c7b4da48493ccd9efd ]
+[ Upstream commit 16b795cc59528cf280abc79af3c70bda42f715b9 ]
 
-Recently, when running './test_progs -j', I occasionally hit the
-following errors:
+Compiling lwt_reroute.c with GCC 12.3 for mips64el/musl-libc yields errors:
 
-  test_lwt_redirect:PASS:pthread_create 0 nsec
-  test_lwt_redirect_run:FAIL:netns_create unexpected error: 256 (errno 0)
-  #142/2   lwt_redirect/lwt_redirect_normal_nomac:FAIL
-  #142     lwt_redirect:FAIL
-  test_lwt_reroute:PASS:pthread_create 0 nsec
-  test_lwt_reroute_run:FAIL:netns_create unexpected error: 256 (errno 0)
-  test_lwt_reroute:PASS:pthread_join 0 nsec
-  #143/2   lwt_reroute/lwt_reroute_qdisc_dropped:FAIL
-  #143     lwt_reroute:FAIL
+In file included from .../include/arpa/inet.h:9,
+                 from ./test_progs.h:18,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_helpers.h:11,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_reroute.c:52:
+.../include/netinet/in.h:23:8: error: redefinition of 'struct in6_addr'
+   23 | struct in6_addr {
+      |        ^~~~~~~~
+In file included from .../include/linux/icmp.h:24,
+                 from tools/testing/selftests/bpf/prog_tests/lwt_helpers.h:9:
+.../include/linux/in6.h:33:8: note: originally defined here
+   33 | struct in6_addr {
+      |        ^~~~~~~~
+.../include/netinet/in.h:34:8: error: redefinition of 'struct sockaddr_in6'
+   34 | struct sockaddr_in6 {
+      |        ^~~~~~~~~~~~
+.../include/linux/in6.h:50:8: note: originally defined here
+   50 | struct sockaddr_in6 {
+      |        ^~~~~~~~~~~~
+.../include/netinet/in.h:42:8: error: redefinition of 'struct ipv6_mreq'
+   42 | struct ipv6_mreq {
+      |        ^~~~~~~~~
+.../include/linux/in6.h:60:8: note: originally defined here
+   60 | struct ipv6_mreq {
+      |        ^~~~~~~~~
 
-The netns_create() definition looks like below:
+These errors occur because <linux/in6.h> is included before <netinet/in.h>,
+bypassing the Linux uapi/libc compat mechanism's partial musl support. As
+described in [1] and [2], fix these errors by including <netinet/in.h> in
+lwt_reroute.c before any uapi headers.
 
-  #define NETNS "ns_lwt"
-  static inline int netns_create(void)
-  {
-        return system("ip netns add " NETNS);
-  }
+[1]: commit c0bace798436 ("uapi libc compat: add fallback for unsupported libcs")
+[2]: https://git.musl-libc.org/cgit/musl/commit/?id=04983f227238
 
-One possibility is that both lwt_redirect and lwt_reroute create
-netns with the same name "ns_lwt" which may cause conflict. I tried
-the following example:
-  $ sudo ip netns add abc
-  $ echo $?
-  0
-  $ sudo ip netns add abc
-  Cannot create namespace file "/var/run/netns/abc": File exists
-  $ echo $?
-  1
-  $
-
-The return code for above netns_create() is 256. The internet search
-suggests that the return value for 'ip netns add ns_lwt' is 1, which
-matches the above 'sudo ip netns add abc' example.
-
-This patch tried to use different netns names for two tests to avoid
-'ip netns add <name>' failure.
-
-I ran './test_progs -j' 10 times and all succeeded with
-lwt_redirect/lwt_reroute tests.
-
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Fixes: 6c77997bc639 ("selftests/bpf: Add lwt_xmit tests for BPF_REROUTE")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20240205052914.1742687-1-yonghong.song@linux.dev
-Stable-dep-of: 16b795cc5952 ("selftests/bpf: Fix redefinition errors compiling lwt_reroute.c")
+Link: https://lore.kernel.org/bpf/bd2908aec0755ba8b75f5dc41848b00585f5c73e.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/lwt_helpers.h  | 2 --
- tools/testing/selftests/bpf/prog_tests/lwt_redirect.c | 1 +
- tools/testing/selftests/bpf/prog_tests/lwt_reroute.c  | 1 +
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/lwt_reroute.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_helpers.h b/tools/testing/selftests/bpf/prog_tests/lwt_helpers.h
-index 61333f2a03f91..68c08309dbc82 100644
---- a/tools/testing/selftests/bpf/prog_tests/lwt_helpers.h
-+++ b/tools/testing/selftests/bpf/prog_tests/lwt_helpers.h
-@@ -27,8 +27,6 @@
- 			}                                                     \
- 	})
- 
--#define NETNS "ns_lwt"
--
- static inline int netns_create(void)
- {
- 	return system("ip netns add " NETNS);
-diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c b/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
-index ea326e26656f5..7b458ae5f0f85 100644
---- a/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
-+++ b/tools/testing/selftests/bpf/prog_tests/lwt_redirect.c
-@@ -53,6 +53,7 @@
- #include <stdbool.h>
- #include <stdlib.h>
- 
-+#define NETNS "ns_lwt_redirect"
- #include "lwt_helpers.h"
- #include "test_progs.h"
- #include "network_helpers.h"
 diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c b/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
-index f4bb2d5fcae0a..c104f07f1b0bc 100644
+index c104f07f1b0bc..920ee3042d093 100644
 --- a/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
 +++ b/tools/testing/selftests/bpf/prog_tests/lwt_reroute.c
-@@ -48,6 +48,7 @@
-  *  For case 2, force UDP packets to overflow fq limit. As long as kernel
+@@ -49,6 +49,7 @@
   *  is not crashed, it is considered successful.
   */
-+#define NETNS "ns_lwt_reroute"
+ #define NETNS "ns_lwt_reroute"
++#include <netinet/in.h>
  #include "lwt_helpers.h"
  #include "network_helpers.h"
  #include <linux/net_tstamp.h>
