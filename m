@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE2D1D0493;
-	Wed,  2 Oct 2024 14:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD08C1D04BE;
+	Wed,  2 Oct 2024 14:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878175; cv=none; b=kC2+Sz9tFbaC9E/fVQyu+cxoTimYyEzT09QXanLO0vFXzdsXrqnTl701q6BwUeka6OFd5LlKPqPNUixSfsG0nK/dI9RKLTxmM0TYwC99lRV3G6ogY1Mv1KbABZ7K5PdvHNWCS7EUfHqjPp5ctdqtvm1UF016/5Cdew5ds55udr8=
+	t=1727878178; cv=none; b=EFAHOdOOjj5nDBWASvNl+v4rN1eHzr/cLNXgcCkLrBhwg+SikX7jmpzeA6r6Mw5GNV+kVTS+tvBpRN6VectM5Owob9JCeO7FTKj7K7RbYCLs88Pv3K/jGsPaKx78bwh7SDnY8DlfwydB0TGBAHvPa5hsFKzCwwIAZmyWM05PMw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878175; c=relaxed/simple;
-	bh=yzI6XNbqTgeeK2Pgb6lXkmvkMknzXGVkFX8m3FHnUas=;
+	s=arc-20240116; t=1727878178; c=relaxed/simple;
+	bh=WRCYKp4BOeV6cKO91NSA3rgz3NhDh9rfzzgHBLmIQlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+PXEe6pnQM4srshvXGoy0HFlQd7ovscOcH9f2TfC22BpanzlpEAGRVN6mHGSGAG48xLiw6KSQnw/5PJphCTA+qcbW8ITYuSwyJwgkGaNs/MZNW369xnX4/EEd2bj7lAXLyQDQP1R8gz3fgeRdpICDWZUTBF5Hbx3csFFUDvdzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrJcqM+i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TNcuh/yaCWdXxblfd5Y2s/DGFJxb9IfKvAzH4oI6vhX7HL4AuaqpDQO7VGC9SRA1U9ohF8b3ZOE8ykqrcs7RF3vK9mVzq2qLrxwAydzC4NTnJhlR+A3pYuAwXxdrW6UaZctFYoD+B7CTtPnM5Alb6tjyoRA922OGbDKXiQRpNaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhEx0zxu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrJcqM+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E4BC4CEC2;
-	Wed,  2 Oct 2024 14:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhEx0zxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4404FC4CEC2;
+	Wed,  2 Oct 2024 14:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878175;
-	bh=yzI6XNbqTgeeK2Pgb6lXkmvkMknzXGVkFX8m3FHnUas=;
+	s=korg; t=1727878178;
+	bh=WRCYKp4BOeV6cKO91NSA3rgz3NhDh9rfzzgHBLmIQlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrJcqM+iGuPdikomnGspw3Jgd8sMiUKN7yp00/Cagv7WduwVROurKKOkNb48Lok8f
-	 eDK6yY1/UdGnRo5ehsvCQzCyXfthHMMS9JPk1CxS3L+CfX4phFhFdSNxM5FRExuFuh
-	 kiUZKA7IlZGIdxBZn4ToCnvwRo8btCyAwQl0bDbs=
+	b=WhEx0zxuvJfqjUQA/2SUAcT4GzlgNJqcywy1KPEvz6z+qiQ5wQ/+O4BXjAHM+IoQv
+	 NIcDv+oyZjMOyWavCKcL9pQLzRGFG3X2Y6PKLnQZXben44nRCXEKA0Nqp+mFxOOJKD
+	 QjOCMVEakFr5DMVquxC8ir95br4Jft1ppvezkJMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 325/634] leds: bd2606mvv: Fix device child node usage in bd2606mvv_probe()
-Date: Wed,  2 Oct 2024 14:57:05 +0200
-Message-ID: <20241002125823.929843090@linuxfoundation.org>
+Subject: [PATCH 6.10 326/634] pinctrl: ti: iodelay: Use scope based of_node_put() cleanups
+Date: Wed,  2 Oct 2024 14:57:06 +0200
+Message-ID: <20241002125823.967978567@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,102 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit ffbf1fcb421429916a861cfc25dfe0c6387dda75 ]
+[ Upstream commit 791a8bb202a85f707c20ef04a471519e35f089dc ]
 
-The current implementation accesses the `child` fwnode handle outside of
-fwnode_for_each_available_child_node() without incrementing its
-refcount. Add the missing call to `fwnode_handle_get(child)`.
+Use scope based of_node_put() cleanup to simplify code.
 
-The cleanup process where `child` is accessed is not right either
-because a single call to `fwnode_handle_put()` is carried out in case of
-an error, ignoring unasigned nodes at the point when the error happens.
-Keep `child` inside of the first loop, and use the helper pointer that
-receives references via `fwnode_handle_get()` to handle the child nodes
-within the second loop.
-
-Moreover, the iterated nodes are direct children of the device node,
-and the `device_for_each_child_node()` macro accounts for child node
-availability. By restricting `child` to live within that loop, the
-scoped version of it can be used to simplify the error handling.
-
-`fwnode_for_each_available_child_node()` is meant to access the child
-nodes of an fwnode, and therefore not direct child nodes of the device
-node.
-
-Use `device_for_each_child_node_scoped()` to indicate device's direct
-child nodes.
-
-Fixes: 8325642d2757 ("leds: bd2606mvv: Driver for the Rohm 6 Channel i2c LED driver")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20240721-device_for_each_child_node-available-v2-3-f33748fd8b2d@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/20240627131721.678727-2-peng.fan@oss.nxp.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: a9f2b249adee ("pinctrl: ti: ti-iodelay: Fix some error handling paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-bd2606mvv.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 43 +++++++++----------------
+ 1 file changed, 15 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/leds/leds-bd2606mvv.c b/drivers/leds/leds-bd2606mvv.c
-index 3fda712d2f809..c1181a35d0f76 100644
---- a/drivers/leds/leds-bd2606mvv.c
-+++ b/drivers/leds/leds-bd2606mvv.c
-@@ -69,16 +69,14 @@ static const struct regmap_config bd2606mvv_regmap = {
- 
- static int bd2606mvv_probe(struct i2c_client *client)
+diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+index ef97586385019..f5e5a23d22260 100644
+--- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
++++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+@@ -822,53 +822,48 @@ MODULE_DEVICE_TABLE(of, ti_iodelay_of_match);
+ static int ti_iodelay_probe(struct platform_device *pdev)
  {
--	struct fwnode_handle *np, *child;
- 	struct device *dev = &client->dev;
- 	struct bd2606mvv_priv *priv;
- 	struct fwnode_handle *led_fwnodes[BD2606_MAX_LEDS] = { 0 };
- 	int active_pairs[BD2606_MAX_LEDS / 2] = { 0 };
- 	int err, reg;
--	int i;
-+	int i, j;
+ 	struct device *dev = &pdev->dev;
+-	struct device_node *np = of_node_get(dev->of_node);
++	struct device_node *np __free(device_node) = of_node_get(dev->of_node);
+ 	struct resource *res;
+ 	struct ti_iodelay_device *iod;
+-	int ret = 0;
++	int ret;
  
--	np = dev_fwnode(dev);
--	if (!np)
-+	if (!dev_fwnode(dev))
- 		return -ENODEV;
+ 	if (!np) {
+-		ret = -EINVAL;
+ 		dev_err(dev, "No OF node\n");
+-		goto exit_out;
++		return -EINVAL;
+ 	}
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -94,20 +92,18 @@ static int bd2606mvv_probe(struct i2c_client *client)
- 
- 	i2c_set_clientdata(client, priv);
- 
--	fwnode_for_each_available_child_node(np, child) {
-+	device_for_each_child_node_scoped(dev, child) {
- 		struct bd2606mvv_led *led;
- 
- 		err = fwnode_property_read_u32(child, "reg", &reg);
--		if (err) {
--			fwnode_handle_put(child);
-+		if (err)
- 			return err;
--		}
--		if (reg < 0 || reg >= BD2606_MAX_LEDS || led_fwnodes[reg]) {
--			fwnode_handle_put(child);
+ 	iod = devm_kzalloc(dev, sizeof(*iod), GFP_KERNEL);
+-	if (!iod) {
+-		ret = -ENOMEM;
+-		goto exit_out;
+-	}
++	if (!iod)
++		return -ENOMEM;
 +
-+		if (reg < 0 || reg >= BD2606_MAX_LEDS || led_fwnodes[reg])
- 			return -EINVAL;
--		}
+ 	iod->dev = dev;
+ 	iod->reg_data = device_get_match_data(dev);
+ 	if (!iod->reg_data) {
+-		ret = -EINVAL;
+ 		dev_err(dev, "No DATA match\n");
+-		goto exit_out;
++		return -EINVAL;
+ 	}
+ 
+ 	/* So far We can assume there is only 1 bank of registers */
+ 	iod->reg_base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+-	if (IS_ERR(iod->reg_base)) {
+-		ret = PTR_ERR(iod->reg_base);
+-		goto exit_out;
+-	}
++	if (IS_ERR(iod->reg_base))
++		return PTR_ERR(iod->reg_base);
 +
- 		led = &priv->leds[reg];
--		led_fwnodes[reg] = child;
-+		led_fwnodes[reg] = fwnode_handle_get(child);
- 		active_pairs[reg / 2]++;
- 		led->priv = priv;
- 		led->led_no = reg;
-@@ -130,7 +126,8 @@ static int bd2606mvv_probe(struct i2c_client *client)
- 						     &priv->leds[i].ldev,
- 						     &init_data);
- 		if (err < 0) {
--			fwnode_handle_put(child);
-+			for (j = i; j < BD2606_MAX_LEDS; j++)
-+				fwnode_handle_put(led_fwnodes[j]);
- 			return dev_err_probe(dev, err,
- 					     "couldn't register LED %s\n",
- 					     priv->leds[i].ldev.name);
+ 	iod->phys_base = res->start;
+ 
+ 	iod->regmap = devm_regmap_init_mmio(dev, iod->reg_base,
+ 					    iod->reg_data->regmap_config);
+ 	if (IS_ERR(iod->regmap)) {
+ 		dev_err(dev, "Regmap MMIO init failed.\n");
+-		ret = PTR_ERR(iod->regmap);
+-		goto exit_out;
++		return PTR_ERR(iod->regmap);
+ 	}
+ 
+ 	ret = ti_iodelay_pinconf_init_dev(iod);
+ 	if (ret)
+-		goto exit_out;
++		return ret;
+ 
+ 	ret = ti_iodelay_alloc_pins(dev, iod, res->start);
+ 	if (ret)
+-		goto exit_out;
++		return ret;
+ 
+ 	iod->desc.pctlops = &ti_iodelay_pinctrl_ops;
+ 	/* no pinmux ops - we are pinconf */
+@@ -879,20 +874,12 @@ static int ti_iodelay_probe(struct platform_device *pdev)
+ 	ret = devm_pinctrl_register_and_init(dev, &iod->desc, iod, &iod->pctl);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register pinctrl\n");
+-		goto exit_out;
++		return ret;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, iod);
+ 
+-	ret = pinctrl_enable(iod->pctl);
+-	if (ret)
+-		goto exit_out;
+-
+-	return 0;
+-
+-exit_out:
+-	of_node_put(np);
+-	return ret;
++	return pinctrl_enable(iod->pctl);
+ }
+ 
+ /**
 -- 
 2.43.0
 
