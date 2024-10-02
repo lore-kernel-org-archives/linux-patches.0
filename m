@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3491D014A;
-	Wed,  2 Oct 2024 14:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E6619409E;
+	Wed,  2 Oct 2024 14:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879509; cv=none; b=ZmgzC+Wzt6qrcVp5NnTN2k05Ss0VKKkyeDAjMJEgI+/oORTF9rRCOrhUEeeY2Gzl5YFlZD8/NdSAr4DRMxnmiJ2JKP+v0tbDQ9PN+rPWGEmW/f10L4z5A4uSGoIzl5K52XHCiPz7C7Wy7xYdbxhDcGPzR/pQEfwaA8pXtI1zjes=
+	t=1727879512; cv=none; b=Sg826oMRdGS4+/L2yRlooIEM56sCsp18IR4fFfJFLQJ+e2bdNnGxi05yFWvONf4JS/BtPwnUDtMZZNdfelpnaJY+46L5jx4dayAatOp+V2hcixpuepjfR6KLwy6v6yHXg4xmNkcTJhCqows0F+UXCh1PNB+mmdON7X1mZJeP5QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879509; c=relaxed/simple;
-	bh=j22X/BU6FvLVVp7KmTNkK8tNeVaSA2iLHywXNzX62oc=;
+	s=arc-20240116; t=1727879512; c=relaxed/simple;
+	bh=4Zqv8FnpupVrit6xb4x5JqH/OEIeNNIeM1OFMFOCqr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuRK6i3kjRNPoJ71ffnjLytVqvAyv1SJwxo44YOwe0RFl+45y3HK60ssaXPa4Rr+dC9Yqz+c+mpV9JKfjgyXPiDrG4qWqNKKk0qTDq7NqZNerQvzwd1hBQt14hTprsC374NQdhlIR1EIz646jTSd5c1egzkqfd8WwkQ0KhZruFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjPLKM6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hu+Pn1W17Euw8Mwk84o/yRWUas87WGz7RuZrag7hNEr79PVBuDFCg7gNxDynUpHmfHpMlcpIUy5Atdq4XXZQGfzpduKqdP9wul1cz/rNNBQa57BJ0kypEQmz8yj6Y/dJer/i4qDctFvITXuGMSIUr8kE9wpb5OGrKNgbqnA46s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OB5yDMPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjPLKM6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C9DC4CEC2;
-	Wed,  2 Oct 2024 14:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB5yDMPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFEEC4CEC2;
+	Wed,  2 Oct 2024 14:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879509;
-	bh=j22X/BU6FvLVVp7KmTNkK8tNeVaSA2iLHywXNzX62oc=;
+	s=korg; t=1727879512;
+	bh=4Zqv8FnpupVrit6xb4x5JqH/OEIeNNIeM1OFMFOCqr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UjPLKM6RDejsdeY9zasegVuNT5/6AkDazIWykmF+FCYY+yzynr19v9X8u/gJzRhAS
-	 eC7s/0QNHxHTfpflZw2wKnhlRwvQELEcH4htt7LRhlv69ypEHZOYgiQDO8VtNNE8wI
-	 T6sVYPJVDrn3Kc4hyRDWB6C5LLGDSpa63dKPrO9Q=
+	b=OB5yDMPcdN9rh2PT7TZsV8vygsyzxoFUdVnXFqsn04FLn2B2TSsWanGOarFjrcOv8
+	 ZjPyqYhEuyFB1JiJp07MvYWcGocZRRZDv41pLcdMKpULhCOjMvyg8weboOuOeHevql
+	 1jNJzQE8Q12KFLXF0iZaI+JxlpYdj/pIupbwgNKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	wenlunpeng <wenlunpeng@uniontech.com>,
+	Su Hui <suhui@nfschina.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/538] scsi: NCR5380: Check for phase match during PDMA fixup
-Date: Wed,  2 Oct 2024 14:56:23 +0200
-Message-ID: <20241002125757.925112999@linuxfoundation.org>
+Subject: [PATCH 6.6 145/538] drm/amd/amdgpu: Properly tune the size of struct
+Date: Wed,  2 Oct 2024 14:56:24 +0200
+Message-ID: <20241002125757.964374177@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,133 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 5768718da9417331803fc4bc090544c2a93b88dc ]
+[ Upstream commit 0cee47cde41e22712c034ae961076067d4ac13a0 ]
 
-It's not an error for a target to change the bus phase during a transfer.
-Unfortunately, the FLAG_DMA_FIXUP workaround does not allow for that -- a
-phase change produces a DRQ timeout error and the device borken flag will
-be set.
+The struct assertion is failed because sparse cannot parse
+`#pragma pack(push, 1)` and `#pragma pack(pop)` correctly.
+GCC's output is still 1-byte-aligned. No harm to memory layout.
 
-Check the phase match bit during FLAG_DMA_FIXUP processing. Don't forget to
-decrement the command residual. While we are here, change shost_printk()
-into scmd_printk() for better consistency with other DMA error messages.
+The error can be filtered out by sparse-diff, but sometimes
+multiple lines queezed into one, making the sparse-diff thinks
+its a new error. I'm trying to aviod this by fixing errors.
 
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Fixes: 55181be8ced1 ("ncr5380: Replace redundant flags with FLAG_NO_DMA_FIXUP")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/99dc7d1f4c825621b5b120963a69f6cd3e9ca659.1723001788.git.fthain@linux-m68k.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/all/20230620045919.492128-1-suhui@nfschina.com/
+Link: https://lore.kernel.org/all/93d10611-9fbb-4242-87b8-5860b2606042@suswa.mountain/
+Fixes: 1721bc1b2afa ("drm/amdgpu: Update VF2PF interface")
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: wenlunpeng <wenlunpeng@uniontech.com>
+Reported-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/NCR5380.c | 78 +++++++++++++++++++++---------------------
- 1 file changed, 39 insertions(+), 39 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/NCR5380.c b/drivers/scsi/NCR5380.c
-index cea3a79d538e4..00e245173320c 100644
---- a/drivers/scsi/NCR5380.c
-+++ b/drivers/scsi/NCR5380.c
-@@ -1485,6 +1485,7 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
- 				unsigned char **data)
- {
- 	struct NCR5380_hostdata *hostdata = shost_priv(instance);
-+	struct NCR5380_cmd *ncmd = NCR5380_to_ncmd(hostdata->connected);
- 	int c = *count;
- 	unsigned char p = *phase;
- 	unsigned char *d = *data;
-@@ -1496,7 +1497,7 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
- 		return -1;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
+index 104a5ad8397da..198687545407e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
+@@ -209,7 +209,7 @@ struct amd_sriov_msg_pf2vf_info {
+ 	uint32_t pcie_atomic_ops_support_flags;
+ 	/* reserved */
+ 	uint32_t reserved[256 - AMD_SRIOV_MSG_PF2VF_INFO_FILLED_SIZE];
+-};
++} __packed;
  
--	NCR5380_to_ncmd(hostdata->connected)->phase = p;
-+	ncmd->phase = p;
+ struct amd_sriov_msg_vf2pf_info_header {
+ 	/* the total structure size in byte */
+@@ -267,7 +267,7 @@ struct amd_sriov_msg_vf2pf_info {
  
- 	if (p & SR_IO) {
- 		if (hostdata->read_overruns)
-@@ -1608,45 +1609,44 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
-  * request.
-  */
+ 	/* reserved */
+ 	uint32_t reserved[256 - AMD_SRIOV_MSG_VF2PF_INFO_FILLED_SIZE];
+-};
++} __packed;
  
--	if (hostdata->flags & FLAG_DMA_FIXUP) {
--		if (p & SR_IO) {
--			/*
--			 * The workaround was to transfer fewer bytes than we
--			 * intended to with the pseudo-DMA read function, wait for
--			 * the chip to latch the last byte, read it, and then disable
--			 * pseudo-DMA mode.
--			 *
--			 * After REQ is asserted, the NCR5380 asserts DRQ and ACK.
--			 * REQ is deasserted when ACK is asserted, and not reasserted
--			 * until ACK goes false.  Since the NCR5380 won't lower ACK
--			 * until DACK is asserted, which won't happen unless we twiddle
--			 * the DMA port or we take the NCR5380 out of DMA mode, we
--			 * can guarantee that we won't handshake another extra
--			 * byte.
--			 */
--
--			if (NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
--			                          BASR_DRQ, BASR_DRQ, 0) < 0) {
--				result = -1;
--				shost_printk(KERN_ERR, instance, "PDMA read: DRQ timeout\n");
--			}
--			if (NCR5380_poll_politely(hostdata, STATUS_REG,
--			                          SR_REQ, 0, 0) < 0) {
--				result = -1;
--				shost_printk(KERN_ERR, instance, "PDMA read: !REQ timeout\n");
--			}
--			d[*count - 1] = NCR5380_read(INPUT_DATA_REG);
--		} else {
--			/*
--			 * Wait for the last byte to be sent.  If REQ is being asserted for
--			 * the byte we're interested, we'll ACK it and it will go false.
--			 */
--			if (NCR5380_poll_politely2(hostdata,
--			     BUS_AND_STATUS_REG, BASR_DRQ, BASR_DRQ,
--			     BUS_AND_STATUS_REG, BASR_PHASE_MATCH, 0, 0) < 0) {
--				result = -1;
--				shost_printk(KERN_ERR, instance, "PDMA write: DRQ and phase timeout\n");
-+	if ((hostdata->flags & FLAG_DMA_FIXUP) &&
-+	    (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH)) {
-+		/*
-+		 * The workaround was to transfer fewer bytes than we
-+		 * intended to with the pseudo-DMA receive function, wait for
-+		 * the chip to latch the last byte, read it, and then disable
-+		 * DMA mode.
-+		 *
-+		 * After REQ is asserted, the NCR5380 asserts DRQ and ACK.
-+		 * REQ is deasserted when ACK is asserted, and not reasserted
-+		 * until ACK goes false. Since the NCR5380 won't lower ACK
-+		 * until DACK is asserted, which won't happen unless we twiddle
-+		 * the DMA port or we take the NCR5380 out of DMA mode, we
-+		 * can guarantee that we won't handshake another extra
-+		 * byte.
-+		 *
-+		 * If sending, wait for the last byte to be sent. If REQ is
-+		 * being asserted for the byte we're interested, we'll ACK it
-+		 * and it will go false.
-+		 */
-+		if (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
-+					   BASR_DRQ, BASR_DRQ, 0)) {
-+			if ((p & SR_IO) &&
-+			    (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH)) {
-+				if (!NCR5380_poll_politely(hostdata, STATUS_REG,
-+							   SR_REQ, 0, 0)) {
-+					d[c] = NCR5380_read(INPUT_DATA_REG);
-+					--ncmd->this_residual;
-+				} else {
-+					result = -1;
-+					scmd_printk(KERN_ERR, hostdata->connected,
-+						    "PDMA fixup: !REQ timeout\n");
-+				}
- 			}
-+		} else if (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH) {
-+			result = -1;
-+			scmd_printk(KERN_ERR, hostdata->connected,
-+				    "PDMA fixup: DRQ timeout\n");
- 		}
- 	}
- 
+ /* mailbox message send from guest to host  */
+ enum amd_sriov_mailbox_request_message {
 -- 
 2.43.0
 
