@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E23376;
-	Wed,  2 Oct 2024 13:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791161CDFBC;
+	Wed,  2 Oct 2024 13:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876124; cv=none; b=lONAMC+5OwApzL+fX5CSKnUjsZ1hhtOw9bsw8ZO1o2ZrdHl3j/WuIRO28CxU60TuyH7PcPQebLNsaWDlC7fZ/+h1W9y0+LJzJ540O99Wtl3gNf4Ilqy2Pb4UhEk6n0wQRShvID5wWGjf/kVmErF02KE6j+4APAMo33e3fghCzTo=
+	t=1727876127; cv=none; b=bKkFbbHPN/zPOMbGI1DTRjHp2ql8k5PkXTM5uiDggo/YCFMSc1+cIVa/VXyr/uM3cBRWk6bH449vQFySdw6y8DnFrNhy2aaENdosbJmDDnJypSywXTPsbnhqcMc9bBia5wMLNI7cg9u4AJjNiJ3sGdmr/oRj3a6L9n8moUrt3Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876124; c=relaxed/simple;
-	bh=BabhBXqFRfK+pwvWcvTMVkl3/xroeUrfuDvtfvYjtF0=;
+	s=arc-20240116; t=1727876127; c=relaxed/simple;
+	bh=ISDnL+Sk4kwHkkycC7K/Az6V3HNuSREiz/T3VSzAOhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IF0TpLbqJGy47uM0DdsT1lSv0w/nBh7UUlJ2eyIYAHCdEBotAHixsuHRMcOXv7QnTLdxJjfqC3wVFoHmG9qLuNd14SgEEFUhZ2tNfdqMMmFvalo//vIQnwN6JED2LfraSmEx8yRFEkzw3NGS2OOuH1UT3/7Gw+3dl8UtvGRTElk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Voq06CbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JnHdcbwM5kiT5dVH+tB+NXv047DVFNUFggoxuvKueXkZ5JeMao2S7DTAJawk2ExgOmI5vI3sV+337aoBz8qkC3EwzI91XzqgVeTOU9NouA5QpMEx1sosvFBQIVVOAaUApxlOYvVcZEsawL6VWfFVddnNUULPJQz6De1gQTyXWoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0RRyH6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Voq06CbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175C7C4CEC5;
-	Wed,  2 Oct 2024 13:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0RRyH6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A85C4CECD;
+	Wed,  2 Oct 2024 13:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876124;
-	bh=BabhBXqFRfK+pwvWcvTMVkl3/xroeUrfuDvtfvYjtF0=;
+	s=korg; t=1727876127;
+	bh=ISDnL+Sk4kwHkkycC7K/Az6V3HNuSREiz/T3VSzAOhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Voq06CbBt4IT9kO8/vTis5+1czgLfDy4Iv/DkOAKHiglC/uUJ6+BGDnkC8QWmcO83
-	 hdBiSkA1UWglctaIiwRcP+fUGnzEiOs4SFoPbp42rh6AoSCX6grnHWBoTT4ciaW9Xr
-	 tgwWl4V4fL4FVbyHruQ2X5uyblgNizGQRnlaLzRc=
+	b=P0RRyH6rvn36ROtZVp/A2eQWu23iuJkBX+dyQSBd6N8CzI1zcCPinIsD9yLwb4P5L
+	 8U2EcyD1Wnjln+qPZXZ+k6TLhPEX/Ui/FHVri//6MZ/e201UgRCVRNS7LAdlG2IlnE
+	 TfjHGlvA6f1jZ6eDJ5wk0Rhg9OZYXY5N9TNxeNf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	David Ahern <dsa@cumulusnetworks.com>,
 	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 337/695] perf hist: Dont set hpp_fmt_value for members in --no-group
-Date: Wed,  2 Oct 2024 14:55:35 +0200
-Message-ID: <20241002125835.902694973@linuxfoundation.org>
+Subject: [PATCH 6.11 338/695] perf sched timehist: Fixed timestamp error when unable to confirm event sched_in time
+Date: Wed,  2 Oct 2024 14:55:36 +0200
+Message-ID: <20241002125835.942261459@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -55,72 +62,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Yang Jihong <yangjihong@bytedance.com>
 
-[ Upstream commit 4f3affe0abf5d5910dc469a1f63257629605d3c3 ]
+[ Upstream commit 39c243411bdb8fb35777adf49ee32549633c4e12 ]
 
-Perf crashes as below when applying --no-group
+If sched_in event for current task is not recorded, sched_in timestamp
+will be set to end_time of time window interest, causing an error in
+timestamp show. In this case, we choose to ignore this event.
 
-  # perf record -e "{cache-misses,branches"} -b sleep 1
-  # perf report --stdio --no-group
-  free(): invalid next size (fast)
-  Aborted (core dumped)
-  #
+Test scenario:
 
-In the __hpp__fmt(), only 1 hpp_fmt_value is allocated for the current
-event when --no-group is applied.
+  perf[1229608] does not record the first sched_in event, run time and sch delay are both 0
 
-However, the current implementation tries to assign the hists from all
-members to the hpp_fmt_value, which exceeds the allocated memory.
+  # perf sched timehist
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+   2090450.763231 [0000]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763235 [0000]  migration/0[15]                     0.000      0.001      0.003
+   2090450.763263 [0001]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763268 [0001]  migration/1[21]                     0.000      0.001      0.004
+   2090450.763302 [0002]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763309 [0002]  migration/2[27]                     0.000      0.001      0.007
+   2090450.763338 [0003]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763343 [0003]  migration/3[33]                     0.000      0.001      0.004
 
-Fixes: 8f6071a3dce40e69 ("perf hist: Simplify __hpp_fmt() using hpp_fmt_data")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Before:
+
+  arbitrarily specify a time window of interest, timestamp will be set to an incorrect value
+
+  # perf sched timehist --time 100,200
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+       200.000000 [0000]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0001]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0002]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0003]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0004]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0005]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0006]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0007]  perf[1229608]                       0.000      0.000      0.000
+
+ After:
+
+  # perf sched timehist --time 100,200
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+
+Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
+Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: David Ahern <dsa@cumulusnetworks.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240820183202.3174323-1-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/r/20240819024720.2405244-1-yangjihong@bytedance.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/hist.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/perf/builtin-sched.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/hist.c b/tools/perf/ui/hist.c
-index 5d1f04f66a5a1..e5491995adf08 100644
---- a/tools/perf/ui/hist.c
-+++ b/tools/perf/ui/hist.c
-@@ -62,7 +62,7 @@ static int __hpp__fmt(struct perf_hpp *hpp, struct hist_entry *he,
- 	struct evsel *pos;
- 	char *buf = hpp->buf;
- 	size_t size = hpp->size;
--	int i, nr_members = 1;
-+	int i = 0, nr_members = 1;
- 	struct hpp_fmt_value *values;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 928b9041535d3..d0c44f6116ed4 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2683,9 +2683,12 @@ static int timehist_sched_change_event(struct perf_tool *tool,
+ 	 * - previous sched event is out of window - we are done
+ 	 * - sample time is beyond window user cares about - reset it
+ 	 *   to close out stats for time window interest
++	 * - If tprev is 0, that is, sched_in event for current task is
++	 *   not recorded, cannot determine whether sched_in event is
++	 *   within time window interest - ignore it
+ 	 */
+ 	if (ptime->end) {
+-		if (tprev > ptime->end)
++		if (!tprev || tprev > ptime->end)
+ 			goto out;
  
- 	if (evsel__is_group_event(evsel))
-@@ -72,16 +72,16 @@ static int __hpp__fmt(struct perf_hpp *hpp, struct hist_entry *he,
- 	if (values == NULL)
- 		return 0;
- 
--	i = 0;
--	for_each_group_evsel(pos, evsel)
--		values[i++].hists = evsel__hists(pos);
--
-+	values[0].hists = evsel__hists(evsel);
- 	values[0].val = get_field(he);
- 	values[0].samples = he->stat.nr_events;
- 
- 	if (evsel__is_group_event(evsel)) {
- 		struct hist_entry *pair;
- 
-+		for_each_group_member(pos, evsel)
-+			values[++i].hists = evsel__hists(pos);
-+
- 		list_for_each_entry(pair, &he->pairs.head, pairs.node) {
- 			for (i = 0; i < nr_members; i++) {
- 				if (values[i].hists != pair->hists)
+ 		if (t > ptime->end)
 -- 
 2.43.0
 
