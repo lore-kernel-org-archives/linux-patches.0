@@ -1,72 +1,107 @@
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7271CFEA3
-	for <patches@lists.linux.dev>; Wed,  2 Oct 2024 15:01:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.62.61
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF531D0BBC
+	for <patches@lists.linux.dev>; Wed,  2 Oct 2024 16:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727881275; cv=none; b=IPCW3/zbErq6G0dLQQIAFBr+Vi/WHxqelAaegPL5a9kbbnAgEKE5DJ4nR0iXNv59GCpr4kBpyvC9n5HNTv14qlDOvBRPDWYV3N9FfCc/WsWpYLONn0XHGIhH8E66awz/TfUi59+yFhICy3R4XkHbsNi0bP9d8i7fzK1kQQ78jh0=
+	t=1727885044; cv=none; b=V+V47rl50CPizWWvMPQEO9f67YBvhA+zWpIf+BASF4FU9se0zg6Np0yodbfV3Gr8AMWhmGjiyE4zbHcKOXYfcBhMpBODAs4OVdsOtiApnOGgCkS88vbcYyg49qzOhQfvL1vAAmNhrZtzwdH/VW7gsYBopPd4wbjjfjmwr31MMYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727881275; c=relaxed/simple;
-	bh=+9FhUT/HesuTcX0o9ubFVPBRifzvCK4Uultpo0OLeEU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cAG3NwY1WE5bcLOsvbIiY2NKo37bD94Qej5HzmP1sQWxxaFaXXe6ohSnD29yx3vWSMDf0VnwpNgOIrea7KwrIG5josBLLy71nkm9xd0qXlREfkHonF2saMKyFSwKkbalikdX88JzOAMI7acMI3bRZI9+K7uRUAG5+YJhjteG8bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=cmucU3kJ; arc=none smtp.client-ip=85.214.62.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1727885044; c=relaxed/simple;
+	bh=xll5ewsNSWb8KrDgYCL/pj1w4tjE0i3lMugj8Y5arWg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q6DKQd+b75Qj/4cVR5b4TtJMr32jvaneSDqaiDLbsjS0lGZSVmkzgSl7hiX3dzvSMqcdFLJPyu9OOm1BlgSdSZaM1bLdbxmO6FFpb2b5WjarjWIcdq2WLrFE8Xpz3KnYJy8PLNqnf5DVxv4gSp4j7hhZpp7q7wanFSbeEiFitwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PfnAnMat; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="cmucU3kJ"
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: marex@denx.de)
-	by phobos.denx.de (Postfix) with ESMTPSA id 4F83C89308;
-	Wed,  2 Oct 2024 17:01:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-	s=phobos-20191101; t=1727881272;
-	bh=705M+O8eoZeecbU6OkZV2lEo34Z7b8fUSTokq7+OAtY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cmucU3kJUGQT7O32MIT58cTlxFGRkZZV4pQcprgPlkO8dBJFLhXe3dlA4Qc3Syy6M
-	 /hFH5SPTAUmpDQI95V7m34iR8gwOY12DYd1yRquara8UE+bPO9BaIPr5aVyzDJfhXL
-	 gHsa/C1rV22xi0YlJjGkv6OTb9bqej+QGdVDSk6fQSefYuH15A6q4A8R7CSJlm4/uj
-	 aO8HPuVVarhh9NrPNFkVQmkfP5XzaEibnginuA23B4jp/ep7kkkq3ERjYGYG9OhA/8
-	 2nCsPv2xM1azBV1JL0WB3sPpWkynCMPje03AjDBmeZL+20KRROOEO4dzf6nPxkActz
-	 sFxZgpQO1ZyEA==
-Message-ID: <e999b9d5-0283-4d86-a0dd-e4d9c29c91eb@denx.de>
-Date: Wed, 2 Oct 2024 17:00:22 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PfnAnMat"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727885042; x=1759421042;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xll5ewsNSWb8KrDgYCL/pj1w4tjE0i3lMugj8Y5arWg=;
+  b=PfnAnMatumZzrcsglX7eOzk5l2mHw+g1FBMeXykDv8n0LFjmmuojdChO
+   c2wBfIYdfUxuIeH+OUBIat9fFOCUH2vGKCOgWIbsQhoIhw+YkCJDnJZBj
+   TmwWFxcxRshyNo6zbH6USNNsP9j2bDWaGYXYofWmwJXaqtNR8IdoJNSI3
+   MHnC6uLFvPYJSxMR7BX8aVKr6IWhckEcAEIFn0zu3t82gFY5/dVw4KEgR
+   Fh5MmZq7+pzc2yVvdsxakFaSCqPbMkTVU6f42+7/fFF7MxPbuc2gwaV7m
+   hZY3QxugX5UDkc7foKmxZrwOtHaaVPuResn9+4rJRNu70rny1fjioZ1Ok
+   g==;
+X-CSE-ConnectionGUID: hZyu1FbOTYCIVUAIWw7L1w==
+X-CSE-MsgGUID: Q+wEc209S0i9PTY7K5jNzA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11213"; a="30848090"
+X-IronPort-AV: E=Sophos;i="6.11,172,1725346800"; 
+   d="scan'208";a="30848090"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2024 09:03:59 -0700
+X-CSE-ConnectionGUID: vFZ3zjy5RfKgid1YAEt8Sw==
+X-CSE-MsgGUID: ed/HeQCpQ4CIspbItsQLBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,172,1725346800"; 
+   d="scan'208";a="78579028"
+Received: from tassilo.jf.intel.com (HELO tassilo) ([10.54.38.190])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2024 09:03:58 -0700
+Date: Wed, 2 Oct 2024 09:03:56 -0700
+From: Andi Kleen <ak@linux.intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Anne Macedo <retpolanne@posteo.net>,
+	Changbin Du <changbin.du@huawei.com>,
+	Ingo Molnar <mingo@redhat.com>, Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 247/538] perf callchain: Fix stitch LBR memory leaks
+Message-ID: <Zv1u7P2GlV6w7WJZ@tassilo>
+References: <20241002125751.964700919@linuxfoundation.org>
+ <20241002125802.002549697@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 288/538] leds: leds-pca995x: Add support for NXP
- PCA9956B
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Pieterjan Camerlynck <pieterjanca@gmail.com>,
- Lee Jones <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
-References: <20241002125751.964700919@linuxfoundation.org>
- <20241002125803.624242401@linuxfoundation.org>
-Content-Language: en-US
-From: Marek Vasut <marex@denx.de>
-In-Reply-To: <20241002125803.624242401@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241002125802.002549697@linuxfoundation.org>
 
-On 10/2/24 2:58 PM, Greg Kroah-Hartman wrote:
+On Wed, Oct 02, 2024 at 02:58:06PM +0200, Greg Kroah-Hartman wrote:
 > 6.6-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Pieterjan Camerlynck <pieterjanca@gmail.com>
+> From: Ian Rogers <irogers@google.com>
 > 
-> [ Upstream commit 68d6520d2e76998cdea58f6dd8782de5ab5b28af ]
+> [ Upstream commit 599c19397b17d197fc1184bbc950f163a292efc9 ]
 > 
-> Add support for PCA9956B chip, which belongs to the same family.
+> The 'struct callchain_cursor_node' has a 'struct map_symbol' whose maps
+> and map members are reference counted. Ensure these values use a _get
+> routine to increment the reference counts and use map_symbol__exit() to
+> release the reference counts.
 > 
-> This chip features 24 instead of 16 outputs, so add a chipdef struct to
-> deal with the different register layouts.
-Seems like a feature patch, not stable material ?
+> Do similar for 'struct thread's prev_lbr_cursor, but save the size of
+> the prev_lbr_cursor array so that it may be iterated.
+> 
+> Ensure that when stitch_nodes are placed on the free list the
+> map_symbols are exited.
+> 
+> Fix resolve_lbr_callchain_sample() by replacing list_replace_init() to
+> list_splice_init(), so the whole list is moved and nodes aren't leaked.
+> 
+> A reproduction of the memory leaks is possible with a leak sanitizer
+> build in the perf report command of:
+
+IMHO this doesn't meet stable criteria. It's a theoretical problem
+that only causes noise in leak checker outputs, but doesn't actually
+affect any real user.  The memory is always freed on exit anyways.
+
+
+-Andi
