@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D571D0427;
-	Wed,  2 Oct 2024 13:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02C129CE7;
+	Wed,  2 Oct 2024 13:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877251; cv=none; b=DVk9GNQD3KmU+PtBQsEfcHfimjHbn7RJ9uqNYI2QDcQ6kW7u550CA8rsrb6GBeB++octfPMg6UZ2/fXTX2V+yHB2d/PI4UAh5GzL+XA1HHp3gJClFs+gvL23YXcCxwek54U1j5Gyx9L+k0syLkQOnFLffEd8tadPxCSRd21C8mw=
+	t=1727877253; cv=none; b=rx1Cgb59exIw40qZVt6s/XbLST+vDOvP5RzbGOS7fFjd6XGqHkF+2NRJA/ZVzV9Gpgehvic2OEOXR+QpOV/WWF9mEuc9729OJufDwWgoOX7Vm9hu9sBUET5UiVfsPF3BebiPHy87VOTO52UDpXaErTJl8lNEfwdV8+uYOQZW5wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877251; c=relaxed/simple;
-	bh=7F9d1VKOK7y07YDFnWzaPcDivXc5ET+B92+UXY4ken8=;
+	s=arc-20240116; t=1727877253; c=relaxed/simple;
+	bh=s6OOnHhmHSurP2eNHY7zUDXn+R+916O03eMVNr01QzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Owd8E1m/PDTij3Eewh2KuHnlfg9pSKPUGwtQlQiXT8fFNAZ4Pa7aIhq/MCotYR8eXAxYInlAJnQDUxckULdS0tj9IhzNbXoAyAqk5nQ7Euy4NXVcLreD5sqARdQpacKtE21Im4hyHEvVXgf7RGjgeE0N3PZtxyqwcHXIF7kVw6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFU+JwHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUY6RSU8FqKcdEkJmQxPJtbG+Rcgyg6uK2KshzBzNp7fFOAt7kcAHBTUpquNj69R3oPXwN6XyGovqYSJdS3JwUVaPUgK5aOIy4lrzoc+o/z7GzZX8h6Hdvjp7s6W59AfGBy4T+EEEGVo2GqqvbsXjhjOdNgxAdiee6Y94zh+0mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym3hUGqh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFU+JwHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B212C4CEDE;
-	Wed,  2 Oct 2024 13:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym3hUGqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5993EC4CEE2;
+	Wed,  2 Oct 2024 13:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877250;
-	bh=7F9d1VKOK7y07YDFnWzaPcDivXc5ET+B92+UXY4ken8=;
+	s=korg; t=1727877253;
+	bh=s6OOnHhmHSurP2eNHY7zUDXn+R+916O03eMVNr01QzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFU+JwHn7CJ4afiko+TF+rtfqjBgCv7LbdMGblAE/+zrVrqHM17nkV4Qjldw68Bgx
-	 lO9yyc+33kT4n89CAEIgIYWroMNC+ys/NfwM9Avs7PBDAMdd2VrBIAGmypcz0Oe5Aa
-	 a2iylXzuf0DtYQ+GmEY3t3108QlQ6U52MuhEVcKQ=
+	b=ym3hUGqhDz+ZxCyKeAVtBNYROzY3HI9RsB07KJAa1a1t9apjEEgNLk0TjKv8xtzwF
+	 eVKkfCdBtrcGu6JKSWsRYzj6gsqd+jbxAPsEFwQSJ/Tp8GPY/gNQCGfj2Y/8qS+qj8
+	 Js1ZsurnXez6z5aqrOnGAOemMoRZyS8SAu1wOQEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 002/634] EDAC/synopsys: Fix error injection on Zynq UltraScale+
-Date: Wed,  2 Oct 2024 14:51:42 +0200
-Message-ID: <20241002125811.178335739@linuxfoundation.org>
+Subject: [PATCH 6.10 020/634] RISC-V: KVM: Dont zero-out PMU snapshot area before freeing data
+Date: Wed,  2 Oct 2024 14:52:00 +0200
+Message-ID: <20241002125811.892110733@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,111 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Anup Patel <apatel@ventanamicro.com>
 
-[ Upstream commit 35e6dbfe1846caeafabb49b7575adb36b0aa2269 ]
+[ Upstream commit 47d40d93292d9cff8dabb735bed83d930fa03950 ]
 
-The Zynq UltraScale+ MPSoC DDR has a disjoint memory from 2GB to 32GB.
-The DDR host interface has a contiguous memory so while injecting
-errors, the driver should remove the hole else the injection fails as
-the address translation is incorrect.
+With the latest Linux-6.11-rc3, the below NULL pointer crash is observed
+when SBI PMU snapshot is enabled for the guest and the guest is forcefully
+powered-off.
 
-Introduce a get_mem_info() function pointer and set it for Zynq
-UltraScale+ platform to return host address.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000508
+  Oops [#1]
+  Modules linked in: kvm
+  CPU: 0 UID: 0 PID: 61 Comm: term-poll Not tainted 6.11.0-rc3-00018-g44d7178dd77a #3
+  Hardware name: riscv-virtio,qemu (DT)
+  epc : __kvm_write_guest_page+0x94/0xa6 [kvm]
+   ra : __kvm_write_guest_page+0x54/0xa6 [kvm]
+  epc : ffffffff01590e98 ra : ffffffff01590e58 sp : ffff8f80001f39b0
+   gp : ffffffff81512a60 tp : ffffaf80024872c0 t0 : ffffaf800247e000
+   t1 : 00000000000007e0 t2 : 0000000000000000 s0 : ffff8f80001f39f0
+   s1 : 00007fff89ac4000 a0 : ffffffff015dd7e8 a1 : 0000000000000086
+   a2 : 0000000000000000 a3 : ffffaf8000000000 a4 : ffffaf80024882c0
+   a5 : 0000000000000000 a6 : ffffaf800328d780 a7 : 00000000000001cc
+   s2 : ffffaf800197bd00 s3 : 00000000000828c4 s4 : ffffaf800248c000
+   s5 : ffffaf800247d000 s6 : 0000000000001000 s7 : 0000000000001000
+   s8 : 0000000000000000 s9 : 00007fff861fd500 s10: 0000000000000001
+   s11: 0000000000800000 t3 : 00000000000004d3 t4 : 00000000000004d3
+   t5 : ffffffff814126e0 t6 : ffffffff81412700
+  status: 0000000200000120 badaddr: 0000000000000508 cause: 000000000000000d
+  [<ffffffff01590e98>] __kvm_write_guest_page+0x94/0xa6 [kvm]
+  [<ffffffff015943a6>] kvm_vcpu_write_guest+0x56/0x90 [kvm]
+  [<ffffffff015a175c>] kvm_pmu_clear_snapshot_area+0x42/0x7e [kvm]
+  [<ffffffff015a1972>] kvm_riscv_vcpu_pmu_deinit.part.0+0xe0/0x14e [kvm]
+  [<ffffffff015a2ad0>] kvm_riscv_vcpu_pmu_deinit+0x1a/0x24 [kvm]
+  [<ffffffff0159b344>] kvm_arch_vcpu_destroy+0x28/0x4c [kvm]
+  [<ffffffff0158e420>] kvm_destroy_vcpus+0x5a/0xda [kvm]
+  [<ffffffff0159930c>] kvm_arch_destroy_vm+0x14/0x28 [kvm]
+  [<ffffffff01593260>] kvm_destroy_vm+0x168/0x2a0 [kvm]
+  [<ffffffff015933d4>] kvm_put_kvm+0x3c/0x58 [kvm]
+  [<ffffffff01593412>] kvm_vm_release+0x22/0x2e [kvm]
 
-Fixes: 1a81361f75d8 ("EDAC, synopsys: Add Error Injection support for ZynqMP DDR controller")
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240711100656.31376-1-shubhrajyoti.datta@amd.com
+Clearly, the kvm_vcpu_write_guest() function is crashing because it is
+being called from kvm_pmu_clear_snapshot_area() upon guest tear down.
+
+To address the above issue, simplify the kvm_pmu_clear_snapshot_area() to
+not zero-out PMU snapshot area from kvm_pmu_clear_snapshot_area() because
+the guest is anyway being tore down.
+
+The kvm_pmu_clear_snapshot_area() is also called when guest changes
+PMU snapshot area of a VCPU but even in this case the previous PMU
+snaphsot area must not be zeroed-out because the guest might have
+reclaimed the pervious PMU snapshot area for some other purpose.
+
+Fixes: c2f41ddbcdd7 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240815170907.2792229-1-apatel@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/synopsys_edac.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_pmu.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/edac/synopsys_edac.c b/drivers/edac/synopsys_edac.c
-index ea7a9a342dd30..d7416166fd8a4 100644
---- a/drivers/edac/synopsys_edac.c
-+++ b/drivers/edac/synopsys_edac.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/spinlock.h>
-+#include <linux/sizes.h>
- #include <linux/interrupt.h>
- #include <linux/of.h>
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index bcf41d6e0df0e..2707a51b082ca 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -391,19 +391,9 @@ int kvm_riscv_vcpu_pmu_read_hpm(struct kvm_vcpu *vcpu, unsigned int csr_num,
+ static void kvm_pmu_clear_snapshot_area(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm_pmu *kvpmu = vcpu_to_pmu(vcpu);
+-	int snapshot_area_size = sizeof(struct riscv_pmu_snapshot_data);
  
-@@ -337,6 +338,7 @@ struct synps_edac_priv {
-  * @get_mtype:		Get mtype.
-  * @get_dtype:		Get dtype.
-  * @get_ecc_state:	Get ECC state.
-+ * @get_mem_info:	Get EDAC memory info
-  * @quirks:		To differentiate IPs.
-  */
- struct synps_platform_data {
-@@ -344,6 +346,9 @@ struct synps_platform_data {
- 	enum mem_type (*get_mtype)(const void __iomem *base);
- 	enum dev_type (*get_dtype)(const void __iomem *base);
- 	bool (*get_ecc_state)(void __iomem *base);
-+#ifdef CONFIG_EDAC_DEBUG
-+	u64 (*get_mem_info)(struct synps_edac_priv *priv);
-+#endif
- 	int quirks;
- };
- 
-@@ -402,6 +407,25 @@ static int zynq_get_error_info(struct synps_edac_priv *priv)
- 	return 0;
+-	if (kvpmu->sdata) {
+-		if (kvpmu->snapshot_addr != INVALID_GPA) {
+-			memset(kvpmu->sdata, 0, snapshot_area_size);
+-			kvm_vcpu_write_guest(vcpu, kvpmu->snapshot_addr,
+-					     kvpmu->sdata, snapshot_area_size);
+-		} else {
+-			pr_warn("snapshot address invalid\n");
+-		}
+-		kfree(kvpmu->sdata);
+-		kvpmu->sdata = NULL;
+-	}
++	kfree(kvpmu->sdata);
++	kvpmu->sdata = NULL;
+ 	kvpmu->snapshot_addr = INVALID_GPA;
  }
  
-+#ifdef CONFIG_EDAC_DEBUG
-+/**
-+ * zynqmp_get_mem_info - Get the current memory info.
-+ * @priv:	DDR memory controller private instance data.
-+ *
-+ * Return: host interface address.
-+ */
-+static u64 zynqmp_get_mem_info(struct synps_edac_priv *priv)
-+{
-+	u64 hif_addr = 0, linear_addr;
-+
-+	linear_addr = priv->poison_addr;
-+	if (linear_addr >= SZ_32G)
-+		linear_addr = linear_addr - SZ_32G + SZ_2G;
-+	hif_addr = linear_addr >> 3;
-+	return hif_addr;
-+}
-+#endif
-+
- /**
-  * zynqmp_get_error_info - Get the current ECC error info.
-  * @priv:	DDR memory controller private instance data.
-@@ -922,6 +946,9 @@ static const struct synps_platform_data zynqmp_edac_def = {
- 	.get_mtype	= zynqmp_get_mtype,
- 	.get_dtype	= zynqmp_get_dtype,
- 	.get_ecc_state	= zynqmp_get_ecc_state,
-+#ifdef CONFIG_EDAC_DEBUG
-+	.get_mem_info	= zynqmp_get_mem_info,
-+#endif
- 	.quirks         = (DDR_ECC_INTR_SUPPORT
- #ifdef CONFIG_EDAC_DEBUG
- 			  | DDR_ECC_DATA_POISON_SUPPORT
-@@ -975,10 +1002,16 @@ MODULE_DEVICE_TABLE(of, synps_edac_match);
- static void ddr_poison_setup(struct synps_edac_priv *priv)
- {
- 	int col = 0, row = 0, bank = 0, bankgrp = 0, rank = 0, regval;
-+	const struct synps_platform_data *p_data;
- 	int index;
- 	ulong hif_addr = 0;
- 
--	hif_addr = priv->poison_addr >> 3;
-+	p_data = priv->p_data;
-+
-+	if (p_data->get_mem_info)
-+		hif_addr = p_data->get_mem_info(priv);
-+	else
-+		hif_addr = priv->poison_addr >> 3;
- 
- 	for (index = 0; index < DDR_MAX_ROW_SHIFT; index++) {
- 		if (priv->row_shift[index])
 -- 
 2.43.0
 
