@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC13F1D0787;
-	Wed,  2 Oct 2024 14:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D131D0E08;
+	Wed,  2 Oct 2024 14:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878117; cv=none; b=tRySo/cATRAsYC5M0eAwT+cInIpCg9rEtarY4RbiQDIZ9hrceAKVTlSITqtOmW+pKB2xhQf3ZshfMhrPE+0HmmqNmrHbA2Ou90tWbXvHomNfxvMwcb3KfXmNPLXfjkqbJYcwmuqINCooOnf4rKhJWxU6AItgdmDiZpHHNXza7E8=
+	t=1727878120; cv=none; b=WqgnW8aOyEhtyh3Ac/B3h8u8sHIANDjHJmlGFO+3Vbc7enq9VCzeupXQ0sb1DB9OPHE+hxBo0Z9kYz5FWuypMzY8TgH/rnAgYfs2I/8ivC9zMG0VP8HwWx2L+N8LmHxJiQWaTZbmvn26KjWpx4Rh/yPhWD2LFH37cnEwEsEK/rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878117; c=relaxed/simple;
-	bh=3GZ3lmZtkp7XMVG2VXTFRyEl661/gT6S2P+zZcpi8VI=;
+	s=arc-20240116; t=1727878120; c=relaxed/simple;
+	bh=E4RDpDdoQFXTvfg/oC1v5QY9NCbBYd5Ru68rrwCgHl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoOGpj7GMtr3V5c8mvobgMMNLf/o1DE+xEXh+3g+R116cqG3bDzqxqwA0Dwhm4p+VWSx+NDMUUANsZvmkVfhgCU8p4elshh6uQzIRZqcHTb9wHs2b49GryQfhk3uwH1DV49tWX2B0Ougla58ZVBq6X4rgHWyk5Re2YQsKy9MbdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOJGCxK1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jc2O7UCpDNwTVr2TQE3b/m9KaKYDTY9XED/gIVf6bEljzaTUi5u1UrycfxwU2dqJiOkTwQhxBBdcR/izAQInKGJKnMV6Qd6Qx336TZHx/Zr+vd1yCnJm0TdAbkMSMRGuI5pDvK41m7Ai2+j0E4+/UzL/dWkZql2+SxX+IZ5hy54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2W4HYzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOJGCxK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490C0C4CEC2;
-	Wed,  2 Oct 2024 14:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2W4HYzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAE7C4CECF;
+	Wed,  2 Oct 2024 14:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878117;
-	bh=3GZ3lmZtkp7XMVG2VXTFRyEl661/gT6S2P+zZcpi8VI=;
+	s=korg; t=1727878120;
+	bh=E4RDpDdoQFXTvfg/oC1v5QY9NCbBYd5Ru68rrwCgHl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOJGCxK1jwo8jKRKmEskRQdJiqRSnU6lz1ILvEuD4kb3BonKwMTevgbd2n/tDQrzb
-	 SI6/UJT6aKplXDfavXs1hdhtT2vj2Wgi0Gi8ttQSfDTy3M+Uux/cfLJJX2+behk3v5
-	 J9KLqGbp0BIa3f9D0ixgqvhIigq12kJNbAgtA4c4=
+	b=J2W4HYzulmKhJ5mmN1VMW2vZbu+r6u5rvO7d6OLiiXmrSvIhsVRt5SUWGyU9YdZ0i
+	 b/og62ay3HuXC0hWS4hfrIXOAEOwxGv4M4y/vf/6psKHcMtYJdbuYJy9nC/OkW45yo
+	 +m06wb4hTAfWLVkZQh/cPZO5G03aao1xWvmOQ20s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 267/634] selftests/bpf: fix to avoid __msg tag de-duplication by clang
-Date: Wed,  2 Oct 2024 14:56:07 +0200
-Message-ID: <20241002125821.640275849@linuxfoundation.org>
+Subject: [PATCH 6.10 301/634] perf dwarf-aux: Check allowed location expressions when collecting variables
+Date: Wed,  2 Oct 2024 14:56:41 +0200
+Message-ID: <20241002125822.989811179@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,189 +59,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit f00bb757ed630affc951691ddaff206039cbb7ee ]
+[ Upstream commit e8bb03ed6850c6ed4ce2f1600ea73401fc2ebd95 ]
 
-__msg, __regex and __xlated tags are based on
-__attribute__((btf_decl_tag("..."))) annotations.
+It missed to call check_allowed_ops() in __die_collect_vars_cb() so it
+can take variables with complex location expression incorrectly.
 
-Clang de-duplicates such annotations, e.g. the following
-two sequences of tags are identical in final BTF:
+For example, I found some variable has this expression.
 
-    /* seq A */            /* seq B */
-    __tag("foo")           __tag("foo")
-    __tag("bar")           __tag("bar")
-    __tag("foo")
+    015d8df8 ffffffff81aacfb3 (base address)
+    015d8e01 v000000000000004 v000000000000000 views at 015d8df2 for:
+             ffffffff81aacfb3 ffffffff81aacfd2 (DW_OP_fbreg: -176; DW_OP_deref;
+						DW_OP_plus_uconst: 332; DW_OP_deref_size: 4;
+						DW_OP_lit1; DW_OP_shra; DW_OP_const1u: 64;
+						DW_OP_minus; DW_OP_stack_value)
+    015d8e14 v000000000000000 v000000000000000 views at 015d8df4 for:
+             ffffffff81aacfd2 ffffffff81aacfd7 (DW_OP_reg3 (rbx))
+    015d8e19 v000000000000000 v000000000000000 views at 015d8df6 for:
+             ffffffff81aacfd7 ffffffff81aad020 (DW_OP_fbreg: -176; DW_OP_deref;
+						DW_OP_plus_uconst: 332; DW_OP_deref_size: 4;
+						DW_OP_lit1; DW_OP_shra; DW_OP_const1u: 64;
+						DW_OP_minus; DW_OP_stack_value)
+    015d8e2c <End of list>
 
-Fix this by adding a unique suffix for each tag using __COUNTER__
-pre-processor macro. E.g. here is a new definition for __msg:
+It looks like '((int *)(-176(%rbp) + 332) >> 1) - 64' but the current
+code thought it's just -176(%rbp) and processed the variable incorrectly.
+It should reject such a complex expression if check_allowed_ops()
+doesn't like it. :)
 
-    #define __msg(msg) \
-      __attribute__((btf_decl_tag("comment:test_expect_msg=" XSTR(__COUNTER__) "=" msg)))
-
-Using this definition the "seq A" from example above is translated to
-BTF as follows:
-
-    [..] DECL_TAG 'comment:test_expect_msg=0=foo' type_id=X component_idx=-1
-    [..] DECL_TAG 'comment:test_expect_msg=1=bar' type_id=X component_idx=-1
-    [..] DECL_TAG 'comment:test_expect_msg=2=foo' type_id=X component_idx=-1
-
-Surprisingly, this bug affects a single existing test:
-verifier_spill_fill/old_stack_misc_vs_cur_ctx_ptr,
-where sequence of identical messages was expected in the log.
-
-Fixes: 537c3f66eac1 ("selftests/bpf: add generic BPF program tester-loader")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240820102357.3372779-4-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 932dcc2c39aedf54 ("perf dwarf-aux: Add die_collect_vars()")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240816235840.2754937-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h  | 15 +++---
- .../selftests/bpf/progs/verifier_spill_fill.c |  8 ++--
- tools/testing/selftests/bpf/test_loader.c     | 47 ++++++++++++++-----
- 3 files changed, 48 insertions(+), 22 deletions(-)
+ tools/perf/util/dwarf-aux.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index 078268a19b773..20541a7cd8070 100644
---- a/tools/testing/selftests/bpf/progs/bpf_misc.h
-+++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -2,6 +2,9 @@
- #ifndef __BPF_MISC_H__
- #define __BPF_MISC_H__
+diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+index 44ef968a7ad33..e7de5045c43a7 100644
+--- a/tools/perf/util/dwarf-aux.c
++++ b/tools/perf/util/dwarf-aux.c
+@@ -1598,6 +1598,9 @@ static int __die_collect_vars_cb(Dwarf_Die *die_mem, void *arg)
+ 	if (dwarf_getlocations(&attr, 0, &base, &start, &end, &ops, &nops) <= 0)
+ 		return DIE_FIND_CB_SIBLING;
  
-+#define XSTR(s) STR(s)
-+#define STR(s) #s
++	if (!check_allowed_ops(ops, nops))
++		return DIE_FIND_CB_SIBLING;
 +
- /* This set of attributes controls behavior of the
-  * test_loader.c:test_loader__run_subtests().
-  *
-@@ -68,15 +71,15 @@
-  *                   Several __arch_* annotations could be specified at once.
-  *                   When test case is not run on current arch it is marked as skipped.
-  */
--#define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" msg)))
--#define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" regex)))
--#define __xlated(msg)		__attribute__((btf_decl_tag("comment:test_expect_xlated=" msg)))
-+#define __msg(msg)		__attribute__((btf_decl_tag("comment:test_expect_msg=" XSTR(__COUNTER__) "=" msg)))
-+#define __regex(regex)		__attribute__((btf_decl_tag("comment:test_expect_regex=" XSTR(__COUNTER__) "=" regex)))
-+#define __xlated(msg)		__attribute__((btf_decl_tag("comment:test_expect_xlated=" XSTR(__COUNTER__) "=" msg)))
- #define __failure		__attribute__((btf_decl_tag("comment:test_expect_failure")))
- #define __success		__attribute__((btf_decl_tag("comment:test_expect_success")))
- #define __description(desc)	__attribute__((btf_decl_tag("comment:test_description=" desc)))
--#define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" msg)))
--#define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" regex)))
--#define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" msg)))
-+#define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" XSTR(__COUNTER__) "=" msg)))
-+#define __regex_unpriv(regex)	__attribute__((btf_decl_tag("comment:test_expect_regex_unpriv=" XSTR(__COUNTER__) "=" regex)))
-+#define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
- #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
- #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
-diff --git a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-index 85e48069c9e61..d4b99c3b4719b 100644
---- a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-@@ -1213,10 +1213,10 @@ __success  __log_level(2)
-  * - once for path entry - label 2;
-  * - once for path entry - label 1 - label 2.
-  */
--__msg("r1 = *(u64 *)(r10 -8)")
--__msg("exit")
--__msg("r1 = *(u64 *)(r10 -8)")
--__msg("exit")
-+__msg("8: (79) r1 = *(u64 *)(r10 -8)")
-+__msg("9: (95) exit")
-+__msg("from 2 to 7")
-+__msg("8: safe")
- __msg("processed 11 insns")
- __flag(BPF_F_TEST_STATE_FREQ)
- __naked void old_stack_misc_vs_cur_ctx_ptr(void)
-diff --git a/tools/testing/selftests/bpf/test_loader.c b/tools/testing/selftests/bpf/test_loader.c
-index 12b0c41e8d64c..0f59bc33a666c 100644
---- a/tools/testing/selftests/bpf/test_loader.c
-+++ b/tools/testing/selftests/bpf/test_loader.c
-@@ -215,6 +215,35 @@ static void update_flags(int *flags, int flag, bool clear)
- 		*flags |= flag;
- }
+ 	if (die_get_real_type(die_mem, &type_die) == NULL)
+ 		return DIE_FIND_CB_SIBLING;
  
-+/* Matches a string of form '<pfx>[^=]=.*' and returns it's suffix.
-+ * Used to parse btf_decl_tag values.
-+ * Such values require unique prefix because compiler does not add
-+ * same __attribute__((btf_decl_tag(...))) twice.
-+ * Test suite uses two-component tags for such cases:
-+ *
-+ *   <pfx> __COUNTER__ '='
-+ *
-+ * For example, two consecutive __msg tags '__msg("foo") __msg("foo")'
-+ * would be encoded as:
-+ *
-+ *   [18] DECL_TAG 'comment:test_expect_msg=0=foo' type_id=15 component_idx=-1
-+ *   [19] DECL_TAG 'comment:test_expect_msg=1=foo' type_id=15 component_idx=-1
-+ *
-+ * And the purpose of this function is to extract 'foo' from the above.
-+ */
-+static const char *skip_dynamic_pfx(const char *s, const char *pfx)
-+{
-+	const char *msg;
-+
-+	if (strncmp(s, pfx, strlen(pfx)) != 0)
-+		return NULL;
-+	msg = s + strlen(pfx);
-+	msg = strchr(msg, '=');
-+	if (!msg)
-+		return NULL;
-+	return msg + 1;
-+}
-+
- enum arch {
- 	ARCH_X86_64	= 0x1,
- 	ARCH_ARM64	= 0x2,
-@@ -290,38 +319,32 @@ static int parse_test_spec(struct test_loader *tester,
- 		} else if (strcmp(s, TEST_TAG_AUXILIARY_UNPRIV) == 0) {
- 			spec->auxiliary = true;
- 			spec->mode_mask |= UNPRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_MSG_PFX))) {
- 			err = push_msg(msg, NULL, &spec->priv.expect_msgs);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= PRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_MSG_PFX_UNPRIV)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_MSG_PFX_UNPRIV) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_MSG_PFX_UNPRIV))) {
- 			err = push_msg(msg, NULL, &spec->unpriv.expect_msgs);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= UNPRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_REGEX_PFX))) {
- 			err = push_msg(NULL, msg, &spec->priv.expect_msgs);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= PRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_REGEX_PFX_UNPRIV)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_REGEX_PFX_UNPRIV) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_REGEX_PFX_UNPRIV))) {
- 			err = push_msg(NULL, msg, &spec->unpriv.expect_msgs);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= UNPRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_XLATED_PFX))) {
- 			err = push_msg(msg, NULL, &spec->priv.expect_xlated);
- 			if (err)
- 				goto cleanup;
- 			spec->mode_mask |= PRIV;
--		} else if (str_has_pfx(s, TEST_TAG_EXPECT_XLATED_PFX_UNPRIV)) {
--			msg = s + sizeof(TEST_TAG_EXPECT_XLATED_PFX_UNPRIV) - 1;
-+		} else if ((msg = skip_dynamic_pfx(s, TEST_TAG_EXPECT_XLATED_PFX_UNPRIV))) {
- 			err = push_msg(msg, NULL, &spec->unpriv.expect_xlated);
- 			if (err)
- 				goto cleanup;
 -- 
 2.43.0
 
