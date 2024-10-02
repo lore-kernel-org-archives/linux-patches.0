@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5381D1F46;
-	Wed,  2 Oct 2024 13:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68461D1F5F;
+	Wed,  2 Oct 2024 13:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877590; cv=none; b=eb1t8tKnoti5kjykWBZKS4B6ii/ya4rIDlVqjNB9N4bUmiQ3ZBSqBw0cXHo7+F8lHWSDuS/f2iKA2BhU46DxMIZ+OiRwMOAcG1SeCzhDsSmUw/y3e+JFzTW3N1Oo0EbTjjpm4pYUKXkeNUrRIQXXcdpjLrqgG0bda/GJUKqR7jQ=
+	t=1727877592; cv=none; b=NBAuoMoWJMRwbECZi0kFsC6y7p3GWjTEGhA0DJdUiK+LKOYp83r0vnrYHefxx90S+gPIHPNOOrMYkZZnNzmFzVARBKw2hZLHyX3f0Y1ZBr2M6bcFKBcd4Xd2OWQakmcd6PfYJq63cTDSPi8TZZIKGu/h2x4qb9VBX8T1k4a2wwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877590; c=relaxed/simple;
-	bh=bSph/C7GR8DvRIQYKnaRlPxwyZfmcSKXi8Qe+8RSOt0=;
+	s=arc-20240116; t=1727877592; c=relaxed/simple;
+	bh=wranJ9BPq022etCBDP9ddSuT8G9SZtJln+XSANJxMGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qqx+7LG61PD9wSUqC9PyCwPgoXV7HgQJnpgOUGGbVqxrKlcxn0LxjiYKkWYqcfgnpZZgwWeylio9GyCEljPmHc2na0L3KCyZg0d3iAihQkPUCguxzJHqg6OXFtvTc5XhCY1AVI9kujnhg/qQwFrZkeC1eQigb/SUTpvEDKyVDE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8VjHK/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GO/edxkz9I51BEb2IhNbLQzrypKdZjyJMe+jllVFd/yirsN6y9nOx8QYGDhf6zzrPpVzy4rOJJJtCGxEz/71nABt2S4wUe0wfBpXTff/CqMvUhzn9al7sK3L78muattve8bvE9J0NyrBMKZR0QBpDXcFxiloa/IVHfFxrFdsPus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPoTjlPX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8VjHK/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722ECC4CEC2;
-	Wed,  2 Oct 2024 13:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPoTjlPX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60824C4CECD;
+	Wed,  2 Oct 2024 13:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877589;
-	bh=bSph/C7GR8DvRIQYKnaRlPxwyZfmcSKXi8Qe+8RSOt0=;
+	s=korg; t=1727877592;
+	bh=wranJ9BPq022etCBDP9ddSuT8G9SZtJln+XSANJxMGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8VjHK/5pwT5qAQUhb/0ACEjqhoKWSEK/aZYAf70u+0UcJqPSwWR1zvqgxMx1OxJd
-	 1o/lCGK/AgX55wVm6N3CvaCma6VYYZojzGnIhUL9u9u3z6WiSSG3cKO1ejqWb5IPV4
-	 bMSFi1gARWE5cj7KzG3qZA3ODR/fh4RanStB7xyA=
+	b=TPoTjlPXhKVQOgw6maBQXDMlgmLcnOIgNuGOS4rIdwtW9MeJ0dNaQkvWxfWZ52CfY
+	 JkcQQwkEF+wMB8MqL35WOc/d6Hbw+57Epv0fqx39sHalQi3WrbfNRx7tjGLFJ8LusV
+	 jLjxeuLWjrmzQgY/Y5kMJBQW7GK8fJRLUMqBxQ+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Su Hui <suhui@nfschina.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 126/634] arm64: dts: renesas: r9a07g054: Correct GICD and GICR sizes
-Date: Wed,  2 Oct 2024 14:53:46 +0200
-Message-ID: <20241002125816.086275691@linuxfoundation.org>
+Subject: [PATCH 6.10 100/634] net: tipc: avoid possible garbage value
+Date: Wed,  2 Oct 2024 14:53:20 +0200
+Message-ID: <20241002125815.061740945@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,37 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 45afa9eacb59b258d2e53c7f63430ea1e8344803 ]
+[ Upstream commit 99655a304e450baaae6b396cb942b9e47659d644 ]
 
-The RZ/V2L SoC is equipped with the GIC-600. The GICD is 64KiB + 64KiB
-for the MBI alias (in total 128KiB), and the GICR is 128KiB per CPU.
+Clang static checker (scan-build) warning:
+net/tipc/bcast.c:305:4:
+The expression is an uninitialized value. The computed value will also
+be garbage [core.uninitialized.Assign]
+  305 |                         (*cong_link_cnt)++;
+      |                         ^~~~~~~~~~~~~~~~~~
 
-Fixes: 7c2b8198f4f32 ("arm64: dts: renesas: Add initial DTSI for RZ/V2L SoC")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/20240730122436.350013-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+tipc_rcast_xmit() will increase cong_link_cnt's value, but cong_link_cnt
+is uninitialized. Although it won't really cause a problem, it's better
+to fix it.
+
+Fixes: dca4a17d24ee ("tipc: fix potential hanging after b/rcast changing")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Link: https://patch.msgid.link/20240912110119.2025503-1-suhui@nfschina.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g054.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/tipc/bcast.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g054.dtsi b/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-index a2318478a66ba..66894b676c01e 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-@@ -1051,8 +1051,8 @@
- 			#interrupt-cells = <3>;
- 			#address-cells = <0>;
- 			interrupt-controller;
--			reg = <0x0 0x11900000 0 0x40000>,
--			      <0x0 0x11940000 0 0x60000>;
-+			reg = <0x0 0x11900000 0 0x20000>,
-+			      <0x0 0x11940000 0 0x40000>;
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_LOW>;
- 		};
+diff --git a/net/tipc/bcast.c b/net/tipc/bcast.c
+index 593846d252143..114fef65f92ea 100644
+--- a/net/tipc/bcast.c
++++ b/net/tipc/bcast.c
+@@ -320,8 +320,8 @@ static int tipc_mcast_send_sync(struct net *net, struct sk_buff *skb,
+ {
+ 	struct tipc_msg *hdr, *_hdr;
+ 	struct sk_buff_head tmpq;
++	u16 cong_link_cnt = 0;
+ 	struct sk_buff *_skb;
+-	u16 cong_link_cnt;
+ 	int rc = 0;
  
+ 	/* Is a cluster supporting with new capabilities ? */
 -- 
 2.43.0
 
