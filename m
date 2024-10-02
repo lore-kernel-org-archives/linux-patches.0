@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7478D1D1E65;
-	Wed,  2 Oct 2024 14:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBD01D1E65;
+	Wed,  2 Oct 2024 14:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880249; cv=none; b=sTXHSJvUrClA5T3A09cmC6jCLHkx7iW1h7LkeOZy+V8qhDKeaWGEEBjYGCDvwlSzrRgzr0TmTC3GZx3POS95RbWnXP7DwmXZiVwN18wzwK/CulMn0AukMFuu35G1NiVkuifuPvG7eAlm0oo66QjMUcxMfP3oFm1HIwEmqNR5vCE=
+	t=1727880252; cv=none; b=uPjaHPL0Z6HAk3ZIl8lmcxJk9IXIwMlzUBDZufslcPeb82+DOoMpkBCCSoNxwazFFdLtS6997yZjXnUuPLMuQTfq0PCeSiuVwg0QsMq4P2rzjyphHKP7/W5QAMUSiCD4vcaAbnsWFzy19chgMwBpMnOHSoB8nvtygZ20CjbNTPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880249; c=relaxed/simple;
-	bh=6pHXlCp/QhNlWyXuy5DYQZidTQI77NRR5sYqnTgeH7g=;
+	s=arc-20240116; t=1727880252; c=relaxed/simple;
+	bh=TTQepycjUsVn10h9nIOSpJScldsJVLzryPGPnpWyZmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bm+LKOjicH2n0navfOv3KtQmop7vJcl865NeLSaW1CoQl5rUkIJCHs3FNj7w2IAD8e595j0Qaqh3o0q50DH58JI/trNjh/2zetEvYsBOCJXTA1Kr5DHtEvlm7nbelDp1azWyu1iGQWbQgzbZx86UwFC7AWOLQ9WmG/Wr77IWXdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfEGeTju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h+3kiYmOt2iYoqjmPY0aMMjT4FZT0Hqvk5gf4CHcBiX0mB4lDii1wt7DKIsiOrENjflKq/4A+y+vgClvZ2Cnf6qv5umeRCpjjV74imzCSmxTVmcSOJY97z3YINB9+qEpBGG5pGCRMpZYmo1//4V+yL9PPvBROM6IYSdgrJHG7ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVys0SKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfEGeTju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A3DC4CEC2;
-	Wed,  2 Oct 2024 14:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVys0SKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86A9C4CEC2;
+	Wed,  2 Oct 2024 14:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880249;
-	bh=6pHXlCp/QhNlWyXuy5DYQZidTQI77NRR5sYqnTgeH7g=;
+	s=korg; t=1727880252;
+	bh=TTQepycjUsVn10h9nIOSpJScldsJVLzryPGPnpWyZmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfEGeTjuhyDg9u3zexCTJWP/iOk5XE9PGaQ4o2ekw5P0CoqTd7p9MyVyQO5erlNR2
-	 CDmwzqYz1c7tNqvtbzqiVwhUfdrp5L2MVliLyw9W76SXBbZNeMQ6stYj6d57GVUxxF
-	 YEa7E9L2LTMQRTSDcqgDzcbGXeWrvfVwVLLSryEg=
+	b=vVys0SKX/uoROFRA2TAhE8sXbJQeG5aqoDYFXMQAh33uVgRzXbeYYUBxzZ+TGKie+
+	 Q4qK9BEXb3BfVPlB82nf+tg86b23myAzVmNPk8Q14od42k4U/mAhk9O7TzU6JGwfAE
+	 tEGnVn8AMHwnkLlj8WNcb45WngkgFbcZR89qgiKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 367/538] ep93xx: clock: Fix off by one in ep93xx_div_recalc_rate()
-Date: Wed,  2 Oct 2024 15:00:06 +0200
-Message-ID: <20241002125806.914516786@linuxfoundation.org>
+	Matthew W Carlis <mattc@purestorage.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.6 394/538] PCI: Clear the LBMS bit after a link retrain
+Date: Wed,  2 Oct 2024 15:00:33 +0200
+Message-ID: <20241002125807.986277653@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -47,48 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <alexander.sverdlin@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit c7f06284a6427475e3df742215535ec3f6cd9662 ]
+commit 8037ac08c2bbb3186f83a5a924f52d1048dbaec5 upstream.
 
-The psc->div[] array has psc->num_div elements.  These values come from
-when we call clk_hw_register_div().  It's adc_divisors and
-ARRAY_SIZE(adc_divisors)) and so on.  So this condition needs to be >=
-instead of > to prevent an out of bounds read.
+The LBMS bit, where implemented, is set by hardware either in response
+to the completion of retraining caused by writing 1 to the Retrain Link
+bit or whenever hardware has changed the link speed or width in attempt
+to correct unreliable link operation.  It is never cleared by hardware
+other than by software writing 1 to the bit position in the Link Status
+register and we never do such a write.
 
-Fixes: 9645ccc7bd7a ("ep93xx: clock: convert in-place to COMMON_CLK")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Reviewed-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://lore.kernel.org/r/1caf01ad4c0a8069535813c26c7f0b8ea011155e.camel@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We currently have two places, namely apply_bad_link_workaround() and
+pcie_failed_link_retrain() in drivers/pci/controller/dwc/pcie-tegra194.c
+and drivers/pci/quirks.c respectively where we check the state of the LBMS
+bit and neither is interested in the state of the bit resulting from the
+completion of retraining, both check for a link fault.
+
+And in particular pcie_failed_link_retrain() causes issues consequently, by
+trying to retrain a link where there's no downstream device anymore and the
+state of 1 in the LBMS bit has been retained from when there was a device
+downstream that has since been removed.
+
+Clear the LBMS bit then at the conclusion of pcie_retrain_link(), so that
+we have a single place that controls it and that our code can track link
+speed or width changes resulting from unreliable link operation.
+
+Fixes: a89c82249c37 ("PCI: Work around PCIe link training failures")
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2408091133140.61955@angie.orcam.me.uk
+Reported-by: Matthew W Carlis <mattc@purestorage.com>
+Link: https://lore.kernel.org/r/20240806000659.30859-1-mattc@purestorage.com/
+Link: https://lore.kernel.org/r/20240722193407.23255-1-mattc@purestorage.com/
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.5+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-ep93xx/clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-ep93xx/clock.c b/arch/arm/mach-ep93xx/clock.c
-index 85a496ddc6197..e9f72a529b508 100644
---- a/arch/arm/mach-ep93xx/clock.c
-+++ b/arch/arm/mach-ep93xx/clock.c
-@@ -359,7 +359,7 @@ static unsigned long ep93xx_div_recalc_rate(struct clk_hw *hw,
- 	u32 val = __raw_readl(psc->reg);
- 	u8 index = (val & psc->mask) >> psc->shift;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5017,7 +5017,15 @@ int pcie_retrain_link(struct pci_dev *pd
+ 		pcie_capability_clear_word(pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RL);
+ 	}
  
--	if (index > psc->num_div)
-+	if (index >= psc->num_div)
- 		return 0;
+-	return pcie_wait_for_link_status(pdev, use_lt, !use_lt);
++	rc = pcie_wait_for_link_status(pdev, use_lt, !use_lt);
++
++	/*
++	 * Clear LBMS after a manual retrain so that the bit can be used
++	 * to track link speed or width changes made by hardware itself
++	 * in attempt to correct unreliable link operation.
++	 */
++	pcie_capability_write_word(pdev, PCI_EXP_LNKSTA, PCI_EXP_LNKSTA_LBMS);
++	return rc;
+ }
  
- 	return DIV_ROUND_UP_ULL(parent_rate, psc->div[index]);
--- 
-2.43.0
-
+ /**
 
 
