@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116A41D0488;
-	Wed,  2 Oct 2024 14:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CC71D0438;
+	Wed,  2 Oct 2024 14:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879729; cv=none; b=Ql2Wcqy+WwUV4zOXK9YN5pgcA78tmplsmGmRTij7MlZ6eBS6Bhe1wWm3CnZgoM0ARhktbxnPJU5puemKdPDv6p6pU9nMrEOI0Oie3znpMWu4YxAruZBcy+9UESn52+YbJRae5/bJ2MJGzO6Eyh/hSQZtcjDxHothNXUhJ1nBCqw=
+	t=1727879732; cv=none; b=McjXr0h6u1sDFBUBjTVHLp//upzfAqeEhFjSyH1iO+8z6T3wNgrxjdA4/O7d7vJJ1IqGkCYtBfd6Dq1gTnJB/FcfsyS4XGEVl+9Bid89R1fJZpJK86HeGbYvX+gNY/fyoerRrCx4DPflzRtJCHAtA1aIrNTJdi+dIdHkQCovSdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879729; c=relaxed/simple;
-	bh=MtlgAsmFkylkNhwd/79Axxk1cJZYtiIF/3OVqAU99qE=;
+	s=arc-20240116; t=1727879732; c=relaxed/simple;
+	bh=JLwAqmTN2pWxTvqRsLjxgG6xTxIbVZ8yY2VKNaeibSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDKTFSjSrQMz1eMVutKgsVo5QB0vvN5A8NxiD86fj76ElzTs3OA1vuVnxohPxLrzkppBgn7xGvGeDMpTQegCucM98i7FL7LT9a0Uw00/tcFnkp3Yjoslz8S7Pe/Ii1N0Hoz4T0U5iskdzh3AX38i+CnWstwbsaGK3paNS5Yf58o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zodtBl0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sF8OD0i9wiDbWX7gVmHo4pY3qsqHzbAAkoshbt3n/JzSlCLzx1oJEoIBbkUalG6k+Tj3gpB0UPIg1YnwuWxF/qqzHQXUz92lZdC1HD3GyAIA9jXXFNXumQWuVQPo8NxImWMHpo1DRB7G6nAJmep+eisNjtpekq6NBjjVKCdtfqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlT6v7ZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zodtBl0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F0C4CEC2;
-	Wed,  2 Oct 2024 14:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlT6v7ZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729AEC4CEC2;
+	Wed,  2 Oct 2024 14:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879729;
-	bh=MtlgAsmFkylkNhwd/79Axxk1cJZYtiIF/3OVqAU99qE=;
+	s=korg; t=1727879731;
+	bh=JLwAqmTN2pWxTvqRsLjxgG6xTxIbVZ8yY2VKNaeibSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zodtBl0iI+sr9NLMhXuAvvJAAQEztmwrTbjfQ3Z94Fs4OMd7pG1vH+UuyETOl/6uM
-	 OJNtaCX61UR+r8Mhr671t8OxUq1IG72MD7DVsIo4MdKtfUddXwBPDhUI9UagbuMTBc
-	 sLt0jSwhcso6s5SmuR/jrxcmojeFtDqCD/+Pr/Y8=
+	b=tlT6v7ZRrOYhNIbI691VzObOPV+M9/32iTuJjGOvqvItoCKr2pR95PrsFPiTEya3t
+	 WyH2DdruHP7DdH+8OYvn9/DKFPmH5pVJFTst2ny1y+CsPUem3XRGs6L9E7MMGBuHlR
+	 DsWuUTYGfybT5qezSrF+6pGKIT/ayYU9u8YXIcbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 218/538] selftests/bpf: Fix compile if backtrace support missing in libc
-Date: Wed,  2 Oct 2024 14:57:37 +0200
-Message-ID: <20241002125800.861700988@linuxfoundation.org>
+Subject: [PATCH 6.6 219/538] selftests/bpf: Fix error compiling tc_redirect.c with musl libc
+Date: Wed,  2 Oct 2024 14:57:38 +0200
+Message-ID: <20241002125800.901202725@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,66 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit c9a83e76b5a96801a2c7ea0a79ca77c356d8b38d ]
+[ Upstream commit 21c5f4f55da759c7444a1ef13e90b6e6f674eeeb ]
 
-Include GNU <execinfo.h> header only with glibc and provide weak, stubbed
-backtrace functions as a fallback in test_progs.c. This allows for non-GNU
-replacements while avoiding compile errors (e.g. with musl libc) like:
+Linux 5.1 implemented 64-bit time types and related syscalls to address the
+Y2038 problem generally across archs. Userspace handling of Y2038 varies
+with the libc however. While musl libc uses 64-bit time across all 32-bit
+and 64-bit platforms, GNU glibc uses 64-bit time on 64-bit platforms but
+defaults to 32-bit time on 32-bit platforms unless they "opt-in" to 64-bit
+time or explicitly use 64-bit syscalls and time structures.
 
-  test_progs.c:13:10: fatal error: execinfo.h: No such file or directory
-     13 | #include <execinfo.h> /* backtrace */
-        |          ^~~~~~~~~~~~
-  test_progs.c: In function 'crash_handler':
-  test_progs.c:1034:14: error: implicit declaration of function 'backtrace' [-Werror=implicit-function-declaration]
-   1034 |         sz = backtrace(bt, ARRAY_SIZE(bt));
-        |              ^~~~~~~~~
-  test_progs.c:1045:9: error: implicit declaration of function 'backtrace_symbols_fd' [-Werror=implicit-function-declaration]
-   1045 |         backtrace_symbols_fd(bt, sz, STDERR_FILENO);
-        |         ^~~~~~~~~~~~~~~~~~~~
+One specific area is the standard setsockopt() call, SO_TIMESTAMPNS option
+used for timestamping, and the related output 'struct timespec'. GNU glibc
+defaults as above, also exposing the SO_TIMESTAMPNS_NEW flag to explicitly
+use a 64-bit call and 'struct __kernel_timespec'. Since these are not
+exposed or needed with musl libc, their use in tc_redirect.c leads to
+compile errors building for mips64el/musl:
 
-Fixes: 9fb156bb82a3 ("selftests/bpf: Print backtrace on SIGSEGV in test_progs")
+  tc_redirect.c: In function 'rcv_tstamp':
+  tc_redirect.c:425:32: error: 'SO_TIMESTAMPNS_NEW' undeclared (first use in this function); did you mean 'SO_TIMESTAMPNS'?
+    425 |             cmsg->cmsg_type == SO_TIMESTAMPNS_NEW)
+        |                                ^~~~~~~~~~~~~~~~~~
+        |                                SO_TIMESTAMPNS
+  tc_redirect.c:425:32: note: each undeclared identifier is reported only once for each function it appears in
+  tc_redirect.c: In function 'test_inet_dtime':
+  tc_redirect.c:491:49: error: 'SO_TIMESTAMPNS_NEW' undeclared (first use in this function); did you mean 'SO_TIMESTAMPNS'?
+    491 |         err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
+        |                                                 ^~~~~~~~~~~~~~~~~~
+        |                                                 SO_TIMESTAMPNS
+
+However, using SO_TIMESTAMPNS_NEW isn't strictly needed, nor is Y2038 being
+explicitly tested. The timestamp checks in tc_redirect.c are simple: the
+packet receive timestamp is non-zero and processed/handled in less than 5
+seconds.
+
+Switch to using the standard setsockopt() call and SO_TIMESTAMPNS option to
+ensure compatibility across glibc and musl libc. In the worst-case, there
+is a 5-second window 14 years from now where tc_redirect tests may fail on
+32-bit systems. However, we should reasonably expect glibc to adopt a
+64-bit mandate rather than the current "opt-in" policy before the Y2038
+roll-over.
+
+Fixes: ce6f6cffaeaa ("selftests/bpf: Wait for the netstamp_needed_key static key to be turned on")
+Fixes: c803475fd8dd ("bpf: selftests: test skb->tstamp in redirect_neigh")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/aa6dc8e23710cb457b278039d0081de7e7b4847d.1722244708.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/031d656c058b4e55ceae56ef49c4e1729b5090f3.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/tc_redirect.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index eed0e4fcf42ef..74620ed3a166e 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -10,7 +10,6 @@
- #include <sched.h>
- #include <signal.h>
- #include <string.h>
--#include <execinfo.h> /* backtrace */
- #include <sys/sysinfo.h> /* get_nprocs */
- #include <netinet/in.h>
- #include <sys/select.h>
-@@ -19,6 +18,21 @@
- #include <bpf/btf.h>
- #include "json_writer.h"
+diff --git a/tools/testing/selftests/bpf/prog_tests/tc_redirect.c b/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
+index af3c31f82a8ae..5a64017335875 100644
+--- a/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
++++ b/tools/testing/selftests/bpf/prog_tests/tc_redirect.c
+@@ -421,7 +421,7 @@ static int set_forwarding(bool enable)
  
-+#ifdef __GLIBC__
-+#include <execinfo.h> /* backtrace */
-+#endif
-+
-+/* Default backtrace funcs if missing at link */
-+__weak int backtrace(void **buffer, int size)
-+{
-+	return 0;
-+}
-+
-+__weak void backtrace_symbols_fd(void *const *buffer, int size, int fd)
-+{
-+	dprintf(fd, "<backtrace not supported>\n");
-+}
-+
- static bool verbose(void)
+ static int __rcv_tstamp(int fd, const char *expected, size_t s, __u64 *tstamp)
  {
- 	return env.verbosity > VERBOSE_NONE;
+-	struct __kernel_timespec pkt_ts = {};
++	struct timespec pkt_ts = {};
+ 	char ctl[CMSG_SPACE(sizeof(pkt_ts))];
+ 	struct timespec now_ts;
+ 	struct msghdr msg = {};
+@@ -445,7 +445,7 @@ static int __rcv_tstamp(int fd, const char *expected, size_t s, __u64 *tstamp)
+ 
+ 	cmsg = CMSG_FIRSTHDR(&msg);
+ 	if (cmsg && cmsg->cmsg_level == SOL_SOCKET &&
+-	    cmsg->cmsg_type == SO_TIMESTAMPNS_NEW)
++	    cmsg->cmsg_type == SO_TIMESTAMPNS)
+ 		memcpy(&pkt_ts, CMSG_DATA(cmsg), sizeof(pkt_ts));
+ 
+ 	pkt_ns = pkt_ts.tv_sec * NSEC_PER_SEC + pkt_ts.tv_nsec;
+@@ -487,9 +487,9 @@ static int wait_netstamp_needed_key(void)
+ 	if (!ASSERT_GE(srv_fd, 0, "start_server"))
+ 		goto done;
+ 
+-	err = setsockopt(srv_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
++	err = setsockopt(srv_fd, SOL_SOCKET, SO_TIMESTAMPNS,
+ 			 &opt, sizeof(opt));
+-	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS_NEW)"))
++	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS)"))
+ 		goto done;
+ 
+ 	cli_fd = connect_to_fd(srv_fd, TIMEOUT_MILLIS);
+@@ -571,9 +571,9 @@ static void test_inet_dtime(int family, int type, const char *addr, __u16 port)
+ 		return;
+ 
+ 	/* Ensure the kernel puts the (rcv) timestamp for all skb */
+-	err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS_NEW,
++	err = setsockopt(listen_fd, SOL_SOCKET, SO_TIMESTAMPNS,
+ 			 &opt, sizeof(opt));
+-	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS_NEW)"))
++	if (!ASSERT_OK(err, "setsockopt(SO_TIMESTAMPNS)"))
+ 		goto done;
+ 
+ 	if (type == SOCK_STREAM) {
 -- 
 2.43.0
 
