@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E111D0DF5;
-	Wed,  2 Oct 2024 14:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E9D1D078B;
+	Wed,  2 Oct 2024 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879282; cv=none; b=gadSkdrKTdDBuph0wLmzHFUiitMYrmu0gFK+6yHZfLxEQbMaxVpSw6duglbj4vwHYt5SVS9HExPmM26rF3QOnimqqe6/SIyJ+JSxs2XF7QDPz8viBwDIwW8OYlbQvoKbZSZFrS33f1Ucuoh6le397hnpHtDLmglElPmfFZ55fjc=
+	t=1727879285; cv=none; b=DT9WxnVY1wZ+sYuTnheciEaPuyBmHtvrQp8JlQrzj4pl/1hQmuO8ZDnP+VKo4c88tRCU0ozfwHoi0mgPldaObZ2ubSZ7v9/0AUp1Qh9FFKjtIje3t3LoTUHu8ThHc5xTHCAftzQn+fcHBTxmR1aQ7iDT2AaIQFoCiM3Tcd4R++E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879282; c=relaxed/simple;
-	bh=4or7EhgzLpDRsy4Y7jH2ojaGACWywkZheakL3YWNqXc=;
+	s=arc-20240116; t=1727879285; c=relaxed/simple;
+	bh=8TeRz29FW1G/DM4VqXYh3xjnLZnrQz2M3Xv7iLxTSxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6DEJwafJ0ljgNxG/VyHXQWtaTWCp4Zojkgmy0bj5Y/YXrpzuMSrXizT6KFAUQqW0u8RM79G4V0MBcVHzDx7StOMkQdFxy0C6XqgRrhK/K3fzzT8RF3jIT79/TSsAkn8s6Die9rxmLN62abMg7ywafUgpnCtl2QMZOsN9r/0skw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KL0q9ieL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5LA2gTrtT6+9rakEGqzO8FARYK2zuFj6q9RhfN8LU+eHm/dDtkOF8hZi44+C7sPZocIxilVQ4WvJbEpTHuAluJJlJExau4GCu+NtUAZ1W7wsl7w8Vj5YW56GGlsmkHBv0DNleLsFDcswkgc2JcQi2H0HUs+ERBXC3BTQUxz5a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0gPzUcu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KL0q9ieL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34293C4CEC2;
-	Wed,  2 Oct 2024 14:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0gPzUcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2088EC4CEC2;
+	Wed,  2 Oct 2024 14:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879282;
-	bh=4or7EhgzLpDRsy4Y7jH2ojaGACWywkZheakL3YWNqXc=;
+	s=korg; t=1727879285;
+	bh=8TeRz29FW1G/DM4VqXYh3xjnLZnrQz2M3Xv7iLxTSxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KL0q9ieL8hWCsCwjViBwapgICgcUx4C63+AjVVz5NeOB5IFEXf7PgtBZGxF6EQ3Ih
-	 pqf42MF9ELy7y3+uJf1BSfj0Hcz7lVO77otdxnsLZeylIdaxv9AdwQ4Ma2jm7HJ/aZ
-	 LnTt/ZPQ2BBiDXG/z3d7ab1egGwAnPgLyG0lSqPs=
+	b=u0gPzUcuruWmZ6qU6V64Son2jMLfEpKdLZ4aBXtdz9CLrx0LzIvlcENMwkO9vIqt8
+	 usY2iP9DVRR5I0BV/inL4hwoSQFMckN9s4lxM5hSxT3F0bjZLl4yvMV40N5ihq0uOu
+	 v/alTmbdPpbKrWk0zcYH8FyqdxBbtudG1if73hD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Golan Ben Ami <golan.ben.ami@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/538] wifi: iwlwifi: remove AX101, AX201 and AX203 support from LNL
-Date: Wed,  2 Oct 2024 14:54:23 +0200
-Message-ID: <20241002125752.970948907@linuxfoundation.org>
+Subject: [PATCH 6.6 059/538] wifi: cfg80211: fix two more possible UBSAN-detected off-by-one errors
+Date: Wed,  2 Oct 2024 14:54:58 +0200
+Message-ID: <20241002125754.535536465@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,67 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Golan Ben Ami <golan.ben.ami@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 6adae0b081454393ca5f7363fd3c7379c8e2a7a1 ]
+[ Upstream commit 15ea13b1b1fbf6364d4cd568e65e4c8479632999 ]
 
-LNL is the codename for the upcoming Series 2 Core Ultra
-processors designed by Intel. AX101, AX201 and AX203 devices
-are not shiped on LNL platforms, so don't support them.
+Although not reproduced in practice, these two cases may be
+considered by UBSAN as off-by-one errors. So fix them in the
+same way as in commit a26a5107bc52 ("wifi: cfg80211: fix UBSAN
+noise in cfg80211_wext_siwscan()").
 
-Signed-off-by: Golan Ben Ami <golan.ben.ami@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240613171043.f24a228dfd96.I989a2d3f1513211bc49ac8143ee4e9e341e1ee67@changeid
+Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
+Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20240909090806.1091956-1-dmantipov@yandex.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 8131dd52810d ("wifi: iwlwifi: config: label 'gl' devices as discrete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 32 ++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ net/wireless/nl80211.c | 3 ++-
+ net/wireless/sme.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index dea4d6478b4f4..365e19314f2ca 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -504,7 +504,37 @@ static const struct pci_device_id iwl_hw_card_ids[] = {
- 	{IWL_PCI_DEVICE(0x2727, PCI_ANY_ID, iwl_bz_trans_cfg)},
- 	{IWL_PCI_DEVICE(0x272D, PCI_ANY_ID, iwl_bz_trans_cfg)},
- 	{IWL_PCI_DEVICE(0x272b, PCI_ANY_ID, iwl_bz_trans_cfg)},
--	{IWL_PCI_DEVICE(0xA840, PCI_ANY_ID, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0000, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0090, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0094, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0098, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x009C, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00C0, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00C4, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00E0, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00E4, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00E8, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x00EC, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0100, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0110, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0114, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0118, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x011C, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0310, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0314, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0510, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x0A10, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1671, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1672, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1771, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1772, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1791, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x1792, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x4090, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x40C4, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x40E0, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x4110, iwl_bz_trans_cfg)},
-+	{IWL_PCI_DEVICE(0xA840, 0x4314, iwl_bz_trans_cfg)},
- 	{IWL_PCI_DEVICE(0x7740, PCI_ANY_ID, iwl_bz_trans_cfg)},
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 2b2dc46dc701f..4ce23762b1c95 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -9679,7 +9679,8 @@ nl80211_parse_sched_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		return ERR_PTR(-ENOMEM);
  
- /* Sc devices */
+ 	if (n_ssids)
+-		request->ssids = (void *)&request->channels[n_channels];
++		request->ssids = (void *)request +
++			struct_size(request, channels, n_channels);
+ 	request->n_ssids = n_ssids;
+ 	if (ie_len) {
+ 		if (n_ssids)
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 72d78dbc55ffd..591cda99d72f5 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -115,7 +115,8 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
+ 		n_channels = i;
+ 	}
+ 	request->n_channels = n_channels;
+-	request->ssids = (void *)&request->channels[n_channels];
++	request->ssids = (void *)request +
++		struct_size(request, channels, n_channels);
+ 	request->n_ssids = 1;
+ 
+ 	memcpy(request->ssids[0].ssid, wdev->conn->params.ssid,
 -- 
 2.43.0
 
