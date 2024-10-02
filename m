@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060681C9B91;
-	Wed,  2 Oct 2024 13:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E640E29CE7;
+	Wed,  2 Oct 2024 13:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876943; cv=none; b=aJO3O0/wXhJLIRqui039lMc/tmPLaIBB+t9KaR5MFOWVfcalMx1Mr6PQm6Iow1Dt3NnnJPmJ2P7vB4isHNqcbT6J4AJ9Et4NL6Y+eWKhrBrjv6mj5b0SVPEcwl3ooN5ggR1aY31YW7eL6AG3erNQIlX72s0yR9UjC6qPM7eLMrA=
+	t=1727876946; cv=none; b=pLsu3WDeGQsJsTjJ3aNtjr5ghlBPQDyO2i35EoPI6tFQTubef/Jl1Mui9ryf1fWSo2M3FQETL7NPhYZYE0pT5f+nJlgPnN3bOY59w2YkxTiDyHdB/IUlYPObvezRo3epRnKEgw8XMX7gnaHdfR2wIEJopAvZd1se8EAGF19Mad0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876943; c=relaxed/simple;
-	bh=Rx7/RBs+03bE7JApnxasiArciqbcZaotRfNb3ucUdMQ=;
+	s=arc-20240116; t=1727876946; c=relaxed/simple;
+	bh=656H5++SlQSBganDHfwxVVBg6vVvbKoHSPcG35nB4Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qS7FCVtx1AVK5mxmdjHHGTeFcaJLNLxgglLQTG9M+mT8FGypT2V1SKz0r1utHDXk1Bi5k2cV5LjZstAWzGdqpYKFzjN82WS10C+/eZ2Xujlh/60h8tXo9lyPqYStNQFtC+YBReScbZ/DLw9q0BWherG++PN5Uo1TF51hZ3mzifE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuVy4O4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HbtKKXqrhpG7JDXDTr8LIXuuIm0bMR8RaAMWvWRYsAy31pdWG2w+T0HQs9XtqtjH7uOS9DNYRWx+4+kCYE9D13H8SB5B2htPXjP0sFktO+7mqJsLW4DpeyDh9R/fR2K9oJRo61+EcBC5UgnGOqpAW3u/3Ua1An3IWqb7kKMGaSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVOpOK7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuVy4O4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADDFC4CEC2;
-	Wed,  2 Oct 2024 13:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVOpOK7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F086C4CEC2;
+	Wed,  2 Oct 2024 13:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876942;
-	bh=Rx7/RBs+03bE7JApnxasiArciqbcZaotRfNb3ucUdMQ=;
+	s=korg; t=1727876945;
+	bh=656H5++SlQSBganDHfwxVVBg6vVvbKoHSPcG35nB4Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuVy4O4hqIdkiD0OkbAmzS8BHekj+78lkLwsMxsqbBbaTmli5fWjblqj7w+btyEzG
-	 kxWK+GIFPTCpgItpp+0zqzE39UuwQ3gBN76DyBhxpLF0Ow6df0Rucg1QV9XvqTp8Hj
-	 LKhdmvqwmBvpBMAoUkJz3VirRF0w4m2U0Xs+pnfY=
+	b=EVOpOK7V6phLL5w/rAIHo8aVnUPp+yq9/F2YkConQ1OSZzpqXFcTOJsS3Zos1EFd+
+	 If3gEaPw4AErv6pD8/EhqN0Ymvk7y3uxgBNCMV7gghjBPqiRhuMITtMSHWm5PGkfkE
+	 sHKozGQMIpyNKthuZtpD8nTYTRI9qldOK5jYQ8ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.11 612/695] perf/x86/intel/pt: Fix sampling synchronization
-Date: Wed,  2 Oct 2024 15:00:10 +0200
-Message-ID: <20241002125846.942214023@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.11 613/695] btrfs: subpage: fix the bitmap dump which can cause bitmap corruption
+Date: Wed,  2 Oct 2024 15:00:11 +0200
+Message-ID: <20241002125846.981827639@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,71 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit d92792a4b26e50b96ab734cbe203d8a4c932a7a9 upstream.
+commit 77b0b98bb743f5d04d8f995ba1936e1143689d4a upstream.
 
-pt_event_snapshot_aux() uses pt->handle_nmi to determine if tracing
-needs to be stopped, however tracing can still be going because
-pt->handle_nmi is set to zero before tracing is stopped in pt_event_stop,
-whereas pt_event_snapshot_aux() requires that tracing must be stopped in
-order to copy a sample of trace from the buffer.
+In commit 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for
+debug") an internal macro GET_SUBPAGE_BITMAP() is introduced to grab the
+bitmap of each attribute.
 
-Instead call pt_config_stop() always, which anyway checks config for
-RTIT_CTL_TRACEEN and does nothing if it is already clear.
+But that commit is using bitmap_cut() which will do the left shift of
+the larger bitmap, causing incorrect values.
 
-Note pt_event_snapshot_aux() can continue to use pt->handle_nmi to
-determine if the trace needs to be restarted afterwards.
+Thankfully this bitmap_cut() is only called for debug usage, and so far
+it's not yet causing problem.
 
-Fixes: 25e8920b301c ("perf/x86/intel/pt: Add sampling support")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240715160712.127117-2-adrian.hunter@intel.com
+Fix it to use bitmap_read() to only grab the desired sub-bitmap.
+
+Fixes: 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for debug")
+CC: stable@vger.kernel.org # 6.6+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ fs/btrfs/subpage.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -1606,6 +1606,7 @@ static void pt_event_stop(struct perf_ev
- 	 * see comment in intel_pt_interrupt().
- 	 */
- 	WRITE_ONCE(pt->handle_nmi, 0);
-+	barrier();
+--- a/fs/btrfs/subpage.c
++++ b/fs/btrfs/subpage.c
+@@ -900,8 +900,14 @@ void btrfs_folio_end_all_writers(const s
+ }
  
- 	pt_config_stop(event);
+ #define GET_SUBPAGE_BITMAP(subpage, subpage_info, name, dst)		\
+-	bitmap_cut(dst, subpage->bitmaps, 0,				\
+-		   subpage_info->name##_offset, subpage_info->bitmap_nr_bits)
++{									\
++	const int bitmap_nr_bits = subpage_info->bitmap_nr_bits;	\
++									\
++	ASSERT(bitmap_nr_bits < BITS_PER_LONG);				\
++	*dst = bitmap_read(subpage->bitmaps,				\
++			   subpage_info->name##_offset,			\
++			   bitmap_nr_bits);				\
++}
  
-@@ -1657,11 +1658,10 @@ static long pt_event_snapshot_aux(struct
- 		return 0;
- 
- 	/*
--	 * Here, handle_nmi tells us if the tracing is on
-+	 * There is no PT interrupt in this mode, so stop the trace and it will
-+	 * remain stopped while the buffer is copied.
- 	 */
--	if (READ_ONCE(pt->handle_nmi))
--		pt_config_stop(event);
--
-+	pt_config_stop(event);
- 	pt_read_offset(buf);
- 	pt_update_head(pt);
- 
-@@ -1673,11 +1673,10 @@ static long pt_event_snapshot_aux(struct
- 	ret = perf_output_copy_aux(&pt->handle, handle, from, to);
- 
- 	/*
--	 * If the tracing was on when we turned up, restart it.
--	 * Compiler barrier not needed as we couldn't have been
--	 * preempted by anything that touches pt->handle_nmi.
-+	 * Here, handle_nmi tells us if the tracing was on.
-+	 * If the tracing was on, restart it.
- 	 */
--	if (pt->handle_nmi)
-+	if (READ_ONCE(pt->handle_nmi))
- 		pt_config_start(event);
- 
- 	return ret;
+ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
+ 				      struct folio *folio, u64 start, u32 len)
 
 
