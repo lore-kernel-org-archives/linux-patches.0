@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F501D0799;
-	Wed,  2 Oct 2024 13:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A591CFECF;
+	Wed,  2 Oct 2024 13:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877197; cv=none; b=ksSZvyshQxUbqsCdSUpv23hheZWfRm6BpAajIDb+qPjmBPTenUfPUzZOrskKAdTywlLfl9DHRiQoPZE58U/CQ6KS+it6Ec9QPEkK2ayzNDFYYcUnUa6cr54NTTHApMppay0QT9tdxIY5fVu6wIjf1eJ3vQcp0p/DmThv9+B63gc=
+	t=1727877200; cv=none; b=kJlf/joHfCvO9viwmT06VIAI8CK4we//HjbHPFeqK9JzQRaWReeCunrBp2CAe41wMiL77XMV4wcplETdR15EANS+kxQStf0sEHEFAUKH81rjrnkUPd1+F4HqmWicPkuE/XA6BYcvEuqUexATvZ05IqSP9QajH67i+AYqxjTbI5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877197; c=relaxed/simple;
-	bh=hrGrhf2tVQ/fYG1tk0CBJN5i/Cd64IkH/ObZeBoXIOA=;
+	s=arc-20240116; t=1727877200; c=relaxed/simple;
+	bh=dw0LZ/YSA0tjPZTAJJzTDQXv5oa1gkbxpoC+3xilCh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q6K0n+Txa0+qJZk3G6Nu1ADaWGziQa6hlwaTffPDGB5hnlIKnJwL46U0iy1UzfFffPe7uJPVuU8kPv9QlARUwEkWI2JekL3m/m+VdrzoWCvXtmu9wnGPozVzXPOYC73yjWDXg7y3hyPOhBcY8kuq9aA5U6TKoeGcRnGuZOF/cMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVlzxOvb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZeGwMGJ7E5hX1imTxJIYz46My6cnTDPPQ4soHwNEUzuLMFvd1JnMsPqng+PDcqIPwaSsXXCaGmc7ZFOC7HHvaY5RYSqD2ZeiBe/b2HoRK6t2A3lzLEqgowdPnkM1qhoKDCSRoDF/UpYGxQYNlkXu7DO+7XJ3CYVC8oALHmdR8MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjcipnQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVlzxOvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51DA9C4CEC2;
-	Wed,  2 Oct 2024 13:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjcipnQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4214FC4CEC2;
+	Wed,  2 Oct 2024 13:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877197;
-	bh=hrGrhf2tVQ/fYG1tk0CBJN5i/Cd64IkH/ObZeBoXIOA=;
+	s=korg; t=1727877200;
+	bh=dw0LZ/YSA0tjPZTAJJzTDQXv5oa1gkbxpoC+3xilCh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVlzxOvbVZwKzUZeQxEr0d35LCb370eSTyFryVscTE/2RM27a4SGkwbKmHP/HSXxT
-	 Kww72vsgBEt7DrjQA7xEkSeiijLjfulgTW1GDl880QvQAMZ4Q3J6Rnr5icj3q5fUpG
-	 c7mD2vDyvAxsWYjAsXkmZQ/4g//Ry723Gq0fgsNY=
+	b=MjcipnQd6qc8jp6TfXj29oFYZ1XUzkp8cvu8XvKUfxcBYyKh3PGD/ZgZZMq6GnSdg
+	 /hlfY1wp0o2K5gshfS+xdY+v6AAWM68o0viygiLrJQQgfhfiWng3+dFW2bxQuHGyrD
+	 sI1Lgs7pGcXxtitLfNcNjuluLgxzWspu2z8WtArg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 667/695] serial: qcom-geni: introduce qcom_geni_serial_poll_bitfield()
-Date: Wed,  2 Oct 2024 15:01:05 +0200
-Message-ID: <20241002125849.133587788@linuxfoundation.org>
+Subject: [PATCH 6.11 668/695] serial: qcom-geni: fix console corruption
+Date: Wed,  2 Oct 2024 15:01:06 +0200
+Message-ID: <20241002125849.173478032@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,65 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit b26d1ad1221273c88c2c4f5b4080338b8ca23859 ]
+[ Upstream commit cc4a0e5754a16bbc1e215c091349a7c83a2c5e14 ]
 
-With a small modification the qcom_geni_serial_poll_bit() function
-could be used to poll more than just a single bit. Let's generalize
-it. We'll make the qcom_geni_serial_poll_bit() into just a wrapper of
-the general function.
+The Qualcomm serial console implementation is broken and can lose
+characters when the serial port is also used for tty output.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240610152420.v4.5.Ic6411eab8d9d37acc451705f583fb535cd6dadb2@changeid
+Specifically, the console code only waits for the current tx command to
+complete when all data has already been written to the fifo. When there
+are on-going longer transfers this often means that console output is
+lost when the console code inadvertently "hijacks" the current tx
+command instead of starting a new one.
+
+This can, for example, be observed during boot when console output that
+should have been interspersed with init output is truncated:
+
+	[    9.462317] qcom-snps-eusb2-hsphy fde000.phy: Registered Qcom-eUSB2 phy
+	[  OK  ] Found device KBG50ZNS256G KIOXIA Wi[    9.471743ndows.
+	[    9.539915] xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+
+Add a new state variable to track how much data has been written to the
+fifo and use it to determine when the fifo and shift register are both
+empty. This is needed since there is currently no other known way to
+determine when the shift register is empty.
+
+This in turn allows the console code to interrupt long transfers without
+losing data.
+
+Note that the oops-in-progress case is similarly broken as it does not
+cancel any active command and also waits for the wrong status flag when
+attempting to drain the fifo (TX_FIFO_NOT_EMPTY_EN is only set when
+cancelling a command leaves data in the fifo).
+
+Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+Fixes: a1fee899e5be ("tty: serial: qcom_geni_serial: Fix softlock")
+Fixes: 9e957a155005 ("serial: qcom-geni: Don't cancel/abort if we can't get the port lock")
+Cc: stable@vger.kernel.org	# 4.17
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240906131336.23625-6-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20240906131336.23625-7-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: cc4a0e5754a1 ("serial: qcom-geni: fix console corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 45 +++++++++++++--------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 54052c68555d7..7bbd70c306201 100644
+index 7bbd70c306201..f8f6e9466b400 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -265,8 +265,8 @@ static bool qcom_geni_serial_secondary_active(struct uart_port *uport)
- 	return readl(uport->membase + SE_GENI_STATUS) & S_GENI_CMD_ACTIVE;
- }
+@@ -131,6 +131,7 @@ struct qcom_geni_serial_port {
+ 	bool brk;
  
--static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
--				      unsigned int offset, u32 field, bool set)
-+static bool qcom_geni_serial_poll_bitfield(struct uart_port *uport,
-+					   unsigned int offset, u32 field, u32 val)
+ 	unsigned int tx_remaining;
++	unsigned int tx_queued;
+ 	int wakeup_irq;
+ 	bool rx_tx_swap;
+ 	bool cts_rts_swap;
+@@ -144,6 +145,8 @@ static const struct uart_ops qcom_geni_uart_pops;
+ static struct uart_driver qcom_geni_console_driver;
+ static struct uart_driver qcom_geni_uart_driver;
+ 
++static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport);
++
+ static inline struct qcom_geni_serial_port *to_dev_port(struct uart_port *uport)
  {
- 	u32 reg;
- 	struct qcom_geni_serial_port *port;
-@@ -286,7 +286,7 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
- 	timeout_us = DIV_ROUND_UP(timeout_us, 10) * 10;
- 	while (timeout_us) {
- 		reg = readl(uport->membase + offset);
--		if ((bool)(reg & field) == set)
-+		if ((reg & field) == val)
- 			return true;
- 		udelay(10);
- 		timeout_us -= 10;
-@@ -294,6 +294,12 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
- 	return false;
- }
+ 	return container_of(uport, struct qcom_geni_serial_port, uport);
+@@ -393,6 +396,14 @@ static void qcom_geni_serial_poll_put_char(struct uart_port *uport,
+ #endif
  
-+static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
-+				      unsigned int offset, u32 field, bool set)
+ #ifdef CONFIG_SERIAL_QCOM_GENI_CONSOLE
++static void qcom_geni_serial_drain_fifo(struct uart_port *uport)
 +{
-+	return qcom_geni_serial_poll_bitfield(uport, offset, field, set ? field : 0);
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++
++	qcom_geni_serial_poll_bitfield(uport, SE_GENI_M_GP_LENGTH, GP_LENGTH,
++			port->tx_queued);
 +}
 +
- static void qcom_geni_serial_setup_tx(struct uart_port *uport, u32 xmit_size)
+ static void qcom_geni_serial_wr_char(struct uart_port *uport, unsigned char ch)
  {
- 	u32 m_cmd;
+ 	struct qcom_geni_private_data *private_data = uport->private_data;
+@@ -468,7 +479,6 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
+ 	struct qcom_geni_serial_port *port;
+ 	bool locked = true;
+ 	unsigned long flags;
+-	u32 geni_status;
+ 
+ 	WARN_ON(co->index < 0 || co->index >= GENI_UART_CONS_PORTS);
+ 
+@@ -482,34 +492,20 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
+ 	else
+ 		uart_port_lock_irqsave(uport, &flags);
+ 
+-	geni_status = readl(uport->membase + SE_GENI_STATUS);
++	if (qcom_geni_serial_main_active(uport)) {
++		/* Wait for completion or drain FIFO */
++		if (!locked || port->tx_remaining == 0)
++			qcom_geni_serial_poll_tx_done(uport);
++		else
++			qcom_geni_serial_drain_fifo(uport);
+ 
+-	if (!locked) {
+-		/*
+-		 * We can only get here if an oops is in progress then we were
+-		 * unable to get the lock. This means we can't safely access
+-		 * our state variables like tx_remaining. About the best we
+-		 * can do is wait for the FIFO to be empty before we start our
+-		 * transfer, so we'll do that.
+-		 */
+-		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+-					  M_TX_FIFO_NOT_EMPTY_EN, false);
+-	} else if ((geni_status & M_GENI_CMD_ACTIVE) && !port->tx_remaining) {
+-		/*
+-		 * It seems we can't interrupt existing transfers if all data
+-		 * has been sent, in which case we need to look for done first.
+-		 */
+-		qcom_geni_serial_poll_tx_done(uport);
++		qcom_geni_serial_cancel_tx_cmd(uport);
+ 	}
+ 
+ 	__qcom_geni_serial_console_write(uport, s, count);
+ 
+-
+-	if (locked) {
+-		if (port->tx_remaining)
+-			qcom_geni_serial_setup_tx(uport, port->tx_remaining);
++	if (locked)
+ 		uart_port_unlock_irqrestore(uport, flags);
+-	}
+ }
+ 
+ static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
+@@ -690,6 +686,7 @@ static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport)
+ 	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ 
+ 	port->tx_remaining = 0;
++	port->tx_queued = 0;
+ }
+ 
+ static void qcom_geni_serial_handle_rx_fifo(struct uart_port *uport, bool drop)
+@@ -916,6 +913,7 @@ static void qcom_geni_serial_handle_tx_fifo(struct uart_port *uport,
+ 	if (!port->tx_remaining) {
+ 		qcom_geni_serial_setup_tx(uport, pending);
+ 		port->tx_remaining = pending;
++		port->tx_queued = 0;
+ 
+ 		irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
+ 		if (!(irq_en & M_TX_FIFO_WATERMARK_EN))
+@@ -924,6 +922,7 @@ static void qcom_geni_serial_handle_tx_fifo(struct uart_port *uport,
+ 	}
+ 
+ 	qcom_geni_serial_send_chunk_fifo(uport, chunk);
++	port->tx_queued += chunk;
+ 
+ 	/*
+ 	 * The tx fifo watermark is level triggered and latched. Though we had
 -- 
 2.43.0
 
