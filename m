@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32E31D0E1C;
-	Wed,  2 Oct 2024 13:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1FD1D0E1C;
+	Wed,  2 Oct 2024 13:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876515; cv=none; b=DdY+NWKApLBVNvQvarQtot0Ek9XvKSwHzLqYliZ172gb53LqSwu8Fie0A3kMNv/uK06bhDCR5jyvGTnX8Ifbwn9Fs05KAp8O/pZcrGj6GuqFJ696I+3KdOWMZGC8hYCCsNJj3S956O/IRUykk53rVLRz3r6wSiZP5+x7Umum32M=
+	t=1727876518; cv=none; b=Q871rJbatxRfR7YMHEChx4k1hdsloFBvVaVKWDpKnnWzqYyva/RR3m9Od1Lpbwa4CR3COMF3k3WPAhmRLmuoY6byvbohRDwNR8jg+XYrnyk9NfcN24w4FoCVu0fjOU4maex+sjwH81+fXwkpgThH1yWUwA4tjbPJopNug6IYNFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876515; c=relaxed/simple;
-	bh=7tsu8DSukpZc1WA1PcTasCTKLk4ps3KvHN1tGYa47WA=;
+	s=arc-20240116; t=1727876518; c=relaxed/simple;
+	bh=2DAw0MEibj4GvOCDCFNggWPZH2QhsWnWrWjx/G35J/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzS8B52Mb63JO7AOiHp3ZCZeaLk7RLhuYhi64NMnKAf6/cfZIQ39w3rkQuqbOk6FXvvl8XH9d1ZSKXzhJm++9qXRlAf2b88UxDM+TvbTeWUJ1wnHvQLzvztJmWwvdYi8PpzWbU6+6GKzeywvNu4oLQN2Mz0CH41BwRUZyaFapfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6gCRieC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DjYHAhGYcBIrAJP8Cs/mdmHzEcq57TuRR5DrEoImG3kF69JDx3cBkg+k9k7yrBMiaxUrob//YcpMrS9kW9pbdLFYMpyO6iQSh+VfrsRkuFr7iGwvtTCTPp9TEn8K+4iyitmbuLJ9vRMofJcdcwfk6BzL7Fcgj39/bkZEjYKypY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9b/7hEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6gCRieC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B869C4CEC5;
-	Wed,  2 Oct 2024 13:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9b/7hEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15320C4CEC5;
+	Wed,  2 Oct 2024 13:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876515;
-	bh=7tsu8DSukpZc1WA1PcTasCTKLk4ps3KvHN1tGYa47WA=;
+	s=korg; t=1727876518;
+	bh=2DAw0MEibj4GvOCDCFNggWPZH2QhsWnWrWjx/G35J/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6gCRieC2cxrOy0j4KS1467q7LMuJ9U6N9Fb6gz2QnX6fooTPj2rF7EJIRBocrygP
-	 ucEp+ENo28Vn4Q36Uh+yWmMwAb9l0123pTWgEhx5zxWBWLptBGxcswv4toeZsZn8nL
-	 G7rCwpfm+HleEnnoj/Z7gwU2Ww3YGGjfXh6A0AMg=
+	b=L9b/7hEF3lpRkH0gwzSihlRGBEK/4v51kgEgcfVrKDh8IV2cu3gSQ6kjjKm/bKYPp
+	 eeoRuOE7YkuUdUN6h++pYW96GPrFIhd0ttpOG+tsVj3lBqlLoIV/+Y6NoDqhvaF+sm
+	 5g5uOxGJ3XVtKFUTbcfA84Pci/YGukV/v+NtG2iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Nikita Shubin <nikita.shubin@maquefel.me>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 471/695] vhost_vdpa: assign irq bypass producer token correctly
-Date: Wed,  2 Oct 2024 14:57:49 +0200
-Message-ID: <20241002125841.275052850@linuxfoundation.org>
+Subject: [PATCH 6.11 472/695] ep93xx: clock: Fix off by one in ep93xx_div_recalc_rate()
+Date: Wed,  2 Oct 2024 14:57:50 +0200
+Message-ID: <20241002125841.313424344@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,93 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Dan Carpenter <alexander.sverdlin@gmail.com>
 
-[ Upstream commit 02e9e9366fefe461719da5d173385b6685f70319 ]
+[ Upstream commit c7f06284a6427475e3df742215535ec3f6cd9662 ]
 
-We used to call irq_bypass_unregister_producer() in
-vhost_vdpa_setup_vq_irq() which is problematic as we don't know if the
-token pointer is still valid or not.
+The psc->div[] array has psc->num_div elements.  These values come from
+when we call clk_hw_register_div().  It's adc_divisors and
+ARRAY_SIZE(adc_divisors)) and so on.  So this condition needs to be >=
+instead of > to prevent an out of bounds read.
 
-Actually, we use the eventfd_ctx as the token so the life cycle of the
-token should be bound to the VHOST_SET_VRING_CALL instead of
-vhost_vdpa_setup_vq_irq() which could be called by set_status().
-
-Fixing this by setting up irq bypass producer's token when handling
-VHOST_SET_VRING_CALL and un-registering the producer before calling
-vhost_vring_ioctl() to prevent a possible use after free as eventfd
-could have been released in vhost_vring_ioctl(). And such registering
-and unregistering will only be done if DRIVER_OK is set.
-
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Fixes: 2cf1ba9a4d15 ("vhost_vdpa: implement IRQ offloading in vhost_vdpa")
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240816031900.18013-1-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 9645ccc7bd7a ("ep93xx: clock: convert in-place to COMMON_CLK")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Reviewed-by: Nikita Shubin <nikita.shubin@maquefel.me>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Link: https://lore.kernel.org/r/1caf01ad4c0a8069535813c26c7f0b8ea011155e.camel@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/arm/mach-ep93xx/clock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 478cd46a49ede..5a49b5a6d4964 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -209,11 +209,9 @@ static void vhost_vdpa_setup_vq_irq(struct vhost_vdpa *v, u16 qid)
- 	if (irq < 0)
- 		return;
+diff --git a/arch/arm/mach-ep93xx/clock.c b/arch/arm/mach-ep93xx/clock.c
+index 85a496ddc6197..e9f72a529b508 100644
+--- a/arch/arm/mach-ep93xx/clock.c
++++ b/arch/arm/mach-ep93xx/clock.c
+@@ -359,7 +359,7 @@ static unsigned long ep93xx_div_recalc_rate(struct clk_hw *hw,
+ 	u32 val = __raw_readl(psc->reg);
+ 	u8 index = (val & psc->mask) >> psc->shift;
  
--	irq_bypass_unregister_producer(&vq->call_ctx.producer);
- 	if (!vq->call_ctx.ctx)
- 		return;
+-	if (index > psc->num_div)
++	if (index >= psc->num_div)
+ 		return 0;
  
--	vq->call_ctx.producer.token = vq->call_ctx.ctx;
- 	vq->call_ctx.producer.irq = irq;
- 	ret = irq_bypass_register_producer(&vq->call_ctx.producer);
- 	if (unlikely(ret))
-@@ -709,6 +707,14 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			vq->last_avail_idx = vq_state.split.avail_index;
- 		}
- 		break;
-+	case VHOST_SET_VRING_CALL:
-+		if (vq->call_ctx.ctx) {
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_unsetup_vq_irq(v, idx);
-+			vq->call_ctx.producer.token = NULL;
-+		}
-+		break;
- 	}
- 
- 	r = vhost_vring_ioctl(&v->vdev, cmd, argp);
-@@ -747,13 +753,16 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			cb.callback = vhost_vdpa_virtqueue_cb;
- 			cb.private = vq;
- 			cb.trigger = vq->call_ctx.ctx;
-+			vq->call_ctx.producer.token = vq->call_ctx.ctx;
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_setup_vq_irq(v, idx);
- 		} else {
- 			cb.callback = NULL;
- 			cb.private = NULL;
- 			cb.trigger = NULL;
- 		}
- 		ops->set_vq_cb(vdpa, idx, &cb);
--		vhost_vdpa_setup_vq_irq(v, idx);
- 		break;
- 
- 	case VHOST_SET_VRING_NUM:
-@@ -1419,6 +1428,7 @@ static int vhost_vdpa_open(struct inode *inode, struct file *filep)
- 	for (i = 0; i < nvqs; i++) {
- 		vqs[i] = &v->vqs[i];
- 		vqs[i]->handle_kick = handle_vq_kick;
-+		vqs[i]->call_ctx.ctx = NULL;
- 	}
- 	vhost_dev_init(dev, vqs, nvqs, 0, 0, 0, false,
- 		       vhost_vdpa_process_iotlb_msg);
+ 	return DIV_ROUND_UP_ULL(parent_rate, psc->div[index]);
 -- 
 2.43.0
 
