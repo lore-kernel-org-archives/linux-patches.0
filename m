@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDC91D0F74;
-	Wed,  2 Oct 2024 14:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91CE1D0DE1;
+	Wed,  2 Oct 2024 14:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877651; cv=none; b=qcG+uzo7iyNRaesjcqoXSolpLUwc7uy5/DzYGpXV0kI2bGok8X9imJAg0QHG1nFHMzJzqOYQqcipWVCBcJNBBzYWVbfARe+S0h5x9Rx/51pDpiGHP1fCohLBhj0Wcd2wkNGmbYbfiUVX6h1g6UcjQRYhT855xL5eoE1WUZmt1RY=
+	t=1727877654; cv=none; b=Ptht7YrKyjMXPzaITiTqje3nTwC3vDEDupoibdBRG2WzSmerId6rXVvjPYJPx5KzK4tK0uhnbfFh0SzEsFNTpEea2tySNTtobj8Guz96/tGe1fa1B7zAMBX2syDv0pOG3N+4QmurRX9npqBhs+GORJfLFj4OmjiGhUODqANF34w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877651; c=relaxed/simple;
-	bh=CifOBE9ypAKOLPdZLIKqzINZ2+lAHQt4Y/wsfyHYbz4=;
+	s=arc-20240116; t=1727877654; c=relaxed/simple;
+	bh=Auul3T/2fuOTnks+6mC7qSyvHRfbVe4VXFDqCbb2Ia4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1knu5N8FQw/Me7r7NvPji33YqQEYaTwE/ynzcB3NmelwOv5CPqe9Ca8kr+UFHI1DNp6nNLCJ8amHTEqFzvnVxJmc1t2Z2n7t4qbF+70Bz+pDXhE9gYcXLrXLND3PcEcIJ3kVlB+9EGOnq77LQ4qmGkHf08VUiQo4uHqDrmoolo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj0xnVZ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oNVbtKN78PTKBrB/VTO4HFUT/wWdAFrahjghWXfRvCyNXD3+PXQkM40DA5ImQPe6gfH190LLhLtpesfE3fb8Wmtvab1ovBvlJHg7Sk7jYKEmiJWwM/TJo3uLo9+wq+ZtNo3F8MYi8YgezjNoQ+LZ5Hex+211Y8L3k+z6lrGwwFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuUc1NKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj0xnVZ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4638AC4CEC5;
-	Wed,  2 Oct 2024 14:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuUc1NKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEEBC4CEC2;
+	Wed,  2 Oct 2024 14:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877651;
-	bh=CifOBE9ypAKOLPdZLIKqzINZ2+lAHQt4Y/wsfyHYbz4=;
+	s=korg; t=1727877654;
+	bh=Auul3T/2fuOTnks+6mC7qSyvHRfbVe4VXFDqCbb2Ia4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tj0xnVZ0b/eA4DOv9ZB5rfMgJo6Vf9s7vZa7LNxh95Xzn0XvmsEoeEBHyEH2LiO5e
-	 zgV8zgslU5v55YxOWKmfMaoNTfCsoBNCD/lU27vrfkQcBnikwIW/81LkhKAfqXBT1x
-	 S9grMIR+CVmJo6TLQX6k58vUL1SQV1EAcavRGgDw=
+	b=iuUc1NKXvlE+ik9cy3AxOSI+LPEVbDGFQ5OsD1MH5vngWSQrol1VOwoBPgKS61k58
+	 h76BAcJeV8dpgq+FURACXsJxFyy1eNJs1bcA3H60TK1Y97BvkPeE2Sk2NkRKo4H108
+	 WuDk7sbCmRTcOndXZTIlhnuOfCkRJ8IVzonaCN6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Yuntao Liu <liuyuntao12@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 148/634] selftests/ftrace: Add required dependency for kprobe tests
-Date: Wed,  2 Oct 2024 14:54:08 +0200
-Message-ID: <20241002125816.952241144@linuxfoundation.org>
+Subject: [PATCH 6.10 149/634] ALSA: hda: cs35l41: fix module autoloading
+Date: Wed,  2 Oct 2024 14:54:09 +0200
+Message-ID: <20241002125816.992397136@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,51 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Yuntao Liu <liuyuntao12@huawei.com>
 
-[ Upstream commit 41f37c852ac3fbfd072a00281b60dc7ba056be8c ]
+[ Upstream commit 48f1434a4632c7da1a6a94e159512ebddbe13392 ]
 
-kprobe_args_{char,string}.tc are using available_filter_functions file
-which is provided by function tracer. Thus if function tracer is disabled,
-these tests are failed on recent kernels because tracefs_create_dir is
-not raised events by adding a dynamic event.
-Add available_filter_functions to requires line.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from spi_device_id table.
 
-Fixes: 7c1130ea5cae ("test: ftrace: Fix kprobe test for eventfs")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
+Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
+Link: https://patch.msgid.link/20240815091312.757139-1-liuyuntao12@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc  | 2 +-
- .../selftests/ftrace/test.d/kprobe/kprobe_args_string.tc        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/cs35l41_hda_spi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
-index e21c9c27ece47..77f4c07cdcb89 100644
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_char.tc
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # SPDX-License-Identifier: GPL-2.0
- # description: Kprobe event char type argument
--# requires: kprobe_events
-+# requires: kprobe_events available_filter_functions
+diff --git a/sound/pci/hda/cs35l41_hda_spi.c b/sound/pci/hda/cs35l41_hda_spi.c
+index b76c0dfd5fefc..f8c356ad0d340 100644
+--- a/sound/pci/hda/cs35l41_hda_spi.c
++++ b/sound/pci/hda/cs35l41_hda_spi.c
+@@ -38,6 +38,7 @@ static const struct spi_device_id cs35l41_hda_spi_id[] = {
+ 	{ "cs35l41-hda", 0 },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(spi, cs35l41_hda_spi_id);
  
- case `uname -m` in
- x86_64)
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
-index 93217d4595563..39001073f7ed5 100644
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_args_string.tc
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # SPDX-License-Identifier: GPL-2.0
- # description: Kprobe event string type argument
--# requires: kprobe_events
-+# requires: kprobe_events available_filter_functions
- 
- case `uname -m` in
- x86_64)
+ static const struct acpi_device_id cs35l41_acpi_hda_match[] = {
+ 	{ "CSC3551", 0 },
 -- 
 2.43.0
 
