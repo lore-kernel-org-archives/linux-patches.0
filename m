@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167C71D0414;
-	Wed,  2 Oct 2024 14:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ED81D0414;
+	Wed,  2 Oct 2024 14:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879582; cv=none; b=WjQgs1dDV6cDEO6JPGp0MOO37aH99iS2kAN+gfi4APfiDTzvybPQadlVwk+SwNZvDT45IohbSVHq7SVBoaCkXJSNUMrBNt23+cHx9TJ8sYz7hImuXdUxwWwgSTF/OEWYuan+5IsnHDdM/BpavPoirfb+rFykpg1c9HzghJRTvv8=
+	t=1727879585; cv=none; b=GpnMIz87jWRE4DYrw0ruFs7kq7tTtHYBSgXqy58CyzyRhdpiaD68pc9UpUwjAXl+Ji9aYh1cpkCFX52y3D08mmGpRyR8vx44aJx/E1hu9fDnv4aaFVY3TGjazyOw1UdHYMK+JBw4s23RgLHMLzVJlotnMCjSx1TUuRo1JswaITk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879582; c=relaxed/simple;
-	bh=yXuWeFGGnHmEre115vhq3Sj3pg3wwlMBBkleT1ty/78=;
+	s=arc-20240116; t=1727879585; c=relaxed/simple;
+	bh=VFIu3Eva/nvOjzai3otejv0QPSBRQCt1WENz5kzzzmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7gQwG/w+wCbdPH733HXq9T3c3TwocwagX0bp8CcWtYcuGTP2KSfECDELBzxIEZbhtRAOaqN74YCm0OS1pKmyNSQ7n74RGHgB8T8FDfv3HMrr3tm5fac+WBfCFv38UkGvff/YHO7c/1s2tZYlLz8fwEspcGBT6oDDlc2Y303+js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thfwW+P3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bk9r5gE+XsFDTxw2fSGSbXB2IEe6+73wctSjbgVe6p5W8IxMlJOdMcTyMpHRZGyChlHMNcZR9JsAXEqRhI3l+VGHDLmgPAY1Q8OoDjq9RKbrIADWj66UKbNV7913+0PGEdbfo8z7nZmG9LFOMeNUSPP9pjKOIH73kqsTf+wyjBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgABY1Pj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thfwW+P3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2A8C4CEC2;
-	Wed,  2 Oct 2024 14:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgABY1Pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79369C4CEC2;
+	Wed,  2 Oct 2024 14:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879581;
-	bh=yXuWeFGGnHmEre115vhq3Sj3pg3wwlMBBkleT1ty/78=;
+	s=korg; t=1727879584;
+	bh=VFIu3Eva/nvOjzai3otejv0QPSBRQCt1WENz5kzzzmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thfwW+P3XbBKuNBxzmDPCSR1uHG6jnrqkoZ3xji3sGXUIW6YgS4YxrqpAu6uvB1KC
-	 qjgMQKdgCX1bNrh+7ZKRBdbYvXTNYrxFm6uc3WtlVmuJ5xuiIwmHfFAcdtdlEnRxz0
-	 q9kRBGKIG9pk6az0FSGMQ5soIEC3sAKM7Mg3ZPOc=
+	b=tgABY1PjunL7V49xZ9AWXikejHPAOGYd12zL0Opmaxevw38I3c6kXZ4yLNdJ1Ol4X
+	 qqo+Tgnw6AzOJZjrU4n9lCqn3V9wq8t/kGuZDtQkJFwPaL7u4Mu0PaiDXKeBVGQFMQ
+	 ZOHPpgiIYiCdELOe3DrM+vw/idD0XSzWhLCJMAxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/538] drm/msm/a5xx: fix races in preemption evaluation stage
-Date: Wed,  2 Oct 2024 14:56:40 +0200
-Message-ID: <20241002125758.609547055@linuxfoundation.org>
+Subject: [PATCH 6.6 170/538] ata: libata: Clear DID_TIME_OUT for ATA PT commands with sense data
+Date: Wed,  2 Oct 2024 14:56:49 +0200
+Message-ID: <20241002125758.964089132@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,122 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit ce050f307ad93bcc5958d0dd35fc276fd394d274 ]
+[ Upstream commit e5dd410acb34c7341a0a93b429dcf3dabf9e3323 ]
 
-On A5XX GPUs when preemption is used it's invietable to enter a soft
-lock-up state in which GPU is stuck at empty ring-buffer doing nothing.
-This appears as full UI lockup and not detected as GPU hang (because
-it's not). This happens due to not triggering preemption when it was
-needed. Sometimes this state can be recovered by some new submit but
-generally it won't happen because applications are waiting for old
-submits to retire.
+When ata_qc_complete() schedules a command for EH using
+ata_qc_schedule_eh(), blk_abort_request() will be called, which leads to
+req->q->mq_ops->timeout() / scsi_timeout() being called.
 
-One of the reasons why this happens is a race between a5xx_submit and
-a5xx_preempt_trigger called from IRQ during submit retire. Former thread
-updates ring->cur of previously empty and not current ring right after
-latter checks it for emptiness. Then both threads can just exit because
-for first one preempt_state wasn't NONE yet and for second one all rings
-appeared to be empty.
+scsi_timeout(), if the LLDD has no abort handler (libata has no abort
+handler), will set host byte to DID_TIME_OUT, and then call
+scsi_eh_scmd_add() to add the command to EH.
 
-To prevent such situations from happening we need to establish guarantee
-for preempt_trigger to make decision after each submit or retire. To
-implement this we serialize preemption initiation using spinlock. If
-switch is already in progress we need to re-trigger preemption when it
-finishes.
+Thus, when commands first enter libata's EH strategy_handler, all the
+commands that have been added to EH will have DID_TIME_OUT set.
 
-Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/612045/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+libata has its own flag (AC_ERR_TIMEOUT), that it sets for commands that
+have not received a completion at the time of entering EH.
+
+Thus, libata doesn't really care about DID_TIME_OUT at all, and currently
+clears the host byte at the end of EH, in ata_scsi_qc_complete(), before
+scsi_eh_finish_cmd() is called.
+
+However, this clearing in ata_scsi_qc_complete() is currently only done
+for commands that are not ATA passthrough commands.
+
+Since the host byte is visible in the completion that we return to user
+space for ATA passthrough commands, for ATA passthrough commands that got
+completed via EH (commands with sense data), the user will incorrectly see:
+ATA pass-through(16): transport error: Host_status=0x03 [DID_TIME_OUT]
+
+Fix this by moving the clearing of the host byte (which is currently only
+done for commands that are not ATA passthrough commands) from
+ata_scsi_qc_complete() to the start of EH (regardless if the command is
+ATA passthrough or not).
+
+While at it, use the proper helper function to clear the host byte, rather
+than open coding the clearing.
+
+This will make sure that we:
+-Correctly clear DID_TIME_OUT for both ATA passthrough commands and
+ commands that are not ATA passthrough commands.
+-Do not needlessly clear the host byte for commands that did not go via EH.
+ ata_scsi_qc_complete() is called both for commands that are completed
+ normally (without going via EH), and for commands that went via EH,
+ however, only commands that went via EH will have DID_TIME_OUT set.
+
+Fixes: 24aeebbf8ea9 ("scsi: ata: libata: Change ata_eh_request_sense() to not set CHECK_CONDITION")
+Reported-by: Igor Pylypiv <ipylypiv@google.com>
+Closes: https://lore.kernel.org/linux-ide/ZttIN8He8TOZ7Lct@google.com/
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Tested-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  1 +
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 24 +++++++++++++++++++++--
- 2 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/ata/libata-eh.c   | 8 ++++++++
+ drivers/ata/libata-scsi.c | 3 ---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-index c7187bcc5e908..b4d06ca3e499d 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-@@ -36,6 +36,7 @@ struct a5xx_gpu {
- 	uint64_t preempt_iova[MSM_GPU_MAX_RINGS];
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 1168e29cae86e..cd87457375454 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -618,6 +618,14 @@ void ata_scsi_cmd_error_handler(struct Scsi_Host *host, struct ata_port *ap,
+ 	list_for_each_entry_safe(scmd, tmp, eh_work_q, eh_entry) {
+ 		struct ata_queued_cmd *qc;
  
- 	atomic_t preempt_state;
-+	spinlock_t preempt_start_lock;
- 	struct timer_list preempt_timer;
- 
- 	struct drm_gem_object *shadow_bo;
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index 67a8ef4adf6b6..c65b34a4a8cc2 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -97,12 +97,19 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
- 	if (gpu->nr_rings == 1)
- 		return;
- 
-+	/*
-+	 * Serialize preemption start to ensure that we always make
-+	 * decision on latest state. Otherwise we can get stuck in
-+	 * lower priority or empty ring.
-+	 */
-+	spin_lock_irqsave(&a5xx_gpu->preempt_start_lock, flags);
++		/*
++		 * If the scmd was added to EH, via ata_qc_schedule_eh() ->
++		 * scsi_timeout() -> scsi_eh_scmd_add(), scsi_timeout() will
++		 * have set DID_TIME_OUT (since libata does not have an abort
++		 * handler). Thus, to clear DID_TIME_OUT, clear the host byte.
++		 */
++		set_host_byte(scmd, DID_OK);
 +
- 	/*
- 	 * Try to start preemption by moving from NONE to START. If
- 	 * unsuccessful, a preemption is already in flight
- 	 */
- 	if (!try_preempt_state(a5xx_gpu, PREEMPT_NONE, PREEMPT_START))
--		return;
-+		goto out;
- 
- 	/* Get the next ring to preempt to */
- 	ring = get_next_ring(gpu);
-@@ -127,9 +134,11 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
- 		set_preempt_state(a5xx_gpu, PREEMPT_ABORT);
- 		update_wptr(gpu, a5xx_gpu->cur_ring);
- 		set_preempt_state(a5xx_gpu, PREEMPT_NONE);
--		return;
-+		goto out;
+ 		ata_qc_for_each_raw(ap, qc, i) {
+ 			if (qc->flags & ATA_QCFLAG_ACTIVE &&
+ 			    qc->scsicmd == scmd)
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index c91f8746289f4..7a71add807a3a 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1725,9 +1725,6 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
+ 			set_status_byte(qc->scsicmd, SAM_STAT_CHECK_CONDITION);
+ 	} else if (is_error && !have_sense) {
+ 		ata_gen_ata_sense(qc);
+-	} else {
+-		/* Keep the SCSI ML and status byte, clear host byte. */
+-		cmd->result &= 0x0000ffff;
  	}
  
-+	spin_unlock_irqrestore(&a5xx_gpu->preempt_start_lock, flags);
-+
- 	/* Make sure the wptr doesn't update while we're in motion */
- 	spin_lock_irqsave(&ring->preempt_lock, flags);
- 	a5xx_gpu->preempt[ring->id]->wptr = get_wptr(ring);
-@@ -152,6 +161,10 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
- 
- 	/* And actually start the preemption */
- 	gpu_write(gpu, REG_A5XX_CP_CONTEXT_SWITCH_CNTL, 1);
-+	return;
-+
-+out:
-+	spin_unlock_irqrestore(&a5xx_gpu->preempt_start_lock, flags);
- }
- 
- void a5xx_preempt_irq(struct msm_gpu *gpu)
-@@ -188,6 +201,12 @@ void a5xx_preempt_irq(struct msm_gpu *gpu)
- 	update_wptr(gpu, a5xx_gpu->cur_ring);
- 
- 	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
-+
-+	/*
-+	 * Try to trigger preemption again in case there was a submit or
-+	 * retire during ring switch
-+	 */
-+	a5xx_preempt_trigger(gpu);
- }
- 
- void a5xx_preempt_hw_init(struct msm_gpu *gpu)
-@@ -300,5 +319,6 @@ void a5xx_preempt_init(struct msm_gpu *gpu)
- 		}
- 	}
- 
-+	spin_lock_init(&a5xx_gpu->preempt_start_lock);
- 	timer_setup(&a5xx_gpu->preempt_timer, a5xx_preempt_timer, 0);
- }
+ 	ata_qc_done(qc);
 -- 
 2.43.0
 
