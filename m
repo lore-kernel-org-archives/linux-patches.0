@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441DE19F411;
-	Wed,  2 Oct 2024 14:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66201D14F6;
+	Wed,  2 Oct 2024 14:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877710; cv=none; b=bwiNjTWSOVrhZcLamglf2p5YWyMOPwFTStVsP/kl7P1vx3m3hqp0Ynkreo9SVZIJSj5crchBrqQGhoAlvrZgojPD6sZ6fGNMTMsJXG+tS/ku9YhCOv3god+mx1hgW9+yFLOGNAv4CDY+dEkONvKIq4ljIRHRVP2hTm6BMSuVPt8=
+	t=1727877712; cv=none; b=TT+Fzr8bdHoRK0ebj2wtOsryQ7gJwmAhUFGz4YaTRXpwDzeq9EA6uHXcpXb816Ou0Y1+TL1u/7MObMJVNwQGOwCk8BBRRH6wbDnsBE0Sr/K2LXsUCyzWBESBLaYNQZ94qHYZ0DHHeD6625xgrBdfx9okFl5zJbe/1wlLzmQj2w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877710; c=relaxed/simple;
-	bh=jaF8KKF7PBOP7axcJCrDSZ7ur3LX/bxhqwshOW5tF0k=;
+	s=arc-20240116; t=1727877712; c=relaxed/simple;
+	bh=FuXekBt8NFQ3mBbuZSOe7k5FmzwKAmA1XlbCjRATY0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLuK+qcMM1SYYB1LNWiN4ZxoOYpaBnR3iWAk3N111QOMDFFkFE/yOeYvhP7Nk4VpMwZF+Pi0D/7F5X4LaRhnAvr/oo5EDJuCSpWRK6E0VwipblJ48pXZrWK1b7+qAFMr7ZLoyY7h21NMogm4acHiPnU+j0VPd2Hu9xeMOdyJ/ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzZtyPsJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l35J0/9A9MnYwxhYJnCwxdQEuAV7bsC9v3ciJ1Rfi3YU+CgiwZhr4z/7fEAGE47LlEWVdxtlRub6DrP2SCZanlE2MstydilJgV7RH0KSe6inIpS2m92vbKTlsF3nBEsrED71KfLO6Cp5PItUe9gE/YnDOmrhPkI/FThPvLo8o1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s++Y/FTw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzZtyPsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52443C4CEC2;
-	Wed,  2 Oct 2024 14:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s++Y/FTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB5AC4CECE;
+	Wed,  2 Oct 2024 14:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877709;
-	bh=jaF8KKF7PBOP7axcJCrDSZ7ur3LX/bxhqwshOW5tF0k=;
+	s=korg; t=1727877712;
+	bh=FuXekBt8NFQ3mBbuZSOe7k5FmzwKAmA1XlbCjRATY0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzZtyPsJh1hyUk++MW3v974GDqLckebOXT1jl+Rw94DzeyzFFm6yFrmptSN8pEUdq
-	 eBe6AxxUYKm1cmfAbBr9uWDTM2nAuxZH3I7w3+oI3u2fbZ+o450iiDQPo592q4PTqG
-	 Spol6xmN76zMQSWUvjG3Mrg0k/dy1Dm9fcfT32wA=
+	b=s++Y/FTwYIL/gH29w3/Rxr5v90ifeg4iubMqs8SdRxhjmwaZ9F2NbDj4VaijrN4p+
+	 aIwW40CcHD4jKQX29T43hzIWYs8aX91jwOOovwSLAqpPXKByiPlmgA84uIV9nKMxRR
+	 uPia9016Rccrs3DDKC58TibozfZs76IJqdogJmrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 136/634] ARM: dts: imx7d-zii-rmu2: fix Ethernet PHY pinctrl property
-Date: Wed,  2 Oct 2024 14:53:56 +0200
-Message-ID: <20241002125816.477067699@linuxfoundation.org>
+Subject: [PATCH 6.10 137/634] arm64: dts: ti: k3-am654-idk: Fix dtbs_check warning in ICSSG dmas
+Date: Wed,  2 Oct 2024 14:53:57 +0200
+Message-ID: <20241002125816.516323357@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,36 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 0e49cfe364dea4345551516eb2fe53135a10432b ]
+[ Upstream commit 2bea7920da8001172f54359395700616269ccb70 ]
 
-There is no "fsl,phy" property in pin controller pincfg nodes:
+ICSSG doesn't use mgmnt rsp dmas. But these are added in the dmas for
+icssg1-eth and icssg0-eth node.
 
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,pins' is a required property
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,phy' does not match any of the regexes: 'pinctrl-[0-9]+'
+These mgmnt rsp dmas result in below dtbs_check warnings.
 
-Fixes: f496e6750083 ("ARM: dts: Add ZII support for ZII i.MX7 RMU2 board")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg1-eth: dmas: [[39, 49664], [39, 49665], [39, 49666], [39, 49667], [39, 49668], [39, 49669], [39, 49670], [39, 49671], [39, 16896], [39, 16897], [39, 16898], [39, 16899]] is too long
+	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
+/workdir/arch/arm64/boot/dts/ti/k3-am654-idk.dtb: icssg0-eth: dmas: [[39, 49408], [39, 49409], [39, 49410], [39, 49411], [39, 49412], [39, 49413], [39, 49414], [39, 49415], [39, 16640], [39, 16641], [39, 16642], [39, 16643]] is too long
+	from schema $id: http://devicetree.org/schemas/net/ti,icssg-prueth.yaml#
+
+Fix these warnings by removing mgmnt rsp dmas from icssg1-eth and
+icssg0-eth nodes.
+
+Fixes: a4d5bc3214eb ("arm64: dts: ti: k3-am654-idk: Add ICSSG Ethernet ports")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240830111000.232028-1-danishanwar@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am654-idk.dtso | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-index 521493342fe97..8f5566027c25a 100644
---- a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-@@ -350,7 +350,7 @@
+diff --git a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
+index 8bdb87fcbde00..1674ad564be1f 100644
+--- a/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
++++ b/arch/arm64/boot/dts/ti/k3-am654-idk.dtso
+@@ -58,9 +58,7 @@
+ 		       <&main_udmap 0xc107>, /* egress slice 1 */
  
- &iomuxc_lpsr {
- 	pinctrl_enet1_phy_interrupt: enet1phyinterruptgrp {
--		fsl,phy = <
-+		fsl,pins = <
- 			MX7D_PAD_LPSR_GPIO1_IO02__GPIO1_IO2	0x08
- 		>;
- 	};
+ 		       <&main_udmap 0x4100>, /* ingress slice 0 */
+-		       <&main_udmap 0x4101>, /* ingress slice 1 */
+-		       <&main_udmap 0x4102>, /* mgmnt rsp slice 0 */
+-		       <&main_udmap 0x4103>; /* mgmnt rsp slice 1 */
++		       <&main_udmap 0x4101>; /* ingress slice 1 */
+ 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
+ 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
+ 			    "rx0", "rx1";
+@@ -126,9 +124,7 @@
+ 		       <&main_udmap 0xc207>, /* egress slice 1 */
+ 
+ 		       <&main_udmap 0x4200>, /* ingress slice 0 */
+-		       <&main_udmap 0x4201>, /* ingress slice 1 */
+-		       <&main_udmap 0x4202>, /* mgmnt rsp slice 0 */
+-		       <&main_udmap 0x4203>; /* mgmnt rsp slice 1 */
++		       <&main_udmap 0x4201>; /* ingress slice 1 */
+ 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
+ 			    "tx1-0", "tx1-1", "tx1-2", "tx1-3",
+ 			    "rx0", "rx1";
 -- 
 2.43.0
 
