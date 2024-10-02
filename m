@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7134F1D0488;
-	Wed,  2 Oct 2024 14:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E74E1D0488;
+	Wed,  2 Oct 2024 14:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878141; cv=none; b=P4Hr5ZvR9nL7dudDVz3kM+cw0aB4Nbl8BxIghONspQEZ8O/01wqcYBcr0PylEPZFUpHoIsbjsM00T3JR8/iCl66uJ52IwWxkRqDd/ceevIP1XzH95LOQddIv56ZHXzJ8VuVKIQMKx1GfyldDcNzuGfj1tbd/leFiAWfuHN5BwCQ=
+	t=1727878144; cv=none; b=AunXzbd6EmhBDr98Vy5SHWf7Cfp9WA3OfeleCdWSnFTKhdOV9RJzM7W0eN2j90aMk8iDevPRtwkv3sTYgaTuqaEPVuvhuwuJivns8sLzU8XpY7kR9MLoHGHgWXL/zzlujNuSRMjWA/cPQeTtKVCK7rliIJezH2EtwgKDs6BPDyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878141; c=relaxed/simple;
-	bh=w99OtR9hPYGOvhNtm6EBqFTNzQymOg3nRjD8uGEYPvM=;
+	s=arc-20240116; t=1727878144; c=relaxed/simple;
+	bh=N7IxAtEBNZAcgziCom0gehKAVi1LBEQ8C5QN3Tk1k8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0yTGTsMQU4hHnlmVRrAnbFJeM8sk9fhOkqJPfEt88fNus7aI2yK6UyZJ5FzZqVF3EiOQ9dNMqLkwqYFuKPCuDTAQ7eICgBfPL1gy5NOsPiVX7we6cfuSiWJfMqWdrEUGonwYYn5hrk0x1DTwtUwSpwKrkgu1jerumrNyfrTouo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jagsnwSM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b026ZBDF7SqomNdDS2QTnJUqHam1RitsJOmwX8FT2LdET7EIezqLFYs5kKxFpRsCHG81xg6Fpr1ponkVDshzX/cyMZxPA7FFhTJj4SGDXQbhO7RzFv0fzLjXfBQf2+P9BcygvBX8blGofM5ZS/aEFTXyMTV9z/gihZCikPD7NrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ai9U1UW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jagsnwSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3D5C4CEC2;
-	Wed,  2 Oct 2024 14:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ai9U1UW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D680BC4CEC2;
+	Wed,  2 Oct 2024 14:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878141;
-	bh=w99OtR9hPYGOvhNtm6EBqFTNzQymOg3nRjD8uGEYPvM=;
+	s=korg; t=1727878144;
+	bh=N7IxAtEBNZAcgziCom0gehKAVi1LBEQ8C5QN3Tk1k8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jagsnwSM0glZzQCJRcX5bCdtYJ+P8HjmZb4YOPPzW2kcXF82G769AZsNygvDVg2qy
-	 jSXo8zenAhrNNsotCXVCw9yAfDTTQ4qDvB5LeOUXwLKozPpJpha5DAF+AcLmt4rcmq
-	 D5CxPemSWCgrSqA40jWZ/fyk3PorsS6ka6Ac3/Kk=
+	b=2ai9U1UWsPSGKDy/mtoEFzCV8DSkXlyDO7Wwct6pm+JBhJ365psMQ5iSySFBJD1Y8
+	 mB/PG9oSTla9b+JjtXedC64e02av6hinA4CS5s+Q74PhffxH8DEt60p5C0PWHCTEwe
+	 Qej0HH6w0MRUwK/xmyVygLDa8TLQdRPhq3aTJTdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 316/634] clk: imx: imx8qxp: Parent should be initialized earlier than the clock
-Date: Wed,  2 Oct 2024 14:56:56 +0200
-Message-ID: <20241002125823.578353469@linuxfoundation.org>
+Subject: [PATCH 6.10 317/634] quota: avoid missing put_quota_format when DQUOT_SUSPENDED is passed
+Date: Wed,  2 Oct 2024 14:56:57 +0200
+Message-ID: <20241002125823.617420720@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 766c386c16c9899461b83573a06380d364c6e261 ]
+[ Upstream commit d16a5f852025be546b6e4ceef15899db3490f4d7 ]
 
-The initialization order of SCU clocks affects the sequence of SCU clock
-resume. If there are no other effects, the earlier the initialization,
-the earlier the resume. During SCU clock resume, the clock rate is
-restored. As SCFW guidelines, configure the parent clock rate before
-configuring the child rate.
+Avoid missing put_quota_format when DQUOT_SUSPENDED is passed to
+dquot_load_quota_sb.
 
-Fixes: babfaa9556d7 ("clk: imx: scu: add more scu clocks")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-15-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://patch.msgid.link/20240715130534.2112678-2-shikemeng@huaweicloud.com
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Fixes: d44c57663723 ("quota: Remove BUG_ON in dquot_load_quota_sb()")
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/quota/dquot.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index 16710eef641ba..83f2e8bd6d506 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -170,8 +170,8 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu("pwm_clk",   IMX_SC_R_LCD_0_PWM_0, IMX_SC_PM_CLK_PER);
- 	imx_clk_scu("elcdif_pll", IMX_SC_R_ELCDIF_PLL, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu2("lcd_clk", lcd_sels, ARRAY_SIZE(lcd_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_PER);
--	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
- 	imx_clk_scu("lcd_pxl_bypass_div_clk", IMX_SC_R_LCD_0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index 627eb2f72ef37..23fcf9e9d6c55 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -2408,7 +2408,7 @@ static int vfs_setup_quota_inode(struct inode *inode, int type)
+ int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
+ 	unsigned int flags)
+ {
+-	struct quota_format_type *fmt = find_quota_format(format_id);
++	struct quota_format_type *fmt;
+ 	struct quota_info *dqopt = sb_dqopt(sb);
+ 	int error;
  
- 	/* Audio SS */
- 	imx_clk_scu("audio_pll0_clk", IMX_SC_R_AUDIO_PLL_0, IMX_SC_PM_CLK_PLL);
-@@ -213,11 +213,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
+@@ -2418,6 +2418,7 @@ int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
+ 	if (WARN_ON_ONCE(flags & DQUOT_SUSPENDED))
+ 		return -EINVAL;
  
--	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
--	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_pll0_clk", IMX_SC_R_DC_1_PLL_0, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_pll1_clk", IMX_SC_R_DC_1_PLL_1, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_bypass0_clk", IMX_SC_R_DC_1_VIDEO0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
-+	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_bypass1_clk", IMX_SC_R_DC_1_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
- 	/* MIPI-LVDS SS */
++	fmt = find_quota_format(format_id);
+ 	if (!fmt)
+ 		return -ESRCH;
+ 	if (!sb->dq_op || !sb->s_qcop ||
 -- 
 2.43.0
 
