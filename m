@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DB01CB32E;
-	Wed,  2 Oct 2024 13:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3814C1D0493;
+	Wed,  2 Oct 2024 13:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877280; cv=none; b=NDr8yYPuBmAWg/yApuwv69f/mAkhm51ovIVwUwulr+GMta/OGX9muaaWQmKw6IZTXhbgyrOnv26ThH6IZxu5lNnweE4Ela8hytCJ0bENVOzj/mKkBfH1b0CkXUjcbf2JQhTFDjnKGa/qzEI4vkgprn1418XLvWOMSwU4hnRUWpQ=
+	t=1727877283; cv=none; b=HMDvybdEh1CyVGt3tK22HkfwUdyjtFyKJy1M+295KLcn3mArIOubWl1V29Ix8cQE5pYeRR9oqHOPtcRQvJ/ivuzRTpVG24ByCiLW16c1fGijZKFpbzVrWtiulH+F8b35tKRW2Jp5bk8C2oCCv5KcPo1JSCgnvN7tyOJXU3DwXBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877280; c=relaxed/simple;
-	bh=ihSLVo4c1qn24KaSQnMkIu17UWQlj92v+4ukswxh7bk=;
+	s=arc-20240116; t=1727877283; c=relaxed/simple;
+	bh=HKFlpBqNFDfDPWL7XKOYDmKA1kOiAuRhjdhAUtUrgNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDgLHYIGUXTC7yyOMlZaq6WQfDRfuhkF2gUs5XmXIECtfMCHarhRqYzbTtuwhNTNgntnQgwAa7n7DIwfFtSeO4ZLXjsbRup3wrGsFmRwVw522byD3SwSEzWbVY6Uw32O4vl03uaICPiwOOrSzhNYjGfFArMmMgJkzpiPQAtDPxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwACLGnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpPjoOwUsUpciIs30VPtUmPYlHjmsIVZWh6DXSY+8kVpwXzgy+a0wSqFny08vNQr6FV7u52h7JvnJmpo02QyUAxpzXk/AN0AAGN24xcENnpVq9wq3LJWowhseEaOUyNrbjiRs6/WDo4lZLB4zAwZoxi65a4/qRYN243W9Cm7vM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbQqGTmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwACLGnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB1DC4AF13;
-	Wed,  2 Oct 2024 13:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbQqGTmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DC3C4AF14;
+	Wed,  2 Oct 2024 13:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877280;
-	bh=ihSLVo4c1qn24KaSQnMkIu17UWQlj92v+4ukswxh7bk=;
+	s=korg; t=1727877283;
+	bh=HKFlpBqNFDfDPWL7XKOYDmKA1kOiAuRhjdhAUtUrgNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwACLGnuAhsAmx2sBbSRdpmDDxE/UTG8GohCN4LsXmeqrL7EDffo7pWy+NTJcp51a
-	 mymg+hPr5M8FIgjPiydeww43Uw+jRTpmwMoUUKoJjBhb3be/5pMTD0yEcyyBLnfX9B
-	 MeCod7WcoAoUXFLS5nJTLJTrOskH3VIcih2HwHuo=
+	b=NbQqGTmm7/fyJRso3SQErlpLGtEwT3dZDoRXec1hqocGN2xxKUYzDve2e8KaVMZms
+	 a8ohNle3M77rKoEy2O5DuLpXlMjngS4rRanLZ3maIuyqNGsg89Gi8ZxPhS8km5OBRr
+	 ShsZEkvYh9er1++GbGwgI8IJuSshuOhKYKRrKWZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Helge Deller <deller@gmx.de>,
+	John David Anglin <dave.anglin@bell.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 003/634] wifi: rtw88: always wait for both firmware loading attempts
-Date: Wed,  2 Oct 2024 14:51:43 +0200
-Message-ID: <20241002125811.217594838@linuxfoundation.org>
+Subject: [PATCH 6.10 004/634] crypto: xor - fix template benchmarking
+Date: Wed,  2 Oct 2024 14:51:44 +0200
+Message-ID: <20241002125811.256482739@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,56 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Helge Deller <deller@kernel.org>
 
-[ Upstream commit 0e735a4c6137262bcefe45bb52fde7b1f5fc6c4d ]
+[ Upstream commit ab9a244c396aae4aaa34b2399b82fc15ec2df8c1 ]
 
-In 'rtw_wait_firmware_completion()', always wait for both (regular and
-wowlan) firmware loading attempts. Otherwise if 'rtw_usb_intf_init()'
-has failed in 'rtw_usb_probe()', 'rtw_usb_disconnect()' may issue
-'ieee80211_free_hw()' when one of 'rtw_load_firmware_cb()' (usually
-the wowlan one) is still in progress, causing UAF detected by KASAN.
+Commit c055e3eae0f1 ("crypto: xor - use ktime for template benchmarking")
+switched from using jiffies to ktime-based performance benchmarking.
 
-Fixes: c8e5695eae99 ("rtw88: load wowlan firmware if wowlan is supported")
-Reported-by: syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6c6c08700f9480c41fe3
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240726114657.25396-1-dmantipov@yandex.ru
+This works nicely on machines which have a fine-grained ktime()
+clocksource as e.g. x86 machines with TSC.
+But other machines, e.g. my 4-way HP PARISC server, don't have such
+fine-grained clocksources, which is why it seems that 800 xor loops
+take zero seconds, which then shows up in the logs as:
+
+ xor: measuring software checksum speed
+    8regs           : -1018167296 MB/sec
+    8regs_prefetch  : -1018167296 MB/sec
+    32regs          : -1018167296 MB/sec
+    32regs_prefetch : -1018167296 MB/sec
+
+Fix this with some small modifications to the existing code to improve
+the algorithm to always produce correct results without introducing
+major delays for architectures with a fine-grained ktime()
+clocksource:
+a) Delay start of the timing until ktime() just advanced. On machines
+with a fast ktime() this should be just one additional ktime() call.
+b) Count the number of loops. Run at minimum 800 loops and finish
+earliest when the ktime() counter has progressed.
+
+With that the throughput can now be calculated more accurately under all
+conditions.
+
+Fixes: c055e3eae0f1 ("crypto: xor - use ktime for template benchmarking")
+Signed-off-by: Helge Deller <deller@gmx.de>
+Tested-by: John David Anglin <dave.anglin@bell.net>
+
+v2:
+- clean up coding style (noticed & suggested by Herbert Xu)
+- rephrased & fixed typo in commit message
+
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ crypto/xor.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 7ab7a988b123f..33a7577557a56 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -1313,20 +1313,21 @@ static int rtw_wait_firmware_completion(struct rtw_dev *rtwdev)
+diff --git a/crypto/xor.c b/crypto/xor.c
+index 8e72e5d5db0de..56aa3169e8717 100644
+--- a/crypto/xor.c
++++ b/crypto/xor.c
+@@ -83,33 +83,30 @@ static void __init
+ do_xor_speed(struct xor_block_template *tmpl, void *b1, void *b2)
  {
- 	const struct rtw_chip_info *chip = rtwdev->chip;
- 	struct rtw_fw_state *fw;
-+	int ret = 0;
+ 	int speed;
+-	int i, j;
+-	ktime_t min, start, diff;
++	unsigned long reps;
++	ktime_t min, start, t0;
  
- 	fw = &rtwdev->fw;
- 	wait_for_completion(&fw->completion);
- 	if (!fw->firmware)
--		return -EINVAL;
-+		ret = -EINVAL;
+ 	tmpl->next = template_list;
+ 	template_list = tmpl;
  
- 	if (chip->wow_fw_name) {
- 		fw = &rtwdev->wow_fw;
- 		wait_for_completion(&fw->completion);
- 		if (!fw->firmware)
--			return -EINVAL;
-+			ret = -EINVAL;
- 	}
+ 	preempt_disable();
  
--	return 0;
-+	return ret;
- }
+-	min = (ktime_t)S64_MAX;
+-	for (i = 0; i < 3; i++) {
+-		start = ktime_get();
+-		for (j = 0; j < REPS; j++) {
+-			mb(); /* prevent loop optimization */
+-			tmpl->do_2(BENCH_SIZE, b1, b2);
+-			mb();
+-		}
+-		diff = ktime_sub(ktime_get(), start);
+-		if (diff < min)
+-			min = diff;
+-	}
++	reps = 0;
++	t0 = ktime_get();
++	/* delay start until time has advanced */
++	while ((start = ktime_get()) == t0)
++		cpu_relax();
++	do {
++		mb(); /* prevent loop optimization */
++		tmpl->do_2(BENCH_SIZE, b1, b2);
++		mb();
++	} while (reps++ < REPS || (t0 = ktime_get()) == start);
++	min = ktime_sub(t0, start);
  
- static enum rtw_lps_deep_mode rtw_update_lps_deep_mode(struct rtw_dev *rtwdev,
+ 	preempt_enable();
+ 
+ 	// bytes/ns == GB/s, multiply by 1000 to get MB/s [not MiB/s]
+-	if (!min)
+-		min = 1;
+-	speed = (1000 * REPS * BENCH_SIZE) / (unsigned int)ktime_to_ns(min);
++	speed = (1000 * reps * BENCH_SIZE) / (unsigned int)ktime_to_ns(min);
+ 	tmpl->speed = speed;
+ 
+ 	pr_info("   %-16s: %5d MB/sec\n", tmpl->name, speed);
 -- 
 2.43.0
 
