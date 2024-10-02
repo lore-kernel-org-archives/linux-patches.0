@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D8E1EEE6;
-	Wed,  2 Oct 2024 14:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450651EEE6;
+	Wed,  2 Oct 2024 14:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880422; cv=none; b=G2/AtjduTu7sA59ZSd6n1LxFhfz7uCj/ECXWwQmR7Ymrmb+dyRjQsNjIOS3wxkSjg+Za/qCTtcvdQrj1R8jj+kJXb00Q8MT7pKLeza5vYdZyKzcA3Hj11s7G0eyi/ig6qd18HTn7iBrIFM1/FV1sl7j9OlGnlWzUU+pFye4P1Aw=
+	t=1727880425; cv=none; b=idecWbkKcCwiD6chpIPQA+YXTFSB00UG4LV/WalbJUvNcDX+OMVxMY4V2VjYxXAvtsFXJjEoP4gMjb0VKeimcFLKGwGdo7sjVv6CJIokvrtv/ij8qB8tw9gzW19hDzPnhm/B+KlcJ+S8SKSIThAiiGbL374tUvc8z2Ew0hQ2lKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880422; c=relaxed/simple;
-	bh=yoUKgQc7HtJdSTztEUpjxi/k6s1GeR9Kvyxb4YD7qDA=;
+	s=arc-20240116; t=1727880425; c=relaxed/simple;
+	bh=nCzkOGNDu8fq65aaSu71i5Aza3mH+Ti+10oMhkYOMX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXsZObwQSUgwSXTHxBdMiddaQkk19Vry1OPEqXwsNOP5saFgqcp/ouHRE2+nxLzzU0fsKsCjdz9ab0+aRUKUDii4M1Dj0KbA3/Fztqw77pvYWaNmNu/rq0mvu6FRS+WnTat1rRzj35q4EJcC7tz/MJXYtVUeHcAx/gYCl3ZrFYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iu//lDW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=etFgSefrYSEXRKqmgUp6w64+9WtB1mZOBHxUd+nzoUMBKAtfaPL/f1+aD55sICvZIA9kCOAIJsPG2eg00OGkFbZ6D41XfSU/V4UaMgE2hXoY+bCUP1DgERUwXgr7o+rlh3+XWrk3ba3zX+KJ7tHXHw4XgzeQq7mx4BaiCkhBIYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHmlwKPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iu//lDW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F99C4CECD;
-	Wed,  2 Oct 2024 14:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHmlwKPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D1DC4CEC2;
+	Wed,  2 Oct 2024 14:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880422;
-	bh=yoUKgQc7HtJdSTztEUpjxi/k6s1GeR9Kvyxb4YD7qDA=;
+	s=korg; t=1727880425;
+	bh=nCzkOGNDu8fq65aaSu71i5Aza3mH+Ti+10oMhkYOMX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iu//lDW/AYHGhTb2sBL/vfn4m2mlj1u1s1Do29qt6e2nZh9umeg10KwZxn39DR3bH
-	 ubkWgnHkXMlnoOXHk62TwikU94ay4dX+4UB10as2ugl+0JX6UPLAYhnmeX6T1xLXp2
-	 IuOaUDDOWYeJrjkW1P1TM2OBI9peL9K/xy0IEiKI=
+	b=vHmlwKPUqM8eAaBCgetwQS0gisQ3GyTEujRZmcF/SXZ6AqWbvFKd2+SwxaHsX1uYy
+	 TBRGe2ZWKzzJw53OnRDx4bGmi65/HQduft3p+2lseHL/b6etfUzQn0X1Roy35Gf7zV
+	 onyWmOoMrk2SqPjlUXep9l7uTVU2ikYOMGw6G/sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ma Ke <make24@iscas.ac.cn>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 453/538] wifi: mt76: mt7915: check devm_kasprintf() returned value
-Date: Wed,  2 Oct 2024 15:01:32 +0200
-Message-ID: <20241002125810.323790659@linuxfoundation.org>
+Subject: [PATCH 6.6 454/538] wifi: mt76: mt7996: fix NULL pointer dereference in mt7996_mcu_sta_bfer_he
+Date: Wed,  2 Oct 2024 15:01:33 +0200
+Message-ID: <20241002125810.363365385@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,39 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Ke <make24@iscas.ac.cn>
 
-commit 267efeda8c55f30e0e7c5b7fd03dea4efec6916c upstream.
+commit f503ae90c7355e8506e68498fe84c1357894cd5b upstream.
 
-devm_kasprintf() can return a NULL pointer on failure but this returned
-value is not checked. Fix this lack and check the returned value.
+Fix the NULL pointer dereference in mt7996_mcu_sta_bfer_he
+routine adding an sta interface to the mt7996 driver.
 
 Found by code review.
 
 Cc: stable@vger.kernel.org
-Fixes: 6ae39b7c7ed4 ("wifi: mt76: mt7921: Support temp sensor")
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patch.msgid.link/20240903014955.4145423-1-make24@iscas.ac.cn
+Link: https://patch.msgid.link/20240813081242.3991814-1-make24@iscas.ac.cn
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 511e0d04eb95..6bef96e3d2a3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -194,6 +194,8 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1300,6 +1300,9 @@ mt7996_mcu_sta_bfer_he(struct ieee80211_
+ 	u8 nss_mcs = mt7996_mcu_get_sta_nss(mcs_map);
+ 	u8 snd_dim, sts;
  
- 	name = devm_kasprintf(&wiphy->dev, GFP_KERNEL, "mt7915_%s",
- 			      wiphy_name(wiphy));
-+	if (!name)
-+		return -ENOMEM;
++	if (!vc)
++		return;
++
+ 	bf->tx_mode = MT_PHY_TYPE_HE_SU;
  
- 	cdev = thermal_cooling_device_register(name, phy, &mt7915_thermal_ops);
- 	if (!IS_ERR(cdev)) {
--- 
-2.46.2
-
+ 	mt7996_mcu_sta_sounding_rate(bf);
 
 
