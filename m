@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1572A1D0799;
-	Wed,  2 Oct 2024 14:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1FD1EB21;
+	Wed,  2 Oct 2024 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880466; cv=none; b=NZeYWXq1M6h7FUFHgk9BYPDcF9O6myTJsoZiG+CrrR5hbXEoqok6qv9hEHLMn7uQyIIWfe+ZR8TzhymD0BY8CTx/77FhYtv+6eddE2lTCLx06XZE9egDtckBoJYHL/y9t4sjeQUiwYTDWgWrJApOvyDQPRvhuiIsy3e62HcAqJc=
+	t=1727880469; cv=none; b=roKaYwYfv8SBoQkeHsPUO9ARb5HFkX7cLd9106wbwQrljJvwLcybJFLKXRIGNbBY2f09HsnVdAKRxURB34dBHz8TUW/+RPJWVnZumu1aZ2I88R5BUY2p3IIfTNGSKiIceFItXTikZIc3sm9ouby2YYaEXYt+0K9XyG7FJ+uD2NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880466; c=relaxed/simple;
-	bh=p9ERjc5xT2JWmcwFExmXHuh1fD+kRle6aonBzSKfL0Y=;
+	s=arc-20240116; t=1727880469; c=relaxed/simple;
+	bh=E5d/wVgP1Gqg1/SZ7rBf+uTDs/dobFN/0WQe9sFajro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFRf84klDrW8oz1NKdfkZyWhxSm2i89df63KJdGmfeNSe9CTn8VA+azOeg05Qk7UCoh8s/LhUjmyLPahJwexmK1Fla8WHrkLKvG+lt7MRmLt3HaCMvwZXYAZa6KhYMh4VS0oeVB3+2LAVt4XtZLnoJlizpi3OI75t8p+Pj+uSuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlMKLOGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GVMctxWka0IgCyo2vsOyZ5vO7AaofEbHq62y59BFmecZtaL2DHfpklGBt5KVip0FQ1COubpHZ0j7jQVgZzxTl0MzHFfY6zKGA1OMy6nBCwAVo1kaLpdN9iNzCcW8cYr3WsVg7LNIXx/a16yX9rMG9o50RGXl1dV2nsfOZVahJks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NU+bTcYb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlMKLOGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F27BC4CEC2;
-	Wed,  2 Oct 2024 14:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NU+bTcYb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D08BC4CEC2;
+	Wed,  2 Oct 2024 14:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880466;
-	bh=p9ERjc5xT2JWmcwFExmXHuh1fD+kRle6aonBzSKfL0Y=;
+	s=korg; t=1727880468;
+	bh=E5d/wVgP1Gqg1/SZ7rBf+uTDs/dobFN/0WQe9sFajro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlMKLOGoPZ2tncc4gXnceDmsFHeBnP/QpIlJYMOKE71HMDqAB87sJvc6MpDwwHVp8
-	 NRdGn/3yM8ZPtkusKUGPQmYEWg9zNoJDO1Nd4DEzYsinIpGlVaetUmxMQz4l88+6yP
-	 6W3mhI/9uysRiSOOwveIZ7nPBNCkseJWt5gyd9VU=
+	b=NU+bTcYbutuSmpGYbwURysFTWttaqzIAQ4uWQ+Rw4TUmz87bLHyHbxIXHuqzkN+Dl
+	 GR26HHExTxd4zPHxM4A5JGQy8CEKpfIo1xeklteq1DC/6SYDg4vzqU1tmUR2su5iXl
+	 deNQ7I6vNGeSdQeoQwB6PnC2Ap3dop5JyhXgcJD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 436/538] USB: class: CDC-ACM: fix race between get_serial and set_serial
-Date: Wed,  2 Oct 2024 15:01:15 +0200
-Message-ID: <20241002125809.650230187@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.6 437/538] usb: cdnsp: Fix incorrect usb_request status
+Date: Wed,  2 Oct 2024 15:01:16 +0200
+Message-ID: <20241002125809.689051208@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,41 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit b41c1fa155ba56d125885b0191aabaf3c508d0a3 upstream.
+commit 1702bec4477cc7d31adb4a760d14d33fac928b7a upstream.
 
-TIOCGSERIAL is an ioctl. Thus it must be atomic. It returns
-two values. Racing with set_serial it can return an inconsistent
-result. The mutex must be taken.
+Fix changes incorrect usb_request->status returned during disabling
+endpoints. Before fix the status returned during dequeuing requests
+while disabling endpoint was ECONNRESET.
+Patch change it to ESHUTDOWN.
 
-In terms of logic the bug is as old as the driver. In terms of
-code it goes back to the conversion to the get_serial and
-set_serial methods.
+Patch fixes issue detected during testing UVC gadget.
+During stopping streaming the class starts dequeuing usb requests and
+controller driver returns the -ECONNRESET status. After completion
+requests the class or application "uvc-gadget" try to queue this
+request again. Changing this status to ESHUTDOWN cause that UVC assumes
+that endpoint is disabled, or device is disconnected and stops
+re-queuing usb requests.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable <stable@kernel.org>
-Fixes: 99f75a1fcd865 ("cdc-acm: switch to ->[sg]et_serial()")
-Link: https://lore.kernel.org/r/20240912141916.1044393-1-oneukum@suse.com
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB9538E8CA7A2096AAF6A3718FDD9E2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/cdns3/cdnsp-ring.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -962,10 +962,12 @@ static int get_serial_info(struct tty_st
- 	struct acm *acm = tty->driver_data;
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -718,7 +718,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	seg = cdnsp_trb_in_td(pdev, cur_td->start_seg, cur_td->first_trb,
+ 			      cur_td->last_trb, hw_deq);
  
- 	ss->line = acm->minor;
-+	mutex_lock(&acm->port.mutex);
- 	ss->close_delay	= jiffies_to_msecs(acm->port.close_delay) / 10;
- 	ss->closing_wait = acm->port.closing_wait == ASYNC_CLOSING_WAIT_NONE ?
- 				ASYNC_CLOSING_WAIT_NONE :
- 				jiffies_to_msecs(acm->port.closing_wait) / 10;
-+	mutex_unlock(&acm->port.mutex);
- 	return 0;
- }
- 
+-	if (seg && (pep->ep_state & EP_ENABLED))
++	if (seg && (pep->ep_state & EP_ENABLED) &&
++	    !(pep->ep_state & EP_DIS_IN_RROGRESS))
+ 		cdnsp_find_new_dequeue_state(pdev, pep, preq->request.stream_id,
+ 					     cur_td, &deq_state);
+ 	else
+@@ -736,7 +737,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	 * During disconnecting all endpoint will be disabled so we don't
+ 	 * have to worry about updating dequeue pointer.
+ 	 */
+-	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING) {
++	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING ||
++	    pep->ep_state & EP_DIS_IN_RROGRESS) {
+ 		status = -ESHUTDOWN;
+ 		ret = cdnsp_cmd_set_deq(pdev, pep, &deq_state);
+ 	}
 
 
