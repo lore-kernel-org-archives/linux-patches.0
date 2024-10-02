@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB211D14EF;
-	Wed,  2 Oct 2024 14:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A66B1D1312;
+	Wed,  2 Oct 2024 14:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879332; cv=none; b=O7qz2jFtfu8gZahQw+Ln+SOSw+Q8vVlqcHpdftoyXZYDR3WEe0+/EpJ7snhLEC9nQh2wIZarbrEcYb90BjSKD3l7FG43t7UBqNIrr6gl/79b919Jo8OY8dPTCYr7GhcQ7dkqnjVXwXF7WBAU+bGCELX4898HCQ5lkgnkWMVHhAw=
+	t=1727879335; cv=none; b=g9gBKgC1LS1M1KjPTT3RhEcAnw2vL1J54j59zEEwkurGyUy2sJJykcKkLvn7A1lBp+jPyrm4Agq0i4WHHVkwqsOA3arPdNweJqpZNXYR6uSO5pDnFEKHIReg4Of6upmvhVW1NEEecE3cyCiVVo2g2GOjqDqPyCGvp4cXkaDJhhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879332; c=relaxed/simple;
-	bh=qdLJSzjifFvNmi9dxOu1vfOMqM00xPPihZBPRU3YReg=;
+	s=arc-20240116; t=1727879335; c=relaxed/simple;
+	bh=+K/p6UnmWcZuTLRSY0eucDraE2WoQowu55EyAVkDiLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lohSwywedH+imSlTVtkrFsuNQOL5+SC94tpYslrNlY8Q34gK8NWdBlMb5Mbu5PBwzsvknd6WfEg/zywubJ6bUho8aCMrEzUiMFG4kLXCLS2r8DB+NXyrwisfCLpJUghHEAjY//+Jm7wJQLpLKD6lOzYnL/2Kf21qDs3zVTkICcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/Dc2Wik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RQqEcV/ECsJIa31/RN82DUrJg+o5H2wA+2Hizg+H6Ej9GNVckLzTWupprjUgoTx3Du9L3dtzsD/QiTVBsFVqZ3xRPECONLU0i9Ig+aaT6Oi6PbW7+dWli+jD4Q+kDfsvUTis6mHZ40hA2xIMD4IouU/DYcUXda/P5LrYEeYb0Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QV5Oh7TY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/Dc2Wik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C34C4CEC2;
-	Wed,  2 Oct 2024 14:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QV5Oh7TY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6193C4CECD;
+	Wed,  2 Oct 2024 14:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879332;
-	bh=qdLJSzjifFvNmi9dxOu1vfOMqM00xPPihZBPRU3YReg=;
+	s=korg; t=1727879335;
+	bh=+K/p6UnmWcZuTLRSY0eucDraE2WoQowu55EyAVkDiLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/Dc2WikcWoQk3k9uyTrEzGD12x3ZQKaQ1oGVmP3wns+cFdmvzFRmvAcH7wTXHa8Z
-	 gSNTvk7iK5ULODnqsFBkTDdPEp8RmDWpH7rxCmIUOOnT7z/H3u9FkJT7xZRmIqaY/W
-	 LfVyJ57St5rZlPjRzzSXyZ/Sbl/Qqxk2fUEBOLVE=
+	b=QV5Oh7TYxRZIdCehMfpwNyDcq/GY6jafd+7ON1q7H2TnPLZ8uJq1JP+f/zwGrZYrr
+	 kT+QlMWsiZ39MdPJs/gyncNWXAfcVgTxeS9Tbm5U+CQKGht18NAPLQV8Y8nn8TpxCo
+	 YtuY8KOmY6LEhJKBgpSo0g+C/TyO4pCDBfTvfw68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Walters <walters@verbum.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/538] erofs: fix incorrect symlink detection in fast symlink
-Date: Wed,  2 Oct 2024 14:55:21 +0200
-Message-ID: <20241002125755.456640594@linuxfoundation.org>
+Subject: [PATCH 6.6 083/538] block, bfq: fix uaf for accessing waker_bfqq after splitting
+Date: Wed,  2 Oct 2024 14:55:22 +0200
+Message-ID: <20241002125755.497215603@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -45,79 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 ]
+[ Upstream commit 1ba0403ac6447f2d63914fb760c44a3b19c44eaf ]
 
-Fast symlink can be used if the on-disk symlink data is stored
-in the same block as the on-disk inode, so we don’t need to trigger
-another I/O for symlink data.  However, currently fs correction could be
-reported _incorrectly_ if inode xattrs are too large.
+After commit 42c306ed7233 ("block, bfq: don't break merge chain in
+bfq_split_bfqq()"), if the current procress is the last holder of bfqq,
+the bfqq can be freed after bfq_split_bfqq(). Hence recored the bfqq and
+then access bfqq->waker_bfqq may trigger UAF. What's more, the waker_bfqq
+may in the merge chain of bfqq, hence just recored waker_bfqq is still
+not safe.
 
-In fact, these should be valid images although they cannot be handled as
-fast symlinks.
+Fix the problem by adding a helper bfq_waker_bfqq() to check if
+bfqq->waker_bfqq is in the merge chain, and current procress is the only
+holder.
 
-Many thanks to Colin for reporting this!
-
-Reported-by: Colin Walters <walters@verbum.org>
-Reported-by: https://honggfuzz.dev/
-Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
-Fixes: 431339ba9042 ("staging: erofs: add inode operations")
-[ Note that it's a runtime misbehavior instead of a security issue. ]
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
+Fixes: 42c306ed7233 ("block, bfq: don't break merge chain in bfq_split_bfqq()")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240909134154.954924-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/inode.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ block/bfq-iosched.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
-index edc8ec7581b8f..9e40bee3682f7 100644
---- a/fs/erofs/inode.c
-+++ b/fs/erofs/inode.c
-@@ -205,12 +205,14 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
- 			      unsigned int m_pofs)
- {
- 	struct erofs_inode *vi = EROFS_I(inode);
--	unsigned int bsz = i_blocksize(inode);
-+	loff_t off;
- 	char *lnk;
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 2c09c298d8940..055ba1f98009d 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6823,6 +6823,31 @@ static void bfq_prepare_request(struct request *rq)
+ 	rq->elv.priv[0] = rq->elv.priv[1] = NULL;
+ }
  
--	/* if it cannot be handled with fast symlink scheme */
--	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
--	    inode->i_size >= bsz || inode->i_size < 0) {
-+	m_pofs += vi->xattr_isize;
-+	/* check if it cannot be handled with fast symlink scheme */
-+	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
-+	    check_add_overflow(m_pofs, inode->i_size, &off) ||
-+	    off > i_blocksize(inode)) {
- 		inode->i_op = &erofs_symlink_iops;
- 		return 0;
- 	}
-@@ -219,16 +221,6 @@ static int erofs_fill_symlink(struct inode *inode, void *kaddr,
- 	if (!lnk)
- 		return -ENOMEM;
++static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
++{
++	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
++	struct bfq_queue *waker_bfqq = bfqq->waker_bfqq;
++
++	if (!waker_bfqq)
++		return NULL;
++
++	while (new_bfqq) {
++		if (new_bfqq == waker_bfqq) {
++			/*
++			 * If waker_bfqq is in the merge chain, and current
++			 * is the only procress.
++			 */
++			if (bfqq_process_refs(waker_bfqq) == 1)
++				return NULL;
++			break;
++		}
++
++		new_bfqq = new_bfqq->new_bfqq;
++	}
++
++	return waker_bfqq;
++}
++
+ /*
+  * If needed, init rq, allocate bfq data structures associated with
+  * rq, and increment reference counters in the destination bfq_queue
+@@ -6884,7 +6909,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 		/* If the queue was seeky for too long, break it apart. */
+ 		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq) &&
+ 			!bic->bfqq_data[a_idx].stably_merged) {
+-			struct bfq_queue *old_bfqq = bfqq;
++			struct bfq_queue *waker_bfqq = bfq_waker_bfqq(bfqq);
  
--	m_pofs += vi->xattr_isize;
--	/* inline symlink data shouldn't cross block boundary */
--	if (m_pofs + inode->i_size > bsz) {
--		kfree(lnk);
--		erofs_err(inode->i_sb,
--			  "inline data cross block boundary @ nid %llu",
--			  vi->nid);
--		DBG_BUGON(1);
--		return -EFSCORRUPTED;
--	}
- 	memcpy(lnk, kaddr + m_pofs, inode->i_size);
- 	lnk[inode->i_size] = '\0';
+ 			/* Update bic before losing reference to bfqq */
+ 			if (bfq_bfqq_in_large_burst(bfqq))
+@@ -6904,7 +6929,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				bfqq_already_existing = true;
  
+ 			if (!bfqq_already_existing) {
+-				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
++				bfqq->waker_bfqq = waker_bfqq;
+ 				bfqq->tentative_waker_bfqq = NULL;
+ 
+ 				/*
+@@ -6914,7 +6939,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				 * woken_list of the waker. See
+ 				 * bfq_check_waker for details.
+ 				 */
+-				if (bfqq->waker_bfqq)
++				if (waker_bfqq)
+ 					hlist_add_head(&bfqq->woken_list_node,
+ 						       &bfqq->waker_bfqq->woken_list);
+ 			}
 -- 
 2.43.0
 
