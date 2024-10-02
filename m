@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B98D1D04A2;
-	Wed,  2 Oct 2024 13:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD251D0793;
+	Wed,  2 Oct 2024 13:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877174; cv=none; b=RcPHW7gQ6PkMwQ4rLMqzFuz1VxA2Mjw5X9cVNIkfv2f467G7RQWyUZNILuc+ae6VXyMFIoBz8XPf1bD3YnLlqHV9FzIRY9IXpA2daeF+HLVk/Quzhd753TYquietMn97jYa7mP80LOpBtyMDJaXfmW6bab27YSvlux78XPX4jEQ=
+	t=1727877177; cv=none; b=E940WE+jJrqFPTLbFuB2MNlLW+dT2FJhDGE1ink2WBWT72qzj5cnU7FeNfoPQq5lsMxLZyBh8mAgVl9IfQt1MYJ2Ts1XcwVvJy9WYYf3CunGfjoDjL3bO8t6cbVsbDwabpq1yymOw9qBkVddOE5L7I9PbzPg8B4JWvj/6kxwIUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877174; c=relaxed/simple;
-	bh=nznfNvb1rnfor1LKSS0Kj5/+lYOKMvNYHd2iBTqVpAo=;
+	s=arc-20240116; t=1727877177; c=relaxed/simple;
+	bh=/x+qNTvSclFh6rk6LisAAsoWdvrsJG5CUiyX5ZlmssQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYmKtMChXkdlMDPMdiJqayDn8GIL38t1fqGIbJAqpaHMBozd6a07enb+kUhitLE6D8ggr1Foo45IDRPTEkHqyoK8Y0EmpHYzZpJaDwifeFdT2a3fPd4/jFfgljU/aRlRSx47lF0LsPN7td3pZGKJB2RymlicORdUypGBqWVv040=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bA1v/FC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dei8wkv2+xxe4+yWWULSWZE9Y9sso/1U+okK4UoUnj2P2/ukYS99Cz9UXJ45frt+8c5avLaRia2zRFettBbJphFGTxSXjbw3Tq7uj8NTSV0yrCYEinE2zw3MjBVTh9O0pBqmSa+gzDF1h4LtJAH+AtiGq4fnkcuLJ6OY0q8UqrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzFo9cD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bA1v/FC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063C4C4CED2;
-	Wed,  2 Oct 2024 13:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzFo9cD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE56AC4CEC5;
+	Wed,  2 Oct 2024 13:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877174;
-	bh=nznfNvb1rnfor1LKSS0Kj5/+lYOKMvNYHd2iBTqVpAo=;
+	s=korg; t=1727877177;
+	bh=/x+qNTvSclFh6rk6LisAAsoWdvrsJG5CUiyX5ZlmssQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bA1v/FC5DCak/qQWARE0tR8smRGTyAxu1OArg0dZ6juAGFfhW48m6rqf9Bb/z0iZj
-	 5UKbWBgjrvUGZEso2nQeiGNg4/ZQd4i6Nn5j4ZbQRZWIdK8/8266SJx0wbxJbeuoBN
-	 sQpaEF5S/E6VYCv+/1bx4flQAwYCDA7UzDX5FqpU=
+	b=xzFo9cD3+i5NkcZ4+5ok91wL3LzxZYVXU3WTVmqX6NQDgiZTREy6ciXCKy9pIbG0s
+	 pUEMJvWXDijEFchUnA1itj5OPtY1JKN5k/gcKe9VoQcxatTRsDrJ9GF8W4rqmVrues
+	 jHzob+fsbZhgdrId3L5/92GO1DVzTFxh3OB+fEBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 662/695] soc: versatile: realview: fix soc_dev leak during device remove
-Date: Wed,  2 Oct 2024 15:01:00 +0200
-Message-ID: <20241002125848.934169516@linuxfoundation.org>
+	syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 689/695] mm: change vmf_anon_prepare() to __vmf_anon_prepare()
+Date: Wed,  2 Oct 2024 15:01:27 +0200
+Message-ID: <20241002125850.021854420@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,63 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-[ Upstream commit c774f2564c0086c23f5269fd4691f233756bf075 ]
+commit 2a058ab3286d6475b2082b90c2d2182d2fea4b39 upstream.
 
-If device is unbound, the soc_dev should be unregistered to prevent
-memory leak.
+Some callers of vmf_anon_prepare() may not want us to release the per-VMA
+lock ourselves.  Rename vmf_anon_prepare() to __vmf_anon_prepare() and let
+the callers drop the lock when desired.
 
-Fixes: a2974c9c1f83 ("soc: add driver for the ARM RealView")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-3-ff4b35abed83@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also, make vmf_anon_prepare() a wrapper that releases the per-VMA lock
+itself for any callers that don't care.
+
+This is in preparation to fix this bug reported by syzbot:
+https://lore.kernel.org/linux-mm/00000000000067c20b06219fbc26@google.com/
+
+Link: https://lkml.kernel.org/r/20240914194243.245-1-vishal.moola@gmail.com
+Fixes: 9acad7ba3e25 ("hugetlb: use vmf_anon_prepare() instead of anon_vma_prepare()")
+Reported-by: syzbot+2dab93857ee95f2eeb08@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/00000000000067c20b06219fbc26@google.com/
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/versatile/soc-realview.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ mm/internal.h |   11 ++++++++++-
+ mm/memory.c   |    8 +++-----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
-index d304ee69287af..cf91abe07d38d 100644
---- a/drivers/soc/versatile/soc-realview.c
-+++ b/drivers/soc/versatile/soc-realview.c
-@@ -4,6 +4,7 @@
-  *
-  * Author: Linus Walleij <linus.walleij@linaro.org>
-  */
-+#include <linux/device.h>
- #include <linux/init.h>
- #include <linux/io.h>
- #include <linux/slab.h>
-@@ -81,6 +82,13 @@ static struct attribute *realview_attrs[] = {
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -310,7 +310,16 @@ static inline void wake_throttle_isolate
+ 		wake_up(wqh);
+ }
  
- ATTRIBUTE_GROUPS(realview);
- 
-+static void realview_soc_socdev_release(void *data)
+-vm_fault_t vmf_anon_prepare(struct vm_fault *vmf);
++vm_fault_t __vmf_anon_prepare(struct vm_fault *vmf);
++static inline vm_fault_t vmf_anon_prepare(struct vm_fault *vmf)
 +{
-+	struct soc_device *soc_dev = data;
++	vm_fault_t ret = __vmf_anon_prepare(vmf);
 +
-+	soc_device_unregister(soc_dev);
++	if (unlikely(ret & VM_FAULT_RETRY))
++		vma_end_read(vmf->vma);
++	return ret;
 +}
 +
- static int realview_soc_probe(struct platform_device *pdev)
- {
- 	struct regmap *syscon_regmap;
-@@ -109,6 +117,11 @@ static int realview_soc_probe(struct platform_device *pdev)
- 	if (IS_ERR(soc_dev))
- 		return -ENODEV;
+ vm_fault_t do_swap_page(struct vm_fault *vmf);
+ void folio_rotate_reclaimable(struct folio *folio);
+ bool __folio_end_writeback(struct folio *folio);
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3276,7 +3276,7 @@ static inline vm_fault_t vmf_can_call_fa
+ }
  
-+	ret = devm_add_action_or_reset(&pdev->dev, realview_soc_socdev_release,
-+				       soc_dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
- 			  &realview_coreid);
- 	if (ret)
--- 
-2.43.0
-
+ /**
+- * vmf_anon_prepare - Prepare to handle an anonymous fault.
++ * __vmf_anon_prepare - Prepare to handle an anonymous fault.
+  * @vmf: The vm_fault descriptor passed from the fault handler.
+  *
+  * When preparing to insert an anonymous page into a VMA from a
+@@ -3290,7 +3290,7 @@ static inline vm_fault_t vmf_can_call_fa
+  * Return: 0 if fault handling can proceed.  Any other value should be
+  * returned to the caller.
+  */
+-vm_fault_t vmf_anon_prepare(struct vm_fault *vmf)
++vm_fault_t __vmf_anon_prepare(struct vm_fault *vmf)
+ {
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	vm_fault_t ret = 0;
+@@ -3298,10 +3298,8 @@ vm_fault_t vmf_anon_prepare(struct vm_fa
+ 	if (likely(vma->anon_vma))
+ 		return 0;
+ 	if (vmf->flags & FAULT_FLAG_VMA_LOCK) {
+-		if (!mmap_read_trylock(vma->vm_mm)) {
+-			vma_end_read(vma);
++		if (!mmap_read_trylock(vma->vm_mm))
+ 			return VM_FAULT_RETRY;
+-		}
+ 	}
+ 	if (__anon_vma_prepare(vma))
+ 		ret = VM_FAULT_OOM;
 
 
