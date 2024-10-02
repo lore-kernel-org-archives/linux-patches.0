@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C726A1D0E27;
-	Wed,  2 Oct 2024 14:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC4D1D271A;
+	Wed,  2 Oct 2024 14:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877607; cv=none; b=S9DCPzbGmqMa5LHERdSINu0hTJt7IQtTuSlMZ4gU9ob2Q2OGQdqC2sGHeZfg2FsHAXgiiPHesCmY8I31xn+j1cCUkiPaRa4L+5lxvSZry+kco3Dx9VqrcGTaLq7snbCNfvjOjJfosVH2ofBrHI0hlIc0YWY53ydB1yG6t9dICy8=
+	t=1727877611; cv=none; b=CQrMrfQubjJbo2FJAZ88Y+kQ2WKKlav2nQnH09ZMUBwC7f359MZ7DD3QaQwEyj3FQ7HQ5AcruY1GnhpMuDjRD2nSDgwD1w1vqTuLkq7yPDc8GjZzu+E7tDA2S1sErMs8wVg0qvSa8CjAv/BGmbNp4L6dU2qshm0vBwA6UjH0tXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877607; c=relaxed/simple;
-	bh=AdFMq/cNiV5uXfc43olHgCFjcNj37f2OCne6L2BXr7c=;
+	s=arc-20240116; t=1727877611; c=relaxed/simple;
+	bh=Mi5toyebAKWBAWahijWNv0hMQRUbmiBXfotPNUZg/dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzULEDFIzy2yWdlZ6iZHXPGP7aNhAAU5oCXYlPbsmgdpkq5iOpmf7AcZdJEMFzffwZQlsVmZFNZ6oh7G0zCE9K7vcy9L64M2TyB+XUVLOh7IzGj+aObC5uqCulEc1p20IG/kPM4TeKuAIiVAUJHszhfLvmACGCkJ6G8pPD2xEXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb5EIwaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sqd8Z3zi8go9CCAyyZTypcEkmwweigqoqsgybKxeWyuLvKibpcHpQrEg5am791JTmm4O24k8Z1ykwsbJUCsAkLqQ8RP3cP5uMRCB3bwpvwBhyZKL2td6aIwU5gWX/xIUdjHY3gMg5UBJarqZBIg3z91wqCOhYQqDT2YTp+hHZ4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz0kQOQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb5EIwaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142AFC4CECD;
-	Wed,  2 Oct 2024 14:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz0kQOQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3113BC4CEC2;
+	Wed,  2 Oct 2024 14:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877607;
-	bh=AdFMq/cNiV5uXfc43olHgCFjcNj37f2OCne6L2BXr7c=;
+	s=korg; t=1727877610;
+	bh=Mi5toyebAKWBAWahijWNv0hMQRUbmiBXfotPNUZg/dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hb5EIwaTJ/zP7pJPKr+/QS2+UMxE9PArxewSmW+w3l2gibnuZZs/DoKcfpG5tEXSq
-	 qmZL9Sayj05Si5SJQtDiagvRO420IpTfb51wznIPYcZpJtRjStXAdOOxE1Cc+xF+FB
-	 h6MhCNmyJ+tJLipKZu5CrNDX6LHCMFb79CFMAXkY=
+	b=iz0kQOQ/oqslB8EgXBWpeSXWu2E6i2qKo1a2Id7wV/cZUNG40QeMd7fd1eA8KG2HP
+	 aXJtH00EY2KMdS3QG+CpnAPSQkI6T223Mk+qvbUc9kW5c2FjvkWGHYyQAVwR5j4Zwy
+	 4ZIJ2PWjoRzZwJhyZuBw8pocv7Z9qt2e/Vl1hUiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 101/634] ipv6: avoid possible NULL deref in rt6_uncached_list_flush_dev()
-Date: Wed,  2 Oct 2024 14:53:21 +0200
-Message-ID: <20241002125815.101351851@linuxfoundation.org>
+Subject: [PATCH 6.10 102/634] ublk: move zone report data out of request pdu
+Date: Wed,  2 Oct 2024 14:53:22 +0200
+Message-ID: <20241002125815.141032907@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,108 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 04ccecfa959d3b9ae7348780d8e379c6486176ac ]
+[ Upstream commit 9327b51c9a9c864f5177127e09851da9d78b4943 ]
 
-Blamed commit accidentally removed a check for rt->rt6i_idev being NULL,
-as spotted by syzbot:
+ublk zoned takes 16 bytes in each request pdu just for handling REPORT_ZONE
+operation, this way does waste memory since request pdu is allocated
+statically.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 UID: 0 PID: 10998 Comm: syz-executor Not tainted 6.11.0-rc6-syzkaller-00208-g625403177711 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
- RIP: 0010:rt6_uncached_list_flush_dev net/ipv6/route.c:177 [inline]
- RIP: 0010:rt6_disable_ip+0x33e/0x7e0 net/ipv6/route.c:4914
-Code: 41 80 3c 04 00 74 0a e8 90 d0 9b f7 48 8b 7c 24 08 48 8b 07 48 89 44 24 10 4c 89 f0 48 c1 e8 03 48 b9 00 00 00 00 00 fc ff df <80> 3c 08 00 74 08 4c 89 f7 e8 64 d0 9b f7 48 8b 44 24 18 49 39 06
-RSP: 0018:ffffc900047374e0 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 1ffff1100fdf8f33 RCX: dffffc0000000000
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffff88807efc78c0
-RBP: ffffc900047375d0 R08: 0000000000000003 R09: fffff520008e6e8c
-R10: dffffc0000000000 R11: fffff520008e6e8c R12: 1ffff1100fdf8f18
-R13: ffff88807efc7998 R14: 0000000000000000 R15: ffff88807efc7930
-FS:  0000000000000000(0000) GS:ffff8880b8900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020002a80 CR3: 0000000022f62000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  addrconf_ifdown+0x15d/0x1bd0 net/ipv6/addrconf.c:3856
- addrconf_notify+0x3cb/0x1020
-  notifier_call_chain+0x19f/0x3e0 kernel/notifier.c:93
-  call_netdevice_notifiers_extack net/core/dev.c:2032 [inline]
-  call_netdevice_notifiers net/core/dev.c:2046 [inline]
-  unregister_netdevice_many_notify+0xd81/0x1c40 net/core/dev.c:11352
-  unregister_netdevice_many net/core/dev.c:11414 [inline]
-  unregister_netdevice_queue+0x303/0x370 net/core/dev.c:11289
-  unregister_netdevice include/linux/netdevice.h:3129 [inline]
-  __tun_detach+0x6b9/0x1600 drivers/net/tun.c:685
-  tun_detach drivers/net/tun.c:701 [inline]
-  tun_chr_close+0x108/0x1b0 drivers/net/tun.c:3510
-  __fput+0x24a/0x8a0 fs/file_table.c:422
-  task_work_run+0x24f/0x310 kernel/task_work.c:228
-  exit_task_work include/linux/task_work.h:40 [inline]
-  do_exit+0xa2f/0x27f0 kernel/exit.c:882
-  do_group_exit+0x207/0x2c0 kernel/exit.c:1031
-  __do_sys_exit_group kernel/exit.c:1042 [inline]
-  __se_sys_exit_group kernel/exit.c:1040 [inline]
-  __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1040
-  x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f1acc77def9
-Code: Unable to access opcode bytes at 0x7f1acc77decf.
-RSP: 002b:00007ffeb26fa738 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f1acc77def9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000043
-RBP: 00007f1acc7dd508 R08: 00007ffeb26f84d7 R09: 0000000000000003
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-R13: 0000000000000003 R14: 00000000ffffffff R15: 00007ffeb26fa8e0
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
- RIP: 0010:rt6_uncached_list_flush_dev net/ipv6/route.c:177 [inline]
- RIP: 0010:rt6_disable_ip+0x33e/0x7e0 net/ipv6/route.c:4914
-Code: 41 80 3c 04 00 74 0a e8 90 d0 9b f7 48 8b 7c 24 08 48 8b 07 48 89 44 24 10 4c 89 f0 48 c1 e8 03 48 b9 00 00 00 00 00 fc ff df <80> 3c 08 00 74 08 4c 89 f7 e8 64 d0 9b f7 48 8b 44 24 18 49 39 06
-RSP: 0018:ffffc900047374e0 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 1ffff1100fdf8f33 RCX: dffffc0000000000
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffff88807efc78c0
-RBP: ffffc900047375d0 R08: 0000000000000003 R09: fffff520008e6e8c
-R10: dffffc0000000000 R11: fffff520008e6e8c R12: 1ffff1100fdf8f18
-R13: ffff88807efc7998 R14: 0000000000000000 R15: ffff88807efc7930
-FS:  0000000000000000(0000) GS:ffff8880b8900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020002a80 CR3: 0000000022f62000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Store the transient zone report data into one global xarray, and remove
+it after the report zone request is completed. This way is reasonable
+since report zone is run in slow code path.
 
-Fixes: e332bc67cf5e ("ipv6: Don't call with rt6_uncached_list_flush_dev")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20240913083147.3095442-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 29802d7ca33b ("ublk: enable zoned storage support")
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240812013624.587587-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 62 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 46 insertions(+), 16 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index a9644a8edb960..1febd95822c9a 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -175,7 +175,7 @@ static void rt6_uncached_list_flush_dev(struct net_device *dev)
- 			struct net_device *rt_dev = rt->dst.dev;
- 			bool handled = false;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index fc001e9f95f61..d06c8ed29620b 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -71,9 +71,6 @@ struct ublk_rq_data {
+ 	struct llist_node node;
  
--			if (rt_idev->dev == dev) {
-+			if (rt_idev && rt_idev->dev == dev) {
- 				rt->rt6i_idev = in6_dev_get(blackhole_netdev);
- 				in6_dev_put(rt_idev);
- 				handled = true;
+ 	struct kref ref;
+-	__u64 sector;
+-	__u32 operation;
+-	__u32 nr_zones;
+ };
+ 
+ struct ublk_uring_cmd_pdu {
+@@ -214,6 +211,33 @@ static inline bool ublk_queue_is_zoned(struct ublk_queue *ubq)
+ 
+ #ifdef CONFIG_BLK_DEV_ZONED
+ 
++struct ublk_zoned_report_desc {
++	__u64 sector;
++	__u32 operation;
++	__u32 nr_zones;
++};
++
++static DEFINE_XARRAY(ublk_zoned_report_descs);
++
++static int ublk_zoned_insert_report_desc(const struct request *req,
++		struct ublk_zoned_report_desc *desc)
++{
++	return xa_insert(&ublk_zoned_report_descs, (unsigned long)req,
++			    desc, GFP_KERNEL);
++}
++
++static struct ublk_zoned_report_desc *ublk_zoned_erase_report_desc(
++		const struct request *req)
++{
++	return xa_erase(&ublk_zoned_report_descs, (unsigned long)req);
++}
++
++static struct ublk_zoned_report_desc *ublk_zoned_get_report_desc(
++		const struct request *req)
++{
++	return xa_load(&ublk_zoned_report_descs, (unsigned long)req);
++}
++
+ static int ublk_get_nr_zones(const struct ublk_device *ub)
+ {
+ 	const struct ublk_param_basic *p = &ub->params.basic;
+@@ -310,7 +334,7 @@ static int ublk_report_zones(struct gendisk *disk, sector_t sector,
+ 		unsigned int zones_in_request =
+ 			min_t(unsigned int, remaining_zones, max_zones_per_request);
+ 		struct request *req;
+-		struct ublk_rq_data *pdu;
++		struct ublk_zoned_report_desc desc;
+ 		blk_status_t status;
+ 
+ 		memset(buffer, 0, buffer_length);
+@@ -321,20 +345,23 @@ static int ublk_report_zones(struct gendisk *disk, sector_t sector,
+ 			goto out;
+ 		}
+ 
+-		pdu = blk_mq_rq_to_pdu(req);
+-		pdu->operation = UBLK_IO_OP_REPORT_ZONES;
+-		pdu->sector = sector;
+-		pdu->nr_zones = zones_in_request;
++		desc.operation = UBLK_IO_OP_REPORT_ZONES;
++		desc.sector = sector;
++		desc.nr_zones = zones_in_request;
++		ret = ublk_zoned_insert_report_desc(req, &desc);
++		if (ret)
++			goto free_req;
+ 
+ 		ret = blk_rq_map_kern(disk->queue, req, buffer, buffer_length,
+ 					GFP_KERNEL);
+-		if (ret) {
+-			blk_mq_free_request(req);
+-			goto out;
+-		}
++		if (ret)
++			goto erase_desc;
+ 
+ 		status = blk_execute_rq(req, 0);
+ 		ret = blk_status_to_errno(status);
++erase_desc:
++		ublk_zoned_erase_report_desc(req);
++free_req:
+ 		blk_mq_free_request(req);
+ 		if (ret)
+ 			goto out;
+@@ -368,7 +395,7 @@ static blk_status_t ublk_setup_iod_zoned(struct ublk_queue *ubq,
+ {
+ 	struct ublksrv_io_desc *iod = ublk_get_iod(ubq, req->tag);
+ 	struct ublk_io *io = &ubq->ios[req->tag];
+-	struct ublk_rq_data *pdu = blk_mq_rq_to_pdu(req);
++	struct ublk_zoned_report_desc *desc;
+ 	u32 ublk_op;
+ 
+ 	switch (req_op(req)) {
+@@ -391,12 +418,15 @@ static blk_status_t ublk_setup_iod_zoned(struct ublk_queue *ubq,
+ 		ublk_op = UBLK_IO_OP_ZONE_RESET_ALL;
+ 		break;
+ 	case REQ_OP_DRV_IN:
+-		ublk_op = pdu->operation;
++		desc = ublk_zoned_get_report_desc(req);
++		if (!desc)
++			return BLK_STS_IOERR;
++		ublk_op = desc->operation;
+ 		switch (ublk_op) {
+ 		case UBLK_IO_OP_REPORT_ZONES:
+ 			iod->op_flags = ublk_op | ublk_req_build_flags(req);
+-			iod->nr_zones = pdu->nr_zones;
+-			iod->start_sector = pdu->sector;
++			iod->nr_zones = desc->nr_zones;
++			iod->start_sector = desc->sector;
+ 			return BLK_STS_OK;
+ 		default:
+ 			return BLK_STS_IOERR;
 -- 
 2.43.0
 
