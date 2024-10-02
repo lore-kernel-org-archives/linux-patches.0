@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B048E8F40;
-	Wed,  2 Oct 2024 14:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B415D1D078B;
+	Wed,  2 Oct 2024 14:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880322; cv=none; b=QmVmvFT2Hr70fHTDV/CGa+OzEX4YXN/pGMN1X9X80nC0WCd7Rvhbi8mqaPw+9tGctqvODwEviJO0NaTow/tiHIBSJhfAdMFW/bBIFdaXxYw5QnbGUi1PKfchZoC3qqSfUoo1i3Pudio2VG76uGXTDjVbQWJkn0HxEFaf0SV3XwI=
+	t=1727880325; cv=none; b=pyTLGCjY2jEM/56MofKnKZkEX5iA7hJwcX4hSXVYlErsd0Yqt8IiaMJeYjn3CX9wukOQw1rPbRbum/QDLgxmGtpkUkH6IFyA1ozYC+7EJl4jqbGRLuiYdnJImzpF3aUt4LzsB+OO6mXT7NC1/tPpYvJBO9aJJH4MK3KFAq5ziRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880322; c=relaxed/simple;
-	bh=Z3jY6t8gQ9muyEEmk0ERc3dQLuCncxgGcwQ5WJ0LpIE=;
+	s=arc-20240116; t=1727880325; c=relaxed/simple;
+	bh=nYRiTQYeD6dtM2qducOEIjnJaf5RbnK7LhPz2wRIfC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRrWCQ7dnDdRos1BXWi531o8kuoqsZwhrJjJhp+pMBLe5iksV3YOuhhmESl/ez0rVDUc+1yzz89074g8ke1rGWsKL++rgei/WsZYx5T80M18J9VAyLZE7BF/rEPl9Qd/7TQRlQ5oHPv2mVwTqE9/05fNWFeokrCYqKlToNpvLq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcwZLXLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dGtjPL/Dbl3OXn3vH4wPq3u4Vqm1ssodrbgx5ng8Zhu0M3eCWH8m/jIvSWQrLjzihaL7tnhvmKfT9K7VFW+J37dcYERusYFe5eDIJN6xVARz9PmrgW1zsG/jMPsKiU6ZDFw3m10m1uvqtW2u5hGRQujSPK8pkzWz+NLNqkxxOCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loytPz1w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcwZLXLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3851FC4CECE;
-	Wed,  2 Oct 2024 14:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loytPz1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B321C4CEC2;
+	Wed,  2 Oct 2024 14:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880322;
-	bh=Z3jY6t8gQ9muyEEmk0ERc3dQLuCncxgGcwQ5WJ0LpIE=;
+	s=korg; t=1727880325;
+	bh=nYRiTQYeD6dtM2qducOEIjnJaf5RbnK7LhPz2wRIfC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HcwZLXLhWaJz66L3yt1kDv1T4MKWXa2XT1jQts/Dmg1BnsyeL3tcofXQQfmXfMz2m
-	 lweL7XXgIRyxg4YQsdZ2lDGx53PI/lkiGcSCOfXzw9NL/yReVJmyz+c7294T6Lop0I
-	 JTUYfAqfXKVRFNZk2PRDVOSZ7ZlmBA1NRVXJrLI4=
+	b=loytPz1w9MzcPljk3j16uBKxn054kY9DYPCVc3W9EVczrkW5FW7Jm0buBdrotbdEg
+	 +Q+IwrvSaL1ir9uWfChTKN9lHRQq/B/UC6sFAhtXD98jV6gUZG6HHv+hVQ8xj7U/an
+	 A1pvdjtrPy5htykiu4R5agb+0RrI1xI0vZNcuw6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Mina Almasry <almasrymina@google.com>,
-	Segher Boessenkool <segher@kernel.crashing.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.6 419/538] powerpc/atomic: Use YZ constraints for DS-form instructions
-Date: Wed,  2 Oct 2024 15:00:58 +0200
-Message-ID: <20241002125808.972756782@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 420/538] fs: Create a generic is_dot_dotdot() utility
+Date: Wed,  2 Oct 2024 15:00:59 +0200
+Message-ID: <20241002125809.012870214@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,112 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 39190ac7cff1fd15135fa8e658030d9646fdb5f2 upstream.
+commit 42c3732fa8073717dd7d924472f1c0bc5b452fdc upstream.
 
-The 'ld' and 'std' instructions require a 4-byte aligned displacement
-because they are DS-form instructions. But the "m" asm constraint
-doesn't enforce that.
+De-duplicate the same functionality in several places by hoisting
+the is_dot_dotdot() utility function into linux/fs.h.
 
-That can lead to build errors if the compiler chooses a non-aligned
-displacement, as seen with GCC 14:
-
-  /tmp/ccuSzwiR.s: Assembler messages:
-  /tmp/ccuSzwiR.s:2579: Error: operand out of domain (39 is not a multiple of 4)
-  make[5]: *** [scripts/Makefile.build:229: net/core/page_pool.o] Error 1
-
-Dumping the generated assembler shows:
-
-  ld 8,39(8)       # MEM[(const struct atomic64_t *)_29].counter, t
-
-Use the YZ constraints to tell the compiler either to generate a DS-form
-displacement, or use an X-form instruction, either of which prevents the
-build error.
-
-See commit 2d43cc701b96 ("powerpc/uaccess: Fix build errors seen with
-GCC 13/14") for more details on the constraint letters.
-
-Fixes: 9f0cbea0d8cc ("[POWERPC] Implement atomic{, 64}_{read, write}() without volatile")
-Cc: stable@vger.kernel.org # v2.6.24+
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/all/20240913125302.0a06b4c7@canb.auug.org.au
-Tested-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Segher Boessenkool <segher@kernel.crashing.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240916120510.2017749-1-mpe@ellerman.id.au
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/asm-compat.h |    6 ++++++
- arch/powerpc/include/asm/atomic.h     |    5 +++--
- arch/powerpc/include/asm/uaccess.h    |    7 +------
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ fs/crypto/fname.c    |    8 +-------
+ fs/ecryptfs/crypto.c |   10 ----------
+ fs/f2fs/f2fs.h       |   11 -----------
+ fs/namei.c           |    6 ++----
+ include/linux/fs.h   |   11 +++++++++++
+ 5 files changed, 14 insertions(+), 32 deletions(-)
 
---- a/arch/powerpc/include/asm/asm-compat.h
-+++ b/arch/powerpc/include/asm/asm-compat.h
-@@ -39,6 +39,12 @@
- #define STDX_BE	stringify_in_c(stdbrx)
- #endif
+--- a/fs/crypto/fname.c
++++ b/fs/crypto/fname.c
+@@ -74,13 +74,7 @@ struct fscrypt_nokey_name {
  
-+#ifdef CONFIG_CC_IS_CLANG
-+#define DS_FORM_CONSTRAINT "Z<>"
-+#else
-+#define DS_FORM_CONSTRAINT "YZ<>"
-+#endif
-+
- #else /* 32-bit */
- 
- /* operations for longs and pointers */
---- a/arch/powerpc/include/asm/atomic.h
-+++ b/arch/powerpc/include/asm/atomic.h
-@@ -11,6 +11,7 @@
- #include <asm/cmpxchg.h>
- #include <asm/barrier.h>
- #include <asm/asm-const.h>
-+#include <asm/asm-compat.h>
- 
- /*
-  * Since *_return_relaxed and {cmp}xchg_relaxed are implemented with
-@@ -197,7 +198,7 @@ static __inline__ s64 arch_atomic64_read
- 	if (IS_ENABLED(CONFIG_PPC_KERNEL_PREFIXED))
- 		__asm__ __volatile__("ld %0,0(%1)" : "=r"(t) : "b"(&v->counter));
- 	else
--		__asm__ __volatile__("ld%U1%X1 %0,%1" : "=r"(t) : "m<>"(v->counter));
-+		__asm__ __volatile__("ld%U1%X1 %0,%1" : "=r"(t) : DS_FORM_CONSTRAINT (v->counter));
- 
- 	return t;
- }
-@@ -208,7 +209,7 @@ static __inline__ void arch_atomic64_set
- 	if (IS_ENABLED(CONFIG_PPC_KERNEL_PREFIXED))
- 		__asm__ __volatile__("std %1,0(%2)" : "=m"(v->counter) : "r"(i), "b"(&v->counter));
- 	else
--		__asm__ __volatile__("std%U0%X0 %1,%0" : "=m<>"(v->counter) : "r"(i));
-+		__asm__ __volatile__("std%U0%X0 %1,%0" : "=" DS_FORM_CONSTRAINT (v->counter) : "r"(i));
- }
- 
- #define ATOMIC64_OP(op, asm_op)						\
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -6,6 +6,7 @@
- #include <asm/page.h>
- #include <asm/extable.h>
- #include <asm/kup.h>
-+#include <asm/asm-compat.h>
- 
- #ifdef __powerpc64__
- /* We use TASK_SIZE_USER64 as TASK_SIZE is not constant */
-@@ -92,12 +93,6 @@ __pu_failed:							\
- 		: label)
- #endif
- 
--#ifdef CONFIG_CC_IS_CLANG
--#define DS_FORM_CONSTRAINT "Z<>"
--#else
--#define DS_FORM_CONSTRAINT "YZ<>"
--#endif
+ static inline bool fscrypt_is_dot_dotdot(const struct qstr *str)
+ {
+-	if (str->len == 1 && str->name[0] == '.')
+-		return true;
 -
- #ifdef __powerpc64__
- #ifdef CONFIG_PPC_KERNEL_PREFIXED
- #define __put_user_asm2_goto(x, ptr, label)			\
+-	if (str->len == 2 && str->name[0] == '.' && str->name[1] == '.')
+-		return true;
+-
+-	return false;
++	return is_dot_dotdot(str->name, str->len);
+ }
+ 
+ /**
+--- a/fs/ecryptfs/crypto.c
++++ b/fs/ecryptfs/crypto.c
+@@ -1949,16 +1949,6 @@ out:
+ 	return rc;
+ }
+ 
+-static bool is_dot_dotdot(const char *name, size_t name_size)
+-{
+-	if (name_size == 1 && name[0] == '.')
+-		return true;
+-	else if (name_size == 2 && name[0] == '.' && name[1] == '.')
+-		return true;
+-
+-	return false;
+-}
+-
+ /**
+  * ecryptfs_decode_and_decrypt_filename - converts the encoded cipher text name to decoded plaintext
+  * @plaintext_name: The plaintext name
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3370,17 +3370,6 @@ static inline bool f2fs_cp_error(struct
+ 	return is_set_ckpt_flags(sbi, CP_ERROR_FLAG);
+ }
+ 
+-static inline bool is_dot_dotdot(const u8 *name, size_t len)
+-{
+-	if (len == 1 && name[0] == '.')
+-		return true;
+-
+-	if (len == 2 && name[0] == '.' && name[1] == '.')
+-		return true;
+-
+-	return false;
+-}
+-
+ static inline void *f2fs_kmalloc(struct f2fs_sb_info *sbi,
+ 					size_t size, gfp_t flags)
+ {
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2667,10 +2667,8 @@ static int lookup_one_common(struct mnt_
+ 	if (!len)
+ 		return -EACCES;
+ 
+-	if (unlikely(name[0] == '.')) {
+-		if (len < 2 || (len == 2 && name[1] == '.'))
+-			return -EACCES;
+-	}
++	if (is_dot_dotdot(name, len))
++		return -EACCES;
+ 
+ 	while (len--) {
+ 		unsigned int c = *(const unsigned char *)name++;
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -2844,6 +2844,17 @@ extern bool path_is_under(const struct p
+ 
+ extern char *file_path(struct file *, char *, int);
+ 
++/**
++ * is_dot_dotdot - returns true only if @name is "." or ".."
++ * @name: file name to check
++ * @len: length of file name, in bytes
++ */
++static inline bool is_dot_dotdot(const char *name, size_t len)
++{
++	return len && unlikely(name[0] == '.') &&
++		(len == 1 || (len == 2 && name[1] == '.'));
++}
++
+ #include <linux/err.h>
+ 
+ /* needed for stackable file system support */
 
 
