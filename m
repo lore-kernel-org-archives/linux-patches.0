@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848E61D0F5A;
-	Wed,  2 Oct 2024 14:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4111D1E62;
+	Wed,  2 Oct 2024 14:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880565; cv=none; b=a92MaHJKUDN4XMERMU5tIQ33YnRajGCuGlSD/fNaSJhpdZ3RQ/GLMDm49HUxvPcA25W+CLovkt95F9eoQ3qw60DXEuzYm9rOxn9iod/qKB5gDFjE3jZNLJjLXB0wL5vHeYjLf8XiWsGvxVYcd8WoKVc1TnYTdKnh8tf6/wVJafY=
+	t=1727880568; cv=none; b=T8JxMZwjE08+lxFNgEIZowAPCGKqzjbWr7BKYSV0LCGDg0+xLySxQD8ymN1IrjJMW+FdKaT5TxVxPnw4YEnrcTEALXBzXM6oxyI7HBvb/xE9KCaxO/p90IGLr3adyE+ZwEaWMUaqfR/IEXGrPzqfSCKn2KGikXVd3dyANEHKqp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880565; c=relaxed/simple;
-	bh=Z/MBlxx08emoqCyEF0INVVvFPsKFTTdhdMwpl0Sy0jg=;
+	s=arc-20240116; t=1727880568; c=relaxed/simple;
+	bh=+JVe8VG1AtPpQ6kFqFIr8NT1+uHzipfyNEuwvU7lVos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjLENjFzcJfZzDtiobvX/MCwSEnWVc9e3YR9thr/s3Ogy64KOhpaoljKJ1onmsnc2oNLhARWYW1oXD0x3FGZn7gNse2XgLLLGjBODneHNgUlddWIKY9J3sCU6esyMG2M69BdWsYLP3dy9QNkP6mIOF7xVaLc4EVbwSvUyKEOJsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DdzmI7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vix33veTIgTxvhxjBspoft0Q9g5t1oNl7zvj6C13/+FE2eaki+wS+brJbxx72VkHHKoMao0ZngEccuxkn8yXue2apT+1rm94PaesbAcmDmYmI1sPA2ygH4lJuBK8MhxzC119XxrKz5jxxfZJ+wLfHSKE8KwFQ/IGi/X3dv6S9Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bv+AEuaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DdzmI7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F709C4CEC2;
-	Wed,  2 Oct 2024 14:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bv+AEuaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE35AC4CECE;
+	Wed,  2 Oct 2024 14:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880565;
-	bh=Z/MBlxx08emoqCyEF0INVVvFPsKFTTdhdMwpl0Sy0jg=;
+	s=korg; t=1727880568;
+	bh=+JVe8VG1AtPpQ6kFqFIr8NT1+uHzipfyNEuwvU7lVos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DdzmI7CcUw+cIeH9/zMM2aF6C8oiUPbxPeSQPMd1v9jJ9L7bJfqlpCFsA7Cd88OV
-	 ndqaiSDRxqa6kB5MUrbbx6YA1x6QgpStNutW9VL7MHm7t02ZsTyoUvlsmcDyftrnRU
-	 cSzJR4yafWv51jONLzlgBN6CLf/xkBnwFPRwOz0E=
+	b=bv+AEuaXEhfFnz0V8Dp5S5mxAXwfiyMDzubgOLm268IG+92F1Wxm4pAwfpYB/tymg
+	 h/2Ay7CzKqOMqzadJP+VM9lW8He2eILiNixXNoxYjCG/fizlShJMR9gKajfOuJbqEF
+	 L7OA+zht5Kb7s9FMjZkNF1+iU0y7a0I3LvXes9ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Qingqing Zhou <quic_qqzhou@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 472/538] arm64: dts: qcom: sa8775p: Mark APPS and PCIe SMMUs as DMA coherent
-Date: Wed,  2 Oct 2024 15:01:51 +0200
-Message-ID: <20241002125811.075519340@linuxfoundation.org>
+	Marek Kraus <gamiee@pine64.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.6 473/538] arm64: dts: rockchip: Correct the Pinebook Pro battery design capacity
+Date: Wed,  2 Oct 2024 15:01:52 +0200
+Message-ID: <20241002125811.115060676@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,45 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit 421688265d7f5d3ff4211982e7231765378bb64f upstream.
+commit def33fb1191207f5afa6dcb681d71fef2a6c1293 upstream.
 
-The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
-mark the APPS and PCIe ones as well.
+All batches of the Pine64 Pinebook Pro, except the latest batch (as of 2024)
+whose hardware design was revised due to the component shortage, use a 1S
+lithium battery whose nominal/design capacity is 10,000 mAh, according to the
+battery datasheet. [1][2]  Let's correct the design full-charge value in the
+Pinebook Pro board dts, to improve the accuracy of the hardware description,
+and to hopefully improve the accuracy of the fuel gauge a bit on all units
+that don't belong to the latest batch.
 
-Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
-Fixes: 2dba7a613a6e ("arm64: dts: qcom: sa8775p: add the pcie smmu node")
+The above-mentioned latest batch uses a different 1S lithium battery with
+a slightly lower capacity, more precisely 9,600 mAh.  To make the fuel gauge
+work reliably on the latest batch, a sample battery would need to be sent to
+CellWise, to obtain its proprietary battery profile, whose data goes into
+"cellwise,battery-profile" in the Pinebook Pro board dts.  Without that data,
+the fuel gauge reportedly works unreliably, so changing the design capacity
+won't have any negative effects on the already unreliable operation of the
+fuel gauge in the Pinebook Pros that belong to the latest batch.
+
+According to the battery datasheet, its voltage can go as low as 2.75 V while
+discharging, but it's better to leave the current 3.0 V value in the dts file,
+because of the associated Pinebook Pro's voltage regulation issues.
+
+[1] https://wiki.pine64.org/index.php/Pinebook_Pro#Battery
+[2] https://files.pine64.org/doc/datasheet/pinebook/40110175P%203.8V%2010000mAh%E8%A7%84%E6%A0%BC%E4%B9%A6-14.pdf
+
+Fixes: c7c4d698cd28 ("arm64: dts: rockchip: add fuel gauge to Pinebook Pro dts")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20240723075948.9545-1-quic_qqzhou%40quicinc.com
-Link: https://lore.kernel.org/r/20240725072117.22425-1-quic_qqzhou@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Marek Kraus <gamiee@pine64.org>
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/731f8ef9b1a867bcc730d19ed277c8c0534c0842.1721065172.git.dsimic@manjaro.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -1951,6 +1951,7 @@
- 			reg = <0x0 0x15000000 0x0 0x100000>;
- 			#iommu-cells = <2>;
- 			#global-interrupts = <2>;
-+			dma-coherent;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -37,7 +37,7 @@
  
- 			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-@@ -2089,6 +2090,7 @@
- 			reg = <0x0 0x15200000 0x0 0x80000>;
- 			#iommu-cells = <2>;
- 			#global-interrupts = <2>;
-+			dma-coherent;
- 
- 			interrupts = <GIC_SPI 920 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 921 IRQ_TYPE_LEVEL_HIGH>,
+ 	bat: battery {
+ 		compatible = "simple-battery";
+-		charge-full-design-microamp-hours = <9800000>;
++		charge-full-design-microamp-hours = <10000000>;
+ 		voltage-max-design-microvolt = <4350000>;
+ 		voltage-min-design-microvolt = <3000000>;
+ 	};
 
 
