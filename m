@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A351D07AB;
-	Wed,  2 Oct 2024 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9681D0940;
+	Wed,  2 Oct 2024 14:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880574; cv=none; b=ra/Wy9hxzyVnwjl8bNmOUCxNE0NocfNcZD+R/AQ1GVjS67QN63gQxZ1RbBm6jIsQurLcobPCW7fRWRnU/5NIp9PEEFSx2Wiz7yTcMAYyIcnnnUlBzrFR8qNdcOgHLP7GM+tYMXJ0AEOQecm+u8MNUB9Pkd19ObIfuqdTc9Tf3B8=
+	t=1727880577; cv=none; b=dA+ZJu6SqQGVGXXwvIkJQs+wpol0jMf98xDog2oBbxDQF0E98QuFDdZ+zVG3LXDCAQ1udlPrFhz5CWo7eVftn6kq6/vMkkvvQkiTXtkU3IN6KSijyuSS5Umf0QviRjUxxkg4iCFv4fX8mu38DgxMze4CZSXRlyzbsmZsenqULD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880574; c=relaxed/simple;
-	bh=63ObZX73+ik31Z7Ouj0On2wKfPR0EpxDAG0y1NaEXL4=;
+	s=arc-20240116; t=1727880577; c=relaxed/simple;
+	bh=W7wy2HMo1scUK37UCAIHNCFf62qlMj+/CpYApjIh/HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p0gFvf+Rxh65VJ6/fWx0s2Gxwx69Crn0C2DoO7hMRcQbz7sQdURnE5/xl9FvT/6MKjYWOmsIVJVvIQqKoBYpp/w63jvI4P7CzxRyI02T3msKGxUDp6Ap19YB6biv3IwyI71aVZwvHvgs5AxZ7+0XFL2FdgMaTYzXr8RY0C6RjPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNlIHIdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UtQuwRHXSqNN728c4ERrvgsQQDoWzIX2zqvQ12nJy/zBOR50dOnvZxmEdE6mGj5DDHjjf8uvSOzgOSyp4GmofZYVwYcu4aKfvbaPWtTXceRHh6dgEKHVhpOxd7le4oIZi2lLf42uwQmeN7m/poMqgmCIYOBwa5q00UMZjLRH4ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdcD9k8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNlIHIdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED744C4CEC2;
-	Wed,  2 Oct 2024 14:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdcD9k8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52FC4CEC2;
+	Wed,  2 Oct 2024 14:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880574;
-	bh=63ObZX73+ik31Z7Ouj0On2wKfPR0EpxDAG0y1NaEXL4=;
+	s=korg; t=1727880577;
+	bh=W7wy2HMo1scUK37UCAIHNCFf62qlMj+/CpYApjIh/HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNlIHIdN+zT3TzPtlF0IUFmw3s8P+b5GalTq6FQjVsvUskzKF5cQoPeD0rUoTvz8b
-	 l52sGvdrTZYdWAahe6YNtFuUa/DEn/e49ijTt5TxbxK8kXQkXjoo+H/ETNyj4cQ0yT
-	 +ASSLmmLxp2LhSTvHEgn8hD940OY+xZRRIy3ojTY=
+	b=NdcD9k8EdmWHnWxcTp2AQUTjbrTpvc/73ApOBFPpU0kXoloWx6bhattU9adtfBLhD
+	 0C6b3cBISgwM01+eKWB++rRWA1kEFW5+Khd49F6mFoGfy+R42N9BDpAvlx4pT34oQM
+	 MZ/1U/LqkB1jLU5Rp6Or2WWM5s6ivhs4QQTR152w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Christian Brauner <brauner@kernel.org>,
-	James Morris <jmorris@namei.org>,
-	Jann Horn <jannh@google.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.6 475/538] fs: Fix file_set_fowner LSM hook inconsistencies
-Date: Wed,  2 Oct 2024 15:01:54 +0200
-Message-ID: <20241002125811.193744643@linuxfoundation.org>
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Guoqing Jiang <guoqing.jiang@canonical.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 466/538] hwrng: mtk - Use devm_pm_runtime_enable
+Date: Wed,  2 Oct 2024 15:01:45 +0200
+Message-ID: <20241002125810.838033142@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,94 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Guoqing Jiang <guoqing.jiang@canonical.com>
 
-commit 26f204380a3c182e5adf1a798db0724d6111b597 upstream.
+commit 78cb66caa6ab5385ac2090f1aae5f3c19e08f522 upstream.
 
-The fcntl's F_SETOWN command sets the process that handle SIGIO/SIGURG
-for the related file descriptor.  Before this change, the
-file_set_fowner LSM hook was always called, ignoring the VFS logic which
-may not actually change the process that handles SIGIO (e.g. TUN, TTY,
-dnotify), nor update the related UID/EUID.
+Replace pm_runtime_enable with the devres-enabled version which
+can trigger pm_runtime_disable.
 
-Moreover, because security_file_set_fowner() was called without lock
-(e.g. f_owner.lock), concurrent F_SETOWN commands could result to a race
-condition and inconsistent LSM states (e.g. SELinux's fown_sid) compared
-to struct fown_struct's UID/EUID.
+Otherwise, the below appears during reload driver.
 
-This change makes sure the LSM states are always in sync with the VFS
-state by moving the security_file_set_fowner() call close to the
-UID/EUID updates and using the same f_owner.lock .
+mtk_rng 1020f000.rng: Unbalanced pm_runtime_enable!
 
-Rename f_modown() to __f_setown() to simplify code.
-
-Cc: stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Casey Schaufler <casey@schaufler-ca.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: James Morris <jmorris@namei.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: Serge E. Hallyn <serge@hallyn.com>
-Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 81d2b34508c6 ("hwrng: mtk - add runtime PM support")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fcntl.c |   14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/char/hw_random/mtk-rng.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -86,8 +86,8 @@ static int setfl(int fd, struct file * f
- 	return error;
- }
+--- a/drivers/char/hw_random/mtk-rng.c
++++ b/drivers/char/hw_random/mtk-rng.c
+@@ -142,7 +142,7 @@ static int mtk_rng_probe(struct platform
+ 	dev_set_drvdata(&pdev->dev, priv);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+-	pm_runtime_enable(&pdev->dev);
++	devm_pm_runtime_enable(&pdev->dev);
  
--static void f_modown(struct file *filp, struct pid *pid, enum pid_type type,
--                     int force)
-+void __f_setown(struct file *filp, struct pid *pid, enum pid_type type,
-+		int force)
- {
- 	write_lock_irq(&filp->f_owner.lock);
- 	if (force || !filp->f_owner.pid) {
-@@ -97,19 +97,13 @@ static void f_modown(struct file *filp,
+ 	dev_info(&pdev->dev, "registered RNG driver\n");
  
- 		if (pid) {
- 			const struct cred *cred = current_cred();
-+			security_file_set_fowner(filp);
- 			filp->f_owner.uid = cred->uid;
- 			filp->f_owner.euid = cred->euid;
- 		}
- 	}
- 	write_unlock_irq(&filp->f_owner.lock);
- }
--
--void __f_setown(struct file *filp, struct pid *pid, enum pid_type type,
--		int force)
--{
--	security_file_set_fowner(filp);
--	f_modown(filp, pid, type, force);
--}
- EXPORT_SYMBOL(__f_setown);
- 
- int f_setown(struct file *filp, int who, int force)
-@@ -145,7 +139,7 @@ EXPORT_SYMBOL(f_setown);
- 
- void f_delown(struct file *filp)
- {
--	f_modown(filp, NULL, PIDTYPE_TGID, 1);
-+	__f_setown(filp, NULL, PIDTYPE_TGID, 1);
- }
- 
- pid_t f_getown(struct file *filp)
 
 
