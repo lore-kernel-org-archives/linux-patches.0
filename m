@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622C11D049F;
-	Wed,  2 Oct 2024 13:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EECC1D079D;
+	Wed,  2 Oct 2024 13:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877416; cv=none; b=EXEZmKXx0TlA+4vZIur03mskLqCQtZiB6V7Is3yKyUq54fjhjTfp8ROx7oxAUrotyfKRQ995FtCHxjgofkCjjaTzHarPMm1YvOf1jX8qPjYqyQSOzP+zTWfGOaSpYpPLUw5h0BdJ3l7UoWQfOwn0mpU4s26YX8l7fKswaxpd/z0=
+	t=1727877419; cv=none; b=Bm1zSit8M8wejWWOuQespwDf8Kaw++7GHRBPgQpNBi3hSmwE10e4mjDt8Jptoit6OQszge20TwhypliotTB/5kmbULFpEy/hicvRd27SX94lYhZQ1MmfIkhiWkN4seZqtrv2TWwfmNGZ5l/hyg8HC8lmqzd+O3a310/1IfLltCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877416; c=relaxed/simple;
-	bh=gmbOuJLJga27CVtgXNiyVJ4do4MN+F7v4Vr6dmtMnSQ=;
+	s=arc-20240116; t=1727877419; c=relaxed/simple;
+	bh=I0CKyWHB9AUkqaEWtDb8NbvOc0DmQs75OD8s3YSsrLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCS9eUEws/0MzWA3rxvGcchoqqXq4HMyrDfjQIgCSPYrtLT/Yl/ueajynD17m8yzHzAZmv8eTrTXHSs9LkujDZKuyvL2Mx0UhRywYXyWE8VOAoqRXkV7pJ3DQDT6iXWs8TZ+ct+9kt46QN1s1N5ana7SosmgF/VI55ltdeAjESU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrDCLs84; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JaoNHPK3eRTiE48hamla3ynIjfd+/Mft1Me4pSf0a7Z/OBzlbZZ8fXrsKszTq7LaYf//e2FiccyQRMq4cE1bXwbq26lBT1n8J7bltgG9iIhuIBH9aoq6r+x8Y7H3whhcFJicR5RQTO6LSR6fBUm4ttbRC91U2kVPLBDJYCDRAfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC99d6nd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrDCLs84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23DDC4CECD;
-	Wed,  2 Oct 2024 13:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC99d6nd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3B1C4CED4;
+	Wed,  2 Oct 2024 13:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877416;
-	bh=gmbOuJLJga27CVtgXNiyVJ4do4MN+F7v4Vr6dmtMnSQ=;
+	s=korg; t=1727877419;
+	bh=I0CKyWHB9AUkqaEWtDb8NbvOc0DmQs75OD8s3YSsrLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrDCLs84bbEJSjTYeY8CY1ZxxAXqg5mTtvhYaF5QP3I2v3Qmauw/+YzW0mYJg6l6P
-	 oPG33P7LDRYeeN+vNs4qOedvr/sUH/4YVxtjvHQZQ+PcOaJ53Ev+fMQqlqMvM1w0nv
-	 PvbSijMhPvHSleWqHMeiKZTV2x6LwH35w0Syagvs=
+	b=iC99d6nd3hyKAdH7lalhtDQ9HQag025JNQQ+CKBX5YkWMZXaYWSHn87gWW8DHWjuj
+	 P9ybCEXfZVn6NZU28h4+VdxTvj1P+iHwnQLLVpUWbs1s6O6zRq0ibHBHahSd7WoxLn
+	 za0waqtwKanGONAoFZP21QuTERAvGwBBJw0Api+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 073/634] crypto: hisilicon/hpre - mask cluster timeout error
-Date: Wed,  2 Oct 2024 14:52:53 +0200
-Message-ID: <20241002125813.989303281@linuxfoundation.org>
+Subject: [PATCH 6.10 074/634] crypto: hisilicon/qm - reset device before enabling it
+Date: Wed,  2 Oct 2024 14:52:54 +0200
+Message-ID: <20241002125814.028678329@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,111 +53,430 @@ Content-Transfer-Encoding: 8bit
 
 From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 145013f723947c83b1a5f76a0cf6e7237d59e973 ]
+[ Upstream commit 5d2d1ee0874c26b8010ddf7f57e2f246e848af38 ]
 
-The timeout threshold of the hpre cluster is 16ms. When the CPU
-and device share virtual address, page fault processing time may
-exceed the threshold.
+Before the device is enabled again, the device may still
+store the previously processed data. If an error occurs in
+the previous task, the device may fail to be enabled again.
+Therefore, before enabling device, reset the device to restore
+the initial state.
 
-In the current test, there is a high probability that the
-cluster times out. However, the cluster is waiting for the
-completion of memory access, which is not an error, the device
-does not need to be reset. If an error occurs in the cluster,
-qm also reports the error. Therefore, the cluster timeout
-error of hpre can be masked.
-
-Fixes: d90fab0deb8e ("crypto: hisilicon/qm - get error type from hardware registers")
 Signed-off-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: b04f06fc0243 ("crypto: hisilicon/qm - inject error before stopping queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_main.c |  32 +++---
+ drivers/crypto/hisilicon/qm.c             | 114 +++++++++++++++-------
+ drivers/crypto/hisilicon/sec2/sec_main.c  |  16 ++-
+ drivers/crypto/hisilicon/zip/zip_main.c   |  23 +++--
+ 4 files changed, 121 insertions(+), 64 deletions(-)
 
 diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 10aa4da93323f..f8340d68afe1d 100644
+index f8340d68afe1d..6b536ad2ada52 100644
 --- a/drivers/crypto/hisilicon/hpre/hpre_main.c
 +++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -13,9 +13,7 @@
- #include <linux/uacce.h>
- #include "hpre.h"
+@@ -354,6 +354,8 @@ static struct dfx_diff_registers hpre_diff_regs[] = {
+ 	},
+ };
  
--#define HPRE_QM_ABNML_INT_MASK		0x100004
- #define HPRE_CTRL_CNT_CLR_CE_BIT	BIT(0)
--#define HPRE_COMM_CNT_CLR_CE		0x0
- #define HPRE_CTRL_CNT_CLR_CE		0x301000
- #define HPRE_FSM_MAX_CNT		0x301008
- #define HPRE_VFG_AXQOS			0x30100c
-@@ -42,7 +40,6 @@
- #define HPRE_HAC_INT_SET		0x301500
- #define HPRE_RNG_TIMEOUT_NUM		0x301A34
- #define HPRE_CORE_INT_ENABLE		0
--#define HPRE_CORE_INT_DISABLE		GENMASK(21, 0)
- #define HPRE_RDCHN_INI_ST		0x301a00
- #define HPRE_CLSTR_BASE			0x302000
- #define HPRE_CORE_EN_OFFSET		0x04
-@@ -66,7 +63,6 @@
- #define HPRE_CLSTR_ADDR_INTRVL		0x1000
- #define HPRE_CLUSTER_INQURY		0x100
- #define HPRE_CLSTR_ADDR_INQRY_RSLT	0x104
--#define HPRE_TIMEOUT_ABNML_BIT		6
- #define HPRE_PASID_EN_BIT		9
- #define HPRE_REG_RD_INTVRL_US		10
- #define HPRE_REG_RD_TMOUT_US		1000
-@@ -203,9 +199,9 @@ static const struct hisi_qm_cap_info hpre_basic_info[] = {
- 	{HPRE_QM_RESET_MASK_CAP, 0x3128, 0, GENMASK(31, 0), 0x0, 0xC37, 0x6C37},
- 	{HPRE_QM_OOO_SHUTDOWN_MASK_CAP, 0x3128, 0, GENMASK(31, 0), 0x0, 0x4, 0x6C37},
- 	{HPRE_QM_CE_MASK_CAP, 0x312C, 0, GENMASK(31, 0), 0x0, 0x8, 0x8},
--	{HPRE_NFE_MASK_CAP, 0x3130, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0x1FFFFFE},
--	{HPRE_RESET_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0xBFFFFE},
--	{HPRE_OOO_SHUTDOWN_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x22, 0xBFFFFE},
-+	{HPRE_NFE_MASK_CAP, 0x3130, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0x1FFFC3E},
-+	{HPRE_RESET_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0xBFFC3E},
-+	{HPRE_OOO_SHUTDOWN_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x22, 0xBFFC3E},
- 	{HPRE_CE_MASK_CAP, 0x3138, 0, GENMASK(31, 0), 0x0, 0x1, 0x1},
- 	{HPRE_CLUSTER_NUM_CAP, 0x313c, 20, GENMASK(3, 0), 0x0,  0x4, 0x1},
- 	{HPRE_CORE_TYPE_NUM_CAP, 0x313c, 16, GENMASK(3, 0), 0x0, 0x2, 0x2},
-@@ -654,11 +650,6 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
- 	writel(HPRE_QM_USR_CFG_MASK, qm->io_base + QM_AWUSER_M_CFG_ENABLE);
- 	writel_relaxed(HPRE_QM_AXI_CFG_MASK, qm->io_base + QM_AXI_M_CFG);
- 
--	/* HPRE need more time, we close this interrupt */
--	val = readl_relaxed(qm->io_base + HPRE_QM_ABNML_INT_MASK);
--	val |= BIT(HPRE_TIMEOUT_ABNML_BIT);
--	writel_relaxed(val, qm->io_base + HPRE_QM_ABNML_INT_MASK);
--
- 	if (qm->ver >= QM_HW_V3)
- 		writel(HPRE_RSA_ENB | HPRE_ECC_ENB,
- 			qm->io_base + HPRE_TYPES_ENB);
-@@ -667,9 +658,7 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
- 
- 	writel(HPRE_QM_VFG_AX_MASK, qm->io_base + HPRE_VFG_AXCACHE);
- 	writel(0x0, qm->io_base + HPRE_BD_ENDIAN);
--	writel(0x0, qm->io_base + HPRE_INT_MASK);
- 	writel(0x0, qm->io_base + HPRE_POISON_BYPASS);
--	writel(0x0, qm->io_base + HPRE_COMM_CNT_CLR_CE);
- 	writel(0x0, qm->io_base + HPRE_ECC_BYPASS);
- 
- 	writel(HPRE_BD_USR_MASK, qm->io_base + HPRE_BD_ARUSR_CFG);
-@@ -759,7 +748,7 @@ static void hpre_hw_error_disable(struct hisi_qm *qm)
- 
- static void hpre_hw_error_enable(struct hisi_qm *qm)
++static const struct hisi_qm_err_ini hpre_err_ini;
++
+ bool hpre_check_alg_support(struct hisi_qm *qm, u32 alg)
  {
--	u32 ce, nfe;
-+	u32 ce, nfe, err_en;
+ 	u32 cap_val;
+@@ -1151,6 +1153,7 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		qm->qp_num = pf_q_num;
+ 		qm->debug.curr_qm_qp_num = pf_q_num;
+ 		qm->qm_list = &hpre_devices;
++		qm->err_ini = &hpre_err_ini;
+ 		if (pf_q_num_flag)
+ 			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
+ 	}
+@@ -1340,8 +1343,6 @@ static int hpre_pf_probe_init(struct hpre *hpre)
  
- 	ce = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_CE_MASK_CAP, qm->cap_ver);
- 	nfe = hisi_qm_get_hw_info(qm, hpre_basic_info, HPRE_NFE_MASK_CAP, qm->cap_ver);
-@@ -776,7 +765,8 @@ static void hpre_hw_error_enable(struct hisi_qm *qm)
- 	hpre_master_ooo_ctrl(qm, true);
+ 	hpre_open_sva_prefetch(qm);
  
- 	/* enable hpre hw error interrupts */
--	writel(HPRE_CORE_INT_ENABLE, qm->io_base + HPRE_INT_MASK);
-+	err_en = ce | nfe | HPRE_HAC_RAS_FE_ENABLE;
-+	writel(~err_en, qm->io_base + HPRE_INT_MASK);
+-	qm->err_ini = &hpre_err_ini;
+-	qm->err_ini->err_info_init(qm);
+ 	hisi_qm_dev_err_init(qm);
+ 	ret = hpre_show_last_regs_init(qm);
+ 	if (ret)
+@@ -1370,6 +1371,18 @@ static int hpre_probe_init(struct hpre *hpre)
+ 	return 0;
  }
  
- static inline struct hisi_qm *hpre_file_to_qm(struct hpre_debugfs_file *file)
++static void hpre_probe_uninit(struct hisi_qm *qm)
++{
++	if (qm->fun_type == QM_HW_VF)
++		return;
++
++	hpre_cnt_regs_clear(qm);
++	qm->debug.curr_qm_qp_num = 0;
++	hpre_show_last_regs_uninit(qm);
++	hpre_close_sva_prefetch(qm);
++	hisi_qm_dev_err_uninit(qm);
++}
++
+ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	struct hisi_qm *qm;
+@@ -1395,7 +1408,7 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	ret = hisi_qm_start(qm);
+ 	if (ret)
+-		goto err_with_err_init;
++		goto err_with_probe_init;
+ 
+ 	ret = hpre_debugfs_init(qm);
+ 	if (ret)
+@@ -1434,9 +1447,8 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	hpre_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
+ 
+-err_with_err_init:
+-	hpre_show_last_regs_uninit(qm);
+-	hisi_qm_dev_err_uninit(qm);
++err_with_probe_init:
++	hpre_probe_uninit(qm);
+ 
+ err_with_qm_init:
+ 	hisi_qm_uninit(qm);
+@@ -1458,13 +1470,7 @@ static void hpre_remove(struct pci_dev *pdev)
+ 	hpre_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
+ 
+-	if (qm->fun_type == QM_HW_PF) {
+-		hpre_cnt_regs_clear(qm);
+-		qm->debug.curr_qm_qp_num = 0;
+-		hpre_show_last_regs_uninit(qm);
+-		hisi_qm_dev_err_uninit(qm);
+-	}
+-
++	hpre_probe_uninit(qm);
+ 	hisi_qm_uninit(qm);
+ }
+ 
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 3dac8d8e85686..d51f0dc64affc 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -450,6 +450,7 @@ static struct qm_typical_qos_table shaper_cbs_s[] = {
+ };
+ 
+ static void qm_irqs_unregister(struct hisi_qm *qm);
++static int qm_reset_device(struct hisi_qm *qm);
+ 
+ static u32 qm_get_hw_error_status(struct hisi_qm *qm)
+ {
+@@ -4113,6 +4114,22 @@ static int qm_controller_reset_prepare(struct hisi_qm *qm)
+ 	return 0;
+ }
+ 
++static int qm_master_ooo_check(struct hisi_qm *qm)
++{
++	u32 val;
++	int ret;
++
++	/* Check the ooo register of the device before resetting the device. */
++	writel(ACC_MASTER_GLOBAL_CTRL_SHUTDOWN, qm->io_base + ACC_MASTER_GLOBAL_CTRL);
++	ret = readl_relaxed_poll_timeout(qm->io_base + ACC_MASTER_TRANS_RETURN,
++					 val, (val == ACC_MASTER_TRANS_RETURN_RW),
++					 POLL_PERIOD, POLL_TIMEOUT);
++	if (ret)
++		pci_warn(qm->pdev, "Bus lock! Please reset system.\n");
++
++	return ret;
++}
++
+ static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
+ {
+ 	u32 nfe_enb = 0;
+@@ -4135,11 +4152,10 @@ static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
+ 	}
+ }
+ 
+-static int qm_soft_reset(struct hisi_qm *qm)
++static int qm_soft_reset_prepare(struct hisi_qm *qm)
+ {
+ 	struct pci_dev *pdev = qm->pdev;
+ 	int ret;
+-	u32 val;
+ 
+ 	/* Ensure all doorbells and mailboxes received by QM */
+ 	ret = qm_check_req_recv(qm);
+@@ -4161,29 +4177,23 @@ static int qm_soft_reset(struct hisi_qm *qm)
+ 	}
+ 
+ 	qm_dev_ecc_mbit_handle(qm);
+-
+-	/* OOO register set and check */
+-	writel(ACC_MASTER_GLOBAL_CTRL_SHUTDOWN,
+-	       qm->io_base + ACC_MASTER_GLOBAL_CTRL);
+-
+-	/* If bus lock, reset chip */
+-	ret = readl_relaxed_poll_timeout(qm->io_base + ACC_MASTER_TRANS_RETURN,
+-					 val,
+-					 (val == ACC_MASTER_TRANS_RETURN_RW),
+-					 POLL_PERIOD, POLL_TIMEOUT);
+-	if (ret) {
+-		pci_emerg(pdev, "Bus lock! Please reset system.\n");
++	ret = qm_master_ooo_check(qm);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	if (qm->err_ini->close_sva_prefetch)
+ 		qm->err_ini->close_sva_prefetch(qm);
+ 
+ 	ret = qm_set_pf_mse(qm, false);
+-	if (ret) {
++	if (ret)
+ 		pci_err(pdev, "Fails to disable pf MSE bit.\n");
+-		return ret;
+-	}
++
++	return ret;
++}
++
++static int qm_reset_device(struct hisi_qm *qm)
++{
++	struct pci_dev *pdev = qm->pdev;
+ 
+ 	/* The reset related sub-control registers are not in PCI BAR */
+ 	if (ACPI_HANDLE(&pdev->dev)) {
+@@ -4202,12 +4212,23 @@ static int qm_soft_reset(struct hisi_qm *qm)
+ 			pci_err(pdev, "Reset step %llu failed!\n", value);
+ 			return -EIO;
+ 		}
+-	} else {
+-		pci_err(pdev, "No reset method!\n");
+-		return -EINVAL;
++
++		return 0;
+ 	}
+ 
+-	return 0;
++	pci_err(pdev, "No reset method!\n");
++	return -EINVAL;
++}
++
++static int qm_soft_reset(struct hisi_qm *qm)
++{
++	int ret;
++
++	ret = qm_soft_reset_prepare(qm);
++	if (ret)
++		return ret;
++
++	return qm_reset_device(qm);
+ }
+ 
+ static int qm_vf_reset_done(struct hisi_qm *qm)
+@@ -5160,6 +5181,35 @@ static int qm_get_pci_res(struct hisi_qm *qm)
+ 	return ret;
+ }
+ 
++static int qm_clear_device(struct hisi_qm *qm)
++{
++	acpi_handle handle = ACPI_HANDLE(&qm->pdev->dev);
++	int ret;
++
++	if (qm->fun_type == QM_HW_VF)
++		return 0;
++
++	/* Device does not support reset, return */
++	if (!qm->err_ini->err_info_init)
++		return 0;
++	qm->err_ini->err_info_init(qm);
++
++	if (!handle)
++		return 0;
++
++	/* No reset method, return */
++	if (!acpi_has_method(handle, qm->err_info.acpi_rst))
++		return 0;
++
++	ret = qm_master_ooo_check(qm);
++	if (ret) {
++		writel(0x0, qm->io_base + ACC_MASTER_GLOBAL_CTRL);
++		return ret;
++	}
++
++	return qm_reset_device(qm);
++}
++
+ static int hisi_qm_pci_init(struct hisi_qm *qm)
+ {
+ 	struct pci_dev *pdev = qm->pdev;
+@@ -5189,8 +5239,14 @@ static int hisi_qm_pci_init(struct hisi_qm *qm)
+ 		goto err_get_pci_res;
+ 	}
+ 
++	ret = qm_clear_device(qm);
++	if (ret)
++		goto err_free_vectors;
++
+ 	return 0;
+ 
++err_free_vectors:
++	pci_free_irq_vectors(pdev);
+ err_get_pci_res:
+ 	qm_put_pci_res(qm);
+ err_disable_pcidev:
+@@ -5491,7 +5547,6 @@ static int qm_prepare_for_suspend(struct hisi_qm *qm)
+ {
+ 	struct pci_dev *pdev = qm->pdev;
+ 	int ret;
+-	u32 val;
+ 
+ 	ret = qm->ops->set_msi(qm, false);
+ 	if (ret) {
+@@ -5499,18 +5554,9 @@ static int qm_prepare_for_suspend(struct hisi_qm *qm)
+ 		return ret;
+ 	}
+ 
+-	/* shutdown OOO register */
+-	writel(ACC_MASTER_GLOBAL_CTRL_SHUTDOWN,
+-	       qm->io_base + ACC_MASTER_GLOBAL_CTRL);
+-
+-	ret = readl_relaxed_poll_timeout(qm->io_base + ACC_MASTER_TRANS_RETURN,
+-					 val,
+-					 (val == ACC_MASTER_TRANS_RETURN_RW),
+-					 POLL_PERIOD, POLL_TIMEOUT);
+-	if (ret) {
+-		pci_emerg(pdev, "Bus lock! Please reset system.\n");
++	ret = qm_master_ooo_check(qm);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = qm_set_pf_mse(qm, false);
+ 	if (ret)
+diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
+index 75aad04ffe5eb..c35533d8930b2 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_main.c
++++ b/drivers/crypto/hisilicon/sec2/sec_main.c
+@@ -1065,9 +1065,6 @@ static int sec_pf_probe_init(struct sec_dev *sec)
+ 	struct hisi_qm *qm = &sec->qm;
+ 	int ret;
+ 
+-	qm->err_ini = &sec_err_ini;
+-	qm->err_ini->err_info_init(qm);
+-
+ 	ret = sec_set_user_domain_and_cache(qm);
+ 	if (ret)
+ 		return ret;
+@@ -1122,6 +1119,7 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		qm->qp_num = pf_q_num;
+ 		qm->debug.curr_qm_qp_num = pf_q_num;
+ 		qm->qm_list = &sec_devices;
++		qm->err_ini = &sec_err_ini;
+ 		if (pf_q_num_flag)
+ 			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
+ 	} else if (qm->fun_type == QM_HW_VF && qm->ver == QM_HW_V1) {
+@@ -1186,6 +1184,12 @@ static int sec_probe_init(struct sec_dev *sec)
+ 
+ static void sec_probe_uninit(struct hisi_qm *qm)
+ {
++	if (qm->fun_type == QM_HW_VF)
++		return;
++
++	sec_debug_regs_clear(qm);
++	sec_show_last_regs_uninit(qm);
++	sec_close_sva_prefetch(qm);
+ 	hisi_qm_dev_err_uninit(qm);
+ }
+ 
+@@ -1274,7 +1278,6 @@ static int sec_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	sec_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
+ err_probe_uninit:
+-	sec_show_last_regs_uninit(qm);
+ 	sec_probe_uninit(qm);
+ err_qm_uninit:
+ 	sec_qm_uninit(qm);
+@@ -1296,11 +1299,6 @@ static void sec_remove(struct pci_dev *pdev)
+ 	sec_debugfs_exit(qm);
+ 
+ 	(void)hisi_qm_stop(qm, QM_NORMAL);
+-
+-	if (qm->fun_type == QM_HW_PF)
+-		sec_debug_regs_clear(qm);
+-	sec_show_last_regs_uninit(qm);
+-
+ 	sec_probe_uninit(qm);
+ 
+ 	sec_qm_uninit(qm);
+diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
+index c94a7b20d07e6..befef0b0e6bbe 100644
+--- a/drivers/crypto/hisilicon/zip/zip_main.c
++++ b/drivers/crypto/hisilicon/zip/zip_main.c
+@@ -1149,8 +1149,6 @@ static int hisi_zip_pf_probe_init(struct hisi_zip *hisi_zip)
+ 
+ 	hisi_zip->ctrl = ctrl;
+ 	ctrl->hisi_zip = hisi_zip;
+-	qm->err_ini = &hisi_zip_err_ini;
+-	qm->err_ini->err_info_init(qm);
+ 
+ 	ret = hisi_zip_set_user_domain_and_cache(qm);
+ 	if (ret)
+@@ -1211,6 +1209,7 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
+ 		qm->qp_num = pf_q_num;
+ 		qm->debug.curr_qm_qp_num = pf_q_num;
+ 		qm->qm_list = &zip_devices;
++		qm->err_ini = &hisi_zip_err_ini;
+ 		if (pf_q_num_flag)
+ 			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
+ 	} else if (qm->fun_type == QM_HW_VF && qm->ver == QM_HW_V1) {
+@@ -1277,6 +1276,16 @@ static int hisi_zip_probe_init(struct hisi_zip *hisi_zip)
+ 	return 0;
+ }
+ 
++static void hisi_zip_probe_uninit(struct hisi_qm *qm)
++{
++	if (qm->fun_type == QM_HW_VF)
++		return;
++
++	hisi_zip_show_last_regs_uninit(qm);
++	hisi_zip_close_sva_prefetch(qm);
++	hisi_qm_dev_err_uninit(qm);
++}
++
+ static int hisi_zip_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	struct hisi_zip *hisi_zip;
+@@ -1303,7 +1312,7 @@ static int hisi_zip_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	ret = hisi_qm_start(qm);
+ 	if (ret)
+-		goto err_dev_err_uninit;
++		goto err_probe_uninit;
+ 
+ 	ret = hisi_zip_debugfs_init(qm);
+ 	if (ret)
+@@ -1342,9 +1351,8 @@ static int hisi_zip_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	hisi_zip_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
+ 
+-err_dev_err_uninit:
+-	hisi_zip_show_last_regs_uninit(qm);
+-	hisi_qm_dev_err_uninit(qm);
++err_probe_uninit:
++	hisi_zip_probe_uninit(qm);
+ 
+ err_qm_uninit:
+ 	hisi_zip_qm_uninit(qm);
+@@ -1366,8 +1374,7 @@ static void hisi_zip_remove(struct pci_dev *pdev)
+ 
+ 	hisi_zip_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
+-	hisi_zip_show_last_regs_uninit(qm);
+-	hisi_qm_dev_err_uninit(qm);
++	hisi_zip_probe_uninit(qm);
+ 	hisi_zip_qm_uninit(qm);
+ }
+ 
 -- 
 2.43.0
 
