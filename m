@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7391D0787;
-	Wed,  2 Oct 2024 14:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2841D0787;
+	Wed,  2 Oct 2024 14:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878109; cv=none; b=nYexzvVpnNzRmoCiLU8/93c9nN9Q3GN+Nal05XQ11jRxXlfcRnGqJvBZ9u7LTRJqLNjIzrMRjaW4T9WOUwO0WxRrPkgQ2xuBuWoJlvuUK3AgUkuWgOWKhIBvNN9u3ai1POP36lEyEper+JuZhfk4gBvw4/qFQLjm4RnW45bKsjo=
+	t=1727878112; cv=none; b=B1BvDUGd7J2A7RuAAEffdEPLeuLXbBy7OArdHEz7Ja3T3zk+cQb8qXTW+7kYderLmuSkSlSDQuDVdfgLeJ/NRTor3J1tdwP0IYMxqCAOrXTCxjd24pk4amVFUQxcbGMzpZjxFtZNMeE3/R/k2P3eN5PVB7MPc/yOmQNazyYcLgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878109; c=relaxed/simple;
-	bh=IViy3ZG0YHfJoLvfD7PPxGxGzCXdA/uZ88xInLyjojs=;
+	s=arc-20240116; t=1727878112; c=relaxed/simple;
+	bh=OBq02CpbuiMIphaBXCNDERm5v7QSKiR9NB1xe25WzNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfZwag8l1teOmJo/kvVCkgxFGl+JNEz8+q8i3swFLZODA8+FGcQy673JC8Ca7QSuE1lUr6e191ZGL9vcViSXBUL5+1Tn6HNFvq+9yBFyJ4W/1MPh7F+WOxDRV1d7fNk/pqhWrdavWDcjzypiX3vOg0czEUAYc3axIV0U6uUp7hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWqHMimr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BO6rxLcNxTCHXdKzjqBEqz8WSy9mPweV2ska1fLEqBGIydO8DJGdq9I61Fd/TY3Yx93Rq9fRibJPvCyTWKYygocvb2xv/Is4QuJmQnCNbGW8YDx2M7b1LgvQikErJC8iFBK7gaBQSpSUaQ8iriRgjalBfYYpDqrRxEfIXCchnnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJ5Y1Rs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWqHMimr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871EDC4CEC2;
-	Wed,  2 Oct 2024 14:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJ5Y1Rs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752AEC4CEC2;
+	Wed,  2 Oct 2024 14:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878108;
-	bh=IViy3ZG0YHfJoLvfD7PPxGxGzCXdA/uZ88xInLyjojs=;
+	s=korg; t=1727878111;
+	bh=OBq02CpbuiMIphaBXCNDERm5v7QSKiR9NB1xe25WzNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWqHMimr3VgjGHiFFibmKyikYGwfKXpA1SqvjeNHurSk0AnFb0YL9Wh3mmkKzOa4p
-	 Gtbs/m5OmFz9PXOTJQCX6NxLoaytNyisMOstxRAFe7coa7hl13O2P97xsYnJlUNKlD
-	 HPMltSBHLs5sFvHgyeIFWgt4udG3DOd19v7RtnQ0=
+	b=TJ5Y1Rs3rd5QbMpet1eFu2z96Db5GJQmarJ3IXTrl+5uKZMryaJngSIE163QBrxV8
+	 fL8XUfGpc8HTmVes5ROEV06/3Rjw89aYY6hYC+/LF2CfjZdPg2kbzxmEfy2e+UzwDn
+	 oBhrmb3cYPX1ihJM/287ZnE+mdkFmX9coegjBQTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangerkun <yangerkun@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Huang Shijie <shijie@os.amperecomputing.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 274/634] ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard
-Date: Wed,  2 Oct 2024 14:56:14 +0200
-Message-ID: <20241002125821.917212305@linuxfoundation.org>
+Subject: [PATCH 6.10 275/634] sched/deadline: Fix schedstats vs deadline servers
+Date: Wed,  2 Oct 2024 14:56:15 +0200
+Message-ID: <20241002125821.956726152@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,67 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangerkun <yangerkun@huawei.com>
+From: Huang Shijie <shijie@os.amperecomputing.com>
 
-[ Upstream commit 20cee68f5b44fdc2942d20f3172a262ec247b117 ]
+[ Upstream commit 9c602adb799e72ee537c0c7ca7e828c3fe2acad6 ]
 
-Commit 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in
-ext4_group_info") speed up fstrim by skipping trim trimmed group. We
-also has the chance to clear trimmed once there exists some block free
-for this group(mount without discard), and the next trim for this group
-will work well too.
+In dl_server_start(), when schedstats is enabled, the following
+happens:
 
-For mount with discard, we will issue dicard when we free blocks, so
-leave trimmed flag keep alive to skip useless trim trigger from
-userspace seems reasonable. But for some case like ext4 build on
-dm-thinpool(ext4 blocksize 4K, pool blocksize 128K), discard from ext4
-maybe unaligned for dm thinpool, and thinpool will just finish this
-discard(see process_discard_bio when begein equals to end) without
-actually process discard. For this case, trim from userspace can really
-help us to free some thinpool block.
+  dl_server_start()
+    dl_se->dl_server = 1;
+    enqueue_dl_entity()
+      update_stats_enqueue_dl()
+        __schedstats_from_dl_se()
+          dl_task_of()
+            BUG_ON(dl_server(dl_se));
 
-So convert to clear trimmed flag for all case no matter mounted with
-discard or not.
+Since only tasks have schedstats and internal entries do not, avoid
+trying to update stats in this case.
 
-Fixes: 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in ext4_group_info")
-Signed-off-by: yangerkun <yangerkun@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240817085510.2084444-1-yangerkun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 63ba8422f876 ("sched/deadline: Introduce deadline servers")
+Signed-off-by: Huang Shijie <shijie@os.amperecomputing.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://lkml.kernel.org/r/20240829031111.12142-1-shijie@os.amperecomputing.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ kernel/sched/deadline.c | 38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 9dda9cd68ab2f..dfecd25cee4ea 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3887,11 +3887,8 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
- 	/*
- 	 * Clear the trimmed flag for the group so that the next
- 	 * ext4_trim_fs can trim it.
--	 * If the volume is mounted with -o discard, online discard
--	 * is supported and the free blocks will be trimmed online.
- 	 */
--	if (!test_opt(sb, DISCARD))
--		EXT4_MB_GRP_CLEAR_TRIMMED(db);
-+	EXT4_MB_GRP_CLEAR_TRIMMED(db);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 9bedd148f0075..09faca47e90fb 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1599,46 +1599,40 @@ static inline bool __dl_less(struct rb_node *a, const struct rb_node *b)
+ 	return dl_time_before(__node_2_dle(a)->deadline, __node_2_dle(b)->deadline);
+ }
  
- 	if (!db->bb_free_root.rb_node) {
- 		/* No more items in the per group rb tree
-@@ -6515,8 +6512,9 @@ static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
- 					 " group:%u block:%d count:%lu failed"
- 					 " with %d", block_group, bit, count,
- 					 err);
--		} else
--			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
-+		}
+-static inline struct sched_statistics *
++static __always_inline struct sched_statistics *
+ __schedstats_from_dl_se(struct sched_dl_entity *dl_se)
+ {
++	if (!schedstat_enabled())
++		return NULL;
 +
-+		EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
++	if (dl_server(dl_se))
++		return NULL;
++
+ 	return &dl_task_of(dl_se)->stats;
+ }
  
- 		ext4_lock_group(sb, block_group);
- 		mb_free_blocks(inode, &e4b, bit, count_clusters);
+ static inline void
+ update_stats_wait_start_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
+ {
+-	struct sched_statistics *stats;
+-
+-	if (!schedstat_enabled())
+-		return;
+-
+-	stats = __schedstats_from_dl_se(dl_se);
+-	__update_stats_wait_start(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
++	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
++	if (stats)
++		__update_stats_wait_start(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
+ }
+ 
+ static inline void
+ update_stats_wait_end_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
+ {
+-	struct sched_statistics *stats;
+-
+-	if (!schedstat_enabled())
+-		return;
+-
+-	stats = __schedstats_from_dl_se(dl_se);
+-	__update_stats_wait_end(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
++	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
++	if (stats)
++		__update_stats_wait_end(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
+ }
+ 
+ static inline void
+ update_stats_enqueue_sleeper_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se)
+ {
+-	struct sched_statistics *stats;
+-
+-	if (!schedstat_enabled())
+-		return;
+-
+-	stats = __schedstats_from_dl_se(dl_se);
+-	__update_stats_enqueue_sleeper(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
++	struct sched_statistics *stats = __schedstats_from_dl_se(dl_se);
++	if (stats)
++		__update_stats_enqueue_sleeper(rq_of_dl_rq(dl_rq), dl_task_of(dl_se), stats);
+ }
+ 
+ static inline void
 -- 
 2.43.0
 
