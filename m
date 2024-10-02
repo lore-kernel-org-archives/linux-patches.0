@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B96E1D0F7A;
-	Wed,  2 Oct 2024 14:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE51198A1A;
+	Wed,  2 Oct 2024 14:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880058; cv=none; b=MBAuu93Re6uN5Mf5UUFW2FBL1K7dtMwG46D1RXHHwOn6Kr/MW1zVYEUahxF0YoE26c9XF2FNRs5UFJ60S88Abm0zq8PNoiXEdDDuUHmIVbEbBJKXN8Rpg0ZxFTh8G3dOXEpVUcUBcO/85vFhJe5Do9E0WULCV6gJ4eUHjVDFrJ0=
+	t=1727880061; cv=none; b=ET8deWOUwah8hT4TiGd+lHYQGlnFJE0RsSOWdpHMC4QoZwfBGKIkdG22Q0WdWan3u+wfR+AwtZDzbk+SpVY0Iw8YIzK+arqTfQMwTn1BUrGFbEh/oobvGLASjAn+kkIhkW4Dj5ZK3e3lXcx7kPyR6nQ79Kt0bVSPQGTzd+eRcbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880058; c=relaxed/simple;
-	bh=FcGZ9i0QKp6N7cXvRU9ardOXV8Oe9pTEnT2rBHZolPo=;
+	s=arc-20240116; t=1727880061; c=relaxed/simple;
+	bh=UeV7fbUZEwdp/oNhN3AnDZdQQRK61njS4K5iN+ccoe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShqofUx8YFuxrpy/UblypjMEvjXUdGbD8IMDlAg18yVAspxSwnYKUXJpHp0PeR/MbiUkMAw3Kl5gWpxUxCIpDZGJJs0oKuJMHAl1bIEt9C4WpV+1ix1X4nwdaEFWf7aHGwk43rLgOMbnCNamuYguqIrf2W8iKC8FuTcWshkRyjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bW55cDfA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePPDqZPJRtGAPghyyEtPn1kFd/lk6wiwG4Grs1Fp/jXXAdUzZw1dNJCRJz2ZTvkQ/pkY91Z1uf5eNmIqII5M3ujRXdiUQAfFFTTK6jqoggtmFoQaEwH6VPJampDXctmdlzFUnxZgSruEhys9VzZMI26Hq70PqiJvN2slUHNPTLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dlt6TDvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bW55cDfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20897C4CEC5;
-	Wed,  2 Oct 2024 14:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dlt6TDvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08677C4CEC2;
+	Wed,  2 Oct 2024 14:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880058;
-	bh=FcGZ9i0QKp6N7cXvRU9ardOXV8Oe9pTEnT2rBHZolPo=;
+	s=korg; t=1727880061;
+	bh=UeV7fbUZEwdp/oNhN3AnDZdQQRK61njS4K5iN+ccoe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bW55cDfAmBJwdENqsVTVfOpT8t69qrInu1KkhEbAtm3+uRqkkArGc4VRttrA8SH8k
-	 eyY11YwdrTqB6ehcDD8WR1dqdK8FiNOpHeY8aY57dwo31GL1UBw5dAwVYngh709GCL
-	 qf7Z5y9qZCPhL9zHQvIwZfl2XLtJGzcQi8KQ3n0k=
+	b=Dlt6TDvqbGbVbrfo73BtDlUWZ29G+nPHPaL7zFMAidazp32ID0gA/aUAAJmqHm6BI
+	 41SMwplSUAiTrhoIZUOSmHiBeIjFILVhsZdazeqFrO6PM1zjC73oJPa9ySpj7y1Qjq
+	 zwSGJ1Gau8/y2d36LHYWho9S6kj8uTM5uR3BOn7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Hawking <maxahawking@sonnenkinder.org>,
-	Jon Mason <jdmason@kudzu.us>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 328/538] ntb_perf: Fix printk format
-Date: Wed,  2 Oct 2024 14:59:27 +0200
-Message-ID: <20241002125805.377750874@linuxfoundation.org>
+Subject: [PATCH 6.6 300/538] media: mediatek: vcodec: Fix VP8 stateless decoder smatch warning
+Date: Wed,  2 Oct 2024 14:58:59 +0200
+Message-ID: <20241002125804.256391369@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,33 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Hawking <maxahawking@sonnenkinder.org>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 1501ae7479c8d0f66efdbfdc9ae8d6136cefbd37 ]
+[ Upstream commit b113bc7c0e83b32f4dd2d291a2b6c4803e0a2c44 ]
 
-The correct printk format is %pa or %pap, but not %pa[p].
+Fix a smatch static checker warning on vdec_vp8_req_if.c.
+Which leads to a kernel crash when fb is NULL.
 
-Fixes: 99a06056124d ("NTB: ntb_perf: Fix address err in perf_copy_chunk")
-Signed-off-by: Max Hawking <maxahawking@sonnenkinder.org>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Fixes: 7a7ae26fd458 ("media: mediatek: vcodec: support stateless VP8 decoding")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/test/ntb_perf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c     | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ntb/test/ntb_perf.c b/drivers/ntb/test/ntb_perf.c
-index 553f1f46bc664..72bc1d017a46e 100644
---- a/drivers/ntb/test/ntb_perf.c
-+++ b/drivers/ntb/test/ntb_perf.c
-@@ -1227,7 +1227,7 @@ static ssize_t perf_dbgfs_read_info(struct file *filep, char __user *ubuf,
- 			"\tOut buffer addr 0x%pK\n", peer->outbuf);
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+index f64b21c071696..86b93055f1633 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+@@ -335,14 +335,18 @@ static int vdec_vp8_slice_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
  
- 		pos += scnprintf(buf + pos, buf_size - pos,
--			"\tOut buff phys addr %pa[p]\n", &peer->out_phys_addr);
-+			"\tOut buff phys addr %pap\n", &peer->out_phys_addr);
+ 	fb = inst->ctx->dev->vdec_pdata->get_cap_buffer(inst->ctx);
+-	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
++	if (!fb) {
++		mtk_vdec_err(inst->ctx, "fb buffer is NULL");
++		return -ENOMEM;
++	}
  
- 		pos += scnprintf(buf + pos, buf_size - pos,
- 			"\tOut buffer size %pa\n", &peer->outbuf_size);
+-	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
++	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
++	y_fb_dma = fb->base_y.dma_addr;
+ 	if (inst->ctx->q_data[MTK_Q_DATA_DST].fmt->num_planes == 1)
+ 		c_fb_dma = y_fb_dma +
+ 			inst->ctx->picinfo.buf_w * inst->ctx->picinfo.buf_h;
+ 	else
+-		c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
++		c_fb_dma = fb->base_c.dma_addr;
+ 
+ 	inst->vsi->dec.bs_dma = (u64)bs->dma_addr;
+ 	inst->vsi->dec.bs_sz = bs->size;
 -- 
 2.43.0
 
