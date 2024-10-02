@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391091D0DE9;
-	Wed,  2 Oct 2024 14:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EFD1D079C;
+	Wed,  2 Oct 2024 14:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880070; cv=none; b=WYKoLT123+LELtyjPf8vczGrsxtoH4P5sMHwiI3WM9bqnXJunvB7/7OglKkDc1ZF9mu1a5k08AHZjTJ8QP9GssIzUQSx4yUn7HOUp59S9yj2Qm4oyqaTTT8TBKjJyXjvBCFRhyopcuOSXgAiLdytJv0XTjVwWYkYBx/26rCbZB0=
+	t=1727880073; cv=none; b=W8706OgvnIlUgOoOSwcChmr9SyQOY2yggmR8bJmM+Qqw52bD0JhIptlx/3fJCZTSEYY/vr9AXGELVuBiC1RTsz92xuFHEM4yEsOEGBb5xbkaW6THdO6JTMGJ2V+FY6+k4XYGcWin9wbmhvibuCdpiDeS9rxvdQ+yt6lWVpj2TNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880070; c=relaxed/simple;
-	bh=88qp9JKaxJWa6pQ5ru4iaVFv5/wPmupTWvkpxfZvmMA=;
+	s=arc-20240116; t=1727880073; c=relaxed/simple;
+	bh=WOnFDK+bikbZzLZ//Y/XlQnlcNNQlHlPiR8nxrfjiVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKotBcqz5041VPI856SLHklf1czr9YLQultBJ1E3hGisiVil5DrlmloGplU9GC7vKecRL+1nJjmzAWaW17mz4w02CvvFm5hSL5bS8w41S/NC50Dk9N2qjBICXjal7dN7GvmXRsbVlseOAvCoBYmWhtmNQka797yLstSzfAaREwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFFpLwA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MVT2i5ZVkEoEjwib3f4S/qlOll7DCm2e2z48lyZIMjn0enSsvnZLJpaVnTTS1oLziSWFybMWwRiWJJ5vzD5yZBNrf9K6ymQl6cHbX0QugSFiiRJxKSZitN6A2A+/KzpeTy8SqGb+IvfezSy+O6aVPVrvZmx+rBLmpGGG/9ebKds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLhqdDhJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFFpLwA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FD0C4CEC2;
-	Wed,  2 Oct 2024 14:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLhqdDhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15BAC4CEC2;
+	Wed,  2 Oct 2024 14:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880070;
-	bh=88qp9JKaxJWa6pQ5ru4iaVFv5/wPmupTWvkpxfZvmMA=;
+	s=korg; t=1727880073;
+	bh=WOnFDK+bikbZzLZ//Y/XlQnlcNNQlHlPiR8nxrfjiVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFFpLwA8IzUuGGR4VrxSWigiAl7Sm+eDkkvfc9pk1psG0JNJD5vOXUX2BJgdPMyVm
-	 EpYOpYbCqwft0J7iDPZX3XZ48MHIH5vQg4XGtaK9Gxcis33xBUBTEbXszM6KoJAe/Q
-	 baCeZrs2lgc6RL7P9nnFoiKuQvXboWA1L3txyFjg=
+	b=bLhqdDhJGZMDnHOapxiKUCWFDR6CX/SuUHVdOq8KpqoMVd3kZo6yKFcEojFzAlmof
+	 57k7u2zRx90AHa0HitGEbEuFOQrNliyooPyTzLZu483leS5tykoaqkkcMRWdUioOcf
+	 NciGJJnvOdssGmf/vuA2Y+pDoy3j9sak98EXGHQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 303/538] RDMA/rtrs-clt: Reset cid to con_num - 1 to stay in bounds
-Date: Wed,  2 Oct 2024 14:59:02 +0200
-Message-ID: <20241002125804.376956355@linuxfoundation.org>
+Subject: [PATCH 6.6 304/538] clk: ti: dra7-atl: Fix leak of of_nodes
+Date: Wed,  2 Oct 2024 14:59:03 +0200
+Message-ID: <20241002125804.416388733@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,45 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Haris Iqbal <haris.iqbal@ionos.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 3e4289b29e216a55d08a89e126bc0b37cbad9f38 ]
+[ Upstream commit 9d6e9f10e2e031fb7bfb3030a7d1afc561a28fea ]
 
-In the function init_conns(), after the create_con() and create_cm() for
-loop if something fails. In the cleanup for loop after the destroy tag, we
-access out of bound memory because cid is set to clt_path->s.con_num.
+This fix leaking the of_node references in of_dra7_atl_clk_probe().
 
-This commits resets the cid to clt_path->s.con_num - 1, to stay in bounds
-in the cleanup loop later.
+The docs for of_parse_phandle_with_args() say that the caller must call
+of_node_put() on the returned node. This adds the missing of_node_put()
+to fix the leak.
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://patch.msgid.link/20240821112217.41827-7-haris.iqbal@ionos.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 9ac33b0ce81f ("CLK: TI: Driver for DRA7 ATL (Audio Tracking Logic)")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240826-clk-fix-leak-v1-1-f55418a13aa6@baylibre.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/clk/ti/clk-dra7-atl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 75d3a27dea9a0..82aa47efb8078 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -2342,6 +2342,12 @@ static int init_conns(struct rtrs_clt_path *clt_path)
- 		if (err)
- 			goto destroy;
- 	}
-+
-+	/*
-+	 * Set the cid to con_num - 1, since if we fail later, we want to stay in bounds.
-+	 */
-+	cid = clt_path->s.con_num - 1;
-+
- 	err = alloc_path_reqs(clt_path);
- 	if (err)
- 		goto destroy;
+diff --git a/drivers/clk/ti/clk-dra7-atl.c b/drivers/clk/ti/clk-dra7-atl.c
+index d964e3affd42c..0eab7f3e2eab9 100644
+--- a/drivers/clk/ti/clk-dra7-atl.c
++++ b/drivers/clk/ti/clk-dra7-atl.c
+@@ -240,6 +240,7 @@ static int of_dra7_atl_clk_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		clk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
+ 		if (IS_ERR(clk)) {
+ 			pr_err("%s: failed to get atl clock %d from provider\n",
+ 			       __func__, i);
 -- 
 2.43.0
 
