@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776041D1E85;
-	Wed,  2 Oct 2024 14:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AF21D0797;
+	Wed,  2 Oct 2024 14:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877843; cv=none; b=AuL8plRZBefbqTYR0l6DLd6YFpy6yYsX/HCtTt0D8Mo6Wtbpe/b0nk4EPJXxvRbVqgZc/bgJkECa/rhddY5mv/YDjdHJNW0shaT/sauE4jNTVRyJpdN+ZhXHbQ/R0c4tdNIZBLMLEWdQ1t0n4Xs26Xg3dAe4TzmEv+UgaN8/Bfo=
+	t=1727877846; cv=none; b=RKoBSQDj9lFLbZOekFEu8zNWyO3fGK0ofT06sct3hkxmh49U88DsIkz9siZfNMbVKyZ60M2n/4nWijWMybEfqr+/tcvs0Uujr5wz/XdYv6zQeet/3+hRNLLs+3+5sesE58Z4yVq6BxOetAxvOGR73GpWbR7Ay/5/LnTC+rmpsHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877843; c=relaxed/simple;
-	bh=ZPWj33PG0MawS6MIfAPIBvHEl+emWQFD5x+8VGYwIss=;
+	s=arc-20240116; t=1727877846; c=relaxed/simple;
+	bh=70UQ1teakVrJTe2QjfufTEB52foDeCHtVvkG/sBxjQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HSSzPg0bqdAflnD9YhlsEngD2HPYSUtzRBHB1tbNyNViNQgmHzpDFQpBi+W6tkadjEh30hEzXgPHGiQQs+4yDdrup8m4iimpdowFnjDKfrKqHU2D6WR6ZCX24zF3oPV9uA+8bz5MnEQzXz43GEgBAWxvQYmXh63YALlt9AGwQfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXnTv7jr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IxtVa6QsyVll6L1rabeqJEwtv1PZwFD+DLHnJcXJskkyFp0gEB8edJFI4wsleFTk9SjlqLX/2sgqNFpO7Ja2rUzaGGzRiIiXVxa4dnwxl6ZKCS5aHBo4ibP4x4Fg1oxvvBIO8+s8hHid1HZmsz+v2xXO1hA6WWO9PMLfL4yw6dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV4Tk4br; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXnTv7jr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E6AC4CEC2;
-	Wed,  2 Oct 2024 14:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV4Tk4br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCA2C4CEC2;
+	Wed,  2 Oct 2024 14:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877843;
-	bh=ZPWj33PG0MawS6MIfAPIBvHEl+emWQFD5x+8VGYwIss=;
+	s=korg; t=1727877846;
+	bh=70UQ1teakVrJTe2QjfufTEB52foDeCHtVvkG/sBxjQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXnTv7jrKVZ8pLDajLNYRGnmn3Mi/0RkiiuZ7V5oxxdIDRxXVFzJzftD/RlP24pAi
-	 g5ZlTLKf41cW7oAa0Zm/Bn6S2d1yaUjMU8m55gwRFFWVamyd+b7191/tJLxtMzTlDx
-	 /uPMYW5KekH0bboRLr6+IRYTm+GbmFFy7UvTcy/k=
+	b=WV4Tk4bry7qxhsPiLpN6GUqMxzU6N5FTJpAvgPGt8rcppL+M1pKlE+2YOjsMxwEs5
+	 bjJu8d3kBMC/KbcQXnXBcO5EEmyMXnuqVuuFznIU7/sRvfWTCO0jgotLVTAHHrkn9N
+	 82P9am7vCtJbX+9asiBSrC9rxYX5xdaqGJNrdUgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lang Yu <lang.yu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 214/634] drm/amdgpu: fix invalid fence handling in amdgpu_vm_tlb_flush
-Date: Wed,  2 Oct 2024 14:55:14 +0200
-Message-ID: <20241002125819.551252274@linuxfoundation.org>
+Subject: [PATCH 6.10 215/634] xen: use correct end address of kernel for conflict checking
+Date: Wed,  2 Oct 2024 14:55:15 +0200
+Message-ID: <20241002125819.590036295@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,40 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lang Yu <lang.yu@amd.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 4453808d9eab0461dea338e89372ffc4a3c50acc ]
+[ Upstream commit fac1bceeeb04886fc2ee952672e6e6c85ce41dca ]
 
-CPU based update doesn't produce a fence, handle such cases properly.
+When running as a Xen PV dom0 the kernel is loaded by the hypervisor
+using a different memory map than that of the host. In order to
+minimize the required changes in the kernel, the kernel adapts its
+memory map to that of the host. In order to do that it is checking
+for conflicts of its load address with the host memory map.
 
-Fixes: d8a3f0a0348d ("drm/amdgpu: implement TLB flush fence")
-Signed-off-by: Lang Yu <lang.yu@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Unfortunately the tested memory range does not include the .brk
+area, which might result in crashes or memory corruption when this
+area does conflict with the memory map of the host.
+
+Fix the test by using the _end label instead of __bss_stop.
+
+Fixes: 808fdb71936c ("xen: check for kernel memory conflicting with memory layout")
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/xen/setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 0f7106066480e..3fdbc10aebce1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -902,10 +902,12 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_update_params *params,
- {
- 	struct amdgpu_vm *vm = params->vm;
- 
--	if (!fence || !*fence)
-+	tlb_cb->vm = vm;
-+	if (!fence || !*fence) {
-+		amdgpu_vm_tlb_seq_cb(NULL, &tlb_cb->cb);
- 		return;
-+	}
- 
--	tlb_cb->vm = vm;
- 	if (!dma_fence_add_callback(*fence, &tlb_cb->cb,
- 				    amdgpu_vm_tlb_seq_cb)) {
- 		dma_fence_put(vm->last_tlb_flush);
+diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
+index 380591028cb8f..d44d6d8b33195 100644
+--- a/arch/x86/xen/setup.c
++++ b/arch/x86/xen/setup.c
+@@ -825,7 +825,7 @@ char * __init xen_memory_setup(void)
+ 	 * to relocating (and even reusing) pages with kernel text or data.
+ 	 */
+ 	if (xen_is_e820_reserved(__pa_symbol(_text),
+-			__pa_symbol(__bss_stop) - __pa_symbol(_text))) {
++				 __pa_symbol(_end) - __pa_symbol(_text))) {
+ 		xen_raw_console_write("Xen hypervisor allocated kernel memory conflicts with E820 map\n");
+ 		BUG();
+ 	}
 -- 
 2.43.0
 
