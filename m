@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068E11D04B4;
-	Wed,  2 Oct 2024 14:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34EF1D0BB4;
+	Wed,  2 Oct 2024 14:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880589; cv=none; b=X+ICPkzTXsbkejTMim7wxHZrnPH+cxJjoyGMSpG38+YWJkYF3QaOjXaXQOctfaqZhVbeT3vzaoImIeMZ4Cj1t9clbcecMXzRAOicvJ46nvSZ5pL+R08aJ8OXptHmNQocst7rLeBCUS4SIWWode6PdhSO6voZ0uOPC47ZwhVrOec=
+	t=1727880592; cv=none; b=ucE5MAHd4PLgWxx3V011dQmHscQwIeK9FgxkNKTHNE1s3aZwQA10XQK0Doe7UDoXX5TIrIUhw5231qdWoUTbPZx5U2EFY3Lu9VLi5cAjHGBs2bZmEXR+ClL/2DSZR8azK03/topi199yItjQQRxduCSxaCExM90a7UOAXHdrwzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880589; c=relaxed/simple;
-	bh=pDJLA60Q1Q/OyZSIzR8HjmlNB037AKE/88el8iqwJXY=;
+	s=arc-20240116; t=1727880592; c=relaxed/simple;
+	bh=xA9Vy+dpDJYpHe17Po/sykCJ02GEUJMtckwZSl30xA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=opmFuKEKc6UwfaPWh84GnnVUcA1ZbiINYi+oT4inwEn/TFrprT68WW2Ln8QXdgj/6YyZuZ9cTwv4aQSvBfTBs1Us/+IpidnhC++izo17h4S5ZfDno3zY999b1NrZXfLubInKV+6OoFHCH70iOpWnPZRt6oDg1FA+IgxGjdVo1ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c41Ka3S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FV0TNLurmqZyZNuGR2t7MebuJoEs/3T5Trxg27Ty4fenKisCmqHHPaJFSHbxL0eF07qYBGY3s6OfCDFRIMwly4NYXBm6zCvIw12pfFxXo4GaTfBMkgH3hByF0bWNIvKRCpDnfHIJZrNYg1VN7yItF6KVOINUwWI9Hq6mmJv/sdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F83pBY07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c41Ka3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838B1C4CEC2;
-	Wed,  2 Oct 2024 14:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F83pBY07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6935DC4CEC2;
+	Wed,  2 Oct 2024 14:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880588;
-	bh=pDJLA60Q1Q/OyZSIzR8HjmlNB037AKE/88el8iqwJXY=;
+	s=korg; t=1727880591;
+	bh=xA9Vy+dpDJYpHe17Po/sykCJ02GEUJMtckwZSl30xA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c41Ka3SNc+9AoEpB10L+InpD97KwsVLk2RA+Z9bb6rKJibaVisGMAg8ye1IY8QQy
-	 AVt+hhNNA4SWg05m+mzkL0X3RSy+HzfRbZG3+h6jmsF/8hjo+2rVhPDupt9WtUBY7S
-	 GDPPDQNeZnxKVQiW9HZclNYXT+JgbY2vMfDutdM4=
+	b=F83pBY07/8FZmnkFT+tTegG7u0NGoxhobwVYo4kdjT2xzW6GVauRK51+PzWQ2klr2
+	 uvaKbuIcFy9OwQUzxauqnX0zxw74cR/9pQhFvJyIn4T3xFSMUeIAshyIQWD/45Np2B
+	 ivyP3d7M/axjiescanJcLT/X0mLxBZUdNi88zA00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Qin Wan <qin.wan@hp.com>,
 	Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Subject: [PATCH 6.6 511/538] thunderbolt: Introduce tb_for_each_upstream_port_on_path()
-Date: Wed,  2 Oct 2024 15:02:30 +0200
-Message-ID: <20241002125812.613853152@linuxfoundation.org>
+Subject: [PATCH 6.6 512/538] thunderbolt: Introduce tb_switch_depth()
+Date: Wed,  2 Oct 2024 15:02:31 +0200
+Message-ID: <20241002125812.652879213@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -54,41 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 956c3abe72fb6a651b8cf77c28462f7e5b6a48b1 ]
+[ Upstream commit c4ff14436952c3d0dd05769d76cf48e73a253b48 ]
 
-This is useful when walking over upstream lane adapters over given path.
+This is useful helper to find out the depth of a connected router.
+Convert the existing users to call this helper instead of open-coding.
+
+No functional changes.
 
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Qin Wan <qin.wan@hp.com>
 Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.h |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/thunderbolt/tb.c |    4 ++--
+ drivers/thunderbolt/tb.h |    9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -255,13 +255,13 @@ static int tb_enable_clx(struct tb_switc
+ 	 * this in the future to cover the whole topology if it turns
+ 	 * out to be beneficial.
+ 	 */
+-	while (sw && sw->config.depth > 1)
++	while (sw && tb_switch_depth(sw) > 1)
+ 		sw = tb_switch_parent(sw);
+ 
+ 	if (!sw)
+ 		return 0;
+ 
+-	if (sw->config.depth != 1)
++	if (tb_switch_depth(sw) != 1)
+ 		return 0;
+ 
+ 	/*
 --- a/drivers/thunderbolt/tb.h
 +++ b/drivers/thunderbolt/tb.h
-@@ -1076,6 +1076,21 @@ static inline bool tb_port_use_credit_al
- 	for ((p) = tb_next_port_on_path((src), (dst), NULL); (p);	\
- 	     (p) = tb_next_port_on_path((src), (dst), (p)))
+@@ -868,6 +868,15 @@ static inline struct tb_port *tb_switch_
+ 	return tb_port_at(tb_route(sw), tb_switch_parent(sw));
+ }
  
 +/**
-+ * tb_for_each_upstream_port_on_path() - Iterate over each upstreamm port on path
-+ * @src: Source port
-+ * @dst: Destination port
-+ * @p: Port used as iterator
-+ *
-+ * Walks over each upstream lane adapter on path from @src to @dst.
++ * tb_switch_depth() - Returns depth of the connected router
++ * @sw: Router
 + */
-+#define tb_for_each_upstream_port_on_path(src, dst, p)			\
-+	for ((p) = tb_next_port_on_path((src), (dst), NULL); (p);	\
-+	     (p) = tb_next_port_on_path((src), (dst), (p)))		\
-+		if (!tb_port_is_null((p)) || !tb_is_upstream_port((p))) {\
-+			continue;					\
-+		} else
++static inline int tb_switch_depth(const struct tb_switch *sw)
++{
++	return sw->config.depth;
++}
 +
- int tb_port_get_link_speed(struct tb_port *port);
- int tb_port_get_link_generation(struct tb_port *port);
- int tb_port_get_link_width(struct tb_port *port);
+ static inline bool tb_switch_is_light_ridge(const struct tb_switch *sw)
+ {
+ 	return sw->config.vendor_id == PCI_VENDOR_ID_INTEL &&
 
 
