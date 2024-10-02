@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A0D1D0438;
-	Wed,  2 Oct 2024 14:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1061D0438;
+	Wed,  2 Oct 2024 14:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879387; cv=none; b=lzcI4vv/AFdFs0PZHYzrbTsDcp+MdE7MoiCTdPIlAQ+VNJ7ZJUP8MEIu7cD0vmp6zSENsIpufBTVMaY6YyHSf47vfTz89bAcAHWpC19i5b2f0J3VMlm0xdNHMoTA1Gc6qqkuf5vGaktEoVYKvJ/ETtyptEzZaN1D61hYETnJKEQ=
+	t=1727879390; cv=none; b=gdaPxa0MlYLy5Dwxx7V332igG8DYOwiSidVpeGP3FUccMTU+csZ2Z3N0YeHARikXyq+63mWCUol/YXb6Hm+rhTTmBEWlNR0yvK3hIFILoxuynEvXuiTqTlMx6pwO5CcL513PnChRUQpjOrO/QMCPE6swxyRyeyFsb3PWJo/0Nek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879387; c=relaxed/simple;
-	bh=kan7scXuJgH5oey2u31V/zvzx+lHBxkUkFntGhAyBXQ=;
+	s=arc-20240116; t=1727879390; c=relaxed/simple;
+	bh=Bcokgovt8tTgEydAYxEEIDqWxH85byZEA91ms/L2yiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6DMuRMFSQR4ZOyaVt1q8FOkIxysw993ozLQSxHAD8t1tpJx0T+dYSHQw4QGgz1+Eyja/5LWwpt5WU7fZHWEhrABkEvUMn5B72FtKDi+fpkfq1yjT8pF/R/pnwEkblB5xKdZwtUWBBtwPrdCdyqFj8xZLKs429bpGyc1WMPeMpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gixfT8Pu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qiz++SGQ5zradUkObYa649ueAcs41qBP2Zr+wPNv8LNT6xZaWg56bEAzlXNrdGSPaFtXf65xRPViy2ROQKB2p/254WQ+wRNTJ6hPtmpVczlBgk2Kun5m2JIjoIORbEOt17q1sySyW5+MQ4BUTL2qw9+HZLDczZtrl/jeFhsADQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2gNR9nx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gixfT8Pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F201C4CEC2;
-	Wed,  2 Oct 2024 14:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2gNR9nx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA06DC4CEC2;
+	Wed,  2 Oct 2024 14:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879387;
-	bh=kan7scXuJgH5oey2u31V/zvzx+lHBxkUkFntGhAyBXQ=;
+	s=korg; t=1727879390;
+	bh=Bcokgovt8tTgEydAYxEEIDqWxH85byZEA91ms/L2yiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gixfT8PuJl9mUiJooz0aAxmJ5k+qePpXNf666ZHAMDfr3aonXr9+iMCcjBCcTT34m
-	 hGA4N7XADFB3rh9Ph1sXEbqFUY9V9aT7kEWLsQxY/tTNjvqHNljP2qgYeqK4RQumck
-	 gKsDL+McWx7nP/8YRp1OhI+MqykeLqHN+Q4eYGWI=
+	b=n2gNR9nx6LLSnIrlqqbMb3114o785ZrUdQfy+MsBZg5oQXP4oF4hpE/Za5ai2KpiE
+	 3F4Ba6GqvE1em9+T2jX1ivuiPbZ0/ebI8r7OAaPhj2hneq6lyzOYQcSJBuM58rGyMo
+	 Nxg29Poe3/7Nh0pbHeR2SwncwQn76qAZLcBBvpF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/538] spi: bcmbca-hsspi: Fix missing pm_runtime_disable()
-Date: Wed,  2 Oct 2024 14:55:41 +0200
-Message-ID: <20241002125756.258497607@linuxfoundation.org>
+Subject: [PATCH 6.6 103/538] ARM: dts: microchip: sama7g5: Fix RTT clock
+Date: Wed,  2 Oct 2024 14:55:42 +0200
+Message-ID: <20241002125756.297526047@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,54 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-[ Upstream commit 4439a2e92cb89028b22c5d7ba1b99e75d7d889f6 ]
+[ Upstream commit 867bf1923200e6ad82bad0289f43bf20b4ac7ff9 ]
 
-The pm_runtime_disable() is missing in remove function, use
-devm_pm_runtime_enable() to fix it. So the pm_runtime_disable() in
-the probe error path can also be removed.
+According to datasheet, Chapter 34. Clock Generator, section 34.2,
+Embedded characteristics, source clock for RTT is the TD_SLCK, registered
+with ID 1 by the slow clock controller driver. Fix RTT clock.
 
-Fixes: a38a2233f23b ("spi: bcmbca-hsspi: Add driver for newer HSSPI controller")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Link: https://patch.msgid.link/20240826124903.3429235-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7540629e2fc7 ("ARM: dts: at91: add sama7g5 SoC DT and sama7g5-ek")
+Link: https://lore.kernel.org/r/20240826165320.3068359-1-claudiu.beznea@tuxon.dev
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcmbca-hsspi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/microchip/sama7g5.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcmbca-hsspi.c b/drivers/spi/spi-bcmbca-hsspi.c
-index 9f64afd8164ea..4965bc86d7f52 100644
---- a/drivers/spi/spi-bcmbca-hsspi.c
-+++ b/drivers/spi/spi-bcmbca-hsspi.c
-@@ -546,12 +546,14 @@ static int bcmbca_hsspi_probe(struct platform_device *pdev)
- 			goto out_put_host;
- 	}
+diff --git a/arch/arm/boot/dts/microchip/sama7g5.dtsi b/arch/arm/boot/dts/microchip/sama7g5.dtsi
+index 269e0a3ca269c..7a95464bb78d8 100644
+--- a/arch/arm/boot/dts/microchip/sama7g5.dtsi
++++ b/arch/arm/boot/dts/microchip/sama7g5.dtsi
+@@ -272,7 +272,7 @@ rtt: rtc@e001d020 {
+ 			compatible = "microchip,sama7g5-rtt", "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
+ 			reg = <0xe001d020 0x30>;
+ 			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&clk32k 0>;
++			clocks = <&clk32k 1>;
+ 		};
  
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		goto out_put_host;
- 
- 	ret = sysfs_create_group(&pdev->dev.kobj, &bcmbca_hsspi_group);
- 	if (ret) {
- 		dev_err(&pdev->dev, "couldn't register sysfs group\n");
--		goto out_pm_disable;
-+		goto out_put_host;
- 	}
- 
- 	/* register and we are done */
-@@ -565,8 +567,6 @@ static int bcmbca_hsspi_probe(struct platform_device *pdev)
- 
- out_sysgroup_disable:
- 	sysfs_remove_group(&pdev->dev.kobj, &bcmbca_hsspi_group);
--out_pm_disable:
--	pm_runtime_disable(&pdev->dev);
- out_put_host:
- 	spi_controller_put(host);
- out_disable_pll_clk:
+ 		clk32k: clock-controller@e001d050 {
 -- 
 2.43.0
 
