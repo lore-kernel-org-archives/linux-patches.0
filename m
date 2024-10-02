@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5ED1D14F5;
-	Wed,  2 Oct 2024 14:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540CA1D14FC;
+	Wed,  2 Oct 2024 14:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878056; cv=none; b=HLJMKkbn1V9FCgJdoZONu9v4OZkXWeSPK/Lt/lA5+vtMzStMk8xHkui31GAJWx4xEbE9GXb1NNSyhIglk4+WwRJyUwb+DeMVuSk5iSU2j0EJqDgacAIBpI6Ln6NC3KtSvNiZ2w4tWnS14Q9taIvz4lWLOc2Tmxj4SE8ROBxOu/M=
+	t=1727878059; cv=none; b=nUvkkN7/Bxqo1Oa9IyxLtn1mdPq6krlmULwu3JPcZTL/6rvSpejVuuYPXzMtCYUW8KA6YcT/JObSZ9dIyf+29Ancp3RhnPpbIZlUjGmmkSMI4opmyBodfyW0J3HGGwvnolAbwBF9CyzqZPXjt2HQN9DLwy/FhgOEXFoKzj7XbjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878056; c=relaxed/simple;
-	bh=ZVBQrMkWtgt04QDsI2aOy4xUPSywQsglFhuXFYrKJng=;
+	s=arc-20240116; t=1727878059; c=relaxed/simple;
+	bh=DRpOFf8cHz5io51K6nuzJ02XkyYu7QPibsbglYaZU1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfC2gMAvcayHF+EAFFIDc0HbwGWuBW5xZl6a76hwGuaa3tjbHvBzrqTzvBSYWM2jQJs/LSoBCkFTw5Y2Nl5h9jAQ4h6+ACYTtFEJYbC/H/rm2URErn7gG8IejXj6ZG1HbiTpUZc7j1rwrjI5xJ84yENuTRzLULUn5kjY+5/OqyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbUPSdgG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVbjwm0F1QjugSASALaOLMAirtUqFsvK0jkmpRih7uuVf7aQyg3a0FoeeYkpxzgdUTLA9eIXXHeG4VroFUfyCCECbeCbHVt6Z9D+kOX+gk5CqglQzdzGOGSvEJEjeSb0tJEuTZGO7V/weHTesrQsvWigIXyvgL09HL8GWhUShfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cx2q+zG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbUPSdgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB282C4CEC2;
-	Wed,  2 Oct 2024 14:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cx2q+zG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49CFC4CECD;
+	Wed,  2 Oct 2024 14:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878056;
-	bh=ZVBQrMkWtgt04QDsI2aOy4xUPSywQsglFhuXFYrKJng=;
+	s=korg; t=1727878059;
+	bh=DRpOFf8cHz5io51K6nuzJ02XkyYu7QPibsbglYaZU1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbUPSdgGoNhr0wZQlBdWAy6SjX+HhcESG2HV4qpMOJFo9muDCKHVAJO+7fDTXZ5Pn
-	 PAocojy5j7p82IdJeyVvIlYlWxD2N/Xq+Becavq4GfHL7gQNt+yhc1k/5WwrE7dWnW
-	 aanKKFtKY1S9kDqz6zTSkAdGqrP6fpbNnCmoYq44=
+	b=Cx2q+zG6wbdBiBTBXDFVncOvQZnY62yXrO2LlmXEqgaVQgofW3fUvr/NybTVI/CZM
+	 xUTKkRSAQGoCzBjY8/b/+SM8xyEN3xE4x43nbcw+6BlXg6vr+MWzhf3PFEOU0MDSoo
+	 OV/yMetweIx9xKYKhrN1pRDyKKULTATKex0CkW9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hao Ge <gehao@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hongyan Xia <hongyan.xia2@arm.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 269/634] selftests/bpf: Fix incorrect parameters in NULL pointer checking
-Date: Wed,  2 Oct 2024 14:56:09 +0200
-Message-ID: <20241002125821.718532599@linuxfoundation.org>
+Subject: [PATCH 6.10 287/634] sched/pelt: Use rq_clock_task() for hw_pressure
+Date: Wed,  2 Oct 2024 14:56:27 +0200
+Message-ID: <20241002125822.438103473@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,46 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit c264487e5410e5a72db8a414566ab7d144223e6c ]
+[ Upstream commit 84d265281d6cea65353fc24146280e0d86ac50cb ]
 
-Smatch reported the following warning:
-    ./tools/testing/selftests/bpf/testing_helpers.c:455 get_xlated_program()
-    warn: variable dereferenced before check 'buf' (see line 454)
+commit 97450eb90965 ("sched/pelt: Remove shift of thermal clock")
+removed the decay_shift for hw_pressure. This commit uses the
+sched_clock_task() in sched_tick() while it replaces the
+sched_clock_task() with rq_clock_pelt() in __update_blocked_others().
+This could bring inconsistence. One possible scenario I can think of
+is in ___update_load_sum():
 
-It seems correct,so let's modify it based on it's suggestion.
+  u64 delta = now - sa->last_update_time
 
-Actually,commit b23ed4d74c4d ("selftests/bpf: Fix invalid pointer
-check in get_xlated_program()") fixed an issue in the test_verifier.c
-once,but it was reverted this time.
+'now' could be calculated by rq_clock_pelt() from
+__update_blocked_others(), and last_update_time was calculated by
+rq_clock_task() previously from sched_tick(). Usually the former
+chases after the latter, it cause a very large 'delta' and brings
+unexpected behavior.
 
-Let's solve this issue with the minimal changes possible.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/1eb3732f-605a-479d-ba64-cd14250cbf91@stanley.mountain/
-Fixes: b4b7a4099b8c ("selftests/bpf: Factor out get_xlated_program() helper")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Link: https://lore.kernel.org/r/20240820023622.29190-1-hao.ge@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 97450eb90965 ("sched/pelt: Remove shift of thermal clock")
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Hongyan Xia <hongyan.xia2@arm.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20240827112607.181206-1-yu.c.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/testing_helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
-index 4230420ef2940..680e452583a78 100644
---- a/tools/testing/selftests/bpf/testing_helpers.c
-+++ b/tools/testing/selftests/bpf/testing_helpers.c
-@@ -451,7 +451,7 @@ int get_xlated_program(int fd_prog, struct bpf_insn **buf, __u32 *cnt)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3c59f2b34a779..5e4162d02afc1 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9365,9 +9365,10 @@ static bool __update_blocked_others(struct rq *rq, bool *done)
  
- 	*cnt = xlated_prog_len / buf_element_size;
- 	*buf = calloc(*cnt, buf_element_size);
--	if (!buf) {
-+	if (!*buf) {
- 		perror("can't allocate xlated program buffer");
- 		return -ENOMEM;
- 	}
+ 	hw_pressure = arch_scale_hw_pressure(cpu_of(rq));
+ 
++	/* hw_pressure doesn't care about invariance */
+ 	decayed = update_rt_rq_load_avg(now, rq, curr_class == &rt_sched_class) |
+ 		  update_dl_rq_load_avg(now, rq, curr_class == &dl_sched_class) |
+-		  update_hw_load_avg(now, rq, hw_pressure) |
++		  update_hw_load_avg(rq_clock_task(rq), rq, hw_pressure) |
+ 		  update_irq_load_avg(rq, 0);
+ 
+ 	if (others_have_blocked(rq))
 -- 
 2.43.0
 
