@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC021EA80;
-	Wed,  2 Oct 2024 14:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288021D1E65;
+	Wed,  2 Oct 2024 14:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880255; cv=none; b=UcYpABh/gP+RIPChKDcaZ/pdtd3+KdkUUXtHlsFk+UlhznvjsNxXJOlW1j3ddal+Nv/gHNug56Ru1eRePvqz1SlQa2sKKXwcCmd8Wb7mZvadvpHOe/w9AmuqK0ocED2N4+9b/lKpPlWSp90/EMnbE2ibPgbgh9Hk77q8pqay5cI=
+	t=1727880258; cv=none; b=CqSDBmsXvXjvTUZenT00th1A+QnGbU+igXcPTKaZTTx6AAoskM/r3mdftI52Ty0QpfY+WRC3dYWYbcZKYS4UlARLCStIVlMavw4BIhiyHQd4yO0ulMKKb5/HqYRFhVEHENNJ8BTR5lt4Ket7sc4/fbE/qVz+CZwvMREHIn5vDEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880255; c=relaxed/simple;
-	bh=RT+qv1Htruml9opTYKkdxRmoR63Lj8fRPLEq2MMwo+U=;
+	s=arc-20240116; t=1727880258; c=relaxed/simple;
+	bh=JpCYMIVt+rC7Hnr5zYSih3CJs6cH5XjX4mgJTKrMHn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lEXJFjWviTIxpJzAULjqHv11NQ41w0QuaJ9aFPdMJsKcA63fsxJj0e+sruFZLWXSoqqBJ8nQAm2YYrJ/jKhNjVQNi7640PI9Zw6fmTr95raSP7Dz2k2DZdOX9oEqVIugMutnHB1bguJyMc3uUeI2uqeGGweolX0zlHN+pDsQPKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESDgUc+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oA7+jV0FUfEyWGxQHekY1vCdbFxWX70VkXpadfgjeYwFywsI1mFQrze1VA+1KHNX/VEYr0Z9lmGdTKo0RtyCDemQgROQA8ZkdSImwUd0FlnjSI4jgrT1bi0T9xBAs68NJUBXKqEWhRq2tJNbRNQ2bKcy9fe8mlD9VoVf0xzY1HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpihXCQv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESDgUc+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4C0C4CEC2;
-	Wed,  2 Oct 2024 14:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpihXCQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A154FC4CECD;
+	Wed,  2 Oct 2024 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880255;
-	bh=RT+qv1Htruml9opTYKkdxRmoR63Lj8fRPLEq2MMwo+U=;
+	s=korg; t=1727880258;
+	bh=JpCYMIVt+rC7Hnr5zYSih3CJs6cH5XjX4mgJTKrMHn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESDgUc+CWNWbfOeG4spoNAiosjWs1XOlfxZ6cEG0psFDcuBtz6YsNa7JsBO6dTrrv
-	 pjnvJRA3jftVOf18hdfeJXX4qBRXQ3cu+p7N187nSbp2gNzw1ONkKgsKHhmAHI/fQl
-	 nO2va9n96gerhNCEVLk4ddstidkPjFvHb7k4AHhQ=
+	b=HpihXCQvzhsAh63Bt8WJGiBfqJYfQ1lKmnUqIh1lhzV5us+aHTB+jYz9YU+bcXjA2
+	 Ekj79vLAmRAEBlLLtWJErX/jCCNL0huh+MfLvQNTUDuvmgBtg/D4SfiM19NrzZbz/H
+	 bJ8Sb2E0GQfrcYLdQjLQCPdoW01jXu3V5vAFvQJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 395/538] PCI: dra7xx: Fix threaded IRQ request for "dra7xx-pcie-main" IRQ
-Date: Wed,  2 Oct 2024 15:00:34 +0200
-Message-ID: <20241002125808.026436406@linuxfoundation.org>
+Subject: [PATCH 6.6 396/538] PCI: imx6: Fix missing call to phy_power_off() in error handling
+Date: Wed,  2 Oct 2024 15:00:35 +0200
+Message-ID: <20241002125808.065790304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -55,42 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 03f84b3baba7836bdfc162c19288d5ce1aa92890 upstream.
+commit 5b04d44d5c74e4d8aab1678496b84700b4b343fe upstream.
 
-Commit da87d35a6e51 ("PCI: dra7xx: Use threaded IRQ handler for
-"dra7xx-pcie-main" IRQ") switched from devm_request_irq() to
-devm_request_threaded_irq() for the "dra7xx-pcie-main" interrupt.
+Fix missing call to phy_power_off() in the error path of
+imx6_pcie_host_init(). Remove unnecessary check for imx6_pcie->phy
+as the PHY API already handles NULL pointers.
 
-Since the primary handler was set to NULL, the "IRQF_ONESHOT" flag
-should have also been set. Fix this.
-
-Fixes: da87d35a6e51 ("PCI: dra7xx: Use threaded IRQ handler for "dra7xx-pcie-main" IRQ")
-Suggested-by: Vignesh Raghavendra <vigneshr@ti.com>
-Link: https://lore.kernel.org/linux-pci/20240827122422.985547-2-s-vadapalli@ti.com
-Reported-by: Udit Kumar <u-kumar1@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Fixes: cbcf8722b523 ("phy: freescale: imx8m-pcie: Fix the wrong order of phy_init() and phy_power_on()")
+Link: https://lore.kernel.org/linux-pci/20240729-pci2_upstream-v8-3-b68ee5ef2b4d@nxp.com
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+[kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -841,7 +841,8 @@ static int dra7xx_pcie_probe(struct plat
- 	dra7xx->mode = mode;
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -997,7 +997,7 @@ static int imx6_pcie_host_init(struct dw
+ 		ret = phy_power_on(imx6_pcie->phy);
+ 		if (ret) {
+ 			dev_err(dev, "waiting for PHY ready timeout!\n");
+-			goto err_phy_off;
++			goto err_phy_exit;
+ 		}
+ 	}
  
- 	ret = devm_request_threaded_irq(dev, irq, NULL, dra7xx_pcie_irq_handler,
--			       IRQF_SHARED, "dra7xx-pcie-main", dra7xx);
-+					IRQF_SHARED | IRQF_ONESHOT,
-+					"dra7xx-pcie-main", dra7xx);
- 	if (ret) {
- 		dev_err(dev, "failed to request irq\n");
- 		goto err_gpio;
+@@ -1012,8 +1012,9 @@ static int imx6_pcie_host_init(struct dw
+ 	return 0;
+ 
+ err_phy_off:
+-	if (imx6_pcie->phy)
+-		phy_exit(imx6_pcie->phy);
++	phy_power_off(imx6_pcie->phy);
++err_phy_exit:
++	phy_exit(imx6_pcie->phy);
+ err_clk_disable:
+ 	imx6_pcie_clk_disable(imx6_pcie);
+ err_reg_disable:
 
 
