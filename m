@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FA41D1F5B;
-	Wed,  2 Oct 2024 14:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EABB1E52C;
+	Wed,  2 Oct 2024 14:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878867; cv=none; b=O+/UD6d7/F2MC7HXIXMN82OxCiap2WX7gPcLME5S+9HmrDqUYmxDZ9pQDdgfAnD+3eYuXZfhAlwoK4rHAomd8MP/b13FhWLsRcGzXRjwzvZqBJw82TAWUDsOXiCJ4Jw5QvOwbypomNPkm8do+Xsdez0KD+TGEp4sXwdS2uZi5No=
+	t=1727878870; cv=none; b=EZCRV2yLZXCsKYLwCp7Txf31XR69fVEbqQA6udjJWKCqMLudIC1d+sFCNOPg1JQTJC3YDiLKyaCGhCJozHiuRs7ABMihDDcaPDV2VLDy81yFJOOJYJGVyTaH78FMytNTbgXtZdupuI7APlPDipjV7W0X7mT5Ive9k/m+rB7aTEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878867; c=relaxed/simple;
-	bh=0M4LpSr5GY/htaqR7t6M7rXSXma9alViVEn8c8n52L0=;
+	s=arc-20240116; t=1727878870; c=relaxed/simple;
+	bh=FTh0B8XLXd8fn2tzzmbupMphsy4vqIKdJRaZVsAPegE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uwjjkj6R4fHOybCMP6v1fOMWb41RsKHDIawcbHWWeWadvv0wCa68RwwgJBIeYEpPDrzhJQVMoEuYJUtyN4i8M0nEIEdNaB0TJu7MafK8ay63RgKldBzy6t8XI34MrCAIB3rQKuwStM4GK2sdIoIjRyJOzN/oN+DTp6NGLfWywl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+KKkvCH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwPzCJKiKar4b8xdHdZGyx8h11CO/Y4X8xUSdfVKQ2d8fsgz50EWKQqcEBvAWJXgQcdGN1MfnFqhSBTjLKo60I5fz3wxQ7ECOTZ4bYBvXasrKVAS/obKzHcQhjHs6Vj8KROf0FWU2LnbsfjfPiuqIo3MLEUuZ1aW56Eh770DtsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6ATBgcM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+KKkvCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3609C4CEC5;
-	Wed,  2 Oct 2024 14:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6ATBgcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB47FC4CEC5;
+	Wed,  2 Oct 2024 14:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878867;
-	bh=0M4LpSr5GY/htaqR7t6M7rXSXma9alViVEn8c8n52L0=;
+	s=korg; t=1727878870;
+	bh=FTh0B8XLXd8fn2tzzmbupMphsy4vqIKdJRaZVsAPegE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+KKkvCHzRX+YdA9wYSLWkVZIfC52LzB5X5NXN3/0346CzvQjeBtbuQaZ9ADkzTvd
-	 2/lDrCqDoD5qYyja1Ywxakk/Df9jL1oO0Hn0UJIrK7FPz+NkCbJiWJUBpWM7NqhSIv
-	 tWUNmMocshIofQ5MLqUCFj/BjFNVVjqALSrWlGzs=
+	b=H6ATBgcMEyyWCJ6K9SgiPFIsJRhYv9gpw2VgqMw5u+nL1R4xIyXudzwJ0lTSQzol4
+	 JguBHorAnHrw8m8e0/mFPVKInRFs+BziaZtwJ6eV/3eXG+7c8XU0JQSOQZLrc1OtzT
+	 CeqDw+NNpfsIToMObN+y8sc0E3+72JlsmfEGTFf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.10 559/634] btrfs: always update fstrim_range on failure in FITRIM ioctl
-Date: Wed,  2 Oct 2024 15:00:59 +0200
-Message-ID: <20241002125833.177929256@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.10 560/634] f2fs: fix several potential integer overflows in file offsets
+Date: Wed,  2 Oct 2024 15:01:00 +0200
+Message-ID: <20241002125833.219717568@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,62 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Stefani <luca.stefani.ge1@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 3368597206dc3c6c3c2247ee146beada14c67380 upstream.
+commit 1cade98cf6415897bf9342ee451cc5b40b58c638 upstream.
 
-Even in case of failure we could've discarded some data and userspace
-should be made aware of it, so copy fstrim_range to userspace
-regardless.
+When dealing with large extents and calculating file offsets by
+summing up according extent offsets and lengths of unsigned int type,
+one may encounter possible integer overflow if the values are
+big enough.
 
-Also make sure to update the trimmed bytes amount even if
-btrfs_trim_free_extents fails.
+Prevent this from happening by expanding one of the addends to
+(pgoff_t) type.
 
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Luca Stefani <luca.stefani.ge1@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: d323d005ac4a ("f2fs: support file defragment")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    4 ++--
- fs/btrfs/ioctl.c       |    4 +---
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ fs/f2fs/extent_cache.c |    4 ++--
+ fs/f2fs/file.c         |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -6426,13 +6426,13 @@ int btrfs_trim_fs(struct btrfs_fs_info *
- 			continue;
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -366,7 +366,7 @@ static unsigned int __free_extent_tree(s
+ static void __drop_largest_extent(struct extent_tree *et,
+ 					pgoff_t fofs, unsigned int len)
+ {
+-	if (fofs < et->largest.fofs + et->largest.len &&
++	if (fofs < (pgoff_t)et->largest.fofs + et->largest.len &&
+ 			fofs + len > et->largest.fofs) {
+ 		et->largest.len = 0;
+ 		et->largest_updated = true;
+@@ -456,7 +456,7 @@ static bool __lookup_extent_tree(struct
  
- 		ret = btrfs_trim_free_extents(device, &group_trimmed);
-+
-+		trimmed += group_trimmed;
- 		if (ret) {
- 			dev_failed++;
- 			dev_ret = ret;
- 			break;
- 		}
--
--		trimmed += group_trimmed;
+ 	if (type == EX_READ &&
+ 			et->largest.fofs <= pgofs &&
+-			et->largest.fofs + et->largest.len > pgofs) {
++			(pgoff_t)et->largest.fofs + et->largest.len > pgofs) {
+ 		*ei = et->largest;
+ 		ret = true;
+ 		stat_inc_largest_node_hit(sbi);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2719,7 +2719,7 @@ static int f2fs_defragment_range(struct
+ 	 * block addresses are continuous.
+ 	 */
+ 	if (f2fs_lookup_read_extent_cache(inode, pg_start, &ei)) {
+-		if (ei.fofs + ei.len >= pg_end)
++		if ((pgoff_t)ei.fofs + ei.len >= pg_end)
+ 			goto out;
  	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
  
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -543,13 +543,11 @@ static noinline int btrfs_ioctl_fitrim(s
- 
- 	range.minlen = max(range.minlen, minlen);
- 	ret = btrfs_trim_fs(fs_info, &range);
--	if (ret < 0)
--		return ret;
- 
- 	if (copy_to_user(arg, &range, sizeof(range)))
- 		return -EFAULT;
- 
--	return 0;
-+	return ret;
- }
- 
- int __pure btrfs_is_empty_uuid(u8 *uuid)
 
 
