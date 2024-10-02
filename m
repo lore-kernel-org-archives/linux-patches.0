@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2753D1D0427;
-	Wed,  2 Oct 2024 13:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218B129CE7;
+	Wed,  2 Oct 2024 13:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877239; cv=none; b=oBBua6F5+kXHV4V2DigmfzjqffXfpz5873S0Jm5jGK+OdugRWoggGy4CNj/eWJUpv75RGK0GDhzSCeZX0BlzEwxI+fJLiPX89wGz0qiXChSkhrsydx4GGThHlQzpOuS803OvT6ZcGrMbjZnvzDYW88f3Elt5u6iKeqB7jfWQ6RQ=
+	t=1727877242; cv=none; b=RamhKrPjKHcRaw0z1ohxkXzNdjHz/Rg7OVxyOH/eDjy3DKLHV11ONTv+UaqZB7cGpjEsF9YjJrCpX79wZ+S0q4XiXwjFN5acPhhTLQOaU36WjT/Ki+XZqyFWBiufkj4FG5BEwMZ8NmpygCJ8+I8EidD96F08VNTWprLAvtDooGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877239; c=relaxed/simple;
-	bh=9AYE9t14z+6fLBb1CGHuHvTuHGEE+RiHw1DEXRwnR6I=;
+	s=arc-20240116; t=1727877242; c=relaxed/simple;
+	bh=xBQ+i+rXfKfvHS7A8Zlo2MY8KhQ6Jr7KB8iDmr820U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbMABAbL5mOwfGNIV8kLOJOHzUJirtGqqpgCOtRbQIGJsNZtvHcriF/swKhzPyCZodNqMMNOGWkBiogb8rD0Qy2n2TBNUJXKACcVJlvCbciCXSLiwjsx7DnEaLEqqA8kMReh1QaEnX2hI7YHwW+p68GtUpJB7H4YnVYqyMMeD30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAjp+IO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GPeWu4KbjpSrty4LR6D0f46vUzayLvFbcoL6tEOgeKJV8Yo/WxOBi59VWMj0+iFE3XBeJlo3xpdxT8pHECtJOSFOlWzVY0pbOJYIDBOjcZwRw+ahdZF8TkNUgWdMzbmmJyFzPpNEDAFMwghiwYeCLXbJrl5AlBwXA+ybbVVw4vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMsWpO0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAjp+IO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C18C4CEC5;
-	Wed,  2 Oct 2024 13:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMsWpO0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0F8C4CEC2;
+	Wed,  2 Oct 2024 13:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877239;
-	bh=9AYE9t14z+6fLBb1CGHuHvTuHGEE+RiHw1DEXRwnR6I=;
+	s=korg; t=1727877242;
+	bh=xBQ+i+rXfKfvHS7A8Zlo2MY8KhQ6Jr7KB8iDmr820U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAjp+IO2SAojUtuhALT/M5y8u+PuA5F73ww8ErsS38jnb+zvGyvfQbI6XWDTJabio
-	 p8PqSwLHlrcydtonInb3sqwGJLKAogA6Hme0TOPayw7TGc3wb7kSefk4xqSNd8zX3r
-	 CyAqfdtwXJ0v9/Ky1jF3ufsUZo3zknZHMbc/GHnQ=
+	b=fMsWpO0dg3NapZsNdCgt95NBKvsEHlvoXDppEef07M95hXKjic4HoduEd9gfLFhgC
+	 rpQ8TWIZdCIwWv9/Slis4qJkgjO/IP3xW8MuNXZwsLL1MRAgIBr5FNMVqcmEr76aZb
+	 ZAtiHlQbIuOV8Kqx0+kLC1xO8gnpHSdnAbzlPeZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Martin <Dave.Martin@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 016/634] arm64: signal: Fix some under-bracketed UAPI macros
-Date: Wed,  2 Oct 2024 14:51:56 +0200
-Message-ID: <20241002125811.735025110@linuxfoundation.org>
+Subject: [PATCH 6.10 017/634] wifi: rtw89: remove unused C2H event ID RTW89_MAC_C2H_FUNC_READ_WOW_CAM to prevent out-of-bounds reading
+Date: Wed,  2 Oct 2024 14:51:57 +0200
+Message-ID: <20241002125811.773862001@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Martin <Dave.Martin@arm.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit fc2220c9b15828319b09384e68399b4afc6276d9 ]
+[ Upstream commit 56310ddb50b190b3390fdc974aec455d0a516bd2 ]
 
-A few SME-related sigcontext UAPI macros leave an argument
-unprotected from misparsing during macro expansion.
+The handler of firmware C2H event RTW89_MAC_C2H_FUNC_READ_WOW_CAM isn't
+implemented, but driver expects number of handlers is
+NUM_OF_RTW89_MAC_C2H_FUNC_WOW causing out-of-bounds access. Fix it by
+removing ID.
 
-Add parentheses around references to macro arguments where
-appropriate.
+Addresses-Coverity-ID: 1598775 ("Out-of-bounds read")
 
-Signed-off-by: Dave Martin <Dave.Martin@arm.com>
-Fixes: ee072cf70804 ("arm64/sme: Implement signal handling for ZT")
-Fixes: 39782210eb7e ("arm64/sme: Implement ZA signal handling")
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240729152005.289844-1-Dave.Martin@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: ff53fce5c78b ("wifi: rtw89: wow: update latest PTK GTK info to mac80211 after resume")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240809072012.84152-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/uapi/asm/sigcontext.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/include/uapi/asm/sigcontext.h b/arch/arm64/include/uapi/asm/sigcontext.h
-index 8a45b7a411e04..57f76d82077ea 100644
---- a/arch/arm64/include/uapi/asm/sigcontext.h
-+++ b/arch/arm64/include/uapi/asm/sigcontext.h
-@@ -320,10 +320,10 @@ struct zt_context {
- 	((sizeof(struct za_context) + (__SVE_VQ_BYTES - 1))	\
- 		/ __SVE_VQ_BYTES * __SVE_VQ_BYTES)
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index a580cb7192337..755a55c8bc20b 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -421,7 +421,6 @@ enum rtw89_mac_c2h_mrc_func {
  
--#define ZA_SIG_REGS_SIZE(vq) ((vq * __SVE_VQ_BYTES) * (vq * __SVE_VQ_BYTES))
-+#define ZA_SIG_REGS_SIZE(vq) (((vq) * __SVE_VQ_BYTES) * ((vq) * __SVE_VQ_BYTES))
+ enum rtw89_mac_c2h_wow_func {
+ 	RTW89_MAC_C2H_FUNC_AOAC_REPORT,
+-	RTW89_MAC_C2H_FUNC_READ_WOW_CAM,
  
- #define ZA_SIG_ZAV_OFFSET(vq, n) (ZA_SIG_REGS_OFFSET + \
--				  (SVE_SIG_ZREG_SIZE(vq) * n))
-+				  (SVE_SIG_ZREG_SIZE(vq) * (n)))
- 
- #define ZA_SIG_CONTEXT_SIZE(vq) \
- 		(ZA_SIG_REGS_OFFSET + ZA_SIG_REGS_SIZE(vq))
-@@ -334,7 +334,7 @@ struct zt_context {
- 
- #define ZT_SIG_REGS_OFFSET sizeof(struct zt_context)
- 
--#define ZT_SIG_REGS_SIZE(n) (ZT_SIG_REG_BYTES * n)
-+#define ZT_SIG_REGS_SIZE(n) (ZT_SIG_REG_BYTES * (n))
- 
- #define ZT_SIG_CONTEXT_SIZE(n) \
- 	(sizeof(struct zt_context) + ZT_SIG_REGS_SIZE(n))
+ 	NUM_OF_RTW89_MAC_C2H_FUNC_WOW,
+ };
 -- 
 2.43.0
 
