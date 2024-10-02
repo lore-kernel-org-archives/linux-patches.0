@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB922F44;
-	Wed,  2 Oct 2024 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC098BEA;
+	Wed,  2 Oct 2024 14:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880504; cv=none; b=Z317nAKR8rGfvhgYYtWiaMNHCCWBRP3ch/2oUFG2H9FgZkXxIDDd35aWdLvqvyqLHm8kbrpMygdCiPbsYxyZyjmtAMq+OwtbY5BJtcdSLEd5ATkHCmyIfNq58xqyNG8XEDKulInx8OBsV4UFWkLfLFPpcxGbJaK3ulSWoSShRgM=
+	t=1727880507; cv=none; b=g7eDLgGXWiii55Xu/jtwFRa5brDXAXOWctJMyDI4STjuKqOIkKmqJpRxmAp6hsRCP5wceopjimhvAkMBTlzs37NTHMoWNLJOY/dmIsTSryZuORIShx9AkxrNGmSVD8a6+uV8Tq1EkSH9CCtX0WzpbhzfCuh2G/SjmuBqU+2qRpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880504; c=relaxed/simple;
-	bh=sEhVGrWJ7do3RbB1VfqcBpUuDBXoFJMbFqnkYkSUkGU=;
+	s=arc-20240116; t=1727880507; c=relaxed/simple;
+	bh=4iQ0lIMISSWWmFq0bZg0T40BPfqyr3RaSDJ83M0qaaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIOxsVhRURI/CCaHuy3Tw1jFEJZIIACzcnOY2k8xpSdOz9Awl6KXoGsjX5AFFz+vtUFAE7NZ8Kgt7xrz/ZSAa2oLnS/U0g+45AvBicOzpBW2mVdRfBQWLXQ/B+k/UI5EICTy4PsSEyTuTiAF4gpCvAxdzYyTasQ3fdJAu3r+nwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnG3aYAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lx4BFQBqKM5GKvY+x8pK65+CCang3FdgCnu9HyLhwMicolSp1iXOUscSPv/1WtxoSRH4HDYIcNwhZXwVeO13tUq18BywaTO//gNNuKd4hiSahuOmMeMe1q8MATHG3wK4fqePUwAWAZNMw9TKlKNRUCVaqKEKzfglYlZaxGN43YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlO2V4Ps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnG3aYAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CDBC4CEC2;
-	Wed,  2 Oct 2024 14:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlO2V4Ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E746C4CEC2;
+	Wed,  2 Oct 2024 14:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880503;
-	bh=sEhVGrWJ7do3RbB1VfqcBpUuDBXoFJMbFqnkYkSUkGU=;
+	s=korg; t=1727880506;
+	bh=4iQ0lIMISSWWmFq0bZg0T40BPfqyr3RaSDJ83M0qaaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnG3aYAvcVdbaOiaJ5szgmf2SxRlnVB1nq5F7h1eX9lVjO0TvS6hl05/p+4LUyWb5
-	 UHIssuO9pIYLTVxc43KqabfZhF9QnG0xhfx5/w692Fjs9pDWTRErCWHpFr2h/tL10f
-	 GOYpdlKWSWbGCCohYF7o8U19uNtI6+vqjMUfUpLE=
+	b=YlO2V4PsIDcujr3UaK3uLHtGNLUStdiyejP/k6F8wg5Xr6fb/5JCersIJz8V2K6ey
+	 bTsaHvvvgSiRlnASKUEuMFuqcmmMTFUrPIq8CXUvuqydpFP9OJNs8xjF+3wYKLGVqJ
+	 GyMmM4R5Lb7VcwJ83OyjO91886MDH7Tkrh6zHltI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Michael Trimarchi <michael@amarulasolutions.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.6 482/538] ARM: dts: imx6ul-geam: fix fsl,pins property in tscgrp pinctrl
-Date: Wed,  2 Oct 2024 15:02:01 +0200
-Message-ID: <20241002125811.469418156@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 483/538] soc: versatile: realview: fix memory leak during device remove
+Date: Wed,  2 Oct 2024 15:02:02 +0200
+Message-ID: <20241002125811.508179789@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,34 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 1b0e32753d8550908dff8982410357b5114be78c upstream.
+[ Upstream commit 1c4f26a41f9d052f334f6ae629e01f598ed93508 ]
 
-The property is "fsl,pins", not "fsl,pin".  Wrong property means the pin
-configuration was not applied.  Fixes dtbs_check warnings:
+If device is unbound, the memory allocated for soc_dev_attr should be
+freed to prevent leaks.
 
-  imx6ul-geam.dtb: pinctrl@20e0000: tscgrp: 'fsl,pins' is a required property
-  imx6ul-geam.dtb: pinctrl@20e0000: tscgrp: 'fsl,pin' does not match any of the regexes: 'pinctrl-[0-9]+'
-
-Cc: stable@vger.kernel.org
-Fixes: a58e4e608bc8 ("ARM: dts: imx6ul-geam: Add Engicam IMX6UL GEA M6UL initial support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Michael Trimarchi <michael@amarulasolutions.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-2-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: c774f2564c00 ("soc: versatile: realview: fix soc_dev leak during device remove")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/versatile/soc-realview.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx6ul-geam.dts
-@@ -366,7 +366,7 @@
- 	};
+diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
+index c6876d232d8fd..d304ee69287af 100644
+--- a/drivers/soc/versatile/soc-realview.c
++++ b/drivers/soc/versatile/soc-realview.c
+@@ -93,7 +93,7 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
  
- 	pinctrl_tsc: tscgrp {
--		fsl,pin = <
-+		fsl,pins = <
- 			MX6UL_PAD_GPIO1_IO01__GPIO1_IO01	0xb0
- 			MX6UL_PAD_GPIO1_IO02__GPIO1_IO02	0xb0
- 			MX6UL_PAD_GPIO1_IO03__GPIO1_IO03	0xb0
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
+ 
+@@ -106,10 +106,9 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	soc_dev_attr->family = "Versatile";
+ 	soc_dev_attr->custom_attr_group = realview_groups[0];
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		kfree(soc_dev_attr);
++	if (IS_ERR(soc_dev))
+ 		return -ENODEV;
+-	}
++
+ 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
+ 			  &realview_coreid);
+ 	if (ret)
+-- 
+2.43.0
+
 
 
