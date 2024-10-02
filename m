@@ -1,48 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A981D0B99;
-	Wed,  2 Oct 2024 14:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4A71D0B99;
+	Wed,  2 Oct 2024 14:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879834; cv=none; b=VyqvBHowIovXGp1f0jOOrYH0fxRPrHIcnBW3gPuwh2iwH3BBixrTu2WJcc9FRJGxrSk0eEm6uvV1x04sR2eWf65GwP7sjW0lO9gn8OQE06+XC/Xx5AqIoMzhOWHlT0SoYMSLWJ/Wt7uJEBeD2I/iXVNkCL6AKMl3HlAFovEKytA=
+	t=1727879837; cv=none; b=ZRtqwW96k0weNbnPSain9YD0JBm6yn98YfhBCUWFSko8uBxsmEFqzi9kaKjQ6wd/SwvttJOhWMIfGaJeodcI/7vjqhJzSblGe3+G/fnZ6W6VJenOyRYWGBjs1aVp2GBgj9tZ5cReHOvugYprA+x3JsPjgxiEKU6iKASmG82hz4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879834; c=relaxed/simple;
-	bh=YbVNPLPZGT7kZPObmdALXtI+gNj9Zj2YSyXsRiOSPTg=;
+	s=arc-20240116; t=1727879837; c=relaxed/simple;
+	bh=ZTj4a74VmxmBlFmSLE6t2dTMkRM+y7mY+NIzzMSb+Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJqkNCNbvlzlrdt38Eng2HUVystlj9hx7CW358MXXVnY7iAfM9sNHJmXfCVOZMqH2VXvtCLCAY4bTU08Km+WQ+D2fQ2ZVM4ZBLO44+WolFt8Fw+E9msAN8UatOxPa9CjlspaBTKBpI1XZQMWLkcSbgn/RnTOZ1KeRteGSOzOiTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xazDi0i2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RsvMjODLjzYXNJsRfE2onTCQpNcxJQMfXZEF18Z2anV2nj7+MhNfq7pUW/q9j2DAiMC81iaBR/+7I/aB1/kvi5rJC8k+iromgwyi5ws/GXqjRTbXbt0krMofwab7Z6rW9izLajhE2/rp56b1OszXFLSqZQ0p3okkUlw5EMDjKMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzuPaIa7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xazDi0i2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D72C4CEC2;
-	Wed,  2 Oct 2024 14:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzuPaIa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDADC4CEC2;
+	Wed,  2 Oct 2024 14:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879834;
-	bh=YbVNPLPZGT7kZPObmdALXtI+gNj9Zj2YSyXsRiOSPTg=;
+	s=korg; t=1727879837;
+	bh=ZTj4a74VmxmBlFmSLE6t2dTMkRM+y7mY+NIzzMSb+Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xazDi0i2+oaB+/9Z7OCMB23w1QMFsz+l0Ch/EZkO2K4iVseT49ef0dF/rsAxDG9ni
-	 VI2C44yTHn+n9sZ3TUjZTXwFHDoSyxyxYmcdya+40pAK1VHXjaE9Zl52VfnSzqwvVp
-	 DmUZ+d8J5uPIsuKZ9GTnm2zqtK/b0OBY6Sf3BxTQ=
+	b=tzuPaIa7NkuKZM70wp23MNrsn9Yw+YlaHXvIkllBOMmJFUJwVv3iQDbmeW0lHCERl
+	 0/0yZLJE8XiHoHtuarl6EeQY56dHcNueDzQ8PpjvRUps6+6BJAs9ZyseGH5poIRf6z
+	 TVU2dyuR/IfUtHrP5Z0kzrvB1/VRTwUfmu39DuUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	David Ahern <dsa@cumulusnetworks.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	linuxarm@huawei.com,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Zeng Tao <prime.zeng@hisilicon.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/538] perf stat: Display iostat headers correctly
-Date: Wed,  2 Oct 2024 14:58:13 +0200
-Message-ID: <20241002125802.283248155@linuxfoundation.org>
+Subject: [PATCH 6.6 255/538] perf sched timehist: Fixed timestamp error when unable to confirm event sched_in time
+Date: Wed,  2 Oct 2024 14:58:14 +0200
+Message-ID: <20241002125802.323179149@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -61,64 +62,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Yang Jihong <yangjihong@bytedance.com>
 
-[ Upstream commit 2615639352420e6e3115952c5b8f46846e1c6d0e ]
+[ Upstream commit 39c243411bdb8fb35777adf49ee32549633c4e12 ]
 
-Currently we'll only print metric headers for metric leader in
-aggregration mode. This will make `perf iostat` header not shown
-since it'll aggregrated globally but don't have metric events:
+If sched_in event for current task is not recorded, sched_in timestamp
+will be set to end_time of time window interest, causing an error in
+timestamp show. In this case, we choose to ignore this event.
 
-  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
-   Performance counter stats for 'system wide':
-      port
-  0000:00                    0                    0                    0                    0
-  0000:80                    0                    0                    0                    0
-  [...]
+Test scenario:
 
-Fix this by excluding the iostat in the check of printing metric
-headers. Then we can see the headers:
+  perf[1229608] does not record the first sched_in event, run time and sch delay are both 0
 
-  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
-   Performance counter stats for 'system wide':
-      port             Inbound Read(MB)    Inbound Write(MB)    Outbound Read(MB)   Outbound Write(MB)
-  0000:00                    0                    0                    0                    0
-  0000:80                    0                    0                    0                    0
-  [...]
+  # perf sched timehist
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+   2090450.763231 [0000]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763235 [0000]  migration/0[15]                     0.000      0.001      0.003
+   2090450.763263 [0001]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763268 [0001]  migration/1[21]                     0.000      0.001      0.004
+   2090450.763302 [0002]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763309 [0002]  migration/2[27]                     0.000      0.001      0.007
+   2090450.763338 [0003]  perf[1229608]                       0.000      0.000      0.000
+   2090450.763343 [0003]  migration/3[33]                     0.000      0.001      0.004
 
-Fixes: 193a9e30207f5477 ("perf stat: Don't display metric header for non-leader uncore events")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Before:
+
+  arbitrarily specify a time window of interest, timestamp will be set to an incorrect value
+
+  # perf sched timehist --time 100,200
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+       200.000000 [0000]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0001]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0002]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0003]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0004]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0005]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0006]  perf[1229608]                       0.000      0.000      0.000
+       200.000000 [0007]  perf[1229608]                       0.000      0.000      0.000
+
+ After:
+
+  # perf sched timehist --time 100,200
+  Samples of sched_switch event do not have callchains.
+             time    cpu  task name                       wait time  sch delay   run time
+                          [tid/pid]                          (msec)     (msec)     (msec)
+  --------------- ------  ------------------------------  ---------  ---------  ---------
+
+Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
+Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: David Ahern <dsa@cumulusnetworks.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: linuxarm@huawei.com
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Cc: Zeng Tao <prime.zeng@hisilicon.com>
-Link: https://lore.kernel.org/r/20240802065800.48774-1-yangyicong@huawei.com
+Link: https://lore.kernel.org/r/20240819024720.2405244-1-yangjihong@bytedance.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat-display.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
-index 0abe35388ab15..f98ade7f9fba4 100644
---- a/tools/perf/util/stat-display.c
-+++ b/tools/perf/util/stat-display.c
-@@ -1207,7 +1207,8 @@ static void print_metric_headers(struct perf_stat_config *config,
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 489a5ef2a25de..42185da0f000a 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2633,9 +2633,12 @@ static int timehist_sched_change_event(struct perf_tool *tool,
+ 	 * - previous sched event is out of window - we are done
+ 	 * - sample time is beyond window user cares about - reset it
+ 	 *   to close out stats for time window interest
++	 * - If tprev is 0, that is, sched_in event for current task is
++	 *   not recorded, cannot determine whether sched_in event is
++	 *   within time window interest - ignore it
+ 	 */
+ 	if (ptime->end) {
+-		if (tprev > ptime->end)
++		if (!tprev || tprev > ptime->end)
+ 			goto out;
  
- 	/* Print metrics headers only */
- 	evlist__for_each_entry(evlist, counter) {
--		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
-+		if (!config->iostat_run &&
-+		    config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
- 			continue;
- 
- 		os.evsel = counter;
+ 		if (t > ptime->end)
 -- 
 2.43.0
 
