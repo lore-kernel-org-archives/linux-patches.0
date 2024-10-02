@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF381D14EB;
-	Wed,  2 Oct 2024 14:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068A21D14F8;
+	Wed,  2 Oct 2024 14:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878629; cv=none; b=lH3+EM0hg+F070GPNGndPoWPVNSTi6LHq3Vp8KTseq3H2CqDvleJYNASs/DeppjJs0AUGGoKn2IwokkCLCNa09u1NKiUIhft8iSvh5ClLtrWvtbo9bN13jDTAvvtLqWhBNOJk+yCYjlgmjgkr3rQiUUeXp8N6F+oxXLjEFL8qoI=
+	t=1727878632; cv=none; b=CJRwHT1jQmF/XuG97IgRiC7LaRklzlwC1yJ1ex675ssiMlHsVaI8MVHT0WKO76wNCyWiRlIrusCPXlAda1csIqAOre5hzChmq3h+9LVaGxjCiVRFEcorsE3o2SXhezn58keqOvMSHgnYi6tLDYYS77SrsQ+c5qDdWSLVZ87b2dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878629; c=relaxed/simple;
-	bh=YLdkmPb03qrfQWpu0xmRCbcim4BGeLMBc1/ezEVjZxI=;
+	s=arc-20240116; t=1727878632; c=relaxed/simple;
+	bh=DTL2S1oTU1jTdDvyiH5YWXPsz2bw596eDK6YaDsEg6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjDUGjNIQ3hLUXrSwcuURRNNYyuW1btny0YoVEWak4OIb3tUVFXyLH9zoZ/gYUwUBsEiGz+Rmlz1H2ISRWwsaGBl5ULeE+qEy0yBtX+VqtpPvAJG9kgx11Lz9pZoq0PNZqh4+wQ3w/uFA7fmI8KE9FzKGXf3OxzbPkZS5j2WRJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZjEAyh/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuFLdoCeEfaj/skv2P0jAUO8To0tC1xtfriuoALAjHCO3Pz2VYwfJ7STwXkG3UlBQuRRLWAUMaTINr+Ma7B3olWXeQZvi+VllRFHVaZPZCKFadxFufLDFch51LljzISkXcVO76hRB+K4yS7KcDCXHQ5qaW1lFwNvzgC2i7hd5QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iwc2iMJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZjEAyh/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974FDC4CEC2;
-	Wed,  2 Oct 2024 14:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iwc2iMJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A26C4CEC5;
+	Wed,  2 Oct 2024 14:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878629;
-	bh=YLdkmPb03qrfQWpu0xmRCbcim4BGeLMBc1/ezEVjZxI=;
+	s=korg; t=1727878631;
+	bh=DTL2S1oTU1jTdDvyiH5YWXPsz2bw596eDK6YaDsEg6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZjEAyh/OhuSy+IJhzJVsajEOw73Z4AfPMkQeFDfzxX+jQFrhtGuDB8OwzqNiMZCN
-	 ieKsUMIbuzdcoYA0ZrUqTH2Y/JZ2p1p30XmpmpXvd3PzLq2c3mZ0ZZj0H1FDV8iC/Z
-	 hv9RIThimat0TatFWXZ5+FreYPWCqv99QJhoNOSE=
+	b=Iwc2iMJkZe2j7yBGgwVJlNQPq7z1ue+0kiTOktfAJ8NnsHHUv04KPsEMS8+IHLDvR
+	 S7QE9imF8EiZ+zBeqy/OwYLWM/9cg2TDD6KoasQRnECEwNppC6TP3cy6jHC4sMJ/Tj
+	 BS/djx+XaCNTTCSqEI6I+26lNreQEdSQqe0ohSEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.10 471/634] PCI: xilinx-nwl: Fix off-by-one in INTx IRQ handler
-Date: Wed,  2 Oct 2024 14:59:31 +0200
-Message-ID: <20241002125829.700295647@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	syzbot+16073ebbc4c64b819b47@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.10 480/634] iommufd: Protect against overflow of ALIGN() during iova allocation
+Date: Wed,  2 Oct 2024 14:59:40 +0200
+Message-ID: <20241002125830.050977053@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,68 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 0199d2f2bd8cd97b310f7ed82a067247d7456029 upstream.
+commit 8f6887349b2f829a4121c518aeb064fc922714e4 upstream.
 
-MSGF_LEG_MASK is laid out with INTA in bit 0, INTB in bit 1, INTC in bit 2,
-and INTD in bit 3. Hardware IRQ numbers start at 0, and we register
-PCI_NUM_INTX IRQs. So to enable INTA (aka hwirq 0) we should set bit 0.
-Remove the subtraction of one.
+Userspace can supply an iova and uptr such that the target iova alignment
+becomes really big and ALIGN() overflows which corrupts the selected area
+range during allocation. CONFIG_IOMMUFD_TEST can detect this:
 
-This bug would cause INTx interrupts not to be delivered, as enabling INTB
-would actually enable INTA, and enabling INTA wouldn't enable anything at
-all. It is likely that this got overlooked for so long since most PCIe
-hardware uses MSIs. This fixes the following UBSAN error:
+   WARNING: CPU: 1 PID: 5092 at drivers/iommu/iommufd/io_pagetable.c:268 iopt_alloc_area_pages drivers/iommu/iommufd/io_pagetable.c:268 [inline]
+   WARNING: CPU: 1 PID: 5092 at drivers/iommu/iommufd/io_pagetable.c:268 iopt_map_pages+0xf95/0x1050 drivers/iommu/iommufd/io_pagetable.c:352
+   Modules linked in:
+   CPU: 1 PID: 5092 Comm: syz-executor294 Not tainted 6.10.0-rc5-syzkaller-00294-g3ffea9a7a6f7 #0
+   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/07/2024
+   RIP: 0010:iopt_alloc_area_pages drivers/iommu/iommufd/io_pagetable.c:268 [inline]
+   RIP: 0010:iopt_map_pages+0xf95/0x1050 drivers/iommu/iommufd/io_pagetable.c:352
+   Code: fc e9 a4 f3 ff ff e8 1a 8b 4c fc 41 be e4 ff ff ff e9 8a f3 ff ff e8 0a 8b 4c fc 90 0f 0b 90 e9 37 f5 ff ff e8 fc 8a 4c fc 90 <0f> 0b 90 e9 68 f3 ff ff 48 c7 c1 ec 82 ad 8f 80 e1 07 80 c1 03 38
+   RSP: 0018:ffffc90003ebf9e0 EFLAGS: 00010293
+   RAX: ffffffff85499fa4 RBX: 00000000ffffffef RCX: ffff888079b49e00
+   RDX: 0000000000000000 RSI: 00000000ffffffef RDI: 0000000000000000
+   RBP: ffffc90003ebfc50 R08: ffffffff85499b30 R09: ffffffff85499942
+   R10: 0000000000000002 R11: ffff888079b49e00 R12: ffff8880228e0010
+   R13: 0000000000000000 R14: 1ffff920007d7f68 R15: ffffc90003ebfd00
+   FS:  000055557d760380(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00000000005fdeb8 CR3: 000000007404a000 CR4: 00000000003506f0
+   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+   Call Trace:
+    <TASK>
+    iommufd_ioas_copy+0x610/0x7b0 drivers/iommu/iommufd/ioas.c:274
+    iommufd_fops_ioctl+0x4d9/0x5a0 drivers/iommu/iommufd/main.c:421
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:907 [inline]
+    __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
+    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  UBSAN: shift-out-of-bounds in ../drivers/pci/controller/pcie-xilinx-nwl.c:389:11
-  shift exponent 18446744073709551615 is too large for 32-bit type 'int'
-  CPU: 1 PID: 61 Comm: kworker/u10:1 Not tainted 6.6.20+ #268
-  Hardware name: xlnx,zynqmp (DT)
-  Workqueue: events_unbound deferred_probe_work_func
-  Call trace:
-  dump_backtrace (arch/arm64/kernel/stacktrace.c:235)
-  show_stack (arch/arm64/kernel/stacktrace.c:242)
-  dump_stack_lvl (lib/dump_stack.c:107)
-  dump_stack (lib/dump_stack.c:114)
-  __ubsan_handle_shift_out_of_bounds (lib/ubsan.c:218 lib/ubsan.c:387)
-  nwl_unmask_leg_irq (drivers/pci/controller/pcie-xilinx-nwl.c:389 (discriminator 1))
-  irq_enable (kernel/irq/internals.h:234 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
-  __irq_startup (kernel/irq/internals.h:239 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
-  irq_startup (kernel/irq/chip.c:270)
-  __setup_irq (kernel/irq/manage.c:1800)
-  request_threaded_irq (kernel/irq/manage.c:2206)
-  pcie_pme_probe (include/linux/interrupt.h:168 drivers/pci/pcie/pme.c:348)
+Cap the automatic alignment to the huge page size, which is probably a
+better idea overall. Huge automatic alignments can fragment and chew up
+the available IOVA space without any reason.
 
-Fixes: 9a181e1093af ("PCI: xilinx-nwl: Modify IRQ chip for legacy interrupts")
-Link: https://lore.kernel.org/r/20240531161337.864994-3-sean.anderson@linux.dev
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/r/0-v1-8009738b9891+1f7-iommufd_align_overflow_jgg@nvidia.com
 Cc: stable@vger.kernel.org
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reported-by: syzbot+16073ebbc4c64b819b47@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/000000000000388410061a74f014@google.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/io_pagetable.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/pci/controller/pcie-xilinx-nwl.c
-+++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -371,7 +371,7 @@ static void nwl_mask_intx_irq(struct irq
- 	u32 mask;
- 	u32 val;
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -112,6 +112,7 @@ static int iopt_alloc_iova(struct io_pag
+ 	unsigned long page_offset = uptr % PAGE_SIZE;
+ 	struct interval_tree_double_span_iter used_span;
+ 	struct interval_tree_span_iter allowed_span;
++	unsigned long max_alignment = PAGE_SIZE;
+ 	unsigned long iova_alignment;
  
--	mask = 1 << (data->hwirq - 1);
-+	mask = 1 << data->hwirq;
- 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
- 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
- 	nwl_bridge_writel(pcie, (val & (~mask)), MSGF_LEG_MASK);
-@@ -385,7 +385,7 @@ static void nwl_unmask_intx_irq(struct i
- 	u32 mask;
- 	u32 val;
+ 	lockdep_assert_held(&iopt->iova_rwsem);
+@@ -131,6 +132,13 @@ static int iopt_alloc_iova(struct io_pag
+ 				       roundup_pow_of_two(length),
+ 				       1UL << __ffs64(uptr));
  
--	mask = 1 << (data->hwirq - 1);
-+	mask = 1 << data->hwirq;
- 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
- 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
- 	nwl_bridge_writel(pcie, (val | mask), MSGF_LEG_MASK);
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++	max_alignment = HPAGE_SIZE;
++#endif
++	/* Protect against ALIGN() overflow */
++	if (iova_alignment >= max_alignment)
++		iova_alignment = max_alignment;
++
+ 	if (iova_alignment < iopt->iova_alignment)
+ 		return -EINVAL;
+ 
 
 
