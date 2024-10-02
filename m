@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A541D0BA8;
-	Wed,  2 Oct 2024 14:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889391D0BA8;
+	Wed,  2 Oct 2024 14:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880120; cv=none; b=lo58PeL+O0KueTY566Q86fYZAkR+VOFCDIuYTd9Fpx1vBN5qFkJxyw3SpltOaFD3gDPk8y/jBv+Zk9AQliWFDk8zO9XyuXsB64nI2zEpWFu7PBKwrNeiVVaCyaPoLjFgxGVWC8d3StHdBDrysOYtoC1og1ryuwaAUyqGgX16534=
+	t=1727880123; cv=none; b=gXkls14A+Z44V/Ni2c+9a/jGODwyJqnzI1G4G5szra2xRx/2Gpo7DVK3p91uwRwpN7/R0ErPACfzTxbbTL+MBGDzkI988CIWw0qse+IFAgRnmaSclQ7uRGS/x/yClOgyZU1JhACyEG9hkdcMQIBkBYlYkQ4D+7Da6KjzKxOqE68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880120; c=relaxed/simple;
-	bh=B5vIOY1kzOVMNuCV0P31wQgjXRR3rVE2dDI5bt8xd38=;
+	s=arc-20240116; t=1727880123; c=relaxed/simple;
+	bh=UZyjfefq6mHRpDx7xfBjYwIrDuEKN3CgF0St63LJnZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvOyaQc9ZiWG/qzyzuaGyREwOkwbhOIV2Y3PiJgn0ZAM9aB5qffoXKe67VGRGRVTecOKTUWwHFuONuqaqagF+OcEZ/Px4++sXX7/U+sEKvwnu5ANBHuxtNbM8tuSOXwpZcTdc9QIyNxAK/a+BWyK9Vk3F3sQVzj1thy1EAy9890=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g415+dZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjdzxruHON8RQRrQoyR99AwP5GupSljVL3UMXQG9SdHMVbUo+HXINQByfM/F827zTZpfauQ/QAegcl5rbngcIKX2oRZFxW26MK4+8heQ3kiQZuXouktvlUl8fEFZoUXO2JwIHnXiiIXCng2U2kdKlZdNC/WEbj54yBEL43f+Tn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdwE8P/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g415+dZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A52C4CEC2;
-	Wed,  2 Oct 2024 14:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdwE8P/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1DBC4CECE;
+	Wed,  2 Oct 2024 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880120;
-	bh=B5vIOY1kzOVMNuCV0P31wQgjXRR3rVE2dDI5bt8xd38=;
+	s=korg; t=1727880123;
+	bh=UZyjfefq6mHRpDx7xfBjYwIrDuEKN3CgF0St63LJnZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g415+dZ6ChJccFaftCLYkyck6E+U3UeI/kJ0ASigCPimEfAjtpGrebvQOghxnIIOi
-	 uzCzmiAhOwE9i7g/fV6YmNhtoim/MgU8kREC8fVCtH9lnGSXV82G6JdVJnaHBY4/yd
-	 AyucpxSbwN1BTK0EyEzLUOgLna5B3a8Zd363tVfI=
+	b=TdwE8P/2pyuWCEIeI7hwFRAbea3C6IVWOlAby5LTgimhSKiaSgR8rMx9fTbZ7hWvK
+	 w1J0qRLBSTbXJ2HZrtIRqyTIZvF/DLjVzddcCrtCbJJmtJNW+9mBnYHKQuAdNOlidr
+	 5sh3jFlctTITk0WMOj41dR6HWE1eF1yOQbkrNqT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yang <yang.yang@vivo.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alexander Dahl <ada@thorsis.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 350/538] lib/sbitmap: define swap_lock as raw_spinlock_t
-Date: Wed,  2 Oct 2024 14:59:49 +0200
-Message-ID: <20241002125806.244007873@linuxfoundation.org>
+Subject: [PATCH 6.6 351/538] spi: atmel-quadspi: Avoid overwriting delay register settings
+Date: Wed,  2 Oct 2024 14:59:50 +0200
+Message-ID: <20241002125806.283289301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -52,63 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Alexander Dahl <ada@thorsis.com>
 
-[ Upstream commit 65f666c6203600053478ce8e34a1db269a8701c9 ]
+[ Upstream commit 329ca3eed4a9a161515a8714be6ba182321385c7 ]
 
-When called from sbitmap_queue_get(), sbitmap_deferred_clear() may be run
-with preempt disabled. In RT kernel, spin_lock() can sleep, then warning
-of "BUG: sleeping function called from invalid context" can be triggered.
+Previously the MR and SCR registers were just set with the supposedly
+required values, from cached register values (cached reg content
+initialized to zero).
 
-Fix it by replacing it with raw_spin_lock.
+All parts fixed here did not consider the current register (cache)
+content, which would make future support of cs_setup, cs_hold, and
+cs_inactive impossible.
 
-Cc: Yang Yang <yang.yang@vivo.com>
-Fixes: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yang Yang <yang.yang@vivo.com>
-Link: https://lore.kernel.org/r/20240919021709.511329-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Setting SCBR in atmel_qspi_setup() erases a possible DLYBS setting from
+atmel_qspi_set_cs_timing().  The DLYBS setting is applied by ORing over
+the current setting, without resetting the bits first.  All writes to MR
+did not consider possible settings of DLYCS and DLYBCT.
+
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Fixes: f732646d0ccd ("spi: atmel-quadspi: Add support for configuring CS timing")
+Link: https://patch.msgid.link/20240918082744.379610-2-ada@thorsis.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sbitmap.h | 2 +-
- lib/sbitmap.c           | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/atmel-quadspi.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
-index c09cdcc99471e..189140bf11fc4 100644
---- a/include/linux/sbitmap.h
-+++ b/include/linux/sbitmap.h
-@@ -40,7 +40,7 @@ struct sbitmap_word {
- 	/**
- 	 * @swap_lock: serializes simultaneous updates of ->word and ->cleared
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index af0464999af1f..bf7999ac22c80 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -375,9 +375,9 @@ static int atmel_qspi_set_cfg(struct atmel_qspi *aq,
+ 	 * If the QSPI controller is set in regular SPI mode, set it in
+ 	 * Serial Memory Mode (SMM).
  	 */
--	spinlock_t swap_lock;
-+	raw_spinlock_t swap_lock;
- } ____cacheline_aligned_in_smp;
- 
- /**
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 9307bf17a8175..1d5e157486922 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -65,7 +65,7 @@ static inline bool sbitmap_deferred_clear(struct sbitmap_word *map,
- {
- 	unsigned long mask, word_mask;
- 
--	guard(spinlock_irqsave)(&map->swap_lock);
-+	guard(raw_spinlock_irqsave)(&map->swap_lock);
- 
- 	if (!map->cleared) {
- 		if (depth == 0)
-@@ -136,7 +136,7 @@ int sbitmap_init_node(struct sbitmap *sb, unsigned int depth, int shift,
+-	if (aq->mr != QSPI_MR_SMM) {
+-		atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
+-		aq->mr = QSPI_MR_SMM;
++	if (!(aq->mr & QSPI_MR_SMM)) {
++		aq->mr |= QSPI_MR_SMM;
++		atmel_qspi_write(aq->scr, aq, QSPI_MR);
  	}
  
- 	for (i = 0; i < sb->map_nr; i++)
--		spin_lock_init(&sb->map[i].swap_lock);
-+		raw_spin_lock_init(&sb->map[i].swap_lock);
+ 	/* Clear pending interrupts */
+@@ -501,7 +501,8 @@ static int atmel_qspi_setup(struct spi_device *spi)
+ 	if (ret < 0)
+ 		return ret;
  
- 	return 0;
- }
+-	aq->scr = QSPI_SCR_SCBR(scbr);
++	aq->scr &= ~QSPI_SCR_SCBR_MASK;
++	aq->scr |= QSPI_SCR_SCBR(scbr);
+ 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
+ 
+ 	pm_runtime_mark_last_busy(ctrl->dev.parent);
+@@ -534,6 +535,7 @@ static int atmel_qspi_set_cs_timing(struct spi_device *spi)
+ 	if (ret < 0)
+ 		return ret;
+ 
++	aq->scr &= ~QSPI_SCR_DLYBS_MASK;
+ 	aq->scr |= QSPI_SCR_DLYBS(cs_setup);
+ 	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
+ 
+@@ -549,8 +551,8 @@ static void atmel_qspi_init(struct atmel_qspi *aq)
+ 	atmel_qspi_write(QSPI_CR_SWRST, aq, QSPI_CR);
+ 
+ 	/* Set the QSPI controller by default in Serial Memory Mode */
+-	atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
+-	aq->mr = QSPI_MR_SMM;
++	aq->mr |= QSPI_MR_SMM;
++	atmel_qspi_write(aq->mr, aq, QSPI_MR);
+ 
+ 	/* Enable the QSPI controller */
+ 	atmel_qspi_write(QSPI_CR_QSPIEN, aq, QSPI_CR);
 -- 
 2.43.0
 
