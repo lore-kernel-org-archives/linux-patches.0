@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF451D0499;
-	Wed,  2 Oct 2024 13:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3B11D0BB3;
+	Wed,  2 Oct 2024 13:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877462; cv=none; b=QiMJgV2WqkaVE2IuoXUrAKcdoFzOhvMSrijS55StRedOw1LQXfhkkr8kQIa6ukiQdCTt3xyAm8/iZRjt8+PyxrzpaMTzyf46CLbBLzI6FoNz/4mzcu3FQNAvf0q8BqQpc8To/Xf4WbQtjDt7tKqL4KB+XM/CAUiaWf7rOULirQw=
+	t=1727877465; cv=none; b=llhjwpvj/a+Gs8gqPsVB3ALEcXx8de5y4bFnXolIaqR6+vhrNmw4VVkV7mGebBiARqqnrRvtlVEQOcWU4IzYtC9sPivWHSIp3O3lzslLUocRP/Y7uIPPlGNM8Ygoz0TUYDhzgTrsGX9+Bt+3rSDWLC2GfeT+fvCnapBu4FZ0V/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877462; c=relaxed/simple;
-	bh=YFZAdiL5sVzP5bbxV4nLbuLiynGzNgr4Gzr0w35HJtY=;
+	s=arc-20240116; t=1727877465; c=relaxed/simple;
+	bh=AnXw4tGQ/1UwWXo8/CFcOoNuYkWpqbr/iZd+iLqIPCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psMtYT9Bp0Y9QNE0lPNMohkjIx5BUK8A4pVE7NSQBCbh/D8jKdUTcQ7HOlYqtphzNUlnGE5cwJrY/KVOh6lAyS+Iz0O99gJKq8pD5BUaZojjxE7/OxmIeBT/BILG8S2X6yIdyiQlY/zoKxoGyw9x16wLOQBlo3SUGSiEdzu2OAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blaiFf3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRn/40jhz7G9HZi8vmifG+5dZoGtzbXHYQW0h9rFxlcipKyFo+F8KjNdHqhhp0j4ZAL/aHtub5g82uJeIEFNRLoEaUCyJxBn1BYEgVn/Ri5rjN76700h0mUOufzxq/Sz+HqQ7PqhlwPanNKCYhiZYiumP/CZbtt1o9IEGUPNZeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wccnim5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blaiFf3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6ACC4AF0D;
-	Wed,  2 Oct 2024 13:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wccnim5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7991C4AF16;
+	Wed,  2 Oct 2024 13:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877462;
-	bh=YFZAdiL5sVzP5bbxV4nLbuLiynGzNgr4Gzr0w35HJtY=;
+	s=korg; t=1727877465;
+	bh=AnXw4tGQ/1UwWXo8/CFcOoNuYkWpqbr/iZd+iLqIPCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blaiFf3T1BKj/9JnUF94OlQcOW7hwMrCnmp6uWs5aUzPmFjjcK1Yfv5PC0dPJLD2c
-	 q5Z/fHoEOz3MFH74RshCbXtADOO6K9F7q+/SOFFryFh9/Wnyngx7PMKyi6ZPdE2XUQ
-	 OHqsdQf2HdWQh98VaM7TjpEKBTx53ExSTLybDWyE=
+	b=Wccnim5SmNSHJEHUOiyRi1BmgDi/0EEtPVstApFkNawky3su2XWbvOS1Eo2HwqyO6
+	 KA94NDgeK1ojT6QyXO290uKsSYbcfs0P3DvEHDUY3JI0GS/UI/+g5ci0VVGLNGrkN2
+	 c/fj4DC8TiHEkMWZAhJD+rLbAkxKKvCNZQJEqFqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 086/634] Bluetooth: hci_sync: Ignore errors from HCI_OP_REMOTE_NAME_REQ_CANCEL
-Date: Wed,  2 Oct 2024 14:53:06 +0200
-Message-ID: <20241002125814.505969899@linuxfoundation.org>
+Subject: [PATCH 6.10 087/634] sock_map: Add a cond_resched() in sock_hash_free()
+Date: Wed,  2 Oct 2024 14:53:07 +0200
+Message-ID: <20241002125814.545399256@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -50,38 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cfbfeee61582e638770a1a10deef866c9adb38f5 ]
+[ Upstream commit b1339be951ad31947ae19bc25cb08769bf255100 ]
 
-This ignores errors from HCI_OP_REMOTE_NAME_REQ_CANCEL since it
-shouldn't interfere with the stopping of discovery and in certain
-conditions it seems to be failing.
+Several syzbot soft lockup reports all have in common sock_hash_free()
 
-Link: https://github.com/bluez/bluez/issues/575
-Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+If a map with a large number of buckets is destroyed, we need to yield
+the cpu when needed.
+
+Fixes: 75e68e5bf2c7 ("bpf, sockhash: Synchronize delete from bucket list on map free")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20240906154449.3742932-1-edumazet@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/sock_map.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index f4a54dbc07f19..86fee9d6c1424 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5331,7 +5331,10 @@ int hci_stop_discovery_sync(struct hci_dev *hdev)
- 		if (!e)
- 			return 0;
- 
--		return hci_remote_name_cancel_sync(hdev, &e->data.bdaddr);
-+		/* Ignore cancel errors since it should interfere with stopping
-+		 * of the discovery.
-+		 */
-+		hci_remote_name_cancel_sync(hdev, &e->data.bdaddr);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index d3dbb92153f2f..724b6856fcc3e 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -1183,6 +1183,7 @@ static void sock_hash_free(struct bpf_map *map)
+ 			sock_put(elem->sk);
+ 			sock_hash_free_elem(htab, elem);
+ 		}
++		cond_resched();
  	}
  
- 	return 0;
+ 	/* wait for psock readers accessing its map link */
 -- 
 2.43.0
 
