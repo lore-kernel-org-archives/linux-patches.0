@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9E61D0403;
-	Wed,  2 Oct 2024 13:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279211D0430;
+	Wed,  2 Oct 2024 13:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875743; cv=none; b=l3h3rnQvHxh+X6q3GMFtOQ1nM8MeTbCiQG+Tr6MytiPOlFWrp8Z/+K0604RWugXJwixebsUm4LF5NK9aGmRTMI0rzUp1I7jek/wc2b7KYry8ggcBKWfXLcd0502NJYd/9UW4cFmeM1FwTGq6/1XkTb/HoGuf7sG6aFs29CAoa0U=
+	t=1727875746; cv=none; b=eIA1//reDce+eYAJqUXRcyyD6N+ZOvp5NPF1dCLSSdMZF9yX5yWnb1KiD5jaLx7sHRbd72SWyNi2JKVhH0djsdQheICeiwtcb0qdlYcy928xejOm2xwNKPPGPdkSgt6vaKswJiVdAxRxHseNCLVO6fFvTG8R/89FYHh9oZRD3AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875743; c=relaxed/simple;
-	bh=QwZttdrryEXkIrkxEy/18LIzjcxoy/FBu/ha61NnZz4=;
+	s=arc-20240116; t=1727875746; c=relaxed/simple;
+	bh=XR8xYZuv240TvGL7YKZCqSfJiAdC2uLkKVD390Lse/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKUV1DgtCq5X2rZ66GDveH0zZO5RngF7Yx0lfVxxxG/gbaVQHWNhWcIiokRDNN9n/UwxWMTxRQEL2eRt3SwpCW0srZAurzqh1D5q+s2F/3yb9+D7PaWZP0y24/5DydlGD8CgRuMMUReGxH/VSZ5Tz8JrhTSoay+1TzIczKooXXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU8cTUAV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNJR16l5lkH5qzi3+xiK4pSSVQoHia44ZfyJyixW35GugqNZwFFFgQuR+SUC3d6Gx5on5dqahXJj114G5EvDpplhV0uxG6IxKckYhAoDpMaWLjGNL3FzyFqWogYJa4Pne4Fy4B3iN230/M5MdNSMp0I19ug+s4QFJc9I/rE75PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evgR6/9Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU8cTUAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51594C4CECD;
-	Wed,  2 Oct 2024 13:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evgR6/9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2535EC4CEC5;
+	Wed,  2 Oct 2024 13:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875742;
-	bh=QwZttdrryEXkIrkxEy/18LIzjcxoy/FBu/ha61NnZz4=;
+	s=korg; t=1727875745;
+	bh=XR8xYZuv240TvGL7YKZCqSfJiAdC2uLkKVD390Lse/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AU8cTUAVGC5afTTBLqQqozj17I/UyZVmsIPv73BW+l5MGOzkQcqcIYOwMvUEUI0Ic
-	 vsn2IyHi0pwIuOaORbwX+YVH/6eNv+HqnUU710f6PILsJfmdvwIEmtsJzE3EdwpMnt
-	 vO0oVKJeIKPdMsk3eIBMbRDNRJ1qBZHRbfLXWeAg=
+	b=evgR6/9QSodOXkXaDpRIIjPY9ZU4Lv0CRJ5A5F0UD+fFKke/pJxwyoOwQYXDQ/6T2
+	 yRHaAmr8RU917QsOC7f3thmaF4I8rrw10PMspg7BfLU2pyazY/nkmtRi26T5NXrGk1
+	 oeQM3ouaDhP034g6YbyaB+eNDDiVg8cksh2pootE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Gilbert Wu <Gilbert.Wu@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 205/695] drm/amd/display: Reset VRR config during resume
-Date: Wed,  2 Oct 2024 14:53:23 +0200
-Message-ID: <20241002125830.644689558@linuxfoundation.org>
+Subject: [PATCH 6.11 206/695] scsi: smartpqi: revert propagate-the-multipath-failure-to-SML-quickly
+Date: Wed,  2 Oct 2024 14:53:24 +0200
+Message-ID: <20241002125830.684991911@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -54,57 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Gilbert Wu <Gilbert.Wu@microchip.com>
 
-[ Upstream commit df18a4de9e77ad92c472fd1eb0fb1255d52dd4cd ]
+[ Upstream commit f1393d52e6cda9c20f12643cbecf1e1dc357e0e2 ]
 
-[Why]
-After resume the system, the new_crtc_state->vrr_infopacket does not
-synchronize with the current state.  It will affect the
-update_freesync_state_on_stream() does not update the state correctly.
+Correct a rare multipath failure issue by reverting commit 94a68c814328
+("scsi: smartpqi: Quickly propagate path failures to SCSI midlayer") [1].
 
-The previous patch causes a PSR SU regression that cannot let panel go
-into self-refresh mode.
+Reason for revert: The patch propagated the path failure to SML quickly
+when one of the path fails during IO and AIO path gets disabled for a
+multipath device.
 
-[How]
-Reset the VRR config during resume to force update the VRR config later.
+But it created a new issue: when creating a volume on an encryption-enabled
+controller, the firmware reports the AIO path is disabled, which cause the
+driver to report a path failure to SML for a multipath device.
 
-Fixes: eb6dfbb7a9c6 ("drm/amd/display: Reset freesync config before update new state")
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+There will be a new fix to handle "Illegal request" and "Invalid field in
+parameter list" on RAID path when the AIO path is disabled on a multipath
+device.
+
+[1] https://lore.kernel.org/all/164375209313.440833.9992416628621839233.stgit@brunhilda.pdev.net/
+
+Fixes: 94a68c814328 ("scsi: smartpqi: Quickly propagate path failures to SCSI midlayer")
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Gilbert Wu <Gilbert.Wu@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/20240711194704.982400-4-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 20 ++------------------
+ 1 file changed, 2 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 511d46d38d6af..ba5f98bd7b391 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -176,6 +176,7 @@ MODULE_FIRMWARE(FIRMWARE_DCN_401_DMUB);
- static int amdgpu_dm_init(struct amdgpu_device *adev);
- static void amdgpu_dm_fini(struct amdgpu_device *adev);
- static bool is_freesync_video_mode(const struct drm_display_mode *mode, struct amdgpu_dm_connector *aconnector);
-+static void reset_freesync_config_for_crtc(struct dm_crtc_state *new_crtc_state);
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 24c7cb285dca0..c1524fb334eb5 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -2354,14 +2354,6 @@ static inline void pqi_mask_device(u8 *scsi3addr)
+ 	scsi3addr[3] |= 0xc0;
+ }
  
- static enum drm_mode_subconnector get_subconnector_type(struct dc_link *link)
+-static inline bool pqi_is_multipath_device(struct pqi_scsi_dev *device)
+-{
+-	if (pqi_is_logical_device(device))
+-		return false;
+-
+-	return (device->path_map & (device->path_map - 1)) != 0;
+-}
+-
+ static inline bool pqi_expose_device(struct pqi_scsi_dev *device)
  {
-@@ -3239,8 +3240,11 @@ static int dm_resume(void *handle)
- 	drm_connector_list_iter_end(&iter);
+ 	return !device->is_physical_device || !pqi_skip_device(device->scsi3addr);
+@@ -3258,14 +3250,12 @@ static void pqi_process_aio_io_error(struct pqi_io_request *io_request)
+ 	int residual_count;
+ 	int xfer_count;
+ 	bool device_offline;
+-	struct pqi_scsi_dev *device;
  
- 	/* Force mode set in atomic commit */
--	for_each_new_crtc_in_state(dm->cached_state, crtc, new_crtc_state, i)
-+	for_each_new_crtc_in_state(dm->cached_state, crtc, new_crtc_state, i) {
- 		new_crtc_state->active_changed = true;
-+		dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
-+		reset_freesync_config_for_crtc(dm_new_crtc_state);
-+	}
+ 	scmd = io_request->scmd;
+ 	error_info = io_request->error_info;
+ 	host_byte = DID_OK;
+ 	sense_data_length = 0;
+ 	device_offline = false;
+-	device = scmd->device->hostdata;
  
- 	/*
- 	 * atomic_check is expected to create the dc states. We need to release
+ 	switch (error_info->service_response) {
+ 	case PQI_AIO_SERV_RESPONSE_COMPLETE:
+@@ -3290,14 +3280,8 @@ static void pqi_process_aio_io_error(struct pqi_io_request *io_request)
+ 			break;
+ 		case PQI_AIO_STATUS_AIO_PATH_DISABLED:
+ 			pqi_aio_path_disabled(io_request);
+-			if (pqi_is_multipath_device(device)) {
+-				pqi_device_remove_start(device);
+-				host_byte = DID_NO_CONNECT;
+-				scsi_status = SAM_STAT_CHECK_CONDITION;
+-			} else {
+-				scsi_status = SAM_STAT_GOOD;
+-				io_request->status = -EAGAIN;
+-			}
++			scsi_status = SAM_STAT_GOOD;
++			io_request->status = -EAGAIN;
+ 			break;
+ 		case PQI_AIO_STATUS_NO_PATH_TO_DEVICE:
+ 		case PQI_AIO_STATUS_INVALID_DEVICE:
 -- 
 2.43.0
 
