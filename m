@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F61D040E;
-	Wed,  2 Oct 2024 13:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478961CFEDA;
+	Wed,  2 Oct 2024 13:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875197; cv=none; b=uF7vIvkpD2HTIPPQxecOePmSVsZ4U5T/ORF+uHITckUqN1m0s+OLBxmS7TrwfbxW66y5z3EaJmPCeM3pS5nyujTmCR4JtSk4yvz4ojRZuAb/ZGaWtQJv6byjAU6n42dvvxR867vv33Ye7QskIfUpOvVLQ6mcw+yHirRrxBY00kY=
+	t=1727875200; cv=none; b=lDdDznM8omy+564h2pj7Wk7HcROw4S3VIUHt9FgXpLy/yDa1M5DPwTgfvsVDONaeCeKpTfbf65ICi8crLGfuOQFGVdjnSzdljk1Zw4xWE58jnvq+CS7JZWAJtpW8/SSG9Pp6JrH5tS/C+wz+J8JnK7mE7J3EEqHwwy9fYE/GIXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875197; c=relaxed/simple;
-	bh=ckpU5O5hpWAaCat/imvUhq3tX884iKGLzlYEZ1uTjQ0=;
+	s=arc-20240116; t=1727875200; c=relaxed/simple;
+	bh=WjN2aX/GrLny/+bvRjK8blnw+RbOZjOql41GaU8WvkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTImFlzsneKidNNjp7NOTWbepaTKa5FIML5McIFW163CGoTLz8ovhr8O/vW90HuQWBVS2ZVMl0TvOyBV4Rj5dQTRmdoaDocX0haHZBmDTPGRZ7Xa0qcAIF2TGfh3k7/7stoCDuAtoSU9G4wKtg9Nuk4mUsGdj1EtRdNE2NKS97c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+CyxfEn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TLkuJ/Ylz2jPuUSYXacrUP9udhnQtdOFK2jn82BpGTkZdeWRSRt+tW2ZweeFqKc1XK9KTpXSJHsEePetu5DvuZf3nr33A7c8osUMhMu2SIoDVed4RzYQ49D+l1UxV63MVJdeU/uUZAuHit6opV27NzAdFoRsam+6F5apbXSJOh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H99ilaO4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+CyxfEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6726FC4CECD;
-	Wed,  2 Oct 2024 13:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H99ilaO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB9FC4CEC5;
+	Wed,  2 Oct 2024 13:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875197;
-	bh=ckpU5O5hpWAaCat/imvUhq3tX884iKGLzlYEZ1uTjQ0=;
+	s=korg; t=1727875199;
+	bh=WjN2aX/GrLny/+bvRjK8blnw+RbOZjOql41GaU8WvkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+CyxfEn/FLjeTbBGK7hMteSoZ7rey96FcBQo0lRWs6WWTmwwRGNiT9uJgDOxwPzd
-	 ypfXO4uGL/ClZhVBfKo5tq4mhyyrF7rh1qsS3jb0KYBwIRo7r8SlJQtrX/ZcMhBlNh
-	 0/w8f0ZJtryVuI0wBs6Vzu0fcHjXuqKVWbWnxHuU=
+	b=H99ilaO4H8iVmyPbiT1OlHI1Jszq9H1BOLGeXJQBIyzaPd6mDtLBD1UqCJMALjYQ/
+	 FySgRLbbDINAjHdn5OHlwBtK0223vyY2J+58QmGN0Ska2UK6rhGkw4fXW6N9sa6hfZ
+	 WR1L8ufdebLzbUvUXnmpXv1tGCgUahiU5hMEqwdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 024/695] wifi: rtw89: remove unused C2H event ID RTW89_MAC_C2H_FUNC_READ_WOW_CAM to prevent out-of-bounds reading
-Date: Wed,  2 Oct 2024 14:50:22 +0200
-Message-ID: <20241002125823.458843056@linuxfoundation.org>
+Subject: [PATCH 6.11 025/695] wifi: rtw88: remove CPT execution branch never used
+Date: Wed,  2 Oct 2024 14:50:23 +0200
+Message-ID: <20241002125823.499327146@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,37 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 56310ddb50b190b3390fdc974aec455d0a516bd2 ]
+[ Upstream commit 77c977327dfaa9ae2e154964cdb89ceb5c7b7cf1 ]
 
-The handler of firmware C2H event RTW89_MAC_C2H_FUNC_READ_WOW_CAM isn't
-implemented, but driver expects number of handlers is
-NUM_OF_RTW89_MAC_C2H_FUNC_WOW causing out-of-bounds access. Fix it by
-removing ID.
+In 'rtw_coex_action_bt_a2dp_pan', 'wl_cpt_test' and 'bt_cpt_test' are
+hardcoded to false, so corresponding 'table_case' and 'tdma_case'
+assignments are never met.
+Also 'rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[1])' is never
+executed. Assuming that CPT was never fully implemented, remove
+lookalike leftovers. Compile tested only.
 
-Addresses-Coverity-ID: 1598775 ("Out-of-bounds read")
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: ff53fce5c78b ("wifi: rtw89: wow: update latest PTK GTK info to mac80211 after resume")
+Fixes: 76f631cb401f ("rtw88: coex: update the mechanism for A2DP + PAN")
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240809072012.84152-4-pkshih@realtek.com
+Link: https://patch.msgid.link/20240809085310.10512-1-d.kandybka@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/coex.c | 38 ++++++-----------------
+ 1 file changed, 10 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index d5895516b3ed5..4c619cec602fc 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -421,7 +421,6 @@ enum rtw89_mac_c2h_mrc_func {
+diff --git a/drivers/net/wireless/realtek/rtw88/coex.c b/drivers/net/wireless/realtek/rtw88/coex.c
+index de3332eb7a227..a99776af56c27 100644
+--- a/drivers/net/wireless/realtek/rtw88/coex.c
++++ b/drivers/net/wireless/realtek/rtw88/coex.c
+@@ -2194,7 +2194,6 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
+ 	struct rtw_coex_stat *coex_stat = &coex->stat;
+ 	struct rtw_efuse *efuse = &rtwdev->efuse;
+ 	u8 table_case, tdma_case;
+-	bool wl_cpt_test = false, bt_cpt_test = false;
  
- enum rtw89_mac_c2h_wow_func {
- 	RTW89_MAC_C2H_FUNC_AOAC_REPORT,
--	RTW89_MAC_C2H_FUNC_READ_WOW_CAM,
+ 	rtw_dbg(rtwdev, RTW_DBG_COEX, "[BTCoex], %s()\n", __func__);
  
- 	NUM_OF_RTW89_MAC_C2H_FUNC_WOW,
- };
+@@ -2202,29 +2201,16 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
+ 	rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
+ 	if (efuse->share_ant) {
+ 		/* Shared-Ant */
+-		if (wl_cpt_test) {
+-			if (coex_stat->wl_gl_busy) {
+-				table_case = 20;
+-				tdma_case = 17;
+-			} else {
+-				table_case = 10;
+-				tdma_case = 15;
+-			}
+-		} else if (bt_cpt_test) {
+-			table_case = 26;
+-			tdma_case = 26;
+-		} else {
+-			if (coex_stat->wl_gl_busy &&
+-			    coex_stat->wl_noisy_level == 0)
+-				table_case = 14;
+-			else
+-				table_case = 10;
++		if (coex_stat->wl_gl_busy &&
++		    coex_stat->wl_noisy_level == 0)
++			table_case = 14;
++		else
++			table_case = 10;
+ 
+-			if (coex_stat->wl_gl_busy)
+-				tdma_case = 15;
+-			else
+-				tdma_case = 20;
+-		}
++		if (coex_stat->wl_gl_busy)
++			tdma_case = 15;
++		else
++			tdma_case = 20;
+ 	} else {
+ 		/* Non-Shared-Ant */
+ 		table_case = 112;
+@@ -2235,11 +2221,7 @@ static void rtw_coex_action_bt_a2dp_pan(struct rtw_dev *rtwdev)
+ 			tdma_case = 120;
+ 	}
+ 
+-	if (wl_cpt_test)
+-		rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[1]);
+-	else
+-		rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
+-
++	rtw_coex_set_rf_para(rtwdev, chip->wl_rf_para_rx[0]);
+ 	rtw_coex_table(rtwdev, false, table_case);
+ 	rtw_coex_tdma(rtwdev, false, tdma_case);
+ }
 -- 
 2.43.0
 
