@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BDE1D04A3;
-	Wed,  2 Oct 2024 13:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26CD1CFECF;
+	Wed,  2 Oct 2024 13:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875591; cv=none; b=kNjDqMWMKmmYL3v7X9WLqkBgmc9xqPt4OitVG1RdvUhvoXFjxSkm6Q7+kaaV5twmgqE8XjJXKHigi7btr1jMqSldJygu4jTnaMZpTKeQzTjZdFL+kVk0rzkO/6o/iachwTBOlObC3vt4s+3s7lm09qBtSwh3wxowiEP834y7UCs=
+	t=1727875594; cv=none; b=GirGudkFhNp6lZ4H5PrBNaciWaN5QRGpRJM9XfyAXDKYOoSRMFRf3t7ZFIg2q5yzvFAfrEzZErPYNfou0Z+Bkq3B8VaJme+zI7iM7B70lAavIssItPUoM/qIg+4RhGl8Z/ewuDQffswZH33Aw9OssMCGV/vJhq88fSNJBtrZssQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875591; c=relaxed/simple;
-	bh=oCyqQcfhBoLmivHFm46sURADWIgKSi9BGgJZxA3ZrDk=;
+	s=arc-20240116; t=1727875594; c=relaxed/simple;
+	bh=N0daNTTHR4kVEaXoYIs2c6SecM2Ow+RiShhTwtKkVio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aTndVBYFXG0C+qvDYdOvcAA43taAqeXCw3iJuuy0OtMMhPeqxy9p7e9eACKmaF2ralZLpkbVPhEjvSMZSJxfK93qE12TwTCJgWUGqcJiOm3ObEAzhuX9dPzxZUS8ASUWdHXuZdONcdJPsY0sEx/yigmKB6cX4LgRDF/z8IGR1XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjI0lghK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=po/2dL9xhG34oa9LfC38RkrYjyA0do07a7Y7xKBn+l8cV8WcmLwvahF0a5LfLqa/Lmiph7eXvR+R1rYjIV3rc9Q1/Aze+YFMHQTj7XGAFA7w2jwwX7bJu5kvpMAcC89e/T0lCIWN0IdEbJtY9jJrAFCbZMbWrR0Hvs0cGfxqXfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUPbBATH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjI0lghK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F75C4CEC5;
-	Wed,  2 Oct 2024 13:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUPbBATH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670F0C4CEC5;
+	Wed,  2 Oct 2024 13:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875590;
-	bh=oCyqQcfhBoLmivHFm46sURADWIgKSi9BGgJZxA3ZrDk=;
+	s=korg; t=1727875593;
+	bh=N0daNTTHR4kVEaXoYIs2c6SecM2Ow+RiShhTwtKkVio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjI0lghKnjE79pCs1FfZDTz9T+XiKwiNOW1Yd83gp/625PoFzNtJYEf5Yyp5JF8Z0
-	 eZAjRsLxIpzm7/ZgxAPXNV6MQhwDuiKFm+SR4rTrSc1qIl5HksT/xx9hR25kXOs1Ot
-	 4Fcvh7IfMCeJDk3dYI9MHBLebF2wVZofi+vFkw4Y=
+	b=BUPbBATHdN325EQDnrVhXhAyKzj77Hbc6mSazWL/LNwGbN340Rab465E9+sJyXhl4
+	 l39j7GPVoXQXYI9kxZ21JJ56xT8F62zia6UR8JlHIB7XuOLGiuORZBV6Yr7qmpaI2Z
+	 /KwB89WHVagvZhF79ViYINlo1PPQ4GaAK3T9i3rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Gao Xiang <xiang@kernel.org>,
+	netfs@lists.linux.dev,
+	linux-erofs@lists.ozlabs.org,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 122/695] block, bfq: dont break merge chain in bfq_split_bfqq()
-Date: Wed,  2 Oct 2024 14:52:00 +0200
-Message-ID: <20241002125827.342808164@linuxfoundation.org>
+Subject: [PATCH 6.11 123/695] cachefiles: Fix non-taking of sb_writers around set/removexattr
+Date: Wed,  2 Oct 2024 14:52:01 +0200
+Message-ID: <20241002125827.382185172@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,68 +49,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 42c306ed723321af4003b2a41bb73728cab54f85 ]
+[ Upstream commit 80887f31672970abae3aaa9cf62ac72a124e7c89 ]
 
-Consider the following scenario:
+Unlike other vfs_xxxx() calls, vfs_setxattr() and vfs_removexattr() don't
+take the sb_writers lock, so the caller should do it for them.
 
-    Process 1       Process 2       Process 3       Process 4
-     (BIC1)          (BIC2)          (BIC3)          (BIC4)
-      Λ               |               |                |
-       \-------------\ \-------------\ \--------------\|
-                      V               V                V
-      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-ref    0              1               2                4
+Fix cachefiles to do this.
 
-If Process 1 issue a new IO and bfqq2 is found, and then bfq_init_rq()
-decide to spilt bfqq2 by bfq_split_bfqq(). Howerver, procress reference
-of bfqq2 is 1 and bfq_split_bfqq() just clear the coop flag, which will
-break the merge chain.
-
-Expected result: caller will allocate a new bfqq for BIC1
-
-    Process 1       Process 2       Process 3       Process 4
-     (BIC1)          (BIC2)          (BIC3)          (BIC4)
-                      |               |                |
-                       \-------------\ \--------------\|
-                                      V                V
-      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-ref    0              0               1                3
-
-Since the condition is only used for the last bfqq4 when the previous
-bfqq2 and bfqq3 are already splited. Fix the problem by checking if
-bfqq is the last one in the merge chain as well.
-
-Fixes: 36eca8948323 ("block, bfq: add Early Queue Merge (EQM)")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240902130329.3787024-4-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9ae326a69004 ("CacheFiles: A cache that backs onto a mounted filesystem")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Christian Brauner <brauner@kernel.org>
+cc: Gao Xiang <xiang@kernel.org>
+cc: netfs@lists.linux.dev
+cc: linux-erofs@lists.ozlabs.org
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20240814203850.2240469-3-dhowells@redhat.com/ # v2
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cachefiles/xattr.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index ffaa0d56328a5..ca766b7d5560e 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6727,7 +6727,7 @@ bfq_split_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq)
- {
- 	bfq_log_bfqq(bfqq->bfqd, bfqq, "splitting queue");
+diff --git a/fs/cachefiles/xattr.c b/fs/cachefiles/xattr.c
+index 4dd8a993c60a8..7c6f260a3be56 100644
+--- a/fs/cachefiles/xattr.c
++++ b/fs/cachefiles/xattr.c
+@@ -64,9 +64,15 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
+ 		memcpy(buf->data, fscache_get_aux(object->cookie), len);
  
--	if (bfqq_process_refs(bfqq) == 1) {
-+	if (bfqq_process_refs(bfqq) == 1 && !bfqq->new_bfqq) {
- 		bfqq->pid = current->pid;
- 		bfq_clear_bfqq_coop(bfqq);
- 		bfq_clear_bfqq_split_coop(bfqq);
+ 	ret = cachefiles_inject_write_error();
+-	if (ret == 0)
+-		ret = vfs_setxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache,
+-				   buf, sizeof(struct cachefiles_xattr) + len, 0);
++	if (ret == 0) {
++		ret = mnt_want_write_file(file);
++		if (ret == 0) {
++			ret = vfs_setxattr(&nop_mnt_idmap, dentry,
++					   cachefiles_xattr_cache, buf,
++					   sizeof(struct cachefiles_xattr) + len, 0);
++			mnt_drop_write_file(file);
++		}
++	}
+ 	if (ret < 0) {
+ 		trace_cachefiles_vfs_error(object, file_inode(file), ret,
+ 					   cachefiles_trace_setxattr_error);
+@@ -151,8 +157,14 @@ int cachefiles_remove_object_xattr(struct cachefiles_cache *cache,
+ 	int ret;
+ 
+ 	ret = cachefiles_inject_remove_error();
+-	if (ret == 0)
+-		ret = vfs_removexattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache);
++	if (ret == 0) {
++		ret = mnt_want_write(cache->mnt);
++		if (ret == 0) {
++			ret = vfs_removexattr(&nop_mnt_idmap, dentry,
++					      cachefiles_xattr_cache);
++			mnt_drop_write(cache->mnt);
++		}
++	}
+ 	if (ret < 0) {
+ 		trace_cachefiles_vfs_error(object, d_inode(dentry), ret,
+ 					   cachefiles_trace_remxattr_error);
+@@ -208,9 +220,15 @@ bool cachefiles_set_volume_xattr(struct cachefiles_volume *volume)
+ 	memcpy(buf->data, p, volume->vcookie->coherency_len);
+ 
+ 	ret = cachefiles_inject_write_error();
+-	if (ret == 0)
+-		ret = vfs_setxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache,
+-				   buf, len, 0);
++	if (ret == 0) {
++		ret = mnt_want_write(volume->cache->mnt);
++		if (ret == 0) {
++			ret = vfs_setxattr(&nop_mnt_idmap, dentry,
++					   cachefiles_xattr_cache,
++					   buf, len, 0);
++			mnt_drop_write(volume->cache->mnt);
++		}
++	}
+ 	if (ret < 0) {
+ 		trace_cachefiles_vfs_error(NULL, d_inode(dentry), ret,
+ 					   cachefiles_trace_setxattr_error);
 -- 
 2.43.0
 
