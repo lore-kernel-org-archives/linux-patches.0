@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EE81D014A;
-	Wed,  2 Oct 2024 14:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3451D049D;
+	Wed,  2 Oct 2024 14:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880499; cv=none; b=GcfXtE38WMB+92Ja9rRcypMS9zD7JlbDUahNRYRMjMuTBL4z0mcyOw+qUz9N/UderpvUl742kOOIL+KEO7z2hMdxIKOGaq9PCrD2NBrQL+OUuhmydiffLxPnW3/dEQbKSKZh00OGxKL8Xw+NnQnvYx0imyZJJtqUU0QQEim+p6U=
+	t=1727880501; cv=none; b=N1wM8wOzY13sznIu5+aZ1upfItb1utq3+cSocb62rs5a92dvKeNvx+RRlUe1tjrZBizUCDeuZk+7CDF/nfOAD9EryFVGf2N3Bs9RzKZ0nwETWRjn+tk/gxvIs+oU+A4cDTmgYeeerE1rMOORNgsVqlV/pe9IFKNuKmHv5TxnBWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880499; c=relaxed/simple;
-	bh=p1Vpmpg1qdqKZ5Ui3v7O+qVvQLiRyuxDpHyJG48GEOw=;
+	s=arc-20240116; t=1727880501; c=relaxed/simple;
+	bh=NzX7W0OqNs94/OgCVPcZQbqp32MzjOf9SK8M1gIVURo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ms0HaqrXUyEz1UIbDxETik+/29AqLcpzoi9cQWN45zcby30xy3xW5QlB2JxGw6ZyCBufE7RQWTNATb3xGr1JpfzUs3aeJDfDPLub4Z8MfHsJZpV6nkbxW/GYfdP8cD3rwN4WI7j46aMkS7GFerx59vnR+0cGjbgRw0k1LUtL32M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZAM9SpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0OnqLM+YTGUSUQ/d96BWlRB3a6GrabyemI81yqrG5Y964u3A6qL18SkozHo0HSK4jdAjqNu0Z7qw9dzAwB5u8C0WyXIrH3eX43E6B+DvlrIuRjVfswHehSG9jykf6HoFjAWzIZrZE5DnvqZ0+a+afrB+nIpWjA2EkPMgVNL4XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUq/K/Rl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZAM9SpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D56C4CEC2;
-	Wed,  2 Oct 2024 14:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUq/K/Rl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921D5C4CEC2;
+	Wed,  2 Oct 2024 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880498;
-	bh=p1Vpmpg1qdqKZ5Ui3v7O+qVvQLiRyuxDpHyJG48GEOw=;
+	s=korg; t=1727880501;
+	bh=NzX7W0OqNs94/OgCVPcZQbqp32MzjOf9SK8M1gIVURo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZAM9SpWIdOZ0kuVxbH3tIIe8eMZ65Q7uyPo7k2kKlwu4pq/1z6qEVaixF3u8Csnh
-	 CJHAFIZuMWmud6PEeIjx0Aux0Jb8o6qdbSM7X24gk5ZeY5op/VmlMYhXxwDcKd89WI
-	 ZkoUaus4b8JKc1GVoTdePylk2nkTsdneYuKsOXug=
+	b=DUq/K/RldwgMoTzUkP49OmKz/tr517OnSZveyDqEQJhjE5yaoafTye9JJpXifE5Ti
+	 Wb1SwbSzW8MKb87E8wqzTxLKz9VJj62HExGVanr5T4QiPMtU/SftT9HnDr/4rSIxqa
+	 k6AVqQ84B4LxeXYb4gEMjy6RArkUO/bB7D9ehhQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gafert <christian.gafert@rohde-schwarz.com>,
-	Max Ferger <max.ferger@rohde-schwarz.com>,
-	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 480/538] padata: use integer wrap around to prevent deadlock on seq_nr overflow
-Date: Wed,  2 Oct 2024 15:01:59 +0200
-Message-ID: <20241002125811.391667434@linuxfoundation.org>
+	stable@kernel.org,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 481/538] spi: fspi: involve lut_num for struct nxp_fspi_devtype_data
+Date: Wed,  2 Oct 2024 15:02:00 +0200
+Message-ID: <20241002125811.430602665@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,46 +52,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
+commit 190b7e2efb1ed8435fc7431d9c7a2447d05d5066 upstream.
 
-When submitting more than 2^32 padata objects to padata_do_serial, the
-current sorting implementation incorrectly sorts padata objects with
-overflowed seq_nr, causing them to be placed before existing objects in
-the reorder list. This leads to a deadlock in the serialization process
-as padata_find_next cannot match padata->seq_nr and pd->processed
-because the padata instance with overflowed seq_nr will be selected
-next.
+The flexspi on different SoCs may have different number of LUTs.
+So involve lut_num in nxp_fspi_devtype_data to make distinguish.
+This patch prepare for the adding of imx8ulp.
 
-To fix this, we use an unsigned integer wrap around to correctly sort
-padata objects in scenarios with integer overflow.
-
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Cc: <stable@vger.kernel.org>
-Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: ef89fd56bdfc ("arm64: dts: imx8ulp: add flexspi node")
+Cc: stable@kernel.org
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240905094338.1986871-3-haibo.chen@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-nxp-fspi.c |   44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -404,7 +404,8 @@ void padata_do_serial(struct padata_priv
- 	/* Sort in ascending order of sequence number. */
- 	list_for_each_prev(pos, &reorder->list) {
- 		cur = list_entry(pos, struct padata_priv, list);
--		if (cur->seq_nr < padata->seq_nr)
-+		/* Compare by difference to consider integer wrap around */
-+		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
- 	list_add(&padata->list, pos);
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -57,13 +57,6 @@
+ #include <linux/spi/spi.h>
+ #include <linux/spi/spi-mem.h>
+ 
+-/*
+- * The driver only uses one single LUT entry, that is updated on
+- * each call of exec_op(). Index 0 is preset at boot with a basic
+- * read operation, so let's use the last entry (31).
+- */
+-#define	SEQID_LUT			31
+-
+ /* Registers used by the driver */
+ #define FSPI_MCR0			0x00
+ #define FSPI_MCR0_AHB_TIMEOUT(x)	((x) << 24)
+@@ -263,9 +256,6 @@
+ #define FSPI_TFDR			0x180
+ 
+ #define FSPI_LUT_BASE			0x200
+-#define FSPI_LUT_OFFSET			(SEQID_LUT * 4 * 4)
+-#define FSPI_LUT_REG(idx) \
+-	(FSPI_LUT_BASE + FSPI_LUT_OFFSET + (idx) * 4)
+ 
+ /* register map end */
+ 
+@@ -341,6 +331,7 @@ struct nxp_fspi_devtype_data {
+ 	unsigned int txfifo;
+ 	unsigned int ahb_buf_size;
+ 	unsigned int quirks;
++	unsigned int lut_num;
+ 	bool little_endian;
+ };
+ 
+@@ -349,6 +340,7 @@ static struct nxp_fspi_devtype_data lx21
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -357,6 +349,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -365,6 +358,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -373,6 +367,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = FSPI_QUIRK_USE_IP_ONLY,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -544,6 +539,8 @@ static void nxp_fspi_prepare_lut(struct
+ 	void __iomem *base = f->iobase;
+ 	u32 lutval[4] = {};
+ 	int lutidx = 1, i;
++	u32 lut_offset = (f->devtype_data->lut_num - 1) * 4 * 4;
++	u32 target_lut_reg;
+ 
+ 	/* cmd */
+ 	lutval[0] |= LUT_DEF(0, LUT_CMD, LUT_PAD(op->cmd.buswidth),
+@@ -588,8 +585,10 @@ static void nxp_fspi_prepare_lut(struct
+ 	fspi_writel(f, FSPI_LCKER_UNLOCK, f->iobase + FSPI_LCKCR);
+ 
+ 	/* fill LUT */
+-	for (i = 0; i < ARRAY_SIZE(lutval); i++)
+-		fspi_writel(f, lutval[i], base + FSPI_LUT_REG(i));
++	for (i = 0; i < ARRAY_SIZE(lutval); i++) {
++		target_lut_reg = FSPI_LUT_BASE + lut_offset + i * 4;
++		fspi_writel(f, lutval[i], base + target_lut_reg);
++	}
+ 
+ 	dev_dbg(f->dev, "CMD[%x] lutval[0:%x \t 1:%x \t 2:%x \t 3:%x], size: 0x%08x\n",
+ 		op->cmd.opcode, lutval[0], lutval[1], lutval[2], lutval[3], op->data.nbytes);
+@@ -876,7 +875,7 @@ static int nxp_fspi_do_op(struct nxp_fsp
+ 	void __iomem *base = f->iobase;
+ 	int seqnum = 0;
+ 	int err = 0;
+-	u32 reg;
++	u32 reg, seqid_lut;
+ 
+ 	reg = fspi_readl(f, base + FSPI_IPRXFCR);
+ 	/* invalid RXFIFO first */
+@@ -892,8 +891,9 @@ static int nxp_fspi_do_op(struct nxp_fsp
+ 	 * the LUT at each exec_op() call. And also specify the DATA
+ 	 * length, since it's has not been specified in the LUT.
+ 	 */
++	seqid_lut = f->devtype_data->lut_num - 1;
+ 	fspi_writel(f, op->data.nbytes |
+-		 (SEQID_LUT << FSPI_IPCR1_SEQID_SHIFT) |
++		 (seqid_lut << FSPI_IPCR1_SEQID_SHIFT) |
+ 		 (seqnum << FSPI_IPCR1_SEQNUM_SHIFT),
+ 		 base + FSPI_IPCR1);
+ 
+@@ -1017,7 +1017,7 @@ static int nxp_fspi_default_setup(struct
+ {
+ 	void __iomem *base = f->iobase;
+ 	int ret, i;
+-	u32 reg;
++	u32 reg, seqid_lut;
+ 
+ 	/* disable and unprepare clock to avoid glitch pass to controller */
+ 	nxp_fspi_clk_disable_unprep(f);
+@@ -1092,11 +1092,17 @@ static int nxp_fspi_default_setup(struct
+ 	fspi_writel(f, reg, base + FSPI_FLSHB1CR1);
+ 	fspi_writel(f, reg, base + FSPI_FLSHB2CR1);
+ 
++	/*
++	 * The driver only uses one single LUT entry, that is updated on
++	 * each call of exec_op(). Index 0 is preset at boot with a basic
++	 * read operation, so let's use the last entry.
++	 */
++	seqid_lut = f->devtype_data->lut_num - 1;
+ 	/* AHB Read - Set lut sequence ID for all CS. */
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA1CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA2CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHB1CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHB2CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHA1CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHA2CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHB1CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHB2CR2);
+ 
+ 	f->selected = -1;
+ 
 
 
