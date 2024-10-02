@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1A41D1E69;
-	Wed,  2 Oct 2024 14:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CA51D0493;
+	Wed,  2 Oct 2024 14:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877796; cv=none; b=dF+50W217bCFjMMcXfyZgaGP+YRwQ4o+JEd221gs+dDAQmqYQ88mkrAbxabSMnl+aNjH7Z0dQUqUR9T4xfbJ1abFnE93wwTK9Xq1Rd4/qtk0+xcyzP7+m9vOIiwo/Xi1tfPw/6ud5BAwxrXJs5Pq5vVp6oBxe+pwEga5+KGvHUM=
+	t=1727877799; cv=none; b=p3kbljSgm+CFPZaHCqLEOoJF7XqaRCgGVD3nu5mGGpb7Kdfv/Zbkjk7RJE+OS5H1eL6kaYQIKZGhAmzlbZagEB1iAtGXTJMNt1neIiYHDsyEibBtwFZqVLp68c/GhQzw6ckicOEEV3oEvZdecq3Spfrt/qgU39u0d2sjlkMOYow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877796; c=relaxed/simple;
-	bh=a3zxu2RdaTORcVwm8qhPT2zKsrv1jAgohChnpPDbyiQ=;
+	s=arc-20240116; t=1727877799; c=relaxed/simple;
+	bh=96K0nTM3L4ab4BiJV6d2alQz4+9rcSj/VirqIQTaAUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vu6y+ZhKnhzg+gePl1MBjW0I47kgNA3zfSUcBUOKzhZMCgXX7vOrOtTIwhg6hoM1yP+OKacj6IhtzvqOY19Zf78L1+NS/hVu8fDgSOXLTv/SYrTE5ymznr2FpLesJ2d1edVR5CIXemgF5uliIt5Den76vadX3NJIVu/BHDdCBl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjYhAf0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KBUuCOFJBJu7CexSuiPkinBU8tYRTI/QEBXU34YzJD897ITXYnx2AQv33sKMzBsUaRiOkVDfsgSR78Yyvrl1z79vutRFEzlpgsbKaWtSHYK7q2rqh/1Bq9/1XHZC6jXG6J8ax6L/d2vHTnvSU/mYRO4tXqU+fTJBonooSt40UUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc3gh0bX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjYhAf0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56828C4CEC2;
-	Wed,  2 Oct 2024 14:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc3gh0bX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BEBAC4CEC2;
+	Wed,  2 Oct 2024 14:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877796;
-	bh=a3zxu2RdaTORcVwm8qhPT2zKsrv1jAgohChnpPDbyiQ=;
+	s=korg; t=1727877799;
+	bh=96K0nTM3L4ab4BiJV6d2alQz4+9rcSj/VirqIQTaAUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjYhAf0akWdBrLY89O8Yn7/yiVKqI0vMYAoPAx5fxhXTKuxXQ6wkOzcLeA+opKUs2
-	 3LWYG1NOxiLsM2AXA0abZ0C79L7hHXuFDvs0168d5Sb9J4/wlehcZfST7FvVUaTddJ
-	 vLcdoMBWmsTuBC83GnJWWX55AuZVjqStZnHy4LzQ=
+	b=gc3gh0bXYVyBbuXTUoOT3H1wbtfj8TW5IGttoY5K8zJtlCVkc6cL2evNyNqJwpLkW
+	 XLqR7ecX8Pxewl6DKuCcQkoyHxpf/yhSCGBwFvjEWH7srLi28wxh9paSPFvUtQ8y7K
+	 ZmhpJWFgQYHA8lUz4cXhPCYXM8gsJsEjWrOOulNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 196/634] powerpc/8xx: Fix initial memory mapping
-Date: Wed,  2 Oct 2024 14:54:56 +0200
-Message-ID: <20241002125818.841359422@linuxfoundation.org>
+Subject: [PATCH 6.10 197/634] powerpc/8xx: Fix kernel vs user address comparison
+Date: Wed,  2 Oct 2024 14:54:57 +0200
+Message-ID: <20241002125818.880944008@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -53,43 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit f9f2bff64c2f0dbee57be3d8c2741357ad3d05e6 ]
+[ Upstream commit 65a82e117ffeeab0baf6f871a1cab11a28ace183 ]
 
-Commit cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
-introduced an initial mapping of kernel TEXT using PAGE_KERNEL_TEXT,
-but the pages that contain kernel TEXT may also contain kernel RODATA,
-and depending on selected debug options PAGE_KERNEL_TEXT may be either
-RWX or ROX. RODATA must be writable during init because it also
-contains ro_after_init data.
+Since commit 9132a2e82adc ("powerpc/8xx: Define a MODULE area below
+kernel text"), module exec space is below PAGE_OFFSET so not only
+space above PAGE_OFFSET, but space above TASK_SIZE need to be seen
+as kernel space.
 
-So use PAGE_KERNEL_X instead to be sure it is RWX.
+Until now the problem went undetected because by default TASK_SIZE
+is 0x8000000 which means address space is determined by just
+checking upper address bit. But when TASK_SIZE is over 0x80000000,
+PAGE_OFFSET is used for comparison, leading to thinking module
+addresses are part of user space.
 
-Fixes: cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
+Fix it by using TASK_SIZE instead of PAGE_OFFSET for address
+comparison.
+
+Fixes: 9132a2e82adc ("powerpc/8xx: Define a MODULE area below kernel text")
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/dac7a828d8497c4548c91840575a706657baa4f1.1724173828.git.christophe.leroy@csgroup.eu
+Link: https://msgid.link/3f574c9845ff0a023b46cb4f38d2c45aecd769bd.1724173828.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/nohash/8xx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/head_8xx.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
-index d93433e26dedb..e5cc3b3a259f9 100644
---- a/arch/powerpc/mm/nohash/8xx.c
-+++ b/arch/powerpc/mm/nohash/8xx.c
-@@ -154,11 +154,11 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
+diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
+index edc479a7c2bce..0bd317b564752 100644
+--- a/arch/powerpc/kernel/head_8xx.S
++++ b/arch/powerpc/kernel/head_8xx.S
+@@ -41,12 +41,12 @@
+ #include "head_32.h"
  
- 	mmu_mapin_immr();
+ .macro compare_to_kernel_boundary scratch, addr
+-#if CONFIG_TASK_SIZE <= 0x80000000 && CONFIG_PAGE_OFFSET >= 0x80000000
++#if CONFIG_TASK_SIZE <= 0x80000000 && MODULES_VADDR >= 0x80000000
+ /* By simply checking Address >= 0x80000000, we know if its a kernel address */
+ 	not.	\scratch, \addr
+ #else
+ 	rlwinm	\scratch, \addr, 16, 0xfff8
+-	cmpli	cr0, \scratch, PAGE_OFFSET@h
++	cmpli	cr0, \scratch, TASK_SIZE@h
+ #endif
+ .endm
  
--	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_TEXT, true);
-+	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_X, true);
- 	if (debug_pagealloc_enabled_or_kfence()) {
- 		top = boundary;
- 	} else {
--		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_TEXT, true);
-+		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_X, true);
- 		mmu_mapin_ram_chunk(einittext8, top, PAGE_KERNEL, true);
- 	}
+@@ -404,7 +404,7 @@ FixupDAR:/* Entry point for dcbx workaround. */
+ 	mfspr	r10, SPRN_SRR0
+ 	mtspr	SPRN_MD_EPN, r10
+ 	rlwinm	r11, r10, 16, 0xfff8
+-	cmpli	cr1, r11, PAGE_OFFSET@h
++	cmpli	cr1, r11, TASK_SIZE@h
+ 	mfspr	r11, SPRN_M_TWB	/* Get level 1 table */
+ 	blt+	cr1, 3f
  
 -- 
 2.43.0
