@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAD91D07BC;
-	Wed,  2 Oct 2024 14:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F1B1D0F46;
+	Wed,  2 Oct 2024 14:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878914; cv=none; b=FVePrqnobVbMnxII5elszjmGkFapNlAm4rLeACAgWDABq8y/t4HxMe4YOF3At98kYKDiCAFvrqEPT7/WhPEQxuNWq9cdbjLTlpFxjESCe2BdZf39pC3EvSkLkF0TdiL/PIHDAy6wViCYz35mjZAJwXpGk6e1eEJ5reEWFK2Ce5c=
+	t=1727878917; cv=none; b=nh30wuGCNVWOS3kCm0wviPtXEj08kcq6dH86rKdUMzbFze4p71Ghz0TWBF/BbQZEs+u8US+mV8f2H8qQmPUjZ0vi0VYwfG1UWCPjx6HBm8jr1SdrOMltTDcWjGn6YMavGPeA0M84UlB53NrG08ZzV42MfrsrsWFpTzKsWJ2BX1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878914; c=relaxed/simple;
-	bh=aB/E+dh0CZ2m+HEmMuk0FaKPieCeY/ik+Bsy9KdjKxs=;
+	s=arc-20240116; t=1727878917; c=relaxed/simple;
+	bh=b3kL94vaT015T6POcEaNWIouC54DJmMw/YxMUXWjHLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWQ3QgWY+elQtjTZNxMULnRI5sxQ6WMYkI224l5cRvebBmkkfslcKL//uD/dImTpID+qzOzNRP1f0NoHO0b7c9daKotxsioAs8vUkap4cIQr1l479q+x1LpRF8g2zg8tNGk03R6WY3GP7Pyq+vXGQoHFc11Uru6C6hmHcrx2Mco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6EkyCGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2Mn358fln+l1F4VUcJj8McTlbwt0aZLi0giGWbyf3X2oNUEJryOZ5ln/LhnUOAcFsl2U0xTB1TWI3LLVruTuirJYOAJxj2tSvjb8HBNV/1uVeP/a6Px6GeRL8fnN2gAOlHWs3AT7POpzHSvH4p5JT828Fr0wOOb/MaDDsU6PrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAUtKygC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6EkyCGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15664C4CECD;
-	Wed,  2 Oct 2024 14:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAUtKygC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26BCC4CEC2;
+	Wed,  2 Oct 2024 14:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878914;
-	bh=aB/E+dh0CZ2m+HEmMuk0FaKPieCeY/ik+Bsy9KdjKxs=;
+	s=korg; t=1727878917;
+	bh=b3kL94vaT015T6POcEaNWIouC54DJmMw/YxMUXWjHLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6EkyCGZtfpjR6ifo7bpP0IuqCLUcVJ1UlP8rSb6E2pmFrYgpyPwg3z5ORJ3/S9rb
-	 dY7B/unaydWGfX9YppMs61LdhnIJWKgW233vcqqXc966zsfoujkpNWtwaN7x7N3/Cn
-	 6Y3LfV9rD7lhi9InJy0A4t2pMVioo5Q8u4e9GucI=
+	b=kAUtKygCxq3kWHoG0MFgPmFh1KxKRS9YUFFO8qAbrn2VZcUdfnuT2uNtBe/qQeMA+
+	 eR4f6miDtocXLI3BnLYm4yX1+mpzeFxzlxfZliwMF6fWxhY5rezYOJH2+tdXqjUvh0
+	 /HvwOn6sozDh/dBrGUsHc46Vy12HfOvLGrE+h4G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alexander Potapenko <glider@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 544/634] x86/entry: Remove unwanted instrumentation in common_interrupt()
-Date: Wed,  2 Oct 2024 15:00:44 +0200
-Message-ID: <20241002125832.582442204@linuxfoundation.org>
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.10 545/634] perf/x86/intel: Allow to setup LBR for counting event for BPF
+Date: Wed,  2 Oct 2024 15:00:45 +0200
+Message-ID: <20241002125832.621627303@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,105 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Vyukov <dvyukov@google.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 477d81a1c47a1b79b9c08fc92b5dea3c5143800b upstream.
+commit ef493f4b122d6b14a6de111d1acac1eab1d673b0 upstream.
 
-common_interrupt() and related variants call kvm_set_cpu_l1tf_flush_l1d(),
-which is neither marked noinstr nor __always_inline.
+The BPF subsystem may capture LBR data on a counting event. However, the
+current implementation assumes that LBR can/should only be used with
+sampling events.
 
-So compiler puts it out of line and adds instrumentation to it.  Since the
-call is inside of instrumentation_begin/end(), objtool does not warn about
-it.
+For instance, retsnoop tool ([0]) makes an extensive use of this
+functionality and sets up perf event as follows:
 
-The manifestation is that KCOV produces spurious coverage in
-kvm_set_cpu_l1tf_flush_l1d() in random places because the call happens when
-preempt count is not yet updated to say that the kernel is in an interrupt.
+	struct perf_event_attr attr;
 
-Mark kvm_set_cpu_l1tf_flush_l1d() as __always_inline and move it out of the
-instrumentation_begin/end() section.  It only calls __this_cpu_write()
-which is already safe to call in noinstr contexts.
+	memset(&attr, 0, sizeof(attr));
+	attr.size = sizeof(attr);
+	attr.type = PERF_TYPE_HARDWARE;
+	attr.config = PERF_COUNT_HW_CPU_CYCLES;
+	attr.sample_type = PERF_SAMPLE_BRANCH_STACK;
+	attr.branch_sample_type = PERF_SAMPLE_BRANCH_KERNEL;
 
-Fixes: 6368558c3710 ("x86/entry: Provide IDTENTRY_SYSVEC")
-Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+To limit the LBR for a sampling event is to avoid unnecessary branch
+stack setup for a counting event in the sample read. Because LBR is only
+read in the sampling event's overflow.
+
+Although in most cases LBR is used in sampling, there is no HW limit to
+bind LBR to the sampling mode. Allow an LBR setup for a counting event
+unless in the sample read mode.
+
+Fixes: 85846b27072d ("perf/x86: Add PERF_X86_EVENT_NEEDS_BRANCH_STACK flag")
+Closes: https://lore.kernel.org/lkml/20240905180055.1221620-1-andrii@kernel.org/
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/3f9a1de9e415fcb53d07dc9e19fa8481bb021b1b.1718092070.git.dvyukov@google.com
+Link: https://lore.kernel.org/r/20240909155848.326640-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/hardirq.h  |    8 ++++++--
- arch/x86/include/asm/idtentry.h |    6 +++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ arch/x86/events/intel/core.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/hardirq.h
-+++ b/arch/x86/include/asm/hardirq.h
-@@ -69,7 +69,11 @@ extern u64 arch_irq_stat(void);
- #define local_softirq_pending_ref       pcpu_hot.softirq_pending
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3912,8 +3912,12 @@ static int intel_pmu_hw_config(struct pe
+ 			x86_pmu.pebs_aliases(event);
+ 	}
  
- #if IS_ENABLED(CONFIG_KVM_INTEL)
--static inline void kvm_set_cpu_l1tf_flush_l1d(void)
-+/*
-+ * This function is called from noinstr interrupt contexts
-+ * and must be inlined to not get instrumentation.
-+ */
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void)
- {
- 	__this_cpu_write(irq_stat.kvm_cpu_l1tf_flush_l1d, 1);
- }
-@@ -84,7 +88,7 @@ static __always_inline bool kvm_get_cpu_
- 	return __this_cpu_read(irq_stat.kvm_cpu_l1tf_flush_l1d);
- }
- #else /* !IS_ENABLED(CONFIG_KVM_INTEL) */
--static inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
- #endif /* IS_ENABLED(CONFIG_KVM_INTEL) */
+-	if (needs_branch_stack(event) && is_sampling_event(event))
+-		event->hw.flags  |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
++	if (needs_branch_stack(event)) {
++		/* Avoid branch stack setup for counting events in SAMPLE READ */
++		if (is_sampling_event(event) ||
++		    !(event->attr.sample_type & PERF_SAMPLE_READ))
++			event->hw.flags |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
++	}
  
- #endif /* _ASM_X86_HARDIRQ_H */
---- a/arch/x86/include/asm/idtentry.h
-+++ b/arch/x86/include/asm/idtentry.h
-@@ -212,8 +212,8 @@ __visible noinstr void func(struct pt_re
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 	u32 vector = (u32)(u8)error_code;				\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_irq_on_irqstack_cond(__##func, regs, vector);		\
- 	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
-@@ -250,7 +250,6 @@ static void __##func(struct pt_regs *reg
- 									\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_sysvec_on_irqstack_cond(__##func, regs);			\
- }									\
- 									\
-@@ -258,6 +257,7 @@ __visible noinstr void func(struct pt_re
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
-@@ -288,7 +288,6 @@ static __always_inline void __##func(str
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
- 	__irq_enter_raw();						\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	__##func (regs);						\
- 	__irq_exit_raw();						\
- }									\
-@@ -297,6 +296,7 @@ __visible noinstr void func(struct pt_re
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
+ 	if (branch_sample_counters(event)) {
+ 		struct perf_event *leader, *sibling;
 
 
