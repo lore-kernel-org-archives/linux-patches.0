@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F6819752C;
-	Wed,  2 Oct 2024 14:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5E19752C;
+	Wed,  2 Oct 2024 14:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880281; cv=none; b=iXvAq9ZrNLwMTdJCQ1Vu7XkCCGaTpXf0l14DG0S/Sfln+pjW34NBvUh7IslgZn4e9VGdr8TRxWsYQOwtuAzFB1o65NqcOMOa7xROMFBByY3x8YA8x5OkTCvL1/jc4OBB/YHyeKxZ51xiMkchffRuR6p4ptxGnPcNgAcKhWTeQjc=
+	t=1727880284; cv=none; b=dvYrcrA2Ew4nePeVNBlQS02D1xiYwcGbKvunBmtiwqBZKOckLa/dRfjbKGQpja6pNcOhQ6TJSeQ/d4H9jIdLipLHa9+XHsIIOa7bkdUUQBtM2W+KDmUxfecVxEFgSMxdkhDM7bGScuCoaHYlB2owH8fA8AikwvTqNSFcRlTj64Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880281; c=relaxed/simple;
-	bh=YipQxIsvPs5Ie6sRIuON1WjnApoiRgSasgWMLh9Mj60=;
+	s=arc-20240116; t=1727880284; c=relaxed/simple;
+	bh=YMqbZdF0TmUa16pwLX34iQFRYqv1gPfyHuBgpgAy8YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cygiIgDxO1kxO8IGznUbm3tbR68zOJIRRM0L0apYSW8cFmHIjVOkmngglyybhJ8wpctMc9HEcVNvgIevDhDIhJ6vODopV5JaU6uyhR/I4Vy6Ja2cPjleLL5I/gOcgzxZEYa+0TURja/l8tB2hBwrcUg0OECzEO4mRH200iP2GMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGYpd+nM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XSIPBLCNbQmH3vFQTAiw/0brQbFhWJmiOF9EAVl6t40xyg3ku7ncNJoTSLqCsQhWAYWqrepWLf8ROyNQjoiXnj5PvQ6bmytYf5GC7sRLjH0ztYLn1lDwgrYj6T6BV5Bnui4IEjWRgDZKzCH2nz0KGzt3S31xgyH/QqcIEesB2Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WWnymB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGYpd+nM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01430C4CEC2;
-	Wed,  2 Oct 2024 14:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WWnymB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21D6C4CEC5;
+	Wed,  2 Oct 2024 14:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880281;
-	bh=YipQxIsvPs5Ie6sRIuON1WjnApoiRgSasgWMLh9Mj60=;
+	s=korg; t=1727880284;
+	bh=YMqbZdF0TmUa16pwLX34iQFRYqv1gPfyHuBgpgAy8YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGYpd+nMK+v2Wb+HtDs7YPg1R9inypSYkQ1X0brt4WFQfCx7kU8yKU9DKzfHOtPn7
-	 cLhKNm9j+XodQrdoOM9D3Yi/ZHvwPU2Sb+dzQvDihm0Hi6yT8kLD7W4ldHSg37ix47
-	 x26QMShsRk8ZB1fBT5L40NH5mcRYnS+mpbtGWhcc=
+	b=1WWnymB9bZyiIeFfLbaNEYQFlyybP7vUrIowlUjrI6sVs1aXOxA7tlBjk0uHGWhWH
+	 85bi17V3r1LsoC/eEsPMiqgrbAWtSQxmyBHrxeBM5nOT9kg8Iawe4dYFuc3b1Aj4Ge
+	 0HLf4aEhMCyO8UZvMzKOK/TPnIHukINVpd25N69c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.6 398/538] PCI: Use an error code with PCIe failed link retraining
-Date: Wed,  2 Oct 2024 15:00:37 +0200
-Message-ID: <20241002125808.147340219@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 407/538] Input: i8042 - add TUXEDO Stellaris 16 Gen5 AMD to i8042 quirk table
+Date: Wed,  2 Oct 2024 15:00:46 +0200
+Message-ID: <20241002125808.501087024@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -46,131 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 59100eb248c0b15585affa546c7f6834b30eb5a4 upstream.
+commit e06edf96dea065dd1d9df695bf8b92784992333e upstream.
 
-Given how the call place in pcie_wait_for_link_delay() got structured now,
-and that pcie_retrain_link() returns a potentially useful error code,
-convert pcie_failed_link_retrain() to return an error code rather than a
-boolean status, fixing handling at the call site mentioned.  Update the
-other call site accordingly.
+Some TongFang barebones have touchpad and/or keyboard issues after
+suspend, fixable with nomux + reset + noloop + nopnp. Luckily, none of
+them have an external PS/2 port so this can safely be set for all of
+them.
 
-Fixes: 1abb47390350 ("Merge branch 'pci/enumeration'")
-Link: https://lore.kernel.org/r/alpine.DEB.2.21.2408091156530.61955@angie.orcam.me.uk
-Reported-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/aa2d1c4e-9961-d54a-00c7-ddf8e858a9b0@linux.intel.com/
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.5+
+I'm not entirely sure if every device listed really needs all four quirks,
+but after testing and production use, no negative effects could be
+observed when setting all four.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240905164851.771578-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c    |    2 +-
- drivers/pci/pci.h    |    6 +++---
- drivers/pci/quirks.c |   20 ++++++++++----------
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1208,7 +1208,7 @@ static int pci_dev_wait(struct pci_dev *
- 		if (delay > PCI_RESET_WAIT) {
- 			if (retrain) {
- 				retrain = false;
--				if (pcie_failed_link_retrain(bridge)) {
-+				if (pcie_failed_link_retrain(bridge) == 0) {
- 					delay = 1;
- 					continue;
- 				}
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -530,7 +530,7 @@ void pci_acs_init(struct pci_dev *dev);
- int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
- int pci_dev_specific_enable_acs(struct pci_dev *dev);
- int pci_dev_specific_disable_acs_redir(struct pci_dev *dev);
--bool pcie_failed_link_retrain(struct pci_dev *dev);
-+int pcie_failed_link_retrain(struct pci_dev *dev);
- #else
- static inline int pci_dev_specific_acs_enabled(struct pci_dev *dev,
- 					       u16 acs_flags)
-@@ -545,9 +545,9 @@ static inline int pci_dev_specific_disab
- {
- 	return -ENOTTY;
- }
--static inline bool pcie_failed_link_retrain(struct pci_dev *dev)
-+static inline int pcie_failed_link_retrain(struct pci_dev *dev)
- {
--	return false;
-+	return -ENOTTY;
- }
- #endif
- 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -78,21 +78,21 @@
-  * again to remove any residual state, ignoring the result as it's supposed
-  * to fail anyway.
-  *
-- * Return TRUE if the link has been successfully retrained.  Return FALSE
-+ * Return 0 if the link has been successfully retrained.  Return an error
-  * if retraining was not needed or we attempted a retrain and it failed.
-  */
--bool pcie_failed_link_retrain(struct pci_dev *dev)
-+int pcie_failed_link_retrain(struct pci_dev *dev)
- {
- 	static const struct pci_device_id ids[] = {
- 		{ PCI_VDEVICE(ASMEDIA, 0x2824) }, /* ASMedia ASM2824 */
- 		{}
- 	};
- 	u16 lnksta, lnkctl2;
--	bool ret = false;
-+	int ret = -ENOTTY;
- 
- 	if (!pci_is_pcie(dev) || !pcie_downstream_port(dev) ||
- 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
--		return false;
-+		return ret;
- 
- 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
- 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-@@ -106,13 +106,13 @@ bool pcie_failed_link_retrain(struct pci
- 		lnkctl2 |= PCI_EXP_LNKCTL2_TLS_2_5GT;
- 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
- 
--		ret = pcie_retrain_link(dev, false) == 0;
--		if (!ret) {
-+		ret = pcie_retrain_link(dev, false);
-+		if (ret) {
- 			pci_info(dev, "retraining failed\n");
- 			pcie_capability_write_word(dev, PCI_EXP_LNKCTL2,
- 						   oldlnkctl2);
- 			pcie_retrain_link(dev, true);
--			return false;
-+			return ret;
- 		}
- 
- 		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-@@ -129,10 +129,10 @@ bool pcie_failed_link_retrain(struct pci
- 		lnkctl2 |= lnkcap & PCI_EXP_LNKCAP_SLS;
- 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
- 
--		ret = pcie_retrain_link(dev, false) == 0;
--		if (!ret) {
-+		ret = pcie_retrain_link(dev, false);
-+		if (ret) {
- 			pci_info(dev, "retraining failed\n");
--			return false;
-+			return ret;
- 		}
- 	}
- 
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1121,6 +1121,29 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOLOOP)
+ 	},
+ 	/*
++	 * Some TongFang barebones have touchpad and/or keyboard issues after
++	 * suspend fixable with nomux + reset + noloop + nopnp. Luckily, none of
++	 * them have an external PS/2 port so this can safely be set for all of
++	 * them.
++	 * TongFang barebones come with board_vendor and/or system_vendor set to
++	 * a different value for each individual reseller. The only somewhat
++	 * universal way to identify them is by board_name.
++	 */
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	/*
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with nomux + reset + noloop + nopnp. Luckily,
+ 	 * none of them have an external PS/2 port so this can safely be set for
 
 
