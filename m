@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430651D04A0;
-	Wed,  2 Oct 2024 13:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320D11D0956;
+	Wed,  2 Oct 2024 13:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876258; cv=none; b=GrU1nE+oWbSliwTB+AHawi8XSESkUkTNM3asDIr/bbGikQyNkEwXBTTsAz0yrNpy74rIr7FJEDByaOAgJHRRCp4l4zepcJ+mSnEo0LtC537buAvDqKQe6we7OJ1uIDriabdQfR8bhXuYdqGjGoLnYlRPM2AX9HHg1JdXBTCsHxk=
+	t=1727876261; cv=none; b=sezKXWzzy1H0q4qVwVT2VLWm8bHkaSOE6eTKTSU1BuvntpqBFxJHDGj/pNteuyhcqQwrr7CeePTfumW2gJlwiOuVvosrd4mqwCrvrS5iJLoxde7rUulpP/ADKweXdUE3Abkn2u5Ke4qWFiP6ymhmH9t5yxVsSx3xyPuNT8TvriM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876258; c=relaxed/simple;
-	bh=duoaS80LTVOvhRDn3sAYv9Uvsp3aDJdeBc91N6D5XIg=;
+	s=arc-20240116; t=1727876261; c=relaxed/simple;
+	bh=OsUN2y/GXP5eFCbcljJUnBUhFewvjK3NoxozVrDbV28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNiahljuaNOwbQE+ngwUWTWbuG3qFE3JvQwNIYSR/vhjcdB42cnPPi2+JYoCV4T8SjJScAFiKowtj/a5Wyd0zebS8kcReLzbukm+ZuTgXYFOtLG7CrmpxXn93I5CpgdE4PmGF0Ps2JpciX3KzA+A+CYqfCrvFWB+8hVxzy+ajNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJvuayEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+W6spUFchCr3pZARsFm3F8J5vnb13VKYfli5CgkTGKVDPKJ1fcGZA2d6VeaU0YHh10notOr2j7eAJ4IDnWAiLWCVeEawBvh5gofguwHI2c7v4Ap6gglq93K0Z/f1wi5Fh664FAtSDZpDmVG798Ovd2hgFdn1zs66xLQec7rbfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEOmOloA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJvuayEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE37C4CECD;
-	Wed,  2 Oct 2024 13:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEOmOloA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB89BC4CED2;
+	Wed,  2 Oct 2024 13:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876258;
-	bh=duoaS80LTVOvhRDn3sAYv9Uvsp3aDJdeBc91N6D5XIg=;
+	s=korg; t=1727876261;
+	bh=OsUN2y/GXP5eFCbcljJUnBUhFewvjK3NoxozVrDbV28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJvuayEdpQOOp/hJ35yeMlngTfpuAeMQADGYd63UBDLKkx5r+3rOHlX8IctJfdXCV
-	 3K0CnoB0/D7tzotdIgSSOhHSZu6/RCkh8yMrtjJtawCfjoZjS0KRdoXRXy955eZOG7
-	 PfML8mbEPG6wA8Rq/66AdwK6W4h3Vu0MYZF6H7yI=
+	b=PEOmOloAVemTjmP4hFHLZgR7uxoXyj9KxJKtcFRyjmFCnRp6TwmTWKXQ6tkCah4iE
+	 XUZhnTV2qAQTM2DYhkkZLZfBhJQ/s1GHBlhEvhdQgrrP8wUd64gyyzH2sO6nI8Usu8
+	 EiQsZXDFwxX+iK212hgsNVLVuY71qqdWs31Ztzt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 382/695] RDMA/iwcm: Fix WARNING:at_kernel/workqueue.c:#check_flush_dependency
-Date: Wed,  2 Oct 2024 14:56:20 +0200
-Message-ID: <20241002125837.705697270@linuxfoundation.org>
+Subject: [PATCH 6.11 356/695] clk: qcom: dispcc-sm8550: use rcg2_ops for mdss_dptx1_aux_clk_src
+Date: Wed,  2 Oct 2024 14:55:54 +0200
+Message-ID: <20241002125836.655248041@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,80 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 86dfdd8288907f03c18b7fb462e0e232c4f98d89 ]
+[ Upstream commit cb4c00698f2f27d99a69adcce659370ca286cf2a ]
 
-In the commit aee2424246f9 ("RDMA/iwcm: Fix a use-after-free related to
-destroying CM IDs"), the function flush_workqueue is invoked to flush the
-work queue iwcm_wq.
+clk_dp_ops should only be used for DisplayPort pixel clocks. Use
+clk_rcg2_ops for disp_cc_mdss_dptx1_aux_clk_src.
 
-But at that time, the work queue iwcm_wq was created via the function
-alloc_ordered_workqueue without the flag WQ_MEM_RECLAIM.
-
-Because the current process is trying to flush the whole iwcm_wq, if
-iwcm_wq doesn't have the flag WQ_MEM_RECLAIM, verify that the current
-process is not reclaiming memory or running on a workqueue which doesn't
-have the flag WQ_MEM_RECLAIM as that can break forward-progress guarantee
-leading to a deadlock.
-
-The call trace is as below:
-
-[  125.350876][ T1430] Call Trace:
-[  125.356281][ T1430]  <TASK>
-[ 125.361285][ T1430] ? __warn (kernel/panic.c:693)
-[ 125.367640][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.375689][ T1430] ? report_bug (lib/bug.c:180 lib/bug.c:219)
-[ 125.382505][ T1430] ? handle_bug (arch/x86/kernel/traps.c:239)
-[ 125.388987][ T1430] ? exc_invalid_op (arch/x86/kernel/traps.c:260 (discriminator 1))
-[ 125.395831][ T1430] ? asm_exc_invalid_op (arch/x86/include/asm/idtentry.h:621)
-[ 125.403125][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.410984][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.418764][ T1430] __flush_workqueue (kernel/workqueue.c:3970)
-[ 125.426021][ T1430] ? __pfx___might_resched (kernel/sched/core.c:10151)
-[ 125.433431][ T1430] ? destroy_cm_id (drivers/infiniband/core/iwcm.c:375) iw_cm
-[ 125.441209][ T1430] ? __pfx___flush_workqueue (kernel/workqueue.c:3910)
-[ 125.473900][ T1430] ? _raw_spin_lock_irqsave (arch/x86/include/asm/atomic.h:107 include/linux/atomic/atomic-arch-fallback.h:2170 include/linux/atomic/atomic-instrumented.h:1302 include/asm-generic/qspinlock.h:111 include/linux/spinlock.h:187 include/linux/spinlock_api_smp.h:111 kernel/locking/spinlock.c:162)
-[ 125.473909][ T1430] ? __pfx__raw_spin_lock_irqsave (kernel/locking/spinlock.c:161)
-[ 125.482537][ T1430] _destroy_id (drivers/infiniband/core/cma.c:2044) rdma_cm
-[ 125.495072][ T1430] nvme_rdma_free_queue (drivers/nvme/host/rdma.c:656 drivers/nvme/host/rdma.c:650) nvme_rdma
-[ 125.505827][ T1430] nvme_rdma_reset_ctrl_work (drivers/nvme/host/rdma.c:2180) nvme_rdma
-[ 125.505831][ T1430] process_one_work (kernel/workqueue.c:3231)
-[ 125.515122][ T1430] worker_thread (kernel/workqueue.c:3306 kernel/workqueue.c:3393)
-[ 125.515127][ T1430] ? __pfx_worker_thread (kernel/workqueue.c:3339)
-[ 125.531837][ T1430] kthread (kernel/kthread.c:389)
-[ 125.539864][ T1430] ? __pfx_kthread (kernel/kthread.c:342)
-[ 125.550628][ T1430] ret_from_fork (arch/x86/kernel/process.c:147)
-[ 125.558840][ T1430] ? __pfx_kthread (kernel/kthread.c:342)
-[ 125.558844][ T1430] ret_from_fork_asm (arch/x86/entry/entry_64.S:257)
-[  125.566487][ T1430]  </TASK>
-[  125.566488][ T1430] ---[ end trace 0000000000000000 ]---
-
-Fixes: aee2424246f9 ("RDMA/iwcm: Fix a use-after-free related to destroying CM IDs")
-Link: https://patch.msgid.link/r/20240820113336.19860-1-yanjun.zhu@linux.dev
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202408151633.fc01893c-oliver.sang@intel.com
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240717-dispcc-sm8550-fixes-v2-2-5c4a3128c40b@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwcm.c | 2 +-
+ drivers/clk/qcom/dispcc-sm8550.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/iwcm.c b/drivers/infiniband/core/iwcm.c
-index 1a6339f3a63fc..7e3a55349e107 100644
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -1182,7 +1182,7 @@ static int __init iw_cm_init(void)
- 	if (ret)
- 		return ret;
- 
--	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", 0);
-+	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", WQ_MEM_RECLAIM);
- 	if (!iwcm_wq)
- 		goto err_alloc;
+diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+index 954b0f6fcea28..a98230540782c 100644
+--- a/drivers/clk/qcom/dispcc-sm8550.c
++++ b/drivers/clk/qcom/dispcc-sm8550.c
+@@ -400,7 +400,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
+ 		.parent_data = disp_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_dp_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
 -- 
 2.43.0
