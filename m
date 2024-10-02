@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1FD1EB21;
-	Wed,  2 Oct 2024 14:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7F51EB21;
+	Wed,  2 Oct 2024 14:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880469; cv=none; b=roKaYwYfv8SBoQkeHsPUO9ARb5HFkX7cLd9106wbwQrljJvwLcybJFLKXRIGNbBY2f09HsnVdAKRxURB34dBHz8TUW/+RPJWVnZumu1aZ2I88R5BUY2p3IIfTNGSKiIceFItXTikZIc3sm9ouby2YYaEXYt+0K9XyG7FJ+uD2NM=
+	t=1727880472; cv=none; b=rVZrfDLUdvr4jg6pba0Gc1qw4pme0+V5wm6u/Qa9FzXYnsnKV8dVdIXuAN44HnIEy21q4zACV7Z4W8d+ZFR5ZqFyfYH2k0Gz7U20/Yg1VihMow8eF08peXo1s3Bb52oPJg+mVFLWznfuuNoX8Xps1alz20mlM4Kj1SsZMhyAsnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880469; c=relaxed/simple;
-	bh=E5d/wVgP1Gqg1/SZ7rBf+uTDs/dobFN/0WQe9sFajro=;
+	s=arc-20240116; t=1727880472; c=relaxed/simple;
+	bh=+easFohQk2Whb/1xife9TrU+OKHyBX4dhNtHesBARQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVMctxWka0IgCyo2vsOyZ5vO7AaofEbHq62y59BFmecZtaL2DHfpklGBt5KVip0FQ1COubpHZ0j7jQVgZzxTl0MzHFfY6zKGA1OMy6nBCwAVo1kaLpdN9iNzCcW8cYr3WsVg7LNIXx/a16yX9rMG9o50RGXl1dV2nsfOZVahJks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NU+bTcYb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pYG4zs2FqGytRhjrifqp/zCFamYDStAoWFARLI+KhJoRkrWXE2dWBY9uCpuFoCfE2fIt6uuc0HP18JiuAmeuTQ2MO8VD26cypR4Rka1v5H0uoih7jNGtAM48irOBaOd9OT6BEs3hFHH/DajELe0Zm5/qA5AtRkaxXtusdEAQX7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoQe2cqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NU+bTcYb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D08BC4CEC2;
-	Wed,  2 Oct 2024 14:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoQe2cqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B523C4CEC2;
+	Wed,  2 Oct 2024 14:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880468;
-	bh=E5d/wVgP1Gqg1/SZ7rBf+uTDs/dobFN/0WQe9sFajro=;
+	s=korg; t=1727880471;
+	bh=+easFohQk2Whb/1xife9TrU+OKHyBX4dhNtHesBARQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NU+bTcYbutuSmpGYbwURysFTWttaqzIAQ4uWQ+Rw4TUmz87bLHyHbxIXHuqzkN+Dl
-	 GR26HHExTxd4zPHxM4A5JGQy8CEKpfIo1xeklteq1DC/6SYDg4vzqU1tmUR2su5iXl
-	 deNQ7I6vNGeSdQeoQwB6PnC2Ap3dop5JyhXgcJD4=
+	b=IoQe2cquhfeExIi393TMYeAHtsoopcFkUuKeKYE95jgl0kk624PWYx5EMM3tzGQIW
+	 s+rvkxwgLHJVMEsPEcPFT0dN6Fc0qPamtvgG8oRHkThXW+4//lfmv0i+LwDhp1vQ9h
+	 0ADi/KPSW+oOMzr7QFtYyB7xQfbb8cGth+v94eGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.6 437/538] usb: cdnsp: Fix incorrect usb_request status
-Date: Wed,  2 Oct 2024 15:01:16 +0200
-Message-ID: <20241002125809.689051208@linuxfoundation.org>
+	Tomas Marek <tomas.marek@elrest.cz>
+Subject: [PATCH 6.6 438/538] usb: dwc2: drd: fix clock gating on USB role switch
+Date: Wed,  2 Oct 2024 15:01:17 +0200
+Message-ID: <20241002125809.727884959@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,54 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Tomas Marek <tomas.marek@elrest.cz>
 
-commit 1702bec4477cc7d31adb4a760d14d33fac928b7a upstream.
+commit 2c6b6afa59e78bebcb65bbc8a76b3459f139547c upstream.
 
-Fix changes incorrect usb_request->status returned during disabling
-endpoints. Before fix the status returned during dequeuing requests
-while disabling endpoint was ECONNRESET.
-Patch change it to ESHUTDOWN.
+The dwc2_handle_usb_suspend_intr() function disables gadget clocks in USB
+peripheral mode when no other power-down mode is available (introduced by
+commit 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")).
+However, the dwc2_drd_role_sw_set() USB role update handler attempts to
+read DWC2 registers if the USB role has changed while the USB is in suspend
+mode (when the clocks are gated). This causes the system to hang.
 
-Patch fixes issue detected during testing UVC gadget.
-During stopping streaming the class starts dequeuing usb requests and
-controller driver returns the -ECONNRESET status. After completion
-requests the class or application "uvc-gadget" try to queue this
-request again. Changing this status to ESHUTDOWN cause that UVC assumes
-that endpoint is disabled, or device is disconnected and stops
-re-queuing usb requests.
+Release the gadget clocks before handling the USB role update.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: stable@vger.kernel.org
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB9538E8CA7A2096AAF6A3718FDD9E2@PH7PR07MB9538.namprd07.prod.outlook.com
+Fixes: 0112b7ce68ea ("usb: dwc2: Update dwc2_handle_usb_suspend_intr function.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tomas Marek <tomas.marek@elrest.cz>
+Link: https://lore.kernel.org/r/20240906055025.25057-1-tomas.marek@elrest.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/dwc2/drd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -718,7 +718,8 @@ int cdnsp_remove_request(struct cdnsp_de
- 	seg = cdnsp_trb_in_td(pdev, cur_td->start_seg, cur_td->first_trb,
- 			      cur_td->last_trb, hw_deq);
- 
--	if (seg && (pep->ep_state & EP_ENABLED))
-+	if (seg && (pep->ep_state & EP_ENABLED) &&
-+	    !(pep->ep_state & EP_DIS_IN_RROGRESS))
- 		cdnsp_find_new_dequeue_state(pdev, pep, preq->request.stream_id,
- 					     cur_td, &deq_state);
- 	else
-@@ -736,7 +737,8 @@ int cdnsp_remove_request(struct cdnsp_de
- 	 * During disconnecting all endpoint will be disabled so we don't
- 	 * have to worry about updating dequeue pointer.
- 	 */
--	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING) {
-+	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING ||
-+	    pep->ep_state & EP_DIS_IN_RROGRESS) {
- 		status = -ESHUTDOWN;
- 		ret = cdnsp_cmd_set_deq(pdev, pep, &deq_state);
+--- a/drivers/usb/dwc2/drd.c
++++ b/drivers/usb/dwc2/drd.c
+@@ -127,6 +127,15 @@ static int dwc2_drd_role_sw_set(struct u
+ 			role = USB_ROLE_DEVICE;
  	}
+ 
++	if ((IS_ENABLED(CONFIG_USB_DWC2_PERIPHERAL) ||
++	     IS_ENABLED(CONFIG_USB_DWC2_DUAL_ROLE)) &&
++	     dwc2_is_device_mode(hsotg) &&
++	     hsotg->lx_state == DWC2_L2 &&
++	     hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
++	     hsotg->bus_suspended &&
++	     !hsotg->params.no_clock_gating)
++		dwc2_gadget_exit_clock_gating(hsotg, 0);
++
+ 	if (role == USB_ROLE_HOST) {
+ 		already = dwc2_ovr_avalid(hsotg, true);
+ 	} else if (role == USB_ROLE_DEVICE) {
 
 
