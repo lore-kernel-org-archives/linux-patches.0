@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F323F1CF5C6;
-	Wed,  2 Oct 2024 13:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB302376;
+	Wed,  2 Oct 2024 13:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876113; cv=none; b=D//frenZlV90GKHmtD7J3WenxHHkNvRmIfnnRg4CTxgpHZlVqn68cCkUdB+Z8rVEcEELhleabOGoj+h58OFMu444eQDvCGvlieDJW7vnSrwwtKU8BZliL2oWR2wzHx2QLRReAWIEsjPg05BxzMwEkMK+N7Q7Oh96Vl/vPsy3g8Q=
+	t=1727876115; cv=none; b=Lq2VNIB0/ZPALEpZetHx5aPVDNFQ7EFtIv54dvJIbi5tB+9DDJU1ap1A5vTm0n4wUiaZwiH9SjO0Z7po0tENdfWyauuYsRR+BzkKVRfKQNX+URv91rCsTZ5K+Vv5khbGg3ZiyH2G1H2Ak84THbhIbm7Um35RtArqSUs6UzQwlw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876113; c=relaxed/simple;
-	bh=VGPU86GDBvBononjDPfPhTxEjZ/DlC4A5nPyESPQRTY=;
+	s=arc-20240116; t=1727876115; c=relaxed/simple;
+	bh=Y6uhTSiafQwFi05DqvzivjWDdKFjGbjvrbt6vvv43wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mf2un+2sL65SpcA+acQdX3wvRkLlxTnZb9OFv6IyTDRnstrA6BTziD5GJ+f6n674xY9xQ1q6ymXTNsXzSLIvZQO78/rhTuss/Z2Z78a+utw6jPJn0w5fyg2ecgw2vkru9vRi+/9kHwrAw3ULAzZrwuYnOpRwflP4N60mFI4GP8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcpJ/S78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMLxBdKXr70O1XG4HTRH8vJC6/W8ARrxdJ139OLlWnWFwj3WqnoorH4Ohs3sdR6CxXwgvOvWIK/Lget8g33BY4PISodgNyTYoaZJ/M3BTJoIJ+E+kgCcvu1UoC1hMrUQ/wnhy6EwfV7iRtBhLgnboU8hHCeZrdlEmtDEwnvY8KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaYkUtzi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcpJ/S78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDC2C4CEC5;
-	Wed,  2 Oct 2024 13:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaYkUtzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CC5C4CEC5;
+	Wed,  2 Oct 2024 13:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876112;
-	bh=VGPU86GDBvBononjDPfPhTxEjZ/DlC4A5nPyESPQRTY=;
+	s=korg; t=1727876115;
+	bh=Y6uhTSiafQwFi05DqvzivjWDdKFjGbjvrbt6vvv43wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcpJ/S78wKOHa3ngSSD3ih1rzF+wc+8GWhGC+2v17/lPfUJHUTZKf1hd81VFWCX3L
-	 Bv1TnRN5m6srwW16xn4l42Czl2E+UTZQxtmcZ5+9/oSjssWgrpkmPkRsBzj+auzB8K
-	 YOrBRYs3FdPNUN6m/QA66SlKKASrnJlalVfsNoEY=
+	b=IaYkUtziLfbf5rpIsjpmUBYGeQHYlo12ASHApK+8OBwid2rY9cD8rOo+1SzdyQEk+
+	 F4ry6A7cTPonu9S7MpaVdafnAyk+85BLaM+WI9L46AQMXRiWEMKkpS2ueGfgJlJzRh
+	 DyCftf/F1zHbTUYbQuzyXR5jozRNoLBDLehEf780=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
 	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	linuxarm@huawei.com,
-	Mark Rutland <mark.rutland@arm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Zeng Tao <prime.zeng@hisilicon.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 333/695] perf stat: Display iostat headers correctly
-Date: Wed,  2 Oct 2024 14:55:31 +0200
-Message-ID: <20241002125835.744212678@linuxfoundation.org>
+Subject: [PATCH 6.11 334/695] perf dwarf-aux: Check allowed location expressions when collecting variables
+Date: Wed,  2 Oct 2024 14:55:32 +0200
+Message-ID: <20241002125835.784062862@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -61,64 +59,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 2615639352420e6e3115952c5b8f46846e1c6d0e ]
+[ Upstream commit e8bb03ed6850c6ed4ce2f1600ea73401fc2ebd95 ]
 
-Currently we'll only print metric headers for metric leader in
-aggregration mode. This will make `perf iostat` header not shown
-since it'll aggregrated globally but don't have metric events:
+It missed to call check_allowed_ops() in __die_collect_vars_cb() so it
+can take variables with complex location expression incorrectly.
 
-  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
-   Performance counter stats for 'system wide':
-      port
-  0000:00                    0                    0                    0                    0
-  0000:80                    0                    0                    0                    0
-  [...]
+For example, I found some variable has this expression.
 
-Fix this by excluding the iostat in the check of printing metric
-headers. Then we can see the headers:
+    015d8df8 ffffffff81aacfb3 (base address)
+    015d8e01 v000000000000004 v000000000000000 views at 015d8df2 for:
+             ffffffff81aacfb3 ffffffff81aacfd2 (DW_OP_fbreg: -176; DW_OP_deref;
+						DW_OP_plus_uconst: 332; DW_OP_deref_size: 4;
+						DW_OP_lit1; DW_OP_shra; DW_OP_const1u: 64;
+						DW_OP_minus; DW_OP_stack_value)
+    015d8e14 v000000000000000 v000000000000000 views at 015d8df4 for:
+             ffffffff81aacfd2 ffffffff81aacfd7 (DW_OP_reg3 (rbx))
+    015d8e19 v000000000000000 v000000000000000 views at 015d8df6 for:
+             ffffffff81aacfd7 ffffffff81aad020 (DW_OP_fbreg: -176; DW_OP_deref;
+						DW_OP_plus_uconst: 332; DW_OP_deref_size: 4;
+						DW_OP_lit1; DW_OP_shra; DW_OP_const1u: 64;
+						DW_OP_minus; DW_OP_stack_value)
+    015d8e2c <End of list>
 
-  root@ubuntu204:/home/yang/linux/tools/perf# ./perf stat --iostat --timeout 1000
-   Performance counter stats for 'system wide':
-      port             Inbound Read(MB)    Inbound Write(MB)    Outbound Read(MB)   Outbound Write(MB)
-  0000:00                    0                    0                    0                    0
-  0000:80                    0                    0                    0                    0
-  [...]
+It looks like '((int *)(-176(%rbp) + 332) >> 1) - 64' but the current
+code thought it's just -176(%rbp) and processed the variable incorrectly.
+It should reject such a complex expression if check_allowed_ops()
+doesn't like it. :)
 
-Fixes: 193a9e30207f5477 ("perf stat: Don't display metric header for non-leader uncore events")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 932dcc2c39aedf54 ("perf dwarf-aux: Add die_collect_vars()")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: linuxarm@huawei.com
-Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Cc: Zeng Tao <prime.zeng@hisilicon.com>
-Link: https://lore.kernel.org/r/20240802065800.48774-1-yangyicong@huawei.com
+Link: https://lore.kernel.org/r/20240816235840.2754937-2-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat-display.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/dwarf-aux.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
-index c38bcb6f4c78e..ea96e4ebad8c8 100644
---- a/tools/perf/util/stat-display.c
-+++ b/tools/perf/util/stat-display.c
-@@ -1237,7 +1237,8 @@ static void print_metric_headers(struct perf_stat_config *config,
+diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+index 44ef968a7ad33..e7de5045c43a7 100644
+--- a/tools/perf/util/dwarf-aux.c
++++ b/tools/perf/util/dwarf-aux.c
+@@ -1598,6 +1598,9 @@ static int __die_collect_vars_cb(Dwarf_Die *die_mem, void *arg)
+ 	if (dwarf_getlocations(&attr, 0, &base, &start, &end, &ops, &nops) <= 0)
+ 		return DIE_FIND_CB_SIBLING;
  
- 	/* Print metrics headers only */
- 	evlist__for_each_entry(evlist, counter) {
--		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
-+		if (!config->iostat_run &&
-+		    config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
- 			continue;
++	if (!check_allowed_ops(ops, nops))
++		return DIE_FIND_CB_SIBLING;
++
+ 	if (die_get_real_type(die_mem, &type_die) == NULL)
+ 		return DIE_FIND_CB_SIBLING;
  
- 		os.evsel = counter;
 -- 
 2.43.0
 
