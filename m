@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707951D278E;
-	Wed,  2 Oct 2024 14:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81541CFEB3;
+	Wed,  2 Oct 2024 14:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877628; cv=none; b=b4tOxj97xmGUFlDeB8pQGMr888anPVbiSecFJaXiQPd1WeFtiySAxZJWAxHziTR0YeNlmxkwvjPawg/Z71aRRrNjVqdF55CNe4UkDgjHudXds9vJjT3plLQqitIoiPYUc3VSKV3TS0nEQeYr53OJEkdhoW+6SPzo+WfQNlyGIRg=
+	t=1727877631; cv=none; b=abxZCtSPXq1aVhna7jGcaBqfQVFpHBN8dLRKfFrZQv31O2j5m7eygOr+kNfvvXC7uY0BF+ka3piIIoKzjJiRvRPxvBtO63YKgPdAucmZWSyu8ogFkINbC3DlvqDP4m5qCN9Kv0u/cKzW+AuK8MIJRnTVnWOnkQYnYLVWTFVd9ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877628; c=relaxed/simple;
-	bh=f5/wgYfeRLqQ38C4qHvRQ5oiAt2xDHWKA121s4upv0g=;
+	s=arc-20240116; t=1727877631; c=relaxed/simple;
+	bh=MncaevKxwDNi0uR8IfcuS4rj1H9wH4BLMEWSC6M5/yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o02SdCYKot7XzocgxLacuZyXXjIHqc+AqnzauAOycWac6VwHl/DRWtfJN8a+0bHIhBUagi3EkRJSLm29TGrr6GZwnD5esPmMg7l5g1QuPNGY6Is5AXbvBir43C4uVQbNbu1DogFzBH5pzQ+sClsI24T6FL9hCjjXud/UnoOJqvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhIpQTWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWEqa6+k403HvJAx4Y79mwRgVAVQWhY2Ueap8M24MjbtfmzTFS2006V+oI2Lzd0zDVCGAOagA2K4Reg6YsHU029Aw5H5BPYBmSexxJQ1akwC3wf/U03cG57DW/NCotMa6uQKlE+yHo1GFhGKkvExb/TI29nu8+uRYrQm3+j3Fzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHZdG0sG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhIpQTWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDD4C4CEC5;
-	Wed,  2 Oct 2024 14:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHZdG0sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD01C4CEC2;
+	Wed,  2 Oct 2024 14:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877628;
-	bh=f5/wgYfeRLqQ38C4qHvRQ5oiAt2xDHWKA121s4upv0g=;
+	s=korg; t=1727877631;
+	bh=MncaevKxwDNi0uR8IfcuS4rj1H9wH4BLMEWSC6M5/yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhIpQTWVlrMHT9d/I0QQWXogStjxTmiMU0+ZqEEjoCYbKf1XYC2a2t4NS1ZVbwRSD
-	 MJWV8g1eiQ9yT3OOSHYink7vsLnkDnOt7/40BUerAERNKIQb+s23ZF6dSx4QZj/ztj
-	 XUwwVkQ9vRRCqDJRvV0PR8ONoA6lLv2PTEzXenc4=
+	b=wHZdG0sGeKq8Lgi/xsu/EwuR5yHg7JJ/Ab2ZwWrH5RCBt/eVSRnV7g56Rl5a37ifQ
+	 +6/FeVaaSkUvXIrHFbhcVedpcknf650ebOQUkPLJsukHzretWOIUyfZxS6eXOnvZ27
+	 yfo55TXvSvRHGoePI1T+gaSKisvjnILpqBIeZHfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Ankit Agrawal <agrawal.ag.ankit@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 132/634] arm64: dts: ti: k3-j721e-beagleboneai64: Fix reversed C6x carveout locations
-Date: Wed,  2 Oct 2024 14:53:52 +0200
-Message-ID: <20241002125816.319825086@linuxfoundation.org>
+Subject: [PATCH 6.10 141/634] clocksource/drivers/qcom: Add missing iounmap() on errors in msm_dt_timer_init()
+Date: Wed,  2 Oct 2024 14:54:01 +0200
+Message-ID: <20241002125816.671870072@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,47 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
 
-[ Upstream commit 1a314099b7559690fe23cdf3300dfff6e830ecb1 ]
+[ Upstream commit ca140a0dc0a18acd4653b56db211fec9b2339986 ]
 
-The DMA carveout for the C6x core 0 is at 0xa6000000 and core 1 is at
-0xa7000000. These are reversed in DT. While both C6x can access either
-region, so this is not normally a problem, but if we start restricting
-the memory each core can access (such as with firewalls) the cores
-accessing the regions for the wrong core will not work. Fix this here.
+Add the missing iounmap() when clock frequency fails to get read by the
+of_property_read_u32() call, or if the call to msm_timer_init() fails.
 
-Fixes: fae14a1cb8dd ("arm64: dts: ti: Add k3-j721e-beagleboneai64")
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240801181232.55027-2-afd@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 6e3321631ac2 ("ARM: msm: Add DT support to msm_timer")
+Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240713095713.GA430091@bnew-VirtualBox
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clocksource/timer-qcom.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-index a2925555fe818..fb899c99753ec 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-@@ -123,7 +123,7 @@
- 			no-map;
- 		};
+diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+index b4afe3a675835..eac4c95c6127f 100644
+--- a/drivers/clocksource/timer-qcom.c
++++ b/drivers/clocksource/timer-qcom.c
+@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	}
  
--		c66_1_dma_memory_region: c66-dma-memory@a6000000 {
-+		c66_0_dma_memory_region: c66-dma-memory@a6000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa6000000 0x00 0x100000>;
- 			no-map;
-@@ -135,7 +135,7 @@
- 			no-map;
- 		};
+ 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
++		iounmap(cpu0_base);
+ 		pr_err("Unknown frequency\n");
+ 		return -EINVAL;
+ 	}
+@@ -243,7 +244,11 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	freq /= 4;
+ 	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
  
--		c66_0_dma_memory_region: c66-dma-memory@a7000000 {
-+		c66_1_dma_memory_region: c66-dma-memory@a7000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa7000000 0x00 0x100000>;
- 			no-map;
+-	return msm_timer_init(freq, 32, irq, !!percpu_offset);
++	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
++	if (ret)
++		iounmap(cpu0_base);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
+ TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
 -- 
 2.43.0
 
