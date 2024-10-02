@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B54716F84F;
-	Wed,  2 Oct 2024 13:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49D816F84F;
+	Wed,  2 Oct 2024 13:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875298; cv=none; b=ZQVYqQaSI4QJJn9eAIhiDH/ipyqO8TmzJM6Id+avzLpXkL9se+18hS0XGlc4WG/OxrzWv/9WnwOaHswDrzu73rzdY8R0kX1Ro0RlqcCOtz792C9Gp2XouHl1KdCvMSGRfYklj7xOXsFDcZf/iED9y+B/7Cg9csQAb5xAxj2ek1Y=
+	t=1727875301; cv=none; b=KGuiD3ptDd8sYLOIX2doLo4Ui3QRRRyM33VMXLIfGQ627Y/4Kq22almtcexs0qGTmjUndPVF61kgua8nRyFen3cjBm4smAv+fdGtRlZLlaX9PnWTGX6FNTREDNkvzQ1VqbiremnPR62M/dvn7j0DML2Tu0+9gYCudKVn+kZYJng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875298; c=relaxed/simple;
-	bh=ImvXoLryg8u9Xp48CzKFvcTorhPVrMaxW7WuQ1QooWQ=;
+	s=arc-20240116; t=1727875301; c=relaxed/simple;
+	bh=UvyU5MScQ2E/PfvTgH93QY5wzNNehZgE+pW5yaz7WSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZLSsCcvxov/kQW6u7gwzi5NFpzv2EAyGupFAACmJkhAbVr5MFwCXHMnSTBEnWiJXLbobJU904CDsOrUqqPaIvBGsMfpxTqAQ0xjB3gGYkgQWL2CXhewaIgJJ33LF8adjdcaBE8AZYMaf8ZFIIRMAQaipxoXn0inVeg+XTB6bXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gA0HMmx4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Isvn7nmq18939bq77273H8CkmEGouhxSwOBjZ8uUsAQJltTW8BvI+4olSUyFD6bJw97JIPNfnsp0RYUSZwnxvYC5thZK5Pz+tGRoR64tl5dcUOs1jZ08K/yXZ1f37WI+KZ9GWz8CUxu6wcQl3Li8oOomKt7V/93puW2zSAdiwOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMU1sK1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gA0HMmx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A36C4CECD;
-	Wed,  2 Oct 2024 13:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMU1sK1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A287C4CEC5;
+	Wed,  2 Oct 2024 13:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875297;
-	bh=ImvXoLryg8u9Xp48CzKFvcTorhPVrMaxW7WuQ1QooWQ=;
+	s=korg; t=1727875300;
+	bh=UvyU5MScQ2E/PfvTgH93QY5wzNNehZgE+pW5yaz7WSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gA0HMmx4PM4llTSYQ0d962QEBHqPCOQvyRdS7Vos8aumK9JJ42JC8FVaKR278SrBP
-	 x8ZBMJHtyj9nPTC4x4703zBrcZOZoJT+e61yZcrOISlbLKGMhE+cHn1IGXBOr+X0iH
-	 nIMNnhP/z8lDQv3Jy9XMueGDt983iaYWcHHV54lM=
+	b=YMU1sK1uNm8AXR1TTbuwL0aq0PdgL8QtF58JwY28B8qGUj/Qneki+MtUArOQDSRvv
+	 7OYEcaF/e+4hVd9bgBq0vQ/miTefACCP0sErRkdqyuH9zbPiWaqTKweW0tqeYzUJ1w
+	 3QUyw2ud9fpGNudNN+JwlQ2xu7ybg3bvFZE01Vlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Martin <Dave.Martin@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Karthikeyan Kathirvel <quic_kathirve@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 023/695] arm64: signal: Fix some under-bracketed UAPI macros
-Date: Wed,  2 Oct 2024 14:50:21 +0200
-Message-ID: <20241002125823.419281910@linuxfoundation.org>
+Subject: [PATCH 6.11 014/695] wifi: ath12k: match WMI BSS chan info structure with firmware definition
+Date: Wed,  2 Oct 2024 14:50:12 +0200
+Message-ID: <20241002125823.059790696@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,53 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Martin <Dave.Martin@arm.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit fc2220c9b15828319b09384e68399b4afc6276d9 ]
+[ Upstream commit dd98d54db29fb553839f43ade5f547baa93392c8 ]
 
-A few SME-related sigcontext UAPI macros leave an argument
-unprotected from misparsing during macro expansion.
+struct wmi_pdev_bss_chan_info_event is not similar to the firmware
+struct definition, this will cause some random failures.
 
-Add parentheses around references to macro arguments where
-appropriate.
+Fix by matching the struct wmi_pdev_bss_chan_info_event with the
+firmware structure definition.
 
-Signed-off-by: Dave Martin <Dave.Martin@arm.com>
-Fixes: ee072cf70804 ("arm64/sme: Implement signal handling for ZT")
-Fixes: 39782210eb7e ("arm64/sme: Implement ZA signal handling")
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240729152005.289844-1-Dave.Martin@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240331183232.2158756-3-quic_kathirve@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/uapi/asm/sigcontext.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/uapi/asm/sigcontext.h b/arch/arm64/include/uapi/asm/sigcontext.h
-index 8a45b7a411e04..57f76d82077ea 100644
---- a/arch/arm64/include/uapi/asm/sigcontext.h
-+++ b/arch/arm64/include/uapi/asm/sigcontext.h
-@@ -320,10 +320,10 @@ struct zt_context {
- 	((sizeof(struct za_context) + (__SVE_VQ_BYTES - 1))	\
- 		/ __SVE_VQ_BYTES * __SVE_VQ_BYTES)
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index 9f4c2f026b4c1..6a913f9b83158 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -4086,7 +4086,6 @@ struct wmi_vdev_stopped_event {
+ } __packed;
  
--#define ZA_SIG_REGS_SIZE(vq) ((vq * __SVE_VQ_BYTES) * (vq * __SVE_VQ_BYTES))
-+#define ZA_SIG_REGS_SIZE(vq) (((vq) * __SVE_VQ_BYTES) * ((vq) * __SVE_VQ_BYTES))
+ struct wmi_pdev_bss_chan_info_event {
+-	__le32 pdev_id;
+ 	__le32 freq;	/* Units in MHz */
+ 	__le32 noise_floor;	/* units are dBm */
+ 	/* rx clear - how often the channel was unused */
+@@ -4104,6 +4103,7 @@ struct wmi_pdev_bss_chan_info_event {
+ 	/*rx_cycle cnt for my bss in 64bits format */
+ 	__le32 rx_bss_cycle_count_low;
+ 	__le32 rx_bss_cycle_count_high;
++	__le32 pdev_id;
+ } __packed;
  
- #define ZA_SIG_ZAV_OFFSET(vq, n) (ZA_SIG_REGS_OFFSET + \
--				  (SVE_SIG_ZREG_SIZE(vq) * n))
-+				  (SVE_SIG_ZREG_SIZE(vq) * (n)))
- 
- #define ZA_SIG_CONTEXT_SIZE(vq) \
- 		(ZA_SIG_REGS_OFFSET + ZA_SIG_REGS_SIZE(vq))
-@@ -334,7 +334,7 @@ struct zt_context {
- 
- #define ZT_SIG_REGS_OFFSET sizeof(struct zt_context)
- 
--#define ZT_SIG_REGS_SIZE(n) (ZT_SIG_REG_BYTES * n)
-+#define ZT_SIG_REGS_SIZE(n) (ZT_SIG_REG_BYTES * (n))
- 
- #define ZT_SIG_CONTEXT_SIZE(n) \
- 	(sizeof(struct zt_context) + ZT_SIG_REGS_SIZE(n))
+ #define WMI_VDEV_INSTALL_KEY_COMPL_STATUS_SUCCESS 0
 -- 
 2.43.0
 
