@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB671D0942;
-	Wed,  2 Oct 2024 13:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAD71D07BA;
+	Wed,  2 Oct 2024 13:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876712; cv=none; b=h2FE04r6F7ytfkNM2Fl8ZYDRhQOGZ490NZL+1QCJWkRkr3Tp+zQqhtfeekgkRNkP3vn3OJ10vfwrC5OewLQG7/cux35QkFXbibO6/JuG2nJyKggPY87B1E1+GtYYkdfPiGgPcGXCgBFmo78gJgFjuFs0qGhrWxz0GvmUUXQ7ctk=
+	t=1727876715; cv=none; b=GAy5W1nooJkJKDe+rIlN7dxqsjtda6WhZ/RLYVM2Gc2dN5RADfYcFCWD8x5rh/y2paw/y2ZbDCMpMCUbmT9KTtUOLdzD3J+8Zoa6Fk7hoTiYbsxr8QLwrTYK+VPMLOPjzMKCSdsqesqESQafRWeC71HbTla2OpTMKZQsVpCWZSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876712; c=relaxed/simple;
-	bh=UKDoVNF5H8lSThnpmHzhxtAAypU4Xt9ZPpWa5HPD4uk=;
+	s=arc-20240116; t=1727876715; c=relaxed/simple;
+	bh=xTSLNfHBpCgB7QxYse+CQ7/OvA8+yjvn3HJ7N9rk1xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxTIhspwJvfLQ0EYOj7c4EJqyDdUAfr8x11O67H8Smbb0pdSMn3XDng56OvKfszakbGGcHDbe9FwScQy17Fax7L8558/qC3ZsXI+krk7C/Aib45CAUon+zK0wA8zWihhmmWUYpWdG05wKgn6tl2rOP2vagZ18tSwNtCO2BqcVkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sl0I2AOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akCRMAsdjODRlfg0kWdZmPxT/yAJdXkrvw+jlYbuspYpPrgsaDBs0BjREbO+DdgwmhJpPb5mz9+BH7YhhvgjsVs6wYfD/Al7aQsGfNPftgLSKjZ0zTYa/F7Kmn4jOaxPSpVtzXI5e8OWZVEt4qEwfaOhHBzBS6FUr2iolkenci4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+L65Fsk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sl0I2AOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5014C4CEC5;
-	Wed,  2 Oct 2024 13:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+L65Fsk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1687C4CEC5;
+	Wed,  2 Oct 2024 13:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876712;
-	bh=UKDoVNF5H8lSThnpmHzhxtAAypU4Xt9ZPpWa5HPD4uk=;
+	s=korg; t=1727876715;
+	bh=xTSLNfHBpCgB7QxYse+CQ7/OvA8+yjvn3HJ7N9rk1xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sl0I2AOUBVg6xVNy/hurofMIhVCbo+w7bVqz2WWq0jKYJn2YXZEYP2YtI4T2abXjx
-	 6ga4a/mR79cLi7yFSb3vU27Yfo2rFDiuClcOvsxtp1Ay1NfNXy0AQYB2Jl4XA/cOcF
-	 MnOfzLwnVmhBLH6oBNBENbPQPIk1ZH7Y/OdUErTI=
+	b=T+L65FskZMeZkAaOG3LRfjWl9HohmrOTHdtIsmqYB8WF/+Ns0xgaFUZb1zgLly8sJ
+	 a+pQlm3G4qjveG1Yrujw/8t+Dz0txLErr3qT4qLBv/h33RO2Tik6addCh4uqebPTrT
+	 0H+lvxQY/FeufDmTV+gCwGebg+IhvBp6bnvIUqYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Gao <chao.gao@intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Farrah Chen <farrah.chen@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.11 538/695] KVM: Use dedicated mutex to protect kvm_usage_count to avoid deadlock
-Date: Wed,  2 Oct 2024 14:58:56 +0200
-Message-ID: <20241002125843.974610982@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.11 539/695] drm/amd/display: Skip Recompute DSC Params if no Stream on Link
+Date: Wed,  2 Oct 2024 14:58:57 +0200
+Message-ID: <20241002125844.013859480@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,303 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit 44d17459626052a2390457e550a12cb973506b2f upstream.
+commit 8151a6c13111b465dbabe07c19f572f7cbd16fef upstream.
 
-Use a dedicated mutex to guard kvm_usage_count to fix a potential deadlock
-on x86 due to a chain of locks and SRCU synchronizations.  Translating the
-below lockdep splat, CPU1 #6 will wait on CPU0 #1, CPU0 #8 will wait on
-CPU2 #3, and CPU2 #7 will wait on CPU1 #4 (if there's a writer, due to the
-fairness of r/w semaphores).
+[why]
+Encounter NULL pointer dereference uner mst + dsc setup.
 
-    CPU0                     CPU1                     CPU2
-1   lock(&kvm->slots_lock);
-2                                                     lock(&vcpu->mutex);
-3                                                     lock(&kvm->srcu);
-4                            lock(cpu_hotplug_lock);
-5                            lock(kvm_lock);
-6                            lock(&kvm->slots_lock);
-7                                                     lock(cpu_hotplug_lock);
-8   sync(&kvm->srcu);
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+    PGD 0 P4D 0
+    Oops: 0000 [#1] PREEMPT SMP NOPTI
+    CPU: 4 PID: 917 Comm: sway Not tainted 6.3.9-arch1-1 #1 124dc55df4f5272ccb409f39ef4872fc2b3376a2
+    Hardware name: LENOVO 20NKS01Y00/20NKS01Y00, BIOS R12ET61W(1.31 ) 07/28/2022
+    RIP: 0010:drm_dp_atomic_find_time_slots+0x5e/0x260 [drm_display_helper]
+    Code: 01 00 00 48 8b 85 60 05 00 00 48 63 80 88 00 00 00 3b 43 28 0f 8d 2e 01 00 00 48 8b 53 30 48 8d 04 80 48 8d 04 c2 48 8b 40 18 <48> 8>
+    RSP: 0018:ffff960cc2df77d8 EFLAGS: 00010293
+    RAX: 0000000000000000 RBX: ffff8afb87e81280 RCX: 0000000000000224
+    RDX: ffff8afb9ee37c00 RSI: ffff8afb8da1a578 RDI: ffff8afb87e81280
+    RBP: ffff8afb83d67000 R08: 0000000000000001 R09: ffff8afb9652f850
+    R10: ffff960cc2df7908 R11: 0000000000000002 R12: 0000000000000000
+    R13: ffff8afb8d7688a0 R14: ffff8afb8da1a578 R15: 0000000000000224
+    FS:  00007f4dac35ce00(0000) GS:ffff8afe30b00000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000008 CR3: 000000010ddc6000 CR4: 00000000003506e0
+    Call Trace:
+<TASK>
+     ? __die+0x23/0x70
+     ? page_fault_oops+0x171/0x4e0
+     ? plist_add+0xbe/0x100
+     ? exc_page_fault+0x7c/0x180
+     ? asm_exc_page_fault+0x26/0x30
+     ? drm_dp_atomic_find_time_slots+0x5e/0x260 [drm_display_helper 0e67723696438d8e02b741593dd50d80b44c2026]
+     ? drm_dp_atomic_find_time_slots+0x28/0x260 [drm_display_helper 0e67723696438d8e02b741593dd50d80b44c2026]
+     compute_mst_dsc_configs_for_link+0x2ff/0xa40 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     ? fill_plane_buffer_attributes+0x419/0x510 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     compute_mst_dsc_configs_for_state+0x1e1/0x250 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     amdgpu_dm_atomic_check+0xecd/0x1190 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     drm_atomic_check_only+0x5c5/0xa40
+     drm_mode_atomic_ioctl+0x76e/0xbc0
 
-Note, there are likely more potential deadlocks in KVM x86, e.g. the same
-pattern of taking cpu_hotplug_lock outside of kvm_lock likely exists with
-__kvmclock_cpufreq_notifier():
+[how]
+dsc recompute should be skipped if no mode change detected on the new
+request. If detected, keep checking whether the stream is already on
+current state or not.
 
-  cpuhp_cpufreq_online()
-  |
-  -> cpufreq_online()
-     |
-     -> cpufreq_gov_performance_limits()
-        |
-        -> __cpufreq_driver_target()
-           |
-           -> __target_index()
-              |
-              -> cpufreq_freq_transition_begin()
-                 |
-                 -> cpufreq_notify_transition()
-                    |
-                    -> ... __kvmclock_cpufreq_notifier()
-
-But, actually triggering such deadlocks is beyond rare due to the
-combination of dependencies and timings involved.  E.g. the cpufreq
-notifier is only used on older CPUs without a constant TSC, mucking with
-the NX hugepage mitigation while VMs are running is very uncommon, and
-doing so while also onlining/offlining a CPU (necessary to generate
-contention on cpu_hotplug_lock) would be even more unusual.
-
-The most robust solution to the general cpu_hotplug_lock issue is likely
-to switch vm_list to be an RCU-protected list, e.g. so that x86's cpufreq
-notifier doesn't to take kvm_lock.  For now, settle for fixing the most
-blatant deadlock, as switching to an RCU-protected list is a much more
-involved change, but add a comment in locking.rst to call out that care
-needs to be taken when walking holding kvm_lock and walking vm_list.
-
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  6.10.0-smp--c257535a0c9d-pip #330 Tainted: G S         O
-  ------------------------------------------------------
-  tee/35048 is trying to acquire lock:
-  ff6a80eced71e0a8 (&kvm->slots_lock){+.+.}-{3:3}, at: set_nx_huge_pages+0x179/0x1e0 [kvm]
-
-  but task is already holding lock:
-  ffffffffc07abb08 (kvm_lock){+.+.}-{3:3}, at: set_nx_huge_pages+0x14a/0x1e0 [kvm]
-
-  which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-  -> #3 (kvm_lock){+.+.}-{3:3}:
-         __mutex_lock+0x6a/0xb40
-         mutex_lock_nested+0x1f/0x30
-         kvm_dev_ioctl+0x4fb/0xe50 [kvm]
-         __se_sys_ioctl+0x7b/0xd0
-         __x64_sys_ioctl+0x21/0x30
-         x64_sys_call+0x15d0/0x2e60
-         do_syscall_64+0x83/0x160
-         entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #2 (cpu_hotplug_lock){++++}-{0:0}:
-         cpus_read_lock+0x2e/0xb0
-         static_key_slow_inc+0x16/0x30
-         kvm_lapic_set_base+0x6a/0x1c0 [kvm]
-         kvm_set_apic_base+0x8f/0xe0 [kvm]
-         kvm_set_msr_common+0x9ae/0xf80 [kvm]
-         vmx_set_msr+0xa54/0xbe0 [kvm_intel]
-         __kvm_set_msr+0xb6/0x1a0 [kvm]
-         kvm_arch_vcpu_ioctl+0xeca/0x10c0 [kvm]
-         kvm_vcpu_ioctl+0x485/0x5b0 [kvm]
-         __se_sys_ioctl+0x7b/0xd0
-         __x64_sys_ioctl+0x21/0x30
-         x64_sys_call+0x15d0/0x2e60
-         do_syscall_64+0x83/0x160
-         entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #1 (&kvm->srcu){.+.+}-{0:0}:
-         __synchronize_srcu+0x44/0x1a0
-         synchronize_srcu_expedited+0x21/0x30
-         kvm_swap_active_memslots+0x110/0x1c0 [kvm]
-         kvm_set_memslot+0x360/0x620 [kvm]
-         __kvm_set_memory_region+0x27b/0x300 [kvm]
-         kvm_vm_ioctl_set_memory_region+0x43/0x60 [kvm]
-         kvm_vm_ioctl+0x295/0x650 [kvm]
-         __se_sys_ioctl+0x7b/0xd0
-         __x64_sys_ioctl+0x21/0x30
-         x64_sys_call+0x15d0/0x2e60
-         do_syscall_64+0x83/0x160
-         entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #0 (&kvm->slots_lock){+.+.}-{3:3}:
-         __lock_acquire+0x15ef/0x2e30
-         lock_acquire+0xe0/0x260
-         __mutex_lock+0x6a/0xb40
-         mutex_lock_nested+0x1f/0x30
-         set_nx_huge_pages+0x179/0x1e0 [kvm]
-         param_attr_store+0x93/0x100
-         module_attr_store+0x22/0x40
-         sysfs_kf_write+0x81/0xb0
-         kernfs_fop_write_iter+0x133/0x1d0
-         vfs_write+0x28d/0x380
-         ksys_write+0x70/0xe0
-         __x64_sys_write+0x1f/0x30
-         x64_sys_call+0x281b/0x2e60
-         do_syscall_64+0x83/0x160
-         entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Cc: Chao Gao <chao.gao@intel.com>
-Fixes: 0bf50497f03b ("KVM: Drop kvm_count_lock and instead protect kvm_usage_count with kvm_lock")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Acked-by: Kai Huang <kai.huang@intel.com>
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20240830043600.127750-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/virt/kvm/locking.rst |   32 +++++++++++++++++++++++---------
- virt/kvm/kvm_main.c                |   31 ++++++++++++++++---------------
- 2 files changed, 39 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/Documentation/virt/kvm/locking.rst
-+++ b/Documentation/virt/kvm/locking.rst
-@@ -9,7 +9,7 @@ KVM Lock Overview
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1344,6 +1344,9 @@ static bool is_dsc_need_re_compute(
+ 	DRM_DEBUG_DRIVER("%s: MST_DSC check on %d streams in current dc_state\n",
+ 			 __func__, dc->current_state->stream_count);
  
- The acquisition orders for mutexes are as follows:
- 
--- cpus_read_lock() is taken outside kvm_lock
-+- cpus_read_lock() is taken outside kvm_lock and kvm_usage_lock
- 
- - kvm->lock is taken outside vcpu->mutex
- 
-@@ -24,6 +24,12 @@ The acquisition orders for mutexes are a
-   are taken on the waiting side when modifying memslots, so MMU notifiers
-   must not take either kvm->slots_lock or kvm->slots_arch_lock.
- 
-+cpus_read_lock() vs kvm_lock:
-+- Taking cpus_read_lock() outside of kvm_lock is problematic, despite that
-+  being the official ordering, as it is quite easy to unknowingly trigger
-+  cpus_read_lock() while holding kvm_lock.  Use caution when walking vm_list,
-+  e.g. avoid complex operations when possible.
++	if (new_stream_on_link_num == 0)
++		return false;
 +
- For SRCU:
- 
- - ``synchronize_srcu(&kvm->srcu)`` is called inside critical sections
-@@ -227,10 +233,17 @@ time it will be set using the Dirty trac
- :Type:		mutex
- :Arch:		any
- :Protects:	- vm_list
--		- kvm_usage_count
-+
-+``kvm_usage_lock``
-+^^^^^^^^^^^^^^^^^^
-+
-+:Type:		mutex
-+:Arch:		any
-+:Protects:	- kvm_usage_count
- 		- hardware virtualization enable/disable
--:Comment:	KVM also disables CPU hotplug via cpus_read_lock() during
--		enable/disable.
-+:Comment:	Exists because using kvm_lock leads to deadlock (see earlier comment
-+		on cpus_read_lock() vs kvm_lock).  Note, KVM also disables CPU hotplug via
-+		cpus_read_lock() when enabling/disabling virtualization.
- 
- ``kvm->mn_invalidate_lock``
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-@@ -290,11 +303,12 @@ time it will be set using the Dirty trac
- 		wakeup.
- 
- ``vendor_module_lock``
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+^^^^^^^^^^^^^^^^^^^^^^
- :Type:		mutex
- :Arch:		x86
- :Protects:	loading a vendor module (kvm_amd or kvm_intel)
--:Comment:	Exists because using kvm_lock leads to deadlock.  cpu_hotplug_lock is
--    taken outside of kvm_lock, e.g. in KVM's CPU online/offline callbacks, and
--    many operations need to take cpu_hotplug_lock when loading a vendor module,
--    e.g. updating static calls.
-+:Comment:	Exists because using kvm_lock leads to deadlock.  kvm_lock is taken
-+    in notifiers, e.g. __kvmclock_cpufreq_notifier(), that may be invoked while
-+    cpu_hotplug_lock is held, e.g. from cpufreq_boost_trigger_state(), and many
-+    operations need to take cpu_hotplug_lock when loading a vendor module, e.g.
-+    updating static calls.
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5575,6 +5575,7 @@ __visible bool kvm_rebooting;
- EXPORT_SYMBOL_GPL(kvm_rebooting);
- 
- static DEFINE_PER_CPU(bool, hardware_enabled);
-+static DEFINE_MUTEX(kvm_usage_lock);
- static int kvm_usage_count;
- 
- static int __hardware_enable_nolock(void)
-@@ -5607,10 +5608,10 @@ static int kvm_online_cpu(unsigned int c
- 	 * be enabled. Otherwise running VMs would encounter unrecoverable
- 	 * errors when scheduled to this CPU.
+ 	/* check current_state if there stream on link but it is not in
+ 	 * new request state
  	 */
--	mutex_lock(&kvm_lock);
-+	mutex_lock(&kvm_usage_lock);
- 	if (kvm_usage_count)
- 		ret = __hardware_enable_nolock();
--	mutex_unlock(&kvm_lock);
-+	mutex_unlock(&kvm_usage_lock);
- 	return ret;
- }
- 
-@@ -5630,10 +5631,10 @@ static void hardware_disable_nolock(void
- 
- static int kvm_offline_cpu(unsigned int cpu)
- {
--	mutex_lock(&kvm_lock);
-+	mutex_lock(&kvm_usage_lock);
- 	if (kvm_usage_count)
- 		hardware_disable_nolock(NULL);
--	mutex_unlock(&kvm_lock);
-+	mutex_unlock(&kvm_usage_lock);
- 	return 0;
- }
- 
-@@ -5649,9 +5650,9 @@ static void hardware_disable_all_nolock(
- static void hardware_disable_all(void)
- {
- 	cpus_read_lock();
--	mutex_lock(&kvm_lock);
-+	mutex_lock(&kvm_usage_lock);
- 	hardware_disable_all_nolock();
--	mutex_unlock(&kvm_lock);
-+	mutex_unlock(&kvm_usage_lock);
- 	cpus_read_unlock();
- }
- 
-@@ -5682,7 +5683,7 @@ static int hardware_enable_all(void)
- 	 * enable hardware multiple times.
- 	 */
- 	cpus_read_lock();
--	mutex_lock(&kvm_lock);
-+	mutex_lock(&kvm_usage_lock);
- 
- 	r = 0;
- 
-@@ -5696,7 +5697,7 @@ static int hardware_enable_all(void)
- 		}
- 	}
- 
--	mutex_unlock(&kvm_lock);
-+	mutex_unlock(&kvm_usage_lock);
- 	cpus_read_unlock();
- 
- 	return r;
-@@ -5724,13 +5725,13 @@ static int kvm_suspend(void)
- {
- 	/*
- 	 * Secondary CPUs and CPU hotplug are disabled across the suspend/resume
--	 * callbacks, i.e. no need to acquire kvm_lock to ensure the usage count
--	 * is stable.  Assert that kvm_lock is not held to ensure the system
--	 * isn't suspended while KVM is enabling hardware.  Hardware enabling
--	 * can be preempted, but the task cannot be frozen until it has dropped
--	 * all locks (userspace tasks are frozen via a fake signal).
-+	 * callbacks, i.e. no need to acquire kvm_usage_lock to ensure the usage
-+	 * count is stable.  Assert that kvm_usage_lock is not held to ensure
-+	 * the system isn't suspended while KVM is enabling hardware.  Hardware
-+	 * enabling can be preempted, but the task cannot be frozen until it has
-+	 * dropped all locks (userspace tasks are frozen via a fake signal).
- 	 */
--	lockdep_assert_not_held(&kvm_lock);
-+	lockdep_assert_not_held(&kvm_usage_lock);
- 	lockdep_assert_irqs_disabled();
- 
- 	if (kvm_usage_count)
-@@ -5740,7 +5741,7 @@ static int kvm_suspend(void)
- 
- static void kvm_resume(void)
- {
--	lockdep_assert_not_held(&kvm_lock);
-+	lockdep_assert_not_held(&kvm_usage_lock);
- 	lockdep_assert_irqs_disabled();
- 
- 	if (kvm_usage_count)
 
 
