@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15431D0E1A;
-	Wed,  2 Oct 2024 14:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC34E1D0E1A;
+	Wed,  2 Oct 2024 14:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878800; cv=none; b=U+TosbwUa3LDlpwTk4VchNEr92ucB+6URV7Ns8U0cQh5IjQuyBrglEi46FMMW+X1pTUONzVBVUgjFtPq+k0wrxzH6uzZAZLdSD5D4YUDoAmsElJGbKYyKyF4ymPXC5lnzfxFcOUwk2B8IkNPQjKK7BxinHDR5Pz1obSUnEdH2bw=
+	t=1727878803; cv=none; b=swIGePcZLO5uSoAcqzo6HxAA9VFA0K1UIRPjwQhutRSjRO0d9pDLktFb3FA7QbI3Mv0tAiI5Qdpa3ryFG39IkXeZvLlOpy+Zcw2JUvvJBLe96S9+Cuqh7X9ZbutKHrVD+FTxtnds7FJK+0u5+JaiUdXBtHUsYJvCd448wJ7ixI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878800; c=relaxed/simple;
-	bh=TJJW2x6/lw4nlrCMiW4ttHXDIOpP56yKBHu0WZInxcg=;
+	s=arc-20240116; t=1727878803; c=relaxed/simple;
+	bh=0lY4y5+3boCg4QWH14f3OgnBHUHpwfZTWURwXRdNpUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f6daHc9RJqRLh7OmtwxcePB8N9h9tOhMHJUEroLlzNQ1aM5nOkZk1wqik12ipXoR7bFA5aU+35EF5qBmUBLbAGOOUFi9pF6Nmc0OFWA2zPQhiVb3ZcVBjk3X/z4Etym8e4gEcGyHIorVBoUHfk69vpcq/dU/3NPHR6o+Facbefw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/kB/3Op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NMTsBp92LRhE6JeXClRnHjRcY0EmcjcDs1AaoMfOYIQvPwrfWpa4Lzfih+UV7y4WlQhfY0Oi1eG/FUc239JYLnr/1XRieIaLeOQSAeDo0Co9rI4jivP8PNLxeBAN8MsAWjuxMDIRzUq73bleUPYUp3jogZS7PlBj2XOTcjGcqOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q78jvqtb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/kB/3Op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DE3C4CEC2;
-	Wed,  2 Oct 2024 14:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q78jvqtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B426C4CEC2;
+	Wed,  2 Oct 2024 14:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878799;
-	bh=TJJW2x6/lw4nlrCMiW4ttHXDIOpP56yKBHu0WZInxcg=;
+	s=korg; t=1727878802;
+	bh=0lY4y5+3boCg4QWH14f3OgnBHUHpwfZTWURwXRdNpUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/kB/3Op+gIKM/31Va6OnSprP7w2XKXEuPc3F+kF7VY4oM4yJVBO6Ib5ptRlZ/PEi
-	 z9pta2N/R6JD6oBemvlI7oAEspoMza4zGKF191QsrU9bkVPQX2W0Zvddp8VvZdfq1I
-	 OPGqSe2w4LAI1ji8hoFRZ6we/aMCLTwPh+Eml918=
+	b=Q78jvqtbbsn0Sf7AnoWsAOz067qKZACT/nLM9YErcyMtutRYU9MjkdLYoCUNmwTJT
+	 LH7MhFwWDzAr4qhrsEmpmR4uacgUnGxU3I/eV7LLnQym2/HV5Og01mI8qFOtZ7ZfQt
+	 6cWQA0OzRT3vRAlItlZtUt04nVdx5X53ahSf0M+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.10 535/634] serial: qcom-geni: fix false console tx restart
-Date: Wed,  2 Oct 2024 15:00:35 +0200
-Message-ID: <20241002125832.225795579@linuxfoundation.org>
+	"=?UTF-8?q?Ernesto=20A . =20Fern=C3=A1ndez?=" <ernesto.mnd.fernandez@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.10 536/634] crypto: qcom-rng - fix support for ACPI-based systems
+Date: Wed,  2 Oct 2024 15:00:36 +0200
+Message-ID: <20241002125832.265869611@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,91 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Brian Masney <bmasney@redhat.com>
 
-commit f97cdbbf187fefcf1fe19689cd9fdca11fe9c3eb upstream.
+commit 3e87031a6ce68f13722155497cd511a00b56a2ae upstream.
 
-Commit 663abb1a7a7f ("tty: serial: qcom_geni_serial: Fix UART hang")
-addressed an issue with stalled tx after the console code interrupted
-the last bytes of a tx command by reenabling the watermark interrupt if
-there is data in write buffer. This can however break software flow
-control by re-enabling tx after the user has stopped it.
+The qcom-rng driver supports both ACPI and device tree-based systems.
+ACPI support was broken when the hw_random interface support was added.
+Let's go ahead and fix this by adding the appropriate driver data to the
+ACPI match table, and change the of_device_get_match_data() call to
+device_get_match_data() so that it will also work on ACPI-based systems.
 
-Address the original issue by not clearing the CMD_DONE flag after
-polling for command completion. This allows the interrupt handler to
-start another transfer when the CMD_DONE interrupt has not been disabled
-due to flow control.
+This fix was boot tested on a Qualcomm Amberwing server (ACPI based) and
+on a Qualcomm SA8775p Automotive Development Board (DT based). I also
+verified that qcom-rng shows up in /proc/crypto on both systems.
 
-Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
-Fixes: 663abb1a7a7f ("tty: serial: qcom_geni_serial: Fix UART hang")
-Cc: stable@vger.kernel.org	# 4.17
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240906131336.23625-3-johan+linaro@kernel.org
+Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support")
+Reported-by: Ernesto A. Fernández <ernesto.mnd.fernandez@gmail.com>
+Closes: https://lore.kernel.org/linux-arm-msm/20240828184019.GA21181@eaf/
+Cc: stable@vger.kernel.org
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |   13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/crypto/qcom-rng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -306,18 +306,16 @@ static void qcom_geni_serial_setup_tx(st
- static void qcom_geni_serial_poll_tx_done(struct uart_port *uport)
- {
- 	int done;
--	u32 irq_clear = M_CMD_DONE_EN;
+diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
+index c670d7d0c11e..6496b075a48d 100644
+--- a/drivers/crypto/qcom-rng.c
++++ b/drivers/crypto/qcom-rng.c
+@@ -196,7 +196,7 @@ static int qcom_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(rng->clk))
+ 		return PTR_ERR(rng->clk);
  
- 	done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 						M_CMD_DONE_EN, true);
- 	if (!done) {
- 		writel(M_GENI_CMD_ABORT, uport->membase +
- 						SE_GENI_M_CMD_CTRL_REG);
--		irq_clear |= M_CMD_ABORT_EN;
- 		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 							M_CMD_ABORT_EN, true);
-+		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	}
--	writel(irq_clear, uport->membase + SE_GENI_M_IRQ_CLEAR);
- }
+-	rng->of_data = (struct qcom_rng_of_data *)of_device_get_match_data(&pdev->dev);
++	rng->of_data = (struct qcom_rng_of_data *)device_get_match_data(&pdev->dev);
  
- static void qcom_geni_serial_abort_rx(struct uart_port *uport)
-@@ -378,6 +376,7 @@ static void qcom_geni_serial_poll_put_ch
- 							unsigned char c)
- {
- 	writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
-+	writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	qcom_geni_serial_setup_tx(uport, 1);
- 	WARN_ON(!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 						M_TX_FIFO_WATERMARK_EN, true));
-@@ -422,6 +421,7 @@ __qcom_geni_serial_console_write(struct
- 	}
+ 	qcom_rng_dev = rng;
+ 	ret = crypto_register_rng(&qcom_rng_alg);
+@@ -247,7 +247,7 @@ static struct qcom_rng_of_data qcom_trng_of_data = {
+ };
  
- 	writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
-+	writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	qcom_geni_serial_setup_tx(uport, bytes_to_send);
- 	for (i = 0; i < count; ) {
- 		size_t chars_to_write = 0;
-@@ -463,7 +463,6 @@ static void qcom_geni_serial_console_wri
- 	bool locked = true;
- 	unsigned long flags;
- 	u32 geni_status;
--	u32 irq_en;
- 
- 	WARN_ON(co->index < 0 || co->index >= GENI_UART_CONS_PORTS);
- 
-@@ -495,12 +494,6 @@ static void qcom_geni_serial_console_wri
- 		 * has been sent, in which case we need to look for done first.
- 		 */
- 		qcom_geni_serial_poll_tx_done(uport);
--
--		if (!kfifo_is_empty(&uport->state->port.xmit_fifo)) {
--			irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
--			writel(irq_en | M_TX_FIFO_WATERMARK_EN,
--					uport->membase + SE_GENI_M_IRQ_EN);
--		}
- 	}
- 
- 	__qcom_geni_serial_console_write(uport, s, count);
+ static const struct acpi_device_id __maybe_unused qcom_rng_acpi_match[] = {
+-	{ .id = "QCOM8160", .driver_data = 1 },
++	{ .id = "QCOM8160", .driver_data = (kernel_ulong_t)&qcom_prng_ee_of_data },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(acpi, qcom_rng_acpi_match);
+-- 
+2.46.2
+
 
 
