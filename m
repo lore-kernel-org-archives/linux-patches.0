@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30825198837;
-	Wed,  2 Oct 2024 13:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695B31D1E8C;
+	Wed,  2 Oct 2024 13:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877581; cv=none; b=VCeM12DiPBW8jlm2RrV4pj0qtZLXRViRQsovKwFdEopGEBcxmFA6IObafNv8+83x1FykIyNp9Qyu+eSPLIvl9tNDHL0IkntXQcttYmtgQqDnoM9VzgI7ArCuDb0Sb71uutUsufBp4b6yUkqlzLzX2EejT9qZiKlk9aZnMTt80tk=
+	t=1727877584; cv=none; b=HfsUFaQ2hDiWjZpkoQxDBdrs2iofHIQuRqwv33tFtKhZql0d41ls9asswKsmeMS3PJJwzrXp/QJxiZ5y7lWrh1YlJgGemjPWiHCNechFYxp6P3Fx40hSt657S2sLufyca1fkWMNPCUzZBNmPIEiGTIUZnE8gXCSWhzsaB76bS2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877581; c=relaxed/simple;
-	bh=qH4gwWmKKNIL4jqow2H7XU6bPzWG7bnxDfE2mdrKjXQ=;
+	s=arc-20240116; t=1727877584; c=relaxed/simple;
+	bh=kKb50PgaCqrT0B5QWDd5ctutAqfI7ZDddLbeXeI8itk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxdLb8Q+yQTzUkz/CQDrM/KQN9bPz5ZK61dNrOCRe1KRh/PS6WQCem5A33WpWJ27rn4GSvdYEld0tEOqwGl/vw5ILNtX0tUJ01NOKh0EEdimcztlj5HMjnL44gfZG4KmQRe0Bn9g+NRzIGcHcON0GPp4tU5y9vJUtDEP4t/j8kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6s60Jpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3pDQZDFq0YSQXKSaDwQ9yghkjVTjKfDiMPQVqJlM+axRveSSpF11xC4NYpGiUusXDN+KiCJL/+GRlxcXFYOjKbYTQ0eFjS6OunpAFEzAmmJMKLbNUaiQirhUxhUpLk8CGS/lL4KOzOeGTXZsTDL91Xw2qxDAvR9fk9rVkPeIRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dm8GHwoP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6s60Jpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC55C4CECD;
-	Wed,  2 Oct 2024 13:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dm8GHwoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95451C4CEC2;
+	Wed,  2 Oct 2024 13:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877581;
-	bh=qH4gwWmKKNIL4jqow2H7XU6bPzWG7bnxDfE2mdrKjXQ=;
+	s=korg; t=1727877584;
+	bh=kKb50PgaCqrT0B5QWDd5ctutAqfI7ZDddLbeXeI8itk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6s60JpuD04qbpR987zSWQJgq4eKku0hj6lup9Po3DjBgyQONm9PJ+QCOvN0OdFKR
-	 MQPArNZ/ZJoJ1yL2ECvmQ8BAjBk8KnA2IoSVv26dftFQZXudn6UQLWSLM7ZqRC/mwX
-	 pKvH1YiF8Jm0YgHT0Jji3YwrsLI5HVFAiat0N0R0=
+	b=dm8GHwoPndQV8XzyG7plc2WaY3bm8oirVCxYKL2yfxoWi4Y11wcs/KbCCBCdskKFm
+	 bJFAsYSJXrREZfcZUkF9BSCQkGpKdmlw4TW21j6MW8EA729E+JooaHOtyHf5yEMyvI
+	 06CJWAOyxk+yNi2pzy8w6K5ElRw/zTdYnwK3+elo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 123/634] regulator: Return actual error in of_regulator_bulk_get_all()
-Date: Wed,  2 Oct 2024 14:53:43 +0200
-Message-ID: <20241002125815.967442993@linuxfoundation.org>
+Subject: [PATCH 6.10 124/634] arm64: dts: renesas: r9a08g045: Correct GICD and GICR sizes
+Date: Wed,  2 Oct 2024 14:53:44 +0200
+Message-ID: <20241002125816.007301657@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 395a41a1d3e377462f3eea8a205ee72be8885ff6 ]
+[ Upstream commit ec9532628eb9d82282b8e52fd9c4a3800d87feec ]
 
-If regulator_get() in of_regulator_bulk_get_all() returns an error, that
-error gets overridden and -EINVAL is always passed out. This masks probe
-deferral requests and likely won't work properly in all cases.
+The RZ/G3S SoC is equipped with the GIC-600. The GICD is 64KiB + 64KiB
+for the MBI alias (in total 128KiB), and the GICR is 128KiB per CPU.
 
-Fix this by letting of_regulator_bulk_get_all() return the original
-error code.
+Despite the RZ/G3S SoC being single-core, it has two instances of GICR.
 
-Fixes: 27b9ecc7a9ba ("regulator: Add of_regulator_bulk_get_all")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://patch.msgid.link/20240822072047.3097740-3-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e20396d65b959 ("arm64: dts: renesas: Add initial DTSI for RZ/G3S SoC")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Link: https://lore.kernel.org/20240730122436.350013-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/of_regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r9a08g045.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
-index 03afc160fc72c..86b680adbf01c 100644
---- a/drivers/regulator/of_regulator.c
-+++ b/drivers/regulator/of_regulator.c
-@@ -777,7 +777,7 @@ int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
- 			name[i] = '\0';
- 			tmp = regulator_get(dev, name);
- 			if (IS_ERR(tmp)) {
--				ret = -EINVAL;
-+				ret = PTR_ERR(tmp);
- 				goto error;
- 			}
- 			(*consumers)[n].consumer = tmp;
+diff --git a/arch/arm64/boot/dts/renesas/r9a08g045.dtsi b/arch/arm64/boot/dts/renesas/r9a08g045.dtsi
+index a2adc4e27ce97..17609d81af294 100644
+--- a/arch/arm64/boot/dts/renesas/r9a08g045.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a08g045.dtsi
+@@ -269,8 +269,8 @@
+ 			#interrupt-cells = <3>;
+ 			#address-cells = <0>;
+ 			interrupt-controller;
+-			reg = <0x0 0x12400000 0 0x40000>,
+-			      <0x0 0x12440000 0 0x60000>;
++			reg = <0x0 0x12400000 0 0x20000>,
++			      <0x0 0x12440000 0 0x40000>;
+ 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_LOW>;
+ 		};
+ 
 -- 
 2.43.0
 
