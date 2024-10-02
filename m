@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5381D0BBE;
-	Wed,  2 Oct 2024 14:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624C61D1F4C;
+	Wed,  2 Oct 2024 14:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878508; cv=none; b=BCeB+J9PlIR9JuEqXYknFK3/2qaxNcTWhPQfhWMg8l9rKQ9cofCNOLu3/gBGnWbR8/Quqvq5Bdiq4ZJA7ZR6J/cO4JhSczjTFsWjDaQKSBnwFXxGYM7xQADhxIqIsbey3wNXbRWgC3dfPduhwn+ERe6zBlP6yRdmnUHs3rPe00M=
+	t=1727878511; cv=none; b=gDoZykf73obzoHAwnoWGiGmjv1o7LnTlRDHppFCLohs/UI3dH845WyIJ+0T8OUpRcYTrUV5Lq1V78qNZyQTz1bA1I5QaDYi+8tqcHdAhAYGnnJo/gD1uSPVE5BoSHdRcwOAxzGsM9INDWLw4mw19e8Rr7P1/gdAbVX9886VyS7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878508; c=relaxed/simple;
-	bh=ZL0WLOUCNjCX837C4m3pBjsrDUIvFNVlFnD4TQg5SJw=;
+	s=arc-20240116; t=1727878511; c=relaxed/simple;
+	bh=NQbJTZBTKNTTv/7t3bfk8Firio3m9GtAkr8jRWu433k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCWNVO41BwaefOUgK953llVcGsoTIb2ZO93t2Gb6oO7VZOgpNYj+LTw97pebFvN4lDFrwatbiuO1cqItd37rARjyLaomJq3zQIwLr/OwOAHBVDARvvT5y6otV0CQkR1iWWYOTzsT1r4ZweQ5nVDE8PgVqZf9blCuHODgeFuG+Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPWViJbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7Ri7nGPeWw4ReEVXVAi7QCfwXSHpVc/cuCHKLGDkIbrNf1dtFqmrjv7t/ARLOshP7tS9emtO/GHMESdHcq6nA8Nyuu5BfzJKpl5U7tgmmzd3vUEIFvbt1vo2RXaT6WUk0VbR3ocXGDCJUkXBZMWsSd52ECuq3i7I5baVX1dLU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2txCbMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPWViJbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1C4C4CECD;
-	Wed,  2 Oct 2024 14:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2txCbMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7639C4CECD;
+	Wed,  2 Oct 2024 14:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878508;
-	bh=ZL0WLOUCNjCX837C4m3pBjsrDUIvFNVlFnD4TQg5SJw=;
+	s=korg; t=1727878511;
+	bh=NQbJTZBTKNTTv/7t3bfk8Firio3m9GtAkr8jRWu433k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPWViJbT3l9qmcp+4kQ9gk94xKeS0rfTKd59fqS0WNRtjKY9CcaxzSkVxyPUkfmRx
-	 d5awGNzRDrfCJYIU3xnOxYxd5HmnxfpJSYpe47xTSlEvhbt19XCOPnfI3ceycxdRHq
-	 S8AWfY4hkwxgZhlyxsh+6ZWHtTsFjtFRi+3Rv880=
+	b=a2txCbMIW650EDRscQFx+YHgS1HKWc96+NjiXOpUx7AuBGwpY+x2OjzS4yGGovcRM
+	 Fxn0bB/1z7njrLNFFzgobZ3ui8D9EpFstFsoPOORMycN3R/hB2zoap1hP8FDAUzm9t
+	 ke+rihbmJ+Sy67qomjdx6sUaAKz5urP9HQTZ+R2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+20d7e439f76bbbd863a7@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 406/634] f2fs: fix to dont set SB_RDONLY in f2fs_handle_critical_error()
-Date: Wed,  2 Oct 2024 14:58:26 +0200
-Message-ID: <20241002125827.135395138@linuxfoundation.org>
+Subject: [PATCH 6.10 407/634] spi: airoha: fix dirmap_{read,write} operations
+Date: Wed,  2 Oct 2024 14:58:27 +0200
+Message-ID: <20241002125827.174053501@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,93 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 930c6ab93492c4b15436524e704950b364b2930c ]
+[ Upstream commit 2e6bbfe7b0c0607001b784082c2685b134174fac ]
 
-syzbot reports a f2fs bug as below:
+SPI_NFI_READ_FROM_CACHE_DONE bit must be written at the end of
+dirmap_read operation even if it is already set.
+In the same way, SPI_NFI_LOAD_TO_CACHE_DONE bit must be written at the
+end of dirmap_write operation even if it is already set.
+For this reason use regmap_write_bits() instead of regmap_set_bits().
+This patch fixes mtd_pagetest kernel module test.
 
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 58 at kernel/rcu/sync.c:177 rcu_sync_dtor+0xcd/0x180 kernel/rcu/sync.c:177
-CPU: 1 UID: 0 PID: 58 Comm: kworker/1:2 Not tainted 6.10.0-syzkaller-12562-g1722389b0d86 #0
-Workqueue: events destroy_super_work
-RIP: 0010:rcu_sync_dtor+0xcd/0x180 kernel/rcu/sync.c:177
-Call Trace:
- percpu_free_rwsem+0x41/0x80 kernel/locking/percpu-rwsem.c:42
- destroy_super_work+0xec/0x130 fs/super.c:282
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
- worker_thread+0x86d/0xd40 kernel/workqueue.c:3390
- kthread+0x2f0/0x390 kernel/kthread.c:389
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-As Christian Brauner pointed out [1]: the root cause is f2fs sets
-SB_RDONLY flag in internal function, rather than setting the flag
-covered w/ sb->s_umount semaphore via remount procedure, then below
-race condition causes this bug:
-
-- freeze_super()
- - sb_wait_write(sb, SB_FREEZE_WRITE)
- - sb_wait_write(sb, SB_FREEZE_PAGEFAULT)
- - sb_wait_write(sb, SB_FREEZE_FS)
-					- f2fs_handle_critical_error
-					 - sb->s_flags |= SB_RDONLY
-- thaw_super
- - thaw_super_locked
-  - sb_rdonly() is true, so it skips
-    sb_freeze_unlock(sb, SB_FREEZE_FS)
-  - deactivate_locked_super
-
-Since f2fs has almost the same logic as ext4 [2] when handling critical
-error in filesystem if it mounts w/ errors=remount-ro option:
-- set CP_ERROR_FLAG flag which indicates filesystem is stopped
-- record errors to superblock
-- set SB_RDONLY falg
-Once we set CP_ERROR_FLAG flag, all writable interfaces can detect the
-flag and stop any further updates on filesystem. So, it is safe to not
-set SB_RDONLY flag, let's remove the logic and keep in line w/ ext4 [3].
-
-[1] https://lore.kernel.org/all/20240729-himbeeren-funknetz-96e62f9c7aee@brauner
-[2] https://lore.kernel.org/all/20240729132721.hxih6ehigadqf7wx@quack3
-[3] https://lore.kernel.org/linux-ext4/20240805201241.27286-1-jack@suse.cz
-
-Fixes: b62e71be2110 ("f2fs: support errors=remount-ro|continue|panic mountoption")
-Reported-by: syzbot+20d7e439f76bbbd863a7@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000b90a8e061e21d12f@google.com/
-Cc: Jan Kara <jack@suse.cz>
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: a403997c1201 ("spi: airoha: add SPI-NAND Flash controller driver")
+Tested-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20240913-airoha-spi-fixes-v1-1-de2e74ed4664@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/spi/spi-airoha-snfi.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 832c052dd94bc..f897e416b7e6d 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4183,12 +4183,14 @@ void f2fs_handle_critical_error(struct f2fs_sb_info *sbi, unsigned char reason,
- 	}
+diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
+index 9d97ec98881cc..be3e4ac42153e 100644
+--- a/drivers/spi/spi-airoha-snfi.c
++++ b/drivers/spi/spi-airoha-snfi.c
+@@ -739,8 +739,13 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
+ 	if (err)
+ 		return err;
  
- 	f2fs_warn(sbi, "Remounting filesystem read-only");
-+
- 	/*
--	 * Make sure updated value of ->s_mount_flags will be visible before
--	 * ->s_flags update
-+	 * We have already set CP_ERROR_FLAG flag to stop all updates
-+	 * to filesystem, so it doesn't need to set SB_RDONLY flag here
-+	 * because the flag should be set covered w/ sb->s_umount semaphore
-+	 * via remount procedure, otherwise, it will confuse code like
-+	 * freeze_super() which will lead to deadlocks and other problems.
- 	 */
--	smp_wmb();
--	sb->s_flags |= SB_RDONLY;
- }
+-	err = regmap_set_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
+-			      SPI_NFI_READ_FROM_CACHE_DONE);
++	/*
++	 * SPI_NFI_READ_FROM_CACHE_DONE bit must be written at the end
++	 * of dirmap_read operation even if it is already set.
++	 */
++	err = regmap_write_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
++				SPI_NFI_READ_FROM_CACHE_DONE,
++				SPI_NFI_READ_FROM_CACHE_DONE);
+ 	if (err)
+ 		return err;
  
- static void f2fs_record_error_work(struct work_struct *work)
+@@ -870,8 +875,13 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
+ 	if (err)
+ 		return err;
+ 
+-	err = regmap_set_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
+-			      SPI_NFI_LOAD_TO_CACHE_DONE);
++	/*
++	 * SPI_NFI_LOAD_TO_CACHE_DONE bit must be written at the end
++	 * of dirmap_write operation even if it is already set.
++	 */
++	err = regmap_write_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
++				SPI_NFI_LOAD_TO_CACHE_DONE,
++				SPI_NFI_LOAD_TO_CACHE_DONE);
+ 	if (err)
+ 		return err;
+ 
 -- 
 2.43.0
 
