@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE03B1D0164;
-	Wed,  2 Oct 2024 13:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10181D0E02;
+	Wed,  2 Oct 2024 13:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876336; cv=none; b=KcoZu6YBTs0s9QKsk3j1pvh+Qk/EEipojgseHQN3vMfK+ROcBz/1B/QJbq6rrP5Wc0oSYKMLUfQ9J2ogvARKPpVf40uDrE3CIqvLYnbtKvyAZ5AmT+XHY88pSxuJ08/oF4gB66MDWBsiwkreBLGuBTkE5Z5at3qKpSDgWK7G2VY=
+	t=1727876339; cv=none; b=uL6APP+VD86FBklyTBCd8hWem7e9+98eVVjZ9IcZWyIIATj53tkRKZ74SOlwcOxxNPqqNAe8AekQGp2h65MVpkJh1+9EmnOKBANUVGtbiBxkI/QICCK4PKnhluKrFh70bqF3BVlsOzTYTN928NQcYsOZt3xjfINfZh2uTAyqnDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876336; c=relaxed/simple;
-	bh=/v+eoh7KH2T6KrfJ8JJo4kgg+Cma4K9y7UFcyGK/EjA=;
+	s=arc-20240116; t=1727876339; c=relaxed/simple;
+	bh=Ydy+FRQ9Ga9zNkhNOPR2EeCtXTlW0QhTNfmAc+dtQgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VCq1E25C+hCxsLiZN7Hye4tOmLrfmBkkkTsmn9K+v8guNsV9FwCfIs3ux33cIqEdXrJ0nmh9uALHa/LBmFyjLLfioFV8utjyPNQePgCxoQBUhuZA4vpYwYoLRYrJlvd3doSzXLjVjG9+gvNyiUwQ4TXAho93SSp1VwQhXDgcvvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLkQJKwm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uD6hmDaeJMVQ5Sh9XmjzzNy3sgcjgr44vcaihFO9erGr0o/FVScesrD2KwqTuePgxbyp3cU1A1Dbq71/1OamUUUy5V264jiOJ8JuNL6Olwr6nh6AOJbLXmK5KxLL+Xmqw6je8ULsOiemyxeIdV83d2c8B0ZVvUFUpQeWXqC+hSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zl4GzkZC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLkQJKwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5713CC4CECD;
-	Wed,  2 Oct 2024 13:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zl4GzkZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AF6C4CEC5;
+	Wed,  2 Oct 2024 13:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876336;
-	bh=/v+eoh7KH2T6KrfJ8JJo4kgg+Cma4K9y7UFcyGK/EjA=;
+	s=korg; t=1727876339;
+	bh=Ydy+FRQ9Ga9zNkhNOPR2EeCtXTlW0QhTNfmAc+dtQgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLkQJKwmfeVHKgoiliN5fllMgAm2dKfSfr0r4A1glhSlxq7pyjsx0XvSpWf/2A4Gy
-	 PpZL8T+5bvGEVi2Zg00XLOTl0keQAyADpO4VZ+BdM4BIXrRsKmSPLf1HqY1UJ4pMJ7
-	 vScIlsb9VdN7SCfORZzgpmTuz944Qgyd+LOecDoI=
+	b=Zl4GzkZCYsvljPR2q2jZY71Fdv5JThzQ/oQTR60zp5abERp/kk6DfXWh1vHFmeX4w
+	 kyslHenmhIp7dbOvY7/hfJAOKlVns4/Rat+JySuBSJD4lPJHmn6+oBEVfGHSeWcYmD
+	 Rs7/2wRhB6tqBqR5XxZv/QMnIRwcp7wOf3HCmqUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Blixt <jonas.blixt@actia.se>,
-	Anson Huang <anson.huang@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 409/695] watchdog: imx_sc_wdt: Dont disable WDT in suspend
-Date: Wed,  2 Oct 2024 14:56:47 +0200
-Message-ID: <20241002125838.780536911@linuxfoundation.org>
+Subject: [PATCH 6.11 410/695] RDMA/hns: Dont modify rq next block addr in HIP09 QPC
+Date: Wed,  2 Oct 2024 14:56:48 +0200
+Message-ID: <20241002125838.820273316@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,71 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Blixt <jonas.blixt@actia.se>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 2d9d6d300fb0a4ae4431bb308027ac9385746d42 ]
+[ Upstream commit 6928d264e328e0cb5ee7663003a6e46e4cba0a7e ]
 
-Parts of the suspend and resume chain is left unprotected if we disable
-the WDT here.
+The field 'rq next block addr' in QPC can be updated by driver only
+on HIP08. On HIP09 HW updates this field while driver is not allowed.
 
->From experiments we can see that the SCU disables and re-enables the WDT
-when we enter and leave suspend to ram. By not touching the WDT here we
-are protected by the WDT all the way to the SCU.
-
-Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
-CC: Anson Huang <anson.huang@nxp.com>
-Fixes: 986857acbc9a ("watchdog: imx_sc: Add i.MX system controller watchdog support")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240801121845.1465765-1-jonas.blixt@actia.se
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20240906093444.3571619-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/imx_sc_wdt.c | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/watchdog/imx_sc_wdt.c b/drivers/watchdog/imx_sc_wdt.c
-index e51fe1b78518f..d73076b686d8c 100644
---- a/drivers/watchdog/imx_sc_wdt.c
-+++ b/drivers/watchdog/imx_sc_wdt.c
-@@ -216,29 +216,6 @@ static int imx_sc_wdt_probe(struct platform_device *pdev)
- 	return devm_watchdog_register_device(dev, wdog);
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 621b057fb9daa..a166b476977f1 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -4423,12 +4423,14 @@ static int config_qp_rq_buf(struct hns_roce_dev *hr_dev,
+ 		     upper_32_bits(to_hr_hw_page_addr(mtts[0])));
+ 	hr_reg_clear(qpc_mask, QPC_RQ_CUR_BLK_ADDR_H);
  
--static int __maybe_unused imx_sc_wdt_suspend(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
+-	context->rq_nxt_blk_addr = cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
+-	qpc_mask->rq_nxt_blk_addr = 0;
 -
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_stop(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static int __maybe_unused imx_sc_wdt_resume(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
--
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_start(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static SIMPLE_DEV_PM_OPS(imx_sc_wdt_pm_ops,
--			 imx_sc_wdt_suspend, imx_sc_wdt_resume);
--
- static const struct of_device_id imx_sc_wdt_dt_ids[] = {
- 	{ .compatible = "fsl,imx-sc-wdt", },
- 	{ /* sentinel */ }
-@@ -250,7 +227,6 @@ static struct platform_driver imx_sc_wdt_driver = {
- 	.driver		= {
- 		.name	= "imx-sc-wdt",
- 		.of_match_table = imx_sc_wdt_dt_ids,
--		.pm	= &imx_sc_wdt_pm_ops,
- 	},
- };
- module_platform_driver(imx_sc_wdt_driver);
+-	hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
+-		     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
+-	hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
++	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
++		context->rq_nxt_blk_addr =
++				cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
++		qpc_mask->rq_nxt_blk_addr = 0;
++		hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
++			     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
++		hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
