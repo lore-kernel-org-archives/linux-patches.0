@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336166FB0;
-	Wed,  2 Oct 2024 14:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F076FB0;
+	Wed,  2 Oct 2024 14:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880428; cv=none; b=KJFdpAXqcCiJLQwk2FzykuqDNPp+tB1QcT70KedEjl2IGVGJc0mm0FYbXU0hiJb0DluMR24pj7ljsXXXI+mKRD2Xq06C2iYMq4cj0hrPbMsdv94s8Kt91BVRYl2vEliQtM3ZbNhWKIWGI0IfVYOoTuMMGt5Hx3hsa52Nrfzqs80=
+	t=1727880431; cv=none; b=Z1rePkfroWwwmjJuTlel5TG2FXJ6v5IUBPNpfFBWD5kDPz2tKCp/M9AJ2+X9rFQY5lMk1Bs+j8PFEdrD8xcch5DCsa3Wt13iNmkh7dgUorCNQxiuqL+Ftu2r34ToevKjNVc7U4F2Z6F4R+/ZLTr8WtX3Jgilde0hvATr0dzmd4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880428; c=relaxed/simple;
-	bh=4MHmxLcSSzf1I6z12Pqv15sFNHGRhj7RdEup0VkYHfw=;
+	s=arc-20240116; t=1727880431; c=relaxed/simple;
+	bh=cHn8HLwEXq6+zdLJj95QIx/voRjgDU/unaJqVFuDV/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDpamhvk5BuJAAxSnzrMA7DqwDajGTItzzRqOS4mN0d0CVLfINsvkV/wGY+9pa7Nye2T/WNs5ujV1LazEuJdCxcYamz6ISjUyrx7aBHKmSwyeItiqQEJQ0hmty2GrEk7YL2QyeMt2UnfP06K2al4O2RqZ/Z4wFq5YQOXBwtgZAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMKxTliF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpVKQhw3JZMnwjGFzGNYTL9+PW7w03MiYJTwTmXqnPVnXldoPdSxJchJvpG5bpKgXIU1qE4sPZGovwTKdYyFnatIRoAf79iVKWMNwL6wdEiKxMK+OBQnmSDpQFceLTDhtyv0KndmDhN7+kcHsfU+4bYFRXaEGANR7fKBzxqUgwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcE/H78x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMKxTliF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8B2C4CEC2;
-	Wed,  2 Oct 2024 14:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcE/H78x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B0EC4CEC2;
+	Wed,  2 Oct 2024 14:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880428;
-	bh=4MHmxLcSSzf1I6z12Pqv15sFNHGRhj7RdEup0VkYHfw=;
+	s=korg; t=1727880431;
+	bh=cHn8HLwEXq6+zdLJj95QIx/voRjgDU/unaJqVFuDV/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMKxTliFYvRRL/tg5SUhC4MLk6elvPxv9ROlzEymZxRWV467I12Bh+SE6/FqTDHvO
-	 HiYot8/qUGnzy29k9VqnosPU0FW/F2KDVhj5vytTTzj5nFNPoCvf0i9wWG1f+ls9F3
-	 xAcSqShJ6VxJBxdVTjwyx4Z+uEq1JqckXa8zczJw=
+	b=jcE/H78x5wXMiLZo5XLWg7zZdP2PvSH8mQIucLyAc0DJhlJlUpbZDs6VaOcgE7Gm/
+	 vJQNWMJQXmGxj+lsgh4l+e9b+qGbSDWcwktrnPcM9apXi3k650KxQqX9UaTM1Yj7ip
+	 CGZ/LFk8GHE0DHQWnywme1k5Q2VyDO7NJ2AnZilk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <morrownr@gmail.com>,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.6 455/538] wifi: rtw88: 8821cu: Remove VID/PID 0bda:c82c
-Date: Wed,  2 Oct 2024 15:01:34 +0200
-Message-ID: <20241002125810.402818542@linuxfoundation.org>
+Subject: [PATCH 6.6 456/538] wifi: rtw88: 8822c: Fix reported RX band width
+Date: Wed,  2 Oct 2024 15:01:35 +0200
+Message-ID: <20241002125810.442472768@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,35 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Morrow <morrownr@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 0af8cd2822f31ed8363223329e5cff2a7ed01961 upstream.
+commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
 
-Remove VID/PID 0bda:c82c as it was inadvertently added to the device
-list in driver rtw8821cu. This VID/PID is for the rtw8822cu device
-and it is already in the appropriate place for that device.
+"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
+
+tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
+rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
+
+This is because the RX band width is calculated incorrectly. Fix the
+calculation according to the phydm_rxsc_2_bw() function from the
+official drivers.
+
+After:
+
+tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
+rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
+
+It also works correctly with the AP configured for 20 MHz and 40 MHz.
+
+Tested with RTL8822CE.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Nick Morrow <morrownr@gmail.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
 Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/335d7fa1-0ba5-4b86-bba5-f98834ace1f8@gmail.com
+Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8821cu.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-@@ -31,8 +31,6 @@ static const struct usb_device_id rtw_88
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82b, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82c, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331d, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* D-Link */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xc811, 0xff, 0xff, 0xff),
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+@@ -2611,12 +2611,14 @@ static void query_phy_status_page1(struc
+ 	else
+ 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
+ 
+-	if (rxsc >= 9 && rxsc <= 12)
++	if (rxsc == 0)
++		bw = rtwdev->hal.current_band_width;
++	else if (rxsc >= 1 && rxsc <= 8)
++		bw = RTW_CHANNEL_WIDTH_20;
++	else if (rxsc >= 9 && rxsc <= 12)
+ 		bw = RTW_CHANNEL_WIDTH_40;
+-	else if (rxsc >= 13)
+-		bw = RTW_CHANNEL_WIDTH_80;
+ 	else
+-		bw = RTW_CHANNEL_WIDTH_20;
++		bw = RTW_CHANNEL_WIDTH_80;
+ 
+ 	channel = GET_PHY_STAT_P1_CHANNEL(phy_status);
+ 	rtw_set_rx_freq_band(pkt_stat, channel);
 
 
