@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E77E1D049A;
-	Wed,  2 Oct 2024 13:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0B31D016B;
+	Wed,  2 Oct 2024 13:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876042; cv=none; b=mhGCXwuOfg1fEOXqB+v/A2zxgMz8UjvIuSZsj8Cb6nCBlrHburZMeoUc8Y7joi45CjapR2jfFyeB4lCwLOPuxD2b0g0+vaUneTVvxWYS6Ocxm8BR7X+Jlfa1F4OFEoVh+R1FeDYtGo1HQlhubjIbM9S/9FX4I4+EPSoI0PzVKL4=
+	t=1727876045; cv=none; b=ZYpcNtgv02xCHIL/e883hi0P29B+ZQKceXVMQyVWR5QanS8wRLPmP9w75/OrfjWWF7No3Ugm4ABqrItkfF+FvQ2jorBqEB4Cb1PR8H81kxzTDE2J3Rd47Pz69gVWXJ/OySIqjMUaxc4ap+wG2MHlBzF9v0Arba7fL38PITWdrVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876042; c=relaxed/simple;
-	bh=QCiKu3emtmb8XjYaRTM4fDtY2Qlm28CzwXzIDTDGluo=;
+	s=arc-20240116; t=1727876045; c=relaxed/simple;
+	bh=cCOT51SHwsG5fXbGRx7mjCWlxFMa9hxgERrSPFSBRTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzoDCCxYfPwFAq1K3Vl6J+TeUlXL1ZrhR7WrDLy4zHtc8+V4J12nYGm4xeTMGOkIglawbQ0O6lFo39ogZeBzHZPCsVEhy1CSHCmAbRXBXOTBxFqfPmYR0sehAd949cVVqa07bh2SS9rmGqkuv53aCueYokvXmYlInOLY3j1KogI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+dZuiYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bMv+IVX5Vjpv3mrvu+cOtGTfO37pMdd2h/LL6QbOP/xZOTYfz6cJwoCIPaxzF48kpSv+HmzZt7iHRYYyW0qhOD8hNJyBIPzuFaeYrc7RiwiMu7sJ1ckG4ftrL1/e8G7XlScSNo3oTNKK6wKO1uaDi90cTWQN9xW+zNji5QzHVdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pov0OM5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+dZuiYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B4AC4CEC5;
-	Wed,  2 Oct 2024 13:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pov0OM5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29C8C4CEC5;
+	Wed,  2 Oct 2024 13:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876042;
-	bh=QCiKu3emtmb8XjYaRTM4fDtY2Qlm28CzwXzIDTDGluo=;
+	s=korg; t=1727876045;
+	bh=cCOT51SHwsG5fXbGRx7mjCWlxFMa9hxgERrSPFSBRTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+dZuiYW2ZjvYUfaWjMAdfqeuAz1jMFyhoiLep8wpEfuyo5i0/slG3NrJsrzAofdu
-	 eWrC0JxPQB4Oqah7KasnmnlUFJQjANzRQgnmLER+PZcoKQRZpplY/fanUPeLDcx7Zk
-	 qy/0gIyxK+Tq9A21rpQ+tWJ9a1dO6zWoJdVjQp+8=
+	b=pov0OM5iFmt8G9p5vQPRojwTNgNihOX0qVePuxqjje5bRBSajWvdAX49kmubaFAvL
+	 DqV/rWo/tZth4YWyAzCfXGpmvxY4yz2LfWoavoBwIGdKXRAT9N6i75ZGTXKzOrOB9Q
+	 mx6RBEL4HIPyxs4FnIeytnW8MFJ2GO+uOSdH/0ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 308/695] ext4: avoid buffer_head leak in ext4_mark_inode_used()
-Date: Wed,  2 Oct 2024 14:55:06 +0200
-Message-ID: <20241002125834.734668606@linuxfoundation.org>
+Subject: [PATCH 6.11 309/695] ext4: avoid potential buffer_head leak in __ext4_new_inode()
+Date: Wed,  2 Oct 2024 14:55:07 +0200
+Message-ID: <20241002125834.782224237@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -53,47 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 5e5b2a56c57def1b41efd49596621504d7bcc61c ]
+[ Upstream commit 227d31b9214d1b9513383cf6c7180628d4b3b61f ]
 
-Release inode_bitmap_bh from ext4_read_inode_bitmap() in
-ext4_mark_inode_used() to avoid buffer_head leak.
-By the way, remove unneeded goto for invalid ino when inode_bitmap_bh
-is NULL.
+If a group is marked EXT4_GROUP_INFO_IBITMAP_CORRUPT after it's inode
+bitmap buffer_head was successfully verified, then __ext4_new_inode()
+will get a valid inode_bitmap_bh of a corrupted group from
+ext4_read_inode_bitmap() in which case inode_bitmap_bh misses a release.
+Hnadle "IS_ERR(inode_bitmap_bh)" and group corruption separately like
+how ext4_free_inode() does to avoid buffer_head leak.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Fixes: 9008a58e5dce ("ext4: make the bitmap read routines return real error codes")
 Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://patch.msgid.link/20240820132234.2759926-2-shikemeng@huaweicloud.com
+Link: https://patch.msgid.link/20240820132234.2759926-3-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ialloc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/ialloc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index 9dfd768ed9f8d..ad7f13976dc60 100644
+index ad7f13976dc60..9e2c08a8665f2 100644
 --- a/fs/ext4/ialloc.c
 +++ b/fs/ext4/ialloc.c
-@@ -755,10 +755,10 @@ int ext4_mark_inode_used(struct super_block *sb, int ino)
- 	struct ext4_group_desc *gdp;
- 	ext4_group_t group;
- 	int bit;
--	int err = -EFSCORRUPTED;
-+	int err;
+@@ -1054,12 +1054,13 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
+ 		brelse(inode_bitmap_bh);
+ 		inode_bitmap_bh = ext4_read_inode_bitmap(sb, group);
+ 		/* Skip groups with suspicious inode tables */
+-		if (((!(sbi->s_mount_state & EXT4_FC_REPLAY))
+-		     && EXT4_MB_GRP_IBITMAP_CORRUPT(grp)) ||
+-		    IS_ERR(inode_bitmap_bh)) {
++		if (IS_ERR(inode_bitmap_bh)) {
+ 			inode_bitmap_bh = NULL;
+ 			goto next_group;
+ 		}
++		if (!(sbi->s_mount_state & EXT4_FC_REPLAY) &&
++		    EXT4_MB_GRP_IBITMAP_CORRUPT(grp))
++			goto next_group;
  
- 	if (ino < EXT4_FIRST_INO(sb) || ino > max_ino)
--		goto out;
-+		return -EFSCORRUPTED;
- 
- 	group = (ino - 1) / EXT4_INODES_PER_GROUP(sb);
- 	bit = (ino - 1) % EXT4_INODES_PER_GROUP(sb);
-@@ -860,6 +860,7 @@ int ext4_mark_inode_used(struct super_block *sb, int ino)
- 	err = ext4_handle_dirty_metadata(NULL, NULL, group_desc_bh);
- 	sync_dirty_buffer(group_desc_bh);
- out:
-+	brelse(inode_bitmap_bh);
- 	return err;
- }
- 
+ repeat_in_this_group:
+ 		ret2 = find_inode_bit(sb, group, inode_bitmap_bh, &ino);
 -- 
 2.43.0
 
