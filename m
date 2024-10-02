@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A43E25771;
-	Wed,  2 Oct 2024 13:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3159B1D041B;
+	Wed,  2 Oct 2024 13:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875232; cv=none; b=A/GZpT6jzxBqayH+wCDVmzPgRdDpKDjFUdSFVJO5YF4cwXjtqh7GVOm4eQ3fCH7BquvkOJjuAy6vmMVMMNufRavGsouONPmhPllJ6uZum2azCIoKIa7amNswtXTCHnZ3qB8IEOiit8F0MetLUY7Ki7J38aFXUjd2RBB43AsGBxQ=
+	t=1727875235; cv=none; b=NvoGri/VjeMK65iFGN7y4nv28tWuNiqMwLNgwYh4lag+yVZdEpCMuDNg2hjji+kmiwV8wABUCilQ2aDwxpf2aiL9P0jV2zB7NWVFNoP+0zQ06aGso4ghryDUPepfwDE32ZTyClYKQyn8UAg/zkeEswjWhUA19U1f3KbxuJejjT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875232; c=relaxed/simple;
-	bh=aTrK1lh70QZsj6i8XwkH5XH68bE81Ff9sTTMoKcZtqY=;
+	s=arc-20240116; t=1727875235; c=relaxed/simple;
+	bh=xHiSCBftZicr3o45WLva6wFFcinqepg94RYnNUtWbFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mka1gEygitCp+dHO6KZEzbsDJqh5OFb3LjQr9G3Ac7d/XcVKgRy2Mahb+bHaJ3DT/grAmpUx/SFu3q7NjBsldegK269I5SGvKnckMxh6fs7UPmmuvMO2EBNLt7BNhRUqeYEfH8HWk75Ttb32H+jcLkX4nO709BD3gv/2ixkK5Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sahY81g1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvJzgvoYRqPJRcfT8iQPm09yidzCrPepYrrc7kxePFpG+Qh7CzNFx7ns5j3/IN0nwYxQ1FZ+EwaGMy0wvQOPRqUUeKzZLQ4suxpK5zNx56N7jS5O2QScNz8Xvze6L0BWRgMj3k84siBnW3jTq+nSEbqkc6g2fiKjdUzQokOQMAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SkRZpvM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sahY81g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CDEC4CEC5;
-	Wed,  2 Oct 2024 13:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SkRZpvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E591C4CEC5;
+	Wed,  2 Oct 2024 13:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875232;
-	bh=aTrK1lh70QZsj6i8XwkH5XH68bE81Ff9sTTMoKcZtqY=;
+	s=korg; t=1727875235;
+	bh=xHiSCBftZicr3o45WLva6wFFcinqepg94RYnNUtWbFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sahY81g16oAHTbfSwbHCMRx53Y9CHAVTsDz/Ej5QE6Q1c2YeJ4eio95vr7NRvMWTj
-	 VbWO0IGPUARvu+ovfQzk4QZdvpkgx6CFavsxlag26WbQF5ee3eoQTnCNqYJzL4RsQ4
-	 LmvY/2Ved4ykitNyuOr8fLuFfwRNrKX1ADZbA5PQ=
+	b=0SkRZpvME7GRjz+9aXeMEIj2dNQqXjGoVyffyCsOjlHoCr3TdznRzaNGLVt5PwSZ6
+	 Et5q9jjxA/5TnMtRprnNN6ZU0PzpWiTzjlufF3TIIFSRvc5kwSiXxVOeMDUx4Axk4T
+	 ucbg9yaPUF5tjdcyNqjiSMy8ET2ix95K9HAG0uy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Yuan Li <leo.li@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 035/695] wifi: rtw89: limit the PPDU length for VHT rate to 0x40000
-Date: Wed,  2 Oct 2024 14:50:33 +0200
-Message-ID: <20241002125823.892889925@linuxfoundation.org>
+Subject: [PATCH 6.11 036/695] kselftest/arm64: signal: fix/refactor SVE vector length enumeration
+Date: Wed,  2 Oct 2024 14:50:34 +0200
+Message-ID: <20241002125823.932638100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,64 +52,568 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Yuan Li <leo.li@realtek.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 124410976bf807e76c45e36685ed8bf959229545 ]
+[ Upstream commit 5225b6562b9a7dc808d5a1e465aaf5e2ebb220cd ]
 
-If the PPDU length for VHT rate exceeds 0x40000, calculating the PSDU
-length will overflow. TMAC will determine the length to be too small and
-as a result, all packets will be sent as ZLD (Zero Length Delimiter).
+Currently a number of SVE/SME related tests have almost identical
+functions to enumerate all supported vector lengths. However over time
+the copy&pasted code has diverged, allowing some bugs to creep in:
+- fake_sigreturn_sme_change_vl reports a failure, not a SKIP if only
+  one vector length is supported (but the SVE version is fine)
+- fake_sigreturn_sme_change_vl tries to set the SVE vector length, not
+  the SME one (but the other SME tests are fine)
+- za_no_regs keeps iterating forever if only one vector length is
+  supported (but za_regs is correct)
 
-Fixes: 5f7e92c59b8e ("wifi: rtw89: 8852b: set AMSDU limit to 5000")
-Signed-off-by: Chia-Yuan Li <leo.li@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240815134054.44649-1-pkshih@realtek.com
+Since those bugs seem to be mostly copy&paste ones, let's consolidate
+the enumeration loop into one shared function, and just call that from
+each test. That should fix the above bugs, and prevent similar issues
+from happening again.
+
+Fixes: 4963aeb35a9e ("kselftest/arm64: signal: Add SME signal handling tests")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240821164401.3598545-1-andre.przywara@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 7 +++++++
- drivers/net/wireless/realtek/rtw89/reg.h | 4 ++++
- 2 files changed, 11 insertions(+)
+ tools/testing/selftests/arm64/signal/Makefile |  2 +-
+ .../selftests/arm64/signal/sve_helpers.c      | 56 +++++++++++++++++++
+ .../selftests/arm64/signal/sve_helpers.h      | 21 +++++++
+ .../testcases/fake_sigreturn_sme_change_vl.c  | 32 +++--------
+ .../testcases/fake_sigreturn_sve_change_vl.c  | 30 ++--------
+ .../arm64/signal/testcases/ssve_regs.c        | 36 +++---------
+ .../arm64/signal/testcases/ssve_za_regs.c     | 36 +++---------
+ .../arm64/signal/testcases/sve_regs.c         | 32 +++--------
+ .../arm64/signal/testcases/za_no_regs.c       | 32 +++--------
+ .../arm64/signal/testcases/za_regs.c          | 36 +++---------
+ 10 files changed, 132 insertions(+), 181 deletions(-)
+ create mode 100644 tools/testing/selftests/arm64/signal/sve_helpers.c
+ create mode 100644 tools/testing/selftests/arm64/signal/sve_helpers.h
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index e2399796aeb1e..facd32de37bce 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -2728,6 +2728,7 @@ bool rtw89_mac_is_qta_dbcc(struct rtw89_dev *rtwdev, enum rtw89_qta_mode mode)
+diff --git a/tools/testing/selftests/arm64/signal/Makefile b/tools/testing/selftests/arm64/signal/Makefile
+index 8f5febaf1a9a2..edb3613513b8a 100644
+--- a/tools/testing/selftests/arm64/signal/Makefile
++++ b/tools/testing/selftests/arm64/signal/Makefile
+@@ -23,7 +23,7 @@ $(TEST_GEN_PROGS): $(PROGS)
+ # Common test-unit targets to build common-layout test-cases executables
+ # Needs secondary expansion to properly include the testcase c-file in pre-reqs
+ COMMON_SOURCES := test_signals.c test_signals_utils.c testcases/testcases.c \
+-	signals.S
++	signals.S sve_helpers.c
+ COMMON_HEADERS := test_signals.h test_signals_utils.h testcases/testcases.h
  
- static int ptcl_init_ax(struct rtw89_dev *rtwdev, u8 mac_idx)
- {
-+	enum rtw89_core_chip_id chip_id = rtwdev->chip->chip_id;
- 	u32 val, reg;
- 	int ret;
- 
-@@ -2766,6 +2767,12 @@ static int ptcl_init_ax(struct rtw89_dev *rtwdev, u8 mac_idx)
- 				  B_AX_SPE_RPT_PATH_MASK, FWD_TO_WLCPU);
- 	}
- 
-+	if (chip_id == RTL8852A || rtw89_is_rtl885xb(rtwdev)) {
-+		reg = rtw89_mac_reg_by_idx(rtwdev, R_AX_AGG_LEN_VHT_0, mac_idx);
-+		rtw89_write32_mask(rtwdev, reg,
-+				   B_AX_AMPDU_MAX_LEN_VHT_MASK, 0x3FF80);
+ .SECONDEXPANSION:
+diff --git a/tools/testing/selftests/arm64/signal/sve_helpers.c b/tools/testing/selftests/arm64/signal/sve_helpers.c
+new file mode 100644
+index 0000000000000..0acc121af3062
+--- /dev/null
++++ b/tools/testing/selftests/arm64/signal/sve_helpers.c
+@@ -0,0 +1,56 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2024 ARM Limited
++ *
++ * Common helper functions for SVE and SME functionality.
++ */
++
++#include <stdbool.h>
++#include <kselftest.h>
++#include <asm/sigcontext.h>
++#include <sys/prctl.h>
++
++unsigned int vls[SVE_VQ_MAX];
++unsigned int nvls;
++
++int sve_fill_vls(bool use_sme, int min_vls)
++{
++	int vq, vl;
++	int pr_set_vl = use_sme ? PR_SME_SET_VL : PR_SVE_SET_VL;
++	int len_mask = use_sme ? PR_SME_VL_LEN_MASK : PR_SVE_VL_LEN_MASK;
++
++	/*
++	 * Enumerate up to SVE_VQ_MAX vector lengths
++	 */
++	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
++		vl = prctl(pr_set_vl, vq * 16);
++		if (vl == -1)
++			return KSFT_FAIL;
++
++		vl &= len_mask;
++
++		/*
++		 * Unlike SVE, SME does not require the minimum vector length
++		 * to be implemented, or the VLs to be consecutive, so any call
++		 * to the prctl might return the single implemented VL, which
++		 * might be larger than 16. So to avoid this loop never
++		 * terminating,  bail out here when we find a higher VL than
++		 * we asked for.
++		 * See the ARM ARM, DDI 0487K.a, B1.4.2: I_QQRNR and I_NWYBP.
++		 */
++		if (vq < sve_vq_from_vl(vl))
++			break;
++
++		/* Skip missing VLs */
++		vq = sve_vq_from_vl(vl);
++
++		vls[nvls++] = vl;
 +	}
 +
- 	return 0;
++	if (nvls < min_vls) {
++		fprintf(stderr, "Only %d VL supported\n", nvls);
++		return KSFT_SKIP;
++	}
++
++	return KSFT_PASS;
++}
+diff --git a/tools/testing/selftests/arm64/signal/sve_helpers.h b/tools/testing/selftests/arm64/signal/sve_helpers.h
+new file mode 100644
+index 0000000000000..50948ce471cc6
+--- /dev/null
++++ b/tools/testing/selftests/arm64/signal/sve_helpers.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2024 ARM Limited
++ *
++ * Common helper functions for SVE and SME functionality.
++ */
++
++#ifndef __SVE_HELPERS_H__
++#define __SVE_HELPERS_H__
++
++#include <stdbool.h>
++
++#define VLS_USE_SVE	false
++#define VLS_USE_SME	true
++
++extern unsigned int vls[];
++extern unsigned int nvls;
++
++int sve_fill_vls(bool use_sme, int min_vls);
++
++#endif
+diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
+index ebd5815b54bba..cb8c051b5c8f2 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
++++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
+@@ -6,44 +6,28 @@
+  * handler, this is not supported and is expected to segfault.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ struct fake_sigframe sf;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sme_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SME, 2);
+ 
+-	/*
+-	 * Enumerate up to SVE_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SVE_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
++	if (!res)
++		return true;
+ 
+-		vl &= PR_SME_VL_LEN_MASK;
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
+-
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least two VLs */
+-	if (nvls < 2) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
+-
+-	return true;
++	return false;
  }
  
-diff --git a/drivers/net/wireless/realtek/rtw89/reg.h b/drivers/net/wireless/realtek/rtw89/reg.h
-index 7df36f3bff0b0..b1c24eedc7e08 100644
---- a/drivers/net/wireless/realtek/rtw89/reg.h
-+++ b/drivers/net/wireless/realtek/rtw89/reg.h
-@@ -2440,6 +2440,10 @@
- #define B_AX_RTS_TXTIME_TH_MASK GENMASK(15, 8)
- #define B_AX_RTS_LEN_TH_MASK GENMASK(7, 0)
+ static int fake_sigreturn_ssve_change_vl(struct tdescr *td,
+diff --git a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
+index e2a452190511f..e1ccf8f85a70c 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
++++ b/tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
+@@ -12,40 +12,22 @@
+ #include <sys/prctl.h>
  
-+#define R_AX_AGG_LEN_VHT_0 0xC618
-+#define R_AX_AGG_LEN_VHT_0_C1 0xE618
-+#define B_AX_AMPDU_MAX_LEN_VHT_MASK GENMASK(19, 0)
-+
- #define S_AX_CTS2S_TH_SEC_256B 1
- #define R_AX_SIFS_SETTING 0xC624
- #define R_AX_SIFS_SETTING_C1 0xE624
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ struct fake_sigframe sf;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sve_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SVE, 2);
+ 
+-	/*
+-	 * Enumerate up to SVE_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SVE_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
++	if (!res)
++		return true;
+ 
+-		vl &= PR_SVE_VL_LEN_MASK;
+-
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
+-
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least two VLs */
+-	if (nvls < 2) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
++	if (res == KSFT_SKIP)
+ 		td->result = KSFT_SKIP;
+-		return false;
+-	}
+ 
+-	return true;
++	return false;
+ }
+ 
+ static int fake_sigreturn_sve_change_vl(struct tdescr *td,
+diff --git a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
+index 3d37daafcff51..6dbe48cf8b09e 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
+@@ -6,51 +6,31 @@
+  * set up as expected.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ static union {
+ 	ucontext_t uc;
+ 	char buf[1024 * 64];
+ } context;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sme_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SME, 1);
+ 
+-	/*
+-	 * Enumerate up to SVE_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SME_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
+-
+-		vl &= PR_SME_VL_LEN_MASK;
+-
+-		/* Did we find the lowest supported VL? */
+-		if (vq < sve_vq_from_vl(vl))
+-			break;
++	if (!res)
++		return true;
+ 
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
+-
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least one VL */
+-	if (nvls < 1) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-	return true;
++	return false;
+ }
+ 
+ static void setup_ssve_regs(void)
+diff --git a/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c b/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
+index 9dc5f128bbc0d..5557e116e9736 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/ssve_za_regs.c
+@@ -6,51 +6,31 @@
+  * signal frames is set up as expected when enabled simultaneously.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ static union {
+ 	ucontext_t uc;
+ 	char buf[1024 * 128];
+ } context;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sme_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SME, 1);
+ 
+-	/*
+-	 * Enumerate up to SVE_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SME_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
+-
+-		vl &= PR_SME_VL_LEN_MASK;
+-
+-		/* Did we find the lowest supported VL? */
+-		if (vq < sve_vq_from_vl(vl))
+-			break;
++	if (!res)
++		return true;
+ 
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
+-
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least one VL */
+-	if (nvls < 1) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-	return true;
++	return false;
+ }
+ 
+ static void setup_regs(void)
+diff --git a/tools/testing/selftests/arm64/signal/testcases/sve_regs.c b/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
+index 8b16eabbb7697..8143eb1c58c18 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/sve_regs.c
+@@ -6,47 +6,31 @@
+  * expected.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ static union {
+ 	ucontext_t uc;
+ 	char buf[1024 * 64];
+ } context;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sve_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SVE, 1);
+ 
+-	/*
+-	 * Enumerate up to SVE_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SVE_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
+-
+-		vl &= PR_SVE_VL_LEN_MASK;
+-
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
++	if (!res)
++		return true;
+ 
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least one VL */
+-	if (nvls < 1) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-	return true;
++	return false;
+ }
+ 
+ static void setup_sve_regs(void)
+diff --git a/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c b/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
+index 4d6f94b6178f3..ce26e9c2fa5e3 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
+@@ -6,47 +6,31 @@
+  * expected.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ static union {
+ 	ucontext_t uc;
+ 	char buf[1024 * 128];
+ } context;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sme_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SME, 1);
+ 
+-	/*
+-	 * Enumerate up to SME_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SME_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
+-
+-		vl &= PR_SME_VL_LEN_MASK;
+-
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
++	if (!res)
++		return true;
+ 
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least one VL */
+-	if (nvls < 1) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-	return true;
++	return false;
+ }
+ 
+ static int do_one_sme_vl(struct tdescr *td, siginfo_t *si, ucontext_t *uc,
+diff --git a/tools/testing/selftests/arm64/signal/testcases/za_regs.c b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
+index 174ad66566964..b9e13f27f1f9a 100644
+--- a/tools/testing/selftests/arm64/signal/testcases/za_regs.c
++++ b/tools/testing/selftests/arm64/signal/testcases/za_regs.c
+@@ -6,51 +6,31 @@
+  * expected.
+  */
+ 
++#include <kselftest.h>
+ #include <signal.h>
+ #include <ucontext.h>
+ #include <sys/prctl.h>
+ 
+ #include "test_signals_utils.h"
++#include "sve_helpers.h"
+ #include "testcases.h"
+ 
+ static union {
+ 	ucontext_t uc;
+ 	char buf[1024 * 128];
+ } context;
+-static unsigned int vls[SVE_VQ_MAX];
+-unsigned int nvls = 0;
+ 
+ static bool sme_get_vls(struct tdescr *td)
+ {
+-	int vq, vl;
++	int res = sve_fill_vls(VLS_USE_SME, 1);
+ 
+-	/*
+-	 * Enumerate up to SME_VQ_MAX vector lengths
+-	 */
+-	for (vq = SVE_VQ_MAX; vq > 0; --vq) {
+-		vl = prctl(PR_SME_SET_VL, vq * 16);
+-		if (vl == -1)
+-			return false;
+-
+-		vl &= PR_SME_VL_LEN_MASK;
+-
+-		/* Did we find the lowest supported VL? */
+-		if (vq < sve_vq_from_vl(vl))
+-			break;
++	if (!res)
++		return true;
+ 
+-		/* Skip missing VLs */
+-		vq = sve_vq_from_vl(vl);
+-
+-		vls[nvls++] = vl;
+-	}
+-
+-	/* We need at least one VL */
+-	if (nvls < 1) {
+-		fprintf(stderr, "Only %d VL supported\n", nvls);
+-		return false;
+-	}
++	if (res == KSFT_SKIP)
++		td->result = KSFT_SKIP;
+ 
+-	return true;
++	return false;
+ }
+ 
+ static void setup_za_regs(void)
 -- 
 2.43.0
 
