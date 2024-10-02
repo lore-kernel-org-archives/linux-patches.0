@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207A21D0953;
-	Wed,  2 Oct 2024 14:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACE11EF1D;
+	Wed,  2 Oct 2024 14:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879614; cv=none; b=KWYqQHIvxggM2O+yZ1X4E97UGRmqpmL4ZndQnGZSOwLQPnZypNuJWocVpVsWag2tZ30mcdaKO/DhrCnfrTAUo6tD3LrfEFPyo6RDPUp2zn1xK1w69WO/SJKIQr15kyBbwH82FTzfhC7EIirJxJh7apF+oZox8dTPEVxnlS5ZANA=
+	t=1727879617; cv=none; b=N8byZe9oF43/UrOySh/391YYHIe3FRn4LCenDoS0QAxVhkmDZ9LhzCIYFkQhf9GDst+2ruelcrboN1OnMTfv/2Y90njtb6LLD7osbZ8t+oFBaKEwJHWfgdhk3DYYpFo0snGSEGHiziMCj8pewOCGQtbnPDp4AYZduN7DchnnIrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879614; c=relaxed/simple;
-	bh=zwbx6C2IchAZCjtKaj0aeTORDrsJb1OLME26vq1wvRA=;
+	s=arc-20240116; t=1727879617; c=relaxed/simple;
+	bh=kU0oLZhCcKqycGZsyMiA3xddJL0jtBx/OJV//PIsmpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkYBTbf4XSrxGxQZC8836Z0w3gtssQNHIBo83bquBvY20WPXq1meHypGVqkl3JELnzTa/J5uLMoZ3FKg0lbnqLsatl9z0HBSXCIcerE+1Pw/KM1Rm2Cp9dGDLpXyRV3dSsAdFgWFTEgVYrgHuu39Cj5tLO7akgEd+Ml1WYJZiaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZQ9bC1K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCeLCbxRlASSdETTiRBPwqOi5pIj2HuF/RHdlMO0bm/m0DEk7BRx1GHjGEYurSzWCOXogKJZHeC6e0zsf5kh/n2cd8exS8iuetVyBC/aeI4Ll98odQHgkwmffPoG5Uq3kNRchJv/rppwsVhj+py3iRlzsgWbu2MOSogIVIxTfww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBSKgphQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZQ9bC1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD1AC4CEC2;
-	Wed,  2 Oct 2024 14:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBSKgphQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D24C4CEC2;
+	Wed,  2 Oct 2024 14:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879614;
-	bh=zwbx6C2IchAZCjtKaj0aeTORDrsJb1OLME26vq1wvRA=;
+	s=korg; t=1727879616;
+	bh=kU0oLZhCcKqycGZsyMiA3xddJL0jtBx/OJV//PIsmpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZQ9bC1K1UxR0K1th/wHCiWFZvZi80anBlHSmgF3/nakHdsYZ/NMBvhWN8/+d+a0/
-	 i9CKrWeUuXuF76E56kTV0JDahI3Ia73RBa4lJnGSs0UaAXHe6xqsvgBHkck+YiTU/G
-	 jrKAeg+uo96jEF8guA1a6AS246QpoDR6/XsXO/vQ=
+	b=FBSKgphQFMaUIw8WOvJ27hMz31roBlUo3F7g+bRDL4sezHl064yZgveLt7Lkm1lke
+	 /uvYkHoyFtg6uF67S/QQLYR+zrLodbF3sVV6HfK0OqkRbcN6erQGadbS4rfM4nyhGd
+	 xtNhw8gB5lLFS2eEUbhS7XmdF38a8zluvG0fZy9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/538] drm/msm/a5xx: workaround early ring-buffer emptiness check
-Date: Wed,  2 Oct 2024 14:56:41 +0200
-Message-ID: <20241002125758.648894713@linuxfoundation.org>
+Subject: [PATCH 6.6 180/538] selftests/bpf: Workaround strict bpf_lsm return value check.
+Date: Wed,  2 Oct 2024 14:56:59 +0200
+Message-ID: <20241002125759.361184906@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,97 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit a30f9f65b5ac82d4390548c32ed9c7f05de7ddf5 ]
+[ Upstream commit aa8ebb270c66cea1f56a25d0f938036e91ad085a ]
 
-There is another cause for soft lock-up of GPU in empty ring-buffer:
-race between GPU executing last commands and CPU checking ring for
-emptiness. On GPU side IRQ for retire is triggered by CACHE_FLUSH_TS
-event and RPTR shadow (which is used to check ring emptiness) is updated
-a bit later from CP_CONTEXT_SWITCH_YIELD. Thus if GPU is executing its
-last commands slow enough or we check that ring too fast we will miss a
-chance to trigger switch to lower priority ring because current ring isn't
-empty just yet. This can escalate to lock-up situation described in
-previous patch.
-To work-around this issue we keep track of last submit sequence number
-for each ring and compare it with one written to memptrs from GPU during
-execution of CACHE_FLUSH_TS event.
+test_progs-no_alu32 -t libbpf_get_fd_by_id_opts
+is being rejected by the verifier with the following error
+due to compiler optimization:
 
-Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/612047/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+6: (67) r0 <<= 62                     ; R0_w=scalar(smax=0x4000000000000000,umax=0xc000000000000000,smin32=0,smax32=umax32=0,var_off=(0x0; 0xc000000000000000))
+7: (c7) r0 s>>= 63                    ; R0_w=scalar(smin=smin32=-1,smax=smax32=0)
+;  @ test_libbpf_get_fd_by_id_opts.c:0
+8: (57) r0 &= -13                     ; R0_w=scalar(smax=0x7ffffffffffffff3,umax=0xfffffffffffffff3,smax32=0x7ffffff3,umax32=0xfffffff3,var_off=(0x0; 0xfffffffffffffff3))
+; int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode) @ test_libbpf_get_fd_by_id_opts.c:27
+9: (95) exit
+At program exit the register R0 has smax=9223372036854775795 should have been in [-4095, 0]
+
+Workaround by adding barrier().
+Eventually the verifier will be able to recognize it.
+
+Fixes: 5d99e198be27 ("bpf, lsm: Add check for BPF LSM return value")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 4 ++++
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h     | 1 +
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 4 ++++
- 3 files changed, 9 insertions(+)
+ .../testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c  | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 14d3a3e78a9db..8c2758a18a19c 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -65,6 +65,8 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+diff --git a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
+index f5ac5f3e89196..568816307f712 100644
+--- a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
++++ b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
+@@ -31,6 +31,7 @@ int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode)
  
- static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
- 	struct msm_ringbuffer *ring = submit->ring;
- 	struct drm_gem_object *obj;
- 	uint32_t *ptr, dwords;
-@@ -109,6 +111,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
- 		}
- 	}
+ 	if (fmode & FMODE_WRITE)
+ 		return -EACCES;
++	barrier();
  
-+	a5xx_gpu->last_seqno[ring->id] = submit->seqno;
- 	a5xx_flush(gpu, ring, true);
- 	a5xx_preempt_trigger(gpu);
- 
-@@ -210,6 +213,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	/* Write the fence to the scratch register */
- 	OUT_PKT4(ring, REG_A5XX_CP_SCRATCH_REG(2), 1);
- 	OUT_RING(ring, submit->seqno);
-+	a5xx_gpu->last_seqno[ring->id] = submit->seqno;
- 
- 	/*
- 	 * Execute a CACHE_FLUSH_TS event. This will ensure that the
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-index b4d06ca3e499d..9c0d701fe4b85 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-@@ -34,6 +34,7 @@ struct a5xx_gpu {
- 	struct drm_gem_object *preempt_counters_bo[MSM_GPU_MAX_RINGS];
- 	struct a5xx_preempt_record *preempt[MSM_GPU_MAX_RINGS];
- 	uint64_t preempt_iova[MSM_GPU_MAX_RINGS];
-+	uint32_t last_seqno[MSM_GPU_MAX_RINGS];
- 
- 	atomic_t preempt_state;
- 	spinlock_t preempt_start_lock;
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index c65b34a4a8cc2..0469fea550108 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -55,6 +55,8 @@ static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- /* Return the highest priority ringbuffer with something in it */
- static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
- 	unsigned long flags;
- 	int i;
- 
-@@ -64,6 +66,8 @@ static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
- 
- 		spin_lock_irqsave(&ring->preempt_lock, flags);
- 		empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
-+		if (!empty && ring == a5xx_gpu->cur_ring)
-+			empty = ring->memptrs->fence == a5xx_gpu->last_seqno[i];
- 		spin_unlock_irqrestore(&ring->preempt_lock, flags);
- 
- 		if (!empty)
+ 	return 0;
+ }
 -- 
 2.43.0
 
