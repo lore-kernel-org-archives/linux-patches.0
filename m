@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02C129CE7;
-	Wed,  2 Oct 2024 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF2D1D0796;
+	Wed,  2 Oct 2024 13:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877253; cv=none; b=rx1Cgb59exIw40qZVt6s/XbLST+vDOvP5RzbGOS7fFjd6XGqHkF+2NRJA/ZVzV9Gpgehvic2OEOXR+QpOV/WWF9mEuc9729OJufDwWgoOX7Vm9hu9sBUET5UiVfsPF3BebiPHy87VOTO52UDpXaErTJl8lNEfwdV8+uYOQZW5wI=
+	t=1727877256; cv=none; b=SNFmplOTKwcl6GXTYcA5WwddooJQz738F4Wk+RphaTwAQckZUoD94bNZfthR1RkO8uLVxVcBVm95yvnsSHTtpyppA71urWZYL2kiD7ck53SkoRkBtRNGiIRBHgtwF2wA3t6+Atagya0En6OcpZTpHNW0S8pbIEzR62UauFQdoX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877253; c=relaxed/simple;
-	bh=s6OOnHhmHSurP2eNHY7zUDXn+R+916O03eMVNr01QzU=;
+	s=arc-20240116; t=1727877256; c=relaxed/simple;
+	bh=99+Yn5cUzku5+re8qnJ6mrtKpLgD4YtGb5TmSxb4VJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jUY6RSU8FqKcdEkJmQxPJtbG+Rcgyg6uK2KshzBzNp7fFOAt7kcAHBTUpquNj69R3oPXwN6XyGovqYSJdS3JwUVaPUgK5aOIy4lrzoc+o/z7GzZX8h6Hdvjp7s6W59AfGBy4T+EEEGVo2GqqvbsXjhjOdNgxAdiee6Y94zh+0mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym3hUGqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNPnrfIaGUWbbF8kbs2Dhx5v/Em3ar7vc1L1WMEADwtrdMuamRwzM3YtnfMR7T7CSHVX8QcCfgOOzugaf8LHyDGJp4Zl1iCpH+U/fNK1Y/tOD0B2R9Btl1KhkOlHuuuW5R9QUFhaJAKumxUuOxn/MyLk9XcpI8TgCNJkeSDIcT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHyQ9b9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym3hUGqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5993EC4CEE2;
-	Wed,  2 Oct 2024 13:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHyQ9b9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4711DC4CEE2;
+	Wed,  2 Oct 2024 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877253;
-	bh=s6OOnHhmHSurP2eNHY7zUDXn+R+916O03eMVNr01QzU=;
+	s=korg; t=1727877256;
+	bh=99+Yn5cUzku5+re8qnJ6mrtKpLgD4YtGb5TmSxb4VJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ym3hUGqhDz+ZxCyKeAVtBNYROzY3HI9RsB07KJAa1a1t9apjEEgNLk0TjKv8xtzwF
-	 eVKkfCdBtrcGu6JKSWsRYzj6gsqd+jbxAPsEFwQSJ/Tp8GPY/gNQCGfj2Y/8qS+qj8
-	 Js1ZsurnXez6z5aqrOnGAOemMoRZyS8SAu1wOQEw=
+	b=GHyQ9b9eLvTczmfrM6qZZhgZrI1mnlwbGrpdTtBEcaS7iQ5P6ojtUPBiL7VK2LS4b
+	 /Vn/3H3yYDB8aK+cHQl+fHxSNa+oiN3Sb3qpIwDmJvgmeT2WS+S4S5zLqdCKiufI6T
+	 m7TOigLkbBwS9vY8jJKUHXUsspZubJrr7n6sfjyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
 	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 020/634] RISC-V: KVM: Dont zero-out PMU snapshot area before freeing data
-Date: Wed,  2 Oct 2024 14:52:00 +0200
-Message-ID: <20241002125811.892110733@linuxfoundation.org>
+Subject: [PATCH 6.10 021/634] RISC-V: KVM: Allow legacy PMU access from guest
+Date: Wed,  2 Oct 2024 14:52:01 +0200
+Message-ID: <20241002125811.931242122@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,92 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit 47d40d93292d9cff8dabb735bed83d930fa03950 ]
+[ Upstream commit 7d1ffc8b087e97dbe1985912c7a2d00e53cea169 ]
 
-With the latest Linux-6.11-rc3, the below NULL pointer crash is observed
-when SBI PMU snapshot is enabled for the guest and the guest is forcefully
-powered-off.
+Currently, KVM traps & emulates PMU counter access only if SBI PMU
+is available as the guest can only configure/read PMU counters via
+SBI only. However, if SBI PMU is not enabled in the host, the
+guest will fallback to the legacy PMU which will try to access
+cycle/instret and result in an illegal instruction trap which
+is not desired.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000508
-  Oops [#1]
-  Modules linked in: kvm
-  CPU: 0 UID: 0 PID: 61 Comm: term-poll Not tainted 6.11.0-rc3-00018-g44d7178dd77a #3
-  Hardware name: riscv-virtio,qemu (DT)
-  epc : __kvm_write_guest_page+0x94/0xa6 [kvm]
-   ra : __kvm_write_guest_page+0x54/0xa6 [kvm]
-  epc : ffffffff01590e98 ra : ffffffff01590e58 sp : ffff8f80001f39b0
-   gp : ffffffff81512a60 tp : ffffaf80024872c0 t0 : ffffaf800247e000
-   t1 : 00000000000007e0 t2 : 0000000000000000 s0 : ffff8f80001f39f0
-   s1 : 00007fff89ac4000 a0 : ffffffff015dd7e8 a1 : 0000000000000086
-   a2 : 0000000000000000 a3 : ffffaf8000000000 a4 : ffffaf80024882c0
-   a5 : 0000000000000000 a6 : ffffaf800328d780 a7 : 00000000000001cc
-   s2 : ffffaf800197bd00 s3 : 00000000000828c4 s4 : ffffaf800248c000
-   s5 : ffffaf800247d000 s6 : 0000000000001000 s7 : 0000000000001000
-   s8 : 0000000000000000 s9 : 00007fff861fd500 s10: 0000000000000001
-   s11: 0000000000800000 t3 : 00000000000004d3 t4 : 00000000000004d3
-   t5 : ffffffff814126e0 t6 : ffffffff81412700
-  status: 0000000200000120 badaddr: 0000000000000508 cause: 000000000000000d
-  [<ffffffff01590e98>] __kvm_write_guest_page+0x94/0xa6 [kvm]
-  [<ffffffff015943a6>] kvm_vcpu_write_guest+0x56/0x90 [kvm]
-  [<ffffffff015a175c>] kvm_pmu_clear_snapshot_area+0x42/0x7e [kvm]
-  [<ffffffff015a1972>] kvm_riscv_vcpu_pmu_deinit.part.0+0xe0/0x14e [kvm]
-  [<ffffffff015a2ad0>] kvm_riscv_vcpu_pmu_deinit+0x1a/0x24 [kvm]
-  [<ffffffff0159b344>] kvm_arch_vcpu_destroy+0x28/0x4c [kvm]
-  [<ffffffff0158e420>] kvm_destroy_vcpus+0x5a/0xda [kvm]
-  [<ffffffff0159930c>] kvm_arch_destroy_vm+0x14/0x28 [kvm]
-  [<ffffffff01593260>] kvm_destroy_vm+0x168/0x2a0 [kvm]
-  [<ffffffff015933d4>] kvm_put_kvm+0x3c/0x58 [kvm]
-  [<ffffffff01593412>] kvm_vm_release+0x22/0x2e [kvm]
+KVM can allow dummy emulation of cycle/instret only for the guest
+if SBI PMU is not enabled in the host. The dummy emulation will
+still return zero as we don't to expose the host counter values
+from a guest using legacy PMU.
 
-Clearly, the kvm_vcpu_write_guest() function is crashing because it is
-being called from kvm_pmu_clear_snapshot_area() upon guest tear down.
-
-To address the above issue, simplify the kvm_pmu_clear_snapshot_area() to
-not zero-out PMU snapshot area from kvm_pmu_clear_snapshot_area() because
-the guest is anyway being tore down.
-
-The kvm_pmu_clear_snapshot_area() is also called when guest changes
-PMU snapshot area of a VCPU but even in this case the previous PMU
-snaphsot area must not be zeroed-out because the guest might have
-reclaimed the pervious PMU snapshot area for some other purpose.
-
-Fixes: c2f41ddbcdd7 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Link: https://lore.kernel.org/r/20240815170907.2792229-1-apatel@ventanamicro.com
+Fixes: a9ac6c37521f ("RISC-V: KVM: Implement trap & emulate for hpmcounters")
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20240816-kvm_pmu_fixes-v1-1-cdfce386dd93@rivosinc.com
 Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ arch/riscv/include/asm/kvm_vcpu_pmu.h | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index bcf41d6e0df0e..2707a51b082ca 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -391,19 +391,9 @@ int kvm_riscv_vcpu_pmu_read_hpm(struct kvm_vcpu *vcpu, unsigned int csr_num,
- static void kvm_pmu_clear_snapshot_area(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_pmu *kvpmu = vcpu_to_pmu(vcpu);
--	int snapshot_area_size = sizeof(struct riscv_pmu_snapshot_data);
+diff --git a/arch/riscv/include/asm/kvm_vcpu_pmu.h b/arch/riscv/include/asm/kvm_vcpu_pmu.h
+index fa0f535bbbf02..c309daa2d75a8 100644
+--- a/arch/riscv/include/asm/kvm_vcpu_pmu.h
++++ b/arch/riscv/include/asm/kvm_vcpu_pmu.h
+@@ -10,6 +10,7 @@
+ #define __KVM_VCPU_RISCV_PMU_H
  
--	if (kvpmu->sdata) {
--		if (kvpmu->snapshot_addr != INVALID_GPA) {
--			memset(kvpmu->sdata, 0, snapshot_area_size);
--			kvm_vcpu_write_guest(vcpu, kvpmu->snapshot_addr,
--					     kvpmu->sdata, snapshot_area_size);
--		} else {
--			pr_warn("snapshot address invalid\n");
--		}
--		kfree(kvpmu->sdata);
--		kvpmu->sdata = NULL;
--	}
-+	kfree(kvpmu->sdata);
-+	kvpmu->sdata = NULL;
- 	kvpmu->snapshot_addr = INVALID_GPA;
- }
+ #include <linux/perf/riscv_pmu.h>
++#include <asm/kvm_vcpu_insn.h>
+ #include <asm/sbi.h>
  
+ #ifdef CONFIG_RISCV_PMU_SBI
+@@ -104,8 +105,20 @@ void kvm_riscv_vcpu_pmu_reset(struct kvm_vcpu *vcpu);
+ struct kvm_pmu {
+ };
+ 
++static inline int kvm_riscv_vcpu_pmu_read_legacy(struct kvm_vcpu *vcpu, unsigned int csr_num,
++						 unsigned long *val, unsigned long new_val,
++						 unsigned long wr_mask)
++{
++	if (csr_num == CSR_CYCLE || csr_num == CSR_INSTRET) {
++		*val = 0;
++		return KVM_INSN_CONTINUE_NEXT_SEPC;
++	} else {
++		return KVM_INSN_ILLEGAL_TRAP;
++	}
++}
++
+ #define KVM_RISCV_VCPU_HPMCOUNTER_CSR_FUNCS \
+-{.base = 0,	.count = 0,	.func = NULL },
++{.base = CSR_CYCLE,	.count = 3,	.func = kvm_riscv_vcpu_pmu_read_legacy },
+ 
+ static inline void kvm_riscv_vcpu_pmu_init(struct kvm_vcpu *vcpu) {}
+ static inline int kvm_riscv_vcpu_pmu_incr_fw(struct kvm_vcpu *vcpu, unsigned long fid)
 -- 
 2.43.0
 
