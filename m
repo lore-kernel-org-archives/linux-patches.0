@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FCA16F84F;
-	Wed,  2 Oct 2024 13:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4BC16F84F;
+	Wed,  2 Oct 2024 13:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727875634; cv=none; b=qOlPVhkOGX4UIEO6Xo0KU3ENQeb8Pd6wgJA2Gjyf1vuddDi+R/gost55tMesQuB4U2t2thyJr4QoVPRa4mt2LCOWJQv1Uqi7WBuOeRld9GGr3KikI4dP4WK9ngTxceL69ey31cpFB77PpCt9V9lL0lgFjBoaGJVhsFAb3Jtk3mg=
+	t=1727875637; cv=none; b=UnQSLjCn6IfDcAQOUUNttQsyfDoLxVklNhyHoPC3Af0awJXbRRRjULUmy0zJ/jqcWPH7cZ8a1R4g4eXbKYQ72QBYTSevnDxEQ4sp71XQ5KJMeQ8bIQG9Rvy+P885jbkjgP3U7juQuJ4hANjerLj5HCXaVQ9M7ibOSnI2CssqkH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727875634; c=relaxed/simple;
-	bh=pd2ejXK13iaH8BWA6ltT/ZK29R6qOPFY833CUDAvusM=;
+	s=arc-20240116; t=1727875637; c=relaxed/simple;
+	bh=K4pdssGvvT0MrhsnoZ7iZNED1fHD/rtTKMZ3qXmXT3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IkSvSpDZ/P5Ms1YLZgDz5zq8zx3JhbnzHXAYvXnmljTN4mRNJSPK+IG3KDeR21bkKmn+Et1EN/ScMl9G2J+NGaA8V766xNoTYnYZ4UZ8JlkR+QuqgloCLQ6kYzYR4PX/eaZIMAU6VPCHZYCp75F1jyTOLBiWjnmE3fAhMOkVNJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eevuugG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FG+vTh+hGvHm0zaHynF+NLmzo2lVEQM+NxwGQqoTNCxw7HX15JG7RZw1VjR9Go0d9GqnuMFNgVdXs7n62QppAZuMdz9f+2hV6Z5U7eA0WM6LKInZLZi8hGc5tu3raYgkxPrISniIrjnWqeqs3uStcJRHX+QzRwvHBUUwYDteAr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+CRgPuY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eevuugG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2935AC4CEC5;
-	Wed,  2 Oct 2024 13:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+CRgPuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FE2C4CEC5;
+	Wed,  2 Oct 2024 13:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727875634;
-	bh=pd2ejXK13iaH8BWA6ltT/ZK29R6qOPFY833CUDAvusM=;
+	s=korg; t=1727875637;
+	bh=K4pdssGvvT0MrhsnoZ7iZNED1fHD/rtTKMZ3qXmXT3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1eevuugGSqPeKD0f/VelldqxiSx1yvgy9tGq/qFEbX60exm4H8b7NX48SiBskHUTn
-	 uKDuUfIAfqOrj4mdvYjZlUNIDTULdGCnCfUhrXrb0gP9oMkTSPesKbm5Kejr5rnQWG
-	 7vGwZaDKqv6Aluhf2hNfaiM3XcF0ReOOGlCHpMQo=
+	b=j+CRgPuYnXfON5UlYMSLjScvz//2zQisE7nIP5BfC0vzGHubi2KTZ/S/uKiYI34WT
+	 IIr3eAK6jH86Yf71XIr24YAgT22WFj18Iet40VztJSIZvcchuv31Ypi30xoi12SfBJ
+	 /EGgadW+ShHpQ4Onr+/EMoA49krAxKd94CLlpYx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	tangbin <tangbin@cmss.chinamobile.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 169/695] m68k: Fix kernel_clone_args.flags in m68k_clone()
-Date: Wed,  2 Oct 2024 14:52:47 +0200
-Message-ID: <20241002125829.220057997@linuxfoundation.org>
+Subject: [PATCH 6.11 170/695] ASoC: loongson: fix error release
+Date: Wed,  2 Oct 2024 14:52:48 +0200
+Message-ID: <20241002125829.259162877@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -52,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: tangbin <tangbin@cmss.chinamobile.com>
 
-[ Upstream commit 09b3d870faa7bc3e96c0978ab3cf4e96e4b15571 ]
+[ Upstream commit 97688a9c5b1fd2b826c682cdfa36d411a5c99828 ]
 
-Stan Johnson recently reported a failure from the 'dump' command:
+In function loongson_card_parse_of(), when get device_node
+'codec' failed, the function of_node_put(codec) should not
+be invoked, thus fix error release.
 
-  DUMP: Date of this level 0 dump: Fri Aug  9 23:37:15 2024
-  DUMP: Dumping /dev/sda (an unlisted file system) to /dev/null
-  DUMP: Label: none
-  DUMP: Writing 10 Kilobyte records
-  DUMP: mapping (Pass I) [regular files]
-  DUMP: mapping (Pass II) [directories]
-  DUMP: estimated 3595695 blocks.
-  DUMP: Context save fork fails in parent 671
-
-The dump program uses the clone syscall with the CLONE_IO flag, that is,
-flags == 0x80000000. When that value is promoted from long int to u64 by
-m68k_clone(), it undergoes sign-extension. The new value includes
-CLONE_INTO_CGROUP so the validation in cgroup_css_set_fork() fails and
-the syscall returns -EBADF. Avoid sign-extension by casting to u32.
-
-Reported-by: Stan Johnson <userm57@yahoo.com>
-Closes: https://lists.debian.org/debian-68k/2024/08/msg00000.html
-Fixes: 6aabc1facdb2 ("m68k: Implement copy_thread_tls()")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/3463f1e5d4e95468dc9f3368f2b78ffa7b72199b.1723335149.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: d24028606e76 ("ASoC: loongson: Add Loongson ASoC Sound Card Support")
+Signed-off-by: tangbin <tangbin@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20240903090620.6276-1-tangbin@cmss.chinamobile.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/process.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/loongson/loongson_card.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/m68k/kernel/process.c b/arch/m68k/kernel/process.c
-index 2584e94e21346..fda7eac23f872 100644
---- a/arch/m68k/kernel/process.c
-+++ b/arch/m68k/kernel/process.c
-@@ -117,7 +117,7 @@ asmlinkage int m68k_clone(struct pt_regs *regs)
- {
- 	/* regs will be equal to current_pt_regs() */
- 	struct kernel_clone_args args = {
--		.flags		= regs->d1 & ~CSIGNAL,
-+		.flags		= (u32)(regs->d1) & ~CSIGNAL,
- 		.pidfd		= (int __user *)regs->d3,
- 		.child_tid	= (int __user *)regs->d4,
- 		.parent_tid	= (int __user *)regs->d3,
+diff --git a/sound/soc/loongson/loongson_card.c b/sound/soc/loongson/loongson_card.c
+index fae5e9312bf08..2c8dbdba27c5f 100644
+--- a/sound/soc/loongson/loongson_card.c
++++ b/sound/soc/loongson/loongson_card.c
+@@ -127,8 +127,8 @@ static int loongson_card_parse_of(struct loongson_card_data *data)
+ 	codec = of_get_child_by_name(dev->of_node, "codec");
+ 	if (!codec) {
+ 		dev_err(dev, "audio-codec property missing or invalid\n");
+-		ret = -EINVAL;
+-		goto err;
++		of_node_put(cpu);
++		return -EINVAL;
+ 	}
+ 
+ 	for (i = 0; i < card->num_links; i++) {
 -- 
 2.43.0
 
