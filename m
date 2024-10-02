@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EC01D0491;
-	Wed,  2 Oct 2024 13:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D625F1CF7D4;
+	Wed,  2 Oct 2024 13:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876214; cv=none; b=rRoJDdt6bMUKubCRtC8bErZ2QdJKfLz63TdPGlmMXmIp++HtlvRtlXtjOXAN1TSSEUVTezjdTYJfwioHhLfAEYaiA2xd+ESNvdmtZXUbSgcDaQTuhyyPzct/GAXGwevyckv9Eaal/t6Y8V4IGxRgTnznPeSXLAA1dal/Pi+RrgQ=
+	t=1727876217; cv=none; b=VhZ7rsVf46qhoNWM0chbSm9R3s/eZRpgAlMHwy/qozdV1Ju3Jn6pcIiQLK9kWIBvSm6uYtNp6imNA0f12qEUTT8gCMGDlADFWz0d7enoyccn8ok8InlRwMbdr6JjYhb263d4wYM6ld4VokZ5MPfciS2HVBPWZ8McWp2ubC9hcyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876214; c=relaxed/simple;
-	bh=tiJL+PV6Q8UjPpOGd/t5wS8ACfEQiaqqGN0As5ztFTI=;
+	s=arc-20240116; t=1727876217; c=relaxed/simple;
+	bh=2Gsp9EJwcV+fUKZ4D/OfStu8rFujvT/O06LlrSOUUEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bs/x69ow//g7B4G3M/o9vltK8gYbr0U96BB0dtqaNQ/Nvs8pRsBolNAuEA5m69rcSWZO/O/2izYIyq9WHBk/Y8IOlrFnYZGwA6SB3BQ69qLh76OVfWjxn597PVv4ufqx/zXOyLIGjIBAtaNV/+3wIUqRdta8ORdqPm2pO2I1/Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6NCzVPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCN+gPhwlYQBtS6dBcl9j0eOjeqZvqFLtquACrUFq5yaGPVKnZWmhYyA1s4fthuTYuu7p79BTSt2tWa5HPnNeeNisnRbNuWrVArRaWPfqi3w8xi7gTuebNBkPbFNsaW2lddwF37dtG39S7rx8O7r+w8gYUA7oEVSHLxW6QcRR1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHiY1Q9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6NCzVPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1D3C4CEC5;
-	Wed,  2 Oct 2024 13:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHiY1Q9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CA0C4CEC5;
+	Wed,  2 Oct 2024 13:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876214;
-	bh=tiJL+PV6Q8UjPpOGd/t5wS8ACfEQiaqqGN0As5ztFTI=;
+	s=korg; t=1727876217;
+	bh=2Gsp9EJwcV+fUKZ4D/OfStu8rFujvT/O06LlrSOUUEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6NCzVPn0uv9S+VO8aNb3QQgyBVIZj3DWJz8DK6gEJEwNSMdIOfV/quWWPNgNT0t2
-	 bBSRRUP1LGuGRA+7A5oDUfDbOSMMLjLwn10gkyT26ujoXRodCsXtbdMMThJvsuVY5g
-	 //CGHtZRprhY3EmskWLr7koqY4Ke6GoWgxLF/Zok=
+	b=gHiY1Q9PD9yT2yAWvXJtfWGLzr1y9oTYdX+06jwQtWNKsxHjTN1jfr4EaNr6WadEt
+	 +MDgpChtQntox3Elx60dZb6D9D3JgDaLpm4NjRdR50bBySzmEJlxWPYcLMFRFr/w6p
+	 0/dDA7V7yMfKDtuM3Y1iq4sUruxlXuZpuC7aCvQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 368/695] PCI: Wait for Link before restoring Downstream Buses
-Date: Wed,  2 Oct 2024 14:56:06 +0200
-Message-ID: <20241002125837.138543570@linuxfoundation.org>
+Subject: [PATCH 6.11 369/695] firewire: core: correct range of block for case of switch statement
+Date: Wed,  2 Oct 2024 14:56:07 +0200
+Message-ID: <20241002125837.177723059@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -45,71 +44,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 3e40aa29d47e231a54640addf6a09c1f64c5b63f ]
+[ Upstream commit ebb9d3ca8f7efc1b6a2f1750d1058eda444883d0 ]
 
-__pci_reset_bus() calls pci_bridge_secondary_bus_reset() to perform the
-reset and also waits for the Secondary Bus to become again accessible.
-__pci_reset_bus() then calls pci_bus_restore_locked() that restores the PCI
-devices connected to the bus, and if necessary, recursively restores also
-the subordinate buses and their devices.
+A commit d8527cab6c31 ("firewire: cdev: implement new event to notify
+response subaction with time stamp") adds an additional case,
+FW_CDEV_EVENT_RESPONSE2, into switch statement in complete_transaction().
+However, the range of block is beyond to the case label and reaches
+neibour default label.
 
-The logic in pci_bus_restore_locked() does not take into account that after
-restoring a device on one level, there might be another Link Downstream
-that can only start to come up after restore has been performed for its
-Downstream Port device. That is, the Link may require additional wait until
-it becomes accessible.
+This commit corrects the range of block. Fortunately, it has few impacts
+in practice since the local variable in the scope under the label is not
+used in codes under default label.
 
-Similarly, pci_slot_restore_locked() lacks wait.
-
-Amend pci_bus_restore_locked() and pci_slot_restore_locked() to wait for
-the Secondary Bus before recursively performing the restore of that bus.
-
-Fixes: 090a3c5322e9 ("PCI: Add pci_reset_slot() and pci_reset_bus()")
-Link: https://lore.kernel.org/r/20240808121708.2523-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: d8527cab6c31 ("firewire: cdev: implement new event to notify response subaction with time stamp")
+Link: https://lore.kernel.org/r/20240810070403.36801-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/firewire/core-cdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index ffaaca0978cbc..5c1d53398f95d 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5672,8 +5672,10 @@ static void pci_bus_restore_locked(struct pci_bus *bus)
+diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
+index 9a7dc90330a35..a888a001bedb1 100644
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -599,11 +599,11 @@ static void complete_transaction(struct fw_card *card, int rcode, u32 request_ts
+ 		queue_event(client, &e->event, rsp, sizeof(*rsp) + rsp->length, NULL, 0);
  
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
- 		pci_dev_restore(dev);
--		if (dev->subordinate)
-+		if (dev->subordinate) {
-+			pci_bridge_wait_for_secondary_bus(dev, "bus reset");
- 			pci_bus_restore_locked(dev->subordinate);
-+		}
+ 		break;
++	}
+ 	default:
+ 		WARN_ON(1);
+ 		break;
  	}
- }
+-	}
  
-@@ -5707,8 +5709,10 @@ static void pci_slot_restore_locked(struct pci_slot *slot)
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
- 		pci_dev_restore(dev);
--		if (dev->subordinate)
-+		if (dev->subordinate) {
-+			pci_bridge_wait_for_secondary_bus(dev, "slot reset");
- 			pci_bus_restore_locked(dev->subordinate);
-+		}
- 	}
- }
- 
+ 	/* Drop the idr's reference */
+ 	client_put(client);
 -- 
 2.43.0
 
