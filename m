@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529021D0414;
-	Wed,  2 Oct 2024 14:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9BF1D0414;
+	Wed,  2 Oct 2024 14:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878361; cv=none; b=WPB5m+mep6QCGidaISxx64zdutre83Roz8lWY804GUoU9HCgY6P3VFVWl/CWR4uXy2bx9D7OOhCpRMmJDdYPGlzVacYIGi/znBjVUAiGs61H2DQuFGJ4f3r/cGEyGBf3rie10ghNNCHzNb2YooAzKnsFIBVK2iBs0FLqU98ZV6g=
+	t=1727878364; cv=none; b=OGg+CbFJFbdtFmYxGM0CdYbWCTWTUeonTYEG7ST5Em5Yld5MLDhuw65AcVStBaZygP/UOM3eKhCfOC30bCUHtSzbHIFwUlqlppFsk8/asrnBDSzLtiTkzuqCD2fj66GZTGU3ps0p5Ubkq54tJD+xavoKMgcRviIYAcBm3qCCNDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878361; c=relaxed/simple;
-	bh=xPy/4wr9dze7gcPA45YFxNKEluRy5zZNlpmLOTBXZG8=;
+	s=arc-20240116; t=1727878364; c=relaxed/simple;
+	bh=Q0nltm/ZCMGY2GSso9PBkbEh6cQ2zZ36LTVNvAvJklA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7Y9ipHWC3Ah+VkD+wl9W24quI9UDAVez5xRM9bS1vCVfq/5uTZDQS73IPm1LdNPUiMm4R+fmAEBYrLejiWvUoFXzoszgYclsoBAximPH0/qC0pafBPAiKQ0aMNt+hk105ugHkrR+EtHMmakZb6Aw7R+NJMFKffize+PuOf/D+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNua77rV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5EUrVjoA1/EBNoWn7ALQXhkuWTPnglllf6ZjP17dCX02SpXvKSfStSkK8JOK6NaW5/B+meDgwsUyCPZk/BljIwsn9KPI6jkZcOpzv76hqUF4g3/8pdtW0RUlI0vGr5GBk30LM+FBM7AbUTuDDq2oRs56/dppAeqUhzkfrBn70A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJx2ujV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNua77rV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18DFC4CEC2;
-	Wed,  2 Oct 2024 14:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJx2ujV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE9AFC4CEC2;
+	Wed,  2 Oct 2024 14:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878361;
-	bh=xPy/4wr9dze7gcPA45YFxNKEluRy5zZNlpmLOTBXZG8=;
+	s=korg; t=1727878364;
+	bh=Q0nltm/ZCMGY2GSso9PBkbEh6cQ2zZ36LTVNvAvJklA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNua77rV4dy/5AJADEXD0L8PSd+j3X97J4b6WnO+1bq8cHUE+jR2ZvzpIGXSZkkR0
-	 5S8sjV2AZP+99oxqGKXNNtNdUo0XX9QheXRW2NE0QYKpf+v1IqwKtje88loSmZnlpY
-	 IxokD5QLImAtaH0ormMkOJGvWuzn4jLYdbnAp7Ag=
+	b=RJx2ujV0i6DcX9/y3Vv7z/BxpmAyo5TA0jksPF8i1BdhlPoDafuZgXWJnBYHKyE9X
+	 5aw/c6TZX/gryHqaNVMrUFjR7K6momrmfT9KUYooLPKcPBKuBsyUJ84wn4sDXxw8cl
+	 DqhB5MILASN8awuCKbaPBFKOGpv0u+o/w15t1lw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Max Hawking <maxahawking@sonnenkinder.org>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 370/634] RDMA/mlx5: Drop redundant work canceling from clean_keys()
-Date: Wed,  2 Oct 2024 14:57:50 +0200
-Message-ID: <20241002125825.702836192@linuxfoundation.org>
+Subject: [PATCH 6.10 388/634] ntb_perf: Fix printk format
+Date: Wed,  2 Oct 2024 14:58:08 +0200
+Message-ID: <20241002125826.419347838@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,37 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Max Hawking <maxahawking@sonnenkinder.org>
 
-[ Upstream commit 30e6bd8d3b5639f8f4261e5e6c0917ce264b8dc2 ]
+[ Upstream commit 1501ae7479c8d0f66efdbfdc9ae8d6136cefbd37 ]
 
-The canceling of dealyed work in clean_keys() is a leftover from years
-back and was added to prevent races in the cleanup process of MR cache.
-The cleanup process was rewritten a few years ago and the canceling of
-delayed work and flushing of workqueue was added before the call to
-clean_keys().
+The correct printk format is %pa or %pap, but not %pa[p].
 
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/943d21f5a9dba7b98a3e1d531e3561ffe9745d71.1725362530.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 7ebb00cea49d ("RDMA/mlx5: Fix MR cache temp entries cleanup")
+Fixes: 99a06056124d ("NTB: ntb_perf: Fix address err in perf_copy_chunk")
+Signed-off-by: Max Hawking <maxahawking@sonnenkinder.org>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/ntb/test/ntb_perf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index b3a8dc9465c04..842e218cd0b5e 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -779,7 +779,6 @@ static void clean_keys(struct mlx5_ib_dev *dev, struct mlx5_cache_ent *ent)
- {
- 	u32 mkey;
+diff --git a/drivers/ntb/test/ntb_perf.c b/drivers/ntb/test/ntb_perf.c
+index 553f1f46bc664..72bc1d017a46e 100644
+--- a/drivers/ntb/test/ntb_perf.c
++++ b/drivers/ntb/test/ntb_perf.c
+@@ -1227,7 +1227,7 @@ static ssize_t perf_dbgfs_read_info(struct file *filep, char __user *ubuf,
+ 			"\tOut buffer addr 0x%pK\n", peer->outbuf);
  
--	cancel_delayed_work(&ent->dwork);
- 	spin_lock_irq(&ent->mkeys_queue.lock);
- 	while (ent->mkeys_queue.ci) {
- 		mkey = pop_mkey_locked(ent);
+ 		pos += scnprintf(buf + pos, buf_size - pos,
+-			"\tOut buff phys addr %pa[p]\n", &peer->out_phys_addr);
++			"\tOut buff phys addr %pap\n", &peer->out_phys_addr);
+ 
+ 		pos += scnprintf(buf + pos, buf_size - pos,
+ 			"\tOut buffer size %pa\n", &peer->outbuf_size);
 -- 
 2.43.0
 
