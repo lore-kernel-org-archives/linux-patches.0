@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECF11D04A0;
-	Wed,  2 Oct 2024 13:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503921D0173;
+	Wed,  2 Oct 2024 13:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876191; cv=none; b=V4tw/RkoCT/2RfBl2zYhAfqRWI+LbzqM4pk+f17gNxOSdmWb4q5qXzRW8dFSqQm1GCtcEcV3CDpBQz3/7awfSDtcjzVpPUaFGqW+xQ5fOWRIAzQs3kuFZMEofwhkoDutYw2X3UzKhjy27WKR+VIBOqH6wKCk4wSykDvIkILbtRo=
+	t=1727876194; cv=none; b=S5kEJbIWBZsxneUU1gi3bKk0OAGFSjFBYRH5sPKXueXX4kcAybEcUcRX/p5knMrKR2T1260PYgYFOHHI56r5pYybFXMbOGwSop//iwcKQLyM5kUByAEI4kB5myK3sJb2+jgyEnU059s+OnTqYZo0d3zkUkt5cgFyEBAy1peOlno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876191; c=relaxed/simple;
-	bh=OQu7mUI8bvjw4Z2nU2LSkXCAdliyWLHxedqOhkCjngE=;
+	s=arc-20240116; t=1727876194; c=relaxed/simple;
+	bh=7PMQ3p3cu9mmzBI9Ipku9/KbXyxzdXImXWIZ77WCRiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRBm3k8bhLfJH0n7EWD3pm+itz3s5pZSScGFgNX0IVt/vSVD8AAvrdrE7Pfw/zVRapJe5GYuW0USrSh1zNtL2gAn63dVDR4WE4LnWrb4BmK/mtbwlbz2mUrWq5bf34HzyqYopg+DUlaykehdtTU3h6SZduNKb7fV8M1vLFGpLMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhSwSxbC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gk3QziFLJ7UX4fmGdGrodC/MRO/3JtcoVe9rr13TvwWYaR/ePGHz/COIodMUYcrqPd6GnIMd6gumpWkTgeurrNKkXDyb/Ndp4CigmHAKRPgu0WaP+JQL3cM+6+0FO/g9Jk30GFjx2sWwzC2vALeFaIOEZ76v/BZL/agMhTCXZfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nO/OJFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhSwSxbC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16F9C4CECD;
-	Wed,  2 Oct 2024 13:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nO/OJFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DC9C4CEC5;
+	Wed,  2 Oct 2024 13:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876191;
-	bh=OQu7mUI8bvjw4Z2nU2LSkXCAdliyWLHxedqOhkCjngE=;
+	s=korg; t=1727876194;
+	bh=7PMQ3p3cu9mmzBI9Ipku9/KbXyxzdXImXWIZ77WCRiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhSwSxbCGmHAPfRcJZkJrLDgVZTYUmiX7DmiYgfA4MDVpNPfyV/+NNz3HhsaCeRM4
-	 Lod8GiDyCB+5CSv9Kh97UAY0EZmxMX0teLaxqxrfVIBtXQEqyqmuOJDzNiuIkFB+NA
-	 14nbBluqjAbo6jsIcs2m3ffDnNaCvcKDK/NNxKxc=
+	b=0nO/OJFruNQPxygabuz4LXJwT3dO8WdCdbMgVjjof40Sx71poMAPsiWuGiKNfELgA
+	 JB6A33d9IP62rvNzE7xIvyHSrvILVFctxFZ7mw66Xfpd1P/C1vBzfLMT3D8HJRuDLe
+	 YRkXJc9ebTU4c2dKnRQAZM0B3fleZzX4hsL+aojs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Lonial Con <kongln9170@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 329/695] perf inject: Fix leader sampling inserting additional samples
-Date: Wed,  2 Oct 2024 14:55:27 +0200
-Message-ID: <20241002125835.581355854@linuxfoundation.org>
+Subject: [PATCH 6.11 320/695] bpf: Fix helper writes to read-only maps
+Date: Wed,  2 Oct 2024 14:55:18 +0200
+Message-ID: <20241002125835.223778225@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -61,127 +54,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 79bcd34e0f3da39fda841406ccc957405e724852 ]
+[ Upstream commit 32556ce93bc45c730829083cb60f95a2728ea48b ]
 
-The processing of leader samples would turn an individual sample with
-a group of read values into multiple samples. 'perf inject' would pass
-through the additional samples increasing the output data file size:
+Lonial found an issue that despite user- and BPF-side frozen BPF map
+(like in case of .rodata), it was still possible to write into it from
+a BPF program side through specific helpers having ARG_PTR_TO_{LONG,INT}
+as arguments.
 
-  $ perf record -g -e "{instructions,cycles}:S" -o perf.orig.data true
-  $ perf script -D -i perf.orig.data | sed -e 's/perf.orig.data/perf.data/g' > orig.txt
-  $ perf inject -i perf.orig.data -o perf.new.data
-  $ perf script -D -i perf.new.data | sed -e 's/perf.new.data/perf.data/g' > new.txt
-  $ diff -u orig.txt new.txt
-  --- orig.txt    2024-07-29 14:29:40.606576769 -0700
-  +++ new.txt     2024-07-29 14:30:04.142737434 -0700
-  ...
-  -0xc550@perf.data [0x30]: event: 3
-  +0xc550@perf.data [0xd0]: event: 9
-  +.
-  +. ... raw event: size 208 bytes
-  +.  0000:  09 00 00 00 01 00 d0 00 fc 72 01 86 ff ff ff ff  .........r......
-  +.  0010:  74 7d 2c 00 74 7d 2c 00 fb c3 79 f9 ba d5 05 00  t},.t},...y.....
-  +.  0020:  e6 cb 1a 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
-  +.  0030:  02 00 00 00 00 00 00 00 76 01 00 00 00 00 00 00  ........v.......
-  +.  0040:  e6 cb 1a 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  +.  0050:  62 18 00 00 00 00 00 00 f6 cb 1a 00 00 00 00 00  b...............
-  +.  0060:  00 00 00 00 00 00 00 00 0c 00 00 00 00 00 00 00  ................
-  +.  0070:  80 ff ff ff ff ff ff ff fc 72 01 86 ff ff ff ff  .........r......
-  +.  0080:  f3 0e 6e 85 ff ff ff ff 0c cb 7f 85 ff ff ff ff  ..n.............
-  +.  0090:  bc f2 87 85 ff ff ff ff 44 af 7f 85 ff ff ff ff  ........D.......
-  +.  00a0:  bd be 7f 85 ff ff ff ff 26 d0 7f 85 ff ff ff ff  ........&.......
-  +.  00b0:  6d a4 ff 85 ff ff ff ff ea 00 20 86 ff ff ff ff  m......... .....
-  +.  00c0:  00 fe ff ff ff ff ff ff 57 14 4f 43 fc 7e 00 00  ........W.OC.~..
-  +
-  +1642373909693435 0xc550 [0xd0]: PERF_RECORD_SAMPLE(IP, 0x1): 2915700/2915700: 0xffffffff860172fc period: 1 addr: 0
-  +... FP chain: nr:12
-  +.....  0: ffffffffffffff80
-  +.....  1: ffffffff860172fc
-  +.....  2: ffffffff856e0ef3
-  +.....  3: ffffffff857fcb0c
-  +.....  4: ffffffff8587f2bc
-  +.....  5: ffffffff857faf44
-  +.....  6: ffffffff857fbebd
-  +.....  7: ffffffff857fd026
-  +.....  8: ffffffff85ffa46d
-  +.....  9: ffffffff862000ea
-  +..... 10: fffffffffffffe00
-  +..... 11: 00007efc434f1457
-  +... sample_read:
-  +.... group nr 2
-  +..... id 00000000001acbe6, value 0000000000000176, lost 0
-  +..... id 00000000001acbf6, value 0000000000001862, lost 0
-  +
-  +0xc620@perf.data [0x30]: event: 3
-  ...
+In check_func_arg() when the argument is as mentioned, the meta->raw_mode
+is never set. Later, check_helper_mem_access(), under the case of
+PTR_TO_MAP_VALUE as register base type, it assumes BPF_READ for the
+subsequent call to check_map_access_type() and given the BPF map is
+read-only it succeeds.
 
-This behavior is incorrect as in the case above 'perf inject' should
-have done nothing. Fix this behavior by disabling separating samples
-for a tool that requests it. Only request this for `perf inject` so as
-to not affect other perf tools. With the patch and the test above
-there are no differences between the orig.txt and new.txt.
+The helpers really need to be annotated as ARG_PTR_TO_{LONG,INT} | MEM_UNINIT
+when results are written into them as opposed to read out of them. The
+latter indicates that it's okay to pass a pointer to uninitialized memory
+as the memory is written to anyway.
 
-Fixes: e4caec0d1af3d608 ("perf evsel: Add PERF_SAMPLE_READ sample related processing")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jiri Olsa <jolsa@redhat.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240729220620.2957754-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+However, ARG_PTR_TO_{LONG,INT} is a special case of ARG_PTR_TO_FIXED_SIZE_MEM
+just with additional alignment requirement. So it is better to just get
+rid of the ARG_PTR_TO_{LONG,INT} special cases altogether and reuse the
+fixed size memory types. For this, add MEM_ALIGNED to additionally ensure
+alignment given these helpers write directly into the args via *<ptr> = val.
+The .arg*_size has been initialized reflecting the actual sizeof(*<ptr>).
+
+MEM_ALIGNED can only be used in combination with MEM_FIXED_SIZE annotated
+argument types, since in !MEM_FIXED_SIZE cases the verifier does not know
+the buffer size a priori and therefore cannot blindly write *<ptr> = val.
+
+Fixes: 57c3bb725a3d ("bpf: Introduce ARG_PTR_TO_{INT,LONG} arg types")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://lore.kernel.org/r/20240913191754.13290-3-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-inject.c | 1 +
- tools/perf/util/session.c   | 3 +++
- tools/perf/util/tool.h      | 1 +
- 3 files changed, 5 insertions(+)
+ include/linux/bpf.h      |  7 +++++--
+ kernel/bpf/helpers.c     |  6 ++++--
+ kernel/bpf/syscall.c     |  3 ++-
+ kernel/bpf/verifier.c    | 41 +++++-----------------------------------
+ kernel/trace/bpf_trace.c |  6 ++++--
+ net/core/filter.c        |  6 ++++--
+ 6 files changed, 24 insertions(+), 45 deletions(-)
 
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index a212678d47beb..c80fb0f60e611 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -2204,6 +2204,7 @@ int cmd_inject(int argc, const char **argv)
- 			.finished_init	= perf_event__repipe_op2_synth,
- 			.compressed	= perf_event__repipe_op4_synth,
- 			.auxtrace	= perf_event__repipe_auxtrace,
-+			.dont_split_sample_group = true,
- 		},
- 		.input_name  = "-",
- 		.samples = LIST_HEAD_INIT(inject.samples),
-diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-index 5596bed1b8c83..080242c691969 100644
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -1511,6 +1511,9 @@ static int deliver_sample_group(struct evlist *evlist,
- 	int ret = -EINVAL;
- 	struct sample_read_value *v = sample->read.group.values;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index b051122f62a4f..70fa4ffc3879f 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -694,6 +694,11 @@ enum bpf_type_flag {
+ 	/* DYNPTR points to xdp_buff */
+ 	DYNPTR_TYPE_XDP		= BIT(16 + BPF_BASE_TYPE_BITS),
  
-+	if (tool->dont_split_sample_group)
-+		return deliver_sample_value(evlist, tool, event, sample, v, machine);
++	/* Memory must be aligned on some architectures, used in combination with
++	 * MEM_FIXED_SIZE.
++	 */
++	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
 +
- 	sample_read_group__for_each(v, sample->read.group.nr, read_format) {
- 		ret = deliver_sample_value(evlist, tool, event, sample, v,
- 					   machine);
-diff --git a/tools/perf/util/tool.h b/tools/perf/util/tool.h
-index c957fb849ac63..62bbc9cec151b 100644
---- a/tools/perf/util/tool.h
-+++ b/tools/perf/util/tool.h
-@@ -85,6 +85,7 @@ struct perf_tool {
- 	bool		namespace_events;
- 	bool		cgroup_events;
- 	bool		no_warn;
-+	bool		dont_split_sample_group;
- 	enum show_feature_header show_feat_hdr;
+ 	__BPF_TYPE_FLAG_MAX,
+ 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
+ };
+@@ -731,8 +736,6 @@ enum bpf_arg_type {
+ 	ARG_ANYTHING,		/* any (initialized) argument is ok */
+ 	ARG_PTR_TO_SPIN_LOCK,	/* pointer to bpf_spin_lock */
+ 	ARG_PTR_TO_SOCK_COMMON,	/* pointer to sock_common */
+-	ARG_PTR_TO_INT,		/* pointer to int */
+-	ARG_PTR_TO_LONG,	/* pointer to long */
+ 	ARG_PTR_TO_SOCKET,	/* pointer to bpf_sock (fullsock) */
+ 	ARG_PTR_TO_BTF_ID,	/* pointer to in-kernel struct */
+ 	ARG_PTR_TO_RINGBUF_MEM,	/* pointer to dynamically reserved ringbuf memory */
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 17a757c78b488..b305b116ce125 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -538,7 +538,8 @@ const struct bpf_func_proto bpf_strtol_proto = {
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(s64),
  };
  
+ BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
+@@ -566,7 +567,8 @@ const struct bpf_func_proto bpf_strtoul_proto = {
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_3(bpf_strncmp, const char *, s1, u32, s1_sz, const char *, s2)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index bf6c5f685ea22..efb7ff89fe2e2 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5952,7 +5952,8 @@ static const struct bpf_func_proto bpf_kallsyms_lookup_name_proto = {
+ 	.arg1_type	= ARG_PTR_TO_MEM,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_LONG,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_size	= sizeof(u64),
+ };
+ 
+ static const struct bpf_func_proto *
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 62cd315984042..e3abf560e405f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8180,16 +8180,6 @@ static bool arg_type_is_dynptr(enum bpf_arg_type type)
+ 	return base_type(type) == ARG_PTR_TO_DYNPTR;
+ }
+ 
+-static int int_ptr_type_to_size(enum bpf_arg_type type)
+-{
+-	if (type == ARG_PTR_TO_INT)
+-		return sizeof(u32);
+-	else if (type == ARG_PTR_TO_LONG)
+-		return sizeof(u64);
+-
+-	return -EINVAL;
+-}
+-
+ static int resolve_map_arg_type(struct bpf_verifier_env *env,
+ 				 const struct bpf_call_arg_meta *meta,
+ 				 enum bpf_arg_type *arg_type)
+@@ -8262,16 +8252,6 @@ static const struct bpf_reg_types mem_types = {
+ 	},
+ };
+ 
+-static const struct bpf_reg_types int_ptr_types = {
+-	.types = {
+-		PTR_TO_STACK,
+-		PTR_TO_PACKET,
+-		PTR_TO_PACKET_META,
+-		PTR_TO_MAP_KEY,
+-		PTR_TO_MAP_VALUE,
+-	},
+-};
+-
+ static const struct bpf_reg_types spin_lock_types = {
+ 	.types = {
+ 		PTR_TO_MAP_VALUE,
+@@ -8327,8 +8307,6 @@ static const struct bpf_reg_types *compatible_reg_types[__BPF_ARG_TYPE_MAX] = {
+ 	[ARG_PTR_TO_SPIN_LOCK]		= &spin_lock_types,
+ 	[ARG_PTR_TO_MEM]		= &mem_types,
+ 	[ARG_PTR_TO_RINGBUF_MEM]	= &ringbuf_mem_types,
+-	[ARG_PTR_TO_INT]		= &int_ptr_types,
+-	[ARG_PTR_TO_LONG]		= &int_ptr_types,
+ 	[ARG_PTR_TO_PERCPU_BTF_ID]	= &percpu_btf_ptr_types,
+ 	[ARG_PTR_TO_FUNC]		= &func_ptr_types,
+ 	[ARG_PTR_TO_STACK]		= &stack_ptr_types,
+@@ -8889,9 +8867,11 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 		 */
+ 		meta->raw_mode = arg_type & MEM_UNINIT;
+ 		if (arg_type & MEM_FIXED_SIZE) {
+-			err = check_helper_mem_access(env, regno,
+-						      fn->arg_size[arg], false,
+-						      meta);
++			err = check_helper_mem_access(env, regno, fn->arg_size[arg], false, meta);
++			if (err)
++				return err;
++			if (arg_type & MEM_ALIGNED)
++				err = check_ptr_alignment(env, reg, 0, fn->arg_size[arg], true);
+ 		}
+ 		break;
+ 	case ARG_CONST_SIZE:
+@@ -8916,17 +8896,6 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 		if (err)
+ 			return err;
+ 		break;
+-	case ARG_PTR_TO_INT:
+-	case ARG_PTR_TO_LONG:
+-	{
+-		int size = int_ptr_type_to_size(arg_type);
+-
+-		err = check_helper_mem_access(env, regno, size, false, meta);
+-		if (err)
+-			return err;
+-		err = check_ptr_alignment(env, reg, 0, size, true);
+-		break;
+-	}
+ 	case ARG_PTR_TO_CONST_STR:
+ 	{
+ 		err = check_reg_const_str(env, reg, regno);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index cd098846e251c..0b6df2c6ebe08 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1226,7 +1226,8 @@ static const struct bpf_func_proto bpf_get_func_arg_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+ 	.arg2_type	= ARG_ANYTHING,
+-	.arg3_type	= ARG_PTR_TO_LONG,
++	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_2(get_func_ret, void *, ctx, u64 *, value)
+@@ -1242,7 +1243,8 @@ static const struct bpf_func_proto bpf_get_func_ret_proto = {
+ 	.func		= get_func_ret,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+-	.arg2_type	= ARG_PTR_TO_LONG,
++	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg2_size	= sizeof(u64),
+ };
+ 
+ BPF_CALL_1(get_func_arg_cnt, void *, ctx)
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 78a6f746ea0ba..88588dae20267 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6346,7 +6346,8 @@ static const struct bpf_func_proto bpf_skb_check_mtu_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_INT,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+ };
+@@ -6357,7 +6358,8 @@ static const struct bpf_func_proto bpf_xdp_check_mtu_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_INT,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+ };
 -- 
 2.43.0
 
