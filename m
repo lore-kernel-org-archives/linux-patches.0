@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8301D0438;
-	Wed,  2 Oct 2024 14:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C02F1D151B;
+	Wed,  2 Oct 2024 14:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879393; cv=none; b=PEMpKkGPtENNtgx6o5kVcM4NGuVrk9rmtORRiBOLKhYSaSqs2Z1Vxs7V82Y4VenE8ZkBo4krwsY8x6Zoz79dUAaG25YOXA4EPfZTqnfRtwAy6ioGxM07SgHn70s2/1EzkndIkmicHqnVJP6Ngn5TtR08x6F8X+NB3GfhKVOtVWI=
+	t=1727879396; cv=none; b=sDxiSzHCeSVa8iXubu4SLs0oerQYbyvMm48x5pkMk8SnOctHyUyAEykJwA8nqcyRqbaC/7O/uZiIrXlA6hEN+06Fh6c1e7cHvJ0AEbXzHpv+BzLS3hBcVF7xju4dGOKuHN4i/s1mBMpwUagTUAAhHoKVW093mwX6KeL05/FRWNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879393; c=relaxed/simple;
-	bh=AZOsf4thOLpiBHuEsZqVnlS5L9vuOOrqhYJTpLCM038=;
+	s=arc-20240116; t=1727879396; c=relaxed/simple;
+	bh=xsE3oSmyeQqsonVnjqmW2vd+gWBBOcg1umvMJc84y44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEUW5cOdXmN05xRWB5uijrQsmQ5midLynrhcjoClechdKXVdkvo4/SmED6YSKwqq8emUZD18feNhw6HNYqDqycuWg9Z5HC4S2Ot3OtUYpLL7bx/aphCyOJUetd7N1JG161V2zLV8ZJjLfKCCphJKCMxSfupLgt0qzztUnvnoFJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xflSlUpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZP6oV7lnj6GXcoDrLo4OhO3XqGUG5M90rssU63S0BQixk/lHNMobKjAqYUI1FGlprq4u2lDAwkFCiwHLE76dn1kC0alJv13PnqxKD66IX/3S3gmS3fQ1kNzcd3uIyf6Q94cviOYIvVd93jWIkY6reKAV4J6gfC02r+yVkb6oIFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUMWJxj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xflSlUpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C528FC4CEC2;
-	Wed,  2 Oct 2024 14:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUMWJxj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD777C4CECD;
+	Wed,  2 Oct 2024 14:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879393;
-	bh=AZOsf4thOLpiBHuEsZqVnlS5L9vuOOrqhYJTpLCM038=;
+	s=korg; t=1727879396;
+	bh=xsE3oSmyeQqsonVnjqmW2vd+gWBBOcg1umvMJc84y44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xflSlUpuc/jYRXqJlgwuMfRsziK0uoYiQkY+bDVN9q3efYTnPhm57PgAbzfyWLdIO
-	 Clmk48Db0/YdRegoiqRsnmitWJ+KsWWqqZ3s99z2n+PEI8equN0ePVATVTX0qVnkWa
-	 35hFfoASB05YCdrfuCEB6sH0+GDLVtnSnMGIF5OM=
+	b=fUMWJxj87fMwA4juDMrzEdsLM4Ow9+G26XMAxQ0OYd6XY/b6rHV61ZtSjYdCPgDhh
+	 Iih5GIQFD4o1qu8csifQkJY0CPvhZ8OE88vJslLcv+qkC37fA6xD7y10Ga69VTg+J+
+	 a6dqKQWdKlChgPxLScd7zBuEkovzIoDHxQKjT7kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/538] ARM: dts: imx7d-zii-rmu2: fix Ethernet PHY pinctrl property
-Date: Wed,  2 Oct 2024 14:55:43 +0200
-Message-ID: <20241002125756.338136336@linuxfoundation.org>
+Subject: [PATCH 6.6 105/538] ARM: versatile: fix OF node leak in CPUs prepare
+Date: Wed,  2 Oct 2024 14:55:44 +0200
+Message-ID: <20241002125756.377817402@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,34 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0e49cfe364dea4345551516eb2fe53135a10432b ]
+[ Upstream commit f2642d97f2105ed17b2ece0c597450f2ff95d704 ]
 
-There is no "fsl,phy" property in pin controller pincfg nodes:
+Machine code is leaking OF node reference from of_find_matching_node()
+in realview_smp_prepare_cpus().
 
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,pins' is a required property
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,phy' does not match any of the regexes: 'pinctrl-[0-9]+'
-
-Fixes: f496e6750083 ("ARM: dts: Add ZII support for ZII i.MX7 RMU2 board")
+Fixes: 5420b4b15617 ("ARM: realview: add an DT SMP boot method")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/20240826054934.10724-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-versatile/platsmp-realview.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-index 521493342fe97..8f5566027c25a 100644
---- a/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx7d-zii-rmu2.dts
-@@ -350,7 +350,7 @@ MX7D_PAD_SD3_RESET_B__SD3_RESET_B	0x59
- 
- &iomuxc_lpsr {
- 	pinctrl_enet1_phy_interrupt: enet1phyinterruptgrp {
--		fsl,phy = <
-+		fsl,pins = <
- 			MX7D_PAD_LPSR_GPIO1_IO02__GPIO1_IO2	0x08
- 		>;
- 	};
+diff --git a/arch/arm/mach-versatile/platsmp-realview.c b/arch/arm/mach-versatile/platsmp-realview.c
+index 5d363385c8019..059d796b26bc8 100644
+--- a/arch/arm/mach-versatile/platsmp-realview.c
++++ b/arch/arm/mach-versatile/platsmp-realview.c
+@@ -66,6 +66,7 @@ static void __init realview_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
+ 	}
+ 	map = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(map)) {
+ 		pr_err("PLATSMP: No syscon regmap\n");
+ 		return;
 -- 
 2.43.0
 
