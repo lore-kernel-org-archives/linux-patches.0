@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6441D0DC3;
-	Wed,  2 Oct 2024 14:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7A21D0DC3;
+	Wed,  2 Oct 2024 14:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877849; cv=none; b=eMFVmTN7E+8GKLq3aaDOuJbPPgqHV+72mGhgJgJHfh2Vd61RCmXkiXm3spmrHn22McGo/ISh0DFGaiCr0IUi0lOijKeBE9bpynZFNVbKyQs7orMGM23ceztSbGPpybsB6W/k+2D3YJnxQXGdg5TXhYa3KEzqD2LuD67O3iyxuZg=
+	t=1727877852; cv=none; b=qL2Z6the9prd8Me9OvUhk0/mpI5q/OeXhKV3lNjXcTznbK2bgyioyL+U/K8UeUCQkzhasZXbesfX9M74OH7S2/PlREnuDI6PwCDKSJvZyIHX4wjzuohx7JJGxcMA3MpIwKPfBHkiIZZt1C1iI1AKJDhbQv0gzdwa04u3OGGwQr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877849; c=relaxed/simple;
-	bh=kJPzDIsOyPavXjf1wluvBuWrqc4BmOwhf424WRrNSos=;
+	s=arc-20240116; t=1727877852; c=relaxed/simple;
+	bh=FUXyB0bc9/17kvWSbE1A8cVCpLieGvhiQjCUw1vBJYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfWhCVdVEaWhUqemikt5H6Mw8W520Sj25q08igLBIm7Z31h6VdVk2t1dJogVRTh9r84jhEogw0EziJ4lzoDdWOrjVdkteiiS97o4BnYjiam2HBy6z3lH4QXSmGWVgwYIPmyTcnT8arEPfiGIG8oihUATfk7PLruc4rqQJfFA6sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYaC4Ewf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noYe4V6RdnY163iEUaiaMxiNEiBg3P3e+7BwNMnDRjJLBsUxJETj21QeNzSFaLtPE6gxf2B+CG+PXQaRpNQZHcgLF+0O71Oc0qXfzPPSwj7scKbHaKQaaWqqKWJh1ZSJzvn6DR3zQukHqrVwDJ7GZEXjBwC2szX8Ifiu8F1KlA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPqlgeRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYaC4Ewf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA39C4CEC2;
-	Wed,  2 Oct 2024 14:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPqlgeRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B03C4CEC2;
+	Wed,  2 Oct 2024 14:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877849;
-	bh=kJPzDIsOyPavXjf1wluvBuWrqc4BmOwhf424WRrNSos=;
+	s=korg; t=1727877852;
+	bh=FUXyB0bc9/17kvWSbE1A8cVCpLieGvhiQjCUw1vBJYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYaC4EwfTzUFtLir3ktjAGYZm9OS5/SybR4YK3/wjITVBYLMWe7iBFAooa8G0hNqv
-	 dGM8h05omBurF4oPZsSn40H/S38prKp7nc/P95jKgoZmZljCBRseExfutm+cQlH5Bm
-	 PoJTGs6+6DCwdKpAkN3Bp1lBSh7tmGE1iouZJZgs=
+	b=LPqlgeRk9E2KglaBzkFBwn2OrwYL8/9R1j0MTo0BGCMOsrxKocBwTb44LKdQx1k2S
+	 PYVcaO3rB9Lo9h39kDnwQ7m+b7e1C2FvbBp7g5CUJFgXiK0sEL0nVsy9XmwoWKqNyU
+	 oUPrzaUED8aEFhtjpkkqiSzZEg+I33HVZldFBZsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joshua Dickens <joshua.dickens@wacom.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 216/634] HID: wacom: Support sequence numbers smaller than 16-bit
-Date: Wed,  2 Oct 2024 14:55:16 +0200
-Message-ID: <20241002125819.628938506@linuxfoundation.org>
+Subject: [PATCH 6.10 217/634] HID: wacom: Do not warn about dropped packets for first packet
+Date: Wed,  2 Oct 2024 14:55:17 +0200
+Message-ID: <20241002125819.668039735@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,15 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gerecke <jason.gerecke@wacom.com>
 
-[ Upstream commit 359673ea3a203611b4f6d0f28922a4b9d2cfbcc8 ]
+[ Upstream commit 84aecf2d251a3359bc78b7c8e58f54b9fc966e89 ]
 
-The current dropped packet reporting assumes that all sequence numbers
-are 16 bits in length. This results in misleading "Dropped" messages if
-the hardware uses fewer bits. For example, if a tablet uses only 8 bits
-to store its sequence number, once it rolls over from 255 -> 0, the
-driver will still be expecting a packet "256". This patch adjusts the
-logic to reset the next expected packet to logical_minimum whenever
-it overflows beyond logical_maximum.
+The driver currently assumes that the first sequence number it will see
+is going to be 0. This is not a realiable assumption and can break if,
+for example, the tablet has already been running for some time prior to
+the kernel driver connecting to the device. This commit initializes the
+expected sequence number to -1 and will only print the "Dropped" warning
+the it has been updated to a non-negative value.
 
 Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
 Tested-by: Joshua Dickens <joshua.dickens@wacom.com>
@@ -70,29 +69,46 @@ Fixes: 6d09085b38e5 ("HID: wacom: Adding Support for new usages")
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_wac.c | 6 +++++-
+ drivers/hid/wacom_wac.h | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index d84740be96426..8cf82a5f3a5bf 100644
+index 8cf82a5f3a5bf..7660f62e6c1f2 100644
 --- a/drivers/hid/wacom_wac.c
 +++ b/drivers/hid/wacom_wac.c
-@@ -2492,9 +2492,14 @@ static void wacom_wac_pen_event(struct hid_device *hdev, struct hid_field *field
+@@ -2368,6 +2368,9 @@ static void wacom_wac_pen_usage_mapping(struct hid_device *hdev,
+ 		wacom_map_usage(input, usage, field, EV_KEY, BTN_STYLUS3, 0);
+ 		features->quirks &= ~WACOM_QUIRK_PEN_BUTTON3;
+ 		break;
++	case WACOM_HID_WD_SEQUENCENUMBER:
++		wacom_wac->hid_data.sequence_number = -1;
++		break;
+ 	}
+ }
+ 
+@@ -2492,7 +2495,8 @@ static void wacom_wac_pen_event(struct hid_device *hdev, struct hid_field *field
  		wacom_wac->hid_data.barrelswitch3 = value;
  		return;
  	case WACOM_HID_WD_SEQUENCENUMBER:
--		if (wacom_wac->hid_data.sequence_number != value)
--			hid_warn(hdev, "Dropped %hu packets", (unsigned short)(value - wacom_wac->hid_data.sequence_number));
-+		if (wacom_wac->hid_data.sequence_number != value) {
-+			int sequence_size = field->logical_maximum - field->logical_minimum + 1;
-+			int drop_count = (value - wacom_wac->hid_data.sequence_number) % sequence_size;
-+			hid_warn(hdev, "Dropped %d packets", drop_count);
-+		}
- 		wacom_wac->hid_data.sequence_number = value + 1;
-+		if (wacom_wac->hid_data.sequence_number > field->logical_maximum)
-+			wacom_wac->hid_data.sequence_number = field->logical_minimum;
- 		return;
- 	}
+-		if (wacom_wac->hid_data.sequence_number != value) {
++		if (wacom_wac->hid_data.sequence_number != value &&
++		    wacom_wac->hid_data.sequence_number >= 0) {
+ 			int sequence_size = field->logical_maximum - field->logical_minimum + 1;
+ 			int drop_count = (value - wacom_wac->hid_data.sequence_number) % sequence_size;
+ 			hid_warn(hdev, "Dropped %d packets", drop_count);
+diff --git a/drivers/hid/wacom_wac.h b/drivers/hid/wacom_wac.h
+index 6ec499841f709..e6443740b462f 100644
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -324,7 +324,7 @@ struct hid_data {
+ 	int bat_connected;
+ 	int ps_connected;
+ 	bool pad_input_event_flag;
+-	unsigned short sequence_number;
++	int sequence_number;
+ 	ktime_t time_delayed;
+ };
  
 -- 
 2.43.0
