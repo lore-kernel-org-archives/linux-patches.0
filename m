@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810871D042F;
-	Wed,  2 Oct 2024 14:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96BA19F411;
+	Wed,  2 Oct 2024 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878337; cv=none; b=KxvBM63r1egzEHbKCXkeL6tjBiKj6rRtkcVI6FiFyHaJHRoNbtwiPREInp5dVjpEwS8AAuHGETg4CMtsoafO14goTiMAmc1UlM0wth+h9EaVkrJCLu878c2ekhHMJeu4artxp4f5v7777oLcPgYObhdi99F3uuWRF4WGezZ5qTg=
+	t=1727878341; cv=none; b=Jjp2u9Re8Mw1WyaUcMa2avrEgKu3TehwCz7h3Z8wWqK1asFTZw3f393PAOJlGAUMhuHlkcETbNQwZdrKGIHr3K6bB/BTI25i+WNmHqqF9g7fF3r79Vp+WmRMZWuJESGPSsb452zSEPkJfheJh3GJGBYg1kzx6f78mVbtG6YPZ78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878337; c=relaxed/simple;
-	bh=0xe8bwdUpvalwVBUAEGB9mCZ7wtRWcOhWIN2GIZhI8o=;
+	s=arc-20240116; t=1727878341; c=relaxed/simple;
+	bh=nZxdxLEio5xx2BZ0rJQI8PJAM/482J//CMA74UsKiuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4OOxgySucqtWYIPCkqStLu9j7cVYP4USyjMPcU1BETFb7hDiQV12Tt1qkKMFjQnD+qlJauEPpX3o1VlCIudu9wRslmRgrIsMkkeO4QV4gm9X+pIeCe/h9C8WoYLRjOn9WYXRKrHhogoyI/qsUknu0XAgrRbRG87N30rnd3Sk/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms30U3OI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTZ8xnKbqjr5pMXGD21aS94aInkdNCuvr1wXA/aOV5fIgyQilFT4+BzsTvS9C1kxHpq4i/4iYnQ6rOyU72Nxn3IrhZc7OFPZGkRJby73tOiGIAumc2Tmq4U/BRJOPDUoV3opeUfNfNhJuAPw94yeoVDIRtI46YdNf3UlTLIX2Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqP5L8nI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms30U3OI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACF4C4CEC5;
-	Wed,  2 Oct 2024 14:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqP5L8nI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C61C4CEC2;
+	Wed,  2 Oct 2024 14:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878337;
-	bh=0xe8bwdUpvalwVBUAEGB9mCZ7wtRWcOhWIN2GIZhI8o=;
+	s=korg; t=1727878340;
+	bh=nZxdxLEio5xx2BZ0rJQI8PJAM/482J//CMA74UsKiuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ms30U3OIwdyuVEkeR2MpqtgQ4ye1Si7mmuYf7WXAmodhW3m+aSwfS3ZBRCLemQzc5
-	 FIo++YS24R0s8YTZRiXbz0yyNNg7ZG2JgG85HuiUTUooAS8ywLZ+19tccMXBYWpABu
-	 K6OJP3o5ve9OvdNaGpzdnAAoawSfdTL41BhE7n0k=
+	b=sqP5L8nIVG/r6U/lxry66kUKP+fGlP3losk+XQil0+t8b1svl+R0aV9i0uYp8BNhU
+	 RlfRFpq0humldbmwx5U8idXSdZ7ZnikvTPDnq+iQ+P8XBVjBGQR/1r2Po0MuvSR8nz
+	 nUdNVW7irFQp3A7lxKg/QRX6CTHKajcw7kS5pVhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 380/634] RDMA/hns: Fix restricted __le16 degrades to integer issue
-Date: Wed,  2 Oct 2024 14:58:00 +0200
-Message-ID: <20241002125826.099037183@linuxfoundation.org>
+Subject: [PATCH 6.10 381/634] RDMA/mlx5: Obtain upper net device only when needed
+Date: Wed,  2 Oct 2024 14:58:01 +0200
+Message-ID: <20241002125826.137996354@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,38 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit f4ccc0a2a0c5977540f519588636b5bc81aae2db ]
+[ Upstream commit 3ed7f9e239938a0cfaf3689e2f545229ecabec06 ]
 
-Fix sparse warnings: restricted __le16 degrades to integer.
+Report the upper device's state as the RDMA port state only in RoCE LAG or
+switchdev LAG.
 
-Fixes: 5a87279591a1 ("RDMA/hns: Support hns HW stats")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202409080508.g4mNSLwy-lkp@intel.com/
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240909065331.3950268-1-huangjunxian6@hisilicon.com
+Fixes: 27f9e0ccb6da ("net/mlx5: Lag, Add single RDMA device in multiport mode")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/20240909173025.30422-3-michaelgur@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 349b68d7e7db6..24e906b9d3ae1 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -1681,8 +1681,8 @@ static int hns_roce_hw_v2_query_counter(struct hns_roce_dev *hr_dev,
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 43660c831b22c..fdb0e62d805b9 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -542,7 +542,7 @@ static int mlx5_query_port_roce(struct ib_device *device, u32 port_num,
+ 	if (!ndev)
+ 		goto out;
  
- 	for (i = 0; i < HNS_ROCE_HW_CNT_TOTAL && i < *num_counters; i++) {
- 		bd_idx = i / CNT_PER_DESC;
--		if (!(desc[bd_idx].flag & HNS_ROCE_CMD_FLAG_NEXT) &&
--		    bd_idx != HNS_ROCE_HW_CNT_TOTAL / CNT_PER_DESC)
-+		if (bd_idx != HNS_ROCE_HW_CNT_TOTAL / CNT_PER_DESC &&
-+		    !(desc[bd_idx].flag & cpu_to_le16(HNS_ROCE_CMD_FLAG_NEXT)))
- 			break;
- 
- 		cnt_data = (__le64 *)&desc[bd_idx].data[0];
+-	if (dev->lag_active) {
++	if (mlx5_lag_is_roce(mdev) || mlx5_lag_is_sriov(mdev)) {
+ 		rcu_read_lock();
+ 		upper = netdev_master_upper_dev_get_rcu(ndev);
+ 		if (upper) {
 -- 
 2.43.0
 
