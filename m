@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAB61D016E;
-	Wed,  2 Oct 2024 13:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFF2198837;
+	Wed,  2 Oct 2024 13:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877379; cv=none; b=Q5MNLQGJA6iJrMqGvYnMueDXJigK1rfdBsvGkWv1XFDIKOdjqstipPoDpFV4JP3eEkRpSfIP5lrRdV44A/Ftclqf8Rrr+UMTKAtBxBfQe9i2H4zHBT7PS5G0NJOj+PDD45Qn6Q1HTlPqSPNvvYaM8elWbS+5/QDVaNxcp0SBSEA=
+	t=1727877382; cv=none; b=F4/pA45jWRrkeaFZobqAbSP//Q8HViKcnSST+8Cfq8la0qbNJrkbDU+kjYpDZUoEaX7I3QlTLn7Sar2Unmh+4CB/BDmzsPqgOD3RE6wyMcelRKPijdp0ftivc6AojcTBhu0zO2mcJy6fFbpzIWpAbGDFGJdDknBd/lAXDh8gN/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877379; c=relaxed/simple;
-	bh=4pXRf0He6k3p4f1xDkZ0K/JycomVIXmuHiGRJPJBzk4=;
+	s=arc-20240116; t=1727877382; c=relaxed/simple;
+	bh=03o5QSYw5MArjI42GN8wgMhiDi2iU6iOJUkfu9NmN2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HC+gHJW0AZsAOSzQ5QYzv6VIBW0iDo8HHXNH8oFdnLA4lP4roBvquxLnweSNfoMETns/K0LuR+Pkrcm/lLkB8wlu70aupIriKFogJQQORgBjjDnj5NkE+bwDxY/hXRj/8673Zu7aAVcBfwW1v9KMClSW+fYNHNuMKHwkaMEOodM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2S+VV9G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKOIyfqDMuRBCWYi/deaAz+k6FW1oKHWu85rQX8/5Gums6yrknbDAdQ8CB9VtBW5lg/5Oj/xnbM8BEAP8Rj7Mj2WibkW/ae9+eD8Mwdn1WXh54oydbQMk8s4m/Y6gJ6VLEqpP5CL10ajzMj3YE4CK6N6ih8vLFgCZdX0f8FEPrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgNuZKBB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2S+VV9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB96FC4CEC2;
-	Wed,  2 Oct 2024 13:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgNuZKBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C8C4CEC5;
+	Wed,  2 Oct 2024 13:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877379;
-	bh=4pXRf0He6k3p4f1xDkZ0K/JycomVIXmuHiGRJPJBzk4=;
+	s=korg; t=1727877382;
+	bh=03o5QSYw5MArjI42GN8wgMhiDi2iU6iOJUkfu9NmN2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2S+VV9G9zF0rYSF9x8vL5oTIsAnJuqI/9qrwF3kJUy6Bc1/O3GrJyrE4FB0ltzlU
-	 OrrQ2sGbPZfO/MjOIcTDz9bJ/v5y5DeNViC9GZWRr0RjbmzbE/Zzuwn+BZHQ6Ogv4o
-	 ng+R3IiQ/9XFvZZ8TLhITp/ApaGDELIiPg6Jnr+o=
+	b=YgNuZKBBWaOWAycl1RChxCFpG+T4DkdP+t6ZH7pvjaPa6GyXrbfKUseCc83PIr74E
+	 Kv51NCjDV+lAWcEJiP0zeVocOM//qSMbTPWtiHMrwmh+s7Ah7Z/XJL+dByorWrMZrP
+	 DnmG74El5PcBD6F+o5UbYTF9H+pFZK7LDdWeAwGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 060/634] perf/arm-cmn: Ensure dtm_idx is big enough
-Date: Wed,  2 Oct 2024 14:52:40 +0200
-Message-ID: <20241002125813.476216259@linuxfoundation.org>
+Subject: [PATCH 6.10 061/634] cpufreq: ti-cpufreq: Introduce quirks to handle syscon fails appropriately
+Date: Wed,  2 Oct 2024 14:52:41 +0200
+Message-ID: <20241002125813.515517367@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,48 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit 359414b33e00bae91e4eabf3e4ef8e76024c7673 ]
+[ Upstream commit abc00ffda43bd4ba85896713464c7510c39f8165 ]
 
-While CMN_MAX_DIMENSION was bumped to 12 for CMN-650, that only supports
-up to a 10x10 mesh, so bumping dtm_idx to 256 bits at the time worked
-out OK in practice. However CMN-700 did finally support up to 144 XPs,
-and thus needs a worst-case 288 bits of dtm_idx for an aggregated XP
-event on a maxed-out config. Oops.
+Commit b4bc9f9e27ed ("cpufreq: ti-cpufreq: add support for omap34xx
+and omap36xx") introduced special handling for OMAP3 class devices
+where syscon node may not be present. However, this also creates a bug
+where the syscon node is present, however the offset used to read
+is beyond the syscon defined range.
 
-Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/e771b358526a0d7fc06efee2c3a2fdc0c9f51d44.1725296395.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix this by providing a quirk option that is populated when such
+special handling is required. This allows proper failure for all other
+platforms when the syscon node and efuse offsets are mismatched.
+
+Fixes: b4bc9f9e27ed ("cpufreq: ti-cpufreq: add support for omap34xx and omap36xx")
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cpufreq/ti-cpufreq.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index f33fd110081c3..058ea798b669b 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -35,6 +35,9 @@
- #define CMN_MAX_XPS			(CMN_MAX_DIMENSION * CMN_MAX_DIMENSION)
- #define CMN_MAX_DTMS			(CMN_MAX_XPS + (CMN_MAX_DIMENSION - 1) * 4)
+diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+index 5af85c4cbad0c..f8e6dc3c14d35 100644
+--- a/drivers/cpufreq/ti-cpufreq.c
++++ b/drivers/cpufreq/ti-cpufreq.c
+@@ -61,6 +61,9 @@ struct ti_cpufreq_soc_data {
+ 	unsigned long efuse_shift;
+ 	unsigned long rev_offset;
+ 	bool multi_regulator;
++/* Backward compatibility hack: Might have missing syscon */
++#define TI_QUIRK_SYSCON_MAY_BE_MISSING	0x1
++	u8 quirks;
+ };
  
-+/* Currently XPs are the node type we can have most of; others top out at 128 */
-+#define CMN_MAX_NODES_PER_EVENT		CMN_MAX_XPS
-+
- /* The CFG node has various info besides the discovery tree */
- #define CMN_CFGM_PERIPH_ID_01		0x0008
- #define CMN_CFGM_PID0_PART_0		GENMASK_ULL(7, 0)
-@@ -565,7 +568,7 @@ static void arm_cmn_debugfs_init(struct arm_cmn *cmn, int id) {}
+ struct ti_cpufreq_data {
+@@ -182,6 +185,7 @@ static struct ti_cpufreq_soc_data omap34xx_soc_data = {
+ 	.efuse_mask = BIT(3),
+ 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
+ 	.multi_regulator = false,
++	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
+ };
  
- struct arm_cmn_hw_event {
- 	struct arm_cmn_node *dn;
--	u64 dtm_idx[4];
-+	u64 dtm_idx[DIV_ROUND_UP(CMN_MAX_NODES_PER_EVENT * 2, 64)];
- 	s8 dtc_idx[CMN_MAX_DTCS];
- 	u8 num_dns;
- 	u8 dtm_offset;
+ /*
+@@ -209,6 +213,7 @@ static struct ti_cpufreq_soc_data omap36xx_soc_data = {
+ 	.efuse_mask = BIT(9),
+ 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
+ 	.multi_regulator = true,
++	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
+ };
+ 
+ /*
+@@ -223,6 +228,7 @@ static struct ti_cpufreq_soc_data am3517_soc_data = {
+ 	.efuse_mask = 0,
+ 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
+ 	.multi_regulator = false,
++	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
+ };
+ 
+ static struct ti_cpufreq_soc_data am625_soc_data = {
+@@ -250,7 +256,7 @@ static int ti_cpufreq_get_efuse(struct ti_cpufreq_data *opp_data,
+ 
+ 	ret = regmap_read(opp_data->syscon, opp_data->soc_data->efuse_offset,
+ 			  &efuse);
+-	if (ret == -EIO) {
++	if (opp_data->soc_data->quirks & TI_QUIRK_SYSCON_MAY_BE_MISSING && ret == -EIO) {
+ 		/* not a syscon register! */
+ 		void __iomem *regs = ioremap(OMAP3_SYSCON_BASE +
+ 				opp_data->soc_data->efuse_offset, 4);
+@@ -291,7 +297,7 @@ static int ti_cpufreq_get_rev(struct ti_cpufreq_data *opp_data,
+ 
+ 	ret = regmap_read(opp_data->syscon, opp_data->soc_data->rev_offset,
+ 			  &revision);
+-	if (ret == -EIO) {
++	if (opp_data->soc_data->quirks & TI_QUIRK_SYSCON_MAY_BE_MISSING && ret == -EIO) {
+ 		/* not a syscon register! */
+ 		void __iomem *regs = ioremap(OMAP3_SYSCON_BASE +
+ 				opp_data->soc_data->rev_offset, 4);
 -- 
 2.43.0
 
