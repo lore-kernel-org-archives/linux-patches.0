@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAFD1D043E;
-	Wed,  2 Oct 2024 14:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862721D0493;
+	Wed,  2 Oct 2024 14:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880445; cv=none; b=G5Y/8CWQAe0Ee4+M690AvbmoPbGLpDBHhe4NFWEAzn2pyg5yX++BVgjlUA8qzJ1G6WvJux0KWeqTgfT9GRDt3vP7vrW+z79730W4O9hjVFlnxjqRGv/UwJUcBoqyX+ibbl1iumuR+iSo1WcjrI2GD3BF0qLImSBkVMp1/ME/bBI=
+	t=1727880448; cv=none; b=MvE0f1gi9DgaqA8266lAjvdVRUYP2FPupZInG7vsv6puEepkAvKPBwUp3aHZYUTRFRrU5hWLh8TG53WVfUK14ChG+grcBI338akyYyIyoZPTeDhjobumZZdtsp7PnyHxyFKRvExw17ost7HPH4oJ02PtjkUPVzkAKt4wuDxIl0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880445; c=relaxed/simple;
-	bh=OZKdYKCY0PIg6WfZ1hziwoFyQqPdhPkCtylq7bUL4v0=;
+	s=arc-20240116; t=1727880448; c=relaxed/simple;
+	bh=DByu+BY/1xKkkJetk5Oesu8pgpTp22mJEN4tk5XlLiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=By55ESss+foFwN4Ln/IhMpXvMRrgLZ8G56/Ipf054d9GiUmhH6ic9ZdgiBnrKsgbsbm3VFdWzz8lKVUGNw2uFpTW3Nm0IH7v8xKRIpAiqJqnfaQRA9j7Xe5/Jcf9n+d4dILXO1SE+aPVXIgKOhkDUroZpESwv49TnuV+Bmt+VBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRf0vjVO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTwGmRT1kES0fq64lO/awhjR+MGOTWhkF+nqNoAkfSXzNDcEDzYM0ln3MF6KG5442r/HRNXZvfxrnlXRyVIll33OTgHGhWaWqkx09FgVeJM3bRSfePz9F8b2wSGjF0gGMnlTq9Q/nzNXFLR+ZAkYXCEc4Mo1uhK7Tj4zBuGl+ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mch5EI4n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRf0vjVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D73C4CEC2;
-	Wed,  2 Oct 2024 14:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mch5EI4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDA0C4CECD;
+	Wed,  2 Oct 2024 14:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880445;
-	bh=OZKdYKCY0PIg6WfZ1hziwoFyQqPdhPkCtylq7bUL4v0=;
+	s=korg; t=1727880448;
+	bh=DByu+BY/1xKkkJetk5Oesu8pgpTp22mJEN4tk5XlLiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRf0vjVOS5phKZxiOHCwdspLgHJ40Vxon0ROp+2sYvgR9ULoBADFO2hUi5WVxkMQa
-	 j3IxAXgOOxZ0rQWpGm44BQJJAdtaLNW6mFKrrpYgbxt7VVFeCNQD72AX55DVn7rNGB
-	 sTUKMOIbfIpW8tqoUgbnbJcAqtEwt5JG1SX0VAIo=
+	b=mch5EI4nMvrMG9L5WZiRGRj00rdSEYFrFmSc8s0Jem9vw1EOib5ixFMBVdqpApKF+
+	 +jX4VqgE8j9RfaS0hCNKA274cH2wnXIYGvTFe68/48wjtYUQSyj7c3KAlubR6tUdo4
+	 QQFlelHdCBtV20i6HsN9ikLofRbXoRbOKN+ns04g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.6 434/538] USB: appledisplay: close race between probe and completion handler
-Date: Wed,  2 Oct 2024 15:01:13 +0200
-Message-ID: <20241002125809.571395952@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 461/538] f2fs: fix several potential integer overflows in file offsets
+Date: Wed,  2 Oct 2024 15:01:40 +0200
+Message-ID: <20241002125810.641854379@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -49,66 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 8265d06b7794493d82c5c21a12d7ba43eccc30cb upstream.
+commit 1cade98cf6415897bf9342ee451cc5b40b58c638 upstream.
 
-There is a small window during probing when IO is running
-but the backlight is not registered. Processing events
-during that time will crash. The completion handler
-needs to check for a backlight before scheduling work.
+When dealing with large extents and calculating file offsets by
+summing up according extent offsets and lengths of unsigned int type,
+one may encounter possible integer overflow if the values are
+big enough.
 
-The bug is as old as the driver.
+Prevent this from happening by expanding one of the addends to
+(pgoff_t) type.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912123317.1026049-1-oneukum@suse.com
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: d323d005ac4a ("f2fs: support file defragment")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/appledisplay.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/f2fs/extent_cache.c |    4 ++--
+ fs/f2fs/file.c         |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/misc/appledisplay.c
-+++ b/drivers/usb/misc/appledisplay.c
-@@ -107,7 +107,12 @@ static void appledisplay_complete(struct
- 	case ACD_BTN_BRIGHT_UP:
- 	case ACD_BTN_BRIGHT_DOWN:
- 		pdata->button_pressed = 1;
--		schedule_delayed_work(&pdata->work, 0);
-+		/*
-+		 * there is a window during which no device
-+		 * is registered
-+		 */
-+		if (pdata->bd )
-+			schedule_delayed_work(&pdata->work, 0);
- 		break;
- 	case ACD_BTN_NONE:
- 	default:
-@@ -202,6 +207,7 @@ static int appledisplay_probe(struct usb
- 	const struct usb_device_id *id)
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -367,7 +367,7 @@ static unsigned int __free_extent_tree(s
+ static void __drop_largest_extent(struct extent_tree *et,
+ 					pgoff_t fofs, unsigned int len)
  {
- 	struct backlight_properties props;
-+	struct backlight_device *backlight;
- 	struct appledisplay *pdata;
- 	struct usb_device *udev = interface_to_usbdev(iface);
- 	struct usb_endpoint_descriptor *endpoint;
-@@ -272,13 +278,14 @@ static int appledisplay_probe(struct usb
- 	memset(&props, 0, sizeof(struct backlight_properties));
- 	props.type = BACKLIGHT_RAW;
- 	props.max_brightness = 0xff;
--	pdata->bd = backlight_device_register(bl_name, NULL, pdata,
-+	backlight = backlight_device_register(bl_name, NULL, pdata,
- 					      &appledisplay_bl_data, &props);
--	if (IS_ERR(pdata->bd)) {
-+	if (IS_ERR(backlight)) {
- 		dev_err(&iface->dev, "Backlight registration failed\n");
--		retval = PTR_ERR(pdata->bd);
-+		retval = PTR_ERR(backlight);
- 		goto error;
- 	}
-+	pdata->bd = backlight;
+-	if (fofs < et->largest.fofs + et->largest.len &&
++	if (fofs < (pgoff_t)et->largest.fofs + et->largest.len &&
+ 			fofs + len > et->largest.fofs) {
+ 		et->largest.len = 0;
+ 		et->largest_updated = true;
+@@ -457,7 +457,7 @@ static bool __lookup_extent_tree(struct
  
- 	/* Try to get brightness */
- 	brightness = appledisplay_bl_get_brightness(pdata->bd);
+ 	if (type == EX_READ &&
+ 			et->largest.fofs <= pgofs &&
+-			et->largest.fofs + et->largest.len > pgofs) {
++			(pgoff_t)et->largest.fofs + et->largest.len > pgofs) {
+ 		*ei = et->largest;
+ 		ret = true;
+ 		stat_inc_largest_node_hit(sbi);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2687,7 +2687,7 @@ static int f2fs_defragment_range(struct
+ 	 * block addresses are continuous.
+ 	 */
+ 	if (f2fs_lookup_read_extent_cache(inode, pg_start, &ei)) {
+-		if (ei.fofs + ei.len >= pg_end)
++		if ((pgoff_t)ei.fofs + ei.len >= pg_end)
+ 			goto out;
+ 	}
+ 
 
 
