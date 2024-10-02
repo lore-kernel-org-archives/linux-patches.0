@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA5C1D0B92;
-	Wed,  2 Oct 2024 13:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6653B1D016B;
+	Wed,  2 Oct 2024 13:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876583; cv=none; b=G24OxrJuNkUjh5r4BAxPoFALYKwfx1wuLapRtxUJNkOwosZ3LpNu2Op9vzSBzLPFfOZ/nrJLMKB3cfL/54sSIjXg3PjJ8Nz6P0dvJ6D9UpIIC3yHFZKqZihUqtMjzcg+nX7Niq7hukRtUMrtsgVd11NFAfTIW5uZaF6U716JnsY=
+	t=1727876586; cv=none; b=VcRmMmXrJjwViiRtNaDi8zUfr1H6yhAdMMMKw/AaMsEcv+v9CXlfjJDMrzT3HN0eF/ibb75QKkBMZcf9MuL5WEgAGPkYEBuU3HJizRiFsjW3sMKI3+6NLU4pV3PIqVrh5jUqL/G+G6ePUvQ/PlmdYiYrbKoZj+QfF+c9XZogoKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876583; c=relaxed/simple;
-	bh=RMtIWDtL7P5t5Rhmk/olStFOxeQWSIuagfl2+jCEN5E=;
+	s=arc-20240116; t=1727876586; c=relaxed/simple;
+	bh=G5Ya5NoAhDPUV3IFbYSjUkyc1uBlRgpSTMjXarwyTkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMjoOwMP8B0XPJ39rsKd8UYOR+dUdIhkIBBoxEqZDCStdHcIpYFN8eEE3jZtI8nHhMoYDzf/dcesOx70G+2iyQ2vc/tHeYVASAZbQpwOgXI21m14Sl4MjwJHr+ez4O8kIi6Tmz+Ev/tGu+cjhePXBZ0FJFFa0y3hwmgL7CFtKRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUNz/c3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bXpdLC32DunQT3xzvhy3slHer/YaSlf9AuacOTV9VdhK+T78cED3I03H+TLfVz4bmM5kU8/NLmPBBWiMHM+ez10RZAyahDjQKdBXfzOW8vKKCv1GzlN00GBW+XjZUOGeahd5+i1rPK+y7URpf6LiHsZp5ICfKalxzjabGmNN/64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeBqDKUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUNz/c3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A54C4CEC5;
-	Wed,  2 Oct 2024 13:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeBqDKUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF45C4CEC5;
+	Wed,  2 Oct 2024 13:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876583;
-	bh=RMtIWDtL7P5t5Rhmk/olStFOxeQWSIuagfl2+jCEN5E=;
+	s=korg; t=1727876585;
+	bh=G5Ya5NoAhDPUV3IFbYSjUkyc1uBlRgpSTMjXarwyTkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUNz/c3KHIuKP4vvcAtsbAF3kIjoNEVUNtiYA9okcPKVvHdGj8deLU9LH8tshEtOv
-	 pPXZpmQg1bGFrWR1reOyaux5z/rIMqWz0DqqBycw1mDFgC9ryJR+oA1o4KV8LuuTlW
-	 EdhEnR0JtXZmROswhtfmIgSIpADG3mKf9SCEpd68=
+	b=MeBqDKUELMdouIwsHrN+nEJarWaHOC/9ZnlU8KTUsgK2hLcE7ItzGhgSgdIXqlIDq
+	 5ZOzavrW3qDcIsW/xaZqdYUiDXYDPM+VkeU2nwM/9Xs7GcLP72953x1JCbD11FMSqp
+	 ue85z/FIwYF1HS5DZg6lO/cVKjD6gc4HKSfyKW2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Jie Gan <quic_jiegan@quicinc.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 462/695] serial: 8250: omap: Cleanup on error in request_irq
-Date: Wed,  2 Oct 2024 14:57:40 +0200
-Message-ID: <20241002125840.898369452@linuxfoundation.org>
+Subject: [PATCH 6.11 463/695] Coresight: Set correct cs_mode for TPDM to fix disable issue
+Date: Wed,  2 Oct 2024 14:57:41 +0200
+Message-ID: <20241002125840.940728990@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Jie Gan <quic_jiegan@quicinc.com>
 
-[ Upstream commit 35e648a16018b747897be2ccc3ce95ff23237bb5 ]
+[ Upstream commit 14f5fa9b5fcbe2b3d5098893aba6ad62254d2ef6 ]
 
-If devm_request_irq fails, the code does not cleanup many things that
-were setup before. Instead of directly returning ret we should jump to
-err.
+The coresight_disable_source_sysfs function should verify the
+mode of the coresight device before disabling the source.
 
-Fixes: fef4f600319e ("serial: 8250: omap: Fix life cycle issues for interrupt handlers")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Tested-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20240807141227.1093006-4-msp@baylibre.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, the mode for the TPDM device is always set to
+CS_MODE_DISABLED, resulting in the check consistently failing.
+As a result, TPDM cannot be properly disabled.
+
+Configure CS_MODE_SYSFS/CS_MODE_PERF during the enablement.
+Configure CS_MODE_DISABLED during the disablement.
+
+Fixes: b3c71626a933 ("Coresight: Add coresight TPDM source driver")
+Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20240812043043.2890694-1-quic_jiegan@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-tpdm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index afef1dd4ddf49..fca5f25d693a7 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1581,7 +1581,7 @@ static int omap8250_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(&pdev->dev, up.port.irq, omap8250_irq, 0,
- 			       dev_name(&pdev->dev), priv);
- 	if (ret < 0)
--		return ret;
-+		goto err;
+diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+index 0726f8842552c..5c5a4b3fe6871 100644
+--- a/drivers/hwtracing/coresight/coresight-tpdm.c
++++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+@@ -449,6 +449,11 @@ static int tpdm_enable(struct coresight_device *csdev, struct perf_event *event,
+ 		return -EBUSY;
+ 	}
  
- 	priv->wakeirq = irq_of_parse_and_map(np, 1);
++	if (!coresight_take_mode(csdev, mode)) {
++		spin_unlock(&drvdata->spinlock);
++		return -EBUSY;
++	}
++
+ 	__tpdm_enable(drvdata);
+ 	drvdata->enable = true;
+ 	spin_unlock(&drvdata->spinlock);
+@@ -506,6 +511,7 @@ static void tpdm_disable(struct coresight_device *csdev,
+ 	}
+ 
+ 	__tpdm_disable(drvdata);
++	coresight_set_mode(csdev, CS_MODE_DISABLED);
+ 	drvdata->enable = false;
+ 	spin_unlock(&drvdata->spinlock);
  
 -- 
 2.43.0
