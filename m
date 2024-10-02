@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7E21D097D;
-	Wed,  2 Oct 2024 14:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461781D0412;
+	Wed,  2 Oct 2024 14:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878973; cv=none; b=gL0eM8Mu9RNxk21p8w+a+1Re8H5URIbr2s/2ZCWccoPFUXWMEzTfzg3CdfrYNE7+iKbwV9cBybgCuA258BODZ312O5pBPNwtdOoPTakE8B37ZsHlIeZzi76dc78jeRLAry9dmXxfluV2qaisLTkwhODdHDPYmX6wy3zxu5J0eno=
+	t=1727878976; cv=none; b=gs5ZYCkznNsQOuNqcQcsuPGKU2eqgs+eUNT9DlIxkCMDVv3BuEFaSlGbamjF0ffUqKG0qeFWdiLbMCPgkJFA80RwIAHB77YDR0NC6iqySDd0yqi4SfIfC2AUY/5GoRSS9bl0BfMP9gz0+0UTUVrRZPibTIWH58YWuQz1OhDZI7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878973; c=relaxed/simple;
-	bh=vnT2eGOaFD2H+9LFAtJxuKlHLvdxT+TIRmtctTJ9yJY=;
+	s=arc-20240116; t=1727878976; c=relaxed/simple;
+	bh=b5DBz6+k1syxv3A9wCvQE6W5eu12nvpU+3sZbJNk1yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuV4cMfE20HXufO3e0rGNN99qkiyxaK8GOAd5zNXCkM1ui8eX0Y9rakgQBH8mPsGjNYhSfWXod6X7wfe/7wdPz8tv5ajiFfB1oCsflmJje7bT3eaW98hKkPCzMANt8pUHjoUMQtbjR5nOet05uUFhgUBn0lP8RGhIGOuCME6i2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiS361Mj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgfMd7b4DAf+bjHOYWJ1gZNro152xMdBI5EKUPMC8sA5zsAyhS03vgYYzNrpEnvKGdSacGbG4TvFppe3sAdTw+taD4EYDluh3rXBaGjMMy6E+9MJluKVX0gx5MJgz2wQYqUwqWeugLYaLuP1u84YloHvFpU3rqaz/Y0J2h/a4p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAFd4yav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiS361Mj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CE5C4CEC2;
-	Wed,  2 Oct 2024 14:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAFd4yav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4D7C4CEC2;
+	Wed,  2 Oct 2024 14:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878973;
-	bh=vnT2eGOaFD2H+9LFAtJxuKlHLvdxT+TIRmtctTJ9yJY=;
+	s=korg; t=1727878975;
+	bh=b5DBz6+k1syxv3A9wCvQE6W5eu12nvpU+3sZbJNk1yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiS361MjXGw8g6XgU1VBHrXRluRDGcTYXqN9SsLEBt8dEEKU+KTNnqIehrDlVoXd5
-	 invqGoQ0fZQYFfPkoClQUNNRskTWpC/497jqzD8qUC0ySactUvW9dCL4IVfITzktRC
-	 jvWkcAB1mlh6Bd9192YXOmzGqWFTU4tvVpJ1/Ihs=
+	b=sAFd4yavYEZdKlkqfu87kW9v01ixWkaXE+VQi6LoxVrGz8HBITJI9qU4cQO5iBd+U
+	 qMjxyQ8geEmuy1zJwnseE6z+d93f5l0PTj9MUJp/63jvYsZAqJdtGm6xQtphljkgNb
+	 aEUdkbtNKzYbLeCBDJMzacxqUILapaEjN0u/wW18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Tao Liu <ltao@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 595/634] KVM: x86: Re-split x2APIC ICR into ICR+ICR2 for AMD (x2AVIC)
-Date: Wed,  2 Oct 2024 15:01:35 +0200
-Message-ID: <20241002125834.598255189@linuxfoundation.org>
+Subject: [PATCH 6.10 596/634] x86/mm: Make x86_platform.guest.enc_status_change_*() return an error
+Date: Wed,  2 Oct 2024 15:01:36 +0200
+Message-ID: <20241002125834.638291172@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -52,158 +55,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 73b42dc69be8564d4951a14d00f827929fe5ef79 ]
+[ Upstream commit 99c5c4c60e0db1d2ff58b8a61c93b6851146469f ]
 
-Re-introduce the "split" x2APIC ICR storage that KVM used prior to Intel's
-IPI virtualization support, but only for AMD.  While not stated anywhere
-in the APM, despite stating the ICR is a single 64-bit register, AMD CPUs
-store the 64-bit ICR as two separate 32-bit values in ICR and ICR2.  When
-IPI virtualization (IPIv on Intel, all AVIC flavors on AMD) is enabled,
-KVM needs to match CPU behavior as some ICR ICR writes will be handled by
-the CPU, not by KVM.
+TDX is going to have more than one reason to fail enc_status_change_prepare().
 
-Add a kvm_x86_ops knob to control the underlying format used by the CPU to
-store the x2APIC ICR, and tune it to AMD vs. Intel regardless of whether
-or not x2AVIC is enabled.  If KVM is handling all ICR writes, the storage
-format for x2APIC mode doesn't matter, and having the behavior follow AMD
-versus Intel will provide better test coverage and ease debugging.
+Change the callback to return errno instead of assuming -EIO. Change
+enc_status_change_finish() too to keep the interface symmetric.
 
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
-Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/20240719235107.3023592-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Dave Hansen <dave.hansen@intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Tao Liu <ltao@redhat.com>
+Link: https://lore.kernel.org/r/20240614095904.1345461-8-kirill.shutemov@linux.intel.com
+Stable-dep-of: d4fc4d014715 ("x86/tdx: Fix "in-kernel MMIO" check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h |  2 ++
- arch/x86/kvm/lapic.c            | 42 +++++++++++++++++++++++----------
- arch/x86/kvm/svm/svm.c          |  2 ++
- arch/x86/kvm/vmx/main.c         |  2 ++
- 4 files changed, 36 insertions(+), 12 deletions(-)
+ arch/x86/coco/tdx/tdx.c         | 20 +++++++++++---------
+ arch/x86/hyperv/ivm.c           | 22 ++++++++++------------
+ arch/x86/include/asm/x86_init.h |  4 ++--
+ arch/x86/kernel/x86_init.c      |  4 ++--
+ arch/x86/mm/mem_encrypt_amd.c   |  8 ++++----
+ arch/x86/mm/pat/set_memory.c    | 12 +++++++-----
+ 6 files changed, 36 insertions(+), 34 deletions(-)
 
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index a571f89db6977..e18399d08fb17 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1708,6 +1708,8 @@ struct kvm_x86_ops {
- 	void (*enable_nmi_window)(struct kvm_vcpu *vcpu);
- 	void (*enable_irq_window)(struct kvm_vcpu *vcpu);
- 	void (*update_cr8_intercept)(struct kvm_vcpu *vcpu, int tpr, int irr);
-+
-+	const bool x2apic_icr_is_split;
- 	const unsigned long required_apicv_inhibits;
- 	bool allow_apicv_in_x2apic_without_x2apic_virtualization;
- 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
-diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index 9392d6e3d8e37..523d02c50562f 100644
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2469,11 +2469,25 @@ int kvm_x2apic_icr_write(struct kvm_lapic *apic, u64 data)
- 	data &= ~APIC_ICR_BUSY;
- 
- 	kvm_apic_send_ipi(apic, (u32)data, (u32)(data >> 32));
--	kvm_lapic_set_reg64(apic, APIC_ICR, data);
-+	if (kvm_x86_ops.x2apic_icr_is_split) {
-+		kvm_lapic_set_reg(apic, APIC_ICR, data);
-+		kvm_lapic_set_reg(apic, APIC_ICR2, data >> 32);
-+	} else {
-+		kvm_lapic_set_reg64(apic, APIC_ICR, data);
-+	}
- 	trace_kvm_apic_write(APIC_ICR, data);
- 	return 0;
+diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
+index 8fe4c2b07128e..fdcc081317764 100644
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -797,28 +797,30 @@ static bool tdx_enc_status_changed(unsigned long vaddr, int numpages, bool enc)
+ 	return true;
  }
  
-+static u64 kvm_x2apic_icr_read(struct kvm_lapic *apic)
-+{
-+	if (kvm_x86_ops.x2apic_icr_is_split)
-+		return (u64)kvm_lapic_get_reg(apic, APIC_ICR) |
-+		       (u64)kvm_lapic_get_reg(apic, APIC_ICR2) << 32;
-+
-+	return kvm_lapic_get_reg64(apic, APIC_ICR);
-+}
-+
- /* emulate APIC access in a trap manner */
- void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
+-static bool tdx_enc_status_change_prepare(unsigned long vaddr, int numpages,
+-					  bool enc)
++static int tdx_enc_status_change_prepare(unsigned long vaddr, int numpages,
++					 bool enc)
  {
-@@ -2491,7 +2505,7 @@ void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
- 	 * maybe-unecessary write, and both are in the noise anyways.
+ 	/*
+ 	 * Only handle shared->private conversion here.
+ 	 * See the comment in tdx_early_init().
  	 */
- 	if (apic_x2apic_mode(apic) && offset == APIC_ICR)
--		WARN_ON_ONCE(kvm_x2apic_icr_write(apic, kvm_lapic_get_reg64(apic, APIC_ICR)));
-+		WARN_ON_ONCE(kvm_x2apic_icr_write(apic, kvm_x2apic_icr_read(apic)));
- 	else
- 		kvm_lapic_reg_write(apic, offset, kvm_lapic_get_reg(apic, offset));
+-	if (enc)
+-		return tdx_enc_status_changed(vaddr, numpages, enc);
+-	return true;
++	if (enc && !tdx_enc_status_changed(vaddr, numpages, enc))
++		return -EIO;
++
++	return 0;
  }
-@@ -3011,18 +3025,22 @@ static int kvm_apic_state_fixup(struct kvm_vcpu *vcpu,
  
- 		/*
- 		 * In x2APIC mode, the LDR is fixed and based on the id.  And
--		 * ICR is internally a single 64-bit register, but needs to be
--		 * split to ICR+ICR2 in userspace for backwards compatibility.
-+		 * if the ICR is _not_ split, ICR is internally a single 64-bit
-+		 * register, but needs to be split to ICR+ICR2 in userspace for
-+		 * backwards compatibility.
- 		 */
--		if (set) {
-+		if (set)
- 			*ldr = kvm_apic_calc_x2apic_ldr(x2apic_id);
+-static bool tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
++static int tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
+ 					 bool enc)
+ {
+ 	/*
+ 	 * Only handle private->shared conversion here.
+ 	 * See the comment in tdx_early_init().
+ 	 */
+-	if (!enc)
+-		return tdx_enc_status_changed(vaddr, numpages, enc);
+-	return true;
++	if (!enc && !tdx_enc_status_changed(vaddr, numpages, enc))
++		return -EIO;
++
++	return 0;
+ }
  
--			icr = __kvm_lapic_get_reg(s->regs, APIC_ICR) |
--			      (u64)__kvm_lapic_get_reg(s->regs, APIC_ICR2) << 32;
--			__kvm_lapic_set_reg64(s->regs, APIC_ICR, icr);
--		} else {
--			icr = __kvm_lapic_get_reg64(s->regs, APIC_ICR);
--			__kvm_lapic_set_reg(s->regs, APIC_ICR2, icr >> 32);
-+		if (!kvm_x86_ops.x2apic_icr_is_split) {
-+			if (set) {
-+				icr = __kvm_lapic_get_reg(s->regs, APIC_ICR) |
-+				      (u64)__kvm_lapic_get_reg(s->regs, APIC_ICR2) << 32;
-+				__kvm_lapic_set_reg64(s->regs, APIC_ICR, icr);
-+			} else {
-+				icr = __kvm_lapic_get_reg64(s->regs, APIC_ICR);
-+				__kvm_lapic_set_reg(s->regs, APIC_ICR2, icr >> 32);
-+			}
+ void __init tdx_early_init(void)
+diff --git a/arch/x86/hyperv/ivm.c b/arch/x86/hyperv/ivm.c
+index 768d73de0d098..b4a851d27c7cb 100644
+--- a/arch/x86/hyperv/ivm.c
++++ b/arch/x86/hyperv/ivm.c
+@@ -523,9 +523,9 @@ static int hv_mark_gpa_visibility(u16 count, const u64 pfn[],
+  * transition is complete, hv_vtom_set_host_visibility() marks the pages
+  * as "present" again.
+  */
+-static bool hv_vtom_clear_present(unsigned long kbuffer, int pagecount, bool enc)
++static int hv_vtom_clear_present(unsigned long kbuffer, int pagecount, bool enc)
+ {
+-	return !set_memory_np(kbuffer, pagecount);
++	return set_memory_np(kbuffer, pagecount);
+ }
+ 
+ /*
+@@ -536,20 +536,19 @@ static bool hv_vtom_clear_present(unsigned long kbuffer, int pagecount, bool enc
+  * with host. This function works as wrap of hv_mark_gpa_visibility()
+  * with memory base and size.
+  */
+-static bool hv_vtom_set_host_visibility(unsigned long kbuffer, int pagecount, bool enc)
++static int hv_vtom_set_host_visibility(unsigned long kbuffer, int pagecount, bool enc)
+ {
+ 	enum hv_mem_host_visibility visibility = enc ?
+ 			VMBUS_PAGE_NOT_VISIBLE : VMBUS_PAGE_VISIBLE_READ_WRITE;
+ 	u64 *pfn_array;
+ 	phys_addr_t paddr;
++	int i, pfn, err;
+ 	void *vaddr;
+ 	int ret = 0;
+-	bool result = true;
+-	int i, pfn;
+ 
+ 	pfn_array = kmalloc(HV_HYP_PAGE_SIZE, GFP_KERNEL);
+ 	if (!pfn_array) {
+-		result = false;
++		ret = -ENOMEM;
+ 		goto err_set_memory_p;
+ 	}
+ 
+@@ -568,10 +567,8 @@ static bool hv_vtom_set_host_visibility(unsigned long kbuffer, int pagecount, bo
+ 		if (pfn == HV_MAX_MODIFY_GPA_REP_COUNT || i == pagecount - 1) {
+ 			ret = hv_mark_gpa_visibility(pfn, pfn_array,
+ 						     visibility);
+-			if (ret) {
+-				result = false;
++			if (ret)
+ 				goto err_free_pfn_array;
+-			}
+ 			pfn = 0;
  		}
  	}
+@@ -586,10 +583,11 @@ static bool hv_vtom_set_host_visibility(unsigned long kbuffer, int pagecount, bo
+ 	 * order to avoid leaving the memory range in a "broken" state. Setting
+ 	 * the PRESENT bits shouldn't fail, but return an error if it does.
+ 	 */
+-	if (set_memory_p(kbuffer, pagecount))
+-		result = false;
++	err = set_memory_p(kbuffer, pagecount);
++	if (err && !ret)
++		ret = err;
  
-@@ -3219,7 +3237,7 @@ static int kvm_lapic_msr_read(struct kvm_lapic *apic, u32 reg, u64 *data)
- 	u32 low;
+-	return result;
++	return ret;
+ }
  
- 	if (reg == APIC_ICR) {
--		*data = kvm_lapic_get_reg64(apic, APIC_ICR);
-+		*data = kvm_x2apic_icr_read(apic);
- 		return 0;
- 	}
+ static bool hv_vtom_tlb_flush_required(bool private)
+diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
+index 6149eabe200f5..28ac3cb9b987b 100644
+--- a/arch/x86/include/asm/x86_init.h
++++ b/arch/x86/include/asm/x86_init.h
+@@ -151,8 +151,8 @@ struct x86_init_acpi {
+  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
+  */
+ struct x86_guest {
+-	bool (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
+-	bool (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
++	int (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
++	int (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
+ 	bool (*enc_tlb_flush_required)(bool enc);
+ 	bool (*enc_cache_flush_required)(void);
+ };
+diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
+index 5474a6fdd6895..3f95e32dd288e 100644
+--- a/arch/x86/kernel/x86_init.c
++++ b/arch/x86/kernel/x86_init.c
+@@ -135,8 +135,8 @@ struct x86_cpuinit_ops x86_cpuinit = {
  
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 0357f7af55966..6d5da700268a5 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -5051,6 +5051,8 @@ static struct kvm_x86_ops svm_x86_ops __initdata = {
- 	.enable_nmi_window = svm_enable_nmi_window,
- 	.enable_irq_window = svm_enable_irq_window,
- 	.update_cr8_intercept = svm_update_cr8_intercept,
-+
-+	.x2apic_icr_is_split = true,
- 	.set_virtual_apic_mode = avic_refresh_virtual_apic_mode,
- 	.refresh_apicv_exec_ctrl = avic_refresh_apicv_exec_ctrl,
- 	.apicv_post_state_restore = avic_apicv_post_state_restore,
-diff --git a/arch/x86/kvm/vmx/main.c b/arch/x86/kvm/vmx/main.c
-index 547fca3709feb..35c2c004dacd2 100644
---- a/arch/x86/kvm/vmx/main.c
-+++ b/arch/x86/kvm/vmx/main.c
-@@ -89,6 +89,8 @@ struct kvm_x86_ops vt_x86_ops __initdata = {
- 	.enable_nmi_window = vmx_enable_nmi_window,
- 	.enable_irq_window = vmx_enable_irq_window,
- 	.update_cr8_intercept = vmx_update_cr8_intercept,
-+
-+	.x2apic_icr_is_split = false,
- 	.set_virtual_apic_mode = vmx_set_virtual_apic_mode,
- 	.set_apic_access_page_addr = vmx_set_apic_access_page_addr,
- 	.refresh_apicv_exec_ctrl = vmx_refresh_apicv_exec_ctrl,
+ static void default_nmi_init(void) { };
+ 
+-static bool enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return true; }
+-static bool enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return true; }
++static int enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return 0; }
++static int enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return 0; }
+ static bool enc_tlb_flush_required_noop(bool enc) { return false; }
+ static bool enc_cache_flush_required_noop(void) { return false; }
+ static bool is_private_mmio_noop(u64 addr) {return false; }
+diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
+index 422602f6039b8..e7b67519ddb5d 100644
+--- a/arch/x86/mm/mem_encrypt_amd.c
++++ b/arch/x86/mm/mem_encrypt_amd.c
+@@ -283,7 +283,7 @@ static void enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc)
+ #endif
+ }
+ 
+-static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
++static int amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
+ {
+ 	/*
+ 	 * To maintain the security guarantees of SEV-SNP guests, make sure
+@@ -292,11 +292,11 @@ static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool
+ 	if (cc_platform_has(CC_ATTR_GUEST_SEV_SNP) && !enc)
+ 		snp_set_memory_shared(vaddr, npages);
+ 
+-	return true;
++	return 0;
+ }
+ 
+ /* Return true unconditionally: return value doesn't matter for the SEV side */
+-static bool amd_enc_status_change_finish(unsigned long vaddr, int npages, bool enc)
++static int amd_enc_status_change_finish(unsigned long vaddr, int npages, bool enc)
+ {
+ 	/*
+ 	 * After memory is mapped encrypted in the page table, validate it
+@@ -308,7 +308,7 @@ static bool amd_enc_status_change_finish(unsigned long vaddr, int npages, bool e
+ 	if (!cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT))
+ 		enc_dec_hypercall(vaddr, npages << PAGE_SHIFT, enc);
+ 
+-	return true;
++	return 0;
+ }
+ 
+ static void __init __set_clr_pte_enc(pte_t *kpte, int level, bool enc)
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 19fdfbb171ed6..498812f067cd5 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2196,7 +2196,8 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
+ 		cpa_flush(&cpa, x86_platform.guest.enc_cache_flush_required());
+ 
+ 	/* Notify hypervisor that we are about to set/clr encryption attribute. */
+-	if (!x86_platform.guest.enc_status_change_prepare(addr, numpages, enc))
++	ret = x86_platform.guest.enc_status_change_prepare(addr, numpages, enc);
++	if (ret)
+ 		goto vmm_fail;
+ 
+ 	ret = __change_page_attr_set_clr(&cpa, 1);
+@@ -2214,16 +2215,17 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
+ 		return ret;
+ 
+ 	/* Notify hypervisor that we have successfully set/clr encryption attribute. */
+-	if (!x86_platform.guest.enc_status_change_finish(addr, numpages, enc))
++	ret = x86_platform.guest.enc_status_change_finish(addr, numpages, enc);
++	if (ret)
+ 		goto vmm_fail;
+ 
+ 	return 0;
+ 
+ vmm_fail:
+-	WARN_ONCE(1, "CPA VMM failure to convert memory (addr=%p, numpages=%d) to %s.\n",
+-		  (void *)addr, numpages, enc ? "private" : "shared");
++	WARN_ONCE(1, "CPA VMM failure to convert memory (addr=%p, numpages=%d) to %s: %d\n",
++		  (void *)addr, numpages, enc ? "private" : "shared", ret);
+ 
+-	return -EIO;
++	return ret;
+ }
+ 
+ static int __set_memory_enc_dec(unsigned long addr, int numpages, bool enc)
 -- 
 2.43.0
 
