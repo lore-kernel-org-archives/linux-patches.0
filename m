@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624C61D1F4C;
-	Wed,  2 Oct 2024 14:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6360E1D2F52;
+	Wed,  2 Oct 2024 14:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878511; cv=none; b=gDoZykf73obzoHAwnoWGiGmjv1o7LnTlRDHppFCLohs/UI3dH845WyIJ+0T8OUpRcYTrUV5Lq1V78qNZyQTz1bA1I5QaDYi+8tqcHdAhAYGnnJo/gD1uSPVE5BoSHdRcwOAxzGsM9INDWLw4mw19e8Rr7P1/gdAbVX9886VyS7Q=
+	t=1727878514; cv=none; b=jsM4qnhHTvYvjDtsZdH2WTeefqJpSOdX1ZhoIazZGYCUSAGKPxGQUQGOgbqsStbevhaGYTiKG2DU//rq60liImTR5sxGjE8wY2w7209Spido1u6Gve5jKGbNdQFRqPLla1rkQRdPDNVi63udiWVaXZJ3DMeIrFdQlLKcXAyt9g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878511; c=relaxed/simple;
-	bh=NQbJTZBTKNTTv/7t3bfk8Firio3m9GtAkr8jRWu433k=;
+	s=arc-20240116; t=1727878514; c=relaxed/simple;
+	bh=9fEVCmazk9bNTdqBOsb04d1ascEDx+VnstkWGLiMeKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7Ri7nGPeWw4ReEVXVAi7QCfwXSHpVc/cuCHKLGDkIbrNf1dtFqmrjv7t/ARLOshP7tS9emtO/GHMESdHcq6nA8Nyuu5BfzJKpl5U7tgmmzd3vUEIFvbt1vo2RXaT6WUk0VbR3ocXGDCJUkXBZMWsSd52ECuq3i7I5baVX1dLU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2txCbMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3D2L8pkw3eXujXQpg+B+SBIbpd/rUHp3unVGJ+W9sfvkVcSjQDsEOvddJmy4ITpLSDDCVLYr5CPrMWG8TuN8luV5QCZ7xz+qHLVQiBItdpNZL3kyIz4iCE7H1yvyBv5Ibbnbo0tl/te/rSulpSjh6R7JBIotGlWAZZToeKcZq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOlppITj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2txCbMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7639C4CECD;
-	Wed,  2 Oct 2024 14:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOlppITj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D7FC4CECF;
+	Wed,  2 Oct 2024 14:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878511;
-	bh=NQbJTZBTKNTTv/7t3bfk8Firio3m9GtAkr8jRWu433k=;
+	s=korg; t=1727878513;
+	bh=9fEVCmazk9bNTdqBOsb04d1ascEDx+VnstkWGLiMeKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2txCbMIW650EDRscQFx+YHgS1HKWc96+NjiXOpUx7AuBGwpY+x2OjzS4yGGovcRM
-	 Fxn0bB/1z7njrLNFFzgobZ3ui8D9EpFstFsoPOORMycN3R/hB2zoap1hP8FDAUzm9t
-	 ke+rihbmJ+Sy67qomjdx6sUaAKz5urP9HQTZ+R2Y=
+	b=pOlppITjYORsN/4K5yO8QeA5RyYUPaTLu/lfja0sF7ui3MRwBteQTlhrHVnMIG/z6
+	 XegJviApXkKFx//gTeEHwoYvaPS0StzKOTD1VDa/fACaHyODaKwG4VHfpmCJlFeE0/
+	 uPf1jbBkmDyZWiJm4FOax/777h7s3HtQPs7TO1Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 407/634] spi: airoha: fix dirmap_{read,write} operations
-Date: Wed,  2 Oct 2024 14:58:27 +0200
-Message-ID: <20241002125827.174053501@linuxfoundation.org>
+Subject: [PATCH 6.10 408/634] spi: airoha: fix airoha_snand_{write,read}_data data_len estimation
+Date: Wed,  2 Oct 2024 14:58:28 +0200
+Message-ID: <20241002125827.212456576@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -54,61 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 2e6bbfe7b0c0607001b784082c2685b134174fac ]
+[ Upstream commit 0e58637eb968c636725dcd6c7055249b4e5326fb ]
 
-SPI_NFI_READ_FROM_CACHE_DONE bit must be written at the end of
-dirmap_read operation even if it is already set.
-In the same way, SPI_NFI_LOAD_TO_CACHE_DONE bit must be written at the
-end of dirmap_write operation even if it is already set.
-For this reason use regmap_write_bits() instead of regmap_set_bits().
-This patch fixes mtd_pagetest kernel module test.
+Fix data length written and read in airoha_snand_write_data and
+airoha_snand_read_data routines respectively if it is bigger than
+SPI_MAX_TRANSFER_SIZE.
 
 Fixes: a403997c1201 ("spi: airoha: add SPI-NAND Flash controller driver")
 Tested-by: Christian Marangi <ansuelsmth@gmail.com>
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20240913-airoha-spi-fixes-v1-1-de2e74ed4664@kernel.org
+Link: https://patch.msgid.link/20240913-airoha-spi-fixes-v1-2-de2e74ed4664@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/spi/spi-airoha-snfi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 9d97ec98881cc..be3e4ac42153e 100644
+index be3e4ac42153e..c71be702cf6f6 100644
 --- a/drivers/spi/spi-airoha-snfi.c
 +++ b/drivers/spi/spi-airoha-snfi.c
-@@ -739,8 +739,13 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		return err;
+@@ -405,7 +405,7 @@ static int airoha_snand_write_data(struct airoha_snand_ctrl *as_ctrl, u8 cmd,
+ 	for (i = 0; i < len; i += data_len) {
+ 		int err;
  
--	err = regmap_set_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
--			      SPI_NFI_READ_FROM_CACHE_DONE);
-+	/*
-+	 * SPI_NFI_READ_FROM_CACHE_DONE bit must be written at the end
-+	 * of dirmap_read operation even if it is already set.
-+	 */
-+	err = regmap_write_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
-+				SPI_NFI_READ_FROM_CACHE_DONE,
-+				SPI_NFI_READ_FROM_CACHE_DONE);
- 	if (err)
- 		return err;
+-		data_len = min(len, SPI_MAX_TRANSFER_SIZE);
++		data_len = min(len - i, SPI_MAX_TRANSFER_SIZE);
+ 		err = airoha_snand_set_fifo_op(as_ctrl, cmd, data_len);
+ 		if (err)
+ 			return err;
+@@ -427,7 +427,7 @@ static int airoha_snand_read_data(struct airoha_snand_ctrl *as_ctrl, u8 *data,
+ 	for (i = 0; i < len; i += data_len) {
+ 		int err;
  
-@@ -870,8 +875,13 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		return err;
- 
--	err = regmap_set_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
--			      SPI_NFI_LOAD_TO_CACHE_DONE);
-+	/*
-+	 * SPI_NFI_LOAD_TO_CACHE_DONE bit must be written at the end
-+	 * of dirmap_write operation even if it is already set.
-+	 */
-+	err = regmap_write_bits(as_ctrl->regmap_nfi, REG_SPI_NFI_SNF_STA_CTL1,
-+				SPI_NFI_LOAD_TO_CACHE_DONE,
-+				SPI_NFI_LOAD_TO_CACHE_DONE);
- 	if (err)
- 		return err;
- 
+-		data_len = min(len, SPI_MAX_TRANSFER_SIZE);
++		data_len = min(len - i, SPI_MAX_TRANSFER_SIZE);
+ 		err = airoha_snand_set_fifo_op(as_ctrl, 0xc, data_len);
+ 		if (err)
+ 			return err;
 -- 
 2.43.0
 
