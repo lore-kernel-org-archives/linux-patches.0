@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA821D0786;
-	Wed,  2 Oct 2024 14:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F418A9475;
+	Wed,  2 Oct 2024 14:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880346; cv=none; b=BEdJaUjBJCxuDB+NyBaczN27Sa0lMdAFe7/IRs8Q4IBR7lWMRQ+Z+idK00stGV1/9Dp5T4mlENAd+A9XQ0NjkY7g1O40VGA4fSuB3mLk87Za+8hfw651OmdMxJrgtuc0hKOd0gJoRGNzONHlDvBX2tRCD1hVkte+YwZrk+ArJ/4=
+	t=1727880349; cv=none; b=e7e5XWMODULzZ5fAWAUC8b35LyxCWJxybwS/4B55vDrM7dobcRpslr4VVTkzVPuQHig3A7Edbr4tkmxtJ4UA5um8R6NpI0ncv1BBx2vw7VyXzR56WOt0E+gP06ehX9PCmt7sv9L6NCg/zCrU/Ju1wSibakRNmY+0TPrRAUXAWgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880346; c=relaxed/simple;
-	bh=VXCG2c71jhwpDWMlIP+FG1TM83U8ZHRzMGadoYqCLMg=;
+	s=arc-20240116; t=1727880349; c=relaxed/simple;
+	bh=Ao6ioC3RqHipQjJZ4Xf84RxeWo/yIsmMZaGOY0O4prM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNk+UMy7Rfcpn11MgJLg1rrQiNfvF4JyWQQJzdTO66RYmZ5K5YzVWtW7EzLilUaufnftNGH9kE9HMaSFWQvFegRKRtHuENh+uGPcsqyHW6pqRHgP5B4IqaiUhLJt5Rodv6Kj6Gv4FazTIpgPBXjNIDb7hZVA+FkerIXWa06b+e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcVu2JTy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEPjKB65+v8tkzCZ9O6XLulC5CAT+DWhiNbi6+wQQDUafSR8Psvn2fBXtr7oejSLI4UDONaQ2wbF3j8yW9FZ//R94sTm6deP1bC2MqKhFit4zaZZHdaaELM21P6iA/IPORInRJEU2cy4b/qBmgmHFtBvvEtWBXSpALhkAasJ7gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvNyYz6V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcVu2JTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEDDC4CEC2;
-	Wed,  2 Oct 2024 14:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvNyYz6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2C7C4CEC2;
+	Wed,  2 Oct 2024 14:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880346;
-	bh=VXCG2c71jhwpDWMlIP+FG1TM83U8ZHRzMGadoYqCLMg=;
+	s=korg; t=1727880348;
+	bh=Ao6ioC3RqHipQjJZ4Xf84RxeWo/yIsmMZaGOY0O4prM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcVu2JTyiKYCMYg02S+ITbol4AC1d0IXnwgKghJELbKU0jwUHIdd19Huww+7Ry/Ev
-	 g5r5xE6O/ahDJK7MUTs+BmRzLUkG6NmeBKwriUIdGHJHImUIgV5RIILusKp8Xz5y+B
-	 MRGa+EdEKUNvb8Js5P8AlGR5I2/7uyuylWOJL1ck=
+	b=GvNyYz6Vzl0WNpt9GFcBmuoRHj4V43v4IdRjut32iGjh5mEg7sikp/ECPaJD2SBgI
+	 TGf2C6UIRvKOH2fhAO1gTvo6IwZzirosEe/te9WZrQil1BnMmznMdiIjk1R3Ovv4kr
+	 3hHAvgNXhDUibQocDiJfBn/XyHppiFBpYtf4pXEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 400/538] Revert "soc: qcom: smd-rpm: Match rpmsg channel instead of compatible"
-Date: Wed,  2 Oct 2024 15:00:39 +0200
-Message-ID: <20241002125808.227384977@linuxfoundation.org>
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 427/538] scsi: mac_scsi: Revise printk(KERN_DEBUG ...) messages
+Date: Wed,  2 Oct 2024 15:01:06 +0200
+Message-ID: <20241002125809.290310455@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -50,88 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit b17155133391d7f6dd18d3fb94a7d492fdec18fa upstream.
+commit 5ec4f820cb9766e4583df947150a6febce8da794 upstream.
 
-The rpm_requests device nodes have the compatible node. As such the
-rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
-smd-rpm is built as a module, it doesn't get autoloaded for the device.
+After a bus fault, capture and log the chip registers immediately, if the
+NDEBUG_PSEUDO_DMA macro is defined. Remove some printk(KERN_DEBUG ...)
+messages that aren't needed any more.  Don't skip the debug message when
+bytes == 0. Show all of the byte counters in the debug messages.
 
-Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
-instead of compatible")
-
-Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org # 5.15+
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/7573c79f4e488fc00af2b8a191e257ca945e0409.1723001788.git.fthain@linux-m68k.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/smd-rpm.c | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ drivers/scsi/mac_scsi.c |   42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-index b7056aed4c7d..9d64283d2125 100644
---- a/drivers/soc/qcom/smd-rpm.c
-+++ b/drivers/soc/qcom/smd-rpm.c
-@@ -196,9 +196,6 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
- {
- 	struct qcom_smd_rpm *rpm;
+--- a/drivers/scsi/mac_scsi.c
++++ b/drivers/scsi/mac_scsi.c
+@@ -286,13 +286,14 @@ static inline int macscsi_pread(struct N
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
  
--	if (!rpdev->dev.of_node)
--		return -EINVAL;
--
- 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
- 	if (!rpm)
- 		return -ENOMEM;
-@@ -218,18 +215,38 @@ static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
- 	of_platform_depopulate(&rpdev->dev);
- }
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
  
--static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
--	{ .name = "rpm_requests", },
--	{ /* sentinel */ }
-+static const struct of_device_id qcom_smd_rpm_of_match[] = {
-+	{ .compatible = "qcom,rpm-apq8084" },
-+	{ .compatible = "qcom,rpm-ipq6018" },
-+	{ .compatible = "qcom,rpm-ipq9574" },
-+	{ .compatible = "qcom,rpm-msm8226" },
-+	{ .compatible = "qcom,rpm-msm8909" },
-+	{ .compatible = "qcom,rpm-msm8916" },
-+	{ .compatible = "qcom,rpm-msm8936" },
-+	{ .compatible = "qcom,rpm-msm8953" },
-+	{ .compatible = "qcom,rpm-msm8974" },
-+	{ .compatible = "qcom,rpm-msm8976" },
-+	{ .compatible = "qcom,rpm-msm8994" },
-+	{ .compatible = "qcom,rpm-msm8996" },
-+	{ .compatible = "qcom,rpm-msm8998" },
-+	{ .compatible = "qcom,rpm-sdm660" },
-+	{ .compatible = "qcom,rpm-sm6115" },
-+	{ .compatible = "qcom,rpm-sm6125" },
-+	{ .compatible = "qcom,rpm-sm6375" },
-+	{ .compatible = "qcom,rpm-qcm2290" },
-+	{ .compatible = "qcom,rpm-qcs404" },
-+	{}
- };
--MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
-+MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+-		bytes = mac_pdma_recv(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_recv(s, d, chunk_bytes);
  
- static struct rpmsg_driver qcom_smd_rpm_driver = {
- 	.probe = qcom_smd_rpm_probe,
- 	.remove = qcom_smd_rpm_remove,
- 	.callback = qcom_smd_rpm_callback,
--	.id_table = qcom_smd_rpm_id_table,
--	.drv.name = "qcom_smd_rpm",
-+	.drv  = {
-+		.name  = "qcom_smd_rpm",
-+		.of_match_table = qcom_smd_rpm_of_match,
-+	},
- };
+ 		if (bytes > 0) {
+ 			d += bytes;
+@@ -302,23 +303,23 @@ static inline int macscsi_pread(struct N
+ 		if (hostdata->pdma_residual == 0)
+ 			goto out;
  
- static int __init qcom_smd_rpm_init(void)
--- 
-2.46.2
-
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, d - dst, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, d - dst, len, bytes, chunk_bytes);
++
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
+ 	}
+@@ -345,13 +346,14 @@ static inline int macscsi_pwrite(struct
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
+ 
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
+ 
+-		bytes = mac_pdma_send(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_send(s, d, chunk_bytes);
+ 
+ 		if (bytes > 0) {
+ 			s += bytes;
+@@ -370,23 +372,23 @@ static inline int macscsi_pwrite(struct
+ 			goto out;
+ 		}
+ 
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, s - src, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, s - src, len, bytes, chunk_bytes);
++
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
+ 	}
 
 
