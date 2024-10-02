@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7B21D0DF5;
-	Wed,  2 Oct 2024 14:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34811D0DF3;
+	Wed,  2 Oct 2024 14:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878406; cv=none; b=d022BnX7DoGNF2oKPzb/rD1PGLRWG13L0HuPpIhBeMEOvVONKVf9HQo/PlmtJdcHuCYnjfLzi9z+4QZTenKpLQsD5D4G3IY68WD1DcFnrf6M4rw8UAf4nZ4JsVeGUA0Fe9fcqe0EmfYRDsVZfbFQbE0q0ajJZiqe6JrHkihgtdo=
+	t=1727878408; cv=none; b=DCPUKSSty2Mpb6rbZoOAuptoRoDIclauqoEYFnIpI028A3QbIkfM2npZCNTfe3P7Lbrcik0vQXkvYFKOWJeNYIf/Azobx5SFg58wemawAefdjXQyS9ulnM9RbigpWAHwV8P2aAd2Ghuu6gt1OA3LaobYn4ADCoz58+N1c4DFmC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878406; c=relaxed/simple;
-	bh=1N6/yKA9qOqhR0otWM4clq70EWSFSV2OLfWp4ulVY/M=;
+	s=arc-20240116; t=1727878408; c=relaxed/simple;
+	bh=a3TxVzeaX8E1U09nIx9nhVzi0ubAGrGxbN84QhY6OwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pM4Ll+5VAEG7KmsEmWFrNU1J/o7dVznK499fKu0iKo67YZYIwu0DmY2SsTQSXjj3V+VoJPjVbvTEadQFFMsKfEfkkzqk8GD5Owsz4oBssTD4omHtLTdZ5E6SA+2rgbZd9FarMiIJUerNgb8SxCRn4NjT/aMZ39EauPeaiA2Tyrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0H0/2Xy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAyUom6m6Ydu9Ryjkx38favaHABp3rh8Si3sDHTJzjK4lakvega/UTF+UYGgFnRe0Pmrqo80TmiICUPr5sRCX5z56DMzR/6uCfTTnnc8xxY96zgG16rXmyt035/Pf+hcxwktycDvVWFOJVJTc0OlBuLTqnv2gme03hV6gDIvZmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyrSv8F/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0H0/2Xy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396A6C4CEC2;
-	Wed,  2 Oct 2024 14:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyrSv8F/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F09C4CEC2;
+	Wed,  2 Oct 2024 14:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878405;
-	bh=1N6/yKA9qOqhR0otWM4clq70EWSFSV2OLfWp4ulVY/M=;
+	s=korg; t=1727878408;
+	bh=a3TxVzeaX8E1U09nIx9nhVzi0ubAGrGxbN84QhY6OwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0H0/2Xy3M3iZV+mfHijWDrk/Zu1mmPMLWuTru9BNjDPUKFhvtB9mvP8MyHDId30C
-	 f08Xk2PFp/t9MEHe0p3dM/zuJoCGYMX8wHzV/PedGMR7OwRfx8wHJhZx0WF+u7qDnD
-	 sK50krgWDp1to1Trh/Qn+CuYQAPbZJ5IB9GhKm8I=
+	b=gyrSv8F/i7SuJrx10mlIP5t4RZqJXTugeodVpUk0lQ0TVNLgbCzi+vUbRrFBov/h9
+	 QAWRdEUl3ReRkECUni3tZyluh4FUy8eJd3acX6+8UL3WKJ9h7MXzZgWCIPGNYcqmL8
+	 OD4M/74rX+a1VqXSXvcMo1glnXuw6ce6hfZg/cs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jonas Blixt <jonas.blixt@actia.se>,
+	Anson Huang <anson.huang@nxp.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 401/634] f2fs: atomic: fix to truncate pagecache before on-disk metadata truncation
-Date: Wed,  2 Oct 2024 14:58:21 +0200
-Message-ID: <20241002125826.937525316@linuxfoundation.org>
+Subject: [PATCH 6.10 372/634] watchdog: imx_sc_wdt: Dont disable WDT in suspend
+Date: Wed,  2 Oct 2024 14:57:52 +0200
+Message-ID: <20241002125825.781665317@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -51,35 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Jonas Blixt <jonas.blixt@actia.se>
 
-[ Upstream commit ebd3309aec6271c4616573b0cb83ea25e623070a ]
+[ Upstream commit 2d9d6d300fb0a4ae4431bb308027ac9385746d42 ]
 
-We should always truncate pagecache while truncating on-disk data.
+Parts of the suspend and resume chain is left unprotected if we disable
+the WDT here.
 
-Fixes: a46bebd502fe ("f2fs: synchronize atomic write aborts")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+>From experiments we can see that the SCU disables and re-enables the WDT
+when we enter and leave suspend to ram. By not touching the WDT here we
+are protected by the WDT all the way to the SCU.
+
+Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
+CC: Anson Huang <anson.huang@nxp.com>
+Fixes: 986857acbc9a ("watchdog: imx_sc: Add i.MX system controller watchdog support")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240801121845.1465765-1-jonas.blixt@actia.se
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/watchdog/imx_sc_wdt.c | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 8425fc33ea403..b2763cde3f582 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2185,6 +2185,10 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
- 		F2FS_I(fi->cow_inode)->atomic_inode = inode;
- 	} else {
- 		/* Reuse the already created COW inode */
-+		f2fs_bug_on(sbi, get_dirty_pages(fi->cow_inode));
-+
-+		invalidate_mapping_pages(fi->cow_inode->i_mapping, 0, -1);
-+
- 		ret = f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
- 		if (ret) {
- 			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+diff --git a/drivers/watchdog/imx_sc_wdt.c b/drivers/watchdog/imx_sc_wdt.c
+index e51fe1b78518f..d73076b686d8c 100644
+--- a/drivers/watchdog/imx_sc_wdt.c
++++ b/drivers/watchdog/imx_sc_wdt.c
+@@ -216,29 +216,6 @@ static int imx_sc_wdt_probe(struct platform_device *pdev)
+ 	return devm_watchdog_register_device(dev, wdog);
+ }
+ 
+-static int __maybe_unused imx_sc_wdt_suspend(struct device *dev)
+-{
+-	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
+-
+-	if (watchdog_active(&imx_sc_wdd->wdd))
+-		imx_sc_wdt_stop(&imx_sc_wdd->wdd);
+-
+-	return 0;
+-}
+-
+-static int __maybe_unused imx_sc_wdt_resume(struct device *dev)
+-{
+-	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
+-
+-	if (watchdog_active(&imx_sc_wdd->wdd))
+-		imx_sc_wdt_start(&imx_sc_wdd->wdd);
+-
+-	return 0;
+-}
+-
+-static SIMPLE_DEV_PM_OPS(imx_sc_wdt_pm_ops,
+-			 imx_sc_wdt_suspend, imx_sc_wdt_resume);
+-
+ static const struct of_device_id imx_sc_wdt_dt_ids[] = {
+ 	{ .compatible = "fsl,imx-sc-wdt", },
+ 	{ /* sentinel */ }
+@@ -250,7 +227,6 @@ static struct platform_driver imx_sc_wdt_driver = {
+ 	.driver		= {
+ 		.name	= "imx-sc-wdt",
+ 		.of_match_table = imx_sc_wdt_dt_ids,
+-		.pm	= &imx_sc_wdt_pm_ops,
+ 	},
+ };
+ module_platform_driver(imx_sc_wdt_driver);
 -- 
 2.43.0
 
