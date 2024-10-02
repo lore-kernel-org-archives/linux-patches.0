@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B642F1D0792;
-	Wed,  2 Oct 2024 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D386FB0;
+	Wed,  2 Oct 2024 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880146; cv=none; b=lC0udt8XM0QIKaIwa3Wj896KDgxkKc6ZF88IGcqKjLy977/5JpYQPWqxw8Nee5NIdfx5dGUcXEU3ZX+kmQ8fgatKpTIY/frExUieoNf+pPnrOgrcavXjRywKIWPEuiFIaYchwBUUUJ7cp7nkHqozavdTpXJresYV6rZ/TzJwW28=
+	t=1727880149; cv=none; b=bWmptGsoaKEKa+MU6hp2ynL3ofdz2hmlBK2JTV+7hfb1pvmWBAR3EQPEinFOkTmJrzuCWPjo5OqRDIUW8oYhxnZM0acP+mL43LMDhw6qR/c+hpWrKJlAsGA1GmQQ78ZQCXi1ISzXCSRlJXsIJWGE2QPi0GfICLURnWxBQg6PxGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880146; c=relaxed/simple;
-	bh=FxSJCWH62K/MtQDMOq7E6QfvVPtKqejAx/nq+Dp0nvQ=;
+	s=arc-20240116; t=1727880149; c=relaxed/simple;
+	bh=KrABpt9MLBelVRHFZeKqINhqQs33BYyeoTMahidCeXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXWLEZBRg3qvvEBFI946j9Osep2y3208j0JS2umCB6NvjGQU8HDNHL7hdL6e+Scoj+F7r5Mxo3DsEWfDReVGm5NnihKzPkieSXlEeIpP823SP2yW45YcCQ9/ADf8Er+m91BPu0ns6VylUVlFpPFnGLvlYwJlJvZgEvt3ORECh5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01hepeKT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nR25z8Q9/y9DOdGKYneItudX3GrR75wZakXloRBSXJbYF0Pr8ihemJBShAs7OabE93ZquX/yH2TCPGqFjxIFninBV13bn2EdtcJJpk+5mIAI43bpa9al6J0ijHnZjDUYXnxHvcMDOl+jSu8nlqZt/Q7qVTUmdaAJ4QXcohdBd8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UstD8qKV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01hepeKT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409B4C4CEC2;
-	Wed,  2 Oct 2024 14:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UstD8qKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8E0C4CEC2;
+	Wed,  2 Oct 2024 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880146;
-	bh=FxSJCWH62K/MtQDMOq7E6QfvVPtKqejAx/nq+Dp0nvQ=;
+	s=korg; t=1727880149;
+	bh=KrABpt9MLBelVRHFZeKqINhqQs33BYyeoTMahidCeXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01hepeKT6GPoizfxCbfa9yqS+6VEEl3qW3Ms32ioxgVvNMNFVzA+UpWztij2bvRil
-	 7V481ahckEz8DsLk6NEwXJ9MglShqcc05p5jRd83LlaQWoAL/6c44zKurKhK/0z5rM
-	 wNOatvDGTmNPhSAg2A3BdVm1+qm5BGz9VyW/IO4Y=
+	b=UstD8qKViV0iLGqYkwKBgUGOQ76d9XhTGeaZ5SV3hv8Px5rJnAgjicmFp2s91DR/4
+	 pS1WWfLygelWCEH++lTmO1Iv68zd5d1fLtey1IAXfsn6y3R3TMpgJ4S/dKKPG3uRmI
+	 Ej84b+7KT6sxLup0LUdHlpYU9le2oK2/tnv+mMbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 332/538] crypto: caam - Pad SG length when allocating hash edesc
-Date: Wed,  2 Oct 2024 14:59:31 +0200
-Message-ID: <20241002125805.536773284@linuxfoundation.org>
+Subject: [PATCH 6.6 359/538] iio: magnetometer: ak8975: drop incorrect AK09116 compatible
+Date: Wed,  2 Oct 2024 14:59:58 +0200
+Message-ID: <20241002125806.597494198@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5124bc96162667766f6120b19f57a640c2eccb2a ]
+[ Upstream commit da6e3160df230692bbd48a6d52318035f19595e2 ]
 
-Because hardware will read in multiples of 4 SG entries, ensure
-the allocated length is always padded.  This was already done
-by some callers of ahash_edesc_alloc, but ahash_digest was conspicuously
-missing.
+All compatibles in this binding without prefixes were deprecated, so
+adding a new deprecated one after some time is not allowed, because it
+defies the core logic of deprecating things.
 
-In any case, doing it in the allocation function ensures that the
-memory is always there.
+Drop the AK09916 vendorless compatible.
 
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Fixes: a5e5c13398f3 ("crypto: caam - fix S/G table passing page boundary")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 76e28aa97fa0 ("iio: magnetometer: ak8975: add AK09116 support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240806053016.6401-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caamhash.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/magnetometer/ak8975.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caamhash.c b/drivers/crypto/caam/caamhash.c
-index 290c8500c247f..65785dc5b73b2 100644
---- a/drivers/crypto/caam/caamhash.c
-+++ b/drivers/crypto/caam/caamhash.c
-@@ -708,6 +708,7 @@ static struct ahash_edesc *ahash_edesc_alloc(struct ahash_request *req,
- 		       GFP_KERNEL : GFP_ATOMIC;
- 	struct ahash_edesc *edesc;
- 
-+	sg_num = pad_sg_nents(sg_num);
- 	edesc = kzalloc(struct_size(edesc, sec4_sg, sg_num), flags);
- 	if (!edesc)
- 		return NULL;
+diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
+index 104798549de11..a79a1d5b46394 100644
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -1083,7 +1083,6 @@ static const struct of_device_id ak8975_of_match[] = {
+ 	{ .compatible = "asahi-kasei,ak09912", .data = &ak_def_array[AK09912] },
+ 	{ .compatible = "ak09912", .data = &ak_def_array[AK09912] },
+ 	{ .compatible = "asahi-kasei,ak09916", .data = &ak_def_array[AK09916] },
+-	{ .compatible = "ak09916", .data = &ak_def_array[AK09916] },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, ak8975_of_match);
 -- 
 2.43.0
 
