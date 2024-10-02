@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC301D0412;
-	Wed,  2 Oct 2024 14:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11B1D097D;
+	Wed,  2 Oct 2024 14:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727878982; cv=none; b=mQxBqPJ+kZ+gGI0qVMw3lfdjV2uXcAoBxevHAgUgagUaPpKIcp1goUzaRA0tFVNJCgE3sGlwL8/pwahxWPJ+a3tziMylA1iLg0g5gUhqnSa++Pgn8lCE2EhKJ1o1tsqJy9e1Wg+j50ZwYuWgD/z7YSaFt6FctXkZEx4dM55MoUg=
+	t=1727878984; cv=none; b=UtGwU2qZHaImLzdxCOUtEC7YDId6QY3QjwzUpOWlt/MoUgHwQ2GGFkzmEmfF3MeH6FCQBCfzIG74y12N30HwOU5VFGp9Md3AJ1e2CsWPeP1f1KNfP5vfFLowB1JtMttwFQj4d7IrfuyjzyouuKjwWWZay+7mi7W09Cti+inonMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727878982; c=relaxed/simple;
-	bh=1dxkuuR5/Abu3cPl71z1e8mGZ6b9FPIZ3gfEjk2cfrQ=;
+	s=arc-20240116; t=1727878984; c=relaxed/simple;
+	bh=HA2YzR4kb4tvudmHC3AKyaBzDrd5Zwmw2DxR09ybvZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1wvPPFlUVsr+3dKHrz+NJSs3LUHC7QcqQnrcS4J6uGymZPDrP1zRivZmlEjgauztINDt/R+B62+T9rlB1aOAk5L7lz/Iz7OsRfToXrQOJBZn4Lz3QbrydcQRNx0Us7DD21lcqgziFye4iutundYkeHQQlg9F2pfmzSkLzdt03A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEHOlBk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lsrsk17MBrug5dhGfeuuewEWuX/GNMOJEMAC+JcWExZQzSGvcrnjow9K85lMDSHmJNAKkNS98eD6RGqnEhjIobLdfGDnlQluB/dcierbGcJP79dXfnC1B4WcijWGFlZcwf/iyC8PGspgO2NALBAKebyUrfFWwdZvD1d54ZXNXY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xokfz9T+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEHOlBk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638DAC4CECD;
-	Wed,  2 Oct 2024 14:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xokfz9T+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EF8C4CECE;
+	Wed,  2 Oct 2024 14:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727878981;
-	bh=1dxkuuR5/Abu3cPl71z1e8mGZ6b9FPIZ3gfEjk2cfrQ=;
+	s=korg; t=1727878984;
+	bh=HA2YzR4kb4tvudmHC3AKyaBzDrd5Zwmw2DxR09ybvZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uEHOlBk/lrau6XohQgH67ob8gsOcmp97BPD26btQA8wciCVxitQgneY+J+pWaAMOJ
-	 e1cp6P4wDIt+tZLXZO4k4arU0eeWc5bafRJSRZs31VUpjfXjk83jUe5Bp2gODGT8iN
-	 7qq/Dc+LYEbuICGbuMqAwP575Db3j/mru3qdor7M=
+	b=Xokfz9T+SnRBLdWICwH2N74tNAv2NPG88H+zmYOACJEaMHRKECfnFVCAwxbH5vuam
+	 9bqtG+cLsKntvASXF5LEaD7PsgXH3PXq6rypuA843w27mGS+rwB3AiUXMm2MZZz1JO
+	 ARLPFlFaaHbU0o3N9J+1Il3ydMijS88O8YgnR6ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nikolay Borisov <nik.borisov@suse.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Kai Huang <kai.huang@intel.com>,
 	Tao Liu <ltao@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 598/634] x86/mm: Add callbacks to prepare encrypted memory for kexec
-Date: Wed,  2 Oct 2024 15:01:38 +0200
-Message-ID: <20241002125834.719070143@linuxfoundation.org>
+Subject: [PATCH 6.10 599/634] x86/tdx: Convert shared memory back to private on kexec
+Date: Wed,  2 Oct 2024 15:01:39 +0200
+Message-ID: <20241002125834.758392603@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125811.070689334@linuxfoundation.org>
 References: <20241002125811.070689334@linuxfoundation.org>
@@ -56,151 +56,257 @@ Content-Transfer-Encoding: 8bit
 
 From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 22daa42294b419a0d8060a3870285e7a72aa63e4 ]
+[ Upstream commit 859e63b789d6b17b3c64e51a0aabdc58752a0254 ]
 
-AMD SEV and Intel TDX guests allocate shared buffers for performing I/O.
-This is done by allocating pages normally from the buddy allocator and
-then converting them to shared using set_memory_decrypted().
+TDX guests allocate shared buffers to perform I/O. It is done by allocating
+pages normally from the buddy allocator and converting them to shared with
+set_memory_decrypted().
 
-On kexec, the second kernel is unaware of which memory has been
-converted in this manner. It only sees E820_TYPE_RAM. Accessing shared
-memory as private is fatal.
+The second, kexec-ed kernel has no idea what memory is converted this way. It
+only sees E820_TYPE_RAM.
 
-Therefore, the memory state must be reset to its original state before
-starting the new kernel with kexec.
+Accessing shared memory via private mapping is fatal. It leads to unrecoverable
+TD exit.
 
-The process of converting shared memory back to private occurs in two
-steps:
+On kexec, walk direct mapping and convert all shared memory back to private. It
+makes all RAM private again and second kernel may use it normally.
 
-- enc_kexec_begin() stops new conversions.
-
-- enc_kexec_finish() unshares all existing shared memory, reverting it
-  back to private.
+The conversion occurs in two steps: stopping new conversions and unsharing all
+memory. In the case of normal kexec, the stopping of conversions takes place
+while scheduling is still functioning. This allows for waiting until any ongoing
+conversions are finished. The second step is carried out when all CPUs except one
+are inactive and interrupts are disabled. This prevents any conflicts with code
+that may access shared memory.
 
 Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Reviewed-by: Kai Huang <kai.huang@intel.com>
 Tested-by: Tao Liu <ltao@redhat.com>
-Link: https://lore.kernel.org/r/20240614095904.1345461-11-kirill.shutemov@linux.intel.com
+Link: https://lore.kernel.org/r/20240614095904.1345461-12-kirill.shutemov@linux.intel.com
 Stable-dep-of: d4fc4d014715 ("x86/tdx: Fix "in-kernel MMIO" check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/x86_init.h | 10 ++++++++++
- arch/x86/kernel/crash.c         | 12 ++++++++++++
- arch/x86/kernel/reboot.c        | 12 ++++++++++++
- arch/x86/kernel/x86_init.c      |  4 ++++
- 4 files changed, 38 insertions(+)
+ arch/x86/coco/tdx/tdx.c           | 94 +++++++++++++++++++++++++++++++
+ arch/x86/include/asm/pgtable.h    |  5 ++
+ arch/x86/include/asm/set_memory.h |  3 +
+ arch/x86/mm/pat/set_memory.c      | 42 +++++++++++++-
+ 4 files changed, 141 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
-index 28ac3cb9b987b..213cf5379a5a6 100644
---- a/arch/x86/include/asm/x86_init.h
-+++ b/arch/x86/include/asm/x86_init.h
-@@ -149,12 +149,22 @@ struct x86_init_acpi {
-  * @enc_status_change_finish	Notify HV after the encryption status of a range is changed
-  * @enc_tlb_flush_required	Returns true if a TLB flush is needed before changing page encryption status
-  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
-+ * @enc_kexec_begin		Begin the two-step process of converting shared memory back
-+ *				to private. It stops the new conversions from being started
-+ *				and waits in-flight conversions to finish, if possible.
-+ * @enc_kexec_finish		Finish the two-step process of converting shared memory to
-+ *				private. All memory is private after the call when
-+ *				the function returns.
-+ *				It is called on only one CPU while the others are shut down
-+ *				and with interrupts disabled.
-  */
- struct x86_guest {
- 	int (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
- 	int (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
- 	bool (*enc_tlb_flush_required)(bool enc);
- 	bool (*enc_cache_flush_required)(void);
-+	void (*enc_kexec_begin)(void);
-+	void (*enc_kexec_finish)(void);
- };
- 
- /**
-diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
-index f06501445cd98..340af81556584 100644
---- a/arch/x86/kernel/crash.c
-+++ b/arch/x86/kernel/crash.c
-@@ -128,6 +128,18 @@ void native_machine_crash_shutdown(struct pt_regs *regs)
- #ifdef CONFIG_HPET_TIMER
- 	hpet_disable();
- #endif
-+
-+	/*
-+	 * Non-crash kexec calls enc_kexec_begin() while scheduling is still
-+	 * active. This allows the callback to wait until all in-flight
-+	 * shared<->private conversions are complete. In a crash scenario,
-+	 * enc_kexec_begin() gets called after all but one CPU have been shut
-+	 * down and interrupts have been disabled. This allows the callback to
-+	 * detect a race with the conversion and report it.
-+	 */
-+	x86_platform.guest.enc_kexec_begin();
-+	x86_platform.guest.enc_kexec_finish();
-+
- 	crash_save_cpu(regs, safe_smp_processor_id());
- }
- 
-diff --git a/arch/x86/kernel/reboot.c b/arch/x86/kernel/reboot.c
-index f3130f762784a..bb7a44af7efd1 100644
---- a/arch/x86/kernel/reboot.c
-+++ b/arch/x86/kernel/reboot.c
-@@ -12,6 +12,7 @@
- #include <linux/delay.h>
- #include <linux/objtool.h>
- #include <linux/pgtable.h>
+diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
+index 729ef77b65865..da8b66dce0da5 100644
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -7,6 +7,7 @@
+ #include <linux/cpufeature.h>
+ #include <linux/export.h>
+ #include <linux/io.h>
 +#include <linux/kexec.h>
- #include <acpi/reboot.h>
- #include <asm/io.h>
- #include <asm/apic.h>
-@@ -716,6 +717,14 @@ static void native_machine_emergency_restart(void)
+ #include <asm/coco.h>
+ #include <asm/tdx.h>
+ #include <asm/vmx.h>
+@@ -14,6 +15,7 @@
+ #include <asm/insn.h>
+ #include <asm/insn-eval.h>
+ #include <asm/pgtable.h>
++#include <asm/set_memory.h>
  
- void native_machine_shutdown(void)
- {
-+	/*
-+	 * Call enc_kexec_begin() while all CPUs are still active and
-+	 * interrupts are enabled. This will allow all in-flight memory
-+	 * conversions to finish cleanly.
-+	 */
-+	if (kexec_in_progress)
-+		x86_platform.guest.enc_kexec_begin();
-+
- 	/* Stop the cpus and apics */
- #ifdef CONFIG_X86_IO_APIC
- 	/*
-@@ -752,6 +761,9 @@ void native_machine_shutdown(void)
- #ifdef CONFIG_X86_64
- 	x86_platform.iommu_shutdown();
- #endif
-+
-+	if (kexec_in_progress)
-+		x86_platform.guest.enc_kexec_finish();
+ /* MMIO direction */
+ #define EPT_READ	0
+@@ -830,6 +832,95 @@ static int tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
+ 	return 0;
  }
  
- static void __machine_emergency_restart(int emergency)
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index 3f95e32dd288e..0a2bbd674a6d9 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -139,6 +139,8 @@ static int enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool
- static int enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return 0; }
- static bool enc_tlb_flush_required_noop(bool enc) { return false; }
- static bool enc_cache_flush_required_noop(void) { return false; }
-+static void enc_kexec_begin_noop(void) {}
-+static void enc_kexec_finish_noop(void) {}
- static bool is_private_mmio_noop(u64 addr) {return false; }
++/* Stop new private<->shared conversions */
++static void tdx_kexec_begin(void)
++{
++	if (!IS_ENABLED(CONFIG_KEXEC_CORE))
++		return;
++
++	/*
++	 * Crash kernel reaches here with interrupts disabled: can't wait for
++	 * conversions to finish.
++	 *
++	 * If race happened, just report and proceed.
++	 */
++	if (!set_memory_enc_stop_conversion())
++		pr_warn("Failed to stop shared<->private conversions\n");
++}
++
++/* Walk direct mapping and convert all shared memory back to private */
++static void tdx_kexec_finish(void)
++{
++	unsigned long addr, end;
++	long found = 0, shared;
++
++	if (!IS_ENABLED(CONFIG_KEXEC_CORE))
++		return;
++
++	lockdep_assert_irqs_disabled();
++
++	addr = PAGE_OFFSET;
++	end  = PAGE_OFFSET + get_max_mapped();
++
++	while (addr < end) {
++		unsigned long size;
++		unsigned int level;
++		pte_t *pte;
++
++		pte = lookup_address(addr, &level);
++		size = page_level_size(level);
++
++		if (pte && pte_decrypted(*pte)) {
++			int pages = size / PAGE_SIZE;
++
++			/*
++			 * Touching memory with shared bit set triggers implicit
++			 * conversion to shared.
++			 *
++			 * Make sure nobody touches the shared range from
++			 * now on.
++			 */
++			set_pte(pte, __pte(0));
++
++			/*
++			 * Memory encryption state persists across kexec.
++			 * If tdx_enc_status_changed() fails in the first
++			 * kernel, it leaves memory in an unknown state.
++			 *
++			 * If that memory remains shared, accessing it in the
++			 * *next* kernel through a private mapping will result
++			 * in an unrecoverable guest shutdown.
++			 *
++			 * The kdump kernel boot is not impacted as it uses
++			 * a pre-reserved memory range that is always private.
++			 * However, gathering crash information could lead to
++			 * a crash if it accesses unconverted memory through
++			 * a private mapping which is possible when accessing
++			 * that memory through /proc/vmcore, for example.
++			 *
++			 * In all cases, print error info in order to leave
++			 * enough bread crumbs for debugging.
++			 */
++			if (!tdx_enc_status_changed(addr, pages, true)) {
++				pr_err("Failed to unshare range %#lx-%#lx\n",
++				       addr, addr + size);
++			}
++
++			found += pages;
++		}
++
++		addr += size;
++	}
++
++	__flush_tlb_all();
++
++	shared = atomic_long_read(&nr_shared);
++	if (shared != found) {
++		pr_err("shared page accounting is off\n");
++		pr_err("nr_shared = %ld, nr_found = %ld\n", shared, found);
++	}
++}
++
+ void __init tdx_early_init(void)
+ {
+ 	struct tdx_module_args args = {
+@@ -889,6 +980,9 @@ void __init tdx_early_init(void)
+ 	x86_platform.guest.enc_cache_flush_required  = tdx_cache_flush_required;
+ 	x86_platform.guest.enc_tlb_flush_required    = tdx_tlb_flush_required;
  
- struct x86_platform_ops x86_platform __ro_after_init = {
-@@ -162,6 +164,8 @@ struct x86_platform_ops x86_platform __ro_after_init = {
- 		.enc_status_change_finish  = enc_status_change_finish_noop,
- 		.enc_tlb_flush_required	   = enc_tlb_flush_required_noop,
- 		.enc_cache_flush_required  = enc_cache_flush_required_noop,
-+		.enc_kexec_begin	   = enc_kexec_begin_noop,
-+		.enc_kexec_finish	   = enc_kexec_finish_noop,
- 	},
- };
++	x86_platform.guest.enc_kexec_begin	     = tdx_kexec_begin;
++	x86_platform.guest.enc_kexec_finish	     = tdx_kexec_finish;
++
+ 	/*
+ 	 * TDX intercepts the RDMSR to read the X2APIC ID in the parallel
+ 	 * bringup low level code. That raises #VE which cannot be handled
+diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
+index 65b8e5bb902cc..e39311a89bf47 100644
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -140,6 +140,11 @@ static inline int pte_young(pte_t pte)
+ 	return pte_flags(pte) & _PAGE_ACCESSED;
+ }
  
++static inline bool pte_decrypted(pte_t pte)
++{
++	return cc_mkdec(pte_val(pte)) == pte_val(pte);
++}
++
+ #define pmd_dirty pmd_dirty
+ static inline bool pmd_dirty(pmd_t pmd)
+ {
+diff --git a/arch/x86/include/asm/set_memory.h b/arch/x86/include/asm/set_memory.h
+index 9aee31862b4a8..4b2abce2e3e7d 100644
+--- a/arch/x86/include/asm/set_memory.h
++++ b/arch/x86/include/asm/set_memory.h
+@@ -49,8 +49,11 @@ int set_memory_wb(unsigned long addr, int numpages);
+ int set_memory_np(unsigned long addr, int numpages);
+ int set_memory_p(unsigned long addr, int numpages);
+ int set_memory_4k(unsigned long addr, int numpages);
++
++bool set_memory_enc_stop_conversion(void);
+ int set_memory_encrypted(unsigned long addr, int numpages);
+ int set_memory_decrypted(unsigned long addr, int numpages);
++
+ int set_memory_np_noalias(unsigned long addr, int numpages);
+ int set_memory_nonglobal(unsigned long addr, int numpages);
+ int set_memory_global(unsigned long addr, int numpages);
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 498812f067cd5..1356e25e6d125 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2228,12 +2228,48 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
+ 	return ret;
+ }
+ 
++/*
++ * The lock serializes conversions between private and shared memory.
++ *
++ * It is taken for read on conversion. A write lock guarantees that no
++ * concurrent conversions are in progress.
++ */
++static DECLARE_RWSEM(mem_enc_lock);
++
++/*
++ * Stop new private<->shared conversions.
++ *
++ * Taking the exclusive mem_enc_lock waits for in-flight conversions to complete.
++ * The lock is not released to prevent new conversions from being started.
++ */
++bool set_memory_enc_stop_conversion(void)
++{
++	/*
++	 * In a crash scenario, sleep is not allowed. Try to take the lock.
++	 * Failure indicates that there is a race with the conversion.
++	 */
++	if (oops_in_progress)
++		return down_write_trylock(&mem_enc_lock);
++
++	down_write(&mem_enc_lock);
++
++	return true;
++}
++
+ static int __set_memory_enc_dec(unsigned long addr, int numpages, bool enc)
+ {
+-	if (cc_platform_has(CC_ATTR_MEM_ENCRYPT))
+-		return __set_memory_enc_pgtable(addr, numpages, enc);
++	int ret = 0;
+ 
+-	return 0;
++	if (cc_platform_has(CC_ATTR_MEM_ENCRYPT)) {
++		if (!down_read_trylock(&mem_enc_lock))
++			return -EBUSY;
++
++		ret = __set_memory_enc_pgtable(addr, numpages, enc);
++
++		up_read(&mem_enc_lock);
++	}
++
++	return ret;
+ }
+ 
+ int set_memory_encrypted(unsigned long addr, int numpages)
 -- 
 2.43.0
 
