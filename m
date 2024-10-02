@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED991D0437;
-	Wed,  2 Oct 2024 13:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245081D0437;
+	Wed,  2 Oct 2024 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727877077; cv=none; b=Wh8VP446Z7DB+gZn/IcZeilnLCESSRbZxcox70syMkT7DpEbMi2VH+QtDV9ei4G162uFE2eIrDzPPkXpygysMJ3vbl69PJzuSRrXy5ZpnUFPHXLADMCSPArX/Vq6/ggMnW2ekbOdD6fI8kxUEXgLXW/HL/v+o0ZSj01yjgkaipI=
+	t=1727877080; cv=none; b=h/Xp5v4QZUIw4pWKeCe0pRc7S8FcBs1WTbp/MDg2oJ24UlqaZ8/1dsX9GEUlo4me2WoWklMAqdjM2oXrXJJMQBtngJ0urioCtCsLdLWH9a0VtM+ZLmMN+Xp9oOpvaMOTTvL+jRdecBOzrjJZ7ns5g1CawcW6XQGMkvyrR+ppErI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727877077; c=relaxed/simple;
-	bh=p2f1Vo8QGQ6+snOiU7+Kn3KVHU+CObHTMQiMHX/rp2k=;
+	s=arc-20240116; t=1727877080; c=relaxed/simple;
+	bh=7Zy2lJAxGtIm/EtlAptXvbBqzk/bf3QXIFZ6bWPv0Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OL5FmoHlSTn+ZVxd62Or5hW8QZCSpNHwqOXX1xKYiJH6PKklrOxwkdlXYXIO2ANNA2euQpveS/TFs1/scqUe2VBzpFVO531vQcXBwWu5cHiAbXyfIvblRH90CVsL6cJvcawNxzHHp2UWpxsDOeJDIzjIBvQ9SNj/1q1zNVBntD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUuAsMyV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLmiGUNJe5lbaH20cmQlr9lQqIKdsJ3AINwZOKgB+9idD77eP/SqHJVTEBuztfR2JK47pm87TJqM2CVhlKYxhS0ZKmcr//bkbPSFXF2I4VnAItr3NmWP0AFJmhnNk69erZNgKOPGsexUlVYZCZLuCK9MXPO8Q4t603lzOCx/g3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDa5x64F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUuAsMyV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99576C4CEC2;
-	Wed,  2 Oct 2024 13:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDa5x64F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EFDC4CEC2;
+	Wed,  2 Oct 2024 13:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727877077;
-	bh=p2f1Vo8QGQ6+snOiU7+Kn3KVHU+CObHTMQiMHX/rp2k=;
+	s=korg; t=1727877080;
+	bh=7Zy2lJAxGtIm/EtlAptXvbBqzk/bf3QXIFZ6bWPv0Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUuAsMyVNX2ZYiXwKi6IDaq5Nn2YhO7Dop1cUoLPMy+tK2BJvulbj95svjc1OPo/z
-	 v4QP0vBfOmLcmQv0/Rj9lnvdHAKaLvyNv9S1FNh58Z+LwIKVXJFOqCrSehFt9TyP67
-	 YclODa/mymBl9T2W/AO5SbXHJVWKGfkKfbF8GFxs=
+	b=PDa5x64F93F9aQhMTvm+Lckrc+HvUP2Pl8Zp4JWPdP8TQAc6+LHCLDnoAfbaYjb12
+	 36fn2vLjaR9XEZs573lkHQVDaoa0t/Qeo9rByOc4cBXAmKI3HnbDJi1dqiIVdf//8W
+	 tummTjpA2IFYds0Qun90guC8wZcoiZNRvp8EeyXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5446fbf332b0602ede0b@syzkaller.appspotmail.com,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.11 655/695] lsm: add the inode_free_security_rcu() LSM implementation hook
-Date: Wed,  2 Oct 2024 15:00:53 +0200
-Message-ID: <20241002125848.657044691@linuxfoundation.org>
+	stable@kernel.org,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.11 656/695] spi: fspi: involve lut_num for struct nxp_fspi_devtype_data
+Date: Wed,  2 Oct 2024 15:00:54 +0200
+Message-ID: <20241002125848.696136622@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -50,183 +52,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 63dff3e48871b0583be5032ff8fb7260c349a18c upstream.
+commit 190b7e2efb1ed8435fc7431d9c7a2447d05d5066 upstream.
 
-The LSM framework has an existing inode_free_security() hook which
-is used by LSMs that manage state associated with an inode, but
-due to the use of RCU to protect the inode, special care must be
-taken to ensure that the LSMs do not fully release the inode state
-until it is safe from a RCU perspective.
+The flexspi on different SoCs may have different number of LUTs.
+So involve lut_num in nxp_fspi_devtype_data to make distinguish.
+This patch prepare for the adding of imx8ulp.
 
-This patch implements a new inode_free_security_rcu() implementation
-hook which is called when it is safe to free the LSM's internal inode
-state.  Unfortunately, this new hook does not have access to the inode
-itself as it may already be released, so the existing
-inode_free_security() hook is retained for those LSMs which require
-access to the inode.
-
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+5446fbf332b0602ede0b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/00000000000076ba3b0617f65cc8@google.com
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: ef89fd56bdfc ("arm64: dts: imx8ulp: add flexspi node")
+Cc: stable@kernel.org
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240905094338.1986871-3-haibo.chen@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/lsm_hook_defs.h     |    1 +
- security/integrity/ima/ima.h      |    2 +-
- security/integrity/ima/ima_iint.c |   20 ++++++++------------
- security/integrity/ima/ima_main.c |    2 +-
- security/landlock/fs.c            |    9 ++++++---
- security/security.c               |   32 ++++++++++++++++----------------
- 6 files changed, 33 insertions(+), 33 deletions(-)
+ drivers/spi/spi-nxp-fspi.c |   44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
---- a/include/linux/lsm_hook_defs.h
-+++ b/include/linux/lsm_hook_defs.h
-@@ -114,6 +114,7 @@ LSM_HOOK(int, 0, path_notify, const stru
- 	 unsigned int obj_type)
- LSM_HOOK(int, 0, inode_alloc_security, struct inode *inode)
- LSM_HOOK(void, LSM_RET_VOID, inode_free_security, struct inode *inode)
-+LSM_HOOK(void, LSM_RET_VOID, inode_free_security_rcu, void *inode_security)
- LSM_HOOK(int, -EOPNOTSUPP, inode_init_security, struct inode *inode,
- 	 struct inode *dir, const struct qstr *qstr, struct xattr *xattrs,
- 	 int *xattr_count)
---- a/security/integrity/ima/ima.h
-+++ b/security/integrity/ima/ima.h
-@@ -223,7 +223,7 @@ static inline void ima_inode_set_iint(co
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -57,13 +57,6 @@
+ #include <linux/spi/spi.h>
+ #include <linux/spi/spi-mem.h>
  
- struct ima_iint_cache *ima_iint_find(struct inode *inode);
- struct ima_iint_cache *ima_inode_get(struct inode *inode);
--void ima_inode_free(struct inode *inode);
-+void ima_inode_free_rcu(void *inode_security);
- void __init ima_iintcache_init(void);
- 
- extern const int read_idmap[];
---- a/security/integrity/ima/ima_iint.c
-+++ b/security/integrity/ima/ima_iint.c
-@@ -109,22 +109,18 @@ struct ima_iint_cache *ima_inode_get(str
- }
- 
- /**
-- * ima_inode_free - Called on inode free
-- * @inode: Pointer to the inode
-+ * ima_inode_free_rcu - Called to free an inode via a RCU callback
-+ * @inode_security: The inode->i_security pointer
-  *
-- * Free the iint associated with an inode.
-+ * Free the IMA data associated with an inode.
-  */
--void ima_inode_free(struct inode *inode)
-+void ima_inode_free_rcu(void *inode_security)
- {
--	struct ima_iint_cache *iint;
-+	struct ima_iint_cache **iint_p = inode_security + ima_blob_sizes.lbs_inode;
- 
--	if (!IS_IMA(inode))
--		return;
+-/*
+- * The driver only uses one single LUT entry, that is updated on
+- * each call of exec_op(). Index 0 is preset at boot with a basic
+- * read operation, so let's use the last entry (31).
+- */
+-#define	SEQID_LUT			31
 -
--	iint = ima_iint_find(inode);
--	ima_inode_set_iint(inode, NULL);
--
--	ima_iint_free(iint);
-+	/* *iint_p should be NULL if !IS_IMA(inode) */
-+	if (*iint_p)
-+		ima_iint_free(*iint_p);
- }
+ /* Registers used by the driver */
+ #define FSPI_MCR0			0x00
+ #define FSPI_MCR0_AHB_TIMEOUT(x)	((x) << 24)
+@@ -263,9 +256,6 @@
+ #define FSPI_TFDR			0x180
  
- static void ima_iint_init_once(void *foo)
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -1193,7 +1193,7 @@ static struct security_hook_list ima_hoo
- #ifdef CONFIG_INTEGRITY_ASYMMETRIC_KEYS
- 	LSM_HOOK_INIT(kernel_module_request, ima_kernel_module_request),
- #endif
--	LSM_HOOK_INIT(inode_free_security, ima_inode_free),
-+	LSM_HOOK_INIT(inode_free_security_rcu, ima_inode_free_rcu),
+ #define FSPI_LUT_BASE			0x200
+-#define FSPI_LUT_OFFSET			(SEQID_LUT * 4 * 4)
+-#define FSPI_LUT_REG(idx) \
+-	(FSPI_LUT_BASE + FSPI_LUT_OFFSET + (idx) * 4)
+ 
+ /* register map end */
+ 
+@@ -341,6 +331,7 @@ struct nxp_fspi_devtype_data {
+ 	unsigned int txfifo;
+ 	unsigned int ahb_buf_size;
+ 	unsigned int quirks;
++	unsigned int lut_num;
+ 	bool little_endian;
  };
  
- static const struct lsm_id ima_lsmid = {
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -1207,13 +1207,16 @@ static int current_check_refer_path(stru
+@@ -349,6 +340,7 @@ static struct nxp_fspi_devtype_data lx21
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
  
- /* Inode hooks */
+@@ -357,6 +349,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
  
--static void hook_inode_free_security(struct inode *const inode)
-+static void hook_inode_free_security_rcu(void *inode_security)
- {
-+	struct landlock_inode_security *inode_sec;
-+
- 	/*
- 	 * All inodes must already have been untied from their object by
- 	 * release_inode() or hook_sb_delete().
+@@ -365,6 +358,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = 0,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -373,6 +367,7 @@ static struct nxp_fspi_devtype_data imx8
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+ 	.quirks = FSPI_QUIRK_USE_IP_ONLY,
++	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+ 
+@@ -544,6 +539,8 @@ static void nxp_fspi_prepare_lut(struct
+ 	void __iomem *base = f->iobase;
+ 	u32 lutval[4] = {};
+ 	int lutidx = 1, i;
++	u32 lut_offset = (f->devtype_data->lut_num - 1) * 4 * 4;
++	u32 target_lut_reg;
+ 
+ 	/* cmd */
+ 	lutval[0] |= LUT_DEF(0, LUT_CMD, LUT_PAD(op->cmd.buswidth),
+@@ -588,8 +585,10 @@ static void nxp_fspi_prepare_lut(struct
+ 	fspi_writel(f, FSPI_LCKER_UNLOCK, f->iobase + FSPI_LCKCR);
+ 
+ 	/* fill LUT */
+-	for (i = 0; i < ARRAY_SIZE(lutval); i++)
+-		fspi_writel(f, lutval[i], base + FSPI_LUT_REG(i));
++	for (i = 0; i < ARRAY_SIZE(lutval); i++) {
++		target_lut_reg = FSPI_LUT_BASE + lut_offset + i * 4;
++		fspi_writel(f, lutval[i], base + target_lut_reg);
++	}
+ 
+ 	dev_dbg(f->dev, "CMD[%02x] lutval[0:%08x 1:%08x 2:%08x 3:%08x], size: 0x%08x\n",
+ 		op->cmd.opcode, lutval[0], lutval[1], lutval[2], lutval[3], op->data.nbytes);
+@@ -876,7 +875,7 @@ static int nxp_fspi_do_op(struct nxp_fsp
+ 	void __iomem *base = f->iobase;
+ 	int seqnum = 0;
+ 	int err = 0;
+-	u32 reg;
++	u32 reg, seqid_lut;
+ 
+ 	reg = fspi_readl(f, base + FSPI_IPRXFCR);
+ 	/* invalid RXFIFO first */
+@@ -892,8 +891,9 @@ static int nxp_fspi_do_op(struct nxp_fsp
+ 	 * the LUT at each exec_op() call. And also specify the DATA
+ 	 * length, since it's has not been specified in the LUT.
  	 */
--	WARN_ON_ONCE(landlock_inode(inode)->object);
-+	inode_sec = inode_security + landlock_blob_sizes.lbs_inode;
-+	WARN_ON_ONCE(inode_sec->object);
- }
++	seqid_lut = f->devtype_data->lut_num - 1;
+ 	fspi_writel(f, op->data.nbytes |
+-		 (SEQID_LUT << FSPI_IPCR1_SEQID_SHIFT) |
++		 (seqid_lut << FSPI_IPCR1_SEQID_SHIFT) |
+ 		 (seqnum << FSPI_IPCR1_SEQNUM_SHIFT),
+ 		 base + FSPI_IPCR1);
  
- /* Super-block hooks */
-@@ -1637,7 +1640,7 @@ static int hook_file_ioctl_compat(struct
- }
- 
- static struct security_hook_list landlock_hooks[] __ro_after_init = {
--	LSM_HOOK_INIT(inode_free_security, hook_inode_free_security),
-+	LSM_HOOK_INIT(inode_free_security_rcu, hook_inode_free_security_rcu),
- 
- 	LSM_HOOK_INIT(sb_delete, hook_sb_delete),
- 	LSM_HOOK_INIT(sb_mount, hook_sb_mount),
---- a/security/security.c
-+++ b/security/security.c
-@@ -1596,9 +1596,8 @@ int security_inode_alloc(struct inode *i
- 
- static void inode_free_by_rcu(struct rcu_head *head)
+@@ -1017,7 +1017,7 @@ static int nxp_fspi_default_setup(struct
  {
--	/*
--	 * The rcu head is at the start of the inode blob
--	 */
-+	/* The rcu head is at the start of the inode blob */
-+	call_void_hook(inode_free_security_rcu, head);
- 	kmem_cache_free(lsm_inode_cache, head);
- }
+ 	void __iomem *base = f->iobase;
+ 	int ret, i;
+-	u32 reg;
++	u32 reg, seqid_lut;
  
-@@ -1606,23 +1605,24 @@ static void inode_free_by_rcu(struct rcu
-  * security_inode_free() - Free an inode's LSM blob
-  * @inode: the inode
-  *
-- * Deallocate the inode security structure and set @inode->i_security to NULL.
-+ * Release any LSM resources associated with @inode, although due to the
-+ * inode's RCU protections it is possible that the resources will not be
-+ * fully released until after the current RCU grace period has elapsed.
-+ *
-+ * It is important for LSMs to note that despite being present in a call to
-+ * security_inode_free(), @inode may still be referenced in a VFS path walk
-+ * and calls to security_inode_permission() may be made during, or after,
-+ * a call to security_inode_free().  For this reason the inode->i_security
-+ * field is released via a call_rcu() callback and any LSMs which need to
-+ * retain inode state for use in security_inode_permission() should only
-+ * release that state in the inode_free_security_rcu() LSM hook callback.
-  */
- void security_inode_free(struct inode *inode)
- {
- 	call_void_hook(inode_free_security, inode);
--	/*
--	 * The inode may still be referenced in a path walk and
--	 * a call to security_inode_permission() can be made
--	 * after inode_free_security() is called. Ideally, the VFS
--	 * wouldn't do this, but fixing that is a much harder
--	 * job. For now, simply free the i_security via RCU, and
--	 * leave the current inode->i_security pointer intact.
--	 * The inode will be freed after the RCU grace period too.
--	 */
--	if (inode->i_security)
--		call_rcu((struct rcu_head *)inode->i_security,
--			 inode_free_by_rcu);
-+	if (!inode->i_security)
-+		return;
-+	call_rcu((struct rcu_head *)inode->i_security, inode_free_by_rcu);
- }
+ 	/* disable and unprepare clock to avoid glitch pass to controller */
+ 	nxp_fspi_clk_disable_unprep(f);
+@@ -1092,11 +1092,17 @@ static int nxp_fspi_default_setup(struct
+ 	fspi_writel(f, reg, base + FSPI_FLSHB1CR1);
+ 	fspi_writel(f, reg, base + FSPI_FLSHB2CR1);
  
- /**
++	/*
++	 * The driver only uses one single LUT entry, that is updated on
++	 * each call of exec_op(). Index 0 is preset at boot with a basic
++	 * read operation, so let's use the last entry.
++	 */
++	seqid_lut = f->devtype_data->lut_num - 1;
+ 	/* AHB Read - Set lut sequence ID for all CS. */
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA1CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA2CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHB1CR2);
+-	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHB2CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHA1CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHA2CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHB1CR2);
++	fspi_writel(f, seqid_lut, base + FSPI_FLSHB2CR2);
+ 
+ 	f->selected = -1;
+ 
 
 
