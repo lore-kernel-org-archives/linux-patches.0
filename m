@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40F81D14FB;
-	Wed,  2 Oct 2024 14:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02FB1D0BBC;
+	Wed,  2 Oct 2024 14:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727880141; cv=none; b=skm3/nbh1q6H33pUlOlwyjbV4qk6qz5fhm6RpBTvHZzthhyXIZPUcKJpyR/Px8L6X92mgMLY5lJ1KiK6WdnYJCWF2Q75emkc1G/nitIinWE3TC9zC0XrNYghXZV7wTaHxzUAx9NPzBLBQ42GoFJr6VNySDAjf+cE4dOM7l5w8uA=
+	t=1727880143; cv=none; b=aTwNl8nwXXwkO/bJjAHYx+mn0+8vC/IViHq6XZNaOGZQcqZnELMegwuFzmHg8zUDlhhYBDU5EFg4OcK9Y2uLXr5Hh72rBUhbuYnW4/9xWh/q4zjJAvFTWoHcWLxJ9aEr4crAVSrM2vjC1OPTLRfw7mcK1Ze/TOPd0t4yQFidyeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727880141; c=relaxed/simple;
-	bh=WgN/cm3DAajkXQG8n45jd4VhjXtpO1Ccv95aBEwdYWM=;
+	s=arc-20240116; t=1727880143; c=relaxed/simple;
+	bh=YtbwWg4E9AYeaLf5e6rHGYcASo/3Yll+B1GYuWLzj8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FW1/kPPRmuxQDs31it+n4288k6Dvn29He+KIGTCxRzY0ZHEadlQxt7ckpHMfQ6svEvjsh8GhJFkTB2vNzxjX0xgq0/X/xbXNTWkrDK85UeeGv8NG2h1IZfm2q/uHkMoXWmx1WFlIn11TIjU5JTqdssPWhQEQPryDMz+Kb3egvVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvh+4jPz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7Rc/DJQwshmAplwSUVmS+m8mfXp7SqZey5TtNXwy+l39H0d/WD/0EHzAFiqdb4+AAKgbwyMxRYxdfNXxh+oHBxbHTkBxKEoONZpNE8c1Oy1Qr0iTrbjAanlbRK3osnJfcCsWaot8vh26IkIq2Xeywi6NhOiW/5Vj4bVZgMC9Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH3sowOl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvh+4jPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A740C4CEC2;
-	Wed,  2 Oct 2024 14:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH3sowOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D35C4CECD;
+	Wed,  2 Oct 2024 14:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727880140;
-	bh=WgN/cm3DAajkXQG8n45jd4VhjXtpO1Ccv95aBEwdYWM=;
+	s=korg; t=1727880143;
+	bh=YtbwWg4E9AYeaLf5e6rHGYcASo/3Yll+B1GYuWLzj8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvh+4jPziDh2jmnf72n+Ii74AfJkg9tjVhjdA2xejnrtWmxtFpPlqub7BVa4zYB8S
-	 GVPdFbv5SzS+0nHx3Qvx5ppT7BhLpKf5l3iMYSaNNP5iUWOyhfaR4eBTk2YhJOowgq
-	 C2RpXHCtFg89iZAAHB/T1W9mt4ZjBFcLN3CaFz2A=
+	b=GH3sowOlGrzVIBmNz7+GC0kLlvlPqiAsOPkpbOvxSZGv3k4IXOg6pSaDBsqWUoyfs
+	 XiQJdOjdEw/l1PSDZgUez+wq4qaEvSyFZhPi/tiThKAHgvzwKwe6ncLDWh/feewToP
+	 Yvw0UbdyveJGa6Fhs4h3cF09CcDZYeTvVz09TqdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 357/538] iio: chemical: bme680: Fix read/write ops to device by adding mutexes
-Date: Wed,  2 Oct 2024 14:59:56 +0200
-Message-ID: <20241002125806.518632714@linuxfoundation.org>
+Subject: [PATCH 6.6 358/538] iio: magnetometer: ak8975: Convert enum->pointer for data in the match tables
+Date: Wed,  2 Oct 2024 14:59:57 +0200
+Message-ID: <20241002125806.558478478@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -51,75 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 77641e5a477d428335cd094b88ac54e09ccb70f4 ]
+[ Upstream commit 4f9ea93afde190a0f906ee624fc9a45cf784551b ]
 
-Add mutexes in the {read/write}_raw() functions of the device to guard the
-read/write of data from/to the device. This is necessary because for any
-operation other than temperature, multiple reads need to take place from
-the device. Even though regmap has a locking by itself, it won't protect us
-from multiple applications trying to read at the same time temperature and
-pressure since the pressure reading includes an internal temperature
-reading and there is nothing to ensure that this temperature+pressure
-reading will happen sequentially without any other operation interfering
-in the meantime.
+Convert enum->pointer for data in the match tables to simplify the probe()
+by replacing device_get_match_data() and i2c_client_get_device_id by
+i2c_get_match_data() as we have similar I2C, ACPI and DT matching table.
 
-Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://patch.msgid.link/20240609233826.330516-2-vassilisamir@gmail.com
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230818075600.24277-2-biju.das.jz@bp.renesas.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: da6e3160df23 ("iio: magnetometer: ak8975: drop incorrect AK09116 compatible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/chemical/bme680_core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iio/magnetometer/ak8975.c | 75 +++++++++++++------------------
+ 1 file changed, 30 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/iio/chemical/bme680_core.c b/drivers/iio/chemical/bme680_core.c
-index 500f56834b01f..a6bf689833dad 100644
---- a/drivers/iio/chemical/bme680_core.c
-+++ b/drivers/iio/chemical/bme680_core.c
-@@ -10,6 +10,7 @@
-  */
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
-+#include <linux/cleanup.h>
- #include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/module.h>
-@@ -52,6 +53,7 @@ struct bme680_calib {
- struct bme680_data {
- 	struct regmap *regmap;
- 	struct bme680_calib bme680;
-+	struct mutex lock; /* Protect multiple serial R/W ops to device. */
- 	u8 oversampling_temp;
- 	u8 oversampling_press;
- 	u8 oversampling_humid;
-@@ -827,6 +829,8 @@ static int bme680_read_raw(struct iio_dev *indio_dev,
- {
- 	struct bme680_data *data = iio_priv(indio_dev);
+diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
+index eb706d0bf70bc..104798549de11 100644
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -813,13 +813,13 @@ static const struct iio_info ak8975_info = {
+ };
  
-+	guard(mutex)(&data->lock);
-+
- 	switch (mask) {
- 	case IIO_CHAN_INFO_PROCESSED:
- 		switch (chan->type) {
-@@ -871,6 +875,8 @@ static int bme680_write_raw(struct iio_dev *indio_dev,
- {
- 	struct bme680_data *data = iio_priv(indio_dev);
+ static const struct acpi_device_id ak_acpi_match[] = {
+-	{"AK8975", AK8975},
+-	{"AK8963", AK8963},
+-	{"INVN6500", AK8963},
+-	{"AK009911", AK09911},
+-	{"AK09911", AK09911},
+-	{"AKM9911", AK09911},
+-	{"AK09912", AK09912},
++	{"AK8975", (kernel_ulong_t)&ak_def_array[AK8975] },
++	{"AK8963", (kernel_ulong_t)&ak_def_array[AK8963] },
++	{"INVN6500", (kernel_ulong_t)&ak_def_array[AK8963] },
++	{"AK009911", (kernel_ulong_t)&ak_def_array[AK09911] },
++	{"AK09911", (kernel_ulong_t)&ak_def_array[AK09911] },
++	{"AKM9911", (kernel_ulong_t)&ak_def_array[AK09911] },
++	{"AK09912", (kernel_ulong_t)&ak_def_array[AK09912] },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, ak_acpi_match);
+@@ -883,10 +883,7 @@ static int ak8975_probe(struct i2c_client *client)
+ 	struct iio_dev *indio_dev;
+ 	struct gpio_desc *eoc_gpiod;
+ 	struct gpio_desc *reset_gpiod;
+-	const void *match;
+-	unsigned int i;
+ 	int err;
+-	enum asahi_compass_chipset chipset;
+ 	const char *name = NULL;
  
-+	guard(mutex)(&data->lock);
-+
- 	if (val2 != 0)
- 		return -EINVAL;
+ 	/*
+@@ -928,27 +925,15 @@ static int ak8975_probe(struct i2c_client *client)
+ 		return err;
  
-@@ -967,6 +973,7 @@ int bme680_core_probe(struct device *dev, struct regmap *regmap,
- 		name = bme680_match_acpi_device(dev);
+ 	/* id will be NULL when enumerated via ACPI */
+-	match = device_get_match_data(&client->dev);
+-	if (match) {
+-		chipset = (uintptr_t)match;
+-		name = dev_name(&client->dev);
+-	} else if (id) {
+-		chipset = (enum asahi_compass_chipset)(id->driver_data);
+-		name = id->name;
+-	} else
+-		return -ENOSYS;
+-
+-	for (i = 0; i < ARRAY_SIZE(ak_def_array); i++)
+-		if (ak_def_array[i].type == chipset)
+-			break;
+-
+-	if (i == ARRAY_SIZE(ak_def_array)) {
+-		dev_err(&client->dev, "AKM device type unsupported: %d\n",
+-			chipset);
++	data->def = i2c_get_match_data(client);
++	if (!data->def)
+ 		return -ENODEV;
+-	}
  
- 	data = iio_priv(indio_dev);
-+	mutex_init(&data->lock);
- 	dev_set_drvdata(dev, indio_dev);
- 	data->regmap = regmap;
- 	indio_dev->name = name;
+-	data->def = &ak_def_array[i];
++	/* If enumerated via firmware node, fix the ABI */
++	if (dev_fwnode(&client->dev))
++		name = dev_name(&client->dev);
++	else
++		name = id->name;
+ 
+ 	/* Fetch the regulators */
+ 	data->vdd = devm_regulator_get(&client->dev, "vdd");
+@@ -1077,28 +1062,28 @@ static DEFINE_RUNTIME_DEV_PM_OPS(ak8975_dev_pm_ops, ak8975_runtime_suspend,
+ 				 ak8975_runtime_resume, NULL);
+ 
+ static const struct i2c_device_id ak8975_id[] = {
+-	{"ak8975", AK8975},
+-	{"ak8963", AK8963},
+-	{"AK8963", AK8963},
+-	{"ak09911", AK09911},
+-	{"ak09912", AK09912},
+-	{"ak09916", AK09916},
++	{"ak8975", (kernel_ulong_t)&ak_def_array[AK8975] },
++	{"ak8963", (kernel_ulong_t)&ak_def_array[AK8963] },
++	{"AK8963", (kernel_ulong_t)&ak_def_array[AK8963] },
++	{"ak09911", (kernel_ulong_t)&ak_def_array[AK09911] },
++	{"ak09912", (kernel_ulong_t)&ak_def_array[AK09912] },
++	{"ak09916", (kernel_ulong_t)&ak_def_array[AK09916] },
+ 	{}
+ };
+ 
+ MODULE_DEVICE_TABLE(i2c, ak8975_id);
+ 
+ static const struct of_device_id ak8975_of_match[] = {
+-	{ .compatible = "asahi-kasei,ak8975", },
+-	{ .compatible = "ak8975", },
+-	{ .compatible = "asahi-kasei,ak8963", },
+-	{ .compatible = "ak8963", },
+-	{ .compatible = "asahi-kasei,ak09911", },
+-	{ .compatible = "ak09911", },
+-	{ .compatible = "asahi-kasei,ak09912", },
+-	{ .compatible = "ak09912", },
+-	{ .compatible = "asahi-kasei,ak09916", },
+-	{ .compatible = "ak09916", },
++	{ .compatible = "asahi-kasei,ak8975", .data = &ak_def_array[AK8975] },
++	{ .compatible = "ak8975", .data = &ak_def_array[AK8975] },
++	{ .compatible = "asahi-kasei,ak8963", .data = &ak_def_array[AK8963] },
++	{ .compatible = "ak8963", .data = &ak_def_array[AK8963] },
++	{ .compatible = "asahi-kasei,ak09911", .data = &ak_def_array[AK09911] },
++	{ .compatible = "ak09911", .data = &ak_def_array[AK09911] },
++	{ .compatible = "asahi-kasei,ak09912", .data = &ak_def_array[AK09912] },
++	{ .compatible = "ak09912", .data = &ak_def_array[AK09912] },
++	{ .compatible = "asahi-kasei,ak09916", .data = &ak_def_array[AK09916] },
++	{ .compatible = "ak09916", .data = &ak_def_array[AK09916] },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, ak8975_of_match);
 -- 
 2.43.0
 
