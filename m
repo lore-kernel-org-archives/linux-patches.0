@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1A0376;
-	Wed,  2 Oct 2024 13:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2287918DF60;
+	Wed,  2 Oct 2024 13:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876197; cv=none; b=L2BeoEqse6giRpFuhDv3AZzOcdsJG6IC/qVcUpaWZBIZgwrcJevq3a/d8RMGxUYpHPUYHzAlQB3TO95agMJqmwh36nt+wKmMERCOAO3FuG+7bdBAQ4cPhiqO1h917gQI6J7Wu4aR28k8FuBIZXKCKeEZUBzVphKGT/AZXM1cHUA=
+	t=1727876200; cv=none; b=WwtIX8Txoqfdqys87la1RVoK/m9tnc8fktIVSYQbyU/prVbC6CSL1+tsLWp9mzzdKruVv2Z4G73DjlN1rYhKRgkE7rJah/0H3pj8k4htZGYq27QSwAm32nITsmyAyPsU2lzcxTdI1Qkef+QjMDM3VcTgcPvWESQF64gAuLRtfjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876197; c=relaxed/simple;
-	bh=QyxWga2MUnupIARh3tkEHKAE7yzTHvx/VE3lOLexo0k=;
+	s=arc-20240116; t=1727876200; c=relaxed/simple;
+	bh=KdCxp2+IcdbOnOfbmz51E4fX+/HkoB0ZE067gAUDaSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hp450f9gq7gDmEgjMBwDtMYPkiSFwoSzQVpa2xEVyYYTSItfUAd3X5Wf4B4JeoDDJ+yBxzsOIIgFUslutlrFOjCnp2tiNPzHnrMGE6/B5/GRdf6Em2OBmz81k2wC7u+bukHDWgZKJ0HSKD5iRgGmBsHjwEjdZ940FaAEJWJ6sM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdFLTccg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFy91/rUkByLBP+AgmFZnNloMBYldz/PYP0zbvT3mVDbf1f3gr05PYBon88loGrblvGE3ZppS1HbzvcEa8GBeWdo/pe5CEGXqbv2/+pLC9YLE2IF1yDNZl8+jJ3pai3cINJ8+r1oTzaVWdDVrBDD5zNebdoDTRvKp8HgAwcAr3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq0AUiXt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdFLTccg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D2FC4CEC5;
-	Wed,  2 Oct 2024 13:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq0AUiXt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0132C4CEC5;
+	Wed,  2 Oct 2024 13:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876197;
-	bh=QyxWga2MUnupIARh3tkEHKAE7yzTHvx/VE3lOLexo0k=;
+	s=korg; t=1727876200;
+	bh=KdCxp2+IcdbOnOfbmz51E4fX+/HkoB0ZE067gAUDaSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdFLTccgZC/bkdONWNef3u17X/zLNIl5zy/GK9x5kL4IzL/I+zBq/+uNNgeNy1MIg
-	 xIaCdNjhm1Y77b0sa/Aui0b06am27EBMLTN9vgzjMyqaVlbiR39AAirQXcni4eFtmL
-	 cEqliCjPmcOhmF6oVOT3fec8UtZJ8HONz9ty9uDY=
+	b=Eq0AUiXtnRO6X26r9RF131WDSLdxFGUBs3vJsf+0hpUjVEWLm8kH/TZluIUMg0waU
+	 ozDQ7zRRBe2McAl0KFhkE23/J8siX3qAU1iAGqjOHIiEItdt3XvId4xsdumo9VUn4/
+	 qcbcR1QXCC0ANHuK0pZYdi5wdzfGsl70nPACmx6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 354/695] clk: rockchip: Set parent rate for DCLK_VOP clock on RK3228
-Date: Wed,  2 Oct 2024 14:55:52 +0200
-Message-ID: <20241002125836.576786083@linuxfoundation.org>
+Subject: [PATCH 6.11 363/695] Input: ilitek_ts_i2c - avoid wrong input subsystem sync
+Date: Wed,  2 Oct 2024 14:56:01 +0200
+Message-ID: <20241002125836.934705879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -51,40 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-[ Upstream commit 1d34b9757523c1ad547bd6d040381f62d74a3189 ]
+[ Upstream commit 7d0b18cd5dc7429917812963611d961fd93cb44d ]
 
-Similar to DCLK_LCDC on RK3328, the DCLK_VOP on RK3228 is typically
-parented by the hdmiphy clk and it is expected that the DCLK_VOP and
-hdmiphy clk rate are kept in sync.
+For different reasons i2c transaction may fail or report id in the
+message may be wrong. Avoid closing the frame in this case as it will
+result in all contacts being dropped, indicating that nothing is
+touching the screen anymore, while usually it is not the case.
 
-Use CLK_SET_RATE_PARENT and CLK_SET_RATE_NO_REPARENT flags, same as used
-on RK3328, to make full use of all possible supported display modes.
-
-Fixes: 0a9d4ac08ebc ("clk: rockchip: set the clock ids for RK3228 VOP")
-Fixes: 307a2e9ac524 ("clk: rockchip: add clock controller for rk3228")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240615170417.3134517-3-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 42370681bd46 ("Input: Add support for ILITEK Lego Series")
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240805085511.43955-2-francesco@dolcini.it
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3228.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/touchscreen/ilitek_ts_i2c.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3228.c b/drivers/clk/rockchip/clk-rk3228.c
-index a24a35553e134..7343d2d7676bc 100644
---- a/drivers/clk/rockchip/clk-rk3228.c
-+++ b/drivers/clk/rockchip/clk-rk3228.c
-@@ -409,7 +409,7 @@ static struct rockchip_clk_branch rk3228_clk_branches[] __initdata = {
- 			RK2928_CLKSEL_CON(29), 0, 3, DFLAGS),
- 	DIV(0, "sclk_vop_pre", "sclk_vop_src", 0,
- 			RK2928_CLKSEL_CON(27), 8, 8, DFLAGS),
--	MUX(DCLK_VOP, "dclk_vop", mux_dclk_vop_p, 0,
-+	MUX(DCLK_VOP, "dclk_vop", mux_dclk_vop_p, CLK_SET_RATE_PARENT | CLK_SET_RATE_NO_REPARENT,
- 			RK2928_CLKSEL_CON(27), 1, 1, MFLAGS),
+diff --git a/drivers/input/touchscreen/ilitek_ts_i2c.c b/drivers/input/touchscreen/ilitek_ts_i2c.c
+index 3eb762896345b..e1849185e18c7 100644
+--- a/drivers/input/touchscreen/ilitek_ts_i2c.c
++++ b/drivers/input/touchscreen/ilitek_ts_i2c.c
+@@ -160,15 +160,14 @@ static int ilitek_process_and_report_v6(struct ilitek_ts_data *ts)
+ 	error = ilitek_i2c_write_and_read(ts, NULL, 0, 0, buf, 64);
+ 	if (error) {
+ 		dev_err(dev, "get touch info failed, err:%d\n", error);
+-		goto err_sync_frame;
++		return error;
+ 	}
  
- 	FACTOR(0, "xin12m", "xin24m", 0, 1, 2),
+ 	report_max_point = buf[REPORT_COUNT_ADDRESS];
+ 	if (report_max_point > ts->max_tp) {
+ 		dev_err(dev, "FW report max point:%d > panel info. max:%d\n",
+ 			report_max_point, ts->max_tp);
+-		error = -EINVAL;
+-		goto err_sync_frame;
++		return -EINVAL;
+ 	}
+ 
+ 	count = DIV_ROUND_UP(report_max_point, packet_max_point);
+@@ -178,7 +177,7 @@ static int ilitek_process_and_report_v6(struct ilitek_ts_data *ts)
+ 		if (error) {
+ 			dev_err(dev, "get touch info. failed, cnt:%d, err:%d\n",
+ 				count, error);
+-			goto err_sync_frame;
++			return error;
+ 		}
+ 	}
+ 
+@@ -203,10 +202,10 @@ static int ilitek_process_and_report_v6(struct ilitek_ts_data *ts)
+ 		ilitek_touch_down(ts, id, x, y);
+ 	}
+ 
+-err_sync_frame:
+ 	input_mt_sync_frame(input);
+ 	input_sync(input);
+-	return error;
++
++	return 0;
+ }
+ 
+ /* APIs of cmds for ILITEK Touch IC */
 -- 
 2.43.0
 
