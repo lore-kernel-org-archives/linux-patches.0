@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5E1D0499;
-	Wed,  2 Oct 2024 13:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69F41D0412;
+	Wed,  2 Oct 2024 13:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727876639; cv=none; b=YX1rooBha319Zmxh/vDVU+c4MGsv8iwRigsgqm0zdKSvkUAa2+PscvNZ4JERx1dAUSzCabgKj4YWHYHzqDssLUqA2cRMl8uMeRd0qefiSgQA0NxZ6SUQz1pGeXS3KuHEFciKxsVvLAy+zRZzJera2A1nRg1J91wD6mLm88p14rI=
+	t=1727876641; cv=none; b=Z6eMqtC32dk2RslRn8U4Jm9ykovJU5bI6gYd+SNfrkhLr8MZUkdCePjWz6tdw6iqeC4Uu/h3r2SEBwyxcjFMGcXORR/z4ywQkeTNhdsvj1ANTyWWgD++7R57EPFQpxvesLEXXrydF3l+/5samOVMy7QOx0epKY3IfFwTzaU6H8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727876639; c=relaxed/simple;
-	bh=lkNnobwW7ynGdi0gHVXxpXCAs2u2jfhe8edk2hAYaXI=;
+	s=arc-20240116; t=1727876641; c=relaxed/simple;
+	bh=vGbVVtJC/ZEYlBXk2W96Vro2cK0YOideeOX/mhy7pTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PSExU5s99TJWpqLeQ1Eb6HRiGXtljH+1j17wDB/GtEguRWuJeK3ITjZwNZdwyqTtmsV7vRXeH6DEkWDR4V1SZF1WBwzvYDRS7yBZelc14m30bQr1vFOX7MY4oiLS2CPP+ksbVWUvalOzS6T1B8hNxEvPS4O9+lzc6Wbt6OoQW+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXO3drvv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cD8RqmEpb2Pmiif2MKJjf+BUVJIZcdzko0OHc6rNvZMePyBk6XgSnICqyaPWWYGeGiCiYUVQS7sRJ+pphAIZT4RM3IOgG79C8gXfCm4owybQQw2Wr31J8Ikua7BRlZjGws3TlG8cruQauxNjIav567vhfrnHV9xp9fp5Bt6zTe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGP2p1h/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXO3drvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBCDC4CEC5;
-	Wed,  2 Oct 2024 13:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGP2p1h/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0D8C4CEC5;
+	Wed,  2 Oct 2024 13:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727876638;
-	bh=lkNnobwW7ynGdi0gHVXxpXCAs2u2jfhe8edk2hAYaXI=;
+	s=korg; t=1727876641;
+	bh=vGbVVtJC/ZEYlBXk2W96Vro2cK0YOideeOX/mhy7pTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXO3drvvv8icfu4hfaGB3RcZT1tCcxgXYXN8hioYC77HmIpCjSZjsxYcgvfqFkdoS
-	 MnrDLOCT99qMxA9IcmD1kRQ76XNOdJomd/SVLkY5FUBut7Rm/H+C362o+9ejWuBBeD
-	 aU5WqN7gACALt9oWrl9cBe20kxLOJ4PUrrWgp0Ks=
+	b=FGP2p1h/XP+/mrcstCEvHleePCtWF1JO+jjnywBiAMuCxd44h0xkYT7sE2l2kZ5sI
+	 xP3OgbDLWJouI/hI8YPf6ccr49Yz5O29RY3HVb0w2EmBvRSEHJD+ApK//bd2FAT/db
+	 LbyJ/Z4GE2E97z546LR+r7HbLVayKgvNLlnB9nIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew W Carlis <mattc@purestorage.com>,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.11 512/695] PCI: Revert to the original speed after PCIe failed link retraining
-Date: Wed,  2 Oct 2024 14:58:30 +0200
-Message-ID: <20241002125842.919349035@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.11 513/695] PCI: Clear the LBMS bit after a link retrain
+Date: Wed,  2 Oct 2024 14:58:31 +0200
+Message-ID: <20241002125842.959441418@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
 References: <20241002125822.467776898@linuxfoundation.org>
@@ -56,77 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit f68dea13405c94381d08f42dbf0416261622bdad upstream.
+commit 8037ac08c2bbb3186f83a5a924f52d1048dbaec5 upstream.
 
-When `pcie_failed_link_retrain' has failed to retrain the link by hand
-it leaves the link speed restricted to 2.5GT/s, which will then affect
-any device that has been plugged in later on, which may not suffer from
-the problem that caused the speed restriction to have been attempted.
-Consequently such a downstream device will suffer from an unnecessary
-communication throughput limitation and therefore performance loss.
+The LBMS bit, where implemented, is set by hardware either in response
+to the completion of retraining caused by writing 1 to the Retrain Link
+bit or whenever hardware has changed the link speed or width in attempt
+to correct unreliable link operation.  It is never cleared by hardware
+other than by software writing 1 to the bit position in the Link Status
+register and we never do such a write.
 
-Remove the speed restriction then and revert the Link Control 2 register
-to its original state if link retraining with the speed restriction in
-place has failed.  Retrain the link again afterwards so as to remove any
-residual state, waiting on LT rather than DLLLA to avoid an excessive
-delay and ignoring the result as this training is supposed to fail
-anyway.
+We currently have two places, namely apply_bad_link_workaround() and
+pcie_failed_link_retrain() in drivers/pci/controller/dwc/pcie-tegra194.c
+and drivers/pci/quirks.c respectively where we check the state of the LBMS
+bit and neither is interested in the state of the bit resulting from the
+completion of retraining, both check for a link fault.
+
+And in particular pcie_failed_link_retrain() causes issues consequently, by
+trying to retrain a link where there's no downstream device anymore and the
+state of 1 in the LBMS bit has been retained from when there was a device
+downstream that has since been removed.
+
+Clear the LBMS bit then at the conclusion of pcie_retrain_link(), so that
+we have a single place that controls it and that our code can track link
+speed or width changes resulting from unreliable link operation.
 
 Fixes: a89c82249c37 ("PCI: Work around PCIe link training failures")
-Link: https://lore.kernel.org/linux-pci/alpine.DEB.2.21.2408251412590.30766@angie.orcam.me.uk
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2408091133140.61955@angie.orcam.me.uk
 Reported-by: Matthew W Carlis <mattc@purestorage.com>
 Link: https://lore.kernel.org/r/20240806000659.30859-1-mattc@purestorage.com/
 Link: https://lore.kernel.org/r/20240722193407.23255-1-mattc@purestorage.com/
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Cc: <stable@vger.kernel.org> # v6.5+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -66,7 +66,7 @@
-  * apply this erratum workaround to any downstream ports as long as they
-  * support Link Active reporting and have the Link Control 2 register.
-  * Restrict the speed to 2.5GT/s then with the Target Link Speed field,
-- * request a retrain and wait 200ms for the data link to go up.
-+ * request a retrain and check the result.
-  *
-  * If this turns out successful and we know by the Vendor:Device ID it is
-  * safe to do so, then lift the restriction, letting the devices negotiate
-@@ -74,6 +74,10 @@
-  * firmware may have already arranged and lift it with ports that already
-  * report their data link being up.
-  *
-+ * Otherwise revert the speed to the original setting and request a retrain
-+ * again to remove any residual state, ignoring the result as it's supposed
-+ * to fail anyway.
-+ *
-  * Return TRUE if the link has been successfully retrained, otherwise FALSE.
-  */
- bool pcie_failed_link_retrain(struct pci_dev *dev)
-@@ -92,6 +96,8 @@ bool pcie_failed_link_retrain(struct pci
- 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
- 	if ((lnksta & (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_DLLLA)) ==
- 	    PCI_EXP_LNKSTA_LBMS) {
-+		u16 oldlnkctl2 = lnkctl2;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4718,7 +4718,15 @@ int pcie_retrain_link(struct pci_dev *pd
+ 		pcie_capability_clear_word(pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RL);
+ 	}
+ 
+-	return pcie_wait_for_link_status(pdev, use_lt, !use_lt);
++	rc = pcie_wait_for_link_status(pdev, use_lt, !use_lt);
 +
- 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
++	/*
++	 * Clear LBMS after a manual retrain so that the bit can be used
++	 * to track link speed or width changes made by hardware itself
++	 * in attempt to correct unreliable link operation.
++	 */
++	pcie_capability_write_word(pdev, PCI_EXP_LNKSTA, PCI_EXP_LNKSTA_LBMS);
++	return rc;
+ }
  
- 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
-@@ -100,6 +106,9 @@ bool pcie_failed_link_retrain(struct pci
- 
- 		if (pcie_retrain_link(dev, false)) {
- 			pci_info(dev, "retraining failed\n");
-+			pcie_capability_write_word(dev, PCI_EXP_LNKCTL2,
-+						   oldlnkctl2);
-+			pcie_retrain_link(dev, true);
- 			return false;
- 		}
- 
+ /**
 
 
