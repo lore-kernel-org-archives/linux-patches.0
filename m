@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703FF1CFEBE;
-	Wed,  2 Oct 2024 14:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1581474BC;
+	Wed,  2 Oct 2024 14:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879963; cv=none; b=a5pOGfzpbPNDeIebZv30hzG2JT07xdw/8pD7Jf2l+4TyAerrdPVn2n2cbp7pORF41+DGQGGzkjn4kx2/QRNgPkDCMwcLb90carNb3wUzV3XZO6kVq3efT1ZFxrEFXjgN7hPM0pcrbZ/gWI2DLWZiRJoyQMxlmIljTLLzVcpm3yw=
+	t=1727879966; cv=none; b=Y+o5E9g8TXBePGs4MjZwTBXDCTYUKOuVqiUiu1Ns9iL6SZ8ZHvdaRGn1V+lOEfJXoTf2cqwRPnuzZ2iSSwScP+g9bZmLK8avvT25eEHAUuw50dj1gXVaSWRr7Htffb9rQISS8yxni2Iw9nZesnwhcNM1eD1BkX4igSpQpeFnwQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879963; c=relaxed/simple;
-	bh=rRQ1SOE2doq+Jky3AX+RJMgg9TSl5l5og9wLNad2CGw=;
+	s=arc-20240116; t=1727879966; c=relaxed/simple;
+	bh=RSgMgVlj+Dfgvg6qnpME0N2t1lm3fnq34lJlkd1dfXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOYXisdljiNNckWPL/RWeOjOeYa/P76WQ1BgXbtFf/JcxRQ7U7sIF8T5RP2Bhi9GNgaCELFtWs83nUmphiwM4DOiWsK6xMirZJGSxfKNI9Za48nConLF0JWDZjd9MPWsr5ntmZfq+r+kM7dMhCpkO4Ph7e3dpOCWm1T63fD3C68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LayMHH+p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qP8+UtT9F28dIJLtysseslTlZG3m9niAtK4prGs/FopVkYiZ8MQiNoks87Edw58RqOyYit+UtUewZevkmLg2RBHkAofSqfgGUjaFY0SU9S1Yszc+t2BNzxP5Xnvf0o7egsOBZ7RnXpvYlkbB72PJxOfEn09BPKYCTjAp1NMjHyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIOhzd+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LayMHH+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D1DC4CEC2;
-	Wed,  2 Oct 2024 14:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIOhzd+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8973FC4CEC2;
+	Wed,  2 Oct 2024 14:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879963;
-	bh=rRQ1SOE2doq+Jky3AX+RJMgg9TSl5l5og9wLNad2CGw=;
+	s=korg; t=1727879965;
+	bh=RSgMgVlj+Dfgvg6qnpME0N2t1lm3fnq34lJlkd1dfXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LayMHH+prcdNDsWchVJZuoJtrUHme2Z4VIIk/WhgzGn9i2IT1LDmr49J9Iu0FQsS9
-	 qxnf6tznI6+H9HZQbUjnhjs8aQBR0+JeAFyOTacnZS3yiW8laL1v0h0oe/r9BK0O72
-	 L/FGcajkacd9lmWtAyKtnqxyeQXEACIOKP+OI4eA=
+	b=KIOhzd+ALCfrBhDwLmWq/2oZe+OTY0kbl6i8BO4xXc1sC8e6AWxFF+FdX+X4o/hXs
+	 StRreU3+j/5efU2o1ccRIEFcmXUvIWlAcwpCu8Q/2ucE2n0vXAfvCHPt/+4A2WaSE3
+	 2joyQq5hEqUvraC1TrO2f2gy1zzqHnVCpsU4Zn6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Terry Lv <terry.lv@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 266/538] clk: imx: imx8qxp: Parent should be initialized earlier than the clock
-Date: Wed,  2 Oct 2024 14:58:25 +0200
-Message-ID: <20241002125802.756776181@linuxfoundation.org>
+Subject: [PATCH 6.6 267/538] remoteproc: imx_rproc: Correct ddr alias for i.MX8M
+Date: Wed,  2 Oct 2024 14:58:26 +0200
+Message-ID: <20241002125802.796190868@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,52 +56,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 766c386c16c9899461b83573a06380d364c6e261 ]
+[ Upstream commit c901f817792822eda9cec23814a4621fa3e66695 ]
 
-The initialization order of SCU clocks affects the sequence of SCU clock
-resume. If there are no other effects, the earlier the initialization,
-the earlier the resume. During SCU clock resume, the clock rate is
-restored. As SCFW guidelines, configure the parent clock rate before
-configuring the child rate.
+The DDR Alias address should be 0x40000000 according to RM, so correct
+it.
 
-Fixes: babfaa9556d7 ("clk: imx: scu: add more scu clocks")
+Fixes: 4ab8f9607aad ("remoteproc: imx_rproc: support i.MX8MQ/M")
+Reported-by: Terry Lv <terry.lv@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-15-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-1-10d0268c7eb1@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/remoteproc/imx_rproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index bc75e37d818d5..6d458995f3887 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -165,8 +165,8 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu("pwm_clk",   IMX_SC_R_LCD_0_PWM_0, IMX_SC_PM_CLK_PER);
- 	imx_clk_scu("elcdif_pll", IMX_SC_R_ELCDIF_PLL, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu2("lcd_clk", lcd_sels, ARRAY_SIZE(lcd_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_PER);
--	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
- 	imx_clk_scu("lcd_pxl_bypass_div_clk", IMX_SC_R_LCD_0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
- 
- 	/* Audio SS */
- 	imx_clk_scu("audio_pll0_clk", IMX_SC_R_AUDIO_PLL_0, IMX_SC_PM_CLK_PLL);
-@@ -206,11 +206,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
--	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
--	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_pll0_clk", IMX_SC_R_DC_1_PLL_0, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_pll1_clk", IMX_SC_R_DC_1_PLL_1, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_bypass0_clk", IMX_SC_R_DC_1_VIDEO0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
-+	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_bypass1_clk", IMX_SC_R_DC_1_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
- 	/* MIPI-LVDS SS */
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index cfee164dd645c..ac32b46b4e0f8 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -213,7 +213,7 @@ static const struct imx_rproc_att imx_rproc_att_imx8mq[] = {
+ 	/* QSPI Code - alias */
+ 	{ 0x08000000, 0x08000000, 0x08000000, 0 },
+ 	/* DDR (Code) - alias */
+-	{ 0x10000000, 0x80000000, 0x0FFE0000, 0 },
++	{ 0x10000000, 0x40000000, 0x0FFE0000, 0 },
+ 	/* TCML */
+ 	{ 0x1FFE0000, 0x007E0000, 0x00020000, ATT_OWN  | ATT_IOMEM},
+ 	/* TCMU */
 -- 
 2.43.0
 
