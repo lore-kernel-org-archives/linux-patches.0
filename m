@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023371474BC;
-	Wed,  2 Oct 2024 14:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57F41CFED1;
+	Wed,  2 Oct 2024 14:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727879550; cv=none; b=t6HyfzV53bVvbmx8JqIhrU+bUSJMkFV5JfzV4kSLTyIb+xFZswUz9ymbL6U/OwlfhwyvcMUVrHA2WBbIamxlR3Zcnt2TSsEzd6WDhv5RdiqCASLWEhZFpsNbYSTrXY/HxOKRwvqiMuCnXHbhQOTsSvXhtyyMcYmH1bnv+Y1t/w4=
+	t=1727879553; cv=none; b=BKvmCtWxI8hQh0z2NHC0i0n8YnY3TTsw4JqaVOZ8klD00h1QuoELbihimKtnbfy2waQYnlb/GBqOGH9JlKrf/8SkEKKstVhY+bEUUAONnuaPWVAA9NJ/8rgMTDsJURFbGc9IFur58pH0jk6/Vi+os4BRwl+itFAWlZ68Ai/qGO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727879550; c=relaxed/simple;
-	bh=09ZlixNu90ICKNllqvRemGJNnFd0Hj6cCbCxxo7A/mw=;
+	s=arc-20240116; t=1727879553; c=relaxed/simple;
+	bh=tqSVdVl5tJwpkQ8GgN6hL+cWkxcwNWSfy/GXxsEYhIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5zi8AP6p7t5eJ14lHpVc5vtqx/Rn3qJJljdkRhookeq5qPXzGAtaU1xda2bzy/tK+JssJd6cXNlOwKt7pbqfLmQwRPCWh1R/smePsWXiJt8B2eFPlgN76pJm5X190wdvOMl+dIU1bO+7o+j10qrXcOoGyi7GpnJjHep6aMM51k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t92wYsa/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxi284W5kgFgzqcOsX+JT8/234SfPWURm3b047GfRVWeZtrIckUm+cBBeF77XZ0gSvbuUsIbop1G/FovyM4DjhojRjgVNXPa6nxZ1ovmDCKTXnRBdnJO+C6XsDmiBji10hy7/dXZPYJcRj4AR26VU9a7GufBMWcyBYS/1xoa4H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4gi+8qP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t92wYsa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D68C4CEC2;
-	Wed,  2 Oct 2024 14:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4gi+8qP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3FDC4CEC2;
+	Wed,  2 Oct 2024 14:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727879549;
-	bh=09ZlixNu90ICKNllqvRemGJNnFd0Hj6cCbCxxo7A/mw=;
+	s=korg; t=1727879552;
+	bh=tqSVdVl5tJwpkQ8GgN6hL+cWkxcwNWSfy/GXxsEYhIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t92wYsa/PBgs84y0vslwQXV040WUHQfeo/ie0p5rXAoF2ADpvRRTGATnrIOU+Iwg5
-	 DbaRaQzGI1hMk8v6QqBBKCwPBAwPELHciEm6lxlCDUxjy9qY0npgSF1EMQvvSpX0Zl
-	 FrV/CxgYTUK2HksVPGdEglSRqu4+OwQnSUDQ+nEM=
+	b=g4gi+8qPMHBdiPFUOnSRvkOkOq8+hvPDj2jyHR7J6+0rOJC4femf4dS6LiBHPWGjY
+	 OoPT0OeuXZeEP6NvGPlHFo/POvwVS+WSmY26+m9WgOvtludiQs1q3dj3vreAQtXyzX
+	 mcRyouyVf/I4gRcuTqZ/LOkjU18WW+Dk8oy/hFE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/538] powerpc/8xx: Fix kernel vs user address comparison
-Date: Wed,  2 Oct 2024 14:56:35 +0200
-Message-ID: <20241002125758.411278896@linuxfoundation.org>
+Subject: [PATCH 6.6 157/538] powerpc/vdso: Inconditionally use CFUNC macro
+Date: Wed,  2 Oct 2024 14:56:36 +0200
+Message-ID: <20241002125758.450456355@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002125751.964700919@linuxfoundation.org>
 References: <20241002125751.964700919@linuxfoundation.org>
@@ -53,59 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 65a82e117ffeeab0baf6f871a1cab11a28ace183 ]
+[ Upstream commit 65948b0e716a47382731889ee6bbb18642b8b003 ]
 
-Since commit 9132a2e82adc ("powerpc/8xx: Define a MODULE area below
-kernel text"), module exec space is below PAGE_OFFSET so not only
-space above PAGE_OFFSET, but space above TASK_SIZE need to be seen
-as kernel space.
+During merge of commit 4e991e3c16a3 ("powerpc: add CFUNC assembly
+label annotation") a fallback version of CFUNC macro was added at
+the last minute, so it can be used inconditionally.
 
-Until now the problem went undetected because by default TASK_SIZE
-is 0x8000000 which means address space is determined by just
-checking upper address bit. But when TASK_SIZE is over 0x80000000,
-PAGE_OFFSET is used for comparison, leading to thinking module
-addresses are part of user space.
-
-Fix it by using TASK_SIZE instead of PAGE_OFFSET for address
-comparison.
-
-Fixes: 9132a2e82adc ("powerpc/8xx: Define a MODULE area below kernel text")
+Fixes: 4e991e3c16a3 ("powerpc: add CFUNC assembly label annotation")
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/3f574c9845ff0a023b46cb4f38d2c45aecd769bd.1724173828.git.christophe.leroy@csgroup.eu
+Link: https://msgid.link/0fa863f2f69b2ca4094ae066fcf1430fb31110c9.1724313540.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/head_8xx.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/vdso/gettimeofday.S | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
-index 647b0b445e89d..0c94db8e2bded 100644
---- a/arch/powerpc/kernel/head_8xx.S
-+++ b/arch/powerpc/kernel/head_8xx.S
-@@ -41,12 +41,12 @@
- #include "head_32.h"
- 
- .macro compare_to_kernel_boundary scratch, addr
--#if CONFIG_TASK_SIZE <= 0x80000000 && CONFIG_PAGE_OFFSET >= 0x80000000
-+#if CONFIG_TASK_SIZE <= 0x80000000 && MODULES_VADDR >= 0x80000000
- /* By simply checking Address >= 0x80000000, we know if its a kernel address */
- 	not.	\scratch, \addr
- #else
- 	rlwinm	\scratch, \addr, 16, 0xfff8
--	cmpli	cr0, \scratch, PAGE_OFFSET@h
-+	cmpli	cr0, \scratch, TASK_SIZE@h
- #endif
- .endm
- 
-@@ -404,7 +404,7 @@ FixupDAR:/* Entry point for dcbx workaround. */
- 	mfspr	r10, SPRN_SRR0
- 	mtspr	SPRN_MD_EPN, r10
- 	rlwinm	r11, r10, 16, 0xfff8
--	cmpli	cr1, r11, PAGE_OFFSET@h
-+	cmpli	cr1, r11, TASK_SIZE@h
- 	mfspr	r11, SPRN_M_TWB	/* Get level 1 table */
- 	blt+	cr1, 3f
- 
+diff --git a/arch/powerpc/kernel/vdso/gettimeofday.S b/arch/powerpc/kernel/vdso/gettimeofday.S
+index 48fc6658053aa..894cb939cd2b3 100644
+--- a/arch/powerpc/kernel/vdso/gettimeofday.S
++++ b/arch/powerpc/kernel/vdso/gettimeofday.S
+@@ -38,11 +38,7 @@
+ 	.else
+ 	addi		r4, r5, VDSO_DATA_OFFSET
+ 	.endif
+-#ifdef __powerpc64__
+ 	bl		CFUNC(DOTSYM(\funct))
+-#else
+-	bl		\funct
+-#endif
+ 	PPC_LL		r0, PPC_MIN_STKFRM + PPC_LR_STKOFF(r1)
+ #ifdef __powerpc64__
+ 	PPC_LL		r2, PPC_MIN_STKFRM + STK_GOT(r1)
 -- 
 2.43.0
 
