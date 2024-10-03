@@ -1,85 +1,115 @@
-Received: from out28-60.mail.aliyun.com (out28-60.mail.aliyun.com [115.124.28.60])
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EF51CC171
-	for <patches@lists.linux.dev>; Thu,  3 Oct 2024 23:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.28.60
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3B484E0D
+	for <patches@lists.linux.dev>; Thu,  3 Oct 2024 23:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727997768; cv=none; b=RuUiD2Ch9LDvaBlZKqBBGZFgyHXEiQmGlXwkxoa0oMi1GABqFGAd/034dZD+irtZOPU31boaSmsQQDTAnXt/E2mm5ujEOTjIpIbw9nDroUusr7QxyxxB3AHLEjYiO5NQP0TnczHYHJse11EFnrTjUZ9FiOmy7Fpdtq7/+EG0xNY=
+	t=1727998409; cv=none; b=H4lJxEsnxiSY4p2oYqp0gBuMCRpPBHIYhmQoF8VOttCeGRVxYTWqYLtL7tWBMAv6h1RUOMj8GFcbYd9Tc4AF5gkTRHlewgsHKt5tbpuY2WFY14sORjIooYBo5agdzuOOytnf0wUlc1ln06K5hXHR5G9qY0qYBzohIv6XAmRhSCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727997768; c=relaxed/simple;
-	bh=RwLY74sC5RdaY6GgDi2FqtfjJxp8v3vkGtL37IuU3hQ=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
-	 MIME-Version:Content-Type; b=J71CHkXu8o2P8Xl491WPylmYiHkNTALL+QbIx/+nwlNYs/bTGsXx8SOLocjHk6kC4Vat9bbT3fjr07DM0hIIVk4erE2xyJZR5GRYPXrqddJ+MJuOQtJe3L5gyh38fC262QKym9Eop+gvMhUO5CdGxT4SLNq9OU2J1M0Woh218IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=115.124.28.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.ZYfSjLp_1727997442)
-          by smtp.aliyun-inc.com;
-          Fri, 04 Oct 2024 07:17:23 +0800
-Date: Fri, 04 Oct 2024 07:17:24 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.6 000/533] 6.6.54-rc2 review
-Cc: stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@denx.de,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net,
- rwarsow@gmx.de,
- conor@kernel.org,
- allen.lkml@gmail.com,
- broonie@kernel.org
-In-Reply-To: <20241003103209.857606770@linuxfoundation.org>
-References: <20241003103209.857606770@linuxfoundation.org>
-Message-Id: <20241004071723.69AD.409509F4@e16-tech.com>
+	s=arc-20240116; t=1727998409; c=relaxed/simple;
+	bh=NdcaIYoUN3/QDabg/eu4TFWwd0SJ41/5IF720takjgw=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=R084usUHyHSS1Pg48bu6S79D8QWJ89sdM1Zfg//N8V66O8dA+NxGfkpdC44z0IBymu9OTO758G+p5Xt4e4R9heqq4ngGDu82OxLZO+qy5wwjhHkNN9gOrCoM8XmS8EI1VMHB4HfhIKiOKfGrzUB4DaX4eFD3i1XSebKRuQgV68g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=MGgV9CNQ; arc=none smtp.client-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="MGgV9CNQ"
+Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
+	by cmsmtp with ESMTPS
+	id wV4ksE61DnNFGwVK1sIsFn; Thu, 03 Oct 2024 23:33:25 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id wVK0shoJH827nwVK1sEgcK; Thu, 03 Oct 2024 23:33:25 +0000
+X-Authority-Analysis: v=2.4 cv=GeTcnhXL c=1 sm=1 tr=0 ts=66ff29c5
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=DAUX931o1VcA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=QwLPCtcMcN5jNYhbZB7Z+UpxpTvfOz7Spxd74YwuQOw=; b=MGgV9CNQZaeaxxJnnqDXHrbewV
+	69LOCVHiTo+ZJqVby8gtfRT6wF8ESwUBPUma0YiV0kjo6wfRVdD+zjyfgRRsV/vutMg+96GFYjqY/
+	YTec4ABtS3hTVuwWX3XuEvw/5eRGwakcKXfYwidRFBqHvyT2PR73GP+YBlv4vpZEPhTfCxb4KG82v
+	n8ZT8yxnrk4vbyzTYRhHzTBUio9ZYWF9oCaJiobi7UWXoBJRdKovum+ZyMr1cdt7mQXBDM37K6S8f
+	YR3ZgSQ6Z/8f7DsJBREf6FTflWHMdQzDUcn5LIiBGC/OHDzRlqzdZtZA2rXHnZzo0Vyqyb6hBN9j3
+	YUk6dHjw==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:44440 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1swVJy-000vUr-1k;
+	Thu, 03 Oct 2024 17:33:22 -0600
+Subject: Re: [PATCH 6.11 000/695] 6.11.2-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20241002125822.467776898@linuxfoundation.org>
+In-Reply-To: <20241002125822.467776898@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <f5b3f4ae-33ab-9de9-871c-f0ce880a6b58@w6rz.net>
+Date: Thu, 3 Oct 2024 16:33:20 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.81.07 [en]
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1swVJy-000vUr-1k
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:44440
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfEMQzEFgBRXi6w9V1Spb429RGOvQqQbZgdxYmI1d65/vQ3yUhmaufDvBWwQV1rmSSvszI94972rOOne6R60vDni0+7wdJ+MDskid7yYjAVOZzDDjndde
+ 92FNttSpKrcr/raMgZqLvjdzSgWWQHE+pzPvOn0y5v6/BWaCkTBfoNG8LuI1KQin7PCARW5162acVA==
 
-Hi,
-
-> This is the start of the stable review cycle for the 6.6.54 release.
-> There are 533 patches in this series, all will be posted as a response
+On 10/2/24 5:49 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.2 release.
+> There are 695 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sat, 05 Oct 2024 10:30:30 +0000.
+>
+> Responses should be made by Fri, 04 Oct 2024 12:56:13 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.54-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.2-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
 > and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-A new waring is report by 'make bzImage' in 6.6.54-rc2, 
-but that is not reported in 6.6.53 and 6.12-rc1.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-arch/x86/tools/insn_decoder_test: warning: Found an x86 instruction decoder bug, please report this.
-arch/x86/tools/insn_decoder_test: warning: ffffffff8103c4d5:    c4 03 81 48 cf e9       vpermil2ps $0x9,%xmm15,%xmm14,%xmm15,%xmm9
-arch/x86/tools/insn_decoder_test: warning: objdump says 6 bytes, but insn_get_length() says 0
-arch/x86/tools/insn_decoder_test: warning: Decoded and checked 6968668 instructions with 1 failures
-
-the root cause is yet not clear.
-
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2024/10/04
-
+Tested-by: Ron Economos <re@w6rz.net>
 
