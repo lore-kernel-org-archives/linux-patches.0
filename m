@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7907839E3;
-	Thu,  3 Oct 2024 07:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AFE1C32;
+	Thu,  3 Oct 2024 07:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727939494; cv=none; b=G0X0cREAVR7dvDd0UXk9IU7x+1pOdv/3R7r8Pb8EtTTVr9mND1e73IvdlrM0PEyFsGCcxikn8xi+f4EKtwdBExZuNdcONUiOBJLsjNjdLxALu7jubo+/G2dW4gGMgp4auHt2YIP7Fo0t8Y0oFhqfnzqgY5pz+YZ2V7hgZBvMOFc=
+	t=1727939570; cv=none; b=HSKCPyDiEPWA5qylXlNQzSmzUMEqNLGPRzDf9NYRHvQivYccnwhHkoX17F1zmVn/CxDAUb+ehPS4UdAXh2oWs6QOxSohannviXvoM9nqrwINz9k5tv+fCeu1JYub6v+fL/8r/xjFCjw0BfvSSlUs4ESpgN28qpbbjBkER6kGvm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727939494; c=relaxed/simple;
-	bh=YYDJ4YDz/e60ZyR/MOXCJPhUS9/2KgB08sv2x0fJagM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YBcFlhbBaomh3dAXLQEloDUEnald3YFxLbs5z9BGmYwYP6sp09rCQ5QneHjTu5rMjRlcN8laUsf+LtqzCaeCqtfEZqGSqNfD1DuUEgDJKNPztGCHx6Htr1kspPEA1I4I8n7B8Ojv9lDah1MeShkDM1fgZc11R9C7nhed35h+S08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdecK8SL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727939570; c=relaxed/simple;
+	bh=/OBKbg4VHuhDk5e0rqVa9fggJ33vISeIqk7oP+5ke7w=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jtI8/OPMh524FpL1Fi6Mha68jgwYXbmabwL61rTQGGZ9u42OaYGnJBmCmYXyM5NXUmw5RziV62m4fNMIES9kp5CnaYuUmls94P0EHQmXGAL4kN86BjYp/wLvoDmyw09GX4U/Aj5TZtErrnxVtJ2GfZ70oWEBawr+l4+hjcm/1VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGmOriGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdecK8SL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8279BC4CEC7;
-	Thu,  3 Oct 2024 07:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGmOriGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0CDC4CEC7;
+	Thu,  3 Oct 2024 07:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1727939494;
-	bh=YYDJ4YDz/e60ZyR/MOXCJPhUS9/2KgB08sv2x0fJagM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rdecK8SLNrHyncxs68hGbtXHgA71BoamUegSF0IYw+yL0wyOBkFhF+Ny3vfvroOfI
-	 L7o3pIbxz1EKUpx8c71q4giN9CHS3TzQ8ZJXYEowHGNfproI5a69VeLewCNHuk61qV
-	 cDae2HeA+mnqv6gt3HZQYFV47Ss7+lnlCoxIi+/4=
-Date: Thu, 3 Oct 2024 09:11:30 +0200
+	s=korg; t=1727939569;
+	bh=/OBKbg4VHuhDk5e0rqVa9fggJ33vISeIqk7oP+5ke7w=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=FGmOriGuLkFDCwJefpcSTZjUy78xHf80mwbYvbFd+1JztcR+erCQV3xGldjnaFmAf
+	 rjA8mJPvHvGgaTyPDbYrnXJrWh7A+R7sfaOO0QKn2Sz/MXlzu6T4OHfwdao+KlKrMQ
+	 vuJZR3ygOILNNxbyriPKIBb5+/leLnO8cTtODpLI=
+Date: Thu, 3 Oct 2024 09:12:46 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Marek Vasut <marex@denx.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Pieterjan Camerlynck <pieterjanca@gmail.com>,
-	Lee Jones <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 288/538] leds: leds-pca995x: Add support for NXP
- PCA9956B
-Message-ID: <2024100303-giggly-coherence-b8c4@gregkh>
-References: <20241002125751.964700919@linuxfoundation.org>
- <20241002125803.624242401@linuxfoundation.org>
- <e999b9d5-0283-4d86-a0dd-e4d9c29c91eb@denx.de>
+To: stable@vger.kernel.org, patches@lists.linux.dev,
+	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.11 451/695] spi: atmel-quadspi: Avoid overwriting delay
+ register settings
+Message-ID: <2024100338-refueling-nearest-6ef6@gregkh>
+References: <20241002125822.467776898@linuxfoundation.org>
+ <20241002125840.462311087@linuxfoundation.org>
+ <20241002-alarm-freedom-16ab0ea3305f@thorsis.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,31 +41,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e999b9d5-0283-4d86-a0dd-e4d9c29c91eb@denx.de>
+In-Reply-To: <20241002-alarm-freedom-16ab0ea3305f@thorsis.com>
 
-On Wed, Oct 02, 2024 at 05:00:22PM +0200, Marek Vasut wrote:
-> On 10/2/24 2:58 PM, Greg Kroah-Hartman wrote:
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Oct 02, 2024 at 03:59:26PM +0200, Alexander Dahl wrote:
+> Hello Greg,
+> 
+> Am Wed, Oct 02, 2024 at 02:57:29PM +0200 schrieb Greg Kroah-Hartman:
+> > 6.11-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
-> > From: Pieterjan Camerlynck <pieterjanca@gmail.com>
+> > From: Alexander Dahl <ada@thorsis.com>
 > > 
-> > [ Upstream commit 68d6520d2e76998cdea58f6dd8782de5ab5b28af ]
+> > [ Upstream commit 329ca3eed4a9a161515a8714be6ba182321385c7 ]
 > > 
-> > Add support for PCA9956B chip, which belongs to the same family.
+> > Previously the MR and SCR registers were just set with the supposedly
+> > required values, from cached register values (cached reg content
+> > initialized to zero).
 > > 
-> > This chip features 24 instead of 16 outputs, so add a chipdef struct to
-> > deal with the different register layouts.
-> Seems like a feature patch, not stable material ?
+> > All parts fixed here did not consider the current register (cache)
+> > content, which would make future support of cs_setup, cs_hold, and
+> > cs_inactive impossible.
+> > 
+> > Setting SCBR in atmel_qspi_setup() erases a possible DLYBS setting from
+> > atmel_qspi_set_cs_timing().  The DLYBS setting is applied by ORing over
+> > the current setting, without resetting the bits first.  All writes to MR
+> > did not consider possible settings of DLYCS and DLYBCT.
+> > 
+> > Signed-off-by: Alexander Dahl <ada@thorsis.com>
+> > Fixes: f732646d0ccd ("spi: atmel-quadspi: Add support for configuring CS timing")
+> > Link: https://patch.msgid.link/20240918082744.379610-2-ada@thorsis.com
+> > Signed-off-by: Mark Brown <broonie@kernel.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >  drivers/spi/atmel-quadspi.c | 14 ++++++++------
+> >  1 file changed, 8 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+> > index 466c01b31123b..b557ce94da209 100644
+> > --- a/drivers/spi/atmel-quadspi.c
+> > +++ b/drivers/spi/atmel-quadspi.c
+> > @@ -375,9 +375,9 @@ static int atmel_qspi_set_cfg(struct atmel_qspi *aq,
+> >  	 * If the QSPI controller is set in regular SPI mode, set it in
+> >  	 * Serial Memory Mode (SMM).
+> >  	 */
+> > -	if (aq->mr != QSPI_MR_SMM) {
+> > -		atmel_qspi_write(QSPI_MR_SMM, aq, QSPI_MR);
+> > -		aq->mr = QSPI_MR_SMM;
+> > +	if (!(aq->mr & QSPI_MR_SMM)) {
+> > +		aq->mr |= QSPI_MR_SMM;
+> > +		atmel_qspi_write(aq->scr, aq, QSPI_MR);
+> 
+> This is a write to a wrong register, it was already fixed with
+> <20240926090356.105789-1-ada@thorsis.com> [1] which was taken by Mark
+> into the spi for-next tree.  If you take this patch, please also take
+> the fixup!  Sorry for messing this up, that was my fault.
+> 
+> (Note: I'm AFK from tomorrow until October 13th.)
+> 
+> Thanks
+> Alex
+> 
+> [1] https://lore.kernel.org/linux-spi/20240926090356.105789-1-ada@thorsis.com/T/#u
 
-As the patch said:
-	Stable-dep-of: 82c5ada1f9d0 ("leds: pca995x: Fix device child node usage in pca995x_probe()")
-
-it is needed for that one.
-
-and we add new device ids or quirks all the time, this one seems sane.
-
-thanks,
+Now queued up, thanks!
 
 greg k-h
