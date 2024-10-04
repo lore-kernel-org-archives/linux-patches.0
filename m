@@ -1,131 +1,206 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3680111CBD;
-	Fri,  4 Oct 2024 00:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EB0328DB
+	for <patches@lists.linux.dev>; Fri,  4 Oct 2024 04:52:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728002577; cv=none; b=Ov+WZ6EOJI4bXxIiOMvla0OzxeTFbRrW6DZ/Q6LblkqS9nwRgEOLtYwVhh7TTFLeIwkYjPmRcb7V+bPrQ/etI3lqd4LDRsBPwjYcf0w2XcRKyP6rHT+0Q/01gqz7hl8IFawPjQIWexJIjtOC4XLMVy/ai1nyMLHSrQcmKn8TGQ8=
+	t=1728017535; cv=none; b=MZMaeB8YWPeZ4TNB5KCpsK0nCVPeb5dzH/+TlADthy7JI+nYR7K+VUOeHHanj5Tr08Xt5n4uWzt/ufP3g5QdeaFJrOA52ILyI2jGUNhg9JD1FcL/BvZf3n7KKVbdEBkNCRCuGv5aSbtHh218SwXUicTHBcQpEyTC4ilsb1T6MbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728002577; c=relaxed/simple;
-	bh=kMMo9BAc0r9Ly2hSQLr4fnwD0fAa39h+ExMmstruj/Q=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=euABGkFCdrX55Yir6vm2LB/IDmJBssUVbWwALg7NZvaOkcWbkyXXojoEIAduiRf48uG0ZQlS/QBW1fWpm+o4H1+pyuu1mG5V7aZSDHE1QUIPD3mYN2SnnGB00A5hSQXMetJFSZI9dRzx9SzeesQ9gCvF5tDnRVc2AyspgznNbjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e7V3NzlS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728017535; c=relaxed/simple;
+	bh=ejP5C1AYJ38+W4qMlT4oQl7oYkorNke0H7+dJlDwP6s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EdVglQgQSAevMRgK+P6+X8a2w3j0Uj7H6LL92ajvBLRT7JFHE2rSSLRuNpcfoqceIgyHulqHuTbCsvB4a4Xlqlu45huWDKHglqSVFuJIM28GSxRTIHjm9OSI4ltZ41k7MarZchXyxJA8s9Yfm0D9IAtFBqg6ACKSNxRPYA7QmcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GbXJOKYu; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e7V3NzlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943E4C4CEC7;
-	Fri,  4 Oct 2024 00:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728002576;
-	bh=kMMo9BAc0r9Ly2hSQLr4fnwD0fAa39h+ExMmstruj/Q=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=e7V3NzlSubY7reZLd5JUnQsOasf7lH26uNnmDfrfJagQCqYL4qr11fwPJVsi7HNpi
-	 QgZOm+6DPsGITx3dheRWzcPgD8niD3La1DnxQSiFeUWxz0cMKfojzlKFzJePWSAKNw
-	 9eFb5q25wS4KmlRqZtuCWDL4CWjJlXUUAlbalZPI6xV+Gpy5cV+aqNQcQ8xAN3ccb4
-	 pGtuMR9+Zjd/8YZoItg0yoiqLQt7Gd9V+lQywlZ523pD1+hnEfp6A7Y9OasEg8mCsY
-	 w0V2XNgp/oGC0YT07gWFxj4lRjzm+S99bXSplJi5fnIp+OsH6qW9gx3K+EtgWJyGBE
-	 btQwmPJSnWLKw==
-Message-ID: <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GbXJOKYu"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7e6cbf6cd1dso1134502a12.3
+        for <patches@lists.linux.dev>; Thu, 03 Oct 2024 21:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728017533; x=1728622333; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Q1IhYiz8eeuWL6vj4hcFX9KVycQYMBC7VkQ15SzUmc=;
+        b=GbXJOKYuyrVe/9iHfeP48rHzw1qJY/6MpEmex46ldscdnhq9X7QsXY8pHyRfZUoMAE
+         l6Zgg8TXtGt4RkKK35aPlEDpRJCaYnVwyoaZsfgZbtitvZLi9a5UP4jzkpVaTSqtJlDz
+         fblZopBUqow1mEkhyuLc1w+QwZQZcEV3zavZ9UVmvhYYMW6TENfVeIuukUO0w4azGePu
+         vgXNQpZkUDYpKjSqGYsWkotrVqiPgGysWw9EzwpbKIMJjmIK3e6dsy8xCsmgEqmzUdoV
+         K4jRBkz2SQI0zHr6aXlt0G6lLaDcECcBaogcnow0fjHtT2kSwcNaAhhtuxh9ujdOgN9P
+         uHDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728017533; x=1728622333;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+Q1IhYiz8eeuWL6vj4hcFX9KVycQYMBC7VkQ15SzUmc=;
+        b=TIqR+dv6AdSs7hvA8fWdorLU6fT6xr/Zm9mtlSgB7tsDuFSdSGN4xDts4WCYHJ3mxS
+         HJGlwjHvYtvk8790CXhUXr8C9dszQIUBxJb+iFjEFFXFi8W1jG1ntqnnJCZ0TYyrtU2h
+         yad9T7Ma8/w8XSjPHboYb+JeasATvSLeaCE/QfhStTdx9kkOhoqIPXhG7EHBPSXLnvC7
+         tsQ/6zgQhaJwP/2dqN/Una30pylQsMW0ptTi9aqU21PtuLa8fkI2V+KtEqgTCE6dyGIq
+         3uKpfyV6pf2Hby0TzdwaX1kprcxMrkpyW29u6HiUZzwMZzCwjwT/lNG5FQtXd7NGTlDk
+         mUwg==
+X-Forwarded-Encrypted: i=1; AJvYcCUeQNpbJZu4zk5uz47yjpQYLTaRzbtZwc9M1+lTiyT2c8FOyjy96a5Ie3YcBfgATWJJhbJu8p93@lists.linux.dev
+X-Gm-Message-State: AOJu0YwocViZLCO6MsWqso9je6RtuvP9lia7EWhCGhYxiYZaWqOOmQY6
+	VsoYpGfk7h+xYCUYEaCuNxXrQpmbH2GwIQYMjZXXTIkOvBmcn7wF
+X-Google-Smtp-Source: AGHT+IGm4NXB0dLG/zomksnWRf8sdveV8TTKKHWO87H38b6WLnVZwIb3Yj3+5q4BwboQFIMAi1N3mw==
+X-Received: by 2002:a05:6a20:9f8f:b0:1d6:8f33:fb64 with SMTP id adf61e73a8af0-1d6dfa2495emr2264224637.3.1728017532628;
+        Thu, 03 Oct 2024 21:52:12 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71dd9df2bacsm2360585b3a.170.2024.10.03.21.52.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Oct 2024 21:52:11 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <cb1e0119-6e3e-4fd2-92ea-3fec18f5843d@roeck-us.net>
+Date: Thu, 3 Oct 2024 21:52:09 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net>
-References: <20240718210513.3801024-1-sboyd@kernel.org> <dcd8894f-1eb6-4b5c-9e6f-f6e584c601d2@roeck-us.net> <6f5a5b5f-71a7-4ed3-8cb3-d930bbce599b@linuxfoundation.org> <ba88a29c-f05e-4ca3-82d1-0a634613caee@roeck-us.net> <4216b852-11a2-41ae-bb01-5f9b578ee41b@roeck-us.net> <879831a8-2039-4cdb-bce2-aefdeb7ab25f@linuxfoundation.org> <da260b77-2ecb-4486-90cb-6db456d381ef@linuxfoundation.org> <f5f1c42d-77c0-48c7-ac52-3d4a3b5c2b47@roeck-us.net> <4a8abb5f501279de7907629f4dd6be24.sboyd@kernel.org> <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net>
-Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with struct clk_parent_data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J.Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>, Geert Uytterhoeven <geert+renesas@glider.be>
-To: Guenter Roeck <linux@roeck-us.net>, Shuah Khan <skhan@linuxfoundation.org>
-Date: Thu, 03 Oct 2024 17:42:54 -0700
-User-Agent: alot/0.10
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with
+ struct clk_parent_data
+To: Stephen Boyd <sboyd@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ patches@lists.linux.dev, kunit-dev@googlegroups.com,
+ linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
+ Brendan Higgins <brendan.higgins@linux.dev>, David Gow
+ <davidgow@google.com>, Rae Moar <rmoar@google.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Rafael J.Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>,
+ Saravana Kannan <saravanak@google.com>, Daniel Latypov
+ <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>,
+ Geert Uytterhoeven <geert+renesas@glider.be>
+References: <20240718210513.3801024-1-sboyd@kernel.org>
+ <dcd8894f-1eb6-4b5c-9e6f-f6e584c601d2@roeck-us.net>
+ <6f5a5b5f-71a7-4ed3-8cb3-d930bbce599b@linuxfoundation.org>
+ <ba88a29c-f05e-4ca3-82d1-0a634613caee@roeck-us.net>
+ <4216b852-11a2-41ae-bb01-5f9b578ee41b@roeck-us.net>
+ <879831a8-2039-4cdb-bce2-aefdeb7ab25f@linuxfoundation.org>
+ <da260b77-2ecb-4486-90cb-6db456d381ef@linuxfoundation.org>
+ <f5f1c42d-77c0-48c7-ac52-3d4a3b5c2b47@roeck-us.net>
+ <4a8abb5f501279de7907629f4dd6be24.sboyd@kernel.org>
+ <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net>
+ <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Guenter Roeck (2024-10-03 17:25:37)
-> On 10/3/24 16:46, Stephen Boyd wrote:
-> [ ... ]
-> > That DT test has been there for a few releases. Is this the first time
-> > those tests have been run on arm64+acpi? I didn't try after sending the
-> > patches and forgot that the patch was dropped.
-> >=20
->=20
-> Previously I had the affected tests disabled and never tracked down the p=
-roblem.
-> Since the problem is now spreading to additional tests, I finally tracked=
- it down,
-> that is all.
+On 10/3/24 17:42, Stephen Boyd wrote:
+> Quoting Guenter Roeck (2024-10-03 17:25:37)
+>> On 10/3/24 16:46, Stephen Boyd wrote:
+>> [ ... ]
+>>> That DT test has been there for a few releases. Is this the first time
+>>> those tests have been run on arm64+acpi? I didn't try after sending the
+>>> patches and forgot that the patch was dropped.
+>>>
+>>
+>> Previously I had the affected tests disabled and never tracked down the problem.
+>> Since the problem is now spreading to additional tests, I finally tracked it down,
+>> that is all.
+> 
+> Ok great. Good to know this isn't a new problem. Thanks for tracking it
+> down.
+> 
+>>
+>>> How are you running kunit tests? I installed the qemu-efi-aarch64 debian
+>>> package to get QEMU_EFI.fd but passing that to the kunit.py run command
+>>> with --qemu_args="-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd" didn't
+>>> get me beyond the point that the EFI stub boots linux. I think the
+>>> serial console must not be working and thus the kunit wrapper waits for
+>>> something to show up but nothing ever does. I haven't dug any further
+>>> though, so maybe you have a working command.
+>>>
+>>
+>> I run all tests during boot, not from the command line. I also use the -bios
+>> command but don't recall any issues with the console. I specify the
+>> console on the qemu command line; depending on the qemu machine it is either
+>> ttyS0 or ttyAMA0. The init script then finds and selects the active console.
+> 
+> Can you please describe how you run the kunit test? And provide the qemu
+> command you run to boot arm64 with acpi?
+> 
 
-Ok great. Good to know this isn't a new problem. Thanks for tracking it
-down.
+Example command line:
 
->=20
-> > How are you running kunit tests? I installed the qemu-efi-aarch64 debian
-> > package to get QEMU_EFI.fd but passing that to the kunit.py run command
-> > with --qemu_args=3D"-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd" didn=
-'t
-> > get me beyond the point that the EFI stub boots linux. I think the
-> > serial console must not be working and thus the kunit wrapper waits for
-> > something to show up but nothing ever does. I haven't dug any further
-> > though, so maybe you have a working command.
-> >=20
->=20
-> I run all tests during boot, not from the command line. I also use the -b=
-ios
-> command but don't recall any issues with the console. I specify the
-> console on the qemu command line; depending on the qemu machine it is eit=
-her
-> ttyS0 or ttyAMA0. The init script then finds and selects the active conso=
-le.
+qemu-system-aarch64 -M virt -m 512 \
+      -kernel arch/arm64/boot/Image -no-reboot -nographic \
+      -snapshot \
+      -bios /opt/buildbot/rootfs/arm64/../firmware/QEMU_EFI-aarch64.fd \
+      -device virtio-blk-device,drive=d0 \
+      -drive file=rootfs.ext2,if=none,id=d0,format=raw \
+      -cpu cortex-a57 -serial stdio -monitor none -no-reboot \
+      --append "kunit.stats_enabled=2 kunit.filter=speed>slow root=/dev/vda rootwait earlycon=pl011,0x9000000 console=ttyAMA0"
 
-Can you please describe how you run the kunit test? And provide the qemu
-command you run to boot arm64 with acpi?
+That works fine for me. Configuration is arm64 defconfig plus various
+debug and kunit options. I built the efi image myself from sources.
+The root file system is from buildroot with modified init script.
+kunit tests are all built into the kernel and run during boot.
 
->=20
-> > Here's my command that isn't working:
-> >=20
-> > ./tools/testing/kunit/kunit.py run --arch=3Darm64 --kunitconfig=3Ddrive=
-rs/of --qemu_args=3D"-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd" =20
-> >=20
->=20
-> I can't really see what that command is actually doing ;-).
+>>
+>> I'll just keep the affected tests disabled on arm64 for the time being.
+> 
+> We should skip the tests on arm64+acpi, which is similar to disabling
+> but not exactly the same. There will likely be more DT overlay usage in
+> kunit and so that will lead to more test disabling. Skipping properly is
+> the better solution.
 
-It eventually runs this qemu command
+Sure, but having those tests fail all the time doesn't help either.
+I'll re-enable the tests if / when they are skipped.
 
-qemu-system-aarch64 -nodefaults -m 1024 -kernel .kunit/arch/arm64/boot/Imag=
-e.gz -append 'kunit.enable=3D1 console=3DttyAMA0 kunit_shutdown=3Dreboot' -=
-no-reboot -nographic -serial stdio -machine virt -cpu max,pauth-impdef=3Don=
- -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd
+Thanks,
+Guenter
 
-I see that it fails because the architected timer isn't there after I
-add an earlycon=3Dpl011,0x9000000 to the kernel commandline. I suspect
-passing a bios like this is incorrect, but I rarely run qemu manually so
-I don't know what I'm doing wrong.
-
-NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
-rcu: srcu_init: Setting srcu_struct sizes based on contention.
-timer_probe: no matching timers found
-Kernel panic - not syncing: Unable to initialise architected timer.
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.11.0-rc1-00261-g497f7c30=
-f184 #203
-Call trace:
- dump_backtrace+0x94/0xec
- show_stack+0x18/0x24
- dump_stack_lvl+0x38/0x90
- dump_stack+0x18/0x24
- panic+0x36c/0x380
- early_brk64+0x0/0xa8
- start_kernel+0x27c/0x558
- __primary_switched+0x80/0x88
----[ end Kernel panic - not syncing: Unable to initialise architected timer=
-. ]---
-
->=20
-> I'll just keep the affected tests disabled on arm64 for the time being.
-
-We should skip the tests on arm64+acpi, which is similar to disabling
-but not exactly the same. There will likely be more DT overlay usage in
-kunit and so that will lead to more test disabling. Skipping properly is
-the better solution.
