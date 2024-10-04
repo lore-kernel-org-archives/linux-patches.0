@@ -1,83 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F2A26281;
-	Fri,  4 Oct 2024 06:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCECC85260
+	for <patches@lists.linux.dev>; Fri,  4 Oct 2024 07:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728024907; cv=none; b=HL4qnaaNRO4vucftSzaOrxaDxXzkJZ949UEETGYOG0lWrda6B2s6PFg4Zm2d3ZtkjjEVX6CoZtPY5rd7NkuGdp+nzoqGWo98z4SXlUV0xK4c5a0lp6GNyAMYHWUGrjA2r5NWv+4nduBXL5qjRRZfgbLK8FZ6P7p3fxyxifQrAYo=
+	t=1728026055; cv=none; b=NbEwIWzEEw1RmsVm65R0d/iqUXF6QlTMCQK2JNJ7rIwc5wzzG7kVmYx3xWNSIYshox6V4X01l+LIN9eTMHqLBCV55/+PFknprxHDeduRDCEjRoe03hUFEFxqSSPHF/9E4JtqdlFFNakAfach5MuR9FvGR1KhuBZGv+ReCvHqLGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728024907; c=relaxed/simple;
-	bh=/Yb+m7ZHMFf8uynm9lEz2NY1ZaPP/bRn5yc46Bjkz3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KjWaziShhawDALw737qs4XUN+aAPOMNe+Npyo/QGTpMsoIIC0NqjICRfoOhXMapJygxSLrPvO2I0NL6yypVAB3APsalp80RKLVbdPWDrZM4q842B8HZQZ1/MsnIzFUGSpnzbgZzD+B33VDVQcrQZDQamNAs35W4yRp+HZ5KasSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ogo6CnLo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728026055; c=relaxed/simple;
+	bh=1iMOmJ43CP6yXp20Vygffsp0eQ0LJHRK+2+LtCsCQqQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ufDOXSOfHJd8xpYB4k9yR2K6frxwIXmZN8dfT6ctJDZjaoKFHlQxN64kcNtc65uIw9jlBS+gtCScSlgBUEyKh3op1nFBUxJP2QwFLS3inJL9epA1xGmK+y1W3BrurTcPseeCRh/4rltCJb/+fs4zNFRGvXBB4HE9YzOJk60oaX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xz8lIaMC; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogo6CnLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF05C4CECC;
-	Fri,  4 Oct 2024 06:55:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728024907;
-	bh=/Yb+m7ZHMFf8uynm9lEz2NY1ZaPP/bRn5yc46Bjkz3I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ogo6CnLoyQcYa5xyWWZonzvPKQwMa3zpsa97/+WfZbECgoYbT/Iv7+5SsORHLyLXy
-	 PRy84kFf2inGQ3nVlaQnrjA8IJxDwzv8ByXz7uZFMjUPYE8bgbldwyADXtb25ixDNK
-	 S8gpNjoYSvDuLaEx06TBrYruQ6kQQfIo/L6j/KIQ=
-Date: Fri, 4 Oct 2024 08:55:04 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Wang Yugui <wangyugui@e16-tech.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/533] 6.6.54-rc2 review
-Message-ID: <2024100426-wheat-heavily-68d1@gregkh>
-References: <20241003103209.857606770@linuxfoundation.org>
- <20241004071723.69AD.409509F4@e16-tech.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xz8lIaMC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1728026051;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hBtwnr0LZruEJbvlzvyuk1+vZcUV6rsB3LNlgkW3ppA=;
+	b=Xz8lIaMCGdSjd6MC/L6xu23krO2Twlt5boqi/vp+M7oY+tMSzWtizv18bFnnmdLisje5Cz
+	zQz0vwKGT+KMnMEvGLGEIoy2y2Vhuif5alhjIbOBGABD2DOUF51HSICsXfa+p7ZBpWIc61
+	0IE/LjeD/v2u4V0TFJrnN1RRsxjZhpA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-13-RY7lrr1aNHSbTSPpcKueNg-1; Fri, 04 Oct 2024 03:14:10 -0400
+X-MC-Unique: RY7lrr1aNHSbTSPpcKueNg-1
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-37cd4acb55aso1293144f8f.0
+        for <patches@lists.linux.dev>; Fri, 04 Oct 2024 00:14:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728026049; x=1728630849;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hBtwnr0LZruEJbvlzvyuk1+vZcUV6rsB3LNlgkW3ppA=;
+        b=D9/vqeeP8h+1XxhulfSg+/r8XydJA8beiIO7CtPY26/NPhtU+gWrPUdG94xlYO5s0W
+         5kN1rqaUGOZWdWN8jQNZHsMNjF8vydezc5F2QP23I9IlXVzMhkSD+hg3KxsmLVad6moi
+         Uj2r3JKqp+Ug6H7EmSsYnMkh/sLsy6WlZ7qk9Hv90+1yND++a5NqF+chAIJzispIx5eM
+         nHJ0O5dOscmHWdAaZICWMhFZrvGY43r/xF7HNBBAvcJHybLHAGU6yN32ez80BnnXyemF
+         eebInpn4a3uR2OoD50PRWLJPd+sOSf3tCVtv60dhHbuglq5dpvbK3OGsguE8nEkRVVcg
+         FJQg==
+X-Forwarded-Encrypted: i=1; AJvYcCURlk5+9I3rBioqa4sYWzbCfe2GO0qI4JbQZ4jnDq2RlFAG2QM3DMc0WgWwsYsbG/pvwbO9KVEV@lists.linux.dev
+X-Gm-Message-State: AOJu0YzzK5j34COR5Ii8Dabz+w/NmH05OO+V+HHIY7XSt40pwrpykwPm
+	VdIUOPC8maA+0/rBBFNSkavn5AhsQIbjEnK1oi9M3JeKo30QlxuWeLdjYS7JwXTGlCpWIPoIIsV
+	ZiPCZHcW6pNhPbUmGPQybGxs7nWRecyU4WDGzX0zcxLh23vnC+kHLpyA=
+X-Received: by 2002:a5d:5f54:0:b0:37c:cfdc:19ba with SMTP id ffacd0b85a97d-37d0e751784mr2002738f8f.28.1728026048945;
+        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5EgGjYY0JfV/z7iaa59W+QZpz8ppmjKMbpPUYbcvmPnVnctrVU3GxGrg0lDO74dDBrAfR4w==
+X-Received: by 2002:a5d:5f54:0:b0:37c:cfdc:19ba with SMTP id ffacd0b85a97d-37d0e751784mr2002722f8f.28.1728026048613;
+        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:c:37e0:ced3:55bd:f454:e722? ([2a01:e0a:c:37e0:ced3:55bd:f454:e722])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d0822995fsm2673066f8f.38.2024.10.04.00.14.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
+Message-ID: <609cf7e5-0fd6-4636-b5b1-b63fe319db28@redhat.com>
+Date: Fri, 4 Oct 2024 09:14:07 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241004071723.69AD.409509F4@e16-tech.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/panic: Select ZLIB_DEFLATE for
+ DRM_PANIC_SCREEN_QR_CODE
+To: Miguel Ojeda <ojeda@kernel.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20241003230734.653717-1-ojeda@kernel.org>
+From: Jocelyn Falempe <jfalempe@redhat.com>
+In-Reply-To: <20241003230734.653717-1-ojeda@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US, fr
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 04, 2024 at 07:17:24AM +0800, Wang Yugui wrote:
-> Hi,
+On 04/10/2024 01:07, Miguel Ojeda wrote:
+> Under `CONFIG_DRM_PANIC_SCREEN_QR_CODE=y`, zlib is used:
 > 
-> > This is the start of the stable review cycle for the 6.6.54 release.
-> > There are 533 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 05 Oct 2024 10:30:30 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.54-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > and the diffstat can be found below.
+>      ld.lld: error: undefined symbol: zlib_deflate_workspacesize
+>      >>> referenced by drm_panic.c
+>      >>>               drivers/gpu/drm/drm_panic.o:(drm_panic_qr_init) in archive vmlinux.a
 > 
-> A new waring is report by 'make bzImage' in 6.6.54-rc2, 
-> but that is not reported in 6.6.53 and 6.12-rc1.
-> 
-> arch/x86/tools/insn_decoder_test: warning: Found an x86 instruction decoder bug, please report this.
-> arch/x86/tools/insn_decoder_test: warning: ffffffff8103c4d5:    c4 03 81 48 cf e9       vpermil2ps $0x9,%xmm15,%xmm14,%xmm15,%xmm9
-> arch/x86/tools/insn_decoder_test: warning: objdump says 6 bytes, but insn_get_length() says 0
-> arch/x86/tools/insn_decoder_test: warning: Decoded and checked 6968668 instructions with 1 failures
-> 
-> the root cause is yet not clear.
+> Thus select `CONFIG_ZLIB_DEFLATE`.
 
-I've been seeing this locally for all 6.6.y releases, so for me it isn't
-new, and I can't seem to track down the root cause.  As it's just now
-showing up for you, can you do a 'git bisect' to find out the issue?
+Hi, good catch, yes it should select the zlib deflate.
 
-thanks,
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
 
-greg k-h
+Best regards,
+
+-- 
+
+Jocelyn
+
+> 
+> Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>   drivers/gpu/drm/Kconfig | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+> index 1cb5a4f19293..cf5bc77e2362 100644
+> --- a/drivers/gpu/drm/Kconfig
+> +++ b/drivers/gpu/drm/Kconfig
+> @@ -152,6 +152,7 @@ config DRM_PANIC_SCREEN
+>   config DRM_PANIC_SCREEN_QR_CODE
+>   	bool "Add a panic screen with a QR code"
+>   	depends on DRM_PANIC && RUST
+> +	select ZLIB_DEFLATE
+>   	help
+>   	  This option adds a QR code generator, and a panic screen with a QR
+>   	  code. The QR code will contain the last lines of kmsg and other debug
+> --
+> 2.46.2
+> 
+
