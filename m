@@ -1,128 +1,87 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCECC85260
-	for <patches@lists.linux.dev>; Fri,  4 Oct 2024 07:14:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262B139D0B
+	for <patches@lists.linux.dev>; Fri,  4 Oct 2024 09:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728026055; cv=none; b=NbEwIWzEEw1RmsVm65R0d/iqUXF6QlTMCQK2JNJ7rIwc5wzzG7kVmYx3xWNSIYshox6V4X01l+LIN9eTMHqLBCV55/+PFknprxHDeduRDCEjRoe03hUFEFxqSSPHF/9E4JtqdlFFNakAfach5MuR9FvGR1KhuBZGv+ReCvHqLGY=
+	t=1728033299; cv=none; b=ffrd8lgRrpp529zEr4YuFgqDArS8FGNeFPrXpBjYSJ9NO6yQHDpRhZvxLffq6LaxhlrEdH6TBYcWojWv+Ij3QwQG4SCn8jkOF69UvHRS59ZngHUGeBihRXr3hNXhsRHETMFrWH1W4COKZz4E24Oh5VuK5m7/LcWz12yuuGuUbhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728026055; c=relaxed/simple;
-	bh=1iMOmJ43CP6yXp20Vygffsp0eQ0LJHRK+2+LtCsCQqQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ufDOXSOfHJd8xpYB4k9yR2K6frxwIXmZN8dfT6ctJDZjaoKFHlQxN64kcNtc65uIw9jlBS+gtCScSlgBUEyKh3op1nFBUxJP2QwFLS3inJL9epA1xGmK+y1W3BrurTcPseeCRh/4rltCJb/+fs4zNFRGvXBB4HE9YzOJk60oaX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xz8lIaMC; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1728033299; c=relaxed/simple;
+	bh=1C7OiAdPfBqnpWez5BahZoMLagkw/f2Vepo1VUMoKwk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=FSfdNCEa9I9smR8m/3y9DDDEqZZppHqPviiRsn4DznsXtEJAv6zIMxH+QOsnoN5uXJOTmwcdGagmYxAPZ/wQB61OOvDwRqDx9nyBP/vFXVw3YwQZDBZGAGlMPcfFDNKGDmCbo4bbDklWPZTZoqibKEa0+ozSBBmMhQyGw5Ia4qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eryRPZaC; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xz8lIaMC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1728026051;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hBtwnr0LZruEJbvlzvyuk1+vZcUV6rsB3LNlgkW3ppA=;
-	b=Xz8lIaMCGdSjd6MC/L6xu23krO2Twlt5boqi/vp+M7oY+tMSzWtizv18bFnnmdLisje5Cz
-	zQz0vwKGT+KMnMEvGLGEIoy2y2Vhuif5alhjIbOBGABD2DOUF51HSICsXfa+p7ZBpWIc61
-	0IE/LjeD/v2u4V0TFJrnN1RRsxjZhpA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-RY7lrr1aNHSbTSPpcKueNg-1; Fri, 04 Oct 2024 03:14:10 -0400
-X-MC-Unique: RY7lrr1aNHSbTSPpcKueNg-1
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-37cd4acb55aso1293144f8f.0
-        for <patches@lists.linux.dev>; Fri, 04 Oct 2024 00:14:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728026049; x=1728630849;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBtwnr0LZruEJbvlzvyuk1+vZcUV6rsB3LNlgkW3ppA=;
-        b=D9/vqeeP8h+1XxhulfSg+/r8XydJA8beiIO7CtPY26/NPhtU+gWrPUdG94xlYO5s0W
-         5kN1rqaUGOZWdWN8jQNZHsMNjF8vydezc5F2QP23I9IlXVzMhkSD+hg3KxsmLVad6moi
-         Uj2r3JKqp+Ug6H7EmSsYnMkh/sLsy6WlZ7qk9Hv90+1yND++a5NqF+chAIJzispIx5eM
-         nHJ0O5dOscmHWdAaZICWMhFZrvGY43r/xF7HNBBAvcJHybLHAGU6yN32ez80BnnXyemF
-         eebInpn4a3uR2OoD50PRWLJPd+sOSf3tCVtv60dhHbuglq5dpvbK3OGsguE8nEkRVVcg
-         FJQg==
-X-Forwarded-Encrypted: i=1; AJvYcCURlk5+9I3rBioqa4sYWzbCfe2GO0qI4JbQZ4jnDq2RlFAG2QM3DMc0WgWwsYsbG/pvwbO9KVEV@lists.linux.dev
-X-Gm-Message-State: AOJu0YzzK5j34COR5Ii8Dabz+w/NmH05OO+V+HHIY7XSt40pwrpykwPm
-	VdIUOPC8maA+0/rBBFNSkavn5AhsQIbjEnK1oi9M3JeKo30QlxuWeLdjYS7JwXTGlCpWIPoIIsV
-	ZiPCZHcW6pNhPbUmGPQybGxs7nWRecyU4WDGzX0zcxLh23vnC+kHLpyA=
-X-Received: by 2002:a5d:5f54:0:b0:37c:cfdc:19ba with SMTP id ffacd0b85a97d-37d0e751784mr2002738f8f.28.1728026048945;
-        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5EgGjYY0JfV/z7iaa59W+QZpz8ppmjKMbpPUYbcvmPnVnctrVU3GxGrg0lDO74dDBrAfR4w==
-X-Received: by 2002:a5d:5f54:0:b0:37c:cfdc:19ba with SMTP id ffacd0b85a97d-37d0e751784mr2002722f8f.28.1728026048613;
-        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:c:37e0:ced3:55bd:f454:e722? ([2a01:e0a:c:37e0:ced3:55bd:f454:e722])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d0822995fsm2673066f8f.38.2024.10.04.00.14.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Oct 2024 00:14:08 -0700 (PDT)
-Message-ID: <609cf7e5-0fd6-4636-b5b1-b63fe319db28@redhat.com>
-Date: Fri, 4 Oct 2024 09:14:07 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eryRPZaC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1728033298; x=1759569298;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=1C7OiAdPfBqnpWez5BahZoMLagkw/f2Vepo1VUMoKwk=;
+  b=eryRPZaCvJSoO6s/pTiXpb4c1Yc/vIXoxS3QZDNzT7LCE2SguGRuRnTX
+   ixcbhvRBNR6eG7sCxIonIPc8UXXiIbLRoASjmH6L2geqxm0fgl8PZMt8d
+   aJ54bizTVRoJvj0k6BqnwL9FUobWhfHrt5hFsVUKYF9wataodN/C97Lqj
+   L4JygAJqz0G2RlUSEVr02MiEylK9C7LTi/6sCJ+pDf9vMUhxg6zeCW13/
+   I7Yx891nz1Fe3ft1x0ZSRczLHdofQkJu969Vfs9Qb+668oR6snYStbwdM
+   dT4vZ3JgzeGXKgFPMaYFPgZho+PWkAZfr02Ux3OzoBMnGxfxwaaoiH8hB
+   w==;
+X-CSE-ConnectionGUID: HBvytu3zTzOPv+cGET1OxA==
+X-CSE-MsgGUID: LMdT+J2ERK+ynwvs/FsZwQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11214"; a="27384894"
+X-IronPort-AV: E=Sophos;i="6.11,177,1725346800"; 
+   d="scan'208";a="27384894"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2024 02:14:57 -0700
+X-CSE-ConnectionGUID: qEPVMXIBSqejCohLUqyHmA==
+X-CSE-MsgGUID: 8iPdFBTKQ0eFmCma1/mkaA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,177,1725346800"; 
+   d="scan'208";a="74647452"
+Received: from linux.intel.com ([10.54.29.200])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2024 02:14:58 -0700
+Received: from abityuts-desk1.fi.intel.com (abityuts-desk1.fi.intel.com [10.237.68.150])
+	by linux.intel.com (Postfix) with ESMTP id 80A2F20B5782;
+	Fri,  4 Oct 2024 02:14:56 -0700 (PDT)
+Message-ID: <5a0d003078c7cb5aa5196c2dcf0508996ff88fcc.camel@linux.intel.com>
+Subject: Re: [PATCH 6.11 608/695] intel_idle: add Granite Rapids Xeon support
+From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Date: Fri, 04 Oct 2024 12:14:55 +0300
+In-Reply-To: <20241002125846.785351246@linuxfoundation.org>
+References: <20241002125822.467776898@linuxfoundation.org>
+	 <20241002125846.785351246@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/panic: Select ZLIB_DEFLATE for
- DRM_PANIC_SCREEN_QR_CODE
-To: Miguel Ojeda <ojeda@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20241003230734.653717-1-ojeda@kernel.org>
-From: Jocelyn Falempe <jfalempe@redhat.com>
-In-Reply-To: <20241003230734.653717-1-ojeda@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, fr
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 04/10/2024 01:07, Miguel Ojeda wrote:
-> Under `CONFIG_DRM_PANIC_SCREEN_QR_CODE=y`, zlib is used:
-> 
->      ld.lld: error: undefined symbol: zlib_deflate_workspacesize
->      >>> referenced by drm_panic.c
->      >>>               drivers/gpu/drm/drm_panic.o:(drm_panic_qr_init) in archive vmlinux.a
-> 
-> Thus select `CONFIG_ZLIB_DEFLATE`.
+On Wed, 2024-10-02 at 15:00 +0200, Greg Kroah-Hartman wrote:
+> 6.11-stable review patch.=C2=A0 If anyone has any objections, please let =
+me know.
+>=20
+> ------------------
+>=20
+> From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+>=20
+> commit 370406bf5738dade8ac95a2ee95c29299d4ac902 upstream.
+>=20
+> Add Granite Rapids Xeon C-states, which are C1, C1E, C6, and C6P.
+>=20
+... snip ...
 
-Hi, good catch, yes it should select the zlib deflate.
+Hi Greg, I was on vacation. Looks good, but I'll test 6.11-stable with thes=
+e
+patches (#608 and #609) to double check, and let you know if there are issu=
+es.
 
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-
-Best regards,
-
--- 
-
-Jocelyn
-
-> 
-> Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->   drivers/gpu/drm/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-> index 1cb5a4f19293..cf5bc77e2362 100644
-> --- a/drivers/gpu/drm/Kconfig
-> +++ b/drivers/gpu/drm/Kconfig
-> @@ -152,6 +152,7 @@ config DRM_PANIC_SCREEN
->   config DRM_PANIC_SCREEN_QR_CODE
->   	bool "Add a panic screen with a QR code"
->   	depends on DRM_PANIC && RUST
-> +	select ZLIB_DEFLATE
->   	help
->   	  This option adds a QR code generator, and a panic screen with a QR
->   	  code. The QR code will contain the last lines of kmsg and other debug
-> --
-> 2.46.2
-> 
-
+Thanks!
