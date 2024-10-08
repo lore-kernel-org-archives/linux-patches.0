@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E081DFE1D;
-	Tue,  8 Oct 2024 13:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23DE1E00BD;
+	Tue,  8 Oct 2024 13:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393911; cv=none; b=rNCocw/MhIRSuqotq/vPBCJwDU4+IMZSJpe2963s1Hln+PZYJqxQIM7pEsr3IfNXAIRBFTQGfDJ16cYUAZAaEzkiC8Xm5/3q6UYw5pY4bxFJJfWP0sAMrbZwP+8fzFadHTBUfz1tba0Smlh1SK4YCaGbHpU1dM/3unuAR8e4SMU=
+	t=1728393913; cv=none; b=FK9wR2vbTG1gGVJMQbVt76mqEWACj5o1yvwP9/C9P6iQFt5/92VJx5MMVRE3/A+v6HFHWQkbgQ47+veOtaspR1KYARPJfwFJlUAf/UOt+PeCQsk6DF6YTUAmX+kPVeFJ8cW6JKeW9aqVNnGkFf3dKO0IaPVRJnhX3ngtIAeH2YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393911; c=relaxed/simple;
-	bh=2G6GXZ56OeyJSDKRzoQMWs7gpauEYqhxsU93t5BCXfM=;
+	s=arc-20240116; t=1728393913; c=relaxed/simple;
+	bh=a2uOeSv3ilj0e+EwIXjV0D5EaBHAKtaH3DXuhx2/mTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NceSI4v2krDL8HZFcJfDXsZVit5eWY9cQCkc2f1U25qpMKVlYZAxyDCL8E/S7bsqE3d9m7DPeXHNtZB3qM/oxtfhndqECgVI3+L5U624rzoIpwawei8h2rH0BFro891riVIFkeqtqxG8CGEngztx/8YO9jmAS/RAO1iGsQ8nrpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osDFSe3F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDZF0CeeSTnEu0AQzoItje03lo5I9bn9NSm6i4O+EKEAdXKm8GBUJXQgD20gpoNmiDyHa5Sv0iv04TyuBUc4BwjHzE2VQ2I31Uewbx3PvoLN8E1+btPHHEwKPgDVrf21vCT2pCQzIXsoZSVbpgNLqhFEZuJn6ZSu1+MN+QlMAOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BR1z9Xay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osDFSe3F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E95C4CECC;
-	Tue,  8 Oct 2024 13:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BR1z9Xay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B1BC4CEC7;
+	Tue,  8 Oct 2024 13:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393910;
-	bh=2G6GXZ56OeyJSDKRzoQMWs7gpauEYqhxsU93t5BCXfM=;
+	s=korg; t=1728393913;
+	bh=a2uOeSv3ilj0e+EwIXjV0D5EaBHAKtaH3DXuhx2/mTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osDFSe3FmbmN77zbAPRkwiqjzXKveiJnAJzlT104Vv6b/2UunKlpgeAzYjg4tzvWQ
-	 P7xxD9pGXITljfnJW33SHC41N9nrjzEcQCUdlIG3Tb04qNi6njo08X2ssl4aJCrx8h
-	 oY6UjEhuSPMqd8DtvCx/QxgjGgnUXrAXlObkH++U=
+	b=BR1z9XayxomlB1IhumCnRKYOqkdqXAcgJsMT0eeXgGduC4ch4CADLhydFKONjw3nT
+	 NvZGpC9bKaCvZ4H3KySvUmEN5oLk3UkIlh7mObAw0iSFXRAtY8Mu4ub1GXocs+QwKT
+	 SQF2OGATQxnQwdVuzhEsCjKSe80TC3Fm3SWI2Df4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 289/386] media: venus: fix use after free bug in venus_remove due to race condition
-Date: Tue,  8 Oct 2024 14:08:54 +0200
-Message-ID: <20241008115640.758681542@linuxfoundation.org>
+	Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 261/386] ocfs2: reserve space for inline xattr before attaching reflink tree
+Date: Tue,  8 Oct 2024 14:08:26 +0200
+Message-ID: <20241008115639.662372087@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,50 +57,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
 
-commit c5a85ed88e043474161bbfe54002c89c1cb50ee2 upstream.
+commit 5ca60b86f57a4d9648f68418a725b3a7de2816b0 upstream.
 
-in venus_probe, core->work is bound with venus_sys_error_handler, which is
-used to handle error. The code use core->sys_err_done to make sync work.
-The core->work is started in venus_event_notify.
+One of our customers reported a crash and a corrupted ocfs2 filesystem.
+The crash was due to the detection of corruption.  Upon troubleshooting,
+the fsck -fn output showed the below corruption
 
-If we call venus_remove, there might be an unfished work. The possible
-sequence is as follows:
+[EXTENT_LIST_FREE] Extent list in owner 33080590 claims 230 as the next free chain record,
+but fsck believes the largest valid value is 227.  Clamp the next record value? n
 
-CPU0                  CPU1
+The stat output from the debugfs.ocfs2 showed the following corruption
+where the "Next Free Rec:" had overshot the "Count:" in the root metadata
+block.
 
-                     |venus_sys_error_handler
-venus_remove         |
-hfi_destroy	 		 |
-venus_hfi_destroy	 |
-kfree(hdev);	     |
-                     |hfi_reinit
-					 |venus_hfi_queues_reinit
-                     |//use hdev
+        Inode: 33080590   Mode: 0640   Generation: 2619713622 (0x9c25a856)
+        FS Generation: 904309833 (0x35e6ac49)
+        CRC32: 00000000   ECC: 0000
+        Type: Regular   Attr: 0x0   Flags: Valid
+        Dynamic Features: (0x16) HasXattr InlineXattr Refcounted
+        Extended Attributes Block: 0  Extended Attributes Inline Size: 256
+        User: 0 (root)   Group: 0 (root)   Size: 281320357888
+        Links: 1   Clusters: 141738
+        ctime: 0x66911b56 0x316edcb8 -- Fri Jul 12 06:02:30.829349048 2024
+        atime: 0x66911d6b 0x7f7a28d -- Fri Jul 12 06:11:23.133669517 2024
+        mtime: 0x66911b56 0x12ed75d7 -- Fri Jul 12 06:02:30.317552087 2024
+        dtime: 0x0 -- Wed Dec 31 17:00:00 1969
+        Refcount Block: 2777346
+        Last Extblk: 2886943   Orphan Slot: 0
+        Sub Alloc Slot: 0   Sub Alloc Bit: 14
+        Tree Depth: 1   Count: 227   Next Free Rec: 230
+        ## Offset        Clusters       Block#
+        0  0             2310           2776351
+        1  2310          2139           2777375
+        2  4449          1221           2778399
+        3  5670          731            2779423
+        4  6401          566            2780447
+        .......          ....           .......
+        .......          ....           .......
 
-Fix it by canceling the work in venus_remove.
+The issue was in the reflink workfow while reserving space for inline
+xattr.  The problematic function is ocfs2_reflink_xattr_inline().  By the
+time this function is called the reflink tree is already recreated at the
+destination inode from the source inode.  At this point, this function
+reserves space for inline xattrs at the destination inode without even
+checking if there is space at the root metadata block.  It simply reduces
+the l_count from 243 to 227 thereby making space of 256 bytes for inline
+xattr whereas the inode already has extents beyond this index (in this
+case up to 230), thereby causing corruption.
 
-Cc: stable@vger.kernel.org
-Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The fix for this is to reserve space for inline metadata at the destination
+inode before the reflink tree gets recreated. The customer has verified the
+fix.
+
+Link: https://lkml.kernel.org/r/20240918063844.1830332-1-gautham.ananthakrishna@oracle.com
+Fixes: ef962df057aa ("ocfs2: xattr: fix inlined xattr reflink")
+Signed-off-by: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/refcounttree.c |   26 ++++++++++++++++++++++++--
+ fs/ocfs2/xattr.c        |   11 +----------
+ 2 files changed, 25 insertions(+), 12 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -424,6 +424,7 @@ static void venus_remove(struct platform
- 	struct device *dev = core->dev;
+--- a/fs/ocfs2/refcounttree.c
++++ b/fs/ocfs2/refcounttree.c
+@@ -25,6 +25,7 @@
+ #include "namei.h"
+ #include "ocfs2_trace.h"
+ #include "file.h"
++#include "symlink.h"
+ 
+ #include <linux/bio.h>
+ #include <linux/blkdev.h>
+@@ -4155,8 +4156,9 @@ static int __ocfs2_reflink(struct dentry
  	int ret;
+ 	struct inode *inode = d_inode(old_dentry);
+ 	struct buffer_head *new_bh = NULL;
++	struct ocfs2_inode_info *oi = OCFS2_I(inode);
  
-+	cancel_delayed_work_sync(&core->work);
- 	ret = pm_runtime_get_sync(dev);
- 	WARN_ON(ret < 0);
+-	if (OCFS2_I(inode)->ip_flags & OCFS2_INODE_SYSTEM_FILE) {
++	if (oi->ip_flags & OCFS2_INODE_SYSTEM_FILE) {
+ 		ret = -EINVAL;
+ 		mlog_errno(ret);
+ 		goto out;
+@@ -4182,6 +4184,26 @@ static int __ocfs2_reflink(struct dentry
+ 		goto out_unlock;
+ 	}
  
++	if ((oi->ip_dyn_features & OCFS2_HAS_XATTR_FL) &&
++	    (oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
++		/*
++		 * Adjust extent record count to reserve space for extended attribute.
++		 * Inline data count had been adjusted in ocfs2_duplicate_inline_data().
++		 */
++		struct ocfs2_inode_info *new_oi = OCFS2_I(new_inode);
++
++		if (!(new_oi->ip_dyn_features & OCFS2_INLINE_DATA_FL) &&
++		    !(ocfs2_inode_is_fast_symlink(new_inode))) {
++			struct ocfs2_dinode *new_di = (struct ocfs2_dinode *)new_bh->b_data;
++			struct ocfs2_dinode *old_di = (struct ocfs2_dinode *)old_bh->b_data;
++			struct ocfs2_extent_list *el = &new_di->id2.i_list;
++			int inline_size = le16_to_cpu(old_di->i_xattr_inline_size);
++
++			le16_add_cpu(&el->l_count, -(inline_size /
++					sizeof(struct ocfs2_extent_rec)));
++		}
++	}
++
+ 	ret = ocfs2_create_reflink_node(inode, old_bh,
+ 					new_inode, new_bh, preserve);
+ 	if (ret) {
+@@ -4189,7 +4211,7 @@ static int __ocfs2_reflink(struct dentry
+ 		goto inode_unlock;
+ 	}
+ 
+-	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_HAS_XATTR_FL) {
++	if (oi->ip_dyn_features & OCFS2_HAS_XATTR_FL) {
+ 		ret = ocfs2_reflink_xattrs(inode, old_bh,
+ 					   new_inode, new_bh,
+ 					   preserve);
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -6520,16 +6520,7 @@ static int ocfs2_reflink_xattr_inline(st
+ 	}
+ 
+ 	new_oi = OCFS2_I(args->new_inode);
+-	/*
+-	 * Adjust extent record count to reserve space for extended attribute.
+-	 * Inline data count had been adjusted in ocfs2_duplicate_inline_data().
+-	 */
+-	if (!(new_oi->ip_dyn_features & OCFS2_INLINE_DATA_FL) &&
+-	    !(ocfs2_inode_is_fast_symlink(args->new_inode))) {
+-		struct ocfs2_extent_list *el = &new_di->id2.i_list;
+-		le16_add_cpu(&el->l_count, -(inline_size /
+-					sizeof(struct ocfs2_extent_rec)));
+-	}
++
+ 	spin_lock(&new_oi->ip_lock);
+ 	new_oi->ip_dyn_features |= OCFS2_HAS_XATTR_FL | OCFS2_INLINE_XATTR_FL;
+ 	new_di->i_dyn_features = cpu_to_le16(new_oi->ip_dyn_features);
 
 
