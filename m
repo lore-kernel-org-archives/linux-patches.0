@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514F41DED74;
-	Tue,  8 Oct 2024 12:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B701DE8BE;
+	Tue,  8 Oct 2024 12:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390174; cv=none; b=A8SH+56ZbbEUiz/Y1isyPzV7cAF3B3Ogo+P0PonnwTwK4UXN8TL3tpV05qlnF0q3DSkFRL/f4kA4v7wNSWJ9oG5zEtpd9J3KmuCTcBlEC914uNgEdvCx9X9yX46a/mzE5yjWmZlG09cz10Ea1ktFypERGjDVcNU/y6hoIeUrSvU=
+	t=1728390177; cv=none; b=rTcwLWVSu8aez4Lza27jQWH0diveTndJ2jaH9xyJYr5dSwWaLEzMRXY8+SfdeIKyNKg8r8/mw+NRRGvKnoPtIDVtVC69oSMKFdteSwB8MrzRhJGwbqhliXVDasQy5pxzy9Cx67kbYExSUew8b8sh9wc+r1dR+dzkSTnNP/43+V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390174; c=relaxed/simple;
-	bh=CVIYPIo3KfdMZCXNbfC3vpCUfqvWWt1hqn/ENp4MoFU=;
+	s=arc-20240116; t=1728390177; c=relaxed/simple;
+	bh=r1Jl5OtxO7ZRGC6C/yD9rZ7mr2F4HkmjC9UMMpoC7LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGZ0uIqVtqulYOd5Ompa8SdSv0dMfyb7xmOwcYSy4APNf5bbln2ryyFBcmmMWHU4gK5Spfp3pBx5xypi9kQ6v454jL+TggNPc5guh7BDRhjo8pkZgsM+QTLz+EpwmL+R5nXJjeq3cKy9Jc/PryjmVxTwaG3dWYFUZAFR4CeGAqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzDPFVFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQVX+BDY2uULPNyFBef9hYZZJsxQQWxx/6STuUJAl2PDVftaI0WYmuiliydET5v88KNsCoOEFAr+FTgDttouIa9rGKdYbReibHc5JBPSu2FjtbTHI1vfC4INr45YhyFENg1VUtO5sdU1Ubh5jRcbdd65d+ncz204od+8U4GeFtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1MjVums; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzDPFVFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6DC4CEC7;
-	Tue,  8 Oct 2024 12:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1MjVums"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A35C4CEC7;
+	Tue,  8 Oct 2024 12:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390174;
-	bh=CVIYPIo3KfdMZCXNbfC3vpCUfqvWWt1hqn/ENp4MoFU=;
+	s=korg; t=1728390177;
+	bh=r1Jl5OtxO7ZRGC6C/yD9rZ7mr2F4HkmjC9UMMpoC7LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzDPFVFBvFL6Fq8x/anGSSFSvElUEUwlGB95XOUUxfH3osi28w7Cb6DM4erz0w0fg
-	 WA9carnTz6sjeE6h6W9tm54J1VH9mm9rOJ8bN/vvDwLMWjxIPjUdR9CWKhK7VTDJt3
-	 eH5ectfntR1sQEG8u8pk0GLB86KQZflCBFJK3KNs=
+	b=Q1MjVumsQ0CGgWR7ngPELEvYNTRgL9B8Lxe/QJxVKc3sSOHdUvWNesuMlKm024WrV
+	 YRvyu185EFJBzME5DdV+IdKTjsp8L3ozv4/pA5jwLuFUa/oQtzJMB/Jh/LM4TOAWQq
+	 vOwQnWgBPnOMN4zPVhykQ7xS6cxLEZrn52pZAS6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 212/482] drm/amd/display: Check stream before comparing them
-Date: Tue,  8 Oct 2024 14:04:35 +0200
-Message-ID: <20241008115656.654841152@linuxfoundation.org>
+Subject: [PATCH 6.10 213/482] drm/amd/display: Check link_res->hpo_dp_link_enc before using it
+Date: Tue,  8 Oct 2024 14:04:36 +0200
+Message-ID: <20241008115656.694399976@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -56,13 +56,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 35ff747c86767937ee1e0ca987545b7eed7a0810 ]
+[ Upstream commit 0beca868cde8742240cd0038141c30482d2b7eb8 ]
 
 [WHAT & HOW]
-amdgpu_dm can pass a null stream to dc_is_stream_unchanged. It is
-necessary to check for null before dereferencing them.
+Functions dp_enable_link_phy and dp_disable_link_phy can pass link_res
+without initializing hpo_dp_link_enc and it is necessary to check for
+null before dereferencing.
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
+This fixes 2 FORWARD_NULL issues reported by Coverity.
 
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
@@ -71,22 +72,34 @@ Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c    | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 7462c34793799..58f6155fecc5a 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -3134,6 +3134,8 @@ static bool are_stream_backends_same(
- bool dc_is_stream_unchanged(
- 	struct dc_stream_state *old_stream, struct dc_stream_state *stream)
- {
-+	if (!old_stream || !stream)
-+		return false;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c b/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
+index e1257404357b1..d0148f10dfc0a 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
+@@ -28,6 +28,8 @@
+ #include "dccg.h"
+ #include "clk_mgr.h"
  
- 	if (!are_stream_backends_same(old_stream, stream))
- 		return false;
++#define DC_LOGGER link->ctx->logger
++
+ void set_hpo_dp_throttled_vcp_size(struct pipe_ctx *pipe_ctx,
+ 		struct fixed31_32 throttled_vcp_size)
+ {
+@@ -124,6 +126,11 @@ void disable_hpo_dp_link_output(struct dc_link *link,
+ 		const struct link_resource *link_res,
+ 		enum signal_type signal)
+ {
++	if (!link_res->hpo_dp_link_enc) {
++		DC_LOG_ERROR("%s: invalid hpo_dp_link_enc\n", __func__);
++		return;
++	}
++
+ 		link_res->hpo_dp_link_enc->funcs->link_disable(link_res->hpo_dp_link_enc);
+ 		link_res->hpo_dp_link_enc->funcs->disable_link_phy(
+ 				link_res->hpo_dp_link_enc, signal);
 -- 
 2.43.0
 
