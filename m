@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FA91DEFF7;
-	Tue,  8 Oct 2024 13:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BA81DEFC8;
+	Tue,  8 Oct 2024 13:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392917; cv=none; b=HrPkUef9XsM3oGGo0EcH31pe7aRt/yUUM27lYlNUDgsvLaKA6IY5b5P9XnLYaiLv75IYi0GOWxGo7l01X6/N+/vqlLqpURl7xUkiprMeGUOtyJ0HgUHPz5hgLnOByqA1aJATDBw+qMWswzxbKPNMxiFdbP2ZFAwHl4mewwxzq6g=
+	t=1728392920; cv=none; b=sb1lieiUt9OGKIbQi9rM3jAWX1k9TOgjLqAdFqUXVer+JpHUwmTk1zNVDIYxUayllWVb3nmcavhHyFT1NhjNtFQSEtl4OO8FbRnIn0+2k9TNsQTplgTBFSilhpztapzZ6ZC0i6ChB1ur4kvYEvXG2GYRLXPZLuOoGJvaMCQfp2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392917; c=relaxed/simple;
-	bh=DbJUlqVE7BbUxFv141qubAf0WD/NgKtlMfAL9aU8sOY=;
+	s=arc-20240116; t=1728392920; c=relaxed/simple;
+	bh=szRt+te+Yh4MmRvABjXAsRYZPv0+EXokMZlv7HTRZ4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYJYatQsUlk9aEfjcJdGGOXvRuxRLhhvfJgdWAoU8w/ltXJaBSWZlbVSztcj/9wNH9/82kyeca/7CoQnH21dMTG6tOxH0GU2pgXd0wS5VU93A5aEQ4TptD2A6q4v6o5SbwZ/s7XlrBkRhrbri0sZ7VZqoQXKu9ta6tsFTOTU8kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCWjdp62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UcA2Xo/NUPPctZ3ozRDUmTUXrcqMKgxTDjAllf9b5GL0LoRcj+iUlxBpy4gZ0e7sl05ppe43QhT+buTRCtsM4pcDenBNY/ShF0XeASCy8x7SoRF9jTbaNiqofj8yMzJD4jTSTftVRb5wFQUyH2/PMZdOsU8vf4FckUVKoyk9F9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyaK8CAj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCWjdp62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA31C4CECC;
-	Tue,  8 Oct 2024 13:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyaK8CAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34219C4CEC7;
+	Tue,  8 Oct 2024 13:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392917;
-	bh=DbJUlqVE7BbUxFv141qubAf0WD/NgKtlMfAL9aU8sOY=;
+	s=korg; t=1728392920;
+	bh=szRt+te+Yh4MmRvABjXAsRYZPv0+EXokMZlv7HTRZ4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SCWjdp62q88wJb2ICkOO38kOQRjh5SREfNXMIjAboOfEhAo62j4ximg7Vbkotaic4
-	 6IzgR6aWQMiTDqbg7/TJbvW8CEPlwX73Hw4H4TuFbbqFF3+4TtmqS7d97kyT1TaAWe
-	 coN4DpwYgeV7P4clkd5ziqlUg5UcQK53pIJ8QvRE=
+	b=PyaK8CAjJuQWEV+XzLIGS4qVqzgy3QvJ8j9w/w4ePgBps91/o3lR4u6QXMXGoCrAo
+	 2kwiXagJkNUk0vLaiU7n5ATNEGSJja4QvHz1Lkc08KwGT74y38NGaI3OH2MRAJxWZC
+	 Y1hsg9xUEhncp04CdRFNR85GJCxWIpHSw+bwoKOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.11 558/558] pmdomain: core: Reduce debug summary table width
-Date: Tue,  8 Oct 2024 14:09:48 +0200
-Message-ID: <20241008115724.189586572@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 546/558] drm/xe: Clean up VM / exec queue file lock usage.
+Date: Tue,  8 Oct 2024 14:09:36 +0200
+Message-ID: <20241008115723.720115011@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,94 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit c6ccb691d484544636bc4a097574c5c135ccccda upstream.
+[ Upstream commit 9e3c85ddea7a473ed57b6cdfef2dfd468356fc91 ]
 
-Commit 9094e53ff5c86ebe ("pmdomain: core: Use dev_name() instead of
-kobject_get_path() in debugfs") severely shortened the names of devices
-in a PM Domain.  Now the most common format[1] consists of a 32-bit
-unit-address (8 characters), followed by a dot and a node name (20
-characters for "air-pollution-sensor" and "interrupt-controller", which
-are the longest generic node names documented in the Devicetree
-Specification), for a typical maximum of 29 characters.
+Both the VM / exec queue file lock protect the lookup and reference to
+the object, nothing more. These locks are not intended anything else
+underneath them. XA have their own locking too, so no need to take the
+VM / exec queue file lock aside from when doing a lookup and reference
+get.
 
-This offers a good opportunity to reduce the table width of the debug
-summary:
-  - Reduce the device name field width from 50 to 30 characters, which
-    matches the PM Domain name width,
-  - Reduce the large inter-column space between the "performance" and
-    "managed by" columns.
+Add some kernel doc to make this clear and cleanup a few typos too.
 
-Visual impact:
-  - The "performance" column now starts at a position that is a
-    multiple of 16, just like the "status" and "children" columns,
-  - All of the "/device", "runtime status", and "managed by" columns are
-    now indented 4 characters more than the columns right above them,
-  - Everything fits in (one less than) 80 characters again ;-)
-
-[1] Note that some device names (e.g. TI AM335x interconnect target
-    modules) do not follow this convention, and may be much longer, but
-    these didn't fit in the old 50-character column width either.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/f8e1821364b6d5d11350447c128f6d2b470f33fe.1725459707.git.geert+renesas@glider.be
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240921011712.2681510-1-matthew.brost@intel.com
+(cherry picked from commit fe4f5d4b661666a45b48fe7f95443f8fefc09c8c)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: 74231870cf49 ("drm/xe/vm: move xa_alloc to prevent UAF")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/core.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c       |  2 --
+ drivers/gpu/drm/xe/xe_device_types.h | 14 +++++++++++---
+ drivers/gpu/drm/xe/xe_drm_client.c   |  9 ++++++++-
+ drivers/gpu/drm/xe/xe_exec_queue.c   |  2 --
+ drivers/gpu/drm/xe/xe_vm.c           |  4 ----
+ 5 files changed, 19 insertions(+), 12 deletions(-)
 
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -3182,7 +3182,7 @@ static void rtpm_status_str(struct seq_f
- 	else
- 		WARN_ON(1);
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 83f603a1ab122..8a44a2b6dcbb6 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -159,10 +159,8 @@ static void xe_file_close(struct drm_device *dev, struct drm_file *file)
+ 		xe_exec_queue_kill(q);
+ 		xe_exec_queue_put(q);
+ 	}
+-	mutex_lock(&xef->vm.lock);
+ 	xa_for_each(&xef->vm.xa, idx, vm)
+ 		xe_vm_close_and_put(vm);
+-	mutex_unlock(&xef->vm.lock);
  
--	seq_printf(s, "%-25s  ", p);
-+	seq_printf(s, "%-26s  ", p);
- }
+ 	xe_file_put(xef);
  
- static void mode_status_str(struct seq_file *s, struct device *dev)
-@@ -3191,7 +3191,7 @@ static void mode_status_str(struct seq_f
+diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
+index fbc05188263d9..a7c7812d57915 100644
+--- a/drivers/gpu/drm/xe/xe_device_types.h
++++ b/drivers/gpu/drm/xe/xe_device_types.h
+@@ -558,15 +558,23 @@ struct xe_file {
+ 	struct {
+ 		/** @vm.xe: xarray to store VMs */
+ 		struct xarray xa;
+-		/** @vm.lock: protects file VM state */
++		/**
++		 * @vm.lock: Protects VM lookup + reference and removal a from
++		 * file xarray. Not an intended to be an outer lock which does
++		 * thing while being held.
++		 */
+ 		struct mutex lock;
+ 	} vm;
  
- 	gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+ 	/** @exec_queue: Submission exec queue state for file */
+ 	struct {
+-		/** @exec_queue.xe: xarray to store engines */
++		/** @exec_queue.xa: xarray to store exece queues */
+ 		struct xarray xa;
+-		/** @exec_queue.lock: protects file engine state */
++		/**
++		 * @exec_queue.lock: Protects exec queue lookup + reference and
++		 * removal a frommfile xarray. Not an intended to be an outer
++		 * lock which does thing while being held.
++		 */
+ 		struct mutex lock;
+ 	} exec_queue;
  
--	seq_printf(s, "%9s", gpd_data->hw_mode ? "HW" : "SW");
-+	seq_printf(s, "%2s", gpd_data->hw_mode ? "HW" : "SW");
- }
+diff --git a/drivers/gpu/drm/xe/xe_drm_client.c b/drivers/gpu/drm/xe/xe_drm_client.c
+index 1af95b9b91715..c237ced421833 100644
+--- a/drivers/gpu/drm/xe/xe_drm_client.c
++++ b/drivers/gpu/drm/xe/xe_drm_client.c
+@@ -288,8 +288,15 @@ static void show_run_ticks(struct drm_printer *p, struct drm_file *file)
  
- static void perf_status_str(struct seq_file *s, struct device *dev)
-@@ -3226,7 +3226,7 @@ static int genpd_summary_one(struct seq_
- 	else
- 		snprintf(state, sizeof(state), "%s",
- 			 status_lookup[genpd->status]);
--	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
-+	seq_printf(s, "%-30s  %-30s  %u", genpd->name, state, genpd->performance_state);
+ 	/* Accumulate all the exec queues from this client */
+ 	mutex_lock(&xef->exec_queue.lock);
+-	xa_for_each(&xef->exec_queue.xa, i, q)
++	xa_for_each(&xef->exec_queue.xa, i, q) {
++		xe_exec_queue_get(q);
++		mutex_unlock(&xef->exec_queue.lock);
++
+ 		xe_exec_queue_update_run_ticks(q);
++
++		mutex_lock(&xef->exec_queue.lock);
++		xe_exec_queue_put(q);
++	}
+ 	mutex_unlock(&xef->exec_queue.lock);
  
- 	/*
- 	 * Modifications on the list require holding locks on both
-@@ -3242,7 +3242,7 @@ static int genpd_summary_one(struct seq_
+ 	/* Get the total GPU cycles */
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+index d0bbb1d9b1ac1..2179c65dc60ab 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue.c
++++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+@@ -627,9 +627,7 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
+ 		}
  	}
  
- 	list_for_each_entry(pm_data, &genpd->dev_list, list_node) {
--		seq_printf(s, "\n    %-50s  ", dev_name(pm_data->dev));
-+		seq_printf(s, "\n    %-30s  ", dev_name(pm_data->dev));
- 		rtpm_status_str(s, pm_data->dev);
- 		perf_status_str(s, pm_data->dev);
- 		mode_status_str(s, pm_data->dev);
-@@ -3260,9 +3260,9 @@ static int summary_show(struct seq_file
- 	struct generic_pm_domain *genpd;
- 	int ret = 0;
+-	mutex_lock(&xef->exec_queue.lock);
+ 	err = xa_alloc(&xef->exec_queue.xa, &id, q, xa_limit_32b, GFP_KERNEL);
+-	mutex_unlock(&xef->exec_queue.lock);
+ 	if (err)
+ 		goto kill_exec_queue;
  
--	seq_puts(s, "domain                          status          children                           performance\n");
--	seq_puts(s, "    /device                                             runtime status                           managed by\n");
--	seq_puts(s, "------------------------------------------------------------------------------------------------------------\n");
-+	seq_puts(s, "domain                          status          children        performance\n");
-+	seq_puts(s, "    /device                         runtime status                  managed by\n");
-+	seq_puts(s, "------------------------------------------------------------------------------\n");
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 743c8d79d79d2..8fb425ad9e4a4 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1905,9 +1905,7 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
+ 	if (IS_ERR(vm))
+ 		return PTR_ERR(vm);
  
- 	ret = mutex_lock_interruptible(&gpd_list_lock);
- 	if (ret)
+-	mutex_lock(&xef->vm.lock);
+ 	err = xa_alloc(&xef->vm.xa, &id, vm, xa_limit_32b, GFP_KERNEL);
+-	mutex_unlock(&xef->vm.lock);
+ 	if (err)
+ 		goto err_close_and_put;
+ 
+@@ -1939,9 +1937,7 @@ int xe_vm_create_ioctl(struct drm_device *dev, void *data,
+ 	return 0;
+ 
+ err_free_id:
+-	mutex_lock(&xef->vm.lock);
+ 	xa_erase(&xef->vm.xa, id);
+-	mutex_unlock(&xef->vm.lock);
+ err_close_and_put:
+ 	xe_vm_close_and_put(vm);
+ 
+-- 
+2.43.0
+
 
 
