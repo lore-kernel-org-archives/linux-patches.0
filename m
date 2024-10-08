@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDC01DED79;
-	Tue,  8 Oct 2024 12:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88C11DDA15;
+	Tue,  8 Oct 2024 12:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391061; cv=none; b=Rok9MwNtQIk/G2lJ8DxWQuxMfdESL49G7HIYKq71sdltXxrjjodny40IQLKBM0oJrepP3IS2Gvbq6Ovs9gzCTng3bmLV7bhiN1dc2UHbGyaa9wAQw+3uxLQSe8kRrCFi49AH4SHeiM9KdpDu6C0wDdpBOcNZ1znyuLLw5EAtcqE=
+	t=1728391065; cv=none; b=rozZRIF4uSHsKksiWR1I/Fy2eq4A60FoC383nxMJ6HWdPW0uV9dViAr8GBdxBZB0+FIvQghRiKuiq3QWGw3YZbmycQneGN7o1ZvGxaDEDLMA22ulwWomiwxNnj5ozdil2S8X2vOAw+Y4ckBE+UtqPm2NAbI9qtqlO8I5zoQ37oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391061; c=relaxed/simple;
-	bh=9JJxbPhhY5hVq3ndOT+LP5l0WFhKDhSlGy9hAHcko9I=;
+	s=arc-20240116; t=1728391065; c=relaxed/simple;
+	bh=FRRmXRBWawtYXBc77nitVGgujOHufZksoxPeFkxstl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnJxPTxn+IQrKj/VfmcYQX3x4J93tO6xT0PjTuac39v+9+fGkCY7KN0Q0/MIgezVPWJrJvZi4vvSMw+DtF6I8FyXBpUe3tk0NPh721IxIiYrVnY8JkUgaBJ4P6sx0YYeShNYoxy9ty1DzSLPH3oz6Ov4M8/nMAZoCGcwM+evTFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gM0GIVX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1zk6TKvuI/tzO7AbBuQgtUSum1tom4XHWQwGeJIXsA37IMdOkckK4wzYK7fYMqDjNYVARZxeAHVKS890+iu48wB5d3XhC/QfQBeiHIZKrM8hbAVG4YIvMasS6tLWpsMGMWlwjk/K987EH1HgNmH/8wbvAmudM7ExcDDyqNzQsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wj6H+Sh1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gM0GIVX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF879C4CECC;
-	Tue,  8 Oct 2024 12:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wj6H+Sh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154DAC4CEC7;
+	Tue,  8 Oct 2024 12:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391061;
-	bh=9JJxbPhhY5hVq3ndOT+LP5l0WFhKDhSlGy9hAHcko9I=;
+	s=korg; t=1728391064;
+	bh=FRRmXRBWawtYXBc77nitVGgujOHufZksoxPeFkxstl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gM0GIVX5Em3Z8zbefzgbAMWwaA6l7Alvhal3cb6KksoQUqePxAEDK//vEeD8E4LFx
-	 y65FDxeobFu8/klivzZI6R1UVMnUol6ClifbKpXbh/zoAuNjA0PE+ai3upYGjCrIK/
-	 6i57nytsE0aVDHCZNZR8z3xEmQgYRHoGB2KE6qAY=
+	b=wj6H+Sh19/aaBeM1wVXPI1HPg8BqPHLmtnC7yXsvro2344BsVzC8PJOV+wRnbQQgI
+	 amD4fpDW0cGQ/P9nVbIxqQ0abJfuGUkaHO4me2PHqyPjytqPkI6/4V1A3/OxfkPh7Z
+	 f/UrvMx1XfxkO0I1/iAbfGshTf0zOEXjo7f5tAi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.10 479/482] crypto: octeontx* - Select CRYPTO_AUTHENC
-Date: Tue,  8 Oct 2024 14:09:02 +0200
-Message-ID: <20241008115707.359587482@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 462/482] RDMA/mana_ib: use the correct page table index based on hardware page size
+Date: Tue,  8 Oct 2024 14:08:45 +0200
+Message-ID: <20241008115706.695284739@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,40 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Long Li <longli@microsoft.com>
 
-commit c398cb8eb0a263a1b7a18892d9f244751689675c upstream.
+[ Upstream commit 9e517a8e9d9a303bf9bde35e5c5374795544c152 ]
 
-Select CRYPTO_AUTHENC as the function crypto_authenec_extractkeys
-may not be available without it.
+MANA hardware uses 4k page size. When calculating the page table index,
+it should use the hardware page size, not the system page size.
 
-Fixes: 311eea7e37c4 ("crypto: octeontx - Fix authenc setkey")
-Fixes: 7ccb750dcac8 ("crypto: octeontx2 - Fix authenc setkey")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202409042013.gT2ZI4wR-lkp@intel.com/
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://patch.msgid.link/1725030993-16213-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mana/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/marvell/Kconfig
-+++ b/drivers/crypto/marvell/Kconfig
-@@ -28,6 +28,7 @@ config CRYPTO_DEV_OCTEONTX_CPT
- 	select CRYPTO_SKCIPHER
- 	select CRYPTO_HASH
- 	select CRYPTO_AEAD
-+	select CRYPTO_AUTHENC
- 	select CRYPTO_DEV_MARVELL
- 	help
- 		This driver allows you to utilize the Marvell Cryptographic
-@@ -47,6 +48,7 @@ config CRYPTO_DEV_OCTEONTX2_CPT
- 	select CRYPTO_SKCIPHER
- 	select CRYPTO_HASH
- 	select CRYPTO_AEAD
-+	select CRYPTO_AUTHENC
- 	select NET_DEVLINK
- 	help
- 		This driver allows you to utilize the Marvell Cryptographic
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index 1543b436ddc68..f2a2ce800443a 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -383,7 +383,7 @@ static int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem
+ 
+ 	create_req->length = umem->length;
+ 	create_req->offset_in_page = ib_umem_dma_offset(umem, page_sz);
+-	create_req->gdma_page_type = order_base_2(page_sz) - PAGE_SHIFT;
++	create_req->gdma_page_type = order_base_2(page_sz) - MANA_PAGE_SHIFT;
+ 	create_req->page_count = num_pages_total;
+ 
+ 	ibdev_dbg(&dev->ib_dev, "size_dma_region %lu num_pages_total %lu\n",
+-- 
+2.43.0
+
 
 
