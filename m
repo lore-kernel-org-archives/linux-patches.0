@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FD31DF265;
-	Tue,  8 Oct 2024 12:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBE61DF728;
+	Tue,  8 Oct 2024 12:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392150; cv=none; b=SFcNbbBHT0ehE9zUoTlfz2xN4w2/t+xqXgOIqGu4QR2Ov1WTRQJa+TKIIqqF4tDlm9Vf6tyNB337JFUknjb540FOGQ8upwbWnndD1zBBnEuOUqfH+eUYj7KftEIVqp7QzZcgPijECp2u9pZjZ9JnmaqiNBH5lB++huFvB2YUfXI=
+	t=1728392153; cv=none; b=CijHVx38ysIVbTbn7CKIdVofhQPlN2NkGkZEv/OatPwd3OeDPsUZBgphTClodaGUtMdrY5YRqTif+OXY5EDZGfLatzLe8IqO0e5wzleZo0YgV1e28HAy2NR80rFF0gzWAxTccmGRhv5OmOUMTUWNAgmtRxvmn6MbwVf+4yQ5fEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392150; c=relaxed/simple;
-	bh=bfIQuPq8i/K0D5LWCXbb8vZXVbv0W3nqz7CobZ4PVzA=;
+	s=arc-20240116; t=1728392153; c=relaxed/simple;
+	bh=99mTev+VYZI2EYRAv8BTGX4kQ8loXEmDl7jOqbvvMzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxpW+vQrsLGKQ8FDejFyC4D9T2bNbEk8gCcd01tL47YNvYZhZk5Ei845sPiAwNAOyeFWrl/s6ds2FXMDdNcjjAY22y/6WyKdQM7++Bxio8SZNdUhMet2BJ6fZY8S+LMYyoB4gj52zbhUWA0EjxDoh6ELnBs+69aozXUUVqpgEt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc6Q9lcs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjU2jXcBuAhnkqZyve8/UsNG6Xdfj6a1DEg0LnA+V2TGM5VAj/vBwpQ8PCl5Yk1n/PtjWB1WeinawqB32sM5r4ecwNvfa9QrktdCcGl2CpnZZVT2YQ/uns9tJA/btH60pTlR06QXG8ZtUVNO7kHlnMYuMA7Wra+2qSkD82jrQss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scZ29S+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc6Q9lcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE1CC4CEC7;
-	Tue,  8 Oct 2024 12:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scZ29S+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C77C4CED5;
+	Tue,  8 Oct 2024 12:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392149;
-	bh=bfIQuPq8i/K0D5LWCXbb8vZXVbv0W3nqz7CobZ4PVzA=;
+	s=korg; t=1728392153;
+	bh=99mTev+VYZI2EYRAv8BTGX4kQ8loXEmDl7jOqbvvMzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zc6Q9lcsGfv6SKzkt7gJlsZFFHfJAK2UNwk5FqJxSegndfCoG+5WhqU0OAZsz2fDv
-	 55NHEY6BqFVTpSxmEaQlsGR5tzNYg95MJ7oSE1UzaqE63OjJLyW1092FKK9o77/NLS
-	 3ksz3nm32j3PzOEdnosaYOFSdCUq5d14UuXgHcXE=
+	b=scZ29S+M9Vk93HLoRwBpNbKPKuBbLhuOQIU/H3J7ciqWIC8ueJd/KopkjzDq4rcIu
+	 YwRKDxxbPbyNiY4nvfxVnVQXhjSEgWOHKagLa8GCjcYtUdnkhWw2LNfqSblgSJvtzg
+	 +msRAVKDJnaRDCAjIAhdHLi5t9CYnQfrKFIFSBwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 330/558] selftests: vDSO: fix vdso_config for powerpc
-Date: Tue,  8 Oct 2024 14:06:00 +0200
-Message-ID: <20241008115715.291448008@linuxfoundation.org>
+Subject: [PATCH 6.11 331/558] selftests: vDSO: fix vDSO symbols lookup for powerpc64
+Date: Tue,  8 Oct 2024 14:06:01 +0200
+Message-ID: <20241008115715.329995019@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,48 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 7d297c419b08eafa69ce27243ee9bbecab4fcaa4 ]
+[ Upstream commit ba83b3239e657469709d15dcea5f9b65bf9dbf34 ]
 
-Running vdso_test_correctness on powerpc64 gives the following warning:
+On powerpc64, following tests fail locating vDSO functions:
 
-  ~ # ./vdso_test_correctness
-  Warning: failed to find clock_gettime64 in vDSO
+  ~ # ./vdso_test_abi
+  TAP version 13
+  1..16
+  # [vDSO kselftest] VDSO_VERSION: LINUX_2.6.15
+  # Couldn't find __kernel_gettimeofday
+  ok 1 # SKIP __kernel_gettimeofday
+  # clock_id: CLOCK_REALTIME
+  # Couldn't find __kernel_clock_gettime
+  ok 2 # SKIP __kernel_clock_gettime CLOCK_REALTIME
+  # Couldn't find __kernel_clock_getres
+  ok 3 # SKIP __kernel_clock_getres CLOCK_REALTIME
+  ...
+  # Couldn't find __kernel_time
+  ok 16 # SKIP __kernel_time
+  # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:16 error:0
 
-This is because vdso_test_correctness was built with VDSO_32BIT defined.
+  ~ # ./vdso_test_getrandom
+  __kernel_getrandom is missing!
 
-__powerpc__ macro is defined on both powerpc32 and powerpc64 so
-__powerpc64__ needs to be checked first in vdso_config.h
+  ~ # ./vdso_test_gettimeofday
+  Could not find __kernel_gettimeofday
 
-Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
+  ~ # ./vdso_test_getcpu
+  Could not find __kernel_getcpu
+
+On powerpc64, as shown below by readelf, vDSO functions symbols have
+type NOTYPE, so also accept that type when looking for symbols.
+
+$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
+ELF Header:
+  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, big endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           PowerPC64
+  Version:                           0x1
+...
+
+Symbol table '.dynsym' contains 12 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     2: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     3: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
+     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     6: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     7: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     8: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     9: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+    10: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+    11: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+
+Symbol table '.symtab' contains 56 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+...
+    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
+    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
+    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
+    48: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_tbfreq
+    49: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_gettimeofday
+    50: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __kernel_sync_dicache
+    51: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_getrandom
+    52: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __kernel_sigtram[...]
+    53: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __kernel_time
+    54: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_g[...]
+    55: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_sys[...]
+
+Fixes: 98eedc3a9dbf ("Document the vDSO and add a reference parser")
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Acked-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_config.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/vDSO/parse_vdso.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_config.h b/tools/testing/selftests/vDSO/vdso_config.h
-index 7b543e7f04d7b..00bfed6e4922e 100644
---- a/tools/testing/selftests/vDSO/vdso_config.h
-+++ b/tools/testing/selftests/vDSO/vdso_config.h
-@@ -18,13 +18,13 @@
- #elif defined(__aarch64__)
- #define VDSO_VERSION		3
- #define VDSO_NAMES		0
--#elif defined(__powerpc__)
-+#elif defined(__powerpc64__)
- #define VDSO_VERSION		1
- #define VDSO_NAMES		0
--#define VDSO_32BIT		1
--#elif defined(__powerpc64__)
-+#elif defined(__powerpc__)
- #define VDSO_VERSION		1
- #define VDSO_NAMES		0
-+#define VDSO_32BIT		1
- #elif defined (__s390__)
- #define VDSO_VERSION		2
- #define VDSO_NAMES		0
+diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
+index 4ae417372e9eb..d9ccc5acac182 100644
+--- a/tools/testing/selftests/vDSO/parse_vdso.c
++++ b/tools/testing/selftests/vDSO/parse_vdso.c
+@@ -216,7 +216,8 @@ void *vdso_sym(const char *version, const char *name)
+ 		ELF(Sym) *sym = &vdso_info.symtab[chain];
+ 
+ 		/* Check for a defined global or weak function w/ right name. */
+-		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
++		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
++		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
+ 			continue;
+ 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
+ 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
 -- 
 2.43.0
 
