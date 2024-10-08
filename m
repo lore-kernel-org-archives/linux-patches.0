@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EF71D26F2;
-	Tue,  8 Oct 2024 12:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC301CF297;
+	Tue,  8 Oct 2024 12:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389985; cv=none; b=oiUMvRN0qOdjap8ErOwGn5wNvQZcKdS7zFAFixbfaUNyOB7t/U0XDgbK4A8yLsh7VSO40RMIjcAw9W86l4uwxwy7/hq/7cOVrkVcuEQnMytr7Qc8gVg0R9ivdHu2sinL9NNMW6ERBFPrKhCgMihElTmrRSYkd3yaHAu5uOsjweo=
+	t=1728389988; cv=none; b=Id2qQJzdFq4tNAGNYoW//DOOpBjI7oYAiyvyAPsgB4igMLSUy/CwXQXKxWQTdTz1ERX1dVn4wNN8m9c5z7voUubiH3YbCDcPYqnhxWcSCCMeoq2mrlocuC78Gf2+P6PLNVwUPEfDDi1mWp84PT8LcS8jQJ7EwPZwk5Jk4qyarwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389985; c=relaxed/simple;
-	bh=xEt7zUk8UzCp/3Ezl/pfCj7Wo1gQVbKd+BCnyQZi5Y0=;
+	s=arc-20240116; t=1728389988; c=relaxed/simple;
+	bh=0rOf0czTH6jHexotBf2DHcsBrnoOUfSPmXwVBhkatIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tlxq6MGR4ONoWkVjpVehxHM1rb0mK76vjva1Stn2KlU0CfER3MBA3Nxo9qDdWa+5p5Ywj3ITeLdB0JJlhg/Co40cXdIjixu8489vVf78g6/43fhAQ5jqgHH5x5yeZ3bH1fJM0jEKPInY4+BFpqX99iuKtNlZcVQUX8HPlG3b4No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lbrwokol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/Pyt47aZLQW9SwJC0nQjC5p5i7dr41z/KWJYa9VVvq9dhC8H7fu1J3l0lOK3IFDCyQVthsanUp7qNt5TqjZMsy0enKNJ1yPWb9JabsfY9jrXLO6/luM51RPzUwkyUfovgMYPVzSIQijncz7bZNfj7hzV9meFvhGvQYNxGJ1bHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nh912jF0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lbrwokol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D881C4CEC7;
-	Tue,  8 Oct 2024 12:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nh912jF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFB1C4CEC7;
+	Tue,  8 Oct 2024 12:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389985;
-	bh=xEt7zUk8UzCp/3Ezl/pfCj7Wo1gQVbKd+BCnyQZi5Y0=;
+	s=korg; t=1728389988;
+	bh=0rOf0czTH6jHexotBf2DHcsBrnoOUfSPmXwVBhkatIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbrwokolINwdBEvfTXoUNyOmCLOQAYpKFwXyGAthh1yYlcHHHTdGUTw7f63G6Clva
-	 Af+QAyjMl89+n1K/VBfxtmswDedRPfieMWTeqfmFGRZGSh9Pw2MvcEVdtHPgwNX7Ya
-	 iLgw0AaUuplX3vCg1z2biWbqot3nqbOrHVB+GB1w=
+	b=nh912jF0U8zZXq/GHOdLMSKBJk2DRvWlzv3rhPrIsbGXak5/odLF5ds5XzrC3dNX2
+	 OvE45ylpD75amK90csR/N2k8nV8JwIBs3IlItUG4CaL7K8VWvjcxfWvBRpezNiBuUB
+	 vc54kbOKL17d5daBADGTR7Oh4A5nxKU+892tf4Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Joe Damato <jdamato@fastly.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 124/482] netdev-genl: Set extack and fix error on napi-get
-Date: Tue,  8 Oct 2024 14:03:07 +0200
-Message-ID: <20241008115653.186435776@linuxfoundation.org>
+Subject: [PATCH 6.10 125/482] block: fix integer overflow in BLKSECDISCARD
+Date: Tue,  8 Oct 2024 14:03:08 +0200
+Message-ID: <20241008115653.225066326@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,62 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 4e3a024b437ec0aee82550cc66a0f4e1a7a88a67 ]
+[ Upstream commit 697ba0b6ec4ae04afb67d3911799b5e2043b4455 ]
 
-In commit 27f91aaf49b3 ("netdev-genl: Add netlink framework functions
-for napi"), when an invalid NAPI ID is specified the return value
--EINVAL is used and no extack is set.
+I independently rediscovered
 
-Change the return value to -ENOENT and set the extack.
+	commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155
+	block: fix overflow in blk_ioctl_discard()
 
-Before this commit:
+but for secure erase.
 
-$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
-                          --do napi-get --json='{"id": 451}'
-Netlink error: Invalid argument
-nl_len = 36 (20) nl_flags = 0x100 nl_type = 2
-	error: -22
+Same problem:
 
-After this commit:
+	uint64_t r[2] = {512, 18446744073709551104ULL};
+	ioctl(fd, BLKSECDISCARD, r);
 
-$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
-                         --do napi-get --json='{"id": 451}'
-Netlink error: No such file or directory
-nl_len = 44 (28) nl_flags = 0x300 nl_type = 2
-	error: -2
-	extack: {'bad-attr': '.id'}
+will enter near infinite loop inside blkdev_issue_secure_erase():
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20240831121707.17562-1-jdamato@fastly.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	a.out: attempt to access beyond end of device
+	loop0: rw=5, sector=3399043073, nr_sectors = 1024 limit=2048
+	bio_check_eod: 3286214 callbacks suppressed
+
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lore.kernel.org/r/9e64057f-650a-46d1-b9f7-34af391536ef@p183
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netdev-genl.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ block/ioctl.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index 05f9515d2c05c..a17d7eaeb0019 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -216,10 +216,12 @@ int netdev_nl_napi_get_doit(struct sk_buff *skb, struct genl_info *info)
- 	rtnl_lock();
+diff --git a/block/ioctl.c b/block/ioctl.c
+index d570e16958961..4515d4679eefd 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -126,7 +126,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 		return -EINVAL;
  
- 	napi = napi_by_id(napi_id);
--	if (napi)
-+	if (napi) {
- 		err = netdev_nl_napi_fill_one(rsp, napi, info);
--	else
--		err = -EINVAL;
-+	} else {
-+		NL_SET_BAD_ATTR(info->extack, info->attrs[NETDEV_A_NAPI_ID]);
-+		err = -ENOENT;
-+	}
+ 	filemap_invalidate_lock(bdev->bd_mapping);
+-	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
++	err = truncate_bdev_range(bdev, mode, start, end - 1);
+ 	if (err)
+ 		goto fail;
  
- 	rtnl_unlock();
+@@ -163,7 +163,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
+ 		void __user *argp)
+ {
+-	uint64_t start, len;
++	uint64_t start, len, end;
+ 	uint64_t range[2];
+ 	int err;
  
+@@ -178,11 +178,12 @@ static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
+ 	len = range[1];
+ 	if ((start & 511) || (len & 511))
+ 		return -EINVAL;
+-	if (start + len > bdev_nr_bytes(bdev))
++	if (check_add_overflow(start, len, &end) ||
++	    end > bdev_nr_bytes(bdev))
+ 		return -EINVAL;
+ 
+ 	filemap_invalidate_lock(bdev->bd_mapping);
+-	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
++	err = truncate_bdev_range(bdev, mode, start, end - 1);
+ 	if (!err)
+ 		err = blkdev_issue_secure_erase(bdev, start >> 9, len >> 9,
+ 						GFP_KERNEL);
 -- 
 2.43.0
 
