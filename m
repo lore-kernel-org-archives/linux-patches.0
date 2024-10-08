@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C341DF270;
-	Tue,  8 Oct 2024 12:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD001DE2AD;
+	Tue,  8 Oct 2024 12:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391315; cv=none; b=NcB+4ZBLwjSfnFkNloKzjFoLA8vlcDNRulrNWVw8Oovh3w3Xp06rHppjiPZVNAwNUoVORlCju+OCEmcVzWUstU7wRiSNNsrRl1vjwMj87H02bhopJQQ/xvhEWyUikvkvdiLVfdbIrxkRci/tg43mFu3e/2Zw8r8JhxIenyu7TVM=
+	t=1728391318; cv=none; b=VxpHbZ1Nn/W48/N28N8KgY9KpYloi81YwdAx6GGwB7wiH4TOwR3jkU8TTTAT7JLfEKbv65fOquXVHXznMNaLs8OD96R/FNtI9v+NTQYk2rGnhqx+kj6gtBWdl2B28gKNOj6MSQL9CesPCyfqKNHTHXnYTqPTefum03IHD6nzU3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391315; c=relaxed/simple;
-	bh=mgjbkBQcEHi1IAqaprg2JeL4DMTxLZk23LIjPeO4E8o=;
+	s=arc-20240116; t=1728391318; c=relaxed/simple;
+	bh=d02Px65IdyRZyjnXDZfQkxf8B9pp8KiBu7FU4NgjbOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdzHtNizuHpv6Zqu7BMaE/uoLYJ4876aSlAWDQakVHX5uEnMv+g2poFwl6P/uccsTL8ROfq9JW7wWwsTwkCa5mxwuk1Si95kyRh4+CS0Z573Rh7tbonycFqdPF8Z+9pNL66pkEJhHxKm/FfAtfOUYhDGBrxWeGeRve+1Uehk2HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYcVyzo2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdNelTfNI50tdIKeNDudgGZiinbOhKBq5zF/g0Hjfi1pW2+31MpV7FEn0bPY52oIJGZlZC84539ezaiq59wF56Upo9frA3ARzSStcdILT5WbZ8YcKS7Kmk3jurfS2/WfzVceuuOFuzMq4sV37wkx+x4/RJCR0PZ40it7RNj+fw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCnN5OYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYcVyzo2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13022C4CECC;
-	Tue,  8 Oct 2024 12:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCnN5OYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4593AC4CECD;
+	Tue,  8 Oct 2024 12:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391315;
-	bh=mgjbkBQcEHi1IAqaprg2JeL4DMTxLZk23LIjPeO4E8o=;
+	s=korg; t=1728391318;
+	bh=d02Px65IdyRZyjnXDZfQkxf8B9pp8KiBu7FU4NgjbOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYcVyzo2349FuTgIt316EamauSGvMqZBjJ3Vuh5lkTE2d9OSPoUM8cjp1PLm5llba
-	 fTwG2kztOinNipCmLOShmfNCGsyNLK3KRH27GmB0WZyoTzOcupp0E2eyWFxqJnr++5
-	 G4d9Of94a7bk3HtbkM1tpD5yBIT00eKvdi2mcTYM=
+	b=DCnN5OYyX7A/04CX+irJlqKioqmYd/hP2JWTSeqcnCJ/2aBdsDbSVuDhbCLlIKMh8
+	 mtRrdy8P8My3/HsC4X9WauL4WTn094mfxZxVaAnZOfMvczT/ZSdcgoqUrRQYfvI93U
+	 ESxPvUeMMQqkAxeP34Whe8QjRV43PJ+icPRpnTAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-afs@lists.infradead.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Hui Wang <hui.wang@canonical.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 034/558] afs: Fix missing wire-up of afs_retry_request()
-Date: Tue,  8 Oct 2024 14:01:04 +0200
-Message-ID: <20241008115703.565273104@linuxfoundation.org>
+Subject: [PATCH 6.11 069/558] ASoC: imx-card: Set card.owner to avoid a warning calltrace if SND=m
+Date: Tue,  8 Oct 2024 14:01:39 +0200
+Message-ID: <20241008115704.931819626@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -57,44 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 2cf36327ee1e47733aba96092d7bd082a4056ff5 ]
+[ Upstream commit 47d7d3fd72afc7dcd548806291793ee6f3848215 ]
 
-afs_retry_request() is supposed to be pointed to by the afs_req_ops netfs
-operations table, but the pointer got lost somewhere.  The function is used
-during writeback to rotate through the authentication keys that were in
-force when the file was modified locally.
+In most Linux distribution kernels, the SND is set to m, in such a
+case, when booting the kernel on i.MX8MP EVK board, there is a
+warning calltrace like below:
+ Call trace:
+ snd_card_init+0x484/0x4cc [snd]
+ snd_card_new+0x70/0xa8 [snd]
+ snd_soc_bind_card+0x310/0xbd0 [snd_soc_core]
+ snd_soc_register_card+0xf0/0x108 [snd_soc_core]
+ devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
 
-Fix this by adding the pointer to the function.
+That is because the card.owner is not set, a warning calltrace is
+raised in the snd_card_init() due to it.
 
-Fixes: 1ecb146f7cd8 ("netfs, afs: Use writeback retry to deal with alternate keys")
-Reported-by: Dr. David Alan Gilbert <linux@treblig.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/1690847.1726346402@warthog.procyon.org.uk
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: aa736700f42f ("ASoC: imx-card: Add imx-card machine driver")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://patch.msgid.link/20241002025659.723544-1-hui.wang@canonical.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/file.c | 1 +
+ sound/soc/fsl/imx-card.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/afs/file.c b/fs/afs/file.c
-index ec1be0091fdb5..290f60460ec75 100644
---- a/fs/afs/file.c
-+++ b/fs/afs/file.c
-@@ -404,6 +404,7 @@ const struct netfs_request_ops afs_req_ops = {
- 	.begin_writeback	= afs_begin_writeback,
- 	.prepare_write		= afs_prepare_write,
- 	.issue_write		= afs_issue_write,
-+	.retry_request		= afs_retry_request,
- };
+diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
+index 0e18ccabe28c3..ce0d8cec375a8 100644
+--- a/sound/soc/fsl/imx-card.c
++++ b/sound/soc/fsl/imx-card.c
+@@ -713,6 +713,7 @@ static int imx_card_probe(struct platform_device *pdev)
  
- static void afs_add_open_mmap(struct afs_vnode *vnode)
+ 	data->plat_data = plat_data;
+ 	data->card.dev = &pdev->dev;
++	data->card.owner = THIS_MODULE;
+ 
+ 	dev_set_drvdata(&pdev->dev, &data->card);
+ 	snd_soc_card_set_drvdata(&data->card, data);
 -- 
 2.43.0
 
