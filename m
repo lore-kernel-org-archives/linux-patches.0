@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8D217F4FF;
-	Tue,  8 Oct 2024 13:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45991DE4DB;
+	Tue,  8 Oct 2024 13:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392466; cv=none; b=h7B+ssdkSp+D7lBZp7NWvl6WEp/gnbHZUOnv4p9/rSHYppNOt6Dvr4wAeOWgiqK5Wpd5boj0/Y3EOMyv8ykqcIa0rQKoshJVG15yTktmEie2dR1HwyuJZzgRbT4bEqQexlMXTRhHVBsvfboXZsYn3zLPG8D8nhA4t+yEvA12ADc=
+	t=1728392470; cv=none; b=WEsRlZkWn3v3ot3i6xQdhlJIK0IIOX4QxCOismcFLo5tzaFmS+AIPTngpU8Kb0zXSqF7XxIlN0G8Nj2n8khAo6gL8cDww9QimtlOzAmq2/3HnVzCySh1leGGs7o/C9ttnzlOuefuKvit/I4BCU4KNheNbrdSo+hSuJLNlyJzhUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392466; c=relaxed/simple;
-	bh=NeqRBHiVGLM6mklId9sC7RMOLNmnmHygG4Ymo44DNQk=;
+	s=arc-20240116; t=1728392470; c=relaxed/simple;
+	bh=91DolElmDlQ7M4OvGKDBe4L3ZiMx7+bNLJIHApAGscs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJhCYMZ/V01KDt8O2mBb45pcXt2HeqIaQ5ew06axrBfWYsOQHXZcvIlH0LNS6BMPzKFD3k2NJSzGW99z+7xxCU33TBdVFFT0qb+sLxwKuUqSW3sdAIRUNYA6NYjNbBZSEcsTzhuVPTj+RZdG1UDzC4FDgazqwRnAEKASwz1rL1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlgxMPYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p46hkWcN6PV1ZW3v3SU2Ng58sxH0x2QX4uCGGmohH0mXLkn/Kr+m9yjHeOmJkAjBHC81Nq0zSJ3JSWX1En0JPPr98VIcrLa8ybqVxI8BE2rRzxyifB/KtmLxKsCPWUrHc+YyNoMEaVIugwK5/l6ggKS6so3fb6mu0ApS6r9+5bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiGygMUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlgxMPYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24339C4CECD;
-	Tue,  8 Oct 2024 13:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiGygMUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6032CC4CEC7;
+	Tue,  8 Oct 2024 13:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392466;
-	bh=NeqRBHiVGLM6mklId9sC7RMOLNmnmHygG4Ymo44DNQk=;
+	s=korg; t=1728392469;
+	bh=91DolElmDlQ7M4OvGKDBe4L3ZiMx7+bNLJIHApAGscs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlgxMPYV4uZ/0EUlKtIF8N8Rtpfn7+AU4Hq40yYQfLXNO/i2tUxUkHMxe/t6aOPtw
-	 5Vb/OJ3AEF2PQBxOJJr9THY83+4H64ukXlFEoK+NnTLAIOoC5ZFYhlKuxordSu0CPq
-	 xfIPnbxlMxZs7AVZTeJDGTg2pS1yaShGw4zU0QMM=
+	b=RiGygMUtF8lItlwXwajLfBwzRj090q4WnoueTvN2FQSA8mNh6cS4UUMbkNNTB0O9k
+	 DceV51zpdbNbIrnzFKIDeSMXqEdIK9yxNAbNat15uaOyF1+gX7mLC6PFi5Njyc+sYs
+	 CK3gFcvEGHRS2LzfMNu7yWubLMuRSNGpnYLZtU+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 424/558] drm/xe: fix UAF around queue destruction
-Date: Tue,  8 Oct 2024 14:07:34 +0200
-Message-ID: <20241008115718.958980290@linuxfoundation.org>
+Subject: [PATCH 6.11 425/558] drm/xe/oa: Dont reset OAC_CONTEXT_ENABLE on OA stream close
+Date: Tue,  8 Oct 2024 14:07:35 +0200
+Message-ID: <20241008115718.999130229@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -45,155 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: José Roberto de Souza <jose.souza@intel.com>
 
-commit 2d2be279f1ca9e7288282d4214f16eea8a727cdb upstream.
+commit 8135f1c09dd2eecee7cb637f7ec9a29e57300eb8 upstream.
 
-We currently do stuff like queuing the final destruction step on a
-random system wq, which will outlive the driver instance. With bad
-timing we can teardown the driver with one or more work workqueue still
-being alive leading to various UAF splats. Add a fini step to ensure
-user queues are properly torn down. At this point GuC should already be
-nuked so queue itself should no longer be referenced from hw pov.
+Mesa testing on Xe2+ revealed that when OA metrics are collected for an
+exec_queue, after the OA stream is closed, future batch buffers submitted
+on that exec_queue do not complete. Not resetting OAC_CONTEXT_ENABLE on OA
+stream close resolves these hangs and should not have any adverse effects.
 
-v2 (Matt B)
- - Looks much safer to use a waitqueue and then just wait for the
-   xa_array to become empty before triggering the drain.
+v2: Make the change that we don't reset the bit clearer (Ashutosh)
+    Also make the same fix for OAC as OAR (Ashutosh)
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2317
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240923145647.77707-2-matthew.auld@intel.com
-(cherry picked from commit 861108666cc0e999cffeab6aff17b662e68774e3)
+Bspec: 60314
+Fixes: 2f4a730fcd2d ("drm/xe/oa: Add OAR support")
+Fixes: 14e077f8006d ("drm/xe/oa: Add OAC support")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2821
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924213713.3497992-1-ashutosh.dixit@intel.com
+(cherry picked from commit 0c8650b09a365f4a31fca1d1d1e9d99c56071128)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_device.c       |    6 +++++-
- drivers/gpu/drm/xe/xe_device_types.h |    3 +++
- drivers/gpu/drm/xe/xe_guc_submit.c   |   26 +++++++++++++++++++++++++-
- drivers/gpu/drm/xe/xe_guc_types.h    |    2 ++
- 4 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -285,6 +285,9 @@ static void xe_device_destroy(struct drm
- 	if (xe->unordered_wq)
- 		destroy_workqueue(xe->unordered_wq);
- 
-+	if (xe->destroy_wq)
-+		destroy_workqueue(xe->destroy_wq);
-+
- 	ttm_device_fini(&xe->ttm);
- }
- 
-@@ -350,8 +353,9 @@ struct xe_device *xe_device_create(struc
- 	xe->preempt_fence_wq = alloc_ordered_workqueue("xe-preempt-fence-wq", 0);
- 	xe->ordered_wq = alloc_ordered_workqueue("xe-ordered-wq", 0);
- 	xe->unordered_wq = alloc_workqueue("xe-unordered-wq", 0, 0);
-+	xe->destroy_wq = alloc_workqueue("xe-destroy-wq", 0, 0);
- 	if (!xe->ordered_wq || !xe->unordered_wq ||
--	    !xe->preempt_fence_wq) {
-+	    !xe->preempt_fence_wq || !xe->destroy_wq) {
- 		/*
- 		 * Cleanup done in xe_device_destroy via
- 		 * drmm_add_action_or_reset register above
---- a/drivers/gpu/drm/xe/xe_device_types.h
-+++ b/drivers/gpu/drm/xe/xe_device_types.h
-@@ -392,6 +392,9 @@ struct xe_device {
- 	/** @unordered_wq: used to serialize unordered work, mostly display */
- 	struct workqueue_struct *unordered_wq;
- 
-+	/** @destroy_wq: used to serialize user destroy work, like queue */
-+	struct workqueue_struct *destroy_wq;
-+
- 	/** @tiles: device tiles */
- 	struct xe_tile tiles[XE_MAX_TILES_PER_DEVICE];
- 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -276,10 +276,26 @@ static struct workqueue_struct *get_subm
- }
- #endif
- 
-+static void xe_guc_submit_fini(struct xe_guc *guc)
-+{
-+	struct xe_device *xe = guc_to_xe(guc);
-+	struct xe_gt *gt = guc_to_gt(guc);
-+	int ret;
-+
-+	ret = wait_event_timeout(guc->submission_state.fini_wq,
-+				 xa_empty(&guc->submission_state.exec_queue_lookup),
-+				 HZ * 5);
-+
-+	drain_workqueue(xe->destroy_wq);
-+
-+	xe_gt_assert(gt, ret);
-+}
-+
- static void guc_submit_fini(struct drm_device *drm, void *arg)
- {
- 	struct xe_guc *guc = arg;
- 
-+	xe_guc_submit_fini(guc);
- 	xa_destroy(&guc->submission_state.exec_queue_lookup);
- 	free_submit_wq(guc);
- }
-@@ -351,6 +367,8 @@ int xe_guc_submit_init(struct xe_guc *gu
- 
- 	xa_init(&guc->submission_state.exec_queue_lookup);
- 
-+	init_waitqueue_head(&guc->submission_state.fini_wq);
-+
- 	primelockdep(guc);
- 
- 	return drmm_add_action_or_reset(&xe->drm, guc_submit_fini, guc);
-@@ -367,6 +385,9 @@ static void __release_guc_id(struct xe_g
- 
- 	xe_guc_id_mgr_release_locked(&guc->submission_state.idm,
- 				     q->guc->id, q->width);
-+
-+	if (xa_empty(&guc->submission_state.exec_queue_lookup))
-+		wake_up(&guc->submission_state.fini_wq);
- }
- 
- static int alloc_guc_id(struct xe_guc *guc, struct xe_exec_queue *q)
-@@ -1267,13 +1288,16 @@ static void __guc_exec_queue_fini_async(
- 
- static void guc_exec_queue_fini_async(struct xe_exec_queue *q)
- {
-+	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct xe_device *xe = guc_to_xe(guc);
-+
- 	INIT_WORK(&q->guc->fini_async, __guc_exec_queue_fini_async);
- 
- 	/* We must block on kernel engines so slabs are empty on driver unload */
- 	if (q->flags & EXEC_QUEUE_FLAG_PERMANENT || exec_queue_wedged(q))
- 		__guc_exec_queue_fini_async(&q->guc->fini_async);
- 	else
--		queue_work(system_wq, &q->guc->fini_async);
-+		queue_work(xe->destroy_wq, &q->guc->fini_async);
- }
- 
- static void __guc_exec_queue_fini(struct xe_guc *guc, struct xe_exec_queue *q)
---- a/drivers/gpu/drm/xe/xe_guc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_types.h
-@@ -81,6 +81,8 @@ struct xe_guc {
- #endif
- 		/** @submission_state.enabled: submission is enabled */
- 		bool enabled;
-+		/** @submission_state.fini_wq: submit fini wait queue */
-+		wait_queue_head_t fini_wq;
- 	} submission_state;
- 	/** @hwconfig: Hardware config state */
- 	struct {
+diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+index eae38a49ee8e..2804f14f8f29 100644
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -709,8 +709,7 @@ static int xe_oa_configure_oar_context(struct xe_oa_stream *stream, bool enable)
+ 		{
+ 			RING_CONTEXT_CONTROL(stream->hwe->mmio_base),
+ 			regs_offset + CTX_CONTEXT_CONTROL,
+-			_MASKED_FIELD(CTX_CTRL_OAC_CONTEXT_ENABLE,
+-				      enable ? CTX_CTRL_OAC_CONTEXT_ENABLE : 0)
++			_MASKED_BIT_ENABLE(CTX_CTRL_OAC_CONTEXT_ENABLE),
+ 		},
+ 	};
+ 	struct xe_oa_reg reg_lri = { OAR_OACONTROL, oacontrol };
+@@ -742,10 +741,8 @@ static int xe_oa_configure_oac_context(struct xe_oa_stream *stream, bool enable)
+ 		{
+ 			RING_CONTEXT_CONTROL(stream->hwe->mmio_base),
+ 			regs_offset + CTX_CONTEXT_CONTROL,
+-			_MASKED_FIELD(CTX_CTRL_OAC_CONTEXT_ENABLE,
+-				      enable ? CTX_CTRL_OAC_CONTEXT_ENABLE : 0) |
+-			_MASKED_FIELD(CTX_CTRL_RUN_ALONE,
+-				      enable ? CTX_CTRL_RUN_ALONE : 0),
++			_MASKED_BIT_ENABLE(CTX_CTRL_OAC_CONTEXT_ENABLE) |
++			_MASKED_FIELD(CTX_CTRL_RUN_ALONE, enable ? CTX_CTRL_RUN_ALONE : 0),
+ 		},
+ 	};
+ 	struct xe_oa_reg reg_lri = { OAC_OACONTROL, oacontrol };
+-- 
+2.46.2
+
 
 
