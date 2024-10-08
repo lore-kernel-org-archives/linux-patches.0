@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA5E1DE4CC;
-	Tue,  8 Oct 2024 13:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D761DF260;
+	Tue,  8 Oct 2024 13:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392965; cv=none; b=Ho9rZsBUFzSh+ciKo+5OYep/bQ7XYoQDGD32LjGQhJMmoE7ZxtA5N1LpLn6TCMA3V43WVVS0a08ehw73ecU47AAJGOb/I3gFP7qKYwKgR3i7iX8np3xus7drVKV1q+dzcCZYZFSR4fG1XDwPFKd/FrI0NRhbkAj8LS2yRr1MGHQ=
+	t=1728392968; cv=none; b=Y9lPf2gQgJAZUVuJzZSzUAOvpVufYmPVq4LVWI6pY5p3i3zO974q9R8Vg5Gv8ho6GIvYZRQ0bsNZDjuDnxqd53iOG5OSGvCJPt5TBMgFwJ0r+9UF2dOXDpVvew/ilEuCM6TdLMKcqnu+C4epv4nuTpSSKcGLR4yOI6W7hwLsJcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392965; c=relaxed/simple;
-	bh=WZ9ZInv4don8Jf7dtUAcMVE2CSbTRpnYusfhe7NYjaI=;
+	s=arc-20240116; t=1728392968; c=relaxed/simple;
+	bh=SVC6JFkj9G2O4TSbBhlD3HdAJZKOVmaNvfoI6Ob29wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ip2Ti0tqgrQKQk59ijIDBZ3odcOITSA1NjjPVR7W1UjM3wftO4fyk6QW51TieEmQiPoTEtmJTg3vTABJu5mGSfJ9dTdoUY/kbVTZyv0aLADhZPtL5kkpbzU3Rcb1vxjRRLvU8zrOK7XOOgW9XxnJywmubXJnEDbsg4rWr/Bv/KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1V9jvjC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvqXB3vMPAvcmRU1dm8iMDvQTrjA4u7H+kdhTpw8169v1AjAEsdqmEo6ni69wFHdgoIU0PW1e2NssP9aJA8blId6S5jd5kE+585awc3FjyU3cEnysSlJqBi6ldL3nnqJqvM49s94jxCCpg1LMiKiF/8KyG/ncWvTu+GhVESvIdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QEbvoGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1V9jvjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D536BC4CEC7;
-	Tue,  8 Oct 2024 13:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QEbvoGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EB6C4CEC7;
+	Tue,  8 Oct 2024 13:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392965;
-	bh=WZ9ZInv4don8Jf7dtUAcMVE2CSbTRpnYusfhe7NYjaI=;
+	s=korg; t=1728392968;
+	bh=SVC6JFkj9G2O4TSbBhlD3HdAJZKOVmaNvfoI6Ob29wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1V9jvjCoDO/cQPA6paRE1NiS3NS96zK1w4BF6NP1gfojaZcozOWmbh8iEcxOX6lc
-	 hKkDlPPL8nNJqgcsaV0bqpANTghFkEEBh54WTCZSn70WgvHK0FuzmHcwcD4gjdlglz
-	 DLx5b3JZftRtMOFfnq7dhdBsTJkqfoLhGiqA78KY=
+	b=2QEbvoGuiSX3PjWG49CIlYR1RicHWragCXAkGWfCVOFE0qbwCfQsIC2Rva1Diuo21
+	 7VlBo2hTdqcPpZdYR6oXXeyNMPefsEzohgy/tles6Z5kxcQY4NUjGK8sn4fCIw+6PY
+	 GQx25wH2ksJutnDiXxRbSHaSxWG+mxn1ktS0Zrn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Yuanyuan Zhong <yzhong@purestorage.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/386] net/mlx5: Fix error path in multi-packet WQE transmit
-Date: Tue,  8 Oct 2024 14:04:18 +0200
-Message-ID: <20241008115629.843486997@linuxfoundation.org>
+Subject: [PATCH 6.6 014/386] net/mlx5: Added cond_resched() to crdump collection
+Date: Tue,  8 Oct 2024 14:04:19 +0200
+Message-ID: <20241008115629.882799464@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,47 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit 2bcae12c795f32ddfbf8c80d1b5f1d3286341c32 ]
+[ Upstream commit ec793155894140df7421d25903de2e6bc12c695b ]
 
-Remove the erroneous unmap in case no DMA mapping was established
+Collecting crdump involves reading vsc registers from pci config space
+of mlx device, which can take long time to complete. This might result
+in starving other threads waiting to run on the cpu.
 
-The multi-packet WQE transmit code attempts to obtain a DMA mapping for
-the skb. This could fail, e.g. under memory pressure, when the IOMMU
-driver just can't allocate more memory for page tables. While the code
-tries to handle this in the path below the err_unmap label it erroneously
-unmaps one entry from the sq's FIFO list of active mappings. Since the
-current map attempt failed this unmap is removing some random DMA mapping
-that might still be required. If the PCI function now presents that IOVA,
-the IOMMU may assumes a rogue DMA access and e.g. on s390 puts the PCI
-function in error state.
+Numbers I got from testing ConnectX-5 Ex MCX516A-CDAT in the lab:
 
-The erroneous behavior was seen in a stress-test environment that created
-memory pressure.
+- mlx5_vsc_gw_read_block_fast() was called with length = 1310716.
+- mlx5_vsc_gw_read_fast() reads 4 bytes at a time. It was not used to
+  read the entire 1310716 bytes. It was called 53813 times because
+  there are jumps in read_addr.
+- On average mlx5_vsc_gw_read_fast() took 35284.4ns.
+- In total mlx5_vsc_wait_on_flag() called vsc_read() 54707 times.
+  The average time for each call was 17548.3ns. In some instances
+  vsc_read() was called more than one time when the flag was not set.
+  As expected the thread released the cpu after 16 iterations in
+  mlx5_vsc_wait_on_flag().
+- Total time to read crdump was 35284.4ns * 53813 ~= 1.898s.
 
-Fixes: 5af75c747e2a ("net/mlx5e: Enhanced TX MPWQE for SKBs")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+It was seen in the field that crdump can take more than 5 seconds to
+complete. During that time mlx5_vsc_wait_on_flag() did not release the
+cpu because it did not complete 16 iterations. It is believed that pci
+config reads were slow. Adding cond_resched() every 128 register read
+improves the situation. In the common case the, crdump takes ~1.8989s,
+the thread yields the cpu every ~4.51ms. If crdump takes ~5s, the thread
+yields the cpu every ~18.0ms.
+
+Fixes: 8b9d8baae1de ("net/mlx5: Add Crdump support")
+Reviewed-by: Yuanyuan Zhong <yzhong@purestorage.com>
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-index 3001a52e1ac2e..85d6334308e31 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-@@ -642,7 +642,6 @@ mlx5e_sq_xmit_mpwqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 	return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
+index d0b595ba61101..432c98f2626db 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
+@@ -24,6 +24,11 @@
+ 	pci_write_config_dword((dev)->pdev, (dev)->vsc_addr + (offset), (val))
+ #define VSC_MAX_RETRIES 2048
  
- err_unmap:
--	mlx5e_dma_unmap_wqe_err(sq, 1);
- 	sq->stats->dropped++;
- 	dev_kfree_skb_any(skb);
- 	mlx5e_tx_flush(sq);
++/* Reading VSC registers can take relatively long time.
++ * Yield the cpu every 128 registers read.
++ */
++#define VSC_GW_READ_BLOCK_COUNT 128
++
+ enum {
+ 	VSC_CTRL_OFFSET = 0x4,
+ 	VSC_COUNTER_OFFSET = 0x8,
+@@ -273,6 +278,7 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
+ {
+ 	unsigned int next_read_addr = 0;
+ 	unsigned int read_addr = 0;
++	unsigned int count = 0;
+ 
+ 	while (read_addr < length) {
+ 		if (mlx5_vsc_gw_read_fast(dev, read_addr, &next_read_addr,
+@@ -280,6 +286,10 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
+ 			return read_addr;
+ 
+ 		read_addr = next_read_addr;
++		if (++count == VSC_GW_READ_BLOCK_COUNT) {
++			cond_resched();
++			count = 0;
++		}
+ 	}
+ 	return length;
+ }
 -- 
 2.43.0
 
