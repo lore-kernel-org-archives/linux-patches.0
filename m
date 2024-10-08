@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9121E485;
-	Tue,  8 Oct 2024 12:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D33EEC8;
+	Tue,  8 Oct 2024 12:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390323; cv=none; b=dhTfG8a20sC4YNppgnuH29WxGHUi4DgAoAbb2swNzXhoqt0RTMWO5BGaESepcwNaVO+k/I5bhdgy8dY1R9pYNDIJWW7WG7jHo/opxXUi5aPn8YXRuVozpV4KUcXY7TO9VrK46Yt31GfMMn/nmZkba0Z58v2AFRVrpxfwKpqFlO0=
+	t=1728390326; cv=none; b=GO5VsiIvHsM1wfgV1cfh3ua6Ww7OV57/2vCDCBLZagMz7ST6aPL3CIzwrnWc40AI/1CgbfHXqOV/6Op5ZuvL1ncVcNgxUJncrre/nZcITzW9r56R9er3QS6aAohDc9olwwU/dC+qfeThSsDtLILjEgh5eZaqOsEoBVpN4Kfexes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390323; c=relaxed/simple;
-	bh=pcJJSpjbexFvZmHhS+Ezn/kbXGW1YYAb7wtUjetKcos=;
+	s=arc-20240116; t=1728390326; c=relaxed/simple;
+	bh=VOSFAR7pua+cl9ZLgVXrHVM4v5+t35H9/LBD0ulmWTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uk9WSfzwnh9u25GOE74RWso6VgZOjsDoK871C0MjgafsNaR83J7+oLNpyOUQBwpaXRdhS2wCa1xWy8kEG8on8dn0Qd/RfKl7J85RZHtMmKqsSNb+DpDzw4O/viG51BMYhKTB73OKdiXqqt9PlD/q3BubEH/9tA5IxLtQ9h2dfEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHlEaskG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pl5tIo9E/V+ydKw5bwphHHXoGcg4F74v8IogEcszYoUOAU+EdYRAFPxo5ZuWiJBvn9P4WaTyRcSDU5iBEvSK323Nu5MFQI1m/io90hPgi/bOcZ7ldQ06MUC96cf4vABmxOVTIjNkn8tZYKi8NgMZCrC6OmR0XguO4/ZeGQH10zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6VmkL9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHlEaskG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE172C4CEC7;
-	Tue,  8 Oct 2024 12:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6VmkL9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14192C4CECD;
+	Tue,  8 Oct 2024 12:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390323;
-	bh=pcJJSpjbexFvZmHhS+Ezn/kbXGW1YYAb7wtUjetKcos=;
+	s=korg; t=1728390326;
+	bh=VOSFAR7pua+cl9ZLgVXrHVM4v5+t35H9/LBD0ulmWTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHlEaskGqBC5O/xlaBnxzwzRBKfk+JEDp7Q0w2FXidSJxhqjgFodVtUtHPSmhV9P6
-	 pR2G1FFVat3O2+BvvKCpaAwkoBx1cxnAISgnfkTEjHJnHkBM+9WT0F6+QUKBpJENnB
-	 CCmw+KROpvd98MCs4lfpXPs4tfDs6Yb80FiQH874=
+	b=B6VmkL9tLZIeBQH3HBCGUBNfvs+9V52TWX3BqFGGTya2FBIxWvS9rF1o0YbRp0Jts
+	 WmJahNBvL6LG3BEr/3yuY/UBT5MtAqNSE4I7o0icmbLVhzvBraUKICG2nz36pJj6dm
+	 mlSFOT2HcDXJmvN7vkjtox9FXmD9Zcw+ppQjDY4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Mikhail Ukhin <mish.uxin2012@yandex.ru>,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 253/482] ext4: fix i_data_sem unlock order in ext4_ind_migrate()
-Date: Tue,  8 Oct 2024 14:05:16 +0200
-Message-ID: <20241008115658.246351913@linuxfoundation.org>
+Subject: [PATCH 6.10 254/482] bpftool: Fix undefined behavior caused by shifting into the sign bit
+Date: Tue,  8 Oct 2024 14:05:17 +0200
+Message-ID: <20241008115658.284116279@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,53 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit cc749e61c011c255d81b192a822db650c68b313f ]
+[ Upstream commit 4cdc0e4ce5e893bc92255f5f734d983012f2bc2e ]
 
-Fuzzing reports a possible deadlock in jbd2_log_wait_commit.
+Replace shifts of '1' with '1U' in bitwise operations within
+__show_dev_tc_bpf() to prevent undefined behavior caused by shifting
+into the sign bit of a signed integer. By using '1U', the operations
+are explicitly performed on unsigned integers, avoiding potential
+integer overflow or sign-related issues.
 
-This issue is triggered when an EXT4_IOC_MIGRATE ioctl is set to require
-synchronous updates because the file descriptor is opened with O_SYNC.
-This can lead to the jbd2_journal_stop() function calling
-jbd2_might_wait_for_commit(), potentially causing a deadlock if the
-EXT4_IOC_MIGRATE call races with a write(2) system call.
-
-This problem only arises when CONFIG_PROVE_LOCKING is enabled. In this
-case, the jbd2_might_wait_for_commit macro locks jbd2_handle in the
-jbd2_journal_stop function while i_data_sem is locked. This triggers
-lockdep because the jbd2_journal_start function might also lock the same
-jbd2_handle simultaneously.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Co-developed-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20240404095000.5872-1-mish.uxin2012%40yandex.ru
-Link: https://patch.msgid.link/20240829152210.2754-1-ancowi69@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20240908140009.3149781-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/bpf/bpftool/net.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
-index d98ac2af8199f..a5e1492bbaaa5 100644
---- a/fs/ext4/migrate.c
-+++ b/fs/ext4/migrate.c
-@@ -663,8 +663,8 @@ int ext4_ind_migrate(struct inode *inode)
- 	if (unlikely(ret2 && !ret))
- 		ret = ret2;
- errout:
--	ext4_journal_stop(handle);
- 	up_write(&EXT4_I(inode)->i_data_sem);
-+	ext4_journal_stop(handle);
- out_unlock:
- 	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
- 	return ret;
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index 968714b4c3d45..ad2ea6cf2db11 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -482,9 +482,9 @@ static void __show_dev_tc_bpf(const struct ip_devname_ifindex *dev,
+ 		if (prog_flags[i] || json_output) {
+ 			NET_START_ARRAY("prog_flags", "%s ");
+ 			for (j = 0; prog_flags[i] && j < 32; j++) {
+-				if (!(prog_flags[i] & (1 << j)))
++				if (!(prog_flags[i] & (1U << j)))
+ 					continue;
+-				NET_DUMP_UINT_ONLY(1 << j);
++				NET_DUMP_UINT_ONLY(1U << j);
+ 			}
+ 			NET_END_ARRAY("");
+ 		}
+@@ -493,9 +493,9 @@ static void __show_dev_tc_bpf(const struct ip_devname_ifindex *dev,
+ 			if (link_flags[i] || json_output) {
+ 				NET_START_ARRAY("link_flags", "%s ");
+ 				for (j = 0; link_flags[i] && j < 32; j++) {
+-					if (!(link_flags[i] & (1 << j)))
++					if (!(link_flags[i] & (1U << j)))
+ 						continue;
+-					NET_DUMP_UINT_ONLY(1 << j);
++					NET_DUMP_UINT_ONLY(1U << j);
+ 				}
+ 				NET_END_ARRAY("");
+ 			}
 -- 
 2.43.0
 
