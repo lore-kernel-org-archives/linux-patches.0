@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2823A4C97;
-	Tue,  8 Oct 2024 12:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31B31E493;
+	Tue,  8 Oct 2024 12:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390463; cv=none; b=qvHN1WnPiuq1uinYZ3qvcGlznMTPbNx9deQaEYu/iqbZvJ/ibty6qy0FPOHHqpRF6WUN9qM0SC+NxiBXoejyNuzzgLTx2eQ6mvI6OCWrY1fGXhl3O1nD0ZY6DZZpfkGZECRlIhpQQ13iuhvVqJ2tByDVfzRD3+SW/hlq6q+HiWs=
+	t=1728390466; cv=none; b=Vkwq/3kpb1EBcLDr9AIQtA1+ScYlPCMU8sU0mrr/pZL3N0UP9ckjwaUUiaFIv+FxIZpZY12ZjduK3eeFTe5GOL39Zklilp62rksUgOlD2zi+CX8Cq7F5TDGWWpVTkePKV9J8juSYTkgkxT0VtB9n+mbzyZQIyFzcPsjlee0aMOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390463; c=relaxed/simple;
-	bh=XfCvJy4uHg/rkFo6S5SLVm6nQ+hj2nDPeLUQKrmQS6Y=;
+	s=arc-20240116; t=1728390466; c=relaxed/simple;
+	bh=YwAZwsUM/rZUsS9zJl2LC1nUqiEJzEkqVlutL1xuVh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D25JOZY0mR+OO5IK28XEw3mFmWu7RSbKLhXcbkGyro90H7VXyWF1u50HWZY0lzwIMgzYjjbNsrcJePJ95GMxPmblqEwfH3hSw4vZ+eLiAukpkKynaLvvXhrv4lIS59fyEPK8YTWQCH/UOdPao/b6VLi78DGE1zO+XHC2FD/7WEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+oDEEVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFt6wY7UB9pkLgA5VU7x4IlDfArp2I111FVCKgKLoWYjGzzv3Hi9sfkgWOaF2ks5tOHy9v5CfhqQsJ/qXBKXsqQmtueTP7oeiOaBCtQEs1wXxGILsKGhy9m3DWc38F0cCeyzIOgJ7YjkgmQ9uTIwOmD7/gBKLbdbHLeVC5BDc3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTi2CAY8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+oDEEVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBA2C4CEC7;
-	Tue,  8 Oct 2024 12:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTi2CAY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9553C4CEC7;
+	Tue,  8 Oct 2024 12:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390463;
-	bh=XfCvJy4uHg/rkFo6S5SLVm6nQ+hj2nDPeLUQKrmQS6Y=;
+	s=korg; t=1728390466;
+	bh=YwAZwsUM/rZUsS9zJl2LC1nUqiEJzEkqVlutL1xuVh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+oDEEVGm827fRiVSeRKNIFdQgMmMSjNEsYCghNmvU+FEgiDJx5Vnc6t8aIRwrATy
-	 cHGnHSHLMhLfxhuK9BgOhK4RYR2mBI0SmsTY7eTscfMrczdR7LcyYosVYpxpJpyRYI
-	 RIGieq2ySPkREjDghjmxBOhIwfqcuTModW9fuRsY=
+	b=nTi2CAY8KOFW2agFXpjpyPmF9RzAszfnKxIiUf9Ox5uhoEXdlS/2VLssq0CHrnhdy
+	 g838KFESK9Hk/N6qz3Btdr1YOtWWD2gJk+BoCz7J9e8uY1MO1wb457JPDvHGYaAEOU
+	 Wr8eRLv76pgetY8PF1JOEzxjweolIpjpJhH5pyKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinadin Shan <sinadin.shan@oracle.com>,
-	Yifei Liu <yifei.l.liu@oracle.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 265/482] selftests: breakpoints: use remaining time to check if suspend succeed
-Date: Tue,  8 Oct 2024 14:05:28 +0200
-Message-ID: <20241008115658.711509096@linuxfoundation.org>
+Subject: [PATCH 6.10 256/482] bpftool: Fix undefined behavior in qsort(NULL, 0, ...)
+Date: Tue,  8 Oct 2024 14:05:19 +0200
+Message-ID: <20241008115658.360726955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,84 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Liu <yifei.l.liu@oracle.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit c66be905cda24fb782b91053b196bd2e966f95b7 ]
+[ Upstream commit f04e2ad394e2755d0bb2d858ecb5598718bf00d5 ]
 
-step_after_suspend_test fails with device busy error while
-writing to /sys/power/state to start suspend. The test believes
-it failed to enter suspend state with
+When netfilter has no entry to display, qsort is called with
+qsort(NULL, 0, ...). This results in undefined behavior, as UBSan
+reports:
 
-$ sudo ./step_after_suspend_test
-TAP version 13
-Bail out! Failed to enter Suspend state
+net.c:827:2: runtime error: null pointer passed as argument 1, which is declared to never be null
 
-However, in the kernel message, I indeed see the system get
-suspended and then wake up later.
+Although the C standard does not explicitly state whether calling qsort
+with a NULL pointer when the size is 0 constitutes undefined behavior,
+Section 7.1.4 of the C standard (Use of library functions) mentions:
 
-[611172.033108] PM: suspend entry (s2idle)
-[611172.044940] Filesystems sync: 0.006 seconds
-[611172.052254] Freezing user space processes
-[611172.059319] Freezing user space processes completed (elapsed 0.001 seconds)
-[611172.067920] OOM killer disabled.
-[611172.072465] Freezing remaining freezable tasks
-[611172.080332] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[611172.089724] printk: Suspending console(s) (use no_console_suspend to debug)
-[611172.117126] serial 00:03: disabled
-some other hardware get reconnected
-[611203.136277] OOM killer enabled.
-[611203.140637] Restarting tasks ...
-[611203.141135] usb 1-8.1: USB disconnect, device number 7
-[611203.141755] done.
-[611203.155268] random: crng reseeded on system resumption
-[611203.162059] PM: suspend exit
+"Each of the following statements applies unless explicitly stated
+otherwise in the detailed descriptions that follow: If an argument to a
+function has an invalid value (such as a value outside the domain of
+the function, or a pointer outside the address space of the program, or
+a null pointer, or a pointer to non-modifiable storage when the
+corresponding parameter is not const-qualified) or a type (after
+promotion) not expected by a function with variable number of
+arguments, the behavior is undefined."
 
-After investigation, I noticed that for the code block
-if (write(power_state_fd, "mem", strlen("mem")) != strlen("mem"))
-	ksft_exit_fail_msg("Failed to enter Suspend state\n");
+To avoid this, add an early return when nf_link_info is NULL to prevent
+calling qsort with a NULL pointer.
 
-The write will return -1 and errno is set to 16 (device busy).
-It should be caused by the write function is not successfully returned
-before the system suspend and the return value get messed when waking up.
-As a result, It may be better to check the time passed of those few
-instructions to determine whether the suspend is executed correctly for
-it is pretty hard to execute those few lines for 5 seconds.
-
-The timer to wake up the system is set to expire after 5 seconds and
-no re-arm. If the timer remaining time is 0 second and 0 nano secomd,
-it means the timer expired and wake the system up. Otherwise, the system
-could be considered to enter the suspend state failed if there is any
-remaining time.
-
-After appling this patch, the test would not fail for it believes the
-system does not go to suspend by mistake. It now could continue to the
-rest part of the test after suspend.
-
-Fixes: bfd092b8c272 ("selftests: breakpoint: add step_after_suspend_test")
-Reported-by: Sinadin Shan <sinadin.shan@oracle.com>
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20240910150207.3179306-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/breakpoints/step_after_suspend_test.c  | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/net.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/breakpoints/step_after_suspend_test.c b/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-index b8703c499d28c..0e6374aac96f5 100644
---- a/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-+++ b/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-@@ -153,7 +153,10 @@ void suspend(void)
- 	if (err < 0)
- 		ksft_exit_fail_msg("timerfd_settime() failed\n");
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index ad2ea6cf2db11..0f2106218e1f0 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -824,6 +824,9 @@ static void show_link_netfilter(void)
+ 		nf_link_count++;
+ 	}
  
--	if (write(power_state_fd, "mem", strlen("mem")) != strlen("mem"))
-+	system("(echo mem > /sys/power/state) 2> /dev/null");
++	if (!nf_link_info)
++		return;
 +
-+	timerfd_gettime(timerfd, &spec);
-+	if (spec.it_value.tv_sec != 0 || spec.it_value.tv_nsec != 0)
- 		ksft_exit_fail_msg("Failed to enter Suspend state\n");
+ 	qsort(nf_link_info, nf_link_count, sizeof(*nf_link_info), netfilter_link_compar);
  
- 	close(timerfd);
+ 	for (id = 0; id < nf_link_count; id++) {
 -- 
 2.43.0
 
