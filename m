@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E21DFD1;
-	Tue,  8 Oct 2024 13:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D41DF24E;
+	Tue,  8 Oct 2024 13:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392680; cv=none; b=Unyh44+2kkn/cZ4xeTQaFoHj7LE3wDv5HeK7trn5ZvxyPxCqcUyYy01J4oeoPn4ifOLB9SLKA9ByusXXUlo9kfOra4MA8X/aJ/G+CUvJK3OpaFqZ5FiQSGByXjofDGjv+1sMmqvpbSEGCDPzrg4yttA/Vk34RvZr0gQVIPX8SuY=
+	t=1728392684; cv=none; b=Z4MX6Zg8Ni/xmdsqJyaTy8+hu2XPx0CavPqtTs8/esWOGI+KHyw+r44XJyuut1guHgqDC36L20lPqgICEybm7kGANRDKiGm4/QMpAUsV+Agio4P3Hf4ngWx5SZdJqpd2v3FSZEyPxtvC/vJ2Ud2OaCY0l3+QRm0zi5sM8/e3wqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392680; c=relaxed/simple;
-	bh=W9Dcg5rA/3vKLdffeDJKsgctEc5ARfNjtnbSwjY2xEE=;
+	s=arc-20240116; t=1728392684; c=relaxed/simple;
+	bh=ieDlIDrXRQ819gpGPYhqgtWRZph31ffy4h9GG0Y0q4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4vlyu6/zm5UUAbCbRVkDmYWVPmveI/qnjNk5osfgz40gmb9HpNRoIu14yfFWLkE3WXwCXK+riWZcuNhePIislhokjC1dwxpiT0IpI+bbxyLVsWRpK1r6YSCFcicIRKSkHHGaT1rmxrCPEq3Ty0GOvfo3Xkwz8brTS/fGIrh4Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=094pb1/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bLMxACPT+4MWVo2aHO09HaDE78ES5adVKH1HsOA97V61afFN8in8yykDkWV2A81vLdYyuzkNf+j1hEaBzk+XwqqOBKCwSJDlwtaQnJKeFtfUyIEoavtrahisjHvZTazIOPEtgFR1KL1P3Qx+qmizHyA7edgSCgm0XXdmqL6fdio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEYrFz1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="094pb1/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58651C4CEC7;
-	Tue,  8 Oct 2024 13:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEYrFz1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC141C4CECC;
+	Tue,  8 Oct 2024 13:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392680;
-	bh=W9Dcg5rA/3vKLdffeDJKsgctEc5ARfNjtnbSwjY2xEE=;
+	s=korg; t=1728392684;
+	bh=ieDlIDrXRQ819gpGPYhqgtWRZph31ffy4h9GG0Y0q4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=094pb1/9ZCp6KQf2W90N3IijVLbV2gsQm4B2LBcLFjy+sI2avhGk3lTlsEbSrqbjH
-	 U1CPQ+jLpl72yDgVXJDlrmRUtVT+F3xjtWeE2ePe26fKW+MyfW0ruW0zLxe9EAPu4t
-	 fAlZotguChduaHOF96J980ER7tmRQz7OC5eZ1I+Y=
+	b=AEYrFz1yzlHradqabJZPi3y6SLJwp8ykNJl3pDLD93mUfk+Y9Gcu3KmJdPwE/9YYe
+	 75l7Z3Vl6MVmhzYrtKHDBFCGEFLwlHxWN2p83JAavJYTspijnZ5WOSxYSaxiSApSgY
+	 uVQbslMZk/ubfvrAs+wyI35k9QjwRyq+PG/bBJfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.11 488/558] HID: bpf: fix cfi stubs for hid_bpf_ops
-Date: Tue,  8 Oct 2024 14:08:38 +0200
-Message-ID: <20241008115721.436678872@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.11 489/558] cachefiles: fix dentry leak in cachefiles_open_file()
+Date: Tue,  8 Oct 2024 14:08:39 +0200
+Message-ID: <20241008115721.476456395@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,60 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit acd5f76fd5292c91628e04da83e8b78c986cfa2b upstream.
+commit da6ef2dffe6056aad3435e6cf7c6471c2a62187c upstream.
 
-With the introduction of commit e42ac1418055 ("bpf: Check unsupported ops
-from the bpf_struct_ops's cfi_stubs"), a HID-BPF struct_ops containing
-a .hid_hw_request() or a .hid_hw_output_report() was failing to load
-as the cfi stubs were not defined.
+A dentry leak may be caused when a lookup cookie and a cull are concurrent:
 
-Fix that by defining those simple static functions and restore HID-BPF
-functionality.
+            P1             |             P2
+-----------------------------------------------------------
+cachefiles_lookup_cookie
+  cachefiles_look_up_object
+    lookup_one_positive_unlocked
+     // get dentry
+                            cachefiles_cull
+                              inode->i_flags |= S_KERNEL_FILE;
+    cachefiles_open_file
+      cachefiles_mark_inode_in_use
+        __cachefiles_mark_inode_in_use
+          can_use = false
+          if (!(inode->i_flags & S_KERNEL_FILE))
+            can_use = true
+	  return false
+        return false
+        // Returns an error but doesn't put dentry
 
-This was detected with the HID selftests suddenly failing on Linus' tree.
+After that the following WARNING will be triggered when the backend folder
+is umounted:
 
-Cc: stable@vger.kernel.org # v6.11+
-Fixes: 9286675a2aed ("HID: bpf: add HID-BPF hooks for hid_hw_output_report")
-Fixes: 8bd0488b5ea5 ("HID: bpf: add HID-BPF hooks for hid_hw_raw_requests")
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+==================================================================
+BUG: Dentry 000000008ad87947{i=7a,n=Dx_1_1.img}  still in use (1) [unmount of ext4 sda]
+WARNING: CPU: 4 PID: 359261 at fs/dcache.c:1767 umount_check+0x5d/0x70
+CPU: 4 PID: 359261 Comm: umount Not tainted 6.6.0-dirty #25
+RIP: 0010:umount_check+0x5d/0x70
+Call Trace:
+ <TASK>
+ d_walk+0xda/0x2b0
+ do_one_tree+0x20/0x40
+ shrink_dcache_for_umount+0x2c/0x90
+ generic_shutdown_super+0x20/0x160
+ kill_block_super+0x1a/0x40
+ ext4_kill_sb+0x22/0x40
+ deactivate_locked_super+0x35/0x80
+ cleanup_mnt+0x104/0x160
+==================================================================
+
+Whether cachefiles_open_file() returns true or false, the reference count
+obtained by lookup_positive_unlocked() in cachefiles_look_up_object()
+should be released.
+
+Therefore release that reference count in cachefiles_look_up_object() to
+fix the above issue and simplify the code.
+
+Fixes: 1f08c925e7a3 ("cachefiles: Implement backing file wrangling")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240829083409.3788142-1-libaokun@huaweicloud.com
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/bpf/hid_bpf_struct_ops.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/cachefiles/namei.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/bpf/hid_bpf_struct_ops.c b/drivers/hid/bpf/hid_bpf_struct_ops.c
-index cd696c59ba0f..702c22fae136 100644
---- a/drivers/hid/bpf/hid_bpf_struct_ops.c
-+++ b/drivers/hid/bpf/hid_bpf_struct_ops.c
-@@ -276,9 +276,23 @@ static int __hid_bpf_rdesc_fixup(struct hid_bpf_ctx *ctx)
- 	return 0;
+--- a/fs/cachefiles/namei.c
++++ b/fs/cachefiles/namei.c
+@@ -595,14 +595,12 @@ static bool cachefiles_open_file(struct
+ 	 * write and readdir but not lookup or open).
+ 	 */
+ 	touch_atime(&file->f_path);
+-	dput(dentry);
+ 	return true;
+ 
+ check_failed:
+ 	fscache_cookie_lookup_negative(object->cookie);
+ 	cachefiles_unmark_inode_in_use(object, file);
+ 	fput(file);
+-	dput(dentry);
+ 	if (ret == -ESTALE)
+ 		return cachefiles_create_file(object);
+ 	return false;
+@@ -611,7 +609,6 @@ error_fput:
+ 	fput(file);
+ error:
+ 	cachefiles_do_unmark_inode_in_use(object, d_inode(dentry));
+-	dput(dentry);
+ 	return false;
  }
  
-+static int __hid_bpf_hw_request(struct hid_bpf_ctx *ctx, unsigned char reportnum,
-+				enum hid_report_type rtype, enum hid_class_request reqtype,
-+				u64 source)
-+{
-+	return 0;
-+}
-+
-+static int __hid_bpf_hw_output_report(struct hid_bpf_ctx *ctx, u64 source)
-+{
-+	return 0;
-+}
-+
- static struct hid_bpf_ops __bpf_hid_bpf_ops = {
- 	.hid_device_event = __hid_bpf_device_event,
- 	.hid_rdesc_fixup = __hid_bpf_rdesc_fixup,
-+	.hid_hw_request = __hid_bpf_hw_request,
-+	.hid_hw_output_report = __hid_bpf_hw_output_report,
- };
+@@ -654,7 +651,9 @@ bool cachefiles_look_up_object(struct ca
+ 		goto new_file;
+ 	}
  
- static struct bpf_struct_ops bpf_hid_bpf_ops = {
--- 
-2.46.2
-
+-	if (!cachefiles_open_file(object, dentry))
++	ret = cachefiles_open_file(object, dentry);
++	dput(dentry);
++	if (!ret)
+ 		return false;
+ 
+ 	_leave(" = t [%lu]", file_inode(object->file)->i_ino);
 
 
