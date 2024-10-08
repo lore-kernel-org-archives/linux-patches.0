@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CC71CCB32;
-	Tue,  8 Oct 2024 12:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED441CCB32;
+	Tue,  8 Oct 2024 12:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391904; cv=none; b=JXqFQmIay+5zy4/BXkyjlCUI549WlihNOtC0eWLMbDH6RAmo/pR+o8y7WOxdr01JQwTKP5gZ/wrH3Yh9aILJjgx6+76o1zK3LmSMs5itYVxi30d33pdfV6jLNk3V8ltGRNbZLfmvVOZX7xaZvz7XV7q4ji1xUEOsb+wCuKPV2vI=
+	t=1728391908; cv=none; b=OHBjeSGdeZmnwKMz2+kosZvZblqQ1Sr/ZbqRywe7BgKJDybzYobt14VxLIzf13m/tRIV0WTJY6cXXsmjuVpyn4cf4Tv+vCT+WuAUkHduGUnwqaS4w3YU13VB0+M+9zS8Ewbcyf04p99fALYNVoHPWKvlBhtjuJKChRbLyunTVfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391904; c=relaxed/simple;
-	bh=YF8lcqTHpjScbgJwen2/hKpgax5Nojs+DtVAT3E3eb8=;
+	s=arc-20240116; t=1728391908; c=relaxed/simple;
+	bh=4KY8vEdqKDq8X7mHMRHYhPttcGsv1d6sknYfFpH0CXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQtScDheQyXvoPzIDMIWDmMPi45X22X1BUthjpVlWuaphgB9B0kiuoYycgSvg2MfPDXoDY8I7WS7Q+2LQyFEv0VXwaIKl5wWazjCbrhpLEsSFNtfCCJOj6NI9kggLTQWTNXV6hAKOZ0tzTL9vKbOTmr61iuTS1XrRZp1EMZhrhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdKhzB+2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhtNup+i6g/EczubDBZMGn90eR0CQ3HoXAdfr3gqQsuvgKxiyHGaz3V6iR2AgUKmib09DfGY5zXp6fXPDVaWxfiwEkja/C7IORzTJ3N2DkJIai7l7T4dPIDzqzBSAW6+UVGoWcQiovJHYZxtV8ME69Qp0pGEpGjQA3b5OQJmYAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTJFpfGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdKhzB+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EAAC4CEC7;
-	Tue,  8 Oct 2024 12:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTJFpfGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D33C4CEC7;
+	Tue,  8 Oct 2024 12:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391904;
-	bh=YF8lcqTHpjScbgJwen2/hKpgax5Nojs+DtVAT3E3eb8=;
+	s=korg; t=1728391907;
+	bh=4KY8vEdqKDq8X7mHMRHYhPttcGsv1d6sknYfFpH0CXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdKhzB+2V0pvAD1BLmluQCAcxfe3f32OAJ65cbJRzxjWpnwZHE2q1wSaQXCHW5Mc9
-	 vYC1lIA1kttQMAh7i/60bgBlaaWIfzUrTpT11pI2yLGjOb51hlfxkyqizvGZ2LQzi3
-	 slogRnrMvkW7DiNO3pqj6EKixuyqk+XJe3MyQHk8=
+	b=vTJFpfGc7OqO+wsP4gfYtst2k+q04cj0fzB4FJvXQDZp+lGoMH2gAbij+eyg/yW8b
+	 8SKtkXcZIpZsPl9ut2ZdHLF4FBOmhgDnK9hMF6n6wHI4k9041dPzKe75HWnYoZyDyA
+	 ZFpu/hYvuowmZYiOOCf0E8/mSLG+zstBeli5sUiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	David Strahan <David.Strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 240/558] scsi: smartpqi: add new controller PCI IDs
-Date: Tue,  8 Oct 2024 14:04:30 +0200
-Message-ID: <20241008115711.786982348@linuxfoundation.org>
+Subject: [PATCH 6.11 258/558] drm/amd/display: Fix index out of bounds in DCN30 degamma hardware format translation
+Date: Tue,  8 Oct 2024 14:04:48 +0200
+Message-ID: <20241008115712.486117526@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,97 +58,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit dbc39b84540f746cc814e69b21e53e6d3e12329a ]
+[ Upstream commit bc50b614d59990747dd5aeced9ec22f9258991ff ]
 
-All PCI ID entries in Hex.
+This commit addresses a potential index out of bounds issue in the
+`cm3_helper_translate_curve_to_degamma_hw_format` function in the DCN30
+color  management module. The issue could occur when the index 'i'
+exceeds the  number of transfer function points (TRANSFER_FUNC_POINTS).
 
-Add new cisco pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   1137   02fe
-                                             9005   028f   1137   02ff
-                                             9005   028f   1137   0300
+The fix adds a check to ensure 'i' is within bounds before accessing the
+transfer function points. If 'i' is out of bounds, the function returns
+false to indicate an error.
 
-Add new h3c pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   193d   0462
-                                             9005   028f   193d   8462
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:338 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:339 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:340 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
 
-Add new ieit pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   1ff9   00a3
-
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: David Strahan <David.Strahan@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-5-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index a4719af88718e..4230714e5f3a1 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -9428,6 +9428,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x152d, 0x8a37)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x193d, 0x0462)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x1104)
-@@ -9468,6 +9472,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x8461)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x193d, 0x8462)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0xc460)
-@@ -10176,6 +10184,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1137, 0x02fa)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x02fe)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x02ff)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x0300)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1ff9, 0x0045)
-@@ -10352,6 +10372,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1f51, 0x1045)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x00a3)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_ANY_ID, PCI_ANY_ID)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+index b8327237ed441..edc77615d0973 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+@@ -335,6 +335,8 @@ bool cm3_helper_translate_curve_to_degamma_hw_format(
+ 				i += increment) {
+ 			if (j == hw_points - 1)
+ 				break;
++			if (i >= TRANSFER_FUNC_POINTS)
++				return false;
+ 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
+ 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
+ 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
 -- 
 2.43.0
 
