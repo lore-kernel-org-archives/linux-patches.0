@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D6C183CB8;
-	Tue,  8 Oct 2024 12:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F40B183CB8;
+	Tue,  8 Oct 2024 12:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391606; cv=none; b=hlXMfFG9PKQN0H4b1K7UuaDvIoVXbfN7A0WNeKh6ZWlepC/+WH42nc9HYiEwwXKdTxoFhGrBU5jeJpo4GO89xHJp1bAGCcnfMY8OfJtzTQI5xB+IamfQr775PeOWqW7ZGrb5rG0wGBX25+49xOirvv7g9taQxNI0Lbj1fLbJIcM=
+	t=1728391609; cv=none; b=irg1NR2EnN+rBL8QOXFVYk1QpOLy0jPDgbJkCnCIfZqcI+XDoIsoBkXljoi0tVwitQrDY3ZKtCwJNW6OwHJm6YaH9E9Qs5qRclNVzNeRO/U892ITDQLkzOpCGuqnKBkpUXdI7AoqZ67qRerkPP4Vo+S8Ag7cl92s8lVVS+enK0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391606; c=relaxed/simple;
-	bh=xVWB/fgM1K3DIvTl6Xa8ufyNZuYfw0nNd/YF4DUJDy4=;
+	s=arc-20240116; t=1728391609; c=relaxed/simple;
+	bh=kiRbraXLRsRsxtDAYyLxirBfm3c+sq4sDAisi2ZATWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwffOvgCwUICapIFzjuZcIWxG0ViF0PPnJAdvV3izpVkLQcKPT6EduIA/+XFHHfqkmGQqgSzPKAxg4sS4+kRNQNUYtQtu0PNQ4K5bGhgpSt2Rtsi+o6mrIt2EYuqe9Sz0Jt9DLerMs9G9DX7nMGYFY2+C6Vp7zg/lPHhllDO5jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddcY3I9t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdVQrvEuGw18qvnvBSLkFJCZDXSt0/0BOmjs5jzxxtLlHfcRQJzuE4q1VXBFZhJY4foTVSJ2MFEIvYFWgzxqyrvyZI6xKHRRWjXUvKE1Z14n3282U4PU4ayYaMf+GLMye7r2+wHaOv2cYBXVUJ2c8QFjQfY7t4xFKYCERiVwjEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKet/TC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddcY3I9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE9F2C4CEC7;
-	Tue,  8 Oct 2024 12:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKet/TC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C42C4CEC7;
+	Tue,  8 Oct 2024 12:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391606;
-	bh=xVWB/fgM1K3DIvTl6Xa8ufyNZuYfw0nNd/YF4DUJDy4=;
+	s=korg; t=1728391609;
+	bh=kiRbraXLRsRsxtDAYyLxirBfm3c+sq4sDAisi2ZATWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddcY3I9teCett4ZxB7zVlJKhLkOC1XNrTCNZO8KpNypCEK21mPNo+Bx/iV7xctQAL
-	 eqk/m42z0ZSbp0SB2AFWaqKQi48tK9fHMzZARB4o708uFGGdF4iKUT4XtsnsyT2ZpS
-	 n8DHLblwReMhmIlE5GNd5vVZfUNd14vetQ2PQbnE=
+	b=oKet/TC+kDoQ+T7mxYk5Mn634tzNGWeIIW4Hd9KKyWpdpAlq9M8vGdD/fU+mxGFLq
+	 TRmAGwgTPWdbCxltewoz1Yt7Tjok2FD5AsJI4pcgHE5WcgjtF4TjCPkx9lwxHgnV9K
+	 RrALpaSsmLv2QzGSRCGF9mcb0Xr3rZUXRyEaFC58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
+	Rob Newcater <rob@durendal.co.uk>,
+	Christian Heusel <christian@heusel.eu>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 140/558] virt: sev-guest: Ensure the SNP guest messages do not exceed a page
-Date: Tue,  8 Oct 2024 14:02:50 +0200
-Message-ID: <20241008115707.874439729@linuxfoundation.org>
+Subject: [PATCH 6.11 167/558] x86/apic: Remove logical destination mode for 64-bit
+Date: Tue,  8 Oct 2024 14:03:17 +0200
+Message-ID: <20241008115708.927948705@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,60 +53,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 2b9ac0b84c2cae91bbaceab62df4de6d503421ec ]
+[ Upstream commit 838ba7733e4e3a94a928e8d0a058de1811a58621 ]
 
-Currently, struct snp_guest_msg includes a message header (96 bytes) and
-a payload (4000 bytes). There is an implicit assumption here that the
-SNP message header will always be 96 bytes, and with that assumption the
-payload array size has been set to 4000 bytes - a magic number. If any
-new member is added to the SNP message header, the SNP guest message
-will span more than a page.
+Logical destination mode of the local APIC is used for systems with up to
+8 CPUs. It has an advantage over physical destination mode as it allows to
+target multiple CPUs at once with IPIs.
 
-Instead of using a magic number for the payload, declare struct
-snp_guest_msg in a way that payload plus the message header do not
-exceed a page.
+That advantage was definitely worth it when systems with up to 8 CPUs
+were state of the art for servers and workstations, but that's history.
 
-  [ bp: Massage. ]
+Aside of that there are systems which fail to work with logical destination
+mode as the ACPI/DMI quirks show and there are AMD Zen1 systems out there
+which fail when interrupt remapping is enabled as reported by Rob and
+Christian. The latter problem can be cured by firmware updates, but not all
+OEMs distribute the required changes.
 
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240731150811.156771-5-nikunj@amd.com
+Physical destination mode is guaranteed to work because it is the only way
+to get a CPU up and running via the INIT/INIT/STARTUP sequence.
+
+As the number of CPUs keeps increasing, logical destination mode becomes a
+less used code path so there is no real good reason to keep it around.
+
+Therefore remove logical destination mode support for 64-bit and default to
+physical destination mode.
+
+Reported-by: Rob Newcater <rob@durendal.co.uk>
+Reported-by: Christian Heusel <christian@heusel.eu>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Rob Newcater <rob@durendal.co.uk>
+Link: https://lore.kernel.org/all/877cd5u671.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/sev.h              | 2 +-
- drivers/virt/coco/sev-guest/sev-guest.c | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/apic.h         |   8 --
+ arch/x86/kernel/apic/apic_flat_64.c | 119 ++--------------------------
+ 2 files changed, 7 insertions(+), 120 deletions(-)
 
-diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
-index 79bbe2be900eb..ee34ab00a8d6d 100644
---- a/arch/x86/include/asm/sev.h
-+++ b/arch/x86/include/asm/sev.h
-@@ -164,7 +164,7 @@ struct snp_guest_msg_hdr {
+diff --git a/arch/x86/include/asm/apic.h b/arch/x86/include/asm/apic.h
+index 9327eb00e96d0..be2045a18e69b 100644
+--- a/arch/x86/include/asm/apic.h
++++ b/arch/x86/include/asm/apic.h
+@@ -345,20 +345,12 @@ extern struct apic *apic;
+  * APIC drivers are probed based on how they are listed in the .apicdrivers
+  * section. So the order is important and enforced by the ordering
+  * of different apic driver files in the Makefile.
+- *
+- * For the files having two apic drivers, we use apic_drivers()
+- * to enforce the order with in them.
+  */
+ #define apic_driver(sym)					\
+ 	static const struct apic *__apicdrivers_##sym __used		\
+ 	__aligned(sizeof(struct apic *))			\
+ 	__section(".apicdrivers") = { &sym }
  
- struct snp_guest_msg {
- 	struct snp_guest_msg_hdr hdr;
--	u8 payload[4000];
-+	u8 payload[PAGE_SIZE - sizeof(struct snp_guest_msg_hdr)];
- } __packed;
+-#define apic_drivers(sym1, sym2)					\
+-	static struct apic *__apicdrivers_##sym1##sym2[2] __used	\
+-	__aligned(sizeof(struct apic *))				\
+-	__section(".apicdrivers") = { &sym1, &sym2 }
+-
+ extern struct apic *__apicdrivers[], *__apicdrivers_end[];
  
- struct sev_guest_platform_data {
-diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
-index 6fc7884ea0a11..c86be0cd8ecd2 100644
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -1090,6 +1090,8 @@ static int __init sev_guest_probe(struct platform_device *pdev)
- 	void __iomem *mapping;
- 	int ret;
+ /*
+diff --git a/arch/x86/kernel/apic/apic_flat_64.c b/arch/x86/kernel/apic/apic_flat_64.c
+index f37ad3392fec9..e0308d8c4e6c2 100644
+--- a/arch/x86/kernel/apic/apic_flat_64.c
++++ b/arch/x86/kernel/apic/apic_flat_64.c
+@@ -8,129 +8,25 @@
+  * Martin Bligh, Andi Kleen, James Bottomley, John Stultz, and
+  * James Cleverdon.
+  */
+-#include <linux/cpumask.h>
+ #include <linux/export.h>
+-#include <linux/acpi.h>
  
-+	BUILD_BUG_ON(sizeof(struct snp_guest_msg) > PAGE_SIZE);
-+
- 	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
- 		return -ENODEV;
+-#include <asm/jailhouse_para.h>
+ #include <asm/apic.h>
  
+ #include "local.h"
+ 
+-static struct apic apic_physflat;
+-static struct apic apic_flat;
+-
+-struct apic *apic __ro_after_init = &apic_flat;
+-EXPORT_SYMBOL_GPL(apic);
+-
+-static int flat_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
+-{
+-	return 1;
+-}
+-
+-static void _flat_send_IPI_mask(unsigned long mask, int vector)
+-{
+-	unsigned long flags;
+-
+-	local_irq_save(flags);
+-	__default_send_IPI_dest_field(mask, vector, APIC_DEST_LOGICAL);
+-	local_irq_restore(flags);
+-}
+-
+-static void flat_send_IPI_mask(const struct cpumask *cpumask, int vector)
+-{
+-	unsigned long mask = cpumask_bits(cpumask)[0];
+-
+-	_flat_send_IPI_mask(mask, vector);
+-}
+-
+-static void
+-flat_send_IPI_mask_allbutself(const struct cpumask *cpumask, int vector)
+-{
+-	unsigned long mask = cpumask_bits(cpumask)[0];
+-	int cpu = smp_processor_id();
+-
+-	if (cpu < BITS_PER_LONG)
+-		__clear_bit(cpu, &mask);
+-
+-	_flat_send_IPI_mask(mask, vector);
+-}
+-
+-static u32 flat_get_apic_id(u32 x)
++static u32 physflat_get_apic_id(u32 x)
+ {
+ 	return (x >> 24) & 0xFF;
+ }
+ 
+-static int flat_probe(void)
++static int physflat_probe(void)
+ {
+ 	return 1;
+ }
+ 
+-static struct apic apic_flat __ro_after_init = {
+-	.name				= "flat",
+-	.probe				= flat_probe,
+-	.acpi_madt_oem_check		= flat_acpi_madt_oem_check,
+-
+-	.dest_mode_logical		= true,
+-
+-	.disable_esr			= 0,
+-
+-	.init_apic_ldr			= default_init_apic_ldr,
+-	.cpu_present_to_apicid		= default_cpu_present_to_apicid,
+-
+-	.max_apic_id			= 0xFE,
+-	.get_apic_id			= flat_get_apic_id,
+-
+-	.calc_dest_apicid		= apic_flat_calc_apicid,
+-
+-	.send_IPI			= default_send_IPI_single,
+-	.send_IPI_mask			= flat_send_IPI_mask,
+-	.send_IPI_mask_allbutself	= flat_send_IPI_mask_allbutself,
+-	.send_IPI_allbutself		= default_send_IPI_allbutself,
+-	.send_IPI_all			= default_send_IPI_all,
+-	.send_IPI_self			= default_send_IPI_self,
+-	.nmi_to_offline_cpu		= true,
+-
+-	.read				= native_apic_mem_read,
+-	.write				= native_apic_mem_write,
+-	.eoi				= native_apic_mem_eoi,
+-	.icr_read			= native_apic_icr_read,
+-	.icr_write			= native_apic_icr_write,
+-	.wait_icr_idle			= apic_mem_wait_icr_idle,
+-	.safe_wait_icr_idle		= apic_mem_wait_icr_idle_timeout,
+-};
+-
+-/*
+- * Physflat mode is used when there are more than 8 CPUs on a system.
+- * We cannot use logical delivery in this case because the mask
+- * overflows, so use physical mode.
+- */
+ static int physflat_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
+ {
+-#ifdef CONFIG_ACPI
+-	/*
+-	 * Quirk: some x86_64 machines can only use physical APIC mode
+-	 * regardless of how many processors are present (x86_64 ES7000
+-	 * is an example).
+-	 */
+-	if (acpi_gbl_FADT.header.revision >= FADT2_REVISION_ID &&
+-		(acpi_gbl_FADT.flags & ACPI_FADT_APIC_PHYSICAL)) {
+-		printk(KERN_DEBUG "system APIC only can use physical flat");
+-		return 1;
+-	}
+-
+-	if (!strncmp(oem_id, "IBM", 3) && !strncmp(oem_table_id, "EXA", 3)) {
+-		printk(KERN_DEBUG "IBM Summit detected, will use apic physical");
+-		return 1;
+-	}
+-#endif
+-
+-	return 0;
+-}
+-
+-static int physflat_probe(void)
+-{
+-	return apic == &apic_physflat || num_possible_cpus() > 8 || jailhouse_paravirt();
++	return 1;
+ }
+ 
+ static struct apic apic_physflat __ro_after_init = {
+@@ -146,7 +42,7 @@ static struct apic apic_physflat __ro_after_init = {
+ 	.cpu_present_to_apicid		= default_cpu_present_to_apicid,
+ 
+ 	.max_apic_id			= 0xFE,
+-	.get_apic_id			= flat_get_apic_id,
++	.get_apic_id			= physflat_get_apic_id,
+ 
+ 	.calc_dest_apicid		= apic_default_calc_apicid,
+ 
+@@ -166,8 +62,7 @@ static struct apic apic_physflat __ro_after_init = {
+ 	.wait_icr_idle			= apic_mem_wait_icr_idle,
+ 	.safe_wait_icr_idle		= apic_mem_wait_icr_idle_timeout,
+ };
++apic_driver(apic_physflat);
+ 
+-/*
+- * We need to check for physflat first, so this order is important.
+- */
+-apic_drivers(apic_physflat, apic_flat);
++struct apic *apic __ro_after_init = &apic_physflat;
++EXPORT_SYMBOL_GPL(apic);
 -- 
 2.43.0
 
