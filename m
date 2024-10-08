@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A348F1DE4CD;
-	Tue,  8 Oct 2024 13:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBA81DE4CD;
+	Tue,  8 Oct 2024 13:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392517; cv=none; b=uv2oXgs+eaxbv0yaHxoIdMYnqLq8k6oxebNz9HuEXfRTtnGHi4RI3Z8JEOTW0saz+6vvJNu6HJ7d6L7PKxBzGImWxcixAMj6fLW+O8UfaxdGwnv/d0t1UuHMb3zQDK1vHvfLQO4niL04qtoRwuWhRcXb7K7pIzf42hPYJafHZ9Y=
+	t=1728392521; cv=none; b=TTyDqr4SyASMR//6om9tAUg69g4rt3R2Wm16LjACTk1xaXihRi8tiHmlQKS+M9X5mJUP55kmQfaYng68pfaMoEPb3+UWBq10qQ1QhhYFUFzUJFRdfWEBT4auS7fRXxV/qa7AAw4djn1OSBWLu3gQfmRwFOfy6k1TlpbAgM/Ie1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392517; c=relaxed/simple;
-	bh=t7CmQsUWJzOHZPU/1v156No5PKEPZiDi1twdY1QcT7Y=;
+	s=arc-20240116; t=1728392521; c=relaxed/simple;
+	bh=gEUQ9jGuDINRdsI8ltQJUNN06gOHlGYUqRHNDgwNh5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRK1iYS8KKsbdUtA6SAKw0wuC4R1bMYJgzHM4D659V3LyfYldPdCQ/w0K2qFWhAHrsjQ9PKd9du4TRrWA/enHH586UsisQL8ovktKV0fuxgqYEXQInoe1+b517NcgIy+atzS3LnqCWmBKwFJ/L5nkiqFpBVX6tBjSTK74BCL2xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGBx3z98; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tdUydnQn1s2XdPkjXo8bu34Pa5/ka879MUpwrdRDU8MyYAn+zKwPsf4OYCDICRwF9IN5ud2HllyhMq3K4kHYEklP/OztkSK9gSZXcii/lrlpn5zrPSskQ8TiAwITWCwOA7nDq3dgE45P7DDlnrPvdpR0jxMzJZ9oelL6XoKVa1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSppBb1c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGBx3z98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EADCC4CEC7;
-	Tue,  8 Oct 2024 13:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSppBb1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5323DC4CEC7;
+	Tue,  8 Oct 2024 13:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392517;
-	bh=t7CmQsUWJzOHZPU/1v156No5PKEPZiDi1twdY1QcT7Y=;
+	s=korg; t=1728392520;
+	bh=gEUQ9jGuDINRdsI8ltQJUNN06gOHlGYUqRHNDgwNh5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGBx3z98rTXe0ZWqRHbPLx9GQ9sBRIFFlVC2du/SbGl8DcLsFE3e9rapmg7CGBWT0
-	 f9STAI1YwXHQVHa5H2zWzeL9jofiUGpMgiWmz2u9heTlDoNg1W9++IPyagViLkw0Zs
-	 GonagkiKoHz2EixZCp4ICloSspXiKHW+c60RqdW4=
+	b=tSppBb1cY4caHhNalQ8/S48cD90+LcLFWOnX/24rCu+l8EgafPjPP9s6Ojm4T9H7V
+	 r5u4E/QNM27pCvhbeXPmCH3QYvNxLkFeNZm8SNRSbivs635CCM5Te7HeK5CGo54Gcx
+	 dBtQMMe2fxQeJ9QLHw1CZPWaeey+6SRlbSRg/yB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 411/558] mm: krealloc: consider spare memory for __GFP_ZERO
-Date: Tue,  8 Oct 2024 14:07:21 +0200
-Message-ID: <20241008115718.447737898@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Joel Granados <j.granados@samsung.com>
+Subject: [PATCH 6.11 438/558] sysctl: avoid spurious permanent empty tables
+Date: Tue,  8 Oct 2024 14:07:48 +0200
+Message-ID: <20241008115719.506164739@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,69 +44,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 1a83a716ec233990e1fd5b6fbb1200ade63bf450 upstream.
+commit 559d4c6a9d3b60f239493239070eb304edaea594 upstream.
 
-As long as krealloc() is called with __GFP_ZERO consistently, starting
-with the initial memory allocation, __GFP_ZERO should be fully honored.
+The test if a table is a permanently empty one, inspects the address of
+the registered ctl_table argument.
+However as sysctl_mount_point is an empty array and does not occupy and
+space it can end up sharing an address with another object in memory.
+If that other object itself is a "struct ctl_table" then registering
+that table will fail as it's incorrectly recognized as permanently empty.
 
-However, if for an existing allocation krealloc() is called with a
-decreased size, it is not ensured that the spare portion the allocation is
-zeroed.  Thus, if krealloc() is subsequently called with a larger size
-again, __GFP_ZERO can't be fully honored, since we don't know the previous
-size, but only the bucket size.
+Avoid this issue by adding a dummy element to the array so that is not
+empty anymore.
+Explicitly register the table with zero elements as otherwise the dummy
+element would be recognized as a sentinel element which would lead to a
+runtime warning from the sysctl core.
 
-Example:
+While the issue seems not being encountered at this time, this seems
+mostly to be due to luck.
+Also a future change, constifying sysctl_mount_point and root_table, can
+reliably trigger this issue on clang 18.
 
-	buf = kzalloc(64, GFP_KERNEL);
-	memset(buf, 0xff, 64);
+Given that empty arrays are non-standard in the first place it seems
+prudent to avoid them if possible.
 
-	buf = krealloc(buf, 48, GFP_KERNEL | __GFP_ZERO);
-
-	/* After this call the last 16 bytes are still 0xff. */
-	buf = krealloc(buf, 64, GFP_KERNEL | __GFP_ZERO);
-
-Fix this, by explicitly setting spare memory to zero, when shrinking an
-allocation with __GFP_ZERO flag set or init_on_alloc enabled.
-
-Link: https://lkml.kernel.org/r/20240812223707.32049-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: David Rientjes <rientjes@google.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4a7b29f65094 ("sysctl: move sysctl type to ctl_table_header")
+Fixes: a35dd3a786f5 ("sysctl: drop now unnecessary out-of-bounds check")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Closes: https://lore.kernel.org/oe-lkp/202408051453.f638857e-lkp@intel.com
+Signed-off-by: Joel Granados <j.granados@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab_common.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/proc/proc_sysctl.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -1273,6 +1273,13 @@ __do_krealloc(const void *p, size_t new_
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -29,8 +29,13 @@ static const struct inode_operations pro
+ static const struct file_operations proc_sys_dir_file_operations;
+ static const struct inode_operations proc_sys_dir_operations;
  
- 	/* If the object still fits, repoison it precisely. */
- 	if (ks >= new_size) {
-+		/* Zero out spare memory. */
-+		if (want_init_on_alloc(flags)) {
-+			kasan_disable_current();
-+			memset((void *)p + new_size, 0, ks - new_size);
-+			kasan_enable_current();
-+		}
-+
- 		p = kasan_krealloc((void *)p, new_size, flags);
- 		return (void *)p;
- 	}
+-/* Support for permanently empty directories */
+-static struct ctl_table sysctl_mount_point[] = { };
++/*
++ * Support for permanently empty directories.
++ * Must be non-empty to avoid sharing an address with other tables.
++ */
++static struct ctl_table sysctl_mount_point[] = {
++	{ }
++};
+ 
+ /**
+  * register_sysctl_mount_point() - registers a sysctl mount point
+@@ -42,7 +47,7 @@ static struct ctl_table sysctl_mount_poi
+  */
+ struct ctl_table_header *register_sysctl_mount_point(const char *path)
+ {
+-	return register_sysctl(path, sysctl_mount_point);
++	return register_sysctl_sz(path, sysctl_mount_point, 0);
+ }
+ EXPORT_SYMBOL(register_sysctl_mount_point);
+ 
 
 
