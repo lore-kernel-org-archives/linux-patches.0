@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C81DF756;
-	Tue,  8 Oct 2024 12:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145591DF759;
+	Tue,  8 Oct 2024 12:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390443; cv=none; b=QA8042rqLNOznCrn+HFOoskBPc2ga6xhYWuE+TgS1B4lXxpzt2a/DakHfKiKDixaA0OyH0+QnJSOy2vLmoNj3O0eP3UGrRtPLuDNOZYvm882E9BXQB6JCSrV2RlhVfDp2GxB+M9WILVi2kBB+MYExGWtF9ocdxIkP7Z9l4FzMVw=
+	t=1728390447; cv=none; b=KUCetaoosVWmxJ9KH2a+3DBXlI6Bo83KaBSJSfqlFMmbeXqCKVk85TcufvwB9ydCnmiIam1MELYFbNtj+2n67MWNRBkQ2RbgmPcFT7d1GbZkhbGh1oTxzR2IChL6f9pmqxu2h2N96olAyEH9XzXBoCjFAUaZoTNqs6Ofc/LSYOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390443; c=relaxed/simple;
-	bh=eAmXXCWeNK6vyitEk9YLt4udp+KBflTywJ7G5KZp3vE=;
+	s=arc-20240116; t=1728390447; c=relaxed/simple;
+	bh=QAp6zXhNeroWQGg/b8YBTVcRE8Ge+HmeNa69DgJtMh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riW01pX0yUPRUb44nVeSLLKuh0N+IqQEnGxvbDhZjOD+6QReuRqNrxZZV4lSKce+AWk2EFcMe2EPwfCy9q6tuDcHNw1CwJJF8KloYO/d+aNFC+NATPslVqUWJfP24wrbDv4MgmQc0gqMWOurqCHEegobIcbMVwKCQU13+kAcnyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fvv21FzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEDzAZ+eWB5KVV5ry5xNRiEEOSNs7Uk6Uiks+WhuUulKVjSO9l3SQ9H9tuC+gCSG+UPqVShhCFKlThQpt9J/KMhFqm0qPHrK/0LDdH5d244FwvCZZXGqgSv4LYVErJpWzOZDwjALxhFU4V4tffisRR9tX5dwyLy8FZBNoOmPPDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6AIJCaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fvv21FzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D1EC4CEC7;
-	Tue,  8 Oct 2024 12:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6AIJCaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487B3C4CEC7;
+	Tue,  8 Oct 2024 12:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390443;
-	bh=eAmXXCWeNK6vyitEk9YLt4udp+KBflTywJ7G5KZp3vE=;
+	s=korg; t=1728390446;
+	bh=QAp6zXhNeroWQGg/b8YBTVcRE8Ge+HmeNa69DgJtMh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fvv21FzUG76DG+I2P5MYTmBtNdGremObOeWz99AmtriKAzgE9IQijAqW2C4ieMuLT
-	 Q9H+D/+VdtsJbv0Y1FSo4Jo39UGy+nmzQB+ocbhW6J9nZemJU64++B55DDj+UDqzq9
-	 3WZcOuxqyMLk31BcQLZyExL0GCrDKblafxrWxY2A=
+	b=a6AIJCaFgxB4TyNULrSNCh3RKAHzaGryCI+vBkHuyLtU36Rw7Iog2Ds3hdrwjOrSo
+	 XbyzmXFOiAkCzJCpD9acbKMAIA7WaWNobBBK9NmlIFD8uCi/IbbqeuPANa+SKH1ROY
+	 2w261btVO0iM7P03P+JTnvYCfaucIRqPEy/4lN3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Burakov <a.burakov@rosalinux.ru>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.10 289/482] platform/x86: x86-android-tablets: Fix use after free on platform_device_register() errors
-Date: Tue,  8 Oct 2024 14:05:52 +0200
-Message-ID: <20241008115659.651635125@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 260/482] spi: spi-cadence: Fix pm_runtime_set_suspended() with runtime pm enabled
+Date: Tue,  8 Oct 2024 14:05:23 +0200
+Message-ID: <20241008115658.517144313@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,52 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 2fae3129c0c08e72b1fe93e61fd8fd203252094a upstream.
+[ Upstream commit 67d4a70faa662df07451e83db1546d3ca0695e08 ]
 
-x86_android_tablet_remove() frees the pdevs[] array, so it should not
-be used after calling x86_android_tablet_remove().
+It is not valid to call pm_runtime_set_suspended() for devices
+with runtime PM enabled because it returns -EAGAIN if it is enabled
+already and working. So, call pm_runtime_disable() before to fix it.
 
-When platform_device_register() fails, store the pdevs[x] PTR_ERR() value
-into the local ret variable before calling x86_android_tablet_remove()
-to avoid using pdevs[] after it has been freed.
-
-Fixes: 5eba0141206e ("platform/x86: x86-android-tablets: Add support for instantiating platform-devs")
-Fixes: e2200d3f26da ("platform/x86: x86-android-tablets: Add gpio_keys support to x86_android_tablet_init()")
-Cc: stable@vger.kernel.org
-Reported-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
-Closes: https://lore.kernel.org/platform-driver-x86/20240917120458.7300-1-a.burakov@rosalinux.ru/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241005130545.64136-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d36ccd9f7ea4 ("spi: cadence: Runtime pm adaptation")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240923040015.3009329-3-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/x86-android-tablets/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-cadence.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/x86-android-tablets/core.c
-+++ b/drivers/platform/x86/x86-android-tablets/core.c
-@@ -390,8 +390,9 @@ static __init int x86_android_tablet_pro
- 	for (i = 0; i < pdev_count; i++) {
- 		pdevs[i] = platform_device_register_full(&dev_info->pdev_info[i]);
- 		if (IS_ERR(pdevs[i])) {
-+			ret = PTR_ERR(pdevs[i]);
- 			x86_android_tablet_remove(pdev);
--			return PTR_ERR(pdevs[i]);
-+			return ret;
- 		}
- 	}
+diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
+index e5140532071d2..316da99f798c8 100644
+--- a/drivers/spi/spi-cadence.c
++++ b/drivers/spi/spi-cadence.c
+@@ -665,8 +665,8 @@ static int cdns_spi_probe(struct platform_device *pdev)
  
-@@ -443,8 +444,9 @@ static __init int x86_android_tablet_pro
- 								  PLATFORM_DEVID_AUTO,
- 								  &pdata, sizeof(pdata));
- 		if (IS_ERR(pdevs[pdev_count])) {
-+			ret = PTR_ERR(pdevs[pdev_count]);
- 			x86_android_tablet_remove(pdev);
--			return PTR_ERR(pdevs[pdev_count]);
-+			return ret;
- 		}
- 		pdev_count++;
+ clk_dis_all:
+ 	if (!spi_controller_is_target(ctlr)) {
+-		pm_runtime_set_suspended(&pdev->dev);
+ 		pm_runtime_disable(&pdev->dev);
++		pm_runtime_set_suspended(&pdev->dev);
  	}
+ remove_ctlr:
+ 	spi_controller_put(ctlr);
+@@ -688,8 +688,8 @@ static void cdns_spi_remove(struct platform_device *pdev)
+ 
+ 	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
+ 
+-	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 
+ 	spi_unregister_controller(ctlr);
+ }
+-- 
+2.43.0
+
 
 
