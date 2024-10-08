@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0091F1DE4CB;
-	Tue,  8 Oct 2024 13:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472121DE4CB;
+	Tue,  8 Oct 2024 13:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394166; cv=none; b=OnsF8G8u5+e23jylauoV05pE7CxKpwbzaFeEWwbwwd7eN88inW8oyyPDZ/AxZ0iHk+kfUK0FEMQu+VAyijngu2qEFEdoi+JOFjqdB6XSZqZjl2qBQ5dnF/U/92clmtwU6aGOUeITge8Z6h+jtxlK6xXRzzpHpSwttSfIgOX3rbM=
+	t=1728394169; cv=none; b=F2df9f619cpWSuLMxKLxdpETtu9FBf8hu6e1hPsoc3+kU5LIHpP7ssax0rKvFOcE9dgAXAQMHms9BI9WhK9FhFNwHiYMYvPk1ZND5jRdEePtARiiOG7WWV9Va5rgJo5wmHVP3l+VrtIwnjLY/9t4ZIaz4Iw8dKYZdTT5v56nfz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394166; c=relaxed/simple;
-	bh=DZOjwinwdbSAY5AAYdgMNz5tj3LuMmD53DS2eDXXlQM=;
+	s=arc-20240116; t=1728394169; c=relaxed/simple;
+	bh=J9K22ArcGlpDKFm0zKGAZydCBNfxBMCSUQnu4OO7Acs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bncwe9LZ6I2MQ7TTM/Iz4ixkjHhW+qyzbH3c3DolDDwZD86ZAnNCIuGdTEtsEesBQqnzt7/g2EUuId+R+QT6lQQ478NtnxPfSDSeNpFNdOcG1YM4+INg4IL2+FxooX91HlpPmYbugO5tP56ACWcAPMIOwT8/pan3Y5bDBxyp6dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEYNyli5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e01AxisjbX67J3nKi9l2rDEJXzLchzU5mOT3ZKTSYfvODfpFOhz4+6shU2cNR22VW9vQemj7DDph+JGn7hChNuVEdVPegK+lWw3NgMg51Nzag7g/N2cidho+KRBMcLoED/btvWE6vN4QfCV32FDTlZXAhuzuJ2w7KMf9uNxPooY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dT0l3Zhk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEYNyli5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657B9C4CEC7;
-	Tue,  8 Oct 2024 13:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dT0l3Zhk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9103C4CECD;
+	Tue,  8 Oct 2024 13:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394165;
-	bh=DZOjwinwdbSAY5AAYdgMNz5tj3LuMmD53DS2eDXXlQM=;
+	s=korg; t=1728394169;
+	bh=J9K22ArcGlpDKFm0zKGAZydCBNfxBMCSUQnu4OO7Acs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEYNyli5IkyHEsoPELm4kxU3xS9oo5krHeHqjMYxFfvKm514goZ05WiFQ/sbgMUR8
-	 YBbQa3JmzJIa0TN8goq77KFYA5W0cNj7u2Ezj3aZXTza44bR+Ddy/2sy+AHswck4Ye
-	 O6OhwfNk8oZABXJGoEDa2L0xrwJ/+DbYrmaM14VM=
+	b=dT0l3Zhkze+DvfeHsa5FPvHaDbWBPly8i3DhBHf8NpJtzKqbSYqFOxdAJkXnOvD4A
+	 j4tfZ1DJ2lo97PyUYXwBr8igpSO++9H43uc2mzpIkYVfIprTqTnxjso0OflXVm2daI
+	 nO2cFKpmyc/MJQbARdMgovjEdvcMEv+2JBRQ5QdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 359/386] r8169: add tally counter fields added with RTL8125
-Date: Tue,  8 Oct 2024 14:10:04 +0200
-Message-ID: <20241008115643.510420473@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vegard Nossum <vegard.nossum@oracle.com>
+Subject: [PATCH 6.6 368/386] ubifs: ubifs_symlink: Fix memleak of inode->i_link in error path
+Date: Tue,  8 Oct 2024 14:10:13 +0200
+Message-ID: <20241008115643.866904777@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,66 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit ced8e8b8f40accfcce4a2bbd8b150aa76d5eff9a ]
+[ Upstream commit 6379b44cdcd67f5f5d986b73953e99700591edfa ]
 
-RTL8125 added fields to the tally counter, what may result in the chip
-dma'ing these new fields to unallocated memory. Therefore make sure
-that the allocated memory area is big enough to hold all of the
-tally counter values, even if we use only parts of it.
+For error handling path in ubifs_symlink(), inode will be marked as
+bad first, then iput() is invoked. If inode->i_link is initialized by
+fscrypt_encrypt_symlink() in encryption scenario, inode->i_link won't
+be freed by callchain ubifs_free_inode -> fscrypt_free_inode in error
+handling path, because make_bad_inode() has changed 'inode->i_mode' as
+'S_IFREG'.
+Following kmemleak is easy to be reproduced by injecting error in
+ubifs_jnl_update() when doing symlink in encryption scenario:
+ unreferenced object 0xffff888103da3d98 (size 8):
+  comm "ln", pid 1692, jiffies 4294914701 (age 12.045s)
+  backtrace:
+   kmemdup+0x32/0x70
+   __fscrypt_encrypt_symlink+0xed/0x1c0
+   ubifs_symlink+0x210/0x300 [ubifs]
+   vfs_symlink+0x216/0x360
+   do_symlinkat+0x11a/0x190
+   do_syscall_64+0x3b/0xe0
+There are two ways fixing it:
+ 1. Remove make_bad_inode() in error handling path. We can do that
+    because ubifs_evict_inode() will do same processes for good
+    symlink inode and bad symlink inode, for inode->i_nlink checking
+    is before is_bad_inode().
+ 2. Free inode->i_link before marking inode bad.
+Method 2 is picked, it has less influence, personally, I think.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/741d26a9-2b2b-485d-91d9-ecb302e345b5@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2c58d548f570 ("fscrypt: cache decrypted symlink target in ->i_link")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+(cherry picked from commit 6379b44cdcd67f5f5d986b73953e99700591edfa)
+[Vegard: CVE-2024-26972; no conflicts]
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/ubifs/dir.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 382ba8b04cbfa..b499d8ea6d216 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -567,6 +567,33 @@ struct rtl8169_counters {
- 	__le32	rx_multicast;
- 	__le16	tx_aborted;
- 	__le16	tx_underrun;
-+	/* new since RTL8125 */
-+	__le64 tx_octets;
-+	__le64 rx_octets;
-+	__le64 rx_multicast64;
-+	__le64 tx_unicast64;
-+	__le64 tx_broadcast64;
-+	__le64 tx_multicast64;
-+	__le32 tx_pause_on;
-+	__le32 tx_pause_off;
-+	__le32 tx_pause_all;
-+	__le32 tx_deferred;
-+	__le32 tx_late_collision;
-+	__le32 tx_all_collision;
-+	__le32 tx_aborted32;
-+	__le32 align_errors32;
-+	__le32 rx_frame_too_long;
-+	__le32 rx_runt;
-+	__le32 rx_pause_on;
-+	__le32 rx_pause_off;
-+	__le32 rx_pause_all;
-+	__le32 rx_unknown_opcode;
-+	__le32 rx_mac_error;
-+	__le32 tx_underrun32;
-+	__le32 rx_mac_missed;
-+	__le32 rx_tcam_dropped;
-+	__le32 tdu;
-+	__le32 rdu;
- };
- 
- struct rtl8169_tc_offsets {
--- 
-2.43.0
-
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1126,6 +1126,8 @@ out_cancel:
+ 	dir_ui->ui_size = dir->i_size;
+ 	mutex_unlock(&dir_ui->ui_mutex);
+ out_inode:
++	/* Free inode->i_link before inode is marked as bad. */
++	fscrypt_free_inode(inode);
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_fname:
 
 
