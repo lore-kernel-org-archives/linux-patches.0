@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833551DE89A;
-	Tue,  8 Oct 2024 13:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAA81DED6F;
+	Tue,  8 Oct 2024 13:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393429; cv=none; b=QVsJJ4VIyXr/+LHbkNyH6M6Ve6/22QE51iGdXtobuS8iZbNvApTE0qf4vJu4bqEAROIWndH+P3Qma/i0xtrPhs8HyztnqV9Pe7W8Mc3qLtCwI8Pb43OnBptBOE1CptdGdCydPdzbD0Ahce1ZDB9gnXmNv2Tv1B0wKYkqIU8oubc=
+	t=1728393432; cv=none; b=C/qKXui5nrOrHq/xfqDvYJKKlBmiNcf4OqjjYrhcBazcvDl8x09cpoumLvXavBGxhx6Cnby7/Bm042K8x2xdZ+FEFo++nSXxmdt46VoUnv9JJIFo7vwqFyMCNHdDj37ot24PO6RmMoYdH7eGY/FE5DgKN9/ZRDN7QrNWwfwGb9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393429; c=relaxed/simple;
-	bh=FUO+z758MnlDP0Nx/H1i/HRuWeTII0X1lgJJytgpy7c=;
+	s=arc-20240116; t=1728393432; c=relaxed/simple;
+	bh=5SvU8ARRQZsmJ83bNdm5qBSKNkF5Rjnv3/yRxWcoy5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fO35Cjue3pMle/j04qjLNYTLOnvIJS0h1LjIZWcvFHvBDRtdRWWjgsSU5Ls/qILau/gQbQijy5n80yYR/5SHIF1cYfYcrLbnTzqDUVIpooD3YstvJSyp1dezoaZX6fgytQmt+wUQpXt8XaUxhI8eI3TZLVCt+Hz1Sf3sAclS5Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJTiO/iF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojTf+qfMg7KRlbyVR1JTqYoSc1FJQL+5BU7/gRRuSdZq/ioqu7NL0H8ihg+L7bggVQn83C8GtKT/y/Z8P9UeurBEY3QVJ+7ywSLzY5aQBYFsz4hFLpGkpZLtu/HC1kxHwdF52A0x1LpUowo9uhjAJgabdsbn9y5KYxBmMkwAnGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aZ2mRVJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJTiO/iF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE60C4CEC7;
-	Tue,  8 Oct 2024 13:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aZ2mRVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E6FC4CEC7;
+	Tue,  8 Oct 2024 13:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393429;
-	bh=FUO+z758MnlDP0Nx/H1i/HRuWeTII0X1lgJJytgpy7c=;
+	s=korg; t=1728393432;
+	bh=5SvU8ARRQZsmJ83bNdm5qBSKNkF5Rjnv3/yRxWcoy5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJTiO/iF5ea2ODDKVs2Xu4t2h9/LJOTGAobv0kAqvB4x8IV8c7hBfNz7pQiUHKZf0
-	 yxAIJv5V7hNE2oH1D5lkI/+gpU/5rHCyNvJxZBGKIWPa+tycm25rHYu/HkfEXlKJRc
-	 1xkVJZ6m3Ki+vTVcTaD8txWevp3wTYx5LHGQE/hQ=
+	b=2aZ2mRVJ/Jy/9hhHx9MzXWLX8si5c05tf/oeptdtvJMvj1yuN6ir3SjEiowaWDbXr
+	 4OPcWpWXRK1/FhiTY0vAXPIkXKacnhc29C1d4em7Rl/HD37QtlwDV2oRgL5gHJqspo
+	 kxNb3GedpdWRhLu0u14HIwR1TCF9hdTXEBcgi+es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Liu <liupeng01@kylinos.cn>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Tim Huang <tim.huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/386] drm/amdgpu: enable gfxoff quirk on HP 705G4
-Date: Tue,  8 Oct 2024 14:06:34 +0200
-Message-ID: <20241008115635.291798340@linuxfoundation.org>
+Subject: [PATCH 6.6 150/386] drm/amdkfd: Fix resource leak in criu restore queue
+Date: Tue,  8 Oct 2024 14:06:35 +0200
+Message-ID: <20241008115635.330537959@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,36 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Liu <liupeng01@kylinos.cn>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 2c7795e245d993bcba2f716a8c93a5891ef910c9 ]
+[ Upstream commit aa47fe8d3595365a935921a90d00bc33ee374728 ]
 
-Enabling gfxoff quirk results in perfectly usable
-graphical user interface on HP 705G4 DM with R5 2400G.
+To avoid memory leaks, release q_extra_data when exiting the restore queue.
+v2: Correct the proto (Alex)
 
-Without the quirk, X server is completely unusable as
-every few seconds there is gpu reset due to ring gfx timeout.
-
-Signed-off-by: Peng Liu <liupeng01@kylinos.cn>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Reviewed-by: Tim Huang <tim.huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index c28e7ff6ede26..00e693c47f3cc 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1174,6 +1174,8 @@ static const struct amdgpu_gfxoff_quirk amdgpu_gfxoff_quirk_list[] = {
- 	{ 0x1002, 0x69af, 0x106b, 0x019a, 0xc0 },
- 	/* https://bbs.openkylin.top/t/topic/171497 */
- 	{ 0x1002, 0x15d8, 0x19e5, 0x3e14, 0xc2 },
-+	/* HP 705G4 DM with R5 2400G */
-+	{ 0x1002, 0x15dd, 0x103c, 0x8464, 0xd6 },
- 	{ 0, 0, 0, 0, 0 },
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index dbc75ca84375a..0583af4e84fa3 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -982,6 +982,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 		pr_debug("Queue id %d was restored successfully\n", queue_id);
  
+ 	kfree(q_data);
++	kfree(q_extra_data);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
