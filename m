@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAAF1DE894;
-	Tue,  8 Oct 2024 12:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5551DE3A3;
+	Tue,  8 Oct 2024 12:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391973; cv=none; b=e0rEwA/j1zOXKnA7GSMrewJ4b4wRlvZ4Rw4AZ/E3wBDP9TCzZo1IBFcv3IOR3bLd4AZjO94k1SY5nRoolcbUSSW7dwc4VZ04fJgffyEWX7pFzio6I5LjW1bcIWXpoOzrG45WtfJofan9veTNZ19QRva95/C1yCSSWYmWqtD4gwE=
+	t=1728391977; cv=none; b=Gu9Z+ejB+N2R43AzougcPI33a9ahr9D88YlzqBzmoMCa1Kyo7EZCKUS2nPOJl8+8cJkFP2Zs75h5yk0d4eT9YYKazPVkudoSYSlmm76weH3/ZsroLP9u8FH9sD9I2TIpfAG1ME2OR+6aDhf8/kp4AzmcJDT1NE8IJTLlwf5GpQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391973; c=relaxed/simple;
-	bh=VReQKxeRDUOhcW6qtTyBkk3CtANM12YaLK72CP2fVOo=;
+	s=arc-20240116; t=1728391977; c=relaxed/simple;
+	bh=tD84dK93WiLkBMBGroZsVlZ0XZXA/6nUL6N5041NT7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+WvJwfvSrJcvfXO8GNnz38axjK4kX78cDBPm+SB3XEdjuwc+uNUye2BgMY0S1xlKgTm29ZSmKVoMr3Uw2vclNIUOlPQ9ugXi3ncJRytNb/P2AXQI64GOlE0XUCjKkTpmwtwDpOxyaRyrKOiAQjsg5jBXlTOfYs9E/UB8/SYanw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqvxPavy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCYd0998fPz0i7tb2Pzl5XCmdKnoXmA2Y20XmJMmO9V3N5YReCzGcPfI4LetfnZpPS9foxk9beWwVJG2FxGxUWEqyER6z3oAFM0RylhzL6ovW1dzA65fQkpgQez22XRLicVZPJtfSyyXb0lMDYmYTNEX7nO5BQ0Ezva3/eplw2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZxJWhUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqvxPavy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C5CC4CECD;
-	Tue,  8 Oct 2024 12:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZxJWhUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902A9C4CED1;
+	Tue,  8 Oct 2024 12:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391973;
-	bh=VReQKxeRDUOhcW6qtTyBkk3CtANM12YaLK72CP2fVOo=;
+	s=korg; t=1728391977;
+	bh=tD84dK93WiLkBMBGroZsVlZ0XZXA/6nUL6N5041NT7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqvxPavyw9W4SQO0lMayiftbm3D0Zuv+Cr4ESqbOIG2oLS3GNBVF4pE+KsWbqKP2/
-	 Q5agdNaPkogKCn9RVQG+q680QnfoBjdiExWSQTtZZCvdQfQAO429QFBPczOzHoHOqR
-	 e1EP0gioIEFixBBBHGgGsh7tTn8+LYz27LFmlckE=
+	b=KZxJWhUj2MKGFaYwtkmpj8kTaV/Y8h6Ub/Wn6MYCSGVERAsbi6d86qjb2LCe3OSeI
+	 AvQV5xB+nL3g5sSwBJhOGHjQADDfXEwYx22K6rh7Um2G8qbZlOo1RSJS4Dz05UlD/9
+	 PVFie38436hiMIbZwWL2/P6vTXNoMGtQtChm3tyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ckath <ckath@yandex.ru>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 247/558] platform/x86: touchscreen_dmi: add nanote-next quirk
-Date: Tue,  8 Oct 2024 14:04:37 +0200
-Message-ID: <20241008115712.059625505@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
+Subject: [PATCH 6.11 238/558] jfs: check if leafidx greater than num leaves per dmap tree
+Date: Tue,  8 Oct 2024 14:04:28 +0200
+Message-ID: <20241008115711.708567965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,67 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ckath <ckath@yandex.ru>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit c11619af35bae5884029bd14170c3e4b55ddf6f3 ]
+[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
 
-Add touschscreen info for the nanote next (UMPC-03-SR).
+syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
+than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
 
-After checking with multiple owners the DMI info really is this generic.
+Shaggy:
+Modified sanity check to apply to control pages as well as leaf pages.
 
-Signed-off-by: Ckath <ckath@yandex.ru>
-Link: https://lore.kernel.org/r/e8dda83a-10ae-42cf-a061-5d29be0d193a@yandex.ru
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ fs/jfs/jfs_dmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index f74af0a689f20..0a39f68c641d1 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -840,6 +840,21 @@ static const struct ts_dmi_data rwc_nanote_p8_data = {
- 	.properties = rwc_nanote_p8_props,
- };
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 8847e8c5d5b45..974ecf5e0d952 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -2944,9 +2944,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
+ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+ {
+ 	int ti, n = 0, k, x = 0;
+-	int max_size;
++	int max_size, max_idx;
  
-+static const struct property_entry rwc_nanote_next_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1785),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1145),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rwc-nanote-next.fw"),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data rwc_nanote_next_data = {
-+	.acpi_name = "MSSL1680:00",
-+	.properties = rwc_nanote_next_props,
-+};
-+
- static const struct property_entry schneider_sct101ctm_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1715),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1140),
-@@ -1589,6 +1604,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "0001")
- 		},
- 	},
-+	{
-+		/* RWC NANOTE NEXT */
-+		.driver_data = (void *)&rwc_nanote_next_data,
-+		.matches = {
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_VENDOR, "To be filled by O.E.M."),
-+			/* Above matches are too generic, add bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "S8A70R100-V005"),
-+		},
-+	},
- 	{
- 		/* Schneider SCT101CTM */
- 		.driver_data = (void *)&schneider_sct101ctm_data,
+ 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
++	max_idx = is_ctl ? LPERCTL : LPERDMAP;
+ 
+ 	/* first check the root of the tree to see if there is
+ 	 * sufficient free space.
+@@ -2978,6 +2979,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+ 		 */
+ 		assert(n < 4);
+ 	}
++	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
++		return -ENOSPC;
+ 
+ 	/* set the return to the leftmost leaf describing sufficient
+ 	 * free space.
 -- 
 2.43.0
 
