@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F431DE3A2;
-	Tue,  8 Oct 2024 12:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B461DC759;
+	Tue,  8 Oct 2024 12:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391049; cv=none; b=IUQoZ8WtT/kaFMZBr6mzv/L3q8zJFDcxYlSFGbhs0qrpqpv3DeGFT9ndxae0a+wcD5jApMvQ9MQB+KumiAv0hW2AQzmrdk2hbx8rGFFDZrw2sGqczX7SMzdrN74S0lWrRM8dSs2vGR1YTISXweHtMuEnmfSBkLKd8qVL4XFVzss=
+	t=1728391052; cv=none; b=Ml5fG/uxyGUqffkEApWPYjAXLrn5dSwscOpY+NFdLLyM1XJkb0mJOXfrS9NJT7jU2ErjqLNQPsgBrE5Eq+KVNUQOB8PJkdBg1kbGSv3bu7iKfsO389DFpgUWgsxYy5p18CpUkH72GPxI08JrPleSSl9d477ymneOlzNh9RXgEZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391049; c=relaxed/simple;
-	bh=fGie67DVEQdyX6oHw0Bqe0CwD0OpNE17WVae2c071OU=;
+	s=arc-20240116; t=1728391052; c=relaxed/simple;
+	bh=gv+3o8AGN9yzAeH5/VaXlj7jE2C8BRAPFhoiQsy1M1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mAJ3VnHS2ijY8pZAZIOqLXAG/6D2106jEvNobdVwr9eZPhO+1p7VnxBN/vo+T047dPZ8q0j0utU5NnFifj05U0+H+76AE5ZSJr1Kj0RKtsTUmGmk5LEXOXdXFgXt7CXQ+nP/IW4WmbDXiW0yoekPa60fXMDaUhFreuk0ZCpm+gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyBdriky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QISTRxkqAxrqOmb70jV/zI66BipP9ku5FDpqG9R2o3cAAWcSOgX/anAFFG7TscZtdZ3Fpx1T1ocphq8bBCkZ9tj+DqoXIKkvp0DjMJcbb6kPF8eGHeOrKtNndNrp+rVJPOGcIrhsjLekVT+g/EfUFdgZyZK5+nxfbRChFpGuU/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIsZ+hnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyBdriky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1EBC4CEC7;
-	Tue,  8 Oct 2024 12:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIsZ+hnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFD4C4CEC7;
+	Tue,  8 Oct 2024 12:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391048;
-	bh=fGie67DVEQdyX6oHw0Bqe0CwD0OpNE17WVae2c071OU=;
+	s=korg; t=1728391052;
+	bh=gv+3o8AGN9yzAeH5/VaXlj7jE2C8BRAPFhoiQsy1M1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyBdrikyNkg1YQMSqKWa2cvedhVzsZlaQdEbUY081tO9o7bZCpPIKExkWSU6AyBCy
-	 DGWrBrbVrG8uGB2g4E0K97+Fw5u8tVBDJebwnQLXixaHFoRdrvNldOxKdyyDZnuakL
-	 IXv1ghETjc0fv96qtMYL3zypcM4qxLV1VSicd30Q=
+	b=sIsZ+hnAlPxWFkgnvGv/y/QlFuNBAud7bJPE1QHr/nuBPYbnxPZJkE8bkA3KHWzs6
+	 xpKvIqP84LsprPzYlwpXA2lpSfdkmEeBvgTjpUN22Nm28mHYfFJwThOqHpLSUM5acy
+	 bvpVakr6xLajuWmFPEd4735OegdFOAFwNLeX5UCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 6.10 475/482] drm/sched: revert "Always increment correct scheduler score"
-Date: Tue,  8 Oct 2024 14:08:58 +0200
-Message-ID: <20241008115707.204584994@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	yuxuanzhe@outlook.com,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 476/482] rxrpc: Fix a race between socket set up and I/O thread creation
+Date: Tue,  8 Oct 2024 14:08:59 +0200
+Message-ID: <20241008115707.242909166@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -44,50 +49,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: David Howells <dhowells@redhat.com>
 
-commit abf201f6ce14c4ceeccde5471bdf59614b83a3d8 upstream.
+commit bc212465326e8587325f520a052346f0b57360e6 upstream.
 
-This reverts commit 087913e0ba2b3b9d7ccbafb2acf5dab9e35ae1d5.
+In rxrpc_open_socket(), it sets up the socket and then sets up the I/O
+thread that will handle it.  This is a problem, however, as there's a gap
+between the two phases in which a packet may come into rxrpc_encap_rcv()
+from the UDP packet but we oops when trying to wake the not-yet created I/O
+thread.
 
-It turned out that the original code was correct since the rq can only
-change when there is no armed job for an entity.
+As a quick fix, just make rxrpc_encap_rcv() discard the packet if there's
+no I/O thread yet.
 
-This change here broke the logic since we only incremented the counter
-for the first job, so revert it.
+A better, but more intrusive fix would perhaps be to rearrange things such
+that the socket creation is done by the I/O thread.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240930131451.536150-1-christian.koenig@amd.com
+Fixes: a275da62e8c1 ("rxrpc: Create a per-local endpoint receive queue and I/O thread")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: yuxuanzhe@outlook.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241001132702.3122709-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rxrpc/ar-internal.h  |    2 +-
+ net/rxrpc/io_thread.c    |   10 ++++++++--
+ net/rxrpc/local_object.c |    2 +-
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -586,6 +586,7 @@ void drm_sched_entity_push_job(struct dr
- 	ktime_t submit_ts;
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1058,7 +1058,7 @@ bool rxrpc_direct_abort(struct sk_buff *
+ int rxrpc_io_thread(void *data);
+ static inline void rxrpc_wake_up_io_thread(struct rxrpc_local *local)
+ {
+-	wake_up_process(local->io_thread);
++	wake_up_process(READ_ONCE(local->io_thread));
+ }
  
- 	trace_drm_sched_job(sched_job, entity);
-+	atomic_inc(entity->rq->sched->score);
- 	WRITE_ONCE(entity->last_user, current->group_leader);
+ static inline bool rxrpc_protocol_error(struct sk_buff *skb, enum rxrpc_abort_reason why)
+--- a/net/rxrpc/io_thread.c
++++ b/net/rxrpc/io_thread.c
+@@ -27,11 +27,17 @@ int rxrpc_encap_rcv(struct sock *udp_sk,
+ {
+ 	struct sk_buff_head *rx_queue;
+ 	struct rxrpc_local *local = rcu_dereference_sk_user_data(udp_sk);
++	struct task_struct *io_thread;
  
- 	/*
-@@ -613,7 +614,6 @@ void drm_sched_entity_push_job(struct dr
- 		rq = entity->rq;
- 		sched = rq->sched;
+ 	if (unlikely(!local)) {
+ 		kfree_skb(skb);
+ 		return 0;
+ 	}
++	io_thread = READ_ONCE(local->io_thread);
++	if (!io_thread) {
++		kfree_skb(skb);
++		return 0;
++	}
+ 	if (skb->tstamp == 0)
+ 		skb->tstamp = ktime_get_real();
  
--		atomic_inc(sched->score);
- 		drm_sched_rq_add_entity(rq, entity);
- 		spin_unlock(&entity->rq_lock);
+@@ -47,7 +53,7 @@ int rxrpc_encap_rcv(struct sock *udp_sk,
+ #endif
+ 
+ 	skb_queue_tail(rx_queue, skb);
+-	rxrpc_wake_up_io_thread(local);
++	wake_up_process(io_thread);
+ 	return 0;
+ }
+ 
+@@ -565,7 +571,7 @@ int rxrpc_io_thread(void *data)
+ 	__set_current_state(TASK_RUNNING);
+ 	rxrpc_see_local(local, rxrpc_local_stop);
+ 	rxrpc_destroy_local(local);
+-	local->io_thread = NULL;
++	WRITE_ONCE(local->io_thread, NULL);
+ 	rxrpc_see_local(local, rxrpc_local_stopped);
+ 	return 0;
+ }
+--- a/net/rxrpc/local_object.c
++++ b/net/rxrpc/local_object.c
+@@ -232,7 +232,7 @@ static int rxrpc_open_socket(struct rxrp
+ 	}
+ 
+ 	wait_for_completion(&local->io_thread_ready);
+-	local->io_thread = io_thread;
++	WRITE_ONCE(local->io_thread, io_thread);
+ 	_leave(" = 0");
+ 	return 0;
  
 
 
