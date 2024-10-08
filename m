@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B61DE898;
-	Tue,  8 Oct 2024 12:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9544D1DEFEA;
+	Tue,  8 Oct 2024 12:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389557; cv=none; b=jZdfkuHxUYxjBsbSO5IcqSjc0Rk/97ir/SwLAsGwbnQPGfVHuJbgKxCl4HH50T+kLrsAwnN4oswrwXl4I6W9Safhx2qSUjosyO4LiE2f7KrUpuVXxfja8WiEJzuk0l2wJS6T8LzAT4sOZM2riEebvvZ6fKc5vzsTSB+013lJtkQ=
+	t=1728389560; cv=none; b=sEJmdb9ET9cRMiyogNcy5FjCMkNCyVMJqZY+GZid2bGJ983OKSDz2vBmeEAgHBmxXf34dpHKEhWvAfObWp92bYyZD9inVqaU7xmqHLppLa+JlZJTIaxmJmkd/G7tioxFtlKBAVe0ZQ424xgbLTsGPyZ5rqfFjv9s5y0Ukar+PdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389557; c=relaxed/simple;
-	bh=lwmb/MXbtYyjQ6npDUyQHirZ4ffL//nwKyNp4/WD/LY=;
+	s=arc-20240116; t=1728389560; c=relaxed/simple;
+	bh=E+bU+PL+XPoZyd47yPktbiusQtipF43K4V3AqfleMZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIt7N0b+3P8rJ0SG8whanqp1VcP6mFF3r9IjL7M1HNFluJunIEa+m/CKLuxxjAPYjdAlOBcS74NrSgm3V6+LSk9eGE/3jTranPz0bcS4s/OHQH8sMyqhOFUHd3KWqWfVdgaLtT5gNmMUDFfxICIx8Rq/Uk8AMbJ4Q6rEnfOH0WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dA7oL5j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cG2/WgERdJ0BpqRBNrFkJJbmujMIE2yzvku36M7OAesoZZrXlqZhS9hpZOajonJA2I//od1BLrTDNO2ESXMRpnbzSwsW/2fRsfPzRyh8e2IU+YU1/XLwco83O6iOl/k3BKocabyc6evMoBxrJfsGyT7i52Tz9lCBANIDe0itZ98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqsXE+li; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dA7oL5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD44C4CECD;
-	Tue,  8 Oct 2024 12:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqsXE+li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03966C4CED3;
+	Tue,  8 Oct 2024 12:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389557;
-	bh=lwmb/MXbtYyjQ6npDUyQHirZ4ffL//nwKyNp4/WD/LY=;
+	s=korg; t=1728389560;
+	bh=E+bU+PL+XPoZyd47yPktbiusQtipF43K4V3AqfleMZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dA7oL5j9VKSrOLSg2Y0mP6t6uPBjwWBAjq3ptvG73fNeQkNIbygjz4bjT8JzBkVt
-	 5R65Nx32I8hB3KKvxLaCrRoD79mTqJn8VFQH3e745VG6a5XwGeuY07YJGwtgPLxEs8
-	 DQtJPZTlryxiCHCMNcr0pXond9MRwpc+7V0C9GCc=
+	b=DqsXE+lieCKx9oUzYkgAz/E7yIWheSkIg4GbW1gX10ZBZhIVbnhhxYSxBa4oOo139
+	 /DLUl+oKQ97jnqyq5hmxLW2v5nFLItDdNY1ZlSOqAlufG3XWSgiZc8wA6Regkt+tfN
+	 tqjdsMsIL+jnhtj1zQA02Ouq+VQBkivL5UnCy8kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 029/482] Bluetooth: L2CAP: Fix uaf in l2cap_connect
-Date: Tue,  8 Oct 2024 14:01:32 +0200
-Message-ID: <20241008115649.446633341@linuxfoundation.org>
+Subject: [PATCH 6.10 030/482] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  8 Oct 2024 14:01:33 +0200
+Message-ID: <20241008115649.486294375@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,127 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 333b4fd11e89b29c84c269123f871883a30be586 ]
+[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
 
-[Syzbot reported]
-BUG: KASAN: slab-use-after-free in l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
-Read of size 8 at addr ffff8880241e9800 by task kworker/u9:0/54
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-CPU: 0 UID: 0 PID: 54 Comm: kworker/u9:0 Not tainted 6.11.0-rc6-syzkaller-00268-g788220eee30d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-Workqueue: hci2 hci_rx_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:93 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0xc3/0x620 mm/kasan/report.c:488
- kasan_report+0xd9/0x110 mm/kasan/report.c:601
- l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
- l2cap_connect_req net/bluetooth/l2cap_core.c:4080 [inline]
- l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:4772 [inline]
- l2cap_sig_channel net/bluetooth/l2cap_core.c:5543 [inline]
- l2cap_recv_frame+0xf0b/0x8eb0 net/bluetooth/l2cap_core.c:6825
- l2cap_recv_acldata+0x9b4/0xb70 net/bluetooth/l2cap_core.c:7514
- hci_acldata_packet net/bluetooth/hci_core.c:3791 [inline]
- hci_rx_work+0xaab/0x1610 net/bluetooth/hci_core.c:4028
- process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
- process_scheduled_works kernel/workqueue.c:3312 [inline]
- worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-...
-
-Freed by task 5245:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
- poison_slab_object+0xf7/0x160 mm/kasan/common.c:240
- __kasan_slab_free+0x32/0x50 mm/kasan/common.c:256
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2256 [inline]
- slab_free mm/slub.c:4477 [inline]
- kfree+0x12a/0x3b0 mm/slub.c:4598
- l2cap_conn_free net/bluetooth/l2cap_core.c:1810 [inline]
- kref_put include/linux/kref.h:65 [inline]
- l2cap_conn_put net/bluetooth/l2cap_core.c:1822 [inline]
- l2cap_conn_del+0x59d/0x730 net/bluetooth/l2cap_core.c:1802
- l2cap_connect_cfm+0x9e6/0xf80 net/bluetooth/l2cap_core.c:7241
- hci_connect_cfm include/net/bluetooth/hci_core.h:1960 [inline]
- hci_conn_failed+0x1c3/0x370 net/bluetooth/hci_conn.c:1265
- hci_abort_conn_sync+0x75a/0xb50 net/bluetooth/hci_sync.c:5583
- abort_conn_sync+0x197/0x360 net/bluetooth/hci_conn.c:2917
- hci_cmd_sync_work+0x1a4/0x410 net/bluetooth/hci_sync.c:328
- process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
- process_scheduled_works kernel/workqueue.c:3312 [inline]
- worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Reported-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
-Tested-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c12e2f941af1feb5632c
-Fixes: 7b064edae38d ("Bluetooth: Fix authentication if acl data comes before remote feature evt")
+Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c   | 2 ++
- net/bluetooth/hci_event.c  | 2 +-
- net/bluetooth/l2cap_core.c | 8 --------
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btmrvl_sdio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 9493966cf389f..a9feb323c7d29 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3792,6 +3792,8 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
+diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
+index 85b7f2bb42598..07cd308f7abf6 100644
+--- a/drivers/bluetooth/btmrvl_sdio.c
++++ b/drivers/bluetooth/btmrvl_sdio.c
+@@ -92,7 +92,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+ 		} else {
+ 			ret = devm_request_irq(dev, cfg->irq_bt,
+ 					       btmrvl_wake_irq_bt,
+-					       0, "bt_wake", card);
++					       IRQF_NO_AUTOEN, "bt_wake", card);
+ 			if (ret) {
+ 				dev_err(dev,
+ 					"Failed to request irq_bt %d (%d)\n",
+@@ -101,7 +101,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
  
- 	hci_dev_lock(hdev);
- 	conn = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (conn && hci_dev_test_flag(hdev, HCI_MGMT))
-+		mgmt_device_connected(hdev, conn, NULL, 0);
- 	hci_dev_unlock(hdev);
- 
- 	if (conn) {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 59d9086db75fe..b2053bbe226c8 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3707,7 +3707,7 @@ static void hci_remote_features_evt(struct hci_dev *hdev, void *data,
- 		goto unlock;
+ 			/* Configure wakeup (enabled by default) */
+ 			device_init_wakeup(dev, true);
+-			disable_irq(cfg->irq_bt);
+ 		}
  	}
  
--	if (!ev->status && !test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
-+	if (!ev->status) {
- 		struct hci_cp_remote_name_req cp;
- 		memset(&cp, 0, sizeof(cp));
- 		bacpy(&cp.bdaddr, &conn->dst);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9988ba382b686..6544c1ed71434 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4066,17 +4066,9 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- static int l2cap_connect_req(struct l2cap_conn *conn,
- 			     struct l2cap_cmd_hdr *cmd, u16 cmd_len, u8 *data)
- {
--	struct hci_dev *hdev = conn->hcon->hdev;
--	struct hci_conn *hcon = conn->hcon;
--
- 	if (cmd_len < sizeof(struct l2cap_conn_req))
- 		return -EPROTO;
- 
--	hci_dev_lock(hdev);
--	if (hci_dev_test_flag(hdev, HCI_MGMT))
--		mgmt_device_connected(hdev, hcon, NULL, 0);
--	hci_dev_unlock(hdev);
--
- 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP);
- 	return 0;
- }
 -- 
 2.43.0
 
