@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF551DED64;
-	Tue,  8 Oct 2024 12:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBB1DF727;
+	Tue,  8 Oct 2024 12:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391322; cv=none; b=lxrRGnxXmjVg5hNteYHObyKdhgi39HE6g8CV7WaQR+mlRHuyqp/7+BPnp98scwAAgIlIIIDj36EhK0Y3VD9GLr2kblJXsd0t0QNwDj0RRS/h0ZLujcOgDiJlsii4e77JjEupyps/M+hX+eLXnN5WjHfEbQgOPqSPbwN9nhE0JF0=
+	t=1728391325; cv=none; b=XTotnP8uGAaNM7DXjA/oLwvVaz6fY5YZbL9Avl+cx3TES8BcXnanPWzKcQgeTNzcBVSmGhZNan+uJLVVEHD85XesDmT2UqAM8qXAEd+4TAybWdv3YcXlVjVeivN38yhnCCYDD3xnLynoBIM4FkFjaGIK5TGqflMErWcW3R+Soo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391322; c=relaxed/simple;
-	bh=Vu6fnFr0xVYr+N+aARf6tjPVq+koNQ+7jzsKhXuKFNA=;
+	s=arc-20240116; t=1728391325; c=relaxed/simple;
+	bh=mi17jRozsgfsuRwFZ714CSPSzpQJGFxcTbH6O/qHrWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtochfEovtwMvLeas6KEwtKoH2e0cmaWhxgfTb57Wn5ovipExF9R+PnHG39vuA47XGOpotm/x04RnV+a9E92oynKcDj86dxjVvhtTa6eMJYPbtIzXJfC4Uq7lAZ5UlvMuSGc1muDPjgwQd/d65u+pcbobJxtE7yo1q2CHWj5WU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvBdUTxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwLZAJYvx8fUMmrIjzLNJija9lZhSA2cocuo2sEE4KlDOIxKbhqn7seWVGqxNnjqeMkQ4fKPvzktVh2L/VK32j5IBKxP1gwJ3+c+xtAMaR9DkRDqR1XwO1AdgHCrFHEpb80IkfzYHbEp73TpEcoN6KC6l+dJT3FUfUAf0Hz9Xug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cipek/lg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvBdUTxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98420C4CEC7;
-	Tue,  8 Oct 2024 12:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cipek/lg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD12CC4CEC7;
+	Tue,  8 Oct 2024 12:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391322;
-	bh=Vu6fnFr0xVYr+N+aARf6tjPVq+koNQ+7jzsKhXuKFNA=;
+	s=korg; t=1728391325;
+	bh=mi17jRozsgfsuRwFZ714CSPSzpQJGFxcTbH6O/qHrWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvBdUTxBBXPg3T0MOqkltnTfnNVPzFWXK41XzXlvL6C6bTBXRBrivDNbePL7y7QU4
-	 GriLhx9z+MqH++dhf6G3Tt2fOaC0FVVsktp8PBEnMYCFMZVWvRJHLuiote2Btv3g2S
-	 kFB6kTfh6JDMYUIPJE2jj6ea89fDLDknySHFyokA=
+	b=Cipek/lg964sL/oNw6J3hCTjy5Zh/7wv1CeirgGqpjklS1gRKHhgiC0XmzL18CtQs
+	 YxlbrMlxyHedLrpLcnTtScduIrQjsuV7OanJPen3UHtZFX/7K77DUgxnQy2RklyKRh
+	 nlQ6jlb9MqHQrcZzUqtgj4hDho/ss/s/mfUYlguA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Christian Heusel <christian@heusel.eu>,
+	Jerry <jerryluo225@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 078/558] ALSA: gus: Fix some error handling paths related to get_bpos() usage
-Date: Tue,  8 Oct 2024 14:01:48 +0200
-Message-ID: <20241008115705.445942829@linuxfoundation.org>
+Subject: [PATCH 6.11 079/558] ALSA: hda/conexant: Fix conflicting quirk for System76 Pangolin
+Date: Tue,  8 Oct 2024 14:01:49 +0200
+Message-ID: <20241008115705.485194065@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,44 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9df39a872c462ea07a3767ebd0093c42b2ff78a2 ]
+[ Upstream commit b3ebb007060f89d5a45c9b99f06a55e36a1945b5 ]
 
-If get_bpos() fails, it is likely that the corresponding error code should
-be returned.
+We received a regression report for System76 Pangolin (pang14) due to
+the recent fix for Tuxedo Sirius devices to support the top speaker.
+The reason was the conflicting PCI SSID, as often seen.
 
-Fixes: a6970bb1dd99 ("ALSA: gus: Convert to the new PCM ops")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/d9ca841edad697154afa97c73a5d7a14919330d9.1727984008.git.christophe.jaillet@wanadoo.fr
+As a workaround, now the codec SSID is checked and the quirk is
+applied conditionally only to Sirius devices.
+
+Fixes: 4178d78cd7a8 ("ALSA: hda/conexant: Add pincfg quirk to enable top speakers on Sirius devices")
+Reported-by: Christian Heusel <christian@heusel.eu>
+Reported-by: Jerry <jerryluo225@gmail.com>
+Closes: https://lore.kernel.org/c930b6a6-64e5-498f-b65a-1cd5e0a1d733@heusel.eu
+Link: https://patch.msgid.link/20241004082602.29016-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/gus/gus_pcm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_conexant.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/sound/isa/gus/gus_pcm.c b/sound/isa/gus/gus_pcm.c
-index 850544725da79..d55c3dc229c0e 100644
---- a/sound/isa/gus/gus_pcm.c
-+++ b/sound/isa/gus/gus_pcm.c
-@@ -378,7 +378,7 @@ static int snd_gf1_pcm_playback_copy(struct snd_pcm_substream *substream,
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index e851785ff0581..4a2c8274c3df7 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -816,6 +816,23 @@ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{}
+ };
  
- 	bpos = get_bpos(pcmp, voice, pos, len);
- 	if (bpos < 0)
--		return pos;
-+		return bpos;
- 	if (copy_from_iter(runtime->dma_area + bpos, len, src) != len)
- 		return -EFAULT;
- 	return playback_copy_ack(substream, bpos, len);
-@@ -395,7 +395,7 @@ static int snd_gf1_pcm_playback_silence(struct snd_pcm_substream *substream,
- 	
- 	bpos = get_bpos(pcmp, voice, pos, len);
- 	if (bpos < 0)
--		return pos;
-+		return bpos;
- 	snd_pcm_format_set_silence(runtime->format, runtime->dma_area + bpos,
- 				   bytes_to_samples(runtime, count));
- 	return playback_copy_ack(substream, bpos, len);
++/* pincfg quirk for Tuxedo Sirius;
++ * unfortunately the (PCI) SSID conflicts with System76 Pangolin pang14,
++ * which has incompatible pin setup, so we check the codec SSID (luckily
++ * different one!) and conditionally apply the quirk here
++ */
++static void cxt_fixup_sirius_top_speaker(struct hda_codec *codec,
++					 const struct hda_fixup *fix,
++					 int action)
++{
++	/* ignore for incorrectly picked-up pang14 */
++	if (codec->core.subsystem_id == 0x278212b3)
++		return;
++	/* set up the top speaker pin */
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		snd_hda_codec_set_pincfg(codec, 0x1d, 0x82170111);
++}
++
+ static const struct hda_fixup cxt_fixups[] = {
+ 	[CXT_PINCFG_LENOVO_X200] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -976,11 +993,8 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+-		.type = HDA_FIXUP_PINS,
+-		.v.pins = (const struct hda_pintbl[]) {
+-			{ 0x1d, 0x82170111 },
+-			{ }
+-		},
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cxt_fixup_sirius_top_speaker,
+ 	},
+ };
+ 
 -- 
 2.43.0
 
