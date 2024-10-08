@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D721E485;
-	Tue,  8 Oct 2024 12:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241591B81CC;
+	Tue,  8 Oct 2024 12:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390782; cv=none; b=AJFz6MLehDQzJw3pi1RevnHgzVv4Wl5gnCoSctVlr3sKWWoPJu20zw9anHJ5i0hL6I8Ty9M4zCEFB3pDi9+8lbEQjjmvesZ46xfmrKCUSLCOePbzF036WiQS36szRpJm3ka9TR8J5T9CLBfdoZKjxb2okOMgc5pykTKVK9IY3rg=
+	t=1728390786; cv=none; b=rr/7dZda1VHF8vAkqjUUSqEx0QUE6AYn3KBNG5B1Y9qe9F5QG7rLyHLT4ldlGIbLAL2Rr1f1rBbcAjdZe3nmPY25Kbp32ElD6CBHFQfbIB0c0ObM69Zq6KmRX/zF2Ga780eDVoZIwvnRDkMBVxjemQKL2t8HJfN2os/LFBoq+ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390782; c=relaxed/simple;
-	bh=V9PpaBUoayG+Xkus4Yi1NvTLXpYp7m1RbkFgmpt46XA=;
+	s=arc-20240116; t=1728390786; c=relaxed/simple;
+	bh=9B9VJjA60o+gpmus44luuC4Eo2WtlkPGODF2smv36Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qngx7qoJLRpHpwQwWyQWGxFMwtT/n2cu5NiXy83DSMYnAvUEXtpHTOH+tlNy+jTRCoOO3xj/Vw1AGPtJJQn1XlPEQNSAUWKRHZg5n4FrASFDoPf5WPmo1B+yhgqBGKk8maYljqJpWh58WFCvrO6p+8MCs7bQfCIZyvZbuHH8aCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/6RXrgk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1XJ5D1ibChh6WiGrNYORN6/nlFw8olPznjOswRjKuoXI+mAE+aU3ENCLQ+iR8iJdQ4D9Nw7jGEhMPntHEM/IV+4Gqhud/ZW9wyhRYP7UfGtw33Ktnok3g0qNJzFHZ5nao/q1nIA0p4QNpzd1jNIwwZEF2HSilyGLjI3wFqHz7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fy2Jfvl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/6RXrgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FFAC4CEC7;
-	Tue,  8 Oct 2024 12:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fy2Jfvl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FDCC4CEC7;
+	Tue,  8 Oct 2024 12:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390782;
-	bh=V9PpaBUoayG+Xkus4Yi1NvTLXpYp7m1RbkFgmpt46XA=;
+	s=korg; t=1728390785;
+	bh=9B9VJjA60o+gpmus44luuC4Eo2WtlkPGODF2smv36Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/6RXrgkwSgMprqtXNzl0wIFB3ACbBfdWTU673etUXK1IMAoReGp2YFYAXAqQ6alT
-	 PpJWYLRgboGGPzrG4bU4k0hd1JDCV/3MDgErlzkdpSQ/MjzzwcC0o52cHU9n0gXDcO
-	 9V78gdwgqGZe0cQp68ssBhYwTHJI5SSNXrcCMubc=
+	b=fy2Jfvl5SF2bc3AfvGDs1bhc80BmpXZS+7mPAHelBuLTCA6kjKA3TSjN8riREWs75
+	 ms/d4FAes2vQjScnpf0LFANIzyMbalI40PoWaLXf3C8cR3tn4TzkEhiKPQsdKDtW2k
+	 vHHB/x7RrVjS0qFA86AAqxY/+hG/ITeQqBsodbkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 390/482] clk: qcom: clk-rpmh: Fix overflow in BCM vote
-Date: Tue,  8 Oct 2024 14:07:33 +0200
-Message-ID: <20241008115703.761151477@linuxfoundation.org>
+	David Virag <virag.david003@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.10 391/482] clk: samsung: exynos7885: Update CLKS_NR_FSYS after bindings fix
+Date: Tue,  8 Oct 2024 14:07:34 +0200
+Message-ID: <20241008115703.799421730@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,36 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: David Virag <virag.david003@gmail.com>
 
-commit a4e5af27e6f6a8b0d14bc0d7eb04f4a6c7291586 upstream.
+commit 217a5f23c290c349ceaa37a6f2c014ad4c2d5759 upstream.
 
-Valid frequencies may result in BCM votes that exceed the max HW value.
-Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
-truncated, which can result in lower frequencies than desired.
+Update CLKS_NR_FSYS to the proper value after a fix in DT bindings.
+This should always be the last clock in a CMU + 1.
 
-Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Fixes: cd268e309c29 ("dt-bindings: clock: Add bindings for Exynos7885 CMU_FSYS")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-Link: https://lore.kernel.org/r/20240809-clk-rpmh-bcm-vote-fix-v2-1-240c584b7ef9@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: David Virag <virag.david003@gmail.com>
+Link: https://lore.kernel.org/r/20240806121157.479212-5-virag.david003@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-rpmh.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/samsung/clk-exynos7885.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -263,6 +263,8 @@ static int clk_rpmh_bcm_send_cmd(struct
- 		cmd_state = 0;
- 	}
+--- a/drivers/clk/samsung/clk-exynos7885.c
++++ b/drivers/clk/samsung/clk-exynos7885.c
+@@ -20,7 +20,7 @@
+ #define CLKS_NR_TOP			(CLK_GOUT_FSYS_USB30DRD + 1)
+ #define CLKS_NR_CORE			(CLK_GOUT_TREX_P_CORE_PCLK_P_CORE + 1)
+ #define CLKS_NR_PERI			(CLK_GOUT_WDT1_PCLK + 1)
+-#define CLKS_NR_FSYS			(CLK_GOUT_MMC_SDIO_SDCLKIN + 1)
++#define CLKS_NR_FSYS			(CLK_MOUT_FSYS_USB30DRD_USER + 1)
  
-+	cmd_state = min(cmd_state, BCM_TCS_CMD_VOTE_MASK);
-+
- 	if (c->last_sent_aggr_state != cmd_state) {
- 		cmd.addr = c->res_addr;
- 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+ /* ---- CMU_TOP ------------------------------------------------------------- */
+ 
 
 
