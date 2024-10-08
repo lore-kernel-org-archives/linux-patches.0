@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6691DF997;
-	Tue,  8 Oct 2024 13:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23031DF745;
+	Tue,  8 Oct 2024 13:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393893; cv=none; b=Lu/FjWJnUTbTlz+Qc1IPCfkNRWfqv/rKlnNaDWNf2uprggWg+hcg3s0XvDa2mTAljvj96iC71clwNgqZIfCGN7SMLJQ9nk9EHZBErc0A9kSeSBPsvya1IVnV4kVjhKesydXmZDlbEr+gpOQ0t8eMW8dZkqdjd76HrIzHtEL4gDk=
+	t=1728393896; cv=none; b=o9mv02nkvG4qQNQJwvHEIg22QSwxIddrfFp33/W72aHwaYgS/xPGldeSKDmSHM8GKL4OPVN0p26StgtUkZySkfFcymk/xn9+l6E92B9NOkl6p0UK/uV3Gd8RF+I2adWPIdtAs1LJJJQTmb7MaE6BbQf0Rijdt5Q8DTUZ9l/HRwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393893; c=relaxed/simple;
-	bh=Eq4Km9aLj5vUKbakI8dZVp9QbFN+sEE0Pn/o0VLH0Nw=;
+	s=arc-20240116; t=1728393896; c=relaxed/simple;
+	bh=OXiGRX/5oK5iBvXW99MlO7u/4DBlNqdaLRPf+hySYz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvA6EMgAUS/MokX6psshXbUgxQcTzuLrCWIFqKUALijSbfsA8AqwcGH+8w3stTx6AIYG+Vzozvk/7nLbnQTJbAYY8PU4Jq23q4SjvD9+iGTY2xb4vDBOp3iSRpVvj15crsZitnAJguBsbEEcfvV2YPzeXFU8myVyx/RHpVs8+Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8wToNa6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RMjFPvvI2p/S9wF3kKjBo38k0RyfEbRzrVduQJZG8zSwPZ97iTWBM1FjXRrCukKLJ4BehA/9gTovej7maUaPMIXuOaiBoDRk3ShdcdwhZ1Yo5CtycTr6lLf/1EQMMrMHrTVKO9DxnfZxVlKH1Imy/r/nJC+H5jYM6XQXKThrosQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2ZcyyJq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8wToNa6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A5FC4CEC7;
-	Tue,  8 Oct 2024 13:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2ZcyyJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3077AC4CEC7;
+	Tue,  8 Oct 2024 13:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393893;
-	bh=Eq4Km9aLj5vUKbakI8dZVp9QbFN+sEE0Pn/o0VLH0Nw=;
+	s=korg; t=1728393896;
+	bh=OXiGRX/5oK5iBvXW99MlO7u/4DBlNqdaLRPf+hySYz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X8wToNa65bgw5w1TRQDWcnp7dX74r5BN1c4LEf4z+rUj7CrS9rUuZBx2+Ot/GZ+iI
-	 hewraIDJhgmbKgoC3vKujr8bTUVxMymDIKHfqdh/biC6Sif4IqC1Xr+yUnrDZmY53g
-	 Yb0Dx7QTwWdNXIjvrzWxYlulCPh8PWWWbOOjitCw=
+	b=K2ZcyyJqMKWAY6TOP5f+xgYmEv3qjC5N7A6VH3XBLv5h7gtTYQxNZBR6nsRKEQKbt
+	 gEga1Rweb25xVBO/jANZhap3YraskL2gA8+rac9cxDiKHh+JQGBPaT8q0b2WX3bBlE
+	 hA70T2WNHm7adW2IqCbLHwLWWAQ2fXJMUJdA9kUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.6 285/386] media: uapi/linux/cec.h: cec_msg_set_reply_to: zero flags
-Date: Tue,  8 Oct 2024 14:08:50 +0200
-Message-ID: <20241008115640.602032334@linuxfoundation.org>
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 286/386] clk: qcom: clk-rpmh: Fix overflow in BCM vote
+Date: Tue,  8 Oct 2024 14:08:51 +0200
+Message-ID: <20241008115640.641289000@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,44 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-commit 599f6899051cb70c4e0aa9fd591b9ee220cb6f14 upstream.
+commit a4e5af27e6f6a8b0d14bc0d7eb04f4a6c7291586 upstream.
 
-The cec_msg_set_reply_to() helper function never zeroed the
-struct cec_msg flags field, this can cause unexpected behavior
-if flags was uninitialized to begin with.
+Valid frequencies may result in BCM votes that exceed the max HW value.
+Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
+truncated, which can result in lower frequencies than desired.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 0dbacebede1e ("[media] cec: move the CEC framework out of staging and to media")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+Link: https://lore.kernel.org/r/20240809-clk-rpmh-bcm-vote-fix-v2-1-240c584b7ef9@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/cec.h |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/clk-rpmh.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/uapi/linux/cec.h
-+++ b/include/uapi/linux/cec.h
-@@ -132,6 +132,8 @@ static inline void cec_msg_init(struct c
-  * Set the msg destination to the orig initiator and the msg initiator to the
-  * orig destination. Note that msg and orig may be the same pointer, in which
-  * case the change is done in place.
-+ *
-+ * It also zeroes the reply, timeout and flags fields.
-  */
- static inline void cec_msg_set_reply_to(struct cec_msg *msg,
- 					struct cec_msg *orig)
-@@ -139,7 +141,9 @@ static inline void cec_msg_set_reply_to(
- 	/* The destination becomes the initiator and vice versa */
- 	msg->msg[0] = (cec_msg_destination(orig) << 4) |
- 		      cec_msg_initiator(orig);
--	msg->reply = msg->timeout = 0;
-+	msg->reply = 0;
-+	msg->timeout = 0;
-+	msg->flags = 0;
- }
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -263,6 +263,8 @@ static int clk_rpmh_bcm_send_cmd(struct
+ 		cmd_state = 0;
+ 	}
  
- /**
++	cmd_state = min(cmd_state, BCM_TCS_CMD_VOTE_MASK);
++
+ 	if (c->last_sent_aggr_state != cmd_state) {
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
 
 
