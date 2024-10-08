@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A081DE8AA;
-	Tue,  8 Oct 2024 12:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA11DE2AD;
+	Tue,  8 Oct 2024 12:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391535; cv=none; b=UmGZHLgCii3ebER4Jycy75buuLA4AWoGm/ExPHD7u+z0BVWvam1JlRXoi5uICsDnD9OqF6Wmfx9kwbnuH/VrS0Mo+oYh/cOQfwY6wv7kRYX0Q210OYU5lc4GwwwLhHb2NJ01XFOJmaJ6BZSFHCs2y2muL2zKPPZnkfYmTLoYqpo=
+	t=1728391538; cv=none; b=n5hUocIFCsm8+eDIQWh1MqHWXbgFgyL0dfFLOl7h1Rwj1JZ/cK+ohCjPIY87VR67S9ODymWEMOe9YGGIhBPsCrnsaIwvK0QQuUjsRf7VSEbonfSj2NhE53ithrQU82c401f31FsL/uGXIl0Zvd/gOrjfapxvNe5fzS6/hpcY3pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391535; c=relaxed/simple;
-	bh=5S7l9E+bkPYqLqjUcba8+1U+7k2awX0pO0X+EsnhFIk=;
+	s=arc-20240116; t=1728391538; c=relaxed/simple;
+	bh=nuJoUOWAf3vfSJ1pWCw9uVVAC4ZPTQhuxITJTvvONBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fI491iMWMT6xTMMD3xtXr2DJ2oQfxuKQE4IP/Vzm+Gq6mGLdUcvwIl94qkNtsXRUnyGMRI+jt4V5LqXuq2//z1kBhvD5UNVI3WpHnOTrxFKo5aIIK+zsz/ODe2G5KtYPbFcXILQYdfHrcMlwmgV/OQbcDZPDHFQbUJGzMdzckdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYiMmD/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NF3BLHJaZJyrOLC86FG1zANjXRSzIEhcpvvIFfA7HcVoNQYxmQTkkntrt1GrDkhdujBcVyMyBQcZzSUDMFoXLV5jFm6mMTYA8o/ZLgCMqDlg5bBgwPNfAd5WP40eGiR/g/D34Z6l2U1LBkkHW0C3KiisqmP8QQkM/V/owDQCJpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfGS3SeA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYiMmD/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA34C4CEC7;
-	Tue,  8 Oct 2024 12:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfGS3SeA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD49C4CECC;
+	Tue,  8 Oct 2024 12:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391535;
-	bh=5S7l9E+bkPYqLqjUcba8+1U+7k2awX0pO0X+EsnhFIk=;
+	s=korg; t=1728391538;
+	bh=nuJoUOWAf3vfSJ1pWCw9uVVAC4ZPTQhuxITJTvvONBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYiMmD/Y/91PW0w2fWtrHbMkhPA220i+85XPaE1/RfMCyeU6Ru7ffGquBLX3adute
-	 L9JmNlQhk3GpUwJth6f7BNZVZKFaOOPY4rTmGkAmRt8Z3AhPGx2jXBv8xAEV1Rbl6B
-	 DWj7tIz0N1+vINqq/QonUutXQGwEY6A1qtnsKkIo=
+	b=BfGS3SeAd5Ur017IKiFifFm+dzDvDUWHZ9S7lYNmPwBAFwh93qZdWwWYFX7jKdRL7
+	 B6vw/ZF4vJ5w2daGl+eSZ2jkCqc5j5pQ4dI+GHg61T5mS8QQZ0CRU4t+FreI2Bp0Aa
+	 WYdxVCYM9Fi/7Q41C4YgKFtNeAuKYh/EpTxtAKK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 103/558] exec: dont WARN for racy path_noexec check
-Date: Tue,  8 Oct 2024 14:02:13 +0200
-Message-ID: <20241008115706.421224381@linuxfoundation.org>
+Subject: [PATCH 6.11 138/558] wifi: iwlwifi: allow only CN mcc from WRDD
+Date: Tue,  8 Oct 2024 14:02:48 +0200
+Message-ID: <20241008115707.795675699@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,107 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 0d196e7589cefe207d5d41f37a0a28a1fdeeb7c6 ]
+[ Upstream commit ff5aabe7c2a4a4b089a9ced0cb3d0e284963a7dd ]
 
-Both i_mode and noexec checks wrapped in WARN_ON stem from an artifact
-of the previous implementation. They used to legitimately check for the
-condition, but that got moved up in two commits:
-633fb6ac3980 ("exec: move S_ISREG() check earlier")
-0fd338b2d2cd ("exec: move path_noexec() check earlier")
+Block other mcc expect CN from WRDD ACPI.
 
-Instead of being removed said checks are WARN_ON'ed instead, which
-has some debug value.
-
-However, the spurious path_noexec check is racy, resulting in
-unwarranted warnings should someone race with setting the noexec flag.
-
-One can note there is more to perm-checking whether execve is allowed
-and none of the conditions are guaranteed to still hold after they were
-tested for.
-
-Additionally this does not validate whether the code path did any perm
-checking to begin with -- it will pass if the inode happens to be
-regular.
-
-Keep the redundant path_noexec() check even though it's mindless
-nonsense checking for guarantee that isn't given so drop the WARN.
-
-Reword the commentary and do small tidy ups while here.
-
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
-Link: https://lore.kernel.org/r/20240805131721.765484-1-mjguzik@gmail.com
-[brauner: keep redundant path_noexec() check]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240808232017.fe6ea7aa4b39.I86004687a2963fe26f990770aca103e2f5cb1628@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c       | 5 +++++
+ drivers/net/wireless/intel/iwlwifi/fw/regulatory.h | 2 ++
+ drivers/net/wireless/intel/iwlwifi/fw/uefi.c       | 2 +-
+ drivers/net/wireless/intel/iwlwifi/fw/uefi.h       | 2 --
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 50e76cc633c4b..caae051c5a956 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -145,13 +145,11 @@ SYSCALL_DEFINE1(uselib, const char __user *, library)
- 		goto out;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 8c8880b448270..a7cea0a55b35a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -357,6 +357,11 @@ int iwl_acpi_get_mcc(struct iwl_fw_runtime *fwrt, char *mcc)
+ 	}
  
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * Check do_open_execat() for an explanation.
- 	 */
- 	error = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path))
- 		goto exit;
- 
- 	error = -ENOEXEC;
-@@ -954,7 +952,6 @@ EXPORT_SYMBOL(transfer_args_to_stack);
- static struct file *do_open_execat(int fd, struct filename *name, int flags)
- {
- 	struct file *file;
--	int err;
- 	struct open_flags open_exec_flags = {
- 		.open_flag = O_LARGEFILE | O_RDONLY | __FMODE_EXEC,
- 		.acc_mode = MAY_EXEC,
-@@ -971,24 +968,20 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
- 
- 	file = do_filp_open(fd, name, &open_exec_flags);
- 	if (IS_ERR(file))
--		goto out;
-+		return file;
- 
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * In the past the regular type check was here. It moved to may_open() in
-+	 * 633fb6ac3980 ("exec: move S_ISREG() check earlier"). Since then it is
-+	 * an invariant that all non-regular files error out before we get here.
- 	 */
--	err = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
--		goto exit;
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path)) {
-+		fput(file);
-+		return ERR_PTR(-EACCES);
+ 	mcc_val = wifi_pkg->package.elements[1].integer.value;
++	if (mcc_val != BIOS_MCC_CHINA) {
++		ret = -EINVAL;
++		IWL_DEBUG_RADIO(fwrt, "ACPI WRDD is supported only for CN\n");
++		goto out_free;
 +	}
  
--out:
- 	return file;
--
--exit:
--	fput(file);
--	return ERR_PTR(err);
- }
+ 	mcc[0] = (mcc_val >> 8) & 0xff;
+ 	mcc[1] = mcc_val & 0xff;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
+index e2c056f483c1c..c5bd89e61d4a8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
+@@ -45,6 +45,8 @@
+ #define IWL_WTAS_ENABLE_IEC_MSK	0x4
+ #define IWL_WTAS_USA_UHB_MSK		BIT(16)
  
- /**
++#define BIOS_MCC_CHINA 0x434e
++
+ /*
+  * The profile for revision 2 is a superset of revision 1, which is in
+  * turn a superset of revision 0.  So we can store all revisions
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+index fb982d4fe8510..2cf878f237ac6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+@@ -638,7 +638,7 @@ int iwl_uefi_get_mcc(struct iwl_fw_runtime *fwrt, char *mcc)
+ 		goto out;
+ 	}
+ 
+-	if (data->mcc != UEFI_MCC_CHINA) {
++	if (data->mcc != BIOS_MCC_CHINA) {
+ 		ret = -EINVAL;
+ 		IWL_DEBUG_RADIO(fwrt, "UEFI WRDD is supported only for CN\n");
+ 		goto out;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.h b/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
+index 1f8884ca8997c..e0ef981cd8f28 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
+@@ -149,8 +149,6 @@ struct uefi_cnv_var_splc {
+ 	u32 default_pwr_limit;
+ } __packed;
+ 
+-#define UEFI_MCC_CHINA 0x434e
+-
+ /* struct uefi_cnv_var_wrdd - WRDD table as defined in UEFI
+  * @revision: the revision of the table
+  * @mcc: country identifier as defined in ISO/IEC 3166-1 Alpha 2 code
 -- 
 2.43.0
 
