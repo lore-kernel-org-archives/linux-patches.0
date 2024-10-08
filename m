@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBF51DE8B1;
-	Tue,  8 Oct 2024 13:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF711DED74;
+	Tue,  8 Oct 2024 13:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393030; cv=none; b=rMOwK5A9Ri8cagYJ2ELAEx8ELyUmUrWuyPk/BRn4rru/l3e1WrwwvQkbSsHABMSO2J07lHknTIvK3eqd2T7N68VbVAu3n47SlYn5YgY2CrjepXjDkUf6hQhRqmXRmWp5Ii2SlQ+WLozR9DH0j4rlKxigMthEh6nTeU9w5UcNqiU=
+	t=1728393033; cv=none; b=lB24cYZF13qsome+MCZ+cKF4zD3lJFSlz+lH3xED8YZzj+8JVHN4gD+HEliRaR0ulIhouZehiO78a/XLDjl+PGP6CC9xOPhQ7j826EqCEb7r0rNaEpl7P75o1lmlzBUSv/uy/3PEZs1cskkrvKs7BAlnD8dbSYlWSb5X84jXP+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393030; c=relaxed/simple;
-	bh=iuzi7DFBQX8sn3+DQqYvoMjBGaax5bMsPq+Ap8JQrWQ=;
+	s=arc-20240116; t=1728393033; c=relaxed/simple;
+	bh=lKt8iiB79/TcLzRvA2pSiH1bnnk6BBXd939q6tDEfs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kk2LDWvSQqkFRxPmJK3XqKVZnR4Z70DxaXdOXqiG9KkH/xmBwBm7tlc5fK0GUVuT11ls8twH26af1JJIFdjgXFLdsY8Jf6DM45rx036uHDiY8JpWVkKkWib5l8+kFCgmbbjgWVApE71KL1Zllh7JGp7rt55xppZ/M2jVEOAJUVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlECEP+i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=csv+XS9LeDUXB1KuGlfEho3j9RKQvCNgllfg3i2w1yNl3urvDqeL23Exhgu7W/QeV598nvtGdMtKMAucpXxlwDHOZRdn3JFCV4287Xd1b9M7/dzRGJqGTpF9eSvTp1ZPSGwBbxXP3wKNOwT1rt+fQFDute2YFTkMaDGyAVe8d6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHrHV/fQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlECEP+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C70FC4CEC7;
-	Tue,  8 Oct 2024 13:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHrHV/fQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1002C4CEC7;
+	Tue,  8 Oct 2024 13:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393029;
-	bh=iuzi7DFBQX8sn3+DQqYvoMjBGaax5bMsPq+Ap8JQrWQ=;
+	s=korg; t=1728393033;
+	bh=lKt8iiB79/TcLzRvA2pSiH1bnnk6BBXd939q6tDEfs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlECEP+io6QwyldV0xnDPG8uAQl2op00EstFiPQ1sqfXp7rhlajeq9lMEf1LLfZXH
-	 QT0VDNGcjpO1jO+1HF2WEYiDOL70oblS39HTKyFXT46obRJTKdt26q9amjyebd9+LG
-	 in3jPaTIwgNob0iFYXpAOj5+zCjSht3dOjEnY7jo=
+	b=RHrHV/fQ4HP+U2TPk4Z0SNDkrDswqrCg0hpWwEGdVzaYPHYHDP0MztreGEHJPj6a3
+	 E83DTwxoTLN1Iaq9RTumqF1tG3e/66tgfIqW4h1sP2cL5xhmivDC+oexQrcUXsqZ0h
+	 ppUMJZQGjMZH6NSCwvY2msjaVVIGFk+vHpoX4OL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Anton Danilov <littlesmilingcloud@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/386] net: stmmac: dwmac4: extend timeout for VLAN Tag register busy bit check
-Date: Tue,  8 Oct 2024 14:04:37 +0200
-Message-ID: <20241008115630.743320144@linuxfoundation.org>
+Subject: [PATCH 6.6 033/386] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
+Date: Tue,  8 Oct 2024 14:04:38 +0200
+Message-ID: <20241008115630.782236162@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,80 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Anton Danilov <littlesmilingcloud@gmail.com>
 
-[ Upstream commit 4c1b56671b68ffcbe6b78308bfdda6bcce6491ae ]
+[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
 
-Increase the timeout for checking the busy bit of the VLAN Tag register
-from 10µs to 500ms. This change is necessary to accommodate scenarios
-where Energy Efficient Ethernet (EEE) is enabled.
+Regression Description:
 
-Overnight testing revealed that when EEE is active, the busy bit can
-remain set for up to approximately 300ms. The new 500ms timeout provides
-a safety margin.
+Depending on the options specified for the GRE tunnel device, small
+packets may be dropped. This occurs because the pskb_network_may_pull
+function fails due to the packet's insufficient length.
 
-Fixes: ed64639bc1e0 ("net: stmmac: Add support for VLAN Rx filtering")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Link: https://patch.msgid.link/20240924205424.573913-1-shenwei.wang@nxp.com
+For example, if only the okey option is specified for the tunnel device,
+original (before encapsulation) packets smaller than 28 bytes (including
+the IPv4 header) will be dropped. This happens because the required
+length is calculated relative to the network header, not the skb->head.
+
+Here is how the required length is computed and checked:
+
+* The pull_len variable is set to 28 bytes, consisting of:
+  * IPv4 header: 20 bytes
+  * GRE header with Key field: 8 bytes
+
+* The pskb_network_may_pull function adds the network offset, shifting
+the checkable space further to the beginning of the network header and
+extending it to the beginning of the packet. As a result, the end of
+the checkable space occurs beyond the actual end of the packet.
+
+Instead of ensuring that 28 bytes are present in skb->head, the function
+is requesting these 28 bytes starting from the network header. For small
+packets, this requested length exceeds the actual packet size, causing
+the check to fail and the packets to be dropped.
+
+This issue affects both locally originated and forwarded packets in
+DMVPN-like setups.
+
+How to reproduce (for local originated packets):
+
+  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
+          local <your-ip> remote 0.0.0.0
+
+  ip link set mtu 1400 dev gre1
+  ip link set up dev gre1
+  ip address add 192.168.13.1/24 dev gre1
+  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
+  ping -s 1374 -c 10 192.168.13.2
+  tcpdump -vni gre1
+  tcpdump -vni <your-ext-iface> 'ip proto 47'
+  ip -s -s -d link show dev gre1
+
+Solution:
+
+Use the pskb_may_pull function instead the pskb_network_may_pull.
+
+Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
+Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c  | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ net/ipv4/ip_gre.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index bf99495b51a9c..a9837985a483d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -14,6 +14,7 @@
- #include <linux/slab.h>
- #include <linux/ethtool.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include "stmmac.h"
- #include "stmmac_pcs.h"
- #include "dwmac4.h"
-@@ -475,7 +476,7 @@ static int dwmac4_write_vlan_filter(struct net_device *dev,
- 				    u8 index, u32 data)
- {
- 	void __iomem *ioaddr = (void __iomem *)dev->base_addr;
--	int i, timeout = 10;
-+	int ret;
- 	u32 val;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index f21a1a5403723..890c15510b421 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -645,11 +645,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
+ 		if (skb_cow_head(skb, 0))
+ 			goto free_skb;
  
- 	if (index >= hw->num_vlan)
-@@ -491,16 +492,15 @@ static int dwmac4_write_vlan_filter(struct net_device *dev,
- 
- 	writel(val, ioaddr + GMAC_VLAN_TAG);
- 
--	for (i = 0; i < timeout; i++) {
--		val = readl(ioaddr + GMAC_VLAN_TAG);
--		if (!(val & GMAC_VLAN_TAG_CTRL_OB))
--			return 0;
--		udelay(1);
-+	ret = readl_poll_timeout(ioaddr + GMAC_VLAN_TAG, val,
-+				 !(val & GMAC_VLAN_TAG_CTRL_OB),
-+				 1000, 500000);
-+	if (ret) {
-+		netdev_err(dev, "Timeout accessing MAC_VLAN_Tag_Filter\n");
-+		return -EBUSY;
- 	}
- 
--	netdev_err(dev, "Timeout accessing MAC_VLAN_Tag_Filter\n");
+-		tnl_params = (const struct iphdr *)skb->data;
 -
--	return -EBUSY;
-+	return 0;
- }
+-		if (!pskb_network_may_pull(skb, pull_len))
++		if (!pskb_may_pull(skb, pull_len))
+ 			goto free_skb;
  
- static int dwmac4_add_hw_vlan_rx_fltr(struct net_device *dev,
++		tnl_params = (const struct iphdr *)skb->data;
++
+ 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
+ 		skb_pull(skb, pull_len);
+ 		skb_reset_mac_header(skb);
 -- 
 2.43.0
 
