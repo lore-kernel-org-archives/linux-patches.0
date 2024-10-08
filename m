@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A001DF279;
-	Tue,  8 Oct 2024 12:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB661DED6F;
+	Tue,  8 Oct 2024 12:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392363; cv=none; b=BF7fm0cLOsgkyu4TTfIYcLF03Q+f1RqztA8WPpH0JFJFHRhSHaDwCGXcdvwxVY+3Smd00LXc3yi/ux1nvuQsZDQGyYcEcTOXh9jGt8mux+71WiRmAQZeSglXyGP+34exMiaf26nwjJigG9ZwstuuvIaziNGCU2af4VDt7VyKatA=
+	t=1728392367; cv=none; b=sb8eMIuOXzMSX/4YAksqPTFQ0RtcriXAKnMsthioTGvmSLM7se2wnJovV1seDAgLhWF6NnoGTknupF/FHsIL1MC1A9I61jDrCdUtq24h+7MmrGGQqE1L49kK/jix9YncAn9IezMef0Pnnf5PBjc3sm9IWY8750HxfqC3iN+LdnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392363; c=relaxed/simple;
-	bh=6Rg/F6BesPIEVwV+puyzWHrnlv/FvtZ67lFOnyQJO/M=;
+	s=arc-20240116; t=1728392367; c=relaxed/simple;
+	bh=MpZ8v9uAL98KOI7exp8nrt6NOn/CUi3SnzRlGu59JOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrTtCfGWi9PKhCVK9GB5O0gwoei8ssO4c+TPgFUv8MQdiHabloF/FFszNA2mhK+js4F4G3VqTumxK5WUj8dfR2e6rx240Oi2+4Otg/nIvYD0OQgRaxv+IvvPP25iV2n0fSbbFycyMRRkiT+7T7Qvug7Lsu5G3CCgbOyGSs844kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJjFLnH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kod4vCuytd08SigIAYKV+Y3MVNIK5PpnzbjndCmolKw/jYK5lF+MM0WawctDcdeFAhpkNXIVm4GB/DEYrFEQ2TfWy4Zq1cbWoJdanzkwvC9+xF/XC+M7oayIKAOBy6KSDYTcF1+sc5zBpW1Sb6zay/xJpS50Ptgm+VJ4cLe+kzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLF0T8gb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJjFLnH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C01C4CEC7;
-	Tue,  8 Oct 2024 12:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLF0T8gb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F27FC4CEC7;
+	Tue,  8 Oct 2024 12:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392363;
-	bh=6Rg/F6BesPIEVwV+puyzWHrnlv/FvtZ67lFOnyQJO/M=;
+	s=korg; t=1728392366;
+	bh=MpZ8v9uAL98KOI7exp8nrt6NOn/CUi3SnzRlGu59JOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJjFLnH3lmnDWn3UsJxk3Lx+AMKbp1vNBglzDYTXBHSjbgIPzPDk4k6S8mEaFKn1R
-	 XT7hcY3W4ombhoU1eQRnUiWna7kINk+MCuhT5DzM/ri4EYb4TuvLGm6zzme6/8mPPc
-	 Y6JjgDSjGKrvE9/crN5VmMFiu9nVvFyLWLbcpoF4=
+	b=wLF0T8gb4nwPUcMEcToJCO15bQWRrxAie9+zem5cNwPZey1gzDeMYh93xp2Cgso4N
+	 x5EEQJ1a4BedYC2i2WbkIqoQjh+pDz57jlr/FB6Ex2NjnJlVT6FCzA1yKYaQo2Yrqw
+	 DwwMpKR3iMWoU6Xjzy+fg1PLbG1mmZyvYPSRvqEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Hans P. Moller" <hmoller@uc.cl>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 376/558] ALSA: line6: add hw monitor volume control to POD HD500X
-Date: Tue,  8 Oct 2024 14:06:46 +0200
-Message-ID: <20241008115717.090462328@linuxfoundation.org>
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.11 394/558] ext4: fix incorrect tid assumption in jbd2_journal_shrink_checkpoint_list()
+Date: Tue,  8 Oct 2024 14:07:04 +0200
+Message-ID: <20241008115717.787431830@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,32 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans P. Moller <hmoller@uc.cl>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit 703235a244e533652346844cfa42623afb36eed1 upstream.
+commit 7a6443e1dad70281f99f0bd394d7fd342481a632 upstream.
 
-Add hw monitor volume control for POD HD500X. This is done adding
-LINE6_CAP_HWMON_CTL to the capabilities
+Function jbd2_journal_shrink_checkpoint_list() assumes that '0' is not a
+valid value for transaction IDs, which is incorrect.  Don't assume that and
+use two extra boolean variables to control the loop iterations and keep
+track of the first and last tid.
 
-Signed-off-by: Hans P. Moller <hmoller@uc.cl>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241003232828.5819-1-hmoller@uc.cl
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240724161119.13448-4-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/line6/podhd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/usb/line6/podhd.c
-+++ b/sound/usb/line6/podhd.c
-@@ -507,7 +507,7 @@ static const struct line6_properties pod
- 	[LINE6_PODHD500X] = {
- 		.id = "PODHD500X",
- 		.name = "POD HD500X",
--		.capabilities	= LINE6_CAP_CONTROL
-+		.capabilities	= LINE6_CAP_CONTROL | LINE6_CAP_HWMON_CTL
- 				| LINE6_CAP_PCM | LINE6_CAP_HWMON,
- 		.altsetting = 1,
- 		.ep_ctrl_r = 0x81,
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -410,6 +410,7 @@ unsigned long jbd2_journal_shrink_checkp
+ 	tid_t tid = 0;
+ 	unsigned long nr_freed = 0;
+ 	unsigned long freed;
++	bool first_set = false;
+ 
+ again:
+ 	spin_lock(&journal->j_list_lock);
+@@ -429,8 +430,10 @@ again:
+ 	else
+ 		transaction = journal->j_checkpoint_transactions;
+ 
+-	if (!first_tid)
++	if (!first_set) {
+ 		first_tid = transaction->t_tid;
++		first_set = true;
++	}
+ 	last_transaction = journal->j_checkpoint_transactions->t_cpprev;
+ 	next_transaction = transaction;
+ 	last_tid = last_transaction->t_tid;
+@@ -460,7 +463,7 @@ again:
+ 	spin_unlock(&journal->j_list_lock);
+ 	cond_resched();
+ 
+-	if (*nr_to_scan && next_tid)
++	if (*nr_to_scan && journal->j_shrink_transaction)
+ 		goto again;
+ out:
+ 	trace_jbd2_shrink_checkpoint_list(journal, first_tid, tid, last_tid,
 
 
