@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF871DFD1;
-	Tue,  8 Oct 2024 13:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8238B1DE4CC;
+	Tue,  8 Oct 2024 13:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392739; cv=none; b=azC+r2dGv/01pO+g+KOw6uR0SbvZMgJyn1ewKjwIF9pPDyMnhfdriKuWPfiYmfy4yDtVD7UqLHy/bHb3wSskjlMirjW0DtwRl0dKt36F3N8ZJPJy8SbvPJgwPPZIoMyDb/6uCf92jxim1KiClL6fFP2f+AZQ9Eu90elZxtRRGBY=
+	t=1728392742; cv=none; b=pWFamNImH4NUofaCmaNkpJUXSTgypvvirXbS6Msz12bm0Uh2OUEPYMYky/Sr1IVA3ZPkceCi8OxkhIqdZc92q4LTHdKl+PQnN3R9GvJzbPg/IEEbhrD8UxjPHT6adsbfgAaWmLwhd+DVXUhTzNxVBV8k4oQ8u01vF1uVyGEx+g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392739; c=relaxed/simple;
-	bh=QGCNvcpl7uDXQF/ZECf3gRf3uGbeBwI6hr8Vb5XLNSQ=;
+	s=arc-20240116; t=1728392742; c=relaxed/simple;
+	bh=gtNkcNBT7L4uEERw62mHqJqfeUP3SkiduSrBhrxsDrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EV8ootNsG6+7altAHmXkDd/P43K9lrgdau4qkkdXfJevKtef9+SjbdCpeSX15g9bl8rntVQusV97Gds2u1eOHe5JOVvLCHC2wyV9Fo5C+D8H6QGAGqmrctPkJu01zzvl9QZFmLrFX/gTypM5v/8nl0Y80SbjAh3KScmJnYvPdag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2UfB+mS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2SY6EfdetoI/H3/pAiufiZRo6J6PcHHAUikvb3plllF19ornuhlZiv1snGcloSsEZWtwPGiEB15MeAxoBzkxS19cDHvDSjBlN1e1Jutqs0Cz9YfNbVNzyGhiFIgEj7iVtLKuDb/X2fOKCEEomAS0igVEtYdh3cmIC5/pEaf+H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuxT9oMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2UfB+mS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE18C4CEC7;
-	Tue,  8 Oct 2024 13:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuxT9oMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E513FC4CEC7;
+	Tue,  8 Oct 2024 13:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392738;
-	bh=QGCNvcpl7uDXQF/ZECf3gRf3uGbeBwI6hr8Vb5XLNSQ=;
+	s=korg; t=1728392742;
+	bh=gtNkcNBT7L4uEERw62mHqJqfeUP3SkiduSrBhrxsDrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2UfB+mSvc4V5o4Y9LkaOYaPowrBhp5qR/XoFjuLZh8soA5wqs3OIKbBTAp0vkdoz
-	 1mK6RnIRolWKEVG7lV51yyVEstTD4SQyjg66EtJSOlC9fOVNkOk8rCQES9rViul+Xg
-	 kv/5v7hp3U4AQKvPs4PtLNNIbLAXFZRYvuiX3w3o=
+	b=LuxT9oMPWSCJSIB8gdFCsLIVMlsSmONlaSE9eZRWksIU0sUmKr1QhE7Fs3Ycitir9
+	 5fwVO+QAFN2Ky2nivuK4z7jJtNJC0gyaOu5IhCb1KV3wyzt00ghhY6W/2NPOAiI8z8
+	 0vFvQgWoJ3xPaol5Hvasaa5w40eTfkLhgB0xQuIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.11 504/558] net: pcs: xpcs: fix the wrong register that was written back
-Date: Tue,  8 Oct 2024 14:08:54 +0200
-Message-ID: <20241008115722.064772397@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kiran K <kiran.k@intel.com>
+Subject: [PATCH 6.11 505/558] Bluetooth: hci_event: Align BR/EDR JUST_WORKS paring with LE
+Date: Tue,  8 Oct 2024 14:08:55 +0200
+Message-ID: <20241008115722.104266341@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,35 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 93ef6ee5c20e9330477930ec6347672c9e0cf5a6 upstream.
+commit b25e11f978b63cb7857890edb3a698599cddb10e upstream.
 
-The value is read from the register TXGBE_RX_GEN_CTL3, and it should be
-written back to TXGBE_RX_GEN_CTL3 when it changes some fields.
+This aligned BR/EDR JUST_WORKS method with LE which since 92516cd97fd4
+("Bluetooth: Always request for user confirmation for Just Works")
+always request user confirmation with confirm_hint set since the
+likes of bluetoothd have dedicated policy around JUST_WORKS method
+(e.g. main.conf:JustWorksRepairing).
 
+CVE: CVE-2024-8805
 Cc: stable@vger.kernel.org
-Fixes: f629acc6f210 ("net: pcs: xpcs: support to switch mode for Wangxun NICs")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reported-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20240924022857.865422-1-jiawenwu@trustnetic.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ba15a58b179e ("Bluetooth: Fix SSP acceptor just-works confirmation without MITM")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pcs/pcs-xpcs-wx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_event.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/net/pcs/pcs-xpcs-wx.c
-+++ b/drivers/net/pcs/pcs-xpcs-wx.c
-@@ -109,7 +109,7 @@ static void txgbe_pma_config_1g(struct d
- 	txgbe_write_pma(xpcs, TXGBE_DFE_TAP_CTL0, 0);
- 	val = txgbe_read_pma(xpcs, TXGBE_RX_GEN_CTL3);
- 	val = u16_replace_bits(val, 0x4, TXGBE_RX_GEN_CTL3_LOS_TRSHLD0);
--	txgbe_write_pma(xpcs, TXGBE_RX_EQ_ATTN_CTL, val);
-+	txgbe_write_pma(xpcs, TXGBE_RX_GEN_CTL3, val);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5324,19 +5324,16 @@ static void hci_user_confirm_request_evt
+ 		goto unlock;
+ 	}
  
- 	txgbe_write_pma(xpcs, TXGBE_MPLLA_CTL0, 0x20);
- 	txgbe_write_pma(xpcs, TXGBE_MPLLA_CTL3, 0x46);
+-	/* If no side requires MITM protection; auto-accept */
++	/* If no side requires MITM protection; use JUST_CFM method */
+ 	if ((!loc_mitm || conn->remote_cap == HCI_IO_NO_INPUT_OUTPUT) &&
+ 	    (!rem_mitm || conn->io_capability == HCI_IO_NO_INPUT_OUTPUT)) {
+ 
+-		/* If we're not the initiators request authorization to
+-		 * proceed from user space (mgmt_user_confirm with
+-		 * confirm_hint set to 1). The exception is if neither
+-		 * side had MITM or if the local IO capability is
+-		 * NoInputNoOutput, in which case we do auto-accept
++		/* If we're not the initiator of request authorization and the
++		 * local IO capability is not NoInputNoOutput, use JUST_WORKS
++		 * method (mgmt_user_confirm with confirm_hint set to 1).
+ 		 */
+ 		if (!test_bit(HCI_CONN_AUTH_PEND, &conn->flags) &&
+-		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT &&
+-		    (loc_mitm || rem_mitm)) {
++		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT) {
+ 			bt_dev_dbg(hdev, "Confirming auto-accept as acceptor");
+ 			confirm_hint = 1;
+ 			goto confirm;
 
 
