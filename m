@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8B81DF26F;
-	Tue,  8 Oct 2024 12:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355FD1DF27C;
+	Tue,  8 Oct 2024 12:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390279; cv=none; b=KH17dC9dUv/nv4SDWcAd8QqzoEljmPOWGZGboMa1Uhf+6R6RawhWtdOcVH/l9oN7RSU2iNuKdcu1iRZvQaaQR2j1+REr0iguRX+FroNVT+lEVeL3Eq+j/p5Zji2E44CSQPsL2wxE/K5ElDL58N1tD2mRtOm4nIpgiUOqOm5oeNk=
+	t=1728390282; cv=none; b=a/1SJ8P0MT6zgBJm38RoUQoje4bstU80b/1QoBG/I2QrYfhEzWwgpRuCa4xctuasQDZJNI2VDJNcnjPzGsY9vmP7k5H60prZORIra7M4eiNQTl3khvbaMiRrldHloBQuID4+rvZZ3xkGR0ZnVIzXIKs1pYCMQNPRe3Lb+Of1pLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390279; c=relaxed/simple;
-	bh=uRhtHhzuy3ofihIumkkUThYJ/t/Qd35cKFxXCFdxTwk=;
+	s=arc-20240116; t=1728390282; c=relaxed/simple;
+	bh=2dxySYWyf4Z9YW3D5OpQbiONkQmgPSFEH+PWce8+rZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsmCERTN5e6n6DYYXTaeoE8ACgdVL1LnsC/uhmHwLlTb58QJ2WVK0fUwatuKZrYkGBwQ/3lUX+RFYRfxRq1itaF1ciynLOJrCkkgdxw/YpTLVTbdd+MciAvonGdu9uHXFT4UdW93yHiTVjq3OCrOtOlR4BCDFIVfBd68+xXcgWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=su9a+cP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzHWUszKhB6Pha4WbEyAsqpvCA4gP1TqmbKPPNgrgMmoDOADXyT5IP26PlpU779K50IREA3DDth7BcGWsMxIC+9fsaBvhGupMc5fGD9hF9h0YQc4YKcQRG+Az4ol+1DEAHC+Nxj0xIE2/ffIk2m03asMkFtP+Wfb2nXkrSUTf2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+XxoxBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="su9a+cP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44B0C4CECC;
-	Tue,  8 Oct 2024 12:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+XxoxBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76F8C4CECC;
+	Tue,  8 Oct 2024 12:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390279;
-	bh=uRhtHhzuy3ofihIumkkUThYJ/t/Qd35cKFxXCFdxTwk=;
+	s=korg; t=1728390282;
+	bh=2dxySYWyf4Z9YW3D5OpQbiONkQmgPSFEH+PWce8+rZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=su9a+cP8L5s8jX1QVrhax6o6aI83L3nS2ZBqqP21etLdRw8WlSQr1NLxZn0qJ2Uu9
-	 NI59MVDyJs2e4P88zhW6PEHA4nGifmrcIa9+vjN/oy4ysFPE3AVOFxfT8MWuO4ZWvq
-	 9dXwPrPI4U7om1tLXG8fKyWYFdhBg6jkYPAmBpB8=
+	b=X+XxoxBoBubGcr0mPi18GfDeTydIkUPA2M2v9gqTsZ7ZlkFdtfBugjJAcYFkSoSko
+	 bwCT3hNOH3aPKwfxLnAZZyyc/p7JsoSTDe++pX7paPQxksIOg0Qca34mbrOkclgnmG
+	 vyjYOHB6fSKgUu9nNyBrbUqc8DNgvx/pe2+eI1p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Zhu Jun <zhujun2@cmss.chinamobile.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 243/482] platform/x86: lenovo-ymc: Ignore the 0x0 state
-Date: Tue,  8 Oct 2024 14:05:06 +0200
-Message-ID: <20241008115657.858925477@linuxfoundation.org>
+Subject: [PATCH 6.10 244/482] tools/hv: Add memory allocation check in hv_fcopy_start
+Date: Tue,  8 Oct 2024 14:05:07 +0200
+Message-ID: <20241008115657.897962956@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Zhu Jun <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit d9dca215708d32e7f88ac0591fbb187cbf368adb ]
+[ Upstream commit 94e86b174d103d941b4afc4f016af8af9e5352fa ]
 
-While booting, Lenovo 14ARB7 reports 'lenovo-ymc: Unknown key 0 pressed'
-warning. This is caused by lenovo_ymc_probe() calling lenovo_ymc_notify()
-at probe time to get the initial tablet-mode-switch state and the key-code
-lenovo_ymc_notify() reads from the firmware is not initialized at probe
-time yet on the Lenovo 14ARB7.
+Added error handling for memory allocation failures
+of file_name and path_name.
 
-The hardware/firmware does an ACPI notify on the WMI device itself when
-it initializes the tablet-mode-switch state later on.
-
-Add 0x0 YMC state to the sparse keymap to silence the warning.
-
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/08ab73bb74c4ad448409f2ce707b1148874a05ce.1724340562.git.soyer@irl.hu
-[hdegoede@redhat.com: Reword commit message]
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20240906091333.11419-1-zhujun2@cmss.chinamobile.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20240906091333.11419-1-zhujun2@cmss.chinamobile.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo-ymc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/hv/hv_fcopy_uio_daemon.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/lenovo-ymc.c b/drivers/platform/x86/lenovo-ymc.c
-index e0bbd6a14a89c..bd9f95404c7cb 100644
---- a/drivers/platform/x86/lenovo-ymc.c
-+++ b/drivers/platform/x86/lenovo-ymc.c
-@@ -43,6 +43,8 @@ struct lenovo_ymc_private {
- };
+diff --git a/tools/hv/hv_fcopy_uio_daemon.c b/tools/hv/hv_fcopy_uio_daemon.c
+index 3ce316cc9f970..7a00f3066a980 100644
+--- a/tools/hv/hv_fcopy_uio_daemon.c
++++ b/tools/hv/hv_fcopy_uio_daemon.c
+@@ -296,6 +296,13 @@ static int hv_fcopy_start(struct hv_start_fcopy *smsg_in)
+ 	file_name = (char *)malloc(file_size * sizeof(char));
+ 	path_name = (char *)malloc(path_size * sizeof(char));
  
- static const struct key_entry lenovo_ymc_keymap[] = {
-+	/* Ignore the uninitialized state */
-+	{ KE_IGNORE, 0x00 },
- 	/* Laptop */
- 	{ KE_SW, 0x01, { .sw = { SW_TABLET_MODE, 0 } } },
- 	/* Tablet */
++	if (!file_name || !path_name) {
++		free(file_name);
++		free(path_name);
++		syslog(LOG_ERR, "Can't allocate memory for file name and/or path name");
++		return HV_E_FAIL;
++	}
++
+ 	wcstoutf8(file_name, (__u16 *)in_file_name, file_size);
+ 	wcstoutf8(path_name, (__u16 *)in_path_name, path_size);
+ 
 -- 
 2.43.0
 
