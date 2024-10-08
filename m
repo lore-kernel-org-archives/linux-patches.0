@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BEE1CCB32;
-	Tue,  8 Oct 2024 12:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639811DE4CC;
+	Tue,  8 Oct 2024 12:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390802; cv=none; b=knFR8WkGSJPc8FqYLnqf6Nu2DoGYclbGtyFtfXDLcMSbpxNN8ifGCy4M9QbVnWFifpPAHI6/Q2g/e1Tjc9wE3cYo1qdQinp4IyhJm6Yv8Iy55+Qm/iyGyLOVEK4X4GbT8rv8kFsIe2d0zXNVcA8fVJ0VCclo9m2CFf+EK/fwWJE=
+	t=1728390805; cv=none; b=X/JOuwHtyFk2dIJALPZOOQY1QHBoR2pORkUy90mmP3V4R4AJeJc/gxkfPIEbBVCD97/AM22n6wGvy6YdE8K0vK/kbMi6IzO90TwSWwL/MevfrecrL4Q98pwjgJyJTicEh3RiUMo+r1u27Dqy/ZTmYPPqWGoHLYnc3E1SlozVnV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390802; c=relaxed/simple;
-	bh=Sq7cDm2UdVfWrkt/TnNpUiebe+JMWartlEmz6v0qMrA=;
+	s=arc-20240116; t=1728390805; c=relaxed/simple;
+	bh=Wzw2rGRg610jnvXOAuJzm/NGhjmbnfYoqZpSHY7f69s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMqKZG8xNfK3i9Wx09YfDUQxfgzTDXITpfe53n8M4SIAyve7RpL2feppJLT9oNVPNPrEejvV/LC/cEwzBJK/f7AY9A9O1VG1RJ76xB6Y6+tdAYtBhBKygD7bx6BYgisoEFvmvYn5FAzBnf4qcNhb8chG7znkh24O1cOgETVWp8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnaabz/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPer+BrTbI+ecJ4XY+mRYN+Ah5GlDPCMuyA08o8grUDxu1eq0adiP+CmG3N74rdmX39MgUZK/IBK8w59usVaJtvvZvc3Z7vWztBh5WJaxobOp0f+HjBdA30tBOR+uRIUg2Ptw8q2hEhV+Gx4oNzMzFloty+G9w5zbGOHjNGiehE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVCsRytl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnaabz/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F15C4CEC7;
-	Tue,  8 Oct 2024 12:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVCsRytl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93195C4CEC7;
+	Tue,  8 Oct 2024 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390802;
-	bh=Sq7cDm2UdVfWrkt/TnNpUiebe+JMWartlEmz6v0qMrA=;
+	s=korg; t=1728390805;
+	bh=Wzw2rGRg610jnvXOAuJzm/NGhjmbnfYoqZpSHY7f69s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnaabz/KSzbkg0+7a30/xf1cNbz0XEqZTTG2LP0yVlQuSKstXL2IvxyKyeX26iudj
-	 lLCFPm5CXYWmJfS4aAHQp6QUKV/CCP8IlIYC4RYMo26wU8YqHzsMNWN2C95+lLUexy
-	 TAZosdItWl95OSnp9TPZvzj3VbNkV3SVA6EEFi2w=
+	b=QVCsRytlXpNXSvYI3r0DhzGZIby1GUolfI8Re6K/mjQaHUBB1IvWG8i8Zw5I5bJeX
+	 Q7V4xfQb2QEqWfynnAWTkkJPFJOuFlApr8IB0diYXrijCKHNZfEElu1XhYMs2gX8iy
+	 c2sCrvyPXCtmnERjdV0qXUCsdOAZHxg1Evm0lIEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Esmat <youssefesmat@google.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>
-Subject: [PATCH 6.10 366/482] sched/core: Clear prev->dl_server in CFS pick fast path
-Date: Tue,  8 Oct 2024 14:07:09 +0200
-Message-ID: <20241008115702.825392518@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.10 367/482] riscv: define ILLEGAL_POINTER_VALUE for 64bit
+Date: Tue,  8 Oct 2024 14:07:10 +0200
+Message-ID: <20241008115702.864304586@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Esmat <youssefesmat@google.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit a741b82423f41501e301eb6f9820b45ca202e877 upstream.
+commit 5c178472af247c7b50f962495bb7462ba453b9fb upstream.
 
-In case the previous pick was a DL server pick, ->dl_server might be
-set. Clear it in the fast path as well.
+This is used in poison.h for poison pointer offset. Based on current
+SV39, SV48 and SV57 vm layout, 0xdead000000000000 is a proper value
+that is not mappable, this can avoid potentially turning an oops to
+an expolit.
 
-Fixes: 63ba8422f876 ("sched/deadline: Introduce deadline servers")
-Signed-off-by: Youssef Esmat <youssefesmat@google.com>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Fixes: fbe934d69eb7 ("RISC-V: Build Infrastructure")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/7f7381ccba09efcb4a1c1ff808ed58385eccc222.1716811044.git.bristot@kernel.org
+Link: https://lore.kernel.org/r/20240705170210.3236-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/Kconfig |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6044,6 +6044,13 @@ __pick_next_task(struct rq *rq, struct t
- 		}
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -312,6 +312,11 @@ config GENERIC_HWEIGHT
+ config FIX_EARLYCON_MEM
+ 	def_bool MMU
  
- 		/*
-+		 * This is a normal CFS pick, but the previous could be a DL pick.
-+		 * Clear it as previous is no longer picked.
-+		 */
-+		if (prev->dl_server)
-+			prev->dl_server = NULL;
++config ILLEGAL_POINTER_VALUE
++	hex
++	default 0 if 32BIT
++	default 0xdead000000000000 if 64BIT
 +
-+		/*
- 		 * This is the fast path; it cannot be a DL server pick;
- 		 * therefore even if @p == @prev, ->dl_server must be NULL.
- 		 */
+ config PGTABLE_LEVELS
+ 	int
+ 	default 5 if 64BIT
 
 
