@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ED5190663;
-	Tue,  8 Oct 2024 12:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693211D7E31;
+	Tue,  8 Oct 2024 12:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390232; cv=none; b=lYAr1RU5yxLCt3x8nAtKfEgtcmFIrZa3Vx03tISZh63xk1tTnuV0ywLjOTOO2DZV0Ss166EmuOrJYCXiZyomRD7kVWHPLhnlmUtpfZwRFZHDvfwlDIB1zMuqQunt4waBATxHZe1pS5/Gp9PCqwYC+VS0RB/fh0/LndylKNFPvuY=
+	t=1728390236; cv=none; b=JQMJx89AsI0hhVYjIs2T/NJOVA5uLidkyMhNAAQHuUyqBXgjgQ0YTzbNGZHJJx3zpunuylbu36wUtWS3cHpiPgTjKLGa+VNYTjOY43he3MKQ7t6YHDBf6n4itMT7h6Chjt4IrDlgB5U1rmlKqFmH6TE941SQXj/Un5sKMBH6Blg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390232; c=relaxed/simple;
-	bh=rxNcm190YGA4cDQ3mc6YiCGFnLGWt+vkY+n0Gskt128=;
+	s=arc-20240116; t=1728390236; c=relaxed/simple;
+	bh=V+XUBEMUxRF+tNYdd/Y8J7qOGjbmIJaEtr4MpJCNjdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYOD5B2Vb1aGCX4BJNSCnwERZiIt8sAwEzPC+L7oB6c0Nip7FgnPMNfA+73LOXwtDnhtidCBERqMC0HFNdkTi0dUAZ6eOU0Gr0EbkyaLRzpMcozDGVYVMHvyFJOOjv36qrlBa171T1O2v2yjAVT4aUJXknuO3BX4OkaiHvsXxQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQcOZE0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJsZECeIJMDyTFhTCBDWy2fUzj1DZNkv6ZOTR42lU0ooFnxf+Gy9elKbQmB4EYNP7EQU5nW3yI3oeylj53AvZFk2kpaa8f494U0nQZXNLNw2ToUkHlkwIHzotGzjTeTmlQVYr9wXeFMtsWFZDT508yxQJa/yyWR/k7V31VkjV8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr8gBzbM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQcOZE0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1381BC4CEC7;
-	Tue,  8 Oct 2024 12:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr8gBzbM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8753DC4CEC7;
+	Tue,  8 Oct 2024 12:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390232;
-	bh=rxNcm190YGA4cDQ3mc6YiCGFnLGWt+vkY+n0Gskt128=;
+	s=korg; t=1728390236;
+	bh=V+XUBEMUxRF+tNYdd/Y8J7qOGjbmIJaEtr4MpJCNjdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQcOZE0cHvR/5qxn9Z9H2L/yvzoFB/eiPaaVlHo1tFsFOFZAUzrquoYTlCd+3/WhA
-	 xa+1YXrPEZMv62Pf4pdgYaXnfNWpxesdId38Q7gKk9FF9/1pUFxlVRCwHfNAQ5+Nzw
-	 62BwBtz4zUBJEkRzeRdQ7pn5+CiP5OQgaKYBTIx4=
+	b=kr8gBzbM1tYORE3WczoEOV/WOEfLylEPFtd3gtVirNY2iU29rTyQxqjc/ZEluslBa
+	 6m3qGzQ/IhKDxp+zo1zEKDAyfHD9d0X0FUN4CIYIRcwhTAJs0knx918m8Y2Peb14P1
+	 uUwr+BRZgJZczcnB2QdHx0p+D2faSR13diJQndmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Dalibard <ontake@ontake.dev>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 188/482] HID: Ignore battery for all ELAN I2C-HID devices
-Date: Tue,  8 Oct 2024 14:04:11 +0200
-Message-ID: <20241008115655.703405837@linuxfoundation.org>
+Subject: [PATCH 6.10 223/482] scsi: lpfc: Validate hdwq pointers before dereferencing in reset/errata paths
+Date: Tue,  8 Oct 2024 14:04:46 +0200
+Message-ID: <20241008115657.084875122@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,124 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit bcc31692a1d1e21f0d06c5f727c03ee299d2264e ]
+[ Upstream commit 2be1d4f11944cd6283cb97268b3e17c4424945ca ]
 
-Before this change there were 16 vid:pid based quirks to ignore the battery
-reported by Elan I2C-HID touchscreens on various Asus and HP laptops.
+When the HBA is undergoing a reset or is handling an errata event, NULL ptr
+dereference crashes may occur in routines such as
+lpfc_sli_flush_io_rings(), lpfc_dev_loss_tmo_callbk(), or
+lpfc_abort_handler().
 
-And a report has been received that the 04F3:2A00 I2C touchscreen on
-the HP ProBook x360 11 G5 EE/86CF also reports a non present battery.
+Add NULL ptr checks before dereferencing hdwq pointers that may have been
+freed due to operations colliding with a reset or errata event handler.
 
-Since I2C-HID devices are always builtin to laptops they are not battery
-owered so it should be safe to just ignore the battery on all Elan I2C-HID
-devices, rather then adding a 17th quirk for the 04F3:2A00 touchscreen.
-
-As reported in the changelog of commit a3a5a37efba1 ("HID: Ignore battery
-for ELAN touchscreens 2F2C and 4116"), which added 2 new Elan touchscreen
-quirks about a month ago, the HID reported battery seems to be related
-to a stylus being used. But even when a stylus is in use it does not
-properly report the charge of the stylus battery, instead the reported
-battery charge jumps from 0% to 1%. So it is best to just ignore the
-HID battery.
-
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2302776
-Cc: Louis Dalibard <ontake@ontake.dev>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240726231512.92867-4-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 16 ----------------
- drivers/hid/hid-input.c | 37 +++++--------------------------------
- 2 files changed, 5 insertions(+), 48 deletions(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c |  3 ++-
+ drivers/scsi/lpfc/lpfc_scsi.c    | 13 +++++++++++--
+ drivers/scsi/lpfc/lpfc_sli.c     | 11 +++++++++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 781c5aa298598..53655f81d9950 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -417,24 +417,8 @@
- #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
- #define USB_DEVICE_ID_HP_X2		0x074d
- #define USB_DEVICE_ID_HP_X2_10_COVER	0x0755
--#define I2C_DEVICE_ID_HP_ENVY_X360_15	0x2d05
--#define I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100	0x29CF
--#define I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV	0x2CF9
--#define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
--#define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
--#define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
--#define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
--#define I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN 0x2F2C
--#define I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN 0x4116
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
--#define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
--#define I2C_DEVICE_ID_SURFACE_GO2_TOUCHSCREEN	0x2A1C
--#define I2C_DEVICE_ID_LENOVO_YOGA_C630_TOUCHSCREEN	0x279F
--#define I2C_DEVICE_ID_HP_SPECTRE_X360_13T_AW100	0x29F5
--#define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V1	0x2BED
--#define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V2	0x2BEE
--#define I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG		0x2D02
- #define I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM	0x2F81
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index 13b08c85440fe..e74a676b6e153 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -175,7 +175,8 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 			 ndlp->nlp_state, ndlp->fc4_xpt_flags);
  
- #define USB_VENDOR_ID_ELECOM		0x056e
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index c9094a4f281e9..fda9dce3da998 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -373,14 +373,6 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
- 		USB_DEVICE_ID_LOGITECH_DINOVO_EDGE_KBD),
- 	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
-@@ -391,32 +383,13 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_AVOID_QUERY },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE, USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW),
- 	  HID_BATTERY_QUIRK_AVOID_QUERY },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_15),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO2_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_LENOVO_YOGA_C630_TOUCHSCREEN),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_13T_AW100),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V1),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V2),
--	  HID_BATTERY_QUIRK_IGNORE },
--	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG),
--	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM),
- 	  HID_BATTERY_QUIRK_AVOID_QUERY },
-+	/*
-+	 * Elan I2C-HID touchscreens seem to all report a non present battery,
-+	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C-HID devices.
-+	 */
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
- 	{}
- };
+ 	/* Don't schedule a worker thread event if the vport is going down. */
+-	if (test_bit(FC_UNLOADING, &vport->load_flag)) {
++	if (test_bit(FC_UNLOADING, &vport->load_flag) ||
++	    !test_bit(HBA_SETUP, &phba->hba_flag)) {
+ 		spin_lock_irqsave(&ndlp->lock, iflags);
+ 		ndlp->rport = NULL;
  
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 9f0b59672e191..0eaede8275dac 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -5555,11 +5555,20 @@ lpfc_abort_handler(struct scsi_cmnd *cmnd)
+ 
+ 	iocb = &lpfc_cmd->cur_iocbq;
+ 	if (phba->sli_rev == LPFC_SLI_REV4) {
+-		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
+-		if (!pring_s4) {
++		/* if the io_wq & pring are gone, the port was reset. */
++		if (!phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq ||
++		    !phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring) {
++			lpfc_printf_vlog(vport, KERN_WARNING, LOG_FCP,
++					 "2877 SCSI Layer I/O Abort Request "
++					 "IO CMPL Status x%x ID %d LUN %llu "
++					 "HBA_SETUP %d\n", FAILED,
++					 cmnd->device->id,
++					 (u64)cmnd->device->lun,
++					 test_bit(HBA_SETUP, &phba->hba_flag));
+ 			ret = FAILED;
+ 			goto out_unlock_hba;
+ 		}
++		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
+ 		spin_lock(&pring_s4->ring_lock);
+ 	}
+ 	/* the command is in process of being cancelled */
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 3e55d5edd60ab..c6fcaeeb52945 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -4687,6 +4687,17 @@ lpfc_sli_flush_io_rings(struct lpfc_hba *phba)
+ 	/* Look on all the FCP Rings for the iotag */
+ 	if (phba->sli_rev >= LPFC_SLI_REV4) {
+ 		for (i = 0; i < phba->cfg_hdw_queue; i++) {
++			if (!phba->sli4_hba.hdwq ||
++			    !phba->sli4_hba.hdwq[i].io_wq) {
++				lpfc_printf_log(phba, KERN_ERR, LOG_SLI,
++						"7777 hdwq's deleted %lx "
++						"%lx %x %x\n",
++						phba->pport->load_flag,
++						phba->hba_flag,
++						phba->link_state,
++						phba->sli.sli_flag);
++				return;
++			}
+ 			pring = phba->sli4_hba.hdwq[i].io_wq->pring;
+ 
+ 			spin_lock_irq(&pring->ring_lock);
 -- 
 2.43.0
 
