@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02901E485;
-	Tue,  8 Oct 2024 12:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833251E485;
+	Tue,  8 Oct 2024 12:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390718; cv=none; b=EUWsQ8V8yECstsj8mHoBlKzzugaNpoRnSevIQ/9JYVByzqXAUTd82m1LNnb25jmtT0jfWY0YJ71eLArI2H7Rx3pmwSKMRf88B06SmSG/I+VOyHl1jz3Pj3izt1g8XerFABNWPACwAHA+wHsf9jsd//8cqut3RPk8/36Bz0QUSBs=
+	t=1728390721; cv=none; b=IUB3lgBjccyHrKfdVjR+vhCGCtGGjmdl/rN1cMXL3m0SuX6/5gGYxR2Wk8GT075JwsRxIHz2FMNMVvsSH+IR51aJMNwUyy2YEvfH1E/OzRFn7dI26IQ2ZQSpZdf0NxWDdroymSON0ER+BafJf4e6EBL/qYeT9ipuxqdqJgnWvpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390718; c=relaxed/simple;
-	bh=K4T63JSNCZEebNE63XflIExmdHjU89GH+XAX7ju4cAM=;
+	s=arc-20240116; t=1728390721; c=relaxed/simple;
+	bh=0BNUqO06w1AiVI4ORUrjpi6kJQBmf5g/2MvV0I8+ZEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYWb60ik1+mKqcH3YDJPPFMlii4ZpT8zxnW95d2DgVvUC7oSOQ9PNs0TIEZVSbqqdhKg8bU6mfW5+RxZLRgdLpyH4Nkq+hP9DaPbLdBP6snINqHSMYKEn9gtigXFYSAJm2+32wHja/FEuamB7TrClfwFB+0J/FrRkbqKbVGfu/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/qVxd8b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NB5VHidPmFPpMLYqGfnlT6J3WWsDfqLgYded0qnO3q5OtqRucHdK+CDdiEEHItIl8nTo/3vlR9hJVTn9DhqAf29m/gFkzR3NwUvh7r/kBSrQum4DHPsVrQBLZeldm6HxdONKK3/THo9GQubrvvcyNNuxwg0Ltd86EkQMGG6sI6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIRPFxGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/qVxd8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EC9C4CEC7;
-	Tue,  8 Oct 2024 12:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIRPFxGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EAEC4CEC7;
+	Tue,  8 Oct 2024 12:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390718;
-	bh=K4T63JSNCZEebNE63XflIExmdHjU89GH+XAX7ju4cAM=;
+	s=korg; t=1728390721;
+	bh=0BNUqO06w1AiVI4ORUrjpi6kJQBmf5g/2MvV0I8+ZEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/qVxd8b6aeZygA6/OES2/qkYSWr7dHbayiYWyz+xuKWFsxODe1Wyqkr3lEUAwEib
-	 56C5SVVdBAi7InRCmhTUWb1SEzoEKa35TyX5sYiDk0ExL0FCXvd3VpQChsF6grUClk
-	 01AMo67n3g5umkOqGp6CU/cQ31YSxFvxJ9g+cJLc=
+	b=qIRPFxGxwl4JqhcJFsN3qtil+Y1DDbIha5xwy9wUAiQPDQCxUGj/lyfkSS/CFCj2K
+	 3hXd5LhsG+4pmoM1eR0gxeZHqtC7HpuZq6l/hmW9ct0IIRvF26TyOFep0A64gWdNGA
+	 3zoZ2o9VSweVvAjoMW8UtMGs5cEkAO68XvDcNWi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Cedric Blancher <cedric.blancher@gmail.com>,
+	Dan Shelton <dan.f.shelton@gmail.com>,
+	Roland Mainz <roland.mainz@nrubsig.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.10 372/482] nfsd: map the EBADMSG to nfserr_io to avoid warning
-Date: Tue,  8 Oct 2024 14:07:15 +0200
-Message-ID: <20241008115703.061914459@linuxfoundation.org>
+Subject: [PATCH 6.10 373/482] NFSD: Fix NFSv4s PUTPUBFH operation
+Date: Tue,  8 Oct 2024 14:07:16 +0200
+Message-ID: <20241008115703.101201324@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,108 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 340e61e44c1d2a15c42ec72ade9195ad525fd048 upstream.
+commit 202f39039a11402dcbcd5fece8d9fa6be83f49ae upstream.
 
-Ext4 will throw -EBADMSG through ext4_readdir when a checksum error
-occurs, resulting in the following WARNING.
+According to RFC 8881, all minor versions of NFSv4 support PUTPUBFH.
 
-Fix it by mapping EBADMSG to nfserr_io.
+Replace the XDR decoder for PUTPUBFH with a "noop" since we no
+longer want the minorversion check, and PUTPUBFH has no arguments to
+decode. (Ideally nfsd4_decode_noop should really be called
+nfsd4_decode_void).
 
-nfsd_buffered_readdir
- iterate_dir // -EBADMSG -74
-  ext4_readdir // .iterate_shared
-   ext4_dx_readdir
-    ext4_htree_fill_tree
-     htree_dirblock_to_tree
-      ext4_read_dirblock
-       __ext4_read_dirblock
-        ext4_dirblock_csum_verify
-         warn_no_space_for_csum
-          __warn_no_space_for_csum
-        return ERR_PTR(-EFSBADCRC) // -EBADMSG -74
- nfserrno // WARNING
+PUTPUBFH should now behave just like PUTROOTFH.
 
-[  161.115610] ------------[ cut here ]------------
-[  161.116465] nfsd: non-standard errno: -74
-[  161.117315] WARNING: CPU: 1 PID: 780 at fs/nfsd/nfsproc.c:878 nfserrno+0x9d/0xd0
-[  161.118596] Modules linked in:
-[  161.119243] CPU: 1 PID: 780 Comm: nfsd Not tainted 5.10.0-00014-g79679361fd5d #138
-[  161.120684] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qe
-mu.org 04/01/2014
-[  161.123601] RIP: 0010:nfserrno+0x9d/0xd0
-[  161.124676] Code: 0f 87 da 30 dd 00 83 e3 01 b8 00 00 00 05 75 d7 44 89 ee 48 c7 c7 c0 57 24 98 89 44 24 04 c6
- 05 ce 2b 61 03 01 e8 99 20 d8 00 <0f> 0b 8b 44 24 04 eb b5 4c 89 e6 48 c7 c7 a0 6d a4 99 e8 cc 15 33
-[  161.127797] RSP: 0018:ffffc90000e2f9c0 EFLAGS: 00010286
-[  161.128794] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-[  161.130089] RDX: 1ffff1103ee16f6d RSI: 0000000000000008 RDI: fffff520001c5f2a
-[  161.131379] RBP: 0000000000000022 R08: 0000000000000001 R09: ffff8881f70c1827
-[  161.132664] R10: ffffed103ee18304 R11: 0000000000000001 R12: 0000000000000021
-[  161.133949] R13: 00000000ffffffb6 R14: ffff8881317c0000 R15: ffffc90000e2fbd8
-[  161.135244] FS:  0000000000000000(0000) GS:ffff8881f7080000(0000) knlGS:0000000000000000
-[  161.136695] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  161.137761] CR2: 00007fcaad70b348 CR3: 0000000144256006 CR4: 0000000000770ee0
-[  161.139041] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  161.140291] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  161.141519] PKRU: 55555554
-[  161.142076] Call Trace:
-[  161.142575]  ? __warn+0x9b/0x140
-[  161.143229]  ? nfserrno+0x9d/0xd0
-[  161.143872]  ? report_bug+0x125/0x150
-[  161.144595]  ? handle_bug+0x41/0x90
-[  161.145284]  ? exc_invalid_op+0x14/0x70
-[  161.146009]  ? asm_exc_invalid_op+0x12/0x20
-[  161.146816]  ? nfserrno+0x9d/0xd0
-[  161.147487]  nfsd_buffered_readdir+0x28b/0x2b0
-[  161.148333]  ? nfsd4_encode_dirent_fattr+0x380/0x380
-[  161.149258]  ? nfsd_buffered_filldir+0xf0/0xf0
-[  161.150093]  ? wait_for_concurrent_writes+0x170/0x170
-[  161.151004]  ? generic_file_llseek_size+0x48/0x160
-[  161.151895]  nfsd_readdir+0x132/0x190
-[  161.152606]  ? nfsd4_encode_dirent_fattr+0x380/0x380
-[  161.153516]  ? nfsd_unlink+0x380/0x380
-[  161.154256]  ? override_creds+0x45/0x60
-[  161.155006]  nfsd4_encode_readdir+0x21a/0x3d0
-[  161.155850]  ? nfsd4_encode_readlink+0x210/0x210
-[  161.156731]  ? write_bytes_to_xdr_buf+0x97/0xe0
-[  161.157598]  ? __write_bytes_to_xdr_buf+0xd0/0xd0
-[  161.158494]  ? lock_downgrade+0x90/0x90
-[  161.159232]  ? nfs4svc_decode_voidarg+0x10/0x10
-[  161.160092]  nfsd4_encode_operation+0x15a/0x440
-[  161.160959]  nfsd4_proc_compound+0x718/0xe90
-[  161.161818]  nfsd_dispatch+0x18e/0x2c0
-[  161.162586]  svc_process_common+0x786/0xc50
-[  161.163403]  ? nfsd_svc+0x380/0x380
-[  161.164137]  ? svc_printk+0x160/0x160
-[  161.164846]  ? svc_xprt_do_enqueue.part.0+0x365/0x380
-[  161.165808]  ? nfsd_svc+0x380/0x380
-[  161.166523]  ? rcu_is_watching+0x23/0x40
-[  161.167309]  svc_process+0x1a5/0x200
-[  161.168019]  nfsd+0x1f5/0x380
-[  161.168663]  ? nfsd_shutdown_threads+0x260/0x260
-[  161.169554]  kthread+0x1c4/0x210
-[  161.170224]  ? kthread_insert_work_sanity_check+0x80/0x80
-[  161.171246]  ret_from_fork+0x1f/0x30
-
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reported-by: Cedric Blancher <cedric.blancher@gmail.com>
+Fixes: e1a90ebd8b23 ("NFSD: Combine decode operations for v4 and v4.1")
+Cc: Dan Shelton <dan.f.shelton@gmail.com>
+Cc: Roland Mainz <roland.mainz@nrubsig.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4xdr.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -100,6 +100,7 @@ nfserrno (int errno)
- 		{ nfserr_io, -EUCLEAN },
- 		{ nfserr_perm, -ENOKEY },
- 		{ nfserr_no_grace, -ENOGRACE},
-+		{ nfserr_io, -EBADMSG },
- 	};
- 	int	i;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1246,14 +1246,6 @@ nfsd4_decode_putfh(struct nfsd4_compound
+ }
  
+ static __be32
+-nfsd4_decode_putpubfh(struct nfsd4_compoundargs *argp, union nfsd4_op_u *p)
+-{
+-	if (argp->minorversion == 0)
+-		return nfs_ok;
+-	return nfserr_notsupp;
+-}
+-
+-static __be32
+ nfsd4_decode_read(struct nfsd4_compoundargs *argp, union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_read *read = &u->read;
+@@ -2374,7 +2366,7 @@ static const nfsd4_dec nfsd4_dec_ops[] =
+ 	[OP_OPEN_CONFIRM]	= nfsd4_decode_open_confirm,
+ 	[OP_OPEN_DOWNGRADE]	= nfsd4_decode_open_downgrade,
+ 	[OP_PUTFH]		= nfsd4_decode_putfh,
+-	[OP_PUTPUBFH]		= nfsd4_decode_putpubfh,
++	[OP_PUTPUBFH]		= nfsd4_decode_noop,
+ 	[OP_PUTROOTFH]		= nfsd4_decode_noop,
+ 	[OP_READ]		= nfsd4_decode_read,
+ 	[OP_READDIR]		= nfsd4_decode_readdir,
 
 
