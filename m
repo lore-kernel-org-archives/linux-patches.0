@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F021DEFE6;
-	Tue,  8 Oct 2024 12:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706DE1DEFE6;
+	Tue,  8 Oct 2024 12:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392228; cv=none; b=rnYVgfE8Cg9Nji2Qm4pmWzvKJM0n0vU89U3vIr8Lkz34oiE0pfS5ypDQagB+rVlv/BTyws6X2xluRvYyQZVyEPk+qzlE4Jj/0iZhwK3BVIusMLphlIJFizvodcG27LKPNPuHJA6OgFjOxhvaGGf8nhccPrTHeQEzKCbikoxjGpw=
+	t=1728392231; cv=none; b=KokvkM5r8tEOimJu4OUuaRkwJ+1cvUJQhLLXBaKrLCGaTIOcIWXxNphup0hf90LpF2Rlf3xRPuwKIw1S4BlMFYzI9tmeKtAhSSTqnJDU0JNXua0XNdta3L+ehFcHQEVuA9UxRT46q5RyM/oH9J1JwPdOnsBSXHz0ww6NaQM/K/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392228; c=relaxed/simple;
-	bh=NVFdkKs4IdbmNZ+4vTFGClOSBHHfq3lb9jULCCICy/Q=;
+	s=arc-20240116; t=1728392231; c=relaxed/simple;
+	bh=Jozbv9Az9pT4IfFMJubRqYIIRH2VUl/p+jEpBs6zNeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+cNFIkmyO4j8qa+9LdiRjViyvr7nX30+xIbtaE039X7lOZyAOHqsiOrjHenUcPPdpcKHPJcsxiPCLSPcKJT8KKvxiToMaqhgwc02vzhM4VKzvGyiggMuBSjV1ZT0CVun7ZoGCavdvWneN5z57cO6q/c9nRjL1jVxj9RxAqjEpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WltC5pAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7LVLohbhKfDBCKsl6MOQqPzKZCOf+QH6HuqUUw0kDrSoHtKE6Vz6SDkxCB4ArctVSDhjQVJbPJEKqXn+GsHJbuMTNs625HQoLyfBkKUiG8Z4p1BpLEWWwpuG8JYeBwUJLpd8SLbdyVQMkXVgwm9geeSTQ7a6I3YuzPMSUOAkR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCnKFoBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WltC5pAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD28C4CEC7;
-	Tue,  8 Oct 2024 12:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCnKFoBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88CDC4CEC7;
+	Tue,  8 Oct 2024 12:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392228;
-	bh=NVFdkKs4IdbmNZ+4vTFGClOSBHHfq3lb9jULCCICy/Q=;
+	s=korg; t=1728392231;
+	bh=Jozbv9Az9pT4IfFMJubRqYIIRH2VUl/p+jEpBs6zNeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WltC5pAQysbvpqArM2C0U51mWAFDwkfkJQX3wpr9dK3PjFWc+gJpD9YKhYiv/hMpw
-	 PxZ9QDNXq2u8uJAaROBf+nHVeIz4Udj5sNnzKn4JH+wMMduzJ3A0omK0Ylh2+Xi9kT
-	 hfjms2SLvFcuTtaw3kTqShYvzojgLZys9g86Q66I=
+	b=pCnKFoBtHs1AvRxnAwTu7HAhsAzQyuU7dwQCwqhnOsDcaWVu6C4EuQc51qlTf1RWd
+	 BSqN1nFlu+DoVQFfItqRj5nWQ3TZ7VRWYhB93/j1ahidyCSNjF2MKmaUIvhGKD8wt/
+	 VjbXSkJQ3NMFchd3MLgpmXUnvP4WduN5/czAXYFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kimriver Liu <kimriver.liu@siengine.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andy Shevchenko <andy@kernel.org>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.11 354/558] i2c: xiic: Fix pm_runtime_set_suspended() with runtime pm enabled
-Date: Tue,  8 Oct 2024 14:06:24 +0200
-Message-ID: <20241008115716.229263861@linuxfoundation.org>
+Subject: [PATCH 6.11 355/558] i2c: designware: fix controller is holding SCL low while ENABLE bit is disabled
+Date: Tue,  8 Oct 2024 14:06:25 +0200
+Message-ID: <20241008115716.269150372@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,34 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Kimriver Liu <kimriver.liu@siengine.com>
 
-commit 0c8d604dea437b69a861479b413d629bc9b3da70 upstream.
+commit 5d69d5a00f80488ddcb4dee7d1374a0709398178 upstream.
 
-It is not valid to call pm_runtime_set_suspended() for devices
-with runtime PM enabled because it returns -EAGAIN if it is enabled
-already and working. So, call pm_runtime_disable() before to fix it.
+It was observed that issuing the ABORT bit (IC_ENABLE[1]) will not
+work when IC_ENABLE is already disabled.
 
-Fixes: 36ecbcab84d0 ("i2c: xiic: Implement power management")
-Cc: <stable@vger.kernel.org> # v4.6+
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Check if the ENABLE bit (IC_ENABLE[0]) is disabled when the controller
+is holding SCL low. If the ENABLE bit is disabled, the software needs
+to enable it before trying to issue the ABORT bit. otherwise,
+the controller ignores any write to ABORT bit.
+
+These kernel logs show up whenever an I2C transaction is
+attempted after this failure.
+i2c_designware e95e0000.i2c: timeout waiting for bus ready
+i2c_designware e95e0000.i2c: timeout in disabling adapter
+
+The patch fixes the issue where the controller cannot be disabled
+while SCL is held low if the ENABLE bit is already disabled.
+
+Fixes: 2409205acd3c ("i2c: designware: fix __i2c_dw_disable() in case master is holding SCL low")
+Signed-off-by: Kimriver Liu <kimriver.liu@siengine.com>
+Cc: <stable@vger.kernel.org> # v6.6+
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xiic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-common.c |   14 ++++++++++
+ drivers/i2c/busses/i2c-designware-core.h   |    1 
+ drivers/i2c/busses/i2c-designware-master.c |   38 +++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+)
 
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -1337,8 +1337,8 @@ static int xiic_i2c_probe(struct platfor
- 	return 0;
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -441,6 +441,7 @@ err_release_lock:
  
- err_pm_disable:
--	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
+ void __i2c_dw_disable(struct dw_i2c_dev *dev)
+ {
++	struct i2c_timings *t = &dev->timings;
+ 	unsigned int raw_intr_stats;
+ 	unsigned int enable;
+ 	int timeout = 100;
+@@ -453,6 +454,19 @@ void __i2c_dw_disable(struct dw_i2c_dev
  
- 	return ret;
+ 	abort_needed = raw_intr_stats & DW_IC_INTR_MST_ON_HOLD;
+ 	if (abort_needed) {
++		if (!(enable & DW_IC_ENABLE_ENABLE)) {
++			regmap_write(dev->map, DW_IC_ENABLE, DW_IC_ENABLE_ENABLE);
++			/*
++			 * Wait 10 times the signaling period of the highest I2C
++			 * transfer supported by the driver (for 400KHz this is
++			 * 25us) to ensure the I2C ENABLE bit is already set
++			 * as described in the DesignWare I2C databook.
++			 */
++			fsleep(DIV_ROUND_CLOSEST_ULL(10 * MICRO, t->bus_freq_hz));
++			/* Set ENABLE bit before setting ABORT */
++			enable |= DW_IC_ENABLE_ENABLE;
++		}
++
+ 		regmap_write(dev->map, DW_IC_ENABLE, enable | DW_IC_ENABLE_ABORT);
+ 		ret = regmap_read_poll_timeout(dev->map, DW_IC_ENABLE, enable,
+ 					       !(enable & DW_IC_ENABLE_ABORT), 10,
+--- a/drivers/i2c/busses/i2c-designware-core.h
++++ b/drivers/i2c/busses/i2c-designware-core.h
+@@ -109,6 +109,7 @@
+ 						 DW_IC_INTR_RX_UNDER | \
+ 						 DW_IC_INTR_RD_REQ)
+ 
++#define DW_IC_ENABLE_ENABLE			BIT(0)
+ #define DW_IC_ENABLE_ABORT			BIT(1)
+ 
+ #define DW_IC_STATUS_ACTIVITY			BIT(0)
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -253,6 +253,34 @@ static void i2c_dw_xfer_init(struct dw_i
+ 	__i2c_dw_write_intr_mask(dev, DW_IC_INTR_MASTER_MASK);
  }
+ 
++/*
++ * This function waits for the controller to be idle before disabling I2C
++ * When the controller is not in the IDLE state, the MST_ACTIVITY bit
++ * (IC_STATUS[5]) is set.
++ *
++ * Values:
++ * 0x1 (ACTIVE): Controller not idle
++ * 0x0 (IDLE): Controller is idle
++ *
++ * The function is called after completing the current transfer.
++ *
++ * Returns:
++ * False when the controller is in the IDLE state.
++ * True when the controller is in the ACTIVE state.
++ */
++static bool i2c_dw_is_controller_active(struct dw_i2c_dev *dev)
++{
++	u32 status;
++
++	regmap_read(dev->map, DW_IC_STATUS, &status);
++	if (!(status & DW_IC_STATUS_MASTER_ACTIVITY))
++		return false;
++
++	return regmap_read_poll_timeout(dev->map, DW_IC_STATUS, status,
++				       !(status & DW_IC_STATUS_MASTER_ACTIVITY),
++				       1100, 20000) != 0;
++}
++
+ static int i2c_dw_check_stopbit(struct dw_i2c_dev *dev)
+ {
+ 	u32 val;
+@@ -789,6 +817,16 @@ i2c_dw_xfer(struct i2c_adapter *adap, st
+ 	}
+ 
+ 	/*
++	 * This happens rarely (~1:500) and is hard to reproduce. Debug trace
++	 * showed that IC_STATUS had value of 0x23 when STOP_DET occurred,
++	 * if disable IC_ENABLE.ENABLE immediately that can result in
++	 * IC_RAW_INTR_STAT.MASTER_ON_HOLD holding SCL low. Check if
++	 * controller is still ACTIVE before disabling I2C.
++	 */
++	if (i2c_dw_is_controller_active(dev))
++		dev_err(dev->dev, "controller active\n");
++
++	/*
+ 	 * We must disable the adapter before returning and signaling the end
+ 	 * of the current transfer. Otherwise the hardware might continue
+ 	 * generating interrupts which in turn causes a race condition with
 
 
