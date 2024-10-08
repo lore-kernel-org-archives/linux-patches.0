@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20501DED79;
-	Tue,  8 Oct 2024 12:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539971DF96D;
+	Tue,  8 Oct 2024 12:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390125; cv=none; b=YOplqqAmXjWQ42xyu7gVrndYBEW9UZkqxHsG6TBRORqG5O4nF1HejoctkWbb2Gt15rUFMJrBBse4vASLgFA2XYXJTRRqhEUg3ANmVYpBSS0GWLhe1TyIVTaSRZif4P1pU5b2N2VYYEsAlNPkf08j6Z+VGUCi71ILFkFTkybCl2A=
+	t=1728390130; cv=none; b=fpaF8mGSjTjr9TNUb8HO1owPK1Ix0gzRtytb9znUNueAt0cYA52bQndHlFgnEvhksebSsaTx8FptjStTpBxeRB34PizFBBkO98BjLlKaYxjT4YzXFBhHpDxAqJx6PEYiGg298bgmv1OXWulhHW19JKUFGe2Ur9p+fdZ5fCRT8uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390125; c=relaxed/simple;
-	bh=F9W+ew9OilhKTjt5s11a8pwOIdBDuv2pYWAvzk95WFs=;
+	s=arc-20240116; t=1728390130; c=relaxed/simple;
+	bh=Rb/ih7nhqD5yvhCEXUWFS4iyzETwC3HM5TG2tarYho4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSefrZC7gSGjt+b2oVQjX9DCDs8Yz++YT0ShEj8G2qniV5FVHQRnwHjBKMMjLdGSw0WYGYKTT6pdtT+p52hwJld8zVh8juaSMOwd1Yf5NY7RXmQqBrXCjVlg9YxZGCHqA5B+tY4s9XoR5kRQTCSvWni1W94RlsJEiPtb5DIUnjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGfNtcnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5OL/GSVLksrFhFHyR23yC3TEBJZH63TsZ6nMbQkqay5AC5JfXW3LmCf3aGF7ZASPZyEKwaF1FeTYDaKJh8GNa72gCtbMANbfHwm5H+huuTpzNzpiKsZpJDFQSeVdjgfrg8lGkpG2CCSW2gG4Gj+yoo1JxYrkAvDpHKkIaYO1xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbP1jvfC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGfNtcnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E3AC4CEC7;
-	Tue,  8 Oct 2024 12:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbP1jvfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4D7C4CECC;
+	Tue,  8 Oct 2024 12:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390125;
-	bh=F9W+ew9OilhKTjt5s11a8pwOIdBDuv2pYWAvzk95WFs=;
+	s=korg; t=1728390130;
+	bh=Rb/ih7nhqD5yvhCEXUWFS4iyzETwC3HM5TG2tarYho4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGfNtcnbJgBLMEeXtOjDjZgmfH5+ATRvsgTuhKXmfJT+AEAIWuvFzzoVWav20O6OT
-	 IjAx1LBQefVDIuxPqfbha+D4ZWEvAhpc6IEryhhcwGd7Owd2ask10LTdoJ31tI1U7q
-	 wvzmgYb+5YwVbnkFHEOEMstA5SVctMFE1Jkz1srQ=
+	b=gbP1jvfCbrPtHYIZFlhv8RQedNW4NtVnPvGDW7hTtm3GbSWW5QDPK/eYgCw4ohqTI
+	 Gurw6H8U4xsDA0a1gUhG6Fnxi1YeayknSEL5UcAEGEqJWDxidc1a8xET1phdDhuwAi
+	 854JzkNVlDMeb2Fxtbn57ckwehFu/657mbM80mAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
 	Mike McGowen <mike.mcgowen@microchip.com>,
-	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
+	David Strahan <David.Strahan@microchip.com>,
 	Don Brace <don.brace@microchip.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 199/482] scsi: smartpqi: correct stream detection
-Date: Tue,  8 Oct 2024 14:04:22 +0200
-Message-ID: <20241008115656.140215791@linuxfoundation.org>
+Subject: [PATCH 6.10 200/482] scsi: smartpqi: add new controller PCI IDs
+Date: Tue,  8 Oct 2024 14:04:23 +0200
+Message-ID: <20241008115656.179737595@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -55,48 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
+[ Upstream commit dbc39b84540f746cc814e69b21e53e6d3e12329a ]
 
-Correct stream detection by initializing the structure
-pqi_scsi_dev_raid_map_data to 0s.
+All PCI ID entries in Hex.
 
-When the OS issues SCSI READ commands, the driver erroneously considers
-them as SCSI WRITES. If they are identified as sequential IOs, the driver
-then submits those requests via the RAID path instead of the AIO path.
+Add new cisco pci ids:
+                                             VID  / DID  / SVID / SDID
+                                             ----   ----   ----   ----
+                                             9005   028f   1137   02fe
+                                             9005   028f   1137   02ff
+                                             9005   028f   1137   0300
 
-The 'is_write' flag might be set for SCSI READ commands also.  The driver
-may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
-being submitted through the RAID path.
+Add new h3c pci ids:
+                                             VID  / DID  / SVID / SDID
+                                             ----   ----   ----   ----
+                                             9005   028f   193d   0462
+                                             9005   028f   193d   8462
 
-Note: This does not cause data corruption.
+Add new ieit pci ids:
+                                             VID  / DID  / SVID / SDID
+                                             ----   ----   ----   ----
+                                             9005   028f   1ff9   00a3
 
 Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
 Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+Signed-off-by: David Strahan <David.Strahan@microchip.com>
 Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
+Link: https://lore.kernel.org/r/20240827185501.692804-5-don.brace@microchip.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 02d16fddd3123..a4719af88718e 100644
+index a4719af88718e..4230714e5f3a1 100644
 --- a/drivers/scsi/smartpqi/smartpqi_init.c
 +++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5917,7 +5917,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
- 	int rc;
- 	struct pqi_scsi_dev *device;
- 	struct pqi_stream_data *pqi_stream_data;
--	struct pqi_scsi_dev_raid_map_data rmd;
-+	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
- 
- 	if (!ctrl_info->enable_stream_detection)
- 		return false;
+@@ -9428,6 +9428,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x152d, 0x8a37)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x193d, 0x0462)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x193d, 0x1104)
+@@ -9468,6 +9472,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x193d, 0x8461)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x193d, 0x8462)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x193d, 0xc460)
+@@ -10176,6 +10184,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1137, 0x02fa)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1137, 0x02fe)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1137, 0x02ff)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1137, 0x0300)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1ff9, 0x0045)
+@@ -10352,6 +10372,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1f51, 0x1045)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1ff9, 0x00a3)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_ANY_ID, PCI_ANY_ID)
 -- 
 2.43.0
 
