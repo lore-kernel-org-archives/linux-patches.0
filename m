@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04BB1D3653;
-	Tue,  8 Oct 2024 13:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811E01D3653;
+	Tue,  8 Oct 2024 13:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393361; cv=none; b=AwnqpBpS05e/SL2JYNcrwMu9B5MAcWA3dc6OoYp2CTDQBlBKdNbrLLd1/2VH+OlByRGGo9LC67qrbMZ5QF8YX/MZ/eesk3klo5v2vawlfAf8R5HVB+FmwRb/wsKEl4e/thPGElcHx3hiI10Uk/Pj0zFwg+s+gwOE6ff1xea6TS0=
+	t=1728393364; cv=none; b=O2S09EK7hM/pWaX8WoEBpwfUK7lo9yChxzj2h25roUThvGrBmAFrVoXoB6jxz7IknG11DbN+riWL4GtASzjJeTj3YGEfg7I7HZ/Vzz7DkOpaoCguM6dz3AUPNwtkFw/NWQjH8QLUrSccPvEin2pCrjGId7jwcFJw9wJfHwfliaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393361; c=relaxed/simple;
-	bh=V1iKgGnX94bREtod46PdG/TSnHyEQZVJA9Ur43VAYU8=;
+	s=arc-20240116; t=1728393364; c=relaxed/simple;
+	bh=Njcj3oeR4VsiqgTiwQJYSFW08ZsYEmtq9j3z0+f1prE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlB8HGXB6D7VAtUon96Xrtx+/cioRRrIPOrglHbbpYVix3wtGXZ5PTOJq7jA6gMaS4qOavM+UuUArh/4AXKJDREgGeMdcIcI72IoSxfS+e51zoEjh5mPnhWXx6G7isXGGtaCTvQeUBg1begT9+FQMTGlMX0Li4iqSDw+aFkDXvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odwW5Qte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lp+z5QuBUFXBZsiicmqL6GIvu73lsKpvAVmPRPHyRtzM812KXw/nAyLDIKfVcp3uABJLL69T5x80Qdd3W+A0GOielYKOobMj0hQTaPhvuoeEKMyhcNdMsawkRu18VSfSA3gH85WIBzRkgcsTv+lP+fkgUGebYvcBquF6FIzXAm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qquAMmqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odwW5Qte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510F4C4CEC7;
-	Tue,  8 Oct 2024 13:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qquAMmqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9480DC4CEC7;
+	Tue,  8 Oct 2024 13:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393360;
-	bh=V1iKgGnX94bREtod46PdG/TSnHyEQZVJA9Ur43VAYU8=;
+	s=korg; t=1728393364;
+	bh=Njcj3oeR4VsiqgTiwQJYSFW08ZsYEmtq9j3z0+f1prE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odwW5QtecKedVqeS5u39PvTtqN9ITKv6GrpYseWzlrmQcV9+0tQ0up6JEMVKfknFh
-	 AdROvyIs15HRS05ZTszC6J2rDttt0mOLdl3uPGvmXb92Q50H+3ac21/vMNI3MSMsy+
-	 3ddc+8JRqhXDQy01r4WfaLrJRUPRUs4mTq1Jz1Pw=
+	b=qquAMmqDHv2tRFRMLC5WzlEP1YqszZgZmgFBKtGT/qyGO9b+MDR386tl21LSYGGGH
+	 RNeCbwDWc2JdLkcGh7KAixDMjh2VABFteqekD3m8kfVamx+fXuZSwc7nRBvkt1mjAN
+	 4I/phkeydU7HBq/si9iaEp5Li05oztnNpt42JJzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Marcin Wojtas <marcin.s.wojtas@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mirsad Todorovac <mtodorovac69@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/386] net: mvpp2: Increase size of queue_name buffer
-Date: Tue,  8 Oct 2024 14:05:32 +0200
-Message-ID: <20241008115632.878195965@linuxfoundation.org>
+Subject: [PATCH 6.6 122/386] x86/syscall: Avoid memcpy() for ia32 syscall_get_arguments()
+Date: Tue,  8 Oct 2024 14:06:07 +0200
+Message-ID: <20241008115634.237949981@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,62 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 91d516d4de48532d967a77967834e00c8c53dfe6 ]
+[ Upstream commit d19d638b1e6cf746263ef60b7d0dee0204d8216a ]
 
-Increase size of queue_name buffer from 30 to 31 to accommodate
-the largest string written to it. This avoids truncation in
-the possibly unlikely case where the string is name is the
-maximum size.
+Modern (fortified) memcpy() prefers to avoid writing (or reading) beyond
+the end of the addressed destination (or source) struct member:
 
-Flagged by gcc-14:
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘syscall_get_arguments’ at ./arch/x86/include/asm/syscall.h:85:2,
+    inlined from ‘populate_seccomp_data’ at kernel/seccomp.c:258:2,
+    inlined from ‘__seccomp_filter’ at kernel/seccomp.c:1231:3:
+./include/linux/fortify-string.h:580:25: error: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  580 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  .../mvpp2_main.c: In function 'mvpp2_probe':
-  .../mvpp2_main.c:7636:32: warning: 'snprintf' output may be truncated before the last format character [-Wformat-truncation=]
-   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
-        |                                ^
-  .../mvpp2_main.c:7635:9: note: 'snprintf' output between 10 and 31 bytes into a destination of size 30
-   7635 |         snprintf(priv->queue_name, sizeof(priv->queue_name),
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
-        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   7637 |                  priv->port_count > 1 ? "+" : "");
-        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+As already done for x86_64 and compat mode, do not use memcpy() to
+extract syscall arguments from struct pt_regs but rather just perform
+direct assignments. Binary output differences are negligible, and actually
+ends up using less stack space:
 
-Introduced by commit 118d6298f6f0 ("net: mvpp2: add ethtool GOP statistics").
-I am not flagging this as a bug as I am not aware that it is one.
+-       sub    $0x84,%esp
++       sub    $0x6c,%esp
 
-Compile tested only.
+and less text size:
 
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Marcin Wojtas <marcin.s.wojtas@gmail.com>
-Link: https://patch.msgid.link/20240806-mvpp2-namelen-v1-1-6dc773653f2f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+   text    data     bss     dec     hex filename
+  10794     252       0   11046    2b26 gcc-32b/kernel/seccomp.o.stock
+  10714     252       0   10966    2ad6 gcc-32b/kernel/seccomp.o.after
+
+Closes: https://lore.kernel.org/lkml/9b69fb14-df89-4677-9c82-056ea9e706f5@gmail.com/
+Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Link: https://lore.kernel.org/all/20240708202202.work.477-kees%40kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/syscall.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index e809f91c08fb9..9e02e4367bec8 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -1088,7 +1088,7 @@ struct mvpp2 {
- 	unsigned int max_port_rxqs;
+diff --git a/arch/x86/include/asm/syscall.h b/arch/x86/include/asm/syscall.h
+index 03bb950eba690..228a42585d5c9 100644
+--- a/arch/x86/include/asm/syscall.h
++++ b/arch/x86/include/asm/syscall.h
+@@ -82,7 +82,12 @@ static inline void syscall_get_arguments(struct task_struct *task,
+ 					 struct pt_regs *regs,
+ 					 unsigned long *args)
+ {
+-	memcpy(args, &regs->bx, 6 * sizeof(args[0]));
++	args[0] = regs->bx;
++	args[1] = regs->cx;
++	args[2] = regs->dx;
++	args[3] = regs->si;
++	args[4] = regs->di;
++	args[5] = regs->bp;
+ }
  
- 	/* Workqueue to gather hardware statistics */
--	char queue_name[30];
-+	char queue_name[31];
- 	struct workqueue_struct *stats_queue;
- 
- 	/* Debugfs root entry */
+ static inline int syscall_get_arch(struct task_struct *task)
 -- 
 2.43.0
 
