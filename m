@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9B61DE4CD;
-	Tue,  8 Oct 2024 13:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC561C9B99;
+	Tue,  8 Oct 2024 13:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392705; cv=none; b=ka0fmRj75x52LAXPh960YTRUFp8KrLS3jeOx5atWTZVnUom2CP+FERB1pjGcFi+0NNPwLAsT9vCtt1ax01+WUGoxnONtwpnF7qZgMqBzPLq+phJGg9wr/s1UalY2znE8fZddhe6+CRvas/c8p3yonNXigGm17vxsXBapBjbWQsc=
+	t=1728392708; cv=none; b=hLCHGFLzcabkCrHqc1aHHuf7+caTAAl2HRn5uGNu+dkeB6rGNydd/RMM/q2bJyoc7cTG+4nG9MA4x3o6cQgUDfvpphH84a4jYR91hx+dt+AuNst/YyuonLP8B7wNGxUvxt9/iGK4CoNL4oDC+avdGqFuU7QJ2ebgHjWMHpW1oME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392705; c=relaxed/simple;
-	bh=0oL4L2HbTxYxqk5ptZHWeBmzkDwKG4IFrnQIzqqtOPI=;
+	s=arc-20240116; t=1728392708; c=relaxed/simple;
+	bh=AtbTU2COA5VI0R2EOWbJW08xZaHbYwGeItUntr7PuAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZbDDWrdMq6g59p/3yvNV4c/9fdDNkBbRv8pT8jqEQYRTHtUTWGGJ5b1dq8gnxFjd84uS3Ida+zE2VNb1sham1YtNuJx0hJGCigGvELlQBLpx6VnuoA4rKQMlW4Ko4RxWbUDNfHqlpR30Mdr0xHnhgb2gWscMS8RAQ4J7euqM2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYQJQvtY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/IWVl7y7a5x6WWLJXRog2PDw2N6tLZWurLVSjrEQPIi9DzRgLPXHnTIXQVxBE0q4FspW05xlfluyG09QTzSpBubsbgIRAHcumKMr0UzTyVP+qtuiz6tNMWN4xjEa9yovN+FF1nM7lQOL19/O40ZhMJS/51qKNbj7y5zgZkNtF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suqm7PRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYQJQvtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8894FC4CEC7;
-	Tue,  8 Oct 2024 13:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suqm7PRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40DCC4CEC7;
+	Tue,  8 Oct 2024 13:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392705;
-	bh=0oL4L2HbTxYxqk5ptZHWeBmzkDwKG4IFrnQIzqqtOPI=;
+	s=korg; t=1728392708;
+	bh=AtbTU2COA5VI0R2EOWbJW08xZaHbYwGeItUntr7PuAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYQJQvtYwcXexNkYFhsfYcTFsSSznrxPB2wL082x7XE6vy8jUDfFPbuopMmZspe3s
-	 lnk1z6YbGJuNmFoffFsi7+5Yy0xo6EP8KK9N+sZnYFQ0DR42lc0Ntjr2drOjkfm5yj
-	 wktTTldVsknzuA5mRW53dgW1GYC+SH1Y7pRrsp8Q=
+	b=suqm7PRS3vCUs83wHJMtfWu8xFqtNXDTHGeKWvzwow2O2wqY1SlovwvXFz40yDQ1E
+	 OiiZLmiNsWZcCqgDcQAyuLQLCHDP9SF/8sflILi4ZO2Uyirv5HotLlXwZ1R27AIbwW
+	 Fe2peMSF3OGI62vKgZgY8Cc+S8PERN27oHeAXmCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.11 495/558] ACPI: resource: Add Asus ExpertBook B2502CVA to irq1_level_low_skip_override[]
-Date: Tue,  8 Oct 2024 14:08:45 +0200
-Message-ID: <20241008115721.709681296@linuxfoundation.org>
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	KhaiWenTan <khai.wen.tan@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.11 478/558] net: stmmac: Fix zero-division error when disabling tc cbs
+Date: Tue,  8 Oct 2024 14:08:28 +0200
+Message-ID: <20241008115721.050173353@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,42 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: KhaiWenTan <khai.wen.tan@linux.intel.com>
 
-commit 056301e7c7c886f96d799edd36f3406cc30e1822 upstream.
+commit 675faf5a14c14a2be0b870db30a70764df81e2df upstream.
 
-Like other Asus ExpertBook models the B2502CVA has its keybopard IRQ (1)
-described as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh
-which breaks the keyboard.
+The commit b8c43360f6e4 ("net: stmmac: No need to calculate speed divider
+when offload is disabled") allows the "port_transmit_rate_kbps" to be
+set to a value of 0, which is then passed to the "div_s64" function when
+tc-cbs is disabled. This leads to a zero-division error.
 
-Add the B2502CVA to the irq1_level_low_skip_override[] quirk table to fix
-this.
+When tc-cbs is disabled, the idleslope, sendslope, and credit values the
+credit values are not required to be configured. Therefore, adding a return
+statement after setting the txQ mode to DCB when tc-cbs is disabled would
+prevent a zero-division error.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217760
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240927141606.66826-4-hdegoede@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: b8c43360f6e4 ("net: stmmac: No need to calculate speed divider when offload is disabled")
+Cc: <stable@vger.kernel.org>
+Co-developed-by: Choong Yong Liang <yong.liang.choong@linux.intel.com>
+Signed-off-by: Choong Yong Liang <yong.liang.choong@linux.intel.com>
+Signed-off-by: KhaiWenTan <khai.wen.tan@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240918061422.1589662-1-khai.wen.tan@linux.intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -511,6 +511,13 @@ static const struct dmi_system_id irq1_l
- 		},
- 	},
- 	{
-+		/* Asus ExpertBook B2502CVA */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "B2502CVA"),
-+		},
-+	},
-+	{
- 		/* Asus Vivobook Go E1404GA* */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -396,6 +396,7 @@ static int tc_setup_cbs(struct stmmac_pr
+ 			return ret;
+ 
+ 		priv->plat->tx_queues_cfg[queue].mode_to_use = MTL_QUEUE_DCB;
++		return 0;
+ 	}
+ 
+ 	/* Final adjustments for HW */
 
 
