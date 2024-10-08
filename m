@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3B11C5793;
-	Tue,  8 Oct 2024 13:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783641C5793;
+	Tue,  8 Oct 2024 13:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392771; cv=none; b=eGXTAzIPhHsNL6M9r7hb7CFh1jcKiInE/nVMosVptu1lqcfVcu2YVCQI7D7v5pt09RPimm2x/luKLBY3JSZvjfnPf5IguG4BaKlvSF6bbbyZWubpASBFBw1jLgiw6pbkuvZ9WbbJSZFUhAa5LK7pDab2ouLUJjBoSkgGn2SNyJM=
+	t=1728392774; cv=none; b=VZUAivUte41NGps5uYEp3QT6wVJN5cxTRw7b57U2v8slDBA7RW7M+1fe4SAhuW0eZi9rD5uAkHxdPHoVD4fEmwZr+nlM69v8B7FU0ekCc7pysfUEO32aHWw4/dsNxmf5qKuGFQT+R/s816Nsex1qIhGulId/7YLcOfe+tK2B1J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392771; c=relaxed/simple;
-	bh=nS4cKFDcZcA30smaD8BgFwUcCpjcCSc++P9HtTD06As=;
+	s=arc-20240116; t=1728392774; c=relaxed/simple;
+	bh=FpOP337FLJ48D7yKV2zqBApSaZR4ViHPlX/1/yAIlSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qsu1r3dCpBGUVXAE2/4Fjy4ZlsUxdCOkSYtvrHI+cYd1Tv6HbXdVzstCjZv5Q5W0gwn60dJVAvvLvkjRewnguTkJjExOPQkgd+4HaOPeXdfarn4/OjN19MCWeaYpVPHu1il/0jD+4xjTrkEWPkzLwtSZhZqIA9/oEpuH6W2TMUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYFlCGoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMeiFadm5N+56VmTwJ2ts8hhvt4qetITg0hye+4BxIlaX5xJIPBFibxD3iC1I+Ma3BPXDCthd8lO2EHg8xaOHW4J2AS7uBys2Ci/+7d5AxS49WMmhR9ZGEqB7dxMr23PHwJ+sa/Waz+z4pmLAhRh6AoyfrWlrl633ReK+Wj78LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgIFnKiD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYFlCGoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00083C4CEC7;
-	Tue,  8 Oct 2024 13:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgIFnKiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F092DC4CEC7;
+	Tue,  8 Oct 2024 13:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392771;
-	bh=nS4cKFDcZcA30smaD8BgFwUcCpjcCSc++P9HtTD06As=;
+	s=korg; t=1728392774;
+	bh=FpOP337FLJ48D7yKV2zqBApSaZR4ViHPlX/1/yAIlSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYFlCGoHkj5O8Im+c9fUAk1ZeBRMSZdlcWMk5FFjDVlU4rquQmqWJ/x7H//ou0L9p
-	 YCrUXUm16TalP3FNs9Aqs0N7NZM4G1D32KvicLdnQ1f7bJRVYZGse8Jg9kANoTpcKP
-	 /Al7LPWRJu+z+z4Ath+blxH3TjvBgIqrRrE3o8/k=
+	b=EgIFnKiDOZlvHitOV02tVRTlnqJz5ntZnKtAXdwW0RzaFTqTPk40r0sqF7T9nZsp2
+	 EMOYOvajhqal69UTN7pXRmyH4NGpeqhe0z6qDP9loua3iY67gHggaWjG4lpjNxPZVb
+	 twLqqW1IzeBnvYN9Z/tYNiLzyoiRSS+cB8pLOjTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 483/558] mm/gup: fix memfd_pin_folios hugetlb page allocation
-Date: Tue,  8 Oct 2024 14:08:33 +0200
-Message-ID: <20241008115721.243699291@linuxfoundation.org>
+Subject: [PATCH 6.11 484/558] mm/gup: fix memfd_pin_folios alloc race panic
+Date: Tue,  8 Oct 2024 14:08:34 +0200
+Message-ID: <20241008115721.281982453@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -58,18 +58,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-commit 9289f020da47ef04b28865589eeee3d56d4bafea upstream.
+commit ce645b9fdc78ec5d28067286e92871ddae6817d5 upstream.
 
-When memfd_pin_folios -> memfd_alloc_folio creates a hugetlb page, the
-index is wrong.  The subsequent call to filemap_get_folios_contig thus
-cannot find it, and fails, and memfd_pin_folios loops forever.  To fix,
-adjust the index for the huge_page_order.
+If memfd_pin_folios tries to create a hugetlb page, but someone else
+already did, then folio gets the value -EEXIST here:
 
-memfd_alloc_folio also forgets to unlock the folio, so the next touch of
-the page calls hugetlb_fault which blocks forever trying to take the lock.
-Unlock it.
+        folio = memfd_alloc_folio(memfd, start_idx);
+        if (IS_ERR(folio)) {
+                ret = PTR_ERR(folio);
+                if (ret != -EEXIST)
+                        goto err;
 
-Link: https://lkml.kernel.org/r/1725373521-451395-5-git-send-email-steven.sistare@oracle.com
+then on the next trip through the "while start_idx" loop we panic here:
+
+        if (folio) {
+                folio_put(folio);
+
+To fix, set the folio to NULL on error.
+
+Link: https://lkml.kernel.org/r/1725373521-451395-6-git-send-email-steven.sistare@oracle.com
 Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
@@ -82,40 +89,18 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memfd.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/gup.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index bfe0e7189a37..bcb131db829d 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -79,10 +79,13 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 		 * alloc from. Also, the folio will be pinned for an indefinite
- 		 * amount of time, so it is not expected to be migrated away.
- 		 */
--		gfp_mask = htlb_alloc_mask(hstate_file(memfd));
--		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
-+		struct hstate *h = hstate_file(memfd);
- 
--		folio = alloc_hugetlb_folio_reserve(hstate_file(memfd),
-+		gfp_mask = htlb_alloc_mask(h);
-+		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
-+		idx >>= huge_page_order(h);
-+
-+		folio = alloc_hugetlb_folio_reserve(h,
- 						    numa_node_id(),
- 						    NULL,
- 						    gfp_mask);
-@@ -95,6 +98,7 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 				free_huge_folio(folio);
- 				return ERR_PTR(err);
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -3705,6 +3705,7 @@ long memfd_pin_folios(struct file *memfd
+ 					ret = PTR_ERR(folio);
+ 					if (ret != -EEXIST)
+ 						goto err;
++					folio = NULL;
+ 				}
  			}
-+			folio_unlock(folio);
- 			return folio;
  		}
- 		return ERR_PTR(-ENOMEM);
--- 
-2.46.2
-
 
 
