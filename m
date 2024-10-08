@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F541DE2AE;
-	Tue,  8 Oct 2024 13:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B7E1DE2AE;
+	Tue,  8 Oct 2024 13:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392687; cv=none; b=VOUJUpUoE9eRVW+r4QABCLuc2Jf5qLrHnhOpMn/9VB/eIlaaftkna5fBGsSM/e7Ol1Xi4bbMlel7awr3L6FM+A76VIKSkwe/wzMWFEAtbpii6Vfelt/esHfdrPTNtER4L2YA9hNpw0gtlVOuViDeo3Q7v6R4X14IWel1j25D5kc=
+	t=1728392691; cv=none; b=ZntMfoEqeUjmW+iswM0DuZ5cMDaJiOGnQayWoKrkWM0iPOJhPjm5kt2NDSfQV3kVAoaNBjrz64LPWlj6d4JCfho5f/e6ZQDy1frRi65ZqjvyYReERm60u40ZwmcJJqz2/AKt/PUg8Yh+53GME0YHuR2FXAAbQSq+5B+Cyr2daiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392687; c=relaxed/simple;
-	bh=VPjIIHpQ8pErmnRRdacAykWJBGWW/DJNDT7i+SN+qzA=;
+	s=arc-20240116; t=1728392691; c=relaxed/simple;
+	bh=nuD1LVts31aq1YgfjNRvV8t8YOp/ElGz6XjH8tE4Eb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpOw2P4N3x50UFk2s5zO8HY/e+d4K+YmbNkpLog8bBdwE+mATfWFj3PcxZHI0LJ/B3R/yuIILo3moKkjBKZlVOzFs/beDFUnUWsdB8BpvfIu3GZLDVcWdQDCUbCf11vfbcCiBtCj3McfwEaHcTK9rm4b94YuTkviwWRe77sYlZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CljZnbNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/McmYIfnm8SQciOGKTEMFFfgndE+xR2U0TzQrtZ4wO+N4bNizQaWc/0xKrD0WQxYVH3iegreaknD94eSg8E7oJNewIsrKdgZ7S5R5dWKxqzEiFExvXM1prfJjJjVYCop7+hZKPsUDHmHUXA454cjPtkpJ0NTCZU/4J9spNMuZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnZnhyxa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CljZnbNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B9EC4CEC7;
-	Tue,  8 Oct 2024 13:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnZnhyxa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5374C4CEC7;
+	Tue,  8 Oct 2024 13:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392687;
-	bh=VPjIIHpQ8pErmnRRdacAykWJBGWW/DJNDT7i+SN+qzA=;
+	s=korg; t=1728392691;
+	bh=nuD1LVts31aq1YgfjNRvV8t8YOp/ElGz6XjH8tE4Eb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CljZnbNZRruZRql2kjdaEjkktkj5lavVbl53OH5765ZF69ZJNgQqq8Erv7FR0sqDc
-	 0JTN726D/iT98tPV25CoU8Cw5Imy6F3yUv3ehDmJrjFYY38EJZgzioViZPcJGwPUdt
-	 77elzoYFoFgzjNnZp5P2m4dc6xxTsgFbnT53f9Oc=
+	b=NnZnhyxaO3Zy6KjCtElI5mvPEJW7277PfyuD8v+neunalvwDwRwzCraeoz8PAe60G
+	 mJGVfbV6w/6Kq2Zhc6KjuSE0fovWMw+UITLFeae+p++x618pXw8iCe+GBeyyiuRpDo
+	 DzVTNnzJyuftfSV3KkKSVo1ou5v9hRVcqnSmoN0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.11 490/558] pidfs: check for valid pid namespace
-Date: Tue,  8 Oct 2024 14:08:40 +0200
-Message-ID: <20241008115721.515038266@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.11 491/558] ACPI: video: Add backlight=native quirk for Dell OptiPlex 5480 AIO
+Date: Tue,  8 Oct 2024 14:08:41 +0200
+Message-ID: <20241008115721.554622029@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -49,51 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 8a46067783bdff222d1fb8f8c20e3b7b711e3ce5 upstream.
+commit ac78288fe062b64e45a479eaae74aaaafcc8ecdd upstream.
 
-When we access a no-current task's pid namespace we need check that the
-task hasn't been reaped in the meantime and it's pid namespace isn't
-accessible anymore.
+Dell All In One (AIO) models released after 2017 may use a backlight
+controller board connected to an UART.
 
-The user namespace is fine because it is only released when the last
-reference to struct task_struct is put and exit_creds() is called.
+In DSDT this uart port will be defined as:
 
-Link: https://lore.kernel.org/r/20240926-klebt-altgedienten-0415ad4d273c@brauner
-Fixes: 5b08bd408534 ("pidfs: allow retrieval of namespace file descriptors")
-CC: stable@vger.kernel.org # v6.11
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+   Name (_HID, "DELL0501")
+   Name (_CID, EisaId ("PNP0501")
+
+The Dell OptiPlex 5480 AIO has an ACPI device for one of its UARTs with
+the above _HID + _CID. Loading the dell-uart-backlight driver fails with
+the following errors:
+
+[   18.261353] dell_uart_backlight serial0-0: Timed out waiting for response.
+[   18.261356] dell_uart_backlight serial0-0: error -ETIMEDOUT: getting firmware version
+[   18.261359] dell_uart_backlight serial0-0: probe with driver dell_uart_backlight failed with error -110
+
+Indicating that there is no backlight controller board attached to
+the UART, while the GPU's native backlight control method does work.
+
+Add a quirk to use the GPU's native backlight control method on this model.
+
+Fixes: cd8e468efb4f ("ACPI: video: Add Dell UART backlight controller detection")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240918153849.37221-1-hdegoede@redhat.com
+[ rjw: Changelog edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pidfs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/video_detect.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index 7ffdc88dfb52..80675b6bf884 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -120,6 +120,7 @@ static long pidfd_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 	struct nsproxy *nsp __free(put_nsproxy) = NULL;
- 	struct pid *pid = pidfd_pid(file);
- 	struct ns_common *ns_common = NULL;
-+	struct pid_namespace *pid_ns;
- 
- 	if (arg)
- 		return -EINVAL;
-@@ -202,7 +203,9 @@ static long pidfd_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 	case PIDFD_GET_PID_NAMESPACE:
- 		if (IS_ENABLED(CONFIG_PID_NS)) {
- 			rcu_read_lock();
--			ns_common = to_ns_common( get_pid_ns(task_active_pid_ns(task)));
-+			pid_ns = task_active_pid_ns(task);
-+			if (pid_ns)
-+				ns_common = to_ns_common(get_pid_ns(pid_ns));
- 			rcu_read_unlock();
- 		}
- 		break;
--- 
-2.46.2
-
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -845,6 +845,15 @@ static const struct dmi_system_id video_
+ 	 * which need native backlight control nevertheless.
+ 	 */
+ 	{
++	 /* https://github.com/zabbly/linux/issues/26 */
++	 .callback = video_detect_force_native,
++	 /* Dell OptiPlex 5480 AIO */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 5480 AIO"),
++		},
++	},
++	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=2303936 */
+ 	 .callback = video_detect_force_native,
+ 	 /* Dell OptiPlex 7760 AIO */
 
 
