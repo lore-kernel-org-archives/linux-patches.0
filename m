@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C2B1DE4CC;
-	Tue,  8 Oct 2024 12:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCC31D31A0;
+	Tue,  8 Oct 2024 12:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391857; cv=none; b=mM5e4En9E1JDr6JkbcKLAzMIzZGks24/ytYwX1DtWbSJYOcxy7/8X2rLcH4/pOW0m+0COqe8pfCEwltaNTjh1cFRstED1xAA5Od8FqtiQQt9K042hjoyz7Rse6rJEArQwmSYH9+kplCsBRI0qNgoDBWy1X409r3+08OlMsNmVTg=
+	t=1728391861; cv=none; b=QThXH5pOBiiblrVrJ/zZz5J7wi5WJv2hcRtWmcRy0VwQPPJZBRpm6Uo8JzwjferegDm1pDjukxvEH9mz9ef9nEYV3fpT0yKiAWG3mEdp7VI+vdH0ywSMeGMj+q8DhzgA9Y8y//q/ZKamhHSrk3ZO40+fWUGpZL/CD73pb3qxINU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391857; c=relaxed/simple;
-	bh=JrLdAu7BjIsP4QCrb1W39ZP9SZJHnjeaSS13/x6f5gU=;
+	s=arc-20240116; t=1728391861; c=relaxed/simple;
+	bh=y1Ye9zmCaMBsiZsQb6k/Lb1csRvSQhE3bOnilMZ1RpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgVeeAVswta/F07E8m3RMxhYZ7/ORgXE/ZxBr+cLhLoZodSU4IL0qMr05XyiKE1Rz2KFr3cG+hSIJGRDdCz9/i/O1lRN4nxpzbF/WshDKiOjMci8fP0K/jDQZ2WlC2aARF0hpRMcDTKDdYD/rLXez4PgkbCC+WwQ5+yUBXgRXl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOYjzaEK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IufUgGt0UK673kDGDhtwhgric+3azzqxI5ouoSmBWMF2xyZ5EbjREg1XViK6Xf3uCCZMJ4TMtUEjpX/2croMw7cFc69+80KLl3o8TmD9qzwKs1AfrewyvBGCgZXnoUYk4d2QmmXrOpZjWjBjiikAlxHdAbGBGZi0d+egJUmuk54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5W5MVVb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOYjzaEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBE7C4CEC7;
-	Tue,  8 Oct 2024 12:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5W5MVVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E06C4CEC7;
+	Tue,  8 Oct 2024 12:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391857;
-	bh=JrLdAu7BjIsP4QCrb1W39ZP9SZJHnjeaSS13/x6f5gU=;
+	s=korg; t=1728391861;
+	bh=y1Ye9zmCaMBsiZsQb6k/Lb1csRvSQhE3bOnilMZ1RpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOYjzaEKJW77eFN95FYgu6gWsWtEPKH4y6tuz3d+a5FE5UZj0DX3/yPzJYhjj/nqn
-	 hayzLW2nv9EkGzWKMBwAW0fj8Q0pLr7nsM5nH5RkeBXD4VjnGo6IrT0cJrr36obNhL
-	 6+15aOYbMV6TLWtjz0YZ91tafh2kvgdh/uNUhaMk=
+	b=B5W5MVVbPVhALk1yNSAcS5JMQYvPc8vQ9n6GbnkV13MsxAyFu67xRphcSfaXgd01V
+	 COIJN86AJ+38Wltlu6QlNw7DW7tRIKSYZxZzp6cPaZJOwHz/pV5bUr2fcoX7GjzMXG
+	 vws52TttBX2PXgfPXj1Iq8Mt/qrbJdVIsqpRzXNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 213/558] drm/amd/display: Add NULL check for clk_mgr in dcn32_init_hw
-Date: Tue,  8 Oct 2024 14:04:03 +0200
-Message-ID: <20241008115710.727286814@linuxfoundation.org>
+Subject: [PATCH 6.11 214/558] drm/xe/hdcp: Check GSC structure validity
+Date: Tue,  8 Oct 2024 14:04:04 +0200
+Message-ID: <20241008115710.765717287@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -58,63 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit c395fd47d1565bd67671f45cca281b3acc2c31ef ]
+[ Upstream commit b4224f6bae3801d589f815672ec62800a1501b0d ]
 
-This commit addresses a potential null pointer dereference issue in the
-`dcn32_init_hw` function. The issue could occur when `dc->clk_mgr` is
-null.
+Sometimes xe_gsc is not initialized when checked at HDCP capability
+check. Add gsc structure check to avoid null pointer error.
 
-The fix adds a check to ensure `dc->clk_mgr` is not null before
-accessing its functions. This prevents a potential null pointer
-dereference.
-
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn32/dcn32_hwseq.c:961 dcn32_init_hw() error: we previously assumed 'dc->clk_mgr' could be null (see line 782)
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240722064451.3610512-4-suraj.kandpal@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/display/xe_hdcp_gsc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-index df80072174b79..9a912b9c1f2e9 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-@@ -779,7 +779,7 @@ void dcn32_init_hw(struct dc *dc)
- 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
- 	uint32_t user_level = MAX_BACKLIGHT_LEVEL;
+diff --git a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+index 990285aa9b261..0af667ebebf98 100644
+--- a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
++++ b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
+@@ -40,10 +40,14 @@ bool intel_hdcp_gsc_check_status(struct xe_device *xe)
+ {
+ 	struct xe_tile *tile = xe_device_get_root_tile(xe);
+ 	struct xe_gt *gt = tile->media_gt;
++	struct xe_gsc *gsc = &gt->uc.gsc;
+ 	bool ret = true;
  
--	if (dc->clk_mgr && dc->clk_mgr->funcs->init_clocks)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks)
- 		dc->clk_mgr->funcs->init_clocks(dc->clk_mgr);
+-	if (!xe_uc_fw_is_enabled(&gt->uc.gsc.fw))
++	if (!gsc && !xe_uc_fw_is_enabled(&gsc->fw)) {
++		drm_dbg_kms(&xe->drm,
++			    "GSC Components not ready for HDCP2.x\n");
+ 		return false;
++	}
  
- 	// Initialize the dccg
-@@ -958,10 +958,11 @@ void dcn32_init_hw(struct dc *dc)
- 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
- 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
+ 	xe_pm_runtime_get(xe);
+ 	if (xe_force_wake_get(gt_to_fw(gt), XE_FW_GSC)) {
+@@ -53,7 +57,7 @@ bool intel_hdcp_gsc_check_status(struct xe_device *xe)
+ 		goto out;
+ 	}
  
--	if (dc->clk_mgr->funcs->notify_wm_ranges)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->notify_wm_ranges)
- 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
+-	if (!xe_gsc_proxy_init_done(&gt->uc.gsc))
++	if (!xe_gsc_proxy_init_done(gsc))
+ 		ret = false;
  
--	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->set_hard_max_memclk &&
-+	    !dc->clk_mgr->dc_mode_softmax_enabled)
- 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
- 
- 	if (dc->res_pool->hubbub->funcs->force_pstate_change_control)
+ 	xe_force_wake_put(gt_to_fw(gt), XE_FW_GSC);
 -- 
 2.43.0
 
