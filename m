@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89B91DED7A;
-	Tue,  8 Oct 2024 13:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF0F1DE8A0;
+	Tue,  8 Oct 2024 13:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393090; cv=none; b=c+PsH9PMxG6RAhe44rMW63zr8oTFIf1bsK28EwluiV/awmDW8eWbOzqElHUdyo+dBOkZRkP3KXQ4P/28ND/XnQ2d7PXHFu/eyxYV6FZBp0+mB5JMSzcJ+DsQhkQNPOEzAXmyxIV0Z2CVka2KH9Wjac37K7/bytHOqmrRmvyQ4t0=
+	t=1728393094; cv=none; b=sYJXySiw19mapNHung9KqHKOxBq2zX5lonOwrZb9SlPtBzlozrYRdGhM2hM3LzOSxY2xuyyONCPT2TXWfE18QZpuzliM7cD9Gt5/1IkAA/c93/1BDT/bBCoeBK+A54epLaB1/ZBwTHxuaJPVkRkl2IZ5fc0kAR0Fjpv9Bwuj0XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393090; c=relaxed/simple;
-	bh=KBqTOXtwWGBQoUM9RuKBurANIr6+EFvf/4KGiwmlTXM=;
+	s=arc-20240116; t=1728393094; c=relaxed/simple;
+	bh=DxN5ST375cHX6WvDH+FiJWLhg/W7ag9/XPTBqDwMefs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hv96uLL7i2xGKr2f0XHuZAJCQ7rAxDXo4nIDtrazFHQwWGZv9TPHfF6wuZKAiHlJznT3rEnsgzm2w8I3A7boGxvlK52wVZUAoGsOdpZ9e3NEtCSJy/y/GmZB65XZcO3ybVnRXrdvwx1zkVLWTfbgqIR5Si7lWs8Yle9/pyDqFSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OF9/qdCI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jg2dT72HMsbhIVqWSSMTm0HTIgIwcdMq8IGRhLqwXsR1p9SD0Wblc4GBbPlzf2YXT9f/SkifkrA8dvFqAYF6197bz2O3410SijFgcNKgED98n23IuSebamB8uHXG0UBWcErUu3mW1/sTIJllQYLTAeJvk/d8iBdMOG17YYjOXno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsL9bTYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OF9/qdCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15098C4CEC7;
-	Tue,  8 Oct 2024 13:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsL9bTYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659E2C4CEC7;
+	Tue,  8 Oct 2024 13:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393090;
-	bh=KBqTOXtwWGBQoUM9RuKBurANIr6+EFvf/4KGiwmlTXM=;
+	s=korg; t=1728393093;
+	bh=DxN5ST375cHX6WvDH+FiJWLhg/W7ag9/XPTBqDwMefs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OF9/qdCIqR6AZUvKW+NrkyujkLtNX9IttORVOFteF9H3mnbPL0PR0JDPPmJcQgOfc
-	 v6gWOXE0L6tbc02VgzocKIx6VpdYjhYlxZxRDQ7iXR3aScANj24I8rhOH46mYyexnl
-	 FtiRKn717tmtlzbtsRQhKef0GhO+f+y5sGCWe2/I=
+	b=wsL9bTYhHLOTjBHk98sdBazHJiNF9Q9Cfsex78rLtqxEC+Rg+03VXiZOWHdM38YKp
+	 /QaOPcVIewv4gOnBMDMRVgA3XbNfMsjam9NpVUjuwEBncltcKB/WZyU/Y4bZJ+Tm35
+	 aa1ijLDrTPtJACBpsr7PqNdjHwf3kIu/KWM3c16w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/386] cifs: Remove intermediate object of failed create reparse call
-Date: Tue,  8 Oct 2024 14:04:54 +0200
-Message-ID: <20241008115631.401631462@linuxfoundation.org>
+Subject: [PATCH 6.6 023/386] Bluetooth: L2CAP: Fix uaf in l2cap_connect
+Date: Tue,  8 Oct 2024 14:04:28 +0200
+Message-ID: <20241008115630.388812675@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,91 +45,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit c9432ad5e32f066875b1bf95939c363bc46d6a45 ]
+[ Upstream commit 333b4fd11e89b29c84c269123f871883a30be586 ]
 
-If CREATE was successful but SMB2_OP_SET_REPARSE failed then remove the
-intermediate object created by CREATE. Otherwise empty object stay on the
-server when reparse call failed.
+[Syzbot reported]
+BUG: KASAN: slab-use-after-free in l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+Read of size 8 at addr ffff8880241e9800 by task kworker/u9:0/54
 
-This ensures that if the creating of special files is unsupported by the
-server then no empty file stay on the server as a result of unsupported
-operation.
+CPU: 0 UID: 0 PID: 54 Comm: kworker/u9:0 Not tainted 6.11.0-rc6-syzkaller-00268-g788220eee30d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Workqueue: hci2 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:93 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0xc3/0x620 mm/kasan/report.c:488
+ kasan_report+0xd9/0x110 mm/kasan/report.c:601
+ l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+ l2cap_connect_req net/bluetooth/l2cap_core.c:4080 [inline]
+ l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:4772 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:5543 [inline]
+ l2cap_recv_frame+0xf0b/0x8eb0 net/bluetooth/l2cap_core.c:6825
+ l2cap_recv_acldata+0x9b4/0xb70 net/bluetooth/l2cap_core.c:7514
+ hci_acldata_packet net/bluetooth/hci_core.c:3791 [inline]
+ hci_rx_work+0xaab/0x1610 net/bluetooth/hci_core.c:4028
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+...
 
-Fixes: 102466f303ff ("smb: client: allow creating special files via reparse points")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Freed by task 5245:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
+ poison_slab_object+0xf7/0x160 mm/kasan/common.c:240
+ __kasan_slab_free+0x32/0x50 mm/kasan/common.c:256
+ kasan_slab_free include/linux/kasan.h:184 [inline]
+ slab_free_hook mm/slub.c:2256 [inline]
+ slab_free mm/slub.c:4477 [inline]
+ kfree+0x12a/0x3b0 mm/slub.c:4598
+ l2cap_conn_free net/bluetooth/l2cap_core.c:1810 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ l2cap_conn_put net/bluetooth/l2cap_core.c:1822 [inline]
+ l2cap_conn_del+0x59d/0x730 net/bluetooth/l2cap_core.c:1802
+ l2cap_connect_cfm+0x9e6/0xf80 net/bluetooth/l2cap_core.c:7241
+ hci_connect_cfm include/net/bluetooth/hci_core.h:1960 [inline]
+ hci_conn_failed+0x1c3/0x370 net/bluetooth/hci_conn.c:1265
+ hci_abort_conn_sync+0x75a/0xb50 net/bluetooth/hci_sync.c:5583
+ abort_conn_sync+0x197/0x360 net/bluetooth/hci_conn.c:2917
+ hci_cmd_sync_work+0x1a4/0x410 net/bluetooth/hci_sync.c:328
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Reported-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Tested-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c12e2f941af1feb5632c
+Fixes: 7b064edae38d ("Bluetooth: Fix authentication if acl data comes before remote feature evt")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_core.c   | 2 ++
+ net/bluetooth/hci_event.c  | 2 +-
+ net/bluetooth/l2cap_core.c | 8 --------
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index dd8acd2077521..8010b3ed4b3fe 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1205,9 +1205,12 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 	struct cifsFileInfo *cfile;
- 	struct inode *new = NULL;
-+	int out_buftype[4] = {};
-+	struct kvec out_iov[4] = {};
- 	struct kvec in_iov[2];
- 	int cmds[2];
- 	int rc;
-+	int i;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 1b56355c40eaf..f787b0eb7d669 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3755,6 +3755,8 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
  
- 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
- 			     SYNCHRONIZE | DELETE |
-@@ -1228,7 +1231,7 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
- 		cmds[1] = SMB2_OP_POSIX_QUERY_INFO;
- 		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
- 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, &oparms,
--				      in_iov, cmds, 2, cfile, NULL, NULL, NULL);
-+				      in_iov, cmds, 2, cfile, out_iov, out_buftype, NULL);
- 		if (!rc) {
- 			rc = smb311_posix_get_inode_info(&new, full_path,
- 							 data, sb, xid);
-@@ -1237,12 +1240,29 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
- 		cmds[1] = SMB2_OP_QUERY_INFO;
- 		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
- 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, &oparms,
--				      in_iov, cmds, 2, cfile, NULL, NULL, NULL);
-+				      in_iov, cmds, 2, cfile, out_iov, out_buftype, NULL);
- 		if (!rc) {
- 			rc = cifs_get_inode_info(&new, full_path,
- 						 data, sb, xid, NULL);
- 		}
+ 	hci_dev_lock(hdev);
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
++	if (conn && hci_dev_test_flag(hdev, HCI_MGMT))
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 	hci_dev_unlock(hdev);
+ 
+ 	if (conn) {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index d81c7fccdd404..b86a30c600a9a 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3707,7 +3707,7 @@ static void hci_remote_features_evt(struct hci_dev *hdev, void *data,
+ 		goto unlock;
  	}
-+
-+
-+	/*
-+	 * If CREATE was successful but SMB2_OP_SET_REPARSE failed then
-+	 * remove the intermediate object created by CREATE. Otherwise
-+	 * empty object stay on the server when reparse call failed.
-+	 */
-+	if (rc &&
-+	    out_iov[0].iov_base != NULL && out_buftype[0] != CIFS_NO_BUFFER &&
-+	    ((struct smb2_hdr *)out_iov[0].iov_base)->Status == STATUS_SUCCESS &&
-+	    (out_iov[1].iov_base == NULL || out_buftype[1] == CIFS_NO_BUFFER ||
-+	     ((struct smb2_hdr *)out_iov[1].iov_base)->Status != STATUS_SUCCESS))
-+		smb2_unlink(xid, tcon, full_path, cifs_sb, NULL);
-+
-+	for (i = 0; i < ARRAY_SIZE(out_buftype); i++)
-+		free_rsp_buf(out_buftype[i], out_iov[i].iov_base);
-+
- 	return rc ? ERR_PTR(rc) : new;
- }
  
+-	if (!ev->status && !test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++	if (!ev->status) {
+ 		struct hci_cp_remote_name_req cp;
+ 		memset(&cp, 0, sizeof(cp));
+ 		bacpy(&cp.bdaddr, &conn->dst);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 2651cc2d5c283..93651c421767a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4064,17 +4064,9 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
+ static int l2cap_connect_req(struct l2cap_conn *conn,
+ 			     struct l2cap_cmd_hdr *cmd, u16 cmd_len, u8 *data)
+ {
+-	struct hci_dev *hdev = conn->hcon->hdev;
+-	struct hci_conn *hcon = conn->hcon;
+-
+ 	if (cmd_len < sizeof(struct l2cap_conn_req))
+ 		return -EPROTO;
+ 
+-	hci_dev_lock(hdev);
+-	if (hci_dev_test_flag(hdev, HCI_MGMT))
+-		mgmt_device_connected(hdev, hcon, NULL, 0);
+-	hci_dev_unlock(hdev);
+-
+ 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP);
+ 	return 0;
+ }
 -- 
 2.43.0
 
