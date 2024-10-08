@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59131DE2CF;
-	Tue,  8 Oct 2024 12:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048561D54D1;
+	Tue,  8 Oct 2024 12:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391796; cv=none; b=WEyz7abZLNM3x5VDhARruWOz1ErBlyTRmFpAoWvCXy6frsBnJfsJm6Dmj6zM34AfSD/6P4I8lkwQFt6S7C4tH2kEd7EkbqyGWnJRd4o8jGvpFzddDirk4JXqfZzPa+19pG7hGIBn/LsjwixCGVyWodPkrpC0TDZ5JWz8cF0O6n8=
+	t=1728391799; cv=none; b=qXQ7+eEVfTPYN+9wlKn3qRgLgMvquJ1JClDE+e5vw85vzo3lv9CpJL3m/zJAZfG332ielyO0NN/YFUqq2miFSI6oJPrq+1pplg4ttGinTUwg+ApasZikzzitZ56Y+LyPXgVwMURuy7cUnJVCmhJuSf4i+eNekr4xbTWaB21m8y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391796; c=relaxed/simple;
-	bh=JZNeuNXTPViikHWTCE6PisxrsEomDLJKuylAYjMLiI4=;
+	s=arc-20240116; t=1728391799; c=relaxed/simple;
+	bh=DqxbZeaQr/xE09Kauy446jvnKPS7JKFfM+oo9GjT7Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WcT8inxDbSjqEToF+om2d7QJinTdwXdRGMm3mwACEo6L8Ctg5etb2w5ceQbYNe14INdeMUFI7J5Z0ge7xD5x2yIAufhePIzThsR95g0FXhS0tOxSklE1YLBBLKtmLV9TbvVRox6lv1teAprYpot42Ov42z/Ns3CVO7aKb0PCuN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWijxuC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ol/E1oF/UNOR9CYILGW4k+WxUk8J+GG3ykkhaSmCAR572ynZQu1g38eB3utO5apwKlZ2DOdG6LcqsBB8whnOu6jSiwSe2BJPQDKBfA7d5hpHXV0GkL81GJzQw450NyjLI4nNd1jHPZYNxOsMiV2AEdExj4sLMdBDImV16bv6vcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgKthbsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWijxuC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073CEC4CEC7;
-	Tue,  8 Oct 2024 12:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgKthbsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BD6C4CECD;
+	Tue,  8 Oct 2024 12:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391795;
-	bh=JZNeuNXTPViikHWTCE6PisxrsEomDLJKuylAYjMLiI4=;
+	s=korg; t=1728391798;
+	bh=DqxbZeaQr/xE09Kauy446jvnKPS7JKFfM+oo9GjT7Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWijxuC7f7ynXluSXZxhbFqiKnjQlDSJ44RhG8jq3lXWVWPkTVXHQeLKO3/VNQ/G0
-	 ZDNnIDlDNtOwJRhlF9R+GjNi2TPVfd6UTW9EFd77a7KTtBgHJBN7zu7qaphk8eWVB5
-	 If+EdWf2Kgt51PjAdOB9XJJzucrPVGmk32FDVRCE=
+	b=WgKthbsJFMUHElze8RCQOnsQ30xWhjeZcdPdzSNjTgjJMq1dqEXy4OLfppGgzwn5B
+	 JCrDS7Q5QfOlrxe6LNy7BKnIgoIB63kf/09ykMBNBrbh2RhXnC44Vt/Zx0oj56dsDn
+	 x6BUp4ReGh8HYudlSQluWVV7CsvaJ3yQej0pwCOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 207/558] drm/amdgpu: disallow multiple BO_HANDLES chunks in one submit
-Date: Tue,  8 Oct 2024 14:03:57 +0200
-Message-ID: <20241008115710.489493054@linuxfoundation.org>
+Subject: [PATCH 6.11 225/558] drm/amd/display: Add NULL check for function pointer in dcn20_set_output_transfer_func
+Date: Tue,  8 Oct 2024 14:04:15 +0200
+Message-ID: <20241008115711.196383250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -46,51 +52,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit fec5f8e8c6bcf83ed7a392801d7b44c5ecfc1e82 ]
+[ Upstream commit 62ed6f0f198da04e884062264df308277628004f ]
 
-Before this commit, only submits with both a BO_HANDLES chunk and a
-'bo_list_handle' would be rejected (by amdgpu_cs_parser_bos).
+This commit adds a null check for the set_output_gamma function pointer
+in the dcn20_set_output_transfer_func function. Previously,
+set_output_gamma was being checked for null at line 1030, but then it
+was being dereferenced without any null check at line 1048. This could
+potentially lead to a null pointer dereference error if set_output_gamma
+is null.
 
-But if UMD sent multiple BO_HANDLES, what would happen is:
-* only the last one would be really used
-* all the others would leak memory as amdgpu_cs_p1_bo_handles would
-  overwrite the previous p->bo_list value
+To fix this, we now ensure that set_output_gamma is not null before
+dereferencing it. We do this by adding a null check for set_output_gamma
+before the call to set_output_gamma at line 1048.
 
-This commit rejects submissions with multiple BO_HANDLES chunks to
-match the implementation of the parser.
-
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 6dfdff58bffd1..78b3c067fea7e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -263,6 +263,10 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 			if (size < sizeof(struct drm_amdgpu_bo_list_in))
- 				goto free_partial_kdata;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 17d1c195663a0..7ca0da88290af 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -1044,7 +1044,8 @@ bool dcn20_set_output_transfer_func(struct dc *dc, struct pipe_ctx *pipe_ctx,
+ 	/*
+ 	 * if above if is not executed then 'params' equal to 0 and set in bypass
+ 	 */
+-	mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
++	if (mpc->funcs->set_output_gamma)
++		mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
  
-+			/* Only a single BO list is allowed to simplify handling. */
-+			if (p->bo_list)
-+				ret = -EINVAL;
-+
- 			ret = amdgpu_cs_p1_bo_handles(p, p->chunks[i].kdata);
- 			if (ret)
- 				goto free_partial_kdata;
+ 	return true;
+ }
 -- 
 2.43.0
 
