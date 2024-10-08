@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C011D1DE88F;
-	Tue,  8 Oct 2024 13:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297391DEFED;
+	Tue,  8 Oct 2024 13:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392893; cv=none; b=gXVUH15d2fI9j/gJFe8gJ5g/7TLhryGYd6v9U2xMTWyl/2knART5l63M91HIMVbC/hn/bscWSC37PxpBvD2h/j1/MHAYrtAbm68F/VVWXTpGrp9nkx0euEuzKJfhAhkf3UB7NEUd8xz7EpEZoi+BrJ+lnfgOf3her26jKzTZXlY=
+	t=1728392897; cv=none; b=k9FZWzDtb6Qm/WoQo31AG1F1lEFZgEFroNlW4aNUl+rKlWjnoa5/5UvBKtGgEYsxDyaCdTBWiU6ZTdEgDgtzC05dZpHM8IJ2EDquS1Vf63v1iuCV5W2NoGpP2pdsNgLHpFT5ItnPCUjIhDWl4HdKZv91CetkQNTpRluPZibTYEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392893; c=relaxed/simple;
-	bh=pa/xgXjA+C706/AdFU6IWnv55KeiKSRUZKcDO4kb7EA=;
+	s=arc-20240116; t=1728392897; c=relaxed/simple;
+	bh=ERmHoXo1YJwxut4E/9rbUu3HRXxWD3A/JPo+/UFpmeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jat/wbT7zx9k2BBn8bW6E/Hj6so0JCFDHkSEuLCUOATTETlD+Ovt86h/a4tEpowWNUySsKf3uRJmF36Ywt1ks32gqZ2mYczoeYbi5BLp0nRBQb/TiKmDVL0NEj8NdPvZ/9zlUXhwyQRhdV71GafPOgZEQiQpL7PWZ6JFgAfPcq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFsy0UWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EewGGU/NemVWhRb11KHUKodKFRRwRlRZ9OXkzmMqmpVtPOIJf7v25DA/9/jXs7i56mYNnVKpWv68BsG+TY90BUM18yblP76LOc+Da0gLHb7colENXsd70AQ/0aZ3xiX24uTorXXd+bTUoah8U0aES7c6etlvi392YQwDzsn1Bqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiHAlI6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFsy0UWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4609AC4CEC7;
-	Tue,  8 Oct 2024 13:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiHAlI6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89065C4CECD;
+	Tue,  8 Oct 2024 13:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392893;
-	bh=pa/xgXjA+C706/AdFU6IWnv55KeiKSRUZKcDO4kb7EA=;
+	s=korg; t=1728392897;
+	bh=ERmHoXo1YJwxut4E/9rbUu3HRXxWD3A/JPo+/UFpmeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFsy0UWXQix1TWM6wvtG7EwHK2g6tV3m2x7dAAAp2SSYgYuB0ysUk7fOt4BakBrb+
-	 fMU0Fjxa9JY/5NDDSRLGE5/ssfbQH8hRQKq/JYWgLUxEOK8HkdD/QY9PcoGQhCf5JC
-	 K7WLXKT9kY23LGYksCpEGxgKBb3iOodDVjaU1y5I=
+	b=CiHAlI6Q1GJ+4giWCbDxsdQAAgEirnqXH7vw3Lck2++1dSFh5k3BfmfO2ZbF+GpAX
+	 1iBiFdbp4eV4QxxBhHR5mctlj0REa1wwBIvrR+BY/6/mcCSoPGPklkv/F2/g0V+mZx
+	 ixTf7QxjDJBSIMQu9kePnTrNQr4pRy+oBUTEYYt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Subject: [PATCH 6.11 519/558] drm/panthor: Dont declare a queue blocked if deferred operations are pending
-Date: Tue,  8 Oct 2024 14:09:09 +0200
-Message-ID: <20241008115722.651950567@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Wei Li <liwei391@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.11 510/558] tracing/timerlat: Drop interface_lock in stop_kthread()
+Date: Tue,  8 Oct 2024 14:09:00 +0200
+Message-ID: <20241008115722.298176997@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,46 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Wei Li <liwei391@huawei.com>
 
-commit 7a1f30afe97294281a2ba05977688385744f9844 upstream.
+commit b484a02c9cedf8703eff8f0756f94618004bd165 upstream.
 
-If deferred operations are pending, we want to wait for those to
-land before declaring the queue blocked on a SYNC_WAIT. We need
-this to deal with the case where the sync object is signalled through
-a deferred SYNC_{ADD,SET} from the same queue. If we don't do that
-and the group gets scheduled out before the deferred SYNC_{SET,ADD}
-is executed, we'll end up with a timeout, because no external
-SYNC_{SET,ADD} will make the scheduler reconsider the group for
-execution.
+stop_kthread() is the offline callback for "trace/osnoise:online", since
+commit 5bfbcd1ee57b ("tracing/timerlat: Add interface_lock around clearing
+of kthread in stop_kthread()"), the following ABBA deadlock scenario is
+introduced:
 
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240905071914.3278599-1-boris.brezillon@collabora.com
+T1                            | T2 [BP]               | T3 [AP]
+osnoise_hotplug_workfn()      | work_for_cpu_fn()     | cpuhp_thread_fun()
+                              |   _cpu_down()         |   osnoise_cpu_die()
+  mutex_lock(&interface_lock) |                       |     stop_kthread()
+                              |     cpus_write_lock() |       mutex_lock(&interface_lock)
+  cpus_read_lock()            |     cpuhp_kick_ap()   |
+
+As the interface_lock here in just for protecting the "kthread" field of
+the osn_var, use xchg() instead to fix this issue. Also use
+for_each_online_cpu() back in stop_per_cpu_kthreads() as it can take
+cpu_read_lock() again.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20240924094515.3561410-3-liwei391@huawei.com
+Fixes: 5bfbcd1ee57b ("tracing/timerlat: Add interface_lock around clearing of kthread in stop_kthread()")
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace_osnoise.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -1103,7 +1103,13 @@ cs_slot_sync_queue_state_locked(struct p
- 			list_move_tail(&group->wait_node,
- 				       &group->ptdev->scheduler->groups.waiting);
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -1953,12 +1953,8 @@ static void stop_kthread(unsigned int cp
+ {
+ 	struct task_struct *kthread;
+ 
+-	mutex_lock(&interface_lock);
+-	kthread = per_cpu(per_cpu_osnoise_var, cpu).kthread;
++	kthread = xchg_relaxed(&(per_cpu(per_cpu_osnoise_var, cpu).kthread), NULL);
+ 	if (kthread) {
+-		per_cpu(per_cpu_osnoise_var, cpu).kthread = NULL;
+-		mutex_unlock(&interface_lock);
+-
+ 		if (cpumask_test_and_clear_cpu(cpu, &kthread_cpumask) &&
+ 		    !WARN_ON(!test_bit(OSN_WORKLOAD, &osnoise_options))) {
+ 			kthread_stop(kthread);
+@@ -1972,7 +1968,6 @@ static void stop_kthread(unsigned int cp
+ 			put_task_struct(kthread);
  		}
--		group->blocked_queues |= BIT(cs_id);
+ 	} else {
+-		mutex_unlock(&interface_lock);
+ 		/* if no workload, just return */
+ 		if (!test_bit(OSN_WORKLOAD, &osnoise_options)) {
+ 			/*
+@@ -1994,8 +1989,12 @@ static void stop_per_cpu_kthreads(void)
+ {
+ 	int cpu;
+ 
+-	for_each_possible_cpu(cpu)
++	cpus_read_lock();
 +
-+		/* The queue is only blocked if there's no deferred operation
-+		 * pending, which can be checked through the scoreboard status.
-+		 */
-+		if (!cs_iface->output->status_scoreboards)
-+			group->blocked_queues |= BIT(cs_id);
++	for_each_online_cpu(cpu)
+ 		stop_kthread(cpu);
 +
- 		queue->syncwait.gpu_va = cs_iface->output->status_wait_sync_ptr;
- 		queue->syncwait.ref = cs_iface->output->status_wait_sync_value;
- 		status_wait_cond = cs_iface->output->status_wait & CS_STATUS_WAIT_SYNC_COND_MASK;
++	cpus_read_unlock();
+ }
+ 
+ /*
 
 
