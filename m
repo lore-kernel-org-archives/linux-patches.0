@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1361DEFE3;
-	Tue,  8 Oct 2024 13:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1201DF730;
+	Tue,  8 Oct 2024 13:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393752; cv=none; b=RZgaAp0zu+Wt4OneSC/hr7I1o+LrDPORCg5Rsw4h1OMMGtwNhhc2cNuihbzaqYHWokkxY/Es3lGf0BtRGSEeGXTqsqsW3YHps5//F7eqlQhxr/nv+YpELAk/LUN20EEuHO40UCh1Y+okdCKfAXLOisrIWoINL7ZBFVytJTf3QFI=
+	t=1728393756; cv=none; b=PWinvlEzWhhgK1n9QahK3noUeX+fpGq/Fiq8x/4GAcESLS3GtjfkpVH5qdCfAEYJT1I8rUnHE92b4PwPS+AtqY2yP68KsOVcxqZUHrAQZP/nTf8QYyvsuz0Ko//SW5pnNR4xA/kEWU2HudHGpT1XEt6Uu61U9Nl/GYLs7+pZAhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393752; c=relaxed/simple;
-	bh=wVxq+9GNfyVOsoqXNWP6jxVPmIcATLiA3RuFNabSUN4=;
+	s=arc-20240116; t=1728393756; c=relaxed/simple;
+	bh=0chyOuB2WUtDNrscEkBfFcH6GtNSLGI6Fr8pTNHPMHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+tV7bOFeWEiKrH7Oj3ITfQtimi5XCuy/EkeXr00cC0BpJ4SS1B9GOzsW88V1OeZ4H2vzcagf0PWpYCxOaRp7Bn/MITQZf1gXJhIgDVCg9GwzoP8fKcqTSCuZYxiiLSAHmdBPL8vIlyXHuRGJn+srqCuI+Sh1o+sUIsVU6iy0uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPG86beF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8XFwJXHuI9r+f/z7LtKREn+pKTXA26VQebN8vCYfhodlZALn4hu1cpEgTHH8aEK2lMIYKtFavsViIP9XId5CPO4Zds643P9ag+lPyx4s1YmVttNGCy61tWXCfp+sbyx1nNS2qj2Y7yU6F6XUKx+3I6nI36f2dh8FCasvC42uR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5Mf3K00; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPG86beF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435F1C4CEC7;
-	Tue,  8 Oct 2024 13:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5Mf3K00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A74CC4CEC7;
+	Tue,  8 Oct 2024 13:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393752;
-	bh=wVxq+9GNfyVOsoqXNWP6jxVPmIcATLiA3RuFNabSUN4=;
+	s=korg; t=1728393756;
+	bh=0chyOuB2WUtDNrscEkBfFcH6GtNSLGI6Fr8pTNHPMHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPG86beFoc0JUNppf992ohyRFRasbczfoRhPYdrgb/K955Wh3GdlsTQldO6YGfQ4h
-	 x+18q9UB2uhq8vuwHkkbskY8w7CjrrZ57ZPZXgP67C+SvRneBOr0CY4tnxvJse5DGx
-	 ZyP5RVM4exQ/cnfO7Asx7nUen8s1BcltyArA2ohU=
+	b=S5Mf3K00FK7donPKgfl7TFw1t9Gzgo+b/h0zlIoNfAeWySH0Auyj5ze8RsxiGbQBq
+	 mJ/S54sb8bqavnHvzY0nDPb8qjphRv9WfGqM1q/6JIJWvN1FJ417PZfHMf6eWqm9Ki
+	 KQI+QOjlPf7i4dQROhUr8Of+IqUVTvD2V+NgtrGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.6 245/386] ext4: fix fast commit inode enqueueing during a full journal commit
-Date: Tue,  8 Oct 2024 14:08:10 +0200
-Message-ID: <20241008115639.036823410@linuxfoundation.org>
+Subject: [PATCH 6.6 246/386] ext4: use handle to mark fc as ineligible in __track_dentry_update()
+Date: Tue,  8 Oct 2024 14:08:11 +0200
+Message-ID: <20241008115639.074752465@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -54,75 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit 6db3c1575a750fd417a70e0178bdf6efa0dd5037 upstream.
+commit faab35a0370fd6e0821c7a8dd213492946fc776f upstream.
 
-When a full journal commit is on-going, any fast commit has to be enqueued
-into a different queue: FC_Q_STAGING instead of FC_Q_MAIN.  This enqueueing
-is done only once, i.e. if an inode is already queued in a previous fast
-commit entry it won't be enqueued again.  However, if a full commit starts
-_after_ the inode is enqueued into FC_Q_MAIN, the next fast commit needs to
-be done into FC_Q_STAGING.  And this is not being done in function
+Calling ext4_fc_mark_ineligible() with a NULL handle is racy and may result
+in a fast-commit being done before the filesystem is effectively marked as
+ineligible.  This patch fixes the calls to this function in
+__track_dentry_update() by adding an extra parameter to the callback used in
 ext4_fc_track_template().
-
-This patch fixes the issue by re-enqueuing an inode into the STAGING queue
-during the fast commit clean-up callback when doing a full commit.  However,
-to prevent a race with a fast-commit, the clean-up callback has to be called
-with the journal locked.
-
-This bug was found using fstest generic/047.  This test creates several 32k
-bytes files, sync'ing each of them after it's creation, and then shutting
-down the filesystem.  Some data may be loss in this operation; for example a
-file may have it's size truncated to zero.
 
 Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240717172220.14201-1-luis.henriques@linux.dev
+Link: https://patch.msgid.link/20240923104909.18342-2-luis.henriques@linux.dev
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   15 ++++++++++++++-
- fs/jbd2/journal.c     |    2 +-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ fs/ext4/fast_commit.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -1295,8 +1295,21 @@ static void ext4_fc_cleanup(journal_t *j
- 		list_del_init(&iter->i_fc_list);
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_COMMITTING);
--		if (tid_geq(tid, iter->i_sync_tid))
-+		if (tid_geq(tid, iter->i_sync_tid)) {
- 			ext4_fc_reset_inode(&iter->vfs_inode);
-+		} else if (full) {
-+			/*
-+			 * We are called after a full commit, inode has been
-+			 * modified while the commit was running. Re-enqueue
-+			 * the inode into STAGING, which will then be splice
-+			 * back into MAIN. This cannot happen during
-+			 * fastcommit because the journal is locked all the
-+			 * time in that case (and tid doesn't increase so
-+			 * tid check above isn't reliable).
-+			 */
-+			list_add_tail(&EXT4_I(&iter->vfs_inode)->i_fc_list,
-+				      &sbi->s_fc_q[FC_Q_STAGING]);
-+		}
- 		/* Make sure EXT4_STATE_FC_COMMITTING bit is clear */
- 		smp_mb();
- #if (BITS_PER_LONG < 64)
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -755,9 +755,9 @@ EXPORT_SYMBOL(jbd2_fc_begin_commit);
+@@ -379,7 +379,7 @@ void ext4_fc_mark_ineligible(struct supe
   */
- static int __jbd2_fc_end_commit(journal_t *journal, tid_t tid, bool fallback)
+ static int ext4_fc_track_template(
+ 	handle_t *handle, struct inode *inode,
+-	int (*__fc_track_fn)(struct inode *, void *, bool),
++	int (*__fc_track_fn)(handle_t *handle, struct inode *, void *, bool),
+ 	void *args, int enqueue)
  {
--	jbd2_journal_unlock_updates(journal);
- 	if (journal->j_fc_cleanup_callback)
- 		journal->j_fc_cleanup_callback(journal, 0, tid);
-+	jbd2_journal_unlock_updates(journal);
- 	write_lock(&journal->j_state_lock);
- 	journal->j_flags &= ~JBD2_FAST_COMMIT_ONGOING;
- 	if (fallback)
+ 	bool update = false;
+@@ -396,7 +396,7 @@ static int ext4_fc_track_template(
+ 		ext4_fc_reset_inode(inode);
+ 		ei->i_sync_tid = tid;
+ 	}
+-	ret = __fc_track_fn(inode, args, update);
++	ret = __fc_track_fn(handle, inode, args, update);
+ 	mutex_unlock(&ei->i_fc_lock);
+ 
+ 	if (!enqueue)
+@@ -420,7 +420,8 @@ struct __track_dentry_update_args {
+ };
+ 
+ /* __track_fn for directory entry updates. Called with ei->i_fc_lock. */
+-static int __track_dentry_update(struct inode *inode, void *arg, bool update)
++static int __track_dentry_update(handle_t *handle, struct inode *inode,
++				 void *arg, bool update)
+ {
+ 	struct ext4_fc_dentry_update *node;
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
+@@ -435,14 +436,14 @@ static int __track_dentry_update(struct
+ 
+ 	if (IS_ENCRYPTED(dir)) {
+ 		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
+-					NULL);
++					handle);
+ 		mutex_lock(&ei->i_fc_lock);
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+ 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
+ 	if (!node) {
+-		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, handle);
+ 		mutex_lock(&ei->i_fc_lock);
+ 		return -ENOMEM;
+ 	}
+@@ -454,7 +455,7 @@ static int __track_dentry_update(struct
+ 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
+ 		if (!node->fcd_name.name) {
+ 			kmem_cache_free(ext4_fc_dentry_cachep, node);
+-			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
++			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, handle);
+ 			mutex_lock(&ei->i_fc_lock);
+ 			return -ENOMEM;
+ 		}
+@@ -576,7 +577,8 @@ void ext4_fc_track_create(handle_t *hand
+ }
+ 
+ /* __track_fn for inode tracking */
+-static int __track_inode(struct inode *inode, void *arg, bool update)
++static int __track_inode(handle_t *handle, struct inode *inode, void *arg,
++			 bool update)
+ {
+ 	if (update)
+ 		return -EEXIST;
+@@ -614,7 +616,8 @@ struct __track_range_args {
+ };
+ 
+ /* __track_fn for tracking data updates */
+-static int __track_range(struct inode *inode, void *arg, bool update)
++static int __track_range(handle_t *handle, struct inode *inode, void *arg,
++			 bool update)
+ {
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
+ 	ext4_lblk_t oldstart;
 
 
