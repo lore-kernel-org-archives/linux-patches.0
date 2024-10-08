@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A1A1E498;
-	Tue,  8 Oct 2024 13:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EEE1DF986;
+	Tue,  8 Oct 2024 13:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394208; cv=none; b=OvnkYgz/DAyBL0LZFnWC1HTnOF64O1CVnwV2usjQ4nwbEj0UfLXwPWnB/VFku+5tBmKGYkYiQlScuqCs3ZFCLs2UYbg2/PWxM4IL0QqbB/AImlRiuR22813xDLOZAO9n3aR8CCO2PCqjQBj6p9PmNNVetMzG+p6qCuKmt5iTcEw=
+	t=1728394211; cv=none; b=H8cprASAaNfGmOCghrp4nY/wB5IfUZgujM6S5jfHPJsoWQ4jCqt43bPPESZ6pgonm1TMk614zzNnroqsO9MCBgFdbim95udUNJCnJ1l1mzF8eW+HzNPpGpDgDhNEI0WMK+HtD3j9OX53LRUmCTKI7qxVq7/O8P4XE0DAXjuHceQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394208; c=relaxed/simple;
-	bh=Um1vTTYFNclwm3uGTNrVXtC94ge6MJokLfuWtoDxYHk=;
+	s=arc-20240116; t=1728394211; c=relaxed/simple;
+	bh=alTQwvcXtEXzxEsOx+7kuKCS6JYnq7t7U0+9qybNlrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra60k+dN7x4Ghxh33wJE1bUyWLQe6FiICwhSe+kmd5NR/vPqKbZNGR/WiFaZo7vhJE6CYRSstGcxGPCPbzlwY//Zm63zk/fJdIpaOF3kBoyBt3/b2ksc881qRRH2t2NW9lxP8bt0BWVXu9oiXKOTpZ83pOqdWujfVWkPKATrfTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQtmAQWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cV19uvMLtbjN2Ap0+Z5sG8SZROlnkmwFZGRG5LMWM/GfMtYmjTE6llrVT7GNmYgkW8w6S7t0Y3jsGiIj9GYTTzrxHGu3COxSc73MTPGSOf2NFG6KuV3IAbOGEhS5Cs3OZU6MXvlfvTqXH3ilm4VuPpi2spvSH9QqmV8j/TRaUdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5IQSN7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQtmAQWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5800C4CEC7;
-	Tue,  8 Oct 2024 13:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5IQSN7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E2C4CEC7;
+	Tue,  8 Oct 2024 13:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394208;
-	bh=Um1vTTYFNclwm3uGTNrVXtC94ge6MJokLfuWtoDxYHk=;
+	s=korg; t=1728394211;
+	bh=alTQwvcXtEXzxEsOx+7kuKCS6JYnq7t7U0+9qybNlrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQtmAQWYBbmDs1xiZOXHKuFlDNmm8dif7BYCdh0NlZKXw8Q4aS1qQgs4hNU6HK/6F
-	 i5QvKZIBlhyTS0e581Lz42cQvLb54JHtzK5nweFM2jm9wgMPvhdI9WrLrepYwNOMWO
-	 dQd3VDWb5Oevn1aqj8NFx5V0e6QFyKgOj/aLWuwA=
+	b=M5IQSN7A/mOf0BcH6NnoX/GXY9gDGejdUDq5LbBPM3C535s+n0pGTNRHyk3/e7EPU
+	 bOe0po0VwBn41tsxxLP9bQGxl4fOsJJtKBWQrvWrRGSWjY+ZSuQxBHzD2s4uIE8uiQ
+	 qLq/gwzEgL2Idjfq5lNRV5P/d0iKg/eskZUCpqA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	yuxuanzhe@outlook.com,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 379/386] rxrpc: Fix a race between socket set up and I/O thread creation
-Date: Tue,  8 Oct 2024 14:10:24 +0200
-Message-ID: <20241008115644.307956064@linuxfoundation.org>
+	Haoran Zhang <wh1sper@zju.edu.cn>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.6 380/386] vhost/scsi: null-ptr-dereference in vhost_scsi_get_req()
+Date: Tue,  8 Oct 2024 14:10:25 +0200
+Message-ID: <20241008115644.347831845@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -55,97 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Haoran Zhang <wh1sper@zju.edu.cn>
 
-commit bc212465326e8587325f520a052346f0b57360e6 upstream.
+commit 221af82f606d928ccef19a16d35633c63026f1be upstream.
 
-In rxrpc_open_socket(), it sets up the socket and then sets up the I/O
-thread that will handle it.  This is a problem, however, as there's a gap
-between the two phases in which a packet may come into rxrpc_encap_rcv()
-from the UDP packet but we oops when trying to wake the not-yet created I/O
-thread.
+Since commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code
+from control queue handler") a null pointer dereference bug can be
+triggered when guest sends an SCSI AN request.
 
-As a quick fix, just make rxrpc_encap_rcv() discard the packet if there's
-no I/O thread yet.
+In vhost_scsi_ctl_handle_vq(), `vc.target` is assigned with
+`&v_req.tmf.lun[1]` within a switch-case block and is then passed to
+vhost_scsi_get_req() which extracts `vc->req` and `tpg`. However, for
+a `VIRTIO_SCSI_T_AN_*` request, tpg is not required, so `vc.target` is
+set to NULL in this branch. Later, in vhost_scsi_get_req(),
+`vc->target` is dereferenced without being checked, leading to a null
+pointer dereference bug. This bug can be triggered from guest.
 
-A better, but more intrusive fix would perhaps be to rearrange things such
-that the socket creation is done by the I/O thread.
+When this bug occurs, the vhost_worker process is killed while holding
+`vq->mutex` and the corresponding tpg will remain occupied
+indefinitely.
 
-Fixes: a275da62e8c1 ("rxrpc: Create a per-local endpoint receive queue and I/O thread")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: yuxuanzhe@outlook.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001132702.3122709-2-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Below is the KASAN report:
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 PID: 840 Comm: poc Not tainted 6.10.0+ #1
+Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS
+1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:vhost_scsi_get_req+0x165/0x3a0
+Code: 00 fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 2b 02 00 00
+48 b8 00 00 00 00 00 fc ff df 4d 8b 65 30 4c 89 e2 48 c1 ea 03 <0f> b6
+04 02 4c 89 e2 83 e2 07 38 d0 7f 08 84 c0 0f 85 be 01 00 00
+RSP: 0018:ffff888017affb50 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffff88801b000000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff888017affcb8
+RBP: ffff888017affb80 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+R13: ffff888017affc88 R14: ffff888017affd1c R15: ffff888017993000
+FS:  000055556e076500(0000) GS:ffff88806b100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000200027c0 CR3: 0000000010ed0004 CR4: 0000000000370ef0
+Call Trace:
+ <TASK>
+ ? show_regs+0x86/0xa0
+ ? die_addr+0x4b/0xd0
+ ? exc_general_protection+0x163/0x260
+ ? asm_exc_general_protection+0x27/0x30
+ ? vhost_scsi_get_req+0x165/0x3a0
+ vhost_scsi_ctl_handle_vq+0x2a4/0xca0
+ ? __pfx_vhost_scsi_ctl_handle_vq+0x10/0x10
+ ? __switch_to+0x721/0xeb0
+ ? __schedule+0xda5/0x5710
+ ? __kasan_check_write+0x14/0x30
+ ? _raw_spin_lock+0x82/0xf0
+ vhost_scsi_ctl_handle_kick+0x52/0x90
+ vhost_run_work_list+0x134/0x1b0
+ vhost_task_fn+0x121/0x350
+...
+ </TASK>
+---[ end trace 0000000000000000 ]---
+
+Let's add a check in vhost_scsi_get_req.
+
+Fixes: 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from control queue handler")
+Signed-off-by: Haoran Zhang <wh1sper@zju.edu.cn>
+[whitespace fixes]
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Message-Id: <b26d7ddd-b098-4361-88f8-17ca7f90adf7@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/ar-internal.h  |    2 +-
- net/rxrpc/io_thread.c    |   10 ++++++++--
- net/rxrpc/local_object.c |    2 +-
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/vhost/scsi.c |   25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -1066,7 +1066,7 @@ bool rxrpc_direct_abort(struct sk_buff *
- int rxrpc_io_thread(void *data);
- static inline void rxrpc_wake_up_io_thread(struct rxrpc_local *local)
- {
--	wake_up_process(local->io_thread);
-+	wake_up_process(READ_ONCE(local->io_thread));
- }
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1018,20 +1018,23 @@ vhost_scsi_get_req(struct vhost_virtqueu
+ 		/* virtio-scsi spec requires byte 0 of the lun to be 1 */
+ 		vq_err(vq, "Illegal virtio-scsi lun: %u\n", *vc->lunp);
+ 	} else {
+-		struct vhost_scsi_tpg **vs_tpg, *tpg;
++		struct vhost_scsi_tpg **vs_tpg, *tpg = NULL;
  
- static inline bool rxrpc_protocol_error(struct sk_buff *skb, enum rxrpc_abort_reason why)
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -27,11 +27,17 @@ int rxrpc_encap_rcv(struct sock *udp_sk,
- {
- 	struct sk_buff_head *rx_queue;
- 	struct rxrpc_local *local = rcu_dereference_sk_user_data(udp_sk);
-+	struct task_struct *io_thread;
+-		vs_tpg = vhost_vq_get_backend(vq);	/* validated at handler entry */
+-
+-		tpg = READ_ONCE(vs_tpg[*vc->target]);
+-		if (unlikely(!tpg)) {
+-			vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
+-		} else {
+-			if (tpgp)
+-				*tpgp = tpg;
+-			ret = 0;
++		if (vc->target) {
++			/* validated at handler entry */
++			vs_tpg = vhost_vq_get_backend(vq);
++			tpg = READ_ONCE(vs_tpg[*vc->target]);
++			if (unlikely(!tpg)) {
++				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
++				goto out;
++			}
+ 		}
+-	}
  
- 	if (unlikely(!local)) {
- 		kfree_skb(skb);
- 		return 0;
- 	}
-+	io_thread = READ_ONCE(local->io_thread);
-+	if (!io_thread) {
-+		kfree_skb(skb);
-+		return 0;
++		if (tpgp)
++			*tpgp = tpg;
++		ret = 0;
 +	}
- 	if (skb->tstamp == 0)
- 		skb->tstamp = ktime_get_real();
- 
-@@ -47,7 +53,7 @@ int rxrpc_encap_rcv(struct sock *udp_sk,
- #endif
- 
- 	skb_queue_tail(rx_queue, skb);
--	rxrpc_wake_up_io_thread(local);
-+	wake_up_process(io_thread);
- 	return 0;
++out:
+ 	return ret;
  }
- 
-@@ -554,7 +560,7 @@ int rxrpc_io_thread(void *data)
- 	__set_current_state(TASK_RUNNING);
- 	rxrpc_see_local(local, rxrpc_local_stop);
- 	rxrpc_destroy_local(local);
--	local->io_thread = NULL;
-+	WRITE_ONCE(local->io_thread, NULL);
- 	rxrpc_see_local(local, rxrpc_local_stopped);
- 	return 0;
- }
---- a/net/rxrpc/local_object.c
-+++ b/net/rxrpc/local_object.c
-@@ -232,7 +232,7 @@ static int rxrpc_open_socket(struct rxrp
- 	}
- 
- 	wait_for_completion(&local->io_thread_ready);
--	local->io_thread = io_thread;
-+	WRITE_ONCE(local->io_thread, io_thread);
- 	_leave(" = 0");
- 	return 0;
  
 
 
