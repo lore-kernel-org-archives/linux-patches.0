@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFC5165F08;
-	Tue,  8 Oct 2024 12:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187817B4EC;
+	Tue,  8 Oct 2024 12:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389885; cv=none; b=SpvTviG2qYK/8gWdnVp9O2uEtnyygtP1jtxc3Z9Hv1bArgKuSByVSBYjHEHO9LZ/p6qhetqpMO3E3cMeFyxEJf/xQVS447dccpi5ix99iWdu/JDR28xiXgAHACY9Xt3mZNDDfgRed7avWL52sHvZL2bzeuePxlK4KPCwkodS2cc=
+	t=1728389888; cv=none; b=Ac2UWzT85W1IvqGigF3U0bZMou9AUVK9lWu3Qzq8FKKRV8jNynVipUw0CaFWWF0lyxNxiqwiOYT3J+l0hnTbPtqRIlKRi1Y28FjMBmgnW1NgCXpv4vyxSyZKyjSMj6NqFfvv3zHizFepdH9wZw2IS0bb0OqEFoCcYhNiguqAOXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389885; c=relaxed/simple;
-	bh=yoX/zKUxWT0aPRb0yOl2pnzvE3bU7mCwY5ZohbTdydk=;
+	s=arc-20240116; t=1728389888; c=relaxed/simple;
+	bh=71n+qRQgogkc1TVTLmQF6XDL3qR5go+0RorX1Sp8WgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QstmkTTlWkxP8vwVA49yob3hlipGrqDZqVEc7p8dRBQnsOEN7C7c+rk97/bfEx+rsVjVFuly6fOQ5StdFd+Vdp26F6ls0mWrgMyCwwtAs3UVdJeGOabxZZUzJAP+mctUyexNRHba3n+Xoj5J1rT40HppbLDH4OMAqGu1AC1vM6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVvUOfF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mGv4lK29T7a0xM/p3KJtvWzyqTWvboxsNEy7FvD200mEfctNrNlYc2T+xSi08IMwQ3I1daXeW/Aldk7bsFOrReNYuCGzdHu7awwLEfQRMPpIZAsz8k3tBxlFnKbqdf+TaU3arkQWepFJPgIk9lNLwbzEI3OgwMadqXdoA5FSqhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmYFa28E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVvUOfF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9189EC4CEC7;
-	Tue,  8 Oct 2024 12:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmYFa28E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C3BC4CEC7;
+	Tue,  8 Oct 2024 12:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389885;
-	bh=yoX/zKUxWT0aPRb0yOl2pnzvE3bU7mCwY5ZohbTdydk=;
+	s=korg; t=1728389888;
+	bh=71n+qRQgogkc1TVTLmQF6XDL3qR5go+0RorX1Sp8WgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVvUOfF5a0drcmbovM8z1/akjfwzaeoUJdhlDPwbMUMHrXMHP5ij8+ujQuwPcHep6
-	 9HNoaViW0hKqbX3wVZ01ZmLePfa/eaIk936VxG+6fQBkvCRHNehvTm/sfVgsP1klU3
-	 Er6bG2hwKRBNpaK4KZMy4o/tE71R09Qchqi3RJ7A=
+	b=rmYFa28E4rXef+zVHGKmHTADemb9xhCrmazd2+MDutFWyZZ+S1djb6b1oEFse6kHi
+	 N0liF/BAede16niortQYOjajN3prztoj4fPdmem1VCEv6jaQmJ/81qHpctrpn5qMCQ
+	 Qfr1jAJj6BXl7Lv4VR7OG3AHHEj7cUYuBLZIMUi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hilda Wu <hildawu@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 094/482] Bluetooth: btrtl: Set msft ext address filter quirk for RTL8852B
-Date: Tue,  8 Oct 2024 14:02:37 +0200
-Message-ID: <20241008115652.010136542@linuxfoundation.org>
+Subject: [PATCH 6.10 095/482] ACPI: video: Add force_vendor quirk for Panasonic Toughbook CF-18
+Date: Tue,  8 Oct 2024 14:02:38 +0200
+Message-ID: <20241008115652.049621206@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,40 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hilda Wu <hildawu@realtek.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9a0570948c5def5c59e588dc0e009ed850a1f5a1 ]
+[ Upstream commit eb7b0f12e13ba99e64e3a690c2166895ed63b437 ]
 
-For tracking multiple devices concurrently with a condition.
-The patch enables the HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER quirk
-on RTL8852B controller.
+The Panasonic Toughbook CF-18 advertises both native and vendor backlight
+control interfaces. But only the vendor one actually works.
 
-The quirk setting is based on commit 9e14606d8f38 ("Bluetooth: msft:
-Extended monitor tracking by address filter")
+acpi_video_get_backlight_type() will pick the non working native backlight
+by default, add a quirk to select the working vendor backlight instead.
 
-With this setting, when a pattern monitor detects a device, this
-feature issues an address monitor for tracking that device. Let the
-original pattern monitor keep monitor new devices.
-
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240907124419.21195-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index bfcb41a57655f..78b5d44558d73 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -1296,6 +1296,7 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 			btrealtek_set_flag(hdev, REALTEK_ALT6_CONTINUOUS_TX_CHIP);
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 75a5f559402f8..428a7399fe04a 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -254,6 +254,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_vendor,
++	 /* Panasonic Toughbook CF-18 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Matsushita Electric Industrial"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "CF-18"),
++		},
++	},
  
- 		if (btrtl_dev->project_id == CHIP_ID_8852A ||
-+		    btrtl_dev->project_id == CHIP_ID_8852B ||
- 		    btrtl_dev->project_id == CHIP_ID_8852C)
- 			set_bit(HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER, &hdev->quirks);
- 
+ 	/*
+ 	 * Toshiba models with Transflective display, these need to use
 -- 
 2.43.0
 
