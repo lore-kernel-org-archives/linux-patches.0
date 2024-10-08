@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098B71CF297;
-	Tue,  8 Oct 2024 12:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7AB190663;
+	Tue,  8 Oct 2024 12:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390564; cv=none; b=g8WN1sOOPQ96rI8VwmHPvf8zI97B3mRLq7ZoegsAwCBMPSWJk7TLZIk0paoOz0pKRrTga2IJFAYDPcMT8mMk7cOhJjD6EYd8+c2Yyge3cbP7S98m21OptwctGoqcy04rOZziwdyLJLy+cccnQcHlX2zD1Ec2//e3LGV2qaR134c=
+	t=1728390567; cv=none; b=J1NFkBSLPDRRA7NmCdIpq59sQDltuSYSnibFvGnJvxU0olPxCJlCSOtwXb3T0xqmEpaEZhtdatx9V5a0WTMcpTfZoPsKf2l7UZso8RpN+n2oY73Rt+EN2aSS4rB9PuwWw3fds9Mu0YiDiZrnetnzX7Bs2AjStyGeiW16kbVzuZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390564; c=relaxed/simple;
-	bh=5gcultbOprj8jAfM9IxOhRi5k8GliqwUSg3XnypZfpU=;
+	s=arc-20240116; t=1728390567; c=relaxed/simple;
+	bh=D3y5NQhUPS4pBIfi4zUajpTJqU96X2DCMMY3gFqwgyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfYB63AwzimxerItaeCJeTp6Z7cmpzuY05Jpg2z0EmyRn3KRyB8BbDE0RNgalDp1EuNC7DPNspWnrOxNyimNI7yivsiiSIpWj606n1TLLIAaudbr0IDXrieZtg2wR9zIyQXo79Xr7WnOl0cynBeTUwcWHS5T+bg7ybs58HhG9Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5ec9AYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZ6Hhjk9D/gw4dby30HnRbyTJPmu6WrWSHjqA3FX84KOHrMfhy7fu2BrAm6oO35V4ACU7KbJnPy68tCCkamgTgcXk2X3e4BZF917uiamst3kHv+pWiEdGwNkUBtDun1hlz+ofe9nwck5yq/MQurUrfBmFyeX4fwZTIj9/eD/oBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0zzLYNl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5ec9AYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB7BC4CEC7;
-	Tue,  8 Oct 2024 12:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0zzLYNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972CEC4CEC7;
+	Tue,  8 Oct 2024 12:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390563;
-	bh=5gcultbOprj8jAfM9IxOhRi5k8GliqwUSg3XnypZfpU=;
+	s=korg; t=1728390567;
+	bh=D3y5NQhUPS4pBIfi4zUajpTJqU96X2DCMMY3gFqwgyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5ec9AYJKRY2jRAe1PMi31/AMiZL+JipNWur0TMzp3gmZJ0vx5z/NPq5DWxku9y0X
-	 tMoRWFZ00UByBryVXQdiOff9dGHsvxcj3UySuXcIykW1QDb+p1yaCmY0O4yDFN4fgd
-	 nzaMVNgj6k8pqbUOnYF/18z2lsNON7P1VOlgD0g0=
+	b=S0zzLYNlLTegDtWcikXxoi5xldOAQsq3Oc9+UaFubN+IAbNOIPfSv+4uHGtlwHyNm
+	 xr29HoCiRR2hRXUoLTUful0dfG/CKtjqn4YTCvRFMsKkG5hOu59uVDh1G5MBfn5k5u
+	 AbZz5TFmhboCGMRiDDlBoZTlUeR3RS7016uy1c+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.10 324/482] ext4: fix slab-use-after-free in ext4_split_extent_at()
-Date: Tue,  8 Oct 2024 14:06:27 +0200
-Message-ID: <20241008115701.178007055@linuxfoundation.org>
+	Robert Hancock <robert.hancock@calian.com>,
+	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.10 294/482] i2c: xiic: Wait for TX empty to avoid missed TX NAKs
+Date: Tue,  8 Oct 2024 14:05:57 +0200
+Message-ID: <20241008115659.848832240@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,127 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-commit c26ab35702f8cd0cdc78f96aa5856bfb77be798f upstream.
+commit 521da1e9225450bd323db5fa5bca942b1dc485b7 upstream.
 
-We hit the following use-after-free:
+Frequently an I2C write will be followed by a read, such as a register
+address write followed by a read of the register value. In this driver,
+when the TX FIFO half empty interrupt was raised and it was determined
+that there was enough space in the TX FIFO to send the following read
+command, it would do so without waiting for the TX FIFO to actually
+empty.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in ext4_split_extent_at+0xba8/0xcc0
-Read of size 2 at addr ffff88810548ed08 by task kworker/u20:0/40
-CPU: 0 PID: 40 Comm: kworker/u20:0 Not tainted 6.9.0-dirty #724
-Call Trace:
- <TASK>
- kasan_report+0x93/0xc0
- ext4_split_extent_at+0xba8/0xcc0
- ext4_split_extent.isra.0+0x18f/0x500
- ext4_split_convert_extents+0x275/0x750
- ext4_ext_handle_unwritten_extents+0x73e/0x1580
- ext4_ext_map_blocks+0xe20/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
+Unfortunately it appears that in some cases this can result in a NAK
+that was raised by the target device on the write, such as due to an
+unsupported register address, being ignored and the subsequent read
+being done anyway. This can potentially put the I2C bus into an
+invalid state and/or result in invalid read data being processed.
 
-Allocated by task 40:
- __kmalloc_noprof+0x1ac/0x480
- ext4_find_extent+0xf3b/0x1e70
- ext4_ext_map_blocks+0x188/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
+To avoid this, once a message has been fully written to the TX FIFO,
+wait for the TX FIFO empty interrupt before moving on to the next
+message, to ensure NAKs are handled properly.
 
-Freed by task 40:
- kfree+0xf1/0x2b0
- ext4_find_extent+0xa71/0x1e70
- ext4_ext_insert_extent+0xa22/0x3260
- ext4_split_extent_at+0x3ef/0xcc0
- ext4_split_extent.isra.0+0x18f/0x500
- ext4_split_convert_extents+0x275/0x750
- ext4_ext_handle_unwritten_extents+0x73e/0x1580
- ext4_ext_map_blocks+0xe20/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
-==================================================================
-
-The flow of issue triggering is as follows:
-
-ext4_split_extent_at
-  path = *ppath
-  ext4_ext_insert_extent(ppath)
-    ext4_ext_create_new_leaf(ppath)
-      ext4_find_extent(orig_path)
-        path = *orig_path
-        read_extent_tree_block
-          // return -ENOMEM or -EIO
-        ext4_free_ext_path(path)
-          kfree(path)
-        *orig_path = NULL
-  a. If err is -ENOMEM:
-  ext4_ext_dirty(path + path->p_depth)
-  // path use-after-free !!!
-  b. If err is -EIO and we have EXT_DEBUG defined:
-  ext4_ext_show_leaf(path)
-    eh = path[depth].p_hdr
-    // path also use-after-free !!!
-
-So when trying to zeroout or fix the extent length, call ext4_find_extent()
-to update the path.
-
-In addition we use *ppath directly as an ext4_ext_show_leaf() input to
-avoid possible use-after-free when EXT_DEBUG is defined, and to avoid
-unnecessary path updates.
-
-Fixes: dfe5080939ea ("ext4: drop EXT4_EX_NOFREE_ON_ERR from rest of extents handling code")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-4-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: e1d5b6598cdc ("i2c: Add support for Xilinx XPS IIC Bus Interface")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Cc: <stable@vger.kernel.org> # v2.6.34+
+Reviewed-by: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3230,6 +3230,25 @@ static int ext4_split_extent_at(handle_t
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
- 		goto out;
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -772,14 +772,17 @@ static irqreturn_t xiic_process(int irq,
+ 			goto out;
+ 		}
  
-+	/*
-+	 * Update path is required because previous ext4_ext_insert_extent()
-+	 * may have freed or reallocated the path. Using EXT4_EX_NOFAIL
-+	 * guarantees that ext4_find_extent() will not return -ENOMEM,
-+	 * otherwise -ENOMEM will cause a retry in do_writepages(), and a
-+	 * WARN_ON may be triggered in ext4_da_update_reserve_space() due to
-+	 * an incorrect ee_len causing the i_reserved_data_blocks exception.
-+	 */
-+	path = ext4_find_extent(inode, ee_block, ppath,
-+				flags | EXT4_EX_NOFAIL);
-+	if (IS_ERR(path)) {
-+		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
-+				 split, PTR_ERR(path));
-+		return PTR_ERR(path);
-+	}
-+	depth = ext_depth(inode);
-+	ex = path[depth].p_ext;
-+	*ppath = path;
-+
- 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
- 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
- 			if (split_flag & EXT4_EXT_DATA_VALID1) {
-@@ -3282,7 +3301,7 @@ fix_extent_len:
- 	ext4_ext_dirty(handle, inode, path + path->p_depth);
- 	return err;
- out:
--	ext4_ext_show_leaf(inode, path);
-+	ext4_ext_show_leaf(inode, *ppath);
- 	return err;
- }
+-		xiic_fill_tx_fifo(i2c);
+-
+-		/* current message sent and there is space in the fifo */
+-		if (!xiic_tx_space(i2c) && xiic_tx_fifo_space(i2c) >= 2) {
++		if (xiic_tx_space(i2c)) {
++			xiic_fill_tx_fifo(i2c);
++		} else {
++			/* current message fully written */
+ 			dev_dbg(i2c->adap.dev.parent,
+ 				"%s end of message sent, nmsgs: %d\n",
+ 				__func__, i2c->nmsgs);
+-			if (i2c->nmsgs > 1) {
++			/* Don't move onto the next message until the TX FIFO empties,
++			 * to ensure that a NAK is not missed.
++			 */
++			if (i2c->nmsgs > 1 && (pend & XIIC_INTR_TX_EMPTY_MASK)) {
+ 				i2c->nmsgs--;
+ 				i2c->tx_msg++;
+ 				xfer_more = 1;
+@@ -790,11 +793,7 @@ static irqreturn_t xiic_process(int irq,
+ 					"%s Got TX IRQ but no more to do...\n",
+ 					__func__);
+ 			}
+-		} else if (!xiic_tx_space(i2c) && (i2c->nmsgs == 1))
+-			/* current frame is sent and is last,
+-			 * make sure to disable tx half
+-			 */
+-			xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
++		}
+ 	}
  
+ 	if (pend & XIIC_INTR_BNB_MASK) {
 
 
