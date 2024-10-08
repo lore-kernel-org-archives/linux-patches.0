@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF281D3634;
-	Tue,  8 Oct 2024 13:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4F51D3634;
+	Tue,  8 Oct 2024 13:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394182; cv=none; b=fUvRKGDYaJO2oop6d+C0GQ/ysOuAsux9xUdLeJGHt2eim+xpufco9JTWpYSAjyBaEwN2LKIgssMoI1nGCE1iWzmP2Vd8APEDW2JFf5rZ0i+YQpIXonVzaOebMQfmNUbqfnhpWPtD9BeIPkED1BqGCpJA+/6fVgvw1gv2srsm1DA=
+	t=1728394186; cv=none; b=V2wbgGQG6ELhul5HEEPMlNgesUHofJKe/lmnxqRnerusC9LmVPd9O6td850LDDFpywJDwgoin3kM/o4ZJOnES8EbnooOsmt/pc25LU9BNbAoN8ZuOboWCe198rW91Q9zhPSh+aRHiU43ygrcGqPoB/0JC6vb6Ni2E1uU98NQmWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394182; c=relaxed/simple;
-	bh=IIQQEujb4W7lF3JEkwzoxuBIBTX6tlvV97cl29/b8DY=;
+	s=arc-20240116; t=1728394186; c=relaxed/simple;
+	bh=thBHe263TsLvdcqOdLQFDjs65EOGAAmKt1ojegrIleU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRBcDHEKwPEY3TNR1V9/dMd5v1cxSDK2yDXjz5Sy64QDHwOas2DDxpWghq2trESZhx/bV0cc4TZhnayOLzSJJhj7va7+xYYXX7WpT7PWfSqd/eHZx/0CJL2aYGLD+2p639zbDKyecHPAkJ8DTLlJ1bcOZN9WztX+sXXgR33A8Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr4ijmt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lBoUufXktJPJbSeuElr0V/lmZr61IhLG2RfuSY3qWjm7awHrUANQEPtUMkNmzEC3CoG8oke22HFFcfbQPqEahnDUbaTSkComRPuJdBnfTrWXUh3Vu1SLrRw7QslxUg7RmUI039VGxcDqQ9+zdMAiq7oE7W8aj/1Qr/DJbn/TX+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm8JI8nq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr4ijmt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0153FC4CEC7;
-	Tue,  8 Oct 2024 13:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm8JI8nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A50C4CEC7;
+	Tue,  8 Oct 2024 13:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394182;
-	bh=IIQQEujb4W7lF3JEkwzoxuBIBTX6tlvV97cl29/b8DY=;
+	s=korg; t=1728394186;
+	bh=thBHe263TsLvdcqOdLQFDjs65EOGAAmKt1ojegrIleU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yr4ijmt1YUUHbuKMqGf4TSx32OlZk6WXURscgqDWIkfumoFSU9RKGAYWQhwsLAHpj
-	 lIOViu27AGgipWnMSWEHFIkJpMuheUGiDRceZOn+Ban+jkCxK6y5szQ1tRFAMSg5Q2
-	 af1PZtT0pc7xw/gmRb/4saj3XXXT1UtYI1wf8b0I=
+	b=Xm8JI8nqUzuYRthJmACEZaty7RNJhj0Ff6rpsWWj43/mdBQVkcUET4IJNMv6du/K7
+	 ZNwJWOhpq8C3H7xmct35DrHvQUti+6pQf3wT/uGCR9jSCZXHKg36sMP8LrcA8nRRZC
+	 nFgMCvNlcjBqipi7t6hXnKRn4+XwdhQqa39YJBkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Mads Bligaard Nielsen <bli@bang-olufsen.dk>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Robert Foss <rfoss@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: [PATCH 6.6 372/386] iommufd: Fix protection fault in iommufd_test_syz_conv_iova
-Date: Tue,  8 Oct 2024 14:10:17 +0200
-Message-ID: <20241008115644.025083174@linuxfoundation.org>
+Subject: [PATCH 6.6 373/386] drm/bridge: adv7511: fix crash on irq during probe
+Date: Tue,  8 Oct 2024 14:10:18 +0200
+Message-ID: <20241008115644.065685502@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -47,123 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Mads Bligaard Nielsen <bli@bang-olufsen.dk>
 
-[ Upstream commit cf7c2789822db8b5efa34f5ebcf1621bc0008d48 ]
+[ Upstream commit aeedaee5ef5468caf59e2bb1265c2116e0c9a924 ]
 
-Syzkaller reported the following bug:
+Moved IRQ registration down to end of adv7511_probe().
 
-  general protection fault, probably for non-canonical address 0xdffffc0000000038: 0000 [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x00000000000001c0-0x00000000000001c7]
-  Call Trace:
-   lock_acquire
-   lock_acquire+0x1ce/0x4f0
-   down_read+0x93/0x4a0
-   iommufd_test_syz_conv_iova+0x56/0x1f0
-   iommufd_test_access_rw.isra.0+0x2ec/0x390
-   iommufd_test+0x1058/0x1e30
-   iommufd_fops_ioctl+0x381/0x510
-   vfs_ioctl
-   __do_sys_ioctl
-   __se_sys_ioctl
-   __x64_sys_ioctl+0x170/0x1e0
-   do_syscall_x64
-   do_syscall_64+0x71/0x140
+If an IRQ already is pending during adv7511_probe
+(before adv7511_cec_init) then cec_received_msg_ts
+could crash using uninitialized data:
 
-This is because the new iommufd_access_change_ioas() sets access->ioas to
-NULL during its process, so the lock might be gone in a concurrent racing
-context.
+    Unable to handle kernel read from unreadable memory at virtual address 00000000000003d5
+    Internal error: Oops: 96000004 [#1] PREEMPT_RT SMP
+    Call trace:
+     cec_received_msg_ts+0x48/0x990 [cec]
+     adv7511_cec_irq_process+0x1cc/0x308 [adv7511]
+     adv7511_irq_process+0xd8/0x120 [adv7511]
+     adv7511_irq_handler+0x1c/0x30 [adv7511]
+     irq_thread_fn+0x30/0xa0
+     irq_thread+0x14c/0x238
+     kthread+0x190/0x1a8
 
-Fix this by doing the same access->ioas sanity as iommufd_access_rw() and
-iommufd_access_pin_pages() functions do.
-
-Cc: stable@vger.kernel.org
-Fixes: 9227da7816dd ("iommufd: Add iommufd_access_change_ioas(_id) helpers")
-Link: https://lore.kernel.org/r/3f1932acaf1dd494d404c04364d73ce8f57f3e5e.1708636627.git.nicolinc@nvidia.com
-Reported-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-(cherry picked from commit cf7c2789822db8b5efa34f5ebcf1621bc0008d48)
-[Harshit: CVE-2024-26785; Resolve conflicts due to missing commit:
- bd7a282650b8 ("iommufd: Add iommufd_ctx to iommufd_put_object()") in
- 6.6.y]
+Fixes: 3b1b975003e4 ("drm: adv7511/33: add HDMI CEC support")
+Signed-off-by: Mads Bligaard Nielsen <bli@bang-olufsen.dk>
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240219-adv7511-cec-irq-crash-fix-v2-1-245e53c4b96f@bang-olufsen.dk
+(cherry picked from commit aeedaee5ef5468caf59e2bb1265c2116e0c9a924)
+[Harshit: CVE-2024-26876; Resolve conflicts due to missing commit:
+ c75551214858 ("drm: adv7511: Add has_dsi variable to struct
+ adv7511_chip_info") in 6.6.y and adv7511_chip_info struct is also not
+ defined]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/selftest.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -44,8 +44,8 @@ enum {
-  * In syzkaller mode the 64 bit IOVA is converted into an nth area and offset
-  * value. This has a much smaller randomization space and syzkaller can hit it.
-  */
--static unsigned long iommufd_test_syz_conv_iova(struct io_pagetable *iopt,
--						u64 *iova)
-+static unsigned long __iommufd_test_syz_conv_iova(struct io_pagetable *iopt,
-+						  u64 *iova)
- {
- 	struct syz_layout {
- 		__u32 nth_area;
-@@ -69,6 +69,21 @@ static unsigned long iommufd_test_syz_co
- 	return 0;
- }
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -1291,17 +1291,6 @@ static int adv7511_probe(struct i2c_clie
  
-+static unsigned long iommufd_test_syz_conv_iova(struct iommufd_access *access,
-+						u64 *iova)
-+{
-+	unsigned long ret;
+ 	INIT_WORK(&adv7511->hpd_work, adv7511_hpd_work);
+ 
+-	if (i2c->irq) {
+-		init_waitqueue_head(&adv7511->wq);
+-
+-		ret = devm_request_threaded_irq(dev, i2c->irq, NULL,
+-						adv7511_irq_handler,
+-						IRQF_ONESHOT, dev_name(dev),
+-						adv7511);
+-		if (ret)
+-			goto err_unregister_cec;
+-	}
+-
+ 	adv7511_power_off(adv7511);
+ 
+ 	i2c_set_clientdata(i2c, adv7511);
+@@ -1325,6 +1314,17 @@ static int adv7511_probe(struct i2c_clie
+ 
+ 	adv7511_audio_init(dev, adv7511);
+ 
++	if (i2c->irq) {
++		init_waitqueue_head(&adv7511->wq);
 +
-+	mutex_lock(&access->ioas_lock);
-+	if (!access->ioas) {
-+		mutex_unlock(&access->ioas_lock);
-+		return 0;
++		ret = devm_request_threaded_irq(dev, i2c->irq, NULL,
++						adv7511_irq_handler,
++						IRQF_ONESHOT, dev_name(dev),
++						adv7511);
++		if (ret)
++			goto err_unregister_audio;
 +	}
-+	ret = __iommufd_test_syz_conv_iova(&access->ioas->iopt, iova);
-+	mutex_unlock(&access->ioas_lock);
-+	return ret;
-+}
 +
- void iommufd_test_syz_conv_iova_id(struct iommufd_ucmd *ucmd,
- 				   unsigned int ioas_id, u64 *iova, u32 *flags)
- {
-@@ -81,7 +96,7 @@ void iommufd_test_syz_conv_iova_id(struc
- 	ioas = iommufd_get_ioas(ucmd->ictx, ioas_id);
- 	if (IS_ERR(ioas))
- 		return;
--	*iova = iommufd_test_syz_conv_iova(&ioas->iopt, iova);
-+	*iova = __iommufd_test_syz_conv_iova(&ioas->iopt, iova);
- 	iommufd_put_object(&ioas->obj);
- }
- 
-@@ -852,7 +867,7 @@ static int iommufd_test_access_pages(str
- 	}
- 
- 	if (flags & MOCK_FLAGS_ACCESS_SYZ)
--		iova = iommufd_test_syz_conv_iova(&staccess->access->ioas->iopt,
-+		iova = iommufd_test_syz_conv_iova(staccess->access,
- 					&cmd->access_pages.iova);
- 
- 	npages = (ALIGN(iova + length, PAGE_SIZE) -
-@@ -954,8 +969,8 @@ static int iommufd_test_access_rw(struct
- 	}
- 
- 	if (flags & MOCK_FLAGS_ACCESS_SYZ)
--		iova = iommufd_test_syz_conv_iova(&staccess->access->ioas->iopt,
--					&cmd->access_rw.iova);
-+		iova = iommufd_test_syz_conv_iova(staccess->access,
-+				&cmd->access_rw.iova);
- 
- 	rc = iommufd_access_rw(staccess->access, iova, tmp, length, flags);
- 	if (rc)
+ 	if (adv7511->type == ADV7533 || adv7511->type == ADV7535) {
+ 		ret = adv7533_attach_dsi(adv7511);
+ 		if (ret)
 
 
