@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D17192594;
-	Tue,  8 Oct 2024 12:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FC61DE2A5;
+	Tue,  8 Oct 2024 12:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391236; cv=none; b=hvrbp/bUozic/mdumvc6Eep3sjL76JyKC8kZzvKJ77niMInV0qDKdpYVGZzCP7ALxwjCSVFPmLdlvhxEyOMCSUMWwhSH6N2T2GN2FDO5fxq85H27n1LwM0+Y2H1mODo6icCJT1Hjj1sb1D8qioGvA+juZidtDIaNUzhU9bC0Grg=
+	t=1728391239; cv=none; b=eKBk+ooYOhY5jx7C/1FBthxKYOWGW6yQmu9/fhjPjiCJbbsFcgE1k5fMMWy789HJtb89CAsF510RGhUdu6YlfLhK/6GRMcOtrQD9KdjhnzExzyl08mGXXr1cfKgMHZhHakxgjrDXdv6cnbwAXDDS/uo1MloElD7eiBW15hbBQU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391236; c=relaxed/simple;
-	bh=HmZ6ry0l4sg3fd7KC8jtOIywsGGtnD17HeWBQWjmlcs=;
+	s=arc-20240116; t=1728391239; c=relaxed/simple;
+	bh=WE5TWBchW2WYi+88TcHXaBIgarP95du5gDDegbMn2go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5yKKQCxfEy2IPiD9SfKGBkMU4Sg5a3/3GwquxZrs1s1KL8BF7ta1NCuD/Wv+xR8FG4QWqibSIFea9RWkr6lI/4dHKzobVSumLtE85B7NwqTviY/TSdMuyqW+nfqzfrW37wwMJrwkWT9MTLz2+uV/WeLvCNU+9Gdzxamc5MMOQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGdq3qxZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMgUwa29+cR7Yc1whyW8fe5AIuqcn0titR2DFHzzS6rowiHRNtE7MjMBMo9NPaCWn94HGDVD3dOkM2dg6heWtSl/4+OSKCFR4JdyoS+LBZ8DHwKOo1LvqbzTEjWupvsmXpyXxqN0uBl4tou/Oy0Eio1OnqCNb9SabF9aGvzdcfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2WKF7nA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGdq3qxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF24C4CEC7;
-	Tue,  8 Oct 2024 12:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2WKF7nA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F282EC4CECC;
+	Tue,  8 Oct 2024 12:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391236;
-	bh=HmZ6ry0l4sg3fd7KC8jtOIywsGGtnD17HeWBQWjmlcs=;
+	s=korg; t=1728391239;
+	bh=WE5TWBchW2WYi+88TcHXaBIgarP95du5gDDegbMn2go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGdq3qxZ7P150sMKHisfqfXdokifqo2QLqpkdvr45KbZ5sFJmmiwBakxuhRxfIGxc
-	 ISbSH5/TOZnlNeE3fz6JGkhJfkSM9y1EzCGF3lPljcxxek97X7KRsOJZhqdxuo4+2U
-	 KRdLIw41EjP5npbQAbMtpH4H+s7SUPY5/i1t4yIQ=
+	b=t2WKF7nAqdOIxoIEmMInvD7MibdRv+62Q2PIeO1LKwjMV4bTnNenaV5vO4vvDDu3i
+	 fmb+fET0X0Wk3eXei9uAuYdwM6zNW+TfJkqbGciWoy17QYJKje9kVG+nQ0aZFMc7Lj
+	 14aVxt6NJ4pmoDNbpksTHgdbPy4SNaLIaafGnZzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 051/558] net/ncsi: Disable the ncsi work before freeing the associated structure
-Date: Tue,  8 Oct 2024 14:01:21 +0200
-Message-ID: <20241008115704.229812407@linuxfoundation.org>
+Subject: [PATCH 6.11 052/558] iomap: constrain the file range passed to iomap_file_unshare
+Date: Tue,  8 Oct 2024 14:01:22 +0200
+Message-ID: <20241008115704.269748768@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,35 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit a0ffa68c70b367358b2672cdab6fa5bc4c40de2c ]
+[ Upstream commit a311a08a4237241fb5b9d219d3e33346de6e83e0 ]
 
-The work function can run after the ncsi device is freed, resulting
-in use-after-free bugs or kernel panic.
+File contents can only be shared (i.e. reflinked) below EOF, so it makes
+no sense to try to unshare ranges beyond EOF.  Constrain the file range
+parameters here so that we don't have to do that in the callers.
 
-Fixes: 2d283bdd079c ("net/ncsi: Resource management")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Link: https://patch.msgid.link/20240925155523.1017097-1-eajames@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5f4e5752a8a3 ("fs: add iomap_file_dirty")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20241002150213.GC21853@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-manage.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/dax.c               | 6 +++++-
+ fs/iomap/buffered-io.c | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index 5ecf611c88200..5cf55bde366d1 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -1954,6 +1954,8 @@ void ncsi_unregister_dev(struct ncsi_dev *nd)
- 	list_del_rcu(&ndp->node);
- 	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+diff --git a/fs/dax.c b/fs/dax.c
+index becb4a6920c6a..c62acd2812f8d 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -1305,11 +1305,15 @@ int dax_file_unshare(struct inode *inode, loff_t pos, loff_t len,
+ 	struct iomap_iter iter = {
+ 		.inode		= inode,
+ 		.pos		= pos,
+-		.len		= len,
+ 		.flags		= IOMAP_WRITE | IOMAP_UNSHARE | IOMAP_DAX,
+ 	};
++	loff_t size = i_size_read(inode);
+ 	int ret;
  
-+	disable_work_sync(&ndp->work);
++	if (pos < 0 || pos >= size)
++		return 0;
 +
- 	kfree(ndp);
- }
- EXPORT_SYMBOL_GPL(ncsi_unregister_dev);
++	iter.len = min(len, size - pos);
+ 	while ((ret = iomap_iter(&iter, ops)) > 0)
+ 		iter.processed = dax_unshare_iter(&iter);
+ 	return ret;
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index f420c53d86acc..389de94715b53 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1382,11 +1382,15 @@ iomap_file_unshare(struct inode *inode, loff_t pos, loff_t len,
+ 	struct iomap_iter iter = {
+ 		.inode		= inode,
+ 		.pos		= pos,
+-		.len		= len,
+ 		.flags		= IOMAP_WRITE | IOMAP_UNSHARE,
+ 	};
++	loff_t size = i_size_read(inode);
+ 	int ret;
+ 
++	if (pos < 0 || pos >= size)
++		return 0;
++
++	iter.len = min(len, size - pos);
+ 	while ((ret = iomap_iter(&iter, ops)) > 0)
+ 		iter.processed = iomap_unshare_iter(&iter);
+ 	return ret;
 -- 
 2.43.0
 
