@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3301DD867;
-	Tue,  8 Oct 2024 12:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5097B1DE3AF;
+	Tue,  8 Oct 2024 12:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389588; cv=none; b=nw4oZOrtHAXpNtUeQrwrF9dcFZiA89wCEtHSF7LaDYomWEw2LT6MaFO/AfxywQxI1Q4TTNy4Ay4UARwcNBbn4kDeY9GUcB4jKIDVDFsfYhEtOEuGUvh3MApNRJPCQNvidaQyo2plZzmfpdWXIlYte4UZr13FdfXNRZnHQmwMFpE=
+	t=1728389591; cv=none; b=ocqp5PltQFmlUCMs6e3v9C3DUyX1duUv3W73oAisN8C5Ry0yHwNin/juGJ1AFagaQv58rQPkIEEaE9Pkz/qyLk4cA5vCcpMXU25liQZ35DboNCLbQ7Oxaa7xqL4fbgsiEWSXNb2uNNDoCSF+AOOMhT0PtrxNlnlTRbUq3OuPPBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389588; c=relaxed/simple;
-	bh=pqhw2J8BHKcmH9nITdOrVXtpWK4t03/ZXU2u9cI0duw=;
+	s=arc-20240116; t=1728389591; c=relaxed/simple;
+	bh=OX22ILeTOzDLJvsWRlVyMs+MannIPgKaQ1pI2zmPpp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdVz/v/otM84BMbZnZ5uaQbF3EKdbhIcoZBtEyQ96qH/EzDo6CH9sYxOBKl+YmUYHVEWr2+s22aahiQ6lbO8BV8eyXEAjXqrauW7txbjC3ZoTiFaJSnp+JO+LxEL2ZHwHgTWZNZSxdhxnshuTkfOarhBGKzfbnLUqANuRxnwRYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZeliX2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tethW63QnwoYcsd/QHPCybTjCGqAygXsdX/+GzzZDRpBvu5s2xvJ1Vp6l3J0O3t0M5g4/qQnRJ3eQyrTEvyTaNiF403PsFc9ATC7T1SufErGFV8MIggEdwl2F/XrW0L8lXMxXpRa6juc0f7RcRNG4wlnDUA2cNyofrG7JHtHH24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH5/Ea7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZeliX2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC5BC4CEC7;
-	Tue,  8 Oct 2024 12:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH5/Ea7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47BBC4CECC;
+	Tue,  8 Oct 2024 12:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389587;
-	bh=pqhw2J8BHKcmH9nITdOrVXtpWK4t03/ZXU2u9cI0duw=;
+	s=korg; t=1728389591;
+	bh=OX22ILeTOzDLJvsWRlVyMs+MannIPgKaQ1pI2zmPpp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yZeliX2NGG5u9/z6dFXotdmvoh6whcI0NdNvquxtDdraqQEHBwQNpKCKTk/uuuuv6
-	 s8tAns1+Rs33TQcYWt+cirlBYvrk+u3sEpdWgFT6C3SV9/tqppIgGZfEpWWoR0Aip9
-	 WfoUAV671zWj5kz+mI8SCZONHbvdf28wItZTBwVI=
+	b=xH5/Ea7Q54gBsBz9oHvcx006Ka1GfQLnCyRFzRX+ggxxgQedoSGVoC1kRkQUOYX1e
+	 rJ/j1hD0ou2u3Cmn13Amj47uB2jdi/fvwiPSNBYZBQbV1S0KnH/bX5/42gVxVK1cVb
+	 mw92Xv9J5WOaiIpVosgZ5oJoWjwZU8gsqt0cRQng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elena Salomatkina <esalomatkina@ispras.ru>,
-	Simon Horman <horms@kernel.org>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 020/482] net/mlx5e: Fix NULL deref in mlx5e_tir_builder_alloc()
-Date: Tue,  8 Oct 2024 14:01:23 +0200
-Message-ID: <20241008115649.094383468@linuxfoundation.org>
+Subject: [PATCH 6.10 038/482] net: fec: Reload PTP registers after link-state change
+Date: Tue,  8 Oct 2024 14:01:41 +0200
+Message-ID: <20241008115649.802831648@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -49,48 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elena Salomatkina <esalomatkina@ispras.ru>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit f25389e779500cf4a59ef9804534237841bce536 ]
+[ Upstream commit d9335d0232d2da605585eea1518ac6733518f938 ]
 
-In mlx5e_tir_builder_alloc() kvzalloc() may return NULL
-which is dereferenced on the next line in a reference
-to the modify field.
+On link-state change, the controller gets reset,
+which clears all PTP registers, including PHC time,
+calibrated clock correction values etc. For correct
+IEEE 1588 operation we need to restore these after
+the reset.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a6696735d694 ("net/mlx5e: Convert TIR to a dedicated object")
-Signed-off-by: Elena Salomatkina <esalomatkina@ispras.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 6605b730c061 ("FEC: Add time stamping code and a PTP hardware clock")
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20240924093705.2897329-2-csokas.bence@prolan.hu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/freescale/fec.h     |  3 +++
+ drivers/net/ethernet/freescale/fec_ptp.c | 20 ++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-index d4239e3b3c88e..11f724ad90dbf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-@@ -23,6 +23,9 @@ struct mlx5e_tir_builder *mlx5e_tir_builder_alloc(bool modify)
- 	struct mlx5e_tir_builder *builder;
+diff --git a/drivers/net/ethernet/freescale/fec.h b/drivers/net/ethernet/freescale/fec.h
+index 0552317a2554b..1cca0425d4939 100644
+--- a/drivers/net/ethernet/freescale/fec.h
++++ b/drivers/net/ethernet/freescale/fec.h
+@@ -693,6 +693,9 @@ struct fec_enet_private {
  
- 	builder = kvzalloc(sizeof(*builder), GFP_KERNEL);
-+	if (!builder)
-+		return NULL;
+ 	struct {
+ 		int pps_enable;
++		u64 ns_sys, ns_phc;
++		u32 at_corr;
++		u8 at_inc_corr;
+ 	} ptp_saved_state;
+ 
+ 	u64 ethtool_stats[];
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index 8027b532de078..5e8fac50f945d 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -773,24 +773,44 @@ void fec_ptp_init(struct platform_device *pdev, int irq_idx)
+ void fec_ptp_save_state(struct fec_enet_private *fep)
+ {
+ 	unsigned long flags;
++	u32 atime_inc_corr;
+ 
+ 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 
+ 	fep->ptp_saved_state.pps_enable = fep->pps_enable;
+ 
++	fep->ptp_saved_state.ns_phc = timecounter_read(&fep->tc);
++	fep->ptp_saved_state.ns_sys = ktime_get_ns();
 +
- 	builder->modify = modify;
++	fep->ptp_saved_state.at_corr = readl(fep->hwp + FEC_ATIME_CORR);
++	atime_inc_corr = readl(fep->hwp + FEC_ATIME_INC) & FEC_T_INC_CORR_MASK;
++	fep->ptp_saved_state.at_inc_corr = (u8)(atime_inc_corr >> FEC_T_INC_CORR_OFFSET);
++
+ 	spin_unlock_irqrestore(&fep->tmreg_lock, flags);
+ }
  
- 	return builder;
+ /* Restore PTP functionality after a reset */
+ void fec_ptp_restore_state(struct fec_enet_private *fep)
+ {
++	u32 atime_inc = readl(fep->hwp + FEC_ATIME_INC) & FEC_T_INC_MASK;
+ 	unsigned long flags;
++	u32 counter;
++	u64 ns;
+ 
+ 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 
+ 	/* Reset turned it off, so adjust our status flag */
+ 	fep->pps_enable = 0;
+ 
++	writel(fep->ptp_saved_state.at_corr, fep->hwp + FEC_ATIME_CORR);
++	atime_inc |= ((u32)fep->ptp_saved_state.at_inc_corr) << FEC_T_INC_CORR_OFFSET;
++	writel(atime_inc, fep->hwp + FEC_ATIME_INC);
++
++	ns = ktime_get_ns() - fep->ptp_saved_state.ns_sys + fep->ptp_saved_state.ns_phc;
++	counter = ns & fep->cc.mask;
++	writel(counter, fep->hwp + FEC_ATIME);
++	timecounter_init(&fep->tc, &fep->cc, ns);
++
+ 	spin_unlock_irqrestore(&fep->tmreg_lock, flags);
+ 
+ 	/* Restart PPS if needed */
 -- 
 2.43.0
 
