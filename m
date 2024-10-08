@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88C11DDA15;
-	Tue,  8 Oct 2024 12:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B891DE4DF;
+	Tue,  8 Oct 2024 12:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391065; cv=none; b=rozZRIF4uSHsKksiWR1I/Fy2eq4A60FoC383nxMJ6HWdPW0uV9dViAr8GBdxBZB0+FIvQghRiKuiq3QWGw3YZbmycQneGN7o1ZvGxaDEDLMA22ulwWomiwxNnj5ozdil2S8X2vOAw+Y4ckBE+UtqPm2NAbI9qtqlO8I5zoQ37oA=
+	t=1728391067; cv=none; b=VnJQzTDv2/yK2BfHoBVJ2pUt0PG0kmgAK5DrLFuStz5bYGe9fzIhyiBo3QkDaMoRz6jMfRYNO1tpkMz4JQpYXK8H54L4QQH30HbNda9Z7bKG5Tq92PcV8PD7LeyE1f4WGpMBCGhNYacaWaW71hTK0gDNPSFw+hosRAI3L8+wrJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391065; c=relaxed/simple;
-	bh=FRRmXRBWawtYXBc77nitVGgujOHufZksoxPeFkxstl0=;
+	s=arc-20240116; t=1728391067; c=relaxed/simple;
+	bh=0ja6nYbnuy6y1WJSX+0bTqWriYvsCj74a78pvKx6je8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1zk6TKvuI/tzO7AbBuQgtUSum1tom4XHWQwGeJIXsA37IMdOkckK4wzYK7fYMqDjNYVARZxeAHVKS890+iu48wB5d3XhC/QfQBeiHIZKrM8hbAVG4YIvMasS6tLWpsMGMWlwjk/K987EH1HgNmH/8wbvAmudM7ExcDDyqNzQsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wj6H+Sh1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHIvPL94cHx+0WIDdI16Lpb41AEnwHm1VnYyZ7NYL2AUUaPpoVWYjxwzSSfqS1iKGJoT1B7Bxvl923ixZPcwFrLhLfyC97fCNqcnk+cm4PdcWFpjFY6CchdqPVJ5nlbZdnZ+ZhznrKYfjqt1eD+UcgchTOHb29nt2OWy//7NwNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwWGntsl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wj6H+Sh1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154DAC4CEC7;
-	Tue,  8 Oct 2024 12:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwWGntsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275E8C4CECD;
+	Tue,  8 Oct 2024 12:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391064;
-	bh=FRRmXRBWawtYXBc77nitVGgujOHufZksoxPeFkxstl0=;
+	s=korg; t=1728391067;
+	bh=0ja6nYbnuy6y1WJSX+0bTqWriYvsCj74a78pvKx6je8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wj6H+Sh19/aaBeM1wVXPI1HPg8BqPHLmtnC7yXsvro2344BsVzC8PJOV+wRnbQQgI
-	 amD4fpDW0cGQ/P9nVbIxqQ0abJfuGUkaHO4me2PHqyPjytqPkI6/4V1A3/OxfkPh7Z
-	 f/UrvMx1XfxkO0I1/iAbfGshTf0zOEXjo7f5tAi0=
+	b=kwWGntslL6nQsoKWVigVLSmq8s80ENT0fvVPykSh4PjQuQaUvMV0aOLjmBAjOQlEO
+	 HAHWM5UESAALLXpbKuHUb5apnfuCrWTTvgoz3tsvyTFCm7tYlBmLpucvAY/Qgk3nQ5
+	 VMwBBihXifzdMMtXoKIsf2XqTQspQl7V/D7uW3cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 462/482] RDMA/mana_ib: use the correct page table index based on hardware page size
-Date: Tue,  8 Oct 2024 14:08:45 +0200
-Message-ID: <20241008115706.695284739@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Gabe Teeger <Gabe.Teeger@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 480/482] drm/amd/display: Revert Avoid overflow assignment
+Date: Tue,  8 Oct 2024 14:09:03 +0200
+Message-ID: <20241008115707.398531209@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,38 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Gabe Teeger <Gabe.Teeger@amd.com>
 
-[ Upstream commit 9e517a8e9d9a303bf9bde35e5c5374795544c152 ]
+commit e80f8f491df873ea2e07c941c747831234814612 upstream.
 
-MANA hardware uses 4k page size. When calculating the page table index,
-it should use the hardware page size, not the system page size.
+This reverts commit a15268787b79 ("drm/amd/display: Avoid overflow assignment in link_dp_cts")
+Due to regression causing DPMS hang.
 
-Cc: stable@vger.kernel.org
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Signed-off-by: Long Li <longli@microsoft.com>
-Link: https://patch.msgid.link/1725030993-16213-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Gabe Teeger <Gabe.Teeger@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h                  |    2 +-
+ drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c |    3 +--
+ drivers/gpu/drm/amd/display/include/dpcd_defs.h               |    1 -
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
-index 1543b436ddc68..f2a2ce800443a 100644
---- a/drivers/infiniband/hw/mana/main.c
-+++ b/drivers/infiniband/hw/mana/main.c
-@@ -383,7 +383,7 @@ static int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -727,7 +727,7 @@ struct dp_audio_test_data_flags {
+ struct dp_audio_test_data {
  
- 	create_req->length = umem->length;
- 	create_req->offset_in_page = ib_umem_dma_offset(umem, page_sz);
--	create_req->gdma_page_type = order_base_2(page_sz) - PAGE_SHIFT;
-+	create_req->gdma_page_type = order_base_2(page_sz) - MANA_PAGE_SHIFT;
- 	create_req->page_count = num_pages_total;
- 
- 	ibdev_dbg(&dev->ib_dev, "size_dma_region %lu num_pages_total %lu\n",
--- 
-2.43.0
-
+ 	struct dp_audio_test_data_flags flags;
+-	uint32_t sampling_rate;
++	uint8_t sampling_rate;
+ 	uint8_t channel_count;
+ 	uint8_t pattern_type;
+ 	uint8_t pattern_period[8];
+--- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
++++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
+@@ -775,8 +775,7 @@ bool dp_set_test_pattern(
+ 			core_link_read_dpcd(link, DP_TRAINING_PATTERN_SET,
+ 					    &training_pattern.raw,
+ 					    sizeof(training_pattern));
+-			if (pattern <= PHY_TEST_PATTERN_END_DP11)
+-				training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
++			training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
+ 			core_link_write_dpcd(link, DP_TRAINING_PATTERN_SET,
+ 					     &training_pattern.raw,
+ 					     sizeof(training_pattern));
+--- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
++++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
+@@ -76,7 +76,6 @@ enum dpcd_phy_test_patterns {
+ 	PHY_TEST_PATTERN_D10_2,
+ 	PHY_TEST_PATTERN_SYMBOL_ERROR,
+ 	PHY_TEST_PATTERN_PRBS7,
+-	PHY_TEST_PATTERN_END_DP11 = PHY_TEST_PATTERN_PRBS7,
+ 	PHY_TEST_PATTERN_80BIT_CUSTOM,/* For DP1.2 only */
+ 	PHY_TEST_PATTERN_CP2520_1,
+ 	PHY_TEST_PATTERN_CP2520_2,
 
 
