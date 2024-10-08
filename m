@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE11C32EB;
-	Tue,  8 Oct 2024 13:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF2C1C32EB;
+	Tue,  8 Oct 2024 13:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392988; cv=none; b=rA6wUSfl5Z8vlh1SRVCg/tNph/Je3tpXmfAhQ7mLymGlbwlUVborQK2JjqmZGT0KuwoJyEp+rX5V/l+9nkQEmJT09UvVWxumetOtfy113FqGarYOZPmF6JcGaCn4FCzvMvpRy1FxRD7sCtUQKx+iZ7vSyaW6pM8D+EqD99GUhf4=
+	t=1728392992; cv=none; b=db2t1FkTTk+w0ygxWjoImr1Jo1CPl5v3pBn8NBS+NgwM1bKeedzIEwXaVtU1sGQJdr7t+DgERGrQysTqeWfUjF1WRIFRKDlxf9j/UdeoUUvQb/IOP9MgV+GG7iIGv0ThRNUjpqDKFhTrOME9miqTaM4xRuM6+5+dDDE3liowZfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392988; c=relaxed/simple;
-	bh=98RcWH8Mmbc00GzguhW9oTxXeRllHo6MYmVId/NELHQ=;
+	s=arc-20240116; t=1728392992; c=relaxed/simple;
+	bh=vBSjwA/sRmMRLLivj8NdfdkAzwrlWjFN84RNuukDFZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4QOp/yBmC7/5tTmU84Hd4oK7siOO2sZItiR+aGiB2b2+Nc/AYUdHsBOLU4nVr6h4ILSM/MVs34sCA1ljIbfJVc4Aqk/t4ihoog6++tcPED1kjt1uZ+G1ZouqN2yWw743cQtzpPkzIzGQYJYu5CRLm42WuEuLJcaC3dk01iY8z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu/Ih3K5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u908iQVvYmO6zbgsXJgS+4mFq7xHHwn9W91b56JyZkEdptYK9RvwR/tMaKL6F3jj2nq68Qx2E0P4kcYpLWI8CN+T9epHaMRPwvowicphUbmab5zbq5tZ2oUWDc5amwNKr5rOn/J2rEFFGDTDYL/n52d9Wx+olTx3JsToFPYhO4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeLlUGsU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu/Ih3K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5B1C4CEC7;
-	Tue,  8 Oct 2024 13:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeLlUGsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E2BC4CECD;
+	Tue,  8 Oct 2024 13:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392988;
-	bh=98RcWH8Mmbc00GzguhW9oTxXeRllHo6MYmVId/NELHQ=;
+	s=korg; t=1728392992;
+	bh=vBSjwA/sRmMRLLivj8NdfdkAzwrlWjFN84RNuukDFZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qu/Ih3K55kidoNquWgM7d+SwjoMND9vSYwjVAt1QaskQywXm5Ypf06GksREVZcR+3
-	 jJNjMG4pD8S4iHLnWbpHWvrhix31ix45huqfNOa45cHIeK82GdCxxO2CI5tSNm+6Ko
-	 HnMuqS8NSgcyltwfIIDvJooUUxMSFJ5GEiCC7lCI=
+	b=oeLlUGsU9p+rfsctxHICL5zIlYhQ3qA3TU4RZISDq9JoL4N6hWU5SDWt8DByxeGtg
+	 nkJPJuz+X2S6sP8X1fte3YSBooQZ/5i9r+iZfik2hL/1AIa/h4+yCugMS1nJ02XGY5
+	 eUSEwKAoh2i4j/zJf8dB5GZDKK5KSnUvZJly+tZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/386] static_call: Replace pointless WARN_ON() in static_call_module_notify()
-Date: Tue,  8 Oct 2024 14:04:07 +0200
-Message-ID: <20241008115629.413533155@linuxfoundation.org>
+Subject: [PATCH 6.6 003/386] jump_label: Simplify and clarify static_key_fast_inc_cpus_locked()
+Date: Tue,  8 Oct 2024 14:04:08 +0200
+Message-ID: <20241008115629.451506990@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,42 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit fe513c2ef0a172a58f158e2e70465c4317f0a9a2 ]
+[ Upstream commit 9bc2ff871f00437ad2f10c1eceff51aaa72b478f ]
 
-static_call_module_notify() triggers a WARN_ON(), when memory allocation
-fails in __static_call_add_module().
+Make the code more obvious and add proper comments to avoid future head
+scratching.
 
-That's not really justified, because the failure case must be correctly
-handled by the well known call chain and the error code is passed
-through to the initiating userspace application.
-
-A memory allocation fail is not a fatal problem, but the WARN_ON() takes
-the machine out when panic_on_warn is set.
-
-Replace it with a pr_warn().
-
-Fixes: 9183c3f9ed71 ("static_call: Add inline static call infrastructure")
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/8734mf7pmb.ffs@tglx
+Link: https://lkml.kernel.org/r/20240610124406.548322963@linutronix.de
+Stable-dep-of: 1d7f856c2ca4 ("jump_label: Fix static_key_slow_dec() yet again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/static_call_inline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/jump_label.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/static_call_inline.c b/kernel/static_call_inline.c
-index 7bb0962b52291..5259cda486d05 100644
---- a/kernel/static_call_inline.c
-+++ b/kernel/static_call_inline.c
-@@ -453,7 +453,7 @@ static int static_call_module_notify(struct notifier_block *nb,
- 	case MODULE_STATE_COMING:
- 		ret = static_call_add_module(mod);
- 		if (ret) {
--			WARN(1, "Failed to allocate memory for static calls");
-+			pr_warn("Failed to allocate memory for static calls\n");
- 			static_call_del_module(mod);
- 		}
- 		break;
+diff --git a/kernel/jump_label.c b/kernel/jump_label.c
+index 1ed269b2c4035..7374053bbe049 100644
+--- a/kernel/jump_label.c
++++ b/kernel/jump_label.c
+@@ -159,22 +159,24 @@ bool static_key_slow_inc_cpuslocked(struct static_key *key)
+ 	if (static_key_fast_inc_not_disabled(key))
+ 		return true;
+ 
+-	jump_label_lock();
+-	if (atomic_read(&key->enabled) == 0) {
+-		atomic_set(&key->enabled, -1);
++	guard(mutex)(&jump_label_mutex);
++	/* Try to mark it as 'enabling in progress. */
++	if (!atomic_cmpxchg(&key->enabled, 0, -1)) {
+ 		jump_label_update(key);
+ 		/*
+-		 * Ensure that if the above cmpxchg loop observes our positive
+-		 * value, it must also observe all the text changes.
++		 * Ensure that when static_key_fast_inc_not_disabled() or
++		 * static_key_slow_try_dec() observe the positive value,
++		 * they must also observe all the text changes.
+ 		 */
+ 		atomic_set_release(&key->enabled, 1);
+ 	} else {
+-		if (WARN_ON_ONCE(!static_key_fast_inc_not_disabled(key))) {
+-			jump_label_unlock();
++		/*
++		 * While holding the mutex this should never observe
++		 * anything else than a value >= 1 and succeed
++		 */
++		if (WARN_ON_ONCE(!static_key_fast_inc_not_disabled(key)))
+ 			return false;
+-		}
+ 	}
+-	jump_label_unlock();
+ 	return true;
+ }
+ 
 -- 
 2.43.0
 
