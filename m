@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2761DE4CD;
-	Tue,  8 Oct 2024 13:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F041F1DE89F;
+	Tue,  8 Oct 2024 13:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393568; cv=none; b=f4fA41BqxmwQil5JT+MIYMxvV37oooH0iYdhvE1ubJr8z2cb5qGUV9/ese0RZnVVofal0nNja3GfOE4HOdM9JGLC8jM/fVlVOUq/95ohD3wDBVaxalAW8tW4l4HAOerSdT8B3w4gJA4eI2s0jjQ/f+0Oj5r4AlYeIPRQ1T+D30E=
+	t=1728393572; cv=none; b=G8oq2KA27DaK82h99G3I2nBTbXgjRphcm6UvDTc5JwDSS5yiQE6OUM7sc2vIYI0fQm9/p4h5T71kscc8PAnO/NaBsR6wa9TYILTIZ6ozUfHLn/4htDaYLLMCh/VZ9oJuwUF+OrFVAeDAWMqu0qbEYb6/4F7kOVH8rvoyubluXwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393568; c=relaxed/simple;
-	bh=6lfEy+R+ILQo9WiH3pFs4w3TfYq28l+PY5tVm2MbumQ=;
+	s=arc-20240116; t=1728393572; c=relaxed/simple;
+	bh=PVbFAeyDgk+9tNtRzy47Nst0AaRHd2vMljCfkvQQ06w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VTTyc8GVJgAqBOe/CoEXdfhXVeLvaEw3J9usHwoLDrTdtq1u1l4UQdmKX4BCktNptWAu99NtRBU8yfJVGHHxTGNFBnr6nF1wgpJZAwW0OHsleHczXql6Ymirz31+rzeg5Wfo+UIQ4kckW1Ge81yf3BrP6oWGWG1u7Z5X+JIjKJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwIcVglf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q30Lu8T3MNNWAvzUQEztH/ZqLkCONGpdR6BI9HbW1G3m1xXzdvYhbfy/ADAqViUfE7MfaKcKYw1fLlt3IFy5bIiwLyRldFl3Gchb/uM9lyIpoMLbJ696UMPLXKbFopXNCdEEmOI42M8df6F1VJpcyrfmZgsdt5Phrn1afCrXBBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYguxPRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwIcVglf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DA4C4CEC7;
-	Tue,  8 Oct 2024 13:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYguxPRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E103C4CEC7;
+	Tue,  8 Oct 2024 13:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393568;
-	bh=6lfEy+R+ILQo9WiH3pFs4w3TfYq28l+PY5tVm2MbumQ=;
+	s=korg; t=1728393571;
+	bh=PVbFAeyDgk+9tNtRzy47Nst0AaRHd2vMljCfkvQQ06w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QwIcVglfwKgkRzKW5aqEObIZceEtJK634X+G2UTUcv7aAsEWFsRHRnQYYajFLSbE/
-	 h3G2GK+nF0EJseCMl+bNYH4HyYSZ+zI/SZHGYfCBbcgknQWJAbAGe0o7sNvOZSSTHG
-	 KiLTpFPn1hQ2Kb0vKwvXlCyQ6V5o8TPmt37KOzrs=
+	b=vYguxPRSEvC03i9girq7dZHBShtAEv+9ajx24GCBackzYOzubged+l0BB22P7MV+M
+	 IaPd4Nxba5l0wZogKAn98lzqZbyz/noJFir8vbEmLy/H9vOdej8i3Q8e8f29grwaoo
+	 A+v5eDGAxHGv6yeWJNoxhPcDCimMUOZ4H5fpkluc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alex Hung <alex.hung@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/386] drm/amd/display: Avoid overflow assignment in link_dp_cts
-Date: Tue,  8 Oct 2024 14:06:44 +0200
-Message-ID: <20241008115635.682712073@linuxfoundation.org>
+Subject: [PATCH 6.6 160/386] drm/amd/display: Initialize get_bytes_per_elements default to 1
+Date: Tue,  8 Oct 2024 14:06:45 +0200
+Message-ID: <20241008115635.721696921@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -56,67 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit a15268787b79fd183dd526cc16bec9af4f4e49a1 ]
+[ Upstream commit 4067f4fa0423a89fb19a30b57231b384d77d2610 ]
 
-sampling_rate is an uint8_t but is assigned an unsigned int, and thus it
-can overflow. As a result, sampling_rate is changed to uint32_t.
+Variables, used as denominators and maybe not assigned to other values,
+should not be 0. bytes_per_element_y & bytes_per_element_c are
+initialized by get_bytes_per_element() which should never return 0.
 
-Similarly, LINK_QUAL_PATTERN_SET has a size of 2 bits, and it should
-only be assigned to a value less or equal than 4.
-
-This fixes 2 INTEGER_OVERFLOW issues reported by Coverity.
+This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
 
 Signed-off-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dp_types.h                  | 2 +-
- drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c | 3 ++-
- drivers/gpu/drm/amd/display/include/dpcd_defs.h               | 1 +
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c | 2 +-
+ .../gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-index 83719f5bea495..8df52f9ba0b7c 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-@@ -721,7 +721,7 @@ struct dp_audio_test_data_flags {
- struct dp_audio_test_data {
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
+index 0fc9f3e3ffaef..f603486af6e30 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
+@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
  
- 	struct dp_audio_test_data_flags flags;
--	uint8_t sampling_rate;
-+	uint32_t sampling_rate;
- 	uint8_t channel_count;
- 	uint8_t pattern_type;
- 	uint8_t pattern_period[8];
-diff --git a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-index fe4282771cd07..8a97d96f7d8bb 100644
---- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-@@ -849,7 +849,8 @@ bool dp_set_test_pattern(
- 			core_link_read_dpcd(link, DP_TRAINING_PATTERN_SET,
- 					    &training_pattern.raw,
- 					    sizeof(training_pattern));
--			training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
-+			if (pattern <= PHY_TEST_PATTERN_END_DP11)
-+				training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
- 			core_link_write_dpcd(link, DP_TRAINING_PATTERN_SET,
- 					     &training_pattern.raw,
- 					     sizeof(training_pattern));
-diff --git a/drivers/gpu/drm/amd/display/include/dpcd_defs.h b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-index aee5170f5fb23..c246235e4afec 100644
---- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-+++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-@@ -76,6 +76,7 @@ enum dpcd_phy_test_patterns {
- 	PHY_TEST_PATTERN_D10_2,
- 	PHY_TEST_PATTERN_SYMBOL_ERROR,
- 	PHY_TEST_PATTERN_PRBS7,
-+	PHY_TEST_PATTERN_END_DP11 = PHY_TEST_PATTERN_PRBS7,
- 	PHY_TEST_PATTERN_80BIT_CUSTOM,/* For DP1.2 only */
- 	PHY_TEST_PATTERN_CP2520_1,
- 	PHY_TEST_PATTERN_CP2520_2,
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
+index 618f4b682ab1b..9f28e4d3c664c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
+@@ -53,7 +53,7 @@ static void calculate_ttu_cursor(
+ 
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
 -- 
 2.43.0
 
