@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CC01DF246;
-	Tue,  8 Oct 2024 12:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066811DE8AA;
+	Tue,  8 Oct 2024 12:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392143; cv=none; b=nZJbtWcSmiq5UFyEjrUdXL3OfewSh8R2w0nk8qVS4iy/WDYwsY31KAUVKL9Czx3mJ6AbwufWSv6/1XsDd6B4bPr1XlXyFqjd2oBfp85c+cDIbvQWRsOH0v+DfvuJRTcgahjhDpYH7TunJQQ1pt+jrCYMu+Do70/N+gf016V4z7E=
+	t=1728392147; cv=none; b=MCKdt+5twwoat/boecHd/FxXMfUPiRT5QAhCJW/Cfr0NNmpbOzUWXlLZYdx+gR9YUo1qCGECa1lMEC2aQJ278UMCvAGascgvMikgQjBy34VnBFuLGh+JMnRzn5PEE3nwb4tOGctB+lRjiUKthjOIB4/7U+MdHDCpaQt9H7Gspyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392143; c=relaxed/simple;
-	bh=asNOO5STQSiIzMp+JT7O+14NQa0PBaeTNoT2j4QP7sE=;
+	s=arc-20240116; t=1728392147; c=relaxed/simple;
+	bh=1op2iDL3VbUkVu5GvSbbf4Wd2ctxjUBTo+r3/YbNVYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2XTt5i47dNB9weHPf9fuOObasPHmWoU+VA7/rChmgaYVjeSUWFPLwXJFzbwqdRqja9cXfJSML6Gwd9GAyu2c5firLuNBPJ55tO3V9eCgkO5QX3tbyoNEVE9WJl9lytln0/BKgENOlF1Nc/zBgAd59YeDwGt8abuOKil0dr0kDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/q17Hmu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJKxJpJRetN0ZZF2Cozf+sR1d2hHnoWEpdrqfT8zYDQj/TISvvthhkiK1DCTGQlVbUP/F6g+abjN0i7iwMbjgHtHzZGS96EybVTGreap17X2YdNZMW5Q01MYpOTKU+RROqYNOyGORr9s1KOM66Ay7xSw+UZG3LiIGYscj7x/Kw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsuhVKFF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/q17Hmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B2DC4CEC7;
-	Tue,  8 Oct 2024 12:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsuhVKFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F9C4CEC7;
+	Tue,  8 Oct 2024 12:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392143;
-	bh=asNOO5STQSiIzMp+JT7O+14NQa0PBaeTNoT2j4QP7sE=;
+	s=korg; t=1728392146;
+	bh=1op2iDL3VbUkVu5GvSbbf4Wd2ctxjUBTo+r3/YbNVYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/q17HmutFXK21/yfH/x3rdj8K/MSBTzl6frQ/MmLggz65G8/yHdkJECQuosmcNvU
-	 72GLJ+sgGMalZ36vXK5+Mel9arKCQjxL+IA4zH+dEgrgt4fiEoRaHfqYNsT/O8M6oI
-	 Sr9BaR7x9EptIi4ErHb/t8VwwBkYdkS45u3ST4wo=
+	b=KsuhVKFFqiHKsrKtEkDV1ST5PcvxDwXmnEfWM4Q+peQStaQ4OIF+X1e163KQcDK0x
+	 fwGanWdcbDy77xElyWi4xKqH3/nYZMFi5MRIGdb7nnt7erjm2lputLKUFfrVkO3viy
+	 8vR9RL6LbP96/qTSvudHMLaTYwfYNAjxRTHS00AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 328/558] drm/xe: Fix memory leak on xe_alloc_pf_queue failure
-Date: Tue,  8 Oct 2024 14:05:58 +0200
-Message-ID: <20241008115715.212379971@linuxfoundation.org>
+Subject: [PATCH 6.11 329/558] selftests: vDSO: fix vDSO name for powerpc
+Date: Tue,  8 Oct 2024 14:05:59 +0200
+Message-ID: <20241008115715.251322249@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,64 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit c5f728de696caa35481fd84202dfbc9fecc18e0b ]
+[ Upstream commit 59eb856c3ed9b3552befd240c0c339f22eed3fa1 ]
 
-Simplify memory unwinding on error also fixing current memory
-leak that can happen on error.
+Following error occurs when running vdso_test_correctness on powerpc:
 
-v2: use devm_kcalloc(Matt A)
+~ # ./vdso_test_correctness
+[WARN]	failed to find vDSO
+[SKIP]	No vDSO, so skipping clock_gettime() tests
+[SKIP]	No vDSO, so skipping clock_gettime64() tests
+[RUN]	Testing getcpu...
+[OK]	CPU 0: syscall: cpu 0, node 0
 
-Fixes: 3338e4f90c14 ("drm/xe: Use topology to determine page fault queue size")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Stuart Summers <stuart.summers@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240826162035.20462-1-nirmoy.das@intel.com
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+On powerpc, vDSO is neither called linux-vdso.so.1 nor linux-gate.so.1
+but linux-vdso32.so.1 or linux-vdso64.so.1.
+
+Also search those two names before giving up.
+
+Fixes: c7e5789b24d3 ("kselftest: Move test_vdso to the vDSO test suite")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_pagefault.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ tools/testing/selftests/vDSO/vdso_test_correctness.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_pagefault.c b/drivers/gpu/drm/xe/xe_gt_pagefault.c
-index 0be4687bfc203..730eec07795e2 100644
---- a/drivers/gpu/drm/xe/xe_gt_pagefault.c
-+++ b/drivers/gpu/drm/xe/xe_gt_pagefault.c
-@@ -388,20 +388,17 @@ static void pagefault_fini(void *arg)
- {
- 	struct xe_gt *gt = arg;
- 	struct xe_device *xe = gt_to_xe(gt);
--	int i;
- 
- 	if (!xe->info.has_usm)
+diff --git a/tools/testing/selftests/vDSO/vdso_test_correctness.c b/tools/testing/selftests/vDSO/vdso_test_correctness.c
+index e691a3cf14911..cdb697ae8343c 100644
+--- a/tools/testing/selftests/vDSO/vdso_test_correctness.c
++++ b/tools/testing/selftests/vDSO/vdso_test_correctness.c
+@@ -114,6 +114,12 @@ static void fill_function_pointers()
+ 	if (!vdso)
+ 		vdso = dlopen("linux-gate.so.1",
+ 			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
++	if (!vdso)
++		vdso = dlopen("linux-vdso32.so.1",
++			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
++	if (!vdso)
++		vdso = dlopen("linux-vdso64.so.1",
++			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
+ 	if (!vdso) {
+ 		printf("[WARN]\tfailed to find vDSO\n");
  		return;
- 
- 	destroy_workqueue(gt->usm.acc_wq);
- 	destroy_workqueue(gt->usm.pf_wq);
--
--	for (i = 0; i < NUM_PF_QUEUE; ++i)
--		kfree(gt->usm.pf_queue[i].data);
- }
- 
- static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
- {
-+	struct xe_device *xe = gt_to_xe(gt);
- 	xe_dss_mask_t all_dss;
- 	int num_dss, num_eus;
- 
-@@ -417,7 +414,8 @@ static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
- 		(num_eus + XE_NUM_HW_ENGINES) * PF_MSG_LEN_DW;
- 
- 	pf_queue->gt = gt;
--	pf_queue->data = kcalloc(pf_queue->num_dw, sizeof(u32), GFP_KERNEL);
-+	pf_queue->data = devm_kcalloc(xe->drm.dev, pf_queue->num_dw,
-+				      sizeof(u32), GFP_KERNEL);
- 	if (!pf_queue->data)
- 		return -ENOMEM;
- 
 -- 
 2.43.0
 
