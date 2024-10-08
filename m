@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F611779B1;
-	Tue,  8 Oct 2024 12:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8453A1C4631;
+	Tue,  8 Oct 2024 12:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390847; cv=none; b=lHXwHOt2iO1aHV4jrzh86A7ck824Wu3wBDN5V6imAB8qpIWD+vB32zQzHrtCXHmrwmo0u6SGZhPS+Ah8P5QZnV4YEXNIraQyIqZsTI8SZKtAchnUe365zD58FqAUgj8sZDEynAfwQ/Ar2HwIYAh7w5B+PXgTFfyS7v4mdTpAbZA=
+	t=1728390850; cv=none; b=IooqfDyKppqtA58Inq0sXnWvjbomrsHXYcadVB8y+bkm/U+SfyTMj6ibvAISzpMe3t/v3Dgze0Ll9JzFX5EYPP/wLU2kUZ6aRdtLUqBbX60bnL6FYPIiLGf85AXzLrP2toadHqCsNRcadiEelnO7lY9EGJ7HmsLsFQxVlb+2GAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390847; c=relaxed/simple;
-	bh=cBUrAST+ELkJp87zvTq/nv6ahfWcWCzllcHpVtW4Psc=;
+	s=arc-20240116; t=1728390850; c=relaxed/simple;
+	bh=z33OhbGcThErXem3Kc+yn188MieBQaAo0awGnaqWkxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyUFVXKEoIv+avQH2LcCsKoVIgroKDJ1gGNEigURqbN6eeIMPey+mrmnsslDqyDj8D+hDfpu6uuRFgOf+HjoWKwJd4o8HRqDQ6B+tgwGl0sqoUvEgcRyns1xk/UG5GVme4ZhXQ6SZTccuLrJfejpyyrCMBGmw+LOq9W9QsutMkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj0u4VHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0c229VBp71a7P4twGoRBHx7Ya2N9P0AVfWJQ+BYzbPnXNzODa5BuQasETeqFfSAYj0FjLDVA5KrJ08w4slVbw4+SxqXpXZsoMoGVsTYADdE/xFXnPBBdG2T6OuIe/+7Vqper/+z+JAEouMzfQeHUc3QpEQIN8D6E55qEJf1OIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfFTYksw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj0u4VHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7D5C4CEC7;
-	Tue,  8 Oct 2024 12:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfFTYksw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC447C4CEC7;
+	Tue,  8 Oct 2024 12:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390847;
-	bh=cBUrAST+ELkJp87zvTq/nv6ahfWcWCzllcHpVtW4Psc=;
+	s=korg; t=1728390850;
+	bh=z33OhbGcThErXem3Kc+yn188MieBQaAo0awGnaqWkxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tj0u4VHJSgffhTKEpgTI06t6o42VypNkzPXbadvszbYqTxmagbFikzuvs3aCR9oj/
-	 1xu2UjWXSGlEmOz64Y8tPsrp7ak0Lpq/W1KSYFCRM/UQ4MptOa73Iidi2u2/1aolUH
-	 vZOa/9bBFY24SwMso6+EOkmc0qAGPrfsEYTFklX0=
+	b=wfFTYkswTmUiFZWbn7pocfkE71cy79UHsysv543ILdsJ/vMxb+uoczwRKZd4CWCBs
+	 Mo4xoUVDAnp8ro4NLQyuoOw8OoY+VI0YJEJq2M41esjQUBEWIkHNO9O6KLfVz3Sp40
+	 7IAsVCsznbwhaeHeP3aeOYTlOoxc6TQ3J111vgI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 394/482] clk: qcom: gcc-sm8250: Do not turn off PCIe GDSCs during gdsc_disable()
-Date: Tue,  8 Oct 2024 14:07:37 +0200
-Message-ID: <20241008115703.915778727@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.10 412/482] ACPI: video: Add backlight=native quirk for Dell OptiPlex 5480 AIO
+Date: Tue,  8 Oct 2024 14:07:55 +0200
+Message-ID: <20241008115704.619281557@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,57 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit ade508b545c969c72cd68479f275a5dd640fd8b9 upstream.
+commit ac78288fe062b64e45a479eaae74aaaafcc8ecdd upstream.
 
-With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-can happen during scenarios such as system suspend and breaks the resume
-of PCIe controllers from suspend.
+Dell All In One (AIO) models released after 2017 may use a backlight
+controller board connected to an UART.
 
-So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
-during gdsc_disable() and allow the hardware to transition the GDSCs to
-retention when the parent domain enters low power state during system
-suspend.
+In DSDT this uart port will be defined as:
 
-Cc: stable@vger.kernel.org # 5.7
-Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240719134238.312191-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+   Name (_HID, "DELL0501")
+   Name (_CID, EisaId ("PNP0501")
+
+The Dell OptiPlex 5480 AIO has an ACPI device for one of its UARTs with
+the above _HID + _CID. Loading the dell-uart-backlight driver fails with
+the following errors:
+
+[   18.261353] dell_uart_backlight serial0-0: Timed out waiting for response.
+[   18.261356] dell_uart_backlight serial0-0: error -ETIMEDOUT: getting firmware version
+[   18.261359] dell_uart_backlight serial0-0: probe with driver dell_uart_backlight failed with error -110
+
+Indicating that there is no backlight controller board attached to
+the UART, while the GPU's native backlight control method does work.
+
+Add a quirk to use the GPU's native backlight control method on this model.
+
+Fixes: cd8e468efb4f ("ACPI: video: Add Dell UART backlight controller detection")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240918153849.37221-1-hdegoede@redhat.com
+[ rjw: Changelog edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sm8250.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/video_detect.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/clk/qcom/gcc-sm8250.c
-+++ b/drivers/clk/qcom/gcc-sm8250.c
-@@ -3226,7 +3226,7 @@ static struct gdsc pcie_0_gdsc = {
- 	.pd = {
- 		.name = "pcie_0_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc pcie_1_gdsc = {
-@@ -3234,7 +3234,7 @@ static struct gdsc pcie_1_gdsc = {
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc pcie_2_gdsc = {
-@@ -3242,7 +3242,7 @@ static struct gdsc pcie_2_gdsc = {
- 	.pd = {
- 		.name = "pcie_2_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc ufs_card_gdsc = {
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -845,6 +845,15 @@ static const struct dmi_system_id video_
+ 	 * which need native backlight control nevertheless.
+ 	 */
+ 	{
++	 /* https://github.com/zabbly/linux/issues/26 */
++	 .callback = video_detect_force_native,
++	 /* Dell OptiPlex 5480 AIO */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 5480 AIO"),
++		},
++	},
++	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=2303936 */
+ 	 .callback = video_detect_force_native,
+ 	 /* Dell OptiPlex 7760 AIO */
 
 
