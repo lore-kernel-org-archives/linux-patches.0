@@ -1,122 +1,100 @@
-Received: from elaine.keithp.com (home.keithp.com [63.227.221.253])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A499E76048;
-	Tue,  8 Oct 2024 16:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.227.221.253
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016871DF964
+	for <patches@lists.linux.dev>; Tue,  8 Oct 2024 17:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728404279; cv=none; b=jJxhzraaT5gQzR1Fy59SX9KTiXJNm2vd87a+Iuad+dlpDbgc+ZEjOZfxdaNQIYU3A6NUqzr7nO69TORxrZ8rS7uRhjY+08mM3RUGK66XlXhm1lKBaT0aiyvBM7ncI6GXzWmch/16qKRM3YcHgdcdcsh0DiPi+tsXsU6WbbmnYb0=
+	t=1728407116; cv=none; b=mdi9Z3NVP4dI/h4Tsb87CV/dsSzlk/Io5IYsJbGozltujy/SxU1p5TCmn6vRseS72aMURbds5K4mdHvzmca+y8uR3oj8nRdob0dhKa696yMKylYiK6MF3AgnrRYC/hKNiM55LcpOYWoXkhe94XzDp3Lqi1H5ESIw9hv842NoSRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728404279; c=relaxed/simple;
-	bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KgmVUBPdSql8SwVjlA7fRTTKV8vlc/hXXakD3oAAAfW6MFS5fEtE59BiEM9lz5DfXwwQ6zWBkiyHStM3L6maazS2+p5D7rwMmAB/XNKQOl188//d/i5Qv1BXYUazPqNGgTXolN5OfE/TEMGonSvpVzUEApxJG0KnzB4t8HVr470=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=keithp.com; spf=pass smtp.mailfrom=keithp.com; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=wi5UHOGz; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=e0/Uw2uz; arc=none smtp.client-ip=63.227.221.253
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=keithp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=keithp.com
+	s=arc-20240116; t=1728407116; c=relaxed/simple;
+	bh=6yf8RgkWeLrXVP+1l3yxp5qwHoOq5jHnuctZRyfcLrc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WPea8tmGLjttiWq1mu2q3XzIukr+hsB2OnZEPuc4D4JmVwnY6FH7fjE/0ut/LmWO1InOOFT4N6z4SOxJomrAF1duvA8k5E7mk8id4TCi6O5TGwIG0gU8LhnOTmcT4gGNTzQK4jvYO1K9wZNuImuN9GG7HaWs86uqKLIiq2PuMy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=FheaXzme; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="wi5UHOGz";
-	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="e0/Uw2uz"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
-	t=1728403701; bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=wi5UHOGzMPYDdaMlW6tAM0wzB8FAZqDhWv92xGXqSEUqu7UV2hqmBSumlq6u6YaGC
-	 nm/Il6qLql7wMjPuJPYrsJvpTD380HBKq32xW4Omunf/U/mrHMqWFTEHgq6TY/sCgV
-	 L7+mOTBuXhWnc+ft5GzRLDRL3u4qY5ZhL9RoI76mlIArSctcAuqxQBPWQFHOqSOeNk
-	 fBeyz7QCEMfCjwFFA5YhKVQNhwq7H6tDXu+2MzgaXvYiFaafyVUUKJccQ0QdzfGzKQ
-	 b+oIaB6dkGEsa7R2aUsrL2KVi1yi+SpE4W5GEGlMOSBiMvi/nXfkk8kXW2+y5I3o/Q
-	 B+ailmMqIYXcQ==
-Received: from localhost (localhost [127.0.0.1])
-	by elaine.keithp.com (Postfix) with ESMTP id 1A8703F20A16;
-	Tue,  8 Oct 2024 09:08:21 -0700 (PDT)
-X-Virus-Scanned: Debian amavis at keithp.com
-Received: from elaine.keithp.com ([127.0.0.1])
- by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id wA-LEzRtO2wP; Tue,  8 Oct 2024 09:08:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
-	t=1728403699; bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=e0/Uw2uzSRNbLGxH1f5Vd//kAsgVYBI6+Ul0EuQeHEB2OfXgunGqjilMV/GChdZmM
-	 ci6E9pHuPl8q8IulQcOKjNsifUOYXqQKqgZgRUliS3vunFVFMBeSSPiN7tXqpVl8uq
-	 H5mU0bU7Vn3zaDiIhz+S66yKT+zwJUMI3UtPdI3fIsnbBvA5duj/HhMxdHWaNN0qR4
-	 0XM9NIbuH4SKftzPQlvNp9yHmjUQsxyB61af7lq7g5NJAAMeTTV/+dGUA7zzX/4hcj
-	 4Bf+6rw1UhrhXjK7N3iIE5wTYf65Yu35xMP/0XA3j9xhe+El0lgPkoXfzbP38FhWl1
-	 /Om8JYcp3zeUw==
-Received: from keithp.com (koto.keithp.com [192.168.11.2])
-	by elaine.keithp.com (Postfix) with ESMTPSA id D5D763F208E2;
-	Tue,  8 Oct 2024 09:08:19 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1000)
-	id 597E41E60239; Tue, 08 Oct 2024 18:08:19 +0200 (CEST)
-From: Keith Packard <keithp@keithp.com>
-To: Christophe Leroy <christophe.leroy@csgroup.eu>, Nathan Chancellor
- <nathan@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Naveen N Rao <naveen@kernel.org>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, Nick Desaulniers
- <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, Justin Stitt
- <justinstitt@google.com>, linuxppc-dev@lists.ozlabs.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 3/3] powerpc: Include -m32 / -m64 for stack protector
- Kconfig test
-In-Reply-To: <a57f21db-911c-4331-af7b-c02c0ea8b1e6@csgroup.eu>
-References: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
- <20241007-powerpc-fix-stackprotector-test-clang-v1-3-08c15b2694e4@kernel.org>
- <a57f21db-911c-4331-af7b-c02c0ea8b1e6@csgroup.eu>
-Date: Tue, 08 Oct 2024 09:08:18 -0700
-Message-ID: <87o73uvaq5.fsf@keithp.com>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="FheaXzme"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-37d2e81e110so474761f8f.3
+        for <patches@lists.linux.dev>; Tue, 08 Oct 2024 10:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1728407113; x=1729011913; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f3YRV8BLw6t5/e/+7ajFhrM1Fg7IM/Mpe/N72BSndBc=;
+        b=FheaXzmeU+LgTL7YmbQfTXU4bDzrSKOUUm2NpjHltYWNxCv9heS9SzibWtqNkIHtkw
+         5o9FdTCk6jbQxKRnYABEgOc0myMMruEembMtLSOpjepb72AocqoMJKLTrY0gR9HonPjG
+         RWzYWr37D9UhNRt+nRpz5UBdAvOKc0UWTYT78ERCnl21ZYd6RxuXsi7+KYxupdk4iGMl
+         A2NgzqYCxYLcTePaH3Fa9wpaSVjgMe+MSBE2cegu+Mf8CiqTf1MgRdaVBVHDhSJl13kv
+         DcDuVUi5RJaeUtyq9MhJpOLGNQcu9qA0EPcvotuCGyGFVVlTTof+iHm0Qbe/u3yOjsh3
+         bSUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728407113; x=1729011913;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f3YRV8BLw6t5/e/+7ajFhrM1Fg7IM/Mpe/N72BSndBc=;
+        b=qXFWItAAn3Q/sHGXmRpt2gOgPRHkaNEcr0gh/zMOuYuH/VKqPV+egyx6N4DIX4Scev
+         L45pp1KRIseW7paJ8IStCRBLyVjD6XNCDvlcJGjcKImbqUWWZAdYF1z1uj5aq8VbFJh6
+         2Djxdzo1f4+ZuQJUgJTINXCsD66+RPCqS1cKG8SNhHbTAQ2fRcyI5MdiWwTbcOhj6vwu
+         ygkJwEkSJKD4xyXLIED8jx76sOruRoyXBwvjYZfLxiOikdY1/9nX5BuVGjgtiXiRcx+D
+         gNkJMgVApxFNPzvsm1teoNV3HRwdz5muU6a8M5RTdtW14oSr1pr+hz5344kWadGVKyta
+         LUsA==
+X-Gm-Message-State: AOJu0YyGY/gwPqEiPfxA+UzMnscrh+i2E+U8lAzCSrxG54wv9kCE8rDQ
+	Y9zlvh8Pvjp/aCwqNZaSTDW7sBmL7WoWcRrKGwOnbnE/uM0bHgs=
+X-Google-Smtp-Source: AGHT+IHQfl0hND+4ioU/ew6zB6733O+fXHQ6AI/5lvB2hSbTyvQLjTIf02G16828G/wHCR8TOnBEsg==
+X-Received: by 2002:a5d:648a:0:b0:375:1b02:1e3c with SMTP id ffacd0b85a97d-37d0e8de99dmr13576498f8f.45.1728407113096;
+        Tue, 08 Oct 2024 10:05:13 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4723.dip0.t-ipconnect.de. [91.43.71.35])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d1690f25asm8479886f8f.11.2024.10.08.10.05.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2024 10:05:12 -0700 (PDT)
+Message-ID: <158d864c-7378-4929-b244-76af607574c2@googlemail.com>
+Date: Tue, 8 Oct 2024 19:05:11 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/386] 6.6.55-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20241008115629.309157387@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Am 08.10.2024 um 14:04 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.55 release.
+> There are 386 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-> Why is there any restriction at all on which register can be used ? I=20
-> can't see such restriction in GCC documentation :=20
-> https://gcc.gnu.org/onlinedocs/gcc/RS_002f6000-and-PowerPC-Options.html
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-The clang implementation shares the same code paths as the user space
-thread local storage implementation. That code uses a fixed register (2
-for 32-bit, 13 for 64-bit) and a fixed offset (-0x7008 for 32-bit and
-=2D0x7010 for 64-bit).
+Beste Grüße,
+Peter Schneider
 
-The new code controls the offset value with a command line parameter.
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-I didn't see any need to make the changes more complicated by including
-support for arbitrary registers. The implementation would be reasonably
-straightforward, but it would make testing a bunch harder.
-
-The command line parsing code validates that you've selected the correct
-register =E2=80=94 if we allow other registers in the future, you'll be abl=
-e to
-verify whether the compiler supports that by testing at build time.
-
-=2D-=20
-=2Dkeith
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAmcFWPMACgkQ2yIaaQAA
-ABECOA//Sm+07+C6UnNX8tFcnftLQhSmKWADbibLW63BL6QrKDIiW4/KWPk7kyiN
-vCqwS5vQ3vxWizedY2o/JZ4DiO7gtHDue9ikTkBnHs5w1lNjoOOd2NaV7kaaUkJW
-AgXU8dZL0ldCFbeF0YqXuQ9ugf6D/FYK0trvurrHffvS4qMcE/C9SYG+5LkbCm38
-vjZfihr32X/7QPXnRNqdNAp64Y1N3P0iPj/RdNpvg566mPhTDRr9gdMYH87l0uDX
-Z+svG3DTILn96nPqlUG9hH0m0f/iW5D3aBuRuwZo5W3YbcKGTGaUhRXIukYZ4PCm
-pI6U9wJMlSUMF4DggW0ZkrZmEOYOTEASm+LW8b7Z+vtd250lyeOFOCQDOhTdiYuP
-RPVEEE+KgHAjO4S6NAoko7zBr4BkCnOXjRdP/xIw5ljorDWlJweL8C+AsjviSTpW
-KxsKJbEHbJRMFyar8cGnRGbKG7eOg2sgQE5xz+bLwicmxTj5hd/5MALrg9W5fpMd
-NmsL2lIhem54JZnSSfX8GO3iKfNI8d4Ra52b1hLtd5ZuJdu3vXxkcgq5puGpnaKA
-EUDrcRPfofvlY8LCtAx5r8rCTonpeK3AwzXr3HIb30MgGhryzVBXCgsk/cnq6gAB
-/tmswKMTEq/AALZryZ+7mFOXOzxcshzk863kdYkgLiwNJdQ9hKA=
-=3DzG
------END PGP SIGNATURE-----
---=-=-=--
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
