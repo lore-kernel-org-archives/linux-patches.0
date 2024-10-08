@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B741DF279;
-	Tue,  8 Oct 2024 13:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E681DEFF6;
+	Tue,  8 Oct 2024 13:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393994; cv=none; b=WtHEF2XPFWwPdWXnIBAW3bi9BBkMk1JBC9heRQaDx0SpfrDFN3VxFOPiwosjQxGBXPiagp2LbNd3uFBUOTZ+k2YXPWbZ1DxJ8FWTebaYfOJIcxJLRVXMW9WgKmVCuR52s1CcV0sCJqXFmwO63KSb0P07wLwRw1ZSx/1CS5MvjFY=
+	t=1728393998; cv=none; b=SadHaL+Rc1vOTq80d96mIs1zGmiueVcXgDNbR3l/CZVioeqNwP5467U3TOMlzqyQHVXca35MqteROXCHfcx+XfOaphQ2hWxPbJNrO2QjICZ9FRc/M/4fUmA0KniUF/nLipQkeV4xTUuQIEMwallFq8euPkWBI95jvue7zZi2L+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393994; c=relaxed/simple;
-	bh=tVexk1nnju/QyFiwjtzByPSseQIbr9UsWMs5kKcUYsQ=;
+	s=arc-20240116; t=1728393998; c=relaxed/simple;
+	bh=VpHvwLLpSqhEhNLfQIII88c5CQJEPNs3WsiLKtHYNg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMDzHvHNlggM/TxjnGs87EZ3+s3IEaMq7oBMrsL0/l5vYur/EbPkbaDOArko8bI2ZDdTtdz1Xn8gqcqHrDbQWahcMZUd0heJevzeiUgBbS4nrq2E/Na6MnGte46tp9U1PkGg6ptA0rmkhYe1hVcrU9SW7JGnj7sfQQUqS37Gf70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVyZpqZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=De3N4g2YEa794I3tRSRca3hsHTxxB76FczbXMHOWsdxzQbbdmaHsSGQE4nVIazNMIuAfrhv0GVuYUd2jaJoHl+jsf4KdgjLBGKBr36R83E+CM22Uw2Ye8NiQ4FNAuAXeMBl2c53wmmWovsEAxZjoPN32hulBstWMwwqkx0USI2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjYQzSAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVyZpqZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312E3C4CECC;
-	Tue,  8 Oct 2024 13:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjYQzSAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AC5C4CEC7;
+	Tue,  8 Oct 2024 13:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393994;
-	bh=tVexk1nnju/QyFiwjtzByPSseQIbr9UsWMs5kKcUYsQ=;
+	s=korg; t=1728393997;
+	bh=VpHvwLLpSqhEhNLfQIII88c5CQJEPNs3WsiLKtHYNg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVyZpqZY1ETXOEtHqygYtHViPnalTJiDQAJ483Q6gYuhh2f4sNVnl2ygm44dRAyJc
-	 mgAS0tBhjEFpcj4rGqiepKwHyEXgvJXv47OsZ0zDNS/f/I0Llo6ITggb0gLgQWHbQR
-	 667ctTrTaoTEzma9DP2OP8dyP9lQGYkWLKMrqdOI=
+	b=cjYQzSApBF7Klp27hOPN6sRnLuSm6ZSITpOh3p8vAx1VNqTV7efGcpMflTu1JKx/V
+	 a6NRujijwGgT3KOinpppBmEAUK+jb1Whpmf4ezGGdtGsABD3zhkfoHLis87jf47e+5
+	 hkSxgtEm+YCEzYTwtM/vp6QYX3iTzpGs+TWyCiUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Ye <jiawei.ye@foxmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.6 315/386] mac802154: Fix potential RCU dereference issue in mac802154_scan_worker
-Date: Tue,  8 Oct 2024 14:09:20 +0200
-Message-ID: <20241008115641.782061456@linuxfoundation.org>
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 316/386] ceph: fix cap ref leak via netfs init_request
+Date: Tue,  8 Oct 2024 14:09:21 +0200
+Message-ID: <20241008115641.821726249@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,63 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Ye <jiawei.ye@foxmail.com>
+From: Patrick Donnelly <pdonnell@redhat.com>
 
-commit bff1709b3980bd7f80be6786f64cc9a9ee9e56da upstream.
+commit ccda9910d8490f4fb067131598e4b2e986faa5a0 upstream.
 
-In the `mac802154_scan_worker` function, the `scan_req->type` field was
-accessed after the RCU read-side critical section was unlocked. According
-to RCU usage rules, this is illegal and can lead to unpredictable
-behavior, such as accessing memory that has been updated or causing
-use-after-free issues.
+Log recovered from a user's cluster:
 
-This possible bug was identified using a static analysis tool developed
-by myself, specifically designed to detect RCU-related issues.
+    <7>[ 5413.970692] ceph:  get_cap_refs 00000000958c114b ret 1 got Fr
+    <7>[ 5413.970695] ceph:  start_read 00000000958c114b, no cache cap
+    ...
+    <7>[ 5473.934609] ceph:   my wanted = Fr, used = Fr, dirty -
+    <7>[ 5473.934616] ceph:  revocation: pAsLsXsFr -> pAsLsXs (revoking Fr)
+    <7>[ 5473.934632] ceph:  __ceph_caps_issued 00000000958c114b cap 00000000f7784259 issued pAsLsXs
+    <7>[ 5473.934638] ceph:  check_caps 10000000e68.fffffffffffffffe file_want - used Fr dirty - flushing - issued pAsLsXs revoking Fr retain pAsLsXsFsr  AUTHONLY NOINVAL FLUSH_FORCE
 
-To address this, the `scan_req->type` value is now stored in a local
-variable `scan_req_type` while still within the RCU read-side critical
-section. The `scan_req_type` is then used after the RCU lock is released,
-ensuring that the type value is safely accessed without violating RCU
-rules.
+The MDS subsequently complains that the kernel client is late releasing
+caps.
 
-Fixes: e2c3e6f53a7a ("mac802154: Handle active scanning")
+Approximately, a series of changes to this code by commits 49870056005c
+("ceph: convert ceph_readpages to ceph_readahead"), 2de160417315
+("netfs: Change ->init_request() to return an error code") and
+a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+resulted in subtle resource cleanup to be missed. The main culprit is
+the change in error handling in 2de160417315 which meant that a failure
+in init_request() would no longer cause cleanup to be called. That
+would prevent the ceph_put_cap_refs() call which would cleanup the
+leaked cap ref.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
-Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/tencent_3B2F4F2B4DA30FAE2F51A9634A16B3AD4908@qq.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+Link: https://tracker.ceph.com/issues/67008
+Signed-off-by: Patrick Donnelly <pdonnell@redhat.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ceph/addr.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -176,6 +176,7 @@ void mac802154_scan_worker(struct work_s
- 	struct ieee802154_local *local =
- 		container_of(work, struct ieee802154_local, scan_work.work);
- 	struct cfg802154_scan_request *scan_req;
-+	enum nl802154_scan_types scan_req_type;
- 	struct ieee802154_sub_if_data *sdata;
- 	unsigned int scan_duration = 0;
- 	struct wpan_phy *wpan_phy;
-@@ -209,6 +210,7 @@ void mac802154_scan_worker(struct work_s
- 	}
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -483,8 +483,11 @@ static int ceph_init_request(struct netf
+ 	rreq->netfs_priv = priv;
  
- 	wpan_phy = scan_req->wpan_phy;
-+	scan_req_type = scan_req->type;
- 	scan_req_duration = scan_req->duration;
+ out:
+-	if (ret < 0)
++	if (ret < 0) {
++		if (got)
++			ceph_put_cap_refs(ceph_inode(inode), got);
+ 		kfree(priv);
++	}
  
- 	/* Look for the next valid chan */
-@@ -246,7 +248,7 @@ void mac802154_scan_worker(struct work_s
- 		goto end_scan;
- 	}
- 
--	if (scan_req->type == NL802154_SCAN_ACTIVE) {
-+	if (scan_req_type == NL802154_SCAN_ACTIVE) {
- 		ret = mac802154_transmit_beacon_req(local, sdata);
- 		if (ret)
- 			dev_err(&sdata->dev->dev,
+ 	return ret;
+ }
 
 
