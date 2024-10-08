@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D501DED6A;
-	Tue,  8 Oct 2024 12:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C101DED6A;
+	Tue,  8 Oct 2024 12:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390164; cv=none; b=qh7JKw5hdmJivBE4J55bAk6Nywxnlx3HFbQK+HLG4yjSrVOT5Z54D9tUdA+UCPl/hWhTgVR55tgORE+WNUC4xR4BmQlqJtBL0SQsCeuq7tUu/2zCmHK/4+XM7cwvV7Z/ROQXr7m7uZ8qdbVFTW9lImIgAf1wAwgsA0iFDvNKT6g=
+	t=1728390167; cv=none; b=hHVmIEyH8+Zf1Ip8j+OAIqTFBrGOgmQgzr9syZ7XoiVWi5c/VWpiJLWOTDgd91RYVawOPbCR29CXYVZ+N9WjIbETbBEuRPb/BayrkOkp+pf0hOmszWExbj7UNXvL/XemLJvuk68PjtK8RYvg4eLsozmoYhBleoDJti/Gg9+aqsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390164; c=relaxed/simple;
-	bh=XbBO7kp2S/1do7MH3tU/4fXCIoEGAq4XfZV7n4daWFM=;
+	s=arc-20240116; t=1728390167; c=relaxed/simple;
+	bh=N59SpeQNlDpo8C41FrMrbdXm60iYAcRb866B77Gcjy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsC++3+s/uAFNZZEqpQAySMzDkiEhOmTgKc9bnEtMR8RtEWYnslxmOgYqxKHF50emn/kGcbItyE9iOdBKW99HykHchJqmSnvl625+4u+JZTU+yDk5q06gbOis2Xf3t54UGiIefWt90oayafxFudZ/dAQTNTh6d6eXsQdUro51K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZyoLxMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCHj/Rcbkp5zAD6LyWIy8MJz+GR+gITAfGzA66R8vWGzOlsCOzkU5cefs01Y2Aagr8q0sNcKgbyE5PPtvN3g9fOna3eLmlQkTPECpG8HPhnLbw12U9FB6PgFqPuDYlc+d5uilVDm4Hcj0nUyjgR1nqjy0hzyDFJIOt0hpQw4Yuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhOXd8r/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZyoLxMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87CEC4CEC7;
-	Tue,  8 Oct 2024 12:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhOXd8r/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1C3C4CEC7;
+	Tue,  8 Oct 2024 12:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390164;
-	bh=XbBO7kp2S/1do7MH3tU/4fXCIoEGAq4XfZV7n4daWFM=;
+	s=korg; t=1728390167;
+	bh=N59SpeQNlDpo8C41FrMrbdXm60iYAcRb866B77Gcjy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZyoLxMzqMB81nbKZznoi82spxc7d+PDVCjd1tJSeUKaVJbJWq+hQ9BsB7r4o8wiJ
-	 DB1yuw2cDrO6SE5Qme620VArX685knMOeF2wEs4TP5nyapZWZdJNfucG2Hu+NCPu5c
-	 d1xuycYBOVKdtmQjcpdlyF2uF7d/66nje0G5iJ50=
+	b=UhOXd8r/X6n5J9jyL+QynImPpvhD240dZQajusGETBNTCg7G+XbYriWCZ0pTjOTGc
+	 WLIaeNvF+rgW0xL5/ZjlsMmFtL3RtIz71QTzkIG0B3yz02qMVfXOp4JyquPsTPOHKr
+	 TRGcRAtDEr7EX2dk09vr/lw8b5nT6cR3aoATfhh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yannick Fertre <yannick.fertre@foss.st.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+	Nevenko Stupar <nevenko.stupar@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 209/482] drm/stm: ltdc: reset plane transparency after plane disable
-Date: Tue,  8 Oct 2024 14:04:32 +0200
-Message-ID: <20241008115656.534524370@linuxfoundation.org>
+Subject: [PATCH 6.10 210/482] drm/amd/display: Check null-initialized variables
+Date: Tue,  8 Oct 2024 14:04:33 +0200
+Message-ID: <20241008115656.574347403@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,36 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yannick Fertre <yannick.fertre@foss.st.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 02fa62d41c8abff945bae5bfc3ddcf4721496aca ]
+[ Upstream commit 367cd9ceba1933b63bc1d87d967baf6d9fd241d2 ]
 
-The plane's opacity should be reseted while the plane
-is disabled. It prevents from seeing a possible global
-or layer background color set earlier.
+[WHAT & HOW]
+drr_timing and subvp_pipe are initialized to null and they are not
+always assigned new values. It is necessary to check for null before
+dereferencing.
 
-Signed-off-by: Yannick Fertre <yannick.fertre@foss.st.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240712131344.98113-1-yannick.fertre@foss.st.com
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+This fixes 2 FORWARD_NULL issues reported by Coverity.
+
+Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/stm/ltdc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
-index 056642d12265c..0832b749b66e7 100644
---- a/drivers/gpu/drm/stm/ltdc.c
-+++ b/drivers/gpu/drm/stm/ltdc.c
-@@ -1513,6 +1513,9 @@ static void ltdc_plane_atomic_disable(struct drm_plane *plane,
- 	/* Disable layer */
- 	regmap_write_bits(ldev->regmap, LTDC_L1CR + lofs, LXCR_LEN | LXCR_CLUTEN |  LXCR_HMEN, 0);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index ebcf5ece209a4..bf8c89fe95a7e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -871,8 +871,9 @@ static bool subvp_drr_schedulable(struct dc *dc, struct dc_state *context)
+ 	 * for VBLANK: (VACTIVE region of the SubVP pipe can fit the MALL prefetch, VBLANK frame time,
+ 	 * and the max of (VBLANK blanking time, MALL region)).
+ 	 */
+-	if (stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
+-			subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
++	if (drr_timing &&
++	    stretched_drr_us < (1 / (double)drr_timing->min_refresh_in_uhz) * 1000000 * 1000000 &&
++	    subvp_active_us - prefetch_us - stretched_drr_us - max_vblank_mallregion > 0)
+ 		schedulable = true;
  
-+	/* Reset the layer transparency to hide any related background color */
-+	regmap_write_bits(ldev->regmap, LTDC_L1CACR + lofs, LXCACR_CONSTA, 0x00);
-+
- 	/* Commit shadow registers = update plane at next vblank */
- 	if (ldev->caps.plane_reg_shadow)
- 		regmap_write_bits(ldev->regmap, LTDC_L1RCR + lofs,
+ 	return schedulable;
+@@ -937,7 +938,7 @@ static bool subvp_vblank_schedulable(struct dc *dc, struct dc_state *context)
+ 		if (!subvp_pipe && pipe_mall_type == SUBVP_MAIN)
+ 			subvp_pipe = pipe;
+ 	}
+-	if (found) {
++	if (found && subvp_pipe) {
+ 		phantom_stream = dc_state_get_paired_subvp_stream(context, subvp_pipe->stream);
+ 		main_timing = &subvp_pipe->stream->timing;
+ 		phantom_timing = &phantom_stream->timing;
 -- 
 2.43.0
 
