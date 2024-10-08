@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0171DE8BE;
-	Tue,  8 Oct 2024 13:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840C01DF990;
+	Tue,  8 Oct 2024 13:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393736; cv=none; b=nD3y4rnwwdAMNkjao2/Kb9Pm+nooiZwlLvGbYQ0dWDHUT0+MjQiJf+GieH5YFfjw4V+L/MpeCdS31/2h94Dl51NoL3poqNBNEOWp+K4dcBqj+mgCDePa9HSkk5r8/CBsd4Fe2apSZM4YoxJf/NHfPSOv8IciT+QPgcBibwgXw7k=
+	t=1728393739; cv=none; b=QoUwZdKkJPWFzB7v9ojGmvRxCdtJASg19NKlWMQElOcg8TUVtkguOi+E+8KwSiHI94GoO4095dUjgNrJNNes7m21DkRGbycZohPVYwKm6wvodNoClJ5TsX3rGwecIFJ0ztHIHwVNkKpTuYQtIrvIkQBvxvaJDPFwsASFJU6Pq3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393736; c=relaxed/simple;
-	bh=4w8QtQKmIUcweIKwxAJR8D7bZqctae8O/sWBPQrVvSE=;
+	s=arc-20240116; t=1728393739; c=relaxed/simple;
+	bh=9iTRbSK7wf9/0/+LCr0JxxUXuAfn6FlSvONCFYbm6M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpcTas0GQiC+5SpVAcKFGLzUPe8voE/5zH5eqdKlv7y9nqUvQsEapF3ztNrTZS8aGdzt6NNDVIuNwU/UXS7vvN5jB+hy1lnXtSp4yOtdNcZ2NCxg8IKpX5x3wTwCUzTSiDaUIaegBuZPvka9WQSERtuF7QFT2hCAYt3KpGJe19I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ryeq1zR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eD7rHh887JMmzR5OuhPZEFdsJ0Sizl4dlAMfRvR68nKQVcCai7SZH295JM3KDdJpra8f2a2sJBf9CzytSzeAFN1bhGaabzxSNzl2IySx1ky2bFVmRsUa2/avJ41GLGLgmymmFT2kMawICEwu7wks1KgaYxVELAqriNa5TEbR+Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLVbAZKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ryeq1zR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1F2C4CEC7;
-	Tue,  8 Oct 2024 13:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLVbAZKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF133C4CED1;
+	Tue,  8 Oct 2024 13:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393736;
-	bh=4w8QtQKmIUcweIKwxAJR8D7bZqctae8O/sWBPQrVvSE=;
+	s=korg; t=1728393739;
+	bh=9iTRbSK7wf9/0/+LCr0JxxUXuAfn6FlSvONCFYbm6M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ryeq1zRPANR0NEHJcfBScxYv3zGGmbF+z6J1Zg+BQTt/2vT1+4rfv7UhKBk2F5fF
-	 s/3WcE1qF5WGxzylJBiJujUDXSFNPlOWvQLSsDEIXFfuiyj2wKMx8xu1cYwbluZAxn
-	 OinDptuL9sqSth6BjLHfMHnIlQ0KXIeWLUBltnAo=
+	b=XLVbAZKYfrdQ+49LZqT9u2Fyk9Q/1uuzmgVsLIXNFB34kNSRBF4j6c7W6aInfZee0
+	 yxGchak4eeTsvZtp2fu7snhNDSyN6haNOmgIIcch8sPVnGs6c/qy47SHvyfLaMsy4m
+	 bpIdYd5gL+5zZdV1BK2DVHkS+QHq9j+Tcr/rThZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaxi Shen <shenxiaxi26@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org,
-	syzbot+59e0101c430934bc9a36@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 241/386] ext4: fix timer use-after-free on failed mount
-Date: Tue,  8 Oct 2024 14:08:06 +0200
-Message-ID: <20241008115638.880779029@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.6 242/386] ext4: update orig_path in ext4_find_extent()
+Date: Tue,  8 Oct 2024 14:08:07 +0200
+Message-ID: <20241008115638.920329083@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,46 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaxi Shen <shenxiaxi26@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 0ce160c5bdb67081a62293028dc85758a8efb22a upstream.
+commit 5b4b2dcace35f618fe361a87bae6f0d13af31bc1 upstream.
 
-Syzbot has found an ODEBUG bug in ext4_fill_super
+In ext4_find_extent(), if the path is not big enough, we free it and set
+*orig_path to NULL. But after reallocating and successfully initializing
+the path, we don't update *orig_path, in which case the caller gets a
+valid path but a NULL ppath, and this may cause a NULL pointer dereference
+or a path memory leak. For example:
 
-The del_timer_sync function cancels the s_err_report timer,
-which reminds about filesystem errors daily. We should
-guarantee the timer is no longer active before kfree(sbi).
+ext4_split_extent
+  path = *ppath = 2000
+  ext4_find_extent
+    if (depth > path[0].p_maxdepth)
+      kfree(path = 2000);
+      *orig_path = path = NULL;
+      path = kcalloc() = 3000
+  ext4_split_extent_at(*ppath = NULL)
+    path = *ppath;
+    ex = path[depth].p_ext;
+    // NULL pointer dereference!
 
-When filesystem mounting fails, the flow goes to failed_mount3,
-where an error occurs when ext4_stop_mmpd is called, causing
-a read I/O failure. This triggers the ext4_handle_error function
-that ultimately re-arms the timer,
-leaving the s_err_report timer active before kfree(sbi) is called.
+==================================================================
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+CPU: 6 UID: 0 PID: 576 Comm: fsstress Not tainted 6.11.0-rc2-dirty #847
+RIP: 0010:ext4_split_extent_at+0x6d/0x560
+Call Trace:
+ <TASK>
+ ext4_split_extent.isra.0+0xcb/0x1b0
+ ext4_ext_convert_to_initialized+0x168/0x6c0
+ ext4_ext_handle_unwritten_extents+0x325/0x4d0
+ ext4_ext_map_blocks+0x520/0xdb0
+ ext4_map_blocks+0x2b0/0x690
+ ext4_iomap_begin+0x20e/0x2c0
+[...]
+==================================================================
 
-Fix the issue by canceling the s_err_report timer after calling ext4_stop_mmpd.
+Therefore, *orig_path is updated when the extent lookup succeeds, so that
+the caller can safely use path or *ppath.
 
-Signed-off-by: Xiaxi Shen <shenxiaxi26@gmail.com>
-Reported-and-tested-by: syzbot+59e0101c430934bc9a36@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=59e0101c430934bc9a36
-Link: https://patch.msgid.link/20240715043336.98097-1-shenxiaxi26@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 10809df84a4d ("ext4: teach ext4_ext_find_extent() to realloc path if necessary")
 Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240822023545.1994557-6-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/extents.c     |    3 ++-
+ fs/ext4/move_extent.c |    1 -
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5659,8 +5659,8 @@ failed_mount3a:
- failed_mount3:
- 	/* flush s_sb_upd_work before sbi destroy */
- 	flush_work(&sbi->s_sb_upd_work);
--	del_timer_sync(&sbi->s_err_report);
- 	ext4_stop_mmpd(sbi);
-+	del_timer_sync(&sbi->s_err_report);
- 	ext4_group_desc_free(sbi);
- failed_mount:
- 	if (sbi->s_chksum_driver)
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -957,6 +957,8 @@ ext4_find_extent(struct inode *inode, ex
+ 
+ 	ext4_ext_show_path(inode, path);
+ 
++	if (orig_path)
++		*orig_path = path;
+ 	return path;
+ 
+ err:
+@@ -3249,7 +3251,6 @@ static int ext4_split_extent_at(handle_t
+ 	}
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+-	*ppath = path;
+ 
+ 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
+ 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -36,7 +36,6 @@ get_ext_path(struct inode *inode, ext4_l
+ 		*ppath = NULL;
+ 		return -ENODATA;
+ 	}
+-	*ppath = path;
+ 	return 0;
+ }
+ 
 
 
