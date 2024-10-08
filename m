@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9544D1DEFEA;
-	Tue,  8 Oct 2024 12:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60091DED4D;
+	Tue,  8 Oct 2024 12:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389560; cv=none; b=sEJmdb9ET9cRMiyogNcy5FjCMkNCyVMJqZY+GZid2bGJ983OKSDz2vBmeEAgHBmxXf34dpHKEhWvAfObWp92bYyZD9inVqaU7xmqHLppLa+JlZJTIaxmJmkd/G7tioxFtlKBAVe0ZQ424xgbLTsGPyZ5rqfFjv9s5y0Ukar+PdU=
+	t=1728389564; cv=none; b=dij4RrGt61fsmmWTby/VbhCmZSqmQ8V4IxGJ2UmKJykRGoUbJtxJ5IrgyBWDQnedfSyJqaw6dUbAZ2LfF0a3xKPGjnWhgGJRrjMNjZ6kDwDPcE/nZD3Qkppi/yG7Sa9yC2dwk2Xlu4/AZhg8YSiBILMb3hwugpP9lQZ7VbCBxGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389560; c=relaxed/simple;
-	bh=E+bU+PL+XPoZyd47yPktbiusQtipF43K4V3AqfleMZk=;
+	s=arc-20240116; t=1728389564; c=relaxed/simple;
+	bh=9OZSG/DQ+vm/Wy4qKHJNMCqT64wOmS0vE+hgWFR3ShM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cG2/WgERdJ0BpqRBNrFkJJbmujMIE2yzvku36M7OAesoZZrXlqZhS9hpZOajonJA2I//od1BLrTDNO2ESXMRpnbzSwsW/2fRsfPzRyh8e2IU+YU1/XLwco83O6iOl/k3BKocabyc6evMoBxrJfsGyT7i52Tz9lCBANIDe0itZ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqsXE+li; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+XSQc+FXA5gkqzU9/EDmCfYmhEr7WoyNVwbOvI0RcMSCia9p13Trp2kimf0JbQlqb3t99fI8ICkQX0ltmVhPuZTj8gA0VSkr8JpigcBzv/IMb+n8MNb2XDL7npnS8GPZa4fX2BPFhrMIauLUi9BanfdbuqMhBO/5cSUR8FXO5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN05klGi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqsXE+li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03966C4CED3;
-	Tue,  8 Oct 2024 12:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN05klGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48832C4CECC;
+	Tue,  8 Oct 2024 12:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389560;
-	bh=E+bU+PL+XPoZyd47yPktbiusQtipF43K4V3AqfleMZk=;
+	s=korg; t=1728389563;
+	bh=9OZSG/DQ+vm/Wy4qKHJNMCqT64wOmS0vE+hgWFR3ShM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqsXE+lieCKx9oUzYkgAz/E7yIWheSkIg4GbW1gX10ZBZhIVbnhhxYSxBa4oOo139
-	 /DLUl+oKQ97jnqyq5hmxLW2v5nFLItDdNY1ZlSOqAlufG3XWSgiZc8wA6Regkt+tfN
-	 tqjdsMsIL+jnhtj1zQA02Ouq+VQBkivL5UnCy8kE=
+	b=kN05klGikCdplj92XIAKpBJnamgi4qIjhXcRFwONa1AzAct8Tw96BkumSxkrNyAJr
+	 MPAW8mm8QJEDni7qeQ+03PDyAXJUVAMtMMjsVKdipR7MTtTeePtPlQIff7olbaA4QQ
+	 WDZand/G8tGqudEN8OHHHmJ8UdQdXclyG/9gLJ10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-afs@lists.infradead.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 030/482] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  8 Oct 2024 14:01:33 +0200
-Message-ID: <20241008115649.486294375@linuxfoundation.org>
+Subject: [PATCH 6.10 031/482] afs: Fix missing wire-up of afs_retry_request()
+Date: Tue,  8 Oct 2024 14:01:34 +0200
+Message-ID: <20241008115649.525603250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,43 +57,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
+[ Upstream commit 2cf36327ee1e47733aba96092d7bd082a4056ff5 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+afs_retry_request() is supposed to be pointed to by the afs_req_ops netfs
+operations table, but the pointer got lost somewhere.  The function is used
+during writeback to rotate through the authentication keys that were in
+force when the file was modified locally.
 
-Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by adding the pointer to the function.
+
+Fixes: 1ecb146f7cd8 ("netfs, afs: Use writeback retry to deal with alternate keys")
+Reported-by: Dr. David Alan Gilbert <linux@treblig.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/1690847.1726346402@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmrvl_sdio.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/afs/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
-index 85b7f2bb42598..07cd308f7abf6 100644
---- a/drivers/bluetooth/btmrvl_sdio.c
-+++ b/drivers/bluetooth/btmrvl_sdio.c
-@@ -92,7 +92,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
- 		} else {
- 			ret = devm_request_irq(dev, cfg->irq_bt,
- 					       btmrvl_wake_irq_bt,
--					       0, "bt_wake", card);
-+					       IRQF_NO_AUTOEN, "bt_wake", card);
- 			if (ret) {
- 				dev_err(dev,
- 					"Failed to request irq_bt %d (%d)\n",
-@@ -101,7 +101,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+diff --git a/fs/afs/file.c b/fs/afs/file.c
+index c3f0c45ae9a9b..e0885cfeb72a7 100644
+--- a/fs/afs/file.c
++++ b/fs/afs/file.c
+@@ -403,6 +403,7 @@ const struct netfs_request_ops afs_req_ops = {
+ 	.begin_writeback	= afs_begin_writeback,
+ 	.prepare_write		= afs_prepare_write,
+ 	.issue_write		= afs_issue_write,
++	.retry_request		= afs_retry_request,
+ };
  
- 			/* Configure wakeup (enabled by default) */
- 			device_init_wakeup(dev, true);
--			disable_irq(cfg->irq_bt);
- 		}
- 	}
- 
+ static void afs_add_open_mmap(struct afs_vnode *vnode)
 -- 
 2.43.0
 
