@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A141DE3A3;
-	Tue,  8 Oct 2024 12:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4F01DE3A3;
+	Tue,  8 Oct 2024 12:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391551; cv=none; b=UZhAyq38mLqrAOPWVy60ygo2Z2O/zCl4cqmETxpg0v7+RbKnzsPvBdwSQ/yvF45lZZu2YWhYUgsc0VoTN8/PY/0mkBFxpQ99vgGjoA0gcvZhH2HDstoReJw2b4DO9eRp8kT6KtIUZChZzE4arFWva49PGgSxVbo3fo7mwfaw/Lc=
+	t=1728391554; cv=none; b=iDomwd6SxfW0FAlleWwYI0LhPCuOHzS+PzK6miZ9Io66kxH6K7+CzsEl11noHaItuqAM7mR+AdFF36v8NaH49tLbhBHmJOcuu7rLArfL4+LgVJcC44Uxit6Cny7I/VKfZmmJksdOkUmN5PVpHe/uwpLqwaMsPgfMi8GzMlQkP24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391551; c=relaxed/simple;
-	bh=vKIUEH5TqMpvYlrzj3E9sKohWPUa0X9mzEMV+fngAEQ=;
+	s=arc-20240116; t=1728391554; c=relaxed/simple;
+	bh=6EYmzzVjqmzlFG5bnyWXOMKMdiI5TOC40t4OKpInJ8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0gPdrx8EZiFAxujk925WefKANHmL4uNlqIpR2nUZVoujazUytKa+o9xE9863JWZW7HQmtLvQYK/zryk7YtaOpo90h7VWT5XmxvC5UKogocYYCVOlUHcqLbzFnVGIg6w4M4qZCp8rxiL530Fvuh687jhlg6vEM6o8GhhMAyPCFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjMbv3/7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdcSnOvMtwkKGOPRl1z+K4IvBAfRc2mIWYc0ktp2+OaJ+RKLuk/8hHqY8YWGnPUMst6h2NTYFl8REzswcq8pU3K0ksdbqnJEb5g7ZuOax6Xd9Xjb8X/b3Jm/mDbWTlw2v+oGXFVUMsGO+hCSbYeIU6BKnKrLzIso/Gwen3z24T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHALNdAY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjMbv3/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E7DC4CECD;
-	Tue,  8 Oct 2024 12:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHALNdAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B881DC4CECD;
+	Tue,  8 Oct 2024 12:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391551;
-	bh=vKIUEH5TqMpvYlrzj3E9sKohWPUa0X9mzEMV+fngAEQ=;
+	s=korg; t=1728391554;
+	bh=6EYmzzVjqmzlFG5bnyWXOMKMdiI5TOC40t4OKpInJ8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjMbv3/7Ej1jqgNsrifqM/P/sWUYpb5/2rUIXE5lyVWcILIpp3JBICTDGCwcAqedn
-	 wSURBLqGRMENDODfH7qGkJbzqbyBSgPCn6KQ+w7BSNPs62MtAM8Lz8uk588UmQ04DQ
-	 d44C64iJ858JYY/PYfd9XeSHyI1Io09pqmuy92g8=
+	b=uHALNdAYnBp/Nmd2saY0khpZg2KqZqWPGcn3/bmBNttYqkRkP0Isw8MD0LxsbXzys
+	 GFQIIHPr4auuF+JHCDUOywEE5u/xnYPVwPEKYlSCWU4qUdd+oXpJuDJBdf/8zGvSLP
+	 l3RQQlPb5d+vXU0gh09B3POEq4SddA2AyJ7Y6nu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 150/558] block: fix integer overflow in BLKSECDISCARD
-Date: Tue,  8 Oct 2024 14:03:00 +0200
-Message-ID: <20241008115708.266324495@linuxfoundation.org>
+Subject: [PATCH 6.11 151/558] cpufreq: amd-pstate: add check for cpufreq_cpu_gets return value
+Date: Tue,  8 Oct 2024 14:03:01 +0200
+Message-ID: <20241008115708.304917735@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,73 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit 697ba0b6ec4ae04afb67d3911799b5e2043b4455 ]
+[ Upstream commit 5493f9714e4cdaf0ee7cec15899a231400cb1a9f ]
 
-I independently rediscovered
+cpufreq_cpu_get may return NULL. To avoid NULL-dereference check it
+and return in case of error.
 
-	commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155
-	block: fix overflow in blk_ioctl_discard()
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-but for secure erase.
-
-Same problem:
-
-	uint64_t r[2] = {512, 18446744073709551104ULL};
-	ioctl(fd, BLKSECDISCARD, r);
-
-will enter near infinite loop inside blkdev_issue_secure_erase():
-
-	a.out: attempt to access beyond end of device
-	loop0: rw=5, sector=3399043073, nr_sectors = 1024 limit=2048
-	bio_check_eod: 3286214 callbacks suppressed
-
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Link: https://lore.kernel.org/r/9e64057f-650a-46d1-b9f7-34af391536ef@p183
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: Perry Yuan <perry.yuan@amd.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index e8e4a4190f183..44257bdfeacbf 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -126,7 +126,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
- 		return -EINVAL;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 073ca9caf52ac..589fde37ccd7a 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -659,7 +659,12 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
+ 	unsigned long max_perf, min_perf, des_perf,
+ 		      cap_perf, lowest_nonlinear_perf;
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+-	struct amd_cpudata *cpudata = policy->driver_data;
++	struct amd_cpudata *cpudata;
++
++	if (!policy)
++		return;
++
++	cpudata = policy->driver_data;
  
- 	filemap_invalidate_lock(bdev->bd_mapping);
--	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
-+	err = truncate_bdev_range(bdev, mode, start, end - 1);
- 	if (err)
- 		goto fail;
- 
-@@ -163,7 +163,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
- static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
- 		void __user *argp)
+ 	if (policy->min != cpudata->min_limit_freq || policy->max != cpudata->max_limit_freq)
+ 		amd_pstate_update_min_max_limit(policy);
+@@ -873,11 +878,16 @@ static void amd_pstate_init_prefcore(struct amd_cpudata *cpudata)
+ static void amd_pstate_update_limits(unsigned int cpu)
  {
--	uint64_t start, len;
-+	uint64_t start, len, end;
- 	uint64_t range[2];
- 	int err;
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+-	struct amd_cpudata *cpudata = policy->driver_data;
++	struct amd_cpudata *cpudata;
+ 	u32 prev_high = 0, cur_high = 0;
+ 	int ret;
+ 	bool highest_perf_changed = false;
  
-@@ -178,11 +178,12 @@ static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
- 	len = range[1];
- 	if ((start & 511) || (len & 511))
- 		return -EINVAL;
--	if (start + len > bdev_nr_bytes(bdev))
-+	if (check_add_overflow(start, len, &end) ||
-+	    end > bdev_nr_bytes(bdev))
- 		return -EINVAL;
- 
- 	filemap_invalidate_lock(bdev->bd_mapping);
--	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
-+	err = truncate_bdev_range(bdev, mode, start, end - 1);
- 	if (!err)
- 		err = blkdev_issue_secure_erase(bdev, start >> 9, len >> 9,
- 						GFP_KERNEL);
++	if (!policy)
++		return;
++
++	cpudata = policy->driver_data;
++
+ 	mutex_lock(&amd_pstate_driver_lock);
+ 	if ((!amd_pstate_prefcore) || (!cpudata->hw_prefcore))
+ 		goto free_cpufreq_put;
 -- 
 2.43.0
 
