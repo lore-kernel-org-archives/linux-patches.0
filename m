@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD001DE2AD;
-	Tue,  8 Oct 2024 12:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF551DED64;
+	Tue,  8 Oct 2024 12:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391318; cv=none; b=VxpHbZ1Nn/W48/N28N8KgY9KpYloi81YwdAx6GGwB7wiH4TOwR3jkU8TTTAT7JLfEKbv65fOquXVHXznMNaLs8OD96R/FNtI9v+NTQYk2rGnhqx+kj6gtBWdl2B28gKNOj6MSQL9CesPCyfqKNHTHXnYTqPTefum03IHD6nzU3A=
+	t=1728391322; cv=none; b=lxrRGnxXmjVg5hNteYHObyKdhgi39HE6g8CV7WaQR+mlRHuyqp/7+BPnp98scwAAgIlIIIDj36EhK0Y3VD9GLr2kblJXsd0t0QNwDj0RRS/h0ZLujcOgDiJlsii4e77JjEupyps/M+hX+eLXnN5WjHfEbQgOPqSPbwN9nhE0JF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391318; c=relaxed/simple;
-	bh=d02Px65IdyRZyjnXDZfQkxf8B9pp8KiBu7FU4NgjbOU=;
+	s=arc-20240116; t=1728391322; c=relaxed/simple;
+	bh=Vu6fnFr0xVYr+N+aARf6tjPVq+koNQ+7jzsKhXuKFNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdNelTfNI50tdIKeNDudgGZiinbOhKBq5zF/g0Hjfi1pW2+31MpV7FEn0bPY52oIJGZlZC84539ezaiq59wF56Upo9frA3ARzSStcdILT5WbZ8YcKS7Kmk3jurfS2/WfzVceuuOFuzMq4sV37wkx+x4/RJCR0PZ40it7RNj+fw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCnN5OYy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FtochfEovtwMvLeas6KEwtKoH2e0cmaWhxgfTb57Wn5ovipExF9R+PnHG39vuA47XGOpotm/x04RnV+a9E92oynKcDj86dxjVvhtTa6eMJYPbtIzXJfC4Uq7lAZ5UlvMuSGc1muDPjgwQd/d65u+pcbobJxtE7yo1q2CHWj5WU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvBdUTxB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCnN5OYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4593AC4CECD;
-	Tue,  8 Oct 2024 12:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvBdUTxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98420C4CEC7;
+	Tue,  8 Oct 2024 12:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391318;
-	bh=d02Px65IdyRZyjnXDZfQkxf8B9pp8KiBu7FU4NgjbOU=;
+	s=korg; t=1728391322;
+	bh=Vu6fnFr0xVYr+N+aARf6tjPVq+koNQ+7jzsKhXuKFNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCnN5OYyX7A/04CX+irJlqKioqmYd/hP2JWTSeqcnCJ/2aBdsDbSVuDhbCLlIKMh8
-	 mtRrdy8P8My3/HsC4X9WauL4WTn094mfxZxVaAnZOfMvczT/ZSdcgoqUrRQYfvI93U
-	 ESxPvUeMMQqkAxeP34Whe8QjRV43PJ+icPRpnTAM=
+	b=pvBdUTxBBXPg3T0MOqkltnTfnNVPzFWXK41XzXlvL6C6bTBXRBrivDNbePL7y7QU4
+	 GriLhx9z+MqH++dhf6G3Tt2fOaC0FVVsktp8PBEnMYCFMZVWvRJHLuiote2Btv3g2S
+	 kFB6kTfh6JDMYUIPJE2jj6ea89fDLDknySHFyokA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 069/558] ASoC: imx-card: Set card.owner to avoid a warning calltrace if SND=m
-Date: Tue,  8 Oct 2024 14:01:39 +0200
-Message-ID: <20241008115704.931819626@linuxfoundation.org>
+Subject: [PATCH 6.11 078/558] ALSA: gus: Fix some error handling paths related to get_bpos() usage
+Date: Tue,  8 Oct 2024 14:01:48 +0200
+Message-ID: <20241008115705.445942829@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,44 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 47d7d3fd72afc7dcd548806291793ee6f3848215 ]
+[ Upstream commit 9df39a872c462ea07a3767ebd0093c42b2ff78a2 ]
 
-In most Linux distribution kernels, the SND is set to m, in such a
-case, when booting the kernel on i.MX8MP EVK board, there is a
-warning calltrace like below:
- Call trace:
- snd_card_init+0x484/0x4cc [snd]
- snd_card_new+0x70/0xa8 [snd]
- snd_soc_bind_card+0x310/0xbd0 [snd_soc_core]
- snd_soc_register_card+0xf0/0x108 [snd_soc_core]
- devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
+If get_bpos() fails, it is likely that the corresponding error code should
+be returned.
 
-That is because the card.owner is not set, a warning calltrace is
-raised in the snd_card_init() due to it.
-
-Fixes: aa736700f42f ("ASoC: imx-card: Add imx-card machine driver")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Link: https://patch.msgid.link/20241002025659.723544-1-hui.wang@canonical.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a6970bb1dd99 ("ALSA: gus: Convert to the new PCM ops")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/d9ca841edad697154afa97c73a5d7a14919330d9.1727984008.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-card.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/isa/gus/gus_pcm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
-index 0e18ccabe28c3..ce0d8cec375a8 100644
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -713,6 +713,7 @@ static int imx_card_probe(struct platform_device *pdev)
+diff --git a/sound/isa/gus/gus_pcm.c b/sound/isa/gus/gus_pcm.c
+index 850544725da79..d55c3dc229c0e 100644
+--- a/sound/isa/gus/gus_pcm.c
++++ b/sound/isa/gus/gus_pcm.c
+@@ -378,7 +378,7 @@ static int snd_gf1_pcm_playback_copy(struct snd_pcm_substream *substream,
  
- 	data->plat_data = plat_data;
- 	data->card.dev = &pdev->dev;
-+	data->card.owner = THIS_MODULE;
- 
- 	dev_set_drvdata(&pdev->dev, &data->card);
- 	snd_soc_card_set_drvdata(&data->card, data);
+ 	bpos = get_bpos(pcmp, voice, pos, len);
+ 	if (bpos < 0)
+-		return pos;
++		return bpos;
+ 	if (copy_from_iter(runtime->dma_area + bpos, len, src) != len)
+ 		return -EFAULT;
+ 	return playback_copy_ack(substream, bpos, len);
+@@ -395,7 +395,7 @@ static int snd_gf1_pcm_playback_silence(struct snd_pcm_substream *substream,
+ 	
+ 	bpos = get_bpos(pcmp, voice, pos, len);
+ 	if (bpos < 0)
+-		return pos;
++		return bpos;
+ 	snd_pcm_format_set_silence(runtime->format, runtime->dma_area + bpos,
+ 				   bytes_to_samples(runtime, count));
+ 	return playback_copy_ack(substream, bpos, len);
 -- 
 2.43.0
 
