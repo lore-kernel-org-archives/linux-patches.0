@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F3189910;
-	Tue,  8 Oct 2024 12:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD38B189910;
+	Tue,  8 Oct 2024 12:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392316; cv=none; b=atd6YaLH4Vnn0dCjS66yNg0T4qZGTIW1YU6AbqPh/CsYTKvTTbkUScSEYaYMv6EYv1UeFgWs2QLYglM7aZ+ko0dxpou+tCH34SDcFcrjPvbOCCg37ewulbltXOCPuxsRSDZaqEnqAyxKo2d/Aje6GBZLzAHU0urVQP1pMeEbU1g=
+	t=1728392319; cv=none; b=KQHW0Tab560pl4n9X/DSJKcKjn35N65UIU7CG9EeIwa0Phcg+8qaLF11uogdvDSvAUXAoiev9Ly/TDCwBNvoYQgZeg9iLsRsTRZJGJQbrAj0PgPoPRvvcfNJFo0ne6ml0p/RntH71Eyba2qRe7Hjq+wUCjV8xxGvlT9++n+NWwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392316; c=relaxed/simple;
-	bh=RQfnY9yUqQNdW2HCvJbhVLJXJC5xzqBX4i5l/kf/vlA=;
+	s=arc-20240116; t=1728392319; c=relaxed/simple;
+	bh=pKHSgkyv2fTfqFu2E+0GnW03kesX5bz6S8lw5I/x3Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+MsLV1sfdwBbyHR1oMp/yqEuPu8MrWJynhCeL/+GG9ixA+4qdvgVGc75865BC2VGQf0XyFwoXEhn3+kcEgFpX1huZj+iti54EChdNWJ0WqCgyUpKviFwE7DKRu7jsheE7tThjK2Ldyl0yxZWju8skYHjgMtqifSUp86NSMNNdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyT0pPXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TTIvm1AWzjMSjUak2DD0Y6oqwHN0pR3ATsrdPmxr/6b/haa55iRx4Zmoni6N1bQ+pd6wd+yYhb0BzcY2P9sBfFlYfLyPU9vlWtvCKT2i4SgFq3R/QY7eRJyHPDTqBOEsAfBcmn9XIfui1j3H/pMhDztIyJlPF8E5Pqtw1u6k3AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YM8+FsF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyT0pPXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB03C4CEC7;
-	Tue,  8 Oct 2024 12:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YM8+FsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB94C4CEC7;
+	Tue,  8 Oct 2024 12:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392316;
-	bh=RQfnY9yUqQNdW2HCvJbhVLJXJC5xzqBX4i5l/kf/vlA=;
+	s=korg; t=1728392319;
+	bh=pKHSgkyv2fTfqFu2E+0GnW03kesX5bz6S8lw5I/x3Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyT0pPXX7DTgLOEbmUQ164IycuM5l9jJ6KM2zrwLdSw68XuQSEErxTIthu9ySRhSf
-	 p023gBmDfRNIrhm1XaEbdFKj5Qh7tXILNn8kFB4pewb9615jZDNf0g+/IiS3NV8dV8
-	 MVlEzOtSRo4m2iOBFpoTBrZo0dVFuU+MHkaex0Ws=
+	b=0YM8+FsF/9UHZzkLARRKAjLZOc6NsPR7l5p14BARfYa6KqMyARl2IiHPKyVeS1oP7
+	 OER9t4/ZLiiz4JHLjKjGsDdcFAX6zxm30aQbYhxiTR2ydbapNmlGL3WZ3KZ7I4t8/Q
+	 MsfeBQ1x6UNtzMGByAZnWDbtcQKBvS510zs1EZjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.11 348/558] KVM: arm64: Fix kvm_has_feat*() handling of negative features
-Date: Tue,  8 Oct 2024 14:06:18 +0200
-Message-ID: <20241008115715.992913801@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Marek Vasut <marex@denx.de>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.11 349/558] i2c: stm32f7: Do not prepare/unprepare clock during runtime suspend/resume
+Date: Tue,  8 Oct 2024 14:06:19 +0200
+Message-ID: <20241008115716.031522681@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,92 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Marek Vasut <marex@denx.de>
 
-commit a1d402abf8e3ff1d821e88993fc5331784fac0da upstream.
+commit 048bbbdbf85e5e00258dfb12f5e368f908801d7b upstream.
 
-Oliver reports that the kvm_has_feat() helper is not behaviing as
-expected for negative feature. On investigation, the main issue
-seems to be caused by the following construct:
+In case there is any sort of clock controller attached to this I2C bus
+controller, for example Versaclock or even an AIC32x4 I2C codec, then
+an I2C transfer triggered from the clock controller clk_ops .prepare
+callback may trigger a deadlock on drivers/clk/clk.c prepare_lock mutex.
 
- #define get_idreg_field(kvm, id, fld)				\
- 	(id##_##fld##_SIGNED ?					\
-	 get_idreg_field_signed(kvm, id, fld) :			\
-	 get_idreg_field_unsigned(kvm, id, fld))
+This is because the clock controller first grabs the prepare_lock mutex
+and then performs the prepare operation, including its I2C access. The
+I2C access resumes this I2C bus controller via .runtime_resume callback,
+which calls clk_prepare_enable(), which attempts to grab the prepare_lock
+mutex again and deadlocks.
 
-where one side of the expression evaluates as something signed,
-and the other as something unsigned. In retrospect, this is totally
-braindead, as the compiler converts this into an unsigned expression.
-When compared to something that is 0, the test is simply elided.
+Since the clock are already prepared since probe() and unprepared in
+remove(), use simple clk_enable()/clk_disable() calls to enable and
+disable the clock on runtime suspend and resume, to avoid hitting the
+prepare_lock mutex.
 
-Epic fail. Similar issue exists in the expand_field_sign() macro.
-
-The correct way to handle this is to chose between signed and unsigned
-comparisons, so that both sides of the ternary expression are of the
-same type (bool).
-
-In order to keep the code readable (sort of), we introduce new
-comparison primitives taking an operator as a parameter, and
-rewrite the kvm_has_feat*() helpers in terms of these primitives.
-
-Fixes: c62d7a23b947 ("KVM: arm64: Add feature checking helpers")
-Reported-by: Oliver Upton <oliver.upton@linux.dev>
-Tested-by: Oliver Upton <oliver.upton@linux.dev>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241002204239.2051637-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: 4e7bca6fc07b ("i2c: i2c-stm32f7: add PM Runtime support")
+Cc: <stable@vger.kernel.org> # v5.0+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |   25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -1423,11 +1423,6 @@ void kvm_set_vm_id_reg(struct kvm *kvm,
- 		sign_extend64(__val, id##_##fld##_WIDTH - 1);		\
- 	})
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -2395,7 +2395,7 @@ static int __maybe_unused stm32f7_i2c_ru
+ 	struct stm32f7_i2c_dev *i2c_dev = dev_get_drvdata(dev);
  
--#define expand_field_sign(id, fld, val)					\
--	(id##_##fld##_SIGNED ?						\
--	 __expand_field_sign_signed(id, fld, val) :			\
--	 __expand_field_sign_unsigned(id, fld, val))
--
- #define get_idreg_field_unsigned(kvm, id, fld)				\
- 	({								\
- 		u64 __val = kvm_read_vm_id_reg((kvm), SYS_##id);	\
-@@ -1443,20 +1438,26 @@ void kvm_set_vm_id_reg(struct kvm *kvm,
- #define get_idreg_field_enum(kvm, id, fld)				\
- 	get_idreg_field_unsigned(kvm, id, fld)
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev))
+-		clk_disable_unprepare(i2c_dev->clk);
++		clk_disable(i2c_dev->clk);
  
--#define get_idreg_field(kvm, id, fld)					\
-+#define kvm_cmp_feat_signed(kvm, id, fld, op, limit)			\
-+	(get_idreg_field_signed((kvm), id, fld) op __expand_field_sign_signed(id, fld, limit))
-+
-+#define kvm_cmp_feat_unsigned(kvm, id, fld, op, limit)			\
-+	(get_idreg_field_unsigned((kvm), id, fld) op __expand_field_sign_unsigned(id, fld, limit))
-+
-+#define kvm_cmp_feat(kvm, id, fld, op, limit)				\
- 	(id##_##fld##_SIGNED ?						\
--	 get_idreg_field_signed(kvm, id, fld) :				\
--	 get_idreg_field_unsigned(kvm, id, fld))
-+	 kvm_cmp_feat_signed(kvm, id, fld, op, limit) :			\
-+	 kvm_cmp_feat_unsigned(kvm, id, fld, op, limit))
+ 	return 0;
+ }
+@@ -2406,9 +2406,9 @@ static int __maybe_unused stm32f7_i2c_ru
+ 	int ret;
  
- #define kvm_has_feat(kvm, id, fld, limit)				\
--	(get_idreg_field((kvm), id, fld) >= expand_field_sign(id, fld, limit))
-+	kvm_cmp_feat(kvm, id, fld, >=, limit)
- 
- #define kvm_has_feat_enum(kvm, id, fld, val)				\
--	(get_idreg_field_unsigned((kvm), id, fld) == __expand_field_sign_unsigned(id, fld, val))
-+	kvm_cmp_feat_unsigned(kvm, id, fld, ==, val)
- 
- #define kvm_has_feat_range(kvm, id, fld, min, max)			\
--	(get_idreg_field((kvm), id, fld) >= expand_field_sign(id, fld, min) && \
--	 get_idreg_field((kvm), id, fld) <= expand_field_sign(id, fld, max))
-+	(kvm_cmp_feat(kvm, id, fld, >=, min) &&				\
-+	kvm_cmp_feat(kvm, id, fld, <=, max))
- 
- /* Check for a given level of PAuth support */
- #define kvm_has_pauth(k, l)						\
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev)) {
+-		ret = clk_prepare_enable(i2c_dev->clk);
++		ret = clk_enable(i2c_dev->clk);
+ 		if (ret) {
+-			dev_err(dev, "failed to prepare_enable clock\n");
++			dev_err(dev, "failed to enable clock\n");
+ 			return ret;
+ 		}
+ 	}
 
 
