@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE561DDA36;
-	Tue,  8 Oct 2024 12:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5011DE88F;
+	Tue,  8 Oct 2024 12:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390011; cv=none; b=eAndAahH0t1xEBTmxPNLLSiDAMizUIQTXQgnA6YXb4ipureQk4hWg9F/QRGstNkzVLB6lHL/0AE19TwaC5EbOvK4g3T6F8pvefJEWhgcwiAgJ/I9jWTmwBbEToqZA3ENxjKoNR+fCwXmImk97iZ3YsOERfk18J/T2DKUmZUEYM8=
+	t=1728390014; cv=none; b=fq+R44xljBTe0Sn5V72vdHeed/MJujv+3epQJH29u9U7FmbYWNrGar4QbE+VSxGkiVeNHidoZ9d7LJy+dpmMPGNoN74m6YAOSAIp2lflYgBmutnkm+qmgY4mGgQ2TnkZT3jumvAZYPbf/MExRFpdZdv0Bn1G6hpRlvK//xICyEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390011; c=relaxed/simple;
-	bh=1Y+ytk3MYnIV5xoqtbZgeK1sNhr+1GnLV2kCYuX8lBM=;
+	s=arc-20240116; t=1728390014; c=relaxed/simple;
+	bh=mUKto5OliWA5AJE3T0klG7C/g4GT4ZDTvikvfHwAidA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7TzrTkQ+LiZ8b6WEF/1x6yKUsnqUXclGIuWOWaukIsm6V/zbnJg/tsTZ4tvYL3B5re+Edg1UmhEX+libaoii/+R2SgSiQ4LCurhvD4YZbO8nYpjMq7emJRYvcq3IdzQ4gWlE01/55Mn5bL8FDDibWRozgx6WhUR840ZF90SDNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl9LpUxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rmgZ9TPk3ZJ6D1T/PD3UP/Rg0d6XUmQQXuRuZS665rvC6rm7v4F7C+gG2+G07MPcERSHSgLwPS18dFPFDkTLoZcvZJc1kTN5hV11CpMfEXAZd5w4J0UbirH12DN3G7Xw5XtkprAA0VODJGGsES4+1tx2pTiUU9gf8uHaRWO580U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNMJAigZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl9LpUxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C0C4CEC7;
-	Tue,  8 Oct 2024 12:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNMJAigZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41360C4CEC7;
+	Tue,  8 Oct 2024 12:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390011;
-	bh=1Y+ytk3MYnIV5xoqtbZgeK1sNhr+1GnLV2kCYuX8lBM=;
+	s=korg; t=1728390014;
+	bh=mUKto5OliWA5AJE3T0klG7C/g4GT4ZDTvikvfHwAidA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hl9LpUxP9myz2vAKgQzRyThKFfOLAgjaePaEOrIEBVrloP+Ci8Fo89c7xu6KO3ord
-	 4mpCWxrTlRVMDt4oOT6qtxEDrTh9tcHbq3EabWGEd61siD2AaFzgUvwIUBZzPW8mWW
-	 f62MfygSPIE7bagQP4SWCL7tJnVwt2FYq1WGIGaY=
+	b=KNMJAigZGbNTMbl1ih1m6ZGfFO+PFyagxh/5q7HViXqdaoLcOJOKmUiEDqoC4R127
+	 /3hr9w302/bmCFA4+IxkmEtHvmXaSZeKrYV+KZ4qmu1aolfSAS/lQgEGI5n0S9PN0U
+	 n/NW8fJoObmKiOZWZIsBoRntyNaiuhesCQHKGJsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-Subject: [PATCH 6.10 164/482] pmdomain: core: Dont hold the genpd-lock when calling dev_pm_domain_set()
-Date: Tue,  8 Oct 2024 14:03:47 +0200
-Message-ID: <20241008115654.758564429@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 165/482] rcuscale: Provide clear error when async specified without primitives
+Date: Tue,  8 Oct 2024 14:03:48 +0200
+Message-ID: <20241008115654.798622859@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,62 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit b87eee38605c396f0e1fa435939960e5c6cd41d6 ]
+[ Upstream commit 11377947b5861fa59bf77c827e1dd7c081842cc9 ]
 
-There is no need to hold the genpd-lock, while assigning the
-dev->pm_domain. In fact, it becomes a problem on a PREEMPT_RT based
-configuration as the genpd-lock may be a raw spinlock, while the lock
-acquired through the call to dev_pm_domain_set() is a regular spinlock.
+Currently, if the rcuscale module's async module parameter is specified
+for RCU implementations that do not have async primitives such as RCU
+Tasks Rude (which now lacks a call_rcu_tasks_rude() function), there
+will be a series of splats due to calls to a NULL pointer.  This commit
+therefore warns of this situation, but switches to non-async testing.
 
-To fix the problem, let's simply move the calls to dev_pm_domain_set()
-outside the genpd-lock.
-
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Tested-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>  # qcm6490 with PREEMPT_RT set
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20240527142557.321610-3-ulf.hansson@linaro.org
+Signed-off-by: "Paul E. McKenney" <paulmck@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/rcu/rcuscale.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-index 0ab6008e863e8..4134a8344d2da 100644
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -1694,7 +1694,6 @@ static int genpd_add_device(struct generic_pm_domain *genpd, struct device *dev,
- 	genpd_lock(genpd);
- 
- 	genpd_set_cpumask(genpd, gpd_data->cpu);
--	dev_pm_domain_set(dev, &genpd->domain);
- 
- 	genpd->device_count++;
- 	if (gd)
-@@ -1703,6 +1702,7 @@ static int genpd_add_device(struct generic_pm_domain *genpd, struct device *dev,
- 	list_add_tail(&gpd_data->base.list_node, &genpd->dev_list);
- 
- 	genpd_unlock(genpd);
-+	dev_pm_domain_set(dev, &genpd->domain);
-  out:
- 	if (ret)
- 		genpd_free_dev_data(dev, gpd_data);
-@@ -1759,12 +1759,13 @@ static int genpd_remove_device(struct generic_pm_domain *genpd,
- 		genpd->gd->max_off_time_changed = true;
- 
- 	genpd_clear_cpumask(genpd, gpd_data->cpu);
--	dev_pm_domain_set(dev, NULL);
- 
- 	list_del_init(&pdd->list_node);
- 
- 	genpd_unlock(genpd);
- 
-+	dev_pm_domain_set(dev, NULL);
-+
- 	if (genpd->detach_dev)
- 		genpd->detach_dev(genpd, dev);
- 
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index 8db4fedaaa1eb..a5806baa1a2a8 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -498,7 +498,7 @@ rcu_scale_writer(void *arg)
+ 			schedule_timeout_idle(torture_random(&tr) % writer_holdoff_jiffies + 1);
+ 		wdp = &wdpp[i];
+ 		*wdp = ktime_get_mono_fast_ns();
+-		if (gp_async) {
++		if (gp_async && !WARN_ON_ONCE(!cur_ops->async)) {
+ retry:
+ 			if (!rhp)
+ 				rhp = kmalloc(sizeof(*rhp), GFP_KERNEL);
+@@ -554,7 +554,7 @@ rcu_scale_writer(void *arg)
+ 			i++;
+ 		rcu_scale_wait_shutdown();
+ 	} while (!torture_must_stop());
+-	if (gp_async) {
++	if (gp_async && cur_ops->async) {
+ 		cur_ops->gp_barrier();
+ 	}
+ 	writer_n_durations[me] = i_max + 1;
 -- 
 2.43.0
 
