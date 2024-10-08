@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521891779B1;
-	Tue,  8 Oct 2024 12:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DAE1DE4CC;
+	Tue,  8 Oct 2024 12:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391024; cv=none; b=NGkmqSLWWGlNSljE1pdLqXEwqgAKoxGQI/uwOMriI02JuY5ODp7EhBKObV8v7hhyhdA48TfJBTGH8kgqwpsglXEX4EgHS9BqglKRBugDpxeVmm6KgfAeFYv5zgy/fA1n7CYRpbx06fEz7F4T1kL7d04A7ckIVx3iw2DcUZJbaco=
+	t=1728391027; cv=none; b=MR+khH3iN+UvKNCL5MtUB/mIba+8wVCFvQyBRq3EXyRjw3v1f8E9PgipXq+KUVql79SwvO07z4/DNnJESt47DdZ/masa1J+1eedCczJaJS1UyPSqaPBe1bBfthMuRqMkUBe7C3y2+zrFSYorxP1MS1NZPFpk8/KAk30qe7NGnso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391024; c=relaxed/simple;
-	bh=92v5ZQv+el85ndIF/MtEwaUCWokX8F2P8nIk2n9tYtQ=;
+	s=arc-20240116; t=1728391027; c=relaxed/simple;
+	bh=zSNTHHcdYlCb550mMfaZiQSP/NfF8iSSd9XUtIHjYI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsvGKPg8y2vbSj0Qjrgs5sYOcnxuiraWF52X2dBUUr4rokr/qAfD6v4GLdXIt2lRSum8GddL6GQG0RId065GesuHXDPxu5j/IlOoRJ3p30hx1GovqDo6PBxMGs0SFijPmgyXL5UDmBBFy6osaab8LM1CBKDrM87/vJKDL/NWkwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qt/7lilb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Se/wMSL2hAOs+97xz3Dv+nxHyhoomJXsarYtdUrNc+0Q+F/HnLsUgpbEnKAtKI5dEOBQtdFYAkC7WZKx3FheOMuzok5xQOx8SqmSTYoWUkPnj6gDTk8MQZzaUc1NT703fYOTGkn7ViACfdzaf6+HYa23L/xRABCbKE5ZaMnAbwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSuHF/I6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt/7lilb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF23DC4CEC7;
-	Tue,  8 Oct 2024 12:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSuHF/I6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07C3C4CEC7;
+	Tue,  8 Oct 2024 12:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391024;
-	bh=92v5ZQv+el85ndIF/MtEwaUCWokX8F2P8nIk2n9tYtQ=;
+	s=korg; t=1728391027;
+	bh=zSNTHHcdYlCb550mMfaZiQSP/NfF8iSSd9XUtIHjYI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qt/7lilb/NEWYUwcYTl19EHQiqt272sO4XzfLEtJlcIa24+axOKNSxPWf5O1dk76s
-	 bJy/SNktjZrCyh2rhfikj018q9Nt+1weBx96ymjAoektxKWeKr7JbosKO+ZSDcvbvv
-	 h+2nQpruIVk8ZI0LVV6oZlXpJ/UCttvlJbg+OAdY=
+	b=FSuHF/I6IUWOlZCqEpXVY0WO77JjSEhW3kRaG/jEwk0nMw2/T4WrB4KArCUKJWb7H
+	 9Q0sraC3egrGevPsGLlTGQhOEBrnP5igmAS17ZGNbPjNdKZ+YzV/39Ung9UcCxqCD6
+	 fM6VealTWFdv50qmNLQlCbtI6XMEVtovFu6N5j/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Subject: [PATCH 6.10 436/482] drm/panthor: Dont add write fences to the shared BOs
-Date: Tue,  8 Oct 2024 14:08:19 +0200
-Message-ID: <20241008115705.682701417@linuxfoundation.org>
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.10 427/482] ceph: fix cap ref leak via netfs init_request
+Date: Tue,  8 Oct 2024 14:08:10 +0200
+Message-ID: <20241008115705.328004722@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,47 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Patrick Donnelly <pdonnell@redhat.com>
 
-commit f9e7ac6e2e9986c2ee63224992cb5c8276e46b2a upstream.
+commit ccda9910d8490f4fb067131598e4b2e986faa5a0 upstream.
 
-The only user (the mesa gallium driver) is already assuming explicit
-synchronization and doing the export/import dance on shared BOs. The
-only reason we were registering ourselves as writers on external BOs
-is because Xe, which was the reference back when we developed Panthor,
-was doing so. Turns out Xe was wrong, and we really want bookkeep on
-all registered fences, so userspace can explicitly upgrade those to
-read/write when needed.
+Log recovered from a user's cluster:
 
-Fixes: 4bdca1150792 ("drm/panthor: Add the driver frontend block")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240905070155.3254011-1-boris.brezillon@collabora.com
+    <7>[ 5413.970692] ceph:  get_cap_refs 00000000958c114b ret 1 got Fr
+    <7>[ 5413.970695] ceph:  start_read 00000000958c114b, no cache cap
+    ...
+    <7>[ 5473.934609] ceph:   my wanted = Fr, used = Fr, dirty -
+    <7>[ 5473.934616] ceph:  revocation: pAsLsXsFr -> pAsLsXs (revoking Fr)
+    <7>[ 5473.934632] ceph:  __ceph_caps_issued 00000000958c114b cap 00000000f7784259 issued pAsLsXs
+    <7>[ 5473.934638] ceph:  check_caps 10000000e68.fffffffffffffffe file_want - used Fr dirty - flushing - issued pAsLsXs revoking Fr retain pAsLsXsFsr  AUTHONLY NOINVAL FLUSH_FORCE
+
+The MDS subsequently complains that the kernel client is late releasing
+caps.
+
+Approximately, a series of changes to this code by commits 49870056005c
+("ceph: convert ceph_readpages to ceph_readahead"), 2de160417315
+("netfs: Change ->init_request() to return an error code") and
+a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+resulted in subtle resource cleanup to be missed. The main culprit is
+the change in error handling in 2de160417315 which meant that a failure
+in init_request() would no longer cause cleanup to be called. That
+would prevent the ceph_put_cap_refs() call which would cleanup the
+leaked cap ref.
+
+Cc: stable@vger.kernel.org
+Fixes: a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+Link: https://tracker.ceph.com/issues/67008
+Signed-off-by: Patrick Donnelly <pdonnell@redhat.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ fs/ceph/addr.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3436,13 +3436,8 @@ void panthor_job_update_resvs(struct drm
- {
- 	struct panthor_job *job = container_of(sched_job, struct panthor_job, base);
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -468,8 +468,11 @@ static int ceph_init_request(struct netf
+ 	rreq->netfs_priv = priv;
  
--	/* Still not sure why we want USAGE_WRITE for external objects, since I
--	 * was assuming this would be handled through explicit syncs being imported
--	 * to external BOs with DMA_BUF_IOCTL_IMPORT_SYNC_FILE, but other drivers
--	 * seem to pass DMA_RESV_USAGE_WRITE, so there must be a good reason.
--	 */
- 	panthor_vm_update_resvs(job->group->vm, exec, &sched_job->s_fence->finished,
--				DMA_RESV_USAGE_BOOKKEEP, DMA_RESV_USAGE_WRITE);
-+				DMA_RESV_USAGE_BOOKKEEP, DMA_RESV_USAGE_BOOKKEEP);
+ out:
+-	if (ret < 0)
++	if (ret < 0) {
++		if (got)
++			ceph_put_cap_refs(ceph_inode(inode), got);
+ 		kfree(priv);
++	}
+ 
+ 	return ret;
  }
- 
- void panthor_sched_unplug(struct panthor_device *ptdev)
 
 
