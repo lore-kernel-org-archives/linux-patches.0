@@ -1,68 +1,68 @@
 Received: from elaine.keithp.com (home.keithp.com [63.227.221.253])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7273C84A35;
-	Tue,  8 Oct 2024 16:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A499E76048;
+	Tue,  8 Oct 2024 16:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.227.221.253
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728403775; cv=none; b=eihG3puhnC+cR5NVlqHXt23++LxdrI8m/GvBjRYCrTL9+DGlrt2AdTEyELy7Gz0S6UMmLYd0/bUyT2PWvxm4gAaUTgfO1uHOtEd5X4Vk2CH0Q8I3XWN0m1Rz/zqHtP8ve4BBQkez/lSdmO1buO1e9jCHHOwBsFnUmfuKi5houKQ=
+	t=1728404279; cv=none; b=jJxhzraaT5gQzR1Fy59SX9KTiXJNm2vd87a+Iuad+dlpDbgc+ZEjOZfxdaNQIYU3A6NUqzr7nO69TORxrZ8rS7uRhjY+08mM3RUGK66XlXhm1lKBaT0aiyvBM7ncI6GXzWmch/16qKRM3YcHgdcdcsh0DiPi+tsXsU6WbbmnYb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728403775; c=relaxed/simple;
-	bh=oJizpp9aoOY0AopSPxylxEhhCtx+WlqEdtLodFwISho=;
+	s=arc-20240116; t=1728404279; c=relaxed/simple;
+	bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=URL7b1YC1GzgCGk0lF2x/LgN3f9HbCqBUzFW0L6AdXu1lOztju1DjGepxCmSifKQQbocAOMW/XTcpCj32xkfv6b92HQA4GHU4emVB1il10HDMxXIUSTshtXZRaFIAh85Dz29y92kenMV+c2uTbn0KGAqP3Dz9Uv2IAJY1lxsV2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=keithp.com; spf=pass smtp.mailfrom=keithp.com; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=Zk9bYakH; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=NSOj9hJX; arc=none smtp.client-ip=63.227.221.253
+	 MIME-Version:Content-Type; b=KgmVUBPdSql8SwVjlA7fRTTKV8vlc/hXXakD3oAAAfW6MFS5fEtE59BiEM9lz5DfXwwQ6zWBkiyHStM3L6maazS2+p5D7rwMmAB/XNKQOl188//d/i5Qv1BXYUazPqNGgTXolN5OfE/TEMGonSvpVzUEApxJG0KnzB4t8HVr470=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=keithp.com; spf=pass smtp.mailfrom=keithp.com; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=wi5UHOGz; dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b=e0/Uw2uz; arc=none smtp.client-ip=63.227.221.253
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=keithp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=keithp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="Zk9bYakH";
-	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="NSOj9hJX"
+	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="wi5UHOGz";
+	dkim=pass (2048-bit key) header.d=keithp.com header.i=@keithp.com header.b="e0/Uw2uz"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
-	t=1728403773; bh=oJizpp9aoOY0AopSPxylxEhhCtx+WlqEdtLodFwISho=;
+	t=1728403701; bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=Zk9bYakHOUzQevZrYXCQdXBwTsIS5nq41acB4bsphbLmhLTYSyaXRBvQ/wpXNYCMW
-	 A4nw5snc1cJpmvG0auJZ6pG+nVepA5tXPZ3CByJmkGh8ahJijudq74dm9/dXu/ZAtu
-	 jS97S/U+Wt2wTgIcjazn7BBCX78Ttw3TwmzP9vQSKjGQxXA7Wyyz6ratkbZ2kkTsCL
-	 5lhcSp2JtVVoD4fImTWHru0z5JDA4ySGqvLMVfvoeEK2ZSBnGmx6pBHyod9mHMx10k
-	 tzHI2AIfQmnsd/Ux0AyvWZltpgUxRarkJJoRgGtg3/3RHqPKddNAabFm9s84YPXyr2
-	 pVN26WltMk8pA==
+	b=wi5UHOGzMPYDdaMlW6tAM0wzB8FAZqDhWv92xGXqSEUqu7UV2hqmBSumlq6u6YaGC
+	 nm/Il6qLql7wMjPuJPYrsJvpTD380HBKq32xW4Omunf/U/mrHMqWFTEHgq6TY/sCgV
+	 L7+mOTBuXhWnc+ft5GzRLDRL3u4qY5ZhL9RoI76mlIArSctcAuqxQBPWQFHOqSOeNk
+	 fBeyz7QCEMfCjwFFA5YhKVQNhwq7H6tDXu+2MzgaXvYiFaafyVUUKJccQ0QdzfGzKQ
+	 b+oIaB6dkGEsa7R2aUsrL2KVi1yi+SpE4W5GEGlMOSBiMvi/nXfkk8kXW2+y5I3o/Q
+	 B+ailmMqIYXcQ==
 Received: from localhost (localhost [127.0.0.1])
-	by elaine.keithp.com (Postfix) with ESMTP id BAA4C3F2275A;
-	Tue,  8 Oct 2024 09:09:33 -0700 (PDT)
+	by elaine.keithp.com (Postfix) with ESMTP id 1A8703F20A16;
+	Tue,  8 Oct 2024 09:08:21 -0700 (PDT)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id yKexJ_RQZQJk; Tue,  8 Oct 2024 09:09:32 -0700 (PDT)
+ id wA-LEzRtO2wP; Tue,  8 Oct 2024 09:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
-	t=1728403772; bh=oJizpp9aoOY0AopSPxylxEhhCtx+WlqEdtLodFwISho=;
+	t=1728403699; bh=Be1lMPNnE3lyAmS0s0JekcNeCZMW9LO8oGmCCamfWiY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=NSOj9hJXUKpWGlxGQaDVv+uH0SmT6MyLkQDbBdfEy45nmCLfbAK0DnTb+FjcOEn21
-	 z7cf99MaJkoNan2k6IIo5Cz8tCZiqLQk5lUHiQJMK0P/8V6ejiXS5hFMSV5VR4eF+F
-	 1+0xUuXi5+q9HxIyB4WLMrepJ9r/btzY9Evmp210t16mlL4EpdH9NhLfO69ItzbRna
-	 RROQKFKpbcnePP3tJVKTsK/SSGox+9EexFPuq5+F0cA6ObQ+jl2L9rxyFt9HjkL6DD
-	 9otdZSXaMLfpqcjtejPGdhcBbKpUUWom27rLVGDHsoeMduuTDPREVNYGf9VtWOGyeS
-	 gmyQCOangUMhw==
+	b=e0/Uw2uzSRNbLGxH1f5Vd//kAsgVYBI6+Ul0EuQeHEB2OfXgunGqjilMV/GChdZmM
+	 ci6E9pHuPl8q8IulQcOKjNsifUOYXqQKqgZgRUliS3vunFVFMBeSSPiN7tXqpVl8uq
+	 H5mU0bU7Vn3zaDiIhz+S66yKT+zwJUMI3UtPdI3fIsnbBvA5duj/HhMxdHWaNN0qR4
+	 0XM9NIbuH4SKftzPQlvNp9yHmjUQsxyB61af7lq7g5NJAAMeTTV/+dGUA7zzX/4hcj
+	 4Bf+6rw1UhrhXjK7N3iIE5wTYf65Yu35xMP/0XA3j9xhe+El0lgPkoXfzbP38FhWl1
+	 /Om8JYcp3zeUw==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
-	by elaine.keithp.com (Postfix) with ESMTPSA id A4A193F208E2;
-	Tue,  8 Oct 2024 09:09:32 -0700 (PDT)
+	by elaine.keithp.com (Postfix) with ESMTPSA id D5D763F208E2;
+	Tue,  8 Oct 2024 09:08:19 -0700 (PDT)
 Received: by keithp.com (Postfix, from userid 1000)
-	id 6643A1E60239; Tue, 08 Oct 2024 18:09:32 +0200 (CEST)
+	id 597E41E60239; Tue, 08 Oct 2024 18:08:19 +0200 (CEST)
 From: Keith Packard <keithp@keithp.com>
-To: Nathan Chancellor <nathan@kernel.org>, Michael Ellerman
- <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Naveen N Rao <naveen@kernel.org>, Madhavan
- Srinivasan <maddy@linux.ibm.com>, Nick Desaulniers
+To: Christophe Leroy <christophe.leroy@csgroup.eu>, Nathan Chancellor
+ <nathan@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Naveen N Rao <naveen@kernel.org>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, Nick Desaulniers
  <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, Justin Stitt
  <justinstitt@google.com>, linuxppc-dev@lists.ozlabs.org,
- llvm@lists.linux.dev, patches@lists.linux.dev, Nathan Chancellor
- <nathan@kernel.org>
-Subject: Re: [PATCH 0/3] powerpc: Prepare for clang's per-task stack
- protector support
-In-Reply-To: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
+ llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 3/3] powerpc: Include -m32 / -m64 for stack protector
+ Kconfig test
+In-Reply-To: <a57f21db-911c-4331-af7b-c02c0ea8b1e6@csgroup.eu>
 References: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
-Date: Tue, 08 Oct 2024 09:09:32 -0700
-Message-ID: <87ldyyvao3.fsf@keithp.com>
+ <20241007-powerpc-fix-stackprotector-test-clang-v1-3-08c15b2694e4@kernel.org>
+ <a57f21db-911c-4331-af7b-c02c0ea8b1e6@csgroup.eu>
+Date: Tue, 08 Oct 2024 09:08:18 -0700
+Message-ID: <87o73uvaq5.fsf@keithp.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,15 +73,29 @@ Content-Type: multipart/signed; boundary="=-=-=";
 	micalg=pgp-sha256; protocol="application/pgp-signature"
 
 --=-=-=
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 
-> This series prepares the powerpc Kconfig and Kbuild files for clang's
-> per-task stack protector support.
+> Why is there any restriction at all on which register can be used ? I=20
+> can't see such restriction in GCC documentation :=20
+> https://gcc.gnu.org/onlinedocs/gcc/RS_002f6000-and-PowerPC-Options.html
 
-Reviewed-by: Keith Packard <keithp@keithp.com>
-Tested-by: Keith Packard <keithp@keithp.com>
+The clang implementation shares the same code paths as the user space
+thread local storage implementation. That code uses a fixed register (2
+for 32-bit, 13 for 64-bit) and a fixed offset (-0x7008 for 32-bit and
+=2D0x7010 for 64-bit).
+
+The new code controls the offset value with a command line parameter.
+
+I didn't see any need to make the changes more complicated by including
+support for arbitrary registers. The implementation would be reasonably
+straightforward, but it would make testing a bunch harder.
+
+The command line parsing code validates that you've selected the correct
+register =E2=80=94 if we allow other registers in the future, you'll be abl=
+e to
+verify whether the compiler supports that by testing at build time.
 
 =2D-=20
 =2Dkeith
@@ -91,18 +105,18 @@ Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAmcFWTwACgkQ2yIaaQAA
-ABGMCQ/+P5eh4p/7FKNEwLPB1NvaEIPPnwmj0iF7AGh45nKXbtvCVPYuBTXTs+/z
-xhYj8zmizQJLgfEjuhJVBLE2DHGQ/hw6ajS/zUPOkwwwmtT81e5sV0OsrxwWqH1E
-LPA+jbNyqETz/Khznu5ev2gT5q70AvPigFpufd1CcLZHT/BQjkGKm0WmIrH3DbCH
-bsH8fJb1wwmudUQO7XLv/X/znlyFp14wmb3wpVAWooeCzm8dYPoIY139TYbr35HF
-+UFQ5HtoA6CsuZOOspjuUSc3GvcDRPEbs1bO3WX3RZVBiBesZsFNiel2Rg33Xlw/
-VsGOKkxAotpZbJA6nYA+O42aizykgL4k29/AHaXGVfDONx7SPLzfHSAE1YFEbqRZ
-g3M0OxVOJFRF0vo4Pw9YVs9lgxwdu6tWSYMVbF5UMROxSX1CDU8hOzgbQhJ1XaV1
-ckJaJNu6E1+1d9dzHydbrgYPZsvAfeeKLjyVaqTroYHfOM4u8ObKNbzpafVFZ9Sw
-GTgOS8k5iwOdQT3Pxp9NXimVmqzcRJqs3VnODz9kuYjhGHHO5gU9dm49J1u0HXVV
-9xuP2wxAjiP9ue9DWs9hW52k4bYj0o2ssrl3oG8LWQvssuZSxo0jXd7Blmm0ygqJ
-FAqH2qOYU8C/Fi/n5iQdPgmSu23BCfS3rnq0cQzit2QjXAiWXKA=
-=7U2U
+iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAmcFWPMACgkQ2yIaaQAA
+ABECOA//Sm+07+C6UnNX8tFcnftLQhSmKWADbibLW63BL6QrKDIiW4/KWPk7kyiN
+vCqwS5vQ3vxWizedY2o/JZ4DiO7gtHDue9ikTkBnHs5w1lNjoOOd2NaV7kaaUkJW
+AgXU8dZL0ldCFbeF0YqXuQ9ugf6D/FYK0trvurrHffvS4qMcE/C9SYG+5LkbCm38
+vjZfihr32X/7QPXnRNqdNAp64Y1N3P0iPj/RdNpvg566mPhTDRr9gdMYH87l0uDX
+Z+svG3DTILn96nPqlUG9hH0m0f/iW5D3aBuRuwZo5W3YbcKGTGaUhRXIukYZ4PCm
+pI6U9wJMlSUMF4DggW0ZkrZmEOYOTEASm+LW8b7Z+vtd250lyeOFOCQDOhTdiYuP
+RPVEEE+KgHAjO4S6NAoko7zBr4BkCnOXjRdP/xIw5ljorDWlJweL8C+AsjviSTpW
+KxsKJbEHbJRMFyar8cGnRGbKG7eOg2sgQE5xz+bLwicmxTj5hd/5MALrg9W5fpMd
+NmsL2lIhem54JZnSSfX8GO3iKfNI8d4Ra52b1hLtd5ZuJdu3vXxkcgq5puGpnaKA
+EUDrcRPfofvlY8LCtAx5r8rCTonpeK3AwzXr3HIb30MgGhryzVBXCgsk/cnq6gAB
+/tmswKMTEq/AALZryZ+7mFOXOzxcshzk863kdYkgLiwNJdQ9hKA=
+=3DzG
 -----END PGP SIGNATURE-----
 --=-=-=--
