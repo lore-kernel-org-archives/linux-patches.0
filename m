@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA11DE2AD;
-	Tue,  8 Oct 2024 12:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BFA1DE8A0;
+	Tue,  8 Oct 2024 12:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391538; cv=none; b=n5hUocIFCsm8+eDIQWh1MqHWXbgFgyL0dfFLOl7h1Rwj1JZ/cK+ohCjPIY87VR67S9ODymWEMOe9YGGIhBPsCrnsaIwvK0QQuUjsRf7VSEbonfSj2NhE53ithrQU82c401f31FsL/uGXIl0Zvd/gOrjfapxvNe5fzS6/hpcY3pY=
+	t=1728391541; cv=none; b=Bbu+zoCHXaBEd/wIKd53JTfbituVjWxYEQXU2R57+k0SyV3z7o5cZoNfjggVG7ciabP8rHsbvQCaaWmf8WYny1jXXZKpF29tLCmCHEpMHf4awFV4u0KKggXsBRXH+0I3PWlDKA6fXJaPgl+G7LsMD/mFfdLwJOsi4oEQLXhE8gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391538; c=relaxed/simple;
-	bh=nuJoUOWAf3vfSJ1pWCw9uVVAC4ZPTQhuxITJTvvONBQ=;
+	s=arc-20240116; t=1728391541; c=relaxed/simple;
+	bh=RtwFmkHR+3Yxo2Ooc+fMDihduaPR+MLZfOp/i4Ey0dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NF3BLHJaZJyrOLC86FG1zANjXRSzIEhcpvvIFfA7HcVoNQYxmQTkkntrt1GrDkhdujBcVyMyBQcZzSUDMFoXLV5jFm6mMTYA8o/ZLgCMqDlg5bBgwPNfAd5WP40eGiR/g/D34Z6l2U1LBkkHW0C3KiisqmP8QQkM/V/owDQCJpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfGS3SeA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gxMPaCVrSiqWFTyIvrG2eF7jNV+2umHe2lmlEMcevXMv28mzpcuDEUU0/gkEFAGW7axOhNSPdLxgeKojH2yI6pzGPYWV+CUJWdgLzTZhJPeZ8zret2tqP8f54uuPm5LRIH1Mrkc1i7zyeOUSCbZrjPn22s19MwEim07MskLV2fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWYM50hX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfGS3SeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD49C4CECC;
-	Tue,  8 Oct 2024 12:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWYM50hX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4605EC4CEC7;
+	Tue,  8 Oct 2024 12:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391538;
-	bh=nuJoUOWAf3vfSJ1pWCw9uVVAC4ZPTQhuxITJTvvONBQ=;
+	s=korg; t=1728391541;
+	bh=RtwFmkHR+3Yxo2Ooc+fMDihduaPR+MLZfOp/i4Ey0dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfGS3SeAd5Ur017IKiFifFm+dzDvDUWHZ9S7lYNmPwBAFwh93qZdWwWYFX7jKdRL7
-	 B6vw/ZF4vJ5w2daGl+eSZ2jkCqc5j5pQ4dI+GHg61T5mS8QQZ0CRU4t+FreI2Bp0Aa
-	 WYdxVCYM9Fi/7Q41C4YgKFtNeAuKYh/EpTxtAKK0=
+	b=GWYM50hXmtgo3P2YoNzS5E5hemI/5A5IVDVjnMRSV/xrCXGJgOezlN+uTH5zYC8TA
+	 P+uc/Z3HGqcrejiYbJycN+2GIQ20hdsf7AyFAVsFxQIDb0xpPpWUY0897HYKr+nvg+
+	 +oh8Ps5+HMtTd9tu0XMbH4HgmswZxVIg6QZlH1q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Stefan=20M=C3=A4tje?= <stefan.maetje@esd.eu>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 138/558] wifi: iwlwifi: allow only CN mcc from WRDD
-Date: Tue,  8 Oct 2024 14:02:48 +0200
-Message-ID: <20241008115707.795675699@linuxfoundation.org>
+Subject: [PATCH 6.11 147/558] can: netlink: avoid call to do_set_data_bittiming callback with stale can_priv::ctrlmode
+Date: Tue,  8 Oct 2024 14:02:57 +0200
+Message-ID: <20241008115708.148878824@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -46,85 +45,174 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Stefan Mätje <stefan.maetje@esd.eu>
 
-[ Upstream commit ff5aabe7c2a4a4b089a9ced0cb3d0e284963a7dd ]
+[ Upstream commit 2423cc20087ae9a7b7af575aa62304ef67cad7b6 ]
 
-Block other mcc expect CN from WRDD ACPI.
+This patch moves the evaluation of data[IFLA_CAN_CTRLMODE] in function
+can_changelink in front of the evaluation of data[IFLA_CAN_BITTIMING].
 
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240808232017.fe6ea7aa4b39.I86004687a2963fe26f990770aca103e2f5cb1628@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This avoids a call to do_set_data_bittiming providing a stale
+can_priv::ctrlmode with a CAN_CTRLMODE_FD flag not matching the
+requested state when switching between a CAN Classic and CAN-FD bitrate.
+
+In the same manner the evaluation of data[IFLA_CAN_CTRLMODE] in function
+can_validate is also moved in front of the evaluation of
+data[IFLA_CAN_BITTIMING].
+
+This is a preparation for patches where the nominal and data bittiming
+may have interdependencies on the driver side depending on the
+CAN_CTRLMODE_FD flag state.
+
+Signed-off-by: Stefan Mätje <stefan.maetje@esd.eu>
+Link: https://patch.msgid.link/20240808164224.213522-1-stefan.maetje@esd.eu
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c       | 5 +++++
- drivers/net/wireless/intel/iwlwifi/fw/regulatory.h | 2 ++
- drivers/net/wireless/intel/iwlwifi/fw/uefi.c       | 2 +-
- drivers/net/wireless/intel/iwlwifi/fw/uefi.h       | 2 --
- 4 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/can/dev/netlink.c | 102 +++++++++++++++++-----------------
+ 1 file changed, 51 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 8c8880b448270..a7cea0a55b35a 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -357,6 +357,11 @@ int iwl_acpi_get_mcc(struct iwl_fw_runtime *fwrt, char *mcc)
- 	}
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index dfdc039d92a6c..01aacdcda2606 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -65,15 +65,6 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
+ 	if (!data)
+ 		return 0;
  
- 	mcc_val = wifi_pkg->package.elements[1].integer.value;
-+	if (mcc_val != BIOS_MCC_CHINA) {
-+		ret = -EINVAL;
-+		IWL_DEBUG_RADIO(fwrt, "ACPI WRDD is supported only for CN\n");
-+		goto out_free;
-+	}
- 
- 	mcc[0] = (mcc_val >> 8) & 0xff;
- 	mcc[1] = mcc_val & 0xff;
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
-index e2c056f483c1c..c5bd89e61d4a8 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.h
-@@ -45,6 +45,8 @@
- #define IWL_WTAS_ENABLE_IEC_MSK	0x4
- #define IWL_WTAS_USA_UHB_MSK		BIT(16)
- 
-+#define BIOS_MCC_CHINA 0x434e
-+
- /*
-  * The profile for revision 2 is a superset of revision 1, which is in
-  * turn a superset of revision 0.  So we can store all revisions
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-index fb982d4fe8510..2cf878f237ac6 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-@@ -638,7 +638,7 @@ int iwl_uefi_get_mcc(struct iwl_fw_runtime *fwrt, char *mcc)
- 		goto out;
- 	}
- 
--	if (data->mcc != UEFI_MCC_CHINA) {
-+	if (data->mcc != BIOS_MCC_CHINA) {
- 		ret = -EINVAL;
- 		IWL_DEBUG_RADIO(fwrt, "UEFI WRDD is supported only for CN\n");
- 		goto out;
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.h b/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
-index 1f8884ca8997c..e0ef981cd8f28 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.h
-@@ -149,8 +149,6 @@ struct uefi_cnv_var_splc {
- 	u32 default_pwr_limit;
- } __packed;
- 
--#define UEFI_MCC_CHINA 0x434e
+-	if (data[IFLA_CAN_BITTIMING]) {
+-		struct can_bittiming bt;
 -
- /* struct uefi_cnv_var_wrdd - WRDD table as defined in UEFI
-  * @revision: the revision of the table
-  * @mcc: country identifier as defined in ISO/IEC 3166-1 Alpha 2 code
+-		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
+-		err = can_validate_bittiming(&bt, extack);
+-		if (err)
+-			return err;
+-	}
+-
+ 	if (data[IFLA_CAN_CTRLMODE]) {
+ 		struct can_ctrlmode *cm = nla_data(data[IFLA_CAN_CTRLMODE]);
+ 		u32 tdc_flags = cm->flags & CAN_CTRLMODE_TDC_MASK;
+@@ -114,6 +105,15 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
+ 		}
+ 	}
+ 
++	if (data[IFLA_CAN_BITTIMING]) {
++		struct can_bittiming bt;
++
++		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
++		err = can_validate_bittiming(&bt, extack);
++		if (err)
++			return err;
++	}
++
+ 	if (is_can_fd) {
+ 		if (!data[IFLA_CAN_BITTIMING] || !data[IFLA_CAN_DATA_BITTIMING])
+ 			return -EOPNOTSUPP;
+@@ -195,48 +195,6 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	/* We need synchronization with dev->stop() */
+ 	ASSERT_RTNL();
+ 
+-	if (data[IFLA_CAN_BITTIMING]) {
+-		struct can_bittiming bt;
+-
+-		/* Do not allow changing bittiming while running */
+-		if (dev->flags & IFF_UP)
+-			return -EBUSY;
+-
+-		/* Calculate bittiming parameters based on
+-		 * bittiming_const if set, otherwise pass bitrate
+-		 * directly via do_set_bitrate(). Bail out if neither
+-		 * is given.
+-		 */
+-		if (!priv->bittiming_const && !priv->do_set_bittiming &&
+-		    !priv->bitrate_const)
+-			return -EOPNOTSUPP;
+-
+-		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
+-		err = can_get_bittiming(dev, &bt,
+-					priv->bittiming_const,
+-					priv->bitrate_const,
+-					priv->bitrate_const_cnt,
+-					extack);
+-		if (err)
+-			return err;
+-
+-		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
+-			NL_SET_ERR_MSG_FMT(extack,
+-					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
+-					   bt.bitrate, priv->bitrate_max);
+-			return -EINVAL;
+-		}
+-
+-		memcpy(&priv->bittiming, &bt, sizeof(bt));
+-
+-		if (priv->do_set_bittiming) {
+-			/* Finally, set the bit-timing registers */
+-			err = priv->do_set_bittiming(dev);
+-			if (err)
+-				return err;
+-		}
+-	}
+-
+ 	if (data[IFLA_CAN_CTRLMODE]) {
+ 		struct can_ctrlmode *cm;
+ 		u32 ctrlstatic;
+@@ -284,6 +242,48 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 			priv->ctrlmode &= cm->flags | ~CAN_CTRLMODE_TDC_MASK;
+ 	}
+ 
++	if (data[IFLA_CAN_BITTIMING]) {
++		struct can_bittiming bt;
++
++		/* Do not allow changing bittiming while running */
++		if (dev->flags & IFF_UP)
++			return -EBUSY;
++
++		/* Calculate bittiming parameters based on
++		 * bittiming_const if set, otherwise pass bitrate
++		 * directly via do_set_bitrate(). Bail out if neither
++		 * is given.
++		 */
++		if (!priv->bittiming_const && !priv->do_set_bittiming &&
++		    !priv->bitrate_const)
++			return -EOPNOTSUPP;
++
++		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
++		err = can_get_bittiming(dev, &bt,
++					priv->bittiming_const,
++					priv->bitrate_const,
++					priv->bitrate_const_cnt,
++					extack);
++		if (err)
++			return err;
++
++		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
++			NL_SET_ERR_MSG_FMT(extack,
++					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
++					   bt.bitrate, priv->bitrate_max);
++			return -EINVAL;
++		}
++
++		memcpy(&priv->bittiming, &bt, sizeof(bt));
++
++		if (priv->do_set_bittiming) {
++			/* Finally, set the bit-timing registers */
++			err = priv->do_set_bittiming(dev);
++			if (err)
++				return err;
++		}
++	}
++
+ 	if (data[IFLA_CAN_RESTART_MS]) {
+ 		/* Do not allow changing restart delay while running */
+ 		if (dev->flags & IFF_UP)
 -- 
 2.43.0
 
