@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696BB1DA60C;
-	Tue,  8 Oct 2024 12:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7081DA60C;
+	Tue,  8 Oct 2024 12:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390499; cv=none; b=LpuPHWKgP8UMXraK2AfmapPfJBYZYoz+y8DCOgnaxXb7Gb3HTbQD5uTqQJy+kOFTsaqdXebNIljsv4NktlIBovduTSfHHx9PX38kcZZWin660mwUhy1KceP2yO00qt1TmyYlXAA7Yger+mVQosOE9sSuCqmTrsU7bx34YR98CK0=
+	t=1728390503; cv=none; b=UO4j3xeaU+CeXE46ZnrZlyDY46xcRR2QLXau5x6+VlTEU/jZagV2NEmUmTyWxKv58dieBbKWmnU5G4+MQaIxKaDLez7qmfBJZQ85i7U7vq0J+VuqbiFtaljwU8juiULm4DuAmkIGaJWrCUJyZY4PdS6gLbJOaKoae9paJXU/KWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390499; c=relaxed/simple;
-	bh=/IhfLkbagABHqpZ81aNaQhGak6GZkKWtjSsJsvhj/fA=;
+	s=arc-20240116; t=1728390503; c=relaxed/simple;
+	bh=DNARcsORLaIPUbz79uxouUQ7HknA2E6AKGbIEL426I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoq+re8wkkaI/bO8W4mF2Z/MoejMVvrMit2pz2++RVFa2IOLU9glMDf7Jlw5h22NWkGueohEHzMzniW9jmlu9r3C53W57qAQXuz4JTrhgLjScckkDEnK/ohh/lI/UBV0a3qA68OFV0fw4VM7l9+s1NMHjN0ViCGsQOT+O+TLDfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVhBttg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPlx+B0mcDOl4IyXpCR7kv0dUky4Hdk+7G+yoSgMFn9zOrpYMzx5M4UGtrsbngq5+HP41yUlEB6sx+OMkhOfD1wgZee+ety1OpwrCkO0jiM83mxHEH2NwqkjBGCkOhkEXLIVIJSU/y1f7xMtLgQfvzD2kzNakrR4BXvoCUF6PUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6r5FJ/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVhBttg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC80EC4CEC7;
-	Tue,  8 Oct 2024 12:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6r5FJ/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D936C4CEC7;
+	Tue,  8 Oct 2024 12:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390499;
-	bh=/IhfLkbagABHqpZ81aNaQhGak6GZkKWtjSsJsvhj/fA=;
+	s=korg; t=1728390502;
+	bh=DNARcsORLaIPUbz79uxouUQ7HknA2E6AKGbIEL426I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVhBttg+KtmBuFvxyxEl0ET0TrIY1l/ovLIrvLu2wfBSQpYj4Hsm7NG2D3cfNguTR
-	 vAlTQ3fbEKQilPIbG8zpEE3dB92MiMApqAGecgZo7lZBOiicbC5guEOyACzTwSXeGM
-	 u0CgyvqCLuvjhljw8Y15h0gb/aFOjfsKp5xu6yUU=
+	b=E6r5FJ/snbsIiqER2/zQAi2vmreBjt0vE+cbqBfRenamMHclPOibYHjRiggZmQY7N
+	 Dxd/fYMxuorGvkVhDinEgqntfuj0r+bM5QleEbk2gFRfi7fAOSK4FK5jXb31JDtSen
+	 1hDEShFLgS82/pw1ZnSZE1mjP3jD9vgWULrB3gcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@intel.com>,
-	David Rientjes <rientjes@google.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.10 308/482] mm, slub: avoid zeroing kmalloc redzone
-Date: Tue,  8 Oct 2024 14:06:11 +0200
-Message-ID: <20241008115700.554838654@linuxfoundation.org>
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.10 309/482] perf/core: Fix small negative period being ignored
+Date: Tue,  8 Oct 2024 14:06:12 +0200
+Message-ID: <20241008115700.593915001@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,200 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Luo Gengkun <luogengkun@huaweicloud.com>
 
-commit 59090e479ac78ae18facd4c58eb332562a23020e upstream.
+commit 62c0b1061593d7012292f781f11145b2d46f43ab upstream.
 
-Since commit 946fa0dbf2d8 ("mm/slub: extend redzone check to extra
-allocated kmalloc space than requested"), setting orig_size treats
-the wasted space (object_size - orig_size) as a redzone. However with
-init_on_free=1 we clear the full object->size, including the redzone.
+In perf_adjust_period, we will first calculate period, and then use
+this period to calculate delta. However, when delta is less than 0,
+there will be a deviation compared to when delta is greater than or
+equal to 0. For example, when delta is in the range of [-14,-1], the
+range of delta = delta + 7 is between [-7,6], so the final value of
+delta/8 is 0. Therefore, the impact of -1 and -2 will be ignored.
+This is unacceptable when the target period is very short, because
+we will lose a lot of samples.
 
-Additionally we clear the object metadata, including the stored orig_size,
-making it zero, which makes check_object() treat the whole object as a
-redzone.
+Here are some tests and analyzes:
+before:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.022 MB perf.data (518 samples) ]
 
-These issues lead to the following BUG report with "slub_debug=FUZ
-init_on_free=1":
+  # perf script
+  ...
+  a.out     396   257.956048:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.957891:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.959730:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.961545:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.963355:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.965163:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.966973:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.968785:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.970593:         23 cs:  ffffffff81f4eeec schedul>
+  ...
 
-[    0.000000] =============================================================================
-[    0.000000] BUG kmalloc-8 (Not tainted): kmalloc Redzone overwritten
-[    0.000000] -----------------------------------------------------------------------------
-[    0.000000]
-[    0.000000] 0xffff000010032858-0xffff00001003285f @offset=2136. First byte 0x0 instead of 0xcc
-[    0.000000] FIX kmalloc-8: Restoring kmalloc Redzone 0xffff000010032858-0xffff00001003285f=0xcc
-[    0.000000] Slab 0xfffffdffc0400c80 objects=36 used=23 fp=0xffff000010032a18 flags=0x3fffe0000000200(workingset|node=0|zone=0|lastcpupid=0x1ffff)
-[    0.000000] Object 0xffff000010032858 @offset=2136 fp=0xffff0000100328c8
-[    0.000000]
-[    0.000000] Redzone  ffff000010032850: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Object   ffff000010032858: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Redzone  ffff000010032860: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Padding  ffff0000100328b4: 00 00 00 00 00 00 00 00 00 00 00 00              ............
-[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.11.0-rc3-next-20240814-00004-g61844c55c3f4 #144
-[    0.000000] Hardware name: NXP i.MX95 19X19 board (DT)
-[    0.000000] Call trace:
-[    0.000000]  dump_backtrace+0x90/0xe8
-[    0.000000]  show_stack+0x18/0x24
-[    0.000000]  dump_stack_lvl+0x74/0x8c
-[    0.000000]  dump_stack+0x18/0x24
-[    0.000000]  print_trailer+0x150/0x218
-[    0.000000]  check_object+0xe4/0x454
-[    0.000000]  free_to_partial_list+0x2f8/0x5ec
+after:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.058 MB perf.data (1466 samples) ]
 
-To address the issue, use orig_size to clear the used area. And restore
-the value of orig_size after clear the remaining area.
+  # perf script
+  ...
+  a.out     395    59.338813:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.339707:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.340682:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.341751:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.342799:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.343765:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.344651:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.345539:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.346502:         13 cs:  ffffffff81f4eeec schedul>
+  ...
 
-When CONFIG_SLUB_DEBUG not defined, (get_orig_size()' directly returns
-s->object_size. So when using memset to init the area, the size can simply
-be orig_size, as orig_size returns object_size when CONFIG_SLUB_DEBUG not
-enabled. And orig_size can never be bigger than object_size.
+test.c
 
-Fixes: 946fa0dbf2d8 ("mm/slub: extend redzone check to extra allocated kmalloc space than requested")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Feng Tang <feng.tang@intel.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+int main() {
+        for (int i = 0; i < 20000; i++)
+                usleep(10);
+
+        return 0;
+}
+
+  # time ./a.out
+  real    0m1.583s
+  user    0m0.040s
+  sys     0m0.298s
+
+The above results were tested on x86-64 qemu with KVM enabled using
+test.c as test program. Ideally, we should have around 1500 samples,
+but the previous algorithm had only about 500, whereas the modified
+algorithm now has about 1400. Further more, the new version shows 1
+sample per 0.001s, while the previous one is 1 sample per 0.002s.This
+indicates that the new algorithm is more sensitive to small negative
+values compared to old algorithm.
+
+Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
+Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240831074316.2106159-2-luogengkun@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |  100 ++++++++++++++++++++++++++++++++------------------------------
- 1 file changed, 53 insertions(+), 47 deletions(-)
+ kernel/events/core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -756,6 +756,50 @@ static inline bool slab_update_freelist(
- 	return false;
- }
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4107,7 +4107,11 @@ static void perf_adjust_period(struct pe
+ 	period = perf_calculate_period(event, nsec, count);
  
-+/*
-+ * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
-+ * family will round up the real request size to these fixed ones, so
-+ * there could be an extra area than what is requested. Save the original
-+ * request size in the meta data area, for better debug and sanity check.
-+ */
-+static inline void set_orig_size(struct kmem_cache *s,
-+				void *object, unsigned int orig_size)
-+{
-+	void *p = kasan_reset_tag(object);
-+	unsigned int kasan_meta_size;
-+
-+	if (!slub_debug_orig_size(s))
-+		return;
-+
-+	/*
-+	 * KASAN can save its free meta data inside of the object at offset 0.
-+	 * If this meta data size is larger than 'orig_size', it will overlap
-+	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
-+	 * 'orig_size' to be as at least as big as KASAN's meta data.
-+	 */
-+	kasan_meta_size = kasan_metadata_size(s, true);
-+	if (kasan_meta_size > orig_size)
-+		orig_size = kasan_meta_size;
-+
-+	p += get_info_end(s);
-+	p += sizeof(struct track) * 2;
-+
-+	*(unsigned int *)p = orig_size;
-+}
-+
-+static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
-+{
-+	void *p = kasan_reset_tag(object);
-+
-+	if (!slub_debug_orig_size(s))
-+		return s->object_size;
-+
-+	p += get_info_end(s);
-+	p += sizeof(struct track) * 2;
-+
-+	return *(unsigned int *)p;
-+}
-+
- #ifdef CONFIG_SLUB_DEBUG
- static unsigned long object_map[BITS_TO_LONGS(MAX_OBJS_PER_PAGE)];
- static DEFINE_SPINLOCK(object_map_lock);
-@@ -969,50 +1013,6 @@ static void print_slab_info(const struct
- 	       folio_flags(folio, 0));
- }
+ 	delta = (s64)(period - hwc->sample_period);
+-	delta = (delta + 7) / 8; /* low pass filter */
++	if (delta >= 0)
++		delta += 7;
++	else
++		delta -= 7;
++	delta /= 8; /* low pass filter */
  
--/*
-- * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
-- * family will round up the real request size to these fixed ones, so
-- * there could be an extra area than what is requested. Save the original
-- * request size in the meta data area, for better debug and sanity check.
-- */
--static inline void set_orig_size(struct kmem_cache *s,
--				void *object, unsigned int orig_size)
--{
--	void *p = kasan_reset_tag(object);
--	unsigned int kasan_meta_size;
--
--	if (!slub_debug_orig_size(s))
--		return;
--
--	/*
--	 * KASAN can save its free meta data inside of the object at offset 0.
--	 * If this meta data size is larger than 'orig_size', it will overlap
--	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
--	 * 'orig_size' to be as at least as big as KASAN's meta data.
--	 */
--	kasan_meta_size = kasan_metadata_size(s, true);
--	if (kasan_meta_size > orig_size)
--		orig_size = kasan_meta_size;
--
--	p += get_info_end(s);
--	p += sizeof(struct track) * 2;
--
--	*(unsigned int *)p = orig_size;
--}
--
--static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
--{
--	void *p = kasan_reset_tag(object);
--
--	if (!slub_debug_orig_size(s))
--		return s->object_size;
--
--	p += get_info_end(s);
--	p += sizeof(struct track) * 2;
--
--	return *(unsigned int *)p;
--}
--
- void skip_orig_size_check(struct kmem_cache *s, const void *object)
- {
- 	set_orig_size(s, (void *)object, s->object_size);
-@@ -1859,7 +1859,6 @@ static inline void inc_slabs_node(struct
- 							int objects) {}
- static inline void dec_slabs_node(struct kmem_cache *s, int node,
- 							int objects) {}
--
- #ifndef CONFIG_SLUB_TINY
- static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
- 			       void **freelist, void *nextfree)
-@@ -2187,14 +2186,21 @@ bool slab_free_hook(struct kmem_cache *s
- 	 */
- 	if (unlikely(init)) {
- 		int rsize;
--		unsigned int inuse;
-+		unsigned int inuse, orig_size;
+ 	sample_period = hwc->sample_period + delta;
  
- 		inuse = get_info_end(s);
-+		orig_size = get_orig_size(s, x);
- 		if (!kasan_has_integrated_init())
--			memset(kasan_reset_tag(x), 0, s->object_size);
-+			memset(kasan_reset_tag(x), 0, orig_size);
- 		rsize = (s->flags & SLAB_RED_ZONE) ? s->red_left_pad : 0;
- 		memset((char *)kasan_reset_tag(x) + inuse, 0,
- 		       s->size - inuse - rsize);
-+		/*
-+		 * Restore orig_size, otherwize kmalloc redzone overwritten
-+		 * would be reported
-+		 */
-+		set_orig_size(s, x, orig_size);
-+
- 	}
- 	/* KASAN might put x into memory quarantine, delaying its reuse. */
- 	return !kasan_slab_free(s, x, init);
 
 
