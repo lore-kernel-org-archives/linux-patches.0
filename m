@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B09192594;
-	Tue,  8 Oct 2024 12:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BF91DED48;
+	Tue,  8 Oct 2024 12:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391448; cv=none; b=J2+xf7rUWpeH9ffQYLrbM3F52o0fmgHdjfIIDi6zPt8flgX1q3EOMGkn2JEQZc5pG5eBJIRnE9XnD9iUTVzdjX6qLXFhtYcRoxZ841EObtsRfk394ClP4Q4iJnyDqjXaixya8K8Qyqn4fPjGYj/mKzMYuFJakFEmLX5/hl+ZXAs=
+	t=1728391451; cv=none; b=JxhG9xRhGHXTTgM8bUkV5FAbL06vVwieZaN1rZ0tUBAjQf97RiThbnFOBFPt3KULkmeVZP71Kw4FbdTLm85j0X9aLAUW860PH4j/c37wUMCPPNJvmXFW3/qV8Sj/CM/c84N2MVUuFBEaTvLb6PKL5V/FDi5TcH8ra5lghXC20k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391448; c=relaxed/simple;
-	bh=IqJrL8iOdYeyVbqLiHV1xu/QqUaG4D/10VszMmwwED0=;
+	s=arc-20240116; t=1728391451; c=relaxed/simple;
+	bh=3h8idDvvSwdhk2A9PWCv3McY/VVEm3AUvQL+zWZwlG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ds29Nrg50/X9BWJQ/V8pf+X+kZnho4wS8ihURk0yniWqmspwb5h743PGVP16kJnAmjSWMJlbru1f1BDei3NTJrmPxPVeNWrH6G3hQK4zbsbiDhDUWb7DG4df5zIgneuTuUwVfLnXoZXzfKdwO1HBS/Jf6cNiF5RPIzN68Tv4l00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsZbViod; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/OMUrlHAWw+CFgpAoPu3fr3Z3o5Y+tVHJyu5NhC9vanRufEATVjqXT/0LSprcEFtj3mxvsLk0MI6EX7RJb5SwjZSFNC5L4fJUH7svdEWcTdmoQVucDTkXkYC14pyPVyrjWtRzGiSNzQ0z9kh4h1Z7YUEairyayfFVCWrRRa/no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUnVvqJM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsZbViod"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77E3C4CEC7;
-	Tue,  8 Oct 2024 12:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUnVvqJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E55C4CEC7;
+	Tue,  8 Oct 2024 12:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391448;
-	bh=IqJrL8iOdYeyVbqLiHV1xu/QqUaG4D/10VszMmwwED0=;
+	s=korg; t=1728391451;
+	bh=3h8idDvvSwdhk2A9PWCv3McY/VVEm3AUvQL+zWZwlG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsZbViodc003JRGC3oBu2FfYYRgfo4R0P/RbFzS2uRWueoLd48pkP0+nh+7wKm/Nx
-	 SqlwZsUQ7Qy/ZgMFqNaG+nk/S1FcU8/Y85MqDG5Xiv4u/cqIc6KSA/fsdmiJMUHC7v
-	 7AM/jRRHcb06J04XfVBD3+27OKShR+rlwIdu0eco=
+	b=nUnVvqJMc4CxjkMw23D7n1ww1QqXw/Q34PeyUp7vSyGnvq3a8na0Lxl1Qkuim5C3W
+	 LUrIzKriNQaFr3nNeE33drO22TLGQPEDy2HZyd68gV3+MJIbVDUEOFBOkMy+EAeLIT
+	 b4lSVOeMbqsUuCbej30YWGdpZ5RGh87uLkOXp8bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Chapman <jchapman@katalix.com>,
-	Tom Parkin <tparkin@katalix.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 118/558] l2tp: use rcu list add/del when updating lists
-Date: Tue,  8 Oct 2024 14:02:28 +0200
-Message-ID: <20241008115707.010471839@linuxfoundation.org>
+Subject: [PATCH 6.11 119/558] wifi: rtw89: 885xb: reset IDMEM mode to prevent download firmware failure
+Date: Tue,  8 Oct 2024 14:02:29 +0200
+Message-ID: <20241008115707.049409427@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,61 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Chapman <jchapman@katalix.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 89b768ec2dfefaeba5212de14fc71368e12d06ba ]
+[ Upstream commit 80fb81bb46a57daedd5decbcc253ea48428a254e ]
 
-l2tp_v3_session_htable and tunnel->session_list are read by lockless
-getters using RCU. Use rcu list variants when adding or removing list
-items.
+For different firmware type, it could change IDMEM mode, so reset it to
+default to avoid encountering error for RTL8851B/RTL8852B/RTL8852BT
+if that kind of firmware was downloaded before.
 
-Signed-off-by: James Chapman <jchapman@katalix.com>
-Signed-off-by: Tom Parkin <tparkin@katalix.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    rtw89_8851be 0000:02:00.0: Firmware version 0.29.41.3, cmd version 0, type 5
+    rtw89_8851be 0000:02:00.0: Firmware version 0.29.41.3, cmd version 0, type 3
+    rtw89_8851be 0000:02:00.0: MAC has already powered on
+    rtw89_8851be 0000:02:00.0: fw security fail
+    rtw89_8851be 0000:02:00.0: download firmware fail
+    rtw89_8851be 0000:02:00.0: [ERR]fwdl 0x1E0 = 0x62
+    rtw89_8851be 0000:02:00.0: [ERR]fwdl 0x83F2 = 0x8
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f51c
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f524
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f51c
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f500
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f51c
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f53c
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f520
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f520
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f508
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f534
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f520
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f534
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f508
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f53c
+    rtw89_8851be 0000:02:00.0: [ERR]fw PC = 0xb892f524
+    rtw89_8851be 0000:02:00.0: failed to setup chip information
+    rtw89_8851be: probe of 0000:02:00.0 failed with error -16
+
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240724052626.12774-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
-index edff7afc06199..ee8133f77b64c 100644
---- a/net/l2tp/l2tp_core.c
-+++ b/net/l2tp/l2tp_core.c
-@@ -394,12 +394,12 @@ static int l2tp_session_collision_add(struct l2tp_net *pn,
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 9a4f23d83bf2a..5c07db4f471d6 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -3788,7 +3788,7 @@ static int rtw89_mac_enable_cpu_ax(struct rtw89_dev *rtwdev, u8 boot_reason,
  
- 	/* If existing session isn't already in the session hlist, add it. */
- 	if (!hash_hashed(&session2->hlist))
--		hash_add(pn->l2tp_v3_session_htable, &session2->hlist,
--			 session2->hlist_key);
-+		hash_add_rcu(pn->l2tp_v3_session_htable, &session2->hlist,
-+			     session2->hlist_key);
+ 	rtw89_write32(rtwdev, R_AX_WCPU_FW_CTRL, val);
  
- 	/* Add new session to the hlist and collision list */
--	hash_add(pn->l2tp_v3_session_htable, &session1->hlist,
--		 session1->hlist_key);
-+	hash_add_rcu(pn->l2tp_v3_session_htable, &session1->hlist,
-+		     session1->hlist_key);
- 	refcount_inc(&clist->ref_count);
- 	l2tp_session_coll_list_add(clist, session1);
+-	if (rtwdev->chip->chip_id == RTL8852B)
++	if (rtw89_is_rtl885xb(rtwdev))
+ 		rtw89_write32_mask(rtwdev, R_AX_SEC_CTRL,
+ 				   B_AX_SEC_IDMEM_SIZE_CONFIG_MASK, 0x2);
  
-@@ -415,7 +415,7 @@ static void l2tp_session_collision_del(struct l2tp_net *pn,
- 
- 	lockdep_assert_held(&pn->l2tp_session_idr_lock);
- 
--	hash_del(&session->hlist);
-+	hash_del_rcu(&session->hlist);
- 
- 	if (clist) {
- 		/* Remove session from its collision list. If there
-@@ -490,7 +490,7 @@ int l2tp_session_register(struct l2tp_session *session,
- 
- 	l2tp_tunnel_inc_refcount(tunnel);
- 	WRITE_ONCE(session->tunnel, tunnel);
--	list_add(&session->list, &tunnel->session_list);
-+	list_add_rcu(&session->list, &tunnel->session_list);
- 
- 	if (tunnel->version == L2TP_HDR_VER_3) {
- 		if (!other_session)
 -- 
 2.43.0
 
