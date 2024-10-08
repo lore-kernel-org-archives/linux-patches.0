@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE3E1DACBE;
-	Tue,  8 Oct 2024 12:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9F61DDA24;
+	Tue,  8 Oct 2024 12:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389871; cv=none; b=V9Dp7VR83+eTVsTK4Fbvre40QtE8VUqX4IlaIESW/BRgr2cDs8H4Mi/wnPTLkdeqz2PxiQXc4fPjVy3xrizyAJbLpyYjQfW/UlcZtE45EcLX2Hw5zrLDBHPmT1/Hic9vumHD5ab2WUd9p6SvAjrDJCPoTI4kHdT4Iq52BPuuox4=
+	t=1728389875; cv=none; b=ViO5db5fNaliURBG6CZjOS//e/FgO1eXU+mc7f8m3gaqeD6stBFR6PBWJoGeogHsMa1BrZ7TpTtloSFKSSGTkM6RTChYpipu0KEDT16fmESYfwI4curEJps06hBb6KbjW87J/EbecwUWhkADMKsSkLVC6Bb5zqD649ukO9rwJlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389871; c=relaxed/simple;
-	bh=4SEkgro3Jl+ikGotn7Uzzh5nAdi8jdQBJdaVQ5USLGU=;
+	s=arc-20240116; t=1728389875; c=relaxed/simple;
+	bh=aCi44OGztgsCmG87e3oyrzSQz2F40UcdMijgZIC9spM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcLluoMrYBjL5GmrcSaDyr2Y+8C5cEaCyxeJ5fubtiRkvxAUoZ5MfAMMm463y64iYGtFvDpscRZSIay6JKxRqEd3nhEUiUJAnpPos4wjRdK7ou4K1AI2Jk0JgjB4lg6Yyemzi/z3CX1tZgDqImPlL2Bf2g+rC2Rv0D+sImnh8bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/bn//a4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhruSduNrSp1cmxmkELxvYn/A4htRvZUPzIzBtm/FH2PyYZOWRwnFFQBJHEJg5pUHDnA8iIb9f+id2gqWKkOMMHMNHv2NMqyvXRSmerB//O7N2Q4WF7ESbh1trINVCPnTVmXLq9Z0ap3THuDyry7ZOsjUe94g16V0AyG3IFKPVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep6W8WXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/bn//a4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4450C4CEC7;
-	Tue,  8 Oct 2024 12:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep6W8WXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168ADC4CECC;
+	Tue,  8 Oct 2024 12:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389871;
-	bh=4SEkgro3Jl+ikGotn7Uzzh5nAdi8jdQBJdaVQ5USLGU=;
+	s=korg; t=1728389874;
+	bh=aCi44OGztgsCmG87e3oyrzSQz2F40UcdMijgZIC9spM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/bn//a4zTTaoWC0K24r9Wa2vpJwKTZ0t83g9+8SE46dIqBhuYPbaH2iG8JeXs9DV
-	 VCUN8cE21s4iAVq2xDLnYFQhmZiL4rQLYmX53IPyseidCxKz1+z2UAEDB9q9y0PaHn
-	 F9TbrdzZRocZBuyCBebtF5+8rgB6XTqDZMT84ouA=
+	b=ep6W8WXgAwbxLapV0wwHF2EOOXK01Ok6UzCjr+/ySXWq8PrpGOIsnRFv1x2g+cFkj
+	 UWLCJp+tZVWOoMapMVNvfLRP6+0aIcZRlm412XLkqHWSz+x7MgwMCNxev09dJJAm5r
+	 tBFGqMkZ5YAd7TCuQ9zbnoiQnvFK3Oqd4uTz0tUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamim Khan <tamim@fusetak.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 090/482] ACPI: resource: Skip IRQ override on Asus Vivobook Go E1404GAB
-Date: Tue,  8 Oct 2024 14:02:33 +0200
-Message-ID: <20241008115651.853466706@linuxfoundation.org>
+Subject: [PATCH 6.10 091/482] wifi: mt76: mt7915: disable tx worker during tx BA session enable/disable
+Date: Tue,  8 Oct 2024 14:02:34 +0200
+Message-ID: <20241008115651.892580802@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,46 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamim Khan <tamim@fusetak.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 49e9cc315604972cc14868cb67831e3e8c3f1470 ]
+[ Upstream commit 256cbd26fbafb30ba3314339106e5c594e9bd5f9 ]
 
-Like other Asus Vivobooks, the Asus Vivobook Go E1404GAB has a DSDT
-that describes IRQ 1 as ActiveLow, while the kernel overrides to Edge_High.
+Avoids firmware race condition.
 
-This override prevents the internal keyboard from working.
-
-Fix the problem by adding this laptop to the table that prevents the kernel
-from overriding the IRQ.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219212
-Signed-off-by: Tamim Khan <tamim@fusetak.com>
-Link: https://patch.msgid.link/20240903014317.38858-1-tamim@fusetak.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/20240827093011.18621-7-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index cb2aacbb93357..8a4726e2eb693 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -503,6 +503,13 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "B2502FBA"),
- 		},
- 	},
-+	{
-+		/* Asus Vivobook Go E1404GAB */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "E1404GAB"),
-+		},
-+	},
- 	{
- 		/* Asus Vivobook E1504GA */
- 		.matches = {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 9599adf104b16..758249b20c222 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -690,13 +690,17 @@ int mt7915_mcu_add_tx_ba(struct mt7915_dev *dev,
+ {
+ 	struct mt7915_sta *msta = (struct mt7915_sta *)params->sta->drv_priv;
+ 	struct mt7915_vif *mvif = msta->vif;
++	int ret;
+ 
++	mt76_worker_disable(&dev->mt76.tx_worker);
+ 	if (enable && !params->amsdu)
+ 		msta->wcid.amsdu = false;
++	ret = mt76_connac_mcu_sta_ba(&dev->mt76, &mvif->mt76, params,
++				     MCU_EXT_CMD(STA_REC_UPDATE),
++				     enable, true);
++	mt76_worker_enable(&dev->mt76.tx_worker);
+ 
+-	return mt76_connac_mcu_sta_ba(&dev->mt76, &mvif->mt76, params,
+-				      MCU_EXT_CMD(STA_REC_UPDATE),
+-				      enable, true);
++	return ret;
+ }
+ 
+ int mt7915_mcu_add_rx_ba(struct mt7915_dev *dev,
 -- 
 2.43.0
 
