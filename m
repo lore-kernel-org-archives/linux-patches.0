@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767C31CCB32;
-	Tue,  8 Oct 2024 12:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC2D1DA60C;
+	Tue,  8 Oct 2024 12:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391136; cv=none; b=D8kbYn5WlW6zULe9wGZNDaLNBxZv80yh8PY4BsIekHjEPVC7c+Akiv2RxmokKWbOz34MrRp/8ImJ+QzsZN0zpS4+uxYgOQXqpTabPmtGC2KPT3l2CggKgYeC/0gT+GSizPWmBg/MnB8GS00KX+0Rt36tw4mdmwVFjrvUK358wGc=
+	t=1728391139; cv=none; b=apssuphWhjjHb3TgHoa/KNfjK+8GgzP0OG5AwCcA8NX+MmYlL5AWZuBvgKgDrQ+f/XnJ/kAeiUumCH6I/5WO5nJAr5xV/bZh8FGY0pGBu8bX0Nwso/VgHr1FT5EU9WDHWQwB4RQ8ueaYErzXnFPsQAQqwtuiam7iaewBeOEIVJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391136; c=relaxed/simple;
-	bh=OPNccFTqk8g5w9RJ4+nMfKZ7+cD+bxltZdfeD5+YTGE=;
+	s=arc-20240116; t=1728391139; c=relaxed/simple;
+	bh=NJDXvGAFYKqxoEmqZ1irQu8QEaUbyovuRavVTO5VZlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2ePs5NcN8YVhZLK2USTVtEPZ6U5LM/Olm5bL3tvbJDhWVZxhESad+Hwf2vZtpY94A2eaRiPX1C7z3Dl0l8a/iLcFlrwCyBGyOvr9JfD2V+Y0k2puHAUueiMdArL1Y9IZOoOQ+EeKCbW3ZWC2ROqQdAYhyPyjiLfY/J4GqzQDpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkC1p6nJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLJAgO8IK0M6XOzpq76fHUzyhe+vfkCitn2wZEtmGDmIVxItkn7nQ32qSqA4jUppLP9y7dlxt128NUYL1pt9tjUTE0YZ4j6l61MKpKnPr/wW7KbI+wxXQA1nrYLJ4Tbw3NM7o58CPc2eDn4q6whwxgfHI2KGRoqmmLR8T4JbRZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZtfUYBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkC1p6nJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D539CC4CEC7;
-	Tue,  8 Oct 2024 12:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZtfUYBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120CDC4CEC7;
+	Tue,  8 Oct 2024 12:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391136;
-	bh=OPNccFTqk8g5w9RJ4+nMfKZ7+cD+bxltZdfeD5+YTGE=;
+	s=korg; t=1728391139;
+	bh=NJDXvGAFYKqxoEmqZ1irQu8QEaUbyovuRavVTO5VZlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkC1p6nJL1gIxKZ5h1w6aXaJwyR0ko+VWwwy1BHzg4rwLWFtHmsiVFo8yZy3ZYUC/
-	 UVvm4XDEGv52zJpv3qv+jXwYsm3oaabH18Uqz2GPNcFKbKxWpBHPCu9FJHuEHgCU7o
-	 yfZkVUS4ydY3AvLGnBMC6jkZSMnYJicf7MYqXjDE=
+	b=kZtfUYBR/0iucqVe4lRUzjn1xwlFP/qNJQkeIIJQYr2n8HLtVJeTFtg3Hsph6adSc
+	 Z9v74NXB31529AmgTIFusEXO6JocHV6cct0elBTjMlccTRxxiqGpdEy7MTmSNDWU/t
+	 /b2uZ/QFWZ9M+R7f4hpjQu6xXuhfEjDo/B01z4nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aakash Menon <aakash.menon@protempis.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 019/558] net: sparx5: Fix invalid timestamps
-Date: Tue,  8 Oct 2024 14:00:49 +0200
-Message-ID: <20241008115702.979993339@linuxfoundation.org>
+Subject: [PATCH 6.11 020/558] net/mlx5: Fix error path in multi-packet WQE transmit
+Date: Tue,  8 Oct 2024 14:00:50 +0200
+Message-ID: <20241008115703.018889197@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,43 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aakash Menon <aakash.r.menon@gmail.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit 151ac45348afc5b56baa584c7cd4876addf461ff ]
+[ Upstream commit 2bcae12c795f32ddfbf8c80d1b5f1d3286341c32 ]
 
-Bit 270-271 are occasionally unexpectedly set by the hardware. This issue
-was observed with 10G SFPs causing huge time errors (> 30ms) in PTP. Only
-30 bits are needed for the nanosecond part of the timestamp, clear 2 most
-significant bits before extracting timestamp from the internal frame
-header.
+Remove the erroneous unmap in case no DMA mapping was established
 
-Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
-Signed-off-by: Aakash Menon <aakash.menon@protempis.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The multi-packet WQE transmit code attempts to obtain a DMA mapping for
+the skb. This could fail, e.g. under memory pressure, when the IOMMU
+driver just can't allocate more memory for page tables. While the code
+tries to handle this in the path below the err_unmap label it erroneously
+unmaps one entry from the sq's FIFO list of active mappings. Since the
+current map attempt failed this unmap is removing some random DMA mapping
+that might still be required. If the PCI function now presents that IOVA,
+the IOMMU may assumes a rogue DMA access and e.g. on s390 puts the PCI
+function in error state.
+
+The erroneous behavior was seen in a stress-test environment that created
+memory pressure.
+
+Fixes: 5af75c747e2a ("net/mlx5e: Enhanced TX MPWQE for SKBs")
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_packet.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-index f3f5fb4204689..70427643f777c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-@@ -45,8 +45,12 @@ void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
- 	fwd = (fwd >> 5);
- 	info->src_port = FIELD_GET(GENMASK(7, 1), fwd);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
+index b09e9abd39f37..f8c7912abe0e3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
+@@ -642,7 +642,6 @@ mlx5e_sq_xmit_mpwqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
+ 	return;
  
-+	/*
-+	 * Bit 270-271 are occasionally unexpectedly set by the hardware,
-+	 * clear bits before extracting timestamp
-+	 */
- 	info->timestamp =
--		((u64)xtr_hdr[2] << 24) |
-+		((u64)(xtr_hdr[2] & GENMASK(5, 0)) << 24) |
- 		((u64)xtr_hdr[3] << 16) |
- 		((u64)xtr_hdr[4] <<  8) |
- 		((u64)xtr_hdr[5] <<  0);
+ err_unmap:
+-	mlx5e_dma_unmap_wqe_err(sq, 1);
+ 	sq->stats->dropped++;
+ 	dev_kfree_skb_any(skb);
+ 	mlx5e_tx_flush(sq);
 -- 
 2.43.0
 
