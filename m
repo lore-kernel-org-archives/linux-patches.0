@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE501DE4FA;
-	Tue,  8 Oct 2024 12:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0703A1DE2CF;
+	Tue,  8 Oct 2024 12:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391579; cv=none; b=JaySKVx+2nsSlTnj/nyg0XIlRX1ylNl+FKxKvI9jYt1faDZv74feg7fDDvS2f37O1IojDjN+GONVEacGO8hHKp5h9nd9BORWi3Deuocn8x/2Z/NuReTstjkpnO+vm6h7spHgDND6NC7ndQ+yXZYmMAXOvPH4jfvJCEAGLbbiExg=
+	t=1728391582; cv=none; b=CQ35JFUvjLohfxbfZGA6ftljd8zSZfuWArJG8wDYGsQC/wduNK5nLaI/s0eVLk+89wtOmgdNjxoZs0Pr6BwlHTYIpNDEsFNGYx99PL346osU5ZA1/INSmVGVQ8Om+Nu7zbXSPsGfGtzgERlJzRG2xYE4rzuhNUPOj1zc9iCvLEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391579; c=relaxed/simple;
-	bh=ZgCCGgzXDacY06XvjNfrF7GErvzicrS7ynfzYqyVy7E=;
+	s=arc-20240116; t=1728391582; c=relaxed/simple;
+	bh=sahE01RuJPa54Uic5RkBrF0JU4D4uDH4bwcXT/CGhE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJX1uVmoFLOxDt4mMG9rF8+10iJTsGn4C5wcfsEz6xS2DBiAz6RRdKTrNmiRNYAO7iC5/gwTmTFFgxTK3V2ycycXPdb4xiEBtZu77y9XlBeUYMPKbwDNt1EZ2EQ+KsMOUb1jwAefza+OAXz5fB+EpJxhuyHt0yxa/SlI9LQWtrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW+kILON; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zchse91GvOk44c9l8QXrQuUuBYn2q+TiPszIfm/3YjnEJDsOXD8gIRNNCJyXA+LeePUYqsCwJTkf9d6XdTFTqrsJLCO3QpDRCFnSTKIbrLT6cI3wVTNrfTc8tkJn7p/aBt4zJ8SDNreoQ4f9mwfpb7fRm8OTPJa/cJkkJDgUiXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVuzRmx7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW+kILON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6F0C4CEC7;
-	Tue,  8 Oct 2024 12:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVuzRmx7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762D9C4CEC7;
+	Tue,  8 Oct 2024 12:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391578;
-	bh=ZgCCGgzXDacY06XvjNfrF7GErvzicrS7ynfzYqyVy7E=;
+	s=korg; t=1728391581;
+	bh=sahE01RuJPa54Uic5RkBrF0JU4D4uDH4bwcXT/CGhE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mW+kILONy5/ePTf6DX8UAz5hW1WIUKV83D5tXQXA1suCiA708AootDkuJD/aYaLED
-	 v8j9wtggKTLCECCCCZNcdiwOstDWLokPbSWsQ/dpsv94TpExg4qnab18L3b39wyZRw
-	 +R1M4rpmq0x/wTP3mcNWRuaUdWnQfXlKaFhVdmLM=
+	b=wVuzRmx7faw/QwsoFqmh7ahnUFQfNkpxTeuO5JNyBk2GXm2U44YNl+xXAkGbod62A
+	 wHvof9wRd795KlDuil9mhu31w8IZPlqJ/V4Wp7hK0IZ0gQqtY4qNT8N6xjCn0rcE+0
+	 N3zuZNQQa9G4tLv3MB2gOhd4mci0ICGW/1KAivgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Joe Damato <jdamato@fastly.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 158/558] net: napi: Prevent overflow of napi_defer_hard_irqs
-Date: Tue,  8 Oct 2024 14:03:08 +0200
-Message-ID: <20241008115708.578950062@linuxfoundation.org>
+Subject: [PATCH 6.11 159/558] crypto: hisilicon - fix missed error branch
+Date: Tue,  8 Oct 2024 14:03:09 +0200
+Message-ID: <20241008115708.617673332@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,123 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Yang Shen <shenyang39@huawei.com>
 
-[ Upstream commit 08062af0a52107a243f7608fd972edb54ca5b7f8 ]
+[ Upstream commit f386dc64e1a5d3dcb84579119ec350ab026fea88 ]
 
-In commit 6f8b12d661d0 ("net: napi: add hard irqs deferral feature")
-napi_defer_irqs was added to net_device and napi_defer_irqs_count was
-added to napi_struct, both as type int.
+If an error occurs in the process after the SGL is mapped
+successfully, it need to unmap the SGL.
 
-This value never goes below zero, so there is not reason for it to be a
-signed int. Change the type for both from int to u32, and add an
-overflow check to sysfs to limit the value to S32_MAX.
+Otherwise, memory problems may occur.
 
-The limit of S32_MAX was chosen because the practical limit before this
-patch was S32_MAX (anything larger was an overflow) and thus there are
-no behavioral changes introduced. If the extra bit is needed in the
-future, the limit can be raised.
-
-Before this patch:
-
-$ sudo bash -c 'echo 2147483649 > /sys/class/net/eth4/napi_defer_hard_irqs'
-$ cat /sys/class/net/eth4/napi_defer_hard_irqs
--2147483647
-
-After this patch:
-
-$ sudo bash -c 'echo 2147483649 > /sys/class/net/eth4/napi_defer_hard_irqs'
-bash: line 0: echo: write error: Numerical result out of range
-
-Similarly, /sys/class/net/XXXXX/tx_queue_len is defined as unsigned:
-
-include/linux/netdevice.h:      unsigned int            tx_queue_len;
-
-And has an overflow check:
-
-dev_change_tx_queue_len(..., unsigned long new_len):
-
-  if (new_len != (unsigned int)new_len)
-          return -ERANGE;
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240904153431.307932-1-jdamato@fastly.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yang Shen <shenyang39@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/net_cachelines/net_device.rst | 2 +-
- include/linux/netdevice.h                              | 4 ++--
- net/core/net-sysfs.c                                   | 6 +++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/crypto/hisilicon/sgl.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/networking/net_cachelines/net_device.rst b/Documentation/networking/net_cachelines/net_device.rst
-index 70c4fb9d4e5ce..d68f37f5b1f82 100644
---- a/Documentation/networking/net_cachelines/net_device.rst
-+++ b/Documentation/networking/net_cachelines/net_device.rst
-@@ -98,7 +98,7 @@ unsigned_int                        num_rx_queues
- unsigned_int                        real_num_rx_queues      -                   read_mostly         get_rps_cpu
- struct_bpf_prog*                    xdp_prog                -                   read_mostly         netif_elide_gro()
- unsigned_long                       gro_flush_timeout       -                   read_mostly         napi_complete_done
--int                                 napi_defer_hard_irqs    -                   read_mostly         napi_complete_done
-+u32                                 napi_defer_hard_irqs    -                   read_mostly         napi_complete_done
- unsigned_int                        gro_max_size            -                   read_mostly         skb_gro_receive
- unsigned_int                        gro_ipv4_max_size       -                   read_mostly         skb_gro_receive
- rx_handler_func_t*                  rx_handler              read_mostly         -                   __netif_receive_skb_core
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 59fb3cb8538fd..b26954dc9ed77 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -356,7 +356,7 @@ struct napi_struct {
+diff --git a/drivers/crypto/hisilicon/sgl.c b/drivers/crypto/hisilicon/sgl.c
+index 568acd0aee3fa..c974f95cd126f 100644
+--- a/drivers/crypto/hisilicon/sgl.c
++++ b/drivers/crypto/hisilicon/sgl.c
+@@ -225,7 +225,7 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
+ 	dma_addr_t curr_sgl_dma = 0;
+ 	struct acc_hw_sge *curr_hw_sge;
+ 	struct scatterlist *sg;
+-	int sg_n;
++	int sg_n, ret;
  
- 	unsigned long		state;
- 	int			weight;
--	int			defer_hard_irqs_count;
-+	u32			defer_hard_irqs_count;
- 	unsigned long		gro_bitmask;
- 	int			(*poll)(struct napi_struct *, int);
- #ifdef CONFIG_NETPOLL
-@@ -2091,7 +2091,7 @@ struct net_device {
- 	unsigned int		real_num_rx_queues;
- 	struct netdev_rx_queue	*_rx;
- 	unsigned long		gro_flush_timeout;
--	int			napi_defer_hard_irqs;
-+	u32			napi_defer_hard_irqs;
- 	unsigned int		gro_max_size;
- 	unsigned int		gro_ipv4_max_size;
- 	rx_handler_func_t __rcu	*rx_handler;
-diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
-index 291fdf4a328b3..93dd5d5436849 100644
---- a/net/core/net-sysfs.c
-+++ b/net/core/net-sysfs.c
-@@ -32,6 +32,7 @@
- #ifdef CONFIG_SYSFS
- static const char fmt_hex[] = "%#x\n";
- static const char fmt_dec[] = "%d\n";
-+static const char fmt_uint[] = "%u\n";
- static const char fmt_ulong[] = "%lu\n";
- static const char fmt_u64[] = "%llu\n";
+ 	if (!dev || !sgl || !pool || !hw_sgl_dma || index >= pool->count)
+ 		return ERR_PTR(-EINVAL);
+@@ -240,14 +240,15 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
  
-@@ -425,6 +426,9 @@ NETDEVICE_SHOW_RW(gro_flush_timeout, fmt_ulong);
+ 	if (sg_n_mapped > pool->sge_nr) {
+ 		dev_err(dev, "the number of entries in input scatterlist is bigger than SGL pool setting.\n");
+-		return ERR_PTR(-EINVAL);
++		ret = -EINVAL;
++		goto err_unmap;
+ 	}
  
- static int change_napi_defer_hard_irqs(struct net_device *dev, unsigned long val)
- {
-+	if (val > S32_MAX)
-+		return -ERANGE;
+ 	curr_hw_sgl = acc_get_sgl(pool, index, &curr_sgl_dma);
+ 	if (IS_ERR(curr_hw_sgl)) {
+ 		dev_err(dev, "Get SGL error!\n");
+-		dma_unmap_sg(dev, sgl, sg_n, DMA_BIDIRECTIONAL);
+-		return ERR_PTR(-ENOMEM);
++		ret = -ENOMEM;
++		goto err_unmap;
+ 	}
+ 	curr_hw_sgl->entry_length_in_sgl = cpu_to_le16(pool->sge_nr);
+ 	curr_hw_sge = curr_hw_sgl->sge_entries;
+@@ -262,6 +263,11 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
+ 	*hw_sgl_dma = curr_sgl_dma;
+ 
+ 	return curr_hw_sgl;
 +
- 	WRITE_ONCE(dev->napi_defer_hard_irqs, val);
- 	return 0;
++err_unmap:
++	dma_unmap_sg(dev, sgl, sg_n, DMA_BIDIRECTIONAL);
++
++	return ERR_PTR(ret);
  }
-@@ -438,7 +442,7 @@ static ssize_t napi_defer_hard_irqs_store(struct device *dev,
+ EXPORT_SYMBOL_GPL(hisi_acc_sg_buf_map_to_hw_sgl);
  
- 	return netdev_store(dev, attr, buf, len, change_napi_defer_hard_irqs);
- }
--NETDEVICE_SHOW_RW(napi_defer_hard_irqs, fmt_dec);
-+NETDEVICE_SHOW_RW(napi_defer_hard_irqs, fmt_uint);
- 
- static ssize_t ifalias_store(struct device *dev, struct device_attribute *attr,
- 			     const char *buf, size_t len)
 -- 
 2.43.0
 
