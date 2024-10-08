@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156761DE4CC;
-	Tue,  8 Oct 2024 13:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7671DE8BE;
+	Tue,  8 Oct 2024 13:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393538; cv=none; b=F4YlruS1frDHLw7809NCF9MJJFIhhx68O5ACcmQtwriMrpBkfCzKaxoe1GfVaEBFTRa2DwonCUpnDzFGJww2R0SY3TVMCbzQ6GKI6HPmzMNLhywrv/O0HEkPMBzxkPH2uwg4BBHbgI/QorEK6DHOoaKft1CCL0V+Do/DnGxEOy8=
+	t=1728393541; cv=none; b=XwrP9qM/nrSaR0PIe8yKT9ack37ikS2NYUSkRHhhKK2OKn3grh3crPpEDxqo54TmO/ZHJWkA/4DK89DJ+tnoKyOrU7FEpkHWWkcoGQ4rKSDnWJwY100/WdfzSQSxCiI8dCUzN54uRsjNDC9I3uIlhk8haBZeJk4T4URBETSql7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393538; c=relaxed/simple;
-	bh=YzXmwrbTLOfkhab8uFO4i/3v2eoZbD6Wold/mUad+Us=;
+	s=arc-20240116; t=1728393541; c=relaxed/simple;
+	bh=5/vBPj0P4Yy5jdw8OKgofMrNOupAIvllHvVTZZSTF44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FjQriJwO+7FqzTbe5MHZDldRAcoxmoi5AoLrigQQqkQhrWqFU5EZZwb1DpKgJ0JkSaTIJN0DfUO1qinHZmJWHani4bwy4o1X5BeOE45fzODUnD5yWo84F9LSnY5zhGvc8PxeSVbQg+qYMM4VtYqW0ccA2KrWUP7zQbsFhOn9cFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEQ73Har; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6jY2Z3IVDM938VbWJpV8RQGQzsGB5M7Q3d/BbPTXsZLDk36STdGsrmHVN1e61djEYddzK52QQPqI/LGUOs2iWTE0woOgaTpumTVDZ+nz4I+diJN/X8CBYqI4senUPfJP0DLgpgIS66bAePoQBd97SLMwdL2IUtb9nrokHabrOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXYQiGaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEQ73Har"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78797C4CEC7;
-	Tue,  8 Oct 2024 13:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXYQiGaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8699C4CECC;
+	Tue,  8 Oct 2024 13:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393537;
-	bh=YzXmwrbTLOfkhab8uFO4i/3v2eoZbD6Wold/mUad+Us=;
+	s=korg; t=1728393541;
+	bh=5/vBPj0P4Yy5jdw8OKgofMrNOupAIvllHvVTZZSTF44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEQ73Har4so87EkNakN+x6EvWLLGDjKc/wjXgmNqAb2s4lDC4J57dJ2IyANqTVpQo
-	 rgXgeQzoMP1alKQ3ntf5uCuwdG4n5G9F0/aujrQngGcR9ZDYgY0GMCChDJE/PfA7aY
-	 FtkDB2DKdNHUIbDIEwH9madpvLi3sV+93li2ZTWk=
+	b=SXYQiGaRsK3/gyT5tneeacHtySteoi1dWWVFv1MSiMAuEEVE+RRwsAmwkx1yMjAns
+	 Kq90t4Ozu1Ezt10fWwCk85OdFUtS6ObTcNR9ncyVP13WNOvk0ywwbNm13TrsRzdMjS
+	 c/9fAmJF34MI1ej0AlU1IUTGrCRYlvdThS1nnBL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Mikhail Ukhin <mish.uxin2012@yandex.ru>,
+	Artem Sadovnikov <ancowi69@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/386] ext4: avoid use-after-free in ext4_ext_show_leaf()
-Date: Tue,  8 Oct 2024 14:07:06 +0200
-Message-ID: <20241008115636.534622871@linuxfoundation.org>
+Subject: [PATCH 6.6 182/386] ext4: fix i_data_sem unlock order in ext4_ind_migrate()
+Date: Tue,  8 Oct 2024 14:07:07 +0200
+Message-ID: <20241008115636.574578801@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,92 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Artem Sadovnikov <ancowi69@gmail.com>
 
-[ Upstream commit 4e2524ba2ca5f54bdbb9e5153bea00421ef653f5 ]
+[ Upstream commit cc749e61c011c255d81b192a822db650c68b313f ]
 
-In ext4_find_extent(), path may be freed by error or be reallocated, so
-using a previously saved *ppath may have been freed and thus may trigger
-use-after-free, as follows:
+Fuzzing reports a possible deadlock in jbd2_log_wait_commit.
 
-ext4_split_extent
-  path = *ppath;
-  ext4_split_extent_at(ppath)
-  path = ext4_find_extent(ppath)
-  ext4_split_extent_at(ppath)
-    // ext4_find_extent fails to free path
-    // but zeroout succeeds
-  ext4_ext_show_leaf(inode, path)
-    eh = path[depth].p_hdr
-    // path use-after-free !!!
+This issue is triggered when an EXT4_IOC_MIGRATE ioctl is set to require
+synchronous updates because the file descriptor is opened with O_SYNC.
+This can lead to the jbd2_journal_stop() function calling
+jbd2_might_wait_for_commit(), potentially causing a deadlock if the
+EXT4_IOC_MIGRATE call races with a write(2) system call.
 
-Similar to ext4_split_extent_at(), we use *ppath directly as an input to
-ext4_ext_show_leaf(). Fix a spelling error by the way.
+This problem only arises when CONFIG_PROVE_LOCKING is enabled. In this
+case, the jbd2_might_wait_for_commit macro locks jbd2_handle in the
+jbd2_journal_stop function while i_data_sem is locked. This triggers
+lockdep because the jbd2_journal_start function might also lock the same
+jbd2_handle simultaneously.
 
-Same problem in ext4_ext_handle_unwritten_extents(). Since 'path' is only
-used in ext4_ext_show_leaf(), remove 'path' and use *ppath directly.
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
 
-This issue is triggered only when EXT_DEBUG is defined and therefore does
-not affect functionality.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-5-libaokun@huaweicloud.com
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Co-developed-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
+Signed-off-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
+Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
+Rule: add
+Link: https://lore.kernel.org/stable/20240404095000.5872-1-mish.uxin2012%40yandex.ru
+Link: https://patch.msgid.link/20240829152210.2754-1-ancowi69@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/ext4/migrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 448e0ea49b31d..7fead53255fcb 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3287,7 +3287,7 @@ static int ext4_split_extent_at(handle_t *handle,
- }
- 
- /*
-- * ext4_split_extents() splits an extent and mark extent which is covered
-+ * ext4_split_extent() splits an extent and mark extent which is covered
-  * by @map as split_flags indicates
-  *
-  * It may result in splitting the extent into multiple extents (up to three)
-@@ -3363,7 +3363,7 @@ static int ext4_split_extent(handle_t *handle,
- 			goto out;
- 	}
- 
--	ext4_ext_show_leaf(inode, path);
-+	ext4_ext_show_leaf(inode, *ppath);
- out:
- 	return err ? err : allocated;
- }
-@@ -3828,14 +3828,13 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
- 			struct ext4_ext_path **ppath, int flags,
- 			unsigned int allocated, ext4_fsblk_t newblock)
- {
--	struct ext4_ext_path __maybe_unused *path = *ppath;
- 	int ret = 0;
- 	int err = 0;
- 
- 	ext_debug(inode, "logical block %llu, max_blocks %u, flags 0x%x, allocated %u\n",
- 		  (unsigned long long)map->m_lblk, map->m_len, flags,
- 		  allocated);
--	ext4_ext_show_leaf(inode, path);
-+	ext4_ext_show_leaf(inode, *ppath);
- 
- 	/*
- 	 * When writing into unwritten space, we should not fail to
-@@ -3932,7 +3931,7 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
- 	if (allocated > map->m_len)
- 		allocated = map->m_len;
- 	map->m_len = allocated;
--	ext4_ext_show_leaf(inode, path);
-+	ext4_ext_show_leaf(inode, *ppath);
- out2:
- 	return err ? err : allocated;
- }
+diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
+index d98ac2af8199f..a5e1492bbaaa5 100644
+--- a/fs/ext4/migrate.c
++++ b/fs/ext4/migrate.c
+@@ -663,8 +663,8 @@ int ext4_ind_migrate(struct inode *inode)
+ 	if (unlikely(ret2 && !ret))
+ 		ret = ret2;
+ errout:
+-	ext4_journal_stop(handle);
+ 	up_write(&EXT4_I(inode)->i_data_sem);
++	ext4_journal_stop(handle);
+ out_unlock:
+ 	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 	return ret;
 -- 
 2.43.0
 
