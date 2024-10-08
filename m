@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833251E485;
-	Tue,  8 Oct 2024 12:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58FF1E485;
+	Tue,  8 Oct 2024 12:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390721; cv=none; b=IUB3lgBjccyHrKfdVjR+vhCGCtGGjmdl/rN1cMXL3m0SuX6/5gGYxR2Wk8GT075JwsRxIHz2FMNMVvsSH+IR51aJMNwUyy2YEvfH1E/OzRFn7dI26IQ2ZQSpZdf0NxWDdroymSON0ER+BafJf4e6EBL/qYeT9ipuxqdqJgnWvpA=
+	t=1728390724; cv=none; b=OYau8FtbAZwtZCcVUqUQ3dM+i49j1CqFKEfa8KMmOhQcuH10xd6lyjJoSXdkjvtwkBRQocppmEQysF3Chfy8uLJbwQuDcDyR0Weemp0tq3+njPoCOXtA+KldCpCG8VW8zjzwkzNZZWwWQbsC81xWxeaZVn1ByrjZcNxx3Zt4Omw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390721; c=relaxed/simple;
-	bh=0BNUqO06w1AiVI4ORUrjpi6kJQBmf5g/2MvV0I8+ZEI=;
+	s=arc-20240116; t=1728390724; c=relaxed/simple;
+	bh=MkEOyGJHElj8j7nK8pubEtFUByeAFfX2HLtmRurTnyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NB5VHidPmFPpMLYqGfnlT6J3WWsDfqLgYded0qnO3q5OtqRucHdK+CDdiEEHItIl8nTo/3vlR9hJVTn9DhqAf29m/gFkzR3NwUvh7r/kBSrQum4DHPsVrQBLZeldm6HxdONKK3/THo9GQubrvvcyNNuxwg0Ltd86EkQMGG6sI6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIRPFxGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPgl5Kd1iv16Yx9uysfTxZq7IHrx+mEjkity3WH44Osmh89W55JLdqw83tjsp9o9Ok9oiS7+wipA2rz+F+JM4M9zWSvoOxEyzKHTRBBuUjuJ5dksAIkDKivvJhVL5qUZ2KjvAFDRBB05ocKKHZHDwpZdsqtrhatzL9yLSL3bYFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz76xk6o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIRPFxGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EAEC4CEC7;
-	Tue,  8 Oct 2024 12:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz76xk6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F99CC4CEC7;
+	Tue,  8 Oct 2024 12:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390721;
-	bh=0BNUqO06w1AiVI4ORUrjpi6kJQBmf5g/2MvV0I8+ZEI=;
+	s=korg; t=1728390724;
+	bh=MkEOyGJHElj8j7nK8pubEtFUByeAFfX2HLtmRurTnyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIRPFxGxwl4JqhcJFsN3qtil+Y1DDbIha5xwy9wUAiQPDQCxUGj/lyfkSS/CFCj2K
-	 3hXd5LhsG+4pmoM1eR0gxeZHqtC7HpuZq6l/hmW9ct0IIRvF26TyOFep0A64gWdNGA
-	 3zoZ2o9VSweVvAjoMW8UtMGs5cEkAO68XvDcNWi0=
+	b=Hz76xk6oT5UZGq6TQtJC4ZFMsABZhWuLBff9EE3Vbncibgz54g3RSjTtdhQUEycHK
+	 f11RPVSMcsJKGXutBn8i1OaTka4bceDmlR9UFTcHxhxg5AibhpeEKRzueEPVqQD8az
+	 /Qw5K1E6zKgSGcUpMteO/j0ZmdW+E9Oj/OVX+8KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cedric Blancher <cedric.blancher@gmail.com>,
-	Dan Shelton <dan.f.shelton@gmail.com>,
-	Roland Mainz <roland.mainz@nrubsig.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.10 373/482] NFSD: Fix NFSv4s PUTPUBFH operation
-Date: Tue,  8 Oct 2024 14:07:16 +0200
-Message-ID: <20241008115703.101201324@linuxfoundation.org>
+	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.10 374/482] i3c: master: svc: Fix use after free vulnerability in svc_i3c_master Driver Due to Race Condition
+Date: Tue,  8 Oct 2024 14:07:17 +0200
+Message-ID: <20241008115703.139781424@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,55 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
 
-commit 202f39039a11402dcbcd5fece8d9fa6be83f49ae upstream.
+commit 61850725779709369c7e907ae8c7c75dc7cec4f3 upstream.
 
-According to RFC 8881, all minor versions of NFSv4 support PUTPUBFH.
+In the svc_i3c_master_probe function, &master->hj_work is bound with
+svc_i3c_master_hj_work, &master->ibi_work is bound with
+svc_i3c_master_ibi_work. And svc_i3c_master_ibi_work  can start the
+hj_work, svc_i3c_master_irq_handler can start the ibi_work.
 
-Replace the XDR decoder for PUTPUBFH with a "noop" since we no
-longer want the minorversion check, and PUTPUBFH has no arguments to
-decode. (Ideally nfsd4_decode_noop should really be called
-nfsd4_decode_void).
+If we remove the module which will call svc_i3c_master_remove to
+make cleanup, it will free master->base through i3c_master_unregister
+while the work mentioned above will be used. The sequence of operations
+that may lead to a UAF bug is as follows:
 
-PUTPUBFH should now behave just like PUTROOTFH.
+CPU0                                         CPU1
 
-Reported-by: Cedric Blancher <cedric.blancher@gmail.com>
-Fixes: e1a90ebd8b23 ("NFSD: Combine decode operations for v4 and v4.1")
-Cc: Dan Shelton <dan.f.shelton@gmail.com>
-Cc: Roland Mainz <roland.mainz@nrubsig.org>
+                                    | svc_i3c_master_hj_work
+svc_i3c_master_remove               |
+i3c_master_unregister(&master->base)|
+device_unregister(&master->dev)     |
+device_release                      |
+//free master->base                 |
+                                    | i3c_master_do_daa(&master->base)
+                                    | //use master->base
+
+Fix it by ensuring that the work is canceled before proceeding with the
+cleanup in svc_i3c_master_remove.
+
+Fixes: 0f74f8b6675c ("i3c: Make i3c_master_unregister() return void")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/stable/20240914154030.180-1-kxwang23%40m.fudan.edu.cn
+Link: https://lore.kernel.org/r/20240914163932.253-1-kxwang23@m.fudan.edu.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1246,14 +1246,6 @@ nfsd4_decode_putfh(struct nfsd4_compound
- }
- 
- static __be32
--nfsd4_decode_putpubfh(struct nfsd4_compoundargs *argp, union nfsd4_op_u *p)
--{
--	if (argp->minorversion == 0)
--		return nfs_ok;
--	return nfserr_notsupp;
--}
--
--static __be32
- nfsd4_decode_read(struct nfsd4_compoundargs *argp, union nfsd4_op_u *u)
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1750,6 +1750,7 @@ static void svc_i3c_master_remove(struct
  {
- 	struct nfsd4_read *read = &u->read;
-@@ -2374,7 +2366,7 @@ static const nfsd4_dec nfsd4_dec_ops[] =
- 	[OP_OPEN_CONFIRM]	= nfsd4_decode_open_confirm,
- 	[OP_OPEN_DOWNGRADE]	= nfsd4_decode_open_downgrade,
- 	[OP_PUTFH]		= nfsd4_decode_putfh,
--	[OP_PUTPUBFH]		= nfsd4_decode_putpubfh,
-+	[OP_PUTPUBFH]		= nfsd4_decode_noop,
- 	[OP_PUTROOTFH]		= nfsd4_decode_noop,
- 	[OP_READ]		= nfsd4_decode_read,
- 	[OP_READDIR]		= nfsd4_decode_readdir,
+ 	struct svc_i3c_master *master = platform_get_drvdata(pdev);
+ 
++	cancel_work_sync(&master->hj_work);
+ 	i3c_master_unregister(&master->base);
+ 
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 
 
