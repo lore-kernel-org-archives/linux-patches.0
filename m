@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F951C9B99;
-	Tue,  8 Oct 2024 13:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F231C9B99;
+	Tue,  8 Oct 2024 13:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392664; cv=none; b=Y/APbINOo0q9vXJa60xx4HWDrw2+9JnhfkpbrlzZNSXaclGXpkaJnsFvXsAno36rwAnv09kiPKY8TYjcm7dgxKFS3nyfgMXFFAUXLpsO7FytTbJnpngDsseex3wgpWJPNWgRGkSjRLe0DfwHi1a2kSErL/43/Uis8aF95VKG704=
+	t=1728392667; cv=none; b=rhldkHIaXQeA9qbrJx3z3mcnWSz0rxrT2sx2TsbNI0lXQNNugcb+F+P9vfGNTbNTfKE5QJ8T9YG0uO0vsrbnMDShqTMjv3A4N8hUfeHxhyG9Xq0XpAc88ro5cifBkOzzXE89ngpky8Ps9YyIDFEaldNvFl3X+cRjXLx4WjGMtu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392664; c=relaxed/simple;
-	bh=nWJ7qSWX9Sl9U0JyzuJ1VDAiRCaFEHNbs5O9O62W8LE=;
+	s=arc-20240116; t=1728392667; c=relaxed/simple;
+	bh=B/z36iSRDr2iiWOAEC5bjtlQ67068V6KAdpJ+h+9xcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZa6oBU2CeRI4mLmlPFmsnmZuI0x4GYHsLJId3HQug4l9bgLu0DjEseKeReQAavnD+6Qx91I9Fzqdo+F4V0V6+EmYouA2HW1LELZYdG4m/RnuLcVNB7yJ4g0PF8PP8VIx+Q9peHyHUh7doNxPuOriI7aMBc5Kf9ZHrKo2ULI74w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ/b0zFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIS4aWIY6vDCjNTKPZuoXSbUIr5frzDemIrDHg0jgNgyoggHLWdCSUrDoe7i0xrSR8i31ojBwzLTih1HN/Xi04KIMXhH3FPq0om4T+cRLZ5xDVe6Y8bfxV8AIaom+EJWEOymE2iXoGiSOoXD6+esEGqcCEETv6RMfcMBBWAkvEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6+9kaoi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ/b0zFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47447C4CEC7;
-	Tue,  8 Oct 2024 13:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6+9kaoi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3E6C4CEC7;
+	Tue,  8 Oct 2024 13:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392663;
-	bh=nWJ7qSWX9Sl9U0JyzuJ1VDAiRCaFEHNbs5O9O62W8LE=;
+	s=korg; t=1728392667;
+	bh=B/z36iSRDr2iiWOAEC5bjtlQ67068V6KAdpJ+h+9xcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZ/b0zFUkyLWhmbxVYyWQF0mybp7RcCRbyxlMnEArjPsx/QH1Cl0HUUbXMIMQgRo3
-	 HA8pF5Qhmjs2v39ek5THaVchR58wP/OtFk+WBJSjc0HCjmXmCKkB+0G+INJ6PIPixE
-	 1EhsmdprzDqC462x8hBbNA7cfOXOu/BeDvM7OqV0=
+	b=x6+9kaoiEALZ75Yf7GPTzZJyyBQR0h2+Ukn7KoNjdIUTCjSoqvM76afTK252wZT3A
+	 JB/rc0fbHYFJjIiBVB7wXUaOwbCBhxQYWrGp85PPBI00HiO33ijDzbDLUvocwTQrSk
+	 AxHLAivJQnDmGnhwSmXoln+oc55BI9RvbJUiUmnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 451/558] clk: qcom: dispcc-sm8250: use CLK_SET_RATE_PARENT for branch clocks
-Date: Tue,  8 Oct 2024 14:08:01 +0200
-Message-ID: <20241008115720.008644089@linuxfoundation.org>
+	syzbot+ba9eac24453387a9d502@syzkaller.appspotmail.com,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.11 442/558] riscv: Fix kernel stack size when KASAN is enabled
+Date: Tue,  8 Oct 2024 14:07:52 +0200
+Message-ID: <20241008115719.659134230@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,48 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit 0e93c6320ecde0583de09f3fe801ce8822886fec upstream.
+commit cfb10de18538e383dbc4f3ce7f477ce49287ff3d upstream.
 
-Add CLK_SET_RATE_PARENT for several branch clocks. Such clocks don't
-have a way to change the rate, so set the parent rate instead.
+We use Kconfig to select the kernel stack size, doubling the default
+size if KASAN is enabled.
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
+But that actually only works if KASAN is selected from the beginning,
+meaning that if KASAN config is added later (for example using
+menuconfig), CONFIG_THREAD_SIZE_ORDER won't be updated, keeping the
+default size, which is not enough for KASAN as reported in [1].
+
+So fix this by moving the logic to compute the right kernel stack into a
+header.
+
+Fixes: a7555f6b62e7 ("riscv: stack: Add config of thread stack size")
+Reported-by: syzbot+ba9eac24453387a9d502@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000eb301906222aadc2@google.com/ [1]
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-1-1149dd8399fe@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240917150328.59831-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/riscv/Kconfig                   |    3 +--
+ arch/riscv/include/asm/thread_info.h |    7 ++++++-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -849,6 +849,7 @@ static struct clk_branch disp_cc_mdss_dp
- 				&disp_cc_mdss_dp_link1_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -884,6 +885,7 @@ static struct clk_branch disp_cc_mdss_dp
- 				&disp_cc_mdss_dp_link_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -1009,6 +1011,7 @@ static struct clk_branch disp_cc_mdss_md
- 				&disp_cc_mdss_mdp_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -763,8 +763,7 @@ config IRQ_STACKS
+ config THREAD_SIZE_ORDER
+ 	int "Kernel stack size (in power-of-two numbers of page size)" if VMAP_STACK && EXPERT
+ 	range 0 4
+-	default 1 if 32BIT && !KASAN
+-	default 3 if 64BIT && KASAN
++	default 1 if 32BIT
+ 	default 2
+ 	help
+ 	  Specify the Pages of thread stack size (from 4KB to 64KB), which also
+--- a/arch/riscv/include/asm/thread_info.h
++++ b/arch/riscv/include/asm/thread_info.h
+@@ -13,7 +13,12 @@
+ #include <linux/sizes.h>
+ 
+ /* thread information allocation */
+-#define THREAD_SIZE_ORDER	CONFIG_THREAD_SIZE_ORDER
++#ifdef CONFIG_KASAN
++#define KASAN_STACK_ORDER	1
++#else
++#define KASAN_STACK_ORDER	0
++#endif
++#define THREAD_SIZE_ORDER	(CONFIG_THREAD_SIZE_ORDER + KASAN_STACK_ORDER)
+ #define THREAD_SIZE		(PAGE_SIZE << THREAD_SIZE_ORDER)
+ 
+ /*
 
 
