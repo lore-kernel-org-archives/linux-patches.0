@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF781DE898;
-	Tue,  8 Oct 2024 12:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908051DEFF3;
+	Tue,  8 Oct 2024 12:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390205; cv=none; b=eVZuRSq2WyC21rzmLeRW0Z3hsIE3Gop6t2rLdaspyCYHmTLC3D3h8yJdF0Aoj4YkvjmdE8hds5eEB8KH73V0w3+z5v/xTlHgTcHDdgr42S257c/MsgHmdNyPhb0Yd8HU0Ktqrv5cft6NzZ8Jttp9IvobGrDfGHhtsna81MpBSjg=
+	t=1728390209; cv=none; b=lpfQMTPxIZ0oCnfFiAnDT7xFNc3LxBCBz38jV17e+eYU6lit69y1an5Y0+iZ+3EH9qSFk7aUIV25ehaTWGgeHaSDGZgDHLE86ynzK+pGUHRIXYhSgrXCrtSLt+Ws/ZLsEa0Q2b/jSnf8qfaFtq7tnZPvoDuHNAzg6xcxF4VtpwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390205; c=relaxed/simple;
-	bh=VABxeYWoqtmAf+gpcuStEh8OduNwO3XVfZ+SUu7SzXs=;
+	s=arc-20240116; t=1728390209; c=relaxed/simple;
+	bh=+t/GI4EIpLYgs9UOO+lTf0jQIKRcAEqCEkN+MIsMhhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=so4qMVUsAApTDr+oe3xO+OYtf9LImInEWkBxttjbZ0kPYVVhjr/tHlUMgDKJD++6pd7F3gAh4El3+rt/cfBi58+hq610zMsm5qWNDut0Otcc9rFh8ujkLv2HL//f+18gcQ4VnoKQeVz87IEqbjeKX/5estVMOMcWD2+wFaJS4lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcYQ7MNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPmPgaMVR0ZBbRf0JQVRiALg+8oSOoVUFqBT1y02D2GuoMKpu2j7ok79AsXZlDA+CRxdiWHDJkSO4WYEyCzJIlz0RempmbqOyjFiuzM5t5bsVjHnH3V0tScMb6vl4zvIL53ulsjCB69tP3IiSbDAz2YKF5Z3soEHUk4PvhdEOtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gisf7w1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcYQ7MNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A468C4CEC7;
-	Tue,  8 Oct 2024 12:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gisf7w1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1735C4CEC7;
+	Tue,  8 Oct 2024 12:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390205;
-	bh=VABxeYWoqtmAf+gpcuStEh8OduNwO3XVfZ+SUu7SzXs=;
+	s=korg; t=1728390209;
+	bh=+t/GI4EIpLYgs9UOO+lTf0jQIKRcAEqCEkN+MIsMhhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcYQ7MNV+tbk7JAiqD7D+nEsDE/F25JRlSWdDL1ije8tEq1DfL0Hc6HCy3ueg6VzI
-	 Bkc7qsiBHk0mdX+5Ju6ii04gHzgGoWruljgrlR/ZlOddH28UrOSKnPTNKzcqb6gT+A
-	 PlUstx4+nS69TKbAhYlMIOGoR+7qExuEzuU298AA=
+	b=gisf7w1V/z91kLAlTublmpx8qqLh3EkF9ZhksUOsHQzvgwXyOrmIBu8QT4FJLeiRE
+	 oIVx1PwaI22PKXFVLY3hynQ6z89Ss9su/4EGdHHKwKxQMuQYdH8ai5EnyqKdmMtJST
+	 HR+yo86TLmG9upD6I80y1r8cwwAJI81MFTUMPE5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 220/482] drm/printer: Allow NULL data in devcoredump printer
-Date: Tue,  8 Oct 2024 14:04:43 +0200
-Message-ID: <20241008115656.968395005@linuxfoundation.org>
+Subject: [PATCH 6.10 221/482] perf,x86: avoid missing caller address in stack traces captured in uprobe
+Date: Tue,  8 Oct 2024 14:04:44 +0200
+Message-ID: <20241008115657.007506451@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,142 +51,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 53369581dc0c68a5700ed51e1660f44c4b2bb524 ]
+[ Upstream commit cfa7f3d2c526c224a6271cc78a4a27a0de06f4f0 ]
 
-We want to determine the size of the devcoredump before writing it out.
-To that end, we will run the devcoredump printer with NULL data to get
-the size, alloc data based on the generated offset, then run the
-devcorecump again with a valid data pointer to print.  This necessitates
-not writing data to the data pointer on the initial pass, when it is
-NULL.
+When tracing user functions with uprobe functionality, it's common to
+install the probe (e.g., a BPF program) at the first instruction of the
+function. This is often going to be `push %rbp` instruction in function
+preamble, which means that within that function frame pointer hasn't
+been established yet. This leads to consistently missing an actual
+caller of the traced function, because perf_callchain_user() only
+records current IP (capturing traced function) and then following frame
+pointer chain (which would be caller's frame, containing the address of
+caller's caller).
 
-v5:
- - Better commit message (Jonathan)
- - Add kerenl doc with examples (Jani)
+So when we have target_1 -> target_2 -> target_3 call chain and we are
+tracing an entry to target_3, captured stack trace will report
+target_1 -> target_3 call chain, which is wrong and confusing.
 
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240801154118.2547543-3-matthew.brost@intel.com
+This patch proposes a x86-64-specific heuristic to detect `push %rbp`
+(`push %ebp` on 32-bit architecture) instruction being traced. Given
+entire kernel implementation of user space stack trace capturing works
+under assumption that user space code was compiled with frame pointer
+register (%rbp/%ebp) preservation, it seems pretty reasonable to use
+this instruction as a strong indicator that this is the entry to the
+function. In that case, return address is still pointed to by %rsp/%esp,
+so we fetch it and add to stack trace before proceeding to unwind the
+rest using frame pointer-based logic.
+
+We also check for `endbr64` (for 64-bit modes) as another common pattern
+for function entry, as suggested by Josh Poimboeuf. Even if we get this
+wrong sometimes for uprobes attached not at the function entry, it's OK
+because stack trace will still be overall meaningful, just with one
+extra bogus entry. If we don't detect this, we end up with guaranteed to
+be missing caller function entry in the stack trace, which is worse
+overall.
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240729175223.23914-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_print.c | 13 +++++----
- include/drm/drm_print.h     | 54 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 61 insertions(+), 6 deletions(-)
+ arch/x86/events/core.c  | 63 +++++++++++++++++++++++++++++++++++++++++
+ include/linux/uprobes.h |  2 ++
+ kernel/events/uprobes.c |  2 ++
+ 3 files changed, 67 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-index cf2efb44722c9..1d122d4de70ec 100644
---- a/drivers/gpu/drm/drm_print.c
-+++ b/drivers/gpu/drm/drm_print.c
-@@ -100,8 +100,9 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
- 			copy = iterator->remain;
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 83d12dd3f831a..d77a97056844b 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -41,6 +41,8 @@
+ #include <asm/desc.h>
+ #include <asm/ldt.h>
+ #include <asm/unwind.h>
++#include <asm/uprobes.h>
++#include <asm/ibt.h>
  
- 		/* Copy out the bit of the string that we need */
--		memcpy(iterator->data,
--			str + (iterator->start - iterator->offset), copy);
-+		if (iterator->data)
-+			memcpy(iterator->data,
-+			       str + (iterator->start - iterator->offset), copy);
+ #include "perf_event.h"
  
- 		iterator->offset = iterator->start + copy;
- 		iterator->remain -= copy;
-@@ -110,7 +111,8 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
+@@ -2814,6 +2816,46 @@ static unsigned long get_segment_base(unsigned int segment)
+ 	return get_desc_base(desc);
+ }
  
- 		len = min_t(ssize_t, strlen(str), iterator->remain);
++#ifdef CONFIG_UPROBES
++/*
++ * Heuristic-based check if uprobe is installed at the function entry.
++ *
++ * Under assumption of user code being compiled with frame pointers,
++ * `push %rbp/%ebp` is a good indicator that we indeed are.
++ *
++ * Similarly, `endbr64` (assuming 64-bit mode) is also a common pattern.
++ * If we get this wrong, captured stack trace might have one extra bogus
++ * entry, but the rest of stack trace will still be meaningful.
++ */
++static bool is_uprobe_at_func_entry(struct pt_regs *regs)
++{
++	struct arch_uprobe *auprobe;
++
++	if (!current->utask)
++		return false;
++
++	auprobe = current->utask->auprobe;
++	if (!auprobe)
++		return false;
++
++	/* push %rbp/%ebp */
++	if (auprobe->insn[0] == 0x55)
++		return true;
++
++	/* endbr64 (64-bit only) */
++	if (user_64bit_mode(regs) && is_endbr(*(u32 *)auprobe->insn))
++		return true;
++
++	return false;
++}
++
++#else
++static bool is_uprobe_at_func_entry(struct pt_regs *regs)
++{
++	return false;
++}
++#endif /* CONFIG_UPROBES */
++
+ #ifdef CONFIG_IA32_EMULATION
  
--		memcpy(iterator->data + pos, str, len);
-+		if (iterator->data)
-+			memcpy(iterator->data + pos, str, len);
+ #include <linux/compat.h>
+@@ -2825,6 +2867,7 @@ perf_callchain_user32(struct pt_regs *regs, struct perf_callchain_entry_ctx *ent
+ 	unsigned long ss_base, cs_base;
+ 	struct stack_frame_ia32 frame;
+ 	const struct stack_frame_ia32 __user *fp;
++	u32 ret_addr;
  
- 		iterator->offset += len;
- 		iterator->remain -= len;
-@@ -140,8 +142,9 @@ void __drm_printfn_coredump(struct drm_printer *p, struct va_format *vaf)
- 	if ((iterator->offset >= iterator->start) && (len < iterator->remain)) {
- 		ssize_t pos = iterator->offset - iterator->start;
+ 	if (user_64bit_mode(regs))
+ 		return 0;
+@@ -2834,6 +2877,12 @@ perf_callchain_user32(struct pt_regs *regs, struct perf_callchain_entry_ctx *ent
  
--		snprintf(((char *) iterator->data) + pos,
--			iterator->remain, "%pV", vaf);
-+		if (iterator->data)
-+			snprintf(((char *) iterator->data) + pos,
-+				 iterator->remain, "%pV", vaf);
+ 	fp = compat_ptr(ss_base + regs->bp);
+ 	pagefault_disable();
++
++	/* see perf_callchain_user() below for why we do this */
++	if (is_uprobe_at_func_entry(regs) &&
++	    !get_user(ret_addr, (const u32 __user *)regs->sp))
++		perf_callchain_store(entry, ret_addr);
++
+ 	while (entry->nr < entry->max_stack) {
+ 		if (!valid_user_frame(fp, sizeof(frame)))
+ 			break;
+@@ -2862,6 +2911,7 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ {
+ 	struct stack_frame frame;
+ 	const struct stack_frame __user *fp;
++	unsigned long ret_addr;
  
- 		iterator->offset += len;
- 		iterator->remain -= len;
-diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
-index 089950ad8681a..8fad7d09bedae 100644
---- a/include/drm/drm_print.h
-+++ b/include/drm/drm_print.h
-@@ -220,7 +220,8 @@ drm_vprintf(struct drm_printer *p, const char *fmt, va_list *va)
+ 	if (perf_guest_state()) {
+ 		/* TODO: We don't support guest os callchain now */
+@@ -2885,6 +2935,19 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ 		return;
  
- /**
-  * struct drm_print_iterator - local struct used with drm_printer_coredump
-- * @data: Pointer to the devcoredump output buffer
-+ * @data: Pointer to the devcoredump output buffer, can be NULL if using
-+ * drm_printer_coredump to determine size of devcoredump
-  * @start: The offset within the buffer to start writing
-  * @remain: The number of bytes to write for this iteration
-  */
-@@ -265,6 +266,57 @@ struct drm_print_iterator {
-  *			coredump_read, ...)
-  *	}
-  *
-+ * The above example has a time complexity of O(N^2), where N is the size of the
-+ * devcoredump. This is acceptable for small devcoredumps but scales poorly for
-+ * larger ones.
-+ *
-+ * Another use case for drm_coredump_printer is to capture the devcoredump into
-+ * a saved buffer before the dev_coredump() callback. This involves two passes:
-+ * one to determine the size of the devcoredump and another to print it to a
-+ * buffer. Then, in dev_coredump(), copy from the saved buffer into the
-+ * devcoredump read buffer.
-+ *
-+ * For example::
-+ *
-+ *	char *devcoredump_saved_buffer;
-+ *
-+ *	ssize_t __coredump_print(char *buffer, ssize_t count, ...)
-+ *	{
-+ *		struct drm_print_iterator iter;
-+ *		struct drm_printer p;
-+ *
-+ *		iter.data = buffer;
-+ *		iter.start = 0;
-+ *		iter.remain = count;
-+ *
-+ *		p = drm_coredump_printer(&iter);
-+ *
-+ *		drm_printf(p, "foo=%d\n", foo);
-+ *		...
-+ *		return count - iter.remain;
-+ *	}
-+ *
-+ *	void coredump_print(...)
-+ *	{
-+ *		ssize_t count;
-+ *
-+ *		count = __coredump_print(NULL, INT_MAX, ...);
-+ *		devcoredump_saved_buffer = kvmalloc(count, GFP_KERNEL);
-+ *		__coredump_print(devcoredump_saved_buffer, count, ...);
-+ *	}
-+ *
-+ *	void coredump_read(char *buffer, loff_t offset, size_t count,
-+ *			   void *data, size_t datalen)
-+ *	{
-+ *		...
-+ *		memcpy(buffer, devcoredump_saved_buffer + offset, count);
-+ *		...
-+ *	}
-+ *
-+ * The above example has a time complexity of O(N*2), where N is the size of the
-+ * devcoredump. This scales better than the previous example for larger
-+ * devcoredumps.
-+ *
-  * RETURNS:
-  * The &drm_printer object
-  */
+ 	pagefault_disable();
++
++	/*
++	 * If we are called from uprobe handler, and we are indeed at the very
++	 * entry to user function (which is normally a `push %rbp` instruction,
++	 * under assumption of application being compiled with frame pointers),
++	 * we should read return address from *regs->sp before proceeding
++	 * to follow frame pointers, otherwise we'll skip immediate caller
++	 * as %rbp is not yet setup.
++	 */
++	if (is_uprobe_at_func_entry(regs) &&
++	    !get_user(ret_addr, (const unsigned long __user *)regs->sp))
++		perf_callchain_store(entry, ret_addr);
++
+ 	while (entry->nr < entry->max_stack) {
+ 		if (!valid_user_frame(fp, sizeof(frame)))
+ 			break;
+diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
+index f46e0ca0169c7..d91e32aff5a13 100644
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -76,6 +76,8 @@ struct uprobe_task {
+ 	struct uprobe			*active_uprobe;
+ 	unsigned long			xol_vaddr;
+ 
++	struct arch_uprobe              *auprobe;
++
+ 	struct return_instance		*return_instances;
+ 	unsigned int			depth;
+ };
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 47cdec3e1df11..28c678c8daef3 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -2071,6 +2071,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
+ 	bool need_prep = false; /* prepare return uprobe, when needed */
+ 
+ 	down_read(&uprobe->register_rwsem);
++	current->utask->auprobe = &uprobe->arch;
+ 	for (uc = uprobe->consumers; uc; uc = uc->next) {
+ 		int rc = 0;
+ 
+@@ -2085,6 +2086,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
+ 
+ 		remove &= rc;
+ 	}
++	current->utask->auprobe = NULL;
+ 
+ 	if (need_prep && !remove)
+ 		prepare_uretprobe(uprobe, regs); /* put bp at return */
 -- 
 2.43.0
 
