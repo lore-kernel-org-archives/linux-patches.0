@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13771DE8BE;
-	Tue,  8 Oct 2024 13:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AAF1E0DB1;
+	Tue,  8 Oct 2024 13:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393969; cv=none; b=W2QYwi3+BHCSmuRjag1YkGha4G9KnmwO2gBdsD6xBz4uzdBUDjZNIEAACYAbWmvsesA/JLvQ/Rltr9DpB2Wekkv93DmoGGFu3PwVN28nxeVc/o/mSGobd8Tsjyw/iDzmqf5JgahcZDSLkQKOTVq2W2vFweFHn49r6zpnkdA1PqM=
+	t=1728393972; cv=none; b=NhqB8K0YDVOW75iJurZuahSf7QdZbxewYn4hnBwjIgi4BWKLC5Suy2dWMWF1l62fbXrJpaJjTQQvAMfnB1VeiVRSCBHdSZoQVYKwMisKCVmWZmQKYGhcmRqoIKNYRZFJ1sur4K990qgTdJkkqjNR8RrCFqdgfOC/zobB2mwThNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393969; c=relaxed/simple;
-	bh=gd/3ATCBHUUGBHpGeiEAvhiTcSXYZCNfzO6P5F3o3PM=;
+	s=arc-20240116; t=1728393972; c=relaxed/simple;
+	bh=N8i+FJ+pePpgdtAdrlCXL4mVLnmqMzrrzenyA7R8dtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ur2tYdAS1BqmxUce5BwCFrwRitHRG+VQLl3pBFbEkFq1kVUMvxAqZp5UsLxUKg7nw1Ff70LiDqL31Im97CMtw1OpRNAO8WIB739B8IgWFPoDT4KNnM83wX4SifZnOtxYAJm5QlITpqLT2szsTZTmAGSg6Yt0TVqt7Wk3zXRP4FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wdy0N+OZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSPGWWhPveE4d32raYjgqwE7CWzvk+SlYgWtg1Cs7O/qb57Ylecm946Ojsguf+hrMGcx6JM3qhA01axI6eNeX4D5PgAIurlA+z8iVjqyzcXov2cpwrha8y3THFnC18YGHA240ekXuBCBhff1+V2JfwxCQ/H28UckopcqEL6l3qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejGiSSfd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wdy0N+OZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151F9C4CEC7;
-	Tue,  8 Oct 2024 13:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejGiSSfd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B47C4CEC7;
+	Tue,  8 Oct 2024 13:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393968;
-	bh=gd/3ATCBHUUGBHpGeiEAvhiTcSXYZCNfzO6P5F3o3PM=;
+	s=korg; t=1728393971;
+	bh=N8i+FJ+pePpgdtAdrlCXL4mVLnmqMzrrzenyA7R8dtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wdy0N+OZBb91er9FOyno4FJ2qo2PhsAxjGuMkBDIiQcG8/ZfD021ek+a1YMqX9iv3
-	 iZE30j5Pk26C5sDOzquQZR81tQN5leI1qZNLLbwjQ8L8ma0tzltrjPP2XYKP03amJQ
-	 spYpA8bFLQ/TuPJCbS8ANTawEuuQOa7CFUKahTe4=
+	b=ejGiSSfdh+Lx0+BXNlRfv+yqe1Z8I4WCoTU+RHzqIR+GAHGHpmQcDrJ74SrteEcru
+	 RvrLr/86Vc/lYSEgdxjB3kF1NaNVGchgShtwhM6B5YYIIU7Gd1DmFSMsHWQInR9h7Y
+	 jFFjvWrmU7Z9wQ9DZEd2mjErlbU2/jhZdFsOe2fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+283673dbc38527ef9f3d@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
+	Ben Millwood <thebenmachine@gmail.com>,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 308/386] btrfs: fix a NULL pointer dereference when failed to start a new trasacntion
-Date: Tue,  8 Oct 2024 14:09:13 +0200
-Message-ID: <20241008115641.504116793@linuxfoundation.org>
+Subject: [PATCH 6.6 309/386] btrfs: send: fix invalid clone operation for file that got its size decreased
+Date: Tue,  8 Oct 2024 14:09:14 +0200
+Message-ID: <20241008115641.543726967@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,89 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit c3b47f49e83197e8dffd023ec568403bcdbb774b upstream.
+commit fa630df665aa9ddce3a96ce7b54e10a38e4d2a2b upstream.
 
-[BUG]
-Syzbot reported a NULL pointer dereference with the following crash:
+During an incremental send we may end up sending an invalid clone
+operation, for the last extent of a file which ends at an unaligned offset
+that matches the final i_size of the file in the send snapshot, in case
+the file had its initial size (the size in the parent snapshot) decreased
+in the send snapshot. In this case the destination will fail to apply the
+clone operation because its end offset is not sector size aligned and it
+ends before the current size of the file.
 
-  FAULT_INJECTION: forcing a failure.
-   start_transaction+0x830/0x1670 fs/btrfs/transaction.c:676
-   prepare_to_relocate+0x31f/0x4c0 fs/btrfs/relocation.c:3642
-   relocate_block_group+0x169/0xd20 fs/btrfs/relocation.c:3678
-  ...
-  BTRFS info (device loop0): balance: ended with status: -12
-  Oops: general protection fault, probably for non-canonical address 0xdffffc00000000cc: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000660-0x0000000000000667]
-  RIP: 0010:btrfs_update_reloc_root+0x362/0xa80 fs/btrfs/relocation.c:926
-  Call Trace:
-   <TASK>
-   commit_fs_roots+0x2ee/0x720 fs/btrfs/transaction.c:1496
-   btrfs_commit_transaction+0xfaf/0x3740 fs/btrfs/transaction.c:2430
-   del_balance_item fs/btrfs/volumes.c:3678 [inline]
-   reset_balance_state+0x25e/0x3c0 fs/btrfs/volumes.c:3742
-   btrfs_balance+0xead/0x10c0 fs/btrfs/volumes.c:4574
-   btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3673
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:907 [inline]
-   __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Sending the truncate operation always happens when we finish processing an
+inode, after we process all its extents (and xattrs, names, etc). So fix
+this by ensuring the file has a valid size before we send a clone
+operation for an unaligned extent that ends at the final i_size of the
+file. The size we truncate to matches the start offset of the clone range
+but it could be any value between that start offset and the final size of
+the file since the clone operation will expand the i_size if the current
+size is smaller than the end offset. The start offset of the range was
+chosen because it's always sector size aligned and avoids a truncation
+into the middle of a page, which results in dirtying the page due to
+filling part of it with zeroes and then making the clone operation at the
+receiver trigger IO.
 
-[CAUSE]
-The allocation failure happens at the start_transaction() inside
-prepare_to_relocate(), and during the error handling we call
-unset_reloc_control(), which makes fs_info->balance_ctl to be NULL.
+The following test reproduces the issue:
 
-Then we continue the error path cleanup in btrfs_balance() by calling
-reset_balance_state() which will call del_balance_item() to fully delete
-the balance item in the root tree.
+  $ cat test.sh
+  #!/bin/bash
 
-However during the small window between set_reloc_contrl() and
-unset_reloc_control(), we can have a subvolume tree update and created a
-reloc_root for that subvolume.
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
 
-Then we go into the final btrfs_commit_transaction() of
-del_balance_item(), and into btrfs_update_reloc_root() inside
-commit_fs_roots().
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
 
-That function checks if fs_info->reloc_ctl is in the merge_reloc_tree
-stage, but since fs_info->reloc_ctl is NULL, it results a NULL pointer
-dereference.
+  # Create a file with a size of 256K + 5 bytes, having two extents, one
+  # with a size of 128K and another one with a size of 128K + 5 bytes.
+  last_ext_size=$((128 * 1024 + 5))
+  xfs_io -f -d -c "pwrite -S 0xab -b 128K 0 128K" \
+         -c "pwrite -S 0xcd -b $last_ext_size 128K $last_ext_size" \
+         $MNT/foo
 
-[FIX]
-Just add extra check on fs_info->reloc_ctl inside
-btrfs_update_reloc_root(), before checking
-fs_info->reloc_ctl->merge_reloc_tree.
+  # Another file which we will later clone foo into, but initially with
+  # a larger size than foo.
+  xfs_io -f -c "pwrite -S 0xef 0 1M" $MNT/bar
 
-That DEAD_RELOC_TREE handling is to prevent further modification to the
-reloc tree during merge stage, but since there is no reloc_ctl at all,
-we do not need to bother that.
+  btrfs subvolume snapshot -r $MNT/ $MNT/snap1
 
-Reported-by: syzbot+283673dbc38527ef9f3d@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/66f6bfa7.050a0220.38ace9.0019.GAE@google.com/
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+  # Now resize bar and clone foo into it.
+  xfs_io -c "truncate 0" \
+         -c "reflink $MNT/foo" $MNT/bar
+
+  btrfs subvolume snapshot -r $MNT/ $MNT/snap2
+
+  rm -f /tmp/send-full /tmp/send-inc
+  btrfs send -f /tmp/send-full $MNT/snap1
+  btrfs send -p $MNT/snap1 -f /tmp/send-inc $MNT/snap2
+
+  umount $MNT
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
+
+  btrfs receive -f /tmp/send-full $MNT
+  btrfs receive -f /tmp/send-inc $MNT
+
+  umount $MNT
+
+Running it before this patch:
+
+  $ ./test.sh
+  (...)
+  At subvol snap1
+  At snapshot snap2
+  ERROR: failed to clone extents to bar: Invalid argument
+
+A test case for fstests will be sent soon.
+
+Reported-by: Ben Millwood <thebenmachine@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAJhrHS2z+WViO2h=ojYvBPDLsATwLbg+7JaNCyYomv0fUxEpQQ@mail.gmail.com/
+Fixes: 46a6e10a1ab1 ("btrfs: send: allow cloning non-aligned extent if it ends at i_size")
+CC: stable@vger.kernel.org # 6.11
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/send.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -931,7 +931,7 @@ int btrfs_update_reloc_root(struct btrfs
- 	btrfs_grab_root(reloc_root);
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -6190,8 +6190,29 @@ static int send_write_or_clone(struct se
+ 	if (ret < 0)
+ 		return ret;
  
- 	/* root->reloc_root will stay until current relocation finished */
--	if (fs_info->reloc_ctl->merge_reloc_tree &&
-+	if (fs_info->reloc_ctl && fs_info->reloc_ctl->merge_reloc_tree &&
- 	    btrfs_root_refs(root_item) == 0) {
- 		set_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
- 		/*
+-	if (clone_root->offset + num_bytes == info.size)
++	if (clone_root->offset + num_bytes == info.size) {
++		/*
++		 * The final size of our file matches the end offset, but it may
++		 * be that its current size is larger, so we have to truncate it
++		 * to any value between the start offset of the range and the
++		 * final i_size, otherwise the clone operation is invalid
++		 * because it's unaligned and it ends before the current EOF.
++		 * We do this truncate to the final i_size when we finish
++		 * processing the inode, but it's too late by then. And here we
++		 * truncate to the start offset of the range because it's always
++		 * sector size aligned while if it were the final i_size it
++		 * would result in dirtying part of a page, filling part of a
++		 * page with zeroes and then having the clone operation at the
++		 * receiver trigger IO and wait for it due to the dirty page.
++		 */
++		if (sctx->parent_root != NULL) {
++			ret = send_truncate(sctx, sctx->cur_ino,
++					    sctx->cur_inode_gen, offset);
++			if (ret < 0)
++				return ret;
++		}
+ 		goto clone_data;
++	}
+ 
+ write_data:
+ 	ret = send_extent_data(sctx, path, offset, num_bytes);
 
 
