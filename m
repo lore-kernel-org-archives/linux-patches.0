@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BEB1DEFED;
-	Tue,  8 Oct 2024 13:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A96A1DEFED;
+	Tue,  8 Oct 2024 13:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393207; cv=none; b=SLtOxItodfrYcH5HB+F4E77RQjCiq3GnGbZH5PtJbeQ8cqyW2wsKkb++vtxeIdN/NsaR5UAULoBwKLu0XN7OjhIWe+VO8i/8lYBAp+ooq5VTXc5/1GnEifiorPbRuJztWTibMWjQV+vaBcLwmtDh4jTFOj0xE3Y8wR8gfyD8+6M=
+	t=1728393210; cv=none; b=B3NhJWCNo9sQxoTguoFjJr244w8fLvsWhAqFcgn8uDrvbGbmOm4A6AB+wR3dnQwXr7x9881fPNOUHfSkOg1JaoKFcvz5kLTNKCw3JOVWQeOaVO4sojfyEKk14GWubZXPLYK+dvclS035B4EPzAJTn/1haZJVTRgNKBHI5DcyU/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393207; c=relaxed/simple;
-	bh=twa4kOF9p1GkjolZfHajeOhhfEIstVp+g8f7LVuenfM=;
+	s=arc-20240116; t=1728393210; c=relaxed/simple;
+	bh=eY7aktInPHICZK/xFMjUfLs2fSblbTdpAqzE8HxTG90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhyRBYwtNSUrK1nItSOriYu0VW4NKDLBm3aKKR2+U4lUSeK+U55rvZeYclOEXgClFga8QItJoTwzC//6pryjZUlcFQzoFPDAQEPdmBu+b/dbINvcRZhgOGfIMwr/VRvTc2YlyHU1uFt2OhuBcpmcCtvnKci7U+tltBEUEUPDVsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WokVjNGm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEGiDvDTAFdncQqiU9ybKchFl/EsIJarGY7cPUrh+lz1dLe84Kn58QAPZpJsXcZU9v7yizn0FLUe+mHBpYvFAPqGobRlfUN3xWhvGjl2s2ZnluBlOO5GqQWK/nbVxJa5QvDc08C/wwTgq3FtFbaamPXzJ35AMkpSLbdbZhPCbzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e27KJEZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WokVjNGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968C7C4CEC7;
-	Tue,  8 Oct 2024 13:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e27KJEZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB1DC4CEC7;
+	Tue,  8 Oct 2024 13:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393207;
-	bh=twa4kOF9p1GkjolZfHajeOhhfEIstVp+g8f7LVuenfM=;
+	s=korg; t=1728393210;
+	bh=eY7aktInPHICZK/xFMjUfLs2fSblbTdpAqzE8HxTG90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WokVjNGm6iEp+m+kSMFnGaz1Y5dhp8vXXHZgPtiYztAZHI0SVk1Y6q0N7+73n4FQ/
-	 PUrCKTXz3kPQyyP1OnQ3vUMbb49C8ynoS5UYlMYi3d1DPGspq2okxjIEhBzYhj2OJw
-	 1O5n4f8/Dx3Mg36fMIp91f7XcUyyhMm1A0MBDh34=
+	b=e27KJEZGmySbLmCIalBNNYxJUEj+TCDgqqnQYPLECg1fRk0JS+53/BMN+Ctshrzdj
+	 vp9NbXgNvhmtRKRNR+7oqEbvpj+H40r8NEiVUdLgj7qVLOaBksEp+sjMlglQ8pMKMg
+	 KEpkelPWZxP9695soD/DRPCLoa0kKpKWgRuIy9Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/386] wifi: rtw88: select WANT_DEV_COREDUMP
-Date: Tue,  8 Oct 2024 14:05:28 +0200
-Message-ID: <20241008115632.724261268@linuxfoundation.org>
+Subject: [PATCH 6.6 084/386] ACPI: EC: Do not release locks during operation region accesses
+Date: Tue,  8 Oct 2024 14:05:29 +0200
+Message-ID: <20241008115632.763436035@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,33 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 7e989b0c1e33210c07340bf5228aa83ea52515b5 ]
+[ Upstream commit dc171114926ec390ab90f46534545420ec03e458 ]
 
-We have invoked device coredump when fw crash.
-Should select WANT_DEV_COREDUMP by ourselves.
+It is not particularly useful to release locks (the EC mutex and the
+ACPI global lock, if present) and re-acquire them immediately thereafter
+during EC address space accesses in acpi_ec_space_handler().
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240718070616.42217-1-pkshih@realtek.com
+First, releasing them for a while before grabbing them again does not
+really help anyone because there may not be enough time for another
+thread to acquire them.
+
+Second, if another thread successfully acquires them and carries out
+a new EC write or read in the middle if an operation region access in
+progress, it may confuse the EC firmware, especially after the burst
+mode has been enabled.
+
+Finally, manipulating the locks after writing or reading every single
+byte of data is overhead that it is better to avoid.
+
+Accordingly, modify the code to carry out EC address space accesses
+entirely without releasing the locks.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/12473338.O9o76ZdvQC@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/ec.c | 55 +++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/Kconfig b/drivers/net/wireless/realtek/rtw88/Kconfig
-index cffad1c012499..2af2bc613458d 100644
---- a/drivers/net/wireless/realtek/rtw88/Kconfig
-+++ b/drivers/net/wireless/realtek/rtw88/Kconfig
-@@ -12,6 +12,7 @@ if RTW88
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 35e22a2af4e4b..115994dfefec1 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -783,6 +783,9 @@ static int acpi_ec_transaction_unlocked(struct acpi_ec *ec,
+ 	unsigned long tmp;
+ 	int ret = 0;
  
- config RTW88_CORE
- 	tristate
-+	select WANT_DEV_COREDUMP
++	if (t->rdata)
++		memset(t->rdata, 0, t->rlen);
++
+ 	/* start transaction */
+ 	spin_lock_irqsave(&ec->lock, tmp);
+ 	/* Enable GPE for command processing (IBF=0/OBF=1) */
+@@ -819,8 +822,6 @@ static int acpi_ec_transaction(struct acpi_ec *ec, struct transaction *t)
  
- config RTW88_PCI
- 	tristate
+ 	if (!ec || (!t) || (t->wlen && !t->wdata) || (t->rlen && !t->rdata))
+ 		return -EINVAL;
+-	if (t->rdata)
+-		memset(t->rdata, 0, t->rlen);
+ 
+ 	mutex_lock(&ec->mutex);
+ 	if (ec->global_lock) {
+@@ -847,7 +848,7 @@ static int acpi_ec_burst_enable(struct acpi_ec *ec)
+ 				.wdata = NULL, .rdata = &d,
+ 				.wlen = 0, .rlen = 1};
+ 
+-	return acpi_ec_transaction(ec, &t);
++	return acpi_ec_transaction_unlocked(ec, &t);
+ }
+ 
+ static int acpi_ec_burst_disable(struct acpi_ec *ec)
+@@ -857,7 +858,7 @@ static int acpi_ec_burst_disable(struct acpi_ec *ec)
+ 				.wlen = 0, .rlen = 0};
+ 
+ 	return (acpi_ec_read_status(ec) & ACPI_EC_FLAG_BURST) ?
+-				acpi_ec_transaction(ec, &t) : 0;
++				acpi_ec_transaction_unlocked(ec, &t) : 0;
+ }
+ 
+ static int acpi_ec_read(struct acpi_ec *ec, u8 address, u8 *data)
+@@ -873,6 +874,19 @@ static int acpi_ec_read(struct acpi_ec *ec, u8 address, u8 *data)
+ 	return result;
+ }
+ 
++static int acpi_ec_read_unlocked(struct acpi_ec *ec, u8 address, u8 *data)
++{
++	int result;
++	u8 d;
++	struct transaction t = {.command = ACPI_EC_COMMAND_READ,
++				.wdata = &address, .rdata = &d,
++				.wlen = 1, .rlen = 1};
++
++	result = acpi_ec_transaction_unlocked(ec, &t);
++	*data = d;
++	return result;
++}
++
+ static int acpi_ec_write(struct acpi_ec *ec, u8 address, u8 data)
+ {
+ 	u8 wdata[2] = { address, data };
+@@ -883,6 +897,16 @@ static int acpi_ec_write(struct acpi_ec *ec, u8 address, u8 data)
+ 	return acpi_ec_transaction(ec, &t);
+ }
+ 
++static int acpi_ec_write_unlocked(struct acpi_ec *ec, u8 address, u8 data)
++{
++	u8 wdata[2] = { address, data };
++	struct transaction t = {.command = ACPI_EC_COMMAND_WRITE,
++				.wdata = wdata, .rdata = NULL,
++				.wlen = 2, .rlen = 0};
++
++	return acpi_ec_transaction_unlocked(ec, &t);
++}
++
+ int ec_read(u8 addr, u8 *val)
+ {
+ 	int err;
+@@ -1323,6 +1347,7 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	struct acpi_ec *ec = handler_context;
+ 	int result = 0, i, bytes = bits / 8;
+ 	u8 *value = (u8 *)value64;
++	u32 glk;
+ 
+ 	if ((address > 0xFF) || !value || !handler_context)
+ 		return AE_BAD_PARAMETER;
+@@ -1330,13 +1355,25 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	if (function != ACPI_READ && function != ACPI_WRITE)
+ 		return AE_BAD_PARAMETER;
+ 
++	mutex_lock(&ec->mutex);
++
++	if (ec->global_lock) {
++		acpi_status status;
++
++		status = acpi_acquire_global_lock(ACPI_EC_UDELAY_GLK, &glk);
++		if (ACPI_FAILURE(status)) {
++			result = -ENODEV;
++			goto unlock;
++		}
++	}
++
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_enable(ec);
+ 
+ 	for (i = 0; i < bytes; ++i, ++address, ++value) {
+ 		result = (function == ACPI_READ) ?
+-			acpi_ec_read(ec, address, value) :
+-			acpi_ec_write(ec, address, *value);
++			acpi_ec_read_unlocked(ec, address, value) :
++			acpi_ec_write_unlocked(ec, address, *value);
+ 		if (result < 0)
+ 			break;
+ 	}
+@@ -1344,6 +1381,12 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_disable(ec);
+ 
++	if (ec->global_lock)
++		acpi_release_global_lock(glk);
++
++unlock:
++	mutex_unlock(&ec->mutex);
++
+ 	switch (result) {
+ 	case -EINVAL:
+ 		return AE_BAD_PARAMETER;
 -- 
 2.43.0
 
