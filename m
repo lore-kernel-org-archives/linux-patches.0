@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5441DFD1;
-	Tue,  8 Oct 2024 13:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE63A1DE4CC;
+	Tue,  8 Oct 2024 13:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392620; cv=none; b=JEjkJdaOmIbqfUdtS/Fupfy/ktb/zdymBRb9VGQc6pRgYeQ2vvCNOQ/2h/2Uu3hJCnFhwgLus6/gXQt9L4Eg8pFs2o9I2WmMLspjsPoUfn6jK9DHGHy1lAwq6c8vbEnIFXwyi7LKcYENJ4OGbck6Q1Y4HoyCcfUt18zqa0gGnRM=
+	t=1728392623; cv=none; b=cQrkCPNx+JW9cu3ZGA0bxEAaHBqBsqKlgdNuDoqLDq1OR/KcJN0x/ISVfQHcEuiGeMRmOB3RLxZzUpaUOYpetvG2nVW9LPveJ4mOamsmS5f4hLQc9DHQENh/yLFQegir/6IowUkVR9tdIoi0S8rtvegOqV9pBNm//UQuarH/qlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392620; c=relaxed/simple;
-	bh=2p7sQ6uvgbWcU+/4Qa7zM9A0dAnlrs2VbidPHiIiWmI=;
+	s=arc-20240116; t=1728392623; c=relaxed/simple;
+	bh=w0jSK/FZJMrRszU6PwQmssZEV1mFmnO4hRrYWmiiXWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TA+wrDQYXx9qvpRuQSNem6j77aJg/DCAchgom9qPcEi4XVSbX6fHda65EhAUNZszC9jhVykOprKTyuSCjOK6gV1Pr2HQPmdFdG3WC7BVgPKJYUwbeIQg4cpDbxViQ+5OPa4FHiUvxB9yfG68YOuXeLWpVBoxC1Qta/y26zvBx0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LK5PzoJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gOFN4TpJWzj5naPZuT951ugiJLhQIJRQu5z0A0k8RpZOPOeS8tlfUe6pJdLVsRS1Muqtyn4ldkNfFUJV9CqfBATuSfNYTK6SJZtOP1lT9yRYzxVWsVYD4L2GPKrl0m7/N864BhC0NIvVB82CK090sLOauQHbcbRaeCD2dxbc6X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVfNgslL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LK5PzoJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC271C4CEC7;
-	Tue,  8 Oct 2024 13:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVfNgslL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D57FC4CEC7;
+	Tue,  8 Oct 2024 13:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392620;
-	bh=2p7sQ6uvgbWcU+/4Qa7zM9A0dAnlrs2VbidPHiIiWmI=;
+	s=korg; t=1728392623;
+	bh=w0jSK/FZJMrRszU6PwQmssZEV1mFmnO4hRrYWmiiXWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LK5PzoJfsh8ORUM7K9L4fQ1LCHTxAe4huG2TmPs4iV021C9gQf+FNd0ZlTief38KY
-	 bprOftmQswjt24v6JLsP+jDTNeZ4S/osBynylBIV+LZzPrn/qV+jrK3CZzI2/4bsZJ
-	 khAPEtAc/BCGRoghSFLgNN84mg/gN3RNaVL2+ABo=
+	b=FVfNgslLnpRIvRCF+e9+f5x7ZDbDmCmhfXywfaR0YSmI/KRLPhIbHUS9YXIJf39Zq
+	 1UdBI38lxFeXXhv9AV/jgWJPGTvUnstseVqTOX2BJXk3Mewxu8vCQE0FxXhkX4ovT7
+	 +VWYkXtJx0L8rrBjnaDfNbFF9hO94japQ5gaXra8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.11 469/558] smb3: fix incorrect mode displayed for read-only files
-Date: Tue,  8 Oct 2024 14:08:19 +0200
-Message-ID: <20241008115720.703603124@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.11 470/558] iio: magnetometer: ak8975: Fix reading for ak099xx sensors
+Date: Tue,  8 Oct 2024 14:08:20 +0200
+Message-ID: <20241008115720.742231495@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -43,88 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-commit 2f3017e7cc7515e0110a3733d8dca84de2a1d23d upstream.
+commit 129464e86c7445a858b790ac2d28d35f58256bbe upstream.
 
-Commands like "chmod 0444" mark a file readonly via the attribute flag
-(when mapping of mode bits into the ACL are not set, or POSIX extensions
-are not negotiated), but they were not reported correctly for stat of
-directories (they were reported ok for files and for "ls").  See example
-below:
+Move ST2 reading with overflow handling after measurement data
+reading.
+ST2 register read have to be read after read measurment data,
+because it means end of the reading and realease the lock on the data.
+Remove ST2 read skip on interrupt based waiting because ST2 required to
+be read out at and of the axis read.
 
-    root:~# ls /mnt2 -l
-    total 12
-    drwxr-xr-x 2 root root         0 Sep 21 18:03 normaldir
-    -rwxr-xr-x 1 root root         0 Sep 21 23:24 normalfile
-    dr-xr-xr-x 2 root root         0 Sep 21 17:55 readonly-dir
-    -r-xr-xr-x 1 root root 209716224 Sep 21 18:15 readonly-file
-    root:~# stat -c %a /mnt2/readonly-dir
-    755
-    root:~# stat -c %a /mnt2/readonly-file
-    555
-
-This fixes the stat of directories when ATTR_READONLY is set
-(in cases where the mode can not be obtained other ways).
-
-    root:~# stat -c %a /mnt2/readonly-dir
-    555
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 57e73a423b1e ("iio: ak8975: add ak09911 and ak09912 support")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Link: https://patch.msgid.link/20240819-ak09918-v4-2-f0734d14cfb9@mainlining.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/iio/magnetometer/ak8975.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -800,10 +800,6 @@ static void cifs_open_info_to_fattr(stru
- 		fattr->cf_mode = S_IFREG | cifs_sb->ctx->file_mode;
- 		fattr->cf_dtype = DT_REG;
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -692,22 +692,8 @@ static int ak8975_start_read_axis(struct
+ 	if (ret < 0)
+ 		return ret;
  
--		/* clear write bits if ATTR_READONLY is set */
--		if (fattr->cf_cifsattrs & ATTR_READONLY)
--			fattr->cf_mode &= ~(S_IWUGO);
--
- 		/*
- 		 * Don't accept zero nlink from non-unix servers unless
- 		 * delete is pending.  Instead mark it as unknown.
-@@ -816,6 +812,10 @@ static void cifs_open_info_to_fattr(stru
- 		}
- 	}
- 
-+	/* clear write bits if ATTR_READONLY is set */
-+	if (fattr->cf_cifsattrs & ATTR_READONLY)
-+		fattr->cf_mode &= ~(S_IWUGO);
-+
- out_reparse:
- 	if (S_ISLNK(fattr->cf_mode)) {
- 		if (likely(data->symlink_target))
-@@ -1233,11 +1233,14 @@ handle_mnt_opt:
- 				 __func__, rc);
- 			goto out;
- 		}
+-	/* This will be executed only for non-interrupt based waiting case */
+-	if (ret & data->def->ctrl_masks[ST1_DRDY]) {
+-		ret = i2c_smbus_read_byte_data(client,
+-					       data->def->ctrl_regs[ST2]);
+-		if (ret < 0) {
+-			dev_err(&client->dev, "Error in reading ST2\n");
+-			return ret;
+-		}
+-		if (ret & (data->def->ctrl_masks[ST2_DERR] |
+-			   data->def->ctrl_masks[ST2_HOFL])) {
+-			dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
+-			return -EINVAL;
+-		}
 -	}
 -
--	/* fill in remaining high mode bits e.g. SUID, VTX */
--	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL)
-+	} else if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL)
-+		/* fill in remaining high mode bits e.g. SUID, VTX */
- 		cifs_sfu_mode(fattr, full_path, cifs_sb, xid);
-+	else if (!(tcon->posix_extensions))
-+		/* clear write bits if ATTR_READONLY is set */
-+		if (fattr->cf_cifsattrs & ATTR_READONLY)
-+			fattr->cf_mode &= ~(S_IWUGO);
-+
+-	return 0;
++	/* Return with zero if the data is ready. */
++	return !data->def->ctrl_regs[ST1_DRDY];
+ }
  
- 	/* check for Minshall+French symlinks */
- 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MF_SYMLINKS) {
+ /* Retrieve raw flux value for one of the x, y, or z axis.  */
+@@ -734,6 +720,20 @@ static int ak8975_read_axis(struct iio_d
+ 	if (ret < 0)
+ 		goto exit;
+ 
++	/* Read out ST2 for release lock on measurment data. */
++	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
++	if (ret < 0) {
++		dev_err(&client->dev, "Error in reading ST2\n");
++		goto exit;
++	}
++
++	if (ret & (data->def->ctrl_masks[ST2_DERR] |
++		   data->def->ctrl_masks[ST2_HOFL])) {
++		dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	mutex_unlock(&data->lock);
+ 
+ 	pm_runtime_mark_last_busy(&data->client->dev);
 
 
