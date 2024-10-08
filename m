@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACA41E485;
-	Tue,  8 Oct 2024 12:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDDF13D24C;
+	Tue,  8 Oct 2024 12:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389836; cv=none; b=F2QRt7VP5fA+t4em5Voq+/ZuB/8lJvlIYliYt9ESIb5AHZl7M5qDx3nsDbqvum2HLkPoffbIoozO3T7GRUktvVTroqSQ//ffWVSczUJwdF+M0YWuR/Qy9B3GAuD8rq2cYahNIQHuBJVNonmLHT8KDtq3f3Rp6tWWy1tA9kV1r+I=
+	t=1728389840; cv=none; b=atUkMyhCgfZhUGHrE85dQDKrWAEe6Cv9qCfKd/tsdqLZRiWX/fy80hsRmCg7dtY5YVyWyf6J6ufuB+u0/hooQBmkI8WJS5feajVoQiX0eTsKdwLx5qPPQUZTJ0tARMrl1Qy+q1w7eRs7F8xbcJ8Lwz6U8XLNtMD7TCZoK4pOyxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389836; c=relaxed/simple;
-	bh=KMasys8su+jvbIILVaud8/JC4No+mW8E4nC3Jy7I4+I=;
+	s=arc-20240116; t=1728389840; c=relaxed/simple;
+	bh=dLDEWW3BPd4ALPdUaSdRoLy/igx9idXJdd2YC0hm4kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swTQZkxMIhaSNaUox/uYJxBpphTs/piowEjc6d+UBPfKiBsOq65NbNNF0aJJlruUFOcnqqAup9v+1qorbg5Ve6k/QOcRd2yfYDsY/m6gcswj1fw60nEc7c9Y64C2CH6LVdzmMTIavmVbNCUegs9esvAyi1eMcQYwIJ40ygWtO9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0NWPXHp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kR/zqHPT4ihOU5R4bloON8hZe4pGySRj5c4w4F9ecm/VUO9juOcwQEWNyD9Y1GICQwisIA0uiC/nmDTF7XaLfBAIcAFDvwYrExc1ltRZ6GBTcitmdYcnwI1lB0IjfaTfJzXOiaAHQnF828zEhlpvk0rPsHzFjV+AyoRuGOchwlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqyM1L+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0NWPXHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73994C4CEC7;
-	Tue,  8 Oct 2024 12:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqyM1L+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2998C4CEC7;
+	Tue,  8 Oct 2024 12:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389836;
-	bh=KMasys8su+jvbIILVaud8/JC4No+mW8E4nC3Jy7I4+I=;
+	s=korg; t=1728389839;
+	bh=dLDEWW3BPd4ALPdUaSdRoLy/igx9idXJdd2YC0hm4kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0NWPXHpjuzNSGrOJ+XUiVGbgj10gscuD+fEd7Y4A096VoIBAY4uTaXq89WC+v4SN
-	 zQpv5grHODIE/AakzHe/XwqFKD/8n3y6w0XeoQe/yutEw33SsbP+6budn2ha6JdZDr
-	 H79bsuR4fOb7+H+t6N3B6GIif//uJ+4r8Bs8Cu5Q=
+	b=EqyM1L+ocfYhGIJp/wjWrQ2Z9GK7ahVCqo64IMgLCKl/tYrMqQBEM+yjqlOo1CXsa
+	 5XcBFB32m5MZyZp+uTrZrAhrs06EQqxpxTqrytp2CnhCdWAJmwkhTokGNy/naq2/8o
+	 F3XIqgivyLhSvTLOfnQ/Rs0BnwfrzHlsLnVbIR5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 110/482] nvme-tcp: sanitize TLS key handling
-Date: Tue,  8 Oct 2024 14:02:53 +0200
-Message-ID: <20241008115652.636995398@linuxfoundation.org>
+Subject: [PATCH 6.10 111/482] nvme-tcp: check for invalidated or revoked key
+Date: Tue,  8 Oct 2024 14:02:54 +0200
+Message-ID: <20241008115652.676217376@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,216 +55,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 363895767fbfa05891b0b4d9e06ebde7a10c6a07 ]
+[ Upstream commit 5bc46b49c828a6dfaab80b71ecb63fe76a1096d2 ]
 
-There is a difference between TLS configured (ie the user has
-provisioned/requested a key) and TLS enabled (ie the connection
-is encrypted with TLS). This becomes important for secure concatenation,
-where the initial authentication is run on an unencrypted connection
-(ie with TLS configured, but not enabled), and then the queue is reset to
-run over TLS (ie TLS configured _and_ enabled).
-So to differentiate between those two states store the generated
-key in opts->tls_key (as we're using the same TLS key for all queues),
-the key serial of the resulting TLS handshake in ctrl->tls_pskid
-(to signal that TLS on the admin queue is enabled), and a simple
-flag for the queues to indicated that TLS has been enabled.
+key_lookup() will always return a key, even if that key is revoked
+or invalidated. So check for invalid keys before continuing.
 
 Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c  |  1 -
- drivers/nvme/host/nvme.h  |  2 +-
- drivers/nvme/host/sysfs.c |  4 +--
- drivers/nvme/host/tcp.c   | 53 +++++++++++++++++++++++++++++----------
- 4 files changed, 43 insertions(+), 17 deletions(-)
+ drivers/nvme/common/keyring.c | 22 ++++++++++++++++++++++
+ drivers/nvme/host/Kconfig     |  1 +
+ drivers/nvme/host/fabrics.c   |  2 +-
+ drivers/nvme/host/tcp.c       |  2 +-
+ include/linux/nvme-keyring.h  |  6 +++++-
+ 5 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 5569cf4183b2a..415ede9886c12 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4587,7 +4587,6 @@ static void nvme_free_ctrl(struct device *dev)
- 
- 	if (!subsys || ctrl->instance != subsys->instance)
- 		ida_free(&nvme_instance_ida, ctrl->instance);
--	key_put(ctrl->tls_key);
- 	nvme_free_cels(ctrl);
- 	nvme_mpath_uninit(ctrl);
- 	cleanup_srcu_struct(&ctrl->srcu);
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index ff1769172778b..cde1cb906dbf2 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -375,7 +375,7 @@ struct nvme_ctrl {
- 	struct nvme_dhchap_key *ctrl_key;
- 	u16 transaction;
- #endif
--	struct key *tls_key;
-+	key_serial_t tls_pskid;
- 
- 	/* Power saving configuration */
- 	u64 ps_max_latency_us;
-diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
-index 3c55f7edd1819..5b1dee8a66ef8 100644
---- a/drivers/nvme/host/sysfs.c
-+++ b/drivers/nvme/host/sysfs.c
-@@ -671,9 +671,9 @@ static ssize_t tls_key_show(struct device *dev,
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
- 
--	if (!ctrl->tls_key)
-+	if (!ctrl->tls_pskid)
- 		return 0;
--	return sysfs_emit(buf, "%08x", key_serial(ctrl->tls_key));
-+	return sysfs_emit(buf, "%08x", ctrl->tls_pskid);
+diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
+index 05e89307c8aa3..ed5167f942d89 100644
+--- a/drivers/nvme/common/keyring.c
++++ b/drivers/nvme/common/keyring.c
+@@ -20,6 +20,28 @@ key_serial_t nvme_keyring_id(void)
  }
- static DEVICE_ATTR_RO(tls_key);
- #endif
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 8b5e4327fe83b..f551609691807 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -165,6 +165,7 @@ struct nvme_tcp_queue {
+ EXPORT_SYMBOL_GPL(nvme_keyring_id);
  
- 	bool			hdr_digest;
- 	bool			data_digest;
-+	bool			tls_enabled;
- 	struct ahash_request	*rcv_hash;
- 	struct ahash_request	*snd_hash;
- 	__le32			exp_ddgst;
-@@ -213,7 +214,21 @@ static inline int nvme_tcp_queue_id(struct nvme_tcp_queue *queue)
- 	return queue - queue->ctrl->queues;
- }
- 
--static inline bool nvme_tcp_tls(struct nvme_ctrl *ctrl)
-+/*
-+ * Check if the queue is TLS encrypted
-+ */
-+static inline bool nvme_tcp_queue_tls(struct nvme_tcp_queue *queue)
++static bool nvme_tls_psk_revoked(struct key *psk)
 +{
-+	if (!IS_ENABLED(CONFIG_NVME_TCP_TLS))
-+		return 0;
-+
-+	return queue->tls_enabled;
++	return test_bit(KEY_FLAG_REVOKED, &psk->flags) ||
++		test_bit(KEY_FLAG_INVALIDATED, &psk->flags);
 +}
 +
-+/*
-+ * Check if TLS is configured for the controller.
-+ */
-+static inline bool nvme_tcp_tls_configured(struct nvme_ctrl *ctrl)
- {
- 	if (!IS_ENABLED(CONFIG_NVME_TCP_TLS))
- 		return 0;
-@@ -368,7 +383,7 @@ static inline bool nvme_tcp_queue_has_pending(struct nvme_tcp_queue *queue)
- 
- static inline bool nvme_tcp_queue_more(struct nvme_tcp_queue *queue)
- {
--	return !nvme_tcp_tls(&queue->ctrl->ctrl) &&
-+	return !nvme_tcp_queue_tls(queue) &&
- 		nvme_tcp_queue_has_pending(queue);
- }
- 
-@@ -1427,7 +1442,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 	memset(&msg, 0, sizeof(msg));
- 	iov.iov_base = icresp;
- 	iov.iov_len = sizeof(*icresp);
--	if (nvme_tcp_tls(&queue->ctrl->ctrl)) {
-+	if (nvme_tcp_queue_tls(queue)) {
- 		msg.msg_control = cbuf;
- 		msg.msg_controllen = sizeof(cbuf);
- 	}
-@@ -1439,7 +1454,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 		goto free_icresp;
- 	}
- 	ret = -ENOTCONN;
--	if (nvme_tcp_tls(&queue->ctrl->ctrl)) {
-+	if (nvme_tcp_queue_tls(queue)) {
- 		ctype = tls_get_record_type(queue->sock->sk,
- 					    (struct cmsghdr *)cbuf);
- 		if (ctype != TLS_RECORD_TYPE_DATA) {
-@@ -1587,7 +1602,10 @@ static void nvme_tcp_tls_done(void *data, int status, key_serial_t pskid)
- 			 qid, pskid);
- 		queue->tls_err = -ENOKEY;
- 	} else {
--		ctrl->ctrl.tls_key = tls_key;
-+		queue->tls_enabled = true;
-+		if (qid == 0)
-+			ctrl->ctrl.tls_pskid = key_serial(tls_key);
-+		key_put(tls_key);
- 		queue->tls_err = 0;
- 	}
- 
-@@ -1768,7 +1786,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
- 	}
- 
- 	/* If PSKs are configured try to start TLS */
--	if (IS_ENABLED(CONFIG_NVME_TCP_TLS) && pskid) {
-+	if (nvme_tcp_tls_configured(nctrl) && pskid) {
- 		ret = nvme_tcp_start_tls(nctrl, queue, pskid);
- 		if (ret)
- 			goto err_init_connect;
-@@ -1829,6 +1847,8 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
- 	mutex_lock(&queue->queue_lock);
- 	if (test_and_clear_bit(NVME_TCP_Q_LIVE, &queue->flags))
- 		__nvme_tcp_stop_queue(queue);
-+	/* Stopping the queue will disable TLS */
-+	queue->tls_enabled = false;
- 	mutex_unlock(&queue->queue_lock);
- }
- 
-@@ -1925,16 +1945,17 @@ static int nvme_tcp_alloc_admin_queue(struct nvme_ctrl *ctrl)
- 	int ret;
- 	key_serial_t pskid = 0;
- 
--	if (nvme_tcp_tls(ctrl)) {
-+	if (nvme_tcp_tls_configured(ctrl)) {
- 		if (ctrl->opts->tls_key)
- 			pskid = key_serial(ctrl->opts->tls_key);
--		else
-+		else {
- 			pskid = nvme_tls_psk_default(ctrl->opts->keyring,
- 						      ctrl->opts->host->nqn,
- 						      ctrl->opts->subsysnqn);
--		if (!pskid) {
--			dev_err(ctrl->device, "no valid PSK found\n");
--			return -ENOKEY;
-+			if (!pskid) {
-+				dev_err(ctrl->device, "no valid PSK found\n");
-+				return -ENOKEY;
-+			}
- 		}
- 	}
- 
-@@ -1957,13 +1978,14 @@ static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
- {
- 	int i, ret;
- 
--	if (nvme_tcp_tls(ctrl) && !ctrl->tls_key) {
-+	if (nvme_tcp_tls_configured(ctrl) && !ctrl->tls_pskid) {
- 		dev_err(ctrl->device, "no PSK negotiated\n");
- 		return -ENOKEY;
- 	}
++struct key *nvme_tls_key_lookup(key_serial_t key_id)
++{
++	struct key *key = key_lookup(key_id);
 +
- 	for (i = 1; i < ctrl->queue_count; i++) {
- 		ret = nvme_tcp_alloc_queue(ctrl, i,
--				key_serial(ctrl->tls_key));
-+				ctrl->tls_pskid);
- 		if (ret)
- 			goto out_free_queues;
- 	}
-@@ -2144,6 +2166,11 @@ static void nvme_tcp_teardown_admin_queue(struct nvme_ctrl *ctrl,
- 	if (remove)
- 		nvme_unquiesce_admin_queue(ctrl);
- 	nvme_tcp_destroy_admin_queue(ctrl, remove);
-+	if (ctrl->tls_pskid) {
-+		dev_dbg(ctrl->device, "Wipe negotiated TLS_PSK %08x\n",
-+			ctrl->tls_pskid);
-+		ctrl->tls_pskid = 0;
++	if (IS_ERR(key)) {
++		pr_err("key id %08x not found\n", key_id);
++		return key;
 +	}
- }
++	if (nvme_tls_psk_revoked(key)) {
++		pr_err("key id %08x revoked\n", key_id);
++		return ERR_PTR(-EKEYREVOKED);
++	}
++	return key;
++}
++EXPORT_SYMBOL_GPL(nvme_tls_key_lookup);
++
+ static void nvme_tls_psk_describe(const struct key *key, struct seq_file *m)
+ {
+ 	seq_puts(m, key->description);
+diff --git a/drivers/nvme/host/Kconfig b/drivers/nvme/host/Kconfig
+index b309c8be720f4..854eb26ac3db9 100644
+--- a/drivers/nvme/host/Kconfig
++++ b/drivers/nvme/host/Kconfig
+@@ -110,6 +110,7 @@ config NVME_HOST_AUTH
+ 	bool "NVMe over Fabrics In-Band Authentication in host side"
+ 	depends on NVME_CORE
+ 	select NVME_AUTH
++	select NVME_KEYRING if NVME_TCP_TLS
+ 	help
+ 	  This provides support for NVMe over Fabrics In-Band Authentication in
+ 	  host side.
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index b5a4b5fd573e0..3e3db6a6524e0 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -650,7 +650,7 @@ static struct key *nvmf_parse_key(int key_id)
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
- static void nvme_tcp_teardown_io_queues(struct nvme_ctrl *ctrl,
+-	key = key_lookup(key_id);
++	key = nvme_tls_key_lookup(key_id);
+ 	if (IS_ERR(key))
+ 		pr_err("key id %08x not found\n", key_id);
+ 	else
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index f551609691807..8c79af3ed1f23 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1596,7 +1596,7 @@ static void nvme_tcp_tls_done(void *data, int status, key_serial_t pskid)
+ 		goto out_complete;
+ 	}
+ 
+-	tls_key = key_lookup(pskid);
++	tls_key = nvme_tls_key_lookup(pskid);
+ 	if (IS_ERR(tls_key)) {
+ 		dev_warn(ctrl->ctrl.device, "queue %d: Invalid key %x\n",
+ 			 qid, pskid);
+diff --git a/include/linux/nvme-keyring.h b/include/linux/nvme-keyring.h
+index e10333d78dbbe..19d2b256180fd 100644
+--- a/include/linux/nvme-keyring.h
++++ b/include/linux/nvme-keyring.h
+@@ -12,7 +12,7 @@ key_serial_t nvme_tls_psk_default(struct key *keyring,
+ 		const char *hostnqn, const char *subnqn);
+ 
+ key_serial_t nvme_keyring_id(void);
+-
++struct key *nvme_tls_key_lookup(key_serial_t key_id);
+ #else
+ 
+ static inline key_serial_t nvme_tls_psk_default(struct key *keyring,
+@@ -24,5 +24,9 @@ static inline key_serial_t nvme_keyring_id(void)
+ {
+ 	return 0;
+ }
++static inline struct key *nvme_tls_key_lookup(key_serial_t key_id)
++{
++	return ERR_PTR(-ENOTSUPP);
++}
+ #endif /* !CONFIG_NVME_KEYRING */
+ #endif /* _NVME_KEYRING_H */
 -- 
 2.43.0
 
