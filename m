@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240CC1DDC06;
-	Tue,  8 Oct 2024 12:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0471DDC06;
+	Tue,  8 Oct 2024 12:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391782; cv=none; b=Ii6gIWk5DsCZSUXQSnj7cpiUzihDTD2YX7cxzVnA7XYcZhEF2nk7h7x0ZIt4fyTgUu1EGSC4BgvCboSwKq3K7OZq2gTmMSavWTiC2VXZSHObHPAEi5BxjRp79qunTmFvsW7zP8WWRkNUTFW+5D23iwwcXlduRQmWDqI/vDxqKaM=
+	t=1728391785; cv=none; b=MW+9nQPlOAG6eD6IC+JUlavdBV4ku3w+u5renia9g9r015beeTE2/pnjGZ7cpJOKfyHiw66WH+ZmiWGab3fAba+82feXcB20vhCx7VXltpJ20H0+k7R5od4TZv0tPZpaQciwPzzKDapYMPVLtiR0OmfNvRFYB6r2Ss6MisNdluM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391782; c=relaxed/simple;
-	bh=Yzgjj59ka3sl9yVB0vb6Jrp3oXjEw6PJLVa4LZmAsPo=;
+	s=arc-20240116; t=1728391785; c=relaxed/simple;
+	bh=RcR4JEi+DGx+JTc0TfbEhvtBXm1djvBTo+mPM3gfj+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GiyNw2Hbfj1Fi9YqGJWDv0DJJ1MSmqFuXsrQ/RfGfWnaRlGH2Wl39Fa4UzlAv5ozffFthZEBbGrsqeLN9zIiwcW5xefqkz6+C6fyMg/5oqe/rNtrMcIEPIHYuNFMMf6jRYnyJbJAbliulG5/nO908YAjv4OqXaPcrORwuI/Pja8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT27LJfY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJaKXztEUXc3Y9I7GUnme2zzF8FYFaNm6KXREJmQlmHQQhJyIMJvme56XlWtrW0slwWVSss6J/MYreiuvZ3ecW4mi3me8+qAEFrbfRD1B6uwzbhkeWSDE9QJhFvAPENi1+sh82mOI/jrz3zYzLNexqxkB7W08yErKkeAmcLIj9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gN7rLkY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT27LJfY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D543C4CEC7;
-	Tue,  8 Oct 2024 12:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gN7rLkY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20E8C4CEC7;
+	Tue,  8 Oct 2024 12:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391782;
-	bh=Yzgjj59ka3sl9yVB0vb6Jrp3oXjEw6PJLVa4LZmAsPo=;
+	s=korg; t=1728391785;
+	bh=RcR4JEi+DGx+JTc0TfbEhvtBXm1djvBTo+mPM3gfj+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eT27LJfYNrPbAIBvhT8v5Ths6fTiSkqp+cyQAh8ghypywB9Nj4lPzlu+s21ocSEPB
-	 4HdN8fJHpp0fXfm+kRMUFc2ROjzu9VDNnSN4vLdK2ynBtJDpobMs8CH6uKzZ1jArB7
-	 Zx/4UHvJUGec0DtfYaSbvDtLRHx9Uq+EOBqP7KAc=
+	b=2gN7rLkYBQixevVXwwFsnRbVIK6gAptjxLY33zYbQoGHeTnl8wgS2Q6SxIwXK9lUj
+	 xStl/EBzVs5pMf9uAoz4Q8/KVWnChfhFulUylWmsr6M0BMAIxGnr4TCTzzZud5t2wI
+	 hxq8XEYbMrw/aa6kBWJ4S8llPQUNhCKhbceiS5+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	David Strahan <David.Strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Louis Dalibard <ontake@ontake.dev>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 221/558] scsi: smartpqi: Add new controller PCI IDs
-Date: Tue,  8 Oct 2024 14:04:11 +0200
-Message-ID: <20241008115711.040035601@linuxfoundation.org>
+Subject: [PATCH 6.11 222/558] HID: Ignore battery for all ELAN I2C-HID devices
+Date: Tue,  8 Oct 2024 14:04:12 +0200
+Message-ID: <20241008115711.078583682@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -55,191 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 0e21e73384d324f75ea16f3d622cfc433fa6209b ]
+[ Upstream commit bcc31692a1d1e21f0d06c5f727c03ee299d2264e ]
 
-All PCI ID entries in hex.
+Before this change there were 16 vid:pid based quirks to ignore the battery
+reported by Elan I2C-HID touchscreens on various Asus and HP laptops.
 
-Add new inagile PCI IDs:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-            SMART-HBA 8242-24i               9005 / 028f / 1ff9 / 0045
-            RAID 8236-16i                    9005 / 028f / 1ff9 / 0046
-            RAID 8240-24i                    9005 / 028f / 1ff9 / 0047
-            SMART-HBA 8238-16i               9005 / 028f / 1ff9 / 0048
-            PM8222-SHBA                      9005 / 028f / 1ff9 / 004a
-            RAID PM8204-2GB                  9005 / 028f / 1ff9 / 004b
-            RAID PM8204-4GB                  9005 / 028f / 1ff9 / 004c
-            PM8222-HBA                       9005 / 028f / 1ff9 / 004f
-            MT0804M6R                        9005 / 028f / 1ff9 / 0051
-            MT0801M6E                        9005 / 028f / 1ff9 / 0052
-            MT0808M6R                        9005 / 028f / 1ff9 / 0053
-            MT0800M6H                        9005 / 028f / 1ff9 / 0054
-            RS0800M5H24i                     9005 / 028f / 1ff9 / 006b
-            RS0800M5E8i                      9005 / 028f / 1ff9 / 006c
-            RS0800M5H8i                      9005 / 028f / 1ff9 / 006d
-            RS0804M5R16i                     9005 / 028f / 1ff9 / 006f
-            RS0800M5E24i                     9005 / 028f / 1ff9 / 0070
-            RS0800M5H16i                     9005 / 028f / 1ff9 / 0071
-            RS0800M5E16i                     9005 / 028f / 1ff9 / 0072
-            RT0800M7E                        9005 / 028f / 1ff9 / 0086
-            RT0800M7H                        9005 / 028f / 1ff9 / 0087
-            RT0804M7R                        9005 / 028f / 1ff9 / 0088
-            RT0808M7R                        9005 / 028f / 1ff9 / 0089
-            RT1608M6R16i                     9005 / 028f / 1ff9 / 00a1
+And a report has been received that the 04F3:2A00 I2C touchscreen on
+the HP ProBook x360 11 G5 EE/86CF also reports a non present battery.
 
-Add new h3c pci_id:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-            UN RAID P4408-Mr-2               9005 / 028f / 193d / 1110
+Since I2C-HID devices are always builtin to laptops they are not battery
+owered so it should be safe to just ignore the battery on all Elan I2C-HID
+devices, rather then adding a 17th quirk for the 04F3:2A00 touchscreen.
 
-Add new powerleader pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-            PL SmartROC PM8204               9005 / 028f / 1f3a / 0104
+As reported in the changelog of commit a3a5a37efba1 ("HID: Ignore battery
+for ELAN touchscreens 2F2C and 4116"), which added 2 new Elan touchscreen
+quirks about a month ago, the HID reported battery seems to be related
+to a stylus being used. But even when a stylus is in use it does not
+properly report the charge of the stylus battery, instead the reported
+battery charge jumps from 0% to 1%. So it is best to just ignore the
+HID battery.
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: David Strahan <David.Strahan@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240711194704.982400-2-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2302776
+Cc: Louis Dalibard <ontake@ontake.dev>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 104 ++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ drivers/hid/hid-ids.h   | 16 ----------------
+ drivers/hid/hid-input.c | 37 +++++--------------------------------
+ 2 files changed, 5 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index c1524fb334eb5..02d16fddd3123 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -9456,6 +9456,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x110b)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x193d, 0x1110)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x8460)
-@@ -9572,6 +9576,14 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1bd4, 0x0089)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x00a1)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1f3a, 0x0104)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x19e5, 0xd227)
-@@ -10164,6 +10176,98 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1137, 0x02fa)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0045)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0046)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0047)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0048)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x004a)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x004b)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x004c)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x004f)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0051)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0052)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0053)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0054)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x006b)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x006c)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x006d)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x006f)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0070)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0071)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0072)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0086)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0087)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0088)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x0089)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 				0x1e93, 0x1000)
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 781c5aa298598..53655f81d9950 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -417,24 +417,8 @@
+ #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
+ #define USB_DEVICE_ID_HP_X2		0x074d
+ #define USB_DEVICE_ID_HP_X2_10_COVER	0x0755
+-#define I2C_DEVICE_ID_HP_ENVY_X360_15	0x2d05
+-#define I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100	0x29CF
+-#define I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV	0x2CF9
+-#define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
+-#define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
+-#define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
+-#define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
+-#define I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN 0x2F2C
+-#define I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN 0x4116
+ #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
+ #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
+-#define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
+-#define I2C_DEVICE_ID_SURFACE_GO2_TOUCHSCREEN	0x2A1C
+-#define I2C_DEVICE_ID_LENOVO_YOGA_C630_TOUCHSCREEN	0x279F
+-#define I2C_DEVICE_ID_HP_SPECTRE_X360_13T_AW100	0x29F5
+-#define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V1	0x2BED
+-#define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V2	0x2BEE
+-#define I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG		0x2D02
+ #define I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM	0x2F81
+ 
+ #define USB_VENDOR_ID_ELECOM		0x056e
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index c9094a4f281e9..fda9dce3da998 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -373,14 +373,6 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
+ 		USB_DEVICE_ID_LOGITECH_DINOVO_EDGE_KBD),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
+@@ -391,32 +383,13 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	  HID_BATTERY_QUIRK_AVOID_QUERY },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE, USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_SW),
+ 	  HID_BATTERY_QUIRK_AVOID_QUERY },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_15),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO2_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_LENOVO_YOGA_C630_TOUCHSCREEN),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_13T_AW100),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V1),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V2),
+-	  HID_BATTERY_QUIRK_IGNORE },
+-	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG),
+-	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM),
+ 	  HID_BATTERY_QUIRK_AVOID_QUERY },
++	/*
++	 * Elan I2C-HID touchscreens seem to all report a non present battery,
++	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C-HID devices.
++	 */
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
+ 	{}
+ };
+ 
 -- 
 2.43.0
 
