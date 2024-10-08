@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862AD1CCB32;
-	Tue,  8 Oct 2024 12:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5221CCB32;
+	Tue,  8 Oct 2024 12:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392037; cv=none; b=e8QtopFt3Sq5AnMoxqYhuKiKZ7GfC0i8HO2JLcnzo78VOaylAF4GXfsOLKPFzTs/teTyVGZwzxrM8duRVBbkI+rHfE77GBgh5J6t2R9YjxDk/YnTxz5/pPYvyu0ct7xndmOKqNJwbwO0aD1TMFwcTSf+HwvPpMkenwH5gyRKe54=
+	t=1728392040; cv=none; b=MsWajaOW099Qyk0nUvDOYZJ8lpv59Wc5MLzkmieiEZpq70gzhVePnAdSsxahnO0MieKwBtxbKFNNDbIMDW16SHnb6CUG1Dr0jdS5xCmRUdcyhif88FqDOUBYfoeiENT9Za1ia3W5nfEqb62jE6kjTChvkwSyIxbbgPmVKAdoALU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392037; c=relaxed/simple;
-	bh=L+sldHu0w1X6PkZQfpnN0+J65ZpwdvMMl0IdZ5Uz1/4=;
+	s=arc-20240116; t=1728392040; c=relaxed/simple;
+	bh=FK1SCjel2tCIfilDCDBOffgDWfXUbFbDjwd43aIIgzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwPVGVOlc1HlbGtKB0P6ndCm3NXG7dclnRjYWviMAiNPrUzNA3ckL3J/gMz/zd6UYY/fekVjjhZzyjo9JNrMMQ2VyQmLfLsYAkuZjUH/I1cAgxSQT56z1RtE4Qc7p1ki8QxMun9CrD09NNEehsBgIS1ykm6q/YQbqJa3DnuHf1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDON8WYr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYW6WVNeunLTIUPqRrojD6M2K6kk/8FLAlf/UZ4tIBZcw89zz3UrQQPX/3AzCNKLzCsKfaMSksxq37jVgTHAHJwiHy3bq02SbS96nLN2iHylM45hHkSnmXnP4u7NaqRawhKcRmSpdOfGA9V8ENxyboHO28Kb0vf9ZZYsO5ajSpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/RVGacn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDON8WYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4E8C4CEC7;
-	Tue,  8 Oct 2024 12:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/RVGacn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12719C4CEC7;
+	Tue,  8 Oct 2024 12:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392037;
-	bh=L+sldHu0w1X6PkZQfpnN0+J65ZpwdvMMl0IdZ5Uz1/4=;
+	s=korg; t=1728392040;
+	bh=FK1SCjel2tCIfilDCDBOffgDWfXUbFbDjwd43aIIgzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDON8WYriWrWGHy9wTXlJ9yQRCyNO3pZLD1CMtfWL2bSHWSLo/hOFnJoJjBPjO3Zf
-	 pKdIzpdmYmEJqO+NEm9v4JSpeyWWwGHk43SxqYazXhJDR1+9GevGbNppuP2QLG4bSU
-	 uDGwgGZpkrfa4VIctFMBLKqx/mkTlYgVGUtTbSQo=
+	b=h/RVGacndxvqG2plAQ5N8R7MDTbAINyiqvYGhemp4yloBo+7TAROx73qCWMm31Uqb
+	 FLurARXq+ZVkGiRQTgZl5bF9O/WNIIZa8F1fXQHRp+7+Bc6g3Bn9P/HXYPXxy5moet
+	 fcPHXIQq06zS0mIkeVU/bv7viHwjlcwB0W0CE1WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gergo Koteles <soyer@irl.hu>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 297/558] drm/amdgpu/gfx10: use rlc safe mode for soft recovery
-Date: Tue,  8 Oct 2024 14:05:27 +0200
-Message-ID: <20241008115714.008633477@linuxfoundation.org>
+Subject: [PATCH 6.11 298/558] platform/x86: lenovo-ymc: Ignore the 0x0 state
+Date: Tue,  8 Oct 2024 14:05:28 +0200
+Message-ID: <20241008115714.047984002@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,33 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Gergo Koteles <soyer@irl.hu>
 
-[ Upstream commit ead60e9c4e29c8574cae1be4fe3af1d9a978fb0f ]
+[ Upstream commit d9dca215708d32e7f88ac0591fbb187cbf368adb ]
 
-Protect the MMIO access with safe mode.
+While booting, Lenovo 14ARB7 reports 'lenovo-ymc: Unknown key 0 pressed'
+warning. This is caused by lenovo_ymc_probe() calling lenovo_ymc_notify()
+at probe time to get the initial tablet-mode-switch state and the key-code
+lenovo_ymc_notify() reads from the firmware is not initialized at probe
+time yet on the Lenovo 14ARB7.
 
-Acked-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The hardware/firmware does an ACPI notify on the WMI device itself when
+it initializes the tablet-mode-switch state later on.
+
+Add 0x0 YMC state to the sparse keymap to silence the warning.
+
+Signed-off-by: Gergo Koteles <soyer@irl.hu>
+Link: https://lore.kernel.org/r/08ab73bb74c4ad448409f2ce707b1148874a05ce.1724340562.git.soyer@irl.hu
+[hdegoede@redhat.com: Reword commit message]
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 2 ++
+ drivers/platform/x86/lenovo-ymc.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 5b41c6a44068c..1bb602c4f9b3f 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -8889,7 +8889,9 @@ static void gfx_v10_0_ring_soft_recovery(struct amdgpu_ring *ring,
- 	value = REG_SET_FIELD(value, SQ_CMD, MODE, 0x01);
- 	value = REG_SET_FIELD(value, SQ_CMD, CHECK_VMID, 1);
- 	value = REG_SET_FIELD(value, SQ_CMD, VM_ID, vmid);
-+	amdgpu_gfx_rlc_enter_safe_mode(adev, 0);
- 	WREG32_SOC15(GC, 0, mmSQ_CMD, value);
-+	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
- }
+diff --git a/drivers/platform/x86/lenovo-ymc.c b/drivers/platform/x86/lenovo-ymc.c
+index e0bbd6a14a89c..bd9f95404c7cb 100644
+--- a/drivers/platform/x86/lenovo-ymc.c
++++ b/drivers/platform/x86/lenovo-ymc.c
+@@ -43,6 +43,8 @@ struct lenovo_ymc_private {
+ };
  
- static void
+ static const struct key_entry lenovo_ymc_keymap[] = {
++	/* Ignore the uninitialized state */
++	{ KE_IGNORE, 0x00 },
+ 	/* Laptop */
+ 	{ KE_SW, 0x01, { .sw = { SW_TABLET_MODE, 0 } } },
+ 	/* Tablet */
 -- 
 2.43.0
 
