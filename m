@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590FD1DE4CC;
-	Tue,  8 Oct 2024 12:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97951D31A0;
+	Tue,  8 Oct 2024 12:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392258; cv=none; b=cIHYIco/vDhXs1Mo0klMjdpbTlCPxBPTnRqd5rcKeJg8d2kZgFLgunr4HlQlEQ8anOpfLESj1xlGbensd5mgr3IpY5WuJh/NAvPSExIk8tZMP4W6xfAG6IGKMO8T8oRIxXq2HxQTOhJ8bCQZjmSpiAn2TjYVhFntF1QX1xtDoLo=
+	t=1728392261; cv=none; b=mH8lPtZe3Ic9/IQw3wzvuc99oQEqPHXbiD1wr2P4FaD7fyyP6PJbNb6cPiFUAUYrxcISV8hQoiI+jWKjo3aiL0fQCF/S2lx2Etg7HZLfq1NWB5Xhvye/cAXl25p2otiyePKeNL3gXpRw894DSBUq0I7VHCHsu+vGafnlueLa7Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392258; c=relaxed/simple;
-	bh=XA6UUr0B9isJ69sM3glZTvYM6sNnoJHMIxjU8ySsthg=;
+	s=arc-20240116; t=1728392261; c=relaxed/simple;
+	bh=Q7ouEzaA9DaUG7YRlfoE7oVTlijI5/83MHdX5tkbxN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFuk6nS0nptwb7a+5Vhz9nTjgezACqdCy02Vk/oyvxEAx8FYX7sZnB9gMQZygWkdM/KnrKT3jBA/3ofcqdBDNWUVXSwsW2sa6QTYlQGT8+50F7uKcLXROQ3eUZbHiGpQDIPw95yhCC2P5wheHeUZLMgkDyKs3gDuWZErbOaYTpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xquzTN8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBIAKRjoaE0GB+GNLjYBB2V5AHHp/ywNNDQLh46frabVHiatqzhoxmXsjzwFxy8XnxUmfyrpbwWHDImx0UTYf/Z7b7BYPx7BwJU/v7FfhArJv7kkp4CUo6k/zTMBP3G9d7hBho32n04+TQhS20/KWsetNlHofihAG7/4/wxHN4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B826uZDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xquzTN8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC1FC4CECC;
-	Tue,  8 Oct 2024 12:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B826uZDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275CFC4CEC7;
+	Tue,  8 Oct 2024 12:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392258;
-	bh=XA6UUr0B9isJ69sM3glZTvYM6sNnoJHMIxjU8ySsthg=;
+	s=korg; t=1728392261;
+	bh=Q7ouEzaA9DaUG7YRlfoE7oVTlijI5/83MHdX5tkbxN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xquzTN8PtkD6eLQUNEpECk52FQMpqKkTzaj7sJdX9PmK7zwZ8xUTKAjzrU3f+dvgS
-	 OzFAPT9WxfWVEOOuHh6VzM1l2u5PEag82ko6182EsWM9EzGXodfOnlQRhlvDO1g6GX
-	 uXeyFewPYI7G0O9WXRAqmkpBnZ4VFJnOn29ZIFeQ=
+	b=B826uZDt0nlc6EvUzrBXC+r67N51dd78qu6PfE14kS2R+CsnoruyOJmVHMlJMXwph
+	 Vq+5UL+2iA/6TaWvjtcYEXIREY5YM/sk2l8NYJSlf16iSRoyjRrwtSA9sOFBgljIlc
+	 pSUkZyfiyoi/s2M/ga3WAvXpQtgVnfDs3DsD8mZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Jonas Gorski <jonas.gorski@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 362/558] spi: bcm63xx: Fix module autoloading
-Date: Tue,  8 Oct 2024 14:06:32 +0200
-Message-ID: <20241008115716.543547107@linuxfoundation.org>
+Subject: [PATCH 6.11 363/558] spi: bcm63xx: Fix missing pm_runtime_disable()
+Date: Tue,  8 Oct 2024 14:06:33 +0200
+Message-ID: <20241008115716.582119268@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,31 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 909f34f2462a99bf876f64c5c61c653213e32fce upstream.
+commit 265697288ec2160ca84707565d6641d46f69b0ff upstream.
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from platform_device_id table.
+The pm_runtime_disable() is missing in the remove function, fix it
+by using devm_pm_runtime_enable(), so the pm_runtime_disable() in
+the probe error path can also be removed.
 
-Fixes: 44d8fb30941d ("spi/bcm63xx: move register definitions into the driver")
-Cc: stable@vger.kernel.org
+Fixes: 2d13f2ff6073 ("spi: bcm63xx-spi: fix pm_runtime")
+Cc: stable@vger.kernel.org # v5.13+
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20240819123349.4020472-2-ruanjinjie@huawei.com
+Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20240819123349.4020472-3-ruanjinjie@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-bcm63xx.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/spi/spi-bcm63xx.c
 +++ b/drivers/spi/spi-bcm63xx.c
-@@ -466,6 +466,7 @@ static const struct platform_device_id b
- 	{
- 	},
- };
-+MODULE_DEVICE_TABLE(platform, bcm63xx_spi_dev_match);
+@@ -584,13 +584,15 @@ static int bcm63xx_spi_probe(struct plat
  
- static const struct of_device_id bcm63xx_spi_of_match[] = {
- 	{ .compatible = "brcm,bcm6348-spi", .data = &bcm6348_spi_reg_offsets },
+ 	bcm_spi_writeb(bs, SPI_INTR_CLEAR_ALL, SPI_INT_STATUS);
+ 
+-	pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		goto out_clk_disable;
+ 
+ 	/* register and we are done */
+ 	ret = devm_spi_register_controller(dev, host);
+ 	if (ret) {
+ 		dev_err(dev, "spi register failed\n");
+-		goto out_pm_disable;
++		goto out_clk_disable;
+ 	}
+ 
+ 	dev_info(dev, "at %pr (irq %d, FIFOs size %d)\n",
+@@ -598,8 +600,6 @@ static int bcm63xx_spi_probe(struct plat
+ 
+ 	return 0;
+ 
+-out_pm_disable:
+-	pm_runtime_disable(&pdev->dev);
+ out_clk_disable:
+ 	clk_disable_unprepare(clk);
+ out_err:
 
 
