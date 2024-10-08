@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5551DE3A3;
-	Tue,  8 Oct 2024 12:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106051DE8BE;
+	Tue,  8 Oct 2024 12:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391977; cv=none; b=Gu9Z+ejB+N2R43AzougcPI33a9ahr9D88YlzqBzmoMCa1Kyo7EZCKUS2nPOJl8+8cJkFP2Zs75h5yk0d4eT9YYKazPVkudoSYSlmm76weH3/ZsroLP9u8FH9sD9I2TIpfAG1ME2OR+6aDhf8/kp4AzmcJDT1NE8IJTLlwf5GpQY=
+	t=1728391981; cv=none; b=WJiXQueyc0xYTrq5cLfySb6YXu00Dr8NsTTCPLv5M9VukU6wDp1dcMptJKVa2fulA3afbVeBtkSiezuGZN9yZFL1eBEMDdI90u3ahm2JCoCaCJa6iCNVBvDThlT96CI3fKYRGu+Dn4gfhpeVXTrWThY6DQDH3/RxeM1haCYAcoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391977; c=relaxed/simple;
-	bh=tD84dK93WiLkBMBGroZsVlZ0XZXA/6nUL6N5041NT7Y=;
+	s=arc-20240116; t=1728391981; c=relaxed/simple;
+	bh=0pRHOZb3S3lDGWyOr0YzBURiu7jG8MEsQLfcV5HguMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCYd0998fPz0i7tb2Pzl5XCmdKnoXmA2Y20XmJMmO9V3N5YReCzGcPfI4LetfnZpPS9foxk9beWwVJG2FxGxUWEqyER6z3oAFM0RylhzL6ovW1dzA65fQkpgQez22XRLicVZPJtfSyyXb0lMDYmYTNEX7nO5BQ0Ezva3/eplw2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZxJWhUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nN/CRwtWFm/UCoMrvh5GUvKjhTB86uTPcCwwIj6zwhtXP/lk67oA8J1NdWAcmKLoealEVXijq6WzUPwSv+nznNsAOzt1ArBTp2soUw+yB9e/yFXeKmyZeQZQEMSTEz/PHYm4xbvQteb2poKQWPLH7Mkk+qny0FcCcNGX2BCxf5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC8IEAWf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZxJWhUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902A9C4CED1;
-	Tue,  8 Oct 2024 12:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC8IEAWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C5FC4CEC7;
+	Tue,  8 Oct 2024 12:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391977;
-	bh=tD84dK93WiLkBMBGroZsVlZ0XZXA/6nUL6N5041NT7Y=;
+	s=korg; t=1728391980;
+	bh=0pRHOZb3S3lDGWyOr0YzBURiu7jG8MEsQLfcV5HguMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZxJWhUj2MKGFaYwtkmpj8kTaV/Y8h6Ub/Wn6MYCSGVERAsbi6d86qjb2LCe3OSeI
-	 AvQV5xB+nL3g5sSwBJhOGHjQADDfXEwYx22K6rh7Um2G8qbZlOo1RSJS4Dz05UlD/9
-	 PVFie38436hiMIbZwWL2/P6vTXNoMGtQtChm3tyI=
+	b=cC8IEAWfvyL8x0C1OFN4chq4T4Y4MblKYKtqOUe4nUCX0+ybghlgacwZv2B7gKbuB
+	 vGj7qBGI0h0TcGIkKnE0Sx31dgL1WTeHZorH2CgnIszmP5dkvsdWEEb1bNYeTKjhrx
+	 6QODMIum68cfjSBonM3ifeoUruz8z8DJMjA+sGwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Subject: [PATCH 6.11 238/558] jfs: check if leafidx greater than num leaves per dmap tree
-Date: Tue,  8 Oct 2024 14:04:28 +0200
-Message-ID: <20241008115711.708567965@linuxfoundation.org>
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 273/558] scsi: lpfc: Update PRLO handling in direct attached topology
+Date: Tue,  8 Oct 2024 14:05:03 +0200
+Message-ID: <20241008115713.073257278@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,50 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
+[ Upstream commit 1f0f7679ad8942f810b0f19ee9cf098c3502d66a ]
 
-syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
-than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
+A kref imbalance occurs when handling an unsolicited PRLO in direct
+attached topology.
 
-Shaggy:
-Modified sanity check to apply to control pages as well as leaf pages.
+Rework PRLO rcv handling when in MAPPED state.  Save the state that we were
+handling a PRLO by setting nlp_last_elscmd to ELS_CMD_PRLO.  Then in the
+lpfc_cmpl_els_logo_acc() completion routine, manually restart discovery.
+By issuing the PLOGI, which nlp_gets, before nlp_put at the end of the
+lpfc_cmpl_els_logo_acc() routine, we are saving us from a final nlp_put.
+And, we are still allowing the unreg_rpi to happen.
 
-Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240726231512.92867-7-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_els.c       | 27 ++++++++++++++++-----------
+ drivers/scsi/lpfc/lpfc_nportdisc.c | 22 ++++++++++++++++++++--
+ 2 files changed, 36 insertions(+), 13 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 8847e8c5d5b45..974ecf5e0d952 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -2944,9 +2944,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- {
- 	int ti, n = 0, k, x = 0;
--	int max_size;
-+	int max_size, max_idx;
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index 8c0926ffee1bf..e27f5d955edb4 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -5244,9 +5244,10 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+ 	/* ACC to LOGO completes to NPort <nlp_DID> */
+ 	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
+ 			 "0109 ACC to LOGO completes to NPort x%x refcnt %d "
+-			 "Data: x%x x%x x%x\n",
+-			 ndlp->nlp_DID, kref_read(&ndlp->kref), ndlp->nlp_flag,
+-			 ndlp->nlp_state, ndlp->nlp_rpi);
++			 "last els x%x Data: x%x x%x x%x\n",
++			 ndlp->nlp_DID, kref_read(&ndlp->kref),
++			 ndlp->nlp_last_elscmd, ndlp->nlp_flag, ndlp->nlp_state,
++			 ndlp->nlp_rpi);
  
- 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
-+	max_idx = is_ctl ? LPERCTL : LPERDMAP;
+ 	/* This clause allows the LOGO ACC to complete and free resources
+ 	 * for the Fabric Domain Controller.  It does deliberately skip
+@@ -5258,18 +5259,22 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+ 		goto out;
  
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -2978,6 +2979,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- 		 */
- 		assert(n < 4);
+ 	if (ndlp->nlp_state == NLP_STE_NPR_NODE) {
+-		/* If PLOGI is being retried, PLOGI completion will cleanup the
+-		 * node. The NLP_NPR_2B_DISC flag needs to be retained to make
+-		 * progress on nodes discovered from last RSCN.
+-		 */
+-		if ((ndlp->nlp_flag & NLP_DELAY_TMO) &&
+-		    (ndlp->nlp_last_elscmd == ELS_CMD_PLOGI))
+-			goto out;
+-
+ 		if (ndlp->nlp_flag & NLP_RPI_REGISTERED)
+ 			lpfc_unreg_rpi(vport, ndlp);
+ 
++		/* If came from PRLO, then PRLO_ACC is done.
++		 * Start rediscovery now.
++		 */
++		if (ndlp->nlp_last_elscmd == ELS_CMD_PRLO) {
++			spin_lock_irq(&ndlp->lock);
++			ndlp->nlp_flag |= NLP_NPR_2B_DISC;
++			spin_unlock_irq(&ndlp->lock);
++			ndlp->nlp_prev_state = ndlp->nlp_state;
++			lpfc_nlp_set_state(vport, ndlp, NLP_STE_PLOGI_ISSUE);
++			lpfc_issue_els_plogi(vport, ndlp->nlp_DID, 0);
++		}
  	}
-+	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
-+		return -ENOSPC;
++
+  out:
+ 	/*
+ 	 * The driver received a LOGO from the rport and has ACK'd it.
+diff --git a/drivers/scsi/lpfc/lpfc_nportdisc.c b/drivers/scsi/lpfc/lpfc_nportdisc.c
+index f6a53446e57f9..4574716c8764f 100644
+--- a/drivers/scsi/lpfc/lpfc_nportdisc.c
++++ b/drivers/scsi/lpfc/lpfc_nportdisc.c
+@@ -2652,8 +2652,26 @@ lpfc_rcv_prlo_mapped_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
+ 	/* flush the target */
+ 	lpfc_sli_abort_iocb(vport, ndlp->nlp_sid, 0, LPFC_CTX_TGT);
  
- 	/* set the return to the leftmost leaf describing sufficient
- 	 * free space.
+-	/* Treat like rcv logo */
+-	lpfc_rcv_logo(vport, ndlp, cmdiocb, ELS_CMD_PRLO);
++	/* Send PRLO_ACC */
++	spin_lock_irq(&ndlp->lock);
++	ndlp->nlp_flag |= NLP_LOGO_ACC;
++	spin_unlock_irq(&ndlp->lock);
++	lpfc_els_rsp_acc(vport, ELS_CMD_PRLO, cmdiocb, ndlp, NULL);
++
++	/* Save ELS_CMD_PRLO as the last elscmd and then set to NPR.
++	 * lpfc_cmpl_els_logo_acc is expected to restart discovery.
++	 */
++	ndlp->nlp_last_elscmd = ELS_CMD_PRLO;
++	ndlp->nlp_prev_state = ndlp->nlp_state;
++
++	lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE | LOG_ELS | LOG_DISCOVERY,
++			 "3422 DID x%06x nflag x%x lastels x%x ref cnt %u\n",
++			 ndlp->nlp_DID, ndlp->nlp_flag,
++			 ndlp->nlp_last_elscmd,
++			 kref_read(&ndlp->kref));
++
++	lpfc_nlp_set_state(vport, ndlp, NLP_STE_NPR_NODE);
++
+ 	return ndlp->nlp_state;
+ }
+ 
 -- 
 2.43.0
 
