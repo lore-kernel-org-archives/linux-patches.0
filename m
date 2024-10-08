@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039D5183CB8;
-	Tue,  8 Oct 2024 12:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F54E1D31A0;
+	Tue,  8 Oct 2024 12:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391653; cv=none; b=cnvWUPI9EDxRneQwzROQk9qpTWxkrJZSt/aV5gOIi8xiTBYBptHUh90AXCfC9XFdgCGyKozseufjiZWej3lbZk/FLgjAJ14U0wOB6IdIsmeab8OSOtfLHaXovwSGNHUssjI3SSi3vIANAsRXqOl1KhCDDnedOjGdG1TthadFKcQ=
+	t=1728391656; cv=none; b=ZjMP1Lly9HIDGvhPObXbWDhU1QNMwF1VxNBQTrT78IHhKTDijAJwpIRceTxO0VLYnRx9gmomqgwG/Hg3FHQ097tmgRmB5/Hkk8cSc29zxNRAr/68vbtu0MFXdgIXfV/0ykCBDhmGnl8ELUOdwdX7c1lxzdH7aVAVj1ym2d/6yfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391653; c=relaxed/simple;
-	bh=mQbgBMbYAWFIVABc6JkLAIBqopHHEcRBiFSIhplp+5w=;
+	s=arc-20240116; t=1728391656; c=relaxed/simple;
+	bh=AJ+GzoxOIXr8XhyMA4gqSNh+MhIUZEymRIduCftP5Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olxVz0sg0wxxOwwZpwuAehb6iQc97bAfU4WvI9CWBuKCuKqPgA9sJEolT7OPG7n14k2AcnJXy+TMM1wKcDpRFzfnUI03q93farQ9itTxO+s2jtQaoeR3e/AXk+QmjeI3qq6XgkdlvzgD8FiSGpU2WTlmj6edBfk7aiYCPy9SH1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzp20hQz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CzGunL1YipmuhiZ6wg2Llt7QfxWWdArja0g4GABB6fOICguHAYtmtTIA3FIJF01ScIYL8UzD8TEzpfDsKBVxZSRmS3Uv8uorsHASMwX0bzhC1c4gjTBOd/18l+d8KVeq6xe0PAr2R59Jke4UvnPWLK4tlpsA7E0YEC5J100EhMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0lwJ0ob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzp20hQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60155C4CEC7;
-	Tue,  8 Oct 2024 12:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0lwJ0ob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D603CC4CEC7;
+	Tue,  8 Oct 2024 12:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391652;
-	bh=mQbgBMbYAWFIVABc6JkLAIBqopHHEcRBiFSIhplp+5w=;
+	s=korg; t=1728391656;
+	bh=AJ+GzoxOIXr8XhyMA4gqSNh+MhIUZEymRIduCftP5Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzp20hQzSNob8sfvu9LNrCAN96x2Ge/InAbHstqfhtAclOwxl2LbxyJjtf4l0Dt0L
-	 P/uu0cKPuhjSIrzB+qgMns2Kg0+owQ4gbSkDCltFkLD0asyT33FzpJ5WDJN/11Te5h
-	 WRF1eNXlnbF4ByOIfrUNhX9x8eFvXX3legQFvZR4=
+	b=m0lwJ0obs4j763FsSR6LMDkzB7l/TWStggcgABH8TWETJXV4gdsp+O7Ndv+BGAV9J
+	 p2LCElEHl+FF6nA1lPM15OXUHzBzKb2IZn9GurZ5r4L5j9sB9FLjZ2KlgoOM29LRbL
+	 HkW0wW+l231RER+9VR1S7B8pnScR4JjSSKV0FwNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 183/558] ALSA: hdsp: Break infinite MIDI input flush loop
-Date: Tue,  8 Oct 2024 14:03:33 +0200
-Message-ID: <20241008115709.554753519@linuxfoundation.org>
+Subject: [PATCH 6.11 184/558] tools/nolibc: powerpc: limit stack-protector workaround to GCC
+Date: Tue,  8 Oct 2024 14:03:34 +0200
+Message-ID: <20241008115709.593364631@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -44,64 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit c01f3815453e2d5f699ccd8c8c1f93a5b8669e59 ]
+[ Upstream commit 1daea158d0aae0770371f3079305a29fdb66829e ]
 
-The current MIDI input flush on HDSP and HDSPM drivers relies on the
-hardware reporting the right value.  If the hardware doesn't give the
-proper value but returns -1, it may be stuck at an infinite loop.
+As mentioned in the comment, the workaround for
+__attribute__((no_stack_protector)) is only necessary on GCC.
+Avoid applying the workaround on clang, as clang does not recognize
+__attribute__((__optimize__)) and would fail.
 
-Add a counter and break if the loop is unexpectedly too long.
-
-Link: https://patch.msgid.link/20240808091513.31380-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20240807-nolibc-llvm-v2-3-c20f2f5fc7c2@weissschuh.net
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/rme9652/hdsp.c  | 6 ++++--
- sound/pci/rme9652/hdspm.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ tools/include/nolibc/arch-powerpc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/rme9652/hdsp.c b/sound/pci/rme9652/hdsp.c
-index e7d1b43471a29..713ca262a0e97 100644
---- a/sound/pci/rme9652/hdsp.c
-+++ b/sound/pci/rme9652/hdsp.c
-@@ -1298,8 +1298,10 @@ static int snd_hdsp_midi_output_possible (struct hdsp *hdsp, int id)
+diff --git a/tools/include/nolibc/arch-powerpc.h b/tools/include/nolibc/arch-powerpc.h
+index ac212e6185b26..41ebd394b90c7 100644
+--- a/tools/include/nolibc/arch-powerpc.h
++++ b/tools/include/nolibc/arch-powerpc.h
+@@ -172,7 +172,7 @@
+ 	_ret;                                                                \
+ })
  
- static void snd_hdsp_flush_midi_input (struct hdsp *hdsp, int id)
- {
--	while (snd_hdsp_midi_input_available (hdsp, id))
--		snd_hdsp_midi_read_byte (hdsp, id);
-+	int count = 256;
-+
-+	while (snd_hdsp_midi_input_available(hdsp, id) && --count)
-+		snd_hdsp_midi_read_byte(hdsp, id);
- }
- 
- static int snd_hdsp_midi_output_write (struct hdsp_midi *hmidi)
-diff --git a/sound/pci/rme9652/hdspm.c b/sound/pci/rme9652/hdspm.c
-index 267c7848974ae..74215f57f4fc9 100644
---- a/sound/pci/rme9652/hdspm.c
-+++ b/sound/pci/rme9652/hdspm.c
-@@ -1838,8 +1838,10 @@ static inline int snd_hdspm_midi_output_possible (struct hdspm *hdspm, int id)
- 
- static void snd_hdspm_flush_midi_input(struct hdspm *hdspm, int id)
- {
--	while (snd_hdspm_midi_input_available (hdspm, id))
--		snd_hdspm_midi_read_byte (hdspm, id);
-+	int count = 256;
-+
-+	while (snd_hdspm_midi_input_available(hdspm, id) && --count)
-+		snd_hdspm_midi_read_byte(hdspm, id);
- }
- 
- static int snd_hdspm_midi_output_write (struct hdspm_midi *hmidi)
+-#ifndef __powerpc64__
++#if !defined(__powerpc64__) && !defined(__clang__)
+ /* FIXME: For 32-bit PowerPC, with newer gcc compilers (e.g. gcc 13.1.0),
+  * "omit-frame-pointer" fails with __attribute__((no_stack_protector)) but
+  * works with __attribute__((__optimize__("-fno-stack-protector")))
 -- 
 2.43.0
 
