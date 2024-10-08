@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31811DFD1;
-	Tue,  8 Oct 2024 13:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78701DFD1;
+	Tue,  8 Oct 2024 13:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392633; cv=none; b=QQNBar+PecDe3uyFxijTN4oW6u74V767VKztawny0qH2efdmsmhA3wVwhsDc0RWkYFMSpzJnKG62NbyOP6GLA72houWmKPyYGkcPQIXIXxjABd5Znpv6qpxT01IzqZwq/fWORDULGCecuRtpMgRsJYATZ2t1Nf66lAe5SZ8LplQ=
+	t=1728392637; cv=none; b=a85cpuEP5daxWFJhg4xGF3GsszYN8gLtkIJfhAuyJKn9MjcGp90La/NVpDd0hOzp/Gwk0kggw7H1t5C6yk7G8DccGSXgbUjIza41tQdg5ubko+LYaPAmr4Uq4JYqAwhuPAR/OPYIe0+L7CVKsoDH4nzSO/AMIeknZOuY2Lr15+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392633; c=relaxed/simple;
-	bh=Msk0CKqxOEPOuKqZohYtISrQ+n3lLRKmeVMh0+t45Eg=;
+	s=arc-20240116; t=1728392637; c=relaxed/simple;
+	bh=H0b8g9tgO+GfJe3dj75Pafw0n1KRt/UeOJr0aKDDD8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNSxc6Sb6qTlOCnqUZt4u820zgF+5PvRhlI0feDwwG/ojgSFMuvhDLiyyUVfb1XMbrCiE5AHKenjg+yga/4Nq+LYm4oK4kppQIclDN6JcWGSOppOCoE8N5V66F2MUQUON3/hUHgkkrYj0ny09uPMd0NjTx9QLlU+J55R8Nqtpa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GqvBDQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSoFl3aO2SBRBEfo+2WvqbeTlOkET+iRG+U2dtwTlZVH6UFRt1NyZcs8C4fVPy2ef+WDSvirtXIodpWnDLtPb1NNFmIWmpqnQDmiHEdb6Ml+aJFozLVnRT0MneMqAPfrsRj5+icA0TF/xGH0QGflKrJ/yKI5yw6BQmsDyudIxVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdiBdRfU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GqvBDQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C43C4CEC7;
-	Tue,  8 Oct 2024 13:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdiBdRfU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6756DC4CEC7;
+	Tue,  8 Oct 2024 13:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392633;
-	bh=Msk0CKqxOEPOuKqZohYtISrQ+n3lLRKmeVMh0+t45Eg=;
+	s=korg; t=1728392636;
+	bh=H0b8g9tgO+GfJe3dj75Pafw0n1KRt/UeOJr0aKDDD8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GqvBDQSJkfGEXUeEmDezu5VyzineLHU3cnMxGc1CmFn+UKYib382qwNZJUSlwwQk
-	 /rKKGLJjnRZId2eg9SG85EHraHQ3hCLCbyYzB4NOQ2DiVlFDYoITo7HdOE6NxlcX6+
-	 SbGuj9z4ORNAKHK4zVFq5Sr7T3DUFioHcwD96gj0=
+	b=XdiBdRfUZXOFAk2jUChBaH2oOKKdr01VHW0CbiKDDsZ+I0bNMdOpz/oBjoGro4RCF
+	 Fno4K6jLfnXkS0lW0LrEFCwPQtuiQlrOwMoUveuALxdmV5S8oezA5eGPpxru/Orctr
+	 xmAMrbO6JdYKLdu3tNDdA1V34M7YbuWy0hDeuRFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 472/558] iio: pressure: bmp280: Fix waiting time for BMP3xx configuration
-Date: Tue,  8 Oct 2024 14:08:22 +0200
-Message-ID: <20241008115720.818792749@linuxfoundation.org>
+	Ben Greear <greearb@candelatech.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.11 473/558] vrf: revert "vrf: Remove unnecessary RCU-bh critical section"
+Date: Tue,  8 Oct 2024 14:08:23 +0200
+Message-ID: <20241008115720.858007665@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,42 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 262a6634bcc4f0c1c53d13aa89882909f281a6aa upstream.
+commit b04c4d9eb4f25b950b33218e33b04c94e7445e51 upstream.
 
-According to the datasheet, both pressure and temperature can go up to
-oversampling x32. With this option, the maximum measurement time is not
-80ms (this is for press x32 and temp x2), but it is 130ms nominal
-(calculated from table 3.9.2) and since most of the maximum values
-are around +15%, it is configured to 150ms.
+This reverts commit 504fc6f4f7f681d2a03aa5f68aad549d90eab853.
 
-Fixes: 8d329309184d ("iio: pressure: bmp280: Add support for BMP380 sensor family")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://patch.msgid.link/20240711211558.106327-3-vassilisamir@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+dev_queue_xmit_nit is expected to be called with BH disabled.
+__dev_queue_xmit has the following:
+
+        /* Disable soft irqs for various locks below. Also
+         * stops preemption for RCU.
+         */
+        rcu_read_lock_bh();
+
+VRF must follow this invariant. The referenced commit removed this
+protection. Which triggered a lockdep warning:
+
+	================================
+	WARNING: inconsistent lock state
+	6.11.0 #1 Tainted: G        W
+	--------------------------------
+	inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
+	btserver/134819 [HC0[0]:SC0[0]:HE1:SE1] takes:
+	ffff8882da30c118 (rlock-AF_PACKET){+.?.}-{2:2}, at: tpacket_rcv+0x863/0x3b30
+	{IN-SOFTIRQ-W} state was registered at:
+	  lock_acquire+0x19a/0x4f0
+	  _raw_spin_lock+0x27/0x40
+	  packet_rcv+0xa33/0x1320
+	  __netif_receive_skb_core.constprop.0+0xcb0/0x3a90
+	  __netif_receive_skb_list_core+0x2c9/0x890
+	  netif_receive_skb_list_internal+0x610/0xcc0
+          [...]
+
+	other info that might help us debug this:
+	 Possible unsafe locking scenario:
+
+	       CPU0
+	       ----
+	  lock(rlock-AF_PACKET);
+	  <Interrupt>
+	    lock(rlock-AF_PACKET);
+
+	 *** DEADLOCK ***
+
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl+0x73/0xa0
+	 mark_lock+0x102e/0x16b0
+	 __lock_acquire+0x9ae/0x6170
+	 lock_acquire+0x19a/0x4f0
+	 _raw_spin_lock+0x27/0x40
+	 tpacket_rcv+0x863/0x3b30
+	 dev_queue_xmit_nit+0x709/0xa40
+	 vrf_finish_direct+0x26e/0x340 [vrf]
+	 vrf_l3_out+0x5f4/0xe80 [vrf]
+	 __ip_local_out+0x51e/0x7a0
+          [...]
+
+Fixes: 504fc6f4f7f6 ("vrf: Remove unnecessary RCU-bh critical section")
+Link: https://lore.kernel.org/netdev/20240925185216.1990381-1-greearb@candelatech.com/
+Reported-by: Ben Greear <greearb@candelatech.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240929061839.1175300-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/bmp280-core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/vrf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -1272,10 +1272,11 @@ static int bmp380_chip_config(struct bmp
- 		}
- 		/*
- 		 * Waits for measurement before checking configuration error
--		 * flag. Selected longest measure time indicated in
--		 * section 3.9.1 in the datasheet.
-+		 * flag. Selected longest measurement time, calculated from
-+		 * formula in datasheet section 3.9.2 with an offset of ~+15%
-+		 * as it seen as well in table 3.9.1.
- 		 */
--		msleep(80);
-+		msleep(150);
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -607,7 +607,9 @@ static void vrf_finish_direct(struct sk_
+ 		eth_zero_addr(eth->h_dest);
+ 		eth->h_proto = skb->protocol;
  
- 		/* Check config error flag */
- 		ret = regmap_read(data->regmap, BMP380_REG_ERROR, &tmp);
++		rcu_read_lock_bh();
+ 		dev_queue_xmit_nit(skb, vrf_dev);
++		rcu_read_unlock_bh();
+ 
+ 		skb_pull(skb, ETH_HLEN);
+ 	}
 
 
