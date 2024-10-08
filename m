@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB1E1D12EA;
-	Tue,  8 Oct 2024 12:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE561DDA36;
+	Tue,  8 Oct 2024 12:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390008; cv=none; b=i1EWnC2GqF0jtkCE0Z3ejTXgJkR/wvky95FKS4GbBjnbZYH5IrpU2MB8e4VwaK5wIs2nVNT7p2yEcLKIkGjNsknyb64Vl2dDm2HvkLR3wgb29Tnzt97RoPiMf1WOpz3ObTbWRTm1uHh3EliN1O9SuqM993OG2I6deMr2ZeU6nDI=
+	t=1728390011; cv=none; b=eAndAahH0t1xEBTmxPNLLSiDAMizUIQTXQgnA6YXb4ipureQk4hWg9F/QRGstNkzVLB6lHL/0AE19TwaC5EbOvK4g3T6F8pvefJEWhgcwiAgJ/I9jWTmwBbEToqZA3ENxjKoNR+fCwXmImk97iZ3YsOERfk18J/T2DKUmZUEYM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390008; c=relaxed/simple;
-	bh=/sHYXPQFbl4i31N9zRZj6PyuahY1VKyYfpPjd/T35O8=;
+	s=arc-20240116; t=1728390011; c=relaxed/simple;
+	bh=1Y+ytk3MYnIV5xoqtbZgeK1sNhr+1GnLV2kCYuX8lBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2oGgpXJx44YX3cx4g0kbmNRl+sM2rVt0YtTg/Zgc8dSlxk2pnPT2V7AZC5Q+MwVLscofTXuS/+9jeDPR7iOrUNdhVVFyXGSvrnWElAqpTd4qtzYNBF53fsY4xIqo3Xq3a3ZdRU6sclBjKvGNOFfNuH383Hvyrfnm3fEc/4zD7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLCfYSrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7TzrTkQ+LiZ8b6WEF/1x6yKUsnqUXclGIuWOWaukIsm6V/zbnJg/tsTZ4tvYL3B5re+Edg1UmhEX+libaoii/+R2SgSiQ4LCurhvD4YZbO8nYpjMq7emJRYvcq3IdzQ4gWlE01/55Mn5bL8FDDibWRozgx6WhUR840ZF90SDNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl9LpUxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLCfYSrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640A3C4CEC7;
-	Tue,  8 Oct 2024 12:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl9LpUxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C0C4CEC7;
+	Tue,  8 Oct 2024 12:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390007;
-	bh=/sHYXPQFbl4i31N9zRZj6PyuahY1VKyYfpPjd/T35O8=;
+	s=korg; t=1728390011;
+	bh=1Y+ytk3MYnIV5xoqtbZgeK1sNhr+1GnLV2kCYuX8lBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLCfYSrETZroqjC/WW4CKPX7gDJ4SSPWAv8H4/KlEdiCQq0Up4nkDb2kUM2rbIZ2k
-	 TUYYMDVv5NEdjEmBrASgQfkj6KtR1v3oGdLyPleQbg2MFEylfBPV2dh6PbvQIKAdfq
-	 0jAYC7uEIoI73YGcrqPrd8d6bTx/vdxChbzdeIfQ=
+	b=Hl9LpUxP9myz2vAKgQzRyThKFfOLAgjaePaEOrIEBVrloP+Ci8Fo89c7xu6KO3ord
+	 4mpCWxrTlRVMDt4oOT6qtxEDrTh9tcHbq3EabWGEd61siD2AaFzgUvwIUBZzPW8mWW
+	 f62MfygSPIE7bagQP4SWCL7tJnVwt2FYq1WGIGaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 155/482] ALSA: hdsp: Break infinite MIDI input flush loop
-Date: Tue,  8 Oct 2024 14:03:38 +0200
-Message-ID: <20241008115654.406096098@linuxfoundation.org>
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Raghavendra Kakarla <quic_rkakarla@quicinc.com>
+Subject: [PATCH 6.10 164/482] pmdomain: core: Dont hold the genpd-lock when calling dev_pm_domain_set()
+Date: Tue,  8 Oct 2024 14:03:47 +0200
+Message-ID: <20241008115654.758564429@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,58 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit c01f3815453e2d5f699ccd8c8c1f93a5b8669e59 ]
+[ Upstream commit b87eee38605c396f0e1fa435939960e5c6cd41d6 ]
 
-The current MIDI input flush on HDSP and HDSPM drivers relies on the
-hardware reporting the right value.  If the hardware doesn't give the
-proper value but returns -1, it may be stuck at an infinite loop.
+There is no need to hold the genpd-lock, while assigning the
+dev->pm_domain. In fact, it becomes a problem on a PREEMPT_RT based
+configuration as the genpd-lock may be a raw spinlock, while the lock
+acquired through the call to dev_pm_domain_set() is a regular spinlock.
 
-Add a counter and break if the loop is unexpectedly too long.
+To fix the problem, let's simply move the calls to dev_pm_domain_set()
+outside the genpd-lock.
 
-Link: https://patch.msgid.link/20240808091513.31380-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Tested-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>  # qcm6490 with PREEMPT_RT set
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20240527142557.321610-3-ulf.hansson@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/rme9652/hdsp.c  | 6 ++++--
- sound/pci/rme9652/hdspm.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/pmdomain/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/rme9652/hdsp.c b/sound/pci/rme9652/hdsp.c
-index e7d1b43471a29..713ca262a0e97 100644
---- a/sound/pci/rme9652/hdsp.c
-+++ b/sound/pci/rme9652/hdsp.c
-@@ -1298,8 +1298,10 @@ static int snd_hdsp_midi_output_possible (struct hdsp *hdsp, int id)
+diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
+index 0ab6008e863e8..4134a8344d2da 100644
+--- a/drivers/pmdomain/core.c
++++ b/drivers/pmdomain/core.c
+@@ -1694,7 +1694,6 @@ static int genpd_add_device(struct generic_pm_domain *genpd, struct device *dev,
+ 	genpd_lock(genpd);
  
- static void snd_hdsp_flush_midi_input (struct hdsp *hdsp, int id)
- {
--	while (snd_hdsp_midi_input_available (hdsp, id))
--		snd_hdsp_midi_read_byte (hdsp, id);
-+	int count = 256;
+ 	genpd_set_cpumask(genpd, gpd_data->cpu);
+-	dev_pm_domain_set(dev, &genpd->domain);
+ 
+ 	genpd->device_count++;
+ 	if (gd)
+@@ -1703,6 +1702,7 @@ static int genpd_add_device(struct generic_pm_domain *genpd, struct device *dev,
+ 	list_add_tail(&gpd_data->base.list_node, &genpd->dev_list);
+ 
+ 	genpd_unlock(genpd);
++	dev_pm_domain_set(dev, &genpd->domain);
+  out:
+ 	if (ret)
+ 		genpd_free_dev_data(dev, gpd_data);
+@@ -1759,12 +1759,13 @@ static int genpd_remove_device(struct generic_pm_domain *genpd,
+ 		genpd->gd->max_off_time_changed = true;
+ 
+ 	genpd_clear_cpumask(genpd, gpd_data->cpu);
+-	dev_pm_domain_set(dev, NULL);
+ 
+ 	list_del_init(&pdd->list_node);
+ 
+ 	genpd_unlock(genpd);
+ 
++	dev_pm_domain_set(dev, NULL);
 +
-+	while (snd_hdsp_midi_input_available(hdsp, id) && --count)
-+		snd_hdsp_midi_read_byte(hdsp, id);
- }
+ 	if (genpd->detach_dev)
+ 		genpd->detach_dev(genpd, dev);
  
- static int snd_hdsp_midi_output_write (struct hdsp_midi *hmidi)
-diff --git a/sound/pci/rme9652/hdspm.c b/sound/pci/rme9652/hdspm.c
-index 267c7848974ae..74215f57f4fc9 100644
---- a/sound/pci/rme9652/hdspm.c
-+++ b/sound/pci/rme9652/hdspm.c
-@@ -1838,8 +1838,10 @@ static inline int snd_hdspm_midi_output_possible (struct hdspm *hdspm, int id)
- 
- static void snd_hdspm_flush_midi_input(struct hdspm *hdspm, int id)
- {
--	while (snd_hdspm_midi_input_available (hdspm, id))
--		snd_hdspm_midi_read_byte (hdspm, id);
-+	int count = 256;
-+
-+	while (snd_hdspm_midi_input_available(hdspm, id) && --count)
-+		snd_hdspm_midi_read_byte(hdspm, id);
- }
- 
- static int snd_hdspm_midi_output_write (struct hdspm_midi *hmidi)
 -- 
 2.43.0
 
