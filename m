@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0703A1DE2CF;
-	Tue,  8 Oct 2024 12:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AE21DE2CF;
+	Tue,  8 Oct 2024 12:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391582; cv=none; b=CQ35JFUvjLohfxbfZGA6ftljd8zSZfuWArJG8wDYGsQC/wduNK5nLaI/s0eVLk+89wtOmgdNjxoZs0Pr6BwlHTYIpNDEsFNGYx99PL346osU5ZA1/INSmVGVQ8Om+Nu7zbXSPsGfGtzgERlJzRG2xYE4rzuhNUPOj1zc9iCvLEU=
+	t=1728391585; cv=none; b=FNGWDkOOligiDRb6ngYrlmxmGmjA/7YUmDXm7cp1gUTHDDiXd+/O24yDDRfg/gbfIpNnTIL4rrKq/P2IMyNauNX4BaLAvL0hxJrX+luLIO0486yh6yEIcrLjFCPLdgoIVZ3mKK5ULIYBI2c2FmXMFyZ8VquOrOxjh8TlIknrvpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391582; c=relaxed/simple;
-	bh=sahE01RuJPa54Uic5RkBrF0JU4D4uDH4bwcXT/CGhE0=;
+	s=arc-20240116; t=1728391585; c=relaxed/simple;
+	bh=bOIwAZsZbk19DyaUiFaJk+mnD0Z3dTrDV1Kf9hv0mj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zchse91GvOk44c9l8QXrQuUuBYn2q+TiPszIfm/3YjnEJDsOXD8gIRNNCJyXA+LeePUYqsCwJTkf9d6XdTFTqrsJLCO3QpDRCFnSTKIbrLT6cI3wVTNrfTc8tkJn7p/aBt4zJ8SDNreoQ4f9mwfpb7fRm8OTPJa/cJkkJDgUiXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVuzRmx7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kaWa9YFCixTIbGLsvcytNdgx4lSotpeJq2K361Ba9dht0bgIDrSelHF5XiGo9iI4U8xacxu3VOENygB1808QwOLFtySzqzWuxQXjjFDq0ZEOAyJbgjN56vihkSR8a47+yo7Sp4gboV5DwEGRGGQHeTOzqMsi3PlhGGzBPj7B6Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha8GDDcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVuzRmx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762D9C4CEC7;
-	Tue,  8 Oct 2024 12:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha8GDDcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A86C4CEC7;
+	Tue,  8 Oct 2024 12:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391581;
-	bh=sahE01RuJPa54Uic5RkBrF0JU4D4uDH4bwcXT/CGhE0=;
+	s=korg; t=1728391585;
+	bh=bOIwAZsZbk19DyaUiFaJk+mnD0Z3dTrDV1Kf9hv0mj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVuzRmx7faw/QwsoFqmh7ahnUFQfNkpxTeuO5JNyBk2GXm2U44YNl+xXAkGbod62A
-	 wHvof9wRd795KlDuil9mhu31w8IZPlqJ/V4Wp7hK0IZ0gQqtY4qNT8N6xjCn0rcE+0
-	 N3zuZNQQa9G4tLv3MB2gOhd4mci0ICGW/1KAivgs=
+	b=Ha8GDDcsUhCdCYq/RjxlNF38a+MGhWVm3Hsj3IqnnGPp4Rt47hm+049HXTLvkhzjd
+	 k3TKm+b9DhT62az0bvsnPF92O1CyRjTMsSDVUZMX24dvWXKA41qCuMP7+1dJbi7n92
+	 nAHXQYJWlnOhd2ESnIiWYrrDfpeDpZ57iYrgm4x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shen <shenyang39@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 159/558] crypto: hisilicon - fix missed error branch
-Date: Tue,  8 Oct 2024 14:03:09 +0200
-Message-ID: <20241008115708.617673332@linuxfoundation.org>
+Subject: [PATCH 6.11 160/558] wifi: mt76: mt7915: add dummy HW offload of IEEE 802.11 fragmentation
+Date: Tue,  8 Oct 2024 14:03:10 +0200
+Message-ID: <20241008115708.656660189@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,67 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shen <shenyang39@huawei.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit f386dc64e1a5d3dcb84579119ec350ab026fea88 ]
+[ Upstream commit f2cc859149240d910fdc6405717673e0b84bfda8 ]
 
-If an error occurs in the process after the SGL is mapped
-successfully, it need to unmap the SGL.
+Currently, CONNAC2 series do not support encryption for fragmented Tx frames.
+Therefore, add dummy function mt7915_set_frag_threshold() to prevent SW
+IEEE 802.11 fragmentation.
 
-Otherwise, memory problems may occur.
-
-Signed-off-by: Yang Shen <shenyang39@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Link: https://patch.msgid.link/20240827093011.18621-16-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sgl.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 1 +
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/sgl.c b/drivers/crypto/hisilicon/sgl.c
-index 568acd0aee3fa..c974f95cd126f 100644
---- a/drivers/crypto/hisilicon/sgl.c
-+++ b/drivers/crypto/hisilicon/sgl.c
-@@ -225,7 +225,7 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
- 	dma_addr_t curr_sgl_dma = 0;
- 	struct acc_hw_sge *curr_hw_sge;
- 	struct scatterlist *sg;
--	int sg_n;
-+	int sg_n, ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 7bc3b4cd35925..6bef96e3d2a3d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -400,6 +400,7 @@ mt7915_init_wiphy(struct mt7915_phy *phy)
+ 	ieee80211_hw_set(hw, SUPPORTS_RX_DECAP_OFFLOAD);
+ 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
+ 	ieee80211_hw_set(hw, WANT_MONITOR_VIF);
++	ieee80211_hw_set(hw, SUPPORTS_TX_FRAG);
  
- 	if (!dev || !sgl || !pool || !hw_sgl_dma || index >= pool->count)
- 		return ERR_PTR(-EINVAL);
-@@ -240,14 +240,15 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
+ 	hw->max_tx_fragments = 4;
  
- 	if (sg_n_mapped > pool->sge_nr) {
- 		dev_err(dev, "the number of entries in input scatterlist is bigger than SGL pool setting.\n");
--		return ERR_PTR(-EINVAL);
-+		ret = -EINVAL;
-+		goto err_unmap;
- 	}
- 
- 	curr_hw_sgl = acc_get_sgl(pool, index, &curr_sgl_dma);
- 	if (IS_ERR(curr_hw_sgl)) {
- 		dev_err(dev, "Get SGL error!\n");
--		dma_unmap_sg(dev, sgl, sg_n, DMA_BIDIRECTIONAL);
--		return ERR_PTR(-ENOMEM);
-+		ret = -ENOMEM;
-+		goto err_unmap;
- 	}
- 	curr_hw_sgl->entry_length_in_sgl = cpu_to_le16(pool->sge_nr);
- 	curr_hw_sge = curr_hw_sgl->sge_entries;
-@@ -262,6 +263,11 @@ hisi_acc_sg_buf_map_to_hw_sgl(struct device *dev,
- 	*hw_sgl_dma = curr_sgl_dma;
- 
- 	return curr_hw_sgl;
-+
-+err_unmap:
-+	dma_unmap_sg(dev, sgl, sg_n, DMA_BIDIRECTIONAL);
-+
-+	return ERR_PTR(ret);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index efbb8b23e4719..e094358005799 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -1577,6 +1577,12 @@ mt7915_twt_teardown_request(struct ieee80211_hw *hw,
+ 	mutex_unlock(&dev->mt76.mutex);
  }
- EXPORT_SYMBOL_GPL(hisi_acc_sg_buf_map_to_hw_sgl);
  
++static int
++mt7915_set_frag_threshold(struct ieee80211_hw *hw, u32 val)
++{
++	return 0;
++}
++
+ static int
+ mt7915_set_radar_background(struct ieee80211_hw *hw,
+ 			    struct cfg80211_chan_def *chandef)
+@@ -1707,6 +1713,7 @@ const struct ieee80211_ops mt7915_ops = {
+ 	.sta_set_decap_offload = mt7915_sta_set_decap_offload,
+ 	.add_twt_setup = mt7915_mac_add_twt_setup,
+ 	.twt_teardown_request = mt7915_twt_teardown_request,
++	.set_frag_threshold = mt7915_set_frag_threshold,
+ 	CFG80211_TESTMODE_CMD(mt76_testmode_cmd)
+ 	CFG80211_TESTMODE_DUMP(mt76_testmode_dump)
+ #ifdef CONFIG_MAC80211_DEBUGFS
 -- 
 2.43.0
 
