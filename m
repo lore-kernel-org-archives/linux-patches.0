@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D832190663;
-	Tue,  8 Oct 2024 12:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9FE1779B1;
+	Tue,  8 Oct 2024 12:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390918; cv=none; b=LUj5JHMN7BacO48xk+lWWbLEqPzUqkaHwWaHCa9KytXyfagVHTfEj5uBrYF6l1pf+3FdWPHAt34qk9kiDOeOPNp2kyeWnWaM/UGAPw5/weCeSMBJ1egusVav0csqHegxQLyDhH9DpshJNY5jdiGsdMa8e041a58ETrwmF5VJYjE=
+	t=1728390921; cv=none; b=Av6jRzht8eCMLafgml4eREQU9ouhYogVLnt/+NdtfILHEY/hHVOIDuXkVtp0qJ/l/QSSVqsiOTsJyO8/T8ChrHgS02gPL0N8wAeYk0iYDLCUr7unlOqMQDv/Hd7gY4yA0jX/jILPkuaGlwWKcS8CEEOt7h7MB7MitH+8et/Qsyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390918; c=relaxed/simple;
-	bh=Fuw844+Qb7EUaV1QCjj9aLrOMzboOlm73EEkV6DbOPw=;
+	s=arc-20240116; t=1728390921; c=relaxed/simple;
+	bh=gvHaEKoJFFoGY1k8ruIYreI1Z/nIUULP1xyWY5d3ess=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=if+uy2ShwqXu/syMXe3a5BDhPFzSPWKoZvvVSQjZne70+JyD8VfWMAqDOa5nkiQuZnjn4Wt8POcMh1a6WsbfMBe/1fPswLwGZ5gQVg/MCaiXCSSOVCURkoNottzQc6aCn6DqQGATJv83zBK7OHhT7n1NZdIclHXNFpyDekIwfSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6j/15NP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXmXeftsjNtB6QMFe8NVKUioOaamjngiumHrRm/2xJ9jBuEICt3q3+kd3vk2M+h3w0TT1tUwzaKhEr+xozFakm69YBlRoHPoc1YSE6LPQnD+ZC6H51TicraJa2IzaSCP69IDb+Alt2etpuHoAMl3SM1FPx46yM9CsfxU+QCoFMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njfdlRm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6j/15NP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74810C4CEC7;
-	Tue,  8 Oct 2024 12:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njfdlRm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB11C4CECC;
+	Tue,  8 Oct 2024 12:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390917;
-	bh=Fuw844+Qb7EUaV1QCjj9aLrOMzboOlm73EEkV6DbOPw=;
+	s=korg; t=1728390921;
+	bh=gvHaEKoJFFoGY1k8ruIYreI1Z/nIUULP1xyWY5d3ess=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6j/15NPKFWDg65EkAuOSWE8FISmlZqJFLX3JKRImGkvTqZs4gscDx18QQ5/n+u6t
-	 Doru7TZ1S471GmVS63r7KHjlxO9ctBzKw3MZPiOub0Wq8/FuF1x1akmHIqIB2ebElU
-	 uXQqzt4ihjcbLVmtFayIjrtAeTpJ980cWDniD2Xk=
+	b=njfdlRm0vZRL6Iz0hxQ1X+mpOyGi4ji0SpI7zU3e7O2i/x4DOc7ECoiJSdIdX+nA6
+	 xXQnZ7TDAYc4Qq1QRTsOpoHCjpEnqMyFJJnVu3PbipGE+MjLr4JDzwnFoLO3OQy8Mt
+	 77WK+FY6Jq06cJ5x+vt579OyTRNAIww//FaGkg9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 401/482] smb3: fix incorrect mode displayed for read-only files
-Date: Tue,  8 Oct 2024 14:07:44 +0200
-Message-ID: <20241008115704.189550706@linuxfoundation.org>
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.10 392/482] clk: qcom: gcc-sm8150: De-register gcc_cpuss_ahb_clk_src
+Date: Tue,  8 Oct 2024 14:07:35 +0200
+Message-ID: <20241008115703.838439348@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -49,82 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit 2f3017e7cc7515e0110a3733d8dca84de2a1d23d upstream.
+commit bab0c7a0bc586e736b7cd2aac8e6391709a70ef2 upstream.
 
-Commands like "chmod 0444" mark a file readonly via the attribute flag
-(when mapping of mode bits into the ACL are not set, or POSIX extensions
-are not negotiated), but they were not reported correctly for stat of
-directories (they were reported ok for files and for "ls").  See example
-below:
+The branch clocks of gcc_cpuss_ahb_clk_src are marked critical
+and hence these clocks vote on XO blocking the suspend.
+De-register these clocks and its source as there is no rate
+setting happening on them.
 
-    root:~# ls /mnt2 -l
-    total 12
-    drwxr-xr-x 2 root root         0 Sep 21 18:03 normaldir
-    -rwxr-xr-x 1 root root         0 Sep 21 23:24 normalfile
-    dr-xr-xr-x 2 root root         0 Sep 21 17:55 readonly-dir
-    -r-xr-xr-x 1 root root 209716224 Sep 21 18:15 readonly-file
-    root:~# stat -c %a /mnt2/readonly-dir
-    755
-    root:~# stat -c %a /mnt2/readonly-file
-    555
-
-This fixes the stat of directories when ATTR_READONLY is set
-(in cases where the mode can not be obtained other ways).
-
-    root:~# stat -c %a /mnt2/readonly-dir
-    555
-
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-5-8b3eaa5fb856@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-sc8180x.c |   63 -----------------------------------------
+ 1 file changed, 63 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -800,10 +800,6 @@ static void cifs_open_info_to_fattr(stru
- 		fattr->cf_mode = S_IFREG | cifs_sb->ctx->file_mode;
- 		fattr->cf_dtype = DT_REG;
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -260,28 +260,6 @@ static const struct clk_parent_data gcc_
+ 	{ .hw = &gpll0_out_even.clkr.hw },
+ };
  
--		/* clear write bits if ATTR_READONLY is set */
--		if (fattr->cf_cifsattrs & ATTR_READONLY)
--			fattr->cf_mode &= ~(S_IWUGO);
+-static const struct freq_tbl ftbl_gcc_cpuss_ahb_clk_src[] = {
+-	F(19200000, P_BI_TCXO, 1, 0, 0),
+-	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
+-	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
+-	{ }
+-};
 -
- 		/*
- 		 * Don't accept zero nlink from non-unix servers unless
- 		 * delete is pending.  Instead mark it as unknown.
-@@ -816,6 +812,10 @@ static void cifs_open_info_to_fattr(stru
- 		}
- 	}
- 
-+	/* clear write bits if ATTR_READONLY is set */
-+	if (fattr->cf_cifsattrs & ATTR_READONLY)
-+		fattr->cf_mode &= ~(S_IWUGO);
-+
- out_reparse:
- 	if (S_ISLNK(fattr->cf_mode)) {
- 		if (likely(data->symlink_target))
-@@ -1233,11 +1233,14 @@ handle_mnt_opt:
- 				 __func__, rc);
- 			goto out;
- 		}
--	}
+-static struct clk_rcg2 gcc_cpuss_ahb_clk_src = {
+-	.cmd_rcgr = 0x48014,
+-	.mnd_width = 0,
+-	.hid_width = 5,
+-	.parent_map = gcc_parent_map_0,
+-	.freq_tbl = ftbl_gcc_cpuss_ahb_clk_src,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "gcc_cpuss_ahb_clk_src",
+-		.parent_data = gcc_parents_0,
+-		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
+-	},
+-};
 -
--	/* fill in remaining high mode bits e.g. SUID, VTX */
--	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL)
-+	} else if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL)
-+		/* fill in remaining high mode bits e.g. SUID, VTX */
- 		cifs_sfu_mode(fattr, full_path, cifs_sb, xid);
-+	else if (!(tcon->posix_extensions))
-+		/* clear write bits if ATTR_READONLY is set */
-+		if (fattr->cf_cifsattrs & ATTR_READONLY)
-+			fattr->cf_mode &= ~(S_IWUGO);
-+
+ static const struct freq_tbl ftbl_gcc_emac_ptp_clk_src[] = {
+ 	F(19200000, P_BI_TCXO, 1, 0, 0),
+ 	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
+@@ -1599,25 +1577,6 @@ static struct clk_branch gcc_cfg_noc_usb
+ 	},
+ };
  
- 	/* check for Minshall+French symlinks */
- 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MF_SYMLINKS) {
+-/* For CPUSS functionality the AHB clock needs to be left enabled */
+-static struct clk_branch gcc_cpuss_ahb_clk = {
+-	.halt_reg = 0x48000,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.clkr = {
+-		.enable_reg = 0x52004,
+-		.enable_mask = BIT(21),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gcc_cpuss_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){
+-				      &gcc_cpuss_ahb_clk_src.clkr.hw
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_cpuss_rbcpr_clk = {
+ 	.halt_reg = 0x48008,
+ 	.halt_check = BRANCH_HALT,
+@@ -3150,25 +3109,6 @@ static struct clk_branch gcc_sdcc4_apps_
+ 	},
+ };
+ 
+-/* For CPUSS functionality the SYS NOC clock needs to be left enabled */
+-static struct clk_branch gcc_sys_noc_cpuss_ahb_clk = {
+-	.halt_reg = 0x4819c,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.clkr = {
+-		.enable_reg = 0x52004,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gcc_sys_noc_cpuss_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){
+-				      &gcc_cpuss_ahb_clk_src.clkr.hw
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_tsif_ahb_clk = {
+ 	.halt_reg = 0x36004,
+ 	.halt_check = BRANCH_HALT,
+@@ -4284,8 +4224,6 @@ static struct clk_regmap *gcc_sc8180x_cl
+ 	[GCC_CFG_NOC_USB3_MP_AXI_CLK] = &gcc_cfg_noc_usb3_mp_axi_clk.clkr,
+ 	[GCC_CFG_NOC_USB3_PRIM_AXI_CLK] = &gcc_cfg_noc_usb3_prim_axi_clk.clkr,
+ 	[GCC_CFG_NOC_USB3_SEC_AXI_CLK] = &gcc_cfg_noc_usb3_sec_axi_clk.clkr,
+-	[GCC_CPUSS_AHB_CLK] = &gcc_cpuss_ahb_clk.clkr,
+-	[GCC_CPUSS_AHB_CLK_SRC] = &gcc_cpuss_ahb_clk_src.clkr,
+ 	[GCC_CPUSS_RBCPR_CLK] = &gcc_cpuss_rbcpr_clk.clkr,
+ 	[GCC_DDRSS_GPU_AXI_CLK] = &gcc_ddrss_gpu_axi_clk.clkr,
+ 	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
+@@ -4422,7 +4360,6 @@ static struct clk_regmap *gcc_sc8180x_cl
+ 	[GCC_SDCC4_AHB_CLK] = &gcc_sdcc4_ahb_clk.clkr,
+ 	[GCC_SDCC4_APPS_CLK] = &gcc_sdcc4_apps_clk.clkr,
+ 	[GCC_SDCC4_APPS_CLK_SRC] = &gcc_sdcc4_apps_clk_src.clkr,
+-	[GCC_SYS_NOC_CPUSS_AHB_CLK] = &gcc_sys_noc_cpuss_ahb_clk.clkr,
+ 	[GCC_TSIF_AHB_CLK] = &gcc_tsif_ahb_clk.clkr,
+ 	[GCC_TSIF_INACTIVITY_TIMERS_CLK] = &gcc_tsif_inactivity_timers_clk.clkr,
+ 	[GCC_TSIF_REF_CLK] = &gcc_tsif_ref_clk.clkr,
 
 
