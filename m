@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29491DE894;
-	Tue,  8 Oct 2024 12:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BE61DED60;
+	Tue,  8 Oct 2024 12:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391937; cv=none; b=g4xHl5RzgPg+GPKMttkznwMKh7NffoFJssBctwWwVxyEluIPW/ar+J+JLnJHCAtf3btm95bdZ3FG+8IllhMv3IXc8qmxNzqZpGJv4DSzIZDI9nJhJRuvJxanuu+3XQNwKA0iXR6ZXhKfBFs7AmSzd17J61mfXJKkExm5vuKNxd8=
+	t=1728391940; cv=none; b=WtMMSExsAAz7UBVVmEL1IR7HTl+4n7g2QuwcIJA47L6cbpigeJYqZ5bsGsEq0MYpAVS99ePXwVQBTTVVKTKFh+K1kWwejLFixoAID1yuMMDsWCEQVimUJQ+5HMCZJff5WicR5eRhw5z5sBB6EQgqqLnDmQrJlXhpAUveIZx4H9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391937; c=relaxed/simple;
-	bh=cQzj912aMiBFeiip6Gv1F5HOtogWbufBC/MV/AbaErI=;
+	s=arc-20240116; t=1728391940; c=relaxed/simple;
+	bh=B1rcXRWWW5oYjg4Woj6i2U1Nfk0U8/3jyaA1pk4tkk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1uoYRiYgjBZT/bjVm3JVqi1iu/kfA78ZagwYOU6uXpfLLvMadhG4DZeksSDtjEYmY6nSkQG6DPzwHmirNNPP3jETH3s98F66V9Q92DxybX6vcbB/qaTlQAiOo5PJB8umXwIUdfhc5fXU38C6j+XH4ME8hgnbfHYLGXax5xMUuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt/dYhJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKlWm7uYWRYUz3k/nRoeWHGZ90Hohd5sO3POAoAqg04T1h0PsEoWe4sTEFJeWPoKh0PNyWIlKUw3zqrdGvGtLEVcQY9qOnx4C2YecSUoQ/s/U5K2EjLrfj5SSQpff+cSbW5191ig6AxhbiIwIBdQ4xxC1ihjNSrxA/LLeX6QNFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PASDTLLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt/dYhJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9E8C4CEC7;
-	Tue,  8 Oct 2024 12:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PASDTLLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549EFC4CEC7;
+	Tue,  8 Oct 2024 12:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391937;
-	bh=cQzj912aMiBFeiip6Gv1F5HOtogWbufBC/MV/AbaErI=;
+	s=korg; t=1728391940;
+	bh=B1rcXRWWW5oYjg4Woj6i2U1Nfk0U8/3jyaA1pk4tkk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vt/dYhJwDnxvP3ztLUU7lkkoXuwcRu2rZBBABua5GP0OG2+sC4snWYXsv4vuKG8cH
-	 PIVbFCeA436JyA2zwjpAEk/ZENbLoSg0hIdngceg3XfE6OgnhLAfsOa0SmXkUn5WL6
-	 UfR8M4Gb9drF6oDfWb3a6PnvBECjtPXPHY1eSDtY=
+	b=PASDTLLwCq9vTX+B0M1ASzbT1liXoTSRf/hGFg1rNd2Z1KEQ//Cnp92DiKanjzRm9
+	 f5JIwyIecfxulvdW1klvA7xwEYY0pvswch+V7lFETm7XocGxWmD5X93FFVGVLuxSBX
+	 /UarTD78ppqnS9t4oT/2JZneuJ65wtxrsGOecx+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 267/558] drm/amd/display: Initialize get_bytes_per_elements default to 1
-Date: Tue,  8 Oct 2024 14:04:57 +0200
-Message-ID: <20241008115712.838505376@linuxfoundation.org>
+Subject: [PATCH 6.11 241/558] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Tue,  8 Oct 2024 14:04:31 +0200
+Message-ID: <20241008115711.825191852@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,53 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4067f4fa0423a89fb19a30b57231b384d77d2610 ]
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-Variables, used as denominators and maybe not assigned to other values,
-should not be 0. bytes_per_element_y & bytes_per_element_c are
-initialized by get_bytes_per_element() which should never return 0.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
+
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
+
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c | 2 +-
- .../gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-index 3d95bfa5aca23..ae52510417280 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 3896123ec51c9..83caca2c4026a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1083,6 +1083,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->chip_id = config->chip_id;
  
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
+ 	gpu->allow_relocs = config->info->family < ADRENO_6XX_GEN1;
++	gpu->pdev = pdev;
  
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-index 98502a4f05672..9e1c18b90805d 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-@@ -53,7 +53,7 @@ static void calculate_ttu_cursor(
+ 	/* Only handle the core clock when GMU is not in use (or is absent). */
+ 	if (adreno_has_gmu_wrapper(adreno_gpu) ||
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 3666b42b4ecd7..a274b84664237 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -931,7 +931,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (IS_ERR(gpu->gpu_cx))
+ 		gpu->gpu_cx = NULL;
  
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
  
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
+ 	msm_devfreq_init(gpu);
 -- 
 2.43.0
 
