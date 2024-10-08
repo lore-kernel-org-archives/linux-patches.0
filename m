@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502721DEFE0;
-	Tue,  8 Oct 2024 13:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7D91DF243;
+	Tue,  8 Oct 2024 13:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393480; cv=none; b=sQ8WUodcCMDTihAqBpDYxRqaLahja2Vaem9EV8utH+aUv/m0aTpoXEYXxjBB4UXV+8cTthbg2yhhkTP99L/z1hxkx+QjX4uvr2EJpxu58bfdFhamGPGekQNQhVyTJ6Yp4VfST2iLqB5kIFH6SHV+KJ0V0Pm5f38chguMSIdRw0I=
+	t=1728393483; cv=none; b=Eo+7IS5zOEVAuLUxiL8/pAyV3SnoSI86jilVkLdvAZ/VS1g10hacHCrALy/Q13P8PTBAT27msK0gDvEPqE0Bwnh3kp8vS5VQmVDtnaBOWVQX9+9yea//lFfle/nAh8z4CjyedOe63bdhHULhuDxLI+BK8L5tocrDVlmEX6WeQes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393480; c=relaxed/simple;
-	bh=ldxWdiGI/KRpszdLsPoQ42wNM6rabCEpds+xmeQWy+4=;
+	s=arc-20240116; t=1728393483; c=relaxed/simple;
+	bh=scDzsqFOAVSRABNHo7i6z6UaQQqGQoSpBJNP4jVVNTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ebt/AgQAQNty6R4aBcIccpNo/6j1vdk+1j/3MPW8qI7WNoE/kLnlK5pYgd9Jd9WsrJve4g2gJXXYSZJQv2AeO/pfWG1OXCBNO/O7gDJD2YmGpf9qIKro/oyRwtxi9gBQ1g9q7Q4ZdbZuS4CkMHJFJCq65OcyAOdnzcVzfKPdycE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0kBP/tS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEvXQsb/2whJwxntQtlDVO59u1SdvxwsTopsj7ujpSf4yyWeovocmx4SViRHjeH2cuQLRMDMbXdZ6drT84sillraF4xqcPgjPuY6mH9lOjKhmnj80TvHbBIcp9p9yBMwepcQm3+4yeHj1/I/mTDm1MQc+0OOXctihuODmdsnOGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+f5zPrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0kBP/tS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67834C4CEC7;
-	Tue,  8 Oct 2024 13:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+f5zPrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932BCC4CEC7;
+	Tue,  8 Oct 2024 13:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393479;
-	bh=ldxWdiGI/KRpszdLsPoQ42wNM6rabCEpds+xmeQWy+4=;
+	s=korg; t=1728393483;
+	bh=scDzsqFOAVSRABNHo7i6z6UaQQqGQoSpBJNP4jVVNTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0kBP/tSHi5zxMGcS2KIIm8uG28JU5dH0/TPiePxj543V48SZphS3Lm0n4JrY+pX1
-	 eAJadIZ+i5sFln48dZFOmyGfupeVChj1fIY2wd8yTyv47GNIznpScFHKxtmdrLZvmZ
-	 t/AGgYIJqXSdw38fJr9MkpfKLFKGhrpOv02zFt9I=
+	b=T+f5zPrrgJwZlFhjEjUSrAQJKA3Li5wCloWZyadSR4W8CsFZNGyxyse3UB4p6jQrR
+	 i1sRN5sAaDHCbM20J5sZx6lw1WhEmQ8vz6aIWxxWMIrjvb3aho/coE/N6nOYZ9NylO
+	 eLKmJ3DT1TI0tiBTolMnribU1Z035j18qoek49jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/386] drm/amdgpu: fix unchecked return value warning for amdgpu_gfx
-Date: Tue,  8 Oct 2024 14:06:50 +0200
-Message-ID: <20241008115635.916778132@linuxfoundation.org>
+Subject: [PATCH 6.6 166/386] perf: Fix event_function_call() locking
+Date: Tue,  8 Oct 2024 14:06:51 +0200
+Message-ID: <20241008115635.955577950@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,70 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <tim.huang@amd.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit c0277b9d7c2ee9ee5dbc948548984f0fbb861301 ]
+[ Upstream commit 558abc7e3f895049faa46b08656be4c60dc6e9fd ]
 
-This resolves the unchecded return value warning reported by Coverity.
+All the event_function/@func call context already uses perf_ctx_lock()
+except for the !ctx->is_active case. Make it all consistent.
 
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240807115550.138301094@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index 0ca51df46cc0d..e7b053898f9e9 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -793,8 +793,11 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
- 	int r;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d40809bdf4b30..18eab7f50ecce 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -263,6 +263,7 @@ static int event_function(void *info)
+ static void event_function_call(struct perf_event *event, event_f func, void *data)
+ {
+ 	struct perf_event_context *ctx = event->ctx;
++	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
+ 	struct task_struct *task = READ_ONCE(ctx->task); /* verified in event_function */
+ 	struct event_function_struct efs = {
+ 		.event = event,
+@@ -291,22 +292,22 @@ static void event_function_call(struct perf_event *event, event_f func, void *da
+ 	if (!task_function_call(task, event_function, &efs))
+ 		return;
  
- 	if (amdgpu_ras_is_supported(adev, ras_block->block)) {
--		if (!amdgpu_persistent_edc_harvesting_supported(adev))
--			amdgpu_ras_reset_error_status(adev, AMDGPU_RAS_BLOCK__GFX);
-+		if (!amdgpu_persistent_edc_harvesting_supported(adev)) {
-+			r = amdgpu_ras_reset_error_status(adev, AMDGPU_RAS_BLOCK__GFX);
-+			if (r)
-+				return r;
-+		}
- 
- 		r = amdgpu_ras_block_late_init(adev, ras_block);
- 		if (r)
-@@ -938,7 +941,10 @@ uint32_t amdgpu_kiq_rreg(struct amdgpu_device *adev, uint32_t reg)
- 		pr_err("critical bug! too many kiq readers\n");
- 		goto failed_unlock;
+-	raw_spin_lock_irq(&ctx->lock);
++	perf_ctx_lock(cpuctx, ctx);
+ 	/*
+ 	 * Reload the task pointer, it might have been changed by
+ 	 * a concurrent perf_event_context_sched_out().
+ 	 */
+ 	task = ctx->task;
+ 	if (task == TASK_TOMBSTONE) {
+-		raw_spin_unlock_irq(&ctx->lock);
++		perf_ctx_unlock(cpuctx, ctx);
+ 		return;
  	}
--	amdgpu_ring_alloc(ring, 32);
-+	r = amdgpu_ring_alloc(ring, 32);
-+	if (r)
-+		goto failed_unlock;
-+
- 	amdgpu_ring_emit_rreg(ring, reg, reg_val_offs);
- 	r = amdgpu_fence_emit_polling(ring, &seq, MAX_KIQ_REG_WAIT);
- 	if (r)
-@@ -1004,7 +1010,10 @@ void amdgpu_kiq_wreg(struct amdgpu_device *adev, uint32_t reg, uint32_t v)
+ 	if (ctx->is_active) {
+-		raw_spin_unlock_irq(&ctx->lock);
++		perf_ctx_unlock(cpuctx, ctx);
+ 		goto again;
  	}
+ 	func(event, NULL, ctx, data);
+-	raw_spin_unlock_irq(&ctx->lock);
++	perf_ctx_unlock(cpuctx, ctx);
+ }
  
- 	spin_lock_irqsave(&kiq->ring_lock, flags);
--	amdgpu_ring_alloc(ring, 32);
-+	r = amdgpu_ring_alloc(ring, 32);
-+	if (r)
-+		goto failed_unlock;
-+
- 	amdgpu_ring_emit_wreg(ring, reg, v);
- 	r = amdgpu_fence_emit_polling(ring, &seq, MAX_KIQ_REG_WAIT);
- 	if (r)
-@@ -1040,6 +1049,7 @@ void amdgpu_kiq_wreg(struct amdgpu_device *adev, uint32_t reg, uint32_t v)
- 
- failed_undo:
- 	amdgpu_ring_undo(ring);
-+failed_unlock:
- 	spin_unlock_irqrestore(&kiq->ring_lock, flags);
- failed_kiq_write:
- 	dev_err(adev->dev, "failed to write reg:%x\n", reg);
+ /*
 -- 
 2.43.0
 
