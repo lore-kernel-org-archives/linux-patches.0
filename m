@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF6A1DE3AE;
-	Tue,  8 Oct 2024 12:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696BB1DA60C;
+	Tue,  8 Oct 2024 12:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390496; cv=none; b=dDjMt/g7Yo6baF7RjMNfj9hRhsYUBqL+Qa5W6CqoKyuNPm+Eas9YUWgfGleP+Xsx/fZFJB21ifAiXBb+X6bN9+4OqzZDD/YzuXhGaVSPMdsi2oxOaT1LdFceZERdCd69Li3Ta64wvpTooHROH/ymRLBuUDqbonHTJTa0wmJggXI=
+	t=1728390499; cv=none; b=LpuPHWKgP8UMXraK2AfmapPfJBYZYoz+y8DCOgnaxXb7Gb3HTbQD5uTqQJy+kOFTsaqdXebNIljsv4NktlIBovduTSfHHx9PX38kcZZWin660mwUhy1KceP2yO00qt1TmyYlXAA7Yger+mVQosOE9sSuCqmTrsU7bx34YR98CK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390496; c=relaxed/simple;
-	bh=gzueCPlRjqTcB5Ada1PS5YK9y1MyYJrPUX6BPfGz9OE=;
+	s=arc-20240116; t=1728390499; c=relaxed/simple;
+	bh=/IhfLkbagABHqpZ81aNaQhGak6GZkKWtjSsJsvhj/fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CK/DeXAJCN57jgQZe4O3o18dOLmG+2L7xomPWhHVXrJI9A9t169e2+PcxH43DWXEvEIaTPFRg3ai9LlQ85hXW8+d7L0xZq6zT4fQCb1+bM2vgAY62ZinpCMJ8jf6u8oKwWAVNOFV7b+CNS+LEtKN/b+gsR4lewj41XYh2Td7njo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO/tG8z6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aoq+re8wkkaI/bO8W4mF2Z/MoejMVvrMit2pz2++RVFa2IOLU9glMDf7Jlw5h22NWkGueohEHzMzniW9jmlu9r3C53W57qAQXuz4JTrhgLjScckkDEnK/ohh/lI/UBV0a3qA68OFV0fw4VM7l9+s1NMHjN0ViCGsQOT+O+TLDfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVhBttg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO/tG8z6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887EAC4CEC7;
-	Tue,  8 Oct 2024 12:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVhBttg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC80EC4CEC7;
+	Tue,  8 Oct 2024 12:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390495;
-	bh=gzueCPlRjqTcB5Ada1PS5YK9y1MyYJrPUX6BPfGz9OE=;
+	s=korg; t=1728390499;
+	bh=/IhfLkbagABHqpZ81aNaQhGak6GZkKWtjSsJsvhj/fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO/tG8z6YNhBaTtpkFFYY0m7rLpk2EmwVwxAddlXSa3zIxtQ4eTMz2WOX9ZOi0UuW
-	 TjVKbmrUQ+skHG1ZbVa+BaDiAxEg2Htdz7AEPtVfD4G8UlioYkFysUpNRIVzf1hezZ
-	 7QumlJK0rPdhKkZOs3CKH7BQUmqfNTjvP7rTbGs0=
+	b=WVhBttg+KtmBuFvxyxEl0ET0TrIY1l/ovLIrvLu2wfBSQpYj4Hsm7NG2D3cfNguTR
+	 vAlTQ3fbEKQilPIbG8zpEE3dB92MiMApqAGecgZo7lZBOiicbC5guEOyACzTwSXeGM
+	 u0CgyvqCLuvjhljw8Y15h0gb/aFOjfsKp5xu6yUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.10 307/482] power: supply: hwmon: Fix missing temp1_max_alarm attribute
-Date: Tue,  8 Oct 2024 14:06:10 +0200
-Message-ID: <20241008115700.516159384@linuxfoundation.org>
+	Feng Tang <feng.tang@intel.com>,
+	David Rientjes <rientjes@google.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.10 308/482] mm, slub: avoid zeroing kmalloc redzone
+Date: Tue,  8 Oct 2024 14:06:11 +0200
+Message-ID: <20241008115700.554838654@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,41 +52,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit e50a57d16f897e45de1112eb6478577b197fab52 upstream.
+commit 59090e479ac78ae18facd4c58eb332562a23020e upstream.
 
-Temp channel 0 aka temp1 can have a temp1_max_alarm attribute for
-power_supply devices which have a POWER_SUPPLY_PROP_TEMP_ALERT_MAX
-property.
+Since commit 946fa0dbf2d8 ("mm/slub: extend redzone check to extra
+allocated kmalloc space than requested"), setting orig_size treats
+the wasted space (object_size - orig_size) as a redzone. However with
+init_on_free=1 we clear the full object->size, including the redzone.
 
-HWMON_T_MAX_ALARM was missing from power_supply_hwmon_info for
-temp channel 0, causing the hwmon temp1_max_alarm attribute to be
-missing from such power_supply devices.
+Additionally we clear the object metadata, including the stored orig_size,
+making it zero, which makes check_object() treat the whole object as a
+redzone.
 
-Add this to power_supply_hwmon_info to fix this.
+These issues lead to the following BUG report with "slub_debug=FUZ
+init_on_free=1":
 
-Fixes: f1d33ae806ec ("power: supply: remove duplicated argument in power_supply_hwmon_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240908185337.103696-2-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[    0.000000] =============================================================================
+[    0.000000] BUG kmalloc-8 (Not tainted): kmalloc Redzone overwritten
+[    0.000000] -----------------------------------------------------------------------------
+[    0.000000]
+[    0.000000] 0xffff000010032858-0xffff00001003285f @offset=2136. First byte 0x0 instead of 0xcc
+[    0.000000] FIX kmalloc-8: Restoring kmalloc Redzone 0xffff000010032858-0xffff00001003285f=0xcc
+[    0.000000] Slab 0xfffffdffc0400c80 objects=36 used=23 fp=0xffff000010032a18 flags=0x3fffe0000000200(workingset|node=0|zone=0|lastcpupid=0x1ffff)
+[    0.000000] Object 0xffff000010032858 @offset=2136 fp=0xffff0000100328c8
+[    0.000000]
+[    0.000000] Redzone  ffff000010032850: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Object   ffff000010032858: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Redzone  ffff000010032860: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Padding  ffff0000100328b4: 00 00 00 00 00 00 00 00 00 00 00 00              ............
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.11.0-rc3-next-20240814-00004-g61844c55c3f4 #144
+[    0.000000] Hardware name: NXP i.MX95 19X19 board (DT)
+[    0.000000] Call trace:
+[    0.000000]  dump_backtrace+0x90/0xe8
+[    0.000000]  show_stack+0x18/0x24
+[    0.000000]  dump_stack_lvl+0x74/0x8c
+[    0.000000]  dump_stack+0x18/0x24
+[    0.000000]  print_trailer+0x150/0x218
+[    0.000000]  check_object+0xe4/0x454
+[    0.000000]  free_to_partial_list+0x2f8/0x5ec
+
+To address the issue, use orig_size to clear the used area. And restore
+the value of orig_size after clear the remaining area.
+
+When CONFIG_SLUB_DEBUG not defined, (get_orig_size()' directly returns
+s->object_size. So when using memset to init the area, the size can simply
+be orig_size, as orig_size returns object_size when CONFIG_SLUB_DEBUG not
+enabled. And orig_size can never be bigger than object_size.
+
+Fixes: 946fa0dbf2d8 ("mm/slub: extend redzone check to extra allocated kmalloc space than requested")
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Feng Tang <feng.tang@intel.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/power_supply_hwmon.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/slub.c |  100 ++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 53 insertions(+), 47 deletions(-)
 
---- a/drivers/power/supply/power_supply_hwmon.c
-+++ b/drivers/power/supply/power_supply_hwmon.c
-@@ -299,7 +299,8 @@ static const struct hwmon_channel_info *
- 			   HWMON_T_INPUT     |
- 			   HWMON_T_MAX       |
- 			   HWMON_T_MIN       |
--			   HWMON_T_MIN_ALARM,
-+			   HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM,
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -756,6 +756,50 @@ static inline bool slab_update_freelist(
+ 	return false;
+ }
  
- 			   HWMON_T_LABEL     |
- 			   HWMON_T_INPUT     |
++/*
++ * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
++ * family will round up the real request size to these fixed ones, so
++ * there could be an extra area than what is requested. Save the original
++ * request size in the meta data area, for better debug and sanity check.
++ */
++static inline void set_orig_size(struct kmem_cache *s,
++				void *object, unsigned int orig_size)
++{
++	void *p = kasan_reset_tag(object);
++	unsigned int kasan_meta_size;
++
++	if (!slub_debug_orig_size(s))
++		return;
++
++	/*
++	 * KASAN can save its free meta data inside of the object at offset 0.
++	 * If this meta data size is larger than 'orig_size', it will overlap
++	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
++	 * 'orig_size' to be as at least as big as KASAN's meta data.
++	 */
++	kasan_meta_size = kasan_metadata_size(s, true);
++	if (kasan_meta_size > orig_size)
++		orig_size = kasan_meta_size;
++
++	p += get_info_end(s);
++	p += sizeof(struct track) * 2;
++
++	*(unsigned int *)p = orig_size;
++}
++
++static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
++{
++	void *p = kasan_reset_tag(object);
++
++	if (!slub_debug_orig_size(s))
++		return s->object_size;
++
++	p += get_info_end(s);
++	p += sizeof(struct track) * 2;
++
++	return *(unsigned int *)p;
++}
++
+ #ifdef CONFIG_SLUB_DEBUG
+ static unsigned long object_map[BITS_TO_LONGS(MAX_OBJS_PER_PAGE)];
+ static DEFINE_SPINLOCK(object_map_lock);
+@@ -969,50 +1013,6 @@ static void print_slab_info(const struct
+ 	       folio_flags(folio, 0));
+ }
+ 
+-/*
+- * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
+- * family will round up the real request size to these fixed ones, so
+- * there could be an extra area than what is requested. Save the original
+- * request size in the meta data area, for better debug and sanity check.
+- */
+-static inline void set_orig_size(struct kmem_cache *s,
+-				void *object, unsigned int orig_size)
+-{
+-	void *p = kasan_reset_tag(object);
+-	unsigned int kasan_meta_size;
+-
+-	if (!slub_debug_orig_size(s))
+-		return;
+-
+-	/*
+-	 * KASAN can save its free meta data inside of the object at offset 0.
+-	 * If this meta data size is larger than 'orig_size', it will overlap
+-	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
+-	 * 'orig_size' to be as at least as big as KASAN's meta data.
+-	 */
+-	kasan_meta_size = kasan_metadata_size(s, true);
+-	if (kasan_meta_size > orig_size)
+-		orig_size = kasan_meta_size;
+-
+-	p += get_info_end(s);
+-	p += sizeof(struct track) * 2;
+-
+-	*(unsigned int *)p = orig_size;
+-}
+-
+-static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
+-{
+-	void *p = kasan_reset_tag(object);
+-
+-	if (!slub_debug_orig_size(s))
+-		return s->object_size;
+-
+-	p += get_info_end(s);
+-	p += sizeof(struct track) * 2;
+-
+-	return *(unsigned int *)p;
+-}
+-
+ void skip_orig_size_check(struct kmem_cache *s, const void *object)
+ {
+ 	set_orig_size(s, (void *)object, s->object_size);
+@@ -1859,7 +1859,6 @@ static inline void inc_slabs_node(struct
+ 							int objects) {}
+ static inline void dec_slabs_node(struct kmem_cache *s, int node,
+ 							int objects) {}
+-
+ #ifndef CONFIG_SLUB_TINY
+ static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
+ 			       void **freelist, void *nextfree)
+@@ -2187,14 +2186,21 @@ bool slab_free_hook(struct kmem_cache *s
+ 	 */
+ 	if (unlikely(init)) {
+ 		int rsize;
+-		unsigned int inuse;
++		unsigned int inuse, orig_size;
+ 
+ 		inuse = get_info_end(s);
++		orig_size = get_orig_size(s, x);
+ 		if (!kasan_has_integrated_init())
+-			memset(kasan_reset_tag(x), 0, s->object_size);
++			memset(kasan_reset_tag(x), 0, orig_size);
+ 		rsize = (s->flags & SLAB_RED_ZONE) ? s->red_left_pad : 0;
+ 		memset((char *)kasan_reset_tag(x) + inuse, 0,
+ 		       s->size - inuse - rsize);
++		/*
++		 * Restore orig_size, otherwize kmalloc redzone overwritten
++		 * would be reported
++		 */
++		set_orig_size(s, x, orig_size);
++
+ 	}
+ 	/* KASAN might put x into memory quarantine, delaying its reuse. */
+ 	return !kasan_slab_free(s, x, init);
 
 
