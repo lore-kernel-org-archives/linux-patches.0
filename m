@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8791DE8A0;
-	Tue,  8 Oct 2024 12:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FE41DF995;
+	Tue,  8 Oct 2024 12:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392201; cv=none; b=Ok1x1kwdOnUOPQCak4QFLBrcY7Pd7M8Uo29cnEOey1+KDxhB4KHuiCoaHfitbU8d2v0bRk2/fVu6Ih+2FtcC3lg4xs9AKJIvNPiOapW+WWoogIqnE/h6MCohjHL7EaLN/pvDXx2w0dnzY/QtMHdWAfShwiPqsTjS6bq+RSy3mFk=
+	t=1728392204; cv=none; b=ZLRxteSwVM3YvupI8UTZWYcYXxBmgwIGSsvoRTAMAyct46h7SWBTg0Hh5bkUIpXEIulSqos8ysbALOH4QZGfPXFvML1Q9H05cNbYGh/B4lWcf5OgrLH4BSDoUADqoRzixxg9gKxxC3Kyj44TFC/jHC6TI+d7wHd4/k2DL0aBbr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392201; c=relaxed/simple;
-	bh=6U/+5H2HDpqoHs6RI4YUqKAEy63Io9JASbGUEtqCPzI=;
+	s=arc-20240116; t=1728392204; c=relaxed/simple;
+	bh=FkzOADYzbyNYi1PneAgVB6DJ4Hfjl18gqOGUifaA+Dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btefDs8IbfveLKf7EdHauv9xsXdF0wKyH7gPzCvH1Ge2BRa8aidqGOHKWwTs7qr3ApD2aMTs5sFgzBQL2n5oQv6fHewFrMJj3MlpCHXas+HR5EmK9vWls2KEeQjutdWt9YWtL+VZj/sZGXvo4nzzsd9ruQDQr9Rk/VNvQ4vji/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzOAjhf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foauC6wA0HOgxnUiCWFuWB5lKwJkaIqZWAN/48mow9SGay+oHNiWPh0wOHDL0iBtOyWcAspo0+JPG8NWIj/t2YZwj8dDXy5xT8nNmiuXhmYVjLSjDOtGbN7GYlzpgA8/TUqfcC3ixz20RQTdxSJnnpjYcZ+vkFGw6NEYiYc9aOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMxNCzuR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzOAjhf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C5BC4CEC7;
-	Tue,  8 Oct 2024 12:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMxNCzuR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B765C4CEC7;
+	Tue,  8 Oct 2024 12:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392200;
-	bh=6U/+5H2HDpqoHs6RI4YUqKAEy63Io9JASbGUEtqCPzI=;
+	s=korg; t=1728392204;
+	bh=FkzOADYzbyNYi1PneAgVB6DJ4Hfjl18gqOGUifaA+Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzOAjhf/cgNYcksVCuBA/Gk9dR9kyOrtQk5kvuxXOYD+H9kddb4TmN2BvGCpjbBj0
-	 O2EXQaGYef42H0GEZJms6tYTljywG4iY14tmeuhoB7gJNnadG8/dR3gOfq1HvtViwQ
-	 cb5PbS3L12tDas+oPCObnb8/mIVQhOi6J8n7XhwQ=
+	b=NMxNCzuRifOfIBaIr2+NxK/O6dFxgchXgmzLCFUkpkOTG44xiHzICbcUkpRAV4/3+
+	 kVp4mCJiEPCUa4KiISdMrD7rKoeIxfLWuloVnHFCA18ZAiEOTBj2s5zD/U+zplPiYd
+	 PWzn5Hkz6NIsvb69LWOiisTb7xIaNxa0AIy7yELY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Cheatham <Benjamin.Cheatham@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Srinivasulu Thanneeru <sthanneeru.opensrc@micron.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 314/558] EINJ, CXL: Fix CXL device SBDF calculation
-Date: Tue,  8 Oct 2024 14:05:44 +0200
-Message-ID: <20241008115714.667369806@linuxfoundation.org>
+Subject: [PATCH 6.11 315/558] spi: spi-imx: Fix pm_runtime_set_suspended() with runtime pm enabled
+Date: Tue,  8 Oct 2024 14:05:45 +0200
+Message-ID: <20241008115714.705863087@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cheatham <Benjamin.Cheatham@amd.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit ee1e3c46ed19c096be22472c728fa7f68b1352c4 ]
+[ Upstream commit b6e05ba0844139dde138625906015c974c86aa93 ]
 
-The SBDF of the target CXL 2.0 compliant root port is required to inject a CXL
-protocol error as per ACPI 6.5. The SBDF given has to be in the
-following format:
+It is not valid to call pm_runtime_set_suspended() for devices
+with runtime PM enabled because it returns -EAGAIN if it is enabled
+already and working. So, call pm_runtime_disable() before to fix it.
 
-31     24 23    16 15    11 10      8  7        0
-+-------------------------------------------------+
-| segment |   bus  | device | function | reserved |
-+-------------------------------------------------+
-
-The SBDF calculated in cxl_dport_get_sbdf() doesn't account for
-the reserved bits currently, causing the wrong SBDF to be used.
-Fix said calculation to properly shift the SBDF.
-
-Without this fix, error injection into CXL 2.0 root ports through the
-CXL debugfs interface (<debugfs>/cxl) is broken. Injection
-through the legacy interface (<debugfs>/apei/einj/) will still work
-because the SBDF is manually provided by the user.
-
-Fixes: 12fb28ea6b1cf ("EINJ: Add CXL error type support")
-Signed-off-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Tested-by: Srinivasulu Thanneeru <sthanneeru.opensrc@micron.com>
-Reviewed-by: Srinivasulu Thanneeru <sthanneeru.opensrc@micron.com>
-Link: https://patch.msgid.link/20240927163428.366557-1-Benjamin.Cheatham@amd.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 43b6bf406cd0 ("spi: imx: fix runtime pm support for !CONFIG_PM")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240923040015.3009329-2-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/einj-cxl.c | 2 +-
+ drivers/spi/spi-imx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/apei/einj-cxl.c b/drivers/acpi/apei/einj-cxl.c
-index 8b8be0c90709f..d64e2713aae4b 100644
---- a/drivers/acpi/apei/einj-cxl.c
-+++ b/drivers/acpi/apei/einj-cxl.c
-@@ -63,7 +63,7 @@ static int cxl_dport_get_sbdf(struct pci_dev *dport_dev, u64 *sbdf)
- 		seg = bridge->domain_nr;
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 85bd1a82a34eb..4c31d36f3130a 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1865,8 +1865,8 @@ static int spi_imx_probe(struct platform_device *pdev)
+ 		spi_imx_sdma_exit(spi_imx);
+ out_runtime_pm_put:
+ 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
+-	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(spi_imx->dev);
++	pm_runtime_set_suspended(&pdev->dev);
  
- 	bus = pbus->number;
--	*sbdf = (seg << 24) | (bus << 16) | dport_dev->devfn;
-+	*sbdf = (seg << 24) | (bus << 16) | (dport_dev->devfn << 8);
- 
- 	return 0;
- }
+ 	clk_disable_unprepare(spi_imx->clk_ipg);
+ out_put_per:
 -- 
 2.43.0
 
