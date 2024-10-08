@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABC1165F08;
-	Tue,  8 Oct 2024 12:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A341DE4F4;
+	Tue,  8 Oct 2024 12:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389783; cv=none; b=KvVZyVdhO7StW/IHp1/71sB0TaJHYDe5Kw5o2W6S71EQs67El349tQ6cJ/TOXg5XEXqNOfhKXrkKuYrkSmsc/bSPrNN9go+Y0VF7spkpn0Tv8w/Qn1Xz98SyrIEa4jCgrasgcD36UJcRnLSTDWEuOljOOQAXF95Ha9D0F7zIQb0=
+	t=1728389786; cv=none; b=OKSf2+e+uvFSGXcB+1S9zvBs+R7NKlnyZnOYjJ/0c6V0ORraxJap5BQw2qWXoumS/mOGjrCdw/H7Gzx1vTHFaZ74IgdvfkXkxtclbP1KiErcK+PsHVa3eJAvSBSkTgfuQmnP3QLfeHJgZjiaDIbLl2tTjd2tWAqyscDn9OvrZXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389783; c=relaxed/simple;
-	bh=j5tEMMIfCJM/18TuCg+27evV9DOO/bq4TRclMOKw9ek=;
+	s=arc-20240116; t=1728389786; c=relaxed/simple;
+	bh=sg50azOz5jUDPzNGfKq3Ac09TnmHm15pkaxnBv2lFLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVADen6P3WZb7efAyTde14zVrxnJcZIHOueQ7Xo3PlnAt+WNrxjivMmCeltxvRu667GPL6gJYaqfaErjQVXorK33nz+8IeITbTcyQnW9QDz0eiqw444qxkMNkpRm5UbX5lmbcSIeXohFNonubDf4dBTp7pXKRBj/g/cEOWBo3f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaYOWzlg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SJJrxcWV3XqwFv+vfZ7y9Z2vW+HyAU+Ro6cuevaublIT55YkQvbje3LQOdu8H3uorK4nd//jbCuTDZ9Rxs4WDVRSS6CzWe5CxhVKa054pjX2cOhG80J0iGplJ3ombJ2gnqqsnw5g2cv8f+f1BrajPvvS4yey/S4GZS/OUYm25zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE7syhqO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaYOWzlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B01C4CECD;
-	Tue,  8 Oct 2024 12:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE7syhqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBD8C4CEC7;
+	Tue,  8 Oct 2024 12:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389782;
-	bh=j5tEMMIfCJM/18TuCg+27evV9DOO/bq4TRclMOKw9ek=;
+	s=korg; t=1728389786;
+	bh=sg50azOz5jUDPzNGfKq3Ac09TnmHm15pkaxnBv2lFLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaYOWzlgP3XxSa3rHZ0Q5kyG5alEO4Q//UoLO7uurO6HO0MwkTPPXw+53b2MAXXb4
-	 04U8v8gR7LB+Vg8Qzm5BpSIL8q3CpOsqsudLNhz8zOaAMU2ezUAMdxEBm9ODt8NIY2
-	 zxzCbrPF7BObeHFbuE717NyDXX+v3qkF/gMJAVzs=
+	b=QE7syhqOamd78d143E4xrvmbO3NdzpoMeD7M3YkAS0YCgxAmk3eKEJ57l9oHxihjq
+	 ckgM5c437ci2cqzRW/a0lYkHchST8E3wq80E14TgLNOZvDpz8k7ha6adcuocnquW6Z
+	 R1mgydd1F/xrtUA7zURxq04SstiRVoKHLbAdP5Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	al0uette@outlook.com,
+	vderp@icloud.com,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 087/482] ACPICA: Fix memory leak if acpi_ps_get_next_field() fails
-Date: Tue,  8 Oct 2024 14:02:30 +0200
-Message-ID: <20241008115651.729465938@linuxfoundation.org>
+Subject: [PATCH 6.10 096/482] ACPI: CPPC: Add support for setting EPP register in FFH
+Date: Tue,  8 Oct 2024 14:02:39 +0200
+Message-ID: <20241008115652.088391057@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -45,94 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit e6169a8ffee8a012badd8c703716e761ce851b15 ]
+[ Upstream commit aaf21ac93909e08a12931173336bdb52ac8499f1 ]
 
-ACPICA commit 1280045754264841b119a5ede96cd005bc09b5a7
+Some Asus AMD systems are reported to not be able to change EPP values
+because the BIOS doesn't advertise support for the CPPC MSR and the PCC
+region is not configured.
 
-If acpi_ps_get_next_field() fails, the previously created field list
-needs to be properly disposed before returning the status code.
+However the ACPI 6.2 specification allows CPC registers to be declared
+in FFH:
+```
+Starting with ACPI Specification 6.2, all _CPC registers can be in
+PCC, System Memory, System IO, or Functional Fixed Hardware address
+spaces. OSPM support for this more flexible register space scheme
+is indicated by the “Flexible Address Space for CPPC Registers” _OSC
+bit.
+```
 
-Link: https://github.com/acpica/acpica/commit/12800457
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-[ rjw: Rename local variable to avoid compiler confusion ]
+If this _OSC has been set allow using FFH to configure EPP.
+
+Reported-by: al0uette@outlook.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218686
+Suggested-by: al0uette@outlook.com
+Tested-by: vderp@icloud.com
+Tested-by: al0uette@outlook.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20240910031524.106387-1-superm1@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 39 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ drivers/acpi/cppc_acpi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 7debfd5ce0d86..28582adfc0aca 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -25,6 +25,8 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state);
- static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 						       *parser_state);
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 2a588e4ed4af4..6a048d44fbcf6 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -103,6 +103,11 @@ static DEFINE_PER_CPU(struct cpc_desc *, cpc_desc_ptr);
+ 				(cpc)->cpc_entry.reg.space_id ==	\
+ 				ACPI_ADR_SPACE_PLATFORM_COMM)
  
-+static void acpi_ps_free_field_list(union acpi_parse_object *start);
++/* Check if a CPC register is in FFH */
++#define CPC_IN_FFH(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&		\
++				(cpc)->cpc_entry.reg.space_id ==	\
++				ACPI_ADR_SPACE_FIXED_HARDWARE)
 +
- /*******************************************************************************
-  *
-  * FUNCTION:    acpi_ps_get_next_package_length
-@@ -683,6 +685,39 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 	return_PTR(field);
- }
+ /* Check if a CPC register is in SystemMemory */
+ #define CPC_IN_SYSTEM_MEMORY(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&	\
+ 				(cpc)->cpc_entry.reg.space_id ==	\
+@@ -1519,9 +1524,12 @@ int cppc_set_epp_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls, bool enable)
+ 		/* after writing CPC, transfer the ownership of PCC to platform */
+ 		ret = send_pcc_cmd(pcc_ss_id, CMD_WRITE);
+ 		up_write(&pcc_ss_data->pcc_lock);
++	} else if (osc_cpc_flexible_adr_space_confirmed &&
++		   CPC_SUPPORTED(epp_set_reg) && CPC_IN_FFH(epp_set_reg)) {
++		ret = cpc_write(cpu, epp_set_reg, perf_ctrls->energy_perf);
+ 	} else {
+ 		ret = -ENOTSUPP;
+-		pr_debug("_CPC in PCC is not supported\n");
++		pr_debug("_CPC in PCC and _CPC in FFH are not supported\n");
+ 	}
  
-+/*******************************************************************************
-+ *
-+ * FUNCTION:    acpi_ps_free_field_list
-+ *
-+ * PARAMETERS:  start               - First Op in field list
-+ *
-+ * RETURN:      None.
-+ *
-+ * DESCRIPTION: Free all Op objects inside a field list.
-+ *
-+ ******************************************************************************/
-+
-+static void acpi_ps_free_field_list(union acpi_parse_object *start)
-+{
-+	union acpi_parse_object *cur = start;
-+	union acpi_parse_object *next;
-+	union acpi_parse_object *arg;
-+
-+	while (cur) {
-+		next = cur->common.next;
-+
-+		/* AML_INT_CONNECTION_OP can have a single argument */
-+
-+		arg = acpi_ps_get_arg(cur, 0);
-+		if (arg) {
-+			acpi_ps_free_op(arg);
-+		}
-+
-+		acpi_ps_free_op(cur);
-+		cur = next;
-+	}
-+}
-+
- /*******************************************************************************
-  *
-  * FUNCTION:    acpi_ps_get_next_arg
-@@ -751,6 +786,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			while (parser_state->aml < parser_state->pkg_end) {
- 				field = acpi_ps_get_next_field(parser_state);
- 				if (!field) {
-+					if (arg) {
-+						acpi_ps_free_field_list(arg);
-+					}
-+
- 					return_ACPI_STATUS(AE_NO_MEMORY);
- 				}
- 
+ 	return ret;
 -- 
 2.43.0
 
