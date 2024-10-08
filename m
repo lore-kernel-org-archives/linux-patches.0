@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E111E493;
-	Tue,  8 Oct 2024 12:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8744D1E485;
+	Tue,  8 Oct 2024 12:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390753; cv=none; b=nvuvsWX7tsFXBJU7muHcRvimqZMD4ojHVTToJ83inbHXlBBpr4BSUEErKpnVUlhhEuUyIbhv5UVnFc45OvPIyYvRERdsaFXAlouqjTszgvALLSmuoO9wXc6Cq0aQzvUpwWvfRPn8cOytgMiWBGuYLPzjXT6FyT2Kyah24Vs91s0=
+	t=1728390756; cv=none; b=oHf8tAoJjayGL6MU40g80J560xEWg+hynRs5UlgJ+R6jbgtQCbi72xH5AFTZG9WrhkXK7/cFbGhSRmov8o6aYN8lSZCvkxX8jgzwoy1PjCHNxAYyqf+JnK5IViW9oH3ktCXoFD24QcapC1Ybsc75/3PWljC2bqL32IDRvGJQtbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390753; c=relaxed/simple;
-	bh=RdrBGepv/0v3RVZKnVDVgYRVy5tIwWzw9/hEgnQFsE0=;
+	s=arc-20240116; t=1728390756; c=relaxed/simple;
+	bh=GYYUd2a+h/hstfvFn1PP45iC9FBS5QMAGhFSdLUGZNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHNWndhzFxpPuZnhzBytt9a4y3Jom++WID4fT+hem+BXQGx2lwRCG232pTbMddBKbYXMMFKoYVxyM0lZWOoa1DF+pz8u8lypo2i6NwjptvX/MZfVR2CWO+hC3IUJZ/dDNDhE44+fvZPqWMEz+6TdudswPC8A/VGdvD3gzLOhCJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvC9mxWP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R602RQOyXncZIzQPYWOtaxO6Tbf4YSCOIMRIOVc/JuzkUjJ/LCZy42B6VRLLTa5ED3JR1pDF40O2hnAfrcO+0ziMEjxYWqGq0czTFoRuRiPsgiuDOFQBQmAJcqctOwoRG/JGJ5/sZbr6VqjjNW2RhXODhdOD5cn5EXlkulHaAoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzsjuytD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvC9mxWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C79C4CEC7;
-	Tue,  8 Oct 2024 12:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzsjuytD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEB7C4CEC7;
+	Tue,  8 Oct 2024 12:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390753;
-	bh=RdrBGepv/0v3RVZKnVDVgYRVy5tIwWzw9/hEgnQFsE0=;
+	s=korg; t=1728390756;
+	bh=GYYUd2a+h/hstfvFn1PP45iC9FBS5QMAGhFSdLUGZNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvC9mxWPQls75ZWgEUY77vp8pewxJ2y1VmaGghALgwUjmpYo2L++NGt7+AC5NlxaZ
-	 evkuxLbCOtASCTxTuBmNWinQpaePzguu0XptNgbe08imGc8JADr+EYcY6Fl0lEqrJm
-	 sjEOAG/zPSjGbGYCPrwhcfnMCX72DW+8J619KSmE=
+	b=xzsjuytDPNfK4thSA7nPVW94iVJ+afem9Su2mNlizadftK7pQloL0o4pgbqwl/tlr
+	 DN5Gqs/HSfDdxF5tHEFpKB/zPYSnT8ACy6usEgk37ZmcxUXGCTK5txqjgB/GglxQRk
+	 nJIhqVMSaVfBd3UTdyFYqzebxH54SZ364NAnuBTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.10 382/482] clk: rockchip: fix error for unknown clocks
-Date: Tue,  8 Oct 2024 14:07:25 +0200
-Message-ID: <20241008115703.450306997@linuxfoundation.org>
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Beleswar Padhi <b-padhi@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.10 383/482] remoteproc: k3-r5: Fix error handling when power-up failed
+Date: Tue,  8 Oct 2024 14:07:26 +0200
+Message-ID: <20241008115703.489532674@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-commit 12fd64babaca4dc09d072f63eda76ba44119816a upstream.
+commit 9ab27eb5866ccbf57715cfdba4b03d57776092fb upstream.
 
-There is a clk == NULL check after the switch to check for
-unsupported clk types. Since clk is re-assigned in a loop,
-this check is useless right now for anything but the first
-round. Let's fix this up by assigning clk = NULL in the
-loop before the switch statement.
+By simply bailing out, the driver was violating its rule and internal
+assumptions that either both or no rproc should be initialized. E.g.,
+this could cause the first core to be available but not the second one,
+leading to crashes on its shutdown later on while trying to dereference
+that second instance.
 
-Fixes: a245fecbb806 ("clk: rockchip: add basic infrastructure for clock branches")
+Fixes: 61f6f68447ab ("remoteproc: k3-r5: Wait for core0 power-up before powering up core1")
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Acked-by: Beleswar Padhi <b-padhi@ti.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-[added fixes + stable-cc]
-Link: https://lore.kernel.org/r/20240325193609.237182-6-sebastian.reichel@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/9f481156-f220-4adf-b3d9-670871351e26@siemens.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/rockchip/clk.c |    3 ++-
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/rockchip/clk.c
-+++ b/drivers/clk/rockchip/clk.c
-@@ -450,12 +450,13 @@ void rockchip_clk_register_branches(stru
- 				    struct rockchip_clk_branch *list,
- 				    unsigned int nr_clk)
- {
--	struct clk *clk = NULL;
-+	struct clk *clk;
- 	unsigned int idx;
- 	unsigned long flags;
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -1332,7 +1332,7 @@ init_rmem:
+ 			dev_err(dev,
+ 				"Timed out waiting for %s core to power up!\n",
+ 				rproc->name);
+-			return ret;
++			goto err_powerup;
+ 		}
+ 	}
  
- 	for (idx = 0; idx < nr_clk; idx++, list++) {
- 		flags = list->flags;
-+		clk = NULL;
+@@ -1348,6 +1348,7 @@ err_split:
+ 		}
+ 	}
  
- 		/* catch simple muxes */
- 		switch (list->branch_type) {
++err_powerup:
+ 	rproc_del(rproc);
+ err_add:
+ 	k3_r5_reserved_mem_exit(kproc);
 
 
