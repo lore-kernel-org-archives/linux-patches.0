@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBE61DF728;
-	Tue,  8 Oct 2024 12:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C081DF27C;
+	Tue,  8 Oct 2024 12:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392153; cv=none; b=CijHVx38ysIVbTbn7CKIdVofhQPlN2NkGkZEv/OatPwd3OeDPsUZBgphTClodaGUtMdrY5YRqTif+OXY5EDZGfLatzLe8IqO0e5wzleZo0YgV1e28HAy2NR80rFF0gzWAxTccmGRhv5OmOUMTUWNAgmtRxvmn6MbwVf+4yQ5fEw=
+	t=1728392156; cv=none; b=apgQO4eQqBBxLAMG5nJ7/x8adBXgUwC1QtaEAKI3HUefYkDuM3yD8mp9kc6e7/tJ/xkFfhXQpGty0AGh8VracKAXglg7Jen6KjZPsf8Cn0G1u8iwzfLNlfkbwz/QwP3tIb6wABre7TTKw5TsLIAUW1dLwP0BbzF5qLJ2mbyS9GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392153; c=relaxed/simple;
-	bh=99mTev+VYZI2EYRAv8BTGX4kQ8loXEmDl7jOqbvvMzw=;
+	s=arc-20240116; t=1728392156; c=relaxed/simple;
+	bh=8vOaPVSZShk7w7tVhzMr7X8e6V9x/FMlidK4LM2FbYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjU2jXcBuAhnkqZyve8/UsNG6Xdfj6a1DEg0LnA+V2TGM5VAj/vBwpQ8PCl5Yk1n/PtjWB1WeinawqB32sM5r4ecwNvfa9QrktdCcGl2CpnZZVT2YQ/uns9tJA/btH60pTlR06QXG8ZtUVNO7kHlnMYuMA7Wra+2qSkD82jrQss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scZ29S+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BR5zrf1G0kI/gfIhdhd4bDADqnM0W7jD+CLWz8b2yfmIIQn0d2KNR5VjLtuhXvgLotxA4HG6yOMlJanXIBm4lNt5R0psZuI5cfEjxGZzOGOeUWs5EHQJVa2jSleyY+96Dv322bPBpYBs+rIUIYhT4uMYci+ehPj5vDiF0tiUoQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDBDQsos; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scZ29S+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C77C4CED5;
-	Tue,  8 Oct 2024 12:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDBDQsos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499C3C4CEC7;
+	Tue,  8 Oct 2024 12:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392153;
-	bh=99mTev+VYZI2EYRAv8BTGX4kQ8loXEmDl7jOqbvvMzw=;
+	s=korg; t=1728392156;
+	bh=8vOaPVSZShk7w7tVhzMr7X8e6V9x/FMlidK4LM2FbYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scZ29S+M9Vk93HLoRwBpNbKPKuBbLhuOQIU/H3J7ciqWIC8ueJd/KopkjzDq4rcIu
-	 YwRKDxxbPbyNiY4nvfxVnVQXhjSEgWOHKagLa8GCjcYtUdnkhWw2LNfqSblgSJvtzg
-	 +msRAVKDJnaRDCAjIAhdHLi5t9CYnQfrKFIFSBwA=
+	b=pDBDQsos/4lZrUeT0OieMbg107LAWhKGOpAlN2jdm4lxOmuMk399+aDHM0xz5CrYi
+	 N+n+4ciOnzefyX/AHr2Mycl/4aEbHJDMNC7sMPcaxCxCA4oF253DE9HA/S3GxR4heN
+	 KEwnXObVbE3HzXSZsOr+9W+HJRbrUwkS6GeEzLPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 331/558] selftests: vDSO: fix vDSO symbols lookup for powerpc64
-Date: Tue,  8 Oct 2024 14:06:01 +0200
-Message-ID: <20241008115715.329995019@linuxfoundation.org>
+Subject: [PATCH 6.11 332/558] ext4: fix error message when rejecting the default hash
+Date: Tue,  8 Oct 2024 14:06:02 +0200
+Message-ID: <20241008115715.369198435@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,106 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-[ Upstream commit ba83b3239e657469709d15dcea5f9b65bf9dbf34 ]
+[ Upstream commit a2187431c395cdfbf144e3536f25468c64fc7cfa ]
 
-On powerpc64, following tests fail locating vDSO functions:
+Commit 985b67cd8639 ("ext4: filesystems without casefold feature cannot
+be mounted with siphash") properly rejects volumes where
+s_def_hash_version is set to DX_HASH_SIPHASH, but the check and the
+error message should not look into casefold setup - a filesystem should
+never have DX_HASH_SIPHASH as the default hash.  Fix it and, since we
+are there, move the check to ext4_hash_info_init.
 
-  ~ # ./vdso_test_abi
-  TAP version 13
-  1..16
-  # [vDSO kselftest] VDSO_VERSION: LINUX_2.6.15
-  # Couldn't find __kernel_gettimeofday
-  ok 1 # SKIP __kernel_gettimeofday
-  # clock_id: CLOCK_REALTIME
-  # Couldn't find __kernel_clock_gettime
-  ok 2 # SKIP __kernel_clock_gettime CLOCK_REALTIME
-  # Couldn't find __kernel_clock_getres
-  ok 3 # SKIP __kernel_clock_getres CLOCK_REALTIME
-  ...
-  # Couldn't find __kernel_time
-  ok 16 # SKIP __kernel_time
-  # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:16 error:0
+Fixes:985b67cd8639 ("ext4: filesystems without casefold feature cannot
+be mounted with siphash")
 
-  ~ # ./vdso_test_getrandom
-  __kernel_getrandom is missing!
-
-  ~ # ./vdso_test_gettimeofday
-  Could not find __kernel_gettimeofday
-
-  ~ # ./vdso_test_getcpu
-  Could not find __kernel_getcpu
-
-On powerpc64, as shown below by readelf, vDSO functions symbols have
-type NOTYPE, so also accept that type when looking for symbols.
-
-$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
-ELF Header:
-  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
-  Class:                             ELF64
-  Data:                              2's complement, big endian
-  Version:                           1 (current)
-  OS/ABI:                            UNIX - System V
-  ABI Version:                       0
-  Type:                              DYN (Shared object file)
-  Machine:                           PowerPC64
-  Version:                           0x1
-...
-
-Symbol table '.dynsym' contains 12 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
-     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     2: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     3: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     6: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     7: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     8: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     9: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    10: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    11: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-
-Symbol table '.symtab' contains 56 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-...
-    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
-    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
-    48: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_tbfreq
-    49: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_gettimeofday
-    50: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __kernel_sync_dicache
-    51: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_getrandom
-    52: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __kernel_sigtram[...]
-    53: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __kernel_time
-    54: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_g[...]
-    55: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_sys[...]
-
-Fixes: 98eedc3a9dbf ("Document the vDSO and add a reference parser")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/87jzg1en6j.fsf_-_@mailhost.krisman.be
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/parse_vdso.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/ext4.h  |  1 +
+ fs/ext4/super.c | 27 +++++++++++++++++----------
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
-index 4ae417372e9eb..d9ccc5acac182 100644
---- a/tools/testing/selftests/vDSO/parse_vdso.c
-+++ b/tools/testing/selftests/vDSO/parse_vdso.c
-@@ -216,7 +216,8 @@ void *vdso_sym(const char *version, const char *name)
- 		ELF(Sym) *sym = &vdso_info.symtab[chain];
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 08acd152261ed..8bd302392d759 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2462,6 +2462,7 @@ static inline __le16 ext4_rec_len_to_disk(unsigned len, unsigned blocksize)
+ #define DX_HASH_HALF_MD4_UNSIGNED	4
+ #define DX_HASH_TEA_UNSIGNED		5
+ #define DX_HASH_SIPHASH			6
++#define DX_HASH_LAST 			DX_HASH_SIPHASH
  
- 		/* Check for a defined global or weak function w/ right name. */
--		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
-+		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
-+		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
- 			continue;
- 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
- 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
+ static inline u32 ext4_chksum(struct ext4_sb_info *sbi, u32 crc,
+ 			      const void *address, unsigned int length)
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index b3f47d6879ebf..1cd4e20cc320d 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -3583,13 +3583,6 @@ int ext4_feature_set_ok(struct super_block *sb, int readonly)
+ 			 "mounted without CONFIG_UNICODE");
+ 		return 0;
+ 	}
+-	if (EXT4_SB(sb)->s_es->s_def_hash_version == DX_HASH_SIPHASH &&
+-	    !ext4_has_feature_casefold(sb)) {
+-		ext4_msg(sb, KERN_ERR,
+-			 "Filesystem without casefold feature cannot be "
+-			 "mounted with siphash");
+-		return 0;
+-	}
+ 
+ 	if (readonly)
+ 		return 1;
+@@ -5095,16 +5088,27 @@ static int ext4_load_super(struct super_block *sb, ext4_fsblk_t *lsb,
+ 	return ret;
+ }
+ 
+-static void ext4_hash_info_init(struct super_block *sb)
++static int ext4_hash_info_init(struct super_block *sb)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+ 	unsigned int i;
+ 
++	sbi->s_def_hash_version = es->s_def_hash_version;
++
++	if (sbi->s_def_hash_version > DX_HASH_LAST) {
++		ext4_msg(sb, KERN_ERR,
++			 "Invalid default hash set in the superblock");
++		return -EINVAL;
++	} else if (sbi->s_def_hash_version == DX_HASH_SIPHASH) {
++		ext4_msg(sb, KERN_ERR,
++			 "SIPHASH is not a valid default hash value");
++		return -EINVAL;
++	}
++
+ 	for (i = 0; i < 4; i++)
+ 		sbi->s_hash_seed[i] = le32_to_cpu(es->s_hash_seed[i]);
+ 
+-	sbi->s_def_hash_version = es->s_def_hash_version;
+ 	if (ext4_has_feature_dir_index(sb)) {
+ 		i = le32_to_cpu(es->s_flags);
+ 		if (i & EXT2_FLAGS_UNSIGNED_HASH)
+@@ -5122,6 +5126,7 @@ static void ext4_hash_info_init(struct super_block *sb)
+ #endif
+ 		}
+ 	}
++	return 0;
+ }
+ 
+ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
+@@ -5269,7 +5274,9 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 	if (err)
+ 		goto failed_mount;
+ 
+-	ext4_hash_info_init(sb);
++	err = ext4_hash_info_init(sb);
++	if (err)
++		goto failed_mount;
+ 
+ 	err = ext4_handle_clustersize(sb);
+ 	if (err)
 -- 
 2.43.0
 
