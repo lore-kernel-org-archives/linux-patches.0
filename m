@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539971DF96D;
-	Tue,  8 Oct 2024 12:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFD7165F08;
+	Tue,  8 Oct 2024 12:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390130; cv=none; b=fpaF8mGSjTjr9TNUb8HO1owPK1Ix0gzRtytb9znUNueAt0cYA52bQndHlFgnEvhksebSsaTx8FptjStTpBxeRB34PizFBBkO98BjLlKaYxjT4YzXFBhHpDxAqJx6PEYiGg298bgmv1OXWulhHW19JKUFGe2Ur9p+fdZ5fCRT8uI=
+	t=1728390134; cv=none; b=O2futMm3JcTJlvedzCb0k6/b0hvHfkOWD6UVjeiOH8PIrkbk99gEZl81z0+2g2Bdyvc/yzq1SbfyQO/iyGsXPHOkqDDgCchGx8M6VcHdSXOPpSywPG5X12xUvjN05dmP1c9prewDhv8GOV7Hjekr8S/gP5dpfc9Ag+zByqISL2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390130; c=relaxed/simple;
-	bh=Rb/ih7nhqD5yvhCEXUWFS4iyzETwC3HM5TG2tarYho4=;
+	s=arc-20240116; t=1728390134; c=relaxed/simple;
+	bh=VIDrS4QnIDXc6HHkTKXG9YfG8v78yD9pcNayHSJkYGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5OL/GSVLksrFhFHyR23yC3TEBJZH63TsZ6nMbQkqay5AC5JfXW3LmCf3aGF7ZASPZyEKwaF1FeTYDaKJh8GNa72gCtbMANbfHwm5H+huuTpzNzpiKsZpJDFQSeVdjgfrg8lGkpG2CCSW2gG4Gj+yoo1JxYrkAvDpHKkIaYO1xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbP1jvfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toaHKgyafsW2G+qDeHqG37akHu0UPlfETNQrGwUR0oh0VPKDM9u8usbkHyjoXS+83WoDoyihOo8ChitxHtB9VEMdmkQ5WkjC2VUwZ0SdQXr1xC/EmhwMxD4us6coQC2zzfJbGqsJ01xrIIO7YFEMRh8sVYjISDKtRqCCgE4MEmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K37br7pP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbP1jvfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4D7C4CECC;
-	Tue,  8 Oct 2024 12:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K37br7pP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49354C4CEC7;
+	Tue,  8 Oct 2024 12:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390130;
-	bh=Rb/ih7nhqD5yvhCEXUWFS4iyzETwC3HM5TG2tarYho4=;
+	s=korg; t=1728390134;
+	bh=VIDrS4QnIDXc6HHkTKXG9YfG8v78yD9pcNayHSJkYGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbP1jvfCbrPtHYIZFlhv8RQedNW4NtVnPvGDW7hTtm3GbSWW5QDPK/eYgCw4ohqTI
-	 Gurw6H8U4xsDA0a1gUhG6Fnxi1YeayknSEL5UcAEGEqJWDxidc1a8xET1phdDhuwAi
-	 854JzkNVlDMeb2Fxtbn57ckwehFu/657mbM80mAg=
+	b=K37br7pPG1FdYkpwj/yWgd7CtjtT7+Lst0pReoJuMQ7vDf8J8kkj4vscqqU+EnDw0
+	 RqBj9Bk3xgEPExAnDxFZCIFVuJvQMtVlrexwVIFY4tMrDGmdpwOjUlP5URGRHqzCLj
+	 OdFeqp87UsKAOB3Cwll4K4wyMDvE/q6PFypgaGqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	David Strahan <David.Strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 200/482] scsi: smartpqi: add new controller PCI IDs
-Date: Tue,  8 Oct 2024 14:04:23 +0200
-Message-ID: <20241008115656.179737595@linuxfoundation.org>
+Subject: [PATCH 6.10 201/482] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Tue,  8 Oct 2024 14:04:24 +0200
+Message-ID: <20241008115656.220261734@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,97 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit dbc39b84540f746cc814e69b21e53e6d3e12329a ]
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-All PCI ID entries in Hex.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-Add new cisco pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   1137   02fe
-                                             9005   028f   1137   02ff
-                                             9005   028f   1137   0300
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-Add new h3c pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   193d   0462
-                                             9005   028f   193d   8462
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
 
-Add new ieit pci ids:
-                                             VID  / DID  / SVID / SDID
-                                             ----   ----   ----   ----
-                                             9005   028f   1ff9   00a3
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: David Strahan <David.Strahan@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-5-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index a4719af88718e..4230714e5f3a1 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -9428,6 +9428,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x152d, 0x8a37)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x193d, 0x0462)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x1104)
-@@ -9468,6 +9472,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0x8461)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x193d, 0x8462)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x193d, 0xc460)
-@@ -10176,6 +10184,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1137, 0x02fa)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x02fe)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x02ff)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1137, 0x0300)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1ff9, 0x0045)
-@@ -10352,6 +10372,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1f51, 0x1045)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1ff9, 0x00a3)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_ANY_ID, PCI_ANY_ID)
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index d5d9361e11aa5..8e8f55225e1ea 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1079,6 +1079,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->chip_id = config->chip_id;
+ 
+ 	gpu->allow_relocs = config->info->family < ADRENO_6XX_GEN1;
++	gpu->pdev = pdev;
+ 
+ 	/* Only handle the core clock when GMU is not in use (or is absent). */
+ 	if (adreno_has_gmu_wrapper(adreno_gpu) ||
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index cd185b9636d26..56b6de049bd7b 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -929,7 +929,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (IS_ERR(gpu->gpu_cx))
+ 		gpu->gpu_cx = NULL;
+ 
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+ 
+ 	msm_devfreq_init(gpu);
 -- 
 2.43.0
 
