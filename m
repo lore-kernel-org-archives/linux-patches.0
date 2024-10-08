@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D371DE3D4;
-	Tue,  8 Oct 2024 12:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5071DED7B;
+	Tue,  8 Oct 2024 12:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390365; cv=none; b=KuV6LRReGtHY9IGPuOk4D+Z17i+K+VqbLcrSvMTCS8UGrmBMsMYFUBShi8tPty5+YZR+5GnSYbd9SR0lyTjNHDGqHbDl1B65Al31f28SND0vHIZOhevyzReDGqfolPpl3CBgIvNx9zOyV7Pn4ulsBd6HiWR3/aQLONzBhRuTx9o=
+	t=1728390369; cv=none; b=Po23Avaa4yyomgxAG+f9xCNmqDJfvHvdqaZpfSFfqH6LUoqr12pCWYXHpp/kpqK0jOPvje759R4FpRzgKG5DYCfjwJuWI0uM2rp4lLSPE5S/wtHVumgWtWlZjWnBzEKn41sxGbQsj1mzcpMfd+KWu/SPeK1FoYuLjQ1Z5aQ1p1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390365; c=relaxed/simple;
-	bh=X67cs1D55qcp7dbiFolj4lGSYgbc1ohwhu/wDDYVnOk=;
+	s=arc-20240116; t=1728390369; c=relaxed/simple;
+	bh=s69oBi+vmkuA4AAD65iXZv6cR3zO/XBmJQIHXNGT8A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHLkiyp0RbkD6Zi0CLnYNvenuCU0ukm7w08V9Og/pWb5wetyeYzFoAglim5BTnMMh9130gvvU6Ej59XUeEwIUYpfPU2/dWraE917p0+48GYRLVTkF2aqEFvhKCEmzYpOFTx7XU4lKCQerwN/xd9GytJfRz9MQuEx/tIAT1qomAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZHXEdhT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGMz4xEGukq4spMtYN5XGWamdcJv42DvgQ0oE/L0N53zigeT3xBbzhUOnouv0ycHwcOfXNFk+MTmScV90bzbQ2Cg17O/TuUfZL+pZprT1b+YtwIEiCsfVJvdtEy3+4+OwzUNAW5JZHqwso8Mi+GHb8IORfzY8SpJPsnfz6XEUAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SR9BFoY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZHXEdhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2612FC4CEC7;
-	Tue,  8 Oct 2024 12:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SR9BFoY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398E1C4CEC7;
+	Tue,  8 Oct 2024 12:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390365;
-	bh=X67cs1D55qcp7dbiFolj4lGSYgbc1ohwhu/wDDYVnOk=;
+	s=korg; t=1728390368;
+	bh=s69oBi+vmkuA4AAD65iXZv6cR3zO/XBmJQIHXNGT8A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZHXEdhT/pQd9hP1TT381E1qhdL1l8xPzFOnZyd3k+tb+JreS3YqDYCH6esp1kXsK
-	 saY7hEAEW0thPzOAEsYsBxPdfQpz6E2BUZF/Fh2XJIQqjOL4o23XN+21y5WRf0XKgi
-	 dl5zTXztw6qacL/Kfg/SZIQL6K5k+jjNIs1pvASs=
+	b=SR9BFoY9AfMIX3hX5kyIH07A1uB3LEDvvqtBD9ZRKIbWdUFjPzsGbX0SFqeJySpLe
+	 iADg+sBaZQtb840vIs38dPhxC3SOosZI84ciyUMRf0vvBXp+JnbnwTb5HqLXMMBiyx
+	 1DzMuWQM+Ea1nVdiCt9bXw/iBbIZgZieH+2mnxdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Anne Macedo <retpolanne@posteo.net>,
+	Changbin Du <changbin.du@huawei.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 268/482] ALSA: control: Fix power_ref lock order for compat code, too
-Date: Tue,  8 Oct 2024 14:05:31 +0200
-Message-ID: <20241008115658.828908637@linuxfoundation.org>
+Subject: [PATCH 6.10 269/482] perf callchain: Fix stitch LBR memory leaks
+Date: Tue,  8 Oct 2024 14:05:32 +0200
+Message-ID: <20241008115658.867946355@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,114 +62,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a1066453b5e49a28523f3ecbbfe4e06c6a29561c ]
+[ Upstream commit 599c19397b17d197fc1184bbc950f163a292efc9 ]
 
-In the previous change for swapping the power_ref and controls_rwsem
-lock order, the code path for the compat layer was forgotten.
-This patch covers the remaining code.
+The 'struct callchain_cursor_node' has a 'struct map_symbol' whose maps
+and map members are reference counted. Ensure these values use a _get
+routine to increment the reference counts and use map_symbol__exit() to
+release the reference counts.
 
-Fixes: fcc62b19104a ("ALSA: control: Take power_ref lock primarily")
-Link: https://patch.msgid.link/20240808163128.20383-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Do similar for 'struct thread's prev_lbr_cursor, but save the size of
+the prev_lbr_cursor array so that it may be iterated.
+
+Ensure that when stitch_nodes are placed on the free list the
+map_symbols are exited.
+
+Fix resolve_lbr_callchain_sample() by replacing list_replace_init() to
+list_splice_init(), so the whole list is moved and nodes aren't leaked.
+
+A reproduction of the memory leaks is possible with a leak sanitizer
+build in the perf report command of:
+
+  ```
+  $ perf record -e cycles --call-graph lbr perf test -w thloop
+  $ perf report --stitch-lbr
+  ```
+
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Fixes: ff165628d72644e3 ("perf callchain: Stitch LBR call stack")
+Signed-off-by: Ian Rogers <irogers@google.com>
+[ Basic tests after applying the patch, repeating the example above ]
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Anne Macedo <retpolanne@posteo.net>
+Cc: Changbin Du <changbin.du@huawei.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240808054644.1286065-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control_compat.c | 45 ++++++++++++++++++++++++++++++-------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ tools/perf/util/machine.c | 17 +++++++++++++++--
+ tools/perf/util/thread.c  |  4 ++++
+ tools/perf/util/thread.h  |  1 +
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/control_compat.c b/sound/core/control_compat.c
-index 934bb945e702a..ff0031cc7dfb8 100644
---- a/sound/core/control_compat.c
-+++ b/sound/core/control_compat.c
-@@ -79,6 +79,7 @@ struct snd_ctl_elem_info32 {
- static int snd_ctl_elem_info_compat(struct snd_ctl_file *ctl,
- 				    struct snd_ctl_elem_info32 __user *data32)
- {
-+	struct snd_card *card = ctl->card;
- 	struct snd_ctl_elem_info *data __free(kfree) = NULL;
- 	int err;
- 
-@@ -95,7 +96,11 @@ static int snd_ctl_elem_info_compat(struct snd_ctl_file *ctl,
- 	if (get_user(data->value.enumerated.item, &data32->value.enumerated.item))
- 		return -EFAULT;
- 
-+	err = snd_power_ref_and_wait(card);
-+	if (err < 0)
-+		return err;
- 	err = snd_ctl_elem_info(ctl, data);
-+	snd_power_unref(card);
- 	if (err < 0)
- 		return err;
- 	/* restore info to 32bit */
-@@ -175,10 +180,7 @@ static int get_ctl_type(struct snd_card *card, struct snd_ctl_elem_id *id,
- 	if (info == NULL)
- 		return -ENOMEM;
- 	info->id = *id;
--	err = snd_power_ref_and_wait(card);
--	if (!err)
--		err = kctl->info(kctl, info);
--	snd_power_unref(card);
-+	err = kctl->info(kctl, info);
- 	if (err >= 0) {
- 		err = info->type;
- 		*countp = info->count;
-@@ -275,8 +277,8 @@ static int copy_ctl_value_to_user(void __user *userdata,
- 	return 0;
- }
- 
--static int ctl_elem_read_user(struct snd_card *card,
--			      void __user *userdata, void __user *valuep)
-+static int __ctl_elem_read_user(struct snd_card *card,
-+				void __user *userdata, void __user *valuep)
- {
- 	struct snd_ctl_elem_value *data __free(kfree) = NULL;
- 	int err, type, count;
-@@ -296,8 +298,21 @@ static int ctl_elem_read_user(struct snd_card *card,
- 	return copy_ctl_value_to_user(userdata, valuep, data, type, count);
- }
- 
--static int ctl_elem_write_user(struct snd_ctl_file *file,
--			       void __user *userdata, void __user *valuep)
-+static int ctl_elem_read_user(struct snd_card *card,
-+			      void __user *userdata, void __user *valuep)
-+{
-+	int err;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 8477edefc2997..706be5e4a0761 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -2270,8 +2270,12 @@ static void save_lbr_cursor_node(struct thread *thread,
+ 		cursor->curr = cursor->first;
+ 	else
+ 		cursor->curr = cursor->curr->next;
 +
-+	err = snd_power_ref_and_wait(card);
-+	if (err < 0)
-+		return err;
-+	err = __ctl_elem_read_user(card, userdata, valuep);
-+	snd_power_unref(card);
-+	return err;
-+}
-+
-+static int __ctl_elem_write_user(struct snd_ctl_file *file,
-+				 void __user *userdata, void __user *valuep)
- {
- 	struct snd_ctl_elem_value *data __free(kfree) = NULL;
- 	struct snd_card *card = file->card;
-@@ -318,6 +333,20 @@ static int ctl_elem_write_user(struct snd_ctl_file *file,
- 	return copy_ctl_value_to_user(userdata, valuep, data, type, count);
- }
++	map_symbol__exit(&lbr_stitch->prev_lbr_cursor[idx].ms);
+ 	memcpy(&lbr_stitch->prev_lbr_cursor[idx], cursor->curr,
+ 	       sizeof(struct callchain_cursor_node));
++	lbr_stitch->prev_lbr_cursor[idx].ms.maps = maps__get(cursor->curr->ms.maps);
++	lbr_stitch->prev_lbr_cursor[idx].ms.map = map__get(cursor->curr->ms.map);
  
-+static int ctl_elem_write_user(struct snd_ctl_file *file,
-+			       void __user *userdata, void __user *valuep)
-+{
-+	struct snd_card *card = file->card;
-+	int err;
+ 	lbr_stitch->prev_lbr_cursor[idx].valid = true;
+ 	cursor->pos++;
+@@ -2482,6 +2486,9 @@ static bool has_stitched_lbr(struct thread *thread,
+ 		memcpy(&stitch_node->cursor, &lbr_stitch->prev_lbr_cursor[i],
+ 		       sizeof(struct callchain_cursor_node));
+ 
++		stitch_node->cursor.ms.maps = maps__get(lbr_stitch->prev_lbr_cursor[i].ms.maps);
++		stitch_node->cursor.ms.map = map__get(lbr_stitch->prev_lbr_cursor[i].ms.map);
 +
-+	err = snd_power_ref_and_wait(card);
-+	if (err < 0)
-+		return err;
-+	err = __ctl_elem_write_user(file, userdata, valuep);
-+	snd_power_unref(card);
-+	return err;
-+}
+ 		if (callee)
+ 			list_add(&stitch_node->node, &lbr_stitch->lists);
+ 		else
+@@ -2505,6 +2512,8 @@ static bool alloc_lbr_stitch(struct thread *thread, unsigned int max_lbr)
+ 	if (!thread__lbr_stitch(thread)->prev_lbr_cursor)
+ 		goto free_lbr_stitch;
+ 
++	thread__lbr_stitch(thread)->prev_lbr_cursor_size = max_lbr + 1;
 +
- static int snd_ctl_elem_read_user_compat(struct snd_card *card,
- 					 struct snd_ctl_elem_value32 __user *data32)
- {
+ 	INIT_LIST_HEAD(&thread__lbr_stitch(thread)->lists);
+ 	INIT_LIST_HEAD(&thread__lbr_stitch(thread)->free_lists);
+ 
+@@ -2560,8 +2569,12 @@ static int resolve_lbr_callchain_sample(struct thread *thread,
+ 						max_lbr, callee);
+ 
+ 		if (!stitched_lbr && !list_empty(&lbr_stitch->lists)) {
+-			list_replace_init(&lbr_stitch->lists,
+-					  &lbr_stitch->free_lists);
++			struct stitch_list *stitch_node;
++
++			list_for_each_entry(stitch_node, &lbr_stitch->lists, node)
++				map_symbol__exit(&stitch_node->cursor.ms);
++
++			list_splice_init(&lbr_stitch->lists, &lbr_stitch->free_lists);
+ 		}
+ 		memcpy(&lbr_stitch->prev_sample, sample, sizeof(*sample));
+ 	}
+diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
+index 87c59aa9fe38b..0ffdd52d86d70 100644
+--- a/tools/perf/util/thread.c
++++ b/tools/perf/util/thread.c
+@@ -476,6 +476,7 @@ void thread__free_stitch_list(struct thread *thread)
+ 		return;
+ 
+ 	list_for_each_entry_safe(pos, tmp, &lbr_stitch->lists, node) {
++		map_symbol__exit(&pos->cursor.ms);
+ 		list_del_init(&pos->node);
+ 		free(pos);
+ 	}
+@@ -485,6 +486,9 @@ void thread__free_stitch_list(struct thread *thread)
+ 		free(pos);
+ 	}
+ 
++	for (unsigned int i = 0 ; i < lbr_stitch->prev_lbr_cursor_size; i++)
++		map_symbol__exit(&lbr_stitch->prev_lbr_cursor[i].ms);
++
+ 	zfree(&lbr_stitch->prev_lbr_cursor);
+ 	free(thread__lbr_stitch(thread));
+ 	thread__set_lbr_stitch(thread, NULL);
+diff --git a/tools/perf/util/thread.h b/tools/perf/util/thread.h
+index 8b4a3c69bad19..6cbf6eb2812e0 100644
+--- a/tools/perf/util/thread.h
++++ b/tools/perf/util/thread.h
+@@ -26,6 +26,7 @@ struct lbr_stitch {
+ 	struct list_head		free_lists;
+ 	struct perf_sample		prev_sample;
+ 	struct callchain_cursor_node	*prev_lbr_cursor;
++	unsigned int prev_lbr_cursor_size;
+ };
+ 
+ DECLARE_RC_STRUCT(thread) {
 -- 
 2.43.0
 
