@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F131DF254;
-	Tue,  8 Oct 2024 13:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FA81DF256;
+	Tue,  8 Oct 2024 13:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394044; cv=none; b=dEPv4HnOqXWD8a0EQEacIxU3DCFPA4xCji2HcQWII1Upy2LQKeAnFsvHjlC9aa6JT49ebNhE6tCyBPTv2MFdXITp7XQWveRH2Oo45aLg3P+FZz3KWTkjLdYduviL+pA7u0Wt2fQzZWJWmhWasYkIZdhUY3LhqWbVzOuJY79f/ws=
+	t=1728394047; cv=none; b=l5zSG9WwFHQ8oD5ETzNJprtmRO/t57N7uUX9CuMz5xbeUhepyF5iBkLmE1DwureETFgQZupaxZ9DJSRugZOtgGx+ok+ouU2HmG9PxaRSv0ZmmjUb33mWmrhwHeLPGeZtk3vl2N+YgnHEHu2engJVyegMJtu+w2YRywTN2N90wCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394044; c=relaxed/simple;
-	bh=wv5Tjv0iNAv4ySFSBRSi8UkAqXbUPCGsRKNjrHmqmSA=;
+	s=arc-20240116; t=1728394047; c=relaxed/simple;
+	bh=XbbrajIq+Luz7orv+UoHn+xTq0v9SCCTWUs5vZyeRNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Esbfjb9AYL0xhcJzuzpHHyvEbvEVkArIOs33H9JvzGiHLfGUXLTHyogHy8Ob3y+2cJKM1JZe9E1BBF1d4QNxff5oMUlTrgJPdYsAmLoRqKGvX2I+uRWnvdkEgqlqsKophsaecN4FAs8WuKH8mAfKIhSzg8CZrhZzW4UDiutBXxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr4gruCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gU5VvTY2GTBm525FFgA4hg9kOlC+DowncQjOYJUtZVohQkvldrvt9fD49O1ioFf8djbEDm+CEX0AT8yGKHSh1Odd2uWfpQhQkmv/mTFTE2lRcxRMEWx8HwH2aQhHwSWWzJcMnMFnRgCcZxZp3wy+O2vM81A/xA12TlOVZhHchQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxll0E2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr4gruCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45C4C4CEC7;
-	Tue,  8 Oct 2024 13:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxll0E2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0996EC4CEC7;
+	Tue,  8 Oct 2024 13:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394044;
-	bh=wv5Tjv0iNAv4ySFSBRSi8UkAqXbUPCGsRKNjrHmqmSA=;
+	s=korg; t=1728394047;
+	bh=XbbrajIq+Luz7orv+UoHn+xTq0v9SCCTWUs5vZyeRNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kr4gruCJTG6FDqVmBcoQfrholsKLiRSW19YFDRhnAPNVru1NAnvtzsWe0KjxOxnD0
-	 E51Xu20LTHDore3Vkxle1hiIFn4tBIfmOGZEre2yn7IneF/UCPSBi01+Cx/UbpGSHv
-	 I8CWoW5Q8/3vVubfPdLVfcDPsflxkpKW05uZyAU0=
+	b=yxll0E2pKV5am4ZlSFAogZqoSiYJbHM/jhEoZ/JL8NgCsIRHKCqSex9zz3R6Qiho2
+	 kx32MxePQ1Qmcm5rifUMOg3F/iHbojwASOFqkm17FxPjgddAI8+XpGLiEZIaYMOc+G
+	 HHIoODxSS0RhXux7n83KQjqU34wVnHftbAmXoYWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 299/386] gso: fix udp gso fraglist segmentation after pull from frag_list
-Date: Tue,  8 Oct 2024 14:09:04 +0200
-Message-ID: <20241008115641.152043719@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 290/386] clk: qcom: gcc-sm8250: Do not turn off PCIe GDSCs during gdsc_disable()
+Date: Tue,  8 Oct 2024 14:08:55 +0200
+Message-ID: <20241008115640.797971338@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,72 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit a1e40ac5b5e9077fe1f7ae0eb88034db0f9ae1ab upstream.
+commit ade508b545c969c72cd68479f275a5dd640fd8b9 upstream.
 
-Detect gso fraglist skbs with corrupted geometry (see below) and
-pass these to skb_segment instead of skb_segment_list, as the first
-can segment them correctly.
+With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of PCIe controllers from suspend.
 
-Valid SKB_GSO_FRAGLIST skbs
-- consist of two or more segments
-- the head_skb holds the protocol headers plus first gso_size
-- one or more frag_list skbs hold exactly one segment
-- all but the last must be gso_size
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
 
-Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
-modify these skbs, breaking these invariants.
-
-In extreme cases they pull all data into skb linear. For UDP, this
-causes a NULL ptr deref in __udpv4_gso_segment_list_csum at
-udp_hdr(seg->next)->dest.
-
-Detect invalid geometry due to pull, by checking head_skb size.
-Don't just drop, as this may blackhole a destination. Convert to be
-able to pass to regular skb_segment.
-
-Link: https://lore.kernel.org/netdev/20240428142913.18666-1-shiming.cheng@mediatek.com/
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20241001171752.107580-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # 5.7
+Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240719134238.312191-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp_offload.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-sm8250.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -290,8 +290,26 @@ struct sk_buff *__udp_gso_segment(struct
- 		return NULL;
- 	}
+--- a/drivers/clk/qcom/gcc-sm8250.c
++++ b/drivers/clk/qcom/gcc-sm8250.c
+@@ -3226,7 +3226,7 @@ static struct gdsc pcie_0_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
--	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
-+		 /* Detect modified geometry and pass those to skb_segment. */
-+		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
-+			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+
-+		 /* Setup csum, as fraglist skips this in udp4_gro_receive. */
-+		gso_skb->csum_start = skb_transport_header(gso_skb) - gso_skb->head;
-+		gso_skb->csum_offset = offsetof(struct udphdr, check);
-+		gso_skb->ip_summed = CHECKSUM_PARTIAL;
-+
-+		uh = udp_hdr(gso_skb);
-+		if (is_ipv6)
-+			uh->check = ~udp_v6_check(gso_skb->len,
-+						  &ipv6_hdr(gso_skb)->saddr,
-+						  &ipv6_hdr(gso_skb)->daddr, 0);
-+		else
-+			uh->check = ~udp_v4_check(gso_skb->len,
-+						  ip_hdr(gso_skb)->saddr,
-+						  ip_hdr(gso_skb)->daddr, 0);
-+	}
+ static struct gdsc pcie_1_gdsc = {
+@@ -3234,7 +3234,7 @@ static struct gdsc pcie_1_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 	skb_pull(gso_skb, sizeof(*uh));
+ static struct gdsc pcie_2_gdsc = {
+@@ -3242,7 +3242,7 @@ static struct gdsc pcie_2_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_2_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
+ static struct gdsc ufs_card_gdsc = {
 
 
