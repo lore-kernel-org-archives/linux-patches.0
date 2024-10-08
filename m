@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE371DF97A;
-	Tue,  8 Oct 2024 13:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6DB1DF754;
+	Tue,  8 Oct 2024 13:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393703; cv=none; b=Q0Uu0gx+/WzS6enB3GOSOf6DOLxAGwXFRxhuoBf9O14hs4MT6F211tUy5CsI/clgxeXQH4K/RRAibH1PiJcLQZnfYBa+Pgos4PcCwTADPmBdc1vnVvT5gpMyKpuwc4DYoEch5BVxbD3OKVBa2RRvD+6BqWKMYe/JswA5BW6JveA=
+	t=1728393706; cv=none; b=uiPPSYhxg0/bjzfaHklS7lmV35+FYIN0gK5IRIDoEtG9Esnm2oi2kRBaIfjZxyibX7fsB3xb2nvQ8a+ooaAa6Yy7UiANWcBmxfAr3ZhXMMDOD/MXpJYcNzNUNGAYGeg31zOCFkiAQycX31pLXIYUbSJd7z3iHP2HYPZs1jH/CbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393703; c=relaxed/simple;
-	bh=DVIy1o1OrokRooawjd1rfFWLDOEYfFX4n/5tlle1bI4=;
+	s=arc-20240116; t=1728393706; c=relaxed/simple;
+	bh=Tn3t5fdjwmAbT4trlVxlqymDXFjPyw5rK2t9NKEyYZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9VQMt7YBDaZjSSY3iv+TVBiOWbr9Dgt/yO7UY+IbqMJxQbbBVrxGj/T0xt4fA26JBX35IsDnWr2k4/YyWY3c30MvsBIHUAQqJOc0ARNz63+8elgCOY8W8j6nN3Hy0+lnQlZIoHawz3mLvoGgYnbjddclSCOZQb5W2zBLWYNIMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGq/Fdhu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=arFbzOftFKirJULmbnHU5JU+6cwmkoO5YmHds94ijjJAna47vgCPNGSbDUTk0p9scyQArd0YbmP5Mav6QegYILdXwUcAUXLb/EeSwV8sRSdpxo2o2/+V6DIktVwC+RHqY68gCSmRF2rO/prUJWucbWAFORd5bpQVrVl4GySaPKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIatQI/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGq/Fdhu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B7DC4CEC7;
-	Tue,  8 Oct 2024 13:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIatQI/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A7DC4CEC7;
+	Tue,  8 Oct 2024 13:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393702;
-	bh=DVIy1o1OrokRooawjd1rfFWLDOEYfFX4n/5tlle1bI4=;
+	s=korg; t=1728393705;
+	bh=Tn3t5fdjwmAbT4trlVxlqymDXFjPyw5rK2t9NKEyYZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGq/FdhuWJoiI1rocPTJxZTU2EqLfC+7CClnGDX9g2JvEPCR1HsvLM//2RaNG/bFm
-	 S4zOcQJgYIm0yfi8bk4JjfjAjbhMaRLw0vlB/oW2G398t35DLbzOnvt8fx+n8/yVlY
-	 ohp1n5MkGm4VuE2EHx8plomhiZfyFVXLtbgo5188=
+	b=LIatQI/7nhgpzzIrnFyGYfIJXNke72QrSenILBea3Ip0sdKBT+gyilQ89HWSptYAw
+	 WoXFvotn/yg8rkc1lW8PotKI/Me/79vW30owiIRwK1u4f+c1KsEhxl6MeXOwlmXYkq
+	 nJBn3Xhh/WNbDej4WxjOsAUuUBbANtnVJXCLcwPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/386] spi: spi-cadence: Fix missing spi_controller_is_target() check
-Date: Tue,  8 Oct 2024 14:07:14 +0200
-Message-ID: <20241008115636.848125554@linuxfoundation.org>
+	Baojun Xu <baojun.xu@ti.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 224/386] ALSA: hda/tas2781: Add new quirk for Lenovo Y990 Laptop
+Date: Tue,  8 Oct 2024 14:07:49 +0200
+Message-ID: <20241008115638.221208200@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,41 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Baojun Xu <baojun.xu@ti.com>
 
-[ Upstream commit 3eae4a916fc0eb6f85b5d399e10335dbd24dd765 ]
+commit 49f5ee951f11f4d6a124f00f71b2590507811a55 upstream.
 
-The spi_controller_is_target() check is missing for pm_runtime_disable()
-in cdns_spi_remove(), add it.
+Add new vendor_id and subsystem_id in quirk for Lenovo Y990 Laptop.
 
-Fixes: b1b90514eaa3 ("spi: spi-cadence: Add support for Slave mode")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240923040015.3009329-4-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240919075743.259-1-baojun.xu@ti.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
-index 316da99f798c8..81edf0a3ddf84 100644
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -688,8 +688,10 @@ static void cdns_spi_remove(struct platform_device *pdev)
- 
- 	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
- 
--	pm_runtime_disable(&pdev->dev);
--	pm_runtime_set_suspended(&pdev->dev);
-+	if (!spi_controller_is_target(ctlr)) {
-+		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_set_suspended(&pdev->dev);
-+	}
- 
- 	spi_unregister_controller(ctlr);
- }
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10330,6 +10330,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x38cd, "Y790 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d2, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d7, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38df, "Y990 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
 
 
