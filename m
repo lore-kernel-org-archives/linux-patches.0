@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F3B1DE89F;
-	Tue,  8 Oct 2024 13:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F551DE4CD;
+	Tue,  8 Oct 2024 13:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393043; cv=none; b=SaS99SPXCzbOaMaDV3fySRCgizz8KwhjMhzW6ZWTjlbN5LS/M5W7LQjiMesh96f+JnX0OkAVqDxNW6jP/yt/pJoFYFvnspH767MfrbEZXmPjFm9w8OevO82GnLxBtpLimKnqsx7ayDE2NULXCS4EGAzXk7q4q6mS+c+UIZf2cDE=
+	t=1728393047; cv=none; b=b9rtIExlzn8NfLz42l2dT5B4M9/G9lkRuz8dQGhglSEAkqRlo+qcuN8QGPQax06x9ys+YZLFNUhgLwtMPy8B0z20OsBm9dwbKSZ9bnuRLwgDFwjfhbj6AbnmtHQdcOeY/PrabybyCGeGWCBQHUrV+jq2wvrUE0f66KtI4JwUR/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393043; c=relaxed/simple;
-	bh=xpufS9yN+SMtNmWd9+Wlg9qYehzXNI0G2sZF2xuraEQ=;
+	s=arc-20240116; t=1728393047; c=relaxed/simple;
+	bh=5xZyo8JPKDeyixdj4iVd7cseyDBJcE8GwOYUVuEuL+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0u6RIiBcSE6+xnJvyognh1IZdAQzlhTYm5mFX5iGzlHPK/xO1SMsQhwXIV/TsEwcjaqbmvoLIjnQ13AA+4a5KI2EXgMWprYpejUj8LsFBJUQWOdk3+2AIGZkKumqomqPset0V4Z09iLMgW2KYMqTsRW4XLAwvTQWSrA7yZaPAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZs59c+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgmEMbw7amuO8hkN4uhlQUAYeJQHnu8Ww7Qv7gzBgUbWIw+A2knVBae5W20O7Bk1LOWQDn5RoOHjqv+qn/MijeyKIaFd/XFJTn5qTiPy8BD22K2sOWNavbLks/ebg9StyTk2FHrdnOGuJTngzabfDf+QJAhdRJPaX5kA9ZaHBr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOvABd7W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZs59c+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30719C4CEC7;
-	Tue,  8 Oct 2024 13:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOvABd7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6203C4CEC7;
+	Tue,  8 Oct 2024 13:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393043;
-	bh=xpufS9yN+SMtNmWd9+Wlg9qYehzXNI0G2sZF2xuraEQ=;
+	s=korg; t=1728393047;
+	bh=5xZyo8JPKDeyixdj4iVd7cseyDBJcE8GwOYUVuEuL+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZs59c+6XD89mrO+x0HAAeRB/vgmuJ6jqrx9VfWO1+D5LbEp4/bn6Lll60SbKheha
-	 A3f6JwPkF4uJnJZseIIuLTqGFQwXCYWGLwPU6RrH7jhzJr6ndCokPf/lvGbN9Jm6B1
-	 HCfUqBUd3SO9j9Gq7NCVgB4xLMaIv32IMNYmUtak=
+	b=TOvABd7WuZgiOsWOmFZsp3eJdrN2sF41VQ8miPXl9/YX4aYQVyOviVa/kDsOXtRm/
+	 i6/AG0gw1tcsGDs+U6f4VUp4XJq4xjUcHrBFA6Ttf5TFK9g6Y8w3a4PRhzE4oKp28v
+	 /wepVYh6RGK2lFbRyQbHusOGan3L1scqBoMS2fM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Ravikanth Tuniki <ravikanth.tuniki@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/386] iomap: constrain the file range passed to iomap_file_unshare
-Date: Tue,  8 Oct 2024 14:04:41 +0200
-Message-ID: <20241008115630.897625438@linuxfoundation.org>
+Subject: [PATCH 6.6 037/386] dt-bindings: net: xlnx,axi-ethernet: Add missing reg minItems
+Date: Tue,  8 Oct 2024 14:04:42 +0200
+Message-ID: <20241008115630.936345307@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,68 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ravikanth Tuniki <ravikanth.tuniki@amd.com>
 
-[ Upstream commit a311a08a4237241fb5b9d219d3e33346de6e83e0 ]
+[ Upstream commit c6929644c1e0d6108e57061d427eb966e1746351 ]
 
-File contents can only be shared (i.e. reflinked) below EOF, so it makes
-no sense to try to unshare ranges beyond EOF.  Constrain the file range
-parameters here so that we don't have to do that in the callers.
+Add missing reg minItems as based on current binding document
+only ethernet MAC IO space is a supported configuration.
 
-Fixes: 5f4e5752a8a3 ("fs: add iomap_file_dirty")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20241002150213.GC21853@frogsfrogsfrogs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+There is a bug in schema, current examples contain 64-bit
+addressing as well as 32-bit addressing. The schema validation
+does pass incidentally considering one 64-bit reg address as
+two 32-bit reg address entries. If we change axi_ethernet_eth1
+example node reg addressing to 32-bit schema validation reports:
+
+Documentation/devicetree/bindings/net/xlnx,axi-ethernet.example.dtb:
+ethernet@40000000: reg: [[1073741824, 262144]] is too short
+
+To fix it add missing reg minItems constraints and to make things clearer
+stick to 32-bit addressing in examples.
+
+Fixes: cbb1ca6d5f9a ("dt-bindings: net: xlnx,axi-ethernet: convert bindings document to yaml")
+Signed-off-by: Ravikanth Tuniki <ravikanth.tuniki@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/1727723615-2109795-1-git-send-email-radhey.shyam.pandey@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c               | 6 +++++-
- fs/iomap/buffered-io.c | 6 +++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 3380b43cb6bbb..d48b4fc7a4838 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1305,11 +1305,15 @@ int dax_file_unshare(struct inode *inode, loff_t pos, loff_t len,
- 	struct iomap_iter iter = {
- 		.inode		= inode,
- 		.pos		= pos,
--		.len		= len,
- 		.flags		= IOMAP_WRITE | IOMAP_UNSHARE | IOMAP_DAX,
- 	};
-+	loff_t size = i_size_read(inode);
- 	int ret;
+diff --git a/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml b/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
+index 1d33d80af11c3..652d696bc9e90 100644
+--- a/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
++++ b/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
+@@ -34,6 +34,7 @@ properties:
+       and length of the AXI DMA controller IO space, unless
+       axistream-connected is specified, in which case the reg
+       attribute of the node referenced by it is used.
++    minItems: 1
+     maxItems: 2
  
-+	if (pos < 0 || pos >= size)
-+		return 0;
-+
-+	iter.len = min(len, size - pos);
- 	while ((ret = iomap_iter(&iter, ops)) > 0)
- 		iter.processed = dax_unshare_iter(&iter);
- 	return ret;
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 975fd88c1f0f4..5371b16341fff 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1316,11 +1316,15 @@ iomap_file_unshare(struct inode *inode, loff_t pos, loff_t len,
- 	struct iomap_iter iter = {
- 		.inode		= inode,
- 		.pos		= pos,
--		.len		= len,
- 		.flags		= IOMAP_WRITE | IOMAP_UNSHARE,
- 	};
-+	loff_t size = i_size_read(inode);
- 	int ret;
- 
-+	if (pos < 0 || pos >= size)
-+		return 0;
-+
-+	iter.len = min(len, size - pos);
- 	while ((ret = iomap_iter(&iter, ops)) > 0)
- 		iter.processed = iomap_unshare_iter(&iter);
- 	return ret;
+   interrupts:
+@@ -165,7 +166,7 @@ examples:
+         clock-names = "s_axi_lite_clk", "axis_clk", "ref_clk", "mgt_clk";
+         clocks = <&axi_clk>, <&axi_clk>, <&pl_enet_ref_clk>, <&mgt_clk>;
+         phy-mode = "mii";
+-        reg = <0x00 0x40000000 0x00 0x40000>;
++        reg = <0x40000000 0x40000>;
+         xlnx,rxcsum = <0x2>;
+         xlnx,rxmem = <0x800>;
+         xlnx,txcsum = <0x2>;
 -- 
 2.43.0
 
