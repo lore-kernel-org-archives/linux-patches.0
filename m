@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9771779B1;
-	Tue,  8 Oct 2024 12:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA6A1779B1;
+	Tue,  8 Oct 2024 12:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390899; cv=none; b=Y+UlRlQ6qp5xSyN6M+OekIC3D4ZCZuwJiwQngcldsDQmpRFQvA9mq3Xay9Fa9mNC0QPqq6Fabm+0vtkKMVgk0h7YMeCKCJZ97WmqSB3ySlICcasLDUsUaMTcN3nTAJsBbYgNoffZhUEZe/QhD/SdjQm/SN5+G3Fdg2UMtlxyEaE=
+	t=1728390902; cv=none; b=S+3erMtYQB3quJ+MOoQl8ayAuT838RwEi+Xp02JtR6UXmcOerrzRTAvOlBLlfjlwob5ZlB8sD0TsiKf1nySPLL887CqAQ7aW7DfArC0n8ATUHujwxLt7KBAJSDdQ//Qs1irEVLA+texh8cCESMmnl13Wnd09LHv+M0+ZWeBz0Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390899; c=relaxed/simple;
-	bh=CElowgiTdofJCKzIGSUcOxc8Vrx6ugb5b0B/6Je/3OQ=;
+	s=arc-20240116; t=1728390902; c=relaxed/simple;
+	bh=E/uci8butSiKTtKw4F1yzhIP5OD3ZETWIobQPQh4sUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfnXxmSlBpPpaQEYC3rbhcODWHCT9fR1VIvTuyX9J66tIqE5vmokRsc6slhKajWKED++IMYYvFNvb9Jf8sMXSrCCClHyaf9SjIqqhP6wPTVTgZ7F6lK7hSCk1pA4t1xfVwCzqUhTnQwYgyNYs+QvVyoryiv4v1VbSJ6O6J/cIbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHyWd5B0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ul/+wB1hFQIY8rhDLnwZ+MQL1hDMQD4F5CFnHgzIpi3vvQ4F/LsKkV60nM5U6KbhgD+H6F2ycBvm/cBx2XgLhjY14LBfFemEs9oKhb3/DuNYBypL74+JWcyeK9NwX+VZ10FPUNGkLH6p5RzcWIYykjoaRCAR9QadtR+rZ80rpio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1wRSZhE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHyWd5B0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA92C4CEC7;
-	Tue,  8 Oct 2024 12:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1wRSZhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F88C4CEC7;
+	Tue,  8 Oct 2024 12:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390899;
-	bh=CElowgiTdofJCKzIGSUcOxc8Vrx6ugb5b0B/6Je/3OQ=;
+	s=korg; t=1728390902;
+	bh=E/uci8butSiKTtKw4F1yzhIP5OD3ZETWIobQPQh4sUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHyWd5B0M5mboTssflg2941nDiooNpat418cMNL9pc6LrWWy0PL5QjvA1J4KgPeR2
-	 Q3WyqQlWu1YKVtc+6/Zfxb2TPXFF6aXA5QUqzo7OaE1sJML6P3o58d9cGiEp85bmSh
-	 ru0G00zsMISwAF2KIJT9JXIrFdko7Tb0rnB6Bz7E=
+	b=V1wRSZhEAuPMwmOGctb/sMhH6Rc1J0rwF12AgrR2Cc+hMH4N/KUM33Cf6ipqt2sMD
+	 UGnWwR4Pho6ZyTCUaVsGcrBjLWuOQtog7CyzRIbDlxOGrRTIcGgMDtUt5pIRJea0sB
+	 HoqQ7d3dT3t75J6JVqLUE/rSZziVXIh8Zu93v6+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.10 426/482] io_uring/net: harden multishot termination case for recv
-Date: Tue,  8 Oct 2024 14:08:09 +0200
-Message-ID: <20241008115705.166207740@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.10 396/482] clk: qcom: gcc-sc8180x: Add GPLL9 support
+Date: Tue,  8 Oct 2024 14:07:39 +0200
+Message-ID: <20241008115703.994524638@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -49,56 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit c314094cb4cfa6fc5a17f4881ead2dfebfa717a7 upstream.
+commit 818a2f8d5e4ad2c1e39a4290158fe8e39a744c70 upstream.
 
-If the recv returns zero, or an error, then it doesn't matter if more
-data has already been received for this buffer. A condition like that
-should terminate the multishot receive. Rather than pass in the
-collected return value, pass in whether to terminate or keep the recv
-going separately.
+Add the missing GPLL9 pll and fix the gcc_parents_7 data to use
+the correct pll hw.
 
-Note that this isn't a bug right now, as the only way to get there is
-via setting MSG_WAITALL with multishot receive. And if an application
-does that, then -EINVAL is returned anyway. But it seems like an easy
-bug to introduce, so let's make it a bit more explicit.
-
-Link: https://github.com/axboe/liburing/issues/1246
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
 Cc: stable@vger.kernel.org
-Fixes: b3fdea6ecb55 ("io_uring: multishot recv")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-3-8b3eaa5fb856@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sc8180x.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1116,6 +1116,7 @@ int io_recv(struct io_kiocb *req, unsign
- 	int ret, min_ret = 0;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	size_t len = sr->len;
-+	bool mshot_finished;
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -142,6 +142,23 @@ static struct clk_alpha_pll gpll7 = {
+ 	},
+ };
  
- 	if (!(req->flags & REQ_F_POLLED) &&
- 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
-@@ -1170,6 +1171,7 @@ out_free:
- 		req_set_fail(req);
- 	}
++static struct clk_alpha_pll gpll9 = {
++	.offset = 0x1c000,
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
++	.clkr = {
++		.enable_reg = 0x52000,
++		.enable_mask = BIT(9),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "gpll9",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "bi_tcxo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_fixed_trion_ops,
++		},
++	},
++};
++
+ static const struct parent_map gcc_parent_map_0[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -241,7 +258,7 @@ static const struct parent_map gcc_paren
+ static const struct clk_parent_data gcc_parents_7[] = {
+ 	{ .fw_name = "bi_tcxo", },
+ 	{ .hw = &gpll0.clkr.hw },
+-	{ .name = "gppl9" },
++	{ .hw = &gpll9.clkr.hw },
+ 	{ .hw = &gpll4.clkr.hw },
+ 	{ .hw = &gpll0_out_even.clkr.hw },
+ };
+@@ -4448,6 +4465,7 @@ static struct clk_regmap *gcc_sc8180x_cl
+ 	[GPLL1] = &gpll1.clkr,
+ 	[GPLL4] = &gpll4.clkr,
+ 	[GPLL7] = &gpll7.clkr,
++	[GPLL9] = &gpll9.clkr,
+ };
  
-+	mshot_finished = ret <= 0;
- 	if (ret > 0)
- 		ret += sr->done_io;
- 	else if (sr->done_io)
-@@ -1177,7 +1179,7 @@ out_free:
- 	else
- 		io_kbuf_recycle(req, issue_flags);
- 
--	if (!io_recv_finish(req, &ret, kmsg, ret <= 0, issue_flags))
-+	if (!io_recv_finish(req, &ret, kmsg, mshot_finished, issue_flags))
- 		goto retry_multishot;
- 
- 	return ret;
+ static const struct qcom_reset_map gcc_sc8180x_resets[] = {
 
 
