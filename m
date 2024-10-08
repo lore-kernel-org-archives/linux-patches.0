@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356E01DE8BD;
-	Tue,  8 Oct 2024 12:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0421D0E23;
+	Tue,  8 Oct 2024 12:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389855; cv=none; b=Kja+HruXy6/iYaV0z9qxgdbuZvssmR7Nrst3a25WUdDbGNFzi/QW+YHiGbBLpzj8/ofgYvtraNks8LcfvSWK1o1gNJlKVVAL4fOwgz5ZXF07BYe6n6L15nqaEK2ABAATJkJZYmsppAC3votwNFIARYzh3cni/Z2JFvtAuTgi+3g=
+	t=1728389859; cv=none; b=Do9Ml60HS3+/SG4/kQFJIbz1B3vmKtETbOQsOArrbIoVYoFGN3wiyF2L6g/orC57sjmkcqhRbII4cUFSqrvPQWtig9KJy2BhW0IuX7NE0vuik/EhNnewktvKPHxBh+YFi7JLfzbBDqMQe8VMO8a5PcqQQGq2T1PzyGAKT/OoyI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389855; c=relaxed/simple;
-	bh=EO0TUELV+m0y9HUCEXihpe2G8cs6MSYAif59FS4XZ2M=;
+	s=arc-20240116; t=1728389859; c=relaxed/simple;
+	bh=ZlQBrtyT20A8/IOuQXML892b8ZhbtSCt/S8NkZ3xx5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7JpqXyQPV1dQRr9anuyl6j+ZrFNB+qz4Tl5kFvWA1zAYuVt5TFiO4+KvwM7tgZFem0d75tFW80oaSgkOp5I5QQWUHCvzk44/IefZdPr4fLQg0Xb84cuvvpseSxVDYf8ijJhtq1l/AwpfAx3qlaK8SfL03or9OE1uZTichBNCig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LV4Kcrln; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnCSJU5kxWUEHBUgBA6flm3GCW8DXqUdz50rkxvcsMIzhONlrZ/coT9V7UHnPEUxJ+cmZk/XONp5Ao0KDqZGpmjfCRfa7vLX5cTka/OTYIk95Km9XTRBLUJ8Wqr3y/6ZyMv1r4zk1/EjZKynrFTw2ydsaP+8a1asWQ1SnbGglVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZRr7rT4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LV4Kcrln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECBAC4CEC7;
-	Tue,  8 Oct 2024 12:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZRr7rT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A21C4CEC7;
+	Tue,  8 Oct 2024 12:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389855;
-	bh=EO0TUELV+m0y9HUCEXihpe2G8cs6MSYAif59FS4XZ2M=;
+	s=korg; t=1728389858;
+	bh=ZlQBrtyT20A8/IOuQXML892b8ZhbtSCt/S8NkZ3xx5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LV4Kcrlnd07WjtlrnNwVeR45SR+SDp6iyovoT3XGMilfdh5LQgEw7f/GhtSse8p3k
-	 a9mqhxFSFOL2fDS8WgyyLW3XKv/JDg+fbmMiTTVdT4GGnps6Qd6jHYe/vo9gzzmCPp
-	 9qNSUrdnkqy6C4y+Q+uQv3JID1TNLbHZgNXEFyUA=
+	b=CZRr7rT4+98unJSGtgo8RS+f+WVUmcxu5lb5DDBalVVmeXBNyRlTuQOn7gyoX+SaR
+	 WN69K+q7k4AVDt3N76t+tEp2CwRqv4Yj3kaU3FQ+P6Ws5jZn9Bk884amS8AOjBcYet
+	 BlzjqhOkMYb5kBoQopoeIq6r+GhkaZWk2Gl40xlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 089/482] e1000e: avoid failing the system during pm_suspend
-Date: Tue,  8 Oct 2024 14:02:32 +0200
-Message-ID: <20241008115651.807486364@linuxfoundation.org>
+Subject: [PATCH 6.10 116/482] wifi: iwlwifi: mvm: use correct key iteration
+Date: Tue,  8 Oct 2024 14:02:59 +0200
+Message-ID: <20241008115652.872866213@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,102 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0a6ad4d9e1690c7faa3a53f762c877e477093657 ]
+[ Upstream commit 4f1591d292277eec51d027405a92f0d4ef5e299e ]
 
-Occasionally when the system goes into pm_suspend, the suspend might fail
-due to a PHY access error on the network adapter. Previously, this would
-have caused the whole system to fail to go to a low power state.
-An example of this was reported in the following Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=205015
+In the cases changed here, key iteration isn't done from
+an RCU critical section, but rather using the wiphy lock
+as protection. Therefore, just use ieee80211_iter_keys().
+The link switch case can therefore also use sync commands.
 
-[ 1663.694828] e1000e 0000:00:19.0 eth0: Failed to disable ULP
-[ 1664.731040] asix 2-3:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0xC1E1
-[ 1665.093513] e1000e 0000:00:19.0 eth0: Hardware Error
-[ 1665.596760] e1000e 0000:00:19.0: pci_pm_resume+0x0/0x80 returned 0 after 2975399 usecs
-
-and then the system never recovers from it, and all the following suspend failed due to this
-[22909.393854] PM: pci_pm_suspend(): e1000e_pm_suspend+0x0/0x760 [e1000e] returns -2
-[22909.393858] PM: dpm_run_callback(): pci_pm_suspend+0x0/0x160 returns -2
-[22909.393861] PM: Device 0000:00:1f.6 failed to suspend async: error -2
-
-This can be avoided by changing the return values of __e1000_shutdown and
-e1000e_pm_suspend functions so that they always return 0 (success). This
-is consistent with what other drivers do.
-
-If the e1000e driver encounters a hardware error during suspend, potential
-side effects include slightly higher power draw or non-working wake on
-LAN. This is preferred to a system-level suspend failure, and a warning
-message is written to the system log, so that the user can be aware that
-the LAN controller experienced a problem during suspend.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=205015
-Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240729201718.69a2d18580c1.I2148e04d4b467d0b100beac8f7e449bfaaf775a5@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 3cd161c6672be..e23eedc791d66 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6671,8 +6671,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 		if (adapter->flags2 & FLAG2_HAS_PHY_WAKEUP) {
- 			/* enable wakeup by the PHY */
- 			retval = e1000_init_phy_wakeup(adapter, wufc);
--			if (retval)
--				return retval;
-+			if (retval) {
-+				e_err("Failed to enable wakeup\n");
-+				goto skip_phy_configurations;
-+			}
- 		} else {
- 			/* enable wakeup by the MAC */
- 			ew32(WUFC, wufc);
-@@ -6693,8 +6695,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 			 * or broadcast.
- 			 */
- 			retval = e1000_enable_ulp_lpt_lp(hw, !runtime);
--			if (retval)
--				return retval;
-+			if (retval) {
-+				e_err("Failed to enable ULP\n");
-+				goto skip_phy_configurations;
-+			}
- 		}
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+index 8a38fc4b0b0f9..455f5f4175064 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+@@ -144,7 +144,7 @@ static void iwl_mvm_mld_update_sta_key(struct ieee80211_hw *hw,
+ 	if (sta != data->sta || key->link_id >= 0)
+ 		return;
  
-@@ -6726,6 +6730,7 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 		hw->phy.ops.release(hw);
- 	}
+-	err = iwl_mvm_send_cmd_pdu(mvm, cmd_id, CMD_ASYNC, sizeof(cmd), &cmd);
++	err = iwl_mvm_send_cmd_pdu(mvm, cmd_id, 0, sizeof(cmd), &cmd);
  
-+skip_phy_configurations:
- 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
- 	 * would have already happened in close and is redundant.
- 	 */
-@@ -6968,15 +6973,13 @@ static int e1000e_pm_suspend(struct device *dev)
- 	e1000e_pm_freeze(dev);
+ 	if (err)
+ 		data->err = err;
+@@ -162,8 +162,8 @@ int iwl_mvm_mld_update_sta_keys(struct iwl_mvm *mvm,
+ 		.new_sta_mask = new_sta_mask,
+ 	};
  
- 	rc = __e1000_shutdown(pdev, false);
--	if (rc) {
--		e1000e_pm_thaw(dev);
--	} else {
-+	if (!rc) {
- 		/* Introduce S0ix implementation */
- 		if (adapter->flags2 & FLAG2_ENABLE_S0IX_FLOWS)
- 			e1000e_s0ix_entry_flow(adapter);
- 	}
- 
--	return rc;
-+	return 0;
+-	ieee80211_iter_keys_rcu(mvm->hw, vif, iwl_mvm_mld_update_sta_key,
+-				&data);
++	ieee80211_iter_keys(mvm->hw, vif, iwl_mvm_mld_update_sta_key,
++			    &data);
+ 	return data.err;
  }
  
- static int e1000e_pm_resume(struct device *dev)
+@@ -402,7 +402,7 @@ void iwl_mvm_sec_key_remove_ap(struct iwl_mvm *mvm,
+ 	if (!sec_key_ver)
+ 		return;
+ 
+-	ieee80211_iter_keys_rcu(mvm->hw, vif,
+-				iwl_mvm_sec_key_remove_ap_iter,
+-				(void *)(uintptr_t)link_id);
++	ieee80211_iter_keys(mvm->hw, vif,
++			    iwl_mvm_sec_key_remove_ap_iter,
++			    (void *)(uintptr_t)link_id);
+ }
 -- 
 2.43.0
 
