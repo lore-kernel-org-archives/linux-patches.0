@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93C21D27B3;
-	Tue,  8 Oct 2024 12:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EFB192594;
+	Tue,  8 Oct 2024 12:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390995; cv=none; b=ESujlJHY8VDEOFghGsTZMJp53bVoMt/9fqZNAmyr0SRo//yiSVi5G0s9Pmgg5VGHE+veWGVRLkKu5JGhj41OAXqewo/ZSFrnRUf/T5ofMoGjWaI20T9jSSqKDtZ7Ao0p5E+tIRfTjVbgtUmzvwVfJLSvE7BaVWUzb+4w4puH6CY=
+	t=1728390999; cv=none; b=ZN25HK105tq6+9BKVYoLY6oY6BbaS2IoCKlgLT8geAA4fEhbxx2yShsp9VJdEWn5/S3qVX9EtHpxETF+TDFwfHKVBuJa+tz4wdiOiMBve8JwKVGpu2jMon7vNK852xR7QETqtwWlZHWjsQsyRTLU0BBb5AM3ZoI0HJm6lrt3cgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390995; c=relaxed/simple;
-	bh=6up5E/Zl12uPFEMqwaTeixXmDEVkMVKvHLPaR2qGr64=;
+	s=arc-20240116; t=1728390999; c=relaxed/simple;
+	bh=WMofMWMtjfCeJGcrayBGUx2SWJWxnc/WOo5gmakumMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abJWs5hHt6i42x0A7exvGQRjqC8/394PAlaW8klJsb+4107JA3LFcNL4/y9WjT0R/h7m0N7pkJx8cL0+Hjdhs4sMcbirtjRiOduvUHaiG2QzczSFZpSjlnWjLYJV8WD7Kc4R4XPtl4/CotsbuTTC3IyJphNe4rovD4Fpbonhiyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPdj1BLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q2/4wYVc6Lad6BfUb/Umq9yuBxNq12wmOnTA+oY1ENViGJZAD+wuyYsgyGukpfTM52I9cmkkSEUZZfwPxp3APmtmxaxBIf3o3VmfHR2dVbt1/KvVybkUYwFaSFtEhLaX1Etnc3O/hRPRTOQq5OTyoT7EeOJbtJz9w2i3NvKv8x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEVsXTBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPdj1BLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38158C4CECD;
-	Tue,  8 Oct 2024 12:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEVsXTBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303D0C4CECD;
+	Tue,  8 Oct 2024 12:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390995;
-	bh=6up5E/Zl12uPFEMqwaTeixXmDEVkMVKvHLPaR2qGr64=;
+	s=korg; t=1728390998;
+	bh=WMofMWMtjfCeJGcrayBGUx2SWJWxnc/WOo5gmakumMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPdj1BLK8pwkAqJcaX2ledYcHgQeijk3uct8M01uAFzsM/r3ghUnpGaIweecC2q0I
-	 AEmqoMaKTYIHMkLk02mclH35zv1ClrJ0RfqG8u+P0Yx5+1G7V7SMf3Pr/3nYDW0GSY
-	 q1lCD36zoHIIAm8Z17ynW315Z6st5VEjp7LX86WU=
+	b=OEVsXTBWQ0KoBSrkjXHQEZwnYSG1dOYB0Uv3AwlodozfscF5F1zXTrW1EOPL2XJwc
+	 znezC3KKLvk8UwpLLL1X9urElGtI6xBQTx5wIKHuY6C7OmQtMD4gUTab9j5BUCxWX/
+	 8I8ITR6vtIPz/C3rwx2HqrJntL8Gp07ofY3mYfLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Duffany <brandon@buildbuddy.io>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 457/482] sched: psi: fix bogus pressure spikes from aggregation race
-Date: Tue,  8 Oct 2024 14:08:40 +0200
-Message-ID: <20241008115706.500689467@linuxfoundation.org>
+Subject: [PATCH 6.10 458/482] sunrpc: change sp_nrthreads from atomic_t to unsigned int.
+Date: Tue,  8 Oct 2024 14:08:41 +0200
+Message-ID: <20241008115706.539649865@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,183 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 3840cbe24cf060ea05a585ca497814609f5d47d1 ]
+[ Upstream commit 60749cbe3d8ae572a6c7dda675de3e8b25797a18 ]
 
-Brandon reports sporadic, non-sensical spikes in cumulative pressure
-time (total=) when reading cpu.pressure at a high rate. This is due to
-a race condition between reader aggregation and tasks changing states.
+sp_nrthreads is only ever accessed under the service mutex
+  nlmsvc_mutex nfs_callback_mutex nfsd_mutex
+so these is no need for it to be an atomic_t.
 
-While it affects all states and all resources captured by PSI, in
-practice it most likely triggers with CPU pressure, since scheduling
-events are so frequent compared to other resource events.
+The fact that all code using it is single-threaded means that we can
+simplify svc_pool_victim and remove the temporary elevation of
+sp_nrthreads.
 
-The race context is the live snooping of ongoing stalls during a
-pressure read. The read aggregates per-cpu records for stalls that
-have concluded, but will also incorporate ad-hoc the duration of any
-active state that hasn't been recorded yet. This is important to get
-timely measurements of ongoing stalls. Those ad-hoc samples are
-calculated on-the-fly up to the current time on that CPU; since the
-stall hasn't concluded, it's expected that this is the minimum amount
-of stall time that will enter the per-cpu records once it does.
-
-The problem is that the path that concludes the state uses a CPU clock
-read that is not synchronized against aggregators; the clock is read
-outside of the seqlock protection. This allows aggregators to race and
-snoop a stall with a longer duration than will actually be recorded.
-
-With the recorded stall time being less than the last snapshot
-remembered by the aggregator, a subsequent sample will underflow and
-observe a bogus delta value, resulting in an erratic jump in pressure.
-
-Fix this by moving the clock read of the state change into the seqlock
-protection. This ensures no aggregation can snoop live stalls past the
-time that's recorded when the state concludes.
-
-Reported-by: Brandon Duffany <brandon@buildbuddy.io>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219194
-Link: https://lore.kernel.org/lkml/20240827121851.GB438928@cmpxchg.org/
-Fixes: df77430639c9 ("psi: Reduce calls to sched_clock() in psi")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: aadc3bbea163 ("NFSD: Limit the number of concurrent async COPY operations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/psi.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ fs/nfsd/nfsctl.c           |  2 +-
+ fs/nfsd/nfssvc.c           |  2 +-
+ include/linux/sunrpc/svc.h |  4 ++--
+ net/sunrpc/svc.c           | 31 +++++++++++--------------------
+ 4 files changed, 15 insertions(+), 24 deletions(-)
 
-diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
-index 507d7b8d79afa..8d4a3d9de4797 100644
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -765,13 +765,14 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
- }
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 0f9b4f7b56cd8..37f619ccafce0 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1746,7 +1746,7 @@ int nfsd_nl_threads_get_doit(struct sk_buff *skb, struct genl_info *info)
+ 			struct svc_pool *sp = &nn->nfsd_serv->sv_pools[i];
  
- static void psi_group_change(struct psi_group *group, int cpu,
--			     unsigned int clear, unsigned int set, u64 now,
-+			     unsigned int clear, unsigned int set,
- 			     bool wake_clock)
- {
- 	struct psi_group_cpu *groupc;
- 	unsigned int t, m;
- 	enum psi_states s;
- 	u32 state_mask;
-+	u64 now;
- 
- 	lockdep_assert_rq_held(cpu_rq(cpu));
- 	groupc = per_cpu_ptr(group->pcpu, cpu);
-@@ -786,6 +787,7 @@ static void psi_group_change(struct psi_group *group, int cpu,
- 	 * SOME and FULL time these may have resulted in.
- 	 */
- 	write_seqcount_begin(&groupc->seq);
-+	now = cpu_clock(cpu);
- 
- 	/*
- 	 * Start with TSK_ONCPU, which doesn't have a corresponding
-@@ -899,18 +901,15 @@ void psi_task_change(struct task_struct *task, int clear, int set)
- {
- 	int cpu = task_cpu(task);
- 	struct psi_group *group;
--	u64 now;
- 
- 	if (!task->pid)
- 		return;
- 
- 	psi_flags_change(task, clear, set);
- 
--	now = cpu_clock(cpu);
--
- 	group = task_psi_group(task);
- 	do {
--		psi_group_change(group, cpu, clear, set, now, true);
-+		psi_group_change(group, cpu, clear, set, true);
- 	} while ((group = group->parent));
- }
- 
-@@ -919,7 +918,6 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- {
- 	struct psi_group *group, *common = NULL;
- 	int cpu = task_cpu(prev);
--	u64 now = cpu_clock(cpu);
- 
- 	if (next->pid) {
- 		psi_flags_change(next, 0, TSK_ONCPU);
-@@ -936,7 +934,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 				break;
- 			}
- 
--			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
-+			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
- 		} while ((group = group->parent));
- 	}
- 
-@@ -974,7 +972,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 		do {
- 			if (group == common)
- 				break;
--			psi_group_change(group, cpu, clear, set, now, wake_clock);
-+			psi_group_change(group, cpu, clear, set, wake_clock);
- 		} while ((group = group->parent));
- 
- 		/*
-@@ -986,7 +984,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
- 		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
- 			clear &= ~TSK_ONCPU;
- 			for (; group; group = group->parent)
--				psi_group_change(group, cpu, clear, set, now, wake_clock);
-+				psi_group_change(group, cpu, clear, set, wake_clock);
+ 			err = nla_put_u32(skb, NFSD_A_SERVER_THREADS,
+-					  atomic_read(&sp->sp_nrthreads));
++					  sp->sp_nrthreads);
+ 			if (err)
+ 				goto err_unlock;
  		}
- 	}
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 89d7918de7b1a..877f926356549 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -705,7 +705,7 @@ int nfsd_get_nrthreads(int n, int *nthreads, struct net *net)
+ 
+ 	if (serv)
+ 		for (i = 0; i < serv->sv_nrpools && i < n; i++)
+-			nthreads[i] = atomic_read(&serv->sv_pools[i].sp_nrthreads);
++			nthreads[i] = serv->sv_pools[i].sp_nrthreads;
+ 	return 0;
  }
-@@ -997,8 +995,8 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
- 	int cpu = task_cpu(curr);
- 	struct psi_group *group;
- 	struct psi_group_cpu *groupc;
--	u64 now, irq;
- 	s64 delta;
-+	u64 irq;
  
- 	if (static_branch_likely(&psi_disabled))
- 		return;
-@@ -1011,7 +1009,6 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
- 	if (prev && task_psi_group(prev) == group)
- 		return;
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index 23617da0e565e..38a4fdf784e9a 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -33,9 +33,9 @@
+  * node traffic on multi-node NUMA NFS servers.
+  */
+ struct svc_pool {
+-	unsigned int		sp_id;	    	/* pool id; also node id on NUMA */
++	unsigned int		sp_id;		/* pool id; also node id on NUMA */
+ 	struct lwq		sp_xprts;	/* pending transports */
+-	atomic_t		sp_nrthreads;	/* # of threads in pool */
++	unsigned int		sp_nrthreads;	/* # of threads in pool */
+ 	struct list_head	sp_all_threads;	/* all server threads */
+ 	struct llist_head	sp_idle_threads; /* idle server threads */
  
--	now = cpu_clock(cpu);
- 	irq = irq_time_read(cpu);
- 	delta = (s64)(irq - rq->psi_irq_time);
- 	if (delta < 0)
-@@ -1019,12 +1016,15 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
- 	rq->psi_irq_time = irq;
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index d9cda1e53a017..6a15b831589c0 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -682,7 +682,7 @@ svc_prepare_thread(struct svc_serv *serv, struct svc_pool *pool, int node)
+ 	serv->sv_nrthreads += 1;
+ 	spin_unlock_bh(&serv->sv_lock);
  
- 	do {
-+		u64 now;
-+
- 		if (!group->enabled)
- 			continue;
+-	atomic_inc(&pool->sp_nrthreads);
++	pool->sp_nrthreads += 1;
  
- 		groupc = per_cpu_ptr(group->pcpu, cpu);
+ 	/* Protected by whatever lock the service uses when calling
+ 	 * svc_set_num_threads()
+@@ -737,31 +737,22 @@ svc_pool_victim(struct svc_serv *serv, struct svc_pool *target_pool,
+ 	struct svc_pool *pool;
+ 	unsigned int i;
  
- 		write_seqcount_begin(&groupc->seq);
-+		now = cpu_clock(cpu);
+-retry:
+ 	pool = target_pool;
  
- 		record_times(groupc, now);
- 		groupc->times[PSI_IRQ_FULL] += delta;
-@@ -1223,11 +1223,9 @@ void psi_cgroup_restart(struct psi_group *group)
- 	for_each_possible_cpu(cpu) {
- 		struct rq *rq = cpu_rq(cpu);
- 		struct rq_flags rf;
--		u64 now;
- 
- 		rq_lock_irq(rq, &rf);
--		now = cpu_clock(cpu);
--		psi_group_change(group, cpu, 0, 0, now, true);
-+		psi_group_change(group, cpu, 0, 0, true);
- 		rq_unlock_irq(rq, &rf);
+-	if (pool != NULL) {
+-		if (atomic_inc_not_zero(&pool->sp_nrthreads))
+-			goto found_pool;
+-		return NULL;
+-	} else {
++	if (!pool) {
+ 		for (i = 0; i < serv->sv_nrpools; i++) {
+ 			pool = &serv->sv_pools[--(*state) % serv->sv_nrpools];
+-			if (atomic_inc_not_zero(&pool->sp_nrthreads))
+-				goto found_pool;
++			if (pool->sp_nrthreads)
++				break;
+ 		}
+-		return NULL;
  	}
+ 
+-found_pool:
+-	set_bit(SP_VICTIM_REMAINS, &pool->sp_flags);
+-	set_bit(SP_NEED_VICTIM, &pool->sp_flags);
+-	if (!atomic_dec_and_test(&pool->sp_nrthreads))
++	if (pool && pool->sp_nrthreads) {
++		set_bit(SP_VICTIM_REMAINS, &pool->sp_flags);
++		set_bit(SP_NEED_VICTIM, &pool->sp_flags);
+ 		return pool;
+-	/* Nothing left in this pool any more */
+-	clear_bit(SP_NEED_VICTIM, &pool->sp_flags);
+-	clear_bit(SP_VICTIM_REMAINS, &pool->sp_flags);
+-	goto retry;
++	}
++	return NULL;
  }
+ 
+ static int
+@@ -840,7 +831,7 @@ svc_set_num_threads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ 	if (!pool)
+ 		nrservs -= serv->sv_nrthreads;
+ 	else
+-		nrservs -= atomic_read(&pool->sp_nrthreads);
++		nrservs -= pool->sp_nrthreads;
+ 
+ 	if (nrservs > 0)
+ 		return svc_start_kthreads(serv, pool, nrservs);
+@@ -928,7 +919,7 @@ svc_exit_thread(struct svc_rqst *rqstp)
+ 
+ 	list_del_rcu(&rqstp->rq_all);
+ 
+-	atomic_dec(&pool->sp_nrthreads);
++	pool->sp_nrthreads -= 1;
+ 
+ 	spin_lock_bh(&serv->sv_lock);
+ 	serv->sv_nrthreads -= 1;
 -- 
 2.43.0
 
