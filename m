@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDA31DED55;
-	Tue,  8 Oct 2024 12:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D17192594;
+	Tue,  8 Oct 2024 12:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391232; cv=none; b=u6fQIQ+jASaoJ1vF5gYoaQZaao7FxP1TqsRUQXoW8nwh5QwqyFTs2CHWSzig/Hpxa8B6hXflIDii91BC8wJVAjoZBznq6oXnOOrdNNqZLSJ3M67kV8IeRBMd3vQDgdca2It7MOuGf0OwxLzZAW/yyPXphBCyRkMh1RCjNurONZs=
+	t=1728391236; cv=none; b=hvrbp/bUozic/mdumvc6Eep3sjL76JyKC8kZzvKJ77niMInV0qDKdpYVGZzCP7ALxwjCSVFPmLdlvhxEyOMCSUMWwhSH6N2T2GN2FDO5fxq85H27n1LwM0+Y2H1mODo6icCJT1Hjj1sb1D8qioGvA+juZidtDIaNUzhU9bC0Grg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391232; c=relaxed/simple;
-	bh=c/4XrmI8cZBAao6FUwmJOJ9WR3L3IhVG0xWlmpWJsMk=;
+	s=arc-20240116; t=1728391236; c=relaxed/simple;
+	bh=HmZ6ry0l4sg3fd7KC8jtOIywsGGtnD17HeWBQWjmlcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYP3p3SQez59YPwa7qcqHkB7WWJxb7GaT1u4JwdbbHAEwXV/M6Exa5OtWO2QHl+sLQyUp0YuWggZKbEsaR4NqH8hs0t1ni8SQ5FRQsaEPNCGZUvn3Cix1+O04UdT59ovMoMc/7L7Yp5xl79GWJykw9N19u141v4PZR165DsRgvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfwX5UH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5yKKQCxfEy2IPiD9SfKGBkMU4Sg5a3/3GwquxZrs1s1KL8BF7ta1NCuD/Wv+xR8FG4QWqibSIFea9RWkr6lI/4dHKzobVSumLtE85B7NwqTviY/TSdMuyqW+nfqzfrW37wwMJrwkWT9MTLz2+uV/WeLvCNU+9Gdzxamc5MMOQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGdq3qxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfwX5UH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4241EC4CECC;
-	Tue,  8 Oct 2024 12:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGdq3qxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF24C4CEC7;
+	Tue,  8 Oct 2024 12:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391232;
-	bh=c/4XrmI8cZBAao6FUwmJOJ9WR3L3IhVG0xWlmpWJsMk=;
+	s=korg; t=1728391236;
+	bh=HmZ6ry0l4sg3fd7KC8jtOIywsGGtnD17HeWBQWjmlcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfwX5UH3H/gtFnY68JQy1JlYxjOXmCi1QlTNj760SYF2uRNzqkpT85+z7dqP6bqYk
-	 vvfW7T34BvwXN+Sg3mFO86uKOnZuac7hHuvpkf7+0XCQKuVJCkxaOfZMOI0uG1LKY3
-	 fQCeRAgb+z6Ytl6UUGltZMB5VrvfLZT2COQ6mhss=
+	b=GGdq3qxZ7P150sMKHisfqfXdokifqo2QLqpkdvr45KbZ5sFJmmiwBakxuhRxfIGxc
+	 ISbSH5/TOZnlNeE3fz6JGkhJfkSM9y1EzCGF3lPljcxxek97X7KRsOJZhqdxuo4+2U
+	 KRdLIw41EjP5npbQAbMtpH4H+s7SUPY5/i1t4yIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eddie James <eajames@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 050/558] bridge: mcast: Fail MDB get request on empty entry
-Date: Tue,  8 Oct 2024 14:01:20 +0200
-Message-ID: <20241008115704.190833058@linuxfoundation.org>
+Subject: [PATCH 6.11 051/558] net/ncsi: Disable the ncsi work before freeing the associated structure
+Date: Tue,  8 Oct 2024 14:01:21 +0200
+Message-ID: <20241008115704.229812407@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 555f45d24ba7cd5527716553031641cdebbe76c7 ]
+[ Upstream commit a0ffa68c70b367358b2672cdab6fa5bc4c40de2c ]
 
-When user space deletes a port from an MDB entry, the port is removed
-synchronously. If this was the last port in the entry and the entry is
-not joined by the host itself, then the entry is scheduled for deletion
-via a timer.
+The work function can run after the ncsi device is freed, resulting
+in use-after-free bugs or kernel panic.
 
-The above means that it is possible for the MDB get netlink request to
-retrieve an empty entry which is scheduled for deletion. This is
-problematic as after deleting the last port in an entry, user space
-cannot rely on a non-zero return code from the MDB get request as an
-indication that the port was successfully removed.
-
-Fix by returning an error when the entry's port list is empty and the
-entry is not joined by the host.
-
-Fixes: 68b380a395a7 ("bridge: mcast: Add MDB get support")
-Reported-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Closes: https://lore.kernel.org/netdev/c92569919307749f879b9482b0f3e125b7d9d2e3.1726480066.git.jamie.bainbridge@gmail.com/
-Tested-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20240929123640.558525-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2d283bdd079c ("net/ncsi: Resource management")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Link: https://patch.msgid.link/20240925155523.1017097-1-eajames@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mdb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ncsi/ncsi-manage.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
-index bc37e47ad8299..1a52a0bca086d 100644
---- a/net/bridge/br_mdb.c
-+++ b/net/bridge/br_mdb.c
-@@ -1674,7 +1674,7 @@ int br_mdb_get(struct net_device *dev, struct nlattr *tb[], u32 portid, u32 seq,
- 	spin_lock_bh(&br->multicast_lock);
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 5ecf611c88200..5cf55bde366d1 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -1954,6 +1954,8 @@ void ncsi_unregister_dev(struct ncsi_dev *nd)
+ 	list_del_rcu(&ndp->node);
+ 	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
  
- 	mp = br_mdb_ip_get(br, &group);
--	if (!mp) {
-+	if (!mp || (!mp->ports && !mp->host_joined)) {
- 		NL_SET_ERR_MSG_MOD(extack, "MDB entry not found");
- 		err = -ENOENT;
- 		goto unlock;
++	disable_work_sync(&ndp->work);
++
+ 	kfree(ndp);
+ }
+ EXPORT_SYMBOL_GPL(ncsi_unregister_dev);
 -- 
 2.43.0
 
