@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA24D1DE4CB;
-	Tue,  8 Oct 2024 12:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD561DE89D;
+	Tue,  8 Oct 2024 12:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392288; cv=none; b=YShB+briFDjpcMjRVJgLOBjvu7sfwgP/ZxZMI7aSV5D8mpKn5hCW5S7teii3K5IAsvLKxIORtncGtVVO/SAk7UE5qQoKNjVl9MVC6yAIQ15Kx/JXpwXMDy6PGLM6sdTHTb0DNqt95IBYyz0jD8YHsWfSQFH+mMxzp+DXbJjD8Yg=
+	t=1728392292; cv=none; b=p9piP+5N040MQAwOf/iJ3pmFaID/EI1i2TlycGy+SO8IAH/SAbu4beRzPxu2hF5MfVLK7R+Hr/2fuA6XAaQbBtuBuBdhLdtrvj1xhV03+KCpIrEtLEEIvbGV8yeV3JBn9q/vnYcSb+YGiafEYMRat2Zo86X4NfrgfHEatSRI2gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392288; c=relaxed/simple;
-	bh=i5WsZr1tqWu7x7l4WHhSrPK5ZmVDFZaqV3ZRdgxHvT0=;
+	s=arc-20240116; t=1728392292; c=relaxed/simple;
+	bh=6lVGrxcUjZcOyMDe9MmGtWsyGRN06TU3Ii7/52lpRdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0qXdlZJX1OyNzq8j+LtQdkSQf3sa9SeHbZ5hGrPEb3HmAZ0b8fXLJ1W3qnjKeuojv4yn4pe4iMRm5nfq103tUVayrjcRAdBWFOQSOz1WyQ5GDcDWFp3SqT84/UkFPLdfQYy5WIVoZUydhhB0bGnj6jYDhXSebu4fexP0R/8N0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXog+Y0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bp31YIgHXut+i4rrHpGg716BVuBXjMfDbbQPTGrx8YSRnV/8z4oGjwciZjZQ4TEOEovOq4s854YSU0IhFYuhUOoJ7dWfokCi5y3Rf+tWxN00GgyRzIOqvDyUASlZhWMJ61RNIS0nQVM2kvBZYzUPNBg8WEP7reQJTkKsogd1I6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0eUNB/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXog+Y0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4879FC4CEC7;
-	Tue,  8 Oct 2024 12:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0eUNB/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D2EC4CEC7;
+	Tue,  8 Oct 2024 12:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392288;
-	bh=i5WsZr1tqWu7x7l4WHhSrPK5ZmVDFZaqV3ZRdgxHvT0=;
+	s=korg; t=1728392292;
+	bh=6lVGrxcUjZcOyMDe9MmGtWsyGRN06TU3Ii7/52lpRdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXog+Y0yIowb3zkN0V5xVhBOtNL3WsYj8QcexAjmmt0uvBOSs2x4OsnKugSHS5606
-	 et49WmmAi0uitLsyacN4wgsakI00Pm6TQICU8DG4Z5NqjwXxuxrssG73Nt+xkYTzQU
-	 f4793vnRFtaPVPImOwmcyg6Cx9c1euricCg9lNIg=
+	b=Z0eUNB/y3fmDB2PVqc1cdXA8DjyDO/eJYD6UbZHE81CiGF39jNjsQ2Hx10wzS1J2p
+	 r3HKLUwcPmfaDKzGNch6qHXWHepyeJwmI5JPx0z0S/hZWpKwosmflLGpgUIW/59aeG
+	 WEguoJONJssScSOrmMPhBhCKBGJdwYbUQqBilMEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.11 370/558] drm/mediatek: ovl_adaptor: Add missing of_node_put()
-Date: Tue,  8 Oct 2024 14:06:40 +0200
-Message-ID: <20241008115716.855623758@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>,
+	Deepak Rawat <drawat@vmware.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Thomas Hellstrom <thellstrom@vmware.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.11 371/558] drm: Consistently use struct drm_mode_rect for FB_DAMAGE_CLIPS
+Date: Tue,  8 Oct 2024 14:06:41 +0200
+Message-ID: <20241008115716.894470016@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -45,45 +54,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 5beb6fba25db235b52eab34bde8112f07bb31d75 upstream.
+commit 8b0d2f61545545ab5eef923ed6e59fc3be2385e0 upstream.
 
-Error paths that exit for_each_child_of_node() need to call
-of_node_put() to decerement the child refcount and avoid memory leaks.
+FB_DAMAGE_CLIPS is a plane property for damage handling. Its UAPI
+should only use UAPI types. Hence replace struct drm_rect with
+struct drm_mode_rect in drm_atomic_plane_set_property(). Both types
+are identical in practice, so there's no change in behavior.
 
-Add the missing of_node_put().
-
-Cc: stable@vger.kernel.org
-Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240624-mtk_disp_ovl_adaptor_scoped-v1-2-9fa1e074d881@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Closes: https://lore.kernel.org/dri-devel/Zu1Ke1TuThbtz15E@intel.com/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: d3b21767821e ("drm: Add a new plane property to send damage during plane update")
+Cc: Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>
+Cc: Deepak Rawat <drawat@vmware.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Thomas Hellstrom <thellstrom@vmware.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.0+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240923075841.16231-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_atomic_uapi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
-@@ -523,8 +523,10 @@ static int ovl_adaptor_comp_init(struct
- 		}
- 
- 		comp_pdev = of_find_device_by_node(node);
--		if (!comp_pdev)
-+		if (!comp_pdev) {
-+			of_node_put(node);
- 			return -EPROBE_DEFER;
-+		}
- 
- 		priv->ovl_adaptor_comp[id] = &comp_pdev->dev;
- 
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -543,7 +543,7 @@ static int drm_atomic_plane_set_property
+ 					&state->fb_damage_clips,
+ 					val,
+ 					-1,
+-					sizeof(struct drm_rect),
++					sizeof(struct drm_mode_rect),
+ 					&replaced);
+ 		return ret;
+ 	} else if (property == plane->scaling_filter_property) {
 
 
