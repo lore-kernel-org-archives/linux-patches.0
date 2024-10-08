@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17C01DE2A5;
-	Tue,  8 Oct 2024 13:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1E51DFD1;
+	Tue,  8 Oct 2024 13:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392670; cv=none; b=n+nHVSvROxXqtSHXkFf2zVoePBxNrotBWT8yXhOJf/i/xdgF2Fmfut/YUDK6ZCV810daSd52sckySeieZ2n9xCncNuF/G3ZC17Xo+X1VcYzsRVGqSms6y0uIR3tn77OpL7Uc8S7yXnwiLH8dqPKnJw7W1UQLrqI+3baj3PP72O4=
+	t=1728392674; cv=none; b=qy2iaXuS5buySObD8uv17Hx0cSmLynB4KK3HMOVsL6/qdDrwPSvqYgKHp+vbNMPnflOnn/I7SBJtT0Dwnl26qqc+vZ/tUYv+xSXF91fI8FSmjqZV/8ZPydmPBh3NUocPUTkhzwkNkDTmFjPF9jup1697DFHbJW88XSs0IWxvTjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392670; c=relaxed/simple;
-	bh=MPT1gJv/Qv0182ozBiSDAgSFxhRCrghwcK1/qM7kQF0=;
+	s=arc-20240116; t=1728392674; c=relaxed/simple;
+	bh=Na6RJVXA+EVWWbD3/1tUldjTdUmc6Nw+zQfgjZhrgqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGvxM73VyW8eeLHGvMI5dCPFppXB2Snf51lxgSRB3idxFU/gYHMdYUsSyiWTfwGyNTnN8xtQhimhu+OIkARlMJ9mfNkz1AcNidAgtLwy7Ic0YjzkcjhVQ2+Y3BnpdleHWvUYca1vpHXBLQVMXYeajjROWBIH3IC2WoDnQdJQxOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjawc9RH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJYPgwkzyu6B8/GpsvAuGvP0tUw54e+kx808hTiOnxJoS0TfCogk41ANgUzXuwPMGB4kqnbcJVITcBvv1Z8nyD9K22fTV+1EZ/ro1GCD7W+/GfF2D84BeqYQEVAZsWPm32Or8zq3uS0lmDZWYRmCwtVERN44VJhl+BffhbvF9bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJhknUuF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjawc9RH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9A6C4CECC;
-	Tue,  8 Oct 2024 13:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJhknUuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81414C4CECC;
+	Tue,  8 Oct 2024 13:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392670;
-	bh=MPT1gJv/Qv0182ozBiSDAgSFxhRCrghwcK1/qM7kQF0=;
+	s=korg; t=1728392674;
+	bh=Na6RJVXA+EVWWbD3/1tUldjTdUmc6Nw+zQfgjZhrgqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjawc9RHT0VGQuGnf1p228B/jgWP6UnxSNlX7pPXhV86eZsBzdsE0A4M1HYsuQoSO
-	 dohO4gsDofXpVcG3gt26aP7lJYyAgHHRFD/lLLsn3YRRHldCtiA06dfgi40z3Ka5tC
-	 btSDA2AwfWPJIIS6eBL0b5fNZChuKzRJrIt/cLwo=
+	b=pJhknUuFUw/PNvJmDCjrhDJRkqOzOXRTNCtK3piU2+aEEYjqbUJ+sLyPUzipVFTvv
+	 v5L0FRSNoiapFJv3d22FNHa5Wak4hmgPq/1OFNWGJY27mxGI5wjAawaY4JzeMrpig4
+	 rfN3hkOfrx0qr7+LVeBp19uunz54Axi1M95hR8tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 477/558] kselftests: mm: fix wrong __NR_userfaultfd value
-Date: Tue,  8 Oct 2024 14:08:27 +0200
-Message-ID: <20241008115721.011890270@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.11 486/558] Input: adp5589-keys - fix NULL pointer dereference
+Date: Tue,  8 Oct 2024 14:08:36 +0200
+Message-ID: <20241008115721.359501131@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,60 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit f30beffd977e98c33550bbeb6f278d157ff54844 upstream.
+commit fb5cc65f973661241e4a2b7390b429aa7b330c69 upstream.
 
-grep -rnIF "#define __NR_userfaultfd"
-tools/include/uapi/asm-generic/unistd.h:681:#define __NR_userfaultfd 282
-arch/x86/include/generated/uapi/asm/unistd_32.h:374:#define
-__NR_userfaultfd 374
-arch/x86/include/generated/uapi/asm/unistd_64.h:327:#define
-__NR_userfaultfd 323
-arch/x86/include/generated/uapi/asm/unistd_x32.h:282:#define
-__NR_userfaultfd (__X32_SYSCALL_BIT + 323)
-arch/arm/include/generated/uapi/asm/unistd-eabi.h:347:#define
-__NR_userfaultfd (__NR_SYSCALL_BASE + 388)
-arch/arm/include/generated/uapi/asm/unistd-oabi.h:359:#define
-__NR_userfaultfd (__NR_SYSCALL_BASE + 388)
-include/uapi/asm-generic/unistd.h:681:#define __NR_userfaultfd 282
+We register a devm action to call adp5589_clear_config() and then pass
+the i2c client as argument so that we can call i2c_get_clientdata() in
+order to get our device object. However, i2c_set_clientdata() is only
+being set at the end of the probe function which means that we'll get a
+NULL pointer dereference in case the probe function fails early.
 
-The number is dependent on the architecture. The above data shows that:
-x86	374
-x86_64	323
-
-The value of __NR_userfaultfd was changed to 282 when asm-generic/unistd.h
-was included.  It makes the test to fail every time as the correct number
-of this syscall on x86_64 is 323.  Fix the header to asm/unistd.h.
-
-Link: https://lkml.kernel.org/r/20240923053836.3270393-1-usama.anjum@collabora.com
-Fixes: a5c6bc590094 ("selftests/mm: remove local __NR_* definitions")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 30df385e35a4 ("Input: adp5589-keys - use devm_add_action_or_reset() for register clear")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-1-fca0149dfc47@analog.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/pagemap_ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/keyboard/adp5589-keys.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/pagemap_ioctl.c b/tools/testing/selftests/mm/pagemap_ioctl.c
-index fc90af2a97b8..bcc73b4e805c 100644
---- a/tools/testing/selftests/mm/pagemap_ioctl.c
-+++ b/tools/testing/selftests/mm/pagemap_ioctl.c
-@@ -15,7 +15,7 @@
- #include <sys/ioctl.h>
- #include <sys/stat.h>
- #include <math.h>
--#include <asm-generic/unistd.h>
-+#include <asm/unistd.h>
- #include <pthread.h>
- #include <sys/resource.h>
- #include <assert.h>
--- 
-2.46.2
-
+--- a/drivers/input/keyboard/adp5589-keys.c
++++ b/drivers/input/keyboard/adp5589-keys.c
+@@ -936,10 +936,9 @@ static int adp5589_keypad_add(struct adp
+ 
+ static void adp5589_clear_config(void *data)
+ {
+-	struct i2c_client *client = data;
+-	struct adp5589_kpad *kpad = i2c_get_clientdata(client);
++	struct adp5589_kpad *kpad = data;
+ 
+-	adp5589_write(client, kpad->var->reg(ADP5589_GENERAL_CFG), 0);
++	adp5589_write(kpad->client, kpad->var->reg(ADP5589_GENERAL_CFG), 0);
+ }
+ 
+ static int adp5589_probe(struct i2c_client *client)
+@@ -983,7 +982,7 @@ static int adp5589_probe(struct i2c_clie
+ 	}
+ 
+ 	error = devm_add_action_or_reset(&client->dev, adp5589_clear_config,
+-					 client);
++					 kpad);
+ 	if (error)
+ 		return error;
+ 
+@@ -1010,8 +1009,6 @@ static int adp5589_probe(struct i2c_clie
+ 	if (error)
+ 		return error;
+ 
+-	i2c_set_clientdata(client, kpad);
+-
+ 	dev_info(&client->dev, "Rev.%d keypad, irq %d\n", revid, client->irq);
+ 	return 0;
+ }
 
 
