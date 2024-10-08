@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51C41DE4FA;
-	Tue,  8 Oct 2024 12:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FFC1DE2AD;
+	Tue,  8 Oct 2024 12:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391251; cv=none; b=QeI3s45UcM1hXMF0t5TNrOipU2N/hMx8XwY7+0a5tvwprahgL1TFoTqxNa0etEklwwCEYJ6KH+4Dvbw2bEaF7epv0a9HvGV297nZpAy1SiKSkd+kThR/V0ZSFsvibjna0I+QrKzIQPJQaPaYsOC/dxxpz7W/ABildXhgucvja1U=
+	t=1728391254; cv=none; b=ORAZPVslsjPd+xiNjDmMxWK9rU7BmiC7U95QluVucPQ6iL9F2fsNBzpP9bGvKxZhZyykYz4NNO1H974yGS2zI9s3+YHc9wLV6DAuJeOoEg0w0SH7NNizKdquMR3xqOU4xNU0E7zNDoxpCgN7gw2BSYnzjV6CNaLl9KZTbvX+MFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391251; c=relaxed/simple;
-	bh=nfMKLV2fopPBn3BoxE8A0HVFSNHNsF3m3qTwJGeHjQA=;
+	s=arc-20240116; t=1728391254; c=relaxed/simple;
+	bh=ENf+d9H2D5FyBQnbr56eP6fdTKvxohqSbVvRmpZzPMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SYzcQjkAa4zJ00H5//fLd0AF1mcBC6L1cJ5dkcKzhajsgEWsW1g3M2mveMMoZlnZQ8hl9/6rj+hCrKYIuad/aSxgZbpklhQ90N+Nj7I4acHRLmyWaOJ6r/dh51DwKYILE+GAGMV3AAi8elitYp/irHnyV+adRBNYnSD+YHMfl7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0MaRv92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AG7+64i+XhUoK+Tu/tjNMJg8k5+bPji7e0NSt1fxSeHb/bN6y/XOGckrsqsHxjBExH57HBTITuHLhB6RB4q5cuGgrqpEnn/+S5uxOPeRQpWMZdHv+3uaZ8tL6c5bAJrDQeMNGI+4NTJZaRNzDP1rOSC4GsoGhUnPZZUhD8eOhMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZh7Ht3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0MaRv92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27940C4CECD;
-	Tue,  8 Oct 2024 12:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZh7Ht3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E685C4CECF;
+	Tue,  8 Oct 2024 12:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391251;
-	bh=nfMKLV2fopPBn3BoxE8A0HVFSNHNsF3m3qTwJGeHjQA=;
+	s=korg; t=1728391254;
+	bh=ENf+d9H2D5FyBQnbr56eP6fdTKvxohqSbVvRmpZzPMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0MaRv92kWJscB98E+tZfBXp65lfpbYEVJGOxxCbXjTk/Jh9zlC3AkoOEze6fyFbV
-	 ho5h5c+kaqHEPlD+SOAklzSTY5rV+hHu/pF4l7QBWXJN9x50tli5h61bRLNX3jFa6w
-	 1zu+MWllsbxheNFNEnevO0xVX7MLI1aCRgb9/gmI=
+	b=MZh7Ht3fcSAz7eGJKb+H+ceTxGKOVfmOdxcHO4PpoeihILWcIq6KhYTuKjYunyXRV
+	 YpaQOtSEXvED2rOVZqvzUaxvike6gAGwb927sLb1g1WwDbZBzVVWgAzAbbVr1fv4IK
+	 Cu0si1glUa+uS11G+XQwI+RM7IoxkVTeA0iYpyLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tang Bin <tangbin@cmss.chinamobile.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 055/558] ASoC: topology: Fix incorrect addressing assignments
-Date: Tue,  8 Oct 2024 14:01:25 +0200
-Message-ID: <20241008115704.385093423@linuxfoundation.org>
+Subject: [PATCH 6.11 056/558] drm/panthor: Fix race when converting group handle to group object
+Date: Tue,  8 Oct 2024 14:01:26 +0200
+Message-ID: <20241008115704.424529697@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -46,56 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tang Bin <tangbin@cmss.chinamobile.com>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit 85109780543b5100aba1d0842b6a7c3142be74d2 ]
+[ Upstream commit cac075706f298948898b1f63e81709df42afa75d ]
 
-The variable 'kc' is handled in the function
-soc_tplg_control_dbytes_create(), and 'kc->private_value'
-is assigned to 'sbe', so In the function soc_tplg_dbytes_create(),
-the right 'sbe' should be 'kc.private_value', the same logical error
-in the function soc_tplg_dmixer_create(), thus fix them.
+XArray provides it's own internal lock which protects the internal array
+when entries are being simultaneously added and removed. However there
+is still a race between retrieving the pointer from the XArray and
+incrementing the reference count.
 
-Fixes: 0867278200f7 ("ASoC: topology: Unify code for creating standalone and widget bytes control")
-Fixes: 4654ca7cc8d6 ("ASoC: topology: Unify code for creating standalone and widget mixer control")
-Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://patch.msgid.link/20240914081608.3514-1-tangbin@cmss.chinamobile.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+To avoid this race simply hold the internal XArray lock when
+incrementing the reference count, this ensures there cannot be a racing
+call to xa_erase().
+
+Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
+Signed-off-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240923103406.2509906-1-steven.price@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-topology.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index af5d42b57be7e..3d82570293b29 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -889,7 +889,7 @@ static int soc_tplg_dbytes_create(struct soc_tplg *tplg, size_t size)
- 		return ret;
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index 12b272a912f86..d21fe63ae2281 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -3242,6 +3242,18 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
+ 	return 0;
+ }
  
- 	/* register dynamic object */
--	sbe = (struct soc_bytes_ext *)&kc.private_value;
-+	sbe = (struct soc_bytes_ext *)kc.private_value;
++static struct panthor_group *group_from_handle(struct panthor_group_pool *pool,
++					       u32 group_handle)
++{
++	struct panthor_group *group;
++
++	xa_lock(&pool->xa);
++	group = group_get(xa_load(&pool->xa, group_handle));
++	xa_unlock(&pool->xa);
++
++	return group;
++}
++
+ int panthor_group_get_state(struct panthor_file *pfile,
+ 			    struct drm_panthor_group_get_state *get_state)
+ {
+@@ -3253,7 +3265,7 @@ int panthor_group_get_state(struct panthor_file *pfile,
+ 	if (get_state->pad)
+ 		return -EINVAL;
  
- 	INIT_LIST_HEAD(&sbe->dobj.list);
- 	sbe->dobj.type = SND_SOC_DOBJ_BYTES;
-@@ -923,7 +923,7 @@ static int soc_tplg_dmixer_create(struct soc_tplg *tplg, size_t size)
- 		return ret;
+-	group = group_get(xa_load(&gpool->xa, get_state->group_handle));
++	group = group_from_handle(gpool, get_state->group_handle);
+ 	if (!group)
+ 		return -EINVAL;
  
- 	/* register dynamic object */
--	sm = (struct soc_mixer_control *)&kc.private_value;
-+	sm = (struct soc_mixer_control *)kc.private_value;
+@@ -3384,7 +3396,7 @@ panthor_job_create(struct panthor_file *pfile,
+ 	job->call_info.latest_flush = qsubmit->latest_flush;
+ 	INIT_LIST_HEAD(&job->node);
  
- 	INIT_LIST_HEAD(&sm->dobj.list);
- 	sm->dobj.type = SND_SOC_DOBJ_MIXER;
+-	job->group = group_get(xa_load(&gpool->xa, group_handle));
++	job->group = group_from_handle(gpool, group_handle);
+ 	if (!job->group) {
+ 		ret = -EINVAL;
+ 		goto err_put_job;
 -- 
 2.43.0
 
