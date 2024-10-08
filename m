@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB341EEC8;
-	Tue,  8 Oct 2024 12:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6270FEEC8;
+	Tue,  8 Oct 2024 12:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389895; cv=none; b=a9QDZQZZkgHnJnLiDwj6tcysIE7p6LdJnHgeFmA/YWZl/QxFghTtWpMsYnWuD4vrey3LwYxeu4PWF7v+ctweNpbSKiYhvr2QqE0GoR4dSkqv8d8+1IWn59nN9SSohPLw5iPnaYCTm8bss9ApFWHotWjUEmZ25HJ8g3PE8bzZXXM=
+	t=1728389898; cv=none; b=UR43rbrJv3l43W+kllT7d/WUwD8Ja0bRbjUWX0r9qLh/+ER2e/pfwa88T8+YW/EKSf1IEHPgDqTdISZyuympO6qK7q0OmbYkntv90P4PCi7+KLhpqFD70z/h3fbHwVOejLcllZjxmrq33hHtwRsqgOVWw15UCMb/rvHqXGTrxFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389895; c=relaxed/simple;
-	bh=j3m0Le1ryw+PN43RGoewbj3cupxqPwxLqyMRjRQaj0Q=;
+	s=arc-20240116; t=1728389898; c=relaxed/simple;
+	bh=Fks232i+ltgkFT1/YcARPxoSwoeDB+4sBIaA/NfrkY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPr5Za+lxkhJ7/crzZzMJTJ9mb5bxmxvwN36ThVAGjA4elBUGIaOQRFawNfcnw24RvO6MkbzLkHOViH5ntI9JyN+x37DMtBr+57IcoI/c1jF5L6Hclfp+C1jX9ikf/H890lAAzOmFsaRkwXv3YA/HpLLW6r19hMAzFnXILmFkEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+eKLSlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGmCSaF4SkbPQR9mGTja5MYXRKM3WIyH84QtDzOqIwGWRX2S8EwfPHinfg+BjnvbtSzeTl2J0pi6rNEgGVHnizByIchED8/YU7Z81uGoTlVRzoizVaFUdvvZaP0XBXaSurs6GSWlqXk4gu6fuF8y9IaFUKP7vZEBB7XNmkOeO5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVF+TH8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+eKLSlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C080C4CECC;
-	Tue,  8 Oct 2024 12:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVF+TH8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A08DC4CEC7;
+	Tue,  8 Oct 2024 12:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389894;
-	bh=j3m0Le1ryw+PN43RGoewbj3cupxqPwxLqyMRjRQaj0Q=;
+	s=korg; t=1728389898;
+	bh=Fks232i+ltgkFT1/YcARPxoSwoeDB+4sBIaA/NfrkY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+eKLSlferJuwKHlPH5b320O2l9rQydF+eg0kl4JV95Z4rkdRPl1C2FCfEta69V2q
-	 oHo3x+dDViEpzqcJYEvTZguLqj+nod+h71vJrkFkCT/LnH87R2oJ4fX5QMKhrwMZb0
-	 bV91ZVM+IaUm6HhH9SsU/fFUAd4xLTj5eJ/xALwE=
+	b=gVF+TH8FVcfw4DVkQQtRSDTQJHD84Ah1QsDssiMN4R5r6FR5GEmv7Jr01cH5KbgDj
+	 DMr8pSi9IfnUb01nBu5Wg6FkMucVr8dme4v+FCz6SYktt0rfVPXVSlIPD2tmTfkrYq
+	 QTyaIqdGANCmi/QB7oAGh6TEI/uZQfNi4lryUpBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Jeff Xu <jeffxu@google.com>,
-	Jann Horn <jannh@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	David Kaplan <david.kaplan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 121/482] proc: add config & param to block forcing mem writes
-Date: Tue,  8 Oct 2024 14:03:04 +0200
-Message-ID: <20241008115653.068115041@linuxfoundation.org>
+Subject: [PATCH 6.10 130/482] x86/bugs: Fix handling when SRSO mitigation is disabled
+Date: Tue,  8 Oct 2024 14:03:13 +0200
+Message-ID: <20241008115653.420590972@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -57,198 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
+From: David Kaplan <david.kaplan@amd.com>
 
-[ Upstream commit 41e8149c8892ed1962bd15350b3c3e6e90cba7f4 ]
+[ Upstream commit 1dbb6b1495d472806fef1f4c94f5b3e4c89a3c1d ]
 
-This adds a Kconfig option and boot param to allow removing
-the FOLL_FORCE flag from /proc/pid/mem write calls because
-it can be abused.
+When the SRSO mitigation is disabled, either via mitigations=off or
+spec_rstack_overflow=off, the warning about the lack of IBPB-enhancing
+microcode is printed anyway.
 
-The traditional forcing behavior is kept as default because
-it can break GDB and some other use cases.
+This is unnecessary since the user has turned off the mitigation.
 
-Previously we tried a more sophisticated approach allowing
-distributions to fine-tune /proc/pid/mem behavior, however
-that got NAK-ed by Linus [1], who prefers this simpler
-approach with semantics also easier to understand for users.
+  [ bp: Massage, drop SBPB rationale as it doesn't matter because when
+    mitigations are disabled x86_pred_cmd is not being used anyway. ]
 
-Link: https://lore.kernel.org/lkml/CAHk-=wiGWLChxYmUA5HrT5aopZrB7_2VTa0NLZcxORgkUe5tEQ@mail.gmail.com/ [1]
-Cc: Doug Anderson <dianders@chromium.org>
-Cc: Jeff Xu <jeffxu@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-Link: https://lore.kernel.org/r/20240802080225.89408-1-adrian.ratiu@collabora.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20240904150711.193022-1-david.kaplan@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         | 10 +++
- fs/proc/base.c                                | 61 ++++++++++++++++++-
- security/Kconfig                              | 32 ++++++++++
- 3 files changed, 102 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index c82446cef8e21..2c8e062eb2ce5 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4791,6 +4791,16 @@
- 	printk.time=	Show timing data prefixed to each printk message line
- 			Format: <bool>  (1/Y/y=enable, 0/N/n=disable)
- 
-+	proc_mem.force_override= [KNL]
-+			Format: {always | ptrace | never}
-+			Traditionally /proc/pid/mem allows memory permissions to be
-+			overridden without restrictions. This option may be set to
-+			restrict that. Can be one of:
-+			- 'always': traditional behavior always allows mem overrides.
-+			- 'ptrace': only allow mem overrides for active ptracers.
-+			- 'never':  never allow mem overrides.
-+			If not specified, default is the CONFIG_PROC_MEM_* choice.
-+
- 	processor.max_cstate=	[HW,ACPI]
- 			Limit processor to maximum C-state
- 			max_cstate=9 overrides any DMI blacklist limit.
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 72a1acd03675c..f389c69767fa5 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -85,6 +85,7 @@
- #include <linux/elf.h>
- #include <linux/pid_namespace.h>
- #include <linux/user_namespace.h>
-+#include <linux/fs_parser.h>
- #include <linux/fs_struct.h>
- #include <linux/slab.h>
- #include <linux/sched/autogroup.h>
-@@ -117,6 +118,40 @@
- static u8 nlink_tid __ro_after_init;
- static u8 nlink_tgid __ro_after_init;
- 
-+enum proc_mem_force {
-+	PROC_MEM_FORCE_ALWAYS,
-+	PROC_MEM_FORCE_PTRACE,
-+	PROC_MEM_FORCE_NEVER
-+};
-+
-+static enum proc_mem_force proc_mem_force_override __ro_after_init =
-+	IS_ENABLED(CONFIG_PROC_MEM_NO_FORCE) ? PROC_MEM_FORCE_NEVER :
-+	IS_ENABLED(CONFIG_PROC_MEM_FORCE_PTRACE) ? PROC_MEM_FORCE_PTRACE :
-+	PROC_MEM_FORCE_ALWAYS;
-+
-+static const struct constant_table proc_mem_force_table[] __initconst = {
-+	{ "always", PROC_MEM_FORCE_ALWAYS },
-+	{ "ptrace", PROC_MEM_FORCE_PTRACE },
-+	{ "never", PROC_MEM_FORCE_NEVER },
-+	{ }
-+};
-+
-+static int __init early_proc_mem_force_override(char *buf)
-+{
-+	if (!buf)
-+		return -EINVAL;
-+
-+	/*
-+	 * lookup_constant() defaults to proc_mem_force_override to preseve
-+	 * the initial Kconfig choice in case an invalid param gets passed.
-+	 */
-+	proc_mem_force_override = lookup_constant(proc_mem_force_table,
-+						  buf, proc_mem_force_override);
-+
-+	return 0;
-+}
-+early_param("proc_mem.force_override", early_proc_mem_force_override);
-+
- struct pid_entry {
- 	const char *name;
- 	unsigned int len;
-@@ -835,6 +870,28 @@ static int mem_open(struct inode *inode, struct file *file)
- 	return ret;
- }
- 
-+static bool proc_mem_foll_force(struct file *file, struct mm_struct *mm)
-+{
-+	struct task_struct *task;
-+	bool ptrace_active = false;
-+
-+	switch (proc_mem_force_override) {
-+	case PROC_MEM_FORCE_NEVER:
-+		return false;
-+	case PROC_MEM_FORCE_PTRACE:
-+		task = get_proc_task(file_inode(file));
-+		if (task) {
-+			ptrace_active =	READ_ONCE(task->ptrace) &&
-+					READ_ONCE(task->mm) == mm &&
-+					READ_ONCE(task->parent) == current;
-+			put_task_struct(task);
-+		}
-+		return ptrace_active;
-+	default:
-+		return true;
-+	}
-+}
-+
- static ssize_t mem_rw(struct file *file, char __user *buf,
- 			size_t count, loff_t *ppos, int write)
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index b6f927f6c567e..47c84503ad9be 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2545,10 +2545,9 @@ static void __init srso_select_mitigation(void)
  {
-@@ -855,7 +912,9 @@ static ssize_t mem_rw(struct file *file, char __user *buf,
- 	if (!mmget_not_zero(mm))
- 		goto free;
+ 	bool has_microcode = boot_cpu_has(X86_FEATURE_IBPB_BRTYPE);
  
--	flags = FOLL_FORCE | (write ? FOLL_WRITE : 0);
-+	flags = write ? FOLL_WRITE : 0;
-+	if (proc_mem_foll_force(file, mm))
-+		flags |= FOLL_FORCE;
+-	if (cpu_mitigations_off())
+-		return;
+-
+-	if (!boot_cpu_has_bug(X86_BUG_SRSO)) {
++	if (!boot_cpu_has_bug(X86_BUG_SRSO) ||
++	    cpu_mitigations_off() ||
++	    srso_cmd == SRSO_CMD_OFF) {
+ 		if (boot_cpu_has(X86_FEATURE_SBPB))
+ 			x86_pred_cmd = PRED_CMD_SBPB;
+ 		return;
+@@ -2579,11 +2578,6 @@ static void __init srso_select_mitigation(void)
+ 	}
  
- 	while (count > 0) {
- 		size_t this_len = min_t(size_t, count, PAGE_SIZE);
-diff --git a/security/Kconfig b/security/Kconfig
-index 412e76f1575d0..a93c1a9b7c283 100644
---- a/security/Kconfig
-+++ b/security/Kconfig
-@@ -19,6 +19,38 @@ config SECURITY_DMESG_RESTRICT
+ 	switch (srso_cmd) {
+-	case SRSO_CMD_OFF:
+-		if (boot_cpu_has(X86_FEATURE_SBPB))
+-			x86_pred_cmd = PRED_CMD_SBPB;
+-		return;
+-
+ 	case SRSO_CMD_MICROCODE:
+ 		if (has_microcode) {
+ 			srso_mitigation = SRSO_MITIGATION_MICROCODE;
+@@ -2637,6 +2631,8 @@ static void __init srso_select_mitigation(void)
+ 			pr_err("WARNING: kernel not compiled with MITIGATION_SRSO.\n");
+                 }
+ 		break;
++	default:
++		break;
+ 	}
  
- 	  If you are unsure how to answer this question, answer N.
- 
-+choice
-+	prompt "Allow /proc/pid/mem access override"
-+	default PROC_MEM_ALWAYS_FORCE
-+	help
-+	  Traditionally /proc/pid/mem allows users to override memory
-+	  permissions for users like ptrace, assuming they have ptrace
-+	  capability.
-+
-+	  This allows people to limit that - either never override, or
-+	  require actual active ptrace attachment.
-+
-+	  Defaults to the traditional behavior (for now)
-+
-+config PROC_MEM_ALWAYS_FORCE
-+	bool "Traditional /proc/pid/mem behavior"
-+	help
-+	  This allows /proc/pid/mem accesses to override memory mapping
-+	  permissions if you have ptrace access rights.
-+
-+config PROC_MEM_FORCE_PTRACE
-+	bool "Require active ptrace() use for access override"
-+	help
-+	  This allows /proc/pid/mem accesses to override memory mapping
-+	  permissions for active ptracers like gdb.
-+
-+config PROC_MEM_NO_FORCE
-+	bool "Never"
-+	help
-+	  Never override memory mapping permissions
-+
-+endchoice
-+
- config SECURITY
- 	bool "Enable different security models"
- 	depends on SYSFS
+ out:
 -- 
 2.43.0
 
