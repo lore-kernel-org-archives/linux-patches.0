@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8421DFE04;
-	Tue,  8 Oct 2024 13:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1D51DFE36;
+	Tue,  8 Oct 2024 13:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394064; cv=none; b=GbGMRRuNjQfyhFQVopN2unIoBqwDlfwD33Slr+7sdb7lgZ1K9zBUd2Irx2GbDsMfwwrqwmdiadZJXpUEO20wchX8GmR3lyuHXsl7v9wNYW6oGiKcHUb3cGZMlj81Js4QuKbehmugqpMYdJEaBBqn0A+JoLroUU7Guf+4LaDPS1E=
+	t=1728394067; cv=none; b=AjcY5PTxK6BADlZ46Q4VeR8VY0miEfQrj5Q7sYAr5cJG986YiBsZoso20sEV9WQmhriRfcqMjDwiX7ZIbMC6i3qKDSMHoRSSCtkb0XPPHdvGHrQM8eU8f/O9JS2Jw/+LIQgsZw0Bhd6zGMQdieMkDc3ozUdHEHx+vjnlzt/b1Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394064; c=relaxed/simple;
-	bh=O6N5RWiITU7cIxBEbOBSZlERJAz6KGVpcgKxz1bmvY4=;
+	s=arc-20240116; t=1728394067; c=relaxed/simple;
+	bh=s8uBH/qD1xp5JCObtC8waIezkpDg9wsBMdAd6UI6Ewk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izcUzEb+pmjtZGBPUV5dnf1YuBYfq1GE11b1E7cssN3q66Fv6efa6AOhtj35qPExuJTp5t+9dC0oYtVpq3+fPhQ4RYcsGRJlJNrYnSZfVxntlGQ2E4QxBZYP3I4unvAJgkrpQZAJgG3Db98tyv/fB/dv8OC3YEopLr9lWu3ZSbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re43BzBP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0WF7C5jBkhU9y9S28mhJ1AFlTvjpbdfcxiYze40UCXlhiA7bGUEZg/oSK7OIoJosWL1CSwTqEw7HAasf1OPQr/nly79kkw0mGV0CAVuNN6R8SaucRzMrWVq9XJnht5rvDWkAezl+NFP7xXBngaqlQF8lMM+iBlozRA6Wii0zUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyIRuPG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re43BzBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80233C4CEC7;
-	Tue,  8 Oct 2024 13:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyIRuPG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A64DC4CEC7;
+	Tue,  8 Oct 2024 13:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394064;
-	bh=O6N5RWiITU7cIxBEbOBSZlERJAz6KGVpcgKxz1bmvY4=;
+	s=korg; t=1728394067;
+	bh=s8uBH/qD1xp5JCObtC8waIezkpDg9wsBMdAd6UI6Ewk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Re43BzBPhLIK6MmFeU8tnuR0AP9IXTYnBxTOcvB1kD8eNE+7T30r+6O4gNi/lHE2x
-	 8mm/lUwKqZ4yPAhyVng8fdyY7pdgWl8fOgg64BOYWqDIi1yqVxua4uYI23ukeCNli2
-	 3xnkX5hLA718SefAipzzX+Gjol/VyREsuIU9cT7s=
+	b=pyIRuPG1CkgJYUUCT2KTyn480/cj1lfr3osAGWWjsL4yXENNMUzd8AznUBhmuIzBv
+	 sTnUkd552Gj/3RmIAeJY+OFNIXBjqrgQnUfpxT4qNT0vDr1/HMiVwqlfxjnG+VftB3
+	 R5Kqdkf51UCEWQb1BL832RkSB1jFTRaqs8Jt6wOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Will Deacon <will@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 337/386] io_uring/net: harden multishot termination case for recv
-Date: Tue,  8 Oct 2024 14:09:42 +0200
-Message-ID: <20241008115642.645407864@linuxfoundation.org>
+Subject: [PATCH 6.6 338/386] uprobes: fix kernel info leak via "[uprobes]" vma
+Date: Tue,  8 Oct 2024 14:09:43 +0200
+Message-ID: <20241008115642.684244284@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,59 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit c314094cb4cfa6fc5a17f4881ead2dfebfa717a7 ]
+commit 34820304cc2cd1804ee1f8f3504ec77813d29c8e upstream.
 
-If the recv returns zero, or an error, then it doesn't matter if more
-data has already been received for this buffer. A condition like that
-should terminate the multishot receive. Rather than pass in the
-collected return value, pass in whether to terminate or keep the recv
-going separately.
+xol_add_vma() maps the uninitialized page allocated by __create_xol_area()
+into userspace. On some architectures (x86) this memory is readable even
+without VM_READ, VM_EXEC results in the same pgprot_t as VM_EXEC|VM_READ,
+although this doesn't really matter, debugger can read this memory anyway.
 
-Note that this isn't a bug right now, as the only way to get there is
-via setting MSG_WAITALL with multishot receive. And if an application
-does that, then -EINVAL is returned anyway. But it seems like an easy
-bug to introduce, so let's make it a bit more explicit.
+Link: https://lore.kernel.org/all/20240929162047.GA12611@redhat.com/
 
-Link: https://github.com/axboe/liburing/issues/1246
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: d4b3b6384f98 ("uprobes/core: Allocate XOL slots for uprobes use")
 Cc: stable@vger.kernel.org
-Fixes: b3fdea6ecb55 ("io_uring: multishot recv")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/events/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index cf1060fb04f43..7412904387bfa 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -930,6 +930,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 	int ret, min_ret = 0;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	size_t len = sr->len;
-+	bool mshot_finished;
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 6876b7f152b10..6dac0b5798213 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1491,7 +1491,7 @@ static struct xol_area *__create_xol_area(unsigned long vaddr)
  
- 	if (!(req->flags & REQ_F_POLLED) &&
- 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
-@@ -999,6 +1000,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 		req_set_fail(req);
- 	}
- 
-+	mshot_finished = ret <= 0;
- 	if (ret > 0)
- 		ret += sr->done_io;
- 	else if (sr->done_io)
-@@ -1006,7 +1008,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 	else
- 		io_kbuf_recycle(req, issue_flags);
- 
--	if (!io_recv_finish(req, &ret, &msg, ret <= 0, issue_flags))
-+	if (!io_recv_finish(req, &ret, &msg, mshot_finished, issue_flags))
- 		goto retry_multishot;
- 
- 	return ret;
+ 	area->xol_mapping.name = "[uprobes]";
+ 	area->xol_mapping.pages = area->pages;
+-	area->pages[0] = alloc_page(GFP_HIGHUSER);
++	area->pages[0] = alloc_page(GFP_HIGHUSER | __GFP_ZERO);
+ 	if (!area->pages[0])
+ 		goto free_bitmap;
+ 	area->pages[1] = NULL;
 -- 
 2.43.0
 
