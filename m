@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8DA1DEFC8;
-	Tue,  8 Oct 2024 13:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42CC1DE4CD;
+	Tue,  8 Oct 2024 13:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393639; cv=none; b=KRQBkgCdSS1pWzuHQec65tSGlXQPfo1kbqg08rLw5Wb1P8wSD/ZejhW8A3kgxj7E9PIIS7FjVrKYvv7t85qiy3at8zogQ2vr5P9aoSc1mAuM4Eg5Ka1tUEjLda34BkSshP9guULWimcE3x0LX2YMG/e9jW6ijA5Bzk28cqaw0U4=
+	t=1728393642; cv=none; b=axDOY+GAIjm+zIH6JnBFj/qLqFBf7NhyWPkI7LVX4Y5vAY0v9q3uCnd8EUIeTdILnA3GGAbNyoH07SfUrSPHINlS8LIttDguqygFAj6/mSX2SWGecEN3MgoQxCeC+skk7eT5/9o9LPuLnfGTIyBLx26jalFQbiI5cbeg7m8fYfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393639; c=relaxed/simple;
-	bh=+T+cuuNS64dSEUtvPIrBIkT2AwGPhtIwV02yVF7r1Xk=;
+	s=arc-20240116; t=1728393642; c=relaxed/simple;
+	bh=PW+MOduTbp881l3exYLkB2mGM8SlqvnF/JU6qJFqexg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOvtguDvJyP4/3nTO5rJWE0X4Y3GENWPw4LHeuYINckJ0dQsHgY+S7nraVYoyAJug2HXLuJmlQJ7R4Mnaxq961MhXNkU4oFOhTSTX+udlc498Z6hjRPrBje1rHuauj9DeJPoDeX2lgdKPdM1lLheO5nnUiN5EOOaE/1715x1kGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMOrTPil; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIsIViZyn2ZVF2n06aqyXeQE4OOZ30TOfume0fzKvjhxncQlYwGjE5WH5dkLz+b3kpLGaXqqPjmCE4OdwEIjiQ+2xPsnOgE2XvNBhpMSkUX8AT3W6E7iXceq6oIQKb92L/i41e94hxjwo1nkvNg/a9T/jtdnKyd06/97aYUJhZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6Q+3V2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMOrTPil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11CCC4CEC7;
-	Tue,  8 Oct 2024 13:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6Q+3V2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF26C4CEC7;
+	Tue,  8 Oct 2024 13:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393639;
-	bh=+T+cuuNS64dSEUtvPIrBIkT2AwGPhtIwV02yVF7r1Xk=;
+	s=korg; t=1728393642;
+	bh=PW+MOduTbp881l3exYLkB2mGM8SlqvnF/JU6qJFqexg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMOrTPil/1o5C93//23MTYEDpuC9E4fwCC1tgoWDGzIkv/rQjIb39MbnqQ67rSIuD
-	 zVZeKE2372okBKYXFq/HiBIM3QRYWqXCI3LJETtNAYgZvmgBHUdjKWgo4x3gdIJUW4
-	 HimcodHUTu7ifP3kn25fhbqhaXep2PU3f2uMZ4U8=
+	b=k6Q+3V2Y4PHhw8ASoFwvsL3pUco9nvOCLAnpxgNsz0nOqTkUyE9IcVGiq/w/lPtoN
+	 dZfpXlexgMzmtg+8wLzloJgZPKW2eFbYXiBWQ+8NZM5Uj8sbwwFxORy6SllkRcnRX+
+	 mdP/N2l4ZpgCIlMG8iJlL6tMbpyv8c0pG4CvFla0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimriver Liu <kimriver.liu@siengine.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 211/386] i2c: designware: fix controller is holding SCL low while ENABLE bit is disabled
-Date: Tue,  8 Oct 2024 14:07:36 +0200
-Message-ID: <20241008115637.710085163@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.6 212/386] rust: sync: require `T: Sync` for `LockedBy::access`
+Date: Tue,  8 Oct 2024 14:07:37 +0200
+Message-ID: <20241008115637.749402530@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,133 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kimriver Liu <kimriver.liu@siengine.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 5d69d5a00f80488ddcb4dee7d1374a0709398178 upstream.
+commit a8ee30f45d5d57467ddb7877ed6914d0eba0af7f upstream.
 
-It was observed that issuing the ABORT bit (IC_ENABLE[1]) will not
-work when IC_ENABLE is already disabled.
+The `LockedBy::access` method only requires a shared reference to the
+owner, so if we have shared access to the `LockedBy` from several
+threads at once, then two threads could call `access` in parallel and
+both obtain a shared reference to the inner value. Thus, require that
+`T: Sync` when calling the `access` method.
 
-Check if the ENABLE bit (IC_ENABLE[0]) is disabled when the controller
-is holding SCL low. If the ENABLE bit is disabled, the software needs
-to enable it before trying to issue the ABORT bit. otherwise,
-the controller ignores any write to ABORT bit.
+An alternative is to require `T: Sync` in the `impl Sync for LockedBy`.
+This patch does not choose that approach as it gives up the ability to
+use `LockedBy` with `!Sync` types, which is okay as long as you only use
+`access_mut`.
 
-These kernel logs show up whenever an I2C transaction is
-attempted after this failure.
-i2c_designware e95e0000.i2c: timeout waiting for bus ready
-i2c_designware e95e0000.i2c: timeout in disabling adapter
-
-The patch fixes the issue where the controller cannot be disabled
-while SCL is held low if the ENABLE bit is already disabled.
-
-Fixes: 2409205acd3c ("i2c: designware: fix __i2c_dw_disable() in case master is holding SCL low")
-Signed-off-by: Kimriver Liu <kimriver.liu@siengine.com>
-Cc: <stable@vger.kernel.org> # v6.6+
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7b1f55e3a984 ("rust: sync: introduce `LockedBy`")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240915-locked-by-sync-fix-v2-1-1a8d89710392@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c |   14 ++++++++++
- drivers/i2c/busses/i2c-designware-core.h   |    1 
- drivers/i2c/busses/i2c-designware-master.c |   38 +++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+)
+ rust/kernel/sync/locked_by.rs |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -441,6 +441,7 @@ err_release_lock:
+--- a/rust/kernel/sync/locked_by.rs
++++ b/rust/kernel/sync/locked_by.rs
+@@ -80,8 +80,12 @@ pub struct LockedBy<T: ?Sized, U: ?Sized
+ // SAFETY: `LockedBy` can be transferred across thread boundaries iff the data it protects can.
+ unsafe impl<T: ?Sized + Send, U: ?Sized> Send for LockedBy<T, U> {}
  
- void __i2c_dw_disable(struct dw_i2c_dev *dev)
- {
-+	struct i2c_timings *t = &dev->timings;
- 	unsigned int raw_intr_stats;
- 	unsigned int enable;
- 	int timeout = 100;
-@@ -453,6 +454,19 @@ void __i2c_dw_disable(struct dw_i2c_dev
+-// SAFETY: `LockedBy` serialises the interior mutability it provides, so it is `Sync` as long as the
+-// data it protects is `Send`.
++// SAFETY: If `T` is not `Sync`, then parallel shared access to this `LockedBy` allows you to use
++// `access_mut` to hand out `&mut T` on one thread at the time. The requirement that `T: Send` is
++// sufficient to allow that.
++//
++// If `T` is `Sync`, then the `access` method also becomes available, which allows you to obtain
++// several `&T` from several threads at once. However, this is okay as `T` is `Sync`.
+ unsafe impl<T: ?Sized + Send, U: ?Sized> Sync for LockedBy<T, U> {}
  
- 	abort_needed = raw_intr_stats & DW_IC_INTR_MST_ON_HOLD;
- 	if (abort_needed) {
-+		if (!(enable & DW_IC_ENABLE_ENABLE)) {
-+			regmap_write(dev->map, DW_IC_ENABLE, DW_IC_ENABLE_ENABLE);
-+			/*
-+			 * Wait 10 times the signaling period of the highest I2C
-+			 * transfer supported by the driver (for 400KHz this is
-+			 * 25us) to ensure the I2C ENABLE bit is already set
-+			 * as described in the DesignWare I2C databook.
-+			 */
-+			fsleep(DIV_ROUND_CLOSEST_ULL(10 * MICRO, t->bus_freq_hz));
-+			/* Set ENABLE bit before setting ABORT */
-+			enable |= DW_IC_ENABLE_ENABLE;
-+		}
-+
- 		regmap_write(dev->map, DW_IC_ENABLE, enable | DW_IC_ENABLE_ABORT);
- 		ret = regmap_read_poll_timeout(dev->map, DW_IC_ENABLE, enable,
- 					       !(enable & DW_IC_ENABLE_ABORT), 10,
---- a/drivers/i2c/busses/i2c-designware-core.h
-+++ b/drivers/i2c/busses/i2c-designware-core.h
-@@ -109,6 +109,7 @@
- 						 DW_IC_INTR_RX_UNDER | \
- 						 DW_IC_INTR_RD_REQ)
+ impl<T, U> LockedBy<T, U> {
+@@ -115,7 +119,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
+     ///
+     /// Panics if `owner` is different from the data protected by the lock used in
+     /// [`new`](LockedBy::new).
+-    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T {
++    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T
++    where
++        T: Sync,
++    {
+         build_assert!(
+             size_of::<U>() > 0,
+             "`U` cannot be a ZST because `owner` wouldn't be unique"
+@@ -124,7 +131,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
+             panic!("mismatched owners");
+         }
  
-+#define DW_IC_ENABLE_ENABLE			BIT(0)
- #define DW_IC_ENABLE_ABORT			BIT(1)
+-        // SAFETY: `owner` is evidence that the owner is locked.
++        // SAFETY: `owner` is evidence that there are only shared references to the owner for the
++        // duration of 'a, so it's not possible to use `Self::access_mut` to obtain a mutable
++        // reference to the inner value that aliases with this shared reference. The type is `Sync`
++        // so there are no other requirements.
+         unsafe { &*self.data.get() }
+     }
  
- #define DW_IC_STATUS_ACTIVITY			BIT(0)
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -253,6 +253,34 @@ static void i2c_dw_xfer_init(struct dw_i
- 	regmap_write(dev->map, DW_IC_INTR_MASK, DW_IC_INTR_MASTER_MASK);
- }
- 
-+/*
-+ * This function waits for the controller to be idle before disabling I2C
-+ * When the controller is not in the IDLE state, the MST_ACTIVITY bit
-+ * (IC_STATUS[5]) is set.
-+ *
-+ * Values:
-+ * 0x1 (ACTIVE): Controller not idle
-+ * 0x0 (IDLE): Controller is idle
-+ *
-+ * The function is called after completing the current transfer.
-+ *
-+ * Returns:
-+ * False when the controller is in the IDLE state.
-+ * True when the controller is in the ACTIVE state.
-+ */
-+static bool i2c_dw_is_controller_active(struct dw_i2c_dev *dev)
-+{
-+	u32 status;
-+
-+	regmap_read(dev->map, DW_IC_STATUS, &status);
-+	if (!(status & DW_IC_STATUS_MASTER_ACTIVITY))
-+		return false;
-+
-+	return regmap_read_poll_timeout(dev->map, DW_IC_STATUS, status,
-+				       !(status & DW_IC_STATUS_MASTER_ACTIVITY),
-+				       1100, 20000) != 0;
-+}
-+
- static int i2c_dw_check_stopbit(struct dw_i2c_dev *dev)
- {
- 	u32 val;
-@@ -695,6 +723,16 @@ i2c_dw_xfer(struct i2c_adapter *adap, st
- 	}
- 
- 	/*
-+	 * This happens rarely (~1:500) and is hard to reproduce. Debug trace
-+	 * showed that IC_STATUS had value of 0x23 when STOP_DET occurred,
-+	 * if disable IC_ENABLE.ENABLE immediately that can result in
-+	 * IC_RAW_INTR_STAT.MASTER_ON_HOLD holding SCL low. Check if
-+	 * controller is still ACTIVE before disabling I2C.
-+	 */
-+	if (i2c_dw_is_controller_active(dev))
-+		dev_err(dev->dev, "controller active\n");
-+
-+	/*
- 	 * We must disable the adapter before returning and signaling the end
- 	 * of the current transfer. Otherwise the hardware might continue
- 	 * generating interrupts which in turn causes a race condition with
 
 
