@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878D41DF971;
-	Tue,  8 Oct 2024 12:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FEE1DED4B;
+	Tue,  8 Oct 2024 12:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390349; cv=none; b=DqgffeGT3nxineuMggNfCKAeQ+CMcQd9ldEnQA9w6KAIowLzyqxhbeiUcEvJdN1hIlMghLtDOCX5Uh8D2818prqqrnS7qwq4hmDe4S8ui2qEqCVlhRU/yo7jT9yt/U3DIb4BIt9vvsA/DogRmBYrSS68Gtngsu4MVzsDWnnUqak=
+	t=1728390352; cv=none; b=TkRAVETC0O2e84UnE8ROmwqLxkEo0nw0JzAC+CFXJB2RF/6TOFL9n3/Gd7njSasJbjdlfdq/wVdNQ/PBzXBRXtJD9rY0c8FFVEh7jLSmvxZrcngTOwhGPvZbQV/FSyCA3fqKBT0IzmJAqc8oqhXiCxFhFQluEr+ckAqxz1u331M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390349; c=relaxed/simple;
-	bh=/mWlIHLj3gAZbb5NZADs2IK9CTUtValK064cbOpeQvY=;
+	s=arc-20240116; t=1728390352; c=relaxed/simple;
+	bh=ZfMxwxxArC5uwtoDHfW0ENRMcPLh7n/eb/sBxNCWp+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brvH7Wty6pcpNYXTgwEkd8w3ABRV8JOsY/yciX9uawpthF4g1GWpYWF5h/TiJDE954exhABNJctofh4RB6fpgJxiKgrJjX9PUapfRssuAqnKKxQ2dAxyMIZc4Byxb12aY4pqz9YesoqpUkzq3N6CkRSraRuYgyWiFIKJp28DgAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REXRDPRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBaGe6JK08/i/xy5DQwoNGxpPFZo/WKj6le+xdw6Rm+b8Fgo/L0c/7mwA/EYVrtwSYxrJUiXiK7PHuPIAPUf2f6dHxfqTLdZCTbEBWYj6T8TBSYo9SDaY5CDW3QbpkABmL9Q7VPz8RSseLtAwNi/Xmu4+3e+UapCx53NDpdY7IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4vXrIYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REXRDPRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938F4C4CEC7;
-	Tue,  8 Oct 2024 12:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4vXrIYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A7CC4CEC7;
+	Tue,  8 Oct 2024 12:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390349;
-	bh=/mWlIHLj3gAZbb5NZADs2IK9CTUtValK064cbOpeQvY=;
+	s=korg; t=1728390352;
+	bh=ZfMxwxxArC5uwtoDHfW0ENRMcPLh7n/eb/sBxNCWp+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REXRDPRaEkakXB74Y4iHb36pd9e5v+Mf9fCRbwrGjsOoJz2R7JrXKvsjPxG2e2Apf
-	 vZCsBxVM/7t/a4HE5xQrK4fPG1KzcXlNkKnTu4puPN/Bq8LVbKlplwDfokV8jNlmmA
-	 3DW643YyETrkaJD4lq0ybhEixqM2YZufn+vHkC6Q=
+	b=d4vXrIYQZaa2ik6X080dGfcTpG8RDfR/KfkLD3unVw8X8FBEM2RF/hRgjGByghYdz
+	 I4COm+o/4H4pD4zpAbBnValzZdHE6h7C00VA/C3NcRdu7cHFOwv4FEyREwdYD3TZ0i
+	 GfNoZK/SaXxdjxHwZWVWyQVCL2fds7rZ1rlw32Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Skvortsov <victor.skvortsov@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kees Cook <kees@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 231/482] drm/amdgpu: Block MMR_READ IOCTL in reset
-Date: Tue,  8 Oct 2024 14:04:54 +0200
-Message-ID: <20241008115657.393224259@linuxfoundation.org>
+Subject: [PATCH 6.10 222/482] scsi: aacraid: Rearrange order of struct aac_srb_unit
+Date: Tue,  8 Oct 2024 14:04:45 +0200
+Message-ID: <20241008115657.046351820@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,109 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Skvortsov <victor.skvortsov@amd.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 9e823f307074c0f82b5f6044943b0086e3079bed ]
+[ Upstream commit 6e5860b0ad4934baee8c7a202c02033b2631bb44 ]
 
-Register access from userspace should be blocked until
-reset is complete.
+struct aac_srb_unit contains struct aac_srb, which contains struct sgmap,
+which ends in a (currently) "fake" (1-element) flexible array.  Converting
+this to a flexible array is needed so that runtime bounds checking won't
+think the array is fixed size (i.e. under CONFIG_FORTIFY_SOURCE=y and/or
+CONFIG_UBSAN_BOUNDS=y), as other parts of aacraid use struct sgmap as a
+flexible array.
 
-Signed-off-by: Victor Skvortsov <victor.skvortsov@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It is not legal to have a flexible array in the middle of a structure, so
+it either needs to be split up or rearranged so that it is at the end of
+the structure. Luckily, struct aac_srb_unit, which is exclusively
+consumed/updated by aac_send_safw_bmic_cmd(), does not depend on member
+ordering.
+
+The values set in the on-stack struct aac_srb_unit instance "srbu" by the
+only two callers, aac_issue_safw_bmic_identify() and
+aac_get_safw_ciss_luns(), do not contain anything in srbu.srb.sgmap.sg, and
+they both implicitly initialize srbu.srb.sgmap.count to 0 during
+memset(). For example:
+
+        memset(&srbu, 0, sizeof(struct aac_srb_unit));
+
+        srbcmd = &srbu.srb;
+        srbcmd->flags   = cpu_to_le32(SRB_DataIn);
+        srbcmd->cdb[0]  = CISS_REPORT_PHYSICAL_LUNS;
+        srbcmd->cdb[1]  = 2; /* extended reporting */
+        srbcmd->cdb[8]  = (u8)(datasize >> 8);
+        srbcmd->cdb[9]  = (u8)(datasize);
+
+        rcode = aac_send_safw_bmic_cmd(dev, &srbu, phys_luns, datasize);
+
+During aac_send_safw_bmic_cmd(), a separate srb is mapped into DMA, and has
+srbu.srb copied into it:
+
+        srb = fib_data(fibptr);
+        memcpy(srb, &srbu->srb, sizeof(struct aac_srb));
+
+Only then is srb.sgmap.count written and srb->sg populated:
+
+        srb->count              = cpu_to_le32(xfer_len);
+
+        sg64 = (struct sgmap64 *)&srb->sg;
+        sg64->count             = cpu_to_le32(1);
+        sg64->sg[0].addr[1]     = cpu_to_le32(upper_32_bits(addr));
+        sg64->sg[0].addr[0]     = cpu_to_le32(lower_32_bits(addr));
+        sg64->sg[0].count       = cpu_to_le32(xfer_len);
+
+But this is happening in the DMA memory, not in srbu.srb. An attempt to
+copy the changes back to srbu does happen:
+
+        /*
+         * Copy the updated data for other dumping or other usage if
+         * needed
+         */
+        memcpy(&srbu->srb, srb, sizeof(struct aac_srb));
+
+But this was never correct: the sg64 (3 u32s) overlap of srb.sg (2 u32s)
+always meant that srbu.srb would have held truncated information and any
+attempt to walk srbu.srb.sg.sg based on the value of srbu.srb.sg.count
+would result in attempting to parse past the end of srbu.srb.sg.sg[0] into
+srbu.srb_reply.
+
+After getting a reply from hardware, the reply is copied into
+srbu.srb_reply:
+
+        srb_reply = (struct aac_srb_reply *)fib_data(fibptr);
+        memcpy(&srbu->srb_reply, srb_reply, sizeof(struct aac_srb_reply));
+
+This has always been fixed-size, so there's no issue here. It is worth
+noting that the two callers _never check_ srbu contents -- neither
+srbu.srb nor srbu.srb_reply is examined. (They depend on the mapped
+xfer_buf instead.)
+
+Therefore, the ordering of members in struct aac_srb_unit does not matter,
+and the flexible array member can moved to the end.
+
+(Additionally, the two memcpy()s that update srbu could be entirely
+removed as they are never consumed, but I left that as-is.)
+
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20240711215739.208776-1-kees@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 43 ++++++++++++++++++-------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ drivers/scsi/aacraid/aacraid.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 977cde6d13626..6d4e774b6cedc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -43,6 +43,7 @@
- #include "amdgpu_gem.h"
- #include "amdgpu_display.h"
- #include "amdgpu_ras.h"
-+#include "amdgpu_reset.h"
- #include "amd_pcie.h"
+diff --git a/drivers/scsi/aacraid/aacraid.h b/drivers/scsi/aacraid/aacraid.h
+index 7d5a155073c62..9b66fa29fb05c 100644
+--- a/drivers/scsi/aacraid/aacraid.h
++++ b/drivers/scsi/aacraid/aacraid.h
+@@ -2029,8 +2029,8 @@ struct aac_srb_reply
+ };
  
- void amdgpu_unregister_gpu_instance(struct amdgpu_device *adev)
-@@ -778,6 +779,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				    ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_READ_MMR_REG: {
-+		int ret = 0;
- 		unsigned int n, alloc_size;
- 		uint32_t *regs;
- 		unsigned int se_num = (info->read_mmr_reg.instance >>
-@@ -787,24 +789,37 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
+ struct aac_srb_unit {
+-	struct aac_srb		srb;
+ 	struct aac_srb_reply	srb_reply;
++	struct aac_srb		srb;
+ };
  
-+		if (!down_read_trylock(&adev->reset_domain->sem))
-+			return -ENOENT;
-+
- 		/* set full masks if the userspace set all bits
- 		 * in the bitfields
- 		 */
--		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
-+		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK) {
- 			se_num = 0xffffffff;
--		else if (se_num >= AMDGPU_GFX_MAX_SE)
--			return -EINVAL;
--		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK)
-+		} else if (se_num >= AMDGPU_GFX_MAX_SE) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
-+
-+		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK) {
- 			sh_num = 0xffffffff;
--		else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE)
--			return -EINVAL;
-+		} else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
--		if (info->read_mmr_reg.count > 128)
--			return -EINVAL;
-+		if (info->read_mmr_reg.count > 128) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
- 		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs), GFP_KERNEL);
--		if (!regs)
--			return -ENOMEM;
-+		if (!regs) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
-+
- 		alloc_size = info->read_mmr_reg.count * sizeof(*regs);
- 
- 		amdgpu_gfx_off_ctrl(adev, false);
-@@ -816,13 +831,17 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 					      info->read_mmr_reg.dword_offset + i);
- 				kfree(regs);
- 				amdgpu_gfx_off_ctrl(adev, true);
--				return -EFAULT;
-+				ret = -EFAULT;
-+				goto out;
- 			}
- 		}
- 		amdgpu_gfx_off_ctrl(adev, true);
- 		n = copy_to_user(out, regs, min(size, alloc_size));
- 		kfree(regs);
--		return n ? -EFAULT : 0;
-+		ret = (n ? -EFAULT : 0);
-+out:
-+		up_read(&adev->reset_domain->sem);
-+		return ret;
- 	}
- 	case AMDGPU_INFO_DEV_INFO: {
- 		struct drm_amdgpu_info_device *dev_info;
+ /*
 -- 
 2.43.0
 
