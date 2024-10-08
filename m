@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B91DE2AD;
-	Tue,  8 Oct 2024 12:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A141DE3A3;
+	Tue,  8 Oct 2024 12:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391548; cv=none; b=AF9Q+NPgH+5SdcI6kcDv7pfJrbtS8Y2wAim3JnhK7wu4OTkxsI2fZI1LSWNWS1Y3suQCdhhSiEmBj0HbDyxIAAWBKr1lnjwCu1srZx0KmdXHbCFgO5pP5qOLd6KN/7MyVO/yNPSWkLolYbEdRUDDoGeJh/u2Lh1X50miy1hx3Ck=
+	t=1728391551; cv=none; b=UZhAyq38mLqrAOPWVy60ygo2Z2O/zCl4cqmETxpg0v7+RbKnzsPvBdwSQ/yvF45lZZu2YWhYUgsc0VoTN8/PY/0mkBFxpQ99vgGjoA0gcvZhH2HDstoReJw2b4DO9eRp8kT6KtIUZChZzE4arFWva49PGgSxVbo3fo7mwfaw/Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391548; c=relaxed/simple;
-	bh=3B5Cq3Kh48Du9mhFUpcl0FPTfvr+4p2Ur3sawLJFcMA=;
+	s=arc-20240116; t=1728391551; c=relaxed/simple;
+	bh=vKIUEH5TqMpvYlrzj3E9sKohWPUa0X9mzEMV+fngAEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OVMB1Bj3c8TgDDfKBOwWEDHxC/dnUB35mqrioFZ1PHKIdhDdI0pB5Gidfoo1V5Q5Fh3LhgkNKlibzzU44NRSeMuwb019rapxYgrn+oiaBOpyL/gMLOIGXjoO+cyG3nGGLZZ/9MaV5Aslo2zbxIOJcE5GQbACzOex4U1uFQWe4kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1v4DzHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z0gPdrx8EZiFAxujk925WefKANHmL4uNlqIpR2nUZVoujazUytKa+o9xE9863JWZW7HQmtLvQYK/zryk7YtaOpo90h7VWT5XmxvC5UKogocYYCVOlUHcqLbzFnVGIg6w4M4qZCp8rxiL530Fvuh687jhlg6vEM6o8GhhMAyPCFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjMbv3/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1v4DzHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98415C4CEC7;
-	Tue,  8 Oct 2024 12:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjMbv3/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E7DC4CECD;
+	Tue,  8 Oct 2024 12:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391548;
-	bh=3B5Cq3Kh48Du9mhFUpcl0FPTfvr+4p2Ur3sawLJFcMA=;
+	s=korg; t=1728391551;
+	bh=vKIUEH5TqMpvYlrzj3E9sKohWPUa0X9mzEMV+fngAEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1v4DzHgZDdf+RQBFpSIyveN34XyNvl68lk9IaZbTG/OC34FI8YO2DFIfAzjGZYm8
-	 tty3oD8MRNwDd6dcJyTlETCBQIWV6x/0Ggi+ayjLZVmeAyga4Bu7i/2e4g05z7kvHr
-	 QaOLRTf8Ua+CmbZoZ0EpdqS5ENvaZbg2N9yHiUk0=
+	b=qjMbv3/7Ej1jqgNsrifqM/P/sWUYpb5/2rUIXE5lyVWcILIpp3JBICTDGCwcAqedn
+	 wSURBLqGRMENDODfH7qGkJbzqbyBSgPCn6KQ+w7BSNPs62MtAM8Lz8uk588UmQ04DQ
+	 d44C64iJ858JYY/PYfd9XeSHyI1Io09pqmuy92g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 149/558] wifi: wilc1000: Do not operate uninitialized hardware during suspend/resume
-Date: Tue,  8 Oct 2024 14:02:59 +0200
-Message-ID: <20241008115708.227307267@linuxfoundation.org>
+Subject: [PATCH 6.11 150/558] block: fix integer overflow in BLKSECDISCARD
+Date: Tue,  8 Oct 2024 14:03:00 +0200
+Message-ID: <20241008115708.266324495@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -46,60 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit b0dc7018477e8fbb7e40c908c29cf663d06b17a7 ]
+[ Upstream commit 697ba0b6ec4ae04afb67d3911799b5e2043b4455 ]
 
-In case the hardware is not initialized, do not operate it during
-suspend/resume cycle, the hardware is already off so there is no
-reason to access it.
+I independently rediscovered
 
-In fact, wilc_sdio_enable_interrupt() in the resume callback does
-interfere with the same call when initializing the hardware after
-resume and makes such initialization after resume fail. Fix this
-by not operating uninitialized hardware during suspend/resume.
+	commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155
+	block: fix overflow in blk_ioctl_discard()
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240821183639.163187-1-marex@denx.de
+but for secure erase.
+
+Same problem:
+
+	uint64_t r[2] = {512, 18446744073709551104ULL};
+	ioctl(fd, BLKSECDISCARD, r);
+
+will enter near infinite loop inside blkdev_issue_secure_erase():
+
+	a.out: attempt to access beyond end of device
+	loop0: rw=5, sector=3399043073, nr_sectors = 1024 limit=2048
+	bio_check_eod: 3286214 callbacks suppressed
+
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lore.kernel.org/r/9e64057f-650a-46d1-b9f7-34af391536ef@p183
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/sdio.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ block/ioctl.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/sdio.c b/drivers/net/wireless/microchip/wilc1000/sdio.c
-index 0043f7a0fdf97..7999aeb76901f 100644
---- a/drivers/net/wireless/microchip/wilc1000/sdio.c
-+++ b/drivers/net/wireless/microchip/wilc1000/sdio.c
-@@ -977,6 +977,9 @@ static int wilc_sdio_suspend(struct device *dev)
+diff --git a/block/ioctl.c b/block/ioctl.c
+index e8e4a4190f183..44257bdfeacbf 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -126,7 +126,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 		return -EINVAL;
  
- 	dev_info(dev, "sdio suspend\n");
+ 	filemap_invalidate_lock(bdev->bd_mapping);
+-	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
++	err = truncate_bdev_range(bdev, mode, start, end - 1);
+ 	if (err)
+ 		goto fail;
  
-+	if (!wilc->initialized)
-+		return 0;
-+
- 	if (!IS_ERR(wilc->rtc_clk))
- 		clk_disable_unprepare(wilc->rtc_clk);
+@@ -163,7 +163,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
+ 		void __user *argp)
+ {
+-	uint64_t start, len;
++	uint64_t start, len, end;
+ 	uint64_t range[2];
+ 	int err;
  
-@@ -999,6 +1002,10 @@ static int wilc_sdio_resume(struct device *dev)
- 	struct wilc *wilc = sdio_get_drvdata(func);
+@@ -178,11 +178,12 @@ static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
+ 	len = range[1];
+ 	if ((start & 511) || (len & 511))
+ 		return -EINVAL;
+-	if (start + len > bdev_nr_bytes(bdev))
++	if (check_add_overflow(start, len, &end) ||
++	    end > bdev_nr_bytes(bdev))
+ 		return -EINVAL;
  
- 	dev_info(dev, "sdio resume\n");
-+
-+	if (!wilc->initialized)
-+		return 0;
-+
- 	wilc_sdio_init(wilc, true);
- 	wilc_sdio_enable_interrupt(wilc);
- 
+ 	filemap_invalidate_lock(bdev->bd_mapping);
+-	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
++	err = truncate_bdev_range(bdev, mode, start, end - 1);
+ 	if (!err)
+ 		err = blkdev_issue_secure_erase(bdev, start >> 9, len >> 9,
+ 						GFP_KERNEL);
 -- 
 2.43.0
 
