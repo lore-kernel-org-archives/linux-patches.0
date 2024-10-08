@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970DA1DE8A0;
-	Tue,  8 Oct 2024 13:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4391DE8B1;
+	Tue,  8 Oct 2024 13:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393097; cv=none; b=rNn6JXvo1n7q0BTlnF1XBXuQ9HHNvDhxuCMvsvJf2IbtHhctQr1ww9GwPse9ZmiYTbewS7yDucqtWgv6q2bk8BTmVZ6WEzlTutvmhSzcRSDWvp/oc0MloO7wiILS8tziyHQGcqNNKuHDzNAWr15x08xgxINbXbA2eKKBMlYLan0=
+	t=1728393101; cv=none; b=U9cfy2P1li2+Rb2RxPiBum/lThFgmOigjz912LKLYjqDPYzFnxkp7kn1ziYglrzz+PM3aU4OVtXiBgMyd7EzKABDGPF//PcQJoQ92w2WqKh6vY0oU9e1yovi9yopwqLfAcYPGl6XpItO21JDbI8+WK1tlt9hgPcsEX5lEJy/E/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393097; c=relaxed/simple;
-	bh=lDvZP+D5LKHJfHX+3pUXT7v7B266yho6giQ4V7QN3cY=;
+	s=arc-20240116; t=1728393101; c=relaxed/simple;
+	bh=v4GO/fFmt90bZ1OXHb0c7H9GxeuGH8IM1LviQ0MKtQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHPlrdo44cMLHHuxXw8YF/GrNtRlx8UCOWMlg2KsUL1aw7LFGi8cJzwMWFunRoKUo+xzVQI/9sYNfXFxuH6E2XyUhe3hBDn3m7ts+u6kgXxJDA58PwGTCMBWXlLrvxlQRX/b66yEH1cWrjohkhR4DkUxKRRpjRuyYmMQkbFGEbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbeTd1iB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tm6xpdHI+6ZK44+Z0E3LG1ZbM3PnT/eNeCcUL7fMC0g4TQ6whmU2jFUSY7jneVnAaeQbfZ10pAu8j2W5S5eNMSYddQwtAgcqcXnhlIvqftQ4NRGmVyghtHpxaU/D3XsnSd1gEuJFKF1Sd/38yaeMeUB1i5deZUL7IXvauqMvRz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POI93PK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbeTd1iB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9008C4CEC7;
-	Tue,  8 Oct 2024 13:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POI93PK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E5DC4CECC;
+	Tue,  8 Oct 2024 13:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393097;
-	bh=lDvZP+D5LKHJfHX+3pUXT7v7B266yho6giQ4V7QN3cY=;
+	s=korg; t=1728393101;
+	bh=v4GO/fFmt90bZ1OXHb0c7H9GxeuGH8IM1LviQ0MKtQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbeTd1iBcsSCxq/f+uppLvKsDWuQBFLO4QzpPT+0FGg5Px77/RQKFjaMY1MBf2l2B
-	 mxe0g0KvoXlikiP5H7GK3PhxXNoIjUHufL9JEDvVnvv3Cc3OuK0B1NTZd6ByrogEWC
-	 Q2dIWZP7TJ4wDelxbIJTzH4Zkq77jBB6P1L+BxxU=
+	b=POI93PK88ERxhq1ldYlKrxFsrtF5LTTciPX2jhKMgt5+/VHE84ZTn4NF0TT2v8ToM
+	 HXTw7OQMjfjuu9jNdSCBCWkVL1Mkc60d/pcBu4Lp3RW3nSeXEQQduPbBGDs8PRDEXe
+	 /A5Yk9KpHnC+zrk0awyHT108YN5ikMepi4Pspczg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Hui Wang <hui.wang@canonical.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/386] ALSA: hda/generic: Unconditionally prefer preferred_dacs pairs
-Date: Tue,  8 Oct 2024 14:04:55 +0200
-Message-ID: <20241008115631.440357142@linuxfoundation.org>
+Subject: [PATCH 6.6 051/386] ASoC: imx-card: Set card.owner to avoid a warning calltrace if SND=m
+Date: Tue,  8 Oct 2024 14:04:56 +0200
+Message-ID: <20241008115631.479304920@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 1c801e7f77445bc56e5e1fec6191fd4503534787 ]
+[ Upstream commit 47d7d3fd72afc7dcd548806291793ee6f3848215 ]
 
-Some time ago, we introduced the obey_preferred_dacs flag for choosing
-the DAC/pin pairs specified by the driver instead of parsing the
-paths.  This works as expected, per se, but there have been a few
-cases where we forgot to set this flag while preferred_dacs table is
-already set up.  It ended up with incorrect wiring and made us
-wondering why it doesn't work.
+In most Linux distribution kernels, the SND is set to m, in such a
+case, when booting the kernel on i.MX8MP EVK board, there is a
+warning calltrace like below:
+ Call trace:
+ snd_card_init+0x484/0x4cc [snd]
+ snd_card_new+0x70/0xa8 [snd]
+ snd_soc_bind_card+0x310/0xbd0 [snd_soc_core]
+ snd_soc_register_card+0xf0/0x108 [snd_soc_core]
+ devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
 
-Basically, when the preferred_dacs table is provided, it means that
-the driver really wants to wire up to follow that.  That is, the
-presence of the preferred_dacs table itself is already a "do-it"
-flag.
+That is because the card.owner is not set, a warning calltrace is
+raised in the snd_card_init() due to it.
 
-In this patch, we simply replace the evaluation of obey_preferred_dacs
-flag with the presence of preferred_dacs table for fixing the
-misbehavior.  Another patch to drop of the obsoleted flag will
-follow.
-
-Fixes: 242d990c158d ("ALSA: hda/generic: Add option to enforce preferred_dacs pairs")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1219803
-Link: https://patch.msgid.link/20241001121439.26060-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: aa736700f42f ("ASoC: imx-card: Add imx-card machine driver")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://patch.msgid.link/20241002025659.723544-1-hui.wang@canonical.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_generic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/fsl/imx-card.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/hda_generic.c b/sound/pci/hda/hda_generic.c
-index d3ed3e21b1979..8e8d4c667923c 100644
---- a/sound/pci/hda/hda_generic.c
-+++ b/sound/pci/hda/hda_generic.c
-@@ -1383,7 +1383,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
- 		struct nid_path *path;
- 		hda_nid_t pin = pins[i];
+diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
+index 356a0bc3b126b..f8144bf4c90d3 100644
+--- a/sound/soc/fsl/imx-card.c
++++ b/sound/soc/fsl/imx-card.c
+@@ -714,6 +714,7 @@ static int imx_card_probe(struct platform_device *pdev)
  
--		if (!spec->obey_preferred_dacs) {
-+		if (!spec->preferred_dacs) {
- 			path = snd_hda_get_path_from_idx(codec, path_idx[i]);
- 			if (path) {
- 				badness += assign_out_path_ctls(codec, path);
-@@ -1395,7 +1395,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
- 		if (dacs[i]) {
- 			if (is_dac_already_used(codec, dacs[i]))
- 				badness += bad->shared_primary;
--		} else if (spec->obey_preferred_dacs) {
-+		} else if (spec->preferred_dacs) {
- 			badness += BAD_NO_PRIMARY_DAC;
- 		}
+ 	data->plat_data = plat_data;
+ 	data->card.dev = &pdev->dev;
++	data->card.owner = THIS_MODULE;
  
+ 	dev_set_drvdata(&pdev->dev, &data->card);
+ 	snd_soc_card_set_drvdata(&data->card, data);
 -- 
 2.43.0
 
