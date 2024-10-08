@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40564183CB8;
-	Tue,  8 Oct 2024 12:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3D61C9B61;
+	Tue,  8 Oct 2024 12:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391597; cv=none; b=S3LNUTyG/f9zr80B0osaZdE3zaXw/OqNOHXFk3Ddx2wR8/2k0sFKl7/8f5Bus28FXF8LTR1tvoTHlBboKpUtqLrRqKc8pbJQYf5USOAmtWwlufaXWypG+ZTfOz1gcNIeIX4gJ1qzRsIltE7+cBR2iLHewvY7F1IfsqLsgBJrhno=
+	t=1728391600; cv=none; b=re+OMfvXoPu3lD1LZPqROW2PJaNQQOToHqeaWsdEUJvxsgzoKRprtMK86owL397TfMwlpNf/o/nluh8POL0lJaHGzwVFjGjw/Ls450YVOpebHE7IFgjQBZgEIQ/ZUpdMZhRr2DBjZBPvsCeZXsGN6cj6PM7ZFc8j/HJ8gZLpkIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391597; c=relaxed/simple;
-	bh=RnwKQLtHF0GCeIbHCvi5Bb7PdcxpzWloj8m0eReqDco=;
+	s=arc-20240116; t=1728391600; c=relaxed/simple;
+	bh=xNSVZpJOdKgolk9WqqUj505HS455A95/Upzxm8xIATQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzBqxDrlK0QRDH0PEPmqHL4Bwnd9YGQ697sGYycYMU2VI2PxIpb4KhljpEMstaXhERzK38SiQO+bN6yRXViSWjlr7oQwt2qJnvlJ4VN7qwBJq+yiUhNpriNaw2gwVxLPkvMwVL8YiG5bnWcq+7LaY5WoW+8LEexwC4wC0Lnvx4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKuTcAW7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b3d3ZI1v4FjfggVeDrv9KaseD8DHBKcStRJiGawab+gUJzMiyn6dRQSaCe5Av73noiu/qvzmyiSZR2D2zSktlFsXNYxDskNiR0U7etUHJo3kYChj43cFR3OImtl8qdfq2pEpM7wUXG8WwfZKboo6nGY9dP3hpx+AOrLXvypJVN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0CffP/l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKuTcAW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8471C4CEC7;
-	Tue,  8 Oct 2024 12:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0CffP/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7B5C4CEC7;
+	Tue,  8 Oct 2024 12:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391597;
-	bh=RnwKQLtHF0GCeIbHCvi5Bb7PdcxpzWloj8m0eReqDco=;
+	s=korg; t=1728391600;
+	bh=xNSVZpJOdKgolk9WqqUj505HS455A95/Upzxm8xIATQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKuTcAW7y1CrNKXcw2sjzXtvRd14uUC12EF3/s/t+u8VbzY5+LOCEw9FCUKPsxFHp
-	 ehRqui937piAQ+ij02gw9KXCco9+rJWTbtdYmY89MVC+aEx9CTEOpSIzxKz+ZmleFH
-	 DlxO3fBJsWGilwk8H1l7Il8ssAAAnk7MEpskTrJY=
+	b=O0CffP/llyOv1xeRYKhHGcBAWbEm/BFFKZ5bWuX2TBS6if5Ut960vi7gfnjFA+h47
+	 YYswMOzQRffW5ILJ35v7YHwfh7uKSfnLkIfHGBgYLQl+29Eg6uLvsf3lUM1lkSBFqw
+	 jFG388mynzY9YEQ3TyoR2WlyF894GK3fj1Pc0wuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Peens <louis.peens@corigine.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 164/558] nfp: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  8 Oct 2024 14:03:14 +0200
-Message-ID: <20241008115708.811638657@linuxfoundation.org>
+Subject: [PATCH 6.11 165/558] ALSA: usb-audio: Add input value sanity checks for standard types
+Date: Tue,  8 Oct 2024 14:03:15 +0200
+Message-ID: <20241008115708.850341527@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,44 +50,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit daaba19d357f0900b303a530ced96c78086267ea ]
+[ Upstream commit 901e85677ec0bb9a69fb9eab1feafe0c4eb7d07e ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+For an invalid input value that is out of the given range, currently
+USB-audio driver corrects the value silently and accepts without
+errors.  This is no wrong behavior, per se, but the recent kselftest
+rather wants to have an error in such a case, hence a different
+behavior is expected now.
 
-Reviewed-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240911094445.1922476-4-ruanjinjie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch adds a sanity check at each control put for the standard
+mixer types and returns an error if an invalid value is given.
+
+Note that this covers only the standard mixer types.  The mixer quirks
+that have own control callbacks would need different coverage.
+
+Link: https://patch.msgid.link/20240806124651.28203-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfp_net_common.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c | 35 +++++++++++++++++++++++++++--------
+ sound/usb/mixer.h |  1 +
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
-index 182ba0a8b095b..6e0929af0f725 100644
---- a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
-@@ -821,14 +821,13 @@ nfp_net_prepare_vector(struct nfp_net *nn, struct nfp_net_r_vector *r_vec,
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index f7ce8e8c3c3ea..2d27d729c3bea 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1377,6 +1377,19 @@ static int get_min_max_with_quirks(struct usb_mixer_elem_info *cval,
  
- 	snprintf(r_vec->name, sizeof(r_vec->name),
- 		 "%s-rxtx-%d", nfp_net_name(nn), idx);
--	err = request_irq(r_vec->irq_vector, r_vec->handler, 0, r_vec->name,
--			  r_vec);
-+	err = request_irq(r_vec->irq_vector, r_vec->handler, IRQF_NO_AUTOEN,
-+			  r_vec->name, r_vec);
- 	if (err) {
- 		nfp_net_napi_del(&nn->dp, r_vec);
- 		nn_err(nn, "Error requesting IRQ %d\n", r_vec->irq_vector);
- 		return err;
+ #define get_min_max(cval, def)	get_min_max_with_quirks(cval, def, NULL)
+ 
++/* get the max value advertised via control API */
++static int get_max_exposed(struct usb_mixer_elem_info *cval)
++{
++	if (!cval->max_exposed) {
++		if (cval->res)
++			cval->max_exposed =
++				DIV_ROUND_UP(cval->max - cval->min, cval->res);
++		else
++			cval->max_exposed = cval->max - cval->min;
++	}
++	return cval->max_exposed;
++}
++
+ /* get a feature/mixer unit info */
+ static int mixer_ctl_feature_info(struct snd_kcontrol *kcontrol,
+ 				  struct snd_ctl_elem_info *uinfo)
+@@ -1389,11 +1402,8 @@ static int mixer_ctl_feature_info(struct snd_kcontrol *kcontrol,
+ 	else
+ 		uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+ 	uinfo->count = cval->channels;
+-	if (cval->val_type == USB_MIXER_BOOLEAN ||
+-	    cval->val_type == USB_MIXER_INV_BOOLEAN) {
+-		uinfo->value.integer.min = 0;
+-		uinfo->value.integer.max = 1;
+-	} else {
++	if (cval->val_type != USB_MIXER_BOOLEAN &&
++	    cval->val_type != USB_MIXER_INV_BOOLEAN) {
+ 		if (!cval->initialized) {
+ 			get_min_max_with_quirks(cval, 0, kcontrol);
+ 			if (cval->initialized && cval->dBmin >= cval->dBmax) {
+@@ -1405,10 +1415,10 @@ static int mixer_ctl_feature_info(struct snd_kcontrol *kcontrol,
+ 					       &kcontrol->id);
+ 			}
+ 		}
+-		uinfo->value.integer.min = 0;
+-		uinfo->value.integer.max =
+-			DIV_ROUND_UP(cval->max - cval->min, cval->res);
  	}
--	disable_irq(r_vec->irq_vector);
++
++	uinfo->value.integer.min = 0;
++	uinfo->value.integer.max = get_max_exposed(cval);
+ 	return 0;
+ }
  
- 	irq_set_affinity_hint(r_vec->irq_vector, &r_vec->affinity_mask);
+@@ -1449,6 +1459,7 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct usb_mixer_elem_info *cval = kcontrol->private_data;
++	int max_val = get_max_exposed(cval);
+ 	int c, cnt, val, oval, err;
+ 	int changed = 0;
  
+@@ -1461,6 +1472,8 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 			if (err < 0)
+ 				return filter_error(cval, err);
+ 			val = ucontrol->value.integer.value[cnt];
++			if (val < 0 || val > max_val)
++				return -EINVAL;
+ 			val = get_abs_value(cval, val);
+ 			if (oval != val) {
+ 				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
+@@ -1474,6 +1487,8 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 		if (err < 0)
+ 			return filter_error(cval, err);
+ 		val = ucontrol->value.integer.value[0];
++		if (val < 0 || val > max_val)
++			return -EINVAL;
+ 		val = get_abs_value(cval, val);
+ 		if (val != oval) {
+ 			snd_usb_set_cur_mix_value(cval, 0, 0, val);
+@@ -2337,6 +2352,8 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
+ 	if (err < 0)
+ 		return filter_error(cval, err);
+ 	val = ucontrol->value.integer.value[0];
++	if (val < 0 || val > get_max_exposed(cval))
++		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+ 		set_cur_ctl_value(cval, cval->control << 8, val);
+@@ -2699,6 +2716,8 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
+ 	if (err < 0)
+ 		return filter_error(cval, err);
+ 	val = ucontrol->value.enumerated.item[0];
++	if (val < 0 || val >= cval->max) /* here cval->max = # elements */
++		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+ 		set_cur_ctl_value(cval, cval->control << 8, val);
+diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
+index d43895c1ae5c6..167fbfcf01ace 100644
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -88,6 +88,7 @@ struct usb_mixer_elem_info {
+ 	int channels;
+ 	int val_type;
+ 	int min, max, res;
++	int max_exposed; /* control API exposes the value in 0..max_exposed */
+ 	int dBmin, dBmax;
+ 	int cached;
+ 	int cache_val[MAX_CHANNELS];
 -- 
 2.43.0
 
