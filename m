@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166D11DE4DF;
-	Tue,  8 Oct 2024 12:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B35A192594;
+	Tue,  8 Oct 2024 12:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391419; cv=none; b=b5XNxELoF/jr39jLAgWz/LOLnUWQ5RB1RxlzXg+In4w6Mm8OtKM9i5l8AY4Dfxspu54y5vXKDCH6p+QwrdQi1h0ev06JLW0NXcZGgfJNM/hGve6bjVVecvCEWQQ0hMQFbbbPcoOCTLhLCbrzHhHDwYYzjgYhFnRW3cvyFSDxA2o=
+	t=1728391422; cv=none; b=d9aRqECbx4l7hEvmZZi1/33dGO/Y2VLRkR+3+NXD4NjlqEJrEATNqoukOROcge8Sjb6Vxs524G2+wN69Sf5GsmfZUZaqO3RkGvQVIxUYzJxFloK3KdFN4rTqNoQp7r1j9UIl4RI6blFqlG2GiFtFEcNws5k8C3eAuoKaYVRwIQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391419; c=relaxed/simple;
-	bh=7ceSUahmg8s+NJcaao4TJAgW8rN+U5ghrC6hAIsYLV0=;
+	s=arc-20240116; t=1728391422; c=relaxed/simple;
+	bh=oLqsdmTmlW2kWSwm0fT4R+CP5p7oGXEQxPa/gKMEu6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFpjKrKbHIHKtRo+AHggu6eESDah/il8i3Rdq2JmL59EnldcEJCErYuySr0xPsygH4OoWadtHTskHSwuO8T23E1lSj9wHJigt0GSIOxTV4SHZWKH3ITXAiTDmBdvadS8ud9102gyUAtkGEmR7qYDmCPee3AlBRuxfmJnI6xcQU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P129DCDx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n/zI3IjCfeJCPEpYPUMjjusyXZJTctAqmp208EXuv4AlXDVVF4qyGwsKeA/0Kr72aHBuBR7GbsHzbn5qpOenbq5m4V1ONxJU52IstJpUfrOA3NJ9giqMjywalavQHTFaBd5xu3scudSl13/jpwDHNtl8xErDyKWB5E6oNiny6SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmWbZeS3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P129DCDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B54C4CEC7;
-	Tue,  8 Oct 2024 12:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmWbZeS3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE8DC4CEC7;
+	Tue,  8 Oct 2024 12:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391419;
-	bh=7ceSUahmg8s+NJcaao4TJAgW8rN+U5ghrC6hAIsYLV0=;
+	s=korg; t=1728391422;
+	bh=oLqsdmTmlW2kWSwm0fT4R+CP5p7oGXEQxPa/gKMEu6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P129DCDx6aOGIhh4hW4F0h2wPWO5gLG3zS6CKT7IDqQGLxZQrGhMQzOrnF3k4HYcw
-	 3Nu+P9REz00Pp4GLrBaqjnv+4xYYXwhnUq4sj+f7bMEdrd2wF52TtmkrBJeOw9zTtW
-	 kYjT+bkoyCmcjan8cJpSDHDCYGn4Pu4iUaxYmQHc=
+	b=jmWbZeS3Zw7PaNSY/4aD1KQLlZPD4hwMBxgJOfiaEgYcCmbqKJI1nCPnfc8vlu4oD
+	 aSzb89WhqNlYUkYAfli/i9ZcZjxqJhEsEAXmkMQiW2ovd3M3AVzksrURLOnu8QX/lT
+	 jOCGNlyRs88yH45rFGqlxN0s8spSoz9639lng76c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Ben Hutchings <benh@debian.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 076/558] gpiolib: Fix potential NULL pointer dereference in gpiod_get_label()
-Date: Tue,  8 Oct 2024 14:01:46 +0200
-Message-ID: <20241008115705.366612602@linuxfoundation.org>
+Subject: [PATCH 6.11 077/558] tools/rtla: Fix installation from out-of-tree build
+Date: Tue,  8 Oct 2024 14:01:47 +0200
+Message-ID: <20241008115705.406651073@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,50 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 7b99b5ab885993bff010ebcd93be5e511c56e28a ]
+[ Upstream commit f771d5369f1dbfe32c93bcb4f5d7ca8322b15389 ]
 
-In `gpiod_get_label()`, it is possible that `srcu_dereference_check()` may
-return a NULL pointer, leading to a scenario where `label->str` is accessed
-without verifying if `label` itself is NULL.
+rtla now supports out-of-tree builds, but installation fails as it
+still tries to install the rtla binary from the source tree.  Use the
+existing macro $(RTLA) to refer to the binary.
 
-This patch adds a proper NULL check for `label` before accessing
-`label->str`. The check for `label->str != NULL` is removed because
-`label->str` can never be NULL if `label` is not NULL.
-
-This fixes the issue where the label name was being printed as `(efault)`
-when dumping the sysfs GPIO file when `label == NULL`.
-
-Fixes: 5a646e03e956 ("gpiolib: Return label, if set, for IRQ only line")
-Fixes: a86d27693066 ("gpiolib: fix the speed of descriptor label setting with SRCU")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20241003131351.472015-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/ZudubuoU_JHjPZ7w@decadent.org.uk
+Fixes: 01474dc706ca ("tools/rtla: Use tools/build makefiles to build rtla")
+Reviewed-by: Tomas Glozar <tglozar@redhat.com>
+Tested-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/tracing/rtla/Makefile.rtla | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 3a9668cc100df..148bcfbf98e02 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -115,12 +115,12 @@ const char *gpiod_get_label(struct gpio_desc *desc)
- 				srcu_read_lock_held(&desc->gdev->desc_srcu));
- 
- 	if (test_bit(FLAG_USED_AS_IRQ, &flags))
--		return label->str ?: "interrupt";
-+		return label ? label->str : "interrupt";
- 
- 	if (!test_bit(FLAG_REQUESTED, &flags))
- 		return NULL;
- 
--	return label->str;
-+	return label ? label->str : NULL;
- }
- 
- static void desc_free_label(struct rcu_head *rh)
+diff --git a/tools/tracing/rtla/Makefile.rtla b/tools/tracing/rtla/Makefile.rtla
+index 3ff0b8970896f..cc1d6b615475f 100644
+--- a/tools/tracing/rtla/Makefile.rtla
++++ b/tools/tracing/rtla/Makefile.rtla
+@@ -38,7 +38,7 @@ BINDIR		:= /usr/bin
+ .PHONY: install
+ install: doc_install
+ 	@$(MKDIR) -p $(DESTDIR)$(BINDIR)
+-	$(call QUIET_INSTALL,rtla)$(INSTALL) rtla -m 755 $(DESTDIR)$(BINDIR)
++	$(call QUIET_INSTALL,rtla)$(INSTALL) $(RTLA) -m 755 $(DESTDIR)$(BINDIR)
+ 	@$(STRIP) $(DESTDIR)$(BINDIR)/rtla
+ 	@test ! -f $(DESTDIR)$(BINDIR)/osnoise || $(RM) $(DESTDIR)$(BINDIR)/osnoise
+ 	@$(LN) rtla $(DESTDIR)$(BINDIR)/osnoise
 -- 
 2.43.0
 
