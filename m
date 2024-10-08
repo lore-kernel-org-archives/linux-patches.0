@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60601DE2AE;
-	Tue,  8 Oct 2024 12:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968291DE2AE;
+	Tue,  8 Oct 2024 12:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390156; cv=none; b=KwGURZ5hRzcUpK7RSQsvTNHxwI0nKxFtNkBN1uWVu5x1Kcq/0exOS5I5IK2Rim9J4X0gMLtccfWMsqgwHMDQP5r3hFg3eUjf7s1mr9kTE5db3bxNl/KwUwFcQ1+iGCTeKxOlTGHlX9bHmCOfYJ+isQxCddh/o+vzzr9rYzr8Kdo=
+	t=1728390160; cv=none; b=brBm5KMb4inxE8OkL+9ac2PfPEWmOEEmtNYQpGnlMCbnKiQRT1trfvn35zvNzEKXTTX9u6iehpdErQeyQXvJsCefJx5VrJuFRDEV80C2hepgqFifjznV8v7NTuTj7Fqh2h1DGuoRbKqS3F3D3pdTYWIOw8InVwICOs6Tk3ScBbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390156; c=relaxed/simple;
-	bh=L7pMFmonRvvVGtr5UjUSabjLrGfpz/xvS27lJf8JqNw=;
+	s=arc-20240116; t=1728390160; c=relaxed/simple;
+	bh=MmJaeCKN3AYDM/J7+BgW4kxAbBHsBQoWhOIaqhpCyEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZCb2bNrgTlvPehqo9QVmp8BnXncoU9foIkCSXANlxMcs4Vp+8qTg5yF4lxT1NsUxgmfayIgtJxPnrVKP6R7cQ6Z37T/TEIpspvwgf71b00RGMzqqN+ni8SAO5mcnW09i7NMJpkEOq5yCLs67S0n7rr9KhtHxq/XsYYs/fNVQII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aI2XxZDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSLoD9kjTjexJ0u9zNrQop7NL4tAOhhDyZfDGcWPuGzctEzuo/FzwSGRgZoiNAFxQsS626es8mjq2TJyN97BWdksqyxAguSLDAzzzgqvEMaygytlIawKbJB1OSLcuFJHua/d9+PmaMtTfm722RTV2Oh1xGXlCc8B52ZSVZhyxdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMSwLYbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aI2XxZDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F527C4CECE;
-	Tue,  8 Oct 2024 12:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMSwLYbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0EFC4CEC7;
+	Tue,  8 Oct 2024 12:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390156;
-	bh=L7pMFmonRvvVGtr5UjUSabjLrGfpz/xvS27lJf8JqNw=;
+	s=korg; t=1728390160;
+	bh=MmJaeCKN3AYDM/J7+BgW4kxAbBHsBQoWhOIaqhpCyEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aI2XxZDA0VazyuprKP7c/J5aXdKg6PMRuKo7KY3jMgyAyJKfxoBCC84IGQRDpPF+I
-	 INUfbNKLte+8vC4PLmlErMXHDEMRJm3ilh2SCvvKmbtUu/H4Y7rGtCxSPl6VVFyxE3
-	 j8Cz0nXbXNNq5wamoGlFSw5NCZ3hmt+tKyV/u3Ho=
+	b=mMSwLYbO+gZHqQu63GGgILAqtBJWH2FTl3Pk3tbpVbsRJ/H+Bu82AQDDPqF5IAeRE
+	 VJjYQJbbGKB7U6qvBBRRod+sfNTlYnzR12Y4EOa2tR5rNFqX2haVXDM/FVrFnfXa45
+	 VPJkDoUu6cmZbqqHL5IvDJQYyQIzTWoqj4Leivag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	aln8 <aln8un@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 190/482] drm/amd/display: Add NULL check for function pointer in dcn20_set_output_transfer_func
-Date: Tue,  8 Oct 2024 14:04:13 +0200
-Message-ID: <20241008115655.781209514@linuxfoundation.org>
+Subject: [PATCH 6.10 208/482] platform/x86/amd: pmf: Add quirk for TUF Gaming A14
+Date: Tue,  8 Oct 2024 14:04:31 +0200
+Message-ID: <20241008115656.496309398@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -58,50 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: aln8 <aln8un@gmail.com>
 
-[ Upstream commit 62ed6f0f198da04e884062264df308277628004f ]
+[ Upstream commit 06369503d644068abd9e90918c6611274d94c126 ]
 
-This commit adds a null check for the set_output_gamma function pointer
-in the dcn20_set_output_transfer_func function. Previously,
-set_output_gamma was being checked for null at line 1030, but then it
-was being dereferenced without any null check at line 1048. This could
-potentially lead to a null pointer dereference error if set_output_gamma
-is null.
+The ASUS TUF Gaming A14 has the same issue as the ROG Zephyrus G14
+where it advertises SPS support but doesn't use it.
 
-To fix this, we now ensure that set_output_gamma is not null before
-dereferencing it. We do this by adding a null check for set_output_gamma
-before the call to set_output_gamma at line 1048.
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: aln8 <aln8un@gmail.com>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20240912073601.65656-1-aln8un@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/pmf-quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index 7d833fa6dd77c..58e8b7482f4f5 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -1040,7 +1040,8 @@ bool dcn20_set_output_transfer_func(struct dc *dc, struct pipe_ctx *pipe_ctx,
- 	/*
- 	 * if above if is not executed then 'params' equal to 0 and set in bypass
- 	 */
--	mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
-+	if (mpc->funcs->set_output_gamma)
-+		mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
+diff --git a/drivers/platform/x86/amd/pmf/pmf-quirks.c b/drivers/platform/x86/amd/pmf/pmf-quirks.c
+index 48870ca52b413..7cde5733b9cac 100644
+--- a/drivers/platform/x86/amd/pmf/pmf-quirks.c
++++ b/drivers/platform/x86/amd/pmf/pmf-quirks.c
+@@ -37,6 +37,14 @@ static const struct dmi_system_id fwbug_list[] = {
+ 		},
+ 		.driver_data = &quirk_no_sps_bug,
+ 	},
++	{
++		.ident = "ASUS TUF Gaming A14",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "FA401W"),
++		},
++		.driver_data = &quirk_no_sps_bug,
++	},
+ 	{}
+ };
  
- 	return true;
- }
 -- 
 2.43.0
 
