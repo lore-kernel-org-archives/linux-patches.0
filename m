@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C841DED48;
-	Tue,  8 Oct 2024 13:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322941DE88B;
+	Tue,  8 Oct 2024 13:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392596; cv=none; b=kY8pBhmVzOytdfS2byHORi/8FWbQE3tvqHrryfi6o+Zrkbke6zvhqtYUhRTfKJX+aMxtrbrYm/JjxU7IlnimG/F2PQENmYY4Nl23S43s0pvifXDvufXndf3wJ5dk9h5L+dq4/pTZWJpyF2tKf6xbNCo36dKnTTv8ZqPDmRkTllc=
+	t=1728392600; cv=none; b=qy6qvTsgPd+MQEiYblA8r1yQ1Q+sC2EYFuzqsdncEr38iGi0xcs5Yn33+hvs4BERp1Qoggnrapgb2FvDzK9yALK1XVBHWRMVK1LL/QvYflEkrFIZZZlEZaqvnkXtWZK6E34WRa6u+g4AlGhOMeSsTP4e+8dGMa4LvORrnyudHHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392596; c=relaxed/simple;
-	bh=0NNK5Vp7FMW6E7f4pIPnOKu+GIHbO5Cyi+ua4m/Oyl8=;
+	s=arc-20240116; t=1728392600; c=relaxed/simple;
+	bh=Rjr4WDiTE063O5CZnYApT4+tyK8VKw39VWjQiOde4Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2T0ljiIRs9gB7uEqLKFKpAzVhvtwMZ9Q5pYPQ5UFU6G3U7P/QSnTQyUtQhUeUC65tTpwly0yWGBjIVlOxGOaFF+s8KcgXFlfT705VtQef/Uq8HKBh6MXIVI7xbPhIcJsQamZC3Te+PnKFZsDXfK3U0QD1dVaUvV10tKCZF0luc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpGI5h0v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVDZASrqiLwjHEhBJqvJOo88hlaN/oWGrcrX4SjDEFziOJlqiGd3nWpyTnXnj+/3ipKZ9YIBXtoYqtUoeGPAmleZV11guNF365pOlzFpyuP5jP1lLX7W9xs8/fle0NAAiK9/AsPEIFuziDxKt26H5jnB7MnpZk8QUEzj2rCTou4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZmEBqbb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpGI5h0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3536DC4CECD;
-	Tue,  8 Oct 2024 13:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZmEBqbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9204FC4CEC7;
+	Tue,  8 Oct 2024 13:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392596;
-	bh=0NNK5Vp7FMW6E7f4pIPnOKu+GIHbO5Cyi+ua4m/Oyl8=;
+	s=korg; t=1728392600;
+	bh=Rjr4WDiTE063O5CZnYApT4+tyK8VKw39VWjQiOde4Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QpGI5h0vq3uCCQhJzcI/3IwzWFN4FK7gFC2p8cMdfXwXNGS9H+glVRZ9Fa4xWlESZ
-	 X5jlnN309UqK6u5LHFA3pxssk7o3BM/0+8N92uVtCSqf7+2fUJ+b6yUZLXKrYXKyXJ
-	 NwptASLPsL1VOHE9k68SZnIMw098m1pQb78AVZW4=
+	b=nZmEBqbbgiVgyNNJotLTzRZr8yLrmFr35ulc3o74rwvpj4t+e4hpGEAEXGEWLfdaD
+	 qi5ptPKiJOJKvZbVTISnDfmCgA+IUsxDmWnE+xCeqRBGhuJdwRhNRFpn+S/B5q8yze
+	 t9+SaqRhogj3nbNko8m8GwKshlmnj3+jL65PRaoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.11 462/558] media: qcom: camss: Remove use_count guard in stop_streaming
-Date: Tue,  8 Oct 2024 14:08:12 +0200
-Message-ID: <20241008115720.434666512@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.11 463/558] clk: qcom: gcc-sc8180x: Add GPLL9 support
+Date: Tue,  8 Oct 2024 14:08:13 +0200
+Message-ID: <20241008115720.472886727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,89 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit 25f18cb1b673220b76a86ebef8e7fb79bd303b27 upstream.
+commit 818a2f8d5e4ad2c1e39a4290158fe8e39a744c70 upstream.
 
-The use_count check was introduced so that multiple concurrent Raw Data
-Interfaces RDIs could be driven by different virtual channels VCs on the
-CSIPHY input driving the video pipeline.
+Add the missing GPLL9 pll and fix the gcc_parents_7 data to use
+the correct pll hw.
 
-This is an invalid use of use_count though as use_count pertains to the
-number of times a video entity has been opened by user-space not the number
-of active streams.
-
-If use_count and stream-on count don't agree then stop_streaming() will
-break as is currently the case and has become apparent when using CAMSS
-with libcamera's released softisp 0.3.
-
-The use of use_count like this is a bit hacky and right now breaks regular
-usage of CAMSS for a single stream case. Stopping qcam results in the splat
-below, and then it cannot be started again and any attempts to do so fails
-with -EBUSY.
-
-[ 1265.509831] WARNING: CPU: 5 PID: 919 at drivers/media/common/videobuf2/videobuf2-core.c:2183 __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
-...
-[ 1265.510630] Call trace:
-[ 1265.510636]  __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
-[ 1265.510648]  vb2_core_streamoff+0x24/0xcc [videobuf2_common]
-[ 1265.510660]  vb2_ioctl_streamoff+0x5c/0xa8 [videobuf2_v4l2]
-[ 1265.510673]  v4l_streamoff+0x24/0x30 [videodev]
-[ 1265.510707]  __video_do_ioctl+0x190/0x3f4 [videodev]
-[ 1265.510732]  video_usercopy+0x304/0x8c4 [videodev]
-[ 1265.510757]  video_ioctl2+0x18/0x34 [videodev]
-[ 1265.510782]  v4l2_ioctl+0x40/0x60 [videodev]
-...
-[ 1265.510944] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 0 in active state
-[ 1265.511175] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 1 in active state
-[ 1265.511398] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 2 in active st
-
-One CAMSS specific way to handle multiple VCs on the same RDI might be:
-
-- Reference count each pipeline enable for CSIPHY, CSID, VFE and RDIx.
-- The video buffers are already associated with msm_vfeN_rdiX so
-  release video buffers when told to do so by stop_streaming.
-- Only release the power-domains for the CSIPHY, CSID and VFE when
-  their internal refcounts drop.
-
-Either way refusing to release video buffers based on use_count is
-erroneous and should be reverted. The silicon enabling code for selecting
-VCs is perfectly fine. Its a "known missing feature" that concurrent VCs
-won't work with CAMSS right now.
-
-Initial testing with this code didn't show an error but, SoftISP and "real"
-usage with Google Hangouts breaks the upstream code pretty quickly, we need
-to do a partial revert and take another pass at VCs.
-
-This commit partially reverts commit 89013969e232 ("media: camss: sm8250:
-Pipeline starting and stopping for multiple virtual channels")
-
-Fixes: 89013969e232 ("media: camss: sm8250: Pipeline starting and stopping for multiple virtual channels")
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Closes: https://lore.kernel.org/lkml/ZoVNHOTI0PKMNt4_@hovoldconsulting.com/
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-3-8b3eaa5fb856@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/clk/qcom/gcc-sc8180x.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -297,12 +297,6 @@ static void video_stop_streaming(struct
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -142,6 +142,23 @@ static struct clk_alpha_pll gpll7 = {
+ 	},
+ };
  
- 		ret = v4l2_subdev_call(subdev, video, s_stream, 0);
++static struct clk_alpha_pll gpll9 = {
++	.offset = 0x1c000,
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
++	.clkr = {
++		.enable_reg = 0x52000,
++		.enable_mask = BIT(9),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "gpll9",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "bi_tcxo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_fixed_trion_ops,
++		},
++	},
++};
++
+ static const struct parent_map gcc_parent_map_0[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -241,7 +258,7 @@ static const struct parent_map gcc_paren
+ static const struct clk_parent_data gcc_parents_7[] = {
+ 	{ .fw_name = "bi_tcxo", },
+ 	{ .hw = &gpll0.clkr.hw },
+-	{ .name = "gppl9" },
++	{ .hw = &gpll9.clkr.hw },
+ 	{ .hw = &gpll4.clkr.hw },
+ 	{ .hw = &gpll0_out_even.clkr.hw },
+ };
+@@ -4489,6 +4506,7 @@ static struct clk_regmap *gcc_sc8180x_cl
+ 	[GPLL1] = &gpll1.clkr,
+ 	[GPLL4] = &gpll4.clkr,
+ 	[GPLL7] = &gpll7.clkr,
++	[GPLL9] = &gpll9.clkr,
+ };
  
--		if (entity->use_count > 1) {
--			/* Don't stop if other instances of the pipeline are still running */
--			dev_dbg(video->camss->dev, "Video pipeline still used, don't stop streaming.\n");
--			return;
--		}
--
- 		if (ret) {
- 			dev_err(video->camss->dev, "Video pipeline stop failed: %d\n", ret);
- 			return;
+ static const struct qcom_reset_map gcc_sc8180x_resets[] = {
 
 
