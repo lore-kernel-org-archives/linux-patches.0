@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB911DED7D;
-	Tue,  8 Oct 2024 13:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF281D3634;
+	Tue,  8 Oct 2024 13:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394179; cv=none; b=gBFdr9syR0qIjvIsq8skTQHJ+cBCmiywE7ohE1bUX6J5n43PN79/iWNReAlhFSQlOHTj//yq79aOlehg3gOPIqgpu8MU3lvBCjuhafVy4a5qz5dZ3YQ9lpz0ZZx/YtWEIVDQTmVdCGAUThiu9Uy8Adi3S802FEJ1FATCCEf85Zw=
+	t=1728394182; cv=none; b=fUvRKGDYaJO2oop6d+C0GQ/ysOuAsux9xUdLeJGHt2eim+xpufco9JTWpYSAjyBaEwN2LKIgssMoI1nGCE1iWzmP2Vd8APEDW2JFf5rZ0i+YQpIXonVzaOebMQfmNUbqfnhpWPtD9BeIPkED1BqGCpJA+/6fVgvw1gv2srsm1DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394179; c=relaxed/simple;
-	bh=6Ys82iFwp4Lil7aUmTNxuMQwKkS29xfK4D4vtvZ8HuE=;
+	s=arc-20240116; t=1728394182; c=relaxed/simple;
+	bh=IIQQEujb4W7lF3JEkwzoxuBIBTX6tlvV97cl29/b8DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W51LJn2WkbGIx3hsvpjcjHXAUW54cpx0PCJQyrLYaYpu8Edg9cw1h/AyCIJEeZaMgioVng3dXCIHXXuYJnFX8eIp6Ts2gZREiLPNP1E0fSSfJgudEHzsi9dAnLRKp7zX9gs/yu2+z9vPpfjmKu723w6QJGeJPZcdZyHScABRXoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNfmWXSz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRBcDHEKwPEY3TNR1V9/dMd5v1cxSDK2yDXjz5Sy64QDHwOas2DDxpWghq2trESZhx/bV0cc4TZhnayOLzSJJhj7va7+xYYXX7WpT7PWfSqd/eHZx/0CJL2aYGLD+2p639zbDKyecHPAkJ8DTLlJ1bcOZN9WztX+sXXgR33A8Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr4ijmt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNfmWXSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989B0C4CEC7;
-	Tue,  8 Oct 2024 13:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr4ijmt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0153FC4CEC7;
+	Tue,  8 Oct 2024 13:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394179;
-	bh=6Ys82iFwp4Lil7aUmTNxuMQwKkS29xfK4D4vtvZ8HuE=;
+	s=korg; t=1728394182;
+	bh=IIQQEujb4W7lF3JEkwzoxuBIBTX6tlvV97cl29/b8DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNfmWXSzjiNRnIYidHUai7Esd6eJ0z5W3TvyY0vLn2zNUn3HM3DBpt24a7SYUHPOb
-	 b8CdVrMNGbd46SQaH30EO1QX7RC8yJfzFwu4NQz273RXCT6DLEV+Xj9c2i9lfOD6Gl
-	 iOEIY6mi6LSs0MMY2BW+fq6W8GPXbBXRM5JCDnRU=
+	b=Yr4ijmt1YUUHbuKMqGf4TSx32OlZk6WXURscgqDWIkfumoFSU9RKGAYWQhwsLAHpj
+	 lIOViu27AGgipWnMSWEHFIkJpMuheUGiDRceZOn+Ban+jkCxK6y5szQ1tRFAMSg5Q2
+	 af1PZtT0pc7xw/gmRb/4saj3XXXT1UtYI1wf8b0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	syzbot+d81bcd883824180500c8@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 371/386] net: dsa: fix netdev_priv() dereference before check on non-DSA netdevice events
-Date: Tue,  8 Oct 2024 14:10:16 +0200
-Message-ID: <20241008115643.985391161@linuxfoundation.org>
+	Vegard Nossum <vegard.nossum@oracle.com>
+Subject: [PATCH 6.6 372/386] iommufd: Fix protection fault in iommufd_test_syz_conv_iova
+Date: Tue,  8 Oct 2024 14:10:17 +0200
+Message-ID: <20241008115644.025083174@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -55,103 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 844f104790bd69c2e4dbb9ee3eba46fde1fcea7b ]
+[ Upstream commit cf7c2789822db8b5efa34f5ebcf1621bc0008d48 ]
 
-After the blamed commit, we started doing this dereference for every
-NETDEV_CHANGEUPPER and NETDEV_PRECHANGEUPPER event in the system.
+Syzkaller reported the following bug:
 
-static inline struct dsa_port *dsa_user_to_port(const struct net_device *dev)
-{
-	struct dsa_user_priv *p = netdev_priv(dev);
+  general protection fault, probably for non-canonical address 0xdffffc0000000038: 0000 [#1] SMP KASAN
+  KASAN: null-ptr-deref in range [0x00000000000001c0-0x00000000000001c7]
+  Call Trace:
+   lock_acquire
+   lock_acquire+0x1ce/0x4f0
+   down_read+0x93/0x4a0
+   iommufd_test_syz_conv_iova+0x56/0x1f0
+   iommufd_test_access_rw.isra.0+0x2ec/0x390
+   iommufd_test+0x1058/0x1e30
+   iommufd_fops_ioctl+0x381/0x510
+   vfs_ioctl
+   __do_sys_ioctl
+   __se_sys_ioctl
+   __x64_sys_ioctl+0x170/0x1e0
+   do_syscall_x64
+   do_syscall_64+0x71/0x140
 
-	return p->dp;
-}
+This is because the new iommufd_access_change_ioas() sets access->ioas to
+NULL during its process, so the lock might be gone in a concurrent racing
+context.
 
-Which is obviously bogus, because not all net_devices have a netdev_priv()
-of type struct dsa_user_priv. But struct dsa_user_priv is fairly small,
-and p->dp means dereferencing 8 bytes starting with offset 16. Most
-drivers allocate that much private memory anyway, making our access not
-fault, and we discard the bogus data quickly afterwards, so this wasn't
-caught.
+Fix this by doing the same access->ioas sanity as iommufd_access_rw() and
+iommufd_access_pin_pages() functions do.
 
-But the dummy interface is somewhat special in that it calls
-alloc_netdev() with a priv size of 0. So every netdev_priv() dereference
-is invalid, and we get this when we emit a NETDEV_PRECHANGEUPPER event
-with a VLAN as its new upper:
-
-$ ip link add dummy1 type dummy
-$ ip link add link dummy1 name dummy1.100 type vlan id 100
-[   43.309174] ==================================================================
-[   43.316456] BUG: KASAN: slab-out-of-bounds in dsa_user_prechangeupper+0x30/0xe8
-[   43.323835] Read of size 8 at addr ffff3f86481d2990 by task ip/374
-[   43.330058]
-[   43.342436] Call trace:
-[   43.366542]  dsa_user_prechangeupper+0x30/0xe8
-[   43.371024]  dsa_user_netdevice_event+0xb38/0xee8
-[   43.375768]  notifier_call_chain+0xa4/0x210
-[   43.379985]  raw_notifier_call_chain+0x24/0x38
-[   43.384464]  __netdev_upper_dev_link+0x3ec/0x5d8
-[   43.389120]  netdev_upper_dev_link+0x70/0xa8
-[   43.393424]  register_vlan_dev+0x1bc/0x310
-[   43.397554]  vlan_newlink+0x210/0x248
-[   43.401247]  rtnl_newlink+0x9fc/0xe30
-[   43.404942]  rtnetlink_rcv_msg+0x378/0x580
-
-Avoid the kernel oops by dereferencing after the type check, as customary.
-
-Fixes: 4c3f80d22b2e ("net: dsa: walk through all changeupper notifier functions")
-Reported-and-tested-by: syzbot+d81bcd883824180500c8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/0000000000001d4255060e87545c@google.com/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240110003354.2796778-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 844f104790bd69c2e4dbb9ee3eba46fde1fcea7b)
-[Harshit: CVE-2024-26596; Resolve conflicts due to missing commit: 6ca80638b90c
- ("net: dsa: Use conduit and user terms") in 6.6.y, used dsa_slave_to_port()
- instead of dsa_user_to_port()]
+Cc: stable@vger.kernel.org
+Fixes: 9227da7816dd ("iommufd: Add iommufd_access_change_ioas(_id) helpers")
+Link: https://lore.kernel.org/r/3f1932acaf1dd494d404c04364d73ce8f57f3e5e.1708636627.git.nicolinc@nvidia.com
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+(cherry picked from commit cf7c2789822db8b5efa34f5ebcf1621bc0008d48)
+[Harshit: CVE-2024-26785; Resolve conflicts due to missing commit:
+ bd7a282650b8 ("iommufd: Add iommufd_ctx to iommufd_put_object()") in
+ 6.6.y]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/slave.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/selftest.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/net/dsa/slave.c
-+++ b/net/dsa/slave.c
-@@ -2822,13 +2822,14 @@ EXPORT_SYMBOL_GPL(dsa_slave_dev_check);
- static int dsa_slave_changeupper(struct net_device *dev,
- 				 struct netdev_notifier_changeupper_info *info)
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -44,8 +44,8 @@ enum {
+  * In syzkaller mode the 64 bit IOVA is converted into an nth area and offset
+  * value. This has a much smaller randomization space and syzkaller can hit it.
+  */
+-static unsigned long iommufd_test_syz_conv_iova(struct io_pagetable *iopt,
+-						u64 *iova)
++static unsigned long __iommufd_test_syz_conv_iova(struct io_pagetable *iopt,
++						  u64 *iova)
  {
--	struct dsa_port *dp = dsa_slave_to_port(dev);
- 	struct netlink_ext_ack *extack;
- 	int err = NOTIFY_DONE;
-+	struct dsa_port *dp;
+ 	struct syz_layout {
+ 		__u32 nth_area;
+@@ -69,6 +69,21 @@ static unsigned long iommufd_test_syz_co
+ 	return 0;
+ }
  
- 	if (!dsa_slave_dev_check(dev))
- 		return err;
- 
-+	dp = dsa_slave_to_port(dev);
- 	extack = netdev_notifier_info_to_extack(&info->info);
- 
- 	if (netif_is_bridge_master(info->upper_dev)) {
-@@ -2881,11 +2882,13 @@ static int dsa_slave_changeupper(struct
- static int dsa_slave_prechangeupper(struct net_device *dev,
- 				    struct netdev_notifier_changeupper_info *info)
- {
--	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_port *dp;
- 
- 	if (!dsa_slave_dev_check(dev))
- 		return NOTIFY_DONE;
- 
-+	dp = dsa_slave_to_port(dev);
++static unsigned long iommufd_test_syz_conv_iova(struct iommufd_access *access,
++						u64 *iova)
++{
++	unsigned long ret;
 +
- 	if (netif_is_bridge_master(info->upper_dev) && !info->linking)
- 		dsa_port_pre_bridge_leave(dp, info->upper_dev);
- 	else if (netif_is_lag_master(info->upper_dev) && !info->linking)
++	mutex_lock(&access->ioas_lock);
++	if (!access->ioas) {
++		mutex_unlock(&access->ioas_lock);
++		return 0;
++	}
++	ret = __iommufd_test_syz_conv_iova(&access->ioas->iopt, iova);
++	mutex_unlock(&access->ioas_lock);
++	return ret;
++}
++
+ void iommufd_test_syz_conv_iova_id(struct iommufd_ucmd *ucmd,
+ 				   unsigned int ioas_id, u64 *iova, u32 *flags)
+ {
+@@ -81,7 +96,7 @@ void iommufd_test_syz_conv_iova_id(struc
+ 	ioas = iommufd_get_ioas(ucmd->ictx, ioas_id);
+ 	if (IS_ERR(ioas))
+ 		return;
+-	*iova = iommufd_test_syz_conv_iova(&ioas->iopt, iova);
++	*iova = __iommufd_test_syz_conv_iova(&ioas->iopt, iova);
+ 	iommufd_put_object(&ioas->obj);
+ }
+ 
+@@ -852,7 +867,7 @@ static int iommufd_test_access_pages(str
+ 	}
+ 
+ 	if (flags & MOCK_FLAGS_ACCESS_SYZ)
+-		iova = iommufd_test_syz_conv_iova(&staccess->access->ioas->iopt,
++		iova = iommufd_test_syz_conv_iova(staccess->access,
+ 					&cmd->access_pages.iova);
+ 
+ 	npages = (ALIGN(iova + length, PAGE_SIZE) -
+@@ -954,8 +969,8 @@ static int iommufd_test_access_rw(struct
+ 	}
+ 
+ 	if (flags & MOCK_FLAGS_ACCESS_SYZ)
+-		iova = iommufd_test_syz_conv_iova(&staccess->access->ioas->iopt,
+-					&cmd->access_rw.iova);
++		iova = iommufd_test_syz_conv_iova(staccess->access,
++				&cmd->access_rw.iova);
+ 
+ 	rc = iommufd_access_rw(staccess->access, iova, tmp, length, flags);
+ 	if (rc)
 
 
