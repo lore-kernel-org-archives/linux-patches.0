@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0E81DEFE3;
-	Tue,  8 Oct 2024 13:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396361DE8BE;
+	Tue,  8 Oct 2024 13:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393238; cv=none; b=rSP8nsXcYS07NZvfnVNYKiF4pX1fn2w04MwuosRnbn5cjeqVgATrDWb4FnfS+tITjOl339XSjz370v65stNXS3s0+ut88mWFwLayqTiwufN9lLzY1izw1E9MsHKvkZez5SgvN6HDMwpEcT7B6ZewxqIBS2O/SJ7Vq/9mxVsOElk=
+	t=1728393242; cv=none; b=jEz72FvBIpq8LUErdFgaYFsa8hDRnz6I20Tub0Ybwguo8Y99PuSha3dzizVkFywtmyM6iQKjNzK0Jo8nzhVNsLZnhnQRyh39X54iMB6eHUKIkjgM4lEMXLtlgATmoxtSPgedC3dNBzbYCA1OxFl8cyqZ2kcEeuLnknSnDUT81pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393238; c=relaxed/simple;
-	bh=8GlkaPJe9jAJZrvBfCIcsDd14CG0w1KUsQbPP1bmeEs=;
+	s=arc-20240116; t=1728393242; c=relaxed/simple;
+	bh=Pd9D6yZz41ULcAujBI3PeLcpFjFGXDQwqgORpX5zzak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A65IHgbWNga5G0RTu6g5njmR8yaX++mkQ7Li6qBdUXZG+me9RHVM+polajUg3oEhgBtZBGxnoohnUhA5/aItHG8h+CHJSu2FD84DRWosHWSp2GE5py1lwQyi8LMEb65+TKuSHX5VkcVC7SsZZyECM5/CD7Y3GNqC4M00xQdtZ3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff7vUF0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rHXEvpNXB/X2Em8NLC75FbfuQ+vgGBh5jHduwcA92OQ4eHsNEnsXlNNRB510xh5IvsCiA70FrXmBi57aew8B6dvUYzndgaJ4Z8jKbW1mpqLeELbtWHe6h9NCyreuEf4iz9H3xxfjo7WSR5jdSjAsNDBa1s3DqqVRNfaDVDQocW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBrPpi2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff7vUF0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D5AC4CECD;
-	Tue,  8 Oct 2024 13:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBrPpi2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A022BC4CEC7;
+	Tue,  8 Oct 2024 13:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393238;
-	bh=8GlkaPJe9jAJZrvBfCIcsDd14CG0w1KUsQbPP1bmeEs=;
+	s=korg; t=1728393242;
+	bh=Pd9D6yZz41ULcAujBI3PeLcpFjFGXDQwqgORpX5zzak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ff7vUF0HBS/bu2UFSabOiL/C+mSnebWUL3fWtFly2+knsyO9bGq9koaaGR3BW6POc
-	 S2pzOOZPU9pvVAcLkXlvEOfooZTrzlZ9EfU46vn0xylnbdwAHkcZWZHT/Q4thNBzqB
-	 kAD9vWtqUGqSMPe0X0bpoTCPhKrYuASMky7oE9JU=
+	b=sBrPpi2DliPxOH3MkiRMouMUQCLadFCO2nYkyQCf5EtvZ7OWopEjzBZOQ531w6PRh
+	 agpLL0tn92UazhoLfx89ydcymu1HRHBk9uhLWIg1UOIGoU6Ip72WZRVI2EtfLIcwRj
+	 6NOgc3P8tFiel90a+wcIsRXsK1oeRO1DJnANV9n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 062/386] ice: Adjust over allocation of memory in ice_sched_add_root_node() and ice_sched_add_node()
-Date: Tue,  8 Oct 2024 14:05:07 +0200
-Message-ID: <20241008115631.908263839@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 053/386] cifs: Do not convert delimiter when parsing NFS-style symlinks
+Date: Tue,  8 Oct 2024 14:04:58 +0200
+Message-ID: <20241008115631.557162317@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -48,64 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 62fdaf9e8056e9a9e6fe63aa9c816ec2122d60c6 ]
+[ Upstream commit d3a49f60917323228f8fdeee313260ef14f94df7 ]
 
-In ice_sched_add_root_node() and ice_sched_add_node() there are calls to
-devm_kcalloc() in order to allocate memory for array of pointers to
-'ice_sched_node' structure. But incorrect types are used as sizeof()
-arguments in these calls (structures instead of pointers) which leads to
-over allocation of memory.
+NFS-style symlinks have target location always stored in NFS/UNIX form
+where backslash means the real UNIX backslash and not the SMB path
+separator.
 
-Adjust over allocation of memory by correcting types in devm_kcalloc()
-sizeof() arguments.
+So do not mangle slash and backslash content of NFS-style symlink during
+readlink() syscall as it is already in the correct Linux form.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This fixes interoperability of NFS-style symlinks with backslashes created
+by Linux NFS3 client throw Windows NFS server and retrieved by Linux SMB
+client throw Windows SMB server, where both Windows servers exports the
+same directory.
 
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d5ecebc4900d ("smb3: Allow query of symlinks stored as reparse points")
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sched.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/smb/client/reparse.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
-index c0533d7b66b99..908bcd0738033 100644
---- a/drivers/net/ethernet/intel/ice/ice_sched.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sched.c
-@@ -28,9 +28,8 @@ ice_sched_add_root_node(struct ice_port_info *pi,
- 	if (!root)
- 		return -ENOMEM;
- 
--	/* coverity[suspicious_sizeof] */
- 	root->children = devm_kcalloc(ice_hw_to_dev(hw), hw->max_children[0],
--				      sizeof(*root), GFP_KERNEL);
-+				      sizeof(*root->children), GFP_KERNEL);
- 	if (!root->children) {
- 		devm_kfree(ice_hw_to_dev(hw), root);
- 		return -ENOMEM;
-@@ -186,10 +185,9 @@ ice_sched_add_node(struct ice_port_info *pi, u8 layer,
- 	if (!node)
- 		return -ENOMEM;
- 	if (hw->max_children[layer]) {
--		/* coverity[suspicious_sizeof] */
- 		node->children = devm_kcalloc(ice_hw_to_dev(hw),
- 					      hw->max_children[layer],
--					      sizeof(*node), GFP_KERNEL);
-+					      sizeof(*node->children), GFP_KERNEL);
- 		if (!node->children) {
- 			devm_kfree(ice_hw_to_dev(hw), node);
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index cfa03c166de8c..ad0e0de9a165d 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -335,7 +335,6 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
+ 							       cifs_sb->local_nls);
+ 		if (!data->symlink_target)
  			return -ENOMEM;
+-		convert_delimiter(data->symlink_target, '/');
+ 		cifs_dbg(FYI, "%s: target path: %s\n",
+ 			 __func__, data->symlink_target);
+ 		break;
 -- 
 2.43.0
 
