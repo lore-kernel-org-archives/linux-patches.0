@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7611DE3C1;
-	Tue,  8 Oct 2024 12:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14221D618C;
+	Tue,  8 Oct 2024 12:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389636; cv=none; b=g91GsVxndNIxWi1ofdoMjcXmyELXS/FyA8qCCI4ABnnKejA8yiDXaJCOkAwLTL/RuNG5X6Nuhqinbdl6BvmMaZ6920ADySQ2Pf5p//OauHrcthZVKpxk5bzehaAv/+2y6GwHcZ+08+jWOsy0pf17479xt20n9t6bMiCk64TFDyg=
+	t=1728389639; cv=none; b=ckjFQcFUCj6Bq0ykfWpPf8cqYw8/UMU2wgFzsmO0upH7YqeQbb5Q+2PTGkNH14ti/yvEjYCohPz64gF+XbpFuwLxekpe3KfiZv+o6PEPbIRpMiWlRvTKNuDa54+GGj/0k0GgKLq7OrQZ+TBKM42Mh+iy39Qfv6OjZSJCdg4m9IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389636; c=relaxed/simple;
-	bh=9FJcBzhpwps6JLy1gSV0qgFSnbc6miQNSOsyb8V4oCE=;
+	s=arc-20240116; t=1728389639; c=relaxed/simple;
+	bh=+VUz9UVD//cVy3FcLadYZzaXWZEYl40G2VToRJskXe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKRYdt8veMNsnict6gqIws3B3bh56vjhfejZqnZTxBkrNDrXoiSUG29Ppuu2ccvEgojgwzZi3X9hiI/awDKAX4m++LX6chO5RaznS9Ffiv8cl8+lV1+ewaTFp9XfXCKHBMYjvqmYORXU+CJ8CY5SYjuKD1IS4gkXpc1ZCdee9U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiXP2ApJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMTzI4d2xYDlDatad/r8pASfWb35uIsagArJTkK/wXqmYk6vqk06msP639KBMwEaWRZ7JROOI44mlrwgvdrHxY9pij+i9H7y1CMUH7yCNYoSKChH9E85JXNzkHuaakVpj84ExtDXUsgFoejoTm/SNyByruZL+VI+PH2IYIWUhIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcI3OSiw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiXP2ApJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630C0C4CEC7;
-	Tue,  8 Oct 2024 12:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcI3OSiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB28AC4CEC7;
+	Tue,  8 Oct 2024 12:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389636;
-	bh=9FJcBzhpwps6JLy1gSV0qgFSnbc6miQNSOsyb8V4oCE=;
+	s=korg; t=1728389639;
+	bh=+VUz9UVD//cVy3FcLadYZzaXWZEYl40G2VToRJskXe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiXP2ApJ5OW93ygrZkmzaYqO/ISGVYpLWbUASj40PGZlyZBvhpLGCwqopGqC7jG5x
-	 uMg1MRGOdfySp7UHBBuF0nDQONyBq3c96PC11EhFwHQhfUp1KtX0SeVL9a4HHwRfHy
-	 axoLiydjqysIqyzx1Y35wDYBuRg8o/iHXnXjet3Y=
+	b=zcI3OSiwShhaQJjZ14XeCvBu+iYx15EquhFSCI/WLjGOl3KxAa1ptiaOHGy2QBAxx
+	 6IePaa28OZZXwRhmbN61HQXK939sIky/tpS2YssT6F/uWShWd3x4GbE08ZdgT26ktg
+	 90m3EDc2plNuoHQlWzLSVou0lQsRtSlZiXKPQ3Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Xu <jeffxu@chromium.org>,
-	Pedro Falcato <pedro.falcato@gmail.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Marc Ferland <marc.ferland@sonatest.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 050/482] selftest mm/mseal: fix test_seal_mremap_move_dontunmap_anyaddr
-Date: Tue,  8 Oct 2024 14:01:53 +0200
-Message-ID: <20241008115650.274712296@linuxfoundation.org>
+Subject: [PATCH 6.10 051/482] i2c: xiic: improve error message when transfer fails to start
+Date: Tue,  8 Oct 2024 14:01:54 +0200
+Message-ID: <20241008115650.314172470@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -58,202 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Xu <jeffxu@chromium.org>
+From: Marc Ferland <marc.ferland@sonatest.com>
 
-[ Upstream commit 072cd213b75eb01fcf40eff898f8d5c008ce1457 ]
+[ Upstream commit ee1691d0ae103ba7fd9439800ef454674fadad27 ]
 
-the syscall remap accepts following:
+xiic_start_xfer can fail for different reasons:
 
-mremap(src, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, dst)
+- EBUSY: bus is busy or i2c messages still in tx_msg or rx_msg
+- ETIMEDOUT: timed-out trying to clear the RX fifo
+- EINVAL: wrong clock settings
 
-when the src is sealed, the call will fail with error code:
-EPERM
+Both EINVAL and ETIMEDOUT will currently print a specific error
+message followed by a generic one, for example:
 
-Previously, the test uses hard-coded 0xdeaddead as dst, and it
-will fail on the system with newer glibc installed.
+    Failed to clear rx fifo
+    Error xiic_start_xfer
 
-This patch removes test's dependency on glibc for mremap(), also
-fix the test and remove the hardcoded address.
+however EBUSY will simply output the generic message:
 
-Link: https://lkml.kernel.org/r/20240807212320.2831848-1-jeffxu@chromium.org
-Fixes: 4926c7a52de7 ("selftest mm/mseal memory sealing")
-Signed-off-by: Jeff Xu <jeffxu@chromium.org>
-Reported-by: Pedro Falcato <pedro.falcato@gmail.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+    Error xiic_start_xfer
+
+which is not really helpful.
+
+This commit adds a new error message when a busy condition is detected
+and also removes the generic message since it does not provide any
+relevant information to the user.
+
+Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: 1d4a1adbed25 ("i2c: xiic: Try re-initialization on bus busy timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/mseal_test.c | 57 ++++++++++++++++---------
- 1 file changed, 36 insertions(+), 21 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/mseal_test.c b/tools/testing/selftests/mm/mseal_test.c
-index 09faffbc3d87c..43e6d0c53fe4c 100644
---- a/tools/testing/selftests/mm/mseal_test.c
-+++ b/tools/testing/selftests/mm/mseal_test.c
-@@ -146,6 +146,16 @@ static int sys_madvise(void *start, size_t len, int types)
- 	return sret;
- }
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index 71391b590adae..19468565120e1 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -1105,8 +1105,11 @@ static int xiic_start_xfer(struct xiic_i2c *i2c, struct i2c_msg *msgs, int num)
+ 	mutex_lock(&i2c->lock);
  
-+static void *sys_mremap(void *addr, size_t old_len, size_t new_len,
-+	unsigned long flags, void *new_addr)
-+{
-+	void *sret;
-+
-+	errno = 0;
-+	sret = (void *) syscall(__NR_mremap, addr, old_len, new_len, flags, new_addr);
-+	return sret;
-+}
-+
- static int sys_pkey_alloc(unsigned long flags, unsigned long init_val)
- {
- 	int ret = syscall(__NR_pkey_alloc, flags, init_val);
-@@ -1151,12 +1161,12 @@ static void test_seal_mremap_shrink(bool seal)
- 	}
+ 	ret = xiic_busy(i2c);
+-	if (ret)
++	if (ret) {
++		dev_err(i2c->adap.dev.parent,
++			"cannot start a transfer while busy\n");
+ 		goto out;
++	}
  
- 	/* shrink from 4 pages to 2 pages. */
--	ret2 = mremap(ptr, size, 2 * page_size, 0, 0);
-+	ret2 = sys_mremap(ptr, size, 2 * page_size, 0, 0);
- 	if (seal) {
--		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
-+		FAIL_TEST_IF_FALSE(ret2 == (void *) MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
- 	} else {
--		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
-+		FAIL_TEST_IF_FALSE(ret2 != (void *) MAP_FAILED);
+ 	i2c->tx_msg = msgs;
+ 	i2c->rx_msg = NULL;
+@@ -1164,10 +1167,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		return err;
  
- 	}
+ 	err = xiic_start_xfer(i2c, msgs, num);
+-	if (err < 0) {
+-		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
++	if (err < 0)
+ 		goto out;
+-	}
  
-@@ -1183,7 +1193,7 @@ static void test_seal_mremap_expand(bool seal)
- 	}
- 
- 	/* expand from 2 page to 4 pages. */
--	ret2 = mremap(ptr, 2 * page_size, 4 * page_size, 0, 0);
-+	ret2 = sys_mremap(ptr, 2 * page_size, 4 * page_size, 0, 0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1216,7 +1226,7 @@ static void test_seal_mremap_move(bool seal)
- 	}
- 
- 	/* move from ptr to fixed address. */
--	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newPtr);
-+	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newPtr);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1335,7 +1345,7 @@ static void test_seal_mremap_shrink_fixed(bool seal)
- 	}
- 
- 	/* mremap to move and shrink to fixed address */
--	ret2 = mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
-+	ret2 = sys_mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
- 			newAddr);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
-@@ -1366,7 +1376,7 @@ static void test_seal_mremap_expand_fixed(bool seal)
- 	}
- 
- 	/* mremap to move and expand to fixed address */
--	ret2 = mremap(ptr, page_size, size, MREMAP_MAYMOVE | MREMAP_FIXED,
-+	ret2 = sys_mremap(ptr, page_size, size, MREMAP_MAYMOVE | MREMAP_FIXED,
- 			newAddr);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
-@@ -1397,7 +1407,7 @@ static void test_seal_mremap_move_fixed(bool seal)
- 	}
- 
- 	/* mremap to move to fixed address */
--	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newAddr);
-+	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_FIXED, newAddr);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1426,14 +1436,13 @@ static void test_seal_mremap_move_fixed_zero(bool seal)
- 	/*
- 	 * MREMAP_FIXED can move the mapping to zero address
- 	 */
--	ret2 = mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
-+	ret2 = sys_mremap(ptr, size, 2 * page_size, MREMAP_MAYMOVE | MREMAP_FIXED,
- 			0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
- 	} else {
- 		FAIL_TEST_IF_FALSE(ret2 == 0);
--
- 	}
- 
- 	TEST_END_CHECK();
-@@ -1456,13 +1465,13 @@ static void test_seal_mremap_move_dontunmap(bool seal)
- 	}
- 
- 	/* mremap to move, and don't unmap src addr. */
--	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, 0);
-+	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP, 0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
- 	} else {
-+		/* kernel will allocate a new address */
- 		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
--
- 	}
- 
- 	TEST_END_CHECK();
-@@ -1470,7 +1479,7 @@ static void test_seal_mremap_move_dontunmap(bool seal)
- 
- static void test_seal_mremap_move_dontunmap_anyaddr(bool seal)
- {
--	void *ptr;
-+	void *ptr, *ptr2;
- 	unsigned long page_size = getpagesize();
- 	unsigned long size = 4 * page_size;
- 	int ret;
-@@ -1485,24 +1494,30 @@ static void test_seal_mremap_move_dontunmap_anyaddr(bool seal)
- 	}
- 
- 	/*
--	 * The 0xdeaddead should not have effect on dest addr
--	 * when MREMAP_DONTUNMAP is set.
-+	 * The new address is any address that not allocated.
-+	 * use allocate/free to similate that.
- 	 */
--	ret2 = mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP,
--			0xdeaddead);
-+	setup_single_address(size, &ptr2);
-+	FAIL_TEST_IF_FALSE(ptr2 != (void *)-1);
-+	ret = sys_munmap(ptr2, size);
-+	FAIL_TEST_IF_FALSE(!ret);
-+
-+	/*
-+	 * remap to any address.
-+	 */
-+	ret2 = sys_mremap(ptr, size, size, MREMAP_MAYMOVE | MREMAP_DONTUNMAP,
-+			(void *) ptr2);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
- 	} else {
--		FAIL_TEST_IF_FALSE(ret2 != MAP_FAILED);
--		FAIL_TEST_IF_FALSE((long)ret2 != 0xdeaddead);
--
-+		/* remap success and return ptr2 */
-+		FAIL_TEST_IF_FALSE(ret2 ==  ptr2);
- 	}
- 
- 	TEST_END_CHECK();
- }
- 
--
- static void test_seal_merge_and_split(void)
- {
- 	void *ptr;
+ 	err = wait_for_completion_timeout(&i2c->completion, XIIC_XFER_TIMEOUT);
+ 	mutex_lock(&i2c->lock);
 -- 
 2.43.0
 
