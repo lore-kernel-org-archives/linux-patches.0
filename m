@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90831C4613;
-	Tue,  8 Oct 2024 12:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06B71C4613;
+	Tue,  8 Oct 2024 12:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391690; cv=none; b=t3rN5n02hiVBY8yXukpXmaeyYsW9RQ1SBtgRoR+o58DCPxaV0bzL6PoFB65k5nfafk/aJCDko0lxAVxk/DjsMQhOGw4GEAmHCUDlVX+x9qB6wukSalxie9sEaplOzdYrWtIX3P2vVtkHh5ECV1T+O5fq0y29pj2/Ha/JPOjrbhI=
+	t=1728391693; cv=none; b=ry+vx+6Fcj4JZSc5zZ05R2kFLc/7AhWso0Sght3As+E4McisQaE4ibuLbBYGlBjwimXVExILL3prQG1fivAyFZrHLQv0XV5Ux+d+Tnm7vKc13fPaAzRoagFavPuqmfv1kL5AVx5jUTRIX/Gfl0O/+gW1HDzzaSds8Yim3Xlbr98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391690; c=relaxed/simple;
-	bh=naqgGlKr1lFQBIan/75/kfYIR2JWPBk4PY9fR0BeL0E=;
+	s=arc-20240116; t=1728391693; c=relaxed/simple;
+	bh=YwNb4eHhO/Z3v+kTOs8HM304MxYsmPCirlnja5iRukI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8bCz/gFth9Hj/8md7r0VwEid/5VbY2oyJjCkFAKlqVJKT+SNaZP8+Q/eikamO0Fh6f0fJ/Xdy98BRAT16TKfrRNmXUbciHOY7Y6wQFsHhLkeD05WpahAzF8+gQWKxkSnqg3+rYz0Mn59CQd1NN72XEnufjv1jI+ZLbNpVaJqzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqM9f6uN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmjVnD9EchwWVyAVhVJOqPhHoGn0iLN5O7T+4ihuwus9qv6Q2F3Mivh7yqCYMiTkU/R+h+DR8X+XTJBuE1/ec0eXBCgTlTvyxyKw6LsbinzXfwJpDkH18qzOIssB8RgQvhgLBvm7432xyqIbiF1Of+6uq2idIWmF0Tc9i6IBZ20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ2TT5Wk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqM9f6uN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FCCC4CEC7;
-	Tue,  8 Oct 2024 12:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ2TT5Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3B1C4CEC7;
+	Tue,  8 Oct 2024 12:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391689;
-	bh=naqgGlKr1lFQBIan/75/kfYIR2JWPBk4PY9fR0BeL0E=;
+	s=korg; t=1728391693;
+	bh=YwNb4eHhO/Z3v+kTOs8HM304MxYsmPCirlnja5iRukI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqM9f6uNdIismT08h2aExyVY10/WLTYKxKKSC9HC0bHQvaVTu/JTBI3saIuclDr6d
-	 gJ19J6qfTr5Fx+PVstZtJpugJB5+hVSsv0Q45Thvycog7t8A2AKt4zpMD81Z/Jqax+
-	 SxipibdvqXimbc77x73sO6H4Ah5Q8Ild7hjDlZN0=
+	b=AJ2TT5WkSwGywEbyVtSEU2WW+FPQayfgACj7pUNJ+vBEGge5vPThBIZCoK0sbyBLu
+	 sM3UcFF/iwFfIKJaGF1sDpsqgHAOXFLFfK3x7asiD+VCi+pjNWreXZ2m3d8I2crPqA
+	 ix/MuNwK52/A9NwEL/oG2GJo7X0PUZF58rpi/rk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-Subject: [PATCH 6.11 193/558] pmdomain: core: Use dev_name() instead of kobject_get_path() in debugfs
-Date: Tue,  8 Oct 2024 14:03:43 +0200
-Message-ID: <20241008115709.945285674@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 194/558] rcuscale: Provide clear error when async specified without primitives
+Date: Tue,  8 Oct 2024 14:03:44 +0200
+Message-ID: <20241008115709.985638302@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,84 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 9094e53ff5c86ebe372ad3960c3216c9817a1a04 ]
+[ Upstream commit 11377947b5861fa59bf77c827e1dd7c081842cc9 ]
 
-Using kobject_get_path() means a dynamic memory allocation gets done, which
-doesn't work on a PREEMPT_RT based configuration while holding genpd's raw
-spinlock.
+Currently, if the rcuscale module's async module parameter is specified
+for RCU implementations that do not have async primitives such as RCU
+Tasks Rude (which now lacks a call_rcu_tasks_rude() function), there
+will be a series of splats due to calls to a NULL pointer.  This commit
+therefore warns of this situation, but switches to non-async testing.
 
-To fix the problem, let's convert into using the simpler dev_name(). This
-means the information about the path doesn't get presented in debugfs, but
-hopefully this shouldn't be an issue.
-
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Tested-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>  # qcm6490 with PREEMPT_RT set
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20240527142557.321610-4-ulf.hansson@linaro.org
+Signed-off-by: "Paul E. McKenney" <paulmck@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/core.c | 23 +++--------------------
- 1 file changed, 3 insertions(+), 20 deletions(-)
+ kernel/rcu/rcuscale.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-index ca7f780582cf4..95b30d35e0b42 100644
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -3210,7 +3210,6 @@ static int genpd_summary_one(struct seq_file *s,
- 		[GENPD_STATE_OFF] = "off"
- 	};
- 	struct pm_domain_data *pm_data;
--	const char *kobj_path;
- 	struct gpd_link *link;
- 	char state[16];
- 	int ret;
-@@ -3243,17 +3242,10 @@ static int genpd_summary_one(struct seq_file *s,
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index b53a9e8f5904f..f88c75b3cea3b 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -499,7 +499,7 @@ rcu_scale_writer(void *arg)
+ 			schedule_timeout_idle(torture_random(&tr) % writer_holdoff_jiffies + 1);
+ 		wdp = &wdpp[i];
+ 		*wdp = ktime_get_mono_fast_ns();
+-		if (gp_async) {
++		if (gp_async && !WARN_ON_ONCE(!cur_ops->async)) {
+ retry:
+ 			if (!rhp)
+ 				rhp = kmalloc(sizeof(*rhp), GFP_KERNEL);
+@@ -555,7 +555,7 @@ rcu_scale_writer(void *arg)
+ 			i++;
+ 		rcu_scale_wait_shutdown();
+ 	} while (!torture_must_stop());
+-	if (gp_async) {
++	if (gp_async && cur_ops->async) {
+ 		cur_ops->gp_barrier();
  	}
- 
- 	list_for_each_entry(pm_data, &genpd->dev_list, list_node) {
--		kobj_path = kobject_get_path(&pm_data->dev->kobj,
--				genpd_is_irq_safe(genpd) ?
--				GFP_ATOMIC : GFP_KERNEL);
--		if (kobj_path == NULL)
--			continue;
--
--		seq_printf(s, "\n    %-50s  ", kobj_path);
-+		seq_printf(s, "\n    %-50s  ", dev_name(pm_data->dev));
- 		rtpm_status_str(s, pm_data->dev);
- 		perf_status_str(s, pm_data->dev);
- 		mode_status_str(s, pm_data->dev);
--		kfree(kobj_path);
- 	}
- 
- 	seq_puts(s, "\n");
-@@ -3422,23 +3414,14 @@ static int devices_show(struct seq_file *s, void *data)
- {
- 	struct generic_pm_domain *genpd = s->private;
- 	struct pm_domain_data *pm_data;
--	const char *kobj_path;
- 	int ret = 0;
- 
- 	ret = genpd_lock_interruptible(genpd);
- 	if (ret)
- 		return -ERESTARTSYS;
- 
--	list_for_each_entry(pm_data, &genpd->dev_list, list_node) {
--		kobj_path = kobject_get_path(&pm_data->dev->kobj,
--				genpd_is_irq_safe(genpd) ?
--				GFP_ATOMIC : GFP_KERNEL);
--		if (kobj_path == NULL)
--			continue;
--
--		seq_printf(s, "%s\n", kobj_path);
--		kfree(kobj_path);
--	}
-+	list_for_each_entry(pm_data, &genpd->dev_list, list_node)
-+		seq_printf(s, "%s\n", dev_name(pm_data->dev));
- 
- 	genpd_unlock(genpd);
- 	return ret;
+ 	writer_n_durations[me] = i_max + 1;
 -- 
 2.43.0
 
