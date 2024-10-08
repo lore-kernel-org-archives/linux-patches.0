@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB581DFD1;
-	Tue,  8 Oct 2024 13:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47B81DE4CD;
+	Tue,  8 Oct 2024 13:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392732; cv=none; b=DSwcigP3lrMVczd5XHDh97llOkbTmQe2EJUB0PdQnrPYhWxS9EhPl3MTaw65hUcLxY8SowRejMv2LZlqWr9IJ+y/bvmEVs7o+imDZvP4/4e44BsIo5r+Dpt4EDdNd+r9+wAZuUSEDWTGu39jl/CYrgyUJkbpK/aznOXOFu1Cu3w=
+	t=1728392735; cv=none; b=ArdGJ2j/6NkFbd+yV4qkAd/5gRm3F8pNWRkETkNwJqp4GuMpztB9s52s4OLSBZSQC6tL9DedPkZ7h4BJuo+sa2kfjQLx0xNK0g7XIz40aB4TEghxt+2sdH77uEJwaZ2ET7FC+1hX2tsoybzc03LlW0/B4iUUJvFh3LIsmA/0pjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392732; c=relaxed/simple;
-	bh=RkVKPy7bFq31O6cjfaA9UEBuMw2ASko3f6P3MYYL6nI=;
+	s=arc-20240116; t=1728392735; c=relaxed/simple;
+	bh=hp1VfcAkFHtnpgBbsopyMJ2f1zrwropBUS9WIlYs4CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hK//3+cnDAkNghBV46kGNI5Cgi69Pfmurce+6/rbd+Y8iRLdb0BisqNCyVnRHPgYe3/jqm0p4HTeBb/jnQX6JGaxYfQOqvvh5XTK/6hy4UfKBopTF2s5C7k+UzY2H5PwOTUNXlYf66qD4r3KbeMteUEDjNN0acjU4YdZ+VvwCKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqAqWzn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkRDt0gvjEuldOJv1/VsPBLhBp661VeR3ABguOqkd88owxUD99omx5h/1Yn1nX6As+Kcnw7vNDqy+aP61MdO45Nl4u23PpDPNVHaDeHMa+j6lut6Lg1kJnvSsf63AR06lUwUuX+TpBKsMfnAZ4mnF0vJMsFyjkbwab3R8qKpKgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4NHuFrn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqAqWzn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28ADC4CECC;
-	Tue,  8 Oct 2024 13:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4NHuFrn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3F7C4CEC7;
+	Tue,  8 Oct 2024 13:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392732;
-	bh=RkVKPy7bFq31O6cjfaA9UEBuMw2ASko3f6P3MYYL6nI=;
+	s=korg; t=1728392735;
+	bh=hp1VfcAkFHtnpgBbsopyMJ2f1zrwropBUS9WIlYs4CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqAqWzn2WxkY6Kz8W+cd+iVHfgqPFWoaoW15Eb+Sm95JLE/px2lCwXDpYSrKvKNat
-	 k5xxj5aqbeAaMXHX9I7gKLRdBiwWTo7ilZpuiuIfqYHpMuyhbQQZgSqJjHmnJeqJQv
-	 q5JUfjpRf6448z6bLBU20atCNRc/VH0LQC4qrsNc=
+	b=R4NHuFrneGNPVJAE8RAGZjlThUsmt2vRn5Q8f/2Z8PAGmm7jv/rBzysDla4LBrnpO
+	 R6uCPU+Q4mWZrCYtovsIn1EnguFovMAfcucE8wUjpfX5rb7hl3bsLEaWf9Xe9Fpf8M
+	 0ebemtTZoxZeOWD/47zok9POPi3jpv86zOYRSYMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiao sheng wen <atzlinux@sina.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.11 502/558] cpufreq: intel_pstate: Make hwp_notify_lock a raw spinlock
-Date: Tue,  8 Oct 2024 14:08:52 +0200
-Message-ID: <20241008115721.985655690@linuxfoundation.org>
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Parth Pancholi <parth.pancholi@toradex.com>,
+	Keerthy <j-keerthy@ti.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.11 503/558] gpio: davinci: fix lazy disable
+Date: Tue,  8 Oct 2024 14:08:53 +0200
+Message-ID: <20241008115722.026749883@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -47,96 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <ukleinek@debian.org>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-commit 8b4865cd904650cbed7f2407e653934c621b8127 upstream.
+commit 3360d41f4ac490282fddc3ccc0b58679aa5c065d upstream.
 
-notify_hwp_interrupt() is called via sysvec_thermal() ->
-smp_thermal_vector() -> intel_thermal_interrupt() in hard irq context.
-For this reason it must not use a simple spin_lock that sleeps with
-PREEMPT_RT enabled. So convert it to a raw spinlock.
+On a few platforms such as TI's AM69 device, disable_irq() fails to keep
+track of the interrupts that happen between disable_irq() and
+enable_irq() and those interrupts are missed. Use the ->irq_unmask() and
+->irq_mask() methods instead of ->irq_enable() and ->irq_disable() to
+correctly keep track of edges when disable_irq is called.
 
-Reported-by: xiao sheng wen <atzlinux@sina.com>
-Link: https://bugs.debian.org/1076483
-Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: xiao sheng wen <atzlinux@sina.com>
-Link: https://patch.msgid.link/20240919081121.10784-2-ukleinek@debian.org
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This solves the issue of disable_irq() not working as expected on such
+platforms.
+
+Fixes: 23265442b02b ("ARM: davinci: irq_data conversion.")
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
+Acked-by: Keerthy <j-keerthy@ti.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240828133207.493961-1-parth105105@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-davinci.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1623,7 +1623,7 @@ static void intel_pstate_notify_work(str
- 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_STATUS, 0);
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -289,7 +289,7 @@ static int davinci_gpio_probe(struct pla
+  * serve as EDMA event triggers.
+  */
+ 
+-static void gpio_irq_disable(struct irq_data *d)
++static void gpio_irq_mask(struct irq_data *d)
+ {
+ 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
+ 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
+@@ -298,7 +298,7 @@ static void gpio_irq_disable(struct irq_
+ 	writel_relaxed(mask, &g->clr_rising);
  }
  
--static DEFINE_SPINLOCK(hwp_notify_lock);
-+static DEFINE_RAW_SPINLOCK(hwp_notify_lock);
- static cpumask_t hwp_intr_enable_mask;
+-static void gpio_irq_enable(struct irq_data *d)
++static void gpio_irq_unmask(struct irq_data *d)
+ {
+ 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
+ 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
+@@ -324,8 +324,8 @@ static int gpio_irq_type(struct irq_data
  
- #define HWP_GUARANTEED_PERF_CHANGE_STATUS      BIT(0)
-@@ -1646,7 +1646,7 @@ void notify_hwp_interrupt(void)
- 	if (!(value & status_mask))
- 		return;
- 
--	spin_lock_irqsave(&hwp_notify_lock, flags);
-+	raw_spin_lock_irqsave(&hwp_notify_lock, flags);
- 
- 	if (!cpumask_test_cpu(this_cpu, &hwp_intr_enable_mask))
- 		goto ack_intr;
-@@ -1654,13 +1654,13 @@ void notify_hwp_interrupt(void)
- 	schedule_delayed_work(&all_cpu_data[this_cpu]->hwp_notify_work,
- 			      msecs_to_jiffies(10));
- 
--	spin_unlock_irqrestore(&hwp_notify_lock, flags);
-+	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
- 
- 	return;
- 
- ack_intr:
- 	wrmsrl_safe(MSR_HWP_STATUS, 0);
--	spin_unlock_irqrestore(&hwp_notify_lock, flags);
-+	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
- }
- 
- static void intel_pstate_disable_hwp_interrupt(struct cpudata *cpudata)
-@@ -1673,9 +1673,9 @@ static void intel_pstate_disable_hwp_int
- 	/* wrmsrl_on_cpu has to be outside spinlock as this can result in IPC */
- 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_INTERRUPT, 0x00);
- 
--	spin_lock_irq(&hwp_notify_lock);
-+	raw_spin_lock_irq(&hwp_notify_lock);
- 	cancel_work = cpumask_test_and_clear_cpu(cpudata->cpu, &hwp_intr_enable_mask);
--	spin_unlock_irq(&hwp_notify_lock);
-+	raw_spin_unlock_irq(&hwp_notify_lock);
- 
- 	if (cancel_work)
- 		cancel_delayed_work_sync(&cpudata->hwp_notify_work);
-@@ -1690,10 +1690,10 @@ static void intel_pstate_enable_hwp_inte
- 	if (boot_cpu_has(X86_FEATURE_HWP_NOTIFY)) {
- 		u64 interrupt_mask = HWP_GUARANTEED_PERF_CHANGE_REQ;
- 
--		spin_lock_irq(&hwp_notify_lock);
-+		raw_spin_lock_irq(&hwp_notify_lock);
- 		INIT_DELAYED_WORK(&cpudata->hwp_notify_work, intel_pstate_notify_work);
- 		cpumask_set_cpu(cpudata->cpu, &hwp_intr_enable_mask);
--		spin_unlock_irq(&hwp_notify_lock);
-+		raw_spin_unlock_irq(&hwp_notify_lock);
- 
- 		if (cpu_feature_enabled(X86_FEATURE_HWP_HIGHEST_PERF_CHANGE))
- 			interrupt_mask |= HWP_HIGHEST_PERF_CHANGE_REQ;
+ static struct irq_chip gpio_irqchip = {
+ 	.name		= "GPIO",
+-	.irq_enable	= gpio_irq_enable,
+-	.irq_disable	= gpio_irq_disable,
++	.irq_unmask	= gpio_irq_unmask,
++	.irq_mask	= gpio_irq_mask,
+ 	.irq_set_type	= gpio_irq_type,
+ 	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
+ };
 
 
