@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA31C1779B1;
-	Tue,  8 Oct 2024 12:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D461779B1;
+	Tue,  8 Oct 2024 12:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390908; cv=none; b=Hn/hhrBOhVu3YLuGKV2imi4dCv96CqQaTQ11ZkPf8IJCSS+v2TtQuHiqseNupYX2ROr7nCW+A+BoPJEEfWpF998YsLxcK83Zn5SvKOj91ZgKms/tppSASGwvgqkeoqis+6XQnkm7AmbI80J69+ggBzSSSoUCUjAj8EMOPb2WwzQ=
+	t=1728390911; cv=none; b=W3sT2ssBGq7G7/AG5+I+ABxq/SEwy3033xaPVwguRk2BLdD1SAIWM4sU2baJjlzAUZu5TVcIVwzC79CLmgDeGuxwraYSbUEk3GDmbv8lNChjvEM9w9Avn/FM8yeaFr+YkAn+doYOOJtu9Hna5QJQyZSsOp7jTcl5L66KPs0DYgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390908; c=relaxed/simple;
-	bh=a76k2vsF7Qu18zNuKK5eBQ7qwygnGKVMNl2uEYKSsvs=;
+	s=arc-20240116; t=1728390911; c=relaxed/simple;
+	bh=82H4TnK/JcTCYbsK/axVRRZczbxDaQ1xyarkpkjyvCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHn802If86RFe07jXfoP3rvq3k0e+AmZz05oZmte0jpWTXVyHf6h06JU26IV03MthyVa2f9S9v+DIhapRM3mVLVg/EYUcZavcHcCNs85maqcF5k2Fdoa0tY+bPRwl6eSAlvuuOW92TVcSxlCxfRqaQ8csP1sGwlN9vKjo/E6VQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKhMRqbD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NxZVQht050Ry+8XooW6udZ7CSUOa4Hq8brWcKacSApfE3LER3PTfMYbwWG8F//zmwSbvZsKu0ffh7PAPS6J6Bwm2LlNxPeimhMi78h1rlGy4oroqwZSsYY5+Wiy7MX8XnTHFkeNPGbqSt0QxjuDkLH+xlBGCWZU9OYmE0keHcQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBV5FChX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKhMRqbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF67C4CEC7;
-	Tue,  8 Oct 2024 12:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBV5FChX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B79C4CEC7;
+	Tue,  8 Oct 2024 12:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390908;
-	bh=a76k2vsF7Qu18zNuKK5eBQ7qwygnGKVMNl2uEYKSsvs=;
+	s=korg; t=1728390911;
+	bh=82H4TnK/JcTCYbsK/axVRRZczbxDaQ1xyarkpkjyvCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKhMRqbDrnIL5gwBirlX+XFEFnlpbt6BK3fsN2WITfYJTHdOhxLSpMQwVepj2V8re
-	 /uZhSz/DvLl6lSddq9QWGjA5EM+owltt7bl5bE0subpiYkrLoMSIYJcMUlxIsXijiL
-	 lx4DFpAkR9ErHr556zSf2uDYU9xeqTeB3JPabt+M=
+	b=bBV5FChXVcgVjovGX3X9u1QfNyFuS67R1DlGZwm6rR4Nhl/p31N0g1Hzd9DSMKvek
+	 ai+0AMefslZ4yZKjoqqqG/7rCWN/+RdLHvH59nIlSRpSubz0ZFY/Eusnag9fiYc3G5
+	 v+ZLBtCzo+jXohrr/T/kPtOtbefPJWUHDHZy15jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 398/482] clk: qcom: gcc-sc8180x: Fix the sdcc2 and sdcc4 clocks freq table
-Date: Tue,  8 Oct 2024 14:07:41 +0200
-Message-ID: <20241008115704.071997818@linuxfoundation.org>
+Subject: [PATCH 6.10 399/482] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for LUCID EVO PLL
+Date: Tue,  8 Oct 2024 14:07:42 +0200
+Message-ID: <20241008115704.111319633@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,44 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Ajit Pandey <quic_ajipan@quicinc.com>
 
-commit b8acaf2de8081371761ab4cf1e7a8ee4e7acc139 upstream.
+commit fff617979f97c773aaa9432c31cf62444b3bdbd4 upstream.
 
-Update the frequency tables of gcc_sdcc2_apps_clk and gcc_sdcc4_apps_clk
-as per the latest frequency plan.
+In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
+PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
+register using regmap_write() API in __alpha_pll_trion_set_rate
+callback will override LUCID EVO PLL initial configuration related
+to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
 
-Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
+Observed random PLL lock failures during PLL enable due to such
+override in PLL calibration value. Use regmap_update_bits() with
+L_VAL bitfield mask instead of regmap_write() API to update only
+PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
+
+Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
 Cc: stable@vger.kernel.org
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-4-8b3eaa5fb856@quicinc.com
+Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/r/20240611133752.2192401-2-quic_ajipan@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sc8180x.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/gcc-sc8180x.c
-+++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -911,7 +911,7 @@ static const struct freq_tbl ftbl_gcc_sd
- 	F(25000000, P_GPLL0_OUT_MAIN, 12, 1, 2),
- 	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
- 	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
--	F(200000000, P_GPLL0_OUT_MAIN, 3, 0, 0),
-+	F(202000000, P_GPLL9_OUT_MAIN, 4, 0, 0),
- 	{ }
- };
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1665,7 +1665,7 @@ static int __alpha_pll_trion_set_rate(st
+ 	if (ret < 0)
+ 		return ret;
  
-@@ -934,9 +934,8 @@ static const struct freq_tbl ftbl_gcc_sd
- 	F(400000, P_BI_TCXO, 12, 1, 4),
- 	F(9600000, P_BI_TCXO, 2, 0, 0),
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
--	F(37500000, P_GPLL0_OUT_MAIN, 16, 0, 0),
- 	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
--	F(75000000, P_GPLL0_OUT_MAIN, 8, 0, 0),
-+	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
- 	{ }
- };
+-	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
++	regmap_update_bits(pll->clkr.regmap, PLL_L_VAL(pll), LUCID_EVO_PLL_L_VAL_MASK,  l);
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
  
+ 	/* Latch the PLL input */
 
 
