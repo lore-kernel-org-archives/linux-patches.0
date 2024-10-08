@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64741DDC24;
-	Tue,  8 Oct 2024 12:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55CD1DC759;
+	Tue,  8 Oct 2024 12:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391472; cv=none; b=nXRJBNEnib1SgCHcDnY61GVf6t+NGxs0tusGsgaoGYi4qx0EOb5yLQ7nQ33eSlgaGogERtD8CeYNry3dtbNcAjTbbns3QiewVXrZrXc9t3lsHwVxWGBSTtva4tpOvr8RWyC2zZgXPJMmFeh9+RjbLfyS1gl8orsRamZP5yTHRqg=
+	t=1728391476; cv=none; b=OqgeFygb6oR4QSLfSMxsUrGRjrq/uATuhdxDpcJ3Q/kjJ8nUoJhKIXLrX9h3TCfZ7+vaKmh72oAUitB0K2dNtRNyy/bz8Y6UPQIoAuoZV0RWPTZKhJvliiGpnct9wdE+f/xwqa3/hHGgVipY+UWKiKHsB6CwJJuaEpclZDmiU5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391472; c=relaxed/simple;
-	bh=gBqeIn7sjNr/FhB2jq4wiEJk+11TNHktRlnZmM/Uzoo=;
+	s=arc-20240116; t=1728391476; c=relaxed/simple;
+	bh=7hZOdFkkecq9Fr0W2I5jDwX+VYRGhxBNJCGDzs6MNBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOPcaMWCBrgMS1u/1mFxBkTVFbQBP9PC3fcHGJgZxE8LZI12eqNJDIslMGuSfo34XjkM3sPsuuH1I5vFzgIlSLLJSRMky4dzk0yGMVTpdubxUcu5ShwH1QeWSeE5K+eNOZKYLYpEZUNZpBoOwX39PvO1t820828LxfpiN3dGrN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkW7gmRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMKnQI0/AysnDEtbcY0ZrZ1J/395VkttZFSD+2dDseuiv0LgOIhgLY5ndDNcXdhac1SOc+gErte8R0Nq3T/kWBqTchEioyhgYkGLGznfff7UHeUjPlSizTypBSJ/k/KR2DnSt+6G0RDILOAK7qmfhPy4roQrwPLF+wUd4CCntuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgIKD5IR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkW7gmRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2036EC4CECC;
-	Tue,  8 Oct 2024 12:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgIKD5IR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528AFC4CECD;
+	Tue,  8 Oct 2024 12:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391472;
-	bh=gBqeIn7sjNr/FhB2jq4wiEJk+11TNHktRlnZmM/Uzoo=;
+	s=korg; t=1728391475;
+	bh=7hZOdFkkecq9Fr0W2I5jDwX+VYRGhxBNJCGDzs6MNBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkW7gmRmSWHVMHOMX2rMSsTjh0/H8zAbua2IXm7OhYiHk5tlom8cbEg013gGt0gVx
-	 YuvtZgAIXGObRCsn/2OvpBSQm1EKREh6J3FhIbUhlTqnKLTj+f4vF3eMDM/CZebFVr
-	 YBnBwERz4ukP6t6WByM5+viOe8JovsrYwfvBr4Dg=
+	b=EgIKD5IRsEXpZm6DcoGOkHdk6eIN3lUq3flEBG7cYJol67Werwz+Rq/1xu3/g3aYl
+	 f3x20vFnJAZijxjYsWWpXZXGS85NSfQ3zL+IfvhvPP8PU9egQiPgft1r4uVoayXYWV
+	 whmw7NnvmcnioC+O3naibL89qwSU+MJ8Zh6DNFG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 125/558] bnxt_en: Extend maximum length of version string by 1 byte
-Date: Tue,  8 Oct 2024 14:02:35 +0200
-Message-ID: <20241008115707.284652596@linuxfoundation.org>
+Subject: [PATCH 6.11 126/558] ipv4: Check !in_dev earlier for ioctl(SIOCSIFADDR).
+Date: Tue,  8 Oct 2024 14:02:36 +0200
+Message-ID: <20241008115707.323205806@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,40 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit ffff7ee843c351ce71d6e0d52f0f20bea35e18c9 ]
+[ Upstream commit e3af3d3c5b26c33a7950e34e137584f6056c4319 ]
 
-This corrects an out-by-one error in the maximum length of the package
-version string. The size argument of snprintf includes space for the
-trailing '\0' byte, so there is no need to allow extra space for it by
-reducing the value of the size argument by 1.
+dev->ip_ptr could be NULL if we set an invalid MTU.
 
-Found by inspection.
-Compile tested only.
+Even then, if we issue ioctl(SIOCSIFADDR) for a new IPv4 address,
+devinet_ioctl() allocates struct in_ifaddr and fails later in
+inet_set_ifa() because in_dev is NULL.
 
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20240813-bnxt-str-v2-1-872050a157e7@kernel.org
+Let's move the check earlier.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240809235406.50187-2-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/devinet.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 4cf9bf8b01b09..ac06f4a4cf97c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -4157,7 +4157,7 @@ static void bnxt_get_pkgver(struct net_device *dev)
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index d96f3e452fef6..ddab151164542 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -574,10 +574,6 @@ static int inet_set_ifa(struct net_device *dev, struct in_ifaddr *ifa)
  
- 	if (!bnxt_get_pkginfo(dev, buf, sizeof(buf))) {
- 		len = strlen(bp->fw_ver_str);
--		snprintf(bp->fw_ver_str + len, FW_VER_STR_LEN - len - 1,
-+		snprintf(bp->fw_ver_str + len, FW_VER_STR_LEN - len,
- 			 "/pkg %s", buf);
- 	}
- }
+ 	ASSERT_RTNL();
+ 
+-	if (!in_dev) {
+-		inet_free_ifa(ifa);
+-		return -ENOBUFS;
+-	}
+ 	ipv4_devconf_setall(in_dev);
+ 	neigh_parms_data_state_setall(in_dev->arp_parms);
+ 	if (ifa->ifa_dev != in_dev) {
+@@ -1184,6 +1180,8 @@ int devinet_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr)
+ 
+ 		if (!ifa) {
+ 			ret = -ENOBUFS;
++			if (!in_dev)
++				break;
+ 			ifa = inet_alloc_ifa();
+ 			if (!ifa)
+ 				break;
 -- 
 2.43.0
 
