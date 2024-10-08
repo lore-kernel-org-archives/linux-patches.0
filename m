@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0241C9B99;
-	Tue,  8 Oct 2024 13:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9DF1DED74;
+	Tue,  8 Oct 2024 13:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392819; cv=none; b=ocVnG0Z16y7Za08mOjOlkhr1d6KHYCsCIR0H0Qq5apzE0AZiV9xXOfUes4R/hdSODuWiNlmZGgi3kGvCkWAf+U3sja4jNdO9sUfy876Tj9Kv/9bWh2p+XylcnTsUSeKd3KgIycaNRQLsW0w4vJ2IBdBf5BzGtFJx0G3Q6mvgYWw=
+	t=1728392823; cv=none; b=PzdHO9c8rt38z6sf4ygflujdoEjZOG2dni9t6s78ILyA3/6lqepnREyIg5nX+rdus/4/9Pul3FpoIGxh8sqQVhg64c0hacPk91b6OozNTkUsj0HG/EDZarlgWgnmtQ5AEj/MNXt6A82hRFJZCcPw4u03uJ+kPmOrtxyxS5AAbCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392819; c=relaxed/simple;
-	bh=GCpW5olJI1JC1dNqcKGdYxcFx9ZdsOaxjtyORMUxjDU=;
+	s=arc-20240116; t=1728392823; c=relaxed/simple;
+	bh=XlybraUUfTyOSO1ztJulWQgyr3gtZZhl7pHwgkNcKwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8Bz+BoJs+YqmRC2eYplZ3bTN7SyLAwSyLWceBEDxkGix+jMeCsk+pBnJb57Kdoec34sRdsCe6ARk1yGdB0xWP2twRXF6kmdOv0+GBsZcueKosjRgVZhSkqGX7bvv/oTuFH7XQMCkX2EyuogLSfXiKHQh8280d5eotAJDeuYct0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrBviQOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhm1Z+RnE7NwQmAxryFV6hpfjv/fNQNC4Mj+0BZ5OBeQsSYjllyKGU92MR0rGsdK7XTWIoRMvlC5YnJSJVneNKrSAe+PrruitMFv5P7kZaYgVz1zU7GZKlikSLyGG56haOD9LeJHjO/ewuHE8tLPidyD9GAFd5Gk82KKG8brcaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1uQ52+8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrBviQOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A73C4CECC;
-	Tue,  8 Oct 2024 13:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1uQ52+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D47C4CECC;
+	Tue,  8 Oct 2024 13:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392819;
-	bh=GCpW5olJI1JC1dNqcKGdYxcFx9ZdsOaxjtyORMUxjDU=;
+	s=korg; t=1728392823;
+	bh=XlybraUUfTyOSO1ztJulWQgyr3gtZZhl7pHwgkNcKwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrBviQOdSVBWgFhUFP3Qe7K6ON1rYNhhD9jBt1gADB6lXqYHJn7Olk6eGpgZayDuj
-	 jZdvyFH6Udqa9q5JU+XQGUhtpWdp5eAuMn5hh8U4TNKt2QPn/BRiVghn1WHGtfmVpl
-	 jyrZdfU0XVz/jAE0UB3FQ70yo+dcJUl4EWV+s3X0=
+	b=B1uQ52+8b5x4Mrta7GiuU1jc6fo+52oCdbcGXoJnMBCBnf2q7AXpAK93gqCvYkp+8
+	 Aq8aAZukE3Aa67aQOfDzmmpOHav4iMFfwb/XEVA0HlbGNp5d7+fDYf+qgxIG0LBMKb
+	 Dv2y0jCMoAtN9KTKn47wVcPppqZb00iX7Nqa2C9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Bonelli <marco@mebeim.net>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 529/558] kconfig: fix infinite loop in sym_calc_choice()
-Date: Tue,  8 Oct 2024 14:09:19 +0200
-Message-ID: <20241008115723.043714061@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Wei Li <liwei391@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.11 512/558] tracing/timerlat: Fix duplicated kthread creation due to CPU online/offline
+Date: Tue,  8 Oct 2024 14:09:02 +0200
+Message-ID: <20241008115722.376088954@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,97 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Wei Li <liwei391@huawei.com>
 
-[ Upstream commit 4d46b5b623e0adee1153b1d80689211e5094ae44 ]
+commit 0bb0a5c12ecf36ad561542bbb95f96355e036a02 upstream.
 
-Since commit f79dc03fe68c ("kconfig: refactor choice value calculation"),
-Kconfig for ARCH=powerpc may result in an infinite loop. This occurs
-because there are two entries for POWERPC64_CPU in a choice block.
+osnoise_hotplug_workfn() is the asynchronous online callback for
+"trace/osnoise:online". It may be congested when a CPU goes online and
+offline repeatedly and is invoked for multiple times after a certain
+online.
 
-If the same symbol appears twice in a choice block, the ->choice_link
-node is added twice to ->choice_members, resulting a corrupted linked
-list.
+This will lead to kthread leak and timer corruption. Add a check
+in start_kthread() to prevent this situation.
 
-A simple test case is:
-
-    choice
-            prompt "choice"
-
-    config A
-            bool "A"
-
-    config B
-            bool "B 1"
-
-    config B
-            bool "B 2"
-
-    endchoice
-
-Running 'make defconfig' results in an infinite loop.
-
-One solution is to replace the current two entries:
-
-    config POWERPC64_CPU
-            bool "Generic (POWER5 and PowerPC 970 and above)"
-            depends on PPC_BOOK3S_64 && !CPU_LITTLE_ENDIAN
-            select PPC_64S_HASH_MMU
-
-    config POWERPC64_CPU
-            bool "Generic (POWER8 and above)"
-            depends on PPC_BOOK3S_64 && CPU_LITTLE_ENDIAN
-            select ARCH_HAS_FAST_MULTIPLIER
-            select PPC_64S_HASH_MMU
-            select PPC_HAS_LBARX_LHARX
-
-with the following single entry:
-
-    config POWERPC64_CPU
-            bool "Generic 64 bit powerpc"
-            depends on PPC_BOOK3S_64
-            select ARCH_HAS_FAST_MULTIPLIER if CPU_LITTLE_ENDIAN
-            select PPC_64S_HASH_MMU
-            select PPC_HAS_LBARX_LHARX if CPU_LITTLE_ENDIAN
-
-In my opinion, the latter looks cleaner, but PowerPC maintainers may
-prefer to display different prompts depending on CPU_LITTLE_ENDIAN.
-
-For now, this commit fixes the issue in Kconfig, restoring the original
-behavior. I will reconsider whether such a use case is worth supporting.
-
-Fixes: f79dc03fe68c ("kconfig: refactor choice value calculation")
-Reported-by: Marco Bonelli <marco@mebeim.net>
-Closes: https://lore.kernel.org/all/1763151587.3581913.1727224126288@privateemail.com/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20240924094515.3561410-2-liwei391@huawei.com
+Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/kconfig/parser.y | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/trace/trace_osnoise.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/kconfig/parser.y b/scripts/kconfig/parser.y
-index 61900feb4254a..add1ce4b5091d 100644
---- a/scripts/kconfig/parser.y
-+++ b/scripts/kconfig/parser.y
-@@ -158,8 +158,14 @@ config_stmt: config_entry_start config_option_list
- 			yynerrs++;
- 		}
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -2006,6 +2006,10 @@ static int start_kthread(unsigned int cp
+ 	void *main = osnoise_main;
+ 	char comm[24];
  
--		list_add_tail(&current_entry->sym->choice_link,
--			      &current_choice->choice_members);
-+		/*
-+		 * If the same symbol appears twice in a choice block, the list
-+		 * node would be added twice, leading to a broken linked list.
-+		 * list_empty() ensures that this symbol has not yet added.
-+		 */
-+		if (list_empty(&current_entry->sym->choice_link))
-+			list_add_tail(&current_entry->sym->choice_link,
-+				      &current_choice->choice_members);
++	/* Do not start a new thread if it is already running */
++	if (per_cpu(per_cpu_osnoise_var, cpu).kthread)
++		return 0;
++
+ 	if (timerlat_enabled()) {
+ 		snprintf(comm, 24, "timerlat/%d", cpu);
+ 		main = timerlat_main;
+@@ -2060,11 +2064,10 @@ static int start_per_cpu_kthreads(void)
+ 		if (cpumask_test_and_clear_cpu(cpu, &kthread_cpumask)) {
+ 			struct task_struct *kthread;
+ 
+-			kthread = per_cpu(per_cpu_osnoise_var, cpu).kthread;
++			kthread = xchg_relaxed(&(per_cpu(per_cpu_osnoise_var, cpu).kthread), NULL);
+ 			if (!WARN_ON(!kthread))
+ 				kthread_stop(kthread);
+ 		}
+-		per_cpu(per_cpu_osnoise_var, cpu).kthread = NULL;
  	}
  
- 	printd(DEBUG_PARSE, "%s:%d:endconfig\n", cur_filename, cur_lineno);
--- 
-2.43.0
-
+ 	for_each_cpu(cpu, current_mask) {
 
 
