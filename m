@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64481DFD1;
-	Tue,  8 Oct 2024 13:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DE61DFD1;
+	Tue,  8 Oct 2024 13:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392563; cv=none; b=iTxQN7VDLYqbQJqQyOkiWzlwFHVf4xrbse9cjek0cY9v8vAq1KWB7pxna7FUySZ4KRVPRPInh0obQadHdEiyJBWTfHVGcA6LITLBZY2YGNmE3+VCSPLzZAy0F49bIOiivE+FzlUfVQmV2qsI8hLuPOCmTt8/9jVWoKi4fudxwvk=
+	t=1728392567; cv=none; b=VZoNLScFG15j4/IeihqVgKLZbR5RhXPkRmuoVZzVUEI+WnUjEo2Q91aW+Za4XsybGNQqGbz8dIQ7K/k62aPZAhgU02KgzQAtIXBnBP4uQVKwnteeo4ZkZ/vJOnfDCMIws+wjFyD0fre6KpEL60A36tYx1y0kUEIalVwSdrqjtyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392563; c=relaxed/simple;
-	bh=uVK4uY/cROfcJ9Wym4xab4ZKc/GPVlTLavaSE9g5+o8=;
+	s=arc-20240116; t=1728392567; c=relaxed/simple;
+	bh=xS0OijpjF5kYMH1AlrQDX9C2gQm0+ycF7zZrYhWi3XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5nuKS5n5Qk1WRWHxgDnei8B/F++Ouf1rE6KkPChda5x9oPSDpmKTVt/LXp/WSDpdDHn/gmILJSA3glWIOpxG9ueCqKG+RFThto2dI6Vbxdso+eHClKNOwzmS1ioDYguof66denccCvakzKMio5d4pyqkCagG1KGslt9t1WQe/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZuEGMZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c31mpIeWEr63PM67ZSVxrs/naoutLEib6r9XT59oGSQY8HB/hhMJjV1NACaZQLXAERv18JcdgcjwvdGRv4k8vFS0gB8d1nFmufaKihsT73NWib5xBoXxhH2HFJAs6mD4k4J05h0+eUL14nx4/S8wVTGAo2hMAqZWAGcG8B+D6q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcGy8tix; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZuEGMZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C93C4CEC7;
-	Tue,  8 Oct 2024 13:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcGy8tix"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CF1C4CEC7;
+	Tue,  8 Oct 2024 13:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392563;
-	bh=uVK4uY/cROfcJ9Wym4xab4ZKc/GPVlTLavaSE9g5+o8=;
+	s=korg; t=1728392566;
+	bh=xS0OijpjF5kYMH1AlrQDX9C2gQm0+ycF7zZrYhWi3XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZuEGMZDBE0XmJ7ChPLAc1r37+bmhiYlyAa/W+ZITKXl/9dEqFik0W4n4Sfs/VXry
-	 HOVENnNHYleNVWXqTf/ee5w7IJzyEqQrY9M6H7BZ7YoqohMg3bknNwF8LOAt9CVqYu
-	 S0Mr5ZUsL3WpeoEOAdbDZ1zH+LuzuJzgEejV8JuY=
+	b=wcGy8tixDa+hb64U7BvGydUWXEa6q82KdFDjjvXM4JOwZOGoINLWL+i7bnNfHh2VD
+	 73Bzm6CTMth++1M79p4p2MKSrKBFNuSPZ29EEouXbF1dUiB6DRd430pPnMPleEiN+F
+	 xdN8VMkDZkl+GF6Dc/SLRKDHh1CiflZfHLEkMPPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 453/558] clk: qcom: gcc-sm8450: Do not turn off PCIe GDSCs during gdsc_disable()
-Date: Tue,  8 Oct 2024 14:08:03 +0200
-Message-ID: <20241008115720.085616601@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.11 454/558] media: uapi/linux/cec.h: cec_msg_set_reply_to: zero flags
+Date: Tue,  8 Oct 2024 14:08:04 +0200
+Message-ID: <20241008115720.125430763@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,48 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 889e1332310656961855c0dcedbb4dbe78e39d22 upstream.
+commit 599f6899051cb70c4e0aa9fd591b9ee220cb6f14 upstream.
 
-With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-can happen during scenarios such as system suspend and breaks the resume
-of PCIe controllers from suspend.
+The cec_msg_set_reply_to() helper function never zeroed the
+struct cec_msg flags field, this can cause unexpected behavior
+if flags was uninitialized to begin with.
 
-So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
-during gdsc_disable() and allow the hardware to transition the GDSCs to
-retention when the parent domain enters low power state during system
-suspend.
-
-Cc: stable@vger.kernel.org # 5.17
-Fixes: db0c944ee92b ("clk: qcom: Add clock driver for SM8450")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240722105733.13040-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0dbacebede1e ("[media] cec: move the CEC framework out of staging and to media")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sm8450.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/cec.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/gcc-sm8450.c
-+++ b/drivers/clk/qcom/gcc-sm8450.c
-@@ -2974,7 +2974,7 @@ static struct gdsc pcie_0_gdsc = {
- 	.pd = {
- 		.name = "pcie_0_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
+--- a/include/uapi/linux/cec.h
++++ b/include/uapi/linux/cec.h
+@@ -132,6 +132,8 @@ static inline void cec_msg_init(struct c
+  * Set the msg destination to the orig initiator and the msg initiator to the
+  * orig destination. Note that msg and orig may be the same pointer, in which
+  * case the change is done in place.
++ *
++ * It also zeroes the reply, timeout and flags fields.
+  */
+ static inline void cec_msg_set_reply_to(struct cec_msg *msg,
+ 					struct cec_msg *orig)
+@@ -139,7 +141,9 @@ static inline void cec_msg_set_reply_to(
+ 	/* The destination becomes the initiator and vice versa */
+ 	msg->msg[0] = (cec_msg_destination(orig) << 4) |
+ 		      cec_msg_initiator(orig);
+-	msg->reply = msg->timeout = 0;
++	msg->reply = 0;
++	msg->timeout = 0;
++	msg->flags = 0;
+ }
  
- static struct gdsc pcie_1_gdsc = {
-@@ -2982,7 +2982,7 @@ static struct gdsc pcie_1_gdsc = {
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc ufs_phy_gdsc = {
+ /**
 
 
