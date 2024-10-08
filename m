@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA54D1DEFE0;
-	Tue,  8 Oct 2024 13:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E6D1DEFDD;
+	Tue,  8 Oct 2024 13:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393277; cv=none; b=nnYM6RP8fGXEDz6p7TXySXZEtDLJJ+ow6tdDcINvBAzdgqtEIHhg7jBXTTFZ420t/2aJ9sryNrptdtaTpOhEsIG4oKBxxICDwkPspSLV6idkWaTL/zbyLxbNjLp2y3fhj5SBvsPaE08W7WCp+Yuf/AGwZ8FEp++PEHWHhZJ7QMA=
+	t=1728393280; cv=none; b=vBYvO7UVrIQNSlZ2qE6jQPwowYBsWqdyB+QvTb/qg94fXgtA/Jz3/w47Ah3Wp5Kf+Bmu4HIGbGBbcB44fKlItmiPQpkuWj5ckf0dbHDYqMwhtQNxfiJT7Kgo1HdUmMle7euYYgSFcmqzLGsiHG/jW5mGJ5KG0NXmznJ1FQw+Cok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393277; c=relaxed/simple;
-	bh=0LC0Yh6xP3W75Wq6iZO1S/VbfYlfgo9C+PbSbwM50C0=;
+	s=arc-20240116; t=1728393280; c=relaxed/simple;
+	bh=6v7/FTXG/rs555X1JWMoFNRxv/eV5Wk/JJUmT/2VdS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rxv1rBONJupq9+9f1m4CC8I3GKgWT10HUY+/i1yikxrF0XX1WVfvjTCUxKXAO0FF1CCIyFD3Dt/jPM0CRFo+NbJypZeKFeWG9BOohSBUK7ItTfqNPfUpxoVYNpZU6kTyK89UE9NGZOhYE6IArWBCaJ0wbV199RdZ17UxWJCQAWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLLrEK97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kkT8MKykXLBaE/F309wI9RRPKrkJW2u/7cUIgCbrM7g5NwAOPLM2nZ5BdeQFIaDjdroz1OBp8yUPsLawDtg2339rvr7Q/s8N0TgFVrC4+AmwMXSU8lQ650snDGJ6DqL7wVFZzo6p0cNBKEorTMSIBtHVH+A5OxOjPnzqSZfAs18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYUENVp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLLrEK97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A497C4CEC7;
-	Tue,  8 Oct 2024 13:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYUENVp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA097C4CECC;
+	Tue,  8 Oct 2024 13:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393276;
-	bh=0LC0Yh6xP3W75Wq6iZO1S/VbfYlfgo9C+PbSbwM50C0=;
+	s=korg; t=1728393280;
+	bh=6v7/FTXG/rs555X1JWMoFNRxv/eV5Wk/JJUmT/2VdS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLLrEK97WGuahC28hFDPWcCn7pc8BhOrQ6nle2EWhVixg1vpWqIqNqJ8Aw8biQJO+
-	 a60bYACG9Blm/V3P3g1LvDEOSdlbwZibgFN/JNm5DHE+PvaMK2ZM+plLDPN8XByF4J
-	 iifNVXozSmtyj9AGjCi3IAMMYIo7dUf1RCkRAM1I=
+	b=CYUENVp2lohZM1a3vgt0JT934YeBbk+pcEDk1uECg9kEEjhi/BR/4ExEnEjSoT544
+	 sUszF1VqPeY1fSHvW7FFbTEkgEdoGjLKzWoCQx5xjMlT532DuZHQ8/JIgIhzq9XG/7
+	 fmrPTedQer/J1aqsN1vTYvB8WffD639KU3+/FjOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Louis Peens <louis.peens@corigine.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/386] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_cmd_802_11_scan_ext()
-Date: Tue,  8 Oct 2024 14:05:50 +0200
-Message-ID: <20241008115633.577208588@linuxfoundation.org>
+Subject: [PATCH 6.6 106/386] nfp: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  8 Oct 2024 14:05:51 +0200
+Message-ID: <20241008115633.615685831@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 498365e52bebcbc36a93279fe7e9d6aec8479cee ]
+[ Upstream commit daaba19d357f0900b303a530ced96c78086267ea ]
 
-Replace one-element array with a flexible-array member in
-`struct host_cmd_ds_802_11_scan_ext`.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-With this, fix the following warning:
-
-elo 16 17:51:58 surfacebook kernel: ------------[ cut here ]------------
-elo 16 17:51:58 surfacebook kernel: memcpy: detected field-spanning write (size 243) of single field "ext_scan->tlv_buffer" at drivers/net/wireless/marvell/mwifiex/scan.c:2239 (size 1)
-elo 16 17:51:58 surfacebook kernel: WARNING: CPU: 0 PID: 498 at drivers/net/wireless/marvell/mwifiex/scan.c:2239 mwifiex_cmd_802_11_scan_ext+0x83/0x90 [mwifiex]
-
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/linux-hardening/ZsZNgfnEwOcPdCly@black.fi.intel.com/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/ZsZa5xRcsLq9D+RX@elsanto
+Reviewed-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240911094445.1922476-4-ruanjinjie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/fw.h   | 2 +-
- drivers/net/wireless/marvell/mwifiex/scan.c | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/netronome/nfp/nfp_net_common.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 62f3c9a52a1d5..a3be37526697b 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -1587,7 +1587,7 @@ struct host_cmd_ds_802_11_scan_rsp {
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
+index f2085340a1cfe..fceb4abea2365 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_net_common.c
+@@ -821,14 +821,13 @@ nfp_net_prepare_vector(struct nfp_net *nn, struct nfp_net_r_vector *r_vec,
  
- struct host_cmd_ds_802_11_scan_ext {
- 	u32   reserved;
--	u8    tlv_buffer[1];
-+	u8    tlv_buffer[];
- } __packed;
+ 	snprintf(r_vec->name, sizeof(r_vec->name),
+ 		 "%s-rxtx-%d", nfp_net_name(nn), idx);
+-	err = request_irq(r_vec->irq_vector, r_vec->handler, 0, r_vec->name,
+-			  r_vec);
++	err = request_irq(r_vec->irq_vector, r_vec->handler, IRQF_NO_AUTOEN,
++			  r_vec->name, r_vec);
+ 	if (err) {
+ 		nfp_net_napi_del(&nn->dp, r_vec);
+ 		nn_err(nn, "Error requesting IRQ %d\n", r_vec->irq_vector);
+ 		return err;
+ 	}
+-	disable_irq(r_vec->irq_vector);
  
- struct mwifiex_ie_types_bss_mode {
-diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
-index 72904c275461e..5be817d9854a6 100644
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -2543,8 +2543,7 @@ int mwifiex_ret_802_11_scan_ext(struct mwifiex_private *priv,
- 	ext_scan_resp = &resp->params.ext_scan;
+ 	irq_set_affinity_hint(r_vec->irq_vector, &r_vec->affinity_mask);
  
- 	tlv = (void *)ext_scan_resp->tlv_buffer;
--	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN
--					      - 1);
-+	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN);
- 
- 	while (buf_left >= sizeof(struct mwifiex_ie_types_header)) {
- 		type = le16_to_cpu(tlv->type);
 -- 
 2.43.0
 
