@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0923B1DE3A3;
-	Tue,  8 Oct 2024 12:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1609D176FCE;
+	Tue,  8 Oct 2024 12:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391573; cv=none; b=iUFW7tl7vW58fJHD0AfhtnFc/IxWvZDt3w3vGYYy8Su7V/NzMa17xamvlnRjedQqIeZLFzwpsXYiHyWSCMpYel9DDkDUaF6THqz2d3/CLFQn8IErFbybU3rdaaU45AZV6S2w0A8Wo0CFBiyhG7lH9rOOVpEAgNMJ3ZEVzUy7sFQ=
+	t=1728391576; cv=none; b=cAPYUaUkKVBEIvVUyjGWZ6zlggNdtNtp6c8LkdZw48Hy5CWSvPxz1Dcorn3o19jpfZmDwL/PochFrT1ahgMC1c+bXKHLAH3qdcWEUh+ImaLXROQQ6ArKtFLAV4/v+lYwrBzFWXhSG5ddE7Mh0KehmfZtCQEkYyJjKFVdQBnNeow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391573; c=relaxed/simple;
-	bh=PBG55lAqnaQwboJtq43WsDRftctVGuPfcb1wgsPFgzM=;
+	s=arc-20240116; t=1728391576; c=relaxed/simple;
+	bh=pRk94JIcSn5g1656qmuqk9i6NNQiaTG1Oqe2iIFHchU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pu+ywukt8sKfBTU1g8m4mLy4MUT4FryKr3FnlIo3LQHs/50juFdOjqUg0UTb433hSFf+ZH5uYLj13/dEA/vwR+E4PapBH8I4W1mxowG3JhpNCHRn9eAaFU0JmOAZkAY6GLQDJTPUbiZE+4TsYez9Mz8m7CV5az5Dx4+/kApnIVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJr0y/Fc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnvUy8zwxlmnnDLK5sU+fh02d80eV3eNCcKL/2OTX5yKF079Si+gaHTm2d9Jz/t313xNsvrjEn7Sjsx4pJjdxnYlUNPyF66i0ua8AUIl3lySrkIIUyJUhMRDgiQFZlur2UduVKZxK4YwdW8KS15NJYQ54s3nTZrAIfi5CP0GYSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4c3+Y4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJr0y/Fc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778E6C4CEC7;
-	Tue,  8 Oct 2024 12:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4c3+Y4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C444C4CEC7;
+	Tue,  8 Oct 2024 12:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391572;
-	bh=PBG55lAqnaQwboJtq43WsDRftctVGuPfcb1wgsPFgzM=;
+	s=korg; t=1728391576;
+	bh=pRk94JIcSn5g1656qmuqk9i6NNQiaTG1Oqe2iIFHchU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJr0y/Fcg4VFb27FDdXNJuHNJ1kYJ/vwpPw3GFqKjUtpg8+AjrRXSUPY9kk4X85kB
-	 Tu6cUi4IFb/+kP0Rq9OmBdVDvDt/azCyU6MZpEITkEJFjDvachFSu6u8N9gerRqitB
-	 N79qEdNbBF+oLOPFoMTru7kZ3eEuiFbGcjW7h9jA=
+	b=L4c3+Y4IcHPx57H4VO4VWPIuMwlhjIgvnK+vwPyktwDYRldLUuV+orQ2JH3RwRepA
+	 c4AQFpoxcZFcQ5ZVl+c6ObeJKo0HFumurgIhQtTVq896arXP4USvzrCz2cukJbhJd2
+	 pz2ABcxoNKPKS+XS80uTHsxnvF1tbwa3yflId7lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Kaplan <david.kaplan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 139/558] wifi: iwlwifi: mvm: avoid NULL pointer dereference
-Date: Tue,  8 Oct 2024 14:02:49 +0200
-Message-ID: <20241008115707.835226753@linuxfoundation.org>
+Subject: [PATCH 6.11 157/558] x86/bugs: Fix handling when SRSO mitigation is disabled
+Date: Tue,  8 Oct 2024 14:03:07 +0200
+Message-ID: <20241008115708.539756155@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,74 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: David Kaplan <david.kaplan@amd.com>
 
-[ Upstream commit 557a6cd847645e667f3b362560bd7e7c09aac284 ]
+[ Upstream commit 1dbb6b1495d472806fef1f4c94f5b3e4c89a3c1d ]
 
-iwl_mvm_tx_skb_sta() and iwl_mvm_tx_mpdu() verify that the mvmvsta
-pointer is not NULL.
-It retrieves this pointer using iwl_mvm_sta_from_mac80211, which is
-dereferencing the ieee80211_sta pointer.
-If sta is NULL, iwl_mvm_sta_from_mac80211 will dereference a NULL
-pointer.
-Fix this by checking the sta pointer before retrieving the mvmsta
-from it. If sta is not NULL, then mvmsta isn't either.
+When the SRSO mitigation is disabled, either via mitigations=off or
+spec_rstack_overflow=off, the warning about the lack of IBPB-enhancing
+microcode is printed anyway.
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20240825191257.880921ce23b7.I340052d70ab6d3410724ce955eb00da10e08188f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This is unnecessary since the user has turned off the mitigation.
+
+  [ bp: Massage, drop SBPB rationale as it doesn't matter because when
+    mitigations are disabled x86_pred_cmd is not being used anyway. ]
+
+Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20240904150711.193022-1-david.kaplan@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 7ff5ea5e7aca5..db926b2f4d8d5 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1203,6 +1203,9 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	bool is_ampdu = false;
- 	int hdrlen;
- 
-+	if (WARN_ON_ONCE(!sta))
-+		return -1;
-+
- 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
- 	fc = hdr->frame_control;
- 	hdrlen = ieee80211_hdrlen(fc);
-@@ -1210,9 +1213,6 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	if (IWL_MVM_NON_TRANSMITTING_AP && ieee80211_is_probe_resp(fc))
- 		return -1;
- 
--	if (WARN_ON_ONCE(!mvmsta))
--		return -1;
--
- 	if (WARN_ON_ONCE(mvmsta->deflink.sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
- 
-@@ -1343,7 +1343,7 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 		       struct ieee80211_sta *sta)
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 45675da354f33..468449f73a957 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2551,10 +2551,9 @@ static void __init srso_select_mitigation(void)
  {
--	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+	struct iwl_mvm_sta *mvmsta;
- 	struct ieee80211_tx_info info;
- 	struct sk_buff_head mpdus_skbs;
- 	struct ieee80211_vif *vif;
-@@ -1352,9 +1352,11 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	struct sk_buff *orig_skb = skb;
- 	const u8 *addr3;
+ 	bool has_microcode = boot_cpu_has(X86_FEATURE_IBPB_BRTYPE);
  
--	if (WARN_ON_ONCE(!mvmsta))
-+	if (WARN_ON_ONCE(!sta))
- 		return -1;
+-	if (cpu_mitigations_off())
+-		return;
+-
+-	if (!boot_cpu_has_bug(X86_BUG_SRSO)) {
++	if (!boot_cpu_has_bug(X86_BUG_SRSO) ||
++	    cpu_mitigations_off() ||
++	    srso_cmd == SRSO_CMD_OFF) {
+ 		if (boot_cpu_has(X86_FEATURE_SBPB))
+ 			x86_pred_cmd = PRED_CMD_SBPB;
+ 		return;
+@@ -2585,11 +2584,6 @@ static void __init srso_select_mitigation(void)
+ 	}
  
-+	mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+
- 	if (WARN_ON_ONCE(mvmsta->deflink.sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
+ 	switch (srso_cmd) {
+-	case SRSO_CMD_OFF:
+-		if (boot_cpu_has(X86_FEATURE_SBPB))
+-			x86_pred_cmd = PRED_CMD_SBPB;
+-		return;
+-
+ 	case SRSO_CMD_MICROCODE:
+ 		if (has_microcode) {
+ 			srso_mitigation = SRSO_MITIGATION_MICROCODE;
+@@ -2643,6 +2637,8 @@ static void __init srso_select_mitigation(void)
+ 			pr_err("WARNING: kernel not compiled with MITIGATION_SRSO.\n");
+                 }
+ 		break;
++	default:
++		break;
+ 	}
  
+ out:
 -- 
 2.43.0
 
