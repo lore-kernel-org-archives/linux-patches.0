@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3B61D31A0;
-	Tue,  8 Oct 2024 12:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA8B1CCB32;
+	Tue,  8 Oct 2024 12:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392066; cv=none; b=h5ACVvBEdDtCycA4KfBYROL/sx3J6dO1ktllKRlfamCHErg9zZN4hjjLwEDWAI4TgT9hvekWQSuhAMlGE3820wTs+oGQCTvxA9O7hZI3B0HqJxh8/8ZL0tb2tUGlyre4B8PqHvL9XjNIfwrn/aQLHopPXGQVZf8FWgFQiV7hYsA=
+	t=1728392069; cv=none; b=FBa7EigNAKDM67EuSaW6cIQXCxN7zVWshZ7/Cu3Ld+tXTQq/VejRpe2KQED4YqjLv75YVboVA8ocwPXVvpzZ7hL1Z0yjErdHvd/wrBptPqAZR9SSFzWwQyOabJbZepUOkbyzutBkaVKNsJeRW83ADLaKQmW2iWvHBIGHABd06jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392066; c=relaxed/simple;
-	bh=HjrsSPZKBuUEZw46eIZODT5ZLGS4wojTTxCx8Wlpook=;
+	s=arc-20240116; t=1728392069; c=relaxed/simple;
+	bh=snErhnoyEtzeBRFaUbaRqc0ifgp9skSFBpvMMvvrhpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQkeIr3x9RsKvRvISr38GomgiWj9GhDfRDTEuw5DXQysqwCNbysP1JhMDQNR9SFVtVcqHvXMkg9LJuKguP3IGDX3sJ7vX+YMQuWet6mWm0xLES4NS9rwhv5KOwtcLQZBnu/rqgwMogxCXY589VwLp7OXIyvssqypTJ0b9yF4XR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxW2ZGwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlLu2bLyyEUOw9Q+D7mysQHJj55rHk13l+xAU/K39+eMKH2Jw7wNjXIJRZxCWcpiq9IK8qQhAALyDocGuozPAame3dv4WVSVKY3Oy1zguzE9mya7r3aT1SVRBY/KKS0yCQaP0lpyB93kXvuy+wm/456hWKrI9gtu/KQU5rnjw0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTn1d64y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxW2ZGwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E6AC4CEC7;
-	Tue,  8 Oct 2024 12:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTn1d64y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F45C4CEC7;
+	Tue,  8 Oct 2024 12:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392065;
-	bh=HjrsSPZKBuUEZw46eIZODT5ZLGS4wojTTxCx8Wlpook=;
+	s=korg; t=1728392069;
+	bh=snErhnoyEtzeBRFaUbaRqc0ifgp9skSFBpvMMvvrhpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxW2ZGwe6bFnfvy9Wy4IM2dh3eaApER+VNb+a9ly5Rhz63AgB7rsEed3K3wqyZomG
-	 tL0mne72O+DbML7nuXYeuhHrr2x1CI6PgCYIIwOR3I8beCS9DUSmH3quN0AC9UZ3Zu
-	 /MBMfSJjRrMPmfU2W3SwLnMYTfbI8x2wWgnp0ryI=
+	b=DTn1d64yZTHSQL7nS5k/xua7PttXhaoGMAEXV2cWrspj7V1yOYFrZrfEyLiP9O2tR
+	 QeiFf3OVTVfIEQUS/BJa4NH9jvIXCDKTzdopuJiZRQclwrnd19ZcnIVbmqWQURrP2L
+	 //oQOORTDMou+Z84hDmffGAtJR8NVyFGzVwakzFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Tim Huang <tim.huang@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 305/558] ext4: dont set SB_RDONLY after filesystem errors
-Date: Tue,  8 Oct 2024 14:05:35 +0200
-Message-ID: <20241008115714.319739584@linuxfoundation.org>
+Subject: [PATCH 6.11 276/558] drm/amdgpu: fix unchecked return value warning for amdgpu_atombios
+Date: Tue,  8 Oct 2024 14:05:06 +0200
+Message-ID: <20241008115713.191040195@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,54 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Tim Huang <tim.huang@amd.com>
 
-[ Upstream commit d3476f3dad4ad68ae5f6b008ea6591d1520da5d8 ]
+[ Upstream commit 92549780e32718d64a6d08bbbb3c6fffecb541c7 ]
 
-When the filesystem is mounted with errors=remount-ro, we were setting
-SB_RDONLY flag to stop all filesystem modifications. We knew this misses
-proper locking (sb->s_umount) and does not go through proper filesystem
-remount procedure but it has been the way this worked since early ext2
-days and it was good enough for catastrophic situation damage
-mitigation. Recently, syzbot has found a way (see link) to trigger
-warnings in filesystem freezing because the code got confused by
-SB_RDONLY changing under its hands. Since these days we set
-EXT4_FLAGS_SHUTDOWN on the superblock which is enough to stop all
-filesystem modifications, modifying SB_RDONLY shouldn't be needed. So
-stop doing that.
+This resolves the unchecded return value warning reported by Coverity.
 
-Link: https://lore.kernel.org/all/000000000000b90a8e061e21d12f@google.com
-Reported-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Link: https://patch.msgid.link/20240805201241.27286-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 35 ++++++++++++--------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index cecea19908109..b3f47d6879ebf 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -735,11 +735,12 @@ static void ext4_handle_error(struct super_block *sb, bool force_ro, int error,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index 7dc102f0bc1d3..0c8975ac5af9e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -1018,8 +1018,9 @@ int amdgpu_atombios_get_clock_dividers(struct amdgpu_device *adev,
+ 		if (clock_type == COMPUTE_ENGINE_PLL_PARAM) {
+ 			args.v3.ulClockParams = cpu_to_le32((clock_type << 24) | clock);
  
- 	ext4_msg(sb, KERN_CRIT, "Remounting filesystem read-only");
- 	/*
--	 * Make sure updated value of ->s_mount_flags will be visible before
--	 * ->s_flags update
-+	 * EXT4_FLAGS_SHUTDOWN was set which stops all filesystem
-+	 * modifications. We don't set SB_RDONLY because that requires
-+	 * sb->s_umount semaphore and setting it without proper remount
-+	 * procedure is confusing code such as freeze_super() leading to
-+	 * deadlocks and other problems.
- 	 */
--	smp_wmb();
--	sb->s_flags |= SB_RDONLY;
- }
+-			amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-				sizeof(args));
++			if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++			    index, (uint32_t *)&args, sizeof(args)))
++				return -EINVAL;
  
- static void update_super_work(struct work_struct *work)
+ 			dividers->post_div = args.v3.ucPostDiv;
+ 			dividers->enable_post_div = (args.v3.ucCntlFlag &
+@@ -1039,8 +1040,9 @@ int amdgpu_atombios_get_clock_dividers(struct amdgpu_device *adev,
+ 			if (strobe_mode)
+ 				args.v5.ucInputFlag = ATOM_PLL_INPUT_FLAG_PLL_STROBE_MODE_EN;
+ 
+-			amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-				sizeof(args));
++			if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++			    index, (uint32_t *)&args, sizeof(args)))
++				return -EINVAL;
+ 
+ 			dividers->post_div = args.v5.ucPostDiv;
+ 			dividers->enable_post_div = (args.v5.ucCntlFlag &
+@@ -1058,8 +1060,9 @@ int amdgpu_atombios_get_clock_dividers(struct amdgpu_device *adev,
+ 		/* fusion */
+ 		args.v4.ulClock = cpu_to_le32(clock);	/* 10 khz */
+ 
+-		amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-			sizeof(args));
++		if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++		    index, (uint32_t *)&args, sizeof(args)))
++			return -EINVAL;
+ 
+ 		dividers->post_divider = dividers->post_div = args.v4.ucPostDiv;
+ 		dividers->real_clock = le32_to_cpu(args.v4.ulClock);
+@@ -1070,8 +1073,9 @@ int amdgpu_atombios_get_clock_dividers(struct amdgpu_device *adev,
+ 		args.v6_in.ulClock.ulComputeClockFlag = clock_type;
+ 		args.v6_in.ulClock.ulClockFreq = cpu_to_le32(clock);	/* 10 khz */
+ 
+-		amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-			sizeof(args));
++		if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++		    index, (uint32_t *)&args, sizeof(args)))
++			return -EINVAL;
+ 
+ 		dividers->whole_fb_div = le16_to_cpu(args.v6_out.ulFbDiv.usFbDiv);
+ 		dividers->frac_fb_div = le16_to_cpu(args.v6_out.ulFbDiv.usFbDivFrac);
+@@ -1113,8 +1117,9 @@ int amdgpu_atombios_get_memory_pll_dividers(struct amdgpu_device *adev,
+ 			if (strobe_mode)
+ 				args.ucInputFlag |= MPLL_INPUT_FLAG_STROBE_MODE_EN;
+ 
+-			amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-				sizeof(args));
++			if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++			    index, (uint32_t *)&args, sizeof(args)))
++				return -EINVAL;
+ 
+ 			mpll_param->clkfrac = le16_to_cpu(args.ulFbDiv.usFbDivFrac);
+ 			mpll_param->clkf = le16_to_cpu(args.ulFbDiv.usFbDiv);
+@@ -1211,8 +1216,9 @@ int amdgpu_atombios_get_max_vddc(struct amdgpu_device *adev, u8 voltage_type,
+ 		args.v2.ucVoltageMode = 0;
+ 		args.v2.usVoltageLevel = 0;
+ 
+-		amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-			sizeof(args));
++		if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++		    index, (uint32_t *)&args, sizeof(args)))
++			return -EINVAL;
+ 
+ 		*voltage = le16_to_cpu(args.v2.usVoltageLevel);
+ 		break;
+@@ -1221,8 +1227,9 @@ int amdgpu_atombios_get_max_vddc(struct amdgpu_device *adev, u8 voltage_type,
+ 		args.v3.ucVoltageMode = ATOM_GET_VOLTAGE_LEVEL;
+ 		args.v3.usVoltageLevel = cpu_to_le16(voltage_id);
+ 
+-		amdgpu_atom_execute_table(adev->mode_info.atom_context, index, (uint32_t *)&args,
+-			sizeof(args));
++		if (amdgpu_atom_execute_table(adev->mode_info.atom_context,
++		    index, (uint32_t *)&args, sizeof(args)))
++			return -EINVAL;
+ 
+ 		*voltage = le16_to_cpu(args.v3.usVoltageLevel);
+ 		break;
 -- 
 2.43.0
 
