@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DC0178384;
-	Tue,  8 Oct 2024 12:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55B31E493;
+	Tue,  8 Oct 2024 12:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390772; cv=none; b=UmBrXP0iBZXLQdt/hUmVEV9faZOPYPZCq9oCQoL9zeYuUIzzVLMxE54/OfQkHvTlMkR0EIqH7LmVKNzdMKhOItAt1uqyEJvuskDHdtv9G+rGKs7rA3zglRb8wWk+oD8gb0Sz9g9Hp4EgFfkkooEj8quKkWsML5TO2KMMola1eks=
+	t=1728390775; cv=none; b=Hwcv82yWBNrOQWxRNDEUbDFWcMoYy7YQCvzM5kUHchIUdGDYOUHdFiaX51NNbRmUEySFlRLRTsUA1VQ1dT+RWCUyXoKsP8uwxq4/NHpzz7wobC9D6xcHnfLvSjGuSVZTwRnf+NOarvZWogb5BYkIM5B4oPvAemntPiPNuTRQrbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390772; c=relaxed/simple;
-	bh=LID3IWvpf/ORg9+x9bgOJSVtGccnPizKjiMMWM4qnaE=;
+	s=arc-20240116; t=1728390775; c=relaxed/simple;
+	bh=eRMIeBCBcGhvIOv4CHYQaBnFbh2ti3Y+DIkBnqdD/2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hz186w25Fowa+vcZqB1m51tmaOF2wXSueqlrRnnQiPy2ZwFU2px+Jv8tJ/uKo9CbN3Rdh1GZyOq2HhAgKYVN2UrGQ7Y4bHVRk42h063tl1RnKTK7MeGaB0ELjEzqqRHIBBH9kVCnkaWERruaKElAJTljkVBSJ735YyX3Q9u+Ckk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+c7EruF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOfq3xeEz5zRwRfJwhv/VuzV5irxe+nXQNwS11NWahlBxQfqFJOhrcPfmBIZc7NXnv0RNZE+KfOt2xzWHRcrnzLqJU68y/AN2YP5C9cZU+aH1+8pAuEadnHrNutYWxVl/NttiGxMX3sKxihe7ZsXbezgykYU7xnDPti5JwUi8bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHS6amXp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+c7EruF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01280C4CEC7;
-	Tue,  8 Oct 2024 12:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHS6amXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D118C4CEC7;
+	Tue,  8 Oct 2024 12:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390772;
-	bh=LID3IWvpf/ORg9+x9bgOJSVtGccnPizKjiMMWM4qnaE=;
+	s=korg; t=1728390775;
+	bh=eRMIeBCBcGhvIOv4CHYQaBnFbh2ti3Y+DIkBnqdD/2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+c7EruFiFDED4bdM3LZ/raFgshXal891MWzStsa6w1M0cATze/8l5hKmSlL/dCMj
-	 E39Xf3KISmQienmvhK7AAtqAaWkcbp1OFn46RZ1ZMrdj0OWaUk7i26boUP8LfKlv7z
-	 1xal9yaRjtO2LtebCiSzhjdaqVlciwh47PDHd6gA=
+	b=KHS6amXpkXpoaBNl7G6WDbmhqtES+6ig6t/aRy9Zb36qC4+avMwop7wax6HOCE4bD
+	 K+lBiCkNG6q44+VAEOw8jCC0RkqydNfLzwrQEL9nkYNvE8Og9gbyUg+BzajYBj13Lh
+	 TPQfFAyUp1wQibbQ5PhbTRarzbtzZM2i5ESt8ra0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 361/482] scripts/gdb: fix lx-mounts command error
-Date: Tue,  8 Oct 2024 14:07:04 +0200
-Message-ID: <20241008115702.629204778@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.10 388/482] media: uapi/linux/cec.h: cec_msg_set_reply_to: zero flags
+Date: Tue,  8 Oct 2024 14:07:31 +0200
+Message-ID: <20241008115703.683227441@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,52 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 4b183f613924ad536be2f8bd12b307e9c5a96bf6 upstream.
+commit 599f6899051cb70c4e0aa9fd591b9ee220cb6f14 upstream.
 
-(gdb) lx-mounts
-      mount          super_block     devname pathname fstype options
-Python Exception <class 'gdb.error'>: There is no member named list.
-Error occurred in Python: There is no member named list.
+The cec_msg_set_reply_to() helper function never zeroed the
+struct cec_msg flags field, this can cause unexpected behavior
+if flags was uninitialized to begin with.
 
-We encounter the above issue after commit 2eea9ce4310d ("mounts: keep
-list of mounts in an rbtree"). The commit move a mount from list into
-rbtree.
-
-So we can instead use rbtree to iterate all mounts information.
-
-Link: https://lkml.kernel.org/r/20240723064902.124154-4-kuan-ying.lee@canonical.com
-Fixes: 2eea9ce4310d ("mounts: keep list of mounts in an rbtree")
-Signed-off-by: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0dbacebede1e ("[media] cec: move the CEC framework out of staging and to media")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gdb/linux/proc.py |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/cec.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/scripts/gdb/linux/proc.py
-+++ b/scripts/gdb/linux/proc.py
-@@ -18,6 +18,7 @@ from linux import utils
- from linux import tasks
- from linux import lists
- from linux import vfs
-+from linux import rbtree
- from struct import *
+--- a/include/uapi/linux/cec.h
++++ b/include/uapi/linux/cec.h
+@@ -132,6 +132,8 @@ static inline void cec_msg_init(struct c
+  * Set the msg destination to the orig initiator and the msg initiator to the
+  * orig destination. Note that msg and orig may be the same pointer, in which
+  * case the change is done in place.
++ *
++ * It also zeroes the reply, timeout and flags fields.
+  */
+ static inline void cec_msg_set_reply_to(struct cec_msg *msg,
+ 					struct cec_msg *orig)
+@@ -139,7 +141,9 @@ static inline void cec_msg_set_reply_to(
+ 	/* The destination becomes the initiator and vice versa */
+ 	msg->msg[0] = (cec_msg_destination(orig) << 4) |
+ 		      cec_msg_initiator(orig);
+-	msg->reply = msg->timeout = 0;
++	msg->reply = 0;
++	msg->timeout = 0;
++	msg->flags = 0;
+ }
  
- 
-@@ -172,8 +173,7 @@ values of that process namespace"""
-         gdb.write("{:^18} {:^15} {:>9} {} {} options\n".format(
-                   "mount", "super_block", "devname", "pathname", "fstype"))
- 
--        for mnt in lists.list_for_each_entry(namespace['list'],
--                                             mount_ptr_type, "mnt_list"):
-+        for mnt in rbtree.rb_inorder_for_each_entry(namespace['mounts'], mount_ptr_type, "mnt_node"):
-             devname = mnt['mnt_devname'].string()
-             devname = devname if devname else "none"
- 
+ /**
 
 
