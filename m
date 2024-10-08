@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D171D0BAA;
-	Tue,  8 Oct 2024 12:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB8A165F08;
+	Tue,  8 Oct 2024 12:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390570; cv=none; b=tzZ3CMfCHlMbEIWRVBwO25pQM7iFk9BL09wki4RmikyTow+6BtCn5AHGG3i4FJTj3tUDHuzodME0OP6wzG8AAWumlG/4En7rf76uOyUL0nJ7U7FBGbRWME2EqymaDA4Ilc1rqhu3lJYWFHAu0evr4uTjoMHKjvdTI77ql3WQdY8=
+	t=1728390579; cv=none; b=K/fwv1NBnAoidrhra1QN8/XTrCi1ykC+OM+C2A1nliev0IwZZrSHTS7/51iGqTPwOOjd1/QlLfb8iKFK6qR3DAA3DbZCG1W5uKYHfNs51ylFNZB1ERoELPwW3nGD/293ckV6YQdaKkEMJK7cQyZSxrbFAZq7nbNrn5qRgpAkjD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390570; c=relaxed/simple;
-	bh=VwR5v8WrpYWqjWPXwzGg517Rw28jI9wAHFpq1vcsXW4=;
+	s=arc-20240116; t=1728390579; c=relaxed/simple;
+	bh=SZpmYqhfSahMTDAEV/p73nzRoaL9SIh6nfpSmnLaloQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ItpY4HUcQdWuUNb7yREhVB1rQnNr7ZJtvYD0K/WcXmfP8A+9b+tjKYjMOW0RdW7EwflzKVMHzgPdNqoW1sQ+qJtbnYVAXFmDm62je/Tf4E+hypiscwWYqeY8IgyqQRlDsBgyKF7ReQst1tN/Q/9M6I6NkakxHdFM2xpBy8SXbp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S17srnYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q//oTtCFM+mf+YgVgwC0+0sjSRiTFpNKXcH92fYZbYwLrXb0necLQbRd4eWYpVgOQWy8JDGpv6ikqQxdSoMNLn/0dZ2Q97VvSIe+MoautBaj1OOj+2F3MVXZUS7SRSU7lbgK9l1OA77jrrVBLCTImUiK26yL7bm8ydV6wBNThoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LugYYQb0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S17srnYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC554C4CEC7;
-	Tue,  8 Oct 2024 12:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LugYYQb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B404C4CEC7;
+	Tue,  8 Oct 2024 12:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390570;
-	bh=VwR5v8WrpYWqjWPXwzGg517Rw28jI9wAHFpq1vcsXW4=;
+	s=korg; t=1728390578;
+	bh=SZpmYqhfSahMTDAEV/p73nzRoaL9SIh6nfpSmnLaloQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S17srnYXLZ+npZaGcufbFvtweuRuAkwyOVyWLpkb5QmtalSgiLO+Gp5oCXyrfTWf2
-	 gufeeEpjaAMZI0afNaU4grDunpva+vttczTjgKsFp11bvCnLG3YzwBRJ3FDMfyQH/e
-	 jVyYR4PtBst47zyR59C3XDQC4q6yU2+PHFLKDbEo=
+	b=LugYYQb05gRk4NYpEAy4Bk21qFSjzsdCbHr46CQ4zz7ome/rEaBECKWQfHgHHGRZM
+	 Sb0QZtQFS2IoyLPWbdc22ywpnbO8JWRasK3F6985joOByIj6Nt2dcAIBLlnfp+28YL
+	 SgxmndsTBkHKFwROtbenfVemBwpwxGExXMJNiKbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 295/482] media: i2c: ar0521: Use cansleep version of gpiod_set_value()
-Date: Tue,  8 Oct 2024 14:05:58 +0200
-Message-ID: <20241008115659.890780348@linuxfoundation.org>
+	Krzysztof Piotr Oledzki <ole@ans.pl>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.10 296/482] i2c: core: Lock address during client device instantiation
+Date: Tue,  8 Oct 2024 14:05:59 +0200
+Message-ID: <20241008115659.930371333@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -46,78 +45,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit bee1aed819a8cda47927436685d216906ed17f62 upstream.
+commit 8d3cefaf659265aa82b0373a563fdb9d16a2b947 upstream.
 
-If we use GPIO reset from I2C port expander, we must use *_cansleep()
-variant of GPIO functions.
-This was not done in ar0521_power_on()/ar0521_power_off() functions.
-Let's fix that.
+Krzysztof reported an issue [0] which is caused by parallel attempts to
+instantiate the same I2C client device. This can happen if driver
+supports auto-detection, but certain devices are also instantiated
+explicitly.
+The original change isn't actually wrong, it just revealed that I2C core
+isn't prepared yet to handle this scenario.
+Calls to i2c_new_client_device() can be nested, therefore we can't use a
+simple mutex here. Parallel instantiation of devices at different addresses
+is ok, so we just have to prevent parallel instantiation at the same address.
+We can use a bitmap with one bit per 7-bit I2C client address, and atomic
+bit operations to set/check/clear bits.
+Now a parallel attempt to instantiate a device at the same address will
+result in -EBUSY being returned, avoiding the "sysfs: cannot create duplicate
+filename" splash.
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 11 at drivers/gpio/gpiolib.c:3496 gpiod_set_value+0x74/0x7c
-Modules linked in:
-CPU: 0 PID: 11 Comm: kworker/u16:0 Not tainted 6.10.0 #53
-Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : gpiod_set_value+0x74/0x7c
-lr : ar0521_power_on+0xcc/0x290
-sp : ffffff8001d7ab70
-x29: ffffff8001d7ab70 x28: ffffff80027dcc90 x27: ffffff8003c82000
-x26: ffffff8003ca9250 x25: ffffffc080a39c60 x24: ffffff8003ca9088
-x23: ffffff8002402720 x22: ffffff8003ca9080 x21: ffffff8003ca9088
-x20: 0000000000000000 x19: ffffff8001eb2a00 x18: ffffff80efeeac80
-x17: 756d2d6332692f30 x16: 0000000000000000 x15: 0000000000000000
-x14: ffffff8001d91d40 x13: 0000000000000016 x12: ffffffc080e98930
-x11: ffffff8001eb2880 x10: 0000000000000890 x9 : ffffff8001d7a9f0
-x8 : ffffff8001d92570 x7 : ffffff80efeeac80 x6 : 000000003fc6e780
-x5 : ffffff8001d91c80 x4 : 0000000000000002 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000001
-Call trace:
- gpiod_set_value+0x74/0x7c
- ar0521_power_on+0xcc/0x290
-...
+Note: This patch version includes small cosmetic changes to the Tested-by
+      version, only functional change is that address locking is supported
+      for slave addresses too.
 
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+[0] https://lore.kernel.org/linux-i2c/9479fe4e-eb0c-407e-84c0-bd60c15baf74@ans.pl/T/#m12706546e8e2414d8f1a0dc61c53393f731685cc
+
+Fixes: caba40ec3531 ("eeprom: at24: Probe for DDR3 thermal sensor in the SPD case")
 Cc: stable@vger.kernel.org
-Acked-by: Krzysztof Hałasa <khalasa@piap.pl>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Tested-by: Krzysztof Piotr Oledzki <ole@ans.pl>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ar0521.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core-base.c |   28 ++++++++++++++++++++++++++++
+ include/linux/i2c.h         |    3 +++
+ 2 files changed, 31 insertions(+)
 
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -844,7 +844,8 @@ static int ar0521_power_off(struct devic
- 	clk_disable_unprepare(sensor->extclk);
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -915,6 +915,27 @@ int i2c_dev_irq_from_resources(const str
+ 	return 0;
+ }
  
- 	if (sensor->reset_gpio)
--		gpiod_set_value(sensor->reset_gpio, 1); /* assert RESET signal */
-+		/* assert RESET signal */
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
++/*
++ * Serialize device instantiation in case it can be instantiated explicitly
++ * and by auto-detection
++ */
++static int i2c_lock_addr(struct i2c_adapter *adap, unsigned short addr,
++			 unsigned short flags)
++{
++	if (!(flags & I2C_CLIENT_TEN) &&
++	    test_and_set_bit(addr, adap->addrs_in_instantiation))
++		return -EBUSY;
++
++	return 0;
++}
++
++static void i2c_unlock_addr(struct i2c_adapter *adap, unsigned short addr,
++			    unsigned short flags)
++{
++	if (!(flags & I2C_CLIENT_TEN))
++		clear_bit(addr, adap->addrs_in_instantiation);
++}
++
+ /**
+  * i2c_new_client_device - instantiate an i2c device
+  * @adap: the adapter managing the device
+@@ -962,6 +983,10 @@ i2c_new_client_device(struct i2c_adapter
+ 		goto out_err_silent;
+ 	}
  
- 	for (i = ARRAY_SIZE(ar0521_supply_names) - 1; i >= 0; i--) {
- 		if (sensor->supplies[i])
-@@ -878,7 +879,7 @@ static int ar0521_power_on(struct device
++	status = i2c_lock_addr(adap, client->addr, client->flags);
++	if (status)
++		goto out_err_silent;
++
+ 	/* Check for address business */
+ 	status = i2c_check_addr_busy(adap, i2c_encode_flags_to_addr(client));
+ 	if (status)
+@@ -993,6 +1018,8 @@ i2c_new_client_device(struct i2c_adapter
+ 	dev_dbg(&adap->dev, "client [%s] registered with bus id %s\n",
+ 		client->name, dev_name(&client->dev));
  
- 	if (sensor->reset_gpio)
- 		/* deassert RESET signal */
--		gpiod_set_value(sensor->reset_gpio, 0);
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
- 	usleep_range(4500, 5000); /* min 45000 clocks */
++	i2c_unlock_addr(adap, client->addr, client->flags);
++
+ 	return client;
  
- 	for (cnt = 0; cnt < ARRAY_SIZE(initial_regs); cnt++) {
+ out_remove_swnode:
+@@ -1004,6 +1031,7 @@ out_err:
+ 	dev_err(&adap->dev,
+ 		"Failed to register i2c client %s at 0x%02x (%d)\n",
+ 		client->name, client->addr, status);
++	i2c_unlock_addr(adap, client->addr, client->flags);
+ out_err_silent:
+ 	if (need_put)
+ 		put_device(&client->dev);
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -748,6 +748,9 @@ struct i2c_adapter {
+ 	struct regulator *bus_regulator;
+ 
+ 	struct dentry *debugfs;
++
++	/* 7bit address space */
++	DECLARE_BITMAP(addrs_in_instantiation, 1 << 7);
+ };
+ #define to_i2c_adapter(d) container_of(d, struct i2c_adapter, dev)
+ 
 
 
