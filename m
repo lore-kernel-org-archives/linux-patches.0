@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF611DDC24;
-	Tue,  8 Oct 2024 12:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9C11DDC24;
+	Tue,  8 Oct 2024 12:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391372; cv=none; b=IOq2gokkAzd8Zik9LyX+PJsIlyRh1E3RgbCZw7dcpXtnbHl1u7C/8W3XT7pKcidpSgWk+yngs0jzKIMcqfXkNGS4qbpPPbUT79cYtKpPRarZpH52vZp+cBi+kb/KTbEeHoJN1WElidL59Fxllrtr7zsyO7zfe4LG5kKiULPXQN4=
+	t=1728391376; cv=none; b=ZbX8xNUNb/Pznz4aG8PC4L9YaV0WqJLyPHOo9sPLbLgsYrYrKaSrmW3eW1M/SQ/UBYWzlsbt/DEKtcg4lASbO/6i96HFwfWcDCqX4TU8wqpnlwJaCtr4xUUONro+mPb6mfeEE5gMkV/m+z2/OAS5HX9N4O4Zoji5juSlLxy9sj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391372; c=relaxed/simple;
-	bh=jN16a/nnvaWJoiMfftiYAUX3rrtX478DGZhLBTyP83Y=;
+	s=arc-20240116; t=1728391376; c=relaxed/simple;
+	bh=MY12BubPSsjVHyQKPSo/DBV0gGFzq4N+/7Erdoo8t2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwUWItzP5fokAQXHY8r7NqFfOGfKSCKwvABAi/Zz36GhOr/IEbypy2ofeqvLzF1vwBYKeKddByzfLN8D6J2JKGOXSw3etAMqrnvbc1QUi6UvPr8EwjJ/toWuLVKo4Wb46iBYXY0UguVvWpQWiOwg+u+z7wHeVntgdB5Wq23MtFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiVWMbV5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIQPOkQPmhQ4LsaLOAabdcdOxb47MmZ1JFJeGrI69ZyCY28eN6SdEJ7qSPB/sfuUCibl8JDl00ivOAy7aCMy1m2PqlRboizcWDUthVk1foVVme50usiYqQzICjnpYrItBP7x0OyB55mdHiVpKT6kzVUyLiNGXigUbX4TJZd3XI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOZJDmjH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiVWMbV5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A56C4CEC7;
-	Tue,  8 Oct 2024 12:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOZJDmjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAB6C4CEC7;
+	Tue,  8 Oct 2024 12:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391372;
-	bh=jN16a/nnvaWJoiMfftiYAUX3rrtX478DGZhLBTyP83Y=;
+	s=korg; t=1728391375;
+	bh=MY12BubPSsjVHyQKPSo/DBV0gGFzq4N+/7Erdoo8t2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiVWMbV5SEjux2idIp3r1A+nGUEOeFe+5a2NhIUs/gL+X1EeXxu0SN3mCAHp4YaYF
-	 9CjUg2U2O4wo46R8/9EbxdqUSsGIQgLTTGFOIC/Om5bAfpRQegTZyHVM2bNAjsFXt+
-	 8HLn0M3EnAArbNFB8TTO1GYrD7jvEPfoZeZUoDXQ=
+	b=VOZJDmjHBwxrTaSR05fFnmlGXvzqX7Zr9ZQ+0Xq7y1pw974cvkDGmI6EoMw6mvmYF
+	 vS2yfmq5LXnoQtNjxpREV2vbb5AlgS/d4jh74RddhXuR0RH3LZsl2nyC7RRnJxV/el
+	 oAzsYxPGjrRB3ZpPBsLWcnXyUDA1n+ebSSQOlb2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 093/558] wifi: iwlwifi: mvm: Fix a race in scan abort flow
-Date: Tue,  8 Oct 2024 14:02:03 +0200
-Message-ID: <20241008115706.031054635@linuxfoundation.org>
+Subject: [PATCH 6.11 094/558] wifi: iwlwifi: mvm: drop wrong STA selection in TX
+Date: Tue,  8 Oct 2024 14:02:04 +0200
+Message-ID: <20241008115706.069055450@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,151 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 87c1c28a9aa149489e1667f5754fc24f4973d2d0 ]
+[ Upstream commit 1c7e1068a7c9c39ed27636db93e71911e0045419 ]
 
-When the upper layer requests to cancel an ongoing scan, a race
-is possible in which by the time the driver starts to handle the
-upper layers scan cancel flow, the FW already completed handling
-the scan request and the driver received the scan complete
-notification but still did not handle the notification. In such a
-case the FW will simply ignore the scan abort request coming from
-the driver, no notification would arrive from the FW and the entire
-abort flow would be considered a failure.
+This shouldn't happen at all, since in station mode all MMPDUs
+go through the TXQ for the STA, and not this function. There
+may or may not be a race in mac80211 through which this might
+happen for some frames while a station is being added, but in
+that case we can also just drop the frame and pretend the STA
+didn't exist yet.
 
-To better handle this, check the status code returned by the FW for
-the scan abort command. In case the status indicates that
-no scan was aborted, complete the scan abort flow with success, i.e.,
-the scan was aborted, as the flow is expected to consume the scan
-complete notification.
+Also, the code is simply wrong since it uses deflink, and it's
+not easy to fix it since the mvmvif->ap_sta pointer cannot be
+used without the mutex, and perhaps the right link might not
+even be known.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Just drop the frame at that point instead of trying to fix it
+up.
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825085558.483989d3baef.I3340556a222388504c6330b333360bf77d10f9e2@changeid
+Link: https://patch.msgid.link/20240808232017.45ad105dc7fe.I6d45c82e5758395d9afb8854057ded03c7dc81d7@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/fw/api/scan.h  | 13 ++++++
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 42 +++++++++++++++----
- 2 files changed, 47 insertions(+), 8 deletions(-)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c    | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-index 8598031567bba..0aefdf353b214 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-@@ -1132,6 +1132,19 @@ struct iwl_umac_scan_abort {
- 	__le32 flags;
- } __packed; /* SCAN_ABORT_CMD_UMAC_API_S_VER_1 */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 625ccf566e1c2..1ebcc6417ecef 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -838,20 +838,10 @@ void iwl_mvm_mac_tx(struct ieee80211_hw *hw,
+ 	if (ieee80211_is_mgmt(hdr->frame_control))
+ 		sta = NULL;
  
-+/**
-+ * enum iwl_umac_scan_abort_status
-+ *
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_SUCCESS: scan was successfully aborted
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_IN_PROGRESS: scan abort is in progress
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND: nothing to abort
-+ */
-+enum iwl_umac_scan_abort_status {
-+	IWL_UMAC_SCAN_ABORT_STATUS_SUCCESS = 0,
-+	IWL_UMAC_SCAN_ABORT_STATUS_IN_PROGRESS,
-+	IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND,
-+};
-+
- /**
-  * struct iwl_umac_scan_complete
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 1cc9c426bb159..3a9018595ea90 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3313,13 +3313,23 @@ void iwl_mvm_rx_umac_scan_iter_complete_notif(struct iwl_mvm *mvm,
- 		       mvm->scan_start);
- }
+-	/* If there is no sta, and it's not offchannel - send through AP */
++	/* this shouldn't even happen: just drop */
+ 	if (!sta && info->control.vif->type == NL80211_IFTYPE_STATION &&
+-	    !offchannel) {
+-		struct iwl_mvm_vif *mvmvif =
+-			iwl_mvm_vif_from_mac80211(info->control.vif);
+-		u8 ap_sta_id = READ_ONCE(mvmvif->deflink.ap_sta_id);
+-
+-		if (ap_sta_id < mvm->fw->ucode_capa.num_stations) {
+-			/* mac80211 holds rcu read lock */
+-			sta = rcu_dereference(mvm->fw_id_to_mac_id[ap_sta_id]);
+-			if (IS_ERR_OR_NULL(sta))
+-				goto drop;
+-		}
+-	}
++	    !offchannel)
++		goto drop;
  
--static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
-+static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type, bool *wait)
- {
--	struct iwl_umac_scan_abort cmd = {};
-+	struct iwl_umac_scan_abort abort_cmd = {};
-+	struct iwl_host_cmd cmd = {
-+		.id = WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
-+		.len = { sizeof(abort_cmd), },
-+		.data = { &abort_cmd, },
-+		.flags = CMD_SEND_IN_RFKILL,
-+	};
-+
- 	int uid, ret;
-+	u32 status = IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND;
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
-+	*wait = true;
-+
- 	/* We should always get a valid index here, because we already
- 	 * checked that this type of scan was running in the generic
- 	 * code.
-@@ -3328,17 +3338,28 @@ static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
- 	if (WARN_ON_ONCE(uid < 0))
- 		return uid;
- 
--	cmd.uid = cpu_to_le32(uid);
-+	abort_cmd.uid = cpu_to_le32(uid);
- 
- 	IWL_DEBUG_SCAN(mvm, "Sending scan abort, uid %u\n", uid);
- 
--	ret = iwl_mvm_send_cmd_pdu(mvm,
--				   WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
--				   CMD_SEND_IN_RFKILL, sizeof(cmd), &cmd);
-+	ret = iwl_mvm_send_cmd_status(mvm, &cmd, &status);
-+
-+	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d, status=%u\n", ret, status);
- 	if (!ret)
- 		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
- 
--	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d\n", ret);
-+	/* Handle the case that the FW is no longer familiar with the scan that
-+	 * is to be stopped. In such a case, it is expected that the scan
-+	 * complete notification was already received but not yet processed.
-+	 * In such a case, there is no need to wait for a scan complete
-+	 * notification and the flow should continue similar to the case that
-+	 * the scan was really aborted.
-+	 */
-+	if (status == IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND) {
-+		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
-+		*wait = false;
-+	}
-+
- 	return ret;
- }
- 
-@@ -3348,6 +3369,7 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 	static const u16 scan_done_notif[] = { SCAN_COMPLETE_UMAC,
- 					      SCAN_OFFLOAD_COMPLETE, };
- 	int ret;
-+	bool wait = true;
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
-@@ -3359,7 +3381,7 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 	IWL_DEBUG_SCAN(mvm, "Preparing to stop scan, type %x\n", type);
- 
- 	if (fw_has_capa(&mvm->fw->ucode_capa, IWL_UCODE_TLV_CAPA_UMAC_SCAN))
--		ret = iwl_mvm_umac_scan_abort(mvm, type);
-+		ret = iwl_mvm_umac_scan_abort(mvm, type, &wait);
- 	else
- 		ret = iwl_mvm_lmac_scan_abort(mvm);
- 
-@@ -3367,6 +3389,10 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 		IWL_DEBUG_SCAN(mvm, "couldn't stop scan type %d\n", type);
- 		iwl_remove_notification(&mvm->notif_wait, &wait_scan_done);
- 		return ret;
-+	} else if (!wait) {
-+		IWL_DEBUG_SCAN(mvm, "no need to wait for scan type %d\n", type);
-+		iwl_remove_notification(&mvm->notif_wait, &wait_scan_done);
-+		return 0;
- 	}
- 
- 	return iwl_wait_notification(&mvm->notif_wait, &wait_scan_done,
+ 	if (tmp_sta && !sta && link_id != IEEE80211_LINK_UNSPECIFIED &&
+ 	    !ieee80211_is_probe_resp(hdr->frame_control)) {
 -- 
 2.43.0
 
