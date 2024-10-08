@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8EF1C32EB;
-	Tue,  8 Oct 2024 13:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288A71C32EB;
+	Tue,  8 Oct 2024 13:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393005; cv=none; b=qMzEcDVhBiwVkUp4SQLTUh2T7wPKW5yclZE0oahAIzLVZdmWcOZXkl/94fwWvWUnkm5GRsC/DA4x7nrtk8p8Bwcu+aE6vUS46IO4Aa3Law0mwmRKGkngU7zHuwsfgEqnJPLjMgZrZzQbZbCPVx/wZqj8AD6bvdjkOedEufW09Cc=
+	t=1728393009; cv=none; b=oH1Rm2z0eOh9Nji2Clxuavq1N3QXR4Layl/gXrAXS43+n4h1uTUdnRsrUw379vlrUuGigMKwJlivDZUNHop5LBGBZMJW5QCLvwArBasyfqVnbGqVwTNTnJuOeHprqiK7GGrZvwkCUP9oye0zw7eAXYV77430Mf0n9IGyDOHI4xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393005; c=relaxed/simple;
-	bh=lTXM3K8l3fRqCbKNtMC6hyCevmzx5yJBSeQNyQxBweg=;
+	s=arc-20240116; t=1728393009; c=relaxed/simple;
+	bh=vCbsXhEFb4l7Cq11jiZ0EWfVTpiai+BQWj3Oiv6FKg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tU8hJ4xR78coctnVDychPcAhGEebTd35loWZHz+ZQU6vZj8noFIadZckWSTcBZnkh7yDr/Xtd8wyRmrNnt7qYyOaVSmuhGHaVdQXTPfV/s0WuD5FpMDeSobuxVTXdMKj1h+xFgTrKe/vO1IlTM/VLbx1A66mAHf0YXz9HLSapoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L9rpveW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1ajVqG+lLA69QVqOiGyc8W9mPojd7QX5lP37suJJylllTYqooR/5CmdA2PN3hxhAJIE0kXUvXSjnsfYEYnSxl13QwxW+6owr5pmCC0Rrnx0paBSm+sjVDS/jgO26VtDbfyLjF+364E0CHXstyNTwVS847LqzNlSMgPvhfutWBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVBqbIu1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L9rpveW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158EAC4CEC7;
-	Tue,  8 Oct 2024 13:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVBqbIu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5CDC4CEC7;
+	Tue,  8 Oct 2024 13:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393005;
-	bh=lTXM3K8l3fRqCbKNtMC6hyCevmzx5yJBSeQNyQxBweg=;
+	s=korg; t=1728393009;
+	bh=vCbsXhEFb4l7Cq11jiZ0EWfVTpiai+BQWj3Oiv6FKg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1L9rpveWRTg8Ner1KrgWTc5bZ647UnpAghBXzuk34U4stMnzaspo8+sNhSyXJGFXa
-	 VY8JdFMxy7AI0NOvZSMS7vJ9xftXXdRJ+oBU3VferZ8J30UNLm4aWYac9nUTex2kUj
-	 AxJazt0wy+q0xjZUPSbe3Bd9L8uN63KxVkHHNuSo=
+	b=BVBqbIu1Wxvsnzlg0rOe82N2PMP3zkqwASTxERw/91P9vmz/NM7t2TlEY0OkJdEdd
+	 C2P8N3FmeOtYuTNhFJKQYHdt20v6kJSe5zX1DMlM2Kb81c3dqlA+r9GtvwLiahppQy
+	 KLFeUm4Hi8OS1Nabkm5ddL8ETtGUtW+fVLQpA8rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Liao Chen <liaochen4@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/386] drm/amdgpu: Fix get each xcp macro
-Date: Tue,  8 Oct 2024 14:04:12 +0200
-Message-ID: <20241008115629.609070052@linuxfoundation.org>
+Subject: [PATCH 6.6 008/386] mailbox: rockchip: fix a typo in module autoloading
+Date: Tue,  8 Oct 2024 14:04:13 +0200
+Message-ID: <20241008115629.649215922@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,33 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Liao Chen <liaochen4@huawei.com>
 
-[ Upstream commit ef126c06a98bde1a41303970eb0fc0ac33c3cc02 ]
+[ Upstream commit e92d87c9c5d769e4cb1dd7c90faa38dddd7e52e3 ]
 
-Fix get each xcp macro to loop over each partition correctly
+MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match) could let the module
+properly autoloaded based on the alias from of_device_id table. It
+should be 'rockchip_mbox_of_match' instead of 'rockchp_mbox_of_match',
+just fix it.
 
-Fixes: 4bdca2057933 ("drm/amdgpu: Add utility functions for xcp")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f70ed3b5dc8b ("mailbox: rockchip: Add Rockchip mailbox driver")
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h | 2 +-
+ drivers/mailbox/rockchip-mailbox.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
-index 9a1036aeec2a0..9142238e7791a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
-@@ -179,6 +179,6 @@ amdgpu_get_next_xcp(struct amdgpu_xcp_mgr *xcp_mgr, int *from)
+diff --git a/drivers/mailbox/rockchip-mailbox.c b/drivers/mailbox/rockchip-mailbox.c
+index 8ffad059e8984..4d966cb2ed036 100644
+--- a/drivers/mailbox/rockchip-mailbox.c
++++ b/drivers/mailbox/rockchip-mailbox.c
+@@ -159,7 +159,7 @@ static const struct of_device_id rockchip_mbox_of_match[] = {
+ 	{ .compatible = "rockchip,rk3368-mailbox", .data = &rk3368_drv_data},
+ 	{ },
+ };
+-MODULE_DEVICE_TABLE(of, rockchp_mbox_of_match);
++MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match);
  
- #define for_each_xcp(xcp_mgr, xcp, i)                            \
- 	for (i = 0, xcp = amdgpu_get_next_xcp(xcp_mgr, &i); xcp; \
--	     xcp = amdgpu_get_next_xcp(xcp_mgr, &i))
-+	     ++i, xcp = amdgpu_get_next_xcp(xcp_mgr, &i))
- 
- #endif
+ static int rockchip_mbox_probe(struct platform_device *pdev)
+ {
 -- 
 2.43.0
 
