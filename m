@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9988F1DF747;
-	Tue,  8 Oct 2024 13:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF38318C333;
+	Tue,  8 Oct 2024 13:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394247; cv=none; b=U0aC7uh83yqSyKlifaprB59DaFTcXQZNsJ0+oJFlLhfzDNxeLJcZJvhYv1Ed2Xnujacgq0XLEiYtJmLM/JRt9xBmiEA3TLjbjZx+NgcwHV0cWqnThxAextz3XGTFUQxt9D3pwZYXOMN0JP3aqiZVCckFJ1bxLeEg896jh9jBPQU=
+	t=1728394251; cv=none; b=CSZb7g/rXwKQeuc5aS1dPCSaqwy0940r5nyRmHkbNV1FTKEpCFQ2bZJyxEQNVOuJ39cSxaYNHoUFZRohablfCJQ+6D+CoNONNpNgN59b3zz9sdGaUZQKHp563HiiNoUdvwMaxqpEpg522ebkQBtYSlcg8fW188wAh1kPX+a53XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394247; c=relaxed/simple;
-	bh=fgHouIUDh0hmhMyKh7aLbahYNbC/ChzhamFExlj1SBU=;
+	s=arc-20240116; t=1728394251; c=relaxed/simple;
+	bh=rYjgt6DVsymNe9Imov7JnM9+Vc6IKcJ+A+UqK2KBM8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9AKxKu8k72eUuPM7dU+WsHo7287JVPHRn+sWO+N1QDSJHhYQza/kaiSIRuDm3gqHQclYcp99jboF0368oJCQHt+j1plwSs17NjTrJvoxdbL7MDNK4aZnNDO94QD54FuUslraCc3BVWKtcHLwkfA/a3nd0WbNawkasCm4qaR0dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nm/DVum; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h74LqbTV0EwXFw/T9jQOQCZc9xeJvsU4TM3CR9QZXG+q7HGqVrVu+GvpEH2fojmIZZkIs7B4S0FnJJYvyczJNOyAMA2yDv5yBUtm3ucrfGd1NPtsWOVbldxw4u+4OJgyhWI1MNdscnSRTc2nMPLSDUmHkKQjgMlkgy7CYd+oSX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uruerUfO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nm/DVum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E6CC4CEC7;
-	Tue,  8 Oct 2024 13:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uruerUfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B02BC4CECD;
+	Tue,  8 Oct 2024 13:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394247;
-	bh=fgHouIUDh0hmhMyKh7aLbahYNbC/ChzhamFExlj1SBU=;
+	s=korg; t=1728394250;
+	bh=rYjgt6DVsymNe9Imov7JnM9+Vc6IKcJ+A+UqK2KBM8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2nm/DVumtuGsHXaMVSIvC2Z0IwQkx6sAY3md3La5RESiUfzDxjH9IQMxzx8b5jJgj
-	 BA5/MEanL1g2wm2yspR63juGGEu1abpBaMdChsp5ygPzSYIuXuQzUcPVTrQLiskmti
-	 Roy8Lg6CAbZVnoE8U8VPkq1ToJl4aM4ix2ewyJqc=
+	b=uruerUfOsRIwY2RG3PIgP1fOQgePUODwCg4Yzl4+eB4REwlAXYkZJu1cp4LXtCdJ3
+	 NKJKr7Qmn/E2p9ZHdbwyIHjbcGPP/Y5xGDPLaBk3nWzaRA4xPSk3g0j2pnSWf95rnI
+	 7kUfDTPSoWqjxQi6YjfzBklfDqIcG9OijNy2KVhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 365/386] btrfs: drop the backref cache during relocation if we commit
-Date: Tue,  8 Oct 2024 14:10:10 +0200
-Message-ID: <20241008115643.747460599@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.6 366/386] drm/rockchip: vop: enable VOP_FEATURE_INTERNAL_RGB on RK3066
+Date: Tue,  8 Oct 2024 14:10:11 +0200
+Message-ID: <20241008115643.787374832@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,214 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit db7e68b522c01eb666cfe1f31637775f18997811 ]
+commit 6ed51ba95e27221ce87979bd2ad5926033b9e1b9 upstream.
 
-Since the inception of relocation we have maintained the backref cache
-across transaction commits, updating the backref cache with the new
-bytenr whenever we COWed blocks that were in the cache, and then
-updating their bytenr once we detected a transaction id change.
+The RK3066 does have RGB display output, so it should be marked as such.
 
-This works as long as we're only ever modifying blocks, not changing the
-structure of the tree.
-
-However relocation does in fact change the structure of the tree.  For
-example, if we are relocating a data extent, we will look up all the
-leaves that point to this data extent.  We will then call
-do_relocation() on each of these leaves, which will COW down to the leaf
-and then update the file extent location.
-
-But, a key feature of do_relocation() is the pending list.  This is all
-the pending nodes that we modified when we updated the file extent item.
-We will then process all of these blocks via finish_pending_nodes, which
-calls do_relocation() on all of the nodes that led up to that leaf.
-
-The purpose of this is to make sure we don't break sharing unless we
-absolutely have to.  Consider the case that we have 3 snapshots that all
-point to this leaf through the same nodes, the initial COW would have
-created a whole new path.  If we did this for all 3 snapshots we would
-end up with 3x the number of nodes we had originally.  To avoid this we
-will cycle through each of the snapshots that point to each of these
-nodes and update their pointers to point at the new nodes.
-
-Once we update the pointer to the new node we will drop the node we
-removed the link for and all of its children via btrfs_drop_subtree().
-This is essentially just btrfs_drop_snapshot(), but for an arbitrary
-point in the snapshot.
-
-The problem with this is that we will never reflect this in the backref
-cache.  If we do this btrfs_drop_snapshot() for a node that is in the
-backref tree, we will leave the node in the backref tree.  This becomes
-a problem when we change the transid, as now the backref cache has
-entire subtrees that no longer exist, but exist as if they still are
-pointed to by the same roots.
-
-In the best case scenario you end up with "adding refs to an existing
-tree ref" errors from insert_inline_extent_backref(), where we attempt
-to link in nodes on roots that are no longer valid.
-
-Worst case you will double free some random block and re-use it when
-there's still references to the block.
-
-This is extremely subtle, and the consequences are quite bad.  There
-isn't a way to make sure our backref cache is consistent between
-transid's.
-
-In order to fix this we need to simply evict the entire backref cache
-anytime we cross transid's.  This reduces performance in that we have to
-rebuild this backref cache every time we change transid's, but fixes the
-bug.
-
-This has existed since relocation was added, and is a pretty critical
-bug.  There's a lot more cleanup that can be done now that this
-functionality is going away, but this patch is as small as possible in
-order to fix the problem and make it easy for us to backport it to all
-the kernels it needs to be backported to.
-
-Followup series will dismantle more of this code and simplify relocation
-drastically to remove this functionality.
-
-We have a reproducer that reproduced the corruption within a few minutes
-of running.  With this patch it survives several iterations/hours of
-running the reproducer.
-
-Fixes: 3fd0a5585eb9 ("Btrfs: Metadata ENOSPC handling for balance")
-CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Val Packett <val@packett.cool>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-3-val@packett.cool
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/backref.c    | 12 ++++---
- fs/btrfs/relocation.c | 75 ++-----------------------------------------
- 2 files changed, 11 insertions(+), 76 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index df223ebf2551c..a2ba1c7fc16af 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -3098,10 +3098,14 @@ void btrfs_backref_release_cache(struct btrfs_backref_cache *cache)
- 		btrfs_backref_cleanup_node(cache, node);
- 	}
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -484,6 +484,7 @@ static const struct vop_data rk3066_vop
+ 	.output = &rk3066_output,
+ 	.win = rk3066_vop_win_data,
+ 	.win_size = ARRAY_SIZE(rk3066_vop_win_data),
++	.feature = VOP_FEATURE_INTERNAL_RGB,
+ 	.max_output = { 1920, 1080 },
+ };
  
--	cache->last_trans = 0;
--
--	for (i = 0; i < BTRFS_MAX_LEVEL; i++)
--		ASSERT(list_empty(&cache->pending[i]));
-+	for (i = 0; i < BTRFS_MAX_LEVEL; i++) {
-+		while (!list_empty(&cache->pending[i])) {
-+			node = list_first_entry(&cache->pending[i],
-+						struct btrfs_backref_node,
-+						list);
-+			btrfs_backref_cleanup_node(cache, node);
-+		}
-+	}
- 	ASSERT(list_empty(&cache->pending_edge));
- 	ASSERT(list_empty(&cache->useless_node));
- 	ASSERT(list_empty(&cache->changed));
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 6e590da98742b..299eac696eb42 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -235,70 +235,6 @@ static struct btrfs_backref_node *walk_down_backref(
- 	return NULL;
- }
- 
--static void update_backref_node(struct btrfs_backref_cache *cache,
--				struct btrfs_backref_node *node, u64 bytenr)
--{
--	struct rb_node *rb_node;
--	rb_erase(&node->rb_node, &cache->rb_root);
--	node->bytenr = bytenr;
--	rb_node = rb_simple_insert(&cache->rb_root, node->bytenr, &node->rb_node);
--	if (rb_node)
--		btrfs_backref_panic(cache->fs_info, bytenr, -EEXIST);
--}
--
--/*
-- * update backref cache after a transaction commit
-- */
--static int update_backref_cache(struct btrfs_trans_handle *trans,
--				struct btrfs_backref_cache *cache)
--{
--	struct btrfs_backref_node *node;
--	int level = 0;
--
--	if (cache->last_trans == 0) {
--		cache->last_trans = trans->transid;
--		return 0;
--	}
--
--	if (cache->last_trans == trans->transid)
--		return 0;
--
--	/*
--	 * detached nodes are used to avoid unnecessary backref
--	 * lookup. transaction commit changes the extent tree.
--	 * so the detached nodes are no longer useful.
--	 */
--	while (!list_empty(&cache->detached)) {
--		node = list_entry(cache->detached.next,
--				  struct btrfs_backref_node, list);
--		btrfs_backref_cleanup_node(cache, node);
--	}
--
--	while (!list_empty(&cache->changed)) {
--		node = list_entry(cache->changed.next,
--				  struct btrfs_backref_node, list);
--		list_del_init(&node->list);
--		BUG_ON(node->pending);
--		update_backref_node(cache, node, node->new_bytenr);
--	}
--
--	/*
--	 * some nodes can be left in the pending list if there were
--	 * errors during processing the pending nodes.
--	 */
--	for (level = 0; level < BTRFS_MAX_LEVEL; level++) {
--		list_for_each_entry(node, &cache->pending[level], list) {
--			BUG_ON(!node->pending);
--			if (node->bytenr == node->new_bytenr)
--				continue;
--			update_backref_node(cache, node, node->new_bytenr);
--		}
--	}
--
--	cache->last_trans = 0;
--	return 1;
--}
--
- static bool reloc_root_is_dead(const struct btrfs_root *root)
- {
- 	/*
-@@ -557,9 +493,6 @@ static int clone_backref_node(struct btrfs_trans_handle *trans,
- 	struct btrfs_backref_edge *new_edge;
- 	struct rb_node *rb_node;
- 
--	if (cache->last_trans > 0)
--		update_backref_cache(trans, cache);
--
- 	rb_node = rb_simple_search(&cache->rb_root, src->commit_root->start);
- 	if (rb_node) {
- 		node = rb_entry(rb_node, struct btrfs_backref_node, rb_node);
-@@ -3682,11 +3615,9 @@ static noinline_for_stack int relocate_block_group(struct reloc_control *rc)
- 			break;
- 		}
- restart:
--		if (update_backref_cache(trans, &rc->backref_cache)) {
--			btrfs_end_transaction(trans);
--			trans = NULL;
--			continue;
--		}
-+		if (rc->backref_cache.last_trans != trans->transid)
-+			btrfs_backref_release_cache(&rc->backref_cache);
-+		rc->backref_cache.last_trans = trans->transid;
- 
- 		ret = find_next_extent(rc, path, &key);
- 		if (ret < 0)
--- 
-2.43.0
-
 
 
