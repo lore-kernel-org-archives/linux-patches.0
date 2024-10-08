@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12FB1DE894;
-	Tue,  8 Oct 2024 12:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207261DE4CC;
+	Tue,  8 Oct 2024 12:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391927; cv=none; b=Lq7YnQ58vSxdy75KkWnAtQ16vdbScBxAQjeKu7faP+esoO66arU87XZdz1qrCcrC+1ak/VUmLI1YGnpqfw3AgTG2ysz5f2ASQydoqFVL1QJ6PnfIa8C+FvsSMA4r12aGOv8DSk5Bkc0nfOh0YNa+J/vuQVOWNm9pjfPz58bK4J0=
+	t=1728391931; cv=none; b=WUbvUL86OT1NpT7HlEff5IjSJsGX4cIuCLm6OcdNJGLxe+e/W/0mL7ifscsWUp2aL4hCmjeDp4Rus18biAFs52lgu+Hkuvrpw9C7Y+Y0k6qQ0IG7KHqyUCCFFgSMx8OYqt2Tf42VCsABIoyiwrlWJeO8QSZKpqY45zVlQ1XeHu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391927; c=relaxed/simple;
-	bh=1u+0ttHz+7NDENB79nkC/dtUPm2OA1tYYkVBizwFKtw=;
+	s=arc-20240116; t=1728391931; c=relaxed/simple;
+	bh=TsPXmKDxIM2uZAqH92l/kQw6ub9pf/06GxFWDwLT2Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hd1H8pWEyF+wLmw4Lmuh3KjEgu10kTYxAeSF3tfs4cavhHyNx4NGycRdLKmte/I/qg0+LrtgJCJt6BAjPsr+1+7+wovyl3Ut46HHT4tGsg5jYHQjNjtD88TrbGb96SRROGhB6pN2tTQUCYOpWmx4X7T8Oy+mL2rbfk5bQNwp/m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZ2mAX0X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUgdc5E3LB68+xk0RcH+DQ2gOJoiSwVQymO7rkbj8UN6B1R+R0tml+txFXBj0S1oM5O5Xt+ncP9GdAX9y/O86Ke05ehXa1QEYX7Rby4uR1ssZXDKRbhfcfxxy3/zRMI5Q5lTBp5SMH5cz7ubqI6+eUrxtMIdFexAC68jyAQLmwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNc98QRt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZ2mAX0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EEDBC4CEC7;
-	Tue,  8 Oct 2024 12:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNc98QRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C945C4CEC7;
+	Tue,  8 Oct 2024 12:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391927;
-	bh=1u+0ttHz+7NDENB79nkC/dtUPm2OA1tYYkVBizwFKtw=;
+	s=korg; t=1728391931;
+	bh=TsPXmKDxIM2uZAqH92l/kQw6ub9pf/06GxFWDwLT2Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZ2mAX0XcSXYgz/y3VINZEhAG2pH/C83eAdmx4Guigmrcv0xn7uir8puWApYhJfl0
-	 7kJedBAFKJLagNJATp7jgjX81ftgJQWSkzDluoGyyIyre5z3/sbkoLBoA7GW+/U7dA
-	 hWMDd9+ISvkHrAzPqefnwRNYvF+J30elPpqsYbEk=
+	b=nNc98QRtWoSEBwUBb7hqyS6nKWcquBH9jpXX7bDaBicaZ5GVTk16QupiI1vLjDm6s
+	 bZB4HQuZ/2LUtkhD8fZTWzLvadQJh9gS6d/hUNAkJEw3EJU/hJc68wJm/j98x6cZPC
+	 IMjg5fkbleZ/qTwawINq+EAky6uHu5K6y4XAClbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 264/558] drm/amd/display: Fix possible overflow in integer multiplication
-Date: Tue,  8 Oct 2024 14:04:54 +0200
-Message-ID: <20241008115712.721823692@linuxfoundation.org>
+Subject: [PATCH 6.11 265/558] drm/amd/display: Check stream_status before it is used
+Date: Tue,  8 Oct 2024 14:04:55 +0200
+Message-ID: <20241008115712.760754059@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -55,14 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 3f96f545f877ac59d0c967f52d760b4b2b3b9a47 ]
+[ Upstream commit 58a8ee96f84d2c21abb85ad8c22d2bbdf59bd7a9 ]
 
 [WHAT & HOW]
-Integer multiplies integer may overflow in context that expects an
-expression of unsigned long long (64 bits). This can be fixed by casting
-integer to unsigned long long to force 64 bits results.
+dc_state_get_stream_status can return null, and therefore null must be
+checked before stream_status is used.
 
-This fixes 2 OVERFLOW_BEFORE_WIDEN issues reported by Coverity.
+This fixes 1 NULL_RETURNS issue reported by Coverity.
 
 Signed-off-by: Alex Hung <alex.hung@amd.com>
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
@@ -71,31 +70,22 @@ Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/resource/dcn32/dcn32_resource_helpers.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource_helpers.c b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource_helpers.c
-index 47c8a9fbe7546..f5a4e97c40ced 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource_helpers.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource_helpers.c
-@@ -663,7 +663,7 @@ bool dcn32_subvp_drr_admissable(struct dc *dc, struct dc_state *context)
- 
- 				subvp_disallow |= disallow_subvp_in_active_plus_blank(pipe);
- 				refresh_rate = (pipe->stream->timing.pix_clk_100hz * (uint64_t)100 +
--					pipe->stream->timing.v_total * pipe->stream->timing.h_total - (uint64_t)1);
-+					pipe->stream->timing.v_total * (unsigned long long)pipe->stream->timing.h_total - (uint64_t)1);
- 				refresh_rate = div_u64(refresh_rate, pipe->stream->timing.v_total);
- 				refresh_rate = div_u64(refresh_rate, pipe->stream->timing.h_total);
- 			}
-@@ -724,7 +724,7 @@ bool dcn32_subvp_vblank_admissable(struct dc *dc, struct dc_state *context, int
- 
- 				subvp_disallow |= disallow_subvp_in_active_plus_blank(pipe);
- 				refresh_rate = (pipe->stream->timing.pix_clk_100hz * (uint64_t)100 +
--					pipe->stream->timing.v_total * pipe->stream->timing.h_total - (uint64_t)1);
-+					pipe->stream->timing.v_total * (unsigned long long)pipe->stream->timing.h_total - (uint64_t)1);
- 				refresh_rate = div_u64(refresh_rate, pipe->stream->timing.v_total);
- 				refresh_rate = div_u64(refresh_rate, pipe->stream->timing.h_total);
- 			}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 81fab62ef38eb..9e05d77453ac3 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3739,7 +3739,7 @@ static void commit_planes_for_stream_fast(struct dc *dc,
+ 				surface_count,
+ 				stream,
+ 				context);
+-	} else {
++	} else if (stream_status) {
+ 		build_dmub_cmd_list(dc,
+ 				srf_updates,
+ 				surface_count,
 -- 
 2.43.0
 
