@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCC91D54D1;
-	Tue,  8 Oct 2024 12:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59131DE2CF;
+	Tue,  8 Oct 2024 12:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391792; cv=none; b=NW9tw2bFo3w/IcB6VOmHooGLSBJFqafUYXcxe43J+16TCZZlsNgFEbjlSvwZMf2fKMonFnqqGMzINCGpPmwVhXmjSJm3ZEn8oE1cs98JHUp0ESNiyKu553HIqMPJ+8TzD2c/5nOu0VUvq0H32IjHAkuYkadqfmpwyZf0Ui9g0yU=
+	t=1728391796; cv=none; b=WEyz7abZLNM3x5VDhARruWOz1ErBlyTRmFpAoWvCXy6frsBnJfsJm6Dmj6zM34AfSD/6P4I8lkwQFt6S7C4tH2kEd7EkbqyGWnJRd4o8jGvpFzddDirk4JXqfZzPa+19pG7hGIBn/LsjwixCGVyWodPkrpC0TDZ5JWz8cF0O6n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391792; c=relaxed/simple;
-	bh=DJ0Gbr95sCt6YWcKyOjYkEpSk7HK1snH+d/UnAMY/to=;
+	s=arc-20240116; t=1728391796; c=relaxed/simple;
+	bh=JZNeuNXTPViikHWTCE6PisxrsEomDLJKuylAYjMLiI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COQdkszBKDy/qOmEFdvkFBLSfObdy78hddOzWzvHt4sfILsxUiGRzXUpPPmACpvZMJ+6TPRSqWe5iVhmie7MzC68cy9U0RtV2XRpbGQg3D+DCl9wS0BY4vymVvEPzXKjIzw2vxnljY0yBahNYgjJ/LYUKYF60JjARiw4drlf5ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoANek2V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WcT8inxDbSjqEToF+om2d7QJinTdwXdRGMm3mwACEo6L8Ctg5etb2w5ceQbYNe14INdeMUFI7J5Z0ge7xD5x2yIAufhePIzThsR95g0FXhS0tOxSklE1YLBBLKtmLV9TbvVRox6lv1teAprYpot42Ov42z/Ns3CVO7aKb0PCuN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWijxuC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoANek2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4F2C4CEC7;
-	Tue,  8 Oct 2024 12:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWijxuC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073CEC4CEC7;
+	Tue,  8 Oct 2024 12:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391792;
-	bh=DJ0Gbr95sCt6YWcKyOjYkEpSk7HK1snH+d/UnAMY/to=;
+	s=korg; t=1728391795;
+	bh=JZNeuNXTPViikHWTCE6PisxrsEomDLJKuylAYjMLiI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RoANek2Vu6uTzokVwo3Z/NrkIMmpgYCoVQ6V/RUSI82sdGvDpJ+rdNakFu1N6SQ+t
-	 KirAdZBgWnnTxLKJsrzUuTH03YakGQlK+xlh8fE1QWX933bd/ws/vEpeFW22qKJbv9
-	 xwc1rGcYHAMKtIu1ln+pu6Nx2CAERJYsGLM04bHU=
+	b=QWijxuC7f7ynXluSXZxhbFqiKnjQlDSJ44RhG8jq3lXWVWPkTVXHQeLKO3/VNQ/G0
+	 ZDNnIDlDNtOwJRhlF9R+GjNi2TPVfd6UTW9EFd77a7KTtBgHJBN7zu7qaphk8eWVB5
+	 If+EdWf2Kgt51PjAdOB9XJJzucrPVGmk32FDVRCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 224/558] drm/amd/display: Handle null stream_status in planes_changed_for_existing_stream
-Date: Tue,  8 Oct 2024 14:04:14 +0200
-Message-ID: <20241008115711.157766540@linuxfoundation.org>
+Subject: [PATCH 6.11 207/558] drm/amdgpu: disallow multiple BO_HANDLES chunks in one submit
+Date: Tue,  8 Oct 2024 14:03:57 +0200
+Message-ID: <20241008115710.489493054@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,55 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-[ Upstream commit 8141f21b941710ecebe49220b69822cab3abd23d ]
+[ Upstream commit fec5f8e8c6bcf83ed7a392801d7b44c5ecfc1e82 ]
 
-This commit adds a null check for 'stream_status' in the function
-'planes_changed_for_existing_stream'. Previously, the code assumed
-'stream_status' could be null, but did not handle the case where it was
-actually null. This could lead to a null pointer dereference.
+Before this commit, only submits with both a BO_HANDLES chunk and a
+'bo_list_handle' would be rejected (by amdgpu_cs_parser_bos).
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_resource.c:3784 planes_changed_for_existing_stream() error: we previously assumed 'stream_status' could be null (see line 3774)
+But if UMD sent multiple BO_HANDLES, what would happen is:
+* only the last one would be really used
+* all the others would leak memory as amdgpu_cs_p1_bo_handles would
+  overwrite the previous p->bo_list value
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+This commit rejects submissions with multiple BO_HANDLES chunks to
+match the implementation of the parser.
+
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index bcb5267b5a6bc..67794497457d3 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -3771,8 +3771,10 @@ static bool planes_changed_for_existing_stream(struct dc_state *context,
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 6dfdff58bffd1..78b3c067fea7e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -263,6 +263,10 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+ 			if (size < sizeof(struct drm_amdgpu_bo_list_in))
+ 				goto free_partial_kdata;
  
--	if (!stream_status)
-+	if (!stream_status) {
- 		ASSERT(0);
-+		return false;
-+	}
- 
- 	for (i = 0; i < set_count; i++)
- 		if (set[i].stream == stream)
++			/* Only a single BO list is allowed to simplify handling. */
++			if (p->bo_list)
++				ret = -EINVAL;
++
+ 			ret = amdgpu_cs_p1_bo_handles(p, p->chunks[i].kdata);
+ 			if (ret)
+ 				goto free_partial_kdata;
 -- 
 2.43.0
 
