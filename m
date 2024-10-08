@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D0C1C9B99;
-	Tue,  8 Oct 2024 13:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4469418F2FA;
+	Tue,  8 Oct 2024 13:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392550; cv=none; b=JQZlF8bP+w7IHQAe4Hl8FY2YL+PhKpeNmewzX/OBNuf99h5EN7I3HquclQMLzLVqYqpd7Ivv7c3nF7DAetQMvOzGNlM9dh2ZU3gSfOvETAu0Kl48LO3LCu8qHQ12q82enRHlHOGYuBQWtafY8Co8adA8coZ4wdfBg6Ew8+J6XWk=
+	t=1728392554; cv=none; b=K3f4Tvmz5GP/Sf22k7sl+MazuVjyFDvoMaIEx9NAuSo3CK4MIHi5TOQz4+IRHvEx6rcGesqVH1/AA/WD0mgHmSCgwm0EnO/76U2jL63conj4G3B4kPg9bc4ch6vJy6IbkjBlbGuofZqvzKcgzRkG1EctfcPAiVfWFp1Q4aqDhOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392550; c=relaxed/simple;
-	bh=3j556GnXZXIkTeq2WYutrTmiJf9ZioIm6mr0CfZNBdI=;
+	s=arc-20240116; t=1728392554; c=relaxed/simple;
+	bh=WexgNRo1j4OH5dNZkUaw4eQFnizahuOO9Wj+fpHp+v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aph48m/mvNN4sF/H0/MqYSoiz+nwPJDMwvMe3PwwHjp/SdK6mnsFyrvJej8y1rBm+BoDQpVj0OFe8+xgggg7AJu6yhr54/I5o08YR+gUCuryHdwF+B6xU2KK/cWVrup4tXerazqnj0nsHDQCu+NK9ibsNPLdm0zj/fWfgrXf6g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrZqaebs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hv8ZsUhzbgKIgtd3BRJjlp06fzuiqoH5Er60GTwznT8/hqknCQakv/2KjGnbzbWEmCHW+SuZdjSk/+APN+3Odhn9XZL7dXczsOO2TazWiKDyuWcH4zNB0K94/blVjXlTsVXirjvOw86a+n594/d+dbvQ2A70+4CfvMw3IU7XfJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RMfWtQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrZqaebs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E51C4CEC7;
-	Tue,  8 Oct 2024 13:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RMfWtQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F96C4CEC7;
+	Tue,  8 Oct 2024 13:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392550;
-	bh=3j556GnXZXIkTeq2WYutrTmiJf9ZioIm6mr0CfZNBdI=;
+	s=korg; t=1728392553;
+	bh=WexgNRo1j4OH5dNZkUaw4eQFnizahuOO9Wj+fpHp+v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrZqaebsM0d3sckDXaYVtw9n4BmBVbMl/0DQ8zlH3y/FM2wixC6/qmU6zL9EXwoz1
-	 NYxxsJoadg/sQ1RNWgg1zF3O4p2xQPbciYJKfQdTVzwJ2pFw+y56kwMsTus/+dmolL
-	 dIXgAaKSXn0itzeNNi7OweMW3rEloKVSQCby+wb0=
+	b=2RMfWtQt0b8bJ/Nw+5ohmr+3itg9lrHDW0d2EAWRWqMfPeDEZN3Ekl3Nv0kKl9lqb
+	 eWt/y2OB/m3vitnklvwAeY5kP+Vf3u5k96nuu4RP/693uqXZ2n1lyVI6RYYb0zA0DK
+	 PWoFjFiqZfJFyUMbBlcZxhMbjtPEBALmH7p5IzgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao2870@gmail.com>,
-	syzbot+05b9b39d8bdfe1a0861f@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 417/558] ocfs2: fix null-ptr-deref when journal load failed.
-Date: Tue,  8 Oct 2024 14:07:27 +0200
-Message-ID: <20241008115718.684284328@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.11 408/558] lib/buildid: harden build ID parsing logic
+Date: Tue,  8 Oct 2024 14:07:18 +0200
+Message-ID: <20241008115718.330945424@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -58,65 +53,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao2870@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 5784d9fcfd43bd853654bb80c87ef293b9e8e80a upstream.
+commit 905415ff3ffb1d7e5afa62bacabd79776bd24606 upstream.
 
-During the mounting process, if journal_reset() fails because of too short
-journal, then lead to jbd2_journal_load() fails with NULL j_sb_buffer.
-Subsequently, ocfs2_journal_shutdown() calls
-jbd2_journal_flush()->jbd2_cleanup_journal_tail()->
-__jbd2_update_log_tail()->jbd2_journal_update_sb_log_tail()
-->lock_buffer(journal->j_sb_buffer), resulting in a null-pointer
-dereference error.
+Harden build ID parsing logic, adding explicit READ_ONCE() where it's
+important to have a consistent value read and validated just once.
 
-To resolve this issue, we should check the JBD2_LOADED flag to ensure the
-journal was properly loaded.  Additionally, use journal instead of
-osb->journal directly to simplify the code.
+Also, as pointed out by Andi Kleen, we need to make sure that entire ELF
+note is within a page bounds, so move the overflow check up and add an
+extra note_size boundaries validation.
 
-Link: https://syzkaller.appspot.com/bug?extid=05b9b39d8bdfe1a0861f
-Link: https://lkml.kernel.org/r/20240902030844.422725-1-sunjunchao2870@gmail.com
-Fixes: f6f50e28f0cb ("jbd2: Fail to load a journal if it is too short")
-Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
-Reported-by: syzbot+05b9b39d8bdfe1a0861f@syzkaller.appspotmail.com
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes tag below points to the code that moved this code into
+lib/buildid.c, and then subsequently was used in perf subsystem, making
+this code exposed to perf_event_open() users in v5.12+.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Suggested-by: Andi Kleen <ak@linux.intel.com>
+Fixes: bd7525dacd7e ("bpf: Move stack_map_get_build_id into lib")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20240829174232.3133883-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ lib/buildid.c |   76 +++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 44 insertions(+), 32 deletions(-)
 
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -1055,7 +1055,7 @@ void ocfs2_journal_shutdown(struct ocfs2
- 	if (!igrab(inode))
- 		BUG();
+--- a/lib/buildid.c
++++ b/lib/buildid.c
+@@ -18,31 +18,37 @@ static int parse_build_id_buf(unsigned c
+ 			      const void *note_start,
+ 			      Elf32_Word note_size)
+ {
+-	Elf32_Word note_offs = 0, new_offs;
+-
+-	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
+-		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
++	const char note_name[] = "GNU";
++	const size_t note_name_sz = sizeof(note_name);
++	u64 note_off = 0, new_off, name_sz, desc_sz;
++	const char *data;
++
++	while (note_off + sizeof(Elf32_Nhdr) < note_size &&
++	       note_off + sizeof(Elf32_Nhdr) > note_off /* overflow */) {
++		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_off);
++
++		name_sz = READ_ONCE(nhdr->n_namesz);
++		desc_sz = READ_ONCE(nhdr->n_descsz);
++
++		new_off = note_off + sizeof(Elf32_Nhdr);
++		if (check_add_overflow(new_off, ALIGN(name_sz, 4), &new_off) ||
++		    check_add_overflow(new_off, ALIGN(desc_sz, 4), &new_off) ||
++		    new_off > note_size)
++			break;
  
--	num_running_trans = atomic_read(&(osb->journal->j_num_trans));
-+	num_running_trans = atomic_read(&(journal->j_num_trans));
- 	trace_ocfs2_journal_shutdown(num_running_trans);
- 
- 	/* Do a commit_cache here. It will flush our journal, *and*
-@@ -1074,9 +1074,10 @@ void ocfs2_journal_shutdown(struct ocfs2
- 		osb->commit_task = NULL;
+ 		if (nhdr->n_type == BUILD_ID &&
+-		    nhdr->n_namesz == sizeof("GNU") &&
+-		    !strcmp((char *)(nhdr + 1), "GNU") &&
+-		    nhdr->n_descsz > 0 &&
+-		    nhdr->n_descsz <= BUILD_ID_SIZE_MAX) {
+-			memcpy(build_id,
+-			       note_start + note_offs +
+-			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr),
+-			       nhdr->n_descsz);
+-			memset(build_id + nhdr->n_descsz, 0,
+-			       BUILD_ID_SIZE_MAX - nhdr->n_descsz);
++		    name_sz == note_name_sz &&
++		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
++		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
++			data = note_start + note_off + ALIGN(note_name_sz, 4);
++			memcpy(build_id, data, desc_sz);
++			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
+ 			if (size)
+-				*size = nhdr->n_descsz;
++				*size = desc_sz;
+ 			return 0;
+ 		}
+-		new_offs = note_offs + sizeof(Elf32_Nhdr) +
+-			ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
+-		if (new_offs <= note_offs)  /* overflow */
+-			break;
+-		note_offs = new_offs;
++
++		note_off = new_off;
  	}
  
--	BUG_ON(atomic_read(&(osb->journal->j_num_trans)) != 0);
-+	BUG_ON(atomic_read(&(journal->j_num_trans)) != 0);
+ 	return -EINVAL;
+@@ -71,7 +77,7 @@ static int get_build_id_32(const void *p
+ {
+ 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)page_addr;
+ 	Elf32_Phdr *phdr;
+-	int i;
++	__u32 i, phnum;
  
--	if (ocfs2_mount_local(osb)) {
-+	if (ocfs2_mount_local(osb) &&
-+	    (journal->j_journal->j_flags & JBD2_LOADED)) {
- 		jbd2_journal_lock_updates(journal->j_journal);
- 		status = jbd2_journal_flush(journal->j_journal, 0);
- 		jbd2_journal_unlock_updates(journal->j_journal);
+ 	/*
+ 	 * FIXME
+@@ -80,18 +86,19 @@ static int get_build_id_32(const void *p
+ 	 */
+ 	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
+ 		return -EINVAL;
++
++	phnum = READ_ONCE(ehdr->e_phnum);
+ 	/* only supports phdr that fits in one page */
+-	if (ehdr->e_phnum >
+-	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
++	if (phnum > (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
+ 		return -EINVAL;
+ 
+ 	phdr = (Elf32_Phdr *)(page_addr + sizeof(Elf32_Ehdr));
+ 
+-	for (i = 0; i < ehdr->e_phnum; ++i) {
++	for (i = 0; i < phnum; ++i) {
+ 		if (phdr[i].p_type == PT_NOTE &&
+ 		    !parse_build_id(page_addr, build_id, size,
+-				    page_addr + phdr[i].p_offset,
+-				    phdr[i].p_filesz))
++				    page_addr + READ_ONCE(phdr[i].p_offset),
++				    READ_ONCE(phdr[i].p_filesz)))
+ 			return 0;
+ 	}
+ 	return -EINVAL;
+@@ -103,7 +110,7 @@ static int get_build_id_64(const void *p
+ {
+ 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *)page_addr;
+ 	Elf64_Phdr *phdr;
+-	int i;
++	__u32 i, phnum;
+ 
+ 	/*
+ 	 * FIXME
+@@ -112,18 +119,19 @@ static int get_build_id_64(const void *p
+ 	 */
+ 	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
+ 		return -EINVAL;
++
++	phnum = READ_ONCE(ehdr->e_phnum);
+ 	/* only supports phdr that fits in one page */
+-	if (ehdr->e_phnum >
+-	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
++	if (phnum > (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
+ 		return -EINVAL;
+ 
+ 	phdr = (Elf64_Phdr *)(page_addr + sizeof(Elf64_Ehdr));
+ 
+-	for (i = 0; i < ehdr->e_phnum; ++i) {
++	for (i = 0; i < phnum; ++i) {
+ 		if (phdr[i].p_type == PT_NOTE &&
+ 		    !parse_build_id(page_addr, build_id, size,
+-				    page_addr + phdr[i].p_offset,
+-				    phdr[i].p_filesz))
++				    page_addr + READ_ONCE(phdr[i].p_offset),
++				    READ_ONCE(phdr[i].p_filesz)))
+ 			return 0;
+ 	}
+ 	return -EINVAL;
+@@ -152,6 +160,10 @@ int build_id_parse(struct vm_area_struct
+ 	page = find_get_page(vma->vm_file->f_mapping, 0);
+ 	if (!page)
+ 		return -EFAULT;	/* page not mapped */
++	if (!PageUptodate(page)) {
++		put_page(page);
++		return -EFAULT;
++	}
+ 
+ 	ret = -EINVAL;
+ 	page_addr = kmap_local_page(page);
 
 
