@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9466B183CB8;
-	Tue,  8 Oct 2024 12:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690581DC046;
+	Tue,  8 Oct 2024 12:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391633; cv=none; b=iC9EvOd/5ptGyyXHVTSjg+V6udxIExU991KyOZrNiJ1rGJtMI28LzcRjrPX92IMFoLWqEMTQHGvQpxQADSY2dVPA2Nys2X4+hNaV2fgpLHRcbt+X+FSjth2TR7sNmQA+74OIQKE3c/KipUl4ZhEm0jZhyGPsx5NdCwgmaRaYBxU=
+	t=1728391636; cv=none; b=rWhFIXDgnUc1DMODaW/kLXLQWM+OHBJn8VDJvXYa9h9a1G0fQjBf51YdJBCVLk1a4C4GKjr0RdtAz3/Mzv95WPkiRmHwWobqJIb9cwbr1KgyyVi3Da1lFr5ZmRC6vMoDsoN98YsK2hWa0LJzIrG93ys8uyxwZJdirio30u8g5Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391633; c=relaxed/simple;
-	bh=RLb1QAmJGfr8+zLZXPhPirWBR+IG7TCinhAvRmfUsSM=;
+	s=arc-20240116; t=1728391636; c=relaxed/simple;
+	bh=U3WN305E/ZmY+S5zQrOuR8QmwNW8kDFBUemVMLpCJn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+VTShvTmTMLbI80dKLJGk8S1Y9Fh2mbvlQJInYkah4eU5C4FAlwY76jjifyru6339f4iZh/xxLUgNdCtHJJpe2GNG2efvKmh0y+b46WxA0kzYhfL9aiAexP5XYkZDifD+XgZYYsxKijwefFYKfUe8ApBCBojgtfKFQ2ghq13uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STS/b2Vt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CIDHY2HnBVlG4Fu3d7CibXeionZjPJtRCTW0iezLA79vKon4qk2O2Gs3HCQDvVynWeQ4Q1o/MJbq1bIGCPeniqg5ppglO/VlfrEFDsGekDNhRbVyaW4lNF3pqBDkAV6y9Dlojx2Mp05yHzN2vOA+u0Hyrktg/XQogqxLsu04PS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJRPG7iU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STS/b2Vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BBCC4CEC7;
-	Tue,  8 Oct 2024 12:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJRPG7iU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29A1C4CECC;
+	Tue,  8 Oct 2024 12:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391633;
-	bh=RLb1QAmJGfr8+zLZXPhPirWBR+IG7TCinhAvRmfUsSM=;
+	s=korg; t=1728391636;
+	bh=U3WN305E/ZmY+S5zQrOuR8QmwNW8kDFBUemVMLpCJn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STS/b2VtJSpu4sqyPVnvO6Ca11ZNSz2ZtA+7QJaP3uMAvil1UpZCynwHs0Uevs9uo
-	 BcHtK2Po7X+ZSGBwUA8+vlyxSFC4poce65cKIfRNqvP9NSeN2aPfu+fWTnEL4qOolf
-	 LIf8kIXoe6lV8eEaRE9u+7ZI5oF/Q3QOGjZfza+Y=
+	b=xJRPG7iUfTcRRiprnuwAzKcmxNkLTCzQc6uzw/PrLOuMXJfLKRxnOvSu7sKB/AwXL
+	 Tn844zhI7mM6vxxKXqp4WIgedEUBZH1F6OmtDKGc4CUldkE+kp9jyYmCsg8+s9OhIJ
+	 0FgfxcnJE8jW5MHA8m0i0fivGKv2jZblat6z66Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Puranjay Mohan <pjy@amazon.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 146/558] nvme: fix metadata handling in nvme-passthrough
-Date: Tue,  8 Oct 2024 14:02:56 +0200
-Message-ID: <20241008115708.108698204@linuxfoundation.org>
+Subject: [PATCH 6.11 137/558] wifi: iwlwifi: mvm: use correct key iteration
+Date: Tue,  8 Oct 2024 14:02:47 +0200
+Message-ID: <20241008115707.755896497@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,85 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <pjy@amazon.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 7c2fd76048e95dd267055b5f5e0a48e6e7c81fd9 ]
+[ Upstream commit 4f1591d292277eec51d027405a92f0d4ef5e299e ]
 
-On an NVMe namespace that does not support metadata, it is possible to
-send an IO command with metadata through io-passthru. This allows issues
-like [1] to trigger in the completion code path.
-nvme_map_user_request() doesn't check if the namespace supports metadata
-before sending it forward. It also allows admin commands with metadata to
-be processed as it ignores metadata when bdev == NULL and may report
-success.
+In the cases changed here, key iteration isn't done from
+an RCU critical section, but rather using the wiphy lock
+as protection. Therefore, just use ieee80211_iter_keys().
+The link switch case can therefore also use sync commands.
 
-Reject an IO command with metadata when the NVMe namespace doesn't
-support it and reject an admin command if it has metadata.
-
-[1] https://lore.kernel.org/all/mb61pcylvnym8.fsf@amazon.com/
-
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Puranjay Mohan <pjy@amazon.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240729201718.69a2d18580c1.I2148e04d4b467d0b100beac8f7e449bfaaf775a5@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index f1d58e70933f5..15c93ce07e263 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2017-2021 Christoph Hellwig.
-  */
- #include <linux/bio-integrity.h>
-+#include <linux/blk-integrity.h>
- #include <linux/ptrace.h>	/* for force_successful_syscall_return */
- #include <linux/nvme_ioctl.h>
- #include <linux/io_uring/cmd.h>
-@@ -119,9 +120,14 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
- 	struct request_queue *q = req->q;
- 	struct nvme_ns *ns = q->queuedata;
- 	struct block_device *bdev = ns ? ns->disk->part0 : NULL;
-+	bool supports_metadata = bdev && blk_get_integrity(bdev->bd_disk);
-+	bool has_metadata = meta_buffer && meta_len;
- 	struct bio *bio = NULL;
- 	int ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+index 8a38fc4b0b0f9..455f5f4175064 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+@@ -144,7 +144,7 @@ static void iwl_mvm_mld_update_sta_key(struct ieee80211_hw *hw,
+ 	if (sta != data->sta || key->link_id >= 0)
+ 		return;
  
-+	if (has_metadata && !supports_metadata)
-+		return -EINVAL;
-+
- 	if (ioucmd && (ioucmd->flags & IORING_URING_CMD_FIXED)) {
- 		struct iov_iter iter;
+-	err = iwl_mvm_send_cmd_pdu(mvm, cmd_id, CMD_ASYNC, sizeof(cmd), &cmd);
++	err = iwl_mvm_send_cmd_pdu(mvm, cmd_id, 0, sizeof(cmd), &cmd);
  
-@@ -143,15 +149,15 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
- 		goto out;
+ 	if (err)
+ 		data->err = err;
+@@ -162,8 +162,8 @@ int iwl_mvm_mld_update_sta_keys(struct iwl_mvm *mvm,
+ 		.new_sta_mask = new_sta_mask,
+ 	};
  
- 	bio = req->bio;
--	if (bdev) {
-+	if (bdev)
- 		bio_set_dev(bio, bdev);
--		if (meta_buffer && meta_len) {
--			ret = bio_integrity_map_user(bio, meta_buffer, meta_len,
--						     meta_seed);
--			if (ret)
--				goto out_unmap;
--			req->cmd_flags |= REQ_INTEGRITY;
--		}
-+
-+	if (has_metadata) {
-+		ret = bio_integrity_map_user(bio, meta_buffer, meta_len,
-+					     meta_seed);
-+		if (ret)
-+			goto out_unmap;
-+		req->cmd_flags |= REQ_INTEGRITY;
- 	}
+-	ieee80211_iter_keys_rcu(mvm->hw, vif, iwl_mvm_mld_update_sta_key,
+-				&data);
++	ieee80211_iter_keys(mvm->hw, vif, iwl_mvm_mld_update_sta_key,
++			    &data);
+ 	return data.err;
+ }
  
- 	return ret;
+@@ -402,7 +402,7 @@ void iwl_mvm_sec_key_remove_ap(struct iwl_mvm *mvm,
+ 	if (!sec_key_ver)
+ 		return;
+ 
+-	ieee80211_iter_keys_rcu(mvm->hw, vif,
+-				iwl_mvm_sec_key_remove_ap_iter,
+-				(void *)(uintptr_t)link_id);
++	ieee80211_iter_keys(mvm->hw, vif,
++			    iwl_mvm_sec_key_remove_ap_iter,
++			    (void *)(uintptr_t)link_id);
+ }
 -- 
 2.43.0
 
