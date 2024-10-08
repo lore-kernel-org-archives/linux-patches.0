@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42261C2420;
-	Tue,  8 Oct 2024 12:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5321C2420;
+	Tue,  8 Oct 2024 12:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391733; cv=none; b=oe1STFwtrkcraACrOLsPNL/s/wXW/XQqaK+wwHAMCRKBUybLW9CPT2qhafoJiTHRs3gCaieZTeGA3+TA2Bx5MDUXYHAXMhsTCvfqulJeJN1Gn69dLjSyNdfVVSlDMiIJAdJRf+7f8x6ZREK00eAvAvvwXha027zbkmpO7DuH9L0=
+	t=1728391737; cv=none; b=eY/uqDtc+kEuUTKZoHWmpNWXpIjXTCaND7mYE27AjsWc1c5n4glYtd2sY+xjtLeoOvbEZA4OQn8QD5ZbIqLOiZJEEVtaVFE7NKaATkrF+SAkB/Upn3PUyijAm+jN1I0dMxm39DjEHDUvV5TjOshM2V20OsMugBMs4XrQspfNAKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391733; c=relaxed/simple;
-	bh=R75rPz07qG1B0v3pmFv+oxD56HcFz2SSHDlf9XHPsWM=;
+	s=arc-20240116; t=1728391737; c=relaxed/simple;
+	bh=O/s29OPWvDazfpSdt16G1G+2fuI6mdaJV7y1WLr0GOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUaGw+cjPazGS96jOwApCkKyFgmRsyUipORK1j08w2INVH1aB931jDyO8smCNf91XGZwxnn4kfCqVcfGf7dG1pG11KwY1yP3tHp6E5ogNBPiadhDQeaUdeNOZQrl8Q9xrryOAN0IBG4mAJWgT0OGH1dq2xrqXTzKhnqmXZ/I5NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMyH3YR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgg3QmwI5XNIGCweZJcuf/j9tFfqelPoz1Jvk7aZoe7jmvGOpUTbZ7kwZtoxntOWR5s5680uTVzjsz4485oxq3KcQHOsykzQPlb03+sPpWG2ZUWISYd2RB0fahDxuwNN7q6gDaooO/QtHlGOYZYDJszHq06IKaWIXqrYpn9enN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf6zUWCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMyH3YR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C76C4CEC7;
-	Tue,  8 Oct 2024 12:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf6zUWCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88345C4CEC7;
+	Tue,  8 Oct 2024 12:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391733;
-	bh=R75rPz07qG1B0v3pmFv+oxD56HcFz2SSHDlf9XHPsWM=;
+	s=korg; t=1728391737;
+	bh=O/s29OPWvDazfpSdt16G1G+2fuI6mdaJV7y1WLr0GOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMyH3YR9Q5JuenKChdMfMEuKyi7mct1rvkSndGZgOFfxdal8hP4CNNcqcCdBRRqhE
-	 wwyIwtMnXxGbSFtd1eYnMB6bY1h2XN0XhlWVPAWv5hEzaFu74+HsuyyR2Dl+5qSyd4
-	 7+0lBgffa0sAtkXTdhJLjK2hkLM1UfzKLSIlGHzo=
+	b=bf6zUWCqa5Ljf0LrWmIxkH4zGlD0rf9uM58UlUAu7G5uRlKbJ9q7/3mp9be4KQfT3
+	 qi4iOP8UcAPNwFW7gRBk57eH72q81nXXJX6smWXS4gwcLOQznhizkD42kPcSLysmPe
+	 OvvdUKOZsXVF7kX0TwLV6nfp05kAOgdmghfol+HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Pius <joshuapius@chromium.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 174/558] ALSA: usb-audio: Add logitech Audio profile quirk
-Date: Tue,  8 Oct 2024 14:03:24 +0200
-Message-ID: <20241008115709.204115487@linuxfoundation.org>
+Subject: [PATCH 6.11 175/558] ASoC: codecs: wsa883x: Handle reading version failure
+Date: Tue,  8 Oct 2024 14:03:25 +0200
+Message-ID: <20241008115709.242873098@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,38 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Pius <joshuapius@chromium.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a51c925c11d7b855167e64b63eb4378e5adfc11d ]
+[ Upstream commit 2fbf16992e5aa14acf0441320033a01a32309ded ]
 
-Specify shortnames for the following Logitech Devices: Rally bar, Rally
-bar mini, Tap, MeetUp and Huddle.
+If reading version and variant from registers fails (which is unlikely
+but possible, because it is a read over bus), the driver will proceed
+and perform device configuration based on uninitialized stack variables.
+Handle it a bit better - bail out without doing any init and failing the
+update status Soundwire callback.
 
-Signed-off-by: Joshua Pius <joshuapius@chromium.org>
-Link: https://patch.msgid.link/20240912152635.1859737-1-joshuapius@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240710-asoc-wsa88xx-version-v1-2-f1c54966ccde@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/wsa883x.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index 778de9244f1e7..9c411b82a218d 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -384,6 +384,12 @@ static const struct usb_audio_device_name usb_audio_names[] = {
- 	/* Creative/Toshiba Multimedia Center SB-0500 */
- 	DEVICE_NAME(0x041e, 0x3048, "Toshiba", "SB-0500"),
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 3e4fdaa3f44fb..53f6de4340548 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -997,15 +997,19 @@ static const struct reg_sequence reg_init[] = {
+ 	{WSA883X_GMAMP_SUP1, 0xE2},
+ };
  
-+	/* Logitech Audio Devices */
-+	DEVICE_NAME(0x046d, 0x0867, "Logitech, Inc.", "Logi-MeetUp"),
-+	DEVICE_NAME(0x046d, 0x0874, "Logitech, Inc.", "Logi-Tap-Audio"),
-+	DEVICE_NAME(0x046d, 0x087c, "Logitech, Inc.", "Logi-Huddle"),
-+	DEVICE_NAME(0x046d, 0x0898, "Logitech, Inc.", "Logi-RB-Audio"),
-+	DEVICE_NAME(0x046d, 0x08d2, "Logitech, Inc.", "Logi-RBM-Audio"),
- 	DEVICE_NAME(0x046d, 0x0990, "Logitech, Inc.", "QuickCam Pro 9000"),
+-static void wsa883x_init(struct wsa883x_priv *wsa883x)
++static int wsa883x_init(struct wsa883x_priv *wsa883x)
+ {
+ 	struct regmap *regmap = wsa883x->regmap;
+-	int variant, version;
++	int variant, version, ret;
  
- 	DEVICE_NAME(0x05e1, 0x0408, "Syntek", "STK1160"),
+-	regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
++	ret = regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
++	if (ret)
++		return ret;
+ 	wsa883x->variant = variant & WSA883X_ID_MASK;
+ 
+-	regmap_read(regmap, WSA883X_CHIP_ID0, &version);
++	ret = regmap_read(regmap, WSA883X_CHIP_ID0, &version);
++	if (ret)
++		return ret;
+ 	wsa883x->version = version;
+ 
+ 	switch (wsa883x->variant) {
+@@ -1040,6 +1044,8 @@ static void wsa883x_init(struct wsa883x_priv *wsa883x)
+ 				   WSA883X_DRE_OFFSET_MASK,
+ 				   wsa883x->comp_offset);
+ 	}
++
++	return 0;
+ }
+ 
+ static int wsa883x_update_status(struct sdw_slave *slave,
+@@ -1048,7 +1054,7 @@ static int wsa883x_update_status(struct sdw_slave *slave,
+ 	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
+ 
+ 	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
+-		wsa883x_init(wsa883x);
++		return wsa883x_init(wsa883x);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
