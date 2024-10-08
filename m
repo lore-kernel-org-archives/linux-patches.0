@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00EA1DE4CD;
-	Tue,  8 Oct 2024 13:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70631E53A;
+	Tue,  8 Oct 2024 13:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394224; cv=none; b=eWka0KWCXU3Gozya41YKFZgsL9ovfwMEjjPtUJJRn8repVc0aOBcZ17BAV4YVqy8PjoAA3MefvPY88FaCeeOlCovKlySZbN5DSGdYAJckIq0ZXDdATRTrZ//Kmsc54b2U3Vt6oOPR0ylnP1SNPhYtKFKMHYXidZRLH2CJtm0fKw=
+	t=1728394228; cv=none; b=pdEXl4LTUfF7HUHZA/Lw+Vj5MUuJXakmuejxryhQVoemh7QVPMDJZAx6sYJdg5XbNZv2fYLL8qGq//5PGZNSIb9U02V8uYaSHh4CSD5tsMbrcDnCqZG13soJUA8RpZJ+jXj7prbejYY3oRlgc+Cn+Hw64FSRdOpVxkuL6k77fYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394224; c=relaxed/simple;
-	bh=m0WtLAzV/3l/JOiTsp5fpFV8qXsGn8PAy3bSgLDowgQ=;
+	s=arc-20240116; t=1728394228; c=relaxed/simple;
+	bh=q0lCW5MyPtouurCNkrsdmTNAktP2UsGlYkU1mSAlrJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPtB2asW3LtIjahyFxNj8KyMXgA0oK1aBRyhgi8peYrJVOs8rsaEVY6jwqMClIz9UBjjkx66SksBnQBs9FJ8a/Z+pqVV8jOsDe9J48/0tY1AQJI3jUHfj/KKF1jVGZP6Z2ZonezXQcAg/8pmTgsDY8AIXaqh7Ap+dxiBoV0Wuus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzr9ePKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqK/MZw6xG2vc4PtwzXyE42+CSeohotwwxr/LrREOamq8VrQ2qvcLKPXSXh93ajxaVl6LPAYoiUTf/P99TXAlR9w6X43l81gzmZmio6xn8GPBCyoQESbI7nTZb4Jmk81Qh30L6eeXwHh5O7xssCrGUkM3AiU051S4eQEOfDaHk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PupmowzW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzr9ePKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF7FC4CEC7;
-	Tue,  8 Oct 2024 13:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PupmowzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D070BC4CEC7;
+	Tue,  8 Oct 2024 13:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394223;
-	bh=m0WtLAzV/3l/JOiTsp5fpFV8qXsGn8PAy3bSgLDowgQ=;
+	s=korg; t=1728394227;
+	bh=q0lCW5MyPtouurCNkrsdmTNAktP2UsGlYkU1mSAlrJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzr9ePKMBDwwn7braDpAELpLGanGeGX65dnrlLqGFK/1JSSPOG79O5/Snb7BqyaNo
-	 aSnc2MIVOaBat4dZDYJ+M82OtmleA1pmtqvfXR3UzZJrBnKgniaVJYJRUgTeRuB8I9
-	 cRDXKV6mls1li4sdpv9F7heDURd4orpFcJkqZoPk=
+	b=PupmowzW22zTyBCF+EbWqa+aaPf021X3OFmbqgTk6DOllifz7J74ECTSXtsHLvzNx
+	 Ar5o4u+24KrVYxnheud3pIfIv0FSI2ny4RD4F4E79j0B+gjwmHY8PToz/M0Zxz5lay
+	 YbUkIscx5OUd1aL20MVhUoZ6Pf5z/pYIKe+qw0is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 384/386] drm/amd/display: enable_hpo_dp_link_output: Check link_res->hpo_dp_link_enc before using it
-Date: Tue,  8 Oct 2024 14:10:29 +0200
-Message-ID: <20241008115644.504125606@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 385/386] null_blk: Fix return value of nullb_device_power_store()
+Date: Tue,  8 Oct 2024 14:10:30 +0200
+Message-ID: <20241008115644.542319888@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,40 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit d925c04d974c657d10471c0c2dba3bc9c7d994ee upstream.
+commit d9ff882b54f99f96787fa3df7cd938966843c418 upstream.
 
-[WHAT & HOW]
-Functions dp_enable_link_phy and dp_disable_link_phy can pass link_res
-without initializing hpo_dp_link_enc and it is necessary to check for
-null before dereferencing.
+When powering on a null_blk device that is not already on, the return
+value ret that is initialized to be count is reused to check the return
+value of null_add_dev(), leading to nullb_device_power_store() to return
+null_add_dev() return value (0 on success) instead of "count".
+So make sure to set ret to be equal to count when there are no errors.
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
-
-Fixes: 0beca868cde8 ("drm/amd/display: Check link_res->hpo_dp_link_enc before using it")
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: a2db328b0839 ("null_blk: fix null-ptr-dereference while configuring 'power' and 'submit_queues'")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Link: https://lore.kernel.org/r/20240527043445.235267-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/block/null_blk/main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_hpo_dp.c
-@@ -110,6 +110,11 @@ void enable_hpo_dp_link_output(struct dc
- 		enum clock_source_id clock_source,
- 		const struct dc_link_settings *link_settings)
- {
-+	if (!link_res->hpo_dp_link_enc) {
-+		DC_LOG_ERROR("%s: invalid hpo_dp_link_enc\n", __func__);
-+		return;
-+	}
-+
- 	if (link->dc->res_pool->dccg->funcs->set_symclk32_le_root_clock_gating)
- 		link->dc->res_pool->dccg->funcs->set_symclk32_le_root_clock_gating(
- 				link->dc->res_pool->dccg,
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -470,6 +470,7 @@ static ssize_t nullb_device_power_store(
+ 
+ 		set_bit(NULLB_DEV_FL_CONFIGURED, &dev->flags);
+ 		dev->power = newp;
++		ret = count;
+ 	} else if (dev->power && !newp) {
+ 		if (test_and_clear_bit(NULLB_DEV_FL_UP, &dev->flags)) {
+ 			dev->power = newp;
 
 
