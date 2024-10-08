@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D7A1DE4CD;
-	Tue,  8 Oct 2024 13:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FA91DEFF7;
+	Tue,  8 Oct 2024 13:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392914; cv=none; b=u3amHcjgh93ifngspRqnAooI6TxhPIX1fVyqVq9l5w0uheWF9LDyIk3w1StfHTujrbJ3cI4YfaBru34RweUXpjIOUqo5VL3ja+Y5vp+yZIhC5XEK/ckRo5Bl6BPEiLA865o9cYH+Qey9WRHP/zQTFrXUxh1XQXZ9j0lYPAb6PIg=
+	t=1728392917; cv=none; b=HrPkUef9XsM3oGGo0EcH31pe7aRt/yUUM27lYlNUDgsvLaKA6IY5b5P9XnLYaiLv75IYi0GOWxGo7l01X6/N+/vqlLqpURl7xUkiprMeGUOtyJ0HgUHPz5hgLnOByqA1aJATDBw+qMWswzxbKPNMxiFdbP2ZFAwHl4mewwxzq6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392914; c=relaxed/simple;
-	bh=S3Ufw2b6YTC8P0fFhVIgVSAaJBXGtRuC3SJ8pWxZnHw=;
+	s=arc-20240116; t=1728392917; c=relaxed/simple;
+	bh=DbJUlqVE7BbUxFv141qubAf0WD/NgKtlMfAL9aU8sOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjLc85Nxwz73xLj8wPnpusJRWMdaoBgALaDkx5F+tDTAo1Hk7A4LnFZqtGLsPVQIsWSgkAhJZQM2aTVasw75Q5rugz9XctDH415YiQh/SkN9s+7VLVCIrlLQUDkNdEZvj2mWXJQaQEfWNnTj4/b8Xo8AgJTjUShlc7xbwr2W2mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9OQEYv7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dYJYatQsUlk9aEfjcJdGGOXvRuxRLhhvfJgdWAoU8w/ltXJaBSWZlbVSztcj/9wNH9/82kyeca/7CoQnH21dMTG6tOxH0GU2pgXd0wS5VU93A5aEQ4TptD2A6q4v6o5SbwZ/s7XlrBkRhrbri0sZ7VZqoQXKu9ta6tsFTOTU8kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCWjdp62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9OQEYv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57296C4CEC7;
-	Tue,  8 Oct 2024 13:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCWjdp62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA31C4CECC;
+	Tue,  8 Oct 2024 13:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392914;
-	bh=S3Ufw2b6YTC8P0fFhVIgVSAaJBXGtRuC3SJ8pWxZnHw=;
+	s=korg; t=1728392917;
+	bh=DbJUlqVE7BbUxFv141qubAf0WD/NgKtlMfAL9aU8sOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q9OQEYv7fECctq5UScuGPCJXeZx8iIhYqHe2WD+SNbfhlPCn0rKHsoWSK+B5JHxeP
-	 b9YMyjq6TGzhuHfEyoSDkWVUJI6MEq0iBaQhEe7gGjRb/87PetwryDlg8zBgDW1eYl
-	 XDa6XaYK7rOP3Du/zd05FxNYO1YS+63Kvj0XlS2s=
+	b=SCWjdp62q88wJb2ICkOO38kOQRjh5SREfNXMIjAboOfEhAo62j4ximg7Vbkotaic4
+	 6IzgR6aWQMiTDqbg7/TJbvW8CEPlwX73Hw4H4TuFbbqFF3+4TtmqS7d97kyT1TaAWe
+	 coN4DpwYgeV7P4clkd5ziqlUg5UcQK53pIJ8QvRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.11 557/558] perf report: Fix segfault when sym sort key is not used
-Date: Tue,  8 Oct 2024 14:09:47 +0200
-Message-ID: <20241008115724.150641144@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.11 558/558] pmdomain: core: Reduce debug summary table width
+Date: Tue,  8 Oct 2024 14:09:48 +0200
+Message-ID: <20241008115724.189586572@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -58,88 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 9af2efee41b27a0f386fb5aa95d8d0b4b5d9fede upstream.
+commit c6ccb691d484544636bc4a097574c5c135ccccda upstream.
 
-The fields in the hist_entry are filled on-demand which means they only
-have meaningful values when relevant sort keys are used.
+Commit 9094e53ff5c86ebe ("pmdomain: core: Use dev_name() instead of
+kobject_get_path() in debugfs") severely shortened the names of devices
+in a PM Domain.  Now the most common format[1] consists of a 32-bit
+unit-address (8 characters), followed by a dot and a node name (20
+characters for "air-pollution-sensor" and "interrupt-controller", which
+are the longest generic node names documented in the Devicetree
+Specification), for a typical maximum of 29 characters.
 
-So if neither of 'dso' nor 'sym' sort keys are used, the map/symbols in
-the hist entry can be garbage.  So it shouldn't access it
-unconditionally.
+This offers a good opportunity to reduce the table width of the debug
+summary:
+  - Reduce the device name field width from 50 to 30 characters, which
+    matches the PM Domain name width,
+  - Reduce the large inter-column space between the "performance" and
+    "managed by" columns.
 
-I got a segfault, when I wanted to see cgroup profiles.
+Visual impact:
+  - The "performance" column now starts at a position that is a
+    multiple of 16, just like the "status" and "children" columns,
+  - All of the "/device", "runtime status", and "managed by" columns are
+    now indented 4 characters more than the columns right above them,
+  - Everything fits in (one less than) 80 characters again ;-)
 
-  $ sudo perf record -a --all-cgroups --synth=cgroup true
+[1] Note that some device names (e.g. TI AM335x interconnect target
+    modules) do not follow this convention, and may be much longer, but
+    these didn't fit in the old 50-character column width either.
 
-  $ sudo perf report -s cgroup
-
-  Program received signal SIGSEGV, Segmentation fault.
-  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
-  48		return RC_CHK_ACCESS(map)->dso;
-  (gdb) bt
-  #0  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
-  #1  0x00005555557aa39b in map__load (map=0x0) at util/map.c:344
-  #2  0x00005555557aa592 in map__find_symbol (map=0x0, addr=140736115941088) at util/map.c:385
-  #3  0x00005555557ef000 in hists__findnew_entry (hists=0x555556039d60, entry=0x7fffffffa4c0, al=0x7fffffffa8c0, sample_self=true)
-      at util/hist.c:644
-  #4  0x00005555557ef61c in __hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
-      block_info=0x0, sample=0x7fffffffaa90, sample_self=true, ops=0x0) at util/hist.c:761
-  #5  0x00005555557ef71f in hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
-      sample=0x7fffffffaa90, sample_self=true) at util/hist.c:779
-  #6  0x00005555557f00fb in iter_add_single_normal_entry (iter=0x7fffffffa900, al=0x7fffffffa8c0) at util/hist.c:1015
-  #7  0x00005555557f09a7 in hist_entry_iter__add (iter=0x7fffffffa900, al=0x7fffffffa8c0, max_stack_depth=127, arg=0x7fffffffbce0)
-      at util/hist.c:1260
-  #8  0x00005555555ba7ce in process_sample_event (tool=0x7fffffffbce0, event=0x7ffff7c14128, sample=0x7fffffffaa90, evsel=0x555556039ad0,
-      machine=0x5555560388e8) at builtin-report.c:334
-  #9  0x00005555557b30c8 in evlist__deliver_sample (evlist=0x555556039010, tool=0x7fffffffbce0, event=0x7ffff7c14128,
-      sample=0x7fffffffaa90, evsel=0x555556039ad0, machine=0x5555560388e8) at util/session.c:1232
-  #10 0x00005555557b32bc in machines__deliver_event (machines=0x5555560388e8, evlist=0x555556039010, event=0x7ffff7c14128,
-      sample=0x7fffffffaa90, tool=0x7fffffffbce0, file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1271
-  #11 0x00005555557b3848 in perf_session__deliver_event (session=0x5555560386d0, event=0x7ffff7c14128, tool=0x7fffffffbce0,
-      file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1354
-  #12 0x00005555557affaf in ordered_events__deliver_event (oe=0x555556038e60, event=0x555556135aa0) at util/session.c:132
-  #13 0x00005555557bb605 in do_flush (oe=0x555556038e60, show_progress=false) at util/ordered-events.c:245
-  #14 0x00005555557bb95c in __ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND, timestamp=0) at util/ordered-events.c:324
-  #15 0x00005555557bba46 in ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND) at util/ordered-events.c:342
-  #16 0x00005555557b1b3b in perf_event__process_finished_round (tool=0x7fffffffbce0, event=0x7ffff7c15bb8, oe=0x555556038e60)
-      at util/session.c:780
-  #17 0x00005555557b3b27 in perf_session__process_user_event (session=0x5555560386d0, event=0x7ffff7c15bb8, file_offset=117688,
-      file_path=0x555556038ff0 "perf.data") at util/session.c:1406
-
-As you can see the entry->ms.map was NULL even if he->ms.map has a
-value.  This is because 'sym' sort key is not given, so it cannot assume
-whether he->ms.sym and entry->ms.sym is the same.  I only checked the
-'sym' sort key here as it implies 'dso' behavior (so maps are the same).
-
-Fixes: ac01c8c4246546fd ("perf hist: Update hist symbol when updating maps")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/r/20240826221045.1202305-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/f8e1821364b6d5d11350447c128f6d2b470f33fe.1725459707.git.geert+renesas@glider.be
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/core.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -636,7 +636,7 @@ static struct hist_entry *hists__findnew
- 			 * mis-adjust symbol addresses when computing
- 			 * the history counter to increment.
- 			 */
--			if (he->ms.map != entry->ms.map) {
-+			if (hists__has(hists, sym) && he->ms.map != entry->ms.map) {
- 				if (he->ms.sym) {
- 					u64 addr = he->ms.sym->start;
- 					he->ms.sym = map__find_symbol(entry->ms.map, addr);
+--- a/drivers/pmdomain/core.c
++++ b/drivers/pmdomain/core.c
+@@ -3182,7 +3182,7 @@ static void rtpm_status_str(struct seq_f
+ 	else
+ 		WARN_ON(1);
+ 
+-	seq_printf(s, "%-25s  ", p);
++	seq_printf(s, "%-26s  ", p);
+ }
+ 
+ static void mode_status_str(struct seq_file *s, struct device *dev)
+@@ -3191,7 +3191,7 @@ static void mode_status_str(struct seq_f
+ 
+ 	gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+ 
+-	seq_printf(s, "%9s", gpd_data->hw_mode ? "HW" : "SW");
++	seq_printf(s, "%2s", gpd_data->hw_mode ? "HW" : "SW");
+ }
+ 
+ static void perf_status_str(struct seq_file *s, struct device *dev)
+@@ -3226,7 +3226,7 @@ static int genpd_summary_one(struct seq_
+ 	else
+ 		snprintf(state, sizeof(state), "%s",
+ 			 status_lookup[genpd->status]);
+-	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
++	seq_printf(s, "%-30s  %-30s  %u", genpd->name, state, genpd->performance_state);
+ 
+ 	/*
+ 	 * Modifications on the list require holding locks on both
+@@ -3242,7 +3242,7 @@ static int genpd_summary_one(struct seq_
+ 	}
+ 
+ 	list_for_each_entry(pm_data, &genpd->dev_list, list_node) {
+-		seq_printf(s, "\n    %-50s  ", dev_name(pm_data->dev));
++		seq_printf(s, "\n    %-30s  ", dev_name(pm_data->dev));
+ 		rtpm_status_str(s, pm_data->dev);
+ 		perf_status_str(s, pm_data->dev);
+ 		mode_status_str(s, pm_data->dev);
+@@ -3260,9 +3260,9 @@ static int summary_show(struct seq_file
+ 	struct generic_pm_domain *genpd;
+ 	int ret = 0;
+ 
+-	seq_puts(s, "domain                          status          children                           performance\n");
+-	seq_puts(s, "    /device                                             runtime status                           managed by\n");
+-	seq_puts(s, "------------------------------------------------------------------------------------------------------------\n");
++	seq_puts(s, "domain                          status          children        performance\n");
++	seq_puts(s, "    /device                         runtime status                  managed by\n");
++	seq_puts(s, "------------------------------------------------------------------------------\n");
+ 
+ 	ret = mutex_lock_interruptible(&gpd_list_lock);
+ 	if (ret)
 
 
