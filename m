@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5AF1DE4CD;
-	Tue,  8 Oct 2024 12:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C1B1DF247;
+	Tue,  8 Oct 2024 12:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391290; cv=none; b=n/aGKG9mQuF0KgBN53bYL4yrjsso8flOBDgk6ggBU6fMb7VO0BBGEdhkP2LoYKsczVkE4LPIrR3ukR9FSvyZJijR/n8f+MykGbQs0gpPZEncFJebzdFOwuvnKNiKut2GhNqwJRhM29O4nMeVMgGNyjRwML+/kouTbSjK/bkYrIU=
+	t=1728391293; cv=none; b=cd7hV5WeQmCIXrsMd6/05wNEHT6/B4bTbi2i05VJ8Ik+MCX1HoQqxknIcu2B2N2yeMVtuG6FnZ1e0AIvc3C4x6PiBkfBU1rfh1BDmiI97B26dCJtn7hwoojFTfymgyWqX4852b6Uerpxk+VqIY2Biz/bWiuSEMbyq8F4c+P5DME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391290; c=relaxed/simple;
-	bh=2+1PGwTS0VnnL3YCC4GDgstNj2raFViRMBg78Pausrg=;
+	s=arc-20240116; t=1728391293; c=relaxed/simple;
+	bh=9QxplPmpBY/fpVXfO6XqT20iSmvde+tQW7mmcLMkkoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k4RSnUzOBXO1NEAcohYetuAhALpLWWTQB/dsf8eS88DzERehC1nsjOBNEOsFPilOWVYTRKS2fZI+tir6Py9cGWSaAb1iS1PaFw1/pIHaEjZnvWAUVESQvARSMxGl+M/eUQQUnUs8cguIRXZOmt3UOndOPBrIeS33t4ZOc3tkBVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO93xbgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fvj21OXTEz/kZGBn/L2eqHGiUyLA7tmILHWs3ocb4RIgAQHv5ttL05ECKo1XaB1fgEFD3NkGZ+y6BEfIsIbXCHEAYcp4zdezGqx+lkczQ8CDR3PrIqHOxVWUwQSP61awVzuKaxWN7RKKAwXalMEeF6Ksz3kGTr1J/GFyGHtG5Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnhMJ2Pq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO93xbgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B867CC4CEC7;
-	Tue,  8 Oct 2024 12:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnhMJ2Pq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2433C4CEC7;
+	Tue,  8 Oct 2024 12:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391290;
-	bh=2+1PGwTS0VnnL3YCC4GDgstNj2raFViRMBg78Pausrg=;
+	s=korg; t=1728391293;
+	bh=9QxplPmpBY/fpVXfO6XqT20iSmvde+tQW7mmcLMkkoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SO93xbgF6k/eUEqWXlZJkHFC5LjT7A2OT2iGfQ3EeWn2v6dMKb7yeWGqfjlppSpB4
-	 oZLmdH4G7VsTP8dEqVsfQgSYTx/Lo674orasTcUJ95nBKkstpgC53ewFV8XZsAAzrP
-	 +Zmkhfmtal0I0cFGr+niLY7+cN5GcSjmiz9SU4JE=
+	b=TnhMJ2PqiiloHbFX6xOPJRpzGXgzuoEJclSiOYGzTKzLBq7PlLezi7910BaLKEDvf
+	 E4QTFSsEAgsCATa+yyXJ9CDG3JlFFmW61W4+41fgFu3TitceLumV9U3OzioNpUQsMG
+	 I22R7l2D58Kg3jAx7xzlfWrBLXi3tHZeDprq4AUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 066/558] ASoC: Intel: soc-acpi-intel-rpl-match: add missing empty item
-Date: Tue,  8 Oct 2024 14:01:36 +0200
-Message-ID: <20241008115704.814478505@linuxfoundation.org>
+Subject: [PATCH 6.11 067/558] drm/panthor: Lock the VM resv before calling drm_gpuvm_bo_obtain_prealloc()
+Date: Tue,  8 Oct 2024 14:01:37 +0200
+Message-ID: <20241008115704.853262315@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -47,44 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 5afc29ba44fdd1bcbad4e07246c395d946301580 ]
+[ Upstream commit fa998a9eac8809da4f219aad49836fcad2a9bf5c ]
 
-There is no links_num in struct snd_soc_acpi_mach {}, and we test
-!link->num_adr as a condition to end the loop in hda_sdw_machine_select().
-So an empty item in struct snd_soc_acpi_link_adr array is required.
+drm_gpuvm_bo_obtain_prealloc() will call drm_gpuvm_bo_put() on our
+pre-allocated BO if the <BO,VM> association exists. Given we
+only have one ref on preallocated_vm_bo, drm_gpuvm_bo_destroy() will
+be called immediately, and we have to hold the VM resv lock when
+calling this function.
 
-Fixes: 65ab45b90656 ("ASoC: Intel: soc-acpi: Add match entries for some cs42l43 laptops")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20241001061738.34854-2-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240913112722.492144-1-boris.brezillon@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-rpl-match.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-rpl-match.c b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
-index bc8817633b81b..b83ac2e6337cf 100644
---- a/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
-@@ -198,6 +198,7 @@ static const struct snd_soc_acpi_link_adr rpl_cs42l43_l0[] = {
- 		.num_adr = ARRAY_SIZE(cs42l43_0_adr),
- 		.adr_d = cs42l43_0_adr,
- 	},
-+	{}
- };
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index cc6e13a977835..ce8e8a93d7076 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1251,9 +1251,17 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
+ 		goto err_cleanup;
+ 	}
  
- static const struct snd_soc_acpi_link_adr rpl_sdca_3_in_1[] = {
++	/* drm_gpuvm_bo_obtain_prealloc() will call drm_gpuvm_bo_put() on our
++	 * pre-allocated BO if the <BO,VM> association exists. Given we
++	 * only have one ref on preallocated_vm_bo, drm_gpuvm_bo_destroy() will
++	 * be called immediately, and we have to hold the VM resv lock when
++	 * calling this function.
++	 */
++	dma_resv_lock(panthor_vm_resv(vm), NULL);
+ 	mutex_lock(&bo->gpuva_list_lock);
+ 	op_ctx->map.vm_bo = drm_gpuvm_bo_obtain_prealloc(preallocated_vm_bo);
+ 	mutex_unlock(&bo->gpuva_list_lock);
++	dma_resv_unlock(panthor_vm_resv(vm));
+ 
+ 	/* If the a vm_bo for this <VM,BO> combination exists, it already
+ 	 * retains a pin ref, and we can release the one we took earlier.
 -- 
 2.43.0
 
