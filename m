@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AE21DE2CF;
-	Tue,  8 Oct 2024 12:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D86183CB8;
+	Tue,  8 Oct 2024 12:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391585; cv=none; b=FNGWDkOOligiDRb6ngYrlmxmGmjA/7YUmDXm7cp1gUTHDDiXd+/O24yDDRfg/gbfIpNnTIL4rrKq/P2IMyNauNX4BaLAvL0hxJrX+luLIO0486yh6yEIcrLjFCPLdgoIVZ3mKK5ULIYBI2c2FmXMFyZ8VquOrOxjh8TlIknrvpU=
+	t=1728391588; cv=none; b=Dvnwp8XkZwUBBbSGBm/ouBB9bsZ5IlVMRu83POT9JVTzBtuejXUM00FJd/RZyEqZJ/DkrcItGf0iYPxs6fMNaj4u8WqWF3nA89NmanDMbB5g/dyG4sAqUeGPHZHnBtExkC5pib+r8yLW1DzjXiS7374srxq8tEBa38wYmWy5eaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391585; c=relaxed/simple;
-	bh=bOIwAZsZbk19DyaUiFaJk+mnD0Z3dTrDV1Kf9hv0mj0=;
+	s=arc-20240116; t=1728391588; c=relaxed/simple;
+	bh=4e/TDzNCIu60xU6nFxK7iAVNuesLpFquYoTCb6Ybhqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaWa9YFCixTIbGLsvcytNdgx4lSotpeJq2K361Ba9dht0bgIDrSelHF5XiGo9iI4U8xacxu3VOENygB1808QwOLFtySzqzWuxQXjjFDq0ZEOAyJbgjN56vihkSR8a47+yo7Sp4gboV5DwEGRGGQHeTOzqMsi3PlhGGzBPj7B6Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha8GDDcs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggtiKV0TSkE1L9VDu+4mJxcKivWeySYeGn4eoJyEuXL6HxczbM1hJZDZtA0mD5LjF+0t5/eQPyFiGa0EDWQ3W5OaM+NVsshLNtTFxFK/g3/mKJUrTdxEkKBKrACLcvqT+tAQ7VldzJAnKkSVUueZrZ5uzpdA8FAw+g1mM4iwj4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6jRzRGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha8GDDcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A86C4CEC7;
-	Tue,  8 Oct 2024 12:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6jRzRGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EAFC4CEC7;
+	Tue,  8 Oct 2024 12:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391585;
-	bh=bOIwAZsZbk19DyaUiFaJk+mnD0Z3dTrDV1Kf9hv0mj0=;
+	s=korg; t=1728391588;
+	bh=4e/TDzNCIu60xU6nFxK7iAVNuesLpFquYoTCb6Ybhqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ha8GDDcsUhCdCYq/RjxlNF38a+MGhWVm3Hsj3IqnnGPp4Rt47hm+049HXTLvkhzjd
-	 k3TKm+b9DhT62az0bvsnPF92O1CyRjTMsSDVUZMX24dvWXKA41qCuMP7+1dJbi7n92
-	 nAHXQYJWlnOhd2ESnIiWYrrDfpeDpZ57iYrgm4x4=
+	b=c6jRzRGx9zPbbvETFxItMCg4ol76KTxYCk6lpJhOY+5dcoThs4rWGZGsK+i1l8zr6
+	 LojFmCanWJoQxPSJ31eB/R6cWjVC8Ae/XzcHdsr6cTUzOGaoidzEDNMqdY50AqQe9I
+	 mqlE/ZGWivxor0T/JcAw4O3OOozR16tOCeTo+yOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 160/558] wifi: mt76: mt7915: add dummy HW offload of IEEE 802.11 fragmentation
-Date: Tue,  8 Oct 2024 14:03:10 +0200
-Message-ID: <20241008115708.656660189@linuxfoundation.org>
+Subject: [PATCH 6.11 161/558] wifi: mt76: mt7915: hold dev->mt76.mutex while disabling tx worker
+Date: Tue,  8 Oct 2024 14:03:11 +0200
+Message-ID: <20241008115708.696036304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,60 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit f2cc859149240d910fdc6405717673e0b84bfda8 ]
+[ Upstream commit 8f7152f10cb434f954aeff85ca1be9cd4d01912b ]
 
-Currently, CONNAC2 series do not support encryption for fragmented Tx frames.
-Therefore, add dummy function mt7915_set_frag_threshold() to prevent SW
-IEEE 802.11 fragmentation.
+Prevent racing against other functions disabling the same worker
 
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Link: https://patch.msgid.link/20240827093011.18621-16-nbd@nbd.name
+Link: https://patch.msgid.link/20240827093011.18621-17-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 1 +
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 7bc3b4cd35925..6bef96e3d2a3d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -400,6 +400,7 @@ mt7915_init_wiphy(struct mt7915_phy *phy)
- 	ieee80211_hw_set(hw, SUPPORTS_RX_DECAP_OFFLOAD);
- 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
- 	ieee80211_hw_set(hw, WANT_MONITOR_VIF);
-+	ieee80211_hw_set(hw, SUPPORTS_TX_FRAG);
- 
- 	hw->max_tx_fragments = 4;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index efbb8b23e4719..e094358005799 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -1577,6 +1577,12 @@ mt7915_twt_teardown_request(struct ieee80211_hw *hw,
- 	mutex_unlock(&dev->mt76.mutex);
- }
- 
-+static int
-+mt7915_set_frag_threshold(struct ieee80211_hw *hw, u32 val)
-+{
-+	return 0;
-+}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 8008ce3fa6c7e..387d47e9fcd38 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1537,12 +1537,14 @@ void mt7915_mac_reset_work(struct work_struct *work)
+ 		set_bit(MT76_RESET, &phy2->mt76->state);
+ 		cancel_delayed_work_sync(&phy2->mt76->mac_work);
+ 	}
 +
- static int
- mt7915_set_radar_background(struct ieee80211_hw *hw,
- 			    struct cfg80211_chan_def *chandef)
-@@ -1707,6 +1713,7 @@ const struct ieee80211_ops mt7915_ops = {
- 	.sta_set_decap_offload = mt7915_sta_set_decap_offload,
- 	.add_twt_setup = mt7915_mac_add_twt_setup,
- 	.twt_teardown_request = mt7915_twt_teardown_request,
-+	.set_frag_threshold = mt7915_set_frag_threshold,
- 	CFG80211_TESTMODE_CMD(mt76_testmode_cmd)
- 	CFG80211_TESTMODE_DUMP(mt76_testmode_dump)
- #ifdef CONFIG_MAC80211_DEBUGFS
++	mutex_lock(&dev->mt76.mutex);
++
+ 	mt76_worker_disable(&dev->mt76.tx_worker);
+ 	mt76_for_each_q_rx(&dev->mt76, i)
+ 		napi_disable(&dev->mt76.napi[i]);
+ 	napi_disable(&dev->mt76.tx_napi);
+ 
+-	mutex_lock(&dev->mt76.mutex);
+ 
+ 	if (mtk_wed_device_active(&dev->mt76.mmio.wed))
+ 		mtk_wed_device_stop(&dev->mt76.mmio.wed);
 -- 
 2.43.0
 
