@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E211DDC35;
-	Tue,  8 Oct 2024 13:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA97F1DFD1;
+	Tue,  8 Oct 2024 13:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392527; cv=none; b=e6p7N1uTnsmn3GrEaDjjbmCjz1r25WVPHnGQL0IdqR7FJIAf6/1GQ9nTKxUW+b3tVAhJQRvYBFnN17Px54nSAkr4TfUBXlBudWZX/C/TPO0MIjPjXrifOVHo2rRr7M4eQVQnnQCs5uT+p82BZQhUnB9NtMM0E9xOVZ2EvofKBts=
+	t=1728392530; cv=none; b=UnL5rmCa6au5EWCRefA/1jyglpRJv7Q9OSZ3z4n05SRsRz1n+ZTntPr/nZJzH7zYN8ltuGfHNtOXnXJePSFWX/lNzYfZ0rcfuaNlvOhcteRCcKCpQqa+t/djkIOpHRWLi3nX/E1wzLNlS5jYS8RVoT99Aj8TJoiP0r74t30RrFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392527; c=relaxed/simple;
-	bh=5s3Q29K6AHPcxmakH2OrZwNdg8a8FudDWZ1/VdyDFQU=;
+	s=arc-20240116; t=1728392530; c=relaxed/simple;
+	bh=hJpFPurEWlACbmqLAtC+R116rZtkaPOjw/YjrQW7CAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKduEzVsuRYmizthvCCiVQRUSNqv6JnrYaAH2//JbQDKxL3qsRQufci41ssxx9/ROVUo6+7AjATBm+KcAAJw3ZWtTtFg0CsQZEhgglYVw5aq5fSR7WuNUQwndGbNICPGT78+FwSpmq0+WKAjwM0+WYjcLCR6DPt78qR87OPrmYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIU7sM9v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnuP0m+hf0qaM989B3sss1StiY+SMWNWLIYdHEoic4AkrwyUpOO2xN62QU6hQCmTYPU0tcSPrJ51HxFxLp3qiOBg29Q3W/8rAeaf/pJuiorA2j6IfyQeKu3omwgzJTZj87Ccbg/6rACYDiHRMlv5Ym4+ewt03aUOlC3KDO1U+ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXp/tzcX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIU7sM9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9684C4CEC7;
-	Tue,  8 Oct 2024 13:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXp/tzcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1038BC4CEC7;
+	Tue,  8 Oct 2024 13:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392527;
-	bh=5s3Q29K6AHPcxmakH2OrZwNdg8a8FudDWZ1/VdyDFQU=;
+	s=korg; t=1728392530;
+	bh=hJpFPurEWlACbmqLAtC+R116rZtkaPOjw/YjrQW7CAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIU7sM9vnHz5fTMF5ijb7qlQAdq+4oW6GcfmPIJb2bDvJRHYD6hYL+SHBn1fwSy/V
-	 XWlUuBeh90h8baPryFqInjfJhgr1WywA0IBaWcbPM1DwM4c0gUZq9khpdDN4iJaibt
-	 kr62DDTNmNQuBwYzPQt/jO/vGYQo+N24SSxFD9Fo=
+	b=sXp/tzcX0+MF4oMfp0g2yxxowb5qsL7hJ4QHVifPtLYHP8Ue2VeNlhnsGN1lwZKrf
+	 ApMLQAkPGOe5iQRlcK+ufIUZVJOYgRdDvkdF2Kl2MrBEAZsWolV0xaP2vj8jWsqRQx
+	 B6izjTnhzw/Eyr9MtgUmAKi487REQezs2+GDNCu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.11 440/558] RDMA/mana_ib: use the correct page size for mapping user-mode doorbell page
-Date: Tue,  8 Oct 2024 14:07:50 +0200
-Message-ID: <20241008115719.583600038@linuxfoundation.org>
+	Pu Lehui <pulehui@huawei.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.11 441/558] drivers/perf: riscv: Align errno for unsupported perf event
+Date: Tue,  8 Oct 2024 14:07:51 +0200
+Message-ID: <20241008115719.621779481@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,41 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-commit 4a3b99bc04e501b816db78f70064e26a01257910 upstream.
+commit c625154993d0d24a962b1830cd5ed92adda2cf86 upstream.
 
-When mapping doorbell page from user-mode, the driver should use the system
-page size as this memory is allocated via mmap() from user-mode.
+RISC-V perf driver does not yet support PERF_TYPE_BREAKPOINT. It would
+be more appropriate to return -EOPNOTSUPP or -ENOENT for this type in
+pmu_sbi_event_map. Considering that other implementations return -ENOENT
+for unsupported perf types, let's synchronize this behavior. Due to this
+reason, a riscv bpf testcases perf_skip fail. Meanwhile, align that
+behavior to the rest of proper place.
 
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Fixes: 9b3e150e310e ("RISC-V: Add a simple platform driver for RISC-V legacy perf")
+Fixes: 16d3b1af0944 ("perf: RISC-V: Check standard event availability")
+Fixes: e9991434596f ("RISC-V: Add perf platform driver based on SBI PMU extension")
 Cc: stable@vger.kernel.org
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Signed-off-by: Long Li <longli@microsoft.com>
-Link: https://patch.msgid.link/1725030993-16213-2-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20240831071520.1630360-1-pulehui@huaweicloud.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/perf/riscv_pmu_legacy.c |    4 ++--
+ drivers/perf/riscv_pmu_sbi.c    |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/hw/mana/main.c
-+++ b/drivers/infiniband/hw/mana/main.c
-@@ -511,13 +511,13 @@ int mana_ib_mmap(struct ib_ucontext *ibc
- 	      PAGE_SHIFT;
- 	prot = pgprot_writecombine(vma->vm_page_prot);
+--- a/drivers/perf/riscv_pmu_legacy.c
++++ b/drivers/perf/riscv_pmu_legacy.c
+@@ -22,13 +22,13 @@ static int pmu_legacy_ctr_get_idx(struct
+ 	struct perf_event_attr *attr = &event->attr;
  
--	ret = rdma_user_mmap_io(ibcontext, vma, pfn, gc->db_page_size, prot,
-+	ret = rdma_user_mmap_io(ibcontext, vma, pfn, PAGE_SIZE, prot,
- 				NULL);
- 	if (ret)
- 		ibdev_dbg(ibdev, "can't rdma_user_mmap_io ret %d\n", ret);
+ 	if (event->attr.type != PERF_TYPE_HARDWARE)
+-		return -EOPNOTSUPP;
++		return -ENOENT;
+ 	if (attr->config == PERF_COUNT_HW_CPU_CYCLES)
+ 		return RISCV_PMU_LEGACY_CYCLE;
+ 	else if (attr->config == PERF_COUNT_HW_INSTRUCTIONS)
+ 		return RISCV_PMU_LEGACY_INSTRET;
  	else
--		ibdev_dbg(ibdev, "mapped I/O pfn 0x%llx page_size %u, ret %d\n",
--			  pfn, gc->db_page_size, ret);
-+		ibdev_dbg(ibdev, "mapped I/O pfn 0x%llx page_size %lu, ret %d\n",
-+			  pfn, PAGE_SIZE, ret);
- 
- 	return ret;
+-		return -EOPNOTSUPP;
++		return -ENOENT;
  }
+ 
+ /* For legacy config & counter index are same */
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -309,7 +309,7 @@ static void pmu_sbi_check_event(struct s
+ 			  ret.value, 0x1, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
+ 	} else if (ret.error == SBI_ERR_NOT_SUPPORTED) {
+ 		/* This event cannot be monitored by any counter */
+-		edata->event_idx = -EINVAL;
++		edata->event_idx = -ENOENT;
+ 	}
+ }
+ 
+@@ -543,7 +543,7 @@ static int pmu_sbi_event_map(struct perf
+ 		}
+ 		break;
+ 	default:
+-		ret = -EINVAL;
++		ret = -ENOENT;
+ 		break;
+ 	}
+ 
 
 
