@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7089A1DE886;
-	Tue,  8 Oct 2024 12:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D081DED74;
+	Tue,  8 Oct 2024 12:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390181; cv=none; b=pFJxLFO98Iu9HDZIF2z8y/DBhYsRSdd47FD5YbLxIjGCXP053S2hEmaLAjErwwvBuL622ptJSphNphZtfTDF0aHbR8i01Rv3sGUm59opMMXeHbVtuQE9yVD7M8cm9XOXnFl0ByPmZZc2XevX3f8IkMa4hbunWCX5pbDUl0TdKdg=
+	t=1728390184; cv=none; b=Zi0mIdw4mBsqKSduFu1HHotAE8wM7GuOggyIbGjvZa95O52MA6Fp/QOu/wJ/m/Da5BUl/Ixmcj3D8QWLNtlNLrAU1yOD00k0NpTMuXDqgloKtMdVJOv7y4EYNAn9rqAZ6P0ZJnym+rMHdPamMqvUJTxkcj2kRuHtOZNYzGpJQYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390181; c=relaxed/simple;
-	bh=GN3aHf1CyWm0x1f6Xn281KuzwWql582bWHHZ4OcPWDQ=;
+	s=arc-20240116; t=1728390184; c=relaxed/simple;
+	bh=Hbkrznynf4M1NRChYLXQMsgssEOMedJ0SlTB67/6kQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryYHDgdYEfaFs46O29HRn18CdvuH7/eoKe/FGsL+4uQ8kfxSj/jxALUh12XojcpAB4yXPa/0HRgZz3CM7VCTxgVM+7E3sE92bPuTUCEAdaUv/N0xvxy+nybjuo58K8PMVxGAeCGZLmkQg4+eTgt5YpLmWbVJEhOXNGGK3isIuJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3sp40QR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=advma08Qcc4UpLH/+1cA8qT2UZj002b3974yK/QIWmo7VVwi1wx6bCkx4watlYtV5WlP/mXxBe6Yk3HmtZSMBKp4gki9n0V3lLhIOW03n9QXsA5t+mqVBZ2mbNfvEMcrSseNuvROquJkrII/ZtJLg45U9x9KGPaswrKAua2EBLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSe1xlo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3sp40QR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415FBC4CEC7;
-	Tue,  8 Oct 2024 12:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSe1xlo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AF2C4CEC7;
+	Tue,  8 Oct 2024 12:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390180;
-	bh=GN3aHf1CyWm0x1f6Xn281KuzwWql582bWHHZ4OcPWDQ=;
+	s=korg; t=1728390184;
+	bh=Hbkrznynf4M1NRChYLXQMsgssEOMedJ0SlTB67/6kQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3sp40QRchQE+WOne58ZYw2HQFTdfkE9AvqZ1y/oGLo/Cx4YyJ0pd3nFFZGrcDzXe
-	 haA7q2Gfnbx7pDoDu5KbMzgRQb/YeOohpusB2Hl9jjT37+hmoz2Zrg264Km1iSlFvy
-	 s1FJThnWO1wKQFCg72oWeaixkOaTkZ07H6XzoGZA=
+	b=hSe1xlo0Fysefu+qamPBLtCTFeN2cqEYl+Mf4u+Ce/r0eIap7IYEXwO/DAvseQpw/
+	 SRzygKSgKKqEeGdFU+IZz/bhw8XahdDGiszlgCmy9bWiW1nauNfApNvB94EZqh/l7z
+	 +XDXjQhEPsUmWZZhSDir41YYvaoMDZBINdQx5xa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 214/482] drm/amd/display: Fix index out of bounds in DCN30 degamma hardware format translation
-Date: Tue,  8 Oct 2024 14:04:37 +0200
-Message-ID: <20241008115656.733415424@linuxfoundation.org>
+Subject: [PATCH 6.10 215/482] drm/amd/display: Fix index out of bounds in degamma hardware format translation
+Date: Tue,  8 Oct 2024 14:04:38 +0200
+Message-ID: <20241008115656.772757199@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -60,21 +60,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit bc50b614d59990747dd5aeced9ec22f9258991ff ]
+[ Upstream commit b7e99058eb2e86aabd7a10761e76cae33d22b49f ]
 
-This commit addresses a potential index out of bounds issue in the
-`cm3_helper_translate_curve_to_degamma_hw_format` function in the DCN30
-color  management module. The issue could occur when the index 'i'
-exceeds the  number of transfer function points (TRANSFER_FUNC_POINTS).
+Fixes index out of bounds issue in
+`cm_helper_translate_curve_to_degamma_hw_format` function. The issue
+could occur when the index 'i' exceeds the number of transfer function
+points (TRANSFER_FUNC_POINTS).
 
 The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, the function returns
+transfer function points. If 'i' is out of bounds the function returns
 false to indicate an error.
 
 Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:338 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:339 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:340 cm3_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:594 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:595 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:596 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
 
 Cc: Tom Chung <chiahsuan.chung@amd.com>
 Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
@@ -88,14 +88,14 @@ Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 2 ++
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-index b8327237ed441..edc77615d0973 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-@@ -335,6 +335,8 @@ bool cm3_helper_translate_curve_to_degamma_hw_format(
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+index 0b49362f71b06..eaed5d1c398aa 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+@@ -591,6 +591,8 @@ bool cm_helper_translate_curve_to_degamma_hw_format(
  				i += increment) {
  			if (j == hw_points - 1)
  				break;
