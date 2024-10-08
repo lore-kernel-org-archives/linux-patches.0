@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F311DEFED;
-	Tue,  8 Oct 2024 13:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E81DE88F;
+	Tue,  8 Oct 2024 13:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394080; cv=none; b=EvKnLyWCNUzIWm2DTJPUDskA9kk8u4id2viTAa5kl+97ZI3Guaeo0E05krcY7UcoPG4u1EZkmHkWMe6xcJU4aZu4+WsOE19yMSgBcdeiBwaMEhH4zwenuMaqpzHzG1Tq6DgpdXaAf3/jtLRv5F7FnApetP2hNuZ8tNNdd6rynRk=
+	t=1728394084; cv=none; b=VpbQdw6tNijpRARcbhBkmITCahmvAL+5b2iVLwDmtfrHOny9MruHTGx+9DpQpavIub0KdmYQwDd7j8jMRahVPUYm/fAN+IS6gY/PlfbI0UEaYhwkP5mnUNYTVBryg+z6MPQzgH13nKh+FHqibWIwFwGWBcG8GRLzp42efqfZumc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394080; c=relaxed/simple;
-	bh=nO0AtGeNoaPNV0QkhPjw5l2DaZTTxx93l62RvcqqGmE=;
+	s=arc-20240116; t=1728394084; c=relaxed/simple;
+	bh=uBgsITFIV7jq0HSW3GTfMp8puVvbRiGOLOY2Yvo2mgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntaQGCbyuNjraJtXWhiCXtqBklCLf/mu6PYrN5iIgh92wxHRjqZmCl/hg51eHrsxg+TNKph1rHHntbZzVSH6X6v2JLRqbSy5zsbBj7BDH5GC/b7WGo7HOHIA9u+Q5PldAiQW4vdM8OpX1XdsddZb2SZBsldQ2mk/WnptwSl+FNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZI4t7I+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbDc5xwvwZ1Jmb1W4Kgv/TswkHabkNsqr8pMH+C/0cTMh8uqPUR0xMvfSrr0cQLXC+CsQMk5KdMY8MMk372UKDZw9CuyCFkpPX8S/yEpiwQviNpniyfQ7Av/7mRkI6XUrT0b/+Pim0kn36xC4ENBub1lmUuEyZi2AgAnKJAJvz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1eMPWqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZI4t7I+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AF8C4CEC7;
-	Tue,  8 Oct 2024 13:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1eMPWqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913EFC4CEC7;
+	Tue,  8 Oct 2024 13:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394080;
-	bh=nO0AtGeNoaPNV0QkhPjw5l2DaZTTxx93l62RvcqqGmE=;
+	s=korg; t=1728394084;
+	bh=uBgsITFIV7jq0HSW3GTfMp8puVvbRiGOLOY2Yvo2mgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZI4t7I+r+Zk3iN6KS1gepJR+r0rAcf+RG2dMnCfrPYGLjH5O9i8dDYboc/yrRNhl
-	 giHDbaK3uyiGebT2dcKHsI04sF17jHsgiYP14oZkdb4NFJftuJzQ5nPVUtKHZx+Gsf
-	 JbPxRhxIY1L4cps6BVPDSpLdYatW4Z1zovbYqPDg=
+	b=k1eMPWqCZdZuYse6gq7mFM48RIRNWo3YCqWyjsAj7eFIyZhcGHi3hihmTUesORXGL
+	 ssxDO9Cxflvp3IREkimROa6U228Mu6519+eB7VCcKLmEYhR6A4hBAW7CFJZmMTl+L8
+	 GSR9OY5D5c9qp+8Vc7ylTTtXH9zDr2QeRfxypGVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Brandon Duffany <brandon@buildbuddy.io>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 342/386] lib/buildid: harden build ID parsing logic
-Date: Tue,  8 Oct 2024 14:09:47 +0200
-Message-ID: <20241008115642.841117649@linuxfoundation.org>
+Subject: [PATCH 6.6 343/386] sched: psi: fix bogus pressure spikes from aggregation race
+Date: Tue,  8 Oct 2024 14:09:48 +0200
+Message-ID: <20241008115642.880710914@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -54,175 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit 905415ff3ffb1d7e5afa62bacabd79776bd24606 ]
+[ Upstream commit 3840cbe24cf060ea05a585ca497814609f5d47d1 ]
 
-Harden build ID parsing logic, adding explicit READ_ONCE() where it's
-important to have a consistent value read and validated just once.
+Brandon reports sporadic, non-sensical spikes in cumulative pressure
+time (total=) when reading cpu.pressure at a high rate. This is due to
+a race condition between reader aggregation and tasks changing states.
 
-Also, as pointed out by Andi Kleen, we need to make sure that entire ELF
-note is within a page bounds, so move the overflow check up and add an
-extra note_size boundaries validation.
+While it affects all states and all resources captured by PSI, in
+practice it most likely triggers with CPU pressure, since scheduling
+events are so frequent compared to other resource events.
 
-Fixes tag below points to the code that moved this code into
-lib/buildid.c, and then subsequently was used in perf subsystem, making
-this code exposed to perf_event_open() users in v5.12+.
+The race context is the live snooping of ongoing stalls during a
+pressure read. The read aggregates per-cpu records for stalls that
+have concluded, but will also incorporate ad-hoc the duration of any
+active state that hasn't been recorded yet. This is important to get
+timely measurements of ongoing stalls. Those ad-hoc samples are
+calculated on-the-fly up to the current time on that CPU; since the
+stall hasn't concluded, it's expected that this is the minimum amount
+of stall time that will enter the per-cpu records once it does.
 
+The problem is that the path that concludes the state uses a CPU clock
+read that is not synchronized against aggregators; the clock is read
+outside of the seqlock protection. This allows aggregators to race and
+snoop a stall with a longer duration than will actually be recorded.
+
+With the recorded stall time being less than the last snapshot
+remembered by the aggregator, a subsequent sample will underflow and
+observe a bogus delta value, resulting in an erratic jump in pressure.
+
+Fix this by moving the clock read of the state change into the seqlock
+protection. This ensures no aggregation can snoop live stalls past the
+time that's recorded when the state concludes.
+
+Reported-by: Brandon Duffany <brandon@buildbuddy.io>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219194
+Link: https://lore.kernel.org/lkml/20240827121851.GB438928@cmpxchg.org/
+Fixes: df77430639c9 ("psi: Reduce calls to sched_clock() in psi")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Suggested-by: Andi Kleen <ak@linux.intel.com>
-Fixes: bd7525dacd7e ("bpf: Move stack_map_get_build_id into lib")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240829174232.3133883-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/buildid.c | 76 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 32 deletions(-)
+ kernel/sched/psi.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/lib/buildid.c b/lib/buildid.c
-index cdc0950f73843..d3bc3d0528d5c 100644
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -18,31 +18,37 @@ static int parse_build_id_buf(unsigned char *build_id,
- 			      const void *note_start,
- 			      Elf32_Word note_size)
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index 431971acc7632..f97e1473389ff 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -776,13 +776,14 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
+ }
+ 
+ static void psi_group_change(struct psi_group *group, int cpu,
+-			     unsigned int clear, unsigned int set, u64 now,
++			     unsigned int clear, unsigned int set,
+ 			     bool wake_clock)
  {
--	Elf32_Word note_offs = 0, new_offs;
+ 	struct psi_group_cpu *groupc;
+ 	unsigned int t, m;
+ 	enum psi_states s;
+ 	u32 state_mask;
++	u64 now;
+ 
+ 	lockdep_assert_rq_held(cpu_rq(cpu));
+ 	groupc = per_cpu_ptr(group->pcpu, cpu);
+@@ -797,6 +798,7 @@ static void psi_group_change(struct psi_group *group, int cpu,
+ 	 * SOME and FULL time these may have resulted in.
+ 	 */
+ 	write_seqcount_begin(&groupc->seq);
++	now = cpu_clock(cpu);
+ 
+ 	/*
+ 	 * Start with TSK_ONCPU, which doesn't have a corresponding
+@@ -910,18 +912,15 @@ void psi_task_change(struct task_struct *task, int clear, int set)
+ {
+ 	int cpu = task_cpu(task);
+ 	struct psi_group *group;
+-	u64 now;
+ 
+ 	if (!task->pid)
+ 		return;
+ 
+ 	psi_flags_change(task, clear, set);
+ 
+-	now = cpu_clock(cpu);
 -
--	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
--		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
-+	const char note_name[] = "GNU";
-+	const size_t note_name_sz = sizeof(note_name);
-+	u64 note_off = 0, new_off, name_sz, desc_sz;
-+	const char *data;
-+
-+	while (note_off + sizeof(Elf32_Nhdr) < note_size &&
-+	       note_off + sizeof(Elf32_Nhdr) > note_off /* overflow */) {
-+		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_off);
-+
-+		name_sz = READ_ONCE(nhdr->n_namesz);
-+		desc_sz = READ_ONCE(nhdr->n_descsz);
-+
-+		new_off = note_off + sizeof(Elf32_Nhdr);
-+		if (check_add_overflow(new_off, ALIGN(name_sz, 4), &new_off) ||
-+		    check_add_overflow(new_off, ALIGN(desc_sz, 4), &new_off) ||
-+		    new_off > note_size)
-+			break;
+ 	group = task_psi_group(task);
+ 	do {
+-		psi_group_change(group, cpu, clear, set, now, true);
++		psi_group_change(group, cpu, clear, set, true);
+ 	} while ((group = group->parent));
+ }
  
- 		if (nhdr->n_type == BUILD_ID &&
--		    nhdr->n_namesz == sizeof("GNU") &&
--		    !strcmp((char *)(nhdr + 1), "GNU") &&
--		    nhdr->n_descsz > 0 &&
--		    nhdr->n_descsz <= BUILD_ID_SIZE_MAX) {
--			memcpy(build_id,
--			       note_start + note_offs +
--			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr),
--			       nhdr->n_descsz);
--			memset(build_id + nhdr->n_descsz, 0,
--			       BUILD_ID_SIZE_MAX - nhdr->n_descsz);
-+		    name_sz == note_name_sz &&
-+		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
-+		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
-+			data = note_start + note_off + ALIGN(note_name_sz, 4);
-+			memcpy(build_id, data, desc_sz);
-+			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
- 			if (size)
--				*size = nhdr->n_descsz;
-+				*size = desc_sz;
- 			return 0;
+@@ -930,7 +929,6 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ {
+ 	struct psi_group *group, *common = NULL;
+ 	int cpu = task_cpu(prev);
+-	u64 now = cpu_clock(cpu);
+ 
+ 	if (next->pid) {
+ 		psi_flags_change(next, 0, TSK_ONCPU);
+@@ -947,7 +945,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 				break;
+ 			}
+ 
+-			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
++			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
+ 		} while ((group = group->parent));
+ 	}
+ 
+@@ -985,7 +983,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		do {
+ 			if (group == common)
+ 				break;
+-			psi_group_change(group, cpu, clear, set, now, wake_clock);
++			psi_group_change(group, cpu, clear, set, wake_clock);
+ 		} while ((group = group->parent));
+ 
+ 		/*
+@@ -997,7 +995,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
+ 			clear &= ~TSK_ONCPU;
+ 			for (; group; group = group->parent)
+-				psi_group_change(group, cpu, clear, set, now, wake_clock);
++				psi_group_change(group, cpu, clear, set, wake_clock);
  		}
--		new_offs = note_offs + sizeof(Elf32_Nhdr) +
--			ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
--		if (new_offs <= note_offs)  /* overflow */
--			break;
--		note_offs = new_offs;
-+
-+		note_off = new_off;
  	}
+ }
+@@ -1008,8 +1006,8 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	int cpu = task_cpu(curr);
+ 	struct psi_group *group;
+ 	struct psi_group_cpu *groupc;
+-	u64 now, irq;
+ 	s64 delta;
++	u64 irq;
  
- 	return -EINVAL;
-@@ -71,7 +77,7 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- {
- 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)page_addr;
- 	Elf32_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
+ 	if (!curr->pid)
+ 		return;
+@@ -1019,7 +1017,6 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	if (prev && task_psi_group(prev) == group)
+ 		return;
  
- 	/*
- 	 * FIXME
-@@ -80,18 +86,19 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
- 		return -EINVAL;
+-	now = cpu_clock(cpu);
+ 	irq = irq_time_read(cpu);
+ 	delta = (s64)(irq - rq->psi_irq_time);
+ 	if (delta < 0)
+@@ -1027,12 +1024,15 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	rq->psi_irq_time = irq;
+ 
+ 	do {
++		u64 now;
 +
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
- 		return -EINVAL;
+ 		if (!group->enabled)
+ 			continue;
  
- 	phdr = (Elf32_Phdr *)(page_addr + sizeof(Elf32_Ehdr));
+ 		groupc = per_cpu_ptr(group->pcpu, cpu);
  
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
+ 		write_seqcount_begin(&groupc->seq);
++		now = cpu_clock(cpu);
+ 
+ 		record_times(groupc, now);
+ 		groupc->times[PSI_IRQ_FULL] += delta;
+@@ -1231,11 +1231,9 @@ void psi_cgroup_restart(struct psi_group *group)
+ 	for_each_possible_cpu(cpu) {
+ 		struct rq *rq = cpu_rq(cpu);
+ 		struct rq_flags rf;
+-		u64 now;
+ 
+ 		rq_lock_irq(rq, &rf);
+-		now = cpu_clock(cpu);
+-		psi_group_change(group, cpu, 0, 0, now, true);
++		psi_group_change(group, cpu, 0, 0, true);
+ 		rq_unlock_irq(rq, &rf);
  	}
- 	return -EINVAL;
-@@ -103,7 +110,7 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- {
- 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *)page_addr;
- 	Elf64_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -112,18 +119,19 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf64_Phdr *)(page_addr + sizeof(Elf64_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -152,6 +160,10 @@ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
-+	if (!PageUptodate(page)) {
-+		put_page(page);
-+		return -EFAULT;
-+	}
- 
- 	ret = -EINVAL;
- 	page_addr = kmap_atomic(page);
+ }
 -- 
 2.43.0
 
