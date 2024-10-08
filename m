@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020511DF727;
-	Tue,  8 Oct 2024 13:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBFC1DF750;
+	Tue,  8 Oct 2024 13:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394149; cv=none; b=Xu5DGdRHq8sdmenq7dQENGPXJs0ABsrHbr1JLCRhvEbWhmobYH0bqSltRsV2A8BoreH3mR/JTsYlJt/AsPfKejCFAtIOFwzURC8PsSb7omcBGCnZ0Y54owMzkrsFFYzuQwxPJIoa+6a4/Tet9P8Dkzk0QnBKPfgxtJBoVYMGE4c=
+	t=1728394152; cv=none; b=Elmw+nlYxWTtgoOx5JikGDzl8LuWR5ILkItQtTEupNsYNDWtdOKrdDxBZlGLmJioOeEsdsPrlJKnx+lABfml70eIFWHJ7tqebwJbQN0HZuIU1g2ceTagcssA0fA7bCMxV64PEuj2vxTnYZ1ZqEmlsfYbUqOFBJiEu4sgfgS++ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394149; c=relaxed/simple;
-	bh=pAR9Dc1zk3JK8m7/aCoQsZTJY8W/pEj4qrgI0nb12r8=;
+	s=arc-20240116; t=1728394152; c=relaxed/simple;
+	bh=iGALKTrrUoAkIwvcko6RxOlGDsO0ernTlIV+gz1CuFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfC+iaQfP+cwwgPtW4uXk+gUFOq+Xs0wJYThBnuVYWVwdLEv/RX34IzImk3r5QK7WG3WUbV56SvimyLtTCX65kHQ/EVFu24Uqey9QyHm86hnIor5T/QqC2dSKvoWfvLFu1kDgnRLN3gfNSGzURCz1cdDqevH9uhQXQNxaMbfNks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVXLZcIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzGMx3s4j+ZHoSy2YBohjDIPmskk0CIs489ih9L9WyMBhdSQnXmU4X4Mhb7rXnnmVe9vcMN6ewE550oYT2UfcdgJm/EG/3L1EdFDTwnEtttucMyp2ynJMJen7XQFCAHDCbTEDW+K2WjqwDHcWZrBRTdGEXN1Km+WDdNorZY893Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfmPIhn5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVXLZcIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B401C4CEC7;
-	Tue,  8 Oct 2024 13:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfmPIhn5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCB7C4CEC7;
+	Tue,  8 Oct 2024 13:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394148;
-	bh=pAR9Dc1zk3JK8m7/aCoQsZTJY8W/pEj4qrgI0nb12r8=;
+	s=korg; t=1728394152;
+	bh=iGALKTrrUoAkIwvcko6RxOlGDsO0ernTlIV+gz1CuFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVXLZcIn7RXaN6RbYvYywYc8pRGOPZUi4yFO5464TDmiGG17maj60K/OxIqwswZi/
-	 F3dQMbYWFHtszfDj8VA0wBq79mq5DsT9iEHQkuSGWSQvLLJnSjh6ew4vi6PU6CqhwX
-	 xW+U5g/tAaFZlx02prv1aPVofbzdsX4whm1bM/KY=
+	b=ZfmPIhn5MsgwdjkgfVzaTv1M8VWF0S2MfIIa93hWx8zo9MDcdlrNNwifPdiXwYo9z
+	 StsguMHu7Wmi3EuhFGylbZwVetUi+78pW0qFrMRRccFAZ7qrgqDik2hnvgU9kyUM6P
+	 Q+9KeUm75wS6YN5q9Ea0HD4S2uctv2NBaK6YaGvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Burakov <a.burakov@rosalinux.ru>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 330/386] platform/x86: x86-android-tablets: Fix use after free on platform_device_register() errors
-Date: Tue,  8 Oct 2024 14:09:35 +0200
-Message-ID: <20241008115642.371087358@linuxfoundation.org>
+Subject: [PATCH 6.6 331/386] i2c: create debugfs entry per adapter
+Date: Tue,  8 Oct 2024 14:09:36 +0200
+Message-ID: <20241008115642.410193855@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,55 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 2fae3129c0c08e72b1fe93e61fd8fd203252094a ]
+[ Upstream commit 73febd775bdbdb98c81255ff85773ac410ded5c4 ]
 
-x86_android_tablet_remove() frees the pdevs[] array, so it should not
-be used after calling x86_android_tablet_remove().
+Two drivers already implement custom debugfs handling for their
+i2c_adapter and more will come. So, let the core create a debugfs
+directory per adapter and pass that to drivers for their debugfs files.
 
-When platform_device_register() fails, store the pdevs[x] PTR_ERR() value
-into the local ret variable before calling x86_android_tablet_remove()
-to avoid using pdevs[] after it has been freed.
-
-Fixes: 5eba0141206e ("platform/x86: x86-android-tablets: Add support for instantiating platform-devs")
-Fixes: e2200d3f26da ("platform/x86: x86-android-tablets: Add gpio_keys support to x86_android_tablet_init()")
-Cc: stable@vger.kernel.org
-Reported-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
-Closes: https://lore.kernel.org/platform-driver-x86/20240917120458.7300-1-a.burakov@rosalinux.ru/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241005130545.64136-1-hdegoede@redhat.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/x86-android-tablets/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core-base.c | 11 +++++++++++
+ include/linux/i2c.h         |  2 ++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
-index ebfd9a3dac957..a0fa0b6859c9c 100644
---- a/drivers/platform/x86/x86-android-tablets/core.c
-+++ b/drivers/platform/x86/x86-android-tablets/core.c
-@@ -339,8 +339,9 @@ static __init int x86_android_tablet_probe(struct platform_device *pdev)
- 	for (i = 0; i < pdev_count; i++) {
- 		pdevs[i] = platform_device_register_full(&dev_info->pdev_info[i]);
- 		if (IS_ERR(pdevs[i])) {
-+			ret = PTR_ERR(pdevs[i]);
- 			x86_android_tablet_remove(pdev);
--			return PTR_ERR(pdevs[i]);
-+			return ret;
- 		}
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 1e873ff0a624d..9d918a7dfddae 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -16,6 +16,7 @@
+ #include <linux/acpi.h>
+ #include <linux/clk/clk-conf.h>
+ #include <linux/completion.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+@@ -67,6 +68,8 @@ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
+ static bool is_registered;
+ 
++static struct dentry *i2c_debugfs_root;
++
+ int i2c_transfer_trace_reg(void)
+ {
+ 	static_branch_inc(&i2c_trace_msg_key);
+@@ -1523,6 +1526,8 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
+ 		goto out_list;
  	}
  
-@@ -388,8 +389,9 @@ static __init int x86_android_tablet_probe(struct platform_device *pdev)
- 								  PLATFORM_DEVID_AUTO,
- 								  &pdata, sizeof(pdata));
- 		if (IS_ERR(pdevs[pdev_count])) {
-+			ret = PTR_ERR(pdevs[pdev_count]);
- 			x86_android_tablet_remove(pdev);
--			return PTR_ERR(pdevs[pdev_count]);
-+			return ret;
- 		}
- 		pdev_count++;
- 	}
++	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
++
+ 	res = i2c_setup_smbus_alert(adap);
+ 	if (res)
+ 		goto out_reg;
+@@ -1562,6 +1567,7 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
+ 	return 0;
+ 
+ out_reg:
++	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	device_unregister(&adap->dev);
+ 	wait_for_completion(&adap->dev_released);
+@@ -1763,6 +1769,8 @@ void i2c_del_adapter(struct i2c_adapter *adap)
+ 
+ 	i2c_host_notify_irq_teardown(adap);
+ 
++	debugfs_remove_recursive(adap->debugfs);
++
+ 	/* wait until all references to the device are gone
+ 	 *
+ 	 * FIXME: This is old code and should ideally be replaced by an
+@@ -2060,6 +2068,8 @@ static int __init i2c_init(void)
+ 
+ 	is_registered = true;
+ 
++	i2c_debugfs_root = debugfs_create_dir("i2c", NULL);
++
+ #ifdef CONFIG_I2C_COMPAT
+ 	i2c_adapter_compat_class = class_compat_register("i2c-adapter");
+ 	if (!i2c_adapter_compat_class) {
+@@ -2098,6 +2108,7 @@ static void __exit i2c_exit(void)
+ #ifdef CONFIG_I2C_COMPAT
+ 	class_compat_unregister(i2c_adapter_compat_class);
+ #endif
++	debugfs_remove_recursive(i2c_debugfs_root);
+ 	bus_unregister(&i2c_bus_type);
+ 	tracepoint_synchronize_unregister();
+ }
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index 32cf5708d5a5b..033de64d09bba 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -746,6 +746,8 @@ struct i2c_adapter {
+ 
+ 	struct irq_domain *host_notify_domain;
+ 	struct regulator *bus_regulator;
++
++	struct dentry *debugfs;
+ };
+ #define to_i2c_adapter(d) container_of(d, struct i2c_adapter, dev)
+ 
 -- 
 2.43.0
 
