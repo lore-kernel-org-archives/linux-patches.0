@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BFF1DE2AE;
-	Tue,  8 Oct 2024 12:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60601DE2AE;
+	Tue,  8 Oct 2024 12:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390153; cv=none; b=albuIJr8YMTvhB12qdu2rTBeLGeb3xwdsKfv3T4E3TuG8sY9y06j0Dt+tduicHmYXz4fLPLu/xJZFIVf12ZOHo+PinbQEJLm3ZDngs605v1x4scz3ImtpsIOeYb+TGdOLWfLclrv33cIH88FhJR8xoO9PFs3HeoaKbIw1BnLAZY=
+	t=1728390156; cv=none; b=KwGURZ5hRzcUpK7RSQsvTNHxwI0nKxFtNkBN1uWVu5x1Kcq/0exOS5I5IK2Rim9J4X0gMLtccfWMsqgwHMDQP5r3hFg3eUjf7s1mr9kTE5db3bxNl/KwUwFcQ1+iGCTeKxOlTGHlX9bHmCOfYJ+isQxCddh/o+vzzr9rYzr8Kdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390153; c=relaxed/simple;
-	bh=mejW5D+UN42s+qnjx+R20RQ2Y8g+J0raN+95QOQk9/U=;
+	s=arc-20240116; t=1728390156; c=relaxed/simple;
+	bh=L7pMFmonRvvVGtr5UjUSabjLrGfpz/xvS27lJf8JqNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klvV5lO58fK7LK0dL59r+Kge4TTq3RnLmnEyhusEbKA599bmyJ1QFSodDZSLADLUQ7+svJdSIBofCDVyi16+uR0xW255UyIE2q8ZhUgULOSTe887RCni+RBl8SD1ZGrEZxIL6L1XEpR1UWZKuGeYSXf6Fd5Mdzg01aP5XQWgfMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLLgGXOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZCb2bNrgTlvPehqo9QVmp8BnXncoU9foIkCSXANlxMcs4Vp+8qTg5yF4lxT1NsUxgmfayIgtJxPnrVKP6R7cQ6Z37T/TEIpspvwgf71b00RGMzqqN+ni8SAO5mcnW09i7NMJpkEOq5yCLs67S0n7rr9KhtHxq/XsYYs/fNVQII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aI2XxZDA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLLgGXOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF05C4CEC7;
-	Tue,  8 Oct 2024 12:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aI2XxZDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F527C4CECE;
+	Tue,  8 Oct 2024 12:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390153;
-	bh=mejW5D+UN42s+qnjx+R20RQ2Y8g+J0raN+95QOQk9/U=;
+	s=korg; t=1728390156;
+	bh=L7pMFmonRvvVGtr5UjUSabjLrGfpz/xvS27lJf8JqNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLLgGXOybSEUAsVH61Y4QgYY0MlP2Y3DUFXl/sYaNetfLUlTrm3QS5u7lNydpa9vA
-	 hdUzjSIWUHqVmrUjMQoczijDXhaZvcTTDmktUyzGdRRs6AqLwsBOcuzPn1uJy4zeME
-	 0zHaiEbPIXNhFNtfyAFCGXJu2fA320MKZ7KYvGvg=
+	b=aI2XxZDA0VazyuprKP7c/J5aXdKg6PMRuKo7KY3jMgyAyJKfxoBCC84IGQRDpPF+I
+	 INUfbNKLte+8vC4PLmlErMXHDEMRJm3ilh2SCvvKmbtUu/H4Y7rGtCxSPl6VVFyxE3
+	 j8Cz0nXbXNNq5wamoGlFSw5NCZ3hmt+tKyV/u3Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ckath <ckath@yandex.ru>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 207/482] platform/x86: touchscreen_dmi: add nanote-next quirk
-Date: Tue,  8 Oct 2024 14:04:30 +0200
-Message-ID: <20241008115656.456512076@linuxfoundation.org>
+Subject: [PATCH 6.10 190/482] drm/amd/display: Add NULL check for function pointer in dcn20_set_output_transfer_func
+Date: Tue,  8 Oct 2024 14:04:13 +0200
+Message-ID: <20241008115655.781209514@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,67 +58,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ckath <ckath@yandex.ru>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit c11619af35bae5884029bd14170c3e4b55ddf6f3 ]
+[ Upstream commit 62ed6f0f198da04e884062264df308277628004f ]
 
-Add touschscreen info for the nanote next (UMPC-03-SR).
+This commit adds a null check for the set_output_gamma function pointer
+in the dcn20_set_output_transfer_func function. Previously,
+set_output_gamma was being checked for null at line 1030, but then it
+was being dereferenced without any null check at line 1048. This could
+potentially lead to a null pointer dereference error if set_output_gamma
+is null.
 
-After checking with multiple owners the DMI info really is this generic.
+To fix this, we now ensure that set_output_gamma is not null before
+dereferencing it. We do this by adding a null check for set_output_gamma
+before the call to set_output_gamma at line 1048.
 
-Signed-off-by: Ckath <ckath@yandex.ru>
-Link: https://lore.kernel.org/r/e8dda83a-10ae-42cf-a061-5d29be0d193a@yandex.ru
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index f74af0a689f20..0a39f68c641d1 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -840,6 +840,21 @@ static const struct ts_dmi_data rwc_nanote_p8_data = {
- 	.properties = rwc_nanote_p8_props,
- };
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 7d833fa6dd77c..58e8b7482f4f5 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -1040,7 +1040,8 @@ bool dcn20_set_output_transfer_func(struct dc *dc, struct pipe_ctx *pipe_ctx,
+ 	/*
+ 	 * if above if is not executed then 'params' equal to 0 and set in bypass
+ 	 */
+-	mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
++	if (mpc->funcs->set_output_gamma)
++		mpc->funcs->set_output_gamma(mpc, mpcc_id, params);
  
-+static const struct property_entry rwc_nanote_next_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1785),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1145),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rwc-nanote-next.fw"),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data rwc_nanote_next_data = {
-+	.acpi_name = "MSSL1680:00",
-+	.properties = rwc_nanote_next_props,
-+};
-+
- static const struct property_entry schneider_sct101ctm_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1715),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1140),
-@@ -1589,6 +1604,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "0001")
- 		},
- 	},
-+	{
-+		/* RWC NANOTE NEXT */
-+		.driver_data = (void *)&rwc_nanote_next_data,
-+		.matches = {
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_VENDOR, "To be filled by O.E.M."),
-+			/* Above matches are too generic, add bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "S8A70R100-V005"),
-+		},
-+	},
- 	{
- 		/* Schneider SCT101CTM */
- 		.driver_data = (void *)&schneider_sct101ctm_data,
+ 	return true;
+ }
 -- 
 2.43.0
 
