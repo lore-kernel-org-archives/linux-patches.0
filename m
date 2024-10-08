@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5430F1CEE8E;
-	Tue,  8 Oct 2024 12:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D763A1E485;
+	Tue,  8 Oct 2024 12:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390623; cv=none; b=cU9NFPjZVWS7I5L/wolhBrt2qIx3eLtPxVsfAmgoAfyV85FbopDoXZiiBGQrK+QymJx7zzqnG7MWj7Ck7OP7mAhFolzLbBJNVSsvXjft4WVNn79rtfaDpSE7p/uz/pgjEaNTjzIXFC4eJBKy3aCVwQsc8mkCTqWjWvz5m2nWPuU=
+	t=1728390626; cv=none; b=WtwK/8Wz8caQatMg2fLr06RmpCcLlX8m06+woEJ9TTmmv2gHSibUAr+4zsVz3y/6T5HOwfWnCsekgdeYnMyoqXj4hLiW3IiZdfgB3BK75uKucX2z2ojOpdVDTHuOSDfU5GQ7sZfWvI4zWvTTdxfNyMeBYaCkawL/f6wC7c2XjwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390623; c=relaxed/simple;
-	bh=3MHCLJ24FOxFxj+swqL1wW+zpJYd3X+t0orsgCjT5BQ=;
+	s=arc-20240116; t=1728390626; c=relaxed/simple;
+	bh=sQJpzDyQIcwVTecPP6FdW/Jcdk/Ddja6XSyCyz7y9Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkymmjCqZyACTe4+ecTidTmVxk/wC2PSjUlcektj44fWaRZv+Xnrqhr7Q1e5bjXoRzUqpo10JsgByyls/z9iJUlgSnL1uPSdjbcFQLGMZ1qZdkL22JKlJTl/9mg9j+GwJUwqk0bP60rr7r+JZpAvw6VC9qZiXO+lV2I1cVzijq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO+UWYbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zao28wv596Bavcr03HUH3QZu/IKlGs8cw3s6XL6Go9co4rDmcVsqJawTKOckADbOGdhSFcsLB/RAW9VGkZ3XBa7XL7DXvWMPY1KL+I79gPDMjh7F31LZurch21YNyGNTE218zUUi9xPEk70PAe9ZILt7g/IQsdYvL6NApr6ScuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1gVz1H5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO+UWYbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC95C4CECC;
-	Tue,  8 Oct 2024 12:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1gVz1H5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D50C4CEC7;
+	Tue,  8 Oct 2024 12:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390623;
-	bh=3MHCLJ24FOxFxj+swqL1wW+zpJYd3X+t0orsgCjT5BQ=;
+	s=korg; t=1728390626;
+	bh=sQJpzDyQIcwVTecPP6FdW/Jcdk/Ddja6XSyCyz7y9Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wO+UWYbTenjWf/lPp+P7dV1BJs8Qd0EYJZ9Dcbo6bTV4TAdstZsefeVKm5TIalSFH
-	 H/iUdms+OCCtsZkIjivGYQDH6KQV48OSmmFzHaA06Bf7I4+llae656Ni72BUbw/Igc
-	 AaojHdX4lG4EpbifCzP3X95UQaO9yd5AtqnNM6Ds=
+	b=Y1gVz1H59EjzOMgzYipkNscZpJNqSA+D1PR6k6G7dMa+VFpQsgsGur/+aLUP/KE1x
+	 3+Zd+ZkNkm9W3FQUrohqZwvxG0miZAOpXYutbCYr1yEt+myfP5tfkIbkBaTt0tEd3y
+	 ye4p926gP8cKibj9QlWOhPevh8ArczTdJLab16pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Camm Maguire <camm@maguirefamily.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.10 343/482] parisc: Fix stack start for ADDR_NO_RANDOMIZE personality
-Date: Tue,  8 Oct 2024 14:06:46 +0200
-Message-ID: <20241008115701.922683828@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.10 344/482] drm/rockchip: vop: clear DMA stop bit on RK3066
+Date: Tue,  8 Oct 2024 14:06:47 +0200
+Message-ID: <20241008115701.962723089@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,75 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Val Packett <val@packett.cool>
 
-commit f31b256994acec6929306dfa86ac29716e7503d6 upstream.
+commit 6b44aa559d6c7f4ea591ef9d2352a7250138d62a upstream.
 
-Fix the stack start address calculation for the parisc architecture in
-setup_arg_pages() when address randomization is disabled. When the
-ADDR_NO_RANDOMIZE process personality is disabled there is no need to add
-additional space for the stack.
-Note that this patch touches code inside an #ifdef CONFIG_STACK_GROWSUP hunk,
-which is why only the parisc architecture is affected since it's the
-only Linux architecture where the stack grows upwards.
+The RK3066 VOP sets a dma_stop bit when it's done scanning out a frame
+and needs the driver to acknowledge that by clearing the bit.
 
-Without this patch you will find the stack in the middle of some
-mapped libaries and suddenly limited to 6MB instead of 8MB:
+Unless we clear it "between" frames, the RGB output only shows noise
+instead of the picture. atomic_flush is the place for it that least
+affects other code (doing it on vblank would require converting all
+other usages of the reg_lock to spin_(un)lock_irq, which would affect
+performance for everyone).
 
-root@parisc:~# setarch -R /bin/bash -c "cat /proc/self/maps"
-00010000-00019000 r-xp 00000000 08:05 1182034           /usr/bin/cat
-00019000-0001a000 rwxp 00009000 08:05 1182034           /usr/bin/cat
-0001a000-0003b000 rwxp 00000000 00:00 0                 [heap]
-f90c4000-f9283000 r-xp 00000000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f9283000-f9285000 r--p 001bf000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f9285000-f928a000 rwxp 001c1000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f928a000-f9294000 rwxp 00000000 00:00 0
-f9301000-f9323000 rwxp 00000000 00:00 0                 [stack]
-f98b4000-f98e4000 r-xp 00000000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f98e4000-f98e5000 r--p 00030000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f98e5000-f98e9000 rwxp 00031000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f9ad8000-f9b00000 rw-p 00000000 00:00 0
-f9b00000-f9b01000 r-xp 00000000 00:00 0                 [vdso]
+This seems to be a redundant synchronization mechanism that was removed
+in later iterations of the VOP hardware block.
 
-With the patch the stack gets correctly mapped at the end
-of the process memory map:
-
-root@panama:~# setarch -R /bin/bash -c "cat /proc/self/maps"
-00010000-00019000 r-xp 00000000 08:13 16385582          /usr/bin/cat
-00019000-0001a000 rwxp 00009000 08:13 16385582          /usr/bin/cat
-0001a000-0003b000 rwxp 00000000 00:00 0                 [heap]
-fef29000-ff0eb000 r-xp 00000000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0eb000-ff0ed000 r--p 001c2000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0ed000-ff0f2000 rwxp 001c4000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0f2000-ff0fc000 rwxp 00000000 00:00 0
-ff4b4000-ff4e4000 r-xp 00000000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff4e4000-ff4e6000 r--p 00030000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff4e6000-ff4ea000 rwxp 00032000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff6d7000-ff6ff000 rw-p 00000000 00:00 0
-ff6ff000-ff700000 r-xp 00000000 00:00 0                 [vdso]
-ff700000-ff722000 rwxp 00000000 00:00 0                 [stack]
-
-Reported-by: Camm Maguire <camm@maguirefamily.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: d045c77c1a69 ("parisc,metag: Fix crashes due to stack randomization on stack-grows-upwards architectures")
-Fixes: 17d9822d4b4c ("parisc: Consider stack randomization for mmap base only when necessary")
-Cc: stable@vger.kernel.org	# v5.2+
+Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Val Packett <val@packett.cool>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-2-val@packett.cool
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c |    4 ++++
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.h |    1 +
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.c |    1 +
+ 3 files changed, 6 insertions(+)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -782,7 +782,8 @@ int setup_arg_pages(struct linux_binprm
- 	stack_base = calc_max_stack_size(stack_base);
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -1583,6 +1583,10 @@ static void vop_crtc_atomic_flush(struct
+ 	VOP_AFBC_SET(vop, enable, s->enable_afbc);
+ 	vop_cfg_done(vop);
  
- 	/* Add space for stack randomization. */
--	stack_base += (STACK_RND_MASK << PAGE_SHIFT);
-+	if (current->flags & PF_RANDOMIZE)
-+		stack_base += (STACK_RND_MASK << PAGE_SHIFT);
++	/* Ack the DMA transfer of the previous frame (RK3066). */
++	if (VOP_HAS_REG(vop, common, dma_stop))
++		VOP_REG_SET(vop, common, dma_stop, 0);
++
+ 	spin_unlock(&vop->reg_lock);
  
- 	/* Make sure we didn't let the argument array grow too large. */
- 	if (vma->vm_end - vma->vm_start > stack_base)
+ 	/*
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+@@ -122,6 +122,7 @@ struct vop_common {
+ 	struct vop_reg lut_buffer_index;
+ 	struct vop_reg gate_en;
+ 	struct vop_reg mmu_en;
++	struct vop_reg dma_stop;
+ 	struct vop_reg out_mode;
+ 	struct vop_reg standby;
+ };
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -466,6 +466,7 @@ static const struct vop_output rk3066_ou
+ };
+ 
+ static const struct vop_common rk3066_common = {
++	.dma_stop = VOP_REG(RK3066_SYS_CTRL0, 0x1, 0),
+ 	.standby = VOP_REG(RK3066_SYS_CTRL0, 0x1, 1),
+ 	.out_mode = VOP_REG(RK3066_DSP_CTRL0, 0xf, 0),
+ 	.cfg_done = VOP_REG(RK3066_REG_CFG_DONE, 0x1, 0),
 
 
