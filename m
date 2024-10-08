@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0039C1DFD1;
-	Tue,  8 Oct 2024 13:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6611DEFC9;
+	Tue,  8 Oct 2024 13:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392418; cv=none; b=bPw2whwl4Ag3W/s/9Vu6F+3wQHGiJwUKG63HpUAc0wDbIk+W2NjaPN1zu8Rt0+KChXg23rW485rM0QUSTkVP8hEubvjTMJFQ3CNxMCxCCJPipbjIxd4bWzRmMkE973bm7KXFjRoft9JBQB0NBArg7U/vC7y6PuN7NrsQRAcn8Bo=
+	t=1728392421; cv=none; b=M9k4urwdB3vlDZzU3OdhrXRH0Qv1k0uC0Go6zvF4dc14B+dKTydDvYrxpQW5NPKYXKwlwZ4+q7C2dcwfmEc2gAxdVzQBLKpCWeg9t6tz3j6yoAfI4Pz+T3BzulkvOOBpDtv7v1A5nWX13MiKmQWr6R8yg6+V41PJzS8YPwjDOrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392418; c=relaxed/simple;
-	bh=I2yHy4XjYqVeNsVlVIJBmuut6n5O3MSpfvWMxqSyVGc=;
+	s=arc-20240116; t=1728392421; c=relaxed/simple;
+	bh=9JWPpWbAtaPXIIu+cTle2eryI2eWMN+AW3Y/Ccsm5G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bxowh2DT+SYzF5F/eV8U0GU0RcCzdhhkMdSNO6U6VpUcatnvChQ/n0GZgz5wt6DkgPsURULedlI4R6j6lIHRgaH83VH6y3Zi0+Uc8ESVuVcOcYF1tPPmEB7p0BREwa+pqtL5ErZuV9YBshwXc+JgnpIzgkTQhzv7shI0KetpWu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTCDlZNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1CnB+Hv8DCTAPVWy5jjEd35W50ixBPdtyjlPoLRinJYijDdk1423UZMv2GlpBiK2PWS7efdSoHVwq+me2vgb9sDUGgvWtk3oBBZA3y9tz1D340SfOJkNeD+a97DRz08acGBcSiwCWtIY+qckKei5Lk1bogzHbFT9J7MTabEREk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dS/zYcCO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTCDlZNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C5EC4CECC;
-	Tue,  8 Oct 2024 13:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dS/zYcCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA791C4CECC;
+	Tue,  8 Oct 2024 13:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392417;
-	bh=I2yHy4XjYqVeNsVlVIJBmuut6n5O3MSpfvWMxqSyVGc=;
+	s=korg; t=1728392421;
+	bh=9JWPpWbAtaPXIIu+cTle2eryI2eWMN+AW3Y/Ccsm5G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTCDlZNuD636xND2cVgJyN8VbyI8u+yGPw5Z5Uuu9usahXECRz38cBVeOuXPj3tTg
-	 ZH1UrZXK3H64LAVMEYWdvj5PUy8ZDvGY+kihx1H9Zkeuc4Ey6SJ4/awnhJAC2pT7/N
-	 BAdwfFKZKhsNeCL1L+xlbVQFho3GY4KqWXq81OTk=
+	b=dS/zYcCOQrPoL1KBYWuDhuD0IqltwLtrvEbw2h+2tjNOPQpM9RB1la8XZEDAr3pIb
+	 To4ne9c2vWuqWHUpl5hK/jVOyl6s9bVAajslXePmcrCkZHEcEv1osYWBr5iM+lhL1u
+	 VKxx85bMG/U7WK7YX0f4KsdsXZFZpg48tSDVGqY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
+	Abhishek Tamboli <abhishektamboli9@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 378/558] ALSA: hda/realtek: Add quirk for Huawei MateBook 13 KLV-WX9
-Date: Tue,  8 Oct 2024 14:06:48 +0200
-Message-ID: <20241008115717.166910604@linuxfoundation.org>
+Subject: [PATCH 6.11 379/558] ALSA: hda/realtek: Add a quirk for HP Pavilion 15z-ec200
+Date: Tue,  8 Oct 2024 14:06:49 +0200
+Message-ID: <20241008115717.205662414@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,15 +50,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Abhishek Tamboli <abhishektamboli9@gmail.com>
 
-commit dee476950cbd83125655a3f49e00d63b79f6114e upstream.
+commit d75dba49744478c32f6ce1c16b5f391c2d5cef5f upstream.
 
-The headset mic requires a fixup to be properly detected/used.
+Add the quirk for HP Pavilion Gaming laptop 15z-ec200 for
+enabling the mute led. The fix apply the ALC285_FIXUP_HP_MUTE_LED
+quirk for this model.
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219303
+Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240926060252.25630-1-aichao@kylinos.cn
+Link: https://patch.msgid.link/20240930145300.4604-1-abhishektamboli9@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -67,13 +70,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10930,6 +10930,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1854, 0x048a, "LG gram 17 (17ZD90R)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
- 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x19e5, 0x3212, "Huawei KLV-WX9 ", ALC256_FIXUP_ACER_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1b35, 0x1235, "CZC B20", ALC269_FIXUP_CZC_B20),
- 	SND_PCI_QUIRK(0x1b35, 0x1236, "CZC TMI", ALC269_FIXUP_CZC_TMI),
- 	SND_PCI_QUIRK(0x1b35, 0x1237, "CZC L101", ALC269_FIXUP_CZC_L101),
+@@ -10388,6 +10388,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8898, "HP EliteBook 845 G8 Notebook PC", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
 
 
