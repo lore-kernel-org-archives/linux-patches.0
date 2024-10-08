@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EBA1C9B61;
-	Tue,  8 Oct 2024 12:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F58D1C9B61;
+	Tue,  8 Oct 2024 12:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391881; cv=none; b=ec77jvHMQoapGK07wLBUoRE5IZ8hn1TvTmviMcjFdqB7Exoz880K4/mgPH7mtYgRbq6fF2xBa2PcXXWLE4xT0CfjVrWGrkqWQO5WAYqQkq0Vym6Ci3ip5HSanBjt8VpePSxi/u4jrdq/7ICqypo8IShNWxXJ2j6vSxpAkYZkvxM=
+	t=1728391884; cv=none; b=IMaFGjA79qHttjn0FpwFaTOuibdbbaMgW1IQwA06qF8B5bFR0jOeupqmHNh5uj6C1NIR83Gl18zFJ6JINkYMcxY46ZvZXqs/E+vlqJp6uGcI2jw1Slf6G+tZW52MXddD16NnfV2B6Hqk6kaEZ0VCZAZrIuX1zX5Q/WX61LCAqXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391881; c=relaxed/simple;
-	bh=YxbZie0chxyktcIEThLfFKrHt9w3KFHW9N/ljtjRv4o=;
+	s=arc-20240116; t=1728391884; c=relaxed/simple;
+	bh=DilKeOp9+V5gZPWruLfw9GN/nYVB/+4G0Bopnm7FJfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwHmQ7DR+H8CZPzwpVnBEzy/hXPH1aAAlSOqT/IWUYyN0TLmq6PJNgSvcqE6//h0hxx6d3A/608Wt5GiSize2pET/o+ap8N8bq81PJwvwktdpEWeHaF/9ChMMXdwlQ4WCKU02yaKPYr+VMKQqVjhdy4Zo8KVmPNLr+Ya7K3emjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZs+EW1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbSgAQOsENTKPymZ6+Ok6nJafnch3vtt1a21Gl9pQ0/JA31P5kWBLx0HJf6q/l6PH3gZkQ9jaYuHZX2BQIeXU8ls3sALTG8IU4Rn35rBvtLTMZfmokoxUMv4zeuZ/+GGNrvFFNhIDooPlDbzU9asu1Y1RHPtQXDGABJHp4ToW6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aY0aaBVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZs+EW1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69832C4CEC7;
-	Tue,  8 Oct 2024 12:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aY0aaBVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB07C4CEC7;
+	Tue,  8 Oct 2024 12:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391880;
-	bh=YxbZie0chxyktcIEThLfFKrHt9w3KFHW9N/ljtjRv4o=;
+	s=korg; t=1728391884;
+	bh=DilKeOp9+V5gZPWruLfw9GN/nYVB/+4G0Bopnm7FJfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZs+EW1UXyjTN39O1N8ap3V6OrSqdQm3FlRK7nG+EgMwjWHGoLQETljnYZXl3HHS+
-	 TlDfTYb0iA6SRB8pZKdrE7ukokh5aM3s40kpSEkKzjrIj5jPXVfZe7i9HfDWw8SEDu
-	 K20vedech514E/85wjK71RACeP8xgR+o3rwlUVe4=
+	b=aY0aaBVT7exOgwostAPDc8RKKaIN1UWbMl7Nn7p/oSPFQ1GwV+5RL/LTIo7CD4tBb
+	 eQJ9BcCR9rGBq1PSrU8XdMFDGeCveTrbA1FQVYP2K9JLlCAS3YOKhQe0hXBzHaHXy4
+	 bWTscpbzpJswtQSYst4N8X2gW8FZ5cVZ+VDorSKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yannick Fertre <yannick.fertre@foss.st.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 251/558] drm/stm: ltdc: reset plane transparency after plane disable
-Date: Tue,  8 Oct 2024 14:04:41 +0200
-Message-ID: <20241008115712.215115219@linuxfoundation.org>
+Subject: [PATCH 6.11 252/558] drm/amd/display: Initialize denominators default to 1
+Date: Tue,  8 Oct 2024 14:04:42 +0200
+Message-ID: <20241008115712.253812838@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,36 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yannick Fertre <yannick.fertre@foss.st.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 02fa62d41c8abff945bae5bfc3ddcf4721496aca ]
+[ Upstream commit b995c0a6de6c74656a0c39cd57a0626351b13e3c ]
 
-The plane's opacity should be reseted while the plane
-is disabled. It prevents from seeing a possible global
-or layer background color set earlier.
+[WHAT & HOW]
+Variables used as denominators and maybe not assigned to other values,
+should not be 0. Change their default to 1 so they are never 0.
 
-Signed-off-by: Yannick Fertre <yannick.fertre@foss.st.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240712131344.98113-1-yannick.fertre@foss.st.com
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/stm/ltdc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c | 2 +-
+ drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c | 2 +-
+ .../display/dc/dml2/dml21/src/dml2_core/dml2_core_shared.c    | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
-index 056642d12265c..0832b749b66e7 100644
---- a/drivers/gpu/drm/stm/ltdc.c
-+++ b/drivers/gpu/drm/stm/ltdc.c
-@@ -1513,6 +1513,9 @@ static void ltdc_plane_atomic_disable(struct drm_plane *plane,
- 	/* Disable layer */
- 	regmap_write_bits(ldev->regmap, LTDC_L1CR + lofs, LXCR_LEN | LXCR_CLUTEN |  LXCR_HMEN, 0);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
+index 7c56ad0f88122..e7019c95ba79e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20.c
+@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
  
-+	/* Reset the layer transparency to hide any related background color */
-+	regmap_write_bits(ldev->regmap, LTDC_L1CACR + lofs, LXCACR_CONSTA, 0x00);
-+
- 	/* Commit shadow registers = update plane at next vblank */
- 	if (ldev->caps.plane_reg_shadow)
- 		regmap_write_bits(ldev->regmap, LTDC_L1RCR + lofs,
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c b/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
+index dae13f202220e..d8bfc85e5dcd0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dml1_display_rq_dlg_calc.c
+@@ -39,7 +39,7 @@
+ 
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
+ 
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_shared.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_shared.c
+index 81f0a6f19f87b..679b200319034 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_shared.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_shared.c
+@@ -9386,8 +9386,8 @@ static void CalculateVMGroupAndRequestTimes(
+ 	double TimePerVMRequestVBlank[],
+ 	double TimePerVMRequestFlip[])
+ {
+-	unsigned int num_group_per_lower_vm_stage = 0;
+-	unsigned int num_req_per_lower_vm_stage = 0;
++	unsigned int num_group_per_lower_vm_stage = 1;
++	unsigned int num_req_per_lower_vm_stage = 1;
+ 
+ #ifdef __DML_VBA_DEBUG__
+ 	dml2_printf("DML::%s: NumberOfActiveSurfaces = %u\n", __func__, NumberOfActiveSurfaces);
 -- 
 2.43.0
 
