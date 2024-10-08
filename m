@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656EE1DE8A0;
-	Tue,  8 Oct 2024 12:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261F51DF25D;
+	Tue,  8 Oct 2024 12:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392170; cv=none; b=UoynHstJBX05BSA/ymtY5vp3ca0NKn1AYiKGjN++wbhzKae9Eh1GYoaNXtrXiYVPpOJAX9SXVsT8I/mwlOpZOGEmU259xQU+0jEIwGck+R/VSSa8CKRPHutXuyKmuV6kiYDR9fWVO9nS79Uj1lCTsb2xemhPfhubAaGhjV7uFXQ=
+	t=1728392174; cv=none; b=s5TrXfS4H/Lq8Sn69Y0RlHUL7t430obKkSldf0yyEs/ydOI0RApnlM95Gx2Rg7JfLhSs7I9MDuDvyOsXC8/m6Z4jiyjNkeuYRgKlZ3J9EDKfuetw+yueXc4Q62Tv2Ko5HCcHs8bO8ZRU5CSSMVIBwK5ezTCdGeTlMi5pU19a+oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392170; c=relaxed/simple;
-	bh=wWAHjDw7Cgczf/MzToc3gnY9wAbkIuTr9Fos3hy5rQc=;
+	s=arc-20240116; t=1728392174; c=relaxed/simple;
+	bh=z8PFOzfMDbHzurXRuwRbi6Qm00EBjh5FTBokDDC4tL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMr0bQ6F7xilmY7t4t5IaDYL79qlATLC7qxPxXUV+OpvDcqWOWKsRS7p4rTiEuBbBQmHSyM6M9guRNtSRCAWXHA5IGt5GivBdoP1B5s1lutld+2ijfPSvIJpXv/ekz0Kx08Wf+ww1n3JyIXu+olok4UR/Q90/emo8YxYN96eoHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdjfD4rs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDKhSNxTc/444IQIr9l7wsJ26f/FOt/4Jo/LUw1XFF9W1g3bTKKoVBAoIKStsFhXZe0mlGZ+ieYEDDy/zyugwNIHt5PrUx0xh00nWbI5iSj7Oh5Zu9ObCEf8lzA80Z5A7oNH9qv7tdyjdE8Ji5Dsz0o+k/XqKujsDXG4V8RFCA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ7JCL5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdjfD4rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30ECC4CEC7;
-	Tue,  8 Oct 2024 12:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ7JCL5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC92C4CED3;
+	Tue,  8 Oct 2024 12:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392170;
-	bh=wWAHjDw7Cgczf/MzToc3gnY9wAbkIuTr9Fos3hy5rQc=;
+	s=korg; t=1728392173;
+	bh=z8PFOzfMDbHzurXRuwRbi6Qm00EBjh5FTBokDDC4tL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdjfD4rsx7ui5ykUMT9fwBWVcDr0ovcpu0cD+vfxL8uuzW6lFT/IeGIYGrSki3nzf
-	 bt7H/lD6XF/BjMIfqN6XiehHDdmhSjFOXunSJ9H0bKjyCdegc/ny55CoLakY7thjuo
-	 w7JjjvlBmqwJfKxHpGVh4TIrdMT2j8CX2y/CSC6Y=
+	b=AQ7JCL5x2HKT/YlJyvOON4FLIQdoe/PtqbgUqh2qQRM+2r8OmYvL+f9XPAnHlyt5u
+	 4KdZPFdEU0p9eXIiFbBJmbnxe12Sjzd2V8lhmcD8VtKDs+DwSSYppzXhzbjU2Z7D1G
+	 GNmuKXEE23ZiVhCM1QtFsSwIsXDwSOEccPq/O/Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Mikhail Ukhin <mish.uxin2012@yandex.ru>,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot+341e5f32ebafbb46b81c@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 309/558] ext4: fix i_data_sem unlock order in ext4_ind_migrate()
-Date: Tue,  8 Oct 2024 14:05:39 +0200
-Message-ID: <20241008115714.473520550@linuxfoundation.org>
+Subject: [PATCH 6.11 336/558] f2fs: fix to dont panic system for no free segment fault injection
+Date: Tue,  8 Oct 2024 14:06:06 +0200
+Message-ID: <20241008115715.525354225@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,53 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit cc749e61c011c255d81b192a822db650c68b313f ]
+[ Upstream commit 65a6ce4726c27b45600303f06496fef46d00b57f ]
 
-Fuzzing reports a possible deadlock in jbd2_log_wait_commit.
+f2fs: fix to don't panic system for no free segment fault injection
 
-This issue is triggered when an EXT4_IOC_MIGRATE ioctl is set to require
-synchronous updates because the file descriptor is opened with O_SYNC.
-This can lead to the jbd2_journal_stop() function calling
-jbd2_might_wait_for_commit(), potentially causing a deadlock if the
-EXT4_IOC_MIGRATE call races with a write(2) system call.
+syzbot reports a f2fs bug as below:
 
-This problem only arises when CONFIG_PROVE_LOCKING is enabled. In this
-case, the jbd2_might_wait_for_commit macro locks jbd2_handle in the
-jbd2_journal_stop function while i_data_sem is locked. This triggers
-lockdep because the jbd2_journal_start function might also lock the same
-jbd2_handle simultaneously.
+F2FS-fs (loop0): inject no free segment in get_new_segment of __allocate_new_segment+0x1ce/0x940 fs/f2fs/segment.c:3167
+F2FS-fs (loop0): Stopped filesystem due to reason: 7
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.c:2748!
+CPU: 0 UID: 0 PID: 5109 Comm: syz-executor304 Not tainted 6.11.0-rc6-syzkaller-00363-g89f5e14d05b4 #0
+RIP: 0010:get_new_segment fs/f2fs/segment.c:2748 [inline]
+RIP: 0010:new_curseg+0x1f61/0x1f70 fs/f2fs/segment.c:2836
+Call Trace:
+ __allocate_new_segment+0x1ce/0x940 fs/f2fs/segment.c:3167
+ f2fs_allocate_new_section fs/f2fs/segment.c:3181 [inline]
+ f2fs_allocate_pinning_section+0xfa/0x4e0 fs/f2fs/segment.c:3195
+ f2fs_expand_inode_data+0x5d6/0xbb0 fs/f2fs/file.c:1799
+ f2fs_fallocate+0x448/0x960 fs/f2fs/file.c:1903
+ vfs_fallocate+0x553/0x6c0 fs/open.c:334
+ do_vfs_ioctl+0x2592/0x2e50 fs/ioctl.c:886
+ __do_sys_ioctl fs/ioctl.c:905 [inline]
+ __se_sys_ioctl+0x81/0x170 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0010:get_new_segment fs/f2fs/segment.c:2748 [inline]
+RIP: 0010:new_curseg+0x1f61/0x1f70 fs/f2fs/segment.c:2836
 
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+The root cause is when we inject no free segment fault into f2fs,
+we should not panic system, fix it.
 
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Co-developed-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20240404095000.5872-1-mish.uxin2012%40yandex.ru
-Link: https://patch.msgid.link/20240829152210.2754-1-ancowi69@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 8b10d3653735 ("f2fs: introduce FAULT_NO_SEGMENT")
+Reported-by: syzbot+341e5f32ebafbb46b81c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000f0ee5b0621ab694b@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/segment.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
-index d98ac2af8199f..a5e1492bbaaa5 100644
---- a/fs/ext4/migrate.c
-+++ b/fs/ext4/migrate.c
-@@ -663,8 +663,8 @@ int ext4_ind_migrate(struct inode *inode)
- 	if (unlikely(ret2 && !ret))
- 		ret = ret2;
- errout:
--	ext4_journal_stop(handle);
- 	up_write(&EXT4_I(inode)->i_data_sem);
-+	ext4_journal_stop(handle);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 987165a58b708..c9320c98cb142 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2730,6 +2730,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
+ 								MAIN_SECS(sbi));
+ 		if (secno >= MAIN_SECS(sbi)) {
+ 			ret = -ENOSPC;
++			f2fs_bug_on(sbi, 1);
+ 			goto out_unlock;
+ 		}
+ 	}
+@@ -2740,6 +2741,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
+ 							MAIN_SECS(sbi));
+ 		if (secno >= MAIN_SECS(sbi)) {
+ 			ret = -ENOSPC;
++			f2fs_bug_on(sbi, 1);
+ 			goto out_unlock;
+ 		}
+ 	}
+@@ -2781,10 +2783,8 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
  out_unlock:
- 	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 	spin_unlock(&free_i->segmap_lock);
+ 
+-	if (ret == -ENOSPC) {
++	if (ret == -ENOSPC)
+ 		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_NO_SEGMENT);
+-		f2fs_bug_on(sbi, 1);
+-	}
  	return ret;
+ }
+ 
 -- 
 2.43.0
 
