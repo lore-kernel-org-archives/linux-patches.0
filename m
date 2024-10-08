@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E7E1779B1;
-	Tue,  8 Oct 2024 12:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B221DE3A2;
+	Tue,  8 Oct 2024 12:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390854; cv=none; b=ikovWI2X4QAqym39IzgJTRx/E4xVD+aaNmtZnsNipSCkEy7enBNIhrFj8sb0bqViESzDfZ49XLqS43gHhRk1Wrxx/VF/03NT1SYkcSwpE4bPlaBDKKEWkVXTE96HvT4kindt8kEuuWu1z6BJZuiK98nSCuIp9IArLQNcu/7bCwg=
+	t=1728390857; cv=none; b=HDyzvbijio4Yiu8cm8xDXGgZwlITifgC6VyqKBrkIHPuGCdxQOm9+Md4nrBis+HaFAC8TuHM88XVcwVdAViZ7FCU6XPUe8Y3AtjM6Jn7GbRTCqRchlrHKxIT/jGi2/BIjgGhEionaWMxgWyYIuz5ljpcdGqMiQdTR868vo8p3Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390854; c=relaxed/simple;
-	bh=mTlk/bvVXCwyNnIIlhCH8wgC50d8ZVVm3cokhe7pKAc=;
+	s=arc-20240116; t=1728390857; c=relaxed/simple;
+	bh=VvcEpblsPYi93zWLdDd1nTMACvafX6p1KHcTdPZjC8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHKOoUDlE1kti2cMMzZYhX2eMDlI7qp7szcYS+w6elw64vjLa6egicUnx44f7UBs8SuYSieAk+GOVVhZooO7WTElcdCiAaHZEJKHT2oJtU0VdJdVV2hC87wZ+2/0/Xziy+WAKvWFqqVOzWvXS1Y/p/dTfiJ9RSebYMVSK5jjACA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZXmC16k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRq3yEecEqalsdS7tQhSLOtbVjSLDUNwYD6u6im4xM13Op1QsQXa4DqN+JNimtaAQJM32c5gJHTwSHg8OciSs4zzoKqOmea6wZm7vr4s2SkKD/eQY2sCNjRbrcuxbfQnbdXXGgS5bOGIeR+ZFx9rvk8DarcW2MY2oPOy8J8amwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZniomD1t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZXmC16k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549DAC4CEC7;
-	Tue,  8 Oct 2024 12:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZniomD1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E82C4CEC7;
+	Tue,  8 Oct 2024 12:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390853;
-	bh=mTlk/bvVXCwyNnIIlhCH8wgC50d8ZVVm3cokhe7pKAc=;
+	s=korg; t=1728390857;
+	bh=VvcEpblsPYi93zWLdDd1nTMACvafX6p1KHcTdPZjC8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZXmC16kaW5TVcpO3fodAuyXUqL2chEyzLnceYLjAmNP+5PeNN8XXU0FaNdVOKonC
-	 aZUDbrI9rEhOQ++51PenpWCT1ijKeyeG8oONUAUmdC3aVtKNjEIgpxukmlOQWeLizO
-	 vbqEO6BTgX6/iOuuObSk7gk9vobTo/FU9NyeBigA=
+	b=ZniomD1taSRiUuBNmiaRCCoVxpYK5/DwSvWK53pqRjctZhp8r0mSfc4TJcEDXgEWJ
+	 JvQUU2wMG5wJXySY8eTqvaWdqfutOI0nEOg5dsSSW9rCbDZkrZuMF9osHB9D/NMuBN
+	 9QDwKtiE4t5VC8rENVo14JVI7myXvljE8MgdUqTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.10 413/482] ACPI: resource: Remove duplicate Asus E1504GAB IRQ override
-Date: Tue,  8 Oct 2024 14:07:56 +0200
-Message-ID: <20241008115704.657330411@linuxfoundation.org>
+Subject: [PATCH 6.10 414/482] ACPI: resource: Loosen the Asus E1404GAB DMI match to also cover the E1404GA
+Date: Tue,  8 Oct 2024 14:07:57 +0200
+Message-ID: <20241008115704.696296280@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,55 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 65bdebf38e5fac7c56a9e05d3479a707e6dc783c upstream.
+commit 63539defee17bf0cbd8e24078cf103efee9c6633 upstream.
 
-Commit d2aaf1996504 ("ACPI: resource: Add DMI quirks for ASUS Vivobook
-E1504GA and E1504GAB") does exactly what the subject says, adding DMI
-matches for both the E1504GA and E1504GAB.
+Like other Asus Vivobooks, the Asus Vivobook Go E1404GA has a DSDT
+describing IRQ 1 as ActiveLow, while the kernel overrides to Edge_High.
 
-But DMI_MATCH() does a substring match, so checking for E1504GA will also
-match E1504GAB.
+    $ sudo dmesg | grep DMI:.*BIOS
+    [    0.000000] DMI: ASUSTeK COMPUTER INC. Vivobook Go E1404GA_E1404GA/E1404GA, BIOS E1404GA.302 08/23/2023
+    $ sudo cp /sys/firmware/acpi/tables/DSDT dsdt.dat
+    $ iasl -d dsdt.dat
+    $ grep -A 30 PS2K dsdt.dsl | grep IRQ -A 1
+                IRQ (Level, ActiveLow, Exclusive, )
+                    {1}
 
-Drop the unnecessary E1504GAB entry since that is covered already by
-the E1504GA entry.
+There already is an entry in the irq1_level_low_skip_override[] DMI match
+table for the "E1404GAB", change this to match on "E1404GA" to cover
+the E1404GA model as well (DMI_MATCH() does a substring match).
 
-Fixes: d2aaf1996504 ("ACPI: resource: Add DMI quirks for ASUS Vivobook E1504GA and E1504GAB")
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219224
 Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240927141606.66826-1-hdegoede@redhat.com
+Link: https://patch.msgid.link/20240927141606.66826-2-hdegoede@redhat.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/acpi/resource.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 8a4726e2eb69..1ff251fd1901 100644
 --- a/drivers/acpi/resource.c
 +++ b/drivers/acpi/resource.c
-@@ -511,19 +511,12 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
+@@ -504,10 +504,10 @@ static const struct dmi_system_id irq1_l
  		},
  	},
  	{
--		/* Asus Vivobook E1504GA */
-+		/* Asus Vivobook E1504GA* */
+-		/* Asus Vivobook Go E1404GAB */
++		/* Asus Vivobook Go E1404GA* */
  		.matches = {
  			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
- 			DMI_MATCH(DMI_BOARD_NAME, "E1504GA"),
+-			DMI_MATCH(DMI_BOARD_NAME, "E1404GAB"),
++			DMI_MATCH(DMI_BOARD_NAME, "E1404GA"),
  		},
  	},
--	{
--		/* Asus Vivobook E1504GAB */
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_BOARD_NAME, "E1504GAB"),
--		},
--	},
  	{
- 		/* Asus Vivobook Pro N6506MV */
- 		.matches = {
--- 
-2.46.2
-
 
 
