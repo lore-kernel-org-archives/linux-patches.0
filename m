@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C2F192594;
-	Tue,  8 Oct 2024 12:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C404C190663;
+	Tue,  8 Oct 2024 12:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390977; cv=none; b=phz30ttuPptpFlAx7I5SgXjOGJ2DEP3LuXEcdLhHEYGiNBs7mnZ/5mgPhaMNfQTeFP6yHM0EA+/xFPo2hUZrBwowhWBRn4oQ9kd9THtFKtfWskA+lOrTpzXnE/yMZn8Y6cZs8VyDV5Tmx2kMiGAycMw0zyFPZrLmwaS/0QpaN/s=
+	t=1728390980; cv=none; b=UyLMQJf+E3E+98mTRLRZ4MrW8ey4dPxtalkUZXX/yJFGNu0HoSYolCB53VOguTOdNVeJ1rcBu5vVabp8paLbtCtjWgEiC7e5Z21sNO8NG7bFBgwE1nPn+e5kdniW4q/DFmrmOa0oix6BVkWG/qCf3fQlzwPikTLTsQWsaIsp4rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390977; c=relaxed/simple;
-	bh=EfKKo307UtEOv/T+MKGne6fEe7GrIHKMLeC/nn6G07Q=;
+	s=arc-20240116; t=1728390980; c=relaxed/simple;
+	bh=+lx7GTgdgyRh+oGQoXlWhl+2tGxeQ9LEzvSdoosD/FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cGvWGyJy5X2AQENtBu29HzS/vHGBJ7nMMKDWx30nSJBmrT+iza6kZ21rCkcaDqhld0rxByANM4tqRdt4dSlnbctBxF0xThqXR1OrxjLmzgEU/v6BgLrYMKPZ9VthzRp5N9NvTETRMl7ozumVA+jci6PW5nhMjPqlQMx6URbSLbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGl5+rJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTEDv4+lqSouquoq1NUIWyQOsSU7Vym3udCA/tLinhRV+W6ShMhLOrAhGN0TEVzg3q6MtgQ3d3eQKW9lQCu92AfXEFpBOw1i45UsRZ2ZFSb9+OP0v0EvYOUDDBthP+j3CmoNzNGG9CEV+fQlyQU7kq8Fn7SOspt5WHa2O8rsCOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weoiLyoF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGl5+rJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2070BC4CEC7;
-	Tue,  8 Oct 2024 12:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weoiLyoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36813C4CECD;
+	Tue,  8 Oct 2024 12:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390977;
-	bh=EfKKo307UtEOv/T+MKGne6fEe7GrIHKMLeC/nn6G07Q=;
+	s=korg; t=1728390980;
+	bh=+lx7GTgdgyRh+oGQoXlWhl+2tGxeQ9LEzvSdoosD/FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGl5+rJllojLU3eoFjGHyxhIVr738jNfPE8F4IsULva1dzp6hXSWDQ9iTVhm5Jre+
-	 6VAmFM1dTtkZicXmljgJgdeDnccW3dECbj4CurSXfimhfNTVzwLlTkc5u7i7SBb6s+
-	 eufQAETfaqVjtjk6uCeZNJ2wngPkSTYiXf9Sr/Jk=
+	b=weoiLyoF6KPG8C0w1bDOBVCCGJ6RciSs/ijlJi3bissq5cj40PN2+ArtFYvEOQy3h
+	 BSSPIv7V8kNOL7t79UQORdqi8PFsY4m9BOO21pqOdB+rpt1zmOR9LUii747fnIphlY
+	 dBcsapD0Tbl8AODqAr0RmunKLkDvZtgy6bmvYXhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 452/482] drm/amd/display: Allow backlight to go below `AMDGPU_DM_DEFAULT_MIN_BACKLIGHT`
-Date: Tue,  8 Oct 2024 14:08:35 +0200
-Message-ID: <20241008115706.305897026@linuxfoundation.org>
+Subject: [PATCH 6.10 453/482] build-id: require program headers to be right after ELF header
+Date: Tue,  8 Oct 2024 14:08:36 +0200
+Message-ID: <20241008115706.345226133@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -47,48 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 87d749a6aab73d8069d0345afaa98297816cb220 ]
+[ Upstream commit 961a2851324561caed579764ffbee3db82b32829 ]
 
-The issue with panel power savings compatibility below
-`AMDGPU_DM_DEFAULT_MIN_BACKLIGHT` happens at
-`AMDGPU_DM_DEFAULT_MIN_BACKLIGHT` as well.
+Neither ELF spec not ELF loader require program header to be placed right
+after ELF header, but build-id code very much assumes such placement:
 
-That issue will be fixed separately, so don't prevent the backlight
-brightness from going that low.
+See
 
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/amd-gfx/be04226a-a9e3-4a45-a83b-6d263c6557d8@t-8ch.de/T/#m400dee4e2fc61fe9470334d20a7c8c89c9aef44f
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+	find_get_page(vma->vm_file->f_mapping, 0);
+
+line and checks against PAGE_SIZE.
+
+Returns errors for now until someone rewrites build-id parser
+to be more inline with load_elf_binary().
+
+Link: https://lkml.kernel.org/r/d58bc281-6ca7-467a-9a64-40fa214bd63e@p183
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Reviewed-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 905415ff3ffb ("lib/buildid: harden build ID parsing logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/buildid.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index d2554b4a14fe9..83f4ff9e848d7 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4176,7 +4176,7 @@ static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm,
- 		int spread = caps.max_input_signal - caps.min_input_signal;
+diff --git a/lib/buildid.c b/lib/buildid.c
+index 7954dd92e36c0..e02b5507418b4 100644
+--- a/lib/buildid.c
++++ b/lib/buildid.c
+@@ -73,6 +73,13 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
+ 	Elf32_Phdr *phdr;
+ 	int i;
  
- 		if (caps.max_input_signal > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
--		    caps.min_input_signal < AMDGPU_DM_DEFAULT_MIN_BACKLIGHT ||
-+		    caps.min_input_signal < 0 ||
- 		    spread > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
- 		    spread < AMDGPU_DM_MIN_SPREAD) {
- 			DRM_DEBUG_KMS("DM: Invalid backlight caps: min=%d, max=%d\n",
++	/*
++	 * FIXME
++	 * Neither ELF spec nor ELF loader require that program headers
++	 * start immediately after ELF header.
++	 */
++	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
++		return -EINVAL;
+ 	/* only supports phdr that fits in one page */
+ 	if (ehdr->e_phnum >
+ 	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
+@@ -98,6 +105,13 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
+ 	Elf64_Phdr *phdr;
+ 	int i;
+ 
++	/*
++	 * FIXME
++	 * Neither ELF spec nor ELF loader require that program headers
++	 * start immediately after ELF header.
++	 */
++	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
++		return -EINVAL;
+ 	/* only supports phdr that fits in one page */
+ 	if (ehdr->e_phnum >
+ 	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
 -- 
 2.43.0
 
