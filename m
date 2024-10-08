@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D681DC759;
-	Tue,  8 Oct 2024 12:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3521DDC24;
+	Tue,  8 Oct 2024 12:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391335; cv=none; b=ah9PhTSayVPV90rbB48mQ/eFYqtIOU5M5FY/DJ0W0ZGb2lZcKP/R7lTANRKO/+4+6Kw4RS2wqzmF5hFXyCLkrgqR+G9dXrLG6Y2EGHGgvFh6KAYTO9YVNa0qvwtxWJ9rItrukdydHsLAVEKv26jEwBChJg0G7vCIhkJn5D484G0=
+	t=1728391338; cv=none; b=P9QnT8dOuskZkdzCyN3lkUWFYRNM9MILM8ZAggSHVqsZbQI4IEWR76x8jbGx9nRDZDd65+762hI4rKn2f3Wy9Rf7d19tOZ4dNOJVdGaGDHj9fzviQfjW6LfBrGz8lOrDcOtcKCOSKaKz9YdHfyUDLemy8/mKBRCENrzVHwU2QZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391335; c=relaxed/simple;
-	bh=A4ea+acqlTK08R+UYmEVwLbJtaqAdscJ3+bxUQNSbPg=;
+	s=arc-20240116; t=1728391338; c=relaxed/simple;
+	bh=Avej4pBkmIfgWuxQIxhuVIWg9O6swJLHgfBX943MXas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShAOCK6k2YSv9qX1/wbucXPBxyuz+9D14BzlbvIVyTuBy0f8OxXYUd14S9RD+s7Vn0XG+/wtyzD6Ls0dFq8Y2CMgV9UJmY5q8dzNSdCJkTBD4fVuk6rbHRF6v0OwhF98TsGkLSxOsvmm+g35yv45yim/PcPGt8uUYgp6kWYqsbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3NLqnN4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tPjupwdzXNppE/Z+ZKWgqOihKDZ0NqWai/7hnQaOMB9FLHoTQWZotAoWopBWTi1v7i4aoyNFqjlzvKlJIHexDIsGLfjHtwLy2S/X/wSXHuMmJhwo1srg/kN8OPSkVABLJUb45VTnZfs8aVbF+p81cs+NWuKhvUbAKYPOLGky6Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMZCiJrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3NLqnN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BABC4CEC7;
-	Tue,  8 Oct 2024 12:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMZCiJrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89432C4CEC7;
+	Tue,  8 Oct 2024 12:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391334;
-	bh=A4ea+acqlTK08R+UYmEVwLbJtaqAdscJ3+bxUQNSbPg=;
+	s=korg; t=1728391337;
+	bh=Avej4pBkmIfgWuxQIxhuVIWg9O6swJLHgfBX943MXas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3NLqnN4CwLAT6zCJhPet6r0REKiSuibesC3fj/lfprLvvqaZkGby0whrYdyV3jPU
-	 WAWNQQFdQlsDgaVWIVJ9H037Nmhi2VjKEd68ybADPZ1MBalsP0PlMo00I1qwLoD/Wn
-	 jOK7DO7xsX+c3bsco5kaKIEVYsYF90MraHxEnVXo=
+	b=mMZCiJrNu6FkKIMVdvm1QHDQlfsyjwR0pSiUWZy0Z1x+WLt9Gz/4TXLVFfgSjvTTA
+	 43cte6+f5TSvXl+JOZlGx1DuD4zLrPNmAT4Jf15X3yrqqtiiIrbmzuVkemEKZKyU2T
+	 jGtr82ptsAGMEtQdyaztcS1et6wY8J/2YdCTI/IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Borsboom <arthurborsboom@gmail.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 082/558] drm/amd/display: Re-enable panel replay feature
-Date: Tue,  8 Oct 2024 14:01:52 +0200
-Message-ID: <20241008115705.602030780@linuxfoundation.org>
+Subject: [PATCH 6.11 083/558] e1000e: avoid failing the system during pm_suspend
+Date: Tue,  8 Oct 2024 14:01:53 +0200
+Message-ID: <20241008115705.640313682@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -55,56 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit be64336307a6c3ee71fe1337c1b9f0495aa83c50 ]
+[ Upstream commit 0a6ad4d9e1690c7faa3a53f762c877e477093657 ]
 
-[Why & How]
-Fixed the replay issues and now re-enable the panel replay feature.
+Occasionally when the system goes into pm_suspend, the suspend might fail
+due to a PHY access error on the network adapter. Previously, this would
+have caused the whole system to fail to go to a low power state.
+An example of this was reported in the following Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=205015
 
-Reported-by: Arthur Borsboom <arthurborsboom@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3344
-Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ 1663.694828] e1000e 0000:00:19.0 eth0: Failed to disable ULP
+[ 1664.731040] asix 2-3:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0xC1E1
+[ 1665.093513] e1000e 0000:00:19.0 eth0: Hardware Error
+[ 1665.596760] e1000e 0000:00:19.0: pci_pm_resume+0x0/0x80 returned 0 after 2975399 usecs
+
+and then the system never recovers from it, and all the following suspend failed due to this
+[22909.393854] PM: pci_pm_suspend(): e1000e_pm_suspend+0x0/0x760 [e1000e] returns -2
+[22909.393858] PM: dpm_run_callback(): pci_pm_suspend+0x0/0x160 returns -2
+[22909.393861] PM: Device 0000:00:1f.6 failed to suspend async: error -2
+
+This can be avoided by changing the return values of __e1000_shutdown and
+e1000e_pm_suspend functions so that they always return 0 (success). This
+is consistent with what other drivers do.
+
+If the e1000e driver encounters a hardware error during suspend, potential
+side effects include slightly higher power draw or non-working wake on
+LAN. This is preferred to a system-level suspend failure, and a warning
+message is written to the system log, so that the user can be aware that
+the LAN controller experienced a problem during suspend.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=205015
+Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 9ee54c5ce4a61..f6cbff0ed6f94 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4919,18 +4919,14 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
- 	/* Determine whether to enable Replay support by default. */
- 	if (!(amdgpu_dc_debug_mask & DC_DISABLE_REPLAY)) {
- 		switch (amdgpu_ip_version(adev, DCE_HWIP, 0)) {
--/*
-- * Disabled by default due to https://gitlab.freedesktop.org/drm/amd/-/issues/3344
-- *		case IP_VERSION(3, 1, 4):
-- *		case IP_VERSION(3, 1, 5):
-- *		case IP_VERSION(3, 1, 6):
-- *		case IP_VERSION(3, 2, 0):
-- *		case IP_VERSION(3, 2, 1):
-- *		case IP_VERSION(3, 5, 0):
-- *		case IP_VERSION(3, 5, 1):
-- *			replay_feature_enabled = true;
-- *			break;
-- */
-+		case IP_VERSION(3, 1, 4):
-+		case IP_VERSION(3, 2, 0):
-+		case IP_VERSION(3, 2, 1):
-+		case IP_VERSION(3, 5, 0):
-+		case IP_VERSION(3, 5, 1):
-+			replay_feature_enabled = true;
-+			break;
-+
- 		default:
- 			replay_feature_enabled = amdgpu_dc_feature_mask & DC_REPLAY_MASK;
- 			break;
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 360ee26557f77..f103249b12fac 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6671,8 +6671,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 		if (adapter->flags2 & FLAG2_HAS_PHY_WAKEUP) {
+ 			/* enable wakeup by the PHY */
+ 			retval = e1000_init_phy_wakeup(adapter, wufc);
+-			if (retval)
+-				return retval;
++			if (retval) {
++				e_err("Failed to enable wakeup\n");
++				goto skip_phy_configurations;
++			}
+ 		} else {
+ 			/* enable wakeup by the MAC */
+ 			ew32(WUFC, wufc);
+@@ -6693,8 +6695,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 			 * or broadcast.
+ 			 */
+ 			retval = e1000_enable_ulp_lpt_lp(hw, !runtime);
+-			if (retval)
+-				return retval;
++			if (retval) {
++				e_err("Failed to enable ULP\n");
++				goto skip_phy_configurations;
++			}
+ 		}
+ 	}
+ 
+@@ -6726,6 +6730,7 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 		hw->phy.ops.release(hw);
+ 	}
+ 
++skip_phy_configurations:
+ 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
+ 	 * would have already happened in close and is redundant.
+ 	 */
+@@ -6968,15 +6973,13 @@ static int e1000e_pm_suspend(struct device *dev)
+ 	e1000e_pm_freeze(dev);
+ 
+ 	rc = __e1000_shutdown(pdev, false);
+-	if (rc) {
+-		e1000e_pm_thaw(dev);
+-	} else {
++	if (!rc) {
+ 		/* Introduce S0ix implementation */
+ 		if (adapter->flags2 & FLAG2_ENABLE_S0IX_FLOWS)
+ 			e1000e_s0ix_entry_flow(adapter);
+ 	}
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int e1000e_pm_resume(struct device *dev)
 -- 
 2.43.0
 
