@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4931D3653;
-	Tue,  8 Oct 2024 13:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F851D3653;
+	Tue,  8 Oct 2024 13:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393413; cv=none; b=Pk+GPkSio/4iI82jzlJhfqd0vO1zR4VnK2f5I1dZsnWfYjycCBzjX/XSburXNR/DKs595khBQlSXU5psm/FyBBvtJNiEDNKUldF7ziDOW1IufiojUA8/D7bYV9QqqSzNdWJFtQDtGefqxyYfwQasqgGiiqW8WojGgDRk3GsPG9I=
+	t=1728393416; cv=none; b=sjQemek5zPmpi7VZI5jcZHmCP+P798fAGJ0m/wCZUwLW+P77DCvsX6Vb18csaP2sAEMsxI3XlFky9s31Y8Xi4d5WfTffJBGhsfVT4j/KYsJbpW3P2eiZgsIQG3cZCMlK3DD3TuIOY1YenAGSbDVcZeHNzMB4pHm9D7wRNc2ZIpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393413; c=relaxed/simple;
-	bh=M5smAU+IPKkeP//UPjVTvtmMz6UaV9stjmdvmtGpBzQ=;
+	s=arc-20240116; t=1728393416; c=relaxed/simple;
+	bh=gq1ooTITyYhUImZb+P8Fmb4cxMNEpmhy9wvSFYsePIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUG+lVqieLjz4Two2oROhn/ZCO/lgym9NtcVI6ynkvgJxVTbL64Jrq9KmyXH9GC+uLyvQ6dQfBzMP9glOvf0kIo7G9C6R7MuHjoEEYwLzUTwicR4VR/NJM/Qb428MUlmKa/ZnsZvQhG2H77K8Brvf2lq824/tQNYSYuTA3UCfPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTEsmlkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kEkC2qCFn3eqinI7MDhm8Ee0NwMkZYWBVjLjM3vzka96b2wQTLEr8hzCVcgwtS0aD4Bh2R0GSmGYpuwjE2zIjUconC1kWSOB1qPGFeYxTRFAN5/WayMPU8ftSfrufFI/T17ot7NG1Wyq7s0BK7an18mAZXavaWelE4CUWk1JAr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmCxU8/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTEsmlkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700F2C4CECC;
-	Tue,  8 Oct 2024 13:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmCxU8/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE018C4CEC7;
+	Tue,  8 Oct 2024 13:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393412;
-	bh=M5smAU+IPKkeP//UPjVTvtmMz6UaV9stjmdvmtGpBzQ=;
+	s=korg; t=1728393416;
+	bh=gq1ooTITyYhUImZb+P8Fmb4cxMNEpmhy9wvSFYsePIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTEsmlkUk/I80GccAJ/kQYUJe9MGfQciCa78F5OPhmCHep19rpBMZ/TJ5nU/Xvfo9
-	 WcsGsWT9G/3rWVFQP/FrJM/mXE24sfsXoNGfdloKcX6qpf6A5q8ctB/wKL5gJrU8ec
-	 DIsZh3z2ZyxJLjFDNtD6cUF3M4gyEEOAK3Q4TxZI=
+	b=wmCxU8/bkOQiMMC1x5X2Yg5HXjEhXc+T0K7+e3f5nh3ofalROP+MeRuOe+Fc07s/b
+	 bpGYuDakTSR9nSjntH5vtUIjn5TtTJQo24MR6Vs+oxwo1QCppsqjk5RIBCASW2qhpb
+	 51x9TQWSHn2xkOXO39nyH3NLfTMT3/0vT3lmZDH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 144/386] jfs: check if leafidx greater than num leaves per dmap tree
-Date: Tue,  8 Oct 2024 14:06:29 +0200
-Message-ID: <20241008115635.096827980@linuxfoundation.org>
+	Scott Benesh <scott.benesh@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 145/386] scsi: smartpqi: correct stream detection
+Date: Tue,  8 Oct 2024 14:06:30 +0200
+Message-ID: <20241008115635.134605845@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,50 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
 
-[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
+[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
 
-syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
-than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
+Correct stream detection by initializing the structure
+pqi_scsi_dev_raid_map_data to 0s.
 
-Shaggy:
-Modified sanity check to apply to control pages as well as leaf pages.
+When the OS issues SCSI READ commands, the driver erroneously considers
+them as SCSI WRITES. If they are identified as sequential IOs, the driver
+then submits those requests via the RAID path instead of the AIO path.
 
-Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+The 'is_write' flag might be set for SCSI READ commands also.  The driver
+may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
+being submitted through the RAID path.
+
+Note: This does not cause data corruption.
+
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 8847e8c5d5b45..974ecf5e0d952 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -2944,9 +2944,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- {
- 	int ti, n = 0, k, x = 0;
--	int max_size;
-+	int max_size, max_idx;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 2ae64cda8bc9e..0af2d366c85f9 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -5918,7 +5918,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
+ 	int rc;
+ 	struct pqi_scsi_dev *device;
+ 	struct pqi_stream_data *pqi_stream_data;
+-	struct pqi_scsi_dev_raid_map_data rmd;
++	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
  
- 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
-+	max_idx = is_ctl ? LPERCTL : LPERDMAP;
- 
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -2978,6 +2979,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- 		 */
- 		assert(n < 4);
- 	}
-+	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
-+		return -ENOSPC;
- 
- 	/* set the return to the leftmost leaf describing sufficient
- 	 * free space.
+ 	if (!ctrl_info->enable_stream_detection)
+ 		return false;
 -- 
 2.43.0
 
