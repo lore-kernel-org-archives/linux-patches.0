@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D04E1DACBE;
-	Tue,  8 Oct 2024 12:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CF81CF297;
+	Tue,  8 Oct 2024 12:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389515; cv=none; b=L5RhW7gBpyNQ79FoN1DILPsFUnEmvXs97ZBWGktMnwfpj2BWtSoC2EQxVv2VRY2v9NP717ntyy80O7Z6/rvGylSh7fN1C9rLxrsyjmkmOOoA0j4uN8cY9s2Nj4Tw9CVJQ7xbRgNoTZNfKn0TAiaFEqLWNfrPgb/AOyiLNMHhBkE=
+	t=1728389519; cv=none; b=njpQ/j+Ws2pfEYWHv7OaSUsDLp1y+uzoHaA2NzpZcfRU1inUsyPh/vYjwNiTpZLggFsz1NyiAqLrrQb5WUVN7I26Ezl7DdsrmU3hD0PNp7RoNnc/1KNUYFkArMrEEpOZHWotY15uRuRgTl9WLpdrTyo82gbHvbB5I3tieO2Pvgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389515; c=relaxed/simple;
-	bh=h0FdP+4uDD+DGlzdqAc3LQaAU2+NbNCfQitaIc/ggXo=;
+	s=arc-20240116; t=1728389519; c=relaxed/simple;
+	bh=F30WaHFYaYfw+jW/niVy2D1pCgZNSL5K8dLVZRVLMSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXVYitWDWS9vimotzt3jS6xNGTXXBM3UXky3GXrG5/l1/kObpe8AfB0zi7OHt1yadUVPhxjtyuMeGqfsjoJDzVnOAiamJVAVBmfAiNZ7CMdbPr4PAkif7T/UpEIgqMo+c3ayIIHVhJckr/e870C8KTmZLwVOPnGuKLdEdDdDEqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhmUgHzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WVUi6wfu0dayi6JRm4KkkbLdMzabQJ4EGdCt0dXUsejwHLzI8nMuI2KE23SGiO+UOSgOD8ziO2cr+QPxzP9IymerQN5Tb6hkEFIrmBkqrSRxbH9ywVtoCWIUmFn6jZuoVrQTeVo6bj/645xKpfGxFyHd3MqM+383WpWrwJpcpS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggyNHyUI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhmUgHzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2296C4CEC7;
-	Tue,  8 Oct 2024 12:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggyNHyUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54738C4CECC;
+	Tue,  8 Oct 2024 12:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389515;
-	bh=h0FdP+4uDD+DGlzdqAc3LQaAU2+NbNCfQitaIc/ggXo=;
+	s=korg; t=1728389518;
+	bh=F30WaHFYaYfw+jW/niVy2D1pCgZNSL5K8dLVZRVLMSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhmUgHzl/130dxjpdDMYZOBNkVtQlDb7oC60r4WBnauR5Ay/b/qIuWKkjt1EOyCOH
-	 5kQ/3YKtSdW68MlZyKvqz/7oqtEqb4lD6l0rIBPmtoSn1LzZOipl6deAQbhnV2Pi82
-	 p7RGGk5hMae1vgtZzQEoqOKWRdtmUQpz33vJUXdo=
+	b=ggyNHyUIl5c6dc+P8G5LFUEFPjvhUjfZ92xjrqlCjP0ij30Py0SujwhWVktbmhGOr
+	 AwCIBCKWCcoJm58V5rj2Szobnm7xl2ZJxfBPIf6q8j2d9lvEtTAzoB7ElDH5lXJfqn
+	 lV+IdwJiaNEPW4kGB7tMnSuqUpD3lwhe1jFaJ+1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aakash Menon <aakash.menon@protempis.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 017/482] net: sparx5: Fix invalid timestamps
-Date: Tue,  8 Oct 2024 14:01:20 +0200
-Message-ID: <20241008115648.976939447@linuxfoundation.org>
+Subject: [PATCH 6.10 002/482] static_call: Replace pointless WARN_ON() in static_call_module_notify()
+Date: Tue,  8 Oct 2024 14:01:05 +0200
+Message-ID: <20241008115648.388174535@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aakash Menon <aakash.r.menon@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 151ac45348afc5b56baa584c7cd4876addf461ff ]
+[ Upstream commit fe513c2ef0a172a58f158e2e70465c4317f0a9a2 ]
 
-Bit 270-271 are occasionally unexpectedly set by the hardware. This issue
-was observed with 10G SFPs causing huge time errors (> 30ms) in PTP. Only
-30 bits are needed for the nanosecond part of the timestamp, clear 2 most
-significant bits before extracting timestamp from the internal frame
-header.
+static_call_module_notify() triggers a WARN_ON(), when memory allocation
+fails in __static_call_add_module().
 
-Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
-Signed-off-by: Aakash Menon <aakash.menon@protempis.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+That's not really justified, because the failure case must be correctly
+handled by the well known call chain and the error code is passed
+through to the initiating userspace application.
+
+A memory allocation fail is not a fatal problem, but the WARN_ON() takes
+the machine out when panic_on_warn is set.
+
+Replace it with a pr_warn().
+
+Fixes: 9183c3f9ed71 ("static_call: Add inline static call infrastructure")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/8734mf7pmb.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_packet.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/static_call_inline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-index f3f5fb4204689..70427643f777c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-@@ -45,8 +45,12 @@ void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
- 	fwd = (fwd >> 5);
- 	info->src_port = FIELD_GET(GENMASK(7, 1), fwd);
- 
-+	/*
-+	 * Bit 270-271 are occasionally unexpectedly set by the hardware,
-+	 * clear bits before extracting timestamp
-+	 */
- 	info->timestamp =
--		((u64)xtr_hdr[2] << 24) |
-+		((u64)(xtr_hdr[2] & GENMASK(5, 0)) << 24) |
- 		((u64)xtr_hdr[3] << 16) |
- 		((u64)xtr_hdr[4] <<  8) |
- 		((u64)xtr_hdr[5] <<  0);
+diff --git a/kernel/static_call_inline.c b/kernel/static_call_inline.c
+index 7bb0962b52291..5259cda486d05 100644
+--- a/kernel/static_call_inline.c
++++ b/kernel/static_call_inline.c
+@@ -453,7 +453,7 @@ static int static_call_module_notify(struct notifier_block *nb,
+ 	case MODULE_STATE_COMING:
+ 		ret = static_call_add_module(mod);
+ 		if (ret) {
+-			WARN(1, "Failed to allocate memory for static calls");
++			pr_warn("Failed to allocate memory for static calls\n");
+ 			static_call_del_module(mod);
+ 		}
+ 		break;
 -- 
 2.43.0
 
