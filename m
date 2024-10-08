@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7967F192594;
-	Tue,  8 Oct 2024 12:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5A192594;
+	Tue,  8 Oct 2024 12:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391403; cv=none; b=mewqcCu1UcouggXWDmv/8xCGe16QgtRuG0F8qlnPQeAcNm7pkxgTevFfDiRi5mpmC/nT3Zd7qO02GawQ6TFqHacALkCTCqBwgDjzP1g3ZDgoDWVKgwGQyIm47O393N/XtUJEAce7ymQS8kZT6V9JjHWLsSCktSGS4aN82Re5DB4=
+	t=1728391406; cv=none; b=HPtmLVGl5Kusk31THn/4jAZMulB4tNtdhBxvKOeBQ/tCn72nq65bMrFbZAePNUQ9WfOsklB7QM1IpP5493ZxhnGgYct3NA1g6D4rcpsgseN0FK9USSk0uk/RTWIRpMuVFojkJvkygyWRbajQHl0FlyW6PpsuHeuZi42N9tFNRbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391403; c=relaxed/simple;
-	bh=FNgUwfJ71XO0tfTooAjnDws0cqh3KYP947uKfuIaVdY=;
+	s=arc-20240116; t=1728391406; c=relaxed/simple;
+	bh=9ly+A4zfotFi7bn8FODYQi/NmGnXbN4a1aaKvqmoI0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNQIpRYSriWZQVfwbsfDbljzBvRGtPF9s9ERbH5R43ph1KyV1X54bvHvazpJb0g/F6hmuj9mBN9gF5Bi8xm31DEsqJcNX5HgoMomNmyr0PgqcUQlKJic8xaVdmf0ORKFfNchjkhzff9TsQ1pDY3JP36lQ8fAepEuawgm9BmlJ+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFMFbOru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KpV/RZ5tz3X5/vHc3qM9GxC7Sp1kM8Ecq2xFOfqvkwylCf/WqM0AkXTNVMJhBj0ZHVXIF1iqkDmVD3iGPxBGwJQoudXRtVukBgfDyxqXabk6P/+GUBBIY8CPpKfrDoJuk9k+F6qvSySXwVI0RrkIJDX4HSRJ18TZe8PChuNPJpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ortLPX0q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFMFbOru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FF6C4CEC7;
-	Tue,  8 Oct 2024 12:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ortLPX0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEDEC4CEC7;
+	Tue,  8 Oct 2024 12:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391403;
-	bh=FNgUwfJ71XO0tfTooAjnDws0cqh3KYP947uKfuIaVdY=;
+	s=korg; t=1728391406;
+	bh=9ly+A4zfotFi7bn8FODYQi/NmGnXbN4a1aaKvqmoI0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFMFbOru5a59q2wuQLcyzQnSPK+fDohzXR6UjSQ6H1hgVw4ZMxRutK2psumOdCmrc
-	 c8CMqzyHt38bqSkcPjLIdWtIHQwr7ToeGXSIkxek3ZU4RLPTie5Dump7KzJU/qJnT1
-	 c8tO7LNQXP7G4BymrkYH/sS0axoGZqSPuyQ5Zo0U=
+	b=ortLPX0qe52fgB1uAZDgImOQhJ5gZXA6jOYfwKHnRgcEHRJPbs0cR4EXheG6fK6H9
+	 dvsjsTtrkDMMKAtVDvcDt/VIt6KJijIZV3ADNMc6iet7781pytLzuOhpBWs2NIXLR7
+	 bDChN1bxyncp2xtjy8PuAPUCVqMrwWSy5Xm1R5R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 102/558] ACPICA: Fix memory leak if acpi_ps_get_next_field() fails
-Date: Tue,  8 Oct 2024 14:02:12 +0200
-Message-ID: <20241008115706.381306380@linuxfoundation.org>
+Subject: [PATCH 6.11 072/558] drm/xe: Resume TDR after GT reset
+Date: Tue,  8 Oct 2024 14:01:42 +0200
+Message-ID: <20241008115705.052255106@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,88 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit e6169a8ffee8a012badd8c703716e761ce851b15 ]
+[ Upstream commit 1b30f87e088b499eb74298db256da5c98e8276e2 ]
 
-ACPICA commit 1280045754264841b119a5ede96cd005bc09b5a7
+Not starting the TDR after GT reset on exec queue which have been
+restarted can lead to jobs being able to be run forever. Fix this by
+restarting the TDR.
 
-If acpi_ps_get_next_field() fails, the previously created field list
-needs to be properly disposed before returning the status code.
-
-Link: https://github.com/acpica/acpica/commit/12800457
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-[ rjw: Rename local variable to avoid compiler confusion ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240724235919.1917216-1-matthew.brost@intel.com
+(cherry picked from commit 8ec5a4e5ce97d6ee9f5eb5b4ce4cfc831976fdec)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 39 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ drivers/gpu/drm/xe/xe_gpu_scheduler.c | 5 +++++
+ drivers/gpu/drm/xe/xe_gpu_scheduler.h | 2 ++
+ drivers/gpu/drm/xe/xe_guc_submit.c    | 1 +
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 7debfd5ce0d86..28582adfc0aca 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -25,6 +25,8 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state);
- static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 						       *parser_state);
- 
-+static void acpi_ps_free_field_list(union acpi_parse_object *start);
-+
- /*******************************************************************************
-  *
-  * FUNCTION:    acpi_ps_get_next_package_length
-@@ -683,6 +685,39 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 	return_PTR(field);
+diff --git a/drivers/gpu/drm/xe/xe_gpu_scheduler.c b/drivers/gpu/drm/xe/xe_gpu_scheduler.c
+index e4ad1d6ce1d5f..7f24e58cc992f 100644
+--- a/drivers/gpu/drm/xe/xe_gpu_scheduler.c
++++ b/drivers/gpu/drm/xe/xe_gpu_scheduler.c
+@@ -90,6 +90,11 @@ void xe_sched_submission_stop(struct xe_gpu_scheduler *sched)
+ 	cancel_work_sync(&sched->work_process_msg);
  }
  
-+/*******************************************************************************
-+ *
-+ * FUNCTION:    acpi_ps_free_field_list
-+ *
-+ * PARAMETERS:  start               - First Op in field list
-+ *
-+ * RETURN:      None.
-+ *
-+ * DESCRIPTION: Free all Op objects inside a field list.
-+ *
-+ ******************************************************************************/
-+
-+static void acpi_ps_free_field_list(union acpi_parse_object *start)
++void xe_sched_submission_resume_tdr(struct xe_gpu_scheduler *sched)
 +{
-+	union acpi_parse_object *cur = start;
-+	union acpi_parse_object *next;
-+	union acpi_parse_object *arg;
-+
-+	while (cur) {
-+		next = cur->common.next;
-+
-+		/* AML_INT_CONNECTION_OP can have a single argument */
-+
-+		arg = acpi_ps_get_arg(cur, 0);
-+		if (arg) {
-+			acpi_ps_free_op(arg);
-+		}
-+
-+		acpi_ps_free_op(cur);
-+		cur = next;
-+	}
++	drm_sched_resume_timeout(&sched->base, sched->base.timeout);
 +}
 +
- /*******************************************************************************
-  *
-  * FUNCTION:    acpi_ps_get_next_arg
-@@ -751,6 +786,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			while (parser_state->aml < parser_state->pkg_end) {
- 				field = acpi_ps_get_next_field(parser_state);
- 				if (!field) {
-+					if (arg) {
-+						acpi_ps_free_field_list(arg);
-+					}
-+
- 					return_ACPI_STATUS(AE_NO_MEMORY);
- 				}
+ void xe_sched_add_msg(struct xe_gpu_scheduler *sched,
+ 		      struct xe_sched_msg *msg)
+ {
+diff --git a/drivers/gpu/drm/xe/xe_gpu_scheduler.h b/drivers/gpu/drm/xe/xe_gpu_scheduler.h
+index 10c6bb9c93868..6aac7fe686735 100644
+--- a/drivers/gpu/drm/xe/xe_gpu_scheduler.h
++++ b/drivers/gpu/drm/xe/xe_gpu_scheduler.h
+@@ -22,6 +22,8 @@ void xe_sched_fini(struct xe_gpu_scheduler *sched);
+ void xe_sched_submission_start(struct xe_gpu_scheduler *sched);
+ void xe_sched_submission_stop(struct xe_gpu_scheduler *sched);
  
++void xe_sched_submission_resume_tdr(struct xe_gpu_scheduler *sched);
++
+ void xe_sched_add_msg(struct xe_gpu_scheduler *sched,
+ 		      struct xe_sched_msg *msg);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index 3d91734980110..64b3a7848f4ab 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1740,6 +1740,7 @@ static void guc_exec_queue_start(struct xe_exec_queue *q)
+ 	}
+ 
+ 	xe_sched_submission_start(sched);
++	xe_sched_submission_resume_tdr(sched);
+ }
+ 
+ int xe_guc_submit_start(struct xe_guc *guc)
 -- 
 2.43.0
 
