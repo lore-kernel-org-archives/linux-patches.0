@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5531DEFC8;
-	Tue,  8 Oct 2024 13:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BBA1DF243;
+	Tue,  8 Oct 2024 13:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393442; cv=none; b=Ve0Ty3iXhI1ihYPtjFYHeqhvfZ7I9I0FvkOdCiROVeWuRiWUrwkbbSFjroPi93Wkv2wrCPrfOjsvulZaeZjosvgDPMcCAJlKh2R+LSOajNJ6tCr3hkq/ojrrvUqL0u0zKgJHFESBJMREznI5TITvGbN6WpbmkMIvFI/o7QQfbqo=
+	t=1728393445; cv=none; b=QBWdmsQ3sUDr6V0NjTst/jqZCAQOXu5aF+PqLui5dxEFtUGZMCtxzKMnhIljjh0ZMDih3bdNKZ3Jd3UqQfThijQaGVRYlmtLvvvfpgoH3Y47D0O0JfnT/eik7Shyd2Tv0vc5Un5cNT04GsX/a4XzAjN/fQ/RsuBYdXp16+W3cFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393442; c=relaxed/simple;
-	bh=sBeANQbk3bkzuZrI0y+IBLjCwkdB7BkiojL/V/k1ShI=;
+	s=arc-20240116; t=1728393445; c=relaxed/simple;
+	bh=26Y/qtL4H/YBcP1KDxXPF0TE9+9kCU/mQzBD7dHc7YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1eeVcojG6Qj0TXt26E/Aggfds6zH2A1oKU5lj9VKsLHoCtWRvmH5SCTUXBf6RW9Yt94N4KAKG5gGUude/ogR+KsN2n3HV5RqZbCeYK+GDgxk2S7qiVG62/jEhvxZypQ2K7ppueZlgHrLlYdiaTMkFCllwpOs/IEBQxuLuNz3mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE7Rsclv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmGauRDSe3gc5keV/H2gA/K8eDl3aQoiJfuaWbug8Zfx9YqajAKFN3B94QttfYJtAmXbo8XY6kVooHdSYdVQGQcJc/v3A0EaIU58rsYDKsOn1c/ij8O577/meGIQBIdPaZ5hi9FZCgIosS2mJiytECs+m15H5NX2tLyenkwJVfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sdes7xAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE7Rsclv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7B3C4CEC7;
-	Tue,  8 Oct 2024 13:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sdes7xAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47353C4CECC;
+	Tue,  8 Oct 2024 13:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393442;
-	bh=sBeANQbk3bkzuZrI0y+IBLjCwkdB7BkiojL/V/k1ShI=;
+	s=korg; t=1728393445;
+	bh=26Y/qtL4H/YBcP1KDxXPF0TE9+9kCU/mQzBD7dHc7YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QE7RsclvfoHhwfezM3nNLUfR2/CZg1LerYvm6F3PamtM0U+uEkEucuH9aZ7DbB3Ha
-	 ao4Iyv5KGgFCYN5apcEuYiGsNlt23+9nWzBcIdN/mgd9I4m28pdIaquUjNd2W0CCc+
-	 SJSrJv+GHUf+21bPEzMQxzCmdIfrAcLrEYphtMEU=
+	b=Sdes7xAiLYpaA35GPjg26rVqzdl61Ku2qicP5WuJSosrv6f+4B6EQC2VCLJXtg1gZ
+	 SpLtYhoLeMQfSGazbwcSuMWWMZNXK+PaJZZxT5KWmJkGONts3PtB7X172gOWTxxpOB
+	 r+grqSwy2ctLWBXes9VLzLwhGGqzf4qVah7bd4D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ckath <ckath@yandex.ru>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yannick Fertre <yannick.fertre@foss.st.com>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/386] platform/x86: touchscreen_dmi: add nanote-next quirk
-Date: Tue,  8 Oct 2024 14:06:37 +0200
-Message-ID: <20241008115635.409430769@linuxfoundation.org>
+Subject: [PATCH 6.6 153/386] drm/stm: ltdc: reset plane transparency after plane disable
+Date: Tue,  8 Oct 2024 14:06:38 +0200
+Message-ID: <20241008115635.447635693@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,67 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ckath <ckath@yandex.ru>
+From: Yannick Fertre <yannick.fertre@foss.st.com>
 
-[ Upstream commit c11619af35bae5884029bd14170c3e4b55ddf6f3 ]
+[ Upstream commit 02fa62d41c8abff945bae5bfc3ddcf4721496aca ]
 
-Add touschscreen info for the nanote next (UMPC-03-SR).
+The plane's opacity should be reseted while the plane
+is disabled. It prevents from seeing a possible global
+or layer background color set earlier.
 
-After checking with multiple owners the DMI info really is this generic.
-
-Signed-off-by: Ckath <ckath@yandex.ru>
-Link: https://lore.kernel.org/r/e8dda83a-10ae-42cf-a061-5d29be0d193a@yandex.ru
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Yannick Fertre <yannick.fertre@foss.st.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240712131344.98113-1-yannick.fertre@foss.st.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/gpu/drm/stm/ltdc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 06ebab520f271..30c05a9948319 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -885,6 +885,21 @@ static const struct ts_dmi_data rwc_nanote_p8_data = {
- 	.properties = rwc_nanote_p8_props,
- };
+diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
+index 056642d12265c..0832b749b66e7 100644
+--- a/drivers/gpu/drm/stm/ltdc.c
++++ b/drivers/gpu/drm/stm/ltdc.c
+@@ -1513,6 +1513,9 @@ static void ltdc_plane_atomic_disable(struct drm_plane *plane,
+ 	/* Disable layer */
+ 	regmap_write_bits(ldev->regmap, LTDC_L1CR + lofs, LXCR_LEN | LXCR_CLUTEN |  LXCR_HMEN, 0);
  
-+static const struct property_entry rwc_nanote_next_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1785),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1145),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rwc-nanote-next.fw"),
-+	{ }
-+};
++	/* Reset the layer transparency to hide any related background color */
++	regmap_write_bits(ldev->regmap, LTDC_L1CACR + lofs, LXCACR_CONSTA, 0x00);
 +
-+static const struct ts_dmi_data rwc_nanote_next_data = {
-+	.acpi_name = "MSSL1680:00",
-+	.properties = rwc_nanote_next_props,
-+};
-+
- static const struct property_entry schneider_sct101ctm_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1715),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1140),
-@@ -1648,6 +1663,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "0001")
- 		},
- 	},
-+	{
-+		/* RWC NANOTE NEXT */
-+		.driver_data = (void *)&rwc_nanote_next_data,
-+		.matches = {
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_VENDOR, "To be filled by O.E.M."),
-+			/* Above matches are too generic, add bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "S8A70R100-V005"),
-+		},
-+	},
- 	{
- 		/* Schneider SCT101CTM */
- 		.driver_data = (void *)&schneider_sct101ctm_data,
+ 	/* Commit shadow registers = update plane at next vblank */
+ 	if (ldev->caps.plane_reg_shadow)
+ 		regmap_write_bits(ldev->regmap, LTDC_L1RCR + lofs,
 -- 
 2.43.0
 
