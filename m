@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F851D3653;
-	Tue,  8 Oct 2024 13:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA891DE89A;
+	Tue,  8 Oct 2024 13:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393416; cv=none; b=sjQemek5zPmpi7VZI5jcZHmCP+P798fAGJ0m/wCZUwLW+P77DCvsX6Vb18csaP2sAEMsxI3XlFky9s31Y8Xi4d5WfTffJBGhsfVT4j/KYsJbpW3P2eiZgsIQG3cZCMlK3DD3TuIOY1YenAGSbDVcZeHNzMB4pHm9D7wRNc2ZIpM=
+	t=1728393419; cv=none; b=QCgIRw723d3T8HipzEm+Ry+2LY0O7Co8zFvniYY+sqrpALufLVcJoozmSngkr+hCyPZiYnMlPxmsaTKxD8su9XqFI4AVytJdYyyBa2rt09sjhhf3n2GMiv9PCXvcNbh+Y+2pVvLeVu4MoWEe80DHAbfJmYVSiOD5WFpdAMZ4G1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393416; c=relaxed/simple;
-	bh=gq1ooTITyYhUImZb+P8Fmb4cxMNEpmhy9wvSFYsePIQ=;
+	s=arc-20240116; t=1728393419; c=relaxed/simple;
+	bh=7+e3hu20vrPFb7Sc5470jCq0pt+moX1dkK7exfrDLAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEkC2qCFn3eqinI7MDhm8Ee0NwMkZYWBVjLjM3vzka96b2wQTLEr8hzCVcgwtS0aD4Bh2R0GSmGYpuwjE2zIjUconC1kWSOB1qPGFeYxTRFAN5/WayMPU8ftSfrufFI/T17ot7NG1Wyq7s0BK7an18mAZXavaWelE4CUWk1JAr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmCxU8/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XpEFVmP55/vaQo/hV8Z97emuCT8G2QTF+v3cVDwp/MdW4imUnUFC8mF5nPGt/FxMzSvVUFwJpcc9eANDfPu2QcFByQkt1rdG87PR9qFExOLR1IXPXO0SVkvJReFoEUuBSt4tk8EqksHs7okJeqO3amVxz0l5aQcfgqFbm46+SJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+Kkol3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmCxU8/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE018C4CEC7;
-	Tue,  8 Oct 2024 13:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+Kkol3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBE1C4CECC;
+	Tue,  8 Oct 2024 13:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393416;
-	bh=gq1ooTITyYhUImZb+P8Fmb4cxMNEpmhy9wvSFYsePIQ=;
+	s=korg; t=1728393419;
+	bh=7+e3hu20vrPFb7Sc5470jCq0pt+moX1dkK7exfrDLAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmCxU8/bkOQiMMC1x5X2Yg5HXjEhXc+T0K7+e3f5nh3ofalROP+MeRuOe+Fc07s/b
-	 bpGYuDakTSR9nSjntH5vtUIjn5TtTJQo24MR6Vs+oxwo1QCppsqjk5RIBCASW2qhpb
-	 51x9TQWSHn2xkOXO39nyH3NLfTMT3/0vT3lmZDH0=
+	b=z+Kkol3fFlREqxdVXXmQejs2knAF5pIgki1CLOMJrBFMNLItFEvkCJWde6kjjpqb4
+	 FWIoFl7zEDSu9NcG9dUOzdUu8vxxpZ+wVZ0+YAqfMpnrqmVaYrzpMxhCeD4aM9xyBL
+	 NgeQi8qFizojWKrgVK9oZSuAWbDmOoydZlZJiNrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/386] scsi: smartpqi: correct stream detection
-Date: Tue,  8 Oct 2024 14:06:30 +0200
-Message-ID: <20241008115635.134605845@linuxfoundation.org>
+Subject: [PATCH 6.6 146/386] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Tue,  8 Oct 2024 14:06:31 +0200
+Message-ID: <20241008115635.174515518@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -55,48 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-Correct stream detection by initializing the structure
-pqi_scsi_dev_raid_map_data to 0s.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-When the OS issues SCSI READ commands, the driver erroneously considers
-them as SCSI WRITES. If they are identified as sequential IOs, the driver
-then submits those requests via the RAID path instead of the AIO path.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-The 'is_write' flag might be set for SCSI READ commands also.  The driver
-may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
-being submitted through the RAID path.
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
 
-Note: This does not cause data corruption.
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 2ae64cda8bc9e..0af2d366c85f9 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5918,7 +5918,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
- 	int rc;
- 	struct pqi_scsi_dev *device;
- 	struct pqi_stream_data *pqi_stream_data;
--	struct pqi_scsi_dev_raid_map_data rmd;
-+	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 4127e2762dcd1..a2df8bd7aa940 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1071,6 +1071,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->chip_id = config->chip_id;
  
- 	if (!ctrl_info->enable_stream_detection)
- 		return false;
+ 	gpu->allow_relocs = config->info->family < ADRENO_6XX_GEN1;
++	gpu->pdev = pdev;
+ 
+ 	/* Only handle the core clock when GMU is not in use (or is absent). */
+ 	if (adreno_has_gmu_wrapper(adreno_gpu) ||
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 5c10b559a5957..5a7541597d0ce 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -927,7 +927,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (IS_ERR(gpu->gpu_cx))
+ 		gpu->gpu_cx = NULL;
+ 
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+ 
+ 	msm_devfreq_init(gpu);
 -- 
 2.43.0
 
