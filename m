@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531FD1C9B99;
-	Tue,  8 Oct 2024 13:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C841DED48;
+	Tue,  8 Oct 2024 13:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392593; cv=none; b=AmRg+TgYluOoLXzH0TuWDPcMDXZG18JvyRfxczjF+wazgQxOengv6q+btun5rW7XQ0yG7X7zRFbF57ZeCGXpC/0zkIe6hffwQm0gfotfHebMkFftuOrG3Z05nMVi0QabK1zi82bPHI9AB+tXIKexz5Ytm+9dcV11f6/aSJmYMbM=
+	t=1728392596; cv=none; b=kY8pBhmVzOytdfS2byHORi/8FWbQE3tvqHrryfi6o+Zrkbke6zvhqtYUhRTfKJX+aMxtrbrYm/JjxU7IlnimG/F2PQENmYY4Nl23S43s0pvifXDvufXndf3wJ5dk9h5L+dq4/pTZWJpyF2tKf6xbNCo36dKnTTv8ZqPDmRkTllc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392593; c=relaxed/simple;
-	bh=hjG3JYp/sr90MIYA4T1MyxqmY/Xxc+d8FFC+XbQM2YY=;
+	s=arc-20240116; t=1728392596; c=relaxed/simple;
+	bh=0NNK5Vp7FMW6E7f4pIPnOKu+GIHbO5Cyi+ua4m/Oyl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cySHjat24iOj8CM/PIZ3cB75zehzFqg2pEVuuAP+TbasqE2OD/ba2oH6EdZYOgjnKcrFL+05nQkjBDhsAQveX33H6vv9nq7vxGzjPK4BQtlCfTKJyMnZPbO0BSrgPoKuwQLf6IfmQrj4hhOWSF81+3NWIonhAOqlkdjyNrXWGUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQbQm47C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2T0ljiIRs9gB7uEqLKFKpAzVhvtwMZ9Q5pYPQ5UFU6G3U7P/QSnTQyUtQhUeUC65tTpwly0yWGBjIVlOxGOaFF+s8KcgXFlfT705VtQef/Uq8HKBh6MXIVI7xbPhIcJsQamZC3Te+PnKFZsDXfK3U0QD1dVaUvV10tKCZF0luc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpGI5h0v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQbQm47C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A71C4CED1;
-	Tue,  8 Oct 2024 13:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpGI5h0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3536DC4CECD;
+	Tue,  8 Oct 2024 13:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392593;
-	bh=hjG3JYp/sr90MIYA4T1MyxqmY/Xxc+d8FFC+XbQM2YY=;
+	s=korg; t=1728392596;
+	bh=0NNK5Vp7FMW6E7f4pIPnOKu+GIHbO5Cyi+ua4m/Oyl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQbQm47CjcJdz7OVlDHnDKd0pl7ESmfUv5uSMqwJPqxlgzExTKIjvakjbS8J1pc1M
-	 RMOp9kTA/GIV4UqlT0xlEs7qjeuFgdItz3o2cK4HR3wTaVye05BPBbd4JiwPrJmVP5
-	 EvdB4Kop20SxMth9sRQuqT03KNc6vlBBOhIfDnxE=
+	b=QpGI5h0vq3uCCQhJzcI/3IwzWFN4FK7gFC2p8cMdfXwXNGS9H+glVRZ9Fa4xWlESZ
+	 X5jlnN309UqK6u5LHFA3pxssk7o3BM/0+8N92uVtCSqf7+2fUJ+b6yUZLXKrYXKyXJ
+	 NwptASLPsL1VOHE9k68SZnIMw098m1pQb78AVZW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Umang Jain <umang.jain@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.11 444/558] media: imx335: Fix reset-gpio handling
-Date: Tue,  8 Oct 2024 14:07:54 +0200
-Message-ID: <20241008115719.737025535@linuxfoundation.org>
+Subject: [PATCH 6.11 462/558] media: qcom: camss: Remove use_count guard in stop_streaming
+Date: Tue,  8 Oct 2024 14:08:12 +0200
+Message-ID: <20241008115720.434666512@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,74 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Jain <umang.jain@ideasonboard.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 99d30e2fdea4086be4e66e2deb10de854b547ab8 upstream.
+commit 25f18cb1b673220b76a86ebef8e7fb79bd303b27 upstream.
 
-Rectify the logical value of reset-gpio so that it is set to
-0 (disabled) during power-on and to 1 (enabled) during power-off.
+The use_count check was introduced so that multiple concurrent Raw Data
+Interfaces RDIs could be driven by different virtual channels VCs on the
+CSIPHY input driving the video pipeline.
 
-Set the reset-gpio to GPIO_OUT_HIGH at initialization time to make
-sure it starts off in reset. Also drop the "Set XCLR" comment which
-is not-so-informative.
+This is an invalid use of use_count though as use_count pertains to the
+number of times a video entity has been opened by user-space not the number
+of active streams.
 
-The existing usage of imx335 had reset-gpios polarity inverted
-(GPIO_ACTIVE_HIGH) in their device-tree sources. With this patch
-included, those DTS will not be able to stream imx335 anymore. The
-reset-gpio polarity will need to be rectified in the device-tree
-sources as shown in [1] example, in order to get imx335 functional
-again (as it remains in reset prior to this fix).
+If use_count and stream-on count don't agree then stop_streaming() will
+break as is currently the case and has become apparent when using CAMSS
+with libcamera's released softisp 0.3.
 
-Cc: stable@vger.kernel.org
-Fixes: 45d19b5fb9ae ("media: i2c: Add imx335 camera sensor driver")
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/linux-media/20240729110437.199428-1-umang.jain@ideasonboard.com/
-Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The use of use_count like this is a bit hacky and right now breaks regular
+usage of CAMSS for a single stream case. Stopping qcam results in the splat
+below, and then it cannot be started again and any attempts to do so fails
+with -EBUSY.
+
+[ 1265.509831] WARNING: CPU: 5 PID: 919 at drivers/media/common/videobuf2/videobuf2-core.c:2183 __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
+...
+[ 1265.510630] Call trace:
+[ 1265.510636]  __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
+[ 1265.510648]  vb2_core_streamoff+0x24/0xcc [videobuf2_common]
+[ 1265.510660]  vb2_ioctl_streamoff+0x5c/0xa8 [videobuf2_v4l2]
+[ 1265.510673]  v4l_streamoff+0x24/0x30 [videodev]
+[ 1265.510707]  __video_do_ioctl+0x190/0x3f4 [videodev]
+[ 1265.510732]  video_usercopy+0x304/0x8c4 [videodev]
+[ 1265.510757]  video_ioctl2+0x18/0x34 [videodev]
+[ 1265.510782]  v4l2_ioctl+0x40/0x60 [videodev]
+...
+[ 1265.510944] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 0 in active state
+[ 1265.511175] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 1 in active state
+[ 1265.511398] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 2 in active st
+
+One CAMSS specific way to handle multiple VCs on the same RDI might be:
+
+- Reference count each pipeline enable for CSIPHY, CSID, VFE and RDIx.
+- The video buffers are already associated with msm_vfeN_rdiX so
+  release video buffers when told to do so by stop_streaming.
+- Only release the power-domains for the CSIPHY, CSID and VFE when
+  their internal refcounts drop.
+
+Either way refusing to release video buffers based on use_count is
+erroneous and should be reverted. The silicon enabling code for selecting
+VCs is perfectly fine. Its a "known missing feature" that concurrent VCs
+won't work with CAMSS right now.
+
+Initial testing with this code didn't show an error but, SoftISP and "real"
+usage with Google Hangouts breaks the upstream code pretty quickly, we need
+to do a partial revert and take another pass at VCs.
+
+This commit partially reverts commit 89013969e232 ("media: camss: sm8250:
+Pipeline starting and stopping for multiple virtual channels")
+
+Fixes: 89013969e232 ("media: camss: sm8250: Pipeline starting and stopping for multiple virtual channels")
+Reported-by: Johan Hovold <johan+linaro@kernel.org>
+Closes: https://lore.kernel.org/lkml/ZoVNHOTI0PKMNt4_@hovoldconsulting.com/
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx335.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/media/platform/qcom/camss/camss-video.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/media/i2c/imx335.c
-+++ b/drivers/media/i2c/imx335.c
-@@ -997,7 +997,7 @@ static int imx335_parse_hw_config(struct
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -297,12 +297,6 @@ static void video_stop_streaming(struct
  
- 	/* Request optional reset pin */
- 	imx335->reset_gpio = devm_gpiod_get_optional(imx335->dev, "reset",
--						     GPIOD_OUT_LOW);
-+						     GPIOD_OUT_HIGH);
- 	if (IS_ERR(imx335->reset_gpio)) {
- 		dev_err(imx335->dev, "failed to get reset gpio %ld\n",
- 			PTR_ERR(imx335->reset_gpio));
-@@ -1110,8 +1110,7 @@ static int imx335_power_on(struct device
+ 		ret = v4l2_subdev_call(subdev, video, s_stream, 0);
  
- 	usleep_range(500, 550); /* Tlow */
- 
--	/* Set XCLR */
--	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
- 
- 	ret = clk_prepare_enable(imx335->inclk);
- 	if (ret) {
-@@ -1124,7 +1123,7 @@ static int imx335_power_on(struct device
- 	return 0;
- 
- error_reset:
--	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
- 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
- 
- 	return ret;
-@@ -1141,7 +1140,7 @@ static int imx335_power_off(struct devic
- 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
- 	struct imx335 *imx335 = to_imx335(sd);
- 
--	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
- 	clk_disable_unprepare(imx335->inclk);
- 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
- 
+-		if (entity->use_count > 1) {
+-			/* Don't stop if other instances of the pipeline are still running */
+-			dev_dbg(video->camss->dev, "Video pipeline still used, don't stop streaming.\n");
+-			return;
+-		}
+-
+ 		if (ret) {
+ 			dev_err(video->camss->dev, "Video pipeline stop failed: %d\n", ret);
+ 			return;
 
 
