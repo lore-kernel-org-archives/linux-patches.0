@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B01779B1;
-	Tue,  8 Oct 2024 12:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71321779B1;
+	Tue,  8 Oct 2024 12:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391189; cv=none; b=XPdYWnIvV2nfSu/fT05J8Tbfaf85kvc83dXXvdZz4cJET6BQwp90q4F6fIu4UoD2tJBpW1dTeuFiIl8vstXLY0XAL3+XFPoynk9Xxlszkwj5TosY9niXu/RoknxP1Wz4NLvNWK6+7nTDHTKHPyTIilexyX0pO2swe0OohyjZkD8=
+	t=1728391193; cv=none; b=oRmxC5Ak2ZsNCtvF7gYG0IebaI7jvD692RuQdGCQ83XB/JBJZsiIQR9StPDXZDwjmM6vXm6Gu+Kuhhk27pJGy6Mu4Xzhfbvy/QlCJL6sUzi9nsMk7zUjW9kc5BrIflIOi56mqkVtyVb+5jqz4xFSL8FsJ6RfYmsQADq/BZhCJvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391189; c=relaxed/simple;
-	bh=mv1h5SoVHCjoRr9a633HFWFK0DM+SmyHX++O+y/KoPs=;
+	s=arc-20240116; t=1728391193; c=relaxed/simple;
+	bh=9xS9rkUM4YD5j/TUCuC7HnGaM/GhPOoY+g4ZifFx5Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1MnQ88T3HnAQTGnxi4qjQ+NXA16zAuRFWvTjqWCpZ3cNFO7Yqax8q3DbFggzDmcDLsmhbdp9zgDVdchS+t++4lOuLm6z0Wqln3JcwCU+imIBiNrNOflS4QL5hNz/bVWEutBprqIfS5PPjUPsPm2UW4DJzlq4nVitXv0X/OT3WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOoRz84o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IgJurNfJVm71lUt8mWC9FMibjCptdhwXcmR+5DFH30h+VnueH9puDpuvQigcunQFxn5tCG+K6UWpkzUDo3rqiuMFOZCY+ni98yKuquvQTMMOyNB/yzj0+4ZiFOab/TSSz/ZJ7BYIDgtwQ+Yy5rVQiiewdN/3GshDZIhGz0Nu5uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2A0znOL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOoRz84o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46704C4CEC7;
-	Tue,  8 Oct 2024 12:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2A0znOL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BCFC4CEC7;
+	Tue,  8 Oct 2024 12:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391189;
-	bh=mv1h5SoVHCjoRr9a633HFWFK0DM+SmyHX++O+y/KoPs=;
+	s=korg; t=1728391192;
+	bh=9xS9rkUM4YD5j/TUCuC7HnGaM/GhPOoY+g4ZifFx5Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOoRz84o46GJYAFue5Suabq661fAiTH9AUjZVTeAWsd1zNpApqS/dgiaQJHF2eAmS
-	 5w1D6PXLkqYdxkuziXFV0OjiUIUFwscxjH/hdk6EB0b1jujU82NamEsZ6gdsU7PKEm
-	 VGyUhU/KbiWd+gSvF/Lg79uXv99Axy87Z8jAMNKA=
+	b=2A0znOL14P4r0jALFCWw1g+bkrOGC++XWuCOC+135JW0eXM8Bmy01mIPCR4KuPhfP
+	 4Vxkn8ObAI1JvRESL7JhnPUL3gjhqO4Nn+eE3vqstKGN8p2eIWgwGBrjdgsLY35uYf
+	 J0ouaLWtr4H00NSdu0h8RwJq6VBMWUpgwgk9dh7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 005/558] scsi: pm8001: Do not overwrite PCI queue mapping
-Date: Tue,  8 Oct 2024 14:00:35 +0200
-Message-ID: <20241008115702.432709029@linuxfoundation.org>
+Subject: [PATCH 6.11 006/558] drm/i915/psr: Do not wait for PSR being idle on on Panel Replay
+Date: Tue,  8 Oct 2024 14:00:36 +0200
+Message-ID: <20241008115702.470908493@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -47,50 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit a141c17a543332fc1238eb5cba562bfc66879126 ]
+[ Upstream commit 9498f2e24ee0133d486667c9fa4c27ecdaadc272 ]
 
-blk_mq_pci_map_queues() maps all queues but right after this, we overwrite
-these mappings by calling blk_mq_map_queues(). Just use one helper but not
-both.
+We do not have ALPM on DP Panel Replay. Due to this SRD_STATUS[SRD State]
+doesn't change from SRDENT_ON after Panel Replay is enabled until it gets
+disabled.
 
-Fixes: 42f22fe36d51 ("scsi: pm8001: Expose hardware queues for pm80xx")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Link: https://lore.kernel.org/r/20240912-do-not-overwrite-pci-mapping-v1-1-85724b6cec49@suse.de
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+On eDP Panel Replay DEEP_SLEEP is not reached.
+_psr2_ready_for_pipe_update_locked is waiting DEEP_SLEEP bit getting reset.
+
+Take these into account in Panel Replay code by not waiting PSR getting
+idle after enabling VBI.
+
+Fixes: 29fb595d4875 ("drm/i915/psr: Panel replay uses SRD_STATUS to track it's status")
+Cc: Animesh Manna <animesh.manna@intel.com>
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240906070033.289015-5-jouni.hogander@intel.com
+(cherry picked from commit a2d98feb4b0013ef4f9db0d8f642a8ac1f5ecbb9)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
-index 1e63cb6cd8e32..33e1eba62ca12 100644
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -100,10 +100,12 @@ static void pm8001_map_queues(struct Scsi_Host *shost)
- 	struct pm8001_hba_info *pm8001_ha = sha->lldd_ha;
- 	struct blk_mq_queue_map *qmap = &shost->tag_set.map[HCTX_TYPE_DEFAULT];
- 
--	if (pm8001_ha->number_of_intr > 1)
-+	if (pm8001_ha->number_of_intr > 1) {
- 		blk_mq_pci_map_queues(qmap, pm8001_ha->pdev, 1);
-+		return;
-+	}
- 
--	return blk_mq_map_queues(qmap);
-+	blk_mq_map_queues(qmap);
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 9cb1cdaaeefa7..d404ad93e91c7 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2746,13 +2746,6 @@ static int _psr1_ready_for_pipe_update_locked(struct intel_dp *intel_dp)
+ 				       EDP_PSR_STATUS_STATE_MASK, 50);
  }
  
- /*
+-static int _panel_replay_ready_for_pipe_update_locked(struct intel_dp *intel_dp)
+-{
+-	return intel_dp_is_edp(intel_dp) ?
+-		_psr2_ready_for_pipe_update_locked(intel_dp) :
+-		_psr1_ready_for_pipe_update_locked(intel_dp);
+-}
+-
+ /**
+  * intel_psr_wait_for_idle_locked - wait for PSR be ready for a pipe update
+  * @new_crtc_state: new CRTC state
+@@ -2775,12 +2768,10 @@ void intel_psr_wait_for_idle_locked(const struct intel_crtc_state *new_crtc_stat
+ 
+ 		lockdep_assert_held(&intel_dp->psr.lock);
+ 
+-		if (!intel_dp->psr.enabled)
++		if (!intel_dp->psr.enabled || intel_dp->psr.panel_replay_enabled)
+ 			continue;
+ 
+-		if (intel_dp->psr.panel_replay_enabled)
+-			ret = _panel_replay_ready_for_pipe_update_locked(intel_dp);
+-		else if (intel_dp->psr.sel_update_enabled)
++		if (intel_dp->psr.sel_update_enabled)
+ 			ret = _psr2_ready_for_pipe_update_locked(intel_dp);
+ 		else
+ 			ret = _psr1_ready_for_pipe_update_locked(intel_dp);
 -- 
 2.43.0
 
