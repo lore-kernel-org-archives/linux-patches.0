@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F023F1DE8A0;
-	Tue,  8 Oct 2024 13:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE261DEFF0;
+	Tue,  8 Oct 2024 13:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393187; cv=none; b=o7yQdSGYGfr+5W3bzBrk+xAqE6j/f68qETF+YCUKMAS2cwaflkhrngljp9Ujm5E3/0GcBZ1zbP+q9fpw6hvI3y1sk402cd9A/9qOYcybHMRA8Yi59M0AZTxGHeiwSGQNX9FM1rIy1vTTCTlrrlDa8zT217+Rpfc062V79JJCbHA=
+	t=1728393190; cv=none; b=aAy1an/DERKi7FgWLowP+1e1VeJy4nq67yp2hBh70yzrQ1BkSh2NHxj3TYkdbI+01ldEpza+zvUxZWINa8KiBcX5Onre0Dmn+ib1zxfMlfwRpXpq+7m0f9fTV2HRGlYSOnBB/LB2CH9lgyZhTzevW+MXbwB6L//gfmrpLyjbxZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393187; c=relaxed/simple;
-	bh=SrprZEYxNoSeSUG/1SJ7qBwmWrtzpgmCq1Y11gQ22hY=;
+	s=arc-20240116; t=1728393190; c=relaxed/simple;
+	bh=Diq4EJ5CcsG4uDbvdniNG8ADeXmKtaUQvTg1xnbgR6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=df6jf8fPuli4FtAGcgzUk7FVvUlqS0JLZNwD7434DoKzKbn/3IIRuRobNJCpkj4gBSMd6d1rHhEqBolGgG7+lVy/2lVISQd3BpnbCm0jo516pjl6R8XCTB6dwDf4S3ylxTGyELE1UE3dSGD/R0G0LhJv+I576sD1s2Xh9/CZiBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSG5yNIO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JEzS2jPC2XS0AbNtnpNoxpaOVi7/5jaHPUvjOiGAB61m1B4h/3b2nMHdX/Y7+WOe+n2NAo9MYl7nYgBLHuSL3zapywcK5nJGWi7vEc9kaUnIrrhiESAAlY0rHcAIPl9SfT6XgFZfbF/CZkY5NnnCkjycx6sZgEjjSo5KZSsf5Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIcO3wDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSG5yNIO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599F6C4CEC7;
-	Tue,  8 Oct 2024 13:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIcO3wDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A18C4CEC7;
+	Tue,  8 Oct 2024 13:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393186;
-	bh=SrprZEYxNoSeSUG/1SJ7qBwmWrtzpgmCq1Y11gQ22hY=;
+	s=korg; t=1728393190;
+	bh=Diq4EJ5CcsG4uDbvdniNG8ADeXmKtaUQvTg1xnbgR6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSG5yNIOdvE/Q9+SV1lPpnu2CVfHQCfXsF+TLuBNghxeCnY08272itoiRx1iw9oQg
-	 bTeaObeZDlNDTlZJ5PnoIvuQ+P8S4Q3k/sKlsHUquzLYbsrQOemM4RbX6ahqC1/v9M
-	 boKgf7FtCPPIPv1Qv8AHdIMGSIpvaxZVbeC4V+N0=
+	b=aIcO3wDNILf2ye4B8CtOkZDSS8PoJxpq9FbHmN8I+qRYG0Q5M4eRjpVwpDFl//ylB
+	 K1DTnU6UXiBYOsTCymIqAZm+gQ9ejJRl7NWgLc4iiWqMi5YZ+rHF47S62tPYfHz/2n
+	 yZ1JVGvSqhW6YuXPOs8989Mqr7ik1ZT4XA8lFMsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	al0uette@outlook.com,
+	vderp@icloud.com,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/386] ACPI: video: Add force_vendor quirk for Panasonic Toughbook CF-18
-Date: Tue,  8 Oct 2024 14:05:23 +0200
-Message-ID: <20241008115632.531460183@linuxfoundation.org>
+Subject: [PATCH 6.6 079/386] ACPI: CPPC: Add support for setting EPP register in FFH
+Date: Tue,  8 Oct 2024 14:05:24 +0200
+Message-ID: <20241008115632.570198942@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,49 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit eb7b0f12e13ba99e64e3a690c2166895ed63b437 ]
+[ Upstream commit aaf21ac93909e08a12931173336bdb52ac8499f1 ]
 
-The Panasonic Toughbook CF-18 advertises both native and vendor backlight
-control interfaces. But only the vendor one actually works.
+Some Asus AMD systems are reported to not be able to change EPP values
+because the BIOS doesn't advertise support for the CPPC MSR and the PCC
+region is not configured.
 
-acpi_video_get_backlight_type() will pick the non working native backlight
-by default, add a quirk to select the working vendor backlight instead.
+However the ACPI 6.2 specification allows CPC registers to be declared
+in FFH:
+```
+Starting with ACPI Specification 6.2, all _CPC registers can be in
+PCC, System Memory, System IO, or Functional Fixed Hardware address
+spaces. OSPM support for this more flexible register space scheme
+is indicated by the “Flexible Address Space for CPPC Registers” _OSC
+bit.
+```
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240907124419.21195-1-hdegoede@redhat.com
+If this _OSC has been set allow using FFH to configure EPP.
+
+Reported-by: al0uette@outlook.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218686
+Suggested-by: al0uette@outlook.com
+Tested-by: vderp@icloud.com
+Tested-by: al0uette@outlook.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20240910031524.106387-1-superm1@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/acpi/cppc_acpi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 16ab2d9ef67f3..e96afb1622f95 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -260,6 +260,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_vendor,
-+	 /* Panasonic Toughbook CF-18 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Matsushita Electric Industrial"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "CF-18"),
-+		},
-+	},
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 28217a995f795..7aced0b9bad7c 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -100,6 +100,11 @@ static DEFINE_PER_CPU(struct cpc_desc *, cpc_desc_ptr);
+ 				(cpc)->cpc_entry.reg.space_id ==	\
+ 				ACPI_ADR_SPACE_PLATFORM_COMM)
  
- 	/*
- 	 * Toshiba models with Transflective display, these need to use
++/* Check if a CPC register is in FFH */
++#define CPC_IN_FFH(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&		\
++				(cpc)->cpc_entry.reg.space_id ==	\
++				ACPI_ADR_SPACE_FIXED_HARDWARE)
++
+ /* Check if a CPC register is in SystemMemory */
+ #define CPC_IN_SYSTEM_MEMORY(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&	\
+ 				(cpc)->cpc_entry.reg.space_id ==	\
+@@ -1514,9 +1519,12 @@ int cppc_set_epp_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls, bool enable)
+ 		/* after writing CPC, transfer the ownership of PCC to platform */
+ 		ret = send_pcc_cmd(pcc_ss_id, CMD_WRITE);
+ 		up_write(&pcc_ss_data->pcc_lock);
++	} else if (osc_cpc_flexible_adr_space_confirmed &&
++		   CPC_SUPPORTED(epp_set_reg) && CPC_IN_FFH(epp_set_reg)) {
++		ret = cpc_write(cpu, epp_set_reg, perf_ctrls->energy_perf);
+ 	} else {
+ 		ret = -ENOTSUPP;
+-		pr_debug("_CPC in PCC is not supported\n");
++		pr_debug("_CPC in PCC and _CPC in FFH are not supported\n");
+ 	}
+ 
+ 	return ret;
 -- 
 2.43.0
 
