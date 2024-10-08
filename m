@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8453A1C4631;
-	Tue,  8 Oct 2024 12:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E7E1779B1;
+	Tue,  8 Oct 2024 12:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390850; cv=none; b=IooqfDyKppqtA58Inq0sXnWvjbomrsHXYcadVB8y+bkm/U+SfyTMj6ibvAISzpMe3t/v3Dgze0Ll9JzFX5EYPP/wLU2kUZ6aRdtLUqBbX60bnL6FYPIiLGf85AXzLrP2toadHqCsNRcadiEelnO7lY9EGJ7HmsLsFQxVlb+2GAQ=
+	t=1728390854; cv=none; b=ikovWI2X4QAqym39IzgJTRx/E4xVD+aaNmtZnsNipSCkEy7enBNIhrFj8sb0bqViESzDfZ49XLqS43gHhRk1Wrxx/VF/03NT1SYkcSwpE4bPlaBDKKEWkVXTE96HvT4kindt8kEuuWu1z6BJZuiK98nSCuIp9IArLQNcu/7bCwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390850; c=relaxed/simple;
-	bh=z33OhbGcThErXem3Kc+yn188MieBQaAo0awGnaqWkxE=;
+	s=arc-20240116; t=1728390854; c=relaxed/simple;
+	bh=mTlk/bvVXCwyNnIIlhCH8wgC50d8ZVVm3cokhe7pKAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0c229VBp71a7P4twGoRBHx7Ya2N9P0AVfWJQ+BYzbPnXNzODa5BuQasETeqFfSAYj0FjLDVA5KrJ08w4slVbw4+SxqXpXZsoMoGVsTYADdE/xFXnPBBdG2T6OuIe/+7Vqper/+z+JAEouMzfQeHUc3QpEQIN8D6E55qEJf1OIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfFTYksw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHKOoUDlE1kti2cMMzZYhX2eMDlI7qp7szcYS+w6elw64vjLa6egicUnx44f7UBs8SuYSieAk+GOVVhZooO7WTElcdCiAaHZEJKHT2oJtU0VdJdVV2hC87wZ+2/0/Xziy+WAKvWFqqVOzWvXS1Y/p/dTfiJ9RSebYMVSK5jjACA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZXmC16k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfFTYksw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC447C4CEC7;
-	Tue,  8 Oct 2024 12:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZXmC16k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549DAC4CEC7;
+	Tue,  8 Oct 2024 12:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390850;
-	bh=z33OhbGcThErXem3Kc+yn188MieBQaAo0awGnaqWkxE=;
+	s=korg; t=1728390853;
+	bh=mTlk/bvVXCwyNnIIlhCH8wgC50d8ZVVm3cokhe7pKAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfFTYkswTmUiFZWbn7pocfkE71cy79UHsysv543ILdsJ/vMxb+uoczwRKZd4CWCBs
-	 Mo4xoUVDAnp8ro4NLQyuoOw8OoY+VI0YJEJq2M41esjQUBEWIkHNO9O6KLfVz3Sp40
-	 7IAsVCsznbwhaeHeP3aeOYTlOoxc6TQ3J111vgI0=
+	b=IZXmC16kaW5TVcpO3fodAuyXUqL2chEyzLnceYLjAmNP+5PeNN8XXU0FaNdVOKonC
+	 aZUDbrI9rEhOQ++51PenpWCT1ijKeyeG8oONUAUmdC3aVtKNjEIgpxukmlOQWeLizO
+	 vbqEO6BTgX6/iOuuObSk7gk9vobTo/FU9NyeBigA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.10 412/482] ACPI: video: Add backlight=native quirk for Dell OptiPlex 5480 AIO
-Date: Tue,  8 Oct 2024 14:07:55 +0200
-Message-ID: <20241008115704.619281557@linuxfoundation.org>
+Subject: [PATCH 6.10 413/482] ACPI: resource: Remove duplicate Asus E1504GAB IRQ override
+Date: Tue,  8 Oct 2024 14:07:56 +0200
+Message-ID: <20241008115704.657330411@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit ac78288fe062b64e45a479eaae74aaaafcc8ecdd upstream.
+commit 65bdebf38e5fac7c56a9e05d3479a707e6dc783c upstream.
 
-Dell All In One (AIO) models released after 2017 may use a backlight
-controller board connected to an UART.
+Commit d2aaf1996504 ("ACPI: resource: Add DMI quirks for ASUS Vivobook
+E1504GA and E1504GAB") does exactly what the subject says, adding DMI
+matches for both the E1504GA and E1504GAB.
 
-In DSDT this uart port will be defined as:
+But DMI_MATCH() does a substring match, so checking for E1504GA will also
+match E1504GAB.
 
-   Name (_HID, "DELL0501")
-   Name (_CID, EisaId ("PNP0501")
+Drop the unnecessary E1504GAB entry since that is covered already by
+the E1504GA entry.
 
-The Dell OptiPlex 5480 AIO has an ACPI device for one of its UARTs with
-the above _HID + _CID. Loading the dell-uart-backlight driver fails with
-the following errors:
-
-[   18.261353] dell_uart_backlight serial0-0: Timed out waiting for response.
-[   18.261356] dell_uart_backlight serial0-0: error -ETIMEDOUT: getting firmware version
-[   18.261359] dell_uart_backlight serial0-0: probe with driver dell_uart_backlight failed with error -110
-
-Indicating that there is no backlight controller board attached to
-the UART, while the GPU's native backlight control method does work.
-
-Add a quirk to use the GPU's native backlight control method on this model.
-
-Fixes: cd8e468efb4f ("ACPI: video: Add Dell UART backlight controller detection")
+Fixes: d2aaf1996504 ("ACPI: resource: Add DMI quirks for ASUS Vivobook E1504GA and E1504GAB")
 Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240918153849.37221-1-hdegoede@redhat.com
-[ rjw: Changelog edit ]
+Link: https://patch.msgid.link/20240927141606.66826-1-hdegoede@redhat.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/acpi/resource.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -845,6 +845,15 @@ static const struct dmi_system_id video_
- 	 * which need native backlight control nevertheless.
- 	 */
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 8a4726e2eb69..1ff251fd1901 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -511,19 +511,12 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
+ 		},
+ 	},
  	{
-+	 /* https://github.com/zabbly/linux/issues/26 */
-+	 .callback = video_detect_force_native,
-+	 /* Dell OptiPlex 5480 AIO */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 5480 AIO"),
-+		},
-+	},
-+	{
- 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=2303936 */
- 	 .callback = video_detect_force_native,
- 	 /* Dell OptiPlex 7760 AIO */
+-		/* Asus Vivobook E1504GA */
++		/* Asus Vivobook E1504GA* */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+ 			DMI_MATCH(DMI_BOARD_NAME, "E1504GA"),
+ 		},
+ 	},
+-	{
+-		/* Asus Vivobook E1504GAB */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "E1504GAB"),
+-		},
+-	},
+ 	{
+ 		/* Asus Vivobook Pro N6506MV */
+ 		.matches = {
+-- 
+2.46.2
+
 
 
