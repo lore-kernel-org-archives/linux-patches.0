@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4591D27B3;
-	Tue,  8 Oct 2024 12:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ED71D27B3;
+	Tue,  8 Oct 2024 12:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391034; cv=none; b=LvJwnkmSYWVwf3mIiphK8Q4BO+aKgPI+L0XOTSJsEQergLl5q1aMjhlu4GX5v6sl6PaUMpD3d0YJwmwN/VP1zioYSoPCfOtZXoBHM0TtMor9Mm3nl+9+KnOiV2rpwcsQHkwnMeRa4TkdDfdcxw8BtlNUm+seyCUoXjhGftQYwEs=
+	t=1728391036; cv=none; b=dFA5zXpytCUDqIPhevNKoItGp/5rgxp8B2wo2/8BwcQIzC96ziHAapVRoYAvWKrMZPlHenEtV//qxSCWyh2fRxU1pfra8jLp2DJyk6AsKTfKqPIPInWlP908iUdgNAk+Apvpx9pNAXW+zDwEWHTMQPuhYoFa58IfGPV4rdy0W9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391034; c=relaxed/simple;
-	bh=QwMg0mFjOhLGhKCztMeYLRN9v/MzOxMpLKzj3VpWu8I=;
+	s=arc-20240116; t=1728391036; c=relaxed/simple;
+	bh=07bX+4aVAbh5nDFmEtZ3sjvqfiat0XOX1HLn+ZyRGnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiZqQ2KsvPhDsKftL4kAGMb3Bn8oqtkdxYxuh5f2UA3ovF8jJf8QjixS8PUIRyjcaRnrKOvuiLrAAcOF+8KFA8XalNsybN/HEU8TLMN0DTPzBHxy70EgCCgh3IuC+eYxNm9y6MbUVEXRP7ZFyM6UJR7gE9Ks92PMnc5RrFhJhX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXY3A3rC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P+h1EkbfvarCC3UHcApzqqKzQiEfcbtRvUaESxCFgHlb1iAlwLHMAgHKeB6GKWjpp6qpW1Scs4MCVh8qv7p0U9zluPox3OBsMZ4unowUQ1TKRVTmEmUAMnfedh2GiFOYhx7GhcOpWQsoyzU4sERUH1dasbJbNgfk9DtQxa5MPe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqYBYt6b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXY3A3rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73032C4CEC7;
-	Tue,  8 Oct 2024 12:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqYBYt6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC61C4CEC7;
+	Tue,  8 Oct 2024 12:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391033;
-	bh=QwMg0mFjOhLGhKCztMeYLRN9v/MzOxMpLKzj3VpWu8I=;
+	s=korg; t=1728391036;
+	bh=07bX+4aVAbh5nDFmEtZ3sjvqfiat0XOX1HLn+ZyRGnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXY3A3rCubp+BeaLIz/nfJzUMRGf2lcY3Gi5MVolnxwNWL6ndF5Khzf2NMkF4caBd
-	 T2cVKp48YsOaXwXQPg4OtY+di7kCM2DurSQkNOLLP06EL0QFUoNVvihhJILYxGxf3Y
-	 Ub0f7u1TP7LJL/3CqOPeyOj3jMm8U7Q1uAhK1xeE=
+	b=hqYBYt6bhzWo6UOZdvLC0khfgJduEd7SXvWOL+GpMNa+SD0seyTJYNMrkzSNzfa2b
+	 r3YoN7jhr7Uj7yQdjmFnPFS1VWThAGX28+Dw2gSnj8bWW2VZ/FXnfVqCBAvMuxFrfC
+	 qJViHXGw0ccOXwu5w5i4pbS98eARHsmHCJ81P30c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 470/482] r8169: add tally counter fields added with RTL8125
-Date: Tue,  8 Oct 2024 14:08:53 +0200
-Message-ID: <20241008115707.009222098@linuxfoundation.org>
+Subject: [PATCH 6.10 471/482] ACPI: battery: Simplify battery hook locking
+Date: Tue,  8 Oct 2024 14:08:54 +0200
+Message-ID: <20241008115707.048801301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -46,70 +47,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit ced8e8b8f40accfcce4a2bbd8b150aa76d5eff9a ]
+[ Upstream commit 86309cbed26139e1caae7629dcca1027d9a28e75 ]
 
-RTL8125 added fields to the tally counter, what may result in the chip
-dma'ing these new fields to unallocated memory. Therefore make sure
-that the allocated memory area is big enough to hold all of the
-tally counter values, even if we use only parts of it.
+Move the conditional locking from __battery_hook_unregister()
+into battery_hook_unregister() and rename the low-level function
+to simplify the locking during battery hook removal.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/741d26a9-2b2b-485d-91d9-ecb302e345b5@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20241001212835.341788-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 76959aff14a0 ("ACPI: battery: Fix possible crash when unregistering a battery hook")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/acpi/battery.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index aa6a73882f914..f5396aafe9ab6 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -577,6 +577,33 @@ struct rtl8169_counters {
- 	__le32	rx_multicast;
- 	__le16	tx_aborted;
- 	__le16	tx_underrun;
-+	/* new since RTL8125 */
-+	__le64 tx_octets;
-+	__le64 rx_octets;
-+	__le64 rx_multicast64;
-+	__le64 tx_unicast64;
-+	__le64 tx_broadcast64;
-+	__le64 tx_multicast64;
-+	__le32 tx_pause_on;
-+	__le32 tx_pause_off;
-+	__le32 tx_pause_all;
-+	__le32 tx_deferred;
-+	__le32 tx_late_collision;
-+	__le32 tx_all_collision;
-+	__le32 tx_aborted32;
-+	__le32 align_errors32;
-+	__le32 rx_frame_too_long;
-+	__le32 rx_runt;
-+	__le32 rx_pause_on;
-+	__le32 rx_pause_off;
-+	__le32 rx_pause_all;
-+	__le32 rx_unknown_opcode;
-+	__le32 rx_mac_error;
-+	__le32 tx_underrun32;
-+	__le32 rx_mac_missed;
-+	__le32 rx_tcam_dropped;
-+	__le32 tdu;
-+	__le32 rdu;
- };
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 44ca989f16466..04610036e5dc5 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -703,28 +703,28 @@ static LIST_HEAD(acpi_battery_list);
+ static LIST_HEAD(battery_hook_list);
+ static DEFINE_MUTEX(hook_mutex);
  
- struct rtl8169_tc_offsets {
+-static void __battery_hook_unregister(struct acpi_battery_hook *hook, int lock)
++static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
+ {
+ 	struct acpi_battery *battery;
++
+ 	/*
+ 	 * In order to remove a hook, we first need to
+ 	 * de-register all the batteries that are registered.
+ 	 */
+-	if (lock)
+-		mutex_lock(&hook_mutex);
+ 	list_for_each_entry(battery, &acpi_battery_list, list) {
+ 		if (!hook->remove_battery(battery->bat, hook))
+ 			power_supply_changed(battery->bat);
+ 	}
+ 	list_del(&hook->list);
+-	if (lock)
+-		mutex_unlock(&hook_mutex);
++
+ 	pr_info("extension unregistered: %s\n", hook->name);
+ }
+ 
+ void battery_hook_unregister(struct acpi_battery_hook *hook)
+ {
+-	__battery_hook_unregister(hook, 1);
++	mutex_lock(&hook_mutex);
++	battery_hook_unregister_unlocked(hook);
++	mutex_unlock(&hook_mutex);
+ }
+ EXPORT_SYMBOL_GPL(battery_hook_unregister);
+ 
+@@ -750,7 +750,7 @@ void battery_hook_register(struct acpi_battery_hook *hook)
+ 			 * hooks.
+ 			 */
+ 			pr_err("extension failed to load: %s", hook->name);
+-			__battery_hook_unregister(hook, 0);
++			battery_hook_unregister_unlocked(hook);
+ 			goto end;
+ 		}
+ 
+@@ -789,7 +789,7 @@ static void battery_hook_add_battery(struct acpi_battery *battery)
+ 			 */
+ 			pr_err("error in extension, unloading: %s",
+ 					hook_node->name);
+-			__battery_hook_unregister(hook_node, 0);
++			battery_hook_unregister_unlocked(hook_node);
+ 		}
+ 	}
+ 	mutex_unlock(&hook_mutex);
+@@ -822,7 +822,7 @@ static void __exit battery_hook_exit(void)
+ 	 * need to remove the hooks.
+ 	 */
+ 	list_for_each_entry_safe(hook, ptr, &battery_hook_list, list) {
+-		__battery_hook_unregister(hook, 1);
++		battery_hook_unregister(hook);
+ 	}
+ 	mutex_destroy(&hook_mutex);
+ }
 -- 
 2.43.0
 
