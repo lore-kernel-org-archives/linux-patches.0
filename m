@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20501779B1;
-	Tue,  8 Oct 2024 12:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064F41779B1;
+	Tue,  8 Oct 2024 12:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390950; cv=none; b=SBK5p+fFGogLbc1gbBBu3Q3VQQEayi/U1NTKkCzZ9USPfb26tHQYKHqSxC8XHiUgPve8bvIDIANMxpicaNYFJwDPME7VeVIiwXKkHP8A1Mc6hcT+/alF1UvOqQqE9JYy9S9F3AoDPIWLWyQeGlurQajT9kNsL3UVOXuWi72JnkU=
+	t=1728390953; cv=none; b=Wxq/vVGwkT4R9lR+bhGq20ROSaDjCb4wMssFn1+tu32pxxdJiWyVhjqg7StusMcS7vkumm1zFbiX+CPFAv2nO2mBQNmTzIFg7yPKu5t8FJ3S2mRQsi3DQEpicbqmg0+vkDtDYZi/vgAHruUMjnA01FxkQqPNpr61HQTmB6zRJYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390950; c=relaxed/simple;
-	bh=LR5DWMJ4YZ+cxIKNa4n72QpPnb4+mTS5Ck5g6roFMKg=;
+	s=arc-20240116; t=1728390953; c=relaxed/simple;
+	bh=kmnFd4lbodnVAvuKKV+LmzI+Exi83aFuq7yscDDDOtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECZdRluzN469z0Ev8E1ZJCuDmKIoC9cT9beXhdsXYMK2MGcoo3SPSxY0XKgs+cBupILlcRPznvMIK8q9uSjws3NQOcoody6/IDz+5pQ4RWYA5ZupIjYrwuia9CiX7xFwVNtRVWj4thooxNCdWz+vv6qMnTlbroj9Il0Yz/HwODc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUZvSs2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m2AwrMT/PJbil+yuuEFL/MDgi+cWKoYKPI2S1QyItPJ21XMdXSHxlWojJ/FxvpI03L5/tTOXHAMxl/WyitG2VgaYmoH1wSgdH1d1MIKDM6xR2y/y9m3HGJd7ijQxzq47jzi0DAvPxhwgY2UvMyZ0/Mruga8sXWHsMLi4J6tZBWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWQZCLlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUZvSs2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6276EC4CEC7;
-	Tue,  8 Oct 2024 12:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWQZCLlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ACAC4CEC7;
+	Tue,  8 Oct 2024 12:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390949;
-	bh=LR5DWMJ4YZ+cxIKNa4n72QpPnb4+mTS5Ck5g6roFMKg=;
+	s=korg; t=1728390952;
+	bh=kmnFd4lbodnVAvuKKV+LmzI+Exi83aFuq7yscDDDOtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUZvSs2gQrkIW3CXUTup+J0Z0fBjH4PpbYOevpx/0ok1FWDDYj8waaiC8lby76jLT
-	 ffhloFPOh4zIKffSNyW2bpD2sb9flNcywbFG1N4SOPj6gO1doWcRW5+GnxIK3RocgG
-	 OUt4fT+S2/0x47VYNhnDzL10OUxBRUxzbwBPLI00=
+	b=MWQZCLlX253liaa02NLU6We0VCR/wPy8w6vEDd2UinWhlSFVufreAqa5eBXkoRySv
+	 ziAV5Qf5Hg2Cf4lopd14QLFiwNP8LtIdzjGu1t7rriH//iMOHopNIDjQqX+yGxIDXm
+	 NLfFXEMekPtMzeJyqjwiWABWbI+xHkf32xEdNIec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Yihan Zhu <Yihan.Zhu@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.10 444/482] drm/amd/display: update DML2 policy EnhancedPrefetchScheduleAccelerationFinal DCN35
-Date: Tue,  8 Oct 2024 14:08:27 +0200
-Message-ID: <20241008115705.996141269@linuxfoundation.org>
+	Wayne Lin <wayne.lin@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 445/482] drm/amd/display: Fix system hang while resume with TBT monitor
+Date: Tue,  8 Oct 2024 14:08:28 +0200
+Message-ID: <20241008115706.035376366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,38 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihan Zhu <Yihan.Zhu@amd.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-commit 0d5e5e8a0aa49ea2163abf128da3b509a6c58286 upstream.
+commit 52d4e3fb3d340447dcdac0e14ff21a764f326907 upstream.
 
-[WHY & HOW]
-Mismatch in DCN35 DML2 cause bw validation failed to acquire unexpected DPP pipe to cause
-grey screen and system hang. Remove EnhancedPrefetchScheduleAccelerationFinal value override
-to match HW spec.
+[Why]
+Connected with a Thunderbolt monitor and do the suspend and the system
+may hang while resume.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+The TBT monitor HPD will be triggered during the resume procedure
+and call the drm_client_modeset_probe() while
+struct drm_connector connector->dev->master is NULL.
+
+It will mess up the pipe topology after resume.
+
+[How]
+Skip the TBT monitor HPD during the resume procedure because we
+currently will probe the connectors after resume by default.
+
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dad21f910fcea2bdcff4af46159101d7f9cd8ba)
+(cherry picked from commit 453f86a26945207a16b8f66aaed5962dc2b95b85)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml2_policy.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_policy.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_policy.c
-@@ -303,7 +303,6 @@ void build_unoptimized_policy_settings(e
- 	if (project == dml_project_dcn35 ||
- 		project == dml_project_dcn351) {
- 		policy->DCCProgrammingAssumesScanDirectionUnknownFinal = false;
--		policy->EnhancedPrefetchScheduleAccelerationFinal = 0;
- 		policy->AllowForPStateChangeOrStutterInVBlankFinal = dml_prefetch_support_uclk_fclk_and_stutter_if_possible; /*new*/
- 		policy->UseOnlyMaxPrefetchModes = 1;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -758,6 +758,12 @@ static void dmub_hpd_callback(struct amd
+ 		return;
  	}
+ 
++	/* Skip DMUB HPD IRQ in suspend/resume. We will probe them later. */
++	if (notify->type == DMUB_NOTIFICATION_HPD && adev->in_suspend) {
++		DRM_INFO("Skip DMUB HPD IRQ callback in suspend/resume\n");
++		return;
++	}
++
+ 	link_index = notify->link_index;
+ 	link = adev->dm.dc->links[link_index];
+ 	dev = adev->dm.ddev;
 
 
