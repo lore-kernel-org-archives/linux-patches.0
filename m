@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066811DE8AA;
-	Tue,  8 Oct 2024 12:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FD31DF265;
+	Tue,  8 Oct 2024 12:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392147; cv=none; b=MCKdt+5twwoat/boecHd/FxXMfUPiRT5QAhCJW/Cfr0NNmpbOzUWXlLZYdx+gR9YUo1qCGECa1lMEC2aQJ278UMCvAGascgvMikgQjBy34VnBFuLGh+JMnRzn5PEE3nwb4tOGctB+lRjiUKthjOIB4/7U+MdHDCpaQt9H7Gspyk=
+	t=1728392150; cv=none; b=SFcNbbBHT0ehE9zUoTlfz2xN4w2/t+xqXgOIqGu4QR2Ov1WTRQJa+TKIIqqF4tDlm9Vf6tyNB337JFUknjb540FOGQ8upwbWnndD1zBBnEuOUqfH+eUYj7KftEIVqp7QzZcgPijECp2u9pZjZ9JnmaqiNBH5lB++huFvB2YUfXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392147; c=relaxed/simple;
-	bh=1op2iDL3VbUkVu5GvSbbf4Wd2ctxjUBTo+r3/YbNVYs=;
+	s=arc-20240116; t=1728392150; c=relaxed/simple;
+	bh=bfIQuPq8i/K0D5LWCXbb8vZXVbv0W3nqz7CobZ4PVzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJKxJpJRetN0ZZF2Cozf+sR1d2hHnoWEpdrqfT8zYDQj/TISvvthhkiK1DCTGQlVbUP/F6g+abjN0i7iwMbjgHtHzZGS96EybVTGreap17X2YdNZMW5Q01MYpOTKU+RROqYNOyGORr9s1KOM66Ay7xSw+UZG3LiIGYscj7x/Kw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsuhVKFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxpW+vQrsLGKQ8FDejFyC4D9T2bNbEk8gCcd01tL47YNvYZhZk5Ei845sPiAwNAOyeFWrl/s6ds2FXMDdNcjjAY22y/6WyKdQM7++Bxio8SZNdUhMet2BJ6fZY8S+LMYyoB4gj52zbhUWA0EjxDoh6ELnBs+69aozXUUVqpgEt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc6Q9lcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsuhVKFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F9C4CEC7;
-	Tue,  8 Oct 2024 12:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc6Q9lcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE1CC4CEC7;
+	Tue,  8 Oct 2024 12:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392146;
-	bh=1op2iDL3VbUkVu5GvSbbf4Wd2ctxjUBTo+r3/YbNVYs=;
+	s=korg; t=1728392149;
+	bh=bfIQuPq8i/K0D5LWCXbb8vZXVbv0W3nqz7CobZ4PVzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsuhVKFFqiHKsrKtEkDV1ST5PcvxDwXmnEfWM4Q+peQStaQ4OIF+X1e163KQcDK0x
-	 fwGanWdcbDy77xElyWi4xKqH3/nYZMFi5MRIGdb7nnt7erjm2lputLKUFfrVkO3viy
-	 8vR9RL6LbP96/qTSvudHMLaTYwfYNAjxRTHS00AA=
+	b=Zc6Q9lcsGfv6SKzkt7gJlsZFFHfJAK2UNwk5FqJxSegndfCoG+5WhqU0OAZsz2fDv
+	 55NHEY6BqFVTpSxmEaQlsGR5tzNYg95MJ7oSE1UzaqE63OjJLyW1092FKK9o77/NLS
+	 3ksz3nm32j3PzOEdnosaYOFSdCUq5d14UuXgHcXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 329/558] selftests: vDSO: fix vDSO name for powerpc
-Date: Tue,  8 Oct 2024 14:05:59 +0200
-Message-ID: <20241008115715.251322249@linuxfoundation.org>
+Subject: [PATCH 6.11 330/558] selftests: vDSO: fix vdso_config for powerpc
+Date: Tue,  8 Oct 2024 14:06:00 +0200
+Message-ID: <20241008115715.291448008@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,48 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 59eb856c3ed9b3552befd240c0c339f22eed3fa1 ]
+[ Upstream commit 7d297c419b08eafa69ce27243ee9bbecab4fcaa4 ]
 
-Following error occurs when running vdso_test_correctness on powerpc:
+Running vdso_test_correctness on powerpc64 gives the following warning:
 
-~ # ./vdso_test_correctness
-[WARN]	failed to find vDSO
-[SKIP]	No vDSO, so skipping clock_gettime() tests
-[SKIP]	No vDSO, so skipping clock_gettime64() tests
-[RUN]	Testing getcpu...
-[OK]	CPU 0: syscall: cpu 0, node 0
+  ~ # ./vdso_test_correctness
+  Warning: failed to find clock_gettime64 in vDSO
 
-On powerpc, vDSO is neither called linux-vdso.so.1 nor linux-gate.so.1
-but linux-vdso32.so.1 or linux-vdso64.so.1.
+This is because vdso_test_correctness was built with VDSO_32BIT defined.
 
-Also search those two names before giving up.
+__powerpc__ macro is defined on both powerpc32 and powerpc64 so
+__powerpc64__ needs to be checked first in vdso_config.h
 
-Fixes: c7e5789b24d3 ("kselftest: Move test_vdso to the vDSO test suite")
+Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Acked-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vdso_test_correctness.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/vDSO/vdso_config.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_test_correctness.c b/tools/testing/selftests/vDSO/vdso_test_correctness.c
-index e691a3cf14911..cdb697ae8343c 100644
---- a/tools/testing/selftests/vDSO/vdso_test_correctness.c
-+++ b/tools/testing/selftests/vDSO/vdso_test_correctness.c
-@@ -114,6 +114,12 @@ static void fill_function_pointers()
- 	if (!vdso)
- 		vdso = dlopen("linux-gate.so.1",
- 			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
-+	if (!vdso)
-+		vdso = dlopen("linux-vdso32.so.1",
-+			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
-+	if (!vdso)
-+		vdso = dlopen("linux-vdso64.so.1",
-+			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
- 	if (!vdso) {
- 		printf("[WARN]\tfailed to find vDSO\n");
- 		return;
+diff --git a/tools/testing/selftests/vDSO/vdso_config.h b/tools/testing/selftests/vDSO/vdso_config.h
+index 7b543e7f04d7b..00bfed6e4922e 100644
+--- a/tools/testing/selftests/vDSO/vdso_config.h
++++ b/tools/testing/selftests/vDSO/vdso_config.h
+@@ -18,13 +18,13 @@
+ #elif defined(__aarch64__)
+ #define VDSO_VERSION		3
+ #define VDSO_NAMES		0
+-#elif defined(__powerpc__)
++#elif defined(__powerpc64__)
+ #define VDSO_VERSION		1
+ #define VDSO_NAMES		0
+-#define VDSO_32BIT		1
+-#elif defined(__powerpc64__)
++#elif defined(__powerpc__)
+ #define VDSO_VERSION		1
+ #define VDSO_NAMES		0
++#define VDSO_32BIT		1
+ #elif defined (__s390__)
+ #define VDSO_VERSION		2
+ #define VDSO_NAMES		0
 -- 
 2.43.0
 
