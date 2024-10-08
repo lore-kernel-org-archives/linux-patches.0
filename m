@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187817B4EC;
-	Tue,  8 Oct 2024 12:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A541DED69;
+	Tue,  8 Oct 2024 12:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389888; cv=none; b=Ac2UWzT85W1IvqGigF3U0bZMou9AUVK9lWu3Qzq8FKKRV8jNynVipUw0CaFWWF0lyxNxiqwiOYT3J+l0hnTbPtqRIlKRi1Y28FjMBmgnW1NgCXpv4vyxSyZKyjSMj6NqFfvv3zHizFepdH9wZw2IS0bb0OqEFoCcYhNiguqAOXk=
+	t=1728389891; cv=none; b=sHehnAMVfzTDMpBlQyFxHiASfbIv/I6otTDtrs0xkOwwJbq7gwbM3NmZf5zfvB8E2aXh2y0vD4c//UYmH105ZmuP5AsasWbbG0hlJBGOwkHbv4uHbmV2hdCJmXLiux5UtzhwUA0pZ0Ogv8aXNdjBGPwRQaiUE6D8iM3uR6jYpw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389888; c=relaxed/simple;
-	bh=71n+qRQgogkc1TVTLmQF6XDL3qR5go+0RorX1Sp8WgE=;
+	s=arc-20240116; t=1728389891; c=relaxed/simple;
+	bh=mCBq7YvJEiQTUfft5nWc7d/Fc+6yoYU34Q22btkxiNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGv4lK29T7a0xM/p3KJtvWzyqTWvboxsNEy7FvD200mEfctNrNlYc2T+xSi08IMwQ3I1daXeW/Aldk7bsFOrReNYuCGzdHu7awwLEfQRMPpIZAsz8k3tBxlFnKbqdf+TaU3arkQWepFJPgIk9lNLwbzEI3OgwMadqXdoA5FSqhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmYFa28E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMF77oMb6g1sW8HSkARI2K4/LBxedz2VrhRMN/tkKvRoKIjaEp/E7lvY0iDI94leLspRFl4uHMw9cQsvaPfCgygYvngZayYjpF9etE4IpKXvOOg0hAjhwtTB0GMT7UwoLW+gZCfzWfrEoSPruU/hhdIasDdPf8vxyIMinF9VtPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxuMowzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmYFa28E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C3BC4CEC7;
-	Tue,  8 Oct 2024 12:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxuMowzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29116C4CECE;
+	Tue,  8 Oct 2024 12:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389888;
-	bh=71n+qRQgogkc1TVTLmQF6XDL3qR5go+0RorX1Sp8WgE=;
+	s=korg; t=1728389891;
+	bh=mCBq7YvJEiQTUfft5nWc7d/Fc+6yoYU34Q22btkxiNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rmYFa28E4rXef+zVHGKmHTADemb9xhCrmazd2+MDutFWyZZ+S1djb6b1oEFse6kHi
-	 N0liF/BAede16niortQYOjajN3prztoj4fPdmem1VCEv6jaQmJ/81qHpctrpn5qMCQ
-	 Qfr1jAJj6BXl7Lv4VR7OG3AHHEj7cUYuBLZIMUi0=
+	b=oxuMowzRZJ/5lYMpQUTx5bXMwfyR59R8WrYN9lI3adOCtXvYxQbOANHM1A4lzbHJ+
+	 csFezmPROIf1/wDJ9RChBfmfbxzJ5mq8e/01kK4BlnP381qsQqJ8kvRYFm6YeQfaGQ
+	 XEcGdSsAio52vL00MN61dVGDQWJaMRERmSHHupyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 095/482] ACPI: video: Add force_vendor quirk for Panasonic Toughbook CF-18
-Date: Tue,  8 Oct 2024 14:02:38 +0200
-Message-ID: <20241008115652.049621206@linuxfoundation.org>
+Subject: [PATCH 6.10 086/482] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
+Date: Tue,  8 Oct 2024 14:02:29 +0200
+Message-ID: <20241008115651.690492350@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit eb7b0f12e13ba99e64e3a690c2166895ed63b437 ]
+[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
 
-The Panasonic Toughbook CF-18 advertises both native and vendor backlight
-control interfaces. But only the vendor one actually works.
+ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
 
-acpi_video_get_backlight_type() will pick the non working native backlight
-by default, add a quirk to select the working vendor backlight instead.
+If acpi_ps_get_next_namepath() fails, the previously allocated
+union acpi_parse_object needs to be freed before returning the
+status code.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240907124419.21195-1-hdegoede@redhat.com
+The issue was first being reported on the Linux ACPI mailing list:
+
+Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
+Link: https://github.com/acpica/acpica/commit/2802af72
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 8 ++++++++
+ drivers/acpi/acpica/psargs.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 75a5f559402f8..428a7399fe04a 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -254,6 +254,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_vendor,
-+	 /* Panasonic Toughbook CF-18 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Matsushita Electric Industrial"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "CF-18"),
-+		},
-+	},
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 422c074ed2897..7debfd5ce0d86 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_NOT_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
+ 		} else {
+ 			/* Single complex argument, nothing returned */
  
- 	/*
- 	 * Toshiba models with Transflective display, these need to use
+@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_POSSIBLE_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
+ 
+ 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
+ 
 -- 
 2.43.0
 
