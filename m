@@ -1,61 +1,33 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5074215F55
-	for <patches@lists.linux.dev>; Tue,  8 Oct 2024 23:27:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75A2218D64;
+	Tue,  8 Oct 2024 23:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728430063; cv=none; b=unz9/Q3UWAp7f0kUQw9pQxc6ZTm7gNGC29bzRY16WqPkyqaK8rCswQ2Mm744vuk237gP6MO1VfrKKH5bezGvoAzplz0Njim28USxZKstQ7P62Y42A8lTyjKGi4zwFP5EtxcbPV5e3mEktNeDtbY3RkptVxn06eSEQVGnvQCil0I=
+	t=1728431031; cv=none; b=Eh5RMqZhdLiOitez6nIs1Rm7vvUT+JzGfrCELDXIF2mGTD9bteCPHl6FV+w+YcWRY7E3HcP0BbumVT+eSN87Nm2XIWwBd/3D4SlOsns/vy9X+5mjS4/pamc9v0GUiMAdfpntZI2yZSn8ewSNv3EB/7GbWa6h+x/CSXOmCa36B44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728430063; c=relaxed/simple;
-	bh=vdtEsmXJT3wve2O6pQuPZ14Hb482hs87xR59pTW8i5g=;
+	s=arc-20240116; t=1728431031; c=relaxed/simple;
+	bh=wS/KQGu06xIsULfc+tyBjmIuSFQa5icnoCOazAay/SY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AEhLRhDbpL8EFE888ZwzPL5gWv8sMWxEHsVA/Yrc7sQzyTPjUglDfh7DQsrdYNt2MgzHwQficOrsS3eRlRPZ4Q6ePP6NzdAaWJR6dp+7yFCStCZxcYhkG/m2TNDgsJRm3u7v9GN1uGxvFAKimAv9v3o7k4+wX538m19scw7gwt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pm+LpF2Z; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=d9IvKOtVl8MoUwOaRUDmk/VP0hYpomFvCDFZZcy7/AYQSnySwxqkMXNK6cTZI/LMJKhSYIX/SGqKxd5189Eg417GeUHbBu0KxwRDKbIVGpCnztmiPwhjDs+PmyxcCGGJAYoKHM2kynSvd+0O9pRz371tNhlZDoSuLQWnQU48iHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bu6ZlGRZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pm+LpF2Z"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2e2993de292so498127a91.2
-        for <patches@lists.linux.dev>; Tue, 08 Oct 2024 16:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728430061; x=1729034861; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=WPAgXuOBQUvSa+7Ar+VJpB36qiWIAixSpKmgUg69p94=;
-        b=Pm+LpF2ZFBrFpUtSP7q5Hd5dR9pXuMnBvcl45ohxcHtoMFisA5ayWnMZSUNm5K1GsX
-         W+6uI3DvRSHIcpS1/LFcIDFLNNJmgu/3rMA6NZri/GckLDSrAlZ8hFHsznvAVIJPETmy
-         iOklDtAL7pZLz4D5nF2utaT7301vPljWEpFPPburPcwZGSED37ktA2V/RMDrXPxTV5R0
-         ZvI8EQ3UN6jaGm0O+V0WgN6Ppkn9cF/i8tQWUdPVMst2fA6pavsT/bN0Lfuo46nh60jU
-         yojtavnd1xRu0ASrczgNCdKt6/Nfxo1uhuvneKl+F0ButIOL6c/un3RbxefEBs1VY+mG
-         Z+Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728430061; x=1729034861;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WPAgXuOBQUvSa+7Ar+VJpB36qiWIAixSpKmgUg69p94=;
-        b=UsS2pSZOrmI7PgRD+oTunYhgKh8iqXeIQS2L8RtZ5XJI7M6NO9PjXFnz8n6h57YqPQ
-         fhZLZd8IoKzpm54WRUHS9GBcUAsajM+q2PEYP0El4ZO7xmuoqKd4rB8bPLsMW9EeCFVc
-         0OVSPFWjYyRQZcSpbIzuaKmUSITLinOYwWWOhARlS2hU0LCOaXYQZDk5nFH7VcN4ug4w
-         NR8+VRmCGJPzKcUXhNlmAc+1oeCQvWCsICy4LEJHXoJ5D1RfkHpDkQ880GYMSyQOc+K3
-         w2kB1ESZa04gwBSvMHHMMTPUcvvid0mK/nkiExMo/CsQxMIWtxVLImwlzygNf6G/LcVc
-         Easg==
-X-Forwarded-Encrypted: i=1; AJvYcCV5lM3oOyzWcmkbg3YrhfWcW78bc8NZfsJICzf+hqgMiLSVSxP+4Brqqhn3G7Rxi+nMXnoq4BCM@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw4vZTmFAhG27rQ2IFX8Yg/JRRM06IqXnk0/EHqf8FnbzrczQ4Z
-	T8v8PYJ9DGv9igSbsP8hN/ku5aiifxHbWOEtzkaqscjFNOrxhnJN
-X-Google-Smtp-Source: AGHT+IE7vJl5NwmkITb5nr7A6xWeqUgwaHStS4JpHCRMULaY96hgbBwFCRXGZ6E/b/2vgw5IdT0SVw==
-X-Received: by 2002:a17:90a:68c7:b0:2e1:92bb:54a9 with SMTP id 98e67ed59e1d1-2e2a23343b7mr689757a91.12.1728430061030;
-        Tue, 08 Oct 2024 16:27:41 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a5965e9csm151387a91.41.2024.10.08.16.27.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 16:27:39 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <594e8e50-8322-480e-ae34-3f8e14f3fe18@roeck-us.net>
-Date: Tue, 8 Oct 2024 16:27:37 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bu6ZlGRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27208C4CEC7;
+	Tue,  8 Oct 2024 23:43:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728431030;
+	bh=wS/KQGu06xIsULfc+tyBjmIuSFQa5icnoCOazAay/SY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bu6ZlGRZcv1SIr39/DFFLmX9TuIX2peAHh5TnROaLtZDW6LsYnQZzh3c3NBfVe+CP
+	 /1GDeAixD0szvqctBawLYzNymiu1ZsQn6EBTY+4TgQC3bJa+uyMLOm0VoH7SY4wwax
+	 Xr0SkqR3mIl5T/LHwq9oDlbD60lyjZvVtuu+HqR8d1nSgiP0TE9/dI1IXc7A2K85h9
+	 qaLHUQI3MO+3yU6suol5vMejvltb3UaIf0CFOueZwCB8G9vQinzICCE4eiirMFo0/3
+	 AVdXMObr4OqdF+Dzemx1bpc/EElRNgd5zSd/cCIMJHgspnSSdeMSyT5Tdvmj6CKKP4
+	 kZcnVAWfxOUPA==
+Message-ID: <779e1e8a-93f3-4f90-a51b-11729ee5f875@kernel.org>
+Date: Wed, 9 Oct 2024 02:43:41 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,139 +35,175 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with
- struct clk_parent_data
-To: Stephen Boyd <sboyd@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- patches@lists.linux.dev, kunit-dev@googlegroups.com,
- linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
- Brendan Higgins <brendan.higgins@linux.dev>, David Gow
- <davidgow@google.com>, Rae Moar <rmoar@google.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J.Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>,
- Saravana Kannan <saravanak@google.com>, Daniel Latypov
- <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>,
- Geert Uytterhoeven <geert+renesas@glider.be>
-References: <20240718210513.3801024-1-sboyd@kernel.org>
- <ba88a29c-f05e-4ca3-82d1-0a634613caee@roeck-us.net>
- <4216b852-11a2-41ae-bb01-5f9b578ee41b@roeck-us.net>
- <879831a8-2039-4cdb-bce2-aefdeb7ab25f@linuxfoundation.org>
- <da260b77-2ecb-4486-90cb-6db456d381ef@linuxfoundation.org>
- <f5f1c42d-77c0-48c7-ac52-3d4a3b5c2b47@roeck-us.net>
- <4a8abb5f501279de7907629f4dd6be24.sboyd@kernel.org>
- <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net>
- <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org>
- <cb1e0119-6e3e-4fd2-92ea-3fec18f5843d@roeck-us.net>
- <ccd372f2754e80d6c01e38a9596bed34.sboyd@kernel.org>
+Subject: Re: [PATCH 6.1 00/63] 6.1.111-rc1 review
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Jinjie Ruan <ruanjinjie@huawei.com>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Anders Roxell <anders.roxell@linaro.org>, linux-spi@vger.kernel.org,
+ Linux PM <linux-pm@vger.kernel.org>
+References: <20240916114221.021192667@linuxfoundation.org>
+ <CA+G9fYtsjFtddG8i+k-SpV8U6okL0p4zpsTiwGfNH5GUA8dWAA@mail.gmail.com>
+ <b0dfa622-f4f7-4f76-9d67-621544cb2212@kernel.org>
+ <32aa7502-ae52-4119-9e72-6347c32f1f23@stanley.mountain>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <ccd372f2754e80d6c01e38a9596bed34.sboyd@kernel.org>
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <32aa7502-ae52-4119-9e72-6347c32f1f23@stanley.mountain>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/8/24 16:12, Stephen Boyd wrote:
-> Quoting Guenter Roeck (2024-10-03 21:52:09)
->> On 10/3/24 17:42, Stephen Boyd wrote:
->>>
->>> Can you please describe how you run the kunit test? And provide the qemu
->>> command you run to boot arm64 with acpi?
->>>
->>
->> Example command line:
->>
->> qemu-system-aarch64 -M virt -m 512 \
->>        -kernel arch/arm64/boot/Image -no-reboot -nographic \
->>        -snapshot \
->>        -bios /opt/buildbot/rootfs/arm64/../firmware/QEMU_EFI-aarch64.fd \
->>        -device virtio-blk-device,drive=d0 \
->>        -drive file=rootfs.ext2,if=none,id=d0,format=raw \
->>        -cpu cortex-a57 -serial stdio -monitor none -no-reboot \
->>        --append "kunit.stats_enabled=2 kunit.filter=speed>slow root=/dev/vda rootwait earlycon=pl011,0x9000000 console=ttyAMA0"
->>
->> That works fine for me. Configuration is arm64 defconfig plus various
->> debug and kunit options. I built the efi image myself from sources.
->> The root file system is from buildroot with modified init script.
->> kunit tests are all built into the kernel and run during boot.
+On 25.09.24 18:42, Dan Carpenter wrote:
+> On Wed, Sep 18, 2024 at 03:08:13PM +0300, Georgi Djakov wrote:
+>>> Warning log:
+>>> --------
+>>> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x517f803c]
+>>> [    0.000000] Linux version 6.1.111-rc1 (tuxmake@tuxmake)
+>>> (aarch64-linux-gnu-gcc (Debian 13.3.0-5) 13.3.0, GNU ld (GNU Binutils
+>>> for Debian) 2.43) #1 SMP PREEMPT @1726489583
+>>> [    0.000000] Machine model: Thundercomm Dragonboard 845c
+>>> ...
+>>> [    7.841428] ------------[ cut here ]------------
+>>> [    7.841431] WARNING: CPU: 4 PID: 492 at
+>>> drivers/interconnect/core.c:685 __icc_enable
+>>> (drivers/interconnect/core.c:685 (discriminator 7))
+>>> [    7.841442] Modules linked in: soundwire_bus(+) venus_core(+)
+>>> qcom_camss(+) drm_dp_aux_bus bluetooth(+) qcom_stats mac80211(+)
+>>> videobuf2_dma_sg drm_display_helper i2c_qcom_geni(+) i2c_qcom_cci
+>>> camcc_sdm845(+) v4l2_mem2mem qcom_q6v5_mss(+) videobuf2_memops
+>>> reset_qcom_pdc spi_geni_qcom(+) videobuf2_v4l2 phy_qcom_qmp_usb(+)
+>>> videobuf2_common gpi(+) qcom_rng cfg80211 phy_qcom_qmp_ufs ufs_qcom(+)
+>>> coresight_stm phy_qcom_qmp_pcie stm_core rfkill slim_qcom_ngd_ctrl
+>>> qrtr pdr_interface lmh qcom_wdt slimbus icc_osm_l3 qcom_q6v5_pas(+)
+>>> icc_bwmon llcc_qcom qcom_pil_info qcom_q6v5 qcom_sysmon qcom_common
+>>> qcom_glink_smem qmi_helpers mdt_loader display_connector
+>>> drm_kms_helper drm socinfo rmtfs_mem
+>>> [    7.841494] CPU: 4 PID: 492 Comm: (udev-worker) Not tainted 6.1.111-rc1 #1
+>>> [    7.841497] Hardware name: Thundercomm Dragonboard 845c (DT)
+>>> [    7.841499] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>>> [    7.841502] pc : __icc_enable (drivers/interconnect/core.c:685
+>>> (discriminator 7))
+>>> [    7.841505] lr : icc_disable (drivers/interconnect/core.c:708)
+>>> [    7.841508] sp : ffff800008b23660
+>>> [    7.841509] x29: ffff800008b23660 x28: ffff800008b23c20 x27: 0000000000000000
+>>> [    7.841513] x26: ffffdd85da6ea1c0 x25: 0000000000000008 x24: 00000000000f4240
+>>> [    7.841516] x23: 0000000000000000 x22: ffff46a58b7ca580 x21: 0000000000000001
+>>> [    7.841519] x20: ffff46a58b7ca5c0 x19: ffff46a58b54a800 x18: 0000000000000000
+>>> [    7.841522] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+>>> [    7.841525] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+>>> [    7.841528] x11: fefefefefefefeff x10: 0000000000000bf0 x9 : ffffdd85d8c9b0bc
+>>> [    7.841531] x8 : ffff800008b22f58 x7 : 0000000000000000 x6 : 0000000000024404
+>>> [    7.841535] x5 : 0000000000000000 x4 : ffff46a58b64b180 x3 : ffffdd85daa5e810
+>>> [    7.841537] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+>>> [    7.841541] Call trace:
+>>> [    7.841542] __icc_enable (drivers/interconnect/core.c:685 (discriminator 7))
+>>> [    7.841545] icc_disable (drivers/interconnect/core.c:708)
+>>> [    7.841547] geni_icc_disable (drivers/soc/qcom/qcom-geni-se.c:862)
+>>> [    7.841553] spi_geni_runtime_suspend+0x3c/0x4c spi_geni_qcom
+>>> [    7.841561] pm_generic_runtime_suspend (drivers/base/power/generic_ops.c:28)
+>>> [    7.841565] __rpm_callback (drivers/base/power/runtime.c:395)
+>>> [    7.841568] rpm_callback (drivers/base/power/runtime.c:532)
+>>> [    7.841570] rpm_suspend (drivers/base/power/runtime.c:672)
+>>> [    7.841572] rpm_idle (drivers/base/power/runtime.c:504 (discriminator 1))
+>>> [    7.841574] update_autosuspend (drivers/base/power/runtime.c:1662)
+>>> [    7.841576] pm_runtime_disable_action (include/linux/spinlock.h:401
+>>> drivers/base/power/runtime.c:1703 include/linux/pm_runtime.h:599
+>>> drivers/base/power/runtime.c:1517)
+>>> [    7.841579] devm_action_release (drivers/base/devres.c:720)
+>>> [    7.841581] release_nodes (drivers/base/devres.c:503)
+>>> [    7.841583] devres_release_all (drivers/base/devres.c:532)
+>>> [    7.841585] device_unbind_cleanup (drivers/base/dd.c:531)
+>>> [    7.841589] really_probe (drivers/base/dd.c:710)
+>>> [    7.841592] __driver_probe_device (drivers/base/dd.c:785)
+>>> [    7.841594] driver_probe_device (drivers/base/dd.c:815)
+>>> [    7.841596] __driver_attach (drivers/base/dd.c:1202)
+>>> [    7.841598] bus_for_each_dev (drivers/base/bus.c:301)
+>>> [    7.841600] driver_attach (drivers/base/dd.c:1219)
+>>> [    7.841602] bus_add_driver (drivers/base/bus.c:618)
+>>> [    7.841604] driver_register (drivers/base/driver.c:246)
+>>> [    7.841607] __platform_driver_register (drivers/base/platform.c:868)
+>>> [    7.841609] spi_geni_driver_init+0x28/0x1000 spi_geni_qcom
 > 
-> Thanks. I figured out that I was missing enabling CONFIG_ACPI. Here's my
-> commandline
 > 
-> ./tools/testing/kunit/kunit.py run --arch=arm64 \
-> 	--kunitconfig=drivers/of \
-> 	--qemu_args="-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd -smp 2" \
-> 	--kconfig_add="CONFIG_ACPI=y" \
-> 	--kernel_args="earlycon=pl011,0x9000000"
-> 
-> Now I can boot and reproduce the failure, but there's another problem.
-> ACPI disables itself when it fails to find tables.
-> 
->   ACPI: Unable to load the System Description Tables
-> 
-> This calls disable_acpi() which sets acpi_disabled to 1. This happens
-> before the unit test runs, meaning we can't reliably use 'acpi_disabled'
-> as a method to skip.
-> 
-> The best I can come up with then is to test for a NULL of_root when
-> CONFIG_ARM64 and CONFIG_ACPI are enabled, because the tests
-> intentionally don't work when both those configs are enabled and the
-> 'of_root' isn't populated. In all other cases the 'of_root' missing is a
-> bug. I'll probably make this into some sort of kunit helper function in
-> of_private.h and send it to DT maintainers.
+> So it looks like spi_geni_probe() calls geni_icc_get() which fails.  It must
+> be with -EPROBE_DEFER otherwise we would get a printk.  This could happen if
+> of_icc_get_from_provider() fails for example.  There are two callers.  These
+> were the only possibilities that I saw which didn't lead to a warning message.
 
-Sounds good. Thanks a lot for tracking this down.
+Apologies that it took me some time to get the board and reproduce it.
+The case is slightly different - geni_icc_get() is not failing, but it's
+the spi_geni_grab_gpi_chan() that sometimes returns -EPROBE_DEFER and then
+devres starts freeing the driver resources and it does it in reverse order,
+so for this driver the order is:
 
-That makes me wonder though why only arm64 has that restriction. Both
-riscv and loongarch have ACPI enabled in their defconfig files but call
-unflatten_device_tree() unconditionally.
+[    7.138679] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
+[    7.138751] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
+[    7.138827] geni_spi 880000.spi: DEVRES REL ffff800081443800 pm_runtime_disable_action (16 bytes)
+[    7.139494] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pm_opp_config_release (16 bytes)
+[    7.139512] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_spi_release_controller (8 bytes)
+[    7.139516] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_clk_release (16 bytes)
+[    7.139519] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_ioremap_release (8 bytes)
+[    7.139524] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_region_release (24 bytes)
+[    7.139527] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (22 bytes)
+[    7.139530] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pinctrl_release (8 bytes)
+[    7.139539] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (40 bytes)
 
-Oh well ...
+The issue here is that pm_runtime_disable_action() results in a call to
+spi_geni_runtime_suspend(), which attempts to suspend the device and
+disable an interconnect path that devm_icc_release() has just released.
+
+This could be easily reproduced by adding a sleep in the beginning of the
+probe function of the GPI DMA driver to make the SPI driver probe defer.
+
+The first commit that introduced this issue seems to be:
+89e362c883c6 ("spi: geni-qcom: Undo runtime PM changes at driver exit time")
+
+Here is a link to the patch i submitted to enable runtime_pm after the
+driver gets all resources (including the interconnects). This approach
+ensures that when devres releases resources in reverse order, it will
+start with pm_runtime_disable_action(), suspending the device, and then
+proceed to free the remaining resources:
+
+https://lore.kernel.org/r/20241008231615.430073-1-djakov@kernel.org/
+
+
+> The automatic cleanup tries to suspend and triggers the warning IS_ERR() warning
+> in __icc_enable().
+> 
+> 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
+> 
+> The best option is probably to disable the warning for EPROBE_DEFER.  Another
+> two options would be to disable the warning entirely.  A third option would be
+> to do a work-around for EPROBE_DEFER in geni_icc_get().
+> 
+> Please, could you take a look and give the Reported-by tag to Naresh?  Or I
+> could send this patch if you want.
+
+> regards,
+> dan carpenter
+> 
+> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+> index 4526ff2e1bd5..0caf8ead6573 100644
+> --- a/drivers/interconnect/core.c
+> +++ b/drivers/interconnect/core.c
+> @@ -682,6 +682,8 @@ static int __icc_enable(struct icc_path *path, bool enable)
+>   	if (!path)
+>   		return 0;
+>   
+> +	if (IS_ERR(path) && (PTR_ERR(path) == -EPROBE_DEFER))
+> +		return 0;
+>   	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
+>   		return -EINVAL;
+
+This change will not help as it's the !path->num_nodes that triggered the warning.
 
 Thanks,
-Guenter
+Georgi
 
