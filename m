@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620BA1DE8B1;
-	Tue,  8 Oct 2024 13:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFD31DE4CC;
+	Tue,  8 Oct 2024 13:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392442; cv=none; b=L7xd5AdCRdUl8K9mgCu+RS3o4I1s4ldOJ/oXTIFXPtOW0gSKNSQqrNe53TbdCodtcecM2aBBCkZvd3jG9HWQ5uJotDopDAmtiVVB70k39sk007+VPmOvK+DBKvS9cckMagKuqJLGRo+tttLXsjE63rt9cISiDOX7Y9q0WyJuczc=
+	t=1728392446; cv=none; b=cbVjzOk9UxxLPgGUN4tt+Dg66EnjXLyX76E25VF5Y+DyN0d9MrAUHxHszrcee0Ddq7VsZlOLI66f6liBz0LAxMwNylUQwF3uKjVc8ZlQrbI5ZXih+cgEeoRyldW/bH5CvKe+Al20zoe7iY8yTFf9GMJsa2PbFQbkqZNYvI4Anq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392442; c=relaxed/simple;
-	bh=eQUmWTbqT9j/R6e9j263lP8hCHnufOAY3FO7qMrXwlM=;
+	s=arc-20240116; t=1728392446; c=relaxed/simple;
+	bh=uRRZMslZ48idI8vdHrgMlEIIl7itmAk2ueG2uY/W2UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NINpkZ5NXbOaadLDKpiLTs7CaB4f+9nDhyy7A1Z7jqIudAoZlQLpiDXr/7pw1TCi9Qltw2JMBdPjOhLXtAzIX16M2Qz+1SR+aaluWsTblmbuBV9Ol4DzyvHJRA6ahIfAI+qCfzkSanwdOTHekocE+xg1Fcg1joldFHS1RyexcFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=np7bluHH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLHT12fez0If4PBxzVNAmB/mFZifj/DtpQXkVt3KW94a2on2R9WxtKqaCiaGvLIi7G4+ODLr7Mgys14rAW02FJ9ZQRcsT3zcj1gn2Y59b+PsL+FNm0O/f0hwcNRIlhwchbhrzIcaX6oq8A6SKICVj/urARj2bYWxxJuw7679Q+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZ0MnNLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="np7bluHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3435C4CEC7;
-	Tue,  8 Oct 2024 13:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZ0MnNLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D25DC4CEC7;
+	Tue,  8 Oct 2024 13:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392442;
-	bh=eQUmWTbqT9j/R6e9j263lP8hCHnufOAY3FO7qMrXwlM=;
+	s=korg; t=1728392445;
+	bh=uRRZMslZ48idI8vdHrgMlEIIl7itmAk2ueG2uY/W2UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=np7bluHHnCLsTtofzqhUsaZ38ysa39thwIGEKV+hdK6q2rCkhZjCf9f9QBjY0p3rw
-	 X2b2Dk7BuvmZ/r/aOjjIRwLNenb/uPTFXAYy1cFImxi49v3p/agSrV42LGAXdwtOKb
-	 pQU1hTzSwVczqfME7gbwyMlnTWtShCfSiUxPz17I=
+	b=FZ0MnNLX2dNPxqM10HgAELW+iNy8SWdBp04lZWn/M61F3h9LE8iJlMaFEfO3tPeGF
+	 PppC8dnaBGujXsbQ142r6Q3yJkC++3EHuWD6JA+LSDWMXFYIlZ4cAQJlJk/Y8b1xjK
+	 fyMBvsDFL5/zGez2rRMIf5rQcQW8dCbR+K0ZlKgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.11 409/558] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
-Date: Tue,  8 Oct 2024 14:07:19 +0200
-Message-ID: <20241008115718.369480175@linuxfoundation.org>
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 418/558] ocfs2: fix possible null-ptr-deref in ocfs2_set_buffer_uptodate
+Date: Tue,  8 Oct 2024 14:07:28 +0200
+Message-ID: <20241008115718.723166576@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,69 +58,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
+commit 33b525cef4cff49e216e4133cc48452e11c0391e upstream.
 
-In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
-to recover some journal space. But if an error occurs while executing
-jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
-space right away, we try other branches, and if j_committing_transaction
-is NULL (i.e., the tid is 0), we will get the following complain:
+When doing cleanup, if flags without OCFS2_BH_READAHEAD, it may trigger
+NULL pointer dereference in the following ocfs2_set_buffer_uptodate() if
+bh is NULL.
 
-============================================
-JBD2: I/O error when updating journal superblock for sdd-8.
-__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
-__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
-Modules linked in:
-CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
-RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
-Call Trace:
- <TASK>
- add_transaction_credits+0x5d1/0x5e0
- start_this_handle+0x1ef/0x6a0
- jbd2__journal_start+0x18b/0x340
- ext4_dirty_inode+0x5d/0xb0
- __mark_inode_dirty+0xe4/0x5d0
- generic_update_time+0x60/0x70
-[...]
-============================================
-
-So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
-clean up at the moment, continue to try to reclaim free space in other ways.
-
-Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
-when updating journal superblock fails") to make jbd2_cleanup_journal_tail
-return the correct error code.
-
-Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lkml.kernel.org/r/20240902023636.1843422-3-joseph.qi@linux.alibaba.com
+Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Heming Zhao <heming.zhao@suse.com>
+Suggested-by: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>	[4.20+]
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ocfs2/buffer_head_io.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -89,8 +89,11 @@ __releases(&journal->j_state_lock)
- 			write_unlock(&journal->j_state_lock);
- 			if (chkpt) {
- 				jbd2_log_do_checkpoint(journal);
--			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
--				/* We were able to recover space; yay! */
-+			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
-+				/*
-+				 * We were able to recover space or the
-+				 * journal was aborted due to an error.
-+				 */
- 				;
- 			} else if (has_transaction) {
- 				/*
+--- a/fs/ocfs2/buffer_head_io.c
++++ b/fs/ocfs2/buffer_head_io.c
+@@ -388,7 +388,8 @@ read_failure:
+ 		/* Always set the buffer in the cache, even if it was
+ 		 * a forced read, or read-ahead which hasn't yet
+ 		 * completed. */
+-		ocfs2_set_buffer_uptodate(ci, bh);
++		if (bh)
++			ocfs2_set_buffer_uptodate(ci, bh);
+ 	}
+ 	ocfs2_metadata_cache_io_unlock(ci);
+ 
 
 
