@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BA41DE8A0;
-	Tue,  8 Oct 2024 13:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80C61DE4CD;
+	Tue,  8 Oct 2024 13:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393104; cv=none; b=j6OGdbRmDDm2j1IimXvyDSJYl5MxNpWug+722t5Bn3Ta1VgFBkikag54QgzZkmcbfG3mbPjJPzxSzLieDPHiJ6K2GSitFal0HR0G8IYGjZqJSjRLRp1/Jqhcov+80TfBmf1jCxSQeJQB/02eWQ0REMizzxhuc1iULSS/cPtWyT4=
+	t=1728393107; cv=none; b=sqqiYM6U9QHDLVkRpqZZPUX/XUazhChg5Apg3gE9KDuNsUGSiXN73CuS4XOBH5EvmFS0fSlOw+uNhQzKosgFZGXehasAh29JiKQe71xnZf1jMAUzHBykjJR/1U17Gx1a0N5Meg9ZJmBR9+NNK0o+HeZqRXfgjMc7073jQuX+W0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393104; c=relaxed/simple;
-	bh=TsVhAhsIootXgLI1cnwdSwdnCVjN6LHC8OFPwm0HBdw=;
+	s=arc-20240116; t=1728393107; c=relaxed/simple;
+	bh=92638754maB4VkSQPJ29EG2N2eL9G4FJ2a8TnJ+fGkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2T6uRjnDLZHIeDkognFIVqXVXS8kyJhnqkYXdrupzOb+BdEWswmDT/E1NjqbcgCInlm/KN1wlobx0+CsnC+UJD8zzzLPU0dCDzok7C4kLIy7VpdRYojNYauM/8imM+Q3MwzGt39YNQXtxDsG7AHELKPlOGl9oAgY3Cdmp/uIkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROKxWMLE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbMZTBcPIddh9l+7mxKLN/B1q3pbuCoXgH5n/VhG55S0gMkvmFCELqcp+chCEe2RpyEJtdE1p1vlFg7enTvihxl4fI51x+wRU1rOzqElX1jcvuXZ3NSxJkb6xmX0nMEAad0MUAoF6YC0+UIWhqBcEqZZMi/tZPd5Neuzx9evxVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQyN057r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROKxWMLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03FCC4CECC;
-	Tue,  8 Oct 2024 13:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQyN057r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA94C4CEC7;
+	Tue,  8 Oct 2024 13:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393104;
-	bh=TsVhAhsIootXgLI1cnwdSwdnCVjN6LHC8OFPwm0HBdw=;
+	s=korg; t=1728393107;
+	bh=92638754maB4VkSQPJ29EG2N2eL9G4FJ2a8TnJ+fGkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROKxWMLEvO3yL+e55MHyL07o/F3XSJBQs+JcWW85Stw/cDK51WyMpZS3nN37TNzP8
-	 y+yNSQTxY2rs9EpjkfhjxUttEY+scX595kgXlgwZHfa4uo+gRUK4hWTLyQzQOPDFIC
-	 xKkOZ4Wt8DPLwoLvsLa6sIDIdhxYTlEwAyxitupQ=
+	b=pQyN057rrZwav1xBlXaAE3m2LVvEp9xx0TBQq2gzJkK96OUmoDf+WrcGo2D9/GybF
+	 G6SV9SQlIQqoOM/wqQOExVaC9MVttyGfV4UMF/JHG84K6EG9mF9W9nTH4yYsMZYT/U
+	 QJJWbhZvJAvHahm2WKRIgVEZ2P7sxKgQdJ8FMjeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/386] cifs: Fix buffer overflow when parsing NFS reparse points
-Date: Tue,  8 Oct 2024 14:04:57 +0200
-Message-ID: <20241008115631.517462084@linuxfoundation.org>
+Subject: [PATCH 6.6 024/386] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  8 Oct 2024 14:04:29 +0200
+Message-ID: <20241008115630.428562348@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,83 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e2a8910af01653c1c268984855629d71fb81f404 ]
+[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
 
-ReparseDataLength is sum of the InodeType size and DataBuffer size.
-So to get DataBuffer size it is needed to subtract InodeType's size from
-ReparseDataLength.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-Function cifs_strndup_from_utf16() is currentlly accessing buf->DataBuffer
-at position after the end of the buffer because it does not subtract
-InodeType size from the length. Fix this problem and correctly subtract
-variable len.
-
-Member InodeType is present only when reparse buffer is large enough. Check
-for ReparseDataLength before accessing InodeType to prevent another invalid
-memory access.
-
-Major and minor rdev values are present also only when reparse buffer is
-large enough. Check for reparse buffer size before calling reparse_mkdev().
-
-Fixes: d5ecebc4900d ("smb3: Allow query of symlinks stored as reparse points")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btmrvl_sdio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 48c27581ec511..cfa03c166de8c 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -320,9 +320,16 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
- 	unsigned int len;
- 	u64 type;
+diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
+index d76c799553aaa..468e4165c7cc0 100644
+--- a/drivers/bluetooth/btmrvl_sdio.c
++++ b/drivers/bluetooth/btmrvl_sdio.c
+@@ -92,7 +92,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+ 		} else {
+ 			ret = devm_request_irq(dev, cfg->irq_bt,
+ 					       btmrvl_wake_irq_bt,
+-					       0, "bt_wake", card);
++					       IRQF_NO_AUTOEN, "bt_wake", card);
+ 			if (ret) {
+ 				dev_err(dev,
+ 					"Failed to request irq_bt %d (%d)\n",
+@@ -101,7 +101,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
  
-+	len = le16_to_cpu(buf->ReparseDataLength);
-+	if (len < sizeof(buf->InodeType)) {
-+		cifs_dbg(VFS, "srv returned malformed nfs buffer\n");
-+		return -EIO;
-+	}
-+
-+	len -= sizeof(buf->InodeType);
-+
- 	switch ((type = le64_to_cpu(buf->InodeType))) {
- 	case NFS_SPECFILE_LNK:
--		len = le16_to_cpu(buf->ReparseDataLength);
- 		data->symlink_target = cifs_strndup_from_utf16(buf->DataBuffer,
- 							       len, true,
- 							       cifs_sb->local_nls);
-@@ -482,12 +489,18 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
- 	u32 tag = data->reparse.tag;
+ 			/* Configure wakeup (enabled by default) */
+ 			device_init_wakeup(dev, true);
+-			disable_irq(cfg->irq_bt);
+ 		}
+ 	}
  
- 	if (tag == IO_REPARSE_TAG_NFS && buf) {
-+		if (le16_to_cpu(buf->ReparseDataLength) < sizeof(buf->InodeType))
-+			return false;
- 		switch (le64_to_cpu(buf->InodeType)) {
- 		case NFS_SPECFILE_CHR:
-+			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
-+				return false;
- 			fattr->cf_mode |= S_IFCHR;
- 			fattr->cf_rdev = reparse_nfs_mkdev(buf);
- 			break;
- 		case NFS_SPECFILE_BLK:
-+			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
-+				return false;
- 			fattr->cf_mode |= S_IFBLK;
- 			fattr->cf_rdev = reparse_nfs_mkdev(buf);
- 			break;
 -- 
 2.43.0
 
