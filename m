@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331D1DE88B;
-	Tue,  8 Oct 2024 12:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22FE1DDA36;
+	Tue,  8 Oct 2024 12:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389934; cv=none; b=assnNXEbtN3/ApD7wAiCDtpqn51B6zd2Cxt02iwQgZj3CiiN9j81ZifQ9TCJhd9zw5LU2h/ZkUOkxz1UGu+EzNQFBHoSv9Lm4XfUxMRQLqIyA3JerMv6k3r84J57Vxt7XBhXGE1RP53R3nFvITQqcLplxtqbiSOtx1qTFXqyLrI=
+	t=1728389938; cv=none; b=pKhFNOEbHgK8JrlXvtCWB+wq5HofZQHvZU9x/21xCkin3NIo+BuqoVkjtHTrfbZzB7d8gkuZysRAhGTOvG9jBCYJAhf80WpaTj3Z3l/8sPPn3/Q6ZJchY/v8agY5v6y17jCCQYlGUHVyJoT2m0JhZ20GSYjd7/gs0da8M47Y65A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389934; c=relaxed/simple;
-	bh=8Ifbtp+Xrp9dNG+NdsuXF3jezNz1YIGK7+DpLm6SIXc=;
+	s=arc-20240116; t=1728389938; c=relaxed/simple;
+	bh=Ymn9ED94vjnGXU1w4BpdskVmtyKYHQkpplfqFzcxTF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYybqmQJrNtFak3fqHraI3fwHlv0APF9iypBmuEj77cbmGsm58UBmRyWRNvLYQJ+Zto5qlFJHr0uRV9Lgp9+0vZXTKBXt7wLZV669/KetniekPfWKmVvK7c3T0R2navE7EWnw/NFcMLhafGQ4AbrjShb/Snp9gE74M7pZKpyEwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uee/IJwX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUXafnhZX5GOqs47Mbrqnp6Si14ShLDGucmX+Xqb3QuLoD/+sF76NEbo2A4OceCGkUVvz5FVfgzA92HtOVqKzcjQMzQAzgF7JpCNxbzxd397+vmFzvAFOZ3UV5qBwjKDPI09WASxTB9qnMSiYALUXzblAt7ddQO470+Bi11AWqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHvchwh/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uee/IJwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFE7C4CEC7;
-	Tue,  8 Oct 2024 12:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHvchwh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D084BC4CECD;
+	Tue,  8 Oct 2024 12:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389934;
-	bh=8Ifbtp+Xrp9dNG+NdsuXF3jezNz1YIGK7+DpLm6SIXc=;
+	s=korg; t=1728389937;
+	bh=Ymn9ED94vjnGXU1w4BpdskVmtyKYHQkpplfqFzcxTF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uee/IJwXiAOo3cZZJMwlcnaaYuKozsCdaIpaW9jC5+jo8FMGtFzc0RTNhczugDFOg
-	 MfIwBiv+oi6hUBQ7SN5u701qdZYyw496D0Aoa1kvzcYwho9yZsHe7ZAigN6xWcsw6F
-	 LgAQRMwNRv1JFIl097+sPyadYoNCvqaAOSxZIu8A=
+	b=LHvchwh/TYf+ytnXw/oWwH8yHx5EF/k0uoM8L/elYhSNVztu6eYHfMpQkd7l0MhKT
+	 SL4UA2VYxi8hllBqm+oegn0ot5XNPgvfIQY2M77UyXuM0f6asP0ebkNqsa3rhgwDHJ
+	 il1nsmygBF7E2Qjh7SWSd8ZQnvQgzcBPe574QSzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Newcater <rob@durendal.co.uk>,
-	Christian Heusel <christian@heusel.eu>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Karol Kosik <k.kosik@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 140/482] x86/apic: Remove logical destination mode for 64-bit
-Date: Tue,  8 Oct 2024 14:03:23 +0200
-Message-ID: <20241008115653.812861585@linuxfoundation.org>
+Subject: [PATCH 6.10 141/482] ALSA: usb-audio: Support multiple control interfaces
+Date: Tue,  8 Oct 2024 14:03:24 +0200
+Message-ID: <20241008115653.852742957@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,227 +51,657 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Karol Kosik <k.kosik@outlook.com>
 
-[ Upstream commit 838ba7733e4e3a94a928e8d0a058de1811a58621 ]
+[ Upstream commit 6aa8700150f7dc62f60b4cf5b1624e2e3d9ed78e ]
 
-Logical destination mode of the local APIC is used for systems with up to
-8 CPUs. It has an advantage over physical destination mode as it allows to
-target multiple CPUs at once with IPIs.
+Registering Numark Party Mix II fails with error 'bogus bTerminalLink 1'.
+The problem stems from the driver not being able to find input/output
+terminals required to configure audio streaming. The information about
+those terminals is stored in AudioControl Interface. Numark device
+contains 2 AudioControl Interfaces and the driver checks only one of them.
 
-That advantage was definitely worth it when systems with up to 8 CPUs
-were state of the art for servers and workstations, but that's history.
+According to the USB standard, a device can have multiple audio functions,
+each represented by Audio Interface Collection. Every audio function is
+considered to be closed box and will contain unique AudioControl Interface
+and zero or more AudioStreaming and MIDIStreaming Interfaces.
 
-Aside of that there are systems which fail to work with logical destination
-mode as the ACPI/DMI quirks show and there are AMD Zen1 systems out there
-which fail when interrupt remapping is enabled as reported by Rob and
-Christian. The latter problem can be cured by firmware updates, but not all
-OEMs distribute the required changes.
+The Numark device adheres to the standard and defines two audio functions:
+- MIDIStreaming function
+- AudioStreaming function
+It starts with MIDI function, followed by the audio function. The driver
+saves the first AudioControl Interface in `snd_usb_audio` structure
+associated with the entire device. It then attempts to use this interface
+to query for terminals and clocks. However, this fails because the correct
+information is stored in the second AudioControl Interface, defined in the
+second Audio Interface Collection.
 
-Physical destination mode is guaranteed to work because it is the only way
-to get a CPU up and running via the INIT/INIT/STARTUP sequence.
+This patch introduces a structure holding association between each
+MIDI/Audio Interface and its corresponding AudioControl Interface,
+instead of relying on AudioControl Interface defined for the entire
+device. This structure is populated during usb probing phase and leveraged
+later when querying for terminals and when sending USB requests.
 
-As the number of CPUs keeps increasing, logical destination mode becomes a
-less used code path so there is no real good reason to keep it around.
+Alternative solutions considered include:
+- defining a quirk for Numark where the order of interface is manually
+changed, or terminals are hardcoded in the driver. This solution would
+have fixed only this model, though it seems that device is USB compliant,
+and it also seems that other devices from this company may be affected.
+What's more, it looks like products from other manufacturers have similar
+problems, i.e. Rane One DJ console
+- keeping a list of all AudioControl Interfaces and querying all of them
+to find required information. That would have solved my problem and have
+low probability of breaking other devices, as we would always start with
+the same logic of querying first AudioControl Interface. This solution
+would not have followed the standard though.
 
-Therefore remove logical destination mode support for 64-bit and default to
-physical destination mode.
+This patch preserves the `snd_usb_audio.ctrl_intf` variable, which holds
+the first AudioControl Interface, and uses it as a fallback when some
+interfaces are not parsed correctly and lack an associated AudioControl
+Interface, i.e., when configured via quirks.
 
-Reported-by: Rob Newcater <rob@durendal.co.uk>
-Reported-by: Christian Heusel <christian@heusel.eu>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Rob Newcater <rob@durendal.co.uk>
-Link: https://lore.kernel.org/all/877cd5u671.ffs@tglx
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217865
+Signed-off-by: Karol Kosik <k.kosik@outlook.com>
+Link: https://patch.msgid.link/AS8P190MB1285893F4735C8B32AD3886BEC852@AS8P190MB1285.EURP190.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/apic.h         |   8 --
- arch/x86/kernel/apic/apic_flat_64.c | 119 ++--------------------------
- 2 files changed, 7 insertions(+), 120 deletions(-)
+ sound/usb/card.c           |  2 ++
+ sound/usb/clock.c          | 62 ++++++++++++++++++++++++--------------
+ sound/usb/format.c         |  6 ++--
+ sound/usb/helper.c         | 34 +++++++++++++++++++++
+ sound/usb/helper.h         | 10 ++++--
+ sound/usb/mixer.c          |  2 +-
+ sound/usb/mixer_quirks.c   | 17 ++++++-----
+ sound/usb/mixer_scarlett.c |  4 +--
+ sound/usb/power.c          |  3 +-
+ sound/usb/power.h          |  1 +
+ sound/usb/stream.c         | 21 ++++++++-----
+ sound/usb/usbaudio.h       | 12 ++++++++
+ 12 files changed, 127 insertions(+), 47 deletions(-)
 
-diff --git a/arch/x86/include/asm/apic.h b/arch/x86/include/asm/apic.h
-index 9327eb00e96d0..be2045a18e69b 100644
---- a/arch/x86/include/asm/apic.h
-+++ b/arch/x86/include/asm/apic.h
-@@ -345,20 +345,12 @@ extern struct apic *apic;
-  * APIC drivers are probed based on how they are listed in the .apicdrivers
-  * section. So the order is important and enforced by the ordering
-  * of different apic driver files in the Makefile.
-- *
-- * For the files having two apic drivers, we use apic_drivers()
-- * to enforce the order with in them.
-  */
- #define apic_driver(sym)					\
- 	static const struct apic *__apicdrivers_##sym __used		\
- 	__aligned(sizeof(struct apic *))			\
- 	__section(".apicdrivers") = { &sym }
+diff --git a/sound/usb/card.c b/sound/usb/card.c
+index bdb04fa37a71d..778de9244f1e7 100644
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -206,6 +206,8 @@ static int snd_usb_create_stream(struct snd_usb_audio *chip, int ctrlif, int int
+ 		return -EINVAL;
+ 	}
  
--#define apic_drivers(sym1, sym2)					\
--	static struct apic *__apicdrivers_##sym1##sym2[2] __used	\
--	__aligned(sizeof(struct apic *))				\
--	__section(".apicdrivers") = { &sym1, &sym2 }
--
- extern struct apic *__apicdrivers[], *__apicdrivers_end[];
++	snd_usb_add_ctrl_interface_link(chip, interface, ctrlif);
++
+ 	if (! snd_usb_parse_audio_interface(chip, interface)) {
+ 		usb_set_interface(dev, interface, 0); /* reset the current interface */
+ 		return usb_driver_claim_interface(&usb_audio_driver, iface,
+diff --git a/sound/usb/clock.c b/sound/usb/clock.c
+index 60fcb872a80b6..8f85200292f3f 100644
+--- a/sound/usb/clock.c
++++ b/sound/usb/clock.c
+@@ -76,11 +76,14 @@ static bool validate_clock_multiplier(void *p, int id, int proto)
+ }
  
+ #define DEFINE_FIND_HELPER(name, obj, validator, type2, type3)		\
+-static obj *name(struct snd_usb_audio *chip, int id, int proto)	\
++static obj *name(struct snd_usb_audio *chip, int id,	\
++				const struct audioformat *fmt)	\
+ {									\
+-	return find_uac_clock_desc(chip->ctrl_intf, id, validator,	\
+-				   proto == UAC_VERSION_3 ? (type3) : (type2), \
+-				   proto);				\
++	struct usb_host_interface *ctrl_intf =	\
++		snd_usb_find_ctrl_interface(chip, fmt->iface); \
++	return find_uac_clock_desc(ctrl_intf, id, validator,	\
++				   fmt->protocol == UAC_VERSION_3 ? (type3) : (type2), \
++				   fmt->protocol);				\
+ }
+ 
+ DEFINE_FIND_HELPER(snd_usb_find_clock_source,
+@@ -93,16 +96,19 @@ DEFINE_FIND_HELPER(snd_usb_find_clock_multiplier,
+ 		   union uac23_clock_multiplier_desc, validate_clock_multiplier,
+ 		   UAC2_CLOCK_MULTIPLIER, UAC3_CLOCK_MULTIPLIER);
+ 
+-static int uac_clock_selector_get_val(struct snd_usb_audio *chip, int selector_id)
++static int uac_clock_selector_get_val(struct snd_usb_audio *chip,
++				int selector_id, int iface_no)
+ {
++	struct usb_host_interface *ctrl_intf;
+ 	unsigned char buf;
+ 	int ret;
+ 
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, iface_no);
+ 	ret = snd_usb_ctl_msg(chip->dev, usb_rcvctrlpipe(chip->dev, 0),
+ 			      UAC2_CS_CUR,
+ 			      USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
+ 			      UAC2_CX_CLOCK_SELECTOR << 8,
+-			      snd_usb_ctrl_intf(chip) | (selector_id << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (selector_id << 8),
+ 			      &buf, sizeof(buf));
+ 
+ 	if (ret < 0)
+@@ -111,16 +117,18 @@ static int uac_clock_selector_get_val(struct snd_usb_audio *chip, int selector_i
+ 	return buf;
+ }
+ 
+-static int uac_clock_selector_set_val(struct snd_usb_audio *chip, int selector_id,
+-					unsigned char pin)
++static int uac_clock_selector_set_val(struct snd_usb_audio *chip,
++					int selector_id, unsigned char pin, int iface_no)
+ {
++	struct usb_host_interface *ctrl_intf;
+ 	int ret;
+ 
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, iface_no);
+ 	ret = snd_usb_ctl_msg(chip->dev, usb_sndctrlpipe(chip->dev, 0),
+ 			      UAC2_CS_CUR,
+ 			      USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_OUT,
+ 			      UAC2_CX_CLOCK_SELECTOR << 8,
+-			      snd_usb_ctrl_intf(chip) | (selector_id << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (selector_id << 8),
+ 			      &pin, sizeof(pin));
+ 	if (ret < 0)
+ 		return ret;
+@@ -132,7 +140,7 @@ static int uac_clock_selector_set_val(struct snd_usb_audio *chip, int selector_i
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = uac_clock_selector_get_val(chip, selector_id);
++	ret = uac_clock_selector_get_val(chip, selector_id, iface_no);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -155,8 +163,10 @@ static bool uac_clock_source_is_valid_quirk(struct snd_usb_audio *chip,
+ 	unsigned char data;
+ 	struct usb_device *dev = chip->dev;
+ 	union uac23_clock_source_desc *cs_desc;
++	struct usb_host_interface *ctrl_intf;
+ 
+-	cs_desc = snd_usb_find_clock_source(chip, source_id, fmt->protocol);
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, fmt->iface);
++	cs_desc = snd_usb_find_clock_source(chip, source_id, fmt);
+ 	if (!cs_desc)
+ 		return false;
+ 
+@@ -191,7 +201,7 @@ static bool uac_clock_source_is_valid_quirk(struct snd_usb_audio *chip,
+ 			err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC2_CS_CUR,
+ 					      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_IN,
+ 					      UAC2_CS_CONTROL_CLOCK_VALID << 8,
+-					      snd_usb_ctrl_intf(chip) | (source_id << 8),
++					      snd_usb_ctrl_intf(ctrl_intf) | (source_id << 8),
+ 					      &data, sizeof(data));
+ 			if (err < 0) {
+ 				dev_warn(&dev->dev,
+@@ -217,8 +227,10 @@ static bool uac_clock_source_is_valid(struct snd_usb_audio *chip,
+ 	struct usb_device *dev = chip->dev;
+ 	u32 bmControls;
+ 	union uac23_clock_source_desc *cs_desc;
++	struct usb_host_interface *ctrl_intf;
+ 
+-	cs_desc = snd_usb_find_clock_source(chip, source_id, fmt->protocol);
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, fmt->iface);
++	cs_desc = snd_usb_find_clock_source(chip, source_id, fmt);
+ 	if (!cs_desc)
+ 		return false;
+ 
+@@ -235,7 +247,7 @@ static bool uac_clock_source_is_valid(struct snd_usb_audio *chip,
+ 	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC2_CS_CUR,
+ 			      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_IN,
+ 			      UAC2_CS_CONTROL_CLOCK_VALID << 8,
+-			      snd_usb_ctrl_intf(chip) | (source_id << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (source_id << 8),
+ 			      &data, sizeof(data));
+ 
+ 	if (err < 0) {
+@@ -274,7 +286,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 	}
+ 
+ 	/* first, see if the ID we're looking at is a clock source already */
+-	source = snd_usb_find_clock_source(chip, entity_id, proto);
++	source = snd_usb_find_clock_source(chip, entity_id, fmt);
+ 	if (source) {
+ 		entity_id = GET_VAL(source, proto, bClockID);
+ 		if (validate && !uac_clock_source_is_valid(chip, fmt,
+@@ -287,7 +299,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 		return entity_id;
+ 	}
+ 
+-	selector = snd_usb_find_clock_selector(chip, entity_id, proto);
++	selector = snd_usb_find_clock_selector(chip, entity_id, fmt);
+ 	if (selector) {
+ 		pins = GET_VAL(selector, proto, bNrInPins);
+ 		clock_id = GET_VAL(selector, proto, bClockID);
+@@ -317,7 +329,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 
+ 		/* the entity ID we are looking at is a selector.
+ 		 * find out what it currently selects */
+-		ret = uac_clock_selector_get_val(chip, clock_id);
++		ret = uac_clock_selector_get_val(chip, clock_id, fmt->iface);
+ 		if (ret < 0) {
+ 			if (!chip->autoclock)
+ 				return ret;
+@@ -346,7 +358,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 			if (chip->quirk_flags & QUIRK_FLAG_SKIP_CLOCK_SELECTOR ||
+ 			    !writeable)
+ 				return ret;
+-			err = uac_clock_selector_set_val(chip, entity_id, cur);
++			err = uac_clock_selector_set_val(chip, entity_id, cur, fmt->iface);
+ 			if (err < 0) {
+ 				if (pins == 1) {
+ 					usb_audio_dbg(chip,
+@@ -377,7 +389,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 			if (ret < 0)
+ 				continue;
+ 
+-			err = uac_clock_selector_set_val(chip, entity_id, i);
++			err = uac_clock_selector_set_val(chip, entity_id, i, fmt->iface);
+ 			if (err < 0)
+ 				continue;
+ 
+@@ -391,7 +403,7 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 	}
+ 
+ 	/* FIXME: multipliers only act as pass-thru element for now */
+-	multiplier = snd_usb_find_clock_multiplier(chip, entity_id, proto);
++	multiplier = snd_usb_find_clock_multiplier(chip, entity_id, fmt);
+ 	if (multiplier)
+ 		return __uac_clock_find_source(chip, fmt,
+ 					       GET_VAL(multiplier, proto, bCSourceID),
+@@ -491,11 +503,13 @@ static int get_sample_rate_v2v3(struct snd_usb_audio *chip, int iface,
+ 	struct usb_device *dev = chip->dev;
+ 	__le32 data;
+ 	int err;
++	struct usb_host_interface *ctrl_intf;
+ 
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, iface);
+ 	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC2_CS_CUR,
+ 			      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_IN,
+ 			      UAC2_CS_CONTROL_SAM_FREQ << 8,
+-			      snd_usb_ctrl_intf(chip) | (clock << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (clock << 8),
+ 			      &data, sizeof(data));
+ 	if (err < 0) {
+ 		dev_warn(&dev->dev, "%d:%d: cannot get freq (v2/v3): err %d\n",
+@@ -524,8 +538,10 @@ int snd_usb_set_sample_rate_v2v3(struct snd_usb_audio *chip,
+ 	__le32 data;
+ 	int err;
+ 	union uac23_clock_source_desc *cs_desc;
++	struct usb_host_interface *ctrl_intf;
+ 
+-	cs_desc = snd_usb_find_clock_source(chip, clock, fmt->protocol);
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, fmt->iface);
++	cs_desc = snd_usb_find_clock_source(chip, clock, fmt);
+ 
+ 	if (!cs_desc)
+ 		return 0;
+@@ -544,7 +560,7 @@ int snd_usb_set_sample_rate_v2v3(struct snd_usb_audio *chip,
+ 	err = snd_usb_ctl_msg(chip->dev, usb_sndctrlpipe(chip->dev, 0), UAC2_CS_CUR,
+ 			      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_OUT,
+ 			      UAC2_CS_CONTROL_SAM_FREQ << 8,
+-			      snd_usb_ctrl_intf(chip) | (clock << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (clock << 8),
+ 			      &data, sizeof(data));
+ 	if (err < 0)
+ 		return err;
+diff --git a/sound/usb/format.c b/sound/usb/format.c
+index 3b45d0ee76938..61c4aca8be09e 100644
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -548,7 +548,9 @@ static int parse_audio_format_rates_v2v3(struct snd_usb_audio *chip,
+ 	unsigned char tmp[2], *data;
+ 	int nr_triplets, data_size, ret = 0, ret_l6;
+ 	int clock = snd_usb_clock_find_source(chip, fp, false);
++	struct usb_host_interface *ctrl_intf;
+ 
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, fp->iface);
+ 	if (clock < 0) {
+ 		dev_err(&dev->dev,
+ 			"%s(): unable to find clock source (clock %d)\n",
+@@ -560,7 +562,7 @@ static int parse_audio_format_rates_v2v3(struct snd_usb_audio *chip,
+ 	ret = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC2_CS_RANGE,
+ 			      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_IN,
+ 			      UAC2_CS_CONTROL_SAM_FREQ << 8,
+-			      snd_usb_ctrl_intf(chip) | (clock << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (clock << 8),
+ 			      tmp, sizeof(tmp));
+ 
+ 	if (ret < 0) {
+@@ -595,7 +597,7 @@ static int parse_audio_format_rates_v2v3(struct snd_usb_audio *chip,
+ 	ret = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC2_CS_RANGE,
+ 			      USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_IN,
+ 			      UAC2_CS_CONTROL_SAM_FREQ << 8,
+-			      snd_usb_ctrl_intf(chip) | (clock << 8),
++			      snd_usb_ctrl_intf(ctrl_intf) | (clock << 8),
+ 			      data, data_size);
+ 
+ 	if (ret < 0) {
+diff --git a/sound/usb/helper.c b/sound/usb/helper.c
+index bf80e55d013a8..72b671fb2c84c 100644
+--- a/sound/usb/helper.c
++++ b/sound/usb/helper.c
+@@ -130,3 +130,37 @@ snd_usb_get_host_interface(struct snd_usb_audio *chip, int ifnum, int altsetting
+ 		return NULL;
+ 	return usb_altnum_to_altsetting(iface, altsetting);
+ }
++
++int snd_usb_add_ctrl_interface_link(struct snd_usb_audio *chip, int ifnum,
++		int ctrlif)
++{
++	struct usb_device *dev = chip->dev;
++	struct usb_host_interface *host_iface;
++
++	if (chip->num_intf_to_ctrl >= MAX_CARD_INTERFACES) {
++		dev_info(&dev->dev, "Too many interfaces assigned to the single USB-audio card\n");
++		return -EINVAL;
++	}
++
++	/* find audiocontrol interface */
++	host_iface = &usb_ifnum_to_if(dev, ctrlif)->altsetting[0];
++
++	chip->intf_to_ctrl[chip->num_intf_to_ctrl].interface = ifnum;
++	chip->intf_to_ctrl[chip->num_intf_to_ctrl].ctrl_intf = host_iface;
++	chip->num_intf_to_ctrl++;
++
++	return 0;
++}
++
++struct usb_host_interface *snd_usb_find_ctrl_interface(struct snd_usb_audio *chip,
++							int ifnum)
++{
++	int i;
++
++	for (i = 0; i < chip->num_intf_to_ctrl; ++i)
++		if (chip->intf_to_ctrl[i].interface == ifnum)
++			return chip->intf_to_ctrl[i].ctrl_intf;
++
++	/* Fallback to first audiocontrol interface */
++	return chip->ctrl_intf;
++}
+diff --git a/sound/usb/helper.h b/sound/usb/helper.h
+index e2b51ec96ec62..0372e050b3dc4 100644
+--- a/sound/usb/helper.h
++++ b/sound/usb/helper.h
+@@ -17,6 +17,12 @@ unsigned char snd_usb_parse_datainterval(struct snd_usb_audio *chip,
+ struct usb_host_interface *
+ snd_usb_get_host_interface(struct snd_usb_audio *chip, int ifnum, int altsetting);
+ 
++int snd_usb_add_ctrl_interface_link(struct snd_usb_audio *chip, int ifnum,
++		int ctrlif);
++
++struct usb_host_interface *snd_usb_find_ctrl_interface(struct snd_usb_audio *chip,
++								int ifnum);
++
  /*
-diff --git a/arch/x86/kernel/apic/apic_flat_64.c b/arch/x86/kernel/apic/apic_flat_64.c
-index f37ad3392fec9..e0308d8c4e6c2 100644
---- a/arch/x86/kernel/apic/apic_flat_64.c
-+++ b/arch/x86/kernel/apic/apic_flat_64.c
-@@ -8,129 +8,25 @@
-  * Martin Bligh, Andi Kleen, James Bottomley, John Stultz, and
-  * James Cleverdon.
-  */
--#include <linux/cpumask.h>
- #include <linux/export.h>
--#include <linux/acpi.h>
+  * retrieve usb_interface descriptor from the host interface
+  * (conditional for compatibility with the older API)
+@@ -28,9 +34,9 @@ snd_usb_get_host_interface(struct snd_usb_audio *chip, int ifnum, int altsetting
  
--#include <asm/jailhouse_para.h>
- #include <asm/apic.h>
+ #define snd_usb_get_speed(dev) ((dev)->speed)
  
- #include "local.h"
- 
--static struct apic apic_physflat;
--static struct apic apic_flat;
--
--struct apic *apic __ro_after_init = &apic_flat;
--EXPORT_SYMBOL_GPL(apic);
--
--static int flat_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
--{
--	return 1;
--}
--
--static void _flat_send_IPI_mask(unsigned long mask, int vector)
--{
--	unsigned long flags;
--
--	local_irq_save(flags);
--	__default_send_IPI_dest_field(mask, vector, APIC_DEST_LOGICAL);
--	local_irq_restore(flags);
--}
--
--static void flat_send_IPI_mask(const struct cpumask *cpumask, int vector)
--{
--	unsigned long mask = cpumask_bits(cpumask)[0];
--
--	_flat_send_IPI_mask(mask, vector);
--}
--
--static void
--flat_send_IPI_mask_allbutself(const struct cpumask *cpumask, int vector)
--{
--	unsigned long mask = cpumask_bits(cpumask)[0];
--	int cpu = smp_processor_id();
--
--	if (cpu < BITS_PER_LONG)
--		__clear_bit(cpu, &mask);
--
--	_flat_send_IPI_mask(mask, vector);
--}
--
--static u32 flat_get_apic_id(u32 x)
-+static u32 physflat_get_apic_id(u32 x)
+-static inline int snd_usb_ctrl_intf(struct snd_usb_audio *chip)
++static inline int snd_usb_ctrl_intf(struct usb_host_interface *ctrl_intf)
  {
- 	return (x >> 24) & 0xFF;
+-	return get_iface_desc(chip->ctrl_intf)->bInterfaceNumber;
++	return get_iface_desc(ctrl_intf)->bInterfaceNumber;
  }
  
--static int flat_probe(void)
-+static int physflat_probe(void)
- {
- 	return 1;
+ /* in validate.c */
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 197fd07e69edd..017b50322d88f 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -728,7 +728,7 @@ static int get_cluster_channels_v3(struct mixer_build *state, unsigned int clust
+ 			UAC3_CS_REQ_HIGH_CAPABILITY_DESCRIPTOR,
+ 			USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
+ 			cluster_id,
+-			snd_usb_ctrl_intf(state->chip),
++			snd_usb_ctrl_intf(state->mixer->hostif),
+ 			&c_header, sizeof(c_header));
+ 	if (err < 0)
+ 		goto error;
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 212b5e6443d88..1d8bf1ecfed44 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1043,7 +1043,7 @@ static int snd_ftu_eff_switch_init(struct usb_mixer_interface *mixer,
+ 	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0), UAC_GET_CUR,
+ 			      USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
+ 			      pval & 0xff00,
+-			      snd_usb_ctrl_intf(mixer->chip) | ((pval & 0xff) << 8),
++			      snd_usb_ctrl_intf(mixer->hostif) | ((pval & 0xff) << 8),
+ 			      value, 2);
+ 	if (err < 0)
+ 		return err;
+@@ -1077,7 +1077,7 @@ static int snd_ftu_eff_switch_update(struct usb_mixer_elem_list *list)
+ 			      UAC_SET_CUR,
+ 			      USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_OUT,
+ 			      pval & 0xff00,
+-			      snd_usb_ctrl_intf(chip) | ((pval & 0xff) << 8),
++			      snd_usb_ctrl_intf(list->mixer->hostif) | ((pval & 0xff) << 8),
+ 			      value, 2);
+ 	snd_usb_unlock_shutdown(chip);
+ 	return err;
+@@ -2115,24 +2115,25 @@ static int dell_dock_mixer_create(struct usb_mixer_interface *mixer)
+ 	return 0;
  }
  
--static struct apic apic_flat __ro_after_init = {
--	.name				= "flat",
--	.probe				= flat_probe,
--	.acpi_madt_oem_check		= flat_acpi_madt_oem_check,
--
--	.dest_mode_logical		= true,
--
--	.disable_esr			= 0,
--
--	.init_apic_ldr			= default_init_apic_ldr,
--	.cpu_present_to_apicid		= default_cpu_present_to_apicid,
--
--	.max_apic_id			= 0xFE,
--	.get_apic_id			= flat_get_apic_id,
--
--	.calc_dest_apicid		= apic_flat_calc_apicid,
--
--	.send_IPI			= default_send_IPI_single,
--	.send_IPI_mask			= flat_send_IPI_mask,
--	.send_IPI_mask_allbutself	= flat_send_IPI_mask_allbutself,
--	.send_IPI_allbutself		= default_send_IPI_allbutself,
--	.send_IPI_all			= default_send_IPI_all,
--	.send_IPI_self			= default_send_IPI_self,
--	.nmi_to_offline_cpu		= true,
--
--	.read				= native_apic_mem_read,
--	.write				= native_apic_mem_write,
--	.eoi				= native_apic_mem_eoi,
--	.icr_read			= native_apic_icr_read,
--	.icr_write			= native_apic_icr_write,
--	.wait_icr_idle			= apic_mem_wait_icr_idle,
--	.safe_wait_icr_idle		= apic_mem_wait_icr_idle_timeout,
--};
--
--/*
-- * Physflat mode is used when there are more than 8 CPUs on a system.
-- * We cannot use logical delivery in this case because the mask
-- * overflows, so use physical mode.
-- */
- static int physflat_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
+-static void dell_dock_init_vol(struct snd_usb_audio *chip, int ch, int id)
++static void dell_dock_init_vol(struct usb_mixer_interface *mixer, int ch, int id)
  {
--#ifdef CONFIG_ACPI
--	/*
--	 * Quirk: some x86_64 machines can only use physical APIC mode
--	 * regardless of how many processors are present (x86_64 ES7000
--	 * is an example).
--	 */
--	if (acpi_gbl_FADT.header.revision >= FADT2_REVISION_ID &&
--		(acpi_gbl_FADT.flags & ACPI_FADT_APIC_PHYSICAL)) {
--		printk(KERN_DEBUG "system APIC only can use physical flat");
--		return 1;
--	}
--
--	if (!strncmp(oem_id, "IBM", 3) && !strncmp(oem_table_id, "EXA", 3)) {
--		printk(KERN_DEBUG "IBM Summit detected, will use apic physical");
--		return 1;
--	}
--#endif
--
--	return 0;
--}
--
--static int physflat_probe(void)
--{
--	return apic == &apic_physflat || num_possible_cpus() > 8 || jailhouse_paravirt();
-+	return 1;
++	struct snd_usb_audio *chip = mixer->chip;
+ 	u16 buf = 0;
+ 
+ 	snd_usb_ctl_msg(chip->dev, usb_sndctrlpipe(chip->dev, 0), UAC_SET_CUR,
+ 			USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_OUT,
+ 			(UAC_FU_VOLUME << 8) | ch,
+-			snd_usb_ctrl_intf(chip) | (id << 8),
++			snd_usb_ctrl_intf(mixer->hostif) | (id << 8),
+ 			&buf, 2);
  }
  
- static struct apic apic_physflat __ro_after_init = {
-@@ -146,7 +42,7 @@ static struct apic apic_physflat __ro_after_init = {
- 	.cpu_present_to_apicid		= default_cpu_present_to_apicid,
+ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
+ {
+ 	/* fix to 0dB playback volumes */
+-	dell_dock_init_vol(mixer->chip, 1, 16);
+-	dell_dock_init_vol(mixer->chip, 2, 16);
+-	dell_dock_init_vol(mixer->chip, 1, 19);
+-	dell_dock_init_vol(mixer->chip, 2, 19);
++	dell_dock_init_vol(mixer, 1, 16);
++	dell_dock_init_vol(mixer, 2, 16);
++	dell_dock_init_vol(mixer, 1, 19);
++	dell_dock_init_vol(mixer, 2, 19);
+ 	return 0;
+ }
  
- 	.max_apic_id			= 0xFE,
--	.get_apic_id			= flat_get_apic_id,
-+	.get_apic_id			= physflat_get_apic_id,
+diff --git a/sound/usb/mixer_scarlett.c b/sound/usb/mixer_scarlett.c
+index 0d6e4f15bf77c..ff548041679bb 100644
+--- a/sound/usb/mixer_scarlett.c
++++ b/sound/usb/mixer_scarlett.c
+@@ -460,7 +460,7 @@ static int scarlett_ctl_meter_get(struct snd_kcontrol *kctl,
+ 	struct snd_usb_audio *chip = elem->head.mixer->chip;
+ 	unsigned char buf[2 * MAX_CHANNELS] = {0, };
+ 	int wValue = (elem->control << 8) | elem->idx_off;
+-	int idx = snd_usb_ctrl_intf(chip) | (elem->head.id << 8);
++	int idx = snd_usb_ctrl_intf(elem->head.mixer->hostif) | (elem->head.id << 8);
+ 	int err;
  
- 	.calc_dest_apicid		= apic_default_calc_apicid,
+ 	err = snd_usb_ctl_msg(chip->dev,
+@@ -1002,7 +1002,7 @@ int snd_scarlett_controls_create(struct usb_mixer_interface *mixer)
+ 	err = snd_usb_ctl_msg(mixer->chip->dev,
+ 		usb_sndctrlpipe(mixer->chip->dev, 0), UAC2_CS_CUR,
+ 		USB_RECIP_INTERFACE | USB_TYPE_CLASS |
+-		USB_DIR_OUT, 0x0100, snd_usb_ctrl_intf(mixer->chip) |
++		USB_DIR_OUT, 0x0100, snd_usb_ctrl_intf(mixer->hostif) |
+ 		(0x29 << 8), sample_rate_buffer, 4);
+ 	if (err < 0)
+ 		return err;
+diff --git a/sound/usb/power.c b/sound/usb/power.c
+index 606a2cb23eab6..66bd4daa68fd5 100644
+--- a/sound/usb/power.c
++++ b/sound/usb/power.c
+@@ -40,6 +40,7 @@ snd_usb_find_power_domain(struct usb_host_interface *ctrl_iface,
+ 					le16_to_cpu(pd_desc->waRecoveryTime1);
+ 				pd->pd_d2d0_rec =
+ 					le16_to_cpu(pd_desc->waRecoveryTime2);
++				pd->ctrl_iface = ctrl_iface;
+ 				return pd;
+ 			}
+ 		}
+@@ -57,7 +58,7 @@ int snd_usb_power_domain_set(struct snd_usb_audio *chip,
+ 	unsigned char current_state;
+ 	int err, idx;
  
-@@ -166,8 +62,7 @@ static struct apic apic_physflat __ro_after_init = {
- 	.wait_icr_idle			= apic_mem_wait_icr_idle,
- 	.safe_wait_icr_idle		= apic_mem_wait_icr_idle_timeout,
+-	idx = snd_usb_ctrl_intf(chip) | (pd->pd_id << 8);
++	idx = snd_usb_ctrl_intf(pd->ctrl_iface) | (pd->pd_id << 8);
+ 
+ 	err = snd_usb_ctl_msg(chip->dev, usb_rcvctrlpipe(chip->dev, 0),
+ 			      UAC2_CS_CUR,
+diff --git a/sound/usb/power.h b/sound/usb/power.h
+index 396e3e51440a7..1fa92ad0ca925 100644
+--- a/sound/usb/power.h
++++ b/sound/usb/power.h
+@@ -6,6 +6,7 @@ struct snd_usb_power_domain {
+ 	int pd_id;              /* UAC3 Power Domain ID */
+ 	int pd_d1d0_rec;        /* D1 to D0 recovery time */
+ 	int pd_d2d0_rec;        /* D2 to D0 recovery time */
++	struct usb_host_interface *ctrl_iface; /* Control interface */
  };
-+apic_driver(apic_physflat);
  
--/*
-- * We need to check for physflat first, so this order is important.
-- */
--apic_drivers(apic_physflat, apic_flat);
-+struct apic *apic __ro_after_init = &apic_physflat;
-+EXPORT_SYMBOL_GPL(apic);
+ enum {
+diff --git a/sound/usb/stream.c b/sound/usb/stream.c
+index e14c725acebf2..d70c140813d68 100644
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -713,10 +713,13 @@ snd_usb_get_audioformat_uac12(struct snd_usb_audio *chip,
+ 	struct usb_device *dev = chip->dev;
+ 	struct uac_format_type_i_continuous_descriptor *fmt;
+ 	unsigned int num_channels = 0, chconfig = 0;
++	struct usb_host_interface *ctrl_intf;
+ 	struct audioformat *fp;
+ 	int clock = 0;
+ 	u64 format;
+ 
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, iface_no);
++
+ 	/* get audio formats */
+ 	if (protocol == UAC_VERSION_1) {
+ 		struct uac1_as_header_descriptor *as =
+@@ -740,7 +743,7 @@ snd_usb_get_audioformat_uac12(struct snd_usb_audio *chip,
+ 
+ 		format = le16_to_cpu(as->wFormatTag); /* remember the format value */
+ 
+-		iterm = snd_usb_find_input_terminal_descriptor(chip->ctrl_intf,
++		iterm = snd_usb_find_input_terminal_descriptor(ctrl_intf,
+ 							       as->bTerminalLink,
+ 							       protocol);
+ 		if (iterm) {
+@@ -776,7 +779,7 @@ snd_usb_get_audioformat_uac12(struct snd_usb_audio *chip,
+ 		 * lookup the terminal associated to this interface
+ 		 * to extract the clock
+ 		 */
+-		input_term = snd_usb_find_input_terminal_descriptor(chip->ctrl_intf,
++		input_term = snd_usb_find_input_terminal_descriptor(ctrl_intf,
+ 								    as->bTerminalLink,
+ 								    protocol);
+ 		if (input_term) {
+@@ -786,7 +789,7 @@ snd_usb_get_audioformat_uac12(struct snd_usb_audio *chip,
+ 			goto found_clock;
+ 		}
+ 
+-		output_term = snd_usb_find_output_terminal_descriptor(chip->ctrl_intf,
++		output_term = snd_usb_find_output_terminal_descriptor(ctrl_intf,
+ 								      as->bTerminalLink,
+ 								      protocol);
+ 		if (output_term) {
+@@ -870,6 +873,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 	struct uac3_cluster_header_descriptor *cluster;
+ 	struct uac3_as_header_descriptor *as = NULL;
+ 	struct uac3_hc_descriptor_header hc_header;
++	struct usb_host_interface *ctrl_intf;
+ 	struct snd_pcm_chmap_elem *chmap;
+ 	struct snd_usb_power_domain *pd;
+ 	unsigned char badd_profile;
+@@ -881,6 +885,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 	int err;
+ 
+ 	badd_profile = chip->badd_profile;
++	ctrl_intf = snd_usb_find_ctrl_interface(chip, iface_no);
+ 
+ 	if (badd_profile >= UAC3_FUNCTION_SUBCLASS_GENERIC_IO) {
+ 		unsigned int maxpacksize =
+@@ -966,7 +971,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 			UAC3_CS_REQ_HIGH_CAPABILITY_DESCRIPTOR,
+ 			USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
+ 			cluster_id,
+-			snd_usb_ctrl_intf(chip),
++			snd_usb_ctrl_intf(ctrl_intf),
+ 			&hc_header, sizeof(hc_header));
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+@@ -990,7 +995,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 			UAC3_CS_REQ_HIGH_CAPABILITY_DESCRIPTOR,
+ 			USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
+ 			cluster_id,
+-			snd_usb_ctrl_intf(chip),
++			snd_usb_ctrl_intf(ctrl_intf),
+ 			cluster, wLength);
+ 	if (err < 0) {
+ 		kfree(cluster);
+@@ -1011,7 +1016,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 	 * lookup the terminal associated to this interface
+ 	 * to extract the clock
+ 	 */
+-	input_term = snd_usb_find_input_terminal_descriptor(chip->ctrl_intf,
++	input_term = snd_usb_find_input_terminal_descriptor(ctrl_intf,
+ 							    as->bTerminalLink,
+ 							    UAC_VERSION_3);
+ 	if (input_term) {
+@@ -1019,7 +1024,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 		goto found_clock;
+ 	}
+ 
+-	output_term = snd_usb_find_output_terminal_descriptor(chip->ctrl_intf,
++	output_term = snd_usb_find_output_terminal_descriptor(ctrl_intf,
+ 							      as->bTerminalLink,
+ 							      UAC_VERSION_3);
+ 	if (output_term) {
+@@ -1068,7 +1073,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 							       UAC_VERSION_3,
+ 							       iface_no);
+ 
+-		pd = snd_usb_find_power_domain(chip->ctrl_intf,
++		pd = snd_usb_find_power_domain(ctrl_intf,
+ 					       as->bTerminalLink);
+ 
+ 		/* ok, let's parse further... */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 43d4029edab46..b0f042c996087 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -21,6 +21,15 @@ struct media_intf_devnode;
+ 
+ #define MAX_CARD_INTERFACES	16
+ 
++/*
++ * Structure holding assosiation between Audio Control Interface
++ * and given Streaming or Midi Interface.
++ */
++struct snd_intf_to_ctrl {
++	u8 interface;
++	struct usb_host_interface *ctrl_intf;
++};
++
+ struct snd_usb_audio {
+ 	int index;
+ 	struct usb_device *dev;
+@@ -63,6 +72,9 @@ struct snd_usb_audio {
+ 	struct usb_host_interface *ctrl_intf;	/* the audio control interface */
+ 	struct media_device *media_dev;
+ 	struct media_intf_devnode *ctl_intf_media_devnode;
++
++	unsigned int num_intf_to_ctrl;
++	struct snd_intf_to_ctrl intf_to_ctrl[MAX_CARD_INTERFACES];
+ };
+ 
+ #define USB_AUDIO_IFACE_UNUSED	((void *)-1L)
 -- 
 2.43.0
 
