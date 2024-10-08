@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6BF1D0BAA;
-	Tue,  8 Oct 2024 12:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF6A1DE3AE;
+	Tue,  8 Oct 2024 12:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390492; cv=none; b=cFGC302vLuO80GxIh78Ptjn0CBXoAny9/n3femTkOQoaaXffQCwFwqhVUZsGP/pXSHaw6Jp91D+L37xCQvCSYqdBWcs4qL0Dnw5jSXk0gFAD20R395RjzvRLFwK1vHXPr6CZQW8FcPuRUTWG7uTT/lTOn7kW+yNK4Lxl2M21DxE=
+	t=1728390496; cv=none; b=dDjMt/g7Yo6baF7RjMNfj9hRhsYUBqL+Qa5W6CqoKyuNPm+Eas9YUWgfGleP+Xsx/fZFJB21ifAiXBb+X6bN9+4OqzZDD/YzuXhGaVSPMdsi2oxOaT1LdFceZERdCd69Li3Ta64wvpTooHROH/ymRLBuUDqbonHTJTa0wmJggXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390492; c=relaxed/simple;
-	bh=LwOS6LnhyiF33ggj2Vw6uBKAjZFWHkKUymZUdR9d9HI=;
+	s=arc-20240116; t=1728390496; c=relaxed/simple;
+	bh=gzueCPlRjqTcB5Ada1PS5YK9y1MyYJrPUX6BPfGz9OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awq1tYZlSx4HlE/Aue0MKxqSFPE0xqGQwCdee7OKc4yHJUb0cxNs0WB/0lfevJFw1+NhRC8q7LCphzry3AgjrjGh8+y8/j9rBUqRXBbgSB5CBl+Z1wyxmU/mwPCD4/VhKwOVF954l739vIhrE4qUc8qvVar6K5cQ2TEG+eae4QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQiQgTeM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK/DeXAJCN57jgQZe4O3o18dOLmG+2L7xomPWhHVXrJI9A9t169e2+PcxH43DWXEvEIaTPFRg3ai9LlQ85hXW8+d7L0xZq6zT4fQCb1+bM2vgAY62ZinpCMJ8jf6u8oKwWAVNOFV7b+CNS+LEtKN/b+gsR4lewj41XYh2Td7njo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO/tG8z6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQiQgTeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4F2C4CEC7;
-	Tue,  8 Oct 2024 12:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO/tG8z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887EAC4CEC7;
+	Tue,  8 Oct 2024 12:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390492;
-	bh=LwOS6LnhyiF33ggj2Vw6uBKAjZFWHkKUymZUdR9d9HI=;
+	s=korg; t=1728390495;
+	bh=gzueCPlRjqTcB5Ada1PS5YK9y1MyYJrPUX6BPfGz9OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQiQgTeMRVBZoDm3nmOP/yUiUpJwjTujFneetKxs+z1eX7xZ+gqm7hdKqg/e+SgJu
-	 hQ53rf6YQUbFV1Ln7iEMQMsPh3nk4vDE3wlaNtj8PzwiBgPGhuMHVR4ExzrxMUdsVH
-	 FBpmZkCIWkHmhr01tMpUrGdjiiBle40jWAxJiPgs=
+	b=fO/tG8z6YNhBaTtpkFFYY0m7rLpk2EmwVwxAddlXSa3zIxtQ4eTMz2WOX9ZOi0UuW
+	 TjVKbmrUQ+skHG1ZbVa+BaDiAxEg2Htdz7AEPtVfD4G8UlioYkFysUpNRIVzf1hezZ
+	 7QumlJK0rPdhKkZOs3CKH7BQUmqfNTjvP7rTbGs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.10 306/482] spi: bcm63xx: Fix missing pm_runtime_disable()
-Date: Tue,  8 Oct 2024 14:06:09 +0200
-Message-ID: <20241008115700.476659310@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.10 307/482] power: supply: hwmon: Fix missing temp1_max_alarm attribute
+Date: Tue,  8 Oct 2024 14:06:10 +0200
+Message-ID: <20241008115700.516159384@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,53 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 265697288ec2160ca84707565d6641d46f69b0ff upstream.
+commit e50a57d16f897e45de1112eb6478577b197fab52 upstream.
 
-The pm_runtime_disable() is missing in the remove function, fix it
-by using devm_pm_runtime_enable(), so the pm_runtime_disable() in
-the probe error path can also be removed.
+Temp channel 0 aka temp1 can have a temp1_max_alarm attribute for
+power_supply devices which have a POWER_SUPPLY_PROP_TEMP_ALERT_MAX
+property.
 
-Fixes: 2d13f2ff6073 ("spi: bcm63xx-spi: fix pm_runtime")
-Cc: stable@vger.kernel.org # v5.13+
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20240819123349.4020472-3-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+HWMON_T_MAX_ALARM was missing from power_supply_hwmon_info for
+temp channel 0, causing the hwmon temp1_max_alarm attribute to be
+missing from such power_supply devices.
+
+Add this to power_supply_hwmon_info to fix this.
+
+Fixes: f1d33ae806ec ("power: supply: remove duplicated argument in power_supply_hwmon_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240908185337.103696-2-hdegoede@redhat.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/power/supply/power_supply_hwmon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -584,13 +584,15 @@ static int bcm63xx_spi_probe(struct plat
+--- a/drivers/power/supply/power_supply_hwmon.c
++++ b/drivers/power/supply/power_supply_hwmon.c
+@@ -299,7 +299,8 @@ static const struct hwmon_channel_info *
+ 			   HWMON_T_INPUT     |
+ 			   HWMON_T_MAX       |
+ 			   HWMON_T_MIN       |
+-			   HWMON_T_MIN_ALARM,
++			   HWMON_T_MIN_ALARM |
++			   HWMON_T_MAX_ALARM,
  
- 	bcm_spi_writeb(bs, SPI_INTR_CLEAR_ALL, SPI_INT_STATUS);
- 
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		goto out_clk_disable;
- 
- 	/* register and we are done */
- 	ret = devm_spi_register_controller(dev, host);
- 	if (ret) {
- 		dev_err(dev, "spi register failed\n");
--		goto out_pm_disable;
-+		goto out_clk_disable;
- 	}
- 
- 	dev_info(dev, "at %pr (irq %d, FIFOs size %d)\n",
-@@ -598,8 +600,6 @@ static int bcm63xx_spi_probe(struct plat
- 
- 	return 0;
- 
--out_pm_disable:
--	pm_runtime_disable(&pdev->dev);
- out_clk_disable:
- 	clk_disable_unprepare(clk);
- out_err:
+ 			   HWMON_T_LABEL     |
+ 			   HWMON_T_INPUT     |
 
 
