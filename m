@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F8913A257;
-	Tue,  8 Oct 2024 13:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA79718C333;
+	Tue,  8 Oct 2024 13:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393606; cv=none; b=pKhGpN/9NqxRNE6PHtO8NcsTZRTGArQZHvowMTTnh/y11qrix0Ug+vueTCw7fuYTAer9YOD+ImFFco4ZqzcmUkRmGf3buHCbRunzM7DMcy3sUfz8WIia0Wyfa1ZPJMb6O6m2f/nqQs8u5BL9GH7pE9c7lDuUu/M2zppKXGcye+8=
+	t=1728393608; cv=none; b=rx/T3mt3nrGXW2oS5STa2I6K14zYRBE3vWWEoL/pRvVLFl5y9VXHAHxgAyQRjON721KfUwF/8hRxRAo+M90qzd8MD6i0RhM5LbTcWl4sTK6PRVFrg8oKkwzLJuh35CuEdVE8wBpy+dYDe3Re5uhAj5m/1kOsBwgi2vkAqU9RqzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393606; c=relaxed/simple;
-	bh=ZW47sO9PcbNf54odBG9xOrqqB7yJUUQHMJfl+FRV4j4=;
+	s=arc-20240116; t=1728393608; c=relaxed/simple;
+	bh=odu0cmUwUdgUo9c8DK1/hEEuOLFjL3uqSMPUHe2Splk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rz9Ryyz2Odc6c0Cipom8w9Y0uTyyhdm183g2NRUW2Rinq2vsXFenelwcmkRRldiHtssctCO63p9gTzc1V939vj7smPVW42WyKCPJe2Mj8Nm3PeM/3fZTxlydvjGYD4ABvOTNlvDuvyc09Nq2jT+g5ntxOQDxvAbTBIO0Pd1udL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX78rWq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcJw3t/uD9Y6Ukw8XCXnwlKvpdH0GclZG7LvAuApmp9zkp5w/zIe3USHdQGXNT8n3t2gay+eYH4z1NzhyBLFvS/yf7o1eOZvUW5g0wWJt+1ObMuLD2QHp+m1SzrgJeMc2ksKDdU6HfcTDXUl0qusZaT5oeznUf7pbILY+U/YS1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/8pfA+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX78rWq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85930C4CED3;
-	Tue,  8 Oct 2024 13:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/8pfA+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6210FC4CEC7;
+	Tue,  8 Oct 2024 13:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393605;
-	bh=ZW47sO9PcbNf54odBG9xOrqqB7yJUUQHMJfl+FRV4j4=;
+	s=korg; t=1728393608;
+	bh=odu0cmUwUdgUo9c8DK1/hEEuOLFjL3uqSMPUHe2Splk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XX78rWq/RVo2Q+QsXUWNe6IKDiI3zzXmrQ91gdEG31EiAyPQFwJiSTCQroFTGwR0x
-	 IQUnJLIQ8WnUUyGwjzrakH5Vm5G49hpdY5ayj2SBX4Ee1oNvG/ILQO9wfn1/gdpeii
-	 KyYK9ad/NOXV1ekAYd1VFA1zCyaYlzMrpVCV7URU=
+	b=q/8pfA+hPKqBj15bavsxZTXNoBI7Ph4aRv+NhtTHg2j+2znI0r0SM8pqLNsGdgk7X
+	 +3MvwUO+uOjIyeUxTH0etc97Ff4qYUMQppbt5hqIu+xIXZLPhIqXqmngPqKttBToRJ
+	 A1/Lcb4IRigC1TYYfhVjofWfK9xqdJm8AvmG8BnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Jens Remus <jremus@linux.ibm.com>,
 	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 202/386] selftests: vDSO: fix ELF hash table entry size for s390x
-Date: Tue,  8 Oct 2024 14:07:27 +0200
-Message-ID: <20241008115637.356799448@linuxfoundation.org>
+Subject: [PATCH 6.6 203/386] selftests: vDSO: fix vdso_config for s390
+Date: Tue,  8 Oct 2024 14:07:28 +0200
+Message-ID: <20241008115637.395631706@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,76 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 14be4e6f35221c4731b004553ecf7cbc6dc1d2d8 ]
+[ Upstream commit a6e23fb8d3c0e3904da70beaf5d7e840a983c97f ]
 
-The vDSO self tests fail on s390x for a vDSO linked with the GNU linker
-ld as follows:
+Running vdso_test_correctness on s390x (aka s390 64 bit) emits a warning:
 
-  # ./vdso_test_gettimeofday
-  Floating point exception (core dumped)
+Warning: failed to find clock_gettime64 in vDSO
 
-On s390x the ELF hash table entries are 64 bits instead of 32 bits in
-size (see Glibc sysdeps/unix/sysv/linux/s390/bits/elfclass.h).
+This is caused by the "#elif defined (__s390__)" check in vdso_config.h
+which the defines VDSO_32BIT.
 
-Fixes: 40723419f407 ("kselftest: Enable vDSO test on non x86 platforms")
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Tested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+If __s390x__ is defined also __s390__ is defined. Therefore the correct
+check must make sure that only __s390__ is defined.
+
+Therefore add the missing !defined(__s390x__). Also use common
+__s390x__ define instead of __s390X__.
+
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/parse_vdso.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tools/testing/selftests/vDSO/vdso_config.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
-index d9ccc5acac182..7dd5668ea8a6e 100644
---- a/tools/testing/selftests/vDSO/parse_vdso.c
-+++ b/tools/testing/selftests/vDSO/parse_vdso.c
-@@ -36,6 +36,12 @@
- #define ELF_BITS_XFORM(bits, x) ELF_BITS_XFORM2(bits, x)
- #define ELF(x) ELF_BITS_XFORM(ELF_BITS, x)
- 
-+#ifdef __s390x__
-+#define ELF_HASH_ENTRY ELF(Xword)
-+#else
-+#define ELF_HASH_ENTRY ELF(Word)
-+#endif
-+
- static struct vdso_info
- {
- 	bool valid;
-@@ -47,8 +53,8 @@ static struct vdso_info
- 	/* Symbol table */
- 	ELF(Sym) *symtab;
- 	const char *symstrings;
--	ELF(Word) *bucket, *chain;
--	ELF(Word) nbucket, nchain;
-+	ELF_HASH_ENTRY *bucket, *chain;
-+	ELF_HASH_ENTRY nbucket, nchain;
- 
- 	/* Version table */
- 	ELF(Versym) *versym;
-@@ -115,7 +121,7 @@ void vdso_init_from_sysinfo_ehdr(uintptr_t base)
- 	/*
- 	 * Fish out the useful bits of the dynamic table.
- 	 */
--	ELF(Word) *hash = 0;
-+	ELF_HASH_ENTRY *hash = 0;
- 	vdso_info.symstrings = 0;
- 	vdso_info.symtab = 0;
- 	vdso_info.versym = 0;
-@@ -133,7 +139,7 @@ void vdso_init_from_sysinfo_ehdr(uintptr_t base)
- 				 + vdso_info.load_offset);
- 			break;
- 		case DT_HASH:
--			hash = (ELF(Word) *)
-+			hash = (ELF_HASH_ENTRY *)
- 				((uintptr_t)dyn[i].d_un.d_ptr
- 				 + vdso_info.load_offset);
- 			break;
+diff --git a/tools/testing/selftests/vDSO/vdso_config.h b/tools/testing/selftests/vDSO/vdso_config.h
+index f9890584f6fb4..72de45f587b2c 100644
+--- a/tools/testing/selftests/vDSO/vdso_config.h
++++ b/tools/testing/selftests/vDSO/vdso_config.h
+@@ -25,11 +25,11 @@
+ #define VDSO_VERSION		1
+ #define VDSO_NAMES		0
+ #define VDSO_32BIT		1
+-#elif defined (__s390__)
++#elif defined (__s390__) && !defined(__s390x__)
+ #define VDSO_VERSION		2
+ #define VDSO_NAMES		0
+ #define VDSO_32BIT		1
+-#elif defined (__s390X__)
++#elif defined (__s390x__)
+ #define VDSO_VERSION		2
+ #define VDSO_NAMES		0
+ #elif defined(__mips__)
 -- 
 2.43.0
 
