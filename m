@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942541DE88B;
-	Tue,  8 Oct 2024 12:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FE91DE4CC;
+	Tue,  8 Oct 2024 12:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389684; cv=none; b=aN+t5X0mxDDufDgrRXfzsM0sMDg6GmJkEuM/GS5tmlrOFKs/5aC0gT5TXO5E+8PivWbbh5oSFsuc3lODSwHwUi4NmzOjXcFXP5S/nx39QTcQU0mEx2DsabT3mkeT4whFs6BQpigtH17HhiapzReDJduhITorwDLqjhybfj+r0bk=
+	t=1728389687; cv=none; b=lLSNpZnaqDqymysT1WKk+6CVPNe9GjoYtpXnPxW2g9QXGfNZHxCr3kGdiVO8DXSCIIInMqGPwP43BIS+3T/q8o79LR6qdL9932TnetSLAmaBE/FwZ7c9C4TWu6rwes/ge/mA6FJO1u2U2XIrybppFV/MaT/r4mQXv4ZlLYsmSw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389684; c=relaxed/simple;
-	bh=yYSMUT6BwvVwhHqzsZlioWGHZ1G4CdmQcF6N6oV+us8=;
+	s=arc-20240116; t=1728389687; c=relaxed/simple;
+	bh=Pun53SwWIJo1p1h3kbVqkgJ7P1CXYd9AhJXIMHsfIJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NLR6RiumYRTkrBEZW4WNAN4T/T4zHK9fE0vAk60teM//Yq8tUNXR/kfyi5lUG6sL+T2U9FL2oMuiyY28tFymUvTve0ilUBGgGuQ4WPMqB7Ilvo0zUsOyHBYH0XyEjo584QMtAmjCfBCzBniviXDdy16CpAQjwZyi/PvOQXVaDhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFMaXDpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mQHXC1K+DLAjZT08R2anUER57zdq3KFSnvGf8HMSmHr6BFeECfvIDX8wV/3ft9MG85twX+1UBn3jk7RhFElf4qnlmRmGzCNcvi3bi/3Tn2NPNbwF4hBPuHvXCOalOdqyIOpcZxdHYEySSvu0d7rf7vLaQACOJlBtaE+77HMuv/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYaqkzVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFMaXDpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA871C4CEC7;
-	Tue,  8 Oct 2024 12:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYaqkzVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5234C4CEC7;
+	Tue,  8 Oct 2024 12:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389684;
-	bh=yYSMUT6BwvVwhHqzsZlioWGHZ1G4CdmQcF6N6oV+us8=;
+	s=korg; t=1728389687;
+	bh=Pun53SwWIJo1p1h3kbVqkgJ7P1CXYd9AhJXIMHsfIJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oFMaXDpM77ctmTfyqpvmDxu3gbZ6tN5SQxPxSKPsYAnBpZFWcTpHTwZNT6mfNDIl1
-	 pY2U3JrMN2hb3Cp3Y4wtxL6QiEUm0/WoMeTvl1AtbWXfhOUYSqsxx3VjPc/wiVsBub
-	 JZtxVWGp+75vCQH/hZKDGDBQZYGhaK7sKkF3L3iY=
+	b=AYaqkzVATlY/LAAqDJ3QDAt9TXn6DxuDDfcpZQ9sNAq8EVtCBDm5r1bF+NZTMKg7Y
+	 eMrUDqeNjzXVCBMFGRZp4eX9x9IXPtichR7cgDUFe7SSqTd0or7Te2+aF9RARsX2qP
+	 SME+PR22tOzVyWMVSVQynID7ABysh2ZfsXtv/J7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 066/482] cifs: Fix buffer overflow when parsing NFS reparse points
-Date: Tue,  8 Oct 2024 14:02:09 +0200
-Message-ID: <20241008115650.905346447@linuxfoundation.org>
+Subject: [PATCH 6.10 067/482] cifs: Do not convert delimiter when parsing NFS-style symlinks
+Date: Tue,  8 Oct 2024 14:02:10 +0200
+Message-ID: <20241008115650.944445695@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -55,74 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit e2a8910af01653c1c268984855629d71fb81f404 ]
+[ Upstream commit d3a49f60917323228f8fdeee313260ef14f94df7 ]
 
-ReparseDataLength is sum of the InodeType size and DataBuffer size.
-So to get DataBuffer size it is needed to subtract InodeType's size from
-ReparseDataLength.
+NFS-style symlinks have target location always stored in NFS/UNIX form
+where backslash means the real UNIX backslash and not the SMB path
+separator.
 
-Function cifs_strndup_from_utf16() is currentlly accessing buf->DataBuffer
-at position after the end of the buffer because it does not subtract
-InodeType size from the length. Fix this problem and correctly subtract
-variable len.
+So do not mangle slash and backslash content of NFS-style symlink during
+readlink() syscall as it is already in the correct Linux form.
 
-Member InodeType is present only when reparse buffer is large enough. Check
-for ReparseDataLength before accessing InodeType to prevent another invalid
-memory access.
-
-Major and minor rdev values are present also only when reparse buffer is
-large enough. Check for reparse buffer size before calling reparse_mkdev().
+This fixes interoperability of NFS-style symlinks with backslashes created
+by Linux NFS3 client throw Windows NFS server and retrieved by Linux SMB
+client throw Windows SMB server, where both Windows servers exports the
+same directory.
 
 Fixes: d5ecebc4900d ("smb3: Allow query of symlinks stored as reparse points")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ fs/smb/client/reparse.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 48c27581ec511..cfa03c166de8c 100644
+index cfa03c166de8c..ad0e0de9a165d 100644
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -320,9 +320,16 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
- 	unsigned int len;
- 	u64 type;
- 
-+	len = le16_to_cpu(buf->ReparseDataLength);
-+	if (len < sizeof(buf->InodeType)) {
-+		cifs_dbg(VFS, "srv returned malformed nfs buffer\n");
-+		return -EIO;
-+	}
-+
-+	len -= sizeof(buf->InodeType);
-+
- 	switch ((type = le64_to_cpu(buf->InodeType))) {
- 	case NFS_SPECFILE_LNK:
--		len = le16_to_cpu(buf->ReparseDataLength);
- 		data->symlink_target = cifs_strndup_from_utf16(buf->DataBuffer,
- 							       len, true,
+@@ -335,7 +335,6 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
  							       cifs_sb->local_nls);
-@@ -482,12 +489,18 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
- 	u32 tag = data->reparse.tag;
- 
- 	if (tag == IO_REPARSE_TAG_NFS && buf) {
-+		if (le16_to_cpu(buf->ReparseDataLength) < sizeof(buf->InodeType))
-+			return false;
- 		switch (le64_to_cpu(buf->InodeType)) {
- 		case NFS_SPECFILE_CHR:
-+			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
-+				return false;
- 			fattr->cf_mode |= S_IFCHR;
- 			fattr->cf_rdev = reparse_nfs_mkdev(buf);
- 			break;
- 		case NFS_SPECFILE_BLK:
-+			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
-+				return false;
- 			fattr->cf_mode |= S_IFBLK;
- 			fattr->cf_rdev = reparse_nfs_mkdev(buf);
- 			break;
+ 		if (!data->symlink_target)
+ 			return -ENOMEM;
+-		convert_delimiter(data->symlink_target, '/');
+ 		cifs_dbg(FYI, "%s: target path: %s\n",
+ 			 __func__, data->symlink_target);
+ 		break;
 -- 
 2.43.0
 
