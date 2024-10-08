@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C71DFE34;
-	Tue,  8 Oct 2024 13:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB3F1E04A5;
+	Tue,  8 Oct 2024 13:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394121; cv=none; b=gjxOxLsmScatd8loZpasku8KbQQUhRdLdjymXSvENiVSCKDaWM2cQfImbhdtDAyQJZElsnBVkD+zv5onSJGWXXdiA/cE+adsoAIEa9GmVa1nqmVG8jGdrawQsWOyRZMuG/gzWswpJytg7JN4PjW8ZCgTN+5EGwIZupV1zMzwGVw=
+	t=1728394124; cv=none; b=Jq30RUph3TTKOIVz/bLBBpExrZz9ICkQoUFfzUzrF2ZbJrdItniwCgK4TihFeNCrjHNkw6bDI4wtRSX0wxRfHNLrlRsKdoPWcphADo3eWxhY1mG0j4GaISgh+ZGiW8XW9rJdHpfRO6zYzuzNVrEKZiokjhs3SUlS/DhVvl1AIhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394121; c=relaxed/simple;
-	bh=oNtodfFZNrxpbSTuQ3zRRDzQGUK/uIMGMZAQmn5FzME=;
+	s=arc-20240116; t=1728394124; c=relaxed/simple;
+	bh=fXpZLfTL1khFBiS/WZHXzROhywKZsoJ5DZ6uHMat8nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCCuB9BsoeoYiLgFUBf/v/TXsrLlS/B5Sj4/n/mCkvij+ohpHG7EFtmWCtQQ19fwVtPODccNLkN0EHPgGRwCAbxEcXHSSsQbsqEwS1DdNrMBCuZWPjUsrS3X83tsA2MQJT2UabKlCegl0OV5v9Du7PEsYSnVeFRSY767gZ0otC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+34lUJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=myyHFcz1Pm6ANA3A4Li0ov5BurnZdiYmhTtL+1wcAj3fWFSq58w6UvDqn/BqLTdS6BY9lPpHsB3ZO++P/XcQqPShUc9IHHE5xrkaCEMG/Oh4P62XK2hLYRZlxUqAv/llqDU75bfTkbiG5oHDaDMmja7ggPHpPMiG6v6woQ69w/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ia8b4ww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+34lUJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C977EC4CECC;
-	Tue,  8 Oct 2024 13:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ia8b4ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDA0C4CEC7;
+	Tue,  8 Oct 2024 13:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394121;
-	bh=oNtodfFZNrxpbSTuQ3zRRDzQGUK/uIMGMZAQmn5FzME=;
+	s=korg; t=1728394124;
+	bh=fXpZLfTL1khFBiS/WZHXzROhywKZsoJ5DZ6uHMat8nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+34lUJB4TSxAISTPyHChpYkp9XHKukRQh1ZHFkhwYQLDwNfbP68i+JHH1nvOk30D
-	 4kxo5cvQCdOQpioeUq2R+l6lMdr2icSUl+Zgo4ji7b7QERKIvtDtOYw2k4WLCFxA9l
-	 yLNwPRTmNXCjsmZCv+sLowZOH3wZ7Bbb1CBVBzsE=
+	b=1ia8b4wwOzEPKZngd3oxHQYf9rhYQEKbzsd7sSMWnwZ6HQEyQlejrRtUcQr1ME4s6
+	 CejMvV9u/aYM3OdT77j/Bqinr/m3CsClWPfcJb9qHvy09J0BrvMBZsOXdtOTgOJWQh
+	 Ua+JBXeIBznWjWzTF9anquQNbiur941HXfIBASLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel Iglesias <ang.iglesiasg@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	xiao sheng wen <atzlinux@sina.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 353/386] iio: pressure: bmp280: Allow multiple chips id per family of devices
-Date: Tue,  8 Oct 2024 14:09:58 +0200
-Message-ID: <20241008115643.273181807@linuxfoundation.org>
+Subject: [PATCH 6.6 327/386] cpufreq: intel_pstate: Make hwp_notify_lock a raw spinlock
+Date: Tue,  8 Oct 2024 14:09:32 +0200
+Message-ID: <20241008115642.253655718@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,149 +48,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Angel Iglesias <ang.iglesiasg@gmail.com>
+From: Uwe Kleine-König <ukleinek@debian.org>
 
-[ Upstream commit 33564435c8084ff29837c9ed9bb9574ec957751d ]
+commit 8b4865cd904650cbed7f2407e653934c621b8127 upstream.
 
-Improve device detection in certain chip families known to have
-various chip IDs. When no ID matches, give a warning but follow
-along what device said on the firmware side and try to configure
-it.
+notify_hwp_interrupt() is called via sysvec_thermal() ->
+smp_thermal_vector() -> intel_thermal_interrupt() in hard irq context.
+For this reason it must not use a simple spin_lock that sleeps with
+PREEMPT_RT enabled. So convert it to a raw spinlock.
 
-Signed-off-by: Angel Iglesias <ang.iglesiasg@gmail.com>
-Link: https://lore.kernel.org/r/eade22d11e9de4405ea19fdaa5a8249143ae94df.1697994521.git.ang.iglesiasg@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: b9065b0250e1 ("iio: pressure: bmp280: Fix regmap for BMP280 device")
+Reported-by: xiao sheng wen <atzlinux@sina.com>
+Link: https://bugs.debian.org/1076483
+Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: xiao sheng wen <atzlinux@sina.com>
+Link: https://patch.msgid.link/20240919081121.10784-2-ukleinek@debian.org
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ukleinek: Backport to v6.6.y]
+Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/bmp280-core.c | 35 ++++++++++++++++++++++--------
- drivers/iio/pressure/bmp280.h      |  3 ++-
- 2 files changed, 28 insertions(+), 10 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/pressure/bmp280-core.c b/drivers/iio/pressure/bmp280-core.c
-index a65630d5742f0..ac72b175ffcc1 100644
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -794,10 +794,12 @@ static int bmp280_chip_config(struct bmp280_data *data)
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 0ee3a04bb1022..8a4fdf212ce0d 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1632,7 +1632,7 @@ static void intel_pstate_notify_work(struct work_struct *work)
+ 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_STATUS, 0);
  }
  
- static const int bmp280_oversampling_avail[] = { 1, 2, 4, 8, 16 };
-+static const u8 bmp280_chip_ids[] = { BMP280_CHIP_ID };
+-static DEFINE_SPINLOCK(hwp_notify_lock);
++static DEFINE_RAW_SPINLOCK(hwp_notify_lock);
+ static cpumask_t hwp_intr_enable_mask;
  
- const struct bmp280_chip_info bmp280_chip_info = {
- 	.id_reg = BMP280_REG_ID,
--	.chip_id = BMP280_CHIP_ID,
-+	.chip_id = bmp280_chip_ids,
-+	.num_chip_id = ARRAY_SIZE(bmp280_chip_ids),
- 	.regmap_config = &bmp280_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp280_channels,
-@@ -846,9 +848,12 @@ static int bme280_chip_config(struct bmp280_data *data)
- 	return bmp280_chip_config(data);
+ void notify_hwp_interrupt(void)
+@@ -1649,7 +1649,7 @@ void notify_hwp_interrupt(void)
+ 	if (!(value & 0x01))
+ 		return;
+ 
+-	spin_lock_irqsave(&hwp_notify_lock, flags);
++	raw_spin_lock_irqsave(&hwp_notify_lock, flags);
+ 
+ 	if (!cpumask_test_cpu(this_cpu, &hwp_intr_enable_mask))
+ 		goto ack_intr;
+@@ -1673,13 +1673,13 @@ void notify_hwp_interrupt(void)
+ 
+ 	schedule_delayed_work(&cpudata->hwp_notify_work, msecs_to_jiffies(10));
+ 
+-	spin_unlock_irqrestore(&hwp_notify_lock, flags);
++	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
+ 
+ 	return;
+ 
+ ack_intr:
+ 	wrmsrl_safe(MSR_HWP_STATUS, 0);
+-	spin_unlock_irqrestore(&hwp_notify_lock, flags);
++	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
  }
  
-+static const u8 bme280_chip_ids[] = { BME280_CHIP_ID };
-+
- const struct bmp280_chip_info bme280_chip_info = {
- 	.id_reg = BMP280_REG_ID,
--	.chip_id = BME280_CHIP_ID,
-+	.chip_id = bme280_chip_ids,
-+	.num_chip_id = ARRAY_SIZE(bme280_chip_ids),
- 	.regmap_config = &bmp280_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp280_channels,
-@@ -1220,10 +1225,12 @@ static int bmp380_chip_config(struct bmp280_data *data)
+ static void intel_pstate_disable_hwp_interrupt(struct cpudata *cpudata)
+@@ -1692,10 +1692,10 @@ static void intel_pstate_disable_hwp_interrupt(struct cpudata *cpudata)
+ 	/* wrmsrl_on_cpu has to be outside spinlock as this can result in IPC */
+ 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_INTERRUPT, 0x00);
  
- static const int bmp380_oversampling_avail[] = { 1, 2, 4, 8, 16, 32 };
- static const int bmp380_iir_filter_coeffs_avail[] = { 1, 2, 4, 8, 16, 32, 64, 128};
-+static const u8 bmp380_chip_ids[] = { BMP380_CHIP_ID };
- 
- const struct bmp280_chip_info bmp380_chip_info = {
- 	.id_reg = BMP380_REG_ID,
--	.chip_id = BMP380_CHIP_ID,
-+	.chip_id = bmp380_chip_ids,
-+	.num_chip_id = ARRAY_SIZE(bmp380_chip_ids),
- 	.regmap_config = &bmp380_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp380_channels,
-@@ -1720,10 +1727,12 @@ static int bmp580_chip_config(struct bmp280_data *data)
+-	spin_lock_irqsave(&hwp_notify_lock, flags);
++	raw_spin_lock_irqsave(&hwp_notify_lock, flags);
+ 	if (cpumask_test_and_clear_cpu(cpudata->cpu, &hwp_intr_enable_mask))
+ 		cancel_delayed_work(&cpudata->hwp_notify_work);
+-	spin_unlock_irqrestore(&hwp_notify_lock, flags);
++	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
  }
  
- static const int bmp580_oversampling_avail[] = { 1, 2, 4, 8, 16, 32, 64, 128 };
-+static const u8 bmp580_chip_ids[] = { BMP580_CHIP_ID, BMP580_CHIP_ID_ALT };
+ static void intel_pstate_enable_hwp_interrupt(struct cpudata *cpudata)
+@@ -1704,10 +1704,10 @@ static void intel_pstate_enable_hwp_interrupt(struct cpudata *cpudata)
+ 	if (boot_cpu_has(X86_FEATURE_HWP_NOTIFY)) {
+ 		unsigned long flags;
  
- const struct bmp280_chip_info bmp580_chip_info = {
- 	.id_reg = BMP580_REG_CHIP_ID,
--	.chip_id = BMP580_CHIP_ID,
-+	.chip_id = bmp580_chip_ids,
-+	.num_chip_id = ARRAY_SIZE(bmp580_chip_ids),
- 	.regmap_config = &bmp580_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp380_channels,
-@@ -1983,10 +1992,12 @@ static int bmp180_chip_config(struct bmp280_data *data)
+-		spin_lock_irqsave(&hwp_notify_lock, flags);
++		raw_spin_lock_irqsave(&hwp_notify_lock, flags);
+ 		INIT_DELAYED_WORK(&cpudata->hwp_notify_work, intel_pstate_notify_work);
+ 		cpumask_set_cpu(cpudata->cpu, &hwp_intr_enable_mask);
+-		spin_unlock_irqrestore(&hwp_notify_lock, flags);
++		raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
  
- static const int bmp180_oversampling_temp_avail[] = { 1 };
- static const int bmp180_oversampling_press_avail[] = { 1, 2, 4, 8 };
-+static const u8 bmp180_chip_ids[] = { BMP180_CHIP_ID };
+ 		/* wrmsrl_on_cpu has to be outside spinlock as this can result in IPC */
+ 		wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_INTERRUPT, 0x01);
+@@ -3136,10 +3136,10 @@ static void intel_pstate_driver_cleanup(void)
+ 			if (intel_pstate_driver == &intel_pstate)
+ 				intel_pstate_clear_update_util_hook(cpu);
  
- const struct bmp280_chip_info bmp180_chip_info = {
- 	.id_reg = BMP280_REG_ID,
--	.chip_id = BMP180_CHIP_ID,
-+	.chip_id = bmp180_chip_ids,
-+	.num_chip_id = ARRAY_SIZE(bmp180_chip_ids),
- 	.regmap_config = &bmp180_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp280_channels,
-@@ -2077,6 +2088,7 @@ int bmp280_common_probe(struct device *dev,
- 	struct bmp280_data *data;
- 	struct gpio_desc *gpiod;
- 	unsigned int chip_id;
-+	unsigned int i;
- 	int ret;
- 
- 	indio_dev = devm_iio_device_alloc(dev, sizeof(*data));
-@@ -2142,12 +2154,17 @@ int bmp280_common_probe(struct device *dev,
- 	ret = regmap_read(regmap, data->chip_info->id_reg, &chip_id);
- 	if (ret < 0)
- 		return ret;
--	if (chip_id != data->chip_info->chip_id) {
--		dev_err(dev, "bad chip id: expected %x got %x\n",
--			data->chip_info->chip_id, chip_id);
--		return -EINVAL;
-+
-+	for (i = 0; i < data->chip_info->num_chip_id; i++) {
-+		if (chip_id == data->chip_info->chip_id[i]) {
-+			dev_info(dev, "0x%x is a known chip id for %s\n", chip_id, name);
-+			break;
-+		}
+-			spin_lock(&hwp_notify_lock);
++			raw_spin_lock(&hwp_notify_lock);
+ 			kfree(all_cpu_data[cpu]);
+ 			WRITE_ONCE(all_cpu_data[cpu], NULL);
+-			spin_unlock(&hwp_notify_lock);
++			raw_spin_unlock(&hwp_notify_lock);
+ 		}
  	}
- 
-+	if (i == data->chip_info->num_chip_id)
-+		dev_warn(dev, "bad chip id: 0x%x is not a known chip id\n", chip_id);
-+
- 	if (data->chip_info->preinit) {
- 		ret = data->chip_info->preinit(data);
- 		if (ret)
-diff --git a/drivers/iio/pressure/bmp280.h b/drivers/iio/pressure/bmp280.h
-index 9d9f4ce2baa6e..a44ea33221635 100644
---- a/drivers/iio/pressure/bmp280.h
-+++ b/drivers/iio/pressure/bmp280.h
-@@ -418,7 +418,8 @@ struct bmp280_data {
- 
- struct bmp280_chip_info {
- 	unsigned int id_reg;
--	const unsigned int chip_id;
-+	const u8 *chip_id;
-+	int num_chip_id;
- 
- 	const struct regmap_config *regmap_config;
- 
+ 	cpus_read_unlock();
 -- 
 2.43.0
 
