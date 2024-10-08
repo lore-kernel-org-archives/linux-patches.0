@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BC31DEFE5;
-	Tue,  8 Oct 2024 12:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAF21DE2AD;
+	Tue,  8 Oct 2024 12:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390476; cv=none; b=RjnIVnqOQjxAQyyLOuDKPwzGUpor/GekqZJQT8Mw432p1YoJbhJor0MywLsns0JTbWFvnMJcLGr811SuD8vNpukyYF8ghyU67HDkroYqioiB8n6NGgeneH44PIxQqTl1eAfTT8Fb/8IPmDJYRn/+AKDSD5P7mxiagOTzBr/MpPc=
+	t=1728390479; cv=none; b=Xd5J3lVQZ2DHrvFhnTsEsrSw0NmCgPD8hOqZhadRhDpvRm//A5o56zOtbyhUd9JWbxfV5UtVTcOZMdH2FtW31PqLMHdEh3HOf0KD9eTMHmaQ3B6sbdaqDN63jMmicol0eOomyW09FN8Wc23PsHre7k5SpWonpoPOUUo7/bFAs/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390476; c=relaxed/simple;
-	bh=usEL5loZhOCBYYwQNN5U257hdcN0pM180lSBOLidyCo=;
+	s=arc-20240116; t=1728390479; c=relaxed/simple;
+	bh=HV+AH9vEBkiYg8DmN7nbtbXGtirhkb+o2aEJ1Tsmt4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBKcaQkPmr2Tavb5p4a/iEhuXpq+mxsETuudU1nQLv605vxDiBc4zR1jDVw1ZSuaBIMuoTSwvL4agxvK4f5aNw2Vt65rle7+CeYJp+iWotdnKze2nZKpOmiWvVvPzRPTINi4JjFEhjSlf0QHf4gXPCqDvUe+GO0t7K4Wnc+cAm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQHC/ulp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VgB2HiBumuzu0XSo6sSTdjteEA7qgEp8/5VKobFC33mcVT2xdzh6nuEf38ggXZhlTalaq9HEM02WNiQaEHdm5IzvVu9d7deH/EnEJUchjNRqbbXiY6BTrG48A49NR5M1kLDyilNQHvSXG9rAkXXDlHkkWgXNTOf7vD0NjCJAM+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLkY6dvg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQHC/ulp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB610C4CEC7;
-	Tue,  8 Oct 2024 12:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLkY6dvg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9605C4CECD;
+	Tue,  8 Oct 2024 12:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390476;
-	bh=usEL5loZhOCBYYwQNN5U257hdcN0pM180lSBOLidyCo=;
+	s=korg; t=1728390479;
+	bh=HV+AH9vEBkiYg8DmN7nbtbXGtirhkb+o2aEJ1Tsmt4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQHC/ulpXNWcQ486Lp6q5ctdRJaSMBtzZ9cbckNpmM5tQxMaF2ugwRgawOKY0jUXU
-	 XQlWAZLgqsnIscDj+wbUE17Z/yc+hWZKaBofAY2Tp77fEzFn2fWqGjb5fbHJYQEPmg
-	 DR2FA+bkRakOUQ1/+tG8H+Wk2RynHzLxHj19eQeU=
+	b=tLkY6dvgPX8E4GF3lzQh/X5Dt2vsHycdvEJPcQMNj2YfljFhU6aJrXffjJaPD8k0L
+	 aEyCq8fp618u6nuF7BpweS8NH503MB5/sP0oPjWeQwtxD51Bn6XqcZySCQIkSJPS22
+	 WMj+rNXRhXFYqahpQqDmD3lehVV2wgcKvd3OLNvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Baynton <mike@mbaynton.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.10 301/482] ovl: fail if trusted xattrs are needed but caller lacks permission
-Date: Tue,  8 Oct 2024 14:06:04 +0200
-Message-ID: <20241008115700.130106809@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.10 302/482] firmware: tegra: bpmp: Drop unused mbox_client_to_bpmp()
+Date: Tue,  8 Oct 2024 14:06:05 +0200
+Message-ID: <20241008115700.322418976@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,91 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Baynton <mike@mbaynton.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 6c4a5f96450415735c31ed70ff354f0ee5cbf67b upstream.
+commit 9c3a62c20f7fb00294a4237e287254456ba8a48b upstream.
 
-Some overlayfs features require permission to read/write trusted.*
-xattrs. These include redirect_dir, verity, metacopy, and data-only
-layers. This patch adds additional validations at mount time to stop
-overlays from mounting in certain cases where the resulting mount would
-not function according to the user's expectations because they lack
-permission to access trusted.* xattrs (for example, not global root.)
+mbox_client_to_bpmp() is not used, W=1 builds:
 
-Similar checks in ovl_make_workdir() that disable features instead of
-failing are still relevant and used in cases where the resulting mount
-can still work "reasonably well." Generally, if the feature was enabled
-through kernel config or module option, any mount that worked before
-will still work the same; this applies to redirect_dir and metacopy. The
-user must explicitly request these features in order to generate a mount
-failure. Verity and data-only layers on the other hand must be explictly
-requested and have no "reasonable" disabled or degraded alternative, so
-mounts attempting either always fail.
+  drivers/firmware/tegra/bpmp.c:28:1: error: unused function 'mbox_client_to_bpmp' [-Werror,-Wunused-function]
 
-"lower data-only dirs require metacopy support" moved down in case
-userxattr is set, which disables metacopy.
-
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Mike Baynton <mike@mbaynton.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: cdfa358b248e ("firmware: tegra: Refactor BPMP driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/params.c |   38 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 33 insertions(+), 5 deletions(-)
+ drivers/firmware/tegra/bpmp.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -782,11 +782,6 @@ int ovl_fs_params_verify(const struct ov
- {
- 	struct ovl_opt_set set = ctx->set;
+--- a/drivers/firmware/tegra/bpmp.c
++++ b/drivers/firmware/tegra/bpmp.c
+@@ -24,12 +24,6 @@
+ #define MSG_RING	BIT(1)
+ #define TAG_SZ		32
  
--	if (ctx->nr_data > 0 && !config->metacopy) {
--		pr_err("lower data-only dirs require metacopy support.\n");
--		return -EINVAL;
--	}
+-static inline struct tegra_bpmp *
+-mbox_client_to_bpmp(struct mbox_client *client)
+-{
+-	return container_of(client, struct tegra_bpmp, mbox.client);
+-}
 -
- 	/* Workdir/index are useless in non-upper mount */
- 	if (!config->upperdir) {
- 		if (config->workdir) {
-@@ -938,6 +933,39 @@ int ovl_fs_params_verify(const struct ov
- 		config->metacopy = false;
- 	}
- 
-+	/*
-+	 * Fail if we don't have trusted xattr capability and a feature was
-+	 * explicitly requested that requires them.
-+	 */
-+	if (!config->userxattr && !capable(CAP_SYS_ADMIN)) {
-+		if (set.redirect &&
-+		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
-+			pr_err("redirect_dir requires permission to access trusted xattrs\n");
-+			return -EPERM;
-+		}
-+		if (config->metacopy && set.metacopy) {
-+			pr_err("metacopy requires permission to access trusted xattrs\n");
-+			return -EPERM;
-+		}
-+		if (config->verity_mode) {
-+			pr_err("verity requires permission to access trusted xattrs\n");
-+			return -EPERM;
-+		}
-+		if (ctx->nr_data > 0) {
-+			pr_err("lower data-only dirs require permission to access trusted xattrs\n");
-+			return -EPERM;
-+		}
-+		/*
-+		 * Other xattr-dependent features should be disabled without
-+		 * great disturbance to the user in ovl_make_workdir().
-+		 */
-+	}
-+
-+	if (ctx->nr_data > 0 && !config->metacopy) {
-+		pr_err("lower data-only dirs require metacopy support.\n");
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
- 
+ static inline const struct tegra_bpmp_ops *
+ channel_to_ops(struct tegra_bpmp_channel *channel)
+ {
 
 
