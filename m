@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366F61C32EB;
-	Tue,  8 Oct 2024 13:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8EF1C32EB;
+	Tue,  8 Oct 2024 13:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393002; cv=none; b=bhMk6Wgyo8JsjxP7ABSsuv5bhGzKJQgcuhU02E/n9pHHE3Q7CNmAKp6+99AEfvAM7J9z0oJAt3EB5GBY/eEvxc7hZy8SU7lCi0JFHeO/owHNlMRPwO1qZ3+IUe7Fzm7Dxc1qLviLLzZ/ypsrYbEHqrHXUZNAO72t6uhUNIjl/V4=
+	t=1728393005; cv=none; b=qMzEcDVhBiwVkUp4SQLTUh2T7wPKW5yclZE0oahAIzLVZdmWcOZXkl/94fwWvWUnkm5GRsC/DA4x7nrtk8p8Bwcu+aE6vUS46IO4Aa3Law0mwmRKGkngU7zHuwsfgEqnJPLjMgZrZzQbZbCPVx/wZqj8AD6bvdjkOedEufW09Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393002; c=relaxed/simple;
-	bh=vGlZW+PWoDvFTp4SQc6arnMNlDd2AW9YbWHNsL/7azs=;
+	s=arc-20240116; t=1728393005; c=relaxed/simple;
+	bh=lTXM3K8l3fRqCbKNtMC6hyCevmzx5yJBSeQNyQxBweg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qR1yMDIb006EAm62OSWGKZoQl8ma7tTuBzBxqhIjGH3JoYPJCsIBSWVsMCRht7KHjyPLteQU2zKFu6EZ/qIH9/amjHLPkRLsEm74lbsP3nJSJCytBIt6XgJ5lHsq/exoFDhHYZ9lW6c02MKBYsJOGU7K9Hx9TFOduDhkon0vxKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWYAdy47; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tU8hJ4xR78coctnVDychPcAhGEebTd35loWZHz+ZQU6vZj8noFIadZckWSTcBZnkh7yDr/Xtd8wyRmrNnt7qYyOaVSmuhGHaVdQXTPfV/s0WuD5FpMDeSobuxVTXdMKj1h+xFgTrKe/vO1IlTM/VLbx1A66mAHf0YXz9HLSapoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L9rpveW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWYAdy47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA001C4CEC7;
-	Tue,  8 Oct 2024 13:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L9rpveW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158EAC4CEC7;
+	Tue,  8 Oct 2024 13:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393002;
-	bh=vGlZW+PWoDvFTp4SQc6arnMNlDd2AW9YbWHNsL/7azs=;
+	s=korg; t=1728393005;
+	bh=lTXM3K8l3fRqCbKNtMC6hyCevmzx5yJBSeQNyQxBweg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWYAdy47Fw1L0e3yujvRWOPc+F2+4GEtKxqn/RcBS3Wtfulh6EBZBSHd5HCd2cl35
-	 23qSvphZF7k6a2L4SDmrwoUQnbX/NInLkQgZXvrCP4czAvv2uaLr7fCpCmoFgbuZaM
-	 VR+JwWEV7I1FHZoqA6KOe5YlnJMDUpTbTDBwc7NA=
+	b=1L9rpveWRTg8Ner1KrgWTc5bZ647UnpAghBXzuk34U4stMnzaspo8+sNhSyXJGFXa
+	 VY8JdFMxy7AI0NOvZSMS7vJ9xftXXdRJ+oBU3VferZ8J30UNLm4aWYac9nUTex2kUj
+	 AxJazt0wy+q0xjZUPSbe3Bd9L8uN63KxVkHHNuSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/386] scsi: pm8001: Do not overwrite PCI queue mapping
-Date: Tue,  8 Oct 2024 14:04:11 +0200
-Message-ID: <20241008115629.568808372@linuxfoundation.org>
+Subject: [PATCH 6.6 007/386] drm/amdgpu: Fix get each xcp macro
+Date: Tue,  8 Oct 2024 14:04:12 +0200
+Message-ID: <20241008115629.609070052@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,44 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit a141c17a543332fc1238eb5cba562bfc66879126 ]
+[ Upstream commit ef126c06a98bde1a41303970eb0fc0ac33c3cc02 ]
 
-blk_mq_pci_map_queues() maps all queues but right after this, we overwrite
-these mappings by calling blk_mq_map_queues(). Just use one helper but not
-both.
+Fix get each xcp macro to loop over each partition correctly
 
-Fixes: 42f22fe36d51 ("scsi: pm8001: Expose hardware queues for pm80xx")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Link: https://lore.kernel.org/r/20240912-do-not-overwrite-pci-mapping-v1-1-85724b6cec49@suse.de
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 4bdca2057933 ("drm/amdgpu: Add utility functions for xcp")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
-index 443a3176c6c0c..c2f6151cbd2d0 100644
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -88,10 +88,12 @@ static void pm8001_map_queues(struct Scsi_Host *shost)
- 	struct pm8001_hba_info *pm8001_ha = sha->lldd_ha;
- 	struct blk_mq_queue_map *qmap = &shost->tag_set.map[HCTX_TYPE_DEFAULT];
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
+index 9a1036aeec2a0..9142238e7791a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.h
+@@ -179,6 +179,6 @@ amdgpu_get_next_xcp(struct amdgpu_xcp_mgr *xcp_mgr, int *from)
  
--	if (pm8001_ha->number_of_intr > 1)
-+	if (pm8001_ha->number_of_intr > 1) {
- 		blk_mq_pci_map_queues(qmap, pm8001_ha->pdev, 1);
-+		return;
-+	}
+ #define for_each_xcp(xcp_mgr, xcp, i)                            \
+ 	for (i = 0, xcp = amdgpu_get_next_xcp(xcp_mgr, &i); xcp; \
+-	     xcp = amdgpu_get_next_xcp(xcp_mgr, &i))
++	     ++i, xcp = amdgpu_get_next_xcp(xcp_mgr, &i))
  
--	return blk_mq_map_queues(qmap);
-+	blk_mq_map_queues(qmap);
- }
- 
- /*
+ #endif
 -- 
 2.43.0
 
