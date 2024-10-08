@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319711DE2CF;
-	Tue,  8 Oct 2024 12:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FC3183CB8;
+	Tue,  8 Oct 2024 12:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391865; cv=none; b=dpGTcy4kqQ40UOrxEdVLBW+fujn3Rva8IeROlU12LCnTje4az2eV5CHdlpTdIDgiq72WZaZrVftgDI/HVGfGxzQkBg6qoiGd2RxCvJ7cdKIuaI+1xtI/K6pWN6CBp+ipHE3mVeZXz4MlDjPl4lSlD/DPI/fs9uNkRV9gK3iv5KM=
+	t=1728391868; cv=none; b=WB9TDO28g3QoL4j2NpxelqM29UXcxOacJoQJG7mWriCXx6VQVMYox/JMDwNGfsxY9Xzhmd1D0lRV7Vx9inBSk7cNatIPpEFVoQRb2l3rHmm8QgGUZ2e3+3NZNehQtZxx7st6pm1bRavgy4+5GYq4oGXyApbJpRrD5WeSSWAMkWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391865; c=relaxed/simple;
-	bh=6ul1ueODuLorEpPNRKvPOlBbU+HzG4KQUsHsHj3SMN8=;
+	s=arc-20240116; t=1728391868; c=relaxed/simple;
+	bh=ugvq0f7/DzZrjzX5zg12TKTi4a42BalSFBqlnBbgC6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezhtXG44mLg/jUfmP/1O3bOFZAmWpIyIqUg2g/BSuy1zv3D5+lOEq3elvJP59pZL/+GI3vLHJqcTvhgVVlssGlVrqxSgHYIyOM7LozEq+xbpYXhd0OKbARLrecsQ9rKLEFtzUNyexkfp9qVx4K6SrpbsCyywoidLJazwfrxlogk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAeetx75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhMkyWKGZjff8xjE+Xh1UrPZT+CxwNgerLID099lIrqfPBHI4gySpAzQ3hBY/kaROWNvmejrNYRQ2Vu4Cs2Xlcoic1eVt5/o7/pVyzm2yYp54yijOUDlaOQXqLzPW9ZfYRdGzRvhump3eEZCBShsPKopG1tmBTEyHgdR04J9SWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVFKhEJq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAeetx75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B39C4CECC;
-	Tue,  8 Oct 2024 12:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVFKhEJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A29EC4CEC7;
+	Tue,  8 Oct 2024 12:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391864;
-	bh=6ul1ueODuLorEpPNRKvPOlBbU+HzG4KQUsHsHj3SMN8=;
+	s=korg; t=1728391868;
+	bh=ugvq0f7/DzZrjzX5zg12TKTi4a42BalSFBqlnBbgC6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAeetx75q4ZwEcmxbwFeqzFCFV7UoACIsxAcHm79i7qNijRTg2cM8uD/5nEwgUGr4
-	 F+sCNjURPpkz3LbwOpmqVCpgpi/YlNpYwIkLxu9GhToaCpVT6AEz4DwCY9Aeckr7ys
-	 mt8Gzu68ZA8vNO6W/+dpnx72gQ0XnmJUsKgBmIGY=
+	b=jVFKhEJqtOoq212YLUirCIkpKxUDp5klNoE46RskT5Js1pqnE4R/bALoiJej8A0fg
+	 VnzLTbThfvXaf3K5w6YyyAg7qvEWBfwmJlAcftSRjShdypqixZTL7v2hWJ9RRgxtUq
+	 iYQhzirMQSnwhAJ4nLyZHNWtCmEH3g/v+wIg9krY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 205/558] drm/amd/display: Check null pointers before used
-Date: Tue,  8 Oct 2024 14:03:55 +0200
-Message-ID: <20241008115710.412050604@linuxfoundation.org>
+Subject: [PATCH 6.11 239/558] scsi: smartpqi: correct stream detection
+Date: Tue,  8 Oct 2024 14:04:29 +0200
+Message-ID: <20241008115711.747843991@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,185 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
 
-[ Upstream commit be1fb44389ca3038ad2430dac4234669bc177ee3 ]
+[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
 
-[WHAT & HOW]
-Poniters, such as dc->clk_mgr, are null checked previously in the same
-function, so Coverity warns "implies that "dc->clk_mgr" might be null".
-As a result, these pointers need to be checked when used again.
+Correct stream detection by initializing the structure
+pqi_scsi_dev_raid_map_data to 0s.
 
-This fixes 10 FORWARD_NULL issues reported by Coverity.
+When the OS issues SCSI READ commands, the driver erroneously considers
+them as SCSI WRITES. If they are identified as sequential IOs, the driver
+then submits those requests via the RAID path instead of the AIO path.
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The 'is_write' flag might be set for SCSI READ commands also.  The driver
+may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
+being submitted through the RAID path.
+
+Note: This does not cause data corruption.
+
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c    | 2 +-
- drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c    | 3 ++-
- drivers/gpu/drm/amd/display/dc/hubp/dcn20/dcn20_hubp.c    | 3 ++-
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 +++--
- drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 4 ++--
- drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c   | 4 ++--
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c   | 8 ++++----
- .../amd/display/dc/link/protocols/link_dp_capability.c    | 2 +-
- 8 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-index 78df96882d6ec..f8409453434c1 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
-@@ -195,7 +195,7 @@ void dce11_pplib_apply_display_requirements(
- 	 * , then change minimum memory clock based on real-time bandwidth
- 	 * limitation.
- 	 */
--	if ((dc->ctx->asic_id.chip_family == FAMILY_AI) &&
-+	if (dc->bw_vbios && (dc->ctx->asic_id.chip_family == FAMILY_AI) &&
- 	     ASICREV_IS_VEGA20_P(dc->ctx->asic_id.hw_internal_rev) && (context->stream_count >= 2)) {
- 		pp_display_cfg->min_memory_clock_khz = max(pp_display_cfg->min_memory_clock_khz,
- 							   (uint32_t) div64_s64(
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-index bf399819ca800..22ac2b7e49aea 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-@@ -749,7 +749,8 @@ bool hubp1_is_flip_pending(struct hubp *hubp)
- 	if (flip_pending)
- 		return true;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 02d16fddd3123..a4719af88718e 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -5917,7 +5917,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
+ 	int rc;
+ 	struct pqi_scsi_dev *device;
+ 	struct pqi_stream_data *pqi_stream_data;
+-	struct pqi_scsi_dev_raid_map_data rmd;
++	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
  
--	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
-+	if (hubp &&
-+	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
- 		return true;
- 
- 	return false;
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn20/dcn20_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn20/dcn20_hubp.c
-index 6bba020ad6fbf..0637e4c552d8a 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn20/dcn20_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn20/dcn20_hubp.c
-@@ -927,7 +927,8 @@ bool hubp2_is_flip_pending(struct hubp *hubp)
- 	if (flip_pending)
- 		return true;
- 
--	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
-+	if (hubp &&
-+	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
- 		return true;
- 
- 	return false;
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index fc0d2077aaec4..96371dac72fc1 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -950,7 +950,7 @@ void dce110_edp_backlight_control(
- {
- 	struct dc_context *ctx = link->ctx;
- 	struct bp_transmitter_control cntl = { 0 };
--	uint8_t pwrseq_instance;
-+	uint8_t pwrseq_instance = 0;
- 	unsigned int pre_T11_delay = OLED_PRE_T11_DELAY;
- 	unsigned int post_T7_delay = OLED_POST_T7_DELAY;
- 
-@@ -1003,7 +1003,8 @@ void dce110_edp_backlight_control(
- 	 */
- 	/* dc_service_sleep_in_milliseconds(50); */
- 		/*edp 1.2*/
--	pwrseq_instance = link->panel_cntl->pwrseq_inst;
-+	if (link->panel_cntl)
-+		pwrseq_instance = link->panel_cntl->pwrseq_inst;
- 
- 	if (cntl.action == TRANSMITTER_CONTROL_BACKLIGHT_ON) {
- 		if (!link->dc->config.edp_no_power_sequencing)
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index 1d2be574f6680..83942abd08e84 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -1554,7 +1554,7 @@ void dcn10_init_hw(struct dc *dc)
- 		dc->clk_mgr->funcs->init_clocks(dc->clk_mgr);
- 
- 	/* Align bw context with hw config when system resume. */
--	if (dc->clk_mgr->clks.dispclk_khz != 0 && dc->clk_mgr->clks.dppclk_khz != 0) {
-+	if (dc->clk_mgr && dc->clk_mgr->clks.dispclk_khz != 0 && dc->clk_mgr->clks.dppclk_khz != 0) {
- 		dc->current_state->bw_ctx.bw.dcn.clk.dispclk_khz = dc->clk_mgr->clks.dispclk_khz;
- 		dc->current_state->bw_ctx.bw.dcn.clk.dppclk_khz = dc->clk_mgr->clks.dppclk_khz;
- 	}
-@@ -1674,7 +1674,7 @@ void dcn10_init_hw(struct dc *dc)
- 		REG_UPDATE(DCFCLK_CNTL, DCFCLK_GATE_DIS, 0);
- 	}
- 
--	if (dc->clk_mgr->funcs->notify_wm_ranges)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs->notify_wm_ranges)
- 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
- }
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
-index 746c522adf84c..3d4b31bd99469 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
-@@ -256,10 +256,10 @@ void dcn31_init_hw(struct dc *dc)
- 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
- 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
- 
--	if (dc->clk_mgr->funcs->notify_wm_ranges)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs->notify_wm_ranges)
- 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
- 
--	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
- 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
- 
- 	if (dc->res_pool->hubbub->funcs->force_pstate_change_control)
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-index 80db40787e019..12a39dbc35419 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -235,7 +235,7 @@ void dcn35_init_hw(struct dc *dc)
- 	if (hws->funcs.enable_power_gating_plane)
- 		hws->funcs.enable_power_gating_plane(dc->hwseq, true);
- */
--	if (res_pool->hubbub->funcs->dchubbub_init)
-+	if (res_pool->hubbub && res_pool->hubbub->funcs->dchubbub_init)
- 		res_pool->hubbub->funcs->dchubbub_init(dc->res_pool->hubbub);
- 	/* If taking control over from VBIOS, we may want to optimize our first
- 	 * mode set, so we need to skip powering down pipes until we know which
-@@ -328,10 +328,10 @@ void dcn35_init_hw(struct dc *dc)
- 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
- 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
- 
--	if (dc->clk_mgr->funcs->notify_wm_ranges)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs->notify_wm_ranges)
- 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
- 
--	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
-+	if (dc->clk_mgr && dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
- 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
- 
- 
-@@ -1054,7 +1054,7 @@ void dcn35_calc_blocks_to_gate(struct dc *dc, struct dc_state *context,
- 		if (pipe_ctx->plane_res.hubp)
- 			update_state->pg_pipe_res_update[PG_HUBP][pipe_ctx->plane_res.hubp->inst] = false;
- 
--		if (pipe_ctx->plane_res.dpp)
-+		if (pipe_ctx->plane_res.dpp && pipe_ctx->plane_res.hubp)
- 			update_state->pg_pipe_res_update[PG_DPP][pipe_ctx->plane_res.hubp->inst] = false;
- 
- 		if (pipe_ctx->plane_res.dpp || pipe_ctx->stream_res.opp)
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 46bb7a855bc21..60015e94c4aa8 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -2254,7 +2254,7 @@ bool dp_verify_link_cap_with_retries(
- 
- 		memset(&link->verified_link_cap, 0,
- 				sizeof(struct dc_link_settings));
--		if (!link_detect_connection_type(link, &type) || type == dc_connection_none) {
-+		if (link->link_enc && (!link_detect_connection_type(link, &type) || type == dc_connection_none)) {
- 			link->verified_link_cap = fail_safe_link_settings;
- 			break;
- 		} else if (dp_verify_link_cap(link, known_limit_link_setting, &fail_count)) {
+ 	if (!ctrl_info->enable_stream_detection)
+ 		return false;
 -- 
 2.43.0
 
