@@ -1,101 +1,139 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DA12139C6
-	for <patches@lists.linux.dev>; Tue,  8 Oct 2024 22:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8778173336;
+	Tue,  8 Oct 2024 23:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728424993; cv=none; b=QDQmPiEPxELTY0Sp06UfD4PD78uPdTvC+T8/vWwf7J/FRLJ2pSAbT99/FjQfrdN8Gao3SAhnciIJ+2XSB55pvYuFi8iTL9luwH2I+8zPXyZucI6ESIjAaIdT19yACb3PdN9cYHQruyqZcVLuYAz+mKnz1iwzSdxFETEBlNZSIMs=
+	t=1728429124; cv=none; b=dJWnYPv29qXVkAtWl+SOaTKq1UePCpVZu2KTZ4eAu3jwTbqScqRLsrJN20dCOXL8N5j/LAnMHjI1LEXvTIvDCMWBDkLgdFQ9PLWeTnITB34HnvrzrxI7XJ9K/Y6eAHdYruY70rLhbqqFWARmHSl5t3gtWCtOerT8zvCTz3GjYtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728424993; c=relaxed/simple;
-	bh=BXAmuJ7ILq+rT+k8LO3lE0/nVu01ECozpjquJa006AM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=La0Kr9xDZh+LQ8RrkeNGFbMQzUKj/+O01xyfQKD0BWqrM6+vmetBu5klCHzKFnMIK/c+grcUeUNsC1imNrkmJIgBUEuiqZr4NhX0mow8B8m3P3O0wpqYdp+BTOqoeOFsHURKrVkUZkSJGEHMeQ5nPB14EfaZ5cRt95Xz5TDPELI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMWcXnUm; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1728429124; c=relaxed/simple;
+	bh=Bki+M28Uxgy/me7xvfPv7pJjxyUy06JPfx4V50qSkoU=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=pKcSgRkNAZqIVE90knHhidOfDYxEpbVMGqhf5IdAKEWj1fgt9Eod+9xW5Mdmxl8le9SmnHtEgV1WpkJkDg5wongB/hIfOLGzbTF4Bot9hzqkAGUOGECU6vjf6a4lY5MQiaGGA9z9D+pkZY6zev+JdqT1l67t67ykhs7U/xI9/Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eONwHUSy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMWcXnUm"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3a39620ff54so1945455ab.1
-        for <patches@lists.linux.dev>; Tue, 08 Oct 2024 15:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1728424990; x=1729029790; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8k/h1zc1if6v/PtO4/Z0OMrVugcpBclAQ9weFD2DFTs=;
-        b=AMWcXnUmkK3mIQlsAxShFCbsn5czxyypV1hDi5o0GuY58QuN/MyRGRhC7KuCMI4yIl
-         mUIWxhpEjlqlNIX0cyzJWgPGkzWIOXkC9GZgI7ChKC+qz5Yqew9x/8VzdZynGi/WHNtL
-         68W9uS/C55qyZp5xYV3OUg9TupRit3vD8GdWQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728424990; x=1729029790;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8k/h1zc1if6v/PtO4/Z0OMrVugcpBclAQ9weFD2DFTs=;
-        b=aNbQynZ16pkd7uegPaW1b+CNxRPpasFTNDCcUI9ep3juXPp9JVdjL8t9T6dagYkZ0w
-         h+92e9MJykaFHZIUvEenkSch1lx1inJGknqAKlD/Mj0xLSsOo/aUww7TmHNwTFQ1NAcJ
-         9qBICIk1X48H3ClurCCWVW4OI9GWxLsTNYkxZu3Cv7gG2onC6mzccri5HoOxsR/sZmjc
-         7XBlcAFjNFyseti10VdOeQbgRHFwc/VJEkes8fXDFckTryM/yemjwKcf5mYelb9h5R/L
-         x8Xw7n5fOw2TCCSrRsn41k8GDrP6fPn6UlsX5Hf2Wgy9xsxhhCAZJ1+ckIHRws6pUYZ0
-         ejsw==
-X-Gm-Message-State: AOJu0Yx+x1mM1kB7s0MBpJoPWA3k+hqmkuXLAv/Bc/f3MFqz7uJWKvlg
-	MAn/SzWJOKRJdKVKZNElEhfY4LUE8EW3ZvguxNLQpSNx39wjsHC5zmao1S8SJlg=
-X-Google-Smtp-Source: AGHT+IEbwfQqS1rnCN/fqKqbgzAthDXhnK25PIZwnEuU6F500jfrAspi+MkyW7GIBwdWt2QIv/P83g==
-X-Received: by 2002:a05:6e02:1a2c:b0:3a0:9a32:dedc with SMTP id e9e14a558f8ab-3a397cf78e6mr4402395ab.6.1728424990268;
-        Tue, 08 Oct 2024 15:03:10 -0700 (PDT)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4db7db303besm1461620173.107.2024.10.08.15.03.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 15:03:09 -0700 (PDT)
-Message-ID: <b1659a9a-66a4-4a07-a76a-31222bf8cfc5@linuxfoundation.org>
-Date: Tue, 8 Oct 2024 16:03:08 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eONwHUSy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47898C4CEC7;
+	Tue,  8 Oct 2024 23:12:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728429124;
+	bh=Bki+M28Uxgy/me7xvfPv7pJjxyUy06JPfx4V50qSkoU=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=eONwHUSy/QglbYsCbdw2Rwy/P6GtWCWP95d3T9XiyozzzzjSkWKtFIRGPqoTYdt6T
+	 a5MVWrbDT3WxfgHTdp2HCkZA5DbWXAgYBWtJ6D28RbhXTAgA/zKWGLLrhl4A1dZZs8
+	 B/QAeWabS7AccKyKwepAUe909Rpk2qfr0sE7sJtdpKqZvnxBIBZLeLmwns0nsDDrUz
+	 i9YX6Np+9iZ8u9HLAudlI6lTqbrCVc9EPz5fZV2dtdPQSD2PinMwxS0S7hLaHUFbKl
+	 wza/yFRmshcoYyi98P/kda2wsf3s/V/NOyNB4FlBvlkyltWCQ5ykKIlXyrrxheuD6f
+	 MYGhWVScEIuqg==
+Message-ID: <ccd372f2754e80d6c01e38a9596bed34.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.10 000/482] 6.10.14-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20241008115648.280954295@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <cb1e0119-6e3e-4fd2-92ea-3fec18f5843d@roeck-us.net>
+References: <20240718210513.3801024-1-sboyd@kernel.org> <ba88a29c-f05e-4ca3-82d1-0a634613caee@roeck-us.net> <4216b852-11a2-41ae-bb01-5f9b578ee41b@roeck-us.net> <879831a8-2039-4cdb-bce2-aefdeb7ab25f@linuxfoundation.org> <da260b77-2ecb-4486-90cb-6db456d381ef@linuxfoundation.org> <f5f1c42d-77c0-48c7-ac52-3d4a3b5c2b47@roeck-us.net> <4a8abb5f501279de7907629f4dd6be24.sboyd@kernel.org> <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net> <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org> <cb1e0119-6e3e-4fd2-92ea-3fec18f5843d@roeck-us.net>
+Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with struct clk_parent_data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J.Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>, Geert Uytterhoeven <geert+renesas@glider.be>
+To: Guenter Roeck <linux@roeck-us.net>, Shuah Khan <skhan@linuxfoundation.org>
+Date: Tue, 08 Oct 2024 16:12:02 -0700
+User-Agent: alot/0.10
 
-On 10/8/24 06:01, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.14 release.
-> There are 482 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 10 Oct 2024 11:55:15 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.14-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Quoting Guenter Roeck (2024-10-03 21:52:09)
+> On 10/3/24 17:42, Stephen Boyd wrote:
+> >=20
+> > Can you please describe how you run the kunit test? And provide the qemu
+> > command you run to boot arm64 with acpi?
+> >=20
+>=20
+> Example command line:
+>=20
+> qemu-system-aarch64 -M virt -m 512 \
+>       -kernel arch/arm64/boot/Image -no-reboot -nographic \
+>       -snapshot \
+>       -bios /opt/buildbot/rootfs/arm64/../firmware/QEMU_EFI-aarch64.fd \
+>       -device virtio-blk-device,drive=3Dd0 \
+>       -drive file=3Drootfs.ext2,if=3Dnone,id=3Dd0,format=3Draw \
+>       -cpu cortex-a57 -serial stdio -monitor none -no-reboot \
+>       --append "kunit.stats_enabled=3D2 kunit.filter=3Dspeed>slow root=3D=
+/dev/vda rootwait earlycon=3Dpl011,0x9000000 console=3DttyAMA0"
+>=20
+> That works fine for me. Configuration is arm64 defconfig plus various
+> debug and kunit options. I built the efi image myself from sources.
+> The root file system is from buildroot with modified init script.
+> kunit tests are all built into the kernel and run during boot.
 
-Compiled and booted on my test system. No dmesg regressions.
+Thanks. I figured out that I was missing enabling CONFIG_ACPI. Here's my
+commandline
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+./tools/testing/kunit/kunit.py run --arch=3Darm64 \
+	--kunitconfig=3Ddrivers/of \
+	--qemu_args=3D"-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd -smp 2" \
+	--kconfig_add=3D"CONFIG_ACPI=3Dy" \
+	--kernel_args=3D"earlycon=3Dpl011,0x9000000"
 
-thanks,
--- Shuah
+Now I can boot and reproduce the failure, but there's another problem.
+ACPI disables itself when it fails to find tables.
+
+ ACPI: Unable to load the System Description Tables
+
+This calls disable_acpi() which sets acpi_disabled to 1. This happens
+before the unit test runs, meaning we can't reliably use 'acpi_disabled'
+as a method to skip.
+
+The best I can come up with then is to test for a NULL of_root when
+CONFIG_ARM64 and CONFIG_ACPI are enabled, because the tests
+intentionally don't work when both those configs are enabled and the
+'of_root' isn't populated. In all other cases the 'of_root' missing is a
+bug. I'll probably make this into some sort of kunit helper function in
+of_private.h and send it to DT maintainers.
+
+---8<----
+diff --git a/drivers/of/of_kunit_helpers.c b/drivers/of/of_kunit_helpers.c
+index 287d6c91bb37..a1330e183230 100644
+--- a/drivers/of/of_kunit_helpers.c
++++ b/drivers/of/of_kunit_helpers.c
+@@ -36,6 +36,9 @@ int of_overlay_fdt_apply_kunit(struct kunit *test, void *=
+overlay_fdt,
+ 	int ret;
+ 	int *copy_id;
+=20
++	if (IS_ENABLED(CONFIG_ARM64) && IS_ENABLED(CONFIG_ACPI) && !of_root)
++		kunit_skip(test, "arm64+acpi rejects overlays");
++
+ 	copy_id =3D kunit_kmalloc(test, sizeof(*copy_id), GFP_KERNEL);
+ 	if (!copy_id)
+ 		return -ENOMEM;
+diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
+index c85a258bc6ae..6cca43bf8029 100644
+--- a/drivers/of/of_test.c
++++ b/drivers/of/of_test.c
+@@ -38,6 +38,8 @@ static int of_dtb_test_init(struct kunit *test)
+ {
+ 	if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
+ 		kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE");
++	if (IS_ENABLED(CONFIG_ARM64) && IS_ENABLED(CONFIG_ACPI) && !of_root)
++		kunit_skip(test, "arm64+acpi doesn't populate a root node on ACPI system=
+s");
+=20
+ 	return 0;
+ }
+diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+index 19a292cdeee3..3e7ac97a6796 100644
+--- a/drivers/of/overlay_test.c
++++ b/drivers/of/overlay_test.c
+@@ -64,6 +64,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit *=
+test)
+=20
+ 	if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
+ 		kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE for root node");
++	if (IS_ENABLED(CONFIG_ARM64) && IS_ENABLED(CONFIG_ACPI) && !of_root)
++		kunit_skip(test, "arm64+acpi rejects overlays");
+=20
+ 	kunit_init_test(&fake, "fake test", NULL);
+ 	KUNIT_ASSERT_EQ(test, fake.status, KUNIT_SUCCESS);
