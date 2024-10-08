@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29DEEEC8;
-	Tue,  8 Oct 2024 12:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3731DEFC2;
+	Tue,  8 Oct 2024 12:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390539; cv=none; b=IYu/hy1Mq5wdujRuOJz7vEzZYyyUGwahpDK+hV2EAWJeFwuDntF/KJCcqcRlg7GoVK9rfrEQWWuyHbXno68ICNIvZsxudlVCT7nSO2kylbMUUUR2RdHS7/O2wWpO1GCF4sXJ9jSd5GYEz26ECJ2L3/XPXkHZLf1JAG3aM46z4Nk=
+	t=1728390542; cv=none; b=PxFhcwJZJKTCCoiXoJu25wqFqxCzkrW52ySBvhoM/nIZN97GupvuSnSLYnTxHiwmhPYzm3wCAypdrClqXghT/bK4StPScRlVe5SBOl+FhTiikK7nKvxt6C+2bTbVdPScBD4rIb2YyeGy8YADkSMbFcZgFsNK6354Jffzp8B+EGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390539; c=relaxed/simple;
-	bh=vXH9GDz6+kZo62ig/I7nLYXWrYdzkAWzbwAJOO1paQs=;
+	s=arc-20240116; t=1728390542; c=relaxed/simple;
+	bh=F5LQAyCpTRBYt8RwAuJgM0Gn2afgpwcCrRzLuqAfQtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lel22hGvCvEZkZzqhPFniojecnb7tBk9hvbp76ZpcY91HTeRtOutIWyZt15TfwEnhpsnN2XfOiISK9yfv+CyTn9jLWjjcC5IoIq60AqyIz52EZEvOK+jiyYLUJ26Wt1LlYfUYaD5ReXkB18fFR8AcMJqLyTGsO6RCiMZF6Jn8cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IE3bwGzp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TEiz6DDbJf4/ILMH4Ll3OTk2HOGOOcXR5dr69O5drIGPDgcYwUhejFCHiFZcGwUvTlC1R81wSPIhs94NR09pmUtSrDzMITT2+eL/3npDhqmGix5qlJhcrZqAhIOBeBo0b6fNb+hOAYsuycgPXQKJEH+cIY/SM7g+d/uGe07fiQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQuvJ821; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IE3bwGzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1E8C4CECC;
-	Tue,  8 Oct 2024 12:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQuvJ821"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F81C4CEC7;
+	Tue,  8 Oct 2024 12:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390539;
-	bh=vXH9GDz6+kZo62ig/I7nLYXWrYdzkAWzbwAJOO1paQs=;
+	s=korg; t=1728390542;
+	bh=F5LQAyCpTRBYt8RwAuJgM0Gn2afgpwcCrRzLuqAfQtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IE3bwGzpO54kizZPp5jLUPFluPegvl9VBQRJrhNTJgnYa+xx27h40N2cuWfACGu4K
-	 7J6lcUeC9yYgX7w0Z1ioDITqEu30Rl1XmM/e8axfeCpS4n6dgPk1YgXWhNn/B2G5/H
-	 xJxDQhcdMKZ8OQZfH3ehuTRgX38l1AbePxUTwW7g=
+	b=RQuvJ821KCBPwQMhk761HPHcdA0eehbrecswYNjavtauMtjcNd+F5FCADLTpE+K9X
+	 A535F5qGY14tLavsG23TkVjClJHV8mL3Mx0dI+ahidsxeyAnjvA7XeR9HoP7+Rl666
+	 6r2FrO/ES5+tOSEY5yrhW7Sa8yRuWdDgtHSS2QYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 319/482] ALSA: hda/realtek: fix mute/micmute LED for HP mt645 G8
-Date: Tue,  8 Oct 2024 14:06:22 +0200
-Message-ID: <20241008115700.984343916@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.10 293/482] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue,  8 Oct 2024 14:05:56 +0200
+Message-ID: <20241008115659.808863270@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,36 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit cb2deca056d579fe008c8d0a4ceb04d2b368fe42 upstream.
+commit e2c85d85a05f16af2223fcc0195ff50a7938b372 upstream.
 
-The HP Elite mt645 G8 Mobile Thin Client uses an ALC236 codec
-and needs the ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk
-to enable the mute and micmute LED functionality.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-This patch adds the system ID of the HP Elite mt645 G8
-to the `alc269_fixup_tbl` in `patch_realtek.c`
-to enable the required quirk.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>
-Link: https://patch.msgid.link/20240916195042.4050-1-nikolai.afanasenkov@hp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.19+
+Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-qcom-geni.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10303,6 +10303,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8ca2, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8caf, "HP Elite mt645 G8 Mobile Thin Client", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8cbd, "HP Pavilion Aero Laptop 13-bg0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8cdd, "HP Spectre", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8cde, "HP Spectre", ALC287_FIXUP_CS35L41_I2C_2),
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -818,15 +818,13 @@ static int geni_i2c_probe(struct platfor
+ 	init_completion(&gi2c->done);
+ 	spin_lock_init(&gi2c->lock);
+ 	platform_set_drvdata(pdev, gi2c);
+-	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
++	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
+ 			       dev_name(dev), gi2c);
+ 	if (ret) {
+ 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
+ 			gi2c->irq, ret);
+ 		return ret;
+ 	}
+-	/* Disable the interrupt so that the system can enter low-power mode */
+-	disable_irq(gi2c->irq);
+ 	i2c_set_adapdata(&gi2c->adap, gi2c);
+ 	gi2c->adap.dev.parent = dev;
+ 	gi2c->adap.dev.of_node = dev->of_node;
 
 
