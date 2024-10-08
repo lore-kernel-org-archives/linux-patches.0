@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E606C1DEFD6;
-	Tue,  8 Oct 2024 12:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669C01DED55;
+	Tue,  8 Oct 2024 12:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390372; cv=none; b=uuZ0dJL5hTMDzoXx96Ni4mIvqOzDJEZ8T7SVai6dirV2sqDxkAVUpIFKrkTO0ENh5gg3acMfnmNIoux+m94OKbV/6dGEX32E+ATaufkFYUvERaNadEWDnUJkPEaVDeCqz+XOvIgexhsjh2zPAtTWAZ2Wdbp4eKKim6Qx1y9BG9Y=
+	t=1728390375; cv=none; b=Y7SPYL+D19tVgoNMSrBZgl+If8+3GPNZkOZogpO+fef+7aGV8uTQbgyKS8y6D33nKpSF0O1G4yQ3q8xs6pgiE2pHryfGLyZsI/iL0S/bwD69SbUbzdNSyqK9yvDWLWSTKNpDIYEhiyfRKzsm74iMGLPwxV3rGp8VXuCoi5ulw1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390372; c=relaxed/simple;
-	bh=Dw3qzdsBYRnzfOcBWtfh91FYTCpbuCavPo6KBDPhkXA=;
+	s=arc-20240116; t=1728390375; c=relaxed/simple;
+	bh=PM0m8xyBO3kV7qxtIGAkLaURMkGFU6xWyNWcL37+/Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eV2xWoJLpXyRkFKdS5nEH3k9fgVSeQ68n6ARZTPvwPUm9ghQKK/H13Spz2Pwj8P33lkGThDS8jondjhz+Z9jTysUPjQKKiwT1NEV/4BpAz0MO4cZZGHfKlkRX5GBh+Nd1Gl4oyceqzjQNtZaAf7OZAVrOOwBLp4KKIDr67sGeVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyCLVdiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7Uh1a8JfQ4tyiJpZA34kIGj0jldb3w7d8/XtK3QNkVs5j9FEzY7A0DQwu5EbkVkNYRvqm8b9J6Cuvj5UeGK7718+AqyqfVHvyglCKbMX3nrfrZcpOWDAxbyZnNcooRepi6OesS/OMNuUbdCj5Ia1EuRp+Zy/nI4AgHZrg41EGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzdOsDMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyCLVdiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CED1C4CEC7;
-	Tue,  8 Oct 2024 12:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzdOsDMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98029C4CEC7;
+	Tue,  8 Oct 2024 12:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390371;
-	bh=Dw3qzdsBYRnzfOcBWtfh91FYTCpbuCavPo6KBDPhkXA=;
+	s=korg; t=1728390375;
+	bh=PM0m8xyBO3kV7qxtIGAkLaURMkGFU6xWyNWcL37+/Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyCLVdiDhfyWC2g9S75YVMDS+8kni/rVmY98LfHAyapLmB0xuXBm9yDIeYCcS42g1
-	 1mCR9Nt4eaTDAgptStsumcCO4h8log2ZpiAPcQezOUlGPQYSvJpVWbe8Tc4z/D3kvo
-	 ZKdtKwoQA3ZXFI4mq1Cn+45hisyrpTc0jGNQTTFc=
+	b=qzdOsDMpb3Ymlq0oU+H0hiwYFusbxfhVd7/RqG2vjZJNROdCv38TA0UapN/lUs2w9
+	 qKS5IV8lO8lNbQxWIdxzmp5bHAUEGr+arSoOCEyEyDXmgvh0HPrnKZHgpmpgkBp4/G
+	 EGzqHE8+bvGh7ZjLQTNsWw/tNtKqnVSZ1EdcQ9k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 270/482] perf: Really fix event_function_call() locking
-Date: Tue,  8 Oct 2024 14:05:33 +0200
-Message-ID: <20241008115658.906945403@linuxfoundation.org>
+Subject: [PATCH 6.10 271/482] drm/xe: fixup xe_alloc_pf_queue
+Date: Tue,  8 Oct 2024 14:05:34 +0200
+Message-ID: <20241008115658.945890800@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,68 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit fe826cc2654e8561b64246325e6a51b62bf2488c ]
+[ Upstream commit 321d6b4b9cbe3dd0bc99937d5e5b4d730b5b5798 ]
 
-Commit 558abc7e3f89 ("perf: Fix event_function_call() locking") lost
-IRQ disabling by mistake.
+kzalloc expects number of bytes, therefore we should convert the number
+of dw into bytes, otherwise we are likely just accessing beyond the
+array causing all kinds of carnage. Also fixup the error handling while
+we are here.
 
-Fixes: 558abc7e3f89 ("perf: Fix event_function_call() locking")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Tested-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+v2:
+ - Prefer kcalloc (dim)
+
+Fixes: 3338e4f90c14 ("drm/xe: Use topology to determine page fault queue size")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240821171917.417386-2-matthew.auld@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_gt_pagefault.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index e18a07de9920a..e5188b0899b63 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -263,8 +263,8 @@ static int event_function(void *info)
- static void event_function_call(struct perf_event *event, event_f func, void *data)
- {
- 	struct perf_event_context *ctx = event->ctx;
--	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
- 	struct task_struct *task = READ_ONCE(ctx->task); /* verified in event_function */
-+	struct perf_cpu_context *cpuctx;
- 	struct event_function_struct efs = {
- 		.event = event,
- 		.func = func,
-@@ -292,22 +292,25 @@ static void event_function_call(struct perf_event *event, event_f func, void *da
- 	if (!task_function_call(task, event_function, &efs))
- 		return;
+diff --git a/drivers/gpu/drm/xe/xe_gt_pagefault.c b/drivers/gpu/drm/xe/xe_gt_pagefault.c
+index ee78b4e47dfcb..28cf90e8989c6 100644
+--- a/drivers/gpu/drm/xe/xe_gt_pagefault.c
++++ b/drivers/gpu/drm/xe/xe_gt_pagefault.c
+@@ -437,7 +437,10 @@ static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
+ 		(num_eus + XE_NUM_HW_ENGINES) * PF_MSG_LEN_DW;
  
-+	local_irq_disable();
-+	cpuctx = this_cpu_ptr(&perf_cpu_context);
- 	perf_ctx_lock(cpuctx, ctx);
- 	/*
- 	 * Reload the task pointer, it might have been changed by
- 	 * a concurrent perf_event_context_sched_out().
- 	 */
- 	task = ctx->task;
--	if (task == TASK_TOMBSTONE) {
--		perf_ctx_unlock(cpuctx, ctx);
--		return;
--	}
-+	if (task == TASK_TOMBSTONE)
-+		goto unlock;
- 	if (ctx->is_active) {
- 		perf_ctx_unlock(cpuctx, ctx);
-+		local_irq_enable();
- 		goto again;
- 	}
- 	func(event, NULL, ctx, data);
-+unlock:
- 	perf_ctx_unlock(cpuctx, ctx);
-+	local_irq_enable();
- }
+ 	pf_queue->gt = gt;
+-	pf_queue->data = kzalloc(pf_queue->num_dw, GFP_KERNEL);
++	pf_queue->data = kcalloc(pf_queue->num_dw, sizeof(u32), GFP_KERNEL);
++	if (!pf_queue->data)
++		return -ENOMEM;
++
+ 	spin_lock_init(&pf_queue->lock);
+ 	INIT_WORK(&pf_queue->worker, pf_queue_work_func);
  
- /*
 -- 
 2.43.0
 
