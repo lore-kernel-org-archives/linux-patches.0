@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B61DFD1;
-	Tue,  8 Oct 2024 13:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46181C9B99;
+	Tue,  8 Oct 2024 13:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392627; cv=none; b=RFcJmuRY7BG6TU2pQ4fROPLE4n4R18pqgR4BHSRkQKgvS5gpNA0W3wNZv9d1/gaUAviKG3/6mBaPo91MCjbkgtuyCYij4MfPFnLWGXGzX66BqF9wu20WOYRsYH/9omG2+C+Bdt5kI+2a/aIThk/XiJrKpsn61kqmR2h8bjRtyLw=
+	t=1728392630; cv=none; b=YdAPMo4o9CH4xgqlw5MjwGuL0FGGrTSoXWL/BVhZRM/7qPdICIzliFN8011A3S4erb+zvbTO1VJke/8BC5MmzoEP3UQwoQha1WGpz29l7PM0UdwH91beKUoDVA9IMfMU3LR5WrBz2tA8ShfD4oWf9UT+SZUzdqmcYeJO3mTAcxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392627; c=relaxed/simple;
-	bh=oYjeE5bzIEbnI0fV8xf8zAjMX/frGp4PnoGNzgiBKwQ=;
+	s=arc-20240116; t=1728392630; c=relaxed/simple;
+	bh=A+rEQSXIa4/iSUqdS6JrHCptZpb3fEG4F1GNSK/vAfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0xG7Bnf05PBd2ap8KEl3ZCLLh/7FM+mv2XkLQz25F2ctSW/386k1iGjKMhMDECIJ6f6ZEZoWLAEgRDETNNBM2Fg8v9AwWCzofUQOZ6AhFR0vu/Mah235cocwDs0HkaEE5pRaRBs2wukkYCpDzqlwPTWVuGjKzlXn1hr+xZ2CFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyYF6tbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGwwxi9pSeuu3ta5b1nG3Qhx9swMYTLVJDyqgCpElM5KhM5YrPhG0H+E/QAQoUHgERQlS+f255f8+Z7jqGWDd5iD/HYhiazknW2ibQVpbkc2iTslM2/2FCwliZ/dbRnvn7jmuaI2I3mwgbFkZXnCIjIHJUytv5FESvc4bTLaiVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1yUXjC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyYF6tbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8034DC4CEC7;
-	Tue,  8 Oct 2024 13:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1yUXjC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04511C4CEC7;
+	Tue,  8 Oct 2024 13:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392627;
-	bh=oYjeE5bzIEbnI0fV8xf8zAjMX/frGp4PnoGNzgiBKwQ=;
+	s=korg; t=1728392630;
+	bh=A+rEQSXIa4/iSUqdS6JrHCptZpb3fEG4F1GNSK/vAfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyYF6tbZ9q4TbTjmNy+YHifmF5A2Xi5dyte0A/EDlK6do5d4X31UOA6GgR0YWgFK/
-	 3ZlDPKcMSPsFO05NZZOnjWSrwWKV6sH1Af+qcdl1qDbIfcIPcUB95N2FgJlqgywxml
-	 WMmx2JA+65Z0IHp+kzxlDQfLaYxu1Zw6gZ+lULpw=
+	b=t1yUXjC4Gmhx9OY/l22Cwzu3XYRSLOyUYhqz544bvR3/ZdrQ5E5nQyNvDMy+SCvmJ
+	 oFVTII3ompDIqlJtLW9fYyFf62Qgw0tbTrsqF3ScW8eolPwORKLq9l1yMcBtWKsy6D
+	 lmSMiqQKBCZ/3v68T4hpWTKnrmwfwTyoTn21/OME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 471/558] iio: pressure: bmp280: Fix regmap for BMP280 device
-Date: Tue,  8 Oct 2024 14:08:21 +0200
-Message-ID: <20241008115720.780531707@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.11 445/558] media: ov5675: Fix power on/off delay timings
+Date: Tue,  8 Oct 2024 14:07:55 +0200
+Message-ID: <20241008115719.775113170@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,130 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit b9065b0250e1705935445ede0a18c1850afe7b75 upstream.
+commit 719ec29fceda2f19c833d2784b1574638320400f upstream.
 
-Up to now, the BMP280 device is using the regmap of the BME280 which
-has registers that exist only in the BME280 device.
+The ov5675 specification says that the gap between XSHUTDN deassert and the
+first I2C transaction should be a minimum of 8192 XVCLK cycles.
 
-Fixes: 14e8015f8569 ("iio: pressure: bmp280: split driver in logical parts")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://patch.msgid.link/20240711211558.106327-2-vassilisamir@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Right now we use a usleep_rage() that gives a sleep time of between about
+430 and 860 microseconds.
+
+On the Lenovo X13s we have observed that in about 1/20 cases the current
+timing is too tight and we start transacting before the ov5675's reset
+cycle completes, leading to I2C bus transaction failures.
+
+The reset racing is sometimes triggered at initial chip probe but, more
+usually on a subsequent power-off/power-on cycle e.g.
+
+[   71.451662] ov5675 24-0010: failed to write reg 0x0103. error = -5
+[   71.451686] ov5675 24-0010: failed to set plls
+
+The current quiescence period we have is too tight. Instead of expressing
+the post reset delay in terms of the current XVCLK this patch converts the
+power-on and power-off delays to the maximum theoretical delay @ 6 MHz with
+an additional buffer.
+
+1.365 milliseconds on the power-on path is 1.5 milliseconds with grace.
+85.3 microseconds on the power-off path is 90 microseconds with grace.
+
+Fixes: 49d9ad719e89 ("media: ov5675: add device-tree support and support runtime PM")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # RK3399 Puma with
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/bmp280-core.c   |    2 -
- drivers/iio/pressure/bmp280-regmap.c |   45 ++++++++++++++++++++++++++++++++---
- drivers/iio/pressure/bmp280.h        |    1 
- 3 files changed, 44 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ov5675.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -882,7 +882,7 @@ const struct bmp280_chip_info bme280_chi
- 	.id_reg = BMP280_REG_ID,
- 	.chip_id = bme280_chip_ids,
- 	.num_chip_id = ARRAY_SIZE(bme280_chip_ids),
--	.regmap_config = &bmp280_regmap_config,
-+	.regmap_config = &bme280_regmap_config,
- 	.start_up_time = 2000,
- 	.channels = bmp280_channels,
- 	.num_channels = 3,
---- a/drivers/iio/pressure/bmp280-regmap.c
-+++ b/drivers/iio/pressure/bmp280-regmap.c
-@@ -41,7 +41,7 @@ const struct regmap_config bmp180_regmap
- };
- EXPORT_SYMBOL_NS(bmp180_regmap_config, IIO_BMP280);
+--- a/drivers/media/i2c/ov5675.c
++++ b/drivers/media/i2c/ov5675.c
+@@ -972,12 +972,10 @@ static int ov5675_set_stream(struct v4l2
  
--static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
-+static bool bme280_is_writeable_reg(struct device *dev, unsigned int reg)
+ static int ov5675_power_off(struct device *dev)
  {
- 	switch (reg) {
- 	case BMP280_REG_CONFIG:
-@@ -54,9 +54,37 @@ static bool bmp280_is_writeable_reg(stru
- 	}
+-	/* 512 xvclk cycles after the last SCCB transation or MIPI frame end */
+-	u32 delay_us = DIV_ROUND_UP(512, OV5675_XVCLK_19_2 / 1000 / 1000);
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
+ 
+-	usleep_range(delay_us, delay_us * 2);
++	usleep_range(90, 100);
+ 
+ 	clk_disable_unprepare(ov5675->xvclk);
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 1);
+@@ -988,7 +986,6 @@ static int ov5675_power_off(struct devic
+ 
+ static int ov5675_power_on(struct device *dev)
+ {
+-	u32 delay_us = DIV_ROUND_UP(8192, OV5675_XVCLK_19_2 / 1000 / 1000);
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
+ 	int ret;
+@@ -1014,8 +1011,11 @@ static int ov5675_power_on(struct device
+ 
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 0);
+ 
+-	/* 8192 xvclk cycles prior to the first SCCB transation */
+-	usleep_range(delay_us, delay_us * 2);
++	/* Worst case quiesence gap is 1.365 milliseconds @ 6MHz XVCLK
++	 * Add an additional threshold grace period to ensure reset
++	 * completion before initiating our first I2C transaction.
++	 */
++	usleep_range(1500, 1600);
+ 
+ 	return 0;
  }
- 
-+static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
-+{
-+	switch (reg) {
-+	case BMP280_REG_CONFIG:
-+	case BMP280_REG_CTRL_MEAS:
-+	case BMP280_REG_RESET:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- static bool bmp280_is_volatile_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-+	case BMP280_REG_TEMP_XLSB:
-+	case BMP280_REG_TEMP_LSB:
-+	case BMP280_REG_TEMP_MSB:
-+	case BMP280_REG_PRESS_XLSB:
-+	case BMP280_REG_PRESS_LSB:
-+	case BMP280_REG_PRESS_MSB:
-+	case BMP280_REG_STATUS:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
-+static bool bme280_is_volatile_reg(struct device *dev, unsigned int reg)
-+{
-+	switch (reg) {
- 	case BME280_REG_HUMIDITY_LSB:
- 	case BME280_REG_HUMIDITY_MSB:
- 	case BMP280_REG_TEMP_XLSB:
-@@ -71,7 +99,6 @@ static bool bmp280_is_volatile_reg(struc
- 		return false;
- 	}
- }
--
- static bool bmp380_is_writeable_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-@@ -167,7 +194,7 @@ const struct regmap_config bmp280_regmap
- 	.reg_bits = 8,
- 	.val_bits = 8,
- 
--	.max_register = BME280_REG_HUMIDITY_LSB,
-+	.max_register = BMP280_REG_TEMP_XLSB,
- 	.cache_type = REGCACHE_RBTREE,
- 
- 	.writeable_reg = bmp280_is_writeable_reg,
-@@ -175,6 +202,18 @@ const struct regmap_config bmp280_regmap
- };
- EXPORT_SYMBOL_NS(bmp280_regmap_config, IIO_BMP280);
- 
-+const struct regmap_config bme280_regmap_config = {
-+	.reg_bits = 8,
-+	.val_bits = 8,
-+
-+	.max_register = BME280_REG_HUMIDITY_LSB,
-+	.cache_type = REGCACHE_RBTREE,
-+
-+	.writeable_reg = bme280_is_writeable_reg,
-+	.volatile_reg = bme280_is_volatile_reg,
-+};
-+EXPORT_SYMBOL_NS(bme280_regmap_config, IIO_BMP280);
-+
- const struct regmap_config bmp380_regmap_config = {
- 	.reg_bits = 8,
- 	.val_bits = 8,
---- a/drivers/iio/pressure/bmp280.h
-+++ b/drivers/iio/pressure/bmp280.h
-@@ -464,6 +464,7 @@ extern const struct bmp280_chip_info bmp
- /* Regmap configurations */
- extern const struct regmap_config bmp180_regmap_config;
- extern const struct regmap_config bmp280_regmap_config;
-+extern const struct regmap_config bme280_regmap_config;
- extern const struct regmap_config bmp380_regmap_config;
- extern const struct regmap_config bmp580_regmap_config;
- 
 
 
