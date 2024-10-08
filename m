@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B791E04B2;
-	Tue,  8 Oct 2024 13:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E9B1DED48;
+	Tue,  8 Oct 2024 13:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393818; cv=none; b=Ng18htr/XwuUfUtZy6dt9zRuAzGkRNgup/obsoUAORk9AvylQlho9MYS1nU9XcE46N4rkqoNCz1lbAPFKYL1banfDLTA2Y40Ks3FZATV2OVklZzu1TOs+RsBiwPpzqvqskkzbd8hoUNsSy26UEwiD/BZO4j+b0rJyVhgs+2wbOY=
+	t=1728393821; cv=none; b=AW9PaxuZQtKQhIHSdPurk8/Ztr3lBElBcsJUvemz9QtXw7q6fgLsrYZ0pABCqREmPt8maYSsnXcK+O+oeWqKy2tfnxXnrQd8iw+H/sxzMGd8qJM/Db0blkj0vC/Z5NrWImFq3vGelm9iwojXGGpgMuOKflh33CGb/hz2gyYOulo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393818; c=relaxed/simple;
-	bh=UMrVL9HNWrPPU1dYG23VI6f9/yBNxXk9XmMftg87bJ8=;
+	s=arc-20240116; t=1728393821; c=relaxed/simple;
+	bh=44roLJxxbnXUtLyrIjGkvFFOJvgj5qTs3IvHJg+5Knc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lvkR3iU/+p3/akiLwNeOtGaDGSsVdJtM6z26/1YULwoRr0dlSMnlCTAofcVJcizIZO3GoSrUd6gM1ajkad/TlFCkBxWhd4MCK0upG/ArS++MuzHcAn+yhGV3tC6t30bBYgBA802RwQmyEKMHIQEdD5jt/iWcqxAojA19eqEp73s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0XZSJ8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmWyz46+hHY/lPDrPPQsbbsW+gsJeKfkDss85A8WwHkFSHOuIhl+573snokaELOrXbe7/0uvAUlPS0/7brCVW6UMEH8nA7nQCMRwci0Px3R+5MfJxNtDy5EPkSPpfmG2kWe5TrbvqTDKafLuuYUnBLIIYdsR8FEBkEoLK1giH7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATWfnfT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0XZSJ8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EABC4CECE;
-	Tue,  8 Oct 2024 13:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATWfnfT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40E5C4CECC;
+	Tue,  8 Oct 2024 13:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393817;
-	bh=UMrVL9HNWrPPU1dYG23VI6f9/yBNxXk9XmMftg87bJ8=;
+	s=korg; t=1728393821;
+	bh=44roLJxxbnXUtLyrIjGkvFFOJvgj5qTs3IvHJg+5Knc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0XZSJ8KLIfvnRlC0LcB8To8KUplE37/bafQUBLhWf+3ljvIHnlBQUPN6HhmpO/MO
-	 zG71wbgJIy3puAMd3+kH0E0RGKrTGWGSrT6GsN2qZpesZcdU/sS4tDpq34la0frh5T
-	 bx5mWOtPoImGGQ66TLjQkZqG7fS+nguY748GWxAs=
+	b=ATWfnfT1CXFdmByqmCkEujhK4p8zt/P2iNVU8o3VIqOEHlZUu/LAqn91AcCvg+SlZ
+	 nqr4XQVjD7mVAS9jq+wG2PphTJowEwfsxGzWeO0U/OZ77SlXJgPugiLvC8vCpa/nO9
+	 exaI+9DKVeHrKJHfT8T4nBqdVW3K/EUbgqAZ6Tdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>,
-	Deepak Rawat <drawat@vmware.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Thomas Hellstrom <thellstrom@vmware.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.6 223/386] drm: Consistently use struct drm_mode_rect for FB_DAMAGE_CLIPS
-Date: Tue,  8 Oct 2024 14:07:48 +0200
-Message-ID: <20241008115638.180401853@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 258/386] mm: krealloc: consider spare memory for __GFP_ZERO
+Date: Tue,  8 Oct 2024 14:08:23 +0200
+Message-ID: <20241008115639.546236587@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -54,54 +51,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 8b0d2f61545545ab5eef923ed6e59fc3be2385e0 upstream.
+commit 1a83a716ec233990e1fd5b6fbb1200ade63bf450 upstream.
 
-FB_DAMAGE_CLIPS is a plane property for damage handling. Its UAPI
-should only use UAPI types. Hence replace struct drm_rect with
-struct drm_mode_rect in drm_atomic_plane_set_property(). Both types
-are identical in practice, so there's no change in behavior.
+As long as krealloc() is called with __GFP_ZERO consistently, starting
+with the initial memory allocation, __GFP_ZERO should be fully honored.
 
-Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Closes: https://lore.kernel.org/dri-devel/Zu1Ke1TuThbtz15E@intel.com/
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: d3b21767821e ("drm: Add a new plane property to send damage during plane update")
-Cc: Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>
-Cc: Deepak Rawat <drawat@vmware.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Thomas Hellstrom <thellstrom@vmware.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.0+
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240923075841.16231-1-tzimmermann@suse.de
+However, if for an existing allocation krealloc() is called with a
+decreased size, it is not ensured that the spare portion the allocation is
+zeroed.  Thus, if krealloc() is subsequently called with a larger size
+again, __GFP_ZERO can't be fully honored, since we don't know the previous
+size, but only the bucket size.
+
+Example:
+
+	buf = kzalloc(64, GFP_KERNEL);
+	memset(buf, 0xff, 64);
+
+	buf = krealloc(buf, 48, GFP_KERNEL | __GFP_ZERO);
+
+	/* After this call the last 16 bytes are still 0xff. */
+	buf = krealloc(buf, 64, GFP_KERNEL | __GFP_ZERO);
+
+Fix this, by explicitly setting spare memory to zero, when shrinking an
+allocation with __GFP_ZERO flag set or init_on_alloc enabled.
+
+Link: https://lkml.kernel.org/r/20240812223707.32049-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Rientjes <rientjes@google.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/slab_common.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -585,7 +585,7 @@ static int drm_atomic_plane_set_property
- 					&state->fb_damage_clips,
- 					val,
- 					-1,
--					sizeof(struct drm_rect),
-+					sizeof(struct drm_mode_rect),
- 					&replaced);
- 		return ret;
- 	} else if (property == plane->scaling_filter_property) {
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -1388,6 +1388,13 @@ __do_krealloc(const void *p, size_t new_
+ 
+ 	/* If the object still fits, repoison it precisely. */
+ 	if (ks >= new_size) {
++		/* Zero out spare memory. */
++		if (want_init_on_alloc(flags)) {
++			kasan_disable_current();
++			memset((void *)p + new_size, 0, ks - new_size);
++			kasan_enable_current();
++		}
++
+ 		p = kasan_krealloc((void *)p, new_size, flags);
+ 		return (void *)p;
+ 	}
 
 
