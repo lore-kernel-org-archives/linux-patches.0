@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D7E178384;
-	Tue,  8 Oct 2024 12:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D721E485;
+	Tue,  8 Oct 2024 12:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390779; cv=none; b=at+89G6uYZ4+1FS91rl379BbdjWeVSDrIZ5/l7pwLqdJZVJ9mbYixUW9/UZSvtuoaH32AbUmnh1ZLe4NgNLl7RXherL0nAHW5YDZLiOzjhkTQYs7SFq9PW9AyBuhnd5ALItGsvtu+fvzoQnUzlgAnNxSCVM6jDJAXdEBU6h+Nhg=
+	t=1728390782; cv=none; b=AJFz6MLehDQzJw3pi1RevnHgzVv4Wl5gnCoSctVlr3sKWWoPJu20zw9anHJ5i0hL6I8Ty9M4zCEFB3pDi9+8lbEQjjmvesZ46xfmrKCUSLCOePbzF036WiQS36szRpJm3ka9TR8J5T9CLBfdoZKjxb2okOMgc5pykTKVK9IY3rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390779; c=relaxed/simple;
-	bh=gP1ZBdtIYs/YAbwxXhvtswtwgVLSsVT/1ywKa9AhNHw=;
+	s=arc-20240116; t=1728390782; c=relaxed/simple;
+	bh=V9PpaBUoayG+Xkus4Yi1NvTLXpYp7m1RbkFgmpt46XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCLUr/WslteSoQhQ+gE27jcLt5egWDhqgKniL5Sa0ouMpomTXb87gazPlaihTI3FMNeMTAvVF1x44ZhciEmplkEOQhDikZ6qNksqDg98JPuaY+bvfEXoCWONwlBnJRztXOcOYz9x6h1SSBcWpC50A6sCQoccarSrNEGpJd41iUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Svqi9zDE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qngx7qoJLRpHpwQwWyQWGxFMwtT/n2cu5NiXy83DSMYnAvUEXtpHTOH+tlNy+jTRCoOO3xj/Vw1AGPtJJQn1XlPEQNSAUWKRHZg5n4FrASFDoPf5WPmo1B+yhgqBGKk8maYljqJpWh58WFCvrO6p+8MCs7bQfCIZyvZbuHH8aCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/6RXrgk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Svqi9zDE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E44C4CEC7;
-	Tue,  8 Oct 2024 12:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/6RXrgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FFAC4CEC7;
+	Tue,  8 Oct 2024 12:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390779;
-	bh=gP1ZBdtIYs/YAbwxXhvtswtwgVLSsVT/1ywKa9AhNHw=;
+	s=korg; t=1728390782;
+	bh=V9PpaBUoayG+Xkus4Yi1NvTLXpYp7m1RbkFgmpt46XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Svqi9zDEJaFISxpEiN8yJvwrx5sEaLBWn+HwFHxN5JRgLrsNenYvMgpDCz4arI1Wk
-	 +0RVFvEtAkFZEKIcMZPV36FUUS9oEWSw28vp+95FHkn3oG/N8FvqMdPtwjapXc1gUR
-	 5kyeUZIuTV5MDJ5upuc4fgA4a8j16kHaePPZzfHs=
+	b=F/6RXrgkwSgMprqtXNzl0wIFB3ACbBfdWTU673etUXK1IMAoReGp2YFYAXAqQ6alT
+	 PpJWYLRgboGGPzrG4bU4k0hd1JDCV/3MDgErlzkdpSQ/MjzzwcC0o52cHU9n0gXDcO
+	 9V78gdwgqGZe0cQp68ssBhYwTHJI5SSNXrcCMubc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 389/482] dt-bindings: clock: qcom: Add GPLL9 support on gcc-sc8180x
-Date: Tue,  8 Oct 2024 14:07:32 +0200
-Message-ID: <20241008115703.721985670@linuxfoundation.org>
+Subject: [PATCH 6.10 390/482] clk: qcom: clk-rpmh: Fix overflow in BCM vote
+Date: Tue,  8 Oct 2024 14:07:33 +0200
+Message-ID: <20241008115703.761151477@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,32 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-commit 648b4bde0aca2980ebc0b90cdfbb80d222370c3d upstream.
+commit a4e5af27e6f6a8b0d14bc0d7eb04f4a6c7291586 upstream.
 
-Add the missing GPLL9 which is required for the gcc sdcc2 clock.
+Valid frequencies may result in BCM votes that exceed the max HW value.
+Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
+truncated, which can result in lower frequencies than desired.
 
-Fixes: 0fadcdfdcf57 ("dt-bindings: clock: Add SC8180x GCC binding")
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
 Cc: stable@vger.kernel.org
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-2-8b3eaa5fb856@quicinc.com
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+Link: https://lore.kernel.org/r/20240809-clk-rpmh-bcm-vote-fix-v2-1-240c584b7ef9@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/dt-bindings/clock/qcom,gcc-sc8180x.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/clk-rpmh.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-+++ b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-@@ -248,6 +248,7 @@
- #define GCC_USB3_SEC_CLKREF_CLK					238
- #define GCC_UFS_MEM_CLKREF_EN					239
- #define GCC_UFS_CARD_CLKREF_EN					240
-+#define GPLL9							241
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -263,6 +263,8 @@ static int clk_rpmh_bcm_send_cmd(struct
+ 		cmd_state = 0;
+ 	}
  
- #define GCC_EMAC_BCR						0
- #define GCC_GPU_BCR						1
++	cmd_state = min(cmd_state, BCM_TCS_CMD_VOTE_MASK);
++
+ 	if (c->last_sent_aggr_state != cmd_state) {
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
 
 
