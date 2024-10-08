@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA461DE2AD;
-	Tue,  8 Oct 2024 12:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2E41779B1;
+	Tue,  8 Oct 2024 12:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391107; cv=none; b=AwF+6e08cBh7+AcEfuKjZBOj4KGCRu9JK0APJgQPsX6tYmXXz6LeP2lhofA8XL69mIuzfQJtlvjejH8KMVqdN0mEsxpk6MmdaLy0CCNA9sL9sDmiHKeIO2DtvW0CVZZdSCW1AglarkoYsC9ejRU259R+jTgxScNwCdEQFe2HPPA=
+	t=1728391110; cv=none; b=koOS+Xauauxb9IB9X8/OOV3OsGk1P/M6bqHPK9Np8kO9NQ/QMa/HhdgrDQ+7Yj07u+gFcFd/r4nPbG9mtwSSzO0p4cDLa6tRaAd3DKa0PdOwQYPjXsymOPyKrSHc4TooAVTceDtIrQNfk/e0+IZOkriaaYCBJTyDEU7CupbxjmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391107; c=relaxed/simple;
-	bh=sTcn9VHocoIdkm3vTJ1bKg1rcjYiK6TC5BAaeklXL5s=;
+	s=arc-20240116; t=1728391110; c=relaxed/simple;
+	bh=L70wxhkBc6RCICoHGqi9sxhzWTnuO40w5DvhBaneFPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcIsgo5qG3irKGHmLaKjU/LZdcbBMMkn11fSi8sKEJD1gE/DQ2xexJfIYVMyAzmaDqFkeTZetRBdI6EBptG7PQGCAnljKToWNHmxOr0m1TwKheyQOtUHYQ+gAxu9xByMORIiIRE4AIHuT6Ymg9WGWROyvmCgOycXhhzd3MYsPk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuIGFEns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nzm0lOWLpkeXcm0TxsyASEIXewM7vEftiJt96u7VLKzTsYRqEWfEcSueL+sPCF9kwJm2RipHfGoPDKePSEIJSANlH3ScXDwnM0dnxCzdNh6xaOYO3vZ3BQremfAsxlfVM8E5jYi3h5me/AexS1uHixJw/nsYI0RSRhD+Pm8iHTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtVtTxSx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuIGFEns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250B1C4CEC7;
-	Tue,  8 Oct 2024 12:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtVtTxSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3133EC4CECD;
+	Tue,  8 Oct 2024 12:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391107;
-	bh=sTcn9VHocoIdkm3vTJ1bKg1rcjYiK6TC5BAaeklXL5s=;
+	s=korg; t=1728391110;
+	bh=L70wxhkBc6RCICoHGqi9sxhzWTnuO40w5DvhBaneFPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuIGFEnsi8SL6UUwOE0X37HCxj/+XD1SL4p8OoFNaWcbzFyzaZtSJv5xCN7825xT1
-	 w2Kn0BBcDy/zjenIvkJASaT+NYovGkmaFPZGPLkfz0VdRENRXPiwmSjhW/RfaIzSTP
-	 +b5XxkqaqZkTozMlFm0G7lHnSc9/IVeZ/Jt8lhhs=
+	b=TtVtTxSx2NmnpucI9g0mmZHpWtiYHRcWmgWFIlRjqj6b86EU/VvytbC6BERtRdPlA
+	 xjli1erdNpK5HRgoR+1HFTT3oMmZ8F8jkiVywby+cN/TnsKM9WYjb12DdNvR19Jnt/
+	 FDsNzPd2kLcYpTbYMVDTQ3xeoWrT2tUznN3W+eRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 002/558] static_call: Replace pointless WARN_ON() in static_call_module_notify()
-Date: Tue,  8 Oct 2024 14:00:32 +0200
-Message-ID: <20241008115702.318252759@linuxfoundation.org>
+Subject: [PATCH 6.11 011/558] ksmbd: fix warning: comparison of distinct pointer types lacks a cast
+Date: Tue,  8 Oct 2024 14:00:41 +0200
+Message-ID: <20241008115702.666015510@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -45,50 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fe513c2ef0a172a58f158e2e70465c4317f0a9a2 ]
+[ Upstream commit 289ebd9afeb94862d96c89217068943f1937df5b ]
 
-static_call_module_notify() triggers a WARN_ON(), when memory allocation
-fails in __static_call_add_module().
+smb2pdu.c: In function ‘smb2_open’:
+./include/linux/minmax.h:20:28: warning: comparison of distinct
+pointer types lacks a cast
+   20 |  (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+      |                            ^~
+./include/linux/minmax.h:26:4: note: in expansion of macro ‘__typecheck’
+   26 |   (__typecheck(x, y) && __no_side_effects(x, y))
+      |    ^~~~~~~~~~~
+./include/linux/minmax.h:36:24: note: in expansion of macro ‘__safe_cmp’
+   36 |  __builtin_choose_expr(__safe_cmp(x, y), \
+      |                        ^~~~~~~~~~
+./include/linux/minmax.h:45:19: note: in expansion of macro ‘__careful_cmp’
+   45 | #define min(x, y) __careful_cmp(x, y, <)
+      |                   ^~~~~~~~~~~~~
+/home/linkinjeon/git/smbd_work/ksmbd/smb2pdu.c:3713:27: note: in
+expansion of macro ‘min’
+ 3713 |     fp->durable_timeout = min(dh_info.timeout,
 
-That's not really justified, because the failure case must be correctly
-handled by the well known call chain and the error code is passed
-through to the initiating userspace application.
-
-A memory allocation fail is not a fatal problem, but the WARN_ON() takes
-the machine out when panic_on_warn is set.
-
-Replace it with a pr_warn().
-
-Fixes: 9183c3f9ed71 ("static_call: Add inline static call infrastructure")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/8734mf7pmb.ffs@tglx
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/static_call_inline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c   | 5 +++--
+ fs/smb/server/vfs_cache.h | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/static_call_inline.c b/kernel/static_call_inline.c
-index 7bb0962b52291..5259cda486d05 100644
---- a/kernel/static_call_inline.c
-+++ b/kernel/static_call_inline.c
-@@ -453,7 +453,7 @@ static int static_call_module_notify(struct notifier_block *nb,
- 	case MODULE_STATE_COMING:
- 		ret = static_call_add_module(mod);
- 		if (ret) {
--			WARN(1, "Failed to allocate memory for static calls");
-+			pr_warn("Failed to allocate memory for static calls\n");
- 			static_call_del_module(mod);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 8bdc592514188..065adfb985fe2 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3531,8 +3531,9 @@ int smb2_open(struct ksmbd_work *work)
+ 			memcpy(fp->create_guid, dh_info.CreateGuid,
+ 					SMB2_CREATE_GUID_SIZE);
+ 			if (dh_info.timeout)
+-				fp->durable_timeout = min(dh_info.timeout,
+-						DURABLE_HANDLE_MAX_TIMEOUT);
++				fp->durable_timeout =
++					min_t(unsigned int, dh_info.timeout,
++					      DURABLE_HANDLE_MAX_TIMEOUT);
+ 			else
+ 				fp->durable_timeout = 60;
  		}
- 		break;
+diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
+index b0f6d0f94cb8d..5bbb179736c29 100644
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -100,8 +100,8 @@ struct ksmbd_file {
+ 	struct list_head		blocked_works;
+ 	struct list_head		lock_list;
+ 
+-	int				durable_timeout;
+-	int				durable_scavenger_timeout;
++	unsigned int			durable_timeout;
++	unsigned int			durable_scavenger_timeout;
+ 
+ 	/* if ls is happening on directory, below is valid*/
+ 	struct ksmbd_readdir_data	readdir_data;
 -- 
 2.43.0
 
