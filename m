@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FC3183CB8;
-	Tue,  8 Oct 2024 12:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F0D183CB8;
+	Tue,  8 Oct 2024 12:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391868; cv=none; b=WB9TDO28g3QoL4j2NpxelqM29UXcxOacJoQJG7mWriCXx6VQVMYox/JMDwNGfsxY9Xzhmd1D0lRV7Vx9inBSk7cNatIPpEFVoQRb2l3rHmm8QgGUZ2e3+3NZNehQtZxx7st6pm1bRavgy4+5GYq4oGXyApbJpRrD5WeSSWAMkWM=
+	t=1728391871; cv=none; b=gyEpVCHvSG1Kggt54/lWetX7Q26JKquMeL7dMdjmX/pB+vyR9aCpPXeE4Ef9ULPacTOnORXnlDuf6ToZ5Fzv+JfkWl0fXp/rL+EDsr2adKRgCEykKJmVB4v5fXUbIXU0Z49X5HohFOTGQmDiMAmAfp1U9RtRZ/RbigsriORbUfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391868; c=relaxed/simple;
-	bh=ugvq0f7/DzZrjzX5zg12TKTi4a42BalSFBqlnBbgC6U=;
+	s=arc-20240116; t=1728391871; c=relaxed/simple;
+	bh=euSTtZweBmcSn0C+P6u67na3g1XAFo/YSfWS7KUB1Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhMkyWKGZjff8xjE+Xh1UrPZT+CxwNgerLID099lIrqfPBHI4gySpAzQ3hBY/kaROWNvmejrNYRQ2Vu4Cs2Xlcoic1eVt5/o7/pVyzm2yYp54yijOUDlaOQXqLzPW9ZfYRdGzRvhump3eEZCBShsPKopG1tmBTEyHgdR04J9SWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVFKhEJq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbVhFGc9V0H+G/p15TvRWzBwfRrfiFnfrbKBXZYRhQB9dqHS3nNg5GRhgYY451L8WR8YfoMDVTYuXUlgPJGpyAEnPwcxVG1zhf1NJSgDL7mbVGl+3H0gAWkx1cpR+2XifqdJQe9w7DJnRdNG8OEBnJQCqKUuw8ji1YEGCRDI70Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFmQ+APe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVFKhEJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A29EC4CEC7;
-	Tue,  8 Oct 2024 12:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFmQ+APe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E8CC4CEC7;
+	Tue,  8 Oct 2024 12:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391868;
-	bh=ugvq0f7/DzZrjzX5zg12TKTi4a42BalSFBqlnBbgC6U=;
+	s=korg; t=1728391871;
+	bh=euSTtZweBmcSn0C+P6u67na3g1XAFo/YSfWS7KUB1Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVFKhEJqtOoq212YLUirCIkpKxUDp5klNoE46RskT5Js1pqnE4R/bALoiJej8A0fg
-	 VnzLTbThfvXaf3K5w6YyyAg7qvEWBfwmJlAcftSRjShdypqixZTL7v2hWJ9RRgxtUq
-	 iYQhzirMQSnwhAJ4nLyZHNWtCmEH3g/v+wIg9krY=
+	b=bFmQ+APew+XweLCQRkVCHH4ofq0MDSG2/5dM8qZ+yoKyqLoWDZZPYLUkM0NB0tCFO
+	 LFLmxKZFn9LlsroaxmxV5MK+GZS03XrRhiSOkYcZCUGWESVX24Ct4SDJ6FL864PyZK
+	 sOpqCDU3QsXk3NRr/SgP3frDDIBVFIIKCM6oN2Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	aln8 <aln8un@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 239/558] scsi: smartpqi: correct stream detection
-Date: Tue,  8 Oct 2024 14:04:29 +0200
-Message-ID: <20241008115711.747843991@linuxfoundation.org>
+Subject: [PATCH 6.11 248/558] platform/x86/amd: pmf: Add quirk for TUF Gaming A14
+Date: Tue,  8 Oct 2024 14:04:38 +0200
+Message-ID: <20241008115712.098339234@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -55,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+From: aln8 <aln8un@gmail.com>
 
-[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
+[ Upstream commit 06369503d644068abd9e90918c6611274d94c126 ]
 
-Correct stream detection by initializing the structure
-pqi_scsi_dev_raid_map_data to 0s.
+The ASUS TUF Gaming A14 has the same issue as the ROG Zephyrus G14
+where it advertises SPS support but doesn't use it.
 
-When the OS issues SCSI READ commands, the driver erroneously considers
-them as SCSI WRITES. If they are identified as sequential IOs, the driver
-then submits those requests via the RAID path instead of the AIO path.
-
-The 'is_write' flag might be set for SCSI READ commands also.  The driver
-may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
-being submitted through the RAID path.
-
-Note: This does not cause data corruption.
-
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: aln8 <aln8un@gmail.com>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20240912073601.65656-1-aln8un@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/pmf-quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 02d16fddd3123..a4719af88718e 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5917,7 +5917,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
- 	int rc;
- 	struct pqi_scsi_dev *device;
- 	struct pqi_stream_data *pqi_stream_data;
--	struct pqi_scsi_dev_raid_map_data rmd;
-+	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
+diff --git a/drivers/platform/x86/amd/pmf/pmf-quirks.c b/drivers/platform/x86/amd/pmf/pmf-quirks.c
+index 48870ca52b413..7cde5733b9cac 100644
+--- a/drivers/platform/x86/amd/pmf/pmf-quirks.c
++++ b/drivers/platform/x86/amd/pmf/pmf-quirks.c
+@@ -37,6 +37,14 @@ static const struct dmi_system_id fwbug_list[] = {
+ 		},
+ 		.driver_data = &quirk_no_sps_bug,
+ 	},
++	{
++		.ident = "ASUS TUF Gaming A14",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "FA401W"),
++		},
++		.driver_data = &quirk_no_sps_bug,
++	},
+ 	{}
+ };
  
- 	if (!ctrl_info->enable_stream_detection)
- 		return false;
 -- 
 2.43.0
 
