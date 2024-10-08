@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40C21DF270;
-	Tue,  8 Oct 2024 13:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89B91DED7A;
+	Tue,  8 Oct 2024 13:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393088; cv=none; b=X36THVQp2hL++X6NaGytdHdSSvoLyXW+5+OG9cyp23EbDPzct+iAexgw5Pa1pV6jtj8EVTP2ZjrbR2s8C7Jl7jY2vvCvnIytf45cg1+iwYry/3JMsR59ux+E7NUcyJkxZb2agx30aXtWk7BhfhA0NGrTEs7pgnma1pxis6LrgM8=
+	t=1728393090; cv=none; b=c+PsH9PMxG6RAhe44rMW63zr8oTFIf1bsK28EwluiV/awmDW8eWbOzqElHUdyo+dBOkZRkP3KXQ4P/28ND/XnQ2d7PXHFu/eyxYV6FZBp0+mB5JMSzcJ+DsQhkQNPOEzAXmyxIV0Z2CVka2KH9Wjac37K7/bytHOqmrRmvyQ4t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393088; c=relaxed/simple;
-	bh=/E8oonKZnhVLMuhLfqWuIfTw3qXA/uAiuVOei5GtTaQ=;
+	s=arc-20240116; t=1728393090; c=relaxed/simple;
+	bh=KBqTOXtwWGBQoUM9RuKBurANIr6+EFvf/4KGiwmlTXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJ7fFFKrVTCUgLprT/le66miqIAz190gHFFrLx3zv3IOcLOMwfFIlKUHc2Qyjj+X8mmBpfP3wsdq/9E6NeaUGhQWa9b2YTJFy1ZYRHqZSIloQL1Afcd6BQI+w00nt9AAC8zmf3k6F0/Z8RXz62cw/uybNLENmx5shx9cWOfxEg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wf06PNYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hv96uLL7i2xGKr2f0XHuZAJCQ7rAxDXo4nIDtrazFHQwWGZv9TPHfF6wuZKAiHlJznT3rEnsgzm2w8I3A7boGxvlK52wVZUAoGsOdpZ9e3NEtCSJy/y/GmZB65XZcO3ybVnRXrdvwx1zkVLWTfbgqIR5Si7lWs8Yle9/pyDqFSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OF9/qdCI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wf06PNYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06267C4CEC7;
-	Tue,  8 Oct 2024 13:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OF9/qdCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15098C4CEC7;
+	Tue,  8 Oct 2024 13:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393087;
-	bh=/E8oonKZnhVLMuhLfqWuIfTw3qXA/uAiuVOei5GtTaQ=;
+	s=korg; t=1728393090;
+	bh=KBqTOXtwWGBQoUM9RuKBurANIr6+EFvf/4KGiwmlTXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wf06PNYaX5daQ37Drun6oRlZb7ecFSHjgyvS5nxhXisU/qpALvle9DpL1p75VGUZB
-	 xOoh3mX15HGpUDm2nQQiaJiUSV3sFlqGU3DuVMA3s9ldMMQcLYLLSSsKIGf2hP/Xe4
-	 kmnlv6bg+umFOy79XQswzJIXNRTun2ryfZYjbtXo=
+	b=OF9/qdCIqR6AZUvKW+NrkyujkLtNX9IttORVOFteF9H3mnbPL0PR0JDPPmJcQgOfc
+	 v6gWOXE0L6tbc02VgzocKIx6VpdYjhYlxZxRDQ7iXR3aScANj24I8rhOH46mYyexnl
+	 FtiRKn717tmtlzbtsRQhKef0GhO+f+y5sGCWe2/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oder Chiou <oder_chiou@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/386] ALSA: hda/realtek: Fix the push button function for the ALC257
-Date: Tue,  8 Oct 2024 14:04:53 +0200
-Message-ID: <20241008115631.362788843@linuxfoundation.org>
+Subject: [PATCH 6.6 049/386] cifs: Remove intermediate object of failed create reparse call
+Date: Tue,  8 Oct 2024 14:04:54 +0200
+Message-ID: <20241008115631.401631462@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,40 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oder Chiou <oder_chiou@realtek.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 05df9732a0894846c46d0062d4af535c5002799d ]
+[ Upstream commit c9432ad5e32f066875b1bf95939c363bc46d6a45 ]
 
-The headset push button cannot work properly in case of the ALC257.
-This patch reverted the previous commit to correct the side effect.
+If CREATE was successful but SMB2_OP_SET_REPARSE failed then remove the
+intermediate object created by CREATE. Otherwise empty object stay on the
+server when reparse call failed.
 
-Fixes: ef9718b3d54e ("ALSA: hda/realtek: Fix noise from speakers on Lenovo IdeaPad 3 15IAU7")
-Signed-off-by: Oder Chiou <oder_chiou@realtek.com>
-Link: https://patch.msgid.link/20240930105039.3473266-1-oder_chiou@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This ensures that if the creating of special files is unsupported by the
+server then no empty file stay on the server as a result of unsupported
+operation.
+
+Fixes: 102466f303ff ("smb: client: allow creating special files via reparse points")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/smb2inode.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 130508f5ad9c8..657223c49515c 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -585,6 +585,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
-+	case 0x10ec0257:
- 	case 0x19e58326:
- 	case 0x10ec0283:
- 	case 0x10ec0285:
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index dd8acd2077521..8010b3ed4b3fe 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -1205,9 +1205,12 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifsFileInfo *cfile;
+ 	struct inode *new = NULL;
++	int out_buftype[4] = {};
++	struct kvec out_iov[4] = {};
+ 	struct kvec in_iov[2];
+ 	int cmds[2];
+ 	int rc;
++	int i;
+ 
+ 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
+ 			     SYNCHRONIZE | DELETE |
+@@ -1228,7 +1231,7 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
+ 		cmds[1] = SMB2_OP_POSIX_QUERY_INFO;
+ 		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
+ 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, &oparms,
+-				      in_iov, cmds, 2, cfile, NULL, NULL, NULL);
++				      in_iov, cmds, 2, cfile, out_iov, out_buftype, NULL);
+ 		if (!rc) {
+ 			rc = smb311_posix_get_inode_info(&new, full_path,
+ 							 data, sb, xid);
+@@ -1237,12 +1240,29 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
+ 		cmds[1] = SMB2_OP_QUERY_INFO;
+ 		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
+ 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, &oparms,
+-				      in_iov, cmds, 2, cfile, NULL, NULL, NULL);
++				      in_iov, cmds, 2, cfile, out_iov, out_buftype, NULL);
+ 		if (!rc) {
+ 			rc = cifs_get_inode_info(&new, full_path,
+ 						 data, sb, xid, NULL);
+ 		}
+ 	}
++
++
++	/*
++	 * If CREATE was successful but SMB2_OP_SET_REPARSE failed then
++	 * remove the intermediate object created by CREATE. Otherwise
++	 * empty object stay on the server when reparse call failed.
++	 */
++	if (rc &&
++	    out_iov[0].iov_base != NULL && out_buftype[0] != CIFS_NO_BUFFER &&
++	    ((struct smb2_hdr *)out_iov[0].iov_base)->Status == STATUS_SUCCESS &&
++	    (out_iov[1].iov_base == NULL || out_buftype[1] == CIFS_NO_BUFFER ||
++	     ((struct smb2_hdr *)out_iov[1].iov_base)->Status != STATUS_SUCCESS))
++		smb2_unlink(xid, tcon, full_path, cifs_sb, NULL);
++
++	for (i = 0; i < ARRAY_SIZE(out_buftype); i++)
++		free_rsp_buf(out_buftype[i], out_iov[i].iov_base);
++
+ 	return rc ? ERR_PTR(rc) : new;
+ }
+ 
 -- 
 2.43.0
 
