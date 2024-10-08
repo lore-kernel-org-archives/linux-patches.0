@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8601CCB32;
-	Tue,  8 Oct 2024 12:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD0B192D69;
+	Tue,  8 Oct 2024 12:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390808; cv=none; b=NY0p78fLewCUGVofRlZSrBxBmdVHRDry4sw3MDZ6k8dQE2GPDBzMFSzb7lGC9qEfeUytEIsT5hapRJgQJEb/jb3bDQAshMVhoeT9gZSZ7ZIkVS2sg71s3jDyIZ4JHAK4hhedqhB6VdfrVmcfyY5C1JuOkK7AyBFKxlIrwNwxWTs=
+	t=1728390811; cv=none; b=Qpl6f6GHM+M6hR6bbZHV6C7pua9KoVxH57MzmARiHEd9i8nImpYXfMPlMiDzVjYxVFGd/NidswHmDzaGiHTeHWOdgQoNsPt/hD4QXIG3HMcBufp2Z8/OLYDp73L7I06caKSofo7CJNbmrs4Z0UYSGd6n1oU0ohya93QNQdKbP4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390808; c=relaxed/simple;
-	bh=7hiKeLaEmWKIQtwn/0OYgGmU+Fh1Svk5X1QtqwH4F6o=;
+	s=arc-20240116; t=1728390811; c=relaxed/simple;
+	bh=UU5NT8hGE03+kwcbwlDhSBDdWNmn2uwix0zQSqD1vHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLQkcL6W6/Irn1/or89lTIU1qHNFM9QyZxr4Woz9pTaNFMTEGZTK2ZH8KyzbjU2oPIXJ9Ex4GDUCJFhzKlpz1+svGBgmHYOkZAGW9hMYgBpDRuPKu/IyPXV4XMwmR768cIvu+RtJtbo0aiI55W6TyvvSFoQ5IWDCZwUMcyJDdZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7gReDi2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XlFRQLU61O++/P9qAp6+YE8K3Brk+DzTuCEBMXzb96yXx6JYW/pVIzMVr8LpwXxGTVl+GkiuIzhgQ1txC/X9UIzy+Q7rALsmHm1jUOVBpMe2hfjs2mPzPOh2rGH595W0oZCOmqq4WKkRslSfbYrDV0sYCTwgs3N8Hg/incYFnvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1Gbf3wD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7gReDi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1B0C4CEC7;
-	Tue,  8 Oct 2024 12:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1Gbf3wD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD20C4CEC7;
+	Tue,  8 Oct 2024 12:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390808;
-	bh=7hiKeLaEmWKIQtwn/0OYgGmU+Fh1Svk5X1QtqwH4F6o=;
+	s=korg; t=1728390811;
+	bh=UU5NT8hGE03+kwcbwlDhSBDdWNmn2uwix0zQSqD1vHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7gReDi2kBhIzOhvRCAJhggTHUKXwLPFuN4/cgE+Z13Xg9lKpo0Yl2Ccx1H00aS/c
-	 rr54zCS9G/5G2WqKqDO5B31LLLJ+O8lDXh8eYlmUISLuKUvQqxbGwNFZ83tloY7kdL
-	 YA82Kgehni+dpI26X5xquc4Tpi89ZdDjNihZjxWk=
+	b=w1Gbf3wDhWbV3NKtvltFIRPIiURckumecX4lQlToivZ6LjH0NbABw4arzzn9XCTRA
+	 411B/90OE8cQMXd37FTgWwNGANlkHcS4VdLICkboQPBY9KDApd1Ztw3RO9kLnv0GlB
+	 RWYodN0IctU7MNuWb9gdGLJ0cRorXNZ+geaBsaJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 358/482] ocfs2: fix possible null-ptr-deref in ocfs2_set_buffer_uptodate
-Date: Tue,  8 Oct 2024 14:07:01 +0200
-Message-ID: <20241008115702.509915220@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.10 393/482] media: venus: fix use after free bug in venus_remove due to race condition
+Date: Tue,  8 Oct 2024 14:07:36 +0200
+Message-ID: <20241008115703.876803329@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -58,45 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 33b525cef4cff49e216e4133cc48452e11c0391e upstream.
+commit c5a85ed88e043474161bbfe54002c89c1cb50ee2 upstream.
 
-When doing cleanup, if flags without OCFS2_BH_READAHEAD, it may trigger
-NULL pointer dereference in the following ocfs2_set_buffer_uptodate() if
-bh is NULL.
+in venus_probe, core->work is bound with venus_sys_error_handler, which is
+used to handle error. The code use core->sys_err_done to make sync work.
+The core->work is started in venus_event_notify.
 
-Link: https://lkml.kernel.org/r/20240902023636.1843422-3-joseph.qi@linux.alibaba.com
-Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Heming Zhao <heming.zhao@suse.com>
-Suggested-by: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>	[4.20+]
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If we call venus_remove, there might be an unfished work. The possible
+sequence is as follows:
+
+CPU0                  CPU1
+
+                     |venus_sys_error_handler
+venus_remove         |
+hfi_destroy	 		 |
+venus_hfi_destroy	 |
+kfree(hdev);	     |
+                     |hfi_reinit
+					 |venus_hfi_queues_reinit
+                     |//use hdev
+
+Fix it by canceling the work in venus_remove.
+
+Cc: stable@vger.kernel.org
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/buffer_head_io.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/buffer_head_io.c
-+++ b/fs/ocfs2/buffer_head_io.c
-@@ -388,7 +388,8 @@ read_failure:
- 		/* Always set the buffer in the cache, even if it was
- 		 * a forced read, or read-ahead which hasn't yet
- 		 * completed. */
--		ocfs2_set_buffer_uptodate(ci, bh);
-+		if (bh)
-+			ocfs2_set_buffer_uptodate(ci, bh);
- 	}
- 	ocfs2_metadata_cache_io_unlock(ci);
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -426,6 +426,7 @@ static void venus_remove(struct platform
+ 	struct device *dev = core->dev;
+ 	int ret;
+ 
++	cancel_delayed_work_sync(&core->work);
+ 	ret = pm_runtime_get_sync(dev);
+ 	WARN_ON(ret < 0);
  
 
 
