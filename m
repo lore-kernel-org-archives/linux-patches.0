@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0611CEE8E;
-	Tue,  8 Oct 2024 12:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A71518BC16;
+	Tue,  8 Oct 2024 12:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390633; cv=none; b=OBDyoO0OuDVjy7d18XaHNBjHRv/Zu41W6Pg9lJtqIO0c4TMgPuiczrvuBKeZqt2QbJiRdDQ6iScK7ZxKofy/ARisCPoVgxeslVC2053qpyYkPlANaaVr0ZCbE3PA6f+TskYxKd+1bbNBqnuB+b7q3NBeDBZ/ilvBB8+mCeg48NU=
+	t=1728390636; cv=none; b=cxMSI2d9TwpRkmekTsF0gAJmeRoR3P3iImmA74z9z7DyViuWYzMMUAqJ3OPt19bd7IOARMBv0BF26bUx5rOmtvI8cZTdAQBy2b5pnSisJ+LytniEWJ8tBBOtwT6R+dQaY9Hp3chcc4nV36+JFl4N2RpLzs9qHB1kggU+fBt91+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390633; c=relaxed/simple;
-	bh=SfmeqCPGZgXIknJg8Rzv41FVueGy+2mSLfN7nfbk7g0=;
+	s=arc-20240116; t=1728390636; c=relaxed/simple;
+	bh=j4eE1NC4aiVcjE4b2UXD8/1LRaCoqIb1nXBB/5K6LGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SLDpEg2eDKyBy1Os/U1bA80E5xEMU32iKBQ5lzFX9IVSlfNMPIcqPC4mdgF4u6rE0G62KkLDIIzBfJF5b44/tObHaOVYP8JWPo610vbdLiCeYa8PO5Ggv9Mxr5Q78y0mPSsjVpp0Mu2g7oDNrC3TsmU0JNkb9samD1Lcyc95C14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lt1hrcbz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XidMNTdjAzLCj/zgms0YSOR2F13ZxWJ3iUsAiNsSQ1xqso8l5QYrPslMMV3zrpD+UV9nAFBJVrQwbTRfnWxvfib7ITW2dLxQm/33iRhZDOsOxoVhja/0zs71la0nhILBZiVk3JD036LhYA97y0k7bKh0S9ew7bZ7Wvz1ysW+iVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bow9/wsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lt1hrcbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8648EC4CEC7;
-	Tue,  8 Oct 2024 12:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bow9/wsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED30C4CEC7;
+	Tue,  8 Oct 2024 12:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390632;
-	bh=SfmeqCPGZgXIknJg8Rzv41FVueGy+2mSLfN7nfbk7g0=;
+	s=korg; t=1728390636;
+	bh=j4eE1NC4aiVcjE4b2UXD8/1LRaCoqIb1nXBB/5K6LGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lt1hrcbzbuGnD1nP19yrzLV8fXCDTUX3e6mogDdWUPoMMgD089SiFdtuCgLCvGPo2
-	 8iZZXD9AwpG8IKMjjHos+jglKgUhz16LaFxxjSv9LRFbOa/r2uVqJg7hZHL3te8gD6
-	 AIFFZ/he1up5cxkKI0fMhpq6y69LtWgWu/hZuxIU=
+	b=Bow9/wscvytWzBTuzbG22RIbhY8D858y5kXLN3G5+b6PUrS/3jqWQz1nOO4g3QDvv
+	 xG3UXBCtO2iYcaOCSU8G9wT/nSYyqZyGe09hIoa8PcbNb6jkSqQPJP1HePwhWCiI46
+	 Kn5ZsWSvl8lZ6cwpP1I+/0zyaj4gCoZtgmAk+LN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nam Cao <namcao@linutronix.de>,
+	Andrew Jones <ajones@ventanamicro.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.10 345/482] of: address: Report error on resource bounds overflow
-Date: Tue,  8 Oct 2024 14:06:48 +0200
-Message-ID: <20241008115702.002271762@linuxfoundation.org>
+Subject: [PATCH 6.10 346/482] of/irq: Support #msi-cells=<0> in of_msi_get_domain
+Date: Tue,  8 Oct 2024 14:06:49 +0200
+Message-ID: <20241008115702.041568629@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -45,59 +44,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-commit 000f6d588a8f3d128f89351058dc04d38e54a327 upstream.
+commit db8e81132cf051843c9a59b46fa5a071c45baeb3 upstream.
 
-The members "start" and "end" of struct resource are of type
-"resource_size_t" which can be 32bit wide.
-Values read from OF however are always 64bit wide.
-Avoid silently truncating the value and instead return an error value.
+An 'msi-parent' property with a single entry and no accompanying
+'#msi-cells' property is considered the legacy definition as opposed
+to its definition after being expanded with commit 126b16e2ad98
+("Docs: dt: add generic MSI bindings"). However, the legacy
+definition is completely compatible with the current definition and,
+since of_phandle_iterator_next() tolerates missing and present-but-
+zero *cells properties since commit e42ee61017f5 ("of: Let
+of_for_each_phandle fallback to non-negative cell_count"), there's no
+need anymore to special case the legacy definition in
+of_msi_get_domain().
 
-This can happen on real systems when the DT was created for a
-PAE-enabled kernel and a non-PAE kernel is actually running.
-For example with an arm defconfig and "qemu-system-arm -M virt".
+Indeed, special casing has turned out to be harmful, because, as of
+commit 7c025238b47a ("dt-bindings: irqchip: Describe the IMX MU block
+as a MSI controller"), MSI controller DT bindings have started
+specifying '#msi-cells' as a required property (even when the value
+must be zero) as an effort to make the bindings more explicit. But,
+since the special casing of 'msi-parent' only uses the existence of
+'#msi-cells' for its heuristic, and not whether or not it's also
+nonzero, the legacy path is not taken. Furthermore, the path to
+support the new, broader definition isn't taken either since that
+path has been restricted to the platform-msi bus.
 
-Link: https://bugs.launchpad.net/qemu/+bug/1790975
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Tested-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/r/20240905-of-resource-overflow-v1-1-0cd8bb92cc1f@linutronix.de
+But, neither the definition of 'msi-parent' nor the definition of
+'#msi-cells' is platform-msi-specific (the platform-msi bus was just
+the first bus that needed '#msi-cells'), so remove both the special
+casing and the restriction. The code removal also requires changing
+to of_parse_phandle_with_optional_args() in order to ensure the
+legacy (but compatible) use of 'msi-parent' remains supported. This
+not only simplifies the code but also resolves an issue with PCI
+devices finding their MSI controllers on riscv, as the riscv,imsics
+binding requires '#msi-cells=<0>'.
+
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240817074107.31153-2-ajones@ventanamicro.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/address.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/of/irq.c |   34 +++++++---------------------------
+ 1 file changed, 7 insertions(+), 27 deletions(-)
 
---- a/drivers/of/address.c
-+++ b/drivers/of/address.c
-@@ -8,6 +8,7 @@
- #include <linux/logic_pio.h>
- #include <linux/module.h>
- #include <linux/of_address.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/pci_regs.h>
- #include <linux/sizes.h>
-@@ -1061,7 +1062,11 @@ static int __of_address_to_resource(stru
- 	if (of_mmio_is_nonposted(dev))
- 		flags |= IORESOURCE_MEM_NONPOSTED;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -716,8 +716,7 @@ struct irq_domain *of_msi_map_get_device
+  * @np: device node for @dev
+  * @token: bus type for this domain
+  *
+- * Parse the msi-parent property (both the simple and the complex
+- * versions), and returns the corresponding MSI domain.
++ * Parse the msi-parent property and returns the corresponding MSI domain.
+  *
+  * Returns: the MSI domain for this device (or NULL on failure).
+  */
+@@ -725,33 +724,14 @@ struct irq_domain *of_msi_get_domain(str
+ 				     struct device_node *np,
+ 				     enum irq_domain_bus_token token)
+ {
+-	struct device_node *msi_np;
++	struct of_phandle_iterator it;
+ 	struct irq_domain *d;
++	int err;
  
-+	if (overflows_type(taddr, r->start))
-+		return -EOVERFLOW;
- 	r->start = taddr;
-+	if (overflows_type(taddr + size - 1, r->end))
-+		return -EOVERFLOW;
- 	r->end = taddr + size - 1;
- 	r->flags = flags;
- 	r->name = name ? name : dev->full_name;
+-	/* Check for a single msi-parent property */
+-	msi_np = of_parse_phandle(np, "msi-parent", 0);
+-	if (msi_np && !of_property_read_bool(msi_np, "#msi-cells")) {
+-		d = irq_find_matching_host(msi_np, token);
+-		if (!d)
+-			of_node_put(msi_np);
+-		return d;
+-	}
+-
+-	if (token == DOMAIN_BUS_PLATFORM_MSI) {
+-		/* Check for the complex msi-parent version */
+-		struct of_phandle_args args;
+-		int index = 0;
+-
+-		while (!of_parse_phandle_with_args(np, "msi-parent",
+-						   "#msi-cells",
+-						   index, &args)) {
+-			d = irq_find_matching_host(args.np, token);
+-			if (d)
+-				return d;
+-
+-			of_node_put(args.np);
+-			index++;
+-		}
++	of_for_each_phandle(&it, err, np, "msi-parent", "#msi-cells", 0) {
++		d = irq_find_matching_host(it.node, token);
++		if (d)
++			return d;
+ 	}
+ 
+ 	return NULL;
 
 
