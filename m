@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546CA1DE8A9;
-	Tue,  8 Oct 2024 12:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124711DEFC9;
+	Tue,  8 Oct 2024 12:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390598; cv=none; b=B2YFocAS8vlm+uhmNOncJL6dV8gsjg3ioWhDvfl/COfs8+Gcvjj0R5GtgQoFgLQtotG/EqnpjNttwO0uRqJW2zYxl0dzRhKhUQQamj6H+yJDVLDjk2Z/Fnq9JC3Jm71PSBGxagaTk8pwx9aulvWPwvbdI5cqt3IILXKmjaXsU7A=
+	t=1728390601; cv=none; b=eHxzVTk7dtpQ18H0x3v/wj3eYaJFIq6SfZz7Ajt+zoNzqvU0rkPhMzZAkJnnYujqFdUtnctXQr9YNcrSRoj+moMsjbap7SwYbET+Wu6q0JonrJQho19crtRa2WgsowML7IiFDNEfd3AMHM2QD07tRGvq1EDLUWk8C8KoGhvuhNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390598; c=relaxed/simple;
-	bh=BnS385pPSDC9xlovUfzP4o3jdoqruqftc6CYf7B3FWU=;
+	s=arc-20240116; t=1728390601; c=relaxed/simple;
+	bh=2m0HS+mrZjJmqb6XLkxHJtaHEYh5i2geRu9CEIBJcEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZZ5JrVt8HgUF8xInfTqejyf9h35C8b9WMwlQHAlhzsfoeVmRv0eFZlJRRlp4gBSVSq8ZuH+s4ddfZu7nQAEUlLgzNhL7766BISHLFztaD/QASDzrruwjw4YJWkKfZ+Omis7fIb7sKwltwVGTr5p6gNc/HrkGTTI3m3mpYJSJEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaDBPyDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6YZG9V7q/3v5LK1tMsKO8nLP5SNHZuz8ZuRUdKw7xX0XTppW1mHw7bH46nLYGdlW6FZDCjxNmi4dTDCKQZ5uzYyPtQNNcPCeNwVfT3pd14GJgdIhoaDFug6gtYmI40chB50l0oNRzQWbuC+GVZDU4QhAQ8QVxx9+a3wAdEWz94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjT8nUm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaDBPyDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2A7C4CEC7;
-	Tue,  8 Oct 2024 12:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjT8nUm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEA1C4CEC7;
+	Tue,  8 Oct 2024 12:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390597;
-	bh=BnS385pPSDC9xlovUfzP4o3jdoqruqftc6CYf7B3FWU=;
+	s=korg; t=1728390600;
+	bh=2m0HS+mrZjJmqb6XLkxHJtaHEYh5i2geRu9CEIBJcEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaDBPyDN63HNfZRFezU2extuIQ2uVE1efOx514BTqlfTuqsLJDTRF+b1rTghfYzed
-	 v+RPizHx0sZmt5NDdYxaPs1l86r/JG2pg4c1Hr8n1mEkyKpg1znoIpEhkkUz79cVDm
-	 OAR7rMbgqGzeyCjX0GuqAXv3wSGxkrzkgRPsnLfQ=
+	b=PjT8nUm+1re7B+2PDJIpkWF3gZ6OE22x1YRLtimGfAjmu9DGTKx96Dm/XH5hC7FlF
+	 iMwMkbA4Ow3/cOxEDw6vZ9n1Mm/XFYHOpKyMQ7gylVjANIN2kqHng2Mi8GY+Us03+h
+	 sLYMpPgyYOwOI3o8Us4I0TDmby9FxiGldLg1diQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.10 335/482] ext4: fix incorrect tid assumption in ext4_wait_for_tail_page_commit()
-Date: Tue,  8 Oct 2024 14:06:38 +0200
-Message-ID: <20241008115701.608857318@linuxfoundation.org>
+Subject: [PATCH 6.10 336/482] ext4: fix incorrect tid assumption in jbd2_journal_shrink_checkpoint_list()
+Date: Tue,  8 Oct 2024 14:06:39 +0200
+Message-ID: <20241008115701.648223343@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,52 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit dd589b0f1445e1ea1085b98edca6e4d5dedb98d0 upstream.
+commit 7a6443e1dad70281f99f0bd394d7fd342481a632 upstream.
 
-Function ext4_wait_for_tail_page_commit() assumes that '0' is not a valid
-value for transaction IDs, which is incorrect.  Don't assume that and invoke
-jbd2_log_wait_commit() if the journal had a committing transaction instead.
+Function jbd2_journal_shrink_checkpoint_list() assumes that '0' is not a
+valid value for transaction IDs, which is incorrect.  Don't assume that and
+use two extra boolean variables to control the loop iterations and keep
+track of the first and last tid.
 
 Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240724161119.13448-2-luis.henriques@linux.dev
+Link: https://patch.msgid.link/20240724161119.13448-4-luis.henriques@linux.dev
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5233,8 +5233,9 @@ static void ext4_wait_for_tail_page_comm
- {
- 	unsigned offset;
- 	journal_t *journal = EXT4_SB(inode->i_sb)->s_journal;
--	tid_t commit_tid = 0;
-+	tid_t commit_tid;
- 	int ret;
-+	bool has_transaction;
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -410,6 +410,7 @@ unsigned long jbd2_journal_shrink_checkp
+ 	tid_t tid = 0;
+ 	unsigned long nr_freed = 0;
+ 	unsigned long freed;
++	bool first_set = false;
  
- 	offset = inode->i_size & (PAGE_SIZE - 1);
- 	/*
-@@ -5259,12 +5260,14 @@ static void ext4_wait_for_tail_page_comm
- 		folio_put(folio);
- 		if (ret != -EBUSY)
- 			return;
--		commit_tid = 0;
-+		has_transaction = false;
- 		read_lock(&journal->j_state_lock);
--		if (journal->j_committing_transaction)
-+		if (journal->j_committing_transaction) {
- 			commit_tid = journal->j_committing_transaction->t_tid;
-+			has_transaction = true;
-+		}
- 		read_unlock(&journal->j_state_lock);
--		if (commit_tid)
-+		if (has_transaction)
- 			jbd2_log_wait_commit(journal, commit_tid);
- 	}
- }
+ again:
+ 	spin_lock(&journal->j_list_lock);
+@@ -429,8 +430,10 @@ again:
+ 	else
+ 		transaction = journal->j_checkpoint_transactions;
+ 
+-	if (!first_tid)
++	if (!first_set) {
+ 		first_tid = transaction->t_tid;
++		first_set = true;
++	}
+ 	last_transaction = journal->j_checkpoint_transactions->t_cpprev;
+ 	next_transaction = transaction;
+ 	last_tid = last_transaction->t_tid;
+@@ -460,7 +463,7 @@ again:
+ 	spin_unlock(&journal->j_list_lock);
+ 	cond_resched();
+ 
+-	if (*nr_to_scan && next_tid)
++	if (*nr_to_scan && journal->j_shrink_transaction)
+ 		goto again;
+ out:
+ 	trace_jbd2_shrink_checkpoint_list(journal, first_tid, tid, last_tid,
 
 
