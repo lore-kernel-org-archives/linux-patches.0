@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6184D1DE89A;
-	Tue,  8 Oct 2024 13:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4C1DEFD7;
+	Tue,  8 Oct 2024 13:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393632; cv=none; b=b4YVlMceNzuAja2WAYMBMFkufavd3Xsn+KMF9p0nIpySsv1S4FmqC57FTJAwz0VhgsSEJPIQ5JptEi6YhF8YWf4xntRBB5YTBEBSCbN+wlo+uDPP7on18SHugvVd4eXAzkxA90un3uMvPX0ttblB758paN5KpUJ2P9xN7rfu7iU=
+	t=1728393635; cv=none; b=NzrpZ3l5kME28naaWiiEGFKDaYyDcCe4WlrNTWQteqIwIO6Uz/fIb9y9hF6kXihk+Hji3HJYs1vKHhuNxreC1w24kkJ/dIFuGakis4hXL4tI9/DbevadjYYAQpd3aP8tKGmB9kBr8VfjPWk2PItcy3/5N+JliKW/IseuQOM43D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393632; c=relaxed/simple;
-	bh=H3PekM3kUykophMnSB3THY7SXGyZnNI2RPPlgUHQ7pQ=;
+	s=arc-20240116; t=1728393635; c=relaxed/simple;
+	bh=GufAfIUsZBlS0Uo/mxPJquN8KXd7BPx9GOrNSHwRRLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hua2qHnEdtTQA+vsu9Dwo2i5Bq00UyIj1CBO9hmgbI0pk6zmufHClFIhe/HqzmdgJqgfpV9dREpJonq3j0fNvFFMFfNAlZkgQ/q4w2nJPX5t+PpAjBQBmQhlRgeJjh2ByOZpCc+xHJ+6sbJfuIE7r1OsBaJ6kk8Uj5Nc6lQy+bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7GNVeKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TObeO3MjHjY8MGVghhtnf2nXlgbgm8GPRS7vxvbfO8UhxQJ8FEP05G7FgY/4IgktyekE/i9dnXjFEiW6eccp8Kc0F5EuysRzH+DQrUPPFFgFnUdS/e++O0aBpJ1yboEAr7q+IHmdxyxUHZ6ZYPI5kk/iRRFfwWlu1n22hoFZN+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQ8pv+Hz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7GNVeKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D4EC4CECE;
-	Tue,  8 Oct 2024 13:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQ8pv+Hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EC5C4CEC7;
+	Tue,  8 Oct 2024 13:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393632;
-	bh=H3PekM3kUykophMnSB3THY7SXGyZnNI2RPPlgUHQ7pQ=;
+	s=korg; t=1728393635;
+	bh=GufAfIUsZBlS0Uo/mxPJquN8KXd7BPx9GOrNSHwRRLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7GNVeKOulbna4YpC2R6jxTL+L1AzJXe2KwKzZBGSrWWSko2wSfHwQaYj7P77v+bs
-	 WdfUrdTRBt1HDnCXw0JXxcMZ+px8Yu3L4VuXx5h3RRmBqs7AU1YUroTVxjM8II0n05
-	 whQkaEsW/881XS81LNdtCJFAZsUWGgH814eOdCHU=
+	b=vQ8pv+HzsC4lT+YtKH3+X0AsiaVAzKN/kU+p7fn4u8Jo2EarCjErhoAuCfQF5bZMR
+	 6/OiaHnngNZ5PjuYF4WTrzvKXO/C0FUBmzI76dfr2dTxrL6uFKGYREaDwL2ZmcOoQh
+	 ig7B9m+voU1PeX9hq2qmIC9lyWZRAo76V6X+bKDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 209/386] media: i2c: ar0521: Use cansleep version of gpiod_set_value()
-Date: Tue,  8 Oct 2024 14:07:34 +0200
-Message-ID: <20241008115637.631123724@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 210/386] i2c: xiic: Fix pm_runtime_set_suspended() with runtime pm enabled
+Date: Tue,  8 Oct 2024 14:07:35 +0200
+Message-ID: <20241008115637.670506800@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,78 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit bee1aed819a8cda47927436685d216906ed17f62 upstream.
+commit 0c8d604dea437b69a861479b413d629bc9b3da70 upstream.
 
-If we use GPIO reset from I2C port expander, we must use *_cansleep()
-variant of GPIO functions.
-This was not done in ar0521_power_on()/ar0521_power_off() functions.
-Let's fix that.
+It is not valid to call pm_runtime_set_suspended() for devices
+with runtime PM enabled because it returns -EAGAIN if it is enabled
+already and working. So, call pm_runtime_disable() before to fix it.
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 11 at drivers/gpio/gpiolib.c:3496 gpiod_set_value+0x74/0x7c
-Modules linked in:
-CPU: 0 PID: 11 Comm: kworker/u16:0 Not tainted 6.10.0 #53
-Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : gpiod_set_value+0x74/0x7c
-lr : ar0521_power_on+0xcc/0x290
-sp : ffffff8001d7ab70
-x29: ffffff8001d7ab70 x28: ffffff80027dcc90 x27: ffffff8003c82000
-x26: ffffff8003ca9250 x25: ffffffc080a39c60 x24: ffffff8003ca9088
-x23: ffffff8002402720 x22: ffffff8003ca9080 x21: ffffff8003ca9088
-x20: 0000000000000000 x19: ffffff8001eb2a00 x18: ffffff80efeeac80
-x17: 756d2d6332692f30 x16: 0000000000000000 x15: 0000000000000000
-x14: ffffff8001d91d40 x13: 0000000000000016 x12: ffffffc080e98930
-x11: ffffff8001eb2880 x10: 0000000000000890 x9 : ffffff8001d7a9f0
-x8 : ffffff8001d92570 x7 : ffffff80efeeac80 x6 : 000000003fc6e780
-x5 : ffffff8001d91c80 x4 : 0000000000000002 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000001
-Call trace:
- gpiod_set_value+0x74/0x7c
- ar0521_power_on+0xcc/0x290
-...
-
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
-Cc: stable@vger.kernel.org
-Acked-by: Krzysztof Hałasa <khalasa@piap.pl>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 36ecbcab84d0 ("i2c: xiic: Implement power management")
+Cc: <stable@vger.kernel.org> # v4.6+
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ar0521.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -847,7 +847,8 @@ static int ar0521_power_off(struct devic
- 	clk_disable_unprepare(sensor->extclk);
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -1337,8 +1337,8 @@ static int xiic_i2c_probe(struct platfor
+ 	return 0;
  
- 	if (sensor->reset_gpio)
--		gpiod_set_value(sensor->reset_gpio, 1); /* assert RESET signal */
-+		/* assert RESET signal */
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
+ err_pm_disable:
+-	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
  
- 	for (i = ARRAY_SIZE(ar0521_supply_names) - 1; i >= 0; i--) {
- 		if (sensor->supplies[i])
-@@ -881,7 +882,7 @@ static int ar0521_power_on(struct device
- 
- 	if (sensor->reset_gpio)
- 		/* deassert RESET signal */
--		gpiod_set_value(sensor->reset_gpio, 0);
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
- 	usleep_range(4500, 5000); /* min 45000 clocks */
- 
- 	for (cnt = 0; cnt < ARRAY_SIZE(initial_regs); cnt++) {
+ 	return ret;
+ }
 
 
