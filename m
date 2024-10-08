@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0ECB1DEFE4;
-	Tue,  8 Oct 2024 12:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414941DEFC4;
+	Tue,  8 Oct 2024 12:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389971; cv=none; b=Lny9s8Tptiv2KP0hxrNs9xjJFJii6cpMueBQPXGFP6VrSd/HjVdRKLNn3I0yBwvj/MYwKb2RF3gXD85oM7G0VVQE+FKIDDOuqR14MWVYcNTm8FQ1SC014c7h2ZkMvgkWuNNKyVQwVY50wEdqPU5i5e4iqHKQs+nA0jBlqilDALo=
+	t=1728389975; cv=none; b=QCYcJRajgqnDiZT0bjFI/w/Ap31Y88RqHu4fXF/3S0luM+s92eKoSsk6QoeuL5uUAf3nNCMq2FCgvnZK2Dlqa4RB/UqOcGM0F/ubLp9l7ErgABR/hJ++1+XA6yvlBy1U95FosmEfDtbCJqYTb2shCzk6EagFa1XgaWDrA4iO1lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389971; c=relaxed/simple;
-	bh=oO2vj5IqRzxRZYMyz+KCozmaIdRtDNphrbry3rNVOZk=;
+	s=arc-20240116; t=1728389975; c=relaxed/simple;
+	bh=tvrWH3zB01BKj5Xdch9Ybn8+RgikApBEl1OLVFqcytM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ah9v98a/6u0eyi84HIdTXoVKXe3D7x6NMq5Ms2zl9LZDJvKuaLyGc/8TjVN1MnsSNitdeo7nJAa+IeRYhUeCzYO7PbV0a87ghsrVYdEScY7jN5G4e7cWefN2VXlGgPBaCi0ZkeZc9Y83JKwM+atip2sXwQy+P2xG95fDtOEHphA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf321MiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QbcgephBQ0fIi+cYtldM0zEV2kvpH+TofGBvjhVZTi19UYrjnWTo4dQXbISfh5u4RHWJ2c9GCd1Hd9SYCGpDp9vzKKZLcm/EJ/x000r5HlumGuM+oJOb9zf2NiPB/QaBz+yeZbvZUP+wIZgGSvbSXQRhWcIqUX/eyV+2mo+xQNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZR4QgdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf321MiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BE9C4CED7;
-	Tue,  8 Oct 2024 12:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZR4QgdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCC7C4CEC7;
+	Tue,  8 Oct 2024 12:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389971;
-	bh=oO2vj5IqRzxRZYMyz+KCozmaIdRtDNphrbry3rNVOZk=;
+	s=korg; t=1728389974;
+	bh=tvrWH3zB01BKj5Xdch9Ybn8+RgikApBEl1OLVFqcytM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf321MiY53An0MaAl7hA5vEpoHzKvH1xHjjM8n9sFP/POljBITwJOjyovQBlbt5Ck
-	 //0cZ19Qv0dLJwlDkgdukMVsEaek7nppH3rS+lYNhaXvexlSqULxYQanjppkhys8X0
-	 7l3mAKcGBxh3wVeWZ4SNpOuoloF+ceyXSom05GJg=
+	b=vZR4QgdIyRgiDSDaiQmFIB58dhVQRkw+ZP3dkhqdUT62h/r0+n5p4X9viQMRy4/Bp
+	 P4/BJvW/RNXkDFpFklb8UDGujCdxdJk3NvYSJL5xpi9sJJC208rstTAmGpszWVI5RH
+	 QLJ0T+P/q0Tz/FdJX1w2kiTIRw7AhnMTdEeXqi5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 150/482] x86/pkeys: Add PKRU as a parameter in signal handling functions
-Date: Tue,  8 Oct 2024 14:03:33 +0200
-Message-ID: <20241008115654.210039205@linuxfoundation.org>
+Subject: [PATCH 6.10 151/482] x86/pkeys: Restore altstack access in sigreturn()
+Date: Tue,  8 Oct 2024 14:03:34 +0200
+Message-ID: <20241008115654.249622580@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,124 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
 
-[ Upstream commit 24cf2bc982ffe02aeffb4a3885c71751a2c7023b ]
+[ Upstream commit d10b554919d4cc8fa8fe2e95b57ad2624728c8e4 ]
 
-Assume there's a multithreaded application that runs untrusted user
-code. Each thread has its stack/code protected by a non-zero PKEY, and the
-PKRU register is set up such that only that particular non-zero PKEY is
-enabled. Each thread also sets up an alternate signal stack to handle
-signals, which is protected by PKEY zero. The PKEYs man page documents that
-the PKRU will be reset to init_pkru when the signal handler is invoked,
-which means that PKEY zero access will be enabled.  But this reset happens
-after the kernel attempts to push fpu state to the alternate stack, which
-is not (yet) accessible by the kernel, which leads to a new SIGSEGV being
-sent to the application, terminating it.
+A process can disable access to the alternate signal stack by not
+enabling the altstack's PKEY in the PKRU register.
 
-Enabling both the non-zero PKEY (for the thread) and PKEY zero in
-userspace will not work for this use case. It cannot have the alt stack
-writeable by all - the rationale here is that the code running in that
-thread (using a non-zero PKEY) is untrusted and should not have access
-to the alternate signal stack (that uses PKEY zero), to prevent the
-return address of a function from being changed. The expectation is that
-kernel should be able to set up the alternate signal stack and deliver
-the signal to the application even if PKEY zero is explicitly disabled
-by the application. The signal handler accessibility should not be
-dictated by whatever PKRU value the thread sets up.
+Nevertheless, the kernel updates the PKRU temporarily for signal
+handling. However, in sigreturn(), restore_sigcontext() will restore the
+PKRU to the user-defined PKRU value.
 
-The PKRU register is managed by XSAVE, which means the sigframe contents
-must match the register contents - which is not the case here. It's
-required that the signal frame contains the user-defined PKRU value (so
-that it is restored correctly from sigcontext) but the actual register must
-be reset to init_pkru so that the alt stack is accessible and the signal
-can be delivered to the application. It seems that the proper fix here
-would be to remove PKRU from the XSAVE framework and manage it separately,
-which is quite complicated. As a workaround, do this:
+This will cause restore_altstack() to fail with a SIGSEGV as it needs read
+access to the altstack which is prohibited by the user-defined PKRU value.
 
-        orig_pkru = rdpkru();
-        wrpkru(orig_pkru & init_pkru_value);
-        xsave_to_user_sigframe();
-        put_user(pkru_sigframe_addr, orig_pkru)
-
-In preparation for writing PKRU to sigframe, pass PKRU as an additional
-parameter down the call chain from get_sigframe().
-
-No functional change.
+Fix this by restoring altstack before restoring PKRU.
 
 Signed-off-by: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240802061318.2140081-2-aruna.ramakrishna@oracle.com
+Link: https://lore.kernel.org/all/20240802061318.2140081-5-aruna.ramakrishna@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/signal.h | 2 +-
- arch/x86/kernel/fpu/signal.c      | 6 +++---
- arch/x86/kernel/signal.c          | 3 ++-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/kernel/signal_64.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/fpu/signal.h b/arch/x86/include/asm/fpu/signal.h
-index 611fa41711aff..eccc75bc9c4f3 100644
---- a/arch/x86/include/asm/fpu/signal.h
-+++ b/arch/x86/include/asm/fpu/signal.h
-@@ -29,7 +29,7 @@ fpu__alloc_mathframe(unsigned long sp, int ia32_frame,
+diff --git a/arch/x86/kernel/signal_64.c b/arch/x86/kernel/signal_64.c
+index 8a94053c54446..ee9453891901b 100644
+--- a/arch/x86/kernel/signal_64.c
++++ b/arch/x86/kernel/signal_64.c
+@@ -260,13 +260,13 @@ SYSCALL_DEFINE0(rt_sigreturn)
  
- unsigned long fpu__get_fpstate_size(void);
+ 	set_current_blocked(&set);
  
--extern bool copy_fpstate_to_sigframe(void __user *buf, void __user *fp, int size);
-+extern bool copy_fpstate_to_sigframe(void __user *buf, void __user *fp, int size, u32 pkru);
- extern void fpu__clear_user_states(struct fpu *fpu);
- extern bool fpu__restore_sig(void __user *buf, int ia32_frame);
+-	if (!restore_sigcontext(regs, &frame->uc.uc_mcontext, uc_flags))
++	if (restore_altstack(&frame->uc.uc_stack))
+ 		goto badframe;
  
-diff --git a/arch/x86/kernel/fpu/signal.c b/arch/x86/kernel/fpu/signal.c
-index 247f2225aa9f3..2b3b9e140dd41 100644
---- a/arch/x86/kernel/fpu/signal.c
-+++ b/arch/x86/kernel/fpu/signal.c
-@@ -156,7 +156,7 @@ static inline bool save_xstate_epilog(void __user *buf, int ia32_frame,
- 	return !err;
- }
+-	if (restore_signal_shadow_stack())
++	if (!restore_sigcontext(regs, &frame->uc.uc_mcontext, uc_flags))
+ 		goto badframe;
  
--static inline int copy_fpregs_to_sigframe(struct xregs_state __user *buf)
-+static inline int copy_fpregs_to_sigframe(struct xregs_state __user *buf, u32 pkru)
- {
- 	if (use_xsave())
- 		return xsave_to_user_sigframe(buf);
-@@ -185,7 +185,7 @@ static inline int copy_fpregs_to_sigframe(struct xregs_state __user *buf)
-  * For [f]xsave state, update the SW reserved fields in the [f]xsave frame
-  * indicating the absence/presence of the extended state to the user.
-  */
--bool copy_fpstate_to_sigframe(void __user *buf, void __user *buf_fx, int size)
-+bool copy_fpstate_to_sigframe(void __user *buf, void __user *buf_fx, int size, u32 pkru)
- {
- 	struct task_struct *tsk = current;
- 	struct fpstate *fpstate = tsk->thread.fpu.fpstate;
-@@ -228,7 +228,7 @@ bool copy_fpstate_to_sigframe(void __user *buf, void __user *buf_fx, int size)
- 		fpregs_restore_userregs();
+-	if (restore_altstack(&frame->uc.uc_stack))
++	if (restore_signal_shadow_stack())
+ 		goto badframe;
  
- 	pagefault_disable();
--	ret = copy_fpregs_to_sigframe(buf_fx);
-+	ret = copy_fpregs_to_sigframe(buf_fx, pkru);
- 	pagefault_enable();
- 	fpregs_unlock();
- 
-diff --git a/arch/x86/kernel/signal.c b/arch/x86/kernel/signal.c
-index 31b6f5dddfc27..1f1e8e0ac5a34 100644
---- a/arch/x86/kernel/signal.c
-+++ b/arch/x86/kernel/signal.c
-@@ -84,6 +84,7 @@ get_sigframe(struct ksignal *ksig, struct pt_regs *regs, size_t frame_size,
- 	unsigned long math_size = 0;
- 	unsigned long sp = regs->sp;
- 	unsigned long buf_fx = 0;
-+	u32 pkru = read_pkru();
- 
- 	/* redzone */
- 	if (!ia32_frame)
-@@ -139,7 +140,7 @@ get_sigframe(struct ksignal *ksig, struct pt_regs *regs, size_t frame_size,
- 	}
- 
- 	/* save i387 and extended state */
--	if (!copy_fpstate_to_sigframe(*fpstate, (void __user *)buf_fx, math_size))
-+	if (!copy_fpstate_to_sigframe(*fpstate, (void __user *)buf_fx, math_size, pkru))
- 		return (void __user *)-1L;
- 
- 	return (void __user *)sp;
+ 	return regs->ax;
 -- 
 2.43.0
 
