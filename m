@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C881DF720;
-	Tue,  8 Oct 2024 12:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EF71D26F2;
+	Tue,  8 Oct 2024 12:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389981; cv=none; b=rkRJTal43iunWVaBqrsrWXQXzigMdH2yhP3j204/ia6Q2hvt7vO7LEPazbwqRODS3xO5UQY+y/QZQSG+I7bGwsgTYjkKP0lvUl9ounTPeK8RPINQy9lIvCwNPckkkPBhtbHrqrjZJJyy3uzvhElvjdEpQdd0YesyIxuSnks8AMY=
+	t=1728389985; cv=none; b=oiUMvRN0qOdjap8ErOwGn5wNvQZcKdS7zFAFixbfaUNyOB7t/U0XDgbK4A8yLsh7VSO40RMIjcAw9W86l4uwxwy7/hq/7cOVrkVcuEQnMytr7Qc8gVg0R9ivdHu2sinL9NNMW6ERBFPrKhCgMihElTmrRSYkd3yaHAu5uOsjweo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389981; c=relaxed/simple;
-	bh=e+UOOwUgaSAGwvZ95Qe6qANAJLjWZxbuBgBE3VI23eI=;
+	s=arc-20240116; t=1728389985; c=relaxed/simple;
+	bh=xEt7zUk8UzCp/3Ezl/pfCj7Wo1gQVbKd+BCnyQZi5Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVKzSL2n8CFxe3Mr8YtUQt6dwwPX0vIP5T6lJj2NFjP/f0xurRPJHAxC4UWD7NUx5qpcp99/7EX/vNA7/Zp4+Irqc5H92c9fBJcH3E3TmJhnWJR9ypcSqoXw3lXz1EbYbkyk8xbEAm6WoPq/laHc3odEmQRH1Xiia57WkOyRzos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbEGCTLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tlxq6MGR4ONoWkVjpVehxHM1rb0mK76vjva1Stn2KlU0CfER3MBA3Nxo9qDdWa+5p5Ywj3ITeLdB0JJlhg/Co40cXdIjixu8489vVf78g6/43fhAQ5jqgHH5x5yeZ3bH1fJM0jEKPInY4+BFpqX99iuKtNlZcVQUX8HPlG3b4No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lbrwokol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbEGCTLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB88C4CECC;
-	Tue,  8 Oct 2024 12:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lbrwokol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D881C4CEC7;
+	Tue,  8 Oct 2024 12:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389981;
-	bh=e+UOOwUgaSAGwvZ95Qe6qANAJLjWZxbuBgBE3VI23eI=;
+	s=korg; t=1728389985;
+	bh=xEt7zUk8UzCp/3Ezl/pfCj7Wo1gQVbKd+BCnyQZi5Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbEGCTLyICZ4Fk5N5whovoe1RgUHmS5MfEymiJHmb9bTR89VIbQ2uHSDyBWsOzuWr
-	 iX/5ahPPsm4qMGuAbNDnC2qHKHCfYnlLmVA2P3Hthmq/B4xdfM1+OdLsw4d8vM6bFr
-	 ShZmmEZyqyWh2/1qEA8jCmyJ0MLDaesK8oH3xBrU=
+	b=LbrwokolINwdBEvfTXoUNyOmCLOQAYpKFwXyGAthh1yYlcHHHTdGUTw7f63G6Clva
+	 Af+QAyjMl89+n1K/VBfxtmswDedRPfieMWTeqfmFGRZGSh9Pw2MvcEVdtHPgwNX7Ya
+	 iLgw0AaUuplX3vCg1z2biWbqot3nqbOrHVB+GB1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Pavin Joseph <me@pavinjoseph.com>,
-	Sarah Brofeldt <srhb@dbc.dk>,
-	Eric Hagberg <ehagberg@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Joe Damato <jdamato@fastly.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 153/482] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Tue,  8 Oct 2024 14:03:36 +0200
-Message-ID: <20241008115654.327782334@linuxfoundation.org>
+Subject: [PATCH 6.10 124/482] netdev-genl: Set extack and fix error on napi-get
+Date: Tue,  8 Oct 2024 14:03:07 +0200
+Message-ID: <20241008115653.186435776@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,80 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit cc31744a294584a36bf764a0ffa3255a8e69f036 ]
+[ Upstream commit 4e3a024b437ec0aee82550cc66a0f4e1a7a88a67 ]
 
-When ident_pud_init() uses only GB pages to create identity maps, large
-ranges of addresses not actually requested can be included in the resulting
-table; a 4K request will map a full GB.  This can include a lot of extra
-address space past that requested, including areas marked reserved by the
-BIOS.  That allows processor speculation into reserved regions, that on UV
-systems can cause system halts.
+In commit 27f91aaf49b3 ("netdev-genl: Add netlink framework functions
+for napi"), when an invalid NAPI ID is specified the return value
+-EINVAL is used and no extack is set.
 
-Only use GB pages when map creation requests include the full GB page of
-space.  Fall back to using smaller 2M pages when only portions of a GB page
-are included in the request.
+Change the return value to -ENOENT and set the extack.
 
-No attempt is made to coalesce mapping requests. If a request requires a
-map entry at the 2M (pmd) level, subsequent mapping requests within the
-same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full GB page.
-Existing usage starts with larger regions and then adds smaller regions, so
-this should not have any great consequence.
+Before this commit:
 
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Pavin Joseph <me@pavinjoseph.com>
-Tested-by: Sarah Brofeldt <srhb@dbc.dk>
-Tested-by: Eric Hagberg <ehagberg@gmail.com>
-Link: https://lore.kernel.org/all/20240717213121.3064030-3-steve.wahl@hpe.com
+$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+                          --do napi-get --json='{"id": 451}'
+Netlink error: Invalid argument
+nl_len = 36 (20) nl_flags = 0x100 nl_type = 2
+	error: -22
+
+After this commit:
+
+$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+                         --do napi-get --json='{"id": 451}'
+Netlink error: No such file or directory
+nl_len = 44 (28) nl_flags = 0x300 nl_type = 2
+	error: -2
+	extack: {'bad-attr': '.id'}
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20240831121707.17562-1-jdamato@fastly.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/ident_map.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ net/core/netdev-genl.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/mm/ident_map.c b/arch/x86/mm/ident_map.c
-index 968d7005f4a72..a204a332c71fc 100644
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_mapping_info *info, pud_t *pud_page,
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 05f9515d2c05c..a17d7eaeb0019 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -216,10 +216,12 @@ int netdev_nl_napi_get_doit(struct sk_buff *skb, struct genl_info *info)
+ 	rtnl_lock();
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
+ 	napi = napi_by_id(napi_id);
+-	if (napi)
++	if (napi) {
+ 		err = netdev_nl_napi_fill_one(rsp, napi, info);
+-	else
+-		err = -EINVAL;
++	} else {
++		NL_SET_BAD_ATTR(info->extack, info->attrs[NETDEV_A_NAPI_ID]);
++		err = -ENOENT;
++	}
  
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_leaf(*pud))
-+			continue;
-+
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
+ 	rtnl_unlock();
  
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
- 
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
 -- 
 2.43.0
 
