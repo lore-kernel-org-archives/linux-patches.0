@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232EF1DDC24;
-	Tue,  8 Oct 2024 12:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EBF1DE2C4;
+	Tue,  8 Oct 2024 12:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389571; cv=none; b=Hl3wPzhNcLjlPl7SQUQjdx51IduRdtlyRPsGOIYa1IImKWeRPfYIqtmQFyLYDcQ5MEMFV6O1vG0sAVzgpjGm13qo6oPdlG6sCPCQh0Wk4z4CZgvwKkB0oF7QoD4nR0oUq1vVlvkuTMvUVU+Jg6B44irPmVR7jrlTjSFX165cL9M=
+	t=1728389574; cv=none; b=gUXuBti3I4kI5yEffA4mP/QmY9frilQhPP52BEW9sNnU+seZftEBfPc/pZHnusBi68I+5VX8D9Gofkgr2zBOha2kCaLo1WyHteXME7Cx1bgcJoU/vC1535QPq/Lh2t9Zsfb+WUDfDzLhJJdZpEsyrr8wWUbfvR3YgQ8MjQ+au88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389571; c=relaxed/simple;
-	bh=AeZyHMfnhJ1D1xD/M/zNahqMU0AxOT0+9I+ePQwh7zo=;
+	s=arc-20240116; t=1728389574; c=relaxed/simple;
+	bh=0Suqf0+K+TmsSk6wr04Oo2ehgvyLTey7pd5VwwFYAuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dk7TBfR5IKDOrMJpUx/P9riVSBAHQ6H4mFxlIhDEboYHE3HYcGArGZyuiVXZaq4GlxaSb4ymMVejJcO6YqZlyQGHqjFtuhlv2cS+0CPGlAZS37En8ar7Id8nFDBVr0YgHzV8YXxwSbR/l6vx6taOcPTK916apGOBDvpBwYBVI1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkUchfe9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOj7yOMpv04Fp6aZEwWUH+ksGTzrE72PCacJG/R0E4YEn7M1+aZ/ZctHN6Vp969zBz2k/fhk3r3iKJxT1KgPvTGOJBFKx2TAcatdEm+vZxkuPohnPEiTYIccsMQjVX7wPw16ibEDd7dc6ecblLGH92bbmbhChr4DE0Oto0XOSTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gI0mpK4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkUchfe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE4AC4CEC7;
-	Tue,  8 Oct 2024 12:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gI0mpK4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC44C4CEC7;
+	Tue,  8 Oct 2024 12:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389570;
-	bh=AeZyHMfnhJ1D1xD/M/zNahqMU0AxOT0+9I+ePQwh7zo=;
+	s=korg; t=1728389574;
+	bh=0Suqf0+K+TmsSk6wr04Oo2ehgvyLTey7pd5VwwFYAuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkUchfe9yiRQfjW84KJEuAQHHCQ4OSYNpHL6ZRc52SN1r0nnBKFkSWr9W6Dd4YTn8
-	 Upn243GJFaO69TtMXuD3mrkO8HgeVhPP7oLPEV5gwdiohFp3RkPlc7QntCfpysySXV
-	 qDgIsA4YV2p0E6S2DS71ZC9VUjzA/VdAb1EiVr+M=
+	b=gI0mpK4INP2VujGZ2yOI5zMDn9NiNnyGLg29hy0ZIhX9pVPSANZixMmK8LuIUnRdz
+	 2IisC6WnzQyLydlQzLhTn9Vv7VpBarC0IIsV+yD4aRa8012AKOWBLZJwv7tpYE7ByB
+	 TLUOiYvAK8f+XkV4FExzc4xZ3vHbHaTi6l7LpUMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 033/482] net: dsa: improve shutdown sequence
-Date: Tue,  8 Oct 2024 14:01:36 +0200
-Message-ID: <20241008115649.603257389@linuxfoundation.org>
+Subject: [PATCH 6.10 034/482] net: Add netif_get_gro_max_size helper for GRO
+Date: Tue,  8 Oct 2024 14:01:37 +0200
+Message-ID: <20241008115649.641824359@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,119 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 6c24a03a61a245fe34d47582898331fa034b6ccd ]
+[ Upstream commit e8d4d34df715133c319fabcf63fdec684be75ff8 ]
 
-Alexander Sverdlin presents 2 problems during shutdown with the
-lan9303 driver. One is specific to lan9303 and the other just happens
-to reproduce there.
+Add a small netif_get_gro_max_size() helper which returns the maximum IPv4
+or IPv6 GRO size of the netdevice.
 
-The first problem is that lan9303 is unique among DSA drivers in that it
-calls dev_get_drvdata() at "arbitrary runtime" (not probe, not shutdown,
-not remove):
+We later add a netif_get_gso_max_size() equivalent as well for GSO, so that
+these helpers can be used consistently instead of open-coded checks.
 
-phy_state_machine()
--> ...
-   -> dsa_user_phy_read()
-      -> ds->ops->phy_read()
-         -> lan9303_phy_read()
-            -> chip->ops->phy_read()
-               -> lan9303_mdio_phy_read()
-                  -> dev_get_drvdata()
-
-But we never stop the phy_state_machine(), so it may continue to run
-after dsa_switch_shutdown(). Our common pattern in all DSA drivers is
-to set drvdata to NULL to suppress the remove() method that may come
-afterwards. But in this case it will result in an NPD.
-
-The second problem is that the way in which we set
-dp->conduit->dsa_ptr = NULL; is concurrent with receive packet
-processing. dsa_switch_rcv() checks once whether dev->dsa_ptr is NULL,
-but afterwards, rather than continuing to use that non-NULL value,
-dev->dsa_ptr is dereferenced again and again without NULL checks:
-dsa_conduit_find_user() and many other places. In between dereferences,
-there is no locking to ensure that what was valid once continues to be
-valid.
-
-Both problems have the common aspect that closing the conduit interface
-solves them.
-
-In the first case, dev_close(conduit) triggers the NETDEV_GOING_DOWN
-event in dsa_user_netdevice_event() which closes user ports as well.
-dsa_port_disable_rt() calls phylink_stop(), which synchronously stops
-the phylink state machine, and ds->ops->phy_read() will thus no longer
-call into the driver after this point.
-
-In the second case, dev_close(conduit) should do this, as per
-Documentation/networking/driver.rst:
-
-| Quiescence
-| ----------
-|
-| After the ndo_stop routine has been called, the hardware must
-| not receive or transmit any data.  All in flight packets must
-| be aborted. If necessary, poll or wait for completion of
-| any reset commands.
-
-So it should be sufficient to ensure that later, when we zeroize
-conduit->dsa_ptr, there will be no concurrent dsa_switch_rcv() call
-on this conduit.
-
-The addition of the netif_device_detach() function is to ensure that
-ioctls, rtnetlinks and ethtool requests on the user ports no longer
-propagate down to the driver - we're no longer prepared to handle them.
-
-The race condition actually did not exist when commit 0650bf52b31f
-("net: dsa: be compatible with masters which unregister on shutdown")
-first introduced dsa_switch_shutdown(). It was created later, when we
-stopped unregistering the user interfaces from a bad spot, and we just
-replaced that sequence with a racy zeroization of conduit->dsa_ptr
-(one which doesn't ensure that the interfaces aren't up).
-
-Reported-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Closes: https://lore.kernel.org/netdev/2d2e3bba17203c14a5ffdabc174e3b6bbb9ad438.camel@siemens.com/
-Closes: https://lore.kernel.org/netdev/c1bf4de54e829111e0e4a70e7bd1cf523c9550ff.camel@siemens.com/
-Fixes: ee534378f005 ("net: dsa: fix panic when DSA master device unbinds on shutdown")
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20240913203549.3081071-1-vladimir.oltean@nxp.com
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240923212242.15669-1-daniel@iogearbox.net
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: e609c959a939 ("net: Fix gso_features_check to check for both dev->gso_{ipv4_,}max_size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/dsa.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/netdevice.h | 9 +++++++++
+ net/core/gro.c            | 9 ++-------
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index 12521a7d40481..03ef2a2af4309 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -1579,6 +1579,7 @@ EXPORT_SYMBOL_GPL(dsa_unregister_switch);
- void dsa_switch_shutdown(struct dsa_switch *ds)
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index d20c6c99eb887..84a445ca4749a 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -5000,6 +5000,15 @@ void netif_set_tso_max_segs(struct net_device *dev, unsigned int segs);
+ void netif_inherit_tso_max(struct net_device *to,
+ 			   const struct net_device *from);
+ 
++static inline unsigned int
++netif_get_gro_max_size(const struct net_device *dev, const struct sk_buff *skb)
++{
++	/* pairs with WRITE_ONCE() in netif_set_gro(_ipv4)_max_size() */
++	return skb->protocol == htons(ETH_P_IPV6) ?
++	       READ_ONCE(dev->gro_max_size) :
++	       READ_ONCE(dev->gro_ipv4_max_size);
++}
++
+ static inline bool netif_is_macsec(const struct net_device *dev)
  {
- 	struct net_device *conduit, *user_dev;
-+	LIST_HEAD(close_list);
- 	struct dsa_port *dp;
+ 	return dev->priv_flags & IFF_MACSEC;
+diff --git a/net/core/gro.c b/net/core/gro.c
+index b3b43de1a6502..87708483a5f46 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -98,7 +98,6 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
+ 	unsigned int headlen = skb_headlen(skb);
+ 	unsigned int len = skb_gro_len(skb);
+ 	unsigned int delta_truesize;
+-	unsigned int gro_max_size;
+ 	unsigned int new_truesize;
+ 	struct sk_buff *lp;
+ 	int segs;
+@@ -112,12 +111,8 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
+ 	if (p->pp_recycle != skb->pp_recycle)
+ 		return -ETOOMANYREFS;
  
- 	mutex_lock(&dsa2_mutex);
-@@ -1588,10 +1589,16 @@ void dsa_switch_shutdown(struct dsa_switch *ds)
+-	/* pairs with WRITE_ONCE() in netif_set_gro(_ipv4)_max_size() */
+-	gro_max_size = p->protocol == htons(ETH_P_IPV6) ?
+-			READ_ONCE(p->dev->gro_max_size) :
+-			READ_ONCE(p->dev->gro_ipv4_max_size);
+-
+-	if (unlikely(p->len + len >= gro_max_size || NAPI_GRO_CB(skb)->flush))
++	if (unlikely(p->len + len >= netif_get_gro_max_size(p->dev, p) ||
++		     NAPI_GRO_CB(skb)->flush))
+ 		return -E2BIG;
  
- 	rtnl_lock();
- 
-+	dsa_switch_for_each_cpu_port(dp, ds)
-+		list_add(&dp->conduit->close_list, &close_list);
-+
-+	dev_close_many(&close_list, true);
-+
- 	dsa_switch_for_each_user_port(dp, ds) {
- 		conduit = dsa_port_to_conduit(dp);
- 		user_dev = dp->user;
- 
-+		netif_device_detach(user_dev);
- 		netdev_upper_dev_unlink(conduit, user_dev);
- 	}
- 
+ 	if (unlikely(p->len + len >= GRO_LEGACY_MAX_SIZE)) {
 -- 
 2.43.0
 
