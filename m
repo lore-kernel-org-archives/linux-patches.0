@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04701DF27C;
-	Tue,  8 Oct 2024 13:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B41F1DE89F;
+	Tue,  8 Oct 2024 13:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393422; cv=none; b=UQRPbQPMzp8k1yKRNiny9HZ6ZWzUVHYZnyKpgCBO5CfBoCpmhKIyfmiaU9HV84S4N/y5rHv6dY83nPO/tx2w+RqrCuQzsjlrKJgENlLnigGNNewuL/RCmJZ4T76IeTEktDSdy140T2VSK903DhMd9x3HP7/Td1CIC7ReSXsrmbQ=
+	t=1728393426; cv=none; b=eJUKAXZQMS/Jc0WKU7XorNlR932CfrKPk7fiUcKx+K82z0qsIWW4zWyqOMUJum/BMeMog2Eg9zu0ISjVNzxFF7gWvnSjS8XKt8yu0zE+56wjdamvEc1jCmq4VDt4UrbKlA/4TKMc7NA8NOLIWFKkPkjQdsdmr8N+hOuGaKZAFfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393422; c=relaxed/simple;
-	bh=O7qwIHYTujJHFKTFeXtTzhxUJOznEPalT0EetOmC60w=;
+	s=arc-20240116; t=1728393426; c=relaxed/simple;
+	bh=O6ozEWII8R5j28ymJLImngx/U0e1er/7WptZ8wiBWwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQsLyt9Ltoo09tn3P+xZDrH/gnYgTsm1C3PCST/GxWkrThje4kMtNlyb+19b0cON3122M2Obi4y8xd2n4yHFqc7xDmJiJkUtiT06w373bk7YeEmmpxDzlC9W4xhBsZ3upN9dLKdF4nr4EUu5ctDOpFhVQE2JNveA9cX8eeNqc+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUT+HYgA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jF1Q0daxJsTCEJj5o7LpNmQeZ22u26nf24PgTNG3isgEhbJg3DwPk5tfigm149A3UGfS7k22CLEo7ihXQxdDd3KTw7PAQQkhA5fVap4wk6gQ90jRkiRuUXFjqAnhuV2AQalyk+r0fk/pZwwliYAAmVUUZZIP+f5YSP/EBTz6urQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RD9KYerF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUT+HYgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDD8C4CECC;
-	Tue,  8 Oct 2024 13:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RD9KYerF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EB2C4CEC7;
+	Tue,  8 Oct 2024 13:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393422;
-	bh=O7qwIHYTujJHFKTFeXtTzhxUJOznEPalT0EetOmC60w=;
+	s=korg; t=1728393425;
+	bh=O6ozEWII8R5j28ymJLImngx/U0e1er/7WptZ8wiBWwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUT+HYgAxqs91v2U96Rn+fA28hzlUWfX5Y4SxgN2mWX64/lTVTWWV/yyGRqIzDY1j
-	 aOQksXkgGqSs442R3q23iFhOoDzQoF1bepvZe0BvnlXxw6CbjeJAq9ck8VEZvcqwAg
-	 EOjyvgyUf7WdrbgsSQ0H06iUn2rVZFOvFtUZVdhE=
+	b=RD9KYerF5dbihR2fxdcKoTF7+JjxwE17S7Yq7ZZNv08rRkwg8pzw3Tfb2miXSgvDR
+	 MaKMSyDFqbPY37+epaDg80r/J1yfG+kgoOSXKf6XfBXRPsbCyutlorcdcuaNYxzx2e
+	 Oomon5ZUt3qyXTwAFP7sQl+ccz1e4NW4j0iymxAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Peng Liu <liupeng01@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/386] jfs: Fix uninit-value access of new_ea in ea_buffer
-Date: Tue,  8 Oct 2024 14:06:32 +0200
-Message-ID: <20241008115635.213730194@linuxfoundation.org>
+Subject: [PATCH 6.6 148/386] drm/amdgpu: add raven1 gfxoff quirk
+Date: Tue,  8 Oct 2024 14:06:33 +0200
+Message-ID: <20241008115635.252495083@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,55 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+From: Peng Liu <liupeng01@kylinos.cn>
 
-[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
+[ Upstream commit 0126c0ae11e8b52ecfde9d1b174ee2f32d6c3a5d ]
 
-syzbot reports that lzo1x_1_do_compress is using uninit-value:
+Fix screen corruption with openkylin.
 
-=====================================================
-BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
-
-...
-
-Uninit was stored to memory at:
- ea_put fs/jfs/xattr.c:639 [inline]
-
-...
-
-Local variable ea_buf created at:
- __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
- __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
-
-=====================================================
-
-The reason is ea_buf->new_ea is not initialized properly.
-
-Fix this by using memset to empty its content at the beginning
-in ea_get().
-
-Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Link: https://bbs.openkylin.top/t/topic/171497
+Signed-off-by: Peng Liu <liupeng01@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/xattr.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
-index 17faf8d355290..49e064c1f5517 100644
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -434,6 +434,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
- 	int rc;
- 	int quota_allocation = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 8168836a08d2e..c28e7ff6ede26 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1172,6 +1172,8 @@ static const struct amdgpu_gfxoff_quirk amdgpu_gfxoff_quirk_list[] = {
+ 	{ 0x1002, 0x15dd, 0x1002, 0x15dd, 0xc6 },
+ 	/* Apple MacBook Pro (15-inch, 2019) Radeon Pro Vega 20 4 GB */
+ 	{ 0x1002, 0x69af, 0x106b, 0x019a, 0xc0 },
++	/* https://bbs.openkylin.top/t/topic/171497 */
++	{ 0x1002, 0x15d8, 0x19e5, 0x3e14, 0xc2 },
+ 	{ 0, 0, 0, 0, 0 },
+ };
  
-+	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
-+
- 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
- 	if (ji->ea.flag == 0)
- 		ea_size = 0;
 -- 
 2.43.0
 
