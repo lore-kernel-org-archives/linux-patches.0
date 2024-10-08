@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E01DED74;
-	Tue,  8 Oct 2024 12:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B62B1DEFC5;
+	Tue,  8 Oct 2024 12:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389865; cv=none; b=L45cq/y5XC4oAURv6I8KH7txUgBrFNnzeyXCY3xsPrlm4Q+sNl7jJEoDKUc79aWBemiNiQyTtxcL9BdEnGNFnA6ZbseLLcEyLc3z4EyT/qcRBsDGRepOkK71WWQQlMd1CiPndrgrOUNmBBvsed/R11FTSduV/m6AddWtPY7uSt8=
+	t=1728389868; cv=none; b=rd9cArubHNm4lzC+axjh6PysK0TLswYaGK8OoKFnkaEcKs1hD6wudggRCwURp5ZRD+GwUPowUTDXWsAG6RrN5bbi1vXQJmMwJWwnnz2wIkUBSvxa5zah+/mOWU3bCl/b2AeuRxwrCGd190P4ouej21DfP2Y9cklWGC4AAooxAiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389865; c=relaxed/simple;
-	bh=Ex+LUWw0WrWeWmQH438SXO8JTfqw8hQO0kvAvEbQ4o8=;
+	s=arc-20240116; t=1728389868; c=relaxed/simple;
+	bh=KlEt9qGrvz2hIkTSOvorhe+uPJ42QrGb5OJfYfrL5O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZ9rfHRAjPQtx4NjGvrDWp2WN5DSMNe7FJrT/NoiB6KVrF5ZHM8np9kxELYAQXL8kHN40XK5g+C9l/RI8yr3F0TlvVMMS0f6ftIhBTd45ML4gb4HVhcjWE7sgGbVdSZUWs3+w4M5iyCqQan7TJvn4MYLIKb2hZXBo+4d2SNrcHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGbnQxtw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rs2f08+v4BBabgehRkfl0/OR8YV6aqZNguUwYD1sRSbrUybFEf+Gfld3VDJ7K4Smp5K6eEnA3uAUh1Yz2mL9gD8zPzt6gw8z1GHpEIv0BClpPx+1nF9A/r64lzVUQwp0GOFDMfAuV8cZPw0Nd0nYPYPyjFjv6ZRaEd2tSMurgRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOatJtfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGbnQxtw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B27AC4CEC7;
-	Tue,  8 Oct 2024 12:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOatJtfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3094C4CEC7;
+	Tue,  8 Oct 2024 12:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389864;
-	bh=Ex+LUWw0WrWeWmQH438SXO8JTfqw8hQO0kvAvEbQ4o8=;
+	s=korg; t=1728389868;
+	bh=KlEt9qGrvz2hIkTSOvorhe+uPJ42QrGb5OJfYfrL5O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGbnQxtwlsRIA69ppi6BFpiq5E8Vv+7qWQdUPQATGqNzwSgm2I1f2jfj7X1QJnLBm
-	 ZT66QWCiFN/8jdPSl+Tgo//VT08z3groumIDVne/brUiguLVl6BDi7iGTzGUfIoH8K
-	 QvNCplntlzp1KaLZHyeom4/dwRNWPG8wopofoALo=
+	b=uOatJtfr5/UiEzqpZdMzA5fVCc4BTrSuZv1UIJsL+lYi3zDCd4ztkapPQxMq43xjE
+	 Sr2W8hhpPXF4kQ6ltR/qNIe+ZZt+de7OPp7WI7J90DiO4hsWZc5xmno0p7jEuhEJck
+	 pKsPATxR+5NcvrU8dUovJ0Bspp79rc6rGAEGi/2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 118/482] wifi: iwlwifi: mvm: avoid NULL pointer dereference
-Date: Tue,  8 Oct 2024 14:03:01 +0200
-Message-ID: <20241008115652.951707704@linuxfoundation.org>
+Subject: [PATCH 6.10 119/482] wifi: mac80211: fix RCU list iterations
+Date: Tue,  8 Oct 2024 14:03:02 +0200
+Message-ID: <20241008115652.990698371@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,74 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 557a6cd847645e667f3b362560bd7e7c09aac284 ]
+[ Upstream commit ac35180032fbc5d80b29af00ba4881815ceefcb6 ]
 
-iwl_mvm_tx_skb_sta() and iwl_mvm_tx_mpdu() verify that the mvmvsta
-pointer is not NULL.
-It retrieves this pointer using iwl_mvm_sta_from_mac80211, which is
-dereferencing the ieee80211_sta pointer.
-If sta is NULL, iwl_mvm_sta_from_mac80211 will dereference a NULL
-pointer.
-Fix this by checking the sta pointer before retrieving the mvmsta
-from it. If sta is not NULL, then mvmsta isn't either.
+There are a number of places where RCU list iteration is
+used, but that aren't (always) called with RCU held. Use
+just list_for_each_entry() in most, and annotate iface
+iteration with the required locks.
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20240825191257.880921ce23b7.I340052d70ab6d3410724ce955eb00da10e08188f@changeid
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240827094939.ed8ac0b2f897.I8443c9c3c0f8051841353491dae758021b53115e@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/mac80211/chan.c | 4 +++-
+ net/mac80211/mlme.c | 2 +-
+ net/mac80211/scan.c | 2 +-
+ net/mac80211/util.c | 4 +++-
+ 4 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 1d695ece93e9e..51c12d70e8c23 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1195,6 +1195,9 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	bool is_ampdu = false;
- 	int hdrlen;
+diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
+index e6a7ff6ca6797..db5675d24e488 100644
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -281,7 +281,9 @@ ieee80211_get_max_required_bw(struct ieee80211_link_data *link)
+ 	enum nl80211_chan_width max_bw = NL80211_CHAN_WIDTH_20_NOHT;
+ 	struct sta_info *sta;
  
-+	if (WARN_ON_ONCE(!sta))
-+		return -1;
+-	list_for_each_entry_rcu(sta, &sdata->local->sta_list, list) {
++	lockdep_assert_wiphy(sdata->local->hw.wiphy);
 +
- 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
- 	fc = hdr->frame_control;
- 	hdrlen = ieee80211_hdrlen(fc);
-@@ -1202,9 +1205,6 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	if (IWL_MVM_NON_TRANSMITTING_AP && ieee80211_is_probe_resp(fc))
- 		return -1;
++	list_for_each_entry(sta, &sdata->local->sta_list, list) {
+ 		if (sdata != sta->sdata &&
+ 		    !(sta->sdata->bss && sta->sdata->bss == sdata->bss))
+ 			continue;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 1faf4d7c115f0..71cc5eb35bfcb 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1020,7 +1020,7 @@ static bool ieee80211_add_vht_ie(struct ieee80211_sub_if_data *sdata,
+ 		bool disable_mu_mimo = false;
+ 		struct ieee80211_sub_if_data *other;
  
--	if (WARN_ON_ONCE(!mvmsta))
--		return -1;
--
- 	if (WARN_ON_ONCE(mvmsta->deflink.sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
+-		list_for_each_entry_rcu(other, &local->interfaces, list) {
++		list_for_each_entry(other, &local->interfaces, list) {
+ 			if (other->vif.bss_conf.mu_mimo_owner) {
+ 				disable_mu_mimo = true;
+ 				break;
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 1c5d99975ad04..3b2bde6360bcb 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -504,7 +504,7 @@ static void __ieee80211_scan_completed(struct ieee80211_hw *hw, bool aborted)
+ 	 * the scan was in progress; if there was none this will
+ 	 * just be a no-op for the particular interface.
+ 	 */
+-	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
++	list_for_each_entry(sdata, &local->interfaces, list) {
+ 		if (ieee80211_sdata_running(sdata))
+ 			wiphy_work_queue(sdata->local->hw.wiphy, &sdata->work);
+ 	}
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index c11dbe82ae1b3..d10e0c528c1bf 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -751,7 +751,9 @@ static void __iterate_interfaces(struct ieee80211_local *local,
+ 	struct ieee80211_sub_if_data *sdata;
+ 	bool active_only = iter_flags & IEEE80211_IFACE_ITER_ACTIVE;
  
-@@ -1335,7 +1335,7 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
- int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 		       struct ieee80211_sta *sta)
- {
--	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+	struct iwl_mvm_sta *mvmsta;
- 	struct ieee80211_tx_info info;
- 	struct sk_buff_head mpdus_skbs;
- 	struct ieee80211_vif *vif;
-@@ -1344,9 +1344,11 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	struct sk_buff *orig_skb = skb;
- 	const u8 *addr3;
- 
--	if (WARN_ON_ONCE(!mvmsta))
-+	if (WARN_ON_ONCE(!sta))
- 		return -1;
- 
-+	mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+
- 	if (WARN_ON_ONCE(mvmsta->deflink.sta_id == IWL_MVM_INVALID_STA))
- 		return -1;
- 
+-	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
++	list_for_each_entry_rcu(sdata, &local->interfaces, list,
++				lockdep_is_held(&local->iflist_mtx) ||
++				lockdep_is_held(&local->hw.wiphy->mtx)) {
+ 		switch (sdata->vif.type) {
+ 		case NL80211_IFTYPE_MONITOR:
+ 			if (!(sdata->u.mntr.flags & MONITOR_FLAG_ACTIVE))
 -- 
 2.43.0
 
