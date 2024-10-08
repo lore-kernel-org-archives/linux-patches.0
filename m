@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB731DE890;
-	Tue,  8 Oct 2024 12:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDA64C97;
+	Tue,  8 Oct 2024 12:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390453; cv=none; b=DO9//n718l6rYSkb/K6gPIoM6C3XyYwf81yozG7rvrPjRTFXONu3U5FeKp0tLHeuVbbBbr4tfivgXwSNxBsayeO3C4LrrWlUEzQoqwB8es0nnLyQiJ8pLg7SkgbYd4oLduRrO7sLiQtZIZviLwCKmOB+QQqRX4T6LYaowEGUkcQ=
+	t=1728390456; cv=none; b=a4Vxnb6zJNAR9x+q1kgDQI0Y4vLRJyryfBRxPrpVcKgY/FpvGnmqhdiJSr3ZD/K8h5NFuqJO9dzRZpqHN93N4gjKzjy50noZf7Naq6wR4eBgF5nMTVa7pUUS54zwnVnnF3xkb/vGxfXZMGdfQtrFuK3Vvih8vrBGaEZJb+nRaz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390453; c=relaxed/simple;
-	bh=Zpo/wFVsDdDRRt2iNZbfxlBHi42bSvYqGPc7evHL25Y=;
+	s=arc-20240116; t=1728390456; c=relaxed/simple;
+	bh=IJfSVbSEmd5SXxZUmM3HizynEvzntg22tgUlMZ1ikxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/qEuXyTxtGe/P340kifHr0fB3VbMGNoLtrok2dP0ju2ZKXkN30ZAdOgKxs1RojoFzE8qB15HHYy6+9ShnIyPA7vB05ckC/4RyAg4cmfloqwqGRwZN7rbuNfld0TSdMrh9OJpfyx7xuKa/RyqSC3AOnnzUXAu9i8Terlvf1mHZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmGWOXZv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJoXvYoXr+J1i67PePalzRJCbgPjavuuQNWRVfEybpK7GafUjVrBZZrAxGKXre8fUhA2RhG+m8M3RN8WPxxCBC/3T0Kh3f1WIxM4qMmFLJxVg18IrWlzM0HzkTVoo8/m/yAbR83J7UqBPZOaSSJMw4fopdhRFmTOhPWQeRFiKs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ85EUa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmGWOXZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8714DC4CEC7;
-	Tue,  8 Oct 2024 12:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ85EUa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409A0C4CEC7;
+	Tue,  8 Oct 2024 12:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390453;
-	bh=Zpo/wFVsDdDRRt2iNZbfxlBHi42bSvYqGPc7evHL25Y=;
+	s=korg; t=1728390456;
+	bh=IJfSVbSEmd5SXxZUmM3HizynEvzntg22tgUlMZ1ikxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmGWOXZvaLthxsBJqngrPTlTjAUGyP/62zhzZcHOobl7W9xFsrPiC8K6dki9x3LyR
-	 Ec/HBvUowgNA7tOC1T4mAHY67d/BOOk9YczRInDDc3SJ2MEqWbd+NZzpDKzOdUCPjG
-	 zpg20A9t1ttH7IxqTtC/nNSL9i2sx3DrozMqzvao=
+	b=QJ85EUa1kooXopeuo/zGXJ8AVB7Xyxc3BMzGBPj4WDPr7piPXX1lCwfR3serxXEJ/
+	 Ofb9oDMGYZnu4FlESTJWQwx+7d12qtwSoOGXs77c0A1WK5/cVwWg/YqgqOKYumVxKV
+	 GPl60/fVzcCRNZnUbHpiBI3UzZ/u5E4HeuLzKgXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 262/482] selftest: hid: add missing run-hid-tools-tests.sh
-Date: Tue,  8 Oct 2024 14:05:25 +0200
-Message-ID: <20241008115658.594329875@linuxfoundation.org>
+Subject: [PATCH 6.10 263/482] spi: s3c64xx: fix timeout counters in flush_fifo
+Date: Tue,  8 Oct 2024 14:05:26 +0200
+Message-ID: <20241008115658.633556300@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,48 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 160c826b4dd0d570f0f51cf002cb49bda807e9f5 ]
+[ Upstream commit 68a16708d2503b6303d67abd43801e2ca40c208d ]
 
-HID test cases run tests using the run-hid-tools-tests.sh script.
-When installed with "make install", the run-hid-tools-tests.sh
-script will not be copied over, resulting in the following error message.
+In the s3c64xx_flush_fifo() code, the loops counter is post-decremented
+in the do { } while(test && loops--) condition. This means the loops is
+left at the unsigned equivalent of -1 if the loop times out. The test
+after will never pass as if tests for loops == 0.
 
-  make -C tools/testing/selftests/ TARGETS=hid install \
-  	  INSTALL_PATH=$KSFT_INSTALL_PATH
-
-  cd $KSFT_INSTALL_PATH
-  ./run_kselftest.sh -c hid
-
-selftests: hid: hid-core.sh
-bash: ./run-hid-tools-tests.sh: No such file or directory
-
-Add the run-hid-tools-tests.sh script to the TEST_FILES in the Makefile
-for it to be installed.
-
-Fixes: ffb85d5c9e80 ("selftests: hid: import hid-tools hid-core tests")
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Fixes: 230d42d422e7 ("spi: Add s3c64xx SPI Controller driver")
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20240924134009.116247-2-ben.dooks@codethink.co.uk
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/hid/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-s3c64xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
-index 2b5ea18bde38b..346328e2295c3 100644
---- a/tools/testing/selftests/hid/Makefile
-+++ b/tools/testing/selftests/hid/Makefile
-@@ -17,6 +17,8 @@ TEST_PROGS += hid-tablet.sh
- TEST_PROGS += hid-usb_crash.sh
- TEST_PROGS += hid-wacom.sh
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index 833c58c88e408..6ab416a339669 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -245,7 +245,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 	loops = msecs_to_loops(1);
+ 	do {
+ 		val = readl(regs + S3C64XX_SPI_STATUS);
+-	} while (TX_FIFO_LVL(val, sdd) && loops--);
++	} while (TX_FIFO_LVL(val, sdd) && --loops);
  
-+TEST_FILES := run-hid-tools-tests.sh
-+
- CXX ?= $(CROSS_COMPILE)g++
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing TX FIFO\n");
+@@ -258,7 +258,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 			readl(regs + S3C64XX_SPI_RX_DATA);
+ 		else
+ 			break;
+-	} while (loops--);
++	} while (--loops);
  
- HOSTPKG_CONFIG := pkg-config
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing RX FIFO\n");
 -- 
 2.43.0
 
