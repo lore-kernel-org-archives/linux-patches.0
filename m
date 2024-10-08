@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17030183CB8;
-	Tue,  8 Oct 2024 12:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BE21C2420;
+	Tue,  8 Oct 2024 12:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391564; cv=none; b=V95mXwdnWO5+P6TCvFP5FtTkIbrbQjm8Hl42e3wL/6R7K0K3vGD4EuZMxVPmvjBW5VKVP79wzPSlDc8vTtahtzPhhWPrdBbuhqLQfCRvveekiIvcyMaRNzQWjmRlk44xudaNFLi8YnU4dSSykTmiS+m8Y3HyL0lNfEmZtneff/4=
+	t=1728391567; cv=none; b=nhIJQfyCbyMjiPMApjCY6wz9rkeBkeQLb92FLMvCzaXKAxk6RjvBG7CNkeYOmKEnfqFcqI9JKDA939JI8k1dp2IVh/4iNk34vIvJkwCTaq/MzM4kksJwZ1TN2uEOMxnDkun5LdWS/I/z9Xrf5QfdGsEm87S193lJmHtIZUaJMfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391564; c=relaxed/simple;
-	bh=n+R/viSZ1rP1lBXXF28nTxftQEpDbp+FQ0Tv1vi1/Lg=;
+	s=arc-20240116; t=1728391567; c=relaxed/simple;
+	bh=7z9Q55X7XsuuPNBZX52kpzC5CjQ9phzrDIvBv8jngK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EijIMPpk9yb7UNQo6x6n7/NLJlZ0K9ZclZ2BTt1O2ZQlACdLDrk8eYQdCNgLFzrjbUdu7+lxOA+oijdMJ11lEafn8Td2PoW64MabEqdMZN7v3NvToiRaSkqBhAqetzh9J665lmPMZOy3ORDw8smSXVRw7uC+3SPBGQyO7XDICqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIaeICsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXq3K9pC5fp2GStvgBxNorgHJUod0q7/P2CBMPH6uJyOzQpWnKsZG5ZEM5CFGAaQJqGzQpHb+6jE8DIyyb/6O40RM1GDO3sw3T2/WeJXwosBvK7+H3HwbG1JVG4G3IS2qnp9eR+oVvw2TFb4QvNFaKDtDwATS1nvxwMuQEt2y9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZ9yxRlY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIaeICsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEADC4CEC7;
-	Tue,  8 Oct 2024 12:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZ9yxRlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B701C4CEC7;
+	Tue,  8 Oct 2024 12:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391563;
-	bh=n+R/viSZ1rP1lBXXF28nTxftQEpDbp+FQ0Tv1vi1/Lg=;
+	s=korg; t=1728391567;
+	bh=7z9Q55X7XsuuPNBZX52kpzC5CjQ9phzrDIvBv8jngK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIaeICsiO8alWWf1VoOiJKQWy+WSvVjDt8ArZMHTK9PjEck4A+WEZCeDtYugCUP3H
-	 DcoFTM1tsllrdD5SQisHgsaXZT+vBamW2gd5R7ZYrZuXtTnaCcswaewNUMHRH5PhPV
-	 hz+FSTQvD5jy/4o8XV/M6TBiA1zvpWBWS9MoY+Fo=
+	b=xZ9yxRlY0XRuV8rcEW37vRbz5NU+uPYiAkBgYZb1cxZaICnNcxvB6bjAx2OYigjjt
+	 jaiZyuJeenl5hfcGNqvMiG+kWhOPKe/UDakDzA7oA0v4wp81GrACsT7Ch5Y74AHhak
+	 RcJuFkD6mZyoHLXvEe12b7cSJoQp/jGanCanFeiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 154/558] net: phy: Check for read errors in SIOCGMIIREG
-Date: Tue,  8 Oct 2024 14:03:04 +0200
-Message-ID: <20241008115708.420803986@linuxfoundation.org>
+Subject: [PATCH 6.11 155/558] wifi: rtw89: avoid reading out of bounds when loading TX power FW elements
+Date: Tue,  8 Oct 2024 14:03:05 +0200
+Message-ID: <20241008115708.461711990@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -49,84 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 569bf6d481b0b823c3c9c3b8be77908fd7caf66b ]
+[ Upstream commit ed2e4bb17a4884cf29c3347353d8aabb7265b46c ]
 
-When reading registers from the PHY using the SIOCGMIIREG IOCTL any
-errors returned from either mdiobus_read() or mdiobus_c45_read() are
-ignored, and parts of the returned error is passed as the register value
-back to user-space.
+Because the loop-expression will do one more time before getting false from
+cond-expression, the original code copied one more entry size beyond valid
+region.
 
-For example, if mdiobus_c45_read() is used with a bus that do not
-implement the read_c45() callback -EOPNOTSUPP is returned. This is
-however directly stored in mii_data->val_out and returned as the
-registers content. As val_out is a u16 the error code is truncated and
-returned as a plausible register value.
+Fix it by moving the entry copy to loop-body.
 
-Fix this by first checking the return value for errors before returning
-it as the register content.
-
-Before this patch,
-
-    # phytool read eth0/0:1/0
-    0xffa1
-
-After this change,
-
-    $ phytool read eth0/0:1/0
-    error: phy_read (-95)
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20240903171536.628930-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240902015803.20420-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.h | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index 785182fa5fe01..b88d857ea23b8 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -342,14 +342,19 @@ int phy_mii_ioctl(struct phy_device *phydev, struct ifreq *ifr, int cmd)
- 		if (mdio_phy_id_is_c45(mii_data->phy_id)) {
- 			prtad = mdio_phy_id_prtad(mii_data->phy_id);
- 			devad = mdio_phy_id_devad(mii_data->phy_id);
--			mii_data->val_out = mdiobus_c45_read(
--				phydev->mdio.bus, prtad, devad,
--				mii_data->reg_num);
-+			ret = mdiobus_c45_read(phydev->mdio.bus, prtad, devad,
-+					       mii_data->reg_num);
-+
- 		} else {
--			mii_data->val_out = mdiobus_read(
--				phydev->mdio.bus, mii_data->phy_id,
--				mii_data->reg_num);
-+			ret = mdiobus_read(phydev->mdio.bus, mii_data->phy_id,
-+					   mii_data->reg_num);
- 		}
-+
-+		if (ret < 0)
-+			return ret;
-+
-+		mii_data->val_out = ret;
-+
- 		return 0;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index 9c282d84743b9..46dfb0b294db9 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -3909,16 +3909,22 @@ struct rtw89_txpwr_conf {
+ 	const void *data;
+ };
  
- 	case SIOCSMIIREG:
++static inline bool rtw89_txpwr_entcpy(void *entry, const void *cursor, u8 size,
++				      const struct rtw89_txpwr_conf *conf)
++{
++	u8 valid_size = min(size, conf->ent_sz);
++
++	memcpy(entry, cursor, valid_size);
++	return true;
++}
++
+ #define rtw89_txpwr_conf_valid(conf) (!!(conf)->data)
+ 
+ #define rtw89_for_each_in_txpwr_conf(entry, cursor, conf) \
+-	for (typecheck(const void *, cursor), (cursor) = (conf)->data, \
+-	     memcpy(&(entry), cursor, \
+-		    min_t(u8, sizeof(entry), (conf)->ent_sz)); \
++	for (typecheck(const void *, cursor), (cursor) = (conf)->data; \
+ 	     (cursor) < (conf)->data + (conf)->num_ents * (conf)->ent_sz; \
+-	     (cursor) += (conf)->ent_sz, \
+-	     memcpy(&(entry), cursor, \
+-		    min_t(u8, sizeof(entry), (conf)->ent_sz)))
++	     (cursor) += (conf)->ent_sz) \
++		if (rtw89_txpwr_entcpy(&(entry), cursor, sizeof(entry), conf))
+ 
+ struct rtw89_txpwr_byrate_data {
+ 	struct rtw89_txpwr_conf conf;
 -- 
 2.43.0
 
