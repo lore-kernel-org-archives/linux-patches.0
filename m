@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4B6EEC8;
-	Tue,  8 Oct 2024 12:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29DEEEC8;
+	Tue,  8 Oct 2024 12:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390536; cv=none; b=jZ9eNpAu1hEstmfoF1QS9otBKox9mMxu++E56y8T/kt5HZg3q3Qi+cJZ70SjIMin923i9lP/lGMJiltRyoZTYtMMXwe+K/J/yJ6xkWi1bzAdvwHWAo3QszJtlR1srEFll+Oy1MPHSAcJ00qcJjtVpUwGDHRgFuWyDGecl0kKMxM=
+	t=1728390539; cv=none; b=IYu/hy1Mq5wdujRuOJz7vEzZYyyUGwahpDK+hV2EAWJeFwuDntF/KJCcqcRlg7GoVK9rfrEQWWuyHbXno68ICNIvZsxudlVCT7nSO2kylbMUUUR2RdHS7/O2wWpO1GCF4sXJ9jSd5GYEz26ECJ2L3/XPXkHZLf1JAG3aM46z4Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390536; c=relaxed/simple;
-	bh=YbpIGsGblL6+nKZkODa70iJNVwCyKKI1bOMkEWgouYM=;
+	s=arc-20240116; t=1728390539; c=relaxed/simple;
+	bh=vXH9GDz6+kZo62ig/I7nLYXWrYdzkAWzbwAJOO1paQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKeHxIIHlhthR/lCoI0uiPMHQA+xIQdr9W0MIr4PnHqAYuhvKlfO1B95B8/BWLwPD0TpfI01ZMe2tdZYqc7EGr6BpQDZRXSQEtqbp0Yph69r6FuZVCnVOfCaaEKzLmhAD+rn0M8fS3WPO75OmQhegkHdQDveVJnf8dDSbwZ83Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUE100TU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lel22hGvCvEZkZzqhPFniojecnb7tBk9hvbp76ZpcY91HTeRtOutIWyZt15TfwEnhpsnN2XfOiISK9yfv+CyTn9jLWjjcC5IoIq60AqyIz52EZEvOK+jiyYLUJ26Wt1LlYfUYaD5ReXkB18fFR8AcMJqLyTGsO6RCiMZF6Jn8cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IE3bwGzp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUE100TU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A39C4CEC7;
-	Tue,  8 Oct 2024 12:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IE3bwGzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1E8C4CECC;
+	Tue,  8 Oct 2024 12:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390536;
-	bh=YbpIGsGblL6+nKZkODa70iJNVwCyKKI1bOMkEWgouYM=;
+	s=korg; t=1728390539;
+	bh=vXH9GDz6+kZo62ig/I7nLYXWrYdzkAWzbwAJOO1paQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUE100TU3xBtbMQuVrnqN0wPVWv3FKiK0h+UQBi0eeNQF8cNJVTNvreUf1kQLGzdH
-	 iLOf9dcICit7C5fhvCWZj0fcB9vkGaBh/OSdBZck2MKoZbqLeM3x3NWrI7IzPgUJHi
-	 POwobMfVCRliKtKV5AE86oRiZ54So139Ga0t725o=
+	b=IE3bwGzpO54kizZPp5jLUPFluPegvl9VBQRJrhNTJgnYa+xx27h40N2cuWfACGu4K
+	 7J6lcUeC9yYgX7w0Z1ioDITqEu30Rl1XmM/e8axfeCpS4n6dgPk1YgXWhNn/B2G5/H
+	 xJxDQhcdMKZ8OQZfH3ehuTRgX38l1AbePxUTwW7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Hans P. Moller" <hmoller@uc.cl>,
+	Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 318/482] ALSA: line6: add hw monitor volume control to POD HD500X
-Date: Tue,  8 Oct 2024 14:06:21 +0200
-Message-ID: <20241008115700.946316542@linuxfoundation.org>
+Subject: [PATCH 6.10 319/482] ALSA: hda/realtek: fix mute/micmute LED for HP mt645 G8
+Date: Tue,  8 Oct 2024 14:06:22 +0200
+Message-ID: <20241008115700.984343916@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,32 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans P. Moller <hmoller@uc.cl>
+From: Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>
 
-commit 703235a244e533652346844cfa42623afb36eed1 upstream.
+commit cb2deca056d579fe008c8d0a4ceb04d2b368fe42 upstream.
 
-Add hw monitor volume control for POD HD500X. This is done adding
-LINE6_CAP_HWMON_CTL to the capabilities
+The HP Elite mt645 G8 Mobile Thin Client uses an ALC236 codec
+and needs the ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk
+to enable the mute and micmute LED functionality.
 
-Signed-off-by: Hans P. Moller <hmoller@uc.cl>
-Cc: <stable@vger.kernel.org>
+This patch adds the system ID of the HP Elite mt645 G8
+to the `alc269_fixup_tbl` in `patch_realtek.c`
+to enable the required quirk.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikolai Afanasenkov <nikolai.afanasenkov@hp.com>
+Link: https://patch.msgid.link/20240916195042.4050-1-nikolai.afanasenkov@hp.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241003232828.5819-1-hmoller@uc.cl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/line6/podhd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/line6/podhd.c
-+++ b/sound/usb/line6/podhd.c
-@@ -507,7 +507,7 @@ static const struct line6_properties pod
- 	[LINE6_PODHD500X] = {
- 		.id = "PODHD500X",
- 		.name = "POD HD500X",
--		.capabilities	= LINE6_CAP_CONTROL
-+		.capabilities	= LINE6_CAP_CONTROL | LINE6_CAP_HWMON_CTL
- 				| LINE6_CAP_PCM | LINE6_CAP_HWMON,
- 		.altsetting = 1,
- 		.ep_ctrl_r = 0x81,
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10303,6 +10303,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8ca2, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8caf, "HP Elite mt645 G8 Mobile Thin Client", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8cbd, "HP Pavilion Aero Laptop 13-bg0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8cdd, "HP Spectre", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8cde, "HP Spectre", ALC287_FIXUP_CS35L41_I2C_2),
 
 
