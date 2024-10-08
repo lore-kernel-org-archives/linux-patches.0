@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548251DED48;
-	Tue,  8 Oct 2024 12:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1C91D12EA;
+	Tue,  8 Oct 2024 12:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390001; cv=none; b=n2uvZN5zKoywwA4YcoPGFI+LHsLMZor52uqgLUjIhlcx4UPnKPWhkTovbU8b2ri/sh/LCwjbcBeLviUum+RINapaGdxmxKc9DSrrpvbW6pIyhGt8+0NzRCjTf/fFBxFf3cFVpHH14sTJSt2VPVcihc7LhQvaKcZ6uqgNs81/9KE=
+	t=1728390004; cv=none; b=OhVBmShJ9tPO63Awqh6CHQ/YaxtCxjdw5Waf+GLb8K0rADd1EuGYSWckJ/D1y4D6AZbGWAKv4QsBS6fZJVF/C1vzdwjIOqqu/2NDHYYrqxxNGevYyPCJ0W8mLuNetZBv7niQqBa0Q1STh+c+1Qc4epw0mwJywEiLH8PGW/ZE+fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390001; c=relaxed/simple;
-	bh=xV5qLbihn0Rhhsa+AbXH36Sd+NVZz2JzvHYAmq2UwWA=;
+	s=arc-20240116; t=1728390004; c=relaxed/simple;
+	bh=M7J3qIkgPL4C2a+C2gOGzE6hNkzHKxf3v7bHPm55cMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePJliCBNZahC4bhEush7QjGkS/YDV4Voh/wjZAtTnJQU/xs2DSrKQYyYZWMIcBuXHdFUK6HOq4pDkWy/Q3zcFKxXdZIxe50+ltjb2jjDO9Q91mWg3Ckp/p1GiGRzsdPV99KY3R1Mggi59s+YjUoe3w5WjL3F8AQMz5Ug9xRt1Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9Tlql9F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r9oR4Qn3xmjJ3QQmsJzzHZHbM2w5lpUSRsuVK9Rb8EOkUjIN96U2UyOrTRdYX/sQDb31lTbgcso3R7PlVTamL2EZlKfIJzphBF4YFSejxPyW1G1OfYnloxQYsQrZnT/JqOWv3Zv6tKkreaEoRriSRTN/musxISU43T5D4ngNFic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbU2Ywuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9Tlql9F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D64C4CECC;
-	Tue,  8 Oct 2024 12:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbU2Ywuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4737C4CECD;
+	Tue,  8 Oct 2024 12:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390001;
-	bh=xV5qLbihn0Rhhsa+AbXH36Sd+NVZz2JzvHYAmq2UwWA=;
+	s=korg; t=1728390004;
+	bh=M7J3qIkgPL4C2a+C2gOGzE6hNkzHKxf3v7bHPm55cMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9Tlql9FL0GPv8Fxx8qExM5cMmsAoIPUW3GKL/+zZZjIhvswvOG6R0bE7l8tqO0tp
-	 py02GsbuhcAbzFJXBlAoHq+CKKckmeEHyFq1aFOdKgDjHlEBK1W0Z9VgzwNAHFGpTi
-	 RFrHeHNbNhkXFS+UMRQm0xVqIvM6HJGwxpM1tsjQ=
+	b=TbU2YwuolfFHHtZhiXVImqYQnjEyzXHD0RLx3pQqhFsmZaKdLByx8RNm9IAF+vZrQ
+	 7eX7AjTZ0vu6esiNgO/Ih//i26qc0+SZpbk0VwYv+F5aOrk/anlsIKdEhInTq6mohs
+	 ZP9NWjvB+yx/S3jiAOiL/T5EXffcd3DBMJWrPe4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Shanavas.K.S" <shanavasks@gmail.com>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 129/482] x86/bugs: Add missing NO_SSB flag
-Date: Tue,  8 Oct 2024 14:03:12 +0200
-Message-ID: <20241008115653.381359295@linuxfoundation.org>
+Subject: [PATCH 6.10 120/482] ACPICA: iasl: handle empty connection_node
+Date: Tue,  8 Oct 2024 14:03:03 +0200
+Message-ID: <20241008115653.029246643@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,44 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-[ Upstream commit 23e12b54acf621f4f03381dca91cc5f1334f21fd ]
+[ Upstream commit a0a2459b79414584af6c46dd8c6f866d8f1aa421 ]
 
-The Moorefield and Lightning Mountain Atom processors are
-missing the NO_SSB flag in the vulnerabilities whitelist.
-This will cause unaffected parts to incorrectly be reported
-as vulnerable. Add the missing flag.
+ACPICA commit 6c551e2c9487067d4b085333e7fe97e965a11625
 
-These parts are currently out of service and were verified
-internally with archived documentation that they need the
-NO_SSB flag.
-
-Closes: https://lore.kernel.org/lkml/CAEJ9NQdhh+4GxrtG1DuYgqYhvc0hi-sKZh-2niukJ-MyFLntAA@mail.gmail.com/
-Reported-by: Shanavas.K.S <shanavasks@gmail.com>
-Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240829192437.4074196-1-daniel.sneddon@linux.intel.com
+Link: https://github.com/acpica/acpica/commit/6c551e2c
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/exprep.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index d4e539d4e158c..be307c9ef263d 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1165,8 +1165,8 @@ static const __initconst struct x86_cpu_id cpu_vuln_whitelist[] = {
+diff --git a/drivers/acpi/acpica/exprep.c b/drivers/acpi/acpica/exprep.c
+index 08196fa17080e..82b1fa2d201fe 100644
+--- a/drivers/acpi/acpica/exprep.c
++++ b/drivers/acpi/acpica/exprep.c
+@@ -437,6 +437,9 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
  
- 	VULNWL_INTEL(INTEL_CORE_YONAH,		NO_SSB),
- 
--	VULNWL_INTEL(INTEL_ATOM_AIRMONT_MID,	NO_L1TF | MSBDS_ONLY | NO_SWAPGS | NO_ITLB_MULTIHIT),
--	VULNWL_INTEL(INTEL_ATOM_AIRMONT_NP,	NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT),
-+	VULNWL_INTEL(INTEL_ATOM_AIRMONT_MID,	NO_SSB | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | MSBDS_ONLY),
-+	VULNWL_INTEL(INTEL_ATOM_AIRMONT_NP,	NO_SSB | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT),
- 
- 	VULNWL_INTEL(INTEL_ATOM_GOLDMONT,	NO_MDS | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | NO_MMIO),
- 	VULNWL_INTEL(INTEL_ATOM_GOLDMONT_D,	NO_MDS | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | NO_MMIO),
+ 		if (info->connection_node) {
+ 			second_desc = info->connection_node->object;
++			if (second_desc == NULL) {
++				break;
++			}
+ 			if (!(second_desc->common.flags & AOPOBJ_DATA_VALID)) {
+ 				status =
+ 				    acpi_ds_get_buffer_arguments(second_desc);
 -- 
 2.43.0
 
