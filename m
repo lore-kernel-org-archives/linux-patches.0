@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B398E192594;
-	Tue,  8 Oct 2024 12:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A034D192594;
+	Tue,  8 Oct 2024 12:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390983; cv=none; b=HFt5XugQEy61g1/sK/Kjo8KeEPuzZ+KicJt5fLxuAE4xmDga3TFdrX6b1EY3/m616ourVmwyQZkFBL4eeG3jGzTLiEpp+h8HK1vHinibXopm4nrcEXOsHOgD/S5IfZIWF6TPTJCOjBQwASBIAVnFOOnGA8TqObWtqrg0YxoOZ0o=
+	t=1728390986; cv=none; b=ViWcMRGmkA9/AbC/2w1Ixu+AFoTnU6IjQmrYQDs2R0oAFynWCBk0nX1WFqIlZJb0rwJox7p26j459aAPmgAV7/BZ11s9/w2vfcPDGuVXs/M3NdHl6PMUoRk8uQjUJ37XkwKKB3mM1uAEVC0JS/nEnugvJPfMuEXkHQFzDhY9DRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390983; c=relaxed/simple;
-	bh=gs8Sir5QUcQWuvebKhX1KTiOOuqYjwc3/B6I0ELQ7GU=;
+	s=arc-20240116; t=1728390986; c=relaxed/simple;
+	bh=erH7kyPwNHgU/WWsCQ69ox0lD3MMhH4/wXG1gBJrxHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0AScCzbe9WcHJL4lejygYT0nSv7ny3cd5qjdbLUzLZajMBxppctDOWmWaoZq0weeTIOi1IwUMEACJ/42upONAL4b4ISe2giHUYcuWU1SBNzLLR9kC61xKO3/6eGmt5TeosISQGfGcsxrgxVUCsagbjopyYQ6AHiSO10pdNQi2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7NpPsBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DA7xOzokRsGyIJ+L0c6OCdRNxHFqc0LRBF82wa9FI3M2yqUXB5wuJpdTLQkU5EHxOiwF2JBofJyXVpKIu9ySGS6Y/t52VRuRuXJMZ/nJKM+NTmW1V+LOghmfgt82MZ7MD5tnXs/nVBVsHUXyLLJ+yOccv3Cdsh/mCOWGfRVLoqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCE2DlKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7NpPsBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326C3C4CECC;
-	Tue,  8 Oct 2024 12:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCE2DlKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25582C4CEC7;
+	Tue,  8 Oct 2024 12:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390983;
-	bh=gs8Sir5QUcQWuvebKhX1KTiOOuqYjwc3/B6I0ELQ7GU=;
+	s=korg; t=1728390986;
+	bh=erH7kyPwNHgU/WWsCQ69ox0lD3MMhH4/wXG1gBJrxHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7NpPsBWv5HF/1zAqdW4D0jBzsZpUAj5elmwyvULAnVvBQ/dFbHQMxzdWhHUm+fiR
-	 eU17KV6uUV0+W7AX9YPdVwmcTQTNJBxHN5taMNHtHIivPnmayH+0Rnqh/BX7VbAGJn
-	 m+R5zFfv+fab+3kiS55yDY2W69V5usyKMcWdu6ls=
+	b=oCE2DlKysB/sNjQ+ktLAUgdPHSBXLL+GiuKqo4HCGsadrKgUQglMzJ8YXOIetC7wb
+	 vJW5tAoNv5XvdDemOtEQdZEpD+3JK06UmxaORYrRRQFnjImEohmjtlyy0ZAIrifE22
+	 9L7mujYtkICSY8WwfYYIULhOAGPAzzSPALW3TQZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 454/482] lib/buildid: harden build ID parsing logic
-Date: Tue,  8 Oct 2024 14:08:37 +0200
-Message-ID: <20241008115706.383769793@linuxfoundation.org>
+Subject: [PATCH 6.10 455/482] drm/xe: Delete unused GuC submission_state.suspend
+Date: Tue,  8 Oct 2024 14:08:38 +0200
+Message-ID: <20241008115706.422643522@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -54,175 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 905415ff3ffb1d7e5afa62bacabd79776bd24606 ]
+[ Upstream commit 3f371a98deada9aee53d908c9aa53f6cdcb1300b ]
 
-Harden build ID parsing logic, adding explicit READ_ONCE() where it's
-important to have a consistent value read and validated just once.
+GuC submission_state.suspend is unused, delete it.
 
-Also, as pointed out by Andi Kleen, we need to make sure that entire ELF
-note is within a page bounds, so move the overflow check up and add an
-extra note_size boundaries validation.
-
-Fixes tag below points to the code that moved this code into
-lib/buildid.c, and then subsequently was used in perf subsystem, making
-this code exposed to perf_event_open() users in v5.12+.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Suggested-by: Andi Kleen <ak@linux.intel.com>
-Fixes: bd7525dacd7e ("bpf: Move stack_map_get_build_id into lib")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240829174232.3133883-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425054747.1918811-1-matthew.brost@intel.com
+Stable-dep-of: 2d2be279f1ca ("drm/xe: fix UAF around queue destruction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/buildid.c | 76 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_submit.c | 4 ----
+ drivers/gpu/drm/xe/xe_guc_types.h  | 9 ---------
+ 2 files changed, 13 deletions(-)
 
-diff --git a/lib/buildid.c b/lib/buildid.c
-index e02b5507418b4..26007cc99a38f 100644
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -18,31 +18,37 @@ static int parse_build_id_buf(unsigned char *build_id,
- 			      const void *note_start,
- 			      Elf32_Word note_size)
- {
--	Elf32_Word note_offs = 0, new_offs;
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index 958dde8422d7e..a40287a7c3de8 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -251,7 +251,6 @@ static void primelockdep(struct xe_guc *guc)
+ 	fs_reclaim_acquire(GFP_KERNEL);
+ 
+ 	mutex_lock(&guc->submission_state.lock);
+-	might_lock(&guc->submission_state.suspend.lock);
+ 	mutex_unlock(&guc->submission_state.lock);
+ 
+ 	fs_reclaim_release(GFP_KERNEL);
+@@ -279,9 +278,6 @@ int xe_guc_submit_init(struct xe_guc *guc)
+ 
+ 	xa_init(&guc->submission_state.exec_queue_lookup);
+ 
+-	spin_lock_init(&guc->submission_state.suspend.lock);
+-	guc->submission_state.suspend.context = dma_fence_context_alloc(1);
 -
--	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
--		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
-+	const char note_name[] = "GNU";
-+	const size_t note_name_sz = sizeof(note_name);
-+	u64 note_off = 0, new_off, name_sz, desc_sz;
-+	const char *data;
-+
-+	while (note_off + sizeof(Elf32_Nhdr) < note_size &&
-+	       note_off + sizeof(Elf32_Nhdr) > note_off /* overflow */) {
-+		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_off);
-+
-+		name_sz = READ_ONCE(nhdr->n_namesz);
-+		desc_sz = READ_ONCE(nhdr->n_descsz);
-+
-+		new_off = note_off + sizeof(Elf32_Nhdr);
-+		if (check_add_overflow(new_off, ALIGN(name_sz, 4), &new_off) ||
-+		    check_add_overflow(new_off, ALIGN(desc_sz, 4), &new_off) ||
-+		    new_off > note_size)
-+			break;
+ 	primelockdep(guc);
  
- 		if (nhdr->n_type == BUILD_ID &&
--		    nhdr->n_namesz == sizeof("GNU") &&
--		    !strcmp((char *)(nhdr + 1), "GNU") &&
--		    nhdr->n_descsz > 0 &&
--		    nhdr->n_descsz <= BUILD_ID_SIZE_MAX) {
--			memcpy(build_id,
--			       note_start + note_offs +
--			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr),
--			       nhdr->n_descsz);
--			memset(build_id + nhdr->n_descsz, 0,
--			       BUILD_ID_SIZE_MAX - nhdr->n_descsz);
-+		    name_sz == note_name_sz &&
-+		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
-+		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
-+			data = note_start + note_off + ALIGN(note_name_sz, 4);
-+			memcpy(build_id, data, desc_sz);
-+			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
- 			if (size)
--				*size = nhdr->n_descsz;
-+				*size = desc_sz;
- 			return 0;
- 		}
--		new_offs = note_offs + sizeof(Elf32_Nhdr) +
--			ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
--		if (new_offs <= note_offs)  /* overflow */
--			break;
--		note_offs = new_offs;
-+
-+		note_off = new_off;
- 	}
- 
- 	return -EINVAL;
-@@ -71,7 +77,7 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- {
- 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)page_addr;
- 	Elf32_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -80,18 +86,19 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf32_Phdr *)(page_addr + sizeof(Elf32_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -103,7 +110,7 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- {
- 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *)page_addr;
- 	Elf64_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -112,18 +119,19 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf64_Phdr *)(page_addr + sizeof(Elf64_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -152,6 +160,10 @@ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
-+	if (!PageUptodate(page)) {
-+		put_page(page);
-+		return -EFAULT;
-+	}
- 
- 	ret = -EINVAL;
- 	page_addr = kmap_local_page(page);
+ 	return drmm_add_action_or_reset(&xe->drm, guc_submit_fini, guc);
+diff --git a/drivers/gpu/drm/xe/xe_guc_types.h b/drivers/gpu/drm/xe/xe_guc_types.h
+index 82bd93f7867d1..546ac6350a31f 100644
+--- a/drivers/gpu/drm/xe/xe_guc_types.h
++++ b/drivers/gpu/drm/xe/xe_guc_types.h
+@@ -72,15 +72,6 @@ struct xe_guc {
+ 		atomic_t stopped;
+ 		/** @submission_state.lock: protects submission state */
+ 		struct mutex lock;
+-		/** @submission_state.suspend: suspend fence state */
+-		struct {
+-			/** @submission_state.suspend.lock: suspend fences lock */
+-			spinlock_t lock;
+-			/** @submission_state.suspend.context: suspend fences context */
+-			u64 context;
+-			/** @submission_state.suspend.seqno: suspend fences seqno */
+-			u32 seqno;
+-		} suspend;
+ #ifdef CONFIG_PROVE_LOCKING
+ #define NUM_SUBMIT_WQ	256
+ 		/** @submission_state.submit_wq_pool: submission ordered workqueues pool */
 -- 
 2.43.0
 
