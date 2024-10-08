@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8A717DFF7;
-	Tue,  8 Oct 2024 12:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F191E493;
+	Tue,  8 Oct 2024 12:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390747; cv=none; b=gcX2RF3p9A/mVsVgKgSRMVDPUvlzrzM7cz94OgAsIViRIVxE+cIk/2MvTelKf/ihbydxB7uJQkqUqIPyg+tk89EGNMqdvt1nczCoRWzwfrZXESOwpsOSNDB4p156lEUsolT1swcRHi6zhbMqOwffufGfKiYdRKHikJqRiHfhNEw=
+	t=1728390750; cv=none; b=GwKFJqt7qTjv4MCoajxU3snnyJO0/6pUzzG4icl9+YiFOIvZezWjodUIATNi+96B1KIYl44oqERBrrPLmc1wvwQRAlgJpX6iSiPli5r6bfxbn2pBFbawoLAnEpWjUZ09DrQul2UEjaZo8Hx6AxZ1wgk9Rr4aKIaRcOxY++HWgps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390747; c=relaxed/simple;
-	bh=PaxanUK4eX3EIl4P8asE7/zQ9uo80iraqPd5fBRRqME=;
+	s=arc-20240116; t=1728390750; c=relaxed/simple;
+	bh=y/M5zohoH+qAdRwUmDYpmPggG9va5P5OYzzlw5X8m84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGfT2HCrEWjTCiJGZ9XAjz1D9ZwmhSYxZuKAQOUjlnjArmNUDc4l2ggpYn1xLibsdNbOb+dt/orvd10eTJqUuRDC8O4H5xOwtnXs8Zj+i2dAljADxgYLLvsueDqUKDfPyuWH5tXzX6Y7tx5JertWHj1z9UDClHdJNe0QEky1BO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ijly4KJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hhtxd0r7SN7wBRyc7tm7UKE+Bs78d0gw3rWq3+BARRHHa696BNOr3XyKQNDm2IwsIolbA0flN7yIjUSXun51BCuFAnS9A/WbthaEkJCrxy5nfZ4LdVeTfqXtVM895P3/ep/IAOh9I21VpyTKQl2x3LpaeRpf/fIA06cTC4E7EiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nw4Pm5Hu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ijly4KJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B19EC4CEC7;
-	Tue,  8 Oct 2024 12:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nw4Pm5Hu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963E4C4CEC7;
+	Tue,  8 Oct 2024 12:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390746;
-	bh=PaxanUK4eX3EIl4P8asE7/zQ9uo80iraqPd5fBRRqME=;
+	s=korg; t=1728390750;
+	bh=y/M5zohoH+qAdRwUmDYpmPggG9va5P5OYzzlw5X8m84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ijly4KJRO7oFYLWgxctgLVZ+OCeBSloRVGA/3v6JrHrq1pmZGhtD7iJ2Emj4fsRdL
-	 jPH8HYCpuZQm0vWOdkFofZXaXFaaL74gaVxS7irJd36yd7pQm7j331Xd5ziZx31TKt
-	 PQu1jClLNQ6prILDDBEpNkDjMO99LinKt/6UN4s0=
+	b=nw4Pm5HuExoO90x4wZQspurjczFJWpzNdf25wDRTaH2YIrWAH9s3tttj7VzF/nvrU
+	 lavZwif+TCaf5i4BVBGEeGffcqtEok82ebtX7b4ObbPJhhg+g94Qu4xk2NsSvmcmaD
+	 j1a82iM55yFwZLMnAf5EaAeWEjxvySLnpp+KfgAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Umang Jain <umang.jain@ideasonboard.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 380/482] media: imx335: Fix reset-gpio handling
-Date: Tue,  8 Oct 2024 14:07:23 +0200
-Message-ID: <20241008115703.371735186@linuxfoundation.org>
+Subject: [PATCH 6.10 381/482] media: ov5675: Fix power on/off delay timings
+Date: Tue,  8 Oct 2024 14:07:24 +0200
+Message-ID: <20241008115703.410188727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,74 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Jain <umang.jain@ideasonboard.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 99d30e2fdea4086be4e66e2deb10de854b547ab8 upstream.
+commit 719ec29fceda2f19c833d2784b1574638320400f upstream.
 
-Rectify the logical value of reset-gpio so that it is set to
-0 (disabled) during power-on and to 1 (enabled) during power-off.
+The ov5675 specification says that the gap between XSHUTDN deassert and the
+first I2C transaction should be a minimum of 8192 XVCLK cycles.
 
-Set the reset-gpio to GPIO_OUT_HIGH at initialization time to make
-sure it starts off in reset. Also drop the "Set XCLR" comment which
-is not-so-informative.
+Right now we use a usleep_rage() that gives a sleep time of between about
+430 and 860 microseconds.
 
-The existing usage of imx335 had reset-gpios polarity inverted
-(GPIO_ACTIVE_HIGH) in their device-tree sources. With this patch
-included, those DTS will not be able to stream imx335 anymore. The
-reset-gpio polarity will need to be rectified in the device-tree
-sources as shown in [1] example, in order to get imx335 functional
-again (as it remains in reset prior to this fix).
+On the Lenovo X13s we have observed that in about 1/20 cases the current
+timing is too tight and we start transacting before the ov5675's reset
+cycle completes, leading to I2C bus transaction failures.
 
+The reset racing is sometimes triggered at initial chip probe but, more
+usually on a subsequent power-off/power-on cycle e.g.
+
+[   71.451662] ov5675 24-0010: failed to write reg 0x0103. error = -5
+[   71.451686] ov5675 24-0010: failed to set plls
+
+The current quiescence period we have is too tight. Instead of expressing
+the post reset delay in terms of the current XVCLK this patch converts the
+power-on and power-off delays to the maximum theoretical delay @ 6 MHz with
+an additional buffer.
+
+1.365 milliseconds on the power-on path is 1.5 milliseconds with grace.
+85.3 microseconds on the power-off path is 90 microseconds with grace.
+
+Fixes: 49d9ad719e89 ("media: ov5675: add device-tree support and support runtime PM")
 Cc: stable@vger.kernel.org
-Fixes: 45d19b5fb9ae ("media: i2c: Add imx335 camera sensor driver")
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/linux-media/20240729110437.199428-1-umang.jain@ideasonboard.com/
-Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # RK3399 Puma with
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx335.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/media/i2c/ov5675.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/media/i2c/imx335.c
-+++ b/drivers/media/i2c/imx335.c
-@@ -997,7 +997,7 @@ static int imx335_parse_hw_config(struct
+--- a/drivers/media/i2c/ov5675.c
++++ b/drivers/media/i2c/ov5675.c
+@@ -972,12 +972,10 @@ static int ov5675_set_stream(struct v4l2
  
- 	/* Request optional reset pin */
- 	imx335->reset_gpio = devm_gpiod_get_optional(imx335->dev, "reset",
--						     GPIOD_OUT_LOW);
-+						     GPIOD_OUT_HIGH);
- 	if (IS_ERR(imx335->reset_gpio)) {
- 		dev_err(imx335->dev, "failed to get reset gpio %ld\n",
- 			PTR_ERR(imx335->reset_gpio));
-@@ -1110,8 +1110,7 @@ static int imx335_power_on(struct device
- 
- 	usleep_range(500, 550); /* Tlow */
- 
--	/* Set XCLR */
--	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
- 
- 	ret = clk_prepare_enable(imx335->inclk);
- 	if (ret) {
-@@ -1124,7 +1123,7 @@ static int imx335_power_on(struct device
- 	return 0;
- 
- error_reset:
--	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
- 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
- 
- 	return ret;
-@@ -1141,7 +1140,7 @@ static int imx335_power_off(struct devic
+ static int ov5675_power_off(struct device *dev)
+ {
+-	/* 512 xvclk cycles after the last SCCB transation or MIPI frame end */
+-	u32 delay_us = DIV_ROUND_UP(512, OV5675_XVCLK_19_2 / 1000 / 1000);
  	struct v4l2_subdev *sd = dev_get_drvdata(dev);
- 	struct imx335 *imx335 = to_imx335(sd);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
  
--	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
-+	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
- 	clk_disable_unprepare(imx335->inclk);
- 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
+-	usleep_range(delay_us, delay_us * 2);
++	usleep_range(90, 100);
  
+ 	clk_disable_unprepare(ov5675->xvclk);
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 1);
+@@ -988,7 +986,6 @@ static int ov5675_power_off(struct devic
+ 
+ static int ov5675_power_on(struct device *dev)
+ {
+-	u32 delay_us = DIV_ROUND_UP(8192, OV5675_XVCLK_19_2 / 1000 / 1000);
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
+ 	int ret;
+@@ -1014,8 +1011,11 @@ static int ov5675_power_on(struct device
+ 
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 0);
+ 
+-	/* 8192 xvclk cycles prior to the first SCCB transation */
+-	usleep_range(delay_us, delay_us * 2);
++	/* Worst case quiesence gap is 1.365 milliseconds @ 6MHz XVCLK
++	 * Add an additional threshold grace period to ensure reset
++	 * completion before initiating our first I2C transaction.
++	 */
++	usleep_range(1500, 1600);
+ 
+ 	return 0;
+ }
 
 
