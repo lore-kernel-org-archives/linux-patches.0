@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31B31E493;
-	Tue,  8 Oct 2024 12:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABA04C97;
+	Tue,  8 Oct 2024 12:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390466; cv=none; b=Vkwq/3kpb1EBcLDr9AIQtA1+ScYlPCMU8sU0mrr/pZL3N0UP9ckjwaUUiaFIv+FxIZpZY12ZjduK3eeFTe5GOL39Zklilp62rksUgOlD2zi+CX8Cq7F5TDGWWpVTkePKV9J8juSYTkgkxT0VtB9n+mbzyZQIyFzcPsjlee0aMOo=
+	t=1728390469; cv=none; b=nWVheI1NJL4LuMtKyVt6+fDEYnzxnlUkmb7Q2DrjljTgCjWwPgo+9PPlkgoP2E1pATKwHVy0YKF92HzZ+aNNwqKVbDTdVEpqSK9vSCI6yLZ6o7dFGcIMnqEpnxf4nP+2BpKSSYRIGiUUgFY/KfhkAkxcvoHPYiaC9mSLPhyj6jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390466; c=relaxed/simple;
-	bh=YwAZwsUM/rZUsS9zJl2LC1nUqiEJzEkqVlutL1xuVh0=;
+	s=arc-20240116; t=1728390469; c=relaxed/simple;
+	bh=JQn1uLVUx1DCqU83cNlp37FW/YaoEzRpcdtCa8YYhnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFt6wY7UB9pkLgA5VU7x4IlDfArp2I111FVCKgKLoWYjGzzv3Hi9sfkgWOaF2ks5tOHy9v5CfhqQsJ/qXBKXsqQmtueTP7oeiOaBCtQEs1wXxGILsKGhy9m3DWc38F0cCeyzIOgJ7YjkgmQ9uTIwOmD7/gBKLbdbHLeVC5BDc3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTi2CAY8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n05iP28R+lDfqRZA3m096wB162NTouvrQRhjyW20UNlvISceoerB039jODtSD2uPkFcOo6uVnDoDwt0I2M9UlvpaH3vOfyHRLWIn3p8JTSJ01mDNnGKJFejUWJzt6V0U5XqzXi9+sou3PLawRWupCblrz26wKi4bFgbIQw8xqRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edW/UPcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTi2CAY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9553C4CEC7;
-	Tue,  8 Oct 2024 12:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edW/UPcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A56C4CEC7;
+	Tue,  8 Oct 2024 12:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390466;
-	bh=YwAZwsUM/rZUsS9zJl2LC1nUqiEJzEkqVlutL1xuVh0=;
+	s=korg; t=1728390469;
+	bh=JQn1uLVUx1DCqU83cNlp37FW/YaoEzRpcdtCa8YYhnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTi2CAY8KOFW2agFXpjpyPmF9RzAszfnKxIiUf9Ox5uhoEXdlS/2VLssq0CHrnhdy
-	 g838KFESK9Hk/N6qz3Btdr1YOtWWD2gJk+BoCz7J9e8uY1MO1wb457JPDvHGYaAEOU
-	 Wr8eRLv76pgetY8PF1JOEzxjweolIpjpJhH5pyKQ=
+	b=edW/UPcCrE5UAcZuKcHLhe6Mabgd2i6WDnpi+RD7rTglmwJeJlE+rQgKTMdJtrL/X
+	 uUZUq+7ffOv7WKljz4KgWDnLTDltrLnHzLiKmPl9aCd1w9g5OZAnDvmF9inG/+/NfX
+	 oFb2icmusePT2NE9gsa+sVwEocxCixApCSDXfyZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 256/482] bpftool: Fix undefined behavior in qsort(NULL, 0, ...)
-Date: Tue,  8 Oct 2024 14:05:19 +0200
-Message-ID: <20241008115658.360726955@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.10 291/482] KVM: arm64: Fix kvm_has_feat*() handling of negative features
+Date: Tue,  8 Oct 2024 14:05:54 +0200
+Message-ID: <20241008115659.729756131@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,57 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit f04e2ad394e2755d0bb2d858ecb5598718bf00d5 ]
+commit a1d402abf8e3ff1d821e88993fc5331784fac0da upstream.
 
-When netfilter has no entry to display, qsort is called with
-qsort(NULL, 0, ...). This results in undefined behavior, as UBSan
-reports:
+Oliver reports that the kvm_has_feat() helper is not behaviing as
+expected for negative feature. On investigation, the main issue
+seems to be caused by the following construct:
 
-net.c:827:2: runtime error: null pointer passed as argument 1, which is declared to never be null
+ #define get_idreg_field(kvm, id, fld)				\
+ 	(id##_##fld##_SIGNED ?					\
+	 get_idreg_field_signed(kvm, id, fld) :			\
+	 get_idreg_field_unsigned(kvm, id, fld))
 
-Although the C standard does not explicitly state whether calling qsort
-with a NULL pointer when the size is 0 constitutes undefined behavior,
-Section 7.1.4 of the C standard (Use of library functions) mentions:
+where one side of the expression evaluates as something signed,
+and the other as something unsigned. In retrospect, this is totally
+braindead, as the compiler converts this into an unsigned expression.
+When compared to something that is 0, the test is simply elided.
 
-"Each of the following statements applies unless explicitly stated
-otherwise in the detailed descriptions that follow: If an argument to a
-function has an invalid value (such as a value outside the domain of
-the function, or a pointer outside the address space of the program, or
-a null pointer, or a pointer to non-modifiable storage when the
-corresponding parameter is not const-qualified) or a type (after
-promotion) not expected by a function with variable number of
-arguments, the behavior is undefined."
+Epic fail. Similar issue exists in the expand_field_sign() macro.
 
-To avoid this, add an early return when nf_link_info is NULL to prevent
-calling qsort with a NULL pointer.
+The correct way to handle this is to chose between signed and unsigned
+comparisons, so that both sides of the ternary expression are of the
+same type (bool).
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20240910150207.3179306-1-visitorckw@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In order to keep the code readable (sort of), we introduce new
+comparison primitives taking an operator as a parameter, and
+rewrite the kvm_has_feat*() helpers in terms of these primitives.
+
+Fixes: c62d7a23b947 ("KVM: arm64: Add feature checking helpers")
+Reported-by: Oliver Upton <oliver.upton@linux.dev>
+Tested-by: Oliver Upton <oliver.upton@linux.dev>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241002204239.2051637-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bpf/bpftool/net.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/kvm_host.h |   25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index ad2ea6cf2db11..0f2106218e1f0 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -824,6 +824,9 @@ static void show_link_netfilter(void)
- 		nf_link_count++;
- 	}
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1364,11 +1364,6 @@ bool kvm_arm_vcpu_stopped(struct kvm_vcp
+ 		sign_extend64(__val, id##_##fld##_WIDTH - 1);		\
+ 	})
  
-+	if (!nf_link_info)
-+		return;
+-#define expand_field_sign(id, fld, val)					\
+-	(id##_##fld##_SIGNED ?						\
+-	 __expand_field_sign_signed(id, fld, val) :			\
+-	 __expand_field_sign_unsigned(id, fld, val))
+-
+ #define get_idreg_field_unsigned(kvm, id, fld)				\
+ 	({								\
+ 		u64 __val = IDREG((kvm), SYS_##id);			\
+@@ -1384,20 +1379,26 @@ bool kvm_arm_vcpu_stopped(struct kvm_vcp
+ #define get_idreg_field_enum(kvm, id, fld)				\
+ 	get_idreg_field_unsigned(kvm, id, fld)
+ 
+-#define get_idreg_field(kvm, id, fld)					\
++#define kvm_cmp_feat_signed(kvm, id, fld, op, limit)			\
++	(get_idreg_field_signed((kvm), id, fld) op __expand_field_sign_signed(id, fld, limit))
 +
- 	qsort(nf_link_info, nf_link_count, sizeof(*nf_link_info), netfilter_link_compar);
++#define kvm_cmp_feat_unsigned(kvm, id, fld, op, limit)			\
++	(get_idreg_field_unsigned((kvm), id, fld) op __expand_field_sign_unsigned(id, fld, limit))
++
++#define kvm_cmp_feat(kvm, id, fld, op, limit)				\
+ 	(id##_##fld##_SIGNED ?						\
+-	 get_idreg_field_signed(kvm, id, fld) :				\
+-	 get_idreg_field_unsigned(kvm, id, fld))
++	 kvm_cmp_feat_signed(kvm, id, fld, op, limit) :			\
++	 kvm_cmp_feat_unsigned(kvm, id, fld, op, limit))
  
- 	for (id = 0; id < nf_link_count; id++) {
--- 
-2.43.0
-
+ #define kvm_has_feat(kvm, id, fld, limit)				\
+-	(get_idreg_field((kvm), id, fld) >= expand_field_sign(id, fld, limit))
++	kvm_cmp_feat(kvm, id, fld, >=, limit)
+ 
+ #define kvm_has_feat_enum(kvm, id, fld, val)				\
+-	(get_idreg_field_unsigned((kvm), id, fld) == __expand_field_sign_unsigned(id, fld, val))
++	kvm_cmp_feat_unsigned(kvm, id, fld, ==, val)
+ 
+ #define kvm_has_feat_range(kvm, id, fld, min, max)			\
+-	(get_idreg_field((kvm), id, fld) >= expand_field_sign(id, fld, min) && \
+-	 get_idreg_field((kvm), id, fld) <= expand_field_sign(id, fld, max))
++	(kvm_cmp_feat(kvm, id, fld, >=, min) &&				\
++	kvm_cmp_feat(kvm, id, fld, <=, max))
+ 
+ /* Check for a given level of PAuth support */
+ #define kvm_has_pauth(k, l)						\
 
 
