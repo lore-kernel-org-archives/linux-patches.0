@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681371DED55;
-	Tue,  8 Oct 2024 12:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9FB1DE8BB;
+	Tue,  8 Oct 2024 12:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389845; cv=none; b=ABXJ/54W2/id/8nWuaghWhLgSJfx7ohTJ51pNpphvXuJSNZbG7K8uCybzIfwwMHpktQCfukpye4ZamEFQd2s/5gTTHLVMDEamg8O75w/Ca+YUGeQpKciNELsfUmdH3dDUBnzbhkc+wuLe/5wb663zrk5oNrqWEk5LuFmIYEEVec=
+	t=1728389848; cv=none; b=cXO6uCAXiGDXJ0ktaA1iofhKvKe3bFd664rUDNT6hQzqsiKbGysznH9z1apuCZ/KCX/4H+KG9SsMxoyiq110CK7x5kQcKVlLAxyfeopgs2ZWCAZ9LoZ62UNT7B0rjbBh5NPcyZKB/VMON+2kIiBTpPhzLzvx8n+O+6/T2lEzU68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389845; c=relaxed/simple;
-	bh=7ltnt/ZZdMhKP3RuecdaCbsNSB0GBsFLoEqSwcpZe0Q=;
+	s=arc-20240116; t=1728389848; c=relaxed/simple;
+	bh=WTJFPRt7EgNjksS1pET65rbAEbK16MxY3Q7v421F2OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnN4iBj8d5z5NOXmUW8UnSrPlcD6Rp+RLPcPbOD4Z4TbMBS7HoPhDHoqzdkoLP4WIRZXRDbtLqWSp1PdaQXdBw4QykGJRw9pT/4fgwXkcHTW/KjOW+wAi7aFb21T6HyBQRIzx27kh8b9ru3nBxSL/lLghLno+g38t/y5DvK7M/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNmnr5fz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fx8poXTH31yFKadpEb894lJNbD+cCDr+Rv9NAIvKF2W766CNU8Y75lVpnIAaTwG35b/KNz0K4d7CYIb5Me6cO1GFGaIfRP03dXxbtMYJJOEiqZuSJrtMtOGfPtVh0jyZKz5oFCL1jgNo8ujhBFFhu+NWJzujDXujPG2KOb8cJzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qbLvBOr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNmnr5fz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E294BC4CEC7;
-	Tue,  8 Oct 2024 12:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qbLvBOr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53F5C4CEC7;
+	Tue,  8 Oct 2024 12:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389845;
-	bh=7ltnt/ZZdMhKP3RuecdaCbsNSB0GBsFLoEqSwcpZe0Q=;
+	s=korg; t=1728389848;
+	bh=WTJFPRt7EgNjksS1pET65rbAEbK16MxY3Q7v421F2OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNmnr5fz456NVtE8eqJpR26dY5CF46vJV8R51LHh4SQj9/pASKuQJ/h56Huwjy/ta
-	 uGx0bFR6wG9oUEXyQkDy16gWHxVYl73zn+mZJ5SKcd+kmMJH1fRnf+J/urjAIuTLu5
-	 y77+kzw6pMCQhhHus0YZJJwV2GQkXXK+Llqduqy4=
+	b=0qbLvBOrp8rkPT1Nru+8ldgs9LPw/kDFJ6elJPxMR6LAx25gkzcTAvxQtaHbBmxCA
+	 YlD2ll53NgOUlMKXI5gq248g7zRAIdBVXg1RCSTr2neQxWNL5a3Fw/+tMLAC/b8Gyd
+	 YtdwNhfphn6b1JK8v7uLDxsv8MiqTcUIhGZ1wQCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 113/482] crypto: simd - Do not call crypto_alloc_tfm during registration
-Date: Tue,  8 Oct 2024 14:02:56 +0200
-Message-ID: <20241008115652.755167274@linuxfoundation.org>
+Subject: [PATCH 6.10 114/482] netpoll: Ensure clean state on setup failures
+Date: Tue,  8 Oct 2024 14:02:57 +0200
+Message-ID: <20241008115652.794626880@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,247 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3c44d31cb34ce4eb8311a2e73634d57702948230 ]
+[ Upstream commit ae5a0456e0b4cfd7e61619e55251ffdf1bc7adfb ]
 
-Algorithm registration is usually carried out during module init,
-where as little work as possible should be carried out.  The SIMD
-code violated this rule by allocating a tfm, this then triggers a
-full test of the algorithm which may dead-lock in certain cases.
+Modify netpoll_setup() and __netpoll_setup() to ensure that the netpoll
+structure (np) is left in a clean state if setup fails for any reason.
+This prevents carrying over misconfigured fields in case of partial
+setup success.
 
-SIMD is only allocating the tfm to get at the alg object, which is
-in fact already available as it is what we are registering.  Use
-that directly and remove the crypto_alloc_tfm call.
+Key changes:
+- np->dev is now set only after successful setup, ensuring it's always
+  NULL if netpoll is not configured or if netpoll_setup() fails.
+- np->local_ip is zeroed if netpoll setup doesn't complete successfully.
+- Added DEBUG_NET_WARN_ON_ONCE() checks to catch unexpected states.
+- Reordered some operations in __netpoll_setup() for better logical flow.
 
-Also remove some obsolete and unused SIMD API.
+These changes improve the reliability of netpoll configuration, since it
+assures that the structure is fully initialized or totally unset.
 
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20240822111051.179850-2-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/crypto/aes-ce-glue.c     |  2 +-
- arch/arm/crypto/aes-neonbs-glue.c |  2 +-
- crypto/simd.c                     | 76 ++++++-------------------------
- include/crypto/internal/simd.h    | 12 +----
- 4 files changed, 19 insertions(+), 73 deletions(-)
+ net/core/netpoll.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/crypto/aes-ce-glue.c b/arch/arm/crypto/aes-ce-glue.c
-index b668c97663ec0..f5b66f4cf45d9 100644
---- a/arch/arm/crypto/aes-ce-glue.c
-+++ b/arch/arm/crypto/aes-ce-glue.c
-@@ -711,7 +711,7 @@ static int __init aes_init(void)
- 		algname = aes_algs[i].base.cra_name + 2;
- 		drvname = aes_algs[i].base.cra_driver_name + 2;
- 		basename = aes_algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(aes_algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto unregister_simds;
-diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
-index f00f042ef3570..0ca94b90bc4ec 100644
---- a/arch/arm/crypto/aes-neonbs-glue.c
-+++ b/arch/arm/crypto/aes-neonbs-glue.c
-@@ -539,7 +539,7 @@ static int __init aes_init(void)
- 		algname = aes_algs[i].base.cra_name + 2;
- 		drvname = aes_algs[i].base.cra_driver_name + 2;
- 		basename = aes_algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(aes_algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto unregister_simds;
-diff --git a/crypto/simd.c b/crypto/simd.c
-index edaa479a1ec5e..d109866641a26 100644
---- a/crypto/simd.c
-+++ b/crypto/simd.c
-@@ -136,27 +136,19 @@ static int simd_skcipher_init(struct crypto_skcipher *tfm)
- 	return 0;
- }
- 
--struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
-+struct simd_skcipher_alg *simd_skcipher_create_compat(struct skcipher_alg *ialg,
-+						      const char *algname,
- 						      const char *drvname,
- 						      const char *basename)
- {
- 	struct simd_skcipher_alg *salg;
--	struct crypto_skcipher *tfm;
--	struct skcipher_alg *ialg;
- 	struct skcipher_alg *alg;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 55bcacf67df3b..e082139004093 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -626,12 +626,9 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 	const struct net_device_ops *ops;
  	int err;
  
--	tfm = crypto_alloc_skcipher(basename, CRYPTO_ALG_INTERNAL,
--				    CRYPTO_ALG_INTERNAL | CRYPTO_ALG_ASYNC);
--	if (IS_ERR(tfm))
--		return ERR_CAST(tfm);
+-	np->dev = ndev;
+-	strscpy(np->dev_name, ndev->name, IFNAMSIZ);
 -
--	ialg = crypto_skcipher_alg(tfm);
--
- 	salg = kzalloc(sizeof(*salg), GFP_KERNEL);
- 	if (!salg) {
- 		salg = ERR_PTR(-ENOMEM);
--		goto out_put_tfm;
-+		goto out;
+ 	if (ndev->priv_flags & IFF_DISABLE_NETPOLL) {
+ 		np_err(np, "%s doesn't support polling, aborting\n",
+-		       np->dev_name);
++		       ndev->name);
+ 		err = -ENOTSUPP;
+ 		goto out;
+ 	}
+@@ -649,7 +646,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 
+ 		refcount_set(&npinfo->refcnt, 1);
+ 
+-		ops = np->dev->netdev_ops;
++		ops = ndev->netdev_ops;
+ 		if (ops->ndo_netpoll_setup) {
+ 			err = ops->ndo_netpoll_setup(ndev, npinfo);
+ 			if (err)
+@@ -660,6 +657,8 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 		refcount_inc(&npinfo->refcnt);
  	}
  
- 	salg->ialg_name = basename;
-@@ -195,30 +187,16 @@ struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
- 	if (err)
- 		goto out_free_salg;
++	np->dev = ndev;
++	strscpy(np->dev_name, ndev->name, IFNAMSIZ);
+ 	npinfo->netpoll = np;
  
--out_put_tfm:
--	crypto_free_skcipher(tfm);
-+out:
- 	return salg;
- 
- out_free_salg:
- 	kfree(salg);
- 	salg = ERR_PTR(err);
--	goto out_put_tfm;
-+	goto out;
- }
- EXPORT_SYMBOL_GPL(simd_skcipher_create_compat);
- 
--struct simd_skcipher_alg *simd_skcipher_create(const char *algname,
--					       const char *basename)
--{
--	char drvname[CRYPTO_MAX_ALG_NAME];
--
--	if (snprintf(drvname, CRYPTO_MAX_ALG_NAME, "simd-%s", basename) >=
--	    CRYPTO_MAX_ALG_NAME)
--		return ERR_PTR(-ENAMETOOLONG);
--
--	return simd_skcipher_create_compat(algname, drvname, basename);
--}
--EXPORT_SYMBOL_GPL(simd_skcipher_create);
--
- void simd_skcipher_free(struct simd_skcipher_alg *salg)
+ 	/* last thing to do is link it to the net device structure */
+@@ -677,6 +676,7 @@ EXPORT_SYMBOL_GPL(__netpoll_setup);
+ int netpoll_setup(struct netpoll *np)
  {
- 	crypto_unregister_skcipher(&salg->alg);
-@@ -246,7 +224,7 @@ int simd_register_skciphers_compat(struct skcipher_alg *algs, int count,
- 		algname = algs[i].base.cra_name + 2;
- 		drvname = algs[i].base.cra_driver_name + 2;
- 		basename = algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto err_unregister;
-@@ -383,27 +361,19 @@ static int simd_aead_init(struct crypto_aead *tfm)
- 	return 0;
- }
- 
--struct simd_aead_alg *simd_aead_create_compat(const char *algname,
--					      const char *drvname,
--					      const char *basename)
-+static struct simd_aead_alg *simd_aead_create_compat(struct aead_alg *ialg,
-+						     const char *algname,
-+						     const char *drvname,
-+						     const char *basename)
- {
- 	struct simd_aead_alg *salg;
--	struct crypto_aead *tfm;
--	struct aead_alg *ialg;
- 	struct aead_alg *alg;
+ 	struct net_device *ndev = NULL;
++	bool ip_overwritten = false;
+ 	struct in_device *in_dev;
  	int err;
  
--	tfm = crypto_alloc_aead(basename, CRYPTO_ALG_INTERNAL,
--				CRYPTO_ALG_INTERNAL | CRYPTO_ALG_ASYNC);
--	if (IS_ERR(tfm))
--		return ERR_CAST(tfm);
--
--	ialg = crypto_aead_alg(tfm);
--
- 	salg = kzalloc(sizeof(*salg), GFP_KERNEL);
- 	if (!salg) {
- 		salg = ERR_PTR(-ENOMEM);
--		goto out_put_tfm;
-+		goto out;
- 	}
+@@ -741,6 +741,7 @@ int netpoll_setup(struct netpoll *np)
+ 			}
  
- 	salg->ialg_name = basename;
-@@ -442,36 +412,20 @@ struct simd_aead_alg *simd_aead_create_compat(const char *algname,
- 	if (err)
- 		goto out_free_salg;
+ 			np->local_ip.ip = ifa->ifa_local;
++			ip_overwritten = true;
+ 			np_info(np, "local IP %pI4\n", &np->local_ip.ip);
+ 		} else {
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -757,6 +758,7 @@ int netpoll_setup(struct netpoll *np)
+ 					    !!(ipv6_addr_type(&np->remote_ip.in6) & IPV6_ADDR_LINKLOCAL))
+ 						continue;
+ 					np->local_ip.in6 = ifp->addr;
++					ip_overwritten = true;
+ 					err = 0;
+ 					break;
+ 				}
+@@ -787,6 +789,9 @@ int netpoll_setup(struct netpoll *np)
+ 	return 0;
  
--out_put_tfm:
--	crypto_free_aead(tfm);
-+out:
- 	return salg;
- 
- out_free_salg:
- 	kfree(salg);
- 	salg = ERR_PTR(err);
--	goto out_put_tfm;
--}
--EXPORT_SYMBOL_GPL(simd_aead_create_compat);
--
--struct simd_aead_alg *simd_aead_create(const char *algname,
--				       const char *basename)
--{
--	char drvname[CRYPTO_MAX_ALG_NAME];
--
--	if (snprintf(drvname, CRYPTO_MAX_ALG_NAME, "simd-%s", basename) >=
--	    CRYPTO_MAX_ALG_NAME)
--		return ERR_PTR(-ENAMETOOLONG);
--
--	return simd_aead_create_compat(algname, drvname, basename);
-+	goto out;
- }
--EXPORT_SYMBOL_GPL(simd_aead_create);
- 
--void simd_aead_free(struct simd_aead_alg *salg)
-+static void simd_aead_free(struct simd_aead_alg *salg)
- {
- 	crypto_unregister_aead(&salg->alg);
- 	kfree(salg);
- }
--EXPORT_SYMBOL_GPL(simd_aead_free);
- 
- int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 			       struct simd_aead_alg **simd_algs)
-@@ -493,7 +447,7 @@ int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 		algname = algs[i].base.cra_name + 2;
- 		drvname = algs[i].base.cra_driver_name + 2;
- 		basename = algs[i].base.cra_driver_name;
--		simd = simd_aead_create_compat(algname, drvname, basename);
-+		simd = simd_aead_create_compat(algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto err_unregister;
-diff --git a/include/crypto/internal/simd.h b/include/crypto/internal/simd.h
-index d2316242a9884..be97b97a75dd2 100644
---- a/include/crypto/internal/simd.h
-+++ b/include/crypto/internal/simd.h
-@@ -14,11 +14,10 @@
- struct simd_skcipher_alg;
- struct skcipher_alg;
- 
--struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
-+struct simd_skcipher_alg *simd_skcipher_create_compat(struct skcipher_alg *ialg,
-+						      const char *algname,
- 						      const char *drvname,
- 						      const char *basename);
--struct simd_skcipher_alg *simd_skcipher_create(const char *algname,
--					       const char *basename);
- void simd_skcipher_free(struct simd_skcipher_alg *alg);
- 
- int simd_register_skciphers_compat(struct skcipher_alg *algs, int count,
-@@ -32,13 +31,6 @@ void simd_unregister_skciphers(struct skcipher_alg *algs, int count,
- struct simd_aead_alg;
- struct aead_alg;
- 
--struct simd_aead_alg *simd_aead_create_compat(const char *algname,
--					      const char *drvname,
--					      const char *basename);
--struct simd_aead_alg *simd_aead_create(const char *algname,
--				       const char *basename);
--void simd_aead_free(struct simd_aead_alg *alg);
--
- int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 			       struct simd_aead_alg **simd_algs);
- 
+ put:
++	DEBUG_NET_WARN_ON_ONCE(np->dev);
++	if (ip_overwritten)
++		memset(&np->local_ip, 0, sizeof(np->local_ip));
+ 	netdev_put(ndev, &np->dev_tracker);
+ unlock:
+ 	rtnl_unlock();
 -- 
 2.43.0
 
