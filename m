@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCFD1DFD1;
-	Tue,  8 Oct 2024 13:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F0D1DEFE6;
+	Tue,  8 Oct 2024 13:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392951; cv=none; b=ddTYdJ8VVupTxP378gE/LBTKjqJKRgXU54jYzbFLDJAAJa+agKmpeF+VccssKpEMxM28UdAfrhRpV/I5j2VCn4ea7ISmdvVQejxKVgfBGZkM522V0E7SQnEkX+wM/2C6lsY+sue/3MX1SVNZJqV5WDvJris8+ewB+Qq2Z4GckVc=
+	t=1728392955; cv=none; b=OOGr8uY7aXt5Xg0qPfCP078MXB+Qb+AQAvMyP8Uxw3F9fmEhafHbsPr3ga60wqugP4DGORAIkexSiXNbsyUKNuiA8wMddVxBGeAwxsY8OeUOBfQvHICyTHBUrQptMB5iHfUG1m8/bUKG5jvTyXspKJcfHRDGV6LTTKF5et/PUl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392951; c=relaxed/simple;
-	bh=6TlkPPNunLkMhsjTgYRpgzl/lgWonZKB1x+aCXM3uyE=;
+	s=arc-20240116; t=1728392955; c=relaxed/simple;
+	bh=Bn2zsm23XRWE3P36Goww0AXpkT3vfGVLhD+uoJJ9jAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixVKzPnrmuC3CLp8e/5Q4H1yEXEt+0TeoyDT+odLY9jnDujlX/tajX01n48k9ragRFS8Ozyd6Cbp45r3ornE9Nk7HM4u7akl3tyGaRoK0VVgX0+fxMGVywyE1b1ggtmwOQX0f9AA/GX/5EpIqrjTzaVP41KMjNpfMtCBnoLaWKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXWkzFrQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tc7R1hNZJuZUR+3II1IQvoC+146REiR2uC6Dg47sZZLnVee46FoXGQFsHZAf6Ej5mO9Q3fzimLH9BdXdSmdBL+c/VJdzGaMz3wP3CQ10lJXgcu8YcbIuaKFLLA/Sxurh1L/1WPXHR1icwofQapetX42zqtfH6z/Soy8Sd2hq0lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khHXL3ue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXWkzFrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4169C4CEC7;
-	Tue,  8 Oct 2024 13:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khHXL3ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF25C4CEC7;
+	Tue,  8 Oct 2024 13:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392951;
-	bh=6TlkPPNunLkMhsjTgYRpgzl/lgWonZKB1x+aCXM3uyE=;
+	s=korg; t=1728392954;
+	bh=Bn2zsm23XRWE3P36Goww0AXpkT3vfGVLhD+uoJJ9jAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXWkzFrQ3d62As8BGkT59ns7AQksZl8JBaFKiHMcHJ7MdIhlP4iP9a1D9XAVwxuNw
-	 f/8HvsLbvkaeC4xfqZ0qAIS/ExET3GBS7yl/ztmdNIFUmNG6/Y27RnPOkNPt+IYAdt
-	 cTZkc4KTp8oY6ReS7fYMdSI7Ayjxu+aZx71503b4=
+	b=khHXL3uesGbZYsfxwys2hkkSbTIMnUUQT4gDUxbb+p461QGR2C86TftR4fBkPuFjk
+	 FKI/9tZVydvo5ydaAJEEN0pB+uv3F0z3VMc9kVvlzY3w/PKjZwmdYt3S1xhjaepjsH
+	 TbTS+zGmkUPbGlYGsfWzT9xG95EOp7m8BGUluqC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/386] static_call: Handle module init failure correctly in static_call_del_module()
-Date: Tue,  8 Oct 2024 14:04:06 +0200
-Message-ID: <20241008115629.374716536@linuxfoundation.org>
+Subject: [PATCH 6.6 010/386] ceph: remove the incorrect Fw reference check when dirtying pages
+Date: Tue,  8 Oct 2024 14:04:15 +0200
+Message-ID: <20241008115629.726540993@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,97 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 4b30051c4864234ec57290c3d142db7c88f10d8a ]
+[ Upstream commit c08dfb1b49492c09cf13838c71897493ea3b424e ]
 
-Module insertion invokes static_call_add_module() to initialize the static
-calls in a module. static_call_add_module() invokes __static_call_init(),
-which allocates a struct static_call_mod to either encapsulate the built-in
-static call sites of the associated key into it so further modules can be
-added or to append the module to the module chain.
+When doing the direct-io reads it will also try to mark pages dirty,
+but for the read path it won't hold the Fw caps and there is case
+will it get the Fw reference.
 
-If that allocation fails the function returns with an error code and the
-module core invokes static_call_del_module() to clean up eventually added
-static_call_mod entries.
-
-This works correctly, when all keys used by the module were converted over
-to a module chain before the failure. If not then static_call_del_module()
-causes a #GP as it blindly assumes that key::mods points to a valid struct
-static_call_mod.
-
-The problem is that key::mods is not a individual struct member of struct
-static_call_key, it's part of a union to save space:
-
-        union {
-                /* bit 0: 0 = mods, 1 = sites */
-                unsigned long type;
-                struct static_call_mod *mods;
-                struct static_call_site *sites;
-	};
-
-key::sites is a pointer to the list of built-in usage sites of the static
-call. The type of the pointer is differentiated by bit 0. A mods pointer
-has the bit clear, the sites pointer has the bit set.
-
-As static_call_del_module() blidly assumes that the pointer is a valid
-static_call_mod type, it fails to check for this failure case and
-dereferences the pointer to the list of built-in call sites, which is
-obviously bogus.
-
-Cure it by checking whether the key has a sites or a mods pointer.
-
-If it's a sites pointer then the key is not to be touched. As the sites are
-walked in the same order as in __static_call_init() the site walk can be
-terminated because all subsequent sites have not been touched by the init
-code due to the error exit.
-
-If it was converted before the allocation fail, then the inner loop which
-searches for a module match will find nothing.
-
-A fail in the second allocation in __static_call_init() is harmless and
-does not require special treatment. The first allocation succeeded and
-converted the key to a module chain. That first entry has mod::mod == NULL
-and mod::next == NULL, so the inner loop of static_call_del_module() will
-neither find a module match nor a module chain. The next site in the walk
-was either already converted, but can't match the module, or it will exit
-the outer loop because it has a static_call_site pointer and not a
-static_call_mod pointer.
-
-Fixes: 9183c3f9ed71 ("static_call: Add inline static call infrastructure")
-Closes: https://lore.kernel.org/all/20230915082126.4187913-1-ruanjinjie@huawei.com
-Reported-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/87zfon6b0s.ffs@tglx
+Fixes: 5dda377cf0a6 ("ceph: set i_head_snapc when getting CEPH_CAP_FILE_WR reference")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/static_call_inline.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ceph/addr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/static_call_inline.c b/kernel/static_call_inline.c
-index 639397b5491ca..7bb0962b52291 100644
---- a/kernel/static_call_inline.c
-+++ b/kernel/static_call_inline.c
-@@ -411,6 +411,17 @@ static void static_call_del_module(struct module *mod)
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index da64bb7325dbc..7549e2b07b6af 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -95,7 +95,6 @@ static bool ceph_dirty_folio(struct address_space *mapping, struct folio *folio)
  
- 	for (site = start; site < stop; site++) {
- 		key = static_call_key(site);
-+
-+		/*
-+		 * If the key was not updated due to a memory allocation
-+		 * failure in __static_call_init() then treating key::sites
-+		 * as key::mods in the code below would cause random memory
-+		 * access and #GP. In that case all subsequent sites have
-+		 * not been touched either, so stop iterating.
-+		 */
-+		if (!static_call_key_has_mods(key))
-+			break;
-+
- 		if (key == prev_key)
- 			continue;
- 
+ 	/* dirty the head */
+ 	spin_lock(&ci->i_ceph_lock);
+-	BUG_ON(ci->i_wr_ref == 0); // caller should hold Fw reference
+ 	if (__ceph_have_pending_cap_snap(ci)) {
+ 		struct ceph_cap_snap *capsnap =
+ 				list_last_entry(&ci->i_cap_snaps,
 -- 
 2.43.0
 
