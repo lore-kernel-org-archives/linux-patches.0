@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3731DEFC2;
-	Tue,  8 Oct 2024 12:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D171B81CC;
+	Tue,  8 Oct 2024 12:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390542; cv=none; b=PxFhcwJZJKTCCoiXoJu25wqFqxCzkrW52ySBvhoM/nIZN97GupvuSnSLYnTxHiwmhPYzm3wCAypdrClqXghT/bK4StPScRlVe5SBOl+FhTiikK7nKvxt6C+2bTbVdPScBD4rIb2YyeGy8YADkSMbFcZgFsNK6354Jffzp8B+EGw=
+	t=1728390546; cv=none; b=A3PuFZmMK93AjLt/2crbXrGB3OERnVCOcm94ql/u03DzoPaszZlRZMDpLlg4M/iy50tgVqItfDiZaAKAnreZvy0HJdZAsyk678u+FrWSpgtXsOMR7mDzc2TJch8SxuQGzN7wsao5YJFp1c9iJxyuC2sWiyimV765oUVIB7YJxlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390542; c=relaxed/simple;
-	bh=F5LQAyCpTRBYt8RwAuJgM0Gn2afgpwcCrRzLuqAfQtY=;
+	s=arc-20240116; t=1728390546; c=relaxed/simple;
+	bh=YK/4XItn1KfnS/QGgKjc/mlsgnBOOwAqTk8nGp2VmAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEiz6DDbJf4/ILMH4Ll3OTk2HOGOOcXR5dr69O5drIGPDgcYwUhejFCHiFZcGwUvTlC1R81wSPIhs94NR09pmUtSrDzMITT2+eL/3npDhqmGix5qlJhcrZqAhIOBeBo0b6fNb+hOAYsuycgPXQKJEH+cIY/SM7g+d/uGe07fiQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQuvJ821; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJmOtKayqJacGT28diVFvstm0kJz+E3/NYGWwztr7MMN4PiwyfrmiIKcLudi+CDv59Y10qJfdKJV/NavBNYUwR0C4OIOYx8q+plvhUq2nCQYG+z8zjCY/GszpLHRdmjSfNn57ucobNNPLBd1tbMdJ2JfqD3dXX+eyTgyErEeMsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+noW1u4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQuvJ821"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F81C4CEC7;
-	Tue,  8 Oct 2024 12:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+noW1u4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D51C4CEC7;
+	Tue,  8 Oct 2024 12:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390542;
-	bh=F5LQAyCpTRBYt8RwAuJgM0Gn2afgpwcCrRzLuqAfQtY=;
+	s=korg; t=1728390545;
+	bh=YK/4XItn1KfnS/QGgKjc/mlsgnBOOwAqTk8nGp2VmAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQuvJ821KCBPwQMhk761HPHcdA0eehbrecswYNjavtauMtjcNd+F5FCADLTpE+K9X
-	 A535F5qGY14tLavsG23TkVjClJHV8mL3Mx0dI+ahidsxeyAnjvA7XeR9HoP7+Rl666
-	 6r2FrO/ES5+tOSEY5yrhW7Sa8yRuWdDgtHSS2QYw=
+	b=F+noW1u46FOAgWmgWZW6GpvkTqGwu+UYYEz9p5eZspAuFsTQdy331LYra9JthiSfA
+	 Gp2gxBEnPxQWZM4bgg/0bgz9z4D2BKsOXYYylFGk+lx+BfkvNErKAaEKVWrLrD1nft
+	 HtquE5p6BPDLEKzlInS+jiFvXd98Q3RRpfyx7Y0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.10 293/482] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue,  8 Oct 2024 14:05:56 +0200
-Message-ID: <20241008115659.808863270@linuxfoundation.org>
+	Ai Chao <aichao@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 320/482] ALSA: hda/realtek: Add quirk for Huawei MateBook 13 KLV-WX9
+Date: Tue,  8 Oct 2024 14:06:23 +0200
+Message-ID: <20241008115701.023060806@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,43 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-commit e2c85d85a05f16af2223fcc0195ff50a7938b372 upstream.
+commit dee476950cbd83125655a3f49e00d63b79f6114e upstream.
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+The headset mic requires a fixup to be properly detected/used.
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: <stable@vger.kernel.org> # v4.19+
-Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240926060252.25630-1-aichao@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -818,15 +818,13 @@ static int geni_i2c_probe(struct platfor
- 	init_completion(&gi2c->done);
- 	spin_lock_init(&gi2c->lock);
- 	platform_set_drvdata(pdev, gi2c);
--	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
-+	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
- 			       dev_name(dev), gi2c);
- 	if (ret) {
- 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
- 			gi2c->irq, ret);
- 		return ret;
- 	}
--	/* Disable the interrupt so that the system can enter low-power mode */
--	disable_irq(gi2c->irq);
- 	i2c_set_adapdata(&gi2c->adap, gi2c);
- 	gi2c->adap.dev.parent = dev;
- 	gi2c->adap.dev.of_node = dev->of_node;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10687,6 +10687,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1854, 0x0441, "LG CQ6 AIO", ALC256_FIXUP_HEADPHONE_AMP_VOL),
+ 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
+ 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x19e5, 0x3212, "Huawei KLV-WX9 ", ALC256_FIXUP_ACER_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1b35, 0x1235, "CZC B20", ALC269_FIXUP_CZC_B20),
+ 	SND_PCI_QUIRK(0x1b35, 0x1236, "CZC TMI", ALC269_FIXUP_CZC_TMI),
+ 	SND_PCI_QUIRK(0x1b35, 0x1237, "CZC L101", ALC269_FIXUP_CZC_L101),
 
 
