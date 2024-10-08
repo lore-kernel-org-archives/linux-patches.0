@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8FB1DE2CD;
-	Tue,  8 Oct 2024 12:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548251DED48;
+	Tue,  8 Oct 2024 12:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389998; cv=none; b=DMR2LpyATpPZs8kZyRMzLW3/KhBKG68RYYqoMha24loJa4ZHdNCfx/pRwSokSGTUQtegtL8/yKroKbqV9aSDAC8WwuGnD/XothQifPs+fMUxIbpi5LZT+DMVEqcXEGSRuozGbx/x2W7V1Wp1hQ5WQsbRSmXjQTNrzkpbU70H1rs=
+	t=1728390001; cv=none; b=n2uvZN5zKoywwA4YcoPGFI+LHsLMZor52uqgLUjIhlcx4UPnKPWhkTovbU8b2ri/sh/LCwjbcBeLviUum+RINapaGdxmxKc9DSrrpvbW6pIyhGt8+0NzRCjTf/fFBxFf3cFVpHH14sTJSt2VPVcihc7LhQvaKcZ6uqgNs81/9KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389998; c=relaxed/simple;
-	bh=Ns+g5ZBus9RfxvvZOLDORiy9Dzj8l30xS0Ob8/HXsUg=;
+	s=arc-20240116; t=1728390001; c=relaxed/simple;
+	bh=xV5qLbihn0Rhhsa+AbXH36Sd+NVZz2JzvHYAmq2UwWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ae5NUfTbJD7vnCO3jSZeljWES7mfyIkGW/Q33EdcugjO+MA1eSGjg5ZL3O9Jq8LxkPalwjF42vJlkV1SEpUwNZCcVmf2ZXkY+oFyp0XlWcuSWMFeSWVJiMcWKb0r3ffwcEZmZN9SiCLLjVUKZay/w5OuqcIXyGA1Ir0R1pRQW0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UWr9x1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePJliCBNZahC4bhEush7QjGkS/YDV4Voh/wjZAtTnJQU/xs2DSrKQYyYZWMIcBuXHdFUK6HOq4pDkWy/Q3zcFKxXdZIxe50+ltjb2jjDO9Q91mWg3Ckp/p1GiGRzsdPV99KY3R1Mggi59s+YjUoe3w5WjL3F8AQMz5Ug9xRt1Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9Tlql9F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UWr9x1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7497FC4CEC7;
-	Tue,  8 Oct 2024 12:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9Tlql9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D64C4CECC;
+	Tue,  8 Oct 2024 12:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389997;
-	bh=Ns+g5ZBus9RfxvvZOLDORiy9Dzj8l30xS0Ob8/HXsUg=;
+	s=korg; t=1728390001;
+	bh=xV5qLbihn0Rhhsa+AbXH36Sd+NVZz2JzvHYAmq2UwWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1UWr9x1jM8y1//nGNmCjq2uZsf/5FCsPcswrlYDRCPuQnF6I/A+cJ+W9KjEVOoikp
-	 kDJ0CtG6/JO3xHPDeegoaw9mHJpZ4226Er6vqNYQenQi6icZ0O7Xe0S9/9LvCmmx8U
-	 HQoKTi1Lq5wx0lBrZYAU6kpicjbwkPepgvOwEY5o=
+	b=v9Tlql9FL0GPv8Fxx8qExM5cMmsAoIPUW3GKL/+zZZjIhvswvOG6R0bE7l8tqO0tp
+	 py02GsbuhcAbzFJXBlAoHq+CKKckmeEHyFq1aFOdKgDjHlEBK1W0Z9VgzwNAHFGpTi
+	 RFrHeHNbNhkXFS+UMRQm0xVqIvM6HJGwxpM1tsjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	"Shanavas.K.S" <shanavasks@gmail.com>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 128/482] wifi: rtw89: avoid reading out of bounds when loading TX power FW elements
-Date: Tue,  8 Oct 2024 14:03:11 +0200
-Message-ID: <20241008115653.342063330@linuxfoundation.org>
+Subject: [PATCH 6.10 129/482] x86/bugs: Add missing NO_SSB flag
+Date: Tue,  8 Oct 2024 14:03:12 +0200
+Message-ID: <20241008115653.381359295@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,57 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 
-[ Upstream commit ed2e4bb17a4884cf29c3347353d8aabb7265b46c ]
+[ Upstream commit 23e12b54acf621f4f03381dca91cc5f1334f21fd ]
 
-Because the loop-expression will do one more time before getting false from
-cond-expression, the original code copied one more entry size beyond valid
-region.
+The Moorefield and Lightning Mountain Atom processors are
+missing the NO_SSB flag in the vulnerabilities whitelist.
+This will cause unaffected parts to incorrectly be reported
+as vulnerable. Add the missing flag.
 
-Fix it by moving the entry copy to loop-body.
+These parts are currently out of service and were verified
+internally with archived documentation that they need the
+NO_SSB flag.
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240902015803.20420-1-pkshih@realtek.com
+Closes: https://lore.kernel.org/lkml/CAEJ9NQdhh+4GxrtG1DuYgqYhvc0hi-sKZh-2niukJ-MyFLntAA@mail.gmail.com/
+Reported-by: Shanavas.K.S <shanavasks@gmail.com>
+Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240829192437.4074196-1-daniel.sneddon@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.h | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index 112bdd95fc6ea..504660ee3cba3 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -3888,16 +3888,22 @@ struct rtw89_txpwr_conf {
- 	const void *data;
- };
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index d4e539d4e158c..be307c9ef263d 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1165,8 +1165,8 @@ static const __initconst struct x86_cpu_id cpu_vuln_whitelist[] = {
  
-+static inline bool rtw89_txpwr_entcpy(void *entry, const void *cursor, u8 size,
-+				      const struct rtw89_txpwr_conf *conf)
-+{
-+	u8 valid_size = min(size, conf->ent_sz);
-+
-+	memcpy(entry, cursor, valid_size);
-+	return true;
-+}
-+
- #define rtw89_txpwr_conf_valid(conf) (!!(conf)->data)
+ 	VULNWL_INTEL(INTEL_CORE_YONAH,		NO_SSB),
  
- #define rtw89_for_each_in_txpwr_conf(entry, cursor, conf) \
--	for (typecheck(const void *, cursor), (cursor) = (conf)->data, \
--	     memcpy(&(entry), cursor, \
--		    min_t(u8, sizeof(entry), (conf)->ent_sz)); \
-+	for (typecheck(const void *, cursor), (cursor) = (conf)->data; \
- 	     (cursor) < (conf)->data + (conf)->num_ents * (conf)->ent_sz; \
--	     (cursor) += (conf)->ent_sz, \
--	     memcpy(&(entry), cursor, \
--		    min_t(u8, sizeof(entry), (conf)->ent_sz)))
-+	     (cursor) += (conf)->ent_sz) \
-+		if (rtw89_txpwr_entcpy(&(entry), cursor, sizeof(entry), conf))
+-	VULNWL_INTEL(INTEL_ATOM_AIRMONT_MID,	NO_L1TF | MSBDS_ONLY | NO_SWAPGS | NO_ITLB_MULTIHIT),
+-	VULNWL_INTEL(INTEL_ATOM_AIRMONT_NP,	NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT),
++	VULNWL_INTEL(INTEL_ATOM_AIRMONT_MID,	NO_SSB | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | MSBDS_ONLY),
++	VULNWL_INTEL(INTEL_ATOM_AIRMONT_NP,	NO_SSB | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT),
  
- struct rtw89_txpwr_byrate_data {
- 	struct rtw89_txpwr_conf conf;
+ 	VULNWL_INTEL(INTEL_ATOM_GOLDMONT,	NO_MDS | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | NO_MMIO),
+ 	VULNWL_INTEL(INTEL_ATOM_GOLDMONT_D,	NO_MDS | NO_L1TF | NO_SWAPGS | NO_ITLB_MULTIHIT | NO_MMIO),
 -- 
 2.43.0
 
