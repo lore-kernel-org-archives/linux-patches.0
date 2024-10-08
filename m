@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA90EEC8;
-	Tue,  8 Oct 2024 12:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074CB1DE3A2;
+	Tue,  8 Oct 2024 12:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390512; cv=none; b=P5SVVUD79bqO0BH3Qv9tQujEeL0R0OWjXgMNR0w389i+5mZYgSElEb0QQvm7R6wTPm4QI2EQO28gKXrijtXyz/CdlmVTTAjMx1ZIC153bCxDWCnIFNlWkU08hX2+l/TGX+cTL+v5HVtjy6lqZEDd6ke6eajigiVFeoewUtYao0E=
+	t=1728390516; cv=none; b=orMLapbWK+31M6nYovqBJpY0Ok+cdks1Hze9MvyhpAF7vFkl+9EP0ylmJZcoKNWIa+VunsQYN/LPBBOImC7QSKVgqPr5OGRG0W0YoAMPxfSk1L93t5xBv4Nva+lyHLMaj8btxVeXRsEOKTE970O30ymPjToJwCiTKrzQOOjaRd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390512; c=relaxed/simple;
-	bh=ql4bfz2Iz6jbvmN8rj9cVCLOqK2s8duia+S2BlOcH2U=;
+	s=arc-20240116; t=1728390516; c=relaxed/simple;
+	bh=98D1hdTlsHWQPnGFbChhh1fwn7ppEVk5e3mBV9O65y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOefGSACVfLTTIwOJ0kNfqHTW2uv79UGcFtoj0LsRPYt8qW+qyU0xCySVxWl+BmcxwJ+q0Ej/N6P4jaDY/EPy5lwHp4G5ZATZ2qu60p/LpFOKIYNDwp6Ky0UYtVTtQCLHl8you+YrLYYDdARDdwJJmkgBQFIsQk0Yy42Z4iHZ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0Q6c6HE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bR+LXvCJmgqpnDpxXXhmlXKmtwz3Q9WJn65Rbu3B5PVOXHCzmYgX5GTud1WM8X3jmTQQmEWNzhLUeC310FkV+ppsnVKlJS3eq6sCl/AX3Y6XGyzFrjGjsbCUZTg8SKB3PiQs5Bz0gUFf7Levh4dXANDDDcJxFKfgR/ezZhEIfEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxkNkxJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0Q6c6HE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CCCC4CEC7;
-	Tue,  8 Oct 2024 12:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxkNkxJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67180C4CEC7;
+	Tue,  8 Oct 2024 12:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390512;
-	bh=ql4bfz2Iz6jbvmN8rj9cVCLOqK2s8duia+S2BlOcH2U=;
+	s=korg; t=1728390515;
+	bh=98D1hdTlsHWQPnGFbChhh1fwn7ppEVk5e3mBV9O65y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0Q6c6HEZ8iF1jMbzXhdGGrhxsZyk1OR8grsKyOpmsm6CcS/lc4RWaUya0s4COW2g
-	 hZDcx8L+XNQVc2U6h0jmTADBango9kGCYdu0hWSWucLe3WjuCj3F/6EiXx+DtuCNwn
-	 vBDKcLLZcdfEYhLGcg8fyaTqCHx8mbxYq3xdxKrU=
+	b=GxkNkxJkNUJwmwg+setlU194qouETkoVyjJccjG9nFZw9vy4OwCYPn4tdUYDaHi4Y
+	 rudJ6Bbw7YQ1n+I5vI2OEK/GCi2tc3e5+Th4FJ5sTSAN3AbBHutmdggG378VlFc0ng
+	 dDgOb3MIJcbUNxpaJljcUbvis+Aymb9CIucVXGQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.10 311/482] parisc: Fix itlb miss handler for 64-bit programs
-Date: Tue,  8 Oct 2024 14:06:14 +0200
-Message-ID: <20241008115700.672808241@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.10 312/482] drm/mediatek: ovl_adaptor: Add missing of_node_put()
+Date: Tue,  8 Oct 2024 14:06:15 +0200
+Message-ID: <20241008115700.712232965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -49,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 9542130937e9dc707dd7c6b7af73326437da2d50 upstream.
+commit 5beb6fba25db235b52eab34bde8112f07bb31d75 upstream.
 
-For an itlb miss when executing code above 4 Gb on ILP64 adjust the
-iasq/iaoq in the same way isr/ior was adjusted.  This fixes signal
-delivery for the 64-bit static test program from
-http://ftp.parisc-linux.org/src/64bit.tar.gz.  Note that signals are
-handled by the signal trampoline code in the 64-bit VDSO which is mapped
-into high userspace memory region above 4GB for 64-bit processes.
+Error paths that exit for_each_child_of_node() need to call
+of_node_put() to decerement the child refcount and avoid memory leaks.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org	# v4.19+
+Add the missing of_node_put().
+
+Cc: stable@vger.kernel.org
+Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240624-mtk_disp_ovl_adaptor_scoped-v1-2-9fa1e074d881@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -1051,8 +1051,7 @@ ENTRY_CFI(intr_save)		/* for os_hpmc */
- 	STREG           %r16, PT_ISR(%r29)
- 	STREG           %r17, PT_IOR(%r29)
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+@@ -523,8 +523,10 @@ static int ovl_adaptor_comp_init(struct
+ 		}
  
--#if 0 && defined(CONFIG_64BIT)
--	/* Revisit when we have 64-bit code above 4Gb */
-+#if defined(CONFIG_64BIT)
- 	b,n		intr_save2
+ 		comp_pdev = of_find_device_by_node(node);
+-		if (!comp_pdev)
++		if (!comp_pdev) {
++			of_node_put(node);
+ 			return -EPROBE_DEFER;
++		}
  
- skip_save_ior:
-@@ -1060,8 +1059,7 @@ skip_save_ior:
- 	 * need to adjust iasq/iaoq here in the same way we adjusted isr/ior
- 	 * above.
- 	 */
--	extrd,u,*	%r8,PSW_W_BIT,1,%r1
--	cmpib,COND(=),n	1,%r1,intr_save2
-+	bb,COND(>=),n	%r8,PSW_W_BIT,intr_save2
- 	LDREG		PT_IASQ0(%r29), %r16
- 	LDREG		PT_IAOQ0(%r29), %r17
- 	/* adjust iasq/iaoq */
+ 		priv->ovl_adaptor_comp[id] = &comp_pdev->dev;
+ 
 
 
