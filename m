@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA97F1DFD1;
-	Tue,  8 Oct 2024 13:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349651C32EB;
+	Tue,  8 Oct 2024 13:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392530; cv=none; b=UnL5rmCa6au5EWCRefA/1jyglpRJv7Q9OSZ3z4n05SRsRz1n+ZTntPr/nZJzH7zYN8ltuGfHNtOXnXJePSFWX/lNzYfZ0rcfuaNlvOhcteRCcKCpQqa+t/djkIOpHRWLi3nX/E1wzLNlS5jYS8RVoT99Aj8TJoiP0r74t30RrFA=
+	t=1728392534; cv=none; b=sCfhXkfM/4vXj+fpd46/sAuwofD645kiPf1VYwq25WDMnMtLTxLjc88t1fYrk4zFXhURnGpzbiPqke+mid+Bi8V+U0F8QGcv4mT1l18pex0Proe7aRPbIO+g2dba0wWeRWn+1m6f7V0pE+XT4qf9tS5jsLlbBrwM8NHarsQA6VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392530; c=relaxed/simple;
-	bh=hJpFPurEWlACbmqLAtC+R116rZtkaPOjw/YjrQW7CAc=;
+	s=arc-20240116; t=1728392534; c=relaxed/simple;
+	bh=8pVTSQmzLtfV3UsTf+YP/gEaT2j+UkNxX9I8Iro6h3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnuP0m+hf0qaM989B3sss1StiY+SMWNWLIYdHEoic4AkrwyUpOO2xN62QU6hQCmTYPU0tcSPrJ51HxFxLp3qiOBg29Q3W/8rAeaf/pJuiorA2j6IfyQeKu3omwgzJTZj87Ccbg/6rACYDiHRMlv5Ym4+ewt03aUOlC3KDO1U+ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXp/tzcX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffT7rdcXQK6IpGKHHZuCoLf2Q621tnq9HJaVB4IUmmrxqwS1xDDSBuonvi1kmFzF28k/3nkvaLcqY0lfaUaaplAQQT8UFDo+UM9QSUHpU7+WyqkPNN9RaOtyMClGdFTnNmFnMDJcNQel42Gv+82w+9PcewRFafTibb+CJEeT+g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thrWx/Df; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXp/tzcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1038BC4CEC7;
-	Tue,  8 Oct 2024 13:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thrWx/Df"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F152C4CEC7;
+	Tue,  8 Oct 2024 13:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392530;
-	bh=hJpFPurEWlACbmqLAtC+R116rZtkaPOjw/YjrQW7CAc=;
+	s=korg; t=1728392533;
+	bh=8pVTSQmzLtfV3UsTf+YP/gEaT2j+UkNxX9I8Iro6h3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXp/tzcX0+MF4oMfp0g2yxxowb5qsL7hJ4QHVifPtLYHP8Ue2VeNlhnsGN1lwZKrf
-	 ApMLQAkPGOe5iQRlcK+ufIUZVJOYgRdDvkdF2Kl2MrBEAZsWolV0xaP2vj8jWsqRQx
-	 B6izjTnhzw/Eyr9MtgUmAKi487REQezs2+GDNCu8=
+	b=thrWx/DfOM+P6+RrcJm9+FRLUy3XlvA2FEpqiRghVYxxSiAaqki+QVRdCGBAXvFeT
+	 CnWN4/CYCjqTzaGRz8dZAhyI0Yc3X9CBilzI7oAquu8jCrPFZWwvVsjIVHLhhOWMEe
+	 YiKIk+dyq+niEie/J3B0I/BNBbwWBjKFFYlyg5SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.11 441/558] drivers/perf: riscv: Align errno for unsupported perf event
-Date: Tue,  8 Oct 2024 14:07:51 +0200
-Message-ID: <20241008115719.621779481@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Su Yue <glass.su@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 412/558] ocfs2: fix the la space leak when unmounting an ocfs2 volume
+Date: Tue,  8 Oct 2024 14:07:22 +0200
+Message-ID: <20241008115718.487567321@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,68 +58,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit c625154993d0d24a962b1830cd5ed92adda2cf86 upstream.
+commit dfe6c5692fb525e5e90cefe306ee0dffae13d35f upstream.
 
-RISC-V perf driver does not yet support PERF_TYPE_BREAKPOINT. It would
-be more appropriate to return -EOPNOTSUPP or -ENOENT for this type in
-pmu_sbi_event_map. Considering that other implementations return -ENOENT
-for unsupported perf types, let's synchronize this behavior. Due to this
-reason, a riscv bpf testcases perf_skip fail. Meanwhile, align that
-behavior to the rest of proper place.
+This bug has existed since the initial OCFS2 code.  The code logic in
+ocfs2_sync_local_to_main() is wrong, as it ignores the last contiguous
+free bits, which causes an OCFS2 volume to lose the last free clusters of
+LA window on each umount command.
 
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Fixes: 9b3e150e310e ("RISC-V: Add a simple platform driver for RISC-V legacy perf")
-Fixes: 16d3b1af0944 ("perf: RISC-V: Check standard event availability")
-Fixes: e9991434596f ("RISC-V: Add perf platform driver based on SBI PMU extension")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240831071520.1630360-1-pulehui@huaweicloud.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lkml.kernel.org/r/20240719114310.14245-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/riscv_pmu_legacy.c |    4 ++--
- drivers/perf/riscv_pmu_sbi.c    |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/ocfs2/localalloc.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/perf/riscv_pmu_legacy.c
-+++ b/drivers/perf/riscv_pmu_legacy.c
-@@ -22,13 +22,13 @@ static int pmu_legacy_ctr_get_idx(struct
- 	struct perf_event_attr *attr = &event->attr;
- 
- 	if (event->attr.type != PERF_TYPE_HARDWARE)
--		return -EOPNOTSUPP;
-+		return -ENOENT;
- 	if (attr->config == PERF_COUNT_HW_CPU_CYCLES)
- 		return RISCV_PMU_LEGACY_CYCLE;
- 	else if (attr->config == PERF_COUNT_HW_INSTRUCTIONS)
- 		return RISCV_PMU_LEGACY_INSTRET;
- 	else
--		return -EOPNOTSUPP;
-+		return -ENOENT;
- }
- 
- /* For legacy config & counter index are same */
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -309,7 +309,7 @@ static void pmu_sbi_check_event(struct s
- 			  ret.value, 0x1, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
- 	} else if (ret.error == SBI_ERR_NOT_SUPPORTED) {
- 		/* This event cannot be monitored by any counter */
--		edata->event_idx = -EINVAL;
-+		edata->event_idx = -ENOENT;
- 	}
- }
- 
-@@ -543,7 +543,7 @@ static int pmu_sbi_event_map(struct perf
- 		}
- 		break;
- 	default:
--		ret = -EINVAL;
-+		ret = -ENOENT;
- 		break;
+--- a/fs/ocfs2/localalloc.c
++++ b/fs/ocfs2/localalloc.c
+@@ -1002,6 +1002,25 @@ static int ocfs2_sync_local_to_main(stru
+ 		start = bit_off + 1;
  	}
  
++	/* clear the contiguous bits until the end boundary */
++	if (count) {
++		blkno = la_start_blk +
++			ocfs2_clusters_to_blocks(osb->sb,
++					start - count);
++
++		trace_ocfs2_sync_local_to_main_free(
++				count, start - count,
++				(unsigned long long)la_start_blk,
++				(unsigned long long)blkno);
++
++		status = ocfs2_release_clusters(handle,
++				main_bm_inode,
++				main_bm_bh, blkno,
++				count);
++		if (status < 0)
++			mlog_errno(status);
++	}
++
+ bail:
+ 	if (status)
+ 		mlog_errno(status);
 
 
