@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58951C9B99;
-	Tue,  8 Oct 2024 13:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB581DFD1;
+	Tue,  8 Oct 2024 13:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392728; cv=none; b=jB2sYTgveArNNudN7o+znltPDFhqjLojlaTfM8BYGazpspj/d+RW5pyBaA3C2poPHM82d732o34ELlazKgaxQ53amxcK8Q2g2aMCmQCM4saE6KwmYmr3h1WgRwxyat1eqcPa4E/PH+T/kOZPDcJaj9+kJIoS4YzgQ2pajvphGfc=
+	t=1728392732; cv=none; b=DSwcigP3lrMVczd5XHDh97llOkbTmQe2EJUB0PdQnrPYhWxS9EhPl3MTaw65hUcLxY8SowRejMv2LZlqWr9IJ+y/bvmEVs7o+imDZvP4/4e44BsIo5r+Dpt4EDdNd+r9+wAZuUSEDWTGu39jl/CYrgyUJkbpK/aznOXOFu1Cu3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392728; c=relaxed/simple;
-	bh=sT43mvBk4G1NrMGFcQ4nKuL9fBpStAI670x9SHQhRC0=;
+	s=arc-20240116; t=1728392732; c=relaxed/simple;
+	bh=RkVKPy7bFq31O6cjfaA9UEBuMw2ASko3f6P3MYYL6nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uW3OeKMxcHYVoXYipmL0ylW9u4951stB0d2VZ1o2u86P4rpw1z9VYPr28raEz4d7N3dSH99JgzEStnkZyU3qqMdB5iVKZA0XRV6FuKkq1QKTYSa3j8T2r2S5jxOvM7zmrcrRVkjA/+9arFPwuDp809hGU5pu0HECeFGliJhs5eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7beyO+L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hK//3+cnDAkNghBV46kGNI5Cgi69Pfmurce+6/rbd+Y8iRLdb0BisqNCyVnRHPgYe3/jqm0p4HTeBb/jnQX6JGaxYfQOqvvh5XTK/6hy4UfKBopTF2s5C7k+UzY2H5PwOTUNXlYf66qD4r3KbeMteUEDjNN0acjU4YdZ+VvwCKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqAqWzn2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7beyO+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A63C4CEC7;
-	Tue,  8 Oct 2024 13:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqAqWzn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28ADC4CECC;
+	Tue,  8 Oct 2024 13:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392728;
-	bh=sT43mvBk4G1NrMGFcQ4nKuL9fBpStAI670x9SHQhRC0=;
+	s=korg; t=1728392732;
+	bh=RkVKPy7bFq31O6cjfaA9UEBuMw2ASko3f6P3MYYL6nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7beyO+Ly49lKlROTUXJ8V/IEVWXAw7/xImvuLamMTRUggI51PfdrvvJklGMuzAWJ
-	 OSgYYFLxHnBDsjiYGl4CRWbyv/PpfOPZM8Ikzzyr2gF7Jar1EBGAM2FrZojxGaR9um
-	 nYNVf44IvJomTau2LOYuD951mrFswFsHfpaeJdbc=
+	b=lqAqWzn2WxkY6Kz8W+cd+iVHfgqPFWoaoW15Eb+Sm95JLE/px2lCwXDpYSrKvKNat
+	 k5xxj5aqbeAaMXHX9I7gKLRdBiwWTo7ilZpuiuIfqYHpMuyhbQQZgSqJjHmnJeqJQv
+	 q5JUfjpRf6448z6bLBU20atCNRc/VH0LQC4qrsNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mikisabate@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	xiao sheng wen <atzlinux@sina.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.11 501/558] cpufreq: Avoid a bad reference count on CPU node
-Date: Tue,  8 Oct 2024 14:08:51 +0200
-Message-ID: <20241008115721.947407277@linuxfoundation.org>
+Subject: [PATCH 6.11 502/558] cpufreq: intel_pstate: Make hwp_notify_lock a raw spinlock
+Date: Tue,  8 Oct 2024 14:08:52 +0200
+Message-ID: <20241008115721.985655690@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,51 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Sabaté Solà <mikisabate@gmail.com>
+From: Uwe Kleine-König <ukleinek@debian.org>
 
-commit c0f02536fffbbec71aced36d52a765f8c4493dc2 upstream.
+commit 8b4865cd904650cbed7f2407e653934c621b8127 upstream.
 
-In the parse_perf_domain function, if the call to
-of_parse_phandle_with_args returns an error, then the reference to the
-CPU device node that was acquired at the start of the function would not
-be properly decremented.
+notify_hwp_interrupt() is called via sysvec_thermal() ->
+smp_thermal_vector() -> intel_thermal_interrupt() in hard irq context.
+For this reason it must not use a simple spin_lock that sleeps with
+PREEMPT_RT enabled. So convert it to a raw spinlock.
 
-Address this by declaring the variable with the __free(device_node)
-cleanup attribute.
-
-Signed-off-by: Miquel Sabaté Solà <mikisabate@gmail.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20240917134246.584026-1-mikisabate@gmail.com
+Reported-by: xiao sheng wen <atzlinux@sina.com>
+Link: https://bugs.debian.org/1076483
+Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: xiao sheng wen <atzlinux@sina.com>
+Link: https://patch.msgid.link/20240919081121.10784-2-ukleinek@debian.org
 Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cpufreq.h |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/cpufreq/intel_pstate.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -1113,10 +1113,9 @@ static inline int parse_perf_domain(int
- 				    const char *cell_name,
- 				    struct of_phandle_args *args)
- {
--	struct device_node *cpu_np;
- 	int ret;
- 
--	cpu_np = of_cpu_device_node_get(cpu);
-+	struct device_node *cpu_np __free(device_node) = of_cpu_device_node_get(cpu);
- 	if (!cpu_np)
- 		return -ENODEV;
- 
-@@ -1124,9 +1123,6 @@ static inline int parse_perf_domain(int
- 					 args);
- 	if (ret < 0)
- 		return ret;
--
--	of_node_put(cpu_np);
--
- 	return 0;
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1623,7 +1623,7 @@ static void intel_pstate_notify_work(str
+ 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_STATUS, 0);
  }
  
+-static DEFINE_SPINLOCK(hwp_notify_lock);
++static DEFINE_RAW_SPINLOCK(hwp_notify_lock);
+ static cpumask_t hwp_intr_enable_mask;
+ 
+ #define HWP_GUARANTEED_PERF_CHANGE_STATUS      BIT(0)
+@@ -1646,7 +1646,7 @@ void notify_hwp_interrupt(void)
+ 	if (!(value & status_mask))
+ 		return;
+ 
+-	spin_lock_irqsave(&hwp_notify_lock, flags);
++	raw_spin_lock_irqsave(&hwp_notify_lock, flags);
+ 
+ 	if (!cpumask_test_cpu(this_cpu, &hwp_intr_enable_mask))
+ 		goto ack_intr;
+@@ -1654,13 +1654,13 @@ void notify_hwp_interrupt(void)
+ 	schedule_delayed_work(&all_cpu_data[this_cpu]->hwp_notify_work,
+ 			      msecs_to_jiffies(10));
+ 
+-	spin_unlock_irqrestore(&hwp_notify_lock, flags);
++	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
+ 
+ 	return;
+ 
+ ack_intr:
+ 	wrmsrl_safe(MSR_HWP_STATUS, 0);
+-	spin_unlock_irqrestore(&hwp_notify_lock, flags);
++	raw_spin_unlock_irqrestore(&hwp_notify_lock, flags);
+ }
+ 
+ static void intel_pstate_disable_hwp_interrupt(struct cpudata *cpudata)
+@@ -1673,9 +1673,9 @@ static void intel_pstate_disable_hwp_int
+ 	/* wrmsrl_on_cpu has to be outside spinlock as this can result in IPC */
+ 	wrmsrl_on_cpu(cpudata->cpu, MSR_HWP_INTERRUPT, 0x00);
+ 
+-	spin_lock_irq(&hwp_notify_lock);
++	raw_spin_lock_irq(&hwp_notify_lock);
+ 	cancel_work = cpumask_test_and_clear_cpu(cpudata->cpu, &hwp_intr_enable_mask);
+-	spin_unlock_irq(&hwp_notify_lock);
++	raw_spin_unlock_irq(&hwp_notify_lock);
+ 
+ 	if (cancel_work)
+ 		cancel_delayed_work_sync(&cpudata->hwp_notify_work);
+@@ -1690,10 +1690,10 @@ static void intel_pstate_enable_hwp_inte
+ 	if (boot_cpu_has(X86_FEATURE_HWP_NOTIFY)) {
+ 		u64 interrupt_mask = HWP_GUARANTEED_PERF_CHANGE_REQ;
+ 
+-		spin_lock_irq(&hwp_notify_lock);
++		raw_spin_lock_irq(&hwp_notify_lock);
+ 		INIT_DELAYED_WORK(&cpudata->hwp_notify_work, intel_pstate_notify_work);
+ 		cpumask_set_cpu(cpudata->cpu, &hwp_intr_enable_mask);
+-		spin_unlock_irq(&hwp_notify_lock);
++		raw_spin_unlock_irq(&hwp_notify_lock);
+ 
+ 		if (cpu_feature_enabled(X86_FEATURE_HWP_HIGHEST_PERF_CHANGE))
+ 			interrupt_mask |= HWP_HIGHEST_PERF_CHANGE_REQ;
 
 
