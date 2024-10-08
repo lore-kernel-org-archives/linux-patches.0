@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74221DE4CC;
-	Tue,  8 Oct 2024 13:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA531DED4E;
+	Tue,  8 Oct 2024 13:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393552; cv=none; b=GGDoYCWT5Jc2WQ9aF/Ow8BRx0BFwLbSX4vIXK/9SAyyTKN3jwpkBy+MEgFtZ7Gs5qCc0+7SCJLscOaoBDdG5MLsne+X/0njeoCxnX8Ii7o997hryIe3j847I7LY2cZtuHzIh+oA3gbZv5ro+hob6+dtx5RaZwfBPBpjvaO/r3bw=
+	t=1728393555; cv=none; b=pm3pBGUyL2QmD7zXedjS/qntAUaNM9CU+pZ/n4B0VWywNS8krJyIrxB3lduyDZ/o2S5sMSXJLKlMCXxm+qkdgdAc8XezQRo8N7/sSJSxRdCIg4rFP+Pfr2DcfH5I7GdbmVsJGthcN02kowBWJT/uKs0k3SzOGy+vRkC3ls8KamE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393552; c=relaxed/simple;
-	bh=3x5AavfRmDvNRMiZnMjHR5ixBr/0YwEx2PtM7wRkDaM=;
+	s=arc-20240116; t=1728393555; c=relaxed/simple;
+	bh=YC9E3bvTJ7hN49WtkAHje9Qk2NVVPjrS7COHf2H/ZGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtlN0BckDp+dPvEfR8naAJba2zA5hQaU1PQqGHADOxeJzuy/HMyezYY+OwJdMtCe6NvTjhV+vyafNJ/jNlb7qEHE9QzI+EQLfysiVQe53NQhR/EB1oZEaFMQktc/GT2OJYgYpT5nvlylYAQIkKC4GVCfiQjhQbE6FqQigCLdB3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpvVi6gq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dd0X+ZgN0vgHxOr/iogi8FaPGgJJZsYDj8AOdfxFvzIk0nndKx/8iSFlgj72i1prmgceQTCHwTgBOVXtEtB3YU9pfolXZ6nNcBw9T138Rird66SEjP47aWlnJYVmM5hbTo09xvk84NRIfbq0NILJs5bDI7by5t+zwWeoML0jtZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dApZnxtL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpvVi6gq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04476C4CEC7;
-	Tue,  8 Oct 2024 13:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dApZnxtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD3FC4CEC7;
+	Tue,  8 Oct 2024 13:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393551;
-	bh=3x5AavfRmDvNRMiZnMjHR5ixBr/0YwEx2PtM7wRkDaM=;
+	s=korg; t=1728393555;
+	bh=YC9E3bvTJ7hN49WtkAHje9Qk2NVVPjrS7COHf2H/ZGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpvVi6gqc5vBO18w1pgQHUdKGaj+RbNQ0GOF6AEzlRHZdz4EaPfxah9b5EsEkKX0V
-	 rzUZ9yDQaphY5hWQfBkhNfIns3fKrcDCEGBMOCs8fBTSn1Gu/KLBZn8q+mrdl79Fuj
-	 11iyvtG9nwJGR48eWbm9uN/fpvWljLlT0h88hcds=
+	b=dApZnxtLMnt0YgJcB+w4GBmBp9WOvkLo1W6qPFwelPIAHcHNT3SvK7jBVFCmHG0mx
+	 mpV4w9wkHJ22kfYuzs0eGB2GQ5435bV6cQVyDKslAeQfghmXuA8dYwkUj/nrDvdUUg
+	 p0hkK7YRysPmvbhWM/u6afVMZRQQwbV/cfCFVJlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/386] drm/amd/display: Fix index out of bounds in DCN30 color transformation
-Date: Tue,  8 Oct 2024 14:06:43 +0200
-Message-ID: <20241008115635.643797285@linuxfoundation.org>
+Subject: [PATCH 6.6 185/386] bpftool: Fix undefined behavior in qsort(NULL, 0, ...)
+Date: Tue,  8 Oct 2024 14:07:10 +0200
+Message-ID: <20241008115636.692458161@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -58,51 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit d81873f9e715b72d4f8d391c8eb243946f784dfc ]
+[ Upstream commit f04e2ad394e2755d0bb2d858ecb5598718bf00d5 ]
 
-This commit addresses a potential index out of bounds issue in the
-`cm3_helper_translate_curve_to_hw_format` function in the DCN30 color
-management module. The issue could occur when the index 'i' exceeds the
-number of transfer function points (TRANSFER_FUNC_POINTS).
+When netfilter has no entry to display, qsort is called with
+qsort(NULL, 0, ...). This results in undefined behavior, as UBSan
+reports:
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, the function returns
-false to indicate an error.
+net.c:827:2: runtime error: null pointer passed as argument 1, which is declared to never be null
 
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:180 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:181 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:182 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+Although the C standard does not explicitly state whether calling qsort
+with a NULL pointer when the size is 0 constitutes undefined behavior,
+Section 7.1.4 of the C standard (Use of library functions) mentions:
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+"Each of the following statements applies unless explicitly stated
+otherwise in the detailed descriptions that follow: If an argument to a
+function has an invalid value (such as a value outside the domain of
+the function, or a pointer outside the address space of the program, or
+a null pointer, or a pointer to non-modifiable storage when the
+corresponding parameter is not const-qualified) or a type (after
+promotion) not expected by a function with variable number of
+arguments, the behavior is undefined."
+
+To avoid this, add an early return when nf_link_info is NULL to prevent
+calling qsort with a NULL pointer.
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20240910150207.3179306-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/bpf/bpftool/net.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-index e0b1fc92ed186..62c02adae7e76 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-@@ -178,6 +178,8 @@ bool cm3_helper_translate_curve_to_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS)
-+				return false;
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index fd54ff436493f..28e9417a5c2e3 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -819,6 +819,9 @@ static void show_link_netfilter(void)
+ 		nf_link_count++;
+ 	}
+ 
++	if (!nf_link_info)
++		return;
++
+ 	qsort(nf_link_info, nf_link_count, sizeof(*nf_link_info), netfilter_link_compar);
+ 
+ 	for (id = 0; id < nf_link_count; id++) {
 -- 
 2.43.0
 
