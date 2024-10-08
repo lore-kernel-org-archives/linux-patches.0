@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B35A192594;
-	Tue,  8 Oct 2024 12:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732BD192594;
+	Tue,  8 Oct 2024 12:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391422; cv=none; b=d9aRqECbx4l7hEvmZZi1/33dGO/Y2VLRkR+3+NXD4NjlqEJrEATNqoukOROcge8Sjb6Vxs524G2+wN69Sf5GsmfZUZaqO3RkGvQVIxUYzJxFloK3KdFN4rTqNoQp7r1j9UIl4RI6blFqlG2GiFtFEcNws5k8C3eAuoKaYVRwIQU=
+	t=1728391425; cv=none; b=Q0IyVjpG4dtT9W9OzOpORXevMu/KynznzmFuJZd0wYUisOukVqdprR+daiX0jYzV2MX4yEdnJxe8gH5FHtwQlZjwQGLffL1RWCi6Ya8IcZKGaTWjLVMITyt/Cry5upNJy9ADcwBdbMOdXwIx3kO+nn9RvtftsIP/jJ0bl2SU5QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391422; c=relaxed/simple;
-	bh=oLqsdmTmlW2kWSwm0fT4R+CP5p7oGXEQxPa/gKMEu6o=;
+	s=arc-20240116; t=1728391425; c=relaxed/simple;
+	bh=zVDDnqPTKTBEvm99fVULcAbEp8scE/aMKhAVjkUHgHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/zI3IjCfeJCPEpYPUMjjusyXZJTctAqmp208EXuv4AlXDVVF4qyGwsKeA/0Kr72aHBuBR7GbsHzbn5qpOenbq5m4V1ONxJU52IstJpUfrOA3NJ9giqMjywalavQHTFaBd5xu3scudSl13/jpwDHNtl8xErDyKWB5E6oNiny6SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmWbZeS3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRnUmUUHukkHcLPHVuzmD2Pl8LYD1TqjQeKdmCvCdDXRJwCqN+pXMBlKOEmVc0SqH/QCGZmKV2xqiYD/W0wHyzFdm9z2ZPOAPrsxt8RyKxG70wy2hdtVlul59bpVoq4f8rlT54CMdDIpMa8pV5gI+sKRyaaaXKqsecWL9ryLESs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDmeGdru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmWbZeS3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE8DC4CEC7;
-	Tue,  8 Oct 2024 12:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDmeGdru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB24C4CEC7;
+	Tue,  8 Oct 2024 12:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391422;
-	bh=oLqsdmTmlW2kWSwm0fT4R+CP5p7oGXEQxPa/gKMEu6o=;
+	s=korg; t=1728391425;
+	bh=zVDDnqPTKTBEvm99fVULcAbEp8scE/aMKhAVjkUHgHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmWbZeS3Zw7PaNSY/4aD1KQLlZPD4hwMBxgJOfiaEgYcCmbqKJI1nCPnfc8vlu4oD
-	 aSzb89WhqNlYUkYAfli/i9ZcZjxqJhEsEAXmkMQiW2ovd3M3AVzksrURLOnu8QX/lT
-	 jOCGNlyRs88yH45rFGqlxN0s8spSoz9639lng76c=
+	b=MDmeGdruOH8Mrpd8Jmg30l2Kk34Y5o+d+pognfU3kMuOYI7b2lzza9bs/swBOtkQY
+	 YyoD+oziIc9v4OgFo7rqbVb2B9G28I2eFxj9G3uSYMyKqsnAKOn8dv/MS+9r/ud3TJ
+	 eDyJxrMSxlhxBwn5oVauCVz9UoqwQmN5OOMnmZKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Glozar <tglozar@redhat.com>,
-	Ben Hutchings <benh@debian.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 077/558] tools/rtla: Fix installation from out-of-tree build
-Date: Tue,  8 Oct 2024 14:01:47 +0200
-Message-ID: <20241008115705.406651073@linuxfoundation.org>
+Subject: [PATCH 6.11 068/558] ALSA: hda/generic: Unconditionally prefer preferred_dacs pairs
+Date: Tue,  8 Oct 2024 14:01:38 +0200
+Message-ID: <20241008115704.891887854@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,38 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f771d5369f1dbfe32c93bcb4f5d7ca8322b15389 ]
+[ Upstream commit 1c801e7f77445bc56e5e1fec6191fd4503534787 ]
 
-rtla now supports out-of-tree builds, but installation fails as it
-still tries to install the rtla binary from the source tree.  Use the
-existing macro $(RTLA) to refer to the binary.
+Some time ago, we introduced the obey_preferred_dacs flag for choosing
+the DAC/pin pairs specified by the driver instead of parsing the
+paths.  This works as expected, per se, but there have been a few
+cases where we forgot to set this flag while preferred_dacs table is
+already set up.  It ended up with incorrect wiring and made us
+wondering why it doesn't work.
 
-Link: https://lore.kernel.org/ZudubuoU_JHjPZ7w@decadent.org.uk
-Fixes: 01474dc706ca ("tools/rtla: Use tools/build makefiles to build rtla")
-Reviewed-by: Tomas Glozar <tglozar@redhat.com>
-Tested-by: Tomas Glozar <tglozar@redhat.com>
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Basically, when the preferred_dacs table is provided, it means that
+the driver really wants to wire up to follow that.  That is, the
+presence of the preferred_dacs table itself is already a "do-it"
+flag.
+
+In this patch, we simply replace the evaluation of obey_preferred_dacs
+flag with the presence of preferred_dacs table for fixing the
+misbehavior.  Another patch to drop of the obsoleted flag will
+follow.
+
+Fixes: 242d990c158d ("ALSA: hda/generic: Add option to enforce preferred_dacs pairs")
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1219803
+Link: https://patch.msgid.link/20241001121439.26060-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/Makefile.rtla | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/hda_generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/tracing/rtla/Makefile.rtla b/tools/tracing/rtla/Makefile.rtla
-index 3ff0b8970896f..cc1d6b615475f 100644
---- a/tools/tracing/rtla/Makefile.rtla
-+++ b/tools/tracing/rtla/Makefile.rtla
-@@ -38,7 +38,7 @@ BINDIR		:= /usr/bin
- .PHONY: install
- install: doc_install
- 	@$(MKDIR) -p $(DESTDIR)$(BINDIR)
--	$(call QUIET_INSTALL,rtla)$(INSTALL) rtla -m 755 $(DESTDIR)$(BINDIR)
-+	$(call QUIET_INSTALL,rtla)$(INSTALL) $(RTLA) -m 755 $(DESTDIR)$(BINDIR)
- 	@$(STRIP) $(DESTDIR)$(BINDIR)/rtla
- 	@test ! -f $(DESTDIR)$(BINDIR)/osnoise || $(RM) $(DESTDIR)$(BINDIR)/osnoise
- 	@$(LN) rtla $(DESTDIR)$(BINDIR)/osnoise
+diff --git a/sound/pci/hda/hda_generic.c b/sound/pci/hda/hda_generic.c
+index 9cff87dfbecbb..b34d84fedcc8a 100644
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -1383,7 +1383,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		struct nid_path *path;
+ 		hda_nid_t pin = pins[i];
+ 
+-		if (!spec->obey_preferred_dacs) {
++		if (!spec->preferred_dacs) {
+ 			path = snd_hda_get_path_from_idx(codec, path_idx[i]);
+ 			if (path) {
+ 				badness += assign_out_path_ctls(codec, path);
+@@ -1395,7 +1395,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		if (dacs[i]) {
+ 			if (is_dac_already_used(codec, dacs[i]))
+ 				badness += bad->shared_primary;
+-		} else if (spec->obey_preferred_dacs) {
++		} else if (spec->preferred_dacs) {
+ 			badness += BAD_NO_PRIMARY_DAC;
+ 		}
+ 
 -- 
 2.43.0
 
