@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2E41779B1;
-	Tue,  8 Oct 2024 12:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565B01DDC24;
+	Tue,  8 Oct 2024 12:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391110; cv=none; b=koOS+Xauauxb9IB9X8/OOV3OsGk1P/M6bqHPK9Np8kO9NQ/QMa/HhdgrDQ+7Yj07u+gFcFd/r4nPbG9mtwSSzO0p4cDLa6tRaAd3DKa0PdOwQYPjXsymOPyKrSHc4TooAVTceDtIrQNfk/e0+IZOkriaaYCBJTyDEU7CupbxjmM=
+	t=1728391114; cv=none; b=ioRJ/Kx686F4sxuPyi+Wd3aH5CIczstEDteGCAVC/lyNVx3kVGMla9AM6eKDqYq4TzOTIpQdL38jPb8wWcimKzaOv8t6M4zwnYywFMWQKxOQxQ/O+FLkmgoLAlSUZACb4kOWG6mGZiX0OvnoTEjPpYelTvYBeXXdWaMEW10VeWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391110; c=relaxed/simple;
-	bh=L70wxhkBc6RCICoHGqi9sxhzWTnuO40w5DvhBaneFPo=;
+	s=arc-20240116; t=1728391114; c=relaxed/simple;
+	bh=vJQZ6zt1p4uuj8Z5femBQShRrDz4xpMmG/9KTwzaLOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nzm0lOWLpkeXcm0TxsyASEIXewM7vEftiJt96u7VLKzTsYRqEWfEcSueL+sPCF9kwJm2RipHfGoPDKePSEIJSANlH3ScXDwnM0dnxCzdNh6xaOYO3vZ3BQremfAsxlfVM8E5jYi3h5me/AexS1uHixJw/nsYI0RSRhD+Pm8iHTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtVtTxSx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEJ3jmSuXp0EDuhsLgJnFNBYgCahsDxjDigt49PxyYuzz1PUqlqDDSmgTeTSarIhM5sM4/ZLtU3ARA+tGAa0+1nVoMgihvMd/4KIo0wmvJ7U26fzfdcRbApuflWKm1l0bxi+3vvKEg+zqHxp/RlQnBWV2+xnV6RHQz3e1EPfZPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNLvHw9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtVtTxSx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3133EC4CECD;
-	Tue,  8 Oct 2024 12:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNLvHw9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8EC4CEC7;
+	Tue,  8 Oct 2024 12:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391110;
-	bh=L70wxhkBc6RCICoHGqi9sxhzWTnuO40w5DvhBaneFPo=;
+	s=korg; t=1728391113;
+	bh=vJQZ6zt1p4uuj8Z5femBQShRrDz4xpMmG/9KTwzaLOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtVtTxSx2NmnpucI9g0mmZHpWtiYHRcWmgWFIlRjqj6b86EU/VvytbC6BERtRdPlA
-	 xjli1erdNpK5HRgoR+1HFTT3oMmZ8F8jkiVywby+cN/TnsKM9WYjb12DdNvR19Jnt/
-	 FDsNzPd2kLcYpTbYMVDTQ3xeoWrT2tUznN3W+eRY=
+	b=oNLvHw9jVXN7kfpVkKZu2cHwKnvqaSsrJkIvf0sz0mdKTt6bqeT9xBodqMZTuGixh
+	 PHlxzYF1j1Zw9a5okwPiqQ5RJhALIHKcagF5/DycjysGVMzq+BABtRoufZp2kAREZh
+	 dhlQEnDiESvFzlVRnP2pUXONlDHG6ambZ2SOrvwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 011/558] ksmbd: fix warning: comparison of distinct pointer types lacks a cast
-Date: Tue,  8 Oct 2024 14:00:41 +0200
-Message-ID: <20241008115702.666015510@linuxfoundation.org>
+Subject: [PATCH 6.11 012/558] mailbox: ARM_MHU_V3 should depend on ARM64
+Date: Tue,  8 Oct 2024 14:00:42 +0200
+Message-ID: <20241008115702.705809192@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -45,75 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 289ebd9afeb94862d96c89217068943f1937df5b ]
+[ Upstream commit 0e4ed48292c55eeb0afab22f8930b556f17eaad2 ]
 
-smb2pdu.c: In function ‘smb2_open’:
-./include/linux/minmax.h:20:28: warning: comparison of distinct
-pointer types lacks a cast
-   20 |  (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-      |                            ^~
-./include/linux/minmax.h:26:4: note: in expansion of macro ‘__typecheck’
-   26 |   (__typecheck(x, y) && __no_side_effects(x, y))
-      |    ^~~~~~~~~~~
-./include/linux/minmax.h:36:24: note: in expansion of macro ‘__safe_cmp’
-   36 |  __builtin_choose_expr(__safe_cmp(x, y), \
-      |                        ^~~~~~~~~~
-./include/linux/minmax.h:45:19: note: in expansion of macro ‘__careful_cmp’
-   45 | #define min(x, y) __careful_cmp(x, y, <)
-      |                   ^~~~~~~~~~~~~
-/home/linkinjeon/git/smbd_work/ksmbd/smb2pdu.c:3713:27: note: in
-expansion of macro ‘min’
- 3713 |     fp->durable_timeout = min(dh_info.timeout,
+The ARM MHUv3 controller is only present on ARM64 SoCs.  Hence add a
+dependency on ARM64, to prevent asking the user about this driver when
+configuring a kernel for a different architecture than ARM64.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: ca1a8680b134b5e6 ("mailbox: arm_mhuv3: Add driver")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c   | 5 +++--
- fs/smb/server/vfs_cache.h | 4 ++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/mailbox/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 8bdc592514188..065adfb985fe2 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3531,8 +3531,9 @@ int smb2_open(struct ksmbd_work *work)
- 			memcpy(fp->create_guid, dh_info.CreateGuid,
- 					SMB2_CREATE_GUID_SIZE);
- 			if (dh_info.timeout)
--				fp->durable_timeout = min(dh_info.timeout,
--						DURABLE_HANDLE_MAX_TIMEOUT);
-+				fp->durable_timeout =
-+					min_t(unsigned int, dh_info.timeout,
-+					      DURABLE_HANDLE_MAX_TIMEOUT);
- 			else
- 				fp->durable_timeout = 60;
- 		}
-diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index b0f6d0f94cb8d..5bbb179736c29 100644
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -100,8 +100,8 @@ struct ksmbd_file {
- 	struct list_head		blocked_works;
- 	struct list_head		lock_list;
+diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
+index 4eed972959279..cbd9206cd7de3 100644
+--- a/drivers/mailbox/Kconfig
++++ b/drivers/mailbox/Kconfig
+@@ -25,6 +25,7 @@ config ARM_MHU_V2
  
--	int				durable_timeout;
--	int				durable_scavenger_timeout;
-+	unsigned int			durable_timeout;
-+	unsigned int			durable_scavenger_timeout;
- 
- 	/* if ls is happening on directory, below is valid*/
- 	struct ksmbd_readdir_data	readdir_data;
+ config ARM_MHU_V3
+ 	tristate "ARM MHUv3 Mailbox"
++	depends on ARM64 || COMPILE_TEST
+ 	depends on HAS_IOMEM || COMPILE_TEST
+ 	depends on OF
+ 	help
 -- 
 2.43.0
 
