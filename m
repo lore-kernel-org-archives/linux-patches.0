@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6EA1DF75D;
-	Tue,  8 Oct 2024 13:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E871DF96C;
+	Tue,  8 Oct 2024 13:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393866; cv=none; b=RettmrdIqjl3c8txnESKoKQa/44LxRB4S45SfeEVAhDt7EtpWhA+VobnY3LLML6n7Qre8VFnK60h1kpxDBkDrDv5IaaG7IHcEapB1LLeprlk/qg/hNUKwZwkfNF8g6mWwXYo29u5Eig+weSBoQ4Vljtqn24zEqVxLpLlS1OW8E0=
+	t=1728393874; cv=none; b=Yg8hzQ9Fp/39Uu/Grn4LZZP5mE3uzQwVBDrYoQcb3HEpx6g9Etrfppg7QcSKTEzHw/ZtrWOj3H6Q5nThK/nCf+hf9O/xz5WxhPhNKQ1gKM0D9a/2rETX4Hms++zjKl43aIp3KnDR1rn/tSjYPj1aViXYtLYrSjh9XauDN6CjPRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393866; c=relaxed/simple;
-	bh=2FKR13EhCNlanyq0N1AWqiOQUjEVzB7IYffecqAexbg=;
+	s=arc-20240116; t=1728393874; c=relaxed/simple;
+	bh=0Foy6w7OlhKsTSpezmOEhr2xwkrj++HgNnEY7c62LnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AwmpNgevEHSDZ6+B96RU2SVRJkibJWp2rYqITyrPOATCp6W0Y6Ry7itVOGCVeys/lClmCDG+oLh4TSBaFVfAVYatFRVC+SA4PKDULy158PLeHiqyRBNzXjNsv7U8gf3KsWDI25x+wZRdh/DXk0jvWre37PrD2yCuRWLxRF1nS+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExpmM5n5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwiQ6nXx9PIib3Pq05ZIk+ZB00OrdGvwafaevqFdMjEHtDd00Wr6JY9kaLLF3COrggZesoB1fBGkfgp9Cg/hFUOYST8ecEeX5LBM6vGX9aGGccxIIyh4/hUlkqHExRzrx7UW3N8QGs+LOYMnpJFhEi9gEZ6HoC1U04NImhTrJm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4wOyob2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExpmM5n5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76128C4CEC7;
-	Tue,  8 Oct 2024 13:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4wOyob2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B71DC4AF09;
+	Tue,  8 Oct 2024 13:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393865;
-	bh=2FKR13EhCNlanyq0N1AWqiOQUjEVzB7IYffecqAexbg=;
+	s=korg; t=1728393874;
+	bh=0Foy6w7OlhKsTSpezmOEhr2xwkrj++HgNnEY7c62LnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExpmM5n57fel0PjHVpalv2NMKhcI72rM92KYFjVyXqjgjGKugPdxQeXu1LU+3uiCX
-	 myvY1lacHy26hpglB3ZMSsQ+9FK2QX06qAIp/UvmQo+ZujETuWRJ/UYQQhZYu85o7d
-	 pzud4OCjTnX58YJFBgeV/8ftGrqtiEnMhfSRW/Jg=
+	b=K4wOyob2hQt3ccOsC7FO0GbSP8K3Qh+8bcbyevG50d/8oBGUX0p/9Jv8RvvtJouVN
+	 tUpn5j0I6CuxTp3rgY9vYsmcE4IV5r9pNWZDra1fO4IEwE2ECjc8Orkfwrovnrhd2o
+	 8wKoLo1R+CZGmZxwqK2Uu99SgczwrHwysJyIHHAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Stange <nstange@suse.com>,
-	Chun-Yi Lee <jlee@suse.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 278/386] aoe: fix the potential use-after-free problem in more places
-Date: Tue,  8 Oct 2024 14:08:43 +0200
-Message-ID: <20241008115640.327670347@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 279/386] media: ov5675: Fix power on/off delay timings
+Date: Tue,  8 Oct 2024 14:08:44 +0200
+Message-ID: <20241008115640.367342812@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,98 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chun-Yi Lee <joeyli.kernel@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 6d6e54fc71ad1ab0a87047fd9c211e75d86084a3 upstream.
+commit 719ec29fceda2f19c833d2784b1574638320400f upstream.
 
-For fixing CVE-2023-6270, f98364e92662 ("aoe: fix the potential
-use-after-free problem in aoecmd_cfg_pkts") makes tx() calling dev_put()
-instead of doing in aoecmd_cfg_pkts(). It avoids that the tx() runs
-into use-after-free.
+The ov5675 specification says that the gap between XSHUTDN deassert and the
+first I2C transaction should be a minimum of 8192 XVCLK cycles.
 
-Then Nicolai Stange found more places in aoe have potential use-after-free
-problem with tx(). e.g. revalidate(), aoecmd_ata_rw(), resend(), probe()
-and aoecmd_cfg_rsp(). Those functions also use aoenet_xmit() to push
-packet to tx queue. So they should also use dev_hold() to increase the
-refcnt of skb->dev.
+Right now we use a usleep_rage() that gives a sleep time of between about
+430 and 860 microseconds.
 
-On the other hand, moving dev_put() to tx() causes that the refcnt of
-skb->dev be reduced to a negative value, because corresponding
-dev_hold() are not called in revalidate(), aoecmd_ata_rw(), resend(),
-probe(), and aoecmd_cfg_rsp(). This patch fixed this issue.
+On the Lenovo X13s we have observed that in about 1/20 cases the current
+timing is too tight and we start transacting before the ov5675's reset
+cycle completes, leading to I2C bus transaction failures.
 
+The reset racing is sometimes triggered at initial chip probe but, more
+usually on a subsequent power-off/power-on cycle e.g.
+
+[   71.451662] ov5675 24-0010: failed to write reg 0x0103. error = -5
+[   71.451686] ov5675 24-0010: failed to set plls
+
+The current quiescence period we have is too tight. Instead of expressing
+the post reset delay in terms of the current XVCLK this patch converts the
+power-on and power-off delays to the maximum theoretical delay @ 6 MHz with
+an additional buffer.
+
+1.365 milliseconds on the power-on path is 1.5 milliseconds with grace.
+85.3 microseconds on the power-off path is 90 microseconds with grace.
+
+Fixes: 49d9ad719e89 ("media: ov5675: add device-tree support and support runtime PM")
 Cc: stable@vger.kernel.org
-Link: https://nvd.nist.gov/vuln/detail/CVE-2023-6270
-Fixes: f98364e92662 ("aoe: fix the potential use-after-free problem in aoecmd_cfg_pkts")
-Reported-by: Nicolai Stange <nstange@suse.com>
-Signed-off-by: Chun-Yi Lee <jlee@suse.com>
-Link: https://lore.kernel.org/stable/20240624064418.27043-1-jlee%40suse.com
-Link: https://lore.kernel.org/r/20241002035458.24401-1-jlee@suse.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # RK3399 Puma with
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/aoe/aoecmd.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov5675.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/block/aoe/aoecmd.c
-+++ b/drivers/block/aoe/aoecmd.c
-@@ -361,6 +361,7 @@ ata_rw_frameinit(struct frame *f)
- 	}
+--- a/drivers/media/i2c/ov5675.c
++++ b/drivers/media/i2c/ov5675.c
+@@ -979,12 +979,10 @@ static int ov5675_set_stream(struct v4l2
  
- 	ah->cmdstat = ATA_CMD_PIO_READ | writebit | extbit;
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
- }
+ static int ov5675_power_off(struct device *dev)
+ {
+-	/* 512 xvclk cycles after the last SCCB transation or MIPI frame end */
+-	u32 delay_us = DIV_ROUND_UP(512, OV5675_XVCLK_19_2 / 1000 / 1000);
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
  
-@@ -401,6 +402,8 @@ aoecmd_ata_rw(struct aoedev *d)
- 		__skb_queue_head_init(&queue);
- 		__skb_queue_tail(&queue, skb);
- 		aoenet_xmit(&queue);
-+	} else {
-+		dev_put(f->t->ifp->nd);
- 	}
- 	return 1;
- }
-@@ -483,10 +486,13 @@ resend(struct aoedev *d, struct frame *f
- 	memcpy(h->dst, t->addr, sizeof h->dst);
- 	memcpy(h->src, t->ifp->nd->dev_addr, sizeof h->src);
+-	usleep_range(delay_us, delay_us * 2);
++	usleep_range(90, 100);
  
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
- 	skb = skb_clone(skb, GFP_ATOMIC);
--	if (skb == NULL)
-+	if (skb == NULL) {
-+		dev_put(t->ifp->nd);
- 		return;
-+	}
- 	f->sent = ktime_get();
- 	__skb_queue_head_init(&queue);
- 	__skb_queue_tail(&queue, skb);
-@@ -617,6 +623,8 @@ probe(struct aoetgt *t)
- 		__skb_queue_head_init(&queue);
- 		__skb_queue_tail(&queue, skb);
- 		aoenet_xmit(&queue);
-+	} else {
-+		dev_put(f->t->ifp->nd);
- 	}
- }
+ 	clk_disable_unprepare(ov5675->xvclk);
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 1);
+@@ -995,7 +993,6 @@ static int ov5675_power_off(struct devic
  
-@@ -1395,6 +1403,7 @@ aoecmd_ata_id(struct aoedev *d)
- 	ah->cmdstat = ATA_CMD_ID_ATA;
- 	ah->lba3 = 0xa0;
+ static int ov5675_power_on(struct device *dev)
+ {
+-	u32 delay_us = DIV_ROUND_UP(8192, OV5675_XVCLK_19_2 / 1000 / 1000);
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
+ 	struct ov5675 *ov5675 = to_ov5675(sd);
+ 	int ret;
+@@ -1021,8 +1018,11 @@ static int ov5675_power_on(struct device
  
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
+ 	gpiod_set_value_cansleep(ov5675->reset_gpio, 0);
  
- 	d->rttavg = RTTAVG_INIT;
-@@ -1404,6 +1413,8 @@ aoecmd_ata_id(struct aoedev *d)
- 	skb = skb_clone(skb, GFP_ATOMIC);
- 	if (skb)
- 		f->sent = ktime_get();
-+	else
-+		dev_put(t->ifp->nd);
+-	/* 8192 xvclk cycles prior to the first SCCB transation */
+-	usleep_range(delay_us, delay_us * 2);
++	/* Worst case quiesence gap is 1.365 milliseconds @ 6MHz XVCLK
++	 * Add an additional threshold grace period to ensure reset
++	 * completion before initiating our first I2C transaction.
++	 */
++	usleep_range(1500, 1600);
  
- 	return skb;
+ 	return 0;
  }
 
 
