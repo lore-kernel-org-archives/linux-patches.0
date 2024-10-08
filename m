@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0043A1DFE39;
-	Tue,  8 Oct 2024 13:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B791E04B2;
+	Tue,  8 Oct 2024 13:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393815; cv=none; b=AwX7NJNSv53FyF+wbeiZHJPmBt3+I9lyUxvmPorKHLLKKiSBewPLb0/AQm1mx9+znO9rd8dfM/wQ0ZATeLHOx135EiaiNMYK7o43CqDZ/stcCsFqhEKsGiRdZO8UPjSlYOjFFBvl4PkgD5bqj1LiJgtzetuKkTtm/cxuVwFE5Yg=
+	t=1728393818; cv=none; b=Ng18htr/XwuUfUtZy6dt9zRuAzGkRNgup/obsoUAORk9AvylQlho9MYS1nU9XcE46N4rkqoNCz1lbAPFKYL1banfDLTA2Y40Ks3FZATV2OVklZzu1TOs+RsBiwPpzqvqskkzbd8hoUNsSy26UEwiD/BZO4j+b0rJyVhgs+2wbOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393815; c=relaxed/simple;
-	bh=Rs7zLp7q9Ti5ZDvMclbIGGzseIbhNhOwVAtt+mi2tyc=;
+	s=arc-20240116; t=1728393818; c=relaxed/simple;
+	bh=UMrVL9HNWrPPU1dYG23VI6f9/yBNxXk9XmMftg87bJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2hAAhFtGzoyv+skYefraLqxzbDeArez2UH+41NjdOS1D92827TxSpqx4TMfdv9aBq+qHTzlnDII758j/W+3oq+OX7x8orTdn1ZXrclDpBFpRApISSJTJDJH5831o7CtCt0q9TuDSkl80NPRQruzMSY5gQ/uMHALnB9IqNGhmb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1OFZPCZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lvkR3iU/+p3/akiLwNeOtGaDGSsVdJtM6z26/1YULwoRr0dlSMnlCTAofcVJcizIZO3GoSrUd6gM1ajkad/TlFCkBxWhd4MCK0upG/ArS++MuzHcAn+yhGV3tC6t30bBYgBA802RwQmyEKMHIQEdD5jt/iWcqxAojA19eqEp73s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0XZSJ8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1OFZPCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442A0C4CECD;
-	Tue,  8 Oct 2024 13:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0XZSJ8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EABC4CECE;
+	Tue,  8 Oct 2024 13:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393814;
-	bh=Rs7zLp7q9Ti5ZDvMclbIGGzseIbhNhOwVAtt+mi2tyc=;
+	s=korg; t=1728393817;
+	bh=UMrVL9HNWrPPU1dYG23VI6f9/yBNxXk9XmMftg87bJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1OFZPCZ/yKscOdq2adBYjcsmiVp10PUgIhxf0JgOEaFlkt6eaTyUcYC9PVKAT3nh
-	 BCvgaCe4EVQXrEOp7caCRKB96ry7VvGKTa4YS7ux8kvlNBJYsIjynG8uVMQhv89anV
-	 1TMLTl2RbU1KZsEfoqJbNCwQ9gz9xSmoDUjs41hA=
+	b=G0XZSJ8KLIfvnRlC0LcB8To8KUplE37/bafQUBLhWf+3ljvIHnlBQUPN6HhmpO/MO
+	 zG71wbgJIy3puAMd3+kH0E0RGKrTGWGSrT6GsN2qZpesZcdU/sS4tDpq34la0frh5T
+	 bx5mWOtPoImGGQ66TLjQkZqG7fS+nguY748GWxAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"yao.ly" <yao.ly@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 232/386] ext4: correct encrypted dentry name hash when not casefolded
-Date: Tue,  8 Oct 2024 14:07:57 +0200
-Message-ID: <20241008115638.532402649@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>,
+	Deepak Rawat <drawat@vmware.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Thomas Hellstrom <thellstrom@vmware.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.6 223/386] drm: Consistently use struct drm_mode_rect for FB_DAMAGE_CLIPS
+Date: Tue,  8 Oct 2024 14:07:48 +0200
+Message-ID: <20241008115638.180401853@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,54 +54,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: yao.ly <yao.ly@linux.alibaba.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 70dd7b573afeba9b8f8a33f2ae1e4a9a2ec8c1ec upstream.
+commit 8b0d2f61545545ab5eef923ed6e59fc3be2385e0 upstream.
 
-EXT4_DIRENT_HASH and EXT4_DIRENT_MINOR_HASH will access struct
-ext4_dir_entry_hash followed ext4_dir_entry. But there is no ext4_dir_entry_hash
-followed when inode is encrypted and not casefolded
+FB_DAMAGE_CLIPS is a plane property for damage handling. Its UAPI
+should only use UAPI types. Hence replace struct drm_rect with
+struct drm_mode_rect in drm_atomic_plane_set_property(). Both types
+are identical in practice, so there's no change in behavior.
 
-Signed-off-by: yao.ly <yao.ly@linux.alibaba.com>
-Link: https://patch.msgid.link/1719816219-128287-1-git-send-email-yao.ly@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Closes: https://lore.kernel.org/dri-devel/Zu1Ke1TuThbtz15E@intel.com/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: d3b21767821e ("drm: Add a new plane property to send damage during plane update")
+Cc: Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>
+Cc: Deepak Rawat <drawat@vmware.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Thomas Hellstrom <thellstrom@vmware.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.0+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240923075841.16231-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/dir.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_atomic_uapi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/dir.c
-+++ b/fs/ext4/dir.c
-@@ -279,12 +279,20 @@ static int ext4_readdir(struct file *fil
- 					struct fscrypt_str de_name =
- 							FSTR_INIT(de->name,
- 								de->name_len);
-+					u32 hash;
-+					u32 minor_hash;
-+
-+					if (IS_CASEFOLDED(inode)) {
-+						hash = EXT4_DIRENT_HASH(de);
-+						minor_hash = EXT4_DIRENT_MINOR_HASH(de);
-+					} else {
-+						hash = 0;
-+						minor_hash = 0;
-+					}
- 
- 					/* Directory is encrypted */
- 					err = fscrypt_fname_disk_to_usr(inode,
--						EXT4_DIRENT_HASH(de),
--						EXT4_DIRENT_MINOR_HASH(de),
--						&de_name, &fstr);
-+						hash, minor_hash, &de_name, &fstr);
- 					de_name = fstr;
- 					fstr.len = save_len;
- 					if (err)
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -585,7 +585,7 @@ static int drm_atomic_plane_set_property
+ 					&state->fb_damage_clips,
+ 					val,
+ 					-1,
+-					sizeof(struct drm_rect),
++					sizeof(struct drm_mode_rect),
+ 					&replaced);
+ 		return ret;
+ 	} else if (property == plane->scaling_filter_property) {
 
 
