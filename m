@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9F31DE8BB;
-	Tue,  8 Oct 2024 12:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8565C1DE3BB;
+	Tue,  8 Oct 2024 12:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389605; cv=none; b=G790oPasqs5zSMAUQK46Q3HElo8deSQ+ijyaI4El3CCGfzGNmEmZcNijl915xrFMzFOUru8yVXM6BF69QlRMwxVvzcSqwKhohELVCz8xYBMqlnmcDpgAyFzv0F3XBMGN6g5AM/44IbVNCBsqgzYxhHAYuqZdnhSxbj+BFYULsj8=
+	t=1728389608; cv=none; b=YvW8TKBTwyIaDtzZG13+dOAjieLE4BhLgUY6NPPAisMWFL80YiWap8cmqJrt++17+phHPTj1wimCHs1nqwzHZ32WoyVD7T3R86WCr/g8FVUUNWamVv3F1qIPyR5mw6KLmP526xwUOKQvarqJQ/YSSUAYXqKyHSbS7ofBIRQsn1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389605; c=relaxed/simple;
-	bh=DTwwwkBDuTSBQn2tywHCfy0Eiz4pbWIb2FkuGytQfoM=;
+	s=arc-20240116; t=1728389608; c=relaxed/simple;
+	bh=UdhKj4LlmeFT5tjG+i3BfyKnhN1DGBI9MWrFlT+YFs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HArvYtXr2paC9QcT3B4hgmsv997t79xN4ZYMeCUXRN/M4zJPt3LTdo8L823CzQBQbKK9vbCpKneMNnJ9gzXSdQ47O75Iu0D4rMQDQeMXuFXbOWLPqpDONZSSeQjp90d1Yz7kbJJ89R27GG3G46ry8bnWMnMBQa10rCw0T4IIyqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gjkhqZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=he8Sqi8/3xO1rFi1UD21JMje6ND7IpbgiTRTz1k3a8FPDYZTq1piACBbafHld7Aq6mLh2N4quwR+FFFF3DGueRwzBDkcRGpjMyuHd+tqSHHCfNFGL0VXzRQ+MRHIVLiVUiSvMsK8Wjihrdnsh9qhJye4FZkv9duLrjAwHmvgFUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6LVj19s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gjkhqZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5262C4CEC7;
-	Tue,  8 Oct 2024 12:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6LVj19s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65B3C4CEC7;
+	Tue,  8 Oct 2024 12:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389605;
-	bh=DTwwwkBDuTSBQn2tywHCfy0Eiz4pbWIb2FkuGytQfoM=;
+	s=korg; t=1728389608;
+	bh=UdhKj4LlmeFT5tjG+i3BfyKnhN1DGBI9MWrFlT+YFs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gjkhqZYEwqhugk4ZvvyGkoHosgNHgGXjcpaFnAI3Zviv0LMhUa+ukwxcuc/M26Uv
-	 YXhNrvix5KrW8Hur7zdVUpWtTkoCC7vt2B/jLRT7YB9DrfABWMfleITO0Gt79z9pwy
-	 UeZ2obCWXeyQWcVVobUr+SPg6N54Zduo6H59F5G0=
+	b=X6LVj19sXCrcEptAwKGL3sH3P/je75oir5fxACS9gxg2lKtW+D/3K3S8Qio5MqlaD
+	 VE4p9o15KyuX4//KYdqO6LtlVrpG24ezrakl0Pxk50LnbP0qDWT6SZql5HubKYsmty
+	 gC3zOB1/6HzYqjtMM4wCgkKA0LlwVPmfBRgz3Ff4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 042/482] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
-Date: Tue,  8 Oct 2024 14:01:45 +0200
-Message-ID: <20241008115649.960328259@linuxfoundation.org>
+Subject: [PATCH 6.10 043/482] net: test for not too small csum_start in virtio_net_hdr_to_skb()
+Date: Tue,  8 Oct 2024 14:01:46 +0200
+Message-ID: <20241008115649.999671874@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,87 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
+[ Upstream commit 49d14b54a527289d09a9480f214b8c586322310a ]
 
-Regression Description:
+syzbot was able to trigger this warning [1], after injecting a
+malicious packet through af_packet, setting skb->csum_start and thus
+the transport header to an incorrect value.
 
-Depending on the options specified for the GRE tunnel device, small
-packets may be dropped. This occurs because the pskb_network_may_pull
-function fails due to the packet's insufficient length.
+We can at least make sure the transport header is after
+the end of the network header (with a estimated minimal size).
 
-For example, if only the okey option is specified for the tunnel device,
-original (before encapsulation) packets smaller than 28 bytes (including
-the IPv4 header) will be dropped. This happens because the required
-length is calculated relative to the network header, not the skb->head.
+[1]
+[   67.873027] skb len=4096 headroom=16 headlen=14 tailroom=0
+mac=(-1,-1) mac_len=0 net=(16,-6) trans=10
+shinfo(txflags=0 nr_frags=1 gso(size=0 type=0 segs=0))
+csum(0xa start=10 offset=0 ip_summed=3 complete_sw=0 valid=0 level=0)
+hash(0x0 sw=0 l4=0) proto=0x0800 pkttype=0 iif=0
+priority=0x0 mark=0x0 alloc_cpu=10 vlan_all=0x0
+encapsulation=0 inner(proto=0x0000, mac=0, net=0, trans=0)
+[   67.877172] dev name=veth0_vlan feat=0x000061164fdd09e9
+[   67.877764] sk family=17 type=3 proto=0
+[   67.878279] skb linear:   00000000: 00 00 10 00 00 00 00 00 0f 00 00 00 08 00
+[   67.879128] skb frag:     00000000: 0e 00 07 00 00 00 28 00 08 80 1c 00 04 00 00 02
+[   67.879877] skb frag:     00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.880647] skb frag:     00000020: 00 00 02 00 00 00 08 00 1b 00 00 00 00 00 00 00
+[   67.881156] skb frag:     00000030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.881753] skb frag:     00000040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.882173] skb frag:     00000050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.882790] skb frag:     00000060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.883171] skb frag:     00000070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.883733] skb frag:     00000080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.884206] skb frag:     00000090: 00 00 00 00 00 00 00 00 00 00 69 70 76 6c 61 6e
+[   67.884704] skb frag:     000000a0: 31 00 00 00 00 00 00 00 00 00 2b 00 00 00 00 00
+[   67.885139] skb frag:     000000b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.885677] skb frag:     000000c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.886042] skb frag:     000000d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.886408] skb frag:     000000e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.887020] skb frag:     000000f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   67.887384] skb frag:     00000100: 00 00
+[   67.887878] ------------[ cut here ]------------
+[   67.887908] offset (-6) >= skb_headlen() (14)
+[   67.888445] WARNING: CPU: 10 PID: 2088 at net/core/dev.c:3332 skb_checksum_help (net/core/dev.c:3332 (discriminator 2))
+[   67.889353] Modules linked in: macsec macvtap macvlan hsr wireguard curve25519_x86_64 libcurve25519_generic libchacha20poly1305 chacha_x86_64 libchacha poly1305_x86_64 dummy bridge sr_mod cdrom evdev pcspkr i2c_piix4 9pnet_virtio 9p 9pnet netfs
+[   67.890111] CPU: 10 UID: 0 PID: 2088 Comm: b363492833 Not tainted 6.11.0-virtme #1011
+[   67.890183] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   67.890309] RIP: 0010:skb_checksum_help (net/core/dev.c:3332 (discriminator 2))
+[   67.891043] Call Trace:
+[   67.891173]  <TASK>
+[   67.891274] ? __warn (kernel/panic.c:741)
+[   67.891320] ? skb_checksum_help (net/core/dev.c:3332 (discriminator 2))
+[   67.891333] ? report_bug (lib/bug.c:180 lib/bug.c:219)
+[   67.891348] ? handle_bug (arch/x86/kernel/traps.c:239)
+[   67.891363] ? exc_invalid_op (arch/x86/kernel/traps.c:260 (discriminator 1))
+[   67.891372] ? asm_exc_invalid_op (./arch/x86/include/asm/idtentry.h:621)
+[   67.891388] ? skb_checksum_help (net/core/dev.c:3332 (discriminator 2))
+[   67.891399] ? skb_checksum_help (net/core/dev.c:3332 (discriminator 2))
+[   67.891416] ip_do_fragment (net/ipv4/ip_output.c:777 (discriminator 1))
+[   67.891448] ? __ip_local_out (./include/linux/skbuff.h:1146 ./include/net/l3mdev.h:196 ./include/net/l3mdev.h:213 net/ipv4/ip_output.c:113)
+[   67.891459] ? __pfx_ip_finish_output2 (net/ipv4/ip_output.c:200)
+[   67.891470] ? ip_route_output_flow (./arch/x86/include/asm/preempt.h:84 (discriminator 13) ./include/linux/rcupdate.h:96 (discriminator 13) ./include/linux/rcupdate.h:871 (discriminator 13) net/ipv4/route.c:2625 (discriminator 13) ./include/net/route.h:141 (discriminator 13) net/ipv4/route.c:2852 (discriminator 13))
+[   67.891484] ipvlan_process_v4_outbound (drivers/net/ipvlan/ipvlan_core.c:445 (discriminator 1))
+[   67.891581] ipvlan_queue_xmit (drivers/net/ipvlan/ipvlan_core.c:542 drivers/net/ipvlan/ipvlan_core.c:604 drivers/net/ipvlan/ipvlan_core.c:670)
+[   67.891596] ipvlan_start_xmit (drivers/net/ipvlan/ipvlan_main.c:227)
+[   67.891607] dev_hard_start_xmit (./include/linux/netdevice.h:4916 ./include/linux/netdevice.h:4925 net/core/dev.c:3588 net/core/dev.c:3604)
+[   67.891620] __dev_queue_xmit (net/core/dev.h:168 (discriminator 25) net/core/dev.c:4425 (discriminator 25))
+[   67.891630] ? skb_copy_bits (./include/linux/uaccess.h:233 (discriminator 1) ./include/linux/uaccess.h:260 (discriminator 1) ./include/linux/highmem-internal.h:230 (discriminator 1) net/core/skbuff.c:3018 (discriminator 1))
+[   67.891645] ? __pskb_pull_tail (net/core/skbuff.c:2848 (discriminator 4))
+[   67.891655] ? skb_partial_csum_set (net/core/skbuff.c:5657)
+[   67.891666] ? virtio_net_hdr_to_skb.constprop.0 (./include/linux/skbuff.h:2791 (discriminator 3) ./include/linux/skbuff.h:2799 (discriminator 3) ./include/linux/virtio_net.h:109 (discriminator 3))
+[   67.891684] packet_sendmsg (net/packet/af_packet.c:3145 (discriminator 1) net/packet/af_packet.c:3177 (discriminator 1))
+[   67.891700] ? _raw_spin_lock_bh (./arch/x86/include/asm/atomic.h:107 (discriminator 4) ./include/linux/atomic/atomic-arch-fallback.h:2170 (discriminator 4) ./include/linux/atomic/atomic-instrumented.h:1302 (discriminator 4) ./include/asm-generic/qspinlock.h:111 (discriminator 4) ./include/linux/spinlock.h:187 (discriminator 4) ./include/linux/spinlock_api_smp.h:127 (discriminator 4) kernel/locking/spinlock.c:178 (discriminator 4))
+[   67.891716] __sys_sendto (net/socket.c:730 (discriminator 1) net/socket.c:745 (discriminator 1) net/socket.c:2210 (discriminator 1))
+[   67.891734] ? do_sock_setsockopt (net/socket.c:2335)
+[   67.891747] ? __sys_setsockopt (./include/linux/file.h:34 net/socket.c:2355)
+[   67.891761] __x64_sys_sendto (net/socket.c:2222 (discriminator 1) net/socket.c:2218 (discriminator 1) net/socket.c:2218 (discriminator 1))
+[   67.891772] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+[   67.891785] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-Here is how the required length is computed and checked:
-
-* The pull_len variable is set to 28 bytes, consisting of:
-  * IPv4 header: 20 bytes
-  * GRE header with Key field: 8 bytes
-
-* The pskb_network_may_pull function adds the network offset, shifting
-the checkable space further to the beginning of the network header and
-extending it to the beginning of the packet. As a result, the end of
-the checkable space occurs beyond the actual end of the packet.
-
-Instead of ensuring that 28 bytes are present in skb->head, the function
-is requesting these 28 bytes starting from the network header. For small
-packets, this requested length exceeds the actual packet size, causing
-the check to fail and the packets to be dropped.
-
-This issue affects both locally originated and forwarded packets in
-DMVPN-like setups.
-
-How to reproduce (for local originated packets):
-
-  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
-          local <your-ip> remote 0.0.0.0
-
-  ip link set mtu 1400 dev gre1
-  ip link set up dev gre1
-  ip address add 192.168.13.1/24 dev gre1
-  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
-  ping -s 1374 -c 10 192.168.13.2
-  tcpdump -vni gre1
-  tcpdump -vni <your-ext-iface> 'ip proto 47'
-  ip -s -s -d link show dev gre1
-
-Solution:
-
-Use the pskb_may_pull function instead the pskb_network_may_pull.
-
-Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9181d6f8a2bb ("net: add more sanity check in virtio_net_hdr_to_skb()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240926165836.3797406-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/virtio_net.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index ba205473522e4..868ef18ad656c 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -661,11 +661,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index 276ca543ef44d..02a9f4dc594d0 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -103,8 +103,10 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
  
--		tnl_params = (const struct iphdr *)skb->data;
--
--		if (!pskb_network_may_pull(skb, pull_len))
-+		if (!pskb_may_pull(skb, pull_len))
- 			goto free_skb;
+ 		if (!skb_partial_csum_set(skb, start, off))
+ 			return -EINVAL;
++		if (skb_transport_offset(skb) < nh_min_len)
++			return -EINVAL;
  
-+		tnl_params = (const struct iphdr *)skb->data;
-+
- 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
- 		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
+-		nh_min_len = max_t(u32, nh_min_len, skb_transport_offset(skb));
++		nh_min_len = skb_transport_offset(skb);
+ 		p_off = nh_min_len + thlen;
+ 		if (!pskb_may_pull(skb, p_off))
+ 			return -EINVAL;
 -- 
 2.43.0
 
