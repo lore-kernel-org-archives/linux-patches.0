@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC4F33981;
-	Tue,  8 Oct 2024 12:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7FA33981;
+	Tue,  8 Oct 2024 12:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389961; cv=none; b=FTWLtPwjElmqohbzg+eVIDOh95x7vZg8yAzGoKnwlD4mDQAx0JFvzRenWdZ9PSQLz6ry7R6iNbczMSdqhvlauP2BVcJEKtOLsx/ytmEXzZYkqzURmCyZ5uNaKc4yjhfVtdbWmILWCW0LiIzyMrNnQSht9GHV42BNqq/+ck4u/vw=
+	t=1728389965; cv=none; b=XUaDHTw78ENj1PlnfNtH+HyNPFzZ5i4oNQNLEXQBY04a+EsNW5Hn4KxRCQ5ECkzXnwprxE7SmBTzhNNuqNy0SDpj5hzWWevF1CDC5mcOls1gAUwKNfnwwKj0zkepmNv6jsyOJrbNAVIXLLkdSid3swICVB9ODRcqnCnsTth7PrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389961; c=relaxed/simple;
-	bh=3xujjn0HuqAyhmggnmSdUCO8AZ2DeIifai3GP1p8Xyk=;
+	s=arc-20240116; t=1728389965; c=relaxed/simple;
+	bh=Ki2sKAeyOpHKrlrmeJKYOjj+5I2kpL0wMIRAe3ltauk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYunbbCrb251d65QT0pmklI5PT4gW6rZUCXlnpdXPNRwUzQ6bRYR3U1mXmAJsOczcn2+U5255ttFOYSjvGS8IDCssBsL5LgO5uJA1QLIPBRKk8B598fg0ISd3dk5BNdO5kVDlpEtd/PH6jf7Cvt+ZL8VGt6gVzpufxK9zRLfGxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOqTMutD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DyEZCZZYBKRcw2JCgWHq6YpDxWJ7wLVvqz5vtJERK1da7sNWDAQWGkR7AZ/pollm1h61lLcK/qNcP29GTh5RR1R/gRkX0/gmpaz7ExFrP2/AS8o5u6qAdj3LRSHXJ2e0bS/hB1h8/eK9RZqKrBOaVQgElrLhiYq3HYsszoI6qw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3u0mu53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOqTMutD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E069C4CEC7;
-	Tue,  8 Oct 2024 12:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3u0mu53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E08C4CEC7;
+	Tue,  8 Oct 2024 12:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389961;
-	bh=3xujjn0HuqAyhmggnmSdUCO8AZ2DeIifai3GP1p8Xyk=;
+	s=korg; t=1728389964;
+	bh=Ki2sKAeyOpHKrlrmeJKYOjj+5I2kpL0wMIRAe3ltauk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOqTMutDGbv77e+OKTIQmg9+CrS5BlT6iK9+ujsl7rRhX+P0eSt486B7dVC+s6oGG
-	 uZl9S+PToyFeZJXfPATgY7NAwq8xoismGHsRzZGsDvPBXW6o3RNGtKrgyF6eOULpCj
-	 Agc1R7yOy22urSoQhMuCQ3odnn25hWuxVFtlVcf0=
+	b=P3u0mu53EiJ2mTWxQ8lHqqhrBuQRoPEOjGDVEvU6fKqkI5FqWnPNNgc+tyJHQz9bA
+	 fCFXYAfx2bPVIaK2hZm+4QPf1ByoNWq++nwHpsjdmHm+LRzDiFYwkOLbX28gedt1Vl
+	 TlQKkYLgpMmeeFaA5mMgbZhPO4eLNQzA761b1gLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 148/482] ALSA: control: Take power_ref lock primarily
-Date: Tue,  8 Oct 2024 14:03:31 +0200
-Message-ID: <20241008115654.132051870@linuxfoundation.org>
+Subject: [PATCH 6.10 149/482] tools/x86/kcpuid: Protect against faulty "max subleaf" values
+Date: Tue,  8 Oct 2024 14:03:32 +0200
+Message-ID: <20241008115654.171041758@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -44,186 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit fcc62b19104a67b9a2941513771e09389b75bd95 ]
+[ Upstream commit cf96ab1a966b87b09fdd9e8cc8357d2d00776a3a ]
 
-The code path for kcontrol accesses have often nested locks of both
-card's controls_rwsem and power_ref, and applies in that order.
-However, what could take much longer is the latter, power_ref; it
-waits for the power state of the device, and it pretty much depends on
-the user's action.
+Protect against the kcpuid code parsing faulty max subleaf numbers
+through a min() expression.  Thus, ensuring that max_subleaf will always
+be ≤ MAX_SUBLEAF_NUM.
 
-This patch swaps the locking order of those locks to a more natural
-way, namely, power_ref -> controls_rwsem, in order to shorten the time
-of possible nested locks.  For consistency, power_ref is taken always
-in the top-level caller side (that is, *_user() functions and the
-ioctl handler itself).
+Use "u32" for the subleaf numbers since kcpuid is compiled with -Wextra,
+which includes signed/unsigned comparisons warnings.
 
-Link: https://patch.msgid.link/20240729160659.4516-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240718134755.378115-5-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control.c | 54 ++++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 20 deletions(-)
+ tools/arch/x86/kcpuid/kcpuid.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/control.c b/sound/core/control.c
-index 1dd2337e29300..2151f19b432fd 100644
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -1164,9 +1164,7 @@ static int __snd_ctl_elem_info(struct snd_card *card,
- #ifdef CONFIG_SND_DEBUG
- 	info->access = 0;
- #endif
--	result = snd_power_ref_and_wait(card);
--	if (!result)
--		result = kctl->info(kctl, info);
-+	result = kctl->info(kctl, info);
- 	snd_power_unref(card);
- 	if (result >= 0) {
- 		snd_BUG_ON(info->access);
-@@ -1205,12 +1203,17 @@ static int snd_ctl_elem_info(struct snd_ctl_file *ctl,
- static int snd_ctl_elem_info_user(struct snd_ctl_file *ctl,
- 				  struct snd_ctl_elem_info __user *_info)
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index 24b7d017ec2c1..b7965dfff33a9 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -7,7 +7,8 @@
+ #include <string.h>
+ #include <getopt.h>
+ 
+-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
++#define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
++#define min(a, b)	(((a) < (b)) ? (a) : (b))
+ 
+ typedef unsigned int u32;
+ typedef unsigned long long u64;
+@@ -207,12 +208,9 @@ static void raw_dump_range(struct cpuid_range *range)
+ #define MAX_SUBLEAF_NUM		32
+ struct cpuid_range *setup_cpuid_range(u32 input_eax)
  {
-+	struct snd_card *card = ctl->card;
- 	struct snd_ctl_elem_info info;
- 	int result;
+-	u32 max_func, idx_func;
+-	int subleaf;
++	u32 max_func, idx_func, subleaf, max_subleaf;
++	u32 eax, ebx, ecx, edx, f = input_eax;
+ 	struct cpuid_range *range;
+-	u32 eax, ebx, ecx, edx;
+-	u32 f = input_eax;
+-	int max_subleaf;
+ 	bool allzero;
  
- 	if (copy_from_user(&info, _info, sizeof(info)))
- 		return -EFAULT;
-+	result = snd_power_ref_and_wait(card);
-+	if (result)
-+		return result;
- 	result = snd_ctl_elem_info(ctl, &info);
-+	snd_power_unref(card);
- 	if (result < 0)
- 		return result;
- 	/* drop internal access flags */
-@@ -1254,10 +1257,7 @@ static int snd_ctl_elem_read(struct snd_card *card,
+ 	eax = input_eax;
+@@ -258,7 +256,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 		 * others have to be tried (0xf)
+ 		 */
+ 		if (f == 0x7 || f == 0x14 || f == 0x17 || f == 0x18)
+-			max_subleaf = (eax & 0xff) + 1;
++			max_subleaf = min((eax & 0xff) + 1, max_subleaf);
  
- 	if (!snd_ctl_skip_validation(&info))
- 		fill_remaining_elem_value(control, &info, pattern);
--	ret = snd_power_ref_and_wait(card);
--	if (!ret)
--		ret = kctl->get(kctl, control);
--	snd_power_unref(card);
-+	ret = kctl->get(kctl, control);
- 	if (ret < 0)
- 		return ret;
- 	if (!snd_ctl_skip_validation(&info) &&
-@@ -1282,7 +1282,11 @@ static int snd_ctl_elem_read_user(struct snd_card *card,
- 	if (IS_ERR(control))
- 		return PTR_ERR(no_free_ptr(control));
- 
-+	result = snd_power_ref_and_wait(card);
-+	if (result)
-+		return result;
- 	result = snd_ctl_elem_read(card, control);
-+	snd_power_unref(card);
- 	if (result < 0)
- 		return result;
- 
-@@ -1297,7 +1301,7 @@ static int snd_ctl_elem_write(struct snd_card *card, struct snd_ctl_file *file,
- 	struct snd_kcontrol *kctl;
- 	struct snd_kcontrol_volatile *vd;
- 	unsigned int index_offset;
--	int result;
-+	int result = 0;
- 
- 	down_write(&card->controls_rwsem);
- 	kctl = snd_ctl_find_id_locked(card, &control->id);
-@@ -1315,9 +1319,8 @@ static int snd_ctl_elem_write(struct snd_card *card, struct snd_ctl_file *file,
- 	}
- 
- 	snd_ctl_build_ioff(&control->id, kctl, index_offset);
--	result = snd_power_ref_and_wait(card);
- 	/* validate input values */
--	if (IS_ENABLED(CONFIG_SND_CTL_INPUT_VALIDATION) && !result) {
-+	if (IS_ENABLED(CONFIG_SND_CTL_INPUT_VALIDATION)) {
- 		struct snd_ctl_elem_info info;
- 
- 		memset(&info, 0, sizeof(info));
-@@ -1329,7 +1332,6 @@ static int snd_ctl_elem_write(struct snd_card *card, struct snd_ctl_file *file,
- 	}
- 	if (!result)
- 		result = kctl->put(kctl, control);
--	snd_power_unref(card);
- 	if (result < 0) {
- 		up_write(&card->controls_rwsem);
- 		return result;
-@@ -1358,7 +1360,11 @@ static int snd_ctl_elem_write_user(struct snd_ctl_file *file,
- 		return PTR_ERR(no_free_ptr(control));
- 
- 	card = file->card;
-+	result = snd_power_ref_and_wait(card);
-+	if (result < 0)
-+		return result;
- 	result = snd_ctl_elem_write(card, file, control);
-+	snd_power_unref(card);
- 	if (result < 0)
- 		return result;
- 
-@@ -1827,7 +1833,7 @@ static int call_tlv_handler(struct snd_ctl_file *file, int op_flag,
- 		{SNDRV_CTL_TLV_OP_CMD,   SNDRV_CTL_ELEM_ACCESS_TLV_COMMAND},
- 	};
- 	struct snd_kcontrol_volatile *vd = &kctl->vd[snd_ctl_get_ioff(kctl, id)];
--	int i, ret;
-+	int i;
- 
- 	/* Check support of the request for this element. */
- 	for (i = 0; i < ARRAY_SIZE(pairs); ++i) {
-@@ -1845,11 +1851,7 @@ static int call_tlv_handler(struct snd_ctl_file *file, int op_flag,
- 	    vd->owner != NULL && vd->owner != file)
- 		return -EPERM;
- 
--	ret = snd_power_ref_and_wait(file->card);
--	if (!ret)
--		ret = kctl->tlv.c(kctl, op_flag, size, buf);
--	snd_power_unref(file->card);
--	return ret;
-+	return kctl->tlv.c(kctl, op_flag, size, buf);
- }
- 
- static int read_tlv_buf(struct snd_kcontrol *kctl, struct snd_ctl_elem_id *id,
-@@ -1962,16 +1964,28 @@ static long snd_ctl_ioctl(struct file *file, unsigned int cmd, unsigned long arg
- 	case SNDRV_CTL_IOCTL_SUBSCRIBE_EVENTS:
- 		return snd_ctl_subscribe_events(ctl, ip);
- 	case SNDRV_CTL_IOCTL_TLV_READ:
--		scoped_guard(rwsem_read, &ctl->card->controls_rwsem)
-+		err = snd_power_ref_and_wait(card);
-+		if (err < 0)
-+			return err;
-+		scoped_guard(rwsem_read, &card->controls_rwsem)
- 			err = snd_ctl_tlv_ioctl(ctl, argp, SNDRV_CTL_TLV_OP_READ);
-+		snd_power_unref(card);
- 		return err;
- 	case SNDRV_CTL_IOCTL_TLV_WRITE:
--		scoped_guard(rwsem_write, &ctl->card->controls_rwsem)
-+		err = snd_power_ref_and_wait(card);
-+		if (err < 0)
-+			return err;
-+		scoped_guard(rwsem_write, &card->controls_rwsem)
- 			err = snd_ctl_tlv_ioctl(ctl, argp, SNDRV_CTL_TLV_OP_WRITE);
-+		snd_power_unref(card);
- 		return err;
- 	case SNDRV_CTL_IOCTL_TLV_COMMAND:
--		scoped_guard(rwsem_write, &ctl->card->controls_rwsem)
-+		err = snd_power_ref_and_wait(card);
-+		if (err < 0)
-+			return err;
-+		scoped_guard(rwsem_write, &card->controls_rwsem)
- 			err = snd_ctl_tlv_ioctl(ctl, argp, SNDRV_CTL_TLV_OP_CMD);
-+		snd_power_unref(card);
- 		return err;
- 	case SNDRV_CTL_IOCTL_POWER:
- 		return -ENOPROTOOPT;
+ 		if (f == 0xb)
+ 			max_subleaf = 2;
 -- 
 2.43.0
 
