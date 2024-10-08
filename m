@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556021C9B99;
-	Tue,  8 Oct 2024 13:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F49F1DE2AE;
+	Tue,  8 Oct 2024 13:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392650; cv=none; b=NuAvNPrjBaeDDov+vFu1gf4pwRorB8NQipthgtMke8s+d2YhdfliCfuX/7fBiFLhXdW/I+o6nFHS8EIA0pAxPsOcw8IBx6xEhvQief2dAMSwOCwwZnqVs81h25WNeKUEjVJLm+jy8cYlBZnp7Ih85dt2EzGWtpym09l7IRpsCns=
+	t=1728392653; cv=none; b=Jaexo6TelLiI+4YpPuKKjQpFz8+LtN8fw8Zcb+HeTLdJFolUkO9CGW0BKizCYXLcVS7T4amfS+TfOQ9FpsWj54isLOT38XLINM8QyZ0u/YtrVx2LvDwBtTKHU/osiy/i7FHcLK2de69T0uvjRzsRKgVXs3q6PDmU7Y3EhX0dXms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392650; c=relaxed/simple;
-	bh=Pew3pT4WKn7K1TNrdzXysUF84GiTly42pXK4JlfBs9g=;
+	s=arc-20240116; t=1728392653; c=relaxed/simple;
+	bh=YZmUGyOm474vvOtOvyhlRLLyyzVazUHcZ30bREdaq0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuqVeSIo2aSR+oLEYxUaxo13+ytm4wqjwGD76DlwzuHEY41gmXi6PtSjl8SSkSZ/1LCTn4QZAHfiN4Ic/zxb7eh7jLJvO0d0S/olKrZg3/JguhPRAIR3uz82zD/duPkdizV0ndGKGxWsMpR3Yn9e0YvlgsGrjDrzEX6ckgieC7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBGxryVS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XFMp6i9rcaUxGSxGwuFwfoqi2YF0Whgv9YFqR8Hrmf2QHauiZL+dmq2R1c2c4XDd0vGo8hJcer3Sil2jXv2gbiZL3obsjaLfDDKR5MXGiBUCJMkOW3xCXTx29vMT0xK+qZaQ9mu0IvEE/3JBXoC/V7RynGWhOoH6LWbmkku1QUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYUDh7B6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBGxryVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDC5C4CEC7;
-	Tue,  8 Oct 2024 13:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYUDh7B6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D241C4CEC7;
+	Tue,  8 Oct 2024 13:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392650;
-	bh=Pew3pT4WKn7K1TNrdzXysUF84GiTly42pXK4JlfBs9g=;
+	s=korg; t=1728392653;
+	bh=YZmUGyOm474vvOtOvyhlRLLyyzVazUHcZ30bREdaq0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBGxryVSVkTolU7sgQ/5ZDEoJq/TjsJCPtGhU5ZkV2EKqhodmZ0Ahw5mcq4/gHhNR
-	 K26lf8fPeH+iOkIUB9c97IQTBdt1IfqsSIkTfDTE0y1yWEssG3i/l2sTGo/16LCFjr
-	 3Zq3+IGWuO8uuuguPb7jkB0c0mCktAcv2edzLcpc=
+	b=UYUDh7B6nCNW/TxRVdYOjK/Bi0w7yKhvMykySkl/VRR3xGyFpKdTGLOStdx6hhcLW
+	 LilEKScfJZ7V0xcL+2WYq21itNJ/yyZwS6wk1dyZffmc7rKy7SV6u1Ls/QrVetVpmU
+	 6KLxlHlvSQRS+1055tqQZzRzU+IckBALYcnNRmxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Curutchet <bastien.curutchet@bootlin.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.11 447/558] leds: pca9532: Remove irrelevant blink configuration error message
-Date: Tue,  8 Oct 2024 14:07:57 +0200
-Message-ID: <20241008115719.852818687@linuxfoundation.org>
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Beleswar Padhi <b-padhi@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.11 448/558] remoteproc: k3-r5: Fix error handling when power-up failed
+Date: Tue,  8 Oct 2024 14:07:58 +0200
+Message-ID: <20241008115719.891931084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet <bastien.curutchet@bootlin.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-commit 2aad93b6de0d874038d3d7958be05011284cd6b9 upstream.
+commit 9ab27eb5866ccbf57715cfdba4b03d57776092fb upstream.
 
-The update_hw_blink() function prints an error message when hardware is
-not able to handle a blink configuration on its own. IMHO, this isn't a
-'real' error since the software fallback is used afterwards.
+By simply bailing out, the driver was violating its rule and internal
+assumptions that either both or no rproc should be initialized. E.g.,
+this could cause the first core to be available but not the second one,
+leading to crashes on its shutdown later on while trying to dereference
+that second instance.
 
-Remove the error messages to avoid flooding the logs with unnecessary
-messages.
-
+Fixes: 61f6f68447ab ("remoteproc: k3-r5: Wait for core0 power-up before powering up core1")
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Acked-by: Beleswar Padhi <b-padhi@ti.com>
 Cc: stable@vger.kernel.org
-Fixes: 48ca7f302cfc ("leds: pca9532: Use PWM1 for hardware blinking")
-Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
-Link: https://lore.kernel.org/r/20240826133237.134604-1-bastien.curutchet@bootlin.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/9f481156-f220-4adf-b3d9-670871351e26@siemens.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/leds-pca9532.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 338ddada3de9..1b47acf54720 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -215,8 +215,7 @@ static int pca9532_update_hw_blink(struct pca9532_led *led,
- 		if (other->state == PCA9532_PWM1) {
- 			if (other->ldev.blink_delay_on != delay_on ||
- 			    other->ldev.blink_delay_off != delay_off) {
--				dev_err(&led->client->dev,
--					"HW can handle only one blink configuration at a time\n");
-+				/* HW can handle only one blink configuration at a time */
- 				return -EINVAL;
- 			}
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -1332,7 +1332,7 @@ init_rmem:
+ 			dev_err(dev,
+ 				"Timed out waiting for %s core to power up!\n",
+ 				rproc->name);
+-			return ret;
++			goto err_powerup;
  		}
-@@ -224,7 +223,7 @@ static int pca9532_update_hw_blink(struct pca9532_led *led,
- 
- 	psc = ((delay_on + delay_off) * PCA9532_PWM_PERIOD_DIV - 1) / 1000;
- 	if (psc > U8_MAX) {
--		dev_err(&led->client->dev, "Blink period too long to be handled by hardware\n");
-+		/* Blink period too long to be handled by hardware */
- 		return -EINVAL;
  	}
  
--- 
-2.46.2
-
+@@ -1348,6 +1348,7 @@ err_split:
+ 		}
+ 	}
+ 
++err_powerup:
+ 	rproc_del(rproc);
+ err_add:
+ 	k3_r5_reserved_mem_exit(kproc);
 
 
