@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D448E1DEFEA;
-	Tue,  8 Oct 2024 12:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB55A1DE2CF;
+	Tue,  8 Oct 2024 12:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391950; cv=none; b=WWbhwjHrRySVSAlw7VDnvbvilBGByrrfcRvTjukCYCCHZuIL/szseLp5cin96rF9fM5TbA5Gor43D6WCoejaXp3RGLN2SI623wp38WEWBCsUCrXIhIkeA3oMFQ+Tf43kfSXKJokpTcEpz3H7JEXehXNpIqsb/X3z6SBSfDZJHhQ=
+	t=1728391954; cv=none; b=peX6JSsRhHTLAUKGwiQw9kvKCi5evgYpCE6ZJqLp/7tF1GwI4IDPMTNi4zbr4IMQYnHXJSc9N/ujQwoedYsvW0b49t0tCrdUJLuvqVwVB8CUmJT/0IfEAtq2mQW7k9Hdjlowttfk2YlD5LOpc4xnnb6f6E90hKSzj7zlSDBtVEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391950; c=relaxed/simple;
-	bh=liUyWHogXWgcJH7Ow1x/H33PBvO844p3umY5WAnvzYs=;
+	s=arc-20240116; t=1728391954; c=relaxed/simple;
+	bh=CUhuwUNTm0xqgAZ1hRH9OEKR+fQT8rwvWWHtjdnDXl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B880I5s1sjSPbafPd8HS6zkDNDDiJQUxNQYzTmp9WJgOUYSZsJwsk+4FVHwk+iNMRy9vZ6HUMysNjQM0shMcDpDN5tA0/mSAF3pUVXwKX3M4qv1HsyXlMFQIHprPZaMjbLa3618gkNFX65RlOynPSgEpXda4YYs6LyRjhiwwRrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2jgvcAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjt5F23vCFHlLpA95K5ZK7Nyxd3JbpGXBOUEOs+eE198+2VDT9R0vMIFaJbzsma4Ypaz8ocZeK2rhfCVsuSEZYQji5qeatM1AM5s1ByCV84pSqVkQfdTECDjp+TvEq9EtfgR2fgtioDPeAZi+zxEzGHWlDaY+x/kcf6CixdSvHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9JKLkMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2jgvcAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A5DC4CECC;
-	Tue,  8 Oct 2024 12:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9JKLkMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A4AC4CEC7;
+	Tue,  8 Oct 2024 12:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391950;
-	bh=liUyWHogXWgcJH7Ow1x/H33PBvO844p3umY5WAnvzYs=;
+	s=korg; t=1728391953;
+	bh=CUhuwUNTm0xqgAZ1hRH9OEKR+fQT8rwvWWHtjdnDXl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2jgvcAvPyGMKJpv2yVRoDzX782faXjOwau9sJJevynwsOLv3xQx+2JaDM5XD2wPa
-	 xrrSflJBW149HmOFgQNXZ+FExY6QVY8gc2vV6vqNQpuWdMfTHCAFQzA9dscZM0RJWr
-	 SAoPwWjiLUrGsrhVibIUNz0f4C87x9xwV8YvqTJs=
+	b=F9JKLkMeybdAyfinTz+nnFvM/6gKoo+MXorXl+ZAa1RIouFFNKKV/n+5Jc7cVfRkp
+	 oGt1tjrvhb72MtkXVhLRG3n2QCUuVn7ZKo3SrWaY1djC40PyZtN7Eqfk2i0uOo+J+Q
+	 3FVViXup0Iy4wK0pqkSdXr6AHn5tRbmw1oWkkTyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 270/558] scsi: aacraid: Rearrange order of struct aac_srb_unit
-Date: Tue,  8 Oct 2024 14:05:00 +0200
-Message-ID: <20241008115712.956851350@linuxfoundation.org>
+Subject: [PATCH 6.11 271/558] scsi: lpfc: Validate hdwq pointers before dereferencing in reset/errata paths
+Date: Tue,  8 Oct 2024 14:05:01 +0200
+Message-ID: <20241008115712.995912457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,110 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 6e5860b0ad4934baee8c7a202c02033b2631bb44 ]
+[ Upstream commit 2be1d4f11944cd6283cb97268b3e17c4424945ca ]
 
-struct aac_srb_unit contains struct aac_srb, which contains struct sgmap,
-which ends in a (currently) "fake" (1-element) flexible array.  Converting
-this to a flexible array is needed so that runtime bounds checking won't
-think the array is fixed size (i.e. under CONFIG_FORTIFY_SOURCE=y and/or
-CONFIG_UBSAN_BOUNDS=y), as other parts of aacraid use struct sgmap as a
-flexible array.
+When the HBA is undergoing a reset or is handling an errata event, NULL ptr
+dereference crashes may occur in routines such as
+lpfc_sli_flush_io_rings(), lpfc_dev_loss_tmo_callbk(), or
+lpfc_abort_handler().
 
-It is not legal to have a flexible array in the middle of a structure, so
-it either needs to be split up or rearranged so that it is at the end of
-the structure. Luckily, struct aac_srb_unit, which is exclusively
-consumed/updated by aac_send_safw_bmic_cmd(), does not depend on member
-ordering.
+Add NULL ptr checks before dereferencing hdwq pointers that may have been
+freed due to operations colliding with a reset or errata event handler.
 
-The values set in the on-stack struct aac_srb_unit instance "srbu" by the
-only two callers, aac_issue_safw_bmic_identify() and
-aac_get_safw_ciss_luns(), do not contain anything in srbu.srb.sgmap.sg, and
-they both implicitly initialize srbu.srb.sgmap.count to 0 during
-memset(). For example:
-
-        memset(&srbu, 0, sizeof(struct aac_srb_unit));
-
-        srbcmd = &srbu.srb;
-        srbcmd->flags   = cpu_to_le32(SRB_DataIn);
-        srbcmd->cdb[0]  = CISS_REPORT_PHYSICAL_LUNS;
-        srbcmd->cdb[1]  = 2; /* extended reporting */
-        srbcmd->cdb[8]  = (u8)(datasize >> 8);
-        srbcmd->cdb[9]  = (u8)(datasize);
-
-        rcode = aac_send_safw_bmic_cmd(dev, &srbu, phys_luns, datasize);
-
-During aac_send_safw_bmic_cmd(), a separate srb is mapped into DMA, and has
-srbu.srb copied into it:
-
-        srb = fib_data(fibptr);
-        memcpy(srb, &srbu->srb, sizeof(struct aac_srb));
-
-Only then is srb.sgmap.count written and srb->sg populated:
-
-        srb->count              = cpu_to_le32(xfer_len);
-
-        sg64 = (struct sgmap64 *)&srb->sg;
-        sg64->count             = cpu_to_le32(1);
-        sg64->sg[0].addr[1]     = cpu_to_le32(upper_32_bits(addr));
-        sg64->sg[0].addr[0]     = cpu_to_le32(lower_32_bits(addr));
-        sg64->sg[0].count       = cpu_to_le32(xfer_len);
-
-But this is happening in the DMA memory, not in srbu.srb. An attempt to
-copy the changes back to srbu does happen:
-
-        /*
-         * Copy the updated data for other dumping or other usage if
-         * needed
-         */
-        memcpy(&srbu->srb, srb, sizeof(struct aac_srb));
-
-But this was never correct: the sg64 (3 u32s) overlap of srb.sg (2 u32s)
-always meant that srbu.srb would have held truncated information and any
-attempt to walk srbu.srb.sg.sg based on the value of srbu.srb.sg.count
-would result in attempting to parse past the end of srbu.srb.sg.sg[0] into
-srbu.srb_reply.
-
-After getting a reply from hardware, the reply is copied into
-srbu.srb_reply:
-
-        srb_reply = (struct aac_srb_reply *)fib_data(fibptr);
-        memcpy(&srbu->srb_reply, srb_reply, sizeof(struct aac_srb_reply));
-
-This has always been fixed-size, so there's no issue here. It is worth
-noting that the two callers _never check_ srbu contents -- neither
-srbu.srb nor srbu.srb_reply is examined. (They depend on the mapped
-xfer_buf instead.)
-
-Therefore, the ordering of members in struct aac_srb_unit does not matter,
-and the flexible array member can moved to the end.
-
-(Additionally, the two memcpy()s that update srbu could be entirely
-removed as they are never consumed, but I left that as-is.)
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://lore.kernel.org/r/20240711215739.208776-1-kees@kernel.org
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240726231512.92867-4-justintee8345@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aacraid/aacraid.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c |  3 ++-
+ drivers/scsi/lpfc/lpfc_scsi.c    | 13 +++++++++++--
+ drivers/scsi/lpfc/lpfc_sli.c     | 11 +++++++++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/aacraid/aacraid.h b/drivers/scsi/aacraid/aacraid.h
-index 7d5a155073c62..9b66fa29fb05c 100644
---- a/drivers/scsi/aacraid/aacraid.h
-+++ b/drivers/scsi/aacraid/aacraid.h
-@@ -2029,8 +2029,8 @@ struct aac_srb_reply
- };
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index 6943f6c6395c4..f21c5993e8d72 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -175,7 +175,8 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 			 ndlp->nlp_state, ndlp->fc4_xpt_flags);
  
- struct aac_srb_unit {
--	struct aac_srb		srb;
- 	struct aac_srb_reply	srb_reply;
-+	struct aac_srb		srb;
- };
+ 	/* Don't schedule a worker thread event if the vport is going down. */
+-	if (test_bit(FC_UNLOADING, &vport->load_flag)) {
++	if (test_bit(FC_UNLOADING, &vport->load_flag) ||
++	    !test_bit(HBA_SETUP, &phba->hba_flag)) {
+ 		spin_lock_irqsave(&ndlp->lock, iflags);
+ 		ndlp->rport = NULL;
  
- /*
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 9f0b59672e191..0eaede8275dac 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -5555,11 +5555,20 @@ lpfc_abort_handler(struct scsi_cmnd *cmnd)
+ 
+ 	iocb = &lpfc_cmd->cur_iocbq;
+ 	if (phba->sli_rev == LPFC_SLI_REV4) {
+-		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
+-		if (!pring_s4) {
++		/* if the io_wq & pring are gone, the port was reset. */
++		if (!phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq ||
++		    !phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring) {
++			lpfc_printf_vlog(vport, KERN_WARNING, LOG_FCP,
++					 "2877 SCSI Layer I/O Abort Request "
++					 "IO CMPL Status x%x ID %d LUN %llu "
++					 "HBA_SETUP %d\n", FAILED,
++					 cmnd->device->id,
++					 (u64)cmnd->device->lun,
++					 test_bit(HBA_SETUP, &phba->hba_flag));
+ 			ret = FAILED;
+ 			goto out_unlock_hba;
+ 		}
++		pring_s4 = phba->sli4_hba.hdwq[iocb->hba_wqidx].io_wq->pring;
+ 		spin_lock(&pring_s4->ring_lock);
+ 	}
+ 	/* the command is in process of being cancelled */
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 88debef2fb6db..7dc34c71eb78c 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -4687,6 +4687,17 @@ lpfc_sli_flush_io_rings(struct lpfc_hba *phba)
+ 	/* Look on all the FCP Rings for the iotag */
+ 	if (phba->sli_rev >= LPFC_SLI_REV4) {
+ 		for (i = 0; i < phba->cfg_hdw_queue; i++) {
++			if (!phba->sli4_hba.hdwq ||
++			    !phba->sli4_hba.hdwq[i].io_wq) {
++				lpfc_printf_log(phba, KERN_ERR, LOG_SLI,
++						"7777 hdwq's deleted %lx "
++						"%lx %x %x\n",
++						phba->pport->load_flag,
++						phba->hba_flag,
++						phba->link_state,
++						phba->sli.sli_flag);
++				return;
++			}
+ 			pring = phba->sli4_hba.hdwq[i].io_wq->pring;
+ 
+ 			spin_lock_irq(&pring->ring_lock);
 -- 
 2.43.0
 
