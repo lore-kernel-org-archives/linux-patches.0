@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F671DF272;
-	Tue,  8 Oct 2024 13:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BD21DE3C1;
+	Tue,  8 Oct 2024 13:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393670; cv=none; b=BswPsh/duWDoAKl3crFZ8iP/xfv6iYfSaSSBtogbpjB05/6MaHIlAMYuHu8LFkSzDcEA0qMRGOvP8rhsAII9YN0O0S0C9ykHyLfo8KuByHgBQN90ZLuUNgCniEnGYy0csTeialEcKi83NOIY/3g47LKo73nrzjEuYwBfYeSBM3Y=
+	t=1728393673; cv=none; b=HVQXmeEyasPfhA3ZcU1U7UWsPCpWPVAaJyEvoQ+QoAx39A4phcqpWpMr+LD/3y4xVXB7Ffz/bjuCBTHiF81Husv5sqmMdA1U1JL+oP66Hm/ez4ATILc+tWODEcv3AwdXj5gp3qXniHQ1+dhbqE3b9B6aeJh7e/lWmrphlCcDHdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393670; c=relaxed/simple;
-	bh=dlWOYLuZ1nNlrUmq8nhz4UuNAZtPazbpxI/6neD3VPU=;
+	s=arc-20240116; t=1728393673; c=relaxed/simple;
+	bh=9nOam8FColMiOQ9TZ3uxLlJE3l1KtEG4unDyGV16jVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NoLrOGB0i5GrauafTL7bfcNvWoqDcmaBRpBg+v3o2sD3CEb4ECUkI8v4KjIhf0wGqfbu2jScp6NuUA8/DwFC+FxGaaCRz/eRhVXml8xiyl/e8wOOa8HvQOYm72Ohyo5gEgpoPvzJU5g+9I5+d87F1m7S3LtBy0JO52f32l5k/aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsBE1c6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J64bRwuAiaJWb/UWO32lVNO1D9W/71g0QQ2flpVcw4VcF7l08h05nHCGiPnJ8vk4uQPqWWooJ7jzbwpz5nI9K+ziMb5C3Bs2FUAzHAnAzRyg76DTBLroMBG9Ci9nnrASRsceyGX48S+dzCIIvnf9hGbZNcOypvqWsT5WV9cilz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujMbj/7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsBE1c6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D09C4CEC7;
-	Tue,  8 Oct 2024 13:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujMbj/7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F0C4CEC7;
+	Tue,  8 Oct 2024 13:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393669;
-	bh=dlWOYLuZ1nNlrUmq8nhz4UuNAZtPazbpxI/6neD3VPU=;
+	s=korg; t=1728393673;
+	bh=9nOam8FColMiOQ9TZ3uxLlJE3l1KtEG4unDyGV16jVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsBE1c6lvTN4Eo3uFXf52WzDizpOamAvMk4nqWCS3CXUlPifTVTG6k+iBWKIpAGfP
-	 4OShiQ6t9+2f7nU9vsGk59rW0YWb0imsOOzfdHa9cbm31x7hZ+0NJm0Wn8T4qgJgrm
-	 +rddzKWzsyi8AqixE99Fe4X/lkUg9lc5rACgjIQY=
+	b=ujMbj/7AxMNzmlqYEMRElgOEFjEtCs+zy9KYHVGMBAExafCfCaiEVNLlc89mlsprR
+	 G/7r2aqPW97U1w856Jvig1HEmP6cHb8nHbfy/RkCAsXHvqvD/AVqTqipEWPhs9FqE+
+	 esoOmy04NhjNlmeZ92TClqHYFtIy7Tq5XqDoucT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 219/386] power: supply: hwmon: Fix missing temp1_max_alarm attribute
-Date: Tue,  8 Oct 2024 14:07:44 +0200
-Message-ID: <20241008115638.025674764@linuxfoundation.org>
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.6 220/386] perf/core: Fix small negative period being ignored
+Date: Tue,  8 Oct 2024 14:07:45 +0200
+Message-ID: <20241008115638.064999149@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,41 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Luo Gengkun <luogengkun@huaweicloud.com>
 
-commit e50a57d16f897e45de1112eb6478577b197fab52 upstream.
+commit 62c0b1061593d7012292f781f11145b2d46f43ab upstream.
 
-Temp channel 0 aka temp1 can have a temp1_max_alarm attribute for
-power_supply devices which have a POWER_SUPPLY_PROP_TEMP_ALERT_MAX
-property.
+In perf_adjust_period, we will first calculate period, and then use
+this period to calculate delta. However, when delta is less than 0,
+there will be a deviation compared to when delta is greater than or
+equal to 0. For example, when delta is in the range of [-14,-1], the
+range of delta = delta + 7 is between [-7,6], so the final value of
+delta/8 is 0. Therefore, the impact of -1 and -2 will be ignored.
+This is unacceptable when the target period is very short, because
+we will lose a lot of samples.
 
-HWMON_T_MAX_ALARM was missing from power_supply_hwmon_info for
-temp channel 0, causing the hwmon temp1_max_alarm attribute to be
-missing from such power_supply devices.
+Here are some tests and analyzes:
+before:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.022 MB perf.data (518 samples) ]
 
-Add this to power_supply_hwmon_info to fix this.
+  # perf script
+  ...
+  a.out     396   257.956048:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.957891:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.959730:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.961545:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.963355:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.965163:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.966973:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.968785:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.970593:         23 cs:  ffffffff81f4eeec schedul>
+  ...
 
-Fixes: f1d33ae806ec ("power: supply: remove duplicated argument in power_supply_hwmon_info")
+after:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.058 MB perf.data (1466 samples) ]
+
+  # perf script
+  ...
+  a.out     395    59.338813:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.339707:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.340682:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.341751:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.342799:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.343765:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.344651:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.345539:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.346502:         13 cs:  ffffffff81f4eeec schedul>
+  ...
+
+test.c
+
+int main() {
+        for (int i = 0; i < 20000; i++)
+                usleep(10);
+
+        return 0;
+}
+
+  # time ./a.out
+  real    0m1.583s
+  user    0m0.040s
+  sys     0m0.298s
+
+The above results were tested on x86-64 qemu with KVM enabled using
+test.c as test program. Ideally, we should have around 1500 samples,
+but the previous algorithm had only about 500, whereas the modified
+algorithm now has about 1400. Further more, the new version shows 1
+sample per 0.001s, while the previous one is 1 sample per 0.002s.This
+indicates that the new algorithm is more sensitive to small negative
+values compared to old algorithm.
+
+Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
+Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240908185337.103696-2-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lkml.kernel.org/r/20240831074316.2106159-2-luogengkun@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/power_supply_hwmon.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/events/core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/power_supply_hwmon.c
-+++ b/drivers/power/supply/power_supply_hwmon.c
-@@ -299,7 +299,8 @@ static const struct hwmon_channel_info *
- 			   HWMON_T_INPUT     |
- 			   HWMON_T_MAX       |
- 			   HWMON_T_MIN       |
--			   HWMON_T_MIN_ALARM,
-+			   HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM,
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4104,7 +4104,11 @@ static void perf_adjust_period(struct pe
+ 	period = perf_calculate_period(event, nsec, count);
  
- 			   HWMON_T_LABEL     |
- 			   HWMON_T_INPUT     |
+ 	delta = (s64)(period - hwc->sample_period);
+-	delta = (delta + 7) / 8; /* low pass filter */
++	if (delta >= 0)
++		delta += 7;
++	else
++		delta -= 7;
++	delta /= 8; /* low pass filter */
+ 
+ 	sample_period = hwc->sample_period + delta;
+ 
 
 
