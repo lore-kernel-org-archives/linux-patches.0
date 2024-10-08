@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7D41C9B99;
-	Tue,  8 Oct 2024 13:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F951C9B99;
+	Tue,  8 Oct 2024 13:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392660; cv=none; b=fDFsa7zDRZ6G7K/0XmHtQA8iZMvQTeyHA1XhEbFH1AjKCb22xgLXh523f8BKkSSu9bdK68M0rqRosb3fXj1Z9kjSh+GnZCnQBsFEshb2zIoUEGEW9NZObtvDkBNmfSCCADqTKM2SXGwuCIWS9dtOk69G/dQNUSI6tC4dA1eCJL0=
+	t=1728392664; cv=none; b=Y/APbINOo0q9vXJa60xx4HWDrw2+9JnhfkpbrlzZNSXaclGXpkaJnsFvXsAno36rwAnv09kiPKY8TYjcm7dgxKFS3nyfgMXFFAUXLpsO7FytTbJnpngDsseex3wgpWJPNWgRGkSjRLe0DfwHi1a2kSErL/43/Uis8aF95VKG704=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392660; c=relaxed/simple;
-	bh=Lu6lXt7t7/PbH9JJQOTTGQw56c+56Qa/CkfMZxBmlkk=;
+	s=arc-20240116; t=1728392664; c=relaxed/simple;
+	bh=nWJ7qSWX9Sl9U0JyzuJ1VDAiRCaFEHNbs5O9O62W8LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aL89cxULx7IBDA2Em0Z1ZFr0JZI1O5msi8R3W/RqufQBppKq/1S1iGPAzkHgh3WSIllxMMv4WfH5nV9zrUzdFGIaGSGHbf0IefsD6/ri7LKG6uJ2AhlJa11WRpdsCvg7nAjkpldUw3YlRew7HRJnj4Ty3ZpsGST0uU+YYj+0KpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1n+kNOcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZa6oBU2CeRI4mLmlPFmsnmZuI0x4GYHsLJId3HQug4l9bgLu0DjEseKeReQAavnD+6Qx91I9Fzqdo+F4V0V6+EmYouA2HW1LELZYdG4m/RnuLcVNB7yJ4g0PF8PP8VIx+Q9peHyHUh7doNxPuOriI7aMBc5Kf9ZHrKo2ULI74w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ/b0zFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1n+kNOcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6CCC4CEC7;
-	Tue,  8 Oct 2024 13:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ/b0zFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47447C4CEC7;
+	Tue,  8 Oct 2024 13:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392660;
-	bh=Lu6lXt7t7/PbH9JJQOTTGQw56c+56Qa/CkfMZxBmlkk=;
+	s=korg; t=1728392663;
+	bh=nWJ7qSWX9Sl9U0JyzuJ1VDAiRCaFEHNbs5O9O62W8LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1n+kNOcfbificOUS/yZr/6OFEb6dmGaJV5mG+wiDRG0knc6GZOwQcFhMFZr/Vq+eD
-	 LvwrwFjb2GV7/+0hjSC6WtkT5oO14Zi2xBdYQscW42YKzWUFLpYq55qP/Au052kxEE
-	 tZL6+fQ8mGWmXNd6xJgf+Cfw9OYK6bHJEZFa5H7k=
+	b=BZ/b0zFUkyLWhmbxVYyWQF0mybp7RcCRbyxlMnEArjPsx/QH1Cl0HUUbXMIMQgRo3
+	 HA8pF5Qhmjs2v39ek5THaVchR58wP/OtFk+WBJSjc0HCjmXmCKkB+0G+INJ6PIPixE
+	 1EhsmdprzDqC462x8hBbNA7cfOXOu/BeDvM7OqV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.11 450/558] media: videobuf2: Drop minimum allocation requirement of 2 buffers
-Date: Tue,  8 Oct 2024 14:08:00 +0200
-Message-ID: <20241008115719.970420056@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.11 451/558] clk: qcom: dispcc-sm8250: use CLK_SET_RATE_PARENT for branch clocks
+Date: Tue,  8 Oct 2024 14:08:01 +0200
+Message-ID: <20241008115720.008644089@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,55 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit e5700c9037727d5a69a677d6dba25010b485d65b upstream.
+commit 0e93c6320ecde0583de09f3fe801ce8822886fec upstream.
 
-When introducing the ability for drivers to indicate the minimum number
-of buffers they require an application to allocate, commit 6662edcd32cc
-("media: videobuf2: Add min_reqbufs_allocation field to vb2_queue
-structure") also introduced a global minimum of 2 buffers. It turns out
-this breaks the Renesas R-Car VSP test suite, where a test that
-allocates a single buffer fails when two buffers are used.
+Add CLK_SET_RATE_PARENT for several branch clocks. Such clocks don't
+have a way to change the rate, so set the parent rate instead.
 
-One may consider debatable whether test suite failures without failures
-in production use cases should be considered as a regression, but
-operation with a single buffer is a valid use case. While full frame
-rate can't be maintained, memory-to-memory devices can still be used
-with a decent efficiency, and requiring applications to allocate
-multiple buffers for single-shot use cases with capture devices would
-just waste memory.
-
-For those reasons, fix the regression by dropping the global minimum of
-buffers. Individual drivers can still set their own minimum.
-
-Fixes: 6662edcd32cc ("media: videobuf2: Add min_reqbufs_allocation field to vb2_queue structure")
+Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
 Cc: stable@vger.kernel.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20240825232449.25905-1-laurent.pinchart+renesas@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-1-1149dd8399fe@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-core.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/clk/qcom/dispcc-sm8250.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -2602,13 +2602,6 @@ int vb2_core_queue_init(struct vb2_queue
- 		return -EINVAL;
- 
- 	/*
--	 * The minimum requirement is 2: one buffer is used
--	 * by the hardware while the other is being processed by userspace.
--	 */
--	if (q->min_reqbufs_allocation < 2)
--		q->min_reqbufs_allocation = 2;
--
--	/*
- 	 * If the driver needs 'min_queued_buffers' in the queue before
- 	 * calling start_streaming() then the minimum requirement is
- 	 * 'min_queued_buffers + 1' to keep at least one buffer available
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -849,6 +849,7 @@ static struct clk_branch disp_cc_mdss_dp
+ 				&disp_cc_mdss_dp_link1_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -884,6 +885,7 @@ static struct clk_branch disp_cc_mdss_dp
+ 				&disp_cc_mdss_dp_link_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1009,6 +1011,7 @@ static struct clk_branch disp_cc_mdss_md
+ 				&disp_cc_mdss_mdp_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 
 
