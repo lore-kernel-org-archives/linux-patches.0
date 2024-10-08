@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C661DA60C;
-	Tue,  8 Oct 2024 12:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACE41DE4D7;
+	Tue,  8 Oct 2024 12:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390678; cv=none; b=evw8d1Mjp50CShiFq1/dp4/9M1BmJGsOzC7oBgPO8UEUcncUFwxuCu1CU9dL1vHbiarOYkDHtH2Y20EJldVDzTjMZSLeZYsluLlaUslnqjEv+TcRXAtyqwepppZqOvoQIixiQe5agWN17urVKL4JE7U1Y0drZHhvnJTO4zigvc4=
+	t=1728390681; cv=none; b=RxWr/GepsFwgJAPlqGE1vQYlayr07h6Xauh1e6gRBQPUp03MMJ9EyIGi4xk4gpJGAi7o8tTRjxF7rDNYMyeT4CsQXrXecWNyqmaUCclYqNC4310WvhlnPVQBKHvit3vTtUk9GloZoEMU4bwUPwyXh2+T1mom/c0fT4f4VhqUDnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390678; c=relaxed/simple;
-	bh=vsBnl3nvi4sq01MJNMjEz6ctp5bmhPtT4oCeEKxSI1Q=;
+	s=arc-20240116; t=1728390681; c=relaxed/simple;
+	bh=IbH94mGdMnstWVrQ1gIbDCj3klnf+2EO8KhRSbmKiKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlZwjElJMD+8TxbWd0g7f+UhhBkxzK4+ViLGN4ficPzDq8cftcPkkw4pcNirdyQX2ia55nANQcw1uWjmiv3obxJLWGJ9Yxof1s0LSU1W5Ck3mFdcNWZcOkwsQHdZ7Xp0FFlRNDv3ApHujou7XzZg2anDz/e0PSH0DCwhp/0HYTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtSz3IQ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P6FzIpbD3+Sf9RGXFY96g+NJaxadWzIwIHvpWvv6v9j3KLkjtmM/G5Sg0zv4XTq/OGFnID8QFwKpInpet7rXE8EdoLUwh91rTW2DgzGyyVl7u7AdZrCbB0gCnkycVhjAO7ma5HFJOyklIdZ169paRDgqwpig6z1tLS1o8akt8aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2p1Y16wI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtSz3IQ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9C3C4CEC7;
-	Tue,  8 Oct 2024 12:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2p1Y16wI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9E9C4CEC7;
+	Tue,  8 Oct 2024 12:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390678;
-	bh=vsBnl3nvi4sq01MJNMjEz6ctp5bmhPtT4oCeEKxSI1Q=;
+	s=korg; t=1728390681;
+	bh=IbH94mGdMnstWVrQ1gIbDCj3klnf+2EO8KhRSbmKiKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtSz3IQ06c1EQl/A4Mzqw4nWtUlWpW13W0ShPW9zSeHtAmavmjXxS97L+7uN7W+XA
-	 SKXFBms54inv5J/eX/WYtWz3wXlRYZ1pmwJiYGDqPqCWwrXl36ctUqROi1/fPJ8zdr
-	 cwRH3iS9oO5csTgpdIAPmFylLjbLh8+d8Om0xUD8=
+	b=2p1Y16wI4X82/IUpGK+xan5MPV1060lQSPuWoSpnfnBvmfk7ncx6gx5jlrKkg5UOu
+	 gf1DBG9c9Hr/YUyc/IAZWHF+JUIQ9jCamzuqbqp4ULaNd/j9Espu2crOvMC1i1Fcdd
+	 Ig6FshC5fY7/RUW7XRBLu5kuwGB//iLrfR+jd4c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	stable@kernel.org,
 	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.10 329/482] ext4: drop ppath from ext4_ext_replay_update_ex() to avoid double-free
-Date: Tue,  8 Oct 2024 14:06:32 +0200
-Message-ID: <20241008115701.374170016@linuxfoundation.org>
+Subject: [PATCH 6.10 330/482] ext4: aovid use-after-free in ext4_ext_insert_extent()
+Date: Tue,  8 Oct 2024 14:06:33 +0200
+Message-ID: <20241008115701.413518501@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -55,93 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 5c0f4cc84d3a601c99bc5e6e6eb1cbda542cce95 upstream.
+commit a164f3a432aae62ca23d03e6d926b122ee5b860d upstream.
 
-When calling ext4_force_split_extent_at() in ext4_ext_replay_update_ex(),
-the 'ppath' is updated but it is the 'path' that is freed, thus potentially
-triggering a double-free in the following process:
+As Ojaswin mentioned in Link, in ext4_ext_insert_extent(), if the path is
+reallocated in ext4_ext_create_new_leaf(), we'll use the stale path and
+cause UAF. Below is a sample trace with dummy values:
 
-ext4_ext_replay_update_ex
-  ppath = path
-  ext4_force_split_extent_at(&ppath)
-    ext4_split_extent_at
-      ext4_ext_insert_extent
-        ext4_ext_create_new_leaf
-          ext4_ext_grow_indepth
-            ext4_find_extent
-              if (depth > path[0].p_maxdepth)
-                kfree(path)                 ---> path First freed
-                *orig_path = path = NULL    ---> null ppath
-  kfree(path)                               ---> path double-free !!!
+ext4_ext_insert_extent
+  path = *ppath = 2000
+  ext4_ext_create_new_leaf(ppath)
+    ext4_find_extent(ppath)
+      path = *ppath = 2000
+      if (depth > path[0].p_maxdepth)
+            kfree(path = 2000);
+            *ppath = path = NULL;
+      path = kcalloc() = 3000
+      *ppath = 3000;
+      return path;
+  /* here path is still 2000, UAF! */
+  eh = path[depth].p_hdr
 
-So drop the unnecessary ppath and use path directly to avoid this problem.
-And use ext4_find_extent() directly to update path, avoiding unnecessary
-memory allocation and freeing. Also, propagate the error returned by
-ext4_find_extent() instead of using strange error codes.
+==================================================================
+BUG: KASAN: slab-use-after-free in ext4_ext_insert_extent+0x26d4/0x3330
+Read of size 8 at addr ffff8881027bf7d0 by task kworker/u36:1/179
+CPU: 3 UID: 0 PID: 179 Comm: kworker/u6:1 Not tainted 6.11.0-rc2-dirty #866
+Call Trace:
+ <TASK>
+ ext4_ext_insert_extent+0x26d4/0x3330
+ ext4_ext_map_blocks+0xe22/0x2d40
+ ext4_map_blocks+0x71e/0x1700
+ ext4_do_writepages+0x1290/0x2800
+[...]
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Allocated by task 179:
+ ext4_find_extent+0x81c/0x1f70
+ ext4_ext_map_blocks+0x146/0x2d40
+ ext4_map_blocks+0x71e/0x1700
+ ext4_do_writepages+0x1290/0x2800
+ ext4_writepages+0x26d/0x4e0
+ do_writepages+0x175/0x700
+[...]
+
+Freed by task 179:
+ kfree+0xcb/0x240
+ ext4_find_extent+0x7c0/0x1f70
+ ext4_ext_insert_extent+0xa26/0x3330
+ ext4_ext_map_blocks+0xe22/0x2d40
+ ext4_map_blocks+0x71e/0x1700
+ ext4_do_writepages+0x1290/0x2800
+ ext4_writepages+0x26d/0x4e0
+ do_writepages+0x175/0x700
+[...]
+==================================================================
+
+So use *ppath to update the path to avoid the above problem.
+
+Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Closes: https://lore.kernel.org/r/ZqyL6rmtwl6N4MWR@li-bb2b2a4c-3307-11b2-a85c-8fa5c3a69313.ibm.com
+Fixes: 10809df84a4d ("ext4: teach ext4_ext_find_extent() to realloc path if necessary")
 Cc: stable@kernel.org
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-8-libaokun@huaweicloud.com
+Link: https://patch.msgid.link/20240822023545.1994557-7-libaokun@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |   21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ fs/ext4/extents.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -5899,7 +5899,7 @@ out:
- int ext4_ext_replay_update_ex(struct inode *inode, ext4_lblk_t start,
- 			      int len, int unwritten, ext4_fsblk_t pblk)
- {
--	struct ext4_ext_path *path = NULL, *ppath;
-+	struct ext4_ext_path *path;
- 	struct ext4_extent *ex;
- 	int ret;
+@@ -2103,6 +2103,7 @@ prepend:
+ 				       ppath, newext);
+ 	if (err)
+ 		goto cleanup;
++	path = *ppath;
+ 	depth = ext_depth(inode);
+ 	eh = path[depth].p_hdr;
  
-@@ -5915,30 +5915,29 @@ int ext4_ext_replay_update_ex(struct ino
- 	if (le32_to_cpu(ex->ee_block) != start ||
- 		ext4_ext_get_actual_len(ex) != len) {
- 		/* We need to split this extent to match our extent first */
--		ppath = path;
- 		down_write(&EXT4_I(inode)->i_data_sem);
--		ret = ext4_force_split_extent_at(NULL, inode, &ppath, start, 1);
-+		ret = ext4_force_split_extent_at(NULL, inode, &path, start, 1);
- 		up_write(&EXT4_I(inode)->i_data_sem);
- 		if (ret)
- 			goto out;
--		kfree(path);
--		path = ext4_find_extent(inode, start, NULL, 0);
-+
-+		path = ext4_find_extent(inode, start, &path, 0);
- 		if (IS_ERR(path))
--			return -1;
--		ppath = path;
-+			return PTR_ERR(path);
- 		ex = path[path->p_depth].p_ext;
- 		WARN_ON(le32_to_cpu(ex->ee_block) != start);
-+
- 		if (ext4_ext_get_actual_len(ex) != len) {
- 			down_write(&EXT4_I(inode)->i_data_sem);
--			ret = ext4_force_split_extent_at(NULL, inode, &ppath,
-+			ret = ext4_force_split_extent_at(NULL, inode, &path,
- 							 start + len, 1);
- 			up_write(&EXT4_I(inode)->i_data_sem);
- 			if (ret)
- 				goto out;
--			kfree(path);
--			path = ext4_find_extent(inode, start, NULL, 0);
-+
-+			path = ext4_find_extent(inode, start, &path, 0);
- 			if (IS_ERR(path))
--				return -EINVAL;
-+				return PTR_ERR(path);
- 			ex = path[path->p_depth].p_ext;
- 		}
- 	}
 
 
