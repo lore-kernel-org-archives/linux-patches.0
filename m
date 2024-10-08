@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7031DE2A5;
-	Tue,  8 Oct 2024 12:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168901DF97F;
+	Tue,  8 Oct 2024 12:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391273; cv=none; b=KWHkAxEMFQNH11h7r8A0xXQ35c1mwanuuBIvP9ZQ2nT4MiYvWtS53U3Gip0yXJ9fOhG4nOp37Z3WSp/AtccFMdJMzzAXUj85BUWRHJhnY34G5d1q1BKzA0Q20vbQfwOEwtm7wB97TLXqdVjya2G/mm2/fMeBLg2RNM5GJGzkJ+c=
+	t=1728391277; cv=none; b=IXnTFQqg27K6AP5g564ZYNnIAaZbVIfqHc5liHm5E+W2d65q6MavIc1GtWdToAiixlAvRB+AnOVppbeNTwkBeXrznDQ312mExJ6TEmay2sen8y0Rz2HSyRIPi3N8oCiYJizAoe286Xys3IUpFuOGLqtCJG6867nnHRuAkF2WG/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391273; c=relaxed/simple;
-	bh=4eem9MSPD6F8tdC8p1lHZZ8Yjl66EbDZD5M7lx+FOXI=;
+	s=arc-20240116; t=1728391277; c=relaxed/simple;
+	bh=LfrqeDMDI3MFeIhl4yiuccFDVl/DR2MT+8LWFlf7Gvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7R3IDLysYutYacU9XBv5o8rrnTG8/6jf9lgKaWJ4b/0FDrwAGDbHe9eXcWlZOKPbcIn7Hzg2CUmZfar7zvn35vR7ohzLgkBw/L0gnnl/e4Vxd3f7q72ZSL7kZejhoGyRvbhIs+4MH/LflWj54u3piAtvBu07npl9MWc+2i3uEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HS7cNKsJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OznsZp9P2iRiFcNEvHIaitLMwUh3FfxVC4B82oXVXy/YaWC806o9q8hNudSxDboVrUhzi1Imi+s16yQkhh9/QCxOweJzLBqG3X5pPyO6lQPU7wMcycvn3Y9YUwniNXK1UTuYjLvwOH19WBy5BPHvcjHSJkyY9EkPNaW0gyZ4rgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdQIQdJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HS7cNKsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483B9C4CEC7;
-	Tue,  8 Oct 2024 12:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdQIQdJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72956C4CEC7;
+	Tue,  8 Oct 2024 12:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391273;
-	bh=4eem9MSPD6F8tdC8p1lHZZ8Yjl66EbDZD5M7lx+FOXI=;
+	s=korg; t=1728391277;
+	bh=LfrqeDMDI3MFeIhl4yiuccFDVl/DR2MT+8LWFlf7Gvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HS7cNKsJ0bacLXmkxMjD3++ffATAOlC+ZV14hTfBeNjE/njth45hkgzlP1d0wphY5
-	 KLGWtzR1zGRdnQHgpSyD6onXLIccQOuFUZu6yH8ZqjlhlxmVXjUkSqNYRHeggK8my7
-	 UAqkm/w6Eoz6qAJm6GokVSUbweFVMY1I/kgfpvWc=
+	b=FdQIQdJAnWbdzlaDpgr5suhfj2ggbA9swfkTzttAObeyOnN67lCbk/p2CGoF9Bv2k
+	 +Pet0z3xkEiIAz+ijQjqbo5UNm3XE2aPiSn30EwCZrLYI1UbmCCr/DlXMoONOnSpq+
+	 kY6DxxQzC0pMDeUMTN5C8oPfZI/zTwtg/a3ebqRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor@kernel.org>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 062/558] rust: mutex: fix __mutex_init() usage in case of PREEMPT_RT
-Date: Tue,  8 Oct 2024 14:01:32 +0200
-Message-ID: <20241008115704.660244172@linuxfoundation.org>
+Subject: [PATCH 6.11 063/558] ALSA: mixer_oss: Remove some incorrect kfree_const() usages
+Date: Tue,  8 Oct 2024 14:01:33 +0200
+Message-ID: <20241008115704.699234940@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,78 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dirk Behme <dirk.behme@de.bosch.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d065cc76054d21e48a839a2a19ba99dbc51a4d11 ]
+[ Upstream commit 368e4663c557de4a33f321b44e7eeec0a21b2e4e ]
 
-In case CONFIG_PREEMPT_RT is enabled __mutex_init() becomes a macro
-instead of an extern function (simplified from
-include/linux/mutex.h):
+"assigned" and "assigned->name" are allocated in snd_mixer_oss_proc_write()
+using kmalloc() and kstrdup(), so there is no point in using kfree_const()
+to free these resources.
 
-    #ifndef CONFIG_PREEMPT_RT
-    extern void __mutex_init(struct mutex *lock, const char *name,
-    			 struct lock_class_key *key);
-    #else
-    #define __mutex_init(mutex, name, key)		\
-    do {						\
-	rt_mutex_base_init(&(mutex)->rtmutex);		\
-    	__mutex_rt_init((mutex), name, key);		\
-    } while (0)
-    #endif
+Switch to the more standard kfree() to free these resources.
 
-The macro isn't resolved by bindgen, then. What results in a build
-error:
+This could avoid a memory leak.
 
-error[E0425]: cannot find function `__mutex_init` in crate `bindings`
-     --> rust/kernel/sync/lock/mutex.rs:104:28
-      |
-104   |           unsafe { bindings::__mutex_init(ptr, name, key) }
-      |                              ^^^^^^^^^^^^ help: a function with a similar name exists: `__mutex_rt_init`
-      |
-     ::: rust/bindings/bindings_generated.rs:23722:5
-      |
-23722 | /     pub fn __mutex_rt_init(
-23723 | |         lock: *mut mutex,
-23724 | |         name: *const core::ffi::c_char,
-23725 | |         key: *mut lock_class_key,
-23726 | |     );
-      | |_____- similarly named function `__mutex_rt_init` defined here
-
-Fix this by adding a helper.
-
-As explained by Gary Guo in [1] no #ifdef CONFIG_PREEMPT_RT
-is needed here as rust/bindings/lib.rs prefers externed function to
-helpers if an externed function exists.
-
-Reported-by: Conor Dooley <conor@kernel.org>
-Link: https://lore.kernel.org/rust-for-linux/20240913-shack-estate-b376a65921b1@spud/
-Link: https://lore.kernel.org/rust-for-linux/20240915123626.1a170103.gary@garyguo.net/ [1]
-Fixes: 6d20d629c6d8 ("rust: lock: introduce `Mutex`")
-Signed-off-by: Dirk Behme <dirk.behme@de.bosch.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240916073752.3123484-1-dirk.behme@de.bosch.com
-[ Reworded to include the proper example by Dirk. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 454f5ec1d2b7 ("ALSA: mixer: oss: Constify snd_mixer_oss_assign_table definition")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/63ac20f64234b7c9ea87a7fa9baf41e8255852f7.1727374631.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/helpers/mutex.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/core/oss/mixer_oss.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/helpers/mutex.c b/rust/helpers/mutex.c
-index 200db7e6279f0..a17ca8cdb50ca 100644
---- a/rust/helpers/mutex.c
-+++ b/rust/helpers/mutex.c
-@@ -7,3 +7,9 @@ void rust_helper_mutex_lock(struct mutex *lock)
- {
- 	mutex_lock(lock);
- }
-+
-+void rust_helper___mutex_init(struct mutex *mutex, const char *name,
-+			      struct lock_class_key *key)
-+{
-+	__mutex_init(mutex, name, key);
-+}
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index 6a0508093ea68..81af725ea40e5 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -901,8 +901,8 @@ static void snd_mixer_oss_slot_free(struct snd_mixer_oss_slot *chn)
+ 	struct slot *p = chn->private_data;
+ 	if (p) {
+ 		if (p->allocated && p->assigned) {
+-			kfree_const(p->assigned->name);
+-			kfree_const(p->assigned);
++			kfree(p->assigned->name);
++			kfree(p->assigned);
+ 		}
+ 		kfree(p);
+ 	}
 -- 
 2.43.0
 
