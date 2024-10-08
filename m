@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC13E1DE8BE;
-	Tue,  8 Oct 2024 13:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEF21DFD1;
+	Tue,  8 Oct 2024 13:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392873; cv=none; b=MtdMWzAJ1vQ3q1y07Oe4bWjgurzmHJF9Byzq8rSZ4Qc9iGcvPWMjKpdci+3KpMsjVRm8+uMIJ6+Esa1O0u8muMW/kCsOn9u/aYA7SmIU+t9cdDTNZ0BPuWjwh9RbHAoqMILU4MP3qRLtw8tc0rHv82bmvYfM9MDUkCFJwhu7hnw=
+	t=1728392877; cv=none; b=MRELUoFyIFv9pPFyrs/yjtPZieApM4fixkEJ9r0QBSgjXAxu7xd8kiYexdBLleKLjx11xXPo7YPlnVgeK8QH+6bMchhs+253AdhDMRSVfEqcR3R2StTBWO16fsIBrZKmyiK1UkUZvtHBQT9YQUu4zy/zRflgrraHGvjyODZfxKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392873; c=relaxed/simple;
-	bh=1KZigy7hQ1RyKsBA4kShwynllhp/qu7ZlB15Sx0X0Qk=;
+	s=arc-20240116; t=1728392877; c=relaxed/simple;
+	bh=Mhjo9oBJ7px0vI0RCifWM8B2Er7n0OsPzmjU9pEZgAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1Re1oDso2Yy4PcbfPtiDxdK2te8WfApeMOoVpRE3jv15iIwIKMTnodLaK0WWek2pF8fKzYPvQ28b98EVR0j6mRbtevY3axaIagL7f3OJQY7Rb9B/UjFEb7YfZj12vZ9Nj+klY87LA4PoE4cNZmVpKOdkgqrX9VZOC4bvH/8REA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq39ooaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BwH3uWtH4pl0WTVktU5cax8CkBVOa/gz0y4gvlIaHfa9HRxnCS8wVXUV+uuo7H4lWFSAheGsmX/uNEr0Rnd9l2bggo0pY8Fwds6AaefWAHo0gNwzYymV3gKETTwIST/izIkWDisZc+CXWIfB7lpMiSmvzklBYhW3szmIQy1gA8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1Hxj+e6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq39ooaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B831C4CEC7;
-	Tue,  8 Oct 2024 13:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1Hxj+e6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F217C4CECD;
+	Tue,  8 Oct 2024 13:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392873;
-	bh=1KZigy7hQ1RyKsBA4kShwynllhp/qu7ZlB15Sx0X0Qk=;
+	s=korg; t=1728392877;
+	bh=Mhjo9oBJ7px0vI0RCifWM8B2Er7n0OsPzmjU9pEZgAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yq39ooaM0GKwJbuTxwfNPTOeiqyhwVSFv1/ZexHK55sbDFeM46j2ZGQ2Sc3H9KVmo
-	 KRYxGn6KimqKDRfrQalznsMYjUTWt9WIGZACKLGFPlZsxLdsjtXwNtIgvUtUEplLi0
-	 M9WZmqDkFd7WHnqvQU54wwBIAVNqmeTZJYWYwNlY=
+	b=v1Hxj+e64i7Z7WikSYdjIk9kplNvf/bUa1NUFxF2epGXAaBJOVDtu9vkktzrlBn87
+	 aic/AUYgBAn0Rx0CjYexRjSCDDpI6mwl9K9inw5JEb98RAvCvlbfHcKngkts3vg9m1
+	 30BxSXykcqyI5aRbOPQZrAd11KuRRePdUS+MMANo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 543/558] r8169: add tally counter fields added with RTL8125
-Date: Tue,  8 Oct 2024 14:09:33 +0200
-Message-ID: <20241008115723.603452506@linuxfoundation.org>
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Helge Deller <deller@gmx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>
+Subject: [PATCH 6.11 514/558] firmware/sysfb: Disable sysfb for firmware buffers with unknown parent
+Date: Tue,  8 Oct 2024 14:09:04 +0200
+Message-ID: <20241008115722.454183618@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,66 +57,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit ced8e8b8f40accfcce4a2bbd8b150aa76d5eff9a ]
+commit ad604f0a4c040dcb8faf44dc72db25e457c28076 upstream.
 
-RTL8125 added fields to the tally counter, what may result in the chip
-dma'ing these new fields to unallocated memory. Therefore make sure
-that the allocated memory area is big enough to hold all of the
-tally counter values, even if we use only parts of it.
+The sysfb framebuffer handling only operates on graphics devices
+that provide the system's firmware framebuffer. If that device is
+not known, assume that any graphics device has been initialized by
+firmware.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/741d26a9-2b2b-485d-91d9-ecb302e345b5@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes a problem on i915 where sysfb does not release the firmware
+framebuffer after the native graphics driver loaded.
+
+Reported-by: Borah, Chaitanya Kumar <chaitanya.kumar.borah@intel.com>
+Closes: https://lore.kernel.org/dri-devel/SJ1PR11MB6129EFB8CE63D1EF6D932F94B96F2@SJ1PR11MB6129.namprd11.prod.outlook.com/
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12160
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: b49420d6a1ae ("video/aperture: optionally match the device in sysfb_disable()")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Linux regression tracking (Thorsten Leemhuis) <regressions@leemhuis.info>
+Cc: <stable@vger.kernel.org> # v6.11+
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924084227.262271-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/firmware/sysfb.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 4c22e6f602702..01e18f645c0ed 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -577,6 +577,33 @@ struct rtl8169_counters {
- 	__le32	rx_multicast;
- 	__le16	tx_aborted;
- 	__le16	tx_underrun;
-+	/* new since RTL8125 */
-+	__le64 tx_octets;
-+	__le64 rx_octets;
-+	__le64 rx_multicast64;
-+	__le64 tx_unicast64;
-+	__le64 tx_broadcast64;
-+	__le64 tx_multicast64;
-+	__le32 tx_pause_on;
-+	__le32 tx_pause_off;
-+	__le32 tx_pause_all;
-+	__le32 tx_deferred;
-+	__le32 tx_late_collision;
-+	__le32 tx_all_collision;
-+	__le32 tx_aborted32;
-+	__le32 align_errors32;
-+	__le32 rx_frame_too_long;
-+	__le32 rx_runt;
-+	__le32 rx_pause_on;
-+	__le32 rx_pause_off;
-+	__le32 rx_pause_all;
-+	__le32 rx_unknown_opcode;
-+	__le32 rx_mac_error;
-+	__le32 tx_underrun32;
-+	__le32 rx_mac_missed;
-+	__le32 rx_tcam_dropped;
-+	__le32 tdu;
-+	__le32 rdu;
- };
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -67,9 +67,11 @@ static bool sysfb_unregister(void)
+ void sysfb_disable(struct device *dev)
+ {
+ 	struct screen_info *si = &screen_info;
++	struct device *parent;
  
- struct rtl8169_tc_offsets {
--- 
-2.43.0
-
+ 	mutex_lock(&disable_lock);
+-	if (!dev || dev == sysfb_parent_dev(si)) {
++	parent = sysfb_parent_dev(si);
++	if (!dev || !parent || dev == parent) {
+ 		sysfb_unregister();
+ 		disabled = true;
+ 	}
 
 
