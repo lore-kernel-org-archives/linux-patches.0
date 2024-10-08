@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0551CEE8E;
-	Tue,  8 Oct 2024 12:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D6D1D0BAA;
+	Tue,  8 Oct 2024 12:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390700; cv=none; b=J4Iyv2ImTyXhsT/5/TFSgtnhmvVX39FZPqyWXBJ9ILZhKTHERx7DBbYGBi5wfTOo7Co9OFG5WaNCeO1y5EUwkzxBrwX7+EtmqVUdmKmM7IQUST0JlpXrePNPdQMYq/uGe3P2uSY2d8Sg3nYMKxSm3d99ta6dz/8vPMf6Fnp3qFw=
+	t=1728390705; cv=none; b=pjqM1HM7OreOIutlI+smIcuk9WMildkoDgPnIyncjz9tK/VVCHpDVFAvWBoEH7Ay/wIbYP6KwjDdN+JANJfHsJzuBbk1ZwgZiW0fpJTkUF5kIJ8LGDg31IXYJsRzcjw7oN6qXgUaMIoQsSkruIBBvMtJhoNWktULLb6ZyhskpNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390700; c=relaxed/simple;
-	bh=DKbyN5BSkBgFo6tIii25EokmE2nSYYydXJCCA1T9VbI=;
+	s=arc-20240116; t=1728390705; c=relaxed/simple;
+	bh=G/zPPQhr3ZX9CvkZ4LwOZokjTrPw+Wk8NVJQgJmZk/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMhdFcS8aPE19iN9ooi10vcOq6crMQDN/XzRgVwswGzsRo2QD6lCco6kHAzAcw7tuerPk/I490+aaKHsQgLuOmSoU0VUVJoMTfboBznplyW1aVC/HXecyq0Sv9q4yfgvtJSoX3wd2salJa6Ay2GmiL24KIKBg0jFysV1vxN9aAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omwxj8oR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KmrKlnbOQU+zrV+9y0cXvNeDx2iW3CzGlLBOVREm6kAhCQC2QUZpg3S+F3hnOJ5wEJyeYm2YyoS24zQimbtPpA5X3z7Mq0vnKUO1Uc9dZqruzSZ7kXAaQbYV0YSsKTVEBHvN4366SNs2tvlDIQUFH0zuTse+upDRgbj+fsyQ45I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRaCPGdZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omwxj8oR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4850FC4CEC7;
-	Tue,  8 Oct 2024 12:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRaCPGdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5246C4CEC7;
+	Tue,  8 Oct 2024 12:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390700;
-	bh=DKbyN5BSkBgFo6tIii25EokmE2nSYYydXJCCA1T9VbI=;
+	s=korg; t=1728390705;
+	bh=G/zPPQhr3ZX9CvkZ4LwOZokjTrPw+Wk8NVJQgJmZk/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omwxj8oRjPVofXnSuQxRcFbttWvJjLo28zFI+Ys0RKGtg44yYGk4doLUgvZvR1SWu
-	 wYvxhvsN7SaUJfYDspAs4q7VnXKER9oKHmiljaAD6VpFieJpRnvsAscUJVa28D4/vw
-	 vyv/lhkFzRP1+9iNsaOpHn8sOznbzPCylZHA04E8=
+	b=cRaCPGdZSQ73vHBnNqw0SJUYwec0dcxlVc5JOLSlW6ufUm3ziSZavrKc4LM1xwo+d
+	 nnMUrhh21CbgLu5zl8/bl/rc5IPO2uL3e+30ogqQe2tPsNYH2gwLngtyOHN8s4soT0
+	 Zd+7CDKNXmyiC+2Cs7qNivx1Nuft2oaiQsiw1oNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 359/482] scripts/gdb: fix timerlist parsing issue
-Date: Tue,  8 Oct 2024 14:07:02 +0200
-Message-ID: <20241008115702.550403917@linuxfoundation.org>
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.10 368/482] exfat: fix memory leak in exfat_load_bitmap()
+Date: Tue,  8 Oct 2024 14:07:11 +0200
+Message-ID: <20241008115702.904414408@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,90 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit a633a4b8001a7f2a12584f267a3280990d9ababa upstream.
+commit d2b537b3e533f28e0d97293fe9293161fe8cd137 upstream.
 
-Patch series "Fix some GDB command error and add some GDB commands", v3.
+If the first directory entry in the root directory is not a bitmap
+directory entry, 'bh' will not be released and reassigned, which
+will cause a memory leak.
 
-Fix some GDB command errors and add some useful GDB commands.
-
-
-This patch (of 5):
-
-Commit 7988e5ae2be7 ("tick: Split nohz and highres features from
-nohz_mode") and commit 7988e5ae2be7 ("tick: Split nohz and highres
-features from nohz_mode") move 'tick_stopped' and 'nohz_mode' to flags
-field which will break the gdb lx-mounts command:
-
-(gdb) lx-timerlist
-Python Exception <class 'gdb.error'>: There is no member named nohz_mode.
-Error occurred in Python: There is no member named nohz_mode.
-
-(gdb) lx-timerlist
-Python Exception <class 'gdb.error'>: There is no member named tick_stopped.
-Error occurred in Python: There is no member named tick_stopped.
-
-We move 'tick_stopped' and 'nohz_mode' to flags field instead.
-
-Link: https://lkml.kernel.org/r/20240723064902.124154-1-kuan-ying.lee@canonical.com
-Link: https://lkml.kernel.org/r/20240723064902.124154-2-kuan-ying.lee@canonical.com
-Fixes: a478ffb2ae23 ("tick: Move individual bit features to debuggable mask accesses")
-Fixes: 7988e5ae2be7 ("tick: Split nohz and highres features from nohz_mode")
-Signed-off-by: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1e49a94cf707 ("exfat: add bitmap operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gdb/linux/timerlist.py | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ fs/exfat/balloc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/scripts/gdb/linux/timerlist.py b/scripts/gdb/linux/timerlist.py
-index 64bc87191003..98445671fe83 100644
---- a/scripts/gdb/linux/timerlist.py
-+++ b/scripts/gdb/linux/timerlist.py
-@@ -87,21 +87,22 @@ def print_cpu(hrtimer_bases, cpu, max_clock_bases):
-             text += "\n"
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -91,11 +91,8 @@ int exfat_load_bitmap(struct super_block
+ 				return -EIO;
  
-         if constants.LX_CONFIG_TICK_ONESHOT:
--            fmts = [("  .{}      : {}", 'nohz_mode'),
--                    ("  .{}      : {} nsecs", 'last_tick'),
--                    ("  .{}   : {}", 'tick_stopped'),
--                    ("  .{}   : {}", 'idle_jiffies'),
--                    ("  .{}     : {}", 'idle_calls'),
--                    ("  .{}    : {}", 'idle_sleeps'),
--                    ("  .{} : {} nsecs", 'idle_entrytime'),
--                    ("  .{}  : {} nsecs", 'idle_waketime'),
--                    ("  .{}  : {} nsecs", 'idle_exittime'),
--                    ("  .{} : {} nsecs", 'idle_sleeptime'),
--                    ("  .{}: {} nsecs", 'iowait_sleeptime'),
--                    ("  .{}   : {}", 'last_jiffies'),
--                    ("  .{}     : {}", 'next_timer'),
--                    ("  .{}   : {} nsecs", 'idle_expires')]
--            text += "\n".join([s.format(f, ts[f]) for s, f in fmts])
-+            TS_FLAG_STOPPED = 1 << 1
-+            TS_FLAG_NOHZ = 1 << 4
-+            text += f"  .{'nohz':15s}: {int(bool(ts['flags'] & TS_FLAG_NOHZ))}\n"
-+            text += f"  .{'last_tick':15s}: {ts['last_tick']}\n"
-+            text += f"  .{'tick_stopped':15s}: {int(bool(ts['flags'] & TS_FLAG_STOPPED))}\n"
-+            text += f"  .{'idle_jiffies':15s}: {ts['idle_jiffies']}\n"
-+            text += f"  .{'idle_calls':15s}: {ts['idle_calls']}\n"
-+            text += f"  .{'idle_sleeps':15s}: {ts['idle_sleeps']}\n"
-+            text += f"  .{'idle_entrytime':15s}: {ts['idle_entrytime']} nsecs\n"
-+            text += f"  .{'idle_waketime':15s}: {ts['idle_waketime']} nsecs\n"
-+            text += f"  .{'idle_exittime':15s}: {ts['idle_exittime']} nsecs\n"
-+            text += f"  .{'idle_sleeptime':15s}: {ts['idle_sleeptime']} nsecs\n"
-+            text += f"  .{'iowait_sleeptime':15s}: {ts['iowait_sleeptime']} nsecs\n"
-+            text += f"  .{'last_jiffies':15s}: {ts['last_jiffies']}\n"
-+            text += f"  .{'next_timer':15s}: {ts['next_timer']}\n"
-+            text += f"  .{'idle_expires':15s}: {ts['idle_expires']} nsecs\n"
-             text += "\njiffies: {}\n".format(jiffies)
+ 			type = exfat_get_entry_type(ep);
+-			if (type == TYPE_UNUSED)
+-				break;
+-			if (type != TYPE_BITMAP)
+-				continue;
+-			if (ep->dentry.bitmap.flags == 0x0) {
++			if (type == TYPE_BITMAP &&
++			    ep->dentry.bitmap.flags == 0x0) {
+ 				int err;
  
-         text += "\n"
--- 
-2.46.2
-
+ 				err = exfat_allocate_bitmap(sb, ep);
+@@ -103,6 +100,9 @@ int exfat_load_bitmap(struct super_block
+ 				return err;
+ 			}
+ 			brelse(bh);
++
++			if (type == TYPE_UNUSED)
++				return -EINVAL;
+ 		}
+ 
+ 		if (exfat_get_next_cluster(sb, &clu.dir))
 
 
