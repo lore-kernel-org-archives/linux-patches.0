@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1B5192594;
-	Tue,  8 Oct 2024 12:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D1D1DED55;
+	Tue,  8 Oct 2024 12:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391442; cv=none; b=QeohH5oG6cs1hruf3kEkn2n/O1nBcuDDHEhsD5zUjINqb1nCsBIGg/Y5BRmYm/lwggP0XfqvN5L1CFZlKNPTKQc+xjCleQUeHiOVvNBEYLPMkdpJZqIbaJrdPFICGSaH8wKSP4Sh38pqQDSxc0ZPo/jRquxXHHIdDx0JImd4BSI=
+	t=1728391445; cv=none; b=N/sr74g8i48YX/C8gCbv03n2UVEn8P4SclfPveM+so/gUHLJZ516Cat/0H1sd+JjW7Nya7AoDek/WGbwt+G0rS3DwIqT5uk2A1NNVQidiOP0QSmdsAMBhPwGg/ss2VDHaOodaktGCZUc7D0yNZZG5b0/YqfKuK0wVt48HAU1Oco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391442; c=relaxed/simple;
-	bh=lAZ4M80G7zgKqhI1bEeli1uur/pGMkD5KB5COt/GiWE=;
+	s=arc-20240116; t=1728391445; c=relaxed/simple;
+	bh=PmE9rrGRdyPr84/stoogRe2UW0ULhhwZKkwyJYGYh/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQOX4cJrqVCl6ZNbKu4+NeGR4Wxdr2jz7Tcg554rOA2IhMKVfwLxJtHwajR3VplmjcoaFTj5OOzP44U7LamQNo8Vg45vCLCfncIqOO8RWLNULq708F4rp6QtK8rtmjqiYTzO0y6TyfniRWDzo+ErYqXg3la7I3YAF+ds7gPD8KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8ukfdzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PhtK4d7oQtu/c1W03CNWxGOmU3Wr0MQ3bxNx+hC/QnjbW4XfMzUGR+gbkb+vHdmEeGSG5ceNOzaoq+l/RqVWK7TQHHoQ2UwxBte9M/SGZAOAMfzeGdvWGZ02Ztr6S5Tjz8X4wr+g/DH+cEWMZq/HD1G6dX4iXZZlR10IsdTVi9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh5OrrIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8ukfdzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B86BC4CEC7;
-	Tue,  8 Oct 2024 12:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh5OrrIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D589C4CECC;
+	Tue,  8 Oct 2024 12:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391441;
-	bh=lAZ4M80G7zgKqhI1bEeli1uur/pGMkD5KB5COt/GiWE=;
+	s=korg; t=1728391445;
+	bh=PmE9rrGRdyPr84/stoogRe2UW0ULhhwZKkwyJYGYh/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8ukfdzTcKnmTZsmG+ty4TSu6DF05pLuOEl05Qe7SlW8L0FPjkuNf53Cj9KPZvWC2
-	 sYqn7wFZLsKDS3IqdTjHWkHbQH8To+sccPEi6xFMjUmuvu2Yoc9QutVvsommifLaa2
-	 Tj5v2J1puwb2KrB9ZWtxau4M4zCKzPNVvH31H09Q=
+	b=Eh5OrrIqQHK1zBZJsbsqCqh1mLsI70K+jx0cswyqfEXLM6Gc8WgX7eEh9jkimGdfu
+	 0vGoxsRVkuEdlUjRdd9jTuO9BwE9Su14btW9/2KZSV2nlhcKmjAHsXfQYpTApISIui
+	 2R14L4j/yeiR1MUa/2SK8+nNFQGOA0S7MhBIkseo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	James Chapman <jchapman@katalix.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 116/558] wifi: rtw88: select WANT_DEV_COREDUMP
-Date: Tue,  8 Oct 2024 14:02:26 +0200
-Message-ID: <20241008115706.931187942@linuxfoundation.org>
+Subject: [PATCH 6.11 117/558] l2tp: free sessions using rcu
+Date: Tue,  8 Oct 2024 14:02:27 +0200
+Message-ID: <20241008115706.970682877@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,33 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: James Chapman <jchapman@katalix.com>
 
-[ Upstream commit 7e989b0c1e33210c07340bf5228aa83ea52515b5 ]
+[ Upstream commit d17e89999574aca143dd4ede43e4382d32d98724 ]
 
-We have invoked device coredump when fw crash.
-Should select WANT_DEV_COREDUMP by ourselves.
+l2tp sessions may be accessed under an rcu read lock. Have them freed
+via rcu and remove the now unneeded synchronize_rcu when a session is
+removed.
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240718070616.42217-1-pkshih@realtek.com
+Signed-off-by: James Chapman <jchapman@katalix.com>
+Signed-off-by: Tom Parkin <tparkin@katalix.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/l2tp/l2tp_core.c | 4 +---
+ net/l2tp/l2tp_core.h | 1 +
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/Kconfig b/drivers/net/wireless/realtek/rtw88/Kconfig
-index 22838ede03cd8..02b0d698413be 100644
---- a/drivers/net/wireless/realtek/rtw88/Kconfig
-+++ b/drivers/net/wireless/realtek/rtw88/Kconfig
-@@ -12,6 +12,7 @@ if RTW88
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index a9cbcbc9d016d..edff7afc06199 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -152,7 +152,7 @@ static void l2tp_session_free(struct l2tp_session *session)
+ 	trace_free_session(session);
+ 	if (session->tunnel)
+ 		l2tp_tunnel_dec_refcount(session->tunnel);
+-	kfree(session);
++	kfree_rcu(session, rcu);
+ }
  
- config RTW88_CORE
- 	tristate
-+	select WANT_DEV_COREDUMP
+ struct l2tp_tunnel *l2tp_sk_to_tunnel(struct sock *sk)
+@@ -1298,8 +1298,6 @@ static void l2tp_session_unhash(struct l2tp_session *session)
  
- config RTW88_PCI
- 	tristate
+ 		spin_unlock_bh(&pn->l2tp_session_idr_lock);
+ 		spin_unlock_bh(&tunnel->list_lock);
+-
+-		synchronize_rcu();
+ 	}
+ }
+ 
+diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
+index 6c25c196cc222..d0e3460089d90 100644
+--- a/net/l2tp/l2tp_core.h
++++ b/net/l2tp/l2tp_core.h
+@@ -67,6 +67,7 @@ struct l2tp_session_coll_list {
+ struct l2tp_session {
+ 	int			magic;		/* should be L2TP_SESSION_MAGIC */
+ 	long			dead;
++	struct rcu_head		rcu;
+ 
+ 	struct l2tp_tunnel	*tunnel;	/* back pointer to tunnel context */
+ 	u32			session_id;
 -- 
 2.43.0
 
