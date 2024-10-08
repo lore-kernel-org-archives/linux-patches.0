@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58221DE4CD;
-	Tue,  8 Oct 2024 13:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA32D1DE8B1;
+	Tue,  8 Oct 2024 13:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393067; cv=none; b=cPRI0jQFTS6kU+zBEKKTUXYVY1nL8Qx/d2Z2mJa+AngWsoLnk0gR1eHGw7EPsStAMjacj6jWl/XgPFkrtmeBJ7ZQmMV3Zbt3uThMFmeAKSuVDPyg0QnPM9WO9LVXWJeEkNJsb1mV3iFHP+xvoIPG/Atk/FY5vcvJCaPw/jXqPw4=
+	t=1728393070; cv=none; b=ru4KoyT7o6MsfbydBVdtVaETXGLYrfy0nT6Oez/84B09UhLTy6URuMXrQYyvH0opxJwkvvMy6Fhk81QhNPfaKsajRP+Ag4z9hII+0/vHTYHivbKygKdrmD4daoVyvXUDcZMZ0Ns4PfBA18GZ+FD+FwIqDr7+sKLd7G+k3rRihKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393067; c=relaxed/simple;
-	bh=A1NKzNTbJH/znyX5l/Q8NCJrvv6lRptMpmFQfIEJiCw=;
+	s=arc-20240116; t=1728393070; c=relaxed/simple;
+	bh=0BZVx05jntKB86PsGGPwUuNaMMsSfOyw+82d+hh81Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPXXnJeiCsCHxExd+q5rPk7sE4NxFWYbCHjNySBhF/zLDDpD8majYl+NEadEz3RHKWlXSafUXKmgiVXBZI2XkzkyphPFqQQa+6siX6Q/y5PvtipJLga0GOAnUOdlTfDCzik1baHXuwL8SXdf1mMRwjfzwq9btyQfA1q0/Tp5lPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hgj5DeRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=StsYfh2XvHXto8Wd6lg3xE3YY9+kISS7F19FEFBF1YuxuIPBRls4U52dH50SdLMKbuPswQA4wuSWFx6ozQY0FSvUPz+CGS5Ofh5c1aKDksm2ovz0LjFlhVYKGbgoVTpIJ6/kCxDkASmb476Zt8KbrjfRGPIRUhVuEaaqEgnVw3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXoKBH6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hgj5DeRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28225C4CEC7;
-	Tue,  8 Oct 2024 13:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXoKBH6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4991DC4CEC7;
+	Tue,  8 Oct 2024 13:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393067;
-	bh=A1NKzNTbJH/znyX5l/Q8NCJrvv6lRptMpmFQfIEJiCw=;
+	s=korg; t=1728393070;
+	bh=0BZVx05jntKB86PsGGPwUuNaMMsSfOyw+82d+hh81Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hgj5DeRm+p4eAil4RKTsOhLFV2mcK9CDmosSApzUz0XkCZ0thIeai59Qzy5WTUUQ2
-	 DgXhOsInCSgSJ+5QVjCRfljBOScyyxaSKf2iqNfxAGW2dHD/tAJcXEVKAdSxHpvqDP
-	 beRqawKlc24TsSlDgAPIIhMK5Q367uBtJUPTfVWI=
+	b=FXoKBH6d2RmF8U+66Ms5FED8mvcMmyoXPjFlmOQ64OYa/KIlTBWaPhhwPoRMoeGpo
+	 yQo/h85lyVHC7zGqr78Sqn+s/588tK2C84b4bj6L95+H29ZKp9DbYSL95RnvLnrlWI
+	 7sM+8TILcsk4MxKxAmf6tANjwond0R7eMQNAIVIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/386] Bluetooth: hci_sock: Fix not validating setsockopt user input
-Date: Tue,  8 Oct 2024 14:04:47 +0200
-Message-ID: <20241008115631.129164002@linuxfoundation.org>
+Subject: [PATCH 6.6 043/386] media: usbtv: Remove useless locks in usbtv_video_free()
+Date: Tue,  8 Oct 2024 14:04:48 +0200
+Message-ID: <20241008115631.168037172@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,76 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-[ Upstream commit b2186061d6043d6345a97100460363e990af0d46 ]
+[ Upstream commit 65e6a2773d655172143cc0b927cdc89549842895 ]
 
-Check user input length before copying data.
+Remove locks calls in usbtv_video_free() because
+are useless and may led to a deadlock as reported here:
+https://syzkaller.appspot.com/x/bisect.txt?x=166dc872180000
+Also remove usbtv_stop() call since it will be called when
+unregistering the device.
 
-Fixes: 09572fca7223 ("Bluetooth: hci_sock: Add support for BT_{SND,RCV}BUF")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Before 'c838530d230b' this issue would only be noticed if you
+disconnect while streaming and now it is noticeable even when
+disconnecting while not streaming.
+
+Fixes: c838530d230b ("media: media videobuf2: Be more flexible on the number of queue stored buffers")
+Fixes: f3d27f34fdd7 ("[media] usbtv: Add driver for Fushicai USBTV007 video frame grabber")
+
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix minor spelling mistake in log message]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sock.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/media/usb/usbtv/usbtv-video.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-index 3d904ca92e9e8..69c2ba1e843eb 100644
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -1943,10 +1943,9 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+diff --git a/drivers/media/usb/usbtv/usbtv-video.c b/drivers/media/usb/usbtv/usbtv-video.c
+index 1e30e05953dc6..7495df6b51912 100644
+--- a/drivers/media/usb/usbtv/usbtv-video.c
++++ b/drivers/media/usb/usbtv/usbtv-video.c
+@@ -962,15 +962,8 @@ int usbtv_video_init(struct usbtv *usbtv)
  
- 	switch (optname) {
- 	case HCI_DATA_DIR:
--		if (copy_from_sockptr(&opt, optval, sizeof(opt))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
-+		if (err)
- 			break;
--		}
+ void usbtv_video_free(struct usbtv *usbtv)
+ {
+-	mutex_lock(&usbtv->vb2q_lock);
+-	mutex_lock(&usbtv->v4l2_lock);
+-
+-	usbtv_stop(usbtv);
+ 	vb2_video_unregister_device(&usbtv->vdev);
+ 	v4l2_device_disconnect(&usbtv->v4l2_dev);
  
- 		if (opt)
- 			hci_pi(sk)->cmsg_mask |= HCI_CMSG_DIR;
-@@ -1955,10 +1954,9 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case HCI_TIME_STAMP:
--		if (copy_from_sockptr(&opt, optval, sizeof(opt))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt)
- 			hci_pi(sk)->cmsg_mask |= HCI_CMSG_TSTAMP;
-@@ -1976,11 +1974,9 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
- 			uf.event_mask[1] = *((u32 *) f->event_mask + 1);
- 		}
- 
--		len = min_t(unsigned int, len, sizeof(uf));
--		if (copy_from_sockptr(&uf, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&uf, sizeof(uf), optval, len);
-+		if (err)
- 			break;
--		}
- 
- 		if (!capable(CAP_NET_RAW)) {
- 			uf.type_mask &= hci_sec_filter.type_mask;
-@@ -2039,10 +2035,9 @@ static int hci_sock_setsockopt(struct socket *sock, int level, int optname,
- 			goto done;
- 		}
- 
--		if (copy_from_sockptr(&opt, optval, sizeof(opt))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
-+		if (err)
- 			break;
--		}
- 
- 		hci_pi(sk)->mtu = opt;
- 		break;
+-	mutex_unlock(&usbtv->v4l2_lock);
+-	mutex_unlock(&usbtv->vb2q_lock);
+-
+ 	v4l2_device_put(&usbtv->v4l2_dev);
+ }
 -- 
 2.43.0
 
