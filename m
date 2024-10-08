@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDE91E485;
-	Tue,  8 Oct 2024 12:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AC71CF297;
+	Tue,  8 Oct 2024 12:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390330; cv=none; b=E87Hc97d3zRvMVjqmAqr85/S+Ox4pgb1xHup8AwAL0KLvezulG+ehw1EFF7Dv6uIpbTfEVhsbIbZ/gBgY0I1xgAJztJbqUCRVthVpi3Ggk7S8/xOOwoeK7sstkO69n/cKa76t6jaN+N6ziqwfmOcHw+JvYtbcM3ryrT/Y0FDqTM=
+	t=1728390334; cv=none; b=lfbCslPXxYiPSAo7GGpQQNwXbbbKtJyaPglSsmruf5j/aAcfF91fUj/xfIFugBSNYvWGu9873TvsW5iHVx0O6s6LuVLTpNbcXcYwqv9HAD2RAU3+VcwimTPDzFSxw27PkvdWx6ySVkcPcNguYfh7sTz931X9EHTFvj+5LApQ3VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390330; c=relaxed/simple;
-	bh=xzjoFnjSPlmJBNNqOs3sqy3ncjg6Y5bXvbOZpnPXTcg=;
+	s=arc-20240116; t=1728390334; c=relaxed/simple;
+	bh=AdKSgxKTJJqnJOYqyI5XyFMecYL5EWjcqotqD+U16EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4zGQDsLIzh9Rg4x7XsFQKBqVOt/E4vJTg92MT09CiFZmamZw0sPwdWMKUjc/A79FDeSnhZtuJLlffolo4yTkqZeuYbFiOhVCP79dvKew1e5PT95sAtxqqsjnZjbf/VhT+Udg+TafMZAyQuqFljeb4WaGA+bBA/BmWIAM/BPInY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9DB6YjC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgM5Mqf50bvwMNBRHyosl/MV9bDqNLf2dV8d2uVuQJdBSzf2/rPypCNGjwDHTfakq4EJJ4HXAKEHzBvAFZm3ehqBUVuKjAKYjuI93rSXvGEAXEQJm36tFv89kgSkd/I2jywUgmnOEG+fV8HfR/J3/PwIEZ8wEo1zIS0K/UF1WL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mw8sPoPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9DB6YjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7082EC4CECC;
-	Tue,  8 Oct 2024 12:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mw8sPoPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49C0C4CEC7;
+	Tue,  8 Oct 2024 12:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390329;
-	bh=xzjoFnjSPlmJBNNqOs3sqy3ncjg6Y5bXvbOZpnPXTcg=;
+	s=korg; t=1728390333;
+	bh=AdKSgxKTJJqnJOYqyI5XyFMecYL5EWjcqotqD+U16EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9DB6YjCC1BF7UJsNyjuqKZBXkFDjGXM09AFatur+LcO72CYLodYAlBNMos4lfvwN
-	 1Dabr453BofhbXHpMr9CzS3dsfbUXpAqOCrAA5ryNUpwyVGKa84OLM1PrWcBnMPEpH
-	 Hfuab6mCjv9y3p0gNyQzPr5d3X/7XrwJAZLXr9cE=
+	b=Mw8sPoPSG/n3CWZM0Lj1+mFgd/+yZfaMHsERehb6szuqes+YEBbSc6luCQhaLClKh
+	 DPmilkMiIYZi2zHpUwLBupsOUMzxxwRnKyaNEbUdoj+TUSNYDiXn1IKelNd0w61BuH
+	 fv2q+LwjV+1e3ehq1GxtMV6NJT22xwadn5kt9Vdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Tim Huang <tim.huang@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 255/482] iomap: handle a post-direct I/O invalidate race in iomap_write_delalloc_release
-Date: Tue,  8 Oct 2024 14:05:18 +0200
-Message-ID: <20241008115658.322424492@linuxfoundation.org>
+Subject: [PATCH 6.10 226/482] drm/amdgpu: fix unchecked return value warning for amdgpu_gfx
+Date: Tue,  8 Oct 2024 14:04:49 +0200
+Message-ID: <20241008115657.200419994@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,46 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Tim Huang <tim.huang@amd.com>
 
-[ Upstream commit 7a9d43eace888a0ee6095035997bb138425844d3 ]
+[ Upstream commit c0277b9d7c2ee9ee5dbc948548984f0fbb861301 ]
 
-When direct I/O completions invalidates the page cache it holds neither the
-i_rwsem nor the invalidate_lock so it can be racing with
-iomap_write_delalloc_release.  If the search for the end of the region that
-contains data returns the start offset we hit such a race and just need to
-look for the end of the newly created hole instead.
+This resolves the unchecded return value warning reported by Coverity.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240910043949.3481298-2-hch@lst.de
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index e817564e80e01..b9b035a5e7793 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1226,7 +1226,15 @@ static int iomap_write_delalloc_release(struct inode *inode,
- 			error = data_end;
- 			goto out_unlock;
- 		}
--		WARN_ON_ONCE(data_end <= start_byte);
-+
-+		/*
-+		 * If we race with post-direct I/O invalidation of the page cache,
-+		 * there might be no data left at start_byte.
-+		 */
-+		if (data_end == start_byte)
-+			continue;
-+
-+		WARN_ON_ONCE(data_end < start_byte);
- 		WARN_ON_ONCE(data_end > scan_end_byte);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index e92bdc9a39d35..1935b211b527d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -816,8 +816,11 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
+ 	int r;
  
- 		error = iomap_write_delalloc_scan(inode, &punch_start_byte,
+ 	if (amdgpu_ras_is_supported(adev, ras_block->block)) {
+-		if (!amdgpu_persistent_edc_harvesting_supported(adev))
+-			amdgpu_ras_reset_error_status(adev, AMDGPU_RAS_BLOCK__GFX);
++		if (!amdgpu_persistent_edc_harvesting_supported(adev)) {
++			r = amdgpu_ras_reset_error_status(adev, AMDGPU_RAS_BLOCK__GFX);
++			if (r)
++				return r;
++		}
+ 
+ 		r = amdgpu_ras_block_late_init(adev, ras_block);
+ 		if (r)
+@@ -961,7 +964,10 @@ uint32_t amdgpu_kiq_rreg(struct amdgpu_device *adev, uint32_t reg, uint32_t xcc_
+ 		pr_err("critical bug! too many kiq readers\n");
+ 		goto failed_unlock;
+ 	}
+-	amdgpu_ring_alloc(ring, 32);
++	r = amdgpu_ring_alloc(ring, 32);
++	if (r)
++		goto failed_unlock;
++
+ 	amdgpu_ring_emit_rreg(ring, reg, reg_val_offs);
+ 	r = amdgpu_fence_emit_polling(ring, &seq, MAX_KIQ_REG_WAIT);
+ 	if (r)
+@@ -1027,7 +1033,10 @@ void amdgpu_kiq_wreg(struct amdgpu_device *adev, uint32_t reg, uint32_t v, uint3
+ 	}
+ 
+ 	spin_lock_irqsave(&kiq->ring_lock, flags);
+-	amdgpu_ring_alloc(ring, 32);
++	r = amdgpu_ring_alloc(ring, 32);
++	if (r)
++		goto failed_unlock;
++
+ 	amdgpu_ring_emit_wreg(ring, reg, v);
+ 	r = amdgpu_fence_emit_polling(ring, &seq, MAX_KIQ_REG_WAIT);
+ 	if (r)
+@@ -1063,6 +1072,7 @@ void amdgpu_kiq_wreg(struct amdgpu_device *adev, uint32_t reg, uint32_t v, uint3
+ 
+ failed_undo:
+ 	amdgpu_ring_undo(ring);
++failed_unlock:
+ 	spin_unlock_irqrestore(&kiq->ring_lock, flags);
+ failed_kiq_write:
+ 	dev_err(adev->dev, "failed to write reg:%x\n", reg);
 -- 
 2.43.0
 
