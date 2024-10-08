@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AE31DEFD6;
-	Tue,  8 Oct 2024 12:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514F41DED74;
+	Tue,  8 Oct 2024 12:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390171; cv=none; b=dKnx9KS9GS9I/mMDPL8+B8CAmgThhYFhVvNVe5QxBjH49CwRb6S5tGj6b9pClbhiGdwoAQWfkJ1IcodpjVHJPwHo/fJys/p7CceQcJ1oR4gYUtnzIARUep/nPy6H/DeshEqyZLGAN241ORncEnmK2V+OWsbQYfE1kFcmI9AkkZY=
+	t=1728390174; cv=none; b=A8SH+56ZbbEUiz/Y1isyPzV7cAF3B3Ogo+P0PonnwTwK4UXN8TL3tpV05qlnF0q3DSkFRL/f4kA4v7wNSWJ9oG5zEtpd9J3KmuCTcBlEC914uNgEdvCx9X9yX46a/mzE5yjWmZlG09cz10Ea1ktFypERGjDVcNU/y6hoIeUrSvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390171; c=relaxed/simple;
-	bh=Kj/mXpAgBANTQbw0yW2ZE/67T068smSePaZQxZLIoAA=;
+	s=arc-20240116; t=1728390174; c=relaxed/simple;
+	bh=CVIYPIo3KfdMZCXNbfC3vpCUfqvWWt1hqn/ENp4MoFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1hAV253cvCqW9CgeZDpZskYefgTt3g2LPQUtXiyt/tF/re2hlkcA/swsFBjv4U6fkXoJG9wWTZUlKIu+ntjecgEOSwA9OyZqsTM08Iapt06moOT4HV5ctDyVnkaHwznkl5rxLLROauKQeU1dNFONtnNhmhMWUyHq3+Q4/6I094=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFL4k1Sv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGZ0uIqVtqulYOd5Ompa8SdSv0dMfyb7xmOwcYSy4APNf5bbln2ryyFBcmmMWHU4gK5Spfp3pBx5xypi9kQ6v454jL+TggNPc5guh7BDRhjo8pkZgsM+QTLz+EpwmL+R5nXJjeq3cKy9Jc/PryjmVxTwaG3dWYFUZAFR4CeGAqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzDPFVFB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFL4k1Sv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA19C4CEC7;
-	Tue,  8 Oct 2024 12:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzDPFVFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6DC4CEC7;
+	Tue,  8 Oct 2024 12:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390171;
-	bh=Kj/mXpAgBANTQbw0yW2ZE/67T068smSePaZQxZLIoAA=;
+	s=korg; t=1728390174;
+	bh=CVIYPIo3KfdMZCXNbfC3vpCUfqvWWt1hqn/ENp4MoFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFL4k1SvXU7Whg1uHiioc0jQxfwBhbovwO77CKx56Mm403FcXE6IP5G7yjgfv1UWi
-	 j1vJN87ztRSQfUuzi1dAT9a6W5I0DZKpXFHMiqjpXvIC2y5VjYsisnrLEtYElJ9PvW
-	 iaW1JYqoVU1DnvMr+7O/0mefl2vBTbqG+hAjVEo0=
+	b=qzDPFVFBvFL6Fq8x/anGSSFSvElUEUwlGB95XOUUxfH3osi28w7Cb6DM4erz0w0fg
+	 WA9carnTz6sjeE6h6W9tm54J1VH9mm9rOJ8bN/vvDwLMWjxIPjUdR9CWKhK7VTDJt3
+	 eH5ectfntR1sQEG8u8pk0GLB86KQZflCBFJK3KNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 211/482] drm/amd/display: Check phantom_stream before it is used
-Date: Tue,  8 Oct 2024 14:04:34 +0200
-Message-ID: <20241008115656.613576120@linuxfoundation.org>
+Subject: [PATCH 6.10 212/482] drm/amd/display: Check stream before comparing them
+Date: Tue,  8 Oct 2024 14:04:35 +0200
+Message-ID: <20241008115656.654841152@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -56,12 +56,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 3718a619a8c0a53152e76bb6769b6c414e1e83f4 ]
+[ Upstream commit 35ff747c86767937ee1e0ca987545b7eed7a0810 ]
 
-dcn32_enable_phantom_stream can return null, so returned value
-must be checked before used.
+[WHAT & HOW]
+amdgpu_dm can pass a null stream to dc_is_stream_unchanged. It is
+necessary to check for null before dereferencing them.
 
-This fixes 1 NULL_RETURNS issue reported by Coverity.
+This fixes 1 FORWARD_NULL issue reported by Coverity.
 
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
@@ -70,23 +71,22 @@ Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-index 9209bcad699a8..55fbe86383c04 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-@@ -1714,6 +1714,9 @@ void dcn32_add_phantom_pipes(struct dc *dc, struct dc_state *context,
- 	// be a valid candidate for SubVP (i.e. has a plane, stream, doesn't
- 	// already have phantom pipe assigned, etc.) by previous checks.
- 	phantom_stream = dcn32_enable_phantom_stream(dc, context, pipes, pipe_cnt, index);
-+	if (!phantom_stream)
-+		return;
-+
- 	dcn32_enable_phantom_plane(dc, context, phantom_stream, index);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index 7462c34793799..58f6155fecc5a 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -3134,6 +3134,8 @@ static bool are_stream_backends_same(
+ bool dc_is_stream_unchanged(
+ 	struct dc_stream_state *old_stream, struct dc_stream_state *stream)
+ {
++	if (!old_stream || !stream)
++		return false;
  
- 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
+ 	if (!are_stream_backends_same(old_stream, stream))
+ 		return false;
 -- 
 2.43.0
 
