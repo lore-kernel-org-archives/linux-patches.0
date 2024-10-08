@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CB51DE2CF;
-	Tue,  8 Oct 2024 12:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884D192594;
+	Tue,  8 Oct 2024 12:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391428; cv=none; b=HFH2nO9L13O3w3y6HJJHSvIWRXildaYCnTG55BKDcJrGMdbuRvyd6R9ZkmdCP7TAzWjbPZJH4fRFB9eHWj7eMMJxzrfpKl+at11Ffw0b5TE+DrGYRELHMBttevbtocTglwNEnaa6uwT0j5NuOHnjy2Zb+Cx2qF4Fsy4ERc5N9IA=
+	t=1728391432; cv=none; b=sW/1R2Nwc6m84XB76Ays+MW/qHA5HVOJIP651zkxGJNTBjmZvU9hj0sVt4E3Ci37NMyN7WnnhE4xjbUX6LJqwVqIMHTpPf+2fzEM8R0Tq6/LW4Ja3ntw55Tu54Jebh1OECTV0j2gvagAImAFpOajvwklTnNhkEXz59o6djWF+F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391428; c=relaxed/simple;
-	bh=/tl25x99j27BrdoNbFNLUNPSRk1/Y0/whtOo41j77VI=;
+	s=arc-20240116; t=1728391432; c=relaxed/simple;
+	bh=k8g34/4EbTBFrT6ldn9SAO2F7JRla5e2IVsKQehIt0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=luc4CfbtijTk1/jQjh0d3ylVRpjHkzuYoECpLQTw2G4El3PvqfbPoKUus7c4+QUKUU0nV8UcEvaGk9gAmffTdBTjgZP2KlNgZrln1LI07/IsOk7u0Gj+0rOiWv7pMnXQfXSzaomDqKwuK4Envl6WeF+PvxSpBr41mDUr5Mcyrfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWHz0M2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPGXjFFe8Pey59yhnbt9vw5fAwnB9ekvVMPWXLoUdun0acdK6ePqnTh0hecVDWzXAYzqQ4CUvaAaXSM07hLC0d2zMYDFLokZciL1azwU79xfReFnpqMZou+HM7zANrrmnq/OkjECY2RpEKG94+xTYdFx9r+hE1+GZ3JPrP0iewg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yB1+Fkge; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWHz0M2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF0EC4CEC7;
-	Tue,  8 Oct 2024 12:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yB1+Fkge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA14C4CEC7;
+	Tue,  8 Oct 2024 12:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391428;
-	bh=/tl25x99j27BrdoNbFNLUNPSRk1/Y0/whtOo41j77VI=;
+	s=korg; t=1728391432;
+	bh=k8g34/4EbTBFrT6ldn9SAO2F7JRla5e2IVsKQehIt0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWHz0M2Wx+d4IMxtbCkzLn/eul2SsRFrXDlMww4I6ySRMhqddQiSDMTZBn/o19zvd
-	 kfgHvMq+zjb2l02nRIuvPKCWUG10cv4EdSI4XnJCg3iz9OeE7C0RcC2RsufFqvsXpA
-	 CESzag5cO14jXlzGHCEyIsvIaVjmzXJPQWesNgt0=
+	b=yB1+FkgemfL881Qob+VPiP2fY94FKjsxL9/EfhXpBVMc5wa2WjwUI6va7TaFqQeIb
+	 ax7s5up1sk0uDXMEljMs0PY5ugffTEzNLF/ng+WSzFSIwfGNAIXwOsVx0rLX1nEBmJ
+	 BlI2yDrOERHR9LKNl8KZjomPzlxJRwewi2mG5ndI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 104/558] fs/inode: Prevent dump_mapping() accessing invalid dentry.d_name.name
-Date: Tue,  8 Oct 2024 14:02:14 +0200
-Message-ID: <20241008115706.461322421@linuxfoundation.org>
+Subject: [PATCH 6.11 113/558] btrfs: dont readahead the relocation inode on RST
+Date: Tue,  8 Oct 2024 14:02:23 +0200
+Message-ID: <20241008115706.812641789@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,134 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Johannes Thumshirn <jthumshirn@wdc.com>
 
-[ Upstream commit 7f7b850689ac06a62befe26e1fd1806799e7f152 ]
+[ Upstream commit 04915240e2c3a018e4c7f23418478d27226c8957 ]
 
-It's observed that a crash occurs during hot-remove a memory device,
-in which user is accessing the hugetlb. See calltrace as following:
+On relocation we're doing readahead on the relocation inode, but if the
+filesystem is backed by a RAID stripe tree we can get ENOENT (e.g. due to
+preallocated extents not being mapped in the RST) from the lookup.
 
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 14045 at arch/x86/mm/fault.c:1278 do_user_addr_fault+0x2a0/0x790
-Modules linked in: kmem device_dax cxl_mem cxl_pmem cxl_port cxl_pci dax_hmem dax_pmem nd_pmem cxl_acpi nd_btt cxl_core crc32c_intel nvme virtiofs fuse nvme_core nfit libnvdimm dm_multipath scsi_dh_rdac scsi_dh_emc s
-mirror dm_region_hash dm_log dm_mod
-CPU: 1 PID: 14045 Comm: daxctl Not tainted 6.10.0-rc2-lizhijian+ #492
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:do_user_addr_fault+0x2a0/0x790
-Code: 48 8b 00 a8 04 0f 84 b5 fe ff ff e9 1c ff ff ff 4c 89 e9 4c 89 e2 be 01 00 00 00 bf 02 00 00 00 e8 b5 ef 24 00 e9 42 fe ff ff <0f> 0b 48 83 c4 08 4c 89 ea 48 89 ee 4c 89 e7 5b 5d 41 5c 41 5d 41
-RSP: 0000:ffffc90000a575f0 EFLAGS: 00010046
-RAX: ffff88800c303600 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000001000 RSI: ffffffff82504162 RDI: ffffffff824b2c36
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffc90000a57658
-R13: 0000000000001000 R14: ffff88800bc2e040 R15: 0000000000000000
-FS:  00007f51cb57d880(0000) GS:ffff88807fd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000001000 CR3: 00000000072e2004 CR4: 00000000001706f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? __warn+0x8d/0x190
- ? do_user_addr_fault+0x2a0/0x790
- ? report_bug+0x1c3/0x1d0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x14/0x70
- ? asm_exc_invalid_op+0x16/0x20
- ? do_user_addr_fault+0x2a0/0x790
- ? exc_page_fault+0x31/0x200
- exc_page_fault+0x68/0x200
-<...snip...>
-BUG: unable to handle page fault for address: 0000000000001000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 800000000ad92067 P4D 800000000ad92067 PUD 7677067 PMD 0
- Oops: Oops: 0000 [#1] PREEMPT SMP PTI
- ---[ end trace 0000000000000000 ]---
- BUG: unable to handle page fault for address: 0000000000001000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 800000000ad92067 P4D 800000000ad92067 PUD 7677067 PMD 0
- Oops: Oops: 0000 [#1] PREEMPT SMP PTI
- CPU: 1 PID: 14045 Comm: daxctl Kdump: loaded Tainted: G        W          6.10.0-rc2-lizhijian+ #492
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
- RIP: 0010:dentry_name+0x1f4/0x440
-<...snip...>
-? dentry_name+0x2fa/0x440
-vsnprintf+0x1f3/0x4f0
-vprintk_store+0x23a/0x540
-vprintk_emit+0x6d/0x330
-_printk+0x58/0x80
-dump_mapping+0x10b/0x1a0
-? __pfx_free_object_rcu+0x10/0x10
-__dump_page+0x26b/0x3e0
-? vprintk_emit+0xe0/0x330
-? _printk+0x58/0x80
-? dump_page+0x17/0x50
-dump_page+0x17/0x50
-do_migrate_range+0x2f7/0x7f0
-? do_migrate_range+0x42/0x7f0
-? offline_pages+0x2f4/0x8c0
-offline_pages+0x60a/0x8c0
-memory_subsys_offline+0x9f/0x1c0
-? lockdep_hardirqs_on+0x77/0x100
-? _raw_spin_unlock_irqrestore+0x38/0x60
-device_offline+0xe3/0x110
-state_store+0x6e/0xc0
-kernfs_fop_write_iter+0x143/0x200
-vfs_write+0x39f/0x560
-ksys_write+0x65/0xf0
-do_syscall_64+0x62/0x130
+But readahead doesn't handle the error and submits invalid reads to the
+device, causing an assertion in the scatter-gather list code:
 
-Previously, some sanity check have been done in dump_mapping() before
-the print facility parsing '%pd' though, it's still possible to run into
-an invalid dentry.d_name.name.
+  BTRFS info (device nvme1n1): balance: start -d -m -s
+  BTRFS info (device nvme1n1): relocating block group 6480920576 flags data|raid0
+  BTRFS error (device nvme1n1): cannot find raid-stripe for logical [6481928192, 6481969152] devid 2, profile raid0
+  ------------[ cut here ]------------
+  kernel BUG at include/linux/scatterlist.h:115!
+  Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  CPU: 0 PID: 1012 Comm: btrfs Not tainted 6.10.0-rc7+ #567
+  RIP: 0010:__blk_rq_map_sg+0x339/0x4a0
+  RSP: 0018:ffffc90001a43820 EFLAGS: 00010202
+  RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffea00045d4802
+  RDX: 0000000117520000 RSI: 0000000000000000 RDI: ffff8881027d1000
+  RBP: 0000000000003000 R08: ffffea00045d4902 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000001000 R12: ffff8881003d10b8
+  R13: ffffc90001a438f0 R14: 0000000000000000 R15: 0000000000003000
+  FS:  00007fcc048a6900(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 000000002cd11000 CR3: 00000001109ea001 CR4: 0000000000370eb0
+  Call Trace:
+   <TASK>
+   ? __die_body.cold+0x14/0x25
+   ? die+0x2e/0x50
+   ? do_trap+0xca/0x110
+   ? do_error_trap+0x65/0x80
+   ? __blk_rq_map_sg+0x339/0x4a0
+   ? exc_invalid_op+0x50/0x70
+   ? __blk_rq_map_sg+0x339/0x4a0
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? __blk_rq_map_sg+0x339/0x4a0
+   nvme_prep_rq.part.0+0x9d/0x770
+   nvme_queue_rq+0x7d/0x1e0
+   __blk_mq_issue_directly+0x2a/0x90
+   ? blk_mq_get_budget_and_tag+0x61/0x90
+   blk_mq_try_issue_list_directly+0x56/0xf0
+   blk_mq_flush_plug_list.part.0+0x52b/0x5d0
+   __blk_flush_plug+0xc6/0x110
+   blk_finish_plug+0x28/0x40
+   read_pages+0x160/0x1c0
+   page_cache_ra_unbounded+0x109/0x180
+   relocate_file_extent_cluster+0x611/0x6a0
+   ? btrfs_search_slot+0xba4/0xd20
+   ? balance_dirty_pages_ratelimited_flags+0x26/0xb00
+   relocate_data_extent.constprop.0+0x134/0x160
+   relocate_block_group+0x3f2/0x500
+   btrfs_relocate_block_group+0x250/0x430
+   btrfs_relocate_chunk+0x3f/0x130
+   btrfs_balance+0x71b/0xef0
+   ? kmalloc_trace_noprof+0x13b/0x280
+   btrfs_ioctl+0x2c2e/0x3030
+   ? kvfree_call_rcu+0x1e6/0x340
+   ? list_lru_add_obj+0x66/0x80
+   ? mntput_no_expire+0x3a/0x220
+   __x64_sys_ioctl+0x96/0xc0
+   do_syscall_64+0x54/0x110
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7fcc04514f9b
+  Code: Unable to access opcode bytes at 0x7fcc04514f71.
+  RSP: 002b:00007ffeba923370 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fcc04514f9b
+  RDX: 00007ffeba923460 RSI: 00000000c4009420 RDI: 0000000000000003
+  RBP: 0000000000000000 R08: 0000000000000013 R09: 0000000000000001
+  R10: 00007fcc043fbba8 R11: 0000000000000246 R12: 00007ffeba924fc5
+  R13: 00007ffeba923460 R14: 0000000000000002 R15: 00000000004d4bb0
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  RIP: 0010:__blk_rq_map_sg+0x339/0x4a0
+  RSP: 0018:ffffc90001a43820 EFLAGS: 00010202
+  RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffea00045d4802
+  RDX: 0000000117520000 RSI: 0000000000000000 RDI: ffff8881027d1000
+  RBP: 0000000000003000 R08: ffffea00045d4902 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000001000 R12: ffff8881003d10b8
+  R13: ffffc90001a438f0 R14: 0000000000000000 R15: 0000000000003000
+  FS:  00007fcc048a6900(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fcc04514f71 CR3: 00000001109ea001 CR4: 0000000000370eb0
+  Kernel panic - not syncing: Fatal exception
+  Kernel Offset: disabled
+  ---[ end Kernel panic - not syncing: Fatal exception ]---
 
-Since dump_mapping() only needs to dump the filename only, retrieve it
-by itself in a safer way to prevent an unnecessary crash.
+So in case of a relocation on a RAID stripe-tree based file system, skip
+the readahead.
 
-Note that either retrieving the filename with '%pd' or
-strncpy_from_kernel_nofault(), the filename could be unreliable.
-
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://lore.kernel.org/r/20240826055503.1522320-1-lizhijian@fujitsu.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/btrfs/relocation.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 7125b73b53675..551ba352072fa 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -595,6 +595,7 @@ void dump_mapping(const struct address_space *mapping)
- 	struct hlist_node *dentry_first;
- 	struct dentry *dentry_ptr;
- 	struct dentry dentry;
-+	char fname[64] = {};
- 	unsigned long ino;
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 0533d0f82dc99..ea4ed85919ec8 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -36,6 +36,7 @@
+ #include "relocation.h"
+ #include "super.h"
+ #include "tree-checker.h"
++#include "raid-stripe-tree.h"
  
- 	/*
-@@ -631,11 +632,14 @@ void dump_mapping(const struct address_space *mapping)
- 		return;
+ /*
+  * Relocation overview
+@@ -2965,21 +2966,34 @@ static int relocate_one_folio(struct reloc_control *rc,
+ 	u64 folio_end;
+ 	u64 cur;
+ 	int ret;
++	const bool use_rst = btrfs_need_stripe_tree_update(fs_info, rc->block_group->flags);
+ 
+ 	ASSERT(index <= last_index);
+ 	folio = filemap_lock_folio(inode->i_mapping, index);
+ 	if (IS_ERR(folio)) {
+-		page_cache_sync_readahead(inode->i_mapping, ra, NULL,
+-					  index, last_index + 1 - index);
++
++		/*
++		 * On relocation we're doing readahead on the relocation inode,
++		 * but if the filesystem is backed by a RAID stripe tree we can
++		 * get ENOENT (e.g. due to preallocated extents not being
++		 * mapped in the RST) from the lookup.
++		 *
++		 * But readahead doesn't handle the error and submits invalid
++		 * reads to the device, causing a assertion failures.
++		 */
++		if (!use_rst)
++			page_cache_sync_readahead(inode->i_mapping, ra, NULL,
++						  index, last_index + 1 - index);
+ 		folio = __filemap_get_folio(inode->i_mapping, index,
+-					    FGP_LOCK | FGP_ACCESSED | FGP_CREAT, mask);
++					    FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
++					    mask);
+ 		if (IS_ERR(folio))
+ 			return PTR_ERR(folio);
  	}
  
-+	if (strncpy_from_kernel_nofault(fname, dentry.d_name.name, 63) < 0)
-+		strscpy(fname, "<invalid>");
- 	/*
--	 * if dentry is corrupted, the %pd handler may still crash,
--	 * but it's unlikely that we reach here with a corrupt mapping
-+	 * Even if strncpy_from_kernel_nofault() succeeded,
-+	 * the fname could be unreliable
- 	 */
--	pr_warn("aops:%ps ino:%lx dentry name:\"%pd\"\n", a_ops, ino, &dentry);
-+	pr_warn("aops:%ps ino:%lx dentry name(?):\"%s\"\n",
-+		a_ops, ino, fname);
- }
+ 	WARN_ON(folio_order(folio));
  
- void clear_inode(struct inode *inode)
+-	if (folio_test_readahead(folio))
++	if (folio_test_readahead(folio) && !use_rst)
+ 		page_cache_async_readahead(inode->i_mapping, ra, NULL,
+ 					   folio, last_index + 1 - index);
+ 
 -- 
 2.43.0
 
