@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B0D1779B1;
-	Tue,  8 Oct 2024 12:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9771779B1;
+	Tue,  8 Oct 2024 12:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390896; cv=none; b=QXPjIY6KL/vgIqZ+5ryz2qjf3CrfR7bz05dOqOfvQEU2e2EDktI/1ZqpZDgkmBpBPC3u4lGmerZwJK2M0sBTUSiIE/P37iVvgCNHmuS2k0MzwhF+uK9koD7QX35EMt4tV9gQLUnuLBWWrLTPS0OEZtPCYFvOxWx9L6/F9oI78Q4=
+	t=1728390899; cv=none; b=Y+UlRlQ6qp5xSyN6M+OekIC3D4ZCZuwJiwQngcldsDQmpRFQvA9mq3Xay9Fa9mNC0QPqq6Fabm+0vtkKMVgk0h7YMeCKCJZ97WmqSB3ySlICcasLDUsUaMTcN3nTAJsBbYgNoffZhUEZe/QhD/SdjQm/SN5+G3Fdg2UMtlxyEaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390896; c=relaxed/simple;
-	bh=hpg6Q16Fwji2LwphJN026BSOQdAxN8PziLGx0tTIra4=;
+	s=arc-20240116; t=1728390899; c=relaxed/simple;
+	bh=CElowgiTdofJCKzIGSUcOxc8Vrx6ugb5b0B/6Je/3OQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXWu8b3rqKQVp+VGw0ahhT1FmWE7SRhL21KTs094Bt+uWaQqSnJmMkHNkW6xrJ6lLBoQ8d2QZlkC4BJ0PFw3LMuX+4IKiesBTulmB+vAX1KfJfq/0rcsNmkH4ZCgVgK+c3yzX3sEN+3+zTafGXeBOxKhzJDIr8UfVjmql6FfAog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otAVR7em; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IfnXxmSlBpPpaQEYC3rbhcODWHCT9fR1VIvTuyX9J66tIqE5vmokRsc6slhKajWKED++IMYYvFNvb9Jf8sMXSrCCClHyaf9SjIqqhP6wPTVTgZ7F6lK7hSCk1pA4t1xfVwCzqUhTnQwYgyNYs+QvVyoryiv4v1VbSJ6O6J/cIbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHyWd5B0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otAVR7em"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21311C4CEC7;
-	Tue,  8 Oct 2024 12:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHyWd5B0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA92C4CEC7;
+	Tue,  8 Oct 2024 12:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390896;
-	bh=hpg6Q16Fwji2LwphJN026BSOQdAxN8PziLGx0tTIra4=;
+	s=korg; t=1728390899;
+	bh=CElowgiTdofJCKzIGSUcOxc8Vrx6ugb5b0B/6Je/3OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=otAVR7emin+KE/XfWcyDFUlkFeQEJKTqWAZhVnNAjlWww2UtMKm5SbPNsJDxgOHbT
-	 CIL90Kqn8s183kvRJMw89agWVufW99GLu2zvT2thXeiHEYE02TyRz9JXtxh6b+AfWs
-	 EO+VqG4TKNPb1BSkJk3X8K/bB8VpTXruA/VpFDZU=
+	b=HHyWd5B0M5mboTssflg2941nDiooNpat418cMNL9pc6LrWWy0PL5QjvA1J4KgPeR2
+	 Q3WyqQlWu1YKVtc+6/Zfxb2TPXFF6aXA5QUqzo7OaE1sJML6P3o58d9cGiEp85bmSh
+	 ru0G00zsMISwAF2KIJT9JXIrFdko7Tb0rnB6Bz7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Ye <jiawei.ye@foxmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.10 425/482] mac802154: Fix potential RCU dereference issue in mac802154_scan_worker
-Date: Tue,  8 Oct 2024 14:08:08 +0200
-Message-ID: <20241008115705.127457191@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 426/482] io_uring/net: harden multishot termination case for recv
+Date: Tue,  8 Oct 2024 14:08:09 +0200
+Message-ID: <20241008115705.166207740@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,63 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Ye <jiawei.ye@foxmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit bff1709b3980bd7f80be6786f64cc9a9ee9e56da upstream.
+commit c314094cb4cfa6fc5a17f4881ead2dfebfa717a7 upstream.
 
-In the `mac802154_scan_worker` function, the `scan_req->type` field was
-accessed after the RCU read-side critical section was unlocked. According
-to RCU usage rules, this is illegal and can lead to unpredictable
-behavior, such as accessing memory that has been updated or causing
-use-after-free issues.
+If the recv returns zero, or an error, then it doesn't matter if more
+data has already been received for this buffer. A condition like that
+should terminate the multishot receive. Rather than pass in the
+collected return value, pass in whether to terminate or keep the recv
+going separately.
 
-This possible bug was identified using a static analysis tool developed
-by myself, specifically designed to detect RCU-related issues.
+Note that this isn't a bug right now, as the only way to get there is
+via setting MSG_WAITALL with multishot receive. And if an application
+does that, then -EINVAL is returned anyway. But it seems like an easy
+bug to introduce, so let's make it a bit more explicit.
 
-To address this, the `scan_req->type` value is now stored in a local
-variable `scan_req_type` while still within the RCU read-side critical
-section. The `scan_req_type` is then used after the RCU lock is released,
-ensuring that the type value is safely accessed without violating RCU
-rules.
-
-Fixes: e2c3e6f53a7a ("mac802154: Handle active scanning")
+Link: https://github.com/axboe/liburing/issues/1246
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
-Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/tencent_3B2F4F2B4DA30FAE2F51A9634A16B3AD4908@qq.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: b3fdea6ecb55 ("io_uring: multishot recv")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |    4 +++-
+ io_uring/net.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -176,6 +176,7 @@ void mac802154_scan_worker(struct work_s
- 	struct ieee802154_local *local =
- 		container_of(work, struct ieee802154_local, scan_work.work);
- 	struct cfg802154_scan_request *scan_req;
-+	enum nl802154_scan_types scan_req_type;
- 	struct ieee802154_sub_if_data *sdata;
- 	unsigned int scan_duration = 0;
- 	struct wpan_phy *wpan_phy;
-@@ -209,6 +210,7 @@ void mac802154_scan_worker(struct work_s
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1116,6 +1116,7 @@ int io_recv(struct io_kiocb *req, unsign
+ 	int ret, min_ret = 0;
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+ 	size_t len = sr->len;
++	bool mshot_finished;
+ 
+ 	if (!(req->flags & REQ_F_POLLED) &&
+ 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
+@@ -1170,6 +1171,7 @@ out_free:
+ 		req_set_fail(req);
  	}
  
- 	wpan_phy = scan_req->wpan_phy;
-+	scan_req_type = scan_req->type;
- 	scan_req_duration = scan_req->duration;
++	mshot_finished = ret <= 0;
+ 	if (ret > 0)
+ 		ret += sr->done_io;
+ 	else if (sr->done_io)
+@@ -1177,7 +1179,7 @@ out_free:
+ 	else
+ 		io_kbuf_recycle(req, issue_flags);
  
- 	/* Look for the next valid chan */
-@@ -246,7 +248,7 @@ void mac802154_scan_worker(struct work_s
- 		goto end_scan;
- 	}
+-	if (!io_recv_finish(req, &ret, kmsg, ret <= 0, issue_flags))
++	if (!io_recv_finish(req, &ret, kmsg, mshot_finished, issue_flags))
+ 		goto retry_multishot;
  
--	if (scan_req->type == NL802154_SCAN_ACTIVE) {
-+	if (scan_req_type == NL802154_SCAN_ACTIVE) {
- 		ret = mac802154_transmit_beacon_req(local, sdata);
- 		if (ret)
- 			dev_err(&sdata->dev->dev,
+ 	return ret;
 
 
