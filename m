@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B134D1DE2A5;
-	Tue,  8 Oct 2024 12:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06E41DE4DB;
+	Tue,  8 Oct 2024 12:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392234; cv=none; b=H8MQ7HmoxYsdeqNHaxOUFeymykQ2PG7cd/5lHxKzzfLyc1/SDwj3gLxTfwBZOYy8Qcji8RsIm2Yy20aC2jhSu2rc3YQQgJ9FO8juOOGk7cTcwswY3gQHONGt8LkVTtbGoWX0hItOoEUF0LXyfERzRtF+f6fjdFWSqieNBYcm43s=
+	t=1728392238; cv=none; b=nW3dLAAsQe1vss97jsfdVqFf/oynNCbcr7llMF1gfRT7y6E3puOORGFJlrJ8jcsnr6rgXSXtuiI/7IrEw42OciN3VafhPwI9LS0pYL2tCMqjtZ37yVBcVyOrLMaO6lQHDK9sIEDffnefIgRh6RCraHvW1thtPMt3N0aFX5Dj3OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392234; c=relaxed/simple;
-	bh=NIw6lxH6G9Ucsb826YFFTxA8a85axywxzHOSi9UUokY=;
+	s=arc-20240116; t=1728392238; c=relaxed/simple;
+	bh=+o1dQPGwTo7SyUj25/R7iTkSqgeuYXd3Wrf1dVoeDQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9e70RQfFBP9fBkLG6PyobyWZ678tB5hyZHkYHmI8VzDlkVLyS7B0wIM5eFriDLrETkKRcmS7LhZ4gS3ehCY+9EBLKvJ3i6gsWNj/PWTSbEt2g5diEIrfW/GuPFPMCSwseeoFKq/FIwZtvDD60NVCZjRAxhc1HjcX6ZfTfQpQFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOn9Llwk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=drjOG+7NYqvaRQ94t6rQR7GXV1J6Kt8W20eYv9UDAKEli5CfQ70vB010h8Tzk31pTP6MmR4hRXVr6osqfuy679wjAbmaeI/VGQFzHXOgw1FMAKvOlOyrJoG6cp9PqzQJ+J0BUYrMO4YFGwaZuRLJ0vZ0M2j8/T2VSO8MvtrvdPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcMvQ24p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOn9Llwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC5CC4CEC7;
-	Tue,  8 Oct 2024 12:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcMvQ24p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0432AC4CEC7;
+	Tue,  8 Oct 2024 12:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392234;
-	bh=NIw6lxH6G9Ucsb826YFFTxA8a85axywxzHOSi9UUokY=;
+	s=korg; t=1728392238;
+	bh=+o1dQPGwTo7SyUj25/R7iTkSqgeuYXd3Wrf1dVoeDQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOn9LlwkefPnvc5e5d4GU4uXqAzDa157g0ebHRmbjE1wsKKRM8dlBsTbeIQ2bbRmB
-	 WiHhkYYNxkcCoHBCJB4dkoxIZ7aOBkF8NSsMHcpIvrRxlbg/t/45CzU6ijW+lQ1wCL
-	 iumZp+5MmAfFHz3TM3yk0gDZ4p0U8g9wZi/drZL0=
+	b=ZcMvQ24pqiYImkjip7GppHjVKc0yvrys/6SeKjkR0Ihc07qbdTaldCC2wzgU/gXJT
+	 iuGW5Y14Tpcg757pYhg1uIl/3+jZXXrb6S2q2V/zaT2jwhAeiXOwu6u0gf4Mt4Gl+E
+	 akyI3QgPACGA3S6kUhT62yYP+zNWfq8WSNMS1ZXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.11 356/558] i2c: synquacer: Deal with optional PCLK correctly
-Date: Tue,  8 Oct 2024 14:06:26 +0200
-Message-ID: <20241008115716.309203393@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.11 357/558] rust: sync: require `T: Sync` for `LockedBy::access`
+Date: Tue,  8 Oct 2024 14:06:27 +0200
+Message-ID: <20241008115716.349427303@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,42 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit f2990f8630531a99cad4dc5c44cb2a11ded42492 upstream.
+commit a8ee30f45d5d57467ddb7877ed6914d0eba0af7f upstream.
 
-ACPI boot does not provide clocks and regulators, but instead, provides
-the PCLK rate directly, and enables the clock in firmware. So deal
-gracefully with this.
+The `LockedBy::access` method only requires a shared reference to the
+owner, so if we have shared access to the `LockedBy` from several
+threads at once, then two threads could call `access` in parallel and
+both obtain a shared reference to the inner value. Thus, require that
+`T: Sync` when calling the `access` method.
 
-Fixes: 55750148e559 ("i2c: synquacer: Fix an error handling path in synquacer_i2c_probe()")
-Cc: stable@vger.kernel.org # v6.10+
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+An alternative is to require `T: Sync` in the `impl Sync for LockedBy`.
+This patch does not choose that approach as it gives up the ability to
+use `LockedBy` with `!Sync` types, which is okay as long as you only use
+`access_mut`.
+
+Cc: stable@vger.kernel.org
+Fixes: 7b1f55e3a984 ("rust: sync: introduce `LockedBy`")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240915-locked-by-sync-fix-v2-1-1a8d89710392@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-synquacer.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ rust/kernel/sync/locked_by.rs |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-synquacer.c
-+++ b/drivers/i2c/busses/i2c-synquacer.c
-@@ -550,12 +550,13 @@ static int synquacer_i2c_probe(struct pl
- 	device_property_read_u32(&pdev->dev, "socionext,pclk-rate",
- 				 &i2c->pclkrate);
+--- a/rust/kernel/sync/locked_by.rs
++++ b/rust/kernel/sync/locked_by.rs
+@@ -83,8 +83,12 @@ pub struct LockedBy<T: ?Sized, U: ?Sized
+ // SAFETY: `LockedBy` can be transferred across thread boundaries iff the data it protects can.
+ unsafe impl<T: ?Sized + Send, U: ?Sized> Send for LockedBy<T, U> {}
  
--	pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
-+	pclk = devm_clk_get_optional_enabled(&pdev->dev, "pclk");
- 	if (IS_ERR(pclk))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(pclk),
- 				     "failed to get and enable clock\n");
+-// SAFETY: `LockedBy` serialises the interior mutability it provides, so it is `Sync` as long as the
+-// data it protects is `Send`.
++// SAFETY: If `T` is not `Sync`, then parallel shared access to this `LockedBy` allows you to use
++// `access_mut` to hand out `&mut T` on one thread at the time. The requirement that `T: Send` is
++// sufficient to allow that.
++//
++// If `T` is `Sync`, then the `access` method also becomes available, which allows you to obtain
++// several `&T` from several threads at once. However, this is okay as `T` is `Sync`.
+ unsafe impl<T: ?Sized + Send, U: ?Sized> Sync for LockedBy<T, U> {}
  
--	i2c->pclkrate = clk_get_rate(pclk);
-+	if (pclk)
-+		i2c->pclkrate = clk_get_rate(pclk);
+ impl<T, U> LockedBy<T, U> {
+@@ -118,7 +122,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
+     ///
+     /// Panics if `owner` is different from the data protected by the lock used in
+     /// [`new`](LockedBy::new).
+-    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T {
++    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T
++    where
++        T: Sync,
++    {
+         build_assert!(
+             size_of::<U>() > 0,
+             "`U` cannot be a ZST because `owner` wouldn't be unique"
+@@ -127,7 +134,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
+             panic!("mismatched owners");
+         }
  
- 	if (i2c->pclkrate < SYNQUACER_I2C_MIN_CLK_RATE ||
- 	    i2c->pclkrate > SYNQUACER_I2C_MAX_CLK_RATE)
+-        // SAFETY: `owner` is evidence that the owner is locked.
++        // SAFETY: `owner` is evidence that there are only shared references to the owner for the
++        // duration of 'a, so it's not possible to use `Self::access_mut` to obtain a mutable
++        // reference to the inner value that aliases with this shared reference. The type is `Sync`
++        // so there are no other requirements.
+         unsafe { &*self.data.get() }
+     }
+ 
 
 
