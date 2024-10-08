@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D721DC759;
-	Tue,  8 Oct 2024 12:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8FB190663;
+	Tue,  8 Oct 2024 12:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391181; cv=none; b=oSjqX856usfnTzMI+yH++CIasyVr7yswxjE7JbANMYFFWP4Rjn+qGFyiJWsAIhJYjC4jooEK39y9v3pm3fmRuoCPzzoQV9GY8vpEoSJuTo+IJRFnzpZ8e/K0+sHuHiIxUmsj0YXj6LOE0cHq+F/Dh3mp7b7DblRHUT8GGLT7LXM=
+	t=1728391184; cv=none; b=lNEzkdlj7d3k8w5pS3r4MpFRYtIsRtefhhi0hUON5mo2D7mKH1xo7ztgLuU1CPQZIEUiMP/vw9YTMSk1KoLYwYsg64SM44gBzTIvhxjJHOaMogPjnFRs6X/J0Bhi9UkQkUEIjccP9k0gobiCPmW+ch7qiwi7BCEGvcqZ1+iAbgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391181; c=relaxed/simple;
-	bh=p1MPYfNzz5NAmjBpVUgjBvwWq9CuniyqiKs65LcFj0k=;
+	s=arc-20240116; t=1728391184; c=relaxed/simple;
+	bh=ivjAxx2H8zkCaRtYSjNgP+uBrasOpOg64FUCYFCjHbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyxNNSVhDUU9Fc5ZawtOgAP0F6vdx9eyLXscI+VAppyDwIwlYor0aFBjL3+Gx2M9RcKbFVYrh2r+dsEFBW5BMF55hxyCWFNX0tpHSt9D+4xT/NY588TJSRBazUneq1fACFVtckS7Due7D7gWFbx2XRx+nL4+zg8fUVhct3OZ8D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdXUnHsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUITdOWrELU7aQMkQht8lHQG9HpINs+8Dp6rrG2O08XxkHMZso8sMenK70t33mgHnXWclIPr2GCN34R6HQdYMVNJ9vQo3SVKULRtRvxn62phNTS4AzdsdyA/LoFjjQ2fCCHmEAMUBbKSH3qXoHUH2vg7g1z5YXHOt1o6TVl67rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EE9/d8Pt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdXUnHsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FE8C4CEC7;
-	Tue,  8 Oct 2024 12:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EE9/d8Pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84880C4CEC7;
+	Tue,  8 Oct 2024 12:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391180;
-	bh=p1MPYfNzz5NAmjBpVUgjBvwWq9CuniyqiKs65LcFj0k=;
+	s=korg; t=1728391183;
+	bh=ivjAxx2H8zkCaRtYSjNgP+uBrasOpOg64FUCYFCjHbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdXUnHsfNR/grN5EO3aE3S6iZvv+PI3kPx38bhMwxed5TjvxsCX3hOcOCnjdsDdQY
-	 X7JAiVwZFB2QZOx0TSwAA3I8OuQGSYOWnObAc8THBqMW1BMQ4NYyDpxe2mJ3fW0fjF
-	 tPWC9+VIoLpoL3Vy2bF1UwWJ/8yJy9wxQ5MDTSHA=
+	b=EE9/d8PtL0njrxz9jR77VZJ0bAzdTlm/U4NGAnVeHXpAGVbfILYFEtI56QW6+FpPz
+	 fF0M4IzY/ueT++ox3FEOadKGtaHpARplfqofudIeILoYZc5JxHcVpS9vPjfcZkzpkz
+	 OydRFl8T6QIFro8EziT1RTRo9jmYkOp76w6/ggS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jiaymao <quic_jiaymao@quicinc.com>,
+	syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 031/558] Bluetooth: MGMT: Fix possible crash on mgmt_index_removed
-Date: Tue,  8 Oct 2024 14:01:01 +0200
-Message-ID: <20241008115703.448638418@linuxfoundation.org>
+Subject: [PATCH 6.11 032/558] Bluetooth: L2CAP: Fix uaf in l2cap_connect
+Date: Tue,  8 Oct 2024 14:01:02 +0200
+Message-ID: <20241008115703.488500391@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,89 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit f53e1c9c726d83092167f2226f32bd3b73f26c21 ]
+[ Upstream commit 333b4fd11e89b29c84c269123f871883a30be586 ]
 
-If mgmt_index_removed is called while there are commands queued on
-cmd_sync it could lead to crashes like the bellow trace:
+[Syzbot reported]
+BUG: KASAN: slab-use-after-free in l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+Read of size 8 at addr ffff8880241e9800 by task kworker/u9:0/54
 
-0x0000053D: __list_del_entry_valid_or_report+0x98/0xdc
-0x0000053D: mgmt_pending_remove+0x18/0x58 [bluetooth]
-0x0000053E: mgmt_remove_adv_monitor_complete+0x80/0x108 [bluetooth]
-0x0000053E: hci_cmd_sync_work+0xbc/0x164 [bluetooth]
+CPU: 0 UID: 0 PID: 54 Comm: kworker/u9:0 Not tainted 6.11.0-rc6-syzkaller-00268-g788220eee30d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Workqueue: hci2 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:93 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0xc3/0x620 mm/kasan/report.c:488
+ kasan_report+0xd9/0x110 mm/kasan/report.c:601
+ l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
+ l2cap_connect_req net/bluetooth/l2cap_core.c:4080 [inline]
+ l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:4772 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:5543 [inline]
+ l2cap_recv_frame+0xf0b/0x8eb0 net/bluetooth/l2cap_core.c:6825
+ l2cap_recv_acldata+0x9b4/0xb70 net/bluetooth/l2cap_core.c:7514
+ hci_acldata_packet net/bluetooth/hci_core.c:3791 [inline]
+ hci_rx_work+0xaab/0x1610 net/bluetooth/hci_core.c:4028
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+...
 
-So while handling mgmt_index_removed this attempts to dequeue
-commands passed as user_data to cmd_sync.
+Freed by task 5245:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
+ poison_slab_object+0xf7/0x160 mm/kasan/common.c:240
+ __kasan_slab_free+0x32/0x50 mm/kasan/common.c:256
+ kasan_slab_free include/linux/kasan.h:184 [inline]
+ slab_free_hook mm/slub.c:2256 [inline]
+ slab_free mm/slub.c:4477 [inline]
+ kfree+0x12a/0x3b0 mm/slub.c:4598
+ l2cap_conn_free net/bluetooth/l2cap_core.c:1810 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ l2cap_conn_put net/bluetooth/l2cap_core.c:1822 [inline]
+ l2cap_conn_del+0x59d/0x730 net/bluetooth/l2cap_core.c:1802
+ l2cap_connect_cfm+0x9e6/0xf80 net/bluetooth/l2cap_core.c:7241
+ hci_connect_cfm include/net/bluetooth/hci_core.h:1960 [inline]
+ hci_conn_failed+0x1c3/0x370 net/bluetooth/hci_conn.c:1265
+ hci_abort_conn_sync+0x75a/0xb50 net/bluetooth/hci_sync.c:5583
+ abort_conn_sync+0x197/0x360 net/bluetooth/hci_conn.c:2917
+ hci_cmd_sync_work+0x1a4/0x410 net/bluetooth/hci_sync.c:328
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-Fixes: 7cf5c2978f23 ("Bluetooth: hci_sync: Refactor remove Adv Monitor")
-Reported-by: jiaymao <quic_jiaymao@quicinc.com>
+Reported-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Tested-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c12e2f941af1feb5632c
+Fixes: 7b064edae38d ("Bluetooth: Fix authentication if acl data comes before remote feature evt")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/bluetooth/hci_core.c   | 2 ++
+ net/bluetooth/hci_event.c  | 2 +-
+ net/bluetooth/l2cap_core.c | 8 --------
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index e4f564d6f6fbf..4157d9f23f46e 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1453,10 +1453,15 @@ static void cmd_status_rsp(struct mgmt_pending_cmd *cmd, void *data)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index d6976db02c06c..b2f8f9c5b6106 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3782,6 +3782,8 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
  
- static void cmd_complete_rsp(struct mgmt_pending_cmd *cmd, void *data)
+ 	hci_dev_lock(hdev);
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
++	if (conn && hci_dev_test_flag(hdev, HCI_MGMT))
++		mgmt_device_connected(hdev, conn, NULL, 0);
+ 	hci_dev_unlock(hdev);
+ 
+ 	if (conn) {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 1c82dcdf6e8fc..b87c0f1dab9e3 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3706,7 +3706,7 @@ static void hci_remote_features_evt(struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	if (!ev->status && !test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++	if (!ev->status) {
+ 		struct hci_cp_remote_name_req cp;
+ 		memset(&cp, 0, sizeof(cp));
+ 		bacpy(&cp.bdaddr, &conn->dst);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 9988ba382b686..6544c1ed71434 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4066,17 +4066,9 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
+ static int l2cap_connect_req(struct l2cap_conn *conn,
+ 			     struct l2cap_cmd_hdr *cmd, u16 cmd_len, u8 *data)
  {
--	if (cmd->cmd_complete) {
--		u8 *status = data;
-+	struct cmd_lookup *match = data;
-+
-+	/* dequeue cmd_sync entries using cmd as data as that is about to be
-+	 * removed/freed.
-+	 */
-+	hci_cmd_sync_dequeue(match->hdev, NULL, cmd, NULL);
+-	struct hci_dev *hdev = conn->hcon->hdev;
+-	struct hci_conn *hcon = conn->hcon;
+-
+ 	if (cmd_len < sizeof(struct l2cap_conn_req))
+ 		return -EPROTO;
  
--		cmd->cmd_complete(cmd, *status);
-+	if (cmd->cmd_complete) {
-+		cmd->cmd_complete(cmd, match->mgmt_status);
- 		mgmt_pending_remove(cmd);
- 
- 		return;
-@@ -9394,12 +9399,12 @@ void mgmt_index_added(struct hci_dev *hdev)
- void mgmt_index_removed(struct hci_dev *hdev)
- {
- 	struct mgmt_ev_ext_index ev;
--	u8 status = MGMT_STATUS_INVALID_INDEX;
-+	struct cmd_lookup match = { NULL, hdev, MGMT_STATUS_INVALID_INDEX };
- 
- 	if (test_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks))
- 		return;
- 
--	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
-+	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
- 
- 	if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
- 		mgmt_index_event(MGMT_EV_UNCONF_INDEX_REMOVED, hdev, NULL, 0,
-@@ -9450,7 +9455,7 @@ void mgmt_power_on(struct hci_dev *hdev, int err)
- void __mgmt_power_off(struct hci_dev *hdev)
- {
- 	struct cmd_lookup match = { NULL, hdev };
--	u8 status, zero_cod[] = { 0, 0, 0 };
-+	u8 zero_cod[] = { 0, 0, 0 };
- 
- 	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, settings_rsp, &match);
- 
-@@ -9462,11 +9467,11 @@ void __mgmt_power_off(struct hci_dev *hdev)
- 	 * status responses.
- 	 */
- 	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
--		status = MGMT_STATUS_INVALID_INDEX;
-+		match.mgmt_status = MGMT_STATUS_INVALID_INDEX;
- 	else
--		status = MGMT_STATUS_NOT_POWERED;
-+		match.mgmt_status = MGMT_STATUS_NOT_POWERED;
- 
--	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
-+	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
- 
- 	if (memcmp(hdev->dev_class, zero_cod, sizeof(zero_cod)) != 0) {
- 		mgmt_limited_event(MGMT_EV_CLASS_OF_DEV_CHANGED, hdev,
+-	hci_dev_lock(hdev);
+-	if (hci_dev_test_flag(hdev, HCI_MGMT))
+-		mgmt_device_connected(hdev, hcon, NULL, 0);
+-	hci_dev_unlock(hdev);
+-
+ 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP);
+ 	return 0;
+ }
 -- 
 2.43.0
 
