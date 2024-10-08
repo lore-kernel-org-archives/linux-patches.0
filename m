@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0671DDA36;
-	Tue,  8 Oct 2024 12:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CB61D4141;
+	Tue,  8 Oct 2024 12:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390824; cv=none; b=mbbqIZQuYakokIj+mnor8Nzu9ZB2+KOM0FpMEq8PMJHY8LkJw2HB8OMihcX987+Eo8k3W+fbzUImP9MCIYofChbq/k5r1yOpW+tsLwW441CaqVR8xGOB6aKY4hNYKEUtFa8N2wx8ovXvOQnGldRiCgOurfpdxz5EJ4WtNg4OW80=
+	t=1728390828; cv=none; b=tXKE2LYZTm0kWv6QLTFnaMV69YBqFOaF2qDnPfNxuueftPcETdm6NXPXCaNPx/xiqC/BbgKg++dfKC/6/wWth796canCNWZ5fKivMDIK8F32ifZh3Bq+um/6cKDDPj4LIMlByuHsk66cJzZdMqXkoCCaEW8XuWwk3LBfldT3cCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390824; c=relaxed/simple;
-	bh=1/OsEsxvJyuJ/hTQz7SvWnUVJjAjIPL5QZA6DG7DcM4=;
+	s=arc-20240116; t=1728390828; c=relaxed/simple;
+	bh=q3+fpuYvAaBuIQ3r2MqIZJXsSW2Zj4kA8IuiNaxClsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oguEiOMofDYHthpcE7bvvCINjzZU/PkLBZFj/tAfuRLYYvhjPWA/8vC5dNx6jpgeDcGVNLGDhCl1ErZ1+9fl5Rv8yBnYOdz8P0l0gpB1jeJZ5lzzKdUktqhJwNNvXjGJ3hb+qq4p1RFHFRb4Ua/q2yvLfIVGegoolC1ix+FHVvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1lQwWOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+g+5qiKQTvvyZ8gEnY0PXxamPwwfw3eQUMeZpXuFF5fJ2DE4DuTfbUaVQ9EbT63qSSEJmJNGfx6tM/29oi9NL9R7l/Dsb3EqPfTQ82r5/+1p2ctUpj8aSAbOGQb+WTTqZFqdQwrI9Z9td6FulrvvTTsJmqfCvKiX6DeUND44u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Glprv8aO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1lQwWOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6A0C4CECD;
-	Tue,  8 Oct 2024 12:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Glprv8aO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E03C4CECC;
+	Tue,  8 Oct 2024 12:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390824;
-	bh=1/OsEsxvJyuJ/hTQz7SvWnUVJjAjIPL5QZA6DG7DcM4=;
+	s=korg; t=1728390827;
+	bh=q3+fpuYvAaBuIQ3r2MqIZJXsSW2Zj4kA8IuiNaxClsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1lQwWOt5y/Oc6QOsk3K8PUrWzF61tXGagQW4k8MBSkDDQNSFqOMCuVDlagm+w4bE
-	 fplZKl4mAHc2MuLVu4AL9DhYJGLVwWr620KW1PBEh8/Z+TKbuuaFidx62ST/3bq9Yv
-	 CvWwpBtsKqpCtKvXtgzwFTuEPdhjDNWuPWU25ZIU=
+	b=Glprv8aOlpQ3N/Z6gq4/wTw6Bk6CehtYdL98eX7HZs8pcrxKfusBCarcasKuNv1Jq
+	 Hxw0Y7z8EWJvHiReVMNVq/y7Yz+iUGQZYBkV0wyUSLRlZso6WtxyDg4uaLQOa4PiCs
+	 yz2fEa+RroVMP20H+ORovQJuPcIBpjBAaM/D6wEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 405/482] gso: fix udp gso fraglist segmentation after pull from frag_list
-Date: Tue,  8 Oct 2024 14:07:48 +0200
-Message-ID: <20241008115704.348340548@linuxfoundation.org>
+	Alfred Agrell <blubban@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH 6.10 406/482] tomoyo: fallback to realpath if symlinks pathname does not exist
+Date: Tue,  8 Oct 2024 14:07:49 +0200
+Message-ID: <20241008115704.386740901@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,72 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit a1e40ac5b5e9077fe1f7ae0eb88034db0f9ae1ab upstream.
+commit ada1986d07976d60bed5017aa38b7f7cf27883f7 upstream.
 
-Detect gso fraglist skbs with corrupted geometry (see below) and
-pass these to skb_segment instead of skb_segment_list, as the first
-can segment them correctly.
+Alfred Agrell found that TOMOYO cannot handle execveat(AT_EMPTY_PATH)
+inside chroot environment where /dev and /proc are not mounted, for
+commit 51f39a1f0cea ("syscalls: implement execveat() system call") missed
+that TOMOYO tries to canonicalize argv[0] when the filename fed to the
+executed program as argv[0] is supplied using potentially nonexistent
+pathname.
 
-Valid SKB_GSO_FRAGLIST skbs
-- consist of two or more segments
-- the head_skb holds the protocol headers plus first gso_size
-- one or more frag_list skbs hold exactly one segment
-- all but the last must be gso_size
+Since "/dev/fd/<fd>" already lost symlink information used for obtaining
+that <fd>, it is too late to reconstruct symlink's pathname. Although
+<filename> part of "/dev/fd/<fd>/<filename>" might not be canonicalized,
+TOMOYO cannot use tomoyo_realpath_nofollow() when /dev or /proc is not
+mounted. Therefore, fallback to tomoyo_realpath_from_path() when
+tomoyo_realpath_nofollow() failed.
 
-Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
-modify these skbs, breaking these invariants.
-
-In extreme cases they pull all data into skb linear. For UDP, this
-causes a NULL ptr deref in __udpv4_gso_segment_list_csum at
-udp_hdr(seg->next)->dest.
-
-Detect invalid geometry due to pull, by checking head_skb size.
-Don't just drop, as this may blackhole a destination. Convert to be
-able to pass to regular skb_segment.
-
-Link: https://lore.kernel.org/netdev/20240428142913.18666-1-shiming.cheng@mediatek.com/
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20241001171752.107580-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Alfred Agrell <blubban@gmail.com>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1082001
+Fixes: 51f39a1f0cea ("syscalls: implement execveat() system call")
+Cc: stable@vger.kernel.org # v3.19+
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp_offload.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ security/tomoyo/domain.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -290,8 +290,26 @@ struct sk_buff *__udp_gso_segment(struct
- 		return NULL;
- 	}
- 
--	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
-+		 /* Detect modified geometry and pass those to skb_segment. */
-+		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
-+			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+
-+		 /* Setup csum, as fraglist skips this in udp4_gro_receive. */
-+		gso_skb->csum_start = skb_transport_header(gso_skb) - gso_skb->head;
-+		gso_skb->csum_offset = offsetof(struct udphdr, check);
-+		gso_skb->ip_summed = CHECKSUM_PARTIAL;
-+
-+		uh = udp_hdr(gso_skb);
-+		if (is_ipv6)
-+			uh->check = ~udp_v6_check(gso_skb->len,
-+						  &ipv6_hdr(gso_skb)->saddr,
-+						  &ipv6_hdr(gso_skb)->daddr, 0);
-+		else
-+			uh->check = ~udp_v4_check(gso_skb->len,
-+						  ip_hdr(gso_skb)->saddr,
-+						  ip_hdr(gso_skb)->daddr, 0);
+--- a/security/tomoyo/domain.c
++++ b/security/tomoyo/domain.c
+@@ -723,10 +723,13 @@ int tomoyo_find_next_domain(struct linux
+ 	ee->r.obj = &ee->obj;
+ 	ee->obj.path1 = bprm->file->f_path;
+ 	/* Get symlink's pathname of program. */
+-	retval = -ENOENT;
+ 	exename.name = tomoyo_realpath_nofollow(original_name);
+-	if (!exename.name)
+-		goto out;
++	if (!exename.name) {
++		/* Fallback to realpath if symlink's pathname does not exist. */
++		exename.name = tomoyo_realpath_from_path(&bprm->file->f_path);
++		if (!exename.name)
++			goto out;
 +	}
- 
- 	skb_pull(gso_skb, sizeof(*uh));
- 
+ 	tomoyo_fill_path_info(&exename);
+ retry:
+ 	/* Check 'aggregator' directive. */
 
 
