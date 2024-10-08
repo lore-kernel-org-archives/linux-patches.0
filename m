@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9151DEFE3;
-	Tue,  8 Oct 2024 13:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A348F1DE4CD;
+	Tue,  8 Oct 2024 13:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392514; cv=none; b=s6G+XAg9Bx4jwVVoOG2Oc7Hf0jUkOaljpdaJWjxkXliTfFpUj5tsYZDJF2aqFIRPc2A7P0GVMOZmBsNOjHjIkbGEHVN5K/aUm1vwYdH4rpVCRyDe3vmDzvUqJzkl5Yys8FJn1HNhLG/HnqXdejLp+Hj+4rCTF+K48ZpdH/ZtFGs=
+	t=1728392517; cv=none; b=uv2oXgs+eaxbv0yaHxoIdMYnqLq8k6oxebNz9HuEXfRTtnGHi4RI3Z8JEOTW0saz+6vvJNu6HJ7d6L7PKxBzGImWxcixAMj6fLW+O8UfaxdGwnv/d0t1UuHMb3zQDK1vHvfLQO4niL04qtoRwuWhRcXb7K7pIzf42hPYJafHZ9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392514; c=relaxed/simple;
-	bh=TzI+lqDij1uGJD2jt2xfzJaZSEWlLxeJy7NLgl9C9eM=;
+	s=arc-20240116; t=1728392517; c=relaxed/simple;
+	bh=t7CmQsUWJzOHZPU/1v156No5PKEPZiDi1twdY1QcT7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QK4/UxEbwcM7HluhqGdcDN7VRhSqrR9kvO+giMVaeXqXmiJr4ZUMZM2i55O23ffQkU0fwxf/4bWS04k8SnNu4Op4UipgnDzbjzWKY6j/FcXiIFF6SBkSC2Z2IzlH62ooBkjcdXB5eRFMaqWpjVMHVk2knLmHD4YjxdDPc4VAQUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVmJ2CPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRK1iYS8KKsbdUtA6SAKw0wuC4R1bMYJgzHM4D659V3LyfYldPdCQ/w0K2qFWhAHrsjQ9PKd9du4TRrWA/enHH586UsisQL8ovktKV0fuxgqYEXQInoe1+b517NcgIy+atzS3LnqCWmBKwFJ/L5nkiqFpBVX6tBjSTK74BCL2xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGBx3z98; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVmJ2CPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91D3C4CECC;
-	Tue,  8 Oct 2024 13:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGBx3z98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EADCC4CEC7;
+	Tue,  8 Oct 2024 13:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392514;
-	bh=TzI+lqDij1uGJD2jt2xfzJaZSEWlLxeJy7NLgl9C9eM=;
+	s=korg; t=1728392517;
+	bh=t7CmQsUWJzOHZPU/1v156No5PKEPZiDi1twdY1QcT7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVmJ2CPEh5K8zR+t/Fmgxtsh7A6W1tP9AkyzOCcyGSnnAjkuaAxODvpOjPXcxMb/L
-	 IqlO2wPlYIrhyrntdqlasTkEkNIeHvFX3eOlhKX5aJQOVkGh3S0SrWUs7htL+eUAql
-	 zP5luQ2TcRsfte9CpJfijb5/6dNQyL+KQrfEgB64=
+	b=nGBx3z98rTXe0ZWqRHbPLx9GQ9sBRIFFlVC2du/SbGl8DcLsFE3e9rapmg7CGBWT0
+	 f9STAI1YwXHQVHa5H2zWzeL9jofiUGpMgiWmz2u9heTlDoNg1W9++IPyagViLkw0Zs
+	 GonagkiKoHz2EixZCp4ICloSspXiKHW+c60RqdW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.11 437/558] i3c: master: svc: Fix use after free vulnerability in svc_i3c_master Driver Due to Race Condition
-Date: Tue,  8 Oct 2024 14:07:47 +0200
-Message-ID: <20241008115719.467967245@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 411/558] mm: krealloc: consider spare memory for __GFP_ZERO
+Date: Tue,  8 Oct 2024 14:07:21 +0200
+Message-ID: <20241008115718.447737898@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,56 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 61850725779709369c7e907ae8c7c75dc7cec4f3 upstream.
+commit 1a83a716ec233990e1fd5b6fbb1200ade63bf450 upstream.
 
-In the svc_i3c_master_probe function, &master->hj_work is bound with
-svc_i3c_master_hj_work, &master->ibi_work is bound with
-svc_i3c_master_ibi_work. And svc_i3c_master_ibi_work  can start the
-hj_work, svc_i3c_master_irq_handler can start the ibi_work.
+As long as krealloc() is called with __GFP_ZERO consistently, starting
+with the initial memory allocation, __GFP_ZERO should be fully honored.
 
-If we remove the module which will call svc_i3c_master_remove to
-make cleanup, it will free master->base through i3c_master_unregister
-while the work mentioned above will be used. The sequence of operations
-that may lead to a UAF bug is as follows:
+However, if for an existing allocation krealloc() is called with a
+decreased size, it is not ensured that the spare portion the allocation is
+zeroed.  Thus, if krealloc() is subsequently called with a larger size
+again, __GFP_ZERO can't be fully honored, since we don't know the previous
+size, but only the bucket size.
 
-CPU0                                         CPU1
+Example:
 
-                                    | svc_i3c_master_hj_work
-svc_i3c_master_remove               |
-i3c_master_unregister(&master->base)|
-device_unregister(&master->dev)     |
-device_release                      |
-//free master->base                 |
-                                    | i3c_master_do_daa(&master->base)
-                                    | //use master->base
+	buf = kzalloc(64, GFP_KERNEL);
+	memset(buf, 0xff, 64);
 
-Fix it by ensuring that the work is canceled before proceeding with the
-cleanup in svc_i3c_master_remove.
+	buf = krealloc(buf, 48, GFP_KERNEL | __GFP_ZERO);
 
-Fixes: 0f74f8b6675c ("i3c: Make i3c_master_unregister() return void")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/stable/20240914154030.180-1-kxwang23%40m.fudan.edu.cn
-Link: https://lore.kernel.org/r/20240914163932.253-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+	/* After this call the last 16 bytes are still 0xff. */
+	buf = krealloc(buf, 64, GFP_KERNEL | __GFP_ZERO);
+
+Fix this, by explicitly setting spare memory to zero, when shrinking an
+allocation with __GFP_ZERO flag set or init_on_alloc enabled.
+
+Link: https://lkml.kernel.org/r/20240812223707.32049-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Rientjes <rientjes@google.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/slab_common.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -1775,6 +1775,7 @@ static void svc_i3c_master_remove(struct
- {
- 	struct svc_i3c_master *master = platform_get_drvdata(pdev);
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -1273,6 +1273,13 @@ __do_krealloc(const void *p, size_t new_
  
-+	cancel_work_sync(&master->hj_work);
- 	i3c_master_unregister(&master->base);
- 
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	/* If the object still fits, repoison it precisely. */
+ 	if (ks >= new_size) {
++		/* Zero out spare memory. */
++		if (want_init_on_alloc(flags)) {
++			kasan_disable_current();
++			memset((void *)p + new_size, 0, ks - new_size);
++			kasan_enable_current();
++		}
++
+ 		p = kasan_krealloc((void *)p, new_size, flags);
+ 		return (void *)p;
+ 	}
 
 
