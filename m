@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A3F1CCB32;
-	Tue,  8 Oct 2024 12:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563641DE8A0;
+	Tue,  8 Oct 2024 12:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391911; cv=none; b=Wm5DDsMrErfGe+CNofeWQKZ1ZRzF1yAQw3Z75BTOJ/L/aVZFBvSNApAQA7oy3MUUExtV3Cx7TWvspyQmg0xH30vLzG35TjzjYGKvDfNDMhZ2jRbIxfzZ83cNCIpLsdwITme/gyWvHE0WmnN6TFYgEUxPlESLl+XPDtN1WL3vn4o=
+	t=1728391914; cv=none; b=ex1QQhk5BQZ91uQZOh679ItvomE6DOV2zIjInRmUoYjcXcdGiMxXb/Dd3FNufBVIQkn4z9XqOFmIvI+vCO7Y7nb8//1XpCoujUuzcWDu9DoNPdLxSMWfZlEBll1gUrhLMfS9qB2LkdCdKnumkE2wHVRQqX97hHbIEz/jIWXYRc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391911; c=relaxed/simple;
-	bh=QpbnwtFXzWDhyhR4yRKX6o7Vh2VC32uCu6fZispOgoc=;
+	s=arc-20240116; t=1728391914; c=relaxed/simple;
+	bh=O8zs4gRvxME/UBI020xwRkzrGt5QuTt8QimKIlOOVEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9XbLC4cZDQpGjJmGkiB8UcrwspNJ2b9tnEexJCDGSuDTd7w58WfwwgZ7pzxQ7F3JT2B0t3SaS/V433y1+F4cyTqkEf2O96LiG4z5RHZlHnf/XhG3IcNzGeUNpMUv1uxNYPRGLi1UBBL8lxqIvb3vYPAPJfQHck/3jCQfaoQZ2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnwEA5Qy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ky3chVjdWJN1yQWdUaKJHtHjSf3sbuITQQfkoNjxtb5pX7A7LxOR2g7zEJ2taKeJdEjeWJZtSzpmy+Y36HAJdVoJI6Wm8uqXotCqFg8SG07SFhquJx1flA+oH6PzBjKmNZCmMc3AlYI/twXje7pkERVUiL+2JZnjrYXq2Rgb0j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRc2LFkO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnwEA5Qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68986C4CECC;
-	Tue,  8 Oct 2024 12:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRc2LFkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9829FC4CEC7;
+	Tue,  8 Oct 2024 12:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391911;
-	bh=QpbnwtFXzWDhyhR4yRKX6o7Vh2VC32uCu6fZispOgoc=;
+	s=korg; t=1728391914;
+	bh=O8zs4gRvxME/UBI020xwRkzrGt5QuTt8QimKIlOOVEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnwEA5QyBWBolVlhmFg0AQyDj7wZG8UUOHOds6sfufzQiKVABwxFkkJTnwqfBrd8Q
-	 XB6umqskhGDRA7EYgcvUPPzi6QMNyNDDkwVMn0EW4gMNejbNErr3eaa8y3YDKYZoHO
-	 deOjfS3XPFeTdqUAZunEu+pbR5mWhBeVxfYgFPSY=
+	b=cRc2LFkOLMoGjNAA1orB/Ggp8G15uW6x5hmZVOZ57GffiCiGlyqsFGTJuXYiWkGj0
+	 7Dm5c3TZrtMg4fdwHfsuTo/TsT9y6PFdPlQk4y6siNGdZ+sndKpdJ955OugOR7aB94
+	 VrXw6ley6QJlEKobXu6d1b5cpRKAApBaG6t/M9rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 259/558] drm/amd/display: Fix index out of bounds in degamma hardware format translation
-Date: Tue,  8 Oct 2024 14:04:49 +0200
-Message-ID: <20241008115712.524675427@linuxfoundation.org>
+Subject: [PATCH 6.11 260/558] drm/amd/display: Implement bounds check for stream encoder creation in DCN401
+Date: Tue,  8 Oct 2024 14:04:50 +0200
+Message-ID: <20241008115712.564732348@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -60,21 +60,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit b7e99058eb2e86aabd7a10761e76cae33d22b49f ]
+[ Upstream commit bdf606810210e8e07a0cdf1af3c467291363b295 ]
 
-Fixes index out of bounds issue in
-`cm_helper_translate_curve_to_degamma_hw_format` function. The issue
-could occur when the index 'i' exceeds the number of transfer function
-points (TRANSFER_FUNC_POINTS).
+'stream_enc_regs' array is an array of dcn10_stream_enc_registers
+structures. The array is initialized with four elements, corresponding
+to the four calls to stream_enc_regs() in the array initializer. This
+means that valid indices for this array are 0, 1, 2, and 3.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds the function returns
-false to indicate an error.
+The error message 'stream_enc_regs' 4 <= 5 below, is indicating that
+there is an attempt to access this array with an index of 5, which is
+out of bounds. This could lead to undefined behavior
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:594 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:595 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:596 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+Here, eng_id is used as an index to access the stream_enc_regs array. If
+eng_id is 5, this would result in an out-of-bounds access on the
+stream_enc_regs array.
+
+Thus fixing Buffer overflow error in dcn401_stream_encoder_create
+
+Found by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn401/dcn401_resource.c:1209 dcn401_stream_encoder_create() error: buffer overflow 'stream_enc_regs' 4 <= 5
 
 Cc: Tom Chung <chiahsuan.chung@amd.com>
 Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
@@ -88,22 +92,22 @@ Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index 0b49362f71b06..eaed5d1c398aa 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -591,6 +591,8 @@ bool cm_helper_translate_curve_to_degamma_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS)
-+				return false;
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
+index 34b02147881dd..3e76732ac0dca 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn401/dcn401_resource.c
+@@ -1188,7 +1188,7 @@ static struct stream_encoder *dcn401_stream_encoder_create(
+ 	vpg = dcn401_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn401_afmt_create(ctx, afmt_inst);
+ 
+-	if (!enc1 || !vpg || !afmt) {
++	if (!enc1 || !vpg || !afmt || eng_id >= ARRAY_SIZE(stream_enc_regs)) {
+ 		kfree(enc1);
+ 		kfree(vpg);
+ 		kfree(afmt);
 -- 
 2.43.0
 
