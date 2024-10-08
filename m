@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D121DF96F;
-	Tue,  8 Oct 2024 12:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C81DF756;
+	Tue,  8 Oct 2024 12:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390440; cv=none; b=dh0D8H3bJm0etse9Rx8AcXfDmMmiNEFfvd/H3HrGJ4jSwL1ABxbjMCLcgdp4iKickvZBP4TgyiSlOUYvl2MTE0lTgP+d6Y077KcKKmrhzkORzFm8XCiJqecds/GzQg/wghWFr3f07fezG7FjgcfE3ZmTT4Z/BfYqLyqUcQ1Er2U=
+	t=1728390443; cv=none; b=QA8042rqLNOznCrn+HFOoskBPc2ga6xhYWuE+TgS1B4lXxpzt2a/DakHfKiKDixaA0OyH0+QnJSOy2vLmoNj3O0eP3UGrRtPLuDNOZYvm882E9BXQB6JCSrV2RlhVfDp2GxB+M9WILVi2kBB+MYExGWtF9ocdxIkP7Z9l4FzMVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390440; c=relaxed/simple;
-	bh=n4P7pF+lRpOflfjmaCkPsnPnrNqJj+O9QBsHYmoTWj4=;
+	s=arc-20240116; t=1728390443; c=relaxed/simple;
+	bh=eAmXXCWeNK6vyitEk9YLt4udp+KBflTywJ7G5KZp3vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5nPvoEY4F6mKnsWy6mdiJuBfYrYlTe9i7WeCH4GLknVxkDAHmpeaWElaLcKIpJ0LEVptL18FI7jAQF3k2vkYqmN99NwzlXTPYHC31crfAl9RJ7CE2ToQkMqDwrzzZRJ1GqdeFc4CLgRnNxGiQZYiM7NfZIPPTbUOkBO7Cg3P6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XT2HJ1f+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=riW01pX0yUPRUb44nVeSLLKuh0N+IqQEnGxvbDhZjOD+6QReuRqNrxZZV4lSKce+AWk2EFcMe2EPwfCy9q6tuDcHNw1CwJJF8KloYO/d+aNFC+NATPslVqUWJfP24wrbDv4MgmQc0gqMWOurqCHEegobIcbMVwKCQU13+kAcnyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fvv21FzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT2HJ1f+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C69BC4CECD;
-	Tue,  8 Oct 2024 12:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fvv21FzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D1EC4CEC7;
+	Tue,  8 Oct 2024 12:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390440;
-	bh=n4P7pF+lRpOflfjmaCkPsnPnrNqJj+O9QBsHYmoTWj4=;
+	s=korg; t=1728390443;
+	bh=eAmXXCWeNK6vyitEk9YLt4udp+KBflTywJ7G5KZp3vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT2HJ1f+TIcflfkJwwhnnJ/FGWMZZlw9ed6mi52RZHTrEp8G3SuvQM9IiFFlw3WBE
-	 GGHAU704T/+UZj4UqAuGwmChUnRwyGaNmGJOLeFll9dfm/dK6sXvqNxLmDfYMY7hmv
-	 vlFn6A7K72DTLyaRA89oxNbWTC+ZRzB2Ab+Ww+Qg=
+	b=Fvv21FzUG76DG+I2P5MYTmBtNdGremObOeWz99AmtriKAzgE9IQijAqW2C4ieMuLT
+	 Q9H+D/+VdtsJbv0Y1FSo4Jo39UGy+nmzQB+ocbhW6J9nZemJU64++B55DDj+UDqzq9
+	 3WZcOuxqyMLk31BcQLZyExL0GCrDKblafxrWxY2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 288/482] Revert "ALSA: hda: Conditionally use snooping for AMD HDMI"
-Date: Tue,  8 Oct 2024 14:05:51 +0200
-Message-ID: <20241008115659.612439959@linuxfoundation.org>
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.10 289/482] platform/x86: x86-android-tablets: Fix use after free on platform_device_register() errors
+Date: Tue,  8 Oct 2024 14:05:52 +0200
+Message-ID: <20241008115659.651635125@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -50,74 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 3f7f36a4559ef78a6418c5f0447fbfbdcf671956 upstream.
+commit 2fae3129c0c08e72b1fe93e61fd8fd203252094a upstream.
 
-This reverts commit 478689b5990deb626a0b3f1ebf165979914d6be4.
+x86_android_tablet_remove() frees the pdevs[] array, so it should not
+be used after calling x86_android_tablet_remove().
 
-The fix seems leading to regressions for other systems.
-Also, the way to check the presence of IOMMU via get_dma_ops() isn't
-reliable and it's no longer applicable for 6.12.  After all, it's no
-right fix, so let's revert it at first.
+When platform_device_register() fails, store the pdevs[x] PTR_ERR() value
+into the local ret variable before calling x86_android_tablet_remove()
+to avoid using pdevs[] after it has been freed.
 
-To be noted, the PCM buffer allocation has been changed to try the
-continuous pages at first since 6.12, so the problem could be already
-addressed without this hackish workaround.
-
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Closes: https://lore.kernel.org/ZvgCdYfKgwHpJXGE@eldamar.lan
-Link: https://patch.msgid.link/20241002155948.4859-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 5eba0141206e ("platform/x86: x86-android-tablets: Add support for instantiating platform-devs")
+Fixes: e2200d3f26da ("platform/x86: x86-android-tablets: Add gpio_keys support to x86_android_tablet_init()")
+Cc: stable@vger.kernel.org
+Reported-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Closes: https://lore.kernel.org/platform-driver-x86/20240917120458.7300-1-a.burakov@rosalinux.ru/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241005130545.64136-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_controller.h |    2 +-
- sound/pci/hda/hda_intel.c      |   10 +---------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ drivers/platform/x86/x86-android-tablets/core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/hda_controller.h
-+++ b/sound/pci/hda/hda_controller.h
-@@ -28,7 +28,7 @@
- #else
- #define AZX_DCAPS_I915_COMPONENT 0		/* NOP */
- #endif
--#define AZX_DCAPS_AMD_ALLOC_FIX	(1 << 14)	/* AMD allocation workaround */
-+/* 14 unused */
- #define AZX_DCAPS_CTX_WORKAROUND (1 << 15)	/* X-Fi workaround */
- #define AZX_DCAPS_POSFIX_LPIB	(1 << 16)	/* Use LPIB as default */
- #define AZX_DCAPS_AMD_WORKAROUND (1 << 17)	/* AMD-specific workaround */
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -40,7 +40,6 @@
+--- a/drivers/platform/x86/x86-android-tablets/core.c
++++ b/drivers/platform/x86/x86-android-tablets/core.c
+@@ -390,8 +390,9 @@ static __init int x86_android_tablet_pro
+ 	for (i = 0; i < pdev_count; i++) {
+ 		pdevs[i] = platform_device_register_full(&dev_info->pdev_info[i]);
+ 		if (IS_ERR(pdevs[i])) {
++			ret = PTR_ERR(pdevs[i]);
+ 			x86_android_tablet_remove(pdev);
+-			return PTR_ERR(pdevs[i]);
++			return ret;
+ 		}
+ 	}
  
- #ifdef CONFIG_X86
- /* for snoop control */
--#include <linux/dma-map-ops.h>
- #include <asm/set_memory.h>
- #include <asm/cpufeature.h>
- #endif
-@@ -307,7 +306,7 @@ enum {
- 
- /* quirks for ATI HDMI with snoop off */
- #define AZX_DCAPS_PRESET_ATI_HDMI_NS \
--	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_AMD_ALLOC_FIX)
-+	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_SNOOP_OFF)
- 
- /* quirks for AMD SB */
- #define AZX_DCAPS_PRESET_AMD_SB \
-@@ -1703,13 +1702,6 @@ static void azx_check_snoop_available(st
- 	if (chip->driver_caps & AZX_DCAPS_SNOOP_OFF)
- 		snoop = false;
- 
--#ifdef CONFIG_X86
--	/* check the presence of DMA ops (i.e. IOMMU), disable snoop conditionally */
--	if ((chip->driver_caps & AZX_DCAPS_AMD_ALLOC_FIX) &&
--	    !get_dma_ops(chip->card->dev))
--		snoop = false;
--#endif
--
- 	chip->snoop = snoop;
- 	if (!snoop) {
- 		dev_info(chip->card->dev, "Force to non-snoop mode\n");
+@@ -443,8 +444,9 @@ static __init int x86_android_tablet_pro
+ 								  PLATFORM_DEVID_AUTO,
+ 								  &pdata, sizeof(pdata));
+ 		if (IS_ERR(pdevs[pdev_count])) {
++			ret = PTR_ERR(pdevs[pdev_count]);
+ 			x86_android_tablet_remove(pdev);
+-			return PTR_ERR(pdevs[pdev_count]);
++			return ret;
+ 		}
+ 		pdev_count++;
+ 	}
 
 
