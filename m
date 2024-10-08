@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B984E1DF72B;
-	Tue,  8 Oct 2024 13:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A028E1E53A;
+	Tue,  8 Oct 2024 13:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394217; cv=none; b=uwKEn2WmAt2PzUxuuZkoGctNuktoeyYfOIQv9dp9pLdqRjx6WEFepIDbdN5w7jrdKkRnyBYY/RnUsLkAMYoRmT9V+lbyiLLSAiDG9lCXYgaT3OYIlJ7gyLt+eHO4Co2VNxbjmx3Yemk2mhDO5NsrkGRfGmhNsogg500VnX8NmS4=
+	t=1728394220; cv=none; b=cMcZQHh7kfs87Hb2Zmx89vQ07fA6jYdiSwGrroEM4XC8yqrHJDTEQGQgih+SAR/WG2Nts9cyFZo4YMcV7vJGZEoHEqDRv3nwGxM8r1YjHB4Gxr+WcMKxnmPOC8wLRSDnp/MDZIEVm72DdrJEoGNrNuUTJF7uo3iDv5cUoBRNvew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394217; c=relaxed/simple;
-	bh=98aq0woGv2qrgsPyB+hL+qnes1erinza0xRCzi5BjKE=;
+	s=arc-20240116; t=1728394220; c=relaxed/simple;
+	bh=lOyZ7fU0C48PdaRG0GQ/7+JKeg1Z4mdSWhLsFC5UwNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IC5XXNdULztxb0M/34UX7nPeYCeCwDO2BUnArmUcd3Yv097Tdg2a+nbhBdC1gi3bK/NMbNDPW0aCP6Isub+dq/yZgy9L+S1ATOPXZsD0WcJb9j58OxBB8dpaLJ+bH9BAxcXhnnsumv9jFX6RWxSrhUvhHaZBIYJmOCJ9xAH+U5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQwQX2kg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HLVeUxOwCM4cHgsCikDWtrf4V/5gT7qxr5hx6r2pC0w1+Q5sWCwjtuhYHXyb7ViStZf5O+adtUpQypqTrxt/r7NLK0H4b4dpDugZ4P+KmbrxSk/e4+HXhkI5OWQVkAhgggw4bZP1jbE9rutcDwISltzamCrTNmNxRRM/KrYGmWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GninlFvQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQwQX2kg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10F7C4CEC7;
-	Tue,  8 Oct 2024 13:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GninlFvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2945BC4CEC7;
+	Tue,  8 Oct 2024 13:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394217;
-	bh=98aq0woGv2qrgsPyB+hL+qnes1erinza0xRCzi5BjKE=;
+	s=korg; t=1728394220;
+	bh=lOyZ7fU0C48PdaRG0GQ/7+JKeg1Z4mdSWhLsFC5UwNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQwQX2kgr38uxjilPDr2HFarLZXoMgeT6efBTY5GurbkXjWIHiUOx0j50n7ux85Wt
-	 IZf9tSDobpWeJahLf8Urn298UHTZ/nAzDEqUwGOJo6oHjL03mLCK+a+ti63OAHZHG7
-	 rX43NrPJcuANqxUMTzdpfuTBOgsb2PAvhUsUT1I4=
+	b=GninlFvQaXLlgcU+eKl1PQO6Vm93ACiHzJS1twEsbol+uV29wFxYNqTdWIFGRJ75R
+	 1wFVDWhFADi2LIFK6doJaNFQMDsbKFlyT2aHxJQRteSyLmkZIL0axoje8ibRqA8lhB
+	 qRfGh1U4vyYdGlzGC4AQx+JD0JapD4v/mc/y4f0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Gabe Teeger <Gabe.Teeger@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 382/386] drm/amd/display: Revert Avoid overflow assignment
-Date: Tue,  8 Oct 2024 14:10:27 +0200
-Message-ID: <20241008115644.425685392@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Matt Fleming <matt@readmodwrite.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.6 383/386] perf report: Fix segfault when sym sort key is not used
+Date: Tue,  8 Oct 2024 14:10:28 +0200
+Message-ID: <20241008115644.464482902@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,57 +58,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabe Teeger <Gabe.Teeger@amd.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit e80f8f491df873ea2e07c941c747831234814612 upstream.
+commit 9af2efee41b27a0f386fb5aa95d8d0b4b5d9fede upstream.
 
-This reverts commit a15268787b79 ("drm/amd/display: Avoid overflow assignment in link_dp_cts")
-Due to regression causing DPMS hang.
+The fields in the hist_entry are filled on-demand which means they only
+have meaningful values when relevant sort keys are used.
 
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Gabe Teeger <Gabe.Teeger@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+So if neither of 'dso' nor 'sym' sort keys are used, the map/symbols in
+the hist entry can be garbage.  So it shouldn't access it
+unconditionally.
+
+I got a segfault, when I wanted to see cgroup profiles.
+
+  $ sudo perf record -a --all-cgroups --synth=cgroup true
+
+  $ sudo perf report -s cgroup
+
+  Program received signal SIGSEGV, Segmentation fault.
+  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
+  48		return RC_CHK_ACCESS(map)->dso;
+  (gdb) bt
+  #0  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
+  #1  0x00005555557aa39b in map__load (map=0x0) at util/map.c:344
+  #2  0x00005555557aa592 in map__find_symbol (map=0x0, addr=140736115941088) at util/map.c:385
+  #3  0x00005555557ef000 in hists__findnew_entry (hists=0x555556039d60, entry=0x7fffffffa4c0, al=0x7fffffffa8c0, sample_self=true)
+      at util/hist.c:644
+  #4  0x00005555557ef61c in __hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
+      block_info=0x0, sample=0x7fffffffaa90, sample_self=true, ops=0x0) at util/hist.c:761
+  #5  0x00005555557ef71f in hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
+      sample=0x7fffffffaa90, sample_self=true) at util/hist.c:779
+  #6  0x00005555557f00fb in iter_add_single_normal_entry (iter=0x7fffffffa900, al=0x7fffffffa8c0) at util/hist.c:1015
+  #7  0x00005555557f09a7 in hist_entry_iter__add (iter=0x7fffffffa900, al=0x7fffffffa8c0, max_stack_depth=127, arg=0x7fffffffbce0)
+      at util/hist.c:1260
+  #8  0x00005555555ba7ce in process_sample_event (tool=0x7fffffffbce0, event=0x7ffff7c14128, sample=0x7fffffffaa90, evsel=0x555556039ad0,
+      machine=0x5555560388e8) at builtin-report.c:334
+  #9  0x00005555557b30c8 in evlist__deliver_sample (evlist=0x555556039010, tool=0x7fffffffbce0, event=0x7ffff7c14128,
+      sample=0x7fffffffaa90, evsel=0x555556039ad0, machine=0x5555560388e8) at util/session.c:1232
+  #10 0x00005555557b32bc in machines__deliver_event (machines=0x5555560388e8, evlist=0x555556039010, event=0x7ffff7c14128,
+      sample=0x7fffffffaa90, tool=0x7fffffffbce0, file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1271
+  #11 0x00005555557b3848 in perf_session__deliver_event (session=0x5555560386d0, event=0x7ffff7c14128, tool=0x7fffffffbce0,
+      file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1354
+  #12 0x00005555557affaf in ordered_events__deliver_event (oe=0x555556038e60, event=0x555556135aa0) at util/session.c:132
+  #13 0x00005555557bb605 in do_flush (oe=0x555556038e60, show_progress=false) at util/ordered-events.c:245
+  #14 0x00005555557bb95c in __ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND, timestamp=0) at util/ordered-events.c:324
+  #15 0x00005555557bba46 in ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND) at util/ordered-events.c:342
+  #16 0x00005555557b1b3b in perf_event__process_finished_round (tool=0x7fffffffbce0, event=0x7ffff7c15bb8, oe=0x555556038e60)
+      at util/session.c:780
+  #17 0x00005555557b3b27 in perf_session__process_user_event (session=0x5555560386d0, event=0x7ffff7c15bb8, file_offset=117688,
+      file_path=0x555556038ff0 "perf.data") at util/session.c:1406
+
+As you can see the entry->ms.map was NULL even if he->ms.map has a
+value.  This is because 'sym' sort key is not given, so it cannot assume
+whether he->ms.sym and entry->ms.sym is the same.  I only checked the
+'sym' sort key here as it implies 'dso' behavior (so maps are the same).
+
+Fixes: ac01c8c4246546fd ("perf hist: Update hist symbol when updating maps")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Matt Fleming <matt@readmodwrite.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20240826221045.1202305-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dp_types.h                  |    2 +-
- drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c |    3 +--
- drivers/gpu/drm/amd/display/include/dpcd_defs.h               |    1 -
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ tools/perf/util/hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-@@ -721,7 +721,7 @@ struct dp_audio_test_data_flags {
- struct dp_audio_test_data {
- 
- 	struct dp_audio_test_data_flags flags;
--	uint32_t sampling_rate;
-+	uint8_t sampling_rate;
- 	uint8_t channel_count;
- 	uint8_t pattern_type;
- 	uint8_t pattern_period[8];
---- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-@@ -849,8 +849,7 @@ bool dp_set_test_pattern(
- 			core_link_read_dpcd(link, DP_TRAINING_PATTERN_SET,
- 					    &training_pattern.raw,
- 					    sizeof(training_pattern));
--			if (pattern <= PHY_TEST_PATTERN_END_DP11)
--				training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
-+			training_pattern.v1_3.LINK_QUAL_PATTERN_SET = pattern;
- 			core_link_write_dpcd(link, DP_TRAINING_PATTERN_SET,
- 					     &training_pattern.raw,
- 					     sizeof(training_pattern));
---- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-+++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-@@ -76,7 +76,6 @@ enum dpcd_phy_test_patterns {
- 	PHY_TEST_PATTERN_D10_2,
- 	PHY_TEST_PATTERN_SYMBOL_ERROR,
- 	PHY_TEST_PATTERN_PRBS7,
--	PHY_TEST_PATTERN_END_DP11 = PHY_TEST_PATTERN_PRBS7,
- 	PHY_TEST_PATTERN_80BIT_CUSTOM,/* For DP1.2 only */
- 	PHY_TEST_PATTERN_CP2520_1,
- 	PHY_TEST_PATTERN_CP2520_2,
+--- a/tools/perf/util/hist.c
++++ b/tools/perf/util/hist.c
+@@ -637,7 +637,7 @@ static struct hist_entry *hists__findnew
+ 			 * mis-adjust symbol addresses when computing
+ 			 * the history counter to increment.
+ 			 */
+-			if (he->ms.map != entry->ms.map) {
++			if (hists__has(hists, sym) && he->ms.map != entry->ms.map) {
+ 				if (he->ms.sym) {
+ 					u64 addr = he->ms.sym->start;
+ 					he->ms.sym = map__find_symbol(entry->ms.map, addr);
 
 
