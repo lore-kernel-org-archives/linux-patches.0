@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7901C9B99;
-	Tue,  8 Oct 2024 13:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0F21DEFC8;
+	Tue,  8 Oct 2024 13:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392793; cv=none; b=bGetJaLboZQVn+IARdu2l7W+xqGrskwx0HH1bayNXVDRD+DmxcnZUZ8IucNnvaJ9YC8HZ/WX0hKvXTH1QiIiARJCNBGBk5PU2wqv9lp3z0KFixhSrgozch4fec34/hT2gwqO6Kd8oeLpyrNdxI0+HFWCoGwyGFuAfz2lmFNmtcQ=
+	t=1728392796; cv=none; b=mUfILUg21sP5mJyLMeCgxIarY90W1qbr7NN6QtzZ45SjI1oQkBkARHZSW0Q5aDAgVzTwA0lnpivdIFpgO8uxhSqx2ayhU0hr8MIWbG5cViY+tGbkgoRT+sH11Tbt6k7YEzbXKXMmkzYOeKzLMXuzJ6GXar3vs69IbHf63XFMDg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392793; c=relaxed/simple;
-	bh=2TfEhMx5EioFduMCRmWMMeuHl/gVEQlr/ZEjFpQdiuI=;
+	s=arc-20240116; t=1728392796; c=relaxed/simple;
+	bh=tqSqlcPzDkQuKSYdfxXHHpimnn2kSBhAcYUoqB/veVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EQNnE0gejy6K5y2Rh/Gdg6sEGs3Nq3TFq0cGKXFHO1XQYHoV6kMYnveUm2ayX4M2b87gF2x0aoNZ4JuL6i7vcY7KyvilOLwWfk6j1ynSB3hExYuACmLlA2ZtOCHKAwOuHxDIxQ7EBtwDtsJbWyuQ4Fb6/KiDC2XTu31kba8mvdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4L5dUxz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eb8vnyUC4FUTyFHezRAYuIim2gAfQZ4hJ/CnuYWBlwZxRAAmVeSYUByRT5hw5tiQjSvzn+5nVPP1nq4BC2QwHKDctZOXKUQbwDeIRiFFHZL1oUgr2BLd5NoTE0z+W+xPGWUlKbf7BY/pSkj3BJPLCN6h3EB7YfWIggWxwbH1CVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZIfkRsG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4L5dUxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FB7C4CECE;
-	Tue,  8 Oct 2024 13:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZIfkRsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E15C4CECC;
+	Tue,  8 Oct 2024 13:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392793;
-	bh=2TfEhMx5EioFduMCRmWMMeuHl/gVEQlr/ZEjFpQdiuI=;
+	s=korg; t=1728392796;
+	bh=tqSqlcPzDkQuKSYdfxXHHpimnn2kSBhAcYUoqB/veVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4L5dUxzxXeS65aG5QIyZss+a5fnEA9RUNPPs21wm9EWOLoon3Qal5GSIHwLZjjwc
-	 wziH3YzyYCNt05D1TWd3dF9tuRLwzy3bu4ruCN3wmHQ5lcAGzpAj4A1MkMJfk4FMfI
-	 2cFhDgdahEb6IM2j4ZSyLYmqlxe8bj73P/nPn2Tg=
+	b=BZIfkRsGjwbxZnt5ln8M9AlNqhhhufdWn83ptSynnnofDMSDQSUPydBa89vFm8L57
+	 8rBkBkfmXqc1l9xkGMjO32tE4nO1CTo7axVYSVHYB5inUsfiCrZL8psPujRRMi78zz
+	 uVJq8B7qfEIoBGLQ8zqW01f5YD0g5VYE3y8/EySk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Nirmoy Das <nirmoy.das@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
 	Luben Tuikov <ltuikov89@gmail.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Philipp Stanner <pstanner@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.11 522/558] drm/sched: Always wake up correct scheduler in drm_sched_entity_push_job
-Date: Tue,  8 Oct 2024 14:09:12 +0200
-Message-ID: <20241008115722.770801147@linuxfoundation.org>
+	dri-devel@lists.freedesktop.org,
+	Nirmoy Das <nirmoy.das@intel.com>
+Subject: [PATCH 6.11 523/558] drm/sched: Always increment correct scheduler score
+Date: Tue,  8 Oct 2024 14:09:13 +0200
+Message-ID: <20241008115722.810620190@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -60,69 +60,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-commit cbc8764e29c2318229261a679b2aafd0f9072885 upstream.
+commit 087913e0ba2b3b9d7ccbafb2acf5dab9e35ae1d5 upstream.
 
-Since drm_sched_entity_modify_sched() can modify the entities run queue,
-lets make sure to only dereference the pointer once so both adding and
-waking up are guaranteed to be consistent.
-
-Alternative of moving the spin_unlock to after the wake up would for now
-be more problematic since the same lock is taken inside
-drm_sched_rq_update_fifo().
-
-v2:
- * Improve commit message. (Philipp)
- * Cache the scheduler pointer directly. (Christian)
+Entities run queue can change during drm_sched_entity_push_job() so make
+sure to update the score consistently.
 
 Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: b37aced31eb0 ("drm/scheduler: implement a function to modify sched list")
+Fixes: d41a39dda140 ("drm/scheduler: improve job distribution with multiple queues")
+Cc: Nirmoy Das <nirmoy.das@amd.com>
 Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: Luben Tuikov <ltuikov89@gmail.com>
 Cc: Matthew Brost <matthew.brost@intel.com>
 Cc: David Airlie <airlied@gmail.com>
 Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Philipp Stanner <pstanner@redhat.com>
 Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.7+
+Cc: <stable@vger.kernel.org> # v5.9+
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240924101914.2713-3-tursulin@igalia.com
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924101914.2713-4-tursulin@igalia.com
 Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/scheduler/sched_entity.c
 +++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -599,6 +599,9 @@ void drm_sched_entity_push_job(struct dr
+@@ -586,7 +586,6 @@ void drm_sched_entity_push_job(struct dr
+ 	ktime_t submit_ts;
  
- 	/* first job wakes up scheduler */
- 	if (first) {
-+		struct drm_gpu_scheduler *sched;
-+		struct drm_sched_rq *rq;
-+
- 		/* Add the entity to the run queue */
- 		spin_lock(&entity->rq_lock);
- 		if (entity->stopped) {
-@@ -608,13 +611,16 @@ void drm_sched_entity_push_job(struct dr
- 			return;
- 		}
+ 	trace_drm_sched_job(sched_job, entity);
+-	atomic_inc(entity->rq->sched->score);
+ 	WRITE_ONCE(entity->last_user, current->group_leader);
  
--		drm_sched_rq_add_entity(entity->rq, entity);
-+		rq = entity->rq;
-+		sched = rq->sched;
-+
-+		drm_sched_rq_add_entity(rq, entity);
+ 	/*
+@@ -614,6 +613,7 @@ void drm_sched_entity_push_job(struct dr
+ 		rq = entity->rq;
+ 		sched = rq->sched;
+ 
++		atomic_inc(sched->score);
+ 		drm_sched_rq_add_entity(rq, entity);
  		spin_unlock(&entity->rq_lock);
  
- 		if (drm_sched_policy == DRM_SCHED_POLICY_FIFO)
- 			drm_sched_rq_update_fifo(entity, submit_ts);
- 
--		drm_sched_wakeup(entity->rq->sched);
-+		drm_sched_wakeup(sched);
- 	}
- }
- EXPORT_SYMBOL(drm_sched_entity_push_job);
 
 
