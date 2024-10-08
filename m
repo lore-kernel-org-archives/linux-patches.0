@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E6A1C9DDF;
-	Tue,  8 Oct 2024 13:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBE51DDC35;
+	Tue,  8 Oct 2024 13:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392476; cv=none; b=A+QKwL2yW3Qlgyye/oIRbCRgxP1XWcsQH01HPFWoBU2XKZPgngqvJ3Zwa0JnTNpGcKGqyy/HtKQj45mpYnzGWS9oMCgVvLSWVtQx1vXCRmTJA0MmFOE5Jm13mDg859NlQ59IF4RmBJ96bnhsrW3bpaNqAA1Bdw6gGK1M2yOXrgc=
+	t=1728392481; cv=none; b=OfnGOkoSrbPcs/aSwnhisYHuFU3MX+5owKxBWxmeSTH7j0QmJluc34GeMaBs24tt1wzTeShbkP97W4lcthR3PmM0pdOxX1PDtas/XitCOkjQYZeLlHaaqKh6rknrEhnSmDu0P3cQcme9wSDkBFGfUNti1d5lDywUcjgZzz+ExT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392476; c=relaxed/simple;
-	bh=FDP4Ud6k6C9DVIsStYhi/RcmYRX9LG/QGx7NhqkxUWI=;
+	s=arc-20240116; t=1728392481; c=relaxed/simple;
+	bh=cfkT/kRYYCjTbkjlVZIJudfeILrwye0BwzmxLeH7R4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQZXj8+8dPAS/2P2TqL6ClFi1YzGQnmhLDQ8mNw6h5A1RXm1V+dWgrQioEI3RF6DCTNuuoDhElXO/25jqVe2BqAjEFF88Un6kM2ugJ8x1jPcwacYdQZ6mWhhaq6r21mSLAacI6I2/up3VxdvMwSyqlYvIjmFRD3r0CgvsSk3hNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5LY0sM4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYJsHrbyB5rc8gdvDZSdKLgakQeVW+2xdGOk9oTfnCzw8tK0q83yMREEOq7BdbS6DpvFe95kpDLBPURzBb3vSuX6Np5f+3PCnpC/692AcH8wplGNJVnRl5fOkKmABJnldd1jZLnBhpG2rcWNeaXgHUHoFAAYTOCNYovD5z8icM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrdeGkIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5LY0sM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF1BC4CEC7;
-	Tue,  8 Oct 2024 13:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrdeGkIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48720C4CEC7;
+	Tue,  8 Oct 2024 13:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392476;
-	bh=FDP4Ud6k6C9DVIsStYhi/RcmYRX9LG/QGx7NhqkxUWI=;
+	s=korg; t=1728392480;
+	bh=cfkT/kRYYCjTbkjlVZIJudfeILrwye0BwzmxLeH7R4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5LY0sM4y/wwzuctGzCrhCOkRuouV0ybmDT6PUrShP9q3XnclxA8G8dJKX8XVmdzr
-	 WKnNUyyk9IdvV1A+0CODQYAgus1dAtpBrfH94NqIsnPbU4SmHkcO1c3Xdf7Uopvk5/
-	 btqxq5uUEB7kHrvr4Org3I4VpGtm+r44QxJbQOVs=
+	b=XrdeGkIaP1nO3HjMKgei7v8nlVwlO68aJjRsAUvsDlaponMeUAmBHKV/HGeczGslK
+	 JfKjqtwqJxt1dZRJpVzswZg/pV9oFCcZhNL7V+zo7M4T5OMg8gagbW3V2J35qX1kn6
+	 b44VdDSl8/vgHgbV66xKePOzgm79D+K9VWEY3qUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>
-Subject: [PATCH 6.11 427/558] sched/core: Add clearing of ->dl_server in put_prev_task_balance()
-Date: Tue,  8 Oct 2024 14:07:37 +0200
-Message-ID: <20241008115719.076636158@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.11 410/558] jbd2: correctly compare tids with tid_geq function in jbd2_fc_begin_commit
+Date: Tue,  8 Oct 2024 14:07:20 +0200
+Message-ID: <20241008115718.409091788@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,57 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit c245910049d04fbfa85bb2f5acd591c24e9907c7 upstream.
+commit f0e3c14802515f60a47e6ef347ea59c2733402aa upstream.
 
-Paths using put_prev_task_balance() need to do a pick shortly
-after. Make sure they also clear the ->dl_server on prev as a
-part of that.
+Use tid_geq to compare tids to work over sequence number wraps.
 
-Fixes: 63ba8422f876 ("sched/deadline: Introduce deadline servers")
-Signed-off-by: "Joel Fernandes (Google)" <joel@joelfernandes.org>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Juri Lelli <juri.lelli@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/d184d554434bedbad0581cb34656582d78655150.1716811044.git.bristot@kernel.org
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20240801013815.2393869-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/jbd2/journal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5789,6 +5789,14 @@ static void put_prev_task_balance(struct
- #endif
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -710,7 +710,7 @@ int jbd2_fc_begin_commit(journal_t *jour
+ 		return -EINVAL;
  
- 	put_prev_task(rq, prev);
-+
-+	/*
-+	 * We've updated @prev and no longer need the server link, clear it.
-+	 * Must be done before ->pick_next_task() because that can (re)set
-+	 * ->dl_server.
-+	 */
-+	if (prev->dl_server)
-+		prev->dl_server = NULL;
- }
- 
- /*
-@@ -5832,14 +5840,6 @@ __pick_next_task(struct rq *rq, struct t
- restart:
- 	put_prev_task_balance(rq, prev, rf);
- 
--	/*
--	 * We've updated @prev and no longer need the server link, clear it.
--	 * Must be done before ->pick_next_task() because that can (re)set
--	 * ->dl_server.
--	 */
--	if (prev->dl_server)
--		prev->dl_server = NULL;
--
- 	for_each_class(class) {
- 		p = class->pick_next_task(rq);
- 		if (p)
+ 	write_lock(&journal->j_state_lock);
+-	if (tid <= journal->j_commit_sequence) {
++	if (tid_geq(journal->j_commit_sequence, tid)) {
+ 		write_unlock(&journal->j_state_lock);
+ 		return -EALREADY;
+ 	}
 
 
