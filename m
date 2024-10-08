@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DC31D3653;
-	Tue,  8 Oct 2024 13:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9908B1DEFF6;
+	Tue,  8 Oct 2024 13:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393455; cv=none; b=cAzB9eM8XgKDQsFd6V5QmYTCGwILx5DEyjBTdOanFHgdRP5ydKVQEGWe7m64KPIEkiTm5StBifPpKnKTRTuPwdebX/aRuM2pd8cYZxTOvcfVld0J0K1gc/epSnZvJB3nAMTsW90rV3ce7IRdUDzRvHcQIZilMJVGwQtUvX6YCqo=
+	t=1728393459; cv=none; b=UN0FL8iAcVLBdXYtX4srtsT5iNHqGqCyqE55CMa4mG0345A9k/51v4cv2/yWxmeju3S2mQpU1UeQgSdIERQ2D0EzZZ01m+GU5CwpPQiyTk6kxXEsOot0+aXDqehOMpRrgyqvlLj5Sq4bKADpz+Fo9eZxCBIDOj53N8zMqrw7PEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393455; c=relaxed/simple;
-	bh=CmGtCu+RCzcJumzlvBGnj5+J0H2gPmrzaQF7wlfg844=;
+	s=arc-20240116; t=1728393459; c=relaxed/simple;
+	bh=uHKne9paOoXw/2MbhadEmNavQm1QyTob87V24Vzj5lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iyIiWWNXgZyMP1F7pVM9biK3heCPPo+zTD3dAlGz1zcmv0tUYLMfi10lPEZa2rcOMMKKrsiGoVHXt6BXmazRTuZTjtlT0gfW2qYKCzTf0n9DIRjnmBXLr1eSYphnYBxSrxLhcXcTsKXdPu6jneUT5poFYruah5MTF8OcM3+ICvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVj5ojr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eyn6K3Cka6gQAu2zBLDOVoWxyuGIEOz2zvKM3G3J10OYf6+OOG0+DxoPlKPLhDhLF0tIvTC8q3zj7wJZzhdfLTcJOfssM8g0ldxNygh4yykG4l9FwD3KIISCoQ1+CUXzyjsrREdYPWgW1w5vpUW0Td0vjeKklnYZvo04JT9Awc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gp6T4kJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVj5ojr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4024C4CEC7;
-	Tue,  8 Oct 2024 13:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gp6T4kJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50BDC4CEC7;
+	Tue,  8 Oct 2024 13:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393455;
-	bh=CmGtCu+RCzcJumzlvBGnj5+J0H2gPmrzaQF7wlfg844=;
+	s=korg; t=1728393459;
+	bh=uHKne9paOoXw/2MbhadEmNavQm1QyTob87V24Vzj5lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVj5ojr13Iwg+IimV7Ha9LFtf07f58jdEghfFNqFZzr6j4xMmA3wMUCHcfrHX7pb2
-	 mK5q//cWOcs7EOqGjijXa2hjeKgwONG7Le7q1kkAq3sLQVOn+N1U4jxYhtXrLxLzqd
-	 TRFBsYFVsnq3vKQL+I4ZVveqsnRrv6TvKm6fUEaU=
+	b=gp6T4kJ8pRoapMeWliqvkIlaiI80l4pleyFeAWFp9jVJuhaXcBmIZWDWXns/njWsf
+	 AAKqMM6ZSJgJwZVT7K8j9X1NNccQi1vXWbzJ+tek+kk66sbkdZCctpxo9/zlPG5r6r
+	 wqGdh4ATejPVmVGT8Twbtpqp6lEPuWugMSjxqmwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Andrew Davis <afd@ti.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/386] rcuscale: Provide clear error when async specified without primitives
-Date: Tue,  8 Oct 2024 14:06:11 +0200
-Message-ID: <20241008115634.395128864@linuxfoundation.org>
+Subject: [PATCH 6.6 127/386] power: reset: brcmstb: Do not go into infinite loop if reset fails
+Date: Tue,  8 Oct 2024 14:06:12 +0200
+Message-ID: <20241008115634.434576550@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,45 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 11377947b5861fa59bf77c827e1dd7c081842cc9 ]
+[ Upstream commit cf8c39b00e982fa506b16f9d76657838c09150cb ]
 
-Currently, if the rcuscale module's async module parameter is specified
-for RCU implementations that do not have async primitives such as RCU
-Tasks Rude (which now lacks a call_rcu_tasks_rude() function), there
-will be a series of splats due to calls to a NULL pointer.  This commit
-therefore warns of this situation, but switches to non-async testing.
+There may be other backup reset methods available, do not halt
+here so that other reset methods can be tried.
 
-Signed-off-by: "Paul E. McKenney" <paulmck@kernel.org>
-Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20240610142836.168603-5-afd@ti.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/reset/brcmstb-reboot.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index ffdb30495e3cc..ed46d9e8c0e43 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -498,7 +498,7 @@ rcu_scale_writer(void *arg)
- 			schedule_timeout_idle(torture_random(&tr) % writer_holdoff_jiffies + 1);
- 		wdp = &wdpp[i];
- 		*wdp = ktime_get_mono_fast_ns();
--		if (gp_async) {
-+		if (gp_async && !WARN_ON_ONCE(!cur_ops->async)) {
- retry:
- 			if (!rhp)
- 				rhp = kmalloc(sizeof(*rhp), GFP_KERNEL);
-@@ -554,7 +554,7 @@ rcu_scale_writer(void *arg)
- 			i++;
- 		rcu_scale_wait_shutdown();
- 	} while (!torture_must_stop());
--	if (gp_async) {
-+	if (gp_async && cur_ops->async) {
- 		cur_ops->gp_barrier();
+diff --git a/drivers/power/reset/brcmstb-reboot.c b/drivers/power/reset/brcmstb-reboot.c
+index 0f2944dc93551..a04713f191a11 100644
+--- a/drivers/power/reset/brcmstb-reboot.c
++++ b/drivers/power/reset/brcmstb-reboot.c
+@@ -62,9 +62,6 @@ static int brcmstb_restart_handler(struct notifier_block *this,
+ 		return NOTIFY_DONE;
  	}
- 	writer_n_durations[me] = i_max + 1;
+ 
+-	while (1)
+-		;
+-
+ 	return NOTIFY_DONE;
+ }
+ 
 -- 
 2.43.0
 
