@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D3192D69;
-	Tue,  8 Oct 2024 12:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B080192D69;
+	Tue,  8 Oct 2024 12:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390646; cv=none; b=IDYQe2vneD2HsLJupzgzzT1PWxkdqim7UeQYZ7ayPT9dQf70yCX5qo6Ok43Xw3ST+b1cjvLSblm/By63ozZzbWfZe0RmfGJpg1eR6+KyFRq8Ec2XA/TOEFKSrPcqZe+LaFiBxaNrZgI0uBp0hZ5nf1b4w5/3D5uXs0n3Pyeu77Y=
+	t=1728390649; cv=none; b=fmo/+2MuaDbb80YPNabGQrpbEu31YJygwM7RdBhAkpIL/yUci4N4v9LK1HdWmcjs2zJqWFtZazBdvmrSgyvsUscNrEHFCkCHkS3cM0vebdfqrDU+ReYgH6Zys56iBgASzqAyb6oozmTJ4JsGRCoJL4+zU1aK9suvhcnie6aTHi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390646; c=relaxed/simple;
-	bh=ZUOWSsVx3egcBmAw2ZjwSh7IxGJ70Q46dbXNWkXtRFM=;
+	s=arc-20240116; t=1728390649; c=relaxed/simple;
+	bh=FJpfb/oxTxS4CUQTNI/f7uio2ca9M5S4X8j7PMFdj0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HE9wiCaaupY6V+/WX8oLEZyEINSV8wUcF4NhzJw6vFf4S4J20FR3lYnhJaXjZV3dCcON5q2dASwmYG+U+QF3We5pNEcfI0YmcuJK9lUYmSG2FxVa5VV7puoStSrgyLUWfATwOn2cmwLIydPqDsTnVo0bh1cO/iKa5xcdhzEoluw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bm6GltD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGKAOQe8uJ+Ni1egy6PdXXatzKNbSZfZWXuJ8r/c5oAbsP6qHoIbgw6B4iNXlFfeq+6IWHyG28pD/tk1cxsU/uoChwk+f/VHlEb4iU9NCxREZDok1mlXNN/vT94n+JyrsXAoCRjsQfCmzAxQqszZgV0hPt9dXdKRaW4WlI2bJnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/KI/mBG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bm6GltD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B06C4CEC7;
-	Tue,  8 Oct 2024 12:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/KI/mBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAD2C4CEC7;
+	Tue,  8 Oct 2024 12:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390646;
-	bh=ZUOWSsVx3egcBmAw2ZjwSh7IxGJ70Q46dbXNWkXtRFM=;
+	s=korg; t=1728390649;
+	bh=FJpfb/oxTxS4CUQTNI/f7uio2ca9M5S4X8j7PMFdj0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bm6GltD0pGOrhozOBAbb48RmPUVbsLx8ucuIWPEMWLp0i9NrzbQIZ5V4g4x+QBDHg
-	 tAsbaxTAEl5sEvgeRwH+NyMzojtKQW+aMuKee4J73mUX1aQezwVzgLu/Tt5JGO/Yp8
-	 tj6FSCLysbSgyorJfGvgpPBrIT42fzQnWqfpJRVs=
+	b=1/KI/mBGiFzXXd1LFWhFUKqQs3iud1SlJHI5idRKTFWlUIw6TRLFlBN7wuXA1hk1m
+	 nUnCPfHg7vd1edsaMqtf8zr/dCDlBz5tTIl6e0YAdTdjBAk+OOXT/X4lP5c0iYyKVx
+	 OGg0x0E9vebOgQkw7apBaF+o30D4Sz6VE7meNal0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	stable@kernel.org,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.10 349/482] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
-Date: Tue,  8 Oct 2024 14:06:52 +0200
-Message-ID: <20241008115702.159062389@linuxfoundation.org>
+Subject: [PATCH 6.10 350/482] jbd2: correctly compare tids with tid_geq function in jbd2_fc_begin_commit
+Date: Tue,  8 Oct 2024 14:06:53 +0200
+Message-ID: <20241008115702.199074820@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,69 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
+commit f0e3c14802515f60a47e6ef347ea59c2733402aa upstream.
 
-In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
-to recover some journal space. But if an error occurs while executing
-jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
-space right away, we try other branches, and if j_committing_transaction
-is NULL (i.e., the tid is 0), we will get the following complain:
+Use tid_geq to compare tids to work over sequence number wraps.
 
-============================================
-JBD2: I/O error when updating journal superblock for sdd-8.
-__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
-__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
-Modules linked in:
-CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
-RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
-Call Trace:
- <TASK>
- add_transaction_credits+0x5d1/0x5e0
- start_this_handle+0x1ef/0x6a0
- jbd2__journal_start+0x18b/0x340
- ext4_dirty_inode+0x5d/0xb0
- __mark_inode_dirty+0xe4/0x5d0
- generic_update_time+0x60/0x70
-[...]
-============================================
-
-So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
-clean up at the moment, continue to try to reclaim free space in other ways.
-
-Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
-when updating journal superblock fails") to make jbd2_cleanup_journal_tail
-return the correct error code.
-
-Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20240801013815.2393869-2-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/jbd2/journal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -89,8 +89,11 @@ __releases(&journal->j_state_lock)
- 			write_unlock(&journal->j_state_lock);
- 			if (chkpt) {
- 				jbd2_log_do_checkpoint(journal);
--			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
--				/* We were able to recover space; yay! */
-+			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
-+				/*
-+				 * We were able to recover space or the
-+				 * journal was aborted due to an error.
-+				 */
- 				;
- 			} else if (has_transaction) {
- 				/*
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -725,7 +725,7 @@ int jbd2_fc_begin_commit(journal_t *jour
+ 		return -EINVAL;
+ 
+ 	write_lock(&journal->j_state_lock);
+-	if (tid <= journal->j_commit_sequence) {
++	if (tid_geq(journal->j_commit_sequence, tid)) {
+ 		write_unlock(&journal->j_state_lock);
+ 		return -EALREADY;
+ 	}
 
 
