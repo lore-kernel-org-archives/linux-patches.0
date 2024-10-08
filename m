@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0880C1779B1;
-	Tue,  8 Oct 2024 12:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F611779B1;
+	Tue,  8 Oct 2024 12:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390844; cv=none; b=FpKFck5ZJyenu78ZX/9UamDiKruBJHFMY5lUjjHRtJeDU8dYX0JbNbpfGjuNTjHh2ydTAp/B6wr/SMQb4OWiZVilac3vzX+7ADkZGsPi+11wLk1fDOYNBTg8f0BZANfyp0sWuBIcKZZyx7S2dmin/KA7+qUDd1vBgtiZ0jKhiIM=
+	t=1728390847; cv=none; b=lHXwHOt2iO1aHV4jrzh86A7ck824Wu3wBDN5V6imAB8qpIWD+vB32zQzHrtCXHmrwmo0u6SGZhPS+Ah8P5QZnV4YEXNIraQyIqZsTI8SZKtAchnUe365zD58FqAUgj8sZDEynAfwQ/Ar2HwIYAh7w5B+PXgTFfyS7v4mdTpAbZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390844; c=relaxed/simple;
-	bh=G8+KkC3i66+4S+pGvUiMtqaVFHcNZ8S8wR1PMr+BK34=;
+	s=arc-20240116; t=1728390847; c=relaxed/simple;
+	bh=cBUrAST+ELkJp87zvTq/nv6ahfWcWCzllcHpVtW4Psc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/2AqTFtLlKCpHiV1p/v7gNWAZWnB9TH2i6V3L8Akw3OHFagTGr00QrZ1/re9wo5fIWK27wzeAHGI4jWX51Vb/lwG2RncAX4RtAOvU9PFNWkKUcTFbEgdmNtE6xlHkWdenQKuT1t+EMp4pOSAEg9OCzf4TVWTVztWJaOc/+g6N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSiVO2yR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyUFVXKEoIv+avQH2LcCsKoVIgroKDJ1gGNEigURqbN6eeIMPey+mrmnsslDqyDj8D+hDfpu6uuRFgOf+HjoWKwJd4o8HRqDQ6B+tgwGl0sqoUvEgcRyns1xk/UG5GVme4ZhXQ6SZTccuLrJfejpyyrCMBGmw+LOq9W9QsutMkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj0u4VHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSiVO2yR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9B2C4CEC7;
-	Tue,  8 Oct 2024 12:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj0u4VHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7D5C4CEC7;
+	Tue,  8 Oct 2024 12:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390843;
-	bh=G8+KkC3i66+4S+pGvUiMtqaVFHcNZ8S8wR1PMr+BK34=;
+	s=korg; t=1728390847;
+	bh=cBUrAST+ELkJp87zvTq/nv6ahfWcWCzllcHpVtW4Psc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSiVO2yRzNWDjkflVhnDAn5LQO8IHfHGjtK1o+w4hd5ViW5Jut37SdiF9PLM5gItH
-	 yhx+zZt05DW+b8ZkTCpTzrzgxu06lCr8YOWk6n83HjNiFYbWK+iH0O+SzwTOBi4h18
-	 rbLiLZkAEKrkBEVfcqhYE48FFUm0HmwswY5ZCvWQ=
+	b=Tj0u4VHJSgffhTKEpgTI06t6o42VypNkzPXbadvszbYqTxmagbFikzuvs3aCR9oj/
+	 1xu2UjWXSGlEmOz64Y8tPsrp7ak0Lpq/W1KSYFCRM/UQ4MptOa73Iidi2u2/1aolUH
+	 vZOa/9bBFY24SwMso6+EOkmc0qAGPrfsEYTFklX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.10 411/482] cachefiles: fix dentry leak in cachefiles_open_file()
-Date: Tue,  8 Oct 2024 14:07:54 +0200
-Message-ID: <20241008115704.580534318@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.10 394/482] clk: qcom: gcc-sm8250: Do not turn off PCIe GDSCs during gdsc_disable()
+Date: Tue,  8 Oct 2024 14:07:37 +0200
+Message-ID: <20241008115703.915778727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,103 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit da6ef2dffe6056aad3435e6cf7c6471c2a62187c upstream.
+commit ade508b545c969c72cd68479f275a5dd640fd8b9 upstream.
 
-A dentry leak may be caused when a lookup cookie and a cull are concurrent:
+With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of PCIe controllers from suspend.
 
-            P1             |             P2
------------------------------------------------------------
-cachefiles_lookup_cookie
-  cachefiles_look_up_object
-    lookup_one_positive_unlocked
-     // get dentry
-                            cachefiles_cull
-                              inode->i_flags |= S_KERNEL_FILE;
-    cachefiles_open_file
-      cachefiles_mark_inode_in_use
-        __cachefiles_mark_inode_in_use
-          can_use = false
-          if (!(inode->i_flags & S_KERNEL_FILE))
-            can_use = true
-	  return false
-        return false
-        // Returns an error but doesn't put dentry
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
 
-After that the following WARNING will be triggered when the backend folder
-is umounted:
-
-==================================================================
-BUG: Dentry 000000008ad87947{i=7a,n=Dx_1_1.img}  still in use (1) [unmount of ext4 sda]
-WARNING: CPU: 4 PID: 359261 at fs/dcache.c:1767 umount_check+0x5d/0x70
-CPU: 4 PID: 359261 Comm: umount Not tainted 6.6.0-dirty #25
-RIP: 0010:umount_check+0x5d/0x70
-Call Trace:
- <TASK>
- d_walk+0xda/0x2b0
- do_one_tree+0x20/0x40
- shrink_dcache_for_umount+0x2c/0x90
- generic_shutdown_super+0x20/0x160
- kill_block_super+0x1a/0x40
- ext4_kill_sb+0x22/0x40
- deactivate_locked_super+0x35/0x80
- cleanup_mnt+0x104/0x160
-==================================================================
-
-Whether cachefiles_open_file() returns true or false, the reference count
-obtained by lookup_positive_unlocked() in cachefiles_look_up_object()
-should be released.
-
-Therefore release that reference count in cachefiles_look_up_object() to
-fix the above issue and simplify the code.
-
-Fixes: 1f08c925e7a3 ("cachefiles: Implement backing file wrangling")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240829083409.3788142-1-libaokun@huaweicloud.com
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: stable@vger.kernel.org # 5.7
+Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240719134238.312191-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cachefiles/namei.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/gcc-sm8250.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/cachefiles/namei.c
-+++ b/fs/cachefiles/namei.c
-@@ -595,14 +595,12 @@ static bool cachefiles_open_file(struct
- 	 * write and readdir but not lookup or open).
- 	 */
- 	touch_atime(&file->f_path);
--	dput(dentry);
- 	return true;
+--- a/drivers/clk/qcom/gcc-sm8250.c
++++ b/drivers/clk/qcom/gcc-sm8250.c
+@@ -3226,7 +3226,7 @@ static struct gdsc pcie_0_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- check_failed:
- 	fscache_cookie_lookup_negative(object->cookie);
- 	cachefiles_unmark_inode_in_use(object, file);
- 	fput(file);
--	dput(dentry);
- 	if (ret == -ESTALE)
- 		return cachefiles_create_file(object);
- 	return false;
-@@ -611,7 +609,6 @@ error_fput:
- 	fput(file);
- error:
- 	cachefiles_do_unmark_inode_in_use(object, d_inode(dentry));
--	dput(dentry);
- 	return false;
- }
+ static struct gdsc pcie_1_gdsc = {
+@@ -3234,7 +3234,7 @@ static struct gdsc pcie_1_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
-@@ -654,7 +651,9 @@ bool cachefiles_look_up_object(struct ca
- 		goto new_file;
- 	}
+ static struct gdsc pcie_2_gdsc = {
+@@ -3242,7 +3242,7 @@ static struct gdsc pcie_2_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_2_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
--	if (!cachefiles_open_file(object, dentry))
-+	ret = cachefiles_open_file(object, dentry);
-+	dput(dentry);
-+	if (!ret)
- 		return false;
- 
- 	_leave(" = t [%lu]", file_inode(object->file)->i_ino);
+ static struct gdsc ufs_card_gdsc = {
 
 
