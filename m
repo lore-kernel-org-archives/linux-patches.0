@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70D0189910;
-	Tue,  8 Oct 2024 12:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E88189910;
+	Tue,  8 Oct 2024 12:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392383; cv=none; b=u5mawIC+9UptY2ttREMQPTYL7qBgvDIu8EW0+vYddhiPpIvufT10OjLEzQceODgzABnyJCgais/WtcBC1uGGWyh+FulPiZFmlqjGxf1jXjzOkvNQeVI01cD3afDR5TraGOwkYRFAllPd+Y76ZbKVAiUS58+Ie31qhLwM/UN/EeI=
+	t=1728392387; cv=none; b=eB67GFDgjK8maYqj4bjQBLeOoskfIPEQMKUdaXUD8RLqPoAXPbghQwHQrtxLWKtm7S/0wpLOyqSnDHRFk8TkzuqQHz1hC6rc9JMrMCeOcfokkfrWmmy70vwqNo5F5HQjlN6LskouAkZCA+2mEBhQV3lXNJ/UsoXW/HBwWr1XBPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392383; c=relaxed/simple;
-	bh=YsLlpCnLZ4WjKfSh24XEgYtwZHqPtz4HbRIO2dFWn8g=;
+	s=arc-20240116; t=1728392387; c=relaxed/simple;
+	bh=iXrjQlVD7jqYBGx9qpSndlJxpIabyxxDPGBuTB7SWDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuI2gP+TtNkFTEQdPm2Yj58E8puuLBrVcuWlnK6JiAnL4G2TWx3dNBg+UWrf0uOfb2/21VJ5JKdUyjx8g3udY/aaEcI5MZamIYGfj4uFUhrf4AGehQszgrEgP0KJrADiTw49SFYrmk6iaVdazoqlpfEu7Y2bSpHK/we1WSpMWmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2Pwacgn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0UGGpbfhJAl2LyApLejHmdBQyEKMC3R/fa2+vRagP//EQpXIVfLJFDHqr5FuIZ1rVQMQMGCAYbufLJNDbVzVyfsRyyY1koZ8iViN8cy+9FVdmVQeuojMEft7BekE09Y+VmZ49A3uau2w9OUfSQLmhSc2JcqWLD58A4xSoVKV5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhsuMt4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2Pwacgn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362E7C4CEC7;
-	Tue,  8 Oct 2024 12:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhsuMt4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC25CC4CEC7;
+	Tue,  8 Oct 2024 12:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392383;
-	bh=YsLlpCnLZ4WjKfSh24XEgYtwZHqPtz4HbRIO2dFWn8g=;
+	s=korg; t=1728392387;
+	bh=iXrjQlVD7jqYBGx9qpSndlJxpIabyxxDPGBuTB7SWDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2Pwacgngljzmv9vvHBneViSsWOnN1flN/b1AnE2T7RZsDBgnsSju1m8Fcq5mh95t
-	 lxQUzPub0MVTqPwwkdYYc+blh9uhjwpQTPmvqEF5MOwyhAMmMUWE9ImnKcan6VkU57
-	 ujTjCRFKCeD5F9lKUKuit2Jlt5zFgZQkZmU+rwYw=
+	b=qhsuMt4xnYpwyBxAWwW8NrR4Hb5Im1mkXkw7rH4txiBjtC0NS0xBi7A6NcAhFtuI1
+	 GIbmM9k8TYz6S6iXUDcQ3p1DCL3rB9l7LNk89Ij7LSFHHNQt6mk2bDcrIF/seKBGze
+	 qCpxvw/9ScULkUixLIdNdVYhzBgIfm/ZEQoujwnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 399/558] drm/xe: Generate oob before compiling anything
-Date: Tue,  8 Oct 2024 14:07:09 +0200
-Message-ID: <20241008115717.980993978@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.11 400/558] parisc: Fix 64-bit userspace syscall path
+Date: Tue,  8 Oct 2024 14:07:10 +0200
+Message-ID: <20241008115718.018919122@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,70 +49,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Helge Deller <deller@kernel.org>
 
-commit ea74bf9ccba9ae80fc0766c07c4abaef927e9e63 upstream.
+commit d24449864da5838936669618356b0e30ca2999c3 upstream.
 
-Instead of keep adding more dependencies as WAs are needed in different
-places of the driver, just add a rule with all the objects so the code
-generation happens before anything else.
+Currently the glibc isn't yet ported to 64-bit for hppa, so
+there is no usable userspace available yet.
+But it's possible to manually build a static 64-bit binary
+and run that for testing. One such 64-bit test program is
+available at http://ftp.parisc-linux.org/src/64bit.tar.gz
+and it shows various issues with the existing 64-bit syscall
+path in the kernel.
+This patch fixes those issues.
 
-While at it, group lines related to wa_oob in the Makefile.
-
-v2: Prefix $(obj) when declaring dependency
-
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240708213041.1734028-1-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org      # v4.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/Makefile |   24 ++++--------------------
- 1 file changed, 4 insertions(+), 20 deletions(-)
+ arch/parisc/kernel/syscall.S |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/xe/Makefile
-+++ b/drivers/gpu/drm/xe/Makefile
-@@ -12,34 +12,15 @@ subdir-ccflags-$(CONFIG_DRM_XE_WERROR) +
- subdir-ccflags-y += -I$(obj) -I$(src)
+--- a/arch/parisc/kernel/syscall.S
++++ b/arch/parisc/kernel/syscall.S
+@@ -243,10 +243,10 @@ linux_gateway_entry:
  
- # generated sources
--hostprogs := xe_gen_wa_oob
+ #ifdef CONFIG_64BIT
+ 	ldil	L%sys_call_table, %r1
+-	or,=	%r2,%r2,%r2
+-	addil	L%(sys_call_table64-sys_call_table), %r1
++	or,ev	%r2,%r2,%r2
++	ldil	L%sys_call_table64, %r1
+ 	ldo	R%sys_call_table(%r1), %r19
+-	or,=	%r2,%r2,%r2
++	or,ev	%r2,%r2,%r2
+ 	ldo	R%sys_call_table64(%r1), %r19
+ #else
+ 	load32	sys_call_table, %r19
+@@ -379,10 +379,10 @@ tracesys_next:
+ 	extrd,u	%r19,63,1,%r2			/* W hidden in bottom bit */
  
-+hostprogs := xe_gen_wa_oob
- generated_oob := $(obj)/generated/xe_wa_oob.c $(obj)/generated/xe_wa_oob.h
--
- quiet_cmd_wa_oob = GEN     $(notdir $(generated_oob))
-       cmd_wa_oob = mkdir -p $(@D); $^ $(generated_oob)
--
- $(obj)/generated/%_wa_oob.c $(obj)/generated/%_wa_oob.h: $(obj)/xe_gen_wa_oob \
- 		 $(src)/xe_wa_oob.rules
- 	$(call cmd,wa_oob)
+ 	ldil	L%sys_call_table, %r1
+-	or,=	%r2,%r2,%r2
+-	addil	L%(sys_call_table64-sys_call_table), %r1
++	or,ev	%r2,%r2,%r2
++	ldil	L%sys_call_table64, %r1
+ 	ldo	R%sys_call_table(%r1), %r19
+-	or,=	%r2,%r2,%r2
++	or,ev	%r2,%r2,%r2
+ 	ldo	R%sys_call_table64(%r1), %r19
+ #else
+ 	load32	sys_call_table, %r19
+@@ -1327,6 +1327,8 @@ ENTRY(sys_call_table)
+ END(sys_call_table)
  
--uses_generated_oob := \
--	$(obj)/xe_ggtt.o \
--	$(obj)/xe_device.o \
--	$(obj)/xe_gsc.o \
--	$(obj)/xe_gt.o \
--	$(obj)/xe_guc.o \
--	$(obj)/xe_guc_ads.o \
--	$(obj)/xe_guc_pc.o \
--	$(obj)/xe_migrate.o \
--	$(obj)/xe_pat.o \
--	$(obj)/xe_ring_ops.o \
--	$(obj)/xe_vm.o \
--	$(obj)/xe_wa.o \
--	$(obj)/xe_ttm_stolen_mgr.o
--
--$(uses_generated_oob): $(generated_oob)
--
- # Please keep these build lists sorted!
- 
- # core driver code
-@@ -322,3 +303,6 @@ quiet_cmd_hdrtest = HDRTEST $(patsubst %
- 
- $(obj)/%.hdrtest: $(src)/%.h FORCE
- 	$(call if_changed_dep,hdrtest)
-+
-+uses_generated_oob := $(addprefix $(obj)/, $(xe-y))
-+$(uses_generated_oob): $(obj)/generated/xe_wa_oob.h
+ #ifdef CONFIG_64BIT
++#undef __SYSCALL_WITH_COMPAT
++#define __SYSCALL_WITH_COMPAT(nr, native, compat)	__SYSCALL(nr, native)
+ 	.align 8
+ ENTRY(sys_call_table64)
+ #include <asm/syscall_table_64.h>    /* 64-bit syscalls */
 
 
