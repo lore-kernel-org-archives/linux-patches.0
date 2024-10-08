@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D1D1DED55;
-	Tue,  8 Oct 2024 12:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B09192594;
+	Tue,  8 Oct 2024 12:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391445; cv=none; b=N/sr74g8i48YX/C8gCbv03n2UVEn8P4SclfPveM+so/gUHLJZ516Cat/0H1sd+JjW7Nya7AoDek/WGbwt+G0rS3DwIqT5uk2A1NNVQidiOP0QSmdsAMBhPwGg/ss2VDHaOodaktGCZUc7D0yNZZG5b0/YqfKuK0wVt48HAU1Oco=
+	t=1728391448; cv=none; b=J2+xf7rUWpeH9ffQYLrbM3F52o0fmgHdjfIIDi6zPt8flgX1q3EOMGkn2JEQZc5pG5eBJIRnE9XnD9iUTVzdjX6qLXFhtYcRoxZ841EObtsRfk394ClP4Q4iJnyDqjXaixya8K8Qyqn4fPjGYj/mKzMYuFJakFEmLX5/hl+ZXAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391445; c=relaxed/simple;
-	bh=PmE9rrGRdyPr84/stoogRe2UW0ULhhwZKkwyJYGYh/I=;
+	s=arc-20240116; t=1728391448; c=relaxed/simple;
+	bh=IqJrL8iOdYeyVbqLiHV1xu/QqUaG4D/10VszMmwwED0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhtK4d7oQtu/c1W03CNWxGOmU3Wr0MQ3bxNx+hC/QnjbW4XfMzUGR+gbkb+vHdmEeGSG5ceNOzaoq+l/RqVWK7TQHHoQ2UwxBte9M/SGZAOAMfzeGdvWGZ02Ztr6S5Tjz8X4wr+g/DH+cEWMZq/HD1G6dX4iXZZlR10IsdTVi9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh5OrrIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ds29Nrg50/X9BWJQ/V8pf+X+kZnho4wS8ihURk0yniWqmspwb5h743PGVP16kJnAmjSWMJlbru1f1BDei3NTJrmPxPVeNWrH6G3hQK4zbsbiDhDUWb7DG4df5zIgneuTuUwVfLnXoZXzfKdwO1HBS/Jf6cNiF5RPIzN68Tv4l00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsZbViod; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh5OrrIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D589C4CECC;
-	Tue,  8 Oct 2024 12:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsZbViod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77E3C4CEC7;
+	Tue,  8 Oct 2024 12:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391445;
-	bh=PmE9rrGRdyPr84/stoogRe2UW0ULhhwZKkwyJYGYh/I=;
+	s=korg; t=1728391448;
+	bh=IqJrL8iOdYeyVbqLiHV1xu/QqUaG4D/10VszMmwwED0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eh5OrrIqQHK1zBZJsbsqCqh1mLsI70K+jx0cswyqfEXLM6Gc8WgX7eEh9jkimGdfu
-	 0vGoxsRVkuEdlUjRdd9jTuO9BwE9Su14btW9/2KZSV2nlhcKmjAHsXfQYpTApISIui
-	 2R14L4j/yeiR1MUa/2SK8+nNFQGOA0S7MhBIkseo=
+	b=xsZbViodc003JRGC3oBu2FfYYRgfo4R0P/RbFzS2uRWueoLd48pkP0+nh+7wKm/Nx
+	 SqlwZsUQ7Qy/ZgMFqNaG+nk/S1FcU8/Y85MqDG5Xiv4u/cqIc6KSA/fsdmiJMUHC7v
+	 7AM/jRRHcb06J04XfVBD3+27OKShR+rlwIdu0eco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Parkin <tparkin@katalix.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 117/558] l2tp: free sessions using rcu
-Date: Tue,  8 Oct 2024 14:02:27 +0200
-Message-ID: <20241008115706.970682877@linuxfoundation.org>
+Subject: [PATCH 6.11 118/558] l2tp: use rcu list add/del when updating lists
+Date: Tue,  8 Oct 2024 14:02:28 +0200
+Message-ID: <20241008115707.010471839@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -54,55 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: James Chapman <jchapman@katalix.com>
 
-[ Upstream commit d17e89999574aca143dd4ede43e4382d32d98724 ]
+[ Upstream commit 89b768ec2dfefaeba5212de14fc71368e12d06ba ]
 
-l2tp sessions may be accessed under an rcu read lock. Have them freed
-via rcu and remove the now unneeded synchronize_rcu when a session is
-removed.
+l2tp_v3_session_htable and tunnel->session_list are read by lockless
+getters using RCU. Use rcu list variants when adding or removing list
+items.
 
 Signed-off-by: James Chapman <jchapman@katalix.com>
 Signed-off-by: Tom Parkin <tparkin@katalix.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_core.c | 4 +---
- net/l2tp/l2tp_core.h | 1 +
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ net/l2tp/l2tp_core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
-index a9cbcbc9d016d..edff7afc06199 100644
+index edff7afc06199..ee8133f77b64c 100644
 --- a/net/l2tp/l2tp_core.c
 +++ b/net/l2tp/l2tp_core.c
-@@ -152,7 +152,7 @@ static void l2tp_session_free(struct l2tp_session *session)
- 	trace_free_session(session);
- 	if (session->tunnel)
- 		l2tp_tunnel_dec_refcount(session->tunnel);
--	kfree(session);
-+	kfree_rcu(session, rcu);
- }
+@@ -394,12 +394,12 @@ static int l2tp_session_collision_add(struct l2tp_net *pn,
  
- struct l2tp_tunnel *l2tp_sk_to_tunnel(struct sock *sk)
-@@ -1298,8 +1298,6 @@ static void l2tp_session_unhash(struct l2tp_session *session)
+ 	/* If existing session isn't already in the session hlist, add it. */
+ 	if (!hash_hashed(&session2->hlist))
+-		hash_add(pn->l2tp_v3_session_htable, &session2->hlist,
+-			 session2->hlist_key);
++		hash_add_rcu(pn->l2tp_v3_session_htable, &session2->hlist,
++			     session2->hlist_key);
  
- 		spin_unlock_bh(&pn->l2tp_session_idr_lock);
- 		spin_unlock_bh(&tunnel->list_lock);
--
--		synchronize_rcu();
- 	}
- }
+ 	/* Add new session to the hlist and collision list */
+-	hash_add(pn->l2tp_v3_session_htable, &session1->hlist,
+-		 session1->hlist_key);
++	hash_add_rcu(pn->l2tp_v3_session_htable, &session1->hlist,
++		     session1->hlist_key);
+ 	refcount_inc(&clist->ref_count);
+ 	l2tp_session_coll_list_add(clist, session1);
  
-diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
-index 6c25c196cc222..d0e3460089d90 100644
---- a/net/l2tp/l2tp_core.h
-+++ b/net/l2tp/l2tp_core.h
-@@ -67,6 +67,7 @@ struct l2tp_session_coll_list {
- struct l2tp_session {
- 	int			magic;		/* should be L2TP_SESSION_MAGIC */
- 	long			dead;
-+	struct rcu_head		rcu;
+@@ -415,7 +415,7 @@ static void l2tp_session_collision_del(struct l2tp_net *pn,
  
- 	struct l2tp_tunnel	*tunnel;	/* back pointer to tunnel context */
- 	u32			session_id;
+ 	lockdep_assert_held(&pn->l2tp_session_idr_lock);
+ 
+-	hash_del(&session->hlist);
++	hash_del_rcu(&session->hlist);
+ 
+ 	if (clist) {
+ 		/* Remove session from its collision list. If there
+@@ -490,7 +490,7 @@ int l2tp_session_register(struct l2tp_session *session,
+ 
+ 	l2tp_tunnel_inc_refcount(tunnel);
+ 	WRITE_ONCE(session->tunnel, tunnel);
+-	list_add(&session->list, &tunnel->session_list);
++	list_add_rcu(&session->list, &tunnel->session_list);
+ 
+ 	if (tunnel->version == L2TP_HDR_VER_3) {
+ 		if (!other_session)
 -- 
 2.43.0
 
