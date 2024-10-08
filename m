@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565B01DDC24;
-	Tue,  8 Oct 2024 12:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62EE190663;
+	Tue,  8 Oct 2024 12:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391114; cv=none; b=ioRJ/Kx686F4sxuPyi+Wd3aH5CIczstEDteGCAVC/lyNVx3kVGMla9AM6eKDqYq4TzOTIpQdL38jPb8wWcimKzaOv8t6M4zwnYywFMWQKxOQxQ/O+FLkmgoLAlSUZACb4kOWG6mGZiX0OvnoTEjPpYelTvYBeXXdWaMEW10VeWQ=
+	t=1728391117; cv=none; b=eEcjnmqxh1cX63SHa7u8yW70ckiTSXFjJrMXeVeV5B505GdkrTnM0UoV1FR7v5nAYgYFp3SgWqTB/vYD1QQMKJ8JsIrl4vDCte713cnZSpO9K/TYAEW+Xbm394gn5tk2uxkUQXp6pz3wQLh/1pBVorH1xj5IajrM1KCTq69s53U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391114; c=relaxed/simple;
-	bh=vJQZ6zt1p4uuj8Z5femBQShRrDz4xpMmG/9KTwzaLOk=;
+	s=arc-20240116; t=1728391117; c=relaxed/simple;
+	bh=6LfyBdfai0A4pDQYPfZA2ASbw926mU3V92OTd3nmwLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEJ3jmSuXp0EDuhsLgJnFNBYgCahsDxjDigt49PxyYuzz1PUqlqDDSmgTeTSarIhM5sM4/ZLtU3ARA+tGAa0+1nVoMgihvMd/4KIo0wmvJ7U26fzfdcRbApuflWKm1l0bxi+3vvKEg+zqHxp/RlQnBWV2+xnV6RHQz3e1EPfZPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNLvHw9j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqBTq/839qz51ELHdkCfgXU0blod2Xq3e1fyegxea3Dg+70HHlPNOCPmNpeKXXRhg5VB7TN81W2o0/BY7oKnyNnq1/HndIq4WZ4YuAOBq9FX44Qx/07Tifc6Yd5lRAVoDO0qq2zeng3CJny9a3pk7QQlY2pgAkwkjfhqVMA1bF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR9+3Fh+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNLvHw9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8EC4CEC7;
-	Tue,  8 Oct 2024 12:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR9+3Fh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1B7C4CEC7;
+	Tue,  8 Oct 2024 12:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391113;
-	bh=vJQZ6zt1p4uuj8Z5femBQShRrDz4xpMmG/9KTwzaLOk=;
+	s=korg; t=1728391116;
+	bh=6LfyBdfai0A4pDQYPfZA2ASbw926mU3V92OTd3nmwLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNLvHw9jVXN7kfpVkKZu2cHwKnvqaSsrJkIvf0sz0mdKTt6bqeT9xBodqMZTuGixh
-	 PHlxzYF1j1Zw9a5okwPiqQ5RJhALIHKcagF5/DycjysGVMzq+BABtRoufZp2kAREZh
-	 dhlQEnDiESvFzlVRnP2pUXONlDHG6ambZ2SOrvwc=
+	b=tR9+3Fh+UnkQkov2Rt+odx0wCeXWNplFDyATgIuvLkOtDa/+q9BQOJXzuVh1IxpmZ
+	 6cKY1F+WHO6XVSXw0QnW9TcuAYXjSuELxwSPwshGZi+IF4Rms/qmGpz/i3BJ4sCCBQ
+	 6ITn0QrvQkJoDjSsFfPbmwpL30mdx0Fp+JM/E2A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Liao Chen <liaochen4@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 012/558] mailbox: ARM_MHU_V3 should depend on ARM64
-Date: Tue,  8 Oct 2024 14:00:42 +0200
-Message-ID: <20241008115702.705809192@linuxfoundation.org>
+Subject: [PATCH 6.11 013/558] mailbox: rockchip: fix a typo in module autoloading
+Date: Tue,  8 Oct 2024 14:00:43 +0200
+Message-ID: <20241008115702.744232945@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Liao Chen <liaochen4@huawei.com>
 
-[ Upstream commit 0e4ed48292c55eeb0afab22f8930b556f17eaad2 ]
+[ Upstream commit e92d87c9c5d769e4cb1dd7c90faa38dddd7e52e3 ]
 
-The ARM MHUv3 controller is only present on ARM64 SoCs.  Hence add a
-dependency on ARM64, to prevent asking the user about this driver when
-configuring a kernel for a different architecture than ARM64.
+MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match) could let the module
+properly autoloaded based on the alias from of_device_id table. It
+should be 'rockchip_mbox_of_match' instead of 'rockchp_mbox_of_match',
+just fix it.
 
-Fixes: ca1a8680b134b5e6 ("mailbox: arm_mhuv3: Add driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: f70ed3b5dc8b ("mailbox: rockchip: Add Rockchip mailbox driver")
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mailbox/rockchip-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
-index 4eed972959279..cbd9206cd7de3 100644
---- a/drivers/mailbox/Kconfig
-+++ b/drivers/mailbox/Kconfig
-@@ -25,6 +25,7 @@ config ARM_MHU_V2
+diff --git a/drivers/mailbox/rockchip-mailbox.c b/drivers/mailbox/rockchip-mailbox.c
+index 8ffad059e8984..4d966cb2ed036 100644
+--- a/drivers/mailbox/rockchip-mailbox.c
++++ b/drivers/mailbox/rockchip-mailbox.c
+@@ -159,7 +159,7 @@ static const struct of_device_id rockchip_mbox_of_match[] = {
+ 	{ .compatible = "rockchip,rk3368-mailbox", .data = &rk3368_drv_data},
+ 	{ },
+ };
+-MODULE_DEVICE_TABLE(of, rockchp_mbox_of_match);
++MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match);
  
- config ARM_MHU_V3
- 	tristate "ARM MHUv3 Mailbox"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on HAS_IOMEM || COMPILE_TEST
- 	depends on OF
- 	help
+ static int rockchip_mbox_probe(struct platform_device *pdev)
+ {
 -- 
 2.43.0
 
