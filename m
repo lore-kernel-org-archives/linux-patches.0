@@ -1,90 +1,100 @@
-Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C541D9A43
-	for <patches@lists.linux.dev>; Tue,  8 Oct 2024 13:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAEE1DE89A;
+	Tue,  8 Oct 2024 13:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394256; cv=none; b=OBoGZW49YBFQhRIROzYX0neHPbaKo2BslsZmrxDjF89aGewowz1ggcYqB8lhrxzei3rh75vPdQ72yZNXPiKwldr0QT34dynIrutSEYLm8oTzf4+O6yJmQjZZUZ6dEpxcJKMcn+FinjcRNuXq2rMxR7aJjPSS1NB5mX8CUyLCYZE=
+	t=1728394257; cv=none; b=cngTk+tw9drEDHUVfLeUtjPdWyO5KIvWWB2q0i2YtoRza9SxfGxu6Xv5jcnA3wu1pp+S2btnWlqId27wynb1Vq7gmmstW7+giqMEeDeST8LPwTBhfKsuSHiE98ZT1eBnUSPt/Xl84sfXaZuA7LFNYwAMygLQLN4Ipow1VXg95PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394256; c=relaxed/simple;
-	bh=vF11pzvR5dwQyWu0VtUt60c+6/yDKn7Ny1ltqg50KiI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=n/tg9gbPB0qdu7fLFF7VBknb73p1eyi5guSNLMiQhKUWqufBvIgoJG3Rg54NwrB5sV/KWztIVxdXgtA7i/z7ZNeBwCCJSL2r/DQg5tfImCZO43g8TBzhxClX4XJrr8WNE7lSrDe2+H580zZc1CJMsbmaKiFA51Cs83CjFeJRRjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=YbPX0ehB; arc=none smtp.client-ip=193.68.50.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+	s=arc-20240116; t=1728394257; c=relaxed/simple;
+	bh=o206EfaSPRrXzI+LR0e5yzNETS5afby1DvdIuxp+GgE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JoKRv/KmWXHabAITCLJKkAZHtFXYxxkGtcqexMFGGq8iXzoJ/BPDjnTGdzOfreAJtSHnnnJ0Xr/DaP8+Lq2/i4yC5o7vxb8ZAF9/QKawMpJlT+UPtChO8T3KlftwiFDdPonpnB33TEmwlEwNH5UvBQUpvhX0mpqrNSa3H45Ch3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkvIYHVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="YbPX0ehB"
-Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
-	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 61528A07D0;
-	Tue,  8 Oct 2024 15:30:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:from:from:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=mail; bh=tB9EDnGwWTC12u9P8tpr
-	ADElod0ztB5FhqWHXJ1bkcw=; b=YbPX0ehBCQVpB2hkDGBgOS7ypIFFBFq130jX
-	Xr7SU5vxAsvzzdt+4GRNeg/NEB4sr6qUVDNkrRC95Facxi9CHHNXUZkNxJHfsdtT
-	i7xtIEqn2G+GQjtQ6z7UXqqZbVeOYCFQYUZUXWxiaDWLBmV7PW1AO6woyiGMFXut
-	aRnlQUxG6+xby30WTQe31N1C03v8D20AwStqFlTL6Ze1rBf0DNoEkoBp6vPyyUV9
-	H2iVnmKovX8LeFuI4z1X3AHP+NedqAEUARPhP63WLz7juPxySUwfITxfOpKu/kOF
-	p9jJlvb8X89LOI0vcycLt2ty4Ks+H1f0qFB0U7TXxtWAKuVeDynYkOqmKRrb9dFh
-	GkQPeVeoNj0Ntm3rUI2UGzfcIv++TGP82Oj1+Xtj7S4Dy9NxvODjb4+L7pUqxhYN
-	jy+63jLikfA3maT1PusVuOptDf1tatfjBDrQuEa7aOKRg7FwhxyDTYqhNzgK5KmX
-	ikZJpq3xfGM6fn3bZez6RBUblZCrLb+zKyLulSM0ihmXXmGYAssq9C0OTyzvWBDy
-	wY7ZAovebJo7iP0996K02elYcqgbuSVP+Irc9vgjhZT2PpoihkV39BqsCvPE96QV
-	6VLtg6gRzFoZixfuXXjt3nWOQxOZ3M/cGRTyPW4zbtP5PAa9qU9gU5o9BU1l6EA6
-	qWIPnzc=
-Message-ID: <1af647ce-69e4-4f86-b0a5-6ac76ec25d12@prolan.hu>
-Date: Tue, 8 Oct 2024 15:30:51 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkvIYHVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB27C4CECF;
+	Tue,  8 Oct 2024 13:30:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1728394256;
+	bh=o206EfaSPRrXzI+LR0e5yzNETS5afby1DvdIuxp+GgE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DkvIYHVfaaV/kEHDYgPPrYsghrYdsgcfZMgrWCRqrrexIPdDB2F4JrH9tdqfiKx6A
+	 YDiXEkoCdV40q9RepH4GKgLN8y3G77GpgIe1fjT4aBzECp5DfdugkntIvBn1QdrdBI
+	 DQzp6HzfJ2tqHIpInqYK+5NLqRo+a6bmi5Yr7EkA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 358/386] r8169: Fix spelling mistake: "tx_underun" -> "tx_underrun"
+Date: Tue,  8 Oct 2024 14:10:03 +0200
+Message-ID: <20241008115643.470989198@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
+References: <20241008115629.309157387@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 028/386] net: fec: Restart PPS after link state change
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Paolo Abeni <pabeni@redhat.com>, Sasha Levin
-	<sashal@kernel.org>, Wei Fang <wei.fang@nxp.com>
-References: <20241008115629.309157387@linuxfoundation.org>
- <20241008115630.584472371@linuxfoundation.org>
-Content-Language: en-US
-From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
-In-Reply-To: <20241008115630.584472371@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
- ATLAS.intranet.prolan.hu (10.254.0.229)
-X-EsetResult: clean, is OK
-X-EsetId: 37303A2980D94855657D61
 
-Hi!
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-On 2024. 10. 08. 14:04, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Csókás, Bence <csokas.bence@prolan.hu>
-> 
-> [ Upstream commit a1477dc87dc4996dcf65a4893d4e2c3a6b593002 ]
-> 
-> On link state change, the controller gets reset,
-> causing PPS to drop out. Re-enable PPS if it was
-> enabled before the controller reset.
-> 
-> Fixes: 6605b730c061 ("FEC: Add time stamping code and a PTP hardware clock")
-> Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-> Link: https://patch.msgid.link/20240924093705.2897329-1-csokas.bence@prolan.hu
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+------------------
 
-There is a patch waiting to be merged that Fixes: this commit.
+From: Colin Ian King <colin.i.king@gmail.com>
 
-Link: 
-https://lore.kernel.org/netdev/20241008061153.1977930-1-wei.fang@nxp.com/
+[ Upstream commit 8df9439389a44fb2cc4ef695e08d6a8870b1616c ]
 
-Bence
+There is a spelling mistake in the struct field tx_underun, rename
+it to tx_underrun.
+
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20240909140021.64884-1-colin.i.king@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ced8e8b8f40a ("r8169: add tally counter fields added with RTL8125")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/ethernet/realtek/r8169_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 8a732edac15a0..382ba8b04cbfa 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -566,7 +566,7 @@ struct rtl8169_counters {
+ 	__le64	rx_broadcast;
+ 	__le32	rx_multicast;
+ 	__le16	tx_aborted;
+-	__le16	tx_underun;
++	__le16	tx_underrun;
+ };
+ 
+ struct rtl8169_tc_offsets {
+@@ -1726,7 +1726,7 @@ static void rtl8169_get_ethtool_stats(struct net_device *dev,
+ 	data[9] = le64_to_cpu(counters->rx_broadcast);
+ 	data[10] = le32_to_cpu(counters->rx_multicast);
+ 	data[11] = le16_to_cpu(counters->tx_aborted);
+-	data[12] = le16_to_cpu(counters->tx_underun);
++	data[12] = le16_to_cpu(counters->tx_underrun);
+ }
+ 
+ static void rtl8169_get_strings(struct net_device *dev, u32 stringset, u8 *data)
+-- 
+2.43.0
+
+
 
