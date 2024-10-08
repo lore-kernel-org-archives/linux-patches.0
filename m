@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3521DDC24;
-	Tue,  8 Oct 2024 12:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F2E1DC759;
+	Tue,  8 Oct 2024 12:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391338; cv=none; b=P9QnT8dOuskZkdzCyN3lkUWFYRNM9MILM8ZAggSHVqsZbQI4IEWR76x8jbGx9nRDZDd65+762hI4rKn2f3Wy9Rf7d19tOZ4dNOJVdGaGDHj9fzviQfjW6LfBrGz8lOrDcOtcKCOSKaKz9YdHfyUDLemy8/mKBRCENrzVHwU2QZo=
+	t=1728391341; cv=none; b=KDr08M00ScOHSbjkMjBnhIYPlOPxZoKCokByiPvl8mwO6mUr745DrMy8l04VVyjYmVAZgZn7ylXIHB45iZvCvERBC0Iz/LjKrMDROISt2iTsM2M80FS/bhazfrPl5P7zjCBeKPD3PLzogwvEmy2wOZh+EbOZ50Ayu3nXZc2R8K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391338; c=relaxed/simple;
-	bh=Avej4pBkmIfgWuxQIxhuVIWg9O6swJLHgfBX943MXas=;
+	s=arc-20240116; t=1728391341; c=relaxed/simple;
+	bh=HUauxSiFWIlJDj/OmV/BApRCWrkXBDwae5B1EIswLqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPjupwdzXNppE/Z+ZKWgqOihKDZ0NqWai/7hnQaOMB9FLHoTQWZotAoWopBWTi1v7i4aoyNFqjlzvKlJIHexDIsGLfjHtwLy2S/X/wSXHuMmJhwo1srg/kN8OPSkVABLJUb45VTnZfs8aVbF+p81cs+NWuKhvUbAKYPOLGky6Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMZCiJrN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqAvqluUXFWopfnMM5gACaGFu+NO4uuF1bE3XIaj/x0wcYQc1jCYUA8Sdz2L+SdnL89zvL9gnLQf44xRHGFN6zV56jKinXwtxBfaH9HpYiudSNfH5VUeocIhW/pmLHSKqBcNewRkPObCWn5/rUmnrs4UF4OemQizgNsSmypjPCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZcpu/c0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMZCiJrN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89432C4CEC7;
-	Tue,  8 Oct 2024 12:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZcpu/c0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD60C4CEC7;
+	Tue,  8 Oct 2024 12:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391337;
-	bh=Avej4pBkmIfgWuxQIxhuVIWg9O6swJLHgfBX943MXas=;
+	s=korg; t=1728391341;
+	bh=HUauxSiFWIlJDj/OmV/BApRCWrkXBDwae5B1EIswLqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMZCiJrNu6FkKIMVdvm1QHDQlfsyjwR0pSiUWZy0Z1x+WLt9Gz/4TXLVFfgSjvTTA
-	 43cte6+f5TSvXl+JOZlGx1DuD4zLrPNmAT4Jf15X3yrqqtiiIrbmzuVkemEKZKyU2T
-	 jGtr82ptsAGMEtQdyaztcS1et6wY8J/2YdCTI/IA=
+	b=RZcpu/c0zhg7KS7EqloDGXA33wuFI8ra9BFg+rcPkOuDwwmmQw7kwzYSfs0fskPAm
+	 vRhcknz+jw2GezeawjSVrwom5R3zNeABrnyTi1KBinmvW3fuXs0IGdiJcRLut+HThr
+	 LoiobsQIFSQ9NF6P+7tSLkP/3nzyWGnKdxh1l1j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	James Chapman <jchapman@katalix.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 083/558] e1000e: avoid failing the system during pm_suspend
-Date: Tue,  8 Oct 2024 14:01:53 +0200
-Message-ID: <20241008115705.640313682@linuxfoundation.org>
+Subject: [PATCH 6.11 084/558] l2tp: prevent possible tunnel refcount underflow
+Date: Tue,  8 Oct 2024 14:01:54 +0200
+Message-ID: <20241008115705.679363759@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,102 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: James Chapman <jchapman@katalix.com>
 
-[ Upstream commit 0a6ad4d9e1690c7faa3a53f762c877e477093657 ]
+[ Upstream commit 24256415d18695b46da06c93135f5b51c548b950 ]
 
-Occasionally when the system goes into pm_suspend, the suspend might fail
-due to a PHY access error on the network adapter. Previously, this would
-have caused the whole system to fail to go to a low power state.
-An example of this was reported in the following Bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=205015
+When a session is created, it sets a backpointer to its tunnel. When
+the session refcount drops to 0, l2tp_session_free drops the tunnel
+refcount if session->tunnel is non-NULL. However, session->tunnel is
+set in l2tp_session_create, before the tunnel refcount is incremented
+by l2tp_session_register, which leaves a small window where
+session->tunnel is non-NULL when the tunnel refcount hasn't been
+bumped.
 
-[ 1663.694828] e1000e 0000:00:19.0 eth0: Failed to disable ULP
-[ 1664.731040] asix 2-3:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0xC1E1
-[ 1665.093513] e1000e 0000:00:19.0 eth0: Hardware Error
-[ 1665.596760] e1000e 0000:00:19.0: pci_pm_resume+0x0/0x80 returned 0 after 2975399 usecs
+Moving the assignment to l2tp_session_register is trivial but
+l2tp_session_create calls l2tp_session_set_header_len which uses
+session->tunnel to get the tunnel's encap. Add an encap arg to
+l2tp_session_set_header_len to avoid using session->tunnel.
 
-and then the system never recovers from it, and all the following suspend failed due to this
-[22909.393854] PM: pci_pm_suspend(): e1000e_pm_suspend+0x0/0x760 [e1000e] returns -2
-[22909.393858] PM: dpm_run_callback(): pci_pm_suspend+0x0/0x160 returns -2
-[22909.393861] PM: Device 0000:00:1f.6 failed to suspend async: error -2
+If l2tpv3 sessions have colliding IDs, it is possible for
+l2tp_v3_session_get to race with l2tp_session_register and fetch a
+session which doesn't yet have session->tunnel set. Add a check for
+this case.
 
-This can be avoided by changing the return values of __e1000_shutdown and
-e1000e_pm_suspend functions so that they always return 0 (success). This
-is consistent with what other drivers do.
-
-If the e1000e driver encounters a hardware error during suspend, potential
-side effects include slightly higher power draw or non-working wake on
-LAN. This is preferred to a system-level suspend failure, and a warning
-message is written to the system log, so that the user can be aware that
-the LAN controller experienced a problem during suspend.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=205015
-Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: James Chapman <jchapman@katalix.com>
+Signed-off-by: Tom Parkin <tparkin@katalix.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ net/l2tp/l2tp_core.c    | 24 +++++++++++++++++-------
+ net/l2tp/l2tp_core.h    |  3 ++-
+ net/l2tp/l2tp_netlink.c |  4 +++-
+ net/l2tp/l2tp_ppp.c     |  3 ++-
+ 4 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 360ee26557f77..f103249b12fac 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6671,8 +6671,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 		if (adapter->flags2 & FLAG2_HAS_PHY_WAKEUP) {
- 			/* enable wakeup by the PHY */
- 			retval = e1000_init_phy_wakeup(adapter, wufc);
--			if (retval)
--				return retval;
-+			if (retval) {
-+				e_err("Failed to enable wakeup\n");
-+				goto skip_phy_configurations;
-+			}
- 		} else {
- 			/* enable wakeup by the MAC */
- 			ew32(WUFC, wufc);
-@@ -6693,8 +6695,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 			 * or broadcast.
- 			 */
- 			retval = e1000_enable_ulp_lpt_lp(hw, !runtime);
--			if (retval)
--				return retval;
-+			if (retval) {
-+				e_err("Failed to enable ULP\n");
-+				goto skip_phy_configurations;
-+			}
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 2e86f520f7994..a9cbcbc9d016d 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -254,7 +254,14 @@ struct l2tp_session *l2tp_v3_session_get(const struct net *net, struct sock *sk,
+ 
+ 		hash_for_each_possible_rcu(pn->l2tp_v3_session_htable, session,
+ 					   hlist, key) {
+-			if (session->tunnel->sock == sk &&
++			/* session->tunnel may be NULL if another thread is in
++			 * l2tp_session_register and has added an item to
++			 * l2tp_v3_session_htable but hasn't yet added the
++			 * session to its tunnel's session_list.
++			 */
++			struct l2tp_tunnel *tunnel = READ_ONCE(session->tunnel);
++
++			if (tunnel && tunnel->sock == sk &&
+ 			    refcount_inc_not_zero(&session->ref_count)) {
+ 				rcu_read_unlock_bh();
+ 				return session;
+@@ -482,6 +489,7 @@ int l2tp_session_register(struct l2tp_session *session,
+ 	}
+ 
+ 	l2tp_tunnel_inc_refcount(tunnel);
++	WRITE_ONCE(session->tunnel, tunnel);
+ 	list_add(&session->list, &tunnel->session_list);
+ 
+ 	if (tunnel->version == L2TP_HDR_VER_3) {
+@@ -797,7 +805,8 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ 		if (!session->lns_mode && !session->send_seq) {
+ 			trace_session_seqnum_lns_enable(session);
+ 			session->send_seq = 1;
+-			l2tp_session_set_header_len(session, tunnel->version);
++			l2tp_session_set_header_len(session, tunnel->version,
++						    tunnel->encap);
  		}
+ 	} else {
+ 		/* No sequence numbers.
+@@ -818,7 +827,8 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ 		if (!session->lns_mode && session->send_seq) {
+ 			trace_session_seqnum_lns_disable(session);
+ 			session->send_seq = 0;
+-			l2tp_session_set_header_len(session, tunnel->version);
++			l2tp_session_set_header_len(session, tunnel->version,
++						    tunnel->encap);
+ 		} else if (session->send_seq) {
+ 			pr_debug_ratelimited("%s: recv data has no seq numbers when required. Discarding.\n",
+ 					     session->name);
+@@ -1663,7 +1673,8 @@ EXPORT_SYMBOL_GPL(l2tp_session_delete);
+ /* We come here whenever a session's send_seq, cookie_len or
+  * l2specific_type parameters are set.
+  */
+-void l2tp_session_set_header_len(struct l2tp_session *session, int version)
++void l2tp_session_set_header_len(struct l2tp_session *session, int version,
++				 enum l2tp_encap_type encap)
+ {
+ 	if (version == L2TP_HDR_VER_2) {
+ 		session->hdr_len = 6;
+@@ -1672,7 +1683,7 @@ void l2tp_session_set_header_len(struct l2tp_session *session, int version)
+ 	} else {
+ 		session->hdr_len = 4 + session->cookie_len;
+ 		session->hdr_len += l2tp_get_l2specific_len(session);
+-		if (session->tunnel->encap == L2TP_ENCAPTYPE_UDP)
++		if (encap == L2TP_ENCAPTYPE_UDP)
+ 			session->hdr_len += 4;
  	}
- 
-@@ -6726,6 +6730,7 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 		hw->phy.ops.release(hw);
- 	}
- 
-+skip_phy_configurations:
- 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
- 	 * would have already happened in close and is redundant.
- 	 */
-@@ -6968,15 +6973,13 @@ static int e1000e_pm_suspend(struct device *dev)
- 	e1000e_pm_freeze(dev);
- 
- 	rc = __e1000_shutdown(pdev, false);
--	if (rc) {
--		e1000e_pm_thaw(dev);
--	} else {
-+	if (!rc) {
- 		/* Introduce S0ix implementation */
- 		if (adapter->flags2 & FLAG2_ENABLE_S0IX_FLOWS)
- 			e1000e_s0ix_entry_flow(adapter);
- 	}
- 
--	return rc;
-+	return 0;
  }
+@@ -1686,7 +1697,6 @@ struct l2tp_session *l2tp_session_create(int priv_size, struct l2tp_tunnel *tunn
+ 	session = kzalloc(sizeof(*session) + priv_size, GFP_KERNEL);
+ 	if (session) {
+ 		session->magic = L2TP_SESSION_MAGIC;
+-		session->tunnel = tunnel;
  
- static int e1000e_pm_resume(struct device *dev)
+ 		session->session_id = session_id;
+ 		session->peer_session_id = peer_session_id;
+@@ -1724,7 +1734,7 @@ struct l2tp_session *l2tp_session_create(int priv_size, struct l2tp_tunnel *tunn
+ 			memcpy(&session->peer_cookie[0], &cfg->peer_cookie[0], cfg->peer_cookie_len);
+ 		}
+ 
+-		l2tp_session_set_header_len(session, tunnel->version);
++		l2tp_session_set_header_len(session, tunnel->version, tunnel->encap);
+ 
+ 		refcount_set(&session->ref_count, 1);
+ 
+diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
+index 8ac81bc1bc6fa..6c25c196cc222 100644
+--- a/net/l2tp/l2tp_core.h
++++ b/net/l2tp/l2tp_core.h
+@@ -260,7 +260,8 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ int l2tp_udp_encap_recv(struct sock *sk, struct sk_buff *skb);
+ 
+ /* Transmit path helpers for sending packets over the tunnel socket. */
+-void l2tp_session_set_header_len(struct l2tp_session *session, int version);
++void l2tp_session_set_header_len(struct l2tp_session *session, int version,
++				 enum l2tp_encap_type encap);
+ int l2tp_xmit_skb(struct l2tp_session *session, struct sk_buff *skb);
+ 
+ /* Pseudowire management.
+diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
+index d105030520f95..fc43ecbd128cc 100644
+--- a/net/l2tp/l2tp_netlink.c
++++ b/net/l2tp/l2tp_netlink.c
+@@ -692,8 +692,10 @@ static int l2tp_nl_cmd_session_modify(struct sk_buff *skb, struct genl_info *inf
+ 		session->recv_seq = nla_get_u8(info->attrs[L2TP_ATTR_RECV_SEQ]);
+ 
+ 	if (info->attrs[L2TP_ATTR_SEND_SEQ]) {
++		struct l2tp_tunnel *tunnel = session->tunnel;
++
+ 		session->send_seq = nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]);
+-		l2tp_session_set_header_len(session, session->tunnel->version);
++		l2tp_session_set_header_len(session, tunnel->version, tunnel->encap);
+ 	}
+ 
+ 	if (info->attrs[L2TP_ATTR_LNS_MODE])
+diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
+index 3596290047b28..4f25c1212cacb 100644
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -1205,7 +1205,8 @@ static int pppol2tp_session_setsockopt(struct sock *sk,
+ 			po->chan.hdrlen = val ? PPPOL2TP_L2TP_HDR_SIZE_SEQ :
+ 				PPPOL2TP_L2TP_HDR_SIZE_NOSEQ;
+ 		}
+-		l2tp_session_set_header_len(session, session->tunnel->version);
++		l2tp_session_set_header_len(session, session->tunnel->version,
++					    session->tunnel->encap);
+ 		break;
+ 
+ 	case PPPOL2TP_SO_LNSMODE:
 -- 
 2.43.0
 
