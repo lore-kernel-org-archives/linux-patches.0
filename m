@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF38318C333;
-	Tue,  8 Oct 2024 13:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18AA18C333;
+	Tue,  8 Oct 2024 13:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394251; cv=none; b=CSZb7g/rXwKQeuc5aS1dPCSaqwy0940r5nyRmHkbNV1FTKEpCFQ2bZJyxEQNVOuJ39cSxaYNHoUFZRohablfCJQ+6D+CoNONNpNgN59b3zz9sdGaUZQKHp563HiiNoUdvwMaxqpEpg522ebkQBtYSlcg8fW188wAh1kPX+a53XU=
+	t=1728394253; cv=none; b=sEuQVushjxK86yAy5Wv6ET/uc+X5JUujkh+bC77rX0MeB1YTdVnnyo31wnr8EhsfoOMdvoZAowDpFeq/EhmgzuPHUlqy0PpeemLW0ID9A/mAzsif5Sy1M06QNXetp/Taq3swxrT38xgYgIiBIw29kmia2RqRTiVHkjG8vwUklz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394251; c=relaxed/simple;
-	bh=rYjgt6DVsymNe9Imov7JnM9+Vc6IKcJ+A+UqK2KBM8Q=;
+	s=arc-20240116; t=1728394253; c=relaxed/simple;
+	bh=kiCIkIdp5/d9jIjTE5hH3mDM2rEGxTLv/p8Gc5MjFEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h74LqbTV0EwXFw/T9jQOQCZc9xeJvsU4TM3CR9QZXG+q7HGqVrVu+GvpEH2fojmIZZkIs7B4S0FnJJYvyczJNOyAMA2yDv5yBUtm3ucrfGd1NPtsWOVbldxw4u+4OJgyhWI1MNdscnSRTc2nMPLSDUmHkKQjgMlkgy7CYd+oSX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uruerUfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxS1p/aKXx0te6RAx+W5LOnjqKmN68lQzQWd/vRddvjXO8WMq2VhcGqqDX6AaLAQW541fc7mWjQvHmIzQ3+oRYtOCVHsKcRFgC1kZQvkGMn9umU5Q9crbQ2P2LTBTzL/PBPZ6t3ibUBvppdN9Sbo1DsVT/wJZSyw8eO4n7UYcTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dtu6JTFh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uruerUfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B02BC4CECD;
-	Tue,  8 Oct 2024 13:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dtu6JTFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47798C4CEC7;
+	Tue,  8 Oct 2024 13:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394250;
-	bh=rYjgt6DVsymNe9Imov7JnM9+Vc6IKcJ+A+UqK2KBM8Q=;
+	s=korg; t=1728394253;
+	bh=kiCIkIdp5/d9jIjTE5hH3mDM2rEGxTLv/p8Gc5MjFEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uruerUfOsRIwY2RG3PIgP1fOQgePUODwCg4Yzl4+eB4REwlAXYkZJu1cp4LXtCdJ3
-	 NKJKr7Qmn/E2p9ZHdbwyIHjbcGPP/Y5xGDPLaBk3nWzaRA4xPSk3g0j2pnSWf95rnI
-	 7kUfDTPSoWqjxQi6YjfzBklfDqIcG9OijNy2KVhU=
+	b=Dtu6JTFhYMz124Hjfh1K2XzQO1xa0HJYBDJ16cCR61IOtTAXogB0W6FlFL4tj2bZK
+	 qHR+WmSvRjvN/iZwaFS2Kasnmq1lFIxPmVj+Eg5HQJdPoGLpMsj4qB2niF+pih4CUN
+	 aaiHcYQ1jvGabrpjhYucGmQDe6ca6OHzvmrW9OjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.6 366/386] drm/rockchip: vop: enable VOP_FEATURE_INTERNAL_RGB on RK3066
-Date: Tue,  8 Oct 2024 14:10:11 +0200
-Message-ID: <20241008115643.787374832@linuxfoundation.org>
+	Jonathan Gray <jsg@jsg.id.au>
+Subject: [PATCH 6.6 367/386] Revert "drm/amd/display: Skip Recompute DSC Params if no Stream on Link"
+Date: Tue,  8 Oct 2024 14:10:12 +0200
+Message-ID: <20241008115643.826879686@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -50,31 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Jonathan Gray <jsg@jsg.id.au>
 
-commit 6ed51ba95e27221ce87979bd2ad5926033b9e1b9 upstream.
+This reverts commit a53841b074cc196c3caaa37e1f15d6bc90943b97.
 
-The RK3066 does have RGB display output, so it should be marked as such.
+duplicated a change made in 6.6.46
+718d83f66fb07b2cab89a1fc984613a00e3db18f
 
-Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Val Packett <val@packett.cool>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-3-val@packett.cool
+Cc: stable@vger.kernel.org # 6.6
+Signed-off-by: Jonathan Gray <jsg@jsg.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_vop_reg.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-@@ -484,6 +484,7 @@ static const struct vop_data rk3066_vop
- 	.output = &rk3066_output,
- 	.win = rk3066_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3066_vop_win_data),
-+	.feature = VOP_FEATURE_INTERNAL_RGB,
- 	.max_output = { 1920, 1080 },
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1269,9 +1269,6 @@ static bool is_dsc_need_re_compute(
+ 	if (new_stream_on_link_num == 0)
+ 		return false;
  
+-	if (new_stream_on_link_num == 0)
+-		return false;
+-
+ 	/* check current_state if there stream on link but it is not in
+ 	 * new request state
+ 	 */
 
 
