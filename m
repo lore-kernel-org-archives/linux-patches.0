@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DCE3C0C;
-	Tue,  8 Oct 2024 04:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBAD3C0C;
+	Tue,  8 Oct 2024 04:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728361355; cv=none; b=ZwL8Rjk/ptJ3jJYtaQHbqKPFyYuQNmB2s3eLNHmoBpUXL6H25RwrQyCAj3DAQQ5AP9QtmEo78x8LL9NFB5FbvdFpipalfaWCderWc9NPXPheF0cOKAj4csb7fF3aLk3LMV79D4R+D5dHHPBETwnhsz7ysykaSWiFtMCQuNprUuU=
+	t=1728361356; cv=none; b=AsvgOCIdIbknMJ4mwBbX88X9YcogZ+Fs+OFgbeVmvvBODg6HzppemhhOhQ8sm7EhyfLANYbRx0inZbcSXqJGm6t0sm+nBIr1k6c2yC9OtyzPs19s3tqZj6eHgGpsaPTQ+S3o638aflNOFM789jdCw2esqPz3hBYnM632wUbvAlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728361355; c=relaxed/simple;
-	bh=CQpN5id32lq/DGrce8Pbuy5QP+ZsBWS9RkPNDANX6pw=;
+	s=arc-20240116; t=1728361356; c=relaxed/simple;
+	bh=bAbqiY32v7W3t8ENtyeNXoNDZoMAvxzj5ilcMrs030c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=vGmyRPlvWYDgeDt+YqKKroY3r0ceIVWDJvy6B3klly9QVSYq8heV1QdTVEmxe8v9ob+H1doTJ+eWB61ermWRPL3+QNlS8lEj22kBz4wu5+myBileeucsbWwUHYk2P5beMiMPM1u2eju6TPSlFqxlYKtLPWG2S30Vdiro6vGhOSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fgj7pJKt; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=adebmNvh+QE0NmyQadQyFXFw9uSGw8bx9heCom+n1mqVeg7mP520W97q7+Gf6G2ol5nbtT8NoWbjDmi30sSb/nANyuglvBfLYgDiwHAol4wJ3gAVCYGQLClWnXkWmrTSD6m9F4NoXt+Gox17y7CyjxzVx9VZfy6wx2LWz9osFvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t3/ahgYV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fgj7pJKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BF8C4CED1;
-	Tue,  8 Oct 2024 04:22:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t3/ahgYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB305C4CED2;
+	Tue,  8 Oct 2024 04:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728361354;
-	bh=CQpN5id32lq/DGrce8Pbuy5QP+ZsBWS9RkPNDANX6pw=;
+	s=k20201202; t=1728361355;
+	bh=bAbqiY32v7W3t8ENtyeNXoNDZoMAvxzj5ilcMrs030c=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Fgj7pJKtimCDmlvDt49Vq++mtqYmEG0QETyNzqgwVWrlPznHZLVLNcewsCCjigoAQ
-	 i2o1nlN7ZmN/do38C9SVxcErFNEYE6IIFFCLvP5bkjkpINwHiAQJtzs2TUCqcsjgfs
-	 me9TBp291n1J6pVoCvqcT/SY0evtCjeLWSDVgZIpg4ay3jg3T3T5Qhqp48716Vjk3W
-	 WonNEeVsdbW5i/JsiuDtOn4SuC6hinbvDvRsEwV4EE9Rg94awK6OyK3sYhis/bi5Wl
-	 mkvAIvvPOV/bCHnLCstiawrOb4iCV7JsHwPuL8RinrtKWqFH9/ddVOdw0d0nkN6wfY
-	 rNgoVftm09B6w==
+	b=t3/ahgYVqgrS38jTqFNgc4fqiVpnurVgv7wdV6tqQRLfO7qvLMVz/7HLUQEjwaGSS
+	 BrH6ux0hqBACdDo/ySV/ZL1EPbXzCKuE0y1vlU2oa/hJ2+TYT2htjJjqpefPlPGQE2
+	 dz8pJOXGC4K2WfR7KuwEtijLlDKdf1fMtvNfjRsdTGUrbGHEiyE4nq5R41z0XBPKmu
+	 do24h94dnGGpwSgvp05yfu1wO4FRzoSl/6PKwk9WAy26j7N/nbsqP37uHAR3d6Quqe
+	 ntFoT95EOKIUlAmr4kYeRQqKyy6ZlA2maqw3uOwB4GG3rLe09NDtZ1P36wmQfoyzW1
+	 +ZuZCUZyDyLnQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 07 Oct 2024 21:22:04 -0700
-Subject: [PATCH 2/3] powerpc: Adjust adding stack protector flags to
- KBUILD_CLAGS for clang
+Date: Mon, 07 Oct 2024 21:22:05 -0700
+Subject: [PATCH 3/3] powerpc: Include -m32 / -m64 for stack protector
+ Kconfig test
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241007-powerpc-fix-stackprotector-test-clang-v1-2-08c15b2694e4@kernel.org>
+Message-Id: <20241007-powerpc-fix-stackprotector-test-clang-v1-3-08c15b2694e4@kernel.org>
 References: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
 In-Reply-To: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
 To: Michael Ellerman <mpe@ellerman.id.au>
@@ -51,70 +51,52 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  llvm@lists.linux.dev, patches@lists.linux.dev, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2742; i=nathan@kernel.org;
- h=from:subject:message-id; bh=CQpN5id32lq/DGrce8Pbuy5QP+ZsBWS9RkPNDANX6pw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOksm9tfNopN8Alwn7wrreFtwtNGlX+XM+K/cOQn+vrbf
- lAvDb3ZUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACayO5Hhn4bRwTNsT95yL/A1
- mTj3sNDLlOkRln/F++1OaVWFvt7zXp+RYdti9qpJ9xZLLNPsX7kqMn9LQ9oPLfYPZm9ChPom1Mg
- nsgAA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2034; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=bAbqiY32v7W3t8ENtyeNXoNDZoMAvxzj5ilcMrs030c=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOksmzucbknsuGt+8vSkpw9S2TY0XJnaPEcpIde+44/In
+ fK5QYyXO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEgpwZGZ6muuw0WezcPZ9L
+ 4eDcpKkP/Z/8mlBQdP7s3s2XK/Z9ZrrKyHBSxuZRVOVcpsAdYnrzpq90udaXoT8pq9th+pWNi/1
+ q3/MDAA==
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-After fixing the HAVE_STACKPROTECTER checks for clang's in-progress
-per-task stack protector support [1], the build fails during prepare0
-because '-mstack-protector-guard-offset' has not been added to
-KBUILD_CFLAGS yet but the other '-mstack-protector-guard' flags have.
+Kbuild uses the powerpc64le-linux-gnu target for clang, which causes the
+Kconfig check for 32-bit powerpc stack protector support to fail because
+nothing flips the target to 32-bit:
 
-  clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
-  clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
-  make[4]: *** [scripts/Makefile.build:229: scripts/mod/empty.o] Error 1
-  make[4]: *** [scripts/Makefile.build:102: scripts/mod/devicetable-offsets.s] Error 1
+  $ clang --target=powerpc64le-linux-gnu \
+          -mstack-protector-guard=tls
+          -mstack-protector-guard-reg=r2 \
+          -mstack-protector-guard-offset=0 \
+          -x c -c -o /dev/null /dev/null
+  clang: error: invalid value 'r2' in 'mstack-protector-guard-reg=', expected one of: r13
 
-Mirror other architectures and add all '-mstack-protector-guard' flags
-to KBUILD_CFLAGS atomically during stack_protector_prepare, which
-resolves the issue and allows clang's implementation to fully work with
-the kernel.
+Use the Kconfig macro '$(m32-flag)', which expands to '-m32' when
+supported, in the stack protector support cc-option call to properly
+switch the target to a 32-bit one, which matches what happens in Kbuild.
+While the 64-bit macro does not strictly need it, add the equivalent
+64-bit option for symmetry.
 
-Link: https://github.com/llvm/llvm-project/pull/110928 [1]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/powerpc/Makefile | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ arch/powerpc/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index bbfe4a1f06ef9db9b2f2e48e02096b1e0500a14b..8f9e387c4c7dd06d8756dca3eac808cc344a937d 100644
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -100,13 +100,6 @@ KBUILD_AFLAGS	+= -m$(BITS)
- KBUILD_LDFLAGS	+= -m elf$(BITS)$(LDEMULATION)
- endif
- 
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard=tls
--ifdef CONFIG_PPC64
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard-reg=r13
--else
--cflags-$(CONFIG_STACKPROTECTOR)	+= -mstack-protector-guard-reg=r2
--endif
--
- LDFLAGS_vmlinux-y := -Bstatic
- LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) := -pie
- LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) += -z notext
-@@ -402,9 +395,13 @@ prepare: stack_protector_prepare
- PHONY += stack_protector_prepare
- stack_protector_prepare: prepare0
- ifdef CONFIG_PPC64
--	$(eval KBUILD_CFLAGS += -mstack-protector-guard-offset=$(shell awk '{if ($$2 == "PACA_CANARY") print $$3;}' include/generated/asm-offsets.h))
-+	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls \
-+				-mstack-protector-guard-reg=r13 \
-+				-mstack-protector-guard-offset=$(shell awk '{if ($$2 == "PACA_CANARY") print $$3;}' include/generated/asm-offsets.h))
- else
--	$(eval KBUILD_CFLAGS += -mstack-protector-guard-offset=$(shell awk '{if ($$2 == "TASK_CANARY") print $$3;}' include/generated/asm-offsets.h))
-+	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls \
-+				-mstack-protector-guard-reg=r2 \
-+				-mstack-protector-guard-offset=$(shell awk '{if ($$2 == "TASK_CANARY") print $$3;}' include/generated/asm-offsets.h))
- endif
- endif
- 
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index eb98050b8c016bb23887a9d669d29e69d933c9c8..6aaca48955a34b2a38af1415bfa36f74f35c3f3e 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -275,8 +275,8 @@ config PPC
+ 	select HAVE_RSEQ
+ 	select HAVE_SETUP_PER_CPU_AREA		if PPC64
+ 	select HAVE_SOFTIRQ_ON_OWN_STACK
+-	select HAVE_STACKPROTECTOR		if PPC32 && $(cc-option,-mstack-protector-guard=tls -mstack-protector-guard-reg=r2 -mstack-protector-guard-offset=0)
+-	select HAVE_STACKPROTECTOR		if PPC64 && $(cc-option,-mstack-protector-guard=tls -mstack-protector-guard-reg=r13 -mstack-protector-guard-offset=0)
++	select HAVE_STACKPROTECTOR		if PPC32 && $(cc-option,$(m32-flag) -mstack-protector-guard=tls -mstack-protector-guard-reg=r2 -mstack-protector-guard-offset=0)
++	select HAVE_STACKPROTECTOR		if PPC64 && $(cc-option,$(m64-flag) -mstack-protector-guard=tls -mstack-protector-guard-reg=r13 -mstack-protector-guard-offset=0)
+ 	select HAVE_STATIC_CALL			if PPC32
+ 	select HAVE_SYSCALL_TRACEPOINTS
+ 	select HAVE_VIRT_CPU_ACCOUNTING
 
 -- 
 2.47.0
