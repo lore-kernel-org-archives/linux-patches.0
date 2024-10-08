@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1C91D12EA;
-	Tue,  8 Oct 2024 12:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB1E1D12EA;
+	Tue,  8 Oct 2024 12:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390004; cv=none; b=OhVBmShJ9tPO63Awqh6CHQ/YaxtCxjdw5Waf+GLb8K0rADd1EuGYSWckJ/D1y4D6AZbGWAKv4QsBS6fZJVF/C1vzdwjIOqqu/2NDHYYrqxxNGevYyPCJ0W8mLuNetZBv7niQqBa0Q1STh+c+1Qc4epw0mwJywEiLH8PGW/ZE+fY=
+	t=1728390008; cv=none; b=i1EWnC2GqF0jtkCE0Z3ejTXgJkR/wvky95FKS4GbBjnbZYH5IrpU2MB8e4VwaK5wIs2nVNT7p2yEcLKIkGjNsknyb64Vl2dDm2HvkLR3wgb29Tnzt97RoPiMf1WOpz3ObTbWRTm1uHh3EliN1O9SuqM993OG2I6deMr2ZeU6nDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390004; c=relaxed/simple;
-	bh=M7J3qIkgPL4C2a+C2gOGzE6hNkzHKxf3v7bHPm55cMA=;
+	s=arc-20240116; t=1728390008; c=relaxed/simple;
+	bh=/sHYXPQFbl4i31N9zRZj6PyuahY1VKyYfpPjd/T35O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9oR4Qn3xmjJ3QQmsJzzHZHbM2w5lpUSRsuVK9Rb8EOkUjIN96U2UyOrTRdYX/sQDb31lTbgcso3R7PlVTamL2EZlKfIJzphBF4YFSejxPyW1G1OfYnloxQYsQrZnT/JqOWv3Zv6tKkreaEoRriSRTN/musxISU43T5D4ngNFic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbU2Ywuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2oGgpXJx44YX3cx4g0kbmNRl+sM2rVt0YtTg/Zgc8dSlxk2pnPT2V7AZC5Q+MwVLscofTXuS/+9jeDPR7iOrUNdhVVFyXGSvrnWElAqpTd4qtzYNBF53fsY4xIqo3Xq3a3ZdRU6sclBjKvGNOFfNuH383Hvyrfnm3fEc/4zD7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLCfYSrE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbU2Ywuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4737C4CECD;
-	Tue,  8 Oct 2024 12:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLCfYSrE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640A3C4CEC7;
+	Tue,  8 Oct 2024 12:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390004;
-	bh=M7J3qIkgPL4C2a+C2gOGzE6hNkzHKxf3v7bHPm55cMA=;
+	s=korg; t=1728390007;
+	bh=/sHYXPQFbl4i31N9zRZj6PyuahY1VKyYfpPjd/T35O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbU2YwuolfFHHtZhiXVImqYQnjEyzXHD0RLx3pQqhFsmZaKdLByx8RNm9IAF+vZrQ
-	 7eX7AjTZ0vu6esiNgO/Ih//i26qc0+SZpbk0VwYv+F5aOrk/anlsIKdEhInTq6mohs
-	 ZP9NWjvB+yx/S3jiAOiL/T5EXffcd3DBMJWrPe4I=
+	b=nLCfYSrETZroqjC/WW4CKPX7gDJ4SSPWAv8H4/KlEdiCQq0Up4nkDb2kUM2rbIZ2k
+	 TUYYMDVv5NEdjEmBrASgQfkj6KtR1v3oGdLyPleQbg2MFEylfBPV2dh6PbvQIKAdfq
+	 0jAYC7uEIoI73YGcrqPrd8d6bTx/vdxChbzdeIfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 120/482] ACPICA: iasl: handle empty connection_node
-Date: Tue,  8 Oct 2024 14:03:03 +0200
-Message-ID: <20241008115653.029246643@linuxfoundation.org>
+Subject: [PATCH 6.10 155/482] ALSA: hdsp: Break infinite MIDI input flush loop
+Date: Tue,  8 Oct 2024 14:03:38 +0200
+Message-ID: <20241008115654.406096098@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,34 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a0a2459b79414584af6c46dd8c6f866d8f1aa421 ]
+[ Upstream commit c01f3815453e2d5f699ccd8c8c1f93a5b8669e59 ]
 
-ACPICA commit 6c551e2c9487067d4b085333e7fe97e965a11625
+The current MIDI input flush on HDSP and HDSPM drivers relies on the
+hardware reporting the right value.  If the hardware doesn't give the
+proper value but returns -1, it may be stuck at an infinite loop.
 
-Link: https://github.com/acpica/acpica/commit/6c551e2c
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Add a counter and break if the loop is unexpectedly too long.
+
+Link: https://patch.msgid.link/20240808091513.31380-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/exprep.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/rme9652/hdsp.c  | 6 ++++--
+ sound/pci/rme9652/hdspm.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpica/exprep.c b/drivers/acpi/acpica/exprep.c
-index 08196fa17080e..82b1fa2d201fe 100644
---- a/drivers/acpi/acpica/exprep.c
-+++ b/drivers/acpi/acpica/exprep.c
-@@ -437,6 +437,9 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
+diff --git a/sound/pci/rme9652/hdsp.c b/sound/pci/rme9652/hdsp.c
+index e7d1b43471a29..713ca262a0e97 100644
+--- a/sound/pci/rme9652/hdsp.c
++++ b/sound/pci/rme9652/hdsp.c
+@@ -1298,8 +1298,10 @@ static int snd_hdsp_midi_output_possible (struct hdsp *hdsp, int id)
  
- 		if (info->connection_node) {
- 			second_desc = info->connection_node->object;
-+			if (second_desc == NULL) {
-+				break;
-+			}
- 			if (!(second_desc->common.flags & AOPOBJ_DATA_VALID)) {
- 				status =
- 				    acpi_ds_get_buffer_arguments(second_desc);
+ static void snd_hdsp_flush_midi_input (struct hdsp *hdsp, int id)
+ {
+-	while (snd_hdsp_midi_input_available (hdsp, id))
+-		snd_hdsp_midi_read_byte (hdsp, id);
++	int count = 256;
++
++	while (snd_hdsp_midi_input_available(hdsp, id) && --count)
++		snd_hdsp_midi_read_byte(hdsp, id);
+ }
+ 
+ static int snd_hdsp_midi_output_write (struct hdsp_midi *hmidi)
+diff --git a/sound/pci/rme9652/hdspm.c b/sound/pci/rme9652/hdspm.c
+index 267c7848974ae..74215f57f4fc9 100644
+--- a/sound/pci/rme9652/hdspm.c
++++ b/sound/pci/rme9652/hdspm.c
+@@ -1838,8 +1838,10 @@ static inline int snd_hdspm_midi_output_possible (struct hdspm *hdspm, int id)
+ 
+ static void snd_hdspm_flush_midi_input(struct hdspm *hdspm, int id)
+ {
+-	while (snd_hdspm_midi_input_available (hdspm, id))
+-		snd_hdspm_midi_read_byte (hdspm, id);
++	int count = 256;
++
++	while (snd_hdspm_midi_input_available(hdspm, id) && --count)
++		snd_hdspm_midi_read_byte(hdspm, id);
+ }
+ 
+ static int snd_hdspm_midi_output_write (struct hdspm_midi *hmidi)
 -- 
 2.43.0
 
