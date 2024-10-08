@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C9D1E0DD0;
-	Tue,  8 Oct 2024 13:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C71E0DFE;
+	Tue,  8 Oct 2024 13:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393825; cv=none; b=oZzAJrS72uGHaS1XQHS4dHqi0e/HU+GuVh5j+2axgw7eTyBVH+PvL22M0+8lSSkEJvv+/c7Hd8yRSJ4mtu3mzuOEd/+2lDyDtESsvaEP5wwrQKZbk2RacGMyccgQotrs1MHZGHdq+12Z2Z6AYj1aRWG0z/DTFP607xCWQLdjfHw=
+	t=1728393829; cv=none; b=AIh8P8lsndLK9gTWz0xozD5E/kkAZ0oIBDf/DlVPUK+co8q58Sj0ulToQ+TGcIi8ytl/k0X8rScGfYQShr1nhUOnxIDuwSfESWoL+4PMvcJmv/rMxjazEV2VSdtnnm7/YqJJXRj1bpoKO+n4X9HzqnKharUX5Lr+u/0Q8lYrp18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393825; c=relaxed/simple;
-	bh=52iLaCNJbXQHe1W2rNdAljb4KIhESjy8ieChlExAR04=;
+	s=arc-20240116; t=1728393829; c=relaxed/simple;
+	bh=VI+JN1XYTgd+rFKLLWgcU7w6xx2kACg63qiUsH4iClU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdMN/dqxqHnINl8XtYQIi5kk1nzh6Qnl3KcpUwdxO38dYjDSJSV7YSIZUz3hVCjXT44wOaJLp2eDJBTPeT473Sfvxj4CDB+fxSSasRTNFIVT2OWxgiYqhoGowBceJRY6gVHx0AYY5ZhGufgfOW1zxrMVb9ZKRlwoubuVT2W1/4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ihk97R0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HldX6wt4qx5PKl+339Nsh/biAewZrJEuVuJgUET0T72HHWpSCQk4z+MjKaXHbQkZrijxGNkmIo1P8q3Fc51gMOm6kl1Qc7Gpd/0uVtaPy78IT0xR1cHRqtYjQ16q2UJw4rOv/OA4Nl7afe03w+KhXs3rTiYyrX+/GHC7bsyv5vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYHfRFko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ihk97R0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D21C4CED9;
-	Tue,  8 Oct 2024 13:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYHfRFko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6BBC4CECC;
+	Tue,  8 Oct 2024 13:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393824;
-	bh=52iLaCNJbXQHe1W2rNdAljb4KIhESjy8ieChlExAR04=;
+	s=korg; t=1728393828;
+	bh=VI+JN1XYTgd+rFKLLWgcU7w6xx2kACg63qiUsH4iClU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ihk97R0UlUJPfY3xISFadcSqyvf7M3KnF7BRoPIXG0fsCTVNHHnaCfhh2yzIa60l3
-	 p/V36wzyTsgeZ3PfzSbl/7qlauDRDXh5LT+bcihHGqjxTodDdwVmcHMz+j1tYddGUq
-	 Rx8zB3ZcijWH3GWBw5g6d1wtRQtbzH0RKxnofouY=
+	b=QYHfRFkoIEs7L8I0/ZyCfP4RFiC346V0Sr+0qEg8mjIzjh/dXKPn2EAehKzVQ8uRU
+	 PWFOUbY6Hsoue82RuSqF2vh6OSsW+tHKQ2WjczHXaihzWpjqpMsf86F/2zN3bhqtzq
+	 Tt/RAjQTDdR5dMpDHlR+nmkXyvTrcLxQpE3qi1Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James More <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 267/386] arm64: Subscribe Microsoft Azure Cobalt 100 to erratum 3194386
-Date: Tue,  8 Oct 2024 14:08:32 +0200
-Message-ID: <20241008115639.898438202@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.6 268/386] riscv: define ILLEGAL_POINTER_VALUE for 64bit
+Date: Tue,  8 Oct 2024 14:08:33 +0200
+Message-ID: <20241008115639.937930116@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -53,44 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit 3eddb108abe3de6723cc4b77e8558ce1b3047987 upstream.
+commit 5c178472af247c7b50f962495bb7462ba453b9fb upstream.
 
-Add the Microsoft Azure Cobalt 100 CPU to the list of CPUs suffering
-from erratum 3194386 added in commit 75b3c43eab59 ("arm64: errata:
-Expand speculative SSBS workaround")
+This is used in poison.h for poison pointer offset. Based on current
+SV39, SV48 and SV57 vm layout, 0xdead000000000000 is a proper value
+that is not mappable, this can avoid potentially turning an oops to
+an expolit.
 
-CC: Mark Rutland <mark.rutland@arm.com>
-CC: James More <james.morse@arm.com>
-CC: Will Deacon <will@kernel.org>
-CC: stable@vger.kernel.org # 6.6+
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20241003225239.321774-1-eahariha@linux.microsoft.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Fixes: fbe934d69eb7 ("RISC-V: Build Infrastructure")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240705170210.3236-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arch/arm64/silicon-errata.rst |    2 ++
- arch/arm64/kernel/cpu_errata.c              |    1 +
- 2 files changed, 3 insertions(+)
+ arch/riscv/Kconfig |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/Documentation/arch/arm64/silicon-errata.rst
-+++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -280,3 +280,5 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | Microsoft      | Azure Cobalt 100| #2253138        | ARM64_ERRATUM_2253138       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| Microsoft      | Azure Cobalt 100| #3324339        | ARM64_ERRATUM_3194386       |
-++----------------+-----------------+-----------------+-----------------------------+
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -463,6 +463,7 @@ static const struct midr_range erratum_s
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X3),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X4),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X925),
-+	MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -259,6 +259,11 @@ config GENERIC_HWEIGHT
+ config FIX_EARLYCON_MEM
+ 	def_bool MMU
+ 
++config ILLEGAL_POINTER_VALUE
++	hex
++	default 0 if 32BIT
++	default 0xdead000000000000 if 64BIT
++
+ config PGTABLE_LEVELS
+ 	int
+ 	default 5 if 64BIT
 
 
