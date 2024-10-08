@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DAC1DED43;
-	Tue,  8 Oct 2024 12:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C721DA60C;
+	Tue,  8 Oct 2024 12:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391086; cv=none; b=Vns+F0ZcG0JWaJGAQABhLoIPqpuAr19yFGv2CB6MAMV89Fyb0bMWZ5wq42ScNTSAp9FwLcJ8RWhuzRgCkjjl+A6JRdFzkngaL6HfLIuIgWEl/oTiRBWofKWAnZrTyktTP7uIMP/8R+MyFPogx57SlXvZQE09v/iKJu7qi+bbDMs=
+	t=1728391089; cv=none; b=AL++yaFZjtUxmZoMpNPcp883atHb+tRrY3YkoRCncrFE59CoJzIhlieNeUQqSTfXp5uBWomEChQdZ7jBYJagPY5+F8mZfURZYG6jeFmJ0t4GmHuxERgAQJh4vMUWxWcgbDXcZvj1vqteA0hti1qONC+8/RwgzrmiOk7Z4SVgy6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391086; c=relaxed/simple;
-	bh=9SH9NpDlGy6Ww6kFVP5Bact79L+b0yxYufZyjRr526o=;
+	s=arc-20240116; t=1728391089; c=relaxed/simple;
+	bh=FJkxiVFIYfA1BW22HabTO4WD45/MiuO1dQ/gdg4BW/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AR4HajDTWNYravw9ISnQKKARdg91O+P9tdBy2VzNuvbsJHCs8znO5We6+X30uOdL3N3sMv9ImiOBklRfSjiWGPcaEVEfyRS1QTA7YlKpQG6xWGneyqRO30rxkdevirPJYFdf/RP2opWWIiiHbYT9oxbRA/4HW5bS8l721+smYio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvEVTSbM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fIJrpMscGBRUo9WeqkKgpwmxR75UYzG12GsScUyMIJz/gMfhOuy1JkwgybPeCMOttt+dVR4d3odhIBXA13DOo9GT8hDiRJC93rES/SPAkdU8iZA79RdPlmwIPubUflmA0Kx3tcW+4RAZU/FLuTCRpAKfWOaKGIFnId3PSIT9IEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZHDWnhf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvEVTSbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3ECBC4CEC7;
-	Tue,  8 Oct 2024 12:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZHDWnhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2DBC4CEC7;
+	Tue,  8 Oct 2024 12:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391086;
-	bh=9SH9NpDlGy6Ww6kFVP5Bact79L+b0yxYufZyjRr526o=;
+	s=korg; t=1728391089;
+	bh=FJkxiVFIYfA1BW22HabTO4WD45/MiuO1dQ/gdg4BW/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvEVTSbMGTxbLyO+SO0OcM4SUNx/yaHiP8R+gr5jNtcMoJHGoU58/hzTfFIbrw/A3
-	 9osskdrC/yNLzllIbZZbSMSgHzGoTo8akZ5IpbClD1N2/hGmOxFa9i+Nlqa4oJJUNC
-	 pFxlIGdZaGyiJoW3XWHw0+DQ4Urr8RjwkH6xF+QE=
+	b=cZHDWnhfyT7grmthG7zDRE/LBLqBSGfS4FPribpScIdvzv3HkANIwajYvkMpzC5jl
+	 wXNhEZlal8Vmu8nGSGwL8Q9ulWyKZh3aqfVZZk9KooV0ADYKB24euuDKoqP/YcMsBZ
+	 IhtVcy2b1MpSAftG/Pq0Z5NojVYIKam8LPEmsoD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 466/482] iio: pressure: bmp280: Use BME prefix for BME280 specifics
-Date: Tue,  8 Oct 2024 14:08:49 +0200
-Message-ID: <20241008115706.851801536@linuxfoundation.org>
+Subject: [PATCH 6.10 467/482] iio: pressure: bmp280: Fix regmap for BMP280 device
+Date: Tue,  8 Oct 2024 14:08:50 +0200
+Message-ID: <20241008115706.890173738@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,286 +54,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit b23be4cd99a6f1f46963b87952632268174e62c1 ]
+[ Upstream commit b9065b0250e1705935445ede0a18c1850afe7b75 ]
 
-Change the rest of the defines and function names that are
-used specifically by the BME280 humidity sensor to BME280
-as it is done for the rest of the BMP{0,1,3,5}80 sensors.
+Up to now, the BMP280 device is using the regmap of the BME280 which
+has registers that exist only in the BME280 device.
 
+Fixes: 14e8015f8569 ("iio: pressure: bmp280: split driver in logical parts")
 Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://lore.kernel.org/r/20240429190046.24252-3-vassilisamir@gmail.com
+Link: https://patch.msgid.link/20240711211558.106327-2-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: b9065b0250e1 ("iio: pressure: bmp280: Fix regmap for BMP280 device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/bmp280-core.c   | 37 +++++++++++------------
- drivers/iio/pressure/bmp280-regmap.c |  8 ++---
- drivers/iio/pressure/bmp280.h        | 45 +++++++++++++++-------------
- 3 files changed, 46 insertions(+), 44 deletions(-)
+ drivers/iio/pressure/bmp280-core.c   |  2 +-
+ drivers/iio/pressure/bmp280-regmap.c | 45 ++++++++++++++++++++++++++--
+ drivers/iio/pressure/bmp280.h        |  1 +
+ 3 files changed, 44 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/iio/pressure/bmp280-core.c b/drivers/iio/pressure/bmp280-core.c
-index 82c177e0ff933..51413ab86e66e 100644
+index 51413ab86e66e..55ea708489b66 100644
 --- a/drivers/iio/pressure/bmp280-core.c
 +++ b/drivers/iio/pressure/bmp280-core.c
-@@ -235,14 +235,14 @@ static int bme280_read_calib(struct bmp280_data *data)
- 	 * Humidity data is only available on BME280.
- 	 */
- 
--	ret = regmap_read(data->regmap, BMP280_REG_COMP_H1, &tmp);
-+	ret = regmap_read(data->regmap, BME280_REG_COMP_H1, &tmp);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H1 comp value\n");
- 		return ret;
- 	}
- 	calib->H1 = tmp;
- 
--	ret = regmap_bulk_read(data->regmap, BMP280_REG_COMP_H2,
-+	ret = regmap_bulk_read(data->regmap, BME280_REG_COMP_H2,
- 			       &data->le16, sizeof(data->le16));
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H2 comp value\n");
-@@ -250,14 +250,14 @@ static int bme280_read_calib(struct bmp280_data *data)
- 	}
- 	calib->H2 = sign_extend32(le16_to_cpu(data->le16), 15);
- 
--	ret = regmap_read(data->regmap, BMP280_REG_COMP_H3, &tmp);
-+	ret = regmap_read(data->regmap, BME280_REG_COMP_H3, &tmp);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H3 comp value\n");
- 		return ret;
- 	}
- 	calib->H3 = tmp;
- 
--	ret = regmap_bulk_read(data->regmap, BMP280_REG_COMP_H4,
-+	ret = regmap_bulk_read(data->regmap, BME280_REG_COMP_H4,
- 			       &data->be16, sizeof(data->be16));
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H4 comp value\n");
-@@ -266,15 +266,15 @@ static int bme280_read_calib(struct bmp280_data *data)
- 	calib->H4 = sign_extend32(((be16_to_cpu(data->be16) >> 4) & 0xff0) |
- 				  (be16_to_cpu(data->be16) & 0xf), 11);
- 
--	ret = regmap_bulk_read(data->regmap, BMP280_REG_COMP_H5,
-+	ret = regmap_bulk_read(data->regmap, BME280_REG_COMP_H5,
- 			       &data->le16, sizeof(data->le16));
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H5 comp value\n");
- 		return ret;
- 	}
--	calib->H5 = sign_extend32(FIELD_GET(BMP280_COMP_H5_MASK, le16_to_cpu(data->le16)), 11);
-+	calib->H5 = sign_extend32(FIELD_GET(BME280_COMP_H5_MASK, le16_to_cpu(data->le16)), 11);
- 
--	ret = regmap_read(data->regmap, BMP280_REG_COMP_H6, &tmp);
-+	ret = regmap_read(data->regmap, BME280_REG_COMP_H6, &tmp);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to read H6 comp value\n");
- 		return ret;
-@@ -290,7 +290,7 @@ static int bme280_read_calib(struct bmp280_data *data)
-  *
-  * Taken from BME280 datasheet, Section 4.2.3, "Compensation formula".
-  */
--static u32 bmp280_compensate_humidity(struct bmp280_data *data,
-+static u32 bme280_compensate_humidity(struct bmp280_data *data,
- 				      s32 adc_humidity)
- {
- 	struct bmp280_calib *calib = &data->calib.bmp280;
-@@ -430,7 +430,7 @@ static int bmp280_read_press(struct bmp280_data *data,
- 	return IIO_VAL_FRACTIONAL;
- }
- 
--static int bmp280_read_humid(struct bmp280_data *data, int *val, int *val2)
-+static int bme280_read_humid(struct bmp280_data *data, int *val, int *val2)
- {
- 	u32 comp_humidity;
- 	s32 adc_humidity;
-@@ -441,7 +441,7 @@ static int bmp280_read_humid(struct bmp280_data *data, int *val, int *val2)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = regmap_bulk_read(data->regmap, BMP280_REG_HUMIDITY_MSB,
-+	ret = regmap_bulk_read(data->regmap, BME280_REG_HUMIDITY_MSB,
- 			       &data->be16, sizeof(data->be16));
- 	if (ret < 0) {
- 		dev_err(data->dev, "failed to read humidity\n");
-@@ -454,7 +454,7 @@ static int bmp280_read_humid(struct bmp280_data *data, int *val, int *val2)
- 		dev_err(data->dev, "reading humidity skipped\n");
- 		return -EIO;
- 	}
--	comp_humidity = bmp280_compensate_humidity(data, adc_humidity);
-+	comp_humidity = bme280_compensate_humidity(data, adc_humidity);
- 
- 	*val = comp_humidity * 1000 / 1024;
- 
-@@ -538,7 +538,7 @@ static int bmp280_read_raw(struct iio_dev *indio_dev,
- 	return ret;
- }
- 
--static int bmp280_write_oversampling_ratio_humid(struct bmp280_data *data,
-+static int bme280_write_oversampling_ratio_humid(struct bmp280_data *data,
- 						 int val)
- {
- 	const int *avail = data->chip_info->oversampling_humid_avail;
-@@ -682,7 +682,7 @@ static int bmp280_write_raw(struct iio_dev *indio_dev,
- 		mutex_lock(&data->lock);
- 		switch (chan->type) {
- 		case IIO_HUMIDITYRELATIVE:
--			ret = bmp280_write_oversampling_ratio_humid(data, val);
-+			ret = bme280_write_oversampling_ratio_humid(data, val);
- 			break;
- 		case IIO_PRESSURE:
- 			ret = bmp280_write_oversampling_ratio_press(data, val);
-@@ -832,16 +832,15 @@ EXPORT_SYMBOL_NS(bmp280_chip_info, IIO_BMP280);
- 
- static int bme280_chip_config(struct bmp280_data *data)
- {
--	u8 osrs = FIELD_PREP(BMP280_OSRS_HUMIDITY_MASK, data->oversampling_humid + 1);
-+	u8 osrs = FIELD_PREP(BME280_OSRS_HUMIDITY_MASK, data->oversampling_humid + 1);
- 	int ret;
- 
- 	/*
- 	 * Oversampling of humidity must be set before oversampling of
- 	 * temperature/pressure is set to become effective.
- 	 */
--	ret = regmap_update_bits(data->regmap, BMP280_REG_CTRL_HUMIDITY,
--				  BMP280_OSRS_HUMIDITY_MASK, osrs);
--
-+	ret = regmap_update_bits(data->regmap, BME280_REG_CTRL_HUMIDITY,
-+				 BME280_OSRS_HUMIDITY_MASK, osrs);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -869,12 +868,12 @@ const struct bmp280_chip_info bme280_chip_info = {
- 
- 	.oversampling_humid_avail = bmp280_oversampling_avail,
- 	.num_oversampling_humid_avail = ARRAY_SIZE(bmp280_oversampling_avail),
--	.oversampling_humid_default = BMP280_OSRS_HUMIDITY_16X - 1,
-+	.oversampling_humid_default = BME280_OSRS_HUMIDITY_16X - 1,
- 
- 	.chip_config = bme280_chip_config,
- 	.read_temp = bmp280_read_temp,
- 	.read_press = bmp280_read_press,
--	.read_humid = bmp280_read_humid,
-+	.read_humid = bme280_read_humid,
- 	.read_calib = bme280_read_calib,
- };
- EXPORT_SYMBOL_NS(bme280_chip_info, IIO_BMP280);
+@@ -853,7 +853,7 @@ const struct bmp280_chip_info bme280_chip_info = {
+ 	.id_reg = BMP280_REG_ID,
+ 	.chip_id = bme280_chip_ids,
+ 	.num_chip_id = ARRAY_SIZE(bme280_chip_ids),
+-	.regmap_config = &bmp280_regmap_config,
++	.regmap_config = &bme280_regmap_config,
+ 	.start_up_time = 2000,
+ 	.channels = bmp280_channels,
+ 	.num_channels = 3,
 diff --git a/drivers/iio/pressure/bmp280-regmap.c b/drivers/iio/pressure/bmp280-regmap.c
-index 3ee56720428c5..fa52839474b18 100644
+index fa52839474b18..d27d68edd9065 100644
 --- a/drivers/iio/pressure/bmp280-regmap.c
 +++ b/drivers/iio/pressure/bmp280-regmap.c
-@@ -45,7 +45,7 @@ static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
+@@ -41,7 +41,7 @@ const struct regmap_config bmp180_regmap_config = {
+ };
+ EXPORT_SYMBOL_NS(bmp180_regmap_config, IIO_BMP280);
+ 
+-static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
++static bool bme280_is_writeable_reg(struct device *dev, unsigned int reg)
  {
  	switch (reg) {
  	case BMP280_REG_CONFIG:
--	case BMP280_REG_CTRL_HUMIDITY:
-+	case BME280_REG_CTRL_HUMIDITY:
- 	case BMP280_REG_CTRL_MEAS:
- 	case BMP280_REG_RESET:
- 		return true;
-@@ -57,8 +57,8 @@ static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
+@@ -54,7 +54,35 @@ static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
+ 	}
+ }
+ 
++static bool bmp280_is_writeable_reg(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case BMP280_REG_CONFIG:
++	case BMP280_REG_CTRL_MEAS:
++	case BMP280_REG_RESET:
++		return true;
++	default:
++		return false;
++	}
++}
++
  static bool bmp280_is_volatile_reg(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case BMP280_REG_TEMP_XLSB:
++	case BMP280_REG_TEMP_LSB:
++	case BMP280_REG_TEMP_MSB:
++	case BMP280_REG_PRESS_XLSB:
++	case BMP280_REG_PRESS_LSB:
++	case BMP280_REG_PRESS_MSB:
++	case BMP280_REG_STATUS:
++		return true;
++	default:
++		return false;
++	}
++}
++
++static bool bme280_is_volatile_reg(struct device *dev, unsigned int reg)
  {
  	switch (reg) {
--	case BMP280_REG_HUMIDITY_LSB:
--	case BMP280_REG_HUMIDITY_MSB:
-+	case BME280_REG_HUMIDITY_LSB:
-+	case BME280_REG_HUMIDITY_MSB:
- 	case BMP280_REG_TEMP_XLSB:
- 	case BMP280_REG_TEMP_LSB:
- 	case BMP280_REG_TEMP_MSB:
-@@ -167,7 +167,7 @@ const struct regmap_config bmp280_regmap_config = {
+ 	case BME280_REG_HUMIDITY_LSB:
+@@ -71,7 +99,6 @@ static bool bmp280_is_volatile_reg(struct device *dev, unsigned int reg)
+ 		return false;
+ 	}
+ }
+-
+ static bool bmp380_is_writeable_reg(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+@@ -167,7 +194,7 @@ const struct regmap_config bmp280_regmap_config = {
  	.reg_bits = 8,
  	.val_bits = 8,
  
--	.max_register = BMP280_REG_HUMIDITY_LSB,
-+	.max_register = BME280_REG_HUMIDITY_LSB,
+-	.max_register = BME280_REG_HUMIDITY_LSB,
++	.max_register = BMP280_REG_TEMP_XLSB,
  	.cache_type = REGCACHE_RBTREE,
  
  	.writeable_reg = bmp280_is_writeable_reg,
+@@ -175,6 +202,18 @@ const struct regmap_config bmp280_regmap_config = {
+ };
+ EXPORT_SYMBOL_NS(bmp280_regmap_config, IIO_BMP280);
+ 
++const struct regmap_config bme280_regmap_config = {
++	.reg_bits = 8,
++	.val_bits = 8,
++
++	.max_register = BME280_REG_HUMIDITY_LSB,
++	.cache_type = REGCACHE_RBTREE,
++
++	.writeable_reg = bme280_is_writeable_reg,
++	.volatile_reg = bme280_is_volatile_reg,
++};
++EXPORT_SYMBOL_NS(bme280_regmap_config, IIO_BMP280);
++
+ const struct regmap_config bmp380_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
 diff --git a/drivers/iio/pressure/bmp280.h b/drivers/iio/pressure/bmp280.h
-index 5812a344ed8e8..91d4457a92301 100644
+index 91d4457a92301..a651cb8009931 100644
 --- a/drivers/iio/pressure/bmp280.h
 +++ b/drivers/iio/pressure/bmp280.h
-@@ -192,8 +192,6 @@
- #define BMP380_PRESS_SKIPPED		0x800000
+@@ -470,6 +470,7 @@ extern const struct bmp280_chip_info bmp580_chip_info;
+ /* Regmap configurations */
+ extern const struct regmap_config bmp180_regmap_config;
+ extern const struct regmap_config bmp280_regmap_config;
++extern const struct regmap_config bme280_regmap_config;
+ extern const struct regmap_config bmp380_regmap_config;
+ extern const struct regmap_config bmp580_regmap_config;
  
- /* BMP280 specific registers */
--#define BMP280_REG_HUMIDITY_LSB		0xFE
--#define BMP280_REG_HUMIDITY_MSB		0xFD
- #define BMP280_REG_TEMP_XLSB		0xFC
- #define BMP280_REG_TEMP_LSB		0xFB
- #define BMP280_REG_TEMP_MSB		0xFA
-@@ -207,15 +205,6 @@
- #define BMP280_REG_CONFIG		0xF5
- #define BMP280_REG_CTRL_MEAS		0xF4
- #define BMP280_REG_STATUS		0xF3
--#define BMP280_REG_CTRL_HUMIDITY	0xF2
--
--/* Due to non linear mapping, and data sizes we can't do a bulk read */
--#define BMP280_REG_COMP_H1		0xA1
--#define BMP280_REG_COMP_H2		0xE1
--#define BMP280_REG_COMP_H3		0xE3
--#define BMP280_REG_COMP_H4		0xE4
--#define BMP280_REG_COMP_H5		0xE5
--#define BMP280_REG_COMP_H6		0xE7
- 
- #define BMP280_REG_COMP_TEMP_START	0x88
- #define BMP280_COMP_TEMP_REG_COUNT	6
-@@ -223,8 +212,6 @@
- #define BMP280_REG_COMP_PRESS_START	0x8E
- #define BMP280_COMP_PRESS_REG_COUNT	18
- 
--#define BMP280_COMP_H5_MASK		GENMASK(15, 4)
--
- #define BMP280_CONTIGUOUS_CALIB_REGS	(BMP280_COMP_TEMP_REG_COUNT + \
- 					 BMP280_COMP_PRESS_REG_COUNT)
- 
-@@ -235,14 +222,6 @@
- #define BMP280_FILTER_8X		3
- #define BMP280_FILTER_16X		4
- 
--#define BMP280_OSRS_HUMIDITY_MASK	GENMASK(2, 0)
--#define BMP280_OSRS_HUMIDITY_SKIP	0
--#define BMP280_OSRS_HUMIDITY_1X		1
--#define BMP280_OSRS_HUMIDITY_2X		2
--#define BMP280_OSRS_HUMIDITY_4X		3
--#define BMP280_OSRS_HUMIDITY_8X		4
--#define BMP280_OSRS_HUMIDITY_16X	5
--
- #define BMP280_OSRS_TEMP_MASK		GENMASK(7, 5)
- #define BMP280_OSRS_TEMP_SKIP		0
- #define BMP280_OSRS_TEMP_1X		1
-@@ -264,6 +243,30 @@
- #define BMP280_MODE_FORCED		1
- #define BMP280_MODE_NORMAL		3
- 
-+/* BME280 specific registers */
-+#define BME280_REG_HUMIDITY_LSB		0xFE
-+#define BME280_REG_HUMIDITY_MSB		0xFD
-+
-+#define BME280_REG_CTRL_HUMIDITY	0xF2
-+
-+/* Due to non linear mapping, and data sizes we can't do a bulk read */
-+#define BME280_REG_COMP_H1		0xA1
-+#define BME280_REG_COMP_H2		0xE1
-+#define BME280_REG_COMP_H3		0xE3
-+#define BME280_REG_COMP_H4		0xE4
-+#define BME280_REG_COMP_H5		0xE5
-+#define BME280_REG_COMP_H6		0xE7
-+
-+#define BME280_COMP_H5_MASK		GENMASK(15, 4)
-+
-+#define BME280_OSRS_HUMIDITY_MASK	GENMASK(2, 0)
-+#define BME280_OSRS_HUMIDITY_SKIP	0
-+#define BME280_OSRS_HUMIDITY_1X		1
-+#define BME280_OSRS_HUMIDITY_2X		2
-+#define BME280_OSRS_HUMIDITY_4X		3
-+#define BME280_OSRS_HUMIDITY_8X		4
-+#define BME280_OSRS_HUMIDITY_16X	5
-+
- /* BMP180 specific registers */
- #define BMP180_REG_OUT_XLSB		0xF8
- #define BMP180_REG_OUT_LSB		0xF7
 -- 
 2.43.0
 
