@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7041DDA36;
-	Tue,  8 Oct 2024 13:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74221DE4CC;
+	Tue,  8 Oct 2024 13:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393548; cv=none; b=Oau2cg5pRVb1uhXsd4YinuYh3s6s4/u+dMjNFkw8ai5PF0uvGHmY9YkMLS+bpWp2mX/YnKNUcOn3xdQBlGhSe7Rru6cteK4ksSCC+92fJsxIOW2j1qz2XqGopgZtA+UrZzM7H0ss21sqDzko2zakOINEZgVULGFEvhRhKRpP+u8=
+	t=1728393552; cv=none; b=GGDoYCWT5Jc2WQ9aF/Ow8BRx0BFwLbSX4vIXK/9SAyyTKN3jwpkBy+MEgFtZ7Gs5qCc0+7SCJLscOaoBDdG5MLsne+X/0njeoCxnX8Ii7o997hryIe3j847I7LY2cZtuHzIh+oA3gbZv5ro+hob6+dtx5RaZwfBPBpjvaO/r3bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393548; c=relaxed/simple;
-	bh=93AeCP1o3Wv+mGG+xhkoAn9DtgzsFQemNhZGdkeJE08=;
+	s=arc-20240116; t=1728393552; c=relaxed/simple;
+	bh=3x5AavfRmDvNRMiZnMjHR5ixBr/0YwEx2PtM7wRkDaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGz2B3mcPZYLQEi1/F6RrPsZqJeYfrI/9K1x4zkEyThFemBmcfBstzoHHqvh+FsxmT9NMIS2MyvMjKz7eVk2Wnuu1fYhJj4PYQvf2LY3/s/oG1+jiVrri/PX/C3KZdIJvNwOLBVLIq2BHlJmwdHBdLX2T4iPEPh26yha051U/Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmwpBKzD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtlN0BckDp+dPvEfR8naAJba2zA5hQaU1PQqGHADOxeJzuy/HMyezYY+OwJdMtCe6NvTjhV+vyafNJ/jNlb7qEHE9QzI+EQLfysiVQe53NQhR/EB1oZEaFMQktc/GT2OJYgYpT5nvlylYAQIkKC4GVCfiQjhQbE6FqQigCLdB3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpvVi6gq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmwpBKzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8CDC4CEC7;
-	Tue,  8 Oct 2024 13:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpvVi6gq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04476C4CEC7;
+	Tue,  8 Oct 2024 13:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393548;
-	bh=93AeCP1o3Wv+mGG+xhkoAn9DtgzsFQemNhZGdkeJE08=;
+	s=korg; t=1728393551;
+	bh=3x5AavfRmDvNRMiZnMjHR5ixBr/0YwEx2PtM7wRkDaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmwpBKzDt9lFV0HkDe6Hb9At2we73pjPb1e4n+3eB4TXHvJSCBBkEuqB9SvGe6zvU
-	 /fUdkWv31lXEBo6zrmi/iHFsjrTvB7DdhqhbePVJnkQWKc5SruaulYfNavu0xTxq6F
-	 jn5ly88TUKn+MBdq8eBjmgDsKyHfXoiK3VcmPmzU=
+	b=vpvVi6gqc5vBO18w1pgQHUdKGaj+RbNQ0GOF6AEzlRHZdz4EaPfxah9b5EsEkKX0V
+	 rzUZ9yDQaphY5hWQfBkhNfIns3fKrcDCEGBMOCs8fBTSn1Gu/KLBZn8q+mrdl79Fuj
+	 11iyvtG9nwJGR48eWbm9uN/fpvWljLlT0h88hcds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/386] iomap: handle a post-direct I/O invalidate race in iomap_write_delalloc_release
-Date: Tue,  8 Oct 2024 14:07:09 +0200
-Message-ID: <20241008115636.652807736@linuxfoundation.org>
+Subject: [PATCH 6.6 158/386] drm/amd/display: Fix index out of bounds in DCN30 color transformation
+Date: Tue,  8 Oct 2024 14:06:43 +0200
+Message-ID: <20241008115635.643797285@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,46 +58,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 7a9d43eace888a0ee6095035997bb138425844d3 ]
+[ Upstream commit d81873f9e715b72d4f8d391c8eb243946f784dfc ]
 
-When direct I/O completions invalidates the page cache it holds neither the
-i_rwsem nor the invalidate_lock so it can be racing with
-iomap_write_delalloc_release.  If the search for the end of the region that
-contains data returns the start offset we hit such a race and just need to
-look for the end of the newly created hole instead.
+This commit addresses a potential index out of bounds issue in the
+`cm3_helper_translate_curve_to_hw_format` function in the DCN30 color
+management module. The issue could occur when the index 'i' exceeds the
+number of transfer function points (TRANSFER_FUNC_POINTS).
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240910043949.3481298-2-hch@lst.de
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+The fix adds a check to ensure 'i' is within bounds before accessing the
+transfer function points. If 'i' is out of bounds, the function returns
+false to indicate an error.
+
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:180 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:181 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:182 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 5371b16341fff..aedaad4c37d75 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1177,7 +1177,15 @@ static int iomap_write_delalloc_release(struct inode *inode,
- 			error = data_end;
- 			goto out_unlock;
- 		}
--		WARN_ON_ONCE(data_end <= start_byte);
-+
-+		/*
-+		 * If we race with post-direct I/O invalidation of the page cache,
-+		 * there might be no data left at start_byte.
-+		 */
-+		if (data_end == start_byte)
-+			continue;
-+
-+		WARN_ON_ONCE(data_end < start_byte);
- 		WARN_ON_ONCE(data_end > scan_end_byte);
- 
- 		error = iomap_write_delalloc_scan(inode, &punch_start_byte,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+index e0b1fc92ed186..62c02adae7e76 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+@@ -178,6 +178,8 @@ bool cm3_helper_translate_curve_to_hw_format(
+ 				i += increment) {
+ 			if (j == hw_points - 1)
+ 				break;
++			if (i >= TRANSFER_FUNC_POINTS)
++				return false;
+ 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
+ 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
+ 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
 -- 
 2.43.0
 
