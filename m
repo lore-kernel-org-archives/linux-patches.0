@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BF41DACBE;
-	Tue,  8 Oct 2024 12:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1C01D26F2;
+	Tue,  8 Oct 2024 12:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390076; cv=none; b=CA3rDApCbyBXeXL0CWTLvD3R/fF23OxH2TYWosYC6wRyccV5Tig9D06kLnn6zo2uc6sO9CKTvaN/w79Kfqxv6a+7/yCTzqNxHjPiZM3wGZ230f2emA/rvry35SwXJYbXZn2/uG0Xk9SNUyv7OaVqw+uzuANRk6UVJaBofsOhAG8=
+	t=1728390080; cv=none; b=WKVrhEp/9kDkRczZ0nF/HE/zcUcgC31hrVW1oiI26pLPFNbq9DyETYYkrzAEGFysFxeiQBsNTW9F8vqVOGcr7S7RyR3rJDH2h0S0X5Vn8xHEB6BKzGqbj8AvLzQFIa09euxOihVkaLIldn8+UroDmgf9/nCqrGcEWye1bCr6LO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390076; c=relaxed/simple;
-	bh=Sml2IShukZVsHYZfzbCP5S3kkAJo3cqAiNzhrRQ4L2o=;
+	s=arc-20240116; t=1728390080; c=relaxed/simple;
+	bh=AR0rF7LGyMP8jHJavdIBlKXA+tr1V5ybKwEnHhpOx48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBjkCtqhonT98X098zWj+BkzPvWXpwD6hpUmSg48yKoYM1PLiPrEDvuzbFShLXVNpKHZ+/CsIjr5NTPtT6et63n+uXK92vP9fqz19CRj8EJqR/DDk39ltphksnk9t2RkD1+dBeTG2eQ3ZHFmLHHFBH0mdJAuRNw9AwwoklwX+BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXTL1MPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BUKpHisxT6sGvhJaatY5uxu6sy8EEafuaaFhpqH+rwMG4fP2B3tl8sKEE7Y4WuFmwX0WSuTTVBBt2loehEBWzZKsd6KSih7/cPT05G+uoGvQtuuWUPPIzeH/tNStNFVRwTQDAw/vyaL+zPOQFwN6di3uOe8xrtUopaNhtKDX14Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blPoSXK6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXTL1MPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04728C4CEC7;
-	Tue,  8 Oct 2024 12:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blPoSXK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA03C4CEC7;
+	Tue,  8 Oct 2024 12:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390076;
-	bh=Sml2IShukZVsHYZfzbCP5S3kkAJo3cqAiNzhrRQ4L2o=;
+	s=korg; t=1728390079;
+	bh=AR0rF7LGyMP8jHJavdIBlKXA+tr1V5ybKwEnHhpOx48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXTL1MPudPpnLLV5iMepyGRzlYZdHOeGNtW/fu0S6L4fHO5NvgYimUWp8qgjxM764
-	 eqNz03yvvMTECvDW5KWOUmBRNykhbmXU8fNqpwoAbl/hRgRB5mzu/3p+wBOAxYqNHb
-	 BaEzR57JByFIW/49Ijssq9Sg0BbO/Svp4/vLnHZg=
+	b=blPoSXK6CGVIoeYKtU6MsWmVYQeUqIZ8gYUBmHJ+sFXpMu4DA4vSnN02Z3PucM8zT
+	 iB87Nsgkp/11EWEfOZJYdSXi94fL/G6reex670ZAr4wm/wdsGbhYL0pgs55ImU4Xfs
+	 jYP7/yhsSG4CRYm1OsmzEbbioDpIbznSxa26WMis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 183/482] drm/amd/display: Add null check for top_pipe_to_program in commit_planes_for_stream
-Date: Tue,  8 Oct 2024 14:04:06 +0200
-Message-ID: <20241008115655.505950805@linuxfoundation.org>
+Subject: [PATCH 6.10 157/482] selftests/nolibc: avoid passing NULL to printf("%s")
+Date: Tue,  8 Oct 2024 14:03:40 +0200
+Message-ID: <20241008115654.484963908@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,55 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 66d71a72539e173a9b00ca0b1852cbaa5f5bf1ad ]
+[ Upstream commit f1a58f61d88642ae1e6e97e9d72d73bc70a93cb8 ]
 
-This commit addresses a null pointer dereference issue in the
-`commit_planes_for_stream` function at line 4140. The issue could occur
-when `top_pipe_to_program` is null.
+Clang on higher optimization levels detects that NULL is passed to
+printf("%s") and warns about it.
+While printf() from nolibc gracefully handles that NULL,
+it is undefined behavior as per POSIX, so the warning is reasonable.
+Avoid the warning by transforming NULL into a non-NULL placeholder.
 
-The fix adds a check to ensure `top_pipe_to_program` is not null before
-accessing its stream_res. This prevents a null pointer dereference.
-
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc.c:4140 commit_planes_for_stream() error: we previously assumed 'top_pipe_to_program' could be null (see line 3906)
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20240807-nolibc-llvm-v2-8-c20f2f5fc7c2@weissschuh.net
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index da237f718dbdd..3bd18e862945f 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3970,7 +3970,8 @@ static void commit_planes_for_stream(struct dc *dc,
- 	}
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index 994477ee87bef..4bd8360d54225 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -534,7 +534,7 @@ int expect_strzr(const char *expr, int llen)
+ {
+ 	int ret = 0;
  
- 	if ((update_type != UPDATE_TYPE_FAST) && stream->update_flags.bits.dsc_changed)
--		if (top_pipe_to_program->stream_res.tg->funcs->lock_doublebuffer_enable) {
-+		if (top_pipe_to_program &&
-+		    top_pipe_to_program->stream_res.tg->funcs->lock_doublebuffer_enable) {
- 			top_pipe_to_program->stream_res.tg->funcs->wait_for_state(
- 				top_pipe_to_program->stream_res.tg,
- 				CRTC_STATE_VACTIVE);
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (expr) {
+ 		ret = 1;
+ 		result(llen, FAIL);
+@@ -553,7 +553,7 @@ int expect_strnz(const char *expr, int llen)
+ {
+ 	int ret = 0;
+ 
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (!expr) {
+ 		ret = 1;
+ 		result(llen, FAIL);
 -- 
 2.43.0
 
