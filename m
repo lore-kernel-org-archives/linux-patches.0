@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858F9183CB8;
-	Tue,  8 Oct 2024 12:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02541DC046;
+	Tue,  8 Oct 2024 12:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391659; cv=none; b=DZXl6dfsAT41wXVFxJHWsCyysBJsXridYmEQhwLbWJgKa/RezvZAowiDB5iOtjDVL6QPKUcrOBGjCoc7fWlOPnGIRFj0hPZ2zpY1EEcvjFeDLxHszBKNDDcl4/v3Tm8ryRc/s/rg+hNSYmGoA1Kz9eNaafPrYLULnuux6u7+B18=
+	t=1728391662; cv=none; b=dztVm3ebc2Lk9QkIOjBXCwIYQ3hkwTjL+fIQNr2HbeIdgOHnC68Un3EJU0SXn8/sXUrdEMaoq1zNySbZnNOtkvJbhKF6AAjqHDhmZxjs/DXALvOrS8LMyElJ4VnIUs1LnRHp9RoaGXb3NaLVR0pvdge2/VNRqYvN/FydPIZOruE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391659; c=relaxed/simple;
-	bh=fJWBoV4pL31Anbe4ncgv0knel+T8wmiMFvq2mui2bNs=;
+	s=arc-20240116; t=1728391662; c=relaxed/simple;
+	bh=CPMacX/Nx6GIC17zX5QpiIuFEsCI6/XdcQ8xQf4jvKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ArbX46vkrvrThV+IUosrlTHwbeQu+jjLMCt3X4NW0BqKezdk1M+53OkGvjzHpMXefFSh25faWshLASERxKGRZBUBFnqEgQ3fOopd7lZy/8me0qp0tTslerB5Bik20ITXGe5yaeSFE8rQ77moP/nMyQswFic76qcTuvOoPoKZOLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6wELayN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hPq4joBhapP3OFg1qK3ZyO+bg5YRKcIMUcO0VzlhMqOHVBDUF5lHjDEixW7jcszQfXtfn6O6jKjtHG0jFLj8vXZzTizdTLnoLcY52AsKO7PuuC9gA9X1bqTtjs5+LpF/cot09OmPVSm1lxj+i3Aj46CuIX8mc6m8QptOWfO3ic8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zl1yH7/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6wELayN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097EBC4CEC7;
-	Tue,  8 Oct 2024 12:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zl1yH7/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF76C4CECD;
+	Tue,  8 Oct 2024 12:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391659;
-	bh=fJWBoV4pL31Anbe4ncgv0knel+T8wmiMFvq2mui2bNs=;
+	s=korg; t=1728391662;
+	bh=CPMacX/Nx6GIC17zX5QpiIuFEsCI6/XdcQ8xQf4jvKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6wELayN3oH3xgbbDb/3FeRHbH60BrspzSlAfj82+O+WhCAHtLwfEM/TpBo0vIlKc
-	 6NBD8HBGOoTcQaTgxjKfD7YJhwKpTtLaYV+niuWG//cADLyqqw5iM+A7D9x2fw/RiC
-	 tj8quG/YirEXQFcDHmiNe71g1gNueOgWCvO1BX8w=
+	b=zl1yH7/TYG2ZX9XJ5mnIDnOI8M6d/YknPlvlb90r76t/WWnKJgyA41R9ZFcK7yG7I
+	 4ksQ7wQbmtM8NEke2507DiLHjVXG6nvifCjn6xkL2t+CBaE5in9ftjCNcGGzEu2RlV
+	 BENqf1DC8+wl3KFGs2NP0Pw1q64CLT85tGAxXVKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Willy Tarreau <w@1wt.eu>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Mirsad Todorovac <mtodorovac69@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 185/558] selftests/nolibc: avoid passing NULL to printf("%s")
-Date: Tue,  8 Oct 2024 14:03:35 +0200
-Message-ID: <20241008115709.631592043@linuxfoundation.org>
+Subject: [PATCH 6.11 186/558] x86/syscall: Avoid memcpy() for ia32 syscall_get_arguments()
+Date: Tue,  8 Oct 2024 14:03:36 +0200
+Message-ID: <20241008115709.670743850@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,47 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit f1a58f61d88642ae1e6e97e9d72d73bc70a93cb8 ]
+[ Upstream commit d19d638b1e6cf746263ef60b7d0dee0204d8216a ]
 
-Clang on higher optimization levels detects that NULL is passed to
-printf("%s") and warns about it.
-While printf() from nolibc gracefully handles that NULL,
-it is undefined behavior as per POSIX, so the warning is reasonable.
-Avoid the warning by transforming NULL into a non-NULL placeholder.
+Modern (fortified) memcpy() prefers to avoid writing (or reading) beyond
+the end of the addressed destination (or source) struct member:
 
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://lore.kernel.org/r/20240807-nolibc-llvm-v2-8-c20f2f5fc7c2@weissschuh.net
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘syscall_get_arguments’ at ./arch/x86/include/asm/syscall.h:85:2,
+    inlined from ‘populate_seccomp_data’ at kernel/seccomp.c:258:2,
+    inlined from ‘__seccomp_filter’ at kernel/seccomp.c:1231:3:
+./include/linux/fortify-string.h:580:25: error: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  580 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As already done for x86_64 and compat mode, do not use memcpy() to
+extract syscall arguments from struct pt_regs but rather just perform
+direct assignments. Binary output differences are negligible, and actually
+ends up using less stack space:
+
+-       sub    $0x84,%esp
++       sub    $0x6c,%esp
+
+and less text size:
+
+   text    data     bss     dec     hex filename
+  10794     252       0   11046    2b26 gcc-32b/kernel/seccomp.o.stock
+  10714     252       0   10966    2ad6 gcc-32b/kernel/seccomp.o.after
+
+Closes: https://lore.kernel.org/lkml/9b69fb14-df89-4677-9c82-056ea9e706f5@gmail.com/
+Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Link: https://lore.kernel.org/all/20240708202202.work.477-kees%40kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/syscall.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
-index 093d0512f4c57..8cbb51dca0cd6 100644
---- a/tools/testing/selftests/nolibc/nolibc-test.c
-+++ b/tools/testing/selftests/nolibc/nolibc-test.c
-@@ -542,7 +542,7 @@ int expect_strzr(const char *expr, int llen)
+diff --git a/arch/x86/include/asm/syscall.h b/arch/x86/include/asm/syscall.h
+index 2fc7bc3863ff6..7c488ff0c7641 100644
+--- a/arch/x86/include/asm/syscall.h
++++ b/arch/x86/include/asm/syscall.h
+@@ -82,7 +82,12 @@ static inline void syscall_get_arguments(struct task_struct *task,
+ 					 struct pt_regs *regs,
+ 					 unsigned long *args)
  {
- 	int ret = 0;
+-	memcpy(args, &regs->bx, 6 * sizeof(args[0]));
++	args[0] = regs->bx;
++	args[1] = regs->cx;
++	args[2] = regs->dx;
++	args[3] = regs->si;
++	args[4] = regs->di;
++	args[5] = regs->bp;
+ }
  
--	llen += printf(" = <%s> ", expr);
-+	llen += printf(" = <%s> ", expr ? expr : "(null)");
- 	if (expr) {
- 		ret = 1;
- 		result(llen, FAIL);
-@@ -561,7 +561,7 @@ int expect_strnz(const char *expr, int llen)
- {
- 	int ret = 0;
- 
--	llen += printf(" = <%s> ", expr);
-+	llen += printf(" = <%s> ", expr ? expr : "(null)");
- 	if (!expr) {
- 		ret = 1;
- 		result(llen, FAIL);
+ static inline int syscall_get_arch(struct task_struct *task)
 -- 
 2.43.0
 
