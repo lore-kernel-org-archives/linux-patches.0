@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E21DE2A5;
-	Tue,  8 Oct 2024 12:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168431DDA15;
+	Tue,  8 Oct 2024 12:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391495; cv=none; b=YfqdFaxXS8sad1m1Vq0vNrtXl1HMwsbCsAwaKjY52RD7qOHg68MKiwikUqzkQVUdv9NlwrCgqCZ9/DMJYkHdrryeZ9gqauusdsAvmxgoTMq7+8898TABq0tvLDnORVTbBrRFYzb8oQm9UfLuGyRsiMWPbK+FpEw7/mOuh8wdmFk=
+	t=1728391498; cv=none; b=jyfbVzTbscJSNEftooxnlA8jC1RgbKFbmKUyE8HBGekWCWMZmJvgjct1eJ6jdbJvz+zQ6r4s4OdvhWLvZinXoQ0hlaDAKDSyquO7wMCNdl8mNH9WQhggLg/F8BROtDmBGKipgkES9xCXzAibNKXssE7LQ24SxBzmOHx9sEZXlLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391495; c=relaxed/simple;
-	bh=JsxPb9A0gGaqYFMCy8wJENYQCk7vMpWiAIY5wkU8l90=;
+	s=arc-20240116; t=1728391498; c=relaxed/simple;
+	bh=JU91iSpyq8mEQW/sp2AtesI29xiyt7imqjHTCc6wjK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GozOtylZmCL40HUTO7UW2OZjgfXacz6ji81tIPwSgo8uXEc4DnVvf/8JX5vVpqQ7XzxKs1Ag17WSe6/V4RRhSHIykMLhQI8IQHmtuXbHFUJn8FQkDRpjyDWjEJ7AB69i08pTNwEISjPgPCPGpGdmBG80I2h0hHEaHi1YI/aepyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydCW+zzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3m/aXxQrtrpm1rO3N+LyIhRRsdoXi34ByuMYwnKGiDD319jDWbaCtSs5Xy3NEbgwVynGvBN3hv27cq3fdv/j8xvmHYo5ec6DtF/ft8NaiYecvKVBvnsdm2fkSlAqIhEWexdFL4eBOWOcEfvMYiAKF69n+HQVbi/LDLsDJqdLuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgLHip+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydCW+zzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93181C4CEC7;
-	Tue,  8 Oct 2024 12:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgLHip+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90647C4CEC7;
+	Tue,  8 Oct 2024 12:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391495;
-	bh=JsxPb9A0gGaqYFMCy8wJENYQCk7vMpWiAIY5wkU8l90=;
+	s=korg; t=1728391498;
+	bh=JU91iSpyq8mEQW/sp2AtesI29xiyt7imqjHTCc6wjK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydCW+zzT1A9iV29wZ5EzLmvfNkWLXlA4uQY98mRJ5HjzBlD9UepbgWvGIHTjXbaLe
-	 PH5eQqqIQgC6EhJ7QlHbkhfdOs76IttlSgdtCoyoP6PkW0fnhsxDxtxlriw7/wpsoj
-	 51MmsLQcd0GIWNm6exEpqMuXPCNRxR2ehwP+TljU=
+	b=CgLHip+9NSpE5tTTNpOux9rAt5uvvxTbAZUY9F3KpkpHozD8Vn4X/N5fHrlfF5Uiq
+	 w28CaUi7TZ2DTn9lUShZ1VHdGiFfnuN0G/a8Gw1gayx5y9sfPvSAYIcuvnTdtT0TFf
+	 xD3txK81sDqZ7qerxdyAzDLsmy83MIuBy4VyRXsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 132/558] nvme-tcp: check for invalidated or revoked key
-Date: Tue,  8 Oct 2024 14:02:42 +0200
-Message-ID: <20241008115707.559151299@linuxfoundation.org>
+Subject: [PATCH 6.11 106/558] wifi: mt76: mt7915: disable tx worker during tx BA session enable/disable
+Date: Tue,  8 Oct 2024 14:02:16 +0200
+Message-ID: <20241008115706.539658635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -53,120 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 5bc46b49c828a6dfaab80b71ecb63fe76a1096d2 ]
+[ Upstream commit 256cbd26fbafb30ba3314339106e5c594e9bd5f9 ]
 
-key_lookup() will always return a key, even if that key is revoked
-or invalidated. So check for invalid keys before continuing.
+Avoids firmware race condition.
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20240827093011.18621-7-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/common/keyring.c | 22 ++++++++++++++++++++++
- drivers/nvme/host/Kconfig     |  1 +
- drivers/nvme/host/fabrics.c   |  2 +-
- drivers/nvme/host/tcp.c       |  2 +-
- include/linux/nvme-keyring.h  |  6 +++++-
- 5 files changed, 30 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
-index 05e89307c8aa3..ed5167f942d89 100644
---- a/drivers/nvme/common/keyring.c
-+++ b/drivers/nvme/common/keyring.c
-@@ -20,6 +20,28 @@ key_serial_t nvme_keyring_id(void)
- }
- EXPORT_SYMBOL_GPL(nvme_keyring_id);
- 
-+static bool nvme_tls_psk_revoked(struct key *psk)
-+{
-+	return test_bit(KEY_FLAG_REVOKED, &psk->flags) ||
-+		test_bit(KEY_FLAG_INVALIDATED, &psk->flags);
-+}
-+
-+struct key *nvme_tls_key_lookup(key_serial_t key_id)
-+{
-+	struct key *key = key_lookup(key_id);
-+
-+	if (IS_ERR(key)) {
-+		pr_err("key id %08x not found\n", key_id);
-+		return key;
-+	}
-+	if (nvme_tls_psk_revoked(key)) {
-+		pr_err("key id %08x revoked\n", key_id);
-+		return ERR_PTR(-EKEYREVOKED);
-+	}
-+	return key;
-+}
-+EXPORT_SYMBOL_GPL(nvme_tls_key_lookup);
-+
- static void nvme_tls_psk_describe(const struct key *key, struct seq_file *m)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 2185cd24e2e1c..2f4755820b3cd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -690,13 +690,17 @@ int mt7915_mcu_add_tx_ba(struct mt7915_dev *dev,
  {
- 	seq_puts(m, key->description);
-diff --git a/drivers/nvme/host/Kconfig b/drivers/nvme/host/Kconfig
-index a3caef75aa0a8..883aaab2d83e3 100644
---- a/drivers/nvme/host/Kconfig
-+++ b/drivers/nvme/host/Kconfig
-@@ -109,6 +109,7 @@ config NVME_HOST_AUTH
- 	bool "NVMe over Fabrics In-Band Authentication in host side"
- 	depends on NVME_CORE
- 	select NVME_AUTH
-+	select NVME_KEYRING if NVME_TCP_TLS
- 	help
- 	  This provides support for NVMe over Fabrics In-Band Authentication in
- 	  host side.
-diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
-index f5f545fa01035..432efcbf9e2f5 100644
---- a/drivers/nvme/host/fabrics.c
-+++ b/drivers/nvme/host/fabrics.c
-@@ -665,7 +665,7 @@ static struct key *nvmf_parse_key(int key_id)
- 		return ERR_PTR(-EINVAL);
- 	}
+ 	struct mt7915_sta *msta = (struct mt7915_sta *)params->sta->drv_priv;
+ 	struct mt7915_vif *mvif = msta->vif;
++	int ret;
  
--	key = key_lookup(key_id);
-+	key = nvme_tls_key_lookup(key_id);
- 	if (IS_ERR(key))
- 		pr_err("key id %08x not found\n", key_id);
- 	else
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index b305873e588e6..e3d82e91151af 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1596,7 +1596,7 @@ static void nvme_tcp_tls_done(void *data, int status, key_serial_t pskid)
- 		goto out_complete;
- 	}
++	mt76_worker_disable(&dev->mt76.tx_worker);
+ 	if (enable && !params->amsdu)
+ 		msta->wcid.amsdu = false;
++	ret = mt76_connac_mcu_sta_ba(&dev->mt76, &mvif->mt76, params,
++				     MCU_EXT_CMD(STA_REC_UPDATE),
++				     enable, true);
++	mt76_worker_enable(&dev->mt76.tx_worker);
  
--	tls_key = key_lookup(pskid);
-+	tls_key = nvme_tls_key_lookup(pskid);
- 	if (IS_ERR(tls_key)) {
- 		dev_warn(ctrl->ctrl.device, "queue %d: Invalid key %x\n",
- 			 qid, pskid);
-diff --git a/include/linux/nvme-keyring.h b/include/linux/nvme-keyring.h
-index e10333d78dbbe..19d2b256180fd 100644
---- a/include/linux/nvme-keyring.h
-+++ b/include/linux/nvme-keyring.h
-@@ -12,7 +12,7 @@ key_serial_t nvme_tls_psk_default(struct key *keyring,
- 		const char *hostnqn, const char *subnqn);
- 
- key_serial_t nvme_keyring_id(void);
--
-+struct key *nvme_tls_key_lookup(key_serial_t key_id);
- #else
- 
- static inline key_serial_t nvme_tls_psk_default(struct key *keyring,
-@@ -24,5 +24,9 @@ static inline key_serial_t nvme_keyring_id(void)
- {
- 	return 0;
+-	return mt76_connac_mcu_sta_ba(&dev->mt76, &mvif->mt76, params,
+-				      MCU_EXT_CMD(STA_REC_UPDATE),
+-				      enable, true);
++	return ret;
  }
-+static inline struct key *nvme_tls_key_lookup(key_serial_t key_id)
-+{
-+	return ERR_PTR(-ENOTSUPP);
-+}
- #endif /* !CONFIG_NVME_KEYRING */
- #endif /* _NVME_KEYRING_H */
+ 
+ int mt7915_mcu_add_rx_ba(struct mt7915_dev *dev,
 -- 
 2.43.0
 
