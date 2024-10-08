@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9211DEFF7;
-	Tue,  8 Oct 2024 13:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874CA1D9A43;
+	Tue,  8 Oct 2024 13:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394014; cv=none; b=NKkfpyI622sgxkEJYXghDQFgCh/2spW8PdTEwAVMBP+z6j6zCxc4SDJn76dochIpM5C91chwA92r8PImm6VvNrzNdUAeieQdVhtCSPgodRoRNJkysYZq3HtMaxvWvrnlPKwQloLGc/t2Yjp06bICAdo/b5IFfGvUsedUJfZm9rw=
+	t=1728394018; cv=none; b=CmmSaRMdRBIxo92iZAB6BVIiwKVyYYQNcD76H4q4XmdaeuT6/kNR8E0pMa2BklfxX+wZ5oC0mU2eiDjFRMNS0MPzpNWiM+lZrFq6d87F8uOIYq6IQdDzTqSfqTpfjaIomHZGhSdVoqPEne2W2/uN+0nRZAWLLgeW+Pn4FAVfsms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394014; c=relaxed/simple;
-	bh=Hf1NcmOd0BnfBd6rWvR0IP4EuIIPlrEfZA9io3N12nY=;
+	s=arc-20240116; t=1728394018; c=relaxed/simple;
+	bh=/OjirSvEQhU6eEPAGIqwjEpean7Sf4rf1A6bsBOerKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0/s6nfd7vmmDk6MAbWydA/sAOMASCPV/jFlzLyOgDhV5x/fkP5oWhSRbnBY4KpLZRc9n6h+17d4cmdKncQ6GNi1uVd5nkUBPamKwRfCq6oYQDGc0ehheew+di5zGgSUcmG6wFJ5XDx5HXo6c8RmS1Egs+Lg3m+oJjxfEWWPGzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yV6Xhiei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qpfR09pujPMxQNfKMsevo2F/xZwjcSdTgS0WPGSuCzDojSKydS189/0/z/oDeNm2aWxNt+y0BABG0lKQFeCG8ccno+hQvEoKoCGUcIgKEjPEH5MkwHdSglXLVzVSmg9d6DCK4Q1WamsRK5pSfGOjl7rFugOjRqPH4F/4qrGNg3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lB5v8uQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yV6Xhiei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46187C4CECC;
-	Tue,  8 Oct 2024 13:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lB5v8uQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89018C4CEC7;
+	Tue,  8 Oct 2024 13:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394014;
-	bh=Hf1NcmOd0BnfBd6rWvR0IP4EuIIPlrEfZA9io3N12nY=;
+	s=korg; t=1728394018;
+	bh=/OjirSvEQhU6eEPAGIqwjEpean7Sf4rf1A6bsBOerKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yV6XhieiycrEeCGMnJI9Rm8/YJWeMLg/O5J1dq4dZuIv5ydPXPAiiF8fWgM5zKp19
-	 pnOTWAA1WaolCIhiyoEenGLfLmW92rZz4Db3h1lAFiMezCRW1HD7zbKyzWselUveQP
-	 qK036aCUxPJquaEgxCz/wDChzOhhNQBzmTT/RL2E=
+	b=lB5v8uQjbZeKTB2is2mwVokjwRu9G80uRDIJz1ARSGm32eKuaW5F+wgOhm1bqrFqw
+	 pwaCkXcX2IMQykXiiJbgJiv5TWoWGEWyBD0BIsoTBQexLL5d5iQgnJklyPn/X+E71l
+	 UaghDTvE0naAUKDMnZpv9NA/JquTa1nlMSjYICVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Wei Li <liwei391@huawei.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Eder Zulian <ezulian@redhat.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 320/386] tracing/timerlat: Fix duplicated kthread creation due to CPU online/offline
-Date: Tue,  8 Oct 2024 14:09:25 +0200
-Message-ID: <20241008115641.978266568@linuxfoundation.org>
+Subject: [PATCH 6.6 321/386] rtla: Fix the help text in osnoise and timerlat top tools
+Date: Tue,  8 Oct 2024 14:09:26 +0200
+Message-ID: <20241008115642.017184716@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,55 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Li <liwei391@huawei.com>
+From: Eder Zulian <ezulian@redhat.com>
 
-commit 0bb0a5c12ecf36ad561542bbb95f96355e036a02 upstream.
+commit 3d7b8ea7a8a20a45d019382c4dc6ed79e8bb95cf upstream.
 
-osnoise_hotplug_workfn() is the asynchronous online callback for
-"trace/osnoise:online". It may be congested when a CPU goes online and
-offline repeatedly and is invoked for multiple times after a certain
-online.
-
-This will lead to kthread leak and timer corruption. Add a check
-in start_kthread() to prevent this situation.
+The help text in osnoise top and timerlat top had some minor errors
+and omissions. The -d option was missing the 's' (second) abbreviation and
+the error message for '-d' used '-D'.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20240924094515.3561410-2-liwei391@huawei.com
-Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
-Signed-off-by: Wei Li <liwei391@huawei.com>
+Fixes: 1eceb2fc2ca54 ("rtla/osnoise: Add osnoise top mode")
+Fixes: a828cd18bc4ad ("rtla: Add timerlat tool and timelart top mode")
+Link: https://lore.kernel.org/20240813155831.384446-1-ezulian@redhat.com
+Suggested-by: Tomas Glozar <tglozar@redhat.com>
+Reviewed-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Eder Zulian <ezulian@redhat.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/tracing/rtla/src/osnoise_top.c  |    2 +-
+ tools/tracing/rtla/src/timerlat_top.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -2006,6 +2006,10 @@ static int start_kthread(unsigned int cp
- 	void *main = osnoise_main;
- 	char comm[24];
- 
-+	/* Do not start a new thread if it is already running */
-+	if (per_cpu(per_cpu_osnoise_var, cpu).kthread)
-+		return 0;
-+
- 	if (timerlat_enabled()) {
- 		snprintf(comm, 24, "timerlat/%d", cpu);
- 		main = timerlat_main;
-@@ -2060,11 +2064,10 @@ static int start_per_cpu_kthreads(void)
- 		if (cpumask_test_and_clear_cpu(cpu, &kthread_cpumask)) {
- 			struct task_struct *kthread;
- 
--			kthread = per_cpu(per_cpu_osnoise_var, cpu).kthread;
-+			kthread = xchg_relaxed(&(per_cpu(per_cpu_osnoise_var, cpu).kthread), NULL);
- 			if (!WARN_ON(!kthread))
- 				kthread_stop(kthread);
- 		}
--		per_cpu(per_cpu_osnoise_var, cpu).kthread = NULL;
- 	}
- 
- 	for_each_cpu(cpu, current_mask) {
+--- a/tools/tracing/rtla/src/osnoise_top.c
++++ b/tools/tracing/rtla/src/osnoise_top.c
+@@ -428,7 +428,7 @@ struct osnoise_top_params *osnoise_top_p
+ 		case 'd':
+ 			params->duration = parse_seconds_duration(optarg);
+ 			if (!params->duration)
+-				osnoise_top_usage(params, "Invalid -D duration\n");
++				osnoise_top_usage(params, "Invalid -d duration\n");
+ 			break;
+ 		case 'e':
+ 			tevent = trace_event_alloc(optarg);
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -339,7 +339,7 @@ static void timerlat_top_usage(char *usa
+ 		"	  -c/--cpus cpus: run the tracer only on the given cpus",
+ 		"	  -H/--house-keeping cpus: run rtla control threads only on the given cpus",
+ 		"	  -C/--cgroup[=cgroup_name]: set cgroup, if no cgroup_name is passed, the rtla's cgroup will be inherited",
+-		"	  -d/--duration time[m|h|d]: duration of the session in seconds",
++		"	  -d/--duration time[s|m|h|d]: duration of the session",
+ 		"	  -D/--debug: print debug info",
+ 		"	     --dump-tasks: prints the task running on all CPUs if stop conditions are met (depends on !--no-aa)",
+ 		"	  -t/--trace[=file]: save the stopped trace to [file|timerlat_trace.txt]",
+@@ -485,7 +485,7 @@ static struct timerlat_top_params
+ 		case 'd':
+ 			params->duration = parse_seconds_duration(optarg);
+ 			if (!params->duration)
+-				timerlat_top_usage("Invalid -D duration\n");
++				timerlat_top_usage("Invalid -d duration\n");
+ 			break;
+ 		case 'e':
+ 			tevent = trace_event_alloc(optarg);
 
 
