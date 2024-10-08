@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FC51D27B3;
-	Tue,  8 Oct 2024 12:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72691D27B3;
+	Tue,  8 Oct 2024 12:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391039; cv=none; b=KFqIsLJqWPja+UoK6vwiOJl8VPh3YXArFyk71u0yssamrwZ61hGHoivaL5jq8faV2pwGw5kQkHqoJQtI95mHtqpnzpTuR74VE0/0POpq99a6bSKOWL37D0CpjbYCJqlQ6v8XxFsuax+zlHXocibVv1DjlBLD6pZoHJbX+YHwDos=
+	t=1728391042; cv=none; b=A8MPf5br7xb4duiH8CgOhYUgHYBzwNFjwYq3VfIeD0HxZMviTpw/yXq9IE8MzBFkLyzqhmn1f5J6GRatkfh2FDunzjX4QOtU3tDEuPEHcN57pkBQCAEnRH5mvVbFfCPsp7gJQFYX7NRlwl9T2cz4eIR7de1M1ozraacRB/XU8AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391039; c=relaxed/simple;
-	bh=Au6eBLrN0VhDX5izzDPFyAS7JmL2/ns3yZRLJ/sTIV0=;
+	s=arc-20240116; t=1728391042; c=relaxed/simple;
+	bh=0euepMjmnXtsj4A37n3imijBzaH4sJYnnp1NUhiErjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTqewhAxLX5aeXSuC76dXVwokASo3zP2XpkcoJCXPoL8Vp7ffVVBecvF3QnC0w0IHkvPjvBb7d6vnHVRv1K5oIRrrAJTZ+T8wm45jSxhoO26baawzVU6oneIWPyTjJGA+iURJyAVbW3DGM1LQNgInpa6JdMZrj9WHvB8mSsKGa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtBjhPxf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+Kh7Al6LrZEfvtBULQ4qWodw++SM9XHtt78eBO4SCSuaAeLBYj+8I7VgQH9WUqhQoNzgbyLtR4FKwci4o//j+zywY6if4Lf4fu15Mrr9gbTZQtzv1NZvCdLABEzWyHXMOeAtKl0Xy2f16Z0SlczMGsOVxqxvRqEaTDUPMIFNas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2k/fvXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtBjhPxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FA0C4CEC7;
-	Tue,  8 Oct 2024 12:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2k/fvXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D38EC4CEC7;
+	Tue,  8 Oct 2024 12:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391039;
-	bh=Au6eBLrN0VhDX5izzDPFyAS7JmL2/ns3yZRLJ/sTIV0=;
+	s=korg; t=1728391042;
+	bh=0euepMjmnXtsj4A37n3imijBzaH4sJYnnp1NUhiErjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtBjhPxfM8u3BmSulyTHHhpST8YpOAE533G0wtaYdY98OXE0xpJ/e0qlxFYnEIlag
-	 WMUQSFTWBOIR6rqSzC2o6yBqqIGPbnjQwhJKP8ti20LQe8Y3SPqE6eRg1iS8kxgKRP
-	 5gBTPjweR87sbeAzO25gPFoYZi3cliXD02i7VKs0=
+	b=L2k/fvXnhuIp8jtOIR4SzXa0UcUB1cw/cGwvt9dbsW9PF6cahZDCE4vUqg7VHF6kW
+	 WXFKg9mC4JRCcJ89BmyzlEwsKZpDQX5+EMp5WW20xSHK4Zk8hN0SXjob3L2q6sXvsW
+	 ZwrGZ2r2pwYhQcw/IQbepKsyuPyZqdhyGI8q5Bhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 472/482] ACPI: battery: Fix possible crash when unregistering a battery hook
-Date: Tue,  8 Oct 2024 14:08:55 +0200
-Message-ID: <20241008115707.086951144@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.10 473/482] drm/rockchip: vop: enable VOP_FEATURE_INTERNAL_RGB on RK3066
+Date: Tue,  8 Oct 2024 14:08:56 +0200
+Message-ID: <20241008115707.126094371@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,69 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 76959aff14a0012ad6b984ec7686d163deccdc16 ]
+commit 6ed51ba95e27221ce87979bd2ad5926033b9e1b9 upstream.
 
-When a battery hook returns an error when adding a new battery, then
-the battery hook is automatically unregistered.
-However the battery hook provider cannot know that, so it will later
-call battery_hook_unregister() on the already unregistered battery
-hook, resulting in a crash.
+The RK3066 does have RGB display output, so it should be marked as such.
 
-Fix this by using the list head to mark already unregistered battery
-hooks as already being unregistered so that they can be ignored by
-battery_hook_unregister().
-
-Fixes: fa93854f7a7e ("battery: Add the battery hooking API")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20241001212835.341788-3-W_Armin@gmx.de
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Val Packett <val@packett.cool>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-3-val@packett.cool
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 04610036e5dc5..916cdf44be893 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -715,7 +715,7 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- 		if (!hook->remove_battery(battery->bat, hook))
- 			power_supply_changed(battery->bat);
- 	}
--	list_del(&hook->list);
-+	list_del_init(&hook->list);
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -515,6 +515,7 @@ static const struct vop_data rk3066_vop
+ 	.output = &rk3066_output,
+ 	.win = rk3066_vop_win_data,
+ 	.win_size = ARRAY_SIZE(rk3066_vop_win_data),
++	.feature = VOP_FEATURE_INTERNAL_RGB,
+ 	.max_output = { 1920, 1080 },
+ };
  
- 	pr_info("extension unregistered: %s\n", hook->name);
- }
-@@ -723,7 +723,14 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- void battery_hook_unregister(struct acpi_battery_hook *hook)
- {
- 	mutex_lock(&hook_mutex);
--	battery_hook_unregister_unlocked(hook);
-+	/*
-+	 * Ignore already unregistered battery hooks. This might happen
-+	 * if a battery hook was previously unloaded due to an error when
-+	 * adding a new battery.
-+	 */
-+	if (!list_empty(&hook->list))
-+		battery_hook_unregister_unlocked(hook);
-+
- 	mutex_unlock(&hook_mutex);
- }
- EXPORT_SYMBOL_GPL(battery_hook_unregister);
-@@ -733,7 +740,6 @@ void battery_hook_register(struct acpi_battery_hook *hook)
- 	struct acpi_battery *battery;
- 
- 	mutex_lock(&hook_mutex);
--	INIT_LIST_HEAD(&hook->list);
- 	list_add(&hook->list, &battery_hook_list);
- 	/*
- 	 * Now that the driver is registered, we need
--- 
-2.43.0
-
 
 
