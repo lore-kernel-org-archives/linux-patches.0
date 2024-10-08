@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9921DE2A5;
-	Tue,  8 Oct 2024 13:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81B41C9B99;
+	Tue,  8 Oct 2024 13:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392765; cv=none; b=obn/JIv16gFpUBCAa+QSKNhMGubcOqnVp2xq9FRAk9/jquvRmpg2Jlfa3FbOLf7VcTFwSrXT0OdK76BlZPEJfmwXgnA/erEGehWTqbAIVWvIBGm84tORiN54XZzu2BfHARaCCOXf6f/Ebq+aIQyXjHwdl00tsIPpLUq+f5Ax0Es=
+	t=1728392768; cv=none; b=AjkLml7rqwfi/uF/0wH5HQMfIo2c8yI3tN8lVxmZ5UzQSwQ5NIRU5Di+ujhfw2vrUJ9NqX4TCGttDId7gmOXc5oSqesAgSkScE2agacZHeOa8LtcF35fhhFh3sQnMhhQQkR2mdc+NruekRlY9ywblx4IWERt1gV0LSSZ1YK2tbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392765; c=relaxed/simple;
-	bh=Vb/0NYmcHhgbm5GueE9wJAOAKz5b/0X6Dpsa7M1tAno=;
+	s=arc-20240116; t=1728392768; c=relaxed/simple;
+	bh=cUD+nTiD9qkJU7OL+1ufMZdMIKmw/yt9A+1K+hh708g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFuV4xMYzD2nltzQAHWxxLjDb3RPxjnZFa/d1NVVTWm6fIxaS8yOjhWfsl1FI2kXuE2OCkUPJfwxWNU+/VQTD/a8befCbSLB51VCprpFQk9XCqr5iF9NK3RP24FlEt+GlB61EQ0i7syGY5N/qPvd8na0RyN9qs3WVEM+JwQAp6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgSfpKEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lybgq4TNj7HtPC2X1/fNMh0NRh2eOIoWdzAgv9Zp5rr5uUH1ql/KSQNSDlA+DPxBWx7dr1KVsGIPUBRUGepbjry4a48A8vFkMnn1InJJn3ESQu42gy6MonrmqpYSIv+b/fGqqV1/2v23D1Sd93KWR4M1OKhxKxrq9znjCnfCppM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3N8M81q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgSfpKEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E26C4CEC7;
-	Tue,  8 Oct 2024 13:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3N8M81q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E27C4CEC7;
+	Tue,  8 Oct 2024 13:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392764;
-	bh=Vb/0NYmcHhgbm5GueE9wJAOAKz5b/0X6Dpsa7M1tAno=;
+	s=korg; t=1728392768;
+	bh=cUD+nTiD9qkJU7OL+1ufMZdMIKmw/yt9A+1K+hh708g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgSfpKEBrXwpEGHRqI0U6S5jCT3S68gp/Qu2X7HKhm9wVwDYKUG1T0W1vr8986d8E
-	 rRF+7+NQLrXpqkl+pWAoSrFxAPFqAc06pAWCBvqYTsPJ4NpfmmJSsUtXYUAdcbAAtL
-	 Fo/2CMzWklC6naWRHzu7zQAfrOkWeMR3+LHgChlQ=
+	b=Q3N8M81qdrv9RKHt/jj6+Iw2xlQS183wP8azh3RCPNYbm4EEnNOIPBCB8dMdHwXdE
+	 mlBnZxa8KcKWKBThnFjnESCxz29dMVp3vaTS1xf5F/nX1MTq8/9peP3vs/BSthEta/
+	 q6NC+a5IOrYADtVK53uo988ONIyzeLd6uSLiVVV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 481/558] mm/hugetlb: fix memfd_pin_folios free_huge_pages leak
-Date: Tue,  8 Oct 2024 14:08:31 +0200
-Message-ID: <20241008115721.166014543@linuxfoundation.org>
+Subject: [PATCH 6.11 482/558] mm/hugetlb: fix memfd_pin_folios resv_huge_pages leak
+Date: Tue,  8 Oct 2024 14:08:32 +0200
+Message-ID: <20241008115721.205151030@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -58,26 +58,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-commit c56b6f3d801d7ec8965993342bdd9e2972b6cb8e upstream.
+commit 26a8ea80929c518bdec5e53a5776f95919b7c88e upstream.
 
-memfd_pin_folios followed by unpin_folios fails to restore free_huge_pages
-if the pages were not already faulted in, because the folio refcount for
-pages created by memfd_alloc_folio never goes to 0.  memfd_pin_folios
-needs another folio_put to undo the folio_try_get below:
+memfd_pin_folios followed by unpin_folios leaves resv_huge_pages elevated
+if the pages were not already faulted in.  During a normal page fault,
+resv_huge_pages is consumed here:
+
+hugetlb_fault()
+  alloc_hugetlb_folio()
+    dequeue_hugetlb_folio_vma()
+      dequeue_hugetlb_folio_nodemask()
+        dequeue_hugetlb_folio_node_exact()
+          free_huge_pages--
+      resv_huge_pages--
+
+During memfd_pin_folios, the page is created by calling
+alloc_hugetlb_folio_nodemask instead of alloc_hugetlb_folio, and
+resv_huge_pages is not modified:
 
 memfd_alloc_folio()
   alloc_hugetlb_folio_nodemask()
     dequeue_hugetlb_folio_nodemask()
       dequeue_hugetlb_folio_node_exact()
-        folio_ref_unfreeze(folio, 1);    ; adds 1 refcount
-  folio_try_get()                        ; adds 1 refcount
-  hugetlb_add_to_page_cache()            ; adds 512 refcount (on x86)
+        free_huge_pages--
 
-With the fix, after memfd_pin_folios + unpin_folios, the refcount for the
-(unfaulted) page is 512, which is correct, as the refcount for a faulted
-unpinned page is 513.
+alloc_hugetlb_folio_nodemask has other callers that must not modify
+resv_huge_pages.  Therefore, to fix, define an alternate version of
+alloc_hugetlb_folio_nodemask for this call site that adjusts
+resv_huge_pages.
 
-Link: https://lkml.kernel.org/r/1725373521-451395-3-git-send-email-steven.sistare@oracle.com
+Link: https://lkml.kernel.org/r/1725373521-451395-4-git-send-email-steven.sistare@oracle.com
 Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
@@ -90,28 +100,80 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h |   10 ++++++++++
+ mm/hugetlb.c            |   17 +++++++++++++++++
+ mm/memfd.c              |    9 ++++-----
+ 3 files changed, 31 insertions(+), 5 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -3618,7 +3618,7 @@ long memfd_pin_folios(struct file *memfd
- 	pgoff_t start_idx, end_idx, next_idx;
- 	struct folio *folio = NULL;
- 	struct folio_batch fbatch;
--	struct hstate *h;
-+	struct hstate *h = NULL;
- 	long ret = -EINVAL;
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -695,6 +695,9 @@ struct folio *alloc_hugetlb_folio(struct
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+ 				nodemask_t *nmask, gfp_t gfp_mask,
+ 				bool allow_alloc_fallback);
++struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
++					  nodemask_t *nmask, gfp_t gfp_mask);
++
+ int hugetlb_add_to_page_cache(struct folio *folio, struct address_space *mapping,
+ 			pgoff_t idx);
+ void restore_reserve_on_error(struct hstate *h, struct vm_area_struct *vma,
+@@ -1060,6 +1063,13 @@ static inline struct folio *alloc_hugetl
+ {
+ 	return NULL;
+ }
++
++static inline struct folio *
++alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
++			    nodemask_t *nmask, gfp_t gfp_mask)
++{
++	return NULL;
++}
  
- 	if (start < 0 || start > end || !max_folios)
-@@ -3662,6 +3662,8 @@ long memfd_pin_folios(struct file *memfd
- 							     &fbatch);
- 			if (folio) {
- 				folio_put(folio);
-+				if (h)
-+					folio_put(folio);
- 				folio = NULL;
- 			}
+ static inline struct folio *
+ alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2564,6 +2564,23 @@ struct folio *alloc_buddy_hugetlb_folio_
+ 	return folio;
+ }
  
++struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
++		nodemask_t *nmask, gfp_t gfp_mask)
++{
++	struct folio *folio;
++
++	spin_lock_irq(&hugetlb_lock);
++	folio = dequeue_hugetlb_folio_nodemask(h, gfp_mask, preferred_nid,
++					       nmask);
++	if (folio) {
++		VM_BUG_ON(!h->resv_huge_pages);
++		h->resv_huge_pages--;
++	}
++
++	spin_unlock_irq(&hugetlb_lock);
++	return folio;
++}
++
+ /* folio migration callback function */
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+ 		nodemask_t *nmask, gfp_t gfp_mask, bool allow_alloc_fallback)
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -82,11 +82,10 @@ struct folio *memfd_alloc_folio(struct f
+ 		gfp_mask = htlb_alloc_mask(hstate_file(memfd));
+ 		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
+ 
+-		folio = alloc_hugetlb_folio_nodemask(hstate_file(memfd),
+-						     numa_node_id(),
+-						     NULL,
+-						     gfp_mask,
+-						     false);
++		folio = alloc_hugetlb_folio_reserve(hstate_file(memfd),
++						    numa_node_id(),
++						    NULL,
++						    gfp_mask);
+ 		if (folio && folio_try_get(folio)) {
+ 			err = hugetlb_add_to_page_cache(folio,
+ 							memfd->f_mapping,
 
 
