@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C9F1DA60C;
-	Tue,  8 Oct 2024 12:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D721DC759;
+	Tue,  8 Oct 2024 12:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391178; cv=none; b=PwEddYreadmqg6IxlfN8r+rbpu58zti8wT/4KTnWFJK2BYcuu3FkDuqn+i8XsZFU4/4yRncAIFZ0LUsg9t664TmQoiB01pdby5X/W9kPezb0jAdFg2DDfH3wHAO85gmi21+e4q9Ri5vx+biilT6EmaUx6ZvMvz2pM8+WmXmcrkE=
+	t=1728391181; cv=none; b=oSjqX856usfnTzMI+yH++CIasyVr7yswxjE7JbANMYFFWP4Rjn+qGFyiJWsAIhJYjC4jooEK39y9v3pm3fmRuoCPzzoQV9GY8vpEoSJuTo+IJRFnzpZ8e/K0+sHuHiIxUmsj0YXj6LOE0cHq+F/Dh3mp7b7DblRHUT8GGLT7LXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391178; c=relaxed/simple;
-	bh=LKAnu5NWEVGoLXGO+Lzck34prbi0IKvwiF0yEqluYo8=;
+	s=arc-20240116; t=1728391181; c=relaxed/simple;
+	bh=p1MPYfNzz5NAmjBpVUgjBvwWq9CuniyqiKs65LcFj0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fb9G+w/i/a/m0oKrEEtV9kXMpErCvgQmvVZzaPp9jGkAcuhfX0d+c1FIUJLFHo/fR1NgRMddfakcCPCkVw8nxFIHZmm9vgMVHHZp5rxXI387WKpyXaiCFt5l9U8nKjenZVnyoGDVm6BP8hnLJQ2GddyKId4p+iL3OnwrwZAsoN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOEbMCCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qyxNNSVhDUU9Fc5ZawtOgAP0F6vdx9eyLXscI+VAppyDwIwlYor0aFBjL3+Gx2M9RcKbFVYrh2r+dsEFBW5BMF55hxyCWFNX0tpHSt9D+4xT/NY588TJSRBazUneq1fACFVtckS7Due7D7gWFbx2XRx+nL4+zg8fUVhct3OZ8D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdXUnHsf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOEbMCCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1D2C4CEC7;
-	Tue,  8 Oct 2024 12:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdXUnHsf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FE8C4CEC7;
+	Tue,  8 Oct 2024 12:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391177;
-	bh=LKAnu5NWEVGoLXGO+Lzck34prbi0IKvwiF0yEqluYo8=;
+	s=korg; t=1728391180;
+	bh=p1MPYfNzz5NAmjBpVUgjBvwWq9CuniyqiKs65LcFj0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOEbMCCe5Wj/FldeQyv8IC5elDBUR7YEN4eTqsUXU/EC6LWektm/3ZjTKgzssfDAS
-	 hri4BTZzvBDNCwIrXq0RBq2kyjNwA8tWepm7fRy7s9nAcdUUlYX4GlSkBCSRLp89uk
-	 CYKkwbuId6O0Et6+BO+spRXgRmYmk5Mrp8ibkVD4=
+	b=sdXUnHsfNR/grN5EO3aE3S6iZvv+PI3kPx38bhMwxed5TjvxsCX3hOcOCnjdsDdQY
+	 X7JAiVwZFB2QZOx0TSwAA3I8OuQGSYOWnObAc8THBqMW1BMQ4NYyDpxe2mJ3fW0fjF
+	 tPWC9+VIoLpoL3Vy2bF1UwWJ/8yJy9wxQ5MDTSHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Rocha <rrochavi@fnal.gov>,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <kai.makisara@kolumbus.fi>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	jiaymao <quic_jiaymao@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 004/558] scsi: st: Fix input/output error on empty drive reset
-Date: Tue,  8 Oct 2024 14:00:34 +0200
-Message-ID: <20241008115702.394795074@linuxfoundation.org>
+Subject: [PATCH 6.11 031/558] Bluetooth: MGMT: Fix possible crash on mgmt_index_removed
+Date: Tue,  8 Oct 2024 14:01:01 +0200
+Message-ID: <20241008115703.448638418@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -46,77 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael Rocha <rrochavi@fnal.gov>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 3d882cca73be830549833517ddccb3ac4668c04e ]
+[ Upstream commit f53e1c9c726d83092167f2226f32bd3b73f26c21 ]
 
-A previous change was introduced to prevent data loss during a power-on
-reset when a tape is present inside the drive. This commit set the
-"pos_unknown" flag to true to avoid operations that could compromise data
-by performing actions from an untracked position. The relevant change is
-commit 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
+If mgmt_index_removed is called while there are commands queued on
+cmd_sync it could lead to crashes like the bellow trace:
 
-As a consequence of this change, a new issue has surfaced: the driver now
-returns an "Input/output error" even for empty drives when the drive, host,
-or bus is reset. This issue stems from the "flush_buffer" function, which
-first checks whether the "pos_unknown" flag is set. If the flag is set, the
-user will encounter an "Input/output error" until the tape position is
-known again. This behavior differs from the previous implementation, where
-empty drives were not affected at system start up time, allowing tape
-software to send commands to the driver to retrieve the drive's status and
-other information.
+0x0000053D: __list_del_entry_valid_or_report+0x98/0xdc
+0x0000053D: mgmt_pending_remove+0x18/0x58 [bluetooth]
+0x0000053E: mgmt_remove_adv_monitor_complete+0x80/0x108 [bluetooth]
+0x0000053E: hci_cmd_sync_work+0xbc/0x164 [bluetooth]
 
-The current behavior prioritizes the "pos_unknown" flag over the
-"ST_NO_TAPE" status, leading to issues for software that detects drives
-during system startup. This software will receive an "Input/output error"
-until a tape is loaded and its position is known.
+So while handling mgmt_index_removed this attempts to dequeue
+commands passed as user_data to cmd_sync.
 
-To resolve this, the "ST_NO_TAPE" status should take priority when the
-drive is empty, allowing communication with the drive following a power-on
-reset. At the same time, the change should continue to protect data by
-maintaining the "pos_unknown" flag when the drive contains a tape and its
-position is unknown.
-
-Signed-off-by: Rafael Rocha <rrochavi@fnal.gov>
-Link: https://lore.kernel.org/r/20240905173921.10944-1-rrochavi@fnal.gov
-Fixes: 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
-Acked-by: Kai Mäkisara <kai.makisara@kolumbus.fi>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7cf5c2978f23 ("Bluetooth: hci_sync: Refactor remove Adv Monitor")
+Reported-by: jiaymao <quic_jiaymao@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 0d8ce1a92168c..d50bad3a2ce92 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -834,6 +834,9 @@ static int flush_buffer(struct scsi_tape *STp, int seek_next)
- 	int backspace, result;
- 	struct st_partstat *STps;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index e4f564d6f6fbf..4157d9f23f46e 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -1453,10 +1453,15 @@ static void cmd_status_rsp(struct mgmt_pending_cmd *cmd, void *data)
  
-+	if (STp->ready != ST_READY)
-+		return 0;
+ static void cmd_complete_rsp(struct mgmt_pending_cmd *cmd, void *data)
+ {
+-	if (cmd->cmd_complete) {
+-		u8 *status = data;
++	struct cmd_lookup *match = data;
 +
- 	/*
- 	 * If there was a bus reset, block further access
- 	 * to this device.
-@@ -841,8 +844,6 @@ static int flush_buffer(struct scsi_tape *STp, int seek_next)
- 	if (STp->pos_unknown)
- 		return (-EIO);
++	/* dequeue cmd_sync entries using cmd as data as that is about to be
++	 * removed/freed.
++	 */
++	hci_cmd_sync_dequeue(match->hdev, NULL, cmd, NULL);
  
--	if (STp->ready != ST_READY)
--		return 0;
- 	STps = &(STp->ps[STp->partition]);
- 	if (STps->rw == ST_WRITING)	/* Writing */
- 		return st_flush_write_buffer(STp);
+-		cmd->cmd_complete(cmd, *status);
++	if (cmd->cmd_complete) {
++		cmd->cmd_complete(cmd, match->mgmt_status);
+ 		mgmt_pending_remove(cmd);
+ 
+ 		return;
+@@ -9394,12 +9399,12 @@ void mgmt_index_added(struct hci_dev *hdev)
+ void mgmt_index_removed(struct hci_dev *hdev)
+ {
+ 	struct mgmt_ev_ext_index ev;
+-	u8 status = MGMT_STATUS_INVALID_INDEX;
++	struct cmd_lookup match = { NULL, hdev, MGMT_STATUS_INVALID_INDEX };
+ 
+ 	if (test_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks))
+ 		return;
+ 
+-	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
++	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
+ 
+ 	if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
+ 		mgmt_index_event(MGMT_EV_UNCONF_INDEX_REMOVED, hdev, NULL, 0,
+@@ -9450,7 +9455,7 @@ void mgmt_power_on(struct hci_dev *hdev, int err)
+ void __mgmt_power_off(struct hci_dev *hdev)
+ {
+ 	struct cmd_lookup match = { NULL, hdev };
+-	u8 status, zero_cod[] = { 0, 0, 0 };
++	u8 zero_cod[] = { 0, 0, 0 };
+ 
+ 	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, settings_rsp, &match);
+ 
+@@ -9462,11 +9467,11 @@ void __mgmt_power_off(struct hci_dev *hdev)
+ 	 * status responses.
+ 	 */
+ 	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
+-		status = MGMT_STATUS_INVALID_INDEX;
++		match.mgmt_status = MGMT_STATUS_INVALID_INDEX;
+ 	else
+-		status = MGMT_STATUS_NOT_POWERED;
++		match.mgmt_status = MGMT_STATUS_NOT_POWERED;
+ 
+-	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &status);
++	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
+ 
+ 	if (memcmp(hdev->dev_class, zero_cod, sizeof(zero_cod)) != 0) {
+ 		mgmt_limited_event(MGMT_EV_CLASS_OF_DEV_CHANGED, hdev,
 -- 
 2.43.0
 
