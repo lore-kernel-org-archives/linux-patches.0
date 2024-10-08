@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C081DF27C;
-	Tue,  8 Oct 2024 12:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4EC1DFE00;
+	Tue,  8 Oct 2024 12:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392156; cv=none; b=apgQO4eQqBBxLAMG5nJ7/x8adBXgUwC1QtaEAKI3HUefYkDuM3yD8mp9kc6e7/tJ/xkFfhXQpGty0AGh8VracKAXglg7Jen6KjZPsf8Cn0G1u8iwzfLNlfkbwz/QwP3tIb6wABre7TTKw5TsLIAUW1dLwP0BbzF5qLJ2mbyS9GI=
+	t=1728392160; cv=none; b=tsPAv0pPoNBvGTMoHSgsnDq201azMalZx+nIy6oFJ3Q3h8Te5V1q7qK7y9/RDLEXIWrMcDhmGSjlIDZxdEeKHX67f+9Rfgop1MBlMhTMCTVFeOPc5efnMPJP5MjwlZByE5EDcazymnhAshtJYMzHKzBRr1063CtEhrPp0wGC0Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392156; c=relaxed/simple;
-	bh=8vOaPVSZShk7w7tVhzMr7X8e6V9x/FMlidK4LM2FbYo=;
+	s=arc-20240116; t=1728392160; c=relaxed/simple;
+	bh=Q1qdwYFAV0lruSv8FDt+QzgLVjn+IGyiHmFjMbKPrCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BR5zrf1G0kI/gfIhdhd4bDADqnM0W7jD+CLWz8b2yfmIIQn0d2KNR5VjLtuhXvgLotxA4HG6yOMlJanXIBm4lNt5R0psZuI5cfEjxGZzOGOeUWs5EHQJVa2jSleyY+96Dv322bPBpYBs+rIUIYhT4uMYci+ehPj5vDiF0tiUoQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDBDQsos; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESE747AeoOCh77CamIPv5VpzvU9a/ankxdNjDyOeyCVXxy1QxyCFVmQSF4jNUFDTkN3zoMmzWy2Ofm4kkn4MC5JN64OYhBggwLBimMt8aRL9y8CNnPSXdGpTrTurR5Kjc1JduZIXrbhmCH8zgkcp6RK0XiGpCNe+V7ysxy5TTao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un+onaxM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDBDQsos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499C3C4CEC7;
-	Tue,  8 Oct 2024 12:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un+onaxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6F0C4CECC;
+	Tue,  8 Oct 2024 12:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392156;
-	bh=8vOaPVSZShk7w7tVhzMr7X8e6V9x/FMlidK4LM2FbYo=;
+	s=korg; t=1728392160;
+	bh=Q1qdwYFAV0lruSv8FDt+QzgLVjn+IGyiHmFjMbKPrCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDBDQsos/4lZrUeT0OieMbg107LAWhKGOpAlN2jdm4lxOmuMk399+aDHM0xz5CrYi
-	 N+n+4ciOnzefyX/AHr2Mycl/4aEbHJDMNC7sMPcaxCxCA4oF253DE9HA/S3GxR4heN
-	 KEwnXObVbE3HzXSZsOr+9W+HJRbrUwkS6GeEzLPU=
+	b=Un+onaxMm4cjlk7UQ5PuAN2JYgtMfD2TQH++hBvKNrUoS8CeM+8ye0bZ14VAQl1uo
+	 gjrgXVlyvaoROyAkpfCgdxgu6kT2ffQSQbCQzKdejSPkZSUFcq9D9nFd9bk2ZpvuPT
+	 XJr7+l1qXvlimrstCnJnfZz9rseLEAdy5r9ShLDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
+	David Hildenbrand <david@redhat.com>,
+	Mario Casquero <mcasquer@redhat.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 332/558] ext4: fix error message when rejecting the default hash
-Date: Tue,  8 Oct 2024 14:06:02 +0200
-Message-ID: <20241008115715.369198435@linuxfoundation.org>
+Subject: [PATCH 6.11 333/558] selftests/mm: fix charge_reserved_hugetlb.sh test
+Date: Tue,  8 Oct 2024 14:06:03 +0200
+Message-ID: <20241008115715.408096164@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,108 +55,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit a2187431c395cdfbf144e3536f25468c64fc7cfa ]
+[ Upstream commit c41a701d18efe6b8aa402efab16edbaba50c9548 ]
 
-Commit 985b67cd8639 ("ext4: filesystems without casefold feature cannot
-be mounted with siphash") properly rejects volumes where
-s_def_hash_version is set to DX_HASH_SIPHASH, but the check and the
-error message should not look into casefold setup - a filesystem should
-never have DX_HASH_SIPHASH as the default hash.  Fix it and, since we
-are there, move the check to ext4_hash_info_init.
+Currently, running the charge_reserved_hugetlb.sh selftest we can
+sometimes observe something like:
 
-Fixes:985b67cd8639 ("ext4: filesystems without casefold feature cannot
-be mounted with siphash")
+  $ ./charge_reserved_hugetlb.sh -cgroup-v2
+  ...
+  write_result is 0
+  After write:
+  hugetlb_usage=0
+  reserved_usage=10485760
+  killing write_to_hugetlbfs
+  Received 2.
+  Deleting the memory
+  Detach failure: Invalid argument
+  umount: /mnt/huge: target is busy.
 
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/87jzg1en6j.fsf_-_@mailhost.krisman.be
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Both cases are issues in the test.
+
+While the unmount error seems to be racy, it will make the test fail:
+	$ ./run_vmtests.sh -t hugetlb
+	...
+	# [FAIL]
+	not ok 10 charge_reserved_hugetlb.sh -cgroup-v2 # exit=32
+
+The issue is that we are not waiting for the write_to_hugetlbfs process to
+quit.  So it might still have a hugetlbfs file open, about which umount is
+not happy.  Fix that by making "killall" wait for the process to quit.
+
+The other error ("Detach failure: Invalid argument") does not seem to
+result in a test error, but is misleading.  Turns out write_to_hugetlbfs.c
+unconditionally tries to cleanup using shmdt(), even when we only
+mmap()'ed a hugetlb file.  Even worse, shmaddr is never even set for the
+SHM case.  Fix that as well.
+
+With this change it seems to work as expected.
+
+Link: https://lkml.kernel.org/r/20240821123115.2068812-1-david@redhat.com
+Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: Mario Casquero <mcasquer@redhat.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Tested-by: Mario Casquero <mcasquer@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h  |  1 +
- fs/ext4/super.c | 27 +++++++++++++++++----------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ .../selftests/mm/charge_reserved_hugetlb.sh   |  2 +-
+ .../testing/selftests/mm/write_to_hugetlbfs.c | 21 +++++++++++--------
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 08acd152261ed..8bd302392d759 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2462,6 +2462,7 @@ static inline __le16 ext4_rec_len_to_disk(unsigned len, unsigned blocksize)
- #define DX_HASH_HALF_MD4_UNSIGNED	4
- #define DX_HASH_TEA_UNSIGNED		5
- #define DX_HASH_SIPHASH			6
-+#define DX_HASH_LAST 			DX_HASH_SIPHASH
+diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+index d680c00d2853a..67df7b47087f0 100755
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -254,7 +254,7 @@ function cleanup_hugetlb_memory() {
+   local cgroup="$1"
+   if [[ "$(pgrep -f write_to_hugetlbfs)" != "" ]]; then
+     echo killing write_to_hugetlbfs
+-    killall -2 write_to_hugetlbfs
++    killall -2 --wait write_to_hugetlbfs
+     wait_for_hugetlb_memory_to_get_depleted $cgroup
+   fi
+   set -e
+diff --git a/tools/testing/selftests/mm/write_to_hugetlbfs.c b/tools/testing/selftests/mm/write_to_hugetlbfs.c
+index 6a2caba19ee1d..1289d311efd70 100644
+--- a/tools/testing/selftests/mm/write_to_hugetlbfs.c
++++ b/tools/testing/selftests/mm/write_to_hugetlbfs.c
+@@ -28,7 +28,7 @@ enum method {
  
- static inline u32 ext4_chksum(struct ext4_sb_info *sbi, u32 crc,
- 			      const void *address, unsigned int length)
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index b3f47d6879ebf..1cd4e20cc320d 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -3583,13 +3583,6 @@ int ext4_feature_set_ok(struct super_block *sb, int readonly)
- 			 "mounted without CONFIG_UNICODE");
- 		return 0;
- 	}
--	if (EXT4_SB(sb)->s_es->s_def_hash_version == DX_HASH_SIPHASH &&
--	    !ext4_has_feature_casefold(sb)) {
--		ext4_msg(sb, KERN_ERR,
--			 "Filesystem without casefold feature cannot be "
--			 "mounted with siphash");
--		return 0;
--	}
+ /* Global variables. */
+ static const char *self;
+-static char *shmaddr;
++static int *shmaddr;
+ static int shmid;
  
- 	if (readonly)
- 		return 1;
-@@ -5095,16 +5088,27 @@ static int ext4_load_super(struct super_block *sb, ext4_fsblk_t *lsb,
- 	return ret;
- }
- 
--static void ext4_hash_info_init(struct super_block *sb)
-+static int ext4_hash_info_init(struct super_block *sb)
+ /*
+@@ -47,15 +47,17 @@ void sig_handler(int signo)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
- 	unsigned int i;
- 
-+	sbi->s_def_hash_version = es->s_def_hash_version;
+ 	printf("Received %d.\n", signo);
+ 	if (signo == SIGINT) {
+-		printf("Deleting the memory\n");
+-		if (shmdt((const void *)shmaddr) != 0) {
+-			perror("Detach failure");
++		if (shmaddr) {
++			printf("Deleting the memory\n");
++			if (shmdt((const void *)shmaddr) != 0) {
++				perror("Detach failure");
++				shmctl(shmid, IPC_RMID, NULL);
++				exit(4);
++			}
 +
-+	if (sbi->s_def_hash_version > DX_HASH_LAST) {
-+		ext4_msg(sb, KERN_ERR,
-+			 "Invalid default hash set in the superblock");
-+		return -EINVAL;
-+	} else if (sbi->s_def_hash_version == DX_HASH_SIPHASH) {
-+		ext4_msg(sb, KERN_ERR,
-+			 "SIPHASH is not a valid default hash value");
-+		return -EINVAL;
-+	}
-+
- 	for (i = 0; i < 4; i++)
- 		sbi->s_hash_seed[i] = le32_to_cpu(es->s_hash_seed[i]);
- 
--	sbi->s_def_hash_version = es->s_def_hash_version;
- 	if (ext4_has_feature_dir_index(sb)) {
- 		i = le32_to_cpu(es->s_flags);
- 		if (i & EXT2_FLAGS_UNSIGNED_HASH)
-@@ -5122,6 +5126,7 @@ static void ext4_hash_info_init(struct super_block *sb)
- #endif
+ 			shmctl(shmid, IPC_RMID, NULL);
+-			exit(4);
++			printf("Done deleting the memory\n");
  		}
+-
+-		shmctl(shmid, IPC_RMID, NULL);
+-		printf("Done deleting the memory\n");
  	}
-+	return 0;
+ 	exit(2);
  }
+@@ -211,7 +213,8 @@ int main(int argc, char **argv)
+ 			shmctl(shmid, IPC_RMID, NULL);
+ 			exit(2);
+ 		}
+-		printf("shmaddr: %p\n", ptr);
++		shmaddr = ptr;
++		printf("shmaddr: %p\n", shmaddr);
  
- static int ext4_block_group_meta_init(struct super_block *sb, int silent)
-@@ -5269,7 +5274,9 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	if (err)
- 		goto failed_mount;
- 
--	ext4_hash_info_init(sb);
-+	err = ext4_hash_info_init(sb);
-+	if (err)
-+		goto failed_mount;
- 
- 	err = ext4_handle_clustersize(sb);
- 	if (err)
+ 		break;
+ 	default:
 -- 
 2.43.0
 
