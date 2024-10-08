@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464F21DF254;
-	Tue,  8 Oct 2024 13:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F131DF254;
+	Tue,  8 Oct 2024 13:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394041; cv=none; b=LMUkPn5p9YE/jFwSlj9oE/ffOjz3e6KZrkSeM61jbxqO6OtCnvXk6jTg4URFij0Csy7VGoexGP8JXZRKHgU1lsh4DpzPuh+wOude0b0stSFn9ck/0wACNTrIoz4bLqWMtpUudFRv0lKyEXDjV0Gt86976pUcnfBDvgComFQaHXo=
+	t=1728394044; cv=none; b=dEPv4HnOqXWD8a0EQEacIxU3DCFPA4xCji2HcQWII1Upy2LQKeAnFsvHjlC9aa6JT49ebNhE6tCyBPTv2MFdXITp7XQWveRH2Oo45aLg3P+FZz3KWTkjLdYduviL+pA7u0Wt2fQzZWJWmhWasYkIZdhUY3LhqWbVzOuJY79f/ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394041; c=relaxed/simple;
-	bh=znrQcowjjeI7d2ohEiAqz/e+zbWYeOqg/dWojRLJysM=;
+	s=arc-20240116; t=1728394044; c=relaxed/simple;
+	bh=wv5Tjv0iNAv4ySFSBRSi8UkAqXbUPCGsRKNjrHmqmSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T270vcSUqywkJtFtFFc46OY58rdYnOypulGQEwY1zbKEOJxzymqQ/w+NJfvvteO81vYISoqZYwTf/NAdMvjkcYEazJKSjBmlvEy748N1Kr2hmmzibAUr2+f8g4hNXC2hgbMhqU47hyXNlEnWsnZzSAWViU19G2LIYWCUdzU9pf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqJwB3uz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Esbfjb9AYL0xhcJzuzpHHyvEbvEVkArIOs33H9JvzGiHLfGUXLTHyogHy8Ob3y+2cJKM1JZe9E1BBF1d4QNxff5oMUlTrgJPdYsAmLoRqKGvX2I+uRWnvdkEgqlqsKophsaecN4FAs8WuKH8mAfKIhSzg8CZrhZzW4UDiutBXxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr4gruCJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqJwB3uz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A836DC4CEC7;
-	Tue,  8 Oct 2024 13:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr4gruCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45C4C4CEC7;
+	Tue,  8 Oct 2024 13:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394041;
-	bh=znrQcowjjeI7d2ohEiAqz/e+zbWYeOqg/dWojRLJysM=;
+	s=korg; t=1728394044;
+	bh=wv5Tjv0iNAv4ySFSBRSi8UkAqXbUPCGsRKNjrHmqmSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VqJwB3uzLDDqoJdvQDCpVzSdv69/jBO6lCq2IP29zOpiZNSVe0eOHaIigUGVK2T9l
-	 khLyhUy4lbjUivY6Nc2+qLabwCNSHj76qfR5F2MVdD+GX7hwdDloTGa0XEz04MKFXu
-	 1CNfopP4cqk9X2YsgwalB/9QW9C+xR1xMkRLd3Ec=
+	b=kr4gruCJTG6FDqVmBcoQfrholsKLiRSW19YFDRhnAPNVru1NAnvtzsWe0KjxOxnD0
+	 E51Xu20LTHDore3Vkxle1hiIFn4tBIfmOGZEre2yn7IneF/UCPSBi01+Cx/UbpGSHv
+	 I8CWoW5Q8/3vVubfPdLVfcDPsflxkpKW05uZyAU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
 	Willem de Bruijn <willemb@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 298/386] vrf: revert "vrf: Remove unnecessary RCU-bh critical section"
-Date: Tue,  8 Oct 2024 14:09:03 +0200
-Message-ID: <20241008115641.113661666@linuxfoundation.org>
+Subject: [PATCH 6.6 299/386] gso: fix udp gso fraglist segmentation after pull from frag_list
+Date: Tue,  8 Oct 2024 14:09:04 +0200
+Message-ID: <20241008115641.152043719@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -55,88 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Willem de Bruijn <willemb@google.com>
 
-commit b04c4d9eb4f25b950b33218e33b04c94e7445e51 upstream.
+commit a1e40ac5b5e9077fe1f7ae0eb88034db0f9ae1ab upstream.
 
-This reverts commit 504fc6f4f7f681d2a03aa5f68aad549d90eab853.
+Detect gso fraglist skbs with corrupted geometry (see below) and
+pass these to skb_segment instead of skb_segment_list, as the first
+can segment them correctly.
 
-dev_queue_xmit_nit is expected to be called with BH disabled.
-__dev_queue_xmit has the following:
+Valid SKB_GSO_FRAGLIST skbs
+- consist of two or more segments
+- the head_skb holds the protocol headers plus first gso_size
+- one or more frag_list skbs hold exactly one segment
+- all but the last must be gso_size
 
-        /* Disable soft irqs for various locks below. Also
-         * stops preemption for RCU.
-         */
-        rcu_read_lock_bh();
+Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
+modify these skbs, breaking these invariants.
 
-VRF must follow this invariant. The referenced commit removed this
-protection. Which triggered a lockdep warning:
+In extreme cases they pull all data into skb linear. For UDP, this
+causes a NULL ptr deref in __udpv4_gso_segment_list_csum at
+udp_hdr(seg->next)->dest.
 
-	================================
-	WARNING: inconsistent lock state
-	6.11.0 #1 Tainted: G        W
-	--------------------------------
-	inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
-	btserver/134819 [HC0[0]:SC0[0]:HE1:SE1] takes:
-	ffff8882da30c118 (rlock-AF_PACKET){+.?.}-{2:2}, at: tpacket_rcv+0x863/0x3b30
-	{IN-SOFTIRQ-W} state was registered at:
-	  lock_acquire+0x19a/0x4f0
-	  _raw_spin_lock+0x27/0x40
-	  packet_rcv+0xa33/0x1320
-	  __netif_receive_skb_core.constprop.0+0xcb0/0x3a90
-	  __netif_receive_skb_list_core+0x2c9/0x890
-	  netif_receive_skb_list_internal+0x610/0xcc0
-          [...]
+Detect invalid geometry due to pull, by checking head_skb size.
+Don't just drop, as this may blackhole a destination. Convert to be
+able to pass to regular skb_segment.
 
-	other info that might help us debug this:
-	 Possible unsafe locking scenario:
-
-	       CPU0
-	       ----
-	  lock(rlock-AF_PACKET);
-	  <Interrupt>
-	    lock(rlock-AF_PACKET);
-
-	 *** DEADLOCK ***
-
-	Call Trace:
-	 <TASK>
-	 dump_stack_lvl+0x73/0xa0
-	 mark_lock+0x102e/0x16b0
-	 __lock_acquire+0x9ae/0x6170
-	 lock_acquire+0x19a/0x4f0
-	 _raw_spin_lock+0x27/0x40
-	 tpacket_rcv+0x863/0x3b30
-	 dev_queue_xmit_nit+0x709/0xa40
-	 vrf_finish_direct+0x26e/0x340 [vrf]
-	 vrf_l3_out+0x5f4/0xe80 [vrf]
-	 __ip_local_out+0x51e/0x7a0
-          [...]
-
-Fixes: 504fc6f4f7f6 ("vrf: Remove unnecessary RCU-bh critical section")
-Link: https://lore.kernel.org/netdev/20240925185216.1990381-1-greearb@candelatech.com/
-Reported-by: Ben Greear <greearb@candelatech.com>
+Link: https://lore.kernel.org/netdev/20240428142913.18666-1-shiming.cheng@mediatek.com/
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
 Signed-off-by: Willem de Bruijn <willemb@google.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240929061839.1175300-1-willemdebruijn.kernel@gmail.com
+Link: https://patch.msgid.link/20241001171752.107580-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vrf.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/udp_offload.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -628,7 +628,9 @@ static void vrf_finish_direct(struct sk_
- 		eth_zero_addr(eth->h_dest);
- 		eth->h_proto = skb->protocol;
- 
-+		rcu_read_lock_bh();
- 		dev_queue_xmit_nit(skb, vrf_dev);
-+		rcu_read_unlock_bh();
- 
- 		skb_pull(skb, ETH_HLEN);
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -290,8 +290,26 @@ struct sk_buff *__udp_gso_segment(struct
+ 		return NULL;
  	}
+ 
+-	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
+-		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
++	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
++		 /* Detect modified geometry and pass those to skb_segment. */
++		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
++			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
++
++		 /* Setup csum, as fraglist skips this in udp4_gro_receive. */
++		gso_skb->csum_start = skb_transport_header(gso_skb) - gso_skb->head;
++		gso_skb->csum_offset = offsetof(struct udphdr, check);
++		gso_skb->ip_summed = CHECKSUM_PARTIAL;
++
++		uh = udp_hdr(gso_skb);
++		if (is_ipv6)
++			uh->check = ~udp_v6_check(gso_skb->len,
++						  &ipv6_hdr(gso_skb)->saddr,
++						  &ipv6_hdr(gso_skb)->daddr, 0);
++		else
++			uh->check = ~udp_v4_check(gso_skb->len,
++						  ip_hdr(gso_skb)->saddr,
++						  ip_hdr(gso_skb)->daddr, 0);
++	}
+ 
+ 	skb_pull(gso_skb, sizeof(*uh));
+ 
 
 
