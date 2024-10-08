@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CCC1DFE14;
-	Tue,  8 Oct 2024 13:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B5D1DF270;
+	Tue,  8 Oct 2024 13:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393715; cv=none; b=VmYtEC2gWlDpEBEXbpSuaBA7YGQ/SRogJhuJjwtcjmCAM29gnTi69buslRUT3dGvWRNr0U6/eE6fpm/QXJIXnClMsLBLbVVlXLX4+OHlSSmBuXxxT+PdL8JKQACaH/rXJQnfEqUMsP9Cip+omePTZ2RkYXkuJPCW2nJa+QDnEnc=
+	t=1728393719; cv=none; b=BaQFqdPQAG9mkla6zKUHBOBiai7EtdaQ53DDXjxiJMaYGiPUvGFUfMc3X5YBkZlfV8xuQCV7R6SOZYq7A0cZlGcfnkc3gDhcOF+xS1lcI/pTX5cewJ7ErXLnQTRkVqvJibfaLGe3w22w19OblSU7zfDs9KnSl8za1B6YkcBtN+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393715; c=relaxed/simple;
-	bh=JNf9szA5fD6fgg6aKNWG+RlUKI9Ob5dyuP+aenthJ/M=;
+	s=arc-20240116; t=1728393719; c=relaxed/simple;
+	bh=n/SFRhDuBRF9tCOusw4XhR8/FnEv14pvoPA3UiuwgTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KR0mLv3YcKx4RIJYhw6UqhTjdzpZ+S8TxcoG6B49uwF1kRIjHpvD+77NnJ1myTqEnqw1PRCkft8/PpS1x4orGk/ZNbmAl+AGn2O6BIlUVuvWgugvqRjd4jm/0HTmvDrLGXHvwRLq3EtwcHaKXO8VObh7607h8/C38Q+lRKuEpi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgPiB+e+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjvf3MrlzIqAnelB9RP6BnunLcc3l4RgyS2ZXt0dYE9Ya0nAInXtQ8RJPODc4uUW+GBWdU95yt2lVArnjsNWdz5OPVopLmrRVVfgNgmoGOJS6AFW/slYAUynf4HHCOS0u6wHLId9ZYF2yFTHQIk8kQNV7OTeJqsQQVyHU8gA0io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU0b0Mtr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgPiB+e+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6503CC4CECC;
-	Tue,  8 Oct 2024 13:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU0b0Mtr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8ECC4CECC;
+	Tue,  8 Oct 2024 13:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393715;
-	bh=JNf9szA5fD6fgg6aKNWG+RlUKI9Ob5dyuP+aenthJ/M=;
+	s=korg; t=1728393719;
+	bh=n/SFRhDuBRF9tCOusw4XhR8/FnEv14pvoPA3UiuwgTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgPiB+e+gv+UliEecTvVsYDeW7n2dgct8y3jvtvCWjL6ReioJdwFR0QzUBOtbkLIO
-	 WQ72uPr0ZVWypOMv5c8Nenqh8CpWCPxP8Pr+lVsmRTT+v2tkabMQ06xkCj7XLcLz7q
-	 yW7D396emOp0jkEh4TSCkNl0Jg9iNm93kInhbTXA=
+	b=UU0b0Mtr8nOJeDvQpyjtys+I3BOhuSE2Q66Tpjhhgqls4zT5oPi41568W12OmFzbT
+	 Mokb64J87vCT8X3NaPqJ/3vP2trOkjvaUFpl8ITq1wA59opunW0BxynVwALwWb1yiL
+	 qOr0obzuvbBaNwjVXU+rpFlY6oKgWRpgYZ8X6SzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 235/386] ext4: fix incorrect tid assumption in ext4_fc_mark_ineligible()
-Date: Tue,  8 Oct 2024 14:08:00 +0200
-Message-ID: <20241008115638.648966556@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.6 236/386] ext4: dax: fix overflowing extents beyond inode size when partially writing
+Date: Tue,  8 Oct 2024 14:08:01 +0200
+Message-ID: <20241008115638.687933155@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,63 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit ebc4b2c1ac92fc0f8bf3f5a9c285a871d5084a6b upstream.
+commit dda898d7ffe85931f9cca6d702a51f33717c501e upstream.
 
-Function jbd2_journal_shrink_checkpoint_list() assumes that '0' is not a
-valid value for transaction IDs, which is incorrect.
+The dax_iomap_rw() does two things in each iteration: map written blocks
+and copy user data to blocks. If the process is killed by user(See signal
+handling in dax_iomap_iter()), the copied data will be returned and added
+on inode size, which means that the length of written extents may exceed
+the inode size, then fsck will fail. An example is given as:
 
-Furthermore, the sbi->s_fc_ineligible_tid handling also makes the same
-assumption by being initialised to '0'.  Fortunately, the sb flag
-EXT4_MF_FC_INELIGIBLE can be used to check whether sbi->s_fc_ineligible_tid
-has been previously set instead of comparing it with '0'.
+dd if=/dev/urandom of=file bs=4M count=1
+ dax_iomap_rw
+  iomap_iter // round 1
+   ext4_iomap_begin
+    ext4_iomap_alloc // allocate 0~2M extents(written flag)
+  dax_iomap_iter // copy 2M data
+  iomap_iter // round 2
+   iomap_iter_advance
+    iter->pos += iter->processed // iter->pos = 2M
+   ext4_iomap_begin
+    ext4_iomap_alloc // allocate 2~4M extents(written flag)
+  dax_iomap_iter
+   fatal_signal_pending
+  done = iter->pos - iocb->ki_pos // done = 2M
+ ext4_handle_inode_extension
+  ext4_update_inode_size // inode size = 2M
 
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+fsck reports: Inode 13, i_size is 2097152, should be 4194304.  Fix?
+
+Fix the problem by truncating extents if the written length is smaller
+than expected.
+
+Fixes: 776722e85d3b ("ext4: DAX iomap write support")
+CC: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219136
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240724161119.13448-5-luis.henriques@linux.dev
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20240809121532.2105494-1-chengzhihao@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/ext4/file.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -339,22 +339,29 @@ void ext4_fc_mark_ineligible(struct supe
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -334,10 +334,10 @@ static ssize_t ext4_handle_inode_extensi
+  * Clean up the inode after DIO or DAX extending write has completed and the
+  * inode size has been updated using ext4_handle_inode_extension().
+  */
+-static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
++static void ext4_inode_extension_cleanup(struct inode *inode, bool need_trunc)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	tid_t tid;
-+	bool has_transaction = true;
-+	bool is_ineligible;
- 
- 	if (ext4_fc_disabled(sb))
- 		return;
- 
--	ext4_set_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
- 	if (handle && !IS_ERR(handle))
- 		tid = handle->h_transaction->t_tid;
- 	else {
- 		read_lock(&sbi->s_journal->j_state_lock);
--		tid = sbi->s_journal->j_running_transaction ?
--				sbi->s_journal->j_running_transaction->t_tid : 0;
-+		if (sbi->s_journal->j_running_transaction)
-+			tid = sbi->s_journal->j_running_transaction->t_tid;
-+		else
-+			has_transaction = false;
- 		read_unlock(&sbi->s_journal->j_state_lock);
+ 	lockdep_assert_held_write(&inode->i_rwsem);
+-	if (count < 0) {
++	if (need_trunc) {
+ 		ext4_truncate_failed_write(inode);
+ 		/*
+ 		 * If the truncate operation failed early, then the inode may
+@@ -586,7 +586,7 @@ static ssize_t ext4_dio_write_iter(struc
+ 		 * writeback of delalloc blocks.
+ 		 */
+ 		WARN_ON_ONCE(ret == -EIOCBQUEUED);
+-		ext4_inode_extension_cleanup(inode, ret);
++		ext4_inode_extension_cleanup(inode, ret < 0);
  	}
- 	spin_lock(&sbi->s_fc_lock);
--	if (tid_gt(tid, sbi->s_fc_ineligible_tid))
-+	is_ineligible = ext4_test_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
-+	if (has_transaction &&
-+	    (!is_ineligible ||
-+	     (is_ineligible && tid_gt(tid, sbi->s_fc_ineligible_tid))))
- 		sbi->s_fc_ineligible_tid = tid;
-+	ext4_set_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
- 	spin_unlock(&sbi->s_fc_lock);
- 	WARN_ON(reason >= EXT4_FC_REASON_MAX);
- 	sbi->s_fc_stats.fc_ineligible_reason_count[reason]++;
+ 
+ out:
+@@ -670,7 +670,7 @@ ext4_dax_write_iter(struct kiocb *iocb,
+ 
+ 	if (extend) {
+ 		ret = ext4_handle_inode_extension(inode, offset, ret);
+-		ext4_inode_extension_cleanup(inode, ret);
++		ext4_inode_extension_cleanup(inode, ret < (ssize_t)count);
+ 	}
+ out:
+ 	inode_unlock(inode);
 
 
