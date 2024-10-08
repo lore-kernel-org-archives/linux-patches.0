@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E371DE89F;
-	Tue,  8 Oct 2024 13:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126C01D3653;
+	Tue,  8 Oct 2024 13:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393469; cv=none; b=fmFvc9g9rtILE1kYGE5mCGYUGkLqBGpjWBmIKWVG9/y2IzLFSskOOjW9q504KJWzzwHxU2/h4YlaP7O5jpkwW3NGQVYU6V6hl8J+LvSEk8DuSXG4JtKS1W2CpITnAMO8x29Js6udgZxh/heO2kj6phMc4MUT8I514c6pR1QZnfc=
+	t=1728393473; cv=none; b=GXXZCBGawJAcwyw8hB1xmzZroO4GD4xt2yeZ4wHyUhvVtjKQVFZDV/R3Np/xP1vUosYoAbDF3GIaMxl5Us2UPwEPiEp5vdR0cjrGxV3skIrK6Gez9ZQHDMLhYH3CTAhnle8QGE2U1yNxC8gwk5AaE75R8hcMLOGfmJLmFY5LJto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393469; c=relaxed/simple;
-	bh=0chEUejavC1w2F3aMQpSuvllH4BbTgqD2h+1YZ5W+Yo=;
+	s=arc-20240116; t=1728393473; c=relaxed/simple;
+	bh=/tEuvF1HGIItV/HilD64+hYYpvZow1PBniRnhwjQ6OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=raKamw/cXIZEawCIfzabpFxqn+yQR8cqDxj4w9AE78XZAObM3HPShcwsgXPc1fiym742oqO8+hIaWwvsupkwUps1q0vJj60+JyCSNOE4U8BIyq47a2qYzNkDwux1sO0VxW3q7A7Oprcnm7VBlfBJrKoYYrxs7ZHHckSU0zPBr64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWEOEtHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LPXtO3U24vH2a7ukZt2T3OuPXYOhlnIxsAYxCEeIKMrVHkEsBL61Oi6lHheYrSoBeoy8/D/WRZU/kfBZc9S9rbZH4U2Vh9BLoE8BkEHi4KqcPOHRrVVb/+XJl+YZwHp4bdvLQVqSlCyYoxfkXqJ6AluJU0p7+tduRwc6C4N1jZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdiO3rlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWEOEtHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02F1C4CEC7;
-	Tue,  8 Oct 2024 13:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdiO3rlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72219C4CEC7;
+	Tue,  8 Oct 2024 13:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393469;
-	bh=0chEUejavC1w2F3aMQpSuvllH4BbTgqD2h+1YZ5W+Yo=;
+	s=korg; t=1728393472;
+	bh=/tEuvF1HGIItV/HilD64+hYYpvZow1PBniRnhwjQ6OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWEOEtHIz/9EOloDs2AHnzEs3GzxrCcEdBMFp0O2segFfHx6VjwWqbZu4ZSUQtcdX
-	 bI7bA8zdD3KOlrB6k6ALACf4zzB5qb0J5FECP/Q8SAAEG9s41yp08LtbfbtJNNRo/J
-	 Mv/6O9pXAmIyI1rtlGihZV9o5+a+0cOcZGCZE+3c=
+	b=DdiO3rlc7DRNdDt/uPnVQNTT/p7a8EZfWd+zLmwQTilzuBBIRwUnRQNUFWBrUo48q
+	 fx/ntvOGo1JXoEylSt9eEdFNw40O5w6UwI7HG+mlTNv74uCuvqOUjd+recev1bvS8O
+	 gSSh/BcZXwG9eAkeiFwC/rCmYS6yvqz8MI3QPbdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/386] cgroup: Disallow mounting v1 hierarchies without controller implementation
-Date: Tue,  8 Oct 2024 14:06:15 +0200
-Message-ID: <20241008115634.553871918@linuxfoundation.org>
+Subject: [PATCH 6.6 121/386] selftests/nolibc: avoid passing NULL to printf("%s")
+Date: Tue,  8 Oct 2024 14:06:06 +0200
+Message-ID: <20241008115634.199213100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,65 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 3c41382e920f1dd5c9f432948fe799c07af1cced ]
+[ Upstream commit f1a58f61d88642ae1e6e97e9d72d73bc70a93cb8 ]
 
-The configs that disable some v1 controllers would still allow mounting
-them but with no controller-specific files. (Making such hierarchies
-equivalent to named v1 hierarchies.) To achieve behavior consistent with
-actual out-compilation of a whole controller, the mounts should treat
-respective controllers as non-existent.
+Clang on higher optimization levels detects that NULL is passed to
+printf("%s") and warns about it.
+While printf() from nolibc gracefully handles that NULL,
+it is undefined behavior as per POSIX, so the warning is reasonable.
+Avoid the warning by transforming NULL into a non-NULL placeholder.
 
-Wrap implementation into a helper function, leverage legacy_files to
-detect compiled out controllers. The effect is that mounts on v1 would
-fail and produce a message like:
-  [ 1543.999081] cgroup: Unknown subsys name 'memory'
-
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20240807-nolibc-llvm-v2-8-c20f2f5fc7c2@weissschuh.net
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup-v1.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup-v1.c b/kernel/cgroup/cgroup-v1.c
-index 9cb00ebe9ac6d..01149e47e1a72 100644
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -46,6 +46,12 @@ bool cgroup1_ssid_disabled(int ssid)
- 	return cgroup_no_v1_mask & (1 << ssid);
- }
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index 1fc4998f06bf6..4aaafbfc2f973 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -522,7 +522,7 @@ int expect_strzr(const char *expr, int llen)
+ {
+ 	int ret = 0;
  
-+static bool cgroup1_subsys_absent(struct cgroup_subsys *ss)
-+{
-+	/* Check also dfl_cftypes for file-less controllers, i.e. perf_event */
-+	return ss->legacy_cftypes == NULL && ss->dfl_cftypes;
-+}
-+
- /**
-  * cgroup_attach_task_all - attach task 'tsk' to all cgroups of task 'from'
-  * @from: attach to all cgroups of a given task
-@@ -932,7 +938,8 @@ int cgroup1_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 		if (ret != -ENOPARAM)
- 			return ret;
- 		for_each_subsys(ss, i) {
--			if (strcmp(param->key, ss->legacy_name))
-+			if (strcmp(param->key, ss->legacy_name) ||
-+			    cgroup1_subsys_absent(ss))
- 				continue;
- 			if (!cgroup_ssid_enabled(i) || cgroup1_ssid_disabled(i))
- 				return invalfc(fc, "Disabled controller '%s'",
-@@ -1024,7 +1031,8 @@ static int check_cgroupfs_options(struct fs_context *fc)
- 	mask = ~((u16)1 << cpuset_cgrp_id);
- #endif
- 	for_each_subsys(ss, i)
--		if (cgroup_ssid_enabled(i) && !cgroup1_ssid_disabled(i))
-+		if (cgroup_ssid_enabled(i) && !cgroup1_ssid_disabled(i) &&
-+		    !cgroup1_subsys_absent(ss))
- 			enabled |= 1 << i;
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (expr) {
+ 		ret = 1;
+ 		result(llen, FAIL);
+@@ -541,7 +541,7 @@ int expect_strnz(const char *expr, int llen)
+ {
+ 	int ret = 0;
  
- 	ctx->subsys_mask &= enabled;
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (!expr) {
+ 		ret = 1;
+ 		result(llen, FAIL);
 -- 
 2.43.0
 
