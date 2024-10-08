@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04E61C9B99;
-	Tue,  8 Oct 2024 13:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E21DFD1;
+	Tue,  8 Oct 2024 13:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392677; cv=none; b=qtuYkrBH1nXZP/7OvYKWE0lYftGvRYftDXHl3yv/+dblVzK3Tw9mqD9hYCLkGlNVpcWnzMAZK6uVkFAXHaInPwTO3VpKyDmikYzaQmp4VQ6OfBggLVT29xc8H3Q5OBCGDVpywRS32hq4BLOZWzRzBepH0HunR3wqd3kw61PEtms=
+	t=1728392680; cv=none; b=Unyh44+2kkn/cZ4xeTQaFoHj7LE3wDv5HeK7trn5ZvxyPxCqcUyYy01J4oeoPn4ifOLB9SLKA9ByusXXUlo9kfOra4MA8X/aJ/G+CUvJK3OpaFqZ5FiQSGByXjofDGjv+1sMmqvpbSEGCDPzrg4yttA/Vk34RvZr0gQVIPX8SuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392677; c=relaxed/simple;
-	bh=6Cfp7QJXPS2yB6HheS3e4uUqzpR+YTV6/RrV+OninCc=;
+	s=arc-20240116; t=1728392680; c=relaxed/simple;
+	bh=W9Dcg5rA/3vKLdffeDJKsgctEc5ARfNjtnbSwjY2xEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZtnWRb6ppm9/XITvUql8WLxGV/zuMTmQLZk0O7aWhE+7m9Ii8cMyWanKUXjVTR4OkAIPPxvqR1ZAiAI1STRkaJc/WSgwZc9O3cT1MMFtsDBkmH3252iDXs2Me8pQ8d3NI9hYQ4q25imsbM0xPOQO3RMDMrW/UfedLyqWcuL9wNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urU8DuKh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4vlyu6/zm5UUAbCbRVkDmYWVPmveI/qnjNk5osfgz40gmb9HpNRoIu14yfFWLkE3WXwCXK+riWZcuNhePIislhokjC1dwxpiT0IpI+bbxyLVsWRpK1r6YSCFcicIRKSkHHGaT1rmxrCPEq3Ty0GOvfo3Xkwz8brTS/fGIrh4Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=094pb1/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urU8DuKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7D7C4CEC7;
-	Tue,  8 Oct 2024 13:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="094pb1/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58651C4CEC7;
+	Tue,  8 Oct 2024 13:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392677;
-	bh=6Cfp7QJXPS2yB6HheS3e4uUqzpR+YTV6/RrV+OninCc=;
+	s=korg; t=1728392680;
+	bh=W9Dcg5rA/3vKLdffeDJKsgctEc5ARfNjtnbSwjY2xEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=urU8DuKhT6HsbcQgoiaOX6A1RvPIyDfbcEbENe6SY+ya5KImMGxSgCXKIqdzUnpNc
-	 qcz9btzseReO7ni+R7Gx4JLFgNS6wtHF9f9vmTVP9UjLOWOQCv97Cdv2+Rl5/vACRN
-	 /6J2+uyVRbQNADRDgLxCBO6WgV0MOpDmI0bGKI7g=
+	b=094pb1/9ZCp6KQf2W90N3IijVLbV2gsQm4B2LBcLFjy+sI2avhGk3lTlsEbSrqbjH
+	 U1CPQ+jLpl72yDgVXJDlrmRUtVT+F3xjtWeE2ePe26fKW+MyfW0ruW0zLxe9EAPu4t
+	 fAlZotguChduaHOF96J980ER7tmRQz7OC5eZ1I+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.11 487/558] Input: adp5589-keys - fix adp5589_gpio_get_value()
-Date: Tue,  8 Oct 2024 14:08:37 +0200
-Message-ID: <20241008115721.398091232@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.11 488/558] HID: bpf: fix cfi stubs for hid_bpf_ops
+Date: Tue,  8 Oct 2024 14:08:38 +0200
+Message-ID: <20241008115721.436678872@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,49 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit c684771630e64bc39bddffeb65dd8a6612a6b249 upstream.
+commit acd5f76fd5292c91628e04da83e8b78c986cfa2b upstream.
 
-The adp5589 seems to have the same behavior as similar devices as
-explained in commit 910a9f5636f5 ("Input: adp5588-keys - get value from
-data out when dir is out").
+With the introduction of commit e42ac1418055 ("bpf: Check unsupported ops
+from the bpf_struct_ops's cfi_stubs"), a HID-BPF struct_ops containing
+a .hid_hw_request() or a .hid_hw_output_report() was failing to load
+as the cfi stubs were not defined.
 
-Basically, when the gpio is set as output we need to get the value from
-ADP5589_GPO_DATA_OUT_A register instead of ADP5589_GPI_STATUS_A.
+Fix that by defining those simple static functions and restore HID-BPF
+functionality.
 
-Fixes: 9d2e173644bb ("Input: ADP5589 - new driver for I2C Keypad Decoder and I/O Expander")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-2-fca0149dfc47@analog.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+This was detected with the HID selftests suddenly failing on Linus' tree.
+
+Cc: stable@vger.kernel.org # v6.11+
+Fixes: 9286675a2aed ("HID: bpf: add HID-BPF hooks for hid_hw_output_report")
+Fixes: 8bd0488b5ea5 ("HID: bpf: add HID-BPF hooks for hid_hw_raw_requests")
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/adp5589-keys.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/hid/bpf/hid_bpf_struct_ops.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/input/keyboard/adp5589-keys.c
-+++ b/drivers/input/keyboard/adp5589-keys.c
-@@ -391,10 +391,17 @@ static int adp5589_gpio_get_value(struct
- 	struct adp5589_kpad *kpad = gpiochip_get_data(chip);
- 	unsigned int bank = kpad->var->bank(kpad->gpiomap[off]);
- 	unsigned int bit = kpad->var->bit(kpad->gpiomap[off]);
-+	int val;
- 
--	return !!(adp5589_read(kpad->client,
--			       kpad->var->reg(ADP5589_GPI_STATUS_A) + bank) &
--			       bit);
-+	mutex_lock(&kpad->gpio_lock);
-+	if (kpad->dir[bank] & bit)
-+		val = kpad->dat_out[bank];
-+	else
-+		val = adp5589_read(kpad->client,
-+				   kpad->var->reg(ADP5589_GPI_STATUS_A) + bank);
-+	mutex_unlock(&kpad->gpio_lock);
-+
-+	return !!(val & bit);
+diff --git a/drivers/hid/bpf/hid_bpf_struct_ops.c b/drivers/hid/bpf/hid_bpf_struct_ops.c
+index cd696c59ba0f..702c22fae136 100644
+--- a/drivers/hid/bpf/hid_bpf_struct_ops.c
++++ b/drivers/hid/bpf/hid_bpf_struct_ops.c
+@@ -276,9 +276,23 @@ static int __hid_bpf_rdesc_fixup(struct hid_bpf_ctx *ctx)
+ 	return 0;
  }
  
- static void adp5589_gpio_set_value(struct gpio_chip *chip,
++static int __hid_bpf_hw_request(struct hid_bpf_ctx *ctx, unsigned char reportnum,
++				enum hid_report_type rtype, enum hid_class_request reqtype,
++				u64 source)
++{
++	return 0;
++}
++
++static int __hid_bpf_hw_output_report(struct hid_bpf_ctx *ctx, u64 source)
++{
++	return 0;
++}
++
+ static struct hid_bpf_ops __bpf_hid_bpf_ops = {
+ 	.hid_device_event = __hid_bpf_device_event,
+ 	.hid_rdesc_fixup = __hid_bpf_rdesc_fixup,
++	.hid_hw_request = __hid_bpf_hw_request,
++	.hid_hw_output_report = __hid_bpf_hw_output_report,
+ };
+ 
+ static struct bpf_struct_ops bpf_hid_bpf_ops = {
+-- 
+2.46.2
+
 
 
