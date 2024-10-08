@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70071DE2CF;
-	Tue,  8 Oct 2024 12:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D3F1DEFC9;
+	Tue,  8 Oct 2024 12:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391918; cv=none; b=H6cjw50xGpDN2pdpUIdKws/s3f0YVpbm3bt8OPsSJlTY0O0WPDUHJFYH1d4KDPFD29WS8KAGEw1Lp/JQ5/F0sNfdpkwooR542tkjq+V7qt/b2tFkXs2V0HXjFtpmWyLQDx/qk7dM1+TEQyTYS4tS9frErUMUUu7qhxrRg9WmTLI=
+	t=1728391921; cv=none; b=ctMB4tfmuI71UdOidEkm34vvm8LokoMAglXzardC1FktnmZjtu9d+88u9QM2AgaEEcx/bKjHpbh/IjoZJZb2Bneam+1dytHNwy6uKdt6I63kSAvKcx7RKULPcHC7o3Y6ntvAgBrQGkhczzIYIw/bCW0Xxqtxl2b7P8z2ICfDSjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391918; c=relaxed/simple;
-	bh=N7fTB46qGK0SOmRqfpC9vF/zCFqPccOblkrJctjeqtE=;
+	s=arc-20240116; t=1728391921; c=relaxed/simple;
+	bh=6lhtmG6Ae+rd7YXCLgSRtv39cyLsNY0nO01FsbtIZq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ga6l7Z4PZUHpulG1EqzGriVSs17jvaxD3OVpThB2WFlkQA6zWDyEqseYQHaA61FsrHgfWE6o+noMlykPZF3Ccpd/tkHGLGGwZfTRQuOQd4RoY8C+hnWBP2KxHsQtkR0W/5bkzxyMgRMAg4Pf1aXR7KfpnV18DHMJ1/qh8s0G/kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juUh8Fx3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h9Qqn0j6lB4LF+bexSSbgAN1p1RitdHEVtQ2jdAbyISSs3Ia7H95w4Enxh8lcdTVRzEc4f4ugnpiq6GdLOPLKoJIqG01UOYeIh4qTOynSRt1c7ad4Js6tYAoH9tyxnibKoG4I1n3cuhRoXKbG9Vg2HZl5gN3TWkDH+mCahetdWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5sC3anC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juUh8Fx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0C1C4CECE;
-	Tue,  8 Oct 2024 12:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5sC3anC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D9BC4CECC;
+	Tue,  8 Oct 2024 12:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391917;
-	bh=N7fTB46qGK0SOmRqfpC9vF/zCFqPccOblkrJctjeqtE=;
+	s=korg; t=1728391921;
+	bh=6lhtmG6Ae+rd7YXCLgSRtv39cyLsNY0nO01FsbtIZq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juUh8Fx3G/dyVwVQUJpUEsDxwLesFMnnVhvza4QqDsohUygf1/V3QTOR7mmjnf7zM
-	 U/KiJs2BXttW66KXXgbofjEUvOsATjLPr3gzNdshIq3aDymARwHcgq/LTrV2wUIzVn
-	 kU2pe5pGIDWEdN+Wf402v8gzS/U4DI49eWGNvW+A=
+	b=V5sC3anCTiKpdoNmeegkGZcwUc58+20AfAYQ89GE+XeJpKJt81H9RFnitgsOhla0j
+	 ByFCSFTXS6ot9cyNgSePx4yXaNb2RrrAgcAOlxLoZZI/Z1t3BhAijIazqTR9W71Lxc
+	 auWshKcpN1KAYJYq2V3TK/k+myhQlx5F7dHPv3wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 261/558] drm/amd/display: Fix index out of bounds in DCN30 color transformation
-Date: Tue,  8 Oct 2024 14:04:51 +0200
-Message-ID: <20241008115712.603936594@linuxfoundation.org>
+Subject: [PATCH 6.11 262/558] drm/amdgpu/gfx12: properly handle error ints on all pipes
+Date: Tue,  8 Oct 2024 14:04:52 +0200
+Message-ID: <20241008115712.644222233@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,57 +45,206 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit d81873f9e715b72d4f8d391c8eb243946f784dfc ]
+[ Upstream commit 39879321769cc2d9a690725959ef76af92a38ac1 ]
 
-This commit addresses a potential index out of bounds issue in the
-`cm3_helper_translate_curve_to_hw_format` function in the DCN30 color
-management module. The issue could occur when the index 'i' exceeds the
-number of transfer function points (TRANSFER_FUNC_POINTS).
+Need to handle the interrupt enables for all pipes.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, the function returns
-false to indicate an error.
+v2: fix indexing (Jessie)
 
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:180 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:181 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_cm_common.c:182 cm3_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 130 ++++++++++++++++++++-----
+ 1 file changed, 106 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-index edc77615d0973..0433f6b5dac78 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-@@ -177,6 +177,8 @@ bool cm3_helper_translate_curve_to_hw_format(
- 				i += increment) {
- 			if (j == hw_points)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS)
-+				return false;
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+index 34b95ca700b23..ac671656069a3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -1690,26 +1690,68 @@ static void gfx_v12_0_constants_init(struct amdgpu_device *adev)
+ 	gfx_v12_0_init_compute_vmid(adev);
+ }
+ 
++static u32 gfx_v12_0_get_cpg_int_cntl(struct amdgpu_device *adev,
++				      int me, int pipe)
++{
++	if (me != 0)
++		return 0;
++
++	switch (pipe) {
++	case 0:
++		return SOC15_REG_OFFSET(GC, 0, regCP_INT_CNTL_RING0);
++	default:
++		return 0;
++	}
++}
++
++static u32 gfx_v12_0_get_cpc_int_cntl(struct amdgpu_device *adev,
++				      int me, int pipe)
++{
++	/*
++	 * amdgpu controls only the first MEC. That's why this function only
++	 * handles the setting of interrupts for this specific MEC. All other
++	 * pipes' interrupts are set by amdkfd.
++	 */
++	if (me != 1)
++		return 0;
++
++	switch (pipe) {
++	case 0:
++		return SOC15_REG_OFFSET(GC, 0, regCP_ME1_PIPE0_INT_CNTL);
++	case 1:
++		return SOC15_REG_OFFSET(GC, 0, regCP_ME1_PIPE1_INT_CNTL);
++	default:
++		return 0;
++	}
++}
++
+ static void gfx_v12_0_enable_gui_idle_interrupt(struct amdgpu_device *adev,
+-						bool enable)
++					       bool enable)
+ {
+-	u32 tmp;
++	u32 tmp, cp_int_cntl_reg;
++	int i, j;
+ 
+ 	if (amdgpu_sriov_vf(adev))
+ 		return;
+ 
+-	tmp = RREG32_SOC15(GC, 0, regCP_INT_CNTL_RING0);
+-
+-	tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CNTX_BUSY_INT_ENABLE,
+-			    enable ? 1 : 0);
+-	tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CNTX_EMPTY_INT_ENABLE,
+-			    enable ? 1 : 0);
+-	tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CMP_BUSY_INT_ENABLE,
+-			    enable ? 1 : 0);
+-	tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, GFX_IDLE_INT_ENABLE,
+-			    enable ? 1 : 0);
+-
+-	WREG32_SOC15(GC, 0, regCP_INT_CNTL_RING0, tmp);
++	for (i = 0; i < adev->gfx.me.num_me; i++) {
++		for (j = 0; j < adev->gfx.me.num_pipe_per_me; j++) {
++			cp_int_cntl_reg = gfx_v12_0_get_cpg_int_cntl(adev, i, j);
++
++			if (cp_int_cntl_reg) {
++				tmp = RREG32_SOC15_IP(GC, cp_int_cntl_reg);
++				tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CNTX_BUSY_INT_ENABLE,
++						    enable ? 1 : 0);
++				tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CNTX_EMPTY_INT_ENABLE,
++						    enable ? 1 : 0);
++				tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, CMP_BUSY_INT_ENABLE,
++						    enable ? 1 : 0);
++				tmp = REG_SET_FIELD(tmp, CP_INT_CNTL_RING0, GFX_IDLE_INT_ENABLE,
++						    enable ? 1 : 0);
++				WREG32_SOC15_IP(GC, cp_int_cntl_reg, tmp);
++			}
++		}
++	}
+ }
+ 
+ static int gfx_v12_0_init_csb(struct amdgpu_device *adev)
+@@ -4755,15 +4797,42 @@ static int gfx_v12_0_eop_irq(struct amdgpu_device *adev,
+ 
+ static int gfx_v12_0_set_priv_reg_fault_state(struct amdgpu_device *adev,
+ 					      struct amdgpu_irq_src *source,
+-					      unsigned type,
++					      unsigned int type,
+ 					      enum amdgpu_interrupt_state state)
+ {
++	u32 cp_int_cntl_reg, cp_int_cntl;
++	int i, j;
++
+ 	switch (state) {
+ 	case AMDGPU_IRQ_STATE_DISABLE:
+ 	case AMDGPU_IRQ_STATE_ENABLE:
+-		WREG32_FIELD15_PREREG(GC, 0, CP_INT_CNTL_RING0,
+-				      PRIV_REG_INT_ENABLE,
+-				      state == AMDGPU_IRQ_STATE_ENABLE ? 1 : 0);
++		for (i = 0; i < adev->gfx.me.num_me; i++) {
++			for (j = 0; j < adev->gfx.me.num_pipe_per_me; j++) {
++				cp_int_cntl_reg = gfx_v12_0_get_cpg_int_cntl(adev, i, j);
++
++				if (cp_int_cntl_reg) {
++					cp_int_cntl = RREG32_SOC15_IP(GC, cp_int_cntl_reg);
++					cp_int_cntl = REG_SET_FIELD(cp_int_cntl, CP_INT_CNTL_RING0,
++								    PRIV_REG_INT_ENABLE,
++								    state == AMDGPU_IRQ_STATE_ENABLE ? 1 : 0);
++					WREG32_SOC15_IP(GC, cp_int_cntl_reg, cp_int_cntl);
++				}
++			}
++		}
++		for (i = 0; i < adev->gfx.mec.num_mec; i++) {
++			for (j = 0; j < adev->gfx.mec.num_pipe_per_mec; j++) {
++				/* MECs start at 1 */
++				cp_int_cntl_reg = gfx_v12_0_get_cpc_int_cntl(adev, i + 1, j);
++
++				if (cp_int_cntl_reg) {
++					cp_int_cntl = RREG32_SOC15_IP(GC, cp_int_cntl_reg);
++					cp_int_cntl = REG_SET_FIELD(cp_int_cntl, CP_ME1_PIPE0_INT_CNTL,
++								    PRIV_REG_INT_ENABLE,
++								    state == AMDGPU_IRQ_STATE_ENABLE ? 1 : 0);
++					WREG32_SOC15_IP(GC, cp_int_cntl_reg, cp_int_cntl);
++				}
++			}
++		}
+ 		break;
+ 	default:
+ 		break;
+@@ -4774,15 +4843,28 @@ static int gfx_v12_0_set_priv_reg_fault_state(struct amdgpu_device *adev,
+ 
+ static int gfx_v12_0_set_priv_inst_fault_state(struct amdgpu_device *adev,
+ 					       struct amdgpu_irq_src *source,
+-					       unsigned type,
++					       unsigned int type,
+ 					       enum amdgpu_interrupt_state state)
+ {
++	u32 cp_int_cntl_reg, cp_int_cntl;
++	int i, j;
++
+ 	switch (state) {
+ 	case AMDGPU_IRQ_STATE_DISABLE:
+ 	case AMDGPU_IRQ_STATE_ENABLE:
+-		WREG32_FIELD15_PREREG(GC, 0, CP_INT_CNTL_RING0,
+-			       PRIV_INSTR_INT_ENABLE,
+-			       state == AMDGPU_IRQ_STATE_ENABLE ? 1 : 0);
++		for (i = 0; i < adev->gfx.me.num_me; i++) {
++			for (j = 0; j < adev->gfx.me.num_pipe_per_me; j++) {
++				cp_int_cntl_reg = gfx_v12_0_get_cpg_int_cntl(adev, i, j);
++
++				if (cp_int_cntl_reg) {
++					cp_int_cntl = RREG32_SOC15_IP(GC, cp_int_cntl_reg);
++					cp_int_cntl = REG_SET_FIELD(cp_int_cntl, CP_INT_CNTL_RING0,
++								    PRIV_INSTR_INT_ENABLE,
++								    state == AMDGPU_IRQ_STATE_ENABLE ? 1 : 0);
++					WREG32_SOC15_IP(GC, cp_int_cntl_reg, cp_int_cntl);
++				}
++			}
++		}
+ 		break;
+ 	default:
+ 		break;
+@@ -4806,8 +4888,8 @@ static void gfx_v12_0_handle_priv_fault(struct amdgpu_device *adev,
+ 	case 0:
+ 		for (i = 0; i < adev->gfx.num_gfx_rings; i++) {
+ 			ring = &adev->gfx.gfx_ring[i];
+-			/* we only enabled 1 gfx queue per pipe for now */
+-			if (ring->me == me_id && ring->pipe == pipe_id)
++			if (ring->me == me_id && ring->pipe == pipe_id &&
++			    ring->queue == queue_id)
+ 				drm_sched_fault(&ring->sched);
+ 		}
+ 		break;
 -- 
 2.43.0
 
