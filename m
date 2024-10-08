@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BFA1DE8A0;
-	Tue,  8 Oct 2024 12:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3521DE2CF;
+	Tue,  8 Oct 2024 12:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391541; cv=none; b=Bbu+zoCHXaBEd/wIKd53JTfbituVjWxYEQXU2R57+k0SyV3z7o5cZoNfjggVG7ciabP8rHsbvQCaaWmf8WYny1jXXZKpF29tLCmCHEpMHf4awFV4u0KKggXsBRXH+0I3PWlDKA6fXJaPgl+G7LsMD/mFfdLwJOsi4oEQLXhE8gw=
+	t=1728391545; cv=none; b=baJAszseaj2gSXR5cd0FoDcFkxjxDcVhW34W8eXMUnJ93RT7OcSCba0TYHO0JuLowVgbhu4mBq6NpfP5N1D2TW/DdiG0zKlSNNy6T0D2iUDXNRBl4TQuDVSxUA0LkKVfnKtGIwz2r33/LVI7SQiksHUDqycCeeVypfCOvQkh9iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391541; c=relaxed/simple;
-	bh=RtwFmkHR+3Yxo2Ooc+fMDihduaPR+MLZfOp/i4Ey0dY=;
+	s=arc-20240116; t=1728391545; c=relaxed/simple;
+	bh=kiBOE/AoCOkRLAzatov0bW1udVEHc+b5fx8KadhtrsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gxMPaCVrSiqWFTyIvrG2eF7jNV+2umHe2lmlEMcevXMv28mzpcuDEUU0/gkEFAGW7axOhNSPdLxgeKojH2yI6pzGPYWV+CUJWdgLzTZhJPeZ8zret2tqP8f54uuPm5LRIH1Mrkc1i7zyeOUSCbZrjPn22s19MwEim07MskLV2fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWYM50hX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgj8sVrtCdcqKBl+EuhtWt4WGU28T5+q2cPsPPN416pcLJAwMegzTr+tFfdzgyWp0BrI3oM5tmspMCP1whnw4cXO8AgH4J98Z5m2QS5ugGGzI2rzJG625XsKC80rL0n6O0JvhI0AfNFKYQlLrEsEkGdYuuSoEtKqCkWcbdigSKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdCHdeq2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWYM50hX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4605EC4CEC7;
-	Tue,  8 Oct 2024 12:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdCHdeq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8FC4CEC7;
+	Tue,  8 Oct 2024 12:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391541;
-	bh=RtwFmkHR+3Yxo2Ooc+fMDihduaPR+MLZfOp/i4Ey0dY=;
+	s=korg; t=1728391545;
+	bh=kiBOE/AoCOkRLAzatov0bW1udVEHc+b5fx8KadhtrsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWYM50hXmtgo3P2YoNzS5E5hemI/5A5IVDVjnMRSV/xrCXGJgOezlN+uTH5zYC8TA
-	 P+uc/Z3HGqcrejiYbJycN+2GIQ20hdsf7AyFAVsFxQIDb0xpPpWUY0897HYKr+nvg+
-	 +oh8Ps5+HMtTd9tu0XMbH4HgmswZxVIg6QZlH1q0=
+	b=YdCHdeq2Ku5MvlsNTcnjs+XClRiRug5dNKdzcvo5aOmiLJT+CoP0zty6uOnHERDMc
+	 ltnbNpK2JQIXAFnVMD4wkNrx8BdeX4vbK4wAGz3kb99hC5ozoK9hM0WaNaRFqXYBl/
+	 31dzj7v814TSOwRMqlmyl2UmabDfa1KHVB/uSsu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Stefan=20M=C3=A4tje?= <stefan.maetje@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Joe Damato <jdamato@fastly.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 147/558] can: netlink: avoid call to do_set_data_bittiming callback with stale can_priv::ctrlmode
-Date: Tue,  8 Oct 2024 14:02:57 +0200
-Message-ID: <20241008115708.148878824@linuxfoundation.org>
+Subject: [PATCH 6.11 148/558] netdev-genl: Set extack and fix error on napi-get
+Date: Tue,  8 Oct 2024 14:02:58 +0200
+Message-ID: <20241008115708.187842782@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -45,174 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Mätje <stefan.maetje@esd.eu>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit 2423cc20087ae9a7b7af575aa62304ef67cad7b6 ]
+[ Upstream commit 4e3a024b437ec0aee82550cc66a0f4e1a7a88a67 ]
 
-This patch moves the evaluation of data[IFLA_CAN_CTRLMODE] in function
-can_changelink in front of the evaluation of data[IFLA_CAN_BITTIMING].
+In commit 27f91aaf49b3 ("netdev-genl: Add netlink framework functions
+for napi"), when an invalid NAPI ID is specified the return value
+-EINVAL is used and no extack is set.
 
-This avoids a call to do_set_data_bittiming providing a stale
-can_priv::ctrlmode with a CAN_CTRLMODE_FD flag not matching the
-requested state when switching between a CAN Classic and CAN-FD bitrate.
+Change the return value to -ENOENT and set the extack.
 
-In the same manner the evaluation of data[IFLA_CAN_CTRLMODE] in function
-can_validate is also moved in front of the evaluation of
-data[IFLA_CAN_BITTIMING].
+Before this commit:
 
-This is a preparation for patches where the nominal and data bittiming
-may have interdependencies on the driver side depending on the
-CAN_CTRLMODE_FD flag state.
+$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+                          --do napi-get --json='{"id": 451}'
+Netlink error: Invalid argument
+nl_len = 36 (20) nl_flags = 0x100 nl_type = 2
+	error: -22
 
-Signed-off-by: Stefan Mätje <stefan.maetje@esd.eu>
-Link: https://patch.msgid.link/20240808164224.213522-1-stefan.maetje@esd.eu
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+After this commit:
+
+$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+                         --do napi-get --json='{"id": 451}'
+Netlink error: No such file or directory
+nl_len = 44 (28) nl_flags = 0x300 nl_type = 2
+	error: -2
+	extack: {'bad-attr': '.id'}
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20240831121707.17562-1-jdamato@fastly.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/netlink.c | 102 +++++++++++++++++-----------------
- 1 file changed, 51 insertions(+), 51 deletions(-)
+ net/core/netdev-genl.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
-index dfdc039d92a6c..01aacdcda2606 100644
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -65,15 +65,6 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
- 	if (!data)
- 		return 0;
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 05f9515d2c05c..a17d7eaeb0019 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -216,10 +216,12 @@ int netdev_nl_napi_get_doit(struct sk_buff *skb, struct genl_info *info)
+ 	rtnl_lock();
  
--	if (data[IFLA_CAN_BITTIMING]) {
--		struct can_bittiming bt;
--
--		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
--		err = can_validate_bittiming(&bt, extack);
--		if (err)
--			return err;
--	}
--
- 	if (data[IFLA_CAN_CTRLMODE]) {
- 		struct can_ctrlmode *cm = nla_data(data[IFLA_CAN_CTRLMODE]);
- 		u32 tdc_flags = cm->flags & CAN_CTRLMODE_TDC_MASK;
-@@ -114,6 +105,15 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
- 		}
- 	}
- 
-+	if (data[IFLA_CAN_BITTIMING]) {
-+		struct can_bittiming bt;
-+
-+		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
-+		err = can_validate_bittiming(&bt, extack);
-+		if (err)
-+			return err;
+ 	napi = napi_by_id(napi_id);
+-	if (napi)
++	if (napi) {
+ 		err = netdev_nl_napi_fill_one(rsp, napi, info);
+-	else
+-		err = -EINVAL;
++	} else {
++		NL_SET_BAD_ATTR(info->extack, info->attrs[NETDEV_A_NAPI_ID]);
++		err = -ENOENT;
 +	}
-+
- 	if (is_can_fd) {
- 		if (!data[IFLA_CAN_BITTIMING] || !data[IFLA_CAN_DATA_BITTIMING])
- 			return -EOPNOTSUPP;
-@@ -195,48 +195,6 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 	/* We need synchronization with dev->stop() */
- 	ASSERT_RTNL();
  
--	if (data[IFLA_CAN_BITTIMING]) {
--		struct can_bittiming bt;
--
--		/* Do not allow changing bittiming while running */
--		if (dev->flags & IFF_UP)
--			return -EBUSY;
--
--		/* Calculate bittiming parameters based on
--		 * bittiming_const if set, otherwise pass bitrate
--		 * directly via do_set_bitrate(). Bail out if neither
--		 * is given.
--		 */
--		if (!priv->bittiming_const && !priv->do_set_bittiming &&
--		    !priv->bitrate_const)
--			return -EOPNOTSUPP;
--
--		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
--		err = can_get_bittiming(dev, &bt,
--					priv->bittiming_const,
--					priv->bitrate_const,
--					priv->bitrate_const_cnt,
--					extack);
--		if (err)
--			return err;
--
--		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
--			NL_SET_ERR_MSG_FMT(extack,
--					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
--					   bt.bitrate, priv->bitrate_max);
--			return -EINVAL;
--		}
--
--		memcpy(&priv->bittiming, &bt, sizeof(bt));
--
--		if (priv->do_set_bittiming) {
--			/* Finally, set the bit-timing registers */
--			err = priv->do_set_bittiming(dev);
--			if (err)
--				return err;
--		}
--	}
--
- 	if (data[IFLA_CAN_CTRLMODE]) {
- 		struct can_ctrlmode *cm;
- 		u32 ctrlstatic;
-@@ -284,6 +242,48 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 			priv->ctrlmode &= cm->flags | ~CAN_CTRLMODE_TDC_MASK;
- 	}
+ 	rtnl_unlock();
  
-+	if (data[IFLA_CAN_BITTIMING]) {
-+		struct can_bittiming bt;
-+
-+		/* Do not allow changing bittiming while running */
-+		if (dev->flags & IFF_UP)
-+			return -EBUSY;
-+
-+		/* Calculate bittiming parameters based on
-+		 * bittiming_const if set, otherwise pass bitrate
-+		 * directly via do_set_bitrate(). Bail out if neither
-+		 * is given.
-+		 */
-+		if (!priv->bittiming_const && !priv->do_set_bittiming &&
-+		    !priv->bitrate_const)
-+			return -EOPNOTSUPP;
-+
-+		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
-+		err = can_get_bittiming(dev, &bt,
-+					priv->bittiming_const,
-+					priv->bitrate_const,
-+					priv->bitrate_const_cnt,
-+					extack);
-+		if (err)
-+			return err;
-+
-+		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
-+					   bt.bitrate, priv->bitrate_max);
-+			return -EINVAL;
-+		}
-+
-+		memcpy(&priv->bittiming, &bt, sizeof(bt));
-+
-+		if (priv->do_set_bittiming) {
-+			/* Finally, set the bit-timing registers */
-+			err = priv->do_set_bittiming(dev);
-+			if (err)
-+				return err;
-+		}
-+	}
-+
- 	if (data[IFLA_CAN_RESTART_MS]) {
- 		/* Do not allow changing restart delay while running */
- 		if (dev->flags & IFF_UP)
 -- 
 2.43.0
 
