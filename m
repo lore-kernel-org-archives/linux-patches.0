@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B2A1DF26B;
-	Tue,  8 Oct 2024 13:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B5A1DEFEA;
+	Tue,  8 Oct 2024 13:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393900; cv=none; b=BpTb36ACkK8QKrcdMfEZqng5edWVpUFkUvrTze60bKBi1oumqudSABhbXSe3P1lyyA+V+ITELozepZlC6RyVLZduCNi7D7BwznMaD46oX2ZqwS4O2nUJhfapLfl9gKEnFrARSBQwrEO+pZiRjMiN5GJApRsF3p/FidbSwA4JPvs=
+	t=1728393903; cv=none; b=tf0pX5WsuUmzBQMCHO2dKcjss1y3p6O0NyiRsbW+L6s3uqP0tGUwe4pKy7sh2OSBdESZkb05wQMnKTAdNZ4I3PaBPvOB4pluvVIkuhtfcYcI9d4JLOOoFz33AUbiMHWGNiMwO3gUga3tWXXHTTioBkbZpX/M4+s8DI7YhRyLt7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393900; c=relaxed/simple;
-	bh=3Iv2MOVJRebZajn1FUokIz+Vwv2TQShYynwcU/Zuh9I=;
+	s=arc-20240116; t=1728393903; c=relaxed/simple;
+	bh=f6Kmpj3MYcHW+9bAPD2bEqR3nioa36J5+t12kHqPcV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5OuB6iBZEjIafeIDojv9DUTGkybF/Cbbai3j+CisTFB7GCnF5m7wHQ9wljPGiGNo/71ISp+CPeaHumjyFNSIG3FTgn9qtQO+SJA5ZtEFs/qSQAwO1LQ2ye2NQqt2m0dCQFq+/KvhbvITKmCvw2hkby/SilkdhKTsSsLqPU3Yi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn+dnS8c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MHNWJ08krBonfTUFvC3wT2ZnU7NpWYn8oaD09pe6zt8WENevabjVpb3RJLihapr0zwkJdFFLgnX1bRfzwGmxZKif0BfeTgYooaKZvwhS/29qg6V+WsOlu7qvnAjxr7DThvbL1wRZl9gUUWd3e25Y8vlE8qCKXc/+G8NLPMfo6BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvAm4xbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn+dnS8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DE3C4CECC;
-	Tue,  8 Oct 2024 13:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvAm4xbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237A2C4CECC;
+	Tue,  8 Oct 2024 13:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393900;
-	bh=3Iv2MOVJRebZajn1FUokIz+Vwv2TQShYynwcU/Zuh9I=;
+	s=korg; t=1728393903;
+	bh=f6Kmpj3MYcHW+9bAPD2bEqR3nioa36J5+t12kHqPcV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn+dnS8cOCZ9xJYJCL4Xm9SVkslVtwdb4q30oHUF3zalKl7tOOf5yY6OSiD6Gts17
-	 ZD5dG40vM7EEO8I9dOAV11dLetHGS620qVi15rfzI0APhQ1X2foLswEOBWYbVTuDGe
-	 yrfpMfGYwWzDgZfrHwb94Sl48290Ez8tje5CBkhQ=
+	b=hvAm4xbSPvxSIBVBQrOpdOY/kC+rjUNe9RfNBypkOGO0l6x6o7WkoXENYsHPZhdAH
+	 /4XqiGRM5LuLz3M7qXxDjtlEQuOdDUeQD2anC9xH0KMhh93bJxEUsLUB21zBlNdS0D
+	 d2H/xwpn6hgnb3oNA1hpusRKxnwDvoGqm4wP8oA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 260/386] ocfs2: fix uninit-value in ocfs2_get_block()
-Date: Tue,  8 Oct 2024 14:08:25 +0200
-Message-ID: <20241008115639.623366689@linuxfoundation.org>
+	David Virag <virag.david003@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.6 287/386] clk: samsung: exynos7885: Update CLKS_NR_FSYS after bindings fix
+Date: Tue,  8 Oct 2024 14:08:52 +0200
+Message-ID: <20241008115640.680586017@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -58,75 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: David Virag <virag.david003@gmail.com>
 
-commit 2af148ef8549a12f8025286b8825c2833ee6bcb8 upstream.
+commit 217a5f23c290c349ceaa37a6f2c014ad4c2d5759 upstream.
 
-syzbot reported an uninit-value BUG:
+Update CLKS_NR_FSYS to the proper value after a fix in DT bindings.
+This should always be the last clock in a CMU + 1.
 
-BUG: KMSAN: uninit-value in ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
-ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
-do_mpage_readpage+0xc45/0x2780 fs/mpage.c:225
-mpage_readahead+0x43f/0x840 fs/mpage.c:374
-ocfs2_readahead+0x269/0x320 fs/ocfs2/aops.c:381
-read_pages+0x193/0x1110 mm/readahead.c:160
-page_cache_ra_unbounded+0x901/0x9f0 mm/readahead.c:273
-do_page_cache_ra mm/readahead.c:303 [inline]
-force_page_cache_ra+0x3b1/0x4b0 mm/readahead.c:332
-force_page_cache_readahead mm/internal.h:347 [inline]
-generic_fadvise+0x6b0/0xa90 mm/fadvise.c:106
-vfs_fadvise mm/fadvise.c:185 [inline]
-ksys_fadvise64_64 mm/fadvise.c:199 [inline]
-__do_sys_fadvise64 mm/fadvise.c:214 [inline]
-__se_sys_fadvise64 mm/fadvise.c:212 [inline]
-__x64_sys_fadvise64+0x1fb/0x3a0 mm/fadvise.c:212
-x64_sys_call+0xe11/0x3ba0
-arch/x86/include/generated/asm/syscalls_64.h:222
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-This is because when ocfs2_extent_map_get_blocks() fails, p_blkno is
-uninitialized.  So the error log will trigger the above uninit-value
-access.
-
-The error log is out-of-date since get_blocks() was removed long time ago.
-And the error code will be logged in ocfs2_extent_map_get_blocks() once
-ocfs2_get_cluster() fails, so fix this by only logging inode and block.
-
-Link: https://syzkaller.appspot.com/bug?extid=9709e73bae885b05314b
-Link: https://lkml.kernel.org/r/20240925090600.3643376-1-joseph.qi@linux.alibaba.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
-Tested-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cd268e309c29 ("dt-bindings: clock: Add bindings for Exynos7885 CMU_FSYS")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Virag <virag.david003@gmail.com>
+Link: https://lore.kernel.org/r/20240806121157.479212-5-virag.david003@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/samsung/clk-exynos7885.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -156,9 +156,8 @@ int ocfs2_get_block(struct inode *inode,
- 	err = ocfs2_extent_map_get_blocks(inode, iblock, &p_blkno, &count,
- 					  &ext_flags);
- 	if (err) {
--		mlog(ML_ERROR, "Error %d from get_blocks(0x%p, %llu, 1, "
--		     "%llu, NULL)\n", err, inode, (unsigned long long)iblock,
--		     (unsigned long long)p_blkno);
-+		mlog(ML_ERROR, "get_blocks() failed, inode: 0x%p, "
-+		     "block: %llu\n", inode, (unsigned long long)iblock);
- 		goto bail;
- 	}
+--- a/drivers/clk/samsung/clk-exynos7885.c
++++ b/drivers/clk/samsung/clk-exynos7885.c
+@@ -20,7 +20,7 @@
+ #define CLKS_NR_TOP			(CLK_GOUT_FSYS_USB30DRD + 1)
+ #define CLKS_NR_CORE			(CLK_GOUT_TREX_P_CORE_PCLK_P_CORE + 1)
+ #define CLKS_NR_PERI			(CLK_GOUT_WDT1_PCLK + 1)
+-#define CLKS_NR_FSYS			(CLK_GOUT_MMC_SDIO_SDCLKIN + 1)
++#define CLKS_NR_FSYS			(CLK_MOUT_FSYS_USB30DRD_USER + 1)
+ 
+ /* ---- CMU_TOP ------------------------------------------------------------- */
  
 
 
