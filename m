@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81CD1DE8BA;
-	Tue,  8 Oct 2024 12:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405B4165F08;
+	Tue,  8 Oct 2024 12:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389771; cv=none; b=RxlANvJ5FK9De0uGCHd39ZssUz3HmGlw8kfIWJrqobQSM6F6ZsMxUrlKlxqyWCJRu/P8eC8uCd3gGSpn2uUBSVXTXkvJ7lHgj5J8q/01LB7nfCtrRUl8bFkK6Bg9cUZ5HXvlGzDyGchg0dXOH8+DH/iHTtxI6MIwCe59k58iq+8=
+	t=1728389775; cv=none; b=hYDjrng6bItrB8mTSiu9Ksm5MsuAHj1xSWFvF/pONxJNzqjsk5YGUh1/K1Ylwb2AQATIba61BvfUkt012JC8T+AmrnCr2MP+/dt8IWg2qqOpkMlKdi97YvNMBchvl4tqvVtvQUpDy6WhfyrR8oXX4ZcsX4vGOrncdBrHabslB8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389771; c=relaxed/simple;
-	bh=gM6xZYeP5S0ne9iuTfCeaVeWXxJBAghm2TK+JDYIpIk=;
+	s=arc-20240116; t=1728389775; c=relaxed/simple;
+	bh=MFuP0nzT9qe+rejwoicrkxqFWa+pTacaZDBA/UkrV+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndgjwF4XEdbl0G/DVpLK7gO4k0Y0HiGYSuEUhsqQF4bLUJNAhDpg89TCJx0uXtkEoio5wp6+vijfnQy45u9Ufhy6sQIRR7luHxKO3SkHPKeVwDsMMEIIXBDAivrnE9Rz9IFkZaXji3U45NsCC4CDja4SkBWVezbpaeaVCjpW0rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEP6esVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAAV0eFAgpqdu1xZaVMdWjiVVOt7Lbhr7CjQ/d5JdL5qle6wht/+ZFpbJ3/5JRYUUG5oSrHE0Gc2uILRnbFgH61cDBPRh6vZCp2McK3YP4dBPtXHunEHNeRvrUP4RnnH5Jo7w0UX2jxHPyZCBsN6mniCaFsjYmf5JSZBCCG6dic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXJIyQ1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEP6esVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35420C4CECC;
-	Tue,  8 Oct 2024 12:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXJIyQ1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8746C4CECC;
+	Tue,  8 Oct 2024 12:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389771;
-	bh=gM6xZYeP5S0ne9iuTfCeaVeWXxJBAghm2TK+JDYIpIk=;
+	s=korg; t=1728389775;
+	bh=MFuP0nzT9qe+rejwoicrkxqFWa+pTacaZDBA/UkrV+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEP6esVAUFyhAL8KId5ASc08gAe7iArK4+RQMbo9m6HpYm1l+uRh0hvw/jMecYUc5
-	 Cz2Q695pnPt38hDzzHvNOsasR9uCJMjjQaeQWF9Vu6SfItJczJP3tWYZV021m0+qML
-	 erZR7D0uHyysRzVBAe04ja3xHC0WteICzhPt0wEQ=
+	b=xXJIyQ1uYt4pDFR5uoPKHwSKcRE05NPLy0n2EcfbsjW53Q/5QPiolz6nFeYLdGWJZ
+	 BwzGmQlcuNaQkUeUOuhqmPsMQTQAPw9xQm6RkjLjYxR3YDebFzU7w7/K56gMH5qv1H
+	 1ia50fXmrZ7++Q3fGCRM/9SXmdX4Dgq0Lmt86hcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 060/482] drm/panthor: Lock the VM resv before calling drm_gpuvm_bo_obtain_prealloc()
-Date: Tue,  8 Oct 2024 14:02:03 +0200
-Message-ID: <20241008115650.669857370@linuxfoundation.org>
+Subject: [PATCH 6.10 061/482] ALSA: hda/generic: Unconditionally prefer preferred_dacs pairs
+Date: Tue,  8 Oct 2024 14:02:04 +0200
+Message-ID: <20241008115650.708796609@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,48 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fa998a9eac8809da4f219aad49836fcad2a9bf5c ]
+[ Upstream commit 1c801e7f77445bc56e5e1fec6191fd4503534787 ]
 
-drm_gpuvm_bo_obtain_prealloc() will call drm_gpuvm_bo_put() on our
-pre-allocated BO if the <BO,VM> association exists. Given we
-only have one ref on preallocated_vm_bo, drm_gpuvm_bo_destroy() will
-be called immediately, and we have to hold the VM resv lock when
-calling this function.
+Some time ago, we introduced the obey_preferred_dacs flag for choosing
+the DAC/pin pairs specified by the driver instead of parsing the
+paths.  This works as expected, per se, but there have been a few
+cases where we forgot to set this flag while preferred_dacs table is
+already set up.  It ended up with incorrect wiring and made us
+wondering why it doesn't work.
 
-Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240913112722.492144-1-boris.brezillon@collabora.com
+Basically, when the preferred_dacs table is provided, it means that
+the driver really wants to wire up to follow that.  That is, the
+presence of the preferred_dacs table itself is already a "do-it"
+flag.
+
+In this patch, we simply replace the evaluation of obey_preferred_dacs
+flag with the presence of preferred_dacs table for fixing the
+misbehavior.  Another patch to drop of the obsoleted flag will
+follow.
+
+Fixes: 242d990c158d ("ALSA: hda/generic: Add option to enforce preferred_dacs pairs")
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1219803
+Link: https://patch.msgid.link/20241001121439.26060-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/pci/hda/hda_generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index cc6e13a977835..ce8e8a93d7076 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1251,9 +1251,17 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
- 		goto err_cleanup;
- 	}
+diff --git a/sound/pci/hda/hda_generic.c b/sound/pci/hda/hda_generic.c
+index 9cff87dfbecbb..b34d84fedcc8a 100644
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -1383,7 +1383,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		struct nid_path *path;
+ 		hda_nid_t pin = pins[i];
  
-+	/* drm_gpuvm_bo_obtain_prealloc() will call drm_gpuvm_bo_put() on our
-+	 * pre-allocated BO if the <BO,VM> association exists. Given we
-+	 * only have one ref on preallocated_vm_bo, drm_gpuvm_bo_destroy() will
-+	 * be called immediately, and we have to hold the VM resv lock when
-+	 * calling this function.
-+	 */
-+	dma_resv_lock(panthor_vm_resv(vm), NULL);
- 	mutex_lock(&bo->gpuva_list_lock);
- 	op_ctx->map.vm_bo = drm_gpuvm_bo_obtain_prealloc(preallocated_vm_bo);
- 	mutex_unlock(&bo->gpuva_list_lock);
-+	dma_resv_unlock(panthor_vm_resv(vm));
+-		if (!spec->obey_preferred_dacs) {
++		if (!spec->preferred_dacs) {
+ 			path = snd_hda_get_path_from_idx(codec, path_idx[i]);
+ 			if (path) {
+ 				badness += assign_out_path_ctls(codec, path);
+@@ -1395,7 +1395,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		if (dacs[i]) {
+ 			if (is_dac_already_used(codec, dacs[i]))
+ 				badness += bad->shared_primary;
+-		} else if (spec->obey_preferred_dacs) {
++		} else if (spec->preferred_dacs) {
+ 			badness += BAD_NO_PRIMARY_DAC;
+ 		}
  
- 	/* If the a vm_bo for this <VM,BO> combination exists, it already
- 	 * retains a pin ref, and we can release the one we took earlier.
 -- 
 2.43.0
 
