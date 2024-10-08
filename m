@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A1C1DEFCE;
-	Tue,  8 Oct 2024 13:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2891A1DF963;
+	Tue,  8 Oct 2024 13:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394025; cv=none; b=D4xdgEjawyfYOqEdq773w+Y/adz1WbWcYG6fKRSWzpQF6L39DgLf/Re+bcbZCDStG7U/Rrv7FKZ1SI9sE2BVKZvwdqpvvxt3SMI4qCAlfBYuc86Sb54BOr3Pt36nu87ySGg/KRgdoWI3ztOsLWfKLCxsnAcWp2d9QKkyDGWSx8c=
+	t=1728394028; cv=none; b=aZozWNTRvq0puiixOCzzrIpyRNz+rsYmrnjVdbki0h368JON7RbLItTeoOUrd41OxdEG8uvWQb3JXGv4jqp2smXX+tf2IrS2frg+LoVy6aMkxYm38LT0cQ8ohEXFG4em7sL3O42LxRiJDY9oJohPtEIJz8Ymb2/8OZTiy5FqPN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394025; c=relaxed/simple;
-	bh=RhASb4D58ukmVeywhlGO3y+06NC7T4ONn/nWI1xGXaU=;
+	s=arc-20240116; t=1728394028; c=relaxed/simple;
+	bh=15MCAFLhLtNyNn9c2G5bMZg7eV8mIybQtYXLKADkePU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDE1Q3Z+SQ5kwPltBQ3EwGRHie/6EyxfrhR8JmE8Cm1JuOno2xf/M/movtqdvjUGCAUD67YNfUsSHMNahYtcW/YnUxRdmfU4lA4Cusc2rJJpDbqW5jrTwC0pQY9rzmv+L2bFsWZwC30nZrl3EC+GhF7pY/YFIzLOWz/glZhOo8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffeGICHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDji9j8v1eF5w85+vt5Piq4RfS2Y6W/xBLjS8IknqMX+KDMfZDu7bhwRYHouQz74nKYYLYrSnbnp7m5KO07Vcer53rwlQM6tWjDXauU1id3Z61uib35zdpoBDHdh4w2hFa4ZGUl8FnTvrvgzcm6x0GGlATekleiBMCFtu2jIS3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTeTkyml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffeGICHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6410EC4CEC7;
-	Tue,  8 Oct 2024 13:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTeTkyml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B95C4CEC7;
+	Tue,  8 Oct 2024 13:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394024;
-	bh=RhASb4D58ukmVeywhlGO3y+06NC7T4ONn/nWI1xGXaU=;
+	s=korg; t=1728394028;
+	bh=15MCAFLhLtNyNn9c2G5bMZg7eV8mIybQtYXLKADkePU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffeGICHf8g1aplrXLvY5HQDBIxB87ZDy8TjfNkWgKWVoMmirDkMnF9FycaCIU8KkW
-	 csJnODFaxvOOtUdbDQCaGIhUIuPysW/f7XA8cOIGHbvt0+sfAy5M70+K+MWHWhjzxD
-	 9McxaAf5L3gOGaHt6WfvQvXt4286d1frTQ6WWd40=
+	b=YTeTkymlY4Lcl/Njd0l302+7XiZVN5qo8+ZqDpLCufAD51b1C3kfgGe/CDBwPNkF8
+	 acw1/bhTEzn2LXozVvKB92bqNr10vFrF9tg0cbIwbj1q3VjsJEeVLKXgYA/Llj3N8a
+	 eeF4nJYrH0k+/xbUnNYKiU2P1zYAywHnpnwXiEKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.6 323/386] drm/i915/gem: fix bitwise and logical AND mixup
-Date: Tue,  8 Oct 2024 14:09:28 +0200
-Message-ID: <20241008115642.096229615@linuxfoundation.org>
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 294/386] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for LUCID EVO PLL
+Date: Tue,  8 Oct 2024 14:08:59 +0200
+Message-ID: <20241008115640.955776608@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -55,48 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Ajit Pandey <quic_ajipan@quicinc.com>
 
-commit 394b52462020b6cceff1f7f47fdebd03589574f3 upstream.
+commit fff617979f97c773aaa9432c31cf62444b3bdbd4 upstream.
 
-CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND is an int, defaulting to 250. When
-the wakeref is non-zero, it's either -1 or a dynamically allocated
-pointer, depending on CONFIG_DRM_I915_DEBUG_RUNTIME_PM. It's likely that
-the code works by coincidence with the bitwise AND, but with
-CONFIG_DRM_I915_DEBUG_RUNTIME_PM=y, there's the off chance that the
-condition evaluates to false, and intel_wakeref_auto() doesn't get
-called. Switch to the intended logical AND.
+In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
+PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
+register using regmap_write() API in __alpha_pll_trion_set_rate
+callback will override LUCID EVO PLL initial configuration related
+to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
 
-v2: Use != to avoid clang -Wconstant-logical-operand (Nathan)
+Observed random PLL lock failures during PLL enable due to such
+override in PLL calibration value. Use regmap_update_bits() with
+L_VAL bitfield mask instead of regmap_write() API to update only
+PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
 
-Fixes: ad74457a6b5a ("drm/i915/dgfx: Release mmap on rpm suspend")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: stable@vger.kernel.org # v6.1+
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com> # v1
-Link: https://patchwork.freedesktop.org/patch/msgid/643cc0a4d12f47fd8403d42581e83b1e9c4543c7.1726680898.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 4c1bfe259ed1d2ade826f95d437e1c41b274df04)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/r/20240611133752.2192401-2-quic_ajipan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_ttm.c |    2 +-
+ drivers/clk/qcom/clk-alpha-pll.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-@@ -1136,7 +1136,7 @@ static vm_fault_t vm_fault_ttm(struct vm
- 		GEM_WARN_ON(!i915_ttm_cpu_maps_iomem(bo->resource));
- 	}
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1638,7 +1638,7 @@ static int __alpha_pll_trion_set_rate(st
+ 	if (ret < 0)
+ 		return ret;
  
--	if (wakeref & CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND)
-+	if (wakeref && CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND != 0)
- 		intel_wakeref_auto(&to_i915(obj->base.dev)->runtime_pm.userfault_wakeref,
- 				   msecs_to_jiffies_timeout(CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND));
+-	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
++	regmap_update_bits(pll->clkr.regmap, PLL_L_VAL(pll), LUCID_EVO_PLL_L_VAL_MASK,  l);
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
  
+ 	/* Latch the PLL input */
 
 
