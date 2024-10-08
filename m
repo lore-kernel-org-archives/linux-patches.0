@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968291DE2AE;
-	Tue,  8 Oct 2024 12:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D501DED6A;
+	Tue,  8 Oct 2024 12:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390160; cv=none; b=brBm5KMb4inxE8OkL+9ac2PfPEWmOEEmtNYQpGnlMCbnKiQRT1trfvn35zvNzEKXTTX9u6iehpdErQeyQXvJsCefJx5VrJuFRDEV80C2hepgqFifjznV8v7NTuTj7Fqh2h1DGuoRbKqS3F3D3pdTYWIOw8InVwICOs6Tk3ScBbg=
+	t=1728390164; cv=none; b=qh7JKw5hdmJivBE4J55bAk6Nywxnlx3HFbQK+HLG4yjSrVOT5Z54D9tUdA+UCPl/hWhTgVR55tgORE+WNUC4xR4BmQlqJtBL0SQsCeuq7tUu/2zCmHK/4+XM7cwvV7Z/ROQXr7m7uZ8qdbVFTW9lImIgAf1wAwgsA0iFDvNKT6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390160; c=relaxed/simple;
-	bh=MmJaeCKN3AYDM/J7+BgW4kxAbBHsBQoWhOIaqhpCyEE=;
+	s=arc-20240116; t=1728390164; c=relaxed/simple;
+	bh=XbBO7kp2S/1do7MH3tU/4fXCIoEGAq4XfZV7n4daWFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSLoD9kjTjexJ0u9zNrQop7NL4tAOhhDyZfDGcWPuGzctEzuo/FzwSGRgZoiNAFxQsS626es8mjq2TJyN97BWdksqyxAguSLDAzzzgqvEMaygytlIawKbJB1OSLcuFJHua/d9+PmaMtTfm722RTV2Oh1xGXlCc8B52ZSVZhyxdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMSwLYbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsC++3+s/uAFNZZEqpQAySMzDkiEhOmTgKc9bnEtMR8RtEWYnslxmOgYqxKHF50emn/kGcbItyE9iOdBKW99HykHchJqmSnvl625+4u+JZTU+yDk5q06gbOis2Xf3t54UGiIefWt90oayafxFudZ/dAQTNTh6d6eXsQdUro51K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZyoLxMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMSwLYbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0EFC4CEC7;
-	Tue,  8 Oct 2024 12:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZyoLxMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87CEC4CEC7;
+	Tue,  8 Oct 2024 12:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390160;
-	bh=MmJaeCKN3AYDM/J7+BgW4kxAbBHsBQoWhOIaqhpCyEE=;
+	s=korg; t=1728390164;
+	bh=XbBO7kp2S/1do7MH3tU/4fXCIoEGAq4XfZV7n4daWFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMSwLYbO+gZHqQu63GGgILAqtBJWH2FTl3Pk3tbpVbsRJ/H+Bu82AQDDPqF5IAeRE
-	 VJjYQJbbGKB7U6qvBBRRod+sfNTlYnzR12Y4EOa2tR5rNFqX2haVXDM/FVrFnfXa45
-	 VPJkDoUu6cmZbqqHL5IvDJQYyQIzTWoqj4Leivag=
+	b=HZyoLxMzqMB81nbKZznoi82spxc7d+PDVCjd1tJSeUKaVJbJWq+hQ9BsB7r4o8wiJ
+	 DB1yuw2cDrO6SE5Qme620VArX685knMOeF2wEs4TP5nyapZWZdJNfucG2Hu+NCPu5c
+	 d1xuycYBOVKdtmQjcpdlyF2uF7d/66nje0G5iJ50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	aln8 <aln8un@gmail.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yannick Fertre <yannick.fertre@foss.st.com>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 208/482] platform/x86/amd: pmf: Add quirk for TUF Gaming A14
-Date: Tue,  8 Oct 2024 14:04:31 +0200
-Message-ID: <20241008115656.496309398@linuxfoundation.org>
+Subject: [PATCH 6.10 209/482] drm/stm: ltdc: reset plane transparency after plane disable
+Date: Tue,  8 Oct 2024 14:04:32 +0200
+Message-ID: <20241008115656.534524370@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,42 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: aln8 <aln8un@gmail.com>
+From: Yannick Fertre <yannick.fertre@foss.st.com>
 
-[ Upstream commit 06369503d644068abd9e90918c6611274d94c126 ]
+[ Upstream commit 02fa62d41c8abff945bae5bfc3ddcf4721496aca ]
 
-The ASUS TUF Gaming A14 has the same issue as the ROG Zephyrus G14
-where it advertises SPS support but doesn't use it.
+The plane's opacity should be reseted while the plane
+is disabled. It prevents from seeing a possible global
+or layer background color set earlier.
 
-Signed-off-by: aln8 <aln8un@gmail.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20240912073601.65656-1-aln8un@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Yannick Fertre <yannick.fertre@foss.st.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240712131344.98113-1-yannick.fertre@foss.st.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/pmf-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/stm/ltdc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmf/pmf-quirks.c b/drivers/platform/x86/amd/pmf/pmf-quirks.c
-index 48870ca52b413..7cde5733b9cac 100644
---- a/drivers/platform/x86/amd/pmf/pmf-quirks.c
-+++ b/drivers/platform/x86/amd/pmf/pmf-quirks.c
-@@ -37,6 +37,14 @@ static const struct dmi_system_id fwbug_list[] = {
- 		},
- 		.driver_data = &quirk_no_sps_bug,
- 	},
-+	{
-+		.ident = "ASUS TUF Gaming A14",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "FA401W"),
-+		},
-+		.driver_data = &quirk_no_sps_bug,
-+	},
- 	{}
- };
+diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
+index 056642d12265c..0832b749b66e7 100644
+--- a/drivers/gpu/drm/stm/ltdc.c
++++ b/drivers/gpu/drm/stm/ltdc.c
+@@ -1513,6 +1513,9 @@ static void ltdc_plane_atomic_disable(struct drm_plane *plane,
+ 	/* Disable layer */
+ 	regmap_write_bits(ldev->regmap, LTDC_L1CR + lofs, LXCR_LEN | LXCR_CLUTEN |  LXCR_HMEN, 0);
  
++	/* Reset the layer transparency to hide any related background color */
++	regmap_write_bits(ldev->regmap, LTDC_L1CACR + lofs, LXCACR_CONSTA, 0x00);
++
+ 	/* Commit shadow registers = update plane at next vblank */
+ 	if (ldev->caps.plane_reg_shadow)
+ 		regmap_write_bits(ldev->regmap, LTDC_L1RCR + lofs,
 -- 
 2.43.0
 
