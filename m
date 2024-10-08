@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9B21DE2D9;
-	Tue,  8 Oct 2024 13:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B3217C7C9;
+	Tue,  8 Oct 2024 13:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393309; cv=none; b=Lwr4ifb+GJ4Utt4l9Z8pJsbg9y/8HoP89DpINq6swPbdcI6r4b0EDe13eWf/goj3dn5tHB6c51IGzs1vuYe0Ns9afiijlA0ZqlmJdzSB26i3P60pzJ/sp4PQ8YEHUGfVZ9L13y2wad00yxYUCkka67yRN6IS4LlsXgRV+Ub0vWo=
+	t=1728393313; cv=none; b=XvC88TSEmexPStpXPpVaLNqmwX2p8pXrVBzcbSKaOdAULfBOL87qovgCTGgfvhGYyNLA/LkzjrVOEcu6SLKkGkJFHFCKqMjpCS8Y4KlTEFylBUwYtUbm7X+q2sJp+MeOwbcEqG26SXeatLUDg0lHJEptBfk7LngBdvviepbg9ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393309; c=relaxed/simple;
-	bh=JLvThrqdWU9uzqC9Zryzp/YOFDW0G9WUt9n8ytIp/R8=;
+	s=arc-20240116; t=1728393313; c=relaxed/simple;
+	bh=5bKBOrGIgxClZFqWghhmid2DPCqOP8m2UGHxnZwn75Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnZOrjWZLr/V5I1ZJ/qL5JSEzSNFRmUd2RSLRzmQ7Xw6qliM/eX1lquWZa+ywTfmYbr1uAVtk7JQ8t+u9l5MpjY8kP/ePCk7dlU9jz6cIruVNE+xK7/puPEVvrQBS+x55U+mPxcqZd0dhreN58qEOoVXK6owqbRzaULssf2yFLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKFEF219; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ixM5LCEXbbz+68wEpGd+WdRXHeZ+7iL1cVOA2IymTexNnNHBNTToeJnVkLrUWbNoqfTXpfnsuyLpA1lrLIAK+IeNpzyAoWf8ScJWo02+2oo9c7CZUSy7meOYEB0GQC2nDVsKNJ1cY2AOKHSNPRxwdpXHIswDjO32aUzspJdFE1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gcsA/v1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKFEF219"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08798C4CEC7;
-	Tue,  8 Oct 2024 13:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gcsA/v1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64977C4CEC7;
+	Tue,  8 Oct 2024 13:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393309;
-	bh=JLvThrqdWU9uzqC9Zryzp/YOFDW0G9WUt9n8ytIp/R8=;
+	s=korg; t=1728393312;
+	bh=5bKBOrGIgxClZFqWghhmid2DPCqOP8m2UGHxnZwn75Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKFEF219dRH1YEf+uAIdJD9LH7SeI2RSJo69vVIkw6ZA1fGC7rN2kFUR3n0wrEUDk
-	 7GGBsm0LIrXrsO6/tySG+gqlWzZSl2NzyZhalhnRsctzWYvRhDB/HuuI2/niOVKXRg
-	 XPHLSnGAaIntyOmGlrXRo9hOvZYjUNqolwmufZYg=
+	b=2gcsA/v1XRFczgX8EI9YR0qUqJBy2iRIspim05R4KhgxfOc+uG6cR1Jsi3ypK5FqI
+	 PofJbycsAQHWA9e9rGcbNmUz4ygt/t4ndcRMbO2I6Nwa1HdM3FtCV6J5fwB+6gFCGf
+	 Zzzw4lKUvtvV2MU0Y2D8hzbeIug3kkyV2xbgBLw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/386] ASoC: codecs: wsa883x: Handle reading version failure
-Date: Tue,  8 Oct 2024 14:05:58 +0200
-Message-ID: <20241008115633.891862725@linuxfoundation.org>
+Subject: [PATCH 6.6 114/386] tools/x86/kcpuid: Protect against faulty "max subleaf" values
+Date: Tue,  8 Oct 2024 14:05:59 +0200
+Message-ID: <20241008115633.930535185@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,76 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit 2fbf16992e5aa14acf0441320033a01a32309ded ]
+[ Upstream commit cf96ab1a966b87b09fdd9e8cc8357d2d00776a3a ]
 
-If reading version and variant from registers fails (which is unlikely
-but possible, because it is a read over bus), the driver will proceed
-and perform device configuration based on uninitialized stack variables.
-Handle it a bit better - bail out without doing any init and failing the
-update status Soundwire callback.
+Protect against the kcpuid code parsing faulty max subleaf numbers
+through a min() expression.  Thus, ensuring that max_subleaf will always
+be ≤ MAX_SUBLEAF_NUM.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240710-asoc-wsa88xx-version-v1-2-f1c54966ccde@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use "u32" for the subleaf numbers since kcpuid is compiled with -Wextra,
+which includes signed/unsigned comparisons warnings.
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240718134755.378115-5-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ tools/arch/x86/kcpuid/kcpuid.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 2169d93989841..1831d4487ba9d 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -998,15 +998,19 @@ static const struct reg_sequence reg_init[] = {
- 	{WSA883X_GMAMP_SUP1, 0xE2},
- };
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index 24b7d017ec2c1..b7965dfff33a9 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -7,7 +7,8 @@
+ #include <string.h>
+ #include <getopt.h>
  
--static void wsa883x_init(struct wsa883x_priv *wsa883x)
-+static int wsa883x_init(struct wsa883x_priv *wsa883x)
+-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
++#define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
++#define min(a, b)	(((a) < (b)) ? (a) : (b))
+ 
+ typedef unsigned int u32;
+ typedef unsigned long long u64;
+@@ -207,12 +208,9 @@ static void raw_dump_range(struct cpuid_range *range)
+ #define MAX_SUBLEAF_NUM		32
+ struct cpuid_range *setup_cpuid_range(u32 input_eax)
  {
- 	struct regmap *regmap = wsa883x->regmap;
--	int variant, version;
-+	int variant, version, ret;
+-	u32 max_func, idx_func;
+-	int subleaf;
++	u32 max_func, idx_func, subleaf, max_subleaf;
++	u32 eax, ebx, ecx, edx, f = input_eax;
+ 	struct cpuid_range *range;
+-	u32 eax, ebx, ecx, edx;
+-	u32 f = input_eax;
+-	int max_subleaf;
+ 	bool allzero;
  
--	regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
-+	ret = regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
-+	if (ret)
-+		return ret;
- 	wsa883x->variant = variant & WSA883X_ID_MASK;
+ 	eax = input_eax;
+@@ -258,7 +256,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 		 * others have to be tried (0xf)
+ 		 */
+ 		if (f == 0x7 || f == 0x14 || f == 0x17 || f == 0x18)
+-			max_subleaf = (eax & 0xff) + 1;
++			max_subleaf = min((eax & 0xff) + 1, max_subleaf);
  
--	regmap_read(regmap, WSA883X_CHIP_ID0, &version);
-+	ret = regmap_read(regmap, WSA883X_CHIP_ID0, &version);
-+	if (ret)
-+		return ret;
- 	wsa883x->version = version;
- 
- 	switch (wsa883x->variant) {
-@@ -1041,6 +1045,8 @@ static void wsa883x_init(struct wsa883x_priv *wsa883x)
- 				   WSA883X_DRE_OFFSET_MASK,
- 				   wsa883x->comp_offset);
- 	}
-+
-+	return 0;
- }
- 
- static int wsa883x_update_status(struct sdw_slave *slave,
-@@ -1049,7 +1055,7 @@ static int wsa883x_update_status(struct sdw_slave *slave,
- 	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
- 
- 	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
--		wsa883x_init(wsa883x);
-+		return wsa883x_init(wsa883x);
- 
- 	return 0;
- }
+ 		if (f == 0xb)
+ 			max_subleaf = 2;
 -- 
 2.43.0
 
