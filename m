@@ -1,100 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAEE1DE89A;
-	Tue,  8 Oct 2024 13:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589DA1D362B;
+	Tue,  8 Oct 2024 13:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394257; cv=none; b=cngTk+tw9drEDHUVfLeUtjPdWyO5KIvWWB2q0i2YtoRza9SxfGxu6Xv5jcnA3wu1pp+S2btnWlqId27wynb1Vq7gmmstW7+giqMEeDeST8LPwTBhfKsuSHiE98ZT1eBnUSPt/Xl84sfXaZuA7LFNYwAMygLQLN4Ipow1VXg95PA=
+	t=1728394798; cv=none; b=mbGim7zPXnqOcYJScqPLex4hQTRuNh5VeA+HmTQ499eBaexRx7pvuf2H2NaZCt2yEZnrpzbQqm0UlViOJ+oS8xOx0SXPnTK0uYjsxOlN2uAYm772+q4ARh7yUhNAeY6Z1dhqMemQheXQOJNHXvTz5drBVQLNo+ZceuujEpMbbOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394257; c=relaxed/simple;
-	bh=o206EfaSPRrXzI+LR0e5yzNETS5afby1DvdIuxp+GgE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoKRv/KmWXHabAITCLJKkAZHtFXYxxkGtcqexMFGGq8iXzoJ/BPDjnTGdzOfreAJtSHnnnJ0Xr/DaP8+Lq2/i4yC5o7vxb8ZAF9/QKawMpJlT+UPtChO8T3KlftwiFDdPonpnB33TEmwlEwNH5UvBQUpvhX0mpqrNSa3H45Ch3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkvIYHVf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728394798; c=relaxed/simple;
+	bh=D3zMX+nGIlOON+28O/pmYT+Fu3bkr9vHmFGcJlFRjRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p6sCe2mQwXiMRTSHjOrQPsTqgGj2IdFHUsNLpJ21rfsu2HdSoCc2OrYT7YnziWiyKV8/U71Uvas/5IPErbIvTM03w7tc3sACLcLdbAxR7PpCXDJJKpN6Rzf2AeiTLFY4O/L0261VWcFPrKMQXwpoqywgQeKAO7+q35QNCa9t974=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RMHLtQSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkvIYHVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB27C4CECF;
-	Tue,  8 Oct 2024 13:30:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394256;
-	bh=o206EfaSPRrXzI+LR0e5yzNETS5afby1DvdIuxp+GgE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkvIYHVfaaV/kEHDYgPPrYsghrYdsgcfZMgrWCRqrrexIPdDB2F4JrH9tdqfiKx6A
-	 YDiXEkoCdV40q9RepH4GKgLN8y3G77GpgIe1fjT4aBzECp5DfdugkntIvBn1QdrdBI
-	 DQzp6HzfJ2tqHIpInqYK+5NLqRo+a6bmi5Yr7EkA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 358/386] r8169: Fix spelling mistake: "tx_underun" -> "tx_underrun"
-Date: Tue,  8 Oct 2024 14:10:03 +0200
-Message-ID: <20241008115643.470989198@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
-References: <20241008115629.309157387@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RMHLtQSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441AEC4CECC;
+	Tue,  8 Oct 2024 13:39:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728394797;
+	bh=D3zMX+nGIlOON+28O/pmYT+Fu3bkr9vHmFGcJlFRjRk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RMHLtQSvncaYoVgNIdgxSoX0o70ZrDxc+PIUIYuwdcx+dXhx5hA9/n7PUUZk14Pc4
+	 Kn+3OMabgZ/Q4luLUeXa2jhlyNXQQov1IY9w8zI06NPNeW9YRQQiroliL5ZGwy9SEG
+	 EUbmOz3CxwdQ5f3XdzxexYAZjlrHxZXGCqs++cDZIFuJWeyGfhAH1+XyTZPy+A5jge
+	 fmtZ3a8bjfX0g1WMlnTP6MGcM88nm5eSAi4eJR5lUpAxEQ+/0tsfD+X5CnsM88g4GQ
+	 Q6GsDj59n0KEWuX7WTccnQlUeeK5k1uMzCSpVKihyuRXGqCgmwkZZgdNKHsbi4n5S4
+	 tSJFGXP4f65Pw==
+Date: Tue, 8 Oct 2024 06:39:55 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Naveen N Rao <naveen@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Keith Packard <keithp@keithp.com>, linuxppc-dev@lists.ozlabs.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 2/3] powerpc: Adjust adding stack protector flags to
+ KBUILD_CLAGS for clang
+Message-ID: <20241008133955.GA3504203@thelio-3990X>
+References: <20241007-powerpc-fix-stackprotector-test-clang-v1-0-08c15b2694e4@kernel.org>
+ <20241007-powerpc-fix-stackprotector-test-clang-v1-2-08c15b2694e4@kernel.org>
+ <331cc7ba-ed5e-4dd3-8175-b51bacb65186@csgroup.eu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <331cc7ba-ed5e-4dd3-8175-b51bacb65186@csgroup.eu>
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+Hi Christophe,
 
-------------------
+First of all, thanks a lot for the quick review.
 
-From: Colin Ian King <colin.i.king@gmail.com>
+On Tue, Oct 08, 2024 at 07:10:36AM +0200, Christophe Leroy wrote:
+> Le 08/10/2024 à 06:22, Nathan Chancellor a écrit :
+> > After fixing the HAVE_STACKPROTECTER checks for clang's in-progress
+> > per-task stack protector support [1], the build fails during prepare0
+> > because '-mstack-protector-guard-offset' has not been added to
+> > KBUILD_CFLAGS yet but the other '-mstack-protector-guard' flags have.
+> > 
+> >    clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
+> >    clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
+> >    make[4]: *** [scripts/Makefile.build:229: scripts/mod/empty.o] Error 1
+> >    make[4]: *** [scripts/Makefile.build:102: scripts/mod/devicetable-offsets.s] Error 1
+> > 
+> > Mirror other architectures and add all '-mstack-protector-guard' flags
+> > to KBUILD_CFLAGS atomically during stack_protector_prepare, which
+> > resolves the issue and allows clang's implementation to fully work with
+> > the kernel.
+> > 
+> > Link: https://github.com/llvm/llvm-project/pull/110928 [1]
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Is it worth a Fixes: tag so that it gets applied on stable, or wont CLANG 20
+> be used with kernels older than 6.13 ?
 
-[ Upstream commit 8df9439389a44fb2cc4ef695e08d6a8870b1616c ]
+Yes, I did consider adding Fixes: + Cc: stable. I think it is probably
+worth doing since the fixes are rather benign. Do you have a suggestion
+for a good Fixes: commit? It always feels somewhat wrong to blame a
+commit for not having foresight into how a future implementation might
+do things differently :)
 
-There is a spelling mistake in the struct field tx_underun, rename
-it to tx_underrun.
+> > -	$(eval KBUILD_CFLAGS += -mstack-protector-guard-offset=$(shell awk '{if ($$2 == "PACA_CANARY") print $$3;}' include/generated/asm-offsets.h))
+> > +	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls \
+> > +				-mstack-protector-guard-reg=r13 \
+> 
+> Can you put both above lines on a single line to avoid having too many lines
+> at the end:
+> 
+> +	$(eval KBUILD_CFLAGS += -mstack-protector-guard=tls -mstack-protector-guard-reg=r13 \
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20240909140021.64884-1-colin.i.king@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ced8e8b8f40a ("r8169: add tally counter fields added with RTL8125")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/realtek/r8169_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Ack, I have made this change locally for v2.
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 8a732edac15a0..382ba8b04cbfa 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -566,7 +566,7 @@ struct rtl8169_counters {
- 	__le64	rx_broadcast;
- 	__le32	rx_multicast;
- 	__le16	tx_aborted;
--	__le16	tx_underun;
-+	__le16	tx_underrun;
- };
- 
- struct rtl8169_tc_offsets {
-@@ -1726,7 +1726,7 @@ static void rtl8169_get_ethtool_stats(struct net_device *dev,
- 	data[9] = le64_to_cpu(counters->rx_broadcast);
- 	data[10] = le32_to_cpu(counters->rx_multicast);
- 	data[11] = le16_to_cpu(counters->tx_aborted);
--	data[12] = le16_to_cpu(counters->tx_underun);
-+	data[12] = le16_to_cpu(counters->tx_underrun);
- }
- 
- static void rtl8169_get_strings(struct net_device *dev, u32 stringset, u8 *data)
--- 
-2.43.0
-
-
-
+Cheers,
+Nathan
