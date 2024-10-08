@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF0F1DE8A0;
-	Tue,  8 Oct 2024 13:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970DA1DE8A0;
+	Tue,  8 Oct 2024 13:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393094; cv=none; b=sYJXySiw19mapNHung9KqHKOxBq2zX5lonOwrZb9SlPtBzlozrYRdGhM2hM3LzOSxY2xuyyONCPT2TXWfE18QZpuzliM7cD9Gt5/1IkAA/c93/1BDT/bBCoeBK+A54epLaB1/ZBwTHxuaJPVkRkl2IZ5fc0kAR0Fjpv9Bwuj0XY=
+	t=1728393097; cv=none; b=rNn6JXvo1n7q0BTlnF1XBXuQ9HHNvDhxuCMvsvJf2IbtHhctQr1ww9GwPse9ZmiYTbewS7yDucqtWgv6q2bk8BTmVZ6WEzlTutvmhSzcRSDWvp/oc0MloO7wiILS8tziyHQGcqNNKuHDzNAWr15x08xgxINbXbA2eKKBMlYLan0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393094; c=relaxed/simple;
-	bh=DxN5ST375cHX6WvDH+FiJWLhg/W7ag9/XPTBqDwMefs=;
+	s=arc-20240116; t=1728393097; c=relaxed/simple;
+	bh=lDvZP+D5LKHJfHX+3pUXT7v7B266yho6giQ4V7QN3cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jg2dT72HMsbhIVqWSSMTm0HTIgIwcdMq8IGRhLqwXsR1p9SD0Wblc4GBbPlzf2YXT9f/SkifkrA8dvFqAYF6197bz2O3410SijFgcNKgED98n23IuSebamB8uHXG0UBWcErUu3mW1/sTIJllQYLTAeJvk/d8iBdMOG17YYjOXno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsL9bTYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHPlrdo44cMLHHuxXw8YF/GrNtRlx8UCOWMlg2KsUL1aw7LFGi8cJzwMWFunRoKUo+xzVQI/9sYNfXFxuH6E2XyUhe3hBDn3m7ts+u6kgXxJDA58PwGTCMBWXlLrvxlQRX/b66yEH1cWrjohkhR4DkUxKRRpjRuyYmMQkbFGEbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbeTd1iB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsL9bTYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659E2C4CEC7;
-	Tue,  8 Oct 2024 13:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbeTd1iB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9008C4CEC7;
+	Tue,  8 Oct 2024 13:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393093;
-	bh=DxN5ST375cHX6WvDH+FiJWLhg/W7ag9/XPTBqDwMefs=;
+	s=korg; t=1728393097;
+	bh=lDvZP+D5LKHJfHX+3pUXT7v7B266yho6giQ4V7QN3cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsL9bTYhHLOTjBHk98sdBazHJiNF9Q9Cfsex78rLtqxEC+Rg+03VXiZOWHdM38YKp
-	 /QaOPcVIewv4gOnBMDMRVgA3XbNfMsjam9NpVUjuwEBncltcKB/WZyU/Y4bZJ+Tm35
-	 aa1ijLDrTPtJACBpsr7PqNdjHwf3kIu/KWM3c16w=
+	b=pbeTd1iBcsSCxq/f+uppLvKsDWuQBFLO4QzpPT+0FGg5Px77/RQKFjaMY1MBf2l2B
+	 mxe0g0KvoXlikiP5H7GK3PhxXNoIjUHufL9JEDvVnvv3Cc3OuK0B1NTZd6ByrogEWC
+	 Q2dIWZP7TJ4wDelxbIJTzH4Zkq77jBB6P1L+BxxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/386] Bluetooth: L2CAP: Fix uaf in l2cap_connect
-Date: Tue,  8 Oct 2024 14:04:28 +0200
-Message-ID: <20241008115630.388812675@linuxfoundation.org>
+Subject: [PATCH 6.6 050/386] ALSA: hda/generic: Unconditionally prefer preferred_dacs pairs
+Date: Tue,  8 Oct 2024 14:04:55 +0200
+Message-ID: <20241008115631.440357142@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,127 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 333b4fd11e89b29c84c269123f871883a30be586 ]
+[ Upstream commit 1c801e7f77445bc56e5e1fec6191fd4503534787 ]
 
-[Syzbot reported]
-BUG: KASAN: slab-use-after-free in l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
-Read of size 8 at addr ffff8880241e9800 by task kworker/u9:0/54
+Some time ago, we introduced the obey_preferred_dacs flag for choosing
+the DAC/pin pairs specified by the driver instead of parsing the
+paths.  This works as expected, per se, but there have been a few
+cases where we forgot to set this flag while preferred_dacs table is
+already set up.  It ended up with incorrect wiring and made us
+wondering why it doesn't work.
 
-CPU: 0 UID: 0 PID: 54 Comm: kworker/u9:0 Not tainted 6.11.0-rc6-syzkaller-00268-g788220eee30d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-Workqueue: hci2 hci_rx_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:93 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0xc3/0x620 mm/kasan/report.c:488
- kasan_report+0xd9/0x110 mm/kasan/report.c:601
- l2cap_connect.constprop.0+0x10d8/0x1270 net/bluetooth/l2cap_core.c:3949
- l2cap_connect_req net/bluetooth/l2cap_core.c:4080 [inline]
- l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:4772 [inline]
- l2cap_sig_channel net/bluetooth/l2cap_core.c:5543 [inline]
- l2cap_recv_frame+0xf0b/0x8eb0 net/bluetooth/l2cap_core.c:6825
- l2cap_recv_acldata+0x9b4/0xb70 net/bluetooth/l2cap_core.c:7514
- hci_acldata_packet net/bluetooth/hci_core.c:3791 [inline]
- hci_rx_work+0xaab/0x1610 net/bluetooth/hci_core.c:4028
- process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
- process_scheduled_works kernel/workqueue.c:3312 [inline]
- worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-...
+Basically, when the preferred_dacs table is provided, it means that
+the driver really wants to wire up to follow that.  That is, the
+presence of the preferred_dacs table itself is already a "do-it"
+flag.
 
-Freed by task 5245:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
- poison_slab_object+0xf7/0x160 mm/kasan/common.c:240
- __kasan_slab_free+0x32/0x50 mm/kasan/common.c:256
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2256 [inline]
- slab_free mm/slub.c:4477 [inline]
- kfree+0x12a/0x3b0 mm/slub.c:4598
- l2cap_conn_free net/bluetooth/l2cap_core.c:1810 [inline]
- kref_put include/linux/kref.h:65 [inline]
- l2cap_conn_put net/bluetooth/l2cap_core.c:1822 [inline]
- l2cap_conn_del+0x59d/0x730 net/bluetooth/l2cap_core.c:1802
- l2cap_connect_cfm+0x9e6/0xf80 net/bluetooth/l2cap_core.c:7241
- hci_connect_cfm include/net/bluetooth/hci_core.h:1960 [inline]
- hci_conn_failed+0x1c3/0x370 net/bluetooth/hci_conn.c:1265
- hci_abort_conn_sync+0x75a/0xb50 net/bluetooth/hci_sync.c:5583
- abort_conn_sync+0x197/0x360 net/bluetooth/hci_conn.c:2917
- hci_cmd_sync_work+0x1a4/0x410 net/bluetooth/hci_sync.c:328
- process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
- process_scheduled_works kernel/workqueue.c:3312 [inline]
- worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+In this patch, we simply replace the evaluation of obey_preferred_dacs
+flag with the presence of preferred_dacs table for fixing the
+misbehavior.  Another patch to drop of the obsoleted flag will
+follow.
 
-Reported-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
-Tested-by: syzbot+c12e2f941af1feb5632c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c12e2f941af1feb5632c
-Fixes: 7b064edae38d ("Bluetooth: Fix authentication if acl data comes before remote feature evt")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 242d990c158d ("ALSA: hda/generic: Add option to enforce preferred_dacs pairs")
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1219803
+Link: https://patch.msgid.link/20241001121439.26060-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c   | 2 ++
- net/bluetooth/hci_event.c  | 2 +-
- net/bluetooth/l2cap_core.c | 8 --------
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ sound/pci/hda/hda_generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 1b56355c40eaf..f787b0eb7d669 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3755,6 +3755,8 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
+diff --git a/sound/pci/hda/hda_generic.c b/sound/pci/hda/hda_generic.c
+index d3ed3e21b1979..8e8d4c667923c 100644
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -1383,7 +1383,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		struct nid_path *path;
+ 		hda_nid_t pin = pins[i];
  
- 	hci_dev_lock(hdev);
- 	conn = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (conn && hci_dev_test_flag(hdev, HCI_MGMT))
-+		mgmt_device_connected(hdev, conn, NULL, 0);
- 	hci_dev_unlock(hdev);
+-		if (!spec->obey_preferred_dacs) {
++		if (!spec->preferred_dacs) {
+ 			path = snd_hda_get_path_from_idx(codec, path_idx[i]);
+ 			if (path) {
+ 				badness += assign_out_path_ctls(codec, path);
+@@ -1395,7 +1395,7 @@ static int try_assign_dacs(struct hda_codec *codec, int num_outs,
+ 		if (dacs[i]) {
+ 			if (is_dac_already_used(codec, dacs[i]))
+ 				badness += bad->shared_primary;
+-		} else if (spec->obey_preferred_dacs) {
++		} else if (spec->preferred_dacs) {
+ 			badness += BAD_NO_PRIMARY_DAC;
+ 		}
  
- 	if (conn) {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index d81c7fccdd404..b86a30c600a9a 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3707,7 +3707,7 @@ static void hci_remote_features_evt(struct hci_dev *hdev, void *data,
- 		goto unlock;
- 	}
- 
--	if (!ev->status && !test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
-+	if (!ev->status) {
- 		struct hci_cp_remote_name_req cp;
- 		memset(&cp, 0, sizeof(cp));
- 		bacpy(&cp.bdaddr, &conn->dst);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 2651cc2d5c283..93651c421767a 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4064,17 +4064,9 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- static int l2cap_connect_req(struct l2cap_conn *conn,
- 			     struct l2cap_cmd_hdr *cmd, u16 cmd_len, u8 *data)
- {
--	struct hci_dev *hdev = conn->hcon->hdev;
--	struct hci_conn *hcon = conn->hcon;
--
- 	if (cmd_len < sizeof(struct l2cap_conn_req))
- 		return -EPROTO;
- 
--	hci_dev_lock(hdev);
--	if (hci_dev_test_flag(hdev, HCI_MGMT))
--		mgmt_device_connected(hdev, hcon, NULL, 0);
--	hci_dev_unlock(hdev);
--
- 	l2cap_connect(conn, cmd, data, L2CAP_CONN_RSP);
- 	return 0;
- }
 -- 
 2.43.0
 
