@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A96A1DEFED;
-	Tue,  8 Oct 2024 13:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083211DED65;
+	Tue,  8 Oct 2024 13:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393210; cv=none; b=B3NhJWCNo9sQxoTguoFjJr244w8fLvsWhAqFcgn8uDrvbGbmOm4A6AB+wR3dnQwXr7x9881fPNOUHfSkOg1JaoKFcvz5kLTNKCw3JOVWQeOaVO4sojfyEKk14GWubZXPLYK+dvclS035B4EPzAJTn/1haZJVTRgNKBHI5DcyU/A=
+	t=1728393214; cv=none; b=A3ebsWTrcRmPnXhizZfrKLIn4ZECFmyo+w7bIrbh+MNAwyzEmLVYe3KgSp2HzP61yiK0Bi9Qi7Y3EYmKh4MFofTYGGU5Bb6N/6PP1yUP0mbOGQA/169gQwClav9wretet725XXgvMaI8O4NKPK32rR6rxdjp6KlFC/hEmRinYhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393210; c=relaxed/simple;
-	bh=eY7aktInPHICZK/xFMjUfLs2fSblbTdpAqzE8HxTG90=;
+	s=arc-20240116; t=1728393214; c=relaxed/simple;
+	bh=/ZT8AWy3KasN3poehEsPb7xCSLSMD+CGYsC5hsfjgQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEGiDvDTAFdncQqiU9ybKchFl/EsIJarGY7cPUrh+lz1dLe84Kn58QAPZpJsXcZU9v7yizn0FLUe+mHBpYvFAPqGobRlfUN3xWhvGjl2s2ZnluBlOO5GqQWK/nbVxJa5QvDc08C/wwTgq3FtFbaamPXzJ35AMkpSLbdbZhPCbzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e27KJEZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNTnjWjLo0iHxApAQcaPIaaOqzcIwh6Nxrnzk+YUZmRLpVsYYhwMUhVJ7gjT8cvhqAbTK3oJQI14EX70tP6i1acD+NrkbrZm8D3GKBT/9LPYKPWhnweQBAo6OnLFls4cceFToVEu2CciPxofj9iBmoRPmbYsX/+cEAens6Trv/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gjw3NUZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e27KJEZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB1DC4CEC7;
-	Tue,  8 Oct 2024 13:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gjw3NUZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B940C4CEC7;
+	Tue,  8 Oct 2024 13:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393210;
-	bh=eY7aktInPHICZK/xFMjUfLs2fSblbTdpAqzE8HxTG90=;
+	s=korg; t=1728393213;
+	bh=/ZT8AWy3KasN3poehEsPb7xCSLSMD+CGYsC5hsfjgQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e27KJEZGmySbLmCIalBNNYxJUEj+TCDgqqnQYPLECg1fRk0JS+53/BMN+Ctshrzdj
-	 vp9NbXgNvhmtRKRNR+7oqEbvpj+H40r8NEiVUdLgj7qVLOaBksEp+sjMlglQ8pMKMg
-	 KEpkelPWZxP9695soD/DRPCLoa0kKpKWgRuIy9Y8=
+	b=Gjw3NUZeAg9kLoL14cRwOzL0ehaWccqULnZBXprsbFDD0uEAgG6rcte+IqJb8v8Jw
+	 +B4MZpvIG8ixwyJL+bBu0vDz8Ng1L+JArzPyBe5SXzvmvYFbaVR/N9BnVYPWIv3xq7
+	 x8xns9QJYAFc7Vn/09s+SyIALKuoNQ5ibNd6g89o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/386] ACPI: EC: Do not release locks during operation region accesses
-Date: Tue,  8 Oct 2024 14:05:29 +0200
-Message-ID: <20241008115632.763436035@linuxfoundation.org>
+Subject: [PATCH 6.6 085/386] ACPICA: check null return of ACPI_ALLOCATE_ZEROED() in acpi_db_convert_to_package()
+Date: Tue,  8 Oct 2024 14:05:30 +0200
+Message-ID: <20241008115632.800971413@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,164 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit dc171114926ec390ab90f46534545420ec03e458 ]
+[ Upstream commit a5242874488eba2b9062985bf13743c029821330 ]
 
-It is not particularly useful to release locks (the EC mutex and the
-ACPI global lock, if present) and re-acquire them immediately thereafter
-during EC address space accesses in acpi_ec_space_handler().
+ACPICA commit 4d4547cf13cca820ff7e0f859ba83e1a610b9fd0
 
-First, releasing them for a while before grabbing them again does not
-really help anyone because there may not be enough time for another
-thread to acquire them.
+ACPI_ALLOCATE_ZEROED() may fail, elements might be NULL and will cause
+NULL pointer dereference later.
 
-Second, if another thread successfully acquires them and carries out
-a new EC write or read in the middle if an operation region access in
-progress, it may confuse the EC firmware, especially after the burst
-mode has been enabled.
-
-Finally, manipulating the locks after writing or reading every single
-byte of data is overhead that it is better to avoid.
-
-Accordingly, modify the code to carry out EC address space accesses
-entirely without releasing the locks.
-
+Link: https://github.com/acpica/acpica/commit/4d4547cf
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/tencent_4A21A2865B8B0A0D12CAEBEB84708EDDB505@qq.com
+[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/12473338.O9o76ZdvQC@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c | 55 +++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 49 insertions(+), 6 deletions(-)
+ drivers/acpi/acpica/dbconvert.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index 35e22a2af4e4b..115994dfefec1 100644
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -783,6 +783,9 @@ static int acpi_ec_transaction_unlocked(struct acpi_ec *ec,
- 	unsigned long tmp;
- 	int ret = 0;
+diff --git a/drivers/acpi/acpica/dbconvert.c b/drivers/acpi/acpica/dbconvert.c
+index 2b84ac093698a..8dbab69320499 100644
+--- a/drivers/acpi/acpica/dbconvert.c
++++ b/drivers/acpi/acpica/dbconvert.c
+@@ -174,6 +174,8 @@ acpi_status acpi_db_convert_to_package(char *string, union acpi_object *object)
+ 	elements =
+ 	    ACPI_ALLOCATE_ZEROED(DB_DEFAULT_PKG_ELEMENTS *
+ 				 sizeof(union acpi_object));
++	if (!elements)
++		return (AE_NO_MEMORY);
  
-+	if (t->rdata)
-+		memset(t->rdata, 0, t->rlen);
-+
- 	/* start transaction */
- 	spin_lock_irqsave(&ec->lock, tmp);
- 	/* Enable GPE for command processing (IBF=0/OBF=1) */
-@@ -819,8 +822,6 @@ static int acpi_ec_transaction(struct acpi_ec *ec, struct transaction *t)
- 
- 	if (!ec || (!t) || (t->wlen && !t->wdata) || (t->rlen && !t->rdata))
- 		return -EINVAL;
--	if (t->rdata)
--		memset(t->rdata, 0, t->rlen);
- 
- 	mutex_lock(&ec->mutex);
- 	if (ec->global_lock) {
-@@ -847,7 +848,7 @@ static int acpi_ec_burst_enable(struct acpi_ec *ec)
- 				.wdata = NULL, .rdata = &d,
- 				.wlen = 0, .rlen = 1};
- 
--	return acpi_ec_transaction(ec, &t);
-+	return acpi_ec_transaction_unlocked(ec, &t);
- }
- 
- static int acpi_ec_burst_disable(struct acpi_ec *ec)
-@@ -857,7 +858,7 @@ static int acpi_ec_burst_disable(struct acpi_ec *ec)
- 				.wlen = 0, .rlen = 0};
- 
- 	return (acpi_ec_read_status(ec) & ACPI_EC_FLAG_BURST) ?
--				acpi_ec_transaction(ec, &t) : 0;
-+				acpi_ec_transaction_unlocked(ec, &t) : 0;
- }
- 
- static int acpi_ec_read(struct acpi_ec *ec, u8 address, u8 *data)
-@@ -873,6 +874,19 @@ static int acpi_ec_read(struct acpi_ec *ec, u8 address, u8 *data)
- 	return result;
- }
- 
-+static int acpi_ec_read_unlocked(struct acpi_ec *ec, u8 address, u8 *data)
-+{
-+	int result;
-+	u8 d;
-+	struct transaction t = {.command = ACPI_EC_COMMAND_READ,
-+				.wdata = &address, .rdata = &d,
-+				.wlen = 1, .rlen = 1};
-+
-+	result = acpi_ec_transaction_unlocked(ec, &t);
-+	*data = d;
-+	return result;
-+}
-+
- static int acpi_ec_write(struct acpi_ec *ec, u8 address, u8 data)
- {
- 	u8 wdata[2] = { address, data };
-@@ -883,6 +897,16 @@ static int acpi_ec_write(struct acpi_ec *ec, u8 address, u8 data)
- 	return acpi_ec_transaction(ec, &t);
- }
- 
-+static int acpi_ec_write_unlocked(struct acpi_ec *ec, u8 address, u8 data)
-+{
-+	u8 wdata[2] = { address, data };
-+	struct transaction t = {.command = ACPI_EC_COMMAND_WRITE,
-+				.wdata = wdata, .rdata = NULL,
-+				.wlen = 2, .rlen = 0};
-+
-+	return acpi_ec_transaction_unlocked(ec, &t);
-+}
-+
- int ec_read(u8 addr, u8 *val)
- {
- 	int err;
-@@ -1323,6 +1347,7 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
- 	struct acpi_ec *ec = handler_context;
- 	int result = 0, i, bytes = bits / 8;
- 	u8 *value = (u8 *)value64;
-+	u32 glk;
- 
- 	if ((address > 0xFF) || !value || !handler_context)
- 		return AE_BAD_PARAMETER;
-@@ -1330,13 +1355,25 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
- 	if (function != ACPI_READ && function != ACPI_WRITE)
- 		return AE_BAD_PARAMETER;
- 
-+	mutex_lock(&ec->mutex);
-+
-+	if (ec->global_lock) {
-+		acpi_status status;
-+
-+		status = acpi_acquire_global_lock(ACPI_EC_UDELAY_GLK, &glk);
-+		if (ACPI_FAILURE(status)) {
-+			result = -ENODEV;
-+			goto unlock;
-+		}
-+	}
-+
- 	if (ec->busy_polling || bits > 8)
- 		acpi_ec_burst_enable(ec);
- 
- 	for (i = 0; i < bytes; ++i, ++address, ++value) {
- 		result = (function == ACPI_READ) ?
--			acpi_ec_read(ec, address, value) :
--			acpi_ec_write(ec, address, *value);
-+			acpi_ec_read_unlocked(ec, address, value) :
-+			acpi_ec_write_unlocked(ec, address, *value);
- 		if (result < 0)
- 			break;
- 	}
-@@ -1344,6 +1381,12 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
- 	if (ec->busy_polling || bits > 8)
- 		acpi_ec_burst_disable(ec);
- 
-+	if (ec->global_lock)
-+		acpi_release_global_lock(glk);
-+
-+unlock:
-+	mutex_unlock(&ec->mutex);
-+
- 	switch (result) {
- 	case -EINVAL:
- 		return AE_BAD_PARAMETER;
+ 	this = string;
+ 	for (i = 0; i < (DB_DEFAULT_PKG_ELEMENTS - 1); i++) {
 -- 
 2.43.0
 
