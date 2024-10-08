@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42CC1DE4CD;
-	Tue,  8 Oct 2024 13:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFFA1DED48;
+	Tue,  8 Oct 2024 13:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393642; cv=none; b=axDOY+GAIjm+zIH6JnBFj/qLqFBf7NhyWPkI7LVX4Y5vAY0v9q3uCnd8EUIeTdILnA3GGAbNyoH07SfUrSPHINlS8LIttDguqygFAj6/mSX2SWGecEN3MgoQxCeC+skk7eT5/9o9LPuLnfGTIyBLx26jalFQbiI5cbeg7m8fYfo=
+	t=1728393646; cv=none; b=qqGpzVbcGIMH4UpWNOdft6IL0oYSh9byTb0GBLZbhWndb8OxkuX7LnL9zebUfng2apRiF0NngEb18tgv5dQZzCARhFoF3p4K0EMw3gvtQPuE0ISysNfdYpVc4GVLxQsdmF5WV8xShOPjdqwygVclqwPZYmDT5mp+lgVOWOTWEs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393642; c=relaxed/simple;
-	bh=PW+MOduTbp881l3exYLkB2mGM8SlqvnF/JU6qJFqexg=;
+	s=arc-20240116; t=1728393646; c=relaxed/simple;
+	bh=CUMT90Whp9d9P9n8EUwvxPzoqVjmkcTXL7WwLLCQgN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIsIViZyn2ZVF2n06aqyXeQE4OOZ30TOfume0fzKvjhxncQlYwGjE5WH5dkLz+b3kpLGaXqqPjmCE4OdwEIjiQ+2xPsnOgE2XvNBhpMSkUX8AT3W6E7iXceq6oIQKb92L/i41e94hxjwo1nkvNg/a9T/jtdnKyd06/97aYUJhZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6Q+3V2Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SillGiHAobPaY/dRzBBj2uzlIGtYrIvu3CawZNFvS5MAhOpTuF42toiSo09vg8ivNnrTmniw695Qqu6TghJQQ0IiRE7w/FRGJp5VATnEykhs4ykqgUYR2BtBAKETYmnuO1hqLBbjpwtPrLduBqpzfUYTXsqMfG4LN5BmzXv70zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAokwHAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6Q+3V2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF26C4CEC7;
-	Tue,  8 Oct 2024 13:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAokwHAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C57C4CEC7;
+	Tue,  8 Oct 2024 13:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393642;
-	bh=PW+MOduTbp881l3exYLkB2mGM8SlqvnF/JU6qJFqexg=;
+	s=korg; t=1728393645;
+	bh=CUMT90Whp9d9P9n8EUwvxPzoqVjmkcTXL7WwLLCQgN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6Q+3V2Y4PHhw8ASoFwvsL3pUco9nvOCLAnpxgNsz0nOqTkUyE9IcVGiq/w/lPtoN
-	 dZfpXlexgMzmtg+8wLzloJgZPKW2eFbYXiBWQ+8NZM5Uj8sbwwFxORy6SllkRcnRX+
-	 mdP/N2l4ZpgCIlMG8iJlL6tMbpyv8c0pG4CvFla0=
+	b=YAokwHAuC5hJpLRgyelJO3IVWohOR/6NA8uLXMRAJUGrhtV7L1IClDFrm7aaI26w4
+	 4rXMQiOfe2QjatvqDm6Y1qoLEoDoABEUQs7TAZHebJyZEd/gjgUgpKkTs5nNlCehxt
+	 Vw2x1lSvVU6iT92RNVDbXzoqUKzWF/Xvq5fbVNos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.6 212/386] rust: sync: require `T: Sync` for `LockedBy::access`
-Date: Tue,  8 Oct 2024 14:07:37 +0200
-Message-ID: <20241008115637.749402530@linuxfoundation.org>
+	Mike Baynton <mike@mbaynton.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.6 213/386] ovl: fail if trusted xattrs are needed but caller lacks permission
+Date: Tue,  8 Oct 2024 14:07:38 +0200
+Message-ID: <20241008115637.788512786@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -52,73 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Mike Baynton <mike@mbaynton.com>
 
-commit a8ee30f45d5d57467ddb7877ed6914d0eba0af7f upstream.
+commit 6c4a5f96450415735c31ed70ff354f0ee5cbf67b upstream.
 
-The `LockedBy::access` method only requires a shared reference to the
-owner, so if we have shared access to the `LockedBy` from several
-threads at once, then two threads could call `access` in parallel and
-both obtain a shared reference to the inner value. Thus, require that
-`T: Sync` when calling the `access` method.
+Some overlayfs features require permission to read/write trusted.*
+xattrs. These include redirect_dir, verity, metacopy, and data-only
+layers. This patch adds additional validations at mount time to stop
+overlays from mounting in certain cases where the resulting mount would
+not function according to the user's expectations because they lack
+permission to access trusted.* xattrs (for example, not global root.)
 
-An alternative is to require `T: Sync` in the `impl Sync for LockedBy`.
-This patch does not choose that approach as it gives up the ability to
-use `LockedBy` with `!Sync` types, which is okay as long as you only use
-`access_mut`.
+Similar checks in ovl_make_workdir() that disable features instead of
+failing are still relevant and used in cases where the resulting mount
+can still work "reasonably well." Generally, if the feature was enabled
+through kernel config or module option, any mount that worked before
+will still work the same; this applies to redirect_dir and metacopy. The
+user must explicitly request these features in order to generate a mount
+failure. Verity and data-only layers on the other hand must be explictly
+requested and have no "reasonable" disabled or degraded alternative, so
+mounts attempting either always fail.
 
-Cc: stable@vger.kernel.org
-Fixes: 7b1f55e3a984 ("rust: sync: introduce `LockedBy`")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240915-locked-by-sync-fix-v2-1-1a8d89710392@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+"lower data-only dirs require metacopy support" moved down in case
+userxattr is set, which disables metacopy.
+
+Cc: stable@vger.kernel.org # v6.6+
+Signed-off-by: Mike Baynton <mike@mbaynton.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/sync/locked_by.rs |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/overlayfs/params.c |   38 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
---- a/rust/kernel/sync/locked_by.rs
-+++ b/rust/kernel/sync/locked_by.rs
-@@ -80,8 +80,12 @@ pub struct LockedBy<T: ?Sized, U: ?Sized
- // SAFETY: `LockedBy` can be transferred across thread boundaries iff the data it protects can.
- unsafe impl<T: ?Sized + Send, U: ?Sized> Send for LockedBy<T, U> {}
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -761,11 +761,6 @@ int ovl_fs_params_verify(const struct ov
+ {
+ 	struct ovl_opt_set set = ctx->set;
  
--// SAFETY: `LockedBy` serialises the interior mutability it provides, so it is `Sync` as long as the
--// data it protects is `Send`.
-+// SAFETY: If `T` is not `Sync`, then parallel shared access to this `LockedBy` allows you to use
-+// `access_mut` to hand out `&mut T` on one thread at the time. The requirement that `T: Send` is
-+// sufficient to allow that.
-+//
-+// If `T` is `Sync`, then the `access` method also becomes available, which allows you to obtain
-+// several `&T` from several threads at once. However, this is okay as `T` is `Sync`.
- unsafe impl<T: ?Sized + Send, U: ?Sized> Sync for LockedBy<T, U> {}
+-	if (ctx->nr_data > 0 && !config->metacopy) {
+-		pr_err("lower data-only dirs require metacopy support.\n");
+-		return -EINVAL;
+-	}
+-
+ 	/* Workdir/index are useless in non-upper mount */
+ 	if (!config->upperdir) {
+ 		if (config->workdir) {
+@@ -917,6 +912,39 @@ int ovl_fs_params_verify(const struct ov
+ 		config->metacopy = false;
+ 	}
  
- impl<T, U> LockedBy<T, U> {
-@@ -115,7 +119,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
-     ///
-     /// Panics if `owner` is different from the data protected by the lock used in
-     /// [`new`](LockedBy::new).
--    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T {
-+    pub fn access<'a>(&'a self, owner: &'a U) -> &'a T
-+    where
-+        T: Sync,
-+    {
-         build_assert!(
-             size_of::<U>() > 0,
-             "`U` cannot be a ZST because `owner` wouldn't be unique"
-@@ -124,7 +131,10 @@ impl<T: ?Sized, U> LockedBy<T, U> {
-             panic!("mismatched owners");
-         }
- 
--        // SAFETY: `owner` is evidence that the owner is locked.
-+        // SAFETY: `owner` is evidence that there are only shared references to the owner for the
-+        // duration of 'a, so it's not possible to use `Self::access_mut` to obtain a mutable
-+        // reference to the inner value that aliases with this shared reference. The type is `Sync`
-+        // so there are no other requirements.
-         unsafe { &*self.data.get() }
-     }
++	/*
++	 * Fail if we don't have trusted xattr capability and a feature was
++	 * explicitly requested that requires them.
++	 */
++	if (!config->userxattr && !capable(CAP_SYS_ADMIN)) {
++		if (set.redirect &&
++		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
++			pr_err("redirect_dir requires permission to access trusted xattrs\n");
++			return -EPERM;
++		}
++		if (config->metacopy && set.metacopy) {
++			pr_err("metacopy requires permission to access trusted xattrs\n");
++			return -EPERM;
++		}
++		if (config->verity_mode) {
++			pr_err("verity requires permission to access trusted xattrs\n");
++			return -EPERM;
++		}
++		if (ctx->nr_data > 0) {
++			pr_err("lower data-only dirs require permission to access trusted xattrs\n");
++			return -EPERM;
++		}
++		/*
++		 * Other xattr-dependent features should be disabled without
++		 * great disturbance to the user in ovl_make_workdir().
++		 */
++	}
++
++	if (ctx->nr_data > 0 && !config->metacopy) {
++		pr_err("lower data-only dirs require metacopy support.\n");
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
  
 
 
