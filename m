@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856B1DF753;
-	Tue,  8 Oct 2024 12:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E11DF966;
+	Tue,  8 Oct 2024 12:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391267; cv=none; b=bMlFg4Bo7XL8ALwJNf4vx8Fj/yi9C7vSMiBxFHpa8zvzv4oKPQ/K6BiI6AIfZ1ipjH6IL3518wEfEagM9+TSsZofnDm6CkS7zxx918zOsNdVL8Fe5ZPQQV1kOUjp0M3Gv6JifB/nW9KtCtSw1G5GtPq32P+gQ5nlbbTezU2E720=
+	t=1728391270; cv=none; b=F1RIyQB6IJuvHeIBnSRfM8FkaVKZp6sxPQYahqllSqOszhKEjhzoamm7QWSuwCrMXe3pFljbwqRSYzs5O6MV3SwrznbhOk08zGp72BvEv5gooSPyigywy2HRTjhTIcL6mqLJVRHfv9VI5rVtcsfB7vbmWlLLpmJ041ZW44m3MR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391267; c=relaxed/simple;
-	bh=ktMJza+XHW3Byz+3UfEZEwj1S8Ew6GD4zUhV5F1rMl8=;
+	s=arc-20240116; t=1728391270; c=relaxed/simple;
+	bh=3dpGET+NFcvvfQRfFn9OpVdZSb7v6cATozuUz6W6J6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ic6LCbuKD9J/E86oubM8Li4+yLBJsRNYh/KVO/SoIWsPcIg5yMQP82Bfof9GOWJn2sA75fDmOqKdL8O3swNKSYfrscZpxryciMK81DDbkC+cc591meeXvRJ6w4rExzO8GpVNqVNnpSVapI0/efPBJPecRzL33rkZXYeWVvLnL18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQePVoX/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxs5yy2xbbetj2I0YJxdoFEWC7zhZKgdUKvpTe/OrPnC0nZYD6rg4y22JXwc9AbFN28Q/iLttosb2KUXaThPrvx3k/sY0+eSk8EOxN/4AcRVd0SrONkyFfVLJZKQBT+QXhYMlUIFB/ooh37dqwUJAm8D1+YGr2UcfZogEccncmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOGZ42Ob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQePVoX/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732BCC4CEC7;
-	Tue,  8 Oct 2024 12:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOGZ42Ob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0488CC4CEC7;
+	Tue,  8 Oct 2024 12:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391267;
-	bh=ktMJza+XHW3Byz+3UfEZEwj1S8Ew6GD4zUhV5F1rMl8=;
+	s=korg; t=1728391270;
+	bh=3dpGET+NFcvvfQRfFn9OpVdZSb7v6cATozuUz6W6J6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQePVoX/DgHw955ODFm3/DxKwCfvG+ubFnQhDgrrsfnWwdX6nXcYQl3BwJ46UgQAP
-	 ksG1Mo5aB4iaRpT6uMuF0rsusQtVuTqqQM9fh2w2Za3XXdibhCrH03wLyXIepX64pd
-	 MYVblcRnvaiC+jwk8dIeNEe9c42WySFbVruHsgUk=
+	b=rOGZ42ObqamF8QSk5Cs2M7IPfiJdyISxfYJovbLFV2973NkIZg+lFZemT0NVT4Zvd
+	 qPDCvfLpAFkFpERzYl43TBtua4PKFESGXyBX/S6E3EYKYQ9IEZaSrgpsbQkB3i+ZXc
+	 2QYbfgH0rl+6yY4y0GBahQVzmLJDoH23H2eUFdnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Hindborg <a.hindborg@samsung.com>,
 	Gary Guo <gary@garyguo.net>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Benno Lossin <benno.lossin@proton.me>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 060/558] rust: kbuild: split up helpers.c
-Date: Tue,  8 Oct 2024 14:01:30 +0200
-Message-ID: <20241008115704.581560201@linuxfoundation.org>
+Subject: [PATCH 6.11 061/558] rust: kbuild: auto generate helper exports
+Date: Tue,  8 Oct 2024 14:01:31 +0200
+Message-ID: <20241008115704.621792380@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -55,135 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Hindborg <a.hindborg@samsung.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 876346536c1b59a5b1b5e44477b1b3ece77647fd ]
+[ Upstream commit e26fa546042add70944d018b930530d16b3cf626 ]
 
-This patch splits up the rust helpers C file. When rebasing patch sets on
-upstream linux, merge conflicts in helpers.c is common and time consuming
-[1]. Thus, split the file so that each kernel component can live in a
-separate file.
+This removes the need to explicitly export all symbols.
 
-This patch lists helper files explicitly and thus conflicts in the file
-list is still likely. However, they should be more simple to resolve than
-the conflicts usually seen in helpers.c.
+Generate helper exports similarly to what's currently done for Rust
+crates. These helpers are exclusively called from within Rust code and
+therefore can be treated similar as other Rust symbols.
 
-[ Removed `README.md` and undeleted the original comment since now,
-  in v3 of the series, we have a `helpers.c` again; which also allows
-  us to keep the "Sorted alphabetically" line and makes the diff easier.
-
-  In addition, updated the Documentation/ mentions of the file, reworded
-  title and removed blank lines at the end of `page.c`.  - Miguel ]
-
-Link: https://rust-for-linux.zulipchat.com/#narrow/stream/288089-General/topic/Splitting.20up.20helpers.2Ec/near/426694012 [1]
-Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Dirk Behme <dirk.behme@de.bosch.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Link: https://lore.kernel.org/r/20240815103016.2771842-1-nmi@metaspace.dk
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
+Link: https://lore.kernel.org/r/20240817165302.3852499-1-gary@garyguo.net
+[ Fixed dependency path, reworded slightly, edited comment a bit and
+  rebased on top of the changes made when applying Andreas' patch
+  (e.g. no `README.md` anymore, so moved the edits).  - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Stable-dep-of: d065cc76054d ("rust: mutex: fix __mutex_init() usage in case of PREEMPT_RT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/rust/general-information.rst |   4 +-
- rust/Makefile                              |   6 +-
- rust/helpers.c                             | 239 ---------------------
- rust/helpers/blk.c                         |  16 ++
- rust/helpers/bug.c                         |   9 +
- rust/helpers/build_assert.c                |  25 +++
- rust/helpers/build_bug.c                   |  10 +
- rust/helpers/err.c                         |  22 ++
- rust/helpers/helpers.c                     |  38 ++++
- rust/helpers/kunit.c                       |  10 +
- rust/helpers/mutex.c                       |  10 +
- rust/helpers/page.c                        |  22 ++
- rust/helpers/refcount.c                    |  22 ++
- rust/helpers/signal.c                      |  10 +
- rust/helpers/slab.c                        |  10 +
- rust/helpers/spinlock.c                    |  27 +++
- rust/helpers/task.c                        |  22 ++
- rust/helpers/uaccess.c                     |  17 ++
- rust/helpers/wait.c                        |  10 +
- rust/helpers/workqueue.c                   |  16 ++
- 20 files changed, 301 insertions(+), 244 deletions(-)
- delete mode 100644 rust/helpers.c
- create mode 100644 rust/helpers/blk.c
- create mode 100644 rust/helpers/bug.c
- create mode 100644 rust/helpers/build_assert.c
- create mode 100644 rust/helpers/build_bug.c
- create mode 100644 rust/helpers/err.c
- create mode 100644 rust/helpers/helpers.c
- create mode 100644 rust/helpers/kunit.c
- create mode 100644 rust/helpers/mutex.c
- create mode 100644 rust/helpers/page.c
- create mode 100644 rust/helpers/refcount.c
- create mode 100644 rust/helpers/signal.c
- create mode 100644 rust/helpers/slab.c
- create mode 100644 rust/helpers/spinlock.c
- create mode 100644 rust/helpers/task.c
- create mode 100644 rust/helpers/uaccess.c
- create mode 100644 rust/helpers/wait.c
- create mode 100644 rust/helpers/workqueue.c
+ rust/Makefile            | 16 ++++++++++++++--
+ rust/exports.c           |  1 +
+ rust/helpers/blk.c       |  2 --
+ rust/helpers/bug.c       |  1 -
+ rust/helpers/build_bug.c |  1 -
+ rust/helpers/err.c       |  3 ---
+ rust/helpers/helpers.c   | 13 -------------
+ rust/helpers/kunit.c     |  1 -
+ rust/helpers/mutex.c     |  1 -
+ rust/helpers/page.c      |  3 ---
+ rust/helpers/refcount.c  |  3 ---
+ rust/helpers/signal.c    |  1 -
+ rust/helpers/slab.c      |  1 -
+ rust/helpers/spinlock.c  |  3 ---
+ rust/helpers/task.c      |  3 ---
+ rust/helpers/uaccess.c   |  2 --
+ rust/helpers/wait.c      |  1 -
+ rust/helpers/workqueue.c |  1 -
+ 18 files changed, 15 insertions(+), 42 deletions(-)
 
-diff --git a/Documentation/rust/general-information.rst b/Documentation/rust/general-information.rst
-index e3f388ef4ee42..a82926d7b379b 100644
---- a/Documentation/rust/general-information.rst
-+++ b/Documentation/rust/general-information.rst
-@@ -75,7 +75,7 @@ should provide as-safe-as-possible abstractions as needed.
- .. code-block::
- 
- 	                                                rust/bindings/
--	                                               (rust/helpers.c)
-+	                                               (rust/helpers/)
- 
- 	                                                   include/ -----+ <-+
- 	                                                                 |   |
-@@ -112,7 +112,7 @@ output files in the ``rust/bindings/`` directory.
- 
- For parts of the C header that ``bindgen`` does not auto generate, e.g. C
- ``inline`` functions or non-trivial macros, it is acceptable to add a small
--wrapper function to ``rust/helpers.c`` to make it available for the Rust side as
-+wrapper function to ``rust/helpers/`` to make it available for the Rust side as
- well.
- 
- Abstractions
 diff --git a/rust/Makefile b/rust/Makefile
-index f168d2c98a15f..acfb8d7feba7e 100644
+index acfb8d7feba7e..2aa93007aacae 100644
 --- a/rust/Makefile
 +++ b/rust/Makefile
-@@ -8,8 +8,8 @@ always-$(CONFIG_RUST) += exports_core_generated.h
+@@ -16,8 +16,8 @@ no-clean-files += libmacros.so
  
- # Missing prototypes are expected in the helpers since these are exported
- # for Rust only, thus there is no header nor prototypes.
--obj-$(CONFIG_RUST) += helpers.o
--CFLAGS_REMOVE_helpers.o = -Wmissing-prototypes -Wmissing-declarations
-+obj-$(CONFIG_RUST) += helpers/helpers.o
-+CFLAGS_REMOVE_helpers/helpers.o = -Wmissing-prototypes -Wmissing-declarations
+ always-$(CONFIG_RUST) += bindings/bindings_generated.rs bindings/bindings_helpers_generated.rs
+ obj-$(CONFIG_RUST) += alloc.o bindings.o kernel.o
+-always-$(CONFIG_RUST) += exports_alloc_generated.h exports_bindings_generated.h \
+-    exports_kernel_generated.h
++always-$(CONFIG_RUST) += exports_alloc_generated.h exports_helpers_generated.h \
++    exports_bindings_generated.h exports_kernel_generated.h
  
- always-$(CONFIG_RUST) += libmacros.so
- no-clean-files += libmacros.so
-@@ -299,7 +299,7 @@ $(obj)/bindings/bindings_helpers_generated.rs: private bindgen_target_cflags = \
-     -I$(objtree)/$(obj) -Wno-missing-prototypes -Wno-missing-declarations
- $(obj)/bindings/bindings_helpers_generated.rs: private bindgen_target_extra = ; \
-     sed -Ei 's/pub fn rust_helper_([a-zA-Z0-9_]*)/#[link_name="rust_helper_\1"]\n    pub fn \1/g' $@
--$(obj)/bindings/bindings_helpers_generated.rs: $(src)/helpers.c FORCE
-+$(obj)/bindings/bindings_helpers_generated.rs: $(src)/helpers/helpers.c FORCE
- 	$(call if_changed_dep,bindgen)
+ always-$(CONFIG_RUST) += uapi/uapi_generated.rs
+ obj-$(CONFIG_RUST) += uapi.o
+@@ -313,6 +313,18 @@ $(obj)/exports_core_generated.h: $(obj)/core.o FORCE
+ $(obj)/exports_alloc_generated.h: $(obj)/alloc.o FORCE
+ 	$(call if_changed,exports)
  
- quiet_cmd_exports = EXPORTS $@
-diff --git a/rust/helpers.c b/rust/helpers.c
-deleted file mode 100644
-index 92d3c03ae1bd5..0000000000000
---- a/rust/helpers.c
-+++ /dev/null
-@@ -1,239 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/*
-- * Non-trivial C macros cannot be used in Rust. Similarly, inlined C functions
-- * cannot be called either. This file explicitly creates functions ("helpers")
-- * that wrap those so that they can be called from Rust.
-- *
++# Even though Rust kernel modules should never use the bindings directly,
++# symbols from the `bindings` crate and the C helpers need to be exported
++# because Rust generics and inlined functions may not get their code generated
++# in the crate where they are defined. Other helpers, called from non-inline
++# functions, may not be exported, in principle. However, in general, the Rust
++# compiler does not guarantee codegen will be performed for a non-inline
++# function either. Therefore, we export all symbols from helpers and bindings.
++# In the future, this may be revisited to reduce the number of exports after
++# the compiler is informed about the places codegen is required.
++$(obj)/exports_helpers_generated.h: $(obj)/helpers/helpers.o FORCE
++	$(call if_changed,exports)
++
+ $(obj)/exports_bindings_generated.h: $(obj)/bindings.o FORCE
+ 	$(call if_changed,exports)
+ 
+diff --git a/rust/exports.c b/rust/exports.c
+index 3803c21d1403e..e5695f3b45b7a 100644
+--- a/rust/exports.c
++++ b/rust/exports.c
+@@ -17,6 +17,7 @@
+ 
+ #include "exports_core_generated.h"
+ #include "exports_alloc_generated.h"
++#include "exports_helpers_generated.h"
+ #include "exports_bindings_generated.h"
+ #include "exports_kernel_generated.h"
+ 
+diff --git a/rust/helpers/blk.c b/rust/helpers/blk.c
+index d99c965eb59bf..cc9f4e6a2d234 100644
+--- a/rust/helpers/blk.c
++++ b/rust/helpers/blk.c
+@@ -7,10 +7,8 @@ void *rust_helper_blk_mq_rq_to_pdu(struct request *rq)
+ {
+ 	return blk_mq_rq_to_pdu(rq);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_to_pdu);
+ 
+ struct request *rust_helper_blk_mq_rq_from_pdu(void *pdu)
+ {
+ 	return blk_mq_rq_from_pdu(pdu);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_from_pdu);
+diff --git a/rust/helpers/bug.c b/rust/helpers/bug.c
+index e2afbad23dcda..e2d13babc7371 100644
+--- a/rust/helpers/bug.c
++++ b/rust/helpers/bug.c
+@@ -6,4 +6,3 @@ __noreturn void rust_helper_BUG(void)
+ {
+ 	BUG();
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_BUG);
+diff --git a/rust/helpers/build_bug.c b/rust/helpers/build_bug.c
+index f3106f248485a..e994f7b5928c0 100644
+--- a/rust/helpers/build_bug.c
++++ b/rust/helpers/build_bug.c
+@@ -7,4 +7,3 @@ const char *rust_helper_errname(int err)
+ {
+ 	return errname(err);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_errname);
+diff --git a/rust/helpers/err.c b/rust/helpers/err.c
+index fba4e0be64f59..be3d45ef78a25 100644
+--- a/rust/helpers/err.c
++++ b/rust/helpers/err.c
+@@ -7,16 +7,13 @@ __force void *rust_helper_ERR_PTR(long err)
+ {
+ 	return ERR_PTR(err);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_ERR_PTR);
+ 
+ bool rust_helper_IS_ERR(__force const void *ptr)
+ {
+ 	return IS_ERR(ptr);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_IS_ERR);
+ 
+ long rust_helper_PTR_ERR(__force const void *ptr)
+ {
+ 	return PTR_ERR(ptr);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_PTR_ERR);
+diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
+index 2b54f22e87741..173533616c917 100644
+--- a/rust/helpers/helpers.c
++++ b/rust/helpers/helpers.c
+@@ -4,19 +4,6 @@
+  * cannot be called either. This file explicitly creates functions ("helpers")
+  * that wrap those so that they can be called from Rust.
+  *
 - * Even though Rust kernel modules should never use the bindings directly, some
 - * of these helpers need to be exported because Rust generics and inlined
 - * functions may not get their code generated in the crate where they are
@@ -197,624 +214,163 @@ index 92d3c03ae1bd5..0000000000000
 - * All symbols are exported as GPL-only to guarantee no GPL-only feature is
 - * accidentally exposed.
 - *
-- * Sorted alphabetically.
-- */
--
--#include <kunit/test-bug.h>
--#include <linux/bug.h>
--#include <linux/build_bug.h>
--#include <linux/device.h>
--#include <linux/err.h>
--#include <linux/errname.h>
--#include <linux/gfp.h>
--#include <linux/highmem.h>
--#include <linux/mutex.h>
--#include <linux/refcount.h>
--#include <linux/sched/signal.h>
--#include <linux/slab.h>
--#include <linux/spinlock.h>
--#include <linux/wait.h>
--#include <linux/workqueue.h>
--
--__noreturn void rust_helper_BUG(void)
--{
--	BUG();
--}
--EXPORT_SYMBOL_GPL(rust_helper_BUG);
--
--unsigned long rust_helper_copy_from_user(void *to, const void __user *from,
--					 unsigned long n)
--{
--	return copy_from_user(to, from, n);
--}
--EXPORT_SYMBOL_GPL(rust_helper_copy_from_user);
--
--unsigned long rust_helper_copy_to_user(void __user *to, const void *from,
--				       unsigned long n)
--{
--	return copy_to_user(to, from, n);
--}
--EXPORT_SYMBOL_GPL(rust_helper_copy_to_user);
--
--void rust_helper_mutex_lock(struct mutex *lock)
--{
--	mutex_lock(lock);
--}
--EXPORT_SYMBOL_GPL(rust_helper_mutex_lock);
--
--void rust_helper___spin_lock_init(spinlock_t *lock, const char *name,
--				  struct lock_class_key *key)
--{
--#ifdef CONFIG_DEBUG_SPINLOCK
--	__raw_spin_lock_init(spinlock_check(lock), name, key, LD_WAIT_CONFIG);
--#else
--	spin_lock_init(lock);
--#endif
--}
--EXPORT_SYMBOL_GPL(rust_helper___spin_lock_init);
--
--void rust_helper_spin_lock(spinlock_t *lock)
--{
--	spin_lock(lock);
--}
--EXPORT_SYMBOL_GPL(rust_helper_spin_lock);
--
--void rust_helper_spin_unlock(spinlock_t *lock)
--{
--	spin_unlock(lock);
--}
--EXPORT_SYMBOL_GPL(rust_helper_spin_unlock);
--
--void rust_helper_init_wait(struct wait_queue_entry *wq_entry)
--{
--	init_wait(wq_entry);
--}
--EXPORT_SYMBOL_GPL(rust_helper_init_wait);
--
--int rust_helper_signal_pending(struct task_struct *t)
--{
--	return signal_pending(t);
--}
--EXPORT_SYMBOL_GPL(rust_helper_signal_pending);
--
--struct page *rust_helper_alloc_pages(gfp_t gfp_mask, unsigned int order)
--{
--	return alloc_pages(gfp_mask, order);
--}
--EXPORT_SYMBOL_GPL(rust_helper_alloc_pages);
--
--void *rust_helper_kmap_local_page(struct page *page)
--{
--	return kmap_local_page(page);
--}
--EXPORT_SYMBOL_GPL(rust_helper_kmap_local_page);
--
--void rust_helper_kunmap_local(const void *addr)
--{
--	kunmap_local(addr);
--}
--EXPORT_SYMBOL_GPL(rust_helper_kunmap_local);
--
--refcount_t rust_helper_REFCOUNT_INIT(int n)
--{
--	return (refcount_t)REFCOUNT_INIT(n);
--}
--EXPORT_SYMBOL_GPL(rust_helper_REFCOUNT_INIT);
--
--void rust_helper_refcount_inc(refcount_t *r)
--{
--	refcount_inc(r);
--}
--EXPORT_SYMBOL_GPL(rust_helper_refcount_inc);
--
--bool rust_helper_refcount_dec_and_test(refcount_t *r)
--{
--	return refcount_dec_and_test(r);
--}
--EXPORT_SYMBOL_GPL(rust_helper_refcount_dec_and_test);
--
--__force void *rust_helper_ERR_PTR(long err)
--{
--	return ERR_PTR(err);
--}
--EXPORT_SYMBOL_GPL(rust_helper_ERR_PTR);
--
--bool rust_helper_IS_ERR(__force const void *ptr)
--{
--	return IS_ERR(ptr);
--}
--EXPORT_SYMBOL_GPL(rust_helper_IS_ERR);
--
--long rust_helper_PTR_ERR(__force const void *ptr)
--{
--	return PTR_ERR(ptr);
--}
--EXPORT_SYMBOL_GPL(rust_helper_PTR_ERR);
--
--const char *rust_helper_errname(int err)
--{
--	return errname(err);
--}
--EXPORT_SYMBOL_GPL(rust_helper_errname);
--
--struct task_struct *rust_helper_get_current(void)
--{
--	return current;
--}
--EXPORT_SYMBOL_GPL(rust_helper_get_current);
--
--void rust_helper_get_task_struct(struct task_struct *t)
--{
--	get_task_struct(t);
--}
--EXPORT_SYMBOL_GPL(rust_helper_get_task_struct);
--
--void rust_helper_put_task_struct(struct task_struct *t)
--{
--	put_task_struct(t);
--}
--EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
--
--struct kunit *rust_helper_kunit_get_current_test(void)
--{
--	return kunit_get_current_test();
--}
--EXPORT_SYMBOL_GPL(rust_helper_kunit_get_current_test);
--
--void rust_helper_init_work_with_key(struct work_struct *work, work_func_t func,
--				    bool onstack, const char *name,
--				    struct lock_class_key *key)
--{
--	__init_work(work, onstack);
--	work->data = (atomic_long_t)WORK_DATA_INIT();
--	lockdep_init_map(&work->lockdep_map, name, key, 0);
--	INIT_LIST_HEAD(&work->entry);
--	work->func = func;
--}
--EXPORT_SYMBOL_GPL(rust_helper_init_work_with_key);
--
--void * __must_check __realloc_size(2)
--rust_helper_krealloc(const void *objp, size_t new_size, gfp_t flags)
--{
--	return krealloc(objp, new_size, flags);
--}
--EXPORT_SYMBOL_GPL(rust_helper_krealloc);
--
--/*
-- * `bindgen` binds the C `size_t` type as the Rust `usize` type, so we can
-- * use it in contexts where Rust expects a `usize` like slice (array) indices.
-- * `usize` is defined to be the same as C's `uintptr_t` type (can hold any
-- * pointer) but not necessarily the same as `size_t` (can hold the size of any
-- * single object). Most modern platforms use the same concrete integer type for
-- * both of them, but in case we find ourselves on a platform where
-- * that's not true, fail early instead of risking ABI or
-- * integer-overflow issues.
-- *
-- * If your platform fails this assertion, it means that you are in
-- * danger of integer-overflow bugs (even if you attempt to add
-- * `--no-size_t-is-usize`). It may be easiest to change the kernel ABI on
-- * your platform such that `size_t` matches `uintptr_t` (i.e., to increase
-- * `size_t`, because `uintptr_t` has to be at least as big as `size_t`).
-- */
--static_assert(
--	sizeof(size_t) == sizeof(uintptr_t) &&
--	__alignof__(size_t) == __alignof__(uintptr_t),
--	"Rust code expects C `size_t` to match Rust `usize`"
--);
--
--// This will soon be moved to a separate file, so no need to merge with above.
--#include <linux/blk-mq.h>
--#include <linux/blkdev.h>
--
--void *rust_helper_blk_mq_rq_to_pdu(struct request *rq)
--{
--	return blk_mq_rq_to_pdu(rq);
--}
--EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_to_pdu);
--
--struct request *rust_helper_blk_mq_rq_from_pdu(void *pdu)
--{
--	return blk_mq_rq_from_pdu(pdu);
--}
--EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_from_pdu);
-diff --git a/rust/helpers/blk.c b/rust/helpers/blk.c
-new file mode 100644
-index 0000000000000..d99c965eb59bf
---- /dev/null
-+++ b/rust/helpers/blk.c
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/blk-mq.h>
-+#include <linux/blkdev.h>
-+
-+void *rust_helper_blk_mq_rq_to_pdu(struct request *rq)
-+{
-+	return blk_mq_rq_to_pdu(rq);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_to_pdu);
-+
-+struct request *rust_helper_blk_mq_rq_from_pdu(void *pdu)
-+{
-+	return blk_mq_rq_from_pdu(pdu);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_blk_mq_rq_from_pdu);
-diff --git a/rust/helpers/bug.c b/rust/helpers/bug.c
-new file mode 100644
-index 0000000000000..e2afbad23dcda
---- /dev/null
-+++ b/rust/helpers/bug.c
-@@ -0,0 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/bug.h>
-+
-+__noreturn void rust_helper_BUG(void)
-+{
-+	BUG();
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_BUG);
-diff --git a/rust/helpers/build_assert.c b/rust/helpers/build_assert.c
-new file mode 100644
-index 0000000000000..6a54b2680b145
---- /dev/null
-+++ b/rust/helpers/build_assert.c
-@@ -0,0 +1,25 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/build_bug.h>
-+
-+/*
-+ * `bindgen` binds the C `size_t` type as the Rust `usize` type, so we can
-+ * use it in contexts where Rust expects a `usize` like slice (array) indices.
-+ * `usize` is defined to be the same as C's `uintptr_t` type (can hold any
-+ * pointer) but not necessarily the same as `size_t` (can hold the size of any
-+ * single object). Most modern platforms use the same concrete integer type for
-+ * both of them, but in case we find ourselves on a platform where
-+ * that's not true, fail early instead of risking ABI or
-+ * integer-overflow issues.
-+ *
-+ * If your platform fails this assertion, it means that you are in
-+ * danger of integer-overflow bugs (even if you attempt to add
-+ * `--no-size_t-is-usize`). It may be easiest to change the kernel ABI on
-+ * your platform such that `size_t` matches `uintptr_t` (i.e., to increase
-+ * `size_t`, because `uintptr_t` has to be at least as big as `size_t`).
-+ */
-+static_assert(
-+	sizeof(size_t) == sizeof(uintptr_t) &&
-+	__alignof__(size_t) == __alignof__(uintptr_t),
-+	"Rust code expects C `size_t` to match Rust `usize`"
-+);
-diff --git a/rust/helpers/build_bug.c b/rust/helpers/build_bug.c
-new file mode 100644
-index 0000000000000..f3106f248485a
---- /dev/null
-+++ b/rust/helpers/build_bug.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/errname.h>
-+
-+const char *rust_helper_errname(int err)
-+{
-+	return errname(err);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_errname);
-diff --git a/rust/helpers/err.c b/rust/helpers/err.c
-new file mode 100644
-index 0000000000000..fba4e0be64f59
---- /dev/null
-+++ b/rust/helpers/err.c
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/err.h>
-+#include <linux/export.h>
-+
-+__force void *rust_helper_ERR_PTR(long err)
-+{
-+	return ERR_PTR(err);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_ERR_PTR);
-+
-+bool rust_helper_IS_ERR(__force const void *ptr)
-+{
-+	return IS_ERR(ptr);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_IS_ERR);
-+
-+long rust_helper_PTR_ERR(__force const void *ptr)
-+{
-+	return PTR_ERR(ptr);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_PTR_ERR);
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-new file mode 100644
-index 0000000000000..2b54f22e87741
---- /dev/null
-+++ b/rust/helpers/helpers.c
-@@ -0,0 +1,38 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Non-trivial C macros cannot be used in Rust. Similarly, inlined C functions
-+ * cannot be called either. This file explicitly creates functions ("helpers")
-+ * that wrap those so that they can be called from Rust.
-+ *
-+ * Even though Rust kernel modules should never use the bindings directly, some
-+ * of these helpers need to be exported because Rust generics and inlined
-+ * functions may not get their code generated in the crate where they are
-+ * defined. Other helpers, called from non-inline functions, may not be
-+ * exported, in principle. However, in general, the Rust compiler does not
-+ * guarantee codegen will be performed for a non-inline function either.
-+ * Therefore, this file exports all the helpers. In the future, this may be
-+ * revisited to reduce the number of exports after the compiler is informed
-+ * about the places codegen is required.
-+ *
-+ * All symbols are exported as GPL-only to guarantee no GPL-only feature is
-+ * accidentally exposed.
-+ *
-+ * Sorted alphabetically.
-+ */
-+
-+#include "blk.c"
-+#include "bug.c"
-+#include "build_assert.c"
-+#include "build_bug.c"
-+#include "err.c"
-+#include "kunit.c"
-+#include "mutex.c"
-+#include "page.c"
-+#include "refcount.c"
-+#include "signal.c"
-+#include "slab.c"
-+#include "spinlock.c"
-+#include "task.c"
-+#include "uaccess.c"
-+#include "wait.c"
-+#include "workqueue.c"
+  * Sorted alphabetically.
+  */
+ 
 diff --git a/rust/helpers/kunit.c b/rust/helpers/kunit.c
-new file mode 100644
-index 0000000000000..905e4ff4424a5
---- /dev/null
+index 905e4ff4424a5..9d725067eb3bc 100644
+--- a/rust/helpers/kunit.c
 +++ b/rust/helpers/kunit.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <kunit/test-bug.h>
-+#include <linux/export.h>
-+
-+struct kunit *rust_helper_kunit_get_current_test(void)
-+{
-+	return kunit_get_current_test();
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_kunit_get_current_test);
+@@ -7,4 +7,3 @@ struct kunit *rust_helper_kunit_get_current_test(void)
+ {
+ 	return kunit_get_current_test();
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_kunit_get_current_test);
 diff --git a/rust/helpers/mutex.c b/rust/helpers/mutex.c
-new file mode 100644
-index 0000000000000..29fd141c387d7
---- /dev/null
+index 29fd141c387d7..200db7e6279f0 100644
+--- a/rust/helpers/mutex.c
 +++ b/rust/helpers/mutex.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/mutex.h>
-+
-+void rust_helper_mutex_lock(struct mutex *lock)
-+{
-+	mutex_lock(lock);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_mutex_lock);
+@@ -7,4 +7,3 @@ void rust_helper_mutex_lock(struct mutex *lock)
+ {
+ 	mutex_lock(lock);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_mutex_lock);
 diff --git a/rust/helpers/page.c b/rust/helpers/page.c
-new file mode 100644
-index 0000000000000..7fd333411a88f
---- /dev/null
+index 7fd333411a88f..b3f2b8fbf87fc 100644
+--- a/rust/helpers/page.c
 +++ b/rust/helpers/page.c
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/gfp.h>
-+#include <linux/highmem.h>
-+
-+struct page *rust_helper_alloc_pages(gfp_t gfp_mask, unsigned int order)
-+{
-+	return alloc_pages(gfp_mask, order);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_alloc_pages);
-+
-+void *rust_helper_kmap_local_page(struct page *page)
-+{
-+	return kmap_local_page(page);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_kmap_local_page);
-+
-+void rust_helper_kunmap_local(const void *addr)
-+{
-+	kunmap_local(addr);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_kunmap_local);
+@@ -7,16 +7,13 @@ struct page *rust_helper_alloc_pages(gfp_t gfp_mask, unsigned int order)
+ {
+ 	return alloc_pages(gfp_mask, order);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_alloc_pages);
+ 
+ void *rust_helper_kmap_local_page(struct page *page)
+ {
+ 	return kmap_local_page(page);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_kmap_local_page);
+ 
+ void rust_helper_kunmap_local(const void *addr)
+ {
+ 	kunmap_local(addr);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_kunmap_local);
 diff --git a/rust/helpers/refcount.c b/rust/helpers/refcount.c
-new file mode 100644
-index 0000000000000..13ab64805f779
---- /dev/null
+index 13ab64805f779..f47afc148ec36 100644
+--- a/rust/helpers/refcount.c
 +++ b/rust/helpers/refcount.c
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/refcount.h>
-+
-+refcount_t rust_helper_REFCOUNT_INIT(int n)
-+{
-+	return (refcount_t)REFCOUNT_INIT(n);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_REFCOUNT_INIT);
-+
-+void rust_helper_refcount_inc(refcount_t *r)
-+{
-+	refcount_inc(r);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_refcount_inc);
-+
-+bool rust_helper_refcount_dec_and_test(refcount_t *r)
-+{
-+	return refcount_dec_and_test(r);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_refcount_dec_and_test);
+@@ -7,16 +7,13 @@ refcount_t rust_helper_REFCOUNT_INIT(int n)
+ {
+ 	return (refcount_t)REFCOUNT_INIT(n);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_REFCOUNT_INIT);
+ 
+ void rust_helper_refcount_inc(refcount_t *r)
+ {
+ 	refcount_inc(r);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_refcount_inc);
+ 
+ bool rust_helper_refcount_dec_and_test(refcount_t *r)
+ {
+ 	return refcount_dec_and_test(r);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_refcount_dec_and_test);
 diff --git a/rust/helpers/signal.c b/rust/helpers/signal.c
-new file mode 100644
-index 0000000000000..d44e8096b8a96
---- /dev/null
+index d44e8096b8a96..63c407f80c26b 100644
+--- a/rust/helpers/signal.c
 +++ b/rust/helpers/signal.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/sched/signal.h>
-+
-+int rust_helper_signal_pending(struct task_struct *t)
-+{
-+	return signal_pending(t);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_signal_pending);
+@@ -7,4 +7,3 @@ int rust_helper_signal_pending(struct task_struct *t)
+ {
+ 	return signal_pending(t);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_signal_pending);
 diff --git a/rust/helpers/slab.c b/rust/helpers/slab.c
-new file mode 100644
-index 0000000000000..3e0a1a173d8a7
---- /dev/null
+index 3e0a1a173d8a7..f043e087f9d66 100644
+--- a/rust/helpers/slab.c
 +++ b/rust/helpers/slab.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/slab.h>
-+
-+void * __must_check __realloc_size(2)
-+rust_helper_krealloc(const void *objp, size_t new_size, gfp_t flags)
-+{
-+	return krealloc(objp, new_size, flags);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_krealloc);
+@@ -7,4 +7,3 @@ rust_helper_krealloc(const void *objp, size_t new_size, gfp_t flags)
+ {
+ 	return krealloc(objp, new_size, flags);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_krealloc);
 diff --git a/rust/helpers/spinlock.c b/rust/helpers/spinlock.c
-new file mode 100644
-index 0000000000000..04fd8ddb4986d
---- /dev/null
+index 04fd8ddb4986d..acc1376b833c7 100644
+--- a/rust/helpers/spinlock.c
 +++ b/rust/helpers/spinlock.c
-@@ -0,0 +1,27 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/spinlock.h>
-+
-+void rust_helper___spin_lock_init(spinlock_t *lock, const char *name,
-+				  struct lock_class_key *key)
-+{
-+#ifdef CONFIG_DEBUG_SPINLOCK
-+	__raw_spin_lock_init(spinlock_check(lock), name, key, LD_WAIT_CONFIG);
-+#else
-+	spin_lock_init(lock);
-+#endif
-+}
-+EXPORT_SYMBOL_GPL(rust_helper___spin_lock_init);
-+
-+void rust_helper_spin_lock(spinlock_t *lock)
-+{
-+	spin_lock(lock);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_spin_lock);
-+
-+void rust_helper_spin_unlock(spinlock_t *lock)
-+{
-+	spin_unlock(lock);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_spin_unlock);
+@@ -12,16 +12,13 @@ void rust_helper___spin_lock_init(spinlock_t *lock, const char *name,
+ 	spin_lock_init(lock);
+ #endif
+ }
+-EXPORT_SYMBOL_GPL(rust_helper___spin_lock_init);
+ 
+ void rust_helper_spin_lock(spinlock_t *lock)
+ {
+ 	spin_lock(lock);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_spin_lock);
+ 
+ void rust_helper_spin_unlock(spinlock_t *lock)
+ {
+ 	spin_unlock(lock);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_spin_unlock);
 diff --git a/rust/helpers/task.c b/rust/helpers/task.c
-new file mode 100644
-index 0000000000000..b176c347f0d41
---- /dev/null
+index b176c347f0d41..7ac789232d11c 100644
+--- a/rust/helpers/task.c
 +++ b/rust/helpers/task.c
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/sched/task.h>
-+
-+struct task_struct *rust_helper_get_current(void)
-+{
-+	return current;
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_get_current);
-+
-+void rust_helper_get_task_struct(struct task_struct *t)
-+{
-+	get_task_struct(t);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_get_task_struct);
-+
-+void rust_helper_put_task_struct(struct task_struct *t)
-+{
-+	put_task_struct(t);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
+@@ -7,16 +7,13 @@ struct task_struct *rust_helper_get_current(void)
+ {
+ 	return current;
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_get_current);
+ 
+ void rust_helper_get_task_struct(struct task_struct *t)
+ {
+ 	get_task_struct(t);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_get_task_struct);
+ 
+ void rust_helper_put_task_struct(struct task_struct *t)
+ {
+ 	put_task_struct(t);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
 diff --git a/rust/helpers/uaccess.c b/rust/helpers/uaccess.c
-new file mode 100644
-index 0000000000000..3d004ac1c1805
---- /dev/null
+index 3d004ac1c1805..f49076f813cd6 100644
+--- a/rust/helpers/uaccess.c
 +++ b/rust/helpers/uaccess.c
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/uaccess.h>
-+
-+unsigned long rust_helper_copy_from_user(void *to, const void __user *from,
-+					 unsigned long n)
-+{
-+	return copy_from_user(to, from, n);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_copy_from_user);
-+
-+unsigned long rust_helper_copy_to_user(void __user *to, const void *from,
-+				       unsigned long n)
-+{
-+	return copy_to_user(to, from, n);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_copy_to_user);
+@@ -7,11 +7,9 @@ unsigned long rust_helper_copy_from_user(void *to, const void __user *from,
+ {
+ 	return copy_from_user(to, from, n);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_copy_from_user);
+ 
+ unsigned long rust_helper_copy_to_user(void __user *to, const void *from,
+ 				       unsigned long n)
+ {
+ 	return copy_to_user(to, from, n);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_copy_to_user);
 diff --git a/rust/helpers/wait.c b/rust/helpers/wait.c
-new file mode 100644
-index 0000000000000..bf361f40c7cbc
---- /dev/null
+index bf361f40c7cbc..c7336bbf27507 100644
+--- a/rust/helpers/wait.c
 +++ b/rust/helpers/wait.c
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/wait.h>
-+
-+void rust_helper_init_wait(struct wait_queue_entry *wq_entry)
-+{
-+	init_wait(wq_entry);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_init_wait);
+@@ -7,4 +7,3 @@ void rust_helper_init_wait(struct wait_queue_entry *wq_entry)
+ {
+ 	init_wait(wq_entry);
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_init_wait);
 diff --git a/rust/helpers/workqueue.c b/rust/helpers/workqueue.c
-new file mode 100644
-index 0000000000000..12e2ee66aa4f6
---- /dev/null
+index 12e2ee66aa4f6..f59427acc3237 100644
+--- a/rust/helpers/workqueue.c
 +++ b/rust/helpers/workqueue.c
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/export.h>
-+#include <linux/workqueue.h>
-+
-+void rust_helper_init_work_with_key(struct work_struct *work, work_func_t func,
-+				    bool onstack, const char *name,
-+				    struct lock_class_key *key)
-+{
-+	__init_work(work, onstack);
-+	work->data = (atomic_long_t)WORK_DATA_INIT();
-+	lockdep_init_map(&work->lockdep_map, name, key, 0);
-+	INIT_LIST_HEAD(&work->entry);
-+	work->func = func;
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_init_work_with_key);
+@@ -13,4 +13,3 @@ void rust_helper_init_work_with_key(struct work_struct *work, work_func_t func,
+ 	INIT_LIST_HEAD(&work->entry);
+ 	work->func = func;
+ }
+-EXPORT_SYMBOL_GPL(rust_helper_init_work_with_key);
 -- 
 2.43.0
 
