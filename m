@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3409F1DE8BA;
-	Tue,  8 Oct 2024 13:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275641DE2AE;
+	Tue,  8 Oct 2024 13:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392753; cv=none; b=H8M6HYz/TN3GWo63Ewvehd5gY9748nuLDo/UNbHWi97w3BpjhxeggQwKKmOlu0NQd/cW0+Xwz30VPRjCdDjgpMuZjCwq4pRhXS9Xp2DPJSl0g9ujPish5ayaUwywv2LnZi+J2bEz+viHG08UzjT3lOlQhijZyUnG/ZJKRbe+b3c=
+	t=1728392756; cv=none; b=uTc3+pRqIoqIekVxw4SOZZEEz51qK8NIKvR3hxAvx9saEjAwrBwCZDTeMtI6Djw6gsGBNpXZXUiVTs1wfvEzYyX/1VkbVDIr2XhyTXhPLyDIfBzw2+ot9rdc0dYZAJc+Jyz/UWM0DyE6xWHBx0Yq0pDSaCavzz2MdhjpRdHcTWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392753; c=relaxed/simple;
-	bh=shJKHnb3pkvfhWoTVsRomYrLAqhS/ouWzjstlfQpaRs=;
+	s=arc-20240116; t=1728392756; c=relaxed/simple;
+	bh=TpAKeOQVKFjzC8dIEYmKlS8R5UEs9aqcygny6zA9gUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBANdx0PBeEfQBjKrIOq1XDdELf4e92m/GENmXEYIuBYXfuLrE9H5QKAaJbHSmQjj6xjSqgmUvFUzeBokL+7vjcpPRoQxhOTHHyUvKDsNAvDbyC/tunLqDEl9jZ8JLsv3IEZnoxjx6jDOX0/ZVi6dLcj6D0EfdwI3S5wXIHJtfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdJtZNVJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMW2CtIaBIzpc+TZ6erlL/CTHVU25MyvS4zex3opuoug08z+OL7piww4ubT46TwldSigoT6GfdvTOUqbjpJdDpO499gbHD2or3blpbh1rQWBtqGVR57tAIl6jI4YCQKBAKo9swpGnjvBA/OZdORUsUeXzwbXi/+hPWvbr7MmYec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOjI+lhV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdJtZNVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DDFC4CEC7;
-	Tue,  8 Oct 2024 13:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOjI+lhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97924C4CEC7;
+	Tue,  8 Oct 2024 13:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392753;
-	bh=shJKHnb3pkvfhWoTVsRomYrLAqhS/ouWzjstlfQpaRs=;
+	s=korg; t=1728392756;
+	bh=TpAKeOQVKFjzC8dIEYmKlS8R5UEs9aqcygny6zA9gUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdJtZNVJJLNEfoj6TAqkV+D7IJ2QI4JMOzF83slFFW/X03K5ECM3jLDrLPojiloP8
-	 ONYoUGFIOSLafMi5jbkiXckxU6SnAL8GoXqYgkBIZyRNguNiSzKdUikd372RvR76k7
-	 w8tiIFJcQ9N0s6HNQzZCkF2d+E5k5HAlBjFzxln0=
+	b=KOjI+lhVVJq9AmM2Yuw0s+VmrxXoynhL40xe8tQH9UDJ5vTA7Yw4jy9su+KPEBLy3
+	 bfDx9INSraLH4MWWEc0XrTQBpkJrqz7RKPmh83Miiq4ORCGoCsqAEkPViM+pHnNMn8
+	 RSopUWp1WGq5+lSCESQAXFBBvtyt1oTCRrJXi/Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 507/558] io_uring/net: harden multishot termination case for recv
-Date: Tue,  8 Oct 2024 14:08:57 +0200
-Message-ID: <20241008115722.182557355@linuxfoundation.org>
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.11 508/558] ceph: fix cap ref leak via netfs init_request
+Date: Tue,  8 Oct 2024 14:08:58 +0200
+Message-ID: <20241008115722.221244735@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -49,56 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Patrick Donnelly <pdonnell@redhat.com>
 
-commit c314094cb4cfa6fc5a17f4881ead2dfebfa717a7 upstream.
+commit ccda9910d8490f4fb067131598e4b2e986faa5a0 upstream.
 
-If the recv returns zero, or an error, then it doesn't matter if more
-data has already been received for this buffer. A condition like that
-should terminate the multishot receive. Rather than pass in the
-collected return value, pass in whether to terminate or keep the recv
-going separately.
+Log recovered from a user's cluster:
 
-Note that this isn't a bug right now, as the only way to get there is
-via setting MSG_WAITALL with multishot receive. And if an application
-does that, then -EINVAL is returned anyway. But it seems like an easy
-bug to introduce, so let's make it a bit more explicit.
+    <7>[ 5413.970692] ceph:  get_cap_refs 00000000958c114b ret 1 got Fr
+    <7>[ 5413.970695] ceph:  start_read 00000000958c114b, no cache cap
+    ...
+    <7>[ 5473.934609] ceph:   my wanted = Fr, used = Fr, dirty -
+    <7>[ 5473.934616] ceph:  revocation: pAsLsXsFr -> pAsLsXs (revoking Fr)
+    <7>[ 5473.934632] ceph:  __ceph_caps_issued 00000000958c114b cap 00000000f7784259 issued pAsLsXs
+    <7>[ 5473.934638] ceph:  check_caps 10000000e68.fffffffffffffffe file_want - used Fr dirty - flushing - issued pAsLsXs revoking Fr retain pAsLsXsFsr  AUTHONLY NOINVAL FLUSH_FORCE
 
-Link: https://github.com/axboe/liburing/issues/1246
+The MDS subsequently complains that the kernel client is late releasing
+caps.
+
+Approximately, a series of changes to this code by commits 49870056005c
+("ceph: convert ceph_readpages to ceph_readahead"), 2de160417315
+("netfs: Change ->init_request() to return an error code") and
+a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+resulted in subtle resource cleanup to be missed. The main culprit is
+the change in error handling in 2de160417315 which meant that a failure
+in init_request() would no longer cause cleanup to be called. That
+would prevent the ceph_put_cap_refs() call which would cleanup the
+leaked cap ref.
+
 Cc: stable@vger.kernel.org
-Fixes: b3fdea6ecb55 ("io_uring: multishot recv")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
+Link: https://tracker.ceph.com/issues/67008
+Signed-off-by: Patrick Donnelly <pdonnell@redhat.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ceph/addr.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1126,6 +1126,7 @@ int io_recv(struct io_kiocb *req, unsign
- 	int ret, min_ret = 0;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	size_t len = sr->len;
-+	bool mshot_finished;
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -473,8 +473,11 @@ static int ceph_init_request(struct netf
+ 	rreq->netfs_priv = priv;
  
- 	if (!(req->flags & REQ_F_POLLED) &&
- 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
-@@ -1180,6 +1181,7 @@ out_free:
- 		req_set_fail(req);
- 	}
- 
-+	mshot_finished = ret <= 0;
- 	if (ret > 0)
- 		ret += sr->done_io;
- 	else if (sr->done_io)
-@@ -1187,7 +1189,7 @@ out_free:
- 	else
- 		io_kbuf_recycle(req, issue_flags);
- 
--	if (!io_recv_finish(req, &ret, kmsg, ret <= 0, issue_flags))
-+	if (!io_recv_finish(req, &ret, kmsg, mshot_finished, issue_flags))
- 		goto retry_multishot;
+ out:
+-	if (ret < 0)
++	if (ret < 0) {
++		if (got)
++			ceph_put_cap_refs(ceph_inode(inode), got);
+ 		kfree(priv);
++	}
  
  	return ret;
+ }
 
 
