@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1C81C32EB;
-	Tue,  8 Oct 2024 13:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1598E1C32EB;
+	Tue,  8 Oct 2024 13:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392996; cv=none; b=pF6XYMAToLDhjPHHH3R4lLpKUEeOusrUPxR3QxOH/xAMB2Q2YxnBxVGmQfqCPDOOMdJQDzCRNNlnRPS0Qr8SdlF4Amy6WZWz3XMQT9sTM8Lrw+Av0fGJHX5X08QdMgHhANygj4z61Cl3mSnOF67y0P8Kkp5oyUY6CzvZ2Iuccnc=
+	t=1728392999; cv=none; b=qq1RolxvfT2YbR2AoI1tSP3/c/c8WjNr8ODBSpsSbhLc0ALnyl3CyJ0o6KtpgNvBgLt6eIFYAjK/2D+/+UuRFB9hRvc3HX7TUlP2779LKWiAQWJhZiUkd2sur3+bCCkqU5TyiQcPSqhtIu45bM65MzdXctb0Cv2Mvc3G3a3fCHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392996; c=relaxed/simple;
-	bh=5XOGS/ta4dt1Jzl0e+xcYqideMmGXiv9SFOQLAj25Rc=;
+	s=arc-20240116; t=1728392999; c=relaxed/simple;
+	bh=xQzooaX1KHJEjozG3imatkKCu8BNt4ZkkaPZhOC2mRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tudRQB5y9/WM0RhNDINcwaao2+DCIFuVjH3Zpg3uxSPItJyZBcSoidSMBXdGCmzo+YaH4HNaTE60+XrExyWpw8rnJ2653khOHUKlLAJofJACRFBZfGCzxBxNxQEbc7rDLMrPnSoluA7miZsI1mn8pMZQxGsPoR5FiELjC2sMfTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxU60R4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G8HnuH/wbl2stpCEJRl0+3UbMH/RpzaBjfPmtFlFS8zEe0/obsy1x5itZ6dCOu13mdwI1FCPTNUQkR2XZmsDbOU33W/mj8XMi1Q9H1fCUyEkcQ8Il7wKHS/UkRQRCSNM2FqX4GAaQca9DbLwRdPQN615KDFiH4liNqg+yz/Cz38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YssGvg5k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxU60R4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1119DC4CEC7;
-	Tue,  8 Oct 2024 13:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YssGvg5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8F1C4CEC7;
+	Tue,  8 Oct 2024 13:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392995;
-	bh=5XOGS/ta4dt1Jzl0e+xcYqideMmGXiv9SFOQLAj25Rc=;
+	s=korg; t=1728392998;
+	bh=xQzooaX1KHJEjozG3imatkKCu8BNt4ZkkaPZhOC2mRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxU60R4qIJhcvhgzA9Hv1gevFLw5upBZC2wrfiKMyom/rzOyPOEg8C8f3Mk8zqqeZ
-	 pz207QCrZOwtq0xleB9b/we2Me+xGK1PBPqsosofLwiuzLcrxv4B/6hLROcmscOMEf
-	 0EH4c0oIBlDUXyPf0Sk6blRJWGbvC44LfZvK1LGc=
+	b=YssGvg5kt0fRON1uCTOymp9vvLAH1TOyoUQGCYEAJchKRM7WSB8azqtLBqCcDwGPn
+	 sqlqfMzUUrJT6NrjHsPOw+h4ynM6SRI99dx+RbGM893FMHVzodJlJ06C2dsuYscM+/
+	 7U6qbjVXAwGNMUfYSJAAQmQP7wykGUC1WRMFgUK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Klara Modin <klarasmodin@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Rafael Rocha <rrochavi@fnal.gov>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <kai.makisara@kolumbus.fi>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/386] jump_label: Fix static_key_slow_dec() yet again
-Date: Tue,  8 Oct 2024 14:04:09 +0200
-Message-ID: <20241008115629.490288429@linuxfoundation.org>
+Subject: [PATCH 6.6 005/386] scsi: st: Fix input/output error on empty drive reset
+Date: Tue,  8 Oct 2024 14:04:10 +0200
+Message-ID: <20241008115629.529143339@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,129 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Rafael Rocha <rrochavi@fnal.gov>
 
-[ Upstream commit 1d7f856c2ca449f04a22d876e36b464b7a9d28b6 ]
+[ Upstream commit 3d882cca73be830549833517ddccb3ac4668c04e ]
 
-While commit 83ab38ef0a0b ("jump_label: Fix concurrency issues in
-static_key_slow_dec()") fixed one problem, it created yet another,
-notably the following is now possible:
+A previous change was introduced to prevent data loss during a power-on
+reset when a tape is present inside the drive. This commit set the
+"pos_unknown" flag to true to avoid operations that could compromise data
+by performing actions from an untracked position. The relevant change is
+commit 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
 
-  slow_dec
-    if (try_dec) // dec_not_one-ish, false
-    // enabled == 1
-                                slow_inc
-                                  if (inc_not_disabled) // inc_not_zero-ish
-                                  // enabled == 2
-                                    return
+As a consequence of this change, a new issue has surfaced: the driver now
+returns an "Input/output error" even for empty drives when the drive, host,
+or bus is reset. This issue stems from the "flush_buffer" function, which
+first checks whether the "pos_unknown" flag is set. If the flag is set, the
+user will encounter an "Input/output error" until the tape position is
+known again. This behavior differs from the previous implementation, where
+empty drives were not affected at system start up time, allowing tape
+software to send commands to the driver to retrieve the drive's status and
+other information.
 
-    guard((mutex)(&jump_label_mutex);
-    if (atomic_cmpxchg(1,0)==1) // false, we're 2
+The current behavior prioritizes the "pos_unknown" flag over the
+"ST_NO_TAPE" status, leading to issues for software that detects drives
+during system startup. This software will receive an "Input/output error"
+until a tape is loaded and its position is known.
 
-                                slow_dec
-                                  if (try-dec) // dec_not_one, true
-                                  // enabled == 1
-                                    return
-    else
-      try_dec() // dec_not_one, false
-      WARN
+To resolve this, the "ST_NO_TAPE" status should take priority when the
+drive is empty, allowing communication with the drive following a power-on
+reset. At the same time, the change should continue to protect data by
+maintaining the "pos_unknown" flag when the drive contains a tape and its
+position is unknown.
 
-Use dec_and_test instead of cmpxchg(), like it was prior to
-83ab38ef0a0b. Add a few WARNs for the paranoid.
-
-Fixes: 83ab38ef0a0b ("jump_label: Fix concurrency issues in static_key_slow_dec()")
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Tested-by: Klara Modin <klarasmodin@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Rafael Rocha <rrochavi@fnal.gov>
+Link: https://lore.kernel.org/r/20240905173921.10944-1-rrochavi@fnal.gov
+Fixes: 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
+Acked-by: Kai Mäkisara <kai.makisara@kolumbus.fi>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/jump_label.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ drivers/scsi/st.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/jump_label.c b/kernel/jump_label.c
-index 7374053bbe049..554e04b25b13a 100644
---- a/kernel/jump_label.c
-+++ b/kernel/jump_label.c
-@@ -165,7 +165,7 @@ bool static_key_slow_inc_cpuslocked(struct static_key *key)
- 		jump_label_update(key);
- 		/*
- 		 * Ensure that when static_key_fast_inc_not_disabled() or
--		 * static_key_slow_try_dec() observe the positive value,
-+		 * static_key_dec_not_one() observe the positive value,
- 		 * they must also observe all the text changes.
- 		 */
- 		atomic_set_release(&key->enabled, 1);
-@@ -247,7 +247,7 @@ void static_key_disable(struct static_key *key)
- }
- EXPORT_SYMBOL_GPL(static_key_disable);
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 338aa8c429682..212a402e75358 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -835,6 +835,9 @@ static int flush_buffer(struct scsi_tape *STp, int seek_next)
+ 	int backspace, result;
+ 	struct st_partstat *STps;
  
--static bool static_key_slow_try_dec(struct static_key *key)
-+static bool static_key_dec_not_one(struct static_key *key)
- {
- 	int v;
- 
-@@ -271,6 +271,14 @@ static bool static_key_slow_try_dec(struct static_key *key)
- 		 * enabled. This suggests an ordering problem on the user side.
- 		 */
- 		WARN_ON_ONCE(v < 0);
++	if (STp->ready != ST_READY)
++		return 0;
 +
-+		/*
-+		 * Warn about underflow, and lie about success in an attempt to
-+		 * not make things worse.
-+		 */
-+		if (WARN_ON_ONCE(v == 0))
-+			return true;
-+
- 		if (v <= 1)
- 			return false;
- 	} while (!likely(atomic_try_cmpxchg(&key->enabled, &v, v - 1)));
-@@ -281,15 +289,27 @@ static bool static_key_slow_try_dec(struct static_key *key)
- static void __static_key_slow_dec_cpuslocked(struct static_key *key)
- {
- 	lockdep_assert_cpus_held();
-+	int val;
+ 	/*
+ 	 * If there was a bus reset, block further access
+ 	 * to this device.
+@@ -842,8 +845,6 @@ static int flush_buffer(struct scsi_tape *STp, int seek_next)
+ 	if (STp->pos_unknown)
+ 		return (-EIO);
  
--	if (static_key_slow_try_dec(key))
-+	if (static_key_dec_not_one(key))
- 		return;
- 
- 	guard(mutex)(&jump_label_mutex);
--	if (atomic_cmpxchg(&key->enabled, 1, 0) == 1)
-+	val = atomic_read(&key->enabled);
-+	/*
-+	 * It should be impossible to observe -1 with jump_label_mutex held,
-+	 * see static_key_slow_inc_cpuslocked().
-+	 */
-+	if (WARN_ON_ONCE(val == -1))
-+		return;
-+	/*
-+	 * Cannot already be 0, something went sideways.
-+	 */
-+	if (WARN_ON_ONCE(val == 0))
-+		return;
-+
-+	if (atomic_dec_and_test(&key->enabled))
- 		jump_label_update(key);
--	else
--		WARN_ON_ONCE(!static_key_slow_try_dec(key));
- }
- 
- static void __static_key_slow_dec(struct static_key *key)
-@@ -326,7 +346,7 @@ void __static_key_slow_dec_deferred(struct static_key *key,
- {
- 	STATIC_KEY_CHECK_USE(key);
- 
--	if (static_key_slow_try_dec(key))
-+	if (static_key_dec_not_one(key))
- 		return;
- 
- 	schedule_delayed_work(work, timeout);
+-	if (STp->ready != ST_READY)
+-		return 0;
+ 	STps = &(STp->ps[STp->partition]);
+ 	if (STps->rw == ST_WRITING)	/* Writing */
+ 		return st_flush_write_buffer(STp);
 -- 
 2.43.0
 
