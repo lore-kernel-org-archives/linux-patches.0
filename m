@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46BF1DE8BE;
-	Tue,  8 Oct 2024 13:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F391DFD84;
+	Tue,  8 Oct 2024 13:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393682; cv=none; b=kr7m2ACiLkgqLwc2aIRKOKcTfO2nCCHOEFZWJZFC9rugKaw1Zz1sM/Qta/RvIhCUTdN+uMVorhqWoyH/lGmv/LQHm7iWlkKqQX9SRjMpZkorIYazw9Fegkj+RE50XsNrS1/bb4aNJ90w2kkwkAyITBqhkpdZzj1xQP2YVrvSl/E=
+	t=1728393686; cv=none; b=IdHU3nOpJTpJdXMWV9is8FIWOoJ8YWRTXtfw5GeQBT8nclYjHLKlKOzG6gLpdubkgqUC6WK+Wn3u8V+ajqzpqZE6lZSes5FcNx+A/dYMRses+F4+GEUP8AJgxrBCcYcAKGBzzAFUvtP2+kYBKJnJgDxSfl+dTk+t3F+Ag3NyV1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393682; c=relaxed/simple;
-	bh=HuSd7IoFmI1Oz0ItBCBNKYaAh6ngAGBb/ccDKVGNJWA=;
+	s=arc-20240116; t=1728393686; c=relaxed/simple;
+	bh=Q4Ke3hEnA3g7wZGt2XV7zw6eIIq4D3h16TMgHgVmU4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6QTOH4zNwiFIM5R/euLkrT7th+Zth2vwfqLVRWvXBmBFBqqjfn+KvpoPOtfVe+Erz3wZCrZrDWdyakYO7eQOR64N02EBp1iZunue/eVtKJaS2jbHbAowaFCSnOFC7Mi624RRfKqgQb4zXe5FEBPOwR85bEbLD02QR+Ov4qmuf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okC2QwcW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C4E7go0MPrSA3Kb5e4lXSAiCBtte0amsO8MlKc3E8vS2ga0Cb8BEqx/sG50jqVdXU6XWUsSqYStY6k4mGy2aea58knQM953OTb1ml8FC4oAMX9o4SlGVF2yDTiCjTI6YXyHQjOrQU2b5kEZL6UAzL6VPFaZHTv/yfqJrRMbJKgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udVOH/Bx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okC2QwcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F79C4CECC;
-	Tue,  8 Oct 2024 13:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udVOH/Bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A86C4CEC7;
+	Tue,  8 Oct 2024 13:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393682;
-	bh=HuSd7IoFmI1Oz0ItBCBNKYaAh6ngAGBb/ccDKVGNJWA=;
+	s=korg; t=1728393686;
+	bh=Q4Ke3hEnA3g7wZGt2XV7zw6eIIq4D3h16TMgHgVmU4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okC2QwcW9LscD7vQ5TtHqYJ+h41jq3GOkhN3SsK/TdviPMiw4LLGPvcIzfWcYbRhu
-	 2SDA+KQauHlrWTMBA5BR1UQv6Q96im04xe1MiuVsFfTsRzIyEnfmXQv+Iyj/ToPZMo
-	 O/zaMy4G38J7iYRRbhS6q2nk8agHwxzHm6mJgwak=
+	b=udVOH/BxYD5jy+UFCgKHPQsPHA5Qy4fRDjdMo+ge2+vIJXnL8e8sJzpPFYx9O1GwA
+	 K2lkFPYsPdxZFM1OkSToMIW63jN7tNzwNCgNT7BQP4ifA0yjzq4DJzT2+wddkC7AwY
+	 EyxMT6m9Lul7Ygqug8W/wCGBcnWYQyiwUWsGNc3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander F. Lent" <lx@xanderlent.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/386] accel/ivpu: Add missing MODULE_FIRMWARE metadata
-Date: Tue,  8 Oct 2024 14:07:18 +0200
-Message-ID: <20241008115637.002418828@linuxfoundation.org>
+Subject: [PATCH 6.6 194/386] spi: rpc-if: Add missing MODULE_DEVICE_TABLE
+Date: Tue,  8 Oct 2024 14:07:19 +0200
+Message-ID: <20241008115637.040137034@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,43 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander F. Lent <lx@xanderlent.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 58b5618ba80a5e5a8d531a70eae12070e5bd713f ]
+[ Upstream commit 0880f669436028c5499901e5acd8f4b4ea0e0c6a ]
 
-Modules that load firmware from various paths at runtime must declare
-those paths at compile time, via the MODULE_FIRMWARE macro, so that the
-firmware paths are included in the module's metadata.
+Add missing MODULE_DEVICE_TABLE definition for automatic loading of the
+driver when it is built as a module.
 
-The accel/ivpu driver loads firmware but lacks this metadata,
-preventing dracut from correctly locating firmware files. Fix it.
-
-Fixes: 9ab43e95f922 ("accel/ivpu: Switch to generation based FW names")
-Fixes: 02d5b0aacd05 ("accel/ivpu: Implement firmware parsing and booting")
-Signed-off-by: Alexander F. Lent <lx@xanderlent.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240709-fix-ivpu-firmware-metadata-v3-1-55f70bba055b@xanderlent.com
+Fixes: eb8d6d464a27 ("spi: add Renesas RPC-IF driver")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20240731072955.224125-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_fw.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-rpc-if.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/accel/ivpu/ivpu_fw.c b/drivers/accel/ivpu/ivpu_fw.c
-index a277bbae78fc4..3b35d262ddd43 100644
---- a/drivers/accel/ivpu/ivpu_fw.c
-+++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -55,6 +55,10 @@ static struct {
- 	{ IVPU_HW_40XX, "intel/vpu/vpu_40xx_v0.0.bin" },
- };
+diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
+index e11146932828a..7cce2d2ab9ca6 100644
+--- a/drivers/spi/spi-rpc-if.c
++++ b/drivers/spi/spi-rpc-if.c
+@@ -198,9 +198,16 @@ static int __maybe_unused rpcif_spi_resume(struct device *dev)
  
-+/* Production fw_names from the table above */
-+MODULE_FIRMWARE("intel/vpu/vpu_37xx_v0.0.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_40xx_v0.0.bin");
+ static SIMPLE_DEV_PM_OPS(rpcif_spi_pm_ops, rpcif_spi_suspend, rpcif_spi_resume);
+ 
++static const struct platform_device_id rpc_if_spi_id_table[] = {
++	{ .name = "rpc-if-spi" },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(platform, rpc_if_spi_id_table);
 +
- static int ivpu_fw_request(struct ivpu_device *vdev)
- {
- 	int ret = -ENOENT;
+ static struct platform_driver rpcif_spi_driver = {
+ 	.probe	= rpcif_spi_probe,
+ 	.remove_new = rpcif_spi_remove,
++	.id_table = rpc_if_spi_id_table,
+ 	.driver = {
+ 		.name	= "rpc-if-spi",
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.43.0
 
