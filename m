@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAC61DF25B;
-	Tue,  8 Oct 2024 13:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31981DF998;
+	Tue,  8 Oct 2024 13:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393981; cv=none; b=sP6SzhmgKGHkSx9fcNrzXdOIANO7WN33Lgz+SSl9fHlZpNqQAZ7VOpV0Gz37ZpZrU69ha8ovdmU4qCcOzoe1cFEqM98GffyRrJNLqxJK3AwzYZNVbjv84Guw3ztdkGnEBWnQmi9nLuCFkEKOpRDPRifbNQ10uFPdAf4O29ej+KE=
+	t=1728393984; cv=none; b=M8UI3WWkYQet009njWZavyxcx2f9FEFJmVczCrfLwet7XZSpXbYyDQ9dKTK2KTV6yP6JOSTyRbEHX/aVbaHEnvTf+UGXQFBv3uC1yCrcO8MaTMbsKlLgrBmcR1sc70Qac/hXsRWv0Qw84lyAdG9L/d/sIkrR3pPM/S7Grb2A6Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393981; c=relaxed/simple;
-	bh=zGFYyyBUK3JjOv4plps//pgi+FEGJuTuxsWcGs863Xk=;
+	s=arc-20240116; t=1728393984; c=relaxed/simple;
+	bh=wDZDMEmW4plA50h8CXIXf9S+BeM4ViaHOwj6Z2zeQ8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gBMZZ24oPP1Mfec9jCB4isy32df7Uc3fpKyaLHlvlYZXLzP749gVeumqkGKbMFJ3+ThQ+7BOM8QK3fkebfFCAk4el1SOXFp3Af9J5Y39YcP19LKYvJgRqBQRDg6r+eSPyWDtVtZ67ZGraImVUO8cAfmdIN6vxv+F+VRPmLOj7IE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdDVtVVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQciwVyv+8R8R9TL/rPSLTga4m2Wy1SAqRD8vQT63yFPYrYinh9I0bWSwXFBpEn+41nxHywbQQLCkbnJtp19cOv3YvduluwG2v+1yrRmrXjag+KxeDbb8GU1ucMwV7HVexCNb3NDKGSojkzI4BnvNhTPbXCY+BIFk6ZRJeTs4Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvLMe+LW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdDVtVVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F659C4CECC;
-	Tue,  8 Oct 2024 13:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvLMe+LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6D6C4CEC7;
+	Tue,  8 Oct 2024 13:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393981;
-	bh=zGFYyyBUK3JjOv4plps//pgi+FEGJuTuxsWcGs863Xk=;
+	s=korg; t=1728393984;
+	bh=wDZDMEmW4plA50h8CXIXf9S+BeM4ViaHOwj6Z2zeQ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdDVtVVQ4ch1Yu3q/sSwOnJfyk4MALfiCmxCc0lxhetSoEw6Hu1pdPIcEy0GDqhTf
-	 3ECfgiHusEKS0wYogTzU89BX+3Z79ivCGgjHTjvHqHEcE12Sqdp+OEN2x2IllFEzRg
-	 lNEbmOFFIq8HLnK3zvkCdTUXGgJ0LounuX2mQpEs=
+	b=tvLMe+LW2cX2MmPjzVN01icct35mS73ZrpFViZWMtbBSqsxaSg9bB2nMSym4WEfaJ
+	 ONdF8O0k+8nISNcuJAbVJACfCUFed5b+iixwNdw7ZNk3W/iSTEToPG+8BEJqJHGxUW
+	 2LBjrbQdjRlC3bt6Dv9YL91qbFdDrPTIDVcru5aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mikisabate@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 311/386] cpufreq: Avoid a bad reference count on CPU node
-Date: Tue,  8 Oct 2024 14:09:16 +0200
-Message-ID: <20241008115641.624481764@linuxfoundation.org>
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Parth Pancholi <parth.pancholi@toradex.com>,
+	Keerthy <j-keerthy@ti.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.6 312/386] gpio: davinci: fix lazy disable
+Date: Tue,  8 Oct 2024 14:09:17 +0200
+Message-ID: <20241008115641.663986359@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -45,58 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Sabaté Solà <mikisabate@gmail.com>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-commit c0f02536fffbbec71aced36d52a765f8c4493dc2 upstream.
+commit 3360d41f4ac490282fddc3ccc0b58679aa5c065d upstream.
 
-In the parse_perf_domain function, if the call to
-of_parse_phandle_with_args returns an error, then the reference to the
-CPU device node that was acquired at the start of the function would not
-be properly decremented.
+On a few platforms such as TI's AM69 device, disable_irq() fails to keep
+track of the interrupts that happen between disable_irq() and
+enable_irq() and those interrupts are missed. Use the ->irq_unmask() and
+->irq_mask() methods instead of ->irq_enable() and ->irq_disable() to
+correctly keep track of edges when disable_irq is called.
 
-Address this by declaring the variable with the __free(device_node)
-cleanup attribute.
+This solves the issue of disable_irq() not working as expected on such
+platforms.
 
-Signed-off-by: Miquel Sabaté Solà <mikisabate@gmail.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20240917134246.584026-1-mikisabate@gmail.com
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 23265442b02b ("ARM: davinci: irq_data conversion.")
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
+Acked-by: Keerthy <j-keerthy@ti.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240828133207.493961-1-parth105105@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cpufreq.h |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpio/gpio-davinci.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -1124,10 +1124,9 @@ static inline int parse_perf_domain(int
- 				    const char *cell_name,
- 				    struct of_phandle_args *args)
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -289,7 +289,7 @@ static int davinci_gpio_probe(struct pla
+  * serve as EDMA event triggers.
+  */
+ 
+-static void gpio_irq_disable(struct irq_data *d)
++static void gpio_irq_mask(struct irq_data *d)
  {
--	struct device_node *cpu_np;
- 	int ret;
- 
--	cpu_np = of_cpu_device_node_get(cpu);
-+	struct device_node *cpu_np __free(device_node) = of_cpu_device_node_get(cpu);
- 	if (!cpu_np)
- 		return -ENODEV;
- 
-@@ -1135,9 +1134,6 @@ static inline int parse_perf_domain(int
- 					 args);
- 	if (ret < 0)
- 		return ret;
--
--	of_node_put(cpu_np);
--
- 	return 0;
+ 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
+ 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
+@@ -298,7 +298,7 @@ static void gpio_irq_disable(struct irq_
+ 	writel_relaxed(mask, &g->clr_rising);
  }
  
+-static void gpio_irq_enable(struct irq_data *d)
++static void gpio_irq_unmask(struct irq_data *d)
+ {
+ 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
+ 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
+@@ -324,8 +324,8 @@ static int gpio_irq_type(struct irq_data
+ 
+ static struct irq_chip gpio_irqchip = {
+ 	.name		= "GPIO",
+-	.irq_enable	= gpio_irq_enable,
+-	.irq_disable	= gpio_irq_disable,
++	.irq_unmask	= gpio_irq_unmask,
++	.irq_mask	= gpio_irq_mask,
+ 	.irq_set_type	= gpio_irq_type,
+ 	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
+ };
 
 
