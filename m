@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7068D1DE4DF;
-	Tue,  8 Oct 2024 12:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A399B192594;
+	Tue,  8 Oct 2024 12:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391460; cv=none; b=PQ4VIAbPNx1GSczMULBQYPzBbZTepO+3w9ee6jzKYMdd6RCk4U6v0ZcAM/o1OJiI24KHT5Ly+UeAxB28429tzZymbqeahBA2EyE+dYa6TQeyjNWM4+T45Hj8QUTFNAI880mMATGEObySvY0+2GnP8/plrTZnQ8Iz1Arnv9AriTQ=
+	t=1728391463; cv=none; b=iXFXH+I416YC6zAdwq4G7Pl+C+vK114yt1ek/tF5U2w50VahJR88yUZVu21zj6v/lTuWmN4rZw5yTvqKPcPxdPkRL2jFX3p7oc0/H/9j6zcbtyMoBPOUfQjiiAFDYLbeyk829b9J32MgqbfJJ7f9IgNeNSEYxFHE7OwuIYjiBuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391460; c=relaxed/simple;
-	bh=aaJ6yfQzo50xh+OAoFbxjzSUZgQV01drWYZ+WWNfbE0=;
+	s=arc-20240116; t=1728391463; c=relaxed/simple;
+	bh=fHvC2Y2b4lyeGUs/ncuXAo6bXjnsQkJp8ya4QFyXofE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgH8ROEvh77dkKxhm+6CZ0jv8d1eiC2DPcN5eru3+npKmncQAKLyFCIRrVcqedpFMPwfkPXF8PRTWfmHcY3k4YmRxahN/Je8omjh8GNWNenrIn/Mnzd7FgfclSCD123xIiJG0/nubDVlE6OC6VSXfuTyk6Bb6x+YzcTv4waiuxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pw/tZ/x9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f5oEHqIaojuTJLwx+uozvvbf3CFFdf25yFUrCS4LLcBta2nyFujZRwbF0oizaO2f1TM/nyxZE5vVXXxT5hIc2XQugVr7vDmDH4tuabKPe4YaS97R8gzRXPPXcTCxEM7qaAG99Bvhlj6IO4ouDjJ86MVS0Qsgb+V6ZRIASAMcmSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPV1Y3Fw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pw/tZ/x9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B0AC4CEC7;
-	Tue,  8 Oct 2024 12:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPV1Y3Fw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0957FC4CEC7;
+	Tue,  8 Oct 2024 12:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391460;
-	bh=aaJ6yfQzo50xh+OAoFbxjzSUZgQV01drWYZ+WWNfbE0=;
+	s=korg; t=1728391463;
+	bh=fHvC2Y2b4lyeGUs/ncuXAo6bXjnsQkJp8ya4QFyXofE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pw/tZ/x91LvCyZX4tlcBdcuCV9nKenXlRSzCOBkq4x2zJf/3wEDk3W++EB/EpOG34
-	 P1qmkEi9DXU45NF/8FlOtpwHNMMbHJy1khPKOqImxKUIFl8vft5kRKUB7uPsosQNQx
-	 s4DuofNAMJQvHBANtXORsP8ZmvneF4QDNVM1tSpA=
+	b=tPV1Y3FwBsc2VvkxBa2C56PADxdQ7ap4t++0nwD2BQV11CmDrktHTSDJRm+1/t/Ns
+	 /xQU0Kr8F9GXFSgYynJIbSzmLMlngSf+vW37dIJJZBV4O33qEkkJRbPrhLiUqBRklX
+	 BnILnxNuVRBsjKx0Vdm5Zq/DBSCSw8KhEVKd4SkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Tamim Khan <tamim@fusetak.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 122/558] tipc: guard against string buffer overrun
-Date: Tue,  8 Oct 2024 14:02:32 +0200
-Message-ID: <20241008115707.167157246@linuxfoundation.org>
+Subject: [PATCH 6.11 105/558] ACPI: resource: Skip IRQ override on Asus Vivobook Go E1404GAB
+Date: Tue,  8 Oct 2024 14:02:15 +0200
+Message-ID: <20241008115706.500247990@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Tamim Khan <tamim@fusetak.com>
 
-[ Upstream commit 6555a2a9212be6983d2319d65276484f7c5f431a ]
+[ Upstream commit 49e9cc315604972cc14868cb67831e3e8c3f1470 ]
 
-Smatch reports that copying media_name and if_name to name_parts may
-overwrite the destination.
+Like other Asus Vivobooks, the Asus Vivobook Go E1404GAB has a DSDT
+that describes IRQ 1 as ActiveLow, while the kernel overrides to Edge_High.
 
- .../bearer.c:166 bearer_name_validate() error: strcpy() 'media_name' too large for 'name_parts->media_name' (32 vs 16)
- .../bearer.c:167 bearer_name_validate() error: strcpy() 'if_name' too large for 'name_parts->if_name' (1010102 vs 16)
+This override prevents the internal keyboard from working.
 
-This does seem to be the case so guard against this possibility by using
-strscpy() and failing if truncation occurs.
+Fix the problem by adding this laptop to the table that prevents the kernel
+from overriding the IRQ.
 
-Introduced by commit b97bf3fd8f6a ("[TIPC] Initial merge")
-
-Compile tested only.
-
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240801-tipic-overrun-v2-1-c5b869d1f074@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219212
+Signed-off-by: Tamim Khan <tamim@fusetak.com>
+Link: https://patch.msgid.link/20240903014317.38858-1-tamim@fusetak.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/acpi/resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 5a526ebafeb4b..3c9e25f6a1d22 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -163,8 +163,12 @@ static int bearer_name_validate(const char *name,
- 
- 	/* return bearer name components, if necessary */
- 	if (name_parts) {
--		strcpy(name_parts->media_name, media_name);
--		strcpy(name_parts->if_name, if_name);
-+		if (strscpy(name_parts->media_name, media_name,
-+			    TIPC_MAX_MEDIA_NAME) < 0)
-+			return 0;
-+		if (strscpy(name_parts->if_name, if_name,
-+			    TIPC_MAX_IF_NAME) < 0)
-+			return 0;
- 	}
- 	return 1;
- }
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index cb2aacbb93357..8a4726e2eb693 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -503,6 +503,13 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "B2502FBA"),
+ 		},
+ 	},
++	{
++		/* Asus Vivobook Go E1404GAB */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "E1404GAB"),
++		},
++	},
+ 	{
+ 		/* Asus Vivobook E1504GA */
+ 		.matches = {
 -- 
 2.43.0
 
