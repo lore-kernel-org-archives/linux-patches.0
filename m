@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669C01DED55;
-	Tue,  8 Oct 2024 12:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A211DEFE5;
+	Tue,  8 Oct 2024 12:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390375; cv=none; b=Y7SPYL+D19tVgoNMSrBZgl+If8+3GPNZkOZogpO+fef+7aGV8uTQbgyKS8y6D33nKpSF0O1G4yQ3q8xs6pgiE2pHryfGLyZsI/iL0S/bwD69SbUbzdNSyqK9yvDWLWSTKNpDIYEhiyfRKzsm74iMGLPwxV3rGp8VXuCoi5ulw1c=
+	t=1728390378; cv=none; b=cg0ERtSjH8Clx2PDLPPHcwAJQEvA55/Gs5by7y/Na74c5ZRVAtRyDiksW5DZ/1XiQLpbVf7vGZf/aFV0+wzHUmu/bb7LW9FdC54Nv2Z2Ty3FdyxF7HnSQVz28QiTz9czVrgUglctcDCASHp3nfoI3Js7y6P0NhQPXUefzsKhUKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390375; c=relaxed/simple;
-	bh=PM0m8xyBO3kV7qxtIGAkLaURMkGFU6xWyNWcL37+/Xc=;
+	s=arc-20240116; t=1728390378; c=relaxed/simple;
+	bh=AiBxuKCbXVWr1OcXYJVtHUUrwQ2Hm0/yWQsKXpLjqNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7Uh1a8JfQ4tyiJpZA34kIGj0jldb3w7d8/XtK3QNkVs5j9FEzY7A0DQwu5EbkVkNYRvqm8b9J6Cuvj5UeGK7718+AqyqfVHvyglCKbMX3nrfrZcpOWDAxbyZnNcooRepi6OesS/OMNuUbdCj5Ia1EuRp+Zy/nI4AgHZrg41EGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzdOsDMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2LlxkE927C6horVpnZFR0IKTSL0KYmVTdN282Cygbm9yC5fGiU8zVh157qeFIVGgzoEmItYhXQsNKVAnQtxQ3/jPgihqmwI9eG/ijayRh/W6agu4B1U9lChnTFNRkedP7at/P90B4UYHOswQeAAaDQHw8xupJ8PnDnRVajH1zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvtAuXCO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzdOsDMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98029C4CEC7;
-	Tue,  8 Oct 2024 12:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvtAuXCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B06C4CEC7;
+	Tue,  8 Oct 2024 12:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390375;
-	bh=PM0m8xyBO3kV7qxtIGAkLaURMkGFU6xWyNWcL37+/Xc=;
+	s=korg; t=1728390378;
+	bh=AiBxuKCbXVWr1OcXYJVtHUUrwQ2Hm0/yWQsKXpLjqNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzdOsDMpb3Ymlq0oU+H0hiwYFusbxfhVd7/RqG2vjZJNROdCv38TA0UapN/lUs2w9
-	 qKS5IV8lO8lNbQxWIdxzmp5bHAUEGr+arSoOCEyEyDXmgvh0HPrnKZHgpmpgkBp4/G
-	 EGzqHE8+bvGh7ZjLQTNsWw/tNtKqnVSZ1EdcQ9k8=
+	b=HvtAuXCOKiXfYKQs+USvrBp/DYuCt1ZOD+N95ZchYTklwY6H6mZPp0W6kdjfblIx9
+	 lGMWaHSU1XG84Tzp1obSr1QX/s03USFEY8+YNhOo0Dz9kJ0a42JxeTwSzoEo5sNMPJ
+	 267p5zfjK+PCBtwfansb/OXUGFquBXvNXjCMzr/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthew Auld <matthew.auld@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Nirmoy Das <nirmoy.das@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 271/482] drm/xe: fixup xe_alloc_pf_queue
-Date: Tue,  8 Oct 2024 14:05:34 +0200
-Message-ID: <20241008115658.945890800@linuxfoundation.org>
+Subject: [PATCH 6.10 272/482] drm/xe: Fix memory leak on xe_alloc_pf_queue failure
+Date: Tue,  8 Oct 2024 14:05:35 +0200
+Message-ID: <20241008115658.984178263@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,45 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit 321d6b4b9cbe3dd0bc99937d5e5b4d730b5b5798 ]
+[ Upstream commit c5f728de696caa35481fd84202dfbc9fecc18e0b ]
 
-kzalloc expects number of bytes, therefore we should convert the number
-of dw into bytes, otherwise we are likely just accessing beyond the
-array causing all kinds of carnage. Also fixup the error handling while
-we are here.
+Simplify memory unwinding on error also fixing current memory
+leak that can happen on error.
 
-v2:
- - Prefer kcalloc (dim)
+v2: use devm_kcalloc(Matt A)
 
 Fixes: 3338e4f90c14 ("drm/xe: Use topology to determine page fault queue size")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
 Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240821171917.417386-2-matthew.auld@intel.com
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240826162035.20462-1-nirmoy.das@intel.com
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_pagefault.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_gt_pagefault.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_gt_pagefault.c b/drivers/gpu/drm/xe/xe_gt_pagefault.c
-index ee78b4e47dfcb..28cf90e8989c6 100644
+index 28cf90e8989c6..d924fdd8f6f97 100644
 --- a/drivers/gpu/drm/xe/xe_gt_pagefault.c
 +++ b/drivers/gpu/drm/xe/xe_gt_pagefault.c
-@@ -437,7 +437,10 @@ static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
+@@ -408,20 +408,17 @@ static void pagefault_fini(void *arg)
+ {
+ 	struct xe_gt *gt = arg;
+ 	struct xe_device *xe = gt_to_xe(gt);
+-	int i;
+ 
+ 	if (!xe->info.has_usm)
+ 		return;
+ 
+ 	destroy_workqueue(gt->usm.acc_wq);
+ 	destroy_workqueue(gt->usm.pf_wq);
+-
+-	for (i = 0; i < NUM_PF_QUEUE; ++i)
+-		kfree(gt->usm.pf_queue[i].data);
+ }
+ 
+ static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
+ {
++	struct xe_device *xe = gt_to_xe(gt);
+ 	xe_dss_mask_t all_dss;
+ 	int num_dss, num_eus;
+ 
+@@ -437,7 +434,8 @@ static int xe_alloc_pf_queue(struct xe_gt *gt, struct pf_queue *pf_queue)
  		(num_eus + XE_NUM_HW_ENGINES) * PF_MSG_LEN_DW;
  
  	pf_queue->gt = gt;
--	pf_queue->data = kzalloc(pf_queue->num_dw, GFP_KERNEL);
-+	pf_queue->data = kcalloc(pf_queue->num_dw, sizeof(u32), GFP_KERNEL);
-+	if (!pf_queue->data)
-+		return -ENOMEM;
-+
- 	spin_lock_init(&pf_queue->lock);
- 	INIT_WORK(&pf_queue->worker, pf_queue_work_func);
+-	pf_queue->data = kcalloc(pf_queue->num_dw, sizeof(u32), GFP_KERNEL);
++	pf_queue->data = devm_kcalloc(xe->drm.dev, pf_queue->num_dw,
++				      sizeof(u32), GFP_KERNEL);
+ 	if (!pf_queue->data)
+ 		return -ENOMEM;
  
 -- 
 2.43.0
