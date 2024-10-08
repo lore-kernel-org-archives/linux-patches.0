@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE261DEFF0;
-	Tue,  8 Oct 2024 13:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E9D1DF26C;
+	Tue,  8 Oct 2024 13:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393190; cv=none; b=aAy1an/DERKi7FgWLowP+1e1VeJy4nq67yp2hBh70yzrQ1BkSh2NHxj3TYkdbI+01ldEpza+zvUxZWINa8KiBcX5Onre0Dmn+ib1zxfMlfwRpXpq+7m0f9fTV2HRGlYSOnBB/LB2CH9lgyZhTzevW+MXbwB6L//gfmrpLyjbxZA=
+	t=1728393193; cv=none; b=aDYmSewRGROjQEIey5u6U/keuJtbBbcp+8lcPR6tzE1WY8qBB7xwBTHMzeZt7oNLXzixYITiSm+8dY+W4CINbHVsuPNFQH+uKAY1cqzzUPq6dxzOfISI7jrCblcI4ienrNV7WJboPEh9nZZ4SBq0kOAIRuxJBNieTb40qbsTrsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393190; c=relaxed/simple;
-	bh=Diq4EJ5CcsG4uDbvdniNG8ADeXmKtaUQvTg1xnbgR6Y=;
+	s=arc-20240116; t=1728393193; c=relaxed/simple;
+	bh=Ot2l9oRbZXJKobJLbT9rU/tWMtYMwlggY9P9HQ+1U/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JEzS2jPC2XS0AbNtnpNoxpaOVi7/5jaHPUvjOiGAB61m1B4h/3b2nMHdX/Y7+WOe+n2NAo9MYl7nYgBLHuSL3zapywcK5nJGWi7vEc9kaUnIrrhiESAAlY0rHcAIPl9SfT6XgFZfbF/CZkY5NnnCkjycx6sZgEjjSo5KZSsf5Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIcO3wDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMeyKZvy/zyVAt2UD6CUEf14mQ7S8YkMxUZhr28f/yu0k9spy5BPxCE3xxMMs2T4ELehl/w4eCtlceiAWL+++niOqwV8V0doj332aoRT6Mnn+DWdV+CAKCCD20M1UqcfQVFxr7gUqqqNl3DuemmPl0Tk8UjV0rGFxYr+vfy57g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M40wEEy7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIcO3wDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A18C4CEC7;
-	Tue,  8 Oct 2024 13:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M40wEEy7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FDCC4CEC7;
+	Tue,  8 Oct 2024 13:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393190;
-	bh=Diq4EJ5CcsG4uDbvdniNG8ADeXmKtaUQvTg1xnbgR6Y=;
+	s=korg; t=1728393193;
+	bh=Ot2l9oRbZXJKobJLbT9rU/tWMtYMwlggY9P9HQ+1U/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIcO3wDNILf2ye4B8CtOkZDSS8PoJxpq9FbHmN8I+qRYG0Q5M4eRjpVwpDFl//ylB
-	 K1DTnU6UXiBYOsTCymIqAZm+gQ9ejJRl7NWgLc4iiWqMi5YZ+rHF47S62tPYfHz/2n
-	 yZ1JVGvSqhW6YuXPOs8989Mqr7ik1ZT4XA8lFMsg=
+	b=M40wEEy7FoiK++8z7uthYARcsI4G30VdJWeO9a3Caa2RtfxTCk1yFN811tTbkInEa
+	 lwCiS7BOcSo6uNLDg814tFCWFmcRV36/1oFHe202bHfg5J6GLoTLJiXzPA9flVS9u/
+	 3FLqqHv1Q18vQOreLeJxHsv/ReNEJLKTRVMft+IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	al0uette@outlook.com,
-	vderp@icloud.com,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Konstantin Ovsepian <ovs@ovs.to>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/386] ACPI: CPPC: Add support for setting EPP register in FFH
-Date: Tue,  8 Oct 2024 14:05:24 +0200
-Message-ID: <20241008115632.570198942@linuxfoundation.org>
+Subject: [PATCH 6.6 080/386] blk_iocost: fix more out of bound shifts
+Date: Tue,  8 Oct 2024 14:05:25 +0200
+Message-ID: <20241008115632.609891667@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -47,76 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Konstantin Ovsepian <ovs@ovs.to>
 
-[ Upstream commit aaf21ac93909e08a12931173336bdb52ac8499f1 ]
+[ Upstream commit 9bce8005ec0dcb23a58300e8522fe4a31da606fa ]
 
-Some Asus AMD systems are reported to not be able to change EPP values
-because the BIOS doesn't advertise support for the CPPC MSR and the PCC
-region is not configured.
+Recently running UBSAN caught few out of bound shifts in the
+ioc_forgive_debts() function:
 
-However the ACPI 6.2 specification allows CPC registers to be declared
-in FFH:
-```
-Starting with ACPI Specification 6.2, all _CPC registers can be in
-PCC, System Memory, System IO, or Functional Fixed Hardware address
-spaces. OSPM support for this more flexible register space scheme
-is indicated by the “Flexible Address Space for CPPC Registers” _OSC
-bit.
-```
+UBSAN: shift-out-of-bounds in block/blk-iocost.c:2142:38
+shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
+long')
+...
+UBSAN: shift-out-of-bounds in block/blk-iocost.c:2144:30
+shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
+long')
+...
+Call Trace:
+<IRQ>
+dump_stack_lvl+0xca/0x130
+__ubsan_handle_shift_out_of_bounds+0x22c/0x280
+? __lock_acquire+0x6441/0x7c10
+ioc_timer_fn+0x6cec/0x7750
+? blk_iocost_init+0x720/0x720
+? call_timer_fn+0x5d/0x470
+call_timer_fn+0xfa/0x470
+? blk_iocost_init+0x720/0x720
+__run_timer_base+0x519/0x700
+...
 
-If this _OSC has been set allow using FFH to configure EPP.
+Actual impact of this issue was not identified but I propose to fix the
+undefined behaviour.
+The proposed fix to prevent those out of bound shifts consist of
+precalculating exponent before using it the shift operations by taking
+min value from the actual exponent and maximum possible number of bits.
 
-Reported-by: al0uette@outlook.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218686
-Suggested-by: al0uette@outlook.com
-Tested-by: vderp@icloud.com
-Tested-by: al0uette@outlook.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20240910031524.106387-1-superm1@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20240822154137.2627818-1-ovs@ovs.to
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ block/blk-iocost.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 28217a995f795..7aced0b9bad7c 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -100,6 +100,11 @@ static DEFINE_PER_CPU(struct cpc_desc *, cpc_desc_ptr);
- 				(cpc)->cpc_entry.reg.space_id ==	\
- 				ACPI_ADR_SPACE_PLATFORM_COMM)
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 0dca77591d66c..c3cb9c20b306c 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2076,7 +2076,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+ 			      struct ioc_now *now)
+ {
+ 	struct ioc_gq *iocg;
+-	u64 dur, usage_pct, nr_cycles;
++	u64 dur, usage_pct, nr_cycles, nr_cycles_shift;
  
-+/* Check if a CPC register is in FFH */
-+#define CPC_IN_FFH(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&		\
-+				(cpc)->cpc_entry.reg.space_id ==	\
-+				ACPI_ADR_SPACE_FIXED_HARDWARE)
+ 	/* if no debtor, reset the cycle */
+ 	if (!nr_debtors) {
+@@ -2138,10 +2138,12 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+ 		old_debt = iocg->abs_vdebt;
+ 		old_delay = iocg->delay;
+ 
++		nr_cycles_shift = min_t(u64, nr_cycles, BITS_PER_LONG - 1);
+ 		if (iocg->abs_vdebt)
+-			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles ?: 1;
++			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles_shift ?: 1;
 +
- /* Check if a CPC register is in SystemMemory */
- #define CPC_IN_SYSTEM_MEMORY(cpc) ((cpc)->type == ACPI_TYPE_BUFFER &&	\
- 				(cpc)->cpc_entry.reg.space_id ==	\
-@@ -1514,9 +1519,12 @@ int cppc_set_epp_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls, bool enable)
- 		/* after writing CPC, transfer the ownership of PCC to platform */
- 		ret = send_pcc_cmd(pcc_ss_id, CMD_WRITE);
- 		up_write(&pcc_ss_data->pcc_lock);
-+	} else if (osc_cpc_flexible_adr_space_confirmed &&
-+		   CPC_SUPPORTED(epp_set_reg) && CPC_IN_FFH(epp_set_reg)) {
-+		ret = cpc_write(cpu, epp_set_reg, perf_ctrls->energy_perf);
- 	} else {
- 		ret = -ENOTSUPP;
--		pr_debug("_CPC in PCC is not supported\n");
-+		pr_debug("_CPC in PCC and _CPC in FFH are not supported\n");
- 	}
+ 		if (iocg->delay)
+-			iocg->delay = iocg->delay >> nr_cycles ?: 1;
++			iocg->delay = iocg->delay >> nr_cycles_shift ?: 1;
  
- 	return ret;
+ 		iocg_kick_waitq(iocg, true, now);
+ 
 -- 
 2.43.0
 
