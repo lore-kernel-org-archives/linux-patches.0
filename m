@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030241C2443;
-	Tue,  8 Oct 2024 12:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8581779B1;
+	Tue,  8 Oct 2024 12:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390887; cv=none; b=lCyt5fc6C5cqFdU9KX/0Heg6duJ2q/dCYlejaVWC3DzsGoXeewD0Y/Y2Zw6KgfZ2L6ggYyzh+kx83vtLxx/2oT9D/5fKH64r2MS5NhCeFd6OoIEl2G4DL2i4zpfN8v2k32nrG+N5Jpi8nFYzxGMww9x7Hq3PyGB9gVqhmtt7W4Y=
+	t=1728390890; cv=none; b=XJPDsPRbPktJ3DpE52yz1/S++C3eXz0fX+SZTfvCegRDGUlhmJP8ITbCIak0Sig6vIXfv9POXPuxEm1VwRfA06qaKSNdZMRrCm7KVA5QFWXTmYzhR4MPkkrnCEA354neP9vgmFqNCbzHMVxywol+l7l5fkvBs8YxWyffuoggnjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390887; c=relaxed/simple;
-	bh=1gnKiGdpbQ5xMeOJkptLuVP4D3aLlC7SrKUgL0W2kZI=;
+	s=arc-20240116; t=1728390890; c=relaxed/simple;
+	bh=AXBiwQ/uCbNSWHe4YoIpTYiZzVPgvalqk+BVZ2reGX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+kJc71PUc699mqHpb3Othh5fKUkz0PVwc5J6q3spFynYhptzAD3qB34p3popClmlB5od0uUy3lTLezLxrb6Cc6iwIMQRH/cNssniHhHe+bPt95MlU5gB6X55C6BjWxyCr5nRJqy1Cdae0C5AGQapJzZxNROaZ4jxS+PqL33eGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvcJe/cE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qm9RKwIIR/1ym44qoMlsjL6zF/6IV7C+/ty3HTxLI04+g5VaIwBq2+QXpbaGIexkjzoZX1XR+Xrydl2k+towmQoC6WjfXjsXIsIvQHm+akQm83fU5tY81eCh0ugQekH83tP/AfLnVXoC4Sd1iKZJPPqPjqrP32wuZY7Y1zNkCzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00dG9I+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvcJe/cE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627BFC4CEC7;
-	Tue,  8 Oct 2024 12:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00dG9I+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6045C4CEC7;
+	Tue,  8 Oct 2024 12:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390886;
-	bh=1gnKiGdpbQ5xMeOJkptLuVP4D3aLlC7SrKUgL0W2kZI=;
+	s=korg; t=1728390890;
+	bh=AXBiwQ/uCbNSWHe4YoIpTYiZzVPgvalqk+BVZ2reGX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YvcJe/cEgaQG0LO6VkvvP02BxLbed0rT2jdEPoSfdW9PNGeKteflTL6AJw9UOsdpB
-	 2KR/paN2YqkQyGrnRvpb4eXXs7KtGlfCjpbnWmV7UGsWqKqt5fm98uMfQ1lpgzD5Sd
-	 PYHeMFo/QlOMEIxmEM3zE719G+bzryFAzagk+epo=
+	b=00dG9I+WDwY4mADmKzQfqO05d08+3CsfzEwcxRqLab3J7UCEMo9gVYEuOGxHTWnm8
+	 CxmrDKksmxCTNHwIKSB8a9en/oRkBRonnhSK3djWybciuM4/ZmVkwaBvA7DJPsgSwD
+	 xbGjsDztsTNi2pawkd+xhDZ22p2agVjlH/tVifFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Keerthy <j-keerthy@ti.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.10 422/482] gpio: davinci: fix lazy disable
-Date: Tue,  8 Oct 2024 14:08:05 +0200
-Message-ID: <20241008115705.011321432@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.10 423/482] net: pcs: xpcs: fix the wrong register that was written back
+Date: Tue,  8 Oct 2024 14:08:06 +0200
+Message-ID: <20241008115705.049759543@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -52,61 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 3360d41f4ac490282fddc3ccc0b58679aa5c065d upstream.
+commit 93ef6ee5c20e9330477930ec6347672c9e0cf5a6 upstream.
 
-On a few platforms such as TI's AM69 device, disable_irq() fails to keep
-track of the interrupts that happen between disable_irq() and
-enable_irq() and those interrupts are missed. Use the ->irq_unmask() and
-->irq_mask() methods instead of ->irq_enable() and ->irq_disable() to
-correctly keep track of edges when disable_irq is called.
+The value is read from the register TXGBE_RX_GEN_CTL3, and it should be
+written back to TXGBE_RX_GEN_CTL3 when it changes some fields.
 
-This solves the issue of disable_irq() not working as expected on such
-platforms.
-
-Fixes: 23265442b02b ("ARM: davinci: irq_data conversion.")
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
-Acked-by: Keerthy <j-keerthy@ti.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240828133207.493961-1-parth105105@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: f629acc6f210 ("net: pcs: xpcs: support to switch mode for Wangxun NICs")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reported-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20240924022857.865422-1-jiawenwu@trustnetic.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-davinci.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/pcs/pcs-xpcs-wx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -289,7 +289,7 @@ static int davinci_gpio_probe(struct pla
-  * serve as EDMA event triggers.
-  */
+--- a/drivers/net/pcs/pcs-xpcs-wx.c
++++ b/drivers/net/pcs/pcs-xpcs-wx.c
+@@ -109,7 +109,7 @@ static void txgbe_pma_config_1g(struct d
+ 	txgbe_write_pma(xpcs, TXGBE_DFE_TAP_CTL0, 0);
+ 	val = txgbe_read_pma(xpcs, TXGBE_RX_GEN_CTL3);
+ 	val = u16_replace_bits(val, 0x4, TXGBE_RX_GEN_CTL3_LOS_TRSHLD0);
+-	txgbe_write_pma(xpcs, TXGBE_RX_EQ_ATTN_CTL, val);
++	txgbe_write_pma(xpcs, TXGBE_RX_GEN_CTL3, val);
  
--static void gpio_irq_disable(struct irq_data *d)
-+static void gpio_irq_mask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -298,7 +298,7 @@ static void gpio_irq_disable(struct irq_
- 	writel_relaxed(mask, &g->clr_rising);
- }
- 
--static void gpio_irq_enable(struct irq_data *d)
-+static void gpio_irq_unmask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -324,8 +324,8 @@ static int gpio_irq_type(struct irq_data
- 
- static struct irq_chip gpio_irqchip = {
- 	.name		= "GPIO",
--	.irq_enable	= gpio_irq_enable,
--	.irq_disable	= gpio_irq_disable,
-+	.irq_unmask	= gpio_irq_unmask,
-+	.irq_mask	= gpio_irq_mask,
- 	.irq_set_type	= gpio_irq_type,
- 	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
- };
+ 	txgbe_write_pma(xpcs, TXGBE_MPLLA_CTL0, 0x20);
+ 	txgbe_write_pma(xpcs, TXGBE_MPLLA_CTL3, 0x46);
 
 
