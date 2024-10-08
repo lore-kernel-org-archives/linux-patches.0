@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F2D1DE8BB;
-	Tue,  8 Oct 2024 12:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356E01DE8BD;
+	Tue,  8 Oct 2024 12:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389851; cv=none; b=fYIqgPpYc+dLsw53cEAo+ajLbIRptV7gv3vL8qKuZqVRHk5Fp8mh6n1jxuCBNoPejjtyMepeFLkbGxHd3sHLVhjj2FsvBz0IX6jMe5x0THhOVrVCLQbvRlCTlGYNTBeYquQOWV/aDfbZ5IhLiIA1GX5kHJeCvujc+qz4hBKc8JE=
+	t=1728389855; cv=none; b=Kja+HruXy6/iYaV0z9qxgdbuZvssmR7Nrst3a25WUdDbGNFzi/QW+YHiGbBLpzj8/ofgYvtraNks8LcfvSWK1o1gNJlKVVAL4fOwgz5ZXF07BYe6n6L15nqaEK2ABAATJkJZYmsppAC3votwNFIARYzh3cni/Z2JFvtAuTgi+3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389851; c=relaxed/simple;
-	bh=yEOpOjTuYdeS1kdMOherkdXBXejyadMYIe6tTRDaWYI=;
+	s=arc-20240116; t=1728389855; c=relaxed/simple;
+	bh=EO0TUELV+m0y9HUCEXihpe2G8cs6MSYAif59FS4XZ2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXBTqJxoBh/pqlp3Gwc9yAg7t6vPhDfyEDq2QbUxwfBR8StHaNIUfNi3NCJOWRIo6stObg/PB9Ym26XyFSbQhWXQ/0Jqsq6QbtiyykIQ/IUthS2JYTcMKmM0LdvxbcBvTNlizpCBFbz7TpmVrmZS6x82WIoxx75y6VBqR2wiy4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLxG4Mpe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7JpqXyQPV1dQRr9anuyl6j+ZrFNB+qz4Tl5kFvWA1zAYuVt5TFiO4+KvwM7tgZFem0d75tFW80oaSgkOp5I5QQWUHCvzk44/IefZdPr4fLQg0Xb84cuvvpseSxVDYf8ijJhtq1l/AwpfAx3qlaK8SfL03or9OE1uZTichBNCig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LV4Kcrln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLxG4Mpe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDD0C4CEC7;
-	Tue,  8 Oct 2024 12:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LV4Kcrln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECBAC4CEC7;
+	Tue,  8 Oct 2024 12:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728389851;
-	bh=yEOpOjTuYdeS1kdMOherkdXBXejyadMYIe6tTRDaWYI=;
+	s=korg; t=1728389855;
+	bh=EO0TUELV+m0y9HUCEXihpe2G8cs6MSYAif59FS4XZ2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLxG4Mpe7C0jN3Lc7uNpyB0Dn1bhRl3+fTS5MJeJ2C0eK8X2jU1J7zhTlRPoDUJyn
-	 h5Iw0N34w4Zo7kirkYmzsAtArHb+ieSUOhr3HnK4+qYPoOwDALDM6WafheJ+CJAUlo
-	 Q2Y70FZPpOQdlHA7JaA6eCaYxZC4FxSu2aWz5YRo=
+	b=LV4Kcrlnd07WjtlrnNwVeR45SR+SDp6iyovoT3XGMilfdh5LQgEw7f/GhtSse8p3k
+	 a9mqhxFSFOL2fDS8WgyyLW3XKv/JDg+fbmMiTTVdT4GGnps6Qd6jHYe/vo9gzzmCPp
+	 9qNSUrdnkqy6C4y+Q+uQv3JID1TNLbHZgNXEFyUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jade Dong <jadedong@tencent.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 115/482] tcp: avoid reusing FIN_WAIT2 when trying to find port in connect() process
-Date: Tue,  8 Oct 2024 14:02:58 +0200
-Message-ID: <20241008115652.834069034@linuxfoundation.org>
+Subject: [PATCH 6.10 089/482] e1000e: avoid failing the system during pm_suspend
+Date: Tue,  8 Oct 2024 14:02:32 +0200
+Message-ID: <20241008115651.807486364@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -53,79 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit 0d9e5df4a257afc3a471a82961ace9a22b88295a ]
+[ Upstream commit 0a6ad4d9e1690c7faa3a53f762c877e477093657 ]
 
-We found that one close-wait socket was reset by the other side
-due to a new connection reusing the same port which is beyond our
-expectation, so we have to investigate the underlying reason.
+Occasionally when the system goes into pm_suspend, the suspend might fail
+due to a PHY access error on the network adapter. Previously, this would
+have caused the whole system to fail to go to a low power state.
+An example of this was reported in the following Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=205015
 
-The following experiment is conducted in the test environment. We
-limit the port range from 40000 to 40010 and delay the time to close()
-after receiving a fin from the active close side, which can help us
-easily reproduce like what happened in production.
+[ 1663.694828] e1000e 0000:00:19.0 eth0: Failed to disable ULP
+[ 1664.731040] asix 2-3:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0xC1E1
+[ 1665.093513] e1000e 0000:00:19.0 eth0: Hardware Error
+[ 1665.596760] e1000e 0000:00:19.0: pci_pm_resume+0x0/0x80 returned 0 after 2975399 usecs
 
-Here are three connections captured by tcpdump:
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965525191
-127.0.0.1.9999 > 127.0.0.1.40002: Flags [S.], seq 2769915070
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [.], ack 1
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [F.], seq 1, ack 1
-// a few seconds later, within 60 seconds
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965590730
-127.0.0.1.9999 > 127.0.0.1.40002: Flags [.], ack 2
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [R], seq 2965525193
-// later, very quickly
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965590730
-127.0.0.1.9999 > 127.0.0.1.40002: Flags [S.], seq 3120990805
-127.0.0.1.40002 > 127.0.0.1.9999: Flags [.], ack 1
+and then the system never recovers from it, and all the following suspend failed due to this
+[22909.393854] PM: pci_pm_suspend(): e1000e_pm_suspend+0x0/0x760 [e1000e] returns -2
+[22909.393858] PM: dpm_run_callback(): pci_pm_suspend+0x0/0x160 returns -2
+[22909.393861] PM: Device 0000:00:1f.6 failed to suspend async: error -2
 
-As we can see, the first flow is reset because:
-1) client starts a new connection, I mean, the second one
-2) client tries to find a suitable port which is a timewait socket
-   (its state is timewait, substate is fin_wait2)
-3) client occupies that timewait port to send a SYN
-4) server finds a corresponding close-wait socket in ehash table,
-   then replies with a challenge ack
-5) client sends an RST to terminate this old close-wait socket.
+This can be avoided by changing the return values of __e1000_shutdown and
+e1000e_pm_suspend functions so that they always return 0 (success). This
+is consistent with what other drivers do.
 
-I don't think the port selection algo can choose a FIN_WAIT2 socket
-when we turn on tcp_tw_reuse because on the server side there
-remain unread data. In some cases, if one side haven't call close() yet,
-we should not consider it as expendable and treat it at will.
+If the e1000e driver encounters a hardware error during suspend, potential
+side effects include slightly higher power draw or non-working wake on
+LAN. This is preferred to a system-level suspend failure, and a warning
+message is written to the system log, so that the user can be aware that
+the LAN controller experienced a problem during suspend.
 
-Even though, sometimes, the server isn't able to call close() as soon
-as possible like what we expect, it can not be terminated easily,
-especially due to a second unrelated connection happening.
-
-After this patch, we can see the expected failure if we start a
-connection when all the ports are occupied in fin_wait2 state:
-"Ncat: Cannot assign requested address."
-
-Reported-by: Jade Dong <jadedong@tencent.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240823001152.31004-1-kerneljasonxing@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=205015
+Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index da0f502553991..7874b3718bc3c 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -118,6 +118,9 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int ts_recent_stamp;
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 3cd161c6672be..e23eedc791d66 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6671,8 +6671,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 		if (adapter->flags2 & FLAG2_HAS_PHY_WAKEUP) {
+ 			/* enable wakeup by the PHY */
+ 			retval = e1000_init_phy_wakeup(adapter, wufc);
+-			if (retval)
+-				return retval;
++			if (retval) {
++				e_err("Failed to enable wakeup\n");
++				goto skip_phy_configurations;
++			}
+ 		} else {
+ 			/* enable wakeup by the MAC */
+ 			ew32(WUFC, wufc);
+@@ -6693,8 +6695,10 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 			 * or broadcast.
+ 			 */
+ 			retval = e1000_enable_ulp_lpt_lp(hw, !runtime);
+-			if (retval)
+-				return retval;
++			if (retval) {
++				e_err("Failed to enable ULP\n");
++				goto skip_phy_configurations;
++			}
+ 		}
+ 	}
  
-+	if (tw->tw_substate == TCP_FIN_WAIT2)
-+		reuse = 0;
-+
- 	if (reuse == 2) {
- 		/* Still does not detect *everything* that goes through
- 		 * lo, since we require a loopback src or dst address
+@@ -6726,6 +6730,7 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
+ 		hw->phy.ops.release(hw);
+ 	}
+ 
++skip_phy_configurations:
+ 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
+ 	 * would have already happened in close and is redundant.
+ 	 */
+@@ -6968,15 +6973,13 @@ static int e1000e_pm_suspend(struct device *dev)
+ 	e1000e_pm_freeze(dev);
+ 
+ 	rc = __e1000_shutdown(pdev, false);
+-	if (rc) {
+-		e1000e_pm_thaw(dev);
+-	} else {
++	if (!rc) {
+ 		/* Introduce S0ix implementation */
+ 		if (adapter->flags2 & FLAG2_ENABLE_S0IX_FLOWS)
+ 			e1000e_s0ix_entry_flow(adapter);
+ 	}
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int e1000e_pm_resume(struct device *dev)
 -- 
 2.43.0
 
