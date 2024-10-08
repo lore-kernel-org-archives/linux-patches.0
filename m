@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49D31CF7A2;
-	Tue,  8 Oct 2024 12:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B7C1CF7A2;
+	Tue,  8 Oct 2024 12:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390255; cv=none; b=h5F7/Vo64QxnHZhkYQ5H4FxXMo1bU4JOECJX+Har0A+fh1eps4JFkVvKLbiUg8XV4E3oKJ8xum+/+7CtWjjKzH7kCHW1kIaLkAvFGqBenl4WiJgpu9s34TGVW3FGTTum+StYbzJFXPLAmVzQ2vShLryTg2fs4FutCRvBs1BNC+0=
+	t=1728390259; cv=none; b=mHcxmVlq11dbk1V8CYHJJoKIGAlLUKOkdv/WE/NwTlQXP/YLxwQt0L5Kf/PjIhC9X22ygcSpMqcZJ3zHRNd9U6WQ/3uoQFipoUmAF5OOZZDpHO0w/D1xpuHXrTEVz+RZSTl6GKhP4ZkVbzWSXW1nCoEtcuek4EUNk4KQHXiuE1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390255; c=relaxed/simple;
-	bh=7nBdqxRv33MHDMAS8LhNDpx3kOpdO2NK1NVAA0rinqg=;
+	s=arc-20240116; t=1728390259; c=relaxed/simple;
+	bh=xiXtpR2ZNL+Um93SNZD9cTNxkFSbjXWNL2gRFQC3gQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnzRJmXAlNVstojthCb74JpwACuk8qsLe+wX64WvXc7qgLrvlmcEJoy5Pi4rm2KAEwHuQMZx6qZkg6AnV8EdeoXkDMzTBP3QzMDhlVH/qu8qQfQor8m52tYo5tPAZNG9/QhhTsYAD/n8sgy3Z3qpGeP4tiQ7HZi/BiqF48B4OSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmLOq0W0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDlMV9D2Rsl7yg4Nvv+EP9OSrk9TJ1A6JOPIIJO9ynCSvU1FsuuWzA2nBGRds0lyyiHG6/g70XMJQb4bQrCb24fLinoY42a524G3fCMWPCj2nA224KZAlK8yPlkkIXKUxnT2ph1xm42WNKN0KZIYx4X2i+KH3RUeH3orsNExWVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p40ZIn3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmLOq0W0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F62C4CEC7;
-	Tue,  8 Oct 2024 12:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p40ZIn3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C148C4CEC7;
+	Tue,  8 Oct 2024 12:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390255;
-	bh=7nBdqxRv33MHDMAS8LhNDpx3kOpdO2NK1NVAA0rinqg=;
+	s=korg; t=1728390259;
+	bh=xiXtpR2ZNL+Um93SNZD9cTNxkFSbjXWNL2gRFQC3gQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmLOq0W0jp/ruDZZLUJNkCipZW+4vR5cd1Wc3d4FRA4/UPD2yRLPbtJF71dhc/QG7
-	 0Z7H53a9cMqTDBtBZtBGga5prHSUJprt7Gd2Fed4s15A64QCa7Cr90bTlbdBYSyGZq
-	 JpBAP6l9VT1rb+zlXd/VwWxqRVc0/pmN1Zey6JXI=
+	b=p40ZIn3R5JVIbQHijXkf/Z/RrPmGt8LOvvTmQsP6FHrP/DlfVOuna5lPiKQhdNojf
+	 mNBe3g0OnrjsF3gtZbomdbo5umKmmA7K3mRDt2OKfCW2JR6yDiARbYtQv2O4f9HwSZ
+	 cjjT0Quc6uosNhXQMmmeJO04DxdYouUioAoYq1G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jagmeet Randhawa <jagmeet.randhawa@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 237/482] drm/xe: Drop warn on xe_guc_pc_gucrc_disable in guc pc fini
-Date: Tue,  8 Oct 2024 14:05:00 +0200
-Message-ID: <20241008115657.624079187@linuxfoundation.org>
+Subject: [PATCH 6.10 238/482] of/irq: Refer to actual buffer size in of_irq_parse_one()
+Date: Tue,  8 Oct 2024 14:05:01 +0200
+Message-ID: <20241008115657.662983995@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -51,33 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit a323782567812ee925e9b7926445532c7afe331b ]
+[ Upstream commit 39ab331ab5d377a18fbf5a0e0b228205edfcc7f4 ]
 
-Not a big deal if CT is down as driver is unloading, no need to warn.
+Replace two open-coded calculations of the buffer size by invocations of
+sizeof() on the buffer itself, to make sure the code will always use the
+actual buffer size.
 
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jagmeet Randhawa <jagmeet.randhawa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240820172958.1095143-4-matthew.brost@intel.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/817c0b9626fd30790fc488c472a3398324cfcc0c.1724156125.git.geert+renesas@glider.be
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_pc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/irq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
-index 23382ced4ea74..69f8b6fdaeaea 100644
---- a/drivers/gpu/drm/xe/xe_guc_pc.c
-+++ b/drivers/gpu/drm/xe/xe_guc_pc.c
-@@ -897,7 +897,7 @@ static void xe_guc_pc_fini(struct drm_device *drm, void *arg)
- 	struct xe_guc_pc *pc = arg;
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index 8fd63100ba8f0..d67b69cb84bfe 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -357,8 +357,8 @@ int of_irq_parse_one(struct device_node *device, int index, struct of_phandle_ar
+ 	addr = of_get_property(device, "reg", &addr_len);
  
- 	XE_WARN_ON(xe_force_wake_get(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL));
--	XE_WARN_ON(xe_guc_pc_gucrc_disable(pc));
-+	xe_guc_pc_gucrc_disable(pc);
- 	XE_WARN_ON(xe_guc_pc_stop(pc));
- 	xe_force_wake_put(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL);
- }
+ 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
+-	if (addr_len > (3 * sizeof(__be32)))
+-		addr_len = 3 * sizeof(__be32);
++	if (addr_len > sizeof(addr_buf))
++		addr_len = sizeof(addr_buf);
+ 	if (addr)
+ 		memcpy(addr_buf, addr, addr_len);
+ 
 -- 
 2.43.0
 
