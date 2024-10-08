@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DF51E485;
-	Tue,  8 Oct 2024 12:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878D41DF971;
+	Tue,  8 Oct 2024 12:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390346; cv=none; b=lBsxEQiyj5p5sN65b7DfFq36iYuRcF9IHivIYYaFabGSlqocDC3T28fWPXINoSYDX5mCRcpaIQI2zEuKaM4nuOnXMyQTTUb/ePNklfomgdrQ5WOEM8c51CJxhCItbxZ/zwwM/utO7yfhepKz4iHB2PtAK9AnFTKx9BKCQW44aVo=
+	t=1728390349; cv=none; b=DqgffeGT3nxineuMggNfCKAeQ+CMcQd9ldEnQA9w6KAIowLzyqxhbeiUcEvJdN1hIlMghLtDOCX5Uh8D2818prqqrnS7qwq4hmDe4S8ui2qEqCVlhRU/yo7jT9yt/U3DIb4BIt9vvsA/DogRmBYrSS68Gtngsu4MVzsDWnnUqak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390346; c=relaxed/simple;
-	bh=7y4qNc7zTS9uzbpa+3/egFh4VFSXlYrsIP8kttxDYU4=;
+	s=arc-20240116; t=1728390349; c=relaxed/simple;
+	bh=/mWlIHLj3gAZbb5NZADs2IK9CTUtValK064cbOpeQvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=caYw4m5o+RRZ9f4zOHkDHgSemI3CMWWjU8lZTl1bNy5Xoe37jRzo4umtq46o7ea4DmAMKF1ACfOHGEyxQyteS/sggu3IwYE2y6ZoYV1Zw+JesVtGTYzh5rDUkLdHqT2t3DcDuKRQsWOPL9sYW8Deqd1AWCe3rRPTzxhSE4fndMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow2lfwo8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brvH7Wty6pcpNYXTgwEkd8w3ABRV8JOsY/yciX9uawpthF4g1GWpYWF5h/TiJDE954exhABNJctofh4RB6fpgJxiKgrJjX9PUapfRssuAqnKKxQ2dAxyMIZc4Byxb12aY4pqz9YesoqpUkzq3N6CkRSraRuYgyWiFIKJp28DgAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REXRDPRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow2lfwo8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66894C4CECE;
-	Tue,  8 Oct 2024 12:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REXRDPRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938F4C4CEC7;
+	Tue,  8 Oct 2024 12:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728390345;
-	bh=7y4qNc7zTS9uzbpa+3/egFh4VFSXlYrsIP8kttxDYU4=;
+	s=korg; t=1728390349;
+	bh=/mWlIHLj3gAZbb5NZADs2IK9CTUtValK064cbOpeQvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ow2lfwo8cPTufRAmG5HIaCud5YEkWuNBQHcCvvulYlVcyyT7sR1K99sE+AnF18Lc+
-	 JmvZJy8+3vqLHRtVd8I2IoFNImbQRxsWuN7Pe2zfuk4MGGHUTZ5VjNrUr2fWkh7G3a
-	 HfJ7Zd1TtSCBCkRSrJWEJZPTOLNErs8OGwnmoDlI=
+	b=REXRDPRaEkakXB74Y4iHb36pd9e5v+Mf9fCRbwrGjsOoJz2R7JrXKvsjPxG2e2Apf
+	 vZCsBxVM/7t/a4HE5xQrK4fPG1KzcXlNkKnTu4puPN/Bq8LVbKlplwDfokV8jNlmmA
+	 3DW643YyETrkaJD4lq0ybhEixqM2YZufn+vHkC6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Victor Skvortsov <victor.skvortsov@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 230/482] drm/radeon/r100: Handle unknown family in r100_cp_init_microcode()
-Date: Tue,  8 Oct 2024 14:04:53 +0200
-Message-ID: <20241008115657.354224421@linuxfoundation.org>
+Subject: [PATCH 6.10 231/482] drm/amdgpu: Block MMR_READ IOCTL in reset
+Date: Tue,  8 Oct 2024 14:04:54 +0200
+Message-ID: <20241008115657.393224259@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
 References: <20241008115648.280954295@linuxfoundation.org>
@@ -45,142 +45,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Victor Skvortsov <victor.skvortsov@amd.com>
 
-[ Upstream commit c6dbab46324b1742b50dc2fb5c1fee2c28129439 ]
+[ Upstream commit 9e823f307074c0f82b5f6044943b0086e3079bed ]
 
-With -Werror:
+Register access from userspace should be blocked until
+reset is complete.
 
-    In function ‘r100_cp_init_microcode’,
-	inlined from ‘r100_cp_init’ at drivers/gpu/drm/radeon/r100.c:1136:7:
-    include/linux/printk.h:465:44: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
-      465 | #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
-	  |                                            ^
-    include/linux/printk.h:437:17: note: in definition of macro ‘printk_index_wrap’
-      437 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-	  |                 ^~~~~~~
-    include/linux/printk.h:508:9: note: in expansion of macro ‘printk’
-      508 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-	  |         ^~~~~~
-    drivers/gpu/drm/radeon/r100.c:1062:17: note: in expansion of macro ‘pr_err’
-     1062 |                 pr_err("radeon_cp: Failed to load firmware \"%s\"\n", fw_name);
-	  |                 ^~~~~~
-
-Fix this by converting the if/else if/... construct into a proper
-switch() statement with a default to handle the error case.
-
-As a bonus, the generated code is ca. 100 bytes smaller (with gcc 11.4.0
-targeting arm32).
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Victor Skvortsov <victor.skvortsov@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r100.c | 70 ++++++++++++++++++++++-------------
- 1 file changed, 45 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 43 ++++++++++++++++++-------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
-index 0b1e19345f43a..bfd42e3e161e9 100644
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -1016,45 +1016,65 @@ static int r100_cp_init_microcode(struct radeon_device *rdev)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index 977cde6d13626..6d4e774b6cedc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -43,6 +43,7 @@
+ #include "amdgpu_gem.h"
+ #include "amdgpu_display.h"
+ #include "amdgpu_ras.h"
++#include "amdgpu_reset.h"
+ #include "amd_pcie.h"
  
- 	DRM_DEBUG_KMS("\n");
- 
--	if ((rdev->family == CHIP_R100) || (rdev->family == CHIP_RV100) ||
--	    (rdev->family == CHIP_RV200) || (rdev->family == CHIP_RS100) ||
--	    (rdev->family == CHIP_RS200)) {
-+	switch (rdev->family) {
-+	case CHIP_R100:
-+	case CHIP_RV100:
-+	case CHIP_RV200:
-+	case CHIP_RS100:
-+	case CHIP_RS200:
- 		DRM_INFO("Loading R100 Microcode\n");
- 		fw_name = FIRMWARE_R100;
--	} else if ((rdev->family == CHIP_R200) ||
--		   (rdev->family == CHIP_RV250) ||
--		   (rdev->family == CHIP_RV280) ||
--		   (rdev->family == CHIP_RS300)) {
-+		break;
-+
-+	case CHIP_R200:
-+	case CHIP_RV250:
-+	case CHIP_RV280:
-+	case CHIP_RS300:
- 		DRM_INFO("Loading R200 Microcode\n");
- 		fw_name = FIRMWARE_R200;
--	} else if ((rdev->family == CHIP_R300) ||
--		   (rdev->family == CHIP_R350) ||
--		   (rdev->family == CHIP_RV350) ||
--		   (rdev->family == CHIP_RV380) ||
--		   (rdev->family == CHIP_RS400) ||
--		   (rdev->family == CHIP_RS480)) {
-+		break;
-+
-+	case CHIP_R300:
-+	case CHIP_R350:
-+	case CHIP_RV350:
-+	case CHIP_RV380:
-+	case CHIP_RS400:
-+	case CHIP_RS480:
- 		DRM_INFO("Loading R300 Microcode\n");
- 		fw_name = FIRMWARE_R300;
--	} else if ((rdev->family == CHIP_R420) ||
--		   (rdev->family == CHIP_R423) ||
--		   (rdev->family == CHIP_RV410)) {
-+		break;
-+
-+	case CHIP_R420:
-+	case CHIP_R423:
-+	case CHIP_RV410:
- 		DRM_INFO("Loading R400 Microcode\n");
- 		fw_name = FIRMWARE_R420;
--	} else if ((rdev->family == CHIP_RS690) ||
--		   (rdev->family == CHIP_RS740)) {
-+		break;
-+
-+	case CHIP_RS690:
-+	case CHIP_RS740:
- 		DRM_INFO("Loading RS690/RS740 Microcode\n");
- 		fw_name = FIRMWARE_RS690;
--	} else if (rdev->family == CHIP_RS600) {
-+		break;
-+
-+	case CHIP_RS600:
- 		DRM_INFO("Loading RS600 Microcode\n");
- 		fw_name = FIRMWARE_RS600;
--	} else if ((rdev->family == CHIP_RV515) ||
--		   (rdev->family == CHIP_R520) ||
--		   (rdev->family == CHIP_RV530) ||
--		   (rdev->family == CHIP_R580) ||
--		   (rdev->family == CHIP_RV560) ||
--		   (rdev->family == CHIP_RV570)) {
-+		break;
-+
-+	case CHIP_RV515:
-+	case CHIP_R520:
-+	case CHIP_RV530:
-+	case CHIP_R580:
-+	case CHIP_RV560:
-+	case CHIP_RV570:
- 		DRM_INFO("Loading R500 Microcode\n");
- 		fw_name = FIRMWARE_R520;
-+		break;
-+
-+	default:
-+		DRM_ERROR("Unsupported Radeon family %u\n", rdev->family);
-+		return -EINVAL;
+ void amdgpu_unregister_gpu_instance(struct amdgpu_device *adev)
+@@ -778,6 +779,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 				    ? -EFAULT : 0;
  	}
+ 	case AMDGPU_INFO_READ_MMR_REG: {
++		int ret = 0;
+ 		unsigned int n, alloc_size;
+ 		uint32_t *regs;
+ 		unsigned int se_num = (info->read_mmr_reg.instance >>
+@@ -787,24 +789,37 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
+ 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
  
- 	err = request_firmware(&rdev->me_fw, fw_name, rdev->dev);
++		if (!down_read_trylock(&adev->reset_domain->sem))
++			return -ENOENT;
++
+ 		/* set full masks if the userspace set all bits
+ 		 * in the bitfields
+ 		 */
+-		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
++		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK) {
+ 			se_num = 0xffffffff;
+-		else if (se_num >= AMDGPU_GFX_MAX_SE)
+-			return -EINVAL;
+-		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK)
++		} else if (se_num >= AMDGPU_GFX_MAX_SE) {
++			ret = -EINVAL;
++			goto out;
++		}
++
++		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK) {
+ 			sh_num = 0xffffffff;
+-		else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE)
+-			return -EINVAL;
++		} else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+-		if (info->read_mmr_reg.count > 128)
+-			return -EINVAL;
++		if (info->read_mmr_reg.count > 128) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs), GFP_KERNEL);
+-		if (!regs)
+-			return -ENOMEM;
++		if (!regs) {
++			ret = -ENOMEM;
++			goto out;
++		}
++
+ 		alloc_size = info->read_mmr_reg.count * sizeof(*regs);
+ 
+ 		amdgpu_gfx_off_ctrl(adev, false);
+@@ -816,13 +831,17 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 					      info->read_mmr_reg.dword_offset + i);
+ 				kfree(regs);
+ 				amdgpu_gfx_off_ctrl(adev, true);
+-				return -EFAULT;
++				ret = -EFAULT;
++				goto out;
+ 			}
+ 		}
+ 		amdgpu_gfx_off_ctrl(adev, true);
+ 		n = copy_to_user(out, regs, min(size, alloc_size));
+ 		kfree(regs);
+-		return n ? -EFAULT : 0;
++		ret = (n ? -EFAULT : 0);
++out:
++		up_read(&adev->reset_domain->sem);
++		return ret;
+ 	}
+ 	case AMDGPU_INFO_DEV_INFO: {
+ 		struct drm_amdgpu_info_device *dev_info;
 -- 
 2.43.0
 
