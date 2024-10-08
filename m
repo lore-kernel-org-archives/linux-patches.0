@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEF51DF98E;
-	Tue,  8 Oct 2024 13:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8CE1DFE0F;
+	Tue,  8 Oct 2024 13:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394237; cv=none; b=FYozEGCgzGPZy6dtZGRcee5rbj64qm6BO/TuSbvOvdFdjTDLMi4zPfSAPHfNKfpYtNNC4qgglPjr+ZuiAhznmrLKwqK0VjUaURxjOFuzAsy+DzrYZByOt3xIiYAsIqkRDTODQrM1P6D9v95eR/aCu1ZXVBELfm2yHFDS510RDgg=
+	t=1728394241; cv=none; b=V5/gCnCzAHpA04Ow2WHV8GCWf0TPb5ZksxOPCH+U3ezMWUSUgEQxlxAh4xIH5fmnhD91zlmRbh8/9LlerCzOw+FFFFPvlpIA8ZEnV6byme2GYabf8Bfc8ZDhqXb++kIVEbUzaSmuiZLEh7Nk5Nd8EeexfrdfU+x9kIHPY+78j9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394237; c=relaxed/simple;
-	bh=HWpjRNJmoVaqmn09j0m9oHKWI4sxVMPLEhS58bq3PoI=;
+	s=arc-20240116; t=1728394241; c=relaxed/simple;
+	bh=w9liF0c9UnmKwp1EGFQldQx1lmSV3R3diA0eqONCYUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpWYqw15s88Pybc2fDtL1BdODJF1sffv/b6JByvPs5G9eeYDt7K+o+lZOEoIsaVIqO1ZbS5mChl8jCq2V4X9fbktlXuGsFpOIZRXxV6aiR2rJmHT4fUnXYYekXuyv2p0+oORCbKja7DcorDZzAZzNAL1kYRVJEXvQnS6tsKdt5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtFTYTqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0LO+D7xBVuN6enzklVUgeht2rBpt270F6I95fw2iUORqsAnv5maBjuKmLSz4HHPs9ATJ2dXhExojYe6UIJ9sOc8m3Blwg1LgJzoengpgOPIik+q/TmoGNrk8uy2v7dSIL5DVQdPhG6Ebus/LMvNCafo01wGLQWhX1tMlk67/P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWgULPjb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtFTYTqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27BAC4CEC7;
-	Tue,  8 Oct 2024 13:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWgULPjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C60C4CEC7;
+	Tue,  8 Oct 2024 13:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728394237;
-	bh=HWpjRNJmoVaqmn09j0m9oHKWI4sxVMPLEhS58bq3PoI=;
+	s=korg; t=1728394240;
+	bh=w9liF0c9UnmKwp1EGFQldQx1lmSV3R3diA0eqONCYUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtFTYTqVa34Onnb/jVWzMTmYLSn+uuQNj7Hbhh4o4dyAV/PbYwrS1O9zAbWm9B/yn
-	 fWnnGKaGMVlwoDxnx9fIszpds8yGxeTsns1ieS6ZviqD7AZklPR2+q59Hr/qEt12ux
-	 lAM+GlFtjRuVrE6g0hD17gDKcdJArOyl+3qi0AUo=
+	b=uWgULPjbed/Iug94RaDlBm6Unfa+HsQip1vwrLFlw8DrFifZD/WmEOYp5WbRzIB4H
+	 aRL6A7QPyyIm75tkO3qUG6mJ/vLLjFrVcdUhl5g0bBY+NJYbLvRP2+066yu19Tvu/E
+	 un5Djo92EU9PXZ/Mf+qwgESdBFNwVnHLi8WgdbEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 362/386] ACPI: battery: Fix possible crash when unregistering a battery hook
-Date: Tue,  8 Oct 2024 14:10:07 +0200
-Message-ID: <20241008115643.627366357@linuxfoundation.org>
+Subject: [PATCH 6.6 363/386] btrfs: relocation: return bool from btrfs_should_ignore_reloc_root
+Date: Tue,  8 Oct 2024 14:10:08 +0200
+Message-ID: <20241008115643.667467477@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -51,67 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 76959aff14a0012ad6b984ec7686d163deccdc16 ]
+[ Upstream commit 32f2abca380fedc60f7a8d3288e4c9586672e207 ]
 
-When a battery hook returns an error when adding a new battery, then
-the battery hook is automatically unregistered.
-However the battery hook provider cannot know that, so it will later
-call battery_hook_unregister() on the already unregistered battery
-hook, resulting in a crash.
+btrfs_should_ignore_reloc_root() is a predicate so it should return
+bool.
 
-Fix this by using the list head to mark already unregistered battery
-hooks as already being unregistered so that they can be ignored by
-battery_hook_unregister().
-
-Fixes: fa93854f7a7e ("battery: Add the battery hooking API")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20241001212835.341788-3-W_Armin@gmx.de
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: db7e68b522c0 ("btrfs: drop the backref cache during relocation if we commit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/btrfs/relocation.c | 19 +++++++++----------
+ fs/btrfs/relocation.h |  2 +-
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index a14852b612bba..e3cbaf3c3bbc1 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -715,7 +715,7 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- 		if (!hook->remove_battery(battery->bat, hook))
- 			power_supply_changed(battery->bat);
- 	}
--	list_del(&hook->list);
-+	list_del_init(&hook->list);
- 
- 	pr_info("extension unregistered: %s\n", hook->name);
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 05b2a59ce8897..1f4fd6c86fb00 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -329,31 +329,30 @@ static bool have_reloc_root(struct btrfs_root *root)
+ 	return true;
  }
-@@ -723,7 +723,14 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- void battery_hook_unregister(struct acpi_battery_hook *hook)
+ 
+-int btrfs_should_ignore_reloc_root(struct btrfs_root *root)
++bool btrfs_should_ignore_reloc_root(struct btrfs_root *root)
  {
- 	mutex_lock(&hook_mutex);
--	battery_hook_unregister_unlocked(hook);
-+	/*
-+	 * Ignore already unregistered battery hooks. This might happen
-+	 * if a battery hook was previously unloaded due to an error when
-+	 * adding a new battery.
-+	 */
-+	if (!list_empty(&hook->list))
-+		battery_hook_unregister_unlocked(hook);
-+
- 	mutex_unlock(&hook_mutex);
- }
- EXPORT_SYMBOL_GPL(battery_hook_unregister);
-@@ -733,7 +740,6 @@ void battery_hook_register(struct acpi_battery_hook *hook)
- 	struct acpi_battery *battery;
+ 	struct btrfs_root *reloc_root;
  
- 	mutex_lock(&hook_mutex);
--	INIT_LIST_HEAD(&hook->list);
- 	list_add(&hook->list, &battery_hook_list);
+ 	if (!test_bit(BTRFS_ROOT_SHAREABLE, &root->state))
+-		return 0;
++		return false;
+ 
+ 	/* This root has been merged with its reloc tree, we can ignore it */
+ 	if (reloc_root_is_dead(root))
+-		return 1;
++		return true;
+ 
+ 	reloc_root = root->reloc_root;
+ 	if (!reloc_root)
+-		return 0;
++		return false;
+ 
+ 	if (btrfs_header_generation(reloc_root->commit_root) ==
+ 	    root->fs_info->running_transaction->transid)
+-		return 0;
++		return false;
  	/*
- 	 * Now that the driver is registered, we need
+-	 * if there is reloc tree and it was created in previous
+-	 * transaction backref lookup can find the reloc tree,
+-	 * so backref node for the fs tree root is useless for
+-	 * relocation.
++	 * If there is reloc tree and it was created in previous transaction
++	 * backref lookup can find the reloc tree, so backref node for the fs
++	 * tree root is useless for relocation.
+ 	 */
+-	return 1;
++	return true;
+ }
+ 
+ /*
+diff --git a/fs/btrfs/relocation.h b/fs/btrfs/relocation.h
+index 77d69f6ae967c..af749c780b4e7 100644
+--- a/fs/btrfs/relocation.h
++++ b/fs/btrfs/relocation.h
+@@ -18,7 +18,7 @@ int btrfs_reloc_post_snapshot(struct btrfs_trans_handle *trans,
+ 			      struct btrfs_pending_snapshot *pending);
+ int btrfs_should_cancel_balance(struct btrfs_fs_info *fs_info);
+ struct btrfs_root *find_reloc_root(struct btrfs_fs_info *fs_info, u64 bytenr);
+-int btrfs_should_ignore_reloc_root(struct btrfs_root *root);
++bool btrfs_should_ignore_reloc_root(struct btrfs_root *root);
+ u64 btrfs_get_reloc_bg_bytenr(struct btrfs_fs_info *fs_info);
+ 
+ #endif
 -- 
 2.43.0
 
