@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C3C1DF726;
-	Tue,  8 Oct 2024 13:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970541DF24B;
+	Tue,  8 Oct 2024 13:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728393263; cv=none; b=F/RydS/8x8GmUs7LaoJ2wcLaoYOBYwKzmV4bZEHnJuhT7xzVbpbJuX0lqtSFbFS3C/YFu26FnMT13U5qBC2TPCDvsQZmSSjt95vo8pIz6J38K+kSRBzExzBacsw0T1G7bTM+GhVcPosYkDimwBPWgbNX2wgIAl4svPWOPMOAx9A=
+	t=1728393266; cv=none; b=KpmH+mO6KWpOTJu5g7gITS77Pn8CFzTQqJ0QmL8+5/Fc8AZlUYST/31sEPCYi+zY5TSDo+Nm0tAXX5e9d6M37EQCuqOvff40AIjpwv/gSLx5K1QRNnMgLEtUQcV8Te05K2od3VmHOfUoVh+3l+qpinM7e1cKtRxJqk4D2ZPFY8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728393263; c=relaxed/simple;
-	bh=Y9uzUHEDef8bKPcTNEAT4IUqn48+O0lYHhTVgbPsRpc=;
+	s=arc-20240116; t=1728393266; c=relaxed/simple;
+	bh=vk5H6tS1eDe7o1/HGKdBxFzI6qw/wHKgGr50zhJM7FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvp9PHDxLLAKMJON9UhCyjQ0rklky7zDPeyDK9siwKxPgl+hvVt2YISMJ8mICYF6HYePUydPQ8au4KaPpdjWpbHwhGljNGg+vHE30A6ZXWT386XbnmWamGKyijjIQwSQfS9rvkr8aqecTl4td/RHsLIEyHJA2ET4GHb6j0y+9w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqapuDAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V7hSycmUbVmc0VQRAa9aovHQ5lsWe1ITWzUpNuQFZjDJiOEwpoZ4jP/0gIsgncm9ug6gRV63xsb7NC4QJ1f23JZ0yTNe62AS3WGmlErxbBCHJET1Gd+YzWkGWH2TEnRcbS2QK9V5o8t2kq76m6d3YIBtheLIhE04tKIn7Ww10MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmY+wiHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqapuDAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5778CC4CEC7;
-	Tue,  8 Oct 2024 13:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmY+wiHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C52C4CEC7;
+	Tue,  8 Oct 2024 13:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728393263;
-	bh=Y9uzUHEDef8bKPcTNEAT4IUqn48+O0lYHhTVgbPsRpc=;
+	s=korg; t=1728393266;
+	bh=vk5H6tS1eDe7o1/HGKdBxFzI6qw/wHKgGr50zhJM7FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqapuDAvfaKHHQ8CRKw4VcqZz8rlCJp2+qBfP2KnJGLo1R9r/vr5qLH6lG9IbksM5
-	 B3syaCiMO4s74/Oj01BJrfEiFi3J+hAiOu0Qa7DsE8gmJvF7wuWAbQRoJ39xLtfllO
-	 2U2HigXliLtUq5Xs4YmZQ3afaSYr0KW2NZVM7854=
+	b=gmY+wiHayq+RkWkBNofBEx6ZFPsGishlXBbwrV3hlIunlMQB96mHM8/5CUqEdB7rX
+	 2w/tumlYv8uSvB4VYQF/IQS7nZGm9FeM6FWlf5w3tFNfpaXUIm0nEWlMmawbJc3WHN
+	 sTavtYDxZ4XX2bmE0HV39qy6udE9esoFrN1WxGbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Grant <al.grant@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	=?UTF-8?q?Stefan=20M=C3=A4tje?= <stefan.maetje@esd.eu>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/386] drivers/perf: arm_spe: Use perf_allow_kernel() for permissions
-Date: Tue,  8 Oct 2024 14:05:46 +0200
-Message-ID: <20241008115633.424834683@linuxfoundation.org>
+Subject: [PATCH 6.6 102/386] can: netlink: avoid call to do_set_data_bittiming callback with stale can_priv::ctrlmode
+Date: Tue,  8 Oct 2024 14:05:47 +0200
+Message-ID: <20241008115633.462827897@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115629.309157387@linuxfoundation.org>
 References: <20241008115629.309157387@linuxfoundation.org>
@@ -46,119 +45,174 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Stefan Mätje <stefan.maetje@esd.eu>
 
-[ Upstream commit 5e9629d0ae977d6f6916d7e519724804e95f0b07 ]
+[ Upstream commit 2423cc20087ae9a7b7af575aa62304ef67cad7b6 ]
 
-Use perf_allow_kernel() for 'pa_enable' (physical addresses),
-'pct_enable' (physical timestamps) and context IDs. This means that
-perf_event_paranoid is now taken into account and LSM hooks can be used,
-which is more consistent with other perf_event_open calls. For example
-PERF_SAMPLE_PHYS_ADDR uses perf_allow_kernel() rather than just
-perfmon_capable().
+This patch moves the evaluation of data[IFLA_CAN_CTRLMODE] in function
+can_changelink in front of the evaluation of data[IFLA_CAN_BITTIMING].
 
-This also indirectly fixes the following error message which is
-misleading because perf_event_paranoid is not taken into account by
-perfmon_capable():
+This avoids a call to do_set_data_bittiming providing a stale
+can_priv::ctrlmode with a CAN_CTRLMODE_FD flag not matching the
+requested state when switching between a CAN Classic and CAN-FD bitrate.
 
-  $ perf record -e arm_spe/pa_enable/
+In the same manner the evaluation of data[IFLA_CAN_CTRLMODE] in function
+can_validate is also moved in front of the evaluation of
+data[IFLA_CAN_BITTIMING].
 
-  Error:
-  Access to performance monitoring and observability operations is
-  limited. Consider adjusting /proc/sys/kernel/perf_event_paranoid
-  setting ...
+This is a preparation for patches where the nominal and data bittiming
+may have interdependencies on the driver side depending on the
+CAN_CTRLMODE_FD flag state.
 
-Suggested-by: Al Grant <al.grant@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20240827145113.1224604-1-james.clark@linaro.org
-Link: https://lore.kernel.org/all/20240807120039.GD37996@noisy.programming.kicks-ass.net/
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Stefan Mätje <stefan.maetje@esd.eu>
+Link: https://patch.msgid.link/20240808164224.213522-1-stefan.maetje@esd.eu
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 9 ++++-----
- include/linux/perf_event.h | 8 +-------
- kernel/events/core.c       | 9 +++++++++
- 3 files changed, 14 insertions(+), 12 deletions(-)
+ drivers/net/can/dev/netlink.c | 102 +++++++++++++++++-----------------
+ 1 file changed, 51 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index d2b0cbf0e0c41..2bec2e3af0bd6 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -41,7 +41,7 @@
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index dfdc039d92a6c..01aacdcda2606 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -65,15 +65,6 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
+ 	if (!data)
+ 		return 0;
  
- /*
-  * Cache if the event is allowed to trace Context information.
-- * This allows us to perform the check, i.e, perfmon_capable(),
-+ * This allows us to perform the check, i.e, perf_allow_kernel(),
-  * in the context of the event owner, once, during the event_init().
-  */
- #define SPE_PMU_HW_FLAGS_CX			0x00001
-@@ -50,7 +50,7 @@ static_assert((PERF_EVENT_FLAG_ARCH & SPE_PMU_HW_FLAGS_CX) == SPE_PMU_HW_FLAGS_C
- 
- static void set_spe_event_has_cx(struct perf_event *event)
- {
--	if (IS_ENABLED(CONFIG_PID_IN_CONTEXTIDR) && perfmon_capable())
-+	if (IS_ENABLED(CONFIG_PID_IN_CONTEXTIDR) && !perf_allow_kernel(&event->attr))
- 		event->hw.flags |= SPE_PMU_HW_FLAGS_CX;
- }
- 
-@@ -767,9 +767,8 @@ static int arm_spe_pmu_event_init(struct perf_event *event)
- 
- 	set_spe_event_has_cx(event);
- 	reg = arm_spe_event_to_pmscr(event);
--	if (!perfmon_capable() &&
--	    (reg & (PMSCR_EL1_PA | PMSCR_EL1_PCT)))
--		return -EACCES;
-+	if (reg & (PMSCR_EL1_PA | PMSCR_EL1_PCT))
-+		return perf_allow_kernel(&event->attr);
- 
- 	return 0;
- }
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index 95d4118ee4a91..7a5563ffe61b5 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -1599,13 +1599,7 @@ static inline int perf_is_paranoid(void)
- 	return sysctl_perf_event_paranoid > -1;
- }
- 
--static inline int perf_allow_kernel(struct perf_event_attr *attr)
--{
--	if (sysctl_perf_event_paranoid > 1 && !perfmon_capable())
--		return -EACCES;
+-	if (data[IFLA_CAN_BITTIMING]) {
+-		struct can_bittiming bt;
 -
--	return security_perf_event_open(attr, PERF_SECURITY_KERNEL);
--}
-+int perf_allow_kernel(struct perf_event_attr *attr);
+-		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
+-		err = can_validate_bittiming(&bt, extack);
+-		if (err)
+-			return err;
+-	}
+-
+ 	if (data[IFLA_CAN_CTRLMODE]) {
+ 		struct can_ctrlmode *cm = nla_data(data[IFLA_CAN_CTRLMODE]);
+ 		u32 tdc_flags = cm->flags & CAN_CTRLMODE_TDC_MASK;
+@@ -114,6 +105,15 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
+ 		}
+ 	}
  
- static inline int perf_allow_cpu(struct perf_event_attr *attr)
- {
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 4d0abdace4e7c..d40809bdf4b30 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13330,6 +13330,15 @@ const struct perf_event_attr *perf_event_attrs(struct perf_event *event)
- 	return &event->attr;
- }
++	if (data[IFLA_CAN_BITTIMING]) {
++		struct can_bittiming bt;
++
++		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
++		err = can_validate_bittiming(&bt, extack);
++		if (err)
++			return err;
++	}
++
+ 	if (is_can_fd) {
+ 		if (!data[IFLA_CAN_BITTIMING] || !data[IFLA_CAN_DATA_BITTIMING])
+ 			return -EOPNOTSUPP;
+@@ -195,48 +195,6 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	/* We need synchronization with dev->stop() */
+ 	ASSERT_RTNL();
  
-+int perf_allow_kernel(struct perf_event_attr *attr)
-+{
-+	if (sysctl_perf_event_paranoid > 1 && !perfmon_capable())
-+		return -EACCES;
+-	if (data[IFLA_CAN_BITTIMING]) {
+-		struct can_bittiming bt;
+-
+-		/* Do not allow changing bittiming while running */
+-		if (dev->flags & IFF_UP)
+-			return -EBUSY;
+-
+-		/* Calculate bittiming parameters based on
+-		 * bittiming_const if set, otherwise pass bitrate
+-		 * directly via do_set_bitrate(). Bail out if neither
+-		 * is given.
+-		 */
+-		if (!priv->bittiming_const && !priv->do_set_bittiming &&
+-		    !priv->bitrate_const)
+-			return -EOPNOTSUPP;
+-
+-		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
+-		err = can_get_bittiming(dev, &bt,
+-					priv->bittiming_const,
+-					priv->bitrate_const,
+-					priv->bitrate_const_cnt,
+-					extack);
+-		if (err)
+-			return err;
+-
+-		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
+-			NL_SET_ERR_MSG_FMT(extack,
+-					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
+-					   bt.bitrate, priv->bitrate_max);
+-			return -EINVAL;
+-		}
+-
+-		memcpy(&priv->bittiming, &bt, sizeof(bt));
+-
+-		if (priv->do_set_bittiming) {
+-			/* Finally, set the bit-timing registers */
+-			err = priv->do_set_bittiming(dev);
+-			if (err)
+-				return err;
+-		}
+-	}
+-
+ 	if (data[IFLA_CAN_CTRLMODE]) {
+ 		struct can_ctrlmode *cm;
+ 		u32 ctrlstatic;
+@@ -284,6 +242,48 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 			priv->ctrlmode &= cm->flags | ~CAN_CTRLMODE_TDC_MASK;
+ 	}
+ 
++	if (data[IFLA_CAN_BITTIMING]) {
++		struct can_bittiming bt;
 +
-+	return security_perf_event_open(attr, PERF_SECURITY_KERNEL);
-+}
-+EXPORT_SYMBOL_GPL(perf_allow_kernel);
++		/* Do not allow changing bittiming while running */
++		if (dev->flags & IFF_UP)
++			return -EBUSY;
 +
- /*
-  * Inherit an event from parent task to child task.
-  *
++		/* Calculate bittiming parameters based on
++		 * bittiming_const if set, otherwise pass bitrate
++		 * directly via do_set_bitrate(). Bail out if neither
++		 * is given.
++		 */
++		if (!priv->bittiming_const && !priv->do_set_bittiming &&
++		    !priv->bitrate_const)
++			return -EOPNOTSUPP;
++
++		memcpy(&bt, nla_data(data[IFLA_CAN_BITTIMING]), sizeof(bt));
++		err = can_get_bittiming(dev, &bt,
++					priv->bittiming_const,
++					priv->bitrate_const,
++					priv->bitrate_const_cnt,
++					extack);
++		if (err)
++			return err;
++
++		if (priv->bitrate_max && bt.bitrate > priv->bitrate_max) {
++			NL_SET_ERR_MSG_FMT(extack,
++					   "arbitration bitrate %u bps surpasses transceiver capabilities of %u bps",
++					   bt.bitrate, priv->bitrate_max);
++			return -EINVAL;
++		}
++
++		memcpy(&priv->bittiming, &bt, sizeof(bt));
++
++		if (priv->do_set_bittiming) {
++			/* Finally, set the bit-timing registers */
++			err = priv->do_set_bittiming(dev);
++			if (err)
++				return err;
++		}
++	}
++
+ 	if (data[IFLA_CAN_RESTART_MS]) {
+ 		/* Do not allow changing restart delay while running */
+ 		if (dev->flags & IFF_UP)
 -- 
 2.43.0
 
