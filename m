@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9506F1CCB32;
-	Tue,  8 Oct 2024 12:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D421DE4CC;
+	Tue,  8 Oct 2024 12:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392092; cv=none; b=IcbqBcUnfrxmJv2+Wod0X8O/Tc+eC5p6BK0TddJyD+fRMYRDAqbWxLl2I3RvhDppbEZj0Q54sLgEzy+ufH3XTCNqn8kzX0Dq+yYWYQQ1wYLyJr6kmklz4s8jKHgEAq1omd7bcG833fTFYGhPdohyDT25uxhDfuLdIAR9JEtXrDU=
+	t=1728392096; cv=none; b=XqCMOzGs5DrVMNd602WB99SOy25z7CpvE0GnDgyAdG9WLBnc3//rqUbb/gtQpHC+wf8c2LfsSIo4rIcJQbFL9eR3g490NwcOFpOT9L6lO7qrDeV/3rbkugBRNv4sEjs/Hdk1Cozk9RBodjIIawW4WEdN/O2RoRqUKGSLTdLGXd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392092; c=relaxed/simple;
-	bh=Hp8LTuxyAZ3/6nJoKGNev/4cWQmZNaeVchLaZoQtTRE=;
+	s=arc-20240116; t=1728392096; c=relaxed/simple;
+	bh=K+r41G++93bbbY+0t4B6iFucGpM6MIdxcA1hDbqBOzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aF8b2UUCq5Aayuog5m03lymG7af4BH1oFfassRXm1EBJldbupqr0NnwvdXOwJ4zOgyuscJY6v0GmN6SNEIxp3B3tEZPwGGLM9lWGOv655lxC2UnPcDzuokFLSqQCaMjKvt8GFGgAR5BnTL99E9xErU4FopWOW0JftR19zFRuhIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JN2qDP97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ai6Ej4v7nbOQNoPoMIoDi8YrQzPUi3e2e5Y5GfawdazZHzakNUVWDPsOCBeBY4gFfYglZJF4WtZu0DS3yFZnrSC7ZVHPbIYJoGmEfrhK4GtnVHxrHrH/F+GTqOXvogDAAkWpvMZe1D4pKYEo+c0lOldiAmoBAMxaCdqVFu+5x1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBJOR42w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JN2qDP97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F255CC4CECF;
-	Tue,  8 Oct 2024 12:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBJOR42w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B53EC4CEDB;
+	Tue,  8 Oct 2024 12:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392092;
-	bh=Hp8LTuxyAZ3/6nJoKGNev/4cWQmZNaeVchLaZoQtTRE=;
+	s=korg; t=1728392096;
+	bh=K+r41G++93bbbY+0t4B6iFucGpM6MIdxcA1hDbqBOzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JN2qDP970Poray05ji/hGV45QOHmPeSqedhxHjZ1LJHBoil0dz0JG9PhosJ7m1WXG
-	 0qThYsUsg1duqcoxgXgs9QhvScowngPcCm6ZG+rUZAViDSxfsZ9XVaiJHot/n20/xc
-	 a8OX0MW/QXaNaqY+EYUVeW+LeqPJXxO5ZEK6YYa8=
+	b=lBJOR42wZOA+48fQbS9trkcxgoIq5DWNXAASaHd0QRxYOjWW6p78+yhm9CnldsHDA
+	 lKDE2RwNtvD5kE2PWHkrGhjoIZFayHLT0xg1klGhvHqCV2Y31wUmGozGTc+R1hiGe2
+	 zZDxGGOTuoww49wQfmF8a6jGbeNDogFDffr9QKfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 272/558] scsi: lpfc: Fix unsolicited FLOGI kref imbalance when in direct attached topology
-Date: Tue,  8 Oct 2024 14:05:02 +0200
-Message-ID: <20241008115713.034908195@linuxfoundation.org>
+Subject: [PATCH 6.11 307/558] ext4: ext4_search_dir should return a proper error
+Date: Tue,  8 Oct 2024 14:05:37 +0200
+Message-ID: <20241008115714.396710416@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -51,194 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit b5c18c9dd138733c16893613345af44deadcf05e ]
+[ Upstream commit cd69f8f9de280e331c9e6ff689ced0a688a9ce8f ]
 
-In direct attached topology, certain target vendors that are quick to issue
-FLOGI followed by a cable pull for more than dev_loss_tmo may result in a
-kref imbalance for the remote port ndlp object.
+ext4_search_dir currently returns -1 in case of a failure, while it returns
+0 when the name is not found. In such failure cases, it should return an
+error code instead.
 
-Add an nlp_get when the defer_flogi_acc flag is set.  This is expected to
-balance the nlp_put in the defer_flogi_acc clause in the
-lpfc_issue_els_flogi() routine.  Because we need to retain the ndlp ptr,
-reorganize all of the defer_flogi_acc information into one
-lpfc_defer_flogi_acc struct.
+This becomes even more important when ext4_find_inline_entry returns an
+error code as well in the next commit.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240726231512.92867-6-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+-EFSCORRUPTED seems appropriate as such error code as these failures would
+be caused by unexpected record lengths and is in line with other instances
+of ext4_check_dir_entry failures.
+
+In the case of ext4_dx_find_entry, the current use of ERR_BAD_DX_DIR was
+left as is to reduce the risk of regressions.
+
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20240821152324.3621860-2-cascardo@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc.h         | 12 ++++++---
- drivers/scsi/lpfc/lpfc_els.c     | 46 +++++++++++++++++++-------------
- drivers/scsi/lpfc/lpfc_hbadisc.c | 11 ++++++--
- 3 files changed, 46 insertions(+), 23 deletions(-)
+ fs/ext4/namei.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
-index 7c147d6ea8a8f..e5a9c5a323f8b 100644
---- a/drivers/scsi/lpfc/lpfc.h
-+++ b/drivers/scsi/lpfc/lpfc.h
-@@ -306,6 +306,14 @@ struct lpfc_stats {
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 6a95713f9193b..8af437ac30511 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1482,7 +1482,7 @@ static bool ext4_match(struct inode *parent,
+ }
  
- struct lpfc_hba;
- 
-+/* Data structure to keep withheld FLOGI_ACC information */
-+struct lpfc_defer_flogi_acc {
-+	bool flag;
-+	u16 rx_id;
-+	u16 ox_id;
-+	struct lpfc_nodelist *ndlp;
-+
-+};
- 
- #define LPFC_VMID_TIMER   300	/* timer interval in seconds */
- 
-@@ -1430,9 +1438,7 @@ struct lpfc_hba {
- 	uint16_t vlan_id;
- 	struct list_head fcf_conn_rec_list;
- 
--	bool defer_flogi_acc_flag;
--	uint16_t defer_flogi_acc_rx_id;
--	uint16_t defer_flogi_acc_ox_id;
-+	struct lpfc_defer_flogi_acc defer_flogi_acc;
- 
- 	spinlock_t ct_ev_lock; /* synchronize access to ct_ev_waiters */
- 	struct list_head ct_ev_waiters;
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 929cbfc95163b..8c0926ffee1bf 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -1390,7 +1390,7 @@ lpfc_issue_els_flogi(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- 	phba->link_flag &= ~LS_EXTERNAL_LOOPBACK;
- 
- 	/* Check for a deferred FLOGI ACC condition */
--	if (phba->defer_flogi_acc_flag) {
-+	if (phba->defer_flogi_acc.flag) {
- 		/* lookup ndlp for received FLOGI */
- 		ndlp = lpfc_findnode_did(vport, 0);
- 		if (!ndlp)
-@@ -1404,34 +1404,38 @@ lpfc_issue_els_flogi(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- 		if (phba->sli_rev == LPFC_SLI_REV4) {
- 			bf_set(wqe_ctxt_tag,
- 			       &defer_flogi_acc.wqe.xmit_els_rsp.wqe_com,
--			       phba->defer_flogi_acc_rx_id);
-+			       phba->defer_flogi_acc.rx_id);
- 			bf_set(wqe_rcvoxid,
- 			       &defer_flogi_acc.wqe.xmit_els_rsp.wqe_com,
--			       phba->defer_flogi_acc_ox_id);
-+			       phba->defer_flogi_acc.ox_id);
- 		} else {
- 			icmd = &defer_flogi_acc.iocb;
--			icmd->ulpContext = phba->defer_flogi_acc_rx_id;
-+			icmd->ulpContext = phba->defer_flogi_acc.rx_id;
- 			icmd->unsli3.rcvsli3.ox_id =
--				phba->defer_flogi_acc_ox_id;
-+				phba->defer_flogi_acc.ox_id;
+ /*
+- * Returns 0 if not found, -1 on failure, and 1 on success
++ * Returns 0 if not found, -EFSCORRUPTED on failure, and 1 on success
+  */
+ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		    struct inode *dir, struct ext4_filename *fname,
+@@ -1503,7 +1503,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 			 * a full check */
+ 			if (ext4_check_dir_entry(dir, NULL, de, bh, search_buf,
+ 						 buf_size, offset))
+-				return -1;
++				return -EFSCORRUPTED;
+ 			*res_dir = de;
+ 			return 1;
  		}
- 
- 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
- 				 "3354 Xmit deferred FLOGI ACC: rx_id: x%x,"
- 				 " ox_id: x%x, hba_flag x%lx\n",
--				 phba->defer_flogi_acc_rx_id,
--				 phba->defer_flogi_acc_ox_id, phba->hba_flag);
-+				 phba->defer_flogi_acc.rx_id,
-+				 phba->defer_flogi_acc.ox_id, phba->hba_flag);
- 
- 		/* Send deferred FLOGI ACC */
- 		lpfc_els_rsp_acc(vport, ELS_CMD_FLOGI, &defer_flogi_acc,
- 				 ndlp, NULL);
- 
--		phba->defer_flogi_acc_flag = false;
--		vport->fc_myDID = did;
-+		phba->defer_flogi_acc.flag = false;
- 
--		/* Decrement ndlp reference count to indicate the node can be
--		 * released when other references are removed.
-+		/* Decrement the held ndlp that was incremented when the
-+		 * deferred flogi acc flag was set.
- 		 */
--		lpfc_nlp_put(ndlp);
-+		if (phba->defer_flogi_acc.ndlp) {
-+			lpfc_nlp_put(phba->defer_flogi_acc.ndlp);
-+			phba->defer_flogi_acc.ndlp = NULL;
-+		}
-+
-+		vport->fc_myDID = did;
+@@ -1511,7 +1511,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		de_len = ext4_rec_len_from_disk(de->rec_len,
+ 						dir->i_sb->s_blocksize);
+ 		if (de_len <= 0)
+-			return -1;
++			return -EFSCORRUPTED;
+ 		offset += de_len;
+ 		de = (struct ext4_dir_entry_2 *) ((char *) de + de_len);
  	}
- 
- 	return 0;
-@@ -8454,9 +8458,9 @@ lpfc_els_rcv_flogi(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
- 
- 	/* Defer ACC response until AFTER we issue a FLOGI */
- 	if (!test_bit(HBA_FLOGI_ISSUED, &phba->hba_flag)) {
--		phba->defer_flogi_acc_rx_id = bf_get(wqe_ctxt_tag,
-+		phba->defer_flogi_acc.rx_id = bf_get(wqe_ctxt_tag,
- 						     &wqe->xmit_els_rsp.wqe_com);
--		phba->defer_flogi_acc_ox_id = bf_get(wqe_rcvoxid,
-+		phba->defer_flogi_acc.ox_id = bf_get(wqe_rcvoxid,
- 						     &wqe->xmit_els_rsp.wqe_com);
- 
- 		vport->fc_myDID = did;
-@@ -8464,11 +8468,17 @@ lpfc_els_rcv_flogi(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
- 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
- 				 "3344 Deferring FLOGI ACC: rx_id: x%x,"
- 				 " ox_id: x%x, hba_flag x%lx\n",
--				 phba->defer_flogi_acc_rx_id,
--				 phba->defer_flogi_acc_ox_id, phba->hba_flag);
-+				 phba->defer_flogi_acc.rx_id,
-+				 phba->defer_flogi_acc.ox_id, phba->hba_flag);
- 
--		phba->defer_flogi_acc_flag = true;
-+		phba->defer_flogi_acc.flag = true;
- 
-+		/* This nlp_get is paired with nlp_puts that reset the
-+		 * defer_flogi_acc.flag back to false.  We need to retain
-+		 * a kref on the ndlp until the deferred FLOGI ACC is
-+		 * processed or cancelled.
-+		 */
-+		phba->defer_flogi_acc.ndlp = lpfc_nlp_get(ndlp);
- 		return 0;
- 	}
- 
-@@ -10504,7 +10514,7 @@ lpfc_els_unsol_buffer(struct lpfc_hba *phba, struct lpfc_sli_ring *pring,
- 
- 		lpfc_els_rcv_flogi(vport, elsiocb, ndlp);
- 		/* retain node if our response is deferred */
--		if (phba->defer_flogi_acc_flag)
-+		if (phba->defer_flogi_acc.flag)
- 			break;
- 		if (newnode)
- 			lpfc_disc_state_machine(vport, ndlp, NULL,
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index f21c5993e8d72..35c9181c6608a 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -1255,7 +1255,14 @@ lpfc_linkdown(struct lpfc_hba *phba)
- 	lpfc_scsi_dev_block(phba);
- 	offline = pci_channel_offline(phba->pcidev);
- 
--	phba->defer_flogi_acc_flag = false;
-+	/* Decrement the held ndlp if there is a deferred flogi acc */
-+	if (phba->defer_flogi_acc.flag) {
-+		if (phba->defer_flogi_acc.ndlp) {
-+			lpfc_nlp_put(phba->defer_flogi_acc.ndlp);
-+			phba->defer_flogi_acc.ndlp = NULL;
-+		}
-+	}
-+	phba->defer_flogi_acc.flag = false;
- 
- 	/* Clear external loopback plug detected flag */
- 	phba->link_flag &= ~LS_EXTERNAL_LOOPBACK;
-@@ -1377,7 +1384,7 @@ lpfc_linkup_port(struct lpfc_vport *vport)
- 		(vport != phba->pport))
- 		return;
- 
--	if (phba->defer_flogi_acc_flag) {
-+	if (phba->defer_flogi_acc.flag) {
- 		clear_bit(FC_ABORT_DISCOVERY, &vport->fc_flag);
- 		clear_bit(FC_RSCN_MODE, &vport->fc_flag);
- 		clear_bit(FC_NLP_MORE, &vport->fc_flag);
+@@ -1663,8 +1663,10 @@ static struct buffer_head *__ext4_find_entry(struct inode *dir,
+ 			goto cleanup_and_exit;
+ 		} else {
+ 			brelse(bh);
+-			if (i < 0)
++			if (i < 0) {
++				ret = ERR_PTR(i);
+ 				goto cleanup_and_exit;
++			}
+ 		}
+ 	next:
+ 		if (++block >= nblocks)
+@@ -1758,7 +1760,7 @@ static struct buffer_head * ext4_dx_find_entry(struct inode *dir,
+ 		if (retval == 1)
+ 			goto success;
+ 		brelse(bh);
+-		if (retval == -1) {
++		if (retval < 0) {
+ 			bh = ERR_PTR(ERR_BAD_DX_DIR);
+ 			goto errout;
+ 		}
 -- 
 2.43.0
 
