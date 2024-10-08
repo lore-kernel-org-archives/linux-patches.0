@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8238B1DE4CC;
-	Tue,  8 Oct 2024 13:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38181DE4CD;
+	Tue,  8 Oct 2024 13:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392742; cv=none; b=pWFamNImH4NUofaCmaNkpJUXSTgypvvirXbS6Msz12bm0Uh2OUEPYMYky/Sr1IVA3ZPkceCi8OxkhIqdZc92q4LTHdKl+PQnN3R9GvJzbPg/IEEbhrD8UxjPHT6adsbfgAaWmLwhd+DVXUhTzNxVBV8k4oQ8u01vF1uVyGEx+g4=
+	t=1728392746; cv=none; b=Extam6fBxdtg4qQ7GGVaFlZPOCUR8b+wIkCy8XuIIGRMNL0t5oO7wD3uJSeH+84uTwXwLw1YEAeUILqZwLzgvREDwm9Nb8om6Hpz0steWkN1yez8NXvQNO0QlH8FDkixZxlE8EaNFoKZlDYJ1NCtSCchWDV3gIs14bAR+3xbwq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392742; c=relaxed/simple;
-	bh=gtNkcNBT7L4uEERw62mHqJqfeUP3SkiduSrBhrxsDrc=;
+	s=arc-20240116; t=1728392746; c=relaxed/simple;
+	bh=ZWgyS9HVX4I8XwE/Z7LTC5dTNEFG2Ia6r4p/AiQbFXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2SY6EfdetoI/H3/pAiufiZRo6J6PcHHAUikvb3plllF19ornuhlZiv1snGcloSsEZWtwPGiEB15MeAxoBzkxS19cDHvDSjBlN1e1Jutqs0Cz9YfNbVNzyGhiFIgEj7iVtLKuDb/X2fOKCEEomAS0igVEtYdh3cmIC5/pEaf+H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuxT9oMP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DydOiMH/qlGSPOvUInZw7kNClXAf+OYg7jTp3QMgHo1NcAdJu+d2smYqRRhS4FT/NY+pS5ghNTnWHSj/Bvhdh1ZFjXgSKX4h/sNA1Z19swiPtb1V37pdumTLClW6HvW6ZE/rLOTWGYFn7Z3PDQxvcVQNpbobO66ZCb411VQpspA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arxjsw1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuxT9oMP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E513FC4CEC7;
-	Tue,  8 Oct 2024 13:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arxjsw1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6588AC4CEC7;
+	Tue,  8 Oct 2024 13:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728392742;
-	bh=gtNkcNBT7L4uEERw62mHqJqfeUP3SkiduSrBhrxsDrc=;
+	s=korg; t=1728392745;
+	bh=ZWgyS9HVX4I8XwE/Z7LTC5dTNEFG2Ia6r4p/AiQbFXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuxT9oMPWSCJSIB8gdFCsLIVMlsSmONlaSE9eZRWksIU0sUmKr1QhE7Fs3Ycitir9
-	 5fwVO+QAFN2Ky2nivuK4z7jJtNJC0gyaOu5IhCb1KV3wyzt00ghhY6W/2NPOAiI8z8
-	 0vFvQgWoJ3xPaol5Hvasaa5w40eTfkLhgB0xQuIg=
+	b=arxjsw1JO+5MpZdwiyHNDFBJFtM001AmZJalcBifu+Tg7nOJAN+MNiHw7JAaNX4CD
+	 FYGXYvMElmNtKdn3B5xSRT9V5LlaaOywj1Fmjo7hn0Pt8nZnuI20JSQJRUmiTi5XSy
+	 3B2BM7Nv+d2Kj8jAprElkekLmDX1rpmrHHonH5Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH 6.11 505/558] Bluetooth: hci_event: Align BR/EDR JUST_WORKS paring with LE
-Date: Tue,  8 Oct 2024 14:08:55 +0200
-Message-ID: <20241008115722.104266341@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.11 479/558] rtc: at91sam9: fix OF node leak in probe() error path
+Date: Tue,  8 Oct 2024 14:08:29 +0200
+Message-ID: <20241008115721.087802019@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -50,52 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit b25e11f978b63cb7857890edb3a698599cddb10e upstream.
+commit 73580e2ee6adfb40276bd420da3bb1abae204e10 upstream.
 
-This aligned BR/EDR JUST_WORKS method with LE which since 92516cd97fd4
-("Bluetooth: Always request for user confirmation for Just Works")
-always request user confirmation with confirm_hint set since the
-likes of bluetoothd have dedicated policy around JUST_WORKS method
-(e.g. main.conf:JustWorksRepairing).
+Driver is leaking an OF node reference obtained from
+of_parse_phandle_with_fixed_args().
 
-CVE: CVE-2024-8805
+Fixes: 43e112bb3dea ("rtc: at91sam9: make use of syscon/regmap to access GPBR registers")
 Cc: stable@vger.kernel.org
-Fixes: ba15a58b179e ("Bluetooth: Fix SSP acceptor just-works confirmation without MITM")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240825183103.102904-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/rtc/rtc-at91sam9.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5324,19 +5324,16 @@ static void hci_user_confirm_request_evt
- 		goto unlock;
- 	}
+--- a/drivers/rtc/rtc-at91sam9.c
++++ b/drivers/rtc/rtc-at91sam9.c
+@@ -368,6 +368,7 @@ static int at91_rtc_probe(struct platfor
+ 		return ret;
  
--	/* If no side requires MITM protection; auto-accept */
-+	/* If no side requires MITM protection; use JUST_CFM method */
- 	if ((!loc_mitm || conn->remote_cap == HCI_IO_NO_INPUT_OUTPUT) &&
- 	    (!rem_mitm || conn->io_capability == HCI_IO_NO_INPUT_OUTPUT)) {
- 
--		/* If we're not the initiators request authorization to
--		 * proceed from user space (mgmt_user_confirm with
--		 * confirm_hint set to 1). The exception is if neither
--		 * side had MITM or if the local IO capability is
--		 * NoInputNoOutput, in which case we do auto-accept
-+		/* If we're not the initiator of request authorization and the
-+		 * local IO capability is not NoInputNoOutput, use JUST_WORKS
-+		 * method (mgmt_user_confirm with confirm_hint set to 1).
- 		 */
- 		if (!test_bit(HCI_CONN_AUTH_PEND, &conn->flags) &&
--		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT &&
--		    (loc_mitm || rem_mitm)) {
-+		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT) {
- 			bt_dev_dbg(hdev, "Confirming auto-accept as acceptor");
- 			confirm_hint = 1;
- 			goto confirm;
+ 	rtc->gpbr = syscon_node_to_regmap(args.np);
++	of_node_put(args.np);
+ 	rtc->gpbr_offset = args.args[0];
+ 	if (IS_ERR(rtc->gpbr)) {
+ 		dev_err(&pdev->dev, "failed to retrieve gpbr regmap, aborting.\n");
 
 
