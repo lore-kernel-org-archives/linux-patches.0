@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDA61DE89D;
-	Tue,  8 Oct 2024 12:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02DC1DEFE4;
+	Tue,  8 Oct 2024 12:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391802; cv=none; b=WUwZ/vtBywAMy2iEPF6T07TuUPjgl+DcRsn+1Qn1hIC25fYpChY0D9phGx61leMe6CmpItdts1+ZJZEhscz4s56WiYv7YTuZMBCRq8rljUVyd7oPorQdiqfL1EtvGzubhFZBozcv/fsSArm5N6Nry5sGAS0x4eWLIyG6jYcVmFM=
+	t=1728391805; cv=none; b=Rw1leSU4RtICCy4r/ViHZIlgs7vPhnjaLLwEnLh59IaB0wUpE65mH01ghPe7ye8SNE0nifgXnMkgJGjcRBmxmVVd021d61Bp1kMzaQkrft877TMVkd1ABeXziXFFh76wJuNfbfGCgLoMUjTyYqp4MUjQ0uGqY0qxRm6Yyh5PCZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391802; c=relaxed/simple;
-	bh=WqQTG/+E+7crHs02fbwkxojTKhRNL96rl4Hn2JZaziU=;
+	s=arc-20240116; t=1728391805; c=relaxed/simple;
+	bh=J/2g0PKlMi25VCKJlenHNo5wDC1YHKZVVUcmVYW2fXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCmJxEmJ+U0qZNpsvAFkdqqrNtjYtxfD257Bc+GxNn+7N4QiEshmCTdwQPeVIDZHxBkIiBZhT7aed/SoQOORWyb2cEKdHwo+Vfx84mchEFTGI88DisRAiroXFNriUSjWOPhfMBxlGYJTN/tlBUK8BEfFBs5NCNuooAXRaAE+Sp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awv3axiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiXd86vcN1G77tWORVCwHERnSt2MIq1lQqbHOMamURWVGUSCv/fDRVkh1qRAGfOzUt7K4q2USTSEGXflA5gLsqupsd59tf/gkcw89KPkQw+TDK+ksnm8Qb1tDpWYalmfa4i/xvV9m056FkH38UtdK3bP0jBOgddRqS1JKlUKkok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYVfiLl6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awv3axiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CA3C4CECC;
-	Tue,  8 Oct 2024 12:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYVfiLl6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C6AC4CEC7;
+	Tue,  8 Oct 2024 12:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391802;
-	bh=WqQTG/+E+7crHs02fbwkxojTKhRNL96rl4Hn2JZaziU=;
+	s=korg; t=1728391805;
+	bh=J/2g0PKlMi25VCKJlenHNo5wDC1YHKZVVUcmVYW2fXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awv3axiyvFOnp81Cr1iCHWPMcHLiAH+aBhEhYD9iFCHKuOAQUCKUS9atd2gzp4Fkl
-	 zccGOc9g2uqzwO9PDwbKlqIBuOe9vKVTtEcjExOEkmbgFYsYJ4mlRV1RLG0Xovg2qZ
-	 tvaZxeA49cJ84d5ucwlXUZT0O2q1jWbk3qnNaoDc=
+	b=ZYVfiLl6EGoyhbEmB/crlMn+TgPl3HySuAi/Ghb3RR+fCHK9vm44ikVnTMrvQgc5w
+	 joIbYYhayCyGkSTAVHBRpR1Q7WnimrCsDJiADcz70lVwH4zZEWEvUAY1IFNgSK5o8K
+	 jvriIYKPzzgwlnHULkpYTrpPaYXmEqWOgUJskpQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 226/558] drm/amd/display: Add NULL check for function pointer in dcn401_set_output_transfer_func
-Date: Tue,  8 Oct 2024 14:04:16 +0200
-Message-ID: <20241008115711.235693725@linuxfoundation.org>
+Subject: [PATCH 6.11 227/558] drm/amd/display: Add NULL check for function pointer in dcn32_set_output_transfer_func
+Date: Tue,  8 Oct 2024 14:04:17 +0200
+Message-ID: <20241008115711.274607234@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -60,10 +60,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit dd340acd42c24a3f28dd22fae6bf38662334264c ]
+[ Upstream commit 28574b08c70e56d34d6f6379326a860b96749051 ]
 
 This commit adds a null check for the set_output_gamma function pointer
-in the dcn401_set_output_transfer_func function. Previously,
+in the dcn32_set_output_transfer_func function. Previously,
 set_output_gamma was being checked for null, but then it was being
 dereferenced without any null check. This could lead to a null pointer
 dereference if set_output_gamma is null.
@@ -84,14 +84,14 @@ Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 4 +++-
+ drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 537a24ec74c85..7c724cf682840 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -748,7 +748,9 @@ bool dcn401_set_output_transfer_func(struct dc *dc,
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+index 9a912b9c1f2e9..33e3d94e429d4 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -582,7 +582,9 @@ bool dcn32_set_output_transfer_func(struct dc *dc,
  		}
  	}
  
