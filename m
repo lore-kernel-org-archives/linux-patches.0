@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776DC1779B1;
-	Tue,  8 Oct 2024 12:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4621779B1;
+	Tue,  8 Oct 2024 12:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391217; cv=none; b=uOQ/19baRlc7B6jllHooLAUv+dBXZASAHX9dzHCZsqL6Mi3zLQVRvgfas09DACXOmmqCaH5uJqxo1uVqgOqqbYPh+ZoEAq6xnz6ty2GgQCobEQueK82pok4TOhGEPGfMON7nh8RpHKYF41sBiaAPLMopVq0txuWif9Lj+kC52Ds=
+	t=1728391220; cv=none; b=Raa81CXtvodiWlB3qO/rAysorWcKdr2EeZ9viA35MVDGcwL2uUan1YrS7oo5+t9onrQefWjoJkgAvCprOSZzvjMLLZOi8C55tOdRrAkjKfVBU/PjL3EdeNj2CbSqErrPK/0kFoFFHLwjWn8oZpuuquYvx8ggt/qJiq+morzJOKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391217; c=relaxed/simple;
-	bh=QhtyMImzP45DmfCtOsRv1y4C5fVe4uyNupR9vjnuCy8=;
+	s=arc-20240116; t=1728391220; c=relaxed/simple;
+	bh=aUiYHLp/o8JLjU62RMmPFXZDYB4HPfzQzoDzzMWrvLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqwXSGhO8DnAman1hE/6Xp8NNDZKC1hldHJVISCl8dkRkV9nuJIZoqQDn1ZBLwhQX6XnsA4SklId6qyJd8ihGcahDpoRlG6Lx1s7SJLW0c5Lpe0hjP8XZ53QX1VwfKZH6uQWzDwE5Wu2Zh9HwUjaxVh0mxtUfEwgq8gJFCLukBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMsqwuQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shd5v46X8UY2n2gW0S01uHYBHrj9g62mB/p/bOwP5/u55KCODDQjriDs9qM1i/GyuRiUBpNlX7z1fhCY0WxKS5kt69i2GnnpOFKj2QafAfLSFub5ahiWixGjyB9Wy2F9G85O2e9xKd4WkUhT+g0SQKdfd1eh14nAjHGso3qMgrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdKSjkxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMsqwuQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3119C4CEC7;
-	Tue,  8 Oct 2024 12:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdKSjkxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AA7C4CEC7;
+	Tue,  8 Oct 2024 12:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728391217;
-	bh=QhtyMImzP45DmfCtOsRv1y4C5fVe4uyNupR9vjnuCy8=;
+	s=korg; t=1728391220;
+	bh=aUiYHLp/o8JLjU62RMmPFXZDYB4HPfzQzoDzzMWrvLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMsqwuQmrwfh3wVoJZZ9CCoEkn9NZdHfzTb9do6wLZINRoDeKhG8Wy2KJ1Hww0eGE
-	 kJzBd0Qz2ngTYZf1fo6ktxUYUS8lGMBO858DkTo41JkJOJC7B5awuP+ulXrDzxZdZt
-	 PMhlW9wxm5S9k9s9aD+8w9LDVoZNBx1Gx/JAeomo=
+	b=zdKSjkxYzDzodRW0PRYSBcdBobLIryTIWfsh0G/ufZ9HKUPEbmn+YzeYIJd3wwn3N
+	 T2p8VKlEleaMKmZH1+g/traQHAm9X/K7nfzvnZoQi1jji5pMo++UHgc14QdCCoixm0
+	 swk1DV6IF0MhrrTPdCRFIkBVS+6GF1TzPJCABMZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 045/558] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
-Date: Tue,  8 Oct 2024 14:01:15 +0200
-Message-ID: <20241008115703.997126550@linuxfoundation.org>
+Subject: [PATCH 6.11 046/558] netfs: Fix missing wakeup after issuing writes
+Date: Tue,  8 Oct 2024 14:01:16 +0200
+Message-ID: <20241008115704.035944529@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241008115702.214071228@linuxfoundation.org>
 References: <20241008115702.214071228@linuxfoundation.org>
@@ -52,87 +54,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
+[ Upstream commit 1ca4169c391c370e0f3a92938df2862900575096 ]
 
-Regression Description:
+After dividing up a proposed write into subrequests, netfslib sets
+NETFS_RREQ_ALL_QUEUED to indicate to the collector that it can move on to
+the final cleanup once it has emptied the subrequest queues.
 
-Depending on the options specified for the GRE tunnel device, small
-packets may be dropped. This occurs because the pskb_network_may_pull
-function fails due to the packet's insufficient length.
+Now, whilst the collector will normally end up running at least once after
+this bit is set just because it takes a while to process all the write
+subrequests before the collector runs out of subrequests, there exists the
+possibility that the issuing thread will be forced to sleep and the
+collector thread will clean up all the subrequests before ALL_QUEUED gets
+set.
 
-For example, if only the okey option is specified for the tunnel device,
-original (before encapsulation) packets smaller than 28 bytes (including
-the IPv4 header) will be dropped. This happens because the required
-length is calculated relative to the network header, not the skb->head.
+In such a case, the collector thread will not get triggered again and will
+never clear NETFS_RREQ_IN_PROGRESS thus leaving a request uncompleted and
+causing a potential futute hang.
 
-Here is how the required length is computed and checked:
+Fix this by scheduling the write collector if all the subrequest queues are
+empty (and thus no writes pending issuance).
 
-* The pull_len variable is set to 28 bytes, consisting of:
-  * IPv4 header: 20 bytes
-  * GRE header with Key field: 8 bytes
+Note that we'd do this ideally before queuing the subrequest, but in the
+case of buffered writeback, at least, we can't find out that we've run out
+of folios until after we've called writeback_iter() and it has returned
+NULL - at which point we might not actually have any subrequests still
+under construction.
 
-* The pskb_network_may_pull function adds the network offset, shifting
-the checkable space further to the beginning of the network header and
-extending it to the beginning of the packet. As a result, the end of
-the checkable space occurs beyond the actual end of the packet.
-
-Instead of ensuring that 28 bytes are present in skb->head, the function
-is requesting these 28 bytes starting from the network header. For small
-packets, this requested length exceeds the actual packet size, causing
-the check to fail and the packets to be dropped.
-
-This issue affects both locally originated and forwarded packets in
-DMVPN-like setups.
-
-How to reproduce (for local originated packets):
-
-  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
-          local <your-ip> remote 0.0.0.0
-
-  ip link set mtu 1400 dev gre1
-  ip link set up dev gre1
-  ip address add 192.168.13.1/24 dev gre1
-  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
-  ping -s 1374 -c 10 192.168.13.2
-  tcpdump -vni gre1
-  tcpdump -vni <your-ext-iface> 'ip proto 47'
-  ip -s -s -d link show dev gre1
-
-Solution:
-
-Use the pskb_may_pull function instead the pskb_network_may_pull.
-
-Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/3317784.1727880350@warthog.procyon.org.uk
+cc: Jeff Layton <jlayton@kernel.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/netfs/write_issue.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index ba205473522e4..868ef18ad656c 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -661,11 +661,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 3f7e37e50c7d0..9486e54b1e563 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -494,6 +494,30 @@ static int netfs_write_folio(struct netfs_io_request *wreq,
+ 	return 0;
+ }
  
--		tnl_params = (const struct iphdr *)skb->data;
--
--		if (!pskb_network_may_pull(skb, pull_len))
-+		if (!pskb_may_pull(skb, pull_len))
- 			goto free_skb;
- 
-+		tnl_params = (const struct iphdr *)skb->data;
++/*
++ * End the issuing of writes, letting the collector know we're done.
++ */
++static void netfs_end_issue_write(struct netfs_io_request *wreq)
++{
++	bool needs_poke = true;
 +
- 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
- 		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
++	smp_wmb(); /* Write subreq lists before ALL_QUEUED. */
++	set_bit(NETFS_RREQ_ALL_QUEUED, &wreq->flags);
++
++	for (int s = 0; s < NR_IO_STREAMS; s++) {
++		struct netfs_io_stream *stream = &wreq->io_streams[s];
++
++		if (!stream->active)
++			continue;
++		if (!list_empty(&stream->subrequests))
++			needs_poke = false;
++		netfs_issue_write(wreq, stream);
++	}
++
++	if (needs_poke)
++		netfs_wake_write_collector(wreq, false);
++}
++
+ /*
+  * Write some of the pending data back to the server
+  */
+@@ -541,10 +565,7 @@ int netfs_writepages(struct address_space *mapping,
+ 			break;
+ 	} while ((folio = writeback_iter(mapping, wbc, folio, &error)));
+ 
+-	for (int s = 0; s < NR_IO_STREAMS; s++)
+-		netfs_issue_write(wreq, &wreq->io_streams[s]);
+-	smp_wmb(); /* Write lists before ALL_QUEUED. */
+-	set_bit(NETFS_RREQ_ALL_QUEUED, &wreq->flags);
++	netfs_end_issue_write(wreq);
+ 
+ 	mutex_unlock(&ictx->wb_lock);
+ 
+@@ -632,10 +653,7 @@ int netfs_end_writethrough(struct netfs_io_request *wreq, struct writeback_contr
+ 	if (writethrough_cache)
+ 		netfs_write_folio(wreq, wbc, writethrough_cache);
+ 
+-	netfs_issue_write(wreq, &wreq->io_streams[0]);
+-	netfs_issue_write(wreq, &wreq->io_streams[1]);
+-	smp_wmb(); /* Write lists before ALL_QUEUED. */
+-	set_bit(NETFS_RREQ_ALL_QUEUED, &wreq->flags);
++	netfs_end_issue_write(wreq);
+ 
+ 	mutex_unlock(&ictx->wb_lock);
+ 
+@@ -680,13 +698,7 @@ int netfs_unbuffered_write(struct netfs_io_request *wreq, bool may_wait, size_t
+ 			break;
+ 	}
+ 
+-	netfs_issue_write(wreq, upload);
+-
+-	smp_wmb(); /* Write lists before ALL_QUEUED. */
+-	set_bit(NETFS_RREQ_ALL_QUEUED, &wreq->flags);
+-	if (list_empty(&upload->subrequests))
+-		netfs_wake_write_collector(wreq, false);
+-
++	netfs_end_issue_write(wreq);
+ 	_leave(" = %d", error);
+ 	return error;
+ }
 -- 
 2.43.0
 
