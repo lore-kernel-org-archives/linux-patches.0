@@ -1,35 +1,36 @@
 Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2065.outbound.protection.outlook.com [40.107.220.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F501E1C15;
-	Wed,  9 Oct 2024 16:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EE21E1C2B;
+	Wed,  9 Oct 2024 16:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.65
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728491008; cv=fail; b=R6i/6PbSoDC2R2VAFpLI2edM9UqAi6AnPDqQB7j0FLF7muFQ1Vas52Kk62FqRx2a7vCumm/rFBx7U8POPHjMrmizNbobPDwgDip6tgGJqyc/Tv92BOQtxjrvn+8EzdVQXa2krjb2HM4uuY3GLX3EM8nFMnoyG+83wY+SVDcIs0Y=
+	t=1728491010; cv=fail; b=m4WF8/2dkZuq0PgT8iuIsB5jQv+o6S97HWCeoVL2ErYGeM59rb+mx+VQPZnC0lWjB2E4+4UCJIHKoLGkDWVo0f6gzbzNIi/oJ3RCzImTCL8XheZg67IVksLTCLgHNSUD+J2c+oDV27FxxABHHyOq/6mBNkXE9AA3vhg0Wmbcw54=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728491008; c=relaxed/simple;
-	bh=3jz28YyyQd5/ZNYYRfBnqweVwyJc7nPA4paLF//1img=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=U1Pt2qbzIL4SFiwuqmYrQlLETVwhJySzGZysvwxbbURyNS2ih2Ob4Y0lyRTIbXDDadyeKQaeIGUaYqo4rZZUtoj1lFZPsrkXZQmekHAHnLQz4+jhYVqA9wrxAsSWtA8TUAnaF4Rq1i6duj7VuLoCRTg53OEn5/cNXOTWzzNUo90=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=V7q5zjFb; arc=fail smtp.client-ip=40.107.220.65
+	s=arc-20240116; t=1728491010; c=relaxed/simple;
+	bh=mKT1IJJeKHX4ypen5n7Whj6rhvt4w+VnV0D5xGA4VGw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=kFLrRQ3+Vzr0NCUrlKyVN9DBS5+GHt3kp6BSxcC+deHnnbYKWNiZVJZrm8JR/yEjt7lePyYa2Pn0KcVwSqT0feoPSHyjn/aEersy3IXgRTliPdnTI7eJmEDz84Y3x14XleYWndTNzXx354DQAKsqPvayJMpPYKkav2m+jckPQS4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CZEs+Ejn; arc=fail smtp.client-ip=40.107.220.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="V7q5zjFb"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CZEs+Ejn"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tUgyw9ez9jxQLw1qCjF6J0riesHhE6lIWJBczDDALm+GPMRzOWG9VJhWGksuLL8pgVPRenEqiyXUwcxGLOO3tyxfMKX/orZst/47gTLyg6Eqo7e3phHJSFLCTJlxWXatb0D/gqDRPG/O+1FwlW8o1MBd6uciZYhjZKdIlGlnYldg5gjq7p6XoyaWs1ay5WVB2y4ISt3ZXAhhyhThycydmp1PgiSNh4VQUDzDVMzb5ODfGr2acCig2uA3Tzt4nsAQ6vIHPY9nv4SjwaTDeM5jtwoOXWVPoWoyGjxGe5rS4hoUWcTOuHqppsu92h7k8Y1lT47A58mgvJSjx+n3+ppqrQ==
+ b=Loj2TqiceABW4PO3prqsIgmEXZkYUekzH3VuVJ+4TASz/xXNp84ixFRUUQG+YLL8EXppLdLx7c5p0jStBmAlNAzlBbuWmE/6rpnpFC1xQUB2nb6/gFa1Me7OgR4VcomcNNiudcZgksjbCCqvsIm9dpOcyR1D/5yR+dwhIO3rSk7Dhumh/JPocfvSOip0HFCNwrBWvJKpVcPfDI+WxZA+LBm5VlY742qyIGa2JE2WgcHtk90UzQsApNyjoTAr3Qbi73siMX5pwq1jgOA9fAaaRrs5lYNRqSp/NREixazR22sqxl69FDUprvJCPYupjkHH0WJs5xBi4YFqqjWFGL9esQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xk2CXhGIdXZFhQVmG8kPggpJMFApNLdJjQxcql3PWp4=;
- b=sDDoeKVK89gQZWauHCmaAXVR30RR67sa+2ZjwBhd0dfQmJWnlP6Mwh1+ccWlh14oSnYC+qLPB0djvJOet3rXjvf98S+W25B9BdF9ZSHLePtL05T7ayPlqZEpiMIimkzmdn3hvF7R2XHIJElSknYIqFL96ydp9heE9Be03bWHLUq73nDaoj9Mjf3PDCUOdn4Z/VqdNy38JLhYADGBwTJsiawEJD5XD324Md+2zLrPxe6VnIiKEW6ulBvdRVhvT2yJgHD4Um8VlLPww1hMfpA0B/NW7HiQayV/ubBtf3DUaPMI9A6zT2oiJCbVO8r+zaKxBp+0jfaC0fQpppxCAkZbJg==
+ bh=UM/OqRVKfdnk+8DUpdClNjxJr4a69tRo13nfkCjpyJA=;
+ b=eVSAmg5MOcC29o2kC5Q2kaGcxAF3YFv0k+Fn4l5njeIfJ+h5nOnZn5xwmkMse6/AzGEerzuL6q0/PSZXll2XZq9zWJx6s0TNtPO5VAMhZJadwFKkUJXT+BBIz0RAlafHUT7pXjr5qn7n8DpKvoxItggoiDI2pLxobWk9CcjWOpbZQfoQKVnTWdWbGaJ/P04Cy8zgUzO8W77dB/g8fB9rvrAQco/i2AZ2ANKpjv7bpLr2wc7/8G7UnUgJVXxQjRrSWR7EUA7APziwBPsXAOl9R6WLK1SUBhU1rQCJeUlfXKoBy00Kw83q5vpw6AZsJjN+yJzXF0Bw1aAtAHBm1V9sQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xk2CXhGIdXZFhQVmG8kPggpJMFApNLdJjQxcql3PWp4=;
- b=V7q5zjFbZUaXQoVgoc9QT5NoAEgthwlLBy7wL0oDzfyyIWP9/2CcZXCfoq4O8F3QOgBmodg/kMajALKCUvxrydAVr3bPWFn3U91CXZdz8Z1UiLV66dr833qmzJcpYOzQC99k0FR6mF2sM+W1Ic3mowR1XkNB9ZzOVMKfoH34NdwvdDpNCa/NKAAOnwlSd0VwQiOMiHdS6i1NzwfhIEiI7aAlV2COdDIoUDNUy+c7qH6zwr4xj7FvjJa9UoSZ0id6nwGUqRhr/ikosUL0ceVlu+0plNF5zjMwP2coNEc7CO62ESyS4LM4ANeDd+qwMN2l+5cJIF7GJ5GY/OUW4Xu8EA==
+ bh=UM/OqRVKfdnk+8DUpdClNjxJr4a69tRo13nfkCjpyJA=;
+ b=CZEs+EjnQu+7dwxWbDCjVec05nOucftxscXNoyXH/Z7yzX0rIVP3+F0ZSd/DN3AEgCKfZqhZDNjQO1jnRiT5qDWp5UhAbM59/yerxYp+H0/bg+7PggdMPrexT2XEdywqM08uqAFbQZWG+VGet7wNF2oD74XiNIJt4YlyCFaC8xuzsZ1Oppq37zAmesD1E3URUo0hnONVp0vkvepHxV37KqaQm3kpkrOuMu+cfrO7fAIcjbCypq7HNx1qgJNf2Qe5FLMbRoqUfqsvMUJHhdiCr43I4f+F7bSzUSmuxjnZbCVlKi2+A78fdzdhGwsrrlaxj00rjPhtquIz2dJ49GBtiA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
@@ -67,13 +68,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v3 0/9] Initial support for SMMUv3 nested translation
-Date: Wed,  9 Oct 2024 13:23:06 -0300
-Message-ID: <0-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
+Subject: [PATCH v3 3/9] ACPI/IORT: Support CANWBS memory access flag
+Date: Wed,  9 Oct 2024 13:23:09 -0300
+Message-ID: <3-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
+In-Reply-To: <0-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
+References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BN0PR04CA0124.namprd04.prod.outlook.com
- (2603:10b6:408:ed::9) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: BN0PR04CA0150.namprd04.prod.outlook.com
+ (2603:10b6:408:ed::35) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -83,195 +86,163 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ1PR12MB6073:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7072227b-4d2c-4324-dfb1-08dce87eae5d
+X-MS-Office365-Filtering-Correlation-Id: 71d76295-0202-478b-92f6-08dce87eae69
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|366016|376014|7416014|1800799024|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?0dFB5z+SqtzPj5y0MZ+uFz797hgnkjYiOmi+Ypke31bXBslqR1gY/D6YLAgS?=
- =?us-ascii?Q?TSkTm9XmrQS+h5Y0edU/WmXgQlTuN90+mA5BxaJTZ5AxEMQe8g4J9ltelvzc?=
- =?us-ascii?Q?QyeVqUWkx7fLD4CwQj8oZKtxpRCmeWFJ/bzF6TV0pgSzVTKMIfsbndE8kC2s?=
- =?us-ascii?Q?SIzDR3kaUgzr1xcUOOs/FoZuIKZQ8htu6+c6D2O2/7lhZ67VxO7yYenuxCye?=
- =?us-ascii?Q?NUS/vud0y+IbLgkfpgGEAw76PxNU9v/YewL83VRUpjSAuBjkRQwHWRxJJLOX?=
- =?us-ascii?Q?0fsuc+FVYFEoWzVoPCcirT5uPycnye410yREVmSA6UG1K6tYwyug+uGsSSGW?=
- =?us-ascii?Q?3FJGz1+cWDAVX9HVhXjy1B4DiZiVdC62N1/W/si0tFI6SRuogHWfR8uzLLwO?=
- =?us-ascii?Q?UdPJJA4rfnbp6ZekpcTQlje5RzA8qMaILrvY66NtkM5Nu68JOqXfEiJA7L9P?=
- =?us-ascii?Q?pt1ggSgley7RK6gdWk6+dfaYp2SWPAYDLiUv1vFKzn0LuED/8pA832IGLE0E?=
- =?us-ascii?Q?b91lr2PvP6v55Kk9JM2EDK7XgEWvzCF39wXuIfcxQNX0LoMWzUu2VuE0R13q?=
- =?us-ascii?Q?ETFSdR4/EdQpZSlmAfG3NgBSuLu2bV9TbkYGhFChJL8WWQNIbCg30BurQdM0?=
- =?us-ascii?Q?3ENIvV/EXHgNeU1Se5Eod97D3vvu/W4qkjeLPPt8PKFScLf7lokqcXG1JR8y?=
- =?us-ascii?Q?N7su+kJ9h6lxmmpKNpjHwbxJsyxXui2GhqrFdQSp51o8bL4DIc3tUM/d7qel?=
- =?us-ascii?Q?U4pXhE8OamiwiV40oSWJHNc5TavtG+e0MGpUwGdfRU26G4grCaZ8ZGgrnvzw?=
- =?us-ascii?Q?EB1N1PJgsazIOPkgeY3R8+YYOdwMQRvUQnJz77IToTjS6lY6x8Elc3xnNuCi?=
- =?us-ascii?Q?XKITfVfYE8BCJCq7JjmQ9275kHctq0SYoxaG7Z0t5RvSO8ZSjm0WgbBZIjB2?=
- =?us-ascii?Q?RsHE2Afxh/d4QulchzaUkTD32obW2pkoS5BUljYNNqeW5PIPxLaW0i4mmAES?=
- =?us-ascii?Q?201rO0QLAst3z6j/QZiGgee05GI1Lsb4AMMndrT3Ckgbb78Q4FNoynVSGh2B?=
- =?us-ascii?Q?tclpDX8Dwgyp3w3lYmz2dSO0oFYiAjHp8dfPwPGMl4IWnBUrKLHtx7Mjk+u0?=
- =?us-ascii?Q?w1/I2OJaws41dWRXNj9l5BY3WU+6zO4xLNuBsIjBA28qW5L6eAifXAImACof?=
- =?us-ascii?Q?qGuyi0XxzAjAl2xFmAfHScX1ziOuVW6+X8JYwfex5LtMarwPXQ40LU5GCR+n?=
- =?us-ascii?Q?FWJynuR1v5gNLi75qfXSOp6lD46rEvPgyY/6G6C2lmLgOp4FV4GD7EiJXQmS?=
- =?us-ascii?Q?wN1fqNHLVfR8M9ZoEZbRpg5G?=
+	=?us-ascii?Q?Qnjhu8Bde1Oevx+ZcdHbbvYD8XC2lv5KVgjNlEl5UTmdQpOd6wkJ+fqMPIOw?=
+ =?us-ascii?Q?H2bP158razPk6Yl37NgeFaRAGu2n1KTM/TbN4r/YMse5MeAgL0qVz0yDj4Jh?=
+ =?us-ascii?Q?r+sijxQbL8+xovFPZ3dDWToFqqFE4R8cvt4Fx/PkpQl6dmXCZcstV/hLMCbW?=
+ =?us-ascii?Q?BGSu9N1fuadwcnYW77VzxQi7MQuY9xwVUNzvTqPeh79ISZONgG0rZAa7ya5p?=
+ =?us-ascii?Q?TSQxKTC15XmpyszAq3Lo6fCooWbmJMpDmBgUFXMEkSk4HJ0ng9ptx5669eY1?=
+ =?us-ascii?Q?+gOeJOk5T2efb1A9s8rc1FPOOniRNnY4GvnwpIfxwyVjoqObG5AhqeD4GARw?=
+ =?us-ascii?Q?7Sn9En8McfzlAG1Fbf34KQwZEId8S4cB2E2c2c97SAllHCF3ke4nhcvmhwme?=
+ =?us-ascii?Q?BU9Oi98gTEpmrrbsHhzkHUyQdCEQxMJwJlMCsxOqbJndhSCVIK947S7tkC0e?=
+ =?us-ascii?Q?KLHXxLu0vyzogoAxwD9IT4aJaJISwbSbvZowqpiNtgzQG3kBwGWWqWZl5TTi?=
+ =?us-ascii?Q?QaLVfK4fn/T+m2s9WFhqtpTLaA724JR7IOuLvOHg/3bqS4Wf4nE8LbKkF51c?=
+ =?us-ascii?Q?iMoKs3xmvUlcmlHr+rs67WL60OuTdnaZ9JZ/GaccXnxmSysDw6FO7ZmRDA96?=
+ =?us-ascii?Q?uin/Z56XG07yGrmnVptpZOsCtGMP1sFUjLo4LQSedLGbodf/blD7ReFNprUb?=
+ =?us-ascii?Q?R9wg/WlvHkyo2oKVwLdFc1RPpDEvgDF/KePKujKoDvV6poUzGkXwsscN1LzC?=
+ =?us-ascii?Q?+PqoiSt1YXrRqjwL8ylGX17ZQ0vVAMviXKYjBdjuTPHZUS/ER615BWWXTOOs?=
+ =?us-ascii?Q?ufCn9Cx7A+5V+yo2rM5rNSl2GhU8m7w8SQcvIxSYgJ06WRIRh14oXSQp8cfO?=
+ =?us-ascii?Q?Z7XdQZJrvhlA+FxbIs9WaG45n6V0t9o/9ZXJGVXbzd7zWhfNrkvroonTjGit?=
+ =?us-ascii?Q?KyZ1hWsLim7IilvLC3GS1ZWZAPHBHMS+XSO3bXaQkeSpHq6+vb8J3cXNvrzO?=
+ =?us-ascii?Q?65Vlro2u+6k3rybCQuG+091Y5FvStuFSOpTysIT4WkdI8wX4+bTeMlsPeeWA?=
+ =?us-ascii?Q?UmUDKaEFhljJUHUEl9fgT+AcdifYXpkPiglvMuKlT9wtcSlDO9AnzVHKZ93c?=
+ =?us-ascii?Q?+bfJm7/SIVQA6MA/nrM8vtHJOTkDEgs7JWJvt9nqiFXzfjFw10i145lr6ka5?=
+ =?us-ascii?Q?RXhG8UkM3RH3GxwdhPdz+Lu+gXDh6LZWvzFjj6y6uPw9T/nCiCUzZ0aUMRy/?=
+ =?us-ascii?Q?E4lcDYWUPN5mXxqbimcpjsS4WEJC4XGkZr0Oq1JA5Rxh3zOmMdiNBW1mppHG?=
+ =?us-ascii?Q?dK5SkceNhqRf8XojuHbz91cp?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?A/m0h+qcDS9pbCt8kdH2xcrVU9SWyNRlKfDgEun1sITGwRaBZMqXcgiM+IRI?=
- =?us-ascii?Q?584snE3wf0oZShmXBKYe0ZtTJ5eVTpXqJdUWMZE+swxrrHUWJGmfd4QG/JJM?=
- =?us-ascii?Q?FWEESP0Od6jDb6VRY0H09Oou2ZYIGulBx8t0gYOuXW1JYA1iT3qGCfZGMInY?=
- =?us-ascii?Q?raOIqyQdIchydgrYyc4TOl8PjgRia9NOxS2zrQtqqDTq0FHlq+Xyc7rVwTM3?=
- =?us-ascii?Q?Zh16hzFKXcPkqfj3aywzvDgy0wyeCIb4cq03AWZkxmMWfIxOnHiDm9vfyRlB?=
- =?us-ascii?Q?VY5J43wzrp03HJjepaPZ5rtlTiuD/gLtKAcof4cr/AWgUkps30kYfmqe8Qap?=
- =?us-ascii?Q?PJtarl/+OlFMgozdUGoyTyzQBXDEQDZLnFi66/K92S3XuAfEp+u9CzrNd47W?=
- =?us-ascii?Q?0AbnMlvWro+4ke/WMemF8KGRCijEVktJ2kMsqSNELLeaIEiicE0y+3HlFUmM?=
- =?us-ascii?Q?layC5zoiP25DoM1JLtpxfBt4PTqN2aT5qoAO7Nr7IJFC2uDQDsq12AUsJD11?=
- =?us-ascii?Q?9yf43D+KfsQoF9906vmC4Hj29C/z04ffDfyENdc7tkcWe+0OhW0SRY8RM+/V?=
- =?us-ascii?Q?Ch5BqUTUXiJfVB0maFBHInsbHkT2pno3oWG1/DvOq1FRtPRCZva5h+Mqdgsc?=
- =?us-ascii?Q?Bjf9NblrVpM8Gcwl77HZviewoGsoPfZ+ExJneeJSc+zkruO32XE+kZQnDAJq?=
- =?us-ascii?Q?PnYVJgVqUArbuzK8IcpvPBk/0oa44B6gDOee2Qp7DuBiAKrVGPi3Cng8SlI/?=
- =?us-ascii?Q?SXLNHnrvxAAuS9t/wMqhZpk1QEUmW94N8L56IeWko+6wvp6Aeo3rBm5IdMGs?=
- =?us-ascii?Q?frH4OANdtse3Le9R31wKKFB/UNbsxA3em35VpLea0XLK546HFnWWakXlvpCG?=
- =?us-ascii?Q?TVBYGyEXRcf0xLJL+TSxWDXrxeWdCv0C5SjQ/twLcNcsdxVdDvsqLtIPvYn9?=
- =?us-ascii?Q?G5eDqQdFATa59v3Q/8KDbEiSv3/O6Yvna6qpm4Sip+m5VjnEGcqW0icTmdxz?=
- =?us-ascii?Q?z+rwOWZLlMXMxJrJoKFBdt883vYX08sSIm/gSbhc7rKpkkKOezU0ZHTKGBk6?=
- =?us-ascii?Q?MptnKlDs7FKRFlwbCnBEkcxcZARF6C9+u+R35oVLRj3BVn+BFPdpfjzCCpVw?=
- =?us-ascii?Q?gIh+KJimR/pEHoKtKofIxRqdjAKtPcDvdq54R3c+V0uDAXeSZlqR9spGCLb0?=
- =?us-ascii?Q?v97JXgpJeHEf5zQ9muGfeWXcQOv8iXU+VoS6bKVPxSVmWI5HSlhqIWfPhhVK?=
- =?us-ascii?Q?fNRxsk9Ew2XxN4elPSOWR+5suTEHKPyi6fQXVk/aJp8Xj1U3qdA+YNtKH13j?=
- =?us-ascii?Q?dVjU9+5rxo45xu1uc2aZFEoX5S8aNiybUqHRWTHgwBrtfNbTSFr2PdWrCniX?=
- =?us-ascii?Q?eYON/r9AIlrH3R2ex+nJaHlE9JjUaDralRHlcWMySKbThtR57D3ak0p/FRM6?=
- =?us-ascii?Q?p0BG3AJCcq7PHUkKudGqUAWoJkL8CWivT0jYOwToCK90dwOjbXqOvxOe9ngY?=
- =?us-ascii?Q?+pU9vNf7J17LQ8emlAL1TI+ubATj3vyq18jsTOE+OB0Sr65p/S6xg/dgvBw/?=
- =?us-ascii?Q?LQwJvtfW+psehOMT2SA=3D?=
+	=?us-ascii?Q?qxlGwldOWm2u2AuF3q5eCits0aUWddCIsL2PvyruTQN55dyrKUrHQ7riK5j2?=
+ =?us-ascii?Q?ZDF6XHFcJ7hkRCbzkQriL85G8tra8v50kYQsMVcjO4MK2plvfiiHGzuc3EYq?=
+ =?us-ascii?Q?2LsvSReBnP1mXNt3QMcj87rG54pppplGV1Em/BcitawRz8YPnGauneX6qE8G?=
+ =?us-ascii?Q?yrlIonbY1+qtLnrt/elc5Juk4giOc1swC3uCLZV9yd6gPsQAXl2NeFTioJYO?=
+ =?us-ascii?Q?fQ4vuzS/2PToBlE+R6q44iQJ7c2PTSU43vIj7oAPhhOJi1FYpZojgv6XcfWV?=
+ =?us-ascii?Q?ZI+GDBhp9ERV56VK0fMC6ecIGUP/8VXN1/hle5LEvQSLvoN0pUV98h4dKvgY?=
+ =?us-ascii?Q?3Ei5vEvXKdixcGFCWIoduuNZALUQfrhMHTnSuYGGMEKoFfSOqcpw0emtUHM8?=
+ =?us-ascii?Q?IYXyoxIeHBSYPxfUw1VaTcQPMDMBs5+6PdHIalVU8yNGankzQcs4aEFlgiJe?=
+ =?us-ascii?Q?8g3T42I3+BI/ce7Cgwn1+/hh5kjRlXEQyXBtD2/Na4eVlIptorilqGN5OFty?=
+ =?us-ascii?Q?tGWc7j3UoYcEec6Z7CfVWzS330AYudpUjncHF3PgglACJdfdgt/3PzkFvtlh?=
+ =?us-ascii?Q?95ev2r6nD+gziGdSs2Dsd+VCMMNFO1EO+1XfzQ59t0F4JlfRMPIoBUhzV1/I?=
+ =?us-ascii?Q?/ojYKV2AshupFvuTUGZm/Ghw5T3kNo17/FK5qfFQbgFPeaIocBsdnaQuduH2?=
+ =?us-ascii?Q?ZSppvfDpitMGofBvgVc1Ya7qyKJDxtKcrzep2iitnmRUgjXsI9kwzl3Sd/Gj?=
+ =?us-ascii?Q?EnBhaEGRIZLg/YUwU1dPKbFeRCYda1M+7jARW7p8fDXD/E5OihPKXBLT5xfy?=
+ =?us-ascii?Q?uwHpnamhiKFYPlhVqhZGY1oMDpZYwN3vVvnUESxQyUmbCfTT3XesDZCA3Kq+?=
+ =?us-ascii?Q?4eHoJpbtXLnj/ju5uwMAi2rYCnBbTGMp36yx0/JOdndVKPUmToo0OOGNObPQ?=
+ =?us-ascii?Q?pvFwqr2o98mE/csDuCPpFkFN87j/48RUDWsV4ZrqQUgZT804eV7MCy0QWN3R?=
+ =?us-ascii?Q?hDeA4aYJjjLAsuGUVzKroGtrQJRYRBzWy8Yx1T5E5R0k3+V+m/U1X2jMGcBg?=
+ =?us-ascii?Q?jPBD5ylMpXThPita4NzdEoSDJO8qY5v1STzLefg6l1QfTlkPd8yjx3kB0Ad9?=
+ =?us-ascii?Q?Ylb1YCcJ4qnzLMLTjsOZWumPm8sxzeid+COAk9AXNt4R4wWvRbRSxMf8lnDD?=
+ =?us-ascii?Q?A/AD+Bhm2P0w7m7LrWDdrmhfS6+aNUY/P9ofgw2gRiA5ePHQiS2vWddYtNO2?=
+ =?us-ascii?Q?/g9eGf6AJYFMhr0/NSPCK7nP/hKGcFtxF4YzHfki7l2PPMHFZVrUNgn90rre?=
+ =?us-ascii?Q?HL1llzu+FmaJwFM2GO8RJp3eGSEcvU2EwEU//jJ3GCt9AmuI99SfVy+18E1e?=
+ =?us-ascii?Q?5snp4i9FRnPElug4XELZimjvNZeY3RN4ti3VYBwbWfBLEmyTKm0P4dG8RPib?=
+ =?us-ascii?Q?zkoTVFslnGLf+UDxHvOtNpXYlkc2ees4P0shWAXa0+jRS30YMmvsYRTmqpie?=
+ =?us-ascii?Q?hmq2v8LLsH6vTbu6GPd1NQGl8GyeMr2Pl5S+F95Qp+EGk58W3Eqi3SAXSGkj?=
+ =?us-ascii?Q?JpvBMaZ0c91rdDeN2ng=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7072227b-4d2c-4324-dfb1-08dce87eae5d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71d76295-0202-478b-92f6-08dce87eae69
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2024 16:23:16.9766
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2024 16:23:17.0717
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TLGTBpL+r3mzeH7BFltOmRbgp/RgNekWKzKXa+0QSyCx1mydxOdtlb78n1DNTihJ
+X-MS-Exchange-CrossTenant-UserPrincipalName: fzV3DIQp0gkbWnuegAh+abXT7GjefFb21K/DvB7YXRKGbwcc7TYdp+rAtV4+a2bI
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6073
 
-This brings support for the IOMMFD ioctls:
+From: Nicolin Chen <nicolinc@nvidia.com>
 
- - IOMMU_GET_HW_INFO
- - IOMMU_HWPT_ALLOC_NEST_PARENT
- - IOMMU_DOMAIN_NESTED
- - ops->enforce_cache_coherency()
+The IORT spec, Issue E.f (April 2024), adds a new CANWBS bit to the Memory
+Access Flag field in the Memory Access Properties table, mainly for a PCI
+Root Complex.
 
-This is quite straightforward as the nested STE can just be built in the
-special NESTED domain op and fed through the generic update machinery.
+This CANWBS defines the coherency of memory accesses to be not marked IOWB
+cacheable/shareable. Its value further implies the coherency impact from a
+pair of mismatched memory attributes (e.g. in a nested translation case):
+  0x0: Use of mismatched memory attributes for accesses made by this
+       device may lead to a loss of coherency.
+  0x1: Coherency of accesses made by this device to locations in
+       Conventional memory are ensured as follows, even if the memory
+       attributes for the accesses presented by the device or provided by
+       the SMMU are different from Inner and Outer Write-back cacheable,
+       Shareable.
 
-The design allows the user provided STE fragment to control several
-aspects of the translation, including putting the STE into a "virtual
-bypass" or a aborting state. This duplicates functionality available by
-other means, but it allows trivially preserving the VMID in the STE as we
-eventually move towards the vIOMMU owning the VMID.
+Note that the loss of coherency on a CANWBS-unsupported HW typically could
+occur to an SMMU that doesn't implement the S2FWB feature where additional
+cache flush operations would be required to prevent that from happening.
 
-Nesting support requires the system to either support S2FWB or the
-stronger CANWBS ACPI flag. This is to ensure the VM cannot bypass the
-cache and view incoherent data, currently VFIO lacks any cache flushing
-that would make this safe.
+Add a new ACPI_IORT_MF_CANWBS flag and set IOMMU_FWSPEC_PCI_RC_CANWBS upon
+the presence of this new flag.
 
-Yan has a series to add some of the needed infrastructure for VFIO cache
-flushing here:
+CANWBS and S2FWB are similar features, in that they both guarantee the VM
+can not violate coherency, however S2FWB can be bypassed by PCI No Snoop
+TLPs, while CANWBS cannot. Thus CANWBS meets the requirements to set
+IOMMU_CAP_ENFORCE_CACHE_COHERENCY.
 
- https://lore.kernel.org/linux-iommu/20240507061802.20184-1-yan.y.zhao@intel.com/
+Architecturally ARM has expected that VFIO would disable No Snoop through
+PCI Config space, if this is done then the two would have the same
+protections.
 
-Which may someday allow relaxing this further.
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/acpi/arm64/iort.c | 13 +++++++++++++
+ include/linux/iommu.h     |  2 ++
+ 2 files changed, 15 insertions(+)
 
-Remove VFIO_TYPE1_NESTING_IOMMU since it was never used and superseded by
-this.
-
-This is the first series in what will be several to complete nesting
-support. At least:
- - IOMMU_RESV_SW_MSI related fixups
-    https://lore.kernel.org/linux-iommu/cover.1722644866.git.nicolinc@nvidia.com/
- - vIOMMU object support to allow ATS and CD invalidations
-    https://lore.kernel.org/linux-iommu/cover.1723061377.git.nicolinc@nvidia.com/
- - vCMDQ hypervisor support for direct invalidation queue assignment
-    https://lore.kernel.org/linux-iommu/cover.1712978212.git.nicolinc@nvidia.com/
- - KVM pinned VMID using vIOMMU for vBTM
-    https://lore.kernel.org/linux-iommu/20240208151837.35068-1-shameerali.kolothum.thodi@huawei.com/
- - Cross instance S2 sharing
- - Virtual Machine Structure using vIOMMU (for vMPAM?)
- - Fault forwarding support through IOMMUFD's fault fd for vSVA
-
-The vIOMMU series is essential to allow the invalidations to be processed
-for the CD as well.
-
-It is enough to allow qemu work to progress.
-
-This is on github: https://github.com/jgunthorpe/linux/commits/smmuv3_nesting
-
-v3:
- - Rebase on v6.12-rc2
- - Revise commit messages
- - Consolidate CANWB checks into arm_smmu_master_canwbs()
- - Add CONFIG_ARM_SMMU_V3_IOMMUFD to compile out iommufd only features
-   like nesting
- - Shift code into arm-smmu-v3-iommufd.c
- - Add missed IS_ERR check
- - Add S2FWB to arm_smmu_get_ste_used()
- - Fixup quirks checks
- - Drop ARM_SMMU_FEAT_COHERENCY checks for S2FWB
- - Limit S2FWB to S2 Nesting Parent domains "just in case"
-v2: https://patch.msgid.link/r/0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com
- - Revise commit messages
- - Guard S2FWB support with ARM_SMMU_FEAT_COHERENCY, since it doesn't make
-   sense to use S2FWB to enforce coherency on inherently non-coherent hardware.
- - Add missing IO_PGTABLE_QUIRK_ARM_S2FWB validation
- - Include formal ACPIA commit for IORT built using
-   generate/linux/gen-patch.sh
- - Use FEAT_NESTING to block creating a NESTING_PARENT
- - Use an abort STE instead of non-valid if the user requests a non-valid
-   vSTE
- - Consistently use 'nest_parent' for naming variables
- - Use the right domain for arm_smmu_remove_master_domain() when it
-   removes the master
- - Join bitfields together
- - Drop arm_smmu_cache_invalidate_user patch, invalidation will
-   exclusively go via viommu
-v1: https://patch.msgid.link/r/0-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com
-
-Jason Gunthorpe (6):
-  vfio: Remove VFIO_TYPE1_NESTING_IOMMU
-  iommu/arm-smmu-v3: Report IOMMU_CAP_ENFORCE_CACHE_COHERENCY for CANWBS
-  iommu/arm-smmu-v3: Implement IOMMU_HWPT_ALLOC_NEST_PARENT
-  iommu/arm-smmu-v3: Expose the arm_smmu_attach interface
-  iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
-  iommu/arm-smmu-v3: Use S2FWB for NESTED domains
-
-Nicolin Chen (3):
-  ACPICA: IORT: Update for revision E.f
-  ACPI/IORT: Support CANWBS memory access flag
-  iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via struct
-    arm_smmu_hw_info
-
- drivers/acpi/arm64/iort.c                     |  13 ++
- drivers/iommu/Kconfig                         |   9 +
- drivers/iommu/arm/arm-smmu-v3/Makefile        |   1 +
- .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 204 ++++++++++++++++++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 114 ++++++----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  83 ++++++-
- drivers/iommu/arm/arm-smmu/arm-smmu.c         |  16 --
- drivers/iommu/io-pgtable-arm.c                |  27 ++-
- drivers/iommu/iommu.c                         |  10 -
- drivers/iommu/iommufd/vfio_compat.c           |   7 +-
- drivers/vfio/vfio_iommu_type1.c               |  12 +-
- include/acpi/actbl2.h                         |   3 +-
- include/linux/io-pgtable.h                    |   2 +
- include/linux/iommu.h                         |   5 +-
- include/uapi/linux/iommufd.h                  |  55 +++++
- include/uapi/linux/vfio.h                     |   2 +-
- 16 files changed, 465 insertions(+), 98 deletions(-)
- create mode 100644 drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-
-
-base-commit: 8cf0b93919e13d1e8d4466eb4080a4c4d9d66d7b
+diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
+index 4c745a26226b27..1f7e4c691d9ee3 100644
+--- a/drivers/acpi/arm64/iort.c
++++ b/drivers/acpi/arm64/iort.c
+@@ -1218,6 +1218,17 @@ static bool iort_pci_rc_supports_ats(struct acpi_iort_node *node)
+ 	return pci_rc->ats_attribute & ACPI_IORT_ATS_SUPPORTED;
+ }
+ 
++static bool iort_pci_rc_supports_canwbs(struct acpi_iort_node *node)
++{
++	struct acpi_iort_memory_access *memory_access;
++	struct acpi_iort_root_complex *pci_rc;
++
++	pci_rc = (struct acpi_iort_root_complex *)node->node_data;
++	memory_access =
++		(struct acpi_iort_memory_access *)&pci_rc->memory_properties;
++	return memory_access->memory_flags & ACPI_IORT_MF_CANWBS;
++}
++
+ static int iort_iommu_xlate(struct device *dev, struct acpi_iort_node *node,
+ 			    u32 streamid)
+ {
+@@ -1335,6 +1346,8 @@ int iort_iommu_configure_id(struct device *dev, const u32 *id_in)
+ 		fwspec = dev_iommu_fwspec_get(dev);
+ 		if (fwspec && iort_pci_rc_supports_ats(node))
+ 			fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
++		if (fwspec && iort_pci_rc_supports_canwbs(node))
++			fwspec->flags |= IOMMU_FWSPEC_PCI_RC_CANWBS;
+ 	} else {
+ 		node = iort_scan_node(ACPI_IORT_NODE_NAMED_COMPONENT,
+ 				      iort_match_node_callback, dev);
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index c88d18d2c9280d..4ad9b9ec6c9b27 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -991,6 +991,8 @@ struct iommu_fwspec {
+ 
+ /* ATS is supported */
+ #define IOMMU_FWSPEC_PCI_RC_ATS			(1 << 0)
++/* CANWBS is supported */
++#define IOMMU_FWSPEC_PCI_RC_CANWBS		(1 << 1)
+ 
+ /*
+  * An iommu attach handle represents a relationship between an iommu domain
 -- 
 2.46.2
 
