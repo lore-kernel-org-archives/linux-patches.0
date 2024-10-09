@@ -1,68 +1,68 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2076.outbound.protection.outlook.com [40.107.220.76])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2086.outbound.protection.outlook.com [40.107.220.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404E41E103B;
-	Wed,  9 Oct 2024 16:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FB01A262D;
+	Wed,  9 Oct 2024 16:39:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.86
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728491973; cv=fail; b=YS21hbYPl3fWUC/1/y/muvVkqtwUfGKoS2YhBBRQ3DYrvuUrBPvQMHsCvXWAEYFLMsQT2tPSbVB2oGcUifmEyOd2Vmnkz64jLLIoIJwdcEyM9o76sPsxk6g5dmPiTWUrmu+U/I7cdRE+S59VkPVvVRvC4uKCRxzUcTzdHyI1Z70=
+	t=1728491978; cv=fail; b=Axg7tjveaMWe+EhPhruvWwbEAMrW++jJSn1w4ccwD8xv+tF/xpFnYNfrJXMgM3HYopdszZe0ALTxaV8U1bs3yeF0tjvkM32dWoBv++oI3NChq2Q2lcMqO4Waj359RTSBN3lAXeO1H5Kuwwx7SQR7yA5DyY1ASi95e6uK2076Ei0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728491973; c=relaxed/simple;
-	bh=WHY0ugQOQc57h2ruy5QsClqDYeuYPth4biOz6N5nYOE=;
+	s=arc-20240116; t=1728491978; c=relaxed/simple;
+	bh=4tVbGJUJqtNGaVcT8R0kiIUNsrETZdEzeMtjYjZZwF4=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ceyCUOvzvev6rndeOeikt7Cb/ukO1KJKC0NvpQ46HJPc95A647vp4Fe0OYuYDno+kRnHRC2g+Ib6z/uT+XnPSxGq2iDYNgZthKW1rP0jt2e3SElu63VNEYrTKO+aD2NnZVXLLUtM6B96RaWGFjdRI9dr8FwOVTLxJFJgdCrFUKQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QjYdkPw3; arc=fail smtp.client-ip=40.107.220.76
+	 MIME-Version:Content-Type; b=KhYSuzvbA+ZHEA+oEKkNl2fVjdn4oNdf3DVL9NWUmAdEAg0MZ0VqM2FC9xapjjdjcLm+ug82ZscavO8f683PSKnwHdA50ycMo8kcYXfQg5m8EBkPj7Wak4RXwEnZbsCG5apQok03866EDu0J3SCm+on82C5J92WXmAdv4tRes08=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bLaWzkSo; arc=fail smtp.client-ip=40.107.220.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QjYdkPw3"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bLaWzkSo"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LaFtw89AcmEZOHPs20brj+2z12qL7MpFLD8SNCGIJyF5V49BHAUqedm5dyhs3AcBOBb/1xs9ylh3JD0i0lZZo5i6IYmhLgBGRGoXQC+3jkhROQPzSMHvT3r0LFnxWTwHWp57C+aNOfoleMO5VGMduDt6MUbytQ2mzHjvT+yyGcL5Qi77AtvjP2jVEiTRvOtZwMHtYG4nhYb6jI19cHukyiQmNfBw9PPEz4q2UD4gY4w6D2HQCLNhmo05xjiR1fTb9xhbWaPT2QBNDBqaIgwBApe5fUcaFU0n3c3UtGM+l6ijrdCwjjYfIAwVYdSsvUtvNn6LYJvvrcaW+U2hANf25g==
+ b=tqQW/iuDu0OPAQSHMzb5UUmd+JmjC17sWS/bPIQ+2Ug6ovvB5vyHjdaEGE/fdSPDvuou5jfH2QcEmz4+o7Hhai2lTipVccs7q/zlXYA24gm8B6xOWnTuRsnlHwowjiM0Mij5B0d7MbpQHcc9eTM/a/SQ31azmfVOUbUVlI1zyeaiDi7ImtGOsIV76/v70mB7XeX1aia5T5NCtv+wIFZU6GBVMt1F4Skl5MtQE6YjzTMtTrzF4CgYIV+GK9yDigPXkny+j2jLiGPranxyP5pTpDgw77nmn4RA2zVSRolmHcndfdhuZp6ENvKvzmHnlA6KZRjZ3c94gO9vgxwAcpInRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=POe16X6GwCo2gRYg7xg4TtCfWFBZbXsj/TKr5W1vlNg=;
- b=skHIzhhXey2eNLFW/c3m6B44tlILswtN7qxBJU9FIl/KNPhtZ9UgX5ShusoYfy4fNG8JAsL0AjlkX2nqe483MVbLku4ClOK2OTAC/+GPCFFRP1yENY0AvND5mMEhxFvw9hegZuhpZJpWgfO22QtJc/40gR6fDdrfTW8pL1qUoVi9ca0qVaQK/GxyHvvbGURKyXNk32V6KlVLy5pInJ8/75NqYnkMN6CSz1JFIftl3blGVsnnG5lYqYB9nYvPrEa6SAlt3BUjAKAQ1tc36Psf04m8nYIMJnJ0PqHqtTXGUfzeBdBYD3Y4dx6ioEnvgSor1fdA2FgXX0oebFxLVZusjg==
+ bh=mhNOrtl8ngqFvDkhNDxq9eJsPpkGfYBdkM2wPGCOqls=;
+ b=PxWKkXyNeKEljbRjE3967yQKocGcYsUJ9n6Otm0ciFKIVSdmvL49sHVLaaOBJvjK91/i6M+bvTupUsQxrM9E7DRY8OVInSTToDf2/URPc5T33fq/0/LblQ3cK1hET8OBSU7sLkNRtdvxnZ4CyxWwVd6aTHwfMH0mbpHhyCr9BABAw4Ja10O+keTm2WCjLLtutQxT8cJQb+KsDZexupoNPi+Im3jXMK12a4vTKNDGctnKS3KA6k/8zpiujcukcxCkDNDHwGhT5dZfgxMl/1+2ncL7fF/U9f2BgsiBbVRhF99IWTjfBiZ7C0Qio2v0Z5cYZA+P4OSWxEvA0mMqkbslAg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=POe16X6GwCo2gRYg7xg4TtCfWFBZbXsj/TKr5W1vlNg=;
- b=QjYdkPw3YXxAlnjXwboYvuzS2WPIpjvQ60lwA7w5MuFhVs2eWrXGgrC/QJ2bgaD48piAm+a8wxgTzKp3eEth5mfb6hpnlb9B6YZziRVQa+kz3+9Ef7zOcID0DFiYts4OBW6R/RxyJZ97YionJfQQZAI4m4E6eTE9SAwXseb7hu14EAiu9eNK1fqARQCT5dbcy3kfdXdbe0i91liOeTrhtIY5JGLZfWI4z2XxslJv+tQ5jcRwdYY5jKcw8z84j96YOfkXPM2TGNI4m78EvJ4hQdwcFSaWP4ZVnR/C1PoBsPe5waqY8/ekyP40HjY9uy3LP+KXvPD8y20KrpRDRfT9hA==
-Received: from SA1P222CA0119.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:3c5::18)
- by SA1PR12MB7221.namprd12.prod.outlook.com (2603:10b6:806:2bd::7) with
+ bh=mhNOrtl8ngqFvDkhNDxq9eJsPpkGfYBdkM2wPGCOqls=;
+ b=bLaWzkSoexE3I9fpEvt/PMDHfi7X0Q8cKQUVGKHoW8RlNBToHl0/mL9UfB7XQsbe+TwDaahgGfIqD99MIsymrzOdGZcZDakDmngbkFni6lUm+5gUkw5DovahWFZMXdyH+/JaMvYCu8KQH5mCPchM6Qe/6GZ9NzeVl8FTeJVEPDA7xypm5nLkgJw7tRFJY/58/H1mNYomPRJlG6R6zvUeicDLRE45tbsuR1CdhLKc7M6mpSYPfLdAWBJlNeuQFnxddOfmESsRUafRhWqkz9Bmunh4XrX2pTT58tWsXR8eQ9PKngC0SFIrL1ro3qq1cujbURqqjQ6R4MJnGq0+qm6D2w==
+Received: from DM6PR02CA0146.namprd02.prod.outlook.com (2603:10b6:5:332::13)
+ by CH3PR12MB8403.namprd12.prod.outlook.com (2603:10b6:610:133::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.23; Wed, 9 Oct
- 2024 16:39:22 +0000
-Received: from SA2PEPF00003F63.namprd04.prod.outlook.com
- (2603:10b6:806:3c5:cafe::45) by SA1P222CA0119.outlook.office365.com
- (2603:10b6:806:3c5::18) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 16:39:29 +0000
+Received: from DS3PEPF000099DF.namprd04.prod.outlook.com
+ (2603:10b6:5:332:cafe::38) by DM6PR02CA0146.outlook.office365.com
+ (2603:10b6:5:332::13) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.17 via Frontend
- Transport; Wed, 9 Oct 2024 16:39:22 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ Transport; Wed, 9 Oct 2024 16:39:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- SA2PEPF00003F63.mail.protection.outlook.com (10.167.248.38) with Microsoft
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ DS3PEPF000099DF.mail.protection.outlook.com (10.167.17.202) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8048.13 via Frontend Transport; Wed, 9 Oct 2024 16:39:22 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.8048.13 via Frontend Transport; Wed, 9 Oct 2024 16:39:28 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 9 Oct 2024
- 09:39:12 -0700
+ 09:39:16 -0700
 Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 9 Oct 2024 09:39:11 -0700
+ 15.2.1544.4; Wed, 9 Oct 2024 09:39:15 -0700
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.12) by mail.nvidia.com
  (10.126.190.181) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
- Transport; Wed, 9 Oct 2024 09:39:10 -0700
+ Transport; Wed, 9 Oct 2024 09:39:15 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <jgg@nvidia.com>, <kevin.tian@intel.com>, <will@kernel.org>
 CC: <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
@@ -73,9 +73,9 @@ CC: <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
 	<mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
 	<smostafa@google.com>, <yi.l.liu@intel.com>, <aik@amd.com>,
 	<patches@lists.linux.dev>
-Subject: [PATCH v3 12/16] iommufd/selftest: Add vIOMMU coverage for IOMMU_HWPT_INVALIDATE ioctl
-Date: Wed, 9 Oct 2024 09:38:24 -0700
-Message-ID: <b050efa68fd64cd3880dfb4a2e36d4289f70c036.1728491532.git.nicolinc@nvidia.com>
+Subject: [PATCH v3 15/16] iommu/arm-smmu-v3: Allow ATS for IOMMU_DOMAIN_NESTED
+Date: Wed, 9 Oct 2024 09:38:27 -0700
+Message-ID: <6c6a25c296eb988d590883c296c21ebbedd53f72.1728491532.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1728491532.git.nicolinc@nvidia.com>
 References: <cover.1728491532.git.nicolinc@nvidia.com>
@@ -90,286 +90,265 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00003F63:EE_|SA1PR12MB7221:EE_
-X-MS-Office365-Filtering-Correlation-Id: 836f147a-b245-4354-993e-08dce880ee00
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DF:EE_|CH3PR12MB8403:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9fb22699-253f-4f66-b349-08dce880f1d2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|1800799024|36860700013|82310400026;
+	BCL:0;ARA:13230040|82310400026|36860700013|376014|7416014|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?r+MLT17+spxX2L3QYgnK/LC+tx2XvAOgqxvt4F2JTjdcpF6pmElCTzbK1Sbv?=
- =?us-ascii?Q?CqFz4q6uBt5sgFqaaaYV6VblEPGgyoQCTE+7Nqc5ZuOsDTYnhB68gmD9if32?=
- =?us-ascii?Q?XHtNIx4kzUqJXyrfVohU/1D2GVDP6RYsDp+X+xnYIu88QTlKsds0hfjaix+T?=
- =?us-ascii?Q?sKmd6aRzE5eE5IMpEbi+3oXNNg4F7vyB7nwwUkRrpqE4BHQAENjhHu/xcgI0?=
- =?us-ascii?Q?1gbNxszjLD3lDWpIgy19QdR8nioniTwACaEkizG7+cbjwpO8xdeZgO0pJ82D?=
- =?us-ascii?Q?SOgWffAB8Tfi/qILqJo31TJ+Z+t5+hsvVdGG+7Ac+MzZ/ujC/fZpUBluF45z?=
- =?us-ascii?Q?kpCAduh41Yyc6J3BTGlH9qK415Y8DSi6ToatQ+bWrvrlUYUWLMGR+Zj/y8rf?=
- =?us-ascii?Q?IZPhwWH+7udVSRpuS4aq57qloytrG0CThO4sdfYDn57RJQXxfmPGam5EMy/m?=
- =?us-ascii?Q?BCPtBSn2NNAHhQTfFxPrNsXNWp+yiWYPg77bwI5EWK/a7Xi59mvxP4iIWahZ?=
- =?us-ascii?Q?y2kv2czNNFqtNl8m7ttvauAmAlDV6hy86F7uhYfY0UBHHvr7/yHq5m9RML01?=
- =?us-ascii?Q?ECzzbMQQ5YFX1bMmZ9UPBU+f2krQJSH8jZyGT3urMANNz11iiLMqs2VGJoJO?=
- =?us-ascii?Q?pglwlaXTirKafRM5NvLbwAS2hTBM89KiH/FiSauVfinn6+j/XwG14L0xus7e?=
- =?us-ascii?Q?rdF0+t8V4e81NW0nkstA1CUGmLawo52ID/u47CkMDuij/udh1rkuT87OPbF+?=
- =?us-ascii?Q?nzwZLX7Zu6Y0cvoF/nUj45wmFSYNq8zf90N16uUv+yTF5DU7ogZUmvUQLTDk?=
- =?us-ascii?Q?z7o03FMkLwZ3K4DsHVh2+sQB4G+j5Rx3ONEtbZcKq5IED6nYNxRm5Ga4vkY3?=
- =?us-ascii?Q?nbDbYnlGrmCexE4s4mYmG4EHfBlYiYvAQZq3h/oZlzn3wJqteM7TrxxTjyfi?=
- =?us-ascii?Q?b/OPjz4ZGaLzSVETWusujmp4Yb6K9nT3LfuGoqPfZ3pWqVgL4VS8CU/nqaJd?=
- =?us-ascii?Q?Q1FB4LJVAh5NrS8eSjJ2m3EIpU2+rSvD1XFX+ciU1jA2D9BmKt4WK+J9gd8g?=
- =?us-ascii?Q?f59r9bdaSapHMayIg2RiOgJSFULwCFdiQiLi/lpxCpiHdalVVCe5xaaD2IjV?=
- =?us-ascii?Q?vZUoMxMiRy9tkpOFElpU7QwchdZC+YxGeo+L/HCA6hAMzgN/82tmHKWNvR+b?=
- =?us-ascii?Q?++d2ofRy0IYy40L21sU+GwAaXiQWNz/TcTRanKTc3S5FD/+5OuCTXeAamw4x?=
- =?us-ascii?Q?5tSmq+6/o4tAlXlnVP7jnmVOA6nOXv6VlzBYNfQSjnYtkAi7oZXXk2Xy5wYw?=
- =?us-ascii?Q?YCrwmEi9tNuehrJuLvj6G7rl3NLHTwrlml++aU13GvEjbma1Da2BN7mv3VDB?=
- =?us-ascii?Q?QHF9B/B/t7/y+2gO1Ol3gW+Yd8hA?=
+	=?us-ascii?Q?maQjsK/scGjNzLapr+wPuvlvX7d6caK/9hF1tYo7phZauhoe7RW20GAjGf/Z?=
+ =?us-ascii?Q?upFPF+mci0cJsnw1Nb/jJtS7OprDhCwF5QwICm1ZtNqNxkEnHWCM8X965BeW?=
+ =?us-ascii?Q?dhu4mYrXLk/eaNHQls10NvgvzkL3yo10UrPr2KmV4sD5xaSvpH/otbLFk0cx?=
+ =?us-ascii?Q?7B4fzUP5SK1yL874iJEn42I5GG22FSfkD77IL00kQyp+opO9FY3G3Aqd9PAV?=
+ =?us-ascii?Q?9Vk1WE/yPpBXEbgpzGasNZJNs2N7+fG6G916Z7b+jE8PpK1DiRdDo3J9qRl+?=
+ =?us-ascii?Q?06dvFN15cICpBRU7JuPZPMa2NOKgj0ZxijhBUJv86z0anQml1L7O2shSQD8Z?=
+ =?us-ascii?Q?TDGAnCn7hIARQXijvbTzGtvQGHLB9DZ5/B3TCS6cUeBG6bwNGDFdPeFnFrN9?=
+ =?us-ascii?Q?HMCwqHlXdNKFUh5GwCDZVm1y8+trLgDOe9AtluenSONsvf/uhkQdsHrv+RzR?=
+ =?us-ascii?Q?m5O8YR6c7Uxgk+lHANfctqLdYPUqwzf1MFKAr5rZOiBOI2gzLHjSib+xxw1s?=
+ =?us-ascii?Q?hUvZCray+OIdDhP8zM5wJ6Ktr9E2VaJvmcGSSdlSSaTfPInjeqB8Tj6W8X2l?=
+ =?us-ascii?Q?4Du8gNdnL1Txmfzg9uN50olQEyRGcaM1czDN05IbG+QCudCD6MaMOYNgsxGB?=
+ =?us-ascii?Q?WguNndnoPs6C7ZEFAbKRA8DcuUqDTCdw1shCuyscrwhHcxFyqSJmieF3d9hj?=
+ =?us-ascii?Q?GJwHuX/Lj9dDzhsOICIVojTrtp+/QbgpyfNELZbQbacCl40dtgPIUccPgcoG?=
+ =?us-ascii?Q?lUN8HInz3XS4gd/Q6BLhZohtj1JGmqoYusUak4TWsUh2sK6IRsrUEUTYxs4S?=
+ =?us-ascii?Q?BE0eMbqb4nuIyMCVn8P+QI1evRnekOYHNjqcmj2cm8W8zMkl19IbFQHQFoiW?=
+ =?us-ascii?Q?f+E0B4LmwP5hkjfghhtNl7dluzPPsgbqgIR5xYqvdyyMormnKAS7VlYZQ4An?=
+ =?us-ascii?Q?bgcLOfeGLE1IovhQYBjWlGHZShQYku7R0xqer13TcTCMfMhvLuXjteJ+fpVA?=
+ =?us-ascii?Q?aXMMqrXdqQEBPUmQ1kY1om3SI0uWQej0w1ST+ynVZxkPd1pXM7f11upVNse2?=
+ =?us-ascii?Q?MlCBggltwGtSZJPZfIZkJf7qww9JC0/gnBtKC9Zf80Qa5V9PLdlamTAIpoSZ?=
+ =?us-ascii?Q?xtsPsz8kq3S7JUTdxrYXhaXgNYN3xSRhjA4rsa0PX4wA/VEPw5Y43iFVaorG?=
+ =?us-ascii?Q?z2vFnNCdpCnJ38+DGxCFaPMQuUO5PV/e6tHquL1kcZ7+pPmWrkxV30waanoD?=
+ =?us-ascii?Q?vOsloTQbd0iKqJrFqrb7EgnGqY9Xd9kteIucU9MiwQQF6VphX8rNwBRypEQn?=
+ =?us-ascii?Q?GGc1r1IfccEUztbqmf1FuKnlks4uuPj23DYOENtI5BqBAhXaVtarpdN3+rmR?=
+ =?us-ascii?Q?k0GpwQc=3D?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700013)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2024 16:39:22.4992
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2024 16:39:28.8936
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 836f147a-b245-4354-993e-08dce880ee00
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9fb22699-253f-4f66-b349-08dce880f1d2
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SA2PEPF00003F63.namprd04.prod.outlook.com
+	DS3PEPF000099DF.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7221
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8403
 
-Add a viommu_cache test function to cover vIOMMU invalidations using the
-updated IOMMU_HWPT_INVALIDATE ioctl, which now allows passing in a vIOMMU
-via its hwpt_id field.
+From: Jason Gunthorpe <jgg@nvidia.com>
 
+Now, ATC invalidation can be done with the vIOMMU invalidation op. A guest
+owned IOMMU_DOMAIN_NESTED can do an ATS too. Allow it to pass in the EATS
+field via the vSTE words.
+
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- tools/testing/selftests/iommu/iommufd_utils.h |  32 ++++
- tools/testing/selftests/iommu/iommufd.c       | 173 ++++++++++++++++++
- 2 files changed, 205 insertions(+)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  4 ++-
+ include/uapi/linux/iommufd.h                  |  2 +-
+ .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 31 ++++++++++++++++---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 27 +++++++++++++---
+ 4 files changed, 54 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/iommu/iommufd_utils.h b/tools/testing/selftests/iommu/iommufd_utils.h
-index b3da8c96a828..29e9cd1fdd82 100644
---- a/tools/testing/selftests/iommu/iommufd_utils.h
-+++ b/tools/testing/selftests/iommu/iommufd_utils.h
-@@ -289,6 +289,38 @@ static int _test_cmd_hwpt_invalidate(int fd, __u32 hwpt_id, void *reqs,
- 					     data_type, lreq, nreqs));   \
- 	})
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index 000af931a30c..470bc3ee25ef 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -305,7 +305,7 @@ static inline u32 arm_smmu_strtab_l2_idx(u32 sid)
+ #define STRTAB_STE_1_NESTING_ALLOWED                            \
+ 	cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |   \
+ 		    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |   \
+-		    STRTAB_STE_1_S1STALLD)
++		    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_EATS)
  
-+static int _test_cmd_viommu_invalidate(int fd, __u32 viommu_id, void *reqs,
-+				       uint32_t data_type, uint32_t lreq,
-+				       uint32_t *nreqs)
-+{
-+	struct iommu_hwpt_invalidate cmd = {
-+		.size = sizeof(cmd),
-+		.hwpt_id = viommu_id,
-+		.data_type = data_type,
-+		.data_uptr = (uint64_t)reqs,
-+		.entry_len = lreq,
-+		.entry_num = *nreqs,
-+	};
-+	int rc = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cmd);
-+	*nreqs = cmd.entry_num;
-+	return rc;
-+}
-+
-+#define test_cmd_viommu_invalidate(viommu, reqs, lreq, nreqs)                  \
-+	({                                                                     \
-+		ASSERT_EQ(0,                                                   \
-+			  _test_cmd_viommu_invalidate(self->fd, viommu, reqs,  \
-+					IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST, \
-+					lreq, nreqs));                         \
-+	})
-+#define test_err_viommu_invalidate(_errno, viommu_id, reqs, data_type, lreq,   \
-+				 nreqs)                                        \
-+	({                                                                     \
-+		EXPECT_ERRNO(_errno, _test_cmd_viommu_invalidate(              \
-+					     self->fd, viommu_id, reqs,        \
-+					     data_type, lreq, nreqs));         \
-+	})
-+
- static int _test_cmd_access_replace_ioas(int fd, __u32 access_id,
- 					 unsigned int ioas_id)
+ /*
+  * Context descriptors.
+@@ -838,6 +838,7 @@ struct arm_smmu_domain {
+ struct arm_smmu_nested_domain {
+ 	struct iommu_domain domain;
+ 	struct arm_smmu_domain *s2_parent;
++	bool enable_ats : 1;
+ 
+ 	__le64 ste[2];
+ };
+@@ -879,6 +880,7 @@ struct arm_smmu_master_domain {
+ 	struct list_head devices_elm;
+ 	struct arm_smmu_master *master;
+ 	ioasid_t ssid;
++	bool nested_ats_flush : 1;
+ };
+ 
+ static inline struct arm_smmu_domain *to_smmu_domain(struct iommu_domain *dom)
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index d9e510ce67cf..9527a4ecfd56 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -404,7 +404,7 @@ struct iommu_hwpt_vtd_s1 {
+  *       a user stage-1 Context Descriptor Table. Must be little-endian.
+  *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
+  *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
+- *       - word-1: S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
++ *       - word-1: EATS, S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
+  *
+  * -EIO will be returned if @ste is not legal or contains any non-allowed field.
+  * Cfg can be used to select a S1, Bypass or Abort configuration. A Bypass
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+index 1b82579eb252..b491017921df 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+@@ -103,8 +103,6 @@ static int arm_smmu_attach_dev_nested(struct iommu_domain *domain,
+ 		.master = master,
+ 		.old_domain = iommu_get_domain_for_dev(dev),
+ 		.ssid = IOMMU_NO_PASID,
+-		/* Currently invalidation of ATC is not supported */
+-		.disable_ats = true,
+ 	};
+ 	struct arm_smmu_ste ste;
+ 	int ret;
+@@ -115,6 +113,15 @@ static int arm_smmu_attach_dev_nested(struct iommu_domain *domain,
+ 		return -EBUSY;
+ 
+ 	mutex_lock(&arm_smmu_asid_lock);
++	/*
++	 * The VM has to control the actual ATS state at the PCI device because
++	 * we forward the invalidations directly from the VM. If the VM doesn't
++	 * think ATS is on it will not generate ATC flushes and the ATC will
++	 * become incoherent. Since we can't access the actual virtual PCI ATS
++	 * config bit here base this off the EATS value in the STE. If the EATS
++	 * is set then the VM must generate ATC flushes.
++	 */
++	state.disable_ats = !nested_domain->enable_ats;
+ 	ret = arm_smmu_attach_prepare(&state, domain);
+ 	if (ret) {
+ 		mutex_unlock(&arm_smmu_asid_lock);
+@@ -140,8 +147,10 @@ static const struct iommu_domain_ops arm_smmu_nested_ops = {
+ 	.free = arm_smmu_domain_nested_free,
+ };
+ 
+-static int arm_smmu_validate_vste(struct iommu_hwpt_arm_smmuv3 *arg)
++static int arm_smmu_validate_vste(struct iommu_hwpt_arm_smmuv3 *arg,
++				  bool *enable_ats)
  {
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index d5c5e3389182..5a41bac3c1ab 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -2495,4 +2495,177 @@ TEST_F(iommufd_viommu, vdevice_alloc)
- 	}
++	unsigned int eats;
+ 	unsigned int cfg;
+ 
+ 	if (!(arg->ste[0] & cpu_to_le64(STRTAB_STE_0_V))) {
+@@ -158,6 +167,18 @@ static int arm_smmu_validate_vste(struct iommu_hwpt_arm_smmuv3 *arg)
+ 	if (cfg != STRTAB_STE_0_CFG_ABORT && cfg != STRTAB_STE_0_CFG_BYPASS &&
+ 	    cfg != STRTAB_STE_0_CFG_S1_TRANS)
+ 		return -EIO;
++
++	/*
++	 * Only Full ATS or ATS UR is supported
++	 * The EATS field will be set by arm_smmu_make_nested_domain_ste()
++	 */
++	eats = FIELD_GET(STRTAB_STE_1_EATS, le64_to_cpu(arg->ste[1]));
++	arg->ste[1] &= ~cpu_to_le64(STRTAB_STE_1_EATS);
++	if (eats != STRTAB_STE_1_EATS_ABT && eats != STRTAB_STE_1_EATS_TRANS)
++		return -EIO;
++
++	if (cfg == STRTAB_STE_0_CFG_S1_TRANS)
++		*enable_ats = (eats == STRTAB_STE_1_EATS_TRANS);
+ 	return 0;
  }
  
-+TEST_F(iommufd_viommu, vdevice_cache)
-+{
-+	struct iommu_viommu_invalidate_selftest inv_reqs[2] = {};
-+	uint32_t viommu_id = self->viommu_id;
-+	uint32_t dev_id = self->device_id;
-+	uint32_t vdev_id = 0;
-+	uint32_t num_inv;
+@@ -170,6 +191,7 @@ arm_smmu_domain_alloc_nesting(struct device *dev, u32 flags,
+ 	struct arm_smmu_nested_domain *nested_domain;
+ 	struct arm_smmu_domain *smmu_parent;
+ 	struct iommu_hwpt_arm_smmuv3 arg;
++	bool enable_ats = false;
+ 	int ret;
+ 
+ 	if (flags || !(master->smmu->features & ARM_SMMU_FEAT_NESTING))
+@@ -204,7 +226,7 @@ arm_smmu_domain_alloc_nesting(struct device *dev, u32 flags,
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	ret = arm_smmu_validate_vste(&arg);
++	ret = arm_smmu_validate_vste(&arg, &enable_ats);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -215,6 +237,7 @@ arm_smmu_domain_alloc_nesting(struct device *dev, u32 flags,
+ 	nested_domain->domain.type = IOMMU_DOMAIN_NESTED;
+ 	nested_domain->domain.ops = &arm_smmu_nested_ops;
+ 	nested_domain->s2_parent = smmu_parent;
++	nested_domain->enable_ats = enable_ats;
+ 	nested_domain->ste[0] = arg.ste[0];
+ 	nested_domain->ste[1] = arg.ste[1] & ~cpu_to_le64(STRTAB_STE_1_EATS);
+ 
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index a2bbd140e232..1cb4afe7a90a 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2107,7 +2107,16 @@ int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain,
+ 		if (!master->ats_enabled)
+ 			continue;
+ 
+-		arm_smmu_atc_inv_to_cmd(master_domain->ssid, iova, size, &cmd);
++		if (master_domain->nested_ats_flush) {
++			/*
++			 * If a S2 used as a nesting parent is changed we have
++			 * no option but to completely flush the ATC.
++			 */
++			arm_smmu_atc_inv_to_cmd(IOMMU_NO_PASID, 0, 0, &cmd);
++		} else {
++			arm_smmu_atc_inv_to_cmd(master_domain->ssid, iova, size,
++						&cmd);
++		}
+ 
+ 		for (i = 0; i < master->num_streams; i++) {
+ 			cmd.atc.sid = master->streams[i].id;
+@@ -2630,7 +2639,8 @@ static void arm_smmu_disable_pasid(struct arm_smmu_master *master)
+ 
+ static struct arm_smmu_master_domain *
+ arm_smmu_find_master_domain(struct arm_smmu_domain *smmu_domain,
+-			    struct arm_smmu_master *master, ioasid_t ssid)
++			    struct arm_smmu_master *master, ioasid_t ssid,
++			    bool nested_ats_flush)
+ {
+ 	struct arm_smmu_master_domain *master_domain;
+ 
+@@ -2639,7 +2649,8 @@ arm_smmu_find_master_domain(struct arm_smmu_domain *smmu_domain,
+ 	list_for_each_entry(master_domain, &smmu_domain->devices,
+ 			    devices_elm) {
+ 		if (master_domain->master == master &&
+-		    master_domain->ssid == ssid)
++		    master_domain->ssid == ssid &&
++		    master_domain->nested_ats_flush == nested_ats_flush)
+ 			return master_domain;
+ 	}
+ 	return NULL;
+@@ -2670,13 +2681,18 @@ static void arm_smmu_remove_master_domain(struct arm_smmu_master *master,
+ {
+ 	struct arm_smmu_domain *smmu_domain = to_smmu_domain_devices(domain);
+ 	struct arm_smmu_master_domain *master_domain;
++	bool nested_ats_flush = false;
+ 	unsigned long flags;
+ 
+ 	if (!smmu_domain)
+ 		return;
+ 
++	if (domain->type == IOMMU_DOMAIN_NESTED)
++		nested_ats_flush = to_smmu_nested_domain(domain)->enable_ats;
 +
-+	if (dev_id) {
-+		test_cmd_vdevice_alloc(viommu_id, dev_id, 0x99, &vdev_id);
-+
-+		test_cmd_dev_check_cache_all(dev_id,
-+					     IOMMU_TEST_DEV_CACHE_DEFAULT);
-+
-+		/* Check data_type by passing zero-length array */
-+		num_inv = 0;
-+		test_cmd_viommu_invalidate(viommu_id, inv_reqs,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: Invalid data_type */
-+		num_inv = 1;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST_INVALID,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: structure size sanity */
-+		num_inv = 1;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs) + 1, &num_inv);
-+		assert(!num_inv);
-+
-+		num_inv = 1;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   1, &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: invalid flag is passed */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0xffffffff;
-+		inv_reqs[0].vdev_id = 0x99;
-+		test_err_viommu_invalidate(EOPNOTSUPP, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: invalid data_uptr when array is not empty */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, NULL,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: invalid entry_len when array is not empty */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   0, &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: invalid cache_id */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].cache_id = MOCK_DEV_CACHE_ID_MAX + 1;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/* Negative test: invalid vdev_id */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x9;
-+		inv_reqs[0].cache_id = 0;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(!num_inv);
-+
-+		/*
-+		 * Invalidate the 1st cache entry but fail the 2nd request
-+		 * due to invalid flags configuration in the 2nd request.
-+		 */
-+		num_inv = 2;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].cache_id = 0;
-+		inv_reqs[1].flags = 0xffffffff;
-+		inv_reqs[1].vdev_id = 0x99;
-+		inv_reqs[1].cache_id = 1;
-+		test_err_viommu_invalidate(EOPNOTSUPP, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(num_inv == 1);
-+		test_cmd_dev_check_cache(dev_id, 0, 0);
-+		test_cmd_dev_check_cache(dev_id, 1,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+		test_cmd_dev_check_cache(dev_id, 2,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+		test_cmd_dev_check_cache(dev_id, 3,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+
-+		/*
-+		 * Invalidate the 1st cache entry but fail the 2nd request
-+		 * due to invalid cache_id configuration in the 2nd request.
-+		 */
-+		num_inv = 2;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].cache_id = 0;
-+		inv_reqs[1].flags = 0;
-+		inv_reqs[1].vdev_id = 0x99;
-+		inv_reqs[1].cache_id = MOCK_DEV_CACHE_ID_MAX + 1;
-+		test_err_viommu_invalidate(EINVAL, viommu_id, inv_reqs,
-+					   IOMMU_VIOMMU_INVALIDATE_DATA_SELFTEST,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(num_inv == 1);
-+		test_cmd_dev_check_cache(dev_id, 0, 0);
-+		test_cmd_dev_check_cache(dev_id, 1,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+		test_cmd_dev_check_cache(dev_id, 2,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+		test_cmd_dev_check_cache(dev_id, 3,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+
-+		/* Invalidate the 2nd cache entry and verify */
-+		num_inv = 1;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].cache_id = 1;
-+		test_cmd_viommu_invalidate(viommu_id, inv_reqs,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(num_inv == 1);
-+		test_cmd_dev_check_cache(dev_id, 0, 0);
-+		test_cmd_dev_check_cache(dev_id, 1, 0);
-+		test_cmd_dev_check_cache(dev_id, 2,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+		test_cmd_dev_check_cache(dev_id, 3,
-+					 IOMMU_TEST_DEV_CACHE_DEFAULT);
-+
-+		/* Invalidate the 3rd and 4th cache entries and verify */
-+		num_inv = 2;
-+		inv_reqs[0].flags = 0;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].cache_id = 2;
-+		inv_reqs[1].flags = 0;
-+		inv_reqs[1].vdev_id = 0x99;
-+		inv_reqs[1].cache_id = 3;
-+		test_cmd_viommu_invalidate(viommu_id, inv_reqs,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(num_inv == 2);
-+		test_cmd_dev_check_cache_all(dev_id, 0);
-+
-+		/* Invalidate all cache entries for nested_dev_id[1] and verify */
-+		num_inv = 1;
-+		inv_reqs[0].vdev_id = 0x99;
-+		inv_reqs[0].flags = IOMMU_TEST_INVALIDATE_FLAG_ALL;
-+		test_cmd_viommu_invalidate(viommu_id, inv_reqs,
-+					   sizeof(*inv_reqs), &num_inv);
-+		assert(num_inv == 1);
-+		test_cmd_dev_check_cache_all(dev_id, 0);
-+		test_ioctl_destroy(vdev_id);
-+	}
-+}
-+
- TEST_HARNESS_MAIN
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	master_domain = arm_smmu_find_master_domain(smmu_domain, master, ssid);
++	master_domain = arm_smmu_find_master_domain(smmu_domain, master, ssid,
++						    nested_ats_flush);
+ 	if (master_domain) {
+ 		list_del(&master_domain->devices_elm);
+ 		kfree(master_domain);
+@@ -2743,6 +2759,9 @@ int arm_smmu_attach_prepare(struct arm_smmu_attach_state *state,
+ 			return -ENOMEM;
+ 		master_domain->master = master;
+ 		master_domain->ssid = state->ssid;
++		if (new_domain->type == IOMMU_DOMAIN_NESTED)
++			master_domain->nested_ats_flush =
++				to_smmu_nested_domain(new_domain)->enable_ats;
+ 
+ 		/*
+ 		 * During prepare we want the current smmu_domain and new
 -- 
 2.43.0
 
