@@ -1,72 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D8B1E1A2D;
-	Wed,  9 Oct 2024 19:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB061714A4;
+	Wed,  9 Oct 2024 19:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728500832; cv=none; b=KsVs8c15MTsOFGxj3tvoMOuKtK77r6VHRKbpoUSe1eTlvRvhfVdmptfCNI0XA5zsgh82Q12hpnjO5cpc8KYc8tMhzI6xaHiNgYxLfu+WnJcHqHoMoAc5PUy62Oz8IfYt2I5g+t6+odWjYNebytZrpj58cljBIp8bKEl7ZC1wrSk=
+	t=1728501979; cv=none; b=mID+h0DbQ8O6pWQlW+6Y9xNWGhj5ONI1dc2MKrRY8508YIs5hOPsYubLpuoHsdbPSMUOnq7opu2i9jfaTAGXbkLAx+JC5pZzUV67RT2zMuMqxHmOpfWYBdkRLktnuqUY8cl++E2lMBvgJ32CZRiBGNQLp64jBe2NxP4PqTdv83M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728500832; c=relaxed/simple;
-	bh=4YhfyUPTJur7qJRzsElWPQS3vLCvkLgU3avegz4EN2Y=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=PXqJHctmuezFYRTzSnKMM3ixX5yWN7N/Xu6Q6BVDsxfhRW3plYxFGnQmQSPvoPTxKaVLdGBLwux3teIzpcrkunq1B6Y81QP56SD2KC/cIzhh2TouslPQtQNkaOyUOVSue/cDn45ryqL43un2M0/+hkw5VWNWzlJtYc0r7tlFyuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sGRLqNV0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728501979; c=relaxed/simple;
+	bh=uORjfL4WuGqTOF2X8sPKum4spOOJIstRjqK9q3eytvE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=utiEJNhwLYGNzjXtsqWswPDIxo5M9iAXhuuGf/XK5+H5faSNtBQkxB2yWYPURBxTXUE/j8LtTjXsHx+tN0Qztbf6ZqWqNGtyadxuBHrgBuKGDDYABgAKN5Sd8ue8tk2RCl2V7SCvlHga4ARITOnyj1P0t9q9E5cXi9RsqSPZP+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LYt6bc5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sGRLqNV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAC7C4CEC3;
-	Wed,  9 Oct 2024 19:07:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LYt6bc5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB489C4CECF;
+	Wed,  9 Oct 2024 19:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728500831;
-	bh=4YhfyUPTJur7qJRzsElWPQS3vLCvkLgU3avegz4EN2Y=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=sGRLqNV02n9pRRQsPmE0+bdGuK0ZSiJR+hnkoYqhKd/oPWvDtKOC9eMTzNVeQE0B0
-	 F0HReY/2YKP7xrDZQ5D8OpU8DtXhhufOgpQdY/yqBYlQ8cLaC4apN5MAsCrEqAi1LI
-	 A10Nt40p/jo11FOVMLrp/HQwldHtug3X8bnQbT0GxU63oOjj6woCLT+T4X/hXbvMzW
-	 4VbCSPD7VLnKXHt/Q7Eu2S3CR667uY0Xo2Wiu8g37sjinFy7JcXNCC/4b6T2FjMpIh
-	 gXqIiomtWTwJpW70OiuG7CHrV01jtk7X3JtWMgUodw+XVc5xKIKYU0GiE9az2+VANU
-	 1qjw3YZCruJ4g==
-Message-ID: <81668a9199b39fe46cefd256d3eac44c.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1728501978;
+	bh=uORjfL4WuGqTOF2X8sPKum4spOOJIstRjqK9q3eytvE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=LYt6bc5iO+k49Z/dCb/PqFUKjDJERR8xN3cGKwH+gMFXbV0de42CDElI7NHuS0F/m
+	 w1QSWTG6L1uo8F3Ml4/Zlcn+kxiI1tRqzPlQ3kmx/65aoQX21Z7C/JaqF3O101bax0
+	 3CNzOxikqLs1kBdk9imJsIDDwEDYuSFzbjkJMzkFFt2Jh/g/NCjOaIXkC9pK1/lRfp
+	 /aEIIa51+9S96SRGZn3JnzP1gHwymrlE0LEhoBtmC42VotGLlTDPYeCgKMTyieWPpd
+	 3MS2uZccUf7L3twyIS7ZkCymSePehpkjNJ/wPqC1m4+850F37+94I4hTNu4jeI8pDw
+	 v6IHqbr0Y0Slg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 09 Oct 2024 12:26:08 -0700
+Subject: [PATCH v2 1/2] powerpc: Fix stack protector Kconfig test for clang
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <594e8e50-8322-480e-ae34-3f8e14f3fe18@roeck-us.net>
-References: <20240718210513.3801024-1-sboyd@kernel.org> <879831a8-2039-4cdb-bce2-aefdeb7ab25f@linuxfoundation.org> <da260b77-2ecb-4486-90cb-6db456d381ef@linuxfoundation.org> <f5f1c42d-77c0-48c7-ac52-3d4a3b5c2b47@roeck-us.net> <4a8abb5f501279de7907629f4dd6be24.sboyd@kernel.org> <3e1de608-008c-4439-acd2-647a288dcdc0@roeck-us.net> <cd31493888acc2b64a4986954dfa43ae.sboyd@kernel.org> <cb1e0119-6e3e-4fd2-92ea-3fec18f5843d@roeck-us.net> <ccd372f2754e80d6c01e38a9596bed34.sboyd@kernel.org> <594e8e50-8322-480e-ae34-3f8e14f3fe18@roeck-us.net>
-Subject: Re: [PATCH v8 8/8] clk: Add KUnit tests for clks registered with struct clk_parent_data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J.Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>, Geert Uytterhoeven <geert+renesas@glider.be>
-To: Guenter Roeck <linux@roeck-us.net>, Shuah Khan <skhan@linuxfoundation.org>
-Date: Wed, 09 Oct 2024 12:07:09 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241009-powerpc-fix-stackprotector-test-clang-v2-1-12fb86b31857@kernel.org>
+References: <20241009-powerpc-fix-stackprotector-test-clang-v2-0-12fb86b31857@kernel.org>
+In-Reply-To: <20241009-powerpc-fix-stackprotector-test-clang-v2-0-12fb86b31857@kernel.org>
+To: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, 
+ Naveen N Rao <naveen@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Nick Desaulniers <ndesaulniers@google.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ Keith Packard <keithp@keithp.com>, linuxppc-dev@lists.ozlabs.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3493; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=uORjfL4WuGqTOF2X8sPKum4spOOJIstRjqK9q3eytvE=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOlsN24ot0yf93LGt8lzD5xTvzZZqUrZcqdp0YZ5e/q8F
+ v5ouhDl3lHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmInaPkWG9uN09g9Wr/zPe
+ fejDKrm42ZNbrjhtr9iBo7faVzmWvj7PyPBbQNL2V73qwg/3xa58E+mTDvtiH5n9lfVYkoy539S
+ lDUwA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Quoting Guenter Roeck (2024-10-08 16:27:37)
-> On 10/8/24 16:12, Stephen Boyd wrote:
-> >=20
-> > The best I can come up with then is to test for a NULL of_root when
-> > CONFIG_ARM64 and CONFIG_ACPI are enabled, because the tests
-> > intentionally don't work when both those configs are enabled and the
-> > 'of_root' isn't populated. In all other cases the 'of_root' missing is a
-> > bug. I'll probably make this into some sort of kunit helper function in
-> > of_private.h and send it to DT maintainers.
->=20
-> Sounds good. Thanks a lot for tracking this down.
->=20
-> That makes me wonder though why only arm64 has that restriction. Both
-> riscv and loongarch have ACPI enabled in their defconfig files but call
-> unflatten_device_tree() unconditionally.
->=20
-> Oh well ...
+Clang's in-progress per-task stack protector support [1] does not work
+with the current Kconfig checks because '-mstack-protector-guard-offset'
+is not provided, unlike all other architecture Kconfig checks.
 
-Some of the reason is described in the thread I linked earlier. In
-particular, this email from Mark[1]. There's also more comments from
-Mark on an earlier patchset[2]. Maybe arm64 will allow it later, and
-then we'll be able to revert this skip patch.
+  $ fd Kconfig -x rg -l mstack-protector-guard-offset
+  ./arch/arm/Kconfig
+  ./arch/riscv/Kconfig
+  ./arch/arm64/Kconfig
 
-[1] https://lore.kernel.org/all/Zd4dQpHO7em1ji67@FVFF77S0Q05N.cambridge.arm=
-.com/
-[2] https://lore.kernel.org/all/ZaZtbU9hre3YhZam@FVFF77S0Q05N/
+This produces an error from clang, which is interpreted as the flags not
+being supported at all when they really are.
+
+  $ clang --target=powerpc64-linux-gnu \
+          -mstack-protector-guard=tls \
+          -mstack-protector-guard-reg=r13 \
+          -c -o /dev/null -x c /dev/null
+  clang: error: '-mstack-protector-guard=tls' is used without '-mstack-protector-guard-offset', and there is no default
+
+This argument will always be provided by the build system, so mirror
+other architectures and use '-mstack-protector-guard-offset=0' for
+testing support, which fixes the issue for clang and does not regress
+support with GCC.
+
+Even with the first problem addressed, the 32-bit test continues to fail
+because Kbuild uses the powerpc64le-linux-gnu target for clang and
+nothing flips the target to 32-bit, resulting in an error about an
+invalid register valid:
+
+  $ clang --target=powerpc64le-linux-gnu \
+          -mstack-protector-guard=tls
+          -mstack-protector-guard-reg=r2 \
+          -mstack-protector-guard-offset=0 \
+          -x c -c -o /dev/null /dev/null
+  clang: error: invalid value 'r2' in 'mstack-protector-guard-reg=', expected one of: r13
+
+While GCC allows arbitrary registers, the implementation of
+'-mstack-protector-guard=tls' in LLVM shares the same code path as the
+user space thread local storage implementation, which uses a fixed
+register (2 for 32-bit and 13 for 62-bit), so the command line parsing
+enforces this limitation.
+
+Use the Kconfig macro '$(m32-flag)', which expands to '-m32' when
+supported, in the stack protector support cc-option call to properly
+switch the target to a 32-bit one, which matches what happens in Kbuild.
+While the 64-bit macro does not strictly need it, add the equivalent
+64-bit option for symmetry.
+
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://github.com/llvm/llvm-project/pull/110928 [1]
+Reviewed-by: Keith Packard <keithp@keithp.com>
+Tested-by: Keith Packard <keithp@keithp.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index 8094a01974cca1d27002720e706f66bec2a2d035..6aaca48955a34b2a38af1415bfa36f74f35c3f3e 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -275,8 +275,8 @@ config PPC
+ 	select HAVE_RSEQ
+ 	select HAVE_SETUP_PER_CPU_AREA		if PPC64
+ 	select HAVE_SOFTIRQ_ON_OWN_STACK
+-	select HAVE_STACKPROTECTOR		if PPC32 && $(cc-option,-mstack-protector-guard=tls -mstack-protector-guard-reg=r2)
+-	select HAVE_STACKPROTECTOR		if PPC64 && $(cc-option,-mstack-protector-guard=tls -mstack-protector-guard-reg=r13)
++	select HAVE_STACKPROTECTOR		if PPC32 && $(cc-option,$(m32-flag) -mstack-protector-guard=tls -mstack-protector-guard-reg=r2 -mstack-protector-guard-offset=0)
++	select HAVE_STACKPROTECTOR		if PPC64 && $(cc-option,$(m64-flag) -mstack-protector-guard=tls -mstack-protector-guard-reg=r13 -mstack-protector-guard-offset=0)
+ 	select HAVE_STATIC_CALL			if PPC32
+ 	select HAVE_SYSCALL_TRACEPOINTS
+ 	select HAVE_VIRT_CPU_ACCOUNTING
+
+-- 
+2.47.0
+
