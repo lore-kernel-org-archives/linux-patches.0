@@ -1,97 +1,126 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65E01FF7BB;
-	Thu, 10 Oct 2024 07:45:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728546314; cv=none; b=uv5WIlUBb3dZ63ItG2Xl9ozHWtg7NLGMCvAKwWtHHAVLcubyHBGvlhVxf8FdnzGG1KhUB/CEH19hH6VFxEr54toabVffRcU1TNIZZKGXJnlfMD1CdtwszFpgCNUnB3ycbyuOTLHSvHR68WIzKuf0V6mgAN8nN6gA5VMOOkWjgbs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728546314; c=relaxed/simple;
-	bh=cS2TIFxGUB5Comdq0Q2G2vFiFm96puaf/ga5iXFe2ts=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=Pdy6o0Oz2QpAF+13FG4U0f7tY4ZA8m6JH6rwiDnHGJUE/ahgiRW8ZZ9ATWE1c4tCFWKafKYsjgvYKkSmBmHbw9fls339qW/clPfMoKBZzv8eDhC8eG7qCjxJIZz92QGDP+Lym5HS/MAefpIvxKZabUfAtCG6+H8BdjqTjFWOaKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.174])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4XPMDQ21KDzfdCy;
-	Thu, 10 Oct 2024 15:42:46 +0800 (CST)
-Received: from dggpemf500002.china.huawei.com (unknown [7.185.36.57])
-	by mail.maildlp.com (Postfix) with ESMTPS id 700BB1400D8;
-	Thu, 10 Oct 2024 15:45:10 +0800 (CST)
-Received: from [10.174.178.247] (10.174.178.247) by
- dggpemf500002.china.huawei.com (7.185.36.57) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 10 Oct 2024 15:45:09 +0800
-Subject: Re: [PATCH v3 3/9] ACPI/IORT: Support CANWBS memory access flag
-To: Jason Gunthorpe <jgg@nvidia.com>, <acpica-devel@lists.linux.dev>,
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
-	<kevin.tian@intel.com>, <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	<linux-acpi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, Lorenzo
- Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Eric Auger
-	<eric.auger@redhat.com>, Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin
- Chen <nicolinc@nvidia.com>, <patches@lists.linux.dev>, "Rafael J. Wysocki"
-	<rafael.j.wysocki@intel.com>, Shameerali Kolothum Thodi
-	<shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
-References: <3-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
-From: Hanjun Guo <guohanjun@huawei.com>
-Message-ID: <180134a4-051e-3a92-1652-0c3c53ffd6fa@huawei.com>
-Date: Thu, 10 Oct 2024 15:45:08 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A7F1C0DC1
+	for <patches@lists.linux.dev>; Thu, 10 Oct 2024 08:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1728550745; cv=pass; b=mTv4ujVbyPV0y/1QPWS8rISSXeueiT2o9BnCLpfcmTys+vZyVc0oX6cMjTU7A1mOHvnipXrQDofxeDX0zMNWooBrQyEow3BGHWEkaerneM0TEarq5guEGje8IuIJBkoUJSw49VK0SHDIGH/g9Gz3utJKwvG0joHNQUp+EBYl3Jw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1728550745; c=relaxed/simple;
+	bh=IBKpCzUUAWN9qQwuN5Iyr9QaGakkO2Cujybu6NmrCYE=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=c6hrHXVz+YW6nonoAUW8RiKbWQWND0LX3/6TWoznw2C9To5+YvL33/WUmzA/cN+viN3jVpFBEuQqt/zJxhv4dpl31V2K4CJ3pzLw08LkBk7bIASZv7R6zU57DDhhZHJaA+I9zPiDyYUv2uCYaEE9jYkPCoD81a+kMByuaX7uXtk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=iNlcqvLC; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="iNlcqvLC"
+ARC-Seal: i=1; a=rsa-sha256; t=1728550724; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=krzBJuY0uZPsewGCw/ReQypzdUjMIQB9GBaVdoNWFIqwazNkQ0WzzSTYR8q+Yxh8Y6ELyu6ecCu1WQXCDObyr20SgKh5dc2BjcrcXaQlqYmjhfpbhoGtN2uThYDWOua+jLFtOs8rG4KJq4huOUageSrTarLylex5jwjn3EzdAYc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1728550724; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=m7dELNL7cHObjTe9qSiqEBrQd7uE9MHb33zBOW6Bchc=; 
+	b=RRuKW7xSc5sZjrRNQ55NczaHHFh19NmxNsZNQYBH+2Sr9ZF+DlQuMlNi5QQzPPO0nU8hSgU9GlQ0EJREMUFEaDJadM0fRBXgl3ORyXuYproSKqutOnhi6JCM+beQCbMFqhmD6y3n8IMyxKLM68R3OHj34QCHL1uxTyTsNYB8iEg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728550724;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=m7dELNL7cHObjTe9qSiqEBrQd7uE9MHb33zBOW6Bchc=;
+	b=iNlcqvLCHJC/Nn87jPGrHgnN4bmwNzB4QpB6NU2g1Mt3MaQzRCB2f62zMsQR4uva
+	38ypGjq1SuNVBfHrBH7dbO7QP7usKp/i6FCdQxe+7G3p5pmrPCQtI9fp27S+iDR8d/O
+	4iJlTt+RlNcHk2fcOcd/T6WvFWbCw8RylWK5XiOw=
+Received: by mx.zohomail.com with SMTPS id 1728550721984430.80826526646126;
+	Thu, 10 Oct 2024 01:58:41 -0700 (PDT)
+Message-ID: <05ef1fc5-6947-45f1-bf9b-879681647107@collabora.com>
+Date: Thu, 10 Oct 2024 13:58:30 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <3-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-GB
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.10 000/482] 6.10.14-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20241008115648.280954295@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241008115648.280954295@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- dggpemf500002.china.huawei.com (7.185.36.57)
+X-ZohoMailClient: External
 
-On 2024/10/10 0:23, Jason Gunthorpe wrote:
-> From: Nicolin Chen<nicolinc@nvidia.com>
+On 10/8/24 5:01 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.14 release.
+> There are 482 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The IORT spec, Issue E.f (April 2024), adds a new CANWBS bit to the Memory
-> Access Flag field in the Memory Access Properties table, mainly for a PCI
-> Root Complex.
+> Responses should be made by Thu, 10 Oct 2024 11:55:15 +0000.
+> Anything received after that time might be too late.
 > 
-> This CANWBS defines the coherency of memory accesses to be not marked IOWB
-> cacheable/shareable. Its value further implies the coherency impact from a
-> pair of mismatched memory attributes (e.g. in a nested translation case):
->    0x0: Use of mismatched memory attributes for accesses made by this
->         device may lead to a loss of coherency.
->    0x1: Coherency of accesses made by this device to locations in
->         Conventional memory are ensured as follows, even if the memory
->         attributes for the accesses presented by the device or provided by
->         the SMMU are different from Inner and Outer Write-back cacheable,
->         Shareable.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.14-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
 > 
-> Note that the loss of coherency on a CANWBS-unsupported HW typically could
-> occur to an SMMU that doesn't implement the S2FWB feature where additional
-> cache flush operations would be required to prevent that from happening.
+> thanks,
 > 
-> Add a new ACPI_IORT_MF_CANWBS flag and set IOMMU_FWSPEC_PCI_RC_CANWBS upon
-> the presence of this new flag.
+> greg k-h
 > 
-> CANWBS and S2FWB are similar features, in that they both guarantee the VM
-> can not violate coherency, however S2FWB can be bypassed by PCI No Snoop
-> TLPs, while CANWBS cannot. Thus CANWBS meets the requirements to set
-> IOMMU_CAP_ENFORCE_CACHE_COHERENCY.
-> 
-> Architecturally ARM has expected that VFIO would disable No Snoop through
-> PCI Config space, if this is done then the two would have the same
-> protections.
 
-Acked-by: Hanjun Guo <guohanjun@huawei.com>
+Hi,
 
-Thanks
-Hanjun
+Please find the KernelCI report below :-
+
+
+OVERVIEW
+
+    Builds: 24 passed, 1 failed
+
+    Boot tests: 510 passed, 0 failed
+
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name:
+        hash: d44129966591836e3ff248d0af2358f1b8f7bc28
+    Checked out from
+
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+linux-6.10.y
+
+
+BUILDS
+    - i386 (defconfig+kcidebug+x86-board)
+      Build error:
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_state.c:219:1: error:
+the frame size of 1192 bytes is larger than 1024 bytes
+[-Werror=frame-larger-than=]
+      config:
+https://kciapistagingstorage1.file.core.windows.net/early-access/kbuild-gcc-12-x86-kcidebug-6705246a7ef7358befb78db3/.config?sv=2022-11-02&ss=f&srt=sco&sp=r&se=2024-10-17T19:19:12Z&st=2023-10-17T11:19:12Z&spr=https&sig=sLmFlvZHXRrZsSGubsDUIvTiv%2BtzgDq6vALfkrtWnv8%3D
+
+BOOT TESTS
+
+    No new boot failures found
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
+
