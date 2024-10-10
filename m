@@ -1,85 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38B219CD1D;
-	Thu, 10 Oct 2024 17:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08001E491B
+	for <patches@lists.linux.dev>; Thu, 10 Oct 2024 22:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728582213; cv=none; b=goTqJfJFP3Jvub/6FGwGlFOvbLuAr0LFeUJdHFFTUqfn3VhxUt0sGAkvbqmIHSbJQqVF6pH5ETCEGnvWptvoObi/TMT8P2dgc4pRbfKErAKo94h0NyzlpAJasA3cQcOHVL/jId/420y6Wh40VBCq59rckosA9f6X2TDrBrslKN8=
+	t=1728600218; cv=none; b=lnLctVeP1NuOdPNXICtU/YyNVYCyEUmVzHXqhDQnLEIT+IMom4ybzqXwh80nB0Y/BkCETtGvL6YlLH9CJ4PwceORcZRZvx5uxjQzbNaNzDEZ+jZO1q5bTGe+I3bMQJgFOvDbQNRscnTBSFJnqDjPiTfEjQwmRb35N/4EaowBMBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728582213; c=relaxed/simple;
-	bh=RMXsM9+daLz0wDlNHh/0NCwE/l30K6rBnwaZjnhUduA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oT5mbTznaFhkPYHwqDxIcZcU3734uG2risjbqz+ShVWueAzmjNntt29YtXBYOiYQiHUd44imxKPf82ZQ2q+sWBvpS6+qMXPXuMTUwu8je8TbThfXl5+o6PbkTQzfdEarZunOoELn7KhHGrwQpHEOd/pvzIk1AjhPFoRDzSUNaVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MmxR6ljD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728600218; c=relaxed/simple;
+	bh=rRcI0RUw1Jag1h85kqXKMUNy1mgQSNv3nPlsJjUAN+8=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bBe+JiZWD1o3emR93/ZDjZ1tqzT1PHW+octzQG/8l3j+NLqszivrsvpRSDozWJYaxkCsSfdb1rROl44YzNSdKYRrs93dsJoGew1aqJXqZLZrS7M2OVoFBi8j99v2+bVmEwx50mViZLt/4mmeB0aXM4F0ZHE0eZKWZ48Hqql0ElY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=oMM74/JL; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MmxR6ljD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7225C4CEC5;
-	Thu, 10 Oct 2024 17:43:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728582213;
-	bh=RMXsM9+daLz0wDlNHh/0NCwE/l30K6rBnwaZjnhUduA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MmxR6ljDZQNaWsEGh7lI3NoP4YGIF6dWWnYUA8Agmgo8+GqnzBrafKDgimmEhJ2ry
-	 6x3dON7Jwnhb2c5BZzwPshbhzha8PFSYiH25FRM1LCKZqIMDZNHajfecrd0AUTYekj
-	 Cx9fFrSWP5lRSRWJdCnWdXeWroZ3kc+Pr/j9tZIYOY/BcDH45JqyAm3zaKnhz/rPs1
-	 ig03hT4DRM+FFDVHJvXMo8rJ8LClpUbU8jbjVj8675Onmp6oMVwnh9qYLzY1SHpKP4
-	 j+4dQ5nfuH0AH2bxM+8k90zuf5D1acObMwGe8kRH2a29LZ7kM7vPx2uJXewtKgSF+c
-	 MiWyH8PYUXmeg==
-Date: Thu, 10 Oct 2024 12:43:31 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Saravana Kannan <saravanak@google.com>,
-	linux-kernel@vger.kernel.org, David Gow <davidgow@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH] of: Skip kunit tests when arm64+ACPI doesn't populate
- root node
-Message-ID: <172858218311.2064946.5279211050619703517.robh@kernel.org>
-References: <20241009204133.1169931-1-sboyd@kernel.org>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oMM74/JL"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7b1123f8f9bso123723385a.1
+        for <patches@lists.linux.dev>; Thu, 10 Oct 2024 15:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1728600216; x=1729205016; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+7kS0OwpIJ8lzGVa/z5he+FP7V/PyYuqC5d6o/YyS+0=;
+        b=oMM74/JLCMmYnC4JuL2ijZgPnkYvVn7S/wl+KdrN/4IOE1nZMAT73WXpkw2MriZFEC
+         BaQRG9YOHf29PHuTJnU3kPZArNSm8pr7nJ+I3Lo+uEZaap8j8gSZ9HFoazl2aTeblY+Z
+         SZJlx6JE3MS1QlaeV+LZcpQfeQuSXbtdfYOQg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728600216; x=1729205016;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+7kS0OwpIJ8lzGVa/z5he+FP7V/PyYuqC5d6o/YyS+0=;
+        b=VzzzjT1hv+J7dJ/RoFdgFHeR6F8pm9T/A3ZeboBCTNyh+LevyTgj0bFiTb4NyXA8FU
+         mnXdYYXbZkmAvjiSwYJK5R1Pgeo78spcPkX37v94TDPKrVDK6GRH5HZ/uXmh6H4gNMkN
+         l04+1F6AtUWrYWY0AivRQKpw1JhGw7YiMIVJdb0IiLp0JV500Y5vPSzAgctomK4Ezkdh
+         3wHXnrlnJ7s92IQoEgcEL8WTayxGovVypmFIKHKQUnB+ixNyC8lBic1Yy1odG+DfRbVY
+         rvMcwhcUzkiMskQItwUJMZuEqXjwu+YBo1gjPUU7wvM4JEShZYM295nDUrolxhFYqCJA
+         LaMg==
+X-Forwarded-Encrypted: i=1; AJvYcCX0y9Tfu6klw1ys4eGbFqbqM1gi3cTzQ23Tnx3Og/7Tz4pjrLW0yYS4KVPbPx+epynhBQmFu1ku@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyy1Mt9AVwztBdmv2nneamBFf3HljuChgc98ZnDIF+BXnEVyzPP
+	ti/7grdCCYc07zuLTD2RhEwERAf1d060lOuQdMQbjw5rSCsu3VT9Yv18RWzp2ePiqtCHOm9ONqV
+	GovwcmHHJwuPAv6/uSy9k0YYsLjyYjODy/pOj
+X-Google-Smtp-Source: AGHT+IGgeD8OWkjTN2+txsFq08VyD7ih43EBc2xXYlKwMPaCKAPaVrQbOpHLD8TgOLBOWOgI5H4Qck7keHxdPo9DUQ0=
+X-Received: by 2002:a05:620a:460f:b0:7a9:aba6:d012 with SMTP id
+ af79cd13be357-7b11a37c515mr97106885a.22.1728600215870; Thu, 10 Oct 2024
+ 15:43:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Oct 2024 18:43:35 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241009204133.1169931-1-sboyd@kernel.org>
+In-Reply-To: <27acewh6h2xcwp63z5o3tgrjmimf4d3mftpnmkvhdhv273zgsp@i6i5ke4btdqx>
+References: <20240901040658.157425-1-swboyd@chromium.org> <20240901040658.157425-14-swboyd@chromium.org>
+ <27acewh6h2xcwp63z5o3tgrjmimf4d3mftpnmkvhdhv273zgsp@i6i5ke4btdqx>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 10 Oct 2024 18:43:35 -0400
+Message-ID: <CAE-0n53S2dFz74_rgx22_1i_bbEC6kj1SL5LAEq_F2wrdCgBNg@mail.gmail.com>
+Subject: Re: [PATCH v4 13/18] dt-bindings: usb-switch: Extend for DisplayPort altmode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
+	dri-devel@lists.freedesktop.org, Guenter Roeck <groeck@chromium.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
+	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Quoting Dmitry Baryshkov (2024-09-19 03:40:19)
+> On Sat, Aug 31, 2024 at 09:06:51PM GMT, Stephen Boyd wrote:
+> > diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> > index f5dc7e23b134..816f295f322f 100644
+> > --- a/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> > @@ -52,6 +52,14 @@ properties:
+> >            endpoint:
+> >              $ref: '#/$defs/usbc-in-endpoint'
+> >
+> > +      port@2:
+> > +        $ref: /schemas/graph.yaml#/$defs/port-base
+> > +        unevaluatedProperties: false
+> > +
+> > +        properties:
+> > +          endpoint:
+> > +            $ref: '#/$defs/dp-endpoint'
+>
+> Is it a separate port or is it an endpoint of the same upstream-facing
+> (non-connector-facing) SS port?
 
-On Wed, 09 Oct 2024 13:41:31 -0700, Stephen Boyd wrote:
-> A root node is required to apply DT overlays. A root node is usually
-> present after commit 7b937cc243e5 ("of: Create of_root if no dtb
-> provided by firmware"), except for on arm64 systems booted with ACPI
-> tables. In that case, the root node is intentionally not populated
-> because it would "allow DT devices to be instantiated atop an ACPI base
-> system"[1].
-> 
-> Introduce an OF function that skips the kunit test if the root node
-> isn't populated. Limit the test to when both CONFIG_ARM64 and
-> CONFIG_ACPI are set, because otherwise the lack of a root node is a bug.
-> Make the function private and take a kunit test parameter so that it
-> can't be abused to test for the presence of the root node in non-test
-> code.
-> 
-> Use this function to skip tests that require the root node. Currently
-> that's the DT tests and any tests that apply overlays.
-> 
-> Reported-by: Guenter Roeck <linux@roeck-us.net>
-> Closes: https://lore.kernel.org/r/6cd337fb-38f0-41cb-b942-5844b84433db@roeck-us.net
-> Link: https://lore.kernel.org/r/Zd4dQpHO7em1ji67@FVFF77S0Q05N.cambridge.arm.com [1]
-> Fixes: 893ecc6d2d61 ("of: Add KUnit test to confirm DTB is loaded")
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/of/of_kunit_helpers.c | 15 +++++++++++++++
->  drivers/of/of_private.h       |  3 +++
->  drivers/of/of_test.c          |  3 +++
->  drivers/of/overlay_test.c     |  3 +++
->  4 files changed, 24 insertions(+)
-> 
+I don't quite follow this comment. This is an input DP endpoint/port.
 
-Applied, thanks!
+>
+> > +
+> >  oneOf:
+> >    - required:
+> >        - port
+> > @@ -65,6 +73,19 @@ $defs:
+> >      $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> >      description: Super Speed (SS) output endpoint to a type-c connector
+> >      unevaluatedProperties: false
+> > +    properties:
+> > +      data-lanes:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +        description: |
+> > +          An array of physical USB Type-C data lane indexes.
+> > +          - 0 is SSRX1 lane
+> > +          - 1 is SSTX1 lane
+> > +          - 2 is SSTX2 lane
+> > +          - 3 is SSRX2 lane
+> > +        minItems: 4
+> > +        maxItems: 4
+> > +        items:
+> > +          maximum: 3
+>
+> What is the usecase to delare less than 4 lanes going to the USB-C
+> connector?
 
+I'm not aware of any usecase. The 'maximum: 3' is the max value in the
+cell, i.e. 0, 1, 2, or 3.
