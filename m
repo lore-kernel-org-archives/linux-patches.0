@@ -1,78 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B5919E7D0;
-	Thu, 10 Oct 2024 09:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC0E1A08C5;
+	Thu, 10 Oct 2024 10:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728554272; cv=none; b=cw7ppgM26H+gQVuRciXFlIl3oyb70Oxy5Uv2v/XNgxWsDC47X902bUy+Es0x7h0tpD8B+UcWMWRvyr0QMqdySNnOCJgoAJrakz0eg+Gc3GLpf5EtzczgXy+jpTxJkkJHjHQHx/zSXCtR0qDCuAqM/6BKwaBcNGt/uXnk/D5POzk=
+	t=1728555415; cv=none; b=DCAFQj/N74+lmj8Ip0Mvhc7PmbLCaG/Ho9BJs/vUCTgh3PR89QK8P85xD/3iQoiVIvhsUbdOskkaXO3uKnrFVCAIJZn+jd1OMMxKR+Zoq6FIlqFedoTHn4VLG80byVEMPF+J4MjkQ+upk98jxK0bHDY18ZqhzL082FsoM7eY3LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728554272; c=relaxed/simple;
-	bh=+DIUl1Brnx8rvfoXu1vBizxsvRwazzV35XPq5sS92BY=;
+	s=arc-20240116; t=1728555415; c=relaxed/simple;
+	bh=Fme7l61BXKKj579X5IywxISXdh4Ffu2sgMDrsdWnSLc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=coRgGaIhj3+hkpyy0mK/eMk0NDgNH/q4rrLrDccTdnFeLmZ8UWpVVWINFLQV14AeKbP7w0EHwtaXgrhrXSYbyV7ElSgV6z/rOzOxK9UsCW+Ra6w4ndHLRnH8HGuR2gQoB1/bYMYzfamZuknvPImEvooftNFRslLzcQT0HgNYxAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rruOdLoe; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=C29W9T/mhKPTZtW/0ZgtQp7wLNQvibpsiRKH0syxhs5O70cjMvPubJNEBlHgmLOh6WdjZ8ZTWKpT0AUR3NscfEZEDHbL/4KEcZRh+1gNBWZ9wLsbcVBJoBd1qfKm0fEog9QNMnSy65p1DnXqceXW8Z1ClXnLEjah6UwaqxGSOT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjaLXhYg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rruOdLoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3667AC4CEC5;
-	Thu, 10 Oct 2024 09:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjaLXhYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47326C4CEC6;
+	Thu, 10 Oct 2024 10:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728554271;
-	bh=+DIUl1Brnx8rvfoXu1vBizxsvRwazzV35XPq5sS92BY=;
+	s=korg; t=1728555415;
+	bh=Fme7l61BXKKj579X5IywxISXdh4Ffu2sgMDrsdWnSLc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rruOdLoe0f46rS9FB9A8LqzTqMpq0F47CkK5owszz0M06RaFyD3eTN4ibBKO6P9L3
-	 fUtowtJ7JYcGLRzlEg3QCLYDP/wD+bHcGoFvh6RNcAGtn/zRDG4LcmeMfoD23C2NKi
-	 cnn4blW6ZNCAqkvuhynJ+6Q6/0434JDFci09mhnI=
-Date: Thu, 10 Oct 2024 11:57:48 +0200
+	b=BjaLXhYgqtCJRrQdeqlRt6pERs7rTFhHPbKKbYwnDUjSI4gCPB9z8qI6wjtHSj+PK
+	 yvgQ+u8JOMwymFGneaTSq3336rfvemAi/riDvRSUpRez88/ceF/tkT9B4rfEnawnRV
+	 pV9vcI/QRKGNFWm1uRzWCjKn1/vBN7Un5adUhQY4=
+Date: Thu, 10 Oct 2024 12:16:52 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: =?iso-8859-1?B?Q3Pza+Fz?= Bence <csokas.bence@prolan.hu>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>,
-	Wei Fang <wei.fang@nxp.com>
-Subject: Re: [PATCH 6.6 028/386] net: fec: Restart PPS after link state change
-Message-ID: <2024101033-primate-hacking-6d3c@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 6.6 000/386] 6.6.55-rc1 review
+Message-ID: <2024101041-germinate-shuffling-9e19@gregkh>
 References: <20241008115629.309157387@linuxfoundation.org>
- <20241008115630.584472371@linuxfoundation.org>
- <1af647ce-69e4-4f86-b0a5-6ac76ec25d12@prolan.hu>
+ <894e27c0-c1e8-476d-ae16-11ab65853d1f@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1af647ce-69e4-4f86-b0a5-6ac76ec25d12@prolan.hu>
+In-Reply-To: <894e27c0-c1e8-476d-ae16-11ab65853d1f@oracle.com>
 
-On Tue, Oct 08, 2024 at 03:30:51PM +0200, Csókás Bence wrote:
-> Hi!
+On Tue, Oct 08, 2024 at 08:28:57PM +0530, Harshit Mogalapalli wrote:
+> Hi Greg,
 > 
-> On 2024. 10. 08. 14:04, Greg Kroah-Hartman wrote:
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> On 08/10/24 17:34, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.55 release.
+> > There are 386 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > ------------------
+> > Responses should be made by Thu, 10 Oct 2024 11:55:15 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > From: Csókás, Bence <csokas.bence@prolan.hu>
-> > 
-> > [ Upstream commit a1477dc87dc4996dcf65a4893d4e2c3a6b593002 ]
-> > 
-> > On link state change, the controller gets reset,
-> > causing PPS to drop out. Re-enable PPS if it was
-> > enabled before the controller reset.
-> > 
-> > Fixes: 6605b730c061 ("FEC: Add time stamping code and a PTP hardware clock")
-> > Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-> > Link: https://patch.msgid.link/20240924093705.2897329-1-csokas.bence@prolan.hu
-> > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ...
 > 
-> There is a patch waiting to be merged that Fixes: this commit.
 > 
-> Link:
-> https://lore.kernel.org/netdev/20241008061153.1977930-1-wei.fang@nxp.com/
+> > Ian Rogers <irogers@google.com>
+> >      perf callchain: Fix stitch LBR memory leaks
+> > 
+> 
+> This patch is causing build failures for tools/perf/
+> 
+> util/machine.c: In function 'save_lbr_cursor_node':
+> util/machine.c:2540:9: error: implicit declaration of function
+> 'map_symbol__exit'; did you mean 'symbol__exit'?
+> [-Werror=implicit-function-declaration]
+>  2540 |         map_symbol__exit(&lbr_stitch->prev_lbr_cursor[idx].ms);
+>       |         ^~~~~~~~~~~~~~~~
+>       |         symbol__exit
+> ...
+> 
+> util/thread.c: In function 'thread__free_stitch_list':
+> util/thread.c:481:17: error: implicit declaration of function
+> 'map_symbol__exit'; did you mean 'symbol__exit'?
+> [-Werror=implicit-function-declaration]
+>   481 |                 map_symbol__exit(&pos->cursor.ms);
+>       |                 ^~~~~~~~~~~~~~~~
+>       |                 symbol__exit
+> 
 
-Great, we can pick it up once it hits Linus's tree, please let us know
-when that happens.
-
-greg k-h
+Argh, I missed this, let me go revert it in another release now...
