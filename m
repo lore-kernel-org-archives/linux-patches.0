@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C32F1798C;
-	Mon, 14 Oct 2024 14:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F360F1AC42C;
+	Mon, 14 Oct 2024 14:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916499; cv=none; b=NLCwJ8syYniSr0euRHDY6GS4ee8ouMednJzDm/SnZgvJV2qYcFE0tVWJMArYHLMHYfWQJL7pmibZReoFIxC9PD1SGL8+AGS3c4CNkKDTzcCQWJsJ8XV2yeCQluQgAWrWfSn+lUMeRuxPKJssOUVLtrCCUjpcZiXPydOIdf1Ya0k=
+	t=1728916503; cv=none; b=C5HRwfYFVwRFnKgawX1HlGKwOodtAsXXEIVs0+Y6XfLADc731Wu4KEsIvyvHc6H8TuyV4E++4hxPd+WKuv+ZxP8oG7Ij7vN6Jk6ribbGFtmz+6zkv2v08SDwN0e77+L9Sao9oTlBZhkZxR9G0LaZmtNMaUtPL/hZsDWAoHagmnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916499; c=relaxed/simple;
-	bh=qtswmeQsMoZLPebWyEc/Fyp0iTC9p7WDuEWYbASYECg=;
+	s=arc-20240116; t=1728916503; c=relaxed/simple;
+	bh=Ut8DJ8QCNpqka+OYJKs5Py1D3RBuPH8xLro9XAUBfDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blwGQpHHjNIlRXz4djA1HuvnG53gMmkIXxuKyU/8f+tRpNjujPEmjLgQRlWHHHmeTPZ6v/sINoq1hrJ1JF1miVIRUAr8lAXRZpTncjFGzyh1scXFWlcA71L79SF22sybLhAFAu+UWRMhmF1vMEdL5w5kpfRj0ejQRPyHY3RV1mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFxiWuqr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTkMdllWcSRuTkoHaBbn1C1viQsMqKB5azEwZB0TS7ffBnhJQZU5unDF/uIts/2VksO3gGwW1N8KAJrhPwnkuQaZxooUvrZwCKkYMD7jYzXRBo5bzarZPkoa+neMRv/+QG5vXK/qhbAG6D2YRV1XUgLMgAIDkvWMDq8KDnohLd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALWjHs/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFxiWuqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2277C4CEC7;
-	Mon, 14 Oct 2024 14:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALWjHs/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E44C4CEC3;
+	Mon, 14 Oct 2024 14:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916499;
-	bh=qtswmeQsMoZLPebWyEc/Fyp0iTC9p7WDuEWYbASYECg=;
+	s=korg; t=1728916502;
+	bh=Ut8DJ8QCNpqka+OYJKs5Py1D3RBuPH8xLro9XAUBfDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFxiWuqrLjbf+NybrATr2Ukhd9YKWuxT7ukVqbuZWnIWbIZ65fQJaGMmdOW7J2sFT
-	 608FzKpSOUK2aN2L8nrs4irgcH801ubnJ5yvaUO52hfL42kWGh/b4y3eCov8Ta3ujo
-	 SvCN7aKSKK7sYf53nn8mxldxttXURwLX/hXC1G4I=
+	b=ALWjHs/DwPrS511BUyf8H/4gCiMAzH2nuaHu++t6jjwtjrZfPBfyRxDjBTzdi1IDG
+	 56eFUwU0tceIjtVNiL8bFo12MDehiUG7MVUvw346eF1NimnzLDaxMznCd6jsxGmEyU
+	 bFlYLyC1AoleG0OyxgUZ6qRuaEW/11ZJYErlENIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anatolij Gustschin <agust@denx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 194/214] net: dsa: lan9303: ensure chip reset and wait for READY status
-Date: Mon, 14 Oct 2024 16:20:57 +0200
-Message-ID: <20241014141052.547920069@linuxfoundation.org>
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.11 203/214] powercap: intel_rapl_tpmi: Fix bogus register reading
+Date: Mon, 14 Oct 2024 16:21:06 +0200
+Message-ID: <20241014141052.897822576@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,83 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anatolij Gustschin <agust@denx.de>
+From: Zhang Rui <rui.zhang@intel.com>
 
-commit 5c14e51d2d7df49fe0d4e64a12c58d2542f452ff upstream.
+commit 91e8f835a7eda4ba2c0c4002a3108a0e3b22d34e upstream.
 
-Accessing device registers seems to be not reliable, the chip
-revision is sometimes detected wrongly (0 instead of expected 1).
+The TPMI_RAPL_REG_DOMAIN_INFO value needs to be multiplied by 8 to get
+the register offset.
 
-Ensure that the chip reset is performed via reset GPIO and then
-wait for 'Device Ready' status in HW_CFG register before doing
-any register initializations.
-
-Cc: stable@vger.kernel.org
-Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
-Signed-off-by: Anatolij Gustschin <agust@denx.de>
-[alex: reworked using read_poll_timeout()]
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20241004113655.3436296-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: All applicable <stable@vger.kernel.org>
+Fixes: 903eb9fb85e3 ("powercap: intel_rapl_tpmi: Fix System Domain probing")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://patch.msgid.link/20240930081801.28502-2-rui.zhang@intel.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303-core.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/powercap/intel_rapl_tpmi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -6,6 +6,7 @@
- #include <linux/module.h>
- #include <linux/gpio/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/iopoll.h>
- #include <linux/mutex.h>
- #include <linux/mii.h>
- #include <linux/of.h>
-@@ -839,6 +840,8 @@ static void lan9303_handle_reset(struct
- 	if (!chip->reset_gpio)
- 		return;
- 
-+	gpiod_set_value_cansleep(chip->reset_gpio, 1);
-+
- 	if (chip->reset_duration != 0)
- 		msleep(chip->reset_duration);
- 
-@@ -864,8 +867,34 @@ static int lan9303_disable_processing(st
- static int lan9303_check_device(struct lan9303 *chip)
- {
- 	int ret;
-+	int err;
- 	u32 reg;
- 
-+	/* In I2C-managed configurations this polling loop will clash with
-+	 * switch's reading of EEPROM right after reset and this behaviour is
-+	 * not configurable. While lan9303_read() already has quite long retry
-+	 * timeout, seems not all cases are being detected as arbitration error.
-+	 *
-+	 * According to datasheet, EEPROM loader has 30ms timeout (in case of
-+	 * missing EEPROM).
-+	 *
-+	 * Loading of the largest supported EEPROM is expected to take at least
-+	 * 5.9s.
-+	 */
-+	err = read_poll_timeout(lan9303_read, ret,
-+				!ret && reg & LAN9303_HW_CFG_READY,
-+				20000, 6000000, false,
-+				chip->regmap, LAN9303_HW_CFG, &reg);
-+	if (ret) {
-+		dev_err(chip->dev, "failed to read HW_CFG reg: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
-+	}
-+	if (err) {
-+		dev_err(chip->dev, "HW_CFG not ready: 0x%08x\n", reg);
-+		return err;
-+	}
-+
- 	ret = lan9303_read(chip->regmap, LAN9303_CHIP_REV, &reg);
- 	if (ret) {
- 		dev_err(chip->dev, "failed to read chip revision register: %d\n",
+--- a/drivers/powercap/intel_rapl_tpmi.c
++++ b/drivers/powercap/intel_rapl_tpmi.c
+@@ -192,7 +192,7 @@ static int parse_one_domain(struct tpmi_
+ 			pr_warn(FW_BUG "System domain must support Domain Info register\n");
+ 			return -ENODEV;
+ 		}
+-		tpmi_domain_info = readq(trp->base + offset + TPMI_RAPL_REG_DOMAIN_INFO);
++		tpmi_domain_info = readq(trp->base + offset + TPMI_RAPL_REG_DOMAIN_INFO * 8);
+ 		if (!(tpmi_domain_info & TPMI_RAPL_DOMAIN_ROOT))
+ 			return 0;
+ 		domain_type = RAPL_DOMAIN_PLATFORM;
 
 
