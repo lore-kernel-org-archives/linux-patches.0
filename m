@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBC11B4F08;
-	Mon, 14 Oct 2024 15:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EC249659;
+	Mon, 14 Oct 2024 15:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919959; cv=none; b=eaHpUUgWtKcjhEC/SS345cyM2SUWo/8hUVUrt3oe3FaYd1RMuiVexHhD+j7izifnnRgp8H1rYk/lBzpMiT1HZSBwHrkZ80Vk6uxzMRcDWW+CjcR5W+aXDcb2k/kxBfV5NX5WZYlmAEigvwy+JwYiI24cnWRJSqeRMRuF0JEHjyk=
+	t=1728919963; cv=none; b=j7gRXH53uGhHYtth4WvP8WnYPbXR7+nBqnsKMTJFqNf9fLYtlGekE08HHaCAMWmcDc4xxHA2C1dJFtGaIWuHuR/kEYfo+nBmrSu/JyvuYAfecm+ddw7BAuQUCeqHMUjSEKrLlduwfe7E7Aq1ibovPv29E5MsoiOXeDdgdVWE1bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919959; c=relaxed/simple;
-	bh=I68Ozh+cb+UH1yjWOzesXAQnmRLNyfJ146mOflYea/E=;
+	s=arc-20240116; t=1728919963; c=relaxed/simple;
+	bh=Ec93hXZF0LM9ZLpuxSTZ7zQO8Cl1cqhdcNFcmEaDZKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVJBrGufOeikvQX7Sr+g7brFzomygGV/iNIsjwWnOsslHEnPw92vfFeT9Qjur6EeHcQaFIzxgQJsNswUSZkl/1GCCjZ8sy93HePMeABWUFACldX/2DTwPMw5Zl2Nht3jb76oWm63RwOjBm2pLtOWXMvkXwN9vqrRVb8UYuIFkQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcuhPLt+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICv0xHAoVoUtq5WcxjX+ZBrvn48gRXogXbgZ6aNbizJJWnKGeRU4kx/KYk4QEpNxdZrYSXebIqbUFNwXK59Jl1YDAnP2i3Y1VbftiphNKiUqvd1wGFFp7q3d768bKY5BcySZiQ2RBpqVVMICcnbRnUIE9d6QuEICMSoINfcwU68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmHZTvbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcuhPLt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E76C4CEC3;
-	Mon, 14 Oct 2024 15:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmHZTvbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5608CC4CEC3;
+	Mon, 14 Oct 2024 15:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919959;
-	bh=I68Ozh+cb+UH1yjWOzesXAQnmRLNyfJ146mOflYea/E=;
+	s=korg; t=1728919962;
+	bh=Ec93hXZF0LM9ZLpuxSTZ7zQO8Cl1cqhdcNFcmEaDZKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcuhPLt+lAv2y6MTdLUVttZiCxK78mKyjzmMCgO3NQWn7b5fUeAI0P+UtIqOCtogG
-	 P4raSi0nw60Riqs4Q50mUdVLvf7qxPyrDdFmHVs37Zru/BO66tZmmfkBe6AnDG8K5J
-	 YiSLjv1mxkC162k6bbG0HvQZglyjQ1kx7NubiFXg=
+	b=KmHZTvbcD535J1plJk2FpDWMdGxGpBnUrsOrSxaoZx0pjQGu6e3ZZUw8lbTiYtumB
+	 WXltTAaF4xOiMxRk2VzqNSBN2IXgio5ZoEil/gAM6sb6goTr8V5FbYjBJruT4sw80A
+	 lBJclSaVtlA3ZKG1nfFqU2H93t7fGfmwAcmNWkI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Breno Leitao <leitao@debian.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 757/798] netfilter: fib: check correct rtable in vrf setups
-Date: Mon, 14 Oct 2024 16:21:51 +0200
-Message-ID: <20241014141247.809212711@linuxfoundation.org>
+Subject: [PATCH 6.1 758/798] net: ibm/emac: allocate dummy net_device dynamically
+Date: Mon, 14 Oct 2024 16:21:52 +0200
+Message-ID: <20241014141247.847669086@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,78 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 05ef7055debc804e8083737402127975e7244fc4 ]
+[ Upstream commit 2eb5e25d84956c264dc03fc45deb3701f3a0ccea ]
 
-We need to init l3mdev unconditionally, else main routing table is searched
-and incorrect result is returned unless strict (iif keyword) matching is
-requested.
+Embedding net_device into structures prohibits the usage of flexible
+arrays in the net_device structure. For more details, see the discussion
+at [1].
 
-Next patch adds a selftest for this.
+Un-embed the net_device from the private struct by converting it
+into a pointer. Then use the leverage the new alloc_netdev_dummy()
+helper to allocate and initialize dummy devices.
 
-Fixes: 2a8a7c0eaa87 ("netfilter: nft_fib: Fix for rpath check with VRF devices")
-Closes: https://bugzilla.netfilter.org/show_bug.cgi?id=1761
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[1] https://lore.kernel.org/all/20240229225910.79e224cf@kernel.org/
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 080ddc22f3b0 ("net: ibm: emac: mal: add dcr_unmap to _remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nft_fib_ipv4.c | 4 +---
- net/ipv6/netfilter/nft_fib_ipv6.c | 5 +++--
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ibm/emac/mal.c | 14 +++++++++++---
+ drivers/net/ethernet/ibm/emac/mal.h |  2 +-
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nft_fib_ipv4.c b/net/ipv4/netfilter/nft_fib_ipv4.c
-index fc65d69f23e16..edec5c8f59ac8 100644
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -66,6 +66,7 @@ void nft_fib4_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 		.flowi4_scope = RT_SCOPE_UNIVERSE,
- 		.flowi4_iif = LOOPBACK_IFINDEX,
- 		.flowi4_uid = sock_net_uid(nft_net(pkt), NULL),
-+		.flowi4_l3mdev = l3mdev_master_ifindex_rcu(nft_in(pkt)),
- 	};
- 	const struct net_device *oif;
- 	const struct net_device *found;
-@@ -84,9 +85,6 @@ void nft_fib4_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 	else
- 		oif = NULL;
+diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
+index a93c9230e982f..7a74975c15fa5 100644
+--- a/drivers/net/ethernet/ibm/emac/mal.c
++++ b/drivers/net/ethernet/ibm/emac/mal.c
+@@ -603,9 +603,13 @@ static int mal_probe(struct platform_device *ofdev)
+ 	INIT_LIST_HEAD(&mal->list);
+ 	spin_lock_init(&mal->lock);
  
--	if (priv->flags & NFTA_FIB_F_IIF)
--		fl4.flowi4_l3mdev = l3mdev_master_ifindex_rcu(oif);
--
- 	if (nft_hook(pkt) == NF_INET_PRE_ROUTING &&
- 	    nft_fib_is_loopback(pkt->skb, nft_in(pkt))) {
- 		nft_fib_store_result(dest, priv, nft_in(pkt));
-diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
-index 36dc14b34388c..c9f1634b3838a 100644
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -41,8 +41,6 @@ static int nft_fib6_flowi_init(struct flowi6 *fl6, const struct nft_fib *priv,
- 	if (ipv6_addr_type(&fl6->daddr) & IPV6_ADDR_LINKLOCAL) {
- 		lookup_flags |= RT6_LOOKUP_F_IFACE;
- 		fl6->flowi6_oif = get_ifindex(dev ? dev : pkt->skb->dev);
--	} else if (priv->flags & NFTA_FIB_F_IIF) {
--		fl6->flowi6_l3mdev = l3mdev_master_ifindex_rcu(dev);
+-	init_dummy_netdev(&mal->dummy_dev);
++	mal->dummy_dev = alloc_netdev_dummy(0);
++	if (!mal->dummy_dev) {
++		err = -ENOMEM;
++		goto fail_unmap;
++	}
+ 
+-	netif_napi_add_weight(&mal->dummy_dev, &mal->napi, mal_poll,
++	netif_napi_add_weight(mal->dummy_dev, &mal->napi, mal_poll,
+ 			      CONFIG_IBM_EMAC_POLL_WEIGHT);
+ 
+ 	/* Load power-on reset defaults */
+@@ -635,7 +639,7 @@ static int mal_probe(struct platform_device *ofdev)
+ 					  GFP_KERNEL);
+ 	if (mal->bd_virt == NULL) {
+ 		err = -ENOMEM;
+-		goto fail_unmap;
++		goto fail_dummy;
  	}
  
- 	if (ipv6_addr_type(&fl6->saddr) & IPV6_ADDR_UNICAST)
-@@ -75,6 +73,8 @@ static u32 __nft_fib6_eval_type(const struct nft_fib *priv,
- 	else if (priv->flags & NFTA_FIB_F_OIF)
- 		dev = nft_out(pkt);
+ 	for (i = 0; i < mal->num_tx_chans; ++i)
+@@ -701,6 +705,8 @@ static int mal_probe(struct platform_device *ofdev)
+ 	free_irq(mal->serr_irq, mal);
+  fail2:
+ 	dma_free_coherent(&ofdev->dev, bd_size, mal->bd_virt, mal->bd_dma);
++ fail_dummy:
++	free_netdev(mal->dummy_dev);
+  fail_unmap:
+ 	dcr_unmap(mal->dcr_host, 0x100);
+  fail:
+@@ -732,6 +738,8 @@ static int mal_remove(struct platform_device *ofdev)
  
-+	fl6.flowi6_l3mdev = l3mdev_master_ifindex_rcu(dev);
+ 	mal_reset(mal);
+ 
++	free_netdev(mal->dummy_dev);
 +
- 	nft_fib6_flowi_init(&fl6, priv, pkt, dev, iph);
+ 	dma_free_coherent(&ofdev->dev,
+ 			  sizeof(struct mal_descriptor) *
+ 			  (NUM_TX_BUFF * mal->num_tx_chans +
+diff --git a/drivers/net/ethernet/ibm/emac/mal.h b/drivers/net/ethernet/ibm/emac/mal.h
+index d212373a72e7c..e0ddc41186a28 100644
+--- a/drivers/net/ethernet/ibm/emac/mal.h
++++ b/drivers/net/ethernet/ibm/emac/mal.h
+@@ -205,7 +205,7 @@ struct mal_instance {
+ 	int			index;
+ 	spinlock_t		lock;
  
- 	if (dev && nf_ipv6_chk_addr(nft_net(pkt), &fl6.daddr, dev, true))
-@@ -165,6 +165,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 		.flowi6_iif = LOOPBACK_IFINDEX,
- 		.flowi6_proto = pkt->tprot,
- 		.flowi6_uid = sock_net_uid(nft_net(pkt), NULL),
-+		.flowi6_l3mdev = l3mdev_master_ifindex_rcu(nft_in(pkt)),
- 	};
- 	struct rt6_info *rt;
- 	int lookup_flags;
+-	struct net_device	dummy_dev;
++	struct net_device	*dummy_dev;
+ 
+ 	unsigned int features;
+ };
 -- 
 2.43.0
 
