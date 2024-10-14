@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9D0E571;
-	Mon, 14 Oct 2024 14:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AA4595B;
+	Mon, 14 Oct 2024 14:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917083; cv=none; b=SKimt5kTjg/IWYpqJBdZnzVXfIqMkZzUVsE+aaUrV6QINxVIBzZdgJY99r9NJE1P1EzXNoB9aUhWHYBwrkT8GWWiVwgsYVuoU/v08k4zV+vB6nc+18m8tC25TybakblFoxHHS9EB4KdZm4Pxa4y8N004N8JaHB4tyma9JRYp8TA=
+	t=1728917087; cv=none; b=GyTrl235VXESBvrGyfFyZaqzEvLMx2hYkSfOpoT0CyjF8D3frNxOD9RbWhQcASJpUoU7M7RpP5k8U8VQ8UvKQjtC3XZYaVAmwLP2IrB6Tib86GWe2OMnSLhyNOjbXeaonlimNTm0bCdJ2OGib7b83zXICFw8x35q3T6IzJv6ypk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917083; c=relaxed/simple;
-	bh=KoAA0JioOFwFjvry8KLhMtrj+cBX5u0wknj10DZTCEA=;
+	s=arc-20240116; t=1728917087; c=relaxed/simple;
+	bh=t4mNrdwxMbK4uqlNzjnRRe/r5Yx5ROHH5iWo5knZpBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0bL/HYfDEjhcjJiq/iayX5mUmoulD84FpRtAmOb3Vpix6V89xzhgQV+g209tL/QCZrDJjcgslHrj46lBgLKZ0QnPiffmhcxFVkifxF7P1LL6Qkjkm0IC3WXhGettv9NAImhCyQKXnKPJNHw3GticOSYqHUOfeV+svjtyeNCYJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etA+Qgz8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PyY3xpFapQ6vNGauJzZCHfJP2oTGFRLSYE6LHxyBUYQTVJxMP+Nc102FyuUMsZUFNYNh0xT19nXuxS6y/v5ryHTKErCfoQNwXP8C4+3RqJzH052icMhJ2F/RtNAck6CoN26O8q6Oc1RWwUqNWPpNOr78yh+Qk1zpvQRuq10H/rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYegqydY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etA+Qgz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F40C4CEC3;
-	Mon, 14 Oct 2024 14:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYegqydY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81303C4CEC3;
+	Mon, 14 Oct 2024 14:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917083;
-	bh=KoAA0JioOFwFjvry8KLhMtrj+cBX5u0wknj10DZTCEA=;
+	s=korg; t=1728917087;
+	bh=t4mNrdwxMbK4uqlNzjnRRe/r5Yx5ROHH5iWo5knZpBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=etA+Qgz8GmJXpqaho93x1WV/T4wz5a72WVxY1T7grzoAduCC7RyKGg7SGvVcRpgE4
-	 67xTJFewy01Rbj0yZfsyfQcUnbZb5cGRNeRZeSJ9iwczi22UFzMEQHFezht5UhHmmP
-	 MaeD9NmdEj56a0+6SQ+LXWdTveGeqEOEZi3YrTYI=
+	b=nYegqydYK+LZ3mU77Rq2ZVWg1pwFoYpLM0+LeP7VCObwHDFpsSKmkIsXm2PdMpOCk
+	 GhbA2P8bSyV0pLZsuK+9CZrlSV2fZrXswC5Make2WEmOxaFxSgwuXlY7jX9TjpVSXM
+	 REfK92NRwvq2Ux1WdgzO6+SdYFhPEqsqnVs1HYcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/213] smb: client: fix UAF in async decryption
-Date: Mon, 14 Oct 2024 16:20:11 +0200
-Message-ID: <20241014141047.067507343@linuxfoundation.org>
+Subject: [PATCH 6.6 140/213] ice: rename switchdev to eswitch
+Date: Mon, 14 Oct 2024 16:20:46 +0200
+Message-ID: <20241014141048.434649664@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,190 +54,353 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit b0abcd65ec545701b8793e12bc27dc98042b151a ]
+[ Upstream commit 5a841e4eb8ed2fea91025b19af8a9ba544f63323 ]
 
-Doing an async decryption (large read) crashes with a
-slab-use-after-free way down in the crypto API.
+Eswitch is used as a prefix for related functions. Main structure
+storing all data related to eswitch should also be named as eswitch
+instead of ice_switchdev_info. Rename it.
 
-Reproducer:
-    # mount.cifs -o ...,seal,esize=1 //srv/share /mnt
-    # dd if=/mnt/largefile of=/dev/null
-    ...
-    [  194.196391] ==================================================================
-    [  194.196844] BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xc1/0x110
-    [  194.197269] Read of size 8 at addr ffff888112bd0448 by task kworker/u77:2/899
-    [  194.197707]
-    [  194.197818] CPU: 12 UID: 0 PID: 899 Comm: kworker/u77:2 Not tainted 6.11.0-lku-00028-gfca3ca14a17a-dirty #43
-    [  194.198400] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
-    [  194.199046] Workqueue: smb3decryptd smb2_decrypt_offload [cifs]
-    [  194.200032] Call Trace:
-    [  194.200191]  <TASK>
-    [  194.200327]  dump_stack_lvl+0x4e/0x70
-    [  194.200558]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.200809]  print_report+0x174/0x505
-    [  194.201040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-    [  194.201352]  ? srso_return_thunk+0x5/0x5f
-    [  194.201604]  ? __virt_addr_valid+0xdf/0x1c0
-    [  194.201868]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.202128]  kasan_report+0xc8/0x150
-    [  194.202361]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.202616]  gf128mul_4k_lle+0xc1/0x110
-    [  194.202863]  ghash_update+0x184/0x210
-    [  194.203103]  shash_ahash_update+0x184/0x2a0
-    [  194.203377]  ? __pfx_shash_ahash_update+0x10/0x10
-    [  194.203651]  ? srso_return_thunk+0x5/0x5f
-    [  194.203877]  ? crypto_gcm_init_common+0x1ba/0x340
-    [  194.204142]  gcm_hash_assoc_remain_continue+0x10a/0x140
-    [  194.204434]  crypt_message+0xec1/0x10a0 [cifs]
-    [  194.206489]  ? __pfx_crypt_message+0x10/0x10 [cifs]
-    [  194.208507]  ? srso_return_thunk+0x5/0x5f
-    [  194.209205]  ? srso_return_thunk+0x5/0x5f
-    [  194.209925]  ? srso_return_thunk+0x5/0x5f
-    [  194.210443]  ? srso_return_thunk+0x5/0x5f
-    [  194.211037]  decrypt_raw_data+0x15f/0x250 [cifs]
-    [  194.212906]  ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
-    [  194.214670]  ? srso_return_thunk+0x5/0x5f
-    [  194.215193]  smb2_decrypt_offload+0x12a/0x6c0 [cifs]
+Also rename switchdev to eswitch where the context is not about eswitch
+mode.
 
-This is because TFM is being used in parallel.
+::uplink_netdev was changed to netdev for simplicity. There is no other
+netdev in function scope so it is obvious.
 
-Fix this by allocating a new AEAD TFM for async decryption, but keep
-the existing one for synchronous READ cases (similar to what is done
-in smb3_calc_signature()).
-
-Also remove the calls to aead_request_set_callback() and
-crypto_wait_req() since it's always going to be a synchronous operation.
-
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: fbcb968a98ac ("ice: Flush FDB entries before reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 47 ++++++++++++++++++++++++-----------------
- fs/smb/client/smb2pdu.c |  6 ++++++
- 2 files changed, 34 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h          |  6 +-
+ drivers/net/ethernet/intel/ice/ice_eswitch.c  | 63 ++++++++++---------
+ .../net/ethernet/intel/ice/ice_eswitch_br.c   | 12 ++--
+ drivers/net/ethernet/intel/ice/ice_tc_lib.c   |  4 +-
+ 4 files changed, 43 insertions(+), 42 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 007d0a683910f..450e3050324c6 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4250,7 +4250,7 @@ smb2_get_enc_key(struct TCP_Server_Info *server, __u64 ses_id, int enc, u8 *key)
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 7b3ce30ba38fa..f943964ec05ae 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -518,7 +518,7 @@ enum ice_misc_thread_tasks {
+ 	ICE_MISC_THREAD_NBITS		/* must be last */
+ };
+ 
+-struct ice_switchdev_info {
++struct ice_eswitch {
+ 	struct ice_vsi *control_vsi;
+ 	struct ice_vsi *uplink_vsi;
+ 	struct ice_esw_br_offloads *br_offloads;
+@@ -631,7 +631,7 @@ struct ice_pf {
+ 	struct ice_link_default_override_tlv link_dflt_override;
+ 	struct ice_lag *lag; /* Link Aggregation information */
+ 
+-	struct ice_switchdev_info switchdev;
++	struct ice_eswitch eswitch;
+ 	struct ice_esw_br_port *br_port;
+ 
+ #define ICE_INVALID_AGG_NODE_ID		0
+@@ -838,7 +838,7 @@ static inline struct ice_vsi *ice_find_vsi(struct ice_pf *pf, u16 vsi_num)
+  */
+ static inline bool ice_is_switchdev_running(struct ice_pf *pf)
+ {
+-	return pf->switchdev.is_running;
++	return pf->eswitch.is_running;
+ }
+ 
+ #define ICE_FD_STAT_CTR_BLOCK_COUNT	256
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+index a655d499abfa8..e7f1e53314d76 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -16,12 +16,12 @@
+  * @vf: pointer to VF struct
+  *
+  * This function adds advanced rule that forwards packets with
+- * VF's VSI index to the corresponding switchdev ctrl VSI queue.
++ * VF's VSI index to the corresponding eswitch ctrl VSI queue.
   */
  static int
- crypt_message(struct TCP_Server_Info *server, int num_rqst,
--	      struct smb_rqst *rqst, int enc)
-+	      struct smb_rqst *rqst, int enc, struct crypto_aead *tfm)
+ ice_eswitch_add_vf_sp_rule(struct ice_pf *pf, struct ice_vf *vf)
  {
- 	struct smb2_transform_hdr *tr_hdr =
- 		(struct smb2_transform_hdr *)rqst[0].rq_iov[0].iov_base;
-@@ -4261,8 +4261,6 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
- 	struct aead_request *req;
- 	u8 *iv;
--	DECLARE_CRYPTO_WAIT(wait);
--	struct crypto_aead *tfm;
- 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	void *creq;
- 	size_t sensitive_size;
-@@ -4274,14 +4272,6 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 		return rc;
- 	}
- 
--	rc = smb3_crypto_aead_allocate(server);
--	if (rc) {
--		cifs_server_dbg(VFS, "%s: crypto alloc failed\n", __func__);
--		return rc;
--	}
--
--	tfm = enc ? server->secmech.enc : server->secmech.dec;
--
- 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
- 		(server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
- 		rc = crypto_aead_setkey(tfm, key, SMB3_GCM256_CRYPTKEY_SIZE);
-@@ -4321,11 +4311,7 @@ crypt_message(struct TCP_Server_Info *server, int num_rqst,
- 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
- 	aead_request_set_ad(req, assoc_data_len);
- 
--	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
--				  crypto_req_done, &wait);
--
--	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
--				: crypto_aead_decrypt(req), &wait);
-+	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
- 
- 	if (!rc && enc)
- 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
-@@ -4432,7 +4418,7 @@ smb3_init_transform_rq(struct TCP_Server_Info *server, int num_rqst,
- 	/* fill the 1st iov with a transform header */
- 	fill_transform_hdr(tr_hdr, orig_len, old_rq, server->cipher_type);
- 
--	rc = crypt_message(server, num_rqst, new_rq, 1);
-+	rc = crypt_message(server, num_rqst, new_rq, 1, server->secmech.enc);
- 	cifs_dbg(FYI, "Encrypt message returned %d\n", rc);
- 	if (rc)
- 		goto err_free;
-@@ -4457,8 +4443,9 @@ decrypt_raw_data(struct TCP_Server_Info *server, char *buf,
- 		 unsigned int buf_data_size, struct iov_iter *iter,
- 		 bool is_offloaded)
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
+ 	struct ice_adv_rule_info rule_info = { 0 };
+ 	struct ice_adv_lkup_elem *list;
+ 	struct ice_hw *hw = &pf->hw;
+@@ -59,7 +59,7 @@ ice_eswitch_add_vf_sp_rule(struct ice_pf *pf, struct ice_vf *vf)
+  * @vf: pointer to the VF struct
+  *
+  * Delete the advanced rule that was used to forward packets with the VF's VSI
+- * index to the corresponding switchdev ctrl VSI queue.
++ * index to the corresponding eswitch ctrl VSI queue.
+  */
+ static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
  {
--	struct kvec iov[2];
-+	struct crypto_aead *tfm;
- 	struct smb_rqst rqst = {NULL};
-+	struct kvec iov[2];
- 	size_t iter_size = 0;
- 	int rc;
+@@ -70,7 +70,7 @@ static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
+ }
  
-@@ -4475,9 +4462,31 @@ decrypt_raw_data(struct TCP_Server_Info *server, char *buf,
- 		iter_size = iov_iter_count(iter);
+ /**
+- * ice_eswitch_setup_env - configure switchdev HW filters
++ * ice_eswitch_setup_env - configure eswitch HW filters
+  * @pf: pointer to PF struct
+  *
+  * This function adds HW filters configuration specific for switchdev
+@@ -78,18 +78,18 @@ static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
+  */
+ static int ice_eswitch_setup_env(struct ice_pf *pf)
+ {
+-	struct ice_vsi *uplink_vsi = pf->switchdev.uplink_vsi;
+-	struct net_device *uplink_netdev = uplink_vsi->netdev;
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *uplink_vsi = pf->eswitch.uplink_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
++	struct net_device *netdev = uplink_vsi->netdev;
+ 	struct ice_vsi_vlan_ops *vlan_ops;
+ 	bool rule_added = false;
+ 
+ 	ice_remove_vsi_fltr(&pf->hw, uplink_vsi->idx);
+ 
+-	netif_addr_lock_bh(uplink_netdev);
+-	__dev_uc_unsync(uplink_netdev, NULL);
+-	__dev_mc_unsync(uplink_netdev, NULL);
+-	netif_addr_unlock_bh(uplink_netdev);
++	netif_addr_lock_bh(netdev);
++	__dev_uc_unsync(netdev, NULL);
++	__dev_mc_unsync(netdev, NULL);
++	netif_addr_unlock_bh(netdev);
+ 
+ 	if (ice_vsi_add_vlan_zero(uplink_vsi))
+ 		goto err_def_rx;
+@@ -132,10 +132,10 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
+ }
+ 
+ /**
+- * ice_eswitch_remap_rings_to_vectors - reconfigure rings of switchdev ctrl VSI
++ * ice_eswitch_remap_rings_to_vectors - reconfigure rings of eswitch ctrl VSI
+  * @pf: pointer to PF struct
+  *
+- * In switchdev number of allocated Tx/Rx rings is equal.
++ * In eswitch number of allocated Tx/Rx rings is equal.
+  *
+  * This function fills q_vectors structures associated with representor and
+  * move each ring pairs to port representor netdevs. Each port representor
+@@ -144,7 +144,7 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
+  */
+ static void ice_eswitch_remap_rings_to_vectors(struct ice_pf *pf)
+ {
+-	struct ice_vsi *vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *vsi = pf->eswitch.control_vsi;
+ 	int q_id;
+ 
+ 	ice_for_each_txq(vsi, q_id) {
+@@ -189,7 +189,7 @@ static void ice_eswitch_remap_rings_to_vectors(struct ice_pf *pf)
+ /**
+  * ice_eswitch_release_reprs - clear PR VSIs configuration
+  * @pf: poiner to PF struct
+- * @ctrl_vsi: pointer to switchdev control VSI
++ * @ctrl_vsi: pointer to eswitch control VSI
+  */
+ static void
+ ice_eswitch_release_reprs(struct ice_pf *pf, struct ice_vsi *ctrl_vsi)
+@@ -223,7 +223,7 @@ ice_eswitch_release_reprs(struct ice_pf *pf, struct ice_vsi *ctrl_vsi)
+  */
+ static int ice_eswitch_setup_reprs(struct ice_pf *pf)
+ {
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
+ 	int max_vsi_num = 0;
+ 	struct ice_vf *vf;
+ 	unsigned int bkt;
+@@ -359,7 +359,7 @@ ice_eswitch_port_start_xmit(struct sk_buff *skb, struct net_device *netdev)
+ }
+ 
+ /**
+- * ice_eswitch_set_target_vsi - set switchdev context in Tx context descriptor
++ * ice_eswitch_set_target_vsi - set eswitch context in Tx context descriptor
+  * @skb: pointer to send buffer
+  * @off: pointer to offload struct
+  */
+@@ -382,7 +382,7 @@ ice_eswitch_set_target_vsi(struct sk_buff *skb,
+ }
+ 
+ /**
+- * ice_eswitch_release_env - clear switchdev HW filters
++ * ice_eswitch_release_env - clear eswitch HW filters
+  * @pf: pointer to PF struct
+  *
+  * This function removes HW filters configuration specific for switchdev
+@@ -390,8 +390,8 @@ ice_eswitch_set_target_vsi(struct sk_buff *skb,
+  */
+ static void ice_eswitch_release_env(struct ice_pf *pf)
+ {
+-	struct ice_vsi *uplink_vsi = pf->switchdev.uplink_vsi;
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *uplink_vsi = pf->eswitch.uplink_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
+ 	struct ice_vsi_vlan_ops *vlan_ops;
+ 
+ 	vlan_ops = ice_get_compat_vsi_vlan_ops(uplink_vsi);
+@@ -407,7 +407,7 @@ static void ice_eswitch_release_env(struct ice_pf *pf)
+ }
+ 
+ /**
+- * ice_eswitch_vsi_setup - configure switchdev control VSI
++ * ice_eswitch_vsi_setup - configure eswitch control VSI
+  * @pf: pointer to PF structure
+  * @pi: pointer to port_info structure
+  */
+@@ -486,12 +486,12 @@ static int ice_eswitch_enable_switchdev(struct ice_pf *pf)
+ 		return -EINVAL;
  	}
  
--	rc = crypt_message(server, 1, &rqst, 0);
-+	if (is_offloaded) {
-+		if ((server->cipher_type == SMB2_ENCRYPTION_AES128_GCM) ||
-+		    (server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
-+			tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
-+		else
-+			tfm = crypto_alloc_aead("ccm(aes)", 0, 0);
-+		if (IS_ERR(tfm)) {
-+			rc = PTR_ERR(tfm);
-+			cifs_server_dbg(VFS, "%s: Failed alloc decrypt TFM, rc=%d\n", __func__, rc);
-+
-+			return rc;
-+		}
-+	} else {
-+		if (unlikely(!server->secmech.dec))
-+			return -EIO;
-+
-+		tfm = server->secmech.dec;
-+	}
-+
-+	rc = crypt_message(server, 1, &rqst, 0, tfm);
- 	cifs_dbg(FYI, "Decrypt message returned %d\n", rc);
+-	pf->switchdev.control_vsi = ice_eswitch_vsi_setup(pf, pf->hw.port_info);
+-	if (!pf->switchdev.control_vsi)
++	pf->eswitch.control_vsi = ice_eswitch_vsi_setup(pf, pf->hw.port_info);
++	if (!pf->eswitch.control_vsi)
+ 		return -ENODEV;
  
-+	if (is_offloaded)
-+		crypto_free_aead(tfm);
-+
- 	if (rc)
- 		return rc;
+-	ctrl_vsi = pf->switchdev.control_vsi;
+-	pf->switchdev.uplink_vsi = uplink_vsi;
++	ctrl_vsi = pf->eswitch.control_vsi;
++	pf->eswitch.uplink_vsi = uplink_vsi;
  
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index bf45b8652e580..83a03201bb862 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1263,6 +1263,12 @@ SMB2_negotiate(const unsigned int xid,
- 		else
- 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
- 	}
-+
-+	if (server->cipher_type && !rc) {
-+		rc = smb3_crypto_aead_allocate(server);
-+		if (rc)
-+			cifs_server_dbg(VFS, "%s: crypto alloc failed, rc=%d\n", __func__, rc);
-+	}
- neg_exit:
- 	free_rsp_buf(resp_buftype, rsp);
- 	return rc;
+ 	if (ice_eswitch_setup_env(pf))
+ 		goto err_vsi;
+@@ -526,12 +526,12 @@ static int ice_eswitch_enable_switchdev(struct ice_pf *pf)
+ }
+ 
+ /**
+- * ice_eswitch_disable_switchdev - disable switchdev resources
++ * ice_eswitch_disable_switchdev - disable eswitch resources
+  * @pf: pointer to PF structure
+  */
+ static void ice_eswitch_disable_switchdev(struct ice_pf *pf)
+ {
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
+ 
+ 	ice_eswitch_napi_disable(pf);
+ 	ice_eswitch_br_offloads_deinit(pf);
+@@ -625,7 +625,7 @@ void ice_eswitch_release(struct ice_pf *pf)
+ 		return;
+ 
+ 	ice_eswitch_disable_switchdev(pf);
+-	pf->switchdev.is_running = false;
++	pf->eswitch.is_running = false;
+ }
+ 
+ /**
+@@ -636,14 +636,15 @@ int ice_eswitch_configure(struct ice_pf *pf)
+ {
+ 	int status;
+ 
+-	if (pf->eswitch_mode == DEVLINK_ESWITCH_MODE_LEGACY || pf->switchdev.is_running)
++	if (pf->eswitch_mode == DEVLINK_ESWITCH_MODE_LEGACY ||
++	    pf->eswitch.is_running)
+ 		return 0;
+ 
+ 	status = ice_eswitch_enable_switchdev(pf);
+ 	if (status)
+ 		return status;
+ 
+-	pf->switchdev.is_running = true;
++	pf->eswitch.is_running = true;
+ 	return 0;
+ }
+ 
+@@ -693,7 +694,7 @@ void ice_eswitch_stop_all_tx_queues(struct ice_pf *pf)
+  */
+ int ice_eswitch_rebuild(struct ice_pf *pf)
+ {
+-	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
+ 	int status;
+ 
+ 	ice_eswitch_napi_disable(pf);
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch_br.c b/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
+index 67bfd1f61cdd4..8944f01e7a0b0 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
+@@ -947,7 +947,7 @@ ice_eswitch_br_vf_repr_port_init(struct ice_esw_br *bridge,
+ static int
+ ice_eswitch_br_uplink_port_init(struct ice_esw_br *bridge, struct ice_pf *pf)
+ {
+-	struct ice_vsi *vsi = pf->switchdev.uplink_vsi;
++	struct ice_vsi *vsi = pf->eswitch.uplink_vsi;
+ 	struct ice_esw_br_port *br_port;
+ 	int err;
+ 
+@@ -1185,7 +1185,7 @@ ice_eswitch_br_port_event(struct notifier_block *nb,
+ static void
+ ice_eswitch_br_offloads_dealloc(struct ice_pf *pf)
+ {
+-	struct ice_esw_br_offloads *br_offloads = pf->switchdev.br_offloads;
++	struct ice_esw_br_offloads *br_offloads = pf->eswitch.br_offloads;
+ 
+ 	ASSERT_RTNL();
+ 
+@@ -1194,7 +1194,7 @@ ice_eswitch_br_offloads_dealloc(struct ice_pf *pf)
+ 
+ 	ice_eswitch_br_deinit(br_offloads, br_offloads->bridge);
+ 
+-	pf->switchdev.br_offloads = NULL;
++	pf->eswitch.br_offloads = NULL;
+ 	kfree(br_offloads);
+ }
+ 
+@@ -1205,14 +1205,14 @@ ice_eswitch_br_offloads_alloc(struct ice_pf *pf)
+ 
+ 	ASSERT_RTNL();
+ 
+-	if (pf->switchdev.br_offloads)
++	if (pf->eswitch.br_offloads)
+ 		return ERR_PTR(-EEXIST);
+ 
+ 	br_offloads = kzalloc(sizeof(*br_offloads), GFP_KERNEL);
+ 	if (!br_offloads)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	pf->switchdev.br_offloads = br_offloads;
++	pf->eswitch.br_offloads = br_offloads;
+ 	br_offloads->pf = pf;
+ 
+ 	return br_offloads;
+@@ -1223,7 +1223,7 @@ ice_eswitch_br_offloads_deinit(struct ice_pf *pf)
+ {
+ 	struct ice_esw_br_offloads *br_offloads;
+ 
+-	br_offloads = pf->switchdev.br_offloads;
++	br_offloads = pf->eswitch.br_offloads;
+ 	if (!br_offloads)
+ 		return;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
+index 2bc89a8f6655f..c213121aa5010 100644
+--- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
+@@ -660,7 +660,7 @@ static int ice_tc_setup_redirect_action(struct net_device *filter_dev,
+ 		   ice_tc_is_dev_uplink(target_dev)) {
+ 		repr = ice_netdev_to_repr(filter_dev);
+ 
+-		fltr->dest_vsi = repr->src_vsi->back->switchdev.uplink_vsi;
++		fltr->dest_vsi = repr->src_vsi->back->eswitch.uplink_vsi;
+ 		fltr->direction = ICE_ESWITCH_FLTR_EGRESS;
+ 	} else if (ice_tc_is_dev_uplink(filter_dev) &&
+ 		   ice_is_port_repr_netdev(target_dev)) {
+@@ -772,7 +772,7 @@ ice_eswitch_add_tc_fltr(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr)
+ 		rule_info.sw_act.src = hw->pf_id;
+ 		rule_info.flags_info.act = ICE_SINGLE_ACT_LB_ENABLE;
+ 	} else if (fltr->direction == ICE_ESWITCH_FLTR_EGRESS &&
+-		   fltr->dest_vsi == vsi->back->switchdev.uplink_vsi) {
++		   fltr->dest_vsi == vsi->back->eswitch.uplink_vsi) {
+ 		/* VF to Uplink */
+ 		rule_info.sw_act.flag |= ICE_FLTR_TX;
+ 		rule_info.sw_act.src = vsi->idx;
 -- 
 2.43.0
 
