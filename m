@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D279C1AB530;
-	Mon, 14 Oct 2024 14:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F21AAE08;
+	Mon, 14 Oct 2024 14:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917054; cv=none; b=E6ZfJKSr2jrtgNx5rsZzFnLnIxkuxO7khuJCXyhQmHhYAJbq09Su+04qj/+zWJggw2UNxvrGgS8+NV+vJbSrEAC14WPnhaAJirhFk3KVMukVcy8kZbbxQdw9uTSM+q4JHtYIsfvInWWrF1HUbs2ZdqIuoiQiELTi5k64+Bv1bek=
+	t=1728917058; cv=none; b=PqJCH89o9dv+F6gRSb2WXX3ijA+nAL2/QUQ7GU26nIxBi+41aAccLgAgTW0LhXX4zoqgIMF/YRMJTUBKNBuCNShHT2ZYrV+JHCK0H1xiX/iZ5APoZezNDCwIiFucdroz/ECdoz2+rPpd1rfca1q5IEKhVngDSTpyJ0s1KKrgJeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917054; c=relaxed/simple;
-	bh=AC/v4ASkjB2oulCGsa5YPm7Ku5m6Nl0XbR1i7U2hz3o=;
+	s=arc-20240116; t=1728917058; c=relaxed/simple;
+	bh=iddXsFuywpJIxq5IwW3UcN1cyUdPYnvWgQ4AwQ/8x+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDA+HpCt9YdaMyMqbM7jGLXgkf9eC2m7FM3LwfThaxTyhtabIgVh65xqQu4MdLUrEqw3S5X0slPwMB84nJIzgVK3FTXdmqUTEjNvEEf/9NZT5JwftNStYXMg5h0tfhfbik5f/yL/Dh3nobmEKtPjz7uOEL99YcsdG2CUUsAorBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HE6xpJfF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eThrlH2Jf2V7a+x55ohURm9jsqowRuDDJPy8qM0l0xYWjMwnLBLDfwQI7yQG7NMDdbm0D3HgMWEE+w14PUifLCkoxq/FResrnP+F80Vx1uWLBY5yHhqbLjzVSBw6srO7Qvm+VN0CY3RarOIWR4Ak2MkAofgBLozSTHBPjEV5LT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIzF0XiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HE6xpJfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE48C4CEC7;
-	Mon, 14 Oct 2024 14:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIzF0XiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A772AC4CEC3;
+	Mon, 14 Oct 2024 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917054;
-	bh=AC/v4ASkjB2oulCGsa5YPm7Ku5m6Nl0XbR1i7U2hz3o=;
+	s=korg; t=1728917058;
+	bh=iddXsFuywpJIxq5IwW3UcN1cyUdPYnvWgQ4AwQ/8x+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HE6xpJfFD+l2m22TI9aEVRp0O8bYb72iuZlni/EFf1cqSgoNeOP3NCGFd6W0N6XA3
-	 n8ktZ+Q8/8YILt0jdNiDD0p/vRhUKFjuAIVlezumZXX47a279AfGtgCTcGYJuaTQNZ
-	 FrTVqJ383A1BC1IfES1h99WY1I66EXRaUoD5k9ks=
+	b=HIzF0XiFWI/3XIJWZho0gBkwqv3HvtV5+GD7E++fYEaA5QLYsxpWD4GP38gViEHJt
+	 uDxlW4OArhflZAiC3n14TaLWL+Y8+b31fSaS8CAmsex11C1f/N8kD+juYs0YhlszEq
+	 9npOW+mBNbrCrCyyRMWUCUZDnkkIweazehGImVew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/213] powercap: intel_rapl_tpmi: Ignore minor version change
-Date: Mon, 14 Oct 2024 16:20:44 +0200
-Message-ID: <20241014141048.356309063@linuxfoundation.org>
+Subject: [PATCH 6.6 109/213] NFSD: Mark filecache "down" if init fails
+Date: Mon, 14 Oct 2024 16:20:15 +0200
+Message-ID: <20241014141047.222152729@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,78 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1d390923974cc233245649cf23833e06b15a9ef7 ]
+[ Upstream commit dc0d0f885aa422f621bc1c2124133eff566b0bc8 ]
 
-The hardware definition of every TPMI feature contains a major and minor
-version. When there is a change in the MMIO offset or change in the
-definition of a field, hardware will change major version. For addition
-of new fields without modifying existing MMIO offsets or fields, only
-the minor version is changed.
+NeilBrown says:
+> The handling of NFSD_FILE_CACHE_UP is strange.  nfsd_file_cache_init()
+> sets it, but doesn't clear it on failure.  So if nfsd_file_cache_init()
+> fails for some reason, nfsd_file_cache_shutdown() would still try to
+> clean up if it was called.
 
-If the driver has not been updated to recognize a new hardware major
-version, it cannot provide the RAPL interface to users due to possible
-register layout incompatibilities. However, the driver does not need to
-be updated every time the hardware minor version changes because in that
-case it will just miss some new functionality exposed by the hardware.
-
-The current implementation causes the driver to refuse to work for any
-hardware version change which is unnecessarily restrictive.
-
-If there is a minor version mismatch, log an information message and
-continue, but if there is a major version mismatch, log a warning and
-exit (as before).
-
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20240930081801.28502-4-rui.zhang@intel.com
-Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: NeilBrown <neilb@suse.de>
+Fixes: c7b824c3d06c ("NFSD: Replace the "init once" mechanism")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_tpmi.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ fs/nfsd/filecache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
-index f6b7f085977ce..0085e59856166 100644
---- a/drivers/powercap/intel_rapl_tpmi.c
-+++ b/drivers/powercap/intel_rapl_tpmi.c
-@@ -15,7 +15,8 @@
- #include <linux/module.h>
- #include <linux/slab.h>
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 5c9f8f8404d5b..6f2bcbfde45e6 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -718,7 +718,7 @@ nfsd_file_cache_init(void)
  
--#define TPMI_RAPL_VERSION 1
-+#define TPMI_RAPL_MAJOR_VERSION 0
-+#define TPMI_RAPL_MINOR_VERSION 1
+ 	ret = rhltable_init(&nfsd_file_rhltable, &nfsd_file_rhash_params);
+ 	if (ret)
+-		return ret;
++		goto out;
  
- /* 1 header + 10 registers + 5 reserved. 8 bytes for each. */
- #define TPMI_RAPL_DOMAIN_SIZE 128
-@@ -154,11 +155,21 @@ static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
- 	tpmi_domain_size = tpmi_domain_header >> 16 & 0xff;
- 	tpmi_domain_flags = tpmi_domain_header >> 32 & 0xffff;
+ 	ret = -ENOMEM;
+ 	nfsd_filecache_wq = alloc_workqueue("nfsd_filecache", 0, 0);
+@@ -770,6 +770,8 @@ nfsd_file_cache_init(void)
  
--	if (tpmi_domain_version != TPMI_RAPL_VERSION) {
--		pr_warn(FW_BUG "Unsupported version:%d\n", tpmi_domain_version);
-+	if (tpmi_domain_version == TPMI_VERSION_INVALID) {
-+		pr_warn(FW_BUG "Invalid version\n");
- 		return -ENODEV;
- 	}
- 
-+	if (TPMI_MAJOR_VERSION(tpmi_domain_version) != TPMI_RAPL_MAJOR_VERSION) {
-+		pr_warn(FW_BUG "Unsupported major version:%ld\n",
-+			TPMI_MAJOR_VERSION(tpmi_domain_version));
-+		return -ENODEV;
-+	}
-+
-+	if (TPMI_MINOR_VERSION(tpmi_domain_version) > TPMI_RAPL_MINOR_VERSION)
-+		pr_info("Ignore: Unsupported minor version:%ld\n",
-+			TPMI_MINOR_VERSION(tpmi_domain_version));
-+
- 	/* Domain size: in unit of 128 Bytes */
- 	if (tpmi_domain_size != 1) {
- 		pr_warn(FW_BUG "Invalid Domain size %d\n", tpmi_domain_size);
+ 	INIT_DELAYED_WORK(&nfsd_filecache_laundrette, nfsd_file_gc_worker);
+ out:
++	if (ret)
++		clear_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags);
+ 	return ret;
+ out_notifier:
+ 	lease_unregister_notifier(&nfsd_file_lease_notifier);
 -- 
 2.43.0
 
