@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE4A1AB525;
-	Mon, 14 Oct 2024 14:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772851AA7A5;
+	Mon, 14 Oct 2024 14:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916887; cv=none; b=fYX8D9CoklaCRduJSShMLYXhnbl0JUw7n/7pQCyDVmPFjjkY7Z+e2XfoU5EgdRH4upRe1elUdlj1u2Voq2htE5f9IJHiGfn3y7lV0gw0W6fKP84romJn7BdFpdK+OfiAgh3fQmrG075iqhxAu5VVibQd46uisTupflv51Z42aMI=
+	t=1728916890; cv=none; b=m0+PI4d0oqYM4q8Q7a76Bg/23oxJoKOlY/dCL0wOGCKmiJtY2nvMth2hlxR8f/TmEIzgHpb83VkUnAmd5fEvvYphO94abz9u3Bs3nnTbzAN9ey6gHpoQdldiebra7SEOTYz/xP8j5Ravn3UFfJj52WLLUL9MXGRzsw4tIYtax5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916887; c=relaxed/simple;
-	bh=WBD+6+IDh2PXIvwVfvE36cf7heCS7sii1mit73p0Nrg=;
+	s=arc-20240116; t=1728916890; c=relaxed/simple;
+	bh=f7wzQBUinYt1JnCTDfeMb90bk0kFq6Y8UC/XScY8GBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4qO7Kvm37eTZ4T89cZWvTIORMPfdrOqSS19h7kZzBU2ilc2RwkwIiPB3D8r10XtmIlHBcgoZp1pZmf7miwLRSSvta1gmQX3vGq88saukXaieymyFhfP34zRE7POhpbQMnh9qqNn0zeLYWFMo/Qfv0h88DjOy8Ra19xFgvtg9Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hchZghmi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlwCatbUeW3pM1YedvXkwd5nCzjawOC0KZLUgcphhrvzkvkjgW29qvOBSv8Yd8gHTORcltvwDSNqzEbdZddRmsTxIPnrViesOLJTP91UoznLDilnMfDMiyWjv5JDiw5wCtdwS/gv7i9tKjgxSDS9IyeiGqtJ9EM6g9iFcBejVyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8iWH28w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hchZghmi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69CBC4CEC3;
-	Mon, 14 Oct 2024 14:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8iWH28w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027E4C4CEC3;
+	Mon, 14 Oct 2024 14:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916887;
-	bh=WBD+6+IDh2PXIvwVfvE36cf7heCS7sii1mit73p0Nrg=;
+	s=korg; t=1728916890;
+	bh=f7wzQBUinYt1JnCTDfeMb90bk0kFq6Y8UC/XScY8GBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hchZghmiMKK/sG/oDK9pm9SgB5s4oZ14uZZPkUw6375UbXnyOz0EiKiilWq88Pmqs
-	 WFH4sXI6TNhXFYdG8HzQLZbtdtmsqqGmmehLyFS6uP90AXmVR1nI2xGHd78E7aolKR
-	 DjnaVAuHpdduOFZEzW5pMIMiv1/aSs2aOCbqK+Mg=
+	b=e8iWH28wSalc21qGMm3IsOt2hmJmBz/0uncu+1mHbpAor2tEnZwxK6t2j1m7Q6SUE
+	 wB6fwhd3XHAWl2weyxGk3AL0etUCNpZYQ5nsFh5wGSkfghspRVH7MfiV5wFo2458Vj
+	 8NM6upQvo9iv83riaOO9S3e9lhm6Z9Doiw7vVnsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>,
+	Yuli Wang <wangyuli@uniontech.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/213] comedi: ni_routing: tools: Check when the file could not be opened
-Date: Mon, 14 Oct 2024 16:19:58 +0200
-Message-ID: <20241014141046.561863794@linuxfoundation.org>
+Subject: [PATCH 6.6 093/213] LoongArch: Fix memleak in pci_acpi_scan_root()
+Date: Mon, 14 Oct 2024 16:19:59 +0200
+Message-ID: <20241014141046.600555902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -50,36 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruffalo Lavoisier <ruffalolavoisier@gmail.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit 5baeb157b341b1d26a5815aeaa4d3bb9e0444fda ]
+[ Upstream commit 5016c3a31a6d74eaf2fdfdec673eae8fcf90379e ]
 
-- After fopen check NULL before using the file pointer use
+Add kfree(root_ops) in this case to avoid memleak of root_ops,
+leaks when pci_find_bus() != 0.
 
-Signed-off-by: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>
-Link: https://lore.kernel.org/r/20240906203025.89588-1-RuffaloLavoisier@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/loongarch/pci/acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c b/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
-index d55521b5bdcb2..892a66b2cea66 100644
---- a/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
-+++ b/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
-@@ -140,6 +140,11 @@ int main(void)
- {
- 	FILE *fp = fopen("ni_values.py", "w");
+diff --git a/arch/loongarch/pci/acpi.c b/arch/loongarch/pci/acpi.c
+index 365f7de771cbb..1da4dc46df43e 100644
+--- a/arch/loongarch/pci/acpi.c
++++ b/arch/loongarch/pci/acpi.c
+@@ -225,6 +225,7 @@ struct pci_bus *pci_acpi_scan_root(struct acpi_pci_root *root)
+ 	if (bus) {
+ 		memcpy(bus->sysdata, info->cfg, sizeof(struct pci_config_window));
+ 		kfree(info);
++		kfree(root_ops);
+ 	} else {
+ 		struct pci_bus *child;
  
-+	if (fp == NULL) {
-+		fprintf(stderr, "Could not open file!");
-+		return -1;
-+	}
-+
- 	/* write route register values */
- 	fprintf(fp, "ni_route_values = {\n");
- 	for (int i = 0; ni_all_route_values[i]; ++i)
 -- 
 2.43.0
 
