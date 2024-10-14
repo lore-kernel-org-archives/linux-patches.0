@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B761AC427;
-	Mon, 14 Oct 2024 15:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF981ABEBF;
+	Mon, 14 Oct 2024 15:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918084; cv=none; b=O305fqAuwh0nMvfMC1We56h3biIPYPRNg0g3ZP0H+nrArJW9jypHRgPXx+WZhQAmrDHrBFeY0aBdWLMidLf5fCaOs3os1BYyDNkaYeJZl1Uok+njSTeDKDJl/2rbP8g4MB/jlH3I3gjdo/hxkmWh4a9IicQ8VOgUAypBtxB/+dU=
+	t=1728918086; cv=none; b=ezbSrD3ZwOJxkf9+zwpO/n0fjz1Z5LPz7avACCpGqELH9I6bGUQ2ZjWa6PkWuosrE7IjNjnIY0hBvNrraHiMZ+I99E3UzzREdspySx7UP0IRB+rV+u0PyRj1Grd23UU60gACj0K0RrKc9GLa1fj1AmgoyfUsEkqFQOQokFPRX4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918084; c=relaxed/simple;
-	bh=G0qoEQ0I4aXUmkhx6NAvdml/N5js4LRkEqazOxXm0qs=;
+	s=arc-20240116; t=1728918086; c=relaxed/simple;
+	bh=Hs506wZfFjvYSNm8PJUPIL7e2BIoxMKNC8exGSjWqBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKbduKE8fovCaqgMSiHyqFDBfIAlTrfFlIFTXhZB+RkG3151zQfXgm668aLu4J9j+mfmR9kwcEPnTsP83kgd+k2h2XYQlq3rSRYsearfHEqD2KNSABVVAy+hEUyp/zwZg30dJQ83kCxTmg5MMLtu1f6z27on8K50ik/FLqb57Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8FpDsl7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xa0/AnpbQdE0VY4BWDABCmGvnOjhcfX5TA0pcEpoUOI6vpAY+oYbDq8m5fekbWM4MLXDrbBURLx8irgZm/ALk3yMXyFXEH5H3GG7EDozQxdoIUQHqobqALWkF5CvQS3/NlhaPtmxAvi8IXD8m03NOP945sbtN8Q0209AnlpNSuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTBxMEpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8FpDsl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAF7C4CED0;
-	Mon, 14 Oct 2024 15:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTBxMEpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043B7C4CEC3;
+	Mon, 14 Oct 2024 15:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918083;
-	bh=G0qoEQ0I4aXUmkhx6NAvdml/N5js4LRkEqazOxXm0qs=;
+	s=korg; t=1728918086;
+	bh=Hs506wZfFjvYSNm8PJUPIL7e2BIoxMKNC8exGSjWqBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8FpDsl7mwFm67G1xIBe7QIX+g9sOoZLi0brXOut+06ovbjgB2qKbBwE47T/QY2zR
-	 T6rXIyVqHcWdM8jz5ZWA7JIWVuSUhM1bZZZmO6IcfpxlM9b0wExzh1secn44P/Gink
-	 AWQEWih0bafmXyIKazrwXSPuW1RFdfJkhfekhwxI=
+	b=NTBxMEpaffR89NQJyt6eUJidc6PTw8GeJCgBIry0eqj9HaJ3mMym+JQ2aacgnt7oh
+	 ORCwYtIXNPga39o33jrfcoYwwulCURzXVANAgE2IIoJOSxUR3isnYmtoFzT7B+FKko
+	 CwHTdlekBQK/PuPlTDG53XtwAveVONBCskBxeVjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Terry Lv <terry.lv@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 217/798] RDMA/erdma: Return QP state in erdma_query_qp
-Date: Mon, 14 Oct 2024 16:12:51 +0200
-Message-ID: <20241014141226.456060216@linuxfoundation.org>
+Subject: [PATCH 6.1 191/798] remoteproc: imx_rproc: Correct ddr alias for i.MX8M
+Date: Mon, 14 Oct 2024 16:12:25 +0200
+Message-ID: <20241014141225.434491224@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,69 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit e77127ff6416b17e0b3e630ac46ee5c9a6570f57 ]
+[ Upstream commit c901f817792822eda9cec23814a4621fa3e66695 ]
 
-Fix qp_state and cur_qp_state to return correct values in
-struct ib_qp_attr.
+The DDR Alias address should be 0x40000000 according to RM, so correct
+it.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20240902112920.58749-4-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 4ab8f9607aad ("remoteproc: imx_rproc: support i.MX8MQ/M")
+Reported-by: Terry Lv <terry.lv@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-1-10d0268c7eb1@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 25 ++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/remoteproc/imx_rproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 654d8513873ec..2edf0d882c6a2 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1292,11 +1292,31 @@ int erdma_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr, int attr_mask,
- 	return ret;
- }
- 
-+static enum ib_qp_state query_qp_state(struct erdma_qp *qp)
-+{
-+	switch (qp->attrs.state) {
-+	case ERDMA_QP_STATE_IDLE:
-+		return IB_QPS_INIT;
-+	case ERDMA_QP_STATE_RTR:
-+		return IB_QPS_RTR;
-+	case ERDMA_QP_STATE_RTS:
-+		return IB_QPS_RTS;
-+	case ERDMA_QP_STATE_CLOSING:
-+		return IB_QPS_ERR;
-+	case ERDMA_QP_STATE_TERMINATE:
-+		return IB_QPS_ERR;
-+	case ERDMA_QP_STATE_ERROR:
-+		return IB_QPS_ERR;
-+	default:
-+		return IB_QPS_ERR;
-+	}
-+}
-+
- int erdma_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
- 		   int qp_attr_mask, struct ib_qp_init_attr *qp_init_attr)
- {
--	struct erdma_qp *qp;
- 	struct erdma_dev *dev;
-+	struct erdma_qp *qp;
- 
- 	if (ibqp && qp_attr && qp_init_attr) {
- 		qp = to_eqp(ibqp);
-@@ -1323,6 +1343,9 @@ int erdma_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
- 
- 	qp_init_attr->cap = qp_attr->cap;
- 
-+	qp_attr->qp_state = query_qp_state(qp);
-+	qp_attr->cur_qp_state = query_qp_state(qp);
-+
- 	return 0;
- }
- 
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index bc26fe5416627..7dad5cbec7ede 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -160,7 +160,7 @@ static const struct imx_rproc_att imx_rproc_att_imx8mq[] = {
+ 	/* QSPI Code - alias */
+ 	{ 0x08000000, 0x08000000, 0x08000000, 0 },
+ 	/* DDR (Code) - alias */
+-	{ 0x10000000, 0x80000000, 0x0FFE0000, 0 },
++	{ 0x10000000, 0x40000000, 0x0FFE0000, 0 },
+ 	/* TCML */
+ 	{ 0x1FFE0000, 0x007E0000, 0x00020000, ATT_OWN  | ATT_IOMEM},
+ 	/* TCMU */
 -- 
 2.43.0
 
