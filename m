@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0642BCF5;
-	Mon, 14 Oct 2024 14:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D22200CB;
+	Mon, 14 Oct 2024 14:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916369; cv=none; b=s2mx7LN+YYHwNqPGPwDkgSW5aRE1zXXI5DLvdSyhngDlmqOiLkC3mUCeeZFYVZSWsXNZJpfVht75N5DNW87BFmh+Hjosq+zb3iqEqcnpCMC5nWpR8xftbVQB2SFxJfdGYTUtWMHfSjWKQPShKc4HU1eDSpoocaP9Ns1ACQzI9NA=
+	t=1728916372; cv=none; b=iCJ8Qri1VQPFuJzcQCwoJ49R2i/69mBk2ZiV58NVcrW0RLELHQY+hGXu7DOShK/NQ0+JpBRja7q2pFS/kiIC8FxQ1X1ZImAG82we0QYwYl8SmLjdWHcFNdwVCbe+jYQ59rG7R5zMx467Enf6bwTC738V8/YKJBn7FkW21587kBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916369; c=relaxed/simple;
-	bh=2cTfGKQVu/eZ2KlQd9a0AoWLHk5K/DvQovSnZQ0efRs=;
+	s=arc-20240116; t=1728916372; c=relaxed/simple;
+	bh=JXUN2uEj8Rr0KLgrwde07BB8zoz9qY/+KUEindsIji8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsrwcY0F+ZwE5j1ZJJ0zBxwzNpiB4aYXjg7t4PKms0upcscPduYWm0gwm7btfcdjQF1D7k+HeTIEhVkhoUzoMf6PWgp+EbYsOcCtUmRQuGOmT+AQi/OXKUM/v38lPOzdnuvc/94Bz3fSuKSn21dwprk1hdo105JVjyDell2+qBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1c52fis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVgKFp6X0WONdTYMSq10aGewy71wH/5HXDsgyob0yYPIFgQ1DoLO5sVBTRqzMooFVrM9SUNPPKf7LpRCPvVkZnbIWUfTWiWM8AJr0gnHFi7lgGgzE3g5FC9UKtYiVRMOXwg74kPoX8tohyu3tTLqW33s0FMmBizBf/xlfSYFcgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPgVu126; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1c52fis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A77DC4CEC3;
-	Mon, 14 Oct 2024 14:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPgVu126"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B51C4CEC7;
+	Mon, 14 Oct 2024 14:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916368;
-	bh=2cTfGKQVu/eZ2KlQd9a0AoWLHk5K/DvQovSnZQ0efRs=;
+	s=korg; t=1728916372;
+	bh=JXUN2uEj8Rr0KLgrwde07BB8zoz9qY/+KUEindsIji8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1c52fisRNkNV4o0bC4HOcmsQROSIwTYnDdwzdZUixqmy+1G+6ca7bP1cRGsfdjk+
-	 0D3uniROIDHvHi1UIM/BawmXOolgyexIQeXiZSkjVyiSN+y3ozPLLyM7AhoWbKY9pw
-	 Gl6TBMYZT5uE746Vk8+4aowbY5R+I5wYw1MQq7LQ=
+	b=IPgVu12601S2D/7iaPrvU6zXLP4xJZXhNEbaZNphTyIloE/BQ3VMqkOzvYyhIj0//
+	 8rrFxLboC0pfAxPvvIOBHIaxylFjqz9sEYyDBl4nNOIgmv4uUvWdt6bLW/qmUZz7tq
+	 3gfX8GQSAzt+74gM0h+nvgvNunbzXdQg66WV9t3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 132/214] btrfs: zoned: fix missing RCU locking in error message when loading zone info
-Date: Mon, 14 Oct 2024 16:19:55 +0200
-Message-ID: <20241014141050.143224431@linuxfoundation.org>
+Subject: [PATCH 6.11 133/214] sctp: ensure sk_state is set to CLOSED if hashing fails in sctp_listen_start
+Date: Mon, 14 Oct 2024 16:19:56 +0200
+Message-ID: <20241014141050.183178083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,47 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit fe4cd7ed128fe82ab9fe4f9fc8a73d4467699787 ]
+[ Upstream commit 4d5c70e6155d5eae198bade4afeab3c1b15073b6 ]
 
-At btrfs_load_zone_info() we have an error path that is dereferencing
-the name of a device which is a RCU string but we are not holding a RCU
-read lock, which is incorrect.
+If hashing fails in sctp_listen_start(), the socket remains in the
+LISTENING state, even though it was not added to the hash table.
+This can lead to a scenario where a socket appears to be listening
+without actually being accessible.
 
-Fix this by using btrfs_err_in_rcu() instead of btrfs_err().
+This patch ensures that if the hashing operation fails, the sk_state
+is set back to CLOSED before returning an error.
 
-The problem is there since commit 08e11a3db098 ("btrfs: zoned: load zone's
-allocation offset"), back then at btrfs_load_block_group_zone_info() but
-then later on that code was factored out into the helper
-btrfs_load_zone_info() by commit 09a46725cc84 ("btrfs: zoned: factor out
-per-zone logic from btrfs_load_block_group_zone_info").
+Note that there is no need to undo the autobind operation if hashing
+fails, as the bind port can still be used for next listen() call on
+the same socket.
 
-Fixes: 08e11a3db098 ("btrfs: zoned: load zone's allocation offset")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 76c6d988aeb3 ("sctp: add sock_reuseport for the sock in __sctp_hash_endpoint")
+Reported-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 047e3337852e1..ff02fd44fb7cd 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1352,7 +1352,7 @@ static int btrfs_load_zone_info(struct btrfs_fs_info *fs_info, int zone_idx,
- 	switch (zone.cond) {
- 	case BLK_ZONE_COND_OFFLINE:
- 	case BLK_ZONE_COND_READONLY:
--		btrfs_err(fs_info,
-+		btrfs_err_in_rcu(fs_info,
- 		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
- 			  (info->physical >> device->zone_info->zone_size_shift),
- 			  rcu_str_deref(device->name), device->devid);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 078bcb3858c79..36ee34f483d70 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8531,6 +8531,7 @@ static int sctp_listen_start(struct sock *sk, int backlog)
+ 	struct sctp_endpoint *ep = sp->ep;
+ 	struct crypto_shash *tfm = NULL;
+ 	char alg[32];
++	int err;
+ 
+ 	/* Allocate HMAC for generating cookie. */
+ 	if (!sp->hmac && sp->sctp_hmac_alg) {
+@@ -8558,18 +8559,25 @@ static int sctp_listen_start(struct sock *sk, int backlog)
+ 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
+ 	if (!ep->base.bind_addr.port) {
+ 		if (sctp_autobind(sk)) {
+-			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+-			return -EAGAIN;
++			err = -EAGAIN;
++			goto err;
+ 		}
+ 	} else {
+ 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
+-			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+-			return -EADDRINUSE;
++			err = -EADDRINUSE;
++			goto err;
+ 		}
+ 	}
+ 
+ 	WRITE_ONCE(sk->sk_max_ack_backlog, backlog);
+-	return sctp_hash_endpoint(ep);
++	err = sctp_hash_endpoint(ep);
++	if (err)
++		goto err;
++
++	return 0;
++err:
++	inet_sk_set_state(sk, SCTP_SS_CLOSED);
++	return err;
+ }
+ 
+ /*
 -- 
 2.43.0
 
