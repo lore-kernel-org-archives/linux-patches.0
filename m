@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E499B55896;
-	Mon, 14 Oct 2024 15:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BFA55896;
+	Mon, 14 Oct 2024 15:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918592; cv=none; b=WSN3jk2sje95qVLCKz9jm1gEfaPwpb6t114S9KCd/C/ACjXToCfMy6u4fCrwrJ+W3ncylaV2esJQCnmSwmdG3whZNFuZ1E94wI4LRFMojJe7bIDPSxnlMfQY8GAjnBOdSLxp5nQ53VSfsz+IVSmvv1YV0J9pWXELw/a/dmtfK8I=
+	t=1728918595; cv=none; b=d9Zq/ERp+d5LQDasP2eNXR1hMDDDsHfQJTa6M/oI4uScfJC34zabEDKKKRAT8QCuMjBNqmU0SxuLcfZz1tHobp3sb15sdQ/Ay8o20a8Su4etIj3CJxsohIGOGpAs7ZteNCyQD5r+p+ApYy38+3j57MNIgK1wCKokGVYRKPsT5zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918592; c=relaxed/simple;
-	bh=9YWcrn+2ryhYXNCs67WCxpEKeaQoQItx8N1sjCYaoeE=;
+	s=arc-20240116; t=1728918595; c=relaxed/simple;
+	bh=WDJarqXweP2u3dqJHbBsvz/k201p9zBGPlq4TTeAIAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcIjPpKpg6GXUVgHeN30EoOMy++qMSYyyQ+gjGPHp8Z2AywxmbKC+kX6mRhdB3SHNJklClzKXgP+GEClVu/yyoJo/sKq5mTlUm/CRpvYFdB7eBfRmbXpcgk3L+cMzS7d6RhTJyQ/bed7gJa74rQ8v1BZ6u8nfOsf8kIiPiu9M6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndEWX2/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eASrhAf+sFJPX/tCLOA+mC0phnmwSzS2t6V3b3QY3Asw04ljnhD68Kk+eKXjKRqgz1o7BASNTQ9twFuZS7QgQVr0ahxg3Qk2rLmFrpCmCMf6PMIm7ho13C6CAUqLxm2y7PKfkNZnEs3z3ZioR1EcQjIeMLUnh4bj/uWZ74uw7v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzWSlFfA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndEWX2/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491BEC4CEC3;
-	Mon, 14 Oct 2024 15:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzWSlFfA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C69C4CECF;
+	Mon, 14 Oct 2024 15:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918591;
-	bh=9YWcrn+2ryhYXNCs67WCxpEKeaQoQItx8N1sjCYaoeE=;
+	s=korg; t=1728918595;
+	bh=WDJarqXweP2u3dqJHbBsvz/k201p9zBGPlq4TTeAIAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndEWX2/dNXXKa8Oj1MhliDfL5Wuc/W8qoEvKh7DlbZamtMlpxU8O9oJ5oYpNZE32W
-	 cU/v2fut1Ppa2whxC59HDvQNfClM7BPfJJQrS2cz+LRte7Ev83+tYT/Let2w2WhY/H
-	 /24ynReCAhxOnSayqRGuEUI4hDKsMTeKh/xCDh7k=
+	b=WzWSlFfAn/36Vd5v/GpqFkD09t9o3OY76bCywShfzdjhF4D47cMq49gCy960CUCCt
+	 No/zOS5YuCkKkXNEup2l2zcAfbY5J8ogw/0qEmFAnczzoj8B5w1Sqb29FfTuXpqiau
+	 HVsDAwyuNb8bIUc4MJHKoOuxsdRMVnPzpYl+F5dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.1 324/798] wifi: rtw88: 8822c: Fix reported RX band width
-Date: Mon, 14 Oct 2024 16:14:38 +0200
-Message-ID: <20241014141230.681784745@linuxfoundation.org>
+	Kairui Song <kasong@tencent.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 359/798] lib/xarray: introduce a new helper xas_get_order
+Date: Mon, 14 Oct 2024 16:15:13 +0200
+Message-ID: <20241014141232.046071201@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,58 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
+commit a4864671ca0bf51c8e78242951741df52c06766f upstream.
 
-"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
+It can be used after xas_load to check the order of loaded entries.
+Compared to xa_get_order, it saves an XA_STATE and avoid a rewalk.
 
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
+Added new test for xas_get_order, to make the test work, we have to export
+xas_get_order with EXPORT_SYMBOL_GPL.
 
-This is because the RX band width is calculated incorrectly. Fix the
-calculation according to the phydm_rxsc_2_bw() function from the
-official drivers.
+Also fix a sparse warning by checking the slot value with xa_entry instead
+of accessing it directly, as suggested by Matthew Wilcox.
 
-After:
-
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
-
-It also works correctly with the AP configured for 20 MHz and 40 MHz.
-
-Tested with RTL8822CE.
-
-Cc: stable@vger.kernel.org
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
+[kasong@tencent.com: simplify comment, sparse warning fix, per Matthew Wilcox]
+  Link: https://lkml.kernel.org/r/20240416071722.45997-4-ryncsn@gmail.com
+Link: https://lkml.kernel.org/r/20240415171857.19244-4-ryncsn@gmail.com
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6758c1128ceb ("mm/filemap: optimize filemap folio adding")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/xarray.h |    6 ++++++
+ lib/test_xarray.c      |   34 ++++++++++++++++++++++++++++++++++
+ lib/xarray.c           |   49 +++++++++++++++++++++++++++++++------------------
+ 3 files changed, 71 insertions(+), 18 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -2593,12 +2593,14 @@ static void query_phy_status_page1(struc
- 	else
- 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
+--- a/include/linux/xarray.h
++++ b/include/linux/xarray.h
+@@ -1530,6 +1530,7 @@ void xas_create_range(struct xa_state *)
  
--	if (rxsc >= 9 && rxsc <= 12)
-+	if (rxsc == 0)
-+		bw = rtwdev->hal.current_band_width;
-+	else if (rxsc >= 1 && rxsc <= 8)
-+		bw = RTW_CHANNEL_WIDTH_20;
-+	else if (rxsc >= 9 && rxsc <= 12)
- 		bw = RTW_CHANNEL_WIDTH_40;
--	else if (rxsc >= 13)
--		bw = RTW_CHANNEL_WIDTH_80;
- 	else
--		bw = RTW_CHANNEL_WIDTH_20;
-+		bw = RTW_CHANNEL_WIDTH_80;
+ #ifdef CONFIG_XARRAY_MULTI
+ int xa_get_order(struct xarray *, unsigned long index);
++int xas_get_order(struct xa_state *xas);
+ void xas_split(struct xa_state *, void *entry, unsigned int order);
+ void xas_split_alloc(struct xa_state *, void *entry, unsigned int order, gfp_t);
+ #else
+@@ -1537,6 +1538,11 @@ static inline int xa_get_order(struct xa
+ {
+ 	return 0;
+ }
++
++static inline int xas_get_order(struct xa_state *xas)
++{
++	return 0;
++}
  
- 	channel = GET_PHY_STAT_P1_CHANNEL(phy_status);
- 	rtw_set_rx_freq_band(pkt_stat, channel);
+ static inline void xas_split(struct xa_state *xas, void *entry,
+ 		unsigned int order)
+--- a/lib/test_xarray.c
++++ b/lib/test_xarray.c
+@@ -1756,6 +1756,39 @@ static noinline void check_get_order(str
+ 	}
+ }
+ 
++static noinline void check_xas_get_order(struct xarray *xa)
++{
++	XA_STATE(xas, xa, 0);
++
++	unsigned int max_order = IS_ENABLED(CONFIG_XARRAY_MULTI) ? 20 : 1;
++	unsigned int order;
++	unsigned long i, j;
++
++	for (order = 0; order < max_order; order++) {
++		for (i = 0; i < 10; i++) {
++			xas_set_order(&xas, i << order, order);
++			do {
++				xas_lock(&xas);
++				xas_store(&xas, xa_mk_value(i));
++				xas_unlock(&xas);
++			} while (xas_nomem(&xas, GFP_KERNEL));
++
++			for (j = i << order; j < (i + 1) << order; j++) {
++				xas_set_order(&xas, j, 0);
++				rcu_read_lock();
++				xas_load(&xas);
++				XA_BUG_ON(xa, xas_get_order(&xas) != order);
++				rcu_read_unlock();
++			}
++
++			xas_lock(&xas);
++			xas_set_order(&xas, i << order, order);
++			xas_store(&xas, NULL);
++			xas_unlock(&xas);
++		}
++	}
++}
++
+ static noinline void check_destroy(struct xarray *xa)
+ {
+ 	unsigned long index;
+@@ -1805,6 +1838,7 @@ static int xarray_checks(void)
+ 	check_reserve(&xa0);
+ 	check_multi_store(&array);
+ 	check_get_order(&array);
++	check_xas_get_order(&array);
+ 	check_xa_alloc();
+ 	check_find(&array);
+ 	check_find_entry(&array);
+--- a/lib/xarray.c
++++ b/lib/xarray.c
+@@ -1752,39 +1752,52 @@ unlock:
+ EXPORT_SYMBOL(xa_store_range);
+ 
+ /**
+- * xa_get_order() - Get the order of an entry.
+- * @xa: XArray.
+- * @index: Index of the entry.
++ * xas_get_order() - Get the order of an entry.
++ * @xas: XArray operation state.
++ *
++ * Called after xas_load, the xas should not be in an error state.
+  *
+  * Return: A number between 0 and 63 indicating the order of the entry.
+  */
+-int xa_get_order(struct xarray *xa, unsigned long index)
++int xas_get_order(struct xa_state *xas)
+ {
+-	XA_STATE(xas, xa, index);
+-	void *entry;
+ 	int order = 0;
+ 
+-	rcu_read_lock();
+-	entry = xas_load(&xas);
+-
+-	if (!entry)
+-		goto unlock;
+-
+-	if (!xas.xa_node)
+-		goto unlock;
++	if (!xas->xa_node)
++		return 0;
+ 
+ 	for (;;) {
+-		unsigned int slot = xas.xa_offset + (1 << order);
++		unsigned int slot = xas->xa_offset + (1 << order);
+ 
+ 		if (slot >= XA_CHUNK_SIZE)
+ 			break;
+-		if (!xa_is_sibling(xas.xa_node->slots[slot]))
++		if (!xa_is_sibling(xa_entry(xas->xa, xas->xa_node, slot)))
+ 			break;
+ 		order++;
+ 	}
+ 
+-	order += xas.xa_node->shift;
+-unlock:
++	order += xas->xa_node->shift;
++	return order;
++}
++EXPORT_SYMBOL_GPL(xas_get_order);
++
++/**
++ * xa_get_order() - Get the order of an entry.
++ * @xa: XArray.
++ * @index: Index of the entry.
++ *
++ * Return: A number between 0 and 63 indicating the order of the entry.
++ */
++int xa_get_order(struct xarray *xa, unsigned long index)
++{
++	XA_STATE(xas, xa, index);
++	int order = 0;
++	void *entry;
++
++	rcu_read_lock();
++	entry = xas_load(&xas);
++	if (entry)
++		order = xas_get_order(&xas);
+ 	rcu_read_unlock();
+ 
+ 	return order;
 
 
