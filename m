@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A3E20EB;
-	Mon, 14 Oct 2024 14:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3464020EB;
+	Mon, 14 Oct 2024 14:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916827; cv=none; b=YEhARij3zNFcj6X0jt4MZN3+HZZA6B1RcmT62UcMGoIQMInb0TfhcMzugMsLqUNkLigepD+RlMOXpnOsncf40T+6/0iZpl3zTqsNo5kKLasFaUNVCvTdnE+2779N+PQDTAdOg/AXVv1jGQUgJhRsBl2RLwsIubD78ki8aFySnrI=
+	t=1728916831; cv=none; b=R3OLhx4JeHAZ8k3ki5H8dEjFf9JT8pceUOMdk0dIR43qO4V+bhRS6CbZ/bBlKQpE1Vo5CsaW6ALR0+4178fsvt104dkcu0hMMLDSt5f1tP2E1QDZ3BQ2DnGQj/+12M5OzjXg8lHScNiF1iCh9ZUzL8CK/bbGSZUGz7wCDSZIlzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916827; c=relaxed/simple;
-	bh=PShpwdKSwSm9L99SUBhFzdi4ybApZUkPQYhmVblxbwM=;
+	s=arc-20240116; t=1728916831; c=relaxed/simple;
+	bh=yfYIgEgvuj04JsCIj0gRt/jvrrzHlvz6Z6EsYvJVDKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEPNUhe4CZjysIuNGbRWOQB7QcnlfBZIjzHcT3K7ugKbAPd6VBKM3EpSalbr6isVU2FSQPBU+mlTTW0p2C1vlp6lM9OeMwAbUju+r0sGNftsarq3KJHNXES16KBC6kYTy3f+0RU4BmwrDjosfOow+QXu6IVKVkMc1GAOowXxlf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnNaiPP+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sn9VeXWHho9BlB8MYgbHMeDnqg1MC2Btq7o6ywBGnbXKLuESet92RoNWfA9W7HVxR7LGVieCWbSWSyGPO+KgYbzF3SAIFA3uv4lj/SXHNkMJTmZ3Pf+amHBLD/W5uPecr6euNKypNdIzOZDLTtluN/ck3tiNnWbo9vDHWdexRTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVGU4TdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnNaiPP+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05090C4CEC3;
-	Mon, 14 Oct 2024 14:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVGU4TdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F97C4CEC3;
+	Mon, 14 Oct 2024 14:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916827;
-	bh=PShpwdKSwSm9L99SUBhFzdi4ybApZUkPQYhmVblxbwM=;
+	s=korg; t=1728916831;
+	bh=yfYIgEgvuj04JsCIj0gRt/jvrrzHlvz6Z6EsYvJVDKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnNaiPP+xoc4ih6m/SI1t2d53XjQlmuUVA0iGzfcykT+phfZKmKBS9NCGUokviCk3
-	 awcQzIxwiSySXqDk+SAHewa9YF21b1AVQk3biMs2Ie183coGGLkHDZF3KLXIrY6k18
-	 gdvc5suHpLa5gT7cb8XoYXjwVa/Ker4MGsqvSocg=
+	b=TVGU4TdGcAILCUX46d0gfexc9QuzHzCk6FccA06z052XwaC7U4ogqCrJ8ibJbCKe2
+	 zeojT5y5eyhkqyhLtfGwgN2zrozrqNWrXTbDGUhexXluE5uTDWzAhN3mLECdYQ2rhW
+	 fRK5lek0wLAclCUxni/ep+oyA80sdtf+w/ak42Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/213] jbd2: fix kernel-doc for j_transaction_overhead_buffers
-Date: Mon, 14 Oct 2024 16:19:10 +0200
-Message-ID: <20241014141044.709380851@linuxfoundation.org>
+Subject: [PATCH 6.6 045/213] lib/build_OID_registry: avoid non-destructive substitution for Perl < 5.13.2 compat
+Date: Mon, 14 Oct 2024 16:19:11 +0200
+Message-ID: <20241014141044.748803436@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -47,47 +49,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit 7e8fb2eda9885ea2d13179a4c0bbf810f900ef25 ]
+[ Upstream commit 2fe29fe945637b9834c5569fbb1c9d4f881d8263 ]
 
-Use the correct struct member name in the kernel-doc notation
-to prevent a kernel-doc build warning.
+On a system with Perl 5.12.1, commit 5ef6dc08cfde
+("lib/build_OID_registry: don't mention the full path of the script in
+output") causes the build to fail with the error below.
 
-include/linux/jbd2.h:1303: warning: Function parameter or struct member 'j_transaction_overhead_buffers' not described in 'journal_s'
-include/linux/jbd2.h:1303: warning: Excess struct member 'j_transaction_overhead' description in 'journal_s'
+     Bareword found where operator expected at ./lib/build_OID_registry line 41, near "s#^\Q$abs_srctree/\E##r"
+     syntax error at ./lib/build_OID_registry line 41, near "s#^\Q$abs_srctree/\E##r"
+     Execution of ./lib/build_OID_registry aborted due to compilation errors.
+     make[3]: *** [lib/Makefile:352: lib/oid_registry_data.c] Error 255
 
-Fixes: e3a00a23781c ("jbd2: precompute number of transaction descriptor blocks")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/linux-next/20240710182252.4c281445@canb.auug.org.au/
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240723051647.3053491-1-rdunlap@infradead.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Ahmad Fatoum analyzed that non-destructive substitution is only supported since
+Perl 5.13.2. Instead of dropping `r` and having the side effect of modifying
+`$0`, introduce a dedicated variable to support older Perl versions.
+
+Link: https://lkml.kernel.org/r/20240702223512.8329-2-pmenzel@molgen.mpg.de
+Link: https://lkml.kernel.org/r/20240701155802.75152-1-pmenzel@molgen.mpg.de
+Fixes: 5ef6dc08cfde ("lib/build_OID_registry: don't mention the full path of the script in output")
+Link: https://lore.kernel.org/all/259f7a87-2692-480e-9073-1c1c35b52f67@molgen.mpg.de/
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Suggested-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/jbd2.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/build_OID_registry | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index 8553dc1d0e898..f0bc9aa5aed3f 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -1084,7 +1084,7 @@ struct journal_s
- 	int			j_revoke_records_per_block;
+diff --git a/lib/build_OID_registry b/lib/build_OID_registry
+index 56d8bafeb848b..8267e8d71338b 100755
+--- a/lib/build_OID_registry
++++ b/lib/build_OID_registry
+@@ -38,7 +38,9 @@ close IN_FILE || die;
+ #
+ open C_FILE, ">$ARGV[1]" or die;
+ print C_FILE "/*\n";
+-print C_FILE " * Automatically generated by ", $0 =~ s#^\Q$abs_srctree/\E##r, ".  Do not edit\n";
++my $scriptname = $0;
++$scriptname =~ s#^\Q$abs_srctree/\E##;
++print C_FILE " * Automatically generated by ", $scriptname, ".  Do not edit\n";
+ print C_FILE " */\n";
  
- 	/**
--	 * @j_transaction_overhead:
-+	 * @j_transaction_overhead_buffers:
- 	 *
- 	 * Number of blocks each transaction needs for its own bookkeeping
- 	 */
+ #
 -- 
 2.43.0
 
