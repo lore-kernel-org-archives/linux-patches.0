@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548B21BDC3;
-	Mon, 14 Oct 2024 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B851A4F20;
+	Mon, 14 Oct 2024 14:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917732; cv=none; b=HZRIzJzky9wHR2rK8xjmzU8CkBqBarvoDur76tvlhTIO8XSzNElyl/wQWW5NHY0YUdsUZzmmLTY0FCt/tuo6tpa8c3ikhri2B9qN1Yww3vygtlzS5TlgLVXvk5G9nY7k3qcnNlswxrjdjLkXdFM7EgeBJ4agcS49FkQ2n1BjsX4=
+	t=1728917735; cv=none; b=Z7AwcPAqf5FCKxfx4Wpb99rtXr14a4DS3m9QFhnaKfX22+yo4S8+08kKAw9WiaecI7/WhE4didZuetlji781qakjA+l+LavshHsdVNejBTCoJ5aOBn2f/reQujryyuTAuAk7f/ydOgwrvP0rgPPw9g5a9TxpP/NcAMsw2Yoa94I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917732; c=relaxed/simple;
-	bh=Xpf7iqDhylOvP30WoNcaU3yLxI4TO2W1eGtpw6PGqy4=;
+	s=arc-20240116; t=1728917735; c=relaxed/simple;
+	bh=crPq5QY2E9t+0/asrixfkzl6F4Tdc6zqNHVRZum0Alo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnkYlzqpU3Pies0ih4Li2GN9cabqCAJrs6/K9D7Xt7WbZ0tXroEjRWUjF45plTpDUNV5tj8PIo6qi9vYXh3xsduRaKpOj8OoHyZfYhN3HnxiAO1h8RJdD26Eq1w/dh47ev9exG1bzynlgVN3333kOOeeLottDoTOSJ6EqUO0l+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPWFwNdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tmpETr+ayRAaTjmQwGHmbFKSikE9LhuEs8AUyHYOp3Mkw5Hc2CT8P0STLiREi67qExOEYcO/9wx+RFucBUqZ+SIkWnIF1alGuXiHQWcGN25CuBOg4Oh7pdGCgXZl+7S2w8YR+Fl+nWI68Li6sUskmJzoH2CF+KuuyA68TyKfwNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8pj48J6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPWFwNdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69057C4CEC3;
-	Mon, 14 Oct 2024 14:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8pj48J6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89737C4CEC3;
+	Mon, 14 Oct 2024 14:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917731;
-	bh=Xpf7iqDhylOvP30WoNcaU3yLxI4TO2W1eGtpw6PGqy4=;
+	s=korg; t=1728917734;
+	bh=crPq5QY2E9t+0/asrixfkzl6F4Tdc6zqNHVRZum0Alo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPWFwNdtWFgtUQMWvTfM95M/Ld6Vi2/CG6Sam4ZCI2ysl6oFdsMEESN1zIwqIpVoT
-	 JWHoncHoVxTVapZUzwZ0ZIBAfs+BEyrqrMxxWnuGy3ujLGTA+dAmfHtOx7bizNkKVR
-	 k/2gXkYSlHUZENZ3dYSPPF8L/mgRnznLVdMaq8rI=
+	b=t8pj48J61Zfmoa+wxII0hR9l4nw8k2MSiZhX+G/e8SeL4aT0gkhe21T3r+t3WEnPI
+	 k1KkUkw1VaiYfPAyu5LSVrewbkWFR1nM4cE5K8TxxmL2ziatI0r5Qa34CJ+UE4116Y
+	 44e5gg9/tZmIH3/JqEu1VUDotlPMjb+G2VRYdzDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/798] hwmon: (max16065) Fix alarm attributes
-Date: Mon, 14 Oct 2024 16:10:44 +0200
-Message-ID: <20241014141221.469821571@linuxfoundation.org>
+Subject: [PATCH 6.1 117/798] drm/vc4: hdmi: Handle error case of pm_runtime_resume_and_get
+Date: Mon, 14 Oct 2024 16:11:11 +0200
+Message-ID: <20241014141222.519434195@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,74 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 119abf7d1815f098f7f91ae7abc84324a19943d7 ]
+[ Upstream commit f1a54e860b1bc8d824925b5a77f510913880e8d6 ]
 
-Chips reporting overcurrent alarms report it in the second alarm register.
-That means the second alarm register has to be read, even if the chip only
-supports 8 or fewer ADC channels.
+The commit 0f5251339eda ("drm/vc4: hdmi: Make sure the controller is
+powered in detect") introduced the necessary power management handling
+to avoid register access while controller is powered down.
+Unfortunately it just print a warning if pm_runtime_resume_and_get()
+fails and proceed anyway.
 
-MAX16067 and MAX16068 report undervoltage and overvoltage alarms in
-separate registers. Fold register contents together to report both with
-the existing alarm attribute. This requires actually storing the chip type
-in struct max16065_data. Rename the variable 'chip' to match the variable
-name used in the probe function.
+This could happen during suspend to idle. So we must assume it is unsafe
+to access the HDMI register. So bail out properly.
 
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0f5251339eda ("drm/vc4: hdmi: Make sure the controller is powered in detect")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240821214052.6800-3-wahrenst@gmx.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index ab3c75bda5a03..24612f6c3d9c9 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -79,7 +79,7 @@ static const bool max16065_have_current[] = {
- };
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 072e2487b4655..971801acbde60 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -448,6 +448,7 @@ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
+ {
+ 	struct vc4_hdmi *vc4_hdmi = connector_to_vc4_hdmi(connector);
+ 	enum drm_connector_status status = connector_status_disconnected;
++	int ret;
  
- struct max16065_data {
--	enum chips type;
-+	enum chips chip;
- 	struct i2c_client *client;
- 	const struct attribute_group *groups[4];
- 	struct mutex update_lock;
-@@ -162,10 +162,17 @@ static struct max16065_data *max16065_update_device(struct device *dev)
- 						     MAX16065_CURR_SENSE);
- 		}
+ 	/*
+ 	 * NOTE: This function should really take vc4_hdmi->mutex, but
+@@ -460,7 +461,12 @@ static int vc4_hdmi_connector_detect_ctx(struct drm_connector *connector,
+ 	 * the lock for now.
+ 	 */
  
--		for (i = 0; i < DIV_ROUND_UP(data->num_adc, 8); i++)
-+		for (i = 0; i < 2; i++)
- 			data->fault[i]
- 			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
+-	WARN_ON(pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev));
++	ret = pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev);
++	if (ret) {
++		drm_err_once(connector->dev, "Failed to retain HDMI power domain: %d\n",
++			     ret);
++		return connector_status_unknown;
++	}
  
-+		/*
-+		 * MAX16067 and MAX16068 have separate undervoltage and
-+		 * overvoltage alarm bits. Squash them together.
-+		 */
-+		if (data->chip == max16067 || data->chip == max16068)
-+			data->fault[0] |= data->fault[1];
-+
- 		data->last_updated = jiffies;
- 		data->valid = true;
- 	}
-@@ -514,6 +521,7 @@ static int max16065_probe(struct i2c_client *client)
- 	if (unlikely(!data))
- 		return -ENOMEM;
- 
-+	data->chip = chip;
- 	data->client = client;
- 	mutex_init(&data->update_lock);
- 
+ 	if (vc4_hdmi->hpd_gpio) {
+ 		if (gpiod_get_value_cansleep(vc4_hdmi->hpd_gpio))
 -- 
 2.43.0
 
