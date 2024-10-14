@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612B249659;
-	Mon, 14 Oct 2024 15:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B301C302C;
+	Mon, 14 Oct 2024 15:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919185; cv=none; b=KR+Bm5wVgz3Z8DbCYkf9eDra+0f8kQMQWN47G/lsJYuTOA1r2XH4S4Qj2eEF+UXGGKwlrgMj9t36zckz/+fMW9l9+rchi/vl5SIkZqZ04tTGU/ddonoLHoW5Ytn36FR5umxltV1HzAc47XqTF2Mi30/gS36O9nwG9i7127ftJvc=
+	t=1728919189; cv=none; b=IkElbql6zAeiG24dcwE7ZX/ozVcs+Pzs5jX3wnijARzXA3S+NNobqH7hBWjE3qxUCOL5JDZ65aW7klDPiz4np9U5ruKYvy7+Z5RaDoHqMbFEo45Z1GjmPma0M2FmDXAdUnFKzGIKsJmO7n8pxmSc2r21GtkXALBtbpt0fFX0PiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919185; c=relaxed/simple;
-	bh=1AEPg4oatgaSloHHyJpaqOCcMY6sdFgW2bAYCOlfuk4=;
+	s=arc-20240116; t=1728919189; c=relaxed/simple;
+	bh=+SnORn+WSZtET3FMMemkf01V0f6UiT23Xe0yFhjGras=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLl0BvmVvIV7GD8tGtpoh9DBWA6SZaTCmt+jWStm7Ukuqx3MjctYOocDxu3+pEA2ApSryrf59U2PullNLxXLBz5FOZv8mSFrpKG+kf8PI0NjziBp3b47tS05tZnSgTH4i09qMyOBmrFmSPoWq97piAxzcYWAfU7OQh+CRXTe9PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eD/HglVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bD0QZpOpKgUoJq0ayzSbpCNbPYjU4YXGtoahfbCCGRWDgFvN/ldH+VHHLpJRsulYXrwt5eqds4rcgj7MMaxpwjARqn80Xf0L5Zy/Cl7nijSCG9o0h1zenrU+fN9/KuZurzHfnFFmxegwkeXmQQQP4gNcs9zjv8zoZXBFbprEwVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1QCuE4L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eD/HglVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C839AC4CEC3;
-	Mon, 14 Oct 2024 15:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1QCuE4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49699C4CEC3;
+	Mon, 14 Oct 2024 15:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919185;
-	bh=1AEPg4oatgaSloHHyJpaqOCcMY6sdFgW2bAYCOlfuk4=;
+	s=korg; t=1728919188;
+	bh=+SnORn+WSZtET3FMMemkf01V0f6UiT23Xe0yFhjGras=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eD/HglVQjIAfS13fH+ZfkbusrECQJPGEpHpHdUZTJB93TwiMZFdm79Ir2+mfWzsqK
-	 UUzUEVoYUVG4UupTUDb6W5sKOQ4MoOqunaboJRHOeouOTXtiaeXELPR4g93aqflj7H
-	 ycO9iZ+5pOZdQXivrgHECqOLaQn+zHGeKH8E2zzM=
+	b=Y1QCuE4L0o6Bh+1rawQMjGWgYC/mCU+mDvEdRMQ8iGsHVklscmRtWGTR4KtQU06hG
+	 uLSafjCh22bPgvE3kZA5nIUDVxUf3l3fyxOY9NBjMfanMiVfAkKiw6UBBi5q3m3RAt
+	 t2PNV97eCfXZT57YYOWtprd7EmG59ASvH9bqWL1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.1 529/798] firmware: tegra: bpmp: Drop unused mbox_client_to_bpmp()
-Date: Mon, 14 Oct 2024 16:18:03 +0200
-Message-ID: <20241014141238.773063171@linuxfoundation.org>
+	"Hans P. Moller" <hmoller@uc.cl>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 538/798] ALSA: line6: add hw monitor volume control to POD HD500X
+Date: Mon, 14 Oct 2024 16:18:12 +0200
+Message-ID: <20241014141239.135717522@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,37 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Hans P. Moller <hmoller@uc.cl>
 
-commit 9c3a62c20f7fb00294a4237e287254456ba8a48b upstream.
+commit 703235a244e533652346844cfa42623afb36eed1 upstream.
 
-mbox_client_to_bpmp() is not used, W=1 builds:
+Add hw monitor volume control for POD HD500X. This is done adding
+LINE6_CAP_HWMON_CTL to the capabilities
 
-  drivers/firmware/tegra/bpmp.c:28:1: error: unused function 'mbox_client_to_bpmp' [-Werror,-Wunused-function]
-
-Fixes: cdfa358b248e ("firmware: tegra: Refactor BPMP driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Hans P. Moller <hmoller@uc.cl>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241003232828.5819-1-hmoller@uc.cl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/tegra/bpmp.c |    6 ------
- 1 file changed, 6 deletions(-)
+ sound/usb/line6/podhd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/tegra/bpmp.c
-+++ b/drivers/firmware/tegra/bpmp.c
-@@ -25,12 +25,6 @@
- #define MSG_RING	BIT(1)
- #define TAG_SZ		32
- 
--static inline struct tegra_bpmp *
--mbox_client_to_bpmp(struct mbox_client *client)
--{
--	return container_of(client, struct tegra_bpmp, mbox.client);
--}
--
- static inline const struct tegra_bpmp_ops *
- channel_to_ops(struct tegra_bpmp_channel *channel)
- {
+--- a/sound/usb/line6/podhd.c
++++ b/sound/usb/line6/podhd.c
+@@ -507,7 +507,7 @@ static const struct line6_properties pod
+ 	[LINE6_PODHD500X] = {
+ 		.id = "PODHD500X",
+ 		.name = "POD HD500X",
+-		.capabilities	= LINE6_CAP_CONTROL
++		.capabilities	= LINE6_CAP_CONTROL | LINE6_CAP_HWMON_CTL
+ 				| LINE6_CAP_PCM | LINE6_CAP_HWMON,
+ 		.altsetting = 1,
+ 		.ep_ctrl_r = 0x81,
 
 
