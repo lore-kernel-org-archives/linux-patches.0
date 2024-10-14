@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C550E481B3;
-	Mon, 14 Oct 2024 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6531D481B3;
+	Mon, 14 Oct 2024 15:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919509; cv=none; b=n/BjbA5vPKc8qt/U/iSHTZh5F0I/P92allz49KBBMIoyNg0Cd9aiXs3cQ4lqZaZqEa2L15r6qgXJa/cGe1QiKZLEUyjpLPw9Nyne+GQVX5VEcaPxLzhzfOSFX3V9oJtOcWvMzMWGcL+Hbw051zHtmpKyl/7hMXw/PAlVEfRDFXk=
+	t=1728919513; cv=none; b=e2t5IW6HTdpysUwOsNVrtsqt8oFqe0RKMU+NOO+/Tc4l8uamMBMtRh/kuJH4z7bL93AE0CeO5/FRZzTkDW2WF8SJL6de7t/eu6/JVYsWMBDxk07XPAoo/6+mg/UT5QYDjGuNRyRuDJmE6s1/4ukcA2W0dNkY2v6ypnUqbPd4SVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919509; c=relaxed/simple;
-	bh=s+ATs3T/0z1lxWaNDS+fD7eCbpM+01gl0G1kB0kez1Y=;
+	s=arc-20240116; t=1728919513; c=relaxed/simple;
+	bh=ZIDuRjlni3GAW8GoUUp+afwv3xJegUfq7UXFbdatGyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmL0uB2MpMHZMiLPRsgy0pERg6kYd2rIpKQJINQMlCqUGFN3gIgO3/ydL/6hlM1z4La7PRjXUyFaYzlZjfElGpX/zokMS/glgto5H/D78auzamODhCsStsjWXdQUL9ZsDbOjfy4zijK+TLdGkTK/Iizk3f35Ok4HXcUUFQjpE3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbA94J9u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYf18LojDF9RQVW+31HqlhbLoViykrgOSXTgG3jIF7X9ZQ8bB/nuLjuR6G7GJgw8zjVXjkXnYjE9EEcR+bw+XUaTjgBwZM8fL6AY/1mQFUFtxgEKbrKLxogvUKeNqHqV9/tOeeQrTlJ+czSU2Ye2SV7wyGWG92A4mVd3XAxTzGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4bYgMPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbA94J9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3657EC4CEC3;
-	Mon, 14 Oct 2024 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4bYgMPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5086C4CEC3;
+	Mon, 14 Oct 2024 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919509;
-	bh=s+ATs3T/0z1lxWaNDS+fD7eCbpM+01gl0G1kB0kez1Y=;
+	s=korg; t=1728919513;
+	bh=ZIDuRjlni3GAW8GoUUp+afwv3xJegUfq7UXFbdatGyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbA94J9ufV1CvLVV95ngYsHg931DGw2VsbvjiWTiZa1IhvhYoftNJhurZtEuvzxDb
-	 +9wHs9qCBEivnFQ3LPF9K162fOVWf/IqZ2Yzuep+zA9cLlkcpemydbqoKPeTJ2fX2s
-	 hGvmARpyEZnm2IAi+3VchvVTEPsxYpnTePWvfR6E=
+	b=q4bYgMPyHYTHa2EBvFj6+NfJ5TnxOvBy+7w5iTZICqhikMlrXS9WIqV383G+oc7lO
+	 eq2hu/mkPoHHH+THaSlcBWyWN650Bx/3IY9cjxI+1OlDKCkPEnmNnLVvszbgeNBVCU
+	 swamrrLRziO3QnXJmzTSuyWUjh1C7SJE04AVeDvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 599/798] Input: adp5589-keys - fix NULL pointer dereference
-Date: Mon, 14 Oct 2024 16:19:13 +0200
-Message-ID: <20241014141241.536021459@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 626/798] arm64: errata: Expand speculative SSBS workaround once more
+Date: Mon, 14 Oct 2024 16:19:40 +0200
+Message-ID: <20241014141242.631915941@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,58 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit fb5cc65f973661241e4a2b7390b429aa7b330c69 upstream.
+[ Upstream commit 081eb7932c2b244f63317a982c5e3990e2c7fbdd ]
 
-We register a devm action to call adp5589_clear_config() and then pass
-the i2c client as argument so that we can call i2c_get_clientdata() in
-order to get our device object. However, i2c_set_clientdata() is only
-being set at the end of the probe function which means that we'll get a
-NULL pointer dereference in case the probe function fails early.
+A number of Arm Ltd CPUs suffer from errata whereby an MSR to the SSBS
+special-purpose register does not affect subsequent speculative
+instructions, permitting speculative store bypassing for a window of
+time.
 
-Fixes: 30df385e35a4 ("Input: adp5589-keys - use devm_add_action_or_reset() for register clear")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-1-fca0149dfc47@analog.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We worked around this for a number of CPUs in commits:
+
+* 7187bb7d0b5c7dfa ("arm64: errata: Add workaround for Arm errata 3194386 and 3312417")
+* 75b3c43eab594bfb ("arm64: errata: Expand speculative SSBS workaround")
+* 145502cac7ea70b5 ("arm64: errata: Expand speculative SSBS workaround (again)")
+
+Since then, a (hopefully final) batch of updates have been published,
+with two more affected CPUs. For the affected CPUs the existing
+mitigation is sufficient, as described in their respective Software
+Developer Errata Notice (SDEN) documents:
+
+* Cortex-A715 (MP148) SDEN v15.0, erratum 3456084
+  https://developer.arm.com/documentation/SDEN-2148827/1500/
+
+* Neoverse-N3 (MP195) SDEN v5.0, erratum 3456111
+  https://developer.arm.com/documentation/SDEN-3050973/0500/
+
+Enable the existing mitigation by adding the relevant MIDRs to
+erratum_spec_ssbs_list, and update silicon-errata.rst and the
+Kconfig text accordingly.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240930111705.3352047-3-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: fix conflict in silicon-errata.rst, handle move ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/adp5589-keys.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ Documentation/arm64/silicon-errata.rst | 4 ++++
+ arch/arm64/Kconfig                     | 2 ++
+ arch/arm64/kernel/cpu_errata.c         | 2 ++
+ 3 files changed, 8 insertions(+)
 
---- a/drivers/input/keyboard/adp5589-keys.c
-+++ b/drivers/input/keyboard/adp5589-keys.c
-@@ -936,10 +936,9 @@ static int adp5589_keypad_add(struct adp
- 
- static void adp5589_clear_config(void *data)
- {
--	struct i2c_client *client = data;
--	struct adp5589_kpad *kpad = i2c_get_clientdata(client);
-+	struct adp5589_kpad *kpad = data;
- 
--	adp5589_write(client, kpad->var->reg(ADP5589_GENERAL_CFG), 0);
-+	adp5589_write(kpad->client, kpad->var->reg(ADP5589_GENERAL_CFG), 0);
- }
- 
- static int adp5589_probe(struct i2c_client *client,
-@@ -983,7 +982,7 @@ static int adp5589_probe(struct i2c_clie
- 	}
- 
- 	error = devm_add_action_or_reset(&client->dev, adp5589_clear_config,
--					 client);
-+					 kpad);
- 	if (error)
- 		return error;
- 
-@@ -1010,8 +1009,6 @@ static int adp5589_probe(struct i2c_clie
- 	if (error)
- 		return error;
- 
--	i2c_set_clientdata(client, kpad);
--
- 	dev_info(&client->dev, "Rev.%d keypad, irq %d\n", revid, client->irq);
- 	return 0;
- }
+diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
+index 6451e9198fef7..e7b50babd0d5c 100644
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -135,6 +135,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A710     | #3324338        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A715     | #3456084        | ARM64_ERRATUM_3194386       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
+@@ -171,6 +173,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N2     | #3324339        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Neoverse-N3     | #3456111        | ARM64_ERRATUM_3194386       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-V1     | #3324341        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-V2     | #3324336        | ARM64_ERRATUM_3194386       |
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 2ef939075039d..1a62ef142a988 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1012,6 +1012,7 @@ config ARM64_ERRATUM_3194386
+ 	  * ARM Cortex-A78C erratum 3324346
+ 	  * ARM Cortex-A78C erratum 3324347
+ 	  * ARM Cortex-A710 erratam 3324338
++	  * ARM Cortex-A715 errartum 3456084
+ 	  * ARM Cortex-A720 erratum 3456091
+ 	  * ARM Cortex-A725 erratum 3456106
+ 	  * ARM Cortex-X1 erratum 3324344
+@@ -1022,6 +1023,7 @@ config ARM64_ERRATUM_3194386
+ 	  * ARM Cortex-X925 erratum 3324334
+ 	  * ARM Neoverse-N1 erratum 3324349
+ 	  * ARM Neoverse N2 erratum 3324339
++	  * ARM Neoverse-N3 erratum 3456111
+ 	  * ARM Neoverse-V1 erratum 3324341
+ 	  * ARM Neoverse V2 erratum 3324336
+ 	  * ARM Neoverse-V3 erratum 3312417
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index 7640031e1b845..78aea409b092b 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -442,6 +442,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
++	MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A725),
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
+@@ -452,6 +453,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X925),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N3),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+-- 
+2.43.0
+
 
 
