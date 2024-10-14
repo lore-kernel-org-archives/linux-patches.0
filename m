@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C5E1547F3;
-	Mon, 14 Oct 2024 14:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747581547F3;
+	Mon, 14 Oct 2024 14:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916115; cv=none; b=ArEF/4WpcZnaYXhaom80cZdgdtzbQU5HBKYX5z73KWc6WCMFz2sqq4Ca7TD1Clu9iqFW49XMTYJUeqxDeeRErMtJXnV+2g9IqUJwz52PUMPUR4wAi2OhyUO2P/x8hsl0hJ5u7FiNw2oecvy757pZuUJmqMhKCPy14lAp2MvT11I=
+	t=1728916118; cv=none; b=ia9Rq6SVTG3I1baKv/hWXdqr54dzEg/J/vRpS3n8hgNZFen4oqGFvz66Ek6twO8WnTnVt8GdHupHykmUzg1ry71/psFyHYBRA5T8QXJ0tTU2ElXP1JxCEQY3x2srAw+/6F9yXKoMh+OuKG3kXGHqXkHI7V/ztUxJN/0syvoWI7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916115; c=relaxed/simple;
-	bh=kvm7o472aVU7Um+TluIDOIlyxj+P3Rm368upsgypfb8=;
+	s=arc-20240116; t=1728916118; c=relaxed/simple;
+	bh=NcqJFnape+HNKi/YWFKxI0Hns4w05t/CWSWWDpqlNr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXhsyTr2wQdnxdOKzWvpQIdyLrhKgO1GIWwOEQ+wLy9gD+qz2ToBlI+sNPGnxdCZXN1WQ02a617Z2y7SMZJzqoEiMvVHr3MbzDftNQLhTDEO3TLQFDy+n+HwvfE2IaKJPzMp+bxo5xawakkSnbqcpNZydSFHDVlaTo46KNye2xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbCAWUnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMKieevHSa9ZtWFmYqgW8xo+tP978iH5NwjSQ4GoNNUlWdMqUZTq2jt//VsIbVGG8JYPM8HWeVColGoxK/go+6Y884Z8591cz3vYxMRnBTMJ0B1EVEnC9PMg/kWcm4EvkvQWX3AsH9Pv1LWlV0z3Z5ju/VvgS1DLYvvv4OIx3I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLSdvQL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbCAWUnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9025AC4CEC3;
-	Mon, 14 Oct 2024 14:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLSdvQL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B80C4CEC3;
+	Mon, 14 Oct 2024 14:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916115;
-	bh=kvm7o472aVU7Um+TluIDOIlyxj+P3Rm368upsgypfb8=;
+	s=korg; t=1728916118;
+	bh=NcqJFnape+HNKi/YWFKxI0Hns4w05t/CWSWWDpqlNr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbCAWUnWC7lecnylpWHpOgCg3Lx5hl21sQDzcJCpM60WoH5wn5kHKKti7iBaFypPO
-	 OqQFHTFPwAxq5nIflf9dldYMjWdc9bCfTeTE00uNPhq/x8lwJoYixKQXOYAkxo+C8b
-	 /GsS40pyUwVkXA/ypjywOe0xXpzyAJ/IkbqjS8U8=
+	b=wLSdvQL4WcFQ7S9+0Qak7zpOKLdvk9HBzUJn7xPWPoLax/nwUuhAeF6gEszTVCqw8
+	 ptipnx6oaZ3Dmew64a0PvKQTn2jMzN/hG6BhcAN7qlU35TZvpogeGuIC1nnr3dfhdj
+	 9RQEZuJuBTG6xrzp2xHveNDPQzND/1lXxEmPlbVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Dave Ertman <david.m.ertman@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.11 087/214] ice: fix VLAN replay after reset
-Date: Mon, 14 Oct 2024 16:19:10 +0200
-Message-ID: <20241014141048.389514912@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 088/214] SUNRPC: Fix integer overflow in decode_rc_list()
+Date: Mon, 14 Oct 2024 16:19:11 +0200
+Message-ID: <20241014141048.428854478@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,54 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Ertman <david.m.ertman@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0eae2c136cb624e4050092feb59f18159b4f2512 ]
+[ Upstream commit 6dbf1f341b6b35bcc20ff95b6b315e509f6c5369 ]
 
-There is a bug currently when there are more than one VLAN defined
-and any reset that affects the PF is initiated, after the reset rebuild
-no traffic will pass on any VLAN but the last one created.
+The math in "rc_list->rcl_nrefcalls * 2 * sizeof(uint32_t)" could have an
+integer overflow.  Add bounds checking on rc_list->rcl_nrefcalls to fix
+that.
 
-This is caused by the iteration though the VLANs during replay each
-clearing the vsi_map bitmap of the VSI that is being replayed.  The
-problem is that during rhe replay, the pointer to the vsi_map bitmap
-is used by each successive vlan to determine if it should be replayed
-on this VSI.
-
-The logic was that the replay of the VLAN would replace the bit in the map
-before the next VLAN would iterate through.  But, since the replay copies
-the old bitmap pointer to filt_replay_rules and creates a new one for the
-recreated VLANS, it does not do this, and leaves the old bitmap broken
-to be used to replay the remaining VLANs.
-
-Since the old bitmap will be cleaned up in post replay cleanup, there is
-no need to alter it and break following VLAN replay, so don't clear the
-bit.
-
-Fixes: 334cb0626de1 ("ice: Implement VSI replay framework")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 4aece6a19cf7 ("nfs41: cb_sequence xdr implementation")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nfs/callback_xdr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 79d91e95358ca..0e740342e2947 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -6322,8 +6322,6 @@ ice_replay_vsi_fltr(struct ice_hw *hw, u16 vsi_handle, u8 recp_id,
- 		if (!itr->vsi_list_info ||
- 		    !test_bit(vsi_handle, itr->vsi_list_info->vsi_map))
- 			continue;
--		/* Clearing it so that the logic can add it back */
--		clear_bit(vsi_handle, itr->vsi_list_info->vsi_map);
- 		f_entry.fltr_info.vsi_handle = vsi_handle;
- 		f_entry.fltr_info.fltr_act = ICE_FWD_TO_VSI;
- 		/* update the src in case it is VSI num */
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index 6df77f008d3fa..fdeb0b34a3d39 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -375,6 +375,8 @@ static __be32 decode_rc_list(struct xdr_stream *xdr,
+ 
+ 	rc_list->rcl_nrefcalls = ntohl(*p++);
+ 	if (rc_list->rcl_nrefcalls) {
++		if (unlikely(rc_list->rcl_nrefcalls > xdr->buf->len))
++			goto out;
+ 		p = xdr_inline_decode(xdr,
+ 			     rc_list->rcl_nrefcalls * 2 * sizeof(uint32_t));
+ 		if (unlikely(p == NULL))
 -- 
 2.43.0
 
