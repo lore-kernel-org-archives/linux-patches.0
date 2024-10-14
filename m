@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D4843AA9;
-	Mon, 14 Oct 2024 15:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A955043AA9;
+	Mon, 14 Oct 2024 15:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918775; cv=none; b=k0WULYo6xYF/NiV0mbVCekrTqSye/nmLze+W8P5ViZ5WRcw+C8UM/lKoK0XwpMvoyIpdLzYuKaAzHNvYbvij0kjZu1n9gywJ0OYun2bvnzDelevoZQs5kiO9iJjJ1PWAcj/JxzHK9p9GkVCEpcq+COHB5dKS7DxhFn8yronKXys=
+	t=1728918778; cv=none; b=SUxHqnqTTkFHDtktPQD4Cd+Ss8pYy+yO7SRaE+RoJDT3qM9qs0lESqj6DzBNYFgTJYmnZ7D3WHfgGaVib/+5ELVieO/NbqiVjln5ys27Wsxs+SRJqRzSPPqxafJZdtwZP5Jc7vf5P/+UIWIvTiuyPa06ZWPDT6gYCdWj6auLU2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918775; c=relaxed/simple;
-	bh=78asXAYAftSf0otNAz16SKc921LUaXzot1juj5P37dU=;
+	s=arc-20240116; t=1728918778; c=relaxed/simple;
+	bh=Qr9w3sJkluk+jTlEMHLlLx8KNkJsLMAEXp437gGOFFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUXs58y0vlQZNC4HVutgTAZOhmms73Ow6VdVbnUZlM3NJUVJ8QoN3cdMNbIsuT9UNrOCqpRyFZruXCXppk2Bc1C2wVZu2+vU50bbnVoFsN20m3DbDZ1sGeDGCXASaXAA7fuvfGqrYvGPAKL6vNssswZZh6MzPof+eGSWz34it2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJuNiW7S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ilOXowiWqJ5a+Iy2XvrIuanIvHEjwdDVsOF6Riatj4s1dMnOrX/gvdMlLVC7W0wOhnelw0+bLx/7faAQR2TRaZuyUgqVahsCOx8T/aiCLJqApjb9NJEkDBaDJpZlr+vBHoFcO0R3SVg0yM36J928L64NbNx0TjrTsKHe7Jxbbpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNGmOju+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJuNiW7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB18C4CEC3;
-	Mon, 14 Oct 2024 15:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNGmOju+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6B0C4CEC3;
+	Mon, 14 Oct 2024 15:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918775;
-	bh=78asXAYAftSf0otNAz16SKc921LUaXzot1juj5P37dU=;
+	s=korg; t=1728918778;
+	bh=Qr9w3sJkluk+jTlEMHLlLx8KNkJsLMAEXp437gGOFFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJuNiW7Sf71Iy9DW5wLdym6LiRng0gAjYmbyoJ1/JCbRUJU5UxFjQOcxp9tg8JI+M
-	 qVgktg4akPKt+K/M0NG6aiHne597+wD3pELCR5KmhlWapx23icRKWYIGqHOtgB0roT
-	 BQ/CWp6zY/L2RCpEKqM8u8iDGYESDlluu2kg7Kpo=
+	b=uNGmOju+4tVema2g7HHv0SdF4tyElHoTTEYwL4Igl9i92nmd/K9NlN2mSbr7v7PLD
+	 VDrrHy0yhbnlEGBXn2rzna7lVGm2avW03/qKVaiIcCieAdf0FTdf3qpZQLUkw7DF8z
+	 AvStgNoKNuYpmnhoU8340RjzxX4Gyv5wMDdPGC0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Kretschmer Mathias <mathias.kretschmer@fit.fraunhofer.de>,
+	Issam Hamdi <ih@simonwunderlich.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 420/798] wifi: iwlwifi: mvm: Fix a race in scan abort flow
-Date: Mon, 14 Oct 2024 16:16:14 +0200
-Message-ID: <20241014141234.450323575@linuxfoundation.org>
+Subject: [PATCH 6.1 421/798] wifi: cfg80211: Set correct chandef when starting CAC
+Date: Mon, 14 Oct 2024 16:16:15 +0200
+Message-ID: <20241014141234.488790070@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,151 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Issam Hamdi <ih@simonwunderlich.de>
 
-[ Upstream commit 87c1c28a9aa149489e1667f5754fc24f4973d2d0 ]
+[ Upstream commit 20361712880396e44ce80aaeec2d93d182035651 ]
 
-When the upper layer requests to cancel an ongoing scan, a race
-is possible in which by the time the driver starts to handle the
-upper layers scan cancel flow, the FW already completed handling
-the scan request and the driver received the scan complete
-notification but still did not handle the notification. In such a
-case the FW will simply ignore the scan abort request coming from
-the driver, no notification would arrive from the FW and the entire
-abort flow would be considered a failure.
+When starting CAC in a mode other than AP mode, it return a
+"WARNING: CPU: 0 PID: 63 at cfg80211_chandef_dfs_usable+0x20/0xaf [cfg80211]"
+caused by the chandef.chan being null at the end of CAC.
 
-To better handle this, check the status code returned by the FW for
-the scan abort command. In case the status indicates that
-no scan was aborted, complete the scan abort flow with success, i.e.,
-the scan was aborted, as the flow is expected to consume the scan
-complete notification.
+Solution: Ensure the channel definition is set for the different modes
+when starting CAC to avoid getting a NULL 'chan' at the end of CAC.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825085558.483989d3baef.I3340556a222388504c6330b333360bf77d10f9e2@changeid
+ Call Trace:
+  ? show_regs.part.0+0x14/0x16
+  ? __warn+0x67/0xc0
+  ? cfg80211_chandef_dfs_usable+0x20/0xaf [cfg80211]
+  ? report_bug+0xa7/0x130
+  ? exc_overflow+0x30/0x30
+  ? handle_bug+0x27/0x50
+  ? exc_invalid_op+0x18/0x60
+  ? handle_exception+0xf6/0xf6
+  ? exc_overflow+0x30/0x30
+  ? cfg80211_chandef_dfs_usable+0x20/0xaf [cfg80211]
+  ? exc_overflow+0x30/0x30
+  ? cfg80211_chandef_dfs_usable+0x20/0xaf [cfg80211]
+  ? regulatory_propagate_dfs_state.cold+0x1b/0x4c [cfg80211]
+  ? cfg80211_propagate_cac_done_wk+0x1a/0x30 [cfg80211]
+  ? process_one_work+0x165/0x280
+  ? worker_thread+0x120/0x3f0
+  ? kthread+0xc2/0xf0
+  ? process_one_work+0x280/0x280
+  ? kthread_complete_and_exit+0x20/0x20
+  ? ret_from_fork+0x19/0x24
+
+Reported-by: Kretschmer Mathias <mathias.kretschmer@fit.fraunhofer.de>
+Signed-off-by: Issam Hamdi <ih@simonwunderlich.de>
+Link: https://patch.msgid.link/20240816142418.3381951-1-ih@simonwunderlich.de
+[shorten subject, remove OCB, reorder cases to match previous list]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/fw/api/scan.h  | 13 ++++++
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 42 +++++++++++++++----
- 2 files changed, 47 insertions(+), 8 deletions(-)
+ net/wireless/nl80211.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-index 7ba0e3409199b..09b4dff7cf394 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-@@ -1111,6 +1111,19 @@ struct iwl_umac_scan_abort {
- 	__le32 flags;
- } __packed; /* SCAN_ABORT_CMD_UMAC_API_S_VER_1 */
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index fe14997ce2c08..4df7a285a7de3 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -9834,7 +9834,20 @@ static int nl80211_start_radar_detection(struct sk_buff *skb,
  
-+/**
-+ * enum iwl_umac_scan_abort_status
-+ *
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_SUCCESS: scan was successfully aborted
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_IN_PROGRESS: scan abort is in progress
-+ * @IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND: nothing to abort
-+ */
-+enum iwl_umac_scan_abort_status {
-+	IWL_UMAC_SCAN_ABORT_STATUS_SUCCESS = 0,
-+	IWL_UMAC_SCAN_ABORT_STATUS_IN_PROGRESS,
-+	IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND,
-+};
-+
- /**
-  * struct iwl_umac_scan_complete
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 20c5cc72e4269..1785fded6290e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3037,13 +3037,23 @@ void iwl_mvm_rx_umac_scan_iter_complete_notif(struct iwl_mvm *mvm,
- 		       mvm->scan_start);
- }
- 
--static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
-+static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type, bool *wait)
- {
--	struct iwl_umac_scan_abort cmd = {};
-+	struct iwl_umac_scan_abort abort_cmd = {};
-+	struct iwl_host_cmd cmd = {
-+		.id = WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
-+		.len = { sizeof(abort_cmd), },
-+		.data = { &abort_cmd, },
-+		.flags = CMD_SEND_IN_RFKILL,
-+	};
-+
- 	int uid, ret;
-+	u32 status = IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND;
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
-+	*wait = true;
-+
- 	/* We should always get a valid index here, because we already
- 	 * checked that this type of scan was running in the generic
- 	 * code.
-@@ -3052,17 +3062,28 @@ static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
- 	if (WARN_ON_ONCE(uid < 0))
- 		return uid;
- 
--	cmd.uid = cpu_to_le32(uid);
-+	abort_cmd.uid = cpu_to_le32(uid);
- 
- 	IWL_DEBUG_SCAN(mvm, "Sending scan abort, uid %u\n", uid);
- 
--	ret = iwl_mvm_send_cmd_pdu(mvm,
--				   WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
--				   CMD_SEND_IN_RFKILL, sizeof(cmd), &cmd);
-+	ret = iwl_mvm_send_cmd_status(mvm, &cmd, &status);
-+
-+	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d, status=%u\n", ret, status);
- 	if (!ret)
- 		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
- 
--	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d\n", ret);
-+	/* Handle the case that the FW is no longer familiar with the scan that
-+	 * is to be stopped. In such a case, it is expected that the scan
-+	 * complete notification was already received but not yet processed.
-+	 * In such a case, there is no need to wait for a scan complete
-+	 * notification and the flow should continue similar to the case that
-+	 * the scan was really aborted.
-+	 */
-+	if (status == IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND) {
-+		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
-+		*wait = false;
-+	}
-+
- 	return ret;
- }
- 
-@@ -3072,6 +3093,7 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 	static const u16 scan_done_notif[] = { SCAN_COMPLETE_UMAC,
- 					      SCAN_OFFLOAD_COMPLETE, };
- 	int ret;
-+	bool wait = true;
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
-@@ -3083,7 +3105,7 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 	IWL_DEBUG_SCAN(mvm, "Preparing to stop scan, type %x\n", type);
- 
- 	if (fw_has_capa(&mvm->fw->ucode_capa, IWL_UCODE_TLV_CAPA_UMAC_SCAN))
--		ret = iwl_mvm_umac_scan_abort(mvm, type);
-+		ret = iwl_mvm_umac_scan_abort(mvm, type, &wait);
- 	else
- 		ret = iwl_mvm_lmac_scan_abort(mvm);
- 
-@@ -3091,6 +3113,10 @@ static int iwl_mvm_scan_stop_wait(struct iwl_mvm *mvm, int type)
- 		IWL_DEBUG_SCAN(mvm, "couldn't stop scan type %d\n", type);
- 		iwl_remove_notification(&mvm->notif_wait, &wait_scan_done);
- 		return ret;
-+	} else if (!wait) {
-+		IWL_DEBUG_SCAN(mvm, "no need to wait for scan type %d\n", type);
-+		iwl_remove_notification(&mvm->notif_wait, &wait_scan_done);
-+		return 0;
- 	}
- 
- 	return iwl_wait_notification(&mvm->notif_wait, &wait_scan_done,
+ 	err = rdev_start_radar_detection(rdev, dev, &chandef, cac_time_ms);
+ 	if (!err) {
+-		wdev->links[0].ap.chandef = chandef;
++		switch (wdev->iftype) {
++		case NL80211_IFTYPE_AP:
++		case NL80211_IFTYPE_P2P_GO:
++			wdev->links[0].ap.chandef = chandef;
++			break;
++		case NL80211_IFTYPE_ADHOC:
++			wdev->u.ibss.chandef = chandef;
++			break;
++		case NL80211_IFTYPE_MESH_POINT:
++			wdev->u.mesh.chandef = chandef;
++			break;
++		default:
++			break;
++		}
+ 		wdev->cac_started = true;
+ 		wdev->cac_start_time = jiffies;
+ 		wdev->cac_time_ms = cac_time_ms;
 -- 
 2.43.0
 
