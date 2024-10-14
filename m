@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253653B298;
-	Mon, 14 Oct 2024 15:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930491ABED9;
+	Mon, 14 Oct 2024 15:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919582; cv=none; b=CHLzdQOkjPQcK7omGps/HngHdCwsqA+G+NRbY2Dvh7kezd14c62K31SILilmDQErSAfX+zA5sdX68VHwo8o4dAYMeSs0u2LFfNMm/2gqJ5MsFTLTeEcjki15HH9/5cr4Z06ZZ/9kH4ITFI48snLXPeYbjjfq50mJ/yMLmBhQGJY=
+	t=1728919585; cv=none; b=W70QtfX8tCR+Q1c+jHuuS10GAAIxqNfY/ZUTfjBru6G1ezUoxocxOLxq/D25R2T7S3Jr1K6bBT4M7Sed2q7TpTL6rlk6xr1Di6PE9V1a5yKYupGoiB5MLV8amhFOxqIwXlmfVwZBf45rKsuqyIuBaLoP1GC0QSrJuRGdPHUpG7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919582; c=relaxed/simple;
-	bh=tMH0vUD8BIMncS3GPYppMIxJmHv5KSpKmKoUpBmqQzk=;
+	s=arc-20240116; t=1728919585; c=relaxed/simple;
+	bh=3ylmk6bUHZWi0kNHJZwfavyZn7Ty412doigiViyvUqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smfYjfV0ylIJEgSpC+xm8jf/29ishuTssODiSOac88PlzLdCh0lDxpgWEstRk8oxG2CI1h7tdCgm/sLGFqdIySCtlI6kbBpkSYj4soFEghNCSTeUtKn5Ihd2UCaYU7Gf5MccPojDXDEVBTWBE4a4YQecNIhnonXz+cKrDgXw7sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lp35FtY8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTdCZnOkF8YD8b2NVQQFcOd0UPaB086OsPneMmGPyCXjpNRUrIOuGKSUMBSgy0hIzVCCfkmeOXq9+DU+/M4iTsx9v7iEeOQmFOuFmkV++KPniYSYQ4z0bCVDer7XGtiAWlYPYC8VtqRyQDqmwTN9tCEYC0LAWUzl9g7/LV/PBMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1aPWp6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lp35FtY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66887C4CEC3;
-	Mon, 14 Oct 2024 15:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1aPWp6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4225C4CEC3;
+	Mon, 14 Oct 2024 15:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919582;
-	bh=tMH0vUD8BIMncS3GPYppMIxJmHv5KSpKmKoUpBmqQzk=;
+	s=korg; t=1728919585;
+	bh=3ylmk6bUHZWi0kNHJZwfavyZn7Ty412doigiViyvUqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lp35FtY8AtXs9nVkTUJkJBahLWxMM+NhlIzx/7wfab5WRoqiAohWeHQHq/r4kADvj
-	 4UEoNtNuRF5p9x4I7mJqfnw8cATl9EvCSNccQ1xOXfsBRB7tf1Vnzx4XpWmYK08tbQ
-	 Noq0kSSEzT8fOSOc9BohoxoSRUP2h1xT2ujb7vlA=
+	b=V1aPWp6OkLn2ib3aYJotBtT7yEZKzRwsTtsfo65Ch6qFp58RSP39kAnV2D34Yv/BN
+	 F6v1BbjovbxTwMTu70tR1LI3CaoDeAK0WnYo+GVHRctiAwVRNW50WCrXDtaZtz9mJP
+	 BgcxJpU9tMfrps0Wbnh+8ugRdJzESq6gyQz0TINo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Simon Horman <horms@kernel.org>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 648/798] r8169: Fix spelling mistake: "tx_underun" -> "tx_underrun"
-Date: Mon, 14 Oct 2024 16:20:02 +0200
-Message-ID: <20241014141243.509214380@linuxfoundation.org>
+Subject: [PATCH 6.1 649/798] r8169: add tally counter fields added with RTL8125
+Date: Mon, 14 Oct 2024 16:20:03 +0200
+Message-ID: <20241014141243.549182966@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,46 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 8df9439389a44fb2cc4ef695e08d6a8870b1616c ]
+[ Upstream commit ced8e8b8f40accfcce4a2bbd8b150aa76d5eff9a ]
 
-There is a spelling mistake in the struct field tx_underun, rename
-it to tx_underrun.
+RTL8125 added fields to the tally counter, what may result in the chip
+dma'ing these new fields to unallocated memory. Therefore make sure
+that the allocated memory area is big enough to hold all of the
+tally counter values, even if we use only parts of it.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20240909140021.64884-1-colin.i.king@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ced8e8b8f40a ("r8169: add tally counter fields added with RTL8125")
+Link: https://patch.msgid.link/741d26a9-2b2b-485d-91d9-ecb302e345b5@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
 diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index b187371fa2f0a..beebb2dcd00f5 100644
+index beebb2dcd00f5..8b35e14fba3a8 100644
 --- a/drivers/net/ethernet/realtek/r8169_main.c
 +++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -563,7 +563,7 @@ struct rtl8169_counters {
- 	__le64	rx_broadcast;
+@@ -564,6 +564,33 @@ struct rtl8169_counters {
  	__le32	rx_multicast;
  	__le16	tx_aborted;
--	__le16	tx_underun;
-+	__le16	tx_underrun;
+ 	__le16	tx_underrun;
++	/* new since RTL8125 */
++	__le64 tx_octets;
++	__le64 rx_octets;
++	__le64 rx_multicast64;
++	__le64 tx_unicast64;
++	__le64 tx_broadcast64;
++	__le64 tx_multicast64;
++	__le32 tx_pause_on;
++	__le32 tx_pause_off;
++	__le32 tx_pause_all;
++	__le32 tx_deferred;
++	__le32 tx_late_collision;
++	__le32 tx_all_collision;
++	__le32 tx_aborted32;
++	__le32 align_errors32;
++	__le32 rx_frame_too_long;
++	__le32 rx_runt;
++	__le32 rx_pause_on;
++	__le32 rx_pause_off;
++	__le32 rx_pause_all;
++	__le32 rx_unknown_opcode;
++	__le32 rx_mac_error;
++	__le32 tx_underrun32;
++	__le32 rx_mac_missed;
++	__le32 rx_tcam_dropped;
++	__le32 tdu;
++	__le32 rdu;
  };
  
  struct rtl8169_tc_offsets {
-@@ -1710,7 +1710,7 @@ static void rtl8169_get_ethtool_stats(struct net_device *dev,
- 	data[9] = le64_to_cpu(counters->rx_broadcast);
- 	data[10] = le32_to_cpu(counters->rx_multicast);
- 	data[11] = le16_to_cpu(counters->tx_aborted);
--	data[12] = le16_to_cpu(counters->tx_underun);
-+	data[12] = le16_to_cpu(counters->tx_underrun);
- }
- 
- static void rtl8169_get_strings(struct net_device *dev, u32 stringset, u8 *data)
 -- 
 2.43.0
 
