@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1821CC154;
-	Mon, 14 Oct 2024 15:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55501CDFDE;
+	Mon, 14 Oct 2024 15:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919037; cv=none; b=FIqkihtAexh5wnn3nur3LSg8iMdK7f1LYD2YqLNDrB007IaeKyJzNo74GbsGYTwg/6GpfCYRyhC0dHqPRQyLw8MSJVXA50nRQeOIrcfCE0JDwUxhd+BdV8NWU5xC+0wMQxgOj11N2FmiQ+strbBlkxzsBD63bbDCSH9aKS4hDFo=
+	t=1728919040; cv=none; b=a2mN4VceYwBpSQpnGZKNRSyGim1kRLfKfk6ZAbpxStGdLs8RvqVlmc1tUkIZWswAk8Do1b2Qgirg51e/lC2xJ7MhW8YJUKPIAyu6He4MnWF1QAiAwGIM8HFSP8I6I0xxVvZ9dfqV61JG3PSQu93H9FTQbOVCBcX/2duwymk8PnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919037; c=relaxed/simple;
-	bh=qkpMSNz65pP8fL/CmEdBaYAk3JSVGf960bjMWrO3xqo=;
+	s=arc-20240116; t=1728919040; c=relaxed/simple;
+	bh=JjHhAd5utNu2JfD/TXKmYwM8DYE3GbWsVRkDoQtHi3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siLQzH+wYnHwiaitezK+l/raGY6vIPp2cHs6c7kZHLZ1l1+olzae2hGKg1w3HpeDm2FCdlPMMJKpXxIlh00yM99DoEZDwsBF3v7JhP8h6wfA64sqg3eO2CNv1G28F41ygVziN6BAa/yRElX9olVfNK8RI9f/nbQtw59H3TGVdmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qe9+71ZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=efGZbTVOM1MvnqdHbn9SJchSFnRgWG3XC77Uuq52MGPMQXmWmeCA5cP8yXdbVKgiEt+EqMOl6HT8qsqI+mTHqwjAFk0S6ggPPRKMcDj61VLmJFUkCCiVZEUhfGOIJNVFXElBhqf18SRpPmGjvUUaeRMc3h7F2AiiOXhZucRM0ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmkG86fC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qe9+71ZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B4DC4CEC3;
-	Mon, 14 Oct 2024 15:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmkG86fC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B465C4CEC3;
+	Mon, 14 Oct 2024 15:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919037;
-	bh=qkpMSNz65pP8fL/CmEdBaYAk3JSVGf960bjMWrO3xqo=;
+	s=korg; t=1728919040;
+	bh=JjHhAd5utNu2JfD/TXKmYwM8DYE3GbWsVRkDoQtHi3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qe9+71ZNcF3oBc/Lw9PYvgchRlREA9b+K0aRA7DsdNEb7Q7Rwn1g/coJ3/VZ9OBxz
-	 +BY5sKtgdJugS8ph2DpAj5/18SjEHujppThDeronaPrBay5YlPT3KPW4e/iJGc8rwQ
-	 KG/X5EXVH2vgtxFvkSafiC9sqBmOpdo7Ffwtjm7Y=
+	b=LmkG86fC4LdqcR0nP0guRPMyNgRm1fRNvS7uFknB303y/f1uF7z86i9K2icjj/uxj
+	 cYQtQa1elHTLHmQ8WWP1yhdd8sxMFtg/jhmuE8cYQ/jHfjsrHlPMbmISQT4/3Laben
+	 SSfea4o0y7e3HfwglHXF7VQqgzkesvakIKVj6Kug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 493/798] drm/amd/display: Fix index out of bounds in degamma hardware format translation
-Date: Mon, 14 Oct 2024 16:17:27 +0200
-Message-ID: <20241014141237.339852085@linuxfoundation.org>
+Subject: [PATCH 6.1 464/798] selftests/nolibc: avoid passing NULL to printf("%s")
+Date: Mon, 14 Oct 2024 16:16:58 +0200
+Message-ID: <20241014141236.205581442@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,58 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit b7e99058eb2e86aabd7a10761e76cae33d22b49f ]
+[ Upstream commit f1a58f61d88642ae1e6e97e9d72d73bc70a93cb8 ]
 
-Fixes index out of bounds issue in
-`cm_helper_translate_curve_to_degamma_hw_format` function. The issue
-could occur when the index 'i' exceeds the number of transfer function
-points (TRANSFER_FUNC_POINTS).
+Clang on higher optimization levels detects that NULL is passed to
+printf("%s") and warns about it.
+While printf() from nolibc gracefully handles that NULL,
+it is undefined behavior as per POSIX, so the warning is reasonable.
+Avoid the warning by transforming NULL into a non-NULL placeholder.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds the function returns
-false to indicate an error.
-
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:594 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:595 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:596 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20240807-nolibc-llvm-v2-8-c20f2f5fc7c2@weissschuh.net
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/nolibc/nolibc-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index c0372aa4ec838..684e30f9cf898 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -571,6 +571,8 @@ bool cm_helper_translate_curve_to_degamma_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS)
-+				return false;
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index f8e8e8d2a5e18..c6ef8b3e83458 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -353,7 +353,7 @@ static int expect_strzr(const char *expr, int llen)
+ {
+ 	int ret = 0;
+ 
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (expr) {
+ 		ret = 1;
+ 		llen += pad_spc(llen, 40, "[FAIL]\n");
+@@ -371,7 +371,7 @@ static int expect_strnz(const char *expr, int llen)
+ {
+ 	int ret = 0;
+ 
+-	llen += printf(" = <%s> ", expr);
++	llen += printf(" = <%s> ", expr ? expr : "(null)");
+ 	if (!expr) {
+ 		ret = 1;
+ 		llen += pad_spc(llen, 40, "[FAIL]\n");
 -- 
 2.43.0
 
