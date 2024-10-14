@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1CF1AB6D4;
-	Mon, 14 Oct 2024 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB701AB6D4;
+	Mon, 14 Oct 2024 15:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920056; cv=none; b=SCW1jSawbusS9Im5LvfLG0JoqXJWtWosLWzz+QjeRVwAeg0zIokRhPmvhR+BOBIx5iUblzVLVkRNGNUEu3hhGHSL+lxUXcLzVWoNUsXsSVJuxvE1npOSIcNAPBGuuJj56VdtiFuswjLmhlElrjzOyXYoU/lrGun0P0yt6JCbJyM=
+	t=1728920059; cv=none; b=aGPBjlUCrSxqkV/kNCkpNZR5XwF4ylzqLxGvxlLOVN1M6b6gxe1TzXPzuP7VU8h+OikjOq0hptx8QZ4AaQGXgg7Nycm1H14MwrNdOvMj4ARYgm8V7mBhs8w5Tq1QguiOmaaOVvNdOEj+Swp0KVEc4QTkQ9oRtGUQ26ArSOT7zpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920056; c=relaxed/simple;
-	bh=uzwzP504dEKTg70EDvBF6ENnT8ZGzvvZtOoQsUyPYDY=;
+	s=arc-20240116; t=1728920059; c=relaxed/simple;
+	bh=Al+z/W05i0bP+CV/Mo/1eqiXSAh85o1+gmpFGMIjgCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vnrm+bxzkK3n41aEyIIBAplsu3MMsY/nyoIr6v9JIJ/68qUHI6Gu3sr7ePQ1OIOCdsQP8dgw1WHRp88IzubFIcAIBcDsIURXTVVwNp5I1tODdYUvbRJWnR6urPHSPUaZJnJQr6F1I8X86wxpWoKWWj168vtIuSuT93a6ySaA8rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zksYJvEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gFCZcY2ZPpc+MLkEHIzPEAxvbCJq2frRYP0JJI+5W8rUz3qfNLYRCb4R4FRIrF8laPUx3vGwoZgntJJo/o+PirI+moFt6lW6x6Chhf9IDQZ6cTgqAMxmmMuH46+FEOfxu5OWGUEItbteXbYqIHGjT7BLJ44YpaxPeFPqKUjtJww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa7SHY5V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zksYJvEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B19C4CEC3;
-	Mon, 14 Oct 2024 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa7SHY5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC0C4CEC3;
+	Mon, 14 Oct 2024 15:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920056;
-	bh=uzwzP504dEKTg70EDvBF6ENnT8ZGzvvZtOoQsUyPYDY=;
+	s=korg; t=1728920059;
+	bh=Al+z/W05i0bP+CV/Mo/1eqiXSAh85o1+gmpFGMIjgCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zksYJvEyivQIEj3DsFX3hUUhcwNOx9L6KK1sEGuUJWEb4WfGOdCi/PmfBbi2KSPvG
-	 XAot5yNI8gUVHwpS6f9sZXX9VKWlS1HZkTLj3dq4FgUXJVZgERLincXlICZNFt3nFA
-	 f+nBShLHveEUNjL0hNWpkoR7D3wbAGsj39aRsm64=
+	b=Qa7SHY5VzTAayl0fAkmFQg1+YWLSuFKUD7kkbwIEE/Y6RSFHX77kFHy8SJ+Ixqr45
+	 JD+MkO5uMkkUyLwFhfjGFINi3I00YcDCcEHBnJD1VzWDPDdWcAtSkZBQQ/yvojb8EQ
+	 K5ncIT4AbaheOE/IXcQd6OlYtR1W6wGyjQ+9qXns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.1 785/798] ata: libata: avoid superfluous disk spin down + spin up during hibernation
-Date: Mon, 14 Oct 2024 16:22:19 +0200
-Message-ID: <20241014141248.909789308@linuxfoundation.org>
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 786/798] net: explicitly clear the sk pointer, when pf->create fails
+Date: Mon, 14 Oct 2024 16:22:20 +0200
+Message-ID: <20241014141248.951165725@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,76 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-commit a38719e3157118428e34fbd45b0d0707a5877784 upstream.
+commit 631083143315d1b192bd7d915b967b37819e88ea upstream.
 
-A user reported that commit aa3998dbeb3a ("ata: libata-scsi: Disable scsi
-device manage_system_start_stop") introduced a spin down + immediate spin
-up of the disk both when entering and when resuming from hibernation.
-This behavior was not there before, and causes an increased latency both
-when entering and when resuming from hibernation.
+We have recently noticed the exact same KASAN splat as in commit
+6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket
+creation fails"). The problem is that commit did not fully address the
+problem, as some pf->create implementations do not use sk_common_release
+in their error paths.
 
-Hibernation is done by three consecutive PM events, in the following order:
-1) PM_EVENT_FREEZE
-2) PM_EVENT_THAW
-3) PM_EVENT_HIBERNATE
+For example, we can use the same reproducer as in the above commit, but
+changing ping to arping. arping uses AF_PACKET socket and if packet_create
+fails, it will just sk_free the allocated sk object.
 
-Commit aa3998dbeb3a ("ata: libata-scsi: Disable scsi device
-manage_system_start_stop") modified ata_eh_handle_port_suspend() to call
-ata_dev_power_set_standby() (which spins down the disk), for both event
-PM_EVENT_FREEZE and event PM_EVENT_HIBERNATE.
+While we could chase all the pf->create implementations and make sure they
+NULL the freed sk object on error from the socket, we can't guarantee
+future protocols will not make the same mistake.
 
-Documentation/driver-api/pm/devices.rst, section "Entering Hibernation",
-explicitly mentions that PM_EVENT_FREEZE does not have to be put the device
-in a low-power state, and actually recommends not doing so. Thus, let's not
-spin down the disk on PM_EVENT_FREEZE. (The disk will instead be spun down
-during the subsequent PM_EVENT_HIBERNATE event.)
+So it is easier to just explicitly NULL the sk pointer upon return from
+pf->create in __sock_create. We do know that pf->create always releases the
+allocated sk object on error, so if the pointer is not NULL, it is
+definitely dangling.
 
-This way, PM_EVENT_FREEZE will behave as it did before commit aa3998dbeb3a
-("ata: libata-scsi: Disable scsi device manage_system_start_stop"), while
-PM_EVENT_HIBERNATE will continue to spin down the disk.
-
-This will avoid the superfluous spin down + spin up when entering and
-resuming from hibernation, while still making sure that the disk is spun
-down before actually entering hibernation.
-
-Cc: stable@vger.kernel.org # v6.6+
-Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20241008135843.1266244-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket creation fails")
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241003170151.69445-1-ignat@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ net/socket.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -3946,10 +3946,20 @@ static void ata_eh_handle_port_suspend(s
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -1548,8 +1548,13 @@ int __sock_create(struct net *net, int f
+ 	rcu_read_unlock();
  
- 	WARN_ON(ap->pflags & ATA_PFLAG_SUSPENDED);
- 
--	/* Set all devices attached to the port in standby mode */
--	ata_for_each_link(link, ap, HOST_FIRST) {
--		ata_for_each_dev(dev, link, ENABLED)
--			ata_dev_power_set_standby(dev);
-+	/*
-+	 * We will reach this point for all of the PM events:
-+	 * PM_EVENT_SUSPEND (if runtime pm, PM_EVENT_AUTO will also be set)
-+	 * PM_EVENT_FREEZE, and PM_EVENT_HIBERNATE.
-+	 *
-+	 * We do not want to perform disk spin down for PM_EVENT_FREEZE.
-+	 * (Spin down will be performed by the subsequent PM_EVENT_HIBERNATE.)
-+	 */
-+	if (!(ap->pm_mesg.event & PM_EVENT_FREEZE)) {
-+		/* Set all devices attached to the port in standby mode */
-+		ata_for_each_link(link, ap, HOST_FIRST) {
-+			ata_for_each_dev(dev, link, ENABLED)
-+				ata_dev_power_set_standby(dev);
-+		}
- 	}
+ 	err = pf->create(net, sock, protocol, kern);
+-	if (err < 0)
++	if (err < 0) {
++		/* ->create should release the allocated sock->sk object on error
++		 * but it may leave the dangling pointer
++		 */
++		sock->sk = NULL;
+ 		goto out_module_put;
++	}
  
  	/*
+ 	 * Now to bump the refcnt of the [loadable] module that owns this
 
 
