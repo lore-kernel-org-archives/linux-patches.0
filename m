@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C86F1D0784;
-	Mon, 14 Oct 2024 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3F91C3050;
+	Mon, 14 Oct 2024 15:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919744; cv=none; b=FMHJpPI9NNbG7AGiZixmcLcaPQJ8nFmHrTfyZ9BYcsAKzZ6QXR2IbggFbEyG3vTFpz5UcinvPfi/7Z2cKLABB1pHtOa5/W/TBnozevUzfA9jEnR+8L47hOsTVAuwsYF9pGmiL1B+25Q0XwNDvZtYhgwtsIjuGq9S+82nFY2uSOQ=
+	t=1728919753; cv=none; b=EoHHa2HXmh6nbcxnaiqaqRuYbirKLq9XJ7VdAhU8wpvdKg0w/MOLG5wywNxMb3XtN46Q9tPvxbWTTwa5IYMxqUYmhkisGHCUbBQH5MfqzmgQrwrxskZ53R+94/0tGxI8u976ZDlVtLH5V0LXTkfBuFYLcEHc9MB6sFBT2U4NNVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919744; c=relaxed/simple;
-	bh=sBlaIpzAzhZg1bHyYVOohAzd0AUVADwIASwo1/RLoRU=;
+	s=arc-20240116; t=1728919753; c=relaxed/simple;
+	bh=1xNBLg0C9zYkhGCUHTPCxsJJ2A0j6POo56mb4Pfgr04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H08L1E2oIihCE0g1mrk/iVVCeWk45iSDkpknyHj9/fukeOXF7475GTOPZUs4RB9S6zvPo3fBvk3iKrWFqGyXxi661qVFAmznIv/TmyZVwZKbmJWIXZ5FVOpvlwUCHfGuY/2exgspwZVcWLEvRuQpM5hddSNJ2Lo4OC8DUtFuu5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIyugNJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDgMISXZopJIDHknwW6yijRC9jUZsxX5moxqe+lQLZg2bqF20qlZ7N0vxYseXduidLlcS0rxOpwmWVpVG6YhehEBzmufbh1Tvw848dnLR1EYXQv3GJK4LG6xoB9h2+U/ZQyDiFVY7mNOiEau9LlNpaGePWO8nHfdVm8jyXUsQCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tda1yt2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIyugNJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E56AC4CEC3;
-	Mon, 14 Oct 2024 15:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tda1yt2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04876C4CED0;
+	Mon, 14 Oct 2024 15:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919744;
-	bh=sBlaIpzAzhZg1bHyYVOohAzd0AUVADwIASwo1/RLoRU=;
+	s=korg; t=1728919752;
+	bh=1xNBLg0C9zYkhGCUHTPCxsJJ2A0j6POo56mb4Pfgr04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIyugNJyNQ1oYjYKZdQU88kysUOFgC6jOpDTl41QaXL96l+Eo5ggWOdMGRFUx0sGb
-	 e0xUSzhzP7QfOXgNEEz608JNZsu60krbdpIwEXAPNRhlP/5b5x/xPHeTsAXsXuENFu
-	 aDxR7Zvqxg/QVhLp1F0mffG90o2NtZgB75FOvn/0=
+	b=tda1yt2CFKQK7nZNDj+gyN4f4AQqP8kk0ugD7Oc3V8LxLil5ETA98HVGnktD0RlgP
+	 p1QHT/79OzEos0ENjjeqVf1KhBYxa5XrTM7jhgVC+PqkCGZXEab3XfCn+/SM4W7mCz
+	 Yhe9YR0B7WerD8N9A+yOolx1NgR1Xh6ssKh5JsC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	"John Warthog9 Hawley (Tenstorrent)" <warthog9@eaglescrag.net>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 694/798] s390/traps: Handle early warnings gracefully
-Date: Mon, 14 Oct 2024 16:20:48 +0200
-Message-ID: <20241014141245.334099965@linuxfoundation.org>
+Subject: [PATCH 6.1 695/798] ktest.pl: Avoid false positives with grub2 skip regex
+Date: Mon, 14 Oct 2024 16:20:49 +0200
+Message-ID: <20241014141245.372962347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,54 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
 
-[ Upstream commit 3c4d0ae0671827f4b536cc2d26f8b9c54584ccc5 ]
+[ Upstream commit 2351e8c65404aabc433300b6bf90c7a37e8bbc4d ]
 
-Add missing warning handling to the early program check handler. This
-way a warning is printed to the console as soon as the early console
-is setup, and the kernel continues to boot.
+Some distros have grub2 config files with the lines
 
-Before this change a disabled wait psw was loaded instead and the
-machine was silently stopped without giving an idea about what
-happened.
+    if [ x"${feature_menuentry_id}" = xy ]; then
+      menuentry_id_option="--id"
+    else
+      menuentry_id_option=""
+    fi
 
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+which match the skip regex defined for grub2 in get_grub_index():
+
+    $skip = '^\s*menuentry';
+
+These false positives cause the grub number to be higher than it
+should be, and the wrong kernel can end up booting.
+
+Grub documents the menuentry command with whitespace between it and the
+title, so make the skip regex reflect this.
+
+Link: https://lore.kernel.org/20240904175530.84175-1-daniel.m.jordan@oracle.com
+Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: John 'Warthog9' Hawley (Tenstorrent) <warthog9@eaglescrag.net>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/early.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
-index b3cb256ec6692..1dcdce60b89c7 100644
---- a/arch/s390/kernel/early.c
-+++ b/arch/s390/kernel/early.c
-@@ -151,8 +151,21 @@ static __init void setup_topology(void)
- 
- void __do_early_pgm_check(struct pt_regs *regs)
- {
--	if (!fixup_exception(regs))
--		disabled_wait();
-+	struct lowcore *lc = get_lowcore();
-+	unsigned long ip;
-+
-+	regs->int_code = lc->pgm_int_code;
-+	regs->int_parm_long = lc->trans_exc_code;
-+	ip = __rewind_psw(regs->psw, regs->int_code >> 16);
-+
-+	/* Monitor Event? Might be a warning */
-+	if ((regs->int_code & PGM_INT_CODE_MASK) == 0x40) {
-+		if (report_bug(ip, regs) == BUG_TRAP_TYPE_WARN)
-+			return;
-+	}
-+	if (fixup_exception(regs))
-+		return;
-+	disabled_wait();
- }
- 
- static noinline __init void setup_lowcore_early(void)
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 449e45bd69665..99e17a0a13649 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2036,7 +2036,7 @@ sub get_grub_index {
+     } elsif ($reboot_type eq "grub2") {
+ 	$command = "cat $grub_file";
+ 	$target = '^\s*menuentry.*' . $grub_menu_qt;
+-	$skip = '^\s*menuentry';
++	$skip = '^\s*menuentry\s';
+ 	$submenu = '^\s*submenu\s';
+     } elsif ($reboot_type eq "grub2bls") {
+ 	$command = $grub_bls_get;
 -- 
 2.43.0
 
