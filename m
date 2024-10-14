@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4671AAE2C;
-	Mon, 14 Oct 2024 14:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9912C1A76A5;
+	Mon, 14 Oct 2024 14:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916064; cv=none; b=FU6HBDqnW6wV2VHm3pFEtOpVy3/ogi/gnrQaGesr3Dar5yv3c/HTpb3dL7zyI6u9jhnrFaMDMFejJlqFe19PFzsmOPywZk6FT19IWLPjg6ME3jva1oaulCFmwPKg7o++J7tTPoFI4qt8Z2akQWqIH3fln2hzCVjstG/igAl9EVo=
+	t=1728916067; cv=none; b=Xxuxd0qmRHeQolQphz69byf2OSNhkKPwWW+bppzULeYxBW5zMHJTcu62qMPGbLX/8wMOHBU0SGpzJrfOtztSqF6qc0An/BqaMyHVviNwNuy/f9eVOqrs2zexZYLS/Wd8ITPluKTGCRZY7eE6kHm5a7Khj807dJEdJoiXze0YRKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916064; c=relaxed/simple;
-	bh=sYQZT4jsbYesHQ1V+qBma9CFMZFEkKrUKse5BtwqOdE=;
+	s=arc-20240116; t=1728916067; c=relaxed/simple;
+	bh=siHllIHnBttHl33bgLU3CYBIdtXsM2Y/IGrUpD9fl8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SuIIJfD/aTtd1rpF+Tc+J+zMMVCrRC65VHBKrA0Njd6OZcHgYaTTzsIRQ7zTFCxwb2H/+aSYrMvvA/yAQIawBLNXAiYcekKslN2nPh2pCR4M7DoYVXDwDPjfjO29pmpCt9YYW6xvrAqV6i322vZ2agEtZtzK5rlEFWAjsxDS4N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSvga2xf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eTYre6aqQd/qqRsxwdgyErJCR0E6Mps8VQst4ICEPxu05rlKo2gCV7xc2OK7Hvw3Wyl7EmKrkTMcY1BVVZIF/rLycl7vNn12hcwLyhupXOMO+BtFe0jH9ZtMY/xjtZRYb3MTcE7xXXA3Br0Tf/FSuXgGtDCXAOX55+wDTfxXuAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKELqAB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSvga2xf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815B7C4CEC3;
-	Mon, 14 Oct 2024 14:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKELqAB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013C8C4CEC3;
+	Mon, 14 Oct 2024 14:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916064;
-	bh=sYQZT4jsbYesHQ1V+qBma9CFMZFEkKrUKse5BtwqOdE=;
+	s=korg; t=1728916067;
+	bh=siHllIHnBttHl33bgLU3CYBIdtXsM2Y/IGrUpD9fl8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSvga2xfYDFkTkbItPrVHMx4AJk0strxMAYNymQSNgV201BFQ/oP68l6PGy3wm4yE
-	 b09HLVppYODbH7nPWOocomltPWnneWo7zFf2D2ocSRsna/ktLyY/BUFBiM6+A+IXPJ
-	 2Nlj+tTCQO71h1v5sIE9sWaux/LE21ejr8yNYn3s=
+	b=FKELqAB1WGLDSWGDJfrN1KjaffjgzzBVoZQVKnAxbjPCo8kcZlBjchvnQ6cQrE4z9
+	 KT072UDa73Fi5y4D1FQOadTgFBVARzZP20CA6uoKsWffA+jbRXM2Qtz2yHLnTdGMce
+	 OhTTiAvNc4TBPY/xuP8hkM2s72c3wGHdYSgrluB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 076/214] drm/amdgpu: nuke the VM PD/PT shadow handling
-Date: Mon, 14 Oct 2024 16:18:59 +0200
-Message-ID: <20241014141047.955176387@linuxfoundation.org>
+Subject: [PATCH 6.11 059/214] xhci: dbc: Fix STALL transfer event handling
+Date: Mon, 14 Oct 2024 16:18:42 +0200
+Message-ID: <20241014141047.292406397@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,515 +52,294 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 7181faaa4703705939580abffaf9cb5d6b50dbb7 ]
+[ Upstream commit 9044ad57b60b0556d42b6f8aa218a68865e810a4 ]
 
-This was only used as workaround for recovering the page tables after
-VRAM was lost and is no longer necessary after the function
-amdgpu_vm_bo_reset_state_machine() started to do the same.
+Don't flush all pending DbC data requests when an endpoint halts.
 
-Compute never used shadows either, so the only proplematic case left is
-SVM and that is most likely not recoverable in any way when VRAM is
-lost.
+An endpoint may halt and xHC DbC triggers a STALL error event if there's
+an issue with a bulk data transfer. The transfer should restart once xHC
+DbC receives a ClearFeature(ENDPOINT_HALT) request from the host.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Once xHC DbC restarts it will start from the TRB pointed to by dequeue
+field in the endpoint context, which might be the same TRB we got the
+STALL event for. Turn the TRB to a no-op in this case to make sure xHC
+DbC doesn't reuse and tries to retransmit this same TRB after we already
+handled it, and gave its corresponding data request back.
+
+Other STALL events might be completely bogus.
+Lukasz Bartosik discovered that xHC DbC might issue spurious STALL events
+if hosts sends a ClearFeature(ENDPOINT_HALT) request to non-halted
+endpoints even without any active bulk transfers.
+
+Assume STALL event is spurious if it reports 0 bytes transferred, and
+the endpoint stopped on the STALLED TRB.
+Don't give back the data request corresponding to the TRB in this case.
+
+The halted status is per endpoint. Track it with a per endpoint flag
+instead of the driver invented DbC wide DS_STALLED state.
+DbC remains in DbC-Configured state even if endpoints halt. There is no
+Stalled state in the DbC Port state Machine (xhci section 7.6.6)
+
+Reported-by: Łukasz Bartosik <ukaszb@chromium.org>
+Closes: https://lore.kernel.org/linux-usb/20240725074857.623299-1-ukaszb@chromium.org/
+Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240905143300.1959279-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h         |  4 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  | 87 +--------------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c  | 67 +---------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.h  | 21 -----
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c      | 17 ----
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c   | 56 +------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 19 +----
- 7 files changed, 6 insertions(+), 265 deletions(-)
+ drivers/usb/host/xhci-dbgcap.c | 133 ++++++++++++++++++++-------------
+ drivers/usb/host/xhci-dbgcap.h |   2 +-
+ 2 files changed, 83 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-index 137a88b8de453..a1b2bf3db55b8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1091,10 +1091,6 @@ struct amdgpu_device {
- 
- 	struct amdgpu_virt	virt;
- 
--	/* link all shadow bo */
--	struct list_head                shadow_list;
--	struct mutex                    shadow_list_lock;
--
- 	/* record hw reset is performed */
- 	bool has_hw_reset;
- 	u8				reset_magic[AMDGPU_RESET_MAGIC_NUM];
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index bcacf2e35eba0..dfd468729d52b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4073,9 +4073,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	spin_lock_init(&adev->mm_stats.lock);
- 	spin_lock_init(&adev->wb.lock);
- 
--	INIT_LIST_HEAD(&adev->shadow_list);
--	mutex_init(&adev->shadow_list_lock);
--
- 	INIT_LIST_HEAD(&adev->reset_list);
- 
- 	INIT_LIST_HEAD(&adev->ras_list);
-@@ -4980,80 +4977,6 @@ static int amdgpu_device_ip_post_soft_reset(struct amdgpu_device *adev)
- 	return 0;
+diff --git a/drivers/usb/host/xhci-dbgcap.c b/drivers/usb/host/xhci-dbgcap.c
+index 161c09953c4e0..241d7aa1fbc20 100644
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -173,16 +173,18 @@ static void xhci_dbc_giveback(struct dbc_request *req, int status)
+ 	spin_lock(&dbc->lock);
  }
  
--/**
-- * amdgpu_device_recover_vram - Recover some VRAM contents
-- *
-- * @adev: amdgpu_device pointer
-- *
-- * Restores the contents of VRAM buffers from the shadows in GTT.  Used to
-- * restore things like GPUVM page tables after a GPU reset where
-- * the contents of VRAM might be lost.
-- *
-- * Returns:
-- * 0 on success, negative error code on failure.
-- */
--static int amdgpu_device_recover_vram(struct amdgpu_device *adev)
--{
--	struct dma_fence *fence = NULL, *next = NULL;
--	struct amdgpu_bo *shadow;
--	struct amdgpu_bo_vm *vmbo;
--	long r = 1, tmo;
+-static void xhci_dbc_flush_single_request(struct dbc_request *req)
++static void trb_to_noop(union xhci_trb *trb)
+ {
+-	union xhci_trb	*trb = req->trb;
 -
--	if (amdgpu_sriov_runtime(adev))
--		tmo = msecs_to_jiffies(8000);
--	else
--		tmo = msecs_to_jiffies(100);
--
--	dev_info(adev->dev, "recover vram bo from shadow start\n");
--	mutex_lock(&adev->shadow_list_lock);
--	list_for_each_entry(vmbo, &adev->shadow_list, shadow_list) {
--		/* If vm is compute context or adev is APU, shadow will be NULL */
--		if (!vmbo->shadow)
--			continue;
--		shadow = vmbo->shadow;
--
--		/* No need to recover an evicted BO */
--		if (!shadow->tbo.resource ||
--		    shadow->tbo.resource->mem_type != TTM_PL_TT ||
--		    shadow->tbo.resource->start == AMDGPU_BO_INVALID_OFFSET ||
--		    shadow->parent->tbo.resource->mem_type != TTM_PL_VRAM)
--			continue;
--
--		r = amdgpu_bo_restore_shadow(shadow, &next);
--		if (r)
--			break;
--
--		if (fence) {
--			tmo = dma_fence_wait_timeout(fence, false, tmo);
--			dma_fence_put(fence);
--			fence = next;
--			if (tmo == 0) {
--				r = -ETIMEDOUT;
--				break;
--			} else if (tmo < 0) {
--				r = tmo;
--				break;
--			}
--		} else {
--			fence = next;
--		}
--	}
--	mutex_unlock(&adev->shadow_list_lock);
--
--	if (fence)
--		tmo = dma_fence_wait_timeout(fence, false, tmo);
--	dma_fence_put(fence);
--
--	if (r < 0 || tmo <= 0) {
--		dev_err(adev->dev, "recover vram bo from shadow failed, r is %ld, tmo is %ld\n", r, tmo);
--		return -EIO;
--	}
--
--	dev_info(adev->dev, "recover vram bo from shadow done\n");
--	return 0;
--}
--
--
- /**
-  * amdgpu_device_reset_sriov - reset ASIC for SR-IOV vf
-  *
-@@ -5116,12 +5039,8 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
- 	if (r)
- 		return r;
+ 	trb->generic.field[0]	= 0;
+ 	trb->generic.field[1]	= 0;
+ 	trb->generic.field[2]	= 0;
+ 	trb->generic.field[3]	&= cpu_to_le32(TRB_CYCLE);
+ 	trb->generic.field[3]	|= cpu_to_le32(TRB_TYPE(TRB_TR_NOOP));
++}
  
--	if (adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST) {
-+	if (adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST)
- 		amdgpu_inc_vram_lost(adev);
--		r = amdgpu_device_recover_vram(adev);
--	}
--	if (r)
--		return r;
++static void xhci_dbc_flush_single_request(struct dbc_request *req)
++{
++	trb_to_noop(req->trb);
+ 	xhci_dbc_giveback(req, -ESHUTDOWN);
+ }
  
- 	/* need to be called during full access so we can't do it later like
- 	 * bare-metal does.
-@@ -5541,9 +5460,7 @@ int amdgpu_do_asic_reset(struct list_head *device_list_handle,
- 			}
- 		}
+@@ -649,7 +651,6 @@ static void xhci_dbc_stop(struct xhci_dbc *dbc)
+ 	case DS_DISABLED:
+ 		return;
+ 	case DS_CONFIGURED:
+-	case DS_STALLED:
+ 		if (dbc->driver->disconnect)
+ 			dbc->driver->disconnect(dbc);
+ 		break;
+@@ -669,6 +670,23 @@ static void xhci_dbc_stop(struct xhci_dbc *dbc)
+ 	pm_runtime_put_sync(dbc->dev); /* note, was self.controller */
+ }
  
--		if (!r)
--			r = amdgpu_device_recover_vram(tmp_adev);
--		else
-+		if (r)
- 			tmp_adev->asic_reset_res = r;
++static void
++handle_ep_halt_changes(struct xhci_dbc *dbc, struct dbc_ep *dep, bool halted)
++{
++	if (halted) {
++		dev_info(dbc->dev, "DbC Endpoint halted\n");
++		dep->halted = 1;
++
++	} else if (dep->halted) {
++		dev_info(dbc->dev, "DbC Endpoint halt cleared\n");
++		dep->halted = 0;
++
++		if (!list_empty(&dep->list_pending))
++			writel(DBC_DOOR_BELL_TARGET(dep->direction),
++			       &dbc->regs->doorbell);
++	}
++}
++
+ static void
+ dbc_handle_port_status(struct xhci_dbc *dbc, union xhci_trb *event)
+ {
+@@ -697,6 +715,7 @@ static void dbc_handle_xfer_event(struct xhci_dbc *dbc, union xhci_trb *event)
+ 	struct xhci_ring	*ring;
+ 	int			ep_id;
+ 	int			status;
++	struct xhci_ep_ctx	*ep_ctx;
+ 	u32			comp_code;
+ 	size_t			remain_length;
+ 	struct dbc_request	*req = NULL, *r;
+@@ -706,8 +725,30 @@ static void dbc_handle_xfer_event(struct xhci_dbc *dbc, union xhci_trb *event)
+ 	ep_id		= TRB_TO_EP_ID(le32_to_cpu(event->generic.field[3]));
+ 	dep		= (ep_id == EPID_OUT) ?
+ 				get_out_ep(dbc) : get_in_ep(dbc);
++	ep_ctx		= (ep_id == EPID_OUT) ?
++				dbc_bulkout_ctx(dbc) : dbc_bulkin_ctx(dbc);
+ 	ring		= dep->ring;
+ 
++	/* Match the pending request: */
++	list_for_each_entry(r, &dep->list_pending, list_pending) {
++		if (r->trb_dma == event->trans_event.buffer) {
++			req = r;
++			break;
++		}
++		if (r->status == -COMP_STALL_ERROR) {
++			dev_warn(dbc->dev, "Give back stale stalled req\n");
++			ring->num_trbs_free++;
++			xhci_dbc_giveback(r, 0);
++		}
++	}
++
++	if (!req) {
++		dev_warn(dbc->dev, "no matched request\n");
++		return;
++	}
++
++	trace_xhci_dbc_handle_transfer(ring, &req->trb->generic);
++
+ 	switch (comp_code) {
+ 	case COMP_SUCCESS:
+ 		remain_length = 0;
+@@ -718,31 +759,49 @@ static void dbc_handle_xfer_event(struct xhci_dbc *dbc, union xhci_trb *event)
+ 	case COMP_TRB_ERROR:
+ 	case COMP_BABBLE_DETECTED_ERROR:
+ 	case COMP_USB_TRANSACTION_ERROR:
+-	case COMP_STALL_ERROR:
+ 		dev_warn(dbc->dev, "tx error %d detected\n", comp_code);
+ 		status = -comp_code;
+ 		break;
++	case COMP_STALL_ERROR:
++		dev_warn(dbc->dev, "Stall error at bulk TRB %llx, remaining %zu, ep deq %llx\n",
++			 event->trans_event.buffer, remain_length, ep_ctx->deq);
++		status = 0;
++		dep->halted = 1;
++
++		/*
++		 * xHC DbC may trigger a STALL bulk xfer event when host sends a
++		 * ClearFeature(ENDPOINT_HALT) request even if there wasn't an
++		 * active bulk transfer.
++		 *
++		 * Don't give back this transfer request as hardware will later
++		 * start processing TRBs starting from this 'STALLED' TRB,
++		 * causing TRBs and requests to be out of sync.
++		 *
++		 * If STALL event shows some bytes were transferred then assume
++		 * it's an actual transfer issue and give back the request.
++		 * In this case mark the TRB as No-Op to avoid hw from using the
++		 * TRB again.
++		 */
++
++		if ((ep_ctx->deq & ~TRB_CYCLE) == event->trans_event.buffer) {
++			dev_dbg(dbc->dev, "Ep stopped on Stalled TRB\n");
++			if (remain_length == req->length) {
++				dev_dbg(dbc->dev, "Spurious stall event, keep req\n");
++				req->status = -COMP_STALL_ERROR;
++				req->actual = 0;
++				return;
++			}
++			dev_dbg(dbc->dev, "Give back stalled req, but turn TRB to No-op\n");
++			trb_to_noop(req->trb);
++		}
++		break;
++
+ 	default:
+ 		dev_err(dbc->dev, "unknown tx error %d\n", comp_code);
+ 		status = -comp_code;
+ 		break;
  	}
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-index e32161f6b67a3..a987f671b1d53 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -77,24 +77,6 @@ static void amdgpu_bo_user_destroy(struct ttm_buffer_object *tbo)
- 	amdgpu_bo_destroy(tbo);
- }
- 
--static void amdgpu_bo_vm_destroy(struct ttm_buffer_object *tbo)
--{
--	struct amdgpu_device *adev = amdgpu_ttm_adev(tbo->bdev);
--	struct amdgpu_bo *shadow_bo = ttm_to_amdgpu_bo(tbo), *bo;
--	struct amdgpu_bo_vm *vmbo;
--
--	bo = shadow_bo->parent;
--	vmbo = to_amdgpu_bo_vm(bo);
--	/* in case amdgpu_device_recover_vram got NULL of bo->parent */
--	if (!list_empty(&vmbo->shadow_list)) {
--		mutex_lock(&adev->shadow_list_lock);
--		list_del_init(&vmbo->shadow_list);
--		mutex_unlock(&adev->shadow_list_lock);
+-	/* Match the pending request: */
+-	list_for_each_entry(r, &dep->list_pending, list_pending) {
+-		if (r->trb_dma == event->trans_event.buffer) {
+-			req = r;
+-			break;
+-		}
 -	}
 -
--	amdgpu_bo_destroy(tbo);
--}
+-	if (!req) {
+-		dev_warn(dbc->dev, "no matched request\n");
+-		return;
+-	}
 -
- /**
-  * amdgpu_bo_is_amdgpu_bo - check if the buffer object is an &amdgpu_bo
-  * @bo: buffer object to be checked
-@@ -108,8 +90,7 @@ static void amdgpu_bo_vm_destroy(struct ttm_buffer_object *tbo)
- bool amdgpu_bo_is_amdgpu_bo(struct ttm_buffer_object *bo)
+-	trace_xhci_dbc_handle_transfer(ring, &req->trb->generic);
+-
+ 	ring->num_trbs_free++;
+ 	req->actual = req->length - remain_length;
+ 	xhci_dbc_giveback(req, status);
+@@ -762,7 +821,6 @@ static void inc_evt_deq(struct xhci_ring *ring)
+ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
  {
- 	if (bo->destroy == &amdgpu_bo_destroy ||
--	    bo->destroy == &amdgpu_bo_user_destroy ||
--	    bo->destroy == &amdgpu_bo_vm_destroy)
-+	    bo->destroy == &amdgpu_bo_user_destroy)
- 		return true;
+ 	dma_addr_t		deq;
+-	struct dbc_ep		*dep;
+ 	union xhci_trb		*evt;
+ 	u32			ctrl, portsc;
+ 	bool			update_erdp = false;
+@@ -814,43 +872,17 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
+ 			return EVT_DISC;
+ 		}
  
- 	return false;
-@@ -722,52 +703,6 @@ int amdgpu_bo_create_vm(struct amdgpu_device *adev,
- 	return r;
- }
+-		/* Handle endpoint stall event: */
++		/* Check and handle changes in endpoint halt status */
+ 		ctrl = readl(&dbc->regs->control);
+-		if ((ctrl & DBC_CTRL_HALT_IN_TR) ||
+-		    (ctrl & DBC_CTRL_HALT_OUT_TR)) {
+-			dev_info(dbc->dev, "DbC Endpoint stall\n");
+-			dbc->state = DS_STALLED;
+-
+-			if (ctrl & DBC_CTRL_HALT_IN_TR) {
+-				dep = get_in_ep(dbc);
+-				xhci_dbc_flush_endpoint_requests(dep);
+-			}
+-
+-			if (ctrl & DBC_CTRL_HALT_OUT_TR) {
+-				dep = get_out_ep(dbc);
+-				xhci_dbc_flush_endpoint_requests(dep);
+-			}
+-
+-			return EVT_DONE;
+-		}
++		handle_ep_halt_changes(dbc, get_in_ep(dbc), ctrl & DBC_CTRL_HALT_IN_TR);
++		handle_ep_halt_changes(dbc, get_out_ep(dbc), ctrl & DBC_CTRL_HALT_OUT_TR);
  
--/**
-- * amdgpu_bo_add_to_shadow_list - add a BO to the shadow list
-- *
-- * @vmbo: BO that will be inserted into the shadow list
-- *
-- * Insert a BO to the shadow list.
-- */
--void amdgpu_bo_add_to_shadow_list(struct amdgpu_bo_vm *vmbo)
--{
--	struct amdgpu_device *adev = amdgpu_ttm_adev(vmbo->bo.tbo.bdev);
+ 		/* Clear DbC run change bit: */
+ 		if (ctrl & DBC_CTRL_DBC_RUN_CHANGE) {
+ 			writel(ctrl, &dbc->regs->control);
+ 			ctrl = readl(&dbc->regs->control);
+ 		}
 -
--	mutex_lock(&adev->shadow_list_lock);
--	list_add_tail(&vmbo->shadow_list, &adev->shadow_list);
--	vmbo->shadow->parent = amdgpu_bo_ref(&vmbo->bo);
--	vmbo->shadow->tbo.destroy = &amdgpu_bo_vm_destroy;
--	mutex_unlock(&adev->shadow_list_lock);
--}
+ 		break;
+-	case DS_STALLED:
+-		ctrl = readl(&dbc->regs->control);
+-		if (!(ctrl & DBC_CTRL_HALT_IN_TR) &&
+-		    !(ctrl & DBC_CTRL_HALT_OUT_TR) &&
+-		    (ctrl & DBC_CTRL_DBC_RUN)) {
+-			dbc->state = DS_CONFIGURED;
+-			break;
+-		}
 -
--/**
-- * amdgpu_bo_restore_shadow - restore an &amdgpu_bo shadow
-- *
-- * @shadow: &amdgpu_bo shadow to be restored
-- * @fence: dma_fence associated with the operation
-- *
-- * Copies a buffer object's shadow content back to the object.
-- * This is used for recovering a buffer from its shadow in case of a gpu
-- * reset where vram context may be lost.
-- *
-- * Returns:
-- * 0 for success or a negative error code on failure.
-- */
--int amdgpu_bo_restore_shadow(struct amdgpu_bo *shadow, struct dma_fence **fence)
--
--{
--	struct amdgpu_device *adev = amdgpu_ttm_adev(shadow->tbo.bdev);
--	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
--	uint64_t shadow_addr, parent_addr;
--
--	shadow_addr = amdgpu_bo_gpu_offset(shadow);
--	parent_addr = amdgpu_bo_gpu_offset(shadow->parent);
--
--	return amdgpu_copy_buffer(ring, shadow_addr, parent_addr,
--				  amdgpu_bo_size(shadow), NULL, fence,
--				  true, false, 0);
--}
--
- /**
-  * amdgpu_bo_kmap - map an &amdgpu_bo buffer object
-  * @bo: &amdgpu_bo buffer object to be mapped
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-index bc42ccbde659a..a4fa1f296daec 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-@@ -130,8 +130,6 @@ struct amdgpu_bo_user {
- 
- struct amdgpu_bo_vm {
- 	struct amdgpu_bo		bo;
--	struct amdgpu_bo		*shadow;
--	struct list_head		shadow_list;
- 	struct amdgpu_vm_bo_base        entries[];
+-		return EVT_DONE;
+ 	default:
+ 		dev_err(dbc->dev, "Unknown DbC state %d\n", dbc->state);
+ 		break;
+@@ -939,7 +971,6 @@ static const char * const dbc_state_strings[DS_MAX] = {
+ 	[DS_ENABLED] = "enabled",
+ 	[DS_CONNECTED] = "connected",
+ 	[DS_CONFIGURED] = "configured",
+-	[DS_STALLED] = "stalled",
  };
  
-@@ -269,22 +267,6 @@ static inline bool amdgpu_bo_encrypted(struct amdgpu_bo *bo)
- 	return bo->flags & AMDGPU_GEM_CREATE_ENCRYPTED;
- }
+ static ssize_t dbc_show(struct device *dev,
+diff --git a/drivers/usb/host/xhci-dbgcap.h b/drivers/usb/host/xhci-dbgcap.h
+index 0118c6288a3cc..97c5dc290138b 100644
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -81,7 +81,6 @@ enum dbc_state {
+ 	DS_ENABLED,
+ 	DS_CONNECTED,
+ 	DS_CONFIGURED,
+-	DS_STALLED,
+ 	DS_MAX
+ };
  
--/**
-- * amdgpu_bo_shadowed - check if the BO is shadowed
-- *
-- * @bo: BO to be tested.
-- *
-- * Returns:
-- * NULL if not shadowed or else return a BO pointer.
-- */
--static inline struct amdgpu_bo *amdgpu_bo_shadowed(struct amdgpu_bo *bo)
--{
--	if (bo->tbo.type == ttm_bo_type_kernel)
--		return to_amdgpu_bo_vm(bo)->shadow;
--
--	return NULL;
--}
--
- bool amdgpu_bo_is_amdgpu_bo(struct ttm_buffer_object *bo);
- void amdgpu_bo_placement_from_domain(struct amdgpu_bo *abo, u32 domain);
+@@ -90,6 +89,7 @@ struct dbc_ep {
+ 	struct list_head		list_pending;
+ 	struct xhci_ring		*ring;
+ 	unsigned int			direction:1;
++	unsigned int			halted:1;
+ };
  
-@@ -343,9 +325,6 @@ u64 amdgpu_bo_gpu_offset(struct amdgpu_bo *bo);
- u64 amdgpu_bo_gpu_offset_no_check(struct amdgpu_bo *bo);
- void amdgpu_bo_get_memory(struct amdgpu_bo *bo,
- 			  struct amdgpu_mem_stats *stats);
--void amdgpu_bo_add_to_shadow_list(struct amdgpu_bo_vm *vmbo);
--int amdgpu_bo_restore_shadow(struct amdgpu_bo *shadow,
--			     struct dma_fence **fence);
- uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
- 					    uint32_t domain);
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 119eebeb16b7f..03c32f5cbd319 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -465,7 +465,6 @@ int amdgpu_vm_validate(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- {
- 	uint64_t new_vm_generation = amdgpu_vm_generation(adev, vm);
- 	struct amdgpu_vm_bo_base *bo_base;
--	struct amdgpu_bo *shadow;
- 	struct amdgpu_bo *bo;
- 	int r;
- 
-@@ -486,16 +485,10 @@ int amdgpu_vm_validate(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 		spin_unlock(&vm->status_lock);
- 
- 		bo = bo_base->bo;
--		shadow = amdgpu_bo_shadowed(bo);
- 
- 		r = validate(param, bo);
- 		if (r)
- 			return r;
--		if (shadow) {
--			r = validate(param, shadow);
--			if (r)
--				return r;
--		}
- 
- 		if (bo->tbo.type != ttm_bo_type_kernel) {
- 			amdgpu_vm_bo_moved(bo_base);
-@@ -2125,10 +2118,6 @@ void amdgpu_vm_bo_invalidate(struct amdgpu_device *adev,
- {
- 	struct amdgpu_vm_bo_base *bo_base;
- 
--	/* shadow bo doesn't have bo base, its validation needs its parent */
--	if (bo->parent && (amdgpu_bo_shadowed(bo->parent) == bo))
--		bo = bo->parent;
--
- 	for (bo_base = bo->vm_bo; bo_base; bo_base = bo_base->next) {
- 		struct amdgpu_vm *vm = bo_base->vm;
- 
-@@ -2456,7 +2445,6 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	root_bo = amdgpu_bo_ref(&root->bo);
- 	r = amdgpu_bo_reserve(root_bo, true);
- 	if (r) {
--		amdgpu_bo_unref(&root->shadow);
- 		amdgpu_bo_unref(&root_bo);
- 		goto error_free_delayed;
- 	}
-@@ -2548,11 +2536,6 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
- 	vm->last_update = dma_fence_get_stub();
- 	vm->is_compute_context = true;
- 
--	/* Free the shadow bo for compute VM */
--	amdgpu_bo_unref(&to_amdgpu_bo_vm(vm->root.bo)->shadow);
--
--	goto unreserve_bo;
--
- unreserve_bo:
- 	amdgpu_bo_unreserve(vm->root.bo);
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-index e39d6e7643bfb..c8e0b8cfd3363 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-@@ -383,14 +383,6 @@ int amdgpu_vm_pt_clear(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	if (r)
- 		return r;
- 
--	if (vmbo->shadow) {
--		struct amdgpu_bo *shadow = vmbo->shadow;
--
--		r = ttm_bo_validate(&shadow->tbo, &shadow->placement, &ctx);
--		if (r)
--			return r;
--	}
--
- 	if (!drm_dev_enter(adev_to_drm(adev), &idx))
- 		return -ENODEV;
- 
-@@ -448,10 +440,7 @@ int amdgpu_vm_pt_create(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 			int32_t xcp_id)
- {
- 	struct amdgpu_bo_param bp;
--	struct amdgpu_bo *bo;
--	struct dma_resv *resv;
- 	unsigned int num_entries;
--	int r;
- 
- 	memset(&bp, 0, sizeof(bp));
- 
-@@ -484,42 +473,7 @@ int amdgpu_vm_pt_create(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	if (vm->root.bo)
- 		bp.resv = vm->root.bo->tbo.base.resv;
- 
--	r = amdgpu_bo_create_vm(adev, &bp, vmbo);
--	if (r)
--		return r;
--
--	bo = &(*vmbo)->bo;
--	if (vm->is_compute_context || (adev->flags & AMD_IS_APU)) {
--		(*vmbo)->shadow = NULL;
--		return 0;
--	}
--
--	if (!bp.resv)
--		WARN_ON(dma_resv_lock(bo->tbo.base.resv,
--				      NULL));
--	resv = bp.resv;
--	memset(&bp, 0, sizeof(bp));
--	bp.size = amdgpu_vm_pt_size(adev, level);
--	bp.domain = AMDGPU_GEM_DOMAIN_GTT;
--	bp.flags = AMDGPU_GEM_CREATE_CPU_GTT_USWC;
--	bp.type = ttm_bo_type_kernel;
--	bp.resv = bo->tbo.base.resv;
--	bp.bo_ptr_size = sizeof(struct amdgpu_bo);
--	bp.xcp_id_plus1 = xcp_id + 1;
--
--	r = amdgpu_bo_create(adev, &bp, &(*vmbo)->shadow);
--
--	if (!resv)
--		dma_resv_unlock(bo->tbo.base.resv);
--
--	if (r) {
--		amdgpu_bo_unref(&bo);
--		return r;
--	}
--
--	amdgpu_bo_add_to_shadow_list(*vmbo);
--
--	return 0;
-+	return amdgpu_bo_create_vm(adev, &bp, vmbo);
- }
- 
- /**
-@@ -569,7 +523,6 @@ static int amdgpu_vm_pt_alloc(struct amdgpu_device *adev,
- 	return 0;
- 
- error_free_pt:
--	amdgpu_bo_unref(&pt->shadow);
- 	amdgpu_bo_unref(&pt_bo);
- 	return r;
- }
-@@ -581,17 +534,10 @@ static int amdgpu_vm_pt_alloc(struct amdgpu_device *adev,
-  */
- static void amdgpu_vm_pt_free(struct amdgpu_vm_bo_base *entry)
- {
--	struct amdgpu_bo *shadow;
--
- 	if (!entry->bo)
- 		return;
- 
- 	entry->bo->vm_bo = NULL;
--	shadow = amdgpu_bo_shadowed(entry->bo);
--	if (shadow) {
--		ttm_bo_set_bulk_move(&shadow->tbo, NULL);
--		amdgpu_bo_unref(&shadow);
--	}
- 	ttm_bo_set_bulk_move(&entry->bo->tbo, NULL);
- 
- 	spin_lock(&entry->vm->status_lock);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-index 9b748d7058b5c..390432a22ddd5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-@@ -35,16 +35,7 @@
-  */
- static int amdgpu_vm_sdma_map_table(struct amdgpu_bo_vm *table)
- {
--	int r;
--
--	r = amdgpu_ttm_alloc_gart(&table->bo.tbo);
--	if (r)
--		return r;
--
--	if (table->shadow)
--		r = amdgpu_ttm_alloc_gart(&table->shadow->tbo);
--
--	return r;
-+	return amdgpu_ttm_alloc_gart(&table->bo.tbo);
- }
- 
- /* Allocate a new job for @count PTE updates */
-@@ -273,17 +264,13 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
- 
- 		if (!p->pages_addr) {
- 			/* set page commands needed */
--			if (vmbo->shadow)
--				amdgpu_vm_sdma_set_ptes(p, vmbo->shadow, pe, addr,
--							count, incr, flags);
- 			amdgpu_vm_sdma_set_ptes(p, bo, pe, addr, count,
- 						incr, flags);
- 			return 0;
- 		}
- 
- 		/* copy commands needed */
--		ndw -= p->adev->vm_manager.vm_pte_funcs->copy_pte_num_dw *
--			(vmbo->shadow ? 2 : 1);
-+		ndw -= p->adev->vm_manager.vm_pte_funcs->copy_pte_num_dw;
- 
- 		/* for padding */
- 		ndw -= 7;
-@@ -298,8 +285,6 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
- 			pte[i] |= flags;
- 		}
- 
--		if (vmbo->shadow)
--			amdgpu_vm_sdma_copy_ptes(p, vmbo->shadow, pe, nptes);
- 		amdgpu_vm_sdma_copy_ptes(p, bo, pe, nptes);
- 
- 		pe += nptes * 8;
+ #define DBC_QUEUE_SIZE			16
 -- 
 2.43.0
 
