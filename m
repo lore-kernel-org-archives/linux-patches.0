@@ -1,49 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3691AB6C0;
-	Mon, 14 Oct 2024 14:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341F21AB6E6;
+	Mon, 14 Oct 2024 14:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728915835; cv=none; b=VB3tyvKJejbp8zegPrr5ViB8Zo4vrwnjZkVmV5OtBQrKZnoCskCmhsgdjdFK399yeCg9l6q/YPi/dpbUO38mkZKoh+eoNUMKw90kdseYKL4KGW6gFFM9AEcqJ79SkquJODeN0Jnwlhs+OHSrinAtBxMkX+K1sChWcz49/n95jzg=
+	t=1728915838; cv=none; b=F4ZXF97j/1VZJwYGasEKsHiVuAv7GADIVeHA3aT7WsDQ//nf9niuaAWt5hulGY4pcCKT+sAYztt3T/xyPZqwG0JADmOdLftsDE+BjMg6V5tgxIC6D46JXa7ZgDti8RKp6t5awoj6zMera8A4xRHQQ//xirf4WKDBpC6exwyZ+2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728915835; c=relaxed/simple;
-	bh=wkyH7nnthUPvw3ag/1wvhJ5ih6rh8uULdqYQYd9uw8c=;
+	s=arc-20240116; t=1728915838; c=relaxed/simple;
+	bh=4J2YvKzHV5hvxrSzqsLNTaMuEKbOQNNZO+hKmAR7ZKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TykthNJ+dSnD8jXQXXlxybDE7HtxcAbQr937j+vno/vxRDJDv9C93MMVnoHopO3DdcePNvEguOhdMUDHQMqYlwAm+BpwPVThhOKU6D7HFTzqhu08JSVoIXlATu+64FZTBe8LBqAr6vRURzbjZgiJaOoVtCI+h/1vGLWjOckvens=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/8QIfaS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aylcnuw7yOxiE0xLsC+HulJS3wwjioguLMvduK0SabqT/uSmSc/xYLGvahhLbB7uudyvuVB8UvwoMPIlh5WS5xD1y0c/4jRE+vzWsgksMRdwJYdTii5Yz0wBEIBH29xTm72xQEs+RmXb7W8Ofjt8bjY7XXBPKhxu3FlbiovR2+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqZC+OMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/8QIfaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A094C4CEC7;
-	Mon, 14 Oct 2024 14:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqZC+OMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99194C4CECF;
+	Mon, 14 Oct 2024 14:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728915834;
-	bh=wkyH7nnthUPvw3ag/1wvhJ5ih6rh8uULdqYQYd9uw8c=;
+	s=korg; t=1728915838;
+	bh=4J2YvKzHV5hvxrSzqsLNTaMuEKbOQNNZO+hKmAR7ZKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/8QIfaSf30pXWK+2+IGSuFiSNrlqhPQQn1gtxrrIeLBXwYbheNHRE4K+7OJwK6nW
-	 +DcECmYPOCc6vYpVguYvrGCRTdaaokjJzwzi6erHgq9+aBRLaUXGbycuVyxZsj7T73
-	 +DJqU81TAh/icJFx/eN+V81kql+aASmCPyyY7xVA=
+	b=fqZC+OMV4DLMxjhqXK3I37I91naOtFKKXhuvQxcVXhYMOoDhxVeZW9I9evIwXZlVn
+	 6wvVSydupAvx9+LGtpIp1FR9zPArtzQU/7CCVFu/J8lZgEDHSCm2HwYZyhSg20MKug
+	 /bY7MOIrIySHcYwbZICZzCtZ8QCaPytK0gTxRoIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 013/214] perf build: Fix build feature-dwarf_getlocations fail for old libdw
-Date: Mon, 14 Oct 2024 16:17:56 +0200
-Message-ID: <20241014141045.512162993@linuxfoundation.org>
+Subject: [PATCH 6.11 014/214] zram: free secondary algorithms names
+Date: Mon, 14 Oct 2024 16:17:57 +0200
+Message-ID: <20241014141045.551022802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -62,102 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Jihong <yangjihong@bytedance.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit a530337ba9ef601c93ec378fd941be43f587d563 ]
+[ Upstream commit 684826f8271ad97580b138b9ffd462005e470b99 ]
 
-For libdw versions below 0.177, need to link libdl.a in addition to
-libbebl.a during static compilation, otherwise
-feature-dwarf_getlocations compilation will fail.
+We need to kfree() secondary algorithms names when reset zram device that
+had multi-streams, otherwise we leak memory.
 
-Before:
-
-  $ make LDFLAGS=-static
-    BUILD:   Doing 'make -j20' parallel build
-  <SNIP>
-  Makefile.config:483: Old libdw.h, finding variables at given 'perf probe' point will not work, install elfutils-devel/libdw-dev >= 0.157
-  <SNIP>
-
-  $ cat ../build/feature/test-dwarf_getlocations.make.output
-  /usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/libebl.a(eblclosebackend.o): in function `ebl_closebackend':
-  (.text+0x20): undefined reference to `dlclose'
-  collect2: error: ld returned 1 exit status
-
-After:
-
-  $ make LDFLAGS=-static
-  <SNIP>
-    Auto-detecting system features:
-  ...                                   dwarf: [ on  ]
-  <SNIP>
-
-    $ ./perf probe
-   Usage: perf probe [<options>] 'PROBEDEF' ['PROBEDEF' ...]
-      or: perf probe [<options>] --add 'PROBEDEF' [--add 'PROBEDEF' ...]
-      or: perf probe [<options>] --del '[GROUP:]EVENT' ...
-      or: perf probe --list [GROUP:]EVENT ...
-  <SNIP>
-
-Fixes: 536661da6ea18fe6 ("perf: build: Only link libebl.a for old libdw")
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@arm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240919013513.118527-3-yangjihong@bytedance.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[senozhatsky@chromium.org: kfree(NULL) is legal]
+  Link: https://lkml.kernel.org/r/20240917013021.868769-1-senozhatsky@chromium.org
+Link: https://lkml.kernel.org/r/20240911025600.3681789-1-senozhatsky@chromium.org
+Fixes: 001d92735701 ("zram: add recompression algorithm sysfs knob")
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile | 3 +++
- tools/perf/Makefile.config   | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index a0167244b2f7f..ead476b373f69 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -181,6 +181,9 @@ ifeq ($(findstring -static,${LDFLAGS}),-static)
-   ifeq ($(shell test $(LIBDW_VERSION_2) -lt 177; echo $$?),0)
-     DWARFLIBS += -lebl
-   endif
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index efcb8d9d274c3..1a875ac43d566 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1989,6 +1989,11 @@ static void zram_destroy_comps(struct zram *zram)
+ 		zcomp_destroy(comp);
+ 		zram->num_active_comps--;
+ 	}
 +
-+  # Must put -ldl after -lebl for dependency
-+  DWARFLIBS += -ldl
- endif
++	for (prio = ZRAM_SECONDARY_COMP; prio < ZRAM_MAX_COMPS; prio++) {
++		kfree(zram->comp_algs[prio]);
++		zram->comp_algs[prio] = NULL;
++	}
+ }
  
- $(OUTPUT)test-dwarf.bin:
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index b452794c763ad..9fccdff682af7 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -152,7 +152,7 @@ ifdef LIBDW_DIR
- endif
- DWARFLIBS := -ldw
- ifeq ($(findstring -static,${LDFLAGS}),-static)
--  DWARFLIBS += -lelf -ldl -lz -llzma -lbz2 -lzstd
-+  DWARFLIBS += -lelf -lz -llzma -lbz2 -lzstd
- 
-   LIBDW_VERSION := $(shell $(PKG_CONFIG) --modversion libdw).0.0
-   LIBDW_VERSION_1 := $(word 1, $(subst ., ,$(LIBDW_VERSION)))
-@@ -163,6 +163,9 @@ ifeq ($(findstring -static,${LDFLAGS}),-static)
-   ifeq ($(shell test $(LIBDW_VERSION_2) -lt 177; echo $$?),0)
-     DWARFLIBS += -lebl
-   endif
-+
-+  # Must put -ldl after -lebl for dependency
-+  DWARFLIBS += -ldl
- endif
- FEATURE_CHECK_CFLAGS-libdw-dwarf-unwind := $(LIBDW_CFLAGS)
- FEATURE_CHECK_LDFLAGS-libdw-dwarf-unwind := $(LIBDW_LDFLAGS) $(DWARFLIBS)
+ static void zram_reset_device(struct zram *zram)
 -- 
 2.43.0
 
