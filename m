@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BB43B298;
-	Mon, 14 Oct 2024 15:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39D014AA9;
+	Mon, 14 Oct 2024 15:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919544; cv=none; b=tBU/VlcA4NHF4gN27kXo5FRJiwpGX+fEPBU7emNgBnIHq11UCl3DfJS7+2sfi48PAW12pIWYBg70F/XlTYSCQD98eMod8kixD501ZZ81EhmHTaYkZd2dc9TCOXEU/BG8DdbFrpJCjKDXh572wjSyM9PUImM+bAL0/dDKIt1A/3g=
+	t=1728919548; cv=none; b=d9lMfFhVJQ2miXmg+fnN+F1uJ6fiUSeH5gkwVlDYyqInILT4lkYTFKVJ+CswYcocKZwQfsTaY3+OqBSuoOZ6Mr5yUQdoq+a4LYKWGi6KrOk4X27MYxGPExkCIBR7MbTeUJ0FAv8RGF0cprSVvX1hAIqmHORUg81g26oD16sEWtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919544; c=relaxed/simple;
-	bh=p75u0bzuxcyuJgdQM4uq6QWhi+3U3tuyT25NJnzcPQE=;
+	s=arc-20240116; t=1728919548; c=relaxed/simple;
+	bh=J1lZUnJLirdc0alkth/sa1qaqHgtl8x8hchWh5IbPyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5tpdvHl9lG2uOXHNMzeEKyC8FWFuxbWdiLLwwaZPeRmHdMqe7+IHwGdaC4zeZ0l2acr7LkvcbrFB5EiBjTB9RVUuEGRa88QWg1MoIVRDIj5sQkhEfxQ3NqImAb6nUAsZSF+nTzM3ouL9WGO9heosT0V9Z2iGd9OJ7cNzneGEvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrWNI8xc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WTlpNb2EDq5l1HaT1TZjYH6w4PgS15icp2AomoiFGClf5OtTpI/tGr5Oh1Q3oMLosv5ZfdfswwpJFufx+yCNOD34epHZ3gCAxhI80MTaNXlGdzNhJBOxzXK8iOwnN96ij9/0a5nQ9C3zNokBorSLzMNtlBoJuU/DA330cshMs7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2bnDZjz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrWNI8xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BD0C4CEC3;
-	Mon, 14 Oct 2024 15:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2bnDZjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03747C4CECF;
+	Mon, 14 Oct 2024 15:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919544;
-	bh=p75u0bzuxcyuJgdQM4uq6QWhi+3U3tuyT25NJnzcPQE=;
+	s=korg; t=1728919547;
+	bh=J1lZUnJLirdc0alkth/sa1qaqHgtl8x8hchWh5IbPyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrWNI8xc8vPt6/qnqpl/8z2dCjwN+GVHwFSnyCv10C+otmxIUJIWbgdpU8YCjodTC
-	 HK//2jhbonNs0+sjukIAB8It8eWLNO5CpzbXE9TdIWPXjAidAFSlHI5geN1IO4SJmc
-	 zmud+3ftsLZlL7/dGz+K3ELxKH7MgPzElAcVZJcQ=
+	b=O2bnDZjzcba1KjehHFIvYmUBXQG08JxX8Syr6lBdGxA4nBLqL7kMYLNtfyf0dAoBB
+	 gFdzctde9wcIWemuY1XOiVfu6QWkDYqaITX6OeS6iIRbN9GYzVM9ryeu1fvUzLKzOX
+	 W9B1bnm5JNBLn+4SojXwAOYDKHZxpm5dYdXHGE10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Millwood <thebenmachine@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 605/798] btrfs: send: fix invalid clone operation for file that got its size decreased
-Date: Mon, 14 Oct 2024 16:19:19 +0200
-Message-ID: <20241014141241.779057768@linuxfoundation.org>
+	Alfred Agrell <blubban@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH 6.1 596/798] tomoyo: fallback to realpath if symlinks pathname does not exist
+Date: Mon, 14 Oct 2024 16:19:10 +0200
+Message-ID: <20241014141241.418334588@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,128 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit fa630df665aa9ddce3a96ce7b54e10a38e4d2a2b upstream.
+commit ada1986d07976d60bed5017aa38b7f7cf27883f7 upstream.
 
-During an incremental send we may end up sending an invalid clone
-operation, for the last extent of a file which ends at an unaligned offset
-that matches the final i_size of the file in the send snapshot, in case
-the file had its initial size (the size in the parent snapshot) decreased
-in the send snapshot. In this case the destination will fail to apply the
-clone operation because its end offset is not sector size aligned and it
-ends before the current size of the file.
+Alfred Agrell found that TOMOYO cannot handle execveat(AT_EMPTY_PATH)
+inside chroot environment where /dev and /proc are not mounted, for
+commit 51f39a1f0cea ("syscalls: implement execveat() system call") missed
+that TOMOYO tries to canonicalize argv[0] when the filename fed to the
+executed program as argv[0] is supplied using potentially nonexistent
+pathname.
 
-Sending the truncate operation always happens when we finish processing an
-inode, after we process all its extents (and xattrs, names, etc). So fix
-this by ensuring the file has a valid size before we send a clone
-operation for an unaligned extent that ends at the final i_size of the
-file. The size we truncate to matches the start offset of the clone range
-but it could be any value between that start offset and the final size of
-the file since the clone operation will expand the i_size if the current
-size is smaller than the end offset. The start offset of the range was
-chosen because it's always sector size aligned and avoids a truncation
-into the middle of a page, which results in dirtying the page due to
-filling part of it with zeroes and then making the clone operation at the
-receiver trigger IO.
+Since "/dev/fd/<fd>" already lost symlink information used for obtaining
+that <fd>, it is too late to reconstruct symlink's pathname. Although
+<filename> part of "/dev/fd/<fd>/<filename>" might not be canonicalized,
+TOMOYO cannot use tomoyo_realpath_nofollow() when /dev or /proc is not
+mounted. Therefore, fallback to tomoyo_realpath_from_path() when
+tomoyo_realpath_nofollow() failed.
 
-The following test reproduces the issue:
-
-  $ cat test.sh
-  #!/bin/bash
-
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
-
-  mkfs.btrfs -f $DEV
-  mount $DEV $MNT
-
-  # Create a file with a size of 256K + 5 bytes, having two extents, one
-  # with a size of 128K and another one with a size of 128K + 5 bytes.
-  last_ext_size=$((128 * 1024 + 5))
-  xfs_io -f -d -c "pwrite -S 0xab -b 128K 0 128K" \
-         -c "pwrite -S 0xcd -b $last_ext_size 128K $last_ext_size" \
-         $MNT/foo
-
-  # Another file which we will later clone foo into, but initially with
-  # a larger size than foo.
-  xfs_io -f -c "pwrite -S 0xef 0 1M" $MNT/bar
-
-  btrfs subvolume snapshot -r $MNT/ $MNT/snap1
-
-  # Now resize bar and clone foo into it.
-  xfs_io -c "truncate 0" \
-         -c "reflink $MNT/foo" $MNT/bar
-
-  btrfs subvolume snapshot -r $MNT/ $MNT/snap2
-
-  rm -f /tmp/send-full /tmp/send-inc
-  btrfs send -f /tmp/send-full $MNT/snap1
-  btrfs send -p $MNT/snap1 -f /tmp/send-inc $MNT/snap2
-
-  umount $MNT
-  mkfs.btrfs -f $DEV
-  mount $DEV $MNT
-
-  btrfs receive -f /tmp/send-full $MNT
-  btrfs receive -f /tmp/send-inc $MNT
-
-  umount $MNT
-
-Running it before this patch:
-
-  $ ./test.sh
-  (...)
-  At subvol snap1
-  At snapshot snap2
-  ERROR: failed to clone extents to bar: Invalid argument
-
-A test case for fstests will be sent soon.
-
-Reported-by: Ben Millwood <thebenmachine@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAJhrHS2z+WViO2h=ojYvBPDLsATwLbg+7JaNCyYomv0fUxEpQQ@mail.gmail.com/
-Fixes: 46a6e10a1ab1 ("btrfs: send: allow cloning non-aligned extent if it ends at i_size")
-CC: stable@vger.kernel.org # 6.11
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Alfred Agrell <blubban@gmail.com>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1082001
+Fixes: 51f39a1f0cea ("syscalls: implement execveat() system call")
+Cc: stable@vger.kernel.org # v3.19+
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ security/tomoyo/domain.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -5941,8 +5941,29 @@ static int send_write_or_clone(struct se
- 	if (ret < 0)
- 		return ret;
- 
--	if (clone_root->offset + num_bytes == info.size)
-+	if (clone_root->offset + num_bytes == info.size) {
-+		/*
-+		 * The final size of our file matches the end offset, but it may
-+		 * be that its current size is larger, so we have to truncate it
-+		 * to any value between the start offset of the range and the
-+		 * final i_size, otherwise the clone operation is invalid
-+		 * because it's unaligned and it ends before the current EOF.
-+		 * We do this truncate to the final i_size when we finish
-+		 * processing the inode, but it's too late by then. And here we
-+		 * truncate to the start offset of the range because it's always
-+		 * sector size aligned while if it were the final i_size it
-+		 * would result in dirtying part of a page, filling part of a
-+		 * page with zeroes and then having the clone operation at the
-+		 * receiver trigger IO and wait for it due to the dirty page.
-+		 */
-+		if (sctx->parent_root != NULL) {
-+			ret = send_truncate(sctx, sctx->cur_ino,
-+					    sctx->cur_inode_gen, offset);
-+			if (ret < 0)
-+				return ret;
-+		}
- 		goto clone_data;
+--- a/security/tomoyo/domain.c
++++ b/security/tomoyo/domain.c
+@@ -723,10 +723,13 @@ int tomoyo_find_next_domain(struct linux
+ 	ee->r.obj = &ee->obj;
+ 	ee->obj.path1 = bprm->file->f_path;
+ 	/* Get symlink's pathname of program. */
+-	retval = -ENOENT;
+ 	exename.name = tomoyo_realpath_nofollow(original_name);
+-	if (!exename.name)
+-		goto out;
++	if (!exename.name) {
++		/* Fallback to realpath if symlink's pathname does not exist. */
++		exename.name = tomoyo_realpath_from_path(&bprm->file->f_path);
++		if (!exename.name)
++			goto out;
 +	}
- 
- write_data:
- 	ret = send_extent_data(sctx, path, offset, num_bytes);
+ 	tomoyo_fill_path_info(&exename);
+ retry:
+ 	/* Check 'aggregator' directive. */
 
 
