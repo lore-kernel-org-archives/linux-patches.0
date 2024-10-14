@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEFB1C231D;
-	Mon, 14 Oct 2024 15:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F5C1C231D;
+	Mon, 14 Oct 2024 15:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918929; cv=none; b=s3GuTGIrbJbjzSKhjcJBdtDkSYaDHA5p0uqItG3yi967lJf2ZiIsKQ7LF8oqGboatupT/AtRs0vMQIxcL/Xbn6fvqVn+wpCnG/0dUZ2HXOYypHiFbbRCqL1jyD6BIFNIPNHErEunm1bB2JQX+8dnk601YkuFP8fMDE3UA0gdA0E=
+	t=1728918933; cv=none; b=aM5c/OGPQibckJWikFnyHia+OiQYivpcFvw8ucAeUxgkorHIwuQYZGT+CrJ5RGTL1umstg3G6IRAnDdy+vLpLjUMS3qF659QDEHxA0xtHlVWMLmnVKJlrHnJ9rVpV1v+TiIRD+yv5pCrIg9Yht0Gy46WlECwMHw+039LN/pnW5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918929; c=relaxed/simple;
-	bh=IBCLFLFQ0jYtEQCXWOHFCzp0lMUcTDMEWuucEODjO30=;
+	s=arc-20240116; t=1728918933; c=relaxed/simple;
+	bh=SmwXG2Yz0C08tkGTEKJ19By3GpzuXwk1SbKp8CAVwmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDOW0yTRULv9RBgZTJ5Oo9XCoIEq1lAXBdsQSxZ+NtoCW1EoPF9mVsRYjpzQGSBcrOcllcyex1nZpYWwVT8olXr4CSI7nHbLbd7WdgcvZ8A4vXpLNOpE+dI2jObEQ7+ulbOL9dzutUDB11p16FEA5MHOutJOyNBZNRiSJbJsM/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gviklQWr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lX5ron9yTlsSuvExEzz76xUwF48WzwC9oDGnr3pToKwpJsAwfUYrDoyKuwrYLaanHnWVvkDcx6E4C/yezqOdgG2elJVwTJDm9Sp5pQ6sRX9oGdcjaYo1QXaWZmw6bIhU3mli4oV5cte2ZtdENc6gFufexz1q7zNDic5kQiFABAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUEjSB/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gviklQWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4F1C4CEC3;
-	Mon, 14 Oct 2024 15:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUEjSB/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A908C4CEC3;
+	Mon, 14 Oct 2024 15:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918929;
-	bh=IBCLFLFQ0jYtEQCXWOHFCzp0lMUcTDMEWuucEODjO30=;
+	s=korg; t=1728918932;
+	bh=SmwXG2Yz0C08tkGTEKJ19By3GpzuXwk1SbKp8CAVwmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gviklQWrpKQQhf4kMJTOWlJow2AZX2QYm1dzITo3omvsas4BgyYeCTqgPkxE9pSCL
-	 mzMXXHTMvH85h8ZmmSySdtAvqBwBXE1kS3QpfpV5r4UBMMP43x+M3n9bhXxgjjOs6I
-	 BpLrc0B27fzA0xz7Mxvjv9e+kPtNDBam2AFm0KfQ=
+	b=XUEjSB/a0cAyL5F2AdcwoV8qH3JOiR10BZWdCgV5Ysq38RFYxB2WNamWx0oY/1u1+
+	 X+VDwCD7ULqSBju4N+oUdEyQp7WSThHQ47B3rd0aKODwu5fe08xs+q6DCN4TPOflrm
+	 /VEuwzkUFiKu2ZZE0mf/+9W0nVbjoJjD2gQXAzIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Konstantin Ovsepian <ovs@ovs.to>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 432/798] ACPI: video: Add force_vendor quirk for Panasonic Toughbook CF-18
-Date: Mon, 14 Oct 2024 16:16:26 +0200
-Message-ID: <20241014141234.932479429@linuxfoundation.org>
+Subject: [PATCH 6.1 433/798] blk_iocost: fix more out of bound shifts
+Date: Mon, 14 Oct 2024 16:16:27 +0200
+Message-ID: <20241014141234.971396251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,43 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Konstantin Ovsepian <ovs@ovs.to>
 
-[ Upstream commit eb7b0f12e13ba99e64e3a690c2166895ed63b437 ]
+[ Upstream commit 9bce8005ec0dcb23a58300e8522fe4a31da606fa ]
 
-The Panasonic Toughbook CF-18 advertises both native and vendor backlight
-control interfaces. But only the vendor one actually works.
+Recently running UBSAN caught few out of bound shifts in the
+ioc_forgive_debts() function:
 
-acpi_video_get_backlight_type() will pick the non working native backlight
-by default, add a quirk to select the working vendor backlight instead.
+UBSAN: shift-out-of-bounds in block/blk-iocost.c:2142:38
+shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
+long')
+...
+UBSAN: shift-out-of-bounds in block/blk-iocost.c:2144:30
+shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
+long')
+...
+Call Trace:
+<IRQ>
+dump_stack_lvl+0xca/0x130
+__ubsan_handle_shift_out_of_bounds+0x22c/0x280
+? __lock_acquire+0x6441/0x7c10
+ioc_timer_fn+0x6cec/0x7750
+? blk_iocost_init+0x720/0x720
+? call_timer_fn+0x5d/0x470
+call_timer_fn+0xfa/0x470
+? blk_iocost_init+0x720/0x720
+__run_timer_base+0x519/0x700
+...
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20240907124419.21195-1-hdegoede@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Actual impact of this issue was not identified but I propose to fix the
+undefined behaviour.
+The proposed fix to prevent those out of bound shifts consist of
+precalculating exponent before using it the shift operations by taking
+min value from the actual exponent and maximum possible number of bits.
+
+Reported-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20240822154137.2627818-1-ovs@ovs.to
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ block/blk-iocost.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 60b0128a10e86..f7a2ab62c6c20 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -258,6 +258,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_vendor,
-+	 /* Panasonic Toughbook CF-18 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Matsushita Electric Industrial"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "CF-18"),
-+		},
-+	},
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 64b594d660b79..772e909e9fbfd 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2057,7 +2057,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+ 			      struct ioc_now *now)
+ {
+ 	struct ioc_gq *iocg;
+-	u64 dur, usage_pct, nr_cycles;
++	u64 dur, usage_pct, nr_cycles, nr_cycles_shift;
  
- 	/*
- 	 * Toshiba models with Transflective display, these need to use
+ 	/* if no debtor, reset the cycle */
+ 	if (!nr_debtors) {
+@@ -2119,10 +2119,12 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+ 		old_debt = iocg->abs_vdebt;
+ 		old_delay = iocg->delay;
+ 
++		nr_cycles_shift = min_t(u64, nr_cycles, BITS_PER_LONG - 1);
+ 		if (iocg->abs_vdebt)
+-			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles ?: 1;
++			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles_shift ?: 1;
++
+ 		if (iocg->delay)
+-			iocg->delay = iocg->delay >> nr_cycles ?: 1;
++			iocg->delay = iocg->delay >> nr_cycles_shift ?: 1;
+ 
+ 		iocg_kick_waitq(iocg, true, now);
+ 
 -- 
 2.43.0
 
