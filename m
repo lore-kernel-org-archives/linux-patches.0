@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDD41B4F14;
-	Mon, 14 Oct 2024 14:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF8D1B4F1E;
+	Mon, 14 Oct 2024 14:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917330; cv=none; b=C19ifFNbmgmloMgHDxUByO+p+Upfn5jqpVxvdEEnL5DOWt4Z3jkM//7iNl1gRRB5s94ihaW6OyMuEXh79gPGKYf5dFkIoZDLhtuoABLwilYCN/cnp4nPe1o4Zeyyd7LDzPopHtMgBh4gOKVwXlZDtual9ZIt5TRrla5QayPiE/8=
+	t=1728917334; cv=none; b=C2WVKNJSuqbH3M/w+fM4AMFMO4ogRuUoY4A6OLmxpWQ6LCNm7AMC8697A8g1EzLA5gTskh0PWCrVlHzsyhM6NrB89WVACluw9JHKdAx+jzKP9QwDCz3n8Qabjh4bXurEvY0A96oLIm1rlUiqwBGdEsUqHYJI7TW/IQi6Uz3SKs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917330; c=relaxed/simple;
-	bh=e0//OWB6a2v2tmXi9Bi+4QKFR5uMUn426ITt38maviM=;
+	s=arc-20240116; t=1728917334; c=relaxed/simple;
+	bh=DjzQ0GOyOc1FgGmFykqDBuqxg6GVs1QaI1jMuskdsps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXXV9A/jNeOJnvF/U0zYiLmblt2u/UeXH20eJ9d4ZiLX+adpZAaXg3DSXarqcTSuY+4DcLOfy92VRazXLfOmBwSu1yxMUAa/5LMimg4bXFgtIhC+2qJIQXLxAQlNOr+CxL3Xr5JF8ch0wbnQkQYNtCtUmZ6Hoh3vJBHmWs192N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwt1JLas; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBjceV+D4Y2sXWR9Hcc8mi2XF7qj1y6asAaAdohM7ocq1OFe5RpfUCMsinyheihkSfIqHxP0iq167FMZs3BtjWFk54isXZ38bHY6O22Mvzi7GXq00wdJguQQMdLPorM1z3lPE+lg3j+8JkJKUFNKtKKQEUw9Cc6HvtseLToR+zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlp0bghV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwt1JLas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1592C4CEC3;
-	Mon, 14 Oct 2024 14:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlp0bghV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622ACC4CEC3;
+	Mon, 14 Oct 2024 14:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917330;
-	bh=e0//OWB6a2v2tmXi9Bi+4QKFR5uMUn426ITt38maviM=;
+	s=korg; t=1728917333;
+	bh=DjzQ0GOyOc1FgGmFykqDBuqxg6GVs1QaI1jMuskdsps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pwt1JLas8SHWH3eU33ZgND34MNoBKDD8Fa8vEQG4z+nxlG9/8MTw01L6kQ9DZeTWf
-	 GvotT3gf2SKX2VkjIv2KQSKXrQIT42SQcE1dd8xDYBRLvGooymPG9QGFdp1N3NYGBT
-	 4jCSh+1JKECFWHMuzocUKVLc5RwFspG2TzXKB3cQ=
+	b=nlp0bghV22gY6TlkkPB4j0hufzZWFJUrvXEXCnb14PwJY4Yvbl1CYe7f3AV3RRd2c
+	 ESZmKSyL3egdFgU4Gd+meB3jE1ZnT8J97hU+cvU9J+111jVafLLqH0cW5N1pjgGPeM
+	 oX7BlUH4ZsTHfhRyfKQuQzfAZ7vTZF5eJvsuiKIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Brandt <todd.e.brandt@intel.com>,
-	Dieter Mummenschanz <dmummenschanz@web.de>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Subject: [PATCH 6.6 212/213] e1000e: fix force smbus during suspend flow
-Date: Mon, 14 Oct 2024 16:21:58 +0200
-Message-ID: <20241014141051.233693731@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 213/213] scsi: Revert "scsi: sd: Do not repeat the starting disk message"
+Date: Mon, 14 Oct 2024 16:21:59 +0200
+Message-ID: <20241014141051.273396615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -55,135 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 76a0a3f9cc2fbd0e56671706bb74a9a988397898 upstream.
+commit da3e19ef0b3de0aa4b25595bdc214c02a04f19b8 upstream.
 
-Commit 861e8086029e ("e1000e: move force SMBUS from enable ulp function
-to avoid PHY loss issue") resolved a PHY access loss during suspend on
-Meteor Lake consumer platforms, but it affected corporate systems
-incorrectly.
+This reverts commit 7a6bbc2829d4ab592c7e440a6f6f5deb3cd95db4.
 
-A better fix, working for both consumer and corporate systems, was
-proposed in commit bfd546a552e1 ("e1000e: move force SMBUS near the end
-of enable_ulp function"). However, it introduced a regression on older
-devices, such as [8086:15B8], [8086:15F9], [8086:15BE].
+The offending commit tried to suppress a double "Starting disk" message for
+some drivers, but instead started spamming the log with bogus messages
+every five seconds:
 
-This patch aims to fix the secondary regression, by limiting the scope of
-the changes to Meteor Lake platforms only.
+	[  311.798956] sd 0:0:0:0: [sda] Starting disk
+	[  316.919103] sd 0:0:0:0: [sda] Starting disk
+	[  322.040775] sd 0:0:0:0: [sda] Starting disk
+	[  327.161140] sd 0:0:0:0: [sda] Starting disk
+	[  332.281352] sd 0:0:0:0: [sda] Starting disk
+	[  337.401878] sd 0:0:0:0: [sda] Starting disk
+	[  342.521527] sd 0:0:0:0: [sda] Starting disk
+	[  345.850401] sd 0:0:0:0: [sda] Starting disk
+	[  350.967132] sd 0:0:0:0: [sda] Starting disk
+	[  356.090454] sd 0:0:0:0: [sda] Starting disk
+	...
 
-Fixes: bfd546a552e1 ("e1000e: move force SMBUS near the end of enable_ulp function")
-Reported-by: Todd Brandt <todd.e.brandt@intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218940
-Reported-by: Dieter Mummenschanz <dmummenschanz@web.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218936
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240709203123.2103296-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+on machines that do not actually stop the disk on runtime suspend (e.g.
+the Qualcomm sc8280xp CRD with UFS).
+
+Let's just revert for now to address the regression.
+
+Fixes: 7a6bbc2829d4 ("scsi: sd: Do not repeat the starting disk message")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240716161101.30692-1-johan+linaro@kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c |   73 ++++++++++++++++++++--------
- 1 file changed, 53 insertions(+), 20 deletions(-)
+ drivers/scsi/sd.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1109,6 +1109,46 @@ static s32 e1000_platform_pm_pch_lpt(str
- }
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3955,6 +3955,8 @@ static int sd_resume(struct device *dev)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
  
- /**
-+ *  e1000e_force_smbus - Force interfaces to transition to SMBUS mode.
-+ *  @hw: pointer to the HW structure
-+ *
-+ *  Force the MAC and the PHY to SMBUS mode. Assumes semaphore already
-+ *  acquired.
-+ *
-+ * Return: 0 on success, negative errno on failure.
-+ **/
-+static s32 e1000e_force_smbus(struct e1000_hw *hw)
-+{
-+	u16 smb_ctrl = 0;
-+	u32 ctrl_ext;
-+	s32 ret_val;
++	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
 +
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
-+	/* Force SMBus mode in the PHY */
-+	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &smb_ctrl);
-+	if (ret_val) {
-+		e1000e_enable_phy_retry(hw);
-+		return ret_val;
-+	}
-+
-+	smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
-+	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, smb_ctrl);
-+
-+	e1000e_enable_phy_retry(hw);
-+
-+	/* Force SMBus mode in the MAC */
-+	ctrl_ext = er32(CTRL_EXT);
-+	ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
-+	ew32(CTRL_EXT, ctrl_ext);
-+
-+	return 0;
-+}
-+
-+/**
-  *  e1000_enable_ulp_lpt_lp - configure Ultra Low Power mode for LynxPoint-LP
-  *  @hw: pointer to the HW structure
-  *  @to_sx: boolean indicating a system power state transition to Sx
-@@ -1165,6 +1205,14 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
- 	if (ret_val)
- 		goto out;
+ 	if (opal_unlock_from_suspend(sdkp->opal_dev)) {
+ 		sd_printk(KERN_NOTICE, sdkp, "OPAL unlock failed\n");
+ 		return -EIO;
+@@ -3971,13 +3973,12 @@ static int sd_resume_common(struct devic
+ 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
+ 		return 0;
  
-+	if (hw->mac.type != e1000_pch_mtp) {
-+		ret_val = e1000e_force_smbus(hw);
-+		if (ret_val) {
-+			e_dbg("Failed to force SMBUS: %d\n", ret_val);
-+			goto release;
-+		}
-+	}
-+
- 	/* Si workaround for ULP entry flow on i127/rev6 h/w.  Enable
- 	 * LPLU and disable Gig speed when entering ULP
- 	 */
-@@ -1225,27 +1273,12 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
+-	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
+-
+ 	if (!sd_do_start_stop(sdkp->device, runtime)) {
+ 		sdkp->suspended = false;
+ 		return 0;
  	}
  
- release:
--	/* Switching PHY interface always returns MDI error
--	 * so disable retry mechanism to avoid wasting time
--	 */
--	e1000e_disable_phy_retry(hw);
--
--	/* Force SMBus mode in PHY */
--	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
--	if (ret_val) {
--		e1000e_enable_phy_retry(hw);
--		hw->phy.ops.release(hw);
--		goto out;
-+	if (hw->mac.type == e1000_pch_mtp) {
-+		ret_val = e1000e_force_smbus(hw);
-+		if (ret_val)
-+			e_dbg("Failed to force SMBUS over MTL system: %d\n",
-+			      ret_val);
- 	}
--	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
--	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
--
--	e1000e_enable_phy_retry(hw);
--
--	/* Force SMBus mode in MAC */
--	mac_reg = er32(CTRL_EXT);
--	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
--	ew32(CTRL_EXT, mac_reg);
- 
- 	hw->phy.ops.release(hw);
- out:
++	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
+ 	ret = sd_start_stop_device(sdkp, 1);
+ 	if (!ret) {
+ 		sd_resume(dev);
 
 
