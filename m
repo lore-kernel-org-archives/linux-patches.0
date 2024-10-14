@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED521ADFF8;
-	Mon, 14 Oct 2024 15:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFD91ADFE8;
+	Mon, 14 Oct 2024 15:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918260; cv=none; b=rr5uuxFpdeG9hU4sO54L0XM32RRu+2A0VDC4XHCtywIkbXpUCBoIuCGA9o/QmPSA0e+nN4MN/0YjnwvOtMxkFJ2zN2dgNQEWcsuoeBVzxtwapO6CJJc6QoEtovZJ/IJ/LISYE5/2tZMQ9Nz02fQ72xw7hZmlUogPiwTsCxAqrrQ=
+	t=1728918264; cv=none; b=Fhh5XnocbmNYtzAE4CvSucDM5mhiHUOf2beyRHJdeKYlWurgEI4p5CQVr9MsM+GQqIDhwPm7JfNMnJvxNHP7/paHnDGvQ9/X88ruG3EvudPL9L2ZPvdArycE4OwYMDDw3h9SS63Ag07WZNZEXgFS3g1703ZnQAQOWBD8mqTG1AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918260; c=relaxed/simple;
-	bh=xl3FM/TMWyUeKGLsRfC+yzNToej/Y04kBXJaeto8uWY=;
+	s=arc-20240116; t=1728918264; c=relaxed/simple;
+	bh=QhcbkjjP0cJ7VsZWOJnWEzHdyhCBI2IW4XI7ZWWIjK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfXF5ScLf3tzVGGiEb+vCmeO/c68cnMT4k/5Wv4rcZcdp8RoIs/mi66gHxe3C6Qt12qh/LFz0p5r0kzCmOQxyn5bqeVOjd62rGvBTLRNrPXK9Cy3EEML5ihCCFTjYTsF7dD47TXBqg4UQoKaJHFA0Qr9pPou2ixfOwKR5MF7Bs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDtwZwRt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QfphYc2wLRXck1JhSueZ3vs9GE/hkAiM8qnREwuuQWnbh0DK2AQvFiNKwTVG72mzQd/8+Z2tczWEEeywv2rJeIRSA7Gv3ajdCJwRIFzxVhgQpywifehn4i+wb1jxWctMlGzkZZ2GV7vJeQw/yMH3chxMslBSML43H71xatBOS3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceveilad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDtwZwRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44C5C4CEC3;
-	Mon, 14 Oct 2024 15:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceveilad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A4CC4CEC3;
+	Mon, 14 Oct 2024 15:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918260;
-	bh=xl3FM/TMWyUeKGLsRfC+yzNToej/Y04kBXJaeto8uWY=;
+	s=korg; t=1728918263;
+	bh=QhcbkjjP0cJ7VsZWOJnWEzHdyhCBI2IW4XI7ZWWIjK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDtwZwRt2SyBc/wcjv+FdzQ1UyeKGiT7NVTqLN/lqo1v1PdJuTw4QsV/9+drtyrOe
-	 dEhKPbUEP85Sh4FNi1WGmE7ElbTSuXajwVE+47lgqMhAFW2qUWv7wMh60CF/mUt6vm
-	 E+sdl+MkhuWs0DZ6+KttgUOTDJz5m0RzzbRAJ7YE=
+	b=ceveilad/112VtFlP6ovpMBWwpwEu9amjxoI5LHrPYcuedj3ytLqkL7oDr2dJGfQa
+	 eFXQd1Ip2n4FL76E8mPlQOBxXURls0SbiCkbDGukILrHQj9TO9I8jWg/vz+L7gWPzX
+	 iwab4YIg6+EjVj9LcbyPKEyGwJ7prKRTogU3Kztc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 271/798] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
-Date: Mon, 14 Oct 2024 16:13:45 +0200
-Message-ID: <20241014141228.581342070@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 272/798] io_uring/sqpoll: do not allow pinning outside of cpuset
+Date: Mon, 14 Oct 2024 16:13:46 +0200
+Message-ID: <20241014141228.619693867@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,85 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
+commit f011c9cf04c06f16b24f583d313d3c012e589e50 upstream.
 
-Only provide ctnetlink_label_size when it is used,
-which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
+The submit queue polling threads are userland threads that just never
+exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
+the affinity of the poller thread is set to the cpu specified in
+sq_thread_cpu. However, this CPU can be outside of the cpuset defined
+by the cgroup cpuset controller. This violates the rules defined by the
+cpuset controller and is a potential issue for realtime applications.
 
-Flagged by clang-18 W=1 builds as:
+In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
+case no explicit pinning is required by inheriting the one of the
+creating task. In case of explicit pinning, the check is more
+complicated, as also a cpu outside of the parent cpumask is allowed.
+We implemented this by using cpuset_cpus_allowed (that has support for
+cgroup cpusets) and testing if the requested cpu is in the set.
 
-.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
-  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
-      |                   ^~~~~~~~~~~~~~~~~~~~
-
-The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
-this patch guards compilation of non-trivial implementations
-of ctnetlink_dump_labels() and ctnetlink_label_size().
-
-However, this is not necessary as each of these functions
-will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
-as each function starts with the equivalent of:
-
-	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
-
-	if (!labels)
-		return 0;
-
-And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
-is not enabled.  So I believe that the compiler optimises the code away
-in such cases anyway.
-
-Found by inspection.
-Compile tested only.
-
-Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
-added Fixes: tag.
-
-Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
-Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
+Cc: stable@vger.kernel.org # 6.1+
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ io_uring/sqpoll.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 9672b0e00d6bf..2cf58a8b8e4dc 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -381,7 +381,7 @@ static int ctnetlink_dump_secctx(struct sk_buff *skb, const struct nf_conn *ct)
- #define ctnetlink_dump_secctx(a, b) (0)
- #endif
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -10,6 +10,7 @@
+ #include <linux/slab.h>
+ #include <linux/audit.h>
+ #include <linux/security.h>
++#include <linux/cpuset.h>
+ #include <linux/io_uring.h>
  
--#ifdef CONFIG_NF_CONNTRACK_LABELS
-+#ifdef CONFIG_NF_CONNTRACK_EVENTS
- static inline int ctnetlink_label_size(const struct nf_conn *ct)
- {
- 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
-@@ -390,6 +390,7 @@ static inline int ctnetlink_label_size(const struct nf_conn *ct)
- 		return 0;
- 	return nla_total_size(sizeof(labels->bits));
- }
-+#endif
+ #include <uapi/linux/io_uring.h>
+@@ -394,10 +395,12 @@ __cold int io_sq_offload_create(struct i
+ 			return 0;
  
- static int
- ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
-@@ -410,10 +411,6 @@ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+ 		if (p->flags & IORING_SETUP_SQ_AFF) {
++			struct cpumask allowed_mask;
+ 			int cpu = p->sq_thread_cpu;
  
- 	return 0;
- }
--#else
--#define ctnetlink_dump_labels(a, b) (0)
--#define ctnetlink_label_size(a)	(0)
--#endif
- 
- #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
- 
--- 
-2.43.0
-
+ 			ret = -EINVAL;
+-			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
++			cpuset_cpus_allowed(current, &allowed_mask);
++			if (!cpumask_test_cpu(cpu, &allowed_mask))
+ 				goto err_sqpoll;
+ 			sqd->sq_cpu = cpu;
+ 		} else {
 
 
