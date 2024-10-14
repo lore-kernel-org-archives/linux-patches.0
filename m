@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136071AB51B;
-	Mon, 14 Oct 2024 15:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729811AB51B;
+	Mon, 14 Oct 2024 15:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920046; cv=none; b=Tek+vo5k7iKf178H6hzq4GH2EJJ+crThMm0dOjHj5W5e3BNxyuFg3YA9qvbHYOu4bc3CzVyNS/3zVDhy3zGCI1Qf0ek7Z0npHIVnTA7kALHX4rsA5O0rVQBoMEwWoC0UflpPwXj7zWtvZlN3hjxAL+tX9UEY3whf05aZEaKm2L0=
+	t=1728920049; cv=none; b=LPdiEHanuAsprnn8mrrh0zBHae58lbXJGqEvBTdABex7oP9O1Ps2HLydGc3eyW4N2ucteKr7uvUIWV3zwrewDQQv0WktSswOPqx5SwI2OvbZAA/qfuuggzWe+MYfd7GlWWBDqUREvnnejRE/Y3LZCwNo7bwFy8kddTpvBLwIPtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920046; c=relaxed/simple;
-	bh=iKPYvn8FZyDS5gCoQWEEIk1R+BlLtkghDuXn+K6YX08=;
+	s=arc-20240116; t=1728920049; c=relaxed/simple;
+	bh=pF4r/P5pLWXM/bepUwMaqQYB9h9NluTq626LWp0aKw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEgVNHzZ6C2cSRaG4FxVZZGx60y+tRYXFcKEIKDguPh/een/k+rlcFoDccMPZZTQhuIBoDstvfg1VC+8/QGVcb7J0Zb+JRPxvP1FsrgJbxYlwZNXeY5g2wATVCrrdomPm34w3f09FYifZYCRNlGClIsJyy2UVQNzEv3F1e0zxxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA0+gUB0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BjZ8Fz87C3IkgErzkVs0akeuwgXawjmQJDJkRz96H+tZIurBP8LCItHF0CL0gTES4NveF+zFxas3t9z91oOtX3QaHF60hiNtY873UrQqDzglE08y0QAh6LOImCDHcYP7xWy807R9N7heo38Rw9JoPy8y0fD0zADpzbs0aTmQzNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIheH9Ln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA0+gUB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A78DC4CEC3;
-	Mon, 14 Oct 2024 15:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIheH9Ln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D532CC4CEC3;
+	Mon, 14 Oct 2024 15:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920046;
-	bh=iKPYvn8FZyDS5gCoQWEEIk1R+BlLtkghDuXn+K6YX08=;
+	s=korg; t=1728920049;
+	bh=pF4r/P5pLWXM/bepUwMaqQYB9h9NluTq626LWp0aKw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VA0+gUB0cG97ZxK1pUC5Q44aNUAh9TRDCNubMc8XHWWNjnG7hbd6kVeXwI0el7tME
-	 m01pSGQ4gBTNtV2D1Jl8B/jtQqH4kUxo+SO87b7qbejec5E/AcwbIVI/ZYK58t+WuL
-	 33EGko6ztMQR27UkUrAhjf2IUW32vpzZ5d6xmswQ=
+	b=XIheH9LniKlWJgyjNKI90YHhVJ4DBY1RFgrP0AxkaAs3SXD7ZUzOPWEKb3ub4/rNS
+	 2ggRPye/Kvk39/QG+SfEY/kINf7AfTIPHZVWvmSCcbpmf+fbWoocImmQ+lNj4a76p6
+	 mQk493irlUEix90IOBAWxuC7ypwGvrl937AK5wY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	stable@kernel.org,
-	Finn Thain <fthain@linux-m68k.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 783/798] scsi: wd33c93: Dont use stale scsi_pointer value
-Date: Mon, 14 Oct 2024 16:22:17 +0200
-Message-ID: <20241014141248.830772880@linuxfoundation.org>
+	He Lugang <helugang@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 766/798] HID: multitouch: Add support for lenovo Y9000P Touchpad
+Date: Mon, 14 Oct 2024 16:22:00 +0200
+Message-ID: <20241014141248.161623357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,43 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: He Lugang <helugang@uniontech.com>
 
-commit 9023ed8d91eb1fcc93e64dc4962f7412b1c4cbec upstream.
+[ Upstream commit 251efae73bd46b097deec4f9986d926813aed744 ]
 
-A regression was introduced with commit dbb2da557a6a ("scsi: wd33c93:
-Move the SCSI pointer to private command data") which results in an oops
-in wd33c93_intr(). That commit added the scsi_pointer variable and
-initialized it from hostdata->connected. However, during selection,
-hostdata->connected is not yet valid. Fix this by getting the current
-scsi_pointer from hostdata->selecting.
+The 2024 Lenovo Y9000P which use GT7868Q chip also needs a fixup.
+The information of the chip is as follows:
+I2C HID v1.00 Mouse [GXTP5100:00 27C6:01E0]
 
-Cc: Daniel Palmer <daniel@0x0f.com>
-Cc: Michael Schmitz <schmitzmic@gmail.com>
-Cc: stable@kernel.org
-Fixes: dbb2da557a6a ("scsi: wd33c93: Move the SCSI pointer to private command data")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Co-developed-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/09e11a0a54e6aa2a88bd214526d305aaf018f523.1727926187.git.fthain@linux-m68k.org
-Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: He Lugang <helugang@uniontech.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/wd33c93.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-ids.h        | 1 +
+ drivers/hid/hid-multitouch.c | 8 ++++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/wd33c93.c
-+++ b/drivers/scsi/wd33c93.c
-@@ -831,7 +831,7 @@ wd33c93_intr(struct Scsi_Host *instance)
- 		/* construct an IDENTIFY message with correct disconnect bit */
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ede3a052ead55..5f98c33ed67ba 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -506,6 +506,7 @@
+ #define USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PIT_E100 0xe100
  
- 		hostdata->outgoing_msg[0] = IDENTIFY(0, cmd->device->lun);
--		if (scsi_pointer->phase)
-+		if (WD33C93_scsi_pointer(cmd)->phase)
- 			hostdata->outgoing_msg[0] |= 0x40;
+ #define I2C_VENDOR_ID_GOODIX		0x27c6
++#define I2C_DEVICE_ID_GOODIX_01E0	0x01e0
+ #define I2C_DEVICE_ID_GOODIX_01E8	0x01e8
+ #define I2C_DEVICE_ID_GOODIX_01E9	0x01e9
+ #define I2C_DEVICE_ID_GOODIX_01F0	0x01f0
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 6d76463f5896f..e7199ae2e3d91 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1447,7 +1447,8 @@ static __u8 *mt_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ {
+ 	if (hdev->vendor == I2C_VENDOR_ID_GOODIX &&
+ 	    (hdev->product == I2C_DEVICE_ID_GOODIX_01E8 ||
+-	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9)) {
++	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9 ||
++		 hdev->product == I2C_DEVICE_ID_GOODIX_01E0)) {
+ 		if (rdesc[607] == 0x15) {
+ 			rdesc[607] = 0x25;
+ 			dev_info(
+@@ -2068,7 +2069,10 @@ static const struct hid_device_id mt_devices[] = {
+ 		     I2C_DEVICE_ID_GOODIX_01E8) },
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
+ 	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
+-		     I2C_DEVICE_ID_GOODIX_01E8) },
++		     I2C_DEVICE_ID_GOODIX_01E9) },
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
++	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
++		     I2C_DEVICE_ID_GOODIX_01E0) },
  
- 		if (hostdata->sync_stat[cmd->device->id] == SS_FIRST) {
+ 	/* GoodTouch panels */
+ 	{ .driver_data = MT_CLS_NSMU,
+-- 
+2.43.0
+
 
 
