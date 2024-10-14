@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734D20EB;
-	Mon, 14 Oct 2024 14:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C8720EB;
+	Mon, 14 Oct 2024 14:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916219; cv=none; b=qrWa/kA/6bNLgpQJ+D/D7O4Dw8Z0pFVw3xkyd4yty5qrLJgK4dNEEzE5VEvKFoUtrLPYAYrJlhiXBmH1mTbPz99HUV7cnvtQmkJNsld+JeucFPDkH17rsqUnCN0xmEKTqohfyj6z9GuCB6LYzu4Xv9hZ2jFlGMqZcQeUE/12Qns=
+	t=1728916222; cv=none; b=l5S+JSx0C8BQXQy48lnOoAz+16kD2Cxadpg6SvCk0Ko2V4fhfNQLbX12zgR6gYzpy9bN5+aA2QQkDm3+T39ST/cMd3EV22/a3ECSDp9OVteFWRLBi+tb6yDpqW1qQD2r5EYoiRNd/MqH/Y9eg7p5Uy8hDpimV0o7CtXt7nfmBpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916219; c=relaxed/simple;
-	bh=uBJ0oCBqhgxeN6zEJCGxk3pe/iTTfg0ngl8egsCQ8+M=;
+	s=arc-20240116; t=1728916222; c=relaxed/simple;
+	bh=zOyImEWgYNLE4ecWLGGuroKQw5XAtHAR1CCaJ/FJxeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbiBBPXQzXOWJdqWOkHe6pYIxLUDtw9kXh3CoVGLPB+Zbw+CR5Ob3XUk5PBMhJY8DCYpNU3aNf0kCio5sTcZqJeQ+pAA50ba1JYl8S3of6H1sBVnXLyggwLTsAlGYLIPohCXYRnKt01yy7190w8eAWNipdswyWFivB8zI8ZdG3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqghlcFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijK51kiF/qh3qkhWIbPn267qUNZYZjvhQcPBHN8vX7UNR09bBrcn+JTX/1XFjOg5ibr7MtuUNJKy3QWUaolJCq9n0PdRdT6ZPu8STSkjs2y5DJ4+ncByUeUH9s07+tdTesZlpQxpl5rkdrCDy/l5IzGCo2V3ztXf6g95Yp412tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH7pdIoj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqghlcFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B51AC4CEC3;
-	Mon, 14 Oct 2024 14:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH7pdIoj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08473C4CEC3;
+	Mon, 14 Oct 2024 14:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916219;
-	bh=uBJ0oCBqhgxeN6zEJCGxk3pe/iTTfg0ngl8egsCQ8+M=;
+	s=korg; t=1728916222;
+	bh=zOyImEWgYNLE4ecWLGGuroKQw5XAtHAR1CCaJ/FJxeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KqghlcFKZtFR3H4YJZ5fTnn0SNrQJDaDD1MA20sYF25XgqeoNqX1KuJSMQiystUw1
-	 PgfI+gUtoeNMe+S0TErdq+SRhWIMnq/BNRBKiVGt/H5jxJ/b+SjuZdTMUm9+yIMYvf
-	 Q/tvXym4Cz5Ye1o9PiSNxEbAYOBXAeGMXv4oVbAI=
+	b=xH7pdIojjW9MjKbieG/v0EebCkjgvwwb19FjdmgE41aGjXRJpUC0YoYpDaMoeAWps
+	 3i960Scn8ql0qeDtiIGxl0Fl+iHE+wqyvWQ4/IYf5fDr8zC2OG+BoXk5OPxYLLVMXi
+	 +ydOgsmSUbuuFTb9Vbu1yk6jU8HmyZa6AiMxqi2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Niels Dettenbach <nd@syndicat.com>,
+	Juergen Gross <jgross@suse.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 117/214] gpio: aspeed: Use devm_clk api to manage clock source
-Date: Mon, 14 Oct 2024 16:19:40 +0200
-Message-ID: <20241014141049.558140089@linuxfoundation.org>
+Subject: [PATCH 6.11 118/214] x86/xen: mark boot CPU of PV guest in MSR_IA32_APICBASE
+Date: Mon, 14 Oct 2024 16:19:41 +0200
+Message-ID: <20241014141049.596514959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit a6191a3d18119184237f4ee600039081ad992320 ]
+[ Upstream commit bf56c410162dbf2e27906acbdcd904cbbfdba302 ]
 
-Replace of_clk_get with devm_clk_get_enabled to manage the clock source.
+Recent topology checks of the x86 boot code uncovered the need for
+PV guests to have the boot cpu marked in the APICBASE MSR.
 
-Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20241008081450.1490955-3-billy_tsai@aspeedtech.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 9d22c96316ac ("x86/topology: Handle bogus ACPI tables correctly")
+Reported-by: Niels Dettenbach <nd@syndicat.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/xen/enlighten_pv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index 98551b7f6de2e..ea40ad43a79ba 100644
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -1193,7 +1193,7 @@ static int __init aspeed_gpio_probe(struct platform_device *pdev)
- 	if (!gpio_id)
- 		return -EINVAL;
- 
--	gpio->clk = of_clk_get(pdev->dev.of_node, 0);
-+	gpio->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(gpio->clk)) {
- 		dev_warn(&pdev->dev,
- 				"Failed to get clock from devicetree, debouncing disabled\n");
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 2c12ae42dc8bd..d6818c6cafda1 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -1032,6 +1032,10 @@ static u64 xen_do_read_msr(unsigned int msr, int *err)
+ 	switch (msr) {
+ 	case MSR_IA32_APICBASE:
+ 		val &= ~X2APIC_ENABLE;
++		if (smp_processor_id() == 0)
++			val |= MSR_IA32_APICBASE_BSP;
++		else
++			val &= ~MSR_IA32_APICBASE_BSP;
+ 		break;
+ 	}
+ 	return val;
 -- 
 2.43.0
 
