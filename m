@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED6A4A24;
-	Mon, 14 Oct 2024 14:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0594A24;
+	Mon, 14 Oct 2024 14:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916638; cv=none; b=i+RhkDtFBn+UNVu9dfbQJdLoAt1REJcwm7EN+hDfjwcn8IrfTj4FEPJIX29a7MYzzsnHSqSmaDP842iUKhkAWFrAOtwdbjRcd21KBOxvCpWrQJAXywMHotHNkcO4GU8napkFDnhWtG8kpDnDYWzQiGWuORa4rxKKjR+3w8ZV9h0=
+	t=1728916641; cv=none; b=JdZukkvYCGs/II27ceqPyGavKNoKibFuPjV11LAidoZ/MtKm77REvfEvXReYz0vrHg3G995lHFZykMlE3W40hm8a0FWkpfWxPxUi+75eVJAE46X4RDZpb/ILl+MSCQhm7UeF6tK5xKcaEbwAf658woqax4PEMgEwjA/CoLRnOX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916638; c=relaxed/simple;
-	bh=M3PTGWyJHbrBS7Ybj3MXs+Af78B41pfOZFaomQxbA3c=;
+	s=arc-20240116; t=1728916641; c=relaxed/simple;
+	bh=BpcHcOPsL/Yf9cl7HNx/DUkKWELcYoM6vJ0zaLx9mVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7NwXkHzwmQBRUahLw58uActVSb5rDy8OeldBdv90/PIvlbMV93bL31PgOK2UR9t1oqEnSMPjYytwPzswT2cETxgViAhFWy/z1VdGnfKhdiKOTK00igj+J5mlGbyJEbDb18s9lrKCxPMXLuwV3kej7s6FTKGtg4tMmwFvqMjFJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+0uUrPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDdtUxDZ/1ydid973HrvM75Im0LuTi1SbEVY+cEmrxkDt+Ffoh2dULrlHsyypFKfOagXZmjc/42ZXe6qI0B1OTPbBNT9kaqjDCFdIGd84ejh8w8jHrZ1w2dzzLpa9OadgxZcjS+t8ppuijpUa9bWObAHqBk8XpsXaEvFcru2gRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A13LKL5I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+0uUrPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8838FC4CEC3;
-	Mon, 14 Oct 2024 14:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A13LKL5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12B5C4CEC3;
+	Mon, 14 Oct 2024 14:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916637;
-	bh=M3PTGWyJHbrBS7Ybj3MXs+Af78B41pfOZFaomQxbA3c=;
+	s=korg; t=1728916641;
+	bh=BpcHcOPsL/Yf9cl7HNx/DUkKWELcYoM6vJ0zaLx9mVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+0uUrPjAWnsE7uxVV7F39tURkK+iixcy84V6dSi0QSPldKwUt5iZukIglgpe2Qei
-	 kqAKyWPVJKlA8jn6WA3iP/1beJcPSO/1NKhC79OMjvpgnPOWDJv2tBV6GH4ITnqPLE
-	 k9HhfnP4LWyVwDJ1Z+9MfCg5rS7lB0i474dsLJD8=
+	b=A13LKL5IK+GJd6SkhiUAXdV8DZy8AcVwiGoIBoYh70TDCHeSt00M96PJrNsGH/ifz
+	 qnHdpb2AknoRmfovsVog6Mfum+jS1kHya38YBKnBCNdx8I8Rn8UD/0mkfDyv0rWrbD
+	 kHe49mRAZ6WQaDN61dpW5t5gDHmofakrTluCxEg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Luis Henriques <lhenriques@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/213] pds_core: no health-thread in VF path
-Date: Mon, 14 Oct 2024 16:18:49 +0200
-Message-ID: <20241014141043.891906972@linuxfoundation.org>
+Subject: [PATCH 6.6 024/213] libceph: init the cursor when preparing sparse read in msgr2
+Date: Mon, 14 Oct 2024 16:18:50 +0200
+Message-ID: <20241014141043.929601567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 3e36031cc0540ca97b615cbb940331892cbd3d21 ]
+[ Upstream commit 321e3c3de53c7530cd518219d01f04e7e32a9d23 ]
 
-The VFs don't run the health thread, so don't try to
-stop or restart the non-existent timer or work item.
+The cursor is no longer initialized in the OSD client, causing the
+sparse read state machine to fall into an infinite loop.  The cursor
+should be initialized in IN_S_PREPARE_SPARSE_DATA state.
 
-Fixes: d9407ff11809 ("pds_core: Prevent health thread from running during reset/remove")
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20240210002002.49483-1-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ idryomov: use msg instead of con->in_msg, changelog ]
+
+Link: https://tracker.ceph.com/issues/64607
+Fixes: 8e46a2d068c9 ("libceph: just wait for more data to be available on the socket")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Tested-by: Luis Henriques <lhenriques@suse.de>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ceph/messenger_v2.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 6d589ac532a3d..eddbf0acdde77 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -451,6 +451,9 @@ static void pdsc_remove(struct pci_dev *pdev)
+diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
+index a901cae2f1060..f9ed6bf6c4776 100644
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -2038,6 +2038,9 @@ static int prepare_sparse_read_data(struct ceph_connection *con)
+ 	if (!con_secure(con))
+ 		con->in_data_crc = -1;
  
- static void pdsc_stop_health_thread(struct pdsc *pdsc)
- {
-+	if (pdsc->pdev->is_virtfn)
-+		return;
++	ceph_msg_data_cursor_init(&con->v2.in_cursor, msg,
++				  msg->sparse_read_total);
 +
- 	timer_shutdown_sync(&pdsc->wdtimer);
- 	if (pdsc->health_work.func)
- 		cancel_work_sync(&pdsc->health_work);
-@@ -458,6 +461,9 @@ static void pdsc_stop_health_thread(struct pdsc *pdsc)
- 
- static void pdsc_restart_health_thread(struct pdsc *pdsc)
- {
-+	if (pdsc->pdev->is_virtfn)
-+		return;
-+
- 	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
- 	mod_timer(&pdsc->wdtimer, jiffies + 1);
- }
+ 	reset_in_kvecs(con);
+ 	con->v2.in_state = IN_S_PREPARE_SPARSE_DATA_CONT;
+ 	con->v2.data_len_remain = data_len(msg);
 -- 
 2.43.0
 
