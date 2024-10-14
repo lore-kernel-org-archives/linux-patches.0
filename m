@@ -1,35 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11481BFE06;
-	Mon, 14 Oct 2024 15:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A451AB51B;
+	Mon, 14 Oct 2024 15:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919404; cv=none; b=Tf1jErngaH9orXOWNWZz0qRfy3UUUwyTnxiX5pu2WSIqVOPIumJTZdNQf7AtoNCwV8NDoYxu0E9eh3+SycGZmMWc3rFGH+I+gm9o8CjcQYNoyMKs9cLARJOM2KmDvC11xqVuyXbzw0BZub9UxATIYORajPW9IqZBvPiCrgabZO0=
+	t=1728919413; cv=none; b=WzOF36TszD2+9MkMZ1bNH8Q6OyUgqLx5fs1xodHT3hypYPb+qMKe9ruVsk77A/bgXVI6Ye4CZA51BzniFcT+6IahbQG6DdC+LON6FAHwmoRle5d3JoiDA3DrJUny752kyI8fQCDcJ8BLrnQYIfpmTdjn8HHYsxm3WSguw1dBhZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919404; c=relaxed/simple;
-	bh=PVwzxVlP+lrDq4ghafIn9y8AXIvRsTs2w3A/JMeS60A=;
+	s=arc-20240116; t=1728919413; c=relaxed/simple;
+	bh=ybosPgXizbs1iYZuYWFiAkHRudofTDt3SgSVdJm9ifE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNcMlW69EkanY201gq/jZ++hI2joH49NEmd4CBAV0ySRfRc+aGFYJti60w47SdHel1/238urY8SnG6Eue2xe92oD6iEEesBkzgB3AD716D8uF+YSL/RdGlrCQoFokSxlHES+HqyhuMELIMEU+K2kiuF+osSRMUfetpqHNRfI6Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ckkzal4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xy4Ax0zEbo95vM3IjebWDdwsDq7rZRXhy5lCxF3P5APtC/JaoUEmILDH7hBXzmbZ1o9Yi5W5jZ8tBzO6khAYb8vKRoHXLuQMLbm5ovwOseF2H+nNOxRpySrPcRTmafq5LUvyZuPnME1JVLpXA/8+h3m9nvsaGXyM/vQHLLAdJt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJJCI9Ex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ckkzal4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E50C4CEC3;
-	Mon, 14 Oct 2024 15:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJJCI9Ex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04463C4CEC3;
+	Mon, 14 Oct 2024 15:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919404;
-	bh=PVwzxVlP+lrDq4ghafIn9y8AXIvRsTs2w3A/JMeS60A=;
+	s=korg; t=1728919412;
+	bh=ybosPgXizbs1iYZuYWFiAkHRudofTDt3SgSVdJm9ifE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ckkzal4b5VUWrJ2lpcwM2d5m9rXVe1NpUaf51KtWiRg0R/46SGvmbAb/a/rueol0C
-	 zNl8fhbQWLGilk8R642dcKDIPNZ7JNqS250QWEdTGfUsRQjrn6nEfXoxKDjVACZGUb
-	 DQL6QHU/zNqzahyg/OzQ+0Oy4/5bpgIyr5l7xouQ=
+	b=WJJCI9ExuIZUO/h4uP285Ply+4AoWMsi86rf0DCiDDm0Su//4ukZO9zwff+6iBf8j
+	 0GMnPum//5QsRna6PN0M6blgqjVY5hnGs972gqzP8qmdMqNNUhLx/PRIbgh9EzzSpV
+	 abkdASY8k/WYuCpn2HKwJTcgCqBMFbX8Kbeh5UeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Heming Zhao <heming.zhao@suse.com>,
-	syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com,
+	syzbot+ab134185af9ef88dfed5@syzkaller.appspotmail.com,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
@@ -37,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gang He <ghe@suse.com>,
 	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 569/798] ocfs2: cancel dqi_sync_work before freeing oinfo
-Date: Mon, 14 Oct 2024 16:18:43 +0200
-Message-ID: <20241014141240.354074570@linuxfoundation.org>
+Subject: [PATCH 6.1 570/798] ocfs2: remove unreasonable unlock in ocfs2_read_blocks
+Date: Mon, 14 Oct 2024 16:18:44 +0200
+Message-ID: <20241014141240.394054426@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -58,80 +59,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit 35fccce29feb3706f649726d410122dd81b92c18 upstream.
+commit c03a82b4a0c935774afa01fd6d128b444fd930a1 upstream.
 
-ocfs2_global_read_info() will initialize and schedule dqi_sync_work at the
-end, if error occurs after successfully reading global quota, it will
-trigger the following warning with CONFIG_DEBUG_OBJECTS_* enabled:
+Patch series "Misc fixes for ocfs2_read_blocks", v5.
 
-ODEBUG: free active (active state 0) object: 00000000d8b0ce28 object type: timer_list hint: qsync_work_fn+0x0/0x16c
+This series contains 2 fixes for ocfs2_read_blocks().  The first patch fix
+the issue reported by syzbot, which detects bad unlock balance in
+ocfs2_read_blocks().  The second patch fixes an issue reported by Heming
+Zhao when reviewing above fix.
 
-This reports that there is an active delayed work when freeing oinfo in
-error handling, so cancel dqi_sync_work first.  BTW, return status instead
-of -1 when .read_file_info fails.
 
-Link: https://syzkaller.appspot.com/bug?extid=f7af59df5d6b25f0febd
-Link: https://lkml.kernel.org/r/20240904071004.2067695-1-joseph.qi@linux.alibaba.com
-Fixes: 171bf93ce11f ("ocfs2: Periodic quota syncing")
+This patch (of 2):
+
+There was a lock release before exiting, so remove the unreasonable unlock.
+
+Link: https://lkml.kernel.org/r/20240902023636.1843422-1-joseph.qi@linux.alibaba.com
+Link: https://lkml.kernel.org/r/20240902023636.1843422-2-joseph.qi@linux.alibaba.com
+Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
 Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Reported-by: syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com
-Tested-by: syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: syzbot+ab134185af9ef88dfed5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ab134185af9ef88dfed5
+Tested-by: syzbot+ab134185af9ef88dfed5@syzkaller.appspotmail.com
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Gang He <ghe@suse.com>
 Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
+Cc: <stable@vger.kernel.org>	[4.20+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ocfs2/buffer_head_io.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -689,7 +689,7 @@ static int ocfs2_local_read_info(struct
- 	int status;
- 	struct buffer_head *bh = NULL;
- 	struct ocfs2_quota_recovery *rec;
--	int locked = 0;
-+	int locked = 0, global_read = 0;
- 
- 	info->dqi_max_spc_limit = 0x7fffffffffffffffLL;
- 	info->dqi_max_ino_limit = 0x7fffffffffffffffLL;
-@@ -697,6 +697,7 @@ static int ocfs2_local_read_info(struct
- 	if (!oinfo) {
- 		mlog(ML_ERROR, "failed to allocate memory for ocfs2 quota"
- 			       " info.");
-+		status = -ENOMEM;
- 		goto out_err;
- 	}
- 	info->dqi_priv = oinfo;
-@@ -709,6 +710,7 @@ static int ocfs2_local_read_info(struct
- 	status = ocfs2_global_read_info(sb, type);
- 	if (status < 0)
- 		goto out_err;
-+	global_read = 1;
- 
- 	status = ocfs2_inode_lock(lqinode, &oinfo->dqi_lqi_bh, 1);
- 	if (status < 0) {
-@@ -779,10 +781,12 @@ out_err:
- 		if (locked)
- 			ocfs2_inode_unlock(lqinode, 1);
- 		ocfs2_release_local_quota_bitmaps(&oinfo->dqi_chunk);
-+		if (global_read)
-+			cancel_delayed_work_sync(&oinfo->dqi_sync_work);
- 		kfree(oinfo);
- 	}
- 	brelse(bh);
--	return -1;
-+	return status;
- }
- 
- /* Write local info to quota file */
+--- a/fs/ocfs2/buffer_head_io.c
++++ b/fs/ocfs2/buffer_head_io.c
+@@ -235,7 +235,6 @@ int ocfs2_read_blocks(struct ocfs2_cachi
+ 		if (bhs[i] == NULL) {
+ 			bhs[i] = sb_getblk(sb, block++);
+ 			if (bhs[i] == NULL) {
+-				ocfs2_metadata_cache_io_unlock(ci);
+ 				status = -ENOMEM;
+ 				mlog_errno(status);
+ 				/* Don't forget to put previous bh! */
 
 
