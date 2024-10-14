@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5497019E802;
-	Mon, 14 Oct 2024 14:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B21AA793;
+	Mon, 14 Oct 2024 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916108; cv=none; b=JnHx2IoAgSmaKz+C2V+en10srLfnbMm4Lj95wApZJg/ikUP4WrTzartGpLiIV+go76VnjJnORYpIFH8MxbwQqbU1odysd2mmAgUZsCt3rbzArmS9epWP0QpEIa9y/bs2m04v1uZP4CKdnTh5ODyQk6kRrzS0qPPo2fRPEOAtwNY=
+	t=1728916111; cv=none; b=eLqXG26tRwaGsT+q78JnXAu5Zk9KaVx5Qo3zZpXqVAdGzlESmy0CgMBUPHA6Fm42FqAJRTMf+bfIKQlXMgjgSllL0oua2DXBUfgIYRpaqcKlBpECMtuFLXNBMZ87+d0QgBCgc8gLvivPQ8oC516nrt4B9zEqmy0aEKVssEiA0E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916108; c=relaxed/simple;
-	bh=Y3IjOLey9ZMVS9WZq49dbkWFuMVZ4EpE+sDvzG2a1qU=;
+	s=arc-20240116; t=1728916111; c=relaxed/simple;
+	bh=+ryevX4ee89OFn4L3F4FkUpcyUlkj6X5xMWkXgIpfio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVlbtQAUFmAXHGf6yF+8DQ3C9XBaXDI2UsrEDP1RnyCuV+/e6/nbaeocsiGZ+0aOxuN90u1FzR+gtRRXVumOE+sT/F70F3q2SkIi1USY94tNhBPn6bBOh6UNlLEzGj4vM5065wgSZW3vp46yC773ypL7BH8270O4DLcviNSLN/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtogZuvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beP9UQelQad73kkZp719XNGKZiJtxTBf25GULzlT3MpWtcUkLQ04dx9qaVOSsLL7Hf/E3DZXcopaLVxRCZi/95LyN9nXJ7Dhv4QEksrvacBvhl9e2IT1D9vvI9zwn1NcPc+TPPsc1koI+fV+1wxHg/Ib2zNc98fxqHhRBFoVQBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOjmt6mq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtogZuvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83FCC4CEC3;
-	Mon, 14 Oct 2024 14:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOjmt6mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B30CC4CEC3;
+	Mon, 14 Oct 2024 14:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916108;
-	bh=Y3IjOLey9ZMVS9WZq49dbkWFuMVZ4EpE+sDvzG2a1qU=;
+	s=korg; t=1728916111;
+	bh=+ryevX4ee89OFn4L3F4FkUpcyUlkj6X5xMWkXgIpfio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtogZuvWjGLM+KF8E7C3zkVjrxAQE+b+ODrso1acAhYcbqMeBUuacZHmyC68Q4MNf
-	 N3jjUGVqOuem507qCbbN3BiE5OLmED46OsIYHcSKVOYgwJuhtz8I9X1NrC7yWFlJrB
-	 ghJvz7XGYAXr0FnwSXCAnVVOvrCumAnXw+XrGpEI=
+	b=jOjmt6mq5qPQFvDFA2ACoL8CsdoD2RNhijMhgEyoBeCa/WC7mV9xndy/K+Fk4wC48
+	 /JhMacv04UnuHC8n+++rmZ5MyPZpnxGWj3xViQwA13vbuASVatyk5VZJsFQ4Aa7vfh
+	 lL4OElPGcXQZQ+D5CkFpEVlvnkhNpjAXCcn0BppM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.11 086/214] ice: disallow DPLL_PIN_STATE_SELECTABLE for dpll output pins
-Date: Mon, 14 Oct 2024 16:19:09 +0200
-Message-ID: <20241014141048.347790911@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 060/214] usb: host: xhci-plat: Parse xhci-missing_cas_quirk and apply quirk
+Date: Mon, 14 Oct 2024 16:18:43 +0200
+Message-ID: <20241014141047.331795982@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,41 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit afe6e30e7701979f536f8fbf6fdef7212441f61a ]
+[ Upstream commit a6cd2b3fa89468b5f28b83d211bd25cc589f9eba ]
 
-Currently the user may request DPLL_PIN_STATE_SELECTABLE for an output
-pin, and this would actually set the DISCONNECTED state instead.
+Parse software managed property 'xhci-skip-phy-init-quirk' and
+'xhci-skip-phy-init-quirk' to apply related quirk. It allows usb glue layer
+driver apply these quirk.
 
-It doesn't make any sense. SELECTABLE is valid only in case of input pins
-(on AUTOMATIC type dpll), where dpll itself would select best valid input.
-For the output pin only CONNECTED/DISCONNECTED are expected.
-
-Fixes: d7999f5ea64b ("ice: implement dpll interface to control cgu")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240906-dwc-mp-v5-1-ea8ec6774e7b@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/xhci-plat.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index e92be6f130a3d..3d20c3b232aa9 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -651,6 +651,8 @@ ice_dpll_output_state_set(const struct dpll_pin *pin, void *pin_priv,
- 	struct ice_dpll_pin *p = pin_priv;
- 	struct ice_dpll *d = dpll_priv;
+diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+index 31bdfa52eeb25..ecaa75718e592 100644
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -259,6 +259,12 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
+ 		if (device_property_read_bool(tmpdev, "write-64-hi-lo-quirk"))
+ 			xhci->quirks |= XHCI_WRITE_64_HI_LO;
  
-+	if (state == DPLL_PIN_STATE_SELECTABLE)
-+		return -EINVAL;
- 	if (!enable && p->state[d->dpll_idx] == DPLL_PIN_STATE_DISCONNECTED)
- 		return 0;
- 
++		if (device_property_read_bool(tmpdev, "xhci-missing-cas-quirk"))
++			xhci->quirks |= XHCI_MISSING_CAS;
++
++		if (device_property_read_bool(tmpdev, "xhci-skip-phy-init-quirk"))
++			xhci->quirks |= XHCI_SKIP_PHY_INIT;
++
+ 		device_property_read_u32(tmpdev, "imod-interval-ns",
+ 					 &xhci->imod_interval);
+ 	}
 -- 
 2.43.0
 
