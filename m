@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF5625632;
-	Mon, 14 Oct 2024 14:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF391AB522;
+	Mon, 14 Oct 2024 14:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916704; cv=none; b=FW/ksW2WcCbxnc1Wuamb05a/iVsKAuwETp9CG8VZwv/fZfwHyfZpMvGwjDdPpAU5mLhTiaLv4mlEn9e1GxxfWlHN6kvKoO2oN7vGRid56a7IjSDbKSB6ZkAbNajF7b3vagIxFkTmXNgCyUwB55/3ieF+ZguOw8LYi0NUapkuiu4=
+	t=1728916708; cv=none; b=iY4FtO0q2MC5PwpRXiWW6ieQgUleViGrq6Cn+zRZ2S3oscAcKvfpJWKlO+ks/IIeYqnbVhupOYLgEeXCcmpZL0st9lZMNTkxN41nF83lj4dz0Lwbo9G672VPBXubhQf2SJav0iR8kUhF0v6LwUVywMhVsSMhqvlBQDr6ccO770Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916704; c=relaxed/simple;
-	bh=wW8x2KUm3qyNKN8u7aAFzwhrWi67wQCU9Beq7qpmvs4=;
+	s=arc-20240116; t=1728916708; c=relaxed/simple;
+	bh=B+U+9+c2bUXrVI0sEv0EAed7w/usXCNmXYeoTgHJX/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2blYumpwutPz+uZadhjmjkJg007+CXvsyOXLM2OaAOx7l2S7GK+C/QQWkR/pDQ57xFk/ofS8Vh94Q/hrHkq4YxNX/QuFH8l08NxD8zgVh4V3ESWT2f/PIvtoXJGBF0sIPUDqOKxtDau2feA96qud/yhiNlgfWyejKZnY5fz21w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNxi8lFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d2FiXu26IqxiULftNHJQubRhYHyUNz0bvyZRU4c7++7LWrTx7NB+TEDNJ4Gd6mmTDWwdBr7/5V43sDHl9IzOs1YeAOIco7aLS32uaEEnI8qmkUVIiheDueELgCF7Hvm5o33tLqF/wwX7LeDivHesSObaNU+9WWdIm0ZuLRyHQjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMoxuetk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNxi8lFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37ABC4CEC3;
-	Mon, 14 Oct 2024 14:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMoxuetk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35004C4CEC7;
+	Mon, 14 Oct 2024 14:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916704;
-	bh=wW8x2KUm3qyNKN8u7aAFzwhrWi67wQCU9Beq7qpmvs4=;
+	s=korg; t=1728916707;
+	bh=B+U+9+c2bUXrVI0sEv0EAed7w/usXCNmXYeoTgHJX/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNxi8lFt02O+EasdOlvz4O4F8OIHnH/b/aIIaf2FZGhAAIljttPkzIhrGJpsUOscT
-	 YLj9pHv0jLN8KkFZr2A39mXRfAloWchysf9SkRzAykYb9K9W+cfyu0wSfgPOeJU2GL
-	 T331s6YyvFchztbihRdD6Xv6AqGPRJV40hF4gy8E=
+	b=LMoxuetklv/LFURy84VJAdMzsUPk+G2e0cBqSRfXfW/M/h6EdrCVwXdi28/6PdsMo
+	 aMtQ9CyK/UeOroOKGPFUmKPac83j1qRwZ2DBdGuTbGBQ55vcFw7KKmZhXzUjzfnhNM
+	 4vT37f3SWNGRXxiN1bZ+6DpqPVvJnOsgVa3gQUkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/213] net: ethernet: cortina: Drop TSO support
-Date: Mon, 14 Oct 2024 16:18:37 +0200
-Message-ID: <20241014141043.421013343@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Wei Fang <wei.fang@nxp.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 002/213] net: fec: dont save PTP state if PTP is unsupported
+Date: Mon, 14 Oct 2024 16:18:28 +0200
+Message-ID: <20241014141043.065946661@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -46,94 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit ac631873c9e7a50d2a8de457cfc4b9f86666403e ]
+commit 6be063071a457767ee229db13f019c2ec03bfe44 upstream.
 
-The recent change to allow large frames without hardware checksumming
-slotted in software checksumming in the driver if hardware could not
-do it.
+Some platforms (such as i.MX25 and i.MX27) do not support PTP, so on
+these platforms fec_ptp_init() is not called and the related members
+in fep are not initialized. However, fec_ptp_save_state() is called
+unconditionally, which causes the kernel to panic. Therefore, add a
+condition so that fec_ptp_save_state() is not called if PTP is not
+supported.
 
-This will however upset TSO (TCP Segment Offloading). Typical
-error dumps includes this:
-
-skb len=2961 headroom=222 headlen=66 tailroom=0
-(...)
-WARNING: CPU: 0 PID: 956 at net/core/dev.c:3259 skb_warn_bad_offload+0x7c/0x108
-gemini-ethernet-port: caps=(0x0000010000154813, 0x00002007ffdd7889)
-
-And the packets do not go through.
-
-The TSO implementation is bogus: a TSO enabled driver must propagate
-the skb_shinfo(skb)->gso_size value to the TSO engine on the NIC.
-
-Drop the size check and TSO offloading features for now: this
-needs to be fixed up properly.
-
-After this ethernet works fine on Gemini devices with a direct connected
-PHY such as D-Link DNS-313.
-
-Also tested to still be working with a DSA switch using the Gemini
-ethernet as conduit interface.
-
-Link: https://lore.kernel.org/netdev/CANn89iJLfxng1sYL5Zk0mknXpyYQPCp83m3KgD2KJ2_hKCpEUg@mail.gmail.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Fixes: d4d0c5b4d279 ("net: ethernet: cortina: Handle large frames")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a1477dc87dc4 ("net: fec: Restart PPS after link state change")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/lkml/353e41fe-6bb4-4ee9-9980-2da2a9c1c508@roeck-us.net/
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20241008061153.1977930-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index f69d974a23a1f..956cfb293ee19 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -79,8 +79,7 @@ MODULE_PARM_DESC(debug, "Debug level (0=none,...,16=all)");
- #define GMAC0_IRQ4_8 (GMAC0_MIB_INT_BIT | GMAC0_RX_OVERRUN_INT_BIT)
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1058,7 +1058,8 @@ fec_restart(struct net_device *ndev)
+ 	u32 rcntl = OPT_FRAME_SIZE | 0x04;
+ 	u32 ecntl = FEC_ECR_ETHEREN;
  
- #define GMAC_OFFLOAD_FEATURES (NETIF_F_SG | NETIF_F_IP_CSUM | \
--		NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM | \
--		NETIF_F_TSO | NETIF_F_TSO_ECN | NETIF_F_TSO6)
-+			       NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM)
+-	fec_ptp_save_state(fep);
++	if (fep->bufdesc_ex)
++		fec_ptp_save_state(fep);
  
- /**
-  * struct gmac_queue_page - page buffer per-page info
-@@ -1148,23 +1147,13 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 	struct gmac_txdesc *txd;
- 	skb_frag_t *skb_frag;
- 	dma_addr_t mapping;
--	unsigned short mtu;
- 	void *buffer;
- 	int ret;
+ 	/* Whack a reset.  We should wait for this.
+ 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
+@@ -1321,7 +1322,8 @@ fec_stop(struct net_device *ndev)
+ 			netdev_err(ndev, "Graceful transmit stop did not complete!\n");
+ 	}
  
--	mtu  = ETH_HLEN;
--	mtu += netdev->mtu;
--	if (skb->protocol == htons(ETH_P_8021Q))
--		mtu += VLAN_HLEN;
--
-+	/* TODO: implement proper TSO using MTU in word3 */
- 	word1 = skb->len;
- 	word3 = SOF_BIT;
+-	fec_ptp_save_state(fep);
++	if (fep->bufdesc_ex)
++		fec_ptp_save_state(fep);
  
--	if (word1 > mtu) {
--		word1 |= TSS_MTU_ENABLE_BIT;
--		word3 |= mtu;
--	}
--
- 	if (skb->len >= ETH_FRAME_LEN) {
- 		/* Hardware offloaded checksumming isn't working on frames
- 		 * bigger than 1514 bytes. A hypothesis about this is that the
--- 
-2.43.0
-
+ 	/* Whack a reset.  We should wait for this.
+ 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
 
 
