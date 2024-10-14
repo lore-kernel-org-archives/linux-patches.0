@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B1A14AA9;
-	Mon, 14 Oct 2024 15:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99251AA7AB;
+	Mon, 14 Oct 2024 15:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920124; cv=none; b=CtxRn3z+dG9CaIv46lEhQL7/7ipfFl8xhkIlgEdUpPQoaY5Kq3L2H0lTB1QF5/Bno1aq/282a07u/lXG0UOCba9LlkgN4m4Rj858yK38FuhLbcWMiHtmq+lh0W7nQBIBQNiPeQJeVV0sDA2jF/EdRowgVe/8p6krg0ZKpBTg24Y=
+	t=1728920127; cv=none; b=gPJ0hEMvSI4cg6xMwa1HPWkzTILMXLXpJ5qJedLqNIWY6cONd9VvuMT4E9w4g5I6YiwwOdXZPmtworV551BjMGqvrN8JFow6t45VBgWqm9+0nxDug9ubl9QXrSVYwhSkrU+hJTPpT9gZhHzko54z5QWBhTa04POQBep+ZuPCkJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920124; c=relaxed/simple;
-	bh=hY9btfJ5dbv8BVLeuQwZoGwaC4l9sYZ4Bh+GVJkapkY=;
+	s=arc-20240116; t=1728920127; c=relaxed/simple;
+	bh=TT1SEeSCzQRbyngIByTipQed8LphaODu6YA5G8jYzig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbBNNYEwmTyxJBXt2cOg7Q6fPiDDptwtWVjEiS6CJSCDXIYKOOL7pnZXBApxX+lcP8ItV0SiF2kdOQpg6VkLJLxX7Pc9nqorAbyF5ZOiqzk7T8IX3uUiRTttFttvuN3K7dQJMDaq/DSfO3muYMirU/MHsxywhljw9UIvTHA901o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn7hgM8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lphbdrYIiSt2xOFk4Y6WGSv5iVyG9Kwvrg3z5+cBS0NNCdmoKfLtCSEbN78b+uBaOXz450qNMsUmWWw1Xk3gDLf0vJAJIx+/1eJlrQdNf+HWCAcrOsZpg/phDT6NTq1FczxLep4n+pwW5AXoPQOq8j87TqlXHH2DSlyQCeycx/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNPvqaho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn7hgM8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36CEC4CEC3;
-	Mon, 14 Oct 2024 15:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNPvqaho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30853C4CECF;
+	Mon, 14 Oct 2024 15:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920124;
-	bh=hY9btfJ5dbv8BVLeuQwZoGwaC4l9sYZ4Bh+GVJkapkY=;
+	s=korg; t=1728920127;
+	bh=TT1SEeSCzQRbyngIByTipQed8LphaODu6YA5G8jYzig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn7hgM8dtpq/QfkvS4jRt/et0m0ZJHwygJ9+7eeuJ1FM1Zl9syorT2NiX/uoxGhoZ
-	 zL8XrB/9rnFa9HdO2U41CH9RaN4SsPiSd677A8yd8IR+0yIcEuHcQb21gOGPJROlAW
-	 vxaeM2GD9MpoWbbOJMIgWSFdARyUCQzjnk56rw10=
+	b=vNPvqahokRjfKW5+c1ajP2CX/9FtSehbX4yJ2C2GG47xJac20+UAGG/JFXxa9JcBK
+	 eHQJOS4Pxh+eMB5s09I3E4qY1xgsX1jrhtXNzcXktXglcLF3D1DDZVfgqqNmDEH78L
+	 UIKlz5OpCuMC8XQp7JR4fcXFkb5Z0PyGyzzX2fkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 772/798] Revert "net: ibm/emac: allocate dummy net_device dynamically"
-Date: Mon, 14 Oct 2024 16:22:06 +0200
-Message-ID: <20241014141248.390237760@linuxfoundation.org>
+	Chris Hixon <linux-kernel-bugs@hixontech.com>,
+	Richard <hobbes1069@gmail.com>,
+	Skyler <skpu@pm.me>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 773/798] HID: amd_sfh: Switch to device-managed dmam_alloc_coherent()
+Date: Mon, 14 Oct 2024 16:22:07 +0200
+Message-ID: <20241014141248.431306139@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -49,81 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit b40eeedbbc0833716b5ccae64cf914f2604a3e5e, which was
-upstream commit 2eb5e25d8495 ("net: ibm/emac: allocate dummy net_device
-dynamically").
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-alloc_netdev_dummy(( does not exist in 6.1, so all this backport did was
-break the build.
+commit c56f9ecb7fb6a3a90079c19eb4c8daf3bbf514b3 upstream.
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Using the device-managed version allows to simplify clean-up in probe()
+error path.
+
+Additionally, this device-managed ensures proper cleanup, which helps to
+resolve memory errors, page faults, btrfs going read-only, and btrfs
+disk corruption.
+
+Fixes: 4b2c53d93a4b ("SFH:Transport Driver to add support of AMD Sensor Fusion Hub (SFH)")
+Tested-by: Chris Hixon <linux-kernel-bugs@hixontech.com>
+Tested-by: Richard <hobbes1069@gmail.com>
+Tested-by: Skyler <skpu@pm.me>
+Reported-by: Chris Hixon <linux-kernel-bugs@hixontech.com>
+Closes: https://lore.kernel.org/all/3b129b1f-8636-456a-80b4-0f6cce0eef63@hixontech.com/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219331
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 14 +++-----------
- drivers/net/ethernet/ibm/emac/mal.h |  2 +-
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c |   14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index 1ebe44804f9d0..f30a2b8a7c173 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -603,13 +603,9 @@ static int mal_probe(struct platform_device *ofdev)
- 	INIT_LIST_HEAD(&mal->list);
- 	spin_lock_init(&mal->lock);
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+@@ -235,9 +235,9 @@ int amd_sfh_hid_client_init(struct amd_m
+ 	cl_data->in_data = in_data;
  
--	mal->dummy_dev = alloc_netdev_dummy(0);
--	if (!mal->dummy_dev) {
--		err = -ENOMEM;
--		goto fail_unmap;
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+-		in_data->sensor_virt_addr[i] = dma_alloc_coherent(dev, sizeof(int) * 8,
+-								  &cl_data->sensor_dma_addr[i],
+-								  GFP_KERNEL);
++		in_data->sensor_virt_addr[i] = dmam_alloc_coherent(dev, sizeof(int) * 8,
++								   &cl_data->sensor_dma_addr[i],
++								   GFP_KERNEL);
+ 		if (!in_data->sensor_virt_addr[i]) {
+ 			rc = -ENOMEM;
+ 			goto cleanup;
+@@ -334,7 +334,6 @@ cleanup:
+ int amd_sfh_hid_client_deinit(struct amd_mp2_dev *privdata)
+ {
+ 	struct amdtp_cl_data *cl_data = privdata->cl_data;
+-	struct amd_input_data *in_data = cl_data->in_data;
+ 	int i, status;
+ 
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+@@ -354,12 +353,5 @@ int amd_sfh_hid_client_deinit(struct amd
+ 	cancel_delayed_work_sync(&cl_data->work_buffer);
+ 	amdtp_hid_remove(cl_data);
+ 
+-	for (i = 0; i < cl_data->num_hid_devices; i++) {
+-		if (in_data->sensor_virt_addr[i]) {
+-			dma_free_coherent(&privdata->pdev->dev, 8 * sizeof(int),
+-					  in_data->sensor_virt_addr[i],
+-					  cl_data->sensor_dma_addr[i]);
+-		}
 -	}
-+	init_dummy_netdev(&mal->dummy_dev);
- 
--	netif_napi_add_weight(mal->dummy_dev, &mal->napi, mal_poll,
-+	netif_napi_add_weight(&mal->dummy_dev, &mal->napi, mal_poll,
- 			      CONFIG_IBM_EMAC_POLL_WEIGHT);
- 
- 	/* Load power-on reset defaults */
-@@ -639,7 +635,7 @@ static int mal_probe(struct platform_device *ofdev)
- 					  GFP_KERNEL);
- 	if (mal->bd_virt == NULL) {
- 		err = -ENOMEM;
--		goto fail_dummy;
-+		goto fail_unmap;
- 	}
- 
- 	for (i = 0; i < mal->num_tx_chans; ++i)
-@@ -705,8 +701,6 @@ static int mal_probe(struct platform_device *ofdev)
- 	free_irq(mal->serr_irq, mal);
-  fail2:
- 	dma_free_coherent(&ofdev->dev, bd_size, mal->bd_virt, mal->bd_dma);
-- fail_dummy:
--	free_netdev(mal->dummy_dev);
-  fail_unmap:
- 	dcr_unmap(mal->dcr_host, 0x100);
-  fail:
-@@ -738,8 +732,6 @@ static int mal_remove(struct platform_device *ofdev)
- 
- 	mal_reset(mal);
- 
--	free_netdev(mal->dummy_dev);
--
- 	dcr_unmap(mal->dcr_host, 0x100);
- 
- 	dma_free_coherent(&ofdev->dev,
-diff --git a/drivers/net/ethernet/ibm/emac/mal.h b/drivers/net/ethernet/ibm/emac/mal.h
-index e0ddc41186a28..d212373a72e7c 100644
---- a/drivers/net/ethernet/ibm/emac/mal.h
-+++ b/drivers/net/ethernet/ibm/emac/mal.h
-@@ -205,7 +205,7 @@ struct mal_instance {
- 	int			index;
- 	spinlock_t		lock;
- 
--	struct net_device	*dummy_dev;
-+	struct net_device	dummy_dev;
- 
- 	unsigned int features;
- };
--- 
-2.43.0
-
+ 	return 0;
+ }
 
 
