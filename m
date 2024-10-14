@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717361C3042;
-	Mon, 14 Oct 2024 15:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCC41AAE13;
+	Mon, 14 Oct 2024 15:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918953; cv=none; b=ErAzRoEl9GssdDkB2O/NtBXMoqKYfdZ13QVvFvQGPhEy4AmM4cYkAgSw9sncZH3bCw6ZRX+W/dd9fLd5FZRdg6rmt+vt3cr5f/NfQTFLHaSj3qFPKogtuRuAehcJNcxfmkfVUqKtR4UgP5J6k1SywZ+NUFCBolTZQ5dfMqkO7yE=
+	t=1728918956; cv=none; b=RBjve1l5HSiSSwO4G1C1qvL0Q6Y7fGmWJhn2fL0RDZQZMh7PjX7VRTWcp3qOnVp4T87pEemqHNf9YnG+kCAcc3hSqxdhUJ1vaLlhsLY0+XQHuhS9e6N/HIMyrdPHj4DU+RUrb1rQtXjv/rVZWtBf07m+XlPpZ3KNJXtt0zpicZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918953; c=relaxed/simple;
-	bh=CbDVcQmWgktnq3kClpIl77RMmxBO27FkhB5x3vmZbtw=;
+	s=arc-20240116; t=1728918956; c=relaxed/simple;
+	bh=fAlJPAhYXY9FArfY0jKuPy5O3c6tKm5L7AqhNuBzSr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTUuD5HFPYrEuZDBHIvv1NadlVHWzei5SKUC2jWq2ib9w3ycDfJQEEzKZQthpUV/RL7NrCjP73co1d+b3NQ5dLGoHNWm6+GgLMZJe01jhcZtnTsJ+4UB8adbJrSPjwAQBFN/e5BsKfshaZ8BBYHnWL9NndBKcnJEm+vWb5H9RSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjVldBpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tvufE+gW3rqp0Y+Ypi5mGyiMTpSGAlaLLMML7OWrE1vvrTH7CEioBhfTT6uyjtoTdNs3jbRK78fivL1LLxDYp7G5J/iLzeAbZI/axqoK3672zSohZ3DaPZvDjsMpHttydQOzYBMnVhIWksrJAk7Nkhookj8HpJGl9N2PjoqIXC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8SrnW/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjVldBpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3877C4CEC3;
-	Mon, 14 Oct 2024 15:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8SrnW/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E77CC4CEC3;
+	Mon, 14 Oct 2024 15:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918953;
-	bh=CbDVcQmWgktnq3kClpIl77RMmxBO27FkhB5x3vmZbtw=;
+	s=korg; t=1728918956;
+	bh=fAlJPAhYXY9FArfY0jKuPy5O3c6tKm5L7AqhNuBzSr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjVldBpT8pD8pz625WtH4hCGiLKi7iR1EuzLZpuvDpmxCWTk5lG6zsuJofEVPPDXh
-	 b4wC5Apx1KUiU+lk6DhWu0LTmcwMQlHO52Hu22hRS0k52bq9d6B3KpsRSuwpBUD16o
-	 GAqIC5FZPUVBqLf05CXuQA+t5Md1p6yyYqKW514s=
+	b=W8SrnW/yVJtk4GGS+uW0UJx8dWSgQsc7EnPDJ0NvCVl6MnUDCdHKH0EKRY4X4Ez0n
+	 mFFPAivD6ZTxwSmtNFqcbfredXXtFsm4ensUGR7hvNWUIZunB/qteCVzR+Bvl7f54d
+	 EL42/LibsGVuLIUf6mEDwqZPVk1Zkqb2eYEZLjc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay K Kumar <sanjay.k.kumar@intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Katya Orlova <e.orlova@ispras.ru>,
+	=?UTF-8?q?Rapha=C3=ABl=20Gallais-Pou?= <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 471/798] iommu/vt-d: Fix potential lockup if qi_submit_sync called with 0 count
-Date: Mon, 14 Oct 2024 16:17:05 +0200
-Message-ID: <20241014141236.480830694@linuxfoundation.org>
+Subject: [PATCH 6.1 472/798] drm/stm: Avoid use-after-free issues with crtc and plane
+Date: Mon, 14 Oct 2024 16:17:06 +0200
+Message-ID: <20241014141236.520672951@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -48,131 +45,256 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjay K Kumar <sanjay.k.kumar@intel.com>
+From: Katya Orlova <e.orlova@ispras.ru>
 
-[ Upstream commit 3cf74230c139f208b7fb313ae0054386eee31a81 ]
+[ Upstream commit 19dd9780b7ac673be95bf6fd6892a184c9db611f ]
 
-If qi_submit_sync() is invoked with 0 invalidation descriptors (for
-instance, for DMA draining purposes), we can run into a bug where a
-submitting thread fails to detect the completion of invalidation_wait.
-Subsequently, this led to a soft lockup. Currently, there is no impact
-by this bug on the existing users because no callers are submitting
-invalidations with 0 descriptors. This fix will enable future users
-(such as DMA drain) calling qi_submit_sync() with 0 count.
+ltdc_load() calls functions drm_crtc_init_with_planes(),
+drm_universal_plane_init() and drm_encoder_init(). These functions
+should not be called with parameters allocated with devm_kzalloc()
+to avoid use-after-free issues [1].
 
-Suppose thread T1 invokes qi_submit_sync() with non-zero descriptors, while
-concurrently, thread T2 calls qi_submit_sync() with zero descriptors. Both
-threads then enter a while loop, waiting for their respective descriptors
-to complete. T1 detects its completion (i.e., T1's invalidation_wait status
-changes to QI_DONE by HW) and proceeds to call reclaim_free_desc() to
-reclaim all descriptors, potentially including adjacent ones of other
-threads that are also marked as QI_DONE.
+Use allocations managed by the DRM framework.
 
-During this time, while T2 is waiting to acquire the qi->q_lock, the IOMMU
-hardware may complete the invalidation for T2, setting its status to
-QI_DONE. However, if T1's execution of reclaim_free_desc() frees T2's
-invalidation_wait descriptor and changes its status to QI_FREE, T2 will
-not observe the QI_DONE status for its invalidation_wait and will
-indefinitely remain stuck.
+Found by Linux Verification Center (linuxtesting.org).
 
-This soft lockup does not occur when only non-zero descriptors are
-submitted.In such cases, invalidation descriptors are interspersed among
-wait descriptors with the status QI_IN_USE, acting as barriers. These
-barriers prevent the reclaim code from mistakenly freeing descriptors
-belonging to other submitters.
+[1]
+https://lore.kernel.org/lkml/u366i76e3qhh3ra5oxrtngjtm2u5lterkekcz6y2jkndhuxzli@diujon4h7qwb/
 
-Considered the following example timeline:
-	T1			T2
-========================================
-	ID1
-	WD1
-	while(WD1!=QI_DONE)
-	unlock
-				lock
-	WD1=QI_DONE*		WD2
-				while(WD2!=QI_DONE)
-				unlock
-	lock
-	WD1==QI_DONE?
-	ID1=QI_DONE		WD2=DONE*
-	reclaim()
-	ID1=FREE
-	WD1=FREE
-	WD2=FREE
-	unlock
-				soft lockup! T2 never sees QI_DONE in WD2
-
-Where:
-ID = invalidation descriptor
-WD = wait descriptor
-* Written by hardware
-
-The root of the problem is that the descriptor status QI_DONE flag is used
-for two conflicting purposes:
-1. signal a descriptor is ready for reclaim (to be freed)
-2. signal by the hardware that a wait descriptor is complete
-
-The solution (in this patch) is state separation by using QI_FREE flag
-for #1.
-
-Once a thread's invalidation descriptors are complete, their status would
-be set to QI_FREE. The reclaim_free_desc() function would then only
-free descriptors marked as QI_FREE instead of those marked as
-QI_DONE. This change ensures that T2 (from the previous example) will
-correctly observe the completion of its invalidation_wait (marked as
-QI_DONE).
-
-Signed-off-by: Sanjay K Kumar <sanjay.k.kumar@intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240728210059.1964602-1-jacob.jun.pan@linux.intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Katya Orlova <e.orlova@ispras.ru>
+Acked-by: Raphaël Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240216125040.8968-1-e.orlova@ispras.ru
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/stm/drv.c  |  3 +-
+ drivers/gpu/drm/stm/ltdc.c | 73 ++++++++++----------------------------
+ 2 files changed, 20 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 345c161ffb27a..76fa7d823b3d0 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1182,9 +1182,7 @@ static void free_iommu(struct intel_iommu *iommu)
-  */
- static inline void reclaim_free_desc(struct q_inval *qi)
+diff --git a/drivers/gpu/drm/stm/drv.c b/drivers/gpu/drm/stm/drv.c
+index 77b1b10456f52..7a3f1b4020292 100644
+--- a/drivers/gpu/drm/stm/drv.c
++++ b/drivers/gpu/drm/stm/drv.c
+@@ -24,6 +24,7 @@
+ #include <drm/drm_module.h>
+ #include <drm/drm_probe_helper.h>
+ #include <drm/drm_vblank.h>
++#include <drm/drm_managed.h>
+ 
+ #include "ltdc.h"
+ 
+@@ -74,7 +75,7 @@ static int drv_load(struct drm_device *ddev)
+ 
+ 	DRM_DEBUG("%s\n", __func__);
+ 
+-	ldev = devm_kzalloc(ddev->dev, sizeof(*ldev), GFP_KERNEL);
++	ldev = drmm_kzalloc(ddev, sizeof(*ldev), GFP_KERNEL);
+ 	if (!ldev)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/gpu/drm/stm/ltdc.c b/drivers/gpu/drm/stm/ltdc.c
+index b8c1636168cfa..1d22afcf34ba7 100644
+--- a/drivers/gpu/drm/stm/ltdc.c
++++ b/drivers/gpu/drm/stm/ltdc.c
+@@ -37,6 +37,7 @@
+ #include <drm/drm_probe_helper.h>
+ #include <drm/drm_simple_kms_helper.h>
+ #include <drm/drm_vblank.h>
++#include <drm/drm_managed.h>
+ 
+ #include <video/videomode.h>
+ 
+@@ -1200,7 +1201,6 @@ static void ltdc_crtc_atomic_print_state(struct drm_printer *p,
+ }
+ 
+ static const struct drm_crtc_funcs ltdc_crtc_funcs = {
+-	.destroy = drm_crtc_cleanup,
+ 	.set_config = drm_atomic_helper_set_config,
+ 	.page_flip = drm_atomic_helper_page_flip,
+ 	.reset = drm_atomic_helper_crtc_reset,
+@@ -1213,7 +1213,6 @@ static const struct drm_crtc_funcs ltdc_crtc_funcs = {
+ };
+ 
+ static const struct drm_crtc_funcs ltdc_crtc_with_crc_support_funcs = {
+-	.destroy = drm_crtc_cleanup,
+ 	.set_config = drm_atomic_helper_set_config,
+ 	.page_flip = drm_atomic_helper_page_flip,
+ 	.reset = drm_atomic_helper_crtc_reset,
+@@ -1546,7 +1545,6 @@ static void ltdc_plane_atomic_print_state(struct drm_printer *p,
+ static const struct drm_plane_funcs ltdc_plane_funcs = {
+ 	.update_plane = drm_atomic_helper_update_plane,
+ 	.disable_plane = drm_atomic_helper_disable_plane,
+-	.destroy = drm_plane_cleanup,
+ 	.reset = drm_atomic_helper_plane_reset,
+ 	.atomic_duplicate_state = drm_atomic_helper_plane_duplicate_state,
+ 	.atomic_destroy_state = drm_atomic_helper_plane_destroy_state,
+@@ -1573,7 +1571,6 @@ static struct drm_plane *ltdc_plane_create(struct drm_device *ddev,
+ 	const u64 *modifiers = ltdc_format_modifiers;
+ 	u32 lofs = index * LAY_OFS;
+ 	u32 val;
+-	int ret;
+ 
+ 	/* Allocate the biggest size according to supported color formats */
+ 	formats = devm_kzalloc(dev, (ldev->caps.pix_fmt_nb +
+@@ -1616,14 +1613,10 @@ static struct drm_plane *ltdc_plane_create(struct drm_device *ddev,
+ 		}
+ 	}
+ 
+-	plane = devm_kzalloc(dev, sizeof(*plane), GFP_KERNEL);
+-	if (!plane)
+-		return NULL;
+-
+-	ret = drm_universal_plane_init(ddev, plane, possible_crtcs,
+-				       &ltdc_plane_funcs, formats, nb_fmt,
+-				       modifiers, type, NULL);
+-	if (ret < 0)
++	plane = drmm_universal_plane_alloc(ddev, struct drm_plane, dev,
++					   possible_crtcs, &ltdc_plane_funcs, formats,
++					   nb_fmt, modifiers, type, NULL);
++	if (IS_ERR(plane))
+ 		return NULL;
+ 
+ 	if (ldev->caps.ycbcr_input) {
+@@ -1646,15 +1639,6 @@ static struct drm_plane *ltdc_plane_create(struct drm_device *ddev,
+ 	return plane;
+ }
+ 
+-static void ltdc_plane_destroy_all(struct drm_device *ddev)
+-{
+-	struct drm_plane *plane, *plane_temp;
+-
+-	list_for_each_entry_safe(plane, plane_temp,
+-				 &ddev->mode_config.plane_list, head)
+-		drm_plane_cleanup(plane);
+-}
+-
+ static int ltdc_crtc_init(struct drm_device *ddev, struct drm_crtc *crtc)
  {
--	while (qi->desc_status[qi->free_tail] == QI_DONE ||
--	       qi->desc_status[qi->free_tail] == QI_ABORT) {
--		qi->desc_status[qi->free_tail] = QI_FREE;
-+	while (qi->desc_status[qi->free_tail] == QI_FREE && qi->free_tail != qi->free_head) {
- 		qi->free_tail = (qi->free_tail + 1) % QI_LENGTH;
- 		qi->free_cnt++;
- 	}
-@@ -1419,8 +1417,16 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
- 		raw_spin_lock(&qi->q_lock);
+ 	struct ltdc_device *ldev = ddev->dev_private;
+@@ -1680,14 +1664,14 @@ static int ltdc_crtc_init(struct drm_device *ddev, struct drm_crtc *crtc)
+ 
+ 	/* Init CRTC according to its hardware features */
+ 	if (ldev->caps.crc)
+-		ret = drm_crtc_init_with_planes(ddev, crtc, primary, NULL,
+-						&ltdc_crtc_with_crc_support_funcs, NULL);
++		ret = drmm_crtc_init_with_planes(ddev, crtc, primary, NULL,
++						 &ltdc_crtc_with_crc_support_funcs, NULL);
+ 	else
+-		ret = drm_crtc_init_with_planes(ddev, crtc, primary, NULL,
+-						&ltdc_crtc_funcs, NULL);
++		ret = drmm_crtc_init_with_planes(ddev, crtc, primary, NULL,
++						 &ltdc_crtc_funcs, NULL);
+ 	if (ret) {
+ 		DRM_ERROR("Can not initialize CRTC\n");
+-		goto cleanup;
++		return ret;
  	}
  
--	for (i = 0; i < count; i++)
--		qi->desc_status[(index + i) % QI_LENGTH] = QI_DONE;
-+	/*
-+	 * The reclaim code can free descriptors from multiple submissions
-+	 * starting from the tail of the queue. When count == 0, the
-+	 * status of the standalone wait descriptor at the tail of the queue
-+	 * must be set to QI_FREE to allow the reclaim code to proceed.
-+	 * It is also possible that descriptors from one of the previous
-+	 * submissions has to be reclaimed by a subsequent submission.
-+	 */
-+	for (i = 0; i <= count; i++)
-+		qi->desc_status[(index + i) % QI_LENGTH] = QI_FREE;
+ 	drm_crtc_helper_add(crtc, &ltdc_crtc_helper_funcs);
+@@ -1701,9 +1685,8 @@ static int ltdc_crtc_init(struct drm_device *ddev, struct drm_crtc *crtc)
+ 	for (i = 1; i < ldev->caps.nb_layers; i++) {
+ 		overlay = ltdc_plane_create(ddev, DRM_PLANE_TYPE_OVERLAY, i);
+ 		if (!overlay) {
+-			ret = -ENOMEM;
+ 			DRM_ERROR("Can not create overlay plane %d\n", i);
+-			goto cleanup;
++			return -ENOMEM;
+ 		}
+ 		if (ldev->caps.dynamic_zorder)
+ 			drm_plane_create_zpos_property(overlay, i, 0, ldev->caps.nb_layers - 1);
+@@ -1716,10 +1699,6 @@ static int ltdc_crtc_init(struct drm_device *ddev, struct drm_crtc *crtc)
+ 	}
  
- 	reclaim_free_desc(qi);
- 	raw_spin_unlock_irqrestore(&qi->q_lock, flags);
+ 	return 0;
+-
+-cleanup:
+-	ltdc_plane_destroy_all(ddev);
+-	return ret;
+ }
+ 
+ static void ltdc_encoder_disable(struct drm_encoder *encoder)
+@@ -1779,23 +1758,19 @@ static int ltdc_encoder_init(struct drm_device *ddev, struct drm_bridge *bridge)
+ 	struct drm_encoder *encoder;
+ 	int ret;
+ 
+-	encoder = devm_kzalloc(ddev->dev, sizeof(*encoder), GFP_KERNEL);
+-	if (!encoder)
+-		return -ENOMEM;
++	encoder = drmm_simple_encoder_alloc(ddev, struct drm_encoder, dev,
++					    DRM_MODE_ENCODER_DPI);
++	if (IS_ERR(encoder))
++		return PTR_ERR(encoder);
+ 
+ 	encoder->possible_crtcs = CRTC_MASK;
+ 	encoder->possible_clones = 0;	/* No cloning support */
+ 
+-	drm_simple_encoder_init(ddev, encoder, DRM_MODE_ENCODER_DPI);
+-
+ 	drm_encoder_helper_add(encoder, &ltdc_encoder_helper_funcs);
+ 
+ 	ret = drm_bridge_attach(encoder, bridge, NULL, 0);
+-	if (ret) {
+-		if (ret != -EPROBE_DEFER)
+-			drm_encoder_cleanup(encoder);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	DRM_DEBUG_DRIVER("Bridge encoder:%d created\n", encoder->base.id);
+ 
+@@ -1965,8 +1940,7 @@ int ltdc_load(struct drm_device *ddev)
+ 			goto err;
+ 
+ 		if (panel) {
+-			bridge = drm_panel_bridge_add_typed(panel,
+-							    DRM_MODE_CONNECTOR_DPI);
++			bridge = drmm_panel_bridge_add(ddev, panel);
+ 			if (IS_ERR(bridge)) {
+ 				DRM_ERROR("panel-bridge endpoint %d\n", i);
+ 				ret = PTR_ERR(bridge);
+@@ -2048,7 +2022,7 @@ int ltdc_load(struct drm_device *ddev)
+ 		}
+ 	}
+ 
+-	crtc = devm_kzalloc(dev, sizeof(*crtc), GFP_KERNEL);
++	crtc = drmm_kzalloc(ddev, sizeof(*crtc), GFP_KERNEL);
+ 	if (!crtc) {
+ 		DRM_ERROR("Failed to allocate crtc\n");
+ 		ret = -ENOMEM;
+@@ -2075,9 +2049,6 @@ int ltdc_load(struct drm_device *ddev)
+ 
+ 	return 0;
+ err:
+-	for (i = 0; i < nb_endpoints; i++)
+-		drm_of_panel_bridge_remove(ddev->dev->of_node, 0, i);
+-
+ 	clk_disable_unprepare(ldev->pixel_clk);
+ 
+ 	return ret;
+@@ -2085,16 +2056,8 @@ int ltdc_load(struct drm_device *ddev)
+ 
+ void ltdc_unload(struct drm_device *ddev)
+ {
+-	struct device *dev = ddev->dev;
+-	int nb_endpoints, i;
+-
+ 	DRM_DEBUG_DRIVER("\n");
+ 
+-	nb_endpoints = of_graph_get_endpoint_count(dev->of_node);
+-
+-	for (i = 0; i < nb_endpoints; i++)
+-		drm_of_panel_bridge_remove(ddev->dev->of_node, 0, i);
+-
+ 	pm_runtime_disable(ddev->dev);
+ }
+ 
 -- 
 2.43.0
 
