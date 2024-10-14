@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDBF1A0724;
-	Mon, 14 Oct 2024 14:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192B1AB517;
+	Mon, 14 Oct 2024 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916526; cv=none; b=BCB9WN2mw99WJe74FSlw+cZdayiD51HSru1Hx27j1Kj1hZDbzZm8ZPUiOFOZhjPyd1NRslxxHOMebMot7jOFu4FZ/oykt56lcckl93AfwCAvoYn6koRn0TYVntwIDZfuXvB65NHcFhhQIDKH8JUL9S/xBwy2yJBE3f7AaxnuWfk=
+	t=1728916534; cv=none; b=cSqhem4XH4VwjhfXvkqfV27LhgKrmzFITirR4xm28afTnj/rP+g2lbmxfCYL4x9u5LRu8Zacljb70udv98+xCUlF7HLVNdTUuejlUxzR4fGTlTbeQ3fDxaF8vsfPD/jd2tMfyZqhKZlbB8mN/phRp7ehUkcBFvFDlZ8DGOk6L9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916526; c=relaxed/simple;
-	bh=TLrxOdmGSFt6LIFvCjdeBCQqGP7BMEE4Cpm5k42FOqA=;
+	s=arc-20240116; t=1728916534; c=relaxed/simple;
+	bh=5rxzK9UIrAuaKxPJm3ZKxLKE5HKIV6c8R7GzMBEomCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UECvfE1uctqSC2wrI3v6emyR/9OdEdJHYSAFvZGVJQmON5KTGLxZfaql4rmwTkHSFBnQuuMa5774HzqqUHKCtccLFYIhQY4W+X/x1irvlcqoZbL9ikPejlxp/8Z0Qm/dZU7lrxsA7wKBapxI2M4XWx0aoMvlCICj6J9NkZBYG40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6sYKzih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2GmENsfBivkTpzExBGQxBQqCfJrz1YCIFibX9FBui/MgCtNpFz3ul0S9NXzpYn/Nm4w0ZI+0BbsysuXnaXWppqMUWoi1WbK3L3MbtBPJUM3pHpT5GC8cYRaHN6n4KXs7f1WBnVWksUObymRCt9qIcOKnza7sdU8Kzr+0r9+Up8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FG0ia2cC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6sYKzih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D302DC4CED0;
-	Mon, 14 Oct 2024 14:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FG0ia2cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B3AC4CEC3;
+	Mon, 14 Oct 2024 14:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916526;
-	bh=TLrxOdmGSFt6LIFvCjdeBCQqGP7BMEE4Cpm5k42FOqA=;
+	s=korg; t=1728916534;
+	bh=5rxzK9UIrAuaKxPJm3ZKxLKE5HKIV6c8R7GzMBEomCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6sYKzihj98vfK1NEwDwpo7rEyRXR6lkubBCDCMDrfk+177jHdY4kFgaYFcg+UR+7
-	 PDd9XPRr7gvW/J0UcEzuuW5Ti+y9VpYHSh0ToZ2HbBfqTtjGsZxjB/Ztjd6Le7ezej
-	 eCDchln8YIRQQsu+yHjyttGbKt8g8NJ80OMxDIxo=
+	b=FG0ia2cC/NPWQyNTzC7cP9+rwR4h/sAl5pftLc+ehC5msxu4+Iwgr4uiAeqshC2pY
+	 1bN9+iNRN6iSiGT208yFK3WU4xE8kmVFasNVhrXO75h+EhydD+yVQhe5uSc47X1qry
+	 zliniT5ahbbVx9lGUcC46pQRPSkjfrDeu4oF1FC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Hillf Danton <hdanton@sina.com>,
-	Tejun Heo <tj@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 210/214] kthread: unpark only parked kthread
-Date: Mon, 14 Oct 2024 16:21:13 +0200
-Message-ID: <20241014141053.172858802@linuxfoundation.org>
+Subject: [PATCH 6.11 211/214] fs/proc/kcore.c: allow translation of physical memory addresses
+Date: Mon, 14 Oct 2024 16:21:14 +0200
+Message-ID: <20241014141053.211783868@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,65 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-commit 214e01ad4ed7158cab66498810094fac5d09b218 upstream.
+commit 3d5854d75e3187147613130561b58f0b06166172 upstream.
 
-Calling into kthread unparking unconditionally is mostly harmless when
-the kthread is already unparked. The wake up is then simply ignored
-because the target is not in TASK_PARKED state.
+When /proc/kcore is read an attempt to read the first two pages results in
+HW-specific page swap on s390 and another (so called prefix) pages are
+accessed instead.  That leads to a wrong read.
 
-However if the kthread is per CPU, the wake up is preceded by a call
-to kthread_bind() which expects the task to be inactive and in
-TASK_PARKED state, which obviously isn't the case if it is unparked.
+Allow architecture-specific translation of memory addresses using
+kc_xlate_dev_mem_ptr() and kc_unxlate_dev_mem_ptr() callbacks similarily
+to /dev/mem xlate_dev_mem_ptr() and unxlate_dev_mem_ptr() callbacks.  That
+way an architecture can deal with specific physical memory ranges.
 
-As a result, calling kthread_stop() on an unparked per-cpu kthread
-triggers such a warning:
+Re-use the existing /dev/mem callback implementation on s390, which
+handles the described prefix pages swapping correctly.
 
-	WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind_mask kernel/kthread.c:525
-	 <TASK>
-	 kthread_stop+0x17a/0x630 kernel/kthread.c:707
-	 destroy_workqueue+0x136/0xc40 kernel/workqueue.c:5810
-	 wg_destruct+0x1e2/0x2e0 drivers/net/wireguard/device.c:257
-	 netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10693
-	 default_device_exit_batch+0xa14/0xa90 net/core/dev.c:11769
-	 ops_exit_list net/core/net_namespace.c:178 [inline]
-	 cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:640
-	 process_one_work kernel/workqueue.c:3231 [inline]
-	 process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
-	 worker_thread+0x86d/0xd70 kernel/workqueue.c:3393
-	 kthread+0x2f0/0x390 kernel/kthread.c:389
-	 ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-	 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-	 </TASK>
+For other architectures the default callback is basically NOP.  It is
+expected the condition (vaddr == __va(__pa(vaddr))) always holds true for
+KCORE_RAM memory type.
 
-Fix this with skipping unecessary unparking while stopping a kthread.
-
-Link: https://lkml.kernel.org/r/20240913214634.12557-1-frederic@kernel.org
-Fixes: 5c25b5ff89f0 ("workqueue: Tag bound workers with KTHREAD_IS_PER_CPU")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
-Tested-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: Tejun Heo <tj@kernel.org>
+Link: https://lkml.kernel.org/r/20240930122119.1651546-1-agordeev@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kthread.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/include/asm/io.h |    2 ++
+ fs/proc/kcore.c            |   36 ++++++++++++++++++++++++++++++++++--
+ 2 files changed, 36 insertions(+), 2 deletions(-)
 
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -623,6 +623,8 @@ void kthread_unpark(struct task_struct *
- {
- 	struct kthread *kthread = to_kthread(k);
+--- a/arch/s390/include/asm/io.h
++++ b/arch/s390/include/asm/io.h
+@@ -16,8 +16,10 @@
+ #include <asm/pci_io.h>
  
-+	if (!test_bit(KTHREAD_SHOULD_PARK, &kthread->flags))
-+		return;
- 	/*
- 	 * Newly created kthread was parked when the CPU was offline.
- 	 * The binding was lost and we need to set it again.
+ #define xlate_dev_mem_ptr xlate_dev_mem_ptr
++#define kc_xlate_dev_mem_ptr xlate_dev_mem_ptr
+ void *xlate_dev_mem_ptr(phys_addr_t phys);
+ #define unxlate_dev_mem_ptr unxlate_dev_mem_ptr
++#define kc_unxlate_dev_mem_ptr unxlate_dev_mem_ptr
+ void unxlate_dev_mem_ptr(phys_addr_t phys, void *addr);
+ 
+ #define IO_SPACE_LIMIT 0
+--- a/fs/proc/kcore.c
++++ b/fs/proc/kcore.c
+@@ -50,6 +50,20 @@ static struct proc_dir_entry *proc_root_
+ #define	kc_offset_to_vaddr(o) ((o) + PAGE_OFFSET)
+ #endif
+ 
++#ifndef kc_xlate_dev_mem_ptr
++#define kc_xlate_dev_mem_ptr kc_xlate_dev_mem_ptr
++static inline void *kc_xlate_dev_mem_ptr(phys_addr_t phys)
++{
++	return __va(phys);
++}
++#endif
++#ifndef kc_unxlate_dev_mem_ptr
++#define kc_unxlate_dev_mem_ptr kc_unxlate_dev_mem_ptr
++static inline void kc_unxlate_dev_mem_ptr(phys_addr_t phys, void *virt)
++{
++}
++#endif
++
+ static LIST_HEAD(kclist_head);
+ static DECLARE_RWSEM(kclist_lock);
+ static int kcore_need_update = 1;
+@@ -471,6 +485,8 @@ static ssize_t read_kcore_iter(struct ki
+ 	while (buflen) {
+ 		struct page *page;
+ 		unsigned long pfn;
++		phys_addr_t phys;
++		void *__start;
+ 
+ 		/*
+ 		 * If this is the first iteration or the address is not within
+@@ -537,7 +553,8 @@ static ssize_t read_kcore_iter(struct ki
+ 			}
+ 			break;
+ 		case KCORE_RAM:
+-			pfn = __pa(start) >> PAGE_SHIFT;
++			phys = __pa(start);
++			pfn =  phys >> PAGE_SHIFT;
+ 			page = pfn_to_online_page(pfn);
+ 
+ 			/*
+@@ -557,13 +574,28 @@ static ssize_t read_kcore_iter(struct ki
+ 			fallthrough;
+ 		case KCORE_VMEMMAP:
+ 		case KCORE_TEXT:
++			if (m->type == KCORE_RAM) {
++				__start = kc_xlate_dev_mem_ptr(phys);
++				if (!__start) {
++					ret = -ENOMEM;
++					if (iov_iter_zero(tsz, iter) != tsz)
++						ret = -EFAULT;
++					goto out;
++				}
++			} else {
++				__start = (void *)start;
++			}
++
+ 			/*
+ 			 * Sadly we must use a bounce buffer here to be able to
+ 			 * make use of copy_from_kernel_nofault(), as these
+ 			 * memory regions might not always be mapped on all
+ 			 * architectures.
+ 			 */
+-			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
++			ret = copy_from_kernel_nofault(buf, __start, tsz);
++			if (m->type == KCORE_RAM)
++				kc_unxlate_dev_mem_ptr(phys, __start);
++			if (ret) {
+ 				if (iov_iter_zero(tsz, iter) != tsz) {
+ 					ret = -EFAULT;
+ 					goto out;
 
 
