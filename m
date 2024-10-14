@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF8D1B4F1E;
-	Mon, 14 Oct 2024 14:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593CA1C3021;
+	Mon, 14 Oct 2024 14:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917334; cv=none; b=C2WVKNJSuqbH3M/w+fM4AMFMO4ogRuUoY4A6OLmxpWQ6LCNm7AMC8697A8g1EzLA5gTskh0PWCrVlHzsyhM6NrB89WVACluw9JHKdAx+jzKP9QwDCz3n8Qabjh4bXurEvY0A96oLIm1rlUiqwBGdEsUqHYJI7TW/IQi6Uz3SKs0=
+	t=1728917337; cv=none; b=muUEqZV6FTxlAUTpJxhqjaW/PPrfYNMw2WagNM+jTIwg5k7T2UcA5MzFv0YWjr4RTAqznbgh+Uzu7rFIUGd0fZ/ZVLyq+s3HfszeeAktEGXJOh83N76U7vflLMUh5Wlj1CDAXMo/glPpAliDQT5NrPTdl38pO3Gli1+Hvi7YTOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917334; c=relaxed/simple;
-	bh=DjzQ0GOyOc1FgGmFykqDBuqxg6GVs1QaI1jMuskdsps=;
+	s=arc-20240116; t=1728917337; c=relaxed/simple;
+	bh=1DURJ1DSMnS6UgxLHs3OefAx1HOc2P1KKzgDQbzTBbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBjceV+D4Y2sXWR9Hcc8mi2XF7qj1y6asAaAdohM7ocq1OFe5RpfUCMsinyheihkSfIqHxP0iq167FMZs3BtjWFk54isXZ38bHY6O22Mvzi7GXq00wdJguQQMdLPorM1z3lPE+lg3j+8JkJKUFNKtKKQEUw9Cc6HvtseLToR+zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlp0bghV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c39ljMnYByskpOpkh1G/BY59FxgGrYKwBVgOsD7GLIYxXJk4AIeHlnXSd7A8g6u9HMDDAzh4XNmYPILiOpVH4dE8rL4VWOmY3ueuUObjcOHRNE8mP+HyMa2hr617xCCg5+iZ3Y7SPikTs4nuOz6uib04fOJYSRXhLbP5PrJob5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ty97VGh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlp0bghV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622ACC4CEC3;
-	Mon, 14 Oct 2024 14:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ty97VGh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF778C4CEC3;
+	Mon, 14 Oct 2024 14:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917333;
-	bh=DjzQ0GOyOc1FgGmFykqDBuqxg6GVs1QaI1jMuskdsps=;
+	s=korg; t=1728917337;
+	bh=1DURJ1DSMnS6UgxLHs3OefAx1HOc2P1KKzgDQbzTBbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlp0bghV22gY6TlkkPB4j0hufzZWFJUrvXEXCnb14PwJY4Yvbl1CYe7f3AV3RRd2c
-	 ESZmKSyL3egdFgU4Gd+meB3jE1ZnT8J97hU+cvU9J+111jVafLLqH0cW5N1pjgGPeM
-	 oX7BlUH4ZsTHfhRyfKQuQzfAZ7vTZF5eJvsuiKIg=
+	b=Ty97VGh3475Fo5A6iXf5pMlo4JTXZC9YHYws9m57X/QNunql4QfXq2pfX8YLLZkl1
+	 Ux7+qz1/13VZkixbtMyJEdVZq0hEy2JIvZB0nldh4BD7fC3Lpp7ds0JrTBxOk8cQKb
+	 pNTG4FTwHlGRQor3PpbEyBNIxqszuRPJLrqzydMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 213/213] scsi: Revert "scsi: sd: Do not repeat the starting disk message"
-Date: Mon, 14 Oct 2024 16:21:59 +0200
-Message-ID: <20241014141051.273396615@linuxfoundation.org>
+	Luca Stefani <luca.stefani.ge1@gmail.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 207/213] btrfs: split remaining space to discard in chunks
+Date: Mon, 14 Oct 2024 16:21:53 +0200
+Message-ID: <20241014141051.040525697@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,70 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Luca Stefani <luca.stefani.ge1@gmail.com>
 
-commit da3e19ef0b3de0aa4b25595bdc214c02a04f19b8 upstream.
+commit a99fcb0158978ed332009449b484e5f3ca2d7df4 upstream.
 
-This reverts commit 7a6bbc2829d4ab592c7e440a6f6f5deb3cd95db4.
+Per Qu Wenruo in case we have a very large disk, e.g. 8TiB device,
+mostly empty although we will do the split according to our super block
+locations, the last super block ends at 256G, we can submit a huge
+discard for the range [256G, 8T), causing a large delay.
 
-The offending commit tried to suppress a double "Starting disk" message for
-some drivers, but instead started spamming the log with bogus messages
-every five seconds:
+Split the space left to discard based on BTRFS_MAX_DISCARD_CHUNK_SIZE in
+preparation of introduction of cancellation points to trim. The value
+of the chunk size is arbitrary, it can be higher or derived from actual
+device capabilities but we can't easily read that using
+bio_discard_limit().
 
-	[  311.798956] sd 0:0:0:0: [sda] Starting disk
-	[  316.919103] sd 0:0:0:0: [sda] Starting disk
-	[  322.040775] sd 0:0:0:0: [sda] Starting disk
-	[  327.161140] sd 0:0:0:0: [sda] Starting disk
-	[  332.281352] sd 0:0:0:0: [sda] Starting disk
-	[  337.401878] sd 0:0:0:0: [sda] Starting disk
-	[  342.521527] sd 0:0:0:0: [sda] Starting disk
-	[  345.850401] sd 0:0:0:0: [sda] Starting disk
-	[  350.967132] sd 0:0:0:0: [sda] Starting disk
-	[  356.090454] sd 0:0:0:0: [sda] Starting disk
-	...
-
-on machines that do not actually stop the disk on runtime suspend (e.g.
-the Qualcomm sc8280xp CRD with UFS).
-
-Let's just revert for now to address the regression.
-
-Fixes: 7a6bbc2829d4 ("scsi: sd: Do not repeat the starting disk message")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240716161101.30692-1-johan+linaro@kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219180
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1229737
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Luca Stefani <luca.stefani.ge1@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c |   19 +++++++++++++++----
+ fs/btrfs/volumes.h     |    6 ++++++
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3955,6 +3955,8 @@ static int sd_resume(struct device *dev)
- {
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
- 
-+	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
-+
- 	if (opal_unlock_from_suspend(sdkp->opal_dev)) {
- 		sd_printk(KERN_NOTICE, sdkp, "OPAL unlock failed\n");
- 		return -EIO;
-@@ -3971,13 +3973,12 @@ static int sd_resume_common(struct devic
- 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
- 		return 0;
- 
--	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
--
- 	if (!sd_do_start_stop(sdkp->device, runtime)) {
- 		sdkp->suspended = false;
- 		return 0;
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1303,13 +1303,24 @@ static int btrfs_issue_discard(struct bl
+ 		bytes_left = end - start;
  	}
  
-+	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
- 	ret = sd_start_stop_device(sdkp, 1);
- 	if (!ret) {
- 		sd_resume(dev);
+-	if (bytes_left) {
++	while (bytes_left) {
++		u64 bytes_to_discard = min(BTRFS_MAX_DISCARD_CHUNK_SIZE, bytes_left);
++
+ 		ret = blkdev_issue_discard(bdev, start >> SECTOR_SHIFT,
+-					   bytes_left >> SECTOR_SHIFT,
++					   bytes_to_discard >> SECTOR_SHIFT,
+ 					   GFP_NOFS);
+-		if (!ret)
+-			*discarded_bytes += bytes_left;
++
++		if (ret) {
++			if (ret != -EOPNOTSUPP)
++				break;
++			continue;
++		}
++
++		start += bytes_to_discard;
++		bytes_left -= bytes_to_discard;
++		*discarded_bytes += bytes_to_discard;
+ 	}
++
+ 	return ret;
+ }
+ 
+--- a/fs/btrfs/volumes.h
++++ b/fs/btrfs/volumes.h
+@@ -15,6 +15,12 @@
+ 
+ #define BTRFS_MAX_DATA_CHUNK_SIZE	(10ULL * SZ_1G)
+ 
++/*
++ * Arbitratry maximum size of one discard request to limit potentially long time
++ * spent in blkdev_issue_discard().
++ */
++#define BTRFS_MAX_DISCARD_CHUNK_SIZE	(SZ_1G)
++
+ extern struct mutex uuid_mutex;
+ 
+ #define BTRFS_STRIPE_LEN		SZ_64K
 
 
