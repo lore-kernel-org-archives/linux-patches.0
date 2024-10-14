@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23536610B;
-	Mon, 14 Oct 2024 14:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E73520EB;
+	Mon, 14 Oct 2024 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916266; cv=none; b=XMJhy4sjG7ZV7FFTVKdvawMV6dZryRC1SWiySBogechr8iqJ/vY2VJ+FB6pEpooIQNFFqOjPgfPbHEcsMOSbUQf/KeNJ6Vzqs3jXuQIWw12gf7mkCwD4JvBrD5tz16DP9Lxc3znuTmbQPgMLJigIDxltvEwH9piiik3W5PhjrDo=
+	t=1728916269; cv=none; b=usrgSmiRunZ2nMoSYe8rsbKw6QoA/hlRhevuoAXxaYDWlzyCy/ePLV0GTa7tbbmF3OLI9e1qeXewimVuP4R6gBqsmoDOvfAFgQfy5Vx3yQ1rCWNtq5sMrjfYdja6lsPOXiPab1kHDf3EMFIDL3aVkZITc6w+qFw6hz217r8fXuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916266; c=relaxed/simple;
-	bh=bU9zlebGXs3185WgWNT6aUqjCWcdHFPJwwBwCwRYDcg=;
+	s=arc-20240116; t=1728916269; c=relaxed/simple;
+	bh=MP4fpq+lO2u5Hue3BCvyLqpyS3bwMy+XbcxlssV+bbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evCFK2QO42yCvJjlNmncjUDZ+xfiUC9EqBRj2Bzdh6w4OWJus/TjZHx5XhisF9ExxdQ00j3uVL5Iq47PIRZVxwhsER3Ieerir8qD6VEwdnWLEJe6RO05S9C8z6/nAW6+olCE68tC3DUsHYOgjDrmn3db1PCYsW0ptjHmH8vU3TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0BXhcj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjYTkPXHXarKYxw0syyDhoM2SBSQpO//AkIs0zlMRUnFrYfiL42OkR2K1X4H7Rz8IZ1yNd0Wc47mGdWhkeJH5iHLB+HizrMacCXT/ZNl/7aSfaMwoOLFznzKDBhB2msB5waXM4DZ7nmM3ux9BsHGs2OYCzdLrvSqZYVvySlB5Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJDZuGSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0BXhcj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8E0C4CEC3;
-	Mon, 14 Oct 2024 14:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJDZuGSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4F9C4CEC3;
+	Mon, 14 Oct 2024 14:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916266;
-	bh=bU9zlebGXs3185WgWNT6aUqjCWcdHFPJwwBwCwRYDcg=;
+	s=korg; t=1728916269;
+	bh=MP4fpq+lO2u5Hue3BCvyLqpyS3bwMy+XbcxlssV+bbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0BXhcj7FaXa6iBflY/7qSbKXppkMEhl/JxvL9Qf+DJDjgzKbXsh9ap9/RkujggEl
-	 E8FIz8rNQAK29kKuO4xtZMOpgI5NiQHRHIEigmv9OXqHhvdtPknxiJq6NlshadnvqG
-	 wEon1c8tcNID63XFKx2CCemBjqCjwKD5h1oWCrXA=
+	b=jJDZuGSPKoVb+wNKigRgGvnVASjO5gM4A5XnTOj6FvoCKoECJoTUZ5ZumZh6eRBgF
+	 b6MbdC0akTsW5dccxSuigC4qfw2WqWIbP7Ju0qvhbUd84W7z/e44fPdVps1fXwSZB6
+	 f8h9lV567/ldX2Jl2KM+3mlDco7ROUMMg6hoi9qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Kacper Ludwinski <kac.ludwinski@icloud.com>,
+	Yury Vostrikov <mon@unformed.ru>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Edward Cree <ecree.xilinx@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 100/214] selftests: net: no_forwarding: fix VID for $swp2 in one_bridge_two_pvids() test
-Date: Mon, 14 Oct 2024 16:19:23 +0200
-Message-ID: <20241014141048.898464142@linuxfoundation.org>
+Subject: [PATCH 6.11 091/214] sfc: Dont invoke xdp_do_flush() from netpoll.
+Date: Mon, 14 Oct 2024 16:19:14 +0200
+Message-ID: <20241014141048.546355856@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,81 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kacper Ludwinski <kac.ludwinski@icloud.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 9f49d14ec41ce7be647028d7d34dea727af55272 ]
+[ Upstream commit 55e802468e1d38dec8e25a2fdb6078d45b647e8c ]
 
-Currently, the second bridge command overwrites the first one.
-Fix this by adding this VID to the interface behind $swp2.
+Yury reported a crash in the sfc driver originated from
+netpoll_send_udp(). The netconsole sends a message and then netpoll
+invokes the driver's NAPI function with a budget of zero. It is
+dedicated to allow driver to free TX resources, that it may have used
+while sending the packet.
 
-The one_bridge_two_pvids() test intends to check that there is no
-leakage of traffic between bridge ports which have a single VLAN - the
-PVID VLAN.
+In the netpoll case the driver invokes xdp_do_flush() unconditionally,
+leading to crash because bpf_net_context was never assigned.
 
-Because of a typo, port $swp1 is configured with a PVID twice (second
-command overwrites first), and $swp2 isn't configured at all (and since
-the bridge vlan_default_pvid property is set to 0, this port will not
-have a PVID at all, so it will drop all untagged and priority-tagged
-traffic).
+Invoke xdp_do_flush() only if budget is not zero.
 
-So, instead of testing the configuration that was intended, we are
-testing a different one, where one port has PVID 2 and the other has
-no PVID. This incorrect version of the test should also pass, but is
-ineffective for its purpose, so fix the typo.
-
-This typo has an impact on results of the test,
-potentially leading to wrong conclusions regarding
-the functionality of a network device.
-
-The tests results:
-
-TEST: Switch ports in VLAN-aware bridge with different PVIDs:
-	Unicast non-IP untagged   [ OK ]
-	Multicast non-IP untagged   [ OK ]
-	Broadcast non-IP untagged   [ OK ]
-	Unicast IPv4 untagged   [ OK ]
-	Multicast IPv4 untagged   [ OK ]
-	Unicast IPv6 untagged   [ OK ]
-	Multicast IPv6 untagged   [ OK ]
-	Unicast non-IP VID 1   [ OK ]
-	Multicast non-IP VID 1   [ OK ]
-	Broadcast non-IP VID 1   [ OK ]
-	Unicast IPv4 VID 1   [ OK ]
-	Multicast IPv4 VID 1   [ OK ]
-	Unicast IPv6 VID 1   [ OK ]
-	Multicast IPv6 VID 1   [ OK ]
-	Unicast non-IP VID 4094   [ OK ]
-	Multicast non-IP VID 4094   [ OK ]
-	Broadcast non-IP VID 4094   [ OK ]
-	Unicast IPv4 VID 4094   [ OK ]
-	Multicast IPv4 VID 4094   [ OK ]
-	Unicast IPv6 VID 4094   [ OK ]
-	Multicast IPv6 VID 4094   [ OK ]
-
-Fixes: 476a4f05d9b8 ("selftests: forwarding: add a no_forwarding.sh test")
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Kacper Ludwinski <kac.ludwinski@icloud.com>
-Link: https://patch.msgid.link/20241002051016.849-1-kac.ludwinski@icloud.com
+Fixes: 401cb7dae8130 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
+Reported-by: Yury Vostrikov <mon@unformed.ru>
+Closes: https://lore.kernel.org/5627f6d1-5491-4462-9d75-bc0612c26a22@app.fastmail.com
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://patch.msgid.link/20241002125837.utOcRo6Y@linutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/no_forwarding.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/efx_channels.c       | 3 ++-
+ drivers/net/ethernet/sfc/siena/efx_channels.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/no_forwarding.sh b/tools/testing/selftests/net/forwarding/no_forwarding.sh
-index 9e677aa64a06a..694ece9ba3a74 100755
---- a/tools/testing/selftests/net/forwarding/no_forwarding.sh
-+++ b/tools/testing/selftests/net/forwarding/no_forwarding.sh
-@@ -202,7 +202,7 @@ one_bridge_two_pvids()
- 	ip link set $swp2 master br0
+diff --git a/drivers/net/ethernet/sfc/efx_channels.c b/drivers/net/ethernet/sfc/efx_channels.c
+index c9e17a8208a90..f1723a6fb082b 100644
+--- a/drivers/net/ethernet/sfc/efx_channels.c
++++ b/drivers/net/ethernet/sfc/efx_channels.c
+@@ -1260,7 +1260,8 @@ static int efx_poll(struct napi_struct *napi, int budget)
  
- 	bridge vlan add dev $swp1 vid 1 pvid untagged
--	bridge vlan add dev $swp1 vid 2 pvid untagged
-+	bridge vlan add dev $swp2 vid 2 pvid untagged
+ 	spent = efx_process_channel(channel, budget);
  
- 	run_test "Switch ports in VLAN-aware bridge with different PVIDs"
+-	xdp_do_flush();
++	if (budget)
++		xdp_do_flush();
  
+ 	if (spent < budget) {
+ 		if (efx_channel_has_rx_queue(channel) &&
+diff --git a/drivers/net/ethernet/sfc/siena/efx_channels.c b/drivers/net/ethernet/sfc/siena/efx_channels.c
+index a7346e965bfe7..d120b3c83ac07 100644
+--- a/drivers/net/ethernet/sfc/siena/efx_channels.c
++++ b/drivers/net/ethernet/sfc/siena/efx_channels.c
+@@ -1285,7 +1285,8 @@ static int efx_poll(struct napi_struct *napi, int budget)
+ 
+ 	spent = efx_process_channel(channel, budget);
+ 
+-	xdp_do_flush();
++	if (budget)
++		xdp_do_flush();
+ 
+ 	if (spent < budget) {
+ 		if (efx_channel_has_rx_queue(channel) &&
 -- 
 2.43.0
 
