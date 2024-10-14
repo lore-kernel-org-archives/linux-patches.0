@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639BC1A76A5;
-	Mon, 14 Oct 2024 14:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA101AAE08;
+	Mon, 14 Oct 2024 14:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916917; cv=none; b=hU5E0q0P9vi/P0GUpONBh2S6+3MdiwNPF34apfprY5utL5QdZ/4B03K/asXKJgoY3IVrnK7BSt/NAE0U+d8quyAYk/XLaFubW9TPN1zd8FUmprg4OIoUNp1Ee+fakLAM1w+l4E9DGr/hVZWoGAJIv2Oj6185PffS5Pb+VQEMsKA=
+	t=1728916920; cv=none; b=dq1YL7sKvWy8uHijFGQ1GlcSshfGZhAd9AnnTUmEUvEfCM+l0WIITmlNVotp0w0MTntARcMFw0Auzo9tMU4gxDMjuSazPY8acMsi4XxMZm+12zNoEYv4O0MON1hvx9py9PIX6G2qmh09LpqeMAEXhOAMJp1ASmdvtOilKNFp8dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916917; c=relaxed/simple;
-	bh=YoYCttugoxuNzJArINEPszTf021PvloiE73O67JihVI=;
+	s=arc-20240116; t=1728916920; c=relaxed/simple;
+	bh=swVuxx/eSO45LJd9xF8bW/FZJhB7IwBO1C8L65Msm74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6hZrKZYpVrz/Ui97FMllhOXG9LiFYPW2R4G/osOgLV3Uh0x6nns/hwHrUg2sxj9397bmdO4OpuFWNlPL7u9LMT01Nf0s6niHemR3ja1XeCpb9z+WgIIXL5shWrnJ6sn/B3Qd8U23M6ir//2TW2Mi6jLbD70OyIxIxhBzRHJ6fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3RxNqW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OKkZ2igqfhpkGpx+EmJehZWX02idqUOOMMnT9YayuYxQ5dycY7x82ZKbnF3pxsViHRazQRB1jEpHV7PGtQvlcV4SiuBPEE0f4iZ8fpJFmju/4JrHrK6wR4BsCzSdSxgxYwz9UHpYYyuEF4w19SbIxL4uSbsFbSyvveD2j7p+5a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4rsIl9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3RxNqW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA5CC4CED0;
-	Mon, 14 Oct 2024 14:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4rsIl9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3105C4CEC3;
+	Mon, 14 Oct 2024 14:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916917;
-	bh=YoYCttugoxuNzJArINEPszTf021PvloiE73O67JihVI=;
+	s=korg; t=1728916920;
+	bh=swVuxx/eSO45LJd9xF8bW/FZJhB7IwBO1C8L65Msm74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3RxNqW95kyDN0B8v+p6eadSUVUld2N4rfuW5eTIKkQjALFAGg/PFkv7dVe550TB4
-	 EA+6zHXh9vnTLu04/CNs4sFaYEVrbQN3SslYTjyjHV89cs7xb3jLrmvqDSDHBla4/T
-	 swt09ysRjKUW5SGUupTTpt7aTbEpVhQGD/uFA90k=
+	b=t4rsIl9DYuWgJfZi7t6bdFOiG4t9mQ/r+xXM6xU4fnaJe+ysGlpdWR/NTPCkFlfGa
+	 uzkA1T6KlK2uEZfL8NbyhUOuXM6vsSiioC/r0nujfrN67ACHVOUs2Ghafh8+i3mNO+
+	 iUga96ayeE9CjAf37o9vNbcOyL9S1zAKlsIe70bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/213] driver core: bus: Return -EIO instead of 0 when show/store invalid bus attribute
-Date: Mon, 14 Oct 2024 16:20:06 +0200
-Message-ID: <20241014141046.873443432@linuxfoundation.org>
+Subject: [PATCH 6.6 101/213] scsi: lpfc: Add ELS_RSP cmd to the list of WQEs to flush in lpfc_els_flush_cmd()
+Date: Mon, 14 Oct 2024 16:20:07 +0200
+Message-ID: <20241014141046.912856147@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -50,46 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit c0fd973c108cdc22a384854bc4b3e288a9717bb2 ]
+[ Upstream commit 93bcc5f3984bf4f51da1529700aec351872dbfff ]
 
-Return -EIO instead of 0 for below erroneous bus attribute operations:
- - read a bus attribute without show().
- - write a bus attribute without store().
+During HBA stress testing, a spam of received PLOGIs exposes a resource
+recovery bug causing leakage of lpfc_sqlq entries from the global
+phba->sli4_hba.lpfc_els_sgl_list.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240724-bus_fix-v2-1-5adbafc698fb@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The issue is in lpfc_els_flush_cmd(), where the driver attempts to recover
+outstanding ELS sgls when walking the txcmplq.  Only CMD_ELS_REQUEST64_CRs
+and CMD_GEN_REQUEST64_CRs are added to the abort and cancel lists.  A check
+for CMD_XMIT_ELS_RSP64_WQE is missing in order to recover LS_ACC usages of
+the phba->sli4_hba.lpfc_els_sgl_list too.
+
+Fix by adding CMD_XMIT_ELS_RSP64_WQE as part of the txcmplq walk when
+adding WQEs to the abort and cancel list in lpfc_els_flush_cmd().  Also,
+update naming convention from CRs to WQEs.
+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240912232447.45607-2-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/bus.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_els.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/bus.c b/drivers/base/bus.c
-index e7761e0ef5a55..d4361ad3b433f 100644
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -152,7 +152,8 @@ static ssize_t bus_attr_show(struct kobject *kobj, struct attribute *attr,
- {
- 	struct bus_attribute *bus_attr = to_bus_attr(attr);
- 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
--	ssize_t ret = 0;
-+	/* return -EIO for reading a bus attribute without show() */
-+	ssize_t ret = -EIO;
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index f67d72160d36e..ebe84bb7bb3dd 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -9649,11 +9649,12 @@ lpfc_els_flush_cmd(struct lpfc_vport *vport)
+ 		if (piocb->cmd_flag & LPFC_DRIVER_ABORTED && !mbx_tmo_err)
+ 			continue;
  
- 	if (bus_attr->show)
- 		ret = bus_attr->show(subsys_priv->bus, buf);
-@@ -164,7 +165,8 @@ static ssize_t bus_attr_store(struct kobject *kobj, struct attribute *attr,
- {
- 	struct bus_attribute *bus_attr = to_bus_attr(attr);
- 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
--	ssize_t ret = 0;
-+	/* return -EIO for writing a bus attribute without store() */
-+	ssize_t ret = -EIO;
+-		/* On the ELS ring we can have ELS_REQUESTs or
+-		 * GEN_REQUESTs waiting for a response.
++		/* On the ELS ring we can have ELS_REQUESTs, ELS_RSPs,
++		 * or GEN_REQUESTs waiting for a CQE response.
+ 		 */
+ 		ulp_command = get_job_cmnd(phba, piocb);
+-		if (ulp_command == CMD_ELS_REQUEST64_CR) {
++		if (ulp_command == CMD_ELS_REQUEST64_WQE ||
++		    ulp_command == CMD_XMIT_ELS_RSP64_WQE) {
+ 			list_add_tail(&piocb->dlist, &abort_list);
  
- 	if (bus_attr->store)
- 		ret = bus_attr->store(subsys_priv->bus, buf, count);
+ 			/* If the link is down when flushing ELS commands
 -- 
 2.43.0
 
