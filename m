@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DDC1ABECB;
-	Mon, 14 Oct 2024 14:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578AA1AAE02;
+	Mon, 14 Oct 2024 14:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917658; cv=none; b=dh47J2ji/WG6eZ2InPs6NcjwRSmKFtX/zuScCrl8lN9SSlFY0/uyXwxT2PL5wx8Ujf+BtVy/MOTc/WZsaCmieWtzM5Jl+D6TZ1UYcAFvPuwyJQoKvd+4bGLXYXHsZ81W5wUzCPksY6EPGCXYyS6uSzmXLsK1KRsZJ3AJwbwsYMY=
+	t=1728917661; cv=none; b=LGMbhPevLY/VO0F7zo2kM6nUTNHiYhwZNwVAqF9VltvWUgcLe9IsQil3kXSf0sEoXYioSLacUPEEOkzZlL67NKgHxzBr/8yC3B9EHiX7RcYOjkD/RnNaNI4XA9aVgLlntDhSxGiKH1bblnKJUYFpPnw5J7ezOekHU6tQVC80bdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917658; c=relaxed/simple;
-	bh=Z9ThiFPvG+fwnLNWYhE9rMTCZeBfp1z8OsM+lcR9ujs=;
+	s=arc-20240116; t=1728917661; c=relaxed/simple;
+	bh=XJiAMbAtlhIMZDhmttSic65AL5OlPHpv5E0Zl/CJA5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLm8w7+3WIfdlu+3DAPKYApVDSSZM6ROri+6Hm8XPHDjJI2F1BR0V2Hmv2+To3Yktdjz/vqjXau32RQg4XNtD2Hp5Y4cM4xCap4a4pyxiX8JLZs9w0WCwbG5LxxYm53EgSz8cdct1tVu5x4KhdBG2Ns71ZeAOa1oY+WEN057f1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WN3lSQnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOQ7lF2hhipukh3ri01AGdH0U2oHmC/IdMOR4NxIea+8Up7LJv8pmrEVv+C9HkJhHhMlcsP80Et+I5zkyySFeUBHA9e7m32hvNa97avh9EPZRsxW00EWDDnRwKAlMovXSRUjWLWymXcLRJkF+lrkWLd1grURJZLjtjVHiEZ3h9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNCnu32A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WN3lSQnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46ECFC4CEC3;
-	Mon, 14 Oct 2024 14:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNCnu32A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6771C4CEC7;
+	Mon, 14 Oct 2024 14:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917657;
-	bh=Z9ThiFPvG+fwnLNWYhE9rMTCZeBfp1z8OsM+lcR9ujs=;
+	s=korg; t=1728917661;
+	bh=XJiAMbAtlhIMZDhmttSic65AL5OlPHpv5E0Zl/CJA5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WN3lSQnzVkbLjhpz+OlQWagfwNmfzQpgDcXobH5GC0XjLqA30KE7+/ONCXxSH7R8G
-	 vzQhY9HfAGksDW5GAjri2arDhBbSAfB6RE+h0RJ5NxFKTyYjkq3Rg00YYCf9KIHa+A
-	 mdX+xPMsZmMk0K+/+d7HMZPLAm0PwDk3lx+w26aM=
+	b=CNCnu32Ad5f3tB6xl675yQ5iZsU2FOHcRR0HEKvsZh2rTpyiioEkS9wE1Lgh3HXul
+	 bZvbsZS7lMBr2SapZtaTubjnDfkbalKsd2CoKybFGo1Nr1Idi7FcMGInhGuI4FhHIr
+	 iuQY8XVbMSpOwmZqnWGnmF22celv3GhGo+rnjdE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Charles Han <hanchunchao@inspur.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/798] i2c: Add i2c_get_match_data()
-Date: Mon, 14 Oct 2024 16:10:42 +0200
-Message-ID: <20241014141221.390180515@linuxfoundation.org>
+Subject: [PATCH 6.1 097/798] mtd: powernv: Add check devm_kasprintf() returned value
+Date: Mon, 14 Oct 2024 16:10:51 +0200
+Message-ID: <20241014141221.743625785@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,67 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 564d73c4d9201526bd976b9379d2aaf1a7133e84 ]
+[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
 
-Add i2c_get_match_data() to get match data for I2C, ACPI and
-DT-based matching, so that we can optimize the driver code.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value is not checked.
 
-Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-[wsa: simplified var initialization]
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 119abf7d1815 ("hwmon: (max16065) Fix alarm attributes")
+Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-base.c | 19 +++++++++++++++++++
- include/linux/i2c.h         |  2 ++
- 2 files changed, 21 insertions(+)
+ drivers/mtd/devices/powernv_flash.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index d6a879f1542c5..643c7f1e5bfd4 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -113,6 +113,25 @@ const struct i2c_device_id *i2c_match_id(const struct i2c_device_id *id,
- }
- EXPORT_SYMBOL_GPL(i2c_match_id);
- 
-+const void *i2c_get_match_data(const struct i2c_client *client)
-+{
-+	struct i2c_driver *driver = to_i2c_driver(client->dev.driver);
-+	const struct i2c_device_id *match;
-+	const void *data;
+diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
+index 36e060386e59d..59e1b3a4406ed 100644
+--- a/drivers/mtd/devices/powernv_flash.c
++++ b/drivers/mtd/devices/powernv_flash.c
+@@ -207,6 +207,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
+ 	 * get them
+ 	 */
+ 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
++	if (!mtd->name)
++		return -ENOMEM;
 +
-+	data = device_get_match_data(&client->dev);
-+	if (!data) {
-+		match = i2c_match_id(driver->id_table, client);
-+		if (!match)
-+			return NULL;
-+
-+		data = (const void *)match->driver_data;
-+	}
-+
-+	return data;
-+}
-+EXPORT_SYMBOL(i2c_get_match_data);
-+
- static int i2c_device_match(struct device *dev, struct device_driver *drv)
- {
- 	struct i2c_client	*client = i2c_verify_client(dev);
-diff --git a/include/linux/i2c.h b/include/linux/i2c.h
-index 35e296d9e1c55..4f5285b87a7f0 100644
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -362,6 +362,8 @@ struct i2c_adapter *i2c_verify_adapter(struct device *dev);
- const struct i2c_device_id *i2c_match_id(const struct i2c_device_id *id,
- 					 const struct i2c_client *client);
- 
-+const void *i2c_get_match_data(const struct i2c_client *client);
-+
- static inline struct i2c_client *kobj_to_i2c_client(struct kobject *kobj)
- {
- 	struct device * const dev = kobj_to_dev(kobj);
+ 	mtd->type = MTD_NORFLASH;
+ 	mtd->flags = MTD_WRITEABLE;
+ 	mtd->size = size;
 -- 
 2.43.0
 
