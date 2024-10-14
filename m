@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5840A1AAE08;
-	Mon, 14 Oct 2024 14:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B751AB52B;
+	Mon, 14 Oct 2024 14:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916590; cv=none; b=dRJCK9rWxC8oeXkKuk/ThhT6IpCcfFU+5dSnE9K9Y/VkJMaZdnv8YuIkh0dFNI+ifu/cBO8wI8JRy8CSKlMcW/MwRFmFXTauWtKeBfsZWvMol/j8javSne7HoNANI9OBiorw/VfLKogW0Nr1DAF2DBS6Zok7ZL3Zwuugh7qXJ8E=
+	t=1728916593; cv=none; b=k/8PeYzy0IwPCVU/baaNThmDy+0ZXLEtR/rbugusQtEucV5IncY/CHsCB7y/xlSCgyANL1C9xCv3ApJmWvjxJzpsar1sYl7RmPBaeSk4cjLG6f5dbcxdV0PzFHIzYp5iUIopeAms2nBX3beIq11RHRDEjQgjrn5N6s86bemQIGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916590; c=relaxed/simple;
-	bh=QdVhbrFS3irK+nZhOjSzkjsVLXF3jlQX2GxPOaeGGGs=;
+	s=arc-20240116; t=1728916593; c=relaxed/simple;
+	bh=DGZ6CdCDNj14yfX/+pwjIRATyVdRf8MnN0KMSDtGfSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pc70L1AFSCOJ8OJrycveHpuakiHIM62YYUajV3ytsaXzPmgLnFrs6nCd+wm5AARudS8Wf1SewWAwlFR5wo2wwYqH62L50ERYGHOhCDL/tJtKOcvBSg5zkM1VkUYVG24O9A3Z9ZuYHJ9wyldV/43aQdKyXIeiJToC01b5WOeVi0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHsKX1Rd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSklDFnkf0mH7tVhI5HIER55Yhd2pOhsLhw25NX8fratNj5O0Y1dNzUCyXxQs1oEcoKAzImMsY+qS65BDCCelaqJiDMfSbJvl82FgmkeboOMxsetym5FfKM3nPwEoh5cE1qXHAfiHLS6VuUX6Ebung11l8q1Rgcqp2h/pgLiDUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7S4PKdh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHsKX1Rd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D398AC4CEC7;
-	Mon, 14 Oct 2024 14:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7S4PKdh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB85AC4CEC7;
+	Mon, 14 Oct 2024 14:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916590;
-	bh=QdVhbrFS3irK+nZhOjSzkjsVLXF3jlQX2GxPOaeGGGs=;
+	s=korg; t=1728916593;
+	bh=DGZ6CdCDNj14yfX/+pwjIRATyVdRf8MnN0KMSDtGfSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHsKX1RdhfIW9aQKqHhW2NBdYcl3cX/i0YJmwPQ2B6MXNd8odVuyn+MUPqT+h+tHY
-	 A//dwwi6EcKAZLfisO+UY4QQ6EmWHDviOygwE52cHjEPqUXUQvOkUyg+pRuBvRZpRo
-	 XYJYOdXxeEUrr+t8GORy9UZNvjZTONtiJHT12Uyo=
+	b=S7S4PKdhvsRikwnC24ejcAWOnuf+SoRZz8K1ES6gALpUgv6BmEQM067Wpwzb55DG3
+	 wChiWVXhHYTyL4qS3HL+8iKoK6m2xn1jiEqls084ooHKJOcPunRUE4yLU3jEXqdDwz
+	 pGyEMnmrRp2bO6ogZCVAj3vjIpXACkHQg4/vVnC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Cong Yang <yangcong5@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/213] Revert "PCI/MSI: Provide stubs for IMS functions"
-Date: Mon, 14 Oct 2024 16:18:29 +0200
-Message-ID: <20241014141043.107386014@linuxfoundation.org>
+Subject: [PATCH 6.6 012/213] drm/panel: boe-tv101wum-nl6: Fine tune Himax83102-j02 panel HFP and HBP (again)
+Date: Mon, 14 Oct 2024 16:18:38 +0200
+Message-ID: <20241014141043.460800985@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,98 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Cong Yang <yangcong5@huaqin.corp-partner.google.com>
 
-[ Upstream commit 372c669271bff736c5bc275c982d8d1b4f1f147c ]
+[ Upstream commit 9dfc46c87cdc8f5a42a71de247a744a6b8188980 ]
 
-This reverts commit 41efa431244f6498833ff8ee8dde28c4924c5479.
+The current measured frame rate is 59.95Hz, which does not meet the
+requirements of touch-stylus and stylus cannot work normally. After
+adjustment, the actual measurement is 60.001Hz. Now this panel looks
+like it's only used by me on the MTK platform, so let's change this
+set of parameters.
 
-IMS (Interrupt Message Store) support appeared in v6.2, but there are no
-users yet.
+[ dianders: Added "(again") to subject and fixed the "Fixes" line ]
 
-Remove it for now.  We can add it back when a user comes along.  If this is
-re-added later, this could be squashed with these commits:
-
-  0194425af0c8 ("PCI/MSI: Provide IMS (Interrupt Message Store) support")
-  c9e5bea27383 ("PCI/MSI: Provide pci_ims_alloc/free_irq()")
-
-which added the non-stub implementations.
-
-Link: https://lore.kernel.org/r/20240410221307.2162676-2-helgaas@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: cea7008190ad ("drm/panel: boe-tv101wum-nl6: Fine tune Himax83102-j02 panel HFP and HBP")
+Signed-off-by: Cong Yang <yangcong5@huaqin.corp-partner.google.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240301061128.3145982-1-yangcong5@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 34 ++++++++--------------------------
- 1 file changed, 8 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 7b18a4b3efb0e..2b7e45bae9408 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1630,8 +1630,6 @@ struct msix_entry {
- 	u16	entry;	/* Driver uses to specify entry, OS writes */
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index cfa5b54ed6fe7..e6328991c87e9 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -2112,11 +2112,11 @@ static const struct panel_desc starry_qfh032011_53g_desc = {
  };
  
--struct msi_domain_template;
--
- #ifdef CONFIG_PCI_MSI
- int pci_msi_vec_count(struct pci_dev *dev);
- void pci_disable_msi(struct pci_dev *dev);
-@@ -1664,11 +1662,6 @@ void pci_msix_free_irq(struct pci_dev *pdev, struct msi_map map);
- void pci_free_irq_vectors(struct pci_dev *dev);
- int pci_irq_vector(struct pci_dev *dev, unsigned int nr);
- const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev, int vec);
--bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
--			   unsigned int hwsize, void *data);
--struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
--				 const struct irq_affinity_desc *affdesc);
--void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
- 
- #else
- static inline int pci_msi_vec_count(struct pci_dev *dev) { return -ENOSYS; }
-@@ -1732,25 +1725,6 @@ static inline const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev,
- {
- 	return cpu_possible_mask;
- }
--
--static inline bool pci_create_ims_domain(struct pci_dev *pdev,
--					 const struct msi_domain_template *template,
--					 unsigned int hwsize, void *data)
--{ return false; }
--
--static inline struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev,
--					       union msi_instance_cookie *icookie,
--					       const struct irq_affinity_desc *affdesc)
--{
--	struct msi_map map = { .index = -ENOSYS, };
--
--	return map;
--}
--
--static inline void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map)
--{
--}
--
- #endif
- 
- /**
-@@ -2667,6 +2641,14 @@ static inline bool pci_is_thunderbolt_attached(struct pci_dev *pdev)
- void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
- #endif
- 
-+struct msi_domain_template;
-+
-+bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
-+			   unsigned int hwsize, void *data);
-+struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
-+				 const struct irq_affinity_desc *affdesc);
-+void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
-+
- #include <linux/dma-mapping.h>
- 
- #define pci_printk(level, pdev, fmt, arg...) \
+ static const struct drm_display_mode starry_himax83102_j02_default_mode = {
+-	.clock = 162850,
++	.clock = 162680,
+ 	.hdisplay = 1200,
+-	.hsync_start = 1200 + 50,
+-	.hsync_end = 1200 + 50 + 20,
+-	.htotal = 1200 + 50 + 20 + 50,
++	.hsync_start = 1200 + 60,
++	.hsync_end = 1200 + 60 + 20,
++	.htotal = 1200 + 60 + 20 + 40,
+ 	.vdisplay = 1920,
+ 	.vsync_start = 1920 + 116,
+ 	.vsync_end = 1920 + 116 + 8,
 -- 
 2.43.0
 
