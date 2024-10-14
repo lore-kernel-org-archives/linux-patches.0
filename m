@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C3B3A1B6;
-	Mon, 14 Oct 2024 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785241A76CC;
+	Mon, 14 Oct 2024 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918216; cv=none; b=gLbCi7zroKhTwsIghOsrYp1f0ZE/0xTT9D0jTPJqC+2C+yZWN/YTLQvWmpmqQQJ76uLeU6UEMLCB98VXhkP9lS8R7rpFvuLjdSO2E44PC+dNhxS5Pxko0A/mtUzzZm1jlPWhFGAEqKMHUwBcezf+biKYWG+MuxhPoK4F7uOQUFQ=
+	t=1728918219; cv=none; b=OgkRcWhyTnfJS3y2+opYNIEbG+bwVp+9G8rHw9ueXZtn2hZFl+5r7otX9LSq77zO9b9olkh3REhvldT9E48yiEwu4ieZYU4zJHAmiBE5ZfdlgDi9vG0BIDVcOUMU6vXl8sgWr/S5/qY+xV3p2cuWPFSlLdRvC0FbWHPIkt5Nw/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918216; c=relaxed/simple;
-	bh=6zAlPWA18SLAY8vjJU7JmWdYCxmGsttZ39xjXV9O8YI=;
+	s=arc-20240116; t=1728918219; c=relaxed/simple;
+	bh=2IE0GpFEi4s1BBAjrf5h6vcwCY7fqp+p04GXh5Korn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I5oy9Jb4bWk7lx7Df2D8M9uGI4sx/e5tWkjENLi4wBlqkuty+r1o4R0JNAfAUafDr+pS7njTshBmBv37snGwJNKdQrtMdAIk9dU0tNGgJoGSRIA+vRRODj7sz9S1hrW0asfJtzfd2IaKLDZnOmkSSwZr2VGtiP8bjUMlrRuG8Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smHMaN2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h24tdyCk9mVErDx456qSu8hHTaNYX+m87fGkgNMVmj4mFHvlm+Xr999bAvGTzqcGYBIHo0pyishgstHg2JVY9ZDAolR0LfS1R1Eda5oBRQWOe6PZiM31QZ4ugmgdBqfWlsPr79LQHfL10Ap80XWzvCWT6qUbDnR6Ucit7Kfet8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPnmVQwP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smHMaN2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C38C4CEC3;
-	Mon, 14 Oct 2024 15:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPnmVQwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2316C4CEC3;
+	Mon, 14 Oct 2024 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918216;
-	bh=6zAlPWA18SLAY8vjJU7JmWdYCxmGsttZ39xjXV9O8YI=;
+	s=korg; t=1728918219;
+	bh=2IE0GpFEi4s1BBAjrf5h6vcwCY7fqp+p04GXh5Korn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smHMaN2NAhh8xAdyLIIByJco1nM6Bnm9CX53B0iael/93TmH23ndtJBbWbwFK6NSw
-	 56RF7LfSbYeZiWGVECry4KdfymL1EG9qOrv/8DqaCOovHTwVXC1FG2EfGmhDpFYRzv
-	 WdMNTZfPIt4R19FRSpDAOtAUDErOeUi96XWFs49Q=
+	b=nPnmVQwP8seD/FdNtT9do8yp3B3HWfQi3bXSKhy16Svj1jVxXPU0vT8FL5NH+kG98
+	 xgbRTpPKL5t4ya3MfU3zjM1xeXOvwujzx+jRUEPTF87c88UvJbHAHUfxV5E7WPlHeq
+	 TZ7L48tdYZCpHUTLDNeFNjnBMk6Qucw3eIN+QIxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 226/798] riscv: Fix fp alignment bug in perf_callchain_user()
-Date: Mon, 14 Oct 2024 16:13:00 +0200
-Message-ID: <20241014141226.803215942@linuxfoundation.org>
+Subject: [PATCH 6.1 227/798] RDMA/cxgb4: Added NULL check for lookup_atid
+Date: Mon, 14 Oct 2024 16:13:01 +0200
+Message-ID: <20241014141226.842256234@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,48 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
 
-[ Upstream commit 22ab08955ea13be04a8efd20cc30890e0afaa49c ]
+[ Upstream commit e766e6a92410ca269161de059fff0843b8ddd65f ]
 
-The standard RISC-V calling convention said:
-	"The stack grows downward and the stack pointer is always
-	kept 16-byte aligned".
+The lookup_atid() function can return NULL if the ATID is
+invalid or does not exist in the identifier table, which
+could lead to dereferencing a null pointer without a
+check in the `act_establish()` and `act_open_rpl()` functions.
+Add a NULL check to prevent null pointer dereferencing.
 
-So perf_callchain_user() should check whether 16-byte aligned for fp.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Link: https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf
-
-Fixes: dbeb90b0c1eb ("riscv: Add perf callchain support")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/r/20240708032847.2998158-2-ruanjinjie@huawei.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: cfdda9d76436 ("RDMA/cxgb4: Add driver for Chelsio T4 RNIC")
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Link: https://patch.msgid.link/20240912145844.77516-1-m.lobanov@rosalinux.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/perf_callchain.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/kernel/perf_callchain.c b/arch/riscv/kernel/perf_callchain.c
-index 3348a61de7d99..2932791e93882 100644
---- a/arch/riscv/kernel/perf_callchain.c
-+++ b/arch/riscv/kernel/perf_callchain.c
-@@ -62,7 +62,7 @@ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
- 	perf_callchain_store(entry, regs->epc);
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index 040ba2224f9ff..b3757c6a0457a 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -1222,6 +1222,8 @@ static int act_establish(struct c4iw_dev *dev, struct sk_buff *skb)
+ 	int ret;
  
- 	fp = user_backtrace(entry, fp, regs->ra);
--	while (fp && !(fp & 0x3) && entry->nr < entry->max_stack)
-+	while (fp && !(fp & 0x7) && entry->nr < entry->max_stack)
- 		fp = user_backtrace(entry, fp, 0);
- }
+ 	ep = lookup_atid(t, atid);
++	if (!ep)
++		return -EINVAL;
  
+ 	pr_debug("ep %p tid %u snd_isn %u rcv_isn %u\n", ep, tid,
+ 		 be32_to_cpu(req->snd_isn), be32_to_cpu(req->rcv_isn));
+@@ -2279,6 +2281,9 @@ static int act_open_rpl(struct c4iw_dev *dev, struct sk_buff *skb)
+ 	int ret = 0;
+ 
+ 	ep = lookup_atid(t, atid);
++	if (!ep)
++		return -EINVAL;
++
+ 	la = (struct sockaddr_in *)&ep->com.local_addr;
+ 	ra = (struct sockaddr_in *)&ep->com.remote_addr;
+ 	la6 = (struct sockaddr_in6 *)&ep->com.local_addr;
 -- 
 2.43.0
 
