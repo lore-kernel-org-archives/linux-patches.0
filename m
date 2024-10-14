@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74681AB51B;
-	Mon, 14 Oct 2024 15:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8181B85DF;
+	Mon, 14 Oct 2024 15:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919416; cv=none; b=necZIN+axxf/JwzGgnrCarZ5fmaGPH6OwmxiyN2tQIqiAwW8ssdCw/icQNk+ia8IVruYlrWIrdlWuvBSUa8QtcrbcXo2iG4/923q9sMAkIA1ec6DQ3QNBiXzM23wkHJpjKQ79TpX2q9/+5FtxW+IZuwNO21SMbtROW8d1K6ZQjo=
+	t=1728919419; cv=none; b=pn3Mf527THeRySPa1ADap88SYpidBCZdT37rlnh02k6wS00NPtKGbhW7fYi+XNmo0SIBmM8+4NfeH35seUTHZnacYvIneYTAYwQ5puAF77jXSWhYLvr3yZbQddOlogIXUw5NfHaXFUhSvrSA7Y+j1qS8MwMORFcWSCoLEqMAclQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919416; c=relaxed/simple;
-	bh=K8v4CFKIzuoIjubOVBmsh8go5Ev856LtK7N2SL0f5SQ=;
+	s=arc-20240116; t=1728919419; c=relaxed/simple;
+	bh=muKD786iKPMLGRDRxyhINjBzibHGT3vMaMJjBJmBRcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMmyGFXssSIy0S+gcUa3Smy+0HpjBEwbLYhf8D3ijHLbSYviaP93Rsz1a895iTgAZdzGKRf7G2P6mqdjfOHQHmBT+bs8+Ou6q7bBMdqi2cR3k2HHz7ImAg3ivIoJzPe5aJ9wVjW6NwhZl7naAWAJr7UYgfRX9eguJagYyo1o+f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ko3Oxadd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LwQ+Mvzev8FUJZ+9ggz0FbKARuE1xVvvr100gzYo3h5KPniYUMKAqFwK/PoIDyBERKvrU9yjSQPvjdMlt7TxTdSqSjkC2PrTwWC4dnvBZylSfk8L5vMDH9fShR8WpRs8Hv1xprrN+rfBHMZoU+6L5mbu0j62YlMLG/IwQE7mrBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZbQytyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ko3Oxadd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D36CC4CEC3;
-	Mon, 14 Oct 2024 15:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZbQytyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9507CC4CEC3;
+	Mon, 14 Oct 2024 15:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919415;
-	bh=K8v4CFKIzuoIjubOVBmsh8go5Ev856LtK7N2SL0f5SQ=;
+	s=korg; t=1728919419;
+	bh=muKD786iKPMLGRDRxyhINjBzibHGT3vMaMJjBJmBRcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ko3Oxaddf0BUhVsyQv36WCwc2v7I5HphjIRwv6tfbWR1cjnkNPYgQqySmLfHv4Dss
-	 jJ09lZp7U5e8ExBhzsRtGP6yb6ILpGTMIw/l3bzr21B5UthODwEt1XDBqcJbgN21Va
-	 Oba7C+1V56tP+W0+Z9w1yg22eKuj8Nresq3b+3F4=
+	b=tZbQytybIefLoClDcFcSmQOVA1oAGVNNRjCTw+IiswG92WDOIAJRLfAN7DzFgF3xE
+	 mmNnFozVUQjKkkE7jmyrC6AMXxtjqMYlwoB4JRd2hPTArOp8Lpf886kcgOxK6GNeXh
+	 czhIMEZYIZJBymkNAUwPDL3ZPE2dJqzF7rqnZLys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao2870@gmail.com>,
-	syzbot+05b9b39d8bdfe1a0861f@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Baoquan He <bhe@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 571/798] ocfs2: fix null-ptr-deref when journal load failed.
-Date: Mon, 14 Oct 2024 16:18:45 +0200
-Message-ID: <20241014141240.434979366@linuxfoundation.org>
+Subject: [PATCH 6.1 562/798] resource: fix region_intersects() vs add_memory_driver_managed()
+Date: Mon, 14 Oct 2024 16:18:36 +0200
+Message-ID: <20241014141240.078175043@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -58,65 +62,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao2870@gmail.com>
+From: Huang Ying <ying.huang@intel.com>
 
-commit 5784d9fcfd43bd853654bb80c87ef293b9e8e80a upstream.
+commit b4afe4183ec77f230851ea139d91e5cf2644c68b upstream.
 
-During the mounting process, if journal_reset() fails because of too short
-journal, then lead to jbd2_journal_load() fails with NULL j_sb_buffer.
-Subsequently, ocfs2_journal_shutdown() calls
-jbd2_journal_flush()->jbd2_cleanup_journal_tail()->
-__jbd2_update_log_tail()->jbd2_journal_update_sb_log_tail()
-->lock_buffer(journal->j_sb_buffer), resulting in a null-pointer
-dereference error.
+On a system with CXL memory, the resource tree (/proc/iomem) related to
+CXL memory may look like something as follows.
 
-To resolve this issue, we should check the JBD2_LOADED flag to ensure the
-journal was properly loaded.  Additionally, use journal instead of
-osb->journal directly to simplify the code.
+490000000-50fffffff : CXL Window 0
+  490000000-50fffffff : region0
+    490000000-50fffffff : dax0.0
+      490000000-50fffffff : System RAM (kmem)
 
-Link: https://syzkaller.appspot.com/bug?extid=05b9b39d8bdfe1a0861f
-Link: https://lkml.kernel.org/r/20240902030844.422725-1-sunjunchao2870@gmail.com
-Fixes: f6f50e28f0cb ("jbd2: Fail to load a journal if it is too short")
-Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
-Reported-by: syzbot+05b9b39d8bdfe1a0861f@syzkaller.appspotmail.com
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Because drivers/dax/kmem.c calls add_memory_driver_managed() during
+onlining CXL memory, which makes "System RAM (kmem)" a descendant of "CXL
+Window X".  This confuses region_intersects(), which expects all "System
+RAM" resources to be at the top level of iomem_resource.  This can lead to
+bugs.
+
+For example, when the following command line is executed to write some
+memory in CXL memory range via /dev/mem,
+
+ $ dd if=data of=/dev/mem bs=$((1 << 10)) seek=$((0x490000000 >> 10)) count=1
+ dd: error writing '/dev/mem': Bad address
+ 1+0 records in
+ 0+0 records out
+ 0 bytes copied, 0.0283507 s, 0.0 kB/s
+
+the command fails as expected.  However, the error code is wrong.  It
+should be "Operation not permitted" instead of "Bad address".  More
+seriously, the /dev/mem permission checking in devmem_is_allowed() passes
+incorrectly.  Although the accessing is prevented later because ioremap()
+isn't allowed to map system RAM, it is a potential security issue.  During
+command executing, the following warning is reported in the kernel log for
+calling ioremap() on system RAM.
+
+ ioremap on RAM at 0x0000000490000000 - 0x0000000490000fff
+ WARNING: CPU: 2 PID: 416 at arch/x86/mm/ioremap.c:216 __ioremap_caller.constprop.0+0x131/0x35d
+ Call Trace:
+  memremap+0xcb/0x184
+  xlate_dev_mem_ptr+0x25/0x2f
+  write_mem+0x94/0xfb
+  vfs_write+0x128/0x26d
+  ksys_write+0xac/0xfe
+  do_syscall_64+0x9a/0xfd
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+The details of command execution process are as follows.  In the above
+resource tree, "System RAM" is a descendant of "CXL Window 0" instead of a
+top level resource.  So, region_intersects() will report no System RAM
+resources in the CXL memory region incorrectly, because it only checks the
+top level resources.  Consequently, devmem_is_allowed() will return 1
+(allow access via /dev/mem) for CXL memory region incorrectly.
+Fortunately, ioremap() doesn't allow to map System RAM and reject the
+access.
+
+So, region_intersects() needs to be fixed to work correctly with the
+resource tree with "System RAM" not at top level as above.  To fix it, if
+we found a unmatched resource in the top level, we will continue to search
+matched resources in its descendant resources.  So, we will not miss any
+matched resources in resource tree anymore.
+
+In the new implementation, an example resource tree
+
+|------------- "CXL Window 0" ------------|
+|-- "System RAM" --|
+
+will behave similar as the following fake resource tree for
+region_intersects(, IORESOURCE_SYSTEM_RAM, ),
+
+|-- "System RAM" --||-- "CXL Window 0a" --|
+
+Where "CXL Window 0a" is part of the original "CXL Window 0" that
+isn't covered by "System RAM".
+
+Link: https://lkml.kernel.org/r/20240906030713.204292-2-ying.huang@intel.com
+Fixes: c221c0b0308f ("device-dax: "Hotplug" persistent memory for use like normal RAM")
+Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Baoquan He <bhe@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/resource.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 50 insertions(+), 8 deletions(-)
 
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -1022,7 +1022,7 @@ void ocfs2_journal_shutdown(struct ocfs2
- 	if (!igrab(inode))
- 		BUG();
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -493,20 +493,62 @@ static int __region_intersects(struct re
+ 			       size_t size, unsigned long flags,
+ 			       unsigned long desc)
+ {
+-	struct resource res;
++	resource_size_t ostart, oend;
+ 	int type = 0; int other = 0;
+-	struct resource *p;
++	struct resource *p, *dp;
++	bool is_type, covered;
++	struct resource res;
  
--	num_running_trans = atomic_read(&(osb->journal->j_num_trans));
-+	num_running_trans = atomic_read(&(journal->j_num_trans));
- 	trace_ocfs2_journal_shutdown(num_running_trans);
+ 	res.start = start;
+ 	res.end = start + size - 1;
  
- 	/* Do a commit_cache here. It will flush our journal, *and*
-@@ -1041,9 +1041,10 @@ void ocfs2_journal_shutdown(struct ocfs2
- 		osb->commit_task = NULL;
+ 	for (p = parent->child; p ; p = p->sibling) {
+-		bool is_type = (((p->flags & flags) == flags) &&
+-				((desc == IORES_DESC_NONE) ||
+-				 (desc == p->desc)));
+-
+-		if (resource_overlaps(p, &res))
+-			is_type ? type++ : other++;
++		if (!resource_overlaps(p, &res))
++			continue;
++		is_type = (p->flags & flags) == flags &&
++			(desc == IORES_DESC_NONE || desc == p->desc);
++		if (is_type) {
++			type++;
++			continue;
++		}
++		/*
++		 * Continue to search in descendant resources as if the
++		 * matched descendant resources cover some ranges of 'p'.
++		 *
++		 * |------------- "CXL Window 0" ------------|
++		 * |-- "System RAM" --|
++		 *
++		 * will behave similar as the following fake resource
++		 * tree when searching "System RAM".
++		 *
++		 * |-- "System RAM" --||-- "CXL Window 0a" --|
++		 */
++		covered = false;
++		ostart = max(res.start, p->start);
++		oend = min(res.end, p->end);
++		for_each_resource(p, dp, false) {
++			if (!resource_overlaps(dp, &res))
++				continue;
++			is_type = (dp->flags & flags) == flags &&
++				(desc == IORES_DESC_NONE || desc == dp->desc);
++			if (is_type) {
++				type++;
++				/*
++				 * Range from 'ostart' to 'dp->start'
++				 * isn't covered by matched resource.
++				 */
++				if (dp->start > ostart)
++					break;
++				if (dp->end >= oend) {
++					covered = true;
++					break;
++				}
++				/* Remove covered range */
++				ostart = max(ostart, dp->end + 1);
++			}
++		}
++		if (!covered)
++			other++;
  	}
  
--	BUG_ON(atomic_read(&(osb->journal->j_num_trans)) != 0);
-+	BUG_ON(atomic_read(&(journal->j_num_trans)) != 0);
- 
--	if (ocfs2_mount_local(osb)) {
-+	if (ocfs2_mount_local(osb) &&
-+	    (journal->j_journal->j_flags & JBD2_LOADED)) {
- 		jbd2_journal_lock_updates(journal->j_journal);
- 		status = jbd2_journal_flush(journal->j_journal, 0);
- 		jbd2_journal_unlock_updates(journal->j_journal);
+ 	if (type == 0)
 
 
