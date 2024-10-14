@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCDE1AB505;
-	Mon, 14 Oct 2024 15:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BFB1A76A5;
+	Mon, 14 Oct 2024 15:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918697; cv=none; b=mHANOub6DpFXrBd9NmhGuYtHTqJVH68eFrmBb260IM2B7vVwvOSVDRV4F62QJIvxvljxwDivUK8EzrT/tqlRq5tUL6dg7DzwcNPXwniicerQipVRGnFvSLzfogrMnnK4DDaMJr23rGPGYIBsj9WelYXn4hla5sCrRQia9vg8znM=
+	t=1728918700; cv=none; b=tBvvRtFyyKiV4YiduFm8p5wdSa16hYTbaViWT0JM4XazXscpW74uY8J8HVsbjlNcWbTDE/cHv+eAJiPF6n+J8N7ThNZLlaUuAGA0maShXu/VyrSZDN/zVPjlQ36sh6kNDepz3A+9RM+t1jajv5Ev22oxuLq9fSmdTyGnqph/oKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918697; c=relaxed/simple;
-	bh=byVFIa3benGbb/Y2NQP016wKMkTGZyAKAwlxU94Z6p4=;
+	s=arc-20240116; t=1728918700; c=relaxed/simple;
+	bh=l4OKDOjK7mqsiNJLGQXZklkN8HPYEBR7u2peEy/vvtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPsMIqrk8HHpNPCCpao9NJ1Hc5cYplFz0ZcfQtKEBHQ66iR4CLmP5hLNXFaGwnClmvsIjpaRbcnxgbW+GuaWEen+AloOva00LfY9JuSWzHSV+0/QUDeEwQrEoPIehtMwMyoCpdvgRVwC31Eu7CADLwxADRzDN012LvEdrXIUR8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSOengrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pU3CA8zqadHi9kGWVOpsD84Iy972YFYSTeJTsh0YqghOy14v8oPbrdAiv5tX2d4KI7iaPWHu39LkWi+QEsBJbbbryFq35r4uqssRDDwC2yXJ0LdWuxK3DToSxdnNGbjzQFfU3V05F62lnew/JQ5fKGaB951dWngwg7+LfD0H/5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAIjSTxs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSOengrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E22CC4CEC3;
-	Mon, 14 Oct 2024 15:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAIjSTxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C20C4CEC3;
+	Mon, 14 Oct 2024 15:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918697;
-	bh=byVFIa3benGbb/Y2NQP016wKMkTGZyAKAwlxU94Z6p4=;
+	s=korg; t=1728918700;
+	bh=l4OKDOjK7mqsiNJLGQXZklkN8HPYEBR7u2peEy/vvtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSOengrWnIG1GGRPmGnzWVYnnyJV6JvndKE3x0J3PU806IELjeC7m5ZiXkLAwK9es
-	 cKD4/Ghg6AoBwQnGHbY/sHRY6V09MOMdOL+mqGHuXUnmsbz7jNQSSDOkQ1ArzkwOE8
-	 PkAN2ypIUM93gtu//IZxeEI+XaalxYBopF3VfJVU=
+	b=VAIjSTxsca7x8gsqH3JIZxqzwQQ3VoLwkFgRzAXNbSXiPLUAV4efvIHbt29jtpjp3
+	 /iUT3uyJAiO96Y4QGMjTHJCAYlLMNBD8Wtt7eDnWkGXxCUXvmcXJi7J/Vy5nd+Uoul
+	 z0oFwdVdGkIlJP5h5CHcVY8/zKkMN2Ubr7vwLTTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 365/798] mm: only enforce minimum stack gap size if its sensible
-Date: Mon, 14 Oct 2024 16:15:19 +0200
-Message-ID: <20241014141232.289077513@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alexander Potapenko <glider@google.com>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.1 366/798] module: Fix KCOV-ignored file name
+Date: Mon, 14 Oct 2024 16:15:20 +0200
+Message-ID: <20241014141232.328187805@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -56,51 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-commit 69b50d4351ed924f29e3d46b159e28f70dfc707f upstream.
+commit f34d086fb7102fec895fd58b9e816b981b284c17 upstream.
 
-The generic mmap_base code tries to leave a gap between the top of the
-stack and the mmap base address, but enforces a minimum gap size (MIN_GAP)
-of 128MB, which is too large on some setups.  In particular, on arm tasks
-without ADDR_LIMIT_32BIT, the STACK_TOP value is less than 128MB, so it's
-impossible to fit such a gap in.
+module.c was renamed to main.c, but the Makefile directive was copy-pasted
+verbatim with the old file name.  Fix up the file name.
 
-Only enforce this minimum if MIN_GAP < MAX_GAP, as we'd prefer to honour
-MAX_GAP, which is defined proportionally, so scales better and always
-leaves us with both _some_ stack space and some room for mmap.
-
-This fixes the usercopy KUnit test suite on 32-bit arm, as it doesn't set
-any personality flags so gets the default (in this case 26-bit) task size.
-This test can be run with: ./tools/testing/kunit/kunit.py run --arch arm
-usercopy --make_options LLVM=1
-
-Link: https://lkml.kernel.org/r/20240803074642.1849623-2-davidgow@google.com
-Fixes: dba79c3df4a2 ("arm: use generic mmap top-down layout and brk randomization")
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cfc1d277891e ("module: Move all into module/")
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/bc0cf790b4839c5e38e2fafc64271f620568a39e.1718092070.git.dvyukov@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/util.c |    2 +-
+ kernel/module/Makefile |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/util.c
-+++ b/mm/util.c
-@@ -399,7 +399,7 @@ static unsigned long mmap_base(unsigned
- 	if (gap + pad > gap)
- 		gap += pad;
+--- a/kernel/module/Makefile
++++ b/kernel/module/Makefile
+@@ -5,7 +5,7 @@
  
--	if (gap < MIN_GAP)
-+	if (gap < MIN_GAP && MIN_GAP < MAX_GAP)
- 		gap = MIN_GAP;
- 	else if (gap > MAX_GAP)
- 		gap = MAX_GAP;
+ # These are called from save_stack_trace() on slub debug path,
+ # and produce insane amounts of uninteresting coverage.
+-KCOV_INSTRUMENT_module.o := n
++KCOV_INSTRUMENT_main.o := n
+ 
+ obj-y += main.o strict_rwx.o
+ obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
 
 
