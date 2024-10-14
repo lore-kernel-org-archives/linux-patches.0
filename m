@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14AD19F40B;
-	Mon, 14 Oct 2024 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427B31AE001;
+	Mon, 14 Oct 2024 15:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918135; cv=none; b=AgJTqHhI9ncpAg2H6yM+4aqKFwhQkUL1Ouz00Cmch3pHf/sVDpeojFalzuUStQMKOCU2bUDpA85hiQRj955gX9wBbPPj5ir/fanaATJhcIwkvBEijKJGYkpfqrKCDZ/Xvp4CgRozhgoSUhPjwEVPzQw+lBhH6rZuhV9luGo7/dg=
+	t=1728918139; cv=none; b=p92CTnC1O8p8MbZYCnFOE5U9+cQjWSjQJmI5B+dDfJ0rnuqfeF/uj0DMo5V6CURfoVpCEnnGYPw3IH/By5ctNQ5dajujtLWv+RuWoN35KsZWilZX4YTcOqp8l7/1OZXU1bd5Gb9zXx0IMotuF2SHfADjmV5TBAPBACoFLw0O/9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918135; c=relaxed/simple;
-	bh=ZBe9CMPhXY3l/AsanMp3VKLL/s0Ya4Z3xniqp6DfYSA=;
+	s=arc-20240116; t=1728918139; c=relaxed/simple;
+	bh=9ez7sSbeJy7CP7zY+LH2UBEJ0RopvE3pt9VfarurDhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHsGcYSEaOCjQHc3hL5lIemmQ7Llh5eU0URMwmKeCx38cHflPWRJGIFKNBq7T8B9my9r3UID47ZWz7CsZBA5SIiCYssNbD/pXIBfcudUWlQ8vX8TJRc6KytPlE2u6Xgujl+HqOWKWO4bFvGswxWzIjRpMmoJS/qrOlf+R7BDdNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3Jsn+1B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PccK8yCrXVEem22IVwCQ8ZEOEtsgnJEK6BSyOpuKZ/lexwWCDM5lPgGj+WuJaaJqd2Rg60pPYfVJgPWPlKul3iZWasVLpHlwDbRiOxQ8bXB/uMFQsa88GT703Z1Qj2vxuqGv0yBd2xHbi5PpXRJDcCbNlSHQZpDJ2HWzhPYZagE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGfYnqCp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3Jsn+1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43816C4CEC3;
-	Mon, 14 Oct 2024 15:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGfYnqCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766A4C4CEC3;
+	Mon, 14 Oct 2024 15:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918135;
-	bh=ZBe9CMPhXY3l/AsanMp3VKLL/s0Ya4Z3xniqp6DfYSA=;
+	s=korg; t=1728918139;
+	bh=9ez7sSbeJy7CP7zY+LH2UBEJ0RopvE3pt9VfarurDhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3Jsn+1Bc0JqJByi1ctXddfFQVQ2jgglGbWUVydvZTA7tRTXlJQeTD2XFXPUWkA1y
-	 a2473s97i86BGTtpqyk49pr97xQVDxlUWSubsL/dRgwkTRIIkgkpVfvFzdQe8wL6mh
-	 9JwLtLN0fLh7ftraGS5Z6PWowyNjWOv94j6ZlirA=
+	b=MGfYnqCpfuMEedJ44ZcraO6XoRc4Vx3PketCrN3fUTfmC6qzKAbHh+qcsXlDYWexO
+	 ugdfSBsw4kRDXfs7fy7H5J8DNZZcCtArzJqjmagVAv4fQtejpiTggcPbKygD1+AVnN
+	 b2SSqQcmAdsIDGFyUFGKVabfyuEG+j4pzBGhJE0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 234/798] f2fs: fix to update i_ctime in __f2fs_setxattr()
-Date: Mon, 14 Oct 2024 16:13:08 +0200
-Message-ID: <20241014141227.114361267@linuxfoundation.org>
+Subject: [PATCH 6.1 235/798] f2fs: remove unneeded check condition in __f2fs_setxattr()
+Date: Mon, 14 Oct 2024 16:13:09 +0200
+Message-ID: <20241014141227.152874183@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,53 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8874ad7dae8d91d24cc87c545c0073b3b2da5688 ]
+[ Upstream commit bc3994ffa4cf23f55171943c713366132c3ff45d ]
 
-generic/728       - output mismatch (see /media/fstests/results//generic/728.out.bad)
-    --- tests/generic/728.out	2023-07-19 07:10:48.362711407 +0000
-    +++ /media/fstests/results//generic/728.out.bad	2023-07-19 08:39:57.000000000 +0000
-     QA output created by 728
-    +Expected ctime to change after setxattr.
-    +Expected ctime to change after removexattr.
-     Silence is golden
-    ...
-    (Run 'diff -u /media/fstests/tests/generic/728.out /media/fstests/results//generic/728.out.bad'  to see the entire diff)
-generic/729        1s
-
-It needs to update i_ctime after {set,remove}xattr, fix it.
+It has checked return value of write_all_xattrs(), remove unneeded
+following check condition.
 
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
-index 0631b383e21f4..0862dfbe6a5d6 100644
+index 0862dfbe6a5d6..6ee71a2faa75f 100644
 --- a/fs/f2fs/xattr.c
 +++ b/fs/f2fs/xattr.c
-@@ -772,17 +772,17 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+@@ -772,7 +772,7 @@ static int __f2fs_setxattr(struct inode *inode, int index,
  	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
  			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
  		f2fs_set_encrypted_inode(inode);
--	f2fs_mark_inode_dirty_sync(inode, true);
- 	if (!error && S_ISDIR(inode->i_mode))
+-	if (!error && S_ISDIR(inode->i_mode))
++	if (S_ISDIR(inode->i_mode))
  		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
  
  same:
- 	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
- 		inode->i_mode = F2FS_I(inode)->i_acl_mode;
--		inode->i_ctime = current_time(inode);
- 		clear_inode_flag(inode, FI_ACL_MODE);
- 	}
- 
-+	inode->i_ctime = current_time(inode);
-+	f2fs_mark_inode_dirty_sync(inode, true);
- exit:
- 	kfree(base_addr);
- 	return error;
 -- 
 2.43.0
 
