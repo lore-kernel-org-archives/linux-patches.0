@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CFE39FCE;
-	Mon, 14 Oct 2024 14:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F711AAE02;
+	Mon, 14 Oct 2024 14:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916383; cv=none; b=kWh10+/UcHaxri4pPQOLTy5IMNwvKhJgY6+Qp4+NU/hT9IdHrniBpMqpB9qXSGklmOR8i3qO3JgR0CWXZF7Sd+JSGzQe08cvD0e8SJbc6FUm5EKtRyvRqUlMV6KkuaWUecw9AcnAesdIFuCFcKmAASLNayuoCSeoLE7Yh5wHWN8=
+	t=1728916386; cv=none; b=tnSZaV3sY5LjwAC5VdazQhLJ+rpc+gUWOzUSoObQv7Er1bEdBxBLVCkAWtLUGhrXSWcHAjnV0AGkKYp8HeeTp4/sLn5Cn9x4jjGH/Hl8s7xb+8u4O+74tEaFiax+2cO3LCFHDhyEl3lwGEtbE4fs4aTswcTd2t22XXH4EyWtvnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916383; c=relaxed/simple;
-	bh=rrXvf9Ji4xT41L+a+iIi7YgSr9Xh+UXQsAQVVBWvCUs=;
+	s=arc-20240116; t=1728916386; c=relaxed/simple;
+	bh=snMuU3y33INBcR6e8NeXBM2vID+lOQq4bipJii6tSkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1CBEkXXXqlPt9Hid1Pd0ImShT12GGcSt4vG3FPKc0hrNb9dvr0W5z7o2yjECJySfAuy3q7brMN/jpMytlNLixaYR+9eN5bY9xW4/AcDOcRfw9HkC6g8lTCqqsVB3VXS9sZZo94ualgRKo037Lyf41Vj8S1WNfbDACvU2BDk6+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJCThsag; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0YhNvxE5Y9BDdjdJiG+jiZMnYPbrRtLrPU16vTiz4zCiO4ckRO7EVNYxMKp+cZNTG4Rl476AYFkAiVaLVz/61msdaMyB3hu9s0oC/4IDgg+ihsnLEzawMggRdpnCO44vt8Bsd2CXrT4U+kYWi9O2LSDzdUILDfq28Shc8X/u4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH2Onvw/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJCThsag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE96C4CEC3;
-	Mon, 14 Oct 2024 14:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH2Onvw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FF2C4CEC3;
+	Mon, 14 Oct 2024 14:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916383;
-	bh=rrXvf9Ji4xT41L+a+iIi7YgSr9Xh+UXQsAQVVBWvCUs=;
+	s=korg; t=1728916386;
+	bh=snMuU3y33INBcR6e8NeXBM2vID+lOQq4bipJii6tSkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJCThsagI7fO/4MQBqv0IwX71IYd/qGwXd3h+/JeX1D2euIKB/U/yJ8uhRXzeAn+d
-	 RUJrWQPglSUMMFZicfoyMiywavkf7XOC0JgDcnNZu3yQsnPmmIfMScdGbpw1WtYnfk
-	 vMbpycsbE4zrP4H67V0zf+rdWeHf+71sz3MMRn+0=
+	b=IH2Onvw/0jVuG+QOzi4jyPcDsyuYomopsVeWz+5fLZb9JkYsA4ODxClA2Abr5Lpna
+	 JJXsSu5YzylfMne0UKDCZDHwbN8LzEU4xe0zD4/jMoQEJ916Ny3X9zadOoPzL5Vn1B
+	 zr+1EuPSJSgE+otLPJmjPZbRfmQVRGrBt+uMZL4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wade Wang <wade.wang@hp.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.11 160/214] HID: plantronics: Workaround for an unexcepted opposite volume key
-Date: Mon, 14 Oct 2024 16:20:23 +0200
-Message-ID: <20241014141051.230509970@linuxfoundation.org>
+	Stefan Blum <stefan.blum@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.11 169/214] ACPI: resource: Make Asus ExpertBook B2402 matches cover more models
+Date: Mon, 14 Oct 2024 16:20:32 +0200
+Message-ID: <20241014141051.575245197@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -50,91 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wade Wang <wade.wang@hp.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 87b696209007b7c4ef7bdfe39ea0253404a43770 upstream.
+commit 564a278573783cd8859829767851744087e676d8 upstream.
 
-Some Plantronics headset as the below send an unexcept opposite
-volume key's HID report for each volume key press after 200ms, like
-unecepted Volume Up Key following Volume Down key pressed by user.
-This patch adds a quirk to hid-plantronics for these devices, which
-will ignore the second unexcepted opposite volume key if it happens
-within 220ms from the last one that was handled.
-    Plantronics EncorePro 500 Series  (047f:431e)
-    Plantronics Blackwire_3325 Series (047f:430c)
+The Asus ExpertBook B2402CBA / B2402FBA are the non flip / flip versions
+of the 14" Asus ExpertBook B2 with 12th gen Intel processors.
 
-The patch was tested on the mentioned model, it shouldn't affect
-other models, however, this quirk might be needed for them too.
-Auto-repeat (when a key is held pressed) is not affected per test
-result.
+It has been reported that the B2402FVA which is the 14" Asus ExpertBook
+B2 flip with 13th gen Intel processors needs to skip the IRQ override too.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Wade Wang <wade.wang@hp.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+And looking at Asus website there also is a B2402CVA which is the non flip
+model with 13th gen Intel processors.
+
+Summarizing the following 4 models of the Asus ExpertBook B2 are known:
+
+B2402CBA: 12th gen Intel CPU, non flip
+B2402FBA: 12th gen Intel CPU, flip
+B2402CVA: 13th gen Intel CPU, non flip
+B2402FVA: 13th gen Intel CPU, flip
+
+Fold the 2 existing quirks for the B2402CBA and B2402FBA into a single
+quirk covering B2402* to also cover the 2 other models while at the same
+time reducing the number of quirks.
+
+Reported-by: Stefan Blum <stefan.blum@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/a983e6d5-c7ab-4758-be9b-7dcfc1b44ed3@gmail.com/
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241005212819.354681-2-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h         |    2 ++
- drivers/hid/hid-plantronics.c |   23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ drivers/acpi/resource.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1036,6 +1036,8 @@
- #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES	0xc056
- #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES	0xc057
- #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES	0xc058
-+#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES	0x430c
-+#define USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES		0x431e
- 
- #define USB_VENDOR_ID_PANASONIC		0x04da
- #define USB_DEVICE_ID_PANABOARD_UBT780	0x1044
---- a/drivers/hid/hid-plantronics.c
-+++ b/drivers/hid/hid-plantronics.c
-@@ -38,8 +38,10 @@
- 			    (usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER)
- 
- #define PLT_QUIRK_DOUBLE_VOLUME_KEYS BIT(0)
-+#define PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS BIT(1)
- 
- #define PLT_DOUBLE_KEY_TIMEOUT 5 /* ms */
-+#define PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT 220 /* ms */
- 
- struct plt_drv_data {
- 	unsigned long device_type;
-@@ -137,6 +139,21 @@ static int plantronics_event(struct hid_
- 
- 		drv_data->last_volume_key_ts = cur_ts;
- 	}
-+	if (drv_data->quirks & PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS) {
-+		unsigned long prev_ts, cur_ts;
-+
-+		/* Usages are filtered in plantronics_usages. */
-+
-+		if (!value) /* Handle key presses only. */
-+			return 0;
-+
-+		prev_ts = drv_data->last_volume_key_ts;
-+		cur_ts = jiffies;
-+		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT)
-+			return 1; /* Ignore the followed opposite volume key. */
-+
-+		drv_data->last_volume_key_ts = cur_ts;
-+	}
- 
- 	return 0;
- }
-@@ -210,6 +227,12 @@ static const struct hid_device_id plantr
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
- 					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
- 		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
-+					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES),
-+		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
-+					 USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES),
-+		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
- 	{ }
- };
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -483,17 +483,10 @@ static const struct dmi_system_id irq1_l
+                 },
+         },
+ 	{
+-		/* Asus ExpertBook B2402CBA */
++		/* Asus ExpertBook B2402 (B2402CBA / B2402FBA / B2402CVA / B2402FVA) */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "B2402CBA"),
+-		},
+-	},
+-	{
+-		/* Asus ExpertBook B2402FBA */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "B2402FBA"),
++			DMI_MATCH(DMI_BOARD_NAME, "B2402"),
+ 		},
+ 	},
+ 	{
 
 
