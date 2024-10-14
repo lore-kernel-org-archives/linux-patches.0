@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C271CBE8A;
-	Mon, 14 Oct 2024 15:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D1E1ADFFB;
+	Mon, 14 Oct 2024 15:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919496; cv=none; b=G3qujAKdY2dKwAg2/+loJzhO9q4hGEKmnq2BQn/uToQZYkmRPcHVp8rO0/PsOjUc58GFg0zKTv9vEauK/PcCu35Sbs2Ce1E44Ig7xCtYbuXSmmQ7oqSJmRTp01BgO+kW4371PrESzX5lVA28SaAEYxCBdkeldG68xnGcFk8MHCQ=
+	t=1728919499; cv=none; b=d7KOXnjHZG6OlDug1DLV+jOn9clpuKXFU8XvxhTQFwB+gLXae3W3+4767pkY78I5HzWs+m4dc74rYOsrMhfkII9WMkGRBARVReeK89jgF4DgfOC4W1aiyvvsIh+/xIKQM2hP+J7a3vxELFVjevYHeV4ke7DKiZXHkS2/wAQWzd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919496; c=relaxed/simple;
-	bh=S3t5aQJiQWolK8ZBAzVteTlz6ZJl6IbB6K6AdR9m5ow=;
+	s=arc-20240116; t=1728919499; c=relaxed/simple;
+	bh=Y3ijdciqb8aetLxTYCUj1pdwsV8aPQr4iOAbQLTufwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iRjCcEgmUSkvyoLwLNhY+eMRxzRSg4O21VhW/4HukhWy7+FjOxSyPsv/HfLOid204jPv1JUd63tEKHbzHDFkCK1+/Kz/BOVumGN2/hsNgtG3/bxz2eaMHTOuJfQo02djJZrYsDVV9/Hnso/IgYo92QM0ngU+6eVTFDTH9Pcfxqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/iEfszY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Puo4ehWgCscCEFfEkmsQ+PJi2VuWTESQze/JbZzjbwGi+IH+WANj6Q+4HLLQggZRc/iVEPSl9KnQZGlnhKI5aoY8ao7+m6HRJTTY3dvWAIxooY5HH+VyF7JGH2RI13qw/MpwRMrn5E5vKOhEQilcXqCaFf5qSSui/r5k3fymmbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vysbm7jE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/iEfszY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDBAC4CEC7;
-	Mon, 14 Oct 2024 15:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vysbm7jE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7CAC4CEC3;
+	Mon, 14 Oct 2024 15:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919495;
-	bh=S3t5aQJiQWolK8ZBAzVteTlz6ZJl6IbB6K6AdR9m5ow=;
+	s=korg; t=1728919499;
+	bh=Y3ijdciqb8aetLxTYCUj1pdwsV8aPQr4iOAbQLTufwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/iEfszYZQTH8Rad0rY4WuP1dskEZ2w9mZxlB7nqYl0DKH/066EAMNXRT5lmr81Wn
-	 GAefwsMaTAEwkBVhe1XstRaYMTeZcgQBePfKwY6P8tsyVfCw3ZnM8jzA8gCsbSjqhG
-	 bUetxV2YjM8l7LfUQNmCAaKA4hTYFWs8c2Zf7+dw=
+	b=vysbm7jEI8ICKpjQRQ0HFO69cYuMoS9Rij5IO5vrCVkbivNkajiwH8rBkz9KwBQ1K
+	 hP3DSrB585TJgwEr7Jky5XFQ0AT+OsAappjsQdu84TGKWtDkZjOU+HKvC6g7KfjvNB
+	 z2v+foejFl5WRXgl6e38vRM74mku8A4XqJB1YWGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Virag <virag.david003@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 622/798] dt-bindings: clock: exynos7885: Fix duplicated binding
-Date: Mon, 14 Oct 2024 16:19:36 +0200
-Message-ID: <20241014141242.475925254@linuxfoundation.org>
+Subject: [PATCH 6.1 623/798] spi: bcm63xx: Fix missing pm_runtime_disable()
+Date: Mon, 14 Oct 2024 16:19:37 +0200
+Message-ID: <20241014141242.514019901@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,51 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Virag <virag.david003@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit abf3a3ea9acb5c886c8729191a670744ecd42024 ]
+[ Upstream commit 265697288ec2160ca84707565d6641d46f69b0ff ]
 
-The numbering in Exynos7885's FSYS CMU bindings has 4 duplicated by
-accident, with the rest of the bindings continuing with 5.
+The pm_runtime_disable() is missing in the remove function, fix it
+by using devm_pm_runtime_enable(), so the pm_runtime_disable() in
+the probe error path can also be removed.
 
-Fix this by moving CLK_MOUT_FSYS_USB30DRD_USER to the end as 11.
-
-Since CLK_MOUT_FSYS_USB30DRD_USER is not used in any device tree as of
-now, and there are no other clocks affected (maybe apart from
-CLK_MOUT_FSYS_MMC_SDIO_USER which the number was shared with, also not
-used in a device tree), this is the least impactful way to solve this
-problem.
-
-Fixes: cd268e309c29 ("dt-bindings: clock: Add bindings for Exynos7885 CMU_FSYS")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Virag <virag.david003@gmail.com>
-Link: https://lore.kernel.org/r/20240806121157.479212-2-virag.david003@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 2d13f2ff6073 ("spi: bcm63xx-spi: fix pm_runtime")
+Cc: stable@vger.kernel.org # v5.13+
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20240819123349.4020472-3-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/clock/exynos7885.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/dt-bindings/clock/exynos7885.h b/include/dt-bindings/clock/exynos7885.h
-index 8256e7430b63d..a363eb63dba7c 100644
---- a/include/dt-bindings/clock/exynos7885.h
-+++ b/include/dt-bindings/clock/exynos7885.h
-@@ -139,13 +139,13 @@
- #define CLK_MOUT_FSYS_MMC_CARD_USER	2
- #define CLK_MOUT_FSYS_MMC_EMBD_USER	3
- #define CLK_MOUT_FSYS_MMC_SDIO_USER	4
--#define CLK_MOUT_FSYS_USB30DRD_USER	4
- #define CLK_GOUT_MMC_CARD_ACLK		5
- #define CLK_GOUT_MMC_CARD_SDCLKIN	6
- #define CLK_GOUT_MMC_EMBD_ACLK		7
- #define CLK_GOUT_MMC_EMBD_SDCLKIN	8
- #define CLK_GOUT_MMC_SDIO_ACLK		9
- #define CLK_GOUT_MMC_SDIO_SDCLKIN	10
--#define FSYS_NR_CLK			11
-+#define CLK_MOUT_FSYS_USB30DRD_USER	11
-+#define FSYS_NR_CLK			12
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index 51296615536a9..695ac74571286 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -595,13 +595,15 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
  
- #endif /* _DT_BINDINGS_CLOCK_EXYNOS_7885_H */
+ 	bcm_spi_writeb(bs, SPI_INTR_CLEAR_ALL, SPI_INT_STATUS);
+ 
+-	pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		goto out_clk_disable;
+ 
+ 	/* register and we are done */
+ 	ret = devm_spi_register_master(dev, master);
+ 	if (ret) {
+ 		dev_err(dev, "spi register failed\n");
+-		goto out_pm_disable;
++		goto out_clk_disable;
+ 	}
+ 
+ 	dev_info(dev, "at %pr (irq %d, FIFOs size %d)\n",
+@@ -609,8 +611,6 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-out_pm_disable:
+-	pm_runtime_disable(&pdev->dev);
+ out_clk_disable:
+ 	clk_disable_unprepare(clk);
+ out_err:
 -- 
 2.43.0
 
