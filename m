@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5200A1A2C06;
-	Mon, 14 Oct 2024 15:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C31C6F55;
+	Mon, 14 Oct 2024 15:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919818; cv=none; b=W2DU20/AIaUk+rF95jDjmN6/1vw4EimpcD2esLS5YFRXnKld1hSJzX42ZU1ZxBTzW0o+jiXCOOgyRqnf4Yw6QTo5KujzL/CmI6R7zMRRjzQko1FtXnOlNhqISFz4pMy7ee8V1085F+k7veKrDwoDn0GoZLqx1/9rG8YCYwop9nI=
+	t=1728919821; cv=none; b=QhA4AhKFipZS+JcTl4EeHd6m+V0Diy9rGt+J5SY1HldgSjyDC7h5FAUK/lU5v/vXdAIUcaPdjctg5xbqHB+foigM5m8vz0f0qVr9dpL9uUNVBheP+0eKhqUxalXJ6yBv2XlvWsfQnFJHF2LuLhOgaUJCf1VKqpAfy6pV5Xs0LkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919818; c=relaxed/simple;
-	bh=+CWQtVP0zf+ISxqsEE+aCgbVr3fdxYgXdFC4opMxS2Q=;
+	s=arc-20240116; t=1728919821; c=relaxed/simple;
+	bh=yw8bFlcuoYW6CUfl41SnGEKKbsiyBVEurfzGaOnaPaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2G9ojuzEWDSCl8cdDKrCpVkR2/8bOtA4dTOOhotEirGzbhRfOufWNuj77JEStDKgMydXEwxBSmPIzWG4of2RQP9peBdd6UCYDIvAeEgEsW+56tPa8XGr+/VipYuht3AfjGvH0BYFTbMwJrieey49oUsoC+T/rULNloZ0gc+EKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4KgFJEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/ZuqIxOiOtJgWA57EHSw42cU1AytYecUhpIl4aIaUpG7sKjwEhci/Ol/xlUlv/+Y/C6AZZ36cBKl9Zmc3nNc4+4SfITvzRZG2NJSyTtqpZo9ZWo88PKNJaGc3/JilFzyfkiptql6Tkk+FWTtSHvNUTB0Cv20hDpUBxef1wBfNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nd58eAY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4KgFJEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF02C4CEC3;
-	Mon, 14 Oct 2024 15:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd58eAY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFDAC4CEC3;
+	Mon, 14 Oct 2024 15:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919817;
-	bh=+CWQtVP0zf+ISxqsEE+aCgbVr3fdxYgXdFC4opMxS2Q=;
+	s=korg; t=1728919821;
+	bh=yw8bFlcuoYW6CUfl41SnGEKKbsiyBVEurfzGaOnaPaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4KgFJEd4pAS/kJUmsFlx/GIdcR8Px0Eo/ThOthkW4aQjU5zi3CgKKO/ZmqR6/RGD
-	 upiQZKuqD1AwOFRkKn92YzU72iZ1bEcj5hhAUzKtTo2t0r1Of3wcasWIRh0fl8RXR2
-	 4hXVadc26+asaujxkf4QC+mfOT7QYpEjBBjFxYH8=
+	b=Nd58eAY2JQoEhiPZWl6Q5+P0jlP/BIy5ST/N7rfCq8f7k0TRoPjh5AJkmrKkeQnE0
+	 ocm37p9dpX+FcbSUtDQi+LKFRKyUk+sM5bceZT4RmZkel9pHGrRRnCdN+/EDxRisnw
+	 4k1J4gY06KtffOyJhf0xP8HAgGnLjOJ9eBKR559o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Philip Chen <philipchen@chromium.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 698/798] RDMA/rtrs-srv: Avoid null pointer deref during path establishment
-Date: Mon, 14 Oct 2024 16:20:52 +0200
-Message-ID: <20241014141245.492460229@linuxfoundation.org>
+Subject: [PATCH 6.1 716/798] virtio_pmem: Check device status before requesting flush
+Date: Mon, 14 Oct 2024 16:21:10 +0200
+Message-ID: <20241014141246.195593584@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,64 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Haris Iqbal <haris.iqbal@ionos.com>
+From: Philip Chen <philipchen@chromium.org>
 
-[ Upstream commit d0e62bf7b575fbfe591f6f570e7595dd60a2f5eb ]
+[ Upstream commit e25fbcd97cf52c3c9824d44b5c56c19673c3dd50 ]
 
-For RTRS path establishment, RTRS client initiates and completes con_num
-of connections. After establishing all its connections, the information
-is exchanged between the client and server through the info_req message.
-During this exchange, it is essential that all connections have been
-established, and the state of the RTRS srv path is CONNECTED.
+If a pmem device is in a bad status, the driver side could wait for
+host ack forever in virtio_pmem_flush(), causing the system to hang.
 
-So add these sanity checks, to make sure we detect and abort process in
-error scenarios to avoid null pointer deref.
+So add a status check in the beginning of virtio_pmem_flush() to return
+early if the device is not activated.
 
-Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://patch.msgid.link/20240821112217.41827-9-haris.iqbal@ionos.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Philip Chen <philipchen@chromium.org>
+Message-Id: <20240826215313.2673566-1-philipchen@chromium.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/nvdimm/nd_virtio.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 726b690ebe652..a70ccb4d4c857 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -936,12 +936,11 @@ static void rtrs_srv_info_req_done(struct ib_cq *cq, struct ib_wc *wc)
- 	if (err)
- 		goto close;
+diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
+index c6a648fd8744a..a78e17a43a9d2 100644
+--- a/drivers/nvdimm/nd_virtio.c
++++ b/drivers/nvdimm/nd_virtio.c
+@@ -44,6 +44,15 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 	unsigned long flags;
+ 	int err, err1;
  
--out:
- 	rtrs_iu_free(iu, srv_path->s.dev->ib_dev, 1);
- 	return;
- close:
-+	rtrs_iu_free(iu, srv_path->s.dev->ib_dev, 1);
- 	close_path(srv_path);
--	goto out;
- }
- 
- static int post_recv_info_req(struct rtrs_srv_con *con)
-@@ -992,6 +991,16 @@ static int post_recv_path(struct rtrs_srv_path *srv_path)
- 			q_size = SERVICE_CON_QUEUE_DEPTH;
- 		else
- 			q_size = srv->queue_depth;
-+		if (srv_path->state != RTRS_SRV_CONNECTING) {
-+			rtrs_err(s, "Path state invalid. state %s\n",
-+				 rtrs_srv_state_str(srv_path->state));
-+			return -EIO;
-+		}
++	/*
++	 * Don't bother to submit the request to the device if the device is
++	 * not activated.
++	 */
++	if (vdev->config->get_status(vdev) & VIRTIO_CONFIG_S_NEEDS_RESET) {
++		dev_info(&vdev->dev, "virtio pmem device needs a reset\n");
++		return -EIO;
++	}
 +
-+		if (!srv_path->s.con[cid]) {
-+			rtrs_err(s, "Conn not set for %d\n", cid);
-+			return -EIO;
-+		}
- 
- 		err = post_recv_io(to_srv_con(srv_path->s.con[cid]), q_size);
- 		if (err) {
+ 	might_sleep();
+ 	req_data = kmalloc(sizeof(*req_data), GFP_KERNEL);
+ 	if (!req_data)
 -- 
 2.43.0
 
