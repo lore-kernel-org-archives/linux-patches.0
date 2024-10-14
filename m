@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15DC1AB536;
-	Mon, 14 Oct 2024 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5375219F43B;
+	Mon, 14 Oct 2024 15:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918100; cv=none; b=sBpyGxalb5kSy50aWJMH+abVux9fhdmMg9k79bppNzunUyuWpSfx3xvq73yIJ508ROHbIH0p8V8Xkbi9eYIdeI0CxtbaHf5OdIMGzIVnOtPttyHrlID1gwFbjMmSx5uHDRor2zE+L5T+kwq7tFDbinZE4H94hd5RJiyebZC2W2I=
+	t=1728918103; cv=none; b=MXNbU9gDbX8a7G41Wi52smlSBlUYTkb9Dx0454/Xkcg6SQSCdvRuRpEYF6MfUNXxbmNYLoFML5BUOrHcpj3Jmz6fAWC2Hq1xgzRVoxOxntCRGChqdbmHMwfLXSv8Nx65VGfmuMDFSv7IVD3DQhd4+IHpV0iXh38fnwU4tK8rwwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918100; c=relaxed/simple;
-	bh=7LU7T/UxvIE3ba13DRcBLpZutcfQjBKggy5ZASE9YaE=;
+	s=arc-20240116; t=1728918103; c=relaxed/simple;
+	bh=7z8OPJWYjRQy4+0YsKCcQ977/i5ero73JmhfehAByFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPQA4mdwExcP8fXTEr9G22zBHiTL7TXsWZ1LfdrxVoySM+ujwrkzD1JqFLpNg+o1UjRoIMaA9oUahsZtkuBMQSxvYxIfWCrv4k/2nC5maALxPPLnEZZWz6WGgkq96yTw/Xtwfjqu4JZDHREE7+zF/Q1V11idEAoEqDzMNMhDhQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/VlHGNg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dewEbzMwDOuR88xapDv/LeSZ/6jFyFzS1/HH88Hu9TNpsyTozd6BTo6x5TMzEgTZZZbIRYcYMuhiCn2mAlKAbFaevi5VeMNb3km5RgWb9TZa89HRpRqhrdpfefyooBKHAUa3kjBKGEGESZBLmADzDJl0G0abcai0QGhMi3lZN8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGlBbXDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/VlHGNg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CDFC4CEC3;
-	Mon, 14 Oct 2024 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGlBbXDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62D3C4CEC3;
+	Mon, 14 Oct 2024 15:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918099;
-	bh=7LU7T/UxvIE3ba13DRcBLpZutcfQjBKggy5ZASE9YaE=;
+	s=korg; t=1728918103;
+	bh=7z8OPJWYjRQy4+0YsKCcQ977/i5ero73JmhfehAByFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/VlHGNg0CSjD1jg6lZM2K8njl0jE7aqR2n+HYNtVbAqjzjl2ldVemRs0LeoyJJx+
-	 4XRieYeddwHkPkcRpw8QvNkoAf5y/oeGvIObPEO/OryPe/IaVtOCPiR44Qv4KhL89P
-	 gAW3ATle+4BNPleTc8AaLY+Se6uNvfWEH/uJTm9Y=
+	b=qGlBbXDBm4Yumtttu9vrHmr4AXxhM0HmfVO7M19V9LPdt0Ev8AA37MBLKpeOXLx9x
+	 6EC+ARLbeXrtCJsA6rvuSq2MAx6eMih1rbCJy8zVQpt1JAA3gFPW1HLskU3mGXHpeT
+	 ttQpWDGeDhSVCZhYHTkpbeh0y0rh0XrN53B9qaAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wenglianfa <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 221/798] RDMA/hns: Fix the overflow risk of hem_list_calc_ba_range()
-Date: Mon, 14 Oct 2024 16:12:55 +0200
-Message-ID: <20241014141226.610084038@linuxfoundation.org>
+Subject: [PATCH 6.1 192/798] remoteproc: imx_rproc: Initialize workqueue earlier
+Date: Mon, 14 Oct 2024 16:12:26 +0200
+Message-ID: <20241014141225.473001968@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,75 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wenglianfa <wenglianfa@huawei.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit d586628b169d14bbf36be64d2b3ec9d9d2fe0432 ]
+[ Upstream commit 858e57c1d3dd7b92cc0fa692ba130a0a5d57e49d ]
 
-The max value of 'unit' and 'hop_num' is 2^24 and 2, so the value of
-'step' may exceed the range of u32. Change the type of 'step' to u64.
+Initialize workqueue before requesting mailbox channel, otherwise if
+mailbox interrupt comes before workqueue ready, the imx_rproc_rx_callback
+will trigger issue.
 
-Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
-Signed-off-by: wenglianfa <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2df7062002d0 ("remoteproc: imx_proc: enable virtio/mailbox")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-3-10d0268c7eb1@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/remoteproc/imx_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index f30274986c0da..156bc710e0dbb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -1082,9 +1082,9 @@ static bool hem_list_is_bottom_bt(int hopnum, int bt_level)
-  * @bt_level: base address table level
-  * @unit: ba entries per bt page
-  */
--static u32 hem_list_calc_ba_range(int hopnum, int bt_level, int unit)
-+static u64 hem_list_calc_ba_range(int hopnum, int bt_level, int unit)
- {
--	u32 step;
-+	u64 step;
- 	int max;
- 	int i;
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 7dad5cbec7ede..00a0c8f4a2200 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -796,6 +796,8 @@ static int imx_rproc_probe(struct platform_device *pdev)
+ 		goto err_put_rproc;
+ 	}
  
-@@ -1120,7 +1120,7 @@ int hns_roce_hem_list_calc_root_ba(const struct hns_roce_buf_region *regions,
- {
- 	struct hns_roce_buf_region *r;
- 	int total = 0;
--	int step;
-+	u64 step;
- 	int i;
++	INIT_WORK(&priv->rproc_work, imx_rproc_vq_work);
++
+ 	ret = imx_rproc_xtr_mbox_init(rproc);
+ 	if (ret)
+ 		goto err_put_wkq;
+@@ -814,8 +816,6 @@ static int imx_rproc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_put_mbox;
  
- 	for (i = 0; i < region_cnt; i++) {
-@@ -1151,7 +1151,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
- 	int ret = 0;
- 	int max_ofs;
- 	int level;
--	u32 step;
-+	u64 step;
- 	int end;
+-	INIT_WORK(&priv->rproc_work, imx_rproc_vq_work);
+-
+ 	if (rproc->state != RPROC_DETACHED)
+ 		rproc->auto_boot = of_property_read_bool(np, "fsl,auto-boot");
  
- 	if (hopnum <= 1)
-@@ -1188,7 +1188,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
- 		}
- 
- 		start_aligned = (distance / step) * step + r->offset;
--		end = min_t(int, start_aligned + step - 1, max_ofs);
-+		end = min_t(u64, start_aligned + step - 1, max_ofs);
- 		cur = hem_list_alloc_item(hr_dev, start_aligned, end, unit,
- 					  true);
- 		if (!cur) {
-@@ -1277,7 +1277,7 @@ static int setup_middle_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
- 	struct hns_roce_hem_item *hem, *temp_hem;
- 	int total = 0;
- 	int offset;
--	int step;
-+	u64 step;
- 
- 	step = hem_list_calc_ba_range(r->hopnum, 1, unit);
- 	if (step < 1)
 -- 
 2.43.0
 
