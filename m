@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC6749659;
-	Mon, 14 Oct 2024 14:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAFF1B85D6;
+	Mon, 14 Oct 2024 14:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917761; cv=none; b=GYIUUBZp+86mwepz9bkoX+y6i6chDBHYHiX9vTt1dsNDxfRneUfr/ARXcHu6O2HHH9wOZcYvhgJIdgdCsSVGOcVN7dkbYhGDX01vYDObmdHSP32pAbtnMl2jW1LCJBmeLM6tCsywXl8gbrlxISWA5DzkafGYVe8PvjG/QBfOXfw=
+	t=1728917764; cv=none; b=fgQmmI3pLqP5ZGE45XOPCM6Y7yYGvJuVb7oDTXDLBqiqIPP3htg0ty6BiSc1AxNQQRMHulssZAvyME3kGf31uO/BiZgzs65JhxC6qZNA2ITpMZ4MMiYvgcVesVdUrzySMN0XZonnOrhmMS8vu5MfBbJFiMgZrE8b47MEWLTAMUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917761; c=relaxed/simple;
-	bh=Wx3zTevK0xybRBlu4Fow57kCTNmaGwAHRe/uZcJeqkU=;
+	s=arc-20240116; t=1728917764; c=relaxed/simple;
+	bh=sSWypJN4yIssAEdszbTxBwhVMVY33Ui0GZc7fpLYtcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZlB+dGMmX1LgmCq6izT5vDWWOGYaNVZwJcm489MZStNKwMm2TOn++XTPy+IUgmvTKAO5DaiFMO0kJeRRc+usu0yvbB5YaywYOGCdS7OVb+fc7npP/x0HBBJNOiG6UzxJ8tr1nTHqCaM4d7/JaNrpKlI0dpwo4xvK1LW7zaCtYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8NCRNCz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/BW+X+rIgGh5zYNxj787ovMyF858h0Y+0HVl9J6W4fUPUkQF2EfJLIT+Nt6BIuSwxprpCd5mY3LfnJQm8G+8zo6i4ApnIwZarPXG5BSc187KpPH3vPfN77bLhTN7F8RV6+xrQTJ46jZUuaPxSPEOoQeDgmLy2o0ZY4Z328ge70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HP5vQXk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8NCRNCz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BB1C4CECF;
-	Mon, 14 Oct 2024 14:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HP5vQXk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEEEC4CEC3;
+	Mon, 14 Oct 2024 14:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917761;
-	bh=Wx3zTevK0xybRBlu4Fow57kCTNmaGwAHRe/uZcJeqkU=;
+	s=korg; t=1728917764;
+	bh=sSWypJN4yIssAEdszbTxBwhVMVY33Ui0GZc7fpLYtcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8NCRNCz8vzqCZ8lvwgHtNvPQvhGUFiT+67XNu05z6FFF+0o2crdZTlbns5tFz6ms
-	 CprL5tl/H9zmtGB7/kZicWpoFHTqoRnCrCEfwwnqtAYqkTd1zSYEBQRobIeH9kjpNw
-	 11YcPnzHTocRt/os0ttHGt2wxY3fVY/9JAicZzKM=
+	b=HP5vQXk35R83mRcT43RnUcv18TaEmcPO6kXB9GcbtXblEH5+et1tBJ5pdBfaymdld
+	 Zq/kgho4qN8F+m41wgTACm2vhWUnkHw0ixJLINLXI4H5tjrHRtJnvewbMjXsck6aKj
+	 wnJKTTXojThQtteTMuXglD/KiSxhrYygSNEBAwco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/798] fbdev: hpfb: Fix an error handling path in hpfb_dio_probe()
-Date: Mon, 14 Oct 2024 16:10:49 +0200
-Message-ID: <20241014141221.665620370@linuxfoundation.org>
+Subject: [PATCH 6.1 096/798] iommu/amd: Do not set the D bit on AMD v2 table entries
+Date: Mon, 14 Oct 2024 16:10:50 +0200
+Message-ID: <20241014141221.704826722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit aa578e897520f32ae12bec487f2474357d01ca9c ]
+[ Upstream commit 2910a7fa1be090fc7637cef0b2e70bcd15bf5469 ]
 
-If an error occurs after request_mem_region(), a corresponding
-release_mem_region() should be called, as already done in the remove
-function.
+The manual says that bit 6 is IGN for all Page-Table Base Address
+pointers, don't set it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: aaac38f61487 ("iommu/amd: Initial support for AMD IOMMU v2 page table")
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/14-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/hpfb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/io_pgtable_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/hpfb.c b/drivers/video/fbdev/hpfb.c
-index cdd44e5deafe4..27f33121ee2ef 100644
---- a/drivers/video/fbdev/hpfb.c
-+++ b/drivers/video/fbdev/hpfb.c
-@@ -344,6 +344,7 @@ static int hpfb_dio_probe(struct dio_dev *d, const struct dio_device_id *ent)
- 	if (hpfb_init_one(paddr, vaddr)) {
- 		if (d->scode >= DIOII_SCBASE)
- 			iounmap((void *)vaddr);
-+		release_mem_region(d->resource.start, resource_size(&d->resource));
- 		return -ENOMEM;
- 	}
- 	return 0;
+diff --git a/drivers/iommu/amd/io_pgtable_v2.c b/drivers/iommu/amd/io_pgtable_v2.c
+index 8638ddf6fb3b2..232d17bd941fd 100644
+--- a/drivers/iommu/amd/io_pgtable_v2.c
++++ b/drivers/iommu/amd/io_pgtable_v2.c
+@@ -56,7 +56,7 @@ static inline u64 set_pgtable_attr(u64 *page)
+ 	u64 prot;
+ 
+ 	prot = IOMMU_PAGE_PRESENT | IOMMU_PAGE_RW | IOMMU_PAGE_USER;
+-	prot |= IOMMU_PAGE_ACCESS | IOMMU_PAGE_DIRTY;
++	prot |= IOMMU_PAGE_ACCESS;
+ 
+ 	return (iommu_virt_to_phys(page) | prot);
+ }
 -- 
 2.43.0
 
