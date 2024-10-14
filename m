@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63D04087C;
-	Mon, 14 Oct 2024 14:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151F14087C;
+	Mon, 14 Oct 2024 14:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917718; cv=none; b=YHJhIy6UQCtTwGzydwffUihDdn376pymMvbNIVsZBj7ywsDx0g1uWr7lgR5M9/VqOOnbE8L8lQ29+F2uVq22yZthv5JAICQ5GD6VxMHBuhW8MAOiSF8c9MRyezzvPiKpXifCWm5Bzm2dQDnsdQitw8+j8wFPArrIWF3uVgdWwOU=
+	t=1728917722; cv=none; b=TsPBqYtjOePkdROF14a6gPapdT2ys0lUw0oiPaAxY68+E/oli3IL1JpEPPjjCnQk3FuF60XNvgDgFMmfYYUAcgFZGpZnRnESkcBbztI2j7WXgOIXcVk9xabR1bDd4PJ+NOB0ZVOmhNogY4OrBG2DZTOcpynYv4+aBiqkU/KPvXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917718; c=relaxed/simple;
-	bh=1pAMdbR3bx1EAvw993PXB4k0v+PW+rQs3EmYb41Hpnw=;
+	s=arc-20240116; t=1728917722; c=relaxed/simple;
+	bh=8zZJ92lSfbLdt848oupPn79rsbDqMfQ4tFscoiTfNZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qq62oUOxXREiJPo+FKsQEmp2I1nHeQmGSIGF0v+hn3Q69/wvvlhPLEkpeWXEsTTb2lKzyD3pANpZpMhLgFA/v3yUYVozsIMGsjsIutNDWgM8V0APGvQy2eXeIR6CH10ZuUTfCCA6aU0yA3krJ+zLiGcSPZZQl7PfMCYTAiFeyHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VY+gHA4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUZ0VJSkyzzbtXjKv8ryHnH0GCWykuaOYtxxbrAccj6ZsJnUNKebu62dmh8hkPMm9rXDSv+wczIBhbvz4qW8Ghc5THdPoexK4BzNo7FXtQfaXuyg7SPNPPhZJL0usLHVZHzdzZz+qL/j9sEbO2QdT0XdyFOBK1g9eFHl5rZG/QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNZZR28P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VY+gHA4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E08C4CECF;
-	Mon, 14 Oct 2024 14:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNZZR28P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A581C4CEC3;
+	Mon, 14 Oct 2024 14:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917718;
-	bh=1pAMdbR3bx1EAvw993PXB4k0v+PW+rQs3EmYb41Hpnw=;
+	s=korg; t=1728917722;
+	bh=8zZJ92lSfbLdt848oupPn79rsbDqMfQ4tFscoiTfNZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VY+gHA4/WTJ+BsGUfWfT+EI/3SDNzBinB7Q8ZNaMWaXMwR4Bjz1/DetNvCgn3ctdq
-	 +0hMsvv+r9CbRtI3YbWvC4x8A90tUygdhZ3LGB7hU8CTux3duFjyow0f+D/Q/n0WTF
-	 4/fhT6oTqf4it2G0F8qCmbcMt0Ye2eFBR6WuytN0=
+	b=SNZZR28PqcG8v5Vsn6NWERIxMvgD4OwcQOl+ZkBPDRb5FeeeqnnwOC66nU+KUJeHS
+	 hcZK7N9S8ybgdgrNhvgG0ybsGd+hd5ji+p/xIt0YoMuEuugnE5ZkqXO/pqmd4B+mkc
+	 mWpHQZs+sc2f5CooNBPNrVgGKFU4BTyDTOTU5xfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
 	Jonas Karlman <jonas@kwiboo.se>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/798] drm/rockchip: vop: Allow 4096px width scaling
-Date: Mon, 14 Oct 2024 16:11:07 +0200
-Message-ID: <20241014141222.365213143@linuxfoundation.org>
+Subject: [PATCH 6.1 114/798] drm/rockchip: dw_hdmi: Fix reading EDID when using a forced mode
+Date: Mon, 14 Oct 2024 16:11:08 +0200
+Message-ID: <20241014141222.404074737@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 0ef968d91a20b5da581839f093f98f7a03a804f7 ]
+[ Upstream commit a5d024541ec466f428e6c514577d511a40779c7b ]
 
-There is no reason to limit VOP scaling to 3840px width, the limit of
-RK3288, when there are newer VOP versions that support 4096px width.
+EDID cannot be read on RK3328 until after read_hpd has been called and
+correct io voltage has been configured based on connection status.
 
-Change to enforce a maximum of 4096px width plane scaling, the maximum
-supported output width of the VOP versions supported by this driver.
+When a forced mode is used, e.g. video=1920x1080@60e, the connector
+detect ops, that in turn normally calls the read_hpd, never gets called.
 
-Fixes: 4c156c21c794 ("drm/rockchip: vop: support plane scale")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
+This result in reading EDID to fail in connector get_modes ops.
+
+Call dw_hdmi_rk3328_read_hpd at end of dw_hdmi_rk3328_setup_hpd to
+correct io voltage and allow reading EDID after setup_hpd.
+
+Fixes: 1c53ba8f22a1 ("drm/rockchip: dw_hdmi: add dw-hdmi support for the rk3328")
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240615170417.3134517-4-jonas@kwiboo.se
+Link: https://patchwork.freedesktop.org/patch/msgid/20240615170417.3134517-5-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 632ab8941eb44..59fde46f6dff8 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -385,8 +385,8 @@ static void scl_vop_cal_scl_fac(struct vop *vop, const struct vop_win_data *win,
- 	if (info->is_yuv)
- 		is_yuv = true;
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index ae857bf8bd624..566f2942f24ae 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -410,6 +410,8 @@ static void dw_hdmi_rk3328_setup_hpd(struct dw_hdmi *dw_hdmi, void *data)
+ 		HIWORD_UPDATE(RK3328_HDMI_SDAIN_MSK | RK3328_HDMI_SCLIN_MSK,
+ 			      RK3328_HDMI_SDAIN_MSK | RK3328_HDMI_SCLIN_MSK |
+ 			      RK3328_HDMI_HPD_IOE));
++
++	dw_hdmi_rk3328_read_hpd(dw_hdmi, data);
+ }
  
--	if (dst_w > 3840) {
--		DRM_DEV_ERROR(vop->dev, "Maximum dst width (3840) exceeded\n");
-+	if (dst_w > 4096) {
-+		DRM_DEV_ERROR(vop->dev, "Maximum dst width (4096) exceeded\n");
- 		return;
- 	}
- 
+ static const struct dw_hdmi_phy_ops rk3228_hdmi_phy_ops = {
 -- 
 2.43.0
 
