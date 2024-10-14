@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01D11AB538;
-	Mon, 14 Oct 2024 15:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEC11ABEC6;
+	Mon, 14 Oct 2024 15:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918818; cv=none; b=CQbfmUvzvtRXa7EkDZMVA4iJL87gIOYrK6K3W8OXGVljxxBOQ/dT4d9yImHQbpU8HxEPXcSIaIUe1D2Nrz3fXtQp83vd/tZJNLSsUujj5a/7Ya8n66+Ri2OPXoL/VE1ngzHRylQJWpryzdy9Bctxe11kAbNQ3R9WWBzqUMJdz3c=
+	t=1728918821; cv=none; b=rJpmRX7HAvTxwCKsY6scin0B5r90r1JpRCMrufqgmBewWft2AuHLEWczR1xF+te/yaYP+jliYDuCkpvT9P1xrCi4YopejfyNswQVZN3ZuMN0xJJOFdLueeOv2NgXcWF9n635FxuUBKuMR6+Y4GOMJanHKHZYa95HFLBdr8H2Iok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918818; c=relaxed/simple;
-	bh=d8SFnRpJWvJGRTyOa7QgM4NAmXqNM+jq0rJ+IIj6KOI=;
+	s=arc-20240116; t=1728918821; c=relaxed/simple;
+	bh=Zl6/NS5zhQQTdAXpUiELCZQggdq0UMsxS9QxP052yd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+6/zJ9nwokswxP0dJH+TzU22dEE1tpgLE/LB6rRjBGzJ55PDeYigE1ICzmOwFU4y9be5XEmMzpAmuqvIe1sI6fQpv7r983tKSQ2B2xUBvZ53EgeAqRe5I17b9rNZeSvS2JVGO8z1w7utXZB+N4WvNv1wLqJtOnSnT8ec/Y0Ag8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYd+2kOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mahaONVfcmOWM7kHIR1FDEL6FzkdSSIrsaH1KzwmqwWrgyztiEYFVPLbnEBLBcTLsSi32uq0ZK8OhFhBYX0/G5CuFqW+Kl2i3Vamo7Ifcpq4Ma2kfIc8NThyiR0cYMgJahFh95/jq6Y5koFwfzHp5cICvaIRsngwYgbKfVdb+D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VL44IHB0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYd+2kOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17302C4CEC3;
-	Mon, 14 Oct 2024 15:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VL44IHB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6C0C4CEC7;
+	Mon, 14 Oct 2024 15:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918817;
-	bh=d8SFnRpJWvJGRTyOa7QgM4NAmXqNM+jq0rJ+IIj6KOI=;
+	s=korg; t=1728918821;
+	bh=Zl6/NS5zhQQTdAXpUiELCZQggdq0UMsxS9QxP052yd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYd+2kOZALDq7cV6njuLkPqgylSJw2+nfqhmaqjH6IqPSlUHs17Bp/9+7TGMH10bm
-	 x4VzjcgRzJoioGART3bhX1IlkpBJhCOZj1PvWa4rCS+DhPI0aIeztk1QHRvmB/cxfR
-	 pksJmPwizP9qeAAexAA3/Hq955iHoqy7tgyCYEVs=
+	b=VL44IHB0WSZDw9VcFyM2q6uNI9u34c9MsyL6EcvNVqrtBdvPAzk6N9h8KFjfC2Obo
+	 tq2pyDCU41T3G1lKSv322v99UmrD1E0Ltb/UEpWbDtyH72yunYWQQwzaTPx4sQV9Nx
+	 yaMpfzUDxsx0aUvbLjvu80RK4VyCnbUH6grAqkcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
+	syzbot+bd8d55ee2acd0a71d8ce@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	James Chapman <jchapman@katalix.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/798] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
-Date: Mon, 14 Oct 2024 16:15:54 +0200
-Message-ID: <20241014141233.660503426@linuxfoundation.org>
+Subject: [PATCH 6.1 401/798] ppp: do not assume bh is held in ppp_channel_bridge_input()
+Date: Mon, 14 Oct 2024 16:15:55 +0200
+Message-ID: <20241014141233.699437518@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,87 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
+[ Upstream commit aec7291003df78cb71fd461d7b672912bde55807 ]
 
-Regression Description:
+Networking receive path is usually handled from BH handler.
+However, some protocols need to acquire the socket lock, and
+packets might be stored in the socket backlog is the socket was
+owned by a user process.
 
-Depending on the options specified for the GRE tunnel device, small
-packets may be dropped. This occurs because the pskb_network_may_pull
-function fails due to the packet's insufficient length.
+In this case, release_sock(), __release_sock(), and sk_backlog_rcv()
+might call the sk->sk_backlog_rcv() handler in process context.
 
-For example, if only the okey option is specified for the tunnel device,
-original (before encapsulation) packets smaller than 28 bytes (including
-the IPv4 header) will be dropped. This happens because the required
-length is calculated relative to the network header, not the skb->head.
+sybot caught ppp was not considering this case in
+ppp_channel_bridge_input() :
 
-Here is how the required length is computed and checked:
+WARNING: inconsistent lock state
+6.11.0-rc7-syzkaller-g5f5673607153 #0 Not tainted
+--------------------------------
+inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+ksoftirqd/1/24 [HC0[0]:SC1[1]:HE1:SE0] takes:
+ ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
+ ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
+ ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
+{SOFTIRQ-ON-W} state was registered at:
+   lock_acquire+0x240/0x728 kernel/locking/lockdep.c:5759
+   __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+   _raw_spin_lock+0x48/0x60 kernel/locking/spinlock.c:154
+   spin_lock include/linux/spinlock.h:351 [inline]
+   ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
+   ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
+   pppoe_rcv_core+0xfc/0x314 drivers/net/ppp/pppoe.c:379
+   sk_backlog_rcv include/net/sock.h:1111 [inline]
+   __release_sock+0x1a8/0x3d8 net/core/sock.c:3004
+   release_sock+0x68/0x1b8 net/core/sock.c:3558
+   pppoe_sendmsg+0xc8/0x5d8 drivers/net/ppp/pppoe.c:903
+   sock_sendmsg_nosec net/socket.c:730 [inline]
+   __sock_sendmsg net/socket.c:745 [inline]
+   __sys_sendto+0x374/0x4f4 net/socket.c:2204
+   __do_sys_sendto net/socket.c:2216 [inline]
+   __se_sys_sendto net/socket.c:2212 [inline]
+   __arm64_sys_sendto+0xd8/0xf8 net/socket.c:2212
+   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+   invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+   el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+   do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+   el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
+   el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+   el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+irq event stamp: 282914
+ hardirqs last  enabled at (282914): [<ffff80008b42e30c>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
+ hardirqs last  enabled at (282914): [<ffff80008b42e30c>] _raw_spin_unlock_irqrestore+0x38/0x98 kernel/locking/spinlock.c:194
+ hardirqs last disabled at (282913): [<ffff80008b42e13c>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
+ hardirqs last disabled at (282913): [<ffff80008b42e13c>] _raw_spin_lock_irqsave+0x2c/0x7c kernel/locking/spinlock.c:162
+ softirqs last  enabled at (282904): [<ffff8000801f8e88>] softirq_handle_end kernel/softirq.c:400 [inline]
+ softirqs last  enabled at (282904): [<ffff8000801f8e88>] handle_softirqs+0xa3c/0xbfc kernel/softirq.c:582
+ softirqs last disabled at (282909): [<ffff8000801fbdf8>] run_ksoftirqd+0x70/0x158 kernel/softirq.c:928
 
-* The pull_len variable is set to 28 bytes, consisting of:
-  * IPv4 header: 20 bytes
-  * GRE header with Key field: 8 bytes
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-* The pskb_network_may_pull function adds the network offset, shifting
-the checkable space further to the beginning of the network header and
-extending it to the beginning of the packet. As a result, the end of
-the checkable space occurs beyond the actual end of the packet.
+       CPU0
+       ----
+  lock(&pch->downl);
+  <Interrupt>
+    lock(&pch->downl);
 
-Instead of ensuring that 28 bytes are present in skb->head, the function
-is requesting these 28 bytes starting from the network header. For small
-packets, this requested length exceeds the actual packet size, causing
-the check to fail and the packets to be dropped.
+ *** DEADLOCK ***
 
-This issue affects both locally originated and forwarded packets in
-DMVPN-like setups.
+1 lock held by ksoftirqd/1/24:
+  #0: ffff80008f74dfa0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire+0x10/0x4c include/linux/rcupdate.h:325
 
-How to reproduce (for local originated packets):
+stack backtrace:
+CPU: 1 UID: 0 PID: 24 Comm: ksoftirqd/1 Not tainted 6.11.0-rc7-syzkaller-g5f5673607153 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call trace:
+  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:319
+  show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:326
+  __dump_stack lib/dump_stack.c:93 [inline]
+  dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:119
+  dump_stack+0x1c/0x28 lib/dump_stack.c:128
+  print_usage_bug+0x698/0x9ac kernel/locking/lockdep.c:4000
+ mark_lock_irq+0x980/0xd2c
+  mark_lock+0x258/0x360 kernel/locking/lockdep.c:4677
+  __lock_acquire+0xf48/0x779c kernel/locking/lockdep.c:5096
+  lock_acquire+0x240/0x728 kernel/locking/lockdep.c:5759
+  __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+  _raw_spin_lock+0x48/0x60 kernel/locking/spinlock.c:154
+  spin_lock include/linux/spinlock.h:351 [inline]
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
+  ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
+  ppp_async_process+0x98/0x150 drivers/net/ppp/ppp_async.c:495
+  tasklet_action_common+0x318/0x3f4 kernel/softirq.c:785
+  tasklet_action+0x68/0x8c kernel/softirq.c:811
+  handle_softirqs+0x2e4/0xbfc kernel/softirq.c:554
+  run_ksoftirqd+0x70/0x158 kernel/softirq.c:928
+  smpboot_thread_fn+0x4b0/0x90c kernel/smpboot.c:164
+  kthread+0x288/0x310 kernel/kthread.c:389
+  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
 
-  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
-          local <your-ip> remote 0.0.0.0
-
-  ip link set mtu 1400 dev gre1
-  ip link set up dev gre1
-  ip address add 192.168.13.1/24 dev gre1
-  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
-  ping -s 1374 -c 10 192.168.13.2
-  tcpdump -vni gre1
-  tcpdump -vni <your-ext-iface> 'ip proto 47'
-  ip -s -s -d link show dev gre1
-
-Solution:
-
-Use the pskb_may_pull function instead the pskb_network_may_pull.
-
-Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
+Reported-by: syzbot+bd8d55ee2acd0a71d8ce@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/66f661e2.050a0220.38ace9.000f.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Tom Parkin <tparkin@katalix.com>
+Cc: James Chapman <jchapman@katalix.com>
+Link: https://patch.msgid.link/20240927074553.341910-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 0267fa05374aa..2c311ed84a3b3 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -644,11 +644,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 5a6fa566e722f..de14e89619c5e 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -2269,7 +2269,7 @@ static bool ppp_channel_bridge_input(struct channel *pch, struct sk_buff *skb)
+ 	if (!pchb)
+ 		goto out_rcu;
  
--		tnl_params = (const struct iphdr *)skb->data;
--
--		if (!pskb_network_may_pull(skb, pull_len))
-+		if (!pskb_may_pull(skb, pull_len))
- 			goto free_skb;
+-	spin_lock(&pchb->downl);
++	spin_lock_bh(&pchb->downl);
+ 	if (!pchb->chan) {
+ 		/* channel got unregistered */
+ 		kfree_skb(skb);
+@@ -2281,7 +2281,7 @@ static bool ppp_channel_bridge_input(struct channel *pch, struct sk_buff *skb)
+ 		kfree_skb(skb);
  
-+		tnl_params = (const struct iphdr *)skb->data;
-+
- 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
- 		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
+ outl:
+-	spin_unlock(&pchb->downl);
++	spin_unlock_bh(&pchb->downl);
+ out_rcu:
+ 	rcu_read_unlock();
+ 
 -- 
 2.43.0
 
