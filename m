@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E1156256;
-	Mon, 14 Oct 2024 15:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADADE1AAE00;
+	Mon, 14 Oct 2024 15:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919702; cv=none; b=X/ubVi0CYU4gens5hCSPGfbAelesOnCuusa9muYX6bk00GAtbEefrrqGc6MKbn3rbykwHg4YCfBcaroXmSasATVJNla6m4jEKGh4Wnm4JQQ6KEacvm+19RBG79knYC2BVQ2gIfcBS5FW3K/YzK6b+8Z63SrfCQXrISlurkawB+k=
+	t=1728919705; cv=none; b=Yb6PEG3Dih2wAO6rs4mLdY7BoWuoc88Cd5jf6ITAkyXhMqE40MmzbbaSyur5QZxwVORieUF0lPYar90hgoljockeDJ90pzWNRxFC5+bUW1dCP3ifYKV6D11fHmDLvqL7FEvWlZUOQro0EluD9aQQMiHFUwx462laN8LSrvZi0wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919702; c=relaxed/simple;
-	bh=3FAebbm7bt4M9E03ngKCfijbViHwGDCS1A+Nt4sVGJ0=;
+	s=arc-20240116; t=1728919705; c=relaxed/simple;
+	bh=m8Hkxij51fWIW/1wDyWbwKxSdeaRJVJQWdbychv/XZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyi+d89xQ08YgntLtIq4I7BZATICVAUkgsXi9AD6IxtpmUYJRnDy3m7JkxFTWD0fxmlHJjrI3dlleZwwXqwM75rx0ec/x2kjnasiYxhaEnuGooUvGCNDW064A1ANa57fKyzFGLoIx8O7dXIOL6YRGFTL0UbZ/Afy316o1y7TOPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVEWjXgu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZ2EzYsZJslSZKwWtyFzSojLsGAoQF2AMN673x5SOthFCHSWkYe060sIBT2t+SGXfc7I9eJnNopftiaTf+lR0gqua0yby4BohSx5oCFKWGPmmhDDSWOHFbQUYYyvfTgHQLqTZ2+fmeyCY7ztIZnSIJY8ODqDoIuaHofapTNHrO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRGM2tcu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVEWjXgu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6F5C4CEC3;
-	Mon, 14 Oct 2024 15:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRGM2tcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D58FC4CECF;
+	Mon, 14 Oct 2024 15:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919702;
-	bh=3FAebbm7bt4M9E03ngKCfijbViHwGDCS1A+Nt4sVGJ0=;
+	s=korg; t=1728919705;
+	bh=m8Hkxij51fWIW/1wDyWbwKxSdeaRJVJQWdbychv/XZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVEWjXgu8yj5DNkyMp/zOOqen89GJkke9zUpv1ub96FsJe36eALqhgloRoQYNYATs
-	 +g8f7dJvl59S0tLf5/2T6fgzGZSHmMu8VJLcdjcXfWAAcm4t8vMO8p522uAFWY3xDo
-	 m90OB5ahdoPQuuYTuurbLJrzeQ+z2rc6+YeCH7rQ=
+	b=KRGM2tcuBBEG0X386Mb942PWKAfJc/FkH/vsTyZMBbgkk0ULnd70pBO4UXTlPK0/p
+	 7hmCa2GO1rdsi00qkz71/ahvNxMQrS5sLd5keSqa6AF+wHehZHeVR0gqN5/P6w1AXA
+	 2UhlkogfcOu0ZLAvm5IxFR11+QJC8l6F6oR3hPUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 683/798] fs/ntfs3: Refactor enum_rstbl to suppress static checker
-Date: Mon, 14 Oct 2024 16:20:37 +0200
-Message-ID: <20241014141244.902470130@linuxfoundation.org>
+Subject: [PATCH 6.1 684/798] virtio_console: fix misc probe bugs
+Date: Mon, 14 Oct 2024 16:20:38 +0200
+Message-ID: <20241014141244.942410616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,56 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 56c16d5459d5c050a97a138a00a82b105a8e0a66 ]
+[ Upstream commit b9efbe2b8f0177fa97bfab290d60858900aa196b ]
 
-Comments and brief description of function enum_rstbl added.
+This fixes the following issue discovered by code review:
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+after vqs have been created, a buggy device can send an interrupt.
+
+A control vq callback will then try to schedule control_work which has
+not been initialized yet. Similarly for config interrupt.  Further, in
+and out vq callbacks invoke find_port_by_vq which attempts to take
+ports_lock which also has not been initialized.
+
+To fix, init all locks and work before creating vqs.
+
+Message-ID: <ad982e975a6160ad110c623c016041311ca15b4f.1726511547.git.mst@redhat.com>
+Fixes: 17634ba25544 ("virtio: console: Add a new MULTIPORT feature, support for generic ports")
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/char/virtio_console.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 8e23bd6cd0f2f..339ce5aa3c75b 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -609,14 +609,29 @@ static inline void add_client(struct CLIENT_REC *ca, u16 index, __le16 *head)
- 	*head = cpu_to_le16(index);
- }
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 9fa3c76a267f5..899036ce3802c 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -2055,25 +2055,27 @@ static int virtcons_probe(struct virtio_device *vdev)
+ 		multiport = true;
+ 	}
  
-+/*
-+ * Enumerate restart table.
-+ *
-+ * @t - table to enumerate.
-+ * @c - current enumerated element.
-+ *
-+ * enumeration starts with @c == NULL
-+ * returns next element or NULL
-+ */
- static inline void *enum_rstbl(struct RESTART_TABLE *t, void *c)
- {
- 	__le32 *e;
- 	u32 bprt;
--	u16 rsize = t ? le16_to_cpu(t->size) : 0;
-+	u16 rsize;
-+
-+	if (!t)
-+		return NULL;
-+
-+	rsize = le16_to_cpu(t->size);
+-	err = init_vqs(portdev);
+-	if (err < 0) {
+-		dev_err(&vdev->dev, "Error %d initializing vqs\n", err);
+-		goto free_chrdev;
+-	}
+-
+ 	spin_lock_init(&portdev->ports_lock);
+ 	INIT_LIST_HEAD(&portdev->ports);
+ 	INIT_LIST_HEAD(&portdev->list);
  
- 	if (!c) {
--		if (!t || !t->total)
-+		/* start enumeration. */
-+		if (!t->total)
- 			return NULL;
- 		e = Add2Ptr(t, sizeof(struct RESTART_TABLE));
- 	} else {
+-	virtio_device_ready(portdev->vdev);
+-
+ 	INIT_WORK(&portdev->config_work, &config_work_handler);
+ 	INIT_WORK(&portdev->control_work, &control_work_handler);
+ 
+ 	if (multiport) {
+ 		spin_lock_init(&portdev->c_ivq_lock);
+ 		spin_lock_init(&portdev->c_ovq_lock);
++	}
+ 
++	err = init_vqs(portdev);
++	if (err < 0) {
++		dev_err(&vdev->dev, "Error %d initializing vqs\n", err);
++		goto free_chrdev;
++	}
++
++	virtio_device_ready(portdev->vdev);
++
++	if (multiport) {
+ 		err = fill_queue(portdev->c_ivq, &portdev->c_ivq_lock);
+ 		if (err < 0) {
+ 			dev_err(&vdev->dev,
 -- 
 2.43.0
 
