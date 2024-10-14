@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BDF4CDEC;
-	Mon, 14 Oct 2024 15:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5021ABEC1;
+	Mon, 14 Oct 2024 15:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918363; cv=none; b=P600P+Of69WLnJk6DkJKpn0yDCfSO8u9DYBssoS71oRQz8roZ94cHfT7u4sNA0EwO8OvjyH7srhLCL5XPsiPL59lR3+R5u2Ka1wXXC8stExtR+EPAK05qP7cqY/wwQ/zj+zHGrOd1UOpisEco4HFUrLdPUq8Is+P4sNo4q9Eu8k=
+	t=1728918367; cv=none; b=CY/5wWTnKxpp9RLva0U15DijlZXAVywGcecxNgjBTbk+idD6UPYCR+wsqrOdEpwcVJEPzc88C3dVdVU4kFWIZ8ssxXcisnRgqBP/GvBLKf3Jrx2fQafmqTp8fSuUEqJ5RXu8C4QQ+J/MUBz/FbXsjmtIwHauZLNWyel/6FFmUvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918363; c=relaxed/simple;
-	bh=Z6qdDxrrf2h8CS7Iowl7E0rtX4boAzNBbTxiZkI+3QY=;
+	s=arc-20240116; t=1728918367; c=relaxed/simple;
+	bh=oLZapMAkIFcv0v1xl0E8Af4aMB1QxE1Xzvg6QgBrvhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oseSLJLDgMFeG0KhWgqS4t3zuvX0mGXOi6C8ZPS/wf9ZLgV4bGWRTcc7xe5qNlIOcdguVqyFHHkMEFfaKto6datd39RqKRut/qRx+vMZBF99M9iH2/i5IvphsOoVSiCUsTtQLblks8B4CQM7gwCPf7mAwrJJswlS0iewIElMtNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzyLow6I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFMLjJ7BqkSNeMf6fCGZ5qfvW93Ks536ddSTTT+XpStrDaM6Vx29PKUgdVKJmWtabcTwyEtM4uiF1KKgeQYF3xav0xPHrgMjOy4Dla6UXSTWsVvV9ys8DWI5ZLts7z6hQE+UIKuMn9XmWL9FKK9YFQoZF6Sdjxd/7GsDgH9OTrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKIFUkKd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzyLow6I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6864C4CECF;
-	Mon, 14 Oct 2024 15:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKIFUkKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD7CC4CECF;
+	Mon, 14 Oct 2024 15:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918363;
-	bh=Z6qdDxrrf2h8CS7Iowl7E0rtX4boAzNBbTxiZkI+3QY=;
+	s=korg; t=1728918366;
+	bh=oLZapMAkIFcv0v1xl0E8Af4aMB1QxE1Xzvg6QgBrvhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzyLow6IKzs2WD8lFGLRcv4lmw/8vGdTPbqBi8FpF6OUnY+zHu7PfNGry0tb3SbmR
-	 XY+8fe5JucLWXTuIiv33c65q7Y4T5JTw7uBLc0riZziCZoLegFQ9cNN/uvCJLnx153
-	 Ihn6E8Gr1bzbpqHn0sgnF4jXPhZ6/wcGJZKRawek=
+	b=jKIFUkKdesKPFk+FvVhe6IjakcnRq5bVCh0lpmUd59zay+0ntl7gOCUZPQadeG4Qu
+	 UXXadCbOkPNJB84Oum92MN22JDRyJeNgacb9krK+VL3kDaygh3jwUIkNk9AYWFyM2T
+	 pE/goJfh69yAaI2bmWHeSq4YKEXKvUslN/v6nk4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 301/798] scsi: sd: Fix off-by-one error in sd_read_block_characteristics()
-Date: Mon, 14 Oct 2024 16:14:15 +0200
-Message-ID: <20241014141229.770869670@linuxfoundation.org>
+Subject: [PATCH 6.1 302/798] scsi: mac_scsi: Revise printk(KERN_DEBUG ...) messages
+Date: Mon, 14 Oct 2024 16:14:16 +0200
+Message-ID: <20241014141229.808541150@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,34 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit f81eaf08385ddd474a2f41595a7757502870c0eb upstream.
+commit 5ec4f820cb9766e4583df947150a6febce8da794 upstream.
 
-Ff the device returns page 0xb1 with length 8 (happens with qemu v2.x, for
-example), sd_read_block_characteristics() may attempt an out-of-bounds
-memory access when accessing the zoned field at offset 8.
+After a bus fault, capture and log the chip registers immediately, if the
+NDEBUG_PSEUDO_DMA macro is defined. Remove some printk(KERN_DEBUG ...)
+messages that aren't needed any more.  Don't skip the debug message when
+bytes == 0. Show all of the byte counters in the debug messages.
 
-Fixes: 7fb019c46eee ("scsi: sd: Switch to using scsi_device VPD pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Link: https://lore.kernel.org/r/20240912134308.282824-1-mwilck@suse.com
+Cc: stable@vger.kernel.org # 5.15+
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/7573c79f4e488fc00af2b8a191e257ca945e0409.1723001788.git.fthain@linux-m68k.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/mac_scsi.c |   42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -2998,7 +2998,7 @@ static void sd_read_block_characteristic
- 	rcu_read_lock();
- 	vpd = rcu_dereference(sdkp->device->vpd_pgb1);
+--- a/drivers/scsi/mac_scsi.c
++++ b/drivers/scsi/mac_scsi.c
+@@ -286,13 +286,14 @@ static inline int macscsi_pread(struct N
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
  
--	if (!vpd || vpd->len < 8) {
-+	if (!vpd || vpd->len <= 8) {
- 		rcu_read_unlock();
- 	        return;
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
+ 
+-		bytes = mac_pdma_recv(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_recv(s, d, chunk_bytes);
+ 
+ 		if (bytes > 0) {
+ 			d += bytes;
+@@ -302,23 +303,23 @@ static inline int macscsi_pread(struct N
+ 		if (hostdata->pdma_residual == 0)
+ 			goto out;
+ 
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, d - dst, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, d - dst, len, bytes, chunk_bytes);
++
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
+ 	}
+@@ -345,13 +346,14 @@ static inline int macscsi_pwrite(struct
+ 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH,
+ 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
+-		int bytes;
++		int bytes, chunk_bytes;
+ 
+ 		if (macintosh_config->ident == MAC_MODEL_IIFX)
+ 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
+ 			                         CTRL_INTERRUPTS_ENABLE);
+ 
+-		bytes = mac_pdma_send(s, d, min(hostdata->pdma_residual, 512));
++		chunk_bytes = min(hostdata->pdma_residual, 512);
++		bytes = mac_pdma_send(s, d, chunk_bytes);
+ 
+ 		if (bytes > 0) {
+ 			s += bytes;
+@@ -370,23 +372,23 @@ static inline int macscsi_pwrite(struct
+ 			goto out;
+ 		}
+ 
+-		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
+-		                           BUS_AND_STATUS_REG, BASR_ACK,
+-		                           BASR_ACK, 0) < 0)
+-			scmd_printk(KERN_DEBUG, hostdata->connected,
+-			            "%s: !REQ and !ACK\n", __func__);
+ 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
+ 			goto out;
+ 
+ 		if (bytes == 0)
+ 			udelay(MAC_PDMA_DELAY);
+ 
+-		if (bytes >= 0)
++		if (bytes > 0)
+ 			continue;
+ 
+-		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
+-		         "%s: bus error (%d/%d)\n", __func__, s - src, len);
+ 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
++		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
++			 "%s: bus error [%d/%d] (%d/%d)\n",
++			 __func__, s - src, len, bytes, chunk_bytes);
++
++		if (bytes == 0)
++			continue;
++
+ 		result = -1;
+ 		goto out;
  	}
 
 
