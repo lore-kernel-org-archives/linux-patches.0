@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B8E481B7;
-	Mon, 14 Oct 2024 14:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512F6481B7;
+	Mon, 14 Oct 2024 14:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917617; cv=none; b=PODCocGsq4b7k+CasFzzLh5UHJq2hVKvfq5dDQYvdZmEcJpKdj7DMTxgl55rFTJxCG+VA9OjXR6DrNPiZLhBlk9rlGsibw/MBNfxqtLiJdiqITK5WSZVSA/GkHX45S+BbEpAB07Nno7W6K4dboq7ezY+kcyhhUrMHkxRKCvn2Do=
+	t=1728917620; cv=none; b=fl8dFNj7J5RWS1uNqLvf4LvYJz9l1p94JOMydr/8h2A9AAZfNwforjPeeOxNzoJ82msiAgii/PR+9ZHjjRgN3xnR9Xjvi3wh1VdHLXNPcUQQpgEwK0Ha8HxoScIjc7eI0HPJT97RlOpKjLZu+Mj3i3oQtUs4eE/b9m1xxk4iXt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917617; c=relaxed/simple;
-	bh=vBad1yK87Jf6r+dLNtipHk+ajUPgCWMtBJKADNjwxgE=;
+	s=arc-20240116; t=1728917620; c=relaxed/simple;
+	bh=p27O/UmQorFC6lpt44+tiMOj+N6qKFv4/fINFQ6422w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRrDEbn0P9BAUCi6ql1QnhP/o59dFsfC9fdqTF5NVea2nUafxnkth/19IB3FyWHnI8quF7qhUehM+u882wSYxXNmwtH/69SgcuiT5gZWKidDvD/mirr//e8cndvvwwwrGophJpfF0Nhz3NJQdRBD2/tvyV8VJfXDllQBrzZP8EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtuShjty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRH1mFLOt0iQclOZi1w56WKjynm4BiowxmbMOJ2o8MB0mPJYjf6Lw4qfBh5NH0/rtv13T2d2xvunzVRimzjJxSFlxa0kMVRwPWO17eNulH6JvwaJwXaSGmwQoQBtiwsYjjF4BvQMjQgkGGNHSTwSRK6eb5O+aWWf9cVb1Yrb9aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4FwfaP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtuShjty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B94FC4CEC7;
-	Mon, 14 Oct 2024 14:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4FwfaP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B017FC4CEC3;
+	Mon, 14 Oct 2024 14:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917616;
-	bh=vBad1yK87Jf6r+dLNtipHk+ajUPgCWMtBJKADNjwxgE=;
+	s=korg; t=1728917620;
+	bh=p27O/UmQorFC6lpt44+tiMOj+N6qKFv4/fINFQ6422w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtuShjtyJN9338XR/kiDu1klt9+vDQ+6D5JfRsSO8c4Nfivt8Qh0Mm/yuqNWCltVc
-	 +Cx8jiyfJZ5l7QZPgIQ+z56Ieazs7OGeJt4XDkYbP0wZiyuymHd/9VWC3cn3n6Fxon
-	 gZfp0ELvQ3N8LF+vRC5smUaZexMvYqKHRqtROpLE=
+	b=g4FwfaP/XfNVsQayZ+kKXpkpbC5hO7ocG3/hoeXpcom6XsoSwMuR/ooK4fG7rers+
+	 i2VD27EY9Tw70/1YzH+NZyCLUmxPUujTnk42K4ga9BtG4FXPY0fGKpgnw/roFpUpXI
+	 iUU6mvDtzsSymKRa5kZQiCE/pZwZCQ7MP5SlWWUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Ankit Agrawal <agrawal.ag.ankit@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/798] reset: k210: fix OF node leak in probe() error path
-Date: Mon, 14 Oct 2024 16:10:36 +0200
-Message-ID: <20241014141221.157356621@linuxfoundation.org>
+Subject: [PATCH 6.1 083/798] clocksource/drivers/qcom: Add missing iounmap() on errors in msm_dt_timer_init()
+Date: Mon, 14 Oct 2024 16:10:37 +0200
+Message-ID: <20241014141221.196121676@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
 
-[ Upstream commit b14e40f5dc7cd0dd7e958010e6ca9ad32ff2ddad ]
+[ Upstream commit ca140a0dc0a18acd4653b56db211fec9b2339986 ]
 
-Driver is leaking OF node reference on memory allocation failure.
-Acquire the OF node reference after memory allocation to fix this and
-keep it simple.
+Add the missing iounmap() when clock frequency fails to get read by the
+of_property_read_u32() call, or if the call to msm_timer_init() fails.
 
-Fixes: 5a2308da9f60 ("riscv: Add Canaan Kendryte K210 reset controller")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240825-reset-cleanup-scoped-v1-2-03f6d834f8c0@linaro.org
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Fixes: 6e3321631ac2 ("ARM: msm: Add DT support to msm_timer")
+Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240713095713.GA430091@bnew-VirtualBox
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/reset-k210.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clocksource/timer-qcom.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/reset/reset-k210.c b/drivers/reset/reset-k210.c
-index 1b6e03522b40d..b0f4546b2b1e5 100644
---- a/drivers/reset/reset-k210.c
-+++ b/drivers/reset/reset-k210.c
-@@ -91,7 +91,7 @@ static const struct reset_control_ops k210_rst_ops = {
- static int k210_rst_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *parent_np = of_get_parent(dev->of_node);
-+	struct device_node *parent_np;
- 	struct k210_rst *ksr;
+diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+index b4afe3a675835..eac4c95c6127f 100644
+--- a/drivers/clocksource/timer-qcom.c
++++ b/drivers/clocksource/timer-qcom.c
+@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	}
  
- 	dev_info(dev, "K210 reset controller\n");
-@@ -100,6 +100,7 @@ static int k210_rst_probe(struct platform_device *pdev)
- 	if (!ksr)
- 		return -ENOMEM;
+ 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
++		iounmap(cpu0_base);
+ 		pr_err("Unknown frequency\n");
+ 		return -EINVAL;
+ 	}
+@@ -243,7 +244,11 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	freq /= 4;
+ 	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
  
-+	parent_np = of_get_parent(dev->of_node);
- 	ksr->map = syscon_node_to_regmap(parent_np);
- 	of_node_put(parent_np);
- 	if (IS_ERR(ksr->map))
+-	return msm_timer_init(freq, 32, irq, !!percpu_offset);
++	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
++	if (ret)
++		iounmap(cpu0_base);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
+ TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
 -- 
 2.43.0
 
