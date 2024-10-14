@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45C94CDEC;
-	Mon, 14 Oct 2024 15:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AE015D5C5;
+	Mon, 14 Oct 2024 15:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919429; cv=none; b=g9q9x1VPe5nlcG6eTc6JFtkgTeXagJs7jmJ6gbLr96AYUydb5rL9MA7kYPGP5BoMRJ3uSRVybwBnDHkLThH6OEXX4iDc85F1GClyD3xe1G2MZPtdYLi1mUFrQKbdrMX5M7JsLSWjqj/mNTeaulPn7f6qBLM/XfbpPsz9YTTxEYU=
+	t=1728919433; cv=none; b=joDALT9YN36AYvEe/rfhe4sml31F2BTZ+/tA3xCEdi1Z0TGaxwjZK+r8hUhCPKFPxuCdwfLokBdx1hFlMCBEj5FF/3UliTLhcReLziGg4rYp1Yv0hM/xYDE2PVlb0muYao+vqMH/DWOkTmIxO90gXVaJ8AXe/YRUG9RSCwGlYSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919429; c=relaxed/simple;
-	bh=88mrUCNG/pQAPtuTwI/qFxXC8R6C9/LhkgLaWKovz2g=;
+	s=arc-20240116; t=1728919433; c=relaxed/simple;
+	bh=VRMnyVQQuKg4u0hkUVe1uuLmttL43SlnURJdILL/EBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPZTfuYchluiYbCBv5qGjd8KL/o7SijIPWZ/33Ybw4hpM1jGF+6DANiTxv8i85PDs6OwiU8Mq8W0EPRVR/rDVZOUaylFYBsdBaEpIIdf+mjrAmCR7r+8DX/zHv/Hqtw9CPhASEImKjFyagtCOvpuE071nAykqyiElC2IEFLdyRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oc0GNMcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyET9fz7rpFkPdSlKhBYjdU9WAYGBh4eAzMMI6Xo4FTP382QbxM368IokEM7o9HtcU8PwBe+mC/L9U/ko/1hm9Pn5NNS6xtRWyQKSoVsxVDDRrpsrGeSoHt7vKlpk4oF1uFMaQLI7NyM0pKPnHHHA6PJsCwshtiNCXA2037KtvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oK/dPzme; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oc0GNMcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243A2C4CEC3;
-	Mon, 14 Oct 2024 15:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oK/dPzme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0D2C4CEC3;
+	Mon, 14 Oct 2024 15:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919429;
-	bh=88mrUCNG/pQAPtuTwI/qFxXC8R6C9/LhkgLaWKovz2g=;
+	s=korg; t=1728919433;
+	bh=VRMnyVQQuKg4u0hkUVe1uuLmttL43SlnURJdILL/EBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oc0GNMcUAuL5NLFcWBLdsLNOL11ikJNBThwNVufPGnf22hCcVZtgsHW9/YcTlic/7
-	 6PD1p8YZpRVIWP7qeqOhAGbL8yKvQwAWuhFT2i8Gediz1S7U0eNCK1ntFviGdPgxa6
-	 ZAjTJNXXLtt+pLBJ/Kbo7Q8wNQMhF9z2j+IRAHiY=
+	b=oK/dPzmekqPHz1K1nf/Iu9Y2E7NYbm64c7s2DRJkPKt365TwLSjuj4BhFthJVWWCT
+	 WyHZPa/ycdNb3atgQY/3OAXgWPauICu8KUHphYj7qM5Y2JY32xKwzzS4d72ciEe0e5
+	 cL9k1HMGqaamtzIC/jwV+mgsVVG7UN3zMEVbMhqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Keerthy <j-keerthy@ti.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 607/798] gpio: davinci: fix lazy disable
-Date: Mon, 14 Oct 2024 16:19:21 +0200
-Message-ID: <20241014141241.860357092@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kiran K <kiran.k@intel.com>
+Subject: [PATCH 6.1 608/798] Bluetooth: hci_event: Align BR/EDR JUST_WORKS paring with LE
+Date: Mon, 14 Oct 2024 16:19:22 +0200
+Message-ID: <20241014141241.906193535@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,61 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 3360d41f4ac490282fddc3ccc0b58679aa5c065d upstream.
+commit b25e11f978b63cb7857890edb3a698599cddb10e upstream.
 
-On a few platforms such as TI's AM69 device, disable_irq() fails to keep
-track of the interrupts that happen between disable_irq() and
-enable_irq() and those interrupts are missed. Use the ->irq_unmask() and
-->irq_mask() methods instead of ->irq_enable() and ->irq_disable() to
-correctly keep track of edges when disable_irq is called.
+This aligned BR/EDR JUST_WORKS method with LE which since 92516cd97fd4
+("Bluetooth: Always request for user confirmation for Just Works")
+always request user confirmation with confirm_hint set since the
+likes of bluetoothd have dedicated policy around JUST_WORKS method
+(e.g. main.conf:JustWorksRepairing).
 
-This solves the issue of disable_irq() not working as expected on such
-platforms.
-
-Fixes: 23265442b02b ("ARM: davinci: irq_data conversion.")
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
-Acked-by: Keerthy <j-keerthy@ti.com>
+CVE: CVE-2024-8805
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240828133207.493961-1-parth105105@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: ba15a58b179e ("Bluetooth: Fix SSP acceptor just-works confirmation without MITM")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-davinci.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_event.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -295,7 +295,7 @@ static int davinci_gpio_probe(struct pla
-  * serve as EDMA event triggers.
-  */
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5422,19 +5422,16 @@ static void hci_user_confirm_request_evt
+ 		goto unlock;
+ 	}
  
--static void gpio_irq_disable(struct irq_data *d)
-+static void gpio_irq_mask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -304,7 +304,7 @@ static void gpio_irq_disable(struct irq_
- 	writel_relaxed(mask, &g->clr_rising);
- }
+-	/* If no side requires MITM protection; auto-accept */
++	/* If no side requires MITM protection; use JUST_CFM method */
+ 	if ((!loc_mitm || conn->remote_cap == HCI_IO_NO_INPUT_OUTPUT) &&
+ 	    (!rem_mitm || conn->io_capability == HCI_IO_NO_INPUT_OUTPUT)) {
  
--static void gpio_irq_enable(struct irq_data *d)
-+static void gpio_irq_unmask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -330,8 +330,8 @@ static int gpio_irq_type(struct irq_data
- 
- static struct irq_chip gpio_irqchip = {
- 	.name		= "GPIO",
--	.irq_enable	= gpio_irq_enable,
--	.irq_disable	= gpio_irq_disable,
-+	.irq_unmask	= gpio_irq_unmask,
-+	.irq_mask	= gpio_irq_mask,
- 	.irq_set_type	= gpio_irq_type,
- 	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
- };
+-		/* If we're not the initiators request authorization to
+-		 * proceed from user space (mgmt_user_confirm with
+-		 * confirm_hint set to 1). The exception is if neither
+-		 * side had MITM or if the local IO capability is
+-		 * NoInputNoOutput, in which case we do auto-accept
++		/* If we're not the initiator of request authorization and the
++		 * local IO capability is not NoInputNoOutput, use JUST_WORKS
++		 * method (mgmt_user_confirm with confirm_hint set to 1).
+ 		 */
+ 		if (!test_bit(HCI_CONN_AUTH_PEND, &conn->flags) &&
+-		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT &&
+-		    (loc_mitm || rem_mitm)) {
++		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT) {
+ 			bt_dev_dbg(hdev, "Confirming auto-accept as acceptor");
+ 			confirm_hint = 1;
+ 			goto confirm;
 
 
