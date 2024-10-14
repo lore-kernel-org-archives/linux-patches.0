@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F0DE571;
-	Mon, 14 Oct 2024 14:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2CE571;
+	Mon, 14 Oct 2024 14:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917097; cv=none; b=HI/23YnVz1Cc5+JErIH21ETe/Xfw5XMtJ1h0D/ezeafRK/ZcZMB0cpkYZqof8W/mxPQ77HT2nSoFebe8K+KmsrYmCwCESgz5ujHYhKyqyCokjNqakZ5/jKJOLxs4RuOeXahq8M3XujeqoWsFD/Fl1SzVS3gWx8AD9SjA5l1mJys=
+	t=1728917101; cv=none; b=jUSu1Wif+bdHl11v+rWv9+kXHrspycKR3q3DiTW7gZ0t/H3TMSKMjZkcjpxooD+LKmqDUPygPf2B9JRzabVVLdgm0oNFbfRd07H/akatHx1OVUECRe8ZvJx97tiqMum9fRCHXzYAK+P3ODG6zTdK0dPCSCRxqfbhRzRJ1Ruw4Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917097; c=relaxed/simple;
-	bh=TxKd8qSWDMvkwBh5ksyahjk8skYMv7pbHVpyBmUp1tQ=;
+	s=arc-20240116; t=1728917101; c=relaxed/simple;
+	bh=6IYQFraQclzhhIjtFMjClwRPqagXeqtzwyQ0DmP1K+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMmRIJL21Y/LAb1uceTTPKREm6xgLVGgoPSf03BeZMiBp2evJPku3tQAqWw/HWbdVjyOaygqxNADrv54ZeeXMv+seFtKDVNUHqAomw8DMFPs6fcTi7vgAnElYTA4MxftN2a/PEPpEMbM9B+wb7yC+88YIA90Svk4CQrRiiotpuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfyFLspE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayB0YiRw6+Ge7MRBRryj3zJoUMTBfehUdKhcZHzUfBKU8R7EC1KSSsSlQLjgW1rW1H6BVGWT+IiHEVvcYLSzwyK58fqXRBXIW88YrrzIrZjPuVcc7DYZS3Kwi6HmDjfcBABpP2JzGgg5hyqyjzYi0vApIZlLxVr7+DDoPREUliw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYi6isAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfyFLspE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A32C4CEC3;
-	Mon, 14 Oct 2024 14:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYi6isAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D21C4CEC3;
+	Mon, 14 Oct 2024 14:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917097;
-	bh=TxKd8qSWDMvkwBh5ksyahjk8skYMv7pbHVpyBmUp1tQ=;
+	s=korg; t=1728917100;
+	bh=6IYQFraQclzhhIjtFMjClwRPqagXeqtzwyQ0DmP1K+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfyFLspEe/1CdYYIGjPJqAhHt1JdHiCAIrW4nnt33Kc3meDnjur19/StE9OwxPwFK
-	 RtjppcEKA7RT9Yf/9/Hp+GDGZ/1r2qsAJ+LvrmZyWR0yPoE0wT0eM88H31LqHltQNq
-	 OITVU/18DP2/1Z2SlCu+gHmUmg8W+JLGiApY57L0=
+	b=dYi6isAE7csGKl3BWu7qG40Wh677ZZlzbtA+MQXavQNUBpTuw7MrC3xEpFzP7wJrB
+	 FB8WILBlSHVjlW185SCgqiBfnKSeMLPwVsWXUKgPHJM5FluFz3kDAjwZqxjA4CIyEC
+	 NfZrOsRBDLs65/DF1vNmGziN1HZXiPFl5CnJ3aGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/213] net: do not delay dst_entries_add() in dst_release()
-Date: Mon, 14 Oct 2024 16:20:57 +0200
-Message-ID: <20241014141048.863384473@linuxfoundation.org>
+Subject: [PATCH 6.6 152/213] rtnetlink: Add bulk registration helpers for rtnetlink message handlers.
+Date: Mon, 14 Oct 2024 16:20:58 +0200
+Message-ID: <20241014141048.903617822@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -55,92 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit ac888d58869bb99753e7652be19a151df9ecb35d ]
+[ Upstream commit 07cc7b0b942bf55ef1a471470ecda8d2a6a6541f ]
 
-dst_entries_add() uses per-cpu data that might be freed at netns
-dismantle from ip6_route_net_exit() calling dst_entries_destroy()
+Before commit addf9b90de22 ("net: rtnetlink: use rcu to free rtnl message
+handlers"), once rtnl_msg_handlers[protocol] was allocated, the following
+rtnl_register_module() for the same protocol never failed.
 
-Before ip6_route_net_exit() can be called, we release all
-the dsts associated with this netns, via calls to dst_release(),
-which waits an rcu grace period before calling dst_destroy()
+However, after the commit, rtnl_msg_handler[protocol][msgtype] needs to
+be allocated in each rtnl_register_module(), so each call could fail.
 
-dst_entries_add() use in dst_destroy() is racy, because
-dst_entries_destroy() could have been called already.
+Many callers of rtnl_register_module() do not handle the returned error,
+and we need to add many error handlings.
 
-Decrementing the number of dsts must happen sooner.
+To handle that easily, let's add wrapper functions for bulk registration
+of rtnetlink message handlers.
 
-Notes:
-
-1) in CONFIG_XFRM case, dst_destroy() can call
-   dst_release_immediate(child), this might also cause UAF
-   if the child does not have DST_NOCOUNT set.
-   IPSEC maintainers might take a look and see how to address this.
-
-2) There is also discussion about removing this count of dst,
-   which might happen in future kernels.
-
-Fixes: f88649721268 ("ipv4: fix dst race in sk_dst_get()")
-Closes: https://lore.kernel.org/lkml/CANn89iLCCGsP7SFn9HKpvnKu96Td4KD08xf7aGtiYgZnkjaL=w@mail.gmail.com/T/
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20241008143110.1064899-1-edumazet@google.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 78b7b991838a ("vxlan: Handle error of rtnl_register_module().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dst.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ include/net/rtnetlink.h | 17 +++++++++++++++++
+ net/core/rtnetlink.c    | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-diff --git a/net/core/dst.c b/net/core/dst.c
-index 980e2fd2f013b..137b8d1c72203 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -109,9 +109,6 @@ struct dst_entry *dst_destroy(struct dst_entry * dst)
- 		child = xdst->child;
- 	}
- #endif
--	if (!(dst->flags & DST_NOCOUNT))
--		dst_entries_add(dst->ops, -1);
--
- 	if (dst->ops->destroy)
- 		dst->ops->destroy(dst);
- 	netdev_put(dst->dev, &dst->dev_tracker);
-@@ -161,17 +158,27 @@ void dst_dev_put(struct dst_entry *dst)
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 6506221c5fe31..0bd400be3f8d9 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -27,6 +27,15 @@ static inline enum rtnl_kinds rtnl_msgtype_kind(int msgtype)
+ 	return msgtype & RTNL_KIND_MASK;
  }
- EXPORT_SYMBOL(dst_dev_put);
  
-+static void dst_count_dec(struct dst_entry *dst)
-+{
-+	if (!(dst->flags & DST_NOCOUNT))
-+		dst_entries_add(dst->ops, -1);
-+}
++struct rtnl_msg_handler {
++	struct module *owner;
++	int protocol;
++	int msgtype;
++	rtnl_doit_func doit;
++	rtnl_dumpit_func dumpit;
++	int flags;
++};
 +
- void dst_release(struct dst_entry *dst)
- {
--	if (dst && rcuref_put(&dst->__rcuref))
-+	if (dst && rcuref_put(&dst->__rcuref)) {
-+		dst_count_dec(dst);
- 		call_rcu_hurry(&dst->rcu_head, dst_destroy_rcu);
-+	}
- }
- EXPORT_SYMBOL(dst_release);
+ void rtnl_register(int protocol, int msgtype,
+ 		   rtnl_doit_func, rtnl_dumpit_func, unsigned int flags);
+ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
+@@ -34,6 +43,14 @@ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
+ int rtnl_unregister(int protocol, int msgtype);
+ void rtnl_unregister_all(int protocol);
  
- void dst_release_immediate(struct dst_entry *dst)
++int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n);
++void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n);
++
++#define rtnl_register_many(handlers)				\
++	__rtnl_register_many(handlers, ARRAY_SIZE(handlers))
++#define rtnl_unregister_many(handlers)				\
++	__rtnl_unregister_many(handlers, ARRAY_SIZE(handlers))
++
+ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
  {
--	if (dst && rcuref_put(&dst->__rcuref))
-+	if (dst && rcuref_put(&dst->__rcuref)) {
-+		dst_count_dec(dst);
- 		dst_destroy(dst);
-+	}
+ 	if (nlmsg_len(nlh) >= sizeof(struct rtgenmsg))
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 8573dad6d8171..ffa1334cddf44 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -389,6 +389,35 @@ void rtnl_unregister_all(int protocol)
  }
- EXPORT_SYMBOL(dst_release_immediate);
+ EXPORT_SYMBOL_GPL(rtnl_unregister_all);
  
++int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n)
++{
++	const struct rtnl_msg_handler *handler;
++	int i, err;
++
++	for (i = 0, handler = handlers; i < n; i++, handler++) {
++		err = rtnl_register_internal(handler->owner, handler->protocol,
++					     handler->msgtype, handler->doit,
++					     handler->dumpit, handler->flags);
++		if (err) {
++			__rtnl_unregister_many(handlers, i);
++			break;
++		}
++	}
++
++	return err;
++}
++EXPORT_SYMBOL_GPL(__rtnl_register_many);
++
++void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n)
++{
++	const struct rtnl_msg_handler *handler;
++	int i;
++
++	for (i = n - 1, handler = handlers + n - 1; i >= 0; i--, handler--)
++		rtnl_unregister(handler->protocol, handler->msgtype);
++}
++EXPORT_SYMBOL_GPL(__rtnl_unregister_many);
++
+ static LIST_HEAD(link_ops);
+ 
+ static const struct rtnl_link_ops *rtnl_link_ops_get(const char *kind)
 -- 
 2.43.0
 
