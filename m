@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E031A28C;
-	Mon, 14 Oct 2024 14:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5537E20322;
+	Mon, 14 Oct 2024 14:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916469; cv=none; b=PDUKeR1i1XQm24/BmSYXHt9HXCjCY+lhbOjLxygIZIuKewI2a/Hw2tpmP2mQVTLubCKLqwT+TpYA006No8V6pYMPCrBBZDCWKfIv5A2Dzl3/DBsG22QQDzhbAGtH407WQIvUAapKsWmk2uQraTdB9v3f7jHYZ69qqhWcLDUHj/8=
+	t=1728916472; cv=none; b=MSShz59VFFNrvbk4+OndnkNuKVX9NY2SQbtQHHMiEpr/4MIpV11a8epqiTpEE17JXiNkvwVeskX2HHSSsGjblVmf4qAE6uQJcrCJXUPo2p5+3swafAdDoAq03GSIub31uUMiczI2n9B+zYjHn3uBjA42ow4jL+KPjMRfNQhjo8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916469; c=relaxed/simple;
-	bh=Pbl7lH4I1+hTOSnDkwJMJ3Pndg10Ca7Wk54MKSCeKJI=;
+	s=arc-20240116; t=1728916472; c=relaxed/simple;
+	bh=O4EXKoKE4Xh9Ijy5+23jjsR9VDypq9FTY9EGzuZX4/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=us4S/abgHasLkHfoAb4Q1SL2wRlefslMXW+aWRpTF1FnCZXQPmhrw/j+2Em0i89PPdZxin7NZUUIXGyRuaZwgv4gyVFbSb9X5vVly2taa3p2OY3y/QYA1UUVnEVU7aBpYK14359G1uHbWEJ9AkMiWP5ZUE4mcggouCRiMzddjOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm9w+i43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZzqHDkPK3EmQNf3PimwT30D+5+Kexu4LL/oKX6epOwBq8S9vhBifypJ1kfb04VYo2B+gD5fWq94HpsCtDRVmdBA+3RJdIwIysd8+9XiJjtlAE2fAyx8QCEMpk8Db0N9zoPu9kH/DADv0NVfL3A9vCTA+Edz8JoNh2b8Lpmt4A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmXVKRjo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm9w+i43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8ABC4CEC3;
-	Mon, 14 Oct 2024 14:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmXVKRjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C7EC4CEC3;
+	Mon, 14 Oct 2024 14:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916469;
-	bh=Pbl7lH4I1+hTOSnDkwJMJ3Pndg10Ca7Wk54MKSCeKJI=;
+	s=korg; t=1728916472;
+	bh=O4EXKoKE4Xh9Ijy5+23jjsR9VDypq9FTY9EGzuZX4/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gm9w+i43/kNzXR/7fkNWARDOyMGcChWdlYG1c1OWGAVEZLutYNW++1eCJuZPC0SMe
-	 epB204BZjQKmRdDwFI0QkIS6kLEEivBAk4qyblpeDzYw7K/nqxbbkNf6QFE5nmgjqz
-	 KFqMGm65hzV+dIb1RgwewJKymw1TwwB3/GXHmYQ8=
+	b=gmXVKRjoAHJ+GK3htTVblQds5zEFcT3QzjszpxQV2pnTc6bPwdHnHYMc+jRjZXzgF
+	 AvRK4+h/UR//jqcSGTAfWiobtsnaOIBxR3Yz2Bqw4re5eJSlgvvVcEWBMuG8pPfu47
+	 mvi0sj5x7LZ/gKs6ieF+70EekWS/1tESDmcd2INc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.11 191/214] OPP: fix error code in dev_pm_opp_set_config()
-Date: Mon, 14 Oct 2024 16:20:54 +0200
-Message-ID: <20241014141052.432419740@linuxfoundation.org>
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.11 192/214] net: explicitly clear the sk pointer, when pf->create fails
+Date: Mon, 14 Oct 2024 16:20:55 +0200
+Message-ID: <20241014141052.470367643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,45 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-commit eb8333673e1ebc2418980b664a84c91b4e98afc4 upstream.
+commit 631083143315d1b192bd7d915b967b37819e88ea upstream.
 
-This is an error path so set the error code.  Smatch complains about the
-current code:
+We have recently noticed the exact same KASAN splat as in commit
+6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket
+creation fails"). The problem is that commit did not fully address the
+problem, as some pf->create implementations do not use sk_common_release
+in their error paths.
 
-    drivers/opp/core.c:2660 dev_pm_opp_set_config()
-    error: uninitialized symbol 'ret'.
+For example, we can use the same reproducer as in the above commit, but
+changing ping to arping. arping uses AF_PACKET socket and if packet_create
+fails, it will just sk_free the allocated sk object.
 
-Fixes: e37440e7e2c2 ("OPP: Call dev_pm_opp_set_opp() for required OPPs")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+While we could chase all the pf->create implementations and make sure they
+NULL the freed sk object on error from the socket, we can't guarantee
+future protocols will not make the same mistake.
+
+So it is easier to just explicitly NULL the sk pointer upon return from
+pf->create in __sock_create. We do know that pf->create always releases the
+allocated sk object on error, so if the pointer is not NULL, it is
+definitely dangling.
+
+Fixes: 6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket creation fails")
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/3f3660af-4ea0-4a89-b3b7-58de7b16d7a5@stanley.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241003170151.69445-1-ignat@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/opp/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/socket.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 494f8860220d..3aa18737470f 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -2630,8 +2630,10 @@ int dev_pm_opp_set_config(struct device *dev, struct dev_pm_opp_config *config)
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -1569,8 +1569,13 @@ int __sock_create(struct net *net, int f
+ 	rcu_read_unlock();
  
- 	/* Attach genpds */
- 	if (config->genpd_names) {
--		if (config->required_devs)
-+		if (config->required_devs) {
-+			ret = -EINVAL;
- 			goto err;
-+		}
+ 	err = pf->create(net, sock, protocol, kern);
+-	if (err < 0)
++	if (err < 0) {
++		/* ->create should release the allocated sock->sk object on error
++		 * but it may leave the dangling pointer
++		 */
++		sock->sk = NULL;
+ 		goto out_module_put;
++	}
  
- 		ret = _opp_attach_genpd(opp_table, dev, config->genpd_names,
- 					config->virt_devs);
--- 
-2.47.0
-
+ 	/*
+ 	 * Now to bump the refcnt of the [loadable] module that owns this
 
 
