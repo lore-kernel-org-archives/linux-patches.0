@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E617A1798C;
-	Mon, 14 Oct 2024 15:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678CE1798C;
+	Mon, 14 Oct 2024 15:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919464; cv=none; b=R6La2yX1pUv/SLLTN7+zss36/UB3fRwHf7wH+fOUaOOZtTuhMupBj/XkEiDSFYhHNJAhykfq5a4zUgqHaIF9ANgNTmiOFQRcxMAi2VnFcGMobt0Ge5TJe82mnCpaYLY3dSzs2+S+YvD6Td6USmJk/zgkguDqeuP9EQeEoLDvjqM=
+	t=1728919467; cv=none; b=eHWHI/o6Y3FkkuKO1/SpeT+bIYkJRNRTt7FLviymhkXD55m5Ak/PhVfXHkO/RAi4e6C+CFyP1xlzdSyMZoaCdRE5/5/605O7nKIofjrzvQ3eYx+3VC7s9H2wjF33GHXdjLAQFJ+KC4kkukkWQKgviFWsuHDHFj/7QT5gq0trzWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919464; c=relaxed/simple;
-	bh=iMOkDWi0DzgsRjCBWSckQ03GQgg+j0uXsBHPEGshYk8=;
+	s=arc-20240116; t=1728919467; c=relaxed/simple;
+	bh=SGD93FjHzeZJYc/Jc3XE5tgLvjdiQmtXf/lP4RKnCxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rMFqPVz/oTfKBfVWmvHhXD6rUTsvEfTz+3TvLj80sm8tBYzziqIy6/OLhZCzZqdqar39nUpdhaxtLGjCBMOFieUxpA/zbENsqCIjDt02ogrgkkNjwtFTcD9nY+XzhMID02cEDiQKDHZjuF+KvfJ7QuKmKdc1Kj5l8pP+avkkzX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaNPWu+2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9B9R9BdFJ+f/uY98AUKQStHjH8+FfMaMKiNVa+DmMpkc6mrVsW+2HwsnATt4QUdUBhmjLRKyAbgXJQOpMfpLE6S5o+HIK0QxSFcBZVR+j8MLRWAcYW/xqinpSp+D59yyU5MkKTOO1MdnRc5mhfdG6u+sbK0BYE1XQ6Qw5PtmRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJIbGfaJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaNPWu+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55261C4CEC3;
-	Mon, 14 Oct 2024 15:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJIbGfaJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA140C4CEC3;
+	Mon, 14 Oct 2024 15:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919463;
-	bh=iMOkDWi0DzgsRjCBWSckQ03GQgg+j0uXsBHPEGshYk8=;
+	s=korg; t=1728919467;
+	bh=SGD93FjHzeZJYc/Jc3XE5tgLvjdiQmtXf/lP4RKnCxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaNPWu+2yPgv0il0Ct8mjUpt2Gl/pE8qmceQ7Gm8USPnobN7aFVqKLNGlu+4o2TwM
-	 eLddNkiE5DlgxkgpKXbfW3MeQ2iAe/YMspVmA7gRLAdxIZf3Gg4DUq6ein8Ma27Wbf
-	 7966vr6JXSQwvEh3dvglNLtKj9ce6MAdpb+JajLA=
+	b=WJIbGfaJKdMnC/nhGIJkSksRc2dpa51tnaiIJykpJ7U5zh4eL5djcTi7859hxStYT
+	 m0TgYuDLGpMHIwX/zFJY0688XtTL1mATjvKiNea6uZIOz24UekSZth2cy0wJh9+Mih
+	 nxouKtlBwfwwnSWjtjetAKzeRYz9BiKyUwf0vsX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Luben Tuikov <ltuikov89@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	Philipp Stanner <pstanner@redhat.com>
-Subject: [PATCH 6.1 614/798] drm/sched: Add locking to drm_sched_entity_modify_sched
-Date: Mon, 14 Oct 2024 16:19:28 +0200
-Message-ID: <20241014141242.156418902@linuxfoundation.org>
+	Wayne Lin <wayne.lin@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 615/798] drm/amd/display: Fix system hang while resume with TBT monitor
+Date: Mon, 14 Oct 2024 16:19:29 +0200
+Message-ID: <20241014141242.196308089@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,56 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-commit 4286cc2c953983d44d248c9de1c81d3a9643345c upstream.
+commit 52d4e3fb3d340447dcdac0e14ff21a764f326907 upstream.
 
-Without the locking amdgpu currently can race between
-amdgpu_ctx_set_entity_priority() (via drm_sched_entity_modify_sched()) and
-drm_sched_job_arm(), leading to the latter accesing potentially
-inconsitent entity->sched_list and entity->num_sched_list pair.
+[Why]
+Connected with a Thunderbolt monitor and do the suspend and the system
+may hang while resume.
 
-v2:
- * Improve commit message. (Philipp)
+The TBT monitor HPD will be triggered during the resume procedure
+and call the drm_client_modeset_probe() while
+struct drm_connector connector->dev->master is NULL.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: b37aced31eb0 ("drm/scheduler: implement a function to modify sched list")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Luben Tuikov <ltuikov89@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: Philipp Stanner <pstanner@redhat.com>
-Cc: <stable@vger.kernel.org> # v5.7+
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240913160559.49054-2-tursulin@igalia.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+It will mess up the pipe topology after resume.
+
+[How]
+Skip the TBT monitor HPD during the resume procedure because we
+currently will probe the connectors after resume by default.
+
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 453f86a26945207a16b8f66aaed5962dc2b95b85)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -110,8 +110,10 @@ void drm_sched_entity_modify_sched(struc
- {
- 	WARN_ON(!num_sched_list || !sched_list);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -712,6 +712,12 @@ static void dmub_hpd_callback(struct amd
+ 		return;
+ 	}
  
-+	spin_lock(&entity->rq_lock);
- 	entity->sched_list = sched_list;
- 	entity->num_sched_list = num_sched_list;
-+	spin_unlock(&entity->rq_lock);
- }
- EXPORT_SYMBOL(drm_sched_entity_modify_sched);
- 
++	/* Skip DMUB HPD IRQ in suspend/resume. We will probe them later. */
++	if (notify->type == DMUB_NOTIFICATION_HPD && adev->in_suspend) {
++		DRM_INFO("Skip DMUB HPD IRQ callback in suspend/resume\n");
++		return;
++	}
++
+ 	link_index = notify->link_index;
+ 	link = adev->dm.dc->links[link_index];
+ 	dev = adev->dm.ddev;
 
 
