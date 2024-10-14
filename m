@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E59B1ABEB7;
-	Mon, 14 Oct 2024 14:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC5E1C82FB;
+	Mon, 14 Oct 2024 14:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917235; cv=none; b=uBocd0U8BzQnXYPMm74OXEvokmH1QHMPGN1W/ged6ZrNelZjdXLOtP8JTrhjjolottVpH1Ahi4fHiBcVzMgZEXZZN2fgVd5p4mGN6PMrUQu0dSkKBBnNB1e2FL9fQIGd7VYUszdVLcrIOkAFhTMOiuxl400EGvuyzs8jdpP2iLk=
+	t=1728917238; cv=none; b=omOfG/Curdx6sCzdEzVMqHjb0ohIia3Ki8klMkeMYVtVPA4rSJr5EioVzuD3Kgo0V/CysHcnfZcx6Unk4EhiDp7858V6IRSz8UT7bYmc+dl5ROFP1CtCDSMMZpI701OTlLZh4Qq1cICBa8dHswJs6Pss22xZuRwBFk7GtTjekKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917235; c=relaxed/simple;
-	bh=025uWzUSr1zlbiq99DhlQy9H13g6K3lTM/R0nn6RX9k=;
+	s=arc-20240116; t=1728917238; c=relaxed/simple;
+	bh=tJyqG4AmNascUd2rxiAk2blCsLp/9l71rczjt0C29+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9v717M6EgVhf8NW/UE7k06dYBqmHGeh+nmdbmXxr3keAhxrsaI6ND9ENTYpVx2mhxD0EiTYGQhwdJUFgDv6ljIfcJEGo0VaRC3otXr7G3WTwnuh8tsy02nXqVKi+UM1qnLw1QjSFRq4IwdXHXUpgi2Jdst3hB61JYxWhRSxSaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvC8igzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9gBLwvDuEiHBTpw5Wt5brEGu1YWcRK6KF003xMmbCPv/qnyWIdp1Wh4HnPF6TBfwCmOyWXI/V0IrDdzvoJJu0tCvTxTsEnziIcrcOBOwzmYpr1v/T5x5agUUKa4DjozTXeyHk6EpsXLl2Wind6/QoEEfjJ28VkcTWHJlyX3atc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqNrlgi/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvC8igzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E4AC4CEC3;
-	Mon, 14 Oct 2024 14:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqNrlgi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF44C4CEC3;
+	Mon, 14 Oct 2024 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917234;
-	bh=025uWzUSr1zlbiq99DhlQy9H13g6K3lTM/R0nn6RX9k=;
+	s=korg; t=1728917238;
+	bh=tJyqG4AmNascUd2rxiAk2blCsLp/9l71rczjt0C29+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvC8igzTP4rZ6WIQjQ7KA3rjvBI9h3JCO1kXK0bq+U0psM/243nsv93zskWrRtZvO
-	 /8bpTYQnHbmq/gzwQw2JIVlaA1QAIl9nKIiKN7TOhrQC5zaXikjF/SQjb2yrn/8j5G
-	 cBFGx6gqLULdXFX/MzkfUN4mMBC+LrNg4XiXJY6I=
+	b=AqNrlgi/T0tnpaDhUhid1I64QoPM37OUYpJatyIkbtsCiUb47FEp07ahVFZtgGZrv
+	 vDx7t08TEDSi6CaMPEKiZsqlLjojnIUYzQy97s3wPOCxBDR1UGrTolcHYR0i/GM93D
+	 l2gfIxxS1HbFGeDf5OGHACUO065Wo0kNkgFhssBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	stable@kernel.org,
-	Finn Thain <fthain@linux-m68k.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 192/213] scsi: wd33c93: Dont use stale scsi_pointer value
-Date: Mon, 14 Oct 2024 16:21:38 +0200
-Message-ID: <20241014141050.455606304@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Eric Tremblay <etremblay@distech-controls.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 175/213] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
+Date: Mon, 14 Oct 2024 16:21:21 +0200
+Message-ID: <20241014141049.796462535@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -54,43 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 9023ed8d91eb1fcc93e64dc4962f7412b1c4cbec upstream.
+[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
 
-A regression was introduced with commit dbb2da557a6a ("scsi: wd33c93:
-Move the SCSI pointer to private command data") which results in an oops
-in wd33c93_intr(). That commit added the scsi_pointer variable and
-initialized it from hostdata->connected. However, during selection,
-hostdata->connected is not yet valid. Fix this by getting the current
-scsi_pointer from hostdata->selecting.
+0-day reports:
 
-Cc: Daniel Palmer <daniel@0x0f.com>
-Cc: Michael Schmitz <schmitzmic@gmail.com>
-Cc: stable@kernel.org
-Fixes: dbb2da557a6a ("scsi: wd33c93: Move the SCSI pointer to private command data")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Co-developed-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/09e11a0a54e6aa2a88bd214526d305aaf018f523.1727926187.git.fthain@linux-m68k.org
-Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/hwmon/tmp513.c:162:21: error:
+	variable 'tmp51x_regmap_config' has initializer but incomplete type
+162 | static const struct regmap_config tmp51x_regmap_config = {
+    |                     ^
+
+struct regmap_config is only available if REGMAP is enabled.
+Add the missing Kconfig dependency to fix the problem.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Cc: Eric Tremblay <etremblay@distech-controls.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/wd33c93.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/wd33c93.c
-+++ b/drivers/scsi/wd33c93.c
-@@ -831,7 +831,7 @@ wd33c93_intr(struct Scsi_Host *instance)
- 		/* construct an IDENTIFY message with correct disconnect bit */
- 
- 		hostdata->outgoing_msg[0] = IDENTIFY(0, cmd->device->lun);
--		if (scsi_pointer->phase)
-+		if (WD33C93_scsi_pointer(cmd)->phase)
- 			hostdata->outgoing_msg[0] |= 0x40;
- 
- 		if (hostdata->sync_stat[cmd->device->id] == SS_FIRST) {
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index ec38c88921589..b46c85e2197c0 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -2137,6 +2137,7 @@ config SENSORS_TMP464
+ config SENSORS_TMP513
+ 	tristate "Texas Instruments TMP513 and compatibles"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  If you say yes here you get support for Texas Instruments TMP512,
+ 	  and TMP513 temperature and power supply sensor chips.
+-- 
+2.43.0
+
 
 
