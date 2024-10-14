@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6531D481B3;
-	Mon, 14 Oct 2024 15:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A53481B3;
+	Mon, 14 Oct 2024 15:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919513; cv=none; b=e2t5IW6HTdpysUwOsNVrtsqt8oFqe0RKMU+NOO+/Tc4l8uamMBMtRh/kuJH4z7bL93AE0CeO5/FRZzTkDW2WF8SJL6de7t/eu6/JVYsWMBDxk07XPAoo/6+mg/UT5QYDjGuNRyRuDJmE6s1/4ukcA2W0dNkY2v6ypnUqbPd4SVU=
+	t=1728919516; cv=none; b=Vccq0qeYr3O0eWxdfKu8nfiZS/WYEocWvbsnahGLRV/tFyKVcIknucXUFkTsrQF1q/20Kymsabt3xWjqKmixR6S63JzfPRYPF24x3z9JPY/0iqyP16ToiktiuGrkMMty+dM/fbvi0MttfUOqh3rdnKu6gixzuV5arkokONI0lGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919513; c=relaxed/simple;
-	bh=ZIDuRjlni3GAW8GoUUp+afwv3xJegUfq7UXFbdatGyY=;
+	s=arc-20240116; t=1728919516; c=relaxed/simple;
+	bh=9jOuBQ++1+doAV/Mr1a9tM30w1ctlCQNuLNgMrfwifU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYf18LojDF9RQVW+31HqlhbLoViykrgOSXTgG3jIF7X9ZQ8bB/nuLjuR6G7GJgw8zjVXjkXnYjE9EEcR+bw+XUaTjgBwZM8fL6AY/1mQFUFtxgEKbrKLxogvUKeNqHqV9/tOeeQrTlJ+czSU2Ye2SV7wyGWG92A4mVd3XAxTzGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4bYgMPy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEz0N/yozHNygaS5wrOB06Hur+zngx9gxHEadtuuhyiG/CDs/uRm4qxEvF6bD0JI7Rom5s6z8kt+EmG5tlxjW/++fKwGrBf87uVHWgqI11ihkV6ZIYLDHRFuWLiinHWVZMmYcRSZ+/yrjanFWEmcY24ukgbM5CxPobAFfLU+Y28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2C+Rprj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4bYgMPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5086C4CEC3;
-	Mon, 14 Oct 2024 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2C+Rprj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E37C4CEC7;
+	Mon, 14 Oct 2024 15:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919513;
-	bh=ZIDuRjlni3GAW8GoUUp+afwv3xJegUfq7UXFbdatGyY=;
+	s=korg; t=1728919516;
+	bh=9jOuBQ++1+doAV/Mr1a9tM30w1ctlCQNuLNgMrfwifU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4bYgMPyHYTHa2EBvFj6+NfJ5TnxOvBy+7w5iTZICqhikMlrXS9WIqV383G+oc7lO
-	 eq2hu/mkPoHHH+THaSlcBWyWN650Bx/3IY9cjxI+1OlDKCkPEnmNnLVvszbgeNBVCU
-	 swamrrLRziO3QnXJmzTSuyWUjh1C7SJE04AVeDvE=
+	b=E2C+RprjXluMNVUmD8i0Negtbq6OMwRiaooL5elGRPFLi9aRfWLsFGjv8yWBJFOMK
+	 PpT3/WUIUPCuTyCucc5eD+PDyR4B3uKkHxlkxOmXIfaNFKERK/jSJ/UNEOhsVzAGGd
+	 sr9p0BMc0yUQWTBQuyiJo2LigBTGXd/hL3dHBLpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 626/798] arm64: errata: Expand speculative SSBS workaround once more
-Date: Mon, 14 Oct 2024 16:19:40 +0200
-Message-ID: <20241014141242.631915941@linuxfoundation.org>
+Subject: [PATCH 6.1 627/798] io_uring/net: harden multishot termination case for recv
+Date: Mon, 14 Oct 2024 16:19:41 +0200
+Message-ID: <20241014141242.670112178@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,112 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 081eb7932c2b244f63317a982c5e3990e2c7fbdd ]
+[ Upstream commit c314094cb4cfa6fc5a17f4881ead2dfebfa717a7 ]
 
-A number of Arm Ltd CPUs suffer from errata whereby an MSR to the SSBS
-special-purpose register does not affect subsequent speculative
-instructions, permitting speculative store bypassing for a window of
-time.
+If the recv returns zero, or an error, then it doesn't matter if more
+data has already been received for this buffer. A condition like that
+should terminate the multishot receive. Rather than pass in the
+collected return value, pass in whether to terminate or keep the recv
+going separately.
 
-We worked around this for a number of CPUs in commits:
+Note that this isn't a bug right now, as the only way to get there is
+via setting MSG_WAITALL with multishot receive. And if an application
+does that, then -EINVAL is returned anyway. But it seems like an easy
+bug to introduce, so let's make it a bit more explicit.
 
-* 7187bb7d0b5c7dfa ("arm64: errata: Add workaround for Arm errata 3194386 and 3312417")
-* 75b3c43eab594bfb ("arm64: errata: Expand speculative SSBS workaround")
-* 145502cac7ea70b5 ("arm64: errata: Expand speculative SSBS workaround (again)")
-
-Since then, a (hopefully final) batch of updates have been published,
-with two more affected CPUs. For the affected CPUs the existing
-mitigation is sufficient, as described in their respective Software
-Developer Errata Notice (SDEN) documents:
-
-* Cortex-A715 (MP148) SDEN v15.0, erratum 3456084
-  https://developer.arm.com/documentation/SDEN-2148827/1500/
-
-* Neoverse-N3 (MP195) SDEN v5.0, erratum 3456111
-  https://developer.arm.com/documentation/SDEN-3050973/0500/
-
-Enable the existing mitigation by adding the relevant MIDRs to
-erratum_spec_ssbs_list, and update silicon-errata.rst and the
-Kconfig text accordingly.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240930111705.3352047-3-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ Mark: fix conflict in silicon-errata.rst, handle move ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://github.com/axboe/liburing/issues/1246
+Cc: stable@vger.kernel.org
+Fixes: b3fdea6ecb55 ("io_uring: multishot recv")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst | 4 ++++
- arch/arm64/Kconfig                     | 2 ++
- arch/arm64/kernel/cpu_errata.c         | 2 ++
- 3 files changed, 8 insertions(+)
+ io_uring/net.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 6451e9198fef7..e7b50babd0d5c 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -135,6 +135,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A710     | #3324338        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-A715     | #3456084        | ARM64_ERRATUM_3194386       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
-@@ -171,6 +173,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N2     | #3324339        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Neoverse-N3     | #3456111        | ARM64_ERRATUM_3194386       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-V1     | #3324341        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-V2     | #3324336        | ARM64_ERRATUM_3194386       |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 2ef939075039d..1a62ef142a988 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -1012,6 +1012,7 @@ config ARM64_ERRATUM_3194386
- 	  * ARM Cortex-A78C erratum 3324346
- 	  * ARM Cortex-A78C erratum 3324347
- 	  * ARM Cortex-A710 erratam 3324338
-+	  * ARM Cortex-A715 errartum 3456084
- 	  * ARM Cortex-A720 erratum 3456091
- 	  * ARM Cortex-A725 erratum 3456106
- 	  * ARM Cortex-X1 erratum 3324344
-@@ -1022,6 +1023,7 @@ config ARM64_ERRATUM_3194386
- 	  * ARM Cortex-X925 erratum 3324334
- 	  * ARM Neoverse-N1 erratum 3324349
- 	  * ARM Neoverse N2 erratum 3324339
-+	  * ARM Neoverse-N3 erratum 3456111
- 	  * ARM Neoverse-V1 erratum 3324341
- 	  * ARM Neoverse V2 erratum 3324336
- 	  * ARM Neoverse-V3 erratum 3312417
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 7640031e1b845..78aea409b092b 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -442,6 +442,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A725),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-@@ -452,6 +453,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X925),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
-+	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N3),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 48404bd330017..f41acabf7b4a5 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -893,6 +893,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
+ 	int ret, min_ret = 0;
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+ 	size_t len = sr->len;
++	bool mshot_finished;
+ 
+ 	if (!(req->flags & REQ_F_POLLED) &&
+ 	    (sr->flags & IORING_RECVSEND_POLL_FIRST))
+@@ -957,6 +958,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
+ 		req_set_fail(req);
+ 	}
+ 
++	mshot_finished = ret <= 0;
+ 	if (ret > 0)
+ 		ret += sr->done_io;
+ 	else if (sr->done_io)
+@@ -968,7 +970,7 @@ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (msg.msg_inq)
+ 		cflags |= IORING_CQE_F_SOCK_NONEMPTY;
+ 
+-	if (!io_recv_finish(req, &ret, cflags, ret <= 0, issue_flags))
++	if (!io_recv_finish(req, &ret, cflags, mshot_finished, issue_flags))
+ 		goto retry_multishot;
+ 
+ 	return ret;
 -- 
 2.43.0
 
