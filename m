@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB0C1547F3;
-	Mon, 14 Oct 2024 14:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646251AB505;
+	Mon, 14 Oct 2024 14:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728915971; cv=none; b=jTSqPLdV4iDsggUb3d2myc3tn8fL3ugm+oPBtiiDbhiE5AXwEMNsAlnHK9Mt3vZP4xa5Yx8Co9h+uIShyVjMn9Lyrs4EbXzB6l9VQjkkTeEjhEa31CzpoMvEJCISLut3YxoY0FhmM6Z59ji9JEEyFxEEFiZXdWslScVyizynKRE=
+	t=1728915974; cv=none; b=ZVy9r1CORQpH4lFg8WR4BrSJQMW4dK0fxTbn37kLUlSbIY2fnNI6rLFudnV1oR3j+1Pd76Y6L/ShkRUYZp/I9ifcinySKL+W64N9rMde+A5rzObp/hwSuK6Zl8hJWMQN2PaU9LjBfvwOec7ICf2zITTW9SRe4YynCr5Jai8G0nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728915971; c=relaxed/simple;
-	bh=YPO5gM7VZopvrEV5Q6IrPa5LpqVgI7Z2wHxslr3hUXs=;
+	s=arc-20240116; t=1728915974; c=relaxed/simple;
+	bh=WLjtRDynmlCAAt6KAHlU1h+MeuiBunfoMqtiYuKB6N0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfyoaGqqQTIxWdlQkqoG+6MZm9q4iJ6ZUabdXx71DA89t9nq9Avo2i98UHc2Sl9aYTw3flrw9jncgOumgAEMXyz2whc05rd26aMQu0+4nS1+iYFl9y8Q0SbBv5vCuRjWGwsQLfwU08jEz8KiM2pIsBV/JEiSfL7bbRgViaImsk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwH18iwa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0EjyDXtFBJxwL9I7sjPi6x83PZfi5AfTU84kz6LSugb0MJLwFjx+8YY7eVbH87WCJIJYYHTYbdSzH+nGpiB0gdZZqQr1W1MsMR8WeoR+xkAGGakulyGaAVDZZQlJG27f5h6QPG2uqnRGWVNAe3//HVRX80DXdYJVlj04T73xv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsv6taRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwH18iwa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38F5C4CEC3;
-	Mon, 14 Oct 2024 14:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsv6taRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3515C4CED5;
+	Mon, 14 Oct 2024 14:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728915971;
-	bh=YPO5gM7VZopvrEV5Q6IrPa5LpqVgI7Z2wHxslr3hUXs=;
+	s=korg; t=1728915974;
+	bh=WLjtRDynmlCAAt6KAHlU1h+MeuiBunfoMqtiYuKB6N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwH18iwaJMi/EOBJP6fbOodzHo3AOjNmW0Fx48AKIb6SbvjNq7fsfUrAuwXvDP0eT
-	 40RZmEsauBjISDRcGYb7kLS06zFvZ0XOWXG6xWd4Eky6seCiVSj0lXQFHj6beTNEji
-	 1sHd3FGz+ZxRIJEaz1i4l/wTZmPAoPjbuk1xzOY4=
+	b=lsv6taRkfEiBcnEszcps7wypCBMgikDMMgxm7W4KSsozcIqROIoaxflHasB5c9ge8
+	 ptLDWJMTs1kF7FTCYs3hwRnHKPFf3kbJl1ithcYdjJyAVq/EtOYKjLoxRbNT13+HER
+	 jbOB85tfUFwIMCtf/6dsB2ju5M1KV86t2qhOa0IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <petr@tesarici.cz>,
-	Ying Sun <sunying@isrc.iscas.ac.cn>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Yunke Cao <yunkec@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 050/214] riscv/kexec_file: Fix relocation type R_RISCV_ADD16 and R_RISCV_SUB16 unknown
-Date: Mon, 14 Oct 2024 16:18:33 +0200
-Message-ID: <20241014141046.943776620@linuxfoundation.org>
+Subject: [PATCH 6.11 051/214] media: videobuf2-core: clear memory related fields in __vb2_plane_dmabuf_put()
+Date: Mon, 14 Oct 2024 16:18:34 +0200
+Message-ID: <20241014141046.982207440@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,54 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Sun <sunying@isrc.iscas.ac.cn>
+From: Yunke Cao <yunkec@chromium.org>
 
-[ Upstream commit c6ebf2c528470a09be77d0d9df2c6617ea037ac5 ]
+[ Upstream commit 6a9c97ab6b7e85697e0b74e86062192a5ffffd99 ]
 
-Runs on the kernel with CONFIG_RISCV_ALTERNATIVE enabled:
-  kexec -sl vmlinux
+Clear vb2_plane's memory related fields in __vb2_plane_dmabuf_put(),
+including bytesused, length, fd and data_offset.
 
-Error:
-  kexec_image: Unknown rela relocation: 34
-  kexec_image: Error loading purgatory ret=-8
-and
-  kexec_image: Unknown rela relocation: 38
-  kexec_image: Error loading purgatory ret=-8
+Remove the duplicated code in __prepare_dmabuf().
 
-The purgatory code uses the 16-bit addition and subtraction relocation
-type, but not handled, resulting in kexec_file_load failure.
-So add handle to arch_kexec_apply_relocations_add().
-
-Tested on RISC-V64 Qemu-virt, issue fixed.
-
-Co-developed-by: Petr Tesarik <petr@tesarici.cz>
-Signed-off-by: Petr Tesarik <petr@tesarici.cz>
-Signed-off-by: Ying Sun <sunying@isrc.iscas.ac.cn>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20240711083236.2859632-1-sunying@isrc.iscas.ac.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Yunke Cao <yunkec@chromium.org>
+Acked-by: Tomasz Figa <tfiga@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/elf_kexec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/elf_kexec.c b/arch/riscv/kernel/elf_kexec.c
-index 11c0d2e0becfe..3c37661801f95 100644
---- a/arch/riscv/kernel/elf_kexec.c
-+++ b/arch/riscv/kernel/elf_kexec.c
-@@ -451,6 +451,12 @@ int arch_kexec_apply_relocations_add(struct purgatory_info *pi,
- 			*(u32 *)loc = CLEAN_IMM(CJTYPE, *(u32 *)loc) |
- 				 ENCODE_CJTYPE_IMM(val - addr);
- 			break;
-+		case R_RISCV_ADD16:
-+			*(u16 *)loc += val;
-+			break;
-+		case R_RISCV_SUB16:
-+			*(u16 *)loc -= val;
-+			break;
- 		case R_RISCV_ADD32:
- 			*(u32 *)loc += val;
- 			break;
+diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+index 8b0de1cb08808..97605c2e25dac 100644
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -311,6 +311,10 @@ static void __vb2_plane_dmabuf_put(struct vb2_buffer *vb, struct vb2_plane *p)
+ 	p->mem_priv = NULL;
+ 	p->dbuf = NULL;
+ 	p->dbuf_mapped = 0;
++	p->bytesused = 0;
++	p->length = 0;
++	p->m.fd = 0;
++	p->data_offset = 0;
+ }
+ 
+ /*
+@@ -1420,10 +1424,6 @@ static int __prepare_dmabuf(struct vb2_buffer *vb)
+ 
+ 		/* Release previously acquired memory if present */
+ 		__vb2_plane_dmabuf_put(vb, &vb->planes[plane]);
+-		vb->planes[plane].bytesused = 0;
+-		vb->planes[plane].length = 0;
+-		vb->planes[plane].m.fd = 0;
+-		vb->planes[plane].data_offset = 0;
+ 
+ 		/* Acquire each plane's memory */
+ 		mem_priv = call_ptr_memop(attach_dmabuf,
 -- 
 2.43.0
 
