@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537951C761F;
-	Mon, 14 Oct 2024 14:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB223481B3;
+	Mon, 14 Oct 2024 14:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917923; cv=none; b=mRWFKEkD04a/gV9rybs0NeRsQmtkW0Tg2DuVxqmRCZ82Bn8O7Bw/0JE0S8HlltdovFa8yn23rQ6dgsz9ZnTbNdzv/ci/bp/7pCtyCRsawckKIiGKOIdOAE/9i5AnH7rJ/KcenD6OQSfgfZ+Yxew0rD9DlGON57Bpvn5QIVU2QlA=
+	t=1728917931; cv=none; b=g8lNhvtpEfSy8fzH7+WG1iPgAC1p1S0kuMwqTv+EzNLVFLe8imZYhxrwr4d/Yn1hH+r42rmQqzM2x0rOBfjKuNmRw1HOzpvDxgKQEmDB7BKdj3IFU9aJ2bb1TjBeediSGPJqlBXk84Cd1M8tOqq490SRTNLYHuP3QhwbTfIXJx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917923; c=relaxed/simple;
-	bh=U2QqdkpPoHVUY1KgcGp5Jl3P1aXsqKlFmU+5BNIFzME=;
+	s=arc-20240116; t=1728917931; c=relaxed/simple;
+	bh=DQyg8Fr5SuxqDR33HBNsRQbxr1zeHZmBKREXPNpAzgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bsIzYb1ECnir5wFFdciw5J0Y8i5f80g9ZbuwhCIsTywrTwCFb/Ias8+3Hab8YJU1Ixsy0CDNk2RGA7f4JMk0m91P6oy7PAcJ+GRE2rAwbXiHXpgJuGNsh+wuQKvdRlpN71lmz280HoR+KK7ONv64HGKTU819MXXsm8EZ1RKMio4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xe3hVBmp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hwv5bFCt2mZh6pwMFNkH9Nh40tnMBYL/TYt86QYZh9G2DBYgBeZsolRRYH/bVzKlHUiAkaYx5r+l79YDMrs/QdDwqdPul8CLPWqYOsfkS1U9ZiKLjgrZAibuoAB+FmJ8JqRBYuWZQSbi7eGtYvXX5kx5ZXaRbRgElrzr+NMVTp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpGgJupt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xe3hVBmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB139C4CEC3;
-	Mon, 14 Oct 2024 14:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpGgJupt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D1AC4CEC3;
+	Mon, 14 Oct 2024 14:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917923;
-	bh=U2QqdkpPoHVUY1KgcGp5Jl3P1aXsqKlFmU+5BNIFzME=;
+	s=korg; t=1728917931;
+	bh=DQyg8Fr5SuxqDR33HBNsRQbxr1zeHZmBKREXPNpAzgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xe3hVBmpVsFZr5/5O5nUIts/sYq7VGsqHji+ZVpjLGpmwK6uJHo/fVdOmTDAsq0QU
-	 uI8D4bQZYOIFUQ11ilbaZb0dxLNkssnpgSfCskZzu1LrxG04L88J0qsS0VGuMokSw2
-	 LbQ/oiPeXoPc3LuNi6TrEg+gcudAc+IHTxECk3ws=
+	b=EpGgJuptLNLTBYu3IY4QXpDIFtDj9y9I+PcUu7X3dTsLLJ+lKhtzbhYJEUZN/bNCl
+	 O4ZYgWHgbl7hT+L7sjCJ6D2foCyo9IkLTsoOXZejR2PwlsVlU31XLDwFhNY8ganQ37
+	 /44RENW7ZQJX0XH6E8lAz84nYNVZpb4MfPqLctH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/798] bpf: Fix bpf_strtol and bpf_strtoul helpers for 32bit
-Date: Mon, 14 Oct 2024 16:12:08 +0200
-Message-ID: <20241014141224.763000958@linuxfoundation.org>
+Subject: [PATCH 6.1 157/798] selftests/bpf: Fix C++ compile error from missing _Bool type
+Date: Mon, 14 Oct 2024 16:11:51 +0200
+Message-ID: <20241014141224.082705503@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,72 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit cfe69c50b05510b24e26ccb427c7cc70beafd6c1 ]
+[ Upstream commit aa95073fd290b5b3e45f067fa22bb25e59e1ff7c ]
 
-The bpf_strtol() and bpf_strtoul() helpers are currently broken on 32bit:
+While building, bpftool makes a skeleton from test_core_extern.c, which
+itself includes <stdbool.h> and uses the 'bool' type. However, the skeleton
+test_core_extern.skel.h generated *does not* include <stdbool.h> or use the
+'bool' type, instead using the C-only '_Bool' type. Compiling test_cpp.cpp
+with g++ 12.3 for mips64el/musl-libc then fails with error:
 
-The argument type ARG_PTR_TO_LONG is BPF-side "long", not kernel-side "long"
-and therefore always considered fixed 64bit no matter if 64 or 32bit underlying
-architecture.
+  In file included from test_cpp.cpp:9:
+  test_core_extern.skel.h:45:17: error: '_Bool' does not name a type
+     45 |                 _Bool CONFIG_BOOL;
+        |                 ^~~~~
 
-This contract breaks in case of the two mentioned helpers since their BPF_CALL
-definition for the helpers was added with {unsigned,}long *res. Meaning, the
-transition from BPF-side "long" (BPF program) to kernel-side "long" (BPF helper)
-breaks here.
+This was likely missed previously because glibc uses a GNU extension for
+<stdbool.h> with C++ (#define _Bool bool), not supported by musl libc.
 
-Both helpers call __bpf_strtoll() with "long long" correctly, but later assigning
-the result into 32-bit "*(long *)" on 32bit architectures. From a BPF program
-point of view, this means upper bits will be seen as uninitialised.
+Normally, a C fragment would include <stdbool.h> and use the 'bool' type,
+and thus cleanly work after import by C++. The ideal fix would be for
+'bpftool gen skeleton' to output the correct type/include supporting C++,
+but in the meantime add a conditional define as above.
 
-Therefore, fix both BPF_CALL signatures to {s,u}64 types to fix this situation.
-
-Now, changing also uapi/bpf.h helper documentation which generates bpf_helper_defs.h
-for BPF programs is tricky: Changing signatures there to __{s,u}64 would trigger
-compiler warnings (incompatible pointer types passing 'long *' to parameter of type
-'__s64 *' (aka 'long long *')) for existing BPF programs.
-
-Leaving the signatures as-is would be fine as from BPF program point of view it is
-still BPF-side "long" and thus equivalent to __{s,u}64 on 64 or 32bit underlying
-architectures.
-
-Note that bpf_strtol() and bpf_strtoul() are the only helpers with this issue.
-
-Fixes: d7a4cb9b6705 ("bpf: Introduce bpf_strtol and bpf_strtoul helpers")
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/481fcec8-c12c-9abb-8ecb-76c71c009959@iogearbox.net
-Link: https://lore.kernel.org/r/20240913191754.13290-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7c8dce4b1661 ("bpftool: Make skeleton C code compilable with C++ compiler")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/6fc1dd28b8bda49e51e4f610bdc9d22f4455632d.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_cpp.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 758510b46d87b..d12e696fac74f 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -509,7 +509,7 @@ static int __bpf_strtoll(const char *buf, size_t buf_len, u64 flags,
- }
+diff --git a/tools/testing/selftests/bpf/test_cpp.cpp b/tools/testing/selftests/bpf/test_cpp.cpp
+index 19ad172036daa..2d2ffd772228d 100644
+--- a/tools/testing/selftests/bpf/test_cpp.cpp
++++ b/tools/testing/selftests/bpf/test_cpp.cpp
+@@ -6,6 +6,10 @@
+ #pragma GCC diagnostic pop
+ #include <bpf/bpf.h>
+ #include <bpf/btf.h>
++
++#ifndef _Bool
++#define _Bool bool
++#endif
+ #include "test_core_extern.skel.h"
  
- BPF_CALL_4(bpf_strtol, const char *, buf, size_t, buf_len, u64, flags,
--	   long *, res)
-+	   s64 *, res)
- {
- 	long long _res;
- 	int err;
-@@ -534,7 +534,7 @@ const struct bpf_func_proto bpf_strtol_proto = {
- };
- 
- BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
--	   unsigned long *, res)
-+	   u64 *, res)
- {
- 	unsigned long long _res;
- 	bool is_negative;
+ template <typename T>
 -- 
 2.43.0
 
