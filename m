@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEE719E961;
-	Mon, 14 Oct 2024 15:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BFF1AB6FC;
+	Mon, 14 Oct 2024 15:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918159; cv=none; b=Y1wchK0lH/yNA02+7wdWs6gyeG2yB/Nq3iJNUI+nSAyYliOQb/Jnk4GznI5bX0WXtQBFbBrMII7iyjXvHKhf5ST/NdAaLO92gp1+DbfPWeaapgBaeY+s3x1HWTOQuW+4gskngkmZjQ4OTwv8oymMwCzzlpoYqDQ7NjbXooQa1es=
+	t=1728918162; cv=none; b=jLZtieKi8puAAfGswEF4AKwrlJAaXpC6flARhjaw1nEIa3r2bvjyiO/Dy1ItKuKP1VC/MECKGBKEYQZedbCdUnIIBCZB9QrYhykJWvgxYMaqzLF55vqsL/yddZcNyKzd4oqiJAQOpaaQ8dWQV+/Udfg7QzZ1ICYGMrUQC7/ANxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918159; c=relaxed/simple;
-	bh=Wv6W1D8C0mapsI+CdN7rpnn1Ltjp9nUnYawGSOrPndE=;
+	s=arc-20240116; t=1728918162; c=relaxed/simple;
+	bh=TSnh9govssa+VshHCb9vnYZKgFsydKgDh/3Om0cKu1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gm4Wq2cQzsnbg72KOLQwVXKBudc1GumTUmaWogssvMHcxgtFps9y4/wvWwjO0eKKy3XINi3XhUsS/8Cr1wLeiR9dHuULe4RQsf7jHKGS0JDROb2SsT5suxhdElqZ2iKirNkrsp8L6SB+IGNnKbsyw/TLpgudWLjtRJNhbnDUrFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn/vEyvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiX+8aKZEkUY9/yj9vWVykCOnXMNPmPoymz8mLjgqJ0Vc0WUEFdrZj12o1Cf36NZhxuBJp5CtVpBgzZ2xoXTS6M0BjBG++BlCYluS6ueS5asYfgumvS13g5QjnHS9kWxcXGaomk8Ue0HDTy4x5veY5G/ch7Aa18U+acB8L5UWSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRdwBsr6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn/vEyvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E0AC4CEC3;
-	Mon, 14 Oct 2024 15:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRdwBsr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AB5C4CEC3;
+	Mon, 14 Oct 2024 15:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918159;
-	bh=Wv6W1D8C0mapsI+CdN7rpnn1Ltjp9nUnYawGSOrPndE=;
+	s=korg; t=1728918162;
+	bh=TSnh9govssa+VshHCb9vnYZKgFsydKgDh/3Om0cKu1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jn/vEyvSGenXK7u1KPphhRirpGr1B2HF0+LLm1BEa2f7ovq4lm6cp4MQf7DKeyZC9
-	 kW+nGcro8gXe0NH0MyNSvEQdq7YEHOdFFFpDAzs0IZYeASsxYOfd/CD+XSeWYJqGai
-	 VxGAEsfFiI1c2y37W8TLXzpYeT+dbT53dU/+CU2k=
+	b=PRdwBsr6SUwxWSjqlttYo5ChD2B58UgM1okt3mDZyvqqeAh2x0m2BSyhSsXDnumdN
+	 tXbF0Zw9LYTlO9CwEN6Q3Dpcqnj9baHcuNMQ2X0UUqwW0d1VMz9wjslqF8KVarYarV
+	 bKKoVoCzxHdaYfsd3G02ZEeDlAyf1QqzVaODaHL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 241/798] f2fs: clean up w/ dotdot_name
-Date: Mon, 14 Oct 2024 16:13:15 +0200
-Message-ID: <20241014141227.386141772@linuxfoundation.org>
+Subject: [PATCH 6.1 224/798] RDMA/hns: Fix 1bit-ECC recovery address in non-4K OS
+Date: Mon, 14 Oct 2024 16:12:58 +0200
+Message-ID: <20241014141226.725878782@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,48 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit ff6584ac2c4b4ee8e1fca20bffaaa387d8fe2974 ]
+[ Upstream commit ce196f6297c7f3ab7780795e40efd6c521f60c8b ]
 
-Just cleanup, no logic changes.
+The 1bit-ECC recovery address read from HW only contain bits 64:12, so
+it should be fixed left-shifted 12 bits when used.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 884ee6dc85b9 ("f2fs: get rid of online repaire on corrupted directory")
+Currently, the driver will shift the address left by PAGE_SHIFT when
+used, which is wrong in non-4K OS.
+
+Fixes: 2de949abd6a5 ("RDMA/hns: Recover 1bit-ECC error of RAM on chip")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20240906093444.3571619-8-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 6dcc73ca32172..cd66584bed0fd 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -449,7 +449,6 @@ static int __recover_dot_dentries(struct inode *dir, nid_t pino)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(dir);
- 	struct qstr dot = QSTR_INIT(".", 1);
--	struct qstr dotdot = QSTR_INIT("..", 2);
- 	struct f2fs_dir_entry *de;
- 	struct page *page;
- 	int err = 0;
-@@ -487,13 +486,13 @@ static int __recover_dot_dentries(struct inode *dir, nid_t pino)
- 			goto out;
- 	}
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 42636aa28b4bb..56c0e87c494ec 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -6314,7 +6314,7 @@ static u64 fmea_get_ram_res_addr(u32 res_type, __le64 *data)
+ 	    res_type == ECC_RESOURCE_SCCC)
+ 		return le64_to_cpu(*data);
  
--	de = f2fs_find_entry(dir, &dotdot, &page);
-+	de = f2fs_find_entry(dir, &dotdot_name, &page);
- 	if (de)
- 		f2fs_put_page(page, 0);
- 	else if (IS_ERR(page))
- 		err = PTR_ERR(page);
- 	else
--		err = f2fs_do_add_link(dir, &dotdot, NULL, pino, S_IFDIR);
-+		err = f2fs_do_add_link(dir, &dotdot_name, NULL, pino, S_IFDIR);
- out:
- 	if (!err)
- 		clear_inode_flag(dir, FI_INLINE_DOTS);
+-	return le64_to_cpu(*data) << PAGE_SHIFT;
++	return le64_to_cpu(*data) << HNS_HW_PAGE_SHIFT;
+ }
+ 
+ static int fmea_recover_others(struct hns_roce_dev *hr_dev, u32 res_type,
 -- 
 2.43.0
 
