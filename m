@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62441CC893;
-	Mon, 14 Oct 2024 14:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A46A1CEEAA;
+	Mon, 14 Oct 2024 14:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917251; cv=none; b=CjY9p40vA635dd/eHKZaifmcrMfRtwceR8AaTy1/e5n8ZVp/aQy4uLfGaOKlBOaeg0Y7n1VJyW3ZzIRh/v4ewnsEMM/0m82fTy1bQpM4p/4Gf9ugel3GSsRTUmJph4Fl6ArBPWgfqZwJ48pc+Jhwe/jK2tthXIgz/VCC/lxJonw=
+	t=1728917255; cv=none; b=WbSYl4uzLeRmiXxOmBwXlQO5j2pSzl1JjxEtT8UJy4OJ31Fek9YW2dAFcwlxyolfY83TVAoMRJFekvCOBsgHSXhKaFexxkZXevyu2uyiZn1zxi0aoZsOOp6jIjyvnZdk4E0wmcf3ll/9Pwc2k2KDPXuR4M+LZoK33zkMg8snVg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917251; c=relaxed/simple;
-	bh=E52431rwp/5xncWyPK+8NJpji7WpCwsraorVSf60oWw=;
+	s=arc-20240116; t=1728917255; c=relaxed/simple;
+	bh=59Ezzow20hcoiZDnPFauOri+mZsfurFh1cAQmfWh5o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtfUNlsnAi+tHS1baDh+PNmYyplIcS5l+P+FsmzD8Xy9vmmDfT/SPsSNozQHcEj8lkTjUOxrYAcizgRDNDH0PHm5307tg1WlDKpsXgW2xJORMysAeax6HhYpDuFvtSFk/eXZEDSNl7baZUHsC1bWbAO/oYNVYMEQjrRtPKSBK4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7TWXOSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GgXQwE6UJRoNDqAWgsnR0siqFN2NMHHxN/OQl6841FZ46sBsPxq8YGypCFFhIcrh1L/hh8gctaT40MbanAWLF18JEPJoi1lgft0gNZwnTwxP4680cB4DLMnmvU/PZj/amKQGeYiFwlSbyGgYXHpXjpw6/BW8FaTAlHjF2Oo4X64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx1UUNoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7TWXOSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6B1C4CEC3;
-	Mon, 14 Oct 2024 14:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx1UUNoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555DBC4CEC3;
+	Mon, 14 Oct 2024 14:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917251;
-	bh=E52431rwp/5xncWyPK+8NJpji7WpCwsraorVSf60oWw=;
+	s=korg; t=1728917254;
+	bh=59Ezzow20hcoiZDnPFauOri+mZsfurFh1cAQmfWh5o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7TWXOSqHa/Axp+lUxctCMvDC2tEC3+srEHfeXVV7iH5zTsdFvySJUGb2EOdfk0wH
-	 PI4a3kfiWPq1ofYh3yPrm/ZE9pXldrp8mto4dWuk1P8ypB2X1fVShAEmwveqcHChED
-	 WooxRy7rj/9C5Cl+tfqvytlMrJEQIZavjZsd96kY=
+	b=Hx1UUNoDpWbdoPQJ6g73V/M9DPxsDQalm68oiext9aqljgAgN1bYjayX4oXmGyg6k
+	 4BgisA1JNF664aNKqr38Hb7kGcSD8cRZcKUJ6thHbJo3l/47nSe92LGjqqVL/QTF6o
+	 MSLgQuzSE8fNUnvb2Z06MctHp02/I57d/NbXrbyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 196/213] net: explicitly clear the sk pointer, when pf->create fails
-Date: Mon, 14 Oct 2024 16:21:42 +0200
-Message-ID: <20241014141050.611023084@linuxfoundation.org>
+Subject: [PATCH 6.6 197/213] net: Fix an unsafe loop on the list
+Date: Mon, 14 Oct 2024 16:21:43 +0200
+Message-ID: <20241014141050.649417395@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,56 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-commit 631083143315d1b192bd7d915b967b37819e88ea upstream.
+commit 1dae9f1187189bc09ff6d25ca97ead711f7e26f9 upstream.
 
-We have recently noticed the exact same KASAN splat as in commit
-6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket
-creation fails"). The problem is that commit did not fully address the
-problem, as some pf->create implementations do not use sk_common_release
-in their error paths.
+The kernel may crash when deleting a genetlink family if there are still
+listeners for that family:
 
-For example, we can use the same reproducer as in the above commit, but
-changing ping to arping. arping uses AF_PACKET socket and if packet_create
-fails, it will just sk_free the allocated sk object.
+Oops: Kernel access of bad area, sig: 11 [#1]
+  ...
+  NIP [c000000000c080bc] netlink_update_socket_mc+0x3c/0xc0
+  LR [c000000000c0f764] __netlink_clear_multicast_users+0x74/0xc0
+  Call Trace:
+__netlink_clear_multicast_users+0x74/0xc0
+genl_unregister_family+0xd4/0x2d0
 
-While we could chase all the pf->create implementations and make sure they
-NULL the freed sk object on error from the socket, we can't guarantee
-future protocols will not make the same mistake.
+Change the unsafe loop on the list to a safe one, because inside the
+loop there is an element removal from this list.
 
-So it is easier to just explicitly NULL the sk pointer upon return from
-pf->create in __sock_create. We do know that pf->create always releases the
-allocated sk object on error, so if the pointer is not NULL, it is
-definitely dangling.
-
-Fixes: 6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket creation fails")
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Fixes: b8273570f802 ("genetlink: fix netns vs. netlink table locking (2)")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241003170151.69445-1-ignat@cloudflare.com
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241003104431.12391-1-a.kovaleva@yadro.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/net/sock.h       |    2 ++
+ net/netlink/af_netlink.c |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -1569,8 +1569,13 @@ int __sock_create(struct net *net, int f
- 	rcu_read_unlock();
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -902,6 +902,8 @@ static inline void sk_add_bind2_node(str
+ 	hlist_for_each_entry(__sk, list, sk_bind_node)
+ #define sk_for_each_bound_bhash2(__sk, list) \
+ 	hlist_for_each_entry(__sk, list, sk_bind2_node)
++#define sk_for_each_bound_safe(__sk, tmp, list) \
++	hlist_for_each_entry_safe(__sk, tmp, list, sk_bind_node)
  
- 	err = pf->create(net, sock, protocol, kern);
--	if (err < 0)
-+	if (err < 0) {
-+		/* ->create should release the allocated sock->sk object on error
-+		 * but it may leave the dangling pointer
-+		 */
-+		sock->sk = NULL;
- 		goto out_module_put;
-+	}
+ /**
+  * sk_for_each_entry_offset_rcu - iterate over a list at a given struct offset
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2143,8 +2143,9 @@ void __netlink_clear_multicast_users(str
+ {
+ 	struct sock *sk;
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
++	struct hlist_node *tmp;
  
- 	/*
- 	 * Now to bump the refcnt of the [loadable] module that owns this
+-	sk_for_each_bound(sk, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
+ }
+ 
 
 
