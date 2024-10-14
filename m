@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F6739FCE;
-	Mon, 14 Oct 2024 14:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4164A24;
+	Mon, 14 Oct 2024 14:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916628; cv=none; b=pbMkTf179pxNE+lYRPCUVDHQzu2FrTGV09u5hmIuBk9hjAxukNuZOw2PCkHNBNEemuKu+VqJO+marHfPBhh10/nbyHq54o3BObW6wh3Cbt5UE678nDlat18Z73/eEBK+3D4CHwtkom9hDjhdXN/RC1L98dZ4XNuC+4GYMxoDTpc=
+	t=1728916631; cv=none; b=kW7gUl3J0fGCS/yxRwC/JOZIl4kbDgYPXo2eHjwA8OPLbsnjxMT4MX8X3tFFa4akQ1TbkkX/znkOYP1WhwABLx1F/VJaiqLcVZbXklJhsadXpQT7UInSx/EhfrX+7wNm6WpEW5+96MDiokoTwOHsYBNyxpS5Fr8uVnbg1EPDDQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916628; c=relaxed/simple;
-	bh=H5Sz1fudZFYeJH7Sal1i3dSxbITNaq70yc9TbER05rY=;
+	s=arc-20240116; t=1728916631; c=relaxed/simple;
+	bh=bpsadeTKxXgrb6YPCMZ9uG3kJHlXHq9+Uyv1V32z4vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4cLozPbDmsi2ra+DN5pZvaqyXXy8vBfoQ50s08SZadmgHNJ3ppd9vccCYhMXJ1Bta9+RVzAbIxKKxns2QjPRk87jqtW3+a6UMR3lsZJwxTOKnYb/wBmsfjNHWdJPwloF//gcYUOX+cmOHP0YBYb+GDWcTr5RS225c9nD0NcqEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5sDSwtd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=flXUvX1Obut9le0aOKaxGcjMNYA7rZttAop1jyE+lFKGvvyGA/gWwO7V5Y78a6HjKe7IDSyIfFYut8XqDZcNBeBlKSLgTIqzHQkJIIxYi/AqjWcXvkiHQimqlD5BTreKXpIJXWs1DFW5DmA+MhM+4TEssdJk9lTdJJefYfRH3go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hp1mveYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5sDSwtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA87BC4CEC3;
-	Mon, 14 Oct 2024 14:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hp1mveYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DE2C4CEC3;
+	Mon, 14 Oct 2024 14:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916628;
-	bh=H5Sz1fudZFYeJH7Sal1i3dSxbITNaq70yc9TbER05rY=;
+	s=korg; t=1728916631;
+	bh=bpsadeTKxXgrb6YPCMZ9uG3kJHlXHq9+Uyv1V32z4vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5sDSwtdk/21JZdMeMe8r27xdLDW+WgWGmBvEgnLZAvk0RcHem4hrQBSjnMrV+5ZL
-	 bFf5XnSq6LJ4AAC8ZPF5JWEb67UgILAaQlHzzZee/Tki4XCx++RceaIlb015unCRop
-	 G3HY4rXJlerCczbr22kCVJrRe84uTA5gmPKsQUms=
+	b=Hp1mveYkK6FTh7tf17p8L75/AldADqfM0HeKMf8hR65In+IqQEKRApakqOh7kwgKo
+	 +HzHDvq4EdA4d/RPDD1NBf1beeR6XXjWvR6iH9rJ07OsYQrCtWIuVpQshadVL75TyZ
+	 P5+nm0BwKqQWiyR1sJjh3h5wGx1OTdrv8lQB8EVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mayank Rana <quic_mrana@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/213] bus: mhi: ep: Do not allocate memory for MHI objects from DMA zone
-Date: Mon, 14 Oct 2024 16:18:47 +0200
-Message-ID: <20241014141043.813974688@linuxfoundation.org>
+Subject: [PATCH 6.6 004/213] ASoC: cs35l56: Load tunings for the correct speaker models
+Date: Mon, 14 Oct 2024 16:18:30 +0200
+Message-ID: <20241014141043.146437222@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,94 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit c7d0b2db5bc5e8c0fdc67b3c8f463c3dfec92f77 ]
+[ Upstream commit 245eeff18d7a37693815250ae15979ce98c3d190 ]
 
-MHI endpoint stack accidentally started allocating memory for objects from
-DMA zone since commit 62210a26cd4f ("bus: mhi: ep: Use slab allocator
-where applicable"). But there is no real need to allocate memory from this
-naturally limited DMA zone. This also causes the MHI endpoint stack to run
-out of memory while doing high bandwidth transfers.
+If the "spk-id-gpios" property is present it points to GPIOs whose
+value must be used to select the correct bin file to match the
+speakers.
 
-So let's switch over to normal memory.
+Some manufacturers use multiple sources of speakers, which need
+different tunings for best performance. On these models the type of
+speaker fitted is indicated by the values of one or more GPIOs. The
+number formed by the GPIOs identifies the tuning required.
 
-Cc: <stable@vger.kernel.org> # 6.8
-Fixes: 62210a26cd4f ("bus: mhi: ep: Use slab allocator where applicable")
-Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
-Link: https://lore.kernel.org/r/20240603164354.79035-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+The speaker ID must be used in combination with the subsystem ID
+(either from PCI SSID or cirrus,firmware-uid property), because the
+GPIOs can only indicate variants of a specific model.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 1a1c3d794ef6 ("ASoC: cs35l56: Use PCI SSID as the firmware UID")
+Link: https://msgid.link/r/20240129162737.497-14-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/sound/cs35l56.h           |  1 +
+ sound/soc/codecs/cs35l56-shared.c | 36 +++++++++++++++++++++++++++++++
+ sound/soc/codecs/cs35l56.c        | 32 ++++++++++++++++++++++-----
+ sound/soc/codecs/cs35l56.h        |  1 +
+ 4 files changed, 65 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 2cb7e21ad3b74..c48f4d9f2c690 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -74,7 +74,7 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
- 	struct mhi_ring_element *event;
- 	int ret;
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index 4e5f35dc042a1..c0f2135968fec 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -287,6 +287,7 @@ int cs35l56_runtime_suspend_common(struct cs35l56_base *cs35l56_base);
+ int cs35l56_runtime_resume_common(struct cs35l56_base *cs35l56_base, bool is_soundwire);
+ void cs35l56_init_cs_dsp(struct cs35l56_base *cs35l56_base, struct cs_dsp *cs_dsp);
+ int cs35l56_hw_init(struct cs35l56_base *cs35l56_base);
++int cs35l56_get_speaker_id(struct cs35l56_base *cs35l56_base);
+ int cs35l56_get_bclk_freq_id(unsigned int freq);
+ void cs35l56_fill_supply_names(struct regulator_bulk_data *data);
  
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 69c951e305842..d3db89c93b331 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -5,6 +5,7 @@
+ // Copyright (C) 2023 Cirrus Logic, Inc. and
+ //                    Cirrus Logic International Semiconductor Ltd.
  
-@@ -93,7 +93,7 @@ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_stat
- 	struct mhi_ring_element *event;
- 	int ret;
++#include <linux/gpio/consumer.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/types.h>
+@@ -695,6 +696,41 @@ int cs35l56_hw_init(struct cs35l56_base *cs35l56_base)
+ }
+ EXPORT_SYMBOL_NS_GPL(cs35l56_hw_init, SND_SOC_CS35L56_SHARED);
  
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
++int cs35l56_get_speaker_id(struct cs35l56_base *cs35l56_base)
++{
++	struct gpio_descs *descs;
++	int speaker_id;
++	int i, ret;
++
++	/* Read the speaker type qualifier from the motherboard GPIOs */
++	descs = gpiod_get_array_optional(cs35l56_base->dev, "spk-id", GPIOD_IN);
++	if (!descs) {
++		return -ENOENT;
++	} else if (IS_ERR(descs)) {
++		ret = PTR_ERR(descs);
++		return dev_err_probe(cs35l56_base->dev, ret, "Failed to get spk-id-gpios\n");
++	}
++
++	speaker_id = 0;
++	for (i = 0; i < descs->ndescs; i++) {
++		ret = gpiod_get_value_cansleep(descs->desc[i]);
++		if (ret < 0) {
++			dev_err_probe(cs35l56_base->dev, ret, "Failed to read spk-id[%d]\n", i);
++			goto err;
++		}
++
++		speaker_id |= (ret << i);
++	}
++
++	dev_dbg(cs35l56_base->dev, "Speaker ID = %d\n", speaker_id);
++	ret = speaker_id;
++err:
++	gpiod_put_array(descs);
++
++	return ret;
++}
++EXPORT_SYMBOL_NS_GPL(cs35l56_get_speaker_id, SND_SOC_CS35L56_SHARED);
++
+ static const u32 cs35l56_bclk_valid_for_pll_freq_table[] = {
+ 	[0x0C] = 128000,
+ 	[0x0F] = 256000,
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index c855ef3ec665e..015269f0db54c 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -941,10 +941,19 @@ static int cs35l56_component_probe(struct snd_soc_component *component)
  
-@@ -111,7 +111,7 @@ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -130,7 +130,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -422,7 +422,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
- 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
- 		write_offset = len - buf_left;
- 
--		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
-+		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
- 		if (!buf_addr)
+ 	if (!cs35l56->dsp.system_name &&
+ 	    (snd_soc_card_get_pci_ssid(component->card, &vendor, &device) == 0)) {
+-		cs35l56->dsp.system_name = devm_kasprintf(cs35l56->base.dev,
+-							  GFP_KERNEL,
+-							  "%04x%04x",
+-							  vendor, device);
++		/* Append a speaker qualifier if there is a speaker ID */
++		if (cs35l56->speaker_id >= 0) {
++			cs35l56->dsp.system_name = devm_kasprintf(cs35l56->base.dev,
++								  GFP_KERNEL,
++								  "%04x%04x-spkid%d",
++								  vendor, device,
++								  cs35l56->speaker_id);
++		} else {
++			cs35l56->dsp.system_name = devm_kasprintf(cs35l56->base.dev,
++								  GFP_KERNEL,
++								  "%04x%04x",
++								  vendor, device);
++		}
+ 		if (!cs35l56->dsp.system_name)
  			return -ENOMEM;
+ 	}
+@@ -1230,7 +1239,13 @@ static int cs35l56_get_firmware_uid(struct cs35l56_private *cs35l56)
+ 	if (ret < 0)
+ 		return 0;
  
-@@ -1460,14 +1460,14 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+-	cs35l56->dsp.system_name = devm_kstrdup(dev, prop, GFP_KERNEL);
++	/* Append a speaker qualifier if there is a speaker ID */
++	if (cs35l56->speaker_id >= 0)
++		cs35l56->dsp.system_name = devm_kasprintf(dev, GFP_KERNEL, "%s-spkid%d",
++							  prop, cs35l56->speaker_id);
++	else
++		cs35l56->dsp.system_name = devm_kstrdup(dev, prop, GFP_KERNEL);
++
+ 	if (cs35l56->dsp.system_name == NULL)
+ 		return -ENOMEM;
  
- 	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
- 							sizeof(struct mhi_ring_element), 0,
--							SLAB_CACHE_DMA, NULL);
-+							0, NULL);
- 	if (!mhi_cntrl->ev_ring_el_cache) {
- 		ret = -ENOMEM;
- 		goto err_free_cmd;
+@@ -1245,6 +1260,7 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 
+ 	init_completion(&cs35l56->init_completion);
+ 	mutex_init(&cs35l56->base.irq_lock);
++	cs35l56->speaker_id = -ENOENT;
+ 
+ 	dev_set_drvdata(cs35l56->base.dev, cs35l56);
+ 
+@@ -1281,6 +1297,12 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 		gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 1);
  	}
  
- 	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
--						      SLAB_CACHE_DMA, NULL);
-+						      0, NULL);
- 	if (!mhi_cntrl->tre_buf_cache) {
- 		ret = -ENOMEM;
- 		goto err_destroy_ev_ring_el_cache;
++	ret = cs35l56_get_speaker_id(&cs35l56->base);
++	if ((ret < 0) && (ret != -ENOENT))
++		goto err;
++
++	cs35l56->speaker_id = ret;
++
+ 	ret = cs35l56_get_firmware_uid(cs35l56);
+ 	if (ret != 0)
+ 		goto err;
+diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
+index d9fbf568a1958..b000e7365e406 100644
+--- a/sound/soc/codecs/cs35l56.h
++++ b/sound/soc/codecs/cs35l56.h
+@@ -44,6 +44,7 @@ struct cs35l56_private {
+ 	bool sdw_attached;
+ 	struct completion init_completion;
+ 
++	int speaker_id;
+ 	u32 rx_mask;
+ 	u32 tx_mask;
+ 	u8 asp_slot_width;
 -- 
 2.43.0
 
