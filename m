@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284791B4F13;
-	Mon, 14 Oct 2024 15:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC991ABEB5;
+	Mon, 14 Oct 2024 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918877; cv=none; b=V5oNplHni7dPN3d0v9Z+CRski27uQxGqzz9+pVqorOTTHYy7/5bXHYPo9iPryYjgLpNdmfi+w924WyKtXL80Vp4f+RDyOg/VGQ52JjhT5bPs7oN49PkVeHnhYx9MjYkxzl0PdlrpPxNEITttWs3oqWD883aISYHWFmPwqDdCzgA=
+	t=1728918880; cv=none; b=q8JogXE6/rlQVP09O5Yw4lIfWEG74PWlQlIPcuP2dB6qJRVYLot0w/BMCIUs0nC5SeQF+iVeUI2W39vFavpyiOpNmZb+5AN8LowQ3ZfGCuy70Ii3a01AIelRF/5M61lNa+tPMDHGedJ5ZBLWptcqsswHukHieMXzurDNxw4Z/sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918877; c=relaxed/simple;
-	bh=3ck/PWUkg/xlMbfxQlkO+7NWJ5W/jVs1kjsw3UGwLz8=;
+	s=arc-20240116; t=1728918880; c=relaxed/simple;
+	bh=5fLtkjpqesAwkuAdh1lfvd2XICFMpMNOxOvfRtLFP58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqCb+vXC8+bLjkjftrZiE03NCJZI4mR5IjY2/Lcb7T4mBJbLuMyQOIB8t+5D2GRsOI0buBsfiMBKNE6uZ93f2Esq8gAWFa0/xeqqjrqCbcx446GzPESUnBxijo0200iKhaRVXqpBeKYFWkKZVL+wKh5yIjQWr4SvBdkTO6eSZkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sigKFxvk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ro9zivx2IbVX7dKoTMFZaiq5TF62eNGE+K/1V4x8gWwJ4KYmifw412KgpRa332wLKZfL9LK5lAuYSxmDjizBpP4se3xG2C00z/U0jRIyixOBd3X3eySdSnPQxHW74q683+b1K6gnHfOxTqyMvZKO396TePykX3dXNdfXEOqnjNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8PTFdrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sigKFxvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A9C4CEC3;
-	Mon, 14 Oct 2024 15:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8PTFdrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112E9C4CEC7;
+	Mon, 14 Oct 2024 15:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918877;
-	bh=3ck/PWUkg/xlMbfxQlkO+7NWJ5W/jVs1kjsw3UGwLz8=;
+	s=korg; t=1728918880;
+	bh=5fLtkjpqesAwkuAdh1lfvd2XICFMpMNOxOvfRtLFP58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sigKFxvkcGhcr2GGEkGIXKtFatOBGJ6hgce1s/lHfivLZthFNW9IIUthx5+WZzNiE
-	 8iPM0OkwM5IXcLrfhiajAPzJOJspFq3UZ7d3v4viIRIvzNJitkrp7wS0sNU1XER1Ca
-	 Uk6SILerJ75S0fw68k+O1n8mKWcWhP2HX/HkKW2k=
+	b=T8PTFdrlNQMDmpH+VtoWiFAa9WCN4UNaVM+k4XLFi297g/95zLmYG8vq8p87T0u26
+	 ugg2rHn1uo49UQGJWPaE8Usu9/NctvN1Ma+VKigir53uNDhIOAN6dgzim/jkl2m4XV
+	 od83G1Y2RVHYIVcwRvxfsPlhpZNO2kZ/N7Nm+gDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/798] wifi: mac80211: fix RCU list iterations
-Date: Mon, 14 Oct 2024 16:16:42 +0200
-Message-ID: <20241014141235.571438457@linuxfoundation.org>
+Subject: [PATCH 6.1 449/798] ACPICA: iasl: handle empty connection_node
+Date: Mon, 14 Oct 2024 16:16:43 +0200
+Message-ID: <20241014141235.611214794@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,82 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-[ Upstream commit ac35180032fbc5d80b29af00ba4881815ceefcb6 ]
+[ Upstream commit a0a2459b79414584af6c46dd8c6f866d8f1aa421 ]
 
-There are a number of places where RCU list iteration is
-used, but that aren't (always) called with RCU held. Use
-just list_for_each_entry() in most, and annotate iface
-iteration with the required locks.
+ACPICA commit 6c551e2c9487067d4b085333e7fe97e965a11625
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240827094939.ed8ac0b2f897.I8443c9c3c0f8051841353491dae758021b53115e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://github.com/acpica/acpica/commit/6c551e2c
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 4 +++-
- net/mac80211/mlme.c | 2 +-
- net/mac80211/scan.c | 2 +-
- net/mac80211/util.c | 4 +++-
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/acpi/acpica/exprep.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index f07e34bed8f3a..807bea1a7d3c1 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -245,7 +245,9 @@ ieee80211_get_max_required_bw(struct ieee80211_sub_if_data *sdata,
- 	enum nl80211_chan_width max_bw = NL80211_CHAN_WIDTH_20_NOHT;
- 	struct sta_info *sta;
+diff --git a/drivers/acpi/acpica/exprep.c b/drivers/acpi/acpica/exprep.c
+index 08f06797386af..4daef7530d91b 100644
+--- a/drivers/acpi/acpica/exprep.c
++++ b/drivers/acpi/acpica/exprep.c
+@@ -437,6 +437,9 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
  
--	list_for_each_entry_rcu(sta, &sdata->local->sta_list, list) {
-+	lockdep_assert_wiphy(sdata->local->hw.wiphy);
-+
-+	list_for_each_entry(sta, &sdata->local->sta_list, list) {
- 		if (sdata != sta->sdata &&
- 		    !(sta->sdata->bss && sta->sdata->bss == sdata->bss))
- 			continue;
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 9a5530ca2f6b2..ee9ec74b9553f 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -660,7 +660,7 @@ static bool ieee80211_add_vht_ie(struct ieee80211_sub_if_data *sdata,
- 		bool disable_mu_mimo = false;
- 		struct ieee80211_sub_if_data *other;
- 
--		list_for_each_entry_rcu(other, &local->interfaces, list) {
-+		list_for_each_entry(other, &local->interfaces, list) {
- 			if (other->vif.bss_conf.mu_mimo_owner) {
- 				disable_mu_mimo = true;
- 				break;
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 6432dd3ec2a7e..0a6e40bd42f62 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -500,7 +500,7 @@ static void __ieee80211_scan_completed(struct ieee80211_hw *hw, bool aborted)
- 	 * the scan was in progress; if there was none this will
- 	 * just be a no-op for the particular interface.
- 	 */
--	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
-+	list_for_each_entry(sdata, &local->interfaces, list) {
- 		if (ieee80211_sdata_running(sdata))
- 			ieee80211_queue_work(&sdata->local->hw, &sdata->work);
- 	}
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 738f1f139a90e..3fe15089b24f5 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -767,7 +767,9 @@ static void __iterate_interfaces(struct ieee80211_local *local,
- 	struct ieee80211_sub_if_data *sdata;
- 	bool active_only = iter_flags & IEEE80211_IFACE_ITER_ACTIVE;
- 
--	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
-+	list_for_each_entry_rcu(sdata, &local->interfaces, list,
-+				lockdep_is_held(&local->iflist_mtx) ||
-+				lockdep_is_held(&local->hw.wiphy->mtx)) {
- 		switch (sdata->vif.type) {
- 		case NL80211_IFTYPE_MONITOR:
- 			if (!(sdata->u.mntr.flags & MONITOR_FLAG_ACTIVE))
+ 		if (info->connection_node) {
+ 			second_desc = info->connection_node->object;
++			if (second_desc == NULL) {
++				break;
++			}
+ 			if (!(second_desc->common.flags & AOPOBJ_DATA_VALID)) {
+ 				status =
+ 				    acpi_ds_get_buffer_arguments(second_desc);
 -- 
 2.43.0
 
