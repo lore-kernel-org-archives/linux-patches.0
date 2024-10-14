@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482A21AB6FC;
-	Mon, 14 Oct 2024 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AC1ABEAD;
+	Mon, 14 Oct 2024 14:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917351; cv=none; b=miJn7ctACQWbDAvDRkrBWP2c1cAOLxUDSUUqeKsO0VntyuZB1JUrIK27FLhHesJsO94GX4eC6nWh0mZfz6RLFOHzAeZ7KUpMDwyom1H8Q+/uX/irpdJuKQM084r0bewkZlDOUrc4B2gExGPGn7/F+oLvvoLzNEspVoDUbCbJR6c=
+	t=1728917355; cv=none; b=GIdcIwYAZSPNZmdtBC7QWVKHYpZM+4MB4ekHB6XCQKRQQB4T9xFtVnbL6HOiuNPmweSNFK5ks5P1FjqqyhV1zaTIBjaZ+dk2UOK3UNdyC6pUg/kKbTp27B0pDs+N7PK8AVOcGMiiIp3uYsgGjYmkxAEDt0xCtmozIImvC8FU1/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917351; c=relaxed/simple;
-	bh=KAWHkWlJrnc9PuTUOUnpmzcBtJv9mKyaXgLWzzkrJ3w=;
+	s=arc-20240116; t=1728917355; c=relaxed/simple;
+	bh=sELjz1y6ZbTFeCWaMdgnBkyJqo9zTFirLjj6IxbmRrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh1TwF/NFOQl2Btu+3BSe+aaDSOKVcXHmP1ntqDmlgkjpXvdlM/RnPXhtw/NOjn9Ojor8H8JvBFURMpVP2KlI9dm/Nf8FFf3DVe9gXRGPWG+S/2jTdo52jSoVlmyb8LqWpbfP0K1rz+xztUznEqTv782D+87SQNQZTTnogp0ao0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCz6pyYt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kCKDJBNJk4mZzvwxy/HHJcpRCp6B+9c/+Abye0NWGGtAMjaOxzMqgJ1ykN7RVTRNwf2uXjG1Bryb/E1p/4QiCORNOwz5VcRRtwzsB+uIFlV+veFRBsErY2VSNC/ZSviPJBx9NoqeEVTzv4WEbfXk7pgCScTp2hxZx25vxLwCqUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lcks2Djc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCz6pyYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDB8C4CEC3;
-	Mon, 14 Oct 2024 14:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lcks2Djc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F522C4CEC3;
+	Mon, 14 Oct 2024 14:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917351;
-	bh=KAWHkWlJrnc9PuTUOUnpmzcBtJv9mKyaXgLWzzkrJ3w=;
+	s=korg; t=1728917354;
+	bh=sELjz1y6ZbTFeCWaMdgnBkyJqo9zTFirLjj6IxbmRrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCz6pyYtsx0ZM8tV2lRRVXNCm4f9RvZoi7cLF/3lPkdvcJUt3A2CRE9U/Ti5I6Q6M
-	 e6e4sRHgqgQJKpT+9AshIZXbo7PWRHjOmmLJU6eOnmdgfYWlsta24s0o1jHggnCTgN
-	 1gfAIrNsx4Ld4xXL68e38s/WsattFmiEOHeV5crs=
+	b=Lcks2DjcQs0Oa33zWLjkL04wOQhj8JfZDW1KBQmwsabFUoE5aVbEHD68SNwP1Se6A
+	 T5lFvcFxAUT92ylpKvNVjrDylEF41pXvINyZhUUknEFdPT1Dy8uWhIKSEqz9xicA0A
+	 Sxl4QMFi+UbjKOyvSJZiNkpSwIN0cNOpgL/XvuB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olaf Hering <olaf@aepfle.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/798] mount: handle OOM on mnt_warn_timestamp_expiry
-Date: Mon, 14 Oct 2024 16:09:26 +0200
-Message-ID: <20241014141218.432740051@linuxfoundation.org>
+Subject: [PATCH 6.1 013/798] kselftest/arm64: Dont pass headers to the compiler as source
+Date: Mon, 14 Oct 2024 16:09:27 +0200
+Message-ID: <20241014141218.471880124@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,59 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olaf Hering <olaf@aepfle.de>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 4bcda1eaf184e308f07f9c61d3a535f9ce477ce8 ]
+[ Upstream commit a884f7970e57aef78c6011561e29d238e46b3a9f ]
 
-If no page could be allocated, an error pointer was used as format
-string in pr_warn.
+The signal Makefile rules pass all the dependencies for each executable,
+including headers, to the compiler which GCC is happy enough with but
+clang rejects:
 
-Rearrange the code to return early in case of OOM. Also add a check
-for the return value of d_path.
+   clang --target=aarch64-none-linux-gnu -fintegrated-as -Wall -O2 -g -I/home/broonie/git/linux/tools/testing/selftests/ -isystem /home/broonie/git/linux/usr/include -D_GNU_SOURCE -std=gnu99 -I.  test_signals.c test_signals_utils.c testcases/testcases.c signals.S testcases/fake_sigreturn_bad_magic.c test_signals.h test_signals_utils.h testcases/testcases.h -o testcases/fake_sigreturn_bad_magic
+  clang: error: cannot specify -o when generating multiple output files
 
-Fixes: f8b92ba67c5d ("mount: Add mount warning for impending timestamp expiry")
-Signed-off-by: Olaf Hering <olaf@aepfle.de>
-Link: https://lore.kernel.org/r/20240730085856.32385-1-olaf@aepfle.de
-[brauner: rewrite commit and commit message]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This happens because clang gets confused about what to do with the
+header files, failing to identify them as source.  This is not amazing
+behaviour on clang's part and should ideally be fixed but even if that
+happens we'd still need a new clang release so let's instead rework the
+Makefile so we use variables for the lists of header and source files,
+allowing us to only pass the source files to the compiler and keep clang
+happy.
+
+As a bonus the resulting Makefile is a bit easier to read.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230111-arm64-kselftest-clang-v1-3-89c69d377727@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Stable-dep-of: 5225b6562b9a ("kselftest/arm64: signal: fix/refactor SVE vector length enumeration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ tools/testing/selftests/arm64/signal/Makefile | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 2b934ade9e70d..59a9f877738b2 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2613,8 +2613,15 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
- 	if (!__mnt_is_readonly(mnt) &&
- 	   (!(sb->s_iflags & SB_I_TS_EXPIRY_WARNED)) &&
- 	   (ktime_get_real_seconds() + TIME_UPTIME_SEC_MAX > sb->s_time_max)) {
--		char *buf = (char *)__get_free_page(GFP_KERNEL);
--		char *mntpath = buf ? d_path(mountpoint, buf, PAGE_SIZE) : ERR_PTR(-ENOMEM);
-+		char *buf, *mntpath;
+diff --git a/tools/testing/selftests/arm64/signal/Makefile b/tools/testing/selftests/arm64/signal/Makefile
+index be7520a863b03..8f5febaf1a9a2 100644
+--- a/tools/testing/selftests/arm64/signal/Makefile
++++ b/tools/testing/selftests/arm64/signal/Makefile
+@@ -22,6 +22,10 @@ $(TEST_GEN_PROGS): $(PROGS)
+ 
+ # Common test-unit targets to build common-layout test-cases executables
+ # Needs secondary expansion to properly include the testcase c-file in pre-reqs
++COMMON_SOURCES := test_signals.c test_signals_utils.c testcases/testcases.c \
++	signals.S
++COMMON_HEADERS := test_signals.h test_signals_utils.h testcases/testcases.h
 +
-+		buf = (char *)__get_free_page(GFP_KERNEL);
-+		if (buf)
-+			mntpath = d_path(mountpoint, buf, PAGE_SIZE);
-+		else
-+			mntpath = ERR_PTR(-ENOMEM);
-+		if (IS_ERR(mntpath))
-+			mntpath = "(unknown)";
- 
- 		pr_warn("%s filesystem being %s at %s supports timestamps until %ptTd (0x%llx)\n",
- 			sb->s_type->name,
-@@ -2622,8 +2629,9 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
- 			mntpath, &sb->s_time_max,
- 			(unsigned long long)sb->s_time_max);
- 
--		free_page((unsigned long)buf);
- 		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
-+		if (buf)
-+			free_page((unsigned long)buf);
- 	}
- }
- 
+ .SECONDEXPANSION:
+-$(PROGS): test_signals.c test_signals_utils.c testcases/testcases.c signals.S $$@.c test_signals.h test_signals_utils.h testcases/testcases.h
+-	$(CC) $(CFLAGS) $^ -o $@
++$(PROGS): $$@.c ${COMMON_SOURCES} ${COMMON_HEADERS}
++	$(CC) $(CFLAGS) ${@}.c ${COMMON_SOURCES} -o $@
 -- 
 2.43.0
 
