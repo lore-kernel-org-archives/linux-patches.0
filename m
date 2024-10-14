@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938021AC458;
-	Mon, 14 Oct 2024 15:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB7614AA9;
+	Mon, 14 Oct 2024 15:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919931; cv=none; b=RTnBDdfLUlaFvE8BKUWi7KZCN27ojEIibl5UveR/rDbKWwwYnHVgw46019qHxLTEGBy1vFGLo2ffU5VtBS3RBnWH5LeZiukrXypb9GIkCROeevV0Zx9JYRhbaVvWnT7UWXVWGc9wzHdpmzVEd9caMHF3axSAW3UrcKS0yj/OHqk=
+	t=1728919936; cv=none; b=lW5eeq3AEnbuQfX0jdEnMiPUaVsgafXGDJ6q2XHxaNgpoEXQ/ZzKKI+9bfBiSzpTCijQBL4UQlWc8z1YT3sCTgx4zFzBjXbmaTGd4r6z/LdDdReKesHBkRaARVG/iHgNVvd8YOqIsKQI4fk5xAfiPNgJiO23ezLanUvaj3069SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919931; c=relaxed/simple;
-	bh=8b46HxIBQNpbj62u+ivqmXtfP0nO4I/jQ6t3jbd8SSk=;
+	s=arc-20240116; t=1728919936; c=relaxed/simple;
+	bh=L994VCHCHqGfKq7eCK0eOVW5QPNWCygjzv5/0Gxue2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0mFu6Jr6148yI8j4mHizp0vJp8kHuP2s4ixBu1Tn0wenXiQTw8qqqcOEnQpXnAnDTd54TmrS9hkiuz+cs3jHHsrCUyoema6puZ5RBylY6tBpkIb3pH1HwW/SU+1m3IyRCzJdffPI8YKSIv0h7wBGVxj89cYmMwM6t342GbHyjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voMFEkTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BdDA+/dBGIpMbIdp1/SIDtwlqoH+TexRlhca8zdsph0fSZ22aSqDVXDrPfVdI+4YCZr/3q6T3n2TVBLfQLiI0iiSE8q7Yc0rVvOAz95onpkvb2BufR648WittgxbRUQoR95trpMqmIlciHxBKhKucjpBg3VeInKVT+bibLN8a8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNNjQEfh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voMFEkTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11224C4CEC3;
-	Mon, 14 Oct 2024 15:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNNjQEfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A362C4CEC3;
+	Mon, 14 Oct 2024 15:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919931;
-	bh=8b46HxIBQNpbj62u+ivqmXtfP0nO4I/jQ6t3jbd8SSk=;
+	s=korg; t=1728919935;
+	bh=L994VCHCHqGfKq7eCK0eOVW5QPNWCygjzv5/0Gxue2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voMFEkTbnCEvg61JXg5i7n7VayQsiqzOdEaTH0skEY7zD7jD1nfMeM81EDCtm4xB+
-	 CnmLsgVpwIwKUmlgDiFVO8zd4ITjUytQMUekSvtewsMnCZby/X+IkmvIkvaEnj6mvF
-	 qN0NErjgKxlYkic4ge31JjtC1U/OMmDKKrXx4PSQ=
+	b=PNNjQEfhYXWz4dsou1agtErEyCTsANH2nmObG7CpzM0NlvoD4jYea+sMEn7lFkQb1
+	 pGMNUnR0txP2qDCTCKmBGFHybSP3AqpLZKrSALIITHay+vUp+cpCFINMSM/58nUwO2
+	 tccjZQG6KWCQfICKsht4bwucvcAcuiM/K9DsMCoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geumhwan Yu <geumhwan.yu@samsung.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 732/798] tcp: fix to allow timestamp undo if no retransmits were sent
-Date: Mon, 14 Oct 2024 16:21:26 +0200
-Message-ID: <20241014141246.828707619@linuxfoundation.org>
+Subject: [PATCH 6.1 750/798] i40e: Fix macvlan leak by synchronizing access to mac_filter_hash
+Date: Mon, 14 Oct 2024 16:21:44 +0200
+Message-ID: <20241014141247.533424924@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,94 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit e37ab7373696e650d3b6262a5b882aadad69bb9e ]
+[ Upstream commit dac6c7b3d33756d6ce09f00a96ea2ecd79fae9fb ]
 
-Fix the TCP loss recovery undo logic in tcp_packet_delayed() so that
-it can trigger undo even if TSQ prevents a fast recovery episode from
-reaching tcp_retransmit_skb().
+This patch addresses a macvlan leak issue in the i40e driver caused by
+concurrent access to vsi->mac_filter_hash. The leak occurs when multiple
+threads attempt to modify the mac_filter_hash simultaneously, leading to
+inconsistent state and potential memory leaks.
 
-Geumhwan Yu <geumhwan.yu@samsung.com> recently reported that after
-this commit from 2019:
+To fix this, we now wrap the calls to i40e_del_mac_filter() and zeroing
+vf->default_lan_addr.addr with spin_lock/unlock_bh(&vsi->mac_filter_hash_lock),
+ensuring atomic operations and preventing concurrent access.
 
-commit bc9f38c8328e ("tcp: avoid unconditional congestion window undo
-on SYN retransmit")
+Additionally, we add lockdep_assert_held(&vsi->mac_filter_hash_lock) in
+i40e_add_mac_filter() to help catch similar issues in the future.
 
-...and before this fix we could have buggy scenarios like the
-following:
+Reproduction steps:
+1. Spawn VFs and configure port vlan on them.
+2. Trigger concurrent macvlan operations (e.g., adding and deleting
+	portvlan and/or mac filters).
+3. Observe the potential memory leak and inconsistent state in the
+	mac_filter_hash.
 
-+ Due to reordering, a TCP connection receives some SACKs and enters a
-  spurious fast recovery.
+This synchronization ensures the integrity of the mac_filter_hash and prevents
+the described leak.
 
-+ TSQ prevents all invocations of tcp_retransmit_skb(), because many
-  skbs are queued in lower layers of the sending machine's network
-  stack; thus tp->retrans_stamp remains 0.
-
-+ The connection receives a TCP timestamp ECR value echoing a
-  timestamp before the fast recovery, indicating that the fast
-  recovery was spurious.
-
-+ The connection fails to undo the spurious fast recovery because
-  tp->retrans_stamp is 0, and thus tcp_packet_delayed() returns false,
-  due to the new logic in the 2019 commit: commit bc9f38c8328e ("tcp:
-  avoid unconditional congestion window undo on SYN retransmit")
-
-This fix tweaks the logic to be more similar to the
-tcp_packet_delayed() logic before bc9f38c8328e, except that we take
-care not to be fooled by the FLAG_SYN_ACKED code path zeroing out
-tp->retrans_stamp (the bug noted and fixed by Yuchung in
-bc9f38c8328e).
-
-Note that this returns the high-level behavior of tcp_packet_delayed()
-to again match the comment for the function, which says: "Nothing was
-retransmitted or returned timestamp is less than timestamp of the
-first retransmission." Note that this comment is in the original
-2005-04-16 Linux git commit, so this is evidently long-standing
-behavior.
-
-Fixes: bc9f38c8328e ("tcp: avoid unconditional congestion window undo on SYN retransmit")
-Reported-by: Geumhwan Yu <geumhwan.yu@samsung.com>
-Diagnosed-by: Geumhwan Yu <geumhwan.yu@samsung.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001200517.2756803-2-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fed0d9f13266 ("i40e: Fix VF's MAC Address change on VM")
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c        | 1 +
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 4c7a2702d904d..5b7345a3a96e4 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2440,8 +2440,22 @@ static bool tcp_skb_spurious_retrans(const struct tcp_sock *tp,
-  */
- static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
- {
--	return tp->retrans_stamp &&
--	       tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
-+	const struct sock *sk = (const struct sock *)tp;
-+
-+	if (tp->retrans_stamp &&
-+	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
-+		return true;  /* got echoed TS before first retransmission */
-+
-+	/* Check if nothing was retransmitted (retrans_stamp==0), which may
-+	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
-+	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
-+	 * retrans_stamp even if we had retransmitted the SYN.
-+	 */
-+	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
-+	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
-+		return true;  /* nothing was retransmitted */
-+
-+	return false;
- }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 1194dcacbd29e..5f46a0677d195 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -1730,6 +1730,7 @@ struct i40e_mac_filter *i40e_add_mac_filter(struct i40e_vsi *vsi,
+ 	struct hlist_node *h;
+ 	int bkt;
  
- /* Undo procedures. */
++	lockdep_assert_held(&vsi->mac_filter_hash_lock);
+ 	if (vsi->info.pvid)
+ 		return i40e_add_filter(vsi, macaddr,
+ 				       le16_to_cpu(vsi->info.pvid));
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index a5f0c95cba8b5..11e9858cc86a0 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2215,8 +2215,10 @@ static int i40e_vc_get_vf_resources_msg(struct i40e_vf *vf, u8 *msg)
+ 		vfres->vsi_res[0].qset_handle
+ 					  = le16_to_cpu(vsi->info.qs_handle[0]);
+ 		if (!(vf->driver_caps & VIRTCHNL_VF_OFFLOAD_USO) && !vf->pf_set_mac) {
++			spin_lock_bh(&vsi->mac_filter_hash_lock);
+ 			i40e_del_mac_filter(vsi, vf->default_lan_addr.addr);
+ 			eth_zero_addr(vf->default_lan_addr.addr);
++			spin_unlock_bh(&vsi->mac_filter_hash_lock);
+ 		}
+ 		ether_addr_copy(vfres->vsi_res[0].default_mac_addr,
+ 				vf->default_lan_addr.addr);
 -- 
 2.43.0
 
