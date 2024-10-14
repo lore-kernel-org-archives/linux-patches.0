@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6B91AA7A5;
-	Mon, 14 Oct 2024 14:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D819E571;
+	Mon, 14 Oct 2024 14:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728915873; cv=none; b=Hv5y3DUIFy1PYTAF31mlKUF84bMwbvrm94gws+mpeOVe6FP44CfqrewlifFy3xcPdlwQzkg0B3z2BuzP9aJiDIyXv1OHhjuLrHVfSxQWn04vZONWOdstELYu9+LdXr1iYafzS4D6aLlEhAKUNeU1na7Iq5zsS7iw3zT6dhhJF1o=
+	t=1728915877; cv=none; b=TtE0FWvobntOYiEYhIlQ/UdCoKLepvV4DmYNY6OS3GCzi0q/ck7RcrErTGAHq71qkugUAQmpO7bVlLGsfmwE37V8MKzOLTxxz+x+Fqve8UMAi9EP5OnS0mBPFyI6McBWfR5uBEgpRM3vNVOYT3t1SXd5rgX8YIrrZnwbfK1hsww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728915873; c=relaxed/simple;
-	bh=evcQytSPwmapF4wdxr6NhcD9B4oea7CfqjUZRULSrmA=;
+	s=arc-20240116; t=1728915877; c=relaxed/simple;
+	bh=GoaL2BArruFLiZ2CyJzK2rBUa+59JR1NiJjf8/mzBpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoFkosdbM4MHYP2DhA9025A2jrMGM9PhuIC8aqayvWMuWfTBbGYqo0oi7X/4Vfooonn20XguXP0Ok03xLLLY7F0IOexkioxsAJIi1CWfLtTPXa4aPIzeudQcZzWp4uMo8NRJaL8ZiJ/X3gtWqgq4WALEDNBTIxXxKKr7ryqF/zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSvh+Xv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbl7E5E9WKE+0gtkxR0+lsebHFKIbGh3GAi5c8y04ajWDb2Jj6KUI1Pu9EjbZPMJWyLtvBH0cZjjjgezrWofPCsXAPZ/kRBiIOFUOqeYO/NFDOLC6Uw/Nj5PHyRLWRA/r5IijrX1Hoj7mZWHPjzcx/L4eDkPoswhv2QGjwYQAaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1VxVGVq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSvh+Xv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E564C4CEC3;
-	Mon, 14 Oct 2024 14:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1VxVGVq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD8DC4CEC3;
+	Mon, 14 Oct 2024 14:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728915873;
-	bh=evcQytSPwmapF4wdxr6NhcD9B4oea7CfqjUZRULSrmA=;
+	s=korg; t=1728915876;
+	bh=GoaL2BArruFLiZ2CyJzK2rBUa+59JR1NiJjf8/mzBpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSvh+Xv3lrMYkIywTnPLqtBzaJtkynuZq7khEbc6A56xyGW3jtqDocSYbEZBtP/t+
-	 J2tDmbh9xF0iKhmFyn4i7vjqGGnlPdBbdB6CZ40GHA1TBgZoad1LFNAgn7rDYwqSE9
-	 38nvizGUVjiNv0mpgUIhpPVGwtSnSdZ2SYACXCcQ=
+	b=r1VxVGVq+tp2RijvWSW2RyS/iH5ap72hGAzei0L7iGmpkBEJNsuYl/R4ZZUlTMIHQ
+	 gXYdwq7n4bVn9GDrpiTaetReeJlla5jsHFH5eog29ax9NBVKqMBGI82YHIyrBZyOla
+	 4iUoHYLiQERqXzHLAj/jdmi8rVZDgeH6P+ZK9fIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 003/214] fs/ntfs3: Do not call file_modified if collapse range failed
-Date: Mon, 14 Oct 2024 16:17:46 +0200
-Message-ID: <20241014141045.125903072@linuxfoundation.org>
+Subject: [PATCH 6.11 004/214] fs/ntfs3: Optimize large writes into sparse file
+Date: Mon, 14 Oct 2024 16:17:47 +0200
+Message-ID: <20241014141045.163253948@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,37 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 2db86f7995fe6b62a4d6fee9f3cdeba3c6d27606 ]
+[ Upstream commit acdbd67bf939577d6f9e3cf796a005c31cec52d8 ]
+
+Optimized cluster allocation by allocating a large chunk in advance
+before writing, instead of allocating during the writing process
+by clusters.
+Essentially replicates the logic of fallocate.
 
 Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ntfs3/file.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index ca1ddc46bd866..cddc51f9a93b2 100644
+index cddc51f9a93b2..d31eae611fe06 100644
 --- a/fs/ntfs3/file.c
 +++ b/fs/ntfs3/file.c
-@@ -484,7 +484,7 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- }
+@@ -408,6 +408,42 @@ static int ntfs_extend(struct inode *inode, loff_t pos, size_t count,
+ 		err = 0;
+ 	}
  
- /*
-- * ntfs_fallocate
-+ * ntfs_fallocate - file_operations::ntfs_fallocate
-  *
-  * Preallocate space for a file. This implements ntfs's fallocate file
-  * operation, which gets called from sys_fallocate system call. User
-@@ -619,6 +619,8 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
- 		ni_lock(ni);
- 		err = attr_collapse_range(ni, vbo, len);
- 		ni_unlock(ni);
-+		if (err)
-+			goto out;
- 	} else if (mode & FALLOC_FL_INSERT_RANGE) {
- 		/* Check new size. */
- 		err = inode_newsize_ok(inode, new_size);
++	if (file && is_sparsed(ni)) {
++		/*
++		 * This code optimizes large writes to sparse file.
++		 * TODO: merge this fragment with fallocate fragment.
++		 */
++		struct ntfs_sb_info *sbi = ni->mi.sbi;
++		CLST vcn = pos >> sbi->cluster_bits;
++		CLST cend = bytes_to_cluster(sbi, end);
++		CLST cend_v = bytes_to_cluster(sbi, ni->i_valid);
++		CLST lcn, clen;
++		bool new;
++
++		if (cend_v > cend)
++			cend_v = cend;
++
++		/*
++		 * Allocate and zero new clusters.
++		 * Zeroing these clusters may be too long.
++		 */
++		for (; vcn < cend_v; vcn += clen) {
++			err = attr_data_get_block(ni, vcn, cend_v - vcn, &lcn,
++						  &clen, &new, true);
++			if (err)
++				goto out;
++		}
++		/*
++		 * Allocate but not zero new clusters.
++		 */
++		for (; vcn < cend; vcn += clen) {
++			err = attr_data_get_block(ni, vcn, cend - vcn, &lcn,
++						  &clen, &new, false);
++			if (err)
++				goto out;
++		}
++	}
++
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	mark_inode_dirty(inode);
+ 
 -- 
 2.43.0
 
