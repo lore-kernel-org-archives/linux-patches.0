@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5537E20322;
-	Mon, 14 Oct 2024 14:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F58320322;
+	Mon, 14 Oct 2024 14:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916472; cv=none; b=MSShz59VFFNrvbk4+OndnkNuKVX9NY2SQbtQHHMiEpr/4MIpV11a8epqiTpEE17JXiNkvwVeskX2HHSSsGjblVmf4qAE6uQJcrCJXUPo2p5+3swafAdDoAq03GSIub31uUMiczI2n9B+zYjHn3uBjA42ow4jL+KPjMRfNQhjo8Y=
+	t=1728916475; cv=none; b=W/HPUackLgRHiJXambZf5xf+6X9iWQG6bhbeqH+2O5ywAeO6OyIL6rVfds6rA/kwQndievmwRLPB1tj+UoYNFVpIjJTJqiESZ/1d/ovyF/S2+rI2h6Q+tH4l9E7iohmT3PZomrUfSQo5Si4vYUIfAMTowQESt3hlMe7VhNy3z8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916472; c=relaxed/simple;
-	bh=O4EXKoKE4Xh9Ijy5+23jjsR9VDypq9FTY9EGzuZX4/8=;
+	s=arc-20240116; t=1728916475; c=relaxed/simple;
+	bh=Cj2DcmimW88qUqcuhCOSSfHv/GZNJD1qsyyDXsF6ZuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZzqHDkPK3EmQNf3PimwT30D+5+Kexu4LL/oKX6epOwBq8S9vhBifypJ1kfb04VYo2B+gD5fWq94HpsCtDRVmdBA+3RJdIwIysd8+9XiJjtlAE2fAyx8QCEMpk8Db0N9zoPu9kH/DADv0NVfL3A9vCTA+Edz8JoNh2b8Lpmt4A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmXVKRjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDcqLyKa3YME0Thh+bnJYLFM0b0VJFP9NW4ntAjd3BEk8OYFkocP5PxjOFge28wLBZio09RIaBfGWtPsGPNEsZY5NIvp7ciwItYC52FgjxspZyAosfqT7cRM7LWP0ukkqNBRdVpy5P3NGmqYoPOz8lNgDUYWFiwzvZQ0oPvKJPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+H7jSgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmXVKRjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C7EC4CEC3;
-	Mon, 14 Oct 2024 14:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+H7jSgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26501C4CEC3;
+	Mon, 14 Oct 2024 14:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916472;
-	bh=O4EXKoKE4Xh9Ijy5+23jjsR9VDypq9FTY9EGzuZX4/8=;
+	s=korg; t=1728916475;
+	bh=Cj2DcmimW88qUqcuhCOSSfHv/GZNJD1qsyyDXsF6ZuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmXVKRjoAHJ+GK3htTVblQds5zEFcT3QzjszpxQV2pnTc6bPwdHnHYMc+jRjZXzgF
-	 AvRK4+h/UR//jqcSGTAfWiobtsnaOIBxR3Yz2Bqw4re5eJSlgvvVcEWBMuG8pPfu47
-	 mvi0sj5x7LZ/gKs6ieF+70EekWS/1tESDmcd2INc=
+	b=H+H7jSgvn00lr028uuh6VibSyrsPFys0THIWA0bOrjd+64SEFEBMuymQH/0B3rK16
+	 y6oCgY4um5SvzJW1EiiL7awp+zHA4ny5eCW++ox7Xl+un0F7wC3ro6A7VyaLi15r/R
+	 YvgIXKwCsLyDcDph3xiWXEpCJsv4Klr5BQoNGHJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 192/214] net: explicitly clear the sk pointer, when pf->create fails
-Date: Mon, 14 Oct 2024 16:20:55 +0200
-Message-ID: <20241014141052.470367643@linuxfoundation.org>
+	stable@kernel.org,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.11 163/214] usb: dwc3: core: Stop processing of pending events if controller is halted
+Date: Mon, 14 Oct 2024 16:20:26 +0200
+Message-ID: <20241014141051.345500382@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,56 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 631083143315d1b192bd7d915b967b37819e88ea upstream.
+commit 0d410e8913f5cffebcca79ffdd596009d4a13a28 upstream.
 
-We have recently noticed the exact same KASAN splat as in commit
-6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket
-creation fails"). The problem is that commit did not fully address the
-problem, as some pf->create implementations do not use sk_common_release
-in their error paths.
+This commit addresses an issue where events were being processed when
+the controller was in a halted state. To fix this issue by stop
+processing the events as the event count was considered stale or
+invalid when the controller was halted.
 
-For example, we can use the same reproducer as in the above commit, but
-changing ping to arping. arping uses AF_PACKET socket and if packet_create
-fails, it will just sk_free the allocated sk object.
-
-While we could chase all the pf->create implementations and make sure they
-NULL the freed sk object on error from the socket, we can't guarantee
-future protocols will not make the same mistake.
-
-So it is easier to just explicitly NULL the sk pointer upon return from
-pf->create in __sock_create. We do know that pf->create always releases the
-allocated sk object on error, so if the pointer is not NULL, it is
-definitely dangling.
-
-Fixes: 6cd4a78d962b ("net: do not leave a dangling sk pointer, when socket creation fails")
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241003170151.69445-1-ignat@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
+Cc: stable@kernel.org
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240916231813.206-1-selvarasu.g@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c   |   22 +++++++++++++++++++---
+ drivers/usb/dwc3/core.h   |    4 ----
+ drivers/usb/dwc3/gadget.c |   11 -----------
+ 3 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -1569,8 +1569,13 @@ int __sock_create(struct net *net, int f
- 	rcu_read_unlock();
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -544,6 +544,7 @@ static int dwc3_alloc_event_buffers(stru
+ int dwc3_event_buffers_setup(struct dwc3 *dwc)
+ {
+ 	struct dwc3_event_buffer	*evt;
++	u32				reg;
  
- 	err = pf->create(net, sock, protocol, kern);
--	if (err < 0)
-+	if (err < 0) {
-+		/* ->create should release the allocated sock->sk object on error
-+		 * but it may leave the dangling pointer
-+		 */
-+		sock->sk = NULL;
- 		goto out_module_put;
-+	}
+ 	if (!dwc->ev_buf)
+ 		return 0;
+@@ -556,8 +557,10 @@ int dwc3_event_buffers_setup(struct dwc3
+ 			upper_32_bits(evt->dma));
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0),
+ 			DWC3_GEVNTSIZ_SIZE(evt->length));
+-	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
  
- 	/*
- 	 * Now to bump the refcnt of the [loadable] module that owns this
++	/* Clear any stale event */
++	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
++	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
+ 	return 0;
+ }
+ 
+@@ -584,7 +587,10 @@ void dwc3_event_buffers_cleanup(struct d
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTADRHI(0), 0);
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0), DWC3_GEVNTSIZ_INTMASK
+ 			| DWC3_GEVNTSIZ_SIZE(0));
+-	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
++
++	/* Clear any stale event */
++	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
++	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
+ }
+ 
+ static void dwc3_core_num_eps(struct dwc3 *dwc)
+@@ -2499,7 +2505,11 @@ static int dwc3_runtime_resume(struct de
+ 
+ 	switch (dwc->current_dr_role) {
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+-		dwc3_gadget_process_pending_events(dwc);
++		if (dwc->pending_events) {
++			pm_runtime_put(dwc->dev);
++			dwc->pending_events = false;
++			enable_irq(dwc->irq_gadget);
++		}
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+ 	default:
+@@ -2589,6 +2599,12 @@ static void dwc3_complete(struct device
+ static const struct dev_pm_ops dwc3_dev_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(dwc3_suspend, dwc3_resume)
+ 	.complete = dwc3_complete,
++
++	/*
++	 * Runtime suspend halts the controller on disconnection. It relies on
++	 * platforms with custom connection notification to start the controller
++	 * again.
++	 */
+ 	SET_RUNTIME_PM_OPS(dwc3_runtime_suspend, dwc3_runtime_resume,
+ 			dwc3_runtime_idle)
+ };
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1675,7 +1675,6 @@ static inline void dwc3_otg_host_init(st
+ #if !IS_ENABLED(CONFIG_USB_DWC3_HOST)
+ int dwc3_gadget_suspend(struct dwc3 *dwc);
+ int dwc3_gadget_resume(struct dwc3 *dwc);
+-void dwc3_gadget_process_pending_events(struct dwc3 *dwc);
+ #else
+ static inline int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
+@@ -1687,9 +1686,6 @@ static inline int dwc3_gadget_resume(str
+ 	return 0;
+ }
+ 
+-static inline void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
+-{
+-}
+ #endif /* !IS_ENABLED(CONFIG_USB_DWC3_HOST) */
+ 
+ #if IS_ENABLED(CONFIG_USB_DWC3_ULPI)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4728,14 +4728,3 @@ int dwc3_gadget_resume(struct dwc3 *dwc)
+ 
+ 	return dwc3_gadget_soft_connect(dwc);
+ }
+-
+-void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
+-{
+-	if (dwc->pending_events) {
+-		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
+-		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
+-		pm_runtime_put(dwc->dev);
+-		dwc->pending_events = false;
+-		enable_irq(dwc->irq_gadget);
+-	}
+-}
 
 
