@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCDD1AAE25;
-	Mon, 14 Oct 2024 14:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C63E1AB508;
+	Mon, 14 Oct 2024 14:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916198; cv=none; b=FPHN0NBcXsgVhsbmXeJE36fjzghb+PTx18/AZqEWN1LJc/oPFXscUK6VRG2+qgnj2WELl5X7LD0zLxwq0986/jeqOa0sDb9W1gEhSYvBotgDe1QhAxmdwGNGQjvOgjBea8x5FkIxAOv2mA3YCWs7UQseaqxXJl7qCcWQdcB1liY=
+	t=1728916202; cv=none; b=c03rbgo8AAiYMJA4U5+72YRht76VdS3y/cLjzekwr4T+nNdvKuguK0bBegEL+VHBYNS93Q5dboFHruHYAEnZjUwaMbRY8+wDagFb4n5TCBpp8bW+NhiwQmu00AHzLWD8HxR+zAP7Y/pcPoaEoi4kSYZz7Aw5s5YSrfB4HvgH+Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916198; c=relaxed/simple;
-	bh=9U/g9mfvxr+VPDUmVXXnsAWQ3hIbMnt8caYE8R8ONQs=;
+	s=arc-20240116; t=1728916202; c=relaxed/simple;
+	bh=qK6xoJ2Js2EWwXJH2co2dlroukkwgtzF3HdV11jB+D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7dR3lKrpBG9VO81cwQ1aZr/WHkFpNtGEJvCUbD5Ryl67Nm+O93aXOUm5utkM82G2E8latk6L+gorj0No6loVg9EWXRdCdXJvkNt1Fvd5dSC1A3m4jcba4jluOYcXYSg2Fk4tzmXMvqdlnhePKMw/fzfCrdlj0JMwYpOFdS0DsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVkFGR4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VRJYjkU98k770znMA5vvOejLGiNRwxM4tJOKhUF++cDfF78eOuGWT/3fFgZGNRBcI8xKkTzywKOXkexm0M15IxLKyhttEvXTluci8ytMrhe7463TFoMur3dIQILjKv2QWTPh6H+Jgjm7MjNwXFrBgn8teEiWTOplXXEPMBudnPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqJk6uAD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVkFGR4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D64C4CEC7;
-	Mon, 14 Oct 2024 14:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqJk6uAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE9FC4CEC3;
+	Mon, 14 Oct 2024 14:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916198;
-	bh=9U/g9mfvxr+VPDUmVXXnsAWQ3hIbMnt8caYE8R8ONQs=;
+	s=korg; t=1728916202;
+	bh=qK6xoJ2Js2EWwXJH2co2dlroukkwgtzF3HdV11jB+D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVkFGR4s+C1Sz2CXhzlxuWzKOM/f8nS7wTMCCf3s3x6CNqcOloDXAobiC5LPye99m
-	 9wNUjtPngey4Pg9T2P5VxL3B6yz0m2LWLgj3Yxt+znZ92tQ5Yv9hg6Cypqy43SZmyn
-	 s02/nbvsn2FwIMrPjNUlYyV8n9M682J3Cu+74p28=
+	b=yqJk6uADxT9ZfxH0rwsgxK0UwYsKuiCDl4ZV8B2Pl9YbWx54cXcSSqQnlAuoNwdLr
+	 xL4nxNVitnsD8oua0GtCIPRRSbrNQEnVneo4cZ5hlAnpawNoyFwFShfiLVTLoDqGOM
+	 OH+R7KmPL52t48Tst8O1QAM9BXdQatvnv+4WjOzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 111/214] net: dsa: b53: fix max MTU for BCM5325/BCM5365
-Date: Mon, 14 Oct 2024 16:19:34 +0200
-Message-ID: <20241014141049.327755546@linuxfoundation.org>
+Subject: [PATCH 6.11 112/214] net: dsa: b53: allow lower MTUs on BCM5325/5365
+Date: Mon, 14 Oct 2024 16:19:35 +0200
+Message-ID: <20241014141049.365833678@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,11 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit ca8c1f71c10193c270f772d70d34b15ad765d6a8 ]
+[ Upstream commit e4b294f88a32438baf31762441f3dd1c996778be ]
 
-BCM5325/BCM5365 do not support jumbo frames, so we should not report a
-jumbo frame mtu for them. But they do support so called "oversized"
-frames up to 1536 bytes long by default, so report an appropriate MTU.
+While BCM5325/5365 do not support jumbo frames, they do support slightly
+oversized frames, so do not error out if requesting a supported MTU for
+them.
 
 Fixes: 6ae5834b983a ("net: dsa: b53: add MTU configuration support")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
@@ -66,33 +66,22 @@ Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 6fed3eb15ad9b..e8b20bfa8b83e 100644
+index e8b20bfa8b83e..5b83f9b6cdac3 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -225,6 +225,7 @@ static const struct b53_mib_desc b53_mibs_58xx[] = {
+@@ -2258,7 +2258,7 @@ static int b53_change_mtu(struct dsa_switch *ds, int port, int mtu)
+ 	bool allow_10_100;
  
- #define B53_MIBS_58XX_SIZE	ARRAY_SIZE(b53_mibs_58xx)
+ 	if (is5325(dev) || is5365(dev))
+-		return -EOPNOTSUPP;
++		return 0;
  
-+#define B53_MAX_MTU_25		(1536 - ETH_HLEN - VLAN_HLEN - ETH_FCS_LEN)
- #define B53_MAX_MTU		(9720 - ETH_HLEN - VLAN_HLEN - ETH_FCS_LEN)
- 
- static int b53_do_vlan_op(struct b53_device *dev, u8 op)
-@@ -2270,6 +2271,11 @@ static int b53_change_mtu(struct dsa_switch *ds, int port, int mtu)
- 
- static int b53_get_max_mtu(struct dsa_switch *ds, int port)
- {
-+	struct b53_device *dev = ds->priv;
-+
-+	if (is5325(dev) || is5365(dev))
-+		return B53_MAX_MTU_25;
-+
- 	return B53_MAX_MTU;
- }
- 
+ 	if (!dsa_is_cpu_port(ds, port))
+ 		return 0;
 -- 
 2.43.0
 
