@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB7614AA9;
-	Mon, 14 Oct 2024 15:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F3D1AC458;
+	Mon, 14 Oct 2024 15:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919936; cv=none; b=lW5eeq3AEnbuQfX0jdEnMiPUaVsgafXGDJ6q2XHxaNgpoEXQ/ZzKKI+9bfBiSzpTCijQBL4UQlWc8z1YT3sCTgx4zFzBjXbmaTGd4r6z/LdDdReKesHBkRaARVG/iHgNVvd8YOqIsKQI4fk5xAfiPNgJiO23ezLanUvaj3069SI=
+	t=1728919939; cv=none; b=agIaoc4cw4+OZNajfBYKJW+jdSx4gSrDI+SquMhUSSZ46ci79s9hJvAWrVEqKOCgKs4eHjkmyhK9iWpKv8SdRFnLOzseUuW8mA/LkQjuAvT6ALL9NhRT5DKgy7eU2pID77o0cjB87P7TGast7T+Rjm6gnf2fJQbKeOtk0/Zg51M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919936; c=relaxed/simple;
-	bh=L994VCHCHqGfKq7eCK0eOVW5QPNWCygjzv5/0Gxue2w=;
+	s=arc-20240116; t=1728919939; c=relaxed/simple;
+	bh=X1QqVBGh70pAok82oJL2iNrL1mmjTUKvLApFZD8dxCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BdDA+/dBGIpMbIdp1/SIDtwlqoH+TexRlhca8zdsph0fSZ22aSqDVXDrPfVdI+4YCZr/3q6T3n2TVBLfQLiI0iiSE8q7Yc0rVvOAz95onpkvb2BufR648WittgxbRUQoR95trpMqmIlciHxBKhKucjpBg3VeInKVT+bibLN8a8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNNjQEfh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=siQAMnI9/gr6oE5teyXpmH1IRjJulC69n/mQebiqSJE66DsurY52cr37j0duJ55EOvZD9SBu41O2B5Fl+xcz5TWERI5H+OIEbqfi1TRp3V9VZxR9ppguRseWV3AqTw+r5tVcdVVRcUcROCZpu6fViXx0Fkr6lG4Qf+MpTeqMOco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IV+NSfg2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNNjQEfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A362C4CEC3;
-	Mon, 14 Oct 2024 15:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IV+NSfg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C113C4CEC3;
+	Mon, 14 Oct 2024 15:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919935;
-	bh=L994VCHCHqGfKq7eCK0eOVW5QPNWCygjzv5/0Gxue2w=;
+	s=korg; t=1728919938;
+	bh=X1QqVBGh70pAok82oJL2iNrL1mmjTUKvLApFZD8dxCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNNjQEfhYXWz4dsou1agtErEyCTsANH2nmObG7CpzM0NlvoD4jYea+sMEn7lFkQb1
-	 pGMNUnR0txP2qDCTCKmBGFHybSP3AqpLZKrSALIITHay+vUp+cpCFINMSM/58nUwO2
-	 tccjZQG6KWCQfICKsht4bwucvcAcuiM/K9DsMCoE=
+	b=IV+NSfg2147dzR8KsEp/ejHdhC8eSAYc0P9qqQzBXlpfsgNADoXrZ2eRWRzWTiRjh
+	 XIjI4sdu/ltreVBsSTuIpeTg1+5jSQ1NpM5MmitqLa4+DJIDKeWbru++gmBWytSLOU
+	 7BxSBveXHkOaDT4z6smGZqqZBcJdKkp2nkqJJYII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Yuanyuan Zhong <yzhong@purestorage.com>,
 	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 750/798] i40e: Fix macvlan leak by synchronizing access to mac_filter_hash
-Date: Mon, 14 Oct 2024 16:21:44 +0200
-Message-ID: <20241014141247.533424924@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 751/798] igb: Do not bring the device up after non-fatal error
+Date: Mon, 14 Oct 2024 16:21:45 +0200
+Message-ID: <20241014141247.574664703@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,71 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit dac6c7b3d33756d6ce09f00a96ea2ecd79fae9fb ]
+[ Upstream commit 330a699ecbfc9c26ec92c6310686da1230b4e7eb ]
 
-This patch addresses a macvlan leak issue in the i40e driver caused by
-concurrent access to vsi->mac_filter_hash. The leak occurs when multiple
-threads attempt to modify the mac_filter_hash simultaneously, leading to
-inconsistent state and potential memory leaks.
+Commit 004d25060c78 ("igb: Fix igb_down hung on surprise removal")
+changed igb_io_error_detected() to ignore non-fatal pcie errors in order
+to avoid hung task that can happen when igb_down() is called multiple
+times. This caused an issue when processing transient non-fatal errors.
+igb_io_resume(), which is called after igb_io_error_detected(), assumes
+that device is brought down by igb_io_error_detected() if the interface
+is up. This resulted in panic with stacktrace below.
 
-To fix this, we now wrap the calls to i40e_del_mac_filter() and zeroing
-vf->default_lan_addr.addr with spin_lock/unlock_bh(&vsi->mac_filter_hash_lock),
-ensuring atomic operations and preventing concurrent access.
+[ T3256] igb 0000:09:00.0 haeth0: igb: haeth0 NIC Link is Down
+[  T292] pcieport 0000:00:1c.5: AER: Uncorrected (Non-Fatal) error received: 0000:09:00.0
+[  T292] igb 0000:09:00.0: PCIe Bus Error: severity=Uncorrected (Non-Fatal), type=Transaction Layer, (Requester ID)
+[  T292] igb 0000:09:00.0:   device [8086:1537] error status/mask=00004000/00000000
+[  T292] igb 0000:09:00.0:    [14] CmpltTO [  200.105524,009][  T292] igb 0000:09:00.0: AER:   TLP Header: 00000000 00000000 00000000 00000000
+[  T292] pcieport 0000:00:1c.5: AER: broadcast error_detected message
+[  T292] igb 0000:09:00.0: Non-correctable non-fatal error reported.
+[  T292] pcieport 0000:00:1c.5: AER: broadcast mmio_enabled message
+[  T292] pcieport 0000:00:1c.5: AER: broadcast resume message
+[  T292] ------------[ cut here ]------------
+[  T292] kernel BUG at net/core/dev.c:6539!
+[  T292] invalid opcode: 0000 [#1] PREEMPT SMP
+[  T292] RIP: 0010:napi_enable+0x37/0x40
+[  T292] Call Trace:
+[  T292]  <TASK>
+[  T292]  ? die+0x33/0x90
+[  T292]  ? do_trap+0xdc/0x110
+[  T292]  ? napi_enable+0x37/0x40
+[  T292]  ? do_error_trap+0x70/0xb0
+[  T292]  ? napi_enable+0x37/0x40
+[  T292]  ? napi_enable+0x37/0x40
+[  T292]  ? exc_invalid_op+0x4e/0x70
+[  T292]  ? napi_enable+0x37/0x40
+[  T292]  ? asm_exc_invalid_op+0x16/0x20
+[  T292]  ? napi_enable+0x37/0x40
+[  T292]  igb_up+0x41/0x150
+[  T292]  igb_io_resume+0x25/0x70
+[  T292]  report_resume+0x54/0x70
+[  T292]  ? report_frozen_detected+0x20/0x20
+[  T292]  pci_walk_bus+0x6c/0x90
+[  T292]  ? aer_print_port_info+0xa0/0xa0
+[  T292]  pcie_do_recovery+0x22f/0x380
+[  T292]  aer_process_err_devices+0x110/0x160
+[  T292]  aer_isr+0x1c1/0x1e0
+[  T292]  ? disable_irq_nosync+0x10/0x10
+[  T292]  irq_thread_fn+0x1a/0x60
+[  T292]  irq_thread+0xe3/0x1a0
+[  T292]  ? irq_set_affinity_notifier+0x120/0x120
+[  T292]  ? irq_affinity_notify+0x100/0x100
+[  T292]  kthread+0xe2/0x110
+[  T292]  ? kthread_complete_and_exit+0x20/0x20
+[  T292]  ret_from_fork+0x2d/0x50
+[  T292]  ? kthread_complete_and_exit+0x20/0x20
+[  T292]  ret_from_fork_asm+0x11/0x20
+[  T292]  </TASK>
 
-Additionally, we add lockdep_assert_held(&vsi->mac_filter_hash_lock) in
-i40e_add_mac_filter() to help catch similar issues in the future.
+To fix this issue igb_io_resume() checks if the interface is running and
+the device is not down this means igb_io_error_detected() did not bring
+the device down and there is no need to bring it up.
 
-Reproduction steps:
-1. Spawn VFs and configure port vlan on them.
-2. Trigger concurrent macvlan operations (e.g., adding and deleting
-	portvlan and/or mac filters).
-3. Observe the potential memory leak and inconsistent state in the
-	mac_filter_hash.
-
-This synchronization ensures the integrity of the mac_filter_hash and prevents
-the described leak.
-
-Fixes: fed0d9f13266 ("i40e: Fix VF's MAC Address change on VM")
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Yuanyuan Zhong <yzhong@purestorage.com>
+Fixes: 004d25060c78 ("igb: Fix igb_down hung on surprise removal")
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c        | 1 +
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 1194dcacbd29e..5f46a0677d195 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -1730,6 +1730,7 @@ struct i40e_mac_filter *i40e_add_mac_filter(struct i40e_vsi *vsi,
- 	struct hlist_node *h;
- 	int bkt;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index f2f719a952f8d..2e2caf559d00a 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -9666,6 +9666,10 @@ static void igb_io_resume(struct pci_dev *pdev)
+ 	struct igb_adapter *adapter = netdev_priv(netdev);
  
-+	lockdep_assert_held(&vsi->mac_filter_hash_lock);
- 	if (vsi->info.pvid)
- 		return i40e_add_filter(vsi, macaddr,
- 				       le16_to_cpu(vsi->info.pvid));
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index a5f0c95cba8b5..11e9858cc86a0 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2215,8 +2215,10 @@ static int i40e_vc_get_vf_resources_msg(struct i40e_vf *vf, u8 *msg)
- 		vfres->vsi_res[0].qset_handle
- 					  = le16_to_cpu(vsi->info.qs_handle[0]);
- 		if (!(vf->driver_caps & VIRTCHNL_VF_OFFLOAD_USO) && !vf->pf_set_mac) {
-+			spin_lock_bh(&vsi->mac_filter_hash_lock);
- 			i40e_del_mac_filter(vsi, vf->default_lan_addr.addr);
- 			eth_zero_addr(vf->default_lan_addr.addr);
-+			spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 		}
- 		ether_addr_copy(vfres->vsi_res[0].default_mac_addr,
- 				vf->default_lan_addr.addr);
+ 	if (netif_running(netdev)) {
++		if (!test_bit(__IGB_DOWN, &adapter->state)) {
++			dev_dbg(&pdev->dev, "Resuming from non-fatal error, do nothing.\n");
++			return;
++		}
+ 		if (igb_up(adapter)) {
+ 			dev_err(&pdev->dev, "igb_up failed after reset\n");
+ 			return;
 -- 
 2.43.0
 
