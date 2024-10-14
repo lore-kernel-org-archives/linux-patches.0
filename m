@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657CE1AAE19;
-	Mon, 14 Oct 2024 14:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B111A76AC;
+	Mon, 14 Oct 2024 14:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916017; cv=none; b=KXYMhW1jYZlIVgc2I1wuJ1odGRSinEbWr0QWgeRXBJqPV9Ue1/X2yCxjLsxYTzSLOQ8vMe+hHPIIoBvP2UnY1wrfk0Ki5FCpjpfyVdJUfUXd5CY5I6qC1DfW35ZtFzdqlxpWmrGCAfZi/Fl53mYHwb6qmKh2Equj27uii5y53Co=
+	t=1728916020; cv=none; b=fq/vYgJV2s1j3qvbUOt2tMDo0Kv3/PaaRjvDK8K/+gHBBbCzWPNT3MtMflMEhh3VYhTKVyQp1CnVPqMyHdrUuAXGXVt6V8SIIdnXfsdbkSi5skqihn8ZbO6kNAgzfzlSs6hxbfnyMvmtRt+ZWO67oWoiWywbeW/1cX8tcteB1IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916017; c=relaxed/simple;
-	bh=SIGXFGKrgSmUmgyzxbkvPIyUiYvNQLK2/jvIlacML5M=;
+	s=arc-20240116; t=1728916020; c=relaxed/simple;
+	bh=W4bSkz29ZSI98doBeIRnQWf0/8jDyp6+Ka6UbKfPimw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEqW3lUqM1A7pTD7TmpK1QLzjMuf4/OVClB1myrCB/L1Bq+CFb7pEPE74oweRNecnvPsa7BD+wIjFsz5TtOQM8QAgcr++HOZ8XmixnTBcMwO3vOjqXqw9561SwD7HKZ3UFN50mQaTEQmgqvSWeRsINEPOfsIK4jbpEs9Livarx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h15A6ijV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OH/5F28udCAF9VA9dbrn/FwIA5bydqY/Xbk35H1w+AxDpCdc/A3Fc6KfhTQlfV10RdzeM+AjE5LpNnAPA7l7V/Ofi9PmOh3pYQkd9iSj9q9ZIb2oIZnDgubBs3z8M1cJ/1EbVyP8062FpZBv/IM1UFfPDXEEZ0h8G0WKyTLIgVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7rmKtdB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h15A6ijV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB77C4CEC3;
-	Mon, 14 Oct 2024 14:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7rmKtdB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C8DC4CEC3;
+	Mon, 14 Oct 2024 14:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916017;
-	bh=SIGXFGKrgSmUmgyzxbkvPIyUiYvNQLK2/jvIlacML5M=;
+	s=korg; t=1728916020;
+	bh=W4bSkz29ZSI98doBeIRnQWf0/8jDyp6+Ka6UbKfPimw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h15A6ijVBUWJPvHIVxYVGhv4aFnDJF8ECVD5byboRm+5VLbDw/ETlba3TZ/xevxSF
-	 1w3ayMSUwbDipYOdVGeUoLhpggK34LirNUaCDJ/yj4UHXzjxvR/jUjy01X40ZYrxXI
-	 MyHNv3g2lB9CtKNqrj9nhZXN/b4pvzH1L8yN/UCY=
+	b=F7rmKtdBE0nZW/3kWLy1v9Y2ul+PMZlwAGVD19tumNMDuO4dFuyU0s8h4KfFXK0Jy
+	 EshmlYMtDmOzVJdeP3KRZjrVxdoWGz0fueePMv5DapATs5IzWyBCLZaHTNq3VvP35g
+	 Z2Nj7TVNBMoMYqoRYnfRnemEPA9POsxVvab6+IT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	SiyuLi <siyuli@glenfly.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 030/214] soundwire: intel_bus_common: enable interrupts before exiting reset
-Date: Mon, 14 Oct 2024 16:18:13 +0200
-Message-ID: <20241014141046.166802282@linuxfoundation.org>
+Subject: [PATCH 6.11 031/214] PCI: Add function 0 DMA alias quirk for Glenfly Arise chip
+Date: Mon, 14 Oct 2024 16:18:14 +0200
+Message-ID: <20241014141046.204169528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,81 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 5aedb8d8336b0a0421b58ca27d1b572aa6695b5b ]
+[ Upstream commit 9246b487ab3c3b5993aae7552b7a4c541cc14a49 ]
 
-The existing code enables the Cadence IP interrupts after the bus
-reset sequence. The problem with this sequence is that it might be
-pre-empted, giving SoundWire devices time to sync and report as
-ATTACHED before the interrupts are enabled. In that case, the Cadence
-IP will not detect a state change and will not throw an interrupt to
-proceed with the enumeration of a Device0.
+Add DMA support for audio function of Glenfly Arise chip, which uses
+Requester ID of function 0.
 
-In our overnight stress tests, we observed that a slight
-sub-millisecond delay in enabling interrupts after the reset was
-correlated with detection failures. This problem is more prevalent on
-the LunarLake silicon, likely due to SOC integration changes, but it
-was observed on earlier generations as well.
-
-This patch reverts the sequence, with the interrupts enabled before
-performing the bus reset. This removes the race condition and makes
-sure the Cadence IP is able to detect the presence of a Device0 in all
-cases.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20240805115003.88035-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/CA2BBD087345B6D1+20240823095708.3237375-1-wangyuli@uniontech.com
+Signed-off-by: SiyuLi <siyuli@glenfly.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+[bhelgaas: lower-case hex to match local code, drop unused Device IDs]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_bus_common.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/pci/quirks.c      | 4 ++++
+ include/linux/pci_ids.h   | 2 ++
+ sound/pci/hda/hda_intel.c | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/intel_bus_common.c b/drivers/soundwire/intel_bus_common.c
-index df944e11b9caa..a75e5d7d87154 100644
---- a/drivers/soundwire/intel_bus_common.c
-+++ b/drivers/soundwire/intel_bus_common.c
-@@ -45,15 +45,15 @@ int intel_start_bus(struct sdw_intel *sdw)
- 		return ret;
- 	}
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 5d57ea27dbc42..979901a0e1f97 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4259,6 +4259,10 @@ static void quirk_dma_func0_alias(struct pci_dev *dev)
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe832, quirk_dma_func0_alias);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe476, quirk_dma_func0_alias);
  
--	ret = sdw_cdns_exit_reset(cdns);
-+	ret = sdw_cdns_enable_interrupt(cdns, true);
- 	if (ret < 0) {
--		dev_err(dev, "%s: unable to exit bus reset sequence: %d\n", __func__, ret);
-+		dev_err(dev, "%s: cannot enable interrupts: %d\n", __func__, ret);
- 		return ret;
- 	}
++/* Some Glenfly chips use function 0 as the PCIe Requester ID for DMA */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d40, quirk_dma_func0_alias);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d41, quirk_dma_func0_alias);
++
+ static void quirk_dma_func1_alias(struct pci_dev *dev)
+ {
+ 	if (PCI_FUNC(dev->devfn) != 1)
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index e388c8b1cbc27..2c94d4004dd50 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -2661,6 +2661,8 @@
+ #define PCI_DEVICE_ID_DCI_PCCOM8	0x0002
+ #define PCI_DEVICE_ID_DCI_PCCOM2	0x0004
  
--	ret = sdw_cdns_enable_interrupt(cdns, true);
-+	ret = sdw_cdns_exit_reset(cdns);
- 	if (ret < 0) {
--		dev_err(dev, "%s: cannot enable interrupts: %d\n", __func__, ret);
-+		dev_err(dev, "%s: unable to exit bus reset sequence: %d\n", __func__, ret);
- 		return ret;
- 	}
- 
-@@ -136,15 +136,15 @@ int intel_start_bus_after_reset(struct sdw_intel *sdw)
- 			return ret;
- 		}
- 
--		ret = sdw_cdns_exit_reset(cdns);
-+		ret = sdw_cdns_enable_interrupt(cdns, true);
- 		if (ret < 0) {
--			dev_err(dev, "unable to exit bus reset sequence during resume\n");
-+			dev_err(dev, "cannot enable interrupts during resume\n");
- 			return ret;
- 		}
- 
--		ret = sdw_cdns_enable_interrupt(cdns, true);
-+		ret = sdw_cdns_exit_reset(cdns);
- 		if (ret < 0) {
--			dev_err(dev, "cannot enable interrupts during resume\n");
-+			dev_err(dev, "unable to exit bus reset sequence during resume\n");
- 			return ret;
- 		}
- 
++#define PCI_VENDOR_ID_GLENFLY		0x6766
++
+ #define PCI_VENDOR_ID_INTEL		0x8086
+ #define PCI_DEVICE_ID_INTEL_EESSC	0x0008
+ #define PCI_DEVICE_ID_INTEL_HDA_CML_LP	0x02c8
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index b33602e64d174..e8958a4646476 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2671,7 +2671,7 @@ static const struct pci_device_id azx_ids[] = {
+ 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
+ 	  AZX_DCAPS_PM_RUNTIME },
+ 	/* GLENFLY */
+-	{ PCI_DEVICE(0x6766, PCI_ANY_ID),
++	{ PCI_DEVICE(PCI_VENDOR_ID_GLENFLY, PCI_ANY_ID),
+ 	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
+ 	  .class_mask = 0xffffff,
+ 	  .driver_data = AZX_DRIVER_GFHDMI | AZX_DCAPS_POSFIX_LPIB |
 -- 
 2.43.0
 
