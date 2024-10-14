@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078BA481B7;
-	Mon, 14 Oct 2024 15:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9B24087C;
+	Mon, 14 Oct 2024 15:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918302; cv=none; b=CIXhCspjqg1XhEoW0sFbCUq7g5yuhOeNn/ad/h5XFEyoezv5i6P/vKlfegIYElIoQklcL8hGKwCTkL1YSVuFc4UFuWNlCZTn8GezV8eTtU7nuRz2C7GrHOQ5wUzOs8I1OtOqEKuVCCdSGq82bNzwv0RFKMeoUYtwy7oaqsZogxs=
+	t=1728918305; cv=none; b=EWnz4fJg3XVDy2Ko1bzrOmurNHXKGd+gMwvelgflnkpHgNxN1E4GNdgLexhrI/N81Z8iV8h9tkq1IupEKuUJu47MlGkHeoq2/DH9cddEqN8pOTuZgBfHt0mwNgn4/JMS97w/fNWTMP9ti841ci/YP2tC2V+vo6LaAjLBHa2zZuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918302; c=relaxed/simple;
-	bh=QB+Fh4XyrvjmlmajZu11nKrr7S2921eUNnS1rLzo3wI=;
+	s=arc-20240116; t=1728918305; c=relaxed/simple;
+	bh=66DSo9FUd13orqdcljrxTm8Pfyje4XozOY+cE9Z+5JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m5CtTlv/4gcUHHKuc8nw3uxABG36uxWHTRMAtsICHN+An7UhDcweZXod6l2Duo4z39zc9L6hxA6POJArVEiTLROVLyjpJd6zWNf9ilqve+qCVfPtXVNmdIMSxyOzfNuVXqbJQHw/4EH1ExGHpCs1a4PwRDHB6COOLZN5f8mI0Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuhYK9rB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1tHXv6h7uEOtSPqr7tp7vv6TQJuXwq2DwKtv853H+YC1hTYjmZyxf9+AsIeyX7vcguSIFVPpEFx6oqxdwRQTplozDf11eTkbK+Svn3eITRAKeqB92k3Ub8fu8xbl9K6GQKSJFl64BNcxe6mG35SZ5857LywQi0W2kiEMiUiX+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3rNHpl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuhYK9rB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30160C4CEC3;
-	Mon, 14 Oct 2024 15:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3rNHpl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A578AC4CEC3;
+	Mon, 14 Oct 2024 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918301;
-	bh=QB+Fh4XyrvjmlmajZu11nKrr7S2921eUNnS1rLzo3wI=;
+	s=korg; t=1728918305;
+	bh=66DSo9FUd13orqdcljrxTm8Pfyje4XozOY+cE9Z+5JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuhYK9rB2fOw4hwKPWy8qDLFDdclbxC/Ai0mCIvrR3c8K3IX1MEViK1PmNmljvmOI
-	 MdHVw3JNSr8SXJScqMHwPxih9WJOwAecTBOMKpwmqMWPCvfrwaeJM0Qf4hbUkQOAJ2
-	 0c3azLRi+fo7be06xLDCJ6gNIdAbOUAaBurmjsMg=
+	b=O3rNHpl1nx1B8KMYZ4poBsgNTgQAjj13HMJrcmLkuW7AtmxUcIYLS9ggr0P3M6cS1
+	 bwV3CC2RuEXICKs4jZ76zlw1c66vgrtMFArBqFAHRsE8r1L7V/S5nQOmPFtbI1klB7
+	 JSX8U4BfyjxsT3HxT1lKyCTwN3w/jlD9ixEMf3gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.1 282/798] PCI: imx6: Fix missing call to phy_power_off() in error handling
-Date: Mon, 14 Oct 2024 16:13:56 +0200
-Message-ID: <20241014141229.025085482@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.1 283/798] PCI: xilinx-nwl: Fix off-by-one in INTx IRQ handler
+Date: Mon, 14 Oct 2024 16:13:57 +0200
+Message-ID: <20241014141229.065594416@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,55 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit 5b04d44d5c74e4d8aab1678496b84700b4b343fe upstream.
+commit 0199d2f2bd8cd97b310f7ed82a067247d7456029 upstream.
 
-Fix missing call to phy_power_off() in the error path of
-imx6_pcie_host_init(). Remove unnecessary check for imx6_pcie->phy
-as the PHY API already handles NULL pointers.
+MSGF_LEG_MASK is laid out with INTA in bit 0, INTB in bit 1, INTC in bit 2,
+and INTD in bit 3. Hardware IRQ numbers start at 0, and we register
+PCI_NUM_INTX IRQs. So to enable INTA (aka hwirq 0) we should set bit 0.
+Remove the subtraction of one.
 
-Fixes: cbcf8722b523 ("phy: freescale: imx8m-pcie: Fix the wrong order of phy_init() and phy_power_on()")
-Link: https://lore.kernel.org/linux-pci/20240729-pci2_upstream-v8-3-b68ee5ef2b4d@nxp.com
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: <stable@vger.kernel.org> # 6.1+
+This bug would cause INTx interrupts not to be delivered, as enabling INTB
+would actually enable INTA, and enabling INTA wouldn't enable anything at
+all. It is likely that this got overlooked for so long since most PCIe
+hardware uses MSIs. This fixes the following UBSAN error:
+
+  UBSAN: shift-out-of-bounds in ../drivers/pci/controller/pcie-xilinx-nwl.c:389:11
+  shift exponent 18446744073709551615 is too large for 32-bit type 'int'
+  CPU: 1 PID: 61 Comm: kworker/u10:1 Not tainted 6.6.20+ #268
+  Hardware name: xlnx,zynqmp (DT)
+  Workqueue: events_unbound deferred_probe_work_func
+  Call trace:
+  dump_backtrace (arch/arm64/kernel/stacktrace.c:235)
+  show_stack (arch/arm64/kernel/stacktrace.c:242)
+  dump_stack_lvl (lib/dump_stack.c:107)
+  dump_stack (lib/dump_stack.c:114)
+  __ubsan_handle_shift_out_of_bounds (lib/ubsan.c:218 lib/ubsan.c:387)
+  nwl_unmask_leg_irq (drivers/pci/controller/pcie-xilinx-nwl.c:389 (discriminator 1))
+  irq_enable (kernel/irq/internals.h:234 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
+  __irq_startup (kernel/irq/internals.h:239 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
+  irq_startup (kernel/irq/chip.c:270)
+  __setup_irq (kernel/irq/manage.c:1800)
+  request_threaded_irq (kernel/irq/manage.c:2206)
+  pcie_pme_probe (include/linux/interrupt.h:168 drivers/pci/pcie/pme.c:348)
+
+Fixes: 9a181e1093af ("PCI: xilinx-nwl: Modify IRQ chip for legacy interrupts")
+Link: https://lore.kernel.org/r/20240531161337.864994-3-sean.anderson@linux.dev
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-xilinx-nwl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -956,7 +956,7 @@ static int imx6_pcie_host_init(struct dw
- 		ret = phy_power_on(imx6_pcie->phy);
- 		if (ret) {
- 			dev_err(dev, "waiting for PHY ready timeout!\n");
--			goto err_phy_off;
-+			goto err_phy_exit;
- 		}
- 	}
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -374,7 +374,7 @@ static void nwl_mask_leg_irq(struct irq_
+ 	u32 mask;
+ 	u32 val;
  
-@@ -971,8 +971,9 @@ static int imx6_pcie_host_init(struct dw
- 	return 0;
+-	mask = 1 << (data->hwirq - 1);
++	mask = 1 << data->hwirq;
+ 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
+ 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
+ 	nwl_bridge_writel(pcie, (val & (~mask)), MSGF_LEG_MASK);
+@@ -388,7 +388,7 @@ static void nwl_unmask_leg_irq(struct ir
+ 	u32 mask;
+ 	u32 val;
  
- err_phy_off:
--	if (imx6_pcie->phy)
--		phy_exit(imx6_pcie->phy);
-+	phy_power_off(imx6_pcie->phy);
-+err_phy_exit:
-+	phy_exit(imx6_pcie->phy);
- err_clk_disable:
- 	imx6_pcie_clk_disable(imx6_pcie);
- err_reg_disable:
+-	mask = 1 << (data->hwirq - 1);
++	mask = 1 << data->hwirq;
+ 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
+ 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
+ 	nwl_bridge_writel(pcie, (val | mask), MSGF_LEG_MASK);
 
 
