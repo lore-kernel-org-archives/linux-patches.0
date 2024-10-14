@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AAA4087C;
-	Mon, 14 Oct 2024 15:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17783BBF2;
+	Mon, 14 Oct 2024 15:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918250; cv=none; b=fX417IIChCTe1N1e1ZA9FX7/Hk9tF8Ao2xPrjt25JegVPFJaAmdFcrTbw+W9CDWo9g4lTHy4rPuSVd84pO4M7/b4klFbmP9Iyv7Ep6rSWmhLNgmarKaDeRC7EXZ4A8pJkh6DN5sIU6wU9dlO3sBTKlnj95ORUNIShhcf8zN0dJ8=
+	t=1728918253; cv=none; b=VfZXvHRZqL91AM0gqiV5kj6TiOGvPLByHwtNRQqp093EPQ31rIjVMfIGiK38yfchVlJfLVv11gawxgqKHxJe/PXQxGz0KmI/uXF6PImVnAEc/tegwEOYk18sMnBovEocwGzDQWaPs6RXzMeB1BrOjLdO3mc+hHYAp0l9pLOYPPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918250; c=relaxed/simple;
-	bh=YbWBq9MYDwGroPA6C9jJRbFEwg4oMg66hUsOsXHf/JI=;
+	s=arc-20240116; t=1728918253; c=relaxed/simple;
+	bh=pnuyR0vt0BSQb+Ahmixm0Nbf6HWsx0yRzm8oElNlo0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOPnAtZzpeZwVYgQ4JNSM+3sUyNbjsBIzx1z0rxuHl3CpFWOBmMHewAG1i4Iw+K0nP0avfEoxtq/IoPLVtZ65bQrpuC7WvxwZcK0dDgBgIOjymh1RCZ4wC5VNH3G2ISzA8IfO798c8UQumWwAQmp8Stn0UF8tOMK0aS2xCmpsUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8YRJbQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mqcF6G2Ahkaz43rVThPZCam0Crh+vs2JeoX34Z24wTMB8CRGZWsdVC+pDffkG3WBByMc3OHTgswep6rrAaAUh0AA5GqDSJrIuI1TLVYjcwhOOBQrPLdyafnwOIVpjTpz6n9E7j4rz1QTDX2DzwdZ6c/o27OGeeN4IrTnTbpupwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1uBMfzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8YRJbQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ECDC4CEC3;
-	Mon, 14 Oct 2024 15:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1uBMfzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111A7C4CEC3;
+	Mon, 14 Oct 2024 15:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918250;
-	bh=YbWBq9MYDwGroPA6C9jJRbFEwg4oMg66hUsOsXHf/JI=;
+	s=korg; t=1728918253;
+	bh=pnuyR0vt0BSQb+Ahmixm0Nbf6HWsx0yRzm8oElNlo0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8YRJbQDkwRa8jhlJrk3aglmfaD5eBZPHS17Us9IBx/axzerRN2VN04DGMXQHktoH
-	 GATq8CssiLoIGit5/Ej4CZq+B2j653HlY3nk0Ld6MfSRPcVR+516soZQ7u48J/i8hJ
-	 fUXEpwpkfB8SDfw6Kpp5qAroHoucsv2Tu2jXOGxs=
+	b=S1uBMfzoYt8vr3XdOJ8/fGd0Qg533ceDeDbXvv9Nd8FbU4VGp7UuUGIlxEBAhpXiq
+	 bJYMof5GWwrz1Cf7oW8ZFi9ebEuXMGrzmuK3WAG6cpPIw1PYtvzc0eNJtz785mrO4I
+	 9v+W3vWpica+YiZ8aOikPqwPX9TJaLqmbybrivT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c187823a52ed505b2257@syzkaller.appspotmail.com,
-	Jiwon Kim <jiwonaid0@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Furong Xu <0x1207@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 268/798] bonding: Fix unnecessary warnings and logs from bond_xdp_get_xmit_slave()
-Date: Mon, 14 Oct 2024 16:13:42 +0200
-Message-ID: <20241014141228.462688903@linuxfoundation.org>
+Subject: [PATCH 6.1 269/798] net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled
+Date: Mon, 14 Oct 2024 16:13:43 +0200
+Message-ID: <20241014141228.500696180@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,63 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiwon Kim <jiwonaid0@gmail.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit 0cbfd45fbcf0cb26d85c981b91c62fe73cdee01c ]
+[ Upstream commit b514c47ebf41a6536551ed28a05758036e6eca7c ]
 
-syzbot reported a WARNING in bond_xdp_get_xmit_slave. To reproduce
-this[1], one bond device (bond1) has xdpdrv, which increases
-bpf_master_redirect_enabled_key. Another bond device (bond0) which is
-unsupported by XDP but its slave (veth3) has xdpgeneric that returns
-XDP_TX. This triggers WARN_ON_ONCE() from the xdp_master_redirect().
-To reduce unnecessary warnings and improve log management, we need to
-delete the WARN_ON_ONCE() and add ratelimit to the netdev_err().
+Commit 5fabb01207a2 ("net: stmmac: Add initial XDP support") sets
+PP_FLAG_DMA_SYNC_DEV flag for page_pool unconditionally,
+page_pool_recycle_direct() will call page_pool_dma_sync_for_device()
+on every page even the page is not going to be reused by XDP program.
 
-[1] Steps to reproduce:
-    # Needs tx_xdp with return XDP_TX;
-    ip l add veth0 type veth peer veth1
-    ip l add veth3 type veth peer veth4
-    ip l add bond0 type bond mode 6 # BOND_MODE_ALB, unsupported by XDP
-    ip l add bond1 type bond # BOND_MODE_ROUNDROBIN by default
-    ip l set veth0 master bond1
-    ip l set bond1 up
-    # Increases bpf_master_redirect_enabled_key
-    ip l set dev bond1 xdpdrv object tx_xdp.o section xdp_tx
-    ip l set veth3 master bond0
-    ip l set bond0 up
-    ip l set veth4 up
-    # Triggers WARN_ON_ONCE() from the xdp_master_redirect()
-    ip l set veth3 xdpgeneric object tx_xdp.o section xdp_tx
+When XDP is not enabled, the page which holds the received buffer
+will be recycled once the buffer is copied into new SKB by
+skb_copy_to_linear_data(), then the MAC core will never reuse this
+page any longer. Always setting PP_FLAG_DMA_SYNC_DEV wastes CPU cycles
+on unnecessary calling of page_pool_dma_sync_for_device().
 
-Reported-by: syzbot+c187823a52ed505b2257@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c187823a52ed505b2257
-Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
-Signed-off-by: Jiwon Kim <jiwonaid0@gmail.com>
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20240918140602.18644-1-jiwonaid0@gmail.com
+After this patch, up to 9% noticeable performance improvement was observed
+on certain platforms.
+
+Fixes: 5fabb01207a2 ("net: stmmac: Add initial XDP support")
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/20240919121028.1348023-1-0x1207@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 375412ce1ea5f..51d6cf0a3fb4e 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -5538,9 +5538,9 @@ bond_xdp_get_xmit_slave(struct net_device *bond_dev, struct xdp_buff *xdp)
- 		break;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 93630840309e7..b5b7ff5b32616 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2015,7 +2015,7 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	rx_q->queue_index = queue;
+ 	rx_q->priv_data = priv;
  
- 	default:
--		/* Should never happen. Mode guarded by bond_xdp_check() */
--		netdev_err(bond_dev, "Unknown bonding mode %d for xdp xmit\n", BOND_MODE(bond));
--		WARN_ON_ONCE(1);
-+		if (net_ratelimit())
-+			netdev_err(bond_dev, "Unknown bonding mode %d for xdp xmit\n",
-+				   BOND_MODE(bond));
- 		return NULL;
- 	}
- 
+-	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
++	pp_params.flags = PP_FLAG_DMA_MAP | (xdp_prog ? PP_FLAG_DMA_SYNC_DEV : 0);
+ 	pp_params.pool_size = dma_conf->dma_rx_size;
+ 	num_pages = DIV_ROUND_UP(dma_conf->dma_buf_sz, PAGE_SIZE);
+ 	pp_params.order = ilog2(num_pages);
 -- 
 2.43.0
 
