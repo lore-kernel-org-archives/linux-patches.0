@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C81AB6FD;
-	Mon, 14 Oct 2024 15:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0184849659;
+	Mon, 14 Oct 2024 15:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919382; cv=none; b=Kl+OOmFAa4Z6ClzWPmaoLjh6VAguzLjavse8ikT5SAHNlKEAr4fD5bIsZXXcHN5e6eZP2YKe9wGzAmqIu1E+w6xj/IzlaicDknVgfYQ5iHmEfguu2NVMUowae2ETXwSM9DqPxX3Y6RrRA3jRHIrXRyNikX8fygv05GNWQ4rPlhc=
+	t=1728919386; cv=none; b=U2dsX/y2Xn2AqJgeMDI2YqjAkhyD+Hh0PL27jxpBmTVJs05rUmSWv8198txhB42IFjlL6Br8Fa3tO4TqxaiP4tw6aRoGP26jmk1ohPO8TRyZEovHJn6Iwj7rQgdttHTcmw/ZMJ9VgAOeCpgSY5N0qTCSMldF+m++aqhJ48SgQXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919382; c=relaxed/simple;
-	bh=deUCibD/MY0rnHDh33UZqLnWaeNSmHjvzKUbd44YFOk=;
+	s=arc-20240116; t=1728919386; c=relaxed/simple;
+	bh=XelvvyGMpBt/9P7agpwmQvArXPzr7ov02ZD7a3NzHC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imKrDdcTxgs0V3y12VqqW/BT2mqKOM3CUmH5xZcHlnrUgz1FWVn0EumJgtLJVZlLPNhD66PTaREruw/I/Ky8CDUWn+pV6+lxnFyblISrk2KBFcDCCsocRraHl4kvYuAtqHRC4mL23BEX8eXvtbGXKG5VKZjzi6aAFmxQTilCsLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJKVIl6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GIwkPxl85kPUVFyKAL738bv1GJhZ8Y/5QvPhISCaghYIs3cZT2qAjf+aisSnlR3iEfXFFGDmaj8dBb0x4FBU5yU2iMwBuLf5M5Y2uytdeARmIEEd5Z1qJci5IQ6KKMhRwHHTxQmXzWg2R6u8XiVNNgEJJVbUpRJDoIrZppnQDEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1SHk4/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJKVIl6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E595DC4CEC3;
-	Mon, 14 Oct 2024 15:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1SHk4/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667DDC4CEC3;
+	Mon, 14 Oct 2024 15:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919382;
-	bh=deUCibD/MY0rnHDh33UZqLnWaeNSmHjvzKUbd44YFOk=;
+	s=korg; t=1728919385;
+	bh=XelvvyGMpBt/9P7agpwmQvArXPzr7ov02ZD7a3NzHC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJKVIl6oWiQrpjO2GstYAhIjDfTTLqvpNt/L7OeglM3oG46V0hjBOOVR8weOF7XLy
-	 FImiP1YAGJ6dh+CIPz8anjumFpvMhUo0bbf+9wVUyxTbgFqvcAwqkBCsNJcVJ4ky6Q
-	 j2+FxGJFCXdIgIZUyZwlZf+JobLuCU1IhN7dUF+Y=
+	b=I1SHk4/CxcssprPQxn+QQVb8R/vyl9wL7TDuKv4BxxJQPiqdAzLKHccuTgCvZ8dgC
+	 a0gBboTEsM/AoXd+O5lh4pORXraYOq4EGW5WFVLNchc0gh78Nl4znf/MB29hBXM1Xn
+	 tbJ/EvWTEbvO9j7Jz3GVDrThWcP5L+netUf+XFm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangrong <wangrong@uniontech.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 593/798] smb: client: use actual path when queryfs
-Date: Mon, 14 Oct 2024 16:19:07 +0200
-Message-ID: <20241014141241.302639803@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 594/798] iio: magnetometer: ak8975: Fix reading for ak099xx sensors
+Date: Mon, 14 Oct 2024 16:19:08 +0200
+Message-ID: <20241014141241.340930790@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,146 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangrong <wangrong@uniontech.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-commit a421e3fe0e6abe27395078f4f0cec5daf466caea upstream.
+commit 129464e86c7445a858b790ac2d28d35f58256bbe upstream.
 
-Due to server permission control, the client does not have access to
-the shared root directory, but can access subdirectories normally, so
-users usually mount the shared subdirectories directly. In this case,
-queryfs should use the actual path instead of the root directory to
-avoid the call returning an error (EACCES).
+Move ST2 reading with overflow handling after measurement data
+reading.
+ST2 register read have to be read after read measurment data,
+because it means end of the reading and realease the lock on the data.
+Remove ST2 read skip on interrupt based waiting because ST2 required to
+be read out at and of the axis read.
 
-Signed-off-by: wangrong <wangrong@uniontech.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 57e73a423b1e ("iio: ak8975: add ak09911 and ak09912 support")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Link: https://patch.msgid.link/20240819-ak09918-v4-2-f0734d14cfb9@mainlining.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c   |   13 ++++++++++++-
- fs/smb/client/cifsglob.h |    2 +-
- fs/smb/client/smb1ops.c  |    2 +-
- fs/smb/client/smb2ops.c  |   19 ++++++++++++-------
- 4 files changed, 26 insertions(+), 10 deletions(-)
+ drivers/iio/magnetometer/ak8975.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -311,8 +311,17 @@ cifs_statfs(struct dentry *dentry, struc
- 	struct TCP_Server_Info *server = tcon->ses->server;
- 	unsigned int xid;
- 	int rc = 0;
-+	const char *full_path;
-+	void *page;
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -692,22 +692,8 @@ static int ak8975_start_read_axis(struct
+ 	if (ret < 0)
+ 		return ret;
  
- 	xid = get_xid();
-+	page = alloc_dentry_path();
-+
-+	full_path = build_path_from_dentry(dentry, page);
-+	if (IS_ERR(full_path)) {
-+		rc = PTR_ERR(full_path);
-+		goto statfs_out;
-+	}
- 
- 	if (le32_to_cpu(tcon->fsAttrInfo.MaxPathNameComponentLength) > 0)
- 		buf->f_namelen =
-@@ -328,8 +337,10 @@ cifs_statfs(struct dentry *dentry, struc
- 	buf->f_ffree = 0;	/* unlimited */
- 
- 	if (server->ops->queryfs)
--		rc = server->ops->queryfs(xid, tcon, cifs_sb, buf);
-+		rc = server->ops->queryfs(xid, tcon, full_path, cifs_sb, buf);
- 
-+statfs_out:
-+	free_dentry_path(page);
- 	free_xid(xid);
- 	return rc;
+-	/* This will be executed only for non-interrupt based waiting case */
+-	if (ret & data->def->ctrl_masks[ST1_DRDY]) {
+-		ret = i2c_smbus_read_byte_data(client,
+-					       data->def->ctrl_regs[ST2]);
+-		if (ret < 0) {
+-			dev_err(&client->dev, "Error in reading ST2\n");
+-			return ret;
+-		}
+-		if (ret & (data->def->ctrl_masks[ST2_DERR] |
+-			   data->def->ctrl_masks[ST2_HOFL])) {
+-			dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
+-			return -EINVAL;
+-		}
+-	}
+-
+-	return 0;
++	/* Return with zero if the data is ready. */
++	return !data->def->ctrl_regs[ST1_DRDY];
  }
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -432,7 +432,7 @@ struct smb_version_operations {
- 			__u16 net_fid, struct cifsInodeInfo *cifs_inode);
- 	/* query remote filesystem */
- 	int (*queryfs)(const unsigned int, struct cifs_tcon *,
--		       struct cifs_sb_info *, struct kstatfs *);
-+		       const char *, struct cifs_sb_info *, struct kstatfs *);
- 	/* send mandatory brlock to the server */
- 	int (*mand_lock)(const unsigned int, struct cifsFileInfo *, __u64,
- 			 __u64, __u32, int, int, bool);
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -906,7 +906,7 @@ cifs_oplock_response(struct cifs_tcon *t
  
- static int
- cifs_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
--	     struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
-+	     const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
- {
- 	int rc = -EOPNOTSUPP;
+ /* Retrieve raw flux value for one of the x, y, or z axis.  */
+@@ -734,6 +720,20 @@ static int ak8975_read_axis(struct iio_d
+ 	if (ret < 0)
+ 		goto exit;
  
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2677,7 +2677,7 @@ smb2_query_info_compound(const unsigned
- 
- static int
- smb2_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
--	     struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
-+	     const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
- {
- 	struct smb2_query_info_rsp *rsp;
- 	struct smb2_fs_full_size_info *info = NULL;
-@@ -2686,7 +2686,7 @@ smb2_queryfs(const unsigned int xid, str
- 	int rc;
- 
- 
--	rc = smb2_query_info_compound(xid, tcon, "",
-+	rc = smb2_query_info_compound(xid, tcon, path,
- 				      FILE_READ_ATTRIBUTES,
- 				      FS_FULL_SIZE_INFORMATION,
- 				      SMB2_O_INFO_FILESYSTEM,
-@@ -2713,28 +2713,33 @@ qfs_exit:
- 
- static int
- smb311_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
--	       struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
-+	       const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
- {
- 	int rc;
--	__le16 srch_path = 0; /* Null - open root of share */
-+	__le16 *utf16_path = NULL;
- 	u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
- 	struct cifs_open_parms oparms;
- 	struct cifs_fid fid;
- 
- 	if (!tcon->posix_extensions)
--		return smb2_queryfs(xid, tcon, cifs_sb, buf);
-+		return smb2_queryfs(xid, tcon, path, cifs_sb, buf);
- 
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
--		.path = "",
-+		.path = path,
- 		.desired_access = FILE_READ_ATTRIBUTES,
- 		.disposition = FILE_OPEN,
- 		.create_options = cifs_create_options(cifs_sb, 0),
- 		.fid = &fid,
- 	};
- 
--	rc = SMB2_open(xid, &oparms, &srch_path, &oplock, NULL, NULL,
-+	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
-+	if (utf16_path == NULL)
-+		return -ENOMEM;
++	/* Read out ST2 for release lock on measurment data. */
++	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
++	if (ret < 0) {
++		dev_err(&client->dev, "Error in reading ST2\n");
++		goto exit;
++	}
 +
-+	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, NULL, NULL,
- 		       NULL, NULL);
-+	kfree(utf16_path);
- 	if (rc)
- 		return rc;
++	if (ret & (data->def->ctrl_masks[ST2_DERR] |
++		   data->def->ctrl_masks[ST2_HOFL])) {
++		dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	mutex_unlock(&data->lock);
  
+ 	pm_runtime_mark_last_busy(&data->client->dev);
 
 
