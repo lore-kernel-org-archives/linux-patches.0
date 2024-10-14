@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409971AC44D;
-	Mon, 14 Oct 2024 15:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405C31AE006;
+	Mon, 14 Oct 2024 15:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919295; cv=none; b=JOKBEC5xONvwvLYSkLy2ZVkyWD6V41tx37KR9JXuXxlmgPbOWj2fem4lZ9QjFL31V/JFsLhYVhA5xgHjCo7p4G0wBhu92Rgs4vx8X0ZkS5JEcnZNoTyddQN3JZmH8JM+4oXriQGJB+Dg3MLidF74WXPqh9lESY1ocVQDEnOW98w=
+	t=1728919298; cv=none; b=rylMLTQARAsfuOFN53rMbxjo5sAI6INNDavquXwtum3MSwPWGgXBejqCH9TDRCssFsjRmrM8BtCWUG03T9Tu3dB0S4PTjW28ogCAdyMFViREdIni/Vl/a7r2v0m7ZyTETZCCypRHjGHni/l7HR1bj8HKmJimfO8ozmpOEugMmoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919295; c=relaxed/simple;
-	bh=qtSvVnm/nZcr7PZriW4iJ6QubyO8C7Wm5kQ2KwAYZ+s=;
+	s=arc-20240116; t=1728919298; c=relaxed/simple;
+	bh=fvuMPbb/n+Sye56h3MSCbDUYur2cvNwK1M0Et5m+1xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzEFQ7C/4RIZxTvQb+w1FufS9RbkuVmAmq5ILeMnlTTQWeLz3uyMJVJ1WWRSkwfTEVib35zPFE4N4ldf+YfzSnoO5sYHXz2+jfPD7MdlZIFBv3Y0ejKf6TWUzSeEnSw5Pf8xmzmbocPodSRdHuO1aFOO1EjcjPQ8FF7WIjhYEtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGJsId12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LJD/fhJnbHspH/W6l2ZxmCwtONaDfhpddSHPzwRlAl0SVzGCK67b+jsQHqFlc7TGwHt2HT2LONUyW/BMD3IFCahxMVqtHs33Qyrheh026hKCzz9E6vB17zai095+wjyUWiCbFaE1bV16jiuRYLHQsCUlzwREN8ZyvuqiVTEKiWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2evBTwm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGJsId12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9406C4CEC3;
-	Mon, 14 Oct 2024 15:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2evBTwm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA06DC4CEC3;
+	Mon, 14 Oct 2024 15:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919295;
-	bh=qtSvVnm/nZcr7PZriW4iJ6QubyO8C7Wm5kQ2KwAYZ+s=;
+	s=korg; t=1728919298;
+	bh=fvuMPbb/n+Sye56h3MSCbDUYur2cvNwK1M0Et5m+1xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGJsId127aR3Of1oNvgox3FwSaHIsJrkTEgtAvhmI+PxWtY7cQ+5a3HRaDuHA1fPQ
-	 RmcONpF8fMC6HJXkmkb2th3Fs3QnbRSu/95DXfgH1sohAnSCJFL5Vjpc+euSAGU7JW
-	 jsh8dIRMla34v22UkO9Ug3Us0Xw68AqBfbMI4bOA=
+	b=2evBTwm4crUGg+yfQ1JLrLK3JeMmxg7GRbcLJcdWKsVWG/tY+iYCS+Pb527QCEoYr
+	 bZZ5NKdUGdO7X9fEhvras+EQBtlInovXSdGERyPGa3g7QDLfATukXGRUATQbaAUpK2
+	 78OXncy2EDXCEhcIsYxpDCncX2I8detca+8vWJLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Lalinsky <lalinsky@c4.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 537/798] ALSA: usb-audio: Add native DSD support for Luxman D-08u
-Date: Mon, 14 Oct 2024 16:18:11 +0200
-Message-ID: <20241014141239.094962519@linuxfoundation.org>
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.1 528/798] media: i2c: ar0521: Use cansleep version of gpiod_set_value()
+Date: Mon, 14 Oct 2024 16:18:02 +0200
+Message-ID: <20241014141238.732814396@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -44,39 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Lalinsky <lalinsky@c4.cz>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-commit 6b0bde5d8d4078ca5feec72fd2d828f0e5cf115d upstream.
+commit bee1aed819a8cda47927436685d216906ed17f62 upstream.
 
-Add native DSD support for Luxman D-08u DAC, by adding the PID/VID 1852:5062.
-This makes DSD playback work, and also sound quality when playing PCM files
-is improved, crackling sounds are gone.
+If we use GPIO reset from I2C port expander, we must use *_cansleep()
+variant of GPIO functions.
+This was not done in ar0521_power_on()/ar0521_power_off() functions.
+Let's fix that.
 
-Signed-off-by: Jan Lalinsky <lalinsky@c4.cz>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241003030811.2655735-1-lalinsky@c4.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 11 at drivers/gpio/gpiolib.c:3496 gpiod_set_value+0x74/0x7c
+Modules linked in:
+CPU: 0 PID: 11 Comm: kworker/u16:0 Not tainted 6.10.0 #53
+Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
+Workqueue: events_unbound deferred_probe_work_func
+pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : gpiod_set_value+0x74/0x7c
+lr : ar0521_power_on+0xcc/0x290
+sp : ffffff8001d7ab70
+x29: ffffff8001d7ab70 x28: ffffff80027dcc90 x27: ffffff8003c82000
+x26: ffffff8003ca9250 x25: ffffffc080a39c60 x24: ffffff8003ca9088
+x23: ffffff8002402720 x22: ffffff8003ca9080 x21: ffffff8003ca9088
+x20: 0000000000000000 x19: ffffff8001eb2a00 x18: ffffff80efeeac80
+x17: 756d2d6332692f30 x16: 0000000000000000 x15: 0000000000000000
+x14: ffffff8001d91d40 x13: 0000000000000016 x12: ffffffc080e98930
+x11: ffffff8001eb2880 x10: 0000000000000890 x9 : ffffff8001d7a9f0
+x8 : ffffff8001d92570 x7 : ffffff80efeeac80 x6 : 000000003fc6e780
+x5 : ffffff8001d91c80 x4 : 0000000000000002 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000001
+Call trace:
+ gpiod_set_value+0x74/0x7c
+ ar0521_power_on+0xcc/0x290
+...
+
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Cc: stable@vger.kernel.org
+Acked-by: Krzysztof Hałasa <khalasa@piap.pl>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/ar0521.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2121,6 +2121,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
-+	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
-+		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+--- a/drivers/media/i2c/ar0521.c
++++ b/drivers/media/i2c/ar0521.c
+@@ -718,7 +718,8 @@ static int ar0521_power_off(struct devic
+ 	clk_disable_unprepare(sensor->extclk);
+ 
+ 	if (sensor->reset_gpio)
+-		gpiod_set_value(sensor->reset_gpio, 1); /* assert RESET signal */
++		/* assert RESET signal */
++		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
+ 
+ 	for (i = ARRAY_SIZE(ar0521_supply_names) - 1; i >= 0; i--) {
+ 		if (sensor->supplies[i])
+@@ -752,7 +753,7 @@ static int ar0521_power_on(struct device
+ 
+ 	if (sensor->reset_gpio)
+ 		/* deassert RESET signal */
+-		gpiod_set_value(sensor->reset_gpio, 0);
++		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
+ 	usleep_range(4500, 5000); /* min 45000 clocks */
+ 
+ 	for (cnt = 0; cnt < ARRAY_SIZE(initial_regs); cnt++) {
 
 
