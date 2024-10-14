@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E024595B;
-	Mon, 14 Oct 2024 14:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440F91ABEB8;
+	Mon, 14 Oct 2024 14:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917048; cv=none; b=iM7yIzN9ByUUL7E1KEnEcpltydkNRSvVS+AU34giuXAEGA2MLC6WX/8b8dB2Fr4DdkMN3Z/lVGwZWETabVbZCEQic2tvce7KneXrl7Zy17wDP7QFynKh+BjgWdGl9OmSI4dTN3NcI7sFij9OdM2tcvtTjTNKnLIar9/KvWDmraE=
+	t=1728917051; cv=none; b=pRR6kHohBz6to9QndPuRJ0QppVb8rcKdqQvXZtRhUrquOeKy0WAE28250/VvJD8Lh0Y2HU0QTPeMuPO9WnGYEyLo2Iq8dAiSn6nrLzImbIoNSZQXWwzUqc3LPi9xe+1g+QmVqMr1pJbXFIdtrLGFRI6fytSCbldAu9UC/QYbsNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917048; c=relaxed/simple;
-	bh=ZBud8ZaYaxWBKJ07NFb7s8K+xkNyYlzxcIhjX/cakFQ=;
+	s=arc-20240116; t=1728917051; c=relaxed/simple;
+	bh=bUjUGXoEUN+x82ZmNR68nBO9tfCjC0zSUG/EwYBir78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMZIBJ/mKZdY//sXAQIISgsGtqzhBP9vpK5LGK/zMDH/IgGd1/T/ou8+STWcVz8g9K3skgn8NAfKnMQivYGOE8YAF2U83dQ4D9WoIIH5txtEfldsmzDHRWHX6ZCaZSFrCUu3waxU6j2WX58Cd+M2FBZN2rDgSER+vukjQaDQ1E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rC735S4X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P9ODZv7EcXX7GZb3pzRchFa+flJHBgMNROrgtNE/lthCCLPi+kvJAiwXOjdtJvo/BBxlGkQdmnLAHwzj9l8tB28+HR3/Ntuq3c/3hz7ZQ5spCZ2/HnRd/isHBIt1shPSaLo4mr1xMOek4B7pwJ2lTlkFE7+XCKuDX3oXGcM7bxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQvrZEMW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rC735S4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79801C4CEC3;
-	Mon, 14 Oct 2024 14:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQvrZEMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3715C4CED0;
+	Mon, 14 Oct 2024 14:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917048;
-	bh=ZBud8ZaYaxWBKJ07NFb7s8K+xkNyYlzxcIhjX/cakFQ=;
+	s=korg; t=1728917051;
+	bh=bUjUGXoEUN+x82ZmNR68nBO9tfCjC0zSUG/EwYBir78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rC735S4XR3OQvOBsXOdrr0l5BLXPR0vSt0VNcphwaoX0WFXm7IxYzXJ7Fl2VoMj4o
-	 PgBq4NaLu3KCDm1HjM27nredLwlYSZMj56kuWpzAvc/49jt9K0dnZrLuUGqSV9z2xP
-	 U/uJ/GdErZhPBc7Ab+rJJcZmNnitrMjvsptl4ycE=
+	b=HQvrZEMW//YzdkfBDMMB5/UgsH/G43HVLZFdo+2AvTPQUuJNMhw03fzh3NZBz1zpM
+	 dvbtVrAMwAgf8SFhhGs9mjRx7L6LMrhLj7pfTm5u0ZxeNPju9z5VytqtA4L+7sePJm
+	 HkaMtToCg52bMcfqNeLwm0h1g3GIvPS/2l+YvMTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/213] gpio: aspeed: Use devm_clk api to manage clock source
-Date: Mon, 14 Oct 2024 16:20:42 +0200
-Message-ID: <20241014141048.279033394@linuxfoundation.org>
+Subject: [PATCH 6.6 137/213] platform/x86/intel/tpmi: Add defines to get version information
+Date: Mon, 14 Oct 2024 16:20:43 +0200
+Message-ID: <20241014141048.317259176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -46,41 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit a6191a3d18119184237f4ee600039081ad992320 ]
+[ Upstream commit 8874e414fe78718d0f2861fe511cecbd1cd73f4d ]
 
-Replace of_clk_get with devm_clk_get_enabled to manage the clock source.
+Add defines to get major and minor version from a TPMI version field
+value. This will avoid code duplication to convert in every feature
+driver. Also add define for invalid version field.
 
-Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20241008081450.1490955-3-billy_tsai@aspeedtech.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://lore.kernel.org/r/20231003184916.1860084-2-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 1d390923974c ("powercap: intel_rapl_tpmi: Ignore minor version change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/intel_tpmi.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index 017f083bc8c29..76468e6a2899a 100644
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -1193,7 +1193,7 @@ static int __init aspeed_gpio_probe(struct platform_device *pdev)
- 	if (!gpio_id)
- 		return -EINVAL;
+diff --git a/include/linux/intel_tpmi.h b/include/linux/intel_tpmi.h
+index 04d937ad4dc4f..ee07393445f9f 100644
+--- a/include/linux/intel_tpmi.h
++++ b/include/linux/intel_tpmi.h
+@@ -6,6 +6,12 @@
+ #ifndef _INTEL_TPMI_H_
+ #define _INTEL_TPMI_H_
  
--	gpio->clk = of_clk_get(pdev->dev.of_node, 0);
-+	gpio->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(gpio->clk)) {
- 		dev_warn(&pdev->dev,
- 				"Failed to get clock from devicetree, debouncing disabled\n");
++#include <linux/bitfield.h>
++
++#define TPMI_VERSION_INVALID	0xff
++#define TPMI_MINOR_VERSION(val)	FIELD_GET(GENMASK(4, 0), val)
++#define TPMI_MAJOR_VERSION(val)	FIELD_GET(GENMASK(7, 5), val)
++
+ /**
+  * struct intel_tpmi_plat_info - Platform information for a TPMI device instance
+  * @package_id:	CPU Package id
 -- 
 2.43.0
 
