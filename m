@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F0B1798C;
-	Mon, 14 Oct 2024 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205DD1AB6FC;
+	Mon, 14 Oct 2024 15:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918845; cv=none; b=Qt4YXdsqlS/T6GyzwAC3GzdP8hvuR4tqG2yDKYWXmqGTbH9eYwplZITwcqX6UpKOFkK0ohxS6EDIHZ4cbTqu0h+5VN4vkXKoa940wWo2HM/6IMh+K2mv6F0nTxKeKX5ggOWTWtSvRpgcXuQVqNkq2ClLalrsvaeeGaQMigJQCuw=
+	t=1728918850; cv=none; b=rFoYmBJI+RJpHSuf2aO5d7HBH/UzXezZB3L27I0AIPgBRe064p2xihMy4IcQIK1mcoMt/KXJHYr0KVOwNyId+JfAlr/f/xKUZx2TiMhoiVUpQTUb/9JmoQibvrb+J7zQOYsGkDNVtp0WESWu/PuIjU4OQzjIPsJhujjOlRX04pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918845; c=relaxed/simple;
-	bh=JLZn02CHVyhrrWhCNntFUsGejYLAKAo/bPBRXxRz7EQ=;
+	s=arc-20240116; t=1728918850; c=relaxed/simple;
+	bh=BR5dclqdxoawdGaSVjs8/YORZudM60Qe3G7gmizOPs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qA4cOPjeiLa1pxLdbJYbOqgl4i+xjzKu7nJzRQ00fhgjQwlqKEUhpyUjS0PZ7eiBKv0fDkvkUjsUEUuhpdU5wWNvdVuau/TJ+5NgTlVY2Xj2ZqyV9YKTU1yHFVw9BzTXxrD8vPVZ6lMuKVHbfje3Sd0ee75cWyywbIQ0fskX+fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJowU8lW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPpCtshuNBwn2xiNRWX+6RulQQ//Df86+6F8usqYTPsYPtr4zkHf+ozLK8SZKY/44iMLrPLMo36FwVWZN6wXG+vU9ULLYxfDHUAkHpoBDXpVe+Zv1nNpQvEtY20k1ADY3GrpoQupptsfLUqKQ1KGSJR/+rAgX90sy20cXoRGdUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiPRQ5IE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJowU8lW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C514C4CEC7;
-	Mon, 14 Oct 2024 15:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiPRQ5IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096B7C4CEC3;
+	Mon, 14 Oct 2024 15:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918845;
-	bh=JLZn02CHVyhrrWhCNntFUsGejYLAKAo/bPBRXxRz7EQ=;
+	s=korg; t=1728918849;
+	bh=BR5dclqdxoawdGaSVjs8/YORZudM60Qe3G7gmizOPs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJowU8lWvnA4iS6JvrZj3LtZcBl8k1SV1FGDg62e+xAFzBhnfT7Jgm7dToaO6OlQm
-	 NYXv0RB//peLCwQAm7o+ymaGwk0QQXmCNyQbdK4HZCnE1jBdEFGgrmeBfRh+R7xvIM
-	 ZYd0ZD03NX4Tvs2vxkqyQP3Psxp8FoODx4dAs3pc=
+	b=SiPRQ5IEDZUL9y+WwjjKYUJeOD03KdXzIdQzArMVRU/j25Voco+cXg1fbocm1Y43B
+	 GuosoJ32dzSwAp50ZUqv93+spOLXi1o92U+vE/iEx0uriRx7956lOUzgaSETHpDlaN
+	 rm2xxAugzzNkaUrkPUQScOo8ASNWLX9qeiMbunvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Simon Horman <horms@kernel.org>,
-	Marcin Wojtas <marcin.s.wojtas@gmail.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 440/798] net: mvpp2: Increase size of queue_name buffer
-Date: Mon, 14 Oct 2024 16:16:34 +0200
-Message-ID: <20241014141235.250856979@linuxfoundation.org>
+Subject: [PATCH 6.1 441/798] bnxt_en: Extend maximum length of version string by 1 byte
+Date: Mon, 14 Oct 2024 16:16:35 +0200
+Message-ID: <20241014141235.296750001@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,54 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 91d516d4de48532d967a77967834e00c8c53dfe6 ]
+[ Upstream commit ffff7ee843c351ce71d6e0d52f0f20bea35e18c9 ]
 
-Increase size of queue_name buffer from 30 to 31 to accommodate
-the largest string written to it. This avoids truncation in
-the possibly unlikely case where the string is name is the
-maximum size.
+This corrects an out-by-one error in the maximum length of the package
+version string. The size argument of snprintf includes space for the
+trailing '\0' byte, so there is no need to allow extra space for it by
+reducing the value of the size argument by 1.
 
-Flagged by gcc-14:
-
-  .../mvpp2_main.c: In function 'mvpp2_probe':
-  .../mvpp2_main.c:7636:32: warning: 'snprintf' output may be truncated before the last format character [-Wformat-truncation=]
-   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
-        |                                ^
-  .../mvpp2_main.c:7635:9: note: 'snprintf' output between 10 and 31 bytes into a destination of size 30
-   7635 |         snprintf(priv->queue_name, sizeof(priv->queue_name),
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
-        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   7637 |                  priv->port_count > 1 ? "+" : "");
-        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Introduced by commit 118d6298f6f0 ("net: mvpp2: add ethtool GOP statistics").
-I am not flagging this as a bug as I am not aware that it is one.
-
+Found by inspection.
 Compile tested only.
 
 Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Marcin Wojtas <marcin.s.wojtas@gmail.com>
-Link: https://patch.msgid.link/20240806-mvpp2-namelen-v1-1-6dc773653f2f@kernel.org
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20240813-bnxt-str-v2-1-872050a157e7@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 11e603686a276..522d65acfc47e 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -1088,7 +1088,7 @@ struct mvpp2 {
- 	unsigned int max_port_rxqs;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 7260b4671ecca..799adba0034a4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -2980,7 +2980,7 @@ static void bnxt_get_pkgver(struct net_device *dev)
  
- 	/* Workqueue to gather hardware statistics */
--	char queue_name[30];
-+	char queue_name[31];
- 	struct workqueue_struct *stats_queue;
- 
- 	/* Debugfs root entry */
+ 	if (!bnxt_get_pkginfo(dev, buf, sizeof(buf))) {
+ 		len = strlen(bp->fw_ver_str);
+-		snprintf(bp->fw_ver_str + len, FW_VER_STR_LEN - len - 1,
++		snprintf(bp->fw_ver_str + len, FW_VER_STR_LEN - len,
+ 			 "/pkg %s", buf);
+ 	}
+ }
 -- 
 2.43.0
 
