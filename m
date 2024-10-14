@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500A775809;
-	Mon, 14 Oct 2024 14:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC161AC448;
+	Mon, 14 Oct 2024 14:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917962; cv=none; b=tfKo77WDaxSObS8/ZZzVAOaGtFSnb/yK3MoHxffVdFR5br8Y1JEl92CBDFxGgMuAiJ2jv0hU1eiNLtBr0GogutAHRZ3J5ORvGwakEobfkPPO0dZjYx8IOUzAU01po2eoxmPoN/7mbhH2L6746Nf6xOGxVAKBytn7sV4mf3mIxAI=
+	t=1728917965; cv=none; b=fLOb9TT/XsdfG6/zuvFV220e0WBL0nkgEDxYwND2iE/XzNMmUm/t5Hxowj4UccePAROHFC8VwdFKeoVg6ELCpMJrtrvU4i6S4D+XjTLo+uUU89cPW3i3WtL5IBOv5jR2umVoJE8+kZZauejsud43swJL5kN7Ft1vJnAJow7Bitg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917962; c=relaxed/simple;
-	bh=E/J93sUeAkq+X7Udzm2rSqtZaVZwymMZGwVvI2oSW1E=;
+	s=arc-20240116; t=1728917965; c=relaxed/simple;
+	bh=1g1IUjYSJm9x3CSACINLau/5CTvo6VzppzQqS/hTkdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RA8bNPeu3nJYq/PY9LRBzQdbQAjDDkJQqeZWMSaqJx6CWl3VGEc8o09X4MKH/sDtwSw43tTEutvLM325ebLwIQW9WupfixPWDY3JbnuZ6iW2SAOMSdd6RkB979JnL0klTZvLtaU09fRVbgR/BzBOm2iCNofjph3JjgRB4nS7dIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocN70vWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mB6mG3Xx6ANf6NCaJHFN3YHjbdgOJP6lKU0ZFi2O2YP20PZivCAVq6FSeRs0hJVeYFlq24wlpt5sAACq0a+RJjPSzqILTuVorAh0mVYawTyVs0SmLqB8me/TEumPKG/gF5gpJne0jwCR7huf2fp4s4Rsva+K4cMWVtXwcewzYT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7uG2m2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocN70vWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956AAC4CEC7;
-	Mon, 14 Oct 2024 14:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7uG2m2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B908C4CECF;
+	Mon, 14 Oct 2024 14:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917962;
-	bh=E/J93sUeAkq+X7Udzm2rSqtZaVZwymMZGwVvI2oSW1E=;
+	s=korg; t=1728917965;
+	bh=1g1IUjYSJm9x3CSACINLau/5CTvo6VzppzQqS/hTkdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocN70vWGPrtC9WWQvUStkZ5mnamCxjReBDcK6KdIyREA4KbqRAnPTmYBDYvMWF2TA
-	 aXefHMz4ZEDa8oTEJE5m47skGQqEV+Yh2Ou2iVESr7IL6g5D7Diw7AK+6kYsyIaML+
-	 BXCr0niLYf+niPOy6jkmY4g2jyXJMh2KdJSfSsYE=
+	b=p7uG2m2KyIxea6YzsCCMyy02fOh/LPulNfUGZA/TPQ1hIPnKypAFlnmAGfYyxTu0Q
+	 VWi9Q9Bb0jrwaP/hG+7rElT++GzjWGRWJHr8mddk6BIOXTV52CnJb9sDkG7EteOPW6
+	 MO6/XaA4n7qazlDIDzUflewVkRsWrsaktKDPZjKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
+	Ye Li <ye.li@nxp.com>,
+	Jacky Bai <ping.bai@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/798] clk: imx: composite-8m: Less function calls in __imx8m_clk_hw_composite() after error detection
-Date: Mon, 14 Oct 2024 16:12:17 +0200
-Message-ID: <20241014141225.124136012@linuxfoundation.org>
+Subject: [PATCH 6.1 184/798] clk: imx: composite-8m: Enable gate clk with mcore_booted
+Date: Mon, 14 Oct 2024 16:12:18 +0200
+Message-ID: <20241014141225.163369134@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,82 +47,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit fed6bf52c86df27ad4f39a72cdad8c27da9a50ba ]
+[ Upstream commit 8f32e9dd0916eb3fd4bcf550ed1d04542a65cb9e ]
 
-The function “kfree” was called in up to three cases
-by the function “__imx8m_clk_hw_composite” during error handling
-even if the passed variables contained a null pointer.
+Bootloader might disable some CCM ROOT Slices. So if mcore_booted set with
+display CCM ROOT disabled by Bootloader, kernel display BLK CTRL driver
+imx8m_blk_ctrl_driver_init may hang the system because the BUS clk is
+disabled.
 
-Adjust jump targets according to the Linux coding style convention.
+Add back gate ops, but with disable doing nothing, then the CCM ROOT
+will be enabled when used.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/147ca1e6-69f3-4586-b5b3-b69f9574a862@web.de
+Fixes: bb7e897b002a ("clk: imx8m: check mcore_booted before register clk")
+Reviewed-by: Ye Li <ye.li@nxp.com>
+Reviewed-by: Jacky Bai <ping.bai@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20240607133347.3291040-2-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Stable-dep-of: 8f32e9dd0916 ("clk: imx: composite-8m: Enable gate clk with mcore_booted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/clk/imx/clk-composite-8m.c | 53 +++++++++++++++++++++++-------
+ 1 file changed, 42 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index 3e9a092e136c1..d36fb533da564 100644
+index d36fb533da564..4f5536163d656 100644
 --- a/drivers/clk/imx/clk-composite-8m.c
 +++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -189,7 +189,7 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+@@ -173,6 +173,34 @@ static const struct clk_ops imx8m_clk_composite_mux_ops = {
+ 	.determine_rate = imx8m_clk_composite_mux_determine_rate,
+ };
+ 
++static int imx8m_clk_composite_gate_enable(struct clk_hw *hw)
++{
++	struct clk_gate *gate = to_clk_gate(hw);
++	unsigned long flags;
++	u32 val;
++
++	spin_lock_irqsave(gate->lock, flags);
++
++	val = readl(gate->reg);
++	val |= BIT(gate->bit_idx);
++	writel(val, gate->reg);
++
++	spin_unlock_irqrestore(gate->lock, flags);
++
++	return 0;
++}
++
++static void imx8m_clk_composite_gate_disable(struct clk_hw *hw)
++{
++	/* composite clk requires the disable hook */
++}
++
++static const struct clk_ops imx8m_clk_composite_gate_ops = {
++	.enable = imx8m_clk_composite_gate_enable,
++	.disable = imx8m_clk_composite_gate_disable,
++	.is_enabled = clk_gate_is_enabled,
++};
++
+ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+ 					const char * const *parent_names,
+ 					int num_parents, void __iomem *reg,
+@@ -186,6 +214,7 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+ 	struct clk_mux *mux = NULL;
+ 	const struct clk_ops *divider_ops;
+ 	const struct clk_ops *mux_ops;
++	const struct clk_ops *gate_ops;
  
  	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
  	if (!mux)
--		goto fail;
-+		return ERR_CAST(hw);
+@@ -226,20 +255,22 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+ 	div->flags = CLK_DIVIDER_ROUND_CLOSEST;
  
- 	mux_hw = &mux->hw;
- 	mux->reg = reg;
-@@ -199,7 +199,7 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+ 	/* skip registering the gate ops if M4 is enabled */
+-	if (!mcore_booted) {
+-		gate = kzalloc(sizeof(*gate), GFP_KERNEL);
+-		if (!gate)
+-			goto free_div;
+-
+-		gate_hw = &gate->hw;
+-		gate->reg = reg;
+-		gate->bit_idx = PCG_CGC_SHIFT;
+-		gate->lock = &imx_ccm_lock;
+-	}
++	gate = kzalloc(sizeof(*gate), GFP_KERNEL);
++	if (!gate)
++		goto free_div;
++
++	gate_hw = &gate->hw;
++	gate->reg = reg;
++	gate->bit_idx = PCG_CGC_SHIFT;
++	gate->lock = &imx_ccm_lock;
++	if (!mcore_booted)
++		gate_ops = &clk_gate_ops;
++	else
++		gate_ops = &imx8m_clk_composite_gate_ops;
  
- 	div = kzalloc(sizeof(*div), GFP_KERNEL);
- 	if (!div)
--		goto fail;
-+		goto free_mux;
- 
- 	div_hw = &div->hw;
- 	div->reg = reg;
-@@ -229,7 +229,7 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
- 	if (!mcore_booted) {
- 		gate = kzalloc(sizeof(*gate), GFP_KERNEL);
- 		if (!gate)
--			goto fail;
-+			goto free_div;
- 
- 		gate_hw = &gate->hw;
- 		gate->reg = reg;
-@@ -241,13 +241,15 @@ struct clk_hw *__imx8m_clk_hw_composite(const char *name,
+ 	hw = clk_hw_register_composite(NULL, name, parent_names, num_parents,
  			mux_hw, mux_ops, div_hw,
- 			divider_ops, gate_hw, &clk_gate_ops, flags);
+-			divider_ops, gate_hw, &clk_gate_ops, flags);
++			divider_ops, gate_hw, gate_ops, flags);
  	if (IS_ERR(hw))
--		goto fail;
-+		goto free_gate;
+ 		goto free_gate;
  
- 	return hw;
- 
--fail:
-+free_gate:
- 	kfree(gate);
-+free_div:
- 	kfree(div);
-+free_mux:
- 	kfree(mux);
- 	return ERR_CAST(hw);
- }
 -- 
 2.43.0
 
