@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0FC17C69;
-	Mon, 14 Oct 2024 15:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C441ABEC1;
+	Mon, 14 Oct 2024 15:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920028; cv=none; b=I2KKZ3rO0J7/XKZLNhSSI3ibt1g+tH2IJrphbS8pw1uFGcDipNSr/LZj/3sWVyeHXVHYPr8ItVRjiONtyuDts6x5nIdQdqSzyrGe9T72AzHP47TW+G4zaJu+5Dac0uCiADwFC10XLSr2IBEgMv6LnIbMZbrYyN21SaJ0nim+jN0=
+	t=1728920032; cv=none; b=krZnTMsJhBx3Q3e0bWk+JFzZreFEEBo0XwBALICLGgjbM1fCwzrtLxezyBRpR8NzrOKacdwhJC8qplkJTDqkkeV7JVhS+YeijcdquvPhZJb3dr4VOvyJjOvYaFKp0Z2GW4dQYPcC0svDo5xEkaf82G2W814aspZIIlEJ6RcW5ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920028; c=relaxed/simple;
-	bh=a6FiCbUSnPGK0IazHF0rTFCDsQpkksjabomSkATyW8E=;
+	s=arc-20240116; t=1728920032; c=relaxed/simple;
+	bh=orEDQybkGHXN6ECHtK2bn9P4u8EjN6ucBp19wGdJ5fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCfGxy7lzalmjLLVCZpObQ4OPeawQs+yEY/rE2rmIsAIdQhV6jMjbM0Rv17xGhp1Z/6GhQhTPfPpDxlYI63hTdswBNfeAhvBotNFJMmRTRBVBQI5Xr+/rN424L5nwy8ezWATrBcVjHBEN0+jVwnVTmG6xXVX5rYp5Fjk6DtpEcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxnA+ohO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMwyYwmaImJqvX8ZP3T+WVufnNcxZSluQ7l/Nl0pShfv1pQfhnQ2nW2aHzXfnupFiSxgNRG/oHW41rI3WmRVKW37b1vIigrkW+xSeOm5CdAqVtCaM6fsAAyo74TCkIcbj4vdcHHXsL1z7L2XDnZcZnEAxID+vPA8elnonYXNq0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JM4d4G7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxnA+ohO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E95C4CEC3;
-	Mon, 14 Oct 2024 15:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JM4d4G7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C25AC4CEC7;
+	Mon, 14 Oct 2024 15:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920028;
-	bh=a6FiCbUSnPGK0IazHF0rTFCDsQpkksjabomSkATyW8E=;
+	s=korg; t=1728920032;
+	bh=orEDQybkGHXN6ECHtK2bn9P4u8EjN6ucBp19wGdJ5fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZxnA+ohOUtjn0vUcJagvLqK1lwqxzOY4Jwk4S0YpiiH8VL6bG2wYsMJK9xh1koQCz
-	 LoZBkqHM0zanUkvOjLKhCcFxA9NUjvFiypTPNGR9I18HXA+wy3H3nD4aGOEzh4w5iX
-	 /Byn87+6Arcr+i5i/Yvkt1Qd/KRywQqr1ycZ8oAY=
+	b=2JM4d4G77nfboxSCwmrqw0LMJOMkEVOhR0iFm1y9JuywHj6gieZO9cGAJS8/Ol9cF
+	 zHrrUjjvU07AaiQQCCfL/9uXKnrG9DcmKlDjKZWQDyv35UbmC6U6biwq3VqetBaLSG
+	 MEuOYjqrmzd8LnsSCdlhbDLd63RbZ3Lybbeeu2zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 778/798] usb: storage: ignore bogus device raised by JieLi BR21 USB sound chip
-Date: Mon, 14 Oct 2024 16:22:12 +0200
-Message-ID: <20241014141248.630396823@linuxfoundation.org>
+	John Keeping <jkeeping@inmusicbrands.com>
+Subject: [PATCH 6.1 779/798] usb: gadget: core: force synchronous registration
+Date: Mon, 14 Oct 2024 16:22:13 +0200
+Message-ID: <20241014141248.668427060@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,46 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-commit a6555cb1cb69db479d0760e392c175ba32426842 upstream.
+commit df9158826b00e53f42c67d62c887a84490d80a0a upstream.
 
-JieLi tends to use SCSI via USB Mass Storage to implement their own
-proprietary commands instead of implementing another USB interface.
-Enumerating it as a generic mass storage device will lead to a Hardware
-Error sense key get reported.
+Registering a gadget driver is expected to complete synchronously and
+immediately after calling driver_register() this function checks that
+the driver has bound so as to return an error.
 
-Ignore this bogus device to prevent appearing a unusable sdX device
-file.
+Set PROBE_FORCE_SYNCHRONOUS to ensure this is the case even when
+asynchronous probing is set as the default.
 
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241001083407.8336-1-uwu@icenowy.me
+Fixes: fc274c1e99731 ("USB: gadget: Add a new bus for gadgets")
+Cc: stable@vger.kernel.org
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20240913102325.2826261-1-jkeeping@inmusicbrands.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/gadget/udc/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -2423,6 +2423,17 @@ UNUSUAL_DEV(  0xc251, 0x4003, 0x0100, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NOT_LOCKABLE),
- 
-+/*
-+ * Reported by Icenowy Zheng <uwu@icenowy.me>
-+ * This is an interface for vendor-specific cryptic commands instead
-+ * of real USB storage device.
-+ */
-+UNUSUAL_DEV(  0xe5b7, 0x0811, 0x0100, 0x0100,
-+		"ZhuHai JieLi Technology",
-+		"JieLi BR21",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_DEVICE),
-+
- /* Reported by Andrew Simmons <andrew.simmons@gmail.com> */
- UNUSUAL_DEV(  0xed06, 0x4500, 0x0001, 0x0001,
- 		"DataStor",
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -1671,6 +1671,7 @@ int usb_gadget_register_driver_owner(str
+ 	driver->driver.bus = &gadget_bus_type;
+ 	driver->driver.owner = owner;
+ 	driver->driver.mod_name = mod_name;
++	driver->driver.probe_type = PROBE_FORCE_SYNCHRONOUS;
+ 	ret = driver_register(&driver->driver);
+ 	if (ret) {
+ 		pr_warn("%s: driver registration failed: %d\n",
 
 
