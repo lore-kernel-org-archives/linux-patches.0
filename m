@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33621AB6D8;
-	Mon, 14 Oct 2024 14:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F251AB6D4;
+	Mon, 14 Oct 2024 14:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916406; cv=none; b=F/DLa5VDA7GFELWd2vOa+Us7guAIb9KQqZAut2DSP1jD2eZssAbKrdYlK1Z2EkF/P2MtwYbYv+xRGVi3Beu955jXJvNigqlXwvuWMNGZvSdXLSeYeLlW2QTMQIyURwYGwYBUc0XsQ4kieACEm0cTCYK14ob7enjZ/FKYezrgWrU=
+	t=1728916410; cv=none; b=Q3e8vREIT67lzerkoXkYbtZmou3NiLyO11XlvdkstfdeZxtkf4berB92iJ2FRwluciPAx3Tsc6uTJAdsY4dTFvX6a8N4HLfiAc7mX1s8HD1uSZt2BCOdYPQ7x4pcBlkO68oUCvMGQ0Xa84TBHtAiMaJEVtFf5QDKzZ+5wpEBNZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916406; c=relaxed/simple;
-	bh=HbnGTA4yZ1lHFqUMdBCqwtcQT1F/6QvfpKRkr92CurY=;
+	s=arc-20240116; t=1728916410; c=relaxed/simple;
+	bh=BwogQViVP0X61Zwlbes13F2fUBM3JZpek5bsKclV+wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXOWA6zR/5X1lqCV+o/sYqSjCCiru9gEhU8E6xxN0G8OElhsDhKhzs+0uZHsU1PKf5XpvroSrFwExY/b9Vn9FO5OCeA1VsbZZRWyf6B0djRdPUoNLYtltF8HQC3DiWym7tKNGT6zVIIFaQABJ2Fu4Xc/iWQUtD0XPWcJ4f8nBLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZVOEF53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Za0B6GTPmCtUD0Yxr1nqYRAwDdruu3cgJz1jbf/72wpsihdfBUV+IdohK8ncIUfk/f1wjmUWe0y98eaRLky6kyn6YqA9nSL7tOA087bZOns6z0z2GLAjNcXbzXlounGAAl65dIbMBh9D/ab6AFetEABMIV43iGprifZISlxvnoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFIZpw7U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZVOEF53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5F6C4CEC3;
-	Mon, 14 Oct 2024 14:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFIZpw7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B93C4CED0;
+	Mon, 14 Oct 2024 14:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916406;
-	bh=HbnGTA4yZ1lHFqUMdBCqwtcQT1F/6QvfpKRkr92CurY=;
+	s=korg; t=1728916410;
+	bh=BwogQViVP0X61Zwlbes13F2fUBM3JZpek5bsKclV+wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZVOEF534SvwOgF6Om9CjzFW4K7kP5ZL94eQzv+/g8Bu2si+C5QMa7oSvt3Gt/RRp
-	 z90bwKB8jg2/28Dp6zaI5yIzcIZ5f08xQG2j0JhOp48QtsR9Kvh6NzdLH8ZpTbtEMD
-	 /Ntg4YPYSg9uodLu22rPiLN62ot90REdyRUpY4C8=
+	b=bFIZpw7UVlWTZ30S4sGwsFxKv7UTDg/+e46t7hJuvlBrIYu031YISVHWNqm3I99S+
+	 OKR4Xtr3Pgt79/UVbxbS0pMipuJwKlX7DomAyZCdnMxX+pOqBCBwOBs/VWu8dkYtWy
+	 vXTZgVb+1B1SjXAppGPmAthJ62Us6riiXYOHeaQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Lang Yu <lang.yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 175/214] drm/amdkfd: Fix an eviction fence leak
-Date: Mon, 14 Oct 2024 16:20:38 +0200
-Message-ID: <20241014141051.809455136@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.11 176/214] drm/amd/display: fix hibernate entry for DCN35+
+Date: Mon, 14 Oct 2024 16:20:39 +0200
+Message-ID: <20241014141051.846754363@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,57 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lang Yu <lang.yu@amd.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit d7d7b947a4fa6d0a82ff2bf0db413edc63738e3a upstream.
+commit 79bc412ef787cf25773d0ece93f8739ce0e6ac1e upstream.
 
-Only creating a new reference for each process instead of each VM.
+Since, two suspend-resume cycles are required to enter hibernate and,
+since we only need to enable idle optimizations in the first cycle
+(which is pretty much equivalent to s2idle). We can check in_s0ix, to
+prevent the system from entering idle optimizations before it actually
+enters hibernate (from display's perspective). Also, call
+dc_set_power_state() before dc_allow_idle_optimizations(), since it's
+safer to do so because dc_set_power_state() writes to DMUB.
 
-Fixes: 9a1c1339abf9 ("drm/amdkfd: Run restore_workers on freezable WQs")
-Suggested-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Lang Yu <lang.yu@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5fa436289483ae56427b0896c31f72361223c758)
-Cc: stable@vger.kernel.org
+(cherry picked from commit 2fe79508d9c393bb9931b0037c5ecaee09a8dc39)
+Cc: stable@vger.kernel.org # 6.10+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++--
- drivers/gpu/drm/amd/amdkfd/kfd_process.c         |    7 +++++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1438,8 +1438,8 @@ static int init_kfd_vm(struct amdgpu_vm
- 	list_add_tail(&vm->vm_list_node,
- 			&(vm->process_info->vm_list_head));
- 	vm->process_info->n_vms++;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2950,10 +2950,11 @@ static int dm_suspend(void *handle)
+ 
+ 	hpd_rx_irq_work_suspend(dm);
+ 
+-	if (adev->dm.dc->caps.ips_support)
+-		dc_allow_idle_optimizations(adev->dm.dc, true);
 -
--	*ef = dma_fence_get(&vm->process_info->eviction_fence->base);
-+	if (ef)
-+		*ef = dma_fence_get(&vm->process_info->eviction_fence->base);
- 	mutex_unlock(&vm->process_info->lock);
+ 	dc_set_power_state(dm->dc, DC_ACPI_CM_POWER_STATE_D3);
++
++	if (dm->dc->caps.ips_support && adev->in_s0ix)
++		dc_allow_idle_optimizations(dm->dc, true);
++
+ 	dc_dmub_srv_set_power_state(dm->dc->ctx->dmub_srv, DC_ACPI_CM_POWER_STATE_D3);
  
  	return 0;
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1676,12 +1676,15 @@ int kfd_process_device_init_vm(struct kf
- 
- 	ret = amdgpu_amdkfd_gpuvm_acquire_process_vm(dev->adev, avm,
- 						     &p->kgd_process_info,
--						     &ef);
-+						     p->ef ? NULL : &ef);
- 	if (ret) {
- 		dev_err(dev->adev->dev, "Failed to create process VM object\n");
- 		return ret;
- 	}
--	RCU_INIT_POINTER(p->ef, ef);
-+
-+	if (!p->ef)
-+		RCU_INIT_POINTER(p->ef, ef);
-+
- 	pdd->drm_priv = drm_file->private_data;
- 
- 	ret = kfd_process_device_reserve_ib_mem(pdd);
 
 
