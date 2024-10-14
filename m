@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7590C1B85D7;
-	Mon, 14 Oct 2024 14:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7171B85F8;
+	Mon, 14 Oct 2024 14:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917568; cv=none; b=QjAwgSbBXdvA845Wt/1VHubQRonhX3GNeKXU2sWlnfZofSvxlvwdnf4XApAH12PovbNyNhcIVuAT8JWFpBDN3wKx63+7pIAIGU6frfikFPfMXFOETVg5/GqzO5t1kqdZlfofi2gdGhpwUWcmJVS94AeJl+vkPqx9zNx9ipTdCbc=
+	t=1728917572; cv=none; b=WgS4hEKdrKhk5jxUHcw5nzbUwKG7A9s2O95GrSqFJSaWJ2ksV9IFLDnmY8YR7hN1T6MGKPthNO0fcR7kRgoCUGF2ArUf0VFwn+2YPJUoYO/so0wmHeFre0h6vwkMsFljqsmkFUCXkSMVoBu8yBEfda25MKgeni1jtJtpXq9mQTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917568; c=relaxed/simple;
-	bh=CIiFeIYVAPiaxw0j3YN4WUVjF36dgaeFJoIVhVSJ0vM=;
+	s=arc-20240116; t=1728917572; c=relaxed/simple;
+	bh=nMPrnxhmZ/sHb092lPPKYPV2pGUipdOcBnlyfWwcJ0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhAN0+7sIeAvoY+xApJAaPihbj81B3dXqatXH4us8fG9eUP3flp4HqA4GvUOldBjRkFoZka+vrtzUgI8TRaKAPSA2Me024S74eIvPx6XN3lE3O1XxaNzP15yuxPqU1aMfE6BpY0Xfykb8IJ6xskphRH+tRTQumfXutZHePwu0dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSF6CTYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBqakvQyy67TZG57rH32CWVk/QGWfpvUguXezp8gmEoYP4Mi5gbgLVYcVCivJIgwF7Xnj+PxwjWG10HvA7yGK3we8adKBvr7qAwpRbfl1j5Senbo+LScjPP+5+eq15O0trWtv//KMtDo5KMKUTS6+O3RyY9gICVPJ1EeeVu7ONc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC1QMzjn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSF6CTYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF09C4CECF;
-	Mon, 14 Oct 2024 14:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC1QMzjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1C3C4CEC3;
+	Mon, 14 Oct 2024 14:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917568;
-	bh=CIiFeIYVAPiaxw0j3YN4WUVjF36dgaeFJoIVhVSJ0vM=;
+	s=korg; t=1728917571;
+	bh=nMPrnxhmZ/sHb092lPPKYPV2pGUipdOcBnlyfWwcJ0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSF6CTYE7Za92TROT1psp0zhRMsOqnwemf50umEvVHB3qZtYjS+Xe+UUqZxFeMiCy
-	 IkutdKgVeWHR/v3bXujCuw5a5Lb1oIuHK81iE1/6bg2kZRxiN2tPQdtLaQUipG1dpx
-	 CEYUbYibXxB5+TFCc0INlMbxjFmMCZtPyP1UD918=
+	b=iC1QMzjnVRL2evfoTpdHCQzhThKPYLbr+mFI3hZFjiNsSvhUJu79+BCO+ofnbdx02
+	 d/y1Scn5o9X1Cxxl39JuX6RxvLnNHoE1S1NMrf+UJH7xaLxBRFOx2gIabS8GQrilOV
+	 2duxcecXxoGYpIBrc2OSSwBBKAQ6ZD+HKLb2ZzWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/798] firmware: arm_scmi: Fix double free in OPTEE transport
-Date: Mon, 14 Oct 2024 16:10:24 +0200
-Message-ID: <20241014141220.689551537@linuxfoundation.org>
+Subject: [PATCH 6.1 071/798] spi: ppc4xx: Avoid returning 0 when failed to parse and map IRQ
+Date: Mon, 14 Oct 2024 16:10:25 +0200
+Message-ID: <20241014141220.729412565@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e98dba934b2fc587eafb83f47ad64d9053b18ae0 ]
+[ Upstream commit 7781f1d120fec8624fc654eda900fc8748262082 ]
 
-Channels can be shared between protocols, avoid freeing the same channel
-descriptors twice when unloading the stack.
+0 is incorrect error code when failed to parse and map IRQ.
+Replace OF specific old API for IRQ retrieval with a generic
+one to fix this issue.
 
-Fixes: 5f90f189a052 ("firmware: arm_scmi: Add optee transport")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Peng Fan <peng.fan@nxp.com>  #i.MX95 19x19 EVK
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Message-Id: <20240812173340.3912830-2-cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 0f245463b01e ("spi: ppc4xx: handle irq_of_parse_and_map() errors")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20240814144525.2648450-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/optee.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/spi/spi-ppc4xx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/optee.c b/drivers/firmware/arm_scmi/optee.c
-index 2a7aeab40e543..f5f6ec83d3e1f 100644
---- a/drivers/firmware/arm_scmi/optee.c
-+++ b/drivers/firmware/arm_scmi/optee.c
-@@ -467,6 +467,13 @@ static int scmi_optee_chan_free(int id, void *p, void *data)
- 	struct scmi_chan_info *cinfo = p;
- 	struct scmi_optee_channel *channel = cinfo->transport_info;
+diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
+index edfe0896046f9..be1dd4e6a3e7d 100644
+--- a/drivers/spi/spi-ppc4xx.c
++++ b/drivers/spi/spi-ppc4xx.c
+@@ -26,7 +26,6 @@
+ #include <linux/errno.h>
+ #include <linux/wait.h>
+ #include <linux/of_address.h>
+-#include <linux/of_irq.h>
+ #include <linux/of_platform.h>
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
+@@ -410,9 +409,10 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
+ 	}
  
-+	/*
-+	 * Different protocols might share the same chan info, so a previous
-+	 * call might have already freed the structure.
-+	 */
-+	if (!channel)
-+		return 0;
-+
- 	mutex_lock(&scmi_optee_private->mu);
- 	list_del(&channel->link);
- 	mutex_unlock(&scmi_optee_private->mu);
+ 	/* Request IRQ */
+-	hw->irqnum = irq_of_parse_and_map(np, 0);
+-	if (hw->irqnum <= 0)
++	ret = platform_get_irq(op, 0);
++	if (ret < 0)
+ 		goto free_host;
++	hw->irqnum = ret;
+ 
+ 	ret = request_irq(hw->irqnum, spi_ppc4xx_int,
+ 			  0, "spi_ppc4xx_of", (void *)hw);
 -- 
 2.43.0
 
