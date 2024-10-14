@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18DF1CA8D;
-	Mon, 14 Oct 2024 15:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B05D3A1B6;
+	Mon, 14 Oct 2024 15:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920086; cv=none; b=chDTmMO0aaJWur/w08VR9sNkVrugl2N6dtjydFAIZVWPbr073JhAP1e4TxkOz1MNS2jxXpijz3UyVr7zOjQp2ZmUq1fofVqTnmzEYPqRAYTUbiqYPK0cfVGH8wg3XqEOAbrmr45uTjgrMD/uMSN8dQDmpa/L9qI5j27NW1DSj+Y=
+	t=1728920089; cv=none; b=bukJRVNL/9ccNsJsEtJ+rJMVK0j+Ig0UqyVXGgFyr3W1Baihxe1GtsOvMt+3JcQrASei78KawqRfdwiflugRweCasd2czF2XQiqNHS/NKr8pQn/74gyHlvxcLgvqf87KHDFQm8SqFbdTC+GK4QJpBijFFDxxG30aUdLYxK4snRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920086; c=relaxed/simple;
-	bh=HwncEqEl9g7/IMpvUbjSyWyZY2m3i/SRn8wLwtphmus=;
+	s=arc-20240116; t=1728920089; c=relaxed/simple;
+	bh=cxRm4vhN6ucsJxi9VLv8c27UcAE/eD9NH07grPVGmJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaW9HBAYRO/ixPMY3XH4RJDkTbdr6MfqZBWYcQhk+5mIgq4Cx5Sh7jQTwiA8oPRBYOSQpzb/BaHMpY+m6XbOUKX5SvIkLchWKL2DhTyDp1npwIlfdY+1A8rARi7dl+76NcX6z5OsbwTswjrsYuWcYFq1TS22RxCBbl83SoKCAsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAF3eaSk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVzCF6aVaDmTs/dYxS9e0nSQnaNh9X6+0JnYkVXKzhkA23/5TZoWg1C4lhjkvi3D6wRvf2i4Y6eb281zx+skNfHXuD/daz/M9rlTM499wU5oYVGp5+uJJei7mxEMywlfGbd02YivS0qLvaUYr4Vxy+7cFTSOQi/49OmFlD/UZTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tuqcdJX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAF3eaSk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66938C4CEC3;
-	Mon, 14 Oct 2024 15:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tuqcdJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE1CC4CECF;
+	Mon, 14 Oct 2024 15:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920085;
-	bh=HwncEqEl9g7/IMpvUbjSyWyZY2m3i/SRn8wLwtphmus=;
+	s=korg; t=1728920089;
+	bh=cxRm4vhN6ucsJxi9VLv8c27UcAE/eD9NH07grPVGmJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAF3eaSk3rdRMMhO0xvhVr46GIqM3CLJtJoiJHQ+r02gmSimn11Tmt6u1MFWNZfxK
-	 SwGlVNR4ep66ad3G7gKW/3yx/EusAhehutJ6F97Zfyr5le8q61EGz4ArKDk2TAwvY4
-	 syBoxlwEP5dNBeKf+5mJ01zUQar7iEhhpvCx+DIA=
+	b=2tuqcdJXwo0FBtFg6kxl60B7jPWrebgs5mHx9TmAxp+ljy4MDB8yCPGJkob6GOmmO
+	 Tu5uRFjzjMFLpYtLRy8VrheUgdN/Ghg5Tkn01m8mAnhuklcoefn8z1tn7U2C7Jm+Di
+	 p6pv2xvQulUtdw7CZFWLhd4h/YXVmwkGiG7epxhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonatan Maman <Ymaman@Nvidia.com>,
-	Gal Shalom <GalShalom@Nvidia.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.1 792/798] nouveau/dmem: Fix vulnerability in migrate_to_ram upon copy error
-Date: Mon, 14 Oct 2024 16:22:26 +0200
-Message-ID: <20241014141249.187252362@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Hillf Danton <hdanton@sina.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 793/798] kthread: unpark only parked kthread
+Date: Mon, 14 Oct 2024 16:22:27 +0200
+Message-ID: <20241014141249.226377974@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,48 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Maman <Ymaman@Nvidia.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 835745a377a4519decd1a36d6b926e369b3033e2 upstream.
+commit 214e01ad4ed7158cab66498810094fac5d09b218 upstream.
 
-The `nouveau_dmem_copy_one` function ensures that the copy push command is
-sent to the device firmware but does not track whether it was executed
-successfully.
+Calling into kthread unparking unconditionally is mostly harmless when
+the kthread is already unparked. The wake up is then simply ignored
+because the target is not in TASK_PARKED state.
 
-In the case of a copy error (e.g., firmware or hardware failure), the
-copy push command will be sent via the firmware channel, and
-`nouveau_dmem_copy_one` will likely report success, leading to the
-`migrate_to_ram` function returning a dirty HIGH_USER page to the user.
+However if the kthread is per CPU, the wake up is preceded by a call
+to kthread_bind() which expects the task to be inactive and in
+TASK_PARKED state, which obviously isn't the case if it is unparked.
 
-This can result in a security vulnerability, as a HIGH_USER page that may
-contain sensitive or corrupted data could be returned to the user.
+As a result, calling kthread_stop() on an unparked per-cpu kthread
+triggers such a warning:
 
-To prevent this vulnerability, we allocate a zero page. Thus, in case of
-an error, a non-dirty (zero) page will be returned to the user.
+	WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind_mask kernel/kthread.c:525
+	 <TASK>
+	 kthread_stop+0x17a/0x630 kernel/kthread.c:707
+	 destroy_workqueue+0x136/0xc40 kernel/workqueue.c:5810
+	 wg_destruct+0x1e2/0x2e0 drivers/net/wireguard/device.c:257
+	 netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10693
+	 default_device_exit_batch+0xa14/0xa90 net/core/dev.c:11769
+	 ops_exit_list net/core/net_namespace.c:178 [inline]
+	 cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:640
+	 process_one_work kernel/workqueue.c:3231 [inline]
+	 process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
+	 worker_thread+0x86d/0xd70 kernel/workqueue.c:3393
+	 kthread+0x2f0/0x390 kernel/kthread.c:389
+	 ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+	 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+	 </TASK>
 
-Fixes: 5be73b690875 ("drm/nouveau/dmem: device memory helpers for SVM")
-Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
-Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
-Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-3-ymaman@nvidia.com
+Fix this with skipping unecessary unparking while stopping a kthread.
+
+Link: https://lkml.kernel.org/r/20240913214634.12557-1-frederic@kernel.org
+Fixes: 5c25b5ff89f0 ("workqueue: Tag bound workers with KTHREAD_IS_PER_CPU")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
+Tested-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dmem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/kthread.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
-@@ -194,7 +194,7 @@ static vm_fault_t nouveau_dmem_migrate_t
- 	if (!spage || !(src & MIGRATE_PFN_MIGRATE))
- 		goto done;
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -622,6 +622,8 @@ void kthread_unpark(struct task_struct *
+ {
+ 	struct kthread *kthread = to_kthread(k);
  
--	dpage = alloc_page_vma(GFP_HIGHUSER, vmf->vma, vmf->address);
-+	dpage = alloc_page_vma(GFP_HIGHUSER | __GFP_ZERO, vmf->vma, vmf->address);
- 	if (!dpage)
- 		goto done;
- 
++	if (!test_bit(KTHREAD_SHOULD_PARK, &kthread->flags))
++		return;
+ 	/*
+ 	 * Newly created kthread was parked when the CPU was offline.
+ 	 * The binding was lost and we need to set it again.
 
 
