@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9413519E802;
-	Mon, 14 Oct 2024 14:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AA51AB535;
+	Mon, 14 Oct 2024 14:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916089; cv=none; b=sQrMPvkXeLDZ216asUZOguEyVYZmAQxQfhVnv3kv4Xw8VBc1RZSZ4BYs3v79PJGmG/YAJC0ugUcgGOoxD+s8sLSfUQ2dhj1rSVHuqCE7/IZ6FIVCtu1OzSnF6upgCLUGE7v+4o6e4r5KWuvOHXhHgNhMIjzfBYpzPkSf+MoFhyQ=
+	t=1728916092; cv=none; b=UdRMuOvaOw72I012tYWwWJoe8ae68STO51mEgS4C62f7cnbgs+OEK0Ra2EQMCrT98ydfv0GFJCq0mkqCfDMDHr2ogwUSwOFYDXhVXoT44Yl90vBACOn/qX3GZ756Oskypwn6i4I3Lqwe9ChvSvgd3MfxSm4Vc3I+DFwIBBQMB2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916089; c=relaxed/simple;
-	bh=bVsk3ubx1J/UhyuS7YD88tOiyTbtAy8YKE1ckOwTCJo=;
+	s=arc-20240116; t=1728916092; c=relaxed/simple;
+	bh=DYDfd2W5n5JzFXrYNYeHDXswy4b/fK58hXIXJSRt2uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUUwC1/P59ZVPgQ3t4ZJ0jvkSiA0AY877EPKGLBHhRrcvYQM2VVzLF9M5WBnYbNpEFjY7bbwoqOFx0xJreI1YMEKDUrHI3e969k46hm9/tBvRS/EZCgvnQJkgou2jby+WRMHXlgkA8Cg9Pw2ZHjOm31tQkLZ5i2kiIeQF0y23M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPvmRyMm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+tsUwsYD4LTfEtPRwm8yQy78HG4alBRBWjM6lHOA4/Vyf5mpDiji8xzNKUEA6kgf1QVnxDBktW1jj4HKH8FZKTAB+hsXg4W03PyfWLfkXxY0PbWNMct24e1TT3BNVSH2OmXTABm/8YKnrijfscM5psPo0b07P4DNFWs6MC6Vbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdoTjETT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPvmRyMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05005C4CEC3;
-	Mon, 14 Oct 2024 14:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdoTjETT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A56C4CEC3;
+	Mon, 14 Oct 2024 14:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916089;
-	bh=bVsk3ubx1J/UhyuS7YD88tOiyTbtAy8YKE1ckOwTCJo=;
+	s=korg; t=1728916092;
+	bh=DYDfd2W5n5JzFXrYNYeHDXswy4b/fK58hXIXJSRt2uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPvmRyMmIG5lRiz7QUGgs8Iq8jankzoTVBt4HlGUK0pyPaziF9EGVEWTS74N63r52
-	 vhTZWulK3I4HWa5O3aHoHGD5k0AL1e6bgBeSrQKjkKXB57pnMYKC8VOqtJRJxk22ym
-	 eRLlSMahDtoFXoxCxFxdpD0k1fx71eH0uJ9H0PNY=
+	b=pdoTjETTjxfyjW1vsY9XomUPuE1vMTJWddo+7MjUBoUr0SPyf311MPPe1AM39DMGc
+	 xxriQT/pvG5p9Txs9tw22TI3ji7EGTm6ga3pJe9dWD6nCoqPRYGuvzb8NaTaV06SH+
+	 MtL/1mgRLwABF1UbxIsSR6rJwIhClMkjy1nnROoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 081/214] NFSD: Mark filecache "down" if init fails
-Date: Mon, 14 Oct 2024 16:19:04 +0200
-Message-ID: <20241014141048.152603628@linuxfoundation.org>
+Subject: [PATCH 6.11 082/214] nfsd: nfsd_destroy_serv() must call svc_destroy() even if nfsd_startup_net() failed
+Date: Mon, 14 Oct 2024 16:19:05 +0200
+Message-ID: <20241014141048.191782323@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit dc0d0f885aa422f621bc1c2124133eff566b0bc8 ]
+[ Upstream commit 53e4e17557049d7688ca9dadeae80864d40cf0b7 ]
 
-NeilBrown says:
-> The handling of NFSD_FILE_CACHE_UP is strange.  nfsd_file_cache_init()
-> sets it, but doesn't clear it on failure.  So if nfsd_file_cache_init()
-> fails for some reason, nfsd_file_cache_shutdown() would still try to
-> clean up if it was called.
+If nfsd_startup_net() fails and so ->nfsd_net_up is false,
+nfsd_destroy_serv() doesn't currently call svc_destroy().  It should.
 
-Reported-by: NeilBrown <neilb@suse.de>
-Fixes: c7b824c3d06c ("NFSD: Replace the "init once" mechanism")
+Fixes: 1e3577a4521e ("SUNRPC: discard sv_refcnt, and svc_get/svc_put")
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfssvc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index e2e248032bfd0..5583db806b0bc 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -719,7 +719,7 @@ nfsd_file_cache_init(void)
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 8103c3c90cd11..58523b4c37de0 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -449,6 +449,9 @@ static void nfsd_shutdown_net(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 	ret = rhltable_init(&nfsd_file_rhltable, &nfsd_file_rhash_params);
- 	if (ret)
--		return ret;
-+		goto out;
++	if (!nn->nfsd_net_up)
++		return;
++	nfsd_export_flush(net);
+ 	nfs4_state_shutdown_net(net);
+ 	nfsd_reply_cache_shutdown(nn);
+ 	nfsd_file_cache_shutdown_net(net);
+@@ -556,11 +559,8 @@ void nfsd_destroy_serv(struct net *net)
+ 	 * other initialization has been done except the rpcb information.
+ 	 */
+ 	svc_rpcb_cleanup(serv, net);
+-	if (!nn->nfsd_net_up)
+-		return;
  
- 	ret = -ENOMEM;
- 	nfsd_file_slab = KMEM_CACHE(nfsd_file, 0);
-@@ -771,6 +771,8 @@ nfsd_file_cache_init(void)
+ 	nfsd_shutdown_net(net);
+-	nfsd_export_flush(net);
+ 	svc_destroy(&serv);
+ }
  
- 	INIT_DELAYED_WORK(&nfsd_filecache_laundrette, nfsd_file_gc_worker);
- out:
-+	if (ret)
-+		clear_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags);
- 	return ret;
- out_notifier:
- 	lease_unregister_notifier(&nfsd_file_lease_notifier);
 -- 
 2.43.0
 
