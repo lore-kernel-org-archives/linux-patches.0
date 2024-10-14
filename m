@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB01820322;
-	Mon, 14 Oct 2024 14:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF2524B34;
+	Mon, 14 Oct 2024 14:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916361; cv=none; b=KGN7nhbvRcvLzBUWoeB63k8MrTu+lDRGh9SbDRXYIqI7GVIi05xvJ+qRYva4l5CNjA97e1R4OWKgzMsVXfhG158ChrD9Ilq3Rwx+1aUFFu3TbFQq/aF0I6Tz2CG1XrMXw87tvpKNt8h4lNqUN5QePOUS+DicR93djAYc/z+ecgg=
+	t=1728916365; cv=none; b=iKbRGwYOQsYioX1tjaPjJx/qBckJvBtaFiy+PWeS/E0ifrbDgu5U/5yjMNn04plPectmA7OTy79XN96tXRJn0rkvMuucKIz7QLxIV8vzrrFZjGo+CiaVppxgp8NCRipOJ1QHAj79LNhXDcFLBTdnTo+Lxs1q17xV53qHV3AqedU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916361; c=relaxed/simple;
-	bh=zpWxnC4RJTVY3O48sx5iD410tFFcA2G5NIAyTM4B//8=;
+	s=arc-20240116; t=1728916365; c=relaxed/simple;
+	bh=34XnZspkRSdBE+ZwTINkqDh/NyUXne+f2Pgv+zupuRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWFWohr9L4jZ6V8W1Sqv1r8QY526fPsyjoGs3Dpx6SNik2fZEgNdZJOqcqSxwv3KkJmXNem35LsUP2i3ACPF3cjHuWMfyTiBng73uOMiB4aTLZOzDFr4CWhBbQNSm3XJVY5ieDC44sHH8yPwBZB09e34Ji4qBXS0eTilpU7j7Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIrtanX+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cE63zzpXFmW297Y0Pju7sLlQY4Y06Y8qhJjQfqDuBeMjh8IoJZjbWfmAz3dIViX6XgiGNlyIOcqRtFb57BYMak1QSLyMwxAf5uIdnqGgnfGbltiLNZoR+8wGhZ1zB2fQQ1NUTVfF7UsZ5DIWLiqXwaP7bZe4a+lPoe1sb2xog5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSHCeDSp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIrtanX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6489BC4CEC3;
-	Mon, 14 Oct 2024 14:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSHCeDSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C204CC4CEC7;
+	Mon, 14 Oct 2024 14:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916361;
-	bh=zpWxnC4RJTVY3O48sx5iD410tFFcA2G5NIAyTM4B//8=;
+	s=korg; t=1728916365;
+	bh=34XnZspkRSdBE+ZwTINkqDh/NyUXne+f2Pgv+zupuRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIrtanX+K1lAglH/w/OXo9eHYBVBC8aRDFfX+tWrK5kzI66Lbu3TCKtqSvPAEYIMk
-	 95UrXO4viNJeCn9rCixyNN2w4XGqS+B3HYs2ieRyIz/zIzhGC0a0Ey/AZZHflOGj07
-	 39DQWnP0ZLyS8XizDi4af5TgP0ltN83b+r2aqzTg=
+	b=vSHCeDSpG7FBYM8l2VR0Gs2bmgtOWGvF5mLNXIvZTzHswR3nS8LGTubgY9S7AHwgm
+	 pIgGbPQkUmkJzXNSRDBReVRNI55S0+eevftLQxsrDl1WKzCqnzLOHgkzIfrGTwBL1s
+	 RmP0oz+uynQT5nhKDmTjknWUuTmjf5LpxQJCqLew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 130/214] net: ibm: emac: mal: fix wrong goto
-Date: Mon, 14 Oct 2024 16:19:53 +0200
-Message-ID: <20241014141050.065833064@linuxfoundation.org>
+Subject: [PATCH 6.11 131/214] net: ti: icssg-prueth: Fix race condition for VLAN table access
+Date: Mon, 14 Oct 2024 16:19:54 +0200
+Message-ID: <20241014141050.104436253@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,34 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 08c8acc9d8f3f70d62dd928571368d5018206490 ]
+[ Upstream commit ff8ee11e778520c5716b7f165d2c7ce14d6a068b ]
 
-dcr_map is called in the previous if and therefore needs to be unmapped.
+The VLAN table is a shared memory between the two ports/slices
+in a ICSSG cluster and this may lead to race condition when the
+common code paths for both ports are executed in different CPUs.
 
-Fixes: 1ff0fcfcb1a6 ("ibm_newemac: Fix new MAL feature handling")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20241007235711.5714-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix the race condition access by locking the shared memory access
+
+Fixes: 487f7323f39a ("net: ti: icssg-prueth: Add helper functions to configure FDB")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icssg_config.c | 2 ++
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 1 +
+ drivers/net/ethernet/ti/icssg/icssg_prueth.h | 2 ++
+ 3 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index d92dd9c83031e..0c5e22d14372a 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -578,7 +578,7 @@ static int mal_probe(struct platform_device *ofdev)
- 		printk(KERN_ERR "%pOF: Support for 405EZ not enabled!\n",
- 				ofdev->dev.of_node);
- 		err = -ENODEV;
--		goto fail;
-+		goto fail_unmap;
- #endif
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_config.c b/drivers/net/ethernet/ti/icssg/icssg_config.c
+index dae52a83a3786..5be020d0887ac 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_config.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_config.c
+@@ -733,6 +733,7 @@ void icssg_vtbl_modify(struct prueth_emac *emac, u8 vid, u8 port_mask,
+ 	u8 fid_c1;
+ 
+ 	tbl = prueth->vlan_tbl;
++	spin_lock(&prueth->vtbl_lock);
+ 	fid_c1 = tbl[vid].fid_c1;
+ 
+ 	/* FID_C1: bit0..2 port membership mask,
+@@ -748,6 +749,7 @@ void icssg_vtbl_modify(struct prueth_emac *emac, u8 vid, u8 port_mask,
  	}
  
+ 	tbl[vid].fid_c1 = fid_c1;
++	spin_unlock(&prueth->vtbl_lock);
+ }
+ EXPORT_SYMBOL_GPL(icssg_vtbl_modify);
+ 
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index e3451beed3238..33cb3590a5cde 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -1262,6 +1262,7 @@ static int prueth_probe(struct platform_device *pdev)
+ 		icss_iep_init_fw(prueth->iep1);
+ 	}
+ 
++	spin_lock_init(&prueth->vtbl_lock);
+ 	/* setup netdev interfaces */
+ 	if (eth0_node) {
+ 		ret = prueth_netdev_init(prueth, eth0_node);
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.h b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+index f678d656a3ed3..4d1c895dacdb6 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.h
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
+@@ -282,6 +282,8 @@ struct prueth {
+ 	bool is_switchmode_supported;
+ 	unsigned char switch_id[MAX_PHYS_ITEM_ID_LEN];
+ 	int default_vlan;
++	/** @vtbl_lock: Lock for vtbl in shared memory */
++	spinlock_t vtbl_lock;
+ };
+ 
+ struct emac_tx_ts_response {
 -- 
 2.43.0
 
