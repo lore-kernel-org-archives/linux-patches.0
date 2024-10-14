@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119DC75809;
-	Mon, 14 Oct 2024 14:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F1D1AB51B;
+	Mon, 14 Oct 2024 14:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917142; cv=none; b=o85iKVoOoMSX6CePJI93NXr5OJ70dnUz+8CCSf6WJhDx5lefsds5+0IdfHh5gSS3vY0bZeyOvOAJ2044FVXOUCo+eQ4dF3m7hbjoTNcmn2/CpMUBNEBTLiBlFf0vMrSqhDb9YDHjitn4hb01Z+W9RvAU49iJHOo0P56Q7nRnYU8=
+	t=1728917145; cv=none; b=nPu3+8IhWtNFGS7aVVGG30PUjuxjD1O0EI3T3Z6jJLUY7KLC4qeiYS+XfE0WN8mVnWao+V7a3wTrUdjXvnqWZ7/Qd0BL7HVNjssS/mz+Y5aZqGItyWdF9hU4/qB+oygqIS5f4I+wCi3497IJjN4OPfJ1+J62GOPpGCxeMV06PuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917142; c=relaxed/simple;
-	bh=hkRqTA14VSuvrpJ3sIhgNfERu5xFParXxctmoVyCAF4=;
+	s=arc-20240116; t=1728917145; c=relaxed/simple;
+	bh=xOq+k46P/pi1gkCfw7I0iWzHZCYBcG5JhE9MXHOAMBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVsJFogApnQCSPJwnsfm9/kl3gliMfdYf6wb7CoMKZ7hH2zKyG06JtGb/SI3pb+NtZPCsmsXLhJU6uLw//FSFTXs2zfU1aU9be7vq6jguz0y8eFADMS0SRvJDZ8P0CsB9rJkkU2i5c/5J5X2ODwuOPj1FCOO6eTluA45Kymd1FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkSIyNHL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kf0SvzQ+TIJzitDrRW2D3IF1LvJ4BYN7o3f6HeUnkOu5SDTdujY4PqCFh4Iqv1ejK5aFfu5XSMIgoom8LJC1Vk9COTvcIcsrGds34pGGTAoW5Znf4Q1hfWfXQNP0UOXa0nsIXJKu4TSzbTgHof9SdQ+M0wKMMSN8Y3yp4Wys/dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jz9y/1K8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkSIyNHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D05C4CEC3;
-	Mon, 14 Oct 2024 14:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jz9y/1K8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0509C4CEC3;
+	Mon, 14 Oct 2024 14:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917141;
-	bh=hkRqTA14VSuvrpJ3sIhgNfERu5xFParXxctmoVyCAF4=;
+	s=korg; t=1728917145;
+	bh=xOq+k46P/pi1gkCfw7I0iWzHZCYBcG5JhE9MXHOAMBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkSIyNHLv+JTBmmohGAIVSPOKFtqnzzJFGUTX0eAoQnzhjnOeLUJTS8SWSM/Fqo1N
-	 ra2PcLEb07+xvJYhG8qzETdn+Z7t9GWt7H5ish9/20r7t+NAf7RExJWKQ17QPF0Eql
-	 o9DKAODKz00ENWOM9NBVAU/pXWjOVEz6Xriqw+0Q=
+	b=Jz9y/1K8Eq516TBYKMrTXFcp8PMHCUufEGnfJf61f57ikOoIr4xLwjXMCYAu0STxl
+	 p38mQetSPv3luyTI4sWxoiquM7vBaXifogRRpd9+SWiB2n+HRvYscWB/VSmQcLp/Aw
+	 N/28jHghAJI+gHLRUU6LUh8sWYURwO5R9BgPBfeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.iitr10@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/213] slip: make slhc_remember() more robust against malicious packets
-Date: Mon, 14 Oct 2024 16:21:09 +0200
-Message-ID: <20241014141049.332825938@linuxfoundation.org>
+Subject: [PATCH 6.6 164/213] rcu/nocb: Make IRQs disablement symmetric
+Date: Mon, 14 Oct 2024 16:21:10 +0200
+Message-ID: <20241014141049.371009559@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,168 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 7d3fce8cbe3a70a1c7c06c9b53696be5d5d8dd5c ]
+[ Upstream commit b913c3fe685e0aec80130975b0f330fd709ff324 ]
 
-syzbot found that slhc_remember() was missing checks against
-malicious packets [1].
+Currently IRQs are disabled on call_rcu() and then depending on the
+context:
 
-slhc_remember() only checked the size of the packet was at least 20,
-which is not good enough.
+* If the CPU is in nocb mode:
 
-We need to make sure the packet includes the IPv4 and TCP header
-that are supposed to be carried.
+   - If the callback is enqueued in the bypass list, IRQs are re-enabled
+     implictly by rcu_nocb_try_bypass()
 
-Add iph and th pointers to make the code more readable.
+   - If the callback is enqueued in the normal list, IRQs are re-enabled
+     implicitly by __call_rcu_nocb_wake()
 
-[1]
+* If the CPU is NOT in nocb mode, IRQs are reenabled explicitly from call_rcu()
 
-BUG: KMSAN: uninit-value in slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  ppp_receive_nonmp_frame+0xe45/0x35e0 drivers/net/ppp/ppp_generic.c:2455
-  ppp_receive_frame drivers/net/ppp/ppp_generic.c:2372 [inline]
-  ppp_do_recv+0x65f/0x40d0 drivers/net/ppp/ppp_generic.c:2212
-  ppp_input+0x7dc/0xe60 drivers/net/ppp/ppp_generic.c:2327
-  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
-  __release_sock+0x1da/0x330 net/core/sock.c:3072
-  release_sock+0x6b/0x250 net/core/sock.c:3626
-  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This makes the code a bit hard to follow, especially as it interleaves
+with nocb locking.
 
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4091 [inline]
-  slab_alloc_node mm/slub.c:4134 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1322 [inline]
-  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
-  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+To make the IRQ flags coverage clearer and also in order to prepare for
+moving all the nocb enqueue code to its own function, always re-enable
+the IRQ flags explicitly from call_rcu().
 
-CPU: 0 UID: 0 PID: 5460 Comm: syz.2.33 Not tainted 6.12.0-rc2-syzkaller-00006-g87d6aab2389e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-
-Fixes: b5451d783ade ("slip: Move the SLIP drivers")
-Reported-by: syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/670646db.050a0220.3f80e.0027.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241009091132.2136321-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Neeraj Upadhyay (AMD) <neeraj.iitr10@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Stable-dep-of: f7345ccc62a4 ("rcu/nocb: Fix rcuog wake-up from offline softirq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 57 ++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ kernel/rcu/tree.c      |  9 ++++++---
+ kernel/rcu/tree_nocb.h | 20 +++++++++-----------
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index ba93bab948e09..bf9e801cc61cc 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -643,46 +643,57 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- int
- slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
- {
--	struct cstate *cs;
--	unsigned ihl;
--
-+	const struct tcphdr *th;
- 	unsigned char index;
-+	struct iphdr *iph;
-+	struct cstate *cs;
-+	unsigned int ihl;
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 8541084eeba50..3d7b119f6e2a3 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -2727,8 +2727,10 @@ __call_rcu_common(struct rcu_head *head, rcu_callback_t func, bool lazy_in)
+ 	}
  
--	if(isize < 20) {
--		/* The packet is shorter than a legal IP header */
-+	/* The packet is shorter than a legal IP header.
-+	 * Also make sure isize is positive.
-+	 */
-+	if (isize < (int)sizeof(struct iphdr)) {
-+runt:
- 		comp->sls_i_runt++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
+ 	check_cb_ovld(rdp);
+-	if (rcu_nocb_try_bypass(rdp, head, &was_alldone, flags, lazy))
++	if (rcu_nocb_try_bypass(rdp, head, &was_alldone, flags, lazy)) {
++		local_irq_restore(flags);
+ 		return; // Enqueued onto ->nocb_bypass, so just leave.
++	}
+ 	// If no-CBs CPU gets here, rcu_nocb_try_bypass() acquired ->nocb_lock.
+ 	rcu_segcblist_enqueue(&rdp->cblist, head);
+ 	if (__is_kvfree_rcu_offset((unsigned long)func))
+@@ -2746,8 +2748,8 @@ __call_rcu_common(struct rcu_head *head, rcu_callback_t func, bool lazy_in)
+ 		__call_rcu_nocb_wake(rdp, was_alldone, flags); /* unlocks */
+ 	} else {
+ 		__call_rcu_core(rdp, head, flags);
+-		local_irq_restore(flags);
  	}
-+	iph = (struct iphdr *)icp;
- 	/* Peek at the IP header's IHL field to find its length */
--	ihl = icp[0] & 0xf;
--	if(ihl < 20 / 4){
--		/* The IP header length field is too small */
--		comp->sls_i_runt++;
--		return slhc_toss( comp );
--	}
--	index = icp[9];
--	icp[9] = IPPROTO_TCP;
-+	ihl = iph->ihl;
-+	/* The IP header length field is too small,
-+	 * or packet is shorter than the IP header followed
-+	 * by minimal tcp header.
-+	 */
-+	if (ihl < 5 || isize < ihl * 4 + sizeof(struct tcphdr))
-+		goto runt;
-+
-+	index = iph->protocol;
-+	iph->protocol = IPPROTO_TCP;
++	local_irq_restore(flags);
+ }
  
- 	if (ip_fast_csum(icp, ihl)) {
- 		/* Bad IP header checksum; discard */
- 		comp->sls_i_badcheck++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
+ #ifdef CONFIG_RCU_LAZY
+@@ -4626,8 +4628,9 @@ void rcutree_migrate_callbacks(int cpu)
+ 		__call_rcu_nocb_wake(my_rdp, true, flags);
+ 	} else {
+ 		rcu_nocb_unlock(my_rdp); /* irqs remain disabled. */
+-		raw_spin_unlock_irqrestore_rcu_node(my_rnp, flags);
++		raw_spin_unlock_rcu_node(my_rnp); /* irqs remain disabled. */
  	}
--	if(index > comp->rslot_limit) {
-+	if (index > comp->rslot_limit) {
- 		comp->sls_i_error++;
- 		return slhc_toss(comp);
++	local_irq_restore(flags);
+ 	if (needwake)
+ 		rcu_gp_kthread_wake();
+ 	lockdep_assert_irqs_enabled();
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index e019f166daa61..7a0bce3f784df 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -516,9 +516,7 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+ 	// 2. Both of these conditions are met:
+ 	//    a. The bypass list previously had only lazy CBs, and:
+ 	//    b. The new CB is non-lazy.
+-	if (ncbs && (!bypass_is_lazy || lazy)) {
+-		local_irq_restore(flags);
+-	} else {
++	if (!ncbs || (bypass_is_lazy && !lazy)) {
+ 		// No-CBs GP kthread might be indefinitely asleep, if so, wake.
+ 		rcu_nocb_lock(rdp); // Rare during call_rcu() flood.
+ 		if (!rcu_segcblist_pend_cbs(&rdp->cblist)) {
+@@ -528,7 +526,7 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+ 		} else {
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 					    TPS("FirstBQnoWake"));
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 		}
  	}
--
-+	th = (struct tcphdr *)(icp + ihl * 4);
-+	if (th->doff < sizeof(struct tcphdr) / 4)
-+		goto runt;
-+	if (isize < ihl * 4 + th->doff * 4)
-+		goto runt;
- 	/* Update local state */
- 	cs = &comp->rstate[comp->recv_current = index];
- 	comp->flags &=~ SLF_TOSS;
--	memcpy(&cs->cs_ip,icp,20);
--	memcpy(&cs->cs_tcp,icp + ihl*4,20);
-+	memcpy(&cs->cs_ip, iph, sizeof(*iph));
-+	memcpy(&cs->cs_tcp, th, sizeof(*th));
- 	if (ihl > 5)
--	  memcpy(cs->cs_ipopt, icp + sizeof(struct iphdr), (ihl - 5) * 4);
--	if (cs->cs_tcp.doff > 5)
--	  memcpy(cs->cs_tcpopt, icp + ihl*4 + sizeof(struct tcphdr), (cs->cs_tcp.doff - 5) * 4);
--	cs->cs_hsize = ihl*2 + cs->cs_tcp.doff*2;
-+	  memcpy(cs->cs_ipopt, &iph[1], (ihl - 5) * 4);
-+	if (th->doff > 5)
-+	  memcpy(cs->cs_tcpopt, &th[1], (th->doff - 5) * 4);
-+	cs->cs_hsize = ihl*2 + th->doff*2;
- 	cs->initialized = true;
- 	/* Put headers back on packet
- 	 * Neither header checksum is recalculated
+ 	return true; // Callback already enqueued.
+@@ -554,7 +552,7 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 	// If we are being polled or there is no kthread, just leave.
+ 	t = READ_ONCE(rdp->nocb_gp_kthread);
+ 	if (rcu_nocb_poll || !t) {
+-		rcu_nocb_unlock_irqrestore(rdp, flags);
++		rcu_nocb_unlock(rdp);
+ 		trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 				    TPS("WakeNotPoll"));
+ 		return;
+@@ -567,17 +565,17 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 		rdp->qlen_last_fqs_check = len;
+ 		// Only lazy CBs in bypass list
+ 		if (lazy_len && bypass_len == lazy_len) {
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_LAZY,
+ 					   TPS("WakeLazy"));
+ 		} else if (!irqs_disabled_flags(flags)) {
+ 			/* ... if queue was empty ... */
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp(rdp, false);
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 					    TPS("WakeEmpty"));
+ 		} else {
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE,
+ 					   TPS("WakeEmptyIsDeferred"));
+ 		}
+@@ -595,15 +593,15 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 		if ((rdp->nocb_cb_sleep ||
+ 		     !rcu_segcblist_ready_cbs(&rdp->cblist)) &&
+ 		    !timer_pending(&rdp->nocb_timer)) {
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_FORCE,
+ 					   TPS("WakeOvfIsDeferred"));
+ 		} else {
+-			rcu_nocb_unlock_irqrestore(rdp, flags);
++			rcu_nocb_unlock(rdp);
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("WakeNot"));
+ 		}
+ 	} else {
+-		rcu_nocb_unlock_irqrestore(rdp, flags);
++		rcu_nocb_unlock(rdp);
+ 		trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("WakeNot"));
+ 	}
+ }
 -- 
 2.43.0
 
