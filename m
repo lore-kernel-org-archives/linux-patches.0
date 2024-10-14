@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37801BFE05;
-	Mon, 14 Oct 2024 14:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456A21B4F14;
+	Mon, 14 Oct 2024 14:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917324; cv=none; b=dXBploiu7T92a216hVuwkl2wYtCO7NTvSD63vOcvUuvP2TaDhDegmWoQ7oaKWO/Vw111NKDPsR7vXwHsNRHQMRjizsi5UvWG8Cqx6PTAy9eUpblocGcoJY3wjIVC9Qf5WKjTRXx4dvCzlcVaESOve0lOxItDHNBa/gb4EJaH5h8=
+	t=1728917327; cv=none; b=QA0r34DstW+N9mmWOnJbRv1UE8jVaTLKdeBboFNpqwo+frrXFMWHtCFd74P+SRx40uKu881WCuaVmul8jlsbtGdLY7Tx9npJ61qN9z2tFUVSQnu/alF5dJZ8Lifi+q8fn5uy68YgM8UghuX63ACfv+Ut6x4RjRPd1RffacvqtgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917324; c=relaxed/simple;
-	bh=QV6X90OhilYaIC5OF3NDVkM5YQnC2vIhmlAb1P81/Vc=;
+	s=arc-20240116; t=1728917327; c=relaxed/simple;
+	bh=3Z+Zu4xd8P1CCw15f0eXxfa38TIoJTvXQ1aoubzYHxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXy3zllJZCufN1fUITTdSogDH8YRr2sFMQNhdUVMjpbpg9cnsCs7A/brgTfijmPYmQ7unUqff84c+mJffQJxy8g75dpTky1Pd3QJTRUSuAXEgltdKHc+vUvZsUTR6bJVuRIVQnHlYOTytUZVOJuUoLQr3I3IMaeWq0N7QH4Y+sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPC5xfNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QV5o0HlvV+X9uMRMYcZ/MDrLT933jADg/4jXTIxJtydy0ILZAcmezZK+osgkznvpJXsjB2Tb8n4xcPUy592kugvdCIVM7W1jAtQMYMYVkjxJHaj4h7K8R55+++cLNuZsiQWEwBWSrmeFpfD19PHfgkQZBPi4Fnt2Sv0+co44Icg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8qs8pUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPC5xfNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97A1C4CEC7;
-	Mon, 14 Oct 2024 14:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8qs8pUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A894C4CECF;
+	Mon, 14 Oct 2024 14:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917323;
-	bh=QV6X90OhilYaIC5OF3NDVkM5YQnC2vIhmlAb1P81/Vc=;
+	s=korg; t=1728917326;
+	bh=3Z+Zu4xd8P1CCw15f0eXxfa38TIoJTvXQ1aoubzYHxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPC5xfNuBJQ7bDb3eO/1wsWyRw9tKQwinUBpre79MbkLSNCOVWoKh4rZTaRXQHeWg
-	 FZGmRb+AFBJXalelbC9PtmoW0DgCtwm0vv9N1+PqLfdDS9Yc1W+eOm+FRInfBp8nYW
-	 48eLO2fxofec1+JphK5V7OLxq92pgY0MSxMG7qGU=
+	b=m8qs8pUWvDu8SFlFkyNwzDVHKKdFACQR9Tg1oE//dLY1xXB6W4MFDWvDxtxuFAro6
+	 v77qCu6ww7MqxnQ3wfbvE8055mvPfLlkkCneDLQWgVS1TkMUILbz3qZwH/DY31QpXy
+	 tlwbu/8vgu0fG9aVhUrnuKHmL4azGAuuEjyAY1lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Roy <roypat@amazon.co.uk>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Alexander Graf <graf@amazon.com>,
-	David Hildenbrand <david@redhat.com>,
-	James Gowans <jgowans@amazon.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 210/213] secretmem: disable memfd_secret() if arch cannot set direct map
-Date: Mon, 14 Oct 2024 16:21:56 +0200
-Message-ID: <20241014141051.156157785@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 211/213] net: ethernet: cortina: Restore TSO support
+Date: Mon, 14 Oct 2024 16:21:57 +0200
+Message-ID: <20241014141051.194300027@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -54,75 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrick Roy <roypat@amazon.co.uk>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 532b53cebe58f34ce1c0f34d866f5c0e335c53c6 upstream.
+commit 2942dfab630444d46aaa37fb7d629b620abbf6ba upstream.
 
-Return -ENOSYS from memfd_secret() syscall if !can_set_direct_map().  This
-is the case for example on some arm64 configurations, where marking 4k
-PTEs in the direct map not present can only be done if the direct map is
-set up at 4k granularity in the first place (as ARM's break-before-make
-semantics do not easily allow breaking apart large/gigantic pages).
+An earlier commit deleted the TSO support in the Cortina Gemini
+driver because the driver was confusing gso_size and MTU,
+probably because what the Linux kernel calls "gso_size" was
+called "MTU" in the datasheet.
 
-More precisely, on arm64 systems with !can_set_direct_map(),
-set_direct_map_invalid_noflush() is a no-op, however it returns success
-(0) instead of an error.  This means that memfd_secret will seemingly
-"work" (e.g.  syscall succeeds, you can mmap the fd and fault in pages),
-but it does not actually achieve its goal of removing its memory from the
-direct map.
+Restore the functionality properly reading the gso_size from
+the skbuff.
 
-Note that with this patch, memfd_secret() will start erroring on systems
-where can_set_direct_map() returns false (arm64 with
-CONFIG_RODATA_FULL_DEFAULT_ENABLED=n, CONFIG_DEBUG_PAGEALLOC=n and
-CONFIG_KFENCE=n), but that still seems better than the current silent
-failure.  Since CONFIG_RODATA_FULL_DEFAULT_ENABLED defaults to 'y', most
-arm64 systems actually have a working memfd_secret() and aren't be
-affected.
+Tested with iperf3, running a server on a different machine
+and client on the device with the cortina gemini ethernet:
 
->From going through the iterations of the original memfd_secret patch
-series, it seems that disabling the syscall in these scenarios was the
-intended behavior [1] (preferred over having
-set_direct_map_invalid_noflush return an error as that would result in
-SIGBUSes at page-fault time), however the check for it got dropped between
-v16 [2] and v17 [3], when secretmem moved away from CMA allocations.
+Connecting to host 192.168.1.2, port 5201
+60008000.ethernet-port eth0: segment offloading mss = 05ea len=1c8a
+60008000.ethernet-port eth0: segment offloading mss = 05ea len=1c8a
+60008000.ethernet-port eth0: segment offloading mss = 05ea len=27da
+60008000.ethernet-port eth0: segment offloading mss = 05ea len=0b92
+60008000.ethernet-port eth0: segment offloading mss = 05ea len=2bda
+(...)
 
-[1]: https://lore.kernel.org/lkml/20201124164930.GK8537@kernel.org/
-[2]: https://lore.kernel.org/lkml/20210121122723.3446-11-rppt@kernel.org/#t
-[3]: https://lore.kernel.org/lkml/20201125092208.12544-10-rppt@kernel.org/
+(The hardware MSS 0x05ea here includes the ethernet headers.)
 
-Link: https://lkml.kernel.org/r/20241001080056.784735-1-roypat@amazon.co.uk
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: Patrick Roy <roypat@amazon.co.uk>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Alexander Graf <graf@amazon.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: James Gowans <jgowans@amazon.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If I disable all segment offloading on the receiving host and
+dump packets using tcpdump -xx like this:
+
+ethtool -K enp2s0 gro off gso off tso off
+tcpdump -xx -i enp2s0 host 192.168.1.136
+
+I get segmented packages such as this when running iperf3:
+
+23:16:54.024139 IP OpenWrt.lan.59168 > Fecusia.targus-getdata1:
+Flags [.], seq 1486:2934, ack 1, win 4198,
+options [nop,nop,TS val 3886192908 ecr 3601341877], length 1448
+0x0000:  fc34 9701 a0c6 14d6 4da8 3c4f 0800 4500
+0x0010:  05dc 16a0 4000 4006 9aa1 c0a8 0188 c0a8
+0x0020:  0102 e720 1451 ff25 9822 4c52 29cf 8010
+0x0030:  1066 ac8c 0000 0101 080a e7a2 990c d6a8
+(...)
+0x05c0:  5e49 e109 fe8c 4617 5e18 7a82 7eae d647
+0x05d0:  e8ee ae64 dc88 c897 3f8a 07a4 3a33 6b1b
+0x05e0:  3501 a30f 2758 cc44 4b4a
+
+Several such packets often follow after each other verifying
+the segmentation into 0x05a8 (1448) byte packages also on the
+reveiving end. As can be seen, the ethernet frames are
+0x05ea (1514) in size.
+
+Performance with iperf3 before this patch: ~15.5 Mbit/s
+Performance with iperf3 after this patch: ~175 Mbit/s
+
+This was running a 60 second test (twice) the best measurement
+was 179 Mbit/s.
+
+For comparison if I run iperf3 with UDP I get around 1.05 Mbit/s
+both before and after this patch.
+
+While this is a gigabit ethernet interface, the CPU is a cheap
+D-Link DIR-685 router (based on the ARMv5 Faraday FA526 at
+~50 MHz), and the software is not supposed to drive traffic,
+as the device has a DSA chip, so this kind of numbers can be
+expected.
+
+Fixes: ac631873c9e7 ("net: ethernet: cortina: Drop TSO support")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/secretmem.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c |   23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -238,7 +238,7 @@ SYSCALL_DEFINE1(memfd_secret, unsigned i
- 	/* make sure local flags do not confict with global fcntl.h */
- 	BUILD_BUG_ON(SECRETMEM_FLAGS_MASK & O_CLOEXEC);
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -79,7 +79,8 @@ MODULE_PARM_DESC(debug, "Debug level (0=
+ #define GMAC0_IRQ4_8 (GMAC0_MIB_INT_BIT | GMAC0_RX_OVERRUN_INT_BIT)
  
--	if (!secretmem_enable)
-+	if (!secretmem_enable || !can_set_direct_map())
- 		return -ENOSYS;
+ #define GMAC_OFFLOAD_FEATURES (NETIF_F_SG | NETIF_F_IP_CSUM | \
+-			       NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM)
++			       NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM | \
++			       NETIF_F_TSO | NETIF_F_TSO_ECN | NETIF_F_TSO6)
  
- 	if (flags & ~(SECRETMEM_FLAGS_MASK | O_CLOEXEC))
-@@ -280,7 +280,7 @@ static struct file_system_type secretmem
+ /**
+  * struct gmac_queue_page - page buffer per-page info
+@@ -1148,13 +1149,25 @@ static int gmac_map_tx_bufs(struct net_d
+ 	skb_frag_t *skb_frag;
+ 	dma_addr_t mapping;
+ 	void *buffer;
++	u16 mss;
+ 	int ret;
  
- static int __init secretmem_init(void)
- {
--	if (!secretmem_enable)
-+	if (!secretmem_enable || !can_set_direct_map())
- 		return 0;
+-	/* TODO: implement proper TSO using MTU in word3 */
+ 	word1 = skb->len;
+ 	word3 = SOF_BIT;
  
- 	secretmem_mnt = kern_mount(&secretmem_fs);
+-	if (skb->len >= ETH_FRAME_LEN) {
++	mss = skb_shinfo(skb)->gso_size;
++	if (mss) {
++		/* This means we are dealing with TCP and skb->len is the
++		 * sum total of all the segments. The TSO will deal with
++		 * chopping this up for us.
++		 */
++		/* The accelerator needs the full frame size here */
++		mss += skb_tcp_all_headers(skb);
++		netdev_dbg(netdev, "segment offloading mss = %04x len=%04x\n",
++			   mss, skb->len);
++		word1 |= TSS_MTU_ENABLE_BIT;
++		word3 |= mss;
++	} else if (skb->len >= ETH_FRAME_LEN) {
+ 		/* Hardware offloaded checksumming isn't working on frames
+ 		 * bigger than 1514 bytes. A hypothesis about this is that the
+ 		 * checksum buffer is only 1518 bytes, so when the frames get
+@@ -1169,7 +1182,9 @@ static int gmac_map_tx_bufs(struct net_d
+ 				return ret;
+ 		}
+ 		word1 |= TSS_BYPASS_BIT;
+-	} else if (skb->ip_summed == CHECKSUM_PARTIAL) {
++	}
++
++	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+ 		int tcp = 0;
+ 
+ 		/* We do not switch off the checksumming on non TCP/UDP
 
 
