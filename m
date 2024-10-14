@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF551AB6FD;
-	Mon, 14 Oct 2024 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C81AB6FD;
+	Mon, 14 Oct 2024 15:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919379; cv=none; b=XtXEMDTivZYIyECDoPlQ6AdA4EBJ9UeG1hBXL5/vo/sIychvYuZP6bF5nahZ5QJN6zF7CtcRvx9dKBDV1EGQf98W8iYPddff28qRX2wf2MUGovEpq/uYgqes6cGGHWaS4kjubU+B5O2NOn89Y7EVxfe9G3/+Efu+F7E9hrWkCWc=
+	t=1728919382; cv=none; b=Kl+OOmFAa4Z6ClzWPmaoLjh6VAguzLjavse8ikT5SAHNlKEAr4fD5bIsZXXcHN5e6eZP2YKe9wGzAmqIu1E+w6xj/IzlaicDknVgfYQ5iHmEfguu2NVMUowae2ETXwSM9DqPxX3Y6RrRA3jRHIrXRyNikX8fygv05GNWQ4rPlhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919379; c=relaxed/simple;
-	bh=+k15zycAGIwEK5+E6otpdEbFMJ9yb6/JcZDDCS81Rys=;
+	s=arc-20240116; t=1728919382; c=relaxed/simple;
+	bh=deUCibD/MY0rnHDh33UZqLnWaeNSmHjvzKUbd44YFOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExOplXxMhmYPQj7EeltIpEPJJj8jBTtFlQnWhgJXEJfITODRwPUTuCxO9DMt/L5cWcYKuJH01Ps7zyygbbYxntQrtjz4uqdb0IQOTMT9hHcAxzc9DoA5JTFF+3uPQ1tLmiVjP/fDpsi1riWtlquKE5CS8FL4WeXex84trvkkzmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvK4oTzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imKrDdcTxgs0V3y12VqqW/BT2mqKOM3CUmH5xZcHlnrUgz1FWVn0EumJgtLJVZlLPNhD66PTaREruw/I/Ky8CDUWn+pV6+lxnFyblISrk2KBFcDCCsocRraHl4kvYuAtqHRC4mL23BEX8eXvtbGXKG5VKZjzi6aAFmxQTilCsLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJKVIl6o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvK4oTzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7096CC4CEC3;
-	Mon, 14 Oct 2024 15:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJKVIl6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E595DC4CEC3;
+	Mon, 14 Oct 2024 15:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919378;
-	bh=+k15zycAGIwEK5+E6otpdEbFMJ9yb6/JcZDDCS81Rys=;
+	s=korg; t=1728919382;
+	bh=deUCibD/MY0rnHDh33UZqLnWaeNSmHjvzKUbd44YFOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvK4oTzUtyU6uBBXiIu9VCwNP35TzyYIZjHdV6AQILIBtxCnmak4QMkITv8N8NEzq
-	 XRDWSxgLvuUTfKN2dysC1lsQTOxukFXlXvq3Z+fAOJL63ugRKFJ/EBbnfxCFqhInjO
-	 0CJhbRg3ipILRWgSicP8+85xC/zQlo6/87YpQaLM=
+	b=jJKVIl6oWiQrpjO2GstYAhIjDfTTLqvpNt/L7OeglM3oG46V0hjBOOVR8weOF7XLy
+	 FImiP1YAGJ6dh+CIPz8anjumFpvMhUo0bbf+9wVUyxTbgFqvcAwqkBCsNJcVJ4ky6Q
+	 j2+FxGJFCXdIgIZUyZwlZf+JobLuCU1IhN7dUF+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 592/798] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for LUCID EVO PLL
-Date: Mon, 14 Oct 2024 16:19:06 +0200
-Message-ID: <20241014141241.263165664@linuxfoundation.org>
+	wangrong <wangrong@uniontech.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 593/798] smb: client: use actual path when queryfs
+Date: Mon, 14 Oct 2024 16:19:07 +0200
+Message-ID: <20241014141241.302639803@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,43 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajit Pandey <quic_ajipan@quicinc.com>
+From: wangrong <wangrong@uniontech.com>
 
-commit fff617979f97c773aaa9432c31cf62444b3bdbd4 upstream.
+commit a421e3fe0e6abe27395078f4f0cec5daf466caea upstream.
 
-In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
-PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
-register using regmap_write() API in __alpha_pll_trion_set_rate
-callback will override LUCID EVO PLL initial configuration related
-to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
+Due to server permission control, the client does not have access to
+the shared root directory, but can access subdirectories normally, so
+users usually mount the shared subdirectories directly. In this case,
+queryfs should use the actual path instead of the root directory to
+avoid the call returning an error (EACCES).
 
-Observed random PLL lock failures during PLL enable due to such
-override in PLL calibration value. Use regmap_update_bits() with
-L_VAL bitfield mask instead of regmap_write() API to update only
-PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
-
-Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+Signed-off-by: wangrong <wangrong@uniontech.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20240611133752.2192401-2-quic_ajipan@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsfs.c   |   13 ++++++++++++-
+ fs/smb/client/cifsglob.h |    2 +-
+ fs/smb/client/smb1ops.c  |    2 +-
+ fs/smb/client/smb2ops.c  |   19 ++++++++++++-------
+ 4 files changed, 26 insertions(+), 10 deletions(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -1581,7 +1581,7 @@ static int __alpha_pll_trion_set_rate(st
- 	if (ret < 0)
- 		return ret;
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -311,8 +311,17 @@ cifs_statfs(struct dentry *dentry, struc
+ 	struct TCP_Server_Info *server = tcon->ses->server;
+ 	unsigned int xid;
+ 	int rc = 0;
++	const char *full_path;
++	void *page;
  
--	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+	regmap_update_bits(pll->clkr.regmap, PLL_L_VAL(pll), LUCID_EVO_PLL_L_VAL_MASK,  l);
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+ 	xid = get_xid();
++	page = alloc_dentry_path();
++
++	full_path = build_path_from_dentry(dentry, page);
++	if (IS_ERR(full_path)) {
++		rc = PTR_ERR(full_path);
++		goto statfs_out;
++	}
  
- 	/* Latch the PLL input */
+ 	if (le32_to_cpu(tcon->fsAttrInfo.MaxPathNameComponentLength) > 0)
+ 		buf->f_namelen =
+@@ -328,8 +337,10 @@ cifs_statfs(struct dentry *dentry, struc
+ 	buf->f_ffree = 0;	/* unlimited */
+ 
+ 	if (server->ops->queryfs)
+-		rc = server->ops->queryfs(xid, tcon, cifs_sb, buf);
++		rc = server->ops->queryfs(xid, tcon, full_path, cifs_sb, buf);
+ 
++statfs_out:
++	free_dentry_path(page);
+ 	free_xid(xid);
+ 	return rc;
+ }
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -432,7 +432,7 @@ struct smb_version_operations {
+ 			__u16 net_fid, struct cifsInodeInfo *cifs_inode);
+ 	/* query remote filesystem */
+ 	int (*queryfs)(const unsigned int, struct cifs_tcon *,
+-		       struct cifs_sb_info *, struct kstatfs *);
++		       const char *, struct cifs_sb_info *, struct kstatfs *);
+ 	/* send mandatory brlock to the server */
+ 	int (*mand_lock)(const unsigned int, struct cifsFileInfo *, __u64,
+ 			 __u64, __u32, int, int, bool);
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -906,7 +906,7 @@ cifs_oplock_response(struct cifs_tcon *t
+ 
+ static int
+ cifs_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
+-	     struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
++	     const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
+ {
+ 	int rc = -EOPNOTSUPP;
+ 
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2677,7 +2677,7 @@ smb2_query_info_compound(const unsigned
+ 
+ static int
+ smb2_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
+-	     struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
++	     const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
+ {
+ 	struct smb2_query_info_rsp *rsp;
+ 	struct smb2_fs_full_size_info *info = NULL;
+@@ -2686,7 +2686,7 @@ smb2_queryfs(const unsigned int xid, str
+ 	int rc;
+ 
+ 
+-	rc = smb2_query_info_compound(xid, tcon, "",
++	rc = smb2_query_info_compound(xid, tcon, path,
+ 				      FILE_READ_ATTRIBUTES,
+ 				      FS_FULL_SIZE_INFORMATION,
+ 				      SMB2_O_INFO_FILESYSTEM,
+@@ -2713,28 +2713,33 @@ qfs_exit:
+ 
+ static int
+ smb311_queryfs(const unsigned int xid, struct cifs_tcon *tcon,
+-	       struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
++	       const char *path, struct cifs_sb_info *cifs_sb, struct kstatfs *buf)
+ {
+ 	int rc;
+-	__le16 srch_path = 0; /* Null - open root of share */
++	__le16 *utf16_path = NULL;
+ 	u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
+ 	struct cifs_open_parms oparms;
+ 	struct cifs_fid fid;
+ 
+ 	if (!tcon->posix_extensions)
+-		return smb2_queryfs(xid, tcon, cifs_sb, buf);
++		return smb2_queryfs(xid, tcon, path, cifs_sb, buf);
+ 
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+-		.path = "",
++		.path = path,
+ 		.desired_access = FILE_READ_ATTRIBUTES,
+ 		.disposition = FILE_OPEN,
+ 		.create_options = cifs_create_options(cifs_sb, 0),
+ 		.fid = &fid,
+ 	};
+ 
+-	rc = SMB2_open(xid, &oparms, &srch_path, &oplock, NULL, NULL,
++	utf16_path = cifs_convert_path_to_utf16(path, cifs_sb);
++	if (utf16_path == NULL)
++		return -ENOMEM;
++
++	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, NULL, NULL,
+ 		       NULL, NULL);
++	kfree(utf16_path);
+ 	if (rc)
+ 		return rc;
+ 
 
 
