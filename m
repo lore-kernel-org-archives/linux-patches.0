@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0184849659;
-	Mon, 14 Oct 2024 15:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BF01AB6FD;
+	Mon, 14 Oct 2024 15:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919386; cv=none; b=U2dsX/y2Xn2AqJgeMDI2YqjAkhyD+Hh0PL27jxpBmTVJs05rUmSWv8198txhB42IFjlL6Br8Fa3tO4TqxaiP4tw6aRoGP26jmk1ohPO8TRyZEovHJn6Iwj7rQgdttHTcmw/ZMJ9VgAOeCpgSY5N0qTCSMldF+m++aqhJ48SgQXY=
+	t=1728919390; cv=none; b=roeBCk2mXj9y1tkwnvE8NoSTompvqCqurld5DkwkrlCw/k6S7mO9EdMjN+uNmBaqiytiHwnsisd7Nk/lGOZLj7NNU4UAICIRGTtFY8gufKJz80OlQM7vKO4nNTMHr6hx6CF+hHVgeWd3xa1S7UDT0z7ch5Iq/GPRde0OBnqOIqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919386; c=relaxed/simple;
-	bh=XelvvyGMpBt/9P7agpwmQvArXPzr7ov02ZD7a3NzHC8=;
+	s=arc-20240116; t=1728919390; c=relaxed/simple;
+	bh=K1h7XlK/s1UsCx5TKyhqge5mGFsGBUMVeeWBaJ+Cn5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GIwkPxl85kPUVFyKAL738bv1GJhZ8Y/5QvPhISCaghYIs3cZT2qAjf+aisSnlR3iEfXFFGDmaj8dBb0x4FBU5yU2iMwBuLf5M5Y2uytdeARmIEEd5Z1qJci5IQ6KKMhRwHHTxQmXzWg2R6u8XiVNNgEJJVbUpRJDoIrZppnQDEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1SHk4/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QI2pvzmlsTEkAeMFhWcADHYKVQlZM6qoXuYRROulLLHbPWIxxtyWrROKtXmGW7KVbEFWesc55m4vfsO9uh40irCFCX/ECQEj76w+giQIJLzKWQ6+hbvK17lHn0K1G/Po3UaPM037m0gEuDgFLtEKmnmYPvx7iNCBCatlaw+kLjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zn41ZfsR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1SHk4/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667DDC4CEC3;
-	Mon, 14 Oct 2024 15:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zn41ZfsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6526FC4CEC3;
+	Mon, 14 Oct 2024 15:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919385;
-	bh=XelvvyGMpBt/9P7agpwmQvArXPzr7ov02ZD7a3NzHC8=;
+	s=korg; t=1728919389;
+	bh=K1h7XlK/s1UsCx5TKyhqge5mGFsGBUMVeeWBaJ+Cn5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1SHk4/CxcssprPQxn+QQVb8R/vyl9wL7TDuKv4BxxJQPiqdAzLKHccuTgCvZ8dgC
-	 a0gBboTEsM/AoXd+O5lh4pORXraYOq4EGW5WFVLNchc0gh78Nl4znf/MB29hBXM1Xn
-	 tbJ/EvWTEbvO9j7Jz3GVDrThWcP5L+netUf+XFm0=
+	b=zn41ZfsRwf6MArPQO/uSAvviGUmHPsTy0kpCjkUSgRfTg/Be7Vws/PTdpsytQur1u
+	 YUBQIgYlyVN4COFQTsI0cqJjTHIiLWCpb79iLVQH/H4OpkPf02ZTWg9l4c0jWjp2Ng
+	 f3SS10w6LTvL3a/TojaHjfqByiIqDbxxoU7jtn68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 594/798] iio: magnetometer: ak8975: Fix reading for ak099xx sensors
-Date: Mon, 14 Oct 2024 16:19:08 +0200
-Message-ID: <20241014141241.340930790@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 595/798] gso: fix udp gso fraglist segmentation after pull from frag_list
+Date: Mon, 14 Oct 2024 16:19:09 +0200
+Message-ID: <20241014141241.379558125@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,81 +44,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 129464e86c7445a858b790ac2d28d35f58256bbe upstream.
+commit a1e40ac5b5e9077fe1f7ae0eb88034db0f9ae1ab upstream.
 
-Move ST2 reading with overflow handling after measurement data
-reading.
-ST2 register read have to be read after read measurment data,
-because it means end of the reading and realease the lock on the data.
-Remove ST2 read skip on interrupt based waiting because ST2 required to
-be read out at and of the axis read.
+Detect gso fraglist skbs with corrupted geometry (see below) and
+pass these to skb_segment instead of skb_segment_list, as the first
+can segment them correctly.
 
-Fixes: 57e73a423b1e ("iio: ak8975: add ak09911 and ak09912 support")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Link: https://patch.msgid.link/20240819-ak09918-v4-2-f0734d14cfb9@mainlining.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Valid SKB_GSO_FRAGLIST skbs
+- consist of two or more segments
+- the head_skb holds the protocol headers plus first gso_size
+- one or more frag_list skbs hold exactly one segment
+- all but the last must be gso_size
+
+Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
+modify these skbs, breaking these invariants.
+
+In extreme cases they pull all data into skb linear. For UDP, this
+causes a NULL ptr deref in __udpv4_gso_segment_list_csum at
+udp_hdr(seg->next)->dest.
+
+Detect invalid geometry due to pull, by checking head_skb size.
+Don't just drop, as this may blackhole a destination. Convert to be
+able to pass to regular skb_segment.
+
+Link: https://lore.kernel.org/netdev/20240428142913.18666-1-shiming.cheng@mediatek.com/
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20241001171752.107580-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/ak8975.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ net/ipv4/udp_offload.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -692,22 +692,8 @@ static int ak8975_start_read_axis(struct
- 	if (ret < 0)
- 		return ret;
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -289,8 +289,26 @@ struct sk_buff *__udp_gso_segment(struct
+ 		return NULL;
+ 	}
  
--	/* This will be executed only for non-interrupt based waiting case */
--	if (ret & data->def->ctrl_masks[ST1_DRDY]) {
--		ret = i2c_smbus_read_byte_data(client,
--					       data->def->ctrl_regs[ST2]);
--		if (ret < 0) {
--			dev_err(&client->dev, "Error in reading ST2\n");
--			return ret;
--		}
--		if (ret & (data->def->ctrl_masks[ST2_DERR] |
--			   data->def->ctrl_masks[ST2_HOFL])) {
--			dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
--			return -EINVAL;
--		}
--	}
--
--	return 0;
-+	/* Return with zero if the data is ready. */
-+	return !data->def->ctrl_regs[ST1_DRDY];
- }
- 
- /* Retrieve raw flux value for one of the x, y, or z axis.  */
-@@ -734,6 +720,20 @@ static int ak8975_read_axis(struct iio_d
- 	if (ret < 0)
- 		goto exit;
- 
-+	/* Read out ST2 for release lock on measurment data. */
-+	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Error in reading ST2\n");
-+		goto exit;
-+	}
+-	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
+-		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
++	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
++		 /* Detect modified geometry and pass those to skb_segment. */
++		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
++			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
 +
-+	if (ret & (data->def->ctrl_masks[ST2_DERR] |
-+		   data->def->ctrl_masks[ST2_HOFL])) {
-+		dev_err(&client->dev, "ST2 status error 0x%x\n", ret);
-+		ret = -EINVAL;
-+		goto exit;
-+	}
++		 /* Setup csum, as fraglist skips this in udp4_gro_receive. */
++		gso_skb->csum_start = skb_transport_header(gso_skb) - gso_skb->head;
++		gso_skb->csum_offset = offsetof(struct udphdr, check);
++		gso_skb->ip_summed = CHECKSUM_PARTIAL;
 +
- 	mutex_unlock(&data->lock);
++		uh = udp_hdr(gso_skb);
++		if (is_ipv6)
++			uh->check = ~udp_v6_check(gso_skb->len,
++						  &ipv6_hdr(gso_skb)->saddr,
++						  &ipv6_hdr(gso_skb)->daddr, 0);
++		else
++			uh->check = ~udp_v4_check(gso_skb->len,
++						  ip_hdr(gso_skb)->saddr,
++						  ip_hdr(gso_skb)->daddr, 0);
++	}
  
- 	pm_runtime_mark_last_busy(&data->client->dev);
+ 	skb_pull(gso_skb, sizeof(*uh));
+ 
 
 
