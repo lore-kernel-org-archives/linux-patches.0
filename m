@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1971D1B86CC;
-	Mon, 14 Oct 2024 15:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A401B86CC;
+	Mon, 14 Oct 2024 15:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919151; cv=none; b=Mp3qyS6toyOVGtyG2bplC0N13MOv56xdCKxD1jdo83DmGijE7DRaFFmfXR7+WGJlCI1IWtHDjzon9Dk2wBpKoE2LcYqKIc9fiNC5dDM0oWCTe9Nr43QTdR6hWlhuQozzJjlKUEi6HNjWNSUNYacP951rQ2xH0LgNb+q1MSDBZxU=
+	t=1728919154; cv=none; b=HLH+UxMmbngjRIomuf7pqUPO9Pz0fnCci3JEds9+P7zLYSJC2G4cmPnKiRAHceyIJIaLdGL8EQ7d0523nm/URSoh017OT5Hr0Sv2AZzxIIXCA3l/sDHR4JO2oipKjpd4xCOZphwAmxYRTTs2VALoNxImIcgWg5Pv9+hhePsmcNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919151; c=relaxed/simple;
-	bh=F4TvSckTmLOKHsfUuCtDT62VjNrHnBP8l3KibBmf0DY=;
+	s=arc-20240116; t=1728919154; c=relaxed/simple;
+	bh=smRawrV3m9iqcj2t5Glqaee4/O+6Epn3ZTcxoLSaMhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ns/5zY0FjuoXddZ0igKUrV9ycXF9UX0Nlt/FkvULYaq8B6DuBIO6F6obUacluK3g4rXFuVAJwumAWmdnXciq6WrfvchhYC17V1rLB82dIVsBwSx6pmpVaA2Xly8f4DbBMmA5QcHwru9HlynK6fX+RzPtQO6XbloqKSHaHDqx2uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyEmtTa4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmKb6/+A9UCAUs0Bs2HVd7YMvJaOJuin5uVTsrUStBgNgoyJauqw+U3I0OZHo0W+E++DuoEblxQOfvTe1VT2tQgYhL78cOboP8LZMi2vKDIj7ZgQOw7QYImiI42MQohIURKw6/35L8mCOZMnTSFqdcP/o4vZsGjBwIu7ME/Ysdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHacpb8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyEmtTa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D284C4CEC3;
-	Mon, 14 Oct 2024 15:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHacpb8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CE6C4CEC3;
+	Mon, 14 Oct 2024 15:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919151;
-	bh=F4TvSckTmLOKHsfUuCtDT62VjNrHnBP8l3KibBmf0DY=;
+	s=korg; t=1728919154;
+	bh=smRawrV3m9iqcj2t5Glqaee4/O+6Epn3ZTcxoLSaMhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyEmtTa4yPV7f/rbkiOBlBjqseaw40NSCj3Guw4d/+xGa4DyS6FVR/SXycVulR+II
-	 YiTALH/p7obdeuxHZqp8XBXBZn0axGVmUzkQDe+bDpWLmVzl3s8HnnhkP6bAXTetPX
-	 KaTkQAu+2KuC/VuQqtguHJOgVjFHG0FiHOWh4B+A=
+	b=ZHacpb8ZGUEUApNM33X3cZvcDRUS3CBf+pWmUd7Z1w54qep5KmqAyKp1q8iPCTA+o
+	 +f52MzAP6N5gTxTe4XS3CTJJbBGasfpilJ1Wy2Nw9Kx+qo4DaeEa9FDzI+oaNUQtRi
+	 Zsha9vSsoB1qNdRzQ5mPqSE0iJhLbKVHrbbvGGWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Marek Vasut <marex@denx.de>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 525/798] i2c: stm32f7: Do not prepare/unprepare clock during runtime suspend/resume
-Date: Mon, 14 Oct 2024 16:17:59 +0200
-Message-ID: <20241014141238.604819054@linuxfoundation.org>
+Subject: [PATCH 6.1 526/798] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Mon, 14 Oct 2024 16:18:00 +0200
+Message-ID: <20241014141238.651964698@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,58 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 048bbbdbf85e5e00258dfb12f5e368f908801d7b upstream.
+commit e2c85d85a05f16af2223fcc0195ff50a7938b372 upstream.
 
-In case there is any sort of clock controller attached to this I2C bus
-controller, for example Versaclock or even an AIC32x4 I2C codec, then
-an I2C transfer triggered from the clock controller clk_ops .prepare
-callback may trigger a deadlock on drivers/clk/clk.c prepare_lock mutex.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-This is because the clock controller first grabs the prepare_lock mutex
-and then performs the prepare operation, including its I2C access. The
-I2C access resumes this I2C bus controller via .runtime_resume callback,
-which calls clk_prepare_enable(), which attempts to grab the prepare_lock
-mutex again and deadlocks.
-
-Since the clock are already prepared since probe() and unprepared in
-remove(), use simple clk_enable()/clk_disable() calls to enable and
-disable the clock on runtime suspend and resume, to avoid hitting the
-prepare_lock mutex.
-
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Fixes: 4e7bca6fc07b ("i2c: i2c-stm32f7: add PM Runtime support")
-Cc: <stable@vger.kernel.org> # v5.0+
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.19+
+Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-qcom-geni.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -2353,7 +2353,7 @@ static int __maybe_unused stm32f7_i2c_ru
- 	struct stm32f7_i2c_dev *i2c_dev = dev_get_drvdata(dev);
- 
- 	if (!stm32f7_i2c_is_slave_registered(i2c_dev))
--		clk_disable_unprepare(i2c_dev->clk);
-+		clk_disable(i2c_dev->clk);
- 
- 	return 0;
- }
-@@ -2364,9 +2364,9 @@ static int __maybe_unused stm32f7_i2c_ru
- 	int ret;
- 
- 	if (!stm32f7_i2c_is_slave_registered(i2c_dev)) {
--		ret = clk_prepare_enable(i2c_dev->clk);
-+		ret = clk_enable(i2c_dev->clk);
- 		if (ret) {
--			dev_err(dev, "failed to prepare_enable clock\n");
-+			dev_err(dev, "failed to enable clock\n");
- 			return ret;
- 		}
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -821,15 +821,13 @@ static int geni_i2c_probe(struct platfor
+ 	init_completion(&gi2c->done);
+ 	spin_lock_init(&gi2c->lock);
+ 	platform_set_drvdata(pdev, gi2c);
+-	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
++	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
+ 			       dev_name(dev), gi2c);
+ 	if (ret) {
+ 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
+ 			gi2c->irq, ret);
+ 		return ret;
  	}
+-	/* Disable the interrupt so that the system can enter low-power mode */
+-	disable_irq(gi2c->irq);
+ 	i2c_set_adapdata(&gi2c->adap, gi2c);
+ 	gi2c->adap.dev.parent = dev;
+ 	gi2c->adap.dev.of_node = dev->of_node;
 
 
