@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7F71AC423;
-	Mon, 14 Oct 2024 15:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD531AB6E9;
+	Mon, 14 Oct 2024 15:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919588; cv=none; b=DVx/9gtJMHTfAN9t+LAiHzGAeH6ayeSn3bHtaVygtmUVyURHAHcpMnYDvlK6OxJXTGpz3G+vxdwOlEAdIqi31T2NJp3cupN3TJsbM8wLf/gzCDOLrxqfxNZ9TG0Y0VWHercPBJrjaCLcc5BHR/DCmTTDtgbmsznlRnrTKdUBBlg=
+	t=1728919592; cv=none; b=QKJep4PTAmM05l64ruwiTTscGuDtWygkLsdSk1puKyI/fS8tx0Gl5br8AqJpY0YUI601BDqcaNpIq5wdPTn/jJNymkvMmrqiF4wsMXXYhKubOnS4fXsEWyp5XUR2IcJN3VHDfO/UECQEXLo3conPtrjAluuBIsbhpP/pE3Kjb1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919588; c=relaxed/simple;
-	bh=c6UtIYChEwRHSRVqXnlzg2vjhhT8Dhfq6kOv+TVbIuQ=;
+	s=arc-20240116; t=1728919592; c=relaxed/simple;
+	bh=PzQLZOPoDtaTqW2wQkDavBPDOwRAznzmubL6oUfB5uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZVblpgSxg6InFXXxcaYF/peTHFtBYWGVHrBB0QXdHSDWLZRytM0EcqBfv/MC3z31IZEUBAR3i4d7P7ND4f/B8pmslDv1YMeG9eekPsZK7JTVECYCKz6Gyiy6lzJHogTK0TBeLqGweEtohFTV8iuNurJ8Ge9ZR5aM+NkFlDbfgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ge2wYnY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=makxKidf84rDD0UeGpheveqZ8+iNHHpqsXWbUMhRZYjJSi2a7gTfQaFl0N9qHDB3LFJr95PP9an0EGHgWi9dV+Msdk67YtDnalud+kyRLRwIfxQ5htFqAFLe69YA/J/PrJTv8lmIFIJBnqHfwN8wEqFlpsh88N4n9/sh6cHymgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhaBdJcg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ge2wYnY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B04DC4CEC3;
-	Mon, 14 Oct 2024 15:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhaBdJcg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4BDC4CEC3;
+	Mon, 14 Oct 2024 15:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919588;
-	bh=c6UtIYChEwRHSRVqXnlzg2vjhhT8Dhfq6kOv+TVbIuQ=;
+	s=korg; t=1728919591;
+	bh=PzQLZOPoDtaTqW2wQkDavBPDOwRAznzmubL6oUfB5uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ge2wYnY0xMsyzlFninAs/tJmOp7ogPgFq1tUtOQ9tLuH9SyajuM1J0zsSxv4+Al2I
-	 S8WdxY88JeFK/wtePGt5NM6fZDB4xSqapIFy9pZQKkAP9l2l3NtblJ2aI+rKkqZPpx
-	 U0MSb7a+pTgpKM76rcb4bSEbVbBnvE+EE+6rZIOE=
+	b=xhaBdJcgOMr/OJn4LnWX6gr8LPA/Das+B8HmpKZeYYE2dlHOgCl13hdIK5GQBq3rH
+	 Rxf7yRPLUYnfznA8Ev+XSDNxTvT3saOZsCbWemGariDDUtQt7fSI5JS3Rq8gzBmy6j
+	 SK81WovtmqaXJWfW5drSrLjaPJ8gXKMoUX1KScUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 632/798] lib/buildid: harden build ID parsing logic
-Date: Mon, 14 Oct 2024 16:19:46 +0200
-Message-ID: <20241014141242.865518264@linuxfoundation.org>
+Subject: [PATCH 6.1 650/798] clk: qcom: gcc-sc8180x: Add GPLL9 support
+Date: Mon, 14 Oct 2024 16:20:04 +0200
+Message-ID: <20241014141243.588425736@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,175 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit 905415ff3ffb1d7e5afa62bacabd79776bd24606 ]
+[ Upstream commit 818a2f8d5e4ad2c1e39a4290158fe8e39a744c70 ]
 
-Harden build ID parsing logic, adding explicit READ_ONCE() where it's
-important to have a consistent value read and validated just once.
+Add the missing GPLL9 pll and fix the gcc_parents_7 data to use
+the correct pll hw.
 
-Also, as pointed out by Andi Kleen, we need to make sure that entire ELF
-note is within a page bounds, so move the overflow check up and add an
-extra note_size boundaries validation.
-
-Fixes tag below points to the code that moved this code into
-lib/buildid.c, and then subsequently was used in perf subsystem, making
-this code exposed to perf_event_open() users in v5.12+.
-
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Suggested-by: Andi Kleen <ak@linux.intel.com>
-Fixes: bd7525dacd7e ("bpf: Move stack_map_get_build_id into lib")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240829174232.3133883-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-3-8b3eaa5fb856@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/buildid.c | 76 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 32 deletions(-)
+ drivers/clk/qcom/gcc-sc8180x.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/lib/buildid.c b/lib/buildid.c
-index 493537344fc81..e41fb0ee405f6 100644
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -18,31 +18,37 @@ static int parse_build_id_buf(unsigned char *build_id,
- 			      const void *note_start,
- 			      Elf32_Word note_size)
- {
--	Elf32_Word note_offs = 0, new_offs;
--
--	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
--		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
-+	const char note_name[] = "GNU";
-+	const size_t note_name_sz = sizeof(note_name);
-+	u64 note_off = 0, new_off, name_sz, desc_sz;
-+	const char *data;
+diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
+index 8c986a60e62c7..ba004281f2944 100644
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -143,6 +143,23 @@ static struct clk_alpha_pll gpll7 = {
+ 	},
+ };
+ 
++static struct clk_alpha_pll gpll9 = {
++	.offset = 0x1c000,
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
++	.clkr = {
++		.enable_reg = 0x52000,
++		.enable_mask = BIT(9),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "gpll9",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "bi_tcxo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_fixed_trion_ops,
++		},
++	},
++};
 +
-+	while (note_off + sizeof(Elf32_Nhdr) < note_size &&
-+	       note_off + sizeof(Elf32_Nhdr) > note_off /* overflow */) {
-+		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_off);
-+
-+		name_sz = READ_ONCE(nhdr->n_namesz);
-+		desc_sz = READ_ONCE(nhdr->n_descsz);
-+
-+		new_off = note_off + sizeof(Elf32_Nhdr);
-+		if (check_add_overflow(new_off, ALIGN(name_sz, 4), &new_off) ||
-+		    check_add_overflow(new_off, ALIGN(desc_sz, 4), &new_off) ||
-+		    new_off > note_size)
-+			break;
+ static const struct parent_map gcc_parent_map_0[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -242,7 +259,7 @@ static const struct parent_map gcc_parent_map_7[] = {
+ static const struct clk_parent_data gcc_parents_7[] = {
+ 	{ .fw_name = "bi_tcxo", },
+ 	{ .hw = &gpll0.clkr.hw },
+-	{ .name = "gppl9" },
++	{ .hw = &gpll9.clkr.hw },
+ 	{ .hw = &gpll4.clkr.hw },
+ 	{ .hw = &gpll0_out_even.clkr.hw },
+ };
+@@ -4420,6 +4437,7 @@ static struct clk_regmap *gcc_sc8180x_clocks[] = {
+ 	[GPLL1] = &gpll1.clkr,
+ 	[GPLL4] = &gpll4.clkr,
+ 	[GPLL7] = &gpll7.clkr,
++	[GPLL9] = &gpll9.clkr,
+ };
  
- 		if (nhdr->n_type == BUILD_ID &&
--		    nhdr->n_namesz == sizeof("GNU") &&
--		    !strcmp((char *)(nhdr + 1), "GNU") &&
--		    nhdr->n_descsz > 0 &&
--		    nhdr->n_descsz <= BUILD_ID_SIZE_MAX) {
--			memcpy(build_id,
--			       note_start + note_offs +
--			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr),
--			       nhdr->n_descsz);
--			memset(build_id + nhdr->n_descsz, 0,
--			       BUILD_ID_SIZE_MAX - nhdr->n_descsz);
-+		    name_sz == note_name_sz &&
-+		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
-+		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
-+			data = note_start + note_off + ALIGN(note_name_sz, 4);
-+			memcpy(build_id, data, desc_sz);
-+			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
- 			if (size)
--				*size = nhdr->n_descsz;
-+				*size = desc_sz;
- 			return 0;
- 		}
--		new_offs = note_offs + sizeof(Elf32_Nhdr) +
--			ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
--		if (new_offs <= note_offs)  /* overflow */
--			break;
--		note_offs = new_offs;
-+
-+		note_off = new_off;
- 	}
- 
- 	return -EINVAL;
-@@ -71,7 +77,7 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- {
- 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)page_addr;
- 	Elf32_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -80,18 +86,19 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf32_Phdr *)(page_addr + sizeof(Elf32_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -103,7 +110,7 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- {
- 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *)page_addr;
- 	Elf64_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -112,18 +119,19 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf64_Phdr *)(page_addr + sizeof(Elf64_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -152,6 +160,10 @@ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
-+	if (!PageUptodate(page)) {
-+		put_page(page);
-+		return -EFAULT;
-+	}
- 
- 	ret = -EINVAL;
- 	page_addr = kmap_atomic(page);
+ static const struct qcom_reset_map gcc_sc8180x_resets[] = {
 -- 
 2.43.0
 
