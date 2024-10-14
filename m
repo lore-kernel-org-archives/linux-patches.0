@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FBF3BBF2;
-	Mon, 14 Oct 2024 15:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DA43A1B6;
+	Mon, 14 Oct 2024 15:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918012; cv=none; b=bneLx8Bs7sAqdcMMu15AjpXBXqe+M15tT96p5e/rh7N6Hzf6pTImextdLcF5CcxYaGPK1L7eZhgT1FFkhSyzECI8mlfEgJ61HJLgtTYkklVei9lYCNS6x4ptoChyP1Y3vZh5c5UVdhqMUQ2Jfg7G7hi07hpw5bOmxNYQtiYpdew=
+	t=1728918015; cv=none; b=O0Fmrs1VBwrYf82qGo26anbe2h1uQ000M+98DgDHfVajKGNIeXeoTxPQjh+V/Tm5A41ryEw2wdqhw5//2fmGnaixtauMV5OVge6iUs5oxvhH8FDJ3uxbwJegQ9pXJ5zQyUdP5MKlmLoPXBHBuHE16m/8N+qZPOkYdaRWghHFFiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918012; c=relaxed/simple;
-	bh=LrAqnipSkaw5HiMrYilN4bB1GIKu25nfmJNFeog/6QA=;
+	s=arc-20240116; t=1728918015; c=relaxed/simple;
+	bh=8xGShRhLpqgAlNB7bWVpqeP1Lr7Q0qJ9tjIUnFWZgMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+RtWFS28LmCKvmyCOZe3f2+t+HWCv7mIrCiE76dYde2oUGmy0kE2BpCuGRHu10eSAe+6kEDVoQH9Jwp+u+616/Wg5o5CxVLqGe1UnQ0ladzlgW4ygAbffyFLwvbRcIpv16J59uYtoYLHpQBduz25DoA1gpNYHGzlvrmRINCWYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRxVXRVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihTL9zmAnP3xLcvF+yvLuCVfBiBJLI0fbbGcCjQwe/Pc6OckT/L8ybfintrOI+NvErRPlr0TBtZI+eX2xye2t9GVAaYeuO0OED3QiBMguSPOvHphSYHsXPm3owdxyG0JVNt4wHC//LDbGHYMhM7VqLKN9sXKDGP/wyQ/LPZN+ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKbk9PeA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRxVXRVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD09C4CEC3;
-	Mon, 14 Oct 2024 15:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKbk9PeA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15744C4CEC7;
+	Mon, 14 Oct 2024 15:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918012;
-	bh=LrAqnipSkaw5HiMrYilN4bB1GIKu25nfmJNFeog/6QA=;
+	s=korg; t=1728918015;
+	bh=8xGShRhLpqgAlNB7bWVpqeP1Lr7Q0qJ9tjIUnFWZgMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRxVXRVHrC9ahnH/yqS02h1LVkmE2rxkx9NBrk3llZH6tX9kso9TdRfiOZcdId7vE
-	 vyavoXeBchboXbK+2TKBiI8LzAhk0Av/O5altD7anQHYXiBYgQGNsVW8Gc+Q0PAk9v
-	 pz6/eyeCq/lN73BdYia4ijZi66s/6Gjz1OBivs6E=
+	b=zKbk9PeAw72iytc9sugNCYbuD5O0hb/I2OGUtTeljRu7GpFLasO7kCg96X2KaCoU1
+	 d/w71Wn90mlD53GLkD+0xkYopUL864Cuej2kMIVTCXyIQ7vTQkJM+5xwaXAbvqw2c2
+	 g4i1hPh4HDATfzzYIna/nde28BwrbNkCFJcSPRYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/798] clk: imx: imx8qxp: Register dc0_bypass0_clk before disp clk
-Date: Mon, 14 Oct 2024 16:12:23 +0200
-Message-ID: <20241014141225.357506202@linuxfoundation.org>
+Subject: [PATCH 6.1 198/798] PCI/PM: Increase wait time after resume
+Date: Mon, 14 Oct 2024 16:12:32 +0200
+Message-ID: <20241014141225.705820901@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,44 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit e61352d5ecdc0da2e7253121c15d9a3e040f78a1 ]
+[ Upstream commit e8b908146d44310473e43b3382eca126e12d279c ]
 
-The initialization order of SCU clocks affects the sequence of SCU clock
-resume. If there are no other effects, the earlier the initialization,
-the earlier the resume. During SCU clock resume, the clock rate is
-restored. As SCFW guidelines, configure the parent clock rate before
-configuring the child rate.
+PCIe r6.0 sec 6.6.1 prescribes that a device must be able to respond to
+config requests within 1.0 s (PCI_RESET_WAIT) after exiting conventional
+reset and this same delay is prescribed when coming out of D3cold (as that
+involves reset too).
 
-Fixes: 91e916771de0 ("clk: imx: scu: remove legacy scu clock binding support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-14-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+A device that requires more than 1 second to initialize after reset may
+respond to config requests with Request Retry Status completions (sec
+2.3.1), and we accommodate that in Linux with a 60 second cap
+(PCIE_RESET_READY_POLL_MS).
+
+Previously we waited up to PCIE_RESET_READY_POLL_MS only in the reset code
+path, not in the resume path.  However, a device has surfaced, namely Intel
+Titan Ridge xHCI, which requires a longer delay also in the resume code
+path.
+
+Make the resume code path to use this same extended delay as the reset
+path.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216728
+Link: https://lore.kernel.org/r/20230404052714.51315-2-mika.westerberg@linux.intel.com
+Reported-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Lukas Wunner <lukas@wunner.de>
+Stable-dep-of: 3e40aa29d47e ("PCI: Wait for Link before restoring Downstream Buses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pci-driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index 1066ea16de625..fd89f0090779f 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -200,11 +200,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu("usb3_lpm_div", IMX_SC_R_USB_2, IMX_SC_PM_CLK_MISC);
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 8dda3b205dfd0..bafe7c9e6d190 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -579,7 +579,8 @@ static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
  
- 	/* Display controller SS */
--	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
--	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_pll0_clk", IMX_SC_R_DC_0_PLL_0, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc0_pll1_clk", IMX_SC_R_DC_0_PLL_1, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc0_bypass0_clk", IMX_SC_R_DC_0_VIDEO0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
-+	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
- 	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
+ static void pci_pm_bridge_power_up_actions(struct pci_dev *pci_dev)
+ {
+-	pci_bridge_wait_for_secondary_bus(pci_dev, "resume", PCI_RESET_WAIT);
++	pci_bridge_wait_for_secondary_bus(pci_dev, "resume",
++					  PCIE_RESET_READY_POLL_MS);
+ 	/*
+ 	 * When powering on a bridge from D3cold, the whole hierarchy may be
+ 	 * powered on into D0uninitialized state, resume them to give them a
 -- 
 2.43.0
 
