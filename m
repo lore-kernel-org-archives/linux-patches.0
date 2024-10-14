@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405C31AE006;
-	Mon, 14 Oct 2024 15:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BCB1AC44D;
+	Mon, 14 Oct 2024 15:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919298; cv=none; b=rylMLTQARAsfuOFN53rMbxjo5sAI6INNDavquXwtum3MSwPWGgXBejqCH9TDRCssFsjRmrM8BtCWUG03T9Tu3dB0S4PTjW28ogCAdyMFViREdIni/Vl/a7r2v0m7ZyTETZCCypRHjGHni/l7HR1bj8HKmJimfO8ozmpOEugMmoA=
+	t=1728919302; cv=none; b=lNXUhJM9SpDvCU0edVDL1W/TidUuLR4feHUpV8zZHoqls67QjGnCYuelBWxHnBN2qiof7Ry92scyzcuUkktIIvvaqFSpNkYoroJ+GevT9bLEq793ie4dpo/Y7LX6zUgQY2smniuD0NsrIgC6aLsaioP9/QS136d5b9YYZNh2TOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919298; c=relaxed/simple;
-	bh=fvuMPbb/n+Sye56h3MSCbDUYur2cvNwK1M0Et5m+1xo=;
+	s=arc-20240116; t=1728919302; c=relaxed/simple;
+	bh=9KjSzCx1ScqpwehI5VdRVIFI6S9r6TE/Y4ovL1jw41U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LJD/fhJnbHspH/W6l2ZxmCwtONaDfhpddSHPzwRlAl0SVzGCK67b+jsQHqFlc7TGwHt2HT2LONUyW/BMD3IFCahxMVqtHs33Qyrheh026hKCzz9E6vB17zai095+wjyUWiCbFaE1bV16jiuRYLHQsCUlzwREN8ZyvuqiVTEKiWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2evBTwm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZRERpG7e8bqEe5RmfPoZvvX7f8jg8dim42dacmuXh0rDS5hdmKiUgwkt0a/64ikg2OOZGj7CRDewpJIlNXNBASAfHnliyt1zxC9iMwj01ulGo+mEjPFlvYcCzfzNRJAWeapkE+l8SULvNEp0JBOs1jXU/f++2MIXRJynp2C4vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m25EAKJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2evBTwm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA06DC4CEC3;
-	Mon, 14 Oct 2024 15:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m25EAKJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2371FC4CEC3;
+	Mon, 14 Oct 2024 15:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919298;
-	bh=fvuMPbb/n+Sye56h3MSCbDUYur2cvNwK1M0Et5m+1xo=;
+	s=korg; t=1728919301;
+	bh=9KjSzCx1ScqpwehI5VdRVIFI6S9r6TE/Y4ovL1jw41U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2evBTwm4crUGg+yfQ1JLrLK3JeMmxg7GRbcLJcdWKsVWG/tY+iYCS+Pb527QCEoYr
-	 bZZ5NKdUGdO7X9fEhvras+EQBtlInovXSdGERyPGa3g7QDLfATukXGRUATQbaAUpK2
-	 78OXncy2EDXCEhcIsYxpDCncX2I8detca+8vWJLM=
+	b=m25EAKJCmzTPJn8BXUz6uP0aHZBImsLVpX7DMQfJLX3y/m7ULeLS/rJZUYEfa5a3V
+	 t/TjV+vaZw5mLIJnlZBTDY4Tc2CWYgKPAlK3EoSbp5v7YEusribBWOZzcrY8rrsOYh
+	 RL4Bwz3JM/1kbBAJwZNqoOtPJ3EgLQTjHKzCO+WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 528/798] media: i2c: ar0521: Use cansleep version of gpiod_set_value()
-Date: Mon, 14 Oct 2024 16:18:02 +0200
-Message-ID: <20241014141238.732814396@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 563/798] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
+Date: Mon, 14 Oct 2024 16:18:37 +0200
+Message-ID: <20241014141240.116768147@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,78 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit bee1aed819a8cda47927436685d216906ed17f62 upstream.
+commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
 
-If we use GPIO reset from I2C port expander, we must use *_cansleep()
-variant of GPIO functions.
-This was not done in ar0521_power_on()/ar0521_power_off() functions.
-Let's fix that.
+In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
+to recover some journal space. But if an error occurs while executing
+jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
+space right away, we try other branches, and if j_committing_transaction
+is NULL (i.e., the tid is 0), we will get the following complain:
 
+============================================
+JBD2: I/O error when updating journal superblock for sdd-8.
+__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
+__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
 ------------[ cut here ]------------
-WARNING: CPU: 0 PID: 11 at drivers/gpio/gpiolib.c:3496 gpiod_set_value+0x74/0x7c
+WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
 Modules linked in:
-CPU: 0 PID: 11 Comm: kworker/u16:0 Not tainted 6.10.0 #53
-Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : gpiod_set_value+0x74/0x7c
-lr : ar0521_power_on+0xcc/0x290
-sp : ffffff8001d7ab70
-x29: ffffff8001d7ab70 x28: ffffff80027dcc90 x27: ffffff8003c82000
-x26: ffffff8003ca9250 x25: ffffffc080a39c60 x24: ffffff8003ca9088
-x23: ffffff8002402720 x22: ffffff8003ca9080 x21: ffffff8003ca9088
-x20: 0000000000000000 x19: ffffff8001eb2a00 x18: ffffff80efeeac80
-x17: 756d2d6332692f30 x16: 0000000000000000 x15: 0000000000000000
-x14: ffffff8001d91d40 x13: 0000000000000016 x12: ffffffc080e98930
-x11: ffffff8001eb2880 x10: 0000000000000890 x9 : ffffff8001d7a9f0
-x8 : ffffff8001d92570 x7 : ffffff80efeeac80 x6 : 000000003fc6e780
-x5 : ffffff8001d91c80 x4 : 0000000000000002 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000001
-Call trace:
- gpiod_set_value+0x74/0x7c
- ar0521_power_on+0xcc/0x290
-...
+CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
+RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
+Call Trace:
+ <TASK>
+ add_transaction_credits+0x5d1/0x5e0
+ start_this_handle+0x1ef/0x6a0
+ jbd2__journal_start+0x18b/0x340
+ ext4_dirty_inode+0x5d/0xb0
+ __mark_inode_dirty+0xe4/0x5d0
+ generic_update_time+0x60/0x70
+[...]
+============================================
 
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
-Cc: stable@vger.kernel.org
-Acked-by: Krzysztof Hałasa <khalasa@piap.pl>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
+clean up at the moment, continue to try to reclaim free space in other ways.
+
+Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
+when updating journal superblock fails") to make jbd2_cleanup_journal_tail
+return the correct error code.
+
+Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ar0521.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -718,7 +718,8 @@ static int ar0521_power_off(struct devic
- 	clk_disable_unprepare(sensor->extclk);
- 
- 	if (sensor->reset_gpio)
--		gpiod_set_value(sensor->reset_gpio, 1); /* assert RESET signal */
-+		/* assert RESET signal */
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
- 
- 	for (i = ARRAY_SIZE(ar0521_supply_names) - 1; i >= 0; i--) {
- 		if (sensor->supplies[i])
-@@ -752,7 +753,7 @@ static int ar0521_power_on(struct device
- 
- 	if (sensor->reset_gpio)
- 		/* deassert RESET signal */
--		gpiod_set_value(sensor->reset_gpio, 0);
-+		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
- 	usleep_range(4500, 5000); /* min 45000 clocks */
- 
- 	for (cnt = 0; cnt < ARRAY_SIZE(initial_regs); cnt++) {
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -101,8 +101,11 @@ __releases(&journal->j_state_lock)
+ 			write_unlock(&journal->j_state_lock);
+ 			if (chkpt) {
+ 				jbd2_log_do_checkpoint(journal);
+-			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
+-				/* We were able to recover space; yay! */
++			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
++				/*
++				 * We were able to recover space or the
++				 * journal was aborted due to an error.
++				 */
+ 				;
+ 			} else if (has_transaction) {
+ 				/*
 
 
