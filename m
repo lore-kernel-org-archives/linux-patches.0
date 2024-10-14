@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76573BBF2;
-	Mon, 14 Oct 2024 15:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2B33BBF2;
+	Mon, 14 Oct 2024 15:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918142; cv=none; b=CRC9r86of7Wl2L9VTFfy3gbOo/zSsR1/0926qQmjco+OQcMruGYUv5XJhWIp0HEt/HHguJQfEupuLzPK4tgdSPCgVP6dxiuAxR7XTcG9B6ggFGFwD7nS79f9U2PjmLoRyYHz2qYEOpwWhtMBt6ci36jpT30QC7Yu+c6ns1ZDiqE=
+	t=1728918146; cv=none; b=Cjdc38FiqYidLn8IS7u1yFY5d6eLW8tcns6EXXH9xYQt9dUQ40yNbkrylepCC0uAhAWiqOvWvRdwa/P7Hbtfr0mWwA5niFosD5ADPBjHG9DAUyOuxCkosc3jo/kwQ7SEGcNL1zd7ekVHK+ZX4dnNusSnQh2WjsvHFV/PwrqiFOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918142; c=relaxed/simple;
-	bh=IQ+q3coEPoMnyTujt3sVcMLPv91YRXGwMcl6ILAZB4Q=;
+	s=arc-20240116; t=1728918146; c=relaxed/simple;
+	bh=FiBrUctCpVfyztz8zsqH8TS8uUaqVGCvwKN+j5cR6ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VRiKrz99ajW/nk8WIr7IIRZjrV86GP6/AHLk27s3pFERKVhSOwEcj54c1Vp87NdWjf7p6pNCVzQbUzRGm04Rk2ttQRLqaqgcZOpUWofiytmr9dk8C14aAeC/DxnruQZmbU/9Xs9jonwEHbO3P6LNmKxp6wTa+EL/vIPhi9lYjMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPYXgPza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebmTfrynBxLx55arkNyjYzTHsvWKQGjKZjOfmIdqZyP7L1h+NkB4fbIKka4LPe0Y/yNV/50PF0kaJNY3WNsTFjLu9MGJx4W2F6ZUp0p6SPu6d1jctPqiPD3qjU8NpOjDRwnCeicsyUnIw0sNVbBk0aHc0lwgAaAj0K2qzegADbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdZWOPWN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPYXgPza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC64C4CEC3;
-	Mon, 14 Oct 2024 15:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdZWOPWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6880AC4CEC3;
+	Mon, 14 Oct 2024 15:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918142;
-	bh=IQ+q3coEPoMnyTujt3sVcMLPv91YRXGwMcl6ILAZB4Q=;
+	s=korg; t=1728918145;
+	bh=FiBrUctCpVfyztz8zsqH8TS8uUaqVGCvwKN+j5cR6ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPYXgPzahKGf4fEdpxeTQaKAuz7R2fbDhBc5qaD5KklnTni6tyDFsuPq39IsXR96i
-	 d13RBORY397LoW/V9uoMCuiuFPj3IwAhdPJ37dN+s3pUFNM1e+nlT59i3AgxppFLmD
-	 0GyzBXoicPtN3K2CZUZwQEXz0ykCZTXxmm5u8xSI=
+	b=CdZWOPWNqI4ziq/TK//i0Z0nDzUpKdZWGoETbHsZ3Be84JIDxdxf7Qt/on/TWW3j0
+	 1kSo+lccMZA+OMJiq6n3Hf66pcPD8i6pTzp0pFOIi3TWX4Gpl5j++QgcrfogG0Mirw
+	 WHMSZEKxK5AekAAvOSc2oR16yE6TjykqdRBw51NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Yunlei He <heyunlei@hihonor.com>,
-	Chao Yu <chao@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 236/798] f2fs: reduce expensive checkpoint trigger frequency
-Date: Mon, 14 Oct 2024 16:13:10 +0200
-Message-ID: <20241014141227.191987045@linuxfoundation.org>
+Subject: [PATCH 6.1 237/798] f2fs: factor the read/write tracing logic into a helper
+Date: Mon, 14 Oct 2024 16:13:11 +0200
+Message-ID: <20241014141227.230431730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,129 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit aaf8c0b9ae042494cb4585883b15c1332de77840 ]
+[ Upstream commit a28bca0f47feb5cdfc22be0e563bd4da2aed74f7 ]
 
-We may trigger high frequent checkpoint for below case:
-1. mkdir /mnt/dir1; set dir1 encrypted
-2. touch /mnt/file1; fsync /mnt/file1
-3. mkdir /mnt/dir2; set dir2 encrypted
-4. touch /mnt/file2; fsync /mnt/file2
-...
+Factor the logic to log a path for reads and writs into a helper
+shared between the read_iter and write_iter methods.
 
-Although, newly created dir and file are not related, due to
-commit bbf156f7afa7 ("f2fs: fix lost xattrs of directories"), we will
-trigger checkpoint whenever fsync() comes after a new encrypted dir
-created.
-
-In order to avoid such performance regression issue, let's record an
-entry including directory's ino in global cache whenever we update
-directory's xattr data, and then triggerring checkpoint() only if
-xattr metadata of target file's parent was updated.
-
-This patch updates to cover below no encryption case as well:
-1) parent is checkpointed
-2) set_xattr(dir) w/ new xnid
-3) create(file)
-4) fsync(file)
-
-Fixes: bbf156f7afa7 ("f2fs: fix lost xattrs of directories")
-Reported-by: wangzijie <wangzijie1@honor.com>
-Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reported-by: Yunlei He <heyunlei@hihonor.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 0cac51185e65 ("f2fs: fix to avoid racing in between read and OPU dio write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h              |  2 ++
- fs/f2fs/file.c              |  3 +++
- fs/f2fs/xattr.c             | 14 ++++++++++++--
- include/trace/events/f2fs.h |  3 ++-
- 4 files changed, 19 insertions(+), 3 deletions(-)
+ fs/f2fs/file.c | 61 +++++++++++++++++++++-----------------------------
+ 1 file changed, 26 insertions(+), 35 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 2b540d87859e0..dc637dfb1ead2 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -284,6 +284,7 @@ enum {
- 	APPEND_INO,		/* for append ino list */
- 	UPDATE_INO,		/* for update ino list */
- 	TRANS_DIR_INO,		/* for transactions dir ino list */
-+	XATTR_DIR_INO,		/* for xattr updated dir ino list */
- 	FLUSH_INO,		/* for multiple device flushing */
- 	MAX_INO_ENTRY,		/* max. list */
- };
-@@ -1137,6 +1138,7 @@ enum cp_reason_type {
- 	CP_FASTBOOT_MODE,
- 	CP_SPEC_LOG_NUM,
- 	CP_RECOVER_DIR,
-+	CP_XATTR_DIR,
- };
- 
- enum iostat_type {
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 62f2521cd955e..6ce8997fc61e0 100644
+index 6ce8997fc61e0..81394c08ef850 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -217,6 +217,9 @@ static inline enum cp_reason_type need_do_checkpoint(struct inode *inode)
- 		f2fs_exist_written_data(sbi, F2FS_I(inode)->i_pino,
- 							TRANS_DIR_INO))
- 		cp_reason = CP_RECOVER_DIR;
-+	else if (f2fs_exist_written_data(sbi, F2FS_I(inode)->i_pino,
-+							XATTR_DIR_INO))
-+		cp_reason = CP_XATTR_DIR;
- 
- 	return cp_reason;
+@@ -4457,6 +4457,27 @@ static ssize_t f2fs_dio_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	return ret;
  }
-diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
-index 6ee71a2faa75f..65437c18e01d3 100644
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -629,6 +629,7 @@ static int __f2fs_setxattr(struct inode *inode, int index,
- 			const char *name, const void *value, size_t size,
- 			struct page *ipage, int flags)
- {
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct f2fs_xattr_entry *here, *last;
- 	void *base_addr, *last_base_addr;
- 	int found, newsize;
-@@ -772,9 +773,18 @@ static int __f2fs_setxattr(struct inode *inode, int index,
- 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
- 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
- 		f2fs_set_encrypted_inode(inode);
--	if (S_ISDIR(inode->i_mode))
--		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
  
-+	if (!S_ISDIR(inode->i_mode))
-+		goto same;
-+	/*
-+	 * In restrict mode, fsync() always try to trigger checkpoint for all
-+	 * metadata consistency, in other mode, it triggers checkpoint when
-+	 * parent's xattr metadata was updated.
-+	 */
-+	if (F2FS_OPTION(sbi).fsync_mode == FSYNC_MODE_STRICT)
-+		set_sbi_flag(sbi, SBI_NEED_CP);
++static void f2fs_trace_rw_file_path(struct kiocb *iocb, size_t count, int rw)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++	char *buf, *path;
++
++	buf = f2fs_kmalloc(F2FS_I_SB(inode), PATH_MAX, GFP_KERNEL);
++	if (!buf)
++		return;
++	path = dentry_path_raw(file_dentry(iocb->ki_filp), buf, PATH_MAX);
++	if (IS_ERR(path))
++		goto free_buf;
++	if (rw == WRITE)
++		trace_f2fs_datawrite_start(inode, iocb->ki_pos, count,
++				current->pid, path, current->comm);
 +	else
-+		f2fs_add_ino_entry(sbi, inode->i_ino, XATTR_DIR_INO);
- same:
- 	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
- 		inode->i_mode = F2FS_I(inode)->i_acl_mode;
-diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
-index 5f58684f6107a..9f0883e9ab3eb 100644
---- a/include/trace/events/f2fs.h
-+++ b/include/trace/events/f2fs.h
-@@ -138,7 +138,8 @@ TRACE_DEFINE_ENUM(EX_READ);
- 		{ CP_NODE_NEED_CP,	"node needs cp" },		\
- 		{ CP_FASTBOOT_MODE,	"fastboot mode" },		\
- 		{ CP_SPEC_LOG_NUM,	"log type is 2" },		\
--		{ CP_RECOVER_DIR,	"dir needs recovery" })
-+		{ CP_RECOVER_DIR,	"dir needs recovery" },		\
-+		{ CP_XATTR_DIR,		"dir's xattr updated" })
++		trace_f2fs_dataread_start(inode, iocb->ki_pos, count,
++				current->pid, path, current->comm);
++free_buf:
++	kfree(buf);
++}
++
+ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ {
+ 	struct inode *inode = file_inode(iocb->ki_filp);
+@@ -4466,24 +4487,9 @@ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	if (!f2fs_is_compress_backend_ready(inode))
+ 		return -EOPNOTSUPP;
  
- #define show_shutdown_mode(type)					\
- 	__print_symbolic(type,						\
+-	if (trace_f2fs_dataread_start_enabled()) {
+-		char *p = f2fs_kmalloc(F2FS_I_SB(inode), PATH_MAX, GFP_KERNEL);
+-		char *path;
+-
+-		if (!p)
+-			goto skip_read_trace;
++	if (trace_f2fs_dataread_start_enabled())
++		f2fs_trace_rw_file_path(iocb, iov_iter_count(to), READ);
+ 
+-		path = dentry_path_raw(file_dentry(iocb->ki_filp), p, PATH_MAX);
+-		if (IS_ERR(path)) {
+-			kfree(p);
+-			goto skip_read_trace;
+-		}
+-
+-		trace_f2fs_dataread_start(inode, pos, iov_iter_count(to),
+-					current->pid, path, current->comm);
+-		kfree(p);
+-	}
+-skip_read_trace:
+ 	if (f2fs_should_use_dio(inode, iocb, to)) {
+ 		ret = f2fs_dio_read_iter(iocb, to);
+ 	} else {
+@@ -4789,24 +4795,9 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if (preallocated < 0) {
+ 		ret = preallocated;
+ 	} else {
+-		if (trace_f2fs_datawrite_start_enabled()) {
+-			char *p = f2fs_kmalloc(F2FS_I_SB(inode),
+-						PATH_MAX, GFP_KERNEL);
+-			char *path;
+-
+-			if (!p)
+-				goto skip_write_trace;
+-			path = dentry_path_raw(file_dentry(iocb->ki_filp),
+-								p, PATH_MAX);
+-			if (IS_ERR(path)) {
+-				kfree(p);
+-				goto skip_write_trace;
+-			}
+-			trace_f2fs_datawrite_start(inode, orig_pos, orig_count,
+-					current->pid, path, current->comm);
+-			kfree(p);
+-		}
+-skip_write_trace:
++		if (trace_f2fs_datawrite_start_enabled())
++			f2fs_trace_rw_file_path(iocb, orig_count, WRITE);
++
+ 		/* Do the actual write. */
+ 		ret = dio ?
+ 			f2fs_dio_write_iter(iocb, from, &may_need_sync) :
 -- 
 2.43.0
 
