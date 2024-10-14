@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B371AB52F;
-	Mon, 14 Oct 2024 14:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12951AAE2C;
+	Mon, 14 Oct 2024 14:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916033; cv=none; b=m3r+ISnkje/B2TLeOReKkeJ7fg8etat3WLPMqbQruWTlukxOctH2nHADFHBUqAaq3rMEvl0aQB7nHOI52uffuQO7XKIgGfbd+BUKmvMR1CrMxZn+/zA3FtTH9oMl2DL6Ul+hoymjXHSeCVKyuI7iu7xjVXi9Um+G1ZzHbzQBIzU=
+	t=1728916036; cv=none; b=dAyvKWfXi0H1oXvmu6nm3Kk3nmX59sgklPEV+w8Sqk2zzpFkFYIRtznlYu88+q1CAEVkW6cj3nklGY57gHfnUBDQ444X58NT3g05mrmJF98R2fsVJMtdpC9Z18OtN/YKtdxuG83GplRewlM9kVqZLHCsrUKV2oQMnhzfM64RtzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916033; c=relaxed/simple;
-	bh=DkM1oDrZAK4OS7UdKDN8eCeMSiV5xebVUtpXO1wRqLI=;
+	s=arc-20240116; t=1728916036; c=relaxed/simple;
+	bh=RSW588COH2tQaQ8X+CGYYaPSAgsa+Q2L3pzbxQrqS+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwGBj3u7OI+QfFe4vOZsME7bOGHm3LYXUd5zt4W0l8/MBjJA222Y+nPHkZlu45xU1mQ+qV+W5Ybz+4tEGAaACqKkz6Hb1K9mxk5wdkWCuBqnyHWhRu6KSw3vcPt5pzYeEWZl3zG+pSSrbpP4cqg7Jf2GqXplmtxuxHlwJ28W77E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEWNTWna; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rn0qky+libSV/cFWnYZcErZguDFIfZXe5DwUderXCnp2yiSM2qflPqDemX8DFAUODz+8hRdODewqEvMGLKm0muTWst4F2dGFSDurIz8Xm0PTH8U9tutXGNXR0o8tL5BBhvh0TUANLpvafEwOsEi1SssppQOFAY2JmqutDiYnMbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWTOtRrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEWNTWna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9610C4CEC3;
-	Mon, 14 Oct 2024 14:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWTOtRrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C95C4CEC3;
+	Mon, 14 Oct 2024 14:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916033;
-	bh=DkM1oDrZAK4OS7UdKDN8eCeMSiV5xebVUtpXO1wRqLI=;
+	s=korg; t=1728916036;
+	bh=RSW588COH2tQaQ8X+CGYYaPSAgsa+Q2L3pzbxQrqS+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEWNTWnaKA6j2TUDlux0aPi1mtE3wAY9Jtn0c7AzAIOXMqE3HW0WNJhy0jr+ko4VI
-	 AoCgfNTIVRHqrJaVHhD5kwmF2Sxt9FmrGBTdPlLBE+YuGvsmpTopjWzVLZCxstuRtA
-	 bKy9kW4bRtPQUdDiNh+tY6k8Z6T2+Nw/EguhmeA0=
+	b=FWTOtRrN9YScbXE8coXVtwUnvSCuImzSVrBd03Iac+s4mNQKYtIhdJ/G6OorU9EvJ
+	 jI00FwDDKHiQQxdBq/42pel99311QaLzw1WsPCxIfcVM5tqPL4zi8JZIL+5gSzp5yp
+	 8BJS2MZbRCuKTExQakcBP6d5SnXzlT7G8NFE6s8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riyan Dhiman <riyandhiman14@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Abhishek Tamboli <abhishektamboli9@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 067/214] staging: vme_user: added bound check to geoid
-Date: Mon, 14 Oct 2024 16:18:50 +0200
-Message-ID: <20241014141047.605333457@linuxfoundation.org>
+Subject: [PATCH 6.11 068/214] usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
+Date: Mon, 14 Oct 2024 16:18:51 +0200
+Message-ID: <20241014141047.643887587@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,58 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riyan Dhiman <riyandhiman14@gmail.com>
+From: Abhishek Tamboli <abhishektamboli9@gmail.com>
 
-[ Upstream commit a8a8b54350229f59c8ba6496fb5689a1632a59be ]
+[ Upstream commit a7bb96b18864225a694e3887ac2733159489e4b0 ]
 
-The geoid is a module parameter that allows users to hardcode the slot number.
-A bound check for geoid was added in the probe function because only values
-between 0 and less than VME_MAX_SLOT are valid.
+Fix potential dereferencing of ERR_PTR() in find_format_by_pix()
+and uvc_v4l2_enum_format().
 
-Signed-off-by: Riyan Dhiman <riyandhiman14@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240827125604.42771-2-riyandhiman14@gmail.com
+Fix the following smatch errors:
+
+drivers/usb/gadget/function/uvc_v4l2.c:124 find_format_by_pix()
+error: 'fmtdesc' dereferencing possible ERR_PTR()
+
+drivers/usb/gadget/function/uvc_v4l2.c:392 uvc_v4l2_enum_format()
+error: 'fmtdesc' dereferencing possible ERR_PTR()
+
+Also, fix similar issue in uvc_v4l2_try_format() for potential
+dereferencing of ERR_PTR().
+
+Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
+Link: https://lore.kernel.org/r/20240815102202.594812-1-abhishektamboli9@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vme_user/vme_fake.c   | 6 ++++++
- drivers/staging/vme_user/vme_tsi148.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/usb/gadget/function/uvc_v4l2.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
-index 7f84d1c86f291..c4fb2b65154c7 100644
---- a/drivers/staging/vme_user/vme_fake.c
-+++ b/drivers/staging/vme_user/vme_fake.c
-@@ -1059,6 +1059,12 @@ static int __init fake_init(void)
- 	struct vme_slave_resource *slave_image;
- 	struct vme_lm_resource *lm;
+diff --git a/drivers/usb/gadget/function/uvc_v4l2.c b/drivers/usb/gadget/function/uvc_v4l2.c
+index a024aecb76dc3..de1736f834e6b 100644
+--- a/drivers/usb/gadget/function/uvc_v4l2.c
++++ b/drivers/usb/gadget/function/uvc_v4l2.c
+@@ -121,6 +121,9 @@ static struct uvcg_format *find_format_by_pix(struct uvc_device *uvc,
+ 	list_for_each_entry(format, &uvc->header->formats, entry) {
+ 		const struct uvc_format_desc *fmtdesc = to_uvc_format(format->fmt);
  
-+	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
-+		pr_err("VME geographical address must be between 0 and %d (exclusive), but got %d\n",
-+			VME_MAX_SLOTS, geoid);
-+		return -EINVAL;
-+	}
++		if (IS_ERR(fmtdesc))
++			continue;
 +
- 	/* We need a fake parent device */
- 	vme_root = root_device_register("vme");
- 	if (IS_ERR(vme_root))
-diff --git a/drivers/staging/vme_user/vme_tsi148.c b/drivers/staging/vme_user/vme_tsi148.c
-index 2ec9c29044041..e40ca4870d704 100644
---- a/drivers/staging/vme_user/vme_tsi148.c
-+++ b/drivers/staging/vme_user/vme_tsi148.c
-@@ -2253,6 +2253,12 @@ static int tsi148_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	struct vme_dma_resource *dma_ctrlr;
- 	struct vme_lm_resource *lm;
+ 		if (fmtdesc->fcc == pixelformat) {
+ 			uformat = format->fmt;
+ 			break;
+@@ -240,6 +243,7 @@ uvc_v4l2_try_format(struct file *file, void *fh, struct v4l2_format *fmt)
+ 	struct uvc_video *video = &uvc->video;
+ 	struct uvcg_format *uformat;
+ 	struct uvcg_frame *uframe;
++	const struct uvc_format_desc *fmtdesc;
+ 	u8 *fcc;
  
-+	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
-+		dev_err(&pdev->dev, "VME geographical address must be between 0 and %d (exclusive), but got %d\n",
-+			VME_MAX_SLOTS, geoid);
-+		return -EINVAL;
-+	}
+ 	if (fmt->type != video->queue.queue.type)
+@@ -277,7 +281,10 @@ uvc_v4l2_try_format(struct file *file, void *fh, struct v4l2_format *fmt)
+ 		fmt->fmt.pix.height = uframe->frame.w_height;
+ 		fmt->fmt.pix.bytesperline = uvc_v4l2_get_bytesperline(uformat, uframe);
+ 		fmt->fmt.pix.sizeimage = uvc_get_frame_size(uformat, uframe);
+-		fmt->fmt.pix.pixelformat = to_uvc_format(uformat)->fcc;
++		fmtdesc = to_uvc_format(uformat);
++		if (IS_ERR(fmtdesc))
++			return PTR_ERR(fmtdesc);
++		fmt->fmt.pix.pixelformat = fmtdesc->fcc;
+ 	}
+ 	fmt->fmt.pix.field = V4L2_FIELD_NONE;
+ 	fmt->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
+@@ -389,6 +396,9 @@ uvc_v4l2_enum_format(struct file *file, void *fh, struct v4l2_fmtdesc *f)
+ 		return -EINVAL;
+ 
+ 	fmtdesc = to_uvc_format(uformat);
++	if (IS_ERR(fmtdesc))
++		return PTR_ERR(fmtdesc);
 +
- 	/* If we want to support more than one of each bridge, we need to
- 	 * dynamically generate this so we get one per device
- 	 */
+ 	f->pixelformat = fmtdesc->fcc;
+ 
+ 	return 0;
 -- 
 2.43.0
 
