@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7C11C689D;
-	Mon, 14 Oct 2024 14:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFC31ABECB;
+	Mon, 14 Oct 2024 14:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917664; cv=none; b=bVEMoOksswnbGxR2RD7JNRlpsZbzEIKLJoqI+oW58GVzLovV88hY/x/p/hcd9IeKQoBLi3rHOhWFL253ZGxTeCXi6YduShHc6v9WeKnQPR246zS6mD8OQfR8FnyTxL37ZlHLH1XNunfdZA/8H5BWTh1/19sekByGEIFAxPug0O8=
+	t=1728917668; cv=none; b=gmwH/D62KHeCIFlYZUi/FLgINIaEHDW2QF5eGrnq693THDp71444f3oupQHJkQ3ZUyRdeTlKFfjKjnobKgHBuXKCXQMB7ik81Y4BOfwcKscUXaH2cF6Gq+jLxd2eLkXa3GDvjDQABVd4JwjkXrbSuq09SNcU4v5oy8lLASofQ5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917664; c=relaxed/simple;
-	bh=RZpD9j7P/p/WoF1T5AGY750uuFj9CDQPsqxSgPPYpL4=;
+	s=arc-20240116; t=1728917668; c=relaxed/simple;
+	bh=tFh9ion9O0q4mD2YTUJVlc6uZk6qXA8360OQ+B8MIqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rJv70UiSuliK1MLhtPQGT+LO8q6nh04JnsQPnP+84WoF2D1SFkx/5fu+zfJKlG1G9qUBr1QthFybf9nSH15BLWpGNXhctZBghNtxUFv+S9Dp1o8XlmcSlO4cE9hlSPeAkO7JlXIzsEKbuN71DX4tWfpWPMPhIIxLyY9NfVETUtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLjopBXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkWNI4xsugHpUZDLu1uKAqm56GGx/JyFpJlp7MCd2nJrYesvejSFvFcxfpmniBn2BANcJxv/C60FQ0qazPx2d7Y1ZpLHiP6tzz5IMT+pMh5CkoXgpBbZLNcVQqN46+Q9VMb5XOMIA9tquK/EsRYbz0udMCoBZwZDp/LNE+hGFtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJIq2fb8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLjopBXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DFEDC4CEC3;
-	Mon, 14 Oct 2024 14:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJIq2fb8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FEAC4CEC3;
+	Mon, 14 Oct 2024 14:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917664;
-	bh=RZpD9j7P/p/WoF1T5AGY750uuFj9CDQPsqxSgPPYpL4=;
+	s=korg; t=1728917668;
+	bh=tFh9ion9O0q4mD2YTUJVlc6uZk6qXA8360OQ+B8MIqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLjopBXR6vD1smaTWiBMvUsUB5WFmTXJGykYkCC656xKTCO86OXhKVfFyQrZm685k
-	 x7V8J8KXk3vZlWsy6MGiis1acdHwNLx7UsavvOC+PEU9tmkSVMLPWq35M/HnRXmdXL
-	 LkawN2zVese0uKTewMuY5FEbiXVcmD45oe84TUaY=
+	b=NJIq2fb8v330l2YkwFPYfZ7kZj2LIynOBI/eFyVvGMo2ujft+cTgPyiEQmWswWFg2
+	 l1LqjKKYaVTJawBWFqqEgUTs75XgIofP+5De0bqitoZeIVquHfbwhY7+jlDNHLUP08
+	 CtyanI/pp3kxzhALM+5Ztj1d2foEY023Bc6XPWNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cheng-Jui=20Wang=20 ?= <Cheng-Jui.Wang@mediatek.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/798] rcu/nocb: Fix RT throttling hrtimer armed from offline CPU
-Date: Mon, 14 Oct 2024 16:10:52 +0200
-Message-ID: <20241014141221.782316271@linuxfoundation.org>
+Subject: [PATCH 6.1 099/798] mtd: rawnand: mtk: Use for_each_child_of_node_scoped()
+Date: Mon, 14 Oct 2024 16:10:53 +0200
+Message-ID: <20241014141221.820614376@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,75 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 9139f93209d1ffd7f489ab19dee01b7c3a1a43d2 ]
+[ Upstream commit 8795952679494b111b7b2ba08bb54ac408daca3b ]
 
-After a CPU is marked offline and until it reaches its final trip to
-idle, rcuo has several opportunities to be woken up, either because
-a callback has been queued in the meantime or because
-rcutree_report_cpu_dead() has issued the final deferred NOCB wake up.
+Avoids the need for manual cleanup of_node_put() in early exits
+from the loop.
 
-If RCU-boosting is enabled, RCU kthreads are set to SCHED_FIFO policy.
-And if RT-bandwidth is enabled, the related hrtimer might be armed.
-However this then happens after hrtimers have been migrated at the
-CPUHP_AP_HRTIMERS_DYING stage, which is broken as reported by the
-following warning:
-
- Call trace:
-  enqueue_hrtimer+0x7c/0xf8
-  hrtimer_start_range_ns+0x2b8/0x300
-  enqueue_task_rt+0x298/0x3f0
-  enqueue_task+0x94/0x188
-  ttwu_do_activate+0xb4/0x27c
-  try_to_wake_up+0x2d8/0x79c
-  wake_up_process+0x18/0x28
-  __wake_nocb_gp+0x80/0x1a0
-  do_nocb_deferred_wakeup_common+0x3c/0xcc
-  rcu_report_dead+0x68/0x1ac
-  cpuhp_report_idle_dead+0x48/0x9c
-  do_idle+0x288/0x294
-  cpu_startup_entry+0x34/0x3c
-  secondary_start_kernel+0x138/0x158
-
-Fix this with waking up rcuo using an IPI if necessary. Since the
-existing API to deal with this situation only handles swait queue, rcuo
-is only woken up from offline CPUs if it's not already waiting on a
-grace period. In the worst case some callbacks will just wait for a
-grace period to complete before being assigned to a subsequent one.
-
-Reported-by: "Cheng-Jui Wang (王正睿)" <Cheng-Jui.Wang@mediatek.com>
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240826094328.2991664-8-ruanjinjie@huawei.com
+Stable-dep-of: 2073ae37d550 ("mtd: rawnand: mtk: Fix init error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_nocb.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/mtk_nand.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 6499eefa06603..7c28d154b0940 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -220,7 +220,10 @@ static bool __wake_nocb_gp(struct rcu_data *rdp_gp,
- 	raw_spin_unlock_irqrestore(&rdp_gp->nocb_gp_lock, flags);
- 	if (needwake) {
- 		trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("DoWake"));
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		if (cpu_is_offline(raw_smp_processor_id()))
-+			swake_up_one_online(&rdp_gp->nocb_gp_wq);
-+		else
-+			wake_up_process(rdp_gp->nocb_gp_kthread);
+diff --git a/drivers/mtd/nand/raw/mtk_nand.c b/drivers/mtd/nand/raw/mtk_nand.c
+index d540454cbbdfa..537ac81e661fc 100644
+--- a/drivers/mtd/nand/raw/mtk_nand.c
++++ b/drivers/mtd/nand/raw/mtk_nand.c
+@@ -1459,15 +1459,12 @@ static int mtk_nfc_nand_chip_init(struct device *dev, struct mtk_nfc *nfc,
+ static int mtk_nfc_nand_chips_init(struct device *dev, struct mtk_nfc *nfc)
+ {
+ 	struct device_node *np = dev->of_node;
+-	struct device_node *nand_np;
+ 	int ret;
+ 
+-	for_each_child_of_node(np, nand_np) {
++	for_each_child_of_node_scoped(np, nand_np) {
+ 		ret = mtk_nfc_nand_chip_init(dev, nfc, nand_np);
+-		if (ret) {
+-			of_node_put(nand_np);
++		if (ret)
+ 			return ret;
+-		}
  	}
  
- 	return needwake;
+ 	return 0;
 -- 
 2.43.0
 
