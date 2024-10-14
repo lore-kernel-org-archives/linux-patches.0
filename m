@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E73520EB;
-	Mon, 14 Oct 2024 14:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678A520EB;
+	Mon, 14 Oct 2024 14:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916269; cv=none; b=usrgSmiRunZ2nMoSYe8rsbKw6QoA/hlRhevuoAXxaYDWlzyCy/ePLV0GTa7tbbmF3OLI9e1qeXewimVuP4R6gBqsmoDOvfAFgQfy5Vx3yQ1rCWNtq5sMrjfYdja6lsPOXiPab1kHDf3EMFIDL3aVkZITc6w+qFw6hz217r8fXuM=
+	t=1728916272; cv=none; b=MugDa+SZgeJFl+NcHT/9342YUAXRVymWA+/RfygSPmcW9Nr5S7CwhBmWAY44F1CBTFcs3WmpTQcJf9z+IA0iUPxayDi8MTKB6WRFlYZAIYi6zLTF30ltSndBJxHCf1T6z4riAHNkOgBa07MK8Ut7/o0nykvt+21S/rYSbJG9F0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916269; c=relaxed/simple;
-	bh=MP4fpq+lO2u5Hue3BCvyLqpyS3bwMy+XbcxlssV+bbQ=;
+	s=arc-20240116; t=1728916272; c=relaxed/simple;
+	bh=IhYjOJC4XTLrutNnyMv3Uj8NrWC0pNSjYW8Fks6eL9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjYTkPXHXarKYxw0syyDhoM2SBSQpO//AkIs0zlMRUnFrYfiL42OkR2K1X4H7Rz8IZ1yNd0Wc47mGdWhkeJH5iHLB+HizrMacCXT/ZNl/7aSfaMwoOLFznzKDBhB2msB5waXM4DZ7nmM3ux9BsHGs2OYCzdLrvSqZYVvySlB5Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJDZuGSP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=poPhdvj/AP1Wo23OJvt4Ch+r5JhsKDp7Yg59NnpPMajpQvncFJDHvIbmhTKquR6Rk8MtgV5IU5z54da2+frzo8oa5/wEldaxB0ApiRmJ+/0HobiwBxgjBxjEHXd4pUt4f5HyVK3WoM9ZQ0/KjB0iiTNVSQ0EEqF2uuRIb1zHsaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJ2I+lM1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJDZuGSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4F9C4CEC3;
-	Mon, 14 Oct 2024 14:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJ2I+lM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F79C4CEC3;
+	Mon, 14 Oct 2024 14:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916269;
-	bh=MP4fpq+lO2u5Hue3BCvyLqpyS3bwMy+XbcxlssV+bbQ=;
+	s=korg; t=1728916272;
+	bh=IhYjOJC4XTLrutNnyMv3Uj8NrWC0pNSjYW8Fks6eL9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJDZuGSPKoVb+wNKigRgGvnVASjO5gM4A5XnTOj6FvoCKoECJoTUZ5ZumZh6eRBgF
-	 b6MbdC0akTsW5dccxSuigC4qfw2WqWIbP7Ju0qvhbUd84W7z/e44fPdVps1fXwSZB6
-	 f8h9lV567/ldX2Jl2KM+3mlDco7ROUMMg6hoi9qI=
+	b=GJ2I+lM1XI9CovkwnLXw14f4Zgz4kB3X9uWB2t2btF5MZ9N4pQ5YJQOPBTFz1M+xt
+	 DPheHi8n6XdIXQl2K1hqVM3KF6rsXGEyUEJURhlOi/HIuou0Q0Bvx77oA41UbReHHu
+	 lBlq0YAFGk1kxNaZ0PQ7/SFrzY5m0WZtPMWYElHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Vostrikov <mon@unformed.ru>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 091/214] sfc: Dont invoke xdp_do_flush() from netpoll.
-Date: Mon, 14 Oct 2024 16:19:14 +0200
-Message-ID: <20241014141048.546355856@linuxfoundation.org>
+Subject: [PATCH 6.11 126/214] e1000e: change I219 (19) devices to ADP
+Date: Mon, 14 Oct 2024 16:19:49 +0200
+Message-ID: <20241014141049.909710627@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,62 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit 55e802468e1d38dec8e25a2fdb6078d45b647e8c ]
+[ Upstream commit 9d9e5347b035412daa844f884b94a05bac94f864 ]
 
-Yury reported a crash in the sfc driver originated from
-netpoll_send_udp(). The netconsole sends a message and then netpoll
-invokes the driver's NAPI function with a budget of zero. It is
-dedicated to allow driver to free TX resources, that it may have used
-while sending the packet.
+Sporadic issues, such as PHY access loss, have been observed on I219 (19)
+devices. It was found that these devices have hardware more closely
+related to ADP than MTP and the issues were caused by taking MTP-specific
+flows.
 
-In the netpoll case the driver invokes xdp_do_flush() unconditionally,
-leading to crash because bpf_net_context was never assigned.
+Change the MAC and board types of these devices from MTP to ADP to
+correctly reflect the LAN hardware, and flows, of these devices.
 
-Invoke xdp_do_flush() only if budget is not zero.
-
-Fixes: 401cb7dae8130 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
-Reported-by: Yury Vostrikov <mon@unformed.ru>
-Closes: https://lore.kernel.org/5627f6d1-5491-4462-9d75-bc0612c26a22@app.fastmail.com
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/20241002125837.utOcRo6Y@linutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: db2d737d63c5 ("e1000e: Separate MTP board type from ADP")
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/efx_channels.c       | 3 ++-
- drivers/net/ethernet/sfc/siena/efx_channels.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/e1000e/hw.h     | 4 ++--
+ drivers/net/ethernet/intel/e1000e/netdev.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/efx_channels.c b/drivers/net/ethernet/sfc/efx_channels.c
-index c9e17a8208a90..f1723a6fb082b 100644
---- a/drivers/net/ethernet/sfc/efx_channels.c
-+++ b/drivers/net/ethernet/sfc/efx_channels.c
-@@ -1260,7 +1260,8 @@ static int efx_poll(struct napi_struct *napi, int budget)
- 
- 	spent = efx_process_channel(channel, budget);
- 
--	xdp_do_flush();
-+	if (budget)
-+		xdp_do_flush();
- 
- 	if (spent < budget) {
- 		if (efx_channel_has_rx_queue(channel) &&
-diff --git a/drivers/net/ethernet/sfc/siena/efx_channels.c b/drivers/net/ethernet/sfc/siena/efx_channels.c
-index a7346e965bfe7..d120b3c83ac07 100644
---- a/drivers/net/ethernet/sfc/siena/efx_channels.c
-+++ b/drivers/net/ethernet/sfc/siena/efx_channels.c
-@@ -1285,7 +1285,8 @@ static int efx_poll(struct napi_struct *napi, int budget)
- 
- 	spent = efx_process_channel(channel, budget);
- 
--	xdp_do_flush();
-+	if (budget)
-+		xdp_do_flush();
- 
- 	if (spent < budget) {
- 		if (efx_channel_has_rx_queue(channel) &&
+diff --git a/drivers/net/ethernet/intel/e1000e/hw.h b/drivers/net/ethernet/intel/e1000e/hw.h
+index 4b6e7536170ab..fc8ed38aa0955 100644
+--- a/drivers/net/ethernet/intel/e1000e/hw.h
++++ b/drivers/net/ethernet/intel/e1000e/hw.h
+@@ -108,8 +108,8 @@ struct e1000_hw;
+ #define E1000_DEV_ID_PCH_RPL_I219_V22		0x0DC8
+ #define E1000_DEV_ID_PCH_MTP_I219_LM18		0x550A
+ #define E1000_DEV_ID_PCH_MTP_I219_V18		0x550B
+-#define E1000_DEV_ID_PCH_MTP_I219_LM19		0x550C
+-#define E1000_DEV_ID_PCH_MTP_I219_V19		0x550D
++#define E1000_DEV_ID_PCH_ADP_I219_LM19		0x550C
++#define E1000_DEV_ID_PCH_ADP_I219_V19		0x550D
+ #define E1000_DEV_ID_PCH_LNP_I219_LM20		0x550E
+ #define E1000_DEV_ID_PCH_LNP_I219_V20		0x550F
+ #define E1000_DEV_ID_PCH_LNP_I219_LM21		0x5510
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index f103249b12fac..07e9033463582 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -7899,10 +7899,10 @@ static const struct pci_device_id e1000_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_V17), board_pch_adp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_RPL_I219_LM22), board_pch_adp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_RPL_I219_V22), board_pch_adp },
++	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_LM19), board_pch_adp },
++	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_V19), board_pch_adp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_LM18), board_pch_mtp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_V18), board_pch_mtp },
+-	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_LM19), board_pch_mtp },
+-	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_V19), board_pch_mtp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_LM20), board_pch_mtp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_V20), board_pch_mtp },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_LM21), board_pch_mtp },
 -- 
 2.43.0
 
