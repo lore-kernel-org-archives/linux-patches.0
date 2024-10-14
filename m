@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0541B4F14;
-	Mon, 14 Oct 2024 15:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4181C7608;
+	Mon, 14 Oct 2024 15:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918970; cv=none; b=ffTUsCZq3842vdHdw/I1lTv2qQQdtFSCLnT7XsWb3XvgcgGeJWtjj1yzB5kmfa8iUnY5DLLcSRNIeX59eCnvhzWrkmNUy8SIxZjg38dA104DSQZYyRyGVLx3nopW8LsVZAiRTNRQhP8cuu88bhDuBuSjE6s24AsMCemFVVaeUBo=
+	t=1728918973; cv=none; b=WAkdpKKXpXMsO1biWqVPBkPR9tQuOaTpH4jiSBL7SGBYtU4J/29Tb4VaZa/C4ARbRxOUu9DhI75iLT3yBQDS5AOVGTL7/dcV0wA5iYIQI5yE5fZyHowz2f0ldB7n396dldxktRhLLF7yOzofjznI54W4wubCcXMIXRhrm5RZZHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918970; c=relaxed/simple;
-	bh=C/tpkFLCTAdR25Yf50URjXwTyy69jI1JV/K6Dvw+qkE=;
+	s=arc-20240116; t=1728918973; c=relaxed/simple;
+	bh=JbofWkSn8VLf/1xfrdQ5HL+iIR7+AX1Vlwi26lNL2Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uy0W6k4y9++wQ6yzTQEx89Z4LXG5fPibG+vk9d6YYfUH13phnXhIWPqfTHXg9Jh3sF9zhCYuJYmSOLbJEOArkuVQFdp2hi7J8KsS5xdMZ3P7eTUiarxsrGaBcsGHMx1y22KUpU2fSz4GkHPjaU8fiilLvU5pO1WIiwnV7SHQx5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIDhknZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fCd4ir1VRBzU2bFC367totw/QZLo1uT6STGesc/78eSb/fA8jO4RKAY41+wsG2Y5C7wIEY+APiTEUqPgXXN83k88H6VR6v8HZcnIHTO2d8PHfvbVI1v6fdlwgk6vi7mYb5wyTOdtBtPmuZXUaJTHozXnFwFnasuejvhkrK+LNVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbS7P2v+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIDhknZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D0DC4CEC3;
-	Mon, 14 Oct 2024 15:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbS7P2v+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6E5C4CECF;
+	Mon, 14 Oct 2024 15:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918969;
-	bh=C/tpkFLCTAdR25Yf50URjXwTyy69jI1JV/K6Dvw+qkE=;
+	s=korg; t=1728918973;
+	bh=JbofWkSn8VLf/1xfrdQ5HL+iIR7+AX1Vlwi26lNL2Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIDhknZIjuOhRxsXU9mpao8DM6CNqYESAAtESc0XjW7TdOtAxxhy/yju1SdNBNhvi
-	 McdQubzxMShj6driYLo1dHltIUbMSlmdX+j+/AJixYHOphOflS/1/iq6rXtgfjEN/u
-	 Khj/8p8f8WURzOVNE5UV6StcviTJVt+X/U6xNMtQ=
+	b=bbS7P2v+n5+0WU2a0/w6Wh0IdLPW0irSLd2gSWFd9KAqhysnXBGsngbtT63ohCDtA
+	 lZSiLG70aUe1QkBKb32BzLvLJ9Iw+1npiXjxTo5fUfO2q6mk+8AdUMHTp0/XCdeWyo
+	 alnthKEkNporhz0T4UXdvwLumD1pQcEa+Txqlp9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 476/798] ata: sata_sil: Rename sil_blacklist to sil_quirks
-Date: Mon, 14 Oct 2024 16:17:10 +0200
-Message-ID: <20241014141236.674672181@linuxfoundation.org>
+Subject: [PATCH 6.1 477/798] drm/amd/display: Handle null stream_status in planes_changed_for_existing_stream
+Date: Mon, 14 Oct 2024 16:17:11 +0200
+Message-ID: <20241014141236.714153831@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,59 +58,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 93b0f9e11ce511353c65b7f924cf5f95bd9c3aba ]
+[ Upstream commit 8141f21b941710ecebe49220b69822cab3abd23d ]
 
-Rename the array sil_blacklist to sil_quirks as this name is more
-neutral and is also consistent with how this driver define quirks with
-the SIL_QUIRK_XXX flags.
+This commit adds a null check for 'stream_status' in the function
+'planes_changed_for_existing_stream'. Previously, the code assumed
+'stream_status' could be null, but did not handle the case where it was
+actually null. This could lead to a null pointer dereference.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_resource.c:3784 planes_changed_for_existing_stream() error: we previously assumed 'stream_status' could be null (see line 3774)
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_sil.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_sil.c b/drivers/ata/sata_sil.c
-index 3b989a52879d9..f412b8d71252f 100644
---- a/drivers/ata/sata_sil.c
-+++ b/drivers/ata/sata_sil.c
-@@ -128,7 +128,7 @@ static const struct pci_device_id sil_pci_tbl[] = {
- static const struct sil_drivelist {
- 	const char *product;
- 	unsigned int quirk;
--} sil_blacklist [] = {
-+} sil_quirks[] = {
- 	{ "ST320012AS",		SIL_QUIRK_MOD15WRITE },
- 	{ "ST330013AS",		SIL_QUIRK_MOD15WRITE },
- 	{ "ST340017AS",		SIL_QUIRK_MOD15WRITE },
-@@ -600,8 +600,8 @@ static void sil_thaw(struct ata_port *ap)
-  *	list, and apply the fixups to only the specific
-  *	devices/hosts/firmwares that need it.
-  *
-- *	20040111 - Seagate drives affected by the Mod15Write bug are blacklisted
-- *	The Maxtor quirk is in the blacklist, but I'm keeping the original
-+ *	20040111 - Seagate drives affected by the Mod15Write bug are quirked
-+ *	The Maxtor quirk is in sil_quirks, but I'm keeping the original
-  *	pessimistic fix for the following reasons...
-  *	- There seems to be less info on it, only one device gleaned off the
-  *	Windows	driver, maybe only one is affected.  More info would be greatly
-@@ -620,9 +620,9 @@ static void sil_dev_config(struct ata_device *dev)
- 
- 	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
- 
--	for (n = 0; sil_blacklist[n].product; n++)
--		if (!strcmp(sil_blacklist[n].product, model_num)) {
--			quirks = sil_blacklist[n].quirk;
-+	for (n = 0; sil_quirks[n].product; n++)
-+		if (!strcmp(sil_quirks[n].product, model_num)) {
-+			quirks = sil_quirks[n].quirk;
- 			break;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index 29400db42bb2d..d4ba81f36ded1 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -2634,8 +2634,10 @@ static bool planes_changed_for_existing_stream(struct dc_state *context,
  		}
+ 	}
  
+-	if (!stream_status)
++	if (!stream_status) {
+ 		ASSERT(0);
++		return false;
++	}
+ 
+ 	for (i = 0; i < set_count; i++)
+ 		if (set[i].stream == stream)
 -- 
 2.43.0
 
