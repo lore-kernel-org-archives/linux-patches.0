@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC801A76CE;
-	Mon, 14 Oct 2024 15:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5F81A76CE;
+	Mon, 14 Oct 2024 15:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919216; cv=none; b=Z7skA2uLyvTlX8ivE+qopPSB2lFijrDp/8E30FQzKIQt5+0Nq3WgXzOt0n9ontWsa9HGx710dT5pFTjUHKJpOL50RjuJwAJX6bQPCxEBuHaFXmQc669gbdLIVlByQ8VWcSfy6OAQXMRgWP85qrXDE9AoRCJCn6fARMhhT1u3kZE=
+	t=1728919220; cv=none; b=LJ8/3qMsWoE4aZrO4tRZYWC6luuvfx3RlGsej8XYlxwlitUmLnNNm80sLVS0Qug4JOIUSrbvJqze6JkWZKqjPhLeH7an1zctRFaaWRCgu1k14YkpYycQpBLmaWXOu9cLSXOaTyW41VYdTrcL5jAbv7MopOSirxAIByOLkGfJsDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919216; c=relaxed/simple;
-	bh=As0XCfSyV+XES3asAuix5zBFpKPwxc1B9NlzC7uhqIg=;
+	s=arc-20240116; t=1728919220; c=relaxed/simple;
+	bh=kYxtst4CboctwJ4OZhCFIucXjen7GiluE98spYX2mkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXWX9/nNDvucofLH+BYn4Y3B2c1LVIwdMbcu4GuDTViQYC8qMz3PCnZ90xlMVwyq0eAv2qblnF1KYuClpwyModJc3pfdal9Y3jaB9dGbpcp5HHCBit4uZyFWda2Pm9So1waU5sVXVCf1nMtg90KoDCW4gEVBDJqbKx/qL3W2szg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOSClT2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLpmjJeCp9oPtBSesO0eb6GQ/gOpqjSgRQxT5INJwY6oONT5vYlMWAMAyKOWeI6CQs7iGCNu7YFecpkUpDWu6TKTfHu8q3MiljyseVurgTxSUJkx0LkmsIx2GCLM3msAqljQxgvAn/Nuj9omAvN7vuzzv8hXyMiYF/uc6DuW3t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbtCZ0R/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOSClT2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA20C4CEC3;
-	Mon, 14 Oct 2024 15:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbtCZ0R/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500F1C4CEC3;
+	Mon, 14 Oct 2024 15:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919216;
-	bh=As0XCfSyV+XES3asAuix5zBFpKPwxc1B9NlzC7uhqIg=;
+	s=korg; t=1728919219;
+	bh=kYxtst4CboctwJ4OZhCFIucXjen7GiluE98spYX2mkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOSClT2PxtzjcWvBE+zxFwjMiVFUr5kUDormMeIn1h6Pcd95B9bZM9lET2FRe8UOO
-	 NUHt8Uqj/dhibH9k3PlZsRyrAokOBm3rrKMKQ6Zbobz4PB+29dXAcDAhfC/9w8dnUO
-	 7/T3TAdBInSoAtRkUqUujg9EhKbPhtdhqbQcdol4=
+	b=gbtCZ0R/Ow+L3kCIVRkdJ4DbWZLIcV1T+zee8uRUpSqfN48iGtKTeroUnOQPXRbtH
+	 dPWakrT14lA+f4kUPcqeCUdhCm/HYsvnHv0m9YxvYz0Uq/Ruu/zxiO3Z1p17QbpD0y
+	 VUzUq6W7Kbmiu90Qd3Sfs4LDH3ZaSdJZty1pIIlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 546/798] ext4: dax: fix overflowing extents beyond inode size when partially writing
-Date: Mon, 14 Oct 2024 16:18:20 +0200
-Message-ID: <20241014141239.448815291@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 547/798] ext4: fix incorrect tid assumption in __jbd2_log_wait_for_space()
+Date: Mon, 14 Oct 2024 16:18:21 +0200
+Message-ID: <20241014141239.486967178@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,83 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit dda898d7ffe85931f9cca6d702a51f33717c501e upstream.
+commit 972090651ee15e51abfb2160e986fa050cfc7a40 upstream.
 
-The dax_iomap_rw() does two things in each iteration: map written blocks
-and copy user data to blocks. If the process is killed by user(See signal
-handling in dax_iomap_iter()), the copied data will be returned and added
-on inode size, which means that the length of written extents may exceed
-the inode size, then fsck will fail. An example is given as:
+Function __jbd2_log_wait_for_space() assumes that '0' is not a valid value
+for transaction IDs, which is incorrect.  Don't assume that and invoke
+jbd2_log_wait_commit() if the journal had a committing transaction instead.
 
-dd if=/dev/urandom of=file bs=4M count=1
- dax_iomap_rw
-  iomap_iter // round 1
-   ext4_iomap_begin
-    ext4_iomap_alloc // allocate 0~2M extents(written flag)
-  dax_iomap_iter // copy 2M data
-  iomap_iter // round 2
-   iomap_iter_advance
-    iter->pos += iter->processed // iter->pos = 2M
-   ext4_iomap_begin
-    ext4_iomap_alloc // allocate 2~4M extents(written flag)
-  dax_iomap_iter
-   fatal_signal_pending
-  done = iter->pos - iocb->ki_pos // done = 2M
- ext4_handle_inode_extension
-  ext4_update_inode_size // inode size = 2M
-
-fsck reports: Inode 13, i_size is 2097152, should be 4194304.  Fix?
-
-Fix the problem by truncating extents if the written length is smaller
-than expected.
-
-Fixes: 776722e85d3b ("ext4: DAX iomap write support")
-CC: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219136
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20240809121532.2105494-1-chengzhihao@huaweicloud.com
+Link: https://patch.msgid.link/20240724161119.13448-3-luis.henriques@linux.dev
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/file.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -324,10 +324,10 @@ static ssize_t ext4_handle_inode_extensi
-  * Clean up the inode after DIO or DAX extending write has completed and the
-  * inode size has been updated using ext4_handle_inode_extension().
-  */
--static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
-+static void ext4_inode_extension_cleanup(struct inode *inode, bool need_trunc)
- {
- 	lockdep_assert_held_write(&inode->i_rwsem);
--	if (count < 0) {
-+	if (need_trunc) {
- 		ext4_truncate_failed_write(inode);
- 		/*
- 		 * If the truncate operation failed early, then the inode may
-@@ -567,7 +567,7 @@ static ssize_t ext4_dio_write_iter(struc
- 		 * writeback of delalloc blocks.
- 		 */
- 		WARN_ON_ONCE(ret == -EIOCBQUEUED);
--		ext4_inode_extension_cleanup(inode, ret);
-+		ext4_inode_extension_cleanup(inode, ret < 0);
- 	}
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -91,9 +91,12 @@ __releases(&journal->j_state_lock)
+ 		if (space_left < nblocks) {
+ 			int chkpt = journal->j_checkpoint_transactions != NULL;
+ 			tid_t tid = 0;
++			bool has_transaction = false;
  
- out:
-@@ -651,7 +651,7 @@ ext4_dax_write_iter(struct kiocb *iocb,
- 
- 	if (extend) {
- 		ret = ext4_handle_inode_extension(inode, offset, ret);
--		ext4_inode_extension_cleanup(inode, ret);
-+		ext4_inode_extension_cleanup(inode, ret < (ssize_t)count);
- 	}
- out:
- 	inode_unlock(inode);
+-			if (journal->j_committing_transaction)
++			if (journal->j_committing_transaction) {
+ 				tid = journal->j_committing_transaction->t_tid;
++				has_transaction = true;
++			}
+ 			spin_unlock(&journal->j_list_lock);
+ 			write_unlock(&journal->j_state_lock);
+ 			if (chkpt) {
+@@ -101,7 +104,7 @@ __releases(&journal->j_state_lock)
+ 			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
+ 				/* We were able to recover space; yay! */
+ 				;
+-			} else if (tid) {
++			} else if (has_transaction) {
+ 				/*
+ 				 * jbd2_journal_commit_transaction() may want
+ 				 * to take the checkpoint_mutex if JBD2_FLUSHED
 
 
