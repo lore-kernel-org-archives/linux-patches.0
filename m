@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE41AB51B;
-	Mon, 14 Oct 2024 15:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA081AB51B;
+	Mon, 14 Oct 2024 15:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919852; cv=none; b=b9HaaIQvOaMmgV2Ii6ulFbjfwQ+rtk02uw3A7CUv9Rg0F1P+VvMJDknH4NVeN+RL0M7rTg2/U0eqUYye07gzoY/w6FerYtQzT4Mly79F5FPo7EFDfaOavWFm3JfUEYsWbchV44+0t1IQCa4Ds4UOej7MqpOOr1L9PwA9VJU7MoQ=
+	t=1728919855; cv=none; b=PCtAlhnsBUjWIt+xoaQs6kYzkl8IMmHhxeCvL43sk3QfrvfQL7g7kCxfw8qcPvbBefSHQELYe+Hgefh3n5cTq23x8SyXiPIlPpXRZFgO64NfKE6XONyPhNx+2qiSAD/pYwCoIaZEPEb0jPTBk22GCIZapG1kFTFGFAo0wi5ANyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919852; c=relaxed/simple;
-	bh=x/Q+7xeAWPe0w0hwC40kaVKnNd1pMKar7HBSIjVzvTo=;
+	s=arc-20240116; t=1728919855; c=relaxed/simple;
+	bh=8wwUF7tGxKWFPL1jr3b0x1BkXoy1ru+0j/90ntuAE/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgrECPL57L/BWcC6LBjv+wwJ4BSQWlo9NRt/T8m4OeNhW8eY8zNMkDDqgyudf0WoD5aaQ6aH7NBEBBv/J4jdWav1NsXl5bHVZG+1oiIxkO/QpbksjhQwNz98l0oOjE/oJWQrP4nGl6sN7iZkI5TnRlQGS8E2+snP/kmciZI6rsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGy3UGam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JyLgg7oxMgWcDjtA5xDwrjlq91tQTpr9jAELW48Snk9N/o4RUGK4k7IxKyzvN5f7ByKINUsL642n2DzqyMsUAkjf6wQxb3pFmbwoMYHM0X7P/5UPYLimlFs/d/VdJAjRXLMqaKSoEFjT1Wj+Rta755KqnKABnw/D9PHeMDI93TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6Hm+rZA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGy3UGam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA6AC4CEC3;
-	Mon, 14 Oct 2024 15:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6Hm+rZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36FEC4CEC3;
+	Mon, 14 Oct 2024 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919852;
-	bh=x/Q+7xeAWPe0w0hwC40kaVKnNd1pMKar7HBSIjVzvTo=;
+	s=korg; t=1728919855;
+	bh=8wwUF7tGxKWFPL1jr3b0x1BkXoy1ru+0j/90ntuAE/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGy3UGamiuKz12GkzTHmHCEFHv1vquDrgbpvYg2QhM15+bJE7UBa14lRupRTbSzqw
-	 VDpLP9oLBb77Xtc//zC/tpSiCacJ5tM/SCGIjJWIFt2N81N5MRML5gjl5sjHqwqMVX
-	 MO/ZFMjKV0EtEKZk/9SZqNaPKe1+nBx3BmMmbfRc=
+	b=w6Hm+rZA5/jWmLIUUHqCAEBD0y1KIbxLxKK+PTiRR9prC8IzTODxdqqHwWFvG9dSM
+	 eNTHZI0FHPv72pUjDDRAUvWjC+KoZczfgxc0hPrmBpqyoeMFxua/hc3zVfDUsETxkD
+	 B3UsyvLiiwtzj1tpyRiR4TBVg4XCfRCgNinh2f70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 725/798] drm/rockchip: vop: limit maximum resolution to hardware capabilities
-Date: Mon, 14 Oct 2024 16:21:19 +0200
-Message-ID: <20241014141246.553077242@linuxfoundation.org>
+Subject: [PATCH 6.1 699/798] clk: bcm: bcm53573: fix OF node leak in init
+Date: Mon, 14 Oct 2024 16:20:53 +0200
+Message-ID: <20241014141245.532377035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,222 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8e140cb60270ee8b5b41e80806323c668d8d4da9 ]
+[ Upstream commit f92d67e23b8caa81f6322a2bad1d633b00ca000e ]
 
-The different VOP variants support different maximum resolutions. Reject
-resolutions that are not supported by a specific variant.
+Driver code is leaking OF node reference from of_get_parent() in
+bcm53573_ilp_init().  Usage of of_get_parent() is not needed in the
+first place, because the parent node will not be freed while we are
+processing given node (triggered by CLK_OF_DECLARE()).  Thus fix the
+leak by accessing parent directly, instead of of_get_parent().
 
-This hasn't been a problem in the upstream driver so far as 1920x1080
-has been the maximum resolution supported by the HDMI driver and that
-resolution is supported by all VOP variants. Now with higher resolutions
-supported in the HDMI driver we have to limit the resolutions to the
-ones supported by the VOP.
-
-The actual maximum resolutions are taken from the Rockchip downstream
-Kernel.
-
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-[dropped the vdisplay > height check after talking to Sascha, as according to
- the vendor code "Actually vop hardware has no output height limit"
- (from vendor commit "drm/rockchip: vop: get rid of max_output.height check")
- and the height-check broke the px30-minievb display]
-
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230216102447.582905-2-s.hauer@pengutronix.de
-Stable-dep-of: 6ed51ba95e27 ("drm/rockchip: vop: enable VOP_FEATURE_INTERNAL_RGB on RK3066")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240826065801.17081-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c  | 12 ++++++++++++
- drivers/gpu/drm/rockchip/rockchip_drm_vop.h  |  6 ++++++
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.h |  5 -----
- drivers/gpu/drm/rockchip/rockchip_vop_reg.c  | 18 ++++++++++++++++++
- 4 files changed, 36 insertions(+), 5 deletions(-)
+ drivers/clk/bcm/clk-bcm53573-ilp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 2a34d5b013430..b2289a523c408 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -1183,6 +1183,17 @@ static void vop_crtc_disable_vblank(struct drm_crtc *crtc)
- 	spin_unlock_irqrestore(&vop->irq_lock, flags);
- }
+diff --git a/drivers/clk/bcm/clk-bcm53573-ilp.c b/drivers/clk/bcm/clk-bcm53573-ilp.c
+index 84f2af736ee8a..83ef41d618be3 100644
+--- a/drivers/clk/bcm/clk-bcm53573-ilp.c
++++ b/drivers/clk/bcm/clk-bcm53573-ilp.c
+@@ -112,7 +112,7 @@ static void bcm53573_ilp_init(struct device_node *np)
+ 		goto err_free_ilp;
+ 	}
  
-+static enum drm_mode_status vop_crtc_mode_valid(struct drm_crtc *crtc,
-+						const struct drm_display_mode *mode)
-+{
-+	struct vop *vop = to_vop(crtc);
-+
-+	if (vop->data->max_output.width && mode->hdisplay > vop->data->max_output.width)
-+		return MODE_BAD_HVALUE;
-+
-+	return MODE_OK;
-+}
-+
- static bool vop_crtc_mode_fixup(struct drm_crtc *crtc,
- 				const struct drm_display_mode *mode,
- 				struct drm_display_mode *adjusted_mode)
-@@ -1598,6 +1609,7 @@ static void vop_crtc_atomic_flush(struct drm_crtc *crtc,
- }
- 
- static const struct drm_crtc_helper_funcs vop_crtc_helper_funcs = {
-+	.mode_valid = vop_crtc_mode_valid,
- 	.mode_fixup = vop_crtc_mode_fixup,
- 	.atomic_check = vop_crtc_atomic_check,
- 	.atomic_begin = vop_crtc_atomic_begin,
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-index 96f9a6b419c2e..c5c716a69171a 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-@@ -42,6 +42,11 @@ enum vop_data_format {
- 	VOP_FMT_YUV444SP,
- };
- 
-+struct vop_rect {
-+	int width;
-+	int height;
-+};
-+
- struct vop_reg {
- 	uint32_t mask;
- 	uint16_t offset;
-@@ -226,6 +231,7 @@ struct vop_data {
- 	const struct vop_win_data *win;
- 	unsigned int win_size;
- 	unsigned int lut_size;
-+	struct vop_rect max_output;
- 
- #define VOP_FEATURE_OUTPUT_RGB10	BIT(0)
- #define VOP_FEATURE_INTERNAL_RGB	BIT(1)
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-index c727093a06d68..f1234a151130f 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-@@ -27,11 +27,6 @@ enum win_dly_mode {
- 	VOP2_DLY_MODE_MAX,
- };
- 
--struct vop_rect {
--	int width;
--	int height;
--};
--
- enum vop2_scale_up_mode {
- 	VOP2_SCALE_UP_NRST_NBOR,
- 	VOP2_SCALE_UP_BIL,
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-index a084097a33a60..b23c887ff4d45 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-@@ -181,6 +181,7 @@ static const struct vop_data rk3036_vop = {
- 	.output = &rk3036_output,
- 	.win = rk3036_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3036_vop_win_data),
-+	.max_output = { 1920, 1080 },
- };
- 
- static const struct vop_win_phy rk3126_win1_data = {
-@@ -213,6 +214,7 @@ static const struct vop_data rk3126_vop = {
- 	.output = &rk3036_output,
- 	.win = rk3126_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3126_vop_win_data),
-+	.max_output = { 1920, 1080 },
- };
- 
- static const int px30_vop_intrs[] = {
-@@ -340,6 +342,7 @@ static const struct vop_data px30_vop_big = {
- 	.output = &px30_output,
- 	.win = px30_vop_big_win_data,
- 	.win_size = ARRAY_SIZE(px30_vop_big_win_data),
-+	.max_output = { 1920, 1080 },
- };
- 
- static const struct vop_win_data px30_vop_lit_win_data[] = {
-@@ -356,6 +359,7 @@ static const struct vop_data px30_vop_lit = {
- 	.output = &px30_output,
- 	.win = px30_vop_lit_win_data,
- 	.win_size = ARRAY_SIZE(px30_vop_lit_win_data),
-+	.max_output = { 1920, 1080 },
- };
- 
- static const struct vop_scl_regs rk3066_win_scl = {
-@@ -480,6 +484,7 @@ static const struct vop_data rk3066_vop = {
- 	.output = &rk3066_output,
- 	.win = rk3066_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3066_vop_win_data),
-+	.max_output = { 1920, 1080 },
- };
- 
- static const struct vop_scl_regs rk3188_win_scl = {
-@@ -586,6 +591,7 @@ static const struct vop_data rk3188_vop = {
- 	.win = rk3188_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3188_vop_win_data),
- 	.feature = VOP_FEATURE_INTERNAL_RGB,
-+	.max_output = { 2048, 1536 },
- };
- 
- static const struct vop_scl_extension rk3288_win_full_scl_ext = {
-@@ -733,6 +739,12 @@ static const struct vop_data rk3288_vop = {
- 	.win = rk3288_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3288_vop_win_data),
- 	.lut_size = 1024,
-+	/*
-+	 * This is the maximum resolution for the VOPB, the VOPL can only do
-+	 * 2560x1600, but we can't distinguish them as they have the same
-+	 * compatible.
-+	 */
-+	.max_output = { 3840, 2160 },
- };
- 
- static const int rk3368_vop_intrs[] = {
-@@ -834,6 +846,7 @@ static const struct vop_data rk3368_vop = {
- 	.misc = &rk3368_misc,
- 	.win = rk3368_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3368_vop_win_data),
-+	.max_output = { 4096, 2160 },
- };
- 
- static const struct vop_intr rk3366_vop_intr = {
-@@ -855,6 +868,7 @@ static const struct vop_data rk3366_vop = {
- 	.misc = &rk3368_misc,
- 	.win = rk3368_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3368_vop_win_data),
-+	.max_output = { 4096, 2160 },
- };
- 
- static const struct vop_output rk3399_output = {
-@@ -985,6 +999,7 @@ static const struct vop_data rk3399_vop_big = {
- 	.win_size = ARRAY_SIZE(rk3399_vop_win_data),
- 	.win_yuv2yuv = rk3399_vop_big_win_yuv2yuv_data,
- 	.lut_size = 1024,
-+	.max_output = { 4096, 2160 },
- };
- 
- static const struct vop_win_data rk3399_vop_lit_win_data[] = {
-@@ -1011,6 +1026,7 @@ static const struct vop_data rk3399_vop_lit = {
- 	.win_size = ARRAY_SIZE(rk3399_vop_lit_win_data),
- 	.win_yuv2yuv = rk3399_vop_lit_win_yuv2yuv_data,
- 	.lut_size = 256,
-+	.max_output = { 2560, 1600 },
- };
- 
- static const struct vop_win_data rk3228_vop_win_data[] = {
-@@ -1030,6 +1046,7 @@ static const struct vop_data rk3228_vop = {
- 	.misc = &rk3368_misc,
- 	.win = rk3228_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3228_vop_win_data),
-+	.max_output = { 4096, 2160 },
- };
- 
- static const struct vop_modeset rk3328_modeset = {
-@@ -1101,6 +1118,7 @@ static const struct vop_data rk3328_vop = {
- 	.misc = &rk3328_misc,
- 	.win = rk3328_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3328_vop_win_data),
-+	.max_output = { 4096, 2160 },
- };
- 
- static const struct of_device_id vop_driver_dt_match[] = {
+-	ilp->regmap = syscon_node_to_regmap(of_get_parent(np));
++	ilp->regmap = syscon_node_to_regmap(np->parent);
+ 	if (IS_ERR(ilp->regmap)) {
+ 		err = PTR_ERR(ilp->regmap);
+ 		goto err_free_ilp;
 -- 
 2.43.0
 
