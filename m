@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF391AB522;
-	Mon, 14 Oct 2024 14:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458231ABEA5;
+	Mon, 14 Oct 2024 14:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916708; cv=none; b=iY4FtO0q2MC5PwpRXiWW6ieQgUleViGrq6Cn+zRZ2S3oscAcKvfpJWKlO+ks/IIeYqnbVhupOYLgEeXCcmpZL0st9lZMNTkxN41nF83lj4dz0Lwbo9G672VPBXubhQf2SJav0iR8kUhF0v6LwUVywMhVsSMhqvlBQDr6ccO770Y=
+	t=1728916711; cv=none; b=GEpb3eLjxSnVTzkvWgIynmUj8KpeMz1kJ/84G+glgRJk88U4TGKiY8r7Fq6vL+I/6Ip87/zd954GwdyHaTC3wJX82WeEdU6xRVu7dFiXPP7X5o1xnU345bEdiaCzyy25dIwbYIFhgVgSkJ/whc9wthNnta7Q+70c07hCHHcYHIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916708; c=relaxed/simple;
-	bh=B+U+9+c2bUXrVI0sEv0EAed7w/usXCNmXYeoTgHJX/M=;
+	s=arc-20240116; t=1728916711; c=relaxed/simple;
+	bh=e8LfM5Q5GqKOQiF6f6KWSJk5a2O5iDxciUgeuqe1NLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d2FiXu26IqxiULftNHJQubRhYHyUNz0bvyZRU4c7++7LWrTx7NB+TEDNJ4Gd6mmTDWwdBr7/5V43sDHl9IzOs1YeAOIco7aLS32uaEEnI8qmkUVIiheDueELgCF7Hvm5o33tLqF/wwX7LeDivHesSObaNU+9WWdIm0ZuLRyHQjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMoxuetk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lLA945LNIVjZfXQZUgw+dIrYFbBzoNbVlkX0K2ywhumEGCEIqhFniYTe3YcAldj4vlTRJFpgma5MwBKTnlOH25rw73owYuB5BDy7jm8n0cAz0zpnXefjWSb5zG1jzxBpDyjVNxrMkZMBldHpWUTDYKNiToOwMfJWb2qCnI1r38Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQSPbeEH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMoxuetk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35004C4CEC7;
-	Mon, 14 Oct 2024 14:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQSPbeEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB101C4CEC3;
+	Mon, 14 Oct 2024 14:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916707;
-	bh=B+U+9+c2bUXrVI0sEv0EAed7w/usXCNmXYeoTgHJX/M=;
+	s=korg; t=1728916711;
+	bh=e8LfM5Q5GqKOQiF6f6KWSJk5a2O5iDxciUgeuqe1NLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMoxuetklv/LFURy84VJAdMzsUPk+G2e0cBqSRfXfW/M/h6EdrCVwXdi28/6PdsMo
-	 aMtQ9CyK/UeOroOKGPFUmKPac83j1qRwZ2DBdGuTbGBQ55vcFw7KKmZhXzUjzfnhNM
-	 4vT37f3SWNGRXxiN1bZ+6DpqPVvJnOsgVa3gQUkE=
+	b=iQSPbeEH0IeTedJfgoOGOdD+++halmmg4ZxrczQXjLWOGpLQU0EoPIg2pkfQkTPv/
+	 IKubpHC621DMte6I+YKJAWE6eJ6x0bUHxAFy77Z+edR6eUrASy2WIKKu4YI3Fh4qw+
+	 JDXLEKuM27VAkHiIzD4f4yYm5cjV0aqGLVe8nAKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wei Fang <wei.fang@nxp.com>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 002/213] net: fec: dont save PTP state if PTP is unsupported
-Date: Mon, 14 Oct 2024 16:18:28 +0200
-Message-ID: <20241014141043.065946661@linuxfoundation.org>
+	Yang Jihong <yangjihong1@huawei.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 037/213] perf sched: Fix memory leak in perf_sched__map()
+Date: Mon, 14 Oct 2024 16:19:03 +0200
+Message-ID: <20241014141044.438882977@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -48,59 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit 6be063071a457767ee229db13f019c2ec03bfe44 upstream.
+[ Upstream commit ef76a5af819743d405674f6de5d0e63320ac653e ]
 
-Some platforms (such as i.MX25 and i.MX27) do not support PTP, so on
-these platforms fec_ptp_init() is not called and the related members
-in fep are not initialized. However, fec_ptp_save_state() is called
-unconditionally, which causes the kernel to panic. Therefore, add a
-condition so that fec_ptp_save_state() is not called if PTP is not
-supported.
+perf_sched__map() needs to free memory of map_cpus, color_pids and
+color_cpus in normal path and rollback allocated memory in error path.
 
-Fixes: a1477dc87dc4 ("net: fec: Restart PPS after link state change")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/lkml/353e41fe-6bb4-4ee9-9980-2da2a9c1c508@roeck-us.net/
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20241008061153.1977930-1-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240206083228.172607-3-yangjihong1@huawei.com
+Stable-dep-of: 1a5efc9e13f3 ("libsubcmd: Don't free the usage string")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/perf/builtin-sched.c | 41 ++++++++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -1058,7 +1058,8 @@ fec_restart(struct net_device *ndev)
- 	u32 rcntl = OPT_FRAME_SIZE | 0x04;
- 	u32 ecntl = FEC_ECR_ETHEREN;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 2d36b06d4d877..8143828fdc585 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -3252,8 +3252,6 @@ static int perf_sched__lat(struct perf_sched *sched)
  
--	fec_ptp_save_state(fep);
-+	if (fep->bufdesc_ex)
-+		fec_ptp_save_state(fep);
+ static int setup_map_cpus(struct perf_sched *sched)
+ {
+-	struct perf_cpu_map *map;
+-
+ 	sched->max_cpu.cpu  = sysconf(_SC_NPROCESSORS_CONF);
  
- 	/* Whack a reset.  We should wait for this.
- 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
-@@ -1321,7 +1322,8 @@ fec_stop(struct net_device *ndev)
- 			netdev_err(ndev, "Graceful transmit stop did not complete!\n");
+ 	if (sched->map.comp) {
+@@ -3262,16 +3260,15 @@ static int setup_map_cpus(struct perf_sched *sched)
+ 			return -1;
  	}
  
--	fec_ptp_save_state(fep);
-+	if (fep->bufdesc_ex)
-+		fec_ptp_save_state(fep);
+-	if (!sched->map.cpus_str)
+-		return 0;
+-
+-	map = perf_cpu_map__new(sched->map.cpus_str);
+-	if (!map) {
+-		pr_err("failed to get cpus map from %s\n", sched->map.cpus_str);
+-		return -1;
++	if (sched->map.cpus_str) {
++		sched->map.cpus = perf_cpu_map__new(sched->map.cpus_str);
++		if (!sched->map.cpus) {
++			pr_err("failed to get cpus map from %s\n", sched->map.cpus_str);
++			zfree(&sched->map.comp_cpus);
++			return -1;
++		}
+ 	}
  
- 	/* Whack a reset.  We should wait for this.
- 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
+-	sched->map.cpus = map;
+ 	return 0;
+ }
+ 
+@@ -3311,20 +3308,34 @@ static int setup_color_cpus(struct perf_sched *sched)
+ 
+ static int perf_sched__map(struct perf_sched *sched)
+ {
++	int rc = -1;
++
+ 	if (setup_map_cpus(sched))
+-		return -1;
++		return rc;
+ 
+ 	if (setup_color_pids(sched))
+-		return -1;
++		goto out_put_map_cpus;
+ 
+ 	if (setup_color_cpus(sched))
+-		return -1;
++		goto out_put_color_pids;
+ 
+ 	setup_pager();
+ 	if (perf_sched__read_events(sched))
+-		return -1;
++		goto out_put_color_cpus;
++
++	rc = 0;
+ 	print_bad_events(sched);
+-	return 0;
++
++out_put_color_cpus:
++	perf_cpu_map__put(sched->map.color_cpus);
++
++out_put_color_pids:
++	perf_thread_map__put(sched->map.color_pids);
++
++out_put_map_cpus:
++	zfree(&sched->map.comp_cpus);
++	perf_cpu_map__put(sched->map.cpus);
++	return rc;
+ }
+ 
+ static int perf_sched__replay(struct perf_sched *sched)
+-- 
+2.43.0
+
 
 
