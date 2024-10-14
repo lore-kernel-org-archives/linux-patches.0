@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA7F55896;
-	Mon, 14 Oct 2024 15:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DB64A24;
+	Mon, 14 Oct 2024 15:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918374; cv=none; b=pj+ikC3dJm7y14ejnrOiefePPqN/BoBtx1my/y5VgwMIYVgo+SAYYoC6QMxh8sIC1qaGB7N0dQHWI5+3zZeZCZpQfYXUCLTs0ptp3L/ZprvOnojY/kBPXYqgK6c5q5wb842lyaVMYdSuTGuLs19n0bBHH5QAq6es9RAqdAdcocc=
+	t=1728918377; cv=none; b=CQ5yU551+L/38LyN7NIJpXUVt8BzJzD2S56EPn27NEO73D/FjpV307bSuiOZeqAhQPIbEHLliDXMORG/MjpQ6ahnG9hHxvsjJnZnL5pJvB9vyR6KaOI5j1emwWOUU0XY/8VzdsRrXS+6bY7/MFCia28avM7oAEYcw/WHTpR4Yrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918374; c=relaxed/simple;
-	bh=byO8z8GDCwMyuoQiWh2les/Ym3IZk0QBfKVXaMmYn8Q=;
+	s=arc-20240116; t=1728918377; c=relaxed/simple;
+	bh=BoEqnuNa/kcJgPkTtih2qKX84fQua0txKHFgmT8nFfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2wzPjFUmukV7S9hUkhm1Nt2+ccjWAvcY6yEJgFqiR81eLcQCuVyLevr5wBg6tvZmTss+pDiFLOWBo3CkqFvBdH9oCeCEZ+yOWodlWQVpV7RNhHhgE/3dg/OYzsnRu9dX1vrDEvugu1Zbsn0Bqt0w2PoSAqJ7+bGdQnzs9KQ+jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoEsxKZ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIlighICkx2GPAv4iS7Di037tMZwPauBd/DVEIQTVy+uOs8uDLm3H3y3DMnL4H0aL/s/C9egAeN7HXTw4kNyQNeLjsfS33wqky7tMI4KEit0U7gs27nlC/HmavaEmkVUtczgePNKK4pMoklK/57HjIFJUsRr6ikPvViDtC2DwpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7pYNHrH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoEsxKZ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BEBC4CEC3;
-	Mon, 14 Oct 2024 15:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7pYNHrH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A66AC4CEC3;
+	Mon, 14 Oct 2024 15:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918373;
-	bh=byO8z8GDCwMyuoQiWh2les/Ym3IZk0QBfKVXaMmYn8Q=;
+	s=korg; t=1728918376;
+	bh=BoEqnuNa/kcJgPkTtih2qKX84fQua0txKHFgmT8nFfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoEsxKZ0y6vUGIc17rRZajdx2rLG03JgUm6uCOcScb1P3+sp/BukaK9/vIVcjH4hN
-	 mI1TF/eyYvrVDSsWDlp+iYKcTynY9zbDG1/p0LV5wHFX4R5eelMMBXuieZQkzEAdGd
-	 /q2Ob20lRc1b1I+r3WAknuB13AlZXHo+W9Kq92nk=
+	b=m7pYNHrHEaJQbDg7KhRXGOBW8NNYI0j0CGNj3WpHEFRyUUPRRddgxV2lVfd8A4abT
+	 VM1Mux+tDmhSerjOFa2ZV71Hvia+HZBB81eVGZs/HpEiFtRnRSc1k05dh8zAytgxB7
+	 He0aLio31lkiYOPvf0gDFlMpSPkosiYcN5wkAc2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Stan Johnson <userm57@yahoo.com>
-Subject: [PATCH 6.1 304/798] scsi: mac_scsi: Disallow bus errors during PDMA send
-Date: Mon, 14 Oct 2024 16:14:18 +0200
-Message-ID: <20241014141229.887499620@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 305/798] usbnet: fix cyclical race on disconnect with work queue
+Date: Mon, 14 Oct 2024 16:14:19 +0200
+Message-ID: <20241014141229.928060902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,143 +50,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 5551bc30e4a69ad86d0d008e2f56cd59b6583476 upstream.
+commit 04e906839a053f092ef53f4fb2d610983412b904 upstream.
 
-SD cards can produce write latency spikes on the order of a hundred
-milliseconds. If the target firmware does not hide that latency during DATA
-IN and OUT phases it can cause the PDMA circuitry to raise a processor bus
-fault which in turn leads to an unreliable byte count and a DMA overrun.
+The work can submit URBs and the URBs can schedule the work.
+This cycle needs to be broken, when a device is to be stopped.
+Use a flag to do so.
+This is a design issue as old as the driver.
 
-The Last Byte Sent flag is used to detect the overrun but this mechanism is
-unreliable on some systems. Instead, set a DID_ERROR result whenever there
-is a bus fault during a PDMA send, unless the cause was a phase mismatch.
-
-Cc: stable@vger.kernel.org # 5.15+
-Reported-and-tested-by: Stan Johnson <userm57@yahoo.com>
-Fixes: 7c1f3e3447a1 ("scsi: mac_scsi: Treat Last Byte Sent time-out as failure")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/cc38df687ace2c4ffc375a683b2502fc476b600d.1723001788.git.fthain@linux-m68k.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/20240919123525.688065-1-oneukum@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mac_scsi.c |   44 +++++++++++++++++++-------------------------
- 1 file changed, 19 insertions(+), 25 deletions(-)
+ drivers/net/usb/usbnet.c   |   37 ++++++++++++++++++++++++++++---------
+ include/linux/usb/usbnet.h |   15 +++++++++++++++
+ 2 files changed, 43 insertions(+), 9 deletions(-)
 
---- a/drivers/scsi/mac_scsi.c
-+++ b/drivers/scsi/mac_scsi.c
-@@ -102,11 +102,15 @@ __setup("mac5380=", mac_scsi_setup);
-  * Linux SCSI drivers lack knowledge of the timing behaviour of SCSI targets
-  * so bus errors are unavoidable.
-  *
-- * If a MOVE.B instruction faults, we assume that zero bytes were transferred
-- * and simply retry. That assumption probably depends on target behaviour but
-- * seems to hold up okay. The NOP provides synchronization: without it the
-- * fault can sometimes occur after the program counter has moved past the
-- * offending instruction. Post-increment addressing can't be used.
-+ * If a MOVE.B instruction faults during a receive operation, we assume the
-+ * target sent nothing and try again. That assumption probably depends on
-+ * target firmware but it seems to hold up okay. If a fault happens during a
-+ * send operation, the target may or may not have seen /ACK and got the byte.
-+ * It's uncertain so the whole SCSI command gets retried.
-+ *
-+ * The NOP is needed for synchronization because the fault address in the
-+ * exception stack frame may or may not be the instruction that actually
-+ * caused the bus error. Post-increment addressing can't be used.
-  */
- 
- #define MOVE_BYTE(operands) \
-@@ -243,22 +247,21 @@ static inline int mac_pdma_send(unsigned
- 	if (n >= 1) {
- 		MOVE_BYTE("%0@,%3@");
- 		if (result)
--			goto out;
-+			return -1;
- 	}
- 	if (n >= 1 && ((unsigned long)addr & 1)) {
- 		MOVE_BYTE("%0@,%3@");
- 		if (result)
--			goto out;
-+			return -2;
- 	}
- 	while (n >= 32)
- 		MOVE_16_WORDS("%0@+,%3@");
- 	while (n >= 2)
- 		MOVE_WORD("%0@+,%3@");
- 	if (result)
--		return start - addr; /* Negated to indicate uncertain length */
-+		return start - addr - 1; /* Negated to indicate uncertain length */
- 	if (n == 1)
- 		MOVE_BYTE("%0@,%3@");
--out:
- 	return addr - start;
- }
- 
-@@ -307,7 +310,6 @@ static inline int macscsi_pread(struct N
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -464,10 +464,15 @@ static enum skb_state defer_bh(struct us
+ void usbnet_defer_kevent (struct usbnet *dev, int work)
  {
- 	u8 __iomem *s = hostdata->pdma_io + (INPUT_DATA_REG << 4);
- 	unsigned char *d = dst;
--	int result = 0;
- 
- 	hostdata->pdma_residual = len;
- 
-@@ -343,11 +345,12 @@ static inline int macscsi_pread(struct N
- 		if (bytes == 0)
- 			continue;
- 
--		result = -1;
-+		if (macscsi_wait_for_drq(hostdata) <= 0)
-+			set_host_byte(hostdata->connected, DID_ERROR);
- 		break;
- 	}
- 
--	return result;
-+	return 0;
+ 	set_bit (work, &dev->flags);
+-	if (!schedule_work (&dev->kevent))
+-		netdev_dbg(dev->net, "kevent %s may have been dropped\n", usbnet_event_names[work]);
+-	else
+-		netdev_dbg(dev->net, "kevent %s scheduled\n", usbnet_event_names[work]);
++	if (!usbnet_going_away(dev)) {
++		if (!schedule_work(&dev->kevent))
++			netdev_dbg(dev->net,
++				   "kevent %s may have been dropped\n",
++				   usbnet_event_names[work]);
++		else
++			netdev_dbg(dev->net,
++				   "kevent %s scheduled\n", usbnet_event_names[work]);
++	}
  }
+ EXPORT_SYMBOL_GPL(usbnet_defer_kevent);
  
- static inline int macscsi_pwrite(struct NCR5380_hostdata *hostdata,
-@@ -355,7 +358,6 @@ static inline int macscsi_pwrite(struct
- {
- 	unsigned char *s = src;
- 	u8 __iomem *d = hostdata->pdma_io + (OUTPUT_DATA_REG << 4);
--	int result = 0;
- 
- 	hostdata->pdma_residual = len;
- 
-@@ -377,17 +379,8 @@ static inline int macscsi_pwrite(struct
- 			hostdata->pdma_residual -= bytes;
- 		}
- 
--		if (hostdata->pdma_residual == 0) {
--			if (NCR5380_poll_politely(hostdata, TARGET_COMMAND_REG,
--			                          TCR_LAST_BYTE_SENT,
--			                          TCR_LAST_BYTE_SENT,
--			                          0) < 0) {
--				scmd_printk(KERN_ERR, hostdata->connected,
--				            "%s: Last Byte Sent timeout\n", __func__);
--				result = -1;
--			}
-+		if (hostdata->pdma_residual == 0)
+@@ -535,7 +540,8 @@ static int rx_submit (struct usbnet *dev
+ 			tasklet_schedule (&dev->bh);
  			break;
--		}
+ 		case 0:
+-			__usbnet_queue_skb(&dev->rxq, skb, rx_start);
++			if (!usbnet_going_away(dev))
++				__usbnet_queue_skb(&dev->rxq, skb, rx_start);
+ 		}
+ 	} else {
+ 		netif_dbg(dev, ifdown, dev->net, "rx: stopped\n");
+@@ -845,9 +851,18 @@ int usbnet_stop (struct net_device *net)
  
- 		if (bytes > 0)
- 			continue;
-@@ -400,11 +393,12 @@ static inline int macscsi_pwrite(struct
- 		if (bytes == 0)
- 			continue;
+ 	/* deferred work (timer, softirq, task) must also stop */
+ 	dev->flags = 0;
+-	del_timer_sync (&dev->delay);
+-	tasklet_kill (&dev->bh);
++	del_timer_sync(&dev->delay);
++	tasklet_kill(&dev->bh);
+ 	cancel_work_sync(&dev->kevent);
++
++	/* We have cyclic dependencies. Those calls are needed
++	 * to break a cycle. We cannot fall into the gaps because
++	 * we have a flag
++	 */
++	tasklet_kill(&dev->bh);
++	del_timer_sync(&dev->delay);
++	cancel_work_sync(&dev->kevent);
++
+ 	if (!pm)
+ 		usb_autopm_put_interface(dev->intf);
  
--		result = -1;
-+		if (macscsi_wait_for_drq(hostdata) <= 0)
-+			set_host_byte(hostdata->connected, DID_ERROR);
- 		break;
+@@ -1173,7 +1188,8 @@ fail_halt:
+ 					   status);
+ 		} else {
+ 			clear_bit (EVENT_RX_HALT, &dev->flags);
+-			tasklet_schedule (&dev->bh);
++			if (!usbnet_going_away(dev))
++				tasklet_schedule(&dev->bh);
+ 		}
  	}
  
--	return result;
-+	return 0;
- }
+@@ -1198,7 +1214,8 @@ fail_halt:
+ 			usb_autopm_put_interface(dev->intf);
+ fail_lowmem:
+ 			if (resched)
+-				tasklet_schedule (&dev->bh);
++				if (!usbnet_going_away(dev))
++					tasklet_schedule(&dev->bh);
+ 		}
+ 	}
  
- static int macscsi_dma_xfer_len(struct NCR5380_hostdata *hostdata,
+@@ -1554,6 +1571,7 @@ static void usbnet_bh (struct timer_list
+ 	} else if (netif_running (dev->net) &&
+ 		   netif_device_present (dev->net) &&
+ 		   netif_carrier_ok(dev->net) &&
++		   !usbnet_going_away(dev) &&
+ 		   !timer_pending(&dev->delay) &&
+ 		   !test_bit(EVENT_RX_PAUSED, &dev->flags) &&
+ 		   !test_bit(EVENT_RX_HALT, &dev->flags)) {
+@@ -1601,6 +1619,7 @@ void usbnet_disconnect (struct usb_inter
+ 	usb_set_intfdata(intf, NULL);
+ 	if (!dev)
+ 		return;
++	usbnet_mark_going_away(dev);
+ 
+ 	xdev = interface_to_usbdev (intf);
+ 
+--- a/include/linux/usb/usbnet.h
++++ b/include/linux/usb/usbnet.h
+@@ -76,8 +76,23 @@ struct usbnet {
+ #		define EVENT_LINK_CHANGE	11
+ #		define EVENT_SET_RX_MODE	12
+ #		define EVENT_NO_IP_ALIGN	13
++/* This one is special, as it indicates that the device is going away
++ * there are cyclic dependencies between tasklet, timer and bh
++ * that must be broken
++ */
++#		define EVENT_UNPLUG		31
+ };
+ 
++static inline bool usbnet_going_away(struct usbnet *ubn)
++{
++	return test_bit(EVENT_UNPLUG, &ubn->flags);
++}
++
++static inline void usbnet_mark_going_away(struct usbnet *ubn)
++{
++	set_bit(EVENT_UNPLUG, &ubn->flags);
++}
++
+ static inline struct usb_driver *driver_of(struct usb_interface *intf)
+ {
+ 	return to_usb_driver(intf->dev.driver);
 
 
