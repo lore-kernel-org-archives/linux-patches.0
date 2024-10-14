@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6099A1A28C;
-	Mon, 14 Oct 2024 14:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217871A28C;
+	Mon, 14 Oct 2024 14:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916565; cv=none; b=PcK5F7qKy0OOP0UoF0jVjPvmmKuhprgLfC4daUeXex6zK1sV2H+kHqe3lDSng4a4yYqION4BfrUBhWz90jlAgT8eL2BCdp+nlTdDL+8gYLXAyqBDnclDuymKihAlePc/UJZiKI6otF7blG4PAB4fepRH2Lrg57HXXS/huYC51fU=
+	t=1728916569; cv=none; b=FgLgZJcj3Hwl0dedc5k32p0UBdjf3STLMaz9ymmXglwFyiBz/32J7MjrCg4Ch0xJ7M/vKNK4h+pPf3sdLIO2Gdpr6YJ/5RiHe2o1FkKH1d3z+CF4lHh3vMJCWBuSN1RiKQWG5dXM9gStWwXH0EoScEGWDsa545SBObnzsomA//0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916565; c=relaxed/simple;
-	bh=EAv43SH2mnrKiYPPRjCjLh9BnRQuuKKOLPSspHdpyeo=;
+	s=arc-20240116; t=1728916569; c=relaxed/simple;
+	bh=DTQhO/4o1ceMK+uoG142RSmvSFRfZh0spaGJ7U76cqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ3XnMmwckDZeur27Y0hXc1IeUMqq1ml2Wgaz4HBfitssRgwYMamjFjVOjQCQv+tfkSiD7HBlxDMdkaR3EJOJjw/IwzOFTyu8VWBYcBqvCPUVrTg4q1xOYS1PgUp/v6GqNRcoNiMvMaxRAvrSxppn/TA7/pLrtJDSr1xLfuogCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3IuKXBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYuO1exyL94KSOKCnKcNLI6e8YMV3/NszCjolXC+4BPK+ZOuHhnNEMtKxUby2ifyF/Fsocn1WMY64UpsfY2wg8CqrLFHXb22flpaCSBXc6F16BkubR9RKL9tRIpsEOTMS7+l9KMEHKUvcbfpOST6OXykWVqLb5i9OMmvNTbTX1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16z/hpOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3IuKXBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCB6C4CEC3;
-	Mon, 14 Oct 2024 14:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16z/hpOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3F4C4CEC3;
+	Mon, 14 Oct 2024 14:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916565;
-	bh=EAv43SH2mnrKiYPPRjCjLh9BnRQuuKKOLPSspHdpyeo=;
+	s=korg; t=1728916568;
+	bh=DTQhO/4o1ceMK+uoG142RSmvSFRfZh0spaGJ7U76cqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3IuKXBxuM0ypMKHEUO6kJ58mXQwF8e305B+5lmAtXnxFYgTY/f0UqNkTdkrcAEPp
-	 lioFVd4/z1FAHpO8HounPK17sPkmKx/+jUu3eMM8zLhm4JqX5WhoNClIZ7cL7DLmL4
-	 U/W7jcz2U+69jX+B4tmpnXMA8AI+NWaLgFkrznUI=
+	b=16z/hpODwIWGxZmbPExcDk/o/JR2zQHkXBP+rtcc17frXVQtTL6k6oWY1q9O6g2FT
+	 fD2WWZg4lTENmgTX89DTnX2zsUdsS6FpkHWBepM8Y56HtJhzX1y7wZM4UKQPi6gBu3
+	 Q7zxzAUBzfhCGRy1qmEkLefURiWWxPVlKXKzzy0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@outlook.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.11 201/214] ice: Fix improper handling of refcount in ice_sriov_set_msix_vec_count()
-Date: Mon, 14 Oct 2024 16:21:04 +0200
-Message-ID: <20241014141052.820154141@linuxfoundation.org>
+	Yonatan Maman <Ymaman@Nvidia.com>,
+	Gal Shalom <GalShalom@Nvidia.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.11 202/214] nouveau/dmem: Fix vulnerability in migrate_to_ram upon copy error
+Date: Mon, 14 Oct 2024 16:21:05 +0200
+Message-ID: <20241014141052.859117128@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,71 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@outlook.com>
+From: Yonatan Maman <Ymaman@Nvidia.com>
 
-commit d517cf89874c6039e6294b18d66f40988e62502a upstream.
+commit 835745a377a4519decd1a36d6b926e369b3033e2 upstream.
 
-This patch addresses an issue with improper reference count handling in the
-ice_sriov_set_msix_vec_count() function.
+The `nouveau_dmem_copy_one` function ensures that the copy push command is
+sent to the device firmware but does not track whether it was executed
+successfully.
 
-First, the function calls ice_get_vf_by_id(), which increments the
-reference count of the vf pointer. If the subsequent call to
-ice_get_vf_vsi() fails, the function currently returns an error without
-decrementing the reference count of the vf pointer, leading to a reference
-count leak. The correct behavior, as implemented in this patch, is to
-decrement the reference count using ice_put_vf(vf) before returning an
-error when vsi is NULL.
+In the case of a copy error (e.g., firmware or hardware failure), the
+copy push command will be sent via the firmware channel, and
+`nouveau_dmem_copy_one` will likely report success, leading to the
+`migrate_to_ram` function returning a dirty HIGH_USER page to the user.
 
-Second, the function calls ice_sriov_get_irqs(), which sets
-vf->first_vector_idx. If this call returns a negative value, indicating an
-error, the function returns an error without decrementing the reference
-count of the vf pointer, resulting in another reference count leak. The
-patch addresses this by adding a call to ice_put_vf(vf) before returning
-an error when vf->first_vector_idx < 0.
+This can result in a security vulnerability, as a HIGH_USER page that may
+contain sensitive or corrupted data could be returned to the user.
 
-This bug was identified by an experimental static analysis tool developed
-by our team. The tool specializes in analyzing reference count operations
-and identifying potential mismanagement of reference counts. In this case,
-the tool flagged the missing decrement operation as a potential issue,
-leading to this patch.
+To prevent this vulnerability, we allocate a zero page. Thus, in case of
+an error, a non-dirty (zero) page will be returned to the user.
 
-Fixes: 4035c72dc1ba ("ice: reconfig host after changing MSI-X on VF")
-Fixes: 4d38cb44bd32 ("ice: manage VFs MSI-X using resource tracking")
+Fixes: 5be73b690875 ("drm/nouveau/dmem: device memory helpers for SVM")
+Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
+Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
+Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@outlook.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-3-ymaman@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_dmem.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -1096,8 +1096,10 @@ int ice_sriov_set_msix_vec_count(struct
- 		return -ENOENT;
+--- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
+@@ -193,7 +193,7 @@ static vm_fault_t nouveau_dmem_migrate_t
+ 	if (!spage || !(src & MIGRATE_PFN_MIGRATE))
+ 		goto done;
  
- 	vsi = ice_get_vf_vsi(vf);
--	if (!vsi)
-+	if (!vsi) {
-+		ice_put_vf(vf);
- 		return -ENOENT;
-+	}
+-	dpage = alloc_page_vma(GFP_HIGHUSER, vmf->vma, vmf->address);
++	dpage = alloc_page_vma(GFP_HIGHUSER | __GFP_ZERO, vmf->vma, vmf->address);
+ 	if (!dpage)
+ 		goto done;
  
- 	prev_msix = vf->num_msix;
- 	prev_queues = vf->num_vf_qs;
-@@ -1145,8 +1147,10 @@ unroll:
- 	vf->num_msix = prev_msix;
- 	vf->num_vf_qs = prev_queues;
- 	vf->first_vector_idx = ice_sriov_get_irqs(pf, vf->num_msix);
--	if (vf->first_vector_idx < 0)
-+	if (vf->first_vector_idx < 0) {
-+		ice_put_vf(vf);
- 		return -EINVAL;
-+	}
- 
- 	if (needs_rebuild) {
- 		vsi->req_txq = prev_queues;
 
 
