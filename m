@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62472487A7;
-	Mon, 14 Oct 2024 15:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C528D45C1C;
+	Mon, 14 Oct 2024 15:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918545; cv=none; b=CZv6PUaSGg/p4de+JDD00g4umxqII5Zz/+m6YTYyFimbBoqt+sl46F0pCXOXHd7GpTij0AhpOOiLSPBct+RJxiZZrcBUA50eh6SHdVHST4SHlGA3s6C/QMqLa+lsjl41XT5oFxR+dafTS6t6wb/XgLmtAcJqt+qb2+ZRVBlAfxY=
+	t=1728918548; cv=none; b=ggbpee2QLlPIqkON4XdlNMN+fAquPNP772hLzP5DEf//JYdgoJ/xw/sMCTADnrR36RUTNYcvOa4bddQhiraDNTj8dioDxf9xG+0a92NVoeb52r2ZTEpgvrciSk4oGAwNnl38Ipd0W+Oh0yfLbm9Inna8E9Gw+DErBbXUf92+4UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918545; c=relaxed/simple;
-	bh=8sge25vSk57AQpVgxG03DiZHMPFD2/SyoVR/QgoW3Yc=;
+	s=arc-20240116; t=1728918548; c=relaxed/simple;
+	bh=Gqy6SHsI9P4HkeRE5P1iUV9kyheNlUDU86OTPl4ujho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLhNZXFqzpQyX82r6GIcfPiwErbPAGMRDCiiY48MdbtNFEI4g0GfvpMaA9CoS/25Y0shsemkYK1WJKv3xswz1Sh3nvECo6+e6PThihclI8xSPbxCIG4NM4NUrsVpd7YLvDCRDK43Zqw5ztYtot2q0TOg8bKnimJzFwwwXYq4mG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5ECje6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6TI6ini5VCY+QnKNxRv48RRXUkVanOGC2kWd2HTNUZTAfo5yCH7n6358qM5LVKiP1gNtO+Z+eGWq64xCt+fGocqAKANao7Re0yF2cRWfmgXLU0bheyP7iSoEl2930Wgv44ipRs4kTEg+UkOe7FQFHupZ2xh6hkcHVEj9r9UvHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvSfMJwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5ECje6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4385C4CEC3;
-	Mon, 14 Oct 2024 15:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvSfMJwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6BDC4CEC3;
+	Mon, 14 Oct 2024 15:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918545;
-	bh=8sge25vSk57AQpVgxG03DiZHMPFD2/SyoVR/QgoW3Yc=;
+	s=korg; t=1728918548;
+	bh=Gqy6SHsI9P4HkeRE5P1iUV9kyheNlUDU86OTPl4ujho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5ECje6+x4Fs4YSrI4g+ytRVycfPv8NsAZ6CRJUJ5i0chFuopFl/7i4qQtciqdbxM
-	 1HzooNN6YdQwdXOm7PubN/IHdN8AJSRgp55Mn7UDzMzgveZ8q84GP8w0podJ1HjAPJ
-	 528gg8Y71fsoUCCLG2kIy/7EAX4hkbZAvviOc/v8=
+	b=gvSfMJwgncnMXVJ1GTTgtDeqN1R8QpsraXzwGHJU/KEmPQ3T2LMnWXoC+wXCV5qH+
+	 plmk6K+679a2tdBTQqJ4lj9mtuWoKGssgsiRPziOLmuQxGc0Ry6N+7EidPdkcfnkl2
+	 9ycDdflJDUuADlrL5CkbNStGDmiJ0Yf4gHepsu+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 353/798] usb: xhci: fix loss of data on Cadence xHC
-Date: Mon, 14 Oct 2024 16:15:07 +0200
-Message-ID: <20241014141231.813053082@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 327/798] f2fs: fix several potential integer overflows in file offsets
+Date: Mon, 14 Oct 2024 16:14:41 +0200
+Message-ID: <20241014141230.798915231@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,117 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e5fa8db0be3e8757e8641600c518425a4589b85c ]
+commit 1cade98cf6415897bf9342ee451cc5b40b58c638 upstream.
 
-Streams should flush their TRB cache, re-read TRBs, and start executing
-TRBs from the beginning of the new dequeue pointer after a 'Set TR Dequeue
-Pointer' command.
+When dealing with large extents and calculating file offsets by
+summing up according extent offsets and lengths of unsigned int type,
+one may encounter possible integer overflow if the values are
+big enough.
 
-Cadence controllers may fail to start from the beginning of the dequeue
-TRB as it doesn't clear the Opaque 'RsvdO' field of the stream context
-during 'Set TR Dequeue' command. This stream context area is where xHC
-stores information about the last partially executed TD when a stream
-is stopped. xHC uses this information to resume the transfer where it left
-mid TD, when the stream is restarted.
+Prevent this from happening by expanding one of the addends to
+(pgoff_t) type.
 
-Patch fixes this by clearing out all RsvdO fields before initializing new
-Stream transfer using a 'Set TR Dequeue Pointer' command.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: stable@vger.kernel.org
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB95386A40146E3EC64086F409DD9D2@PH7PR07MB9538.namprd07.prod.outlook.com
+Fixes: d323d005ac4a ("f2fs: support file defragment")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/host.c     |  4 +++-
- drivers/usb/host/xhci-pci.c  |  7 +++++++
- drivers/usb/host/xhci-ring.c | 14 ++++++++++++++
- drivers/usb/host/xhci.h      |  1 +
- 4 files changed, 25 insertions(+), 1 deletion(-)
+ fs/f2fs/extent_cache.c |    4 ++--
+ fs/f2fs/file.c         |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/cdns3/host.c b/drivers/usb/cdns3/host.c
-index ceca4d839dfd4..7ba760ee62e33 100644
---- a/drivers/usb/cdns3/host.c
-+++ b/drivers/usb/cdns3/host.c
-@@ -62,7 +62,9 @@ static const struct xhci_plat_priv xhci_plat_cdns3_xhci = {
- 	.resume_quirk = xhci_cdns3_resume_quirk,
- };
- 
--static const struct xhci_plat_priv xhci_plat_cdnsp_xhci;
-+static const struct xhci_plat_priv xhci_plat_cdnsp_xhci = {
-+	.quirks = XHCI_CDNS_SCTX_QUIRK,
-+};
- 
- static int __cdns_host_init(struct cdns *cdns)
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -426,7 +426,7 @@ static unsigned int __free_extent_tree(s
+ static void __drop_largest_extent(struct extent_tree *et,
+ 					pgoff_t fofs, unsigned int len)
  {
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 7d1c44c562f41..18d7a94c82607 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -75,6 +75,9 @@
- #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
- #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
+-	if (fofs < et->largest.fofs + et->largest.len &&
++	if (fofs < (pgoff_t)et->largest.fofs + et->largest.len &&
+ 			fofs + len > et->largest.fofs) {
+ 		et->largest.len = 0;
+ 		et->largest_updated = true;
+@@ -505,7 +505,7 @@ static bool __lookup_extent_tree(struct
  
-+#define PCI_DEVICE_ID_CADENCE				0x17CD
-+#define PCI_DEVICE_ID_CADENCE_SSP			0x0200
-+
- static const char hcd_name[] = "xhci_hcd";
- 
- static struct hc_driver __read_mostly xhci_pci_hc_driver;
-@@ -352,6 +355,10 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
+ 	if (type == EX_READ &&
+ 			et->largest.fofs <= pgofs &&
+-			et->largest.fofs + et->largest.len > pgofs) {
++			(pgoff_t)et->largest.fofs + et->largest.len > pgofs) {
+ 		*ei = et->largest;
+ 		ret = true;
+ 		stat_inc_largest_node_hit(sbi);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2671,7 +2671,7 @@ static int f2fs_defragment_range(struct
+ 	 * block addresses are continuous.
+ 	 */
+ 	if (f2fs_lookup_read_extent_cache(inode, pg_start, &ei)) {
+-		if (ei.fofs + ei.len >= pg_end)
++		if ((pgoff_t)ei.fofs + ei.len >= pg_end)
+ 			goto out;
  	}
  
-+	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
-+	    pdev->device == PCI_DEVICE_ID_CADENCE_SSP)
-+		xhci->quirks |= XHCI_CDNS_SCTX_QUIRK;
-+
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 29d53c4e60df5..83cd36f5d9e4b 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1384,6 +1384,20 @@ static void xhci_handle_cmd_set_deq(struct xhci_hcd *xhci, int slot_id,
- 			struct xhci_stream_ctx *ctx =
- 				&ep->stream_info->stream_ctx_array[stream_id];
- 			deq = le64_to_cpu(ctx->stream_ring) & SCTX_DEQ_MASK;
-+
-+			/*
-+			 * Cadence xHCI controllers store some endpoint state
-+			 * information within Rsvd0 fields of Stream Endpoint
-+			 * context. This field is not cleared during Set TR
-+			 * Dequeue Pointer command which causes XDMA to skip
-+			 * over transfer ring and leads to data loss on stream
-+			 * pipe.
-+			 * To fix this issue driver must clear Rsvd0 field.
-+			 */
-+			if (xhci->quirks & XHCI_CDNS_SCTX_QUIRK) {
-+				ctx->reserved[0] = 0;
-+				ctx->reserved[1] = 0;
-+			}
- 		} else {
- 			deq = le64_to_cpu(ep_ctx->deq) & ~EP_CTX_CYCLE_MASK;
- 		}
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 09fe993d67762..bd6f311a53f16 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1917,6 +1917,7 @@ struct xhci_hcd {
- #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
- #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
-+#define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
--- 
-2.43.0
-
 
 
