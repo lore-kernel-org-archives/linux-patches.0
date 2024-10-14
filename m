@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B091F19E802;
-	Mon, 14 Oct 2024 15:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBEC19E802;
+	Mon, 14 Oct 2024 15:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918720; cv=none; b=hjy2Da3tpdfIFug7ZqZu9EbSWsw1tKTXT+EF8YlrG3+1/4a84FJk1CvH+4GudP9y7rzuxe5XlBCmQ8rOmqrArLl+EQKG2+anAwAE2qpWt6Da4J50e57G3lVBWdyNu4T57drujpU2Bd+dgKHeBwvYri/VzhcK7EcnKtQwLM4Z3Kc=
+	t=1728918724; cv=none; b=AIJYwbipZOGD1hKpTG+HTXdkLOa8P6Ci1RPHC7t4Cm22qdOWSVLi950GO1xN3v4eVyIcbOcHQpGfBfW4cAnyViRBfv8NrJhCFVD2DwfbXnjA8rE9/R00R0qmTRB3bqrW1eT6VIJY6fx5AAM0yLBtQ1eJR8FwCYxfa+tDwDpCH1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918720; c=relaxed/simple;
-	bh=vfgtzamUKUKs0Q3Hd6+cGh0vw4x2Q0ki69z31fFpgp8=;
+	s=arc-20240116; t=1728918724; c=relaxed/simple;
+	bh=xttULZcsfFay5oI7uyk5iW3uJo+R1aB5j6C8NkLB0oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BY5vstwmaYGc89/e3cbaNWR5NUirA/J5T0prxKmObvhX4Poqcm9KRjyOatC+/fZuryz6zbI1QB7H7Wty46y6gOIaN8s8ngfl4GEKmo7Zta5ZeQ1ho2B3tFMzkzpLYlU654kdVbM9SjKA5DCEEDpd9C3EJVpeNAPzI8wsoMSDu+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhXYT35x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDMwrgu8aHZW+HPHKMljF68d5ukIED2kdtmOlNh7jVr840uobXMPJLJAmPGPSVOu3Yi9bhS9qXPEaZ3b3qwMiBaj11CeOjKtTPmCxK8OOhlqXvTtZvEGsxuJJnQMqSNvMYHj/MntLygH0t/zbP1i7XLebDKfJfbmInyxirFn+vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpZ3enhi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhXYT35x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BD5C4CEC3;
-	Mon, 14 Oct 2024 15:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpZ3enhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A13C4CEC3;
+	Mon, 14 Oct 2024 15:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918720;
-	bh=vfgtzamUKUKs0Q3Hd6+cGh0vw4x2Q0ki69z31fFpgp8=;
+	s=korg; t=1728918723;
+	bh=xttULZcsfFay5oI7uyk5iW3uJo+R1aB5j6C8NkLB0oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhXYT35xNYN2+TBappomeh69S6FPhSYMN6lDvkFZOWc3jwUAJBcn4Km0RXck92Myf
-	 +4/JOhLKe+91umltH1N1v0fEpSBbnvfrSSL0rOwvuSpVXcZ7CV6wJSDXTWrGXhTgPN
-	 pFmP8AFJ3+FMAT3k2NcMEgY6yjk7i1zO+vN+o2Rg=
+	b=xpZ3enhi/JT7KOaLrmfNQ152Cq0CuYQqxMOLaxa2DxawpznQPcUFC7I30eBG1Vl0Q
+	 Ttl6OQ1VJ1CscAD4pEvOkR7QD6oJsGmV+9ToixcO0TKIrMXegslePlZ1uR9DjfPnPd
+	 FpTLpjY0IQ9ruNXf6ML5VD+eFPxoGnuxC/LyHHeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marc Ferland <marc.ferland@sonatest.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 404/798] sctp: set sk_state back to CLOSED if autobind fails in sctp_listen_start
-Date: Mon, 14 Oct 2024 16:15:58 +0200
-Message-ID: <20241014141233.818621742@linuxfoundation.org>
+Subject: [PATCH 6.1 405/798] i2c: xiic: improve error message when transfer fails to start
+Date: Mon, 14 Oct 2024 16:15:59 +0200
+Message-ID: <20241014141233.858347451@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,53 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Marc Ferland <marc.ferland@sonatest.com>
 
-[ Upstream commit 8beee4d8dee76b67c75dc91fd8185d91e845c160 ]
+[ Upstream commit ee1691d0ae103ba7fd9439800ef454674fadad27 ]
 
-In sctp_listen_start() invoked by sctp_inet_listen(), it should set the
-sk_state back to CLOSED if sctp_autobind() fails due to whatever reason.
+xiic_start_xfer can fail for different reasons:
 
-Otherwise, next time when calling sctp_inet_listen(), if sctp_sk(sk)->reuse
-is already set via setsockopt(SCTP_REUSE_PORT), sctp_sk(sk)->bind_hash will
-be dereferenced as sk_state is LISTENING, which causes a crash as bind_hash
-is NULL.
+- EBUSY: bus is busy or i2c messages still in tx_msg or rx_msg
+- ETIMEDOUT: timed-out trying to clear the RX fifo
+- EINVAL: wrong clock settings
 
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:sctp_inet_listen+0x7f0/0xa20 net/sctp/socket.c:8617
-  Call Trace:
-   <TASK>
-   __sys_listen_socket net/socket.c:1883 [inline]
-   __sys_listen+0x1b7/0x230 net/socket.c:1894
-   __do_sys_listen net/socket.c:1902 [inline]
+Both EINVAL and ETIMEDOUT will currently print a specific error
+message followed by a generic one, for example:
 
-Fixes: 5e8f3f703ae4 ("sctp: simplify sctp listening code")
-Reported-by: syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/a93e655b3c153dc8945d7a812e6d8ab0d52b7aa0.1727729391.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+    Failed to clear rx fifo
+    Error xiic_start_xfer
+
+however EBUSY will simply output the generic message:
+
+    Error xiic_start_xfer
+
+which is not really helpful.
+
+This commit adds a new error message when a busy condition is detected
+and also removes the generic message since it does not provide any
+relevant information to the user.
+
+Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: 1d4a1adbed25 ("i2c: xiic: Try re-initialization on bus busy timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 9689d2f2d91f9..98b8eb9a21bdf 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8546,8 +8546,10 @@ static int sctp_listen_start(struct sock *sk, int backlog)
- 	 */
- 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
- 	if (!ep->base.bind_addr.port) {
--		if (sctp_autobind(sk))
-+		if (sctp_autobind(sk)) {
-+			inet_sk_set_state(sk, SCTP_SS_CLOSED);
- 			return -EAGAIN;
-+		}
- 	} else {
- 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
- 			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index b27bfc7765993..f5dc33b4576ed 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -673,8 +673,11 @@ static int xiic_start_xfer(struct xiic_i2c *i2c, struct i2c_msg *msgs, int num)
+ 	mutex_lock(&i2c->lock);
+ 
+ 	ret = xiic_busy(i2c);
+-	if (ret)
++	if (ret) {
++		dev_err(i2c->adap.dev.parent,
++			"cannot start a transfer while busy\n");
+ 		goto out;
++	}
+ 
+ 	i2c->tx_msg = msgs;
+ 	i2c->rx_msg = NULL;
+@@ -704,10 +707,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		return err;
+ 
+ 	err = xiic_start_xfer(i2c, msgs, num);
+-	if (err < 0) {
+-		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
++	if (err < 0)
+ 		goto out;
+-	}
+ 
+ 	err = wait_for_completion_timeout(&i2c->completion, XIIC_XFER_TIMEOUT);
+ 	mutex_lock(&i2c->lock);
 -- 
 2.43.0
 
