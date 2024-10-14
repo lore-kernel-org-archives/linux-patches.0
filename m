@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C528D45C1C;
-	Mon, 14 Oct 2024 15:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6DD45C1C;
+	Mon, 14 Oct 2024 15:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918548; cv=none; b=ggbpee2QLlPIqkON4XdlNMN+fAquPNP772hLzP5DEf//JYdgoJ/xw/sMCTADnrR36RUTNYcvOa4bddQhiraDNTj8dioDxf9xG+0a92NVoeb52r2ZTEpgvrciSk4oGAwNnl38Ipd0W+Oh0yfLbm9Inna8E9Gw+DErBbXUf92+4UE=
+	t=1728918552; cv=none; b=sOQPGtwxyjBQDTHJHZVhvTQcs6TerI/ASTlvgC7paiUFeTXoye78lejgu89gBZiAvBNK2XaPVapnGxotv5siX7yp4SydsPg5RXBdK5uF5WO8Na4QfsG3U7PvedS6WbhkzPNwIVn6mVMG6DMU964l95umrUP9vXLsYPbsd6Kfszc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918548; c=relaxed/simple;
-	bh=Gqy6SHsI9P4HkeRE5P1iUV9kyheNlUDU86OTPl4ujho=;
+	s=arc-20240116; t=1728918552; c=relaxed/simple;
+	bh=7Rw6IMi12e5fnVUSAp21MOa5FGLnqrNus7+Fdq4pMsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6TI6ini5VCY+QnKNxRv48RRXUkVanOGC2kWd2HTNUZTAfo5yCH7n6358qM5LVKiP1gNtO+Z+eGWq64xCt+fGocqAKANao7Re0yF2cRWfmgXLU0bheyP7iSoEl2930Wgv44ipRs4kTEg+UkOe7FQFHupZ2xh6hkcHVEj9r9UvHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvSfMJwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOMfUwQl1SGx4QkqppyiGrCKE4XCRx3OiBBjTk/MyKR/PoW3blyRQZWMZOOTKl2eVum+iB5HmEgR9bDkaHlPfg0V8kRZiIRX86eyWrXldv2H6JyNa4ZrJfOz1uRkqJwmh3AstjRlJG1E7HvC/flNnNGRUEPx+2hN6olP+xV466g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBgJ6bwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvSfMJwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6BDC4CEC3;
-	Mon, 14 Oct 2024 15:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBgJ6bwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD26C4CEC3;
+	Mon, 14 Oct 2024 15:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918548;
-	bh=Gqy6SHsI9P4HkeRE5P1iUV9kyheNlUDU86OTPl4ujho=;
+	s=korg; t=1728918552;
+	bh=7Rw6IMi12e5fnVUSAp21MOa5FGLnqrNus7+Fdq4pMsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvSfMJwgncnMXVJ1GTTgtDeqN1R8QpsraXzwGHJU/KEmPQ3T2LMnWXoC+wXCV5qH+
-	 plmk6K+679a2tdBTQqJ4lj9mtuWoKGssgsiRPziOLmuQxGc0Ry6N+7EidPdkcfnkl2
-	 9ycDdflJDUuADlrL5CkbNStGDmiJ0Yf4gHepsu+M=
+	b=SBgJ6bwR/rzo5mAhpvjcklzjTS5saS4OqtKxaSwT2b2SKQIfgEvqPIrQvrJQJ8d3O
+	 S6pu2qjAlZ0hh/B2VN5z1b2j0Ty8Rx6wQrPc39mHSJDQsRMg/DHazxRo0pvV9o2asr
+	 u+/flZyDhlIFADrdUYhQlkg14rA+lxP5cjvX7X6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 327/798] f2fs: fix several potential integer overflows in file offsets
-Date: Mon, 14 Oct 2024 16:14:41 +0200
-Message-ID: <20241014141230.798915231@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 354/798] pps: remove usage of the deprecated ida_simple_xx() API
+Date: Mon, 14 Oct 2024 16:15:08 +0200
+Message-ID: <20241014141231.851464377@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,62 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 1cade98cf6415897bf9342ee451cc5b40b58c638 upstream.
+[ Upstream commit 55dbc5b5174d0e7d1fa397d05aa4cb145e8b887e ]
 
-When dealing with large extents and calculating file offsets by
-summing up according extent offsets and lengths of unsigned int type,
-one may encounter possible integer overflow if the values are
-big enough.
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-Prevent this from happening by expanding one of the addends to
-(pgoff_t) type.
+This is less verbose.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: d323d005ac4a ("f2fs: support file defragment")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/9f681747d446b874952a892491387d79ffe565a9.1713089394.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 62c5a01a5711 ("pps: add an error check in parport_attach")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c |    4 ++--
- fs/f2fs/file.c         |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/pps/clients/pps_parport.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -426,7 +426,7 @@ static unsigned int __free_extent_tree(s
- static void __drop_largest_extent(struct extent_tree *et,
- 					pgoff_t fofs, unsigned int len)
- {
--	if (fofs < et->largest.fofs + et->largest.len &&
-+	if (fofs < (pgoff_t)et->largest.fofs + et->largest.len &&
- 			fofs + len > et->largest.fofs) {
- 		et->largest.len = 0;
- 		et->largest_updated = true;
-@@ -505,7 +505,7 @@ static bool __lookup_extent_tree(struct
- 
- 	if (type == EX_READ &&
- 			et->largest.fofs <= pgofs &&
--			et->largest.fofs + et->largest.len > pgofs) {
-+			(pgoff_t)et->largest.fofs + et->largest.len > pgofs) {
- 		*ei = et->largest;
- 		ret = true;
- 		stat_inc_largest_node_hit(sbi);
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2671,7 +2671,7 @@ static int f2fs_defragment_range(struct
- 	 * block addresses are continuous.
- 	 */
- 	if (f2fs_lookup_read_extent_cache(inode, pg_start, &ei)) {
--		if (ei.fofs + ei.len >= pg_end)
-+		if ((pgoff_t)ei.fofs + ei.len >= pg_end)
- 			goto out;
+diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
+index 42f93d4c6ee32..af972cdc04b53 100644
+--- a/drivers/pps/clients/pps_parport.c
++++ b/drivers/pps/clients/pps_parport.c
+@@ -148,7 +148,7 @@ static void parport_attach(struct parport *port)
+ 		return;
  	}
  
+-	index = ida_simple_get(&pps_client_index, 0, 0, GFP_KERNEL);
++	index = ida_alloc(&pps_client_index, GFP_KERNEL);
+ 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
+ 	pps_client_cb.private = device;
+ 	pps_client_cb.irq_func = parport_irq;
+@@ -188,7 +188,7 @@ static void parport_attach(struct parport *port)
+ err_unregister_dev:
+ 	parport_unregister_device(device->pardev);
+ err_free:
+-	ida_simple_remove(&pps_client_index, index);
++	ida_free(&pps_client_index, index);
+ 	kfree(device);
+ }
+ 
+@@ -208,7 +208,7 @@ static void parport_detach(struct parport *port)
+ 	pps_unregister_source(device->pps);
+ 	parport_release(pardev);
+ 	parport_unregister_device(pardev);
+-	ida_simple_remove(&pps_client_index, device->index);
++	ida_free(&pps_client_index, device->index);
+ 	kfree(device);
+ }
+ 
+-- 
+2.43.0
+
 
 
