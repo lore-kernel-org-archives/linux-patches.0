@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8131B4F13;
-	Mon, 14 Oct 2024 15:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2072614AA9;
+	Mon, 14 Oct 2024 15:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919140; cv=none; b=KU8RTJzX+E3pOkd4zJGnMmLriMfSoRQnN1CnWDZq5NYa8dBLEk6BAx8edGbycpO53iYS6k04zHe9iUDePehel7uGC3qAD/5Z74FhhloehVDLCtiyFpVr3igi6CYn75AHKzFMj42+PKolbECnJBzvVHeMazOqSCZ4q78MPRQSJ1E=
+	t=1728919144; cv=none; b=vCAAe+tUuNW/W5fTCWrC45RbjQbuyMwYm4f1YxVqHB8cDTx+v6sYJ2ya5+j5gl6oMQGGLKm1bU1oiO+T2KqLG/k2StZLGZhgfMaByHvQP2nsyuAHnwFM8PbTn3MLT4/fF40nZYzSDgoNTtm1jfxC/VBQSWBN3Idas45/UN1u0e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919140; c=relaxed/simple;
-	bh=YQv38f7d5sSjbjEKL88HKuLFIHZWcrB+yf4EXJ2AYNo=;
+	s=arc-20240116; t=1728919144; c=relaxed/simple;
+	bh=WXnwXCUpAZjcdmgBiNdQpfIGvwqIxGF5yJnQq7SMqwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjGYRVDszZZZkmD8GRw0uboa5qlQ3fBP9Ad+ev6rMB5szGit6eKczQ2e2lrTIPb90kFnYHgaWD9TFRcPyFBvBb+OTjc6ugv+scmR2v4lUsHYDIaMVDuCm9c2dYN3I4WyJrMyLO1VjvUdKBskzDTtVKoGHInbD5URdtCEgbEn06M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh32CEdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkDNb6GSYw8fkxKrmypWPlF6MD6QOpkXHibmdMJsvn2VOg70s/9pnNn4tuaU5s8J49wg4mWHzngTjZeIKvdxBL755fVAIpl521VQh0fZF5YmAB06VEeHbcbAsUrv2v+8blXIGmlQNVS42F+795ZD9Uys2UttyYMs1eFxOP7+wPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liEwBUgW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh32CEdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120D5C4CEC3;
-	Mon, 14 Oct 2024 15:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liEwBUgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87281C4CEC3;
+	Mon, 14 Oct 2024 15:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919140;
-	bh=YQv38f7d5sSjbjEKL88HKuLFIHZWcrB+yf4EXJ2AYNo=;
+	s=korg; t=1728919144;
+	bh=WXnwXCUpAZjcdmgBiNdQpfIGvwqIxGF5yJnQq7SMqwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mh32CEdNKzCbZixVu3ZF5ItCwwyVzLA5MGs25H50T5YvvL1qbvTrQdGEZSuUp78QN
-	 AWFRSEOe6rkDQtNZursGRY+oj1XGZSujUW7RsPREACcKJDcJ8U0iC/m2nojUcnzsEF
-	 Sx5drP0jUGSggEiNB9t7uVeaQs1HWKgLG7ea+3xE=
+	b=liEwBUgWxpC/DZlWudOmsjwm1WRD0k6ccleJ+XAD0QTgVkSYYFsj+3wyYX9wM5U6d
+	 rgK1rS5jUmFxDoa/Qp9w0gLY+syHclO/dyGL8TYUFWQVmmezfIcJn+Rhx5CVK+wxF1
+	 mI3+isVgoa4wLT2ZH75URi33gn2DI8dl9lg30mn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 523/798] Revert "ALSA: hda: Conditionally use snooping for AMD HDMI"
-Date: Mon, 14 Oct 2024 16:17:57 +0200
-Message-ID: <20241014141238.525806055@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 497/798] perf,x86: avoid missing caller address in stack traces captured in uprobe
+Date: Mon, 14 Oct 2024 16:17:31 +0200
+Message-ID: <20241014141237.497476754@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,74 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 3f7f36a4559ef78a6418c5f0447fbfbdcf671956 upstream.
+[ Upstream commit cfa7f3d2c526c224a6271cc78a4a27a0de06f4f0 ]
 
-This reverts commit 478689b5990deb626a0b3f1ebf165979914d6be4.
+When tracing user functions with uprobe functionality, it's common to
+install the probe (e.g., a BPF program) at the first instruction of the
+function. This is often going to be `push %rbp` instruction in function
+preamble, which means that within that function frame pointer hasn't
+been established yet. This leads to consistently missing an actual
+caller of the traced function, because perf_callchain_user() only
+records current IP (capturing traced function) and then following frame
+pointer chain (which would be caller's frame, containing the address of
+caller's caller).
 
-The fix seems leading to regressions for other systems.
-Also, the way to check the presence of IOMMU via get_dma_ops() isn't
-reliable and it's no longer applicable for 6.12.  After all, it's no
-right fix, so let's revert it at first.
+So when we have target_1 -> target_2 -> target_3 call chain and we are
+tracing an entry to target_3, captured stack trace will report
+target_1 -> target_3 call chain, which is wrong and confusing.
 
-To be noted, the PCM buffer allocation has been changed to try the
-continuous pages at first since 6.12, so the problem could be already
-addressed without this hackish workaround.
+This patch proposes a x86-64-specific heuristic to detect `push %rbp`
+(`push %ebp` on 32-bit architecture) instruction being traced. Given
+entire kernel implementation of user space stack trace capturing works
+under assumption that user space code was compiled with frame pointer
+register (%rbp/%ebp) preservation, it seems pretty reasonable to use
+this instruction as a strong indicator that this is the entry to the
+function. In that case, return address is still pointed to by %rsp/%esp,
+so we fetch it and add to stack trace before proceeding to unwind the
+rest using frame pointer-based logic.
 
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Closes: https://lore.kernel.org/ZvgCdYfKgwHpJXGE@eldamar.lan
-Link: https://patch.msgid.link/20241002155948.4859-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We also check for `endbr64` (for 64-bit modes) as another common pattern
+for function entry, as suggested by Josh Poimboeuf. Even if we get this
+wrong sometimes for uprobes attached not at the function entry, it's OK
+because stack trace will still be overall meaningful, just with one
+extra bogus entry. If we don't detect this, we end up with guaranteed to
+be missing caller function entry in the stack trace, which is worse
+overall.
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240729175223.23914-1-andrii@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_controller.h |    2 +-
- sound/pci/hda/hda_intel.c      |   10 +---------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ arch/x86/events/core.c  | 63 +++++++++++++++++++++++++++++++++++++++++
+ include/linux/uprobes.h |  2 ++
+ kernel/events/uprobes.c |  2 ++
+ 3 files changed, 67 insertions(+)
 
---- a/sound/pci/hda/hda_controller.h
-+++ b/sound/pci/hda/hda_controller.h
-@@ -28,7 +28,7 @@
- #else
- #define AZX_DCAPS_I915_COMPONENT 0		/* NOP */
- #endif
--#define AZX_DCAPS_AMD_ALLOC_FIX	(1 << 14)	/* AMD allocation workaround */
-+/* 14 unused */
- #define AZX_DCAPS_CTX_WORKAROUND (1 << 15)	/* X-Fi workaround */
- #define AZX_DCAPS_POSFIX_LPIB	(1 << 16)	/* Use LPIB as default */
- #define AZX_DCAPS_AMD_WORKAROUND (1 << 17)	/* AMD-specific workaround */
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -40,7 +40,6 @@
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 2b2c9fd74ef90..39f86188be54c 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -41,6 +41,8 @@
+ #include <asm/desc.h>
+ #include <asm/ldt.h>
+ #include <asm/unwind.h>
++#include <asm/uprobes.h>
++#include <asm/ibt.h>
  
- #ifdef CONFIG_X86
- /* for snoop control */
--#include <linux/dma-map-ops.h>
- #include <asm/set_memory.h>
- #include <asm/cpufeature.h>
- #endif
-@@ -301,7 +300,7 @@ enum {
+ #include "perf_event.h"
  
- /* quirks for ATI HDMI with snoop off */
- #define AZX_DCAPS_PRESET_ATI_HDMI_NS \
--	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_AMD_ALLOC_FIX)
-+	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_SNOOP_OFF)
+@@ -2841,6 +2843,46 @@ static unsigned long get_segment_base(unsigned int segment)
+ 	return get_desc_base(desc);
+ }
  
- /* quirks for AMD SB */
- #define AZX_DCAPS_PRESET_AMD_SB \
-@@ -1719,13 +1718,6 @@ static void azx_check_snoop_available(st
- 	if (chip->driver_caps & AZX_DCAPS_SNOOP_OFF)
- 		snoop = false;
++#ifdef CONFIG_UPROBES
++/*
++ * Heuristic-based check if uprobe is installed at the function entry.
++ *
++ * Under assumption of user code being compiled with frame pointers,
++ * `push %rbp/%ebp` is a good indicator that we indeed are.
++ *
++ * Similarly, `endbr64` (assuming 64-bit mode) is also a common pattern.
++ * If we get this wrong, captured stack trace might have one extra bogus
++ * entry, but the rest of stack trace will still be meaningful.
++ */
++static bool is_uprobe_at_func_entry(struct pt_regs *regs)
++{
++	struct arch_uprobe *auprobe;
++
++	if (!current->utask)
++		return false;
++
++	auprobe = current->utask->auprobe;
++	if (!auprobe)
++		return false;
++
++	/* push %rbp/%ebp */
++	if (auprobe->insn[0] == 0x55)
++		return true;
++
++	/* endbr64 (64-bit only) */
++	if (user_64bit_mode(regs) && is_endbr(*(u32 *)auprobe->insn))
++		return true;
++
++	return false;
++}
++
++#else
++static bool is_uprobe_at_func_entry(struct pt_regs *regs)
++{
++	return false;
++}
++#endif /* CONFIG_UPROBES */
++
+ #ifdef CONFIG_IA32_EMULATION
  
--#ifdef CONFIG_X86
--	/* check the presence of DMA ops (i.e. IOMMU), disable snoop conditionally */
--	if ((chip->driver_caps & AZX_DCAPS_AMD_ALLOC_FIX) &&
--	    !get_dma_ops(chip->card->dev))
--		snoop = false;
--#endif
--
- 	chip->snoop = snoop;
- 	if (!snoop) {
- 		dev_info(chip->card->dev, "Force to non-snoop mode\n");
+ #include <linux/compat.h>
+@@ -2852,6 +2894,7 @@ perf_callchain_user32(struct pt_regs *regs, struct perf_callchain_entry_ctx *ent
+ 	unsigned long ss_base, cs_base;
+ 	struct stack_frame_ia32 frame;
+ 	const struct stack_frame_ia32 __user *fp;
++	u32 ret_addr;
+ 
+ 	if (user_64bit_mode(regs))
+ 		return 0;
+@@ -2861,6 +2904,12 @@ perf_callchain_user32(struct pt_regs *regs, struct perf_callchain_entry_ctx *ent
+ 
+ 	fp = compat_ptr(ss_base + regs->bp);
+ 	pagefault_disable();
++
++	/* see perf_callchain_user() below for why we do this */
++	if (is_uprobe_at_func_entry(regs) &&
++	    !get_user(ret_addr, (const u32 __user *)regs->sp))
++		perf_callchain_store(entry, ret_addr);
++
+ 	while (entry->nr < entry->max_stack) {
+ 		if (!valid_user_frame(fp, sizeof(frame)))
+ 			break;
+@@ -2889,6 +2938,7 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ {
+ 	struct stack_frame frame;
+ 	const struct stack_frame __user *fp;
++	unsigned long ret_addr;
+ 
+ 	if (perf_guest_state()) {
+ 		/* TODO: We don't support guest os callchain now */
+@@ -2912,6 +2962,19 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ 		return;
+ 
+ 	pagefault_disable();
++
++	/*
++	 * If we are called from uprobe handler, and we are indeed at the very
++	 * entry to user function (which is normally a `push %rbp` instruction,
++	 * under assumption of application being compiled with frame pointers),
++	 * we should read return address from *regs->sp before proceeding
++	 * to follow frame pointers, otherwise we'll skip immediate caller
++	 * as %rbp is not yet setup.
++	 */
++	if (is_uprobe_at_func_entry(regs) &&
++	    !get_user(ret_addr, (const unsigned long __user *)regs->sp))
++		perf_callchain_store(entry, ret_addr);
++
+ 	while (entry->nr < entry->max_stack) {
+ 		if (!valid_user_frame(fp, sizeof(frame)))
+ 			break;
+diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
+index f46e0ca0169c7..d91e32aff5a13 100644
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -76,6 +76,8 @@ struct uprobe_task {
+ 	struct uprobe			*active_uprobe;
+ 	unsigned long			xol_vaddr;
+ 
++	struct arch_uprobe              *auprobe;
++
+ 	struct return_instance		*return_instances;
+ 	unsigned int			depth;
+ };
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index f8bda852c6b48..8a5989d46c930 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -2075,6 +2075,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
+ 	bool need_prep = false; /* prepare return uprobe, when needed */
+ 
+ 	down_read(&uprobe->register_rwsem);
++	current->utask->auprobe = &uprobe->arch;
+ 	for (uc = uprobe->consumers; uc; uc = uc->next) {
+ 		int rc = 0;
+ 
+@@ -2089,6 +2090,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
+ 
+ 		remove &= rc;
+ 	}
++	current->utask->auprobe = NULL;
+ 
+ 	if (need_prep && !remove)
+ 		prepare_uretprobe(uprobe, regs); /* put bp at return */
+-- 
+2.43.0
+
 
 
