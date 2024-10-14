@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BA1AE876;
-	Mon, 14 Oct 2024 15:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64B81B4F31;
+	Mon, 14 Oct 2024 15:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918149; cv=none; b=pdHREWT2ZmDTDiCzt1f3DcxVb9bQ9PQOOe32l7tb2oiWWGply3mLFkYuLmHm84HOyn6RKI003KmcBO/tjz55s2QZ+D6VNEyzwoSxxWy23YF6paGx2Q8zwPjzlguKNE3R6ptQjzoZ/FS6ddg2Pl9wklJajMAogXyUups+f4+wfpI=
+	t=1728918152; cv=none; b=rfviT8pOd9CbH3LyQ3aGtYNaYnsWMr7NVpO7Aa3rHp2XcH2wTsaj9Hvl9lQgUcJQUE0ydl0nJhlBq5sTu/oZoIs7Y2vjJNfpx01yF4AnJXIY0GW+ie16qq3F0CjFfq9+7k40ccsfEV6u2o7EQRG87i0SPCEV5ZI/izv8StP+A1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918149; c=relaxed/simple;
-	bh=3nfVyxqM8cIRCBgqb6o+XnpuPTOBCIX8n3nrlJ+I9Qg=;
+	s=arc-20240116; t=1728918152; c=relaxed/simple;
+	bh=Y9LG5m+EGE3ZS6N7ePZrOS9ajVgSrvlnzf0p7bkfPuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwP4nXlOv//NihT63CJmTInEghGsZmYN0YWif6bnsqSj2G6FgTxrehcEOxZb8MEP6TBYvs7c/mOB+Wsli3t7iO/3Vrx3Q49/J8n/NVwO04MR8DvzvuqrX3SXZV9fohzO1CN2sd8UYQb0SoIUjebziLnAcmK2qXnRRLdrZbb5nQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pePIIQh/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rl3DhSPQYJ7coDeE8RJXN+k+q81AuTynMWi4DIDjk0Tg6u3gq/EqvTMTjt8e3TJEIBWQEZ3vuAtBMoXncGPu7DqkSNFBCBaPKVmKUZWZkceMARhvvCQAEsih3KMPEmwFRuvSQtVSg3euCzNLIe1p33M4Hk4u+VBe+sdiFhTpeEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGyikMDI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pePIIQh/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96ED5C4CEC7;
-	Mon, 14 Oct 2024 15:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGyikMDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31997C4CEC3;
+	Mon, 14 Oct 2024 15:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918149;
-	bh=3nfVyxqM8cIRCBgqb6o+XnpuPTOBCIX8n3nrlJ+I9Qg=;
+	s=korg; t=1728918152;
+	bh=Y9LG5m+EGE3ZS6N7ePZrOS9ajVgSrvlnzf0p7bkfPuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pePIIQh/AL01M1K9iACuMezzAeCqnDnVm4dmuLZdhlSa7PhzVGIk50cHsuhyYsbLM
-	 7QI8WM6iwrC5wz2oOuFRoXnd7Pa1VGb/t+tt7sZ4Jq+utB/0dmpcxdExJvjSeu0nao
-	 UiYoVkm8sdqsLhhZaiCIXhjP7fmXMB+GuQdjbQ+8=
+	b=KGyikMDI1VUUzcGXe+x1EYrx+6WJLGJbBn1KlIL2WiZjMrrEK6TtZZHbd+W3Y4gdr
+	 /RSPobUTbb+1iltAp63Xiw8J07mTDBxGEZaLxb+gLcKcQOoDvs+652rJF5eyNYsD5E
+	 DCZ4YZn/tdKaLDmvy60Hdi2yapi79+kZEI2EHGxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/798] f2fs: fix to avoid racing in between read and OPU dio write
-Date: Mon, 14 Oct 2024 16:13:12 +0200
-Message-ID: <20241014141227.270300798@linuxfoundation.org>
+Subject: [PATCH 6.1 239/798] f2fs: fix to wait page writeback before setting gcing flag
+Date: Mon, 14 Oct 2024 16:13:13 +0200
+Message-ID: <20241014141227.308790403@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,40 +53,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0cac51185e65dc2a20686184e02f3cafc99eb202 ]
+[ Upstream commit a4d7f2b3238fd5f76b9e6434a0bd5d2e29049cff ]
 
-If lfs mode is on, buffered read may race w/ OPU dio write as below,
-it may cause buffered read hits unwritten data unexpectly, and for
-dio read, the race condition exists as well.
+Soft IRQ				Thread
+- f2fs_write_end_io
+					- f2fs_defragment_range
+					 - set_page_private_gcing
+ - type = WB_DATA_TYPE(page, false);
+ : assign type w/ F2FS_WB_CP_DATA
+ due to page_private_gcing() is true
+  - dec_page_count() w/ wrong type
+  - end_page_writeback()
 
-Thread A			Thread B
-- f2fs_file_write_iter
- - f2fs_dio_write_iter
-  - __iomap_dio_rw
-   - f2fs_iomap_begin
-    - f2fs_map_blocks
-     - __allocate_data_block
-      - allocated blkaddr #x
-       - iomap_dio_submit_bio
-				- f2fs_file_read_iter
-				 - filemap_read
-				  - f2fs_read_data_folio
-				   - f2fs_mpage_readpages
-				    - f2fs_map_blocks
-				     : get blkaddr #x
-				    - f2fs_submit_read_bio
-				IRQ
-				- f2fs_read_end_io
-				 : read IO on blkaddr #x complete
-IRQ
-- iomap_dio_bio_end_io
- : direct write IO on blkaddr #x complete
+Value of F2FS_WB_CP_DATA reference count may become negative under above
+race condition, the root cause is we missed to wait page writeback before
+setting gcing page private flag, let's fix it.
 
-In LFS mode, if there is inflight dio, let's wait for its completion,
-this policy won't cover all race cases, however it is a tradeoff which
-avoids abusing lock around IO paths.
-
-Fixes: f847c699cff3 ("f2fs: allow out-place-update for direct IO in LFS mode")
+Fixes: 2d1fe8a86bf5 ("f2fs: fix to tag gcing flag on page during file defragment")
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -95,20 +79,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 81394c08ef850..f03320c47c823 100644
+index f03320c47c823..c9f0bb8f8b210 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -4490,6 +4490,10 @@ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	if (trace_f2fs_dataread_start_enabled())
- 		f2fs_trace_rw_file_path(iocb, iov_iter_count(to), READ);
+@@ -2749,6 +2749,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+ 				goto clear_out;
+ 			}
  
-+	/* In LFS mode, if there is inflight dio, wait for its completion */
-+	if (f2fs_lfs_mode(F2FS_I_SB(inode)))
-+		inode_dio_wait(inode);
++			f2fs_wait_on_page_writeback(page, DATA, true, true);
 +
- 	if (f2fs_should_use_dio(inode, iocb, to)) {
- 		ret = f2fs_dio_read_iter(iocb, to);
- 	} else {
+ 			set_page_dirty(page);
+ 			set_page_private_gcing(page);
+ 			f2fs_put_page(page, 1);
+@@ -4108,6 +4110,8 @@ static int redirty_blocks(struct inode *inode, pgoff_t page_idx, int len)
+ 		/* It will never fail, when page has pinned above */
+ 		f2fs_bug_on(F2FS_I_SB(inode), !page);
+ 
++		f2fs_wait_on_page_writeback(page, DATA, true, true);
++
+ 		set_page_dirty(page);
+ 		set_page_private_gcing(page);
+ 		f2fs_put_page(page, 1);
 -- 
 2.43.0
 
