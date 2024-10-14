@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E959A1C82E2;
-	Mon, 14 Oct 2024 15:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0001ABEA5;
+	Mon, 14 Oct 2024 15:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918940; cv=none; b=XB5vhbsxTfw3942gaJuUPXk3LsccSZ5LbKx0Xg0g89Lx/d4D67q8fA8rFf8II02yd24GMp7TjfvAbiQqZ3EVP5IMtKk4aS86SFbK6WSuUlNsaPzydy0ufyt5CTSsQsJ1MBD/UOcWiAYTk0Xs1n3EPV1xXEKmonqZvnTeqgNvO1M=
+	t=1728918943; cv=none; b=cG6Pble1zMvMfbMx2vHJB4dSzdybh4oLVGmM44eFjs/jveEojdkNzp6unGDjf1ZM6QfoBhfIe+oUdkjWXa2H95FvHbWl2y7EkyLHtif/P3rLbwRsJIRKWXq3Ng9OQhJe54syhCGh4OB4ClHK00KyP2l92Hrk8oypSJ5ibaUIkXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918940; c=relaxed/simple;
-	bh=aQQtfK0IbQ0wyG+bbf2XkD3bEYCPMkdL2kk/x4TKM5I=;
+	s=arc-20240116; t=1728918943; c=relaxed/simple;
+	bh=FUS7tA1Yv45hHBPWoXkkt/O9WAp8yXJyeWdlcU1KDyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oiha9SqUmcvnqJAW0A8hn4qrrt6Th7W8G5Bt4EZme781fGsFImFUW2Hjr8lDVGZv0xZ/g+lHhn8D74Ez3r6IHXKlekjHu71IySx/jZpf6l6Zu2PjGiP6wSCqhNNIS4UIzkxCmdNvuJe4m0eeLi3UecJFiE0vcjlST6szLQQLJkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cY+kTIAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHcXSPyFC4A/jwswkDLaGBNWfY+ocdJwDYvIreVc2Vk3pyurmwlUt847r/FF7Guto8Aw2SmVWImoXoWPZavFRGIcGPuhphL/NV61zC51l26zXH2Amf34TALVOI9VUIFZAC/v75oYviAZAQnmGFvtWIHPLDZuzYFZUiIuhOjpE08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsO3yb5Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cY+kTIAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3E1C4CEC3;
-	Mon, 14 Oct 2024 15:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsO3yb5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83ABDC4CEC7;
+	Mon, 14 Oct 2024 15:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918939;
-	bh=aQQtfK0IbQ0wyG+bbf2XkD3bEYCPMkdL2kk/x4TKM5I=;
+	s=korg; t=1728918943;
+	bh=FUS7tA1Yv45hHBPWoXkkt/O9WAp8yXJyeWdlcU1KDyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cY+kTIABebwO+U3PFVffAcbJRSVlx8fznMsG2sa45CTaNDE7uIUqEYtxcldNORtYI
-	 G5M2ecRTIIZTTwXwoIxdmnSfHrlNShqPjULp11dj1C8ue+uNHlsMwbr2gp8rdjLBXx
-	 AjSTl+ZHnlXPIfFSkAjBYBVEvzp6ZfxqblaxjTCg=
+	b=OsO3yb5ZPjlkNe2CHBAtvQ0iie5u7jTJ1w19LpDtrSGZX1IhrtWXPBDzo/lMMch0x
+	 sBubUT0TonpjuEkt34oCRQ50KQeXtwdFNjvM7HmDXa6BqxGbbrx+TrC8L/cOPv9eCi
+	 GW/ncEQNvqj+Q8Objad9VhSkiItIFTdJv1VEtJIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Seiji Nishikawa <snishika@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/798] wifi: ath11k: fix array out-of-bound access in SoC stats
-Date: Mon, 14 Oct 2024 16:16:29 +0200
-Message-ID: <20241014141235.053480052@linuxfoundation.org>
+Subject: [PATCH 6.1 426/798] ACPI: PAD: fix crash in exit_round_robin()
+Date: Mon, 14 Oct 2024 16:16:20 +0200
+Message-ID: <20241014141234.687152541@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,41 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-[ Upstream commit 69f253e46af98af17e3efa3e5dfa72fcb7d1983d ]
+[ Upstream commit 0a2ed70a549e61c5181bad5db418d223b68ae932 ]
 
-Currently, the ath11k_soc_dp_stats::hal_reo_error array is defined with a
-maximum size of DP_REO_DST_RING_MAX. However, the ath11k_dp_process_rx()
-function access ath11k_soc_dp_stats::hal_reo_error using the REO
-destination SRNG ring ID, which is incorrect. SRNG ring ID differ from
-normal ring ID, and this usage leads to out-of-bounds array access. To fix
-this issue, modify ath11k_dp_process_rx() to use the normal ring ID
-directly instead of the SRNG ring ID to avoid out-of-bounds array access.
+The kernel occasionally crashes in cpumask_clear_cpu(), which is called
+within exit_round_robin(), because when executing clear_bit(nr, addr) with
+nr set to 0xffffffff, the address calculation may cause misalignment within
+the memory, leading to access to an invalid memory address.
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+----------
+BUG: unable to handle kernel paging request at ffffffffe0740618
+        ...
+CPU: 3 PID: 2919323 Comm: acpi_pad/14 Kdump: loaded Tainted: G           OE  X --------- -  - 4.18.0-425.19.2.el8_7.x86_64 #1
+        ...
+RIP: 0010:power_saving_thread+0x313/0x411 [acpi_pad]
+Code: 89 cd 48 89 d3 eb d1 48 c7 c7 55 70 72 c0 e8 64 86 b0 e4 c6 05 0d a1 02 00 01 e9 bc fd ff ff 45 89 e4 42 8b 04 a5 20 82 72 c0 <f0> 48 0f b3 05 f4 9c 01 00 42 c7 04 a5 20 82 72 c0 ff ff ff ff 31
+RSP: 0018:ff72a5d51fa77ec8 EFLAGS: 00010202
+RAX: 00000000ffffffff RBX: ff462981e5d8cb80 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000246 RDI: 0000000000000246
+RBP: ff46297556959d80 R08: 0000000000000382 R09: ff46297c8d0f38d8
+R10: 0000000000000000 R11: 0000000000000001 R12: 000000000000000e
+R13: 0000000000000000 R14: ffffffffffffffff R15: 000000000000000e
+FS:  0000000000000000(0000) GS:ff46297a800c0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffe0740618 CR3: 0000007e20410004 CR4: 0000000000771ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ ? acpi_pad_add+0x120/0x120 [acpi_pad]
+ kthread+0x10b/0x130
+ ? set_kthread_struct+0x50/0x50
+ ret_from_fork+0x1f/0x40
+        ...
+CR2: ffffffffe0740618
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240704070811.4186543-3-quic_periyasa@quicinc.com
+crash> dis -lr ffffffffc0726923
+        ...
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 114
+0xffffffffc0726918 <power_saving_thread+776>:	mov    %r12d,%r12d
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 325
+0xffffffffc072691b <power_saving_thread+779>:	mov    -0x3f8d7de0(,%r12,4),%eax
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./arch/x86/include/asm/bitops.h: 80
+0xffffffffc0726923 <power_saving_thread+787>:	lock btr %rax,0x19cf4(%rip)        # 0xffffffffc0740620 <pad_busy_cpus_bits>
+
+crash> px tsk_in_cpu[14]
+$66 = 0xffffffff
+
+crash> px 0xffffffffc072692c+0x19cf4
+$99 = 0xffffffffc0740620
+
+crash> sym 0xffffffffc0740620
+ffffffffc0740620 (b) pad_busy_cpus_bits [acpi_pad]
+
+crash> px pad_busy_cpus_bits[0]
+$42 = 0xfffc0
+----------
+
+To fix this, ensure that tsk_in_cpu[tsk_index] != -1 before calling
+cpumask_clear_cpu() in exit_round_robin(), just as it is done in
+round_robin_cpu().
+
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Link: https://patch.msgid.link/20240825141352.25280-1-snishika@redhat.com
+[ rjw: Subject edit, avoid updates to the same value ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_pad.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 3746f9c956969..73f299f65e2eb 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2699,7 +2699,7 @@ int ath11k_dp_process_rx(struct ath11k_base *ab, int ring_id,
- 		if (unlikely(push_reason !=
- 			     HAL_REO_DEST_RING_PUSH_REASON_ROUTING_INSTRUCTION)) {
- 			dev_kfree_skb_any(msdu);
--			ab->soc_stats.hal_reo_error[dp->reo_dst_ring[ring_id].ring_id]++;
-+			ab->soc_stats.hal_reo_error[ring_id]++;
- 			continue;
- 		}
+diff --git a/drivers/acpi/acpi_pad.c b/drivers/acpi/acpi_pad.c
+index ec0e22a1e25d6..bfb8ad1e2e855 100644
+--- a/drivers/acpi/acpi_pad.c
++++ b/drivers/acpi/acpi_pad.c
+@@ -130,8 +130,10 @@ static void exit_round_robin(unsigned int tsk_index)
+ {
+ 	struct cpumask *pad_busy_cpus = to_cpumask(pad_busy_cpus_bits);
  
+-	cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
+-	tsk_in_cpu[tsk_index] = -1;
++	if (tsk_in_cpu[tsk_index] != -1) {
++		cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
++		tsk_in_cpu[tsk_index] = -1;
++	}
+ }
+ 
+ static unsigned int idle_pct = 5; /* percentage */
 -- 
 2.43.0
 
