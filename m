@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498431AA793;
-	Mon, 14 Oct 2024 15:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4F21A76A5;
+	Mon, 14 Oct 2024 15:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918609; cv=none; b=TuaI8WbkAA6MtxOU3+32CtbY8iA9ZOjEDVioRQgqVqVeAZn6PaVHk/v2Ibuq48GupcEbjxTgQalY1xvdtoC/JA342s7XHZp1YgRPIRs54UR1/S7XK3ApOg+VKMV5yS9nK9Gj0YEGLwS4hwXGEmXy7gAy/VRFYHNp/jd6gOLKJYw=
+	t=1728918612; cv=none; b=L842x1Yhd25037c6c/qN8CUHhDOs8Ns3tFwIMBaNZ90ggv7YiVNKe6w/M/iJC9ebzcNmf+rbEpNjuYglQ0h4d7gqn3xLoIpJfzHqxPCIayBsiW1clueIp8bkdvuGBw0sz4gRjgwnxgP4QezDBHlp9NbZd7IxfL2/EzgNE+GvbOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918609; c=relaxed/simple;
-	bh=TX8WNMV4EoJgL6Fl5HjnstJ2Ym8QOCRIfZm005qvx4k=;
+	s=arc-20240116; t=1728918612; c=relaxed/simple;
+	bh=F3UPabyJUKJrHPuISZs8mIrKkkuhzT7qJBJwxzjvR8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUz6IwR1DOBPYk4WKPUkyZW0albNFFK7UpnHlbsf8gG48rwJpAIVMF16HXus+cqZ7u0fUzriHq8ga13nx4cPiNBKFoX/rN2NXzZSWwo67iMhmTgj7Da9FrJsiPaao4T1rzCoLH26G26tEjzc/BL9/APMFyU/6clQvlhzoPN6RsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiVj4vwI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YkAvyVL/Ki2l4SZx3e6PTzqd6MMos5pizGBQ0GBhRtpkv+Zq3NPWHNKM1N3TIx5oSs5Bp+goVYBi0bck9H3Ek1Ks91u2zKUxrEV1LMsyOuN+hazH0D+egNpXdkdRxdTrJ4mVZOGhmIlUUXLYJ3g5AgrQPkbrmcwiJcyjNKdfNAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKfg2Duq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiVj4vwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF38C4CEC3;
-	Mon, 14 Oct 2024 15:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKfg2Duq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB8C4CEC3;
+	Mon, 14 Oct 2024 15:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918609;
-	bh=TX8WNMV4EoJgL6Fl5HjnstJ2Ym8QOCRIfZm005qvx4k=;
+	s=korg; t=1728918612;
+	bh=F3UPabyJUKJrHPuISZs8mIrKkkuhzT7qJBJwxzjvR8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiVj4vwIhqrPleCqJffQLxvsAaG0HdGQhigzvwRaFVCa4FdePYafoFdoL3lwXIXwa
-	 HFvx3nvQ574uqcxirJwkz6e7j3PS8hofF6umXdyHqx14Jm3cPLYf/3JNK7t5nTo8yI
-	 /3VhHsMqa1gY1fus3EBBD+IxUvBGpUFheehEjkF0=
+	b=hKfg2DuqmZE+LRvjitQoMoXqXBJ/xJLu2cEGqPjWwUDXPzqUCrnpX3SXLa6rhQGor
+	 m4hR3S/SwzLwMcAlQzlT4NMJ0vXPL+LIfMeKzWBM5zvhCC2SX2eZcqUskgsmkrnNoT
+	 0PrMW5bcw2+ZTuH4hhuuCUgdR1G/4QVunmrxLU98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.1 371/798] perf/arm-cmn: Fail DTC counter allocation correctly
-Date: Mon, 14 Oct 2024 16:15:25 +0200
-Message-ID: <20241014141232.526096149@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 372/798] iio: magnetometer: ak8975: Fix Unexpected device error
+Date: Mon, 14 Oct 2024 16:15:26 +0200
+Message-ID: <20241014141232.565255390@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,44 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: André Apitzsch <git@apitzsch.eu>
 
-commit 1892fe103c3a20fced306c8dafa74f7f6d4ea0a3 upstream.
+commit 848f68c760ab1e14a9046ea6e45e3304ab9fa50b upstream.
 
-Calling arm_cmn_event_clear() before all DTC indices are allocated is
-wrong, and can lead to arm_cmn_event_add() erroneously clearing live
-counters from full DTCs where allocation fails. Since the DTC counters
-are only updated by arm_cmn_init_counter() after all DTC and DTM
-allocations succeed, nothing actually needs cleaning up in this case
-anyway, and it should just return directly as it did before.
+Explicity specify array indices to fix mapping between
+asahi_compass_chipset and ak_def_array.
+While at it, remove unneeded AKXXXX.
 
-Fixes: 7633ec2c262f ("perf/arm-cmn: Rework DTC counters (again)")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/ed589c0d8e4130dc68b8ad1625226d28bdc185d4.1702322847.git.robin.murphy@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 4f9ea93afde1 ("iio: magnetometer: ak8975: Convert enum->pointer for data in the match tables")
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231001-ak_magnetometer-v1-1-09bf3b8798a3@apitzsch.eu
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/magnetometer/ak8975.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1671,7 +1671,7 @@ static int arm_cmn_event_add(struct perf
- 			idx = 0;
- 			while (cmn->dtc[j].counters[idx])
- 				if (++idx == CMN_DT_NUM_COUNTERS)
--					goto free_dtms;
-+					return -ENOSPC;
- 		}
- 		hw->dtc_idx[j] = idx;
- 	}
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -204,7 +204,6 @@ static long ak09912_raw_to_gauss(u16 dat
+ 
+ /* Compatible Asahi Kasei Compass parts */
+ enum asahi_compass_chipset {
+-	AKXXXX		= 0,
+ 	AK8975,
+ 	AK8963,
+ 	AK09911,
+@@ -248,7 +247,7 @@ struct ak_def {
+ };
+ 
+ static const struct ak_def ak_def_array[] = {
+-	{
++	[AK8975] = {
+ 		.type = AK8975,
+ 		.raw_to_gauss = ak8975_raw_to_gauss,
+ 		.range = 4096,
+@@ -273,7 +272,7 @@ static const struct ak_def ak_def_array[
+ 			AK8975_REG_HYL,
+ 			AK8975_REG_HZL},
+ 	},
+-	{
++	[AK8963] = {
+ 		.type = AK8963,
+ 		.raw_to_gauss = ak8963_09911_raw_to_gauss,
+ 		.range = 8190,
+@@ -298,7 +297,7 @@ static const struct ak_def ak_def_array[
+ 			AK8975_REG_HYL,
+ 			AK8975_REG_HZL},
+ 	},
+-	{
++	[AK09911] = {
+ 		.type = AK09911,
+ 		.raw_to_gauss = ak8963_09911_raw_to_gauss,
+ 		.range = 8192,
+@@ -323,7 +322,7 @@ static const struct ak_def ak_def_array[
+ 			AK09912_REG_HYL,
+ 			AK09912_REG_HZL},
+ 	},
+-	{
++	[AK09912] = {
+ 		.type = AK09912,
+ 		.raw_to_gauss = ak09912_raw_to_gauss,
+ 		.range = 32752,
+@@ -348,7 +347,7 @@ static const struct ak_def ak_def_array[
+ 			AK09912_REG_HYL,
+ 			AK09912_REG_HZL},
+ 	},
+-	{
++	[AK09916] = {
+ 		.type = AK09916,
+ 		.raw_to_gauss = ak09912_raw_to_gauss,
+ 		.range = 32752,
 
 
