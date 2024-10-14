@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A945F1C7265;
-	Mon, 14 Oct 2024 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95961ABEC7;
+	Mon, 14 Oct 2024 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918963; cv=none; b=DCP34IuHyS+CUSgTJOkXusBpqKrpBI9wvOZ18vM9tPlJWeuTqu9R/DEDjEgOm+JRCd3/jsL0UFIsHnC3FudgaQ6aA3WCtN1bw2D6NfxH/bPcx0LS8WYk5OUq1XAjU9qIs43Pxzcsz3syuo4dpkxBwRLCo1i+xTBGQ58WjAcCEMk=
+	t=1728918967; cv=none; b=ipWQrocqMNVlqn6+p2ZgWhBLh7ofkdjPP+WOPYyYxEJwoTxozfu2WOejO+fk/7oef203zzVrwKkU6MhiUVGPWjEP7RlpQWkc6RZB1jlrJ7jhSSbUu/bEn4euxIbCvyN5CE20HmL/IrQ/AkMv22qa1BAur3MHv2C732CXOEkJvVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918963; c=relaxed/simple;
-	bh=DkQiptsGs+80g+pRJyZuqziQ8jglWFawq5NCLYpXV6k=;
+	s=arc-20240116; t=1728918967; c=relaxed/simple;
+	bh=DnlvF95FF/YH1s8c6XnxOtRSkP917/br7uD5G7isoqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLvFKgiAk5EVohwaOVa6OmPx4j/ibm42Oc/tsSWVoKuoZ6ldeLc50aYhvq/0+K4zLO+7g6XxsvhLngbJAgJW/N5NnQ5cvEEnkneFYvhkh6CtKDLSxFjfInM52BuUNjdDX919swa3/max08dHpsOCCCoLT876mcJJGTuvO4Up34o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+uHjSFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KvP5cykPmFCLIVOqNsJS3eWfsEgiuCLho2tTcQjz/xSiZdisMsGQHJ6LvavWQ51rPpgCqFknyi9agTZR8XrzrdVdLfFn3zus2izgdI4ng4irgjdPKIvAix02vtpGPk+Ar3pLWX9dECGoxCycwnyFcU8hU0SmzJ5F0K/Z504GEVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVQ1M8kz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+uHjSFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF369C4CEC3;
-	Mon, 14 Oct 2024 15:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVQ1M8kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156F0C4CEC3;
+	Mon, 14 Oct 2024 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918963;
-	bh=DkQiptsGs+80g+pRJyZuqziQ8jglWFawq5NCLYpXV6k=;
+	s=korg; t=1728918966;
+	bh=DnlvF95FF/YH1s8c6XnxOtRSkP917/br7uD5G7isoqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+uHjSFHNGvsvCe5eHlf8eEHllBZUbaX9WSx7TNGt6/Z/cmJYFdIR5uiQUXyBbBVi
-	 xDoPtt+JOaMepXtckRPJcGuIysphHYwO/lRTB9pl0A49Vk4Xj9unsrDQ16HFFJq5xJ
-	 qGFjiRziMCjTYmPaFCh+akuaprFKdTEXLdDJQH84=
+	b=zVQ1M8kzV5tU1RQS95ms//q6RSOdkZ4K7f2BrPM+o5keJ+IbZ15xSfDskf+UIUcRF
+	 uz+eOVgHThKzYosj6hbaSvC+XT2AtahsopvSYTFbUaqY+CK/f4hsvYFkHXRVkwKjNX
+	 Wci/pMiEQQ2TRf1svqYcsftCM0rb/YMHpM2I77Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 474/798] drm/amd/display: Add null check for top_pipe_to_program in commit_planes_for_stream
-Date: Mon, 14 Oct 2024 16:17:08 +0200
-Message-ID: <20241014141236.597871981@linuxfoundation.org>
+Subject: [PATCH 6.1 475/798] ata: pata_serverworks: Do not use the term blacklist
+Date: Mon, 14 Oct 2024 16:17:09 +0200
+Message-ID: <20241014141236.636386255@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -58,49 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 66d71a72539e173a9b00ca0b1852cbaa5f5bf1ad ]
+[ Upstream commit 858048568c9e3887d8b19e101ee72f129d65cb15 ]
 
-This commit addresses a null pointer dereference issue in the
-`commit_planes_for_stream` function at line 4140. The issue could occur
-when `top_pipe_to_program` is null.
+Let's not use the term blacklist in the function
+serverworks_osb4_filter() documentation comment and rather simply refer
+to what that function looks at: the list of devices with groken UDMA5.
 
-The fix adds a check to ensure `top_pipe_to_program` is not null before
-accessing its stream_res. This prevents a null pointer dereference.
+While at it, also constify the values of the csb_bad_ata100 array.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc.c:4140 commit_planes_for_stream() error: we previously assumed 'top_pipe_to_program' could be null (see line 3906)
+Of note is that all of this should probably be handled using libata
+quirk mechanism but it is unclear if these UDMA5 quirks are specific
+to this controller only.
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/pata_serverworks.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index d7bca680805d3..b424465238afc 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3727,7 +3727,8 @@ static void commit_planes_for_stream(struct dc *dc,
- 	}
+diff --git a/drivers/ata/pata_serverworks.c b/drivers/ata/pata_serverworks.c
+index c0bc4af0d1960..804c74ce3c1df 100644
+--- a/drivers/ata/pata_serverworks.c
++++ b/drivers/ata/pata_serverworks.c
+@@ -46,10 +46,11 @@
+ #define SVWKS_CSB5_REVISION_NEW	0x92 /* min PCI_REVISION_ID for UDMA5 (A2.0) */
+ #define SVWKS_CSB6_REVISION	0xa0 /* min PCI_REVISION_ID for UDMA4 (A1.0) */
  
- 	if ((update_type != UPDATE_TYPE_FAST) && stream->update_flags.bits.dsc_changed)
--		if (top_pipe_to_program->stream_res.tg->funcs->lock_doublebuffer_enable) {
-+		if (top_pipe_to_program &&
-+		    top_pipe_to_program->stream_res.tg->funcs->lock_doublebuffer_enable) {
- 			top_pipe_to_program->stream_res.tg->funcs->wait_for_state(
- 				top_pipe_to_program->stream_res.tg,
- 				CRTC_STATE_VACTIVE);
+-/* Seagate Barracuda ATA IV Family drives in UDMA mode 5
+- * can overrun their FIFOs when used with the CSB5 */
+-
+-static const char *csb_bad_ata100[] = {
++/*
++ * Seagate Barracuda ATA IV Family drives in UDMA mode 5
++ * can overrun their FIFOs when used with the CSB5.
++ */
++static const char * const csb_bad_ata100[] = {
+ 	"ST320011A",
+ 	"ST340016A",
+ 	"ST360021A",
+@@ -163,10 +164,11 @@ static unsigned int serverworks_osb4_filter(struct ata_device *adev, unsigned in
+  *	@adev: ATA device
+  *	@mask: Mask of proposed modes
+  *
+- *	Check the blacklist and disable UDMA5 if matched
++ *	Check the list of devices with broken UDMA5 and
++ *	disable UDMA5 if matched.
+  */
+-
+-static unsigned int serverworks_csb_filter(struct ata_device *adev, unsigned int mask)
++static unsigned int serverworks_csb_filter(struct ata_device *adev,
++					   unsigned int mask)
+ {
+ 	const char *p;
+ 	char model_num[ATA_ID_PROD_LEN + 1];
 -- 
 2.43.0
 
