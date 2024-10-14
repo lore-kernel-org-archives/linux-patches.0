@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43418481B3;
-	Mon, 14 Oct 2024 15:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808271798C;
+	Mon, 14 Oct 2024 15:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919345; cv=none; b=KCXPvRL4xesF/HK3HaF1BRq0W7esvJJKs2XLzTwXYAwwzMJUaLpRKzhOq/kGqdJg1O5m8HpX8sd9UHrNBfP4RZ/3B8CIUjKo4O8Tu5pZap8WVCShu43ohZ91XqJG7rXQ/KKHpfBa27yWt1n2btr3dHrOb4LmAOm/7Wuxzl+emoE=
+	t=1728919348; cv=none; b=GFNvMsT9ztRAWSJiVpFqKuSMjXRTGlAx98DO1mjO4AixnLSwo0koBNiT+AvMp8SK40eQJmY278afX880JaiwCfv8xESnrFVhCKKt1doA7oX9nRs4QEgKaCIkk0AZ/MWDzsUzAw7GrGxrvRfFyTf12zG1mx35QkPSmiTlhSSb07g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919345; c=relaxed/simple;
-	bh=Drb5TpX8Qlv5o0Wrz0Ca8EeBGbMKkzmM5ArdQsc/EiU=;
+	s=arc-20240116; t=1728919348; c=relaxed/simple;
+	bh=niXv30vTWzr78bhbVUhlUhCg1ICshR93yZecoNvRHCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwrdmQmyO7a1ffwYdNDFBZ+qLxBsz8VFaa1bZgO6aIM9AKdIzuEMJvNq4/4kWFMDbn+HB/le54lvF6XevAsCwtPYDvD8ov5wUiDgZ3GUr2WTfEIiISv1YsboPJh3ifleeCViyBKVhOCVumNMCVRSI2B8Nuts+7fFPFdyGuFg7O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6ZSjkiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fo9i9rrtMGOTNiN8pfwvxDbimV/U0c2qvEVAtg8hy+T8am54Ik4SpTAENfRKyYt4Qz2EWymqv2aj686u8NFyFw0SM7blAIg0Tjmrtb8gfgTDIDfs5XQchhABgfUvUPRxKflYAe0JOKdYKWMjJSqRqzghGoWj025Gz/H6UHJAlDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojsXpTLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6ZSjkiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3059C4CEC3;
-	Mon, 14 Oct 2024 15:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojsXpTLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E545DC4CEC3;
+	Mon, 14 Oct 2024 15:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919345;
-	bh=Drb5TpX8Qlv5o0Wrz0Ca8EeBGbMKkzmM5ArdQsc/EiU=;
+	s=korg; t=1728919348;
+	bh=niXv30vTWzr78bhbVUhlUhCg1ICshR93yZecoNvRHCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6ZSjkiwSlzjpOkuWXEiyORChUD7KhNWJi6J4GrcsJ9MDcuqLhSTEVOAlcfhYL6ye
-	 ZpvV4ja0ylsHvASbBF3TaO/LF2PHvCUusL54MLOUKqli3u4gx3Xv04k6e56CqXaVm7
-	 zby8q949cmJv2pJqLKIrbv8l9pqXW76A9qo6lDVU=
+	b=ojsXpTLHArC0nKMGpIdeFDMvMbORbLoqBjvAWSPlAiK5wE3XoZPf301LzBA6brEYL
+	 35InAKQAEPIFwpN2zaKt+B5qyXpTH9s2Ed3q9R5F44pWkfAanjyMkHa3eP0JzmVUHB
+	 DGLEdwHsYltYtkkk+8DeDyNQIwXS1RTLMewTCCXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.1 583/798] media: sun4i_csi: Implement link validate for sun4i_csi subdev
-Date: Mon, 14 Oct 2024 16:18:57 +0200
-Message-ID: <20241014141240.907347705@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 584/798] clk: qcom: gcc-sm8450: Do not turn off PCIe GDSCs during gdsc_disable()
+Date: Mon, 14 Oct 2024 16:18:58 +0200
+Message-ID: <20241014141240.946210658@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,45 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 2dc5d5d401f5c6cecd97800ffef82e8d17d228f0 upstream.
+commit 889e1332310656961855c0dcedbb4dbe78e39d22 upstream.
 
-The sun4i_csi driver doesn't implement link validation for the subdev it
-registers, leaving the link between the subdev and its source
-unvalidated. Fix it, using the v4l2_subdev_link_validate() helper.
+With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of PCIe controllers from suspend.
 
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Acked-by: Chen-Yu Tsai <wens@csie.org>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
+
+Cc: stable@vger.kernel.org # 5.17
+Fixes: db0c944ee92b ("clk: qcom: Add clock driver for SM8450")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240722105733.13040-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/gcc-sm8450.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-+++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-@@ -40,6 +40,10 @@ static const struct media_entity_operati
- 	.link_validate = v4l2_subdev_link_validate,
+--- a/drivers/clk/qcom/gcc-sm8450.c
++++ b/drivers/clk/qcom/gcc-sm8450.c
+@@ -2934,7 +2934,7 @@ static struct gdsc pcie_0_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
  };
  
-+static const struct media_entity_operations sun4i_csi_subdev_entity_ops = {
-+	.link_validate = v4l2_subdev_link_validate,
-+};
-+
- static int sun4i_csi_notify_bound(struct v4l2_async_notifier *notifier,
- 				  struct v4l2_subdev *subdev,
- 				  struct v4l2_async_subdev *asd)
-@@ -214,6 +218,7 @@ static int sun4i_csi_probe(struct platfo
- 	v4l2_subdev_init(subdev, &sun4i_csi_subdev_ops);
- 	subdev->flags = V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
- 	subdev->entity.function = MEDIA_ENT_F_VID_IF_BRIDGE;
-+	subdev->entity.ops = &sun4i_csi_subdev_entity_ops;
- 	subdev->owner = THIS_MODULE;
- 	snprintf(subdev->name, sizeof(subdev->name), "sun4i-csi-0");
- 	v4l2_set_subdevdata(subdev, csi);
+ static struct gdsc pcie_1_gdsc = {
+@@ -2942,7 +2942,7 @@ static struct gdsc pcie_1_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
+ 
+ static struct gdsc ufs_phy_gdsc = {
 
 
