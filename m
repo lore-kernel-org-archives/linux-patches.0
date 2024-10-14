@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3A724B34;
-	Mon, 14 Oct 2024 14:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967611AB507;
+	Mon, 14 Oct 2024 14:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916659; cv=none; b=PNDbahZ/UfQ1hR7GBO1G7mtiF+9uX91Jc6a2x5BTgN0cgUgB4j0u7wLyMWS1V3pFBmkSqv5XcsWMMXTaInuz2Da0+BY5MYr5KmxMB/5NnDvNLESyocVprsRkXpFFZJmvIpGsXn4VIwQ9ZOjb/tVauRXZkOlRj+V6bvZ6qJfuYoU=
+	t=1728916663; cv=none; b=Rd5hWVlGL+75R4ch4R2z4usJiTdTYr9K6h8+tWv/WFGENL69SX98SFNIrceTd0fP9w15tr+xkTewshcOfpL6FCIGjPyuhaBl4WeQmNEBenYgn6ljsmwxV0PHc6Bi5H3mNchKN0YNs9xBZyFbFtfVjsvFpBlzQEdBUHEAPndFOLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916659; c=relaxed/simple;
-	bh=YniJeMKd2vR2Ay74XM7kSI0XmeCRWEfdLPWqNvtVYfY=;
+	s=arc-20240116; t=1728916663; c=relaxed/simple;
+	bh=rJgLx1404ahk5IukRUtxi5sQzFsVkQBTycEvzOy+YqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9l/OP3MrjBmoLjHKAS+ejCRfAe2IRT7WSfq1TnA3Bohl16nFJFWo892W6gP/rahp6k8yBhIfOCcZR0cZcjFiIcmZ9cLs3tYO5lAvhZSBq+aTAh/hjEbW5UvfeGAprOmTbfVI6bmFd4v+dT/pJ23QIfnEeIGa/fRCSdDY15ZUdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEQ3KZy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6jGltrSWp5is8QzZSPG/l0Gg3mtJbpz9dQd8SVsIi8GigLrGTzx5hrwwLQ16HPrZsbTPTDvx1ubDUGZPX7uFmMOosZOTx/ojtpgsNuZqASX08RkRGtxbPs7g2XWiGnBF0iT/Ktd4grKuKwMliOGYcGoy/EQSO5aSqFrOat8woQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0JIKqLN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEQ3KZy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC29FC4CEC3;
-	Mon, 14 Oct 2024 14:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0JIKqLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48A8C4CEC3;
+	Mon, 14 Oct 2024 14:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916659;
-	bh=YniJeMKd2vR2Ay74XM7kSI0XmeCRWEfdLPWqNvtVYfY=;
+	s=korg; t=1728916663;
+	bh=rJgLx1404ahk5IukRUtxi5sQzFsVkQBTycEvzOy+YqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEQ3KZy2oWimtHKM1ZCnte7K27M04FZSyqDbBr07N6SDKkxoIyt4OiOGaDK2PRbR0
-	 pM+m4tA2kCWeasm7FI57O25ALlhAZhavfjfaqmtgE+2q4+wXhOMbXlcw/pNoLdiYmt
-	 BTMd3fRsPwJfmwlSrnWtNEGtGwxex6gtoiKrwSsg=
+	b=F0JIKqLNZBxqTHB33RmrUMl/v0T4f0V9hAhElQgV1Z0oJVHnZZFrW7WepjSEhEBJZ
+	 qMJhY3RAwUzLhAYvW1FUGmq4Rjp/3ScOumQ+HafZDOY+l+EiwRCNnYlZ8boa2+LSF+
+	 zpOjkbLtVhzAwyxKRVhbFuRbI6LkzhnpP6fSeg4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Gergo Koteles <soyer@irl.hu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/213] ASoC: tas2781: mark dvc_tlv with __maybe_unused
-Date: Mon, 14 Oct 2024 16:18:55 +0200
-Message-ID: <20241014141044.123461949@linuxfoundation.org>
+Subject: [PATCH 6.6 030/213] scsi: Remove scsi device no_start_on_resume flag
+Date: Mon, 14 Oct 2024 16:18:56 +0200
+Message-ID: <20241014141044.162199888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,43 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 831ec5e3538e989c7995137b5c5c661991a09504 ]
+[ Upstream commit c4367ac83805a2322268c9736cd8ef9124063424 ]
 
-Since we put dvc_tlv static variable to a header file it's copied to
-each module that includes the header. But not all of them are actually
-used it.
+The scsi device flag no_start_on_resume is not set by any scsi low
+level driver. Remove it. This reverts the changes introduced by commit
+0a8589055936 ("ata,scsi: do not issue START STOP UNIT on resume").
 
-Fix this W=1 build warning:
-
-include/sound/tas2781-tlv.h:18:35: warning: 'dvc_tlv' defined but not
-used [-Wunused-const-variable=]
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202403290354.v0StnRpc-lkp@intel.com/
-Fixes: ae065d0ce9e3 ("ALSA: hda/tas2781: remove digital gain kcontrol")
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Message-ID: <0e461545a2a6e9b6152985143e50526322e5f76b.1711665731.git.soyer@irl.hu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 7a6bbc2829d4 ("scsi: sd: Do not repeat the starting disk message")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781-tlv.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sd.c          | 9 +++------
+ include/scsi/scsi_device.h | 1 -
+ 2 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/include/sound/tas2781-tlv.h b/include/sound/tas2781-tlv.h
-index 4038dd421150a..1dc59005d241f 100644
---- a/include/sound/tas2781-tlv.h
-+++ b/include/sound/tas2781-tlv.h
-@@ -15,7 +15,7 @@
- #ifndef __TAS2781_TLV_H__
- #define __TAS2781_TLV_H__
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index b0a574c534c4c..2c627deedc1fa 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3968,7 +3968,7 @@ static int sd_resume(struct device *dev)
+ static int sd_resume_common(struct device *dev, bool runtime)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+-	int ret = 0;
++	int ret;
  
--static const DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 100, 0);
-+static const __maybe_unused DECLARE_TLV_DB_SCALE(dvc_tlv, -10000, 100, 0);
- static const DECLARE_TLV_DB_SCALE(amp_vol_tlv, 1100, 50, 0);
+ 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
+ 		return 0;
+@@ -3978,11 +3978,8 @@ static int sd_resume_common(struct device *dev, bool runtime)
+ 		return 0;
+ 	}
  
- #endif
+-	if (!sdkp->device->no_start_on_resume) {
+-		sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
+-		ret = sd_start_stop_device(sdkp, 1);
+-	}
+-
++	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
++	ret = sd_start_stop_device(sdkp, 1);
+ 	if (!ret) {
+ 		sd_resume(dev);
+ 		sdkp->suspended = false;
+diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
+index 9c8b6f611330c..c38f4fe5e64cf 100644
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -216,7 +216,6 @@ struct scsi_device {
+ 	unsigned use_192_bytes_for_3f:1; /* ask for 192 bytes from page 0x3f */
+ 	unsigned no_start_on_add:1;	/* do not issue start on add */
+ 	unsigned allow_restart:1; /* issue START_UNIT in error handler */
+-	unsigned no_start_on_resume:1; /* Do not issue START_STOP_UNIT on resume */
+ 	unsigned start_stop_pwr_cond:1;	/* Set power cond. in START_STOP_UNIT */
+ 	unsigned no_uld_attach:1; /* disable connecting to upper level drivers */
+ 	unsigned select_no_atn:1;
 -- 
 2.43.0
 
