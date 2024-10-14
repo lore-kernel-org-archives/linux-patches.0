@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6FB1C82F4;
-	Mon, 14 Oct 2024 15:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145541C331A;
+	Mon, 14 Oct 2024 15:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919797; cv=none; b=aqeYCzysFRG7Zo2hvNrahSxGDECd6a1nwIxOrwiMmkBKqjIlbVicfPMSbPhuG7XhppASohd2FnTGl/Vm/Zu8bAYBPOcnPHghj3TfH/NNaDmKVL+4qrW8C894vbWN/rIxjmM9jNl2tDFq1oWtgYT3EsLLOrFnuCHxnkDS6oZH1dE=
+	t=1728919801; cv=none; b=El2LpkYPYFmMFVG2rma8W20uchvtN0miThVv49KzFTNMo+tj4+6NwCQaCoNbCsjoiGMNw/qgZOqTwAMujcX+BYfU4DlsIl/p7Ld3yKv/jOkn3WGTTyOYZ03t0XIuksx4QgPcujIqRz/5TXDd3UZs/c/3nR0TP0PQkwAqNgrA2mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919797; c=relaxed/simple;
-	bh=JiaPQ+rxjz6fUccVLkkwvwjJgGw8orIqEcp3If1Edds=;
+	s=arc-20240116; t=1728919801; c=relaxed/simple;
+	bh=xFhJHpJWYC9/OlD+Q7nFlBKf3ELFtiHbvSCvIXZ5ggU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWQCFgEHUpaTRzVEKLy/cJSrYOtp1/HLXD8WEBR/VJxDYjSC+gnynmHTO749YxozPRZP3B/BrR4SpxhjKmddZ/ulzL28odJ1SmBW+TRkI2eEcHy+v1Ka7Sph6kHOIUz1eF1Qmb1k4umr8tWwdMV/x3VsWpaJFc/CE7yTnc57VD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTqDLLr+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbhISF7c9pt6uwN/ieY5yKv3MjNTbbxOm/IQ5bZyqBzg2YJ0FoQ1cpmYec5X54Ag7ivMGshH5O4f9OTxW0cid1PWEZ4/4fXEeHzIzNW4uWI286sFKePnvTHdBAxB+sx9cIGAEKM12MZOsu0BJtP7YmCZ68TLPrOt/C8gEL3WESU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPkU9ygh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTqDLLr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A43C4CEC3;
-	Mon, 14 Oct 2024 15:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPkU9ygh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E685C4CEC3;
+	Mon, 14 Oct 2024 15:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919797;
-	bh=JiaPQ+rxjz6fUccVLkkwvwjJgGw8orIqEcp3If1Edds=;
+	s=korg; t=1728919800;
+	bh=xFhJHpJWYC9/OlD+Q7nFlBKf3ELFtiHbvSCvIXZ5ggU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTqDLLr+Dkrl5mOD7Osq+Uu0iZJk5gkevyI+YPHS+rdSCClHrQgnN2GYo64+nRRx5
-	 uE5xX90aK/VmLUs76sKA4qhWh2JSgowgmnU6RtJ8bpm1K2vaACU1ZJgXjqX+rbHO5/
-	 EPvMahoJNFk8SUbVs0l7OHOKCWyVEioQcH0n9UMk=
+	b=UPkU9yghz342KGaVy2LqNPwl7ygZoXcw8ga7UUxZyd6weHaZpYk7n1fS6otOfg+Sc
+	 MdMy0/9y7m09xVpJpk1yy87dtvvZQ5KXT/l/8slPZbZdEJNd1ZRvNJbRXfo0xk49Dg
+	 lFi4cHDPBUIDsBWvplupmBC/nawGV3TFYbzuFOtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 710/798] clk: imx: Remove CLK_SET_PARENT_GATE for DRAM mux for i.MX7D
-Date: Mon, 14 Oct 2024 16:21:04 +0200
-Message-ID: <20241014141245.962129940@linuxfoundation.org>
+Subject: [PATCH 6.1 711/798] usb: chipidea: udc: enable suspend interrupt after usb reset
+Date: Mon, 14 Oct 2024 16:21:05 +0200
+Message-ID: <20241014141246.000893044@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,42 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit a54c441b46a0745683c2eef5a359d22856d27323 ]
+[ Upstream commit e4fdcc10092fb244218013bfe8ff01c55d54e8e4 ]
 
-For i.MX7D DRAM related mux clock, the clock source change should ONLY
-be done done in low level asm code without accessing DRAM, and then
-calling clk API to sync the HW clock status with clk tree, it should never
-touch real clock source switch via clk API, so CLK_SET_PARENT_GATE flag
-should NOT be added, otherwise, DRAM's clock parent will be disabled when
-DRAM is active, and system will hang.
+Currently, suspend interrupt is enabled before pullup enable operation.
+This will cause a suspend interrupt assert right after pullup DP. This
+suspend interrupt is meaningless, so this will ignore such interrupt
+by enable it after usb reset completed.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-8-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20240823073832.1702135-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx7d.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/chipidea/udc.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx7d.c b/drivers/clk/imx/clk-imx7d.c
-index cbf8131c63f7e..f26b85e8f3292 100644
---- a/drivers/clk/imx/clk-imx7d.c
-+++ b/drivers/clk/imx/clk-imx7d.c
-@@ -498,9 +498,9 @@ static void __init imx7d_clocks_init(struct device_node *ccm_node)
- 	hws[IMX7D_ENET_AXI_ROOT_SRC] = imx_clk_hw_mux2_flags("enet_axi_src", base + 0x8900, 24, 3, enet_axi_sel, ARRAY_SIZE(enet_axi_sel), CLK_SET_PARENT_GATE);
- 	hws[IMX7D_NAND_USDHC_BUS_ROOT_SRC] = imx_clk_hw_mux2_flags("nand_usdhc_src", base + 0x8980, 24, 3, nand_usdhc_bus_sel, ARRAY_SIZE(nand_usdhc_bus_sel), CLK_SET_PARENT_GATE);
- 	hws[IMX7D_DRAM_PHYM_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_phym_src", base + 0x9800, 24, 1, dram_phym_sel, ARRAY_SIZE(dram_phym_sel), CLK_SET_PARENT_GATE);
--	hws[IMX7D_DRAM_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_src", base + 0x9880, 24, 1, dram_sel, ARRAY_SIZE(dram_sel), CLK_SET_PARENT_GATE);
-+	hws[IMX7D_DRAM_ROOT_SRC] = imx_clk_hw_mux2("dram_src", base + 0x9880, 24, 1, dram_sel, ARRAY_SIZE(dram_sel));
- 	hws[IMX7D_DRAM_PHYM_ALT_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_phym_alt_src", base + 0xa000, 24, 3, dram_phym_alt_sel, ARRAY_SIZE(dram_phym_alt_sel), CLK_SET_PARENT_GATE);
--	hws[IMX7D_DRAM_ALT_ROOT_SRC]  = imx_clk_hw_mux2_flags("dram_alt_src", base + 0xa080, 24, 3, dram_alt_sel, ARRAY_SIZE(dram_alt_sel), CLK_SET_PARENT_GATE);
-+	hws[IMX7D_DRAM_ALT_ROOT_SRC]  = imx_clk_hw_mux2("dram_alt_src", base + 0xa080, 24, 3, dram_alt_sel, ARRAY_SIZE(dram_alt_sel));
- 	hws[IMX7D_USB_HSIC_ROOT_SRC] = imx_clk_hw_mux2_flags("usb_hsic_src", base + 0xa100, 24, 3, usb_hsic_sel, ARRAY_SIZE(usb_hsic_sel), CLK_SET_PARENT_GATE);
- 	hws[IMX7D_PCIE_CTRL_ROOT_SRC] = imx_clk_hw_mux2_flags("pcie_ctrl_src", base + 0xa180, 24, 3, pcie_ctrl_sel, ARRAY_SIZE(pcie_ctrl_sel), CLK_SET_PARENT_GATE);
- 	hws[IMX7D_PCIE_PHY_ROOT_SRC] = imx_clk_hw_mux2_flags("pcie_phy_src", base + 0xa200, 24, 3, pcie_phy_sel, ARRAY_SIZE(pcie_phy_sel), CLK_SET_PARENT_GATE);
+diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+index 8c3e3a635ac2d..35dfc05854fb7 100644
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -86,7 +86,7 @@ static int hw_device_state(struct ci_hdrc *ci, u32 dma)
+ 		hw_write(ci, OP_ENDPTLISTADDR, ~0, dma);
+ 		/* interrupt, error, port change, reset, sleep/suspend */
+ 		hw_write(ci, OP_USBINTR, ~0,
+-			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI|USBi_SLI);
++			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI);
+ 	} else {
+ 		hw_write(ci, OP_USBINTR, ~0, 0);
+ 	}
+@@ -876,6 +876,7 @@ __releases(ci->lock)
+ __acquires(ci->lock)
+ {
+ 	int retval;
++	u32 intr;
+ 
+ 	spin_unlock(&ci->lock);
+ 	if (ci->gadget.speed != USB_SPEED_UNKNOWN)
+@@ -889,6 +890,11 @@ __acquires(ci->lock)
+ 	if (retval)
+ 		goto done;
+ 
++	/* clear SLI */
++	hw_write(ci, OP_USBSTS, USBi_SLI, USBi_SLI);
++	intr = hw_read(ci, OP_USBINTR, ~0);
++	hw_write(ci, OP_USBINTR, ~0, intr | USBi_SLI);
++
+ 	ci->status = usb_ep_alloc_request(&ci->ep0in->ep, GFP_ATOMIC);
+ 	if (ci->status == NULL)
+ 		retval = -ENOMEM;
 -- 
 2.43.0
 
