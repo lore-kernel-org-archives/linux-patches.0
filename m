@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87AF1A76A5;
-	Mon, 14 Oct 2024 15:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EED1A76A5;
+	Mon, 14 Oct 2024 15:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918659; cv=none; b=cg7mrccPU98Xw7nTyrRtW1h0vSbfqBENZy1nTzIBCzZQahcMvPav3JlhrUSaEIJRb61locQZ9AtqKiiobWEdgZgeoqUvpy7JntpceGIG+qIjo0phsLc5mDt5GmT5OFbKPDX9rgeavjQsHAC2Pafxmb0cdhg5VmcZ8oNIoUyrUCw=
+	t=1728918663; cv=none; b=Glf092apb8lFws0laaAkSAFC6wg208omgQEIYcFaW9XTEMPXZHoiMKPeF+ZrIMjDfznskqob9/+qbMhw7JfCRz7ntZMp6INOCuzF6oJs9HTMSPjhUryoZrjIOeJ4FM6FZtgkrPGW3O+Kc0saYXRycG7yj1NA4tuHfrr0BSpXKEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918659; c=relaxed/simple;
-	bh=8ZapBsKeR01TVej8YoI9BpfwDfaEiYXz8Y9Q2i+gZH8=;
+	s=arc-20240116; t=1728918663; c=relaxed/simple;
+	bh=l4QolEhdUlzgfuKlbmRFBuxzYVYaObqfazAsQIs78DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AX/hfWFlQSDa5ye/8I3axGRyTWlPW91YQi6ldOT7D+XpsMcp8iIH/8HZZhLbUGki+1aEEdCz0PXiXn9FsGoFlOhjFBcBCXd7Nf2EkSYzR+x9lt2aJUhTGij+y32B6z+LKJt8euxNvjwmQ24rjaOPqToJQltPUDLWAo5BinSF9QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es9Kbqhb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IuYbwEulmLeroyNyp+7wEHzHw8DRh5XjXeFu2P+oLRPWojTcArFKhOnCwnUBVLjqaDgqJgCEwtb6yf43+cp9EUQMh4gbyZLUhxOtmGpJnaO0T24imNRagM1X/jIraB4D2+kyPw+ZKM33pLhFJPAMCcLxyWv+e47g9FQ5Czv3bXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWzaxlV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es9Kbqhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F08FC4CEC3;
-	Mon, 14 Oct 2024 15:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWzaxlV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F63CC4CEC3;
+	Mon, 14 Oct 2024 15:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918659;
-	bh=8ZapBsKeR01TVej8YoI9BpfwDfaEiYXz8Y9Q2i+gZH8=;
+	s=korg; t=1728918663;
+	bh=l4QolEhdUlzgfuKlbmRFBuxzYVYaObqfazAsQIs78DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=es9KbqhbVyTcQ/gSou4CBftylxu1jDNB0Ohhok+wuh8kM+Il+Csy0lc/gnICO90j8
-	 Bw/V8ILGp06EVQ8vTTBXk9Cavet1y1Y/nzdgx7cGi9KeQ+JKybmpAoBQaPtd5WwinE
-	 CBB/s3gmKkVHzIwAM0CSodmdlYPu5uEzoOoCniy4=
+	b=eWzaxlV3OGGJ1/Iw6n9eJHqgCaQ4IMteUIV3QoKM+PVDIawvDn5E9O45dTVym8OxJ
+	 vKhOZRaO7iPo4dEMn6yAfN+GDq9ltIUQQ/6CJyLq8YVJwIsAQ416A7LuSy1dtUxAgI
+	 kFDoXOOCA30dcHCeVysrviNCxQnUoC0YFm6VgMh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Aakash Menon <aakash.menon@protempis.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 385/798] ieee802154: Fix build error
-Date: Mon, 14 Oct 2024 16:15:39 +0200
-Message-ID: <20241014141233.075355413@linuxfoundation.org>
+Subject: [PATCH 6.1 386/798] net: sparx5: Fix invalid timestamps
+Date: Mon, 14 Oct 2024 16:15:40 +0200
+Message-ID: <20241014141233.113959057@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,38 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Aakash Menon <aakash.r.menon@gmail.com>
 
-[ Upstream commit addf89774e48c992316449ffab4f29c2309ebefb ]
+[ Upstream commit 151ac45348afc5b56baa584c7cd4876addf461ff ]
 
-If REGMAP_SPI is m and IEEE802154_MCR20A is y,
+Bit 270-271 are occasionally unexpectedly set by the hardware. This issue
+was observed with 10G SFPs causing huge time errors (> 30ms) in PTP. Only
+30 bits are needed for the nanosecond part of the timestamp, clear 2 most
+significant bits before extracting timestamp from the internal frame
+header.
 
-	mcr20a.c:(.text+0x3ed6c5b): undefined reference to `__devm_regmap_init_spi'
-	ld: mcr20a.c:(.text+0x3ed6cb5): undefined reference to `__devm_regmap_init_spi'
-
-Select REGMAP_SPI for IEEE802154_MCR20A to fix it.
-
-Fixes: 8c6ad9cc5157 ("ieee802154: Add NXP MCR20A IEEE 802.15.4 transceiver driver")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/20240909131740.1296608-1-ruanjinjie@huawei.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
+Signed-off-by: Aakash Menon <aakash.menon@protempis.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/microchip/sparx5/sparx5_packet.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ieee802154/Kconfig b/drivers/net/ieee802154/Kconfig
-index 95da876c56138..1075e24b11def 100644
---- a/drivers/net/ieee802154/Kconfig
-+++ b/drivers/net/ieee802154/Kconfig
-@@ -101,6 +101,7 @@ config IEEE802154_CA8210_DEBUGFS
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+index ac7e1cffbcecf..dcf2e342fc14a 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+@@ -45,8 +45,12 @@ void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
+ 	fwd = (fwd >> 5);
+ 	info->src_port = FIELD_GET(GENMASK(7, 1), fwd);
  
- config IEEE802154_MCR20A
- 	tristate "MCR20A transceiver driver"
-+	select REGMAP_SPI
- 	depends on IEEE802154_DRIVERS && MAC802154
- 	depends on SPI
- 	help
++	/*
++	 * Bit 270-271 are occasionally unexpectedly set by the hardware,
++	 * clear bits before extracting timestamp
++	 */
+ 	info->timestamp =
+-		((u64)xtr_hdr[2] << 24) |
++		((u64)(xtr_hdr[2] & GENMASK(5, 0)) << 24) |
+ 		((u64)xtr_hdr[3] << 16) |
+ 		((u64)xtr_hdr[4] <<  8) |
+ 		((u64)xtr_hdr[5] <<  0);
 -- 
 2.43.0
 
