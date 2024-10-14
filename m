@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B93D26296;
-	Mon, 14 Oct 2024 15:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B10F1BDC3;
+	Mon, 14 Oct 2024 15:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918491; cv=none; b=gKvQXN7DpJCATvlZylkixVUVwPg/0wOxw6aV3i5XAIT1i51jO57T+xTb+9sEJuGWQIPJ3fR3E5+8j3HQTJFF+wZKTtYa5DdZH7Yt7qvaXADp5qXZTJ7frF658lykZYI2iSzaFWooLe+yqPZ7XaZPX292H1/kpfCx1UgwJXTtF+A=
+	t=1728918495; cv=none; b=pSHg5Jdyop7Ra+ADQHBxKCQ2Cr6OQtosJFkde/xuHNdaQHqaJjM/uBIZU4G/9psPtgH26TmgdL6g2JKMxQ9Ea2H9Tc8SWGqEYvgaR+16+wIuMKdqqIsEBJXgB/SL3N+cgcGlGbIxgB1jTNrgNp75J/fOx4v6/+dFv+p68f2+MhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918491; c=relaxed/simple;
-	bh=OTfMYfpQ0R4aJt5FnyjKro9hMWCzkCoJQD9hR6dLt6Q=;
+	s=arc-20240116; t=1728918495; c=relaxed/simple;
+	bh=eoB/xJJ3OXDv7nDPGMS3bvBLDoEnVWrrkd820VyGvts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4S9/Q+xZ2zrK7ojNJRisBJfv/3EJYgEPUAea+Hwj2c9j3RN5ed9b5PV2Mdt/FrV6OMTrF2qMoEX+uXdwoE51mGwphnYU2Zv+Jcm1JQ0bmAJHpF4yWXjE8mWRdghX2e1dujrnj7wlUuPR1SICLH9Vs0eS1vBYwFAkxz+7Yu3Zc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw0r694D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSJ6XcIKSJy6KHsZuZlR9BKD3AF3g7khFqyPM1356gruGj3jhsKxtTbuZSZsLogTSOGeztMexgXMddS08J6OxKWY1ETBr4lfv+JRPXh9k46I08DZ/IzH1VVijcOsmne70pJAdvPtg0GVqC0mjcLHmriyOInFMCnNDhfWpy9qMGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4p8iplB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw0r694D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B556C4CEC7;
-	Mon, 14 Oct 2024 15:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4p8iplB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8174AC4CEC3;
+	Mon, 14 Oct 2024 15:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918491;
-	bh=OTfMYfpQ0R4aJt5FnyjKro9hMWCzkCoJQD9hR6dLt6Q=;
+	s=korg; t=1728918495;
+	bh=eoB/xJJ3OXDv7nDPGMS3bvBLDoEnVWrrkd820VyGvts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kw0r694D8VzHY9CowG5tW+5LIyBflCw8IymzKugDcdvn25soYeMb6DEmGXAjzkzCG
-	 NQhycXDcTrXamCiAlYwBXuwTv37zpdgDNB2+MYsOG6B5DW9jzZkKQv6tpB9piuB1pm
-	 epB96ppIA/Wqg5WO2TzbFPmJM9pCPx454EsODC2c=
+	b=I4p8iplBB6dPtw1rbYkNGJTLBo8LheBod6uMaXkzCTH/LzYckVqLqMWZqH+D7Sq1i
+	 uylT2n43aiEHiAhF4IjJRDuq91XXnqwhygmQOrJffRCxRCgKYVEZmyKz5hEKKMjVGS
+	 EkIOyAuvh7QcMCcU4/1FbdTMu2eg3mlAc9NQak3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gafert <christian.gafert@rohde-schwarz.com>,
-	Max Ferger <max.ferger@rohde-schwarz.com>,
-	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 340/798] padata: use integer wrap around to prevent deadlock on seq_nr overflow
-Date: Mon, 14 Oct 2024 16:14:54 +0200
-Message-ID: <20241014141231.305180476@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 341/798] soc: versatile: realview: fix memory leak during device remove
+Date: Mon, 14 Oct 2024 16:14:55 +0200
+Message-ID: <20241014141231.344225248@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
+[ Upstream commit 1c4f26a41f9d052f334f6ae629e01f598ed93508 ]
 
-When submitting more than 2^32 padata objects to padata_do_serial, the
-current sorting implementation incorrectly sorts padata objects with
-overflowed seq_nr, causing them to be placed before existing objects in
-the reorder list. This leads to a deadlock in the serialization process
-as padata_find_next cannot match padata->seq_nr and pd->processed
-because the padata instance with overflowed seq_nr will be selected
-next.
+If device is unbound, the memory allocated for soc_dev_attr should be
+freed to prevent leaks.
 
-To fix this, we use an unsigned integer wrap around to correctly sort
-padata objects in scenarios with integer overflow.
-
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Cc: <stable@vger.kernel.org>
-Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-2-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: c774f2564c00 ("soc: versatile: realview: fix soc_dev leak during device remove")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/versatile/soc-realview.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -396,7 +396,8 @@ void padata_do_serial(struct padata_priv
- 	/* Sort in ascending order of sequence number. */
- 	list_for_each_prev(pos, &reorder->list) {
- 		cur = list_entry(pos, struct padata_priv, list);
--		if (cur->seq_nr < padata->seq_nr)
-+		/* Compare by difference to consider integer wrap around */
-+		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
- 	list_add(&padata->list, pos);
+diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
+index c6876d232d8fd..d304ee69287af 100644
+--- a/drivers/soc/versatile/soc-realview.c
++++ b/drivers/soc/versatile/soc-realview.c
+@@ -93,7 +93,7 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
+ 
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
+ 
+@@ -106,10 +106,9 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	soc_dev_attr->family = "Versatile";
+ 	soc_dev_attr->custom_attr_group = realview_groups[0];
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		kfree(soc_dev_attr);
++	if (IS_ERR(soc_dev))
+ 		return -ENODEV;
+-	}
++
+ 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
+ 			  &realview_coreid);
+ 	if (ret)
+-- 
+2.43.0
+
 
 
