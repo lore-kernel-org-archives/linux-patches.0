@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B60F1798C;
-	Mon, 14 Oct 2024 15:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9A1798C;
+	Mon, 14 Oct 2024 15:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918394; cv=none; b=X0JqHWdGeG0+NbsWZpwPbVnqQ+4ci5TMgTdlGMMSRrTAmXItGijgsJG6zB8P7kMw/BJykfQ9Cc9fKOX5dcEsURpHxldMTJCiL2zGxtj+f23X4vDUCJpDhN86oKvZ/SHIqtBud2GvNjxUaoTLRZmRNA4xGY/fNWhMNQD8HDrXIi4=
+	t=1728918397; cv=none; b=DD+WqVzqAJguzPvx+IbGmQmYy83N51fEqS+qIRgyMkU4sAO+hFI8oRHIia4+zw3q+2YtfJkZCbjaGKg3VjwNslclT9s7NCe5fZLfs0D6Z/dYE2fK6dadO0JhnE/slTXL61klvPCPidQnYyv6gAx85qh/FwUqV4u7ZALMaT1Fq+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918394; c=relaxed/simple;
-	bh=Imh3Yjt3STeXKiGvaha7hB/8D0v5iiGETRRFqwyJUDw=;
+	s=arc-20240116; t=1728918397; c=relaxed/simple;
+	bh=QeSmgzq9YhCx2QYTV8gQWRzlIFJtbUiMXU6hspciSkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRolIUI/LZazH7oj82SbDTo/O19sw/G0Tp5C36SxLWcR1B5ciRO8HxMxuyVho5qrTzx/wOuW6qS0CK0hGPQ75kzHn4IeraBxW+FGypcjee4RMNXwTMhR4isOiiBTESkZDXjlGsTNaRWd1snkIXK7KfxNZlZYkCwH2jDyTO+e3wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiTdPOWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C9f25GgYkjcDTXApbkqYJU+olTz2U7Lyr77EAoIGarrZ/ohm/wwbcuDE3+JHCUYA2p7c3lxPCeR/cow3gy6MzV9Ij6S1ERWC75CneYaNGs0dhVy5cHQ3w5lQGLul3jCOGEK4xnE8DQ0qmfSml6eXDJwx+J7QmqhDZiD7cUE8Upg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVMQDby3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiTdPOWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5747CC4CEC3;
-	Mon, 14 Oct 2024 15:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVMQDby3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C3AC4CEC3;
+	Mon, 14 Oct 2024 15:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918393;
-	bh=Imh3Yjt3STeXKiGvaha7hB/8D0v5iiGETRRFqwyJUDw=;
+	s=korg; t=1728918396;
+	bh=QeSmgzq9YhCx2QYTV8gQWRzlIFJtbUiMXU6hspciSkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiTdPOWyPH+63NC9IBycA+5aMQdtPoUvc05xaSSP1zef5Vz/yTP7VqlooiRfyJKym
-	 AKi0tvPEj/RwKggL6FngxWoYBKh0ukP3OjOEmihPtP+zwVFjsx7Xj8xN5H5pRVVNOq
-	 WJzpSUS3sQhAhvucuwUAb6PjKxBEOlL58XroJ+RY=
+	b=NVMQDby3scQ9ZADPQ3+/C53maTnJGUw9c6be8+cnVTpLMW9JhcFsOHWFHYgkupORn
+	 AhPD0Z53dD0choQy3fh7THGUHIzNYYhA29HgD4uAg2EVoQ0rqZBShKRrzkRJEwZjF6
+	 Mtv06oCe+E72wPo+K/4YcWOUvHezUtsbjAVYVqeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 292/798] KVM: x86: Move x2APIC ICR helper above kvm_apic_write_nodecode()
-Date: Mon, 14 Oct 2024 16:14:06 +0200
-Message-ID: <20241014141229.415434633@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.1 310/798] usb: cdnsp: Fix incorrect usb_request status
+Date: Mon, 14 Oct 2024 16:14:24 +0200
+Message-ID: <20241014141230.126532045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -49,85 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit d33234342f8b468e719e05649fd26549fb37ef8a upstream.
+commit 1702bec4477cc7d31adb4a760d14d33fac928b7a upstream.
 
-Hoist kvm_x2apic_icr_write() above kvm_apic_write_nodecode() so that a
-local helper to _read_ the x2APIC ICR can be added and used in the
-nodecode path without needing a forward declaration.
+Fix changes incorrect usb_request->status returned during disabling
+endpoints. Before fix the status returned during dequeuing requests
+while disabling endpoint was ECONNRESET.
+Patch change it to ESHUTDOWN.
 
-No functional change intended.
+Patch fixes issue detected during testing UVC gadget.
+During stopping streaming the class starts dequeuing usb requests and
+controller driver returns the -ECONNRESET status. After completion
+requests the class or application "uvc-gadget" try to queue this
+request again. Changing this status to ESHUTDOWN cause that UVC assumes
+that endpoint is disabled, or device is disconnected and stops
+re-queuing usb requests.
 
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240719235107.3023592-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB9538E8CA7A2096AAF6A3718FDD9E2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |   46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/usb/cdns3/cdnsp-ring.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2297,6 +2297,29 @@ void kvm_lapic_set_eoi(struct kvm_vcpu *
- }
- EXPORT_SYMBOL_GPL(kvm_lapic_set_eoi);
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -718,7 +718,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	seg = cdnsp_trb_in_td(pdev, cur_td->start_seg, cur_td->first_trb,
+ 			      cur_td->last_trb, hw_deq);
  
-+#define X2APIC_ICR_RESERVED_BITS (GENMASK_ULL(31, 20) | GENMASK_ULL(17, 16) | BIT(13))
-+
-+int kvm_x2apic_icr_write(struct kvm_lapic *apic, u64 data)
-+{
-+	if (data & X2APIC_ICR_RESERVED_BITS)
-+		return 1;
-+
-+	/*
-+	 * The BUSY bit is reserved on both Intel and AMD in x2APIC mode, but
-+	 * only AMD requires it to be zero, Intel essentially just ignores the
-+	 * bit.  And if IPI virtualization (Intel) or x2AVIC (AMD) is enabled,
-+	 * the CPU performs the reserved bits checks, i.e. the underlying CPU
-+	 * behavior will "win".  Arbitrarily clear the BUSY bit, as there is no
-+	 * sane way to provide consistent behavior with respect to hardware.
-+	 */
-+	data &= ~APIC_ICR_BUSY;
-+
-+	kvm_apic_send_ipi(apic, (u32)data, (u32)(data >> 32));
-+	kvm_lapic_set_reg64(apic, APIC_ICR, data);
-+	trace_kvm_apic_write(APIC_ICR, data);
-+	return 0;
-+}
-+
- /* emulate APIC access in a trap manner */
- void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
- {
-@@ -2936,29 +2959,6 @@ int kvm_lapic_set_vapic_addr(struct kvm_
- 	return 0;
- }
- 
--#define X2APIC_ICR_RESERVED_BITS (GENMASK_ULL(31, 20) | GENMASK_ULL(17, 16) | BIT(13))
--
--int kvm_x2apic_icr_write(struct kvm_lapic *apic, u64 data)
--{
--	if (data & X2APIC_ICR_RESERVED_BITS)
--		return 1;
--
--	/*
--	 * The BUSY bit is reserved on both Intel and AMD in x2APIC mode, but
--	 * only AMD requires it to be zero, Intel essentially just ignores the
--	 * bit.  And if IPI virtualization (Intel) or x2AVIC (AMD) is enabled,
--	 * the CPU performs the reserved bits checks, i.e. the underlying CPU
--	 * behavior will "win".  Arbitrarily clear the BUSY bit, as there is no
--	 * sane way to provide consistent behavior with respect to hardware.
--	 */
--	data &= ~APIC_ICR_BUSY;
--
--	kvm_apic_send_ipi(apic, (u32)data, (u32)(data >> 32));
--	kvm_lapic_set_reg64(apic, APIC_ICR, data);
--	trace_kvm_apic_write(APIC_ICR, data);
--	return 0;
--}
--
- static int kvm_lapic_msr_read(struct kvm_lapic *apic, u32 reg, u64 *data)
- {
- 	u32 low;
+-	if (seg && (pep->ep_state & EP_ENABLED))
++	if (seg && (pep->ep_state & EP_ENABLED) &&
++	    !(pep->ep_state & EP_DIS_IN_RROGRESS))
+ 		cdnsp_find_new_dequeue_state(pdev, pep, preq->request.stream_id,
+ 					     cur_td, &deq_state);
+ 	else
+@@ -736,7 +737,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	 * During disconnecting all endpoint will be disabled so we don't
+ 	 * have to worry about updating dequeue pointer.
+ 	 */
+-	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING) {
++	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING ||
++	    pep->ep_state & EP_DIS_IN_RROGRESS) {
+ 		status = -ESHUTDOWN;
+ 		ret = cdnsp_cmd_set_deq(pdev, pep, &deq_state);
+ 	}
 
 
