@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACDB3BBF2;
-	Mon, 14 Oct 2024 14:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB5A1AB6DA;
+	Mon, 14 Oct 2024 14:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917725; cv=none; b=g70qvChi+kYWdgBeD4d4UVcf/72VS8VmpMjWk7m5leUeyps+qz1s6MyBHp4X6ZKoZsUKKGi0poPzF3T7/fD247sbhzvo4JPYmj/MU2LJXOOhAj02lGa2hHzBfAsdDFycXha1s+7MH+cb+btlhM+QbfunVfcD27T3M0/HOtKTngY=
+	t=1728917729; cv=none; b=SpL91Nl5jORVqk0hPI5xES06vfkBNBX0tUrft8xs9NKPkU/MKGPUeMozJzlfvwMseaXnXRJP/Kw6YPsDSUbWjgo8mSKOjGXYjGxD3LZhVdZW0XgKWvJpXgyo5ZqAMVBUJ1xtrV17zTYeKQ6hy7NfVzkjmPqbv8E/vjz4qwXmnWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917725; c=relaxed/simple;
-	bh=yMIZXOsUd4FUq1G4lERFliHkr8IrMbdGKmWaieF5/ig=;
+	s=arc-20240116; t=1728917729; c=relaxed/simple;
+	bh=y8ExQyNIt0E54BnX7XsatOMETgvxjini91IugdHDdlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvjpRkfnw65ye1Wchbkmbsgt6CCzSQvWjQ1RI07k2u/l3sb/LsbcplU9bdk+L3m7/jmVdvw211UdVSHHOoLFMvMQrreCkoCxf9e79+jM2SjMXTRuVW2+JowXn/rkLnWm2zoMUtppRB9M5CNGubMg/KN6KtMEYGyFX8lyxEJIR/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtW69TDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGFXk17yie9Mgh3AXey/mKF/sLACDE2qv4ChyEaN4KL7maz9R6R0LgO5ZTQVlzaw09smThySwF8ihmlVrvBPKSdncxxnDGpcoAvtF2B4Ef6Fnw7Vz2uvaT6SpPLZXAGiDSfMCmvJk5PK+NkJDI6fAsCLxfDtNNIau7h69Cd2wFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaOt8O20; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtW69TDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3B6C4CEC3;
-	Mon, 14 Oct 2024 14:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaOt8O20"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26850C4CECF;
+	Mon, 14 Oct 2024 14:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917725;
-	bh=yMIZXOsUd4FUq1G4lERFliHkr8IrMbdGKmWaieF5/ig=;
+	s=korg; t=1728917728;
+	bh=y8ExQyNIt0E54BnX7XsatOMETgvxjini91IugdHDdlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtW69TDufiAOwdwEfSNSFzvauP+eYvN5E5nthtCKT5tPBTtDXP0CO7uqAty0gteHA
-	 OYUNWU2GS/mc0QUa7WexqBYqsyg6UGz4tNbhHg5tgNRBr4hE9ypSD5VnUwc28BAfq5
-	 EPUVBkjjoVWdisKS8eSYAKL6R56nPZdtm6X3c0W8=
+	b=kaOt8O20M28Wdvccd3PWtvpJRJgQ9pFbkjOykJxXC5sxXwHIqyd0f4+BCI0YPDVtl
+	 sr+syDchSqjkFmF5gZZIOVGDiBnTjvG/fKm9kQYhDFSnjyCd9VHqS2+3s3sWDZNZ9b
+	 e1/CeQxalC7zAYVKuJfjznf4REQW6oa+YCZHtDYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Liu Ying <victor.liu@nxp.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/798] drm/radeon/evergreen_cs: fix int overflow errors in cs track offsets
-Date: Mon, 14 Oct 2024 16:11:09 +0200
-Message-ID: <20241014141222.442634923@linuxfoundation.org>
+Subject: [PATCH 6.1 116/798] drm/bridge: lontium-lt8912b: Validate mode in drm_bridge_funcs::mode_valid()
+Date: Mon, 14 Oct 2024 16:11:10 +0200
+Message-ID: <20241014141222.480702940@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,223 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit 3fbaf475a5b8361ebee7da18964db809e37518b7 ]
+[ Upstream commit fe828fbd87786238b30f44cafd698d975d956c97 ]
 
-Several cs track offsets (such as 'track->db_s_read_offset')
-either are initialized with or plainly take big enough values that,
-once shifted 8 bits left, may be hit with integer overflow if the
-resulting values end up going over u32 limit.
+If the bridge is attached with the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag set,
+this driver won't initialize a connector and hence display mode won't be
+validated in drm_connector_helper_funcs::mode_valid().  So, move the mode
+validation from drm_connector_helper_funcs::mode_valid() to
+drm_bridge_funcs::mode_valid(), because the mode validation is always done
+for the bridge.
 
-Same goes for a few instances of 'surf.layer_size * mslice'
-multiplications that are added to 'offset' variable - they may
-potentially overflow as well and need to be validated properly.
-
-While some debug prints in this code section take possible overflow
-issues into account, simply casting to (unsigned long) may be
-erroneous in its own way, as depending on CPU architecture one is
-liable to get different results.
-
-Fix said problems by:
- - casting 'offset' to fixed u64 data type instead of
- ambiguous unsigned long.
- - casting one of the operands in vulnerable to integer
- overflow cases to u64.
- - adjust format specifiers in debug prints to properly
- represent 'offset' values.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 285484e2d55e ("drm/radeon: add support for evergreen/ni tiling informations v11")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240813091637.1054586-1-victor.liu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen_cs.c | 62 +++++++++++++--------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 35 ++++++++++++------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen_cs.c b/drivers/gpu/drm/radeon/evergreen_cs.c
-index 0de79f3a7e3ff..820c2c3641d38 100644
---- a/drivers/gpu/drm/radeon/evergreen_cs.c
-+++ b/drivers/gpu/drm/radeon/evergreen_cs.c
-@@ -395,7 +395,7 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
+diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+index 55a7fa4670a7a..825d0973663aa 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -411,22 +411,6 @@ static const struct drm_connector_funcs lt8912_connector_funcs = {
+ 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+ };
  
- 	mslice = G_028C6C_SLICE_MAX(track->cb_color_view[id]) + 1;
-@@ -433,14 +433,14 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 		return r;
- 	}
+-static enum drm_mode_status
+-lt8912_connector_mode_valid(struct drm_connector *connector,
+-			    struct drm_display_mode *mode)
+-{
+-	if (mode->clock > 150000)
+-		return MODE_CLOCK_HIGH;
+-
+-	if (mode->hdisplay > 1920)
+-		return MODE_BAD_HVALUE;
+-
+-	if (mode->vdisplay > 1080)
+-		return MODE_BAD_VVALUE;
+-
+-	return MODE_OK;
+-}
+-
+ static int lt8912_connector_get_modes(struct drm_connector *connector)
+ {
+ 	struct edid *edid;
+@@ -454,7 +438,6 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
  
--	offset = track->cb_color_bo_offset[id] << 8;
-+	offset = (u64)track->cb_color_bo_offset[id] << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d cb[%d] bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d cb[%d] bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, id, offset, surf.base_align);
- 		return -EINVAL;
- 	}
+ static const struct drm_connector_helper_funcs lt8912_connector_helper_funcs = {
+ 	.get_modes = lt8912_connector_get_modes,
+-	.mode_valid = lt8912_connector_mode_valid,
+ };
  
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->cb_color_bo[id])) {
- 		/* old ddx are broken they allocate bo with w*h*bpp but
- 		 * program slice with ALIGN(h, 8), catch this and patch
-@@ -448,14 +448,14 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 		 */
- 		if (!surf.mode) {
- 			uint32_t *ib = p->ib.ptr;
--			unsigned long tmp, nby, bsize, size, min = 0;
-+			u64 tmp, nby, bsize, size, min = 0;
+ static void lt8912_bridge_mode_set(struct drm_bridge *bridge,
+@@ -596,6 +579,23 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
+ 		drm_bridge_hpd_disable(lt->hdmi_port);
+ }
  
- 			/* find the height the ddx wants */
- 			if (surf.nby > 8) {
- 				min = surf.nby - 8;
- 			}
- 			bsize = radeon_bo_size(track->cb_color_bo[id]);
--			tmp = track->cb_color_bo_offset[id] << 8;
-+			tmp = (u64)track->cb_color_bo_offset[id] << 8;
- 			for (nby = surf.nby; nby > min; nby--) {
- 				size = nby * surf.nbx * surf.bpe * surf.nsamples;
- 				if ((tmp + size * mslice) <= bsize) {
-@@ -467,7 +467,7 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 				slice = ((nby * surf.nbx) / 64) - 1;
- 				if (!evergreen_surface_check(p, &surf, "cb")) {
- 					/* check if this one works */
--					tmp += surf.layer_size * mslice;
-+					tmp += (u64)surf.layer_size * mslice;
- 					if (tmp <= bsize) {
- 						ib[track->cb_color_slice_idx[id]] = slice;
- 						goto old_ddx_ok;
-@@ -476,9 +476,9 @@ static int evergreen_cs_track_validate_cb(struct radeon_cs_parser *p, unsigned i
- 			}
- 		}
- 		dev_warn(p->dev, "%s:%d cb[%d] bo too small (layer size %d, "
--			 "offset %d, max layer %d, bo size %ld, slice %d)\n",
-+			 "offset %llu, max layer %d, bo size %ld, slice %d)\n",
- 			 __func__, __LINE__, id, surf.layer_size,
--			track->cb_color_bo_offset[id] << 8, mslice,
-+			(u64)track->cb_color_bo_offset[id] << 8, mslice,
- 			radeon_bo_size(track->cb_color_bo[id]), slice);
- 		dev_warn(p->dev, "%s:%d problematic surf: (%d %d) (%d %d %d %d %d %d %d)\n",
- 			 __func__, __LINE__, surf.nbx, surf.nby,
-@@ -562,7 +562,7 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
- 
- 	mslice = G_028008_SLICE_MAX(track->db_depth_view) + 1;
-@@ -608,18 +608,18 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 		return r;
- 	}
- 
--	offset = track->db_s_read_offset << 8;
-+	offset = (u64)track->db_s_read_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil read bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil read bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_s_read_bo)) {
- 		dev_warn(p->dev, "%s:%d stencil read bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_s_read_offset << 8, mslice,
-+			(u64)track->db_s_read_offset << 8, mslice,
- 			radeon_bo_size(track->db_s_read_bo));
- 		dev_warn(p->dev, "%s:%d stencil invalid (0x%08x 0x%08x 0x%08x 0x%08x)\n",
- 			 __func__, __LINE__, track->db_depth_size,
-@@ -627,18 +627,18 @@ static int evergreen_cs_track_validate_stencil(struct radeon_cs_parser *p)
- 		return -EINVAL;
- 	}
- 
--	offset = track->db_s_write_offset << 8;
-+	offset = (u64)track->db_s_write_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil write bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil write bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_s_write_bo)) {
- 		dev_warn(p->dev, "%s:%d stencil write bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_s_write_offset << 8, mslice,
-+			(u64)track->db_s_write_offset << 8, mslice,
- 			radeon_bo_size(track->db_s_write_bo));
- 		return -EINVAL;
- 	}
-@@ -659,7 +659,7 @@ static int evergreen_cs_track_validate_depth(struct radeon_cs_parser *p)
- 	struct evergreen_cs_track *track = p->track;
- 	struct eg_surface surf;
- 	unsigned pitch, slice, mslice;
--	unsigned long offset;
-+	u64 offset;
- 	int r;
- 
- 	mslice = G_028008_SLICE_MAX(track->db_depth_view) + 1;
-@@ -706,34 +706,34 @@ static int evergreen_cs_track_validate_depth(struct radeon_cs_parser *p)
- 		return r;
- 	}
- 
--	offset = track->db_z_read_offset << 8;
-+	offset = (u64)track->db_z_read_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil read bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil read bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_z_read_bo)) {
- 		dev_warn(p->dev, "%s:%d depth read bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_z_read_offset << 8, mslice,
-+			(u64)track->db_z_read_offset << 8, mslice,
- 			radeon_bo_size(track->db_z_read_bo));
- 		return -EINVAL;
- 	}
- 
--	offset = track->db_z_write_offset << 8;
-+	offset = (u64)track->db_z_write_offset << 8;
- 	if (offset & (surf.base_align - 1)) {
--		dev_warn(p->dev, "%s:%d stencil write bo base %ld not aligned with %ld\n",
-+		dev_warn(p->dev, "%s:%d stencil write bo base %llu not aligned with %ld\n",
- 			 __func__, __LINE__, offset, surf.base_align);
- 		return -EINVAL;
- 	}
--	offset += surf.layer_size * mslice;
-+	offset += (u64)surf.layer_size * mslice;
- 	if (offset > radeon_bo_size(track->db_z_write_bo)) {
- 		dev_warn(p->dev, "%s:%d depth write bo too small (layer size %d, "
--			 "offset %ld, max layer %d, bo size %ld)\n",
-+			 "offset %llu, max layer %d, bo size %ld)\n",
- 			 __func__, __LINE__, surf.layer_size,
--			(unsigned long)track->db_z_write_offset << 8, mslice,
-+			(u64)track->db_z_write_offset << 8, mslice,
- 			radeon_bo_size(track->db_z_write_bo));
- 		return -EINVAL;
- 	}
++static enum drm_mode_status
++lt8912_bridge_mode_valid(struct drm_bridge *bridge,
++			 const struct drm_display_info *info,
++			 const struct drm_display_mode *mode)
++{
++	if (mode->clock > 150000)
++		return MODE_CLOCK_HIGH;
++
++	if (mode->hdisplay > 1920)
++		return MODE_BAD_HVALUE;
++
++	if (mode->vdisplay > 1080)
++		return MODE_BAD_VVALUE;
++
++	return MODE_OK;
++}
++
+ static enum drm_connector_status
+ lt8912_bridge_detect(struct drm_bridge *bridge)
+ {
+@@ -626,6 +626,7 @@ static struct edid *lt8912_bridge_get_edid(struct drm_bridge *bridge,
+ static const struct drm_bridge_funcs lt8912_bridge_funcs = {
+ 	.attach = lt8912_bridge_attach,
+ 	.detach = lt8912_bridge_detach,
++	.mode_valid = lt8912_bridge_mode_valid,
+ 	.mode_set = lt8912_bridge_mode_set,
+ 	.enable = lt8912_bridge_enable,
+ 	.detect = lt8912_bridge_detect,
 -- 
 2.43.0
 
