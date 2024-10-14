@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7A4F9DA;
-	Mon, 14 Oct 2024 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9625920EB;
+	Mon, 14 Oct 2024 14:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916246; cv=none; b=hx8EluJOKZ79p0QEW7ZNQlUgHN3PpxtVURb2ZL9L5WwW7/Ke0jeDx6NO6AL68AlwIAe424cGjnI8Qjp7UaJCdNuX6NLCPg+1/eYyn8a4l/9aCSlpvJW0dIM90Nn7MCwUY9jFjXf3rjz+O0u1XYEQNEOieD1HBFSjg0R35qAZQB8=
+	t=1728916249; cv=none; b=ZlNESRgOb401ZOy+o3fm5FJErjyu9eXxaYFX6UKmns6B6fjel/s2bgSL71CKu8kozw+x6AcrQZNHr3/RxCJinn3yVvt0MbQT4tpAT//h9y/4BDhIWr/GYBRD+4YO5TqkTLmYh9U0JHN1qgxxrIKwQiE86avmj97bZz8aSF2fZNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916246; c=relaxed/simple;
-	bh=lnDTZQuIHYwXPBvgPtJZTXi0cOoGzc4nbwUKgBv24Rw=;
+	s=arc-20240116; t=1728916249; c=relaxed/simple;
+	bh=dAU/ehewvo7tM8ro+qVBNne0DzngElLVxfcoYPvAW3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeLay/OdVgc+PjZS6J2PtSlPXe/S76ssj27ypCSdsEQPw5dr87u0cr86VNNI1GmQ+OE6fPrb8hJzKrJCIEF3/ZUUOBBmU8965EPeWJq5/ahi+i0WB7Phoap94IoFcIos3zibDcpT+l9+/k0xnzVHFieyFBIqCymgzR8lkfRg2vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlIqeIj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hX1Mf1aj3QdfyMxHmSd5WCpayEY5IDk9AtnxgDo/tdLJybXHXtnyfCkMcrDG0BFFrvo+nMh/hWviJ/I1CwuXikMtmvQ4RQR/l2/DjbPGzXVRIuN+QjOCveK9v+n3HI736ZdRKsuazJerK9pl8BtdaRkoo51xhJexxNEZ3LLdhOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRuuWdPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlIqeIj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91C8C4CEC3;
-	Mon, 14 Oct 2024 14:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRuuWdPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0C1C4CEC3;
+	Mon, 14 Oct 2024 14:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916246;
-	bh=lnDTZQuIHYwXPBvgPtJZTXi0cOoGzc4nbwUKgBv24Rw=;
+	s=korg; t=1728916249;
+	bh=dAU/ehewvo7tM8ro+qVBNne0DzngElLVxfcoYPvAW3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlIqeIj4k034J8sEEGkGJtg3iZV7lrRR3L5ZvNVv7gEFZ+qCPSJf3SJldanMTjEW5
-	 dw1j4yBVhTAQJjbs2807yfR1bpH56OAEXg5sU/Ed6pkYYRPTeEgZqFbL06MGu2dyLA
-	 sb9YmBXopQGk74H3iJB0xR3F+spNdMLPboCh/PUU=
+	b=nRuuWdPGSAM59nZOhJ8+yIGgUvcWWHvCLdrP+NISt/hXKr8axmlb67zIzFq5Gqheo
+	 vuL4dZIyo2rWMGd1BbbM3SxbUNZYaaF4nN6DcadP8Z9KopuCeAQ4dPtLTdbHWFUPSL
+	 SQV86Pg00mtnpUFH2Bjd24p25k0sqLO8Orn6saLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 124/214] i40e: Fix macvlan leak by synchronizing access to mac_filter_hash
-Date: Mon, 14 Oct 2024 16:19:47 +0200
-Message-ID: <20241014141049.828540722@linuxfoundation.org>
+Subject: [PATCH 6.11 095/214] tcp: fix tcp_enter_recovery() to zero retrans_stamp when its safe
+Date: Mon, 14 Oct 2024 16:19:18 +0200
+Message-ID: <20241014141048.702791971@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,71 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit dac6c7b3d33756d6ce09f00a96ea2ecd79fae9fb ]
+[ Upstream commit b41b4cbd9655bcebcce941bef3601db8110335be ]
 
-This patch addresses a macvlan leak issue in the i40e driver caused by
-concurrent access to vsi->mac_filter_hash. The leak occurs when multiple
-threads attempt to modify the mac_filter_hash simultaneously, leading to
-inconsistent state and potential memory leaks.
+Fix tcp_enter_recovery() so that if there are no retransmits out then
+we zero retrans_stamp when entering fast recovery. This is necessary
+to fix two buggy behaviors.
 
-To fix this, we now wrap the calls to i40e_del_mac_filter() and zeroing
-vf->default_lan_addr.addr with spin_lock/unlock_bh(&vsi->mac_filter_hash_lock),
-ensuring atomic operations and preventing concurrent access.
+Currently a non-zero retrans_stamp value can persist across multiple
+back-to-back loss recovery episodes. This is because we generally only
+clears retrans_stamp if we are completely done with loss recoveries,
+and get to tcp_try_to_open() and find !tcp_any_retrans_done(sk). This
+behavior causes two bugs:
 
-Additionally, we add lockdep_assert_held(&vsi->mac_filter_hash_lock) in
-i40e_add_mac_filter() to help catch similar issues in the future.
+(1) When a loss recovery episode (CA_Loss or CA_Recovery) is followed
+immediately by a new CA_Recovery, the retrans_stamp value can persist
+and can be a time before this new CA_Recovery episode starts. That
+means that timestamp-based undo will be using the wrong retrans_stamp
+(a value that is too old) when comparing incoming TS ecr values to
+retrans_stamp to see if the current fast recovery episode can be
+undone.
 
-Reproduction steps:
-1. Spawn VFs and configure port vlan on them.
-2. Trigger concurrent macvlan operations (e.g., adding and deleting
-	portvlan and/or mac filters).
-3. Observe the potential memory leak and inconsistent state in the
-	mac_filter_hash.
+(2) If there is a roughly minutes-long sequence of back-to-back fast
+recovery episodes, one after another (e.g. in a shallow-buffered or
+policed bottleneck), where each fast recovery successfully makes
+forward progress and recovers one window of sequence space (but leaves
+at least one retransmit in flight at the end of the recovery),
+followed by several RTOs, then the ETIMEDOUT check may be using the
+wrong retrans_stamp (a value set at the start of the first fast
+recovery in the sequence). This can cause a very premature ETIMEDOUT,
+killing the connection prematurely.
 
-This synchronization ensures the integrity of the mac_filter_hash and prevents
-the described leak.
+This commit changes the code to zero retrans_stamp when entering fast
+recovery, when this is known to be safe (no retransmits are out in the
+network). That ensures that when starting a fast recovery episode, and
+it is safe to do so, retrans_stamp is set when we send the fast
+retransmit packet. That addresses both bug (1) and bug (2) by ensuring
+that (if no retransmits are out when we start a fast recovery) we use
+the initial fast retransmit of this fast recovery as the time value
+for undo and ETIMEDOUT calculations.
 
-Fixes: fed0d9f13266 ("i40e: Fix VF's MAC Address change on VM")
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This makes intuitive sense, since the start of a new fast recovery
+episode (in a scenario where no lost packets are out in the network)
+means that the connection has made forward progress since the last RTO
+or fast recovery, and we should thus "restart the clock" used for both
+undo and ETIMEDOUT logic.
+
+Note that if when we start fast recovery there *are* retransmits out
+in the network, there can still be undesirable (1)/(2) issues. For
+example, after this patch we can still have the (1) and (2) problems
+in cases like this:
+
++ round 1: sender sends flight 1
+
++ round 2: sender receives SACKs and enters fast recovery 1,
+  retransmits some packets in flight 1 and then sends some new data as
+  flight 2
+
++ round 3: sender receives some SACKs for flight 2, notes losses, and
+  retransmits some packets to fill the holes in flight 2
+
++ fast recovery has some lost retransmits in flight 1 and continues
+  for one or more rounds sending retransmits for flight 1 and flight 2
+
++ fast recovery 1 completes when snd_una reaches high_seq at end of
+  flight 1
+
++ there are still holes in the SACK scoreboard in flight 2, so we
+  enter fast recovery 2, but some retransmits in the flight 2 sequence
+  range are still in flight (retrans_out > 0), so we can't execute the
+  new retrans_stamp=0 added here to clear retrans_stamp
+
+It's not yet clear how to fix these remaining (1)/(2) issues in an
+efficient way without breaking undo behavior, given that retrans_stamp
+is currently used for undo and ETIMEDOUT. Perhaps the optimal (but
+expensive) strategy would be to set retrans_stamp to the timestamp of
+the earliest outstanding retransmit when entering fast recovery. But
+at least this commit makes things better.
+
+Note that this does not change the semantics of retrans_stamp; it
+simply makes retrans_stamp accurate in some cases where it was not
+before:
+
+(1) Some loss recovery, followed by an immediate entry into a fast
+recovery, where there are no retransmits out when entering the fast
+recovery.
+
+(2) When a TFO server has a SYNACK retransmit that sets retrans_stamp,
+and then the ACK that completes the 3-way handshake has SACK blocks
+that trigger a fast recovery. In this case when entering fast recovery
+we want to zero out the retrans_stamp from the TFO SYNACK retransmit,
+and set the retrans_stamp based on the timestamp of the fast recovery.
+
+We introduce a tcp_retrans_stamp_cleanup() helper, because this
+two-line sequence already appears in 3 places and is about to appear
+in 2 more as a result of this bug fix patch series. Once this bug fix
+patches series in the net branch makes it into the net-next branch
+we'll update the 3 other call sites to use the new helper.
+
+This is a long-standing issue. The Fixes tag below is chosen to be the
+oldest commit at which the patch will apply cleanly, which is from
+Linux v3.5 in 2012.
+
+Fixes: 1fbc340514fc ("tcp: early retransmit: tcp_enter_recovery()")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241001200517.2756803-3-ncardwell.sw@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c        | 1 +
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 ++
- 2 files changed, 3 insertions(+)
+ net/ipv4/tcp_input.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index cbcfada7b357a..f7d4b5f79422b 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -1734,6 +1734,7 @@ struct i40e_mac_filter *i40e_add_mac_filter(struct i40e_vsi *vsi,
- 	struct hlist_node *h;
- 	int bkt;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index e6d73f6131ceb..631e44c344454 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2522,6 +2522,16 @@ static bool tcp_any_retrans_done(const struct sock *sk)
+ 	return false;
+ }
  
-+	lockdep_assert_held(&vsi->mac_filter_hash_lock);
- 	if (vsi->info.pvid)
- 		return i40e_add_filter(vsi, macaddr,
- 				       le16_to_cpu(vsi->info.pvid));
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 662622f01e312..dfa785e39458d 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2213,8 +2213,10 @@ static int i40e_vc_get_vf_resources_msg(struct i40e_vf *vf, u8 *msg)
- 		vfres->vsi_res[0].qset_handle
- 					  = le16_to_cpu(vsi->info.qs_handle[0]);
- 		if (!(vf->driver_caps & VIRTCHNL_VF_OFFLOAD_USO) && !vf->pf_set_mac) {
-+			spin_lock_bh(&vsi->mac_filter_hash_lock);
- 			i40e_del_mac_filter(vsi, vf->default_lan_addr.addr);
- 			eth_zero_addr(vf->default_lan_addr.addr);
-+			spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 		}
- 		ether_addr_copy(vfres->vsi_res[0].default_mac_addr,
- 				vf->default_lan_addr.addr);
++/* If loss recovery is finished and there are no retransmits out in the
++ * network, then we clear retrans_stamp so that upon the next loss recovery
++ * retransmits_timed_out() and timestamp-undo are using the correct value.
++ */
++static void tcp_retrans_stamp_cleanup(struct sock *sk)
++{
++	if (!tcp_any_retrans_done(sk))
++		tcp_sk(sk)->retrans_stamp = 0;
++}
++
+ static void DBGUNDO(struct sock *sk, const char *msg)
+ {
+ #if FASTRETRANS_DEBUG > 1
+@@ -2889,6 +2899,9 @@ void tcp_enter_recovery(struct sock *sk, bool ece_ack)
+ 	struct tcp_sock *tp = tcp_sk(sk);
+ 	int mib_idx;
+ 
++	/* Start the clock with our fast retransmit, for undo and ETIMEDOUT. */
++	tcp_retrans_stamp_cleanup(sk);
++
+ 	if (tcp_is_reno(tp))
+ 		mib_idx = LINUX_MIB_TCPRENORECOVERY;
+ 	else
 -- 
 2.43.0
 
