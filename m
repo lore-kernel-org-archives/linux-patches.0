@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7384D1BDC3;
-	Mon, 14 Oct 2024 15:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF9826296;
+	Mon, 14 Oct 2024 15:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918284; cv=none; b=lj3zUyjC7LkSi50yxXEZOCaH6DuU+YEoQs7g/ETe+IhkrPZm7rR4UPYaNyFaZYTgXhsfkxcXGRX9fLs4NPFQsTq9QZpgvnO3ff7Py7hWu3zFzZJUar54+XeE8AnkJvSVD08q2pefRFkTTfJ+huOjvToMQy4crb0TmlultetSCK8=
+	t=1728918288; cv=none; b=mHLcTDpq+XScy8w5DALQU6/aUbaTTHB5GpNSSxSBgrC3wFmNhmSEJNqwAg032tEyLvU+eG0vJScID4ZwBqerFdBlcZGgZo+TUdsNrb4Scx+K9uIiZG1yPX5tA1kvEt8Jz7PDTiZIwHf6vp+T3S90qDQvMlN8+Ot0SUI3Y49lSl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918284; c=relaxed/simple;
-	bh=JF1ZLDEBHLWR6WkKmMVfgGsxnNfSDy3Y17xPhxx/lBo=;
+	s=arc-20240116; t=1728918288; c=relaxed/simple;
+	bh=lL8P6y+vfq+DDSaRK1UlLe+ApoEHJRlUrSMOVGUJyak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQJ8r3W07w8ZSvyRB76/9X2H2usB/UoA9GMDCfBMc61394BNBFesKUK8zGZqR+t6LWyXMCL/jBp8c0kOyjjP+Q/vQ/pK1fMvV18OSyxBlZj3JRJaPtWx348QYn1D2583iyC1pbmMpHxBk25wY81pH69tgd50rVnh/71IdmevOUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8m7mtCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqWrJcsqPjvPCC+6yRJXkOGzJWsU9rcVcNCB3dqtZdxKInGqeJLIt3X80SbyFMxweNRODuWr9ynVYmmDNlT2U36d++NstGOX8XWvYNZGocOgpYTjEH+AQeiE8mlAuiuQzkgKvePs9JF4+I9hyy02OVguHG9ZsXnXxNMA12/r014=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRi5RuE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8m7mtCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D986BC4CEC3;
-	Mon, 14 Oct 2024 15:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRi5RuE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A865C4CEC7;
+	Mon, 14 Oct 2024 15:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918284;
-	bh=JF1ZLDEBHLWR6WkKmMVfgGsxnNfSDy3Y17xPhxx/lBo=;
+	s=korg; t=1728918287;
+	bh=lL8P6y+vfq+DDSaRK1UlLe+ApoEHJRlUrSMOVGUJyak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8m7mtCCf0vh3QaG7MsSMZnLIyk3jSMRsIjvV13nX5x60w+wZAh8V8WA+8p36psWe
-	 3dUgiezAWkA/2hsdC+HK14QxFVR3PqVh5G7cc8jQHEZGjTBi2MMREgxJrFimqd4LHs
-	 +aWvsp7RFI7EOmApE9s4AZyiE7AUpHFSD/OGGnZo=
+	b=JRi5RuE79qjEEv7QKUGnje/6tijPLZYV+jCHLAIQSoNNfc8IsWUGvopXsfwdkzmJZ
+	 19qq2vjZTVUWxudqytdmpEiWVP6aCqvePlrml4l1d688JRDgtObQOoGvoRnx2MbpBT
+	 O/fHIDWpT7FgHZY1z4988IkSS2Ga2t/SzbtqedvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Marek Gresko <marek.gresko@protonmail.com>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 277/798] selinux,smack: dont bypass permissions check in inode_setsecctx hook
-Date: Mon, 14 Oct 2024 16:13:51 +0200
-Message-ID: <20241014141228.826708909@linuxfoundation.org>
+Subject: [PATCH 6.1 278/798] drm/vmwgfx: Prevent unmapping active read buffers
+Date: Mon, 14 Oct 2024 16:13:52 +0200
+Message-ID: <20241014141228.865628242@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -57,74 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 76a0e79bc84f466999fa501fce5bf7a07641b8a7 upstream.
+commit aba07b9a0587f50e5d3346eaa19019cf3f86c0ea upstream.
 
-Marek Gresko reports that the root user on an NFS client is able to
-change the security labels on files on an NFS filesystem that is
-exported with root squashing enabled.
+The kms paths keep a persistent map active to read and compare the cursor
+buffer. These maps can race with each other in simple scenario where:
+a) buffer "a" mapped for update
+b) buffer "a" mapped for compare
+c) do the compare
+d) unmap "a" for compare
+e) update the cursor
+f) unmap "a" for update
+At step "e" the buffer has been unmapped and the read contents is bogus.
 
-The end of the kerneldoc comment for __vfs_setxattr_noperm() states:
+Prevent unmapping of active read buffers by simply keeping a count of
+how many paths have currently active maps and unmap only when the count
+reaches 0.
 
- *  This function requires the caller to lock the inode's i_mutex before it
- *  is executed. It also assumes that the caller will make the appropriate
- *  permission checks.
-
-nfsd_setattr() does do permissions checking via fh_verify() and
-nfsd_permission(), but those don't do all the same permissions checks
-that are done by security_inode_setxattr() and its related LSM hooks do.
-
-Since nfsd_setattr() is the only consumer of security_inode_setsecctx(),
-simplest solution appears to be to replace the call to
-__vfs_setxattr_noperm() with a call to __vfs_setxattr_locked().  This
-fixes the above issue and has the added benefit of causing nfsd to
-recall conflicting delegations on a file when a client tries to change
-its security label.
-
-Cc: stable@kernel.org
-Reported-by: Marek Gresko <marek.gresko@protonmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218809
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Tested-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Casey Schaufler <casey@schaufler-ca.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[Shivani: Modified to apply on v5.15.y-v6.1.y]
+Fixes: 485d98d472d5 ("drm/vmwgfx: Add support for CursorMob and CursorBypass 4")
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240816183332.31961-2-zack.rusin@broadcom.com
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+[Shivani: Modified to apply on v6.1.y]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c   |    4 ++--
- security/smack/smack_lsm.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c  |   12 +++++++++++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.h |    3 +++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -6631,8 +6631,8 @@ static int selinux_inode_notifysecctx(st
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -348,6 +348,8 @@ void *vmw_bo_map_and_cache(struct vmw_bu
+ 	void *virtual;
+ 	int ret;
+ 
++	atomic_inc(&vbo->map_count);
++
+ 	virtual = ttm_kmap_obj_virtual(&vbo->map, &not_used);
+ 	if (virtual)
+ 		return virtual;
+@@ -370,10 +372,17 @@ void *vmw_bo_map_and_cache(struct vmw_bu
   */
- static int selinux_inode_setsecctx(struct dentry *dentry, void *ctx, u32 ctxlen)
+ void vmw_bo_unmap(struct vmw_buffer_object *vbo)
  {
--	return __vfs_setxattr_noperm(&init_user_ns, dentry, XATTR_NAME_SELINUX,
--				     ctx, ctxlen, 0);
-+	return __vfs_setxattr_locked(&init_user_ns, dentry, XATTR_NAME_SELINUX,
-+				       ctx, ctxlen, 0, NULL);
++	int map_count;
++
+ 	if (vbo->map.bo == NULL)
+ 		return;
+ 
+-	ttm_bo_kunmap(&vbo->map);
++	map_count = atomic_dec_return(&vbo->map_count);
++
++	if (!map_count) {
++		ttm_bo_kunmap(&vbo->map);
++		vbo->map.bo = NULL;
++	}
  }
  
- static int selinux_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen)
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4714,8 +4714,8 @@ static int smack_inode_notifysecctx(stru
  
- static int smack_inode_setsecctx(struct dentry *dentry, void *ctx, u32 ctxlen)
- {
--	return __vfs_setxattr_noperm(&init_user_ns, dentry, XATTR_NAME_SMACK,
--				     ctx, ctxlen, 0);
-+	return __vfs_setxattr_locked(&init_user_ns, dentry, XATTR_NAME_SMACK,
-+				     ctx, ctxlen, 0, NULL);
- }
+@@ -510,6 +519,7 @@ int vmw_bo_init(struct vmw_private *dev_
+ 	BUILD_BUG_ON(TTM_MAX_BO_PRIORITY <= 3);
+ 	vmw_bo->base.priority = 3;
+ 	vmw_bo->res_tree = RB_ROOT;
++	atomic_set(&vmw_bo->map_count, 0);
  
- static int smack_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen)
+ 	size = ALIGN(size, PAGE_SIZE);
+ 	drm_gem_private_object_init(vdev, &vmw_bo->base.base, size);
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
+@@ -116,6 +116,8 @@ struct vmwgfx_hash_item {
+  * @base: The TTM buffer object
+  * @res_tree: RB tree of resources using this buffer object as a backing MOB
+  * @base_mapped_count: ttm BO mapping count; used by KMS atomic helpers.
++ * @map_count: The number of currently active maps. Will differ from the
++ * cpu_writers because it includes kernel maps.
+  * @cpu_writers: Number of synccpu write grabs. Protected by reservation when
+  * increased. May be decreased without reservation.
+  * @dx_query_ctx: DX context if this buffer object is used as a DX query MOB
+@@ -129,6 +131,7 @@ struct vmw_buffer_object {
+ 	/* For KMS atomic helpers: ttm bo mapping count */
+ 	atomic_t base_mapped_count;
+ 
++	atomic_t map_count;
+ 	atomic_t cpu_writers;
+ 	/* Not ref-counted.  Protected by binding_mutex */
+ 	struct vmw_resource *dx_query_ctx;
 
 
