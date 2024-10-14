@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCA1AA793;
-	Mon, 14 Oct 2024 15:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C9C1A76A5;
+	Mon, 14 Oct 2024 15:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918625; cv=none; b=LpvR3Pt51csrFif2hTqa867cF5U0Vz4MlYn06x2onMTWVCiWQ8tSPHT1RQk0mh/luBrc3KwTAviu/YowK85+KZ4n+gU9AvfkcQnLbJQP4vgIAg/4bqPWjh0M57sILK6QHNicvl+97BY+/TwO5gwMFhH7k9QueLaCek4bBRzdNdk=
+	t=1728918629; cv=none; b=UMYozhtUZOYYPueWfFg8ztZN8aduTHkbmR7aIL9LRKsFyCOIfdjZIGICAntmSI8lJxxhDyiW93Yl+nsm0d7tIl/7AByLi9+vqdzbFY+umrolTjzdYiDT1P0jNH0DpVKNactd6Dg1kBTdtHPlalM4oDSNEDIYxyYhTfJZxzm5CrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918625; c=relaxed/simple;
-	bh=fvDZQkxJUs+nA9GgGGqcyUJrPSnZOGQ1HBKGCEcNqMY=;
+	s=arc-20240116; t=1728918629; c=relaxed/simple;
+	bh=08LqgoMGhEdf7NgOESEXf4q2BSXc0j79lqvvXvYdagI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=udZIi+dFH4gJn4rNIyymU7LR1S0xLR5wC0OocnoAiFb2rwVMEw5p3Y0BgbWn89cckyzB8I3PHmDWFlHw09KqbX+Q35575t5hwJNGH8szB27TdeLO/+D82NnzetFtwhbyrJJEVHy+j+Cm2syks75+KBw/WxZ8NvV7I47KoMrhRfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4kZM2UX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nO56TSsZ9AIhw8yaZdQm215jN/BRClc66NuLSbLEGSYALlp952s1RY6U7PPsuSEkk7PZ5bRubkzZHl9cPaK+AoBNLGbNqiuFKRxCWGr8WNR4AwslPgQsBI8D/crCscZQzsfsfV6a8zxQYhxwEnCmnZYYZ+iJpiiPi2IMgZXPN98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgXFHQ6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4kZM2UX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AF3C4CEC3;
-	Mon, 14 Oct 2024 15:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgXFHQ6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69D3C4CEC3;
+	Mon, 14 Oct 2024 15:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918625;
-	bh=fvDZQkxJUs+nA9GgGGqcyUJrPSnZOGQ1HBKGCEcNqMY=;
+	s=korg; t=1728918629;
+	bh=08LqgoMGhEdf7NgOESEXf4q2BSXc0j79lqvvXvYdagI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4kZM2UX0eT05yRX0uYyQftsxrNruvC+lKRr+EtmelqiqBcpntHvKJmOLtIgws7LF
-	 4zCIkdM7Wtwy5GNISPUvCUi96tGrxPRZofZDE9BPYiZR1eFvA0LIrvhSLHYYuaP+18
-	 xyVrYJvawDkCcPQTAacthXZcoPllvoq6B99ysmYM=
+	b=FgXFHQ6YOxWLiXe7DOIKrXLI38VXkEaGj3vo8ttt/M4C//++I5tf2L9/1DmejEHit
+	 P1fF+rqPAivwcrl1FPWm03S1hD5GscGXR8zlhGOFOMEJ3e4Xarr/yDi0YMRjiS3wOG
+	 5+QSNwQsS4DdprIbDY1mV16MqTpd7/paEA6aesAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Helmut Grohne <helmut@freexian.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>
-Subject: [PATCH 6.1 376/798] wifi: mt76: do not run mt76_unregister_device() on unregistered hw
-Date: Mon, 14 Oct 2024 16:15:30 +0200
-Message-ID: <20241014141232.725633905@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 377/798] static_call: Handle module init failure correctly in static_call_del_module()
+Date: Mon, 14 Oct 2024 16:15:31 +0200
+Message-ID: <20241014141232.764443548@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -47,86 +46,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 41130c32f3a18fcc930316da17f3a5f3bc326aa1 upstream.
+[ Upstream commit 4b30051c4864234ec57290c3d142db7c88f10d8a ]
 
-Trying to probe a mt7921e pci card without firmware results in a
-successful probe where ieee80211_register_hw hasn't been called. When
-removing the driver, ieee802111_unregister_hw is called unconditionally
-leading to a kernel NULL pointer dereference.
-Fix the issue running mt76_unregister_device routine just for registered
-hw.
+Module insertion invokes static_call_add_module() to initialize the static
+calls in a module. static_call_add_module() invokes __static_call_init(),
+which allocates a struct static_call_mod to either encapsulate the built-in
+static call sites of the associated key into it so further modules can be
+added or to append the module to the module chain.
 
-Link: https://bugs.debian.org/1029116
-Link: https://bugs.kali.org/view.php?id=8140
-Reported-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Fixes: 1c71e03afe4b ("mt76: mt7921: move mt7921_init_hw in a dedicated work")
-Tested-by: Helmut Grohne <helmut@freexian.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/be3457d82f4e44bb71a22b2b5db27b644a37b1e1.1677107277.git.lorenzo@kernel.org
-Signed-off-by: Georg Müller <georgmueller@gmx.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If that allocation fails the function returns with an error code and the
+module core invokes static_call_del_module() to clean up eventually added
+static_call_mod entries.
+
+This works correctly, when all keys used by the module were converted over
+to a module chain before the failure. If not then static_call_del_module()
+causes a #GP as it blindly assumes that key::mods points to a valid struct
+static_call_mod.
+
+The problem is that key::mods is not a individual struct member of struct
+static_call_key, it's part of a union to save space:
+
+        union {
+                /* bit 0: 0 = mods, 1 = sites */
+                unsigned long type;
+                struct static_call_mod *mods;
+                struct static_call_site *sites;
+	};
+
+key::sites is a pointer to the list of built-in usage sites of the static
+call. The type of the pointer is differentiated by bit 0. A mods pointer
+has the bit clear, the sites pointer has the bit set.
+
+As static_call_del_module() blidly assumes that the pointer is a valid
+static_call_mod type, it fails to check for this failure case and
+dereferences the pointer to the list of built-in call sites, which is
+obviously bogus.
+
+Cure it by checking whether the key has a sites or a mods pointer.
+
+If it's a sites pointer then the key is not to be touched. As the sites are
+walked in the same order as in __static_call_init() the site walk can be
+terminated because all subsequent sites have not been touched by the init
+code due to the error exit.
+
+If it was converted before the allocation fail, then the inner loop which
+searches for a module match will find nothing.
+
+A fail in the second allocation in __static_call_init() is harmless and
+does not require special treatment. The first allocation succeeded and
+converted the key to a module chain. That first entry has mod::mod == NULL
+and mod::next == NULL, so the inner loop of static_call_del_module() will
+neither find a module match nor a module chain. The next site in the walk
+was either already converted, but can't match the module, or it will exit
+the outer loop because it has a static_call_site pointer and not a
+static_call_mod pointer.
+
+Fixes: 9183c3f9ed71 ("static_call: Add inline static call infrastructure")
+Closes: https://lore.kernel.org/all/20230915082126.4187913-1-ruanjinjie@huawei.com
+Reported-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/87zfon6b0s.ffs@tglx
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c |    8 ++++++++
- drivers/net/wireless/mediatek/mt76/mt76.h     |    1 +
- 2 files changed, 9 insertions(+)
+ kernel/static_call_inline.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -522,6 +522,7 @@ int mt76_register_phy(struct mt76_phy *p
- 	if (ret)
- 		return ret;
+diff --git a/kernel/static_call_inline.c b/kernel/static_call_inline.c
+index dc5665b628140..075194d9cbf5b 100644
+--- a/kernel/static_call_inline.c
++++ b/kernel/static_call_inline.c
+@@ -400,6 +400,17 @@ static void static_call_del_module(struct module *mod)
  
-+	set_bit(MT76_STATE_REGISTERED, &phy->state);
- 	phy->dev->phys[phy->band_idx] = phy;
- 
- 	return 0;
-@@ -532,6 +533,9 @@ void mt76_unregister_phy(struct mt76_phy
- {
- 	struct mt76_dev *dev = phy->dev;
- 
-+	if (!test_bit(MT76_STATE_REGISTERED, &phy->state))
-+		return;
+ 	for (site = start; site < stop; site++) {
+ 		key = static_call_key(site);
 +
- 	mt76_tx_status_check(dev, true);
- 	ieee80211_unregister_hw(phy->hw);
- 	dev->phys[phy->band_idx] = NULL;
-@@ -654,6 +658,7 @@ int mt76_register_device(struct mt76_dev
- 		return ret;
- 
- 	WARN_ON(mt76_worker_setup(hw, &dev->tx_worker, NULL, "tx"));
-+	set_bit(MT76_STATE_REGISTERED, &phy->state);
- 	sched_set_fifo_low(dev->tx_worker.task);
- 
- 	return 0;
-@@ -664,6 +669,9 @@ void mt76_unregister_device(struct mt76_
- {
- 	struct ieee80211_hw *hw = dev->hw;
- 
-+	if (!test_bit(MT76_STATE_REGISTERED, &dev->phy.state))
-+		return;
++		/*
++		 * If the key was not updated due to a memory allocation
++		 * failure in __static_call_init() then treating key::sites
++		 * as key::mods in the code below would cause random memory
++		 * access and #GP. In that case all subsequent sites have
++		 * not been touched either, so stop iterating.
++		 */
++		if (!static_call_key_has_mods(key))
++			break;
 +
- 	if (IS_ENABLED(CONFIG_MT76_LEDS))
- 		mt76_led_cleanup(dev);
- 	mt76_tx_status_check(dev, true);
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -388,6 +388,7 @@ struct mt76_tx_cb {
+ 		if (key == prev_key)
+ 			continue;
  
- enum {
- 	MT76_STATE_INITIALIZED,
-+	MT76_STATE_REGISTERED,
- 	MT76_STATE_RUNNING,
- 	MT76_STATE_MCU_RUNNING,
- 	MT76_SCANNING,
+-- 
+2.43.0
+
 
 
