@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47C21AC887;
-	Mon, 14 Oct 2024 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C961AAE00;
+	Mon, 14 Oct 2024 15:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919695; cv=none; b=fchxLE94VAE+hPd8PAnYp1CPqrv4N6WXKOZpHYzg6gQJ7RHDM/mgX1ZWUTowagaaHI4V1M9MI9d06ycB1fZiGlRH6mpfDQmNyilRAl/or1RJeGaCkhGl+WJljebd6DV6lYfUl9v28ed3aBoXkZozrExpRDxl2mEUvtXFWR2ZweQ=
+	t=1728919699; cv=none; b=Tl7JhfMDjkDmJ3tOBEtsz0TPh0Lf6IU9m5Y1UUIAnvZiBBAmGKwqSdS5IqC7cN3YeVWht/Jj13lurpfKzTTKpty8NjfEdD+BM7Ig7PpuQOvXaqR/fXDFf0Cs81ZSeYUW+MN15ugkDIvbqg0Vqvk3A+zDIHFLptHe/QTCmUQHu2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919695; c=relaxed/simple;
-	bh=xen6wT5ARhlcZPblqQCPFpdJdnqcWjL8oQW29fMw7vs=;
+	s=arc-20240116; t=1728919699; c=relaxed/simple;
+	bh=yipi2HGCvCJZTD5YVtxAGj8a76clVwMjK6pI7GIda50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1m91hbqyUs20zqSl+oNskKlrBuhoIyxYtU99VJ6Cn6UFbXOHWRhkfVaeZ3rH5cuRDh47Btk2csn6pbcoZY0uu53Moqj+3ggfJZdoDqNadeP+V0ZoZkOhIAVl/qEDiUmPGh3/Pkq2pXFVLKVTGo2S29YFvfO10+sGyC18ve9BWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMpF1Oxb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETcrSyYCvps70uk92gzEtyRYj50zis4xWh3z+rkFvjaH6rIKQ5Mcl6W6FVSUPnMgINYcgV4EGGhc+xmNp7t04JPg9ZMPtZBsxbiQlQsT8ORwyW8Qh9XeGid3s18pUr027VadSbJEeO6sNZfZ38VoWGqj5bIgiJ2dAmiSBW4FUZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW6DdgbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMpF1Oxb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1533DC4CEC3;
-	Mon, 14 Oct 2024 15:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW6DdgbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631C4C4CEC3;
+	Mon, 14 Oct 2024 15:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919695;
-	bh=xen6wT5ARhlcZPblqQCPFpdJdnqcWjL8oQW29fMw7vs=;
+	s=korg; t=1728919698;
+	bh=yipi2HGCvCJZTD5YVtxAGj8a76clVwMjK6pI7GIda50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMpF1OxbVr8PMe9UMj2toUHo0qLQr5iTCtgS5h/QejaxEIN/iqs3Rk5m9JXwkqPDC
-	 CxskvyzYVsrqEZUGcz5xEaNsCsNkKPgKFgDJvG1Kvxje0rpWla+z8yd8id74GhT7uz
-	 KuzYET3lmFfn86H524d1Ijq2I7ac6yNNquSnHdTc=
+	b=wW6DdgbBrz+I8WAAYhkqfxnSIHsnVgwB9lNH619gMx0PqfHhSSLR9+bkW33s9jO7D
+	 oIfD1Muo3R3uB8AYOgYXHuIFGacc+0iBiFAi+W/PbiNy5x4/NvHHlAYgWf/rzgIBxo
+	 LwjzAkRH0GDatOQPksZWqzDuzymeq+M8AX4onxRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 682/798] fs/ntfs3: Fix sparse warning in ni_fiemap
-Date: Mon, 14 Oct 2024 16:20:36 +0200
-Message-ID: <20241014141244.863420798@linuxfoundation.org>
+Subject: [PATCH 6.1 665/798] net: ethernet: cortina: Drop TSO support
+Date: Mon, 14 Oct 2024 16:20:19 +0200
+Message-ID: <20241014141244.190936702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,106 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 62fea783f96ce825f0ac9e40ce9530ddc1ea2a29 ]
+[ Upstream commit ac631873c9e7a50d2a8de457cfc4b9f86666403e ]
 
-The interface of fiemap_fill_next_extent_k() was modified
-to eliminate the sparse warning.
+The recent change to allow large frames without hardware checksumming
+slotted in software checksumming in the driver if hardware could not
+do it.
 
-Fixes: d57431c6f511 ("fs/ntfs3: Do copy_to_user out of run_lock")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406271920.hndE8N6D-lkp@intel.com/
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This will however upset TSO (TCP Segment Offloading). Typical
+error dumps includes this:
+
+skb len=2961 headroom=222 headlen=66 tailroom=0
+(...)
+WARNING: CPU: 0 PID: 956 at net/core/dev.c:3259 skb_warn_bad_offload+0x7c/0x108
+gemini-ethernet-port: caps=(0x0000010000154813, 0x00002007ffdd7889)
+
+And the packets do not go through.
+
+The TSO implementation is bogus: a TSO enabled driver must propagate
+the skb_shinfo(skb)->gso_size value to the TSO engine on the NIC.
+
+Drop the size check and TSO offloading features for now: this
+needs to be fixed up properly.
+
+After this ethernet works fine on Gemini devices with a direct connected
+PHY such as D-Link DNS-313.
+
+Also tested to still be working with a DSA switch using the Gemini
+ethernet as conduit interface.
+
+Link: https://lore.kernel.org/netdev/CANn89iJLfxng1sYL5Zk0mknXpyYQPCp83m3KgD2KJ2_hKCpEUg@mail.gmail.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Fixes: d4d0c5b4d279 ("net: ethernet: cortina: Handle large frames")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index b3299cda59622..e19510f977112 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -1901,13 +1901,13 @@ enum REPARSE_SIGN ni_parse_reparse(struct ntfs_inode *ni, struct ATTRIB *attr,
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 19fb8c4caab87..e454bbedf29ee 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -79,8 +79,7 @@ MODULE_PARM_DESC(debug, "Debug level (0=none,...,16=all)");
+ #define GMAC0_IRQ4_8 (GMAC0_MIB_INT_BIT | GMAC0_RX_OVERRUN_INT_BIT)
  
- /*
-  * fiemap_fill_next_extent_k - a copy of fiemap_fill_next_extent
-- * but it accepts kernel address for fi_extents_start
-+ * but it uses 'fe_k' instead of fieinfo->fi_extents_start
-  */
- static int fiemap_fill_next_extent_k(struct fiemap_extent_info *fieinfo,
--				     u64 logical, u64 phys, u64 len, u32 flags)
-+				     struct fiemap_extent *fe_k, u64 logical,
-+				     u64 phys, u64 len, u32 flags)
- {
- 	struct fiemap_extent extent;
--	struct fiemap_extent __user *dest = fieinfo->fi_extents_start;
+ #define GMAC_OFFLOAD_FEATURES (NETIF_F_SG | NETIF_F_IP_CSUM | \
+-		NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM | \
+-		NETIF_F_TSO | NETIF_F_TSO_ECN | NETIF_F_TSO6)
++			       NETIF_F_IPV6_CSUM | NETIF_F_RXCSUM)
  
- 	/* only count the extents */
- 	if (fieinfo->fi_extents_max == 0) {
-@@ -1931,8 +1931,7 @@ static int fiemap_fill_next_extent_k(struct fiemap_extent_info *fieinfo,
- 	extent.fe_length = len;
- 	extent.fe_flags = flags;
+ /**
+  * struct gmac_queue_page - page buffer per-page info
+@@ -1148,23 +1147,13 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	struct gmac_txdesc *txd;
+ 	skb_frag_t *skb_frag;
+ 	dma_addr_t mapping;
+-	unsigned short mtu;
+ 	void *buffer;
+ 	int ret;
  
--	dest += fieinfo->fi_extents_mapped;
--	memcpy(dest, &extent, sizeof(extent));
-+	memcpy(fe_k + fieinfo->fi_extents_mapped, &extent, sizeof(extent));
+-	mtu  = ETH_HLEN;
+-	mtu += netdev->mtu;
+-	if (skb->protocol == htons(ETH_P_8021Q))
+-		mtu += VLAN_HLEN;
+-
++	/* TODO: implement proper TSO using MTU in word3 */
+ 	word1 = skb->len;
+ 	word3 = SOF_BIT;
  
- 	fieinfo->fi_extents_mapped++;
- 	if (fieinfo->fi_extents_mapped == fieinfo->fi_extents_max)
-@@ -1950,7 +1949,6 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 	      __u64 vbo, __u64 len)
- {
- 	int err = 0;
--	struct fiemap_extent __user *fe_u = fieinfo->fi_extents_start;
- 	struct fiemap_extent *fe_k = NULL;
- 	struct ntfs_sb_info *sbi = ni->mi.sbi;
- 	u8 cluster_bits = sbi->cluster_bits;
-@@ -2009,7 +2007,6 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 		err = -ENOMEM;
- 		goto out;
- 	}
--	fieinfo->fi_extents_start = fe_k;
- 
- 	end = vbo + len;
- 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
-@@ -2099,8 +2096,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 			if (vbo + dlen >= end)
- 				flags |= FIEMAP_EXTENT_LAST;
- 
--			err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, dlen,
--							flags);
-+			err = fiemap_fill_next_extent_k(fieinfo, fe_k, vbo, lbo,
-+							dlen, flags);
- 
- 			if (err < 0)
- 				break;
-@@ -2121,7 +2118,7 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 		if (vbo + bytes >= end)
- 			flags |= FIEMAP_EXTENT_LAST;
- 
--		err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, bytes,
-+		err = fiemap_fill_next_extent_k(fieinfo, fe_k, vbo, lbo, bytes,
- 						flags);
- 		if (err < 0)
- 			break;
-@@ -2138,15 +2135,13 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 	/*
- 	 * Copy to user memory out of lock
- 	 */
--	if (copy_to_user(fe_u, fe_k,
-+	if (copy_to_user(fieinfo->fi_extents_start, fe_k,
- 			 fieinfo->fi_extents_max *
- 				 sizeof(struct fiemap_extent))) {
- 		err = -EFAULT;
- 	}
- 
- out:
--	/* Restore original pointer. */
--	fieinfo->fi_extents_start = fe_u;
- 	kfree(fe_k);
- 	return err;
- }
+-	if (word1 > mtu) {
+-		word1 |= TSS_MTU_ENABLE_BIT;
+-		word3 |= mtu;
+-	}
+-
+ 	if (skb->len >= ETH_FRAME_LEN) {
+ 		/* Hardware offloaded checksumming isn't working on frames
+ 		 * bigger than 1514 bytes. A hypothesis about this is that the
 -- 
 2.43.0
 
