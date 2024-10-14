@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FF41AD403;
-	Mon, 14 Oct 2024 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7991BDC3;
+	Mon, 14 Oct 2024 14:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917183; cv=none; b=KLZQpep495L6lqFnAJAXMprOR3errbHBpy+ASbmAG3Vfz4Cfo4OaKK9089+wKkbXNDz6rOtBiyeLyCjlhIAjRArDpKpcRwRpkEUiLXWE0RG0zFiyEKQgHV9bqctWng1xkCgrKmHjsDnzNHMXx8zJWNcHuxd9fcSkZ2EmZyEefEQ=
+	t=1728917186; cv=none; b=W5Ajq3OkpwaYbZaaJWJGBSPjDsVOkaTkq6h6nNM3hYgXXuJDV+N19sAu4qJQPitbh6hFOFhP9URMwSsUAWiPBhtONa6YHC9/iRuQ3GM3/IYr/smIe4i1cVwFViw8loa4nemmnogTgk+XF8fPAE8csQLXY5yh0COKR9mCCU7vgHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917183; c=relaxed/simple;
-	bh=7m9XTEUqMixPLbua399Mcgcycm50vt1HV4MZZ7Gn0ZI=;
+	s=arc-20240116; t=1728917186; c=relaxed/simple;
+	bh=tet3CCosC0qqT8ZVpnbyS2GCkDnAY6a6hIjqU2axJwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcOzLdwAVkdnz++YHPwDHhH6kA6uqK2oenh8TybbWqAO5OE8l+QwOOUhp0GFQcwSEFWbQSW3ry7bBBs4LmwI4THF3qo768Zk9LdFQVaGI9rceHhi5DemgJ1T7kJu8RlAY/nUEAlfY7loYPK/XvR1Kp1SlR3DZo5cIKw6/L5fgKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzWecQ/t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhbwKpIIrWeVb7DdNqIW47vGgpxSj1a8H1hFSamMPvQjFL0n2TNDqFqPL+Uy5+urGJVs6S1n0px6VM5IIIDNzPkQ3XrVQqlsTJoEVYtrXiev1A5GwHQL8qwF8bXd0FuBHNeRvt9EhKRibSvxL5SziKXPNgUptm1sOlt0yjvtu10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtSYGVy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzWecQ/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC538C4CEC3;
-	Mon, 14 Oct 2024 14:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtSYGVy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E2EC4CEC7;
+	Mon, 14 Oct 2024 14:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917183;
-	bh=7m9XTEUqMixPLbua399Mcgcycm50vt1HV4MZZ7Gn0ZI=;
+	s=korg; t=1728917186;
+	bh=tet3CCosC0qqT8ZVpnbyS2GCkDnAY6a6hIjqU2axJwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzWecQ/tNQFN/FAT8aXMFi+1Z55B5Nh3lICCgjSKyk1ppvWC5AOFbOwduSA1KqwX8
-	 anBbMyxyNNLI5FjZBNWH5O5R5iPIpMdwQjH4lenw3vnnRCnZT1nqdMVMXzHq2Vty2u
-	 2uamCB1evFfTPPUC8d1zViU5zzsXXHXGoSQZ/N3o=
+	b=jtSYGVy3MRSLwiNATATC2MTw2DxWmjrMeQsEpMcP/FjdRnwy+F4erAN3Z5IlwVvgT
+	 uotvVDaOXdYBEcO04No9lco0tr/Xn23/CfRRT/wOGR4TxHpDNSfn6LCU35ZPP4kZp7
+	 JwuJsTq3Um1SBlDzyiybSozd/98c2E1ZsL195AQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/213] e1000e: change I219 (19) devices to ADP
-Date: Mon, 14 Oct 2024 16:20:50 +0200
-Message-ID: <20241014141048.586921304@linuxfoundation.org>
+Subject: [PATCH 6.6 145/213] net/sched: accept TCA_STAB only for root qdisc
+Date: Mon, 14 Oct 2024 16:20:51 +0200
+Message-ID: <20241014141048.627078824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,60 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9d9e5347b035412daa844f884b94a05bac94f864 ]
+[ Upstream commit 3cb7cf1540ddff5473d6baeb530228d19bc97b8a ]
 
-Sporadic issues, such as PHY access loss, have been observed on I219 (19)
-devices. It was found that these devices have hardware more closely
-related to ADP than MTP and the issues were caused by taking MTP-specific
-flows.
+Most qdiscs maintain their backlog using qdisc_pkt_len(skb)
+on the assumption it is invariant between the enqueue()
+and dequeue() handlers.
 
-Change the MAC and board types of these devices from MTP to ADP to
-correctly reflect the LAN hardware, and flows, of these devices.
+Unfortunately syzbot can crash a host rather easily using
+a TBF + SFQ combination, with an STAB on SFQ [1]
 
-Fixes: db2d737d63c5 ("e1000e: Separate MTP board type from ADP")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+We can't support TCA_STAB on arbitrary level, this would
+require to maintain per-qdisc storage.
+
+[1]
+[   88.796496] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   88.798611] #PF: supervisor read access in kernel mode
+[   88.799014] #PF: error_code(0x0000) - not-present page
+[   88.799506] PGD 0 P4D 0
+[   88.799829] Oops: Oops: 0000 [#1] SMP NOPTI
+[   88.800569] CPU: 14 UID: 0 PID: 2053 Comm: b371744477 Not tainted 6.12.0-rc1-virtme #1117
+[   88.801107] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   88.801779] RIP: 0010:sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[ 88.802544] Code: 0f b7 50 12 48 8d 04 d5 00 00 00 00 48 89 d6 48 29 d0 48 8b 91 c0 01 00 00 48 c1 e0 03 48 01 c2 66 83 7a 1a 00 7e c0 48 8b 3a <4c> 8b 07 4c 89 02 49 89 50 08 48 c7 47 08 00 00 00 00 48 c7 07 00
+All code
+========
+   0:	0f b7 50 12          	movzwl 0x12(%rax),%edx
+   4:	48 8d 04 d5 00 00 00 	lea    0x0(,%rdx,8),%rax
+   b:	00
+   c:	48 89 d6             	mov    %rdx,%rsi
+   f:	48 29 d0             	sub    %rdx,%rax
+  12:	48 8b 91 c0 01 00 00 	mov    0x1c0(%rcx),%rdx
+  19:	48 c1 e0 03          	shl    $0x3,%rax
+  1d:	48 01 c2             	add    %rax,%rdx
+  20:	66 83 7a 1a 00       	cmpw   $0x0,0x1a(%rdx)
+  25:	7e c0                	jle    0xffffffffffffffe7
+  27:	48 8b 3a             	mov    (%rdx),%rdi
+  2a:*	4c 8b 07             	mov    (%rdi),%r8		<-- trapping instruction
+  2d:	4c 89 02             	mov    %r8,(%rdx)
+  30:	49 89 50 08          	mov    %rdx,0x8(%r8)
+  34:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  3b:	00
+  3c:	48                   	rex.W
+  3d:	c7                   	.byte 0xc7
+  3e:	07                   	(bad)
+	...
+
+Code starting with the faulting instruction
+===========================================
+   0:	4c 8b 07             	mov    (%rdi),%r8
+   3:	4c 89 02             	mov    %r8,(%rdx)
+   6:	49 89 50 08          	mov    %rdx,0x8(%r8)
+   a:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  11:	00
+  12:	48                   	rex.W
+  13:	c7                   	.byte 0xc7
+  14:	07                   	(bad)
+	...
+[   88.803721] RSP: 0018:ffff9a1f892b7d58 EFLAGS: 00000206
+[   88.804032] RAX: 0000000000000000 RBX: ffff9a1f8420c800 RCX: ffff9a1f8420c800
+[   88.804560] RDX: ffff9a1f81bc1440 RSI: 0000000000000000 RDI: 0000000000000000
+[   88.805056] RBP: ffffffffc04bb0e0 R08: 0000000000000001 R09: 00000000ff7f9a1f
+[   88.805473] R10: 000000000001001b R11: 0000000000009a1f R12: 0000000000000140
+[   88.806194] R13: 0000000000000001 R14: ffff9a1f886df400 R15: ffff9a1f886df4ac
+[   88.806734] FS:  00007f445601a740(0000) GS:ffff9a2e7fd80000(0000) knlGS:0000000000000000
+[   88.807225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   88.807672] CR2: 0000000000000000 CR3: 000000050cc46000 CR4: 00000000000006f0
+[   88.808165] Call Trace:
+[   88.808459]  <TASK>
+[   88.808710] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+[   88.809261] ? page_fault_oops (arch/x86/mm/fault.c:715)
+[   88.809561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
+[   88.809806] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
+[   88.810074] ? sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[   88.810411] sfq_reset (net/sched/sch_sfq.c:525) sch_sfq
+[   88.810671] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.810950] tbf_reset (./include/linux/timekeeping.h:169 net/sched/sch_tbf.c:334) sch_tbf
+[   88.811208] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.811484] netif_set_real_num_tx_queues (./include/linux/spinlock.h:396 ./include/net/sch_generic.h:768 net/core/dev.c:2958)
+[   88.811870] __tun_detach (drivers/net/tun.c:590 drivers/net/tun.c:673)
+[   88.812271] tun_chr_close (drivers/net/tun.c:702 drivers/net/tun.c:3517)
+[   88.812505] __fput (fs/file_table.c:432 (discriminator 1))
+[   88.812735] task_work_run (kernel/task_work.c:230)
+[   88.813016] do_exit (kernel/exit.c:940)
+[   88.813372] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
+[   88.813639] ? handle_mm_fault (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:97 ./arch/x86/include/asm/irqflags.h:155 ./include/linux/memcontrol.h:1022 ./include/linux/memcontrol.h:1045 ./include/linux/memcontrol.h:1052 mm/memory.c:5928 mm/memory.c:6088)
+[   88.813867] do_group_exit (kernel/exit.c:1070)
+[   88.814138] __x64_sys_exit_group (kernel/exit.c:1099)
+[   88.814490] x64_sys_call (??:?)
+[   88.814791] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+[   88.815012] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+[   88.815495] RIP: 0033:0x7f44560f1975
+
+Fixes: 175f9c1bba9b ("net_sched: Add size table for qdiscs")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20241007184130.3960565-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/hw.h     | 4 ++--
- drivers/net/ethernet/intel/e1000e/netdev.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/net/sch_generic.h | 1 -
+ net/sched/sch_api.c       | 7 ++++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/hw.h b/drivers/net/ethernet/intel/e1000e/hw.h
-index 4b6e7536170ab..fc8ed38aa0955 100644
---- a/drivers/net/ethernet/intel/e1000e/hw.h
-+++ b/drivers/net/ethernet/intel/e1000e/hw.h
-@@ -108,8 +108,8 @@ struct e1000_hw;
- #define E1000_DEV_ID_PCH_RPL_I219_V22		0x0DC8
- #define E1000_DEV_ID_PCH_MTP_I219_LM18		0x550A
- #define E1000_DEV_ID_PCH_MTP_I219_V18		0x550B
--#define E1000_DEV_ID_PCH_MTP_I219_LM19		0x550C
--#define E1000_DEV_ID_PCH_MTP_I219_V19		0x550D
-+#define E1000_DEV_ID_PCH_ADP_I219_LM19		0x550C
-+#define E1000_DEV_ID_PCH_ADP_I219_V19		0x550D
- #define E1000_DEV_ID_PCH_LNP_I219_LM20		0x550E
- #define E1000_DEV_ID_PCH_LNP_I219_V20		0x550F
- #define E1000_DEV_ID_PCH_LNP_I219_LM21		0x5510
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 06d109063c8d8..721c098f2bb1b 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -7899,10 +7899,10 @@ static const struct pci_device_id e1000_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_V17), board_pch_adp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_RPL_I219_LM22), board_pch_adp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_RPL_I219_V22), board_pch_adp },
-+	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_LM19), board_pch_adp },
-+	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_ADP_I219_V19), board_pch_adp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_LM18), board_pch_mtp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_V18), board_pch_mtp },
--	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_LM19), board_pch_mtp },
--	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_MTP_I219_V19), board_pch_mtp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_LM20), board_pch_mtp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_V20), board_pch_mtp },
- 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_PCH_LNP_I219_LM21), board_pch_mtp },
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 2799d44e5b979..326d3a322c109 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -845,7 +845,6 @@ static inline void qdisc_calculate_pkt_len(struct sk_buff *skb,
+ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 				struct sk_buff **to_free)
+ {
+-	qdisc_calculate_pkt_len(skb, sch);
+ 	return sch->enqueue(skb, sch, to_free);
+ }
+ 
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 0feb824242a68..1455892694c00 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -593,7 +593,6 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
+ 		pkt_len = 1;
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
+ }
+-EXPORT_SYMBOL(__qdisc_calculate_pkt_len);
+ 
+ void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
+ {
+@@ -1172,6 +1171,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+ 			return -EINVAL;
+ 		}
+ 
++		if (new &&
++		    !(parent->flags & TCQ_F_MQROOT) &&
++		    rcu_access_pointer(new->stab)) {
++			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
++			return -EINVAL;
++		}
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
 -- 
 2.43.0
 
