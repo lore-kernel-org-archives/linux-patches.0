@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D4B1ABECD;
-	Mon, 14 Oct 2024 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50FA1ABEB7;
+	Mon, 14 Oct 2024 14:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917834; cv=none; b=OcKHL2fwDNdSYLVve804Rpx0BNO3er17EoZZU/lX/Rd93etVzid/7J8FJYLfXfPeSD38Hw7vuE11tHO2eE6NvOHb5iwbIXO0U5Fj49sLcm572CBOaUJX5NsFOcbWB+hYYkdSFW2vi0C9oUntvL4sIEtxvq0gTIIysudx+NtRef0=
+	t=1728917837; cv=none; b=Mi0D0E5Oz2XWxpStmzv/j5nYdRUJFBnm7gjy+Psq5cQm6Yrx9oaPdz8GSXCNWp+xQv27ryTSKDMl0MB8YugR9cr+y4gokda5o1oKao8iNY0vzzj7ePu3Roy/pjXb+7snMPK5zD8nkkKgXmaMPFiEDQxFW4DtSQVRZPrafytT6LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917834; c=relaxed/simple;
-	bh=ruE8/wUmE8csqCSTtVqGJw1mR1IRYFG/5D6039WHPrU=;
+	s=arc-20240116; t=1728917837; c=relaxed/simple;
+	bh=D/1BrxwvUD+OuQZ0iqWaJqJSt4Ukfo+VDZp3TSMHq4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFZ3QfdrtOmmGzJO+T5lf78AJtPLbEreiRbkfvL9JY6DaFr3pyIVEy6IHiY8zvEfGwRtls+ckwX78SuX+abBh6z0dgomNGnAV5UzTpDqZW/xCi+6QxkXNnIWYzNLLgZTgGYonWK85hQnOzLUNznRnhRxz/kLcbgVcAsTA2VUsoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FR8ZDuWm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hA0T75lTrkudmw15cHbo9CyxSYfQhNCbjX1XdY2pZBEDy2R2DgW6/wVs5ZecOS0Cf/V0JAr4Rqofv8ptdQdnPaafa5haBNgYoimHW1A51hDhcxOdcUyGuWnC7CLAI943E6yiStXUDMZXhrgiY+QcL6X+oUV+0Q9vdRhPGl77Au4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EeKQeK6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FR8ZDuWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E567DC4CEC3;
-	Mon, 14 Oct 2024 14:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EeKQeK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41811C4CEC3;
+	Mon, 14 Oct 2024 14:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917834;
-	bh=ruE8/wUmE8csqCSTtVqGJw1mR1IRYFG/5D6039WHPrU=;
+	s=korg; t=1728917837;
+	bh=D/1BrxwvUD+OuQZ0iqWaJqJSt4Ukfo+VDZp3TSMHq4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FR8ZDuWmyh/9HL5ymwCQpGtSewFq4F7tpipZTeIhYFTPs3AUpzefMOP4XWm2H8obu
-	 kFutsu76RRFBzPAS6e3jugR6GIdArhRmVXfH5uDkGN0uz2J3xZyxMDUjtlJDyZlH5v
-	 Y315SKOrj2MRARYturwU3YhBwGfPbeBfYEzEETmc=
+	b=1EeKQeK6vhDrfVeDJQfjQDrrcHEXYS0e6SyD2aCy1MHeJoXx1zboP1Tcb9Eyg54md
+	 UdvYroRIBgLx0ePK+9/nJDnlklqeHBB6K1wButIghFvGYmb7joazLplCdvBmUJig21
+	 SztQYcParufWBf5A1+m9tzZCge644jonr4I7LrL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yonghong Song <yonghong.song@linux.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/798] selftests/bpf: Refactor out some functions in ns_current_pid_tgid test
-Date: Mon, 14 Oct 2024 16:11:42 +0200
-Message-ID: <20241014141223.731414031@linuxfoundation.org>
+Subject: [PATCH 6.1 149/798] selftests/bpf: Add a cgroup prog bpf_get_ns_current_pid_tgid() test
+Date: Mon, 14 Oct 2024 16:11:43 +0200
+Message-ID: <20241014141223.770571614@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,79 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 4d4bd29e363c467752536f874a2cba10a5923c59 ]
+[ Upstream commit 87ade6cd859ea9dbde6e80b3fcf717ed9a73b4a9 ]
 
-Refactor some functions in both user space code and bpf program
-as these functions are used by later cgroup/sk_msg tests.
-Another change is to mark tp program optional loading as later
-patches will use optional loading as well since they have quite
-different attachment and testing logic.
-
-There is no functionality change.
+Add a cgroup bpf program test where the bpf program is running
+in a pid namespace. The test is successfully:
+  #165/3   ns_current_pid_tgid/new_ns_cgrp:OK
 
 Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240315184904.2976123-1-yonghong.song@linux.dev
+Link: https://lore.kernel.org/bpf/20240315184910.2976522-1-yonghong.song@linux.dev
 Stable-dep-of: 21f0b0af9772 ("selftests/bpf: Fix include of <sys/fcntl.h>")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/ns_current_pid_tgid.c      | 53 ++++++++++++-------
- .../bpf/progs/test_ns_current_pid_tgid.c      | 10 ++--
- 2 files changed, 41 insertions(+), 22 deletions(-)
+ .../bpf/prog_tests/ns_current_pid_tgid.c      | 73 +++++++++++++++++++
+ .../bpf/progs/test_ns_current_pid_tgid.c      |  7 ++
+ 2 files changed, 80 insertions(+)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-index 3a0664a86243e..847d7b70e2902 100644
+index 847d7b70e2902..fded38d24aae4 100644
 --- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
 +++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-@@ -16,30 +16,46 @@
+@@ -12,6 +12,7 @@
+ #include <sys/wait.h>
+ #include <sys/mount.h>
+ #include <sys/fcntl.h>
++#include "network_helpers.h"
+ 
  #define STACK_SIZE (1024 * 1024)
  static char child_stack[STACK_SIZE];
+@@ -74,6 +75,50 @@ static int test_current_pid_tgid_tp(void *args)
+ 	return ret;
+ }
  
--static int test_current_pid_tgid(void *args)
-+static int get_pid_tgid(pid_t *pid, pid_t *tgid,
-+			struct test_ns_current_pid_tgid__bss *bss)
- {
--	struct test_ns_current_pid_tgid__bss  *bss;
--	struct test_ns_current_pid_tgid *skel;
--	int ret = -1, err;
--	pid_t tgid, pid;
- 	struct stat st;
-+	int err;
- 
--	skel = test_ns_current_pid_tgid__open_and_load();
--	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open_and_load"))
--		goto out;
--
--	pid = syscall(SYS_gettid);
--	tgid = getpid();
-+	*pid = syscall(SYS_gettid);
-+	*tgid = getpid();
- 
- 	err = stat("/proc/self/ns/pid", &st);
- 	if (!ASSERT_OK(err, "stat /proc/self/ns/pid"))
--		goto cleanup;
-+		return err;
- 
--	bss = skel->bss;
- 	bss->dev = st.st_dev;
- 	bss->ino = st.st_ino;
- 	bss->user_pid = 0;
- 	bss->user_tgid = 0;
-+	return 0;
-+}
-+
-+static int test_current_pid_tgid_tp(void *args)
++static int test_current_pid_tgid_cgrp(void *args)
 +{
-+	struct test_ns_current_pid_tgid__bss  *bss;
++	struct test_ns_current_pid_tgid__bss *bss;
 +	struct test_ns_current_pid_tgid *skel;
-+	int ret = -1, err;
++	int server_fd = -1, ret = -1, err;
++	int cgroup_fd = *(int *)args;
 +	pid_t tgid, pid;
 +
 +	skel = test_ns_current_pid_tgid__open();
 +	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open"))
 +		return ret;
 +
-+	bpf_program__set_autoload(skel->progs.tp_handler, true);
++	bpf_program__set_autoload(skel->progs.cgroup_bind4, true);
 +
 +	err = test_ns_current_pid_tgid__load(skel);
 +	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__load"))
@@ -134,72 +106,88 @@ index 3a0664a86243e..847d7b70e2902 100644
 +	bss = skel->bss;
 +	if (get_pid_tgid(&pid, &tgid, bss))
 +		goto cleanup;
- 
- 	err = test_ns_current_pid_tgid__attach(skel);
- 	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__attach"))
-@@ -55,11 +71,10 @@ static int test_current_pid_tgid(void *args)
- 
- cleanup:
- 	test_ns_current_pid_tgid__destroy(skel);
--out:
- 	return ret;
- }
- 
--static void test_ns_current_pid_tgid_new_ns(void)
-+static void test_ns_current_pid_tgid_new_ns(int (*fn)(void *), void *arg)
++
++	skel->links.cgroup_bind4 = bpf_program__attach_cgroup(
++		skel->progs.cgroup_bind4, cgroup_fd);
++	if (!ASSERT_OK_PTR(skel->links.cgroup_bind4, "bpf_program__attach_cgroup"))
++		goto cleanup;
++
++	server_fd = start_server(AF_INET, SOCK_STREAM, NULL, 0, 0);
++	if (!ASSERT_GE(server_fd, 0, "start_server"))
++		goto cleanup;
++
++	if (!ASSERT_EQ(bss->user_pid, pid, "pid"))
++		goto cleanup;
++	if (!ASSERT_EQ(bss->user_tgid, tgid, "tgid"))
++		goto cleanup;
++	ret = 0;
++
++cleanup:
++	if (server_fd >= 0)
++		close(server_fd);
++	test_ns_current_pid_tgid__destroy(skel);
++	return ret;
++}
++
+ static void test_ns_current_pid_tgid_new_ns(int (*fn)(void *), void *arg)
  {
  	int wstatus;
- 	pid_t cpid;
-@@ -67,8 +82,8 @@ static void test_ns_current_pid_tgid_new_ns(void)
- 	/* Create a process in a new namespace, this process
- 	 * will be the init process of this new namespace hence will be pid 1.
- 	 */
--	cpid = clone(test_current_pid_tgid, child_stack + STACK_SIZE,
--		     CLONE_NEWPID | SIGCHLD, NULL);
-+	cpid = clone(fn, child_stack + STACK_SIZE,
-+		     CLONE_NEWPID | SIGCHLD, arg);
- 
- 	if (!ASSERT_NEQ(cpid, -1, "clone"))
+@@ -95,6 +140,25 @@ static void test_ns_current_pid_tgid_new_ns(int (*fn)(void *), void *arg)
  		return;
-@@ -84,7 +99,7 @@ static void test_ns_current_pid_tgid_new_ns(void)
+ }
+ 
++static void test_in_netns(int (*fn)(void *), void *arg)
++{
++	struct nstoken *nstoken = NULL;
++
++	SYS(cleanup, "ip netns add ns_current_pid_tgid");
++	SYS(cleanup, "ip -net ns_current_pid_tgid link set dev lo up");
++
++	nstoken = open_netns("ns_current_pid_tgid");
++	if (!ASSERT_OK_PTR(nstoken, "open_netns"))
++		goto cleanup;
++
++	test_ns_current_pid_tgid_new_ns(fn, arg);
++
++cleanup:
++	if (nstoken)
++		close_netns(nstoken);
++	SYS_NOFAIL("ip netns del ns_current_pid_tgid");
++}
++
+ /* TODO: use a different tracepoint */
  void serial_test_ns_current_pid_tgid(void)
  {
- 	if (test__start_subtest("root_ns_tp"))
--		test_current_pid_tgid(NULL);
-+		test_current_pid_tgid_tp(NULL);
+@@ -102,4 +166,13 @@ void serial_test_ns_current_pid_tgid(void)
+ 		test_current_pid_tgid_tp(NULL);
  	if (test__start_subtest("new_ns_tp"))
--		test_ns_current_pid_tgid_new_ns();
-+		test_ns_current_pid_tgid_new_ns(test_current_pid_tgid_tp, NULL);
+ 		test_ns_current_pid_tgid_new_ns(test_current_pid_tgid_tp, NULL);
++	if (test__start_subtest("new_ns_cgrp")) {
++		int cgroup_fd = -1;
++
++		cgroup_fd = test__join_cgroup("/sock_addr");
++		if (ASSERT_GE(cgroup_fd, 0, "join_cgroup")) {
++			test_in_netns(test_current_pid_tgid_cgrp, &cgroup_fd);
++			close(cgroup_fd);
++		}
++	}
  }
 diff --git a/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c b/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-index 0763d49f9c421..aa3ec7ca16d9b 100644
+index aa3ec7ca16d9b..d0010e698f668 100644
 --- a/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
 +++ b/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-@@ -10,17 +10,21 @@ __u64 user_tgid = 0;
- __u64 dev = 0;
- __u64 ino = 0;
- 
--SEC("tracepoint/syscalls/sys_enter_nanosleep")
--int handler(const void *ctx)
-+static void get_pid_tgid(void)
- {
- 	struct bpf_pidns_info nsdata;
- 
- 	if (bpf_get_ns_current_pid_tgid(dev, ino, &nsdata, sizeof(struct bpf_pidns_info)))
--		return 0;
-+		return;
- 
- 	user_pid = nsdata.pid;
- 	user_tgid = nsdata.tgid;
-+}
- 
-+SEC("?tracepoint/syscalls/sys_enter_nanosleep")
-+int tp_handler(const void *ctx)
-+{
-+	get_pid_tgid();
+@@ -28,4 +28,11 @@ int tp_handler(const void *ctx)
  	return 0;
  }
  
++SEC("?cgroup/bind4")
++int cgroup_bind4(struct bpf_sock_addr *ctx)
++{
++	get_pid_tgid();
++	return 1;
++}
++
+ char _license[] SEC("license") = "GPL";
 -- 
 2.43.0
 
