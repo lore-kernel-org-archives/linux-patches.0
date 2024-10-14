@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F02A1ABEA6;
-	Mon, 14 Oct 2024 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B1420322;
+	Mon, 14 Oct 2024 14:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916424; cv=none; b=jUb56lA9XEnvyg5EZ2HZwRx7UKjfLTAAvGdNQLyI1HVn/wCv/fd0zV78jVMAosg7tVpF++vT26ZD0nOdzkyuw2m4//U4gW5uGPiW1OWCE3ChfdNfZB8qsaU0g0UXAHWpi8wEpEef0hvAnCHx5TUjx051mCJqHVKizF667e4cj9Q=
+	t=1728916427; cv=none; b=BfrtdXcU+/7kaqrUtZFr3bUoodY+gQYzyuQFeiXTbuNcDBI8RD8ZQqeHfN/gAkXgic/diYFG/7HBpqVlQxQL6sK/0EGrV/30pAE43VORByrSKUnT7qby/W16yY0/tVFtCA4wm+jtlzw7QZRgvgoV0BQrDLTUzj7tRXv6MT7oQ5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916424; c=relaxed/simple;
-	bh=uJCnhO/6qVa7BJLG+ZP5VMMmSZ60J6qSzJ71fVNPfCg=;
+	s=arc-20240116; t=1728916427; c=relaxed/simple;
+	bh=BrVuhQVgYazvbVa0YD+aTvXS6NQy/QlImy8+7PWNbEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2dwVkHiKRuhXK8vDXfYvBIsrD1p1jKU0f6Qg5ztxYuddkJxFyqSijjsTz3g4lmN8qSZC47g0lqeMnR+9kMeJXC2aqAISYxC7FAF0z9GbvYzdRzVdQB5Wag9TBCX4g+7UqhoBRfCtCQZkhQGfMhkp4RToHBenYQsrCqdClCeAmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPttQpEQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWCVxA5/LePBhOz5A7q4q/UA0sSHYyEbUKBptet1lo4LIqaxEKLIlCyhP4T/RZbIX+/NJsCBdSU2Dk/bBukjVn74DbSWXnjudsGWg5ok9ymRtNB7HtAkGQNEYtS1PwhV/zptyL7rj9PNdilQ6EtEPQMSPSPtMLUaW3W+HJt83Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaGOMyBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPttQpEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D38C4CEC3;
-	Mon, 14 Oct 2024 14:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaGOMyBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C525C4CEC3;
+	Mon, 14 Oct 2024 14:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916423;
-	bh=uJCnhO/6qVa7BJLG+ZP5VMMmSZ60J6qSzJ71fVNPfCg=;
+	s=korg; t=1728916427;
+	bh=BrVuhQVgYazvbVa0YD+aTvXS6NQy/QlImy8+7PWNbEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPttQpEQJnG6yXkINZfMa5iwllQMs1XBmmmQ4xgPOo6BdWqIjMukcxx4QPJhYHbYc
-	 xGfpcmA0lko52c+K87JIIypmD94hxMn8Le7TrqwclbY+kG1Yqai47m+vIV9XAeZqSj
-	 zqmOqzo7np/uoruR1RJgG8TXzgvqPACXSbn2QbVc=
+	b=QaGOMyBKA8sxgiMwX0OQBAGYWRiOhA3T5N6NvjuIBNITnOp6MPJbumbcKqo27lRkJ
+	 JL6v4GWInmQZY/JPsT5dEeCGc64HB9Oqw9JCJmAQMN2YR92x7XVqVIFTrEyvRJGHyy
+	 T9fQTBn+xHl7MHj8MrFz/MjHsAIzyB4aa2K8DnTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Badal Nilawar <badal.nilawar@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 179/214] drm/xe/ct: prevent UAF in send_recv()
-Date: Mon, 14 Oct 2024 16:20:42 +0200
-Message-ID: <20241014141051.964980766@linuxfoundation.org>
+Subject: [PATCH 6.11 180/214] drm/xe/ct: fix xa_store() error checking
+Date: Mon, 14 Oct 2024 16:20:43 +0200
+Message-ID: <20241014141052.004825098@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -54,17 +54,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Auld <matthew.auld@intel.com>
 
-commit db7f92af626178ba59dbbcdd5dee9ec24a987a88 upstream.
+commit e863781abe4fe430406dd075ca0cab99165b4e63 upstream.
 
-Ensure we serialize with completion side to prevent UAF with fence going
-out of scope on the stack, since we have no clue if it will fire after
-the timeout before we can erase from the xa. Also we have some dependent
-loads and stores for which we need the correct ordering, and we lack the
-needed barriers. Fix this by grabbing the ct->lock after the wait, which
-is also held by the completion side.
-
-v2 (Badal):
- - Also print done after acquiring the lock and seeing timeout.
+Looks like we are meant to use xa_err() to extract the error encoded in
+the ptr.
 
 Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
 Signed-off-by: Matthew Auld <matthew.auld@intel.com>
@@ -72,58 +65,55 @@ Cc: Matthew Brost <matthew.brost@intel.com>
 Cc: Badal Nilawar <badal.nilawar@intel.com>
 Cc: <stable@vger.kernel.org> # v6.8+
 Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241001084346.98516-5-matthew.auld@intel.com
-(cherry picked from commit 52789ce35c55ccd30c4b67b9cc5b2af55e0122ea)
+Link: https://patchwork.freedesktop.org/patch/msgid/20241001084346.98516-6-matthew.auld@intel.com
+(cherry picked from commit 1aa4b7864707886fa40d959483591f3d3937fa28)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c |   23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
 --- a/drivers/gpu/drm/xe/xe_guc_ct.c
 +++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -894,16 +894,26 @@ retry_same_fence:
- 	}
+@@ -658,16 +658,12 @@ static int __guc_ct_send_locked(struct x
+ 		num_g2h = 1;
  
- 	ret = wait_event_timeout(ct->g2h_fence_wq, g2h_fence.done, HZ);
-+
-+	/*
-+	 * Ensure we serialize with completion side to prevent UAF with fence going out of scope on
-+	 * the stack, since we have no clue if it will fire after the timeout before we can erase
-+	 * from the xa. Also we have some dependent loads and stores below for which we need the
-+	 * correct ordering, and we lack the needed barriers.
-+	 */
-+	mutex_lock(&ct->lock);
- 	if (!ret) {
--		xe_gt_err(gt, "Timed out wait for G2H, fence %u, action %04x",
--			  g2h_fence.seqno, action[0]);
-+		xe_gt_err(gt, "Timed out wait for G2H, fence %u, action %04x, done %s",
-+			  g2h_fence.seqno, action[0], str_yes_no(g2h_fence.done));
- 		xa_erase_irq(&ct->fence_lookup, g2h_fence.seqno);
-+		mutex_unlock(&ct->lock);
- 		return -ETIME;
- 	}
+ 		if (g2h_fence_needs_alloc(g2h_fence)) {
+-			void *ptr;
+-
+ 			g2h_fence->seqno = next_ct_seqno(ct, true);
+-			ptr = xa_store(&ct->fence_lookup,
+-				       g2h_fence->seqno,
+-				       g2h_fence, GFP_ATOMIC);
+-			if (IS_ERR(ptr)) {
+-				ret = PTR_ERR(ptr);
++			ret = xa_err(xa_store(&ct->fence_lookup,
++					      g2h_fence->seqno, g2h_fence,
++					      GFP_ATOMIC));
++			if (ret)
+ 				goto out;
+-			}
+ 		}
  
- 	if (g2h_fence.retry) {
- 		xe_gt_dbg(gt, "H2G action %#x retrying: reason %#x\n",
- 			  action[0], g2h_fence.reason);
-+		mutex_unlock(&ct->lock);
- 		goto retry;
- 	}
- 	if (g2h_fence.fail) {
-@@ -912,7 +922,12 @@ retry_same_fence:
- 		ret = -EIO;
- 	}
+ 		seqno = g2h_fence->seqno;
+@@ -870,14 +866,11 @@ retry:
+ retry_same_fence:
+ 	ret = guc_ct_send(ct, action, len, 0, 0, &g2h_fence);
+ 	if (unlikely(ret == -ENOMEM)) {
+-		void *ptr;
+-
+ 		/* Retry allocation /w GFP_KERNEL */
+-		ptr = xa_store(&ct->fence_lookup,
+-			       g2h_fence.seqno,
+-			       &g2h_fence, GFP_KERNEL);
+-		if (IS_ERR(ptr))
+-			return PTR_ERR(ptr);
++		ret = xa_err(xa_store(&ct->fence_lookup, g2h_fence.seqno,
++				      &g2h_fence, GFP_KERNEL));
++		if (ret)
++			return ret;
  
--	return ret > 0 ? response_buffer ? g2h_fence.response_len : g2h_fence.response_data : ret;
-+	if (ret > 0)
-+		ret = response_buffer ? g2h_fence.response_len : g2h_fence.response_data;
-+
-+	mutex_unlock(&ct->lock);
-+
-+	return ret;
- }
- 
- /**
+ 		goto retry_same_fence;
+ 	} else if (unlikely(ret)) {
 
 
