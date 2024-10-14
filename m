@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33AD1AC8A2;
-	Mon, 14 Oct 2024 15:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380EC1AB534;
+	Mon, 14 Oct 2024 15:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918825; cv=none; b=q9pIhZW5QcdNWHJNRPFqFIY+HdVr2HChJo2gEQwEWpYNQCLU5wGljeHnanIccFZ2T0xUXQmz8ToaD/CYbBbG2l79Bc6Kc3c+cbo6fI8gkQRsEB83YmY4e3iwHqlQb1hxZ2SDlFKP4O5AuCAM4McTM+/vb0f9+z0COPKvb7TzE+w=
+	t=1728918828; cv=none; b=J/SUZrTseAZBN1nyJg5A+wvTrvkGq4WYFTAvtDg9Vh7yMGZss1F0+WFzrhpGN8eC8F7bhi6dt19UhDswllZtnAC1uGPG4cl/p0dOoa46UeYsXqu37goRwJgogyd/ipiQCkOXQ35BMdh8BjkfSYTkExbXymtNU2m7mp2slcmFOVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918825; c=relaxed/simple;
-	bh=dI+FpOcF0G2v1uhIO3e77aDxdDAivSb0ktnSQKIbzHU=;
+	s=arc-20240116; t=1728918828; c=relaxed/simple;
+	bh=tRsNh4DUZvzMVzcr06dCReC32L8gZaKhWf+FE+J3Mpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1ph0CsskyZHaz/zsCMRzLAtR/N9QGhlgiCYVp2dAA08WjEw7qwhAm4dZValrl5Ni2T01Zop3XOuDBQh+CtH/S84pJXi3mvhokeN7FhO35NU11aR8Hv+XyLX2s9TNfuWA1S1OP+CXkmUSuUnMtKZ1fsWIyxc0VS2V7y18H9rry0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLKRHkf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8EncsPfw+OCCBZuBwNJJj92fyJv8d1x9Q0VJGRJv64/6uL/77KdaJaDM8/PpHJGkOyN2S+MW57n9HIjG7c810Ti+ZsZkYHiNx0MGFOn5Mgsat6HgOzdOerlHKLgNzqp0aU3B97L3Vp5NJn3nrONCt3/wDe20hmkvJaPZafTD/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKNzNsNR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLKRHkf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7FEC4CEC7;
-	Mon, 14 Oct 2024 15:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKNzNsNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA68C4CEC7;
+	Mon, 14 Oct 2024 15:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918824;
-	bh=dI+FpOcF0G2v1uhIO3e77aDxdDAivSb0ktnSQKIbzHU=;
+	s=korg; t=1728918828;
+	bh=tRsNh4DUZvzMVzcr06dCReC32L8gZaKhWf+FE+J3Mpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLKRHkf/buqSMVygid2tyYsPYMUMoT9YMrEb/RT/tbcj9w+VkPqk27aJAjtvGoSSj
-	 O7WcjbK902CN1UJI7leC8bLYY7JrryxEaqli+1Q0ghKhpgP0Fp39v6flj6ICaTR6WT
-	 z/IImk2YpsValMImRkwzMPKkiRwccREUCHSFvquk=
+	b=cKNzNsNRBWc4UD0xXNtXPQCgZ1Rta9/3rS5H4Gl+SMRnctn2chS8WZzr9Vp2EAbmW
+	 80QU+2J5WS7KL2G2CiuZ+hIJxOOA59LCmsgQSMD3rNoAGy1VTSCvzYpkdWDKb5dvz9
+	 H+eism2m7pxyJgAb+kOD1aUDkesIBs4FyLCud8BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 392/798] net: wwan: qcom_bam_dmux: Fix missing pm_runtime_disable()
-Date: Mon, 14 Oct 2024 16:15:46 +0200
-Message-ID: <20241014141233.344904369@linuxfoundation.org>
+Subject: [PATCH 6.1 427/798] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
+Date: Mon, 14 Oct 2024 16:16:21 +0200
+Message-ID: <20241014141234.725458528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,66 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d505d3593b52b6c43507f119572409087416ba28 ]
+[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
 
-It's important to undo pm_runtime_use_autosuspend() with
-pm_runtime_dont_use_autosuspend() at driver exit time.
+ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
 
-But the pm_runtime_disable() and pm_runtime_dont_use_autosuspend()
-is missing in the error path for bam_dmux_probe(). So add it.
+If acpi_ps_get_next_namepath() fails, the previously allocated
+union acpi_parse_object needs to be freed before returning the
+status code.
 
-Found by code review. Compile-tested only.
+The issue was first being reported on the Linux ACPI mailing list:
 
-Fixes: 21a0ffd9b38c ("net: wwan: Add Qualcomm BAM-DMUX WWAN network driver")
-Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
+Link: https://github.com/acpica/acpica/commit/2802af72
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/qcom_bam_dmux.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/acpi/acpica/psargs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
-index 17d46f4d29139..174a9156b3233 100644
---- a/drivers/net/wwan/qcom_bam_dmux.c
-+++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -823,17 +823,17 @@ static int bam_dmux_probe(struct platform_device *pdev)
- 	ret = devm_request_threaded_irq(dev, pc_ack_irq, NULL, bam_dmux_pc_ack_irq,
- 					IRQF_ONESHOT, NULL, dmux);
- 	if (ret)
--		return ret;
-+		goto err_disable_pm;
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index f7ec5606098c7..919a7aebcc036 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_NOT_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
+ 		} else {
+ 			/* Single complex argument, nothing returned */
  
- 	ret = devm_request_threaded_irq(dev, dmux->pc_irq, NULL, bam_dmux_pc_irq,
- 					IRQF_ONESHOT, NULL, dmux);
- 	if (ret)
--		return ret;
-+		goto err_disable_pm;
+@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_POSSIBLE_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
  
- 	ret = irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL,
- 				    &dmux->pc_state);
- 	if (ret)
--		return ret;
-+		goto err_disable_pm;
+ 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
  
- 	/* Check if remote finished initialization before us */
- 	if (dmux->pc_state) {
-@@ -844,6 +844,11 @@ static int bam_dmux_probe(struct platform_device *pdev)
- 	}
- 
- 	return 0;
-+
-+err_disable_pm:
-+	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+	return ret;
- }
- 
- static int bam_dmux_remove(struct platform_device *pdev)
 -- 
 2.43.0
 
