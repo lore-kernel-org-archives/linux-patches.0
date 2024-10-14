@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC761AD3E1;
-	Mon, 14 Oct 2024 14:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE411ABEB5;
+	Mon, 14 Oct 2024 14:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917443; cv=none; b=VpANiPnAM7rRAMEtMJbD8MAYgc2NZmLiRVR+OuEQ5GxM1y6MUScnu9WXvE5BvBe+S9Xh5HoI1zFe4YroB2elOalfPmXBzTBBguKqcBlQDvnjNOaDHGcvufuPNB1rCGzVDXr7D7lXuG699TWkfmwAbj9N3nF5YCu0G71AeMDrcLE=
+	t=1728917446; cv=none; b=paq1+mUPlNXz4wwVOORvUwmfZA8JEWo8/Am0y98TnYuTCMoUHMixSUEepJJoaI1ui6uKTKsU+Kt85udz3f0traSf2lY6ylzYzgd1DofGrS4ejarnHxIw4pMPjkySb+IzjmFl0+3K1o4wkudTU65ybVuxR9HcszoibwoHJWcdw+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917443; c=relaxed/simple;
-	bh=s+Q9ae2CKP13EopAvWmLG+7j2KYCesuYVuYy4wyM4ys=;
+	s=arc-20240116; t=1728917446; c=relaxed/simple;
+	bh=0vf6X68U9tVrIm6ZIIQZyjuKU8ZEtVFlsyvgFWVOm3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpINSN3/4bdQnVOzgs9EGmBc8ZaC6L7OaMr7LfDGsE3ihaBwUgSS7fnK/kyfz+lAQbwQWFz8vdiDKpdkJOOGsmW6KD8xAvs/amNPXMTYvK+EbToOIwWevGBcaoHUTHWMO3SnYIRiH7jX+ZIufo3ACLzzuplL6JKqsEWMxg0V/h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YynYtv0s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7d7Nf7oYqoQiccE0mV5iODi8WC823WilC+tUTF/lGkiV5YgnZjk7CHxD/m01/cZFZB93CVMW6eZJIQwupTSgkceOb9EIvLI0QiKiPJ3FYnQM+gTQ8qt4/+ZRGP3YFyEygrl3Jo9vZg4H/GWtKtgn1mbXVHrgEk+2yQb5Zrq+Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9cNZejD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YynYtv0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71351C4CEC3;
-	Mon, 14 Oct 2024 14:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9cNZejD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E588CC4CEC3;
+	Mon, 14 Oct 2024 14:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917442;
-	bh=s+Q9ae2CKP13EopAvWmLG+7j2KYCesuYVuYy4wyM4ys=;
+	s=korg; t=1728917446;
+	bh=0vf6X68U9tVrIm6ZIIQZyjuKU8ZEtVFlsyvgFWVOm3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YynYtv0s6GUnDn9kdfrQBbIocsI69M9WiFuguhbNTsxJoffOY74mabXRhg9fSp+QB
-	 6UqHDdCryVFnd+ShTL8G7K5uvsawFUGv5m1qHzBD/Yr6He65jZoDbSbfSpEgeV/uqk
-	 KbckwKyhO1xsJl1hO5hBXmMm4jsV61GBQ3OJXWbk=
+	b=N9cNZejDn+AyWRYarxhUpe5cd5BHAQXfvGfsh8IpevmezTNn4GMP8LVvaXr6P5ypt
+	 Bwtu6DV6oESwTS/PFcrc3bIMKaWZQqmBfLdx/AcYE50MIci/bG978FuSIJ3BNWmeTz
+	 PA1q2vUSay1225f2Ckywz1kpgBGqXQfgFV9Nytas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/798] crypto: hisilicon/hpre - enable sva error interrupt event
-Date: Mon, 14 Oct 2024 16:09:51 +0200
-Message-ID: <20241014141219.401220431@linuxfoundation.org>
+Subject: [PATCH 6.1 020/798] ACPICA: Implement ACPI_WARNING_ONCE and ACPI_ERROR_ONCE
+Date: Mon, 14 Oct 2024 16:09:34 +0200
+Message-ID: <20241014141218.744152828@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,45 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-[ Upstream commit 391dde6e48ff84687395a0a4e84f7e1540301e4e ]
+[ Upstream commit 632b746b108e3c62e0795072d00ed597371c738a ]
 
-Enable sva error interrupt event. When an error occurs on
-the sva module, the device reports an abnormal interrupt to
-the driver.
+ACPICA commit 2ad4e6e7c4118f4cdfcad321c930b836cec77406
 
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 145013f72394 ("crypto: hisilicon/hpre - mask cluster timeout error")
+In some cases it is not practical nor useful to nag user about some
+firmware errors that they cannot fix. Add a macro that will print a
+warning or error only once to be used in these cases.
+
+Link: https://github.com/acpica/acpica/commit/2ad4e6e7
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: c82c507126c9 ("ACPICA: executer/exsystem: Don't nag user about every Stall() violating the spec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/acpi/acoutput.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 269df4ec148ba..19a36facabcc4 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -203,7 +203,7 @@ static const struct hisi_qm_cap_info hpre_basic_info[] = {
- 	{HPRE_QM_RESET_MASK_CAP, 0x3128, 0, GENMASK(31, 0), 0x0, 0xC37, 0x6C37},
- 	{HPRE_QM_OOO_SHUTDOWN_MASK_CAP, 0x3128, 0, GENMASK(31, 0), 0x0, 0x4, 0x6C37},
- 	{HPRE_QM_CE_MASK_CAP, 0x312C, 0, GENMASK(31, 0), 0x0, 0x8, 0x8},
--	{HPRE_NFE_MASK_CAP, 0x3130, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0xFFFFFE},
-+	{HPRE_NFE_MASK_CAP, 0x3130, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0x1FFFFFE},
- 	{HPRE_RESET_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x3FFFFE, 0xBFFFFE},
- 	{HPRE_OOO_SHUTDOWN_MASK_CAP, 0x3134, 0, GENMASK(31, 0), 0x0, 0x22, 0xBFFFFE},
- 	{HPRE_CE_MASK_CAP, 0x3138, 0, GENMASK(31, 0), 0x0, 0x1, 0x1},
-@@ -283,6 +283,9 @@ static const struct hpre_hw_error hpre_hw_errors[] = {
- 	}, {
- 		.int_msk = BIT(23),
- 		.msg = "sva_fsm_timeout_int_set"
-+	}, {
-+		.int_msk = BIT(24),
-+		.msg = "sva_int_set"
- 	}, {
- 		/* sentinel */
- 	}
+diff --git a/include/acpi/acoutput.h b/include/acpi/acoutput.h
+index 73781aae21192..eaef8471177af 100644
+--- a/include/acpi/acoutput.h
++++ b/include/acpi/acoutput.h
+@@ -193,6 +193,7 @@
+  */
+ #ifndef ACPI_NO_ERROR_MESSAGES
+ #define AE_INFO                         _acpi_module_name, __LINE__
++#define ACPI_ONCE(_fn, _plist)                  { static char _done; if (!_done) { _done = 1; _fn _plist; } }
+ 
+ /*
+  * Error reporting. Callers module and line number are inserted by AE_INFO,
+@@ -201,8 +202,10 @@
+  */
+ #define ACPI_INFO(plist)                acpi_info plist
+ #define ACPI_WARNING(plist)             acpi_warning plist
++#define ACPI_WARNING_ONCE(plist)        ACPI_ONCE(acpi_warning, plist)
+ #define ACPI_EXCEPTION(plist)           acpi_exception plist
+ #define ACPI_ERROR(plist)               acpi_error plist
++#define ACPI_ERROR_ONCE(plist)          ACPI_ONCE(acpi_error, plist)
+ #define ACPI_BIOS_WARNING(plist)        acpi_bios_warning plist
+ #define ACPI_BIOS_EXCEPTION(plist)      acpi_bios_exception plist
+ #define ACPI_BIOS_ERROR(plist)          acpi_bios_error plist
+@@ -214,8 +217,10 @@
+ 
+ #define ACPI_INFO(plist)
+ #define ACPI_WARNING(plist)
++#define ACPI_WARNING_ONCE(plist)
+ #define ACPI_EXCEPTION(plist)
+ #define ACPI_ERROR(plist)
++#define ACPI_ERROR_ONCE(plist)
+ #define ACPI_BIOS_WARNING(plist)
+ #define ACPI_BIOS_EXCEPTION(plist)
+ #define ACPI_BIOS_ERROR(plist)
 -- 
 2.43.0
 
