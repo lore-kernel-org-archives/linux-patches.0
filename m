@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76CD200CB;
-	Mon, 14 Oct 2024 14:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AB31798C;
+	Mon, 14 Oct 2024 14:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916212; cv=none; b=V6IGCatZqbCllz9SHyjCV+wyI8hOgrrS+sT7pbwElE1rWu2dT8eGnHfA7FRuCedXhOEYFsRAct7I+gqaluTGsWhxc0XqqepuU4MEYrLWebRcgh2wcH9czMKAoyEIGT0qRA8KZwoPrSrF7hS8YgjVkhtlqTyiymZ3i2QiUtdU0IU=
+	t=1728916216; cv=none; b=fKfVCEZX3YV/Wcn15U2fNrb/M+tiVw6MrqNcUqV04s8D0Z+ktY0YJqM4ePUjkNXG1WfPLwqz6LaY9XZYK8kYq4CVUnLTj686vHL2cFcGJfxL4XF3KGD84DilRu++mSmw/KZY9zVreQfDqX9eGuXvgHXYB5Fe9qJKUasMEDRHAxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916212; c=relaxed/simple;
-	bh=5fxguFS5ektI9xbjVye3LSTdrQA4rA3xP4EQmrrD3Oo=;
+	s=arc-20240116; t=1728916216; c=relaxed/simple;
+	bh=dhVyug9Rq78i1LGjpfxMaZVgfBdq1HjmP2GZutTv1EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2gPeGJb2fPBpv8YlkPldc5GQEa886APOH7PNaFYlmzO71NVxjFL4bHH/S/v56IycQhughSfg0z5A2l6/hG1iApqJrBvlqFE3r5dl0/Fj9or4vWshXvxBvRzCln8jo+gAWxm/GjIyY+V4xeEbeFE0qLJs++JXL1PmFss8ww3CbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjjdAtIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fas1Z5hVleao++mTH1YGOm1wa8GJDkdC+tMv1Z9awx0Y2a6z7AWFX+lpV7wU5cXef6UILL60nzOrDOxKoTS2GS2AzdvtMq7jLBUDK8hl4z8bcg4b+Pi7FPnMbaCcld4icGLdEyfyYR1cdBxmWT3PCjeu7QRtwIcHg7DOCVcgJAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFUsiook; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjjdAtIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0127FC4CEC3;
-	Mon, 14 Oct 2024 14:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFUsiook"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D683C4CEC3;
+	Mon, 14 Oct 2024 14:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916212;
-	bh=5fxguFS5ektI9xbjVye3LSTdrQA4rA3xP4EQmrrD3Oo=;
+	s=korg; t=1728916215;
+	bh=dhVyug9Rq78i1LGjpfxMaZVgfBdq1HjmP2GZutTv1EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UjjdAtIkxpqWy9k4NXRIZcXSpLDn6QgWHi0A6x97Cmq5YosX3W6a+oc/ms0hh5aje
-	 jOidtfphHqPovtlpVlaZKYcdE71huWYXyT/e4bYFjaEtbtZKLJfGp4uetTePLjVhuR
-	 we0RS/LQOU09RUAHSpSf07ykHxTzi0un4e6IuIQI=
+	b=WFUsiookRPdj102DnJayCiHEcJz2LDnG1uNKOXuss8kKdXXUM+VNqy9t/txsSdVfB
+	 1vZ4n0G7fwO2H00ULgh5W2ZgkNjD/MORjsEQEhelzXHt6tobPDsBWKzyJylG9rZAFt
+	 qsBH3wiI/E5XwdalqAtLJEuMZfnCu3lfQHGRomSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonatan Maman <Ymaman@Nvidia.com>,
-	Gal Shalom <GalShalom@Nvidia.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 115/214] nouveau/dmem: Fix privileged error in copy engine channel
-Date: Mon, 14 Oct 2024 16:19:38 +0200
-Message-ID: <20241014141049.480767431@linuxfoundation.org>
+Subject: [PATCH 6.11 116/214] gpio: aspeed: Add the flush write to ensure the write complete.
+Date: Mon, 14 Oct 2024 16:19:39 +0200
+Message-ID: <20241014141049.519836847@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,44 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Maman <Ymaman@Nvidia.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 04e0481526e30ab8c7e7580033d2f88b7ef2da3f ]
+[ Upstream commit 1bb5a99e1f3fd27accb804aa0443a789161f843c ]
 
-When `nouveau_dmem_copy_one` is called, the following error occurs:
+Performing a dummy read ensures that the register write operation is fully
+completed, mitigating any potential bus delays that could otherwise impact
+the frequency of bitbang usage. E.g., if the JTAG application uses GPIO to
+control the JTAG pins (TCK, TMS, TDI, TDO, and TRST), and the application
+sets the TCK clock to 1 MHz, the GPIO's high/low transitions will rely on
+a delay function to ensure the clock frequency does not exceed 1 MHz.
+However, this can lead to rapid toggling of the GPIO because the write
+operation is POSTed and does not wait for a bus acknowledgment.
 
-[272146.675156] nouveau 0000:06:00.0: fifo: PBDMA9: 00000004 [HCE_PRIV]
-ch 1 00000300 00003386
-
-This indicates that a copy push command triggered a Host Copy Engine
-Privileged error on channel 1 (Copy Engine channel). To address this
-issue, modify the Copy Engine channel to allow privileged push commands
-
-Fixes: 6de125383a5c ("drm/nouveau/fifo: expose runlist topology info on all chipsets")
-Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
-Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
-Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-2-ymaman@nvidia.com
+Fixes: 361b79119a4b ("gpio: Add Aspeed driver")
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20241008081450.1490955-2-billy_tsai@aspeedtech.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-aspeed.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
-index 88413b5c8684a..bfba4e374df44 100644
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -356,7 +356,7 @@ nouveau_accel_ce_init(struct nouveau_drm *drm)
- 		return;
- 	}
+diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
+index 04c03402db6dd..98551b7f6de2e 100644
+--- a/drivers/gpio/gpio-aspeed.c
++++ b/drivers/gpio/gpio-aspeed.c
+@@ -406,6 +406,8 @@ static void __aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
+ 	gpio->dcache[GPIO_BANK(offset)] = reg;
  
--	ret = nouveau_channel_new(&drm->client, false, runm, NvDmaFB, NvDmaTT, &drm->cechan);
-+	ret = nouveau_channel_new(&drm->client, true, runm, NvDmaFB, NvDmaTT, &drm->cechan);
- 	if (ret)
- 		NV_ERROR(drm, "failed to create ce channel, %d\n", ret);
+ 	iowrite32(reg, addr);
++	/* Flush write */
++	ioread32(addr);
  }
+ 
+ static void aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
 -- 
 2.43.0
 
