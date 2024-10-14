@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4201B1ABEB7;
-	Mon, 14 Oct 2024 15:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15DC1AB536;
+	Mon, 14 Oct 2024 15:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918096; cv=none; b=pqO/pPRe/OwjyY43ksTN/pB/vGWf3OGKJrjJwbI8X+yuLl9y8ddRI1LWe4U9rNix9NniYbt3KJl1rozmpBW24xGfNfDwWinFJjQu0srL6WVxABv37DBqFLeQpkRLu0yn90lxYtOYjNiYjuVwBcaVmJXTxglU05GBOUe1pZfD2E8=
+	t=1728918100; cv=none; b=sBpyGxalb5kSy50aWJMH+abVux9fhdmMg9k79bppNzunUyuWpSfx3xvq73yIJ508ROHbIH0p8V8Xkbi9eYIdeI0CxtbaHf5OdIMGzIVnOtPttyHrlID1gwFbjMmSx5uHDRor2zE+L5T+kwq7tFDbinZE4H94hd5RJiyebZC2W2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918096; c=relaxed/simple;
-	bh=M0Yr93ftA50JzKFlvo5ynrx2dJHKYWZE3PByOrrEmzE=;
+	s=arc-20240116; t=1728918100; c=relaxed/simple;
+	bh=7LU7T/UxvIE3ba13DRcBLpZutcfQjBKggy5ZASE9YaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4hDPjaPdiuccUbVK/+Sws1TECV5ySKmYKiqEmfDmENMhXWpxfVaHW08/Lq9ArwxshD6R9YTj2X+FU3EycBYFdIWCmXe+WXrGUQFp7pkB8tvHYb1zmNwn63EpUDREwWB84OmdU0hoVu2DClpDYE48Q6+U040psF8tDf+URevwKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knFcmN2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UPQA4mdwExcP8fXTEr9G22zBHiTL7TXsWZ1LfdrxVoySM+ujwrkzD1JqFLpNg+o1UjRoIMaA9oUahsZtkuBMQSxvYxIfWCrv4k/2nC5maALxPPLnEZZWz6WGgkq96yTw/Xtwfjqu4JZDHREE7+zF/Q1V11idEAoEqDzMNMhDhQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/VlHGNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knFcmN2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB79C4CEC3;
-	Mon, 14 Oct 2024 15:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/VlHGNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CDFC4CEC3;
+	Mon, 14 Oct 2024 15:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918096;
-	bh=M0Yr93ftA50JzKFlvo5ynrx2dJHKYWZE3PByOrrEmzE=;
+	s=korg; t=1728918099;
+	bh=7LU7T/UxvIE3ba13DRcBLpZutcfQjBKggy5ZASE9YaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knFcmN2vqB2M19d0DVjA9b8onJkNoIwmUY3uQpLOB232fL+B1hDqOZoiRW1TC/EPY
-	 0PRgqZD0h4uP7URa0hqaEKC+0zhOEF9d7V8sKw7xh+IUaoG6291/pLE7c8eNVwC7I6
-	 86jhRdi24xy23dAj6qnMASJCYOxxVmhqzC/nUN0s=
+	b=s/VlHGNg0CSjD1jg6lZM2K8njl0jE7aqR2n+HYNtVbAqjzjl2ldVemRs0LeoyJJx+
+	 4XRieYeddwHkPkcRpw8QvNkoAf5y/oeGvIObPEO/OryPe/IaVtOCPiR44Qv4KhL89P
+	 gAW3ATle+4BNPleTc8AaLY+Se6uNvfWEH/uJTm9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 220/798] RDMA/hns: Fix Use-After-Free of rsv_qp on HIP08
-Date: Mon, 14 Oct 2024 16:12:54 +0200
-Message-ID: <20241014141226.572007981@linuxfoundation.org>
+Subject: [PATCH 6.1 221/798] RDMA/hns: Fix the overflow risk of hem_list_calc_ba_range()
+Date: Mon, 14 Oct 2024 16:12:55 +0200
+Message-ID: <20241014141226.610084038@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,47 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit fd8489294dd2beefb70f12ec4f6132aeec61a4d0 ]
+[ Upstream commit d586628b169d14bbf36be64d2b3ec9d9d2fe0432 ]
 
-Currently rsv_qp is freed before ib_unregister_device() is called
-on HIP08. During the time interval, users can still dereg MR and
-rsv_qp will be used in this process, leading to a UAF. Move the
-release of rsv_qp after calling ib_unregister_device() to fix it.
+The max value of 'unit' and 'hop_num' is 2^24 and 2, so the value of
+'step' may exceed the range of u32. Change the type of 'step' to u64.
 
-Fixes: 70f92521584f ("RDMA/hns: Use the reserved loopback QPs to free MR before destroying MPT")
+Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
 Signed-off-by: wenglianfa <wenglianfa@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-3-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20240906093444.3571619-5-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 3318d27233e0d..7ca85dcb5458c 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -3058,6 +3058,9 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
- 
- static void hns_roce_v2_exit(struct hns_roce_dev *hr_dev)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index f30274986c0da..156bc710e0dbb 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -1082,9 +1082,9 @@ static bool hem_list_is_bottom_bt(int hopnum, int bt_level)
+  * @bt_level: base address table level
+  * @unit: ba entries per bt page
+  */
+-static u32 hem_list_calc_ba_range(int hopnum, int bt_level, int unit)
++static u64 hem_list_calc_ba_range(int hopnum, int bt_level, int unit)
  {
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
-+		free_mr_exit(hr_dev);
-+
- 	hns_roce_function_clear(hr_dev);
+-	u32 step;
++	u64 step;
+ 	int max;
+ 	int i;
  
- 	if (!hr_dev->is_vf)
-@@ -6935,9 +6938,6 @@ static void __hns_roce_hw_v2_uninit_instance(struct hnae3_handle *handle,
- 	hr_dev->state = HNS_ROCE_DEVICE_STATE_UNINIT;
- 	hns_roce_handle_device_err(hr_dev);
+@@ -1120,7 +1120,7 @@ int hns_roce_hem_list_calc_root_ba(const struct hns_roce_buf_region *regions,
+ {
+ 	struct hns_roce_buf_region *r;
+ 	int total = 0;
+-	int step;
++	u64 step;
+ 	int i;
  
--	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
--		free_mr_exit(hr_dev);
--
- 	hns_roce_exit(hr_dev);
- 	kfree(hr_dev->priv);
- 	ib_dealloc_device(&hr_dev->ib_dev);
+ 	for (i = 0; i < region_cnt; i++) {
+@@ -1151,7 +1151,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
+ 	int ret = 0;
+ 	int max_ofs;
+ 	int level;
+-	u32 step;
++	u64 step;
+ 	int end;
+ 
+ 	if (hopnum <= 1)
+@@ -1188,7 +1188,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
+ 		}
+ 
+ 		start_aligned = (distance / step) * step + r->offset;
+-		end = min_t(int, start_aligned + step - 1, max_ofs);
++		end = min_t(u64, start_aligned + step - 1, max_ofs);
+ 		cur = hem_list_alloc_item(hr_dev, start_aligned, end, unit,
+ 					  true);
+ 		if (!cur) {
+@@ -1277,7 +1277,7 @@ static int setup_middle_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
+ 	struct hns_roce_hem_item *hem, *temp_hem;
+ 	int total = 0;
+ 	int offset;
+-	int step;
++	u64 step;
+ 
+ 	step = hem_list_calc_ba_range(r->hopnum, 1, unit);
+ 	if (step < 1)
 -- 
 2.43.0
 
