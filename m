@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117F41ABEB7;
-	Mon, 14 Oct 2024 14:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6811B85DF;
+	Mon, 14 Oct 2024 14:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917828; cv=none; b=n44DAuuEtIqIfMFWwUzRQgRBSoV0kTD7KPo/rvjjh6pmhWXmt9a7HcF7hj+b959fdDdcSHBuPJKsi3A+eK/jhpV2gzQ5+IvdVdyez7FKi4YzC4eQbZ7s/EB7RHzSb7YsO5oYZ3bOGaRNfumV4m/aV2Wxj81xlSz3uIeQlO94+cc=
+	t=1728917831; cv=none; b=Xmb6ff+ywDz68gfUdNNDl5swYlgMBQqS6aQI7KyLD9k81cCXraSIHUw2wrGQf8Tuc+OWQNOyaDRk+UHw/3vfyM1+R7wSwjzlIQVny0kcLFVUoqq29lt22OpXM/pcx+NSeuyp98wx8EnSawa+99i7XgUL/fDOfZhVqndMliZccg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917828; c=relaxed/simple;
-	bh=3TYXP/sqF8hGD2aFuII5BGQRsTrM1oTSyXvP0y9dV2A=;
+	s=arc-20240116; t=1728917831; c=relaxed/simple;
+	bh=B8fvIItE1IH7zMm2Bhsq15Rq7sRMOm4++C9N8PX+3AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmGN1Ppc2PUsx321fSq1ijDuRqPRkTEs9sTEEWgtXGcOb3RUBspaDk1ErwOOmw3j714EPpSOYw4V6MElqMS/Hd86b8TBx4No0SB3vTtnwNIM0K6rrH/KIfCSpi3nlpj4gZjmq9OSc+JLJvM9DuyT31EeeGCf/lniDMsdiaUXJnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNbrM71u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BgjBXOSytm5jVGCUiLbcVtAZY1+6e8Q+kuRSjZm8txTXRhclKWVnScePq4IzN4yg8MOEeIKaSN2vkN3+Wsa23fgGEkC/XMLTu/cbg4WaEepRRE4EhelJVhb+G2j1i2eGgESk0+o3Z+bNfQJdTO0bm9mhGBRxtoaYXkMPSAxy75s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcsdeYWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNbrM71u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C25C4CEC3;
-	Mon, 14 Oct 2024 14:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcsdeYWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDCDC4CEC3;
+	Mon, 14 Oct 2024 14:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917828;
-	bh=3TYXP/sqF8hGD2aFuII5BGQRsTrM1oTSyXvP0y9dV2A=;
+	s=korg; t=1728917831;
+	bh=B8fvIItE1IH7zMm2Bhsq15Rq7sRMOm4++C9N8PX+3AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNbrM71uWI4B9ucDV0GU0byE9g5s9Pa7YUQEZBVmP0BmGSltqBuvFKiNhNPa8G+To
-	 nqEx13lb0AX2MsMj35anh+jPbLJVPgFG+otQpiqpeTP++C6ETCZuO1ZKDESKwSB/0l
-	 3s0pul+F61SpxfoGe3Eu0J953fg173m35/YsAhQI=
+	b=KcsdeYWe7UtVsGE52txAx64R0OeA3svuVS+az85beyv2PKK+QArUgUkpj7y73Dr0n
+	 ILsZl8naLCIpHGhanrX2p5QRUOmSIj6VQMnS7Dw9PY6kBzFclioH7zzB+37Rl6oOtn
+	 N0SmHMc+Cs/t+mcjE8zRbNjwhHkQsUaH3fwJxXik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/798] selftests/bpf: Fix missing BUILD_BUG_ON() declaration
-Date: Mon, 14 Oct 2024 16:11:40 +0200
-Message-ID: <20241014141223.653301577@linuxfoundation.org>
+Subject: [PATCH 6.1 147/798] selftests/bpf: Replace CHECK with ASSERT_* in ns_current_pid_tgid test
+Date: Mon, 14 Oct 2024 16:11:41 +0200
+Message-ID: <20241014141223.691938221@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,40 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 6495eb79ca7d15bd87c38d77307e8f9b6b7bf4ef ]
+[ Upstream commit 84239a24d10174fcfc7d6760cb120435a6ff69af ]
 
-Explicitly include '<linux/build_bug.h>' to fix errors seen compiling with
-gcc targeting mips64el/musl-libc:
+Replace CHECK in selftest ns_current_pid_tgid with recommended ASSERT_* style.
+I also shortened subtest name as the prefix of subtest name is covered
+by the test name already.
 
-  user_ringbuf.c: In function 'test_user_ringbuf_loop':
-  user_ringbuf.c:426:9: error: implicit declaration of function 'BUILD_BUG_ON' [-Werror=implicit-function-declaration]
-    426 |         BUILD_BUG_ON(total_samples <= c_max_entries);
-        |         ^~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+This patch does fix a testing issue. Currently even if bss->user_{pid,tgid}
+is not correct, the test still passed since the clone func returns 0.
+I fixed it to return a non-zero value if bss->user_{pid,tgid} is incorrect.
 
-Fixes: e5a9df51c746 ("selftests/bpf: Add selftests validating the user ringbuf")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/b28575f9221ec54871c46a2e87612bb4bbf46ccd.1721713597.git.tony.ambardar@gmail.com
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20240315184859.2975543-1-yonghong.song@linux.dev
+Stable-dep-of: 21f0b0af9772 ("selftests/bpf: Fix include of <sys/fcntl.h>")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/user_ringbuf.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../bpf/prog_tests/ns_current_pid_tgid.c      | 36 ++++++++++---------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-index 02b18d018b36a..ca81d660eb96f 100644
---- a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-@@ -4,6 +4,7 @@
- #define _GNU_SOURCE
- #include <linux/compiler.h>
- #include <linux/ring_buffer.h>
-+#include <linux/build_bug.h>
- #include <pthread.h>
- #include <stdio.h>
- #include <stdlib.h>
+diff --git a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+index 24d493482ffc7..3a0664a86243e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
++++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+@@ -20,19 +20,19 @@ static int test_current_pid_tgid(void *args)
+ {
+ 	struct test_ns_current_pid_tgid__bss  *bss;
+ 	struct test_ns_current_pid_tgid *skel;
+-	int err = -1, duration = 0;
++	int ret = -1, err;
+ 	pid_t tgid, pid;
+ 	struct stat st;
+ 
+ 	skel = test_ns_current_pid_tgid__open_and_load();
+-	if (CHECK(!skel, "skel_open_load", "failed to load skeleton\n"))
+-		goto cleanup;
++	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open_and_load"))
++		goto out;
+ 
+ 	pid = syscall(SYS_gettid);
+ 	tgid = getpid();
+ 
+ 	err = stat("/proc/self/ns/pid", &st);
+-	if (CHECK(err, "stat", "failed /proc/self/ns/pid: %d\n", err))
++	if (!ASSERT_OK(err, "stat /proc/self/ns/pid"))
+ 		goto cleanup;
+ 
+ 	bss = skel->bss;
+@@ -42,24 +42,26 @@ static int test_current_pid_tgid(void *args)
+ 	bss->user_tgid = 0;
+ 
+ 	err = test_ns_current_pid_tgid__attach(skel);
+-	if (CHECK(err, "skel_attach", "skeleton attach failed: %d\n", err))
++	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__attach"))
+ 		goto cleanup;
+ 
+ 	/* trigger tracepoint */
+ 	usleep(1);
+-	ASSERT_EQ(bss->user_pid, pid, "pid");
+-	ASSERT_EQ(bss->user_tgid, tgid, "tgid");
+-	err = 0;
++	if (!ASSERT_EQ(bss->user_pid, pid, "pid"))
++		goto cleanup;
++	if (!ASSERT_EQ(bss->user_tgid, tgid, "tgid"))
++		goto cleanup;
++	ret = 0;
+ 
+ cleanup:
+-	 test_ns_current_pid_tgid__destroy(skel);
+-
+-	return err;
++	test_ns_current_pid_tgid__destroy(skel);
++out:
++	return ret;
+ }
+ 
+ static void test_ns_current_pid_tgid_new_ns(void)
+ {
+-	int wstatus, duration = 0;
++	int wstatus;
+ 	pid_t cpid;
+ 
+ 	/* Create a process in a new namespace, this process
+@@ -68,21 +70,21 @@ static void test_ns_current_pid_tgid_new_ns(void)
+ 	cpid = clone(test_current_pid_tgid, child_stack + STACK_SIZE,
+ 		     CLONE_NEWPID | SIGCHLD, NULL);
+ 
+-	if (CHECK(cpid == -1, "clone", "%s\n", strerror(errno)))
++	if (!ASSERT_NEQ(cpid, -1, "clone"))
+ 		return;
+ 
+-	if (CHECK(waitpid(cpid, &wstatus, 0) == -1, "waitpid", "%s\n", strerror(errno)))
++	if (!ASSERT_NEQ(waitpid(cpid, &wstatus, 0), -1, "waitpid"))
+ 		return;
+ 
+-	if (CHECK(WEXITSTATUS(wstatus) != 0, "newns_pidtgid", "failed"))
++	if (!ASSERT_OK(WEXITSTATUS(wstatus), "newns_pidtgid"))
+ 		return;
+ }
+ 
+ /* TODO: use a different tracepoint */
+ void serial_test_ns_current_pid_tgid(void)
+ {
+-	if (test__start_subtest("ns_current_pid_tgid_root_ns"))
++	if (test__start_subtest("root_ns_tp"))
+ 		test_current_pid_tgid(NULL);
+-	if (test__start_subtest("ns_current_pid_tgid_new_ns"))
++	if (test__start_subtest("new_ns_tp"))
+ 		test_ns_current_pid_tgid_new_ns();
+ }
 -- 
 2.43.0
 
