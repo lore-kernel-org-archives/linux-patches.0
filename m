@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4241ABEB1;
-	Mon, 14 Oct 2024 15:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A3A1798C;
+	Mon, 14 Oct 2024 15:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919083; cv=none; b=tDJRlS83tqghyUSdbaLkNgsE7R8FljApSvgj/nE9LMhGDqm79JnRPt/YwpIpOlfoMTwE8frja0FGaZbei8SBXNQHWe5WT1+NV0L90FOWTT0IQlF2rAxB17/Gq7OeTYVMQlD18r1XtiatmlNsRCcIZL29lowYo36+toggsCXV06Q=
+	t=1728919087; cv=none; b=FJQmk+CkaWXmtVmA3kdfA0YY/hyxxdSQG6+LseztjQb9V9un7dWny8HVeryOBRDyBZIOL3oNvIB7UXVFE2KAjvyKY751sd+1uzRcg4Y0RRKAfwTV1dLjz7NzbHvGLFQaUaw3fScrK/yVqJQ2cS1UhAQgf/h9PSo2DAd+MO7me7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919083; c=relaxed/simple;
-	bh=ToVeGWb1ZxTCfZDwDu+MVRA47oM04N+f0qQ87sHThP4=;
+	s=arc-20240116; t=1728919087; c=relaxed/simple;
+	bh=dWvHWDQxmODHKDs+KpilTqix+DITWTkjBQc3R3z88t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIAX6Aqtv+4kz2P3nsjxWic9UAkqf3BZNcPE9IQN7HQVKNKUcOm5C6sM/AvYA4C2vjrhDlVh5cY3VroLU8hBJ8EMYKnC68Nlb+S9qpXiALGN9mEfTYTStAKmjizp1lh31Gzr8vAtTQ1GVqr9MWVhx2m0bLrsDHXi4AOUa+1cFvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDpowf3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hZ9HHo+9U/X8lodNA/7hj+sa6B0BW53JmchTbG13oToMmPKc/QEOcxrxM3JesKzJwY/j5zIDTUyxIc81TmT1m4/8ibdaij7yzQJfFt0qDl9N2Y4SKx4ZxEjl6dS9pe6uBwIsZaSkNWLjQRR2hJ6TPk5oRkcRMgoVfP0IVsZSKc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyFly/ik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDpowf3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0763CC4CEC3;
-	Mon, 14 Oct 2024 15:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyFly/ik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784BEC4CEC3;
+	Mon, 14 Oct 2024 15:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919083;
-	bh=ToVeGWb1ZxTCfZDwDu+MVRA47oM04N+f0qQ87sHThP4=;
+	s=korg; t=1728919087;
+	bh=dWvHWDQxmODHKDs+KpilTqix+DITWTkjBQc3R3z88t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDpowf3QgUps+TGGmb1s6MgRXGkx+IM4K71Sx4qS0gYv9L6HTRHAmYmoJb0PL3zd9
-	 kN0sAFZoM8xzSwvud5fG+YF6+GkD0vqLuhfXsrdSzd0WK3E+Bfoz0yhlILVvPeyJXS
-	 oyVMNVIhc4CiuhCF9Fpj15BBUFDnxiK9XRsMhKCc=
+	b=GyFly/ikRH0o45PPCTEwkHw44IwWyrVziKrqNqcjOI8Yn6votO6y9NEWUE4RzTHrt
+	 Nau7eP6uk9PtPjvJ8D7vGZerAzQSufEQTZsDqYgnwWYU0TDQJHE786Qwiys8dGlt0/
+	 wCVG0UNFDxHa/Yb5c+QbIlqiMiqHrXP+yctgCZAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 509/798] iomap: handle a post-direct I/O invalidate race in iomap_write_delalloc_release
-Date: Mon, 14 Oct 2024 16:17:43 +0200
-Message-ID: <20241014141237.976965673@linuxfoundation.org>
+Subject: [PATCH 6.1 510/798] blk-integrity: use sysfs_emit
+Date: Mon, 14 Oct 2024 16:17:44 +0200
+Message-ID: <20241014141238.016137494@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,52 +48,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 7a9d43eace888a0ee6095035997bb138425844d3 ]
+Upstream commit 3315e169b446249c1b61ff988d157238f4b2c5a0.
 
-When direct I/O completions invalidates the page cache it holds neither the
-i_rwsem nor the invalidate_lock so it can be racing with
-iomap_write_delalloc_release.  If the search for the end of the region that
-contains data returns the start offset we hit such a race and just need to
-look for the end of the newly created hole instead.
+The correct way to emit data into sysfs is via sysfs_emit(), use it.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240910043949.3481298-2-hch@lst.de
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Also perform some trivial syntactic cleanups.
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20230309-kobj_release-gendisk_integrity-v3-1-ceccb4493c46@weissschuh.net
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ block/blk-integrity.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 98617f00101d6..1833608f39318 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -990,7 +990,15 @@ static int iomap_write_delalloc_release(struct inode *inode,
- 			error = data_end;
- 			goto out_unlock;
- 		}
--		WARN_ON_ONCE(data_end <= start_byte);
-+
-+		/*
-+		 * If we race with post-direct I/O invalidation of the page cache,
-+		 * there might be no data left at start_byte.
-+		 */
-+		if (data_end == start_byte)
-+			continue;
-+
-+		WARN_ON_ONCE(data_end < start_byte);
- 		WARN_ON_ONCE(data_end > scan_end_byte);
+diff --git a/block/blk-integrity.c b/block/blk-integrity.c
+index e2d88611d5bf9..7131f0d30f116 100644
+--- a/block/blk-integrity.c
++++ b/block/blk-integrity.c
+@@ -248,20 +248,19 @@ static ssize_t integrity_attr_store(struct kobject *kobj,
+ static ssize_t integrity_format_show(struct blk_integrity *bi, char *page)
+ {
+ 	if (bi->profile && bi->profile->name)
+-		return sprintf(page, "%s\n", bi->profile->name);
+-	else
+-		return sprintf(page, "none\n");
++		return sysfs_emit(page, "%s\n", bi->profile->name);
++	return sysfs_emit(page, "none\n");
+ }
  
- 		error = iomap_write_delalloc_scan(inode, &punch_start_byte,
+ static ssize_t integrity_tag_size_show(struct blk_integrity *bi, char *page)
+ {
+-	return sprintf(page, "%u\n", bi->tag_size);
++	return sysfs_emit(page, "%u\n", bi->tag_size);
+ }
+ 
+ static ssize_t integrity_interval_show(struct blk_integrity *bi, char *page)
+ {
+-	return sprintf(page, "%u\n",
+-		       bi->interval_exp ? 1 << bi->interval_exp : 0);
++	return sysfs_emit(page, "%u\n",
++			  bi->interval_exp ? 1 << bi->interval_exp : 0);
+ }
+ 
+ static ssize_t integrity_verify_store(struct blk_integrity *bi,
+@@ -280,7 +279,7 @@ static ssize_t integrity_verify_store(struct blk_integrity *bi,
+ 
+ static ssize_t integrity_verify_show(struct blk_integrity *bi, char *page)
+ {
+-	return sprintf(page, "%d\n", (bi->flags & BLK_INTEGRITY_VERIFY) != 0);
++	return sysfs_emit(page, "%d\n", !!(bi->flags & BLK_INTEGRITY_VERIFY));
+ }
+ 
+ static ssize_t integrity_generate_store(struct blk_integrity *bi,
+@@ -299,13 +298,13 @@ static ssize_t integrity_generate_store(struct blk_integrity *bi,
+ 
+ static ssize_t integrity_generate_show(struct blk_integrity *bi, char *page)
+ {
+-	return sprintf(page, "%d\n", (bi->flags & BLK_INTEGRITY_GENERATE) != 0);
++	return sysfs_emit(page, "%d\n", !!(bi->flags & BLK_INTEGRITY_GENERATE));
+ }
+ 
+ static ssize_t integrity_device_show(struct blk_integrity *bi, char *page)
+ {
+-	return sprintf(page, "%u\n",
+-		       (bi->flags & BLK_INTEGRITY_DEVICE_CAPABLE) != 0);
++	return sysfs_emit(page, "%u\n",
++			  !!(bi->flags & BLK_INTEGRITY_DEVICE_CAPABLE));
+ }
+ 
+ static struct integrity_sysfs_entry integrity_format_entry = {
 -- 
 2.43.0
 
