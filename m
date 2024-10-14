@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489964595B;
-	Mon, 14 Oct 2024 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005754595B;
+	Mon, 14 Oct 2024 14:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916852; cv=none; b=TJi+HADEjt4CN1YgP3u6hXs4sQ7iXhSCHs5G1h94IaXCS6wZK3YBb3iJHLeR2sTDam/rwCknWtc+z1XltS311ogluaBsmPe5dWIB4CxJ9g3Lo16Y0yN5dtQmoh59K7v5R724ePF/1td8lSZFkcJo1+ZHE78dDO6kyJWfNn4WbOY=
+	t=1728916856; cv=none; b=WkiDWS8aYk7knSNEP4zKiP9pwUar0ebkwQNw57VvTZ3VAw6pndVlh0DISqFI+r39bhymWSCLHJTOqA64lVe71/1o9pJxdSmqSqxAnoKIwcWZRag2n499eFoQwsu8zIyn/2Ani6TxXCiszNgRELSQ+Be+DGC38iZLpwlP3n2UPhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916852; c=relaxed/simple;
-	bh=UlXR5/4Kj3/3wnUHsIpfAvdGeqUnsGSt38FqP90gdoM=;
+	s=arc-20240116; t=1728916856; c=relaxed/simple;
+	bh=/QcHuTzLan98W2X3rgDvs97/VanWOoBkK05/+MoEJ0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAv01XFBbLwHfpfJ9DN5NzkKX1Q4lxA6bS24pi//B3NhtbFnT3HwlY8hAoTDrBdCoCiu9tOlStPawcdAXKXapJJOfr36YHuGKi1Keofepd1ae4SEiPB2rDBClOrYgM8tF0AeuZvV0lU3xxLqfWLWc2R1VyscBQeR9KImn5MNQVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNDHOj8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i2V+qz5RDqirb22WKNUSSZxv24C13gy2/Gbh7SVQUDM8YQsNuvv8MdMJ+hvtO/9FIYPeo8RP6E5K0G0a98tjS7V9RdS6oyVdz/oOaehW7R9p0SfmpC6zanXOxNPzSVG0Jpx2ALRMmP6js2j45uOBev9Rkg37Ayugzd0jqf5w0GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPggeaop; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNDHOj8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC40C4CEC3;
-	Mon, 14 Oct 2024 14:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPggeaop"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15070C4CECF;
+	Mon, 14 Oct 2024 14:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916852;
-	bh=UlXR5/4Kj3/3wnUHsIpfAvdGeqUnsGSt38FqP90gdoM=;
+	s=korg; t=1728916855;
+	bh=/QcHuTzLan98W2X3rgDvs97/VanWOoBkK05/+MoEJ0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNDHOj8ZklhSEFAEM1BYW90w3FyIRh6HeLse4cj5BF+uBYUWEA2lJmM1e2nZygmUP
-	 3UEq3+8rCKfyq4LDOodxoB1Wqi9ZiSD55Lzb+Hgl15dEvEud9Eb+scOjrKHZHPZDOG
-	 iZNENDnTsCEiyDDDFpd786Z8tJzY2nrLPfSQTrYg=
+	b=WPggeaopcAdmaZ0WSnc6BVTdTXWyYrHhngHg1C1tQN5+c4bhosPs1RodaxU791IiJ
+	 htnNcvN7Dfc5ZEMy9sMyTOyx3IA5hIO3e9Gq/9uMe0izAwz5dDlcAVDvpnTqjjqmpq
+	 b6a26eOeE4Ky8c+Ibza+vIiietZaVZSUwudmzkfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Petr Tesarik <petr@tesarici.cz>,
+	Ying Sun <sunying@isrc.iscas.ac.cn>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/213] soundwire: cadence: re-check Peripheral status with delayed_work
-Date: Mon, 14 Oct 2024 16:19:49 +0200
-Message-ID: <20241014141046.216943005@linuxfoundation.org>
+Subject: [PATCH 6.6 084/213] riscv/kexec_file: Fix relocation type R_RISCV_ADD16 and R_RISCV_SUB16 unknown
+Date: Mon, 14 Oct 2024 16:19:50 +0200
+Message-ID: <20241014141046.255684944@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -53,202 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Ying Sun <sunying@isrc.iscas.ac.cn>
 
-[ Upstream commit f8c35d61ba01afa76846905c67862cdace7f66b0 ]
+[ Upstream commit c6ebf2c528470a09be77d0d9df2c6617ea037ac5 ]
 
-The SoundWire peripheral enumeration is entirely based on interrupts,
-more specifically sticky bits tracking state changes.
+Runs on the kernel with CONFIG_RISCV_ALTERNATIVE enabled:
+  kexec -sl vmlinux
 
-This patch adds a defensive programming check on the actual status
-reported in PING frames. If for some reason an interrupt was lost or
-delayed, the delayed work would detect a peripheral change of status
-after the bus starts.
+Error:
+  kexec_image: Unknown rela relocation: 34
+  kexec_image: Error loading purgatory ret=-8
+and
+  kexec_image: Unknown rela relocation: 38
+  kexec_image: Error loading purgatory ret=-8
 
-The 100ms defined for the delay is not completely arbitrary, if a
-Peripheral didn't join the bus within that delay then probably the
-hardware link is broken, and conversely if the detection didn't happen
-because of software issues the 100ms is still acceptable in terms of
-user experience.
+The purgatory code uses the 16-bit addition and subtraction relocation
+type, but not handled, resulting in kexec_file_load failure.
+So add handle to arch_kexec_apply_relocations_add().
 
-The overhead of the one-shot workqueue is minimal, and the mutual
-exclusion ensures that the interrupt and delayed work cannot update
-the status concurrently.
+Tested on RISC-V64 Qemu-virt, issue fixed.
 
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20240805114921.88007-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Co-developed-by: Petr Tesarik <petr@tesarici.cz>
+Signed-off-by: Petr Tesarik <petr@tesarici.cz>
+Signed-off-by: Ying Sun <sunying@isrc.iscas.ac.cn>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240711083236.2859632-1-sunying@isrc.iscas.ac.cn
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c   | 39 ++++++++++++++++++++++++++--
- drivers/soundwire/cadence_master.h   |  5 ++++
- drivers/soundwire/intel.h            |  2 ++
- drivers/soundwire/intel_auxdevice.c  |  1 +
- drivers/soundwire/intel_bus_common.c | 11 ++++++++
- 5 files changed, 56 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/elf_kexec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index 3e7cf04aaf2a6..e69982dbd449b 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -891,8 +891,14 @@ static int cdns_update_slave_status(struct sdw_cdns *cdns,
- 		}
- 	}
- 
--	if (is_slave)
--		return sdw_handle_slave_status(&cdns->bus, status);
-+	if (is_slave) {
-+		int ret;
-+
-+		mutex_lock(&cdns->status_update_lock);
-+		ret = sdw_handle_slave_status(&cdns->bus, status);
-+		mutex_unlock(&cdns->status_update_lock);
-+		return ret;
-+	}
- 
- 	return 0;
- }
-@@ -989,6 +995,31 @@ irqreturn_t sdw_cdns_irq(int irq, void *dev_id)
- }
- EXPORT_SYMBOL(sdw_cdns_irq);
- 
-+static void cdns_check_attached_status_dwork(struct work_struct *work)
-+{
-+	struct sdw_cdns *cdns =
-+		container_of(work, struct sdw_cdns, attach_dwork.work);
-+	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
-+	u32 val;
-+	int ret;
-+	int i;
-+
-+	val = cdns_readl(cdns, CDNS_MCP_SLAVE_STAT);
-+
-+	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
-+		status[i] = val & 0x3;
-+		if (status[i])
-+			dev_dbg(cdns->dev, "Peripheral %d status: %d\n", i, status[i]);
-+		val >>= 2;
-+	}
-+
-+	mutex_lock(&cdns->status_update_lock);
-+	ret = sdw_handle_slave_status(&cdns->bus, status);
-+	mutex_unlock(&cdns->status_update_lock);
-+	if (ret < 0)
-+		dev_err(cdns->dev, "%s: sdw_handle_slave_status failed: %d\n", __func__, ret);
-+}
-+
- /**
-  * cdns_update_slave_status_work - update slave status in a work since we will need to handle
-  * other interrupts eg. CDNS_MCP_INT_RX_WL during the update slave
-@@ -1745,7 +1776,11 @@ int sdw_cdns_probe(struct sdw_cdns *cdns)
- 	init_completion(&cdns->tx_complete);
- 	cdns->bus.port_ops = &cdns_port_ops;
- 
-+	mutex_init(&cdns->status_update_lock);
-+
- 	INIT_WORK(&cdns->work, cdns_update_slave_status_work);
-+	INIT_DELAYED_WORK(&cdns->attach_dwork, cdns_check_attached_status_dwork);
-+
- 	return 0;
- }
- EXPORT_SYMBOL(sdw_cdns_probe);
-diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
-index bc84435e420f5..e1d7969ba48ae 100644
---- a/drivers/soundwire/cadence_master.h
-+++ b/drivers/soundwire/cadence_master.h
-@@ -117,6 +117,8 @@ struct sdw_cdns_dai_runtime {
-  * @link_up: Link status
-  * @msg_count: Messages sent on bus
-  * @dai_runtime_array: runtime context for each allocated DAI.
-+ * @status_update_lock: protect concurrency between interrupt-based and delayed work
-+ * status update
-  */
- struct sdw_cdns {
- 	struct device *dev;
-@@ -148,10 +150,13 @@ struct sdw_cdns {
- 	bool interrupt_enabled;
- 
- 	struct work_struct work;
-+	struct delayed_work attach_dwork;
- 
- 	struct list_head list;
- 
- 	struct sdw_cdns_dai_runtime **dai_runtime_array;
-+
-+	struct mutex status_update_lock; /* add mutual exclusion to sdw_handle_slave_status() */
- };
- 
- #define bus_to_cdns(_bus) container_of(_bus, struct sdw_cdns, bus)
-diff --git a/drivers/soundwire/intel.h b/drivers/soundwire/intel.h
-index 511932c55216c..bb6b1df2d2c20 100644
---- a/drivers/soundwire/intel.h
-+++ b/drivers/soundwire/intel.h
-@@ -91,6 +91,8 @@ static inline void intel_writew(void __iomem *base, int offset, u16 value)
- 
- #define INTEL_MASTER_RESET_ITERATIONS	10
- 
-+#define SDW_INTEL_DELAYED_ENUMERATION_MS	100
-+
- #define SDW_INTEL_CHECK_OPS(sdw, cb)	((sdw) && (sdw)->link_res && (sdw)->link_res->hw_ops && \
- 					 (sdw)->link_res->hw_ops->cb)
- #define SDW_INTEL_OPS(sdw, cb)		((sdw)->link_res->hw_ops->cb)
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index 93698532deac4..bdfff78ac2f81 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -398,6 +398,7 @@ static void intel_link_remove(struct auxiliary_device *auxdev)
- 	 */
- 	if (!bus->prop.hw_disabled) {
- 		sdw_intel_debugfs_exit(sdw);
-+		cancel_delayed_work_sync(&cdns->attach_dwork);
- 		sdw_cdns_enable_interrupt(cdns, false);
- 	}
- 	sdw_bus_master_delete(bus);
-diff --git a/drivers/soundwire/intel_bus_common.c b/drivers/soundwire/intel_bus_common.c
-index 179aa0d85951b..db9cf211671a3 100644
---- a/drivers/soundwire/intel_bus_common.c
-+++ b/drivers/soundwire/intel_bus_common.c
-@@ -60,6 +60,9 @@ int intel_start_bus(struct sdw_intel *sdw)
- 	sdw_cdns_check_self_clearing_bits(cdns, __func__,
- 					  true, INTEL_MASTER_RESET_ITERATIONS);
- 
-+	schedule_delayed_work(&cdns->attach_dwork,
-+			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
-+
- 	return 0;
- }
- 
-@@ -151,6 +154,9 @@ int intel_start_bus_after_reset(struct sdw_intel *sdw)
- 	}
- 	sdw_cdns_check_self_clearing_bits(cdns, __func__, true, INTEL_MASTER_RESET_ITERATIONS);
- 
-+	schedule_delayed_work(&cdns->attach_dwork,
-+			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
-+
- 	return 0;
- }
- 
-@@ -184,6 +190,9 @@ int intel_start_bus_after_clock_stop(struct sdw_intel *sdw)
- 
- 	sdw_cdns_check_self_clearing_bits(cdns, __func__, true, INTEL_MASTER_RESET_ITERATIONS);
- 
-+	schedule_delayed_work(&cdns->attach_dwork,
-+			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
-+
- 	return 0;
- }
- 
-@@ -194,6 +203,8 @@ int intel_stop_bus(struct sdw_intel *sdw, bool clock_stop)
- 	bool wake_enable = false;
- 	int ret;
- 
-+	cancel_delayed_work_sync(&cdns->attach_dwork);
-+
- 	if (clock_stop) {
- 		ret = sdw_cdns_clock_stop(cdns, true);
- 		if (ret < 0)
+diff --git a/arch/riscv/kernel/elf_kexec.c b/arch/riscv/kernel/elf_kexec.c
+index e60fbd8660c4a..8c32bf1eedda0 100644
+--- a/arch/riscv/kernel/elf_kexec.c
++++ b/arch/riscv/kernel/elf_kexec.c
+@@ -444,6 +444,12 @@ int arch_kexec_apply_relocations_add(struct purgatory_info *pi,
+ 			*(u32 *)loc = CLEAN_IMM(CJTYPE, *(u32 *)loc) |
+ 				 ENCODE_CJTYPE_IMM(val - addr);
+ 			break;
++		case R_RISCV_ADD16:
++			*(u16 *)loc += val;
++			break;
++		case R_RISCV_SUB16:
++			*(u16 *)loc -= val;
++			break;
+ 		case R_RISCV_ADD32:
+ 			*(u32 *)loc += val;
+ 			break;
 -- 
 2.43.0
 
