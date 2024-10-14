@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C063624B34;
-	Mon, 14 Oct 2024 14:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED6A4A24;
+	Mon, 14 Oct 2024 14:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916634; cv=none; b=T74Vqx9pNbSPMLZjGRvUwGHVTtoLe7JA5eNb/I7nLREXYD7y9ge1g4iruwp9CtE1mBbOq8XITHMvkNjIHFHhimcgGDsQlISaDLKLYLVY3TqlWDgdjKp5imKteJuwwwolYpdPEIssZ0lDqF2v5eAlWFlUIZjWISe8tv2ngKzEaN0=
+	t=1728916638; cv=none; b=i+RhkDtFBn+UNVu9dfbQJdLoAt1REJcwm7EN+hDfjwcn8IrfTj4FEPJIX29a7MYzzsnHSqSmaDP842iUKhkAWFrAOtwdbjRcd21KBOxvCpWrQJAXywMHotHNkcO4GU8napkFDnhWtG8kpDnDYWzQiGWuORa4rxKKjR+3w8ZV9h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916634; c=relaxed/simple;
-	bh=C49t4bjwpfWh6VmK+YuFqT9JE/ewg7xZKh4lhu+vNJ8=;
+	s=arc-20240116; t=1728916638; c=relaxed/simple;
+	bh=M3PTGWyJHbrBS7Ybj3MXs+Af78B41pfOZFaomQxbA3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KA6Vto9Q/U629YOv6yuPjLhGkyz9wXyi3X+9Xzts02cR68sLdvlvcKGbEOFv9xMDpC9Z7NK6Mef/WzK87zcLGZ9p0MhJV9t/cgCxIBs89mnPz6AWjwy6vwzA1xbEwJPHI2CejGa33RSwM7z6NLo59aqLOQRjebvaJhdqR3uxvVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh75+DTQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U7NwXkHzwmQBRUahLw58uActVSb5rDy8OeldBdv90/PIvlbMV93bL31PgOK2UR9t1oqEnSMPjYytwPzswT2cETxgViAhFWy/z1VdGnfKhdiKOTK00igj+J5mlGbyJEbDb18s9lrKCxPMXLuwV3kej7s6FTKGtg4tMmwFvqMjFJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+0uUrPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh75+DTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CAFCC4CEC3;
-	Mon, 14 Oct 2024 14:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+0uUrPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8838FC4CEC3;
+	Mon, 14 Oct 2024 14:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916634;
-	bh=C49t4bjwpfWh6VmK+YuFqT9JE/ewg7xZKh4lhu+vNJ8=;
+	s=korg; t=1728916637;
+	bh=M3PTGWyJHbrBS7Ybj3MXs+Af78B41pfOZFaomQxbA3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gh75+DTQ/DQr0fzWNAP9avQfI2wjgrl+04CW4IdycZVwEB+CWNrFj2Sbf7lYMl8Yj
-	 4EFQRqlKgVYLayh08sajfOYMEmP0Q83Gt7ktZ67/5+Aq46qsLmkYhzjhdAnV2XAE1B
-	 aQhupTQTCNJEgXgHPrhdoZ1769L+WUdovbs4MOu8=
+	b=D+0uUrPjAWnsE7uxVV7F39tURkK+iixcy84V6dSi0QSPldKwUt5iZukIglgpe2Qei
+	 kqAKyWPVJKlA8jn6WA3iP/1beJcPSO/1NKhC79OMjvpgnPOWDJv2tBV6GH4ITnqPLE
+	 k9HhfnP4LWyVwDJ1Z+9MfCg5rS7lB0i474dsLJD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoff Levand <geoff@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/213] Revert "powerpc/ps3_defconfig: Disable PPC64_BIG_ENDIAN_ELF_ABI_V2"
-Date: Mon, 14 Oct 2024 16:18:48 +0200
-Message-ID: <20241014141043.853517012@linuxfoundation.org>
+Subject: [PATCH 6.6 023/213] pds_core: no health-thread in VF path
+Date: Mon, 14 Oct 2024 16:18:49 +0200
+Message-ID: <20241014141043.891906972@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,35 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoff Levand <geoff@infradead.org>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 914d081ead115f7ba685ab57f977716bdd09c894 ]
+[ Upstream commit 3e36031cc0540ca97b615cbb940331892cbd3d21 ]
 
-This reverts commit 482b718a84f08b6fc84879c3e90cc57dba11c115.
+The VFs don't run the health thread, so don't try to
+stop or restart the non-existent timer or work item.
 
-The preceding commits by Nicholas Piggin enable PS3 support for ELFv2,
-so there's no need to disable it for PS3 anymore.
-
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/983836405df1b6001a2262972fb32d1aee97d6f5.1705654669.git.geoff@infradead.org
+Fixes: d9407ff11809 ("pds_core: Prevent health thread from running during reset/remove")
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20240210002002.49483-1-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/configs/ps3_defconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/powerpc/configs/ps3_defconfig b/arch/powerpc/configs/ps3_defconfig
-index aa8bb0208bcc8..2b175ddf82f0b 100644
---- a/arch/powerpc/configs/ps3_defconfig
-+++ b/arch/powerpc/configs/ps3_defconfig
-@@ -24,7 +24,6 @@ CONFIG_PS3_VRAM=m
- CONFIG_PS3_LPM=m
- # CONFIG_PPC_OF_BOOT_TRAMPOLINE is not set
- CONFIG_KEXEC=y
--# CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not set
- CONFIG_PPC_4K_PAGES=y
- CONFIG_SCHED_SMT=y
- CONFIG_PM=y
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 6d589ac532a3d..eddbf0acdde77 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -451,6 +451,9 @@ static void pdsc_remove(struct pci_dev *pdev)
+ 
+ static void pdsc_stop_health_thread(struct pdsc *pdsc)
+ {
++	if (pdsc->pdev->is_virtfn)
++		return;
++
+ 	timer_shutdown_sync(&pdsc->wdtimer);
+ 	if (pdsc->health_work.func)
+ 		cancel_work_sync(&pdsc->health_work);
+@@ -458,6 +461,9 @@ static void pdsc_stop_health_thread(struct pdsc *pdsc)
+ 
+ static void pdsc_restart_health_thread(struct pdsc *pdsc)
+ {
++	if (pdsc->pdev->is_virtfn)
++		return;
++
+ 	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
+ 	mod_timer(&pdsc->wdtimer, jiffies + 1);
+ }
 -- 
 2.43.0
 
