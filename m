@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE7F1AC885;
-	Mon, 14 Oct 2024 15:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502E91CF7C6;
+	Mon, 14 Oct 2024 15:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919632; cv=none; b=FKvihIai34WTtvKldrtsj2gGZCgDWbQ82pyoCNhX0rAZ6y1yKhpcbZt7ppUFjrdASbF074egetnHaBKPBjSnf52dyL4Nf+9ZzaaaaFFe4I9MQ8oK+zUSRJX3lLT9653KDJEj0JfG+a1T+7zcmifVpwzIyW3vDDdlCdOJiIwsD70=
+	t=1728919635; cv=none; b=uCLiQZH3yxHmiQfgD4XDsrtQtSFqDVKlxuODGGzRcM1gZLz31Gw1hJKdYWv36mdVHcu9ucRdn7pmomgrIXzTTImhvLiPocfCwX1UXTmdFXN10SPEAX8NL9VVsaUReQO4n46a+k/xIu3chG5/qUlxG5lgXltWVQ9vc2s7txfk2MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919632; c=relaxed/simple;
-	bh=Qda8jM2e5+1spywJIihty1F54WOJj4DpBCeltHmj7OY=;
+	s=arc-20240116; t=1728919635; c=relaxed/simple;
+	bh=iE67nwFiQr5inrYHh2VVHKzB3CtGpxYaGBpRvbwNvR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAa8Plb1tRFwI/7Yds/JEd78r+gbTnLWD75g1iC1rP3pf8pvZxmEsRZhbikL1N+eDk/FEa4qlhC8OI8ify23rcyEqfFOd459ne0ax5WvtHcu/u5tgRcRH2IqbfvuObeCpGWIexF15jsCVkpU+EENCZAMOGXd6kcdREaeUOrjr2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVjbN74o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9JY7F23dfDzGZCuPPZ5P9is4pKBu+dgu/aUKGYqniqFXXW2EHUcf31Ui0dNIDZR98KGKBuRK5jQGxUgK2M55AW8O021PtmWwQy09n7K1w3JT9h6A3FdS2ST/FnjD20LQnKSUlI2ZsGTzcqJ06XVTLZQ/VV2OCvoRcMD5C5Hi3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7wkjVxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVjbN74o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD52C4CECF;
-	Mon, 14 Oct 2024 15:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7wkjVxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBA0C4CED0;
+	Mon, 14 Oct 2024 15:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919631;
-	bh=Qda8jM2e5+1spywJIihty1F54WOJj4DpBCeltHmj7OY=;
+	s=korg; t=1728919634;
+	bh=iE67nwFiQr5inrYHh2VVHKzB3CtGpxYaGBpRvbwNvR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVjbN74ou0hzOSjq/cA5GaQBglfD54MRlQAT4zE0zou/spxTmFmRxNYtaM5nw9hsq
-	 mP5NeL6Dfpg892olllKkpvipfgFBndWzZjtfyQ98BgvKp0bL5FZXkWVc5BjpITGxaT
-	 nh6wmisKnYGjZLVd4co43GsW/rIXr+L8SdwW6rso=
+	b=D7wkjVxYSJD1Wgsrbp5nhYYds3EYojABE5PDjQ0gz0xbFEdBMvuhyg16cE54JVjLe
+	 4ffNdN+QyZJcMzVGF/OK2uOzZlTzFMDg2KF/3Lr3L7Kpxq0bLPZ6/E8tdAkVGJ/E6I
+	 WoaHoT8/rS+dMCas1bg4ym9/4iQ3w5+RuOT/iWy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiyang Ruan <ruansy.fnst@fujitsu.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Chinner <david@fromorbit.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 661/798] fsdax: dax_unshare_iter() should return a valid length
-Date: Mon, 14 Oct 2024 16:20:15 +0200
-Message-ID: <20241014141244.020694119@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.1 662/798] clk: imx6ul: fix "failed to get parent" error
+Date: Mon, 14 Oct 2024 16:20:16 +0200
+Message-ID: <20241014141244.060130988@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -57,43 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 388bc034d91d480efa88abc5c8d6e6c8a878b1ab upstream.
+commit f420f47e56c67587d9bc8f94267327b6fb214c1d upstream.
 
-The copy_mc_to_kernel() will return 0 if it executed successfully.  Then
-the return value should be set to the length it copied.
+On some configuration we may get following error:
+[    0.000000] imx:clk-gpr-mux: failed to get parent (-EINVAL)
 
-[akpm@linux-foundation.org: don't mess up `ret', per Matthew]
-Link: https://lkml.kernel.org/r/1675341227-14-1-git-send-email-ruansy.fnst@fujitsu.com
-Fixes: d984648e428b ("fsdax,xfs: port unshare to fsdax")
-Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This happens if selector is configured to not supported value. To avoid
+this warnings add dummy parents for not supported values.
+
+Fixes: 4e197ee880c2 ("clk: imx6ul: add ethernet refclock mux support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20230310164523.534571-1-o.rempel@pengutronix.de
+Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
+Reported-by: Stefan Wahren <stefan.wahren@i2se.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dax.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx6ul.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1247,8 +1247,9 @@ static s64 dax_unshare_iter(struct iomap
- 	if (ret < 0)
- 		goto out_unlock;
+--- a/drivers/clk/imx/clk-imx6ul.c
++++ b/drivers/clk/imx/clk-imx6ul.c
+@@ -95,14 +95,16 @@ static const struct clk_div_table video_
+ 	{ }
+ };
  
--	ret = copy_mc_to_kernel(daddr, saddr, length);
--	if (ret)
-+	if (copy_mc_to_kernel(daddr, saddr, length) == 0)
-+		ret = length;
-+	else
- 		ret = -EIO;
+-static const char * enet1_ref_sels[] = { "enet1_ref_125m", "enet1_ref_pad", };
++static const char * enet1_ref_sels[] = { "enet1_ref_125m", "enet1_ref_pad", "dummy", "dummy"};
+ static const u32 enet1_ref_sels_table[] = { IMX6UL_GPR1_ENET1_TX_CLK_DIR,
+-					    IMX6UL_GPR1_ENET1_CLK_SEL };
++					    IMX6UL_GPR1_ENET1_CLK_SEL, 0,
++					    IMX6UL_GPR1_ENET1_TX_CLK_DIR | IMX6UL_GPR1_ENET1_CLK_SEL };
+ static const u32 enet1_ref_sels_table_mask = IMX6UL_GPR1_ENET1_TX_CLK_DIR |
+ 					     IMX6UL_GPR1_ENET1_CLK_SEL;
+-static const char * enet2_ref_sels[] = { "enet2_ref_125m", "enet2_ref_pad", };
++static const char * enet2_ref_sels[] = { "enet2_ref_125m", "enet2_ref_pad", "dummy", "dummy"};
+ static const u32 enet2_ref_sels_table[] = { IMX6UL_GPR1_ENET2_TX_CLK_DIR,
+-					    IMX6UL_GPR1_ENET2_CLK_SEL };
++					    IMX6UL_GPR1_ENET2_CLK_SEL, 0,
++					    IMX6UL_GPR1_ENET2_TX_CLK_DIR | IMX6UL_GPR1_ENET2_CLK_SEL };
+ static const u32 enet2_ref_sels_table_mask = IMX6UL_GPR1_ENET2_TX_CLK_DIR |
+ 					     IMX6UL_GPR1_ENET2_CLK_SEL;
  
- out_unlock:
 
 
