@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3B1AE01F;
-	Mon, 14 Oct 2024 15:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39CE1AE01F;
+	Mon, 14 Oct 2024 15:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919372; cv=none; b=Qw+u1FiQf6XIH2s1/HPE1t2enbbV30e5Jsi9bV9jEKIeHbPYDUyVCnP7ENG4rkOBHyDG/ykg3rf0CvCi6i9M2sZLjI/dVdmhpEgk8BlA23nWcV+/0sXg9hMsXu3Y92EVW7cDLhIfeZhuQ6Mx81ExenqtcBH/4d4SzJiWBGknr5U=
+	t=1728919376; cv=none; b=sfl4oO8WEKMnWdOS9dOd4qvh5dMjA/waxU61edeuQ5tB2KBEY+bP1V4OCi1ByJ3dy8zZ9e21lO8rfhLByw4pq4M7KHC9K43wEoqYRiqM3nn5X/eoL+nnN4rTfYxTZUIe9beVbRVqtDrFYS4QdHcUEB00aTgVBS+aA9OYyNfyT8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919372; c=relaxed/simple;
-	bh=5l7HWN54Sg5ptCCW3jOB5TVemOxBrpmzbY223kQ1ARc=;
+	s=arc-20240116; t=1728919376; c=relaxed/simple;
+	bh=oPk4u5WjiJ/ecqFm/sdGg/MMdzhuuEDK/ft7rgI06EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXb0CTLT8N+5f76mRa9hj00WnEDc5/56ubtwIiOeLVPeDutUX1UwEyXCyGFt31uZOsmr1VlzFw1SxwtF2eoFyselgbTat4oqpH44rqTsIQZVf5M166tvsBNLIpoLJQVST1VGKdqkqK6nvVKGB6O5Cc8T+EFiETwHFP3C8HR1cN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7+EKx/N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mCNLmwvUkNtjyLIgVHyjYAAZAZerJXolKHxX+CIZl1ovAE3uF6ppLTqZBuR63sHRl7MGcv6meHzfyAaXnlu7o9d+fkstL23F4x9oLgiDFFGMcuZ5R57PwOSdbamZuq4+iYNI7p2X/Gxk/+AUjH6ace0hyV7+/i6qOmKlWMXoAsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INpsGBeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7+EKx/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DFCC4CEC3;
-	Mon, 14 Oct 2024 15:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INpsGBeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE411C4CEC3;
+	Mon, 14 Oct 2024 15:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919372;
-	bh=5l7HWN54Sg5ptCCW3jOB5TVemOxBrpmzbY223kQ1ARc=;
+	s=korg; t=1728919375;
+	bh=oPk4u5WjiJ/ecqFm/sdGg/MMdzhuuEDK/ft7rgI06EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7+EKx/NRToiGz0mX3tpHmW/u1rCxu9jMpNn2OGuapYF61sjopcn6oXf1h2wABrg1
-	 fCUeyK5j3rEBK8K2pX/iRRCmBZ7QPAH6ZeGDAmwPBb0VYWvhVpVHaHk8l/gHJMhtki
-	 AY5gGnmn5DWvf6r5GzjBDJo/JICJrAoEFgl3/HFg=
+	b=INpsGBeGKj5pdvPJ70C7WIeVgPkTiR37k9Gmyh5jKHRS60KCwYrH34xK3/ySA5CNi
+	 uZX31IknLJmWclIN2vBrMjUNYYaVT8e605nUp8rroOiMA9fGUA7L2wKp8sy7xpM8b+
+	 82GGizMeYPircd9sOIZF05szSSGvQwZoQvv0nkB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 591/798] clk: qcom: gcc-sc8180x: Fix the sdcc2 and sdcc4 clocks freq table
-Date: Mon, 14 Oct 2024 16:19:05 +0200
-Message-ID: <20241014141241.223499476@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 565/798] mm: krealloc: consider spare memory for __GFP_ZERO
+Date: Mon, 14 Oct 2024 16:18:39 +0200
+Message-ID: <20241014141240.194585562@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,44 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit b8acaf2de8081371761ab4cf1e7a8ee4e7acc139 upstream.
+commit 1a83a716ec233990e1fd5b6fbb1200ade63bf450 upstream.
 
-Update the frequency tables of gcc_sdcc2_apps_clk and gcc_sdcc4_apps_clk
-as per the latest frequency plan.
+As long as krealloc() is called with __GFP_ZERO consistently, starting
+with the initial memory allocation, __GFP_ZERO should be fully honored.
 
-Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
-Cc: stable@vger.kernel.org
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-4-8b3eaa5fb856@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+However, if for an existing allocation krealloc() is called with a
+decreased size, it is not ensured that the spare portion the allocation is
+zeroed.  Thus, if krealloc() is subsequently called with a larger size
+again, __GFP_ZERO can't be fully honored, since we don't know the previous
+size, but only the bucket size.
+
+Example:
+
+	buf = kzalloc(64, GFP_KERNEL);
+	memset(buf, 0xff, 64);
+
+	buf = krealloc(buf, 48, GFP_KERNEL | __GFP_ZERO);
+
+	/* After this call the last 16 bytes are still 0xff. */
+	buf = krealloc(buf, 64, GFP_KERNEL | __GFP_ZERO);
+
+Fix this, by explicitly setting spare memory to zero, when shrinking an
+allocation with __GFP_ZERO flag set or init_on_alloc enabled.
+
+Link: https://lkml.kernel.org/r/20240812223707.32049-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Rientjes <rientjes@google.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sc8180x.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ mm/slab_common.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/clk/qcom/gcc-sc8180x.c
-+++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -895,7 +895,7 @@ static const struct freq_tbl ftbl_gcc_sd
- 	F(25000000, P_GPLL0_OUT_MAIN, 12, 1, 2),
- 	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
- 	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
--	F(200000000, P_GPLL0_OUT_MAIN, 3, 0, 0),
-+	F(202000000, P_GPLL9_OUT_MAIN, 4, 0, 0),
- 	{ }
- };
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -1322,6 +1322,13 @@ __do_krealloc(const void *p, size_t new_
  
-@@ -918,9 +918,8 @@ static const struct freq_tbl ftbl_gcc_sd
- 	F(400000, P_BI_TCXO, 12, 1, 4),
- 	F(9600000, P_BI_TCXO, 2, 0, 0),
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
--	F(37500000, P_GPLL0_OUT_MAIN, 16, 0, 0),
- 	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
--	F(75000000, P_GPLL0_OUT_MAIN, 8, 0, 0),
-+	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
- 	{ }
- };
- 
+ 	/* If the object still fits, repoison it precisely. */
+ 	if (ks >= new_size) {
++		/* Zero out spare memory. */
++		if (want_init_on_alloc(flags)) {
++			kasan_disable_current();
++			memset((void *)p + new_size, 0, ks - new_size);
++			kasan_enable_current();
++		}
++
+ 		p = kasan_krealloc((void *)p, new_size, flags);
+ 		return (void *)p;
+ 	}
 
 
