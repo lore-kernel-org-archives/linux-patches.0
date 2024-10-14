@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3391AB521;
-	Mon, 14 Oct 2024 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DF017C77;
+	Mon, 14 Oct 2024 14:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916946; cv=none; b=iw96sk+p7Gj5mFLyqFha7Ij6tuh6FmbyjxRJxK78v+bozrhXDLtsvABt8AVPRdozykblR930AZAKriCtbH5NhWKP+QWN6N02HT2ik8QHuvcZSADsJtet71jcpUMAqJNP4jX4ku4eCHzmfO+sI/SnpcToathvFOO3ZAE3psPiAtI=
+	t=1728916954; cv=none; b=q7J0Kg6ss8/HPPYL/OVfbCc3H6ryPIOef+P1VfaCWYoMcOsDtNeDYgR72A7aLKhOrvUQTpMsT91TVxvzO0LW401DaPrBnXAiIA5AHmG9ZmP1LngNSoDU1F74eeg9gcP2HfzCvEckS9sbTJjBW+/Ynd8xqdBcm6TVieO7O3X0/ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916946; c=relaxed/simple;
-	bh=P2/nVTV2sMZa1dEwF9uRNa5XtbJX/e+KKlF8iUlh6bE=;
+	s=arc-20240116; t=1728916954; c=relaxed/simple;
+	bh=U1Q7bXgu9ewmONYD0NId9IaXaFIcs5u95GqfyjpG8rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sP8SwXBn9NiHjtfwvVgAhcgkxooqFiBbh7zXj/MGoqxYz7E6JPlOtCVq0BYEmHVeNYopftLUz40yaM8WLfUpAvmfnX8AfnRBsLHcgEsgiyef8mXx++fN50+PchqtpP9+xO7tz6j7+feuwk/S/pDJNYwdmN2KUkNI9LQubfuyY2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa//XmO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpEwEdnmQIyLcWCzcgwxy0PppY03kBhvRgw+Y/2QUGKHya3pITl8IYWuvs/FCwmy3Ins2qcTgwb8vYcqt0A49DVR51fmts2xl4L6c5oGE4HKRipLpLjl7FohzPoyeqTad5QSPSgyNnscp6PHBdM+hWw7/1EatkLVFugO8NBGQ0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWykj3Qa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa//XmO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E2EC4CEC3;
-	Mon, 14 Oct 2024 14:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWykj3Qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B1EC4CEC7;
+	Mon, 14 Oct 2024 14:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916946;
-	bh=P2/nVTV2sMZa1dEwF9uRNa5XtbJX/e+KKlF8iUlh6bE=;
+	s=korg; t=1728916954;
+	bh=U1Q7bXgu9ewmONYD0NId9IaXaFIcs5u95GqfyjpG8rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qa//XmO/OFzTCd95QejGllsp+9T3KYvIo4EZAnLVY0z+cTDZqKmZr18yrikuiR/3x
-	 qSNY6CGE27zgdOAYTuIRf8fvaZkQckZGijylTTI9w7Q7hRqI9gDWEh/nkmgRrEyV9V
-	 7FU3yPa7PBBToJgRcqGrd3FOMI67HCF3kXsZuJK4=
+	b=TWykj3QakThAwAGUT3lThif5f9g0IOnS7drjtc/GPuiWe37qWKA079hXgXZAa20f0
+	 837gMRISs2Dx1jHYdTroU+wPAu92SUAxGguDy15rPahlHab17vzJMgJlg6Uydd7SzR
+	 AcPUYVpLM3D9sgyxgdoTO4km4rrSYgb7hH6Usy+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fca234bd7eb378ff78e@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/213] io_uring: check if we need to reschedule during overflow flush
-Date: Mon, 14 Oct 2024 16:19:44 +0200
-Message-ID: <20241014141046.025015422@linuxfoundation.org>
+Subject: [PATCH 6.6 079/213] ntb: ntb_hw_switchtec: Fix use after free vulnerability in switchtec_ntb_remove due to race condition
+Date: Mon, 14 Oct 2024 16:19:45 +0200
+Message-ID: <20241014141046.063387683@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,55 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
 
-[ Upstream commit eac2ca2d682f94f46b1973bdf5e77d85d77b8e53 ]
+[ Upstream commit e51aded92d42784313ba16c12f4f88cc4f973bbb ]
 
-In terms of normal application usage, this list will always be empty.
-And if an application does overflow a bit, it'll have a few entries.
-However, nothing obviously prevents syzbot from running a test case
-that generates a ton of overflow entries, and then flushing them can
-take quite a while.
+In the switchtec_ntb_add function, it can call switchtec_ntb_init_sndev
+function, then &sndev->check_link_status_work is bound with
+check_link_status_work. switchtec_ntb_link_notification may be called
+to start the work.
 
-Check for needing to reschedule while flushing, and drop our locks and
-do so if necessary. There's no state to maintain here as overflows
-always prune from head-of-list, hence it's fine to drop and reacquire
-the locks at the end of the loop.
+If we remove the module which will call switchtec_ntb_remove to make
+cleanup, it will free sndev through kfree(sndev), while the work
+mentioned above will be used. The sequence of operations that may lead
+to a UAF bug is as follows:
 
-Link: https://lore.kernel.org/io-uring/66ed061d.050a0220.29194.0053.GAE@google.com/
-Reported-by: syzbot+5fca234bd7eb378ff78e@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+CPU0                                 CPU1
+
+                        | check_link_status_work
+switchtec_ntb_remove    |
+kfree(sndev);           |
+                        | if (sndev->link_force_down)
+                        | // use sndev
+
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in switchtec_ntb_remove.
+
+Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 7b0a100e1139a..39d8d1fc5c2bc 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -701,6 +701,21 @@ static void __io_cqring_overflow_flush(struct io_ring_ctx *ctx)
- 		memcpy(cqe, &ocqe->cqe, cqe_size);
- 		list_del(&ocqe->list);
- 		kfree(ocqe);
-+
-+		/*
-+		 * For silly syzbot cases that deliberately overflow by huge
-+		 * amounts, check if we need to resched and drop and
-+		 * reacquire the locks if so. Nothing real would ever hit this.
-+		 * Ideally we'd have a non-posting unlock for this, but hard
-+		 * to care for a non-real case.
-+		 */
-+		if (need_resched()) {
-+			io_cq_unlock_post(ctx);
-+			mutex_unlock(&ctx->uring_lock);
-+			cond_resched();
-+			mutex_lock(&ctx->uring_lock);
-+			io_cq_lock(ctx);
-+		}
- 	}
- 
- 	if (list_empty(&ctx->cq_overflow_list)) {
+diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
+index d6bbcc7b5b90d..0a94c634ddc27 100644
+--- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
++++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
+@@ -1554,6 +1554,7 @@ static void switchtec_ntb_remove(struct device *dev)
+ 	switchtec_ntb_deinit_db_msg_irq(sndev);
+ 	switchtec_ntb_deinit_shared_mw(sndev);
+ 	switchtec_ntb_deinit_crosslink(sndev);
++	cancel_work_sync(&sndev->check_link_status_work);
+ 	kfree(sndev);
+ 	dev_info(dev, "ntb device unregistered\n");
+ }
 -- 
 2.43.0
 
