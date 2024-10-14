@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF71C2335;
-	Mon, 14 Oct 2024 15:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FF619E98B;
+	Mon, 14 Oct 2024 15:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919601; cv=none; b=EMQFJqYZTim5LISXvIT6tN/9wEdZwTBo9VdVeDY+zwT+JAc8WsclLgmaF1qdPQZ7MZ9xv4GJ6xfsBg6/w6sYWzXCMTit9WoaMj7LCs/sbZ4UQ8S0bv6WQ4mxbTy0luWpb3AGXIUVp42abguqJdwo5ckQ7FakneHMUqPjDmZ/pQg=
+	t=1728919605; cv=none; b=o/qP0zwLxp3wEoa4l7c/DJY9vUvhUYBtRcYW07s/eRaUWZj7rhNkvk20SXuikhvu4eImOY0q4SRLvUURDQugVrvYACWcUoGeqcgLJR+biZuTx/2ENCObYVo67xRyM6CxdjEfV6ghZ3dPNoZy9Al0v1Wtqu2bvIpi5TaOdnosz9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919601; c=relaxed/simple;
-	bh=BtOeomBYRsbjFbawBsExer2KMkoSxxAxi9i0KGwDT2A=;
+	s=arc-20240116; t=1728919605; c=relaxed/simple;
+	bh=6yjZbBK3T2HbJsV73tsSnmUNlCWw5+vv4P+RFm0kf/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtZq9x7spG6r8fWoJg1euunhSRJXrOsP2+GQYQe88qRFL9dGW/9TFMDJB6GfVFhh+xF83r+RMZ4igEsZYdaVmOT0Kg4sMI3UicrEYGh3MwS3Nm5vdbxhjnbUPNKJU6zRuw4//zPfB4YVkvqMOTf69/iiHHmfWo3tGnFbawIke04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZlCAJCS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+uWJvn7n40pxEk+Cadx0rM/uMTC8s045fpIvR7zUGfr+R/CVx24wiBLUQifVIZwWQsRu87a6xWBRXYNhoG0rLoxoa5ZWzqQdYPLVWiIyw/PfpDSEo2k1MY9O6LSpcUDpDRqAVx7VxbKeR3U3riUiHt1zDasX42/gKqufmIyNzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cNjZ6C/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZlCAJCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49FCC4CEC3;
-	Mon, 14 Oct 2024 15:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cNjZ6C/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2466BC4CEC3;
+	Mon, 14 Oct 2024 15:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919601;
-	bh=BtOeomBYRsbjFbawBsExer2KMkoSxxAxi9i0KGwDT2A=;
+	s=korg; t=1728919604;
+	bh=6yjZbBK3T2HbJsV73tsSnmUNlCWw5+vv4P+RFm0kf/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZlCAJCSz/luBi4IzPlpcJOscnFUbQP/zOM9TjMCmA174jks4uezVJuphKfPfs6Qj
-	 Zz8AQte0NN1/23PU8kR3bb5oe3Jirx7XbmCS5v7bqcXJ/E/lCkhkLLY+nldFuKYiho
-	 gdklDc8ZQIrKizg5kFjIwFC1mS0epsW0xGkIk0HQ=
+	b=1cNjZ6C/ocSszgOFIgFqbz2rRq08F+pnk+NdlkYEtHT7nCcIJmOxzDjOK6th84tMp
+	 BATB8I07Vuy88kfUjYuhW38MmQFYsub8EGx9icwZKIWtAy/pWG7kXb7te1rnXafI/P
+	 PUzP1vrASLBuBwS4x4GcViwFhdAzhEUiCxnOj1l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"dmitry.baryshkov@linaro.org, agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, Sumit Semwal" <sumit.semwal@linaro.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 6.1 653/798] Revert "arm64: dts: qcom: sm8250: switch UFS QMP PHY to new style of bindings"
-Date: Mon, 14 Oct 2024 16:20:07 +0200
-Message-ID: <20241014141243.704889775@linuxfoundation.org>
+	"linux-erofs@lists.ozlabs.org, LKML" <linux-kernel@vger.kernel.org>,
+	Yue Hu <huyue2@coolpad.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.1 654/798] erofs: get rid of erofs_inode_datablocks()
+Date: Mon, 14 Oct 2024 16:20:08 +0200
+Message-ID: <20241014141243.744899671@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,68 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-This reverts commit cf9c7b34b90b622254b236a9a43737b6059a1c14.
+commit 4efdec36dc9907628e590a68193d6d8e5e74d032 upstream.
 
-This commit breaks UFS on RB5 in the 6.1 LTS kernels. The original patch
-author suggests that this is not a stable kernel patch, hence reverting
-it.
+erofs_inode_datablocks() has the only one caller, let's just get
+rid of it entirely.  No logic changes.
 
-This was reported during testing with 6.1.103 / 5.15.165 LTS kernels
-merged in the respective Android Common Kernel branches.
-
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Stable-dep-of: 9ed50b8231e3 ("erofs: fix incorrect symlink detection in fast symlink")
+Link: https://lore.kernel.org/r/20230204093040.97967-1-hsiangkao@linux.alibaba.com
+[ Gao Xiang: apply this to 6.6.y to avoid further backport twists
+             due to obsoleted EROFS_BLKSIZ. ]
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+Obsoleted EROFS_BLKSIZ impedes efforts to backport
+ 9ed50b8231e3 ("erofs: fix incorrect symlink detection in fast symlink")
+ 9e2f9d34dd12 ("erofs: handle overlapped pclusters out of crafted images properly")
 
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2125,7 +2125,7 @@
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy>;
-+			phys = <&ufs_mem_phy_lanes>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -2169,8 +2169,10 @@
+To avoid further bugfix conflicts due to random EROFS_BLKSIZs
+around the whole codebase, just backport the dependencies for 6.1.y.
+
+ fs/erofs/internal.h |    6 ------
+ fs/erofs/namei.c    |   18 +++++-------------
+ 2 files changed, 5 insertions(+), 19 deletions(-)
+
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -347,12 +347,6 @@ static inline erofs_off_t erofs_iloc(str
+ 		(EROFS_I(inode)->nid << sbi->islotbits);
+ }
  
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sm8250-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1000>;
+-static inline unsigned long erofs_inode_datablocks(struct inode *inode)
+-{
+-	/* since i_size cannot be changed */
+-	return DIV_ROUND_UP(inode->i_size, EROFS_BLKSIZ);
+-}
 -
-+			reg = <0 0x01d87000 0 0x1c0>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
-@@ -2178,12 +2180,18 @@
- 
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
-+			status = "disabled";
- 
- 			power-domains = <&gcc UFS_PHY_GDSC>;
- 
--			#phy-cells = <0>;
+ static inline unsigned int erofs_bitrange(unsigned int value, unsigned int bit,
+ 					  unsigned int bits)
+ {
+--- a/fs/erofs/namei.c
++++ b/fs/erofs/namei.c
+@@ -5,7 +5,6 @@
+  * Copyright (C) 2022, Alibaba Cloud
+  */
+ #include "xattr.h"
 -
--			status = "disabled";
-+			ufs_mem_phy_lanes: phy@1d87400 {
-+				reg = <0 0x01d87400 0 0x16c>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x16c>,
-+				      <0 0x01d87a00 0 0x200>;
-+				#phy-cells = <0>;
-+			};
- 		};
+ #include <trace/events/erofs.h>
  
- 		ipa_virt: interconnect@1e00000 {
+ struct erofs_qstr {
+@@ -87,19 +86,13 @@ static struct erofs_dirent *find_target_
+ 	return ERR_PTR(-ENOENT);
+ }
+ 
+-static void *find_target_block_classic(struct erofs_buf *target,
+-				       struct inode *dir,
+-				       struct erofs_qstr *name,
+-				       int *_ndirents)
++static void *erofs_find_target_block(struct erofs_buf *target,
++		struct inode *dir, struct erofs_qstr *name, int *_ndirents)
+ {
+-	unsigned int startprfx, endprfx;
+-	int head, back;
++	int head = 0, back = DIV_ROUND_UP(dir->i_size, EROFS_BLKSIZ) - 1;
++	unsigned int startprfx = 0, endprfx = 0;
+ 	void *candidate = ERR_PTR(-ENOENT);
+ 
+-	startprfx = endprfx = 0;
+-	head = 0;
+-	back = erofs_inode_datablocks(dir) - 1;
+-
+ 	while (head <= back) {
+ 		const int mid = head + (back - head) / 2;
+ 		struct erofs_buf buf = __EROFS_BUF_INITIALIZER;
+@@ -180,8 +173,7 @@ int erofs_namei(struct inode *dir, const
+ 	qn.end = name->name + name->len;
+ 
+ 	ndirents = 0;
+-
+-	de = find_target_block_classic(&buf, dir, &qn, &ndirents);
++	de = erofs_find_target_block(&buf, dir, &qn, &ndirents);
+ 	if (IS_ERR(de))
+ 		return PTR_ERR(de);
+ 
 
 
