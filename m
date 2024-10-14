@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ABD4C3D0;
-	Mon, 14 Oct 2024 15:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA5F15D5C5;
+	Mon, 14 Oct 2024 15:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920066; cv=none; b=UVlQGz6wICig9T5PrpiR+R21qTfhfvgx6pCzuf/f4doGtmSzu0TlKZGUa/brlT9q8BOzH5rn2BoipEV2AU962DS4sNaVlLXpPXK42toIO0N1cW1C9FLhQ4PHb8YN0Dhopb5WsQWmbFY2SEdkZusdEVz+MY2iPeAid6xpcVD0nVA=
+	t=1728920070; cv=none; b=Hw1pJasanyqMCZvxx2kJD0aWXXJWcAx3sLehVkAnnBZJhxzbHQo4wTgmMrxcnR+Br44GPzMrOaK8VNWCHcrLc3jfHKPsaebJZnnDMPUJYLbN0Qr/qEnzEYg6+A9wKKV97ExkFzJ5R5ZjIdZgT2oduyLgHhjW6Carxq3+Oy+hZKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920066; c=relaxed/simple;
-	bh=WvCFMXyv1vJUk7lOmxLMqPFjyVxBHblSx42jxQimvi4=;
+	s=arc-20240116; t=1728920070; c=relaxed/simple;
+	bh=G2AmXhLdTplZeKQOzY2nWPLPrhvyrtCQASkfZDHsGVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSZBDPLehEpGGq1fQX36A1vr5HwKx9wtQZS/9lVFYkj45OWN4q3ZrTVacaYYtqSyhrX6QFemNWnXoD63toMdxsEwcLLpRFjeSr6n5w8+iKcxqIEy4aEHEa2WDy0FHROl6d1bc8dQEYxeqDs0i+34hgPXxTxe5OjOJh4eBzM5cXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ro2ysyLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZCZvcwe+6WTbK+7tyCyGCjjMNESmoibL2E+pLcMBVe2+9PGBfcKKqFGVuU8kbuAdrAtgwjINT21nEcT+TPEHDfLTxKz0t+7pw/NKLKJ6+QWxWBhXqQEzjmwXJj5s0oIi31k4ug8LxsNFAxFiILts+agI/xFConQDQ0R3K1yAEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvHffF+V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ro2ysyLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2893BC4CEC3;
-	Mon, 14 Oct 2024 15:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvHffF+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A378FC4CEC3;
+	Mon, 14 Oct 2024 15:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920066;
-	bh=WvCFMXyv1vJUk7lOmxLMqPFjyVxBHblSx42jxQimvi4=;
+	s=korg; t=1728920070;
+	bh=G2AmXhLdTplZeKQOzY2nWPLPrhvyrtCQASkfZDHsGVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ro2ysyLw4rnFAjp6m1ssi+D/9pMFm4H22COZ45xHnP07HumhV/SVwoK4j4GzxahB2
-	 is99lUYVC4JpJFx+bGg+OMY8EyAWYhJ4EARwQlRWMUNay3mrJzkXoDoCsVmklVsuGh
-	 tyCB0ISucb8rQn88iRvy5OnK9XA6fSyvA9FFygpk=
+	b=kvHffF+VIwBRY/ZwEnlCkwXMrCMfVnjjoi4jVScd7gkrijZR9ZHjQF8xQMedEqFSL
+	 tT4jO8qjGuLJdCS65XOSVQKinAaxrCEevvaoF6xOvSmX4Xi0BUJZhtskTfVGnnaJCf
+	 WrDpsPC0eBkNY9wXioBPlpfS2N8PIR6lyScca5mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anatolij Gustschin <agust@denx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 788/798] net: dsa: lan9303: ensure chip reset and wait for READY status
-Date: Mon, 14 Oct 2024 16:22:22 +0200
-Message-ID: <20241014141249.030162363@linuxfoundation.org>
+Subject: [PATCH 6.1 789/798] mptcp: handle consistently DSS corruption
+Date: Mon, 14 Oct 2024 16:22:23 +0200
+Message-ID: <20241014141249.068790307@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,83 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anatolij Gustschin <agust@denx.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 5c14e51d2d7df49fe0d4e64a12c58d2542f452ff upstream.
+commit e32d262c89e2b22cb0640223f953b548617ed8a6 upstream.
 
-Accessing device registers seems to be not reliable, the chip
-revision is sometimes detected wrongly (0 instead of expected 1).
+Bugged peer implementation can send corrupted DSS options, consistently
+hitting a few warning in the data path. Use DEBUG_NET assertions, to
+avoid the splat on some builds and handle consistently the error, dumping
+related MIBs and performing fallback and/or reset according to the
+subflow type.
 
-Ensure that the chip reset is performed via reset GPIO and then
-wait for 'Device Ready' status in HW_CFG register before doing
-any register initializations.
-
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
 Cc: stable@vger.kernel.org
-Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
-Signed-off-by: Anatolij Gustschin <agust@denx.de>
-[alex: reworked using read_poll_timeout()]
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20241004113655.3436296-1-alexander.sverdlin@siemens.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241008-net-mptcp-fallback-fixes-v1-1-c6fb8e93e551@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303-core.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ net/mptcp/mib.c      |    2 ++
+ net/mptcp/mib.h      |    2 ++
+ net/mptcp/protocol.c |   24 +++++++++++++++++++++---
+ net/mptcp/subflow.c  |    4 +++-
+ 4 files changed, 28 insertions(+), 4 deletions(-)
 
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -6,6 +6,7 @@
- #include <linux/module.h>
- #include <linux/gpio/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/iopoll.h>
- #include <linux/mutex.h>
- #include <linux/mii.h>
- #include <linux/phy.h>
-@@ -825,6 +826,8 @@ static void lan9303_handle_reset(struct
- 	if (!chip->reset_gpio)
- 		return;
+--- a/net/mptcp/mib.c
++++ b/net/mptcp/mib.c
+@@ -26,6 +26,8 @@ static const struct snmp_mib mptcp_snmp_
+ 	SNMP_MIB_ITEM("MPJoinAckRx", MPTCP_MIB_JOINACKRX),
+ 	SNMP_MIB_ITEM("MPJoinAckHMacFailure", MPTCP_MIB_JOINACKMAC),
+ 	SNMP_MIB_ITEM("DSSNotMatching", MPTCP_MIB_DSSNOMATCH),
++	SNMP_MIB_ITEM("DSSCorruptionFallback", MPTCP_MIB_DSSCORRUPTIONFALLBACK),
++	SNMP_MIB_ITEM("DSSCorruptionReset", MPTCP_MIB_DSSCORRUPTIONRESET),
+ 	SNMP_MIB_ITEM("InfiniteMapTx", MPTCP_MIB_INFINITEMAPTX),
+ 	SNMP_MIB_ITEM("InfiniteMapRx", MPTCP_MIB_INFINITEMAPRX),
+ 	SNMP_MIB_ITEM("DSSNoMatchTCP", MPTCP_MIB_DSSTCPMISMATCH),
+--- a/net/mptcp/mib.h
++++ b/net/mptcp/mib.h
+@@ -19,6 +19,8 @@ enum linux_mptcp_mib_field {
+ 	MPTCP_MIB_JOINACKRX,		/* Received an ACK + MP_JOIN */
+ 	MPTCP_MIB_JOINACKMAC,		/* HMAC was wrong on ACK + MP_JOIN */
+ 	MPTCP_MIB_DSSNOMATCH,		/* Received a new mapping that did not match the previous one */
++	MPTCP_MIB_DSSCORRUPTIONFALLBACK,/* DSS corruption detected, fallback */
++	MPTCP_MIB_DSSCORRUPTIONRESET,	/* DSS corruption detected, MPJ subflow reset */
+ 	MPTCP_MIB_INFINITEMAPTX,	/* Sent an infinite mapping */
+ 	MPTCP_MIB_INFINITEMAPRX,	/* Received an infinite mapping */
+ 	MPTCP_MIB_DSSTCPMISMATCH,	/* DSS-mapping did not map with TCP's sequence numbers */
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -630,6 +630,18 @@ static bool mptcp_check_data_fin(struct
+ 	return ret;
+ }
  
-+	gpiod_set_value_cansleep(chip->reset_gpio, 1);
-+
- 	if (chip->reset_duration != 0)
- 		msleep(chip->reset_duration);
- 
-@@ -850,8 +853,34 @@ static int lan9303_disable_processing(st
- static int lan9303_check_device(struct lan9303 *chip)
- {
- 	int ret;
-+	int err;
- 	u32 reg;
- 
-+	/* In I2C-managed configurations this polling loop will clash with
-+	 * switch's reading of EEPROM right after reset and this behaviour is
-+	 * not configurable. While lan9303_read() already has quite long retry
-+	 * timeout, seems not all cases are being detected as arbitration error.
-+	 *
-+	 * According to datasheet, EEPROM loader has 30ms timeout (in case of
-+	 * missing EEPROM).
-+	 *
-+	 * Loading of the largest supported EEPROM is expected to take at least
-+	 * 5.9s.
-+	 */
-+	err = read_poll_timeout(lan9303_read, ret,
-+				!ret && reg & LAN9303_HW_CFG_READY,
-+				20000, 6000000, false,
-+				chip->regmap, LAN9303_HW_CFG, &reg);
-+	if (ret) {
-+		dev_err(chip->dev, "failed to read HW_CFG reg: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
++static void mptcp_dss_corruption(struct mptcp_sock *msk, struct sock *ssk)
++{
++	if (READ_ONCE(msk->allow_infinite_fallback)) {
++		MPTCP_INC_STATS(sock_net(ssk),
++				MPTCP_MIB_DSSCORRUPTIONFALLBACK);
++		mptcp_do_fallback(ssk);
++	} else {
++		MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_DSSCORRUPTIONRESET);
++		mptcp_subflow_reset(ssk);
 +	}
-+	if (err) {
-+		dev_err(chip->dev, "HW_CFG not ready: 0x%08x\n", reg);
-+		return err;
-+	}
++}
 +
- 	ret = lan9303_read(chip->regmap, LAN9303_CHIP_REV, &reg);
- 	if (ret) {
- 		dev_err(chip->dev, "failed to read chip revision register: %d\n",
+ static bool __mptcp_move_skbs_from_subflow(struct mptcp_sock *msk,
+ 					   struct sock *ssk,
+ 					   unsigned int *bytes)
+@@ -702,10 +714,16 @@ static bool __mptcp_move_skbs_from_subfl
+ 				moved += len;
+ 			seq += len;
+ 
+-			if (WARN_ON_ONCE(map_remaining < len))
+-				break;
++			if (unlikely(map_remaining < len)) {
++				DEBUG_NET_WARN_ON_ONCE(1);
++				mptcp_dss_corruption(msk, ssk);
++			}
+ 		} else {
+-			WARN_ON_ONCE(!fin);
++			if (unlikely(!fin)) {
++				DEBUG_NET_WARN_ON_ONCE(1);
++				mptcp_dss_corruption(msk, ssk);
++			}
++
+ 			sk_eat_skb(ssk, skb);
+ 			done = true;
+ 		}
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -855,8 +855,10 @@ static bool skb_is_fully_mapped(struct s
+ 	unsigned int skb_consumed;
+ 
+ 	skb_consumed = tcp_sk(ssk)->copied_seq - TCP_SKB_CB(skb)->seq;
+-	if (WARN_ON_ONCE(skb_consumed >= skb->len))
++	if (unlikely(skb_consumed >= skb->len)) {
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		return true;
++	}
+ 
+ 	return skb->len - skb_consumed <= subflow->map_data_len -
+ 					  mptcp_subflow_get_map_offset(subflow);
 
 
