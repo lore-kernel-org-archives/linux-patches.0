@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A591B85D7;
-	Mon, 14 Oct 2024 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2741B85EB;
+	Mon, 14 Oct 2024 15:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918870; cv=none; b=iID66vSnQNjvwVZMKgRyiEojLRWfHytGq8Qe+U20arMcQ1wopR6rOUnsdkGIgtqLtUVPFdR6lR2lavV5RpJXBZBuuANuQWdn6N40UCliKhR43pH8eo5xMvW6wC8dOjU96TIw2NNklOPv4BaW7e17qmm6S0Rj4u+L+vmLxVTJbHY=
+	t=1728918873; cv=none; b=m6Hl+8lmFhu7aoCnse9JMyMienV6l3y7ANGkdMXnx+whNjTHXx4ARml7ZekuJxFgd3nvbwjd72xA326ewDd09l950YSfViYwkpdOGK9HDLkVUHKeS7sQLd0N47y4H/CYPpJS+T5D0/X/oQ/41lhXfXl6Mh7b18kk1aN0CxXZxII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918870; c=relaxed/simple;
-	bh=FV3HgWJTyhVSl+Q20X/2k0TqP662IRsPA3H/4FVZgPw=;
+	s=arc-20240116; t=1728918873; c=relaxed/simple;
+	bh=V/ShyK/PrRTVbBGV38eK2/IDCJAlAeTeIirc1UyBKdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dNIIQ/QeCi77bWXOq8QyzZo9w1KFIu5NUWKtbRmIw3MXJts0GopnGmcwZn3yDt/imHUvA+SaVjIEi/WTI5axaxmdDZmv40rALT+adbqZ74dC0hC+Hv9eAAo1LYrz4oVe1rkJIZnZ+xVq+mizzrbaLbrqsVqG6Oh26QlbBov/NiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmUncKHq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOIa0h4tzoti+UJQ6tubpNTHUDpQ33wgEBzxS9FmN+4EU+h/ER2pyz6GYq0tBC4+CSHHkbcc1bvthVZ6L1qTGldNYinK7qbNzmh0OuSB2uDKyoPFdik0wvK6Zlq0T0Gq/xpBSPGgQWYegN0YPth89ixExNmNZYtClDRwPDvoQNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv328w3t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmUncKHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB76FC4CEC3;
-	Mon, 14 Oct 2024 15:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv328w3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A474C4CEC3;
+	Mon, 14 Oct 2024 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918870;
-	bh=FV3HgWJTyhVSl+Q20X/2k0TqP662IRsPA3H/4FVZgPw=;
+	s=korg; t=1728918873;
+	bh=V/ShyK/PrRTVbBGV38eK2/IDCJAlAeTeIirc1UyBKdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmUncKHqI21O4ELw+SfHtz/0cyDPejzLI32QSFWM8ozy2Pa/SrIuZ0316NHQzVgoN
-	 /1xQS4Td6nDNnnnmaMzLr/YyEobhF5+MAPbVQhX0c+R67o7FITn350hz5W7mshqJhh
-	 QVXxjtIywyFi0ESWXJnqwVx1bisH4zoA0i/0vLSY=
+	b=Vv328w3tL1Ew6N+/RM+e+X7fXmUnjMoXeESqWgwMWfsRWwWC73HS8TuRrWbMymeed
+	 oLLgXJsx/qXZzxaOtuZl2qishFLizEn9AdcI0lJqAKVQBf6lLQODAzwd8+WgC4m78Z
+	 GdKjKkRAT+Mm8gaQ72Ms0+X48g/VBXHVbvX7Es9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jade Dong <jadedong@tencent.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 446/798] crypto: simd - Do not call crypto_alloc_tfm during registration
-Date: Mon, 14 Oct 2024 16:16:40 +0200
-Message-ID: <20241014141235.492766426@linuxfoundation.org>
+Subject: [PATCH 6.1 447/798] tcp: avoid reusing FIN_WAIT2 when trying to find port in connect() process
+Date: Mon, 14 Oct 2024 16:16:41 +0200
+Message-ID: <20241014141235.531675708@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,247 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 3c44d31cb34ce4eb8311a2e73634d57702948230 ]
+[ Upstream commit 0d9e5df4a257afc3a471a82961ace9a22b88295a ]
 
-Algorithm registration is usually carried out during module init,
-where as little work as possible should be carried out.  The SIMD
-code violated this rule by allocating a tfm, this then triggers a
-full test of the algorithm which may dead-lock in certain cases.
+We found that one close-wait socket was reset by the other side
+due to a new connection reusing the same port which is beyond our
+expectation, so we have to investigate the underlying reason.
 
-SIMD is only allocating the tfm to get at the alg object, which is
-in fact already available as it is what we are registering.  Use
-that directly and remove the crypto_alloc_tfm call.
+The following experiment is conducted in the test environment. We
+limit the port range from 40000 to 40010 and delay the time to close()
+after receiving a fin from the active close side, which can help us
+easily reproduce like what happened in production.
 
-Also remove some obsolete and unused SIMD API.
+Here are three connections captured by tcpdump:
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965525191
+127.0.0.1.9999 > 127.0.0.1.40002: Flags [S.], seq 2769915070
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [.], ack 1
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [F.], seq 1, ack 1
+// a few seconds later, within 60 seconds
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965590730
+127.0.0.1.9999 > 127.0.0.1.40002: Flags [.], ack 2
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [R], seq 2965525193
+// later, very quickly
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [S], seq 2965590730
+127.0.0.1.9999 > 127.0.0.1.40002: Flags [S.], seq 3120990805
+127.0.0.1.40002 > 127.0.0.1.9999: Flags [.], ack 1
 
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+As we can see, the first flow is reset because:
+1) client starts a new connection, I mean, the second one
+2) client tries to find a suitable port which is a timewait socket
+   (its state is timewait, substate is fin_wait2)
+3) client occupies that timewait port to send a SYN
+4) server finds a corresponding close-wait socket in ehash table,
+   then replies with a challenge ack
+5) client sends an RST to terminate this old close-wait socket.
+
+I don't think the port selection algo can choose a FIN_WAIT2 socket
+when we turn on tcp_tw_reuse because on the server side there
+remain unread data. In some cases, if one side haven't call close() yet,
+we should not consider it as expendable and treat it at will.
+
+Even though, sometimes, the server isn't able to call close() as soon
+as possible like what we expect, it can not be terminated easily,
+especially due to a second unrelated connection happening.
+
+After this patch, we can see the expected failure if we start a
+connection when all the ports are occupied in fin_wait2 state:
+"Ncat: Cannot assign requested address."
+
+Reported-by: Jade Dong <jadedong@tencent.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240823001152.31004-1-kerneljasonxing@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/crypto/aes-ce-glue.c     |  2 +-
- arch/arm/crypto/aes-neonbs-glue.c |  2 +-
- crypto/simd.c                     | 76 ++++++-------------------------
- include/crypto/internal/simd.h    | 12 +----
- 4 files changed, 19 insertions(+), 73 deletions(-)
+ net/ipv4/tcp_ipv4.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/crypto/aes-ce-glue.c b/arch/arm/crypto/aes-ce-glue.c
-index b668c97663ec0..f5b66f4cf45d9 100644
---- a/arch/arm/crypto/aes-ce-glue.c
-+++ b/arch/arm/crypto/aes-ce-glue.c
-@@ -711,7 +711,7 @@ static int __init aes_init(void)
- 		algname = aes_algs[i].base.cra_name + 2;
- 		drvname = aes_algs[i].base.cra_driver_name + 2;
- 		basename = aes_algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(aes_algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto unregister_simds;
-diff --git a/arch/arm/crypto/aes-neonbs-glue.c b/arch/arm/crypto/aes-neonbs-glue.c
-index f00f042ef3570..0ca94b90bc4ec 100644
---- a/arch/arm/crypto/aes-neonbs-glue.c
-+++ b/arch/arm/crypto/aes-neonbs-glue.c
-@@ -539,7 +539,7 @@ static int __init aes_init(void)
- 		algname = aes_algs[i].base.cra_name + 2;
- 		drvname = aes_algs[i].base.cra_driver_name + 2;
- 		basename = aes_algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(aes_algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto unregister_simds;
-diff --git a/crypto/simd.c b/crypto/simd.c
-index edaa479a1ec5e..d109866641a26 100644
---- a/crypto/simd.c
-+++ b/crypto/simd.c
-@@ -136,27 +136,19 @@ static int simd_skcipher_init(struct crypto_skcipher *tfm)
- 	return 0;
- }
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 1327447a3aade..984435cb1013c 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -115,6 +115,9 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 	const struct tcp_timewait_sock *tcptw = tcp_twsk(sktw);
+ 	struct tcp_sock *tp = tcp_sk(sk);
  
--struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
-+struct simd_skcipher_alg *simd_skcipher_create_compat(struct skcipher_alg *ialg,
-+						      const char *algname,
- 						      const char *drvname,
- 						      const char *basename)
- {
- 	struct simd_skcipher_alg *salg;
--	struct crypto_skcipher *tfm;
--	struct skcipher_alg *ialg;
- 	struct skcipher_alg *alg;
- 	int err;
- 
--	tfm = crypto_alloc_skcipher(basename, CRYPTO_ALG_INTERNAL,
--				    CRYPTO_ALG_INTERNAL | CRYPTO_ALG_ASYNC);
--	if (IS_ERR(tfm))
--		return ERR_CAST(tfm);
--
--	ialg = crypto_skcipher_alg(tfm);
--
- 	salg = kzalloc(sizeof(*salg), GFP_KERNEL);
- 	if (!salg) {
- 		salg = ERR_PTR(-ENOMEM);
--		goto out_put_tfm;
-+		goto out;
- 	}
- 
- 	salg->ialg_name = basename;
-@@ -195,30 +187,16 @@ struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
- 	if (err)
- 		goto out_free_salg;
- 
--out_put_tfm:
--	crypto_free_skcipher(tfm);
-+out:
- 	return salg;
- 
- out_free_salg:
- 	kfree(salg);
- 	salg = ERR_PTR(err);
--	goto out_put_tfm;
-+	goto out;
- }
- EXPORT_SYMBOL_GPL(simd_skcipher_create_compat);
- 
--struct simd_skcipher_alg *simd_skcipher_create(const char *algname,
--					       const char *basename)
--{
--	char drvname[CRYPTO_MAX_ALG_NAME];
--
--	if (snprintf(drvname, CRYPTO_MAX_ALG_NAME, "simd-%s", basename) >=
--	    CRYPTO_MAX_ALG_NAME)
--		return ERR_PTR(-ENAMETOOLONG);
--
--	return simd_skcipher_create_compat(algname, drvname, basename);
--}
--EXPORT_SYMBOL_GPL(simd_skcipher_create);
--
- void simd_skcipher_free(struct simd_skcipher_alg *salg)
- {
- 	crypto_unregister_skcipher(&salg->alg);
-@@ -246,7 +224,7 @@ int simd_register_skciphers_compat(struct skcipher_alg *algs, int count,
- 		algname = algs[i].base.cra_name + 2;
- 		drvname = algs[i].base.cra_driver_name + 2;
- 		basename = algs[i].base.cra_driver_name;
--		simd = simd_skcipher_create_compat(algname, drvname, basename);
-+		simd = simd_skcipher_create_compat(algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto err_unregister;
-@@ -383,27 +361,19 @@ static int simd_aead_init(struct crypto_aead *tfm)
- 	return 0;
- }
- 
--struct simd_aead_alg *simd_aead_create_compat(const char *algname,
--					      const char *drvname,
--					      const char *basename)
-+static struct simd_aead_alg *simd_aead_create_compat(struct aead_alg *ialg,
-+						     const char *algname,
-+						     const char *drvname,
-+						     const char *basename)
- {
- 	struct simd_aead_alg *salg;
--	struct crypto_aead *tfm;
--	struct aead_alg *ialg;
- 	struct aead_alg *alg;
- 	int err;
- 
--	tfm = crypto_alloc_aead(basename, CRYPTO_ALG_INTERNAL,
--				CRYPTO_ALG_INTERNAL | CRYPTO_ALG_ASYNC);
--	if (IS_ERR(tfm))
--		return ERR_CAST(tfm);
--
--	ialg = crypto_aead_alg(tfm);
--
- 	salg = kzalloc(sizeof(*salg), GFP_KERNEL);
- 	if (!salg) {
- 		salg = ERR_PTR(-ENOMEM);
--		goto out_put_tfm;
-+		goto out;
- 	}
- 
- 	salg->ialg_name = basename;
-@@ -442,36 +412,20 @@ struct simd_aead_alg *simd_aead_create_compat(const char *algname,
- 	if (err)
- 		goto out_free_salg;
- 
--out_put_tfm:
--	crypto_free_aead(tfm);
-+out:
- 	return salg;
- 
- out_free_salg:
- 	kfree(salg);
- 	salg = ERR_PTR(err);
--	goto out_put_tfm;
--}
--EXPORT_SYMBOL_GPL(simd_aead_create_compat);
--
--struct simd_aead_alg *simd_aead_create(const char *algname,
--				       const char *basename)
--{
--	char drvname[CRYPTO_MAX_ALG_NAME];
--
--	if (snprintf(drvname, CRYPTO_MAX_ALG_NAME, "simd-%s", basename) >=
--	    CRYPTO_MAX_ALG_NAME)
--		return ERR_PTR(-ENAMETOOLONG);
--
--	return simd_aead_create_compat(algname, drvname, basename);
-+	goto out;
- }
--EXPORT_SYMBOL_GPL(simd_aead_create);
- 
--void simd_aead_free(struct simd_aead_alg *salg)
-+static void simd_aead_free(struct simd_aead_alg *salg)
- {
- 	crypto_unregister_aead(&salg->alg);
- 	kfree(salg);
- }
--EXPORT_SYMBOL_GPL(simd_aead_free);
- 
- int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 			       struct simd_aead_alg **simd_algs)
-@@ -493,7 +447,7 @@ int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 		algname = algs[i].base.cra_name + 2;
- 		drvname = algs[i].base.cra_driver_name + 2;
- 		basename = algs[i].base.cra_driver_name;
--		simd = simd_aead_create_compat(algname, drvname, basename);
-+		simd = simd_aead_create_compat(algs + i, algname, drvname, basename);
- 		err = PTR_ERR(simd);
- 		if (IS_ERR(simd))
- 			goto err_unregister;
-diff --git a/include/crypto/internal/simd.h b/include/crypto/internal/simd.h
-index d2316242a9884..be97b97a75dd2 100644
---- a/include/crypto/internal/simd.h
-+++ b/include/crypto/internal/simd.h
-@@ -14,11 +14,10 @@
- struct simd_skcipher_alg;
- struct skcipher_alg;
- 
--struct simd_skcipher_alg *simd_skcipher_create_compat(const char *algname,
-+struct simd_skcipher_alg *simd_skcipher_create_compat(struct skcipher_alg *ialg,
-+						      const char *algname,
- 						      const char *drvname,
- 						      const char *basename);
--struct simd_skcipher_alg *simd_skcipher_create(const char *algname,
--					       const char *basename);
- void simd_skcipher_free(struct simd_skcipher_alg *alg);
- 
- int simd_register_skciphers_compat(struct skcipher_alg *algs, int count,
-@@ -32,13 +31,6 @@ void simd_unregister_skciphers(struct skcipher_alg *algs, int count,
- struct simd_aead_alg;
- struct aead_alg;
- 
--struct simd_aead_alg *simd_aead_create_compat(const char *algname,
--					      const char *drvname,
--					      const char *basename);
--struct simd_aead_alg *simd_aead_create(const char *algname,
--				       const char *basename);
--void simd_aead_free(struct simd_aead_alg *alg);
--
- int simd_register_aeads_compat(struct aead_alg *algs, int count,
- 			       struct simd_aead_alg **simd_algs);
- 
++	if (tw->tw_substate == TCP_FIN_WAIT2)
++		reuse = 0;
++
+ 	if (reuse == 2) {
+ 		/* Still does not detect *everything* that goes through
+ 		 * lo, since we require a loopback src or dst address
 -- 
 2.43.0
 
