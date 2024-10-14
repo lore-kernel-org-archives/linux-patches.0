@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906321AAE38;
-	Mon, 14 Oct 2024 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BD649659;
+	Mon, 14 Oct 2024 14:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917261; cv=none; b=iQUJ2yPhNEPOr5x+h6Hq2BhvTqLjeg9ObcRVgdM5xlfgD/2j2dLuVExENZyKT18ywaQ73QkEqmrMua1RVQdRPPy+m2XepTsu3plCDbZ4sYmyor+UHNX6DLQQii7F/ZFw0S2koSoIIICE1K03oQz6tsjoK4pjl82BgNKQszfYlT8=
+	t=1728917264; cv=none; b=rv2JWc7APJWBNE2IecH6/Mnup8M0QGSfs69e8yBVU0DfIOgFy14WmE2FlLWBiZjV5AIJb29OSVm1QIOpKOelHq9Lfp7w0pS6P09GUHUHT1DkHyQSjsCEZrto5tyQ8Zohe6a6PQWr6RqNQbZrOubdHF0BYK9+RI5ixODQL+NlPT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917261; c=relaxed/simple;
-	bh=5Th43cCYoIe/c32yrT7odTRGBC+YIeEj6t1R00dS6dQ=;
+	s=arc-20240116; t=1728917264; c=relaxed/simple;
+	bh=DspTqQ+uq/CdAKhHvWEVScfEebSCvQNFJug4M5WxNy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRmw+BA7FO5bEZRIxK6k6yxdN/QVn4EpLgTEE5xNHbNH8/1GB4+QpM1eTMRikdKBq4ugoY2nuRH1St6ZUE3x3EkgD/vkMG2u2DW35BlWm9dLIL7IbxGMkx8uh5Ne/I14nE5hxbkOgZ/HFXEpc9+ReEcqPWmIJesnOlu5FBT2p6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK+D1r98; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dr0Kgdy4KwMrZ/Eylr6VpedrjoWtju23vsabhidoWnCuLoQQWWVbvxDSG1C9Q9yMh317R3Ct7+zwIbR4U6PtdPt1tJHj+p/EGClARISK340jXjDmCbTpYsZKqlPxFxaMaKIa5Iefxbv/kLCBn+JW/RhWXieXDDb85cqQgpZnrHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flfhqstx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK+D1r98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8F7C4CEC3;
-	Mon, 14 Oct 2024 14:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flfhqstx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FFBC4CEC3;
+	Mon, 14 Oct 2024 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917261;
-	bh=5Th43cCYoIe/c32yrT7odTRGBC+YIeEj6t1R00dS6dQ=;
+	s=korg; t=1728917264;
+	bh=DspTqQ+uq/CdAKhHvWEVScfEebSCvQNFJug4M5WxNy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XK+D1r98RbSUp454gmsvsbTdVMinv8ZOuSJ78BRvQDcO2G1XVBSRVN+dE1GEnv2do
-	 OjmrXe/P8YbWS80oIJlx7/Y28wN+jH/bUbFnBQNqi7wFlgavRHytUQ87jXB8rMPgh8
-	 x4GVe+qnfprmQiR7Yo7WGCITfS0qeStkAXOPFhjg=
+	b=flfhqstxjmp/IhN8oYgjosQwIQ6/5Z1sh5Mle3r101YbTPnHLnGSbUeboqfeEWEHS
+	 6VDlSk2EAmQVzu2XrChubtmahpiZTCcdMdO327pusva2oMDAlnMhWo6rXRBhzaQXm7
+	 jnkJ5LnJn1vfB1Mt5KsmhvFcWnnWgCjqTexk+0Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 199/213] net: phy: Remove LED entry from LEDs list on unregister
-Date: Mon, 14 Oct 2024 16:21:45 +0200
-Message-ID: <20241014141050.727501538@linuxfoundation.org>
+Subject: [PATCH 6.6 200/213] mptcp: handle consistently DSS corruption
+Date: Mon, 14 Oct 2024 16:21:46 +0200
+Message-ID: <20241014141050.766086567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,58 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit f50b5d74c68e551667e265123659b187a30fe3a5 upstream.
+commit e32d262c89e2b22cb0640223f953b548617ed8a6 upstream.
 
-Commit c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct
-ordering") correctly fixed a problem with using devm_ but missed
-removing the LED entry from the LEDs list.
+Bugged peer implementation can send corrupted DSS options, consistently
+hitting a few warning in the data path. Use DEBUG_NET assertions, to
+avoid the splat on some builds and handle consistently the error, dumping
+related MIBs and performing fallback and/or reset according to the
+subflow type.
 
-This cause kernel panic on specific scenario where the port for the PHY
-is torn down and up and the kmod for the PHY is removed.
-
-On setting the port down the first time, the assosiacted LEDs are
-correctly unregistered. The associated kmod for the PHY is now removed.
-The kmod is now added again and the port is now put up, the associated LED
-are registered again.
-On putting the port down again for the second time after these step, the
-LED list now have 4 elements. With the first 2 already unregistered
-previously and the 2 new one registered again.
-
-This cause a kernel panic as the first 2 element should have been
-removed.
-
-Fix this by correctly removing the element when LED is unregistered.
-
-Reported-by: Daniel Golle <daniel@makrotopia.org>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
 Cc: stable@vger.kernel.org
-Fixes: c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct ordering")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241004182759.14032-1-ansuelsmth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241008-net-mptcp-fallback-fixes-v1-1-c6fb8e93e551@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mptcp/mib.c      |    2 ++
+ net/mptcp/mib.h      |    2 ++
+ net/mptcp/protocol.c |   24 +++++++++++++++++++++---
+ net/mptcp/subflow.c  |    4 +++-
+ 4 files changed, 28 insertions(+), 4 deletions(-)
 
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3082,10 +3082,11 @@ static __maybe_unused int phy_led_hw_is_
- 
- static void phy_leds_unregister(struct phy_device *phydev)
- {
--	struct phy_led *phyled;
-+	struct phy_led *phyled, *tmp;
- 
--	list_for_each_entry(phyled, &phydev->leds, list) {
-+	list_for_each_entry_safe(phyled, tmp, &phydev->leds, list) {
- 		led_classdev_unregister(&phyled->led_cdev);
-+		list_del(&phyled->list);
- 	}
+--- a/net/mptcp/mib.c
++++ b/net/mptcp/mib.c
+@@ -26,6 +26,8 @@ static const struct snmp_mib mptcp_snmp_
+ 	SNMP_MIB_ITEM("MPJoinAckRx", MPTCP_MIB_JOINACKRX),
+ 	SNMP_MIB_ITEM("MPJoinAckHMacFailure", MPTCP_MIB_JOINACKMAC),
+ 	SNMP_MIB_ITEM("DSSNotMatching", MPTCP_MIB_DSSNOMATCH),
++	SNMP_MIB_ITEM("DSSCorruptionFallback", MPTCP_MIB_DSSCORRUPTIONFALLBACK),
++	SNMP_MIB_ITEM("DSSCorruptionReset", MPTCP_MIB_DSSCORRUPTIONRESET),
+ 	SNMP_MIB_ITEM("InfiniteMapTx", MPTCP_MIB_INFINITEMAPTX),
+ 	SNMP_MIB_ITEM("InfiniteMapRx", MPTCP_MIB_INFINITEMAPRX),
+ 	SNMP_MIB_ITEM("DSSNoMatchTCP", MPTCP_MIB_DSSTCPMISMATCH),
+--- a/net/mptcp/mib.h
++++ b/net/mptcp/mib.h
+@@ -19,6 +19,8 @@ enum linux_mptcp_mib_field {
+ 	MPTCP_MIB_JOINACKRX,		/* Received an ACK + MP_JOIN */
+ 	MPTCP_MIB_JOINACKMAC,		/* HMAC was wrong on ACK + MP_JOIN */
+ 	MPTCP_MIB_DSSNOMATCH,		/* Received a new mapping that did not match the previous one */
++	MPTCP_MIB_DSSCORRUPTIONFALLBACK,/* DSS corruption detected, fallback */
++	MPTCP_MIB_DSSCORRUPTIONRESET,	/* DSS corruption detected, MPJ subflow reset */
+ 	MPTCP_MIB_INFINITEMAPTX,	/* Sent an infinite mapping */
+ 	MPTCP_MIB_INFINITEMAPRX,	/* Received an infinite mapping */
+ 	MPTCP_MIB_DSSTCPMISMATCH,	/* DSS-mapping did not map with TCP's sequence numbers */
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -620,6 +620,18 @@ static bool mptcp_check_data_fin(struct
+ 	return ret;
  }
  
++static void mptcp_dss_corruption(struct mptcp_sock *msk, struct sock *ssk)
++{
++	if (READ_ONCE(msk->allow_infinite_fallback)) {
++		MPTCP_INC_STATS(sock_net(ssk),
++				MPTCP_MIB_DSSCORRUPTIONFALLBACK);
++		mptcp_do_fallback(ssk);
++	} else {
++		MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_DSSCORRUPTIONRESET);
++		mptcp_subflow_reset(ssk);
++	}
++}
++
+ static bool __mptcp_move_skbs_from_subflow(struct mptcp_sock *msk,
+ 					   struct sock *ssk,
+ 					   unsigned int *bytes)
+@@ -692,10 +704,16 @@ static bool __mptcp_move_skbs_from_subfl
+ 				moved += len;
+ 			seq += len;
+ 
+-			if (WARN_ON_ONCE(map_remaining < len))
+-				break;
++			if (unlikely(map_remaining < len)) {
++				DEBUG_NET_WARN_ON_ONCE(1);
++				mptcp_dss_corruption(msk, ssk);
++			}
+ 		} else {
+-			WARN_ON_ONCE(!fin);
++			if (unlikely(!fin)) {
++				DEBUG_NET_WARN_ON_ONCE(1);
++				mptcp_dss_corruption(msk, ssk);
++			}
++
+ 			sk_eat_skb(ssk, skb);
+ 			done = true;
+ 		}
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -944,8 +944,10 @@ static bool skb_is_fully_mapped(struct s
+ 	unsigned int skb_consumed;
+ 
+ 	skb_consumed = tcp_sk(ssk)->copied_seq - TCP_SKB_CB(skb)->seq;
+-	if (WARN_ON_ONCE(skb_consumed >= skb->len))
++	if (unlikely(skb_consumed >= skb->len)) {
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		return true;
++	}
+ 
+ 	return skb->len - skb_consumed <= subflow->map_data_len -
+ 					  mptcp_subflow_get_map_offset(subflow);
 
 
