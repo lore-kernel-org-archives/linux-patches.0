@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A615611E;
-	Mon, 14 Oct 2024 14:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B174A20EB;
+	Mon, 14 Oct 2024 14:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916862; cv=none; b=JsyMqSWfHW9zZZYFLUcU01iJXUVsMnDH/WYeljIIzfBYpyunXDk8VjcKRcouSTOqmzBuP6wCflMgfMc2QBmDyiaGhI4iNQ5NBsBwiyzyE6nDCUbGrDnsdAJjnA8NBdl8NkLtcEU/fjFNHh7F2lJtgs9xZlF2cvByN1W8zLJ5iM0=
+	t=1728916865; cv=none; b=mszxS8quAxCFHJzsWZY+f7VzRFAMwbKXpmRPKAKIh0oucevnahe4dK0n9197Y232+TgEWKAfCUDcsmthoOa5v1FIQ0gG6s2OGUwQmBkMTLP3Dgof0Dty1N4LOHdNRc5Ea7+Be0CXz/p0CjlxdkVpctZRCDBbmxZz/GbWm4RRLGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916862; c=relaxed/simple;
-	bh=MPC/RZWbA1rSR6yoULfhmSiiFlJM2s74Vr/QgqxUTnE=;
+	s=arc-20240116; t=1728916865; c=relaxed/simple;
+	bh=xWaUjF564L15CHUBnr3c5xEKtN4Aiby2rK6/wIqEY/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6u7M6g3f8FGFWPSYhNKcjyH4AS2e1WfLl+gmPPItmCtmZhyFZz/E36dFuXwVJ+Jrj4n60+d0IedClePVPv29PtiOrjrIV8tRR57PgRxkZ9KmCtl4syljMNO80OtNNzjUyUWlmO701m2eZQTHnsMsgG7Qb4RXW0o1eB5TV0ObaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcCkguOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7Q3FcQaoYhGlnxHrPp6pXs2r7yGwdnW8oebNXLiY0CtBh2D1s8goWNc7wynP1Qv/Rn9rkokf980dPHICQafjYsVR+xYBVTKQ0Uzhirzpfifwa4u1goxno6jnHs4ETTvDc/hFDKa/7PwoVbazS+CHV82DCq2boCKbJcEypYsh4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFXef8Qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcCkguOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD089C4CEC7;
-	Mon, 14 Oct 2024 14:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFXef8Qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1951FC4CEC3;
+	Mon, 14 Oct 2024 14:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916862;
-	bh=MPC/RZWbA1rSR6yoULfhmSiiFlJM2s74Vr/QgqxUTnE=;
+	s=korg; t=1728916865;
+	bh=xWaUjF564L15CHUBnr3c5xEKtN4Aiby2rK6/wIqEY/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcCkguOw6VrarPhZ88W2m5oFBh6o9O6kMe6MyXMuytOiFE99px85k3pwy3SwHfg05
-	 +bQ7t9zvICrfYyKWXe4boRogSnmznzV1Pm87WYBF3hi1LnFt/u9g8e24DkCsp0AJrq
-	 rrQYr3fl99iqA/LJLa1KO659XReO2RKLlM29G3nM=
+	b=iFXef8QgXCsRlMWHVhgyliel3pKELnZE2MW5z/G9yrhAUlQpMSX5mqgRiBwBlDear
+	 J+A7YLeilevEaVvKC3qNDJ2hm1NBWKMmkcyMfjov0hUm+mWYPAqnxQngoorrUXnagx
+	 E6h/HnYSN495nQu3tr7SmMALFrddzEWlnX2nkETY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/213] remoteproc: imx_rproc: Use imx specific hook for find_loaded_rsc_table
-Date: Mon, 14 Oct 2024 16:19:52 +0200
-Message-ID: <20241014141046.330711645@linuxfoundation.org>
+Subject: [PATCH 6.6 087/213] clk: imx: Remove CLK_SET_PARENT_GATE for DRAM mux for i.MX7D
+Date: Mon, 14 Oct 2024 16:19:53 +0200
+Message-ID: <20241014141046.369274224@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -55,64 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit e954a1bd16102abc800629f9900715d8ec4c3130 ]
+[ Upstream commit a54c441b46a0745683c2eef5a359d22856d27323 ]
 
-If there is a resource table device tree node, use the address as
-the resource table address, otherwise use the address(where
-.resource_table section loaded) inside the Cortex-M elf file.
+For i.MX7D DRAM related mux clock, the clock source change should ONLY
+be done done in low level asm code without accessing DRAM, and then
+calling clk API to sync the HW clock status with clk tree, it should never
+touch real clock source switch via clk API, so CLK_SET_PARENT_GATE flag
+should NOT be added, otherwise, DRAM's clock parent will be disabled when
+DRAM is active, and system will hang.
 
-And there is an update in NXP SDK that Resource Domain Control(RDC)
-enabled to protect TCM, linux not able to write the TCM space when
-updating resource table status and cause kernel dump. So use the address
-from device tree could avoid kernel dump.
-
-Note: NXP M4 SDK not check resource table update, so it does not matter
-use whether resource table address specified in elf file or in device
-tree. But to reflect the fact that if people specific resource table
-address in device tree, it means people are aware and going to use it,
-not the address specified in elf file.
-
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-2-10d0268c7eb1@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20240607133347.3291040-8-peng.fan@oss.nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx7d.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index d68d4b22f528e..610a69928dff2 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -669,6 +669,17 @@ static struct resource_table *imx_rproc_get_loaded_rsc_table(struct rproc *rproc
- 	return (struct resource_table *)priv->rsc_table;
- }
- 
-+static struct resource_table *
-+imx_rproc_elf_find_loaded_rsc_table(struct rproc *rproc, const struct firmware *fw)
-+{
-+	struct imx_rproc *priv = rproc->priv;
-+
-+	if (priv->rsc_table)
-+		return (struct resource_table *)priv->rsc_table;
-+
-+	return rproc_elf_find_loaded_rsc_table(rproc, fw);
-+}
-+
- static const struct rproc_ops imx_rproc_ops = {
- 	.prepare	= imx_rproc_prepare,
- 	.attach		= imx_rproc_attach,
-@@ -679,7 +690,7 @@ static const struct rproc_ops imx_rproc_ops = {
- 	.da_to_va       = imx_rproc_da_to_va,
- 	.load		= rproc_elf_load_segments,
- 	.parse_fw	= imx_rproc_parse_fw,
--	.find_loaded_rsc_table = rproc_elf_find_loaded_rsc_table,
-+	.find_loaded_rsc_table = imx_rproc_elf_find_loaded_rsc_table,
- 	.get_loaded_rsc_table = imx_rproc_get_loaded_rsc_table,
- 	.sanity_check	= rproc_elf_sanity_check,
- 	.get_boot_addr	= rproc_elf_get_boot_addr,
+diff --git a/drivers/clk/imx/clk-imx7d.c b/drivers/clk/imx/clk-imx7d.c
+index 2b77d1fc7bb94..1e1296e748357 100644
+--- a/drivers/clk/imx/clk-imx7d.c
++++ b/drivers/clk/imx/clk-imx7d.c
+@@ -498,9 +498,9 @@ static void __init imx7d_clocks_init(struct device_node *ccm_node)
+ 	hws[IMX7D_ENET_AXI_ROOT_SRC] = imx_clk_hw_mux2_flags("enet_axi_src", base + 0x8900, 24, 3, enet_axi_sel, ARRAY_SIZE(enet_axi_sel), CLK_SET_PARENT_GATE);
+ 	hws[IMX7D_NAND_USDHC_BUS_ROOT_SRC] = imx_clk_hw_mux2_flags("nand_usdhc_src", base + 0x8980, 24, 3, nand_usdhc_bus_sel, ARRAY_SIZE(nand_usdhc_bus_sel), CLK_SET_PARENT_GATE);
+ 	hws[IMX7D_DRAM_PHYM_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_phym_src", base + 0x9800, 24, 1, dram_phym_sel, ARRAY_SIZE(dram_phym_sel), CLK_SET_PARENT_GATE);
+-	hws[IMX7D_DRAM_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_src", base + 0x9880, 24, 1, dram_sel, ARRAY_SIZE(dram_sel), CLK_SET_PARENT_GATE);
++	hws[IMX7D_DRAM_ROOT_SRC] = imx_clk_hw_mux2("dram_src", base + 0x9880, 24, 1, dram_sel, ARRAY_SIZE(dram_sel));
+ 	hws[IMX7D_DRAM_PHYM_ALT_ROOT_SRC] = imx_clk_hw_mux2_flags("dram_phym_alt_src", base + 0xa000, 24, 3, dram_phym_alt_sel, ARRAY_SIZE(dram_phym_alt_sel), CLK_SET_PARENT_GATE);
+-	hws[IMX7D_DRAM_ALT_ROOT_SRC]  = imx_clk_hw_mux2_flags("dram_alt_src", base + 0xa080, 24, 3, dram_alt_sel, ARRAY_SIZE(dram_alt_sel), CLK_SET_PARENT_GATE);
++	hws[IMX7D_DRAM_ALT_ROOT_SRC]  = imx_clk_hw_mux2("dram_alt_src", base + 0xa080, 24, 3, dram_alt_sel, ARRAY_SIZE(dram_alt_sel));
+ 	hws[IMX7D_USB_HSIC_ROOT_SRC] = imx_clk_hw_mux2_flags("usb_hsic_src", base + 0xa100, 24, 3, usb_hsic_sel, ARRAY_SIZE(usb_hsic_sel), CLK_SET_PARENT_GATE);
+ 	hws[IMX7D_PCIE_CTRL_ROOT_SRC] = imx_clk_hw_mux2_flags("pcie_ctrl_src", base + 0xa180, 24, 3, pcie_ctrl_sel, ARRAY_SIZE(pcie_ctrl_sel), CLK_SET_PARENT_GATE);
+ 	hws[IMX7D_PCIE_PHY_ROOT_SRC] = imx_clk_hw_mux2_flags("pcie_phy_src", base + 0xa200, 24, 3, pcie_phy_sel, ARRAY_SIZE(pcie_phy_sel), CLK_SET_PARENT_GATE);
 -- 
 2.43.0
 
