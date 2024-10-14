@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B3E3A1B6;
-	Mon, 14 Oct 2024 15:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A25A481B3;
+	Mon, 14 Oct 2024 15:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918471; cv=none; b=NJKBoEQGAIp6uSqdBWD0bf667R2X6zrR9/3Epwg4wn6wgcWNnPGZXOIqDngkCeP+dgxUNY+PpJxt3uoRs3B+FJ7fOLINBzmWYU171/590tKK9vQav44RQ7Xj1M2rYqrtVt3wQkjJV3WP00axd6vY/qU/InGZrjKF9OQBqC25OIo=
+	t=1728918475; cv=none; b=fIRkxMYAOzTgY25OdbFyOK/wNVXR85TsEi1glRKSR/oFxmEhYF9J+BkTiFmwlYcb8Nzyl35oEec5bI9XhKbq5hleskG9djYxWN4lwOR8+qglQAv9ulE7sKcXSLBKKwqaOn9/lV9DEgwNo7KB/tIm1tPnuQHlgx9DuKus1hBVYF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918471; c=relaxed/simple;
-	bh=yPeBihS1stzFJUC3W7IZrWQX55Dr+n0rpUMxrRb7HIU=;
+	s=arc-20240116; t=1728918475; c=relaxed/simple;
+	bh=t7z/SeqNl9lvHUiomzlVpV9a8oWW69mW11YvbfZn7Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ssAIOFaqUEEBYysKjrcg3A0/NCeimSBr1ixS+pgLo42UJAWYmUeUTIyAzbFsqSiR3XiK2qijPUtVI19Enl6G57BBB2nE1o2BNivPok/HAHyk4BPTIuyHE62HfAxyjpl5kcI0rnU6D78HY57Os8UXfaa2mEthpZbedNjrFRCNO00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cyc0bbNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orKgk1QJHCEfRP9Ts5HbrNtQHmOBuFu4C3R7iU9kgPbotdztatQZBJlA0xf3uZpZ/YppFMnToGOgAx2PAhgjGd6I72KPPwDLudcwOk+B4KeZAwO1lKI90PI/eCSvhPNKTpc53d5RZPfOqWh3JgYI4V8HDhxOpUGkxhSqV/nsaGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVrtCRXm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cyc0bbNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45847C4CEC3;
-	Mon, 14 Oct 2024 15:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVrtCRXm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70006C4CEC3;
+	Mon, 14 Oct 2024 15:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918471;
-	bh=yPeBihS1stzFJUC3W7IZrWQX55Dr+n0rpUMxrRb7HIU=;
+	s=korg; t=1728918474;
+	bh=t7z/SeqNl9lvHUiomzlVpV9a8oWW69mW11YvbfZn7Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cyc0bbNoRWi2FJLZG9brVUDwmZIruxMlD2ml/ksfq9CZTE8pqc6krJKnajCMy7Pax
-	 p/Y1h3Q6HQ8pczQr48cPXKDyWpTI/2hZeCiQzpmfqIX3tP15hRUHph93kvBq14Al3m
-	 BmBotKKN61BwBrd8oOXJ7nY6edNxcI8hOZPe01ts=
+	b=UVrtCRXmO9LfatfdVq7DHuDKDeyqYKtDZSr9V37XEopQkCsmtz1nT+OybQooGzy3J
+	 rfJQTgltSYDEkVMD2yEgpa2TtMCauu98rzfB3bRruFTYcpH7pEVz4LVjguM5e/hOOU
+	 wGv8ckNmri/3cc5IsqbLwe+NLUDPMhPFGojHGxPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikola Radojevic <nikola@radojevic.rs>,
+	Marek Kraus <gamiee@pine64.org>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 334/798] arm64: dts: rockchip: Raise Pinebook Pros panel backlight PWM frequency
-Date: Mon, 14 Oct 2024 16:14:48 +0200
-Message-ID: <20241014141231.071706229@linuxfoundation.org>
+Subject: [PATCH 6.1 335/798] arm64: dts: rockchip: Correct the Pinebook Pro battery design capacity
+Date: Mon, 14 Oct 2024 16:14:49 +0200
+Message-ID: <20241014141231.110215894@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,39 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Dragan Simic <dsimic@manjaro.org>
 
-commit 8c51521de18755d4112a77a598a348b38d0af370 upstream.
+commit def33fb1191207f5afa6dcb681d71fef2a6c1293 upstream.
 
-Increase the frequency of the PWM signal that drives the LED backlight of
-the Pinebook Pro's panel, from about 1.35 KHz (which equals to the PWM
-period of 740,740 ns), to exactly 8 kHz (which equals to the PWM period of
-125,000 ns).  Using a higher PWM frequency for the panel backlight, which
-reduces the flicker, can only be beneficial to the end users' eyes.
+All batches of the Pine64 Pinebook Pro, except the latest batch (as of 2024)
+whose hardware design was revised due to the component shortage, use a 1S
+lithium battery whose nominal/design capacity is 10,000 mAh, according to the
+battery datasheet. [1][2]  Let's correct the design full-charge value in the
+Pinebook Pro board dts, to improve the accuracy of the hardware description,
+and to hopefully improve the accuracy of the fuel gauge a bit on all units
+that don't belong to the latest batch.
 
-On top of that, increasing the backlight PWM signal frequency reportedly
-eliminates the buzzing emitted from the Pinebook Pro's built-in speakers
-when certain backlight levels are set, which cause some weird interference
-with some of the components of the Pinebook Pro's audio chain.
+The above-mentioned latest batch uses a different 1S lithium battery with
+a slightly lower capacity, more precisely 9,600 mAh.  To make the fuel gauge
+work reliably on the latest batch, a sample battery would need to be sent to
+CellWise, to obtain its proprietary battery profile, whose data goes into
+"cellwise,battery-profile" in the Pinebook Pro board dts.  Without that data,
+the fuel gauge reportedly works unreliably, so changing the design capacity
+won't have any negative effects on the already unreliable operation of the
+fuel gauge in the Pinebook Pros that belong to the latest batch.
 
-The old value for the backlight PWM period, i.e. 740,740 ns, is pretty much
-an arbitrary value that was selected during the very early bring-up of the
-Pinebook Pro, only because that value seemed to minimize horizontal line
-distortion on the display, which resulted from the old X.org drivers causing
-screen tearing when dragging windows around.  That's no longer an issue, so
-there are no reasons to stick with the old PWM period value.
+According to the battery datasheet, its voltage can go as low as 2.75 V while
+discharging, but it's better to leave the current 3.0 V value in the dts file,
+because of the associated Pinebook Pro's voltage regulation issues.
 
-The lower and the upper backlight PWM frequency limits for the Pinebook Pro's
-panel, according to its datasheet, are 200 Hz and 10 kHz, respectively. [1]
-These changes still leave some headroom, which may have some positive effects
-on the lifetime expectancy of the panel's backlight LEDs.
+[1] https://wiki.pine64.org/index.php/Pinebook_Pro#Battery
+[2] https://files.pine64.org/doc/datasheet/pinebook/40110175P%203.8V%2010000mAh%E8%A7%84%E6%A0%BC%E4%B9%A6-14.pdf
 
-[1] https://files.pine64.org/doc/datasheet/PinebookPro/NV140FHM-N49_Rev.P0_20160804_201710235838.pdf
-
-Fixes: 5a65505a6988 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Fixes: c7c4d698cd28 ("arm64: dts: rockchip: add fuel gauge to Pinebook Pro dts")
 Cc: stable@vger.kernel.org
-Reported-by: Nikola Radojevic <nikola@radojevic.rs>
+Cc: Marek Kraus <gamiee@pine64.org>
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Tested-by: Nikola Radojević <nikola@radojevic.rs>
-Link: https://lore.kernel.org/r/2a23b6cfd8c0513e5b233b4006ee3d3ed09b824f.1722805655.git.dsimic@manjaro.org
+Link: https://lore.kernel.org/r/731f8ef9b1a867bcc730d19ed277c8c0534c0842.1721065172.git.dsimic@manjaro.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -95,14 +92,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -32,7 +32,7 @@
- 	backlight: edp-backlight {
- 		compatible = "pwm-backlight";
- 		power-supply = <&vcc_12v>;
--		pwms = <&pwm0 0 740740 0>;
-+		pwms = <&pwm0 0 125000 0>;
- 	};
+@@ -37,7 +37,7 @@
  
  	bat: battery {
+ 		compatible = "simple-battery";
+-		charge-full-design-microamp-hours = <9800000>;
++		charge-full-design-microamp-hours = <10000000>;
+ 		voltage-max-design-microvolt = <4350000>;
+ 		voltage-min-design-microvolt = <3000000>;
+ 	};
 
 
