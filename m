@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BA11AB51B;
-	Mon, 14 Oct 2024 15:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6394B1C7608;
+	Mon, 14 Oct 2024 15:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919655; cv=none; b=lyYFwXNXuoKSxhGXRwcRYBJS8Q2QWULROVR+XSlrm49sIy/oATlBkwJCIG00LI+wy64UWHS/AxF/krPZwhDuUgZlxm2+bhSjSjur+P4I3bpHDZuA5gHmzAbAXfUJvRP+tiPymqPHvw0XJt2qZv2Pcdq99TiobzRtK6+0JZ6RyBM=
+	t=1728919658; cv=none; b=Xkncq2D67j74Cl0TvM7FsEVUEPNItkj5oXK4pa/OSFAbg1PzG60/yzczhqKvvx0vYnIZYyPsKF41HIRQiXoROIdqBdQ0Gb54O0XMCC/5rje6LK+b32GAImxacepZ4iAJoaFWPD3eVWe5QX/rLtWfpUlogWW7nxc5Xoe3Sx5DEXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919655; c=relaxed/simple;
-	bh=9TDQONxgwEy++51YkPICAkD3pNOwH0FXvABJFv95VAI=;
+	s=arc-20240116; t=1728919658; c=relaxed/simple;
+	bh=U9TnY9xK9o6mS4ZCZxKaIhwq/eX2AJvi/9iM8yz4A9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1Pd46iVopnfpLgMNmDkhFsCCNStMMtQa8ekgBVZnqfdRuC0kkxViQybkfZFoaqkHVhWUIP3jOk9HFJM46tehFNtzDq580qg4zIeUJwWl//sqAh2PHdrI3cugcsOgYtyhY65giKY2kE7Cp0nC6gfgzSnYH5flTps1nTcJ7OaYeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwjsSREf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SZCWLskSuwAtyZNbz7kwKgvJRfB1AvIlbV47ij2I2yUPG4OYNu+8P4TnmiBrb1/ISOIb1hziGfx+FPnkKh3IausLxwyvUQ5r1BYWftbqtKBfnzPwFGCTkJuDJ6aPXY5w155LoTFRw4b2AhSB66BqdQ3X84GD+ZW2lhfrU7AVoKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1ewJYan; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwjsSREf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9D9C4CEC7;
-	Mon, 14 Oct 2024 15:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1ewJYan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5029C4CEC3;
+	Mon, 14 Oct 2024 15:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919654;
-	bh=9TDQONxgwEy++51YkPICAkD3pNOwH0FXvABJFv95VAI=;
+	s=korg; t=1728919658;
+	bh=U9TnY9xK9o6mS4ZCZxKaIhwq/eX2AJvi/9iM8yz4A9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwjsSREfC1VDT9wF31cd66FRvm/PmO9Nl2N7s0A2MMFqGNgvlTvCWVGRG9Y7cn6r9
-	 2t7C93Zr5RjnZmAJnfp3P8tde3xORqqGzFjA1oLhK94xhSPC1ySDOIHdqK0BBd9d+y
-	 HJEt0CE/f88+U/awdP0JKktMGLXyEupKjB/o2Flc=
+	b=f1ewJYanDX2Kx0cc9a1V6ytByJEtOBmYcseICUR7ueDmoX06DrW3wLV+4eO6GsBgz
+	 2QqdwB3UhYtY25+Xp4HmzYXDICLMFR4jR1kiH7M92bP2pA1oBBAwN1ydwqEZj4I8nL
+	 n2RErjN1jS7SPbmIeyCffAzTt4Xm/t8ury5Mx998=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Michel <alex.michel@wiedemann-group.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 639/798] clk: imx6ul: fix clock parent for IMX6UL_CLK_ENETx_REF_SEL
-Date: Mon, 14 Oct 2024 16:19:53 +0200
-Message-ID: <20241014141243.145467547@linuxfoundation.org>
+Subject: [PATCH 6.1 630/798] drm/amd/display: Allow backlight to go below `AMDGPU_DM_DEFAULT_MIN_BACKLIGHT`
+Date: Mon, 14 Oct 2024 16:19:44 +0200
+Message-ID: <20241014141242.787953258@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,51 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michel Alex <Alex.Michel@wiedemann-group.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 32c055ef563c3a4a73a477839f591b1b170bde8e ]
+[ Upstream commit 87d749a6aab73d8069d0345afaa98297816cb220 ]
 
-Commit 4e197ee880c24ecb63f7fe17449b3653bc64b03c ("clk: imx6ul: add
-ethernet refclock mux support") sets the internal clock as default
-ethernet clock.
+The issue with panel power savings compatibility below
+`AMDGPU_DM_DEFAULT_MIN_BACKLIGHT` happens at
+`AMDGPU_DM_DEFAULT_MIN_BACKLIGHT` as well.
 
-Since IMX6UL_CLK_ENET_REF cannot be parent for IMX6UL_CLK_ENET1_REF_SEL,
-the call to clk_set_parent() fails. IMX6UL_CLK_ENET1_REF_125M is the correct
-parent and shall be used instead.
-Same applies for IMX6UL_CLK_ENET2_REF_SEL, for which IMX6UL_CLK_ENET2_REF_125M
-is the correct parent.
+That issue will be fixed separately, so don't prevent the backlight
+brightness from going that low.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Michel <alex.michel@wiedemann-group.com>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/AS1P250MB0608F9CE4009DCE65C61EEDEA9922@AS1P250MB0608.EURP250.PROD.OUTLOOK.COM
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/amd-gfx/be04226a-a9e3-4a45-a83b-6d263c6557d8@t-8ch.de/T/#m400dee4e2fc61fe9470334d20a7c8c89c9aef44f
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx6ul.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx6ul.c b/drivers/clk/imx/clk-imx6ul.c
-index ef6c94b732684..c4266d732f7c1 100644
---- a/drivers/clk/imx/clk-imx6ul.c
-+++ b/drivers/clk/imx/clk-imx6ul.c
-@@ -540,8 +540,8 @@ static void __init imx6ul_clocks_init(struct device_node *ccm_node)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 0625c4f075f2d..8f7130f7d8c69 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4077,7 +4077,7 @@ static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm,
+ 		int spread = caps.max_input_signal - caps.min_input_signal;
  
- 	clk_set_parent(hws[IMX6UL_CLK_ENFC_SEL]->clk, hws[IMX6UL_CLK_PLL2_PFD2]->clk);
- 
--	clk_set_parent(hws[IMX6UL_CLK_ENET1_REF_SEL]->clk, hws[IMX6UL_CLK_ENET_REF]->clk);
--	clk_set_parent(hws[IMX6UL_CLK_ENET2_REF_SEL]->clk, hws[IMX6UL_CLK_ENET2_REF]->clk);
-+	clk_set_parent(hws[IMX6UL_CLK_ENET1_REF_SEL]->clk, hws[IMX6UL_CLK_ENET1_REF_125M]->clk);
-+	clk_set_parent(hws[IMX6UL_CLK_ENET2_REF_SEL]->clk, hws[IMX6UL_CLK_ENET2_REF_125M]->clk);
- 
- 	imx_register_uart_clocks();
- }
+ 		if (caps.max_input_signal > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
+-		    caps.min_input_signal < AMDGPU_DM_DEFAULT_MIN_BACKLIGHT ||
++		    caps.min_input_signal < 0 ||
+ 		    spread > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
+ 		    spread < AMDGPU_DM_MIN_SPREAD) {
+ 			DRM_DEBUG_KMS("DM: Invalid backlight caps: min=%d, max=%d\n",
 -- 
 2.43.0
 
