@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192B1AB517;
-	Mon, 14 Oct 2024 14:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0724419E802;
+	Mon, 14 Oct 2024 14:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916534; cv=none; b=cSqhem4XH4VwjhfXvkqfV27LhgKrmzFITirR4xm28afTnj/rP+g2lbmxfCYL4x9u5LRu8Zacljb70udv98+xCUlF7HLVNdTUuejlUxzR4fGTlTbeQ3fDxaF8vsfPD/jd2tMfyZqhKZlbB8mN/phRp7ehUkcBFvFDlZ8DGOk6L9A=
+	t=1728916538; cv=none; b=qllVtrLxE4uXaq4aM+Vgotyvq0Ik1Z6YX3+9IcY+EK6eU8AmpvpfLM3j44W4DhKR3MhuB/0FnJViEGai4vMxnvXYcgdqaxThFiePoJvQahaawnIa23aOcVvnL1+yuX8Crau9SQg6oSj9p1WP6dGtwXdvGC6MAWIQBSCkE5P9L5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916534; c=relaxed/simple;
-	bh=5rxzK9UIrAuaKxPJm3ZKxLKE5HKIV6c8R7GzMBEomCw=;
+	s=arc-20240116; t=1728916538; c=relaxed/simple;
+	bh=bOnwC81/UpNdBnEqIe6JhimC24tkIPhf6y2L1l1l4L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2GmENsfBivkTpzExBGQxBQqCfJrz1YCIFibX9FBui/MgCtNpFz3ul0S9NXzpYn/Nm4w0ZI+0BbsysuXnaXWppqMUWoi1WbK3L3MbtBPJUM3pHpT5GC8cYRaHN6n4KXs7f1WBnVWksUObymRCt9qIcOKnza7sdU8Kzr+0r9+Up8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FG0ia2cC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fm2xboPjrwqIixWcgCYEWhBU7eazGt6H7Kk+DnieVdvxL7OdG9oXlPiMiweHhwF2zXFwkyK+azLkYy/0bZfB1FFopxUivcDoSCn/AVLi+HTtSx1af5jOAeX6EkQD99jjo1OveUu+wux1gbtyH6oBWdLyOPP42+BRY8IIFcpcsnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlV2aQSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FG0ia2cC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B3AC4CEC3;
-	Mon, 14 Oct 2024 14:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlV2aQSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BE4C4CEC3;
+	Mon, 14 Oct 2024 14:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916534;
-	bh=5rxzK9UIrAuaKxPJm3ZKxLKE5HKIV6c8R7GzMBEomCw=;
+	s=korg; t=1728916537;
+	bh=bOnwC81/UpNdBnEqIe6JhimC24tkIPhf6y2L1l1l4L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FG0ia2cC/NPWQyNTzC7cP9+rwR4h/sAl5pftLc+ehC5msxu4+Iwgr4uiAeqshC2pY
-	 1bN9+iNRN6iSiGT208yFK3WU4xE8kmVFasNVhrXO75h+EhydD+yVQhe5uSc47X1qry
-	 zliniT5ahbbVx9lGUcC46pQRPSkjfrDeu4oF1FC0=
+	b=FlV2aQSaosG144yUVOQS9FQYX5Vd6ofzwLizdKR/EMArQwwy4d/KlYDGujtVs+ZzD
+	 claFOWdjkLUC56clqbOoMg9nmdlQqP3mSFjA/ucwf3si/taMOO7a6xgsvzB+ojmX37
+	 +/f9fUpk6WmWBGmcxsBC2jmSHsiZCG24XxEJZ3bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Patrick Roy <roypat@amazon.co.uk>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Alexander Graf <graf@amazon.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Gowans <jgowans@amazon.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 211/214] fs/proc/kcore.c: allow translation of physical memory addresses
-Date: Mon, 14 Oct 2024 16:21:14 +0200
-Message-ID: <20241014141053.211783868@linuxfoundation.org>
+Subject: [PATCH 6.11 212/214] secretmem: disable memfd_secret() if arch cannot set direct map
+Date: Mon, 14 Oct 2024 16:21:15 +0200
+Message-ID: <20241014141053.250150809@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,122 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Patrick Roy <roypat@amazon.co.uk>
 
-commit 3d5854d75e3187147613130561b58f0b06166172 upstream.
+commit 532b53cebe58f34ce1c0f34d866f5c0e335c53c6 upstream.
 
-When /proc/kcore is read an attempt to read the first two pages results in
-HW-specific page swap on s390 and another (so called prefix) pages are
-accessed instead.  That leads to a wrong read.
+Return -ENOSYS from memfd_secret() syscall if !can_set_direct_map().  This
+is the case for example on some arm64 configurations, where marking 4k
+PTEs in the direct map not present can only be done if the direct map is
+set up at 4k granularity in the first place (as ARM's break-before-make
+semantics do not easily allow breaking apart large/gigantic pages).
 
-Allow architecture-specific translation of memory addresses using
-kc_xlate_dev_mem_ptr() and kc_unxlate_dev_mem_ptr() callbacks similarily
-to /dev/mem xlate_dev_mem_ptr() and unxlate_dev_mem_ptr() callbacks.  That
-way an architecture can deal with specific physical memory ranges.
+More precisely, on arm64 systems with !can_set_direct_map(),
+set_direct_map_invalid_noflush() is a no-op, however it returns success
+(0) instead of an error.  This means that memfd_secret will seemingly
+"work" (e.g.  syscall succeeds, you can mmap the fd and fault in pages),
+but it does not actually achieve its goal of removing its memory from the
+direct map.
 
-Re-use the existing /dev/mem callback implementation on s390, which
-handles the described prefix pages swapping correctly.
+Note that with this patch, memfd_secret() will start erroring on systems
+where can_set_direct_map() returns false (arm64 with
+CONFIG_RODATA_FULL_DEFAULT_ENABLED=n, CONFIG_DEBUG_PAGEALLOC=n and
+CONFIG_KFENCE=n), but that still seems better than the current silent
+failure.  Since CONFIG_RODATA_FULL_DEFAULT_ENABLED defaults to 'y', most
+arm64 systems actually have a working memfd_secret() and aren't be
+affected.
 
-For other architectures the default callback is basically NOP.  It is
-expected the condition (vaddr == __va(__pa(vaddr))) always holds true for
-KCORE_RAM memory type.
+>From going through the iterations of the original memfd_secret patch
+series, it seems that disabling the syscall in these scenarios was the
+intended behavior [1] (preferred over having
+set_direct_map_invalid_noflush return an error as that would result in
+SIGBUSes at page-fault time), however the check for it got dropped between
+v16 [2] and v17 [3], when secretmem moved away from CMA allocations.
 
-Link: https://lkml.kernel.org/r/20240930122119.1651546-1-agordeev@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
+[1]: https://lore.kernel.org/lkml/20201124164930.GK8537@kernel.org/
+[2]: https://lore.kernel.org/lkml/20210121122723.3446-11-rppt@kernel.org/#t
+[3]: https://lore.kernel.org/lkml/20201125092208.12544-10-rppt@kernel.org/
+
+Link: https://lkml.kernel.org/r/20241001080056.784735-1-roypat@amazon.co.uk
+Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
+Signed-off-by: Patrick Roy <roypat@amazon.co.uk>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: James Gowans <jgowans@amazon.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/io.h |    2 ++
- fs/proc/kcore.c            |   36 ++++++++++++++++++++++++++++++++++--
- 2 files changed, 36 insertions(+), 2 deletions(-)
+ mm/secretmem.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/include/asm/io.h
-+++ b/arch/s390/include/asm/io.h
-@@ -16,8 +16,10 @@
- #include <asm/pci_io.h>
+--- a/mm/secretmem.c
++++ b/mm/secretmem.c
+@@ -238,7 +238,7 @@ SYSCALL_DEFINE1(memfd_secret, unsigned i
+ 	/* make sure local flags do not confict with global fcntl.h */
+ 	BUILD_BUG_ON(SECRETMEM_FLAGS_MASK & O_CLOEXEC);
  
- #define xlate_dev_mem_ptr xlate_dev_mem_ptr
-+#define kc_xlate_dev_mem_ptr xlate_dev_mem_ptr
- void *xlate_dev_mem_ptr(phys_addr_t phys);
- #define unxlate_dev_mem_ptr unxlate_dev_mem_ptr
-+#define kc_unxlate_dev_mem_ptr unxlate_dev_mem_ptr
- void unxlate_dev_mem_ptr(phys_addr_t phys, void *addr);
+-	if (!secretmem_enable)
++	if (!secretmem_enable || !can_set_direct_map())
+ 		return -ENOSYS;
  
- #define IO_SPACE_LIMIT 0
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -50,6 +50,20 @@ static struct proc_dir_entry *proc_root_
- #define	kc_offset_to_vaddr(o) ((o) + PAGE_OFFSET)
- #endif
+ 	if (flags & ~(SECRETMEM_FLAGS_MASK | O_CLOEXEC))
+@@ -280,7 +280,7 @@ static struct file_system_type secretmem
  
-+#ifndef kc_xlate_dev_mem_ptr
-+#define kc_xlate_dev_mem_ptr kc_xlate_dev_mem_ptr
-+static inline void *kc_xlate_dev_mem_ptr(phys_addr_t phys)
-+{
-+	return __va(phys);
-+}
-+#endif
-+#ifndef kc_unxlate_dev_mem_ptr
-+#define kc_unxlate_dev_mem_ptr kc_unxlate_dev_mem_ptr
-+static inline void kc_unxlate_dev_mem_ptr(phys_addr_t phys, void *virt)
-+{
-+}
-+#endif
-+
- static LIST_HEAD(kclist_head);
- static DECLARE_RWSEM(kclist_lock);
- static int kcore_need_update = 1;
-@@ -471,6 +485,8 @@ static ssize_t read_kcore_iter(struct ki
- 	while (buflen) {
- 		struct page *page;
- 		unsigned long pfn;
-+		phys_addr_t phys;
-+		void *__start;
+ static int __init secretmem_init(void)
+ {
+-	if (!secretmem_enable)
++	if (!secretmem_enable || !can_set_direct_map())
+ 		return 0;
  
- 		/*
- 		 * If this is the first iteration or the address is not within
-@@ -537,7 +553,8 @@ static ssize_t read_kcore_iter(struct ki
- 			}
- 			break;
- 		case KCORE_RAM:
--			pfn = __pa(start) >> PAGE_SHIFT;
-+			phys = __pa(start);
-+			pfn =  phys >> PAGE_SHIFT;
- 			page = pfn_to_online_page(pfn);
- 
- 			/*
-@@ -557,13 +574,28 @@ static ssize_t read_kcore_iter(struct ki
- 			fallthrough;
- 		case KCORE_VMEMMAP:
- 		case KCORE_TEXT:
-+			if (m->type == KCORE_RAM) {
-+				__start = kc_xlate_dev_mem_ptr(phys);
-+				if (!__start) {
-+					ret = -ENOMEM;
-+					if (iov_iter_zero(tsz, iter) != tsz)
-+						ret = -EFAULT;
-+					goto out;
-+				}
-+			} else {
-+				__start = (void *)start;
-+			}
-+
- 			/*
- 			 * Sadly we must use a bounce buffer here to be able to
- 			 * make use of copy_from_kernel_nofault(), as these
- 			 * memory regions might not always be mapped on all
- 			 * architectures.
- 			 */
--			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
-+			ret = copy_from_kernel_nofault(buf, __start, tsz);
-+			if (m->type == KCORE_RAM)
-+				kc_unxlate_dev_mem_ptr(phys, __start);
-+			if (ret) {
- 				if (iov_iter_zero(tsz, iter) != tsz) {
- 					ret = -EFAULT;
- 					goto out;
+ 	secretmem_mnt = kern_mount(&secretmem_fs);
 
 
