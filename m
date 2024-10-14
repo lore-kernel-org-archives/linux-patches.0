@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B35A1BBBC4;
-	Mon, 14 Oct 2024 14:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249241AAE27;
+	Mon, 14 Oct 2024 14:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917768; cv=none; b=PlKUUPnJ8ORxIAQOFn4mlX8F34QIg+vQn+H6tEjssAXRn2wf4OOZAEMqUMZzHlneiIltR+LDv4BI7tA+ooDVt+AQEOwlRq2j51cD3u5/GU47JaCcwouXk0MUfvvv/ZQwWTHFpJ9SD6O4PTnHLq0B7gBlQ0jKIf/ohKeUwz494QQ=
+	t=1728917771; cv=none; b=u1WEysyoEa8uGHfDzQh/lBcm5/ZA4Nhg0PkuHuWJtaMKC4fOpfpmit1KMNGtCpSFsq22HfiktVvio0tH72HjUzyaDeitrItlUZspQNue7ZLXl8OYCt6Seh1SBXxQ1vKvaDOW1Ar8JMQXW2d7c0tJlfo5pDZc52WOtyJe4slm56A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917768; c=relaxed/simple;
-	bh=HXvJiyYouBOhAR+fCJNi0JmWjAr5/1MQOjiqxsy36t4=;
+	s=arc-20240116; t=1728917771; c=relaxed/simple;
+	bh=LWJya6Xt1APev4tbyEgex3tBAVRgStxU4zeXYrtbW6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxRSmIN2LTesnBcIVoZdKxDHVDP8B5ARag2n99nzigtvCLmd80GzPLhOAdkUkvGV5+QrpzN2LTYw51jtaECJgmZLhhyWeAzHRECLQATU5UHQBDlwcL2YHzSEIz7E64CCRavPg/bZEGHuxf2XQzUBWu/t6vWNVtBSyCxpmBAwBx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/W4Nwvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKSRFMiyXH4lRtVLpVezRwpg6VQm8H1AR4CyKn9vTItfNSfHEIWSS2XXAqhq3lAdjcER4KwgNncNc20kMb8dCcPX4KVm3ZOxMDfC5gYZFzLlsovHvh9cZmrZkY6X6IfXF1899+IcNsPC6+xeGQxbkUXmvOD1KbZwzF0GzY/lOgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvOVkoRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/W4Nwvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D24C4CEC3;
-	Mon, 14 Oct 2024 14:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvOVkoRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F51CC4CEC3;
+	Mon, 14 Oct 2024 14:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917767;
-	bh=HXvJiyYouBOhAR+fCJNi0JmWjAr5/1MQOjiqxsy36t4=;
+	s=korg; t=1728917771;
+	bh=LWJya6Xt1APev4tbyEgex3tBAVRgStxU4zeXYrtbW6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/W4NwvfpMKlTWqm0amf0ExbpVFexJB7nkQ2ULbIa96kZY24THCWT4sROVyStkO4A
-	 aaXM/mSg5LQJfnXHXy3KM2NuVd6lu6Y1YcMtPzKFogeJ8lofqEiERObm9TgUZH+umh
-	 71iiftMnFnzHHF+8os6CQRsV3Krwoyi760UEDhHw=
+	b=TvOVkoRG3tYrrq2JpGmKWGNmt3SxQiTcWNjCL9IfUlNvrG4WEYjOFISvfCBwqkSiq
+	 QhioiNK/pekldifL/S6OYzSQz5QdAgz3KqXWh1tqQMPqKM2HxOGtFyOgnCL49vx+6g
+	 A5FhQUElhXWFdy6ENziW1wm20I+20kwKW87v2BOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/798] hwmon: (max16065) Fix overflows seen when writing limits
-Date: Mon, 14 Oct 2024 16:10:41 +0200
-Message-ID: <20241014141221.350505236@linuxfoundation.org>
+Subject: [PATCH 6.1 122/798] powerpc/8xx: Fix initial memory mapping
+Date: Mon, 14 Oct 2024 16:11:16 +0200
+Message-ID: <20241014141222.714138300@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 744ec4477b11c42e2c8de9eb8364675ae7a0bd81 ]
+[ Upstream commit f9f2bff64c2f0dbee57be3d8c2741357ad3d05e6 ]
 
-Writing large limits resulted in overflows as reported by module tests.
+Commit cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
+introduced an initial mapping of kernel TEXT using PAGE_KERNEL_TEXT,
+but the pages that contain kernel TEXT may also contain kernel RODATA,
+and depending on selected debug options PAGE_KERNEL_TEXT may be either
+RWX or ROX. RODATA must be writable during init because it also
+contains ro_after_init data.
 
-in0_lcrit: Suspected overflow: [max=5538, read 0, written 2147483647]
-in0_crit: Suspected overflow: [max=5538, read 0, written 2147483647]
-in0_min: Suspected overflow: [max=5538, read 0, written 2147483647]
+So use PAGE_KERNEL_X instead to be sure it is RWX.
 
-Fix the problem by clamping prior to multiplications and the use of
-DIV_ROUND_CLOSEST, and by using consistent variable types.
-
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/dac7a828d8497c4548c91840575a706657baa4f1.1724173828.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/mm/nohash/8xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index daa5d8af1e69d..0d938161595dd 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -114,9 +114,10 @@ static inline int LIMIT_TO_MV(int limit, int range)
- 	return limit * range / 256;
- }
+diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
+index dbbfe897455dc..52f24fda2d5f6 100644
+--- a/arch/powerpc/mm/nohash/8xx.c
++++ b/arch/powerpc/mm/nohash/8xx.c
+@@ -147,11 +147,11 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
  
--static inline int MV_TO_LIMIT(int mv, int range)
-+static inline int MV_TO_LIMIT(unsigned long mv, int range)
- {
--	return clamp_val(DIV_ROUND_CLOSEST(mv * 256, range), 0, 255);
-+	mv = clamp_val(mv, 0, ULONG_MAX / 256);
-+	return DIV_ROUND_CLOSEST(clamp_val(mv * 256, 0, range * 255), range);
- }
+ 	mmu_mapin_immr();
  
- static inline int ADC_TO_CURR(int adc, int gain)
+-	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_TEXT, true);
++	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_X, true);
+ 	if (debug_pagealloc_enabled_or_kfence()) {
+ 		top = boundary;
+ 	} else {
+-		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_TEXT, true);
++		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_X, true);
+ 		mmu_mapin_ram_chunk(einittext8, top, PAGE_KERNEL, true);
+ 	}
+ 
 -- 
 2.43.0
 
