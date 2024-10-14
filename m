@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFD61AB536;
-	Mon, 14 Oct 2024 14:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33621AB6D8;
+	Mon, 14 Oct 2024 14:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916403; cv=none; b=pLlGLvOmxI15JHUxOPDu67+n1UK9altBdRITgUgkNtlac7YL6mKUgMfQXfDyMVM7raHRcmhs43eTo85Y3Ag+sHIfIZYQqmdZWnWyZHWe6wBywTMzMscaex3DEe4LATgR8FXJY4jGOpxkhTe4r+gH2gwXcGpdr0/cDjI4IxRatuU=
+	t=1728916406; cv=none; b=F/DLa5VDA7GFELWd2vOa+Us7guAIb9KQqZAut2DSP1jD2eZssAbKrdYlK1Z2EkF/P2MtwYbYv+xRGVi3Beu955jXJvNigqlXwvuWMNGZvSdXLSeYeLlW2QTMQIyURwYGwYBUc0XsQ4kieACEm0cTCYK14ob7enjZ/FKYezrgWrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916403; c=relaxed/simple;
-	bh=SVZd1AaTDsHeezNRtNnU+5pTjUWmys1LNUxcusNIemA=;
+	s=arc-20240116; t=1728916406; c=relaxed/simple;
+	bh=HbnGTA4yZ1lHFqUMdBCqwtcQT1F/6QvfpKRkr92CurY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gvmy9l7CC7vjaUzEhpaQCYuhApIwd29pF1wTy8GyN0vp/J5wbWt04bDDhrT+Kngn4z5X92oiCV2x38tXt3meY534jDzwpFWCZLzWGRZEt4EXGBq4WBaTXa7TL6Bkx6Qdoz48yVmD2ux4YnbEPcbg9qAbjuLAR+wVeXYi6qk2iXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rB5XNzi7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXOWA6zR/5X1lqCV+o/sYqSjCCiru9gEhU8E6xxN0G8OElhsDhKhzs+0uZHsU1PKf5XpvroSrFwExY/b9Vn9FO5OCeA1VsbZZRWyf6B0djRdPUoNLYtltF8HQC3DiWym7tKNGT6zVIIFaQABJ2Fu4Xc/iWQUtD0XPWcJ4f8nBLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZVOEF53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rB5XNzi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BFFC4CED1;
-	Mon, 14 Oct 2024 14:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZVOEF53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5F6C4CEC3;
+	Mon, 14 Oct 2024 14:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916403;
-	bh=SVZd1AaTDsHeezNRtNnU+5pTjUWmys1LNUxcusNIemA=;
+	s=korg; t=1728916406;
+	bh=HbnGTA4yZ1lHFqUMdBCqwtcQT1F/6QvfpKRkr92CurY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rB5XNzi7QZMXwLgVbMe0mLGetiXM2DWU57V03kfK/9M39JbflctJ2b2ZmlS6VVyGg
-	 DWrJl3CohP0WaukoFXa2WlUMZFaFZkaC4+oWfsZd68GgCUizfliUaLsKf7n0PGPoj8
-	 zJu02WqckiQf2a8LY+bdNONzUWNmj/Q08g9a8xD4=
+	b=nZVOEF534SvwOgF6Om9CjzFW4K7kP5ZL94eQzv+/g8Bu2si+C5QMa7oSvt3Gt/RRp
+	 z90bwKB8jg2/28Dp6zaI5yIzcIZ5f08xQG2j0JhOp48QtsR9Kvh6NzdLH8ZpTbtEMD
+	 /Ntg4YPYSg9uodLu22rPiLN62ot90REdyRUpY4C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <bbrezillon@kernel.org>,
-	"Juan A. Suarez Romero" <jasuarez@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.11 174/214] drm/vc4: Stop the active perfmon before being destroyed
-Date: Mon, 14 Oct 2024 16:20:37 +0200
-Message-ID: <20241014141051.769836883@linuxfoundation.org>
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Lang Yu <lang.yu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.11 175/214] drm/amdkfd: Fix an eviction fence leak
+Date: Mon, 14 Oct 2024 16:20:38 +0200
+Message-ID: <20241014141051.809455136@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -45,66 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Lang Yu <lang.yu@amd.com>
 
-commit 0b2ad4f6f2bec74a5287d96cb2325a5e11706f22 upstream.
+commit d7d7b947a4fa6d0a82ff2bf0db413edc63738e3a upstream.
 
-Upon closing the file descriptor, the active performance monitor is not
-stopped. Although all perfmons are destroyed in `vc4_perfmon_close_file()`,
-the active performance monitor's pointer (`vc4->active_perfmon`) is still
-retained.
+Only creating a new reference for each process instead of each VM.
 
-If we open a new file descriptor and submit a few jobs with performance
-monitors, the driver will attempt to stop the active performance monitor
-using the stale pointer in `vc4->active_perfmon`. However, this pointer
-is no longer valid because the previous process has already terminated,
-and all performance monitors associated with it have been destroyed and
-freed.
-
-To fix this, when the active performance monitor belongs to a given
-process, explicitly stop it before destroying and freeing it.
-
-Cc: stable@vger.kernel.org # v4.17+
-Cc: Boris Brezillon <bbrezillon@kernel.org>
-Cc: Juan A. Suarez Romero <jasuarez@igalia.com>
-Fixes: 65101d8c9108 ("drm/vc4: Expose performance counters to userspace")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Juan A. Suarez <jasuarez@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241004123817.890016-2-mcanal@igalia.com
+Fixes: 9a1c1339abf9 ("drm/amdkfd: Run restore_workers on freezable WQs")
+Suggested-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Lang Yu <lang.yu@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5fa436289483ae56427b0896c31f72361223c758)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_perfmon.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++--
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c         |    7 +++++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_perfmon.c
-+++ b/drivers/gpu/drm/vc4/vc4_perfmon.c
-@@ -116,6 +116,11 @@ void vc4_perfmon_open_file(struct vc4_fi
- static int vc4_perfmon_idr_del(int id, void *elem, void *data)
- {
- 	struct vc4_perfmon *perfmon = elem;
-+	struct vc4_dev *vc4 = (struct vc4_dev *)data;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1438,8 +1438,8 @@ static int init_kfd_vm(struct amdgpu_vm
+ 	list_add_tail(&vm->vm_list_node,
+ 			&(vm->process_info->vm_list_head));
+ 	vm->process_info->n_vms++;
+-
+-	*ef = dma_fence_get(&vm->process_info->eviction_fence->base);
++	if (ef)
++		*ef = dma_fence_get(&vm->process_info->eviction_fence->base);
+ 	mutex_unlock(&vm->process_info->lock);
+ 
+ 	return 0;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1676,12 +1676,15 @@ int kfd_process_device_init_vm(struct kf
+ 
+ 	ret = amdgpu_amdkfd_gpuvm_acquire_process_vm(dev->adev, avm,
+ 						     &p->kgd_process_info,
+-						     &ef);
++						     p->ef ? NULL : &ef);
+ 	if (ret) {
+ 		dev_err(dev->adev->dev, "Failed to create process VM object\n");
+ 		return ret;
+ 	}
+-	RCU_INIT_POINTER(p->ef, ef);
 +
-+	/* If the active perfmon is being destroyed, stop it first */
-+	if (perfmon == vc4->active_perfmon)
-+		vc4_perfmon_stop(vc4, perfmon, false);
++	if (!p->ef)
++		RCU_INIT_POINTER(p->ef, ef);
++
+ 	pdd->drm_priv = drm_file->private_data;
  
- 	vc4_perfmon_put(perfmon);
- 
-@@ -130,7 +135,7 @@ void vc4_perfmon_close_file(struct vc4_f
- 		return;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
--	idr_for_each(&vc4file->perfmon.idr, vc4_perfmon_idr_del, NULL);
-+	idr_for_each(&vc4file->perfmon.idr, vc4_perfmon_idr_del, vc4);
- 	idr_destroy(&vc4file->perfmon.idr);
- 	mutex_unlock(&vc4file->perfmon.lock);
- 	mutex_destroy(&vc4file->perfmon.lock);
+ 	ret = kfd_process_device_reserve_ib_mem(pdd);
 
 
