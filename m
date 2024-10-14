@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042E013B7A1;
-	Mon, 14 Oct 2024 14:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCEC13B7A1;
+	Mon, 14 Oct 2024 14:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916149; cv=none; b=h8/qfs5wPkx6LFcQFE9WWXeLeL1E++bbC+IfEWj9upsGr9kFsLuBnbP5f1sKnO6CoRfT+JXUMa6NClAWYNzAJJF/Dvcf4dkL2EBdbIrihF0z2C3v3/TIVT7b6QAIO9UmAWESBkFTlhEg7uFZfbhBBnUK6od/io5TKzt8ERjo0Wk=
+	t=1728916152; cv=none; b=cBUfWpAc3Vq39DGIVjqEotqXlrY0El+qlb5690kKtXhoD+kmV5qkNe11x7xj34NSXSjMiF0qCgeqD5Phqv00B4e4FEy3eXGi+tW6LQlkMU2zr4CXtIkL++g4rfp4IDFQopwAkuO+fSwUqmmgMtuwXYZOjATKK8J/G8c23mhYG2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916149; c=relaxed/simple;
-	bh=2He5T2YzNF2DG7xKxFD+d1zxG7PaRgky+o90XoG4lhg=;
+	s=arc-20240116; t=1728916152; c=relaxed/simple;
+	bh=tDuCTZrMkuWXD/4GK0NeDyZ3WGyImIvPITUZSBL8uIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUy9+wTO9c6RV8TGZCZhvtyLgmMI1QT26J/tJBxz6KsgBizcI+XKAkEEqmq20pu/ICbQ+pJ007cJDYdhYixzzGuQGileM7Vkw49GXgnBv/Iwl/FXgVeleK9Z2oSFLuCfO/DblqDLOb+3+shuJeIEk++d0a1RR8XTKYSaohDLzmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3Bxkvdj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WErqINR5s+CSiKmmibKF6f3N0gXuSGx6uCXpfF1Lq/P1ni3xtHClY3tky/LJ9EeBTTY1mplc9zeGrPcQIThvnkoX/NcMDZbrn7hzxvMXEQ7GNB74v/1IagplGsGlRq/lJen5d49px43/eMVJx4qiyM4jG2cVrovpft/x97MkUFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNk/4M0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3Bxkvdj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19937C4CECF;
-	Mon, 14 Oct 2024 14:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNk/4M0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6F4C4CED0;
+	Mon, 14 Oct 2024 14:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916148;
-	bh=2He5T2YzNF2DG7xKxFD+d1zxG7PaRgky+o90XoG4lhg=;
+	s=korg; t=1728916152;
+	bh=tDuCTZrMkuWXD/4GK0NeDyZ3WGyImIvPITUZSBL8uIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3Bxkvdj56gunKbIoYkRgz7tUSBRrwv/8ps/uG1VhBxpR1iWgPfIJu89XsFez1UQ/
-	 EonFfmZtZB9FznuOYSH3DZ/YsHV0kfsT40f/F79urJhaUMu2DHgbz2BPUCD6xnjyGA
-	 pwMLlVTGcVOZ54212geetucuP4NjneJZ3ERszcrU=
+	b=SNk/4M0xxRQ5FUVZWKlCzgRH8bWSKLFuxO6pMYnir27fi/q6ibXYxymMjr6x/O1I0
+	 urmAgwliBWkQxsAw2+tF1eyua8iQErgMpuZeXzKPATEyQZfWbb18Rb0sbLUk7zASwO
+	 toKvsbU6Zp6/LtsnE+GevbjvDrUdkKZnWf5nLl+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 057/214] usb: chipidea: udc: enable suspend interrupt after usb reset
-Date: Mon, 14 Oct 2024 16:18:40 +0200
-Message-ID: <20241014141047.214734341@linuxfoundation.org>
+Subject: [PATCH 6.11 092/214] net: phy: aquantia: AQR115c fix up PMA capabilities
+Date: Mon, 14 Oct 2024 16:19:15 +0200
+Message-ID: <20241014141048.586158868@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -51,57 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Abhishek Chauhan <quic_abchauha@quicinc.com>
 
-[ Upstream commit e4fdcc10092fb244218013bfe8ff01c55d54e8e4 ]
+[ Upstream commit 17cbfcdd85f6c93b2e9565d61110ad0b90440436 ]
 
-Currently, suspend interrupt is enabled before pullup enable operation.
-This will cause a suspend interrupt assert right after pullup DP. This
-suspend interrupt is meaningless, so this will ignore such interrupt
-by enable it after usb reset completed.
+AQR115c reports incorrect PMA capabilities which includes
+10G/5G and also incorrectly disables capabilities like autoneg
+and 10Mbps support.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20240823073832.1702135-1-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+AQR115c as per the Marvell databook supports speeds up to 2.5Gbps
+with autonegotiation.
+
+Fixes: 0ebc581f8a4b ("net: phy: aquantia: add support for aqr115c")
+Link: https://lore.kernel.org/all/20240913011635.1286027-1-quic_abchauha@quicinc.com/T/
+Signed-off-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20241001224626.2400222-2-quic_abchauha@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/udc.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/phy/aquantia/aquantia_main.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index 2d7f616270c17..69ef3cd8d4f83 100644
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -86,7 +86,7 @@ static int hw_device_state(struct ci_hdrc *ci, u32 dma)
- 		hw_write(ci, OP_ENDPTLISTADDR, ~0, dma);
- 		/* interrupt, error, port change, reset, sleep/suspend */
- 		hw_write(ci, OP_USBINTR, ~0,
--			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI|USBi_SLI);
-+			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI);
- 	} else {
- 		hw_write(ci, OP_USBINTR, ~0, 0);
- 	}
-@@ -877,6 +877,7 @@ __releases(ci->lock)
- __acquires(ci->lock)
- {
- 	int retval;
-+	u32 intr;
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 4d156d406bab9..1bb39664a5cb1 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -731,6 +731,19 @@ static int aqr113c_fill_interface_modes(struct phy_device *phydev)
+ 	return aqr107_fill_interface_modes(phydev);
+ }
  
- 	spin_unlock(&ci->lock);
- 	if (ci->gadget.speed != USB_SPEED_UNKNOWN)
-@@ -890,6 +891,11 @@ __acquires(ci->lock)
- 	if (retval)
- 		goto done;
- 
-+	/* clear SLI */
-+	hw_write(ci, OP_USBSTS, USBi_SLI, USBi_SLI);
-+	intr = hw_read(ci, OP_USBINTR, ~0);
-+	hw_write(ci, OP_USBINTR, ~0, intr | USBi_SLI);
++static int aqr115c_get_features(struct phy_device *phydev)
++{
++	unsigned long *supported = phydev->supported;
 +
- 	ci->status = usb_ep_alloc_request(&ci->ep0in->ep, GFP_ATOMIC);
- 	if (ci->status == NULL)
- 		retval = -ENOMEM;
++	/* PHY supports speeds up to 2.5G with autoneg. PMA capabilities
++	 * are not useful.
++	 */
++	linkmode_or(supported, supported, phy_gbit_features);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT, supported);
++
++	return 0;
++}
++
+ static int aqr113c_config_init(struct phy_device *phydev)
+ {
+ 	int ret;
+@@ -1046,6 +1059,7 @@ static struct phy_driver aqr_driver[] = {
+ 	.get_sset_count = aqr107_get_sset_count,
+ 	.get_strings    = aqr107_get_strings,
+ 	.get_stats      = aqr107_get_stats,
++	.get_features   = aqr115c_get_features,
+ 	.link_change_notify = aqr107_link_change_notify,
+ 	.led_brightness_set = aqr_phy_led_brightness_set,
+ 	.led_hw_is_supported = aqr_phy_led_hw_is_supported,
 -- 
 2.43.0
 
