@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B9A1A76A5;
-	Mon, 14 Oct 2024 15:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E161AA793;
+	Mon, 14 Oct 2024 15:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918667; cv=none; b=sTAKnYTpSGKQ48ty5QByUJrYxmlMPHn6uWTFCDan+39Gf7QTJWjmoQswxpfS0l5nU/N442QMdKvBkRuiRfG6n8BDo/WhgYeQLSVHyQ6xY8oSCUruRrx8XY2tohShOCeJi5KpSip4ISCRkqtJJiP+Rm/SrNTiqYa+oqX098v2N0o=
+	t=1728918670; cv=none; b=ccQV7ReUOOg2/7NfsKE7qi/iiCcjCZfBOKQxmm7Xnc17sQbQVyC3jPhxlnCizr+ynVJDLQR0cqTJ6+lXKR25Huj3AlSj/x/hwHEYT9KxSz6damLkNdQ+nKkdSPBcGEfonU9Q4Nv69CuFTYznB6kJKyl3ITIbta5sm53jHFw15YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918667; c=relaxed/simple;
-	bh=crHkjEYyl/cDS1vz+bE6HYouMhHWV6oTZzai1YkByuQ=;
+	s=arc-20240116; t=1728918670; c=relaxed/simple;
+	bh=LdxatDUsJ8imKVnONTLLBGsBYbiUdwrFQQ5hN+0W9jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQgrLxgYcwPEKZZcZ7702FioRy+471rwJy03HpxZCSHvzkjNO0nCipw1Z56EHcOMsPMEOOZ08Q2cLcdGcC3+Jo4wzor2ti2s2jIer/hWu3pHotjYrI7kxLan/mX0ZDX1ToURyBzHis9EFUGs7zRwQ6KUgO9VGS/LwDPQ/hrQguE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUMkNwl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qOBDYKb08G0pBm2BNjJUP7o/ZSZKnbnLoG1x3m9JVmUQRSe2D8yHlPCCzAV+OOKh1QxgmWo787C+3AEHBYjldCBEGhxujLiXEcDYlSBjroTl3OmMUgCTCoknJXIH5I3YuLvgX/vdriNDZYGOgjbR86FgKjsHK8G9cx3jBUC7duQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJKGEz/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUMkNwl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E972C4CEC3;
-	Mon, 14 Oct 2024 15:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJKGEz/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CED8C4CEC3;
+	Mon, 14 Oct 2024 15:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918666;
-	bh=crHkjEYyl/cDS1vz+bE6HYouMhHWV6oTZzai1YkByuQ=;
+	s=korg; t=1728918669;
+	bh=LdxatDUsJ8imKVnONTLLBGsBYbiUdwrFQQ5hN+0W9jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUMkNwl0uFOsEAMygxR10/1WQQX9syupAAFzmt0ag5Q5qAGymZLdrzledloqcUjEP
-	 cHFItj0TZXifyeP1FjK9raXW0Ipyf1BWmtxzivtOCzHKTWShN8kMebmt3KkLbG2Znx
-	 evHbgDUD9TTa9rtErvNvQ07SiozGaLFkAfNOjbgY=
+	b=xJKGEz/MJ8iT+jN46MoIjcAe6HENo8Q3FCHyBdZ3I/5Ews+kgf1QyFKSjI122J04g
+	 2Qv4s9S5LQ0/HftjlI9qL6iPJZdz2duD/3wUJNYSTxBfpujTOr1fr5MdkiM241bZBx
+	 6u6JTYQ6Uld6pJnxZiPkopE1mvGUbqV3zE7RKCZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 387/798] net/mlx5: Fix error path in multi-packet WQE transmit
-Date: Mon, 14 Oct 2024 16:15:41 +0200
-Message-ID: <20241014141233.152068545@linuxfoundation.org>
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Abhishek Rawal <rawal.abhishek92@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>
+Subject: [PATCH 6.1 361/798] icmp: Add counters for rate limits
+Date: Mon, 14 Oct 2024 16:15:15 +0200
+Message-ID: <20241014141232.129828812@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,49 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit 2bcae12c795f32ddfbf8c80d1b5f1d3286341c32 ]
+commit d0941130c93515411c8d66fc22bdae407b509a6d upstream.
 
-Remove the erroneous unmap in case no DMA mapping was established
+There are multiple ICMP rate limiting mechanisms:
 
-The multi-packet WQE transmit code attempts to obtain a DMA mapping for
-the skb. This could fail, e.g. under memory pressure, when the IOMMU
-driver just can't allocate more memory for page tables. While the code
-tries to handle this in the path below the err_unmap label it erroneously
-unmaps one entry from the sq's FIFO list of active mappings. Since the
-current map attempt failed this unmap is removing some random DMA mapping
-that might still be required. If the PCI function now presents that IOVA,
-the IOMMU may assumes a rogue DMA access and e.g. on s390 puts the PCI
-function in error state.
+* Global limits: net.ipv4.icmp_msgs_burst/icmp_msgs_per_sec
+* v4 per-host limits: net.ipv4.icmp_ratelimit/ratemask
+* v6 per-host limits: net.ipv6.icmp_ratelimit/ratemask
 
-The erroneous behavior was seen in a stress-test environment that created
-memory pressure.
+However, when ICMP output is limited, there is no way to tell
+which limit has been hit or even if the limits are responsible
+for the lack of ICMP output.
 
-Fixes: 5af75c747e2a ("net/mlx5e: Enhanced TX MPWQE for SKBs")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add counters for each of the cases above. As we are within
+local_bh_disable(), use the __INC stats variant.
+
+Example output:
+
+ # nstat -sz "*RateLimit*"
+ IcmpOutRateLimitGlobal          134                0.0
+ IcmpOutRateLimitHost            770                0.0
+ Icmp6OutRateLimitHost           84                 0.0
+
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Suggested-by: Abhishek Rawal <rawal.abhishek92@gmail.com>
+Link: https://lore.kernel.org/r/273b32241e6b7fdc5c609e6f5ebc68caf3994342.1674605770.git.jamie.bainbridge@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/uapi/linux/snmp.h |    3 +++
+ net/ipv4/icmp.c           |    3 +++
+ net/ipv4/proc.c           |    8 +++++---
+ net/ipv6/icmp.c           |    4 ++++
+ net/ipv6/proc.c           |    1 +
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-index e6e792a38a640..7aea25c09f72b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-@@ -633,7 +633,6 @@ mlx5e_sq_xmit_mpwqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 	return;
+--- a/include/uapi/linux/snmp.h
++++ b/include/uapi/linux/snmp.h
+@@ -95,6 +95,8 @@ enum
+ 	ICMP_MIB_OUTADDRMASKS,			/* OutAddrMasks */
+ 	ICMP_MIB_OUTADDRMASKREPS,		/* OutAddrMaskReps */
+ 	ICMP_MIB_CSUMERRORS,			/* InCsumErrors */
++	ICMP_MIB_RATELIMITGLOBAL,		/* OutRateLimitGlobal */
++	ICMP_MIB_RATELIMITHOST,			/* OutRateLimitHost */
+ 	__ICMP_MIB_MAX
+ };
  
- err_unmap:
--	mlx5e_dma_unmap_wqe_err(sq, 1);
- 	sq->stats->dropped++;
- 	dev_kfree_skb_any(skb);
- 	mlx5e_tx_flush(sq);
--- 
-2.43.0
-
+@@ -112,6 +114,7 @@ enum
+ 	ICMP6_MIB_OUTMSGS,			/* OutMsgs */
+ 	ICMP6_MIB_OUTERRORS,			/* OutErrors */
+ 	ICMP6_MIB_CSUMERRORS,			/* InCsumErrors */
++	ICMP6_MIB_RATELIMITHOST,		/* OutRateLimitHost */
+ 	__ICMP6_MIB_MAX
+ };
+ 
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -297,6 +297,7 @@ static bool icmpv4_global_allow(struct n
+ 	if (icmp_global_allow())
+ 		return true;
+ 
++	__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITGLOBAL);
+ 	return false;
+ }
+ 
+@@ -326,6 +327,8 @@ static bool icmpv4_xrlim_allow(struct ne
+ 	if (peer)
+ 		inet_putpeer(peer);
+ out:
++	if (!rc)
++		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
+ 	return rc;
+ }
+ 
+--- a/net/ipv4/proc.c
++++ b/net/ipv4/proc.c
+@@ -352,7 +352,7 @@ static void icmp_put(struct seq_file *se
+ 	seq_puts(seq, "\nIcmp: InMsgs InErrors InCsumErrors");
+ 	for (i = 0; icmpmibmap[i].name; i++)
+ 		seq_printf(seq, " In%s", icmpmibmap[i].name);
+-	seq_puts(seq, " OutMsgs OutErrors");
++	seq_puts(seq, " OutMsgs OutErrors OutRateLimitGlobal OutRateLimitHost");
+ 	for (i = 0; icmpmibmap[i].name; i++)
+ 		seq_printf(seq, " Out%s", icmpmibmap[i].name);
+ 	seq_printf(seq, "\nIcmp: %lu %lu %lu",
+@@ -362,9 +362,11 @@ static void icmp_put(struct seq_file *se
+ 	for (i = 0; icmpmibmap[i].name; i++)
+ 		seq_printf(seq, " %lu",
+ 			   atomic_long_read(ptr + icmpmibmap[i].index));
+-	seq_printf(seq, " %lu %lu",
++	seq_printf(seq, " %lu %lu %lu %lu",
+ 		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTMSGS),
+-		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTERRORS));
++		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTERRORS),
++		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_RATELIMITGLOBAL),
++		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_RATELIMITHOST));
+ 	for (i = 0; icmpmibmap[i].name; i++)
+ 		seq_printf(seq, " %lu",
+ 			   atomic_long_read(ptr + (icmpmibmap[i].index | 0x100)));
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -183,6 +183,7 @@ static bool icmpv6_global_allow(struct n
+ 	if (icmp_global_allow())
+ 		return true;
+ 
++	__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITGLOBAL);
+ 	return false;
+ }
+ 
+@@ -224,6 +225,9 @@ static bool icmpv6_xrlim_allow(struct so
+ 		if (peer)
+ 			inet_putpeer(peer);
+ 	}
++	if (!res)
++		__ICMP6_INC_STATS(net, ip6_dst_idev(dst),
++				  ICMP6_MIB_RATELIMITHOST);
+ 	dst_release(dst);
+ 	return res;
+ }
+--- a/net/ipv6/proc.c
++++ b/net/ipv6/proc.c
+@@ -94,6 +94,7 @@ static const struct snmp_mib snmp6_icmp6
+ 	SNMP_MIB_ITEM("Icmp6OutMsgs", ICMP6_MIB_OUTMSGS),
+ 	SNMP_MIB_ITEM("Icmp6OutErrors", ICMP6_MIB_OUTERRORS),
+ 	SNMP_MIB_ITEM("Icmp6InCsumErrors", ICMP6_MIB_CSUMERRORS),
++	SNMP_MIB_ITEM("Icmp6OutRateLimitHost", ICMP6_MIB_RATELIMITHOST),
+ 	SNMP_MIB_SENTINEL
+ };
+ 
 
 
