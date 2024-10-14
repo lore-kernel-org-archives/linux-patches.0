@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700A5481B7;
-	Mon, 14 Oct 2024 15:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078BA481B7;
+	Mon, 14 Oct 2024 15:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918298; cv=none; b=FZJSZI/vaEuK48YoKQ++HQe+q6Gc+oEnS1zo9SIdf5ETf6DhmKrG7negh0OU5qLOgjWd9UEftzBvHlxg5kOWu10/arB3qmXLrd8vu6MTy53qz65zTXRX25bwLpn5oO3O5Vum67eLQiQjfn/Q8HVi314nibmQEha2S9/8DDlTVmk=
+	t=1728918302; cv=none; b=CIXhCspjqg1XhEoW0sFbCUq7g5yuhOeNn/ad/h5XFEyoezv5i6P/vKlfegIYElIoQklcL8hGKwCTkL1YSVuFc4UFuWNlCZTn8GezV8eTtU7nuRz2C7GrHOQ5wUzOs8I1OtOqEKuVCCdSGq82bNzwv0RFKMeoUYtwy7oaqsZogxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918298; c=relaxed/simple;
-	bh=3ySgtHnFlVfCPnNbxSIp64N2MLw+hwBPmJLYK2Fj9OQ=;
+	s=arc-20240116; t=1728918302; c=relaxed/simple;
+	bh=QB+Fh4XyrvjmlmajZu11nKrr7S2921eUNnS1rLzo3wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlEd+/THWYP/9Iou4sf5OaQHW7UbbWQXVUHCSNZBwUc5gS1J0gej57pWSXIZY8dzL0DxQ7WpzcbPXSFjQEheWErACOPpRx82R0Zp5J17CeASS3OQbJ6Ws4eXzFtNkzft7qpqVjOBKFmVOVWht7wcN80SQnlA7XCg2CMEGqKj/Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVFdThsq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m5CtTlv/4gcUHHKuc8nw3uxABG36uxWHTRMAtsICHN+An7UhDcweZXod6l2Duo4z39zc9L6hxA6POJArVEiTLROVLyjpJd6zWNf9ilqve+qCVfPtXVNmdIMSxyOzfNuVXqbJQHw/4EH1ExGHpCs1a4PwRDHB6COOLZN5f8mI0Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuhYK9rB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVFdThsq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952D4C4CEC3;
-	Mon, 14 Oct 2024 15:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuhYK9rB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30160C4CEC3;
+	Mon, 14 Oct 2024 15:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918298;
-	bh=3ySgtHnFlVfCPnNbxSIp64N2MLw+hwBPmJLYK2Fj9OQ=;
+	s=korg; t=1728918301;
+	bh=QB+Fh4XyrvjmlmajZu11nKrr7S2921eUNnS1rLzo3wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVFdThsqJ9mYA9K6rjpnWnkJCtHWYhEMF4U9E8bOpl7/fMkVWcaHs6YoON513UmVe
-	 ZjKXEaGmbUJN0V4nhSQTKJ8UZkkvTXxO3NvbUKTh7j4DaLVRZrbnwazX3F0kxbTnTm
-	 lzPcVqJo0QDt4wGdxz2TnpVcGYq3ZiDeEg6O28xg=
+	b=xuhYK9rB2fOw4hwKPWy8qDLFDdclbxC/Ai0mCIvrR3c8K3IX1MEViK1PmNmljvmOI
+	 MdHVw3JNSr8SXJScqMHwPxih9WJOwAecTBOMKpwmqMWPCvfrwaeJM0Qf4hbUkQOAJ2
+	 0c3azLRi+fo7be06xLDCJ6gNIdAbOUAaBurmjsMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 281/798] Remove *.orig pattern from .gitignore
-Date: Mon, 14 Oct 2024 16:13:55 +0200
-Message-ID: <20241014141228.984762947@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.1 282/798] PCI: imx6: Fix missing call to phy_power_off() in error handling
+Date: Mon, 14 Oct 2024 16:13:56 +0200
+Message-ID: <20241014141229.025085482@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -44,63 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 76be4f5a784533c71afbbb1b8f2963ef9e2ee258 upstream.
+commit 5b04d44d5c74e4d8aab1678496b84700b4b343fe upstream.
 
-Commit 3f1b0e1f2875 (".gitignore update") added *.orig and *.rej
-patterns to .gitignore in v2.6.23. The commit message didn't give a
-rationale. Later on, commit 1f5d3a6b6532 ("Remove *.rej pattern from
-.gitignore") removed the *.rej pattern in v2.6.26, on the rationale that
-*.rej files indicated something went really wrong and should not be
-ignored.
+Fix missing call to phy_power_off() in the error path of
+imx6_pcie_host_init(). Remove unnecessary check for imx6_pcie->phy
+as the PHY API already handles NULL pointers.
 
-The *.rej files are now shown by `git status`, which helps located
-conflicts when applying patches and lowers the probability that they
-will go unnoticed. It is however still easy to overlook the *.orig files
-which slowly polute the source tree. That's not as big of a deal as not
-noticing a conflict, but it's still not nice.
-
-Drop the *.orig pattern from .gitignore to avoid this and help keep the
-source tree clean.
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-[masahiroy@kernel.org:
-I do not have a strong opinion about this. Perhaps some people may have
-a different opinion.
-
-If you are someone who wants to ignore *.orig, it is likely you would
-want to do so across all projects. Then, $XDG_CONFIG_HOME/git/ignore
-would be more suitable for your needs. gitignore(5) suggests, "Patterns
-which a user wants Git to ignore in all situations generally go into a
-file specified by core.excludesFile in the user's ~/.gitconfig".
-
-Please note that you cannot do the opposite; if *.orig is ignored by
-the project's .gitignore, you cannot override the decision because
-$XDG_CONFIG_HOME/git/ignore has a lower priority.
-
-If *.orig is sitting on the fence, I'd leave it to the users. ]
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: cbcf8722b523 ("phy: freescale: imx8m-pcie: Fix the wrong order of phy_init() and phy_power_on()")
+Link: https://lore.kernel.org/linux-pci/20240729-pci2_upstream-v8-3-b68ee5ef2b4d@nxp.com
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .gitignore |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/.gitignore
-+++ b/.gitignore
-@@ -133,7 +133,6 @@ GTAGS
- # id-utils files
- ID
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -956,7 +956,7 @@ static int imx6_pcie_host_init(struct dw
+ 		ret = phy_power_on(imx6_pcie->phy);
+ 		if (ret) {
+ 			dev_err(dev, "waiting for PHY ready timeout!\n");
+-			goto err_phy_off;
++			goto err_phy_exit;
+ 		}
+ 	}
  
--*.orig
- *~
- \#*#
+@@ -971,8 +971,9 @@ static int imx6_pcie_host_init(struct dw
+ 	return 0;
  
+ err_phy_off:
+-	if (imx6_pcie->phy)
+-		phy_exit(imx6_pcie->phy);
++	phy_power_off(imx6_pcie->phy);
++err_phy_exit:
++	phy_exit(imx6_pcie->phy);
+ err_clk_disable:
+ 	imx6_pcie_clk_disable(imx6_pcie);
+ err_reg_disable:
 
 
