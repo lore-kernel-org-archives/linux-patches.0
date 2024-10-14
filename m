@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8151B4F1E;
-	Mon, 14 Oct 2024 15:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7E814AA9;
+	Mon, 14 Oct 2024 15:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919121; cv=none; b=p/nQ/8xsqbZLtN0n1wMyaC3TtliW8VIiT4zh6tDbnF+9zXvSB/kxBUKC0hOuy4n/86Dvy9KBa2WU9JHUDmMWvSIIqwy8wadNozo4VgJbOzOaQ2+0W9XceXmvjN9Dzk5fBbUiYeIcjGq/84x/JhXmA9e7zBSX0b5rK35cfBMCTeY=
+	t=1728919130; cv=none; b=IlBws4I0mQjGVjCQQjjynZMcR0vP3e1rhR72SEClK6RZMZwr3IXAOTCkEKqxyIV2UCtqvCnmh1n4KTyiF8fMxplspSk6sfOr5tz/WIDFGFVHA5EtU2ALliZ8zPDs01wE2sseV6icG/qjGObqvS3c/EtaDVUcFcl+sptZp5c0bgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919121; c=relaxed/simple;
-	bh=ABEUlHIYhvozbo0lvnN+5Oypbku6qfGpUBtZSGmXgKo=;
+	s=arc-20240116; t=1728919130; c=relaxed/simple;
+	bh=YYCgFtiPxpFwp7gM6Mc5ckMaJ8IeJ2cUBmmPRAL6SgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMCT3SughLLJB+Sns1gfISlFzY7Xrc6upYJqyOERbOojyGNKBQn0UQ5ZBBvSjcexVg6GiJaJda4iQhgnuqx+pJ65tTNqgQN57tTZEAc/G109D0K6nSwXc1lPrGxLiOYeUCgEQKWonja0DYDf3vrJWyksgP4d82rl9re1FYhvxh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IB78uV5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTcxlkOJdkbKbej46PFxfBF0NojGBlpj2/z0UzvderWVWVT9mJsMOrvBpdD4CprF/ySyYgxqwAYmkHmQMcu+DFl+3YPLK0sB76Yju7UR2uQVxAR88AryIKrpDT7NwxWUitKDJ0n02Nr+/CNPSryIsFsQy2A9cB45IyPTqgRtF9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZN15bLbZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IB78uV5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5C3C4CEC7;
-	Mon, 14 Oct 2024 15:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZN15bLbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1108C4CEC7;
+	Mon, 14 Oct 2024 15:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919121;
-	bh=ABEUlHIYhvozbo0lvnN+5Oypbku6qfGpUBtZSGmXgKo=;
+	s=korg; t=1728919130;
+	bh=YYCgFtiPxpFwp7gM6Mc5ckMaJ8IeJ2cUBmmPRAL6SgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IB78uV5LQO6JZQlpXWwEpFRXXDsaLz67GUXYM8zbg6MNPClHJgkh43Gp4esegzt00
-	 EMdqjGr07v5lZOvCNo+T4/sU1+/VbBU2nI7FxrHVA04KTUI9zShi3qrwtq0I/BUvx9
-	 v8q34RfdrHFk5iwzrVabZcga1nAK6vFH3mytmfOo=
+	b=ZN15bLbZx5uRiWYKmN3cCkbQ8cZuzR9zvDop3h93cNDv5UZCSK64dQF5UiBY2Wc08
+	 hs+IyglU3mRTUhR8MJUxAPmdcb+XcIfZfdwfL3mf0q5le7yFFvjb44dBVlJfqJ+3/6
+	 Gjz6LOofSutVbTZrW2n/isnzGQWb/Y/yu2h3pFGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mario Casquero <mcasquer@redhat.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 519/798] selftests/mm: fix charge_reserved_hugetlb.sh test
-Date: Mon, 14 Oct 2024 16:17:53 +0200
-Message-ID: <20241014141238.368650714@linuxfoundation.org>
+Subject: [PATCH 6.1 520/798] powerpc/vdso: Fix VDSO data access when running in a non-root time namespace
+Date: Mon, 14 Oct 2024 16:17:54 +0200
+Message-ID: <20241014141238.407673956@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -55,121 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit c41a701d18efe6b8aa402efab16edbaba50c9548 ]
+[ Upstream commit c73049389e58c01e2e3bbfae900c8daeee177191 ]
 
-Currently, running the charge_reserved_hugetlb.sh selftest we can
-sometimes observe something like:
+When running in a non-root time namespace, the global VDSO data page
+is replaced by a dedicated namespace data page and the global data
+page is mapped next to it. Detailed explanations can be found at
+commit 660fd04f9317 ("lib/vdso: Prepare for time namespace support").
 
-  $ ./charge_reserved_hugetlb.sh -cgroup-v2
-  ...
-  write_result is 0
-  After write:
-  hugetlb_usage=0
-  reserved_usage=10485760
-  killing write_to_hugetlbfs
-  Received 2.
-  Deleting the memory
-  Detach failure: Invalid argument
-  umount: /mnt/huge: target is busy.
+When it happens, __kernel_get_syscall_map and __kernel_get_tbfreq
+and __kernel_sync_dicache don't work anymore because they read 0
+instead of the data they need.
 
-Both cases are issues in the test.
+To address that, clock_mode has to be read. When it is set to
+VDSO_CLOCKMODE_TIMENS, it means it is a dedicated namespace data page
+and the global data is located on the following page.
 
-While the unmount error seems to be racy, it will make the test fail:
-	$ ./run_vmtests.sh -t hugetlb
-	...
-	# [FAIL]
-	not ok 10 charge_reserved_hugetlb.sh -cgroup-v2 # exit=32
+Add a macro called get_realdatapage which reads clock_mode and add
+PAGE_SIZE to the pointer provided by get_datapage macro when
+clock_mode is equal to VDSO_CLOCKMODE_TIMENS. Use this new macro
+instead of get_datapage macro except for time functions as they handle
+it internally.
 
-The issue is that we are not waiting for the write_to_hugetlbfs process to
-quit.  So it might still have a hugetlbfs file open, about which umount is
-not happy.  Fix that by making "killall" wait for the process to quit.
-
-The other error ("Detach failure: Invalid argument") does not seem to
-result in a test error, but is misleading.  Turns out write_to_hugetlbfs.c
-unconditionally tries to cleanup using shmdt(), even when we only
-mmap()'ed a hugetlb file.  Even worse, shmaddr is never even set for the
-SHM case.  Fix that as well.
-
-With this change it seems to work as expected.
-
-Link: https://lkml.kernel.org/r/20240821123115.2068812-1-david@redhat.com
-Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Mario Casquero <mcasquer@redhat.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 74205b3fc2ef ("powerpc/vdso: Add support for time namespaces")
+Reported-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Closes: https://lore.kernel.org/all/ZtnYqZI-nrsNslwy@zx2c4.com/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/vm/charge_reserved_hugetlb.sh   |  2 +-
- .../testing/selftests/vm/write_to_hugetlbfs.c | 21 +++++++++++--------
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ arch/powerpc/include/asm/vdso_datapage.h | 15 +++++++++++++++
+ arch/powerpc/kernel/asm-offsets.c        |  2 ++
+ arch/powerpc/kernel/vdso/cacheflush.S    |  2 +-
+ arch/powerpc/kernel/vdso/datapage.S      |  4 ++--
+ 4 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-index e14bdd4455f2d..8e00276b4e69b 100644
---- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-@@ -252,7 +252,7 @@ function cleanup_hugetlb_memory() {
-   local cgroup="$1"
-   if [[ "$(pgrep -f write_to_hugetlbfs)" != "" ]]; then
-     echo killing write_to_hugetlbfs
--    killall -2 write_to_hugetlbfs
-+    killall -2 --wait write_to_hugetlbfs
-     wait_for_hugetlb_memory_to_get_depleted $cgroup
-   fi
-   set -e
-diff --git a/tools/testing/selftests/vm/write_to_hugetlbfs.c b/tools/testing/selftests/vm/write_to_hugetlbfs.c
-index 6a2caba19ee1d..1289d311efd70 100644
---- a/tools/testing/selftests/vm/write_to_hugetlbfs.c
-+++ b/tools/testing/selftests/vm/write_to_hugetlbfs.c
-@@ -28,7 +28,7 @@ enum method {
+diff --git a/arch/powerpc/include/asm/vdso_datapage.h b/arch/powerpc/include/asm/vdso_datapage.h
+index a585c8e538ff0..939daf6b695ef 100644
+--- a/arch/powerpc/include/asm/vdso_datapage.h
++++ b/arch/powerpc/include/asm/vdso_datapage.h
+@@ -111,6 +111,21 @@ extern struct vdso_arch_data *vdso_data;
+ 	addi	\ptr, \ptr, (_vdso_datapage - 999b)@l
+ .endm
  
- /* Global variables. */
- static const char *self;
--static char *shmaddr;
-+static int *shmaddr;
- static int shmid;
- 
- /*
-@@ -47,15 +47,17 @@ void sig_handler(int signo)
- {
- 	printf("Received %d.\n", signo);
- 	if (signo == SIGINT) {
--		printf("Deleting the memory\n");
--		if (shmdt((const void *)shmaddr) != 0) {
--			perror("Detach failure");
-+		if (shmaddr) {
-+			printf("Deleting the memory\n");
-+			if (shmdt((const void *)shmaddr) != 0) {
-+				perror("Detach failure");
-+				shmctl(shmid, IPC_RMID, NULL);
-+				exit(4);
-+			}
++#include <asm/asm-offsets.h>
++#include <asm/page.h>
 +
- 			shmctl(shmid, IPC_RMID, NULL);
--			exit(4);
-+			printf("Done deleting the memory\n");
- 		}
--
--		shmctl(shmid, IPC_RMID, NULL);
--		printf("Done deleting the memory\n");
- 	}
- 	exit(2);
- }
-@@ -211,7 +213,8 @@ int main(int argc, char **argv)
- 			shmctl(shmid, IPC_RMID, NULL);
- 			exit(2);
- 		}
--		printf("shmaddr: %p\n", ptr);
-+		shmaddr = ptr;
-+		printf("shmaddr: %p\n", shmaddr);
++.macro get_realdatapage ptr scratch
++	get_datapage \ptr
++#ifdef CONFIG_TIME_NS
++	lwz	\scratch, VDSO_CLOCKMODE_OFFSET(\ptr)
++	xoris	\scratch, \scratch, VDSO_CLOCKMODE_TIMENS@h
++	xori	\scratch, \scratch, VDSO_CLOCKMODE_TIMENS@l
++	cntlzw	\scratch, \scratch
++	rlwinm	\scratch, \scratch, PAGE_SHIFT - 5, 1 << PAGE_SHIFT
++	add	\ptr, \ptr, \scratch
++#endif
++.endm
++
+ #endif /* __ASSEMBLY__ */
  
- 		break;
- 	default:
+ #endif /* __KERNEL__ */
+diff --git a/arch/powerpc/kernel/asm-offsets.c b/arch/powerpc/kernel/asm-offsets.c
+index 4ce2a4aa39854..65d79dd0c92ce 100644
+--- a/arch/powerpc/kernel/asm-offsets.c
++++ b/arch/powerpc/kernel/asm-offsets.c
+@@ -347,6 +347,8 @@ int main(void)
+ #else
+ 	OFFSET(CFG_SYSCALL_MAP32, vdso_arch_data, syscall_map);
+ #endif
++	OFFSET(VDSO_CLOCKMODE_OFFSET, vdso_arch_data, data[0].clock_mode);
++	DEFINE(VDSO_CLOCKMODE_TIMENS, VDSO_CLOCKMODE_TIMENS);
+ 
+ #ifdef CONFIG_BUG
+ 	DEFINE(BUG_ENTRY_SIZE, sizeof(struct bug_entry));
+diff --git a/arch/powerpc/kernel/vdso/cacheflush.S b/arch/powerpc/kernel/vdso/cacheflush.S
+index 0085ae464dac9..3b2479bd2f9a1 100644
+--- a/arch/powerpc/kernel/vdso/cacheflush.S
++++ b/arch/powerpc/kernel/vdso/cacheflush.S
+@@ -30,7 +30,7 @@ END_FTR_SECTION_IFSET(CPU_FTR_COHERENT_ICACHE)
+ #ifdef CONFIG_PPC64
+ 	mflr	r12
+   .cfi_register lr,r12
+-	get_datapage	r10
++	get_realdatapage	r10, r11
+ 	mtlr	r12
+   .cfi_restore	lr
+ #endif
+diff --git a/arch/powerpc/kernel/vdso/datapage.S b/arch/powerpc/kernel/vdso/datapage.S
+index db8e167f01667..2b19b6201a33a 100644
+--- a/arch/powerpc/kernel/vdso/datapage.S
++++ b/arch/powerpc/kernel/vdso/datapage.S
+@@ -28,7 +28,7 @@ V_FUNCTION_BEGIN(__kernel_get_syscall_map)
+ 	mflr	r12
+   .cfi_register lr,r12
+ 	mr.	r4,r3
+-	get_datapage	r3
++	get_realdatapage	r3, r11
+ 	mtlr	r12
+ #ifdef __powerpc64__
+ 	addi	r3,r3,CFG_SYSCALL_MAP64
+@@ -52,7 +52,7 @@ V_FUNCTION_BEGIN(__kernel_get_tbfreq)
+   .cfi_startproc
+ 	mflr	r12
+   .cfi_register lr,r12
+-	get_datapage	r3
++	get_realdatapage	r3, r11
+ #ifndef __powerpc64__
+ 	lwz	r4,(CFG_TB_TICKS_PER_SEC + 4)(r3)
+ #endif
 -- 
 2.43.0
 
