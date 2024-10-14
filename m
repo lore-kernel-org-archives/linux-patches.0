@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4DD1A28C;
-	Mon, 14 Oct 2024 14:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7319E802;
+	Mon, 14 Oct 2024 14:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916541; cv=none; b=JidXdX60PXzqbLbTBnx+tH/Bq0qlDbAs1tMIjTwuyEEJ5VzlyyC83ATLglSIB5eR6Z0Y0g1e2Qa/6euU71ACtZ840eoTV4WuCgq1ro8eaBupCnyB1l9+Kw+46wzcL1lMV4jI2FP0LJgMY6Wbhhj/a1hfFSKlsAPxYd4oLGTbdoo=
+	t=1728916545; cv=none; b=NgLraLfjwGhd77qk6KOvSCQkWbkd9GS/gRVNFh7n24TYR2yWeI8ScLZabgHRbvLYM7au6Mw0Ta7w9WGWAa6nVzm5BJRjQ1uAFbxvQGQYl201GgBxcz02ycw66CqTYzR1K4+xI0X+PPG/ZG426GUZ0sm2A4a6PRNYw3TcAlvBWxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916541; c=relaxed/simple;
-	bh=4oaJUhaWp3AT3+kNeh1SbKYSTTkKnlPP+ZM/umlc0Bw=;
+	s=arc-20240116; t=1728916545; c=relaxed/simple;
+	bh=/VBKV0w8i3EXy4hP5+3BnX5kO/AbaIC47qk8Qxr9TGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jeGQEvfTHKXe/PKYbauORk7cwMTerWqtVySyMFLO91BlsWMHLBAsTx0VQMsM0y33qFja3LxhK9mkmkcHyGMdJfkOfc2BkbJw/aYZjGd10c5zeJiSCMSGieLmdHkLLwKnexf4dS4XznWxPfptkXP/gim6m7DJ4vx4HVaWcaS6Ua8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8PUp0mc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZA5qHSTbFzQfjMHuQyUkOWbOyUu4sAK8q7uP9Ju/FdnJSw3Xf4x/UtXqlmsVMtsLCjlDN9QclOI0Z1khXZAajpGHASI/waG3Xe0JXixqB7ujbcmBLQfSSsfIyYr6gprx9uaXu4YCxJxQDmNbCWzXJqD8XAL15izV/fZqYkXJ3xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agHcVBX2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8PUp0mc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A8FC4CEC3;
-	Mon, 14 Oct 2024 14:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agHcVBX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D21C4CEC3;
+	Mon, 14 Oct 2024 14:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916541;
-	bh=4oaJUhaWp3AT3+kNeh1SbKYSTTkKnlPP+ZM/umlc0Bw=;
+	s=korg; t=1728916544;
+	bh=/VBKV0w8i3EXy4hP5+3BnX5kO/AbaIC47qk8Qxr9TGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8PUp0mcHGDcsMrYVAW8PyRNv2OhPiniRCaTlEWarAsKE9bDIEgbyBrxgYTFbLJbV
-	 Oj5DtDwCsAAFNpuXVdGAFW1KRnDoQSD3KSgE/rfyuxG27XNe4HKpTfF+H7AquiMcqK
-	 TQ/w09DrJGSbkwNnsQ0CmGWG9iq46HcziH+GJWTo=
+	b=agHcVBX2oekqkWxdZ0lG3LJZKW+hpZfobNZxzSpWvGtxWPm8xcIdYgsZ4/19MsSFa
+	 wqjN7c7R/hKl45VSA4zgX6gOuam4IFv5AbknHKkHQ4wUk55kRHL8HRwZ92IMmqI6vz
+	 AyFrbF52HCtzFTYZ1cJbt2tRVCnZtmkgjqX8k7YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 195/214] net: phy: Remove LED entry from LEDs list on unregister
-Date: Mon, 14 Oct 2024 16:20:58 +0200
-Message-ID: <20241014141052.586390479@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.11 213/214] PCI: Pass domain number to pci_bus_release_domain_nr() explicitly
+Date: Mon, 14 Oct 2024 16:21:16 +0200
+Message-ID: <20241014141053.288403051@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -46,64 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit f50b5d74c68e551667e265123659b187a30fe3a5 upstream.
+commit 0cca961a026177af69044f10d6ae76d8ce043764 upstream.
 
-Commit c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct
-ordering") correctly fixed a problem with using devm_ but missed
-removing the LED entry from the LEDs list.
+The pci_bus_release_domain_nr() API is supposed to free the domain
+number allocated by pci_bus_find_domain_nr(). Most of the callers of
+pci_bus_find_domain_nr(), store the domain number in pci_bus::domain_nr.
 
-This cause kernel panic on specific scenario where the port for the PHY
-is torn down and up and the kmod for the PHY is removed.
+As such, the pci_bus_release_domain_nr() implicitly frees the domain
+number by dereferencing 'struct pci_bus'. However, one of the callers
+of this API, the PCI endpoint subsystem, doesn't have 'struct pci_bus',
+so it only passes NULL. Due to this, the API will end up dereferencing
+the NULL pointer.
 
-On setting the port down the first time, the assosiacted LEDs are
-correctly unregistered. The associated kmod for the PHY is now removed.
-The kmod is now added again and the port is now put up, the associated LED
-are registered again.
-On putting the port down again for the second time after these step, the
-LED list now have 4 elements. With the first 2 already unregistered
-previously and the 2 new one registered again.
+To fix this issue, pass the domain number to this API explicitly. Since
+'struct pci_bus' is not used for anything else other than extracting the
+domain number, it makes sense to pass the domain number directly.
 
-This cause a kernel panic as the first 2 element should have been
-removed.
-
-Fix this by correctly removing the element when LED is unregistered.
-
-Reported-by: Daniel Golle <daniel@makrotopia.org>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Cc: stable@vger.kernel.org
-Fixes: c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct ordering")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241004182759.14032-1-ansuelsmth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0328947c5032 ("PCI: endpoint: Assign PCI domain number for endpoint controllers")
+Closes: https://lore.kernel.org/linux-pci/c0c40ddb-bf64-4b22-9dd1-8dbb18aa2813@stanley.mountain
+Link: https://lore.kernel.org/linux-pci/20240912053025.25314-1-manivannan.sadhasivam@linaro.org
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pci/endpoint/pci-epc-core.c |    2 +-
+ drivers/pci/pci.c                   |   14 +++++++-------
+ drivers/pci/probe.c                 |    2 +-
+ drivers/pci/remove.c                |    2 +-
+ include/linux/pci.h                 |    2 +-
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3249,10 +3249,11 @@ static __maybe_unused int phy_led_hw_is_
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -840,7 +840,7 @@ void pci_epc_destroy(struct pci_epc *epc
+ 	device_unregister(&epc->dev);
  
- static void phy_leds_unregister(struct phy_device *phydev)
- {
--	struct phy_led *phyled;
-+	struct phy_led *phyled, *tmp;
- 
--	list_for_each_entry(phyled, &phydev->leds, list) {
-+	list_for_each_entry_safe(phyled, tmp, &phydev->leds, list) {
- 		led_classdev_unregister(&phyled->led_cdev);
-+		list_del(&phyled->list);
- 	}
+ #ifdef CONFIG_PCI_DOMAINS_GENERIC
+-	pci_bus_release_domain_nr(NULL, &epc->dev);
++	pci_bus_release_domain_nr(&epc->dev, epc->domain_nr);
+ #endif
+ }
+ EXPORT_SYMBOL_GPL(pci_epc_destroy);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6814,16 +6814,16 @@ static int of_pci_bus_find_domain_nr(str
+ 	return ida_alloc(&pci_domain_nr_dynamic_ida, GFP_KERNEL);
  }
  
+-static void of_pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent)
++static void of_pci_bus_release_domain_nr(struct device *parent, int domain_nr)
+ {
+-	if (bus->domain_nr < 0)
++	if (domain_nr < 0)
+ 		return;
+ 
+ 	/* Release domain from IDA where it was allocated. */
+-	if (of_get_pci_domain_nr(parent->of_node) == bus->domain_nr)
+-		ida_free(&pci_domain_nr_static_ida, bus->domain_nr);
++	if (of_get_pci_domain_nr(parent->of_node) == domain_nr)
++		ida_free(&pci_domain_nr_static_ida, domain_nr);
+ 	else
+-		ida_free(&pci_domain_nr_dynamic_ida, bus->domain_nr);
++		ida_free(&pci_domain_nr_dynamic_ida, domain_nr);
+ }
+ 
+ int pci_bus_find_domain_nr(struct pci_bus *bus, struct device *parent)
+@@ -6832,11 +6832,11 @@ int pci_bus_find_domain_nr(struct pci_bu
+ 			       acpi_pci_bus_find_domain_nr(bus);
+ }
+ 
+-void pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent)
++void pci_bus_release_domain_nr(struct device *parent, int domain_nr)
+ {
+ 	if (!acpi_disabled)
+ 		return;
+-	of_pci_bus_release_domain_nr(bus, parent);
++	of_pci_bus_release_domain_nr(parent, domain_nr);
+ }
+ #endif
+ 
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1061,7 +1061,7 @@ unregister:
+ 
+ free:
+ #ifdef CONFIG_PCI_DOMAINS_GENERIC
+-	pci_bus_release_domain_nr(bus, parent);
++	pci_bus_release_domain_nr(parent, bus->domain_nr);
+ #endif
+ 	kfree(bus);
+ 	return err;
+--- a/drivers/pci/remove.c
++++ b/drivers/pci/remove.c
+@@ -179,7 +179,7 @@ void pci_remove_root_bus(struct pci_bus
+ #ifdef CONFIG_PCI_DOMAINS_GENERIC
+ 	/* Release domain_nr if it was dynamically allocated */
+ 	if (host_bridge->domain_nr == PCI_DOMAIN_NR_NOT_SET)
+-		pci_bus_release_domain_nr(bus, host_bridge->dev.parent);
++		pci_bus_release_domain_nr(host_bridge->dev.parent, bus->domain_nr);
+ #endif
+ 
+ 	pci_remove_bus(bus);
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1884,7 +1884,7 @@ static inline int acpi_pci_bus_find_doma
+ { return 0; }
+ #endif
+ int pci_bus_find_domain_nr(struct pci_bus *bus, struct device *parent);
+-void pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent);
++void pci_bus_release_domain_nr(struct device *parent, int domain_nr);
+ #endif
+ 
+ /* Some architectures require additional setup to direct VGA traffic */
 
 
