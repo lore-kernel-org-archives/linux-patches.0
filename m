@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7701B1AD3F6;
-	Mon, 14 Oct 2024 15:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FB91B85CD;
+	Mon, 14 Oct 2024 15:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919021; cv=none; b=EmFrMhY13aBu02LAh8PHKh5ryxKHEnCtam/AbbSQICHv/bLqJ1M0AOk3+flpLSKuWfT3W8JDGwtiBJdyBvSZZ6JF5rjALGdba/QvOzvW3GAIdDgOqjlCzy7IDXrfsqNpyPPS9h04dI+s5Zi08KqvONorzbAuR5+UVJAMnNR64Vg=
+	t=1728919024; cv=none; b=QlEfN7BvXkeo/ae7ToijJ/hEX2alB3S1BoFqBVE8GMxJAdSrWY+1f7JCzmUrAykszwHYeQ+1xHFOnDFfTjJasEBwDaqGjsLsaJACLwAndJzxn0ReiWwkp6jnYEZPh08thgnJYzWb2ljWCJNBZyL3PMOa2/795Sa6RoRBF3i16kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919021; c=relaxed/simple;
-	bh=xn33ip4Zq3MuZzm0EjpQtAgAaZ0BnfGbyjRVC1vp9AE=;
+	s=arc-20240116; t=1728919024; c=relaxed/simple;
+	bh=oEGoIeYIjqVmLAwElNoceQ76iH+kMGMhkGWj5VK8Q2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8sTM9BqHxAUvjb97LXJ1ZxfJ45jGQa9GwwuBGPIVjEhwCFo4z2Hd/9/ppjnMg5C4URoUZuFYRvqZ1aXhDjbZa39oyVCmwy1CMsNqY/joeO2wplQp5Cj+BghrzF9NQsXywUcqrveRulAfdV6B8rAKasnI1ToHIKbT6lUKJpi2zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3xSeBvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FMqr+pJHitfVLd+k5glEAL/ugkDXbWm4/xOJYVMFpmvSZshZjtzORYXYqgns0jUUTtT03c+y4ipqjKBSX2bJ6UWmk3n2vw1d6lLg7DtttbzH04wrrxgc6+WARTYU2A0/S7Pbog18KoakRAso3CmnrRjBVWsgKgtqFU6TsVHGmLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dqx5iAYu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3xSeBvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC2DC4CEC3;
-	Mon, 14 Oct 2024 15:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dqx5iAYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE20DC4CEC3;
+	Mon, 14 Oct 2024 15:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919021;
-	bh=xn33ip4Zq3MuZzm0EjpQtAgAaZ0BnfGbyjRVC1vp9AE=;
+	s=korg; t=1728919024;
+	bh=oEGoIeYIjqVmLAwElNoceQ76iH+kMGMhkGWj5VK8Q2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3xSeBvEpCfX0fEZJkLxAL8qBgPglFoiMhQ0Cn708TkrOHyWDoX6NBIFogRtQA5AK
-	 /v7KCufbLOIqan2PzwpTWbJXScwLRf1lKZ9H8iWgYFQAtEB7aIKNOr8rMIACGcP3Me
-	 jG8CklBQSdm02DK9Y/mo9yJ6MC3YjYLK9bGaSFyo=
+	b=Dqx5iAYu6yw6LVh5yaO1tR2Zsezw1bCdEsQpiu5a1sdP8WRlidKw67/EZObA96FXC
+	 cPGtzziqbz/berJw2swP3SrSKernfIRA1r/CzwHUaAfV2GjCwDfWIyhsbjNakj5W7/
+	 DOfS6vHMxz9mOtbiDdHBisrke9JsxwS1fNsroFww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ckath <ckath@yandex.ru>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 489/798] platform/x86: touchscreen_dmi: add nanote-next quirk
-Date: Mon, 14 Oct 2024 16:17:23 +0200
-Message-ID: <20241014141237.181626070@linuxfoundation.org>
+Subject: [PATCH 6.1 463/798] ALSA: hdsp: Break infinite MIDI input flush loop
+Date: Mon, 14 Oct 2024 16:16:57 +0200
+Message-ID: <20241014141236.167052307@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,67 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ckath <ckath@yandex.ru>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c11619af35bae5884029bd14170c3e4b55ddf6f3 ]
+[ Upstream commit c01f3815453e2d5f699ccd8c8c1f93a5b8669e59 ]
 
-Add touschscreen info for the nanote next (UMPC-03-SR).
+The current MIDI input flush on HDSP and HDSPM drivers relies on the
+hardware reporting the right value.  If the hardware doesn't give the
+proper value but returns -1, it may be stuck at an infinite loop.
 
-After checking with multiple owners the DMI info really is this generic.
+Add a counter and break if the loop is unexpectedly too long.
 
-Signed-off-by: Ckath <ckath@yandex.ru>
-Link: https://lore.kernel.org/r/e8dda83a-10ae-42cf-a061-5d29be0d193a@yandex.ru
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240808091513.31380-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ sound/pci/rme9652/hdsp.c  | 6 ++++--
+ sound/pci/rme9652/hdspm.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 029355a2f389d..427c590102a19 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -854,6 +854,21 @@ static const struct ts_dmi_data rwc_nanote_p8_data = {
- 	.properties = rwc_nanote_p8_props,
- };
+diff --git a/sound/pci/rme9652/hdsp.c b/sound/pci/rme9652/hdsp.c
+index 65add92c88aa6..cd7bf4d7ca082 100644
+--- a/sound/pci/rme9652/hdsp.c
++++ b/sound/pci/rme9652/hdsp.c
+@@ -1298,8 +1298,10 @@ static int snd_hdsp_midi_output_possible (struct hdsp *hdsp, int id)
  
-+static const struct property_entry rwc_nanote_next_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 5),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1785),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1145),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rwc-nanote-next.fw"),
-+	{ }
-+};
+ static void snd_hdsp_flush_midi_input (struct hdsp *hdsp, int id)
+ {
+-	while (snd_hdsp_midi_input_available (hdsp, id))
+-		snd_hdsp_midi_read_byte (hdsp, id);
++	int count = 256;
 +
-+static const struct ts_dmi_data rwc_nanote_next_data = {
-+	.acpi_name = "MSSL1680:00",
-+	.properties = rwc_nanote_next_props,
-+};
++	while (snd_hdsp_midi_input_available(hdsp, id) && --count)
++		snd_hdsp_midi_read_byte(hdsp, id);
+ }
+ 
+ static int snd_hdsp_midi_output_write (struct hdsp_midi *hmidi)
+diff --git a/sound/pci/rme9652/hdspm.c b/sound/pci/rme9652/hdspm.c
+index fa1812e7a49dc..247f5c52fb090 100644
+--- a/sound/pci/rme9652/hdspm.c
++++ b/sound/pci/rme9652/hdspm.c
+@@ -1838,8 +1838,10 @@ static inline int snd_hdspm_midi_output_possible (struct hdspm *hdspm, int id)
+ 
+ static void snd_hdspm_flush_midi_input(struct hdspm *hdspm, int id)
+ {
+-	while (snd_hdspm_midi_input_available (hdspm, id))
+-		snd_hdspm_midi_read_byte (hdspm, id);
++	int count = 256;
 +
- static const struct property_entry schneider_sct101ctm_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1715),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1140),
-@@ -1603,6 +1618,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "0001")
- 		},
- 	},
-+	{
-+		/* RWC NANOTE NEXT */
-+		.driver_data = (void *)&rwc_nanote_next_data,
-+		.matches = {
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_VENDOR, "To be filled by O.E.M."),
-+			/* Above matches are too generic, add bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "S8A70R100-V005"),
-+		},
-+	},
- 	{
- 		/* Schneider SCT101CTM */
- 		.driver_data = (void *)&schneider_sct101ctm_data,
++	while (snd_hdspm_midi_input_available(hdspm, id) && --count)
++		snd_hdspm_midi_read_byte(hdspm, id);
+ }
+ 
+ static int snd_hdspm_midi_output_write (struct hdspm_midi *hmidi)
 -- 
 2.43.0
 
