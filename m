@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027BC1AE00C;
-	Mon, 14 Oct 2024 15:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FBF3BBF2;
+	Mon, 14 Oct 2024 15:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918009; cv=none; b=kKf9IdDH64zHhkFb9DibRWQ0BAwRl5jJ2SYKk0dtMTmFoxnvqoREhSFFgJbHR6QNJTMwubRsiCTjnokbbXZz3rcFax2TahSUvryVkf7GgeWkdiD3lxZOjaKCZH4HBcJ51KwHtOpK0UvAfQl8k+qljw3YidF+e78C5dTpZmpTzwE=
+	t=1728918012; cv=none; b=bneLx8Bs7sAqdcMMu15AjpXBXqe+M15tT96p5e/rh7N6Hzf6pTImextdLcF5CcxYaGPK1L7eZhgT1FFkhSyzECI8mlfEgJ61HJLgtTYkklVei9lYCNS6x4ptoChyP1Y3vZh5c5UVdhqMUQ2Jfg7G7hi07hpw5bOmxNYQtiYpdew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918009; c=relaxed/simple;
-	bh=aFPjnewCxqgLe4FceFK0gE/MfBlfuqHCdpArKNDA+54=;
+	s=arc-20240116; t=1728918012; c=relaxed/simple;
+	bh=LrAqnipSkaw5HiMrYilN4bB1GIKu25nfmJNFeog/6QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpaPe8uiFRQkgPcZx64QwNs/Cu0nrP3kTiL+rb5LnaENPMTMVPd5sFsz9Gi/Tlg4+bx+9s+d93HlEXo0hkTOo0jG1yy5rO62VzqjfCbGnZwOCq2jhCt7ATTFaLmYjPKD8pIDTmcHFO/qK022CFe/QY3EhzKzkpJeIfoM1SATwIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzOk7vnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+RtWFS28LmCKvmyCOZe3f2+t+HWCv7mIrCiE76dYde2oUGmy0kE2BpCuGRHu10eSAe+6kEDVoQH9Jwp+u+616/Wg5o5CxVLqGe1UnQ0ladzlgW4ygAbffyFLwvbRcIpv16J59uYtoYLHpQBduz25DoA1gpNYHGzlvrmRINCWYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRxVXRVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzOk7vnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68708C4CEC3;
-	Mon, 14 Oct 2024 15:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRxVXRVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD09C4CEC3;
+	Mon, 14 Oct 2024 15:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918008;
-	bh=aFPjnewCxqgLe4FceFK0gE/MfBlfuqHCdpArKNDA+54=;
+	s=korg; t=1728918012;
+	bh=LrAqnipSkaw5HiMrYilN4bB1GIKu25nfmJNFeog/6QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzOk7vnmvxNLShoOKJwZDfgU1Gbl6YyJ90op60OcOKDugC9yNAArdSrouth5+2l+9
-	 xc/niuS4sKKC5eAduUCtjRx2GwwUzBF5WGNmsW3HggKWT/nb5GRM+UUt51Lt6kkalt
-	 G1bTGTyCPPsTyi6vjg5y/DVbVyRadp1CvWHtyfkY=
+	b=xRxVXRVHrC9ahnH/yqS02h1LVkmE2rxkx9NBrk3llZH6tX9kso9TdRfiOZcdId7vE
+	 vyavoXeBchboXbK+2TKBiI8LzAhk0Av/O5altD7anQHYXiBYgQGNsVW8Gc+Q0PAk9v
+	 pz6/eyeCq/lN73BdYia4ijZi66s/6Gjz1OBivs6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/798] selftests/bpf: Fix errors compiling cg_storage_multi.h with musl libc
-Date: Mon, 14 Oct 2024 16:11:49 +0200
-Message-ID: <20241014141224.004271631@linuxfoundation.org>
+Subject: [PATCH 6.1 189/798] clk: imx: imx8qxp: Register dc0_bypass0_clk before disp clk
+Date: Mon, 14 Oct 2024 16:12:23 +0200
+Message-ID: <20241014141225.357506202@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,47 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 730561d3c08d4a327cceaabf11365958a1c00cec ]
+[ Upstream commit e61352d5ecdc0da2e7253121c15d9a3e040f78a1 ]
 
-Remove a redundant include of '<asm/types.h>', whose needed definitions are
-already included (via '<linux/types.h>') in cg_storage_multi_egress_only.c,
-cg_storage_multi_isolated.c, and cg_storage_multi_shared.c. This avoids
-redefinition errors seen compiling for mips64el/musl-libc like:
+The initialization order of SCU clocks affects the sequence of SCU clock
+resume. If there are no other effects, the earlier the initialization,
+the earlier the resume. During SCU clock resume, the clock rate is
+restored. As SCFW guidelines, configure the parent clock rate before
+configuring the child rate.
 
-  In file included from progs/cg_storage_multi_egress_only.c:13:
-  In file included from progs/cg_storage_multi.h:6:
-  In file included from /usr/mips64el-linux-gnuabi64/include/asm/types.h:23:
-  /usr/include/asm-generic/int-l64.h:29:25: error: typedef redefinition with different types ('long' vs 'long long')
-     29 | typedef __signed__ long __s64;
-        |                         ^
-  /usr/include/asm-generic/int-ll64.h:30:44: note: previous definition is here
-     30 | __extension__ typedef __signed__ long long __s64;
-        |                                            ^
-
-Fixes: 9e5bd1f7633b ("selftests/bpf: Test CGROUP_STORAGE map can't be used by multiple progs")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/4f4702e9f6115b7f84fea01b2326ca24c6df7ba8.1721713597.git.tony.ambardar@gmail.com
+Fixes: 91e916771de0 ("clk: imx: scu: remove legacy scu clock binding support")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20240607133347.3291040-14-peng.fan@oss.nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/cg_storage_multi.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/clk/imx/clk-imx8qxp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/cg_storage_multi.h b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-index a0778fe7857a1..41d59f0ee606c 100644
---- a/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-+++ b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
-@@ -3,8 +3,6 @@
- #ifndef __PROGS_CG_STORAGE_MULTI_H
- #define __PROGS_CG_STORAGE_MULTI_H
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 1066ea16de625..fd89f0090779f 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -200,11 +200,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ 	imx_clk_scu("usb3_lpm_div", IMX_SC_R_USB_2, IMX_SC_PM_CLK_MISC);
  
--#include <asm/types.h>
--
- struct cgroup_value {
- 	__u32 egress_pkts;
- 	__u32 ingress_pkts;
+ 	/* Display controller SS */
+-	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
+-	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_pll0_clk", IMX_SC_R_DC_0_PLL_0, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_pll1_clk", IMX_SC_R_DC_0_PLL_1, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_bypass0_clk", IMX_SC_R_DC_0_VIDEO0, IMX_SC_PM_CLK_BYPASS);
++	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
++	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
+ 
+ 	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
 -- 
 2.43.0
 
