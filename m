@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA641AAE08;
-	Mon, 14 Oct 2024 14:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF3713B7A1;
+	Mon, 14 Oct 2024 14:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916980; cv=none; b=m4xgi0xIK6wjzHn/u49J79F0m6Uct+EfdFk2dfFTyBA5hW9OriOWY40t23vxuAukxoJXLCQtnr1Khp8AA9vUk8Ds79JK8AKXqjypDWLFzkiMfkpX1RewFMOdrwxha9pfcFqmVI49psGOcx37nvOj1rZwjKewnN402HuTLo6TI/M=
+	t=1728916983; cv=none; b=JwkY/mbRDY+k2H/Err59UzDYRtNT6kpad7c21JN9wAR2Uccir00Z16zL5AUKtE+89VX3bcEXIi1i5Llpj+hxj/5EI1jrYOt3ENlmBTr/a3owNZWdyEuYwYE9OO4UHYKcTthPpuclYId09jdjpxpMocfylp74dt1kG/pf7BzLkZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916980; c=relaxed/simple;
-	bh=2u4KIZvytcDgAbfrX+FXB3AyxXowIccrM8K4dAHhyYA=;
+	s=arc-20240116; t=1728916983; c=relaxed/simple;
+	bh=sTuEKnZMnOttwsVxFKgvj9JCZBpg7HWwRrRC1tn2LZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reDM42WwpLpiqMFbP+BC1TmC0m3ff6XuZ9JB25Xlfi5XVN+2fvBAvPi7XgjkSrn5vSNStGwZpnpgK8GMrrvSUy4uJ0J1BqBs88hFl9owd4lYGm207MNLSMhuHJCH4mmK4nzbXZ28Olu2qXNZTBCvnFy6Wgw4PU+PRStrB/RknD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ig34IEcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMZpeupJPtHXSUW0AU3pgugHVSTozxEFAXFcvB9xxoLU7NO5qH87d3H7RVH8XWvSUhztGlk4akYdQ/djQAH2XVR0MVrlfBHr89RPxAaW60jnd8St73AVeX3WI4eT1PMj79Pswp7Ref4sMFizEDu2wjWoKxxgOMsii4IJnvMZ+mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3p5iXjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ig34IEcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FF9C4CEC3;
-	Mon, 14 Oct 2024 14:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3p5iXjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15133C4CEC3;
+	Mon, 14 Oct 2024 14:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916980;
-	bh=2u4KIZvytcDgAbfrX+FXB3AyxXowIccrM8K4dAHhyYA=;
+	s=korg; t=1728916983;
+	bh=sTuEKnZMnOttwsVxFKgvj9JCZBpg7HWwRrRC1tn2LZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ig34IEcpb7Bdn87UGbKLdtCvhatT1DEFsqfrht66/G2FiY5bDhci76DY0DZ/AKtUE
-	 hywXfoQwLajSV84/8h285KB82XOITiXTSy4SO95yCLoymYDeEncUgiicRIukoAOIsp
-	 Coa9WP0/whYG9Rj4K1wg3y/wUFD97fJ9vxcq9kGM=
+	b=Y3p5iXjfbAsyfdZMZmpLiX5n0iFP/GX1cWzHeC29GeSvBrCODXl0qhkVceZLrLqgU
+	 CbKhT2XRzf/GbM7nfLTforxLrTC08c6oI7NchpQemnRUjMKGRuwrlS1hLdWiGZK3/0
+	 rqFqe00W3/wh+kAqt2oIbkFNhZpc562spYsOZDYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/213] tcp: fix TFO SYN_RECV to not zero retrans_stamp with retransmits out
-Date: Mon, 14 Oct 2024 16:20:24 +0200
-Message-ID: <20241014141047.573363140@linuxfoundation.org>
+Subject: [PATCH 6.6 119/213] rxrpc: Fix uninitialised variable in rxrpc_send_data()
+Date: Mon, 14 Oct 2024 16:20:25 +0200
+Message-ID: <20241014141047.612523466@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -53,61 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 27c80efcc20486c82698f05f00e288b44513c86b ]
+[ Upstream commit 7a310f8d7dfe2d92a1f31ddb5357bfdd97eed273 ]
 
-Fix tcp_rcv_synrecv_state_fastopen() to not zero retrans_stamp
-if retransmits are outstanding.
+Fix the uninitialised txb variable in rxrpc_send_data() by moving the code
+that loads it above all the jumps to maybe_error, txb being stored back
+into call->tx_pending right before the normal return.
 
-tcp_fastopen_synack_timer() sets retrans_stamp, so typically we'll
-need to zero retrans_stamp here to prevent spurious
-retransmits_timed_out(). The logic to zero retrans_stamp is from this
-2019 commit:
-
-commit cd736d8b67fb ("tcp: fix retrans timestamp on passive Fast Open")
-
-However, in the corner case where the ACK of our TFO SYNACK carried
-some SACK blocks that caused us to enter TCP_CA_Recovery then that
-non-zero retrans_stamp corresponds to the active fast recovery, and we
-need to leave retrans_stamp with its current non-zero value, for
-correct ETIMEDOUT and undo behavior.
-
-Fixes: cd736d8b67fb ("tcp: fix retrans timestamp on passive Fast Open")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001200517.2756803-4-ncardwell.sw@gmail.com
+Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lists.infradead.org/pipermail/linux-afs/2024-October/008896.html
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20241001132702.3122709-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/rxrpc/sendmsg.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index d472f7052cd32..fb053942dba2a 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6554,10 +6554,17 @@ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
- 	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
- 		tcp_try_undo_recovery(sk);
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index 8e0b94714e849..24f765d243db1 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -303,6 +303,11 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 	sk_clear_bit(SOCKWQ_ASYNC_NOSPACE, sk);
  
--	/* Reset rtx states to prevent spurious retransmits_timed_out() */
- 	tcp_update_rto_time(tp);
--	tp->retrans_stamp = 0;
- 	inet_csk(sk)->icsk_retransmits = 0;
-+	/* In tcp_fastopen_synack_timer() on the first SYNACK RTO we set
-+	 * retrans_stamp but don't enter CA_Loss, so in case that happened we
-+	 * need to zero retrans_stamp here to prevent spurious
-+	 * retransmits_timed_out(). However, if the ACK of our SYNACK caused us
-+	 * to enter CA_Recovery then we need to leave retrans_stamp as it was
-+	 * set entering CA_Recovery, for correct retransmits_timed_out() and
-+	 * undo behavior.
-+	 */
-+	tcp_retrans_stamp_cleanup(sk);
+ reload:
++	txb = call->tx_pending;
++	call->tx_pending = NULL;
++	if (txb)
++		rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
++
+ 	ret = -EPIPE;
+ 	if (sk->sk_shutdown & SEND_SHUTDOWN)
+ 		goto maybe_error;
+@@ -329,11 +334,6 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			goto maybe_error;
+ 	}
  
- 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
- 	 * we no longer need req so release it.
+-	txb = call->tx_pending;
+-	call->tx_pending = NULL;
+-	if (txb)
+-		rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
+-
+ 	do {
+ 		if (!txb) {
+ 			size_t remain, bufsize, chunk, offset;
 -- 
 2.43.0
 
