@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EDE1AAC4;
-	Mon, 14 Oct 2024 15:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B480B1AC427;
+	Mon, 14 Oct 2024 15:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920107; cv=none; b=IejbhuW/G6ch/cLhdYca4bfgW33EH9kTKkKrZT+tkRwdj6KRwvHQEHdLjK83Q9xj0NHA9mLvnsBGKcYn3xr2MoDbrP8xhHIjCJwEqyfYzQMSu7slfEwwgbSg/rqy6pzmNG2XI7diyCrDbU+Ols/l5/UV6j/0U2sV4seSx7XBspI=
+	t=1728920110; cv=none; b=q5pCvzprefb3AF87mB71IVKugBYzKgQuD1wckzbr16NX5sqNAzNiAyMCruqoDp4fK6h+8YSio2hNFJuLlv/lZ0f0XiZwgjc7ZHjqXDpsgoftQzR+sWZ3yP5Sy4MEMgnDCCX/HSHia0HA2aMUhqCqoAwpIOpcVe4NcU1ndskFGXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920107; c=relaxed/simple;
-	bh=sAbxYtgzjWF2/vmPy/8leQG0aDUjMk4ZuBzKjeBHonY=;
+	s=arc-20240116; t=1728920110; c=relaxed/simple;
+	bh=KG9xQB3E1idac/N5nwGjkF+5qV+5WOMPn/dTkWcjlOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6KRl9YEOspJbcTAF1hsCQFz28rPZADaVSTyg2eEQP9A4a5xt17mz4KDXy2DZF+HHQaXBdNjW/ekc1VVQRneiKXhYh/s7zZe651X3jm6zqJ/ArxEecFMXpjPp4M1tSSPyoJwABgFLbO52fqFsQfDgliefKUVn7UWo5kYOEm7PDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u07uqxSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0aQi4LwOzA8pr8jlqyDgP26WYcgPkTuAXFx5hAtRnHQXJh8vDReAU7a5yn0oQJU1THvKauL+tni15XKdEuQ6b6q/9p7DM5Fy3OYUtvPPRO3YN/TA022C70cJaMm0lYnXmLrz1BhTlzYcqkmYuTAYjOecBAbaEzW1H/kkpVxikA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0RRm6T1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u07uqxSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B50C4CED1;
-	Mon, 14 Oct 2024 15:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0RRm6T1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB53EC4CEC7;
+	Mon, 14 Oct 2024 15:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920106;
-	bh=sAbxYtgzjWF2/vmPy/8leQG0aDUjMk4ZuBzKjeBHonY=;
+	s=korg; t=1728920110;
+	bh=KG9xQB3E1idac/N5nwGjkF+5qV+5WOMPn/dTkWcjlOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u07uqxSGJlQ0jbWoXG3u3QgoebFyl6f4lVotF2j1Ecgm1do6H2yArkzhAUXzqBZeC
-	 quV1CmGGI9DvQRu6nbLOK2BsiWjGsu3EwjEWovWeQU0P90+R3hJG2hhr0Fqj/cv/1F
-	 HAYmb/u3hCZORbHUICuMsFbloHqSqqkhn0rojf/Y=
+	b=V0RRm6T1a+G0GonZ+r/Q5w5Gp6gls2eoLASOqiBfXy6t+/N1LfecvaRvYacqvAuaE
+	 5s/VkwQwlA8AuJue4NuE8lbPcE+xGQ/lQjOkWsameNJs988lFdUOrIK5rvD5JBR7Lp
+	 QVD+nNoBqeTYqc7OLLqq0S+ZDKAORMO//jbdM0oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 797/798] block, bfq: fix uaf for accessing waker_bfqq after splitting
-Date: Mon, 14 Oct 2024 16:22:31 +0200
-Message-ID: <20241014141249.382979387@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Kenton Groombridge <concord@gentoo.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 768/798] wifi: mac80211: Avoid address calculations via out of bounds array indexing
+Date: Mon, 14 Oct 2024 16:22:02 +0200
+Message-ID: <20241014141248.238508357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,90 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Kenton Groombridge <concord@gentoo.org>
 
-commit 1ba0403ac6447f2d63914fb760c44a3b19c44eaf upstream.
+[ Upstream commit 2663d0462eb32ae7c9b035300ab6b1523886c718 ]
 
-After commit 42c306ed7233 ("block, bfq: don't break merge chain in
-bfq_split_bfqq()"), if the current procress is the last holder of bfqq,
-the bfqq can be freed after bfq_split_bfqq(). Hence recored the bfqq and
-then access bfqq->waker_bfqq may trigger UAF. What's more, the waker_bfqq
-may in the merge chain of bfqq, hence just recored waker_bfqq is still
-not safe.
+req->n_channels must be set before req->channels[] can be used.
 
-Fix the problem by adding a helper bfq_waker_bfqq() to check if
-bfqq->waker_bfqq is in the merge chain, and current procress is the only
-holder.
+This patch fixes one of the issues encountered in [1].
 
-Fixes: 42c306ed7233 ("block, bfq: don't break merge chain in bfq_split_bfqq()")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240909134154.954924-2-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[   83.964255] UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:364:4
+[   83.964258] index 0 is out of range for type 'struct ieee80211_channel *[]'
+[...]
+[   83.964264] Call Trace:
+[   83.964267]  <TASK>
+[   83.964269]  dump_stack_lvl+0x3f/0xc0
+[   83.964274]  __ubsan_handle_out_of_bounds+0xec/0x110
+[   83.964278]  ieee80211_prep_hw_scan+0x2db/0x4b0
+[   83.964281]  __ieee80211_start_scan+0x601/0x990
+[   83.964291]  nl80211_trigger_scan+0x874/0x980
+[   83.964295]  genl_family_rcv_msg_doit+0xe8/0x160
+[   83.964298]  genl_rcv_msg+0x240/0x270
+[...]
+
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=218810
+
+Co-authored-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Kenton Groombridge <concord@gentoo.org>
+Link: https://msgid.link/20240605152218.236061-1-concord@gentoo.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[Xiangyu: Modified to apply on 6.1.y and 6.6.y]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c |   31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ net/mac80211/scan.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6724,6 +6724,31 @@ static void bfq_prepare_request(struct r
- 	rq->elv.priv[0] = rq->elv.priv[1] = NULL;
- }
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 0a6e40bd42f62..edbf468e0bea3 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -357,7 +357,8 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
+ 	struct cfg80211_scan_request *req;
+ 	struct cfg80211_chan_def chandef;
+ 	u8 bands_used = 0;
+-	int i, ielen, n_chans;
++	int i, ielen;
++	u32 *n_chans;
+ 	u32 flags = 0;
  
-+static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
-+{
-+	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
-+	struct bfq_queue *waker_bfqq = bfqq->waker_bfqq;
-+
-+	if (!waker_bfqq)
-+		return NULL;
-+
-+	while (new_bfqq) {
-+		if (new_bfqq == waker_bfqq) {
-+			/*
-+			 * If waker_bfqq is in the merge chain, and current
-+			 * is the only procress.
-+			 */
-+			if (bfqq_process_refs(waker_bfqq) == 1)
-+				return NULL;
-+			break;
-+		}
-+
-+		new_bfqq = new_bfqq->new_bfqq;
-+	}
-+
-+	return waker_bfqq;
-+}
-+
- /*
-  * If needed, init rq, allocate bfq data structures associated with
-  * rq, and increment reference counters in the destination bfq_queue
-@@ -6784,7 +6809,7 @@ static struct bfq_queue *bfq_init_rq(str
- 		/* If the queue was seeky for too long, break it apart. */
- 		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq) &&
- 			!bic->stably_merged) {
--			struct bfq_queue *old_bfqq = bfqq;
-+			struct bfq_queue *waker_bfqq = bfq_waker_bfqq(bfqq);
+ 	req = rcu_dereference_protected(local->scan_req,
+@@ -367,34 +368,34 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
+ 		return false;
  
- 			/* Update bic before losing reference to bfqq */
- 			if (bfq_bfqq_in_large_burst(bfqq))
-@@ -6803,7 +6828,7 @@ static struct bfq_queue *bfq_init_rq(str
- 				bfqq_already_existing = true;
+ 	if (ieee80211_hw_check(&local->hw, SINGLE_SCAN_ON_ALL_BANDS)) {
++		local->hw_scan_req->req.n_channels = req->n_channels;
++
+ 		for (i = 0; i < req->n_channels; i++) {
+ 			local->hw_scan_req->req.channels[i] = req->channels[i];
+ 			bands_used |= BIT(req->channels[i]->band);
+ 		}
+-
+-		n_chans = req->n_channels;
+ 	} else {
+ 		do {
+ 			if (local->hw_scan_band == NUM_NL80211_BANDS)
+ 				return false;
  
- 			if (!bfqq_already_existing) {
--				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
-+				bfqq->waker_bfqq = waker_bfqq;
- 				bfqq->tentative_waker_bfqq = NULL;
+-			n_chans = 0;
++			n_chans = &local->hw_scan_req->req.n_channels;
++			*n_chans = 0;
  
- 				/*
-@@ -6813,7 +6838,7 @@ static struct bfq_queue *bfq_init_rq(str
- 				 * woken_list of the waker. See
- 				 * bfq_check_waker for details.
- 				 */
--				if (bfqq->waker_bfqq)
-+				if (waker_bfqq)
- 					hlist_add_head(&bfqq->woken_list_node,
- 						       &bfqq->waker_bfqq->woken_list);
+ 			for (i = 0; i < req->n_channels; i++) {
+ 				if (req->channels[i]->band !=
+ 				    local->hw_scan_band)
+ 					continue;
+-				local->hw_scan_req->req.channels[n_chans] =
++				local->hw_scan_req->req.channels[(*n_chans)++] =
+ 							req->channels[i];
+-				n_chans++;
++
+ 				bands_used |= BIT(req->channels[i]->band);
  			}
+ 
+ 			local->hw_scan_band++;
+-		} while (!n_chans);
++		} while (!*n_chans);
+ 	}
+ 
+-	local->hw_scan_req->req.n_channels = n_chans;
+ 	ieee80211_prepare_scan_chandef(&chandef, req->scan_width);
+ 
+ 	if (req->flags & NL80211_SCAN_FLAG_MIN_PREQ_CONTENT)
+-- 
+2.43.0
+
 
 
