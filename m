@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C441ABEC1;
-	Mon, 14 Oct 2024 15:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F2F1AB501;
+	Mon, 14 Oct 2024 15:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920032; cv=none; b=krZnTMsJhBx3Q3e0bWk+JFzZreFEEBo0XwBALICLGgjbM1fCwzrtLxezyBRpR8NzrOKacdwhJC8qplkJTDqkkeV7JVhS+YeijcdquvPhZJb3dr4VOvyJjOvYaFKp0Z2GW4dQYPcC0svDo5xEkaf82G2W814aspZIIlEJ6RcW5ro=
+	t=1728920035; cv=none; b=EHHtvLxZv3tHm3UAPS6pNLHMud3ITKppCWBQ6lX90+cWtzqe84/3ctuBGzCS0Udqp2XqIlL1if/JNFRduyC+L2tsgkErfO/jBIBdSrrwUjpo5ZQ3QRoN9aIdC5GJo/ASYwqEUU1y+V70Nf33hSrsSnpa94OFOg5BlQzL8ctS2IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920032; c=relaxed/simple;
-	bh=orEDQybkGHXN6ECHtK2bn9P4u8EjN6ucBp19wGdJ5fo=;
+	s=arc-20240116; t=1728920035; c=relaxed/simple;
+	bh=10URusjpXIsJ7LyfTHN05IeE3/Ub4tXgwPhmTB/cuAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMwyYwmaImJqvX8ZP3T+WVufnNcxZSluQ7l/Nl0pShfv1pQfhnQ2nW2aHzXfnupFiSxgNRG/oHW41rI3WmRVKW37b1vIigrkW+xSeOm5CdAqVtCaM6fsAAyo74TCkIcbj4vdcHHXsL1z7L2XDnZcZnEAxID+vPA8elnonYXNq0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JM4d4G7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJpPtSKSIrX/iigqm78Kgu/FskFTGREncWSw2j0z9X6gH74s1CAXRjv7lddBqFF8e0bKEs2LGIZCRJ8iqs5ozj1vAfqpS5UEjVV6LMHACGrvTewjQc1C8PM4wl1OgO6LxyqLTi2GlLXBnJBP2hEakYGEYNiwWFMG+8/Wgr9uQ1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lpv6RjbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JM4d4G7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C25AC4CEC7;
-	Mon, 14 Oct 2024 15:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lpv6RjbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDE8C4CEC3;
+	Mon, 14 Oct 2024 15:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920032;
-	bh=orEDQybkGHXN6ECHtK2bn9P4u8EjN6ucBp19wGdJ5fo=;
+	s=korg; t=1728920035;
+	bh=10URusjpXIsJ7LyfTHN05IeE3/Ub4tXgwPhmTB/cuAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JM4d4G77nfboxSCwmrqw0LMJOMkEVOhR0iFm1y9JuywHj6gieZO9cGAJS8/Ol9cF
-	 zHrrUjjvU07AaiQQCCfL/9uXKnrG9DcmKlDjKZWQDyv35UbmC6U6biwq3VqetBaLSG
-	 MEuOYjqrmzd8LnsSCdlhbDLd63RbZ3Lybbeeu2zw=
+	b=Lpv6RjbGMHBx7hRA2nKqZ3Ae99ol4Jg3bx18gW7K0id4E5YUTWwNdtjBahTHTsmnB
+	 vzMGyZmcg9iYAqZcW2G0vMP4P6y66299sEyd9rM5ekqyWi2eC3nFah5G2u8r5hQB/B
+	 NAgVR44+cYXp6HIIfZZSFJUmrNTZgP1wanamysAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>
-Subject: [PATCH 6.1 779/798] usb: gadget: core: force synchronous registration
-Date: Mon, 14 Oct 2024 16:22:13 +0200
-Message-ID: <20241014141248.668427060@linuxfoundation.org>
+	SurajSonawane2415 <surajsonawane0215@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 780/798] hid: intel-ish-hid: Fix uninitialized variable rv in ish_fw_xfer_direct_dma
+Date: Mon, 14 Oct 2024 16:22:14 +0200
+Message-ID: <20241014141248.707990769@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -49,35 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: SurajSonawane2415 <surajsonawane0215@gmail.com>
 
-commit df9158826b00e53f42c67d62c887a84490d80a0a upstream.
+commit d41bff05a61fb539f21e9bf0d39fac77f457434e upstream.
 
-Registering a gadget driver is expected to complete synchronously and
-immediately after calling driver_register() this function checks that
-the driver has bound so as to return an error.
+Fix the uninitialized symbol 'rv' in the function ish_fw_xfer_direct_dma
+to resolve the following warning from the smatch tool:
+drivers/hid/intel-ish-hid/ishtp-fw-loader.c:714 ish_fw_xfer_direct_dma()
+error: uninitialized symbol 'rv'.
+Initialize 'rv' to 0 to prevent undefined behavior from uninitialized
+access.
 
-Set PROBE_FORCE_SYNCHRONOUS to ensure this is the case even when
-asynchronous probing is set as the default.
-
-Fixes: fc274c1e99731 ("USB: gadget: Add a new bus for gadgets")
 Cc: stable@vger.kernel.org
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://lore.kernel.org/r/20240913102325.2826261-1-jkeeping@inmusicbrands.com
+Fixes: 91b228107da3 ("HID: intel-ish-hid: ISH firmware loader client driver")
+Signed-off-by: SurajSonawane2415 <surajsonawane0215@gmail.com>
+Link: https://patch.msgid.link/20241004075944.44932-1-surajsonawane0215@gmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/intel-ish-hid/ishtp-fw-loader.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1671,6 +1671,7 @@ int usb_gadget_register_driver_owner(str
- 	driver->driver.bus = &gadget_bus_type;
- 	driver->driver.owner = owner;
- 	driver->driver.mod_name = mod_name;
-+	driver->driver.probe_type = PROBE_FORCE_SYNCHRONOUS;
- 	ret = driver_register(&driver->driver);
- 	if (ret) {
- 		pr_warn("%s: driver registration failed: %d\n",
+--- a/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
++++ b/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
+@@ -635,7 +635,7 @@ static int ish_fw_xfer_direct_dma(struct
+ 				  const struct firmware *fw,
+ 				  const struct shim_fw_info fw_info)
+ {
+-	int rv;
++	int rv = 0;
+ 	void *dma_buf;
+ 	dma_addr_t dma_buf_phy;
+ 	u32 fragment_offset, fragment_size, payload_max_size;
 
 
