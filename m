@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F347A1AE850;
-	Mon, 14 Oct 2024 15:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376751AE850;
+	Mon, 14 Oct 2024 15:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919051; cv=none; b=ZNJ+zuTOAoHTiUY6/lH5DePwisURmJwAQJd1jd3Hc2p2ex/7qv6ykOZiqqt8ETkHMZ61FZ/yMnYpUPWtAESYlHJJBjWW61WRkXlkdfs/aLANDIUylebeGMIftKOUngrhxI7auAfJGrGrwMPD6Ws+oDcEhy3mJm0h6oUtdHHlzgM=
+	t=1728919054; cv=none; b=MzvTPlhBwVl50j9KfU8TPrMA0iQYSmWmSRhFPQgT+9WlC6jEB8cyd4E/bUiqhXDkGDWczGh9c9LDWjfYMXWvEne3bAoz6WjPcTGjIAjRUxhsC2povzYpxZMR1XkyEHpT1To3/Hf8jxUoXW3/fVbBmH7rzLhdmkRUDtFljQj2vEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919051; c=relaxed/simple;
-	bh=KJZr3gp5HfNoeX819npzsm8qCejg5zEZXk7KH9p/UDQ=;
+	s=arc-20240116; t=1728919054; c=relaxed/simple;
+	bh=6yFr6wUk9KuLUfW5tHlLaBOwXpcXdmf4hDXkxqD6nB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TyMZ6Xi4q4c6ARlzCvxka1YlFo69ipJBiJOuX5qLcHVsLDHC8fP8loOuUFmgoMfYm6Y2NJj1w9id1nHbyjYlG+gGW2EThiUZRgqfnVBt8xhVJnHhknMdArFBfM0E+EFvPaVP96jvbJ1GxTKFFtBP6hs+gP4UzwQVDx8tgBc+qPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkz4uKtX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G49PGZqup9vP+9dVedY8mpsx7iGS6e92+O9wsdDDTzY3zsrDxUkXaRlHXyB92bZwG54+8QDYvAM/FosZiKjpc0GFZ1p3lTEX9UMy0NSWAJJViKsCaGkWDkule+naPnVThuzyjcD0DIoNzFgoIXG/P0fcgBcaTvl/OV/oAxZWGsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSFNz66e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkz4uKtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7240AC4CED0;
-	Mon, 14 Oct 2024 15:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSFNz66e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FB3C4CEC3;
+	Mon, 14 Oct 2024 15:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919050;
-	bh=KJZr3gp5HfNoeX819npzsm8qCejg5zEZXk7KH9p/UDQ=;
+	s=korg; t=1728919054;
+	bh=6yFr6wUk9KuLUfW5tHlLaBOwXpcXdmf4hDXkxqD6nB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkz4uKtXBXnkFW8FQJ+24snAahOnhsB8IyDsXO3VT9kraRZxTKaGoWWJiBTC2PNwY
-	 TCUKCpv2k4uiF5TML4uV0zXp+JjnsaWWUcI9IVm7esdXI0UMCys3BVnbgQENXxOSyP
-	 SOFASs9Jw0J7wt2pG4fZZS/ZNMhP5Kx0doOs7fBE=
+	b=OSFNz66ehx4ZvK6VuwgPYzos0Ya5t1tAU5CMIJTJ31IhtFxyt9xSjRmMl+I83/n/S
+	 6ncbhQPgjW24HkmwPJfivc8mm0yacPCDbJ1TofPOjfKIV8GEKIACOG9dKRjHe4Mw5l
+	 8oFo23pPgk/kIK8YlQfGtVVasCipXjTVnQ/qCsFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Marc Gonzalez <mgonzalez@freebox.fr>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/798] rcuscale: Provide clear error when async specified without primitives
-Date: Mon, 14 Oct 2024 16:17:01 +0200
-Message-ID: <20241014141236.322295130@linuxfoundation.org>
+Subject: [PATCH 6.1 468/798] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
+Date: Mon, 14 Oct 2024 16:17:02 +0200
+Message-ID: <20241014141236.361559181@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,45 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
 
-[ Upstream commit 11377947b5861fa59bf77c827e1dd7c081842cc9 ]
+[ Upstream commit 3a8990b8a778219327c5f8ecf10b5d81377b925a ]
 
-Currently, if the rcuscale module's async module parameter is specified
-for RCU implementations that do not have async primitives such as RCU
-Tasks Rude (which now lacks a call_rcu_tasks_rude() function), there
-will be a series of splats due to calls to a NULL pointer.  This commit
-therefore warns of this situation, but switches to non-async testing.
+On qcom msm8998, writing to the last context bank of lpass_q6_smmu
+(base address 0x05100000) produces a system freeze & reboot.
 
-Signed-off-by: "Paul E. McKenney" <paulmck@kernel.org>
-Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+The hardware/hypervisor reports 13 context banks for the LPASS SMMU
+on msm8998, but only the first 12 are accessible...
+Override the number of context banks
+
+[    2.546101] arm-smmu 5100000.iommu: probing hardware configuration...
+[    2.552439] arm-smmu 5100000.iommu: SMMUv2 with:
+[    2.558945] arm-smmu 5100000.iommu: 	stage 1 translation
+[    2.563627] arm-smmu 5100000.iommu: 	address translation ops
+[    2.568923] arm-smmu 5100000.iommu: 	non-coherent table walk
+[    2.574566] arm-smmu 5100000.iommu: 	(IDR0.CTTW overridden by FW configuration)
+[    2.580220] arm-smmu 5100000.iommu: 	stream matching with 12 register groups
+[    2.587263] arm-smmu 5100000.iommu: 	13 context banks (0 stage-2 only)
+[    2.614447] arm-smmu 5100000.iommu: 	Supported page sizes: 0x63315000
+[    2.621358] arm-smmu 5100000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
+[    2.627772] arm-smmu 5100000.iommu: 	preserved 0 boot mappings
+
+Specifically, the crashes occur here:
+
+	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
+	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
+
+and here:
+
+	arm_smmu_write_context_bank(smmu, i);
+	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
+
+It is likely that FW reserves the last context bank for its own use,
+thus a simple work-around is: DON'T USE IT in Linux.
+
+If we decrease the number of context banks, last one will be "hidden".
+
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20240820-smmu-v3-1-2f71483b00ec@freebox.fr
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index 0b88d96511adc..6595e166f6d59 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -449,7 +449,7 @@ rcu_scale_writer(void *arg)
- 			udelay(writer_holdoff);
- 		wdp = &wdpp[i];
- 		*wdp = ktime_get_mono_fast_ns();
--		if (gp_async) {
-+		if (gp_async && !WARN_ON_ONCE(!cur_ops->async)) {
- retry:
- 			if (!rhp)
- 				rhp = kmalloc(sizeof(*rhp), GFP_KERNEL);
-@@ -505,7 +505,7 @@ rcu_scale_writer(void *arg)
- 			i++;
- 		rcu_scale_wait_shutdown();
- 	} while (!torture_must_stop());
--	if (gp_async) {
-+	if (gp_async && cur_ops->async) {
- 		cur_ops->gp_barrier();
- 	}
- 	writer_n_durations[me] = i_max + 1;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index f15dcb9e4175c..3d1313ed7a84f 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -273,6 +273,13 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 	u32 smr;
+ 	int i;
+ 
++	/*
++	 * MSM8998 LPASS SMMU reports 13 context banks, but accessing
++	 * the last context bank crashes the system.
++	 */
++	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") && smmu->num_context_banks == 13)
++		smmu->num_context_banks = 12;
++
+ 	/*
+ 	 * Some platforms support more than the Arm SMMU architected maximum of
+ 	 * 128 stream matching groups. For unknown reasons, the additional
 -- 
 2.43.0
 
