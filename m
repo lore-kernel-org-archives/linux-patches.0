@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF134595B;
-	Mon, 14 Oct 2024 14:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489964595B;
+	Mon, 14 Oct 2024 14:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916848; cv=none; b=gq/9sW9M55aK3jIMZ7yUb10oB+iP4oB99R/H6HHxDYQpeLXtDHc1DB2A6/P6hEoNne01gYJk9Qmtv5+iNxyr20Jk/lvCK0Z8Xz/edTASc3HI7yddfyVeczwvfj7SOYC8nRTQtTfkqbMZKm8heZvpDzT7a40mphdnzhIHLSU+pUc=
+	t=1728916852; cv=none; b=TJi+HADEjt4CN1YgP3u6hXs4sQ7iXhSCHs5G1h94IaXCS6wZK3YBb3iJHLeR2sTDam/rwCknWtc+z1XltS311ogluaBsmPe5dWIB4CxJ9g3Lo16Y0yN5dtQmoh59K7v5R724ePF/1td8lSZFkcJo1+ZHE78dDO6kyJWfNn4WbOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916848; c=relaxed/simple;
-	bh=ske3gUz9LLWeJK8NE9nTo9EdF118Ql31vsHXXdTToZ4=;
+	s=arc-20240116; t=1728916852; c=relaxed/simple;
+	bh=UlXR5/4Kj3/3wnUHsIpfAvdGeqUnsGSt38FqP90gdoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehBWTLm0YC8VjVttzz2fdv0tNeFw3XZnm2Mn/xyMzS4ctHsoaCJn5lLgj0/V7fPwuHR/V/b9EkyMMo/1e4taP8qSnC3mBJViG175W58J2vJKrdbxoSYUt8RJNS7epRPztrnPz+6eXlXcHyI3M22yE8N7Qj9Alu4rkuieojmOfY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sD4cm88S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gAv01XFBbLwHfpfJ9DN5NzkKX1Q4lxA6bS24pi//B3NhtbFnT3HwlY8hAoTDrBdCoCiu9tOlStPawcdAXKXapJJOfr36YHuGKi1Keofepd1ae4SEiPB2rDBClOrYgM8tF0AeuZvV0lU3xxLqfWLWc2R1VyscBQeR9KImn5MNQVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNDHOj8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sD4cm88S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EA2C4CEC7;
-	Mon, 14 Oct 2024 14:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNDHOj8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC40C4CEC3;
+	Mon, 14 Oct 2024 14:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916848;
-	bh=ske3gUz9LLWeJK8NE9nTo9EdF118Ql31vsHXXdTToZ4=;
+	s=korg; t=1728916852;
+	bh=UlXR5/4Kj3/3wnUHsIpfAvdGeqUnsGSt38FqP90gdoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sD4cm88SinsbJ9VrO+WsAFKfVuvyCGrb3jplzvvdmC44EooI56G9NecK6CI46kSjs
-	 jBg5ZOJFL23nQSUhucNyN+aaJJMiKLeTqPDnPpigEFkvj6/UG4QP8ignssqwzSxExd
-	 rBZUDHNNUz6tQ9tPgR7wqE9Aekq2Uowoea7IzHDA=
+	b=JNDHOj8ZklhSEFAEM1BYW90w3FyIRh6HeLse4cj5BF+uBYUWEA2lJmM1e2nZygmUP
+	 3UEq3+8rCKfyq4LDOodxoB1Wqi9ZiSD55Lzb+Hgl15dEvEud9Eb+scOjrKHZHPZDOG
+	 iZNENDnTsCEiyDDDFpd786Z8tJzY2nrLPfSQTrYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/213] RDMA/mlx5: Enforce umem boundaries for explicit ODP page faults
-Date: Mon, 14 Oct 2024 16:19:48 +0200
-Message-ID: <20241014141046.179968397@linuxfoundation.org>
+Subject: [PATCH 6.6 083/213] soundwire: cadence: re-check Peripheral status with delayed_work
+Date: Mon, 14 Oct 2024 16:19:49 +0200
+Message-ID: <20241014141046.216943005@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,96 +53,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 8c6d097d830f779fc1725fbaa1314f20a7a07b4b ]
+[ Upstream commit f8c35d61ba01afa76846905c67862cdace7f66b0 ]
 
-The new memory scheme page faults are requesting the driver to fetch
-additinal pages to the faulted memory access.
-This is done in order to prefetch pages before and after the area that
-got the page fault, assuming this will reduce the total amount of page
-faults.
+The SoundWire peripheral enumeration is entirely based on interrupts,
+more specifically sticky bits tracking state changes.
 
-The driver should ensure it handles only the pages that are within the
-umem range.
+This patch adds a defensive programming check on the actual status
+reported in PING frames. If for some reason an interrupt was lost or
+delayed, the delayed work would detect a peripheral change of status
+after the bus starts.
 
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/20240909100504.29797-5-michaelgur@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The 100ms defined for the delay is not completely arbitrary, if a
+Peripheral didn't join the bus within that delay then probably the
+hardware link is broken, and conversely if the detection didn't happen
+because of software issues the 100ms is still acceptable in terms of
+user experience.
+
+The overhead of the one-shot workqueue is minimal, and the mutual
+exclusion ensures that the interrupt and delayed work cannot update
+the status concurrently.
+
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20240805114921.88007-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/soundwire/cadence_master.c   | 39 ++++++++++++++++++++++++++--
+ drivers/soundwire/cadence_master.h   |  5 ++++
+ drivers/soundwire/intel.h            |  2 ++
+ drivers/soundwire/intel_auxdevice.c  |  1 +
+ drivers/soundwire/intel_bus_common.c | 11 ++++++++
+ 5 files changed, 56 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index a524181f34df9..3a4605fda6d57 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -733,24 +733,31 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
-  *  >0: Number of pages mapped
-  */
- static int pagefault_mr(struct mlx5_ib_mr *mr, u64 io_virt, size_t bcnt,
--			u32 *bytes_mapped, u32 flags)
-+			u32 *bytes_mapped, u32 flags, bool permissive_fault)
- {
- 	struct ib_umem_odp *odp = to_ib_umem_odp(mr->umem);
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index 3e7cf04aaf2a6..e69982dbd449b 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -891,8 +891,14 @@ static int cdns_update_slave_status(struct sdw_cdns *cdns,
+ 		}
+ 	}
  
--	if (unlikely(io_virt < mr->ibmr.iova))
-+	if (unlikely(io_virt < mr->ibmr.iova) && !permissive_fault)
- 		return -EFAULT;
- 
- 	if (mr->umem->is_dmabuf)
- 		return pagefault_dmabuf_mr(mr, bcnt, bytes_mapped, flags);
- 
- 	if (!odp->is_implicit_odp) {
-+		u64 offset = io_virt < mr->ibmr.iova ? 0 : io_virt - mr->ibmr.iova;
- 		u64 user_va;
- 
--		if (check_add_overflow(io_virt - mr->ibmr.iova,
--				       (u64)odp->umem.address, &user_va))
-+		if (check_add_overflow(offset, (u64)odp->umem.address,
-+				       &user_va))
- 			return -EFAULT;
--		if (unlikely(user_va >= ib_umem_end(odp) ||
--			     ib_umem_end(odp) - user_va < bcnt))
+-	if (is_slave)
+-		return sdw_handle_slave_status(&cdns->bus, status);
++	if (is_slave) {
++		int ret;
 +
-+		if (permissive_fault) {
-+			if (user_va < ib_umem_start(odp))
-+				user_va = ib_umem_start(odp);
-+			if ((user_va + bcnt) > ib_umem_end(odp))
-+				bcnt = ib_umem_end(odp) - user_va;
-+		} else if (unlikely(user_va >= ib_umem_end(odp) ||
-+				    ib_umem_end(odp) - user_va < bcnt))
- 			return -EFAULT;
- 		return pagefault_real_mr(mr, odp, user_va, bcnt, bytes_mapped,
- 					 flags);
-@@ -857,7 +864,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
- 	case MLX5_MKEY_MR:
- 		mr = container_of(mmkey, struct mlx5_ib_mr, mmkey);
++		mutex_lock(&cdns->status_update_lock);
++		ret = sdw_handle_slave_status(&cdns->bus, status);
++		mutex_unlock(&cdns->status_update_lock);
++		return ret;
++	}
  
--		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0);
-+		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
+ 	return 0;
+ }
+@@ -989,6 +995,31 @@ irqreturn_t sdw_cdns_irq(int irq, void *dev_id)
+ }
+ EXPORT_SYMBOL(sdw_cdns_irq);
+ 
++static void cdns_check_attached_status_dwork(struct work_struct *work)
++{
++	struct sdw_cdns *cdns =
++		container_of(work, struct sdw_cdns, attach_dwork.work);
++	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
++	u32 val;
++	int ret;
++	int i;
++
++	val = cdns_readl(cdns, CDNS_MCP_SLAVE_STAT);
++
++	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
++		status[i] = val & 0x3;
++		if (status[i])
++			dev_dbg(cdns->dev, "Peripheral %d status: %d\n", i, status[i]);
++		val >>= 2;
++	}
++
++	mutex_lock(&cdns->status_update_lock);
++	ret = sdw_handle_slave_status(&cdns->bus, status);
++	mutex_unlock(&cdns->status_update_lock);
++	if (ret < 0)
++		dev_err(cdns->dev, "%s: sdw_handle_slave_status failed: %d\n", __func__, ret);
++}
++
+ /**
+  * cdns_update_slave_status_work - update slave status in a work since we will need to handle
+  * other interrupts eg. CDNS_MCP_INT_RX_WL during the update slave
+@@ -1745,7 +1776,11 @@ int sdw_cdns_probe(struct sdw_cdns *cdns)
+ 	init_completion(&cdns->tx_complete);
+ 	cdns->bus.port_ops = &cdns_port_ops;
+ 
++	mutex_init(&cdns->status_update_lock);
++
+ 	INIT_WORK(&cdns->work, cdns_update_slave_status_work);
++	INIT_DELAYED_WORK(&cdns->attach_dwork, cdns_check_attached_status_dwork);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(sdw_cdns_probe);
+diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
+index bc84435e420f5..e1d7969ba48ae 100644
+--- a/drivers/soundwire/cadence_master.h
++++ b/drivers/soundwire/cadence_master.h
+@@ -117,6 +117,8 @@ struct sdw_cdns_dai_runtime {
+  * @link_up: Link status
+  * @msg_count: Messages sent on bus
+  * @dai_runtime_array: runtime context for each allocated DAI.
++ * @status_update_lock: protect concurrency between interrupt-based and delayed work
++ * status update
+  */
+ struct sdw_cdns {
+ 	struct device *dev;
+@@ -148,10 +150,13 @@ struct sdw_cdns {
+ 	bool interrupt_enabled;
+ 
+ 	struct work_struct work;
++	struct delayed_work attach_dwork;
+ 
+ 	struct list_head list;
+ 
+ 	struct sdw_cdns_dai_runtime **dai_runtime_array;
++
++	struct mutex status_update_lock; /* add mutual exclusion to sdw_handle_slave_status() */
+ };
+ 
+ #define bus_to_cdns(_bus) container_of(_bus, struct sdw_cdns, bus)
+diff --git a/drivers/soundwire/intel.h b/drivers/soundwire/intel.h
+index 511932c55216c..bb6b1df2d2c20 100644
+--- a/drivers/soundwire/intel.h
++++ b/drivers/soundwire/intel.h
+@@ -91,6 +91,8 @@ static inline void intel_writew(void __iomem *base, int offset, u16 value)
+ 
+ #define INTEL_MASTER_RESET_ITERATIONS	10
+ 
++#define SDW_INTEL_DELAYED_ENUMERATION_MS	100
++
+ #define SDW_INTEL_CHECK_OPS(sdw, cb)	((sdw) && (sdw)->link_res && (sdw)->link_res->hw_ops && \
+ 					 (sdw)->link_res->hw_ops->cb)
+ #define SDW_INTEL_OPS(sdw, cb)		((sdw)->link_res->hw_ops->cb)
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index 93698532deac4..bdfff78ac2f81 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -398,6 +398,7 @@ static void intel_link_remove(struct auxiliary_device *auxdev)
+ 	 */
+ 	if (!bus->prop.hw_disabled) {
+ 		sdw_intel_debugfs_exit(sdw);
++		cancel_delayed_work_sync(&cdns->attach_dwork);
+ 		sdw_cdns_enable_interrupt(cdns, false);
+ 	}
+ 	sdw_bus_master_delete(bus);
+diff --git a/drivers/soundwire/intel_bus_common.c b/drivers/soundwire/intel_bus_common.c
+index 179aa0d85951b..db9cf211671a3 100644
+--- a/drivers/soundwire/intel_bus_common.c
++++ b/drivers/soundwire/intel_bus_common.c
+@@ -60,6 +60,9 @@ int intel_start_bus(struct sdw_intel *sdw)
+ 	sdw_cdns_check_self_clearing_bits(cdns, __func__,
+ 					  true, INTEL_MASTER_RESET_ITERATIONS);
+ 
++	schedule_delayed_work(&cdns->attach_dwork,
++			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
++
+ 	return 0;
+ }
+ 
+@@ -151,6 +154,9 @@ int intel_start_bus_after_reset(struct sdw_intel *sdw)
+ 	}
+ 	sdw_cdns_check_self_clearing_bits(cdns, __func__, true, INTEL_MASTER_RESET_ITERATIONS);
+ 
++	schedule_delayed_work(&cdns->attach_dwork,
++			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
++
+ 	return 0;
+ }
+ 
+@@ -184,6 +190,9 @@ int intel_start_bus_after_clock_stop(struct sdw_intel *sdw)
+ 
+ 	sdw_cdns_check_self_clearing_bits(cdns, __func__, true, INTEL_MASTER_RESET_ITERATIONS);
+ 
++	schedule_delayed_work(&cdns->attach_dwork,
++			      msecs_to_jiffies(SDW_INTEL_DELAYED_ENUMERATION_MS));
++
+ 	return 0;
+ }
+ 
+@@ -194,6 +203,8 @@ int intel_stop_bus(struct sdw_intel *sdw, bool clock_stop)
+ 	bool wake_enable = false;
+ 	int ret;
+ 
++	cancel_delayed_work_sync(&cdns->attach_dwork);
++
+ 	if (clock_stop) {
+ 		ret = sdw_cdns_clock_stop(cdns, true);
  		if (ret < 0)
- 			goto end;
- 
-@@ -1710,7 +1717,7 @@ static void mlx5_ib_prefetch_mr_work(struct work_struct *w)
- 	for (i = 0; i < work->num_sge; ++i) {
- 		ret = pagefault_mr(work->frags[i].mr, work->frags[i].io_virt,
- 				   work->frags[i].length, &bytes_mapped,
--				   work->pf_flags);
-+				   work->pf_flags, false);
- 		if (ret <= 0)
- 			continue;
- 		mlx5_update_odp_stats(work->frags[i].mr, prefetch, ret);
-@@ -1761,7 +1768,7 @@ static int mlx5_ib_prefetch_sg_list(struct ib_pd *pd,
- 		if (IS_ERR(mr))
- 			return PTR_ERR(mr);
- 		ret = pagefault_mr(mr, sg_list[i].addr, sg_list[i].length,
--				   &bytes_mapped, pf_flags);
-+				   &bytes_mapped, pf_flags, false);
- 		if (ret < 0) {
- 			mlx5r_deref_odp_mkey(&mr->mmkey);
- 			return ret;
 -- 
 2.43.0
 
