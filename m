@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BA315D5C5;
-	Mon, 14 Oct 2024 15:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF7F1798C;
+	Mon, 14 Oct 2024 15:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919436; cv=none; b=ll+35eA5Pm0lf07Rq9YuOO64k4XAno2SKp/L7euyP1PEouSY9EKBMqVYAZUT3zn411SceCnOeHFOhB0HGl6ybxtYzPzInogxMQ4lnmjpPM9bmKlB9fSGaI2qGRVtgcT9L3xMk1C6kPRN0VJ3b5xHfN2rBWNMwdBfjmfej4AXsyI=
+	t=1728919445; cv=none; b=jWcXs/oh25j689HXdHan8RZzteNBycQ+ILQaYhOtsUSiJ6pdTWj69YXwd/AIIRifRzYZQGX4zBHRgUJkXEwJ5oTeAJ6nVkAUpv416BXTuVsjBBChCr9jkpaYb5xLzvkdYcL6ofodHHUJBzaDmdurZcZ7Hj8/D+gWuegj7CfFexU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919436; c=relaxed/simple;
-	bh=2epSHavD24h7GH2Bc/QhhU7w08WZnz2shatf/noG4Rc=;
+	s=arc-20240116; t=1728919445; c=relaxed/simple;
+	bh=V9Dl9YkAhafRguG2ZY6ck758MJoTjMjekqc/wv8GBAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yh27W0dJrcLzXPUlnEFMkIsczOiPeDH41O7GcWG7EFYM83fq79wQIDEYFpGIjl5Wd+qXuekmBT3HHkmEupPgr4C/XXQjVW0dy/isQwRVlTw9tXzdFo+RQWUXR0/q/tJJdgEkdQ707nlwMe2NdtuMwLyNGYHgLn22qKdtZG0xpHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1MFJD4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2YHxvknp2f0wqDGpcC9bK52jNb/SIO46WKbNk16cyD8IE0r0M81qKuFfrPu0O0M6DfZfppzIH/j5uUcAXqCJ6JkXv7FFEeCGrO3fuuQno4ZKBPibRjPDsQfwYk4qxJxNwz1JC0CP8nLpBk2GVn2/xzy+GXhnUD9zTK5B9TFLnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvfF9un9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1MFJD4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAE6C4CED1;
-	Mon, 14 Oct 2024 15:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvfF9un9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95519C4CEC7;
+	Mon, 14 Oct 2024 15:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919436;
-	bh=2epSHavD24h7GH2Bc/QhhU7w08WZnz2shatf/noG4Rc=;
+	s=korg; t=1728919445;
+	bh=V9Dl9YkAhafRguG2ZY6ck758MJoTjMjekqc/wv8GBAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1MFJD4s/pAN3WM+i6SumHS7Ud8FJ5s9JC6vrxtNY+LsUtpZ9sAAK5NM7xI88gmUm
-	 EgWSu2nbGtOWl+4CLGHrocvaJk94vaQ4ecmh6x83s+Q/+t08fmls1+UGvsbP2mkKXM
-	 lypZseMRKol//eEeF7Aum0xxwWY7kOYpWshBXceo=
+	b=wvfF9un9ezsJV99u9HwCQ+xPJbdgBJaIZzXF9dzspHvZnoYXcBL99PRVnnq/5icGG
+	 sYTuWmCdmdScae+j3zNEAIPBLqKzbMbvZAr/VSXaF+WZSRG6u/p53u3htkwF2X9KrP
+	 0mjaNmhHV80Rxb/rqCwMLg/WVjvW25vmqTdD5+ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 609/798] ceph: fix cap ref leak via netfs init_request
-Date: Mon, 14 Oct 2024 16:19:23 +0200
-Message-ID: <20241014141241.944858869@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Wei Li <liwei391@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 610/798] tracing/hwlat: Fix a race during cpuhp processing
+Date: Mon, 14 Oct 2024 16:19:24 +0200
+Message-ID: <20241014141241.983163415@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,58 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrick Donnelly <pdonnell@redhat.com>
+From: Wei Li <liwei391@huawei.com>
 
-commit ccda9910d8490f4fb067131598e4b2e986faa5a0 upstream.
+commit 2a13ca2e8abb12ee43ada8a107dadca83f140937 upstream.
 
-Log recovered from a user's cluster:
+The cpuhp online/offline processing race also exists in percpu-mode hwlat
+tracer in theory, apply the fix too. That is:
 
-    <7>[ 5413.970692] ceph:  get_cap_refs 00000000958c114b ret 1 got Fr
-    <7>[ 5413.970695] ceph:  start_read 00000000958c114b, no cache cap
-    ...
-    <7>[ 5473.934609] ceph:   my wanted = Fr, used = Fr, dirty -
-    <7>[ 5473.934616] ceph:  revocation: pAsLsXsFr -> pAsLsXs (revoking Fr)
-    <7>[ 5473.934632] ceph:  __ceph_caps_issued 00000000958c114b cap 00000000f7784259 issued pAsLsXs
-    <7>[ 5473.934638] ceph:  check_caps 10000000e68.fffffffffffffffe file_want - used Fr dirty - flushing - issued pAsLsXs revoking Fr retain pAsLsXsFsr  AUTHONLY NOINVAL FLUSH_FORCE
-
-The MDS subsequently complains that the kernel client is late releasing
-caps.
-
-Approximately, a series of changes to this code by commits 49870056005c
-("ceph: convert ceph_readpages to ceph_readahead"), 2de160417315
-("netfs: Change ->init_request() to return an error code") and
-a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
-resulted in subtle resource cleanup to be missed. The main culprit is
-the change in error handling in 2de160417315 which meant that a failure
-in init_request() would no longer cause cleanup to be called. That
-would prevent the ceph_put_cap_refs() call which would cleanup the
-leaked cap ref.
+    T1                       | T2
+    [CPUHP_ONLINE]           | cpu_device_down()
+     hwlat_hotplug_workfn()  |
+                             |     cpus_write_lock()
+                             |     takedown_cpu(1)
+                             |     cpus_write_unlock()
+    [CPUHP_OFFLINE]          |
+        cpus_read_lock()     |
+        start_kthread(1)     |
+        cpus_read_unlock()   |
 
 Cc: stable@vger.kernel.org
-Fixes: a5c9dc445139 ("ceph: Make ceph_init_request() check caps on readahead")
-Link: https://tracker.ceph.com/issues/67008
-Signed-off-by: Patrick Donnelly <pdonnell@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20240924094515.3561410-5-liwei391@huawei.com
+Fixes: ba998f7d9531 ("trace/hwlat: Support hotplug operations")
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/trace_hwlat.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -435,8 +435,11 @@ static int ceph_init_request(struct netf
- 	rreq->netfs_priv = priv;
+--- a/kernel/trace/trace_hwlat.c
++++ b/kernel/trace/trace_hwlat.c
+@@ -520,6 +520,8 @@ static void hwlat_hotplug_workfn(struct
+ 	if (!hwlat_busy || hwlat_data.thread_mode != MODE_PER_CPU)
+ 		goto out_unlock;
  
- out:
--	if (ret < 0)
-+	if (ret < 0) {
-+		if (got)
-+			ceph_put_cap_refs(ceph_inode(inode), got);
- 		kfree(priv);
-+	}
++	if (!cpu_online(cpu))
++		goto out_unlock;
+ 	if (!cpumask_test_cpu(cpu, tr->tracing_cpumask))
+ 		goto out_unlock;
  
- 	return ret;
- }
 
 
