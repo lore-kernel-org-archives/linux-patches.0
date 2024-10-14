@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866B6481B7;
-	Mon, 14 Oct 2024 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B8E481B7;
+	Mon, 14 Oct 2024 14:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917613; cv=none; b=QX+am1EyWMZHdFL+8fEXYEolAHh3nuMylpGd9SyVOQhA+BIo5f7XJsTz0bOf8R9T4oD2av1uvyUkGLwDr0A7CUEoNSCjMIgRExPX/YKLX242s5nsxMglBlFtcr50m70bk0lgshTXMk6BeSgMqwa5ujlkg7rOfb0hDpL8TTxvzOw=
+	t=1728917617; cv=none; b=PODCocGsq4b7k+CasFzzLh5UHJq2hVKvfq5dDQYvdZmEcJpKdj7DMTxgl55rFTJxCG+VA9OjXR6DrNPiZLhBlk9rlGsibw/MBNfxqtLiJdiqITK5WSZVSA/GkHX45S+BbEpAB07Nno7W6K4dboq7ezY+kcyhhUrMHkxRKCvn2Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917613; c=relaxed/simple;
-	bh=b0dfcpT61TAfToDSHUrIdbHWKIw8GRF/I9L983A6dYk=;
+	s=arc-20240116; t=1728917617; c=relaxed/simple;
+	bh=vBad1yK87Jf6r+dLNtipHk+ajUPgCWMtBJKADNjwxgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCnBfh2HMVm81wGRlTq2FPkfLJiZoAmtr5Pz+2QRyQqnpdFnhRmNpr+dlcWOI/9CHz8Npvdui7AqoBfkKETWsryCpwNwpOjKrEiah2qwzba0TFjm2nbRnjHwGS+mcdQTMbB/ddy1qqAOo1O/JTZzD3T86XvtDQrXxQfqnWB9GNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ8A9Dvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRrDEbn0P9BAUCi6ql1QnhP/o59dFsfC9fdqTF5NVea2nUafxnkth/19IB3FyWHnI8quF7qhUehM+u882wSYxXNmwtH/69SgcuiT5gZWKidDvD/mirr//e8cndvvwwwrGophJpfF0Nhz3NJQdRBD2/tvyV8VJfXDllQBrzZP8EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtuShjty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ8A9Dvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FB3C4CEC3;
-	Mon, 14 Oct 2024 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtuShjty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B94FC4CEC7;
+	Mon, 14 Oct 2024 14:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917613;
-	bh=b0dfcpT61TAfToDSHUrIdbHWKIw8GRF/I9L983A6dYk=;
+	s=korg; t=1728917616;
+	bh=vBad1yK87Jf6r+dLNtipHk+ajUPgCWMtBJKADNjwxgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZ8A9Dvc/MRkp90YMwFoVpPAJpc2LsMr17+Eru483Stq//JrGAayY8eRbQdeHwDsZ
-	 NlYiAcMDdXJJggRVUJ3wWRf6KoZ9mrilsP5SXJTbuxivR9ohDqhUQYVz/IdIKLSAW7
-	 Vq+txk302YiShLICR9jd6jK/O+HXvEhFXn2TODtE=
+	b=AtuShjtyJN9338XR/kiDu1klt9+vDQ+6D5JfRsSO8c4Nfivt8Qh0Mm/yuqNWCltVc
+	 +Cx8jiyfJZ5l7QZPgIQ+z56Ieazs7OGeJt4XDkYbP0wZiyuymHd/9VWC3cn3n6Fxon
+	 gZfp0ELvQ3N8LF+vRC5smUaZexMvYqKHRqtROpLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/798] bareudp: Pull inner IP header in bareudp_udp_encap_recv().
-Date: Mon, 14 Oct 2024 16:10:09 +0200
-Message-ID: <20241014141220.105782388@linuxfoundation.org>
+Subject: [PATCH 6.1 082/798] reset: k210: fix OF node leak in probe() error path
+Date: Mon, 14 Oct 2024 16:10:36 +0200
+Message-ID: <20241014141221.157356621@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,68 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 45fa29c85117170b0508790f878b13ec6593c888 ]
+[ Upstream commit b14e40f5dc7cd0dd7e958010e6ca9ad32ff2ddad ]
 
-Bareudp reads the inner IP header to get the ECN value. Therefore, it
-needs to ensure that it's part of the skb's linear data.
+Driver is leaking OF node reference on memory allocation failure.
+Acquire the OF node reference after memory allocation to fix this and
+keep it simple.
 
-This is similar to the vxlan and geneve fixes for that same problem:
-  * commit f7789419137b ("vxlan: Pull inner IP header in vxlan_rcv().")
-  * commit 1ca1ba465e55 ("geneve: make sure to pull inner header in
-    geneve_rx()")
-
-Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/5205940067c40218a70fbb888080466b2fc288db.1726046181.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5a2308da9f60 ("riscv: Add Canaan Kendryte K210 reset controller")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20240825-reset-cleanup-scoped-v1-2-03f6d834f8c0@linaro.org
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bareudp.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/reset/reset-k210.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
-index 277493e41b072..d0759d8bf7305 100644
---- a/drivers/net/bareudp.c
-+++ b/drivers/net/bareudp.c
-@@ -67,6 +67,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
- 	__be16 proto;
- 	void *oiph;
- 	int err;
-+	int nh;
+diff --git a/drivers/reset/reset-k210.c b/drivers/reset/reset-k210.c
+index 1b6e03522b40d..b0f4546b2b1e5 100644
+--- a/drivers/reset/reset-k210.c
++++ b/drivers/reset/reset-k210.c
+@@ -91,7 +91,7 @@ static const struct reset_control_ops k210_rst_ops = {
+ static int k210_rst_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct device_node *parent_np = of_get_parent(dev->of_node);
++	struct device_node *parent_np;
+ 	struct k210_rst *ksr;
  
- 	bareudp = rcu_dereference_sk_user_data(sk);
- 	if (!bareudp)
-@@ -144,10 +145,25 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
- 	}
- 	skb_dst_set(skb, &tun_dst->dst);
- 	skb->dev = bareudp->dev;
--	oiph = skb_network_header(skb);
--	skb_reset_network_header(skb);
- 	skb_reset_mac_header(skb);
+ 	dev_info(dev, "K210 reset controller\n");
+@@ -100,6 +100,7 @@ static int k210_rst_probe(struct platform_device *pdev)
+ 	if (!ksr)
+ 		return -ENOMEM;
  
-+	/* Save offset of outer header relative to skb->head,
-+	 * because we are going to reset the network header to the inner header
-+	 * and might change skb->head.
-+	 */
-+	nh = skb_network_header(skb) - skb->head;
-+
-+	skb_reset_network_header(skb);
-+
-+	if (!pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(bareudp->dev, rx_length_errors);
-+		DEV_STATS_INC(bareudp->dev, rx_errors);
-+		goto drop;
-+	}
-+
-+	/* Get the outer header. */
-+	oiph = skb->head + nh;
-+
- 	if (!ipv6_mod_enabled() || family == AF_INET)
- 		err = IP_ECN_decapsulate(oiph, skb);
- 	else
++	parent_np = of_get_parent(dev->of_node);
+ 	ksr->map = syscon_node_to_regmap(parent_np);
+ 	of_node_put(parent_np);
+ 	if (IS_ERR(ksr->map))
 -- 
 2.43.0
 
