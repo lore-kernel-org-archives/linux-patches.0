@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D490E1CC154;
-	Mon, 14 Oct 2024 15:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092C11CBE8A;
+	Mon, 14 Oct 2024 15:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919665; cv=none; b=cFBCIs8VXOxCJE3mkGNG5u8Afs0V3azD1SxNdadGE0wP6BmOXv2KzuB/mouVlCRhgG9zMbcYESU11E/u0K3NT8d6ZCW/Y1OFj2j0u8s68qU7495vfZBapE9cyCfca2vl0LTRljhFp5C7nFBCu4mCkIxe6ECnQErTst/35l5O+oM=
+	t=1728919669; cv=none; b=Lj43HW6QR4dC8/Mfaa0bN5eX0KQ9M/r5UWdI2czyas8O5577iJzEqd21OTE7xGWzBLPeJ4Md5zibZ9T65tDGKuOzUYaSLwMxebrEyIxWqVM8U4r+ZMZAtSJmu4J4yolhV03IH5tg4Tk1snFkw/j/eU36Rln/h6RZ0KM/BoiXBIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919665; c=relaxed/simple;
-	bh=2CEzetiLcKmt7LjOOge3CHj7ZGxtO9DlvF4Nbza2YNg=;
+	s=arc-20240116; t=1728919669; c=relaxed/simple;
+	bh=igc1giDUUvamQ7kSEKxjGXm8WZ03gFf8PLT9DCVkWdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGxlq3LFyZpRxyuYbolKrp0CacrlmKGahhMXRaTgFlWA/FqJsQzQiL/fE0EheWkC7Kg7FwG+TJDncpzCi85jzbGyV06CNg9HdvFSDGfnhAIeN0XNqChtvxpV2HCy7BK4cVRHY9Qv9fm2FXn/6Yupo7PN3nSCg7ZnO4mkEzBvTK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgPu5ls6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejIwcjI5t/E+8iaYY/zQ+CGG5mvd37xLkzMliZO8hKHazG5V/m95Cyqo2J+MsHG2E6ES5JvckfmnTX2GLRLlEHZ3e7XqN4hS28HZHqap/JnMU0EWHR1mpoWbFMLjpJkRQZEi8x3o6v65KXnJWjdcqA8k+tr3Gbwr7GzsQ8Yr1yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbgTsDnR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgPu5ls6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06FEC4CEC7;
-	Mon, 14 Oct 2024 15:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbgTsDnR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826EBC4CECF;
+	Mon, 14 Oct 2024 15:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919665;
-	bh=2CEzetiLcKmt7LjOOge3CHj7ZGxtO9DlvF4Nbza2YNg=;
+	s=korg; t=1728919668;
+	bh=igc1giDUUvamQ7kSEKxjGXm8WZ03gFf8PLT9DCVkWdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgPu5ls6Hx5TfxPRDu9ZtoATbusKyTHFhdHN39z+8Gj7I60SV/DTeEFAHVGbQS5JN
-	 x3Fd8CMkC/yfrJG07PBp+A54jm+QodNRChh4EXPamzYUFt7csms8lvQ6KEoF9oGNxe
-	 x6cRbDeUmb/sh+qg/l3ky3ad7D7A1VzsniqnMxus=
+	b=cbgTsDnR0JIW8iUW7UmQB2BD8Kd3aXGIndIH3B+fqu6zv7aBVEON5GqBCV2gdVcMI
+	 W5hROiZRJ/l5JSSFsIi49Vc+jh5tuOsO8NjvaDXSGqo6jcLuKWeCfwXtFgDd2zXzDS
+	 41A1YWucNOA8xcilISiAkd7MxP2H2VnGLj5A9qC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 673/798] perf sched: Avoid large stack allocations
-Date: Mon, 14 Oct 2024 16:20:27 +0200
-Message-ID: <20241014141244.505741581@linuxfoundation.org>
+Subject: [PATCH 6.1 674/798] perf sched: Move start_work_mutex and work_done_wait_mutex initialization to perf_sched__replay()
+Date: Mon, 14 Oct 2024 16:20:28 +0200
+Message-ID: <20241014141244.545526648@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -58,89 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 232418a0b2e8b8e72dac003b19352f1b647cdb31 ]
+[ Upstream commit c6907863519cf97ee09653cc8ec338a2328c2b6f ]
 
-Commit 5ded57ac1bdb ("perf inject: Remove static variables") moved
-static variables to local, however, in this case 3 MAX_CPUS (4096)
-sized arrays were moved onto the stack making the stack frame quite
-large. Avoid the stack usage by dynamically allocating the arrays.
+The start_work_mutex and work_done_wait_mutex are used only for the
+'perf sched replay'. Put their initialization in perf_sched__replay () to
+reduce unnecessary actions in other commands.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230527034324.2597593-2-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Simple functional testing:
+
+  # perf sched record perf bench sched messaging
+  # Running 'sched/messaging' benchmark:
+  # 20 sender and receiver processes per group
+  # 10 groups == 400 processes run
+
+       Total time: 0.197 [sec]
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 14.952 MB perf.data (134165 samples) ]
+
+  # perf sched replay
+  run measurement overhead: 108 nsecs
+  sleep measurement overhead: 65658 nsecs
+  the run test took 999991 nsecs
+  the sleep test took 1079324 nsecs
+  nr_run_events:        42378
+  nr_sleep_events:      43102
+  nr_wakeup_events:     31852
+  target-less wakeups:  17
+  multi-target wakeups: 712
+  task      0 (             swapper:         0), nr_events: 10451
+  task      1 (             swapper:         1), nr_events: 3
+  task      2 (             swapper:         2), nr_events: 1
+  <SNIP>
+  task    717 (     sched-messaging:     74483), nr_events: 152
+  task    718 (     sched-messaging:     74484), nr_events: 1944
+  task    719 (     sched-messaging:     74485), nr_events: 73
+  task    720 (     sched-messaging:     74486), nr_events: 163
+  task    721 (     sched-messaging:     74487), nr_events: 942
+  task    722 (     sched-messaging:     74488), nr_events: 78
+  task    723 (     sched-messaging:     74489), nr_events: 1090
+  ------------------------------------------------------------
+  #1  : 1366.507, ravg: 1366.51, cpu: 7682.70 / 7682.70
+  #2  : 1410.072, ravg: 1370.86, cpu: 7723.88 / 7686.82
+  #3  : 1396.296, ravg: 1373.41, cpu: 7568.20 / 7674.96
+  #4  : 1381.019, ravg: 1374.17, cpu: 7531.81 / 7660.64
+  #5  : 1393.826, ravg: 1376.13, cpu: 7725.25 / 7667.11
+  #6  : 1401.581, ravg: 1378.68, cpu: 7594.82 / 7659.88
+  #7  : 1381.337, ravg: 1378.94, cpu: 7371.22 / 7631.01
+  #8  : 1373.842, ravg: 1378.43, cpu: 7894.92 / 7657.40
+  #9  : 1364.697, ravg: 1377.06, cpu: 7324.91 / 7624.15
+  #10 : 1363.613, ravg: 1375.72, cpu: 7209.55 / 7582.69
+  # echo $?
+  0
+
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240206083228.172607-2-yangjihong1@huawei.com
 Stable-dep-of: 1a5efc9e13f3 ("libsubcmd: Don't free the usage string")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ tools/perf/builtin-sched.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index d83a7569db0e2..3eff78e7b67a2 100644
+index 3eff78e7b67a2..2d595dde2d121 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -193,8 +193,8 @@ struct perf_sched {
-  * weird events, such as a task being switched away that is not current.
-  */
- 	struct perf_cpu	 max_cpu;
--	u32		 curr_pid[MAX_CPUS];
--	struct thread	 *curr_thread[MAX_CPUS];
-+	u32		 *curr_pid;
-+	struct thread	 **curr_thread;
- 	char		 next_shortname1;
- 	char		 next_shortname2;
- 	unsigned int	 replay_repeat;
-@@ -224,7 +224,7 @@ struct perf_sched {
- 	u64		 run_avg;
- 	u64		 all_runtime;
- 	u64		 all_count;
--	u64		 cpu_last_switched[MAX_CPUS];
-+	u64		 *cpu_last_switched;
- 	struct rb_root_cached atom_root, sorted_atom_root, merged_atom_root;
- 	struct list_head sort_list, cmp_pid;
- 	bool force;
-@@ -3590,7 +3590,22 @@ int cmd_sched(int argc, const char **argv)
+@@ -3317,15 +3317,20 @@ static int perf_sched__map(struct perf_sched *sched)
  
- 	mutex_init(&sched.start_work_mutex);
- 	mutex_init(&sched.work_done_wait_mutex);
--	for (i = 0; i < ARRAY_SIZE(sched.curr_pid); i++)
-+	sched.curr_thread = calloc(MAX_CPUS, sizeof(*sched.curr_thread));
-+	if (!sched.curr_thread) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	sched.cpu_last_switched = calloc(MAX_CPUS, sizeof(*sched.cpu_last_switched));
-+	if (!sched.cpu_last_switched) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	sched.curr_pid = malloc(MAX_CPUS * sizeof(*sched.curr_pid));
-+	if (!sched.curr_pid) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	for (i = 0; i < MAX_CPUS; i++)
- 		sched.curr_pid[i] = -1;
+ static int perf_sched__replay(struct perf_sched *sched)
+ {
++	int ret;
+ 	unsigned long i;
  
- 	argc = parse_options_subcommand(argc, argv, sched_options, sched_subcommands,
-@@ -3659,6 +3674,9 @@ int cmd_sched(int argc, const char **argv)
- 	}
++	mutex_init(&sched->start_work_mutex);
++	mutex_init(&sched->work_done_wait_mutex);
++
+ 	calibrate_run_measurement_overhead(sched);
+ 	calibrate_sleep_measurement_overhead(sched);
  
- out:
-+	free(sched.curr_pid);
-+	free(sched.cpu_last_switched);
-+	free(sched.curr_thread);
- 	mutex_destroy(&sched.start_work_mutex);
- 	mutex_destroy(&sched.work_done_wait_mutex);
+ 	test_calibrations(sched);
  
+-	if (perf_sched__read_events(sched))
+-		return -1;
++	ret = perf_sched__read_events(sched);
++	if (ret)
++		goto out_mutex_destroy;
+ 
+ 	printf("nr_run_events:        %ld\n", sched->nr_run_events);
+ 	printf("nr_sleep_events:      %ld\n", sched->nr_sleep_events);
+@@ -3350,7 +3355,11 @@ static int perf_sched__replay(struct perf_sched *sched)
+ 
+ 	sched->thread_funcs_exit = true;
+ 	destroy_tasks(sched);
+-	return 0;
++
++out_mutex_destroy:
++	mutex_destroy(&sched->start_work_mutex);
++	mutex_destroy(&sched->work_done_wait_mutex);
++	return ret;
+ }
+ 
+ static void setup_sorting(struct perf_sched *sched, const struct option *options,
+@@ -3588,8 +3597,6 @@ int cmd_sched(int argc, const char **argv)
+ 	unsigned int i;
+ 	int ret = 0;
+ 
+-	mutex_init(&sched.start_work_mutex);
+-	mutex_init(&sched.work_done_wait_mutex);
+ 	sched.curr_thread = calloc(MAX_CPUS, sizeof(*sched.curr_thread));
+ 	if (!sched.curr_thread) {
+ 		ret = -ENOMEM;
+@@ -3677,8 +3684,6 @@ int cmd_sched(int argc, const char **argv)
+ 	free(sched.curr_pid);
+ 	free(sched.cpu_last_switched);
+ 	free(sched.curr_thread);
+-	mutex_destroy(&sched.start_work_mutex);
+-	mutex_destroy(&sched.work_done_wait_mutex);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
