@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB30D611E;
-	Mon, 14 Oct 2024 14:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8558D20EB;
+	Mon, 14 Oct 2024 14:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916872; cv=none; b=q2XoY9SqBom/9ziwMRiZkUP98cWTzy2xuOA6adT7GSH78HYpF2AGubjofdhma1tFrE7d2THbIMz1gVEXFoJa0++iF0eKG7ia09i6KRkrboJxK1kRzxOHDC1QS/P9Ji8KbocH6TCBlaZaOrsY8R+fqgX/fV1A9rym/ihea1iMBCk=
+	t=1728916876; cv=none; b=X9LYR75YTFyPPhLjZYKkouF+BlcsgMEgd5v+xYTWvZdEK2tUFpD21IaqoWKdNKSh0fAmad9CnNGUnxJEGtNy0MgmsRTPyP50ACAZyU33BpqzWsnTCbnVpkrxm+dcrzJHl2Y0pjTH+Tf+eKHC2HdcP/XX+HFK8WP8u70CnDZUtLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916872; c=relaxed/simple;
-	bh=5UPkypACSx0uIJZGUk2S5vDrg4rmfgu5OvdeYQdeftM=;
+	s=arc-20240116; t=1728916876; c=relaxed/simple;
+	bh=RxzxvwyzQivninrxMY1mM20yk7Yg2/5Fbs9+QuVKjuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CM/AO0E8DqIg/nOsWc9UpP3ieLYlaM6vcCyYHx+Tz9useshdZKoyXY4gTShIuxhoEbu7MqI4mEQmurhubmW/lae4gT4GZ0Zo7SMXAzqUloMc4B24U9xtQ8ERhNI0kRX80U+ElUwh8zh+YiDtaGm7a6leHNOcIjT/ekeTi7HfoII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7F7HbyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5vVPUdzMBmokXfrMdc6U57EhSCyNUKyTfK9bTVjK+gK2niOdRpz8xRwNnJ2cDx2G0vstLIjkRcKXIcCiMk/HQmqMeGdu63L2AZIi8X6/X+/Vzj4J2NZWMX3IRT1KbSDbVBKrDvUgU9EjSr9J4ZA7yrDPu2O3Nc4UdRv9bmE1Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kG7YXcRT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7F7HbyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D347C4CEC7;
-	Mon, 14 Oct 2024 14:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kG7YXcRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FC4C4CEC7;
+	Mon, 14 Oct 2024 14:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916872;
-	bh=5UPkypACSx0uIJZGUk2S5vDrg4rmfgu5OvdeYQdeftM=;
+	s=korg; t=1728916876;
+	bh=RxzxvwyzQivninrxMY1mM20yk7Yg2/5Fbs9+QuVKjuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7F7HbyNfyQKEhu0r1Q07GspcBgtyrILQVAz/qcL97kYVKMf5T5w4EmrQKyrqeHsw
-	 IMBlEbEdZfWSJp1IR4cuh96UYHJxHrI1k5ING8103I1RG9/Unws8tbW4d02OZVWlKw
-	 c09XrMuE7r2M5+xCEFmLGoQKMkY+DH2bCo4WPKkY=
+	b=kG7YXcRTEUNhT7OBLHyvAvNHtZdAZ/H1BQHew/h10wncsGq96ieX5aMYqsPREW8dt
+	 wq79cimJQdqnFuNzkPBIQRcBNU++ACJ1AIp+vz1CQmwbt+yiQIUiaE+Arqf8++pA01
+	 pIfc2JCKPGDM5IrAlxw2Jb6lMegdBmvwp/Wu18BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/213] usb: typec: tipd: Free IRQ only if it was requested before
-Date: Mon, 14 Oct 2024 16:19:55 +0200
-Message-ID: <20241014141046.448450111@linuxfoundation.org>
+Subject: [PATCH 6.6 072/213] clk: bcm: bcm53573: fix OF node leak in init
+Date: Mon, 14 Oct 2024 16:19:38 +0200
+Message-ID: <20241014141045.793087668@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,58 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wadim Egorov <w.egorov@phytec.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit db63d9868f7f310de44ba7bea584e2454f8b4ed0 ]
+[ Upstream commit f92d67e23b8caa81f6322a2bad1d633b00ca000e ]
 
-In polling mode, if no IRQ was requested there is no need to free it.
-Call devm_free_irq() only if client->irq is set. This fixes the warning
-caused by the tps6598x module removal:
+Driver code is leaking OF node reference from of_get_parent() in
+bcm53573_ilp_init().  Usage of of_get_parent() is not needed in the
+first place, because the parent node will not be freed while we are
+processing given node (triggered by CLK_OF_DECLARE()).  Thus fix the
+leak by accessing parent directly, instead of of_get_parent().
 
-WARNING: CPU: 2 PID: 333 at kernel/irq/devres.c:144 devm_free_irq+0x80/0x8c
-...
-...
-Call trace:
-  devm_free_irq+0x80/0x8c
-  tps6598x_remove+0x28/0x88 [tps6598x]
-  i2c_device_remove+0x2c/0x9c
-  device_remove+0x4c/0x80
-  device_release_driver_internal+0x1cc/0x228
-  driver_detach+0x50/0x98
-  bus_remove_driver+0x6c/0xbc
-  driver_unregister+0x30/0x60
-  i2c_del_driver+0x54/0x64
-  tps6598x_i2c_driver_exit+0x18/0xc3c [tps6598x]
-  __arm64_sys_delete_module+0x184/0x264
-  invoke_syscall+0x48/0x110
-  el0_svc_common.constprop.0+0xc8/0xe8
-  do_el0_svc+0x20/0x2c
-  el0_svc+0x28/0x98
-  el0t_64_sync_handler+0x13c/0x158
-  el0t_64_sync+0x190/0x194
-
-Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240816124150.608125-1-w.egorov@phytec.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240826065801.17081-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tipd/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/bcm/clk-bcm53573-ilp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
-index 125269f39f83a..01db27cbf1d10 100644
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -907,6 +907,8 @@ static void tps6598x_remove(struct i2c_client *client)
+diff --git a/drivers/clk/bcm/clk-bcm53573-ilp.c b/drivers/clk/bcm/clk-bcm53573-ilp.c
+index 84f2af736ee8a..83ef41d618be3 100644
+--- a/drivers/clk/bcm/clk-bcm53573-ilp.c
++++ b/drivers/clk/bcm/clk-bcm53573-ilp.c
+@@ -112,7 +112,7 @@ static void bcm53573_ilp_init(struct device_node *np)
+ 		goto err_free_ilp;
+ 	}
  
- 	if (!client->irq)
- 		cancel_delayed_work_sync(&tps->wq_poll);
-+	else
-+		devm_free_irq(tps->dev, client->irq, tps);
- 
- 	tps6598x_disconnect(tps, 0);
- 	typec_unregister_port(tps->port);
+-	ilp->regmap = syscon_node_to_regmap(of_get_parent(np));
++	ilp->regmap = syscon_node_to_regmap(np->parent);
+ 	if (IS_ERR(ilp->regmap)) {
+ 		err = PTR_ERR(ilp->regmap);
+ 		goto err_free_ilp;
 -- 
 2.43.0
 
