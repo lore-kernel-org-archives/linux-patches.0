@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF2524B34;
-	Mon, 14 Oct 2024 14:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0642BCF5;
+	Mon, 14 Oct 2024 14:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916365; cv=none; b=iKbRGwYOQsYioX1tjaPjJx/qBckJvBtaFiy+PWeS/E0ifrbDgu5U/5yjMNn04plPectmA7OTy79XN96tXRJn0rkvMuucKIz7QLxIV8vzrrFZjGo+CiaVppxgp8NCRipOJ1QHAj79LNhXDcFLBTdnTo+Lxs1q17xV53qHV3AqedU=
+	t=1728916369; cv=none; b=s2mx7LN+YYHwNqPGPwDkgSW5aRE1zXXI5DLvdSyhngDlmqOiLkC3mUCeeZFYVZSWsXNZJpfVht75N5DNW87BFmh+Hjosq+zb3iqEqcnpCMC5nWpR8xftbVQB2SFxJfdGYTUtWMHfSjWKQPShKc4HU1eDSpoocaP9Ns1ACQzI9NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916365; c=relaxed/simple;
-	bh=34XnZspkRSdBE+ZwTINkqDh/NyUXne+f2Pgv+zupuRw=;
+	s=arc-20240116; t=1728916369; c=relaxed/simple;
+	bh=2cTfGKQVu/eZ2KlQd9a0AoWLHk5K/DvQovSnZQ0efRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cE63zzpXFmW297Y0Pju7sLlQY4Y06Y8qhJjQfqDuBeMjh8IoJZjbWfmAz3dIViX6XgiGNlyIOcqRtFb57BYMak1QSLyMwxAf5uIdnqGgnfGbltiLNZoR+8wGhZ1zB2fQQ1NUTVfF7UsZ5DIWLiqXwaP7bZe4a+lPoe1sb2xog5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSHCeDSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsrwcY0F+ZwE5j1ZJJ0zBxwzNpiB4aYXjg7t4PKms0upcscPduYWm0gwm7btfcdjQF1D7k+HeTIEhVkhoUzoMf6PWgp+EbYsOcCtUmRQuGOmT+AQi/OXKUM/v38lPOzdnuvc/94Bz3fSuKSn21dwprk1hdo105JVjyDell2+qBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1c52fis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSHCeDSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C204CC4CEC7;
-	Mon, 14 Oct 2024 14:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1c52fis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A77DC4CEC3;
+	Mon, 14 Oct 2024 14:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916365;
-	bh=34XnZspkRSdBE+ZwTINkqDh/NyUXne+f2Pgv+zupuRw=;
+	s=korg; t=1728916368;
+	bh=2cTfGKQVu/eZ2KlQd9a0AoWLHk5K/DvQovSnZQ0efRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSHCeDSpG7FBYM8l2VR0Gs2bmgtOWGvF5mLNXIvZTzHswR3nS8LGTubgY9S7AHwgm
-	 pIgGbPQkUmkJzXNSRDBReVRNI55S0+eevftLQxsrDl1WKzCqnzLOHgkzIfrGTwBL1s
-	 RmP0oz+uynQT5nhKDmTjknWUuTmjf5LpxQJCqLew=
+	b=s1c52fisRNkNV4o0bC4HOcmsQROSIwTYnDdwzdZUixqmy+1G+6ca7bP1cRGsfdjk+
+	 0D3uniROIDHvHi1UIM/BawmXOolgyexIQeXiZSkjVyiSN+y3ozPLLyM7AhoWbKY9pw
+	 Gl6TBMYZT5uE746Vk8+4aowbY5R+I5wYw1MQq7LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 131/214] net: ti: icssg-prueth: Fix race condition for VLAN table access
-Date: Mon, 14 Oct 2024 16:19:54 +0200
-Message-ID: <20241014141050.104436253@linuxfoundation.org>
+Subject: [PATCH 6.11 132/214] btrfs: zoned: fix missing RCU locking in error message when loading zone info
+Date: Mon, 14 Oct 2024 16:19:55 +0200
+Message-ID: <20241014141050.143224431@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,72 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ff8ee11e778520c5716b7f165d2c7ce14d6a068b ]
+[ Upstream commit fe4cd7ed128fe82ab9fe4f9fc8a73d4467699787 ]
 
-The VLAN table is a shared memory between the two ports/slices
-in a ICSSG cluster and this may lead to race condition when the
-common code paths for both ports are executed in different CPUs.
+At btrfs_load_zone_info() we have an error path that is dereferencing
+the name of a device which is a RCU string but we are not holding a RCU
+read lock, which is incorrect.
 
-Fix the race condition access by locking the shared memory access
+Fix this by using btrfs_err_in_rcu() instead of btrfs_err().
 
-Fixes: 487f7323f39a ("net: ti: icssg-prueth: Add helper functions to configure FDB")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The problem is there since commit 08e11a3db098 ("btrfs: zoned: load zone's
+allocation offset"), back then at btrfs_load_block_group_zone_info() but
+then later on that code was factored out into the helper
+btrfs_load_zone_info() by commit 09a46725cc84 ("btrfs: zoned: factor out
+per-zone logic from btrfs_load_block_group_zone_info").
+
+Fixes: 08e11a3db098 ("btrfs: zoned: load zone's allocation offset")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_config.c | 2 ++
- drivers/net/ethernet/ti/icssg/icssg_prueth.c | 1 +
- drivers/net/ethernet/ti/icssg/icssg_prueth.h | 2 ++
- 3 files changed, 5 insertions(+)
+ fs/btrfs/zoned.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_config.c b/drivers/net/ethernet/ti/icssg/icssg_config.c
-index dae52a83a3786..5be020d0887ac 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_config.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_config.c
-@@ -733,6 +733,7 @@ void icssg_vtbl_modify(struct prueth_emac *emac, u8 vid, u8 port_mask,
- 	u8 fid_c1;
- 
- 	tbl = prueth->vlan_tbl;
-+	spin_lock(&prueth->vtbl_lock);
- 	fid_c1 = tbl[vid].fid_c1;
- 
- 	/* FID_C1: bit0..2 port membership mask,
-@@ -748,6 +749,7 @@ void icssg_vtbl_modify(struct prueth_emac *emac, u8 vid, u8 port_mask,
- 	}
- 
- 	tbl[vid].fid_c1 = fid_c1;
-+	spin_unlock(&prueth->vtbl_lock);
- }
- EXPORT_SYMBOL_GPL(icssg_vtbl_modify);
- 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-index e3451beed3238..33cb3590a5cde 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-@@ -1262,6 +1262,7 @@ static int prueth_probe(struct platform_device *pdev)
- 		icss_iep_init_fw(prueth->iep1);
- 	}
- 
-+	spin_lock_init(&prueth->vtbl_lock);
- 	/* setup netdev interfaces */
- 	if (eth0_node) {
- 		ret = prueth_netdev_init(prueth, eth0_node);
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.h b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-index f678d656a3ed3..4d1c895dacdb6 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-@@ -282,6 +282,8 @@ struct prueth {
- 	bool is_switchmode_supported;
- 	unsigned char switch_id[MAX_PHYS_ITEM_ID_LEN];
- 	int default_vlan;
-+	/** @vtbl_lock: Lock for vtbl in shared memory */
-+	spinlock_t vtbl_lock;
- };
- 
- struct emac_tx_ts_response {
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 047e3337852e1..ff02fd44fb7cd 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1352,7 +1352,7 @@ static int btrfs_load_zone_info(struct btrfs_fs_info *fs_info, int zone_idx,
+ 	switch (zone.cond) {
+ 	case BLK_ZONE_COND_OFFLINE:
+ 	case BLK_ZONE_COND_READONLY:
+-		btrfs_err(fs_info,
++		btrfs_err_in_rcu(fs_info,
+ 		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
+ 			  (info->physical >> device->zone_info->zone_size_shift),
+ 			  rcu_str_deref(device->name), device->devid);
 -- 
 2.43.0
 
