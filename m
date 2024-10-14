@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC831AB507;
-	Mon, 14 Oct 2024 14:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1EB1AA797;
+	Mon, 14 Oct 2024 14:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917007; cv=none; b=fu7gBtwcvpwLJwHkU3peusBpE5navTIv+JYvuaCDDpaC7G4wrKJol8+nSM0qWPYPqOBc4xVJI+OZDua65dg7a8B9JOXP/TcxH6yRCpaH/6NkPyrdvp1dHAThQsg4G7e40Kw0rvlJ4sKgsIUDTsH6soZZCJxLqSjZt2oBkzvYrPo=
+	t=1728917010; cv=none; b=M2cX44JqQv035LqGeMuXFlWt1+ZQoGVT497BMFuhkV9bzBQskd/F9FqAILmNy+pC5+togN4Uy5UZqJOxzNiSBIsGlLt+0qLKjOTdfvZzyL1fpn31bk8r+R7UKy2YQF3tQz694VFap141q7PcigAXn6xMemrNyBs73mMjiNEqVLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917007; c=relaxed/simple;
-	bh=UdJ7rtvO1X86t3UAlrBtL62rNY0XREjjmOa3cDDac1c=;
+	s=arc-20240116; t=1728917010; c=relaxed/simple;
+	bh=PyerRhANBWvrN5WXJgdSyckyfNEnpgmGmyvkmk0mwnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9ak+DAHSUfro27Ofk5FIHGumcNXGuo7NDsNbMo/YlvE35pzFm4zzfZdrpzy5k9cv1J/mIzMoRZZX5aBOhqHxqtJaiabj2R5OJ9K7w9Sxr3pg3jLcdrcBIEQMIDtqS0RVRppmWwdK5J7Q9X9yw5swshl74xsnqItU46qvVL26aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khLnvRJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBG+b0FIlbpn7RziLjdZzlRkos1+H+b3UC5bleCvzycDOAWH4B1wc8pWKbRl+G1wIQ6UY3LcA9vpWyVFoZuMtTcOB0jEGpSPRgwt5WO+N+126HeA3PZECWtuXnSyMVUk4/w+hc1XGpC9eN8jInfnKqd+xmq6+zY5tkp91TOzaj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw6y27x/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khLnvRJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7D1C4CEC3;
-	Mon, 14 Oct 2024 14:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw6y27x/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7F4C4CEC3;
+	Mon, 14 Oct 2024 14:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917007;
-	bh=UdJ7rtvO1X86t3UAlrBtL62rNY0XREjjmOa3cDDac1c=;
+	s=korg; t=1728917010;
+	bh=PyerRhANBWvrN5WXJgdSyckyfNEnpgmGmyvkmk0mwnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khLnvRJln5MCF61x6fYTczl8ceGZKGKzxQwvlwh54W6mtK+RPQmFUOZ3Vu6TgCcDV
-	 6KJXrL3r0EsynfJVynXuy8TB+Vfd/ZfHyDcfN3S7RQkXjk5Uq/GvFurVl3PtrY6JND
-	 1+fcZLE87F0uuRM8Pu6OGLJrCEJL8yKvooQK08ck=
+	b=kw6y27x/UxgLLS5dhqCQJ8b8Icq5ZumOuqT4Zw/qzkkRA9mJXZi07P6e4OWZii2GJ
+	 DDHF+Qnjcum53kc4KIyaWD8RLHaT71C1BBfrw5jz+xVdGPKliILwLlpwxeCz3TQY5s
+	 pVgDKCTd/fik3HIznFxKXeHV1z4gEaIyvJ6nEpGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/213] thermal: intel: int340x: processor: Fix warning during module unload
-Date: Mon, 14 Oct 2024 16:20:31 +0200
-Message-ID: <20241014141047.851332361@linuxfoundation.org>
+Subject: [PATCH 6.6 126/213] Revert "net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled"
+Date: Mon, 14 Oct 2024 16:20:32 +0200
+Message-ID: <20241014141047.889483672@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,80 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 99ca0b57e49fb73624eede1c4396d9e3d10ccf14 ]
+[ Upstream commit 5546da79e6cc5bb3324bf25688ed05498fd3f86d ]
 
-The processor_thermal driver uses pcim_device_enable() to enable a PCI
-device, which means the device will be automatically disabled on driver
-detach.  Thus there is no need to call pci_disable_device() again on it.
+This reverts commit b514c47ebf41a6536551ed28a05758036e6eca7c.
 
-With recent PCI device resource management improvements, e.g. commit
-f748a07a0b64 ("PCI: Remove legacy pcim_release()"), this problem is
-exposed and triggers the warining below.
+The commit describes that we don't have to sync the page when
+recycling, and it tries to optimize that case. But we do need
+to sync after allocation. Recycling side should be changed to
+pass the right sync size instead.
 
- [  224.010735] proc_thermal_pci 0000:00:04.0: disabling already-disabled device
- [  224.010747] WARNING: CPU: 8 PID: 4442 at drivers/pci/pci.c:2250 pci_disable_device+0xe5/0x100
- ...
- [  224.010844] Call Trace:
- [  224.010845]  <TASK>
- [  224.010847]  ? show_regs+0x6d/0x80
- [  224.010851]  ? __warn+0x8c/0x140
- [  224.010854]  ? pci_disable_device+0xe5/0x100
- [  224.010856]  ? report_bug+0x1c9/0x1e0
- [  224.010859]  ? handle_bug+0x46/0x80
- [  224.010862]  ? exc_invalid_op+0x1d/0x80
- [  224.010863]  ? asm_exc_invalid_op+0x1f/0x30
- [  224.010867]  ? pci_disable_device+0xe5/0x100
- [  224.010869]  ? pci_disable_device+0xe5/0x100
- [  224.010871]  ? kfree+0x21a/0x2b0
- [  224.010873]  pcim_disable_device+0x20/0x30
- [  224.010875]  devm_action_release+0x16/0x20
- [  224.010878]  release_nodes+0x47/0xc0
- [  224.010880]  devres_release_all+0x9f/0xe0
- [  224.010883]  device_unbind_cleanup+0x12/0x80
- [  224.010885]  device_release_driver_internal+0x1ca/0x210
- [  224.010887]  driver_detach+0x4e/0xa0
- [  224.010889]  bus_remove_driver+0x6f/0xf0
- [  224.010890]  driver_unregister+0x35/0x60
- [  224.010892]  pci_unregister_driver+0x44/0x90
- [  224.010894]  proc_thermal_pci_driver_exit+0x14/0x5f0 [processor_thermal_device_pci]
- ...
- [  224.010921] ---[ end trace 0000000000000000 ]---
-
-Remove the excess pci_disable_device() calls.
-
-Fixes: acd65d5d1cf4 ("thermal/drivers/int340x/processor_thermal: Add PCI MMIO based thermal driver")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20240930081801.28502-3-rui.zhang@intel.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: b514c47ebf41 ("net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled")
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/20241004070846.2502e9ea@kernel.org
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/20241004142115.910876-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/int340x_thermal/processor_thermal_device_pci.c        | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-index e7a0f17cdbe4b..24eaec5d095c1 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-@@ -280,7 +280,6 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
- 	if (!pci_info->no_legacy)
- 		proc_thermal_remove(proc_priv);
- 	proc_thermal_mmio_remove(pdev, proc_priv);
--	pci_disable_device(pdev);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 89a80e3e8bb88..d6167a7b19f21 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2018,7 +2018,7 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	rx_q->queue_index = queue;
+ 	rx_q->priv_data = priv;
  
- 	return ret;
- }
-@@ -302,7 +301,6 @@ static void proc_thermal_pci_remove(struct pci_dev *pdev)
- 	proc_thermal_mmio_remove(pdev, pci_info->proc_priv);
- 	if (!pci_info->no_legacy)
- 		proc_thermal_remove(proc_priv);
--	pci_disable_device(pdev);
- }
- 
- #ifdef CONFIG_PM_SLEEP
+-	pp_params.flags = PP_FLAG_DMA_MAP | (xdp_prog ? PP_FLAG_DMA_SYNC_DEV : 0);
++	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
+ 	pp_params.pool_size = dma_conf->dma_rx_size;
+ 	num_pages = DIV_ROUND_UP(dma_conf->dma_buf_sz, PAGE_SIZE);
+ 	pp_params.order = ilog2(num_pages);
 -- 
 2.43.0
 
