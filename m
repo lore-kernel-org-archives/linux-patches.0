@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B05D3A1B6;
-	Mon, 14 Oct 2024 15:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AEC1AAC4;
+	Mon, 14 Oct 2024 15:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920089; cv=none; b=bukJRVNL/9ccNsJsEtJ+rJMVK0j+Ig0UqyVXGgFyr3W1Baihxe1GtsOvMt+3JcQrASei78KawqRfdwiflugRweCasd2czF2XQiqNHS/NKr8pQn/74gyHlvxcLgvqf87KHDFQm8SqFbdTC+GK4QJpBijFFDxxG30aUdLYxK4snRc=
+	t=1728920093; cv=none; b=NFmSw40hb2+QhFQNzOsOyWW22Qdsp3CbYdhvBPeF9lG2XLoXJGph9nFTVXcWMzfWxCTMttwJz5qKldBPBy0Eg85KsYKwQaorLvN3rmS7dAtqATx/8KmWJkA+4Vac6tYGnsWjHeIBwzORLnwG4LqBjZHRvga/kQPct2VvOA8Sr50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920089; c=relaxed/simple;
-	bh=cxRm4vhN6ucsJxi9VLv8c27UcAE/eD9NH07grPVGmJs=;
+	s=arc-20240116; t=1728920093; c=relaxed/simple;
+	bh=Rttkjbapv8X8wOnwnwSxFt7DKOIXUfRcU1afmVpMMik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVzCF6aVaDmTs/dYxS9e0nSQnaNh9X6+0JnYkVXKzhkA23/5TZoWg1C4lhjkvi3D6wRvf2i4Y6eb281zx+skNfHXuD/daz/M9rlTM499wU5oYVGp5+uJJei7mxEMywlfGbd02YivS0qLvaUYr4Vxy+7cFTSOQi/49OmFlD/UZTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tuqcdJX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9yLOqEfa4UQJAVJickE1FY7pKf+pr7IKKyyQZtvRu3tLMnoZCrME8BKZIyPfTSV94Wazfrd8RwAsmqM4GtlkkynxUYTSNX2hLvOYsc5EshLb2031b23Aucs2T9JTsRLwg8EOOmrb7oirzKJouI9cYKCj+0gIyDmZNpWtxYQ4VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnIkSp2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tuqcdJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE1CC4CECF;
-	Mon, 14 Oct 2024 15:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnIkSp2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6197AC4CEC3;
+	Mon, 14 Oct 2024 15:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920089;
-	bh=cxRm4vhN6ucsJxi9VLv8c27UcAE/eD9NH07grPVGmJs=;
+	s=korg; t=1728920092;
+	bh=Rttkjbapv8X8wOnwnwSxFt7DKOIXUfRcU1afmVpMMik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tuqcdJXwo0FBtFg6kxl60B7jPWrebgs5mHx9TmAxp+ljy4MDB8yCPGJkob6GOmmO
-	 Tu5uRFjzjMFLpYtLRy8VrheUgdN/Ghg5Tkn01m8mAnhuklcoefn8z1tn7U2C7Jm+Di
-	 p6pv2xvQulUtdw7CZFWLhd4h/YXVmwkGiG7epxhk=
+	b=lnIkSp2yv2DzR9GtiuqqtOvZKB7xu8wzTdbPSRHdZB/UfTvcJ16GZIQs9w+RI8RPo
+	 tKMs/zRYNwZmbMaAIlXKtwoBW2nSsUke8v/ajCHjETxRCrB14hhjmlkETZKuZkXOwf
+	 6XyiV3+peU3QXEWYeIrBw9otG75QvBy+sBcvn7JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Hillf Danton <hdanton@sina.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 793/798] kthread: unpark only parked kthread
-Date: Mon, 14 Oct 2024 16:22:27 +0200
-Message-ID: <20241014141249.226377974@linuxfoundation.org>
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.1 767/798] net/mlx5: Always drain health in shutdown callback
+Date: Mon, 14 Oct 2024 16:22:01 +0200
+Message-ID: <20241014141248.199970693@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,65 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Shay Drory <shayd@nvidia.com>
 
-commit 214e01ad4ed7158cab66498810094fac5d09b218 upstream.
+[ Upstream commit 1b75da22ed1e6171e261bc9265370162553d5393 ]
 
-Calling into kthread unparking unconditionally is mostly harmless when
-the kthread is already unparked. The wake up is then simply ignored
-because the target is not in TASK_PARKED state.
+There is no point in recovery during device shutdown. if health
+work started need to wait for it to avoid races and NULL pointer
+access.
 
-However if the kthread is per CPU, the wake up is preceded by a call
-to kthread_bind() which expects the task to be inactive and in
-TASK_PARKED state, which obviously isn't the case if it is unparked.
+Hence, drain health WQ on shutdown callback.
 
-As a result, calling kthread_stop() on an unparked per-cpu kthread
-triggers such a warning:
-
-	WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind_mask kernel/kthread.c:525
-	 <TASK>
-	 kthread_stop+0x17a/0x630 kernel/kthread.c:707
-	 destroy_workqueue+0x136/0xc40 kernel/workqueue.c:5810
-	 wg_destruct+0x1e2/0x2e0 drivers/net/wireguard/device.c:257
-	 netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10693
-	 default_device_exit_batch+0xa14/0xa90 net/core/dev.c:11769
-	 ops_exit_list net/core/net_namespace.c:178 [inline]
-	 cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:640
-	 process_one_work kernel/workqueue.c:3231 [inline]
-	 process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
-	 worker_thread+0x86d/0xd70 kernel/workqueue.c:3393
-	 kthread+0x2f0/0x390 kernel/kthread.c:389
-	 ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-	 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-	 </TASK>
-
-Fix this with skipping unecessary unparking while stopping a kthread.
-
-Link: https://lkml.kernel.org/r/20240913214634.12557-1-frederic@kernel.org
-Fixes: 5c25b5ff89f0 ("workqueue: Tag bound workers with KTHREAD_IS_PER_CPU")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
-Tested-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1958fc2f0712 ("net/mlx5: SF, Add auxiliary device driver")
+Fixes: d2aa060d40fa ("net/mlx5: Cancel health poll before sending panic teardown command")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Xiangyu: Modified to apply on 6.1.y to fix CVE-2024-43866]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kthread.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c          | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -622,6 +622,8 @@ void kthread_unpark(struct task_struct *
- {
- 	struct kthread *kthread = to_kthread(k);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 76af59cfdd0e6..825ad7663fa45 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1950,7 +1950,6 @@ static int mlx5_try_fast_unload(struct mlx5_core_dev *dev)
+ 	/* Panic tear down fw command will stop the PCI bus communication
+ 	 * with the HCA, so the health poll is no longer needed.
+ 	 */
+-	mlx5_drain_health_wq(dev);
+ 	mlx5_stop_health_poll(dev, false);
  
-+	if (!test_bit(KTHREAD_SHOULD_PARK, &kthread->flags))
-+		return;
- 	/*
- 	 * Newly created kthread was parked when the CPU was offline.
- 	 * The binding was lost and we need to set it again.
+ 	ret = mlx5_cmd_fast_teardown_hca(dev);
+@@ -1985,6 +1984,7 @@ static void shutdown(struct pci_dev *pdev)
+ 
+ 	mlx5_core_info(dev, "Shutdown was called\n");
+ 	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
++	mlx5_drain_health_wq(dev);
+ 	err = mlx5_try_fast_unload(dev);
+ 	if (err)
+ 		mlx5_unload_one(dev, false);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+index 2424cdf9cca99..d6850eb0ed7f4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+@@ -75,6 +75,7 @@ static void mlx5_sf_dev_shutdown(struct auxiliary_device *adev)
+ {
+ 	struct mlx5_sf_dev *sf_dev = container_of(adev, struct mlx5_sf_dev, adev);
+ 
++	mlx5_drain_health_wq(sf_dev->mdev);
+ 	mlx5_unload_one(sf_dev->mdev, false);
+ }
+ 
+-- 
+2.43.0
+
 
 
