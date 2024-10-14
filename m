@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F6C1B85E3;
-	Mon, 14 Oct 2024 15:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8781B85E2;
+	Mon, 14 Oct 2024 15:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919969; cv=none; b=JhZ2KczLkFhhMZcdJosg8+ufBD3TzbBqejazrsPZ7PMbIjgvYioTSTooaPGLvlRny51eYfWHFwmt00dipGSXZjNamwcnIlXj/noknrzOKNGNsEginRDJiu2PGnpJuMxMX5IkrKyW8xfrgAyOLkrwBrpJYjfA6yyTS2afPsYNvgk=
+	t=1728919973; cv=none; b=M7r46LO9PD3RbeYvhgP6JV0ftXIjQDhCy6EKdtcaAtdX4fp0IlofrSUI9P1HT2zxuf4j+5VokEgj0QBoebhACcQPzE/U5EwKuidO5o5cnHqo2PHdMpJCTGY8/5PIUwNX3A3WysRVKOFE7hbqV7Ci0uwJsZbnbgefmY52lhGqa/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919969; c=relaxed/simple;
-	bh=+0hA3/znlRPV8ZJ0XRBWGuSYDs19H2svZA5Eu3tZzsU=;
+	s=arc-20240116; t=1728919973; c=relaxed/simple;
+	bh=+2rOGEmucCNQcVg1J+93ESI1ilRpVQkOHu/K3KkTko0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FobGTGTcEeRZQtypAVqvIVgUbGBLAPNojvAMeTWKKtEJMBdcGbC4xJhcj1uA4yqk+isGDLxgsLnQolgceQl+cganASseAwTFOlhFVGgh09gXHDZZlrShy+9g5gznoJF2LwpLAOKOBOf7i0LfE3OthLAz1a+2XPu+YOdUTs0TSX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2jO5Ay9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZhcnUYW/bl1iemGxPhTquN5rsBqC7V9vMJXf9wqvjxEDi4L6It7iBRm+VWOXJAAxya1JyVfbrqc0y3uOu7IqqbiE5HzyA4rTNodBk685zmpkdxt7QHrIlSsxZ4e/qhASaVZ3HsgJi8IMFMWaGuJy/PQDbZGCT4CtgEtgGLPEHao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GA8G7cM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2jO5Ay9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C1EC4CEC3;
-	Mon, 14 Oct 2024 15:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GA8G7cM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B12C4CEC3;
+	Mon, 14 Oct 2024 15:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919969;
-	bh=+0hA3/znlRPV8ZJ0XRBWGuSYDs19H2svZA5Eu3tZzsU=;
+	s=korg; t=1728919972;
+	bh=+2rOGEmucCNQcVg1J+93ESI1ilRpVQkOHu/K3KkTko0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2jO5Ay9IOhORfwrDRfUlbik8AbrXV/qZiBEUbW385Tswng5yfK7quW51wgwMeWxY
-	 UrMi3qjRR37XRNrTixSvrl/D8oQHbV4CsxFyw3e4cg7S6KGYczFehEBBWB1RsHDdxp
-	 NA8/d8hH9nQtOv6skh5IvQaeviqo+E20XQfIvg84=
+	b=0GA8G7cMdeOn5gdiyDK7roDytwIjddQ0OketS34Gai+iNOSEQ7K1A6A6/Q8W5czaZ
+	 uuBtJAvoVl48Tm+Gfe6ys7W+llHdUbQAPI3n4ZjCYEayIFxsVgl9iNOwvKV7zkF2DS
+	 saYTv6m91kgcAEjJ/v2BCFI+72xqDm3EUdHYd0BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 733/798] tcp: fix tcp_enter_recovery() to zero retrans_stamp when its safe
-Date: Mon, 14 Oct 2024 16:21:27 +0200
-Message-ID: <20241014141246.867802240@linuxfoundation.org>
+Subject: [PATCH 6.1 760/798] rtnetlink: Add bulk registration helpers for rtnetlink message handlers.
+Date: Mon, 14 Oct 2024 16:21:54 +0200
+Message-ID: <20241014141247.926414824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,151 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit b41b4cbd9655bcebcce941bef3601db8110335be ]
+[ Upstream commit 07cc7b0b942bf55ef1a471470ecda8d2a6a6541f ]
 
-Fix tcp_enter_recovery() so that if there are no retransmits out then
-we zero retrans_stamp when entering fast recovery. This is necessary
-to fix two buggy behaviors.
+Before commit addf9b90de22 ("net: rtnetlink: use rcu to free rtnl message
+handlers"), once rtnl_msg_handlers[protocol] was allocated, the following
+rtnl_register_module() for the same protocol never failed.
 
-Currently a non-zero retrans_stamp value can persist across multiple
-back-to-back loss recovery episodes. This is because we generally only
-clears retrans_stamp if we are completely done with loss recoveries,
-and get to tcp_try_to_open() and find !tcp_any_retrans_done(sk). This
-behavior causes two bugs:
+However, after the commit, rtnl_msg_handler[protocol][msgtype] needs to
+be allocated in each rtnl_register_module(), so each call could fail.
 
-(1) When a loss recovery episode (CA_Loss or CA_Recovery) is followed
-immediately by a new CA_Recovery, the retrans_stamp value can persist
-and can be a time before this new CA_Recovery episode starts. That
-means that timestamp-based undo will be using the wrong retrans_stamp
-(a value that is too old) when comparing incoming TS ecr values to
-retrans_stamp to see if the current fast recovery episode can be
-undone.
+Many callers of rtnl_register_module() do not handle the returned error,
+and we need to add many error handlings.
 
-(2) If there is a roughly minutes-long sequence of back-to-back fast
-recovery episodes, one after another (e.g. in a shallow-buffered or
-policed bottleneck), where each fast recovery successfully makes
-forward progress and recovers one window of sequence space (but leaves
-at least one retransmit in flight at the end of the recovery),
-followed by several RTOs, then the ETIMEDOUT check may be using the
-wrong retrans_stamp (a value set at the start of the first fast
-recovery in the sequence). This can cause a very premature ETIMEDOUT,
-killing the connection prematurely.
+To handle that easily, let's add wrapper functions for bulk registration
+of rtnetlink message handlers.
 
-This commit changes the code to zero retrans_stamp when entering fast
-recovery, when this is known to be safe (no retransmits are out in the
-network). That ensures that when starting a fast recovery episode, and
-it is safe to do so, retrans_stamp is set when we send the fast
-retransmit packet. That addresses both bug (1) and bug (2) by ensuring
-that (if no retransmits are out when we start a fast recovery) we use
-the initial fast retransmit of this fast recovery as the time value
-for undo and ETIMEDOUT calculations.
-
-This makes intuitive sense, since the start of a new fast recovery
-episode (in a scenario where no lost packets are out in the network)
-means that the connection has made forward progress since the last RTO
-or fast recovery, and we should thus "restart the clock" used for both
-undo and ETIMEDOUT logic.
-
-Note that if when we start fast recovery there *are* retransmits out
-in the network, there can still be undesirable (1)/(2) issues. For
-example, after this patch we can still have the (1) and (2) problems
-in cases like this:
-
-+ round 1: sender sends flight 1
-
-+ round 2: sender receives SACKs and enters fast recovery 1,
-  retransmits some packets in flight 1 and then sends some new data as
-  flight 2
-
-+ round 3: sender receives some SACKs for flight 2, notes losses, and
-  retransmits some packets to fill the holes in flight 2
-
-+ fast recovery has some lost retransmits in flight 1 and continues
-  for one or more rounds sending retransmits for flight 1 and flight 2
-
-+ fast recovery 1 completes when snd_una reaches high_seq at end of
-  flight 1
-
-+ there are still holes in the SACK scoreboard in flight 2, so we
-  enter fast recovery 2, but some retransmits in the flight 2 sequence
-  range are still in flight (retrans_out > 0), so we can't execute the
-  new retrans_stamp=0 added here to clear retrans_stamp
-
-It's not yet clear how to fix these remaining (1)/(2) issues in an
-efficient way without breaking undo behavior, given that retrans_stamp
-is currently used for undo and ETIMEDOUT. Perhaps the optimal (but
-expensive) strategy would be to set retrans_stamp to the timestamp of
-the earliest outstanding retransmit when entering fast recovery. But
-at least this commit makes things better.
-
-Note that this does not change the semantics of retrans_stamp; it
-simply makes retrans_stamp accurate in some cases where it was not
-before:
-
-(1) Some loss recovery, followed by an immediate entry into a fast
-recovery, where there are no retransmits out when entering the fast
-recovery.
-
-(2) When a TFO server has a SYNACK retransmit that sets retrans_stamp,
-and then the ACK that completes the 3-way handshake has SACK blocks
-that trigger a fast recovery. In this case when entering fast recovery
-we want to zero out the retrans_stamp from the TFO SYNACK retransmit,
-and set the retrans_stamp based on the timestamp of the fast recovery.
-
-We introduce a tcp_retrans_stamp_cleanup() helper, because this
-two-line sequence already appears in 3 places and is about to appear
-in 2 more as a result of this bug fix patch series. Once this bug fix
-patches series in the net branch makes it into the net-next branch
-we'll update the 3 other call sites to use the new helper.
-
-This is a long-standing issue. The Fixes tag below is chosen to be the
-oldest commit at which the patch will apply cleanly, which is from
-Linux v3.5 in 2012.
-
-Fixes: 1fbc340514fc ("tcp: early retransmit: tcp_enter_recovery()")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001200517.2756803-3-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 78b7b991838a ("vxlan: Handle error of rtnl_register_module().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/net/rtnetlink.h | 17 +++++++++++++++++
+ net/core/rtnetlink.c    | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 5b7345a3a96e4..9ac47ccfe1203 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2489,6 +2489,16 @@ static bool tcp_any_retrans_done(const struct sock *sk)
- 	return false;
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 9f881b74f32ed..fdc7b4ce0ef7b 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -27,6 +27,15 @@ static inline enum rtnl_kinds rtnl_msgtype_kind(int msgtype)
+ 	return msgtype & RTNL_KIND_MASK;
  }
  
-+/* If loss recovery is finished and there are no retransmits out in the
-+ * network, then we clear retrans_stamp so that upon the next loss recovery
-+ * retransmits_timed_out() and timestamp-undo are using the correct value.
-+ */
-+static void tcp_retrans_stamp_cleanup(struct sock *sk)
-+{
-+	if (!tcp_any_retrans_done(sk))
-+		tcp_sk(sk)->retrans_stamp = 0;
-+}
++struct rtnl_msg_handler {
++	struct module *owner;
++	int protocol;
++	int msgtype;
++	rtnl_doit_func doit;
++	rtnl_dumpit_func dumpit;
++	int flags;
++};
 +
- static void DBGUNDO(struct sock *sk, const char *msg)
- {
- #if FASTRETRANS_DEBUG > 1
-@@ -2856,6 +2866,9 @@ void tcp_enter_recovery(struct sock *sk, bool ece_ack)
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int mib_idx;
+ void rtnl_register(int protocol, int msgtype,
+ 		   rtnl_doit_func, rtnl_dumpit_func, unsigned int flags);
+ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
+@@ -34,6 +43,14 @@ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
+ int rtnl_unregister(int protocol, int msgtype);
+ void rtnl_unregister_all(int protocol);
  
-+	/* Start the clock with our fast retransmit, for undo and ETIMEDOUT. */
-+	tcp_retrans_stamp_cleanup(sk);
++int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n);
++void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n);
 +
- 	if (tcp_is_reno(tp))
- 		mib_idx = LINUX_MIB_TCPRENORECOVERY;
- 	else
++#define rtnl_register_many(handlers)				\
++	__rtnl_register_many(handlers, ARRAY_SIZE(handlers))
++#define rtnl_unregister_many(handlers)				\
++	__rtnl_unregister_many(handlers, ARRAY_SIZE(handlers))
++
+ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
+ {
+ 	if (nlmsg_len(nlh) >= sizeof(struct rtgenmsg))
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index be663a7382ce9..afb52254a47ec 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -385,6 +385,35 @@ void rtnl_unregister_all(int protocol)
+ }
+ EXPORT_SYMBOL_GPL(rtnl_unregister_all);
+ 
++int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n)
++{
++	const struct rtnl_msg_handler *handler;
++	int i, err;
++
++	for (i = 0, handler = handlers; i < n; i++, handler++) {
++		err = rtnl_register_internal(handler->owner, handler->protocol,
++					     handler->msgtype, handler->doit,
++					     handler->dumpit, handler->flags);
++		if (err) {
++			__rtnl_unregister_many(handlers, i);
++			break;
++		}
++	}
++
++	return err;
++}
++EXPORT_SYMBOL_GPL(__rtnl_register_many);
++
++void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n)
++{
++	const struct rtnl_msg_handler *handler;
++	int i;
++
++	for (i = n - 1, handler = handlers + n - 1; i >= 0; i--, handler--)
++		rtnl_unregister(handler->protocol, handler->msgtype);
++}
++EXPORT_SYMBOL_GPL(__rtnl_unregister_many);
++
+ static LIST_HEAD(link_ops);
+ 
+ static const struct rtnl_link_ops *rtnl_link_ops_get(const char *kind)
 -- 
 2.43.0
 
