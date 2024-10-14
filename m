@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557631AB6C1;
-	Mon, 14 Oct 2024 14:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D311AB52F;
+	Mon, 14 Oct 2024 14:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917000; cv=none; b=Xi7r7uj7g+0eY09acsn8tWO/C+dDzEUtCf575slTz1UxczYrc+hhgMqu2bv/waBkNkcx3EIKuNndDWEUx4ZNLhtUjnaUyFeQnrfwgzdJELoZmpcqojMfliyX2NQ6Z24jFQSobb0VjMs+ZhzPGriZTW6w4c9Lc0/6JKUSqY0jLAI=
+	t=1728917003; cv=none; b=juqZmhoU00lwP+6M1urV0sD7yKsQIDqeaYx09/a3pVk3MYrijdX+3RYYiItN8WZJfvloJrDlWipmK2PDO5HIyCNcTjhw6qh2zKqdw2xxGfstY7B3BuH75B0BiBNsxt1oCGIXWCdi1oGkdyZjEtgtl7R8UqtMnFXY0HM5gBGLy0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917000; c=relaxed/simple;
-	bh=O5oGpRzabzeqX37hsifSO8BttgEqXt2+CVwyWOtndHQ=;
+	s=arc-20240116; t=1728917003; c=relaxed/simple;
+	bh=9lJoN9uK1HnDJT9piNDhfjxVzzOER3nYOT7Now6BbDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L12paS+w3bGj7RBIYWRtZdlSHtM1qruJkU9O1QHfDEIzAjxHV2amfo+I5I6p9QqDbk3UHGyVU0b4zOifDBZWBa1EinWXkj9ZvdDJxPp3+BYvAPyHlFXspltLfD3ymb2j4I389ES2iQUVVp/qfS6HmzBJh2J+0cYHS+uR11mow2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Abhsdf+3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IUIQFbS59f8QDZASmbShfrxzzeDEpLuXMzoSCL+IWdomNp/j5bIuIqDe3Lk6Z403xrN2D+GHaKOgXfaCNNpcvQVtswfPamTdvErBRxYKjww1gEAQpnlBDz4hAYS0NNhpcGcpyE7jcQPuem+vQbFueGCInITaiCWLpeEYK+gZQe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMiResTc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Abhsdf+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CA5C4CEC7;
-	Mon, 14 Oct 2024 14:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMiResTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28857C4CED1;
+	Mon, 14 Oct 2024 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917000;
-	bh=O5oGpRzabzeqX37hsifSO8BttgEqXt2+CVwyWOtndHQ=;
+	s=korg; t=1728917003;
+	bh=9lJoN9uK1HnDJT9piNDhfjxVzzOER3nYOT7Now6BbDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Abhsdf+3rkg1zUN/CELGDG9FUchWA4S1RLrEK7HrhBR9ZCojSkYYkV5XXgw/dkrUw
-	 nX95rRqmd/TZZKBy+p4Eet2xt/X5k11/Eb68f78baJjrQOkhqfNr4ec9lN7q6/1HIa
-	 8fuddLQ3Wfbgl3t5HWljbeh67dmaXCelGkY0+6lI=
+	b=nMiResTcMw/B9bUdCxMSYEUaawMtCnNrxBa/yfXef/+3QOjd86yNr5SkQE1As+9OO
+	 6dWx2si+9jibPqTUEU6J3PsuI9CCtcAC5AlfcV8rahjw5HVWMZMot/dkS99UgrxKEg
+	 gEasX3+tvC6OeNBqYe3gYO58fSQ7RNcSngznFU7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/213] thermal: int340x: processor_thermal: Set feature mask before proc_thermal_add
-Date: Mon, 14 Oct 2024 16:20:30 +0200
-Message-ID: <20241014141047.812429843@linuxfoundation.org>
+Subject: [PATCH 6.6 107/213] x86/amd_nb: Add new PCI IDs for AMD family 0x1a
+Date: Mon, 14 Oct 2024 16:20:13 +0200
+Message-ID: <20241014141047.145484827@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,85 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit 6ebc25d8b053a208786295bab58abbb66b39c318 ]
+[ Upstream commit 0e640f0a47d8426eab1fb9c03f0af898dfe810b8 ]
 
-The function proc_thermal_add() adds sysfs entries for power limits.
+Add the new PCI Device IDs to the MISC IDs list to support new
+generation of AMD 1Ah family 70h Models of processors.
 
-The feature mask of available features is not present at that time, so
-it cannot be used by proc_thermal_add() to selectively create sysfs
-attributes.
+  [ bp: Massage commit message. ]
 
-The feature mask is set by proc_thermal_mmio_add(), so modify the code
-to call it before proc_thermal_add() so as to allow the latter to use
-the feature mask.
-
-There is no functional impact with this change.
-
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 99ca0b57e49f ("thermal: intel: int340x: processor: Fix warning during module unload")
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240510111829.969501-1-Shyam-sundar.S-k@amd.com
+Stable-dep-of: 59c34008d3bd ("x86/amd_nb: Add new PCI IDs for AMD family 1Ah model 60h")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../processor_thermal_device_pci.c            | 21 +++++++++----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ arch/x86/kernel/amd_nb.c | 1 +
+ include/linux/pci_ids.h  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-index 0d1e980072704..e7a0f17cdbe4b 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-@@ -223,19 +223,19 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
- 
- 	INIT_DELAYED_WORK(&pci_info->work, proc_thermal_threshold_work_fn);
- 
--	ret = proc_thermal_add(&pdev->dev, proc_priv);
--	if (ret) {
--		dev_err(&pdev->dev, "error: proc_thermal_add, will continue\n");
--		pci_info->no_legacy = 1;
--	}
--
- 	proc_priv->priv_data = pci_info;
- 	pci_info->proc_priv = proc_priv;
- 	pci_set_drvdata(pdev, proc_priv);
- 
- 	ret = proc_thermal_mmio_add(pdev, proc_priv, id->driver_data);
- 	if (ret)
--		goto err_ret_thermal;
-+		return ret;
-+
-+	ret = proc_thermal_add(&pdev->dev, proc_priv);
-+	if (ret) {
-+		dev_err(&pdev->dev, "error: proc_thermal_add, will continue\n");
-+		pci_info->no_legacy = 1;
-+	}
- 
- 	psv_trip.temperature = get_trip_temp(pci_info);
- 
-@@ -245,7 +245,7 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
- 							&tzone_params, 0, 0);
- 	if (IS_ERR(pci_info->tzone)) {
- 		ret = PTR_ERR(pci_info->tzone);
--		goto err_ret_mmio;
-+		goto err_del_legacy;
- 	}
- 
- 	/* request and enable interrupt */
-@@ -276,11 +276,10 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
- 	pci_free_irq_vectors(pdev);
- err_ret_tzone:
- 	thermal_zone_device_unregister(pci_info->tzone);
--err_ret_mmio:
--	proc_thermal_mmio_remove(pdev, proc_priv);
--err_ret_thermal:
-+err_del_legacy:
- 	if (!pci_info->no_legacy)
- 		proc_thermal_remove(proc_priv);
-+	proc_thermal_mmio_remove(pdev, proc_priv);
- 	pci_disable_device(pdev);
- 
- 	return ret;
+diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
+index 6f1cc7f1b202a..8a1a6faf29658 100644
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -92,6 +92,7 @@ static const struct pci_device_id amd_nb_misc_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_MI200_DF_F3) },
+ 	{}
+ };
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index cebfd1bb9dfa1..f195ebc3ecb57 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -580,6 +580,7 @@
+ #define PCI_DEVICE_ID_AMD_19H_M78H_DF_F3 0x12fb
+ #define PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3 0x12c3
+ #define PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3 0x16fb
++#define PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3 0x12bb
+ #define PCI_DEVICE_ID_AMD_MI200_DF_F3	0x14d3
+ #define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
+ #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
 -- 
 2.43.0
 
