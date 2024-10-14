@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678CE1798C;
-	Mon, 14 Oct 2024 15:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C171798C;
+	Mon, 14 Oct 2024 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919467; cv=none; b=eHWHI/o6Y3FkkuKO1/SpeT+bIYkJRNRTt7FLviymhkXD55m5Ak/PhVfXHkO/RAi4e6C+CFyP1xlzdSyMZoaCdRE5/5/605O7nKIofjrzvQ3eYx+3VC7s9H2wjF33GHXdjLAQFJ+KC4kkukkWQKgviFWsuHDHFj/7QT5gq0trzWA=
+	t=1728919471; cv=none; b=JFnK8A0KNXto+q/tMIuHWBIEdVcNYa9gYmFQis+7CPBTsQG5AZmq7hyyQ7f6TGpYKfw+AOqrGhQdbhFnA6F9jTc9VaUa4ZT4VybBqOIo81mz20zkAQDfEWBIGVitGfAsOXD6yQrSh+R1tAX0e28LEayJU05l/tPcLBkKLLDKpm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919467; c=relaxed/simple;
-	bh=SGD93FjHzeZJYc/Jc3XE5tgLvjdiQmtXf/lP4RKnCxY=;
+	s=arc-20240116; t=1728919471; c=relaxed/simple;
+	bh=LKay1aRuaE/u5eF/ZqkLguD3fSpLdtPkXCwgVGG99z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9B9R9BdFJ+f/uY98AUKQStHjH8+FfMaMKiNVa+DmMpkc6mrVsW+2HwsnATt4QUdUBhmjLRKyAbgXJQOpMfpLE6S5o+HIK0QxSFcBZVR+j8MLRWAcYW/xqinpSp+D59yyU5MkKTOO1MdnRc5mhfdG6u+sbK0BYE1XQ6Qw5PtmRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJIbGfaJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTSKE4QO552JIdlxJxkaJTGQSwMKTuNNHBdWxLmQT46EyBUW+bsJA+pyYPKqRWdW+/m/783dw1ujQbdRAp55wrZoflpmRAIOv12flMUwld/I/P5yAmIy7Aj7X2vEwAnH8N530GsXp9E9ck3kzpijfmWDckCEBhHm8fiY8/VEygA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaMO0mH2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJIbGfaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA140C4CEC3;
-	Mon, 14 Oct 2024 15:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaMO0mH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F777C4CECF;
+	Mon, 14 Oct 2024 15:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919467;
-	bh=SGD93FjHzeZJYc/Jc3XE5tgLvjdiQmtXf/lP4RKnCxY=;
+	s=korg; t=1728919471;
+	bh=LKay1aRuaE/u5eF/ZqkLguD3fSpLdtPkXCwgVGG99z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJIbGfaJKdMnC/nhGIJkSksRc2dpa51tnaiIJykpJ7U5zh4eL5djcTi7859hxStYT
-	 m0TgYuDLGpMHIwX/zFJY0688XtTL1mATjvKiNea6uZIOz24UekSZth2cy0wJh9+Mih
-	 nxouKtlBwfwwnSWjtjetAKzeRYz9BiKyUwf0vsX4=
+	b=DaMO0mH2gm10wUWUztwx5MtQEG3gsTLEGM+0qP6ybJX1hh3olkTQu+swZDawunanR
+	 MJDEFMB/NlWZesP+E+9qcVZIdMHeY1W0Jk2SsX0gRHGqHEtb5XM+qqqlL/qX9a1/ks
+	 4vrSx5rSkns0OFbgwjiBdbbRq/roNXP8GL52CHiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 615/798] drm/amd/display: Fix system hang while resume with TBT monitor
-Date: Mon, 14 Oct 2024 16:19:29 +0200
-Message-ID: <20241014141242.196308089@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 598/798] rtc: at91sam9: fix OF node leak in probe() error path
+Date: Mon, 14 Oct 2024 16:19:12 +0200
+Message-ID: <20241014141241.497482215@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,50 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 52d4e3fb3d340447dcdac0e14ff21a764f326907 upstream.
+commit 73580e2ee6adfb40276bd420da3bb1abae204e10 upstream.
 
-[Why]
-Connected with a Thunderbolt monitor and do the suspend and the system
-may hang while resume.
+Driver is leaking an OF node reference obtained from
+of_parse_phandle_with_fixed_args().
 
-The TBT monitor HPD will be triggered during the resume procedure
-and call the drm_client_modeset_probe() while
-struct drm_connector connector->dev->master is NULL.
-
-It will mess up the pipe topology after resume.
-
-[How]
-Skip the TBT monitor HPD during the resume procedure because we
-currently will probe the connectors after resume by default.
-
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 453f86a26945207a16b8f66aaed5962dc2b95b85)
+Fixes: 43e112bb3dea ("rtc: at91sam9: make use of syscon/regmap to access GPBR registers")
 Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240825183103.102904-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/rtc/rtc-at91sam9.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -712,6 +712,12 @@ static void dmub_hpd_callback(struct amd
- 		return;
- 	}
+--- a/drivers/rtc/rtc-at91sam9.c
++++ b/drivers/rtc/rtc-at91sam9.c
+@@ -368,6 +368,7 @@ static int at91_rtc_probe(struct platfor
+ 		return ret;
  
-+	/* Skip DMUB HPD IRQ in suspend/resume. We will probe them later. */
-+	if (notify->type == DMUB_NOTIFICATION_HPD && adev->in_suspend) {
-+		DRM_INFO("Skip DMUB HPD IRQ callback in suspend/resume\n");
-+		return;
-+	}
-+
- 	link_index = notify->link_index;
- 	link = adev->dm.dc->links[link_index];
- 	dev = adev->dm.ddev;
+ 	rtc->gpbr = syscon_node_to_regmap(args.np);
++	of_node_put(args.np);
+ 	rtc->gpbr_offset = args.args[0];
+ 	if (IS_ERR(rtc->gpbr)) {
+ 		dev_err(&pdev->dev, "failed to retrieve gpbr regmap, aborting.\n");
 
 
