@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9116B20EB;
-	Mon, 14 Oct 2024 14:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA03920EB;
+	Mon, 14 Oct 2024 14:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916294; cv=none; b=gz2SenIpaUf54G58OBCwDuCZMVsmD9jeA1mhzVGYN8l6cvzdyd35/Z51ylt/J9IcFMHH2nx1X6bCIMKQt18NBMKE5vZ5Cvf4REQSZ/pycV8iqztsJjUgT/JT8eeBU1bXkPn83vU0gO4s5so4Jc0xyiPT4MYWvItk/EVV8WwBOLg=
+	t=1728916297; cv=none; b=QO2qRd0KuFBD55+CGIO6N6ADbkQCEGhSgU0BlLMgOla4Ist/1a6ekaT9ahge6o59wwmy5dxSF9tTZDmwQG1C5vW/a6e6kmZAqnBLPhAj/4Be4OmXhbXerQke9cGoS1MN9mn20DsDdcyDnWTKdQgUQfkll48HTfbw2GEebzCGJIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916294; c=relaxed/simple;
-	bh=D9XTgISuWRPtVuqVTa4t+XzsV/m7lWmYbiz084yAubo=;
+	s=arc-20240116; t=1728916297; c=relaxed/simple;
+	bh=VMsg7KM3r0D2jle2EoEKFe0HDmKYqyXYF/T+ST27+/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBzhoQzsxfih1FDdn63lbZ/B+ddlGPM6SZNVkpowF/kryFr+FLeoPiE/etc+34CtP4jN0+kmXaHgixWM7Er6WbcB5YPgFsGM6vaKTVUn4aSC0sKwWgf+luEf9zr9ZrTKewxmUq984hjTcljqBGt+nO/P/P4N7bH7o03tzMo3nyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjnMFuGg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vf/Y/EQ1fRjUgPaRHfv2TxDYO7HFKDpfGyydLxGaXWarwNK7RjchYpD/FT6ovrzAE8Fz4rRternVCPES0nXaJhsx6+FRhNTABIIzsUBC6mg/JDXyq67Ha4CT/+sB9CtS5hXCnrTw129iMSQ6YclBjQzWgWNZzby6UnYArTLMv2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMuIZ0Oi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjnMFuGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A29C4CEC3;
-	Mon, 14 Oct 2024 14:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMuIZ0Oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E04C4CEC3;
+	Mon, 14 Oct 2024 14:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916294;
-	bh=D9XTgISuWRPtVuqVTa4t+XzsV/m7lWmYbiz084yAubo=;
+	s=korg; t=1728916297;
+	bh=VMsg7KM3r0D2jle2EoEKFe0HDmKYqyXYF/T+ST27+/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjnMFuGgatqRaGw8boWrKd6oZxAy+NGdlZLIhphpqnS71TCWcWYE9TjPooDeTrKzc
-	 ZGgmjvirBhVWsFA6xzRWtp/5nLbQtRcOpB8MbW7noYLUxKXKBPG5q1X6h9HH7TAZ6u
-	 dOuocgkwxec/dP/dn0/IdHX4iINsxC7E1luiYGS0=
+	b=IMuIZ0OiYxInWuTIXGDfEs49r8RcQNUT5oStQseA2Cdbqj8q4WFSO+V4Yb7Nm73RW
+	 c7YlIj0wsyPBg7Il48eop4S0V8BR+ZhQPRh80D8bl2n1Dc/W/X8hF+J0lMfN40DMiM
+	 OdzRP59EUWXlaxS+whi6m4GePWSSH2B+/x24ftPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 141/214] rtnetlink: Add bulk registration helpers for rtnetlink message handlers.
-Date: Mon, 14 Oct 2024 16:20:04 +0200
-Message-ID: <20241014141050.491335289@linuxfoundation.org>
+Subject: [PATCH 6.11 142/214] vxlan: Handle error of rtnl_register_module().
+Date: Mon, 14 Oct 2024 16:20:05 +0200
+Message-ID: <20241014141050.529591590@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,105 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 07cc7b0b942bf55ef1a471470ecda8d2a6a6541f ]
+[ Upstream commit 78b7b991838a4a6baeaad934addc4db2c5917eb8 ]
 
-Before commit addf9b90de22 ("net: rtnetlink: use rcu to free rtnl message
-handlers"), once rtnl_msg_handlers[protocol] was allocated, the following
-rtnl_register_module() for the same protocol never failed.
+Since introduced, vxlan_vnifilter_init() has been ignoring the
+returned value of rtnl_register_module(), which could fail silently.
 
-However, after the commit, rtnl_msg_handler[protocol][msgtype] needs to
-be allocated in each rtnl_register_module(), so each call could fail.
+Handling the error allows users to view a module as an all-or-nothing
+thing in terms of the rtnetlink functionality.  This prevents syzkaller
+from reporting spurious errors from its tests, where OOM often occurs
+and module is automatically loaded.
 
-Many callers of rtnl_register_module() do not handle the returned error,
-and we need to add many error handlings.
+Let's handle the errors by rtnl_register_many().
 
-To handle that easily, let's add wrapper functions for bulk registration
-of rtnetlink message handlers.
-
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 78b7b991838a ("vxlan: Handle error of rtnl_register_module().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rtnetlink.h | 17 +++++++++++++++++
- net/core/rtnetlink.c    | 29 +++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ drivers/net/vxlan/vxlan_core.c      |  6 +++++-
+ drivers/net/vxlan/vxlan_private.h   |  2 +-
+ drivers/net/vxlan/vxlan_vnifilter.c | 19 +++++++++----------
+ 3 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index b45d57b5968af..2d3eb7cb4dfff 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -29,6 +29,15 @@ static inline enum rtnl_kinds rtnl_msgtype_kind(int msgtype)
- 	return msgtype & RTNL_KIND_MASK;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index ba59e92ab941d..02919c529dc2d 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4913,9 +4913,13 @@ static int __init vxlan_init_module(void)
+ 	if (rc)
+ 		goto out4;
+ 
+-	vxlan_vnifilter_init();
++	rc = vxlan_vnifilter_init();
++	if (rc)
++		goto out5;
+ 
+ 	return 0;
++out5:
++	rtnl_link_unregister(&vxlan_link_ops);
+ out4:
+ 	unregister_switchdev_notifier(&vxlan_switchdev_notifier_block);
+ out3:
+diff --git a/drivers/net/vxlan/vxlan_private.h b/drivers/net/vxlan/vxlan_private.h
+index b35d96b788437..76a351a997d51 100644
+--- a/drivers/net/vxlan/vxlan_private.h
++++ b/drivers/net/vxlan/vxlan_private.h
+@@ -202,7 +202,7 @@ int vxlan_vni_in_use(struct net *src_net, struct vxlan_dev *vxlan,
+ int vxlan_vnigroup_init(struct vxlan_dev *vxlan);
+ void vxlan_vnigroup_uninit(struct vxlan_dev *vxlan);
+ 
+-void vxlan_vnifilter_init(void);
++int vxlan_vnifilter_init(void);
+ void vxlan_vnifilter_uninit(void);
+ void vxlan_vnifilter_count(struct vxlan_dev *vxlan, __be32 vni,
+ 			   struct vxlan_vni_node *vninode,
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index 9c59d0bf8c3de..d2023e7131bd4 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -992,19 +992,18 @@ static int vxlan_vnifilter_process(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return err;
  }
  
-+struct rtnl_msg_handler {
-+	struct module *owner;
-+	int protocol;
-+	int msgtype;
-+	rtnl_doit_func doit;
-+	rtnl_dumpit_func dumpit;
-+	int flags;
+-void vxlan_vnifilter_init(void)
++static const struct rtnl_msg_handler vxlan_vnifilter_rtnl_msg_handlers[] = {
++	{THIS_MODULE, PF_BRIDGE, RTM_GETTUNNEL, NULL, vxlan_vnifilter_dump, 0},
++	{THIS_MODULE, PF_BRIDGE, RTM_NEWTUNNEL, vxlan_vnifilter_process, NULL, 0},
++	{THIS_MODULE, PF_BRIDGE, RTM_DELTUNNEL, vxlan_vnifilter_process, NULL, 0},
 +};
 +
- void rtnl_register(int protocol, int msgtype,
- 		   rtnl_doit_func, rtnl_dumpit_func, unsigned int flags);
- int rtnl_register_module(struct module *owner, int protocol, int msgtype,
-@@ -36,6 +45,14 @@ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
- int rtnl_unregister(int protocol, int msgtype);
- void rtnl_unregister_all(int protocol);
- 
-+int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n);
-+void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n);
-+
-+#define rtnl_register_many(handlers)				\
-+	__rtnl_register_many(handlers, ARRAY_SIZE(handlers))
-+#define rtnl_unregister_many(handlers)				\
-+	__rtnl_unregister_many(handlers, ARRAY_SIZE(handlers))
-+
- static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
++int vxlan_vnifilter_init(void)
  {
- 	if (nlmsg_len(nlh) >= sizeof(struct rtgenmsg))
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 73fd7f543fd09..97a38a7e1b2cc 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -384,6 +384,35 @@ void rtnl_unregister_all(int protocol)
+-	rtnl_register_module(THIS_MODULE, PF_BRIDGE, RTM_GETTUNNEL, NULL,
+-			     vxlan_vnifilter_dump, 0);
+-	rtnl_register_module(THIS_MODULE, PF_BRIDGE, RTM_NEWTUNNEL,
+-			     vxlan_vnifilter_process, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_BRIDGE, RTM_DELTUNNEL,
+-			     vxlan_vnifilter_process, NULL, 0);
++	return rtnl_register_many(vxlan_vnifilter_rtnl_msg_handlers);
  }
- EXPORT_SYMBOL_GPL(rtnl_unregister_all);
  
-+int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n)
-+{
-+	const struct rtnl_msg_handler *handler;
-+	int i, err;
-+
-+	for (i = 0, handler = handlers; i < n; i++, handler++) {
-+		err = rtnl_register_internal(handler->owner, handler->protocol,
-+					     handler->msgtype, handler->doit,
-+					     handler->dumpit, handler->flags);
-+		if (err) {
-+			__rtnl_unregister_many(handlers, i);
-+			break;
-+		}
-+	}
-+
-+	return err;
-+}
-+EXPORT_SYMBOL_GPL(__rtnl_register_many);
-+
-+void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n)
-+{
-+	const struct rtnl_msg_handler *handler;
-+	int i;
-+
-+	for (i = n - 1, handler = handlers + n - 1; i >= 0; i--, handler--)
-+		rtnl_unregister(handler->protocol, handler->msgtype);
-+}
-+EXPORT_SYMBOL_GPL(__rtnl_unregister_many);
-+
- static LIST_HEAD(link_ops);
- 
- static const struct rtnl_link_ops *rtnl_link_ops_get(const char *kind)
+ void vxlan_vnifilter_uninit(void)
+ {
+-	rtnl_unregister(PF_BRIDGE, RTM_GETTUNNEL);
+-	rtnl_unregister(PF_BRIDGE, RTM_NEWTUNNEL);
+-	rtnl_unregister(PF_BRIDGE, RTM_DELTUNNEL);
++	rtnl_unregister_many(vxlan_vnifilter_rtnl_msg_handlers);
+ }
 -- 
 2.43.0
 
