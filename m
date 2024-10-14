@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1971AA793;
-	Mon, 14 Oct 2024 14:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEAE1AA793;
+	Mon, 14 Oct 2024 14:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916653; cv=none; b=LaNyptFCL8I2GgCiEhWy2DO2lM5kwizKfhiNR++SoaW6Nk9gMK8Cv4lPKdjAaQ0Q+Nc1MsVOqa+lExBu1Q6LNJqj4QA6grnu1aHDVRNim7q66RnFhM2UlEYETO7OHcVwqioisYbEiob+UXseO0z8+vzu9axxwroXfT6lGQuWJpc=
+	t=1728916656; cv=none; b=kd1KetvZgOx0Jyzh2/o8qsoYWdgsm86bG/RaYsN0LkkWuXgxtBvtVHAmjsRoEb6x1w5DL9TEmUA2VRT/qqzRArPgy1+xiQe07h30bjC71X5vf2CQdjeUNecGrQlIWVoQ5pzYRa5fb+/XOYQ+9hVQPrCTx5xMasxTrZJ6e+1wTj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916653; c=relaxed/simple;
-	bh=pB6cKZEmWPj2/FyBhoI1/UYNDsocjZmh8Jdmt9qsNCk=;
+	s=arc-20240116; t=1728916656; c=relaxed/simple;
+	bh=vo7dbB0+z/XMhgwXmdR65/ipNRf3MXi3WxtS8LX/p/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhUYh10v/n5jzSexCXy+ShiNUvvs2bUlnOiOK1dOQLAvPLhx+pGAynHI3x1lJTZr3s10G3wgIOLMC6GAF6FMy2KWF6VMc3gRivmLfC13ltC/w6spYxaoLaYnqwhWJRtKt0XX8ITgnw+KW/6B4vK8YUxSOZsJgDqMik0fvpcBx4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxtHoDnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOSDsguHXgAZQUlobApvv3Ag9AOdz3XoeUntDQiandH6piq4Q0sv/TUMWVSgBz63PJwLtMpljrRLo6xxR5gpzeXXgPymr01tkr5kjAntuIGiKO7KqU94/qJX6xvFYu+3uuFXjFMXYvglT1xmCrwM1A6HbmdjcY7AYcSEZzWs8pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5wO/f7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxtHoDnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E1EC4CEC3;
-	Mon, 14 Oct 2024 14:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5wO/f7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0BFC4CEC3;
+	Mon, 14 Oct 2024 14:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916653;
-	bh=pB6cKZEmWPj2/FyBhoI1/UYNDsocjZmh8Jdmt9qsNCk=;
+	s=korg; t=1728916656;
+	bh=vo7dbB0+z/XMhgwXmdR65/ipNRf3MXi3WxtS8LX/p/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxtHoDnUPjjT3YoQcvjHiKr4L0yYlD1KBvZVtkf4rIhnMJDwkPjjYIDLh/RdDh2yt
-	 cl24mTNtIzgGjSU7IFIGUZlkevAaS3IEU6mva1N0hRc14RcD5w/X4vbmlgf7aVeYQy
-	 1Uu/8edlFn99w/o1hIsH7lBZmdhZuzbyNxc6WUMQ=
+	b=b5wO/f7vs1fyR6FwcdbrLeDKqpUUKHP2Get0jl1dQ1FcD3M4vav+svWU0FJ8OG80A
+	 4y5/LV1xZCE5cTSl8i2VyXfOEGHzibO7BDJ1vXhs3M+6s++W1Tl2dDkf9wqMbho3cd
+	 +6Wk6SoYEoVe4OjHC97jmXeohSQAJTTZMVY4hR/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Mark Brown <broonie@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/213] spi: spi-fsl-lpspi: remove redundant spi_controller_put call
-Date: Mon, 14 Oct 2024 16:18:53 +0200
-Message-ID: <20241014141044.046357060@linuxfoundation.org>
+Subject: [PATCH 6.6 028/213] ata: ahci: Add mask_port_map module parameter
+Date: Mon, 14 Oct 2024 16:18:54 +0200
+Message-ID: <20241014141044.085469616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,84 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit bff892acf79cec531da6cb21c50980a584ce1476 ]
+[ Upstream commit 24cfd86433c920188ac3f02df8aba6bc4c792f4b ]
 
-devm_spi_alloc_controller will allocate an SPI controller and
-automatically release a reference on it when dev is unbound from
-its driver. It doesn't need to call spi_controller_put explicitly
-to put the reference when lpspi driver failed initialization.
+Commits 0077a504e1a4 ("ahci: asm1166: correct count of reported ports")
+and 9815e3961754 ("ahci: asm1064: correct count of reported ports")
+attempted to limit the ports of the ASM1166 and ASM1064 AHCI controllers
+to avoid long boot times caused by the fact that these adapters report
+a port map larger than the number of physical ports. The excess ports
+are "virtual" to hide port multiplier devices and probing these ports
+takes time. However, these commits caused a regression for users that do
+use PMP devices, as the ATA devices connected to the PMP cannot be
+scanned. These commits have thus been reverted by commit 6cd8adc3e18
+("ahci: asm1064: asm1166: don't limit reported ports") to allow the
+discovery of devices connected through a port multiplier. But this
+revert re-introduced the long boot times for users that do not use a
+port multiplier setup.
 
-Fixes: 2ae0ab0143fc ("spi: lpspi: Avoid potential use-after-free in probe()")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://msgid.link/r/20240403084029.2000544-1-carlos.song@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch adds the mask_port_map ahci module parameter to allow users
+to manually specify port map masks for controllers. In the case of the
+ASMedia 1166 and 1064 controllers, users that do not have port
+multiplier devices can mask the excess virtual ports exposed by the
+controller to speedup port scanning, thus reducing boot time.
+
+The mask_port_map parameter accepts 2 different formats:
+ - mask_port_map=<mask>
+   This applies the same mask to all AHCI controllers
+   present in the system. This format is convenient for small systems
+   that have only a single AHCI controller.
+ - mask_port_map=<pci_dev>=<mask>,<pci_dev>=mask,...
+   This applies the specified masks only to the PCI device listed. The
+   <pci_dev> field is a regular PCI device ID (domain:bus:dev.func).
+   This ID can be seen following "ahci" in the kernel messages. E.g.
+   for "ahci 0000:01:00.0: 2/2 ports implemented (port mask 0x3)", the
+   <pci_dev> field is "0000:01:00.0".
+
+When used, the function ahci_save_initial_config() indicates that a
+port map mask was applied with the message "masking port_map ...".
+E.g.: without a mask:
+modprobe ahci
+dmesg | grep ahci
+...
+ahci 0000:00:17.0: AHCI vers 0001.0301, 32 command slots, 6 Gbps, SATA mode
+ahci 0000:00:17.0: (0000:00:17.0) 8/8 ports implemented (port mask 0xff)
+
+With a mask:
+modprobe ahci mask_port_map=0000:00:17.0=0x1
+dmesg | grep ahci
+...
+ahci 0000:00:17.0: masking port_map 0xff -> 0x1
+ahci 0000:00:17.0: AHCI vers 0001.0301, 32 command slots, 6 Gbps, SATA mode
+ahci 0000:00:17.0: (0000:00:17.0) 1/8 ports implemented (port mask 0x1)
+
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/ata/ahci.c | 85 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 180cea7d38172..13313f07839b6 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -881,39 +881,39 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	fsl_lpspi->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(fsl_lpspi->base)) {
- 		ret = PTR_ERR(fsl_lpspi->base);
--		goto out_controller_put;
-+		return ret;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 0a6aea36cd975..6e76780fb4308 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -667,6 +667,87 @@ static int mobile_lpm_policy = -1;
+ module_param(mobile_lpm_policy, int, 0644);
+ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ 
++static char *ahci_mask_port_map;
++module_param_named(mask_port_map, ahci_mask_port_map, charp, 0444);
++MODULE_PARM_DESC(mask_port_map,
++		 "32-bits port map masks to ignore controllers ports. "
++		 "Valid values are: "
++		 "\"<mask>\" to apply the same mask to all AHCI controller "
++		 "devices, and \"<pci_dev>=<mask>,<pci_dev>=<mask>,...\" to "
++		 "specify different masks for the controllers specified, "
++		 "where <pci_dev> is the PCI ID of an AHCI controller in the "
++		 "form \"domain:bus:dev.func\"");
++
++static void ahci_apply_port_map_mask(struct device *dev,
++				     struct ahci_host_priv *hpriv, char *mask_s)
++{
++	unsigned int mask;
++
++	if (kstrtouint(mask_s, 0, &mask)) {
++		dev_err(dev, "Invalid port map mask\n");
++		return;
++	}
++
++	hpriv->mask_port_map = mask;
++}
++
++static void ahci_get_port_map_mask(struct device *dev,
++				   struct ahci_host_priv *hpriv)
++{
++	char *param, *end, *str, *mask_s;
++	char *name;
++
++	if (!strlen(ahci_mask_port_map))
++		return;
++
++	str = kstrdup(ahci_mask_port_map, GFP_KERNEL);
++	if (!str)
++		return;
++
++	/* Handle single mask case */
++	if (!strchr(str, '=')) {
++		ahci_apply_port_map_mask(dev, hpriv, str);
++		goto free;
++	}
++
++	/*
++	 * Mask list case: parse the parameter to apply the mask only if
++	 * the device name matches.
++	 */
++	param = str;
++	end = param + strlen(param);
++	while (param && param < end && *param) {
++		name = param;
++		param = strchr(name, '=');
++		if (!param)
++			break;
++
++		*param = '\0';
++		param++;
++		if (param >= end)
++			break;
++
++		if (strcmp(dev_name(dev), name) != 0) {
++			param = strchr(param, ',');
++			if (param)
++				param++;
++			continue;
++		}
++
++		mask_s = param;
++		param = strchr(mask_s, ',');
++		if (param) {
++			*param = '\0';
++			param++;
++		}
++
++		ahci_apply_port_map_mask(dev, hpriv, mask_s);
++	}
++
++free:
++	kfree(str);
++}
++
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
+ {
+@@ -689,6 +770,10 @@ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 			  "Disabling your PATA port. Use the boot option 'ahci.marvell_enable=0' to avoid this.\n");
  	}
- 	fsl_lpspi->base_phys = res->start;
  
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0) {
- 		ret = irq;
--		goto out_controller_put;
-+		return ret;
- 	}
- 
- 	ret = devm_request_irq(&pdev->dev, irq, fsl_lpspi_isr, 0,
- 			       dev_name(&pdev->dev), fsl_lpspi);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't get irq%d: %d\n", irq, ret);
--		goto out_controller_put;
-+		return ret;
- 	}
- 
- 	fsl_lpspi->clk_per = devm_clk_get(&pdev->dev, "per");
- 	if (IS_ERR(fsl_lpspi->clk_per)) {
- 		ret = PTR_ERR(fsl_lpspi->clk_per);
--		goto out_controller_put;
-+		return ret;
- 	}
- 
- 	fsl_lpspi->clk_ipg = devm_clk_get(&pdev->dev, "ipg");
- 	if (IS_ERR(fsl_lpspi->clk_ipg)) {
- 		ret = PTR_ERR(fsl_lpspi->clk_ipg);
--		goto out_controller_put;
-+		return ret;
- 	}
- 
- 	/* enable the clock */
- 	ret = fsl_lpspi_init_rpm(fsl_lpspi);
- 	if (ret)
--		goto out_controller_put;
-+		return ret;
- 
- 	ret = pm_runtime_get_sync(fsl_lpspi->dev);
- 	if (ret < 0) {
-@@ -974,8 +974,6 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
- 	pm_runtime_put_sync(fsl_lpspi->dev);
- 	pm_runtime_disable(fsl_lpspi->dev);
--out_controller_put:
--	spi_controller_put(controller);
- 
- 	return ret;
++	/* Handle port map masks passed as module parameter. */
++	if (ahci_mask_port_map)
++		ahci_get_port_map_mask(&pdev->dev, hpriv);
++
+ 	ahci_save_initial_config(&pdev->dev, hpriv);
  }
+ 
 -- 
 2.43.0
 
