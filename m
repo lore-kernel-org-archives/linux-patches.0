@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97A41ABED9;
-	Mon, 14 Oct 2024 15:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253653B298;
+	Mon, 14 Oct 2024 15:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919579; cv=none; b=X46uwWyRJsWGPL6Vu4QpKpN5X4r24vqH88XEY4vGujK/PYQJIyXew2cZ28y5bTO7j8oJ0+sD6KTBBmiBQwFD0Ijg8QGcV4J7VkIc2756YD9xjlq3dac+C8LBfLda/C1zUl8B9aEwgFY5MlCeF7y62HQ85+0FAC7LdYuPuedfKpM=
+	t=1728919582; cv=none; b=CHLzdQOkjPQcK7omGps/HngHdCwsqA+G+NRbY2Dvh7kezd14c62K31SILilmDQErSAfX+zA5sdX68VHwo8o4dAYMeSs0u2LFfNMm/2gqJ5MsFTLTeEcjki15HH9/5cr4Z06ZZ/9kH4ITFI48snLXPeYbjjfq50mJ/yMLmBhQGJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919579; c=relaxed/simple;
-	bh=LrPgmohVnmw1SW74W7lWJhNJtX2iY70lmrfCGZGIcEQ=;
+	s=arc-20240116; t=1728919582; c=relaxed/simple;
+	bh=tMH0vUD8BIMncS3GPYppMIxJmHv5KSpKmKoUpBmqQzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=be7DTKufeFVeYSWIKIMDrQOgoCebvQOTA5Hsib03EXXnX2td1uwFL1SIrRhtTknxAgpN7B0gJvPsp6bu9QogpZcIU2UpwQyo9mFAapp6pHBheLkc0ArHV6DS7p5lgqzEbIIgU68QILutraAjh2evR24kkCdncNDe4RUSPPC0gcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtUkzHul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smfYjfV0ylIJEgSpC+xm8jf/29ishuTssODiSOac88PlzLdCh0lDxpgWEstRk8oxG2CI1h7tdCgm/sLGFqdIySCtlI6kbBpkSYj4soFEghNCSTeUtKn5Ihd2UCaYU7Gf5MccPojDXDEVBTWBE4a4YQecNIhnonXz+cKrDgXw7sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lp35FtY8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtUkzHul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3770C4CEC3;
-	Mon, 14 Oct 2024 15:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lp35FtY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66887C4CEC3;
+	Mon, 14 Oct 2024 15:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919578;
-	bh=LrPgmohVnmw1SW74W7lWJhNJtX2iY70lmrfCGZGIcEQ=;
+	s=korg; t=1728919582;
+	bh=tMH0vUD8BIMncS3GPYppMIxJmHv5KSpKmKoUpBmqQzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtUkzHulCAYTmQkgiTywdNYeskWP377QrtTetq1rjF/jv/DCAoBj8r7CbpLSwVvas
-	 tk/4AC/J8MbxTgzjUDeGo70lBe3dnUNbm+SQbZXx71LHCvVdP06eRtF6HkNTr1RRqp
-	 vVunph2ILcbZPpxv76YJtc7cUZnbmn8Dz1e+S0C8=
+	b=lp35FtY8AtXs9nVkTUJkJBahLWxMM+NhlIzx/7wfab5WRoqiAohWeHQHq/r4kADvj
+	 4UEoNtNuRF5p9x4I7mJqfnw8cATl9EvCSNccQ1xOXfsBRB7tf1Vnzx4XpWmYK08tbQ
+	 Noq0kSSEzT8fOSOc9BohoxoSRUP2h1xT2ujb7vlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Virag <virag.david003@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 647/798] clk: samsung: exynos7885: Update CLKS_NR_FSYS after bindings fix
-Date: Mon, 14 Oct 2024 16:20:01 +0200
-Message-ID: <20241014141243.470823315@linuxfoundation.org>
+Subject: [PATCH 6.1 648/798] r8169: Fix spelling mistake: "tx_underun" -> "tx_underrun"
+Date: Mon, 14 Oct 2024 16:20:02 +0200
+Message-ID: <20241014141243.509214380@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,36 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Virag <virag.david003@gmail.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 217a5f23c290c349ceaa37a6f2c014ad4c2d5759 ]
+[ Upstream commit 8df9439389a44fb2cc4ef695e08d6a8870b1616c ]
 
-Update CLKS_NR_FSYS to the proper value after a fix in DT bindings.
-This should always be the last clock in a CMU + 1.
+There is a spelling mistake in the struct field tx_underun, rename
+it to tx_underrun.
 
-Fixes: cd268e309c29 ("dt-bindings: clock: Add bindings for Exynos7885 CMU_FSYS")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Virag <virag.david003@gmail.com>
-Link: https://lore.kernel.org/r/20240806121157.479212-5-virag.david003@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20240909140021.64884-1-colin.i.king@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ced8e8b8f40a ("r8169: add tally counter fields added with RTL8125")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-exynos7885.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk-exynos7885.c b/drivers/clk/samsung/clk-exynos7885.c
-index 5d58879606eef..0f71fa6e8878b 100644
---- a/drivers/clk/samsung/clk-exynos7885.c
-+++ b/drivers/clk/samsung/clk-exynos7885.c
-@@ -21,7 +21,7 @@
- #define CLKS_NR_TOP			(CLK_GOUT_FSYS_USB30DRD + 1)
- #define CLKS_NR_CORE			(CLK_GOUT_TREX_P_CORE_PCLK_P_CORE + 1)
- #define CLKS_NR_PERI			(CLK_GOUT_WDT1_PCLK + 1)
--#define CLKS_NR_FSYS			(CLK_GOUT_MMC_SDIO_SDCLKIN + 1)
-+#define CLKS_NR_FSYS			(CLK_MOUT_FSYS_USB30DRD_USER + 1)
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index b187371fa2f0a..beebb2dcd00f5 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -563,7 +563,7 @@ struct rtl8169_counters {
+ 	__le64	rx_broadcast;
+ 	__le32	rx_multicast;
+ 	__le16	tx_aborted;
+-	__le16	tx_underun;
++	__le16	tx_underrun;
+ };
  
- /* ---- CMU_TOP ------------------------------------------------------------- */
+ struct rtl8169_tc_offsets {
+@@ -1710,7 +1710,7 @@ static void rtl8169_get_ethtool_stats(struct net_device *dev,
+ 	data[9] = le64_to_cpu(counters->rx_broadcast);
+ 	data[10] = le32_to_cpu(counters->rx_multicast);
+ 	data[11] = le16_to_cpu(counters->tx_aborted);
+-	data[12] = le16_to_cpu(counters->tx_underun);
++	data[12] = le16_to_cpu(counters->tx_underrun);
+ }
  
+ static void rtl8169_get_strings(struct net_device *dev, u32 stringset, u8 *data)
 -- 
 2.43.0
 
