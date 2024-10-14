@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F091C2DB0;
-	Mon, 14 Oct 2024 15:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5200A1A2C06;
+	Mon, 14 Oct 2024 15:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919814; cv=none; b=uWeEBqkrFqI7jJESz2B44tpqBqX3oarwmeUFGjb5FIp1U7CItLDedUokcpNPcJYj+VrWKFle6TPirGjqE0aXOQxa1n6PufCay95MoMRDvfmtFlBDrOeCzMYp2VVHwdH7s549gl24Vu3X9sDxMnKm0B9ouLqSIRU5bRGcmnQy2f4=
+	t=1728919818; cv=none; b=W2DU20/AIaUk+rF95jDjmN6/1vw4EimpcD2esLS5YFRXnKld1hSJzX42ZU1ZxBTzW0o+jiXCOOgyRqnf4Yw6QTo5KujzL/CmI6R7zMRRjzQko1FtXnOlNhqISFz4pMy7ee8V1085F+k7veKrDwoDn0GoZLqx1/9rG8YCYwop9nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919814; c=relaxed/simple;
-	bh=ztLQK3uYHoIf8CvGCn3F0PvT37Re79OzHWOhZblXTaY=;
+	s=arc-20240116; t=1728919818; c=relaxed/simple;
+	bh=+CWQtVP0zf+ISxqsEE+aCgbVr3fdxYgXdFC4opMxS2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNCPDtzk03Ip+9iCd1/IPAkTBdjqcWTtX9TOX6MFvL7DgSS3prs9MTSouPQCa+kJu6Pj2vutIb3h3INfyxTtJSKmWEB0lo1m5b0WE8ieMJB5GNKpPH0lSv8kVYr7mL9JIyFVdGM3jh2uCv/i2QulqXYgycC+OwlcjPaecFbQzzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvJ44Xfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q2G9ojuzEWDSCl8cdDKrCpVkR2/8bOtA4dTOOhotEirGzbhRfOufWNuj77JEStDKgMydXEwxBSmPIzWG4of2RQP9peBdd6UCYDIvAeEgEsW+56tPa8XGr+/VipYuht3AfjGvH0BYFTbMwJrieey49oUsoC+T/rULNloZ0gc+EKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4KgFJEd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvJ44Xfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED27AC4CEC3;
-	Mon, 14 Oct 2024 15:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4KgFJEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF02C4CEC3;
+	Mon, 14 Oct 2024 15:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919814;
-	bh=ztLQK3uYHoIf8CvGCn3F0PvT37Re79OzHWOhZblXTaY=;
+	s=korg; t=1728919817;
+	bh=+CWQtVP0zf+ISxqsEE+aCgbVr3fdxYgXdFC4opMxS2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvJ44Xfp8HRRqwYukwkYqsgi55ANMooxM/KoKCE9wSsTRn5nBhW5UFpnFw0vZoirS
-	 y27lvypKp/xohxrGOiXb3ZUJ9FWo/GhKOSJvdKllAlRPo0fAZr1DU1mLEDkff/YdIm
-	 9W2uq+JrSu8ixrVrnzNBuQdG5R75V/5l2FaG27Ok=
+	b=N4KgFJEd4pAS/kJUmsFlx/GIdcR8Px0Eo/ThOthkW4aQjU5zi3CgKKO/ZmqR6/RGD
+	 upiQZKuqD1AwOFRkKn92YzU72iZ1bEcj5hhAUzKtTo2t0r1Of3wcasWIRh0fl8RXR2
+	 4hXVadc26+asaujxkf4QC+mfOT7QYpEjBBjFxYH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 715/798] netfilter: nf_reject: Fix build warning when CONFIG_BRIDGE_NETFILTER=n
-Date: Mon, 14 Oct 2024 16:21:09 +0200
-Message-ID: <20241014141246.157105360@linuxfoundation.org>
+Subject: [PATCH 6.1 698/798] RDMA/rtrs-srv: Avoid null pointer deref during path establishment
+Date: Mon, 14 Oct 2024 16:20:52 +0200
+Message-ID: <20241014141245.492460229@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,112 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Md Haris Iqbal <haris.iqbal@ionos.com>
 
-[ Upstream commit fc56878ca1c288e49b5cbb43860a5938e3463654 ]
+[ Upstream commit d0e62bf7b575fbfe591f6f570e7595dd60a2f5eb ]
 
-If CONFIG_BRIDGE_NETFILTER is not enabled, which is the case for x86_64
-defconfig, then building nf_reject_ipv4.c and nf_reject_ipv6.c with W=1
-using gcc-14 results in the following warnings, which are treated as
-errors:
+For RTRS path establishment, RTRS client initiates and completes con_num
+of connections. After establishing all its connections, the information
+is exchanged between the client and server through the info_req message.
+During this exchange, it is essential that all connections have been
+established, and the state of the RTRS srv path is CONNECTED.
 
-net/ipv4/netfilter/nf_reject_ipv4.c: In function 'nf_send_reset':
-net/ipv4/netfilter/nf_reject_ipv4.c:243:23: error: variable 'niph' set but not used [-Werror=unused-but-set-variable]
-  243 |         struct iphdr *niph;
-      |                       ^~~~
-cc1: all warnings being treated as errors
-net/ipv6/netfilter/nf_reject_ipv6.c: In function 'nf_send_reset6':
-net/ipv6/netfilter/nf_reject_ipv6.c:286:25: error: variable 'ip6h' set but not used [-Werror=unused-but-set-variable]
-  286 |         struct ipv6hdr *ip6h;
-      |                         ^~~~
-cc1: all warnings being treated as errors
+So add these sanity checks, to make sure we detect and abort process in
+error scenarios to avoid null pointer deref.
 
-Address this by reducing the scope of these local variables to where
-they are used, which is code only compiled when CONFIG_BRIDGE_NETFILTER
-enabled.
-
-Compile tested and run through netfilter selftests.
-
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/netfilter-devel/20240906145513.567781-1-andriy.shevchenko@linux.intel.com/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Link: https://patch.msgid.link/20240821112217.41827-9-haris.iqbal@ionos.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 10 ++++------
- net/ipv6/netfilter/nf_reject_ipv6.c |  5 ++---
- 2 files changed, 6 insertions(+), 9 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index fc761915c5f6f..675b5bbed638e 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -239,9 +239,8 @@ static int nf_reject_fill_skb_dst(struct sk_buff *skb_in)
- void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 		   int hook)
- {
--	struct sk_buff *nskb;
--	struct iphdr *niph;
- 	const struct tcphdr *oth;
-+	struct sk_buff *nskb;
- 	struct tcphdr _oth;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index 726b690ebe652..a70ccb4d4c857 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -936,12 +936,11 @@ static void rtrs_srv_info_req_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	if (err)
+ 		goto close;
  
- 	oth = nf_reject_ip_tcphdr_get(oldskb, &_oth, hook);
-@@ -266,14 +265,12 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	nskb->mark = IP4_REPLY_MARK(net, oldskb->mark);
+-out:
+ 	rtrs_iu_free(iu, srv_path->s.dev->ib_dev, 1);
+ 	return;
+ close:
++	rtrs_iu_free(iu, srv_path->s.dev->ib_dev, 1);
+ 	close_path(srv_path);
+-	goto out;
+ }
  
- 	skb_reserve(nskb, LL_MAX_HEADER);
--	niph = nf_reject_iphdr_put(nskb, oldskb, IPPROTO_TCP,
--				   ip4_dst_hoplimit(skb_dst(nskb)));
-+	nf_reject_iphdr_put(nskb, oldskb, IPPROTO_TCP,
-+			    ip4_dst_hoplimit(skb_dst(nskb)));
- 	nf_reject_ip_tcphdr_put(nskb, oldskb, oth);
- 	if (ip_route_me_harder(net, sk, nskb, RTN_UNSPEC))
- 		goto free_nskb;
+ static int post_recv_info_req(struct rtrs_srv_con *con)
+@@ -992,6 +991,16 @@ static int post_recv_path(struct rtrs_srv_path *srv_path)
+ 			q_size = SERVICE_CON_QUEUE_DEPTH;
+ 		else
+ 			q_size = srv->queue_depth;
++		if (srv_path->state != RTRS_SRV_CONNECTING) {
++			rtrs_err(s, "Path state invalid. state %s\n",
++				 rtrs_srv_state_str(srv_path->state));
++			return -EIO;
++		}
++
++		if (!srv_path->s.con[cid]) {
++			rtrs_err(s, "Conn not set for %d\n", cid);
++			return -EIO;
++		}
  
--	niph = ip_hdr(nskb);
--
- 	/* "Never happens" */
- 	if (nskb->len > dst_mtu(skb_dst(nskb)))
- 		goto free_nskb;
-@@ -290,6 +287,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	 */
- 	if (nf_bridge_info_exists(oldskb)) {
- 		struct ethhdr *oeth = eth_hdr(oldskb);
-+		struct iphdr *niph = ip_hdr(nskb);
- 		struct net_device *br_indev;
- 
- 		br_indev = nf_bridge_get_physindev(oldskb, net);
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 690d1c0476913..4e0976534648c 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -273,7 +273,6 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	const struct tcphdr *otcph;
- 	unsigned int otcplen, hh_len;
- 	const struct ipv6hdr *oip6h = ipv6_hdr(oldskb);
--	struct ipv6hdr *ip6h;
- 	struct dst_entry *dst = NULL;
- 	struct flowi6 fl6;
- 
-@@ -329,8 +328,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	nskb->mark = fl6.flowi6_mark;
- 
- 	skb_reserve(nskb, hh_len + dst->header_len);
--	ip6h = nf_reject_ip6hdr_put(nskb, oldskb, IPPROTO_TCP,
--				    ip6_dst_hoplimit(dst));
-+	nf_reject_ip6hdr_put(nskb, oldskb, IPPROTO_TCP, ip6_dst_hoplimit(dst));
- 	nf_reject_ip6_tcphdr_put(nskb, oldskb, otcph, otcplen);
- 
- 	nf_ct_attach(nskb, oldskb);
-@@ -345,6 +343,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	 */
- 	if (nf_bridge_info_exists(oldskb)) {
- 		struct ethhdr *oeth = eth_hdr(oldskb);
-+		struct ipv6hdr *ip6h = ipv6_hdr(nskb);
- 		struct net_device *br_indev;
- 
- 		br_indev = nf_bridge_get_physindev(oldskb, net);
+ 		err = post_recv_io(to_srv_con(srv_path->s.con[cid]), q_size);
+ 		if (err) {
 -- 
 2.43.0
 
