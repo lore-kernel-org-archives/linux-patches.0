@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E161AA793;
-	Mon, 14 Oct 2024 15:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029B21A76A5;
+	Mon, 14 Oct 2024 15:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918670; cv=none; b=ccQV7ReUOOg2/7NfsKE7qi/iiCcjCZfBOKQxmm7Xnc17sQbQVyC3jPhxlnCizr+ynVJDLQR0cqTJ6+lXKR25Huj3AlSj/x/hwHEYT9KxSz6damLkNdQ+nKkdSPBcGEfonU9Q4Nv69CuFTYznB6kJKyl3ITIbta5sm53jHFw15YA=
+	t=1728918674; cv=none; b=BNtgUQxS7LdTn1VYsKZq3l3AjZJkRfCILcAKuc5LZDcy1yuKKbobTVX4ZQgc+0w7kYLriKFKHXEc9OCC00UG3uoF1IeXK9e+LONKl+YgDvNMsZQBizYZOkCt3lyZzyV7BnTBKaw0LYoEoT6vFdHe+idhnVdXQWXcGa3AP/Ses+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918670; c=relaxed/simple;
-	bh=LdxatDUsJ8imKVnONTLLBGsBYbiUdwrFQQ5hN+0W9jw=;
+	s=arc-20240116; t=1728918674; c=relaxed/simple;
+	bh=fMekQNrvPqszdMqObDWDXCEBacHIfOhJYOMh0jI1/oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOBDYKb08G0pBm2BNjJUP7o/ZSZKnbnLoG1x3m9JVmUQRSe2D8yHlPCCzAV+OOKh1QxgmWo787C+3AEHBYjldCBEGhxujLiXEcDYlSBjroTl3OmMUgCTCoknJXIH5I3YuLvgX/vdriNDZYGOgjbR86FgKjsHK8G9cx3jBUC7duQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJKGEz/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GIWpBuek32pt1a4mEsEITgnx07dwaA/A+IYA8X59I4Rg5C+VhildRqhA0jkp5K0qo+3dNLGjVx3cFDzqQD78cMGIVw2mRIdYerbFIIU04hkzKxU9WYhp/vmJdNEnPbofdY2dByIzkgElRX5A7xEstAH7e41iLw66iGBl7lyiUUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LG0iC7E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJKGEz/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CED8C4CEC3;
-	Mon, 14 Oct 2024 15:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LG0iC7E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2C5C4CEC3;
+	Mon, 14 Oct 2024 15:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918669;
-	bh=LdxatDUsJ8imKVnONTLLBGsBYbiUdwrFQQ5hN+0W9jw=;
+	s=korg; t=1728918673;
+	bh=fMekQNrvPqszdMqObDWDXCEBacHIfOhJYOMh0jI1/oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJKGEz/MJ8iT+jN46MoIjcAe6HENo8Q3FCHyBdZ3I/5Ews+kgf1QyFKSjI122J04g
-	 2Qv4s9S5LQ0/HftjlI9qL6iPJZdz2duD/3wUJNYSTxBfpujTOr1fr5MdkiM241bZBx
-	 6u6JTYQ6Uld6pJnxZiPkopE1mvGUbqV3zE7RKCZE=
+	b=0LG0iC7EaUOYL1d/xANA0TRZkhNESUgfimYm1AafdhY7npNo4i2RItX4OYYp+XCpn
+	 9dtxmEj+8CNRA/qdslwleszBxsRMsBLfK+xzzSyL6k8NYmfqh+aBPzzxwz+EvSdsCC
+	 f61Uh0nnd6QJVH4brLu1YrGOg/ZWXFThrMBp67aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
-	Abhishek Rawal <rawal.abhishek92@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>
-Subject: [PATCH 6.1 361/798] icmp: Add counters for rate limits
-Date: Mon, 14 Oct 2024 16:15:15 +0200
-Message-ID: <20241014141232.129828812@linuxfoundation.org>
+	Yuanyuan Zhong <yzhong@purestorage.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 388/798] net/mlx5: Added cond_resched() to crdump collection
+Date: Mon, 14 Oct 2024 16:15:42 +0200
+Message-ID: <20241014141233.190509341@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,136 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-commit d0941130c93515411c8d66fc22bdae407b509a6d upstream.
+[ Upstream commit ec793155894140df7421d25903de2e6bc12c695b ]
 
-There are multiple ICMP rate limiting mechanisms:
+Collecting crdump involves reading vsc registers from pci config space
+of mlx device, which can take long time to complete. This might result
+in starving other threads waiting to run on the cpu.
 
-* Global limits: net.ipv4.icmp_msgs_burst/icmp_msgs_per_sec
-* v4 per-host limits: net.ipv4.icmp_ratelimit/ratemask
-* v6 per-host limits: net.ipv6.icmp_ratelimit/ratemask
+Numbers I got from testing ConnectX-5 Ex MCX516A-CDAT in the lab:
 
-However, when ICMP output is limited, there is no way to tell
-which limit has been hit or even if the limits are responsible
-for the lack of ICMP output.
+- mlx5_vsc_gw_read_block_fast() was called with length = 1310716.
+- mlx5_vsc_gw_read_fast() reads 4 bytes at a time. It was not used to
+  read the entire 1310716 bytes. It was called 53813 times because
+  there are jumps in read_addr.
+- On average mlx5_vsc_gw_read_fast() took 35284.4ns.
+- In total mlx5_vsc_wait_on_flag() called vsc_read() 54707 times.
+  The average time for each call was 17548.3ns. In some instances
+  vsc_read() was called more than one time when the flag was not set.
+  As expected the thread released the cpu after 16 iterations in
+  mlx5_vsc_wait_on_flag().
+- Total time to read crdump was 35284.4ns * 53813 ~= 1.898s.
 
-Add counters for each of the cases above. As we are within
-local_bh_disable(), use the __INC stats variant.
+It was seen in the field that crdump can take more than 5 seconds to
+complete. During that time mlx5_vsc_wait_on_flag() did not release the
+cpu because it did not complete 16 iterations. It is believed that pci
+config reads were slow. Adding cond_resched() every 128 register read
+improves the situation. In the common case the, crdump takes ~1.8989s,
+the thread yields the cpu every ~4.51ms. If crdump takes ~5s, the thread
+yields the cpu every ~18.0ms.
 
-Example output:
-
- # nstat -sz "*RateLimit*"
- IcmpOutRateLimitGlobal          134                0.0
- IcmpOutRateLimitHost            770                0.0
- Icmp6OutRateLimitHost           84                 0.0
-
-Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Suggested-by: Abhishek Rawal <rawal.abhishek92@gmail.com>
-Link: https://lore.kernel.org/r/273b32241e6b7fdc5c609e6f5ebc68caf3994342.1674605770.git.jamie.bainbridge@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8b9d8baae1de ("net/mlx5: Add Crdump support")
+Reviewed-by: Yuanyuan Zhong <yzhong@purestorage.com>
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/snmp.h |    3 +++
- net/ipv4/icmp.c           |    3 +++
- net/ipv4/proc.c           |    8 +++++---
- net/ipv6/icmp.c           |    4 ++++
- net/ipv6/proc.c           |    1 +
- 5 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/uapi/linux/snmp.h
-+++ b/include/uapi/linux/snmp.h
-@@ -95,6 +95,8 @@ enum
- 	ICMP_MIB_OUTADDRMASKS,			/* OutAddrMasks */
- 	ICMP_MIB_OUTADDRMASKREPS,		/* OutAddrMaskReps */
- 	ICMP_MIB_CSUMERRORS,			/* InCsumErrors */
-+	ICMP_MIB_RATELIMITGLOBAL,		/* OutRateLimitGlobal */
-+	ICMP_MIB_RATELIMITHOST,			/* OutRateLimitHost */
- 	__ICMP_MIB_MAX
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
+index d0b595ba61101..432c98f2626db 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
+@@ -24,6 +24,11 @@
+ 	pci_write_config_dword((dev)->pdev, (dev)->vsc_addr + (offset), (val))
+ #define VSC_MAX_RETRIES 2048
  
-@@ -112,6 +114,7 @@ enum
- 	ICMP6_MIB_OUTMSGS,			/* OutMsgs */
- 	ICMP6_MIB_OUTERRORS,			/* OutErrors */
- 	ICMP6_MIB_CSUMERRORS,			/* InCsumErrors */
-+	ICMP6_MIB_RATELIMITHOST,		/* OutRateLimitHost */
- 	__ICMP6_MIB_MAX
- };
++/* Reading VSC registers can take relatively long time.
++ * Yield the cpu every 128 registers read.
++ */
++#define VSC_GW_READ_BLOCK_COUNT 128
++
+ enum {
+ 	VSC_CTRL_OFFSET = 0x4,
+ 	VSC_COUNTER_OFFSET = 0x8,
+@@ -273,6 +278,7 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
+ {
+ 	unsigned int next_read_addr = 0;
+ 	unsigned int read_addr = 0;
++	unsigned int count = 0;
  
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -297,6 +297,7 @@ static bool icmpv4_global_allow(struct n
- 	if (icmp_global_allow())
- 		return true;
+ 	while (read_addr < length) {
+ 		if (mlx5_vsc_gw_read_fast(dev, read_addr, &next_read_addr,
+@@ -280,6 +286,10 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
+ 			return read_addr;
  
-+	__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITGLOBAL);
- 	return false;
- }
- 
-@@ -326,6 +327,8 @@ static bool icmpv4_xrlim_allow(struct ne
- 	if (peer)
- 		inet_putpeer(peer);
- out:
-+	if (!rc)
-+		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
- 	return rc;
- }
- 
---- a/net/ipv4/proc.c
-+++ b/net/ipv4/proc.c
-@@ -352,7 +352,7 @@ static void icmp_put(struct seq_file *se
- 	seq_puts(seq, "\nIcmp: InMsgs InErrors InCsumErrors");
- 	for (i = 0; icmpmibmap[i].name; i++)
- 		seq_printf(seq, " In%s", icmpmibmap[i].name);
--	seq_puts(seq, " OutMsgs OutErrors");
-+	seq_puts(seq, " OutMsgs OutErrors OutRateLimitGlobal OutRateLimitHost");
- 	for (i = 0; icmpmibmap[i].name; i++)
- 		seq_printf(seq, " Out%s", icmpmibmap[i].name);
- 	seq_printf(seq, "\nIcmp: %lu %lu %lu",
-@@ -362,9 +362,11 @@ static void icmp_put(struct seq_file *se
- 	for (i = 0; icmpmibmap[i].name; i++)
- 		seq_printf(seq, " %lu",
- 			   atomic_long_read(ptr + icmpmibmap[i].index));
--	seq_printf(seq, " %lu %lu",
-+	seq_printf(seq, " %lu %lu %lu %lu",
- 		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTMSGS),
--		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTERRORS));
-+		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_OUTERRORS),
-+		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_RATELIMITGLOBAL),
-+		snmp_fold_field(net->mib.icmp_statistics, ICMP_MIB_RATELIMITHOST));
- 	for (i = 0; icmpmibmap[i].name; i++)
- 		seq_printf(seq, " %lu",
- 			   atomic_long_read(ptr + (icmpmibmap[i].index | 0x100)));
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -183,6 +183,7 @@ static bool icmpv6_global_allow(struct n
- 	if (icmp_global_allow())
- 		return true;
- 
-+	__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITGLOBAL);
- 	return false;
- }
- 
-@@ -224,6 +225,9 @@ static bool icmpv6_xrlim_allow(struct so
- 		if (peer)
- 			inet_putpeer(peer);
+ 		read_addr = next_read_addr;
++		if (++count == VSC_GW_READ_BLOCK_COUNT) {
++			cond_resched();
++			count = 0;
++		}
  	}
-+	if (!res)
-+		__ICMP6_INC_STATS(net, ip6_dst_idev(dst),
-+				  ICMP6_MIB_RATELIMITHOST);
- 	dst_release(dst);
- 	return res;
+ 	return length;
  }
---- a/net/ipv6/proc.c
-+++ b/net/ipv6/proc.c
-@@ -94,6 +94,7 @@ static const struct snmp_mib snmp6_icmp6
- 	SNMP_MIB_ITEM("Icmp6OutMsgs", ICMP6_MIB_OUTMSGS),
- 	SNMP_MIB_ITEM("Icmp6OutErrors", ICMP6_MIB_OUTERRORS),
- 	SNMP_MIB_ITEM("Icmp6InCsumErrors", ICMP6_MIB_CSUMERRORS),
-+	SNMP_MIB_ITEM("Icmp6OutRateLimitHost", ICMP6_MIB_RATELIMITHOST),
- 	SNMP_MIB_SENTINEL
- };
- 
+-- 
+2.43.0
+
 
 
