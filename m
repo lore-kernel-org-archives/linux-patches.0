@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8C14C3D0;
-	Mon, 14 Oct 2024 15:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0744E1537AA;
+	Mon, 14 Oct 2024 15:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919828; cv=none; b=dPNaidY3TI8NP9ci6meOyrf2U4+amu1zTLtlQv0teLgpeXJ8VjEquGU7TjVJgHpVSjbfa66uvPvDQ6xxFdc7oIlhbDlZ1Yh4q0M2o//7Jr4lMBGd35GzX39bwapTeUdgv/HTI1mSGOyUxfZEVsnAnPFXWMwLQXTf86SJrdSkW+w=
+	t=1728919832; cv=none; b=urIEoZf2zq9J0MuOpDfBJaBF/bjj8x4JevgjDpwb53WJVyNilaxCux6PL2bSSp2qtl1mFUi2wi4Te6ADkRMlpB25hIPpVUfMClpetQNdGFRL4syfsY2qzwC3Fetor22CrdVmpE37IfDH2Th02vdOR8xLzVuNj9lq44VcDG0UiPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919828; c=relaxed/simple;
-	bh=rnLYbKiqbarBLeRvFBpN/OynZVqIQHipXbsiepvYADg=;
+	s=arc-20240116; t=1728919832; c=relaxed/simple;
+	bh=XM64NmLjjqqtYIwojBr4zYIiFGEnMvKTED3HHySYEVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0GQfc+fOz8KdMcbonnag3C0pFT0qYlhdErfhHPOMFxCDTNXjnSznHPTtruDZ1DckErA2Rnf0D8iHIyIeLlYkd2jAtGLGM3l062elOSGYg+/CA0aWKwLxPmtkXx4M8P5wimjWlFYK8kKB+ik1NmcPsgMBkJ4GcKngrUPOPmb0kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZX7rSfR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PaxqxkU0J3s6oTH5se3alMGoW1celqhK/Z45f7v8eJLM7z1Z/2VrQnxnhFQrhxwuh5tnKViiLX3c+M0vlEFTd8eRauSUnpb86ejQWoTlZJkZ1Ip9yp/PwczOIXLdWhCbiOsI6gP3kulxgH+Lwrlr+WtZV1t1NYcmEk26g3fA0do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLJT4NhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZX7rSfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1328C4CEC3;
-	Mon, 14 Oct 2024 15:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLJT4NhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6F4C4CEC3;
+	Mon, 14 Oct 2024 15:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919828;
-	bh=rnLYbKiqbarBLeRvFBpN/OynZVqIQHipXbsiepvYADg=;
+	s=korg; t=1728919831;
+	bh=XM64NmLjjqqtYIwojBr4zYIiFGEnMvKTED3HHySYEVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZX7rSfRAQ5tt/fMvDE35/INeD63Qa4DwrKMLS7xtC8/S+StI8KQxIIe/TzqHJ8bO
-	 CG8zFvZt3SVlNLclzXTLyDHTxoGaP1Lmhe1dQgeVxfheW59wNKFTQwBQW0fMoi/Ib7
-	 xVqTgqLtqm8TvcI//Og1JvrU4WD2mH14T9erA4SQ=
+	b=pLJT4NhG/k3gFQ7JHyspn5fW4sd2iDSvK+vAPVGrXeL47N+vmBouuI8qN8Qi6uQ2N
+	 UzPIi6Ele4nMwtBSpnVOdvGDXioR+NJvnaNmV6MLt+5PSgOwUh6Lr+7MgsKnrnHXCf
+	 hkJtB+RyoFZMOfeGEA/GZ1kElgJxd06ENAXcZ98w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riyan Dhiman <riyandhiman14@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 718/798] staging: vme_user: added bound check to geoid
-Date: Mon, 14 Oct 2024 16:21:12 +0200
-Message-ID: <20241014141246.277222667@linuxfoundation.org>
+Subject: [PATCH 6.1 719/798] driver core: bus: Return -EIO instead of 0 when show/store invalid bus attribute
+Date: Mon, 14 Oct 2024 16:21:13 +0200
+Message-ID: <20241014141246.317022694@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,58 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riyan Dhiman <riyandhiman14@gmail.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit a8a8b54350229f59c8ba6496fb5689a1632a59be ]
+[ Upstream commit c0fd973c108cdc22a384854bc4b3e288a9717bb2 ]
 
-The geoid is a module parameter that allows users to hardcode the slot number.
-A bound check for geoid was added in the probe function because only values
-between 0 and less than VME_MAX_SLOT are valid.
+Return -EIO instead of 0 for below erroneous bus attribute operations:
+ - read a bus attribute without show().
+ - write a bus attribute without store().
 
-Signed-off-by: Riyan Dhiman <riyandhiman14@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240827125604.42771-2-riyandhiman14@gmail.com
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20240724-bus_fix-v2-1-5adbafc698fb@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vme_user/vme_fake.c   | 6 ++++++
- drivers/staging/vme_user/vme_tsi148.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/base/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
-index 1ee432c223e2b..0c4d60aa00ab2 100644
---- a/drivers/staging/vme_user/vme_fake.c
-+++ b/drivers/staging/vme_user/vme_fake.c
-@@ -1071,6 +1071,12 @@ static int __init fake_init(void)
- 	struct vme_slave_resource *slave_image;
- 	struct vme_lm_resource *lm;
+diff --git a/drivers/base/bus.c b/drivers/base/bus.c
+index 7ca47e5b3c1f4..339a9edcde5f5 100644
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -104,7 +104,8 @@ static ssize_t bus_attr_show(struct kobject *kobj, struct attribute *attr,
+ {
+ 	struct bus_attribute *bus_attr = to_bus_attr(attr);
+ 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
+-	ssize_t ret = 0;
++	/* return -EIO for reading a bus attribute without show() */
++	ssize_t ret = -EIO;
  
-+	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
-+		pr_err("VME geographical address must be between 0 and %d (exclusive), but got %d\n",
-+			VME_MAX_SLOTS, geoid);
-+		return -EINVAL;
-+	}
-+
- 	/* We need a fake parent device */
- 	vme_root = __root_device_register("vme", THIS_MODULE);
- 	if (IS_ERR(vme_root))
-diff --git a/drivers/staging/vme_user/vme_tsi148.c b/drivers/staging/vme_user/vme_tsi148.c
-index 0171f46d1848f..0e649c8b259d1 100644
---- a/drivers/staging/vme_user/vme_tsi148.c
-+++ b/drivers/staging/vme_user/vme_tsi148.c
-@@ -2261,6 +2261,12 @@ static int tsi148_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	struct vme_dma_resource *dma_ctrlr;
- 	struct vme_lm_resource *lm;
+ 	if (bus_attr->show)
+ 		ret = bus_attr->show(subsys_priv->bus, buf);
+@@ -116,7 +117,8 @@ static ssize_t bus_attr_store(struct kobject *kobj, struct attribute *attr,
+ {
+ 	struct bus_attribute *bus_attr = to_bus_attr(attr);
+ 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
+-	ssize_t ret = 0;
++	/* return -EIO for writing a bus attribute without store() */
++	ssize_t ret = -EIO;
  
-+	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
-+		dev_err(&pdev->dev, "VME geographical address must be between 0 and %d (exclusive), but got %d\n",
-+			VME_MAX_SLOTS, geoid);
-+		return -EINVAL;
-+	}
-+
- 	/* If we want to support more than one of each bridge, we need to
- 	 * dynamically generate this so we get one per device
- 	 */
+ 	if (bus_attr->store)
+ 		ret = bus_attr->store(subsys_priv->bus, buf, count);
 -- 
 2.43.0
 
