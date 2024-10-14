@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7371AAC4;
-	Mon, 14 Oct 2024 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4341AB508;
+	Mon, 14 Oct 2024 14:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916180; cv=none; b=EgDJwQA8h0/74Lh6cgWQL6prBJojd99ZP8L32iVI1l/UdR+yQTBDuoNo7SJ+fc64odSAYOwZpVSJ8z/sJnJEyD0WiPplN6TVrDj8ygspnc2cpBbkGml0d7XvHYzzjMuKnFSBWNgxuTscz7AOr+I3kcgZo4CiN31H7JlKa41nS4k=
+	t=1728916183; cv=none; b=YLxFjs0FM/sGLRYkBNfe0dumyozsxsF5gWAwyahlgLJpbl6l+UPUDDfUyDDwYBTt0fmlmHMWGO4041LBNaCq7T8e04ZzZ4FlW9tGIzAZDt2ovKRJMRRPyr8XLzXZr1HcFHm4LIqiZslkj8T6LF8m3OQGU6p1b7ApQhB2UCEFlIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916180; c=relaxed/simple;
-	bh=e1K6I66La8HaDReaZbdEgrNi33LvQL7AwTr04YurwBY=;
+	s=arc-20240116; t=1728916183; c=relaxed/simple;
+	bh=pBhfDn2vncCod7kFTMV2RRj92XzMFRo7ggLSpFdbrCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/qWvd7NCHl++VbVio1kHK112f64a/lr/tul9NYX1EwOZC5mrh2sA3qyTNnVWTWogfTh1Rgr5Nu+kXeEB2fi520vHGBLmsRc84hHuhyDkij+eRgzQMavb3eX6fV81M8VCtGxi4IT7AQrRhgd/mHDUfIK12KpI1HAaZJZP9zxceU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAjn5UP1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThPMpOo6cU1GRux8HQK6kMTvHmdvMadie7TuDu/9AbOjFHteD0Zpcvs6hyoRlU7fybd1zFvuOKPW+1Je2FX+J35P0OglswxWdZ+9MXcFkmZmnN2ZlIll9dKp9B96hpXJcX+fJvmKhqiy2vxC0gD0PsQrFm71KU06wW1tpLeiqAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3yYakov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAjn5UP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09C9C4CEC3;
-	Mon, 14 Oct 2024 14:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3yYakov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93A4C4CED1;
+	Mon, 14 Oct 2024 14:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916180;
-	bh=e1K6I66La8HaDReaZbdEgrNi33LvQL7AwTr04YurwBY=;
+	s=korg; t=1728916183;
+	bh=pBhfDn2vncCod7kFTMV2RRj92XzMFRo7ggLSpFdbrCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAjn5UP1Ds50FQFTE/gKs4rGoLKJiaIroNYrilNn7C7ivgCln27aQ9yH3MBOe7XHm
-	 6Cf33AysonkLkXcLP2hEZ8/makgnRqVL2upEdXTJ6fawWDRafDQLKPITeAN9/M1biG
-	 /0GQlFeuXlv31gRpTA0sD7eG6iQNw/Sy5IFnvau0=
+	b=Q3yYakovnDLHgrCClZRt8vlj/mH2y0AbpzzzerC6ScW5si92Vj27pU2ltPPua/iEM
+	 5uLXqqZuJo+fHTFX9vv58tpglQs/6JRfEfkBBqObV9SMMMKVZRcnBnwsZagLMwdJKf
+	 UAbAfJJ5wu1yec3oYE9cuWGbQrHFRi4sRgYb19Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Furong Xu <0x1207@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 107/214] Revert "net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled"
-Date: Mon, 14 Oct 2024 16:19:30 +0200
-Message-ID: <20241014141049.170921583@linuxfoundation.org>
+Subject: [PATCH 6.11 108/214] net: ethernet: adi: adin1110: Fix some error handling path in adin1110_read_fifo()
+Date: Mon, 14 Oct 2024 16:19:31 +0200
+Message-ID: <20241014141049.211571401@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 5546da79e6cc5bb3324bf25688ed05498fd3f86d ]
+[ Upstream commit 83211ae1640516accae645de82f5a0a142676897 ]
 
-This reverts commit b514c47ebf41a6536551ed28a05758036e6eca7c.
+If 'frame_size' is too small or if 'round_len' is an error code, it is
+likely that an error code should be returned to the caller.
 
-The commit describes that we don't have to sync the page when
-recycling, and it tries to optimize that case. But we do need
-to sync after allocation. Recycling side should be changed to
-pass the right sync size instead.
+Actually, 'ret' is likely to be 0, so if one of these sanity checks fails,
+'success' is returned.
 
-Fixes: b514c47ebf41 ("net: stmmac: set PP_FLAG_DMA_SYNC_DEV only if XDP is enabled")
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/20241004070846.2502e9ea@kernel.org
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/20241004142115.910876-1-kuba@kernel.org
+Return -EINVAL instead.
+
+Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/8ff73b40f50d8fa994a454911b66adebce8da266.1727981562.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/adi/adin1110.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 95d3d1081727f..f3a1b179aaeac 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2022,7 +2022,7 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
- 	rx_q->queue_index = queue;
- 	rx_q->priv_data = priv;
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index 0713f1e2c7f38..bf2e513295bb7 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -318,11 +318,11 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ 	 * from the  ADIN1110 frame header.
+ 	 */
+ 	if (frame_size < ADIN1110_FRAME_HEADER_LEN + ADIN1110_FEC_LEN)
+-		return ret;
++		return -EINVAL;
  
--	pp_params.flags = PP_FLAG_DMA_MAP | (xdp_prog ? PP_FLAG_DMA_SYNC_DEV : 0);
-+	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
- 	pp_params.pool_size = dma_conf->dma_rx_size;
- 	num_pages = DIV_ROUND_UP(dma_conf->dma_buf_sz, PAGE_SIZE);
- 	pp_params.order = ilog2(num_pages);
+ 	round_len = adin1110_round_len(frame_size);
+ 	if (round_len < 0)
+-		return ret;
++		return -EINVAL;
+ 
+ 	frame_size_no_fcs = frame_size - ADIN1110_FRAME_HEADER_LEN - ADIN1110_FEC_LEN;
+ 	memset(priv->data, 0, ADIN1110_RD_HEADER_LEN);
 -- 
 2.43.0
 
