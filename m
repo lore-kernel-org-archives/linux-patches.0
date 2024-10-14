@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AC31A76A5;
-	Mon, 14 Oct 2024 15:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C103481B3;
+	Mon, 14 Oct 2024 15:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918782; cv=none; b=iVGYOJ9Dj2AeOcf5yzZXmAbZPcj49vPcDchxJda24RusZa42tyPucQP+EK7HEuY2FAm3KIgLqIisSX2IVLn2hhfk3qIBH0nve6hajDbjq8r26hxqwEuKzEhDB6/A81vFAWUADfWwgsj9y7i/w/MygdWCXOTbFY2pTqitrnFPbwU=
+	t=1728918785; cv=none; b=B3Ih64f6lu3SiWYP+hlPxc98m5Qf1WyIhUGmBSGyWDIB8mudSjAciZy/UOS4tIiE51qG8O0thJb0bfruv+2xB7PpI9CjPyx+ddTRW1AAQJThRBAF6pTP0bVGdze9BYZDwt7aP7FN0xo6namYNyQzKhG/kBMJZRhLLsGHY3keBpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918782; c=relaxed/simple;
-	bh=2XRTV2ZRiRCHqDjsM/+2t5opdohrePOkRb3R1bY+AJY=;
+	s=arc-20240116; t=1728918785; c=relaxed/simple;
+	bh=gAgH7yJD72B3ISX99MTMqaA2G8+oRXp2ovM4XL311WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=soPSRUEFQBXTZ2Ec+8stzI9qUb42FNXlHKSEOiZRMXGSM7FQBhGNb3RfTWmpwP3rqqtI/GWF+AaklcJuvk1yQtmem0hl8ZiliqpCqh/x+nwVto32OU9HIUaphhbier9l1MGpAh/SUqC8P3xiarU0a+JdMjQCHGwUhatO/A27RlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mz0YS5/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEyTpWAqs0DdHQHQvt2BvJqV0bSp8kr/ayH7qD3AsVWKTt+emlLPwzOHaQ4oO/qC35jU3JD9ASEWobJwNtBuXAuEO/sFsSHbtz11Xl0KANmUSAmLY14qA07juOejE5I3ODmkzkoPRJt8uCqpbUC4YZnvRfsvYMNsfWI8p6bjzSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixEHXmDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mz0YS5/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891A1C4CEC7;
-	Mon, 14 Oct 2024 15:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixEHXmDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD4FC4CECF;
+	Mon, 14 Oct 2024 15:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918782;
-	bh=2XRTV2ZRiRCHqDjsM/+2t5opdohrePOkRb3R1bY+AJY=;
+	s=korg; t=1728918785;
+	bh=gAgH7yJD72B3ISX99MTMqaA2G8+oRXp2ovM4XL311WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mz0YS5/+jUFZwKn71gCIgZ7FyavyDS3s8O8p8b3tkbkDTr/wcKdUim4YRBkQlAvcT
-	 lgDowpVhYQEtGJyJEtDawWL6v15E7raEQrawFF1BuA4sR3IaA9kQppnHa/+f2hSzr3
-	 r+tN7wUUtzDBCl5sLvVE3SEwbMUpYXqOZWnkyraU=
+	b=ixEHXmDgHbC5OIR3vHZOkV1FFPQsssRDB39J2mxTsRttokP1lmZ156cRCftaX0eOL
+	 hGx9KTm9K00uLpuk5e/JX99089TQiu1Ee5lhmi+8olOb1kibyo8gRb0SlYX0ShTpz1
+	 /JJQkKmJR50H74w4yplT3QGkU+C+mvDkcDsn5kYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/798] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Mon, 14 Oct 2024 16:15:49 +0200
-Message-ID: <20241014141233.462072895@linuxfoundation.org>
+Subject: [PATCH 6.1 422/798] net/xen-netback: prevent UAF in xenvif_flush_hash()
+Date: Mon, 14 Oct 2024 16:16:16 +0200
+Message-ID: <20241014141234.527626212@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
+[ Upstream commit 0fa5e94a1811d68fbffa0725efe6d4ca62c03d12 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+During the list_for_each_entry_rcu iteration call of xenvif_flush_hash,
+kfree_rcu does not exist inside the rcu read critical section, so if
+kfree_rcu is called when the rcu grace period ends during the iteration,
+UAF occurs when accessing head->next after the entry becomes free.
 
-Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Therefore, to solve this, you need to change it to list_for_each_entry_safe.
+
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://patch.msgid.link/20240822181109.2577354-1-aha310510@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmrvl_sdio.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/xen-netback/hash.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
-index ba057ebfda5c2..981b43f79e4a3 100644
---- a/drivers/bluetooth/btmrvl_sdio.c
-+++ b/drivers/bluetooth/btmrvl_sdio.c
-@@ -92,7 +92,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
- 		} else {
- 			ret = devm_request_irq(dev, cfg->irq_bt,
- 					       btmrvl_wake_irq_bt,
--					       0, "bt_wake", card);
-+					       IRQF_NO_AUTOEN, "bt_wake", card);
- 			if (ret) {
- 				dev_err(dev,
- 					"Failed to request irq_bt %d (%d)\n",
-@@ -101,7 +101,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+diff --git a/drivers/net/xen-netback/hash.c b/drivers/net/xen-netback/hash.c
+index ff96f22648efd..45ddce35f6d2c 100644
+--- a/drivers/net/xen-netback/hash.c
++++ b/drivers/net/xen-netback/hash.c
+@@ -95,7 +95,7 @@ static u32 xenvif_new_hash(struct xenvif *vif, const u8 *data,
  
- 			/* Configure wakeup (enabled by default) */
- 			device_init_wakeup(dev, true);
--			disable_irq(cfg->irq_bt);
- 		}
- 	}
+ static void xenvif_flush_hash(struct xenvif *vif)
+ {
+-	struct xenvif_hash_cache_entry *entry;
++	struct xenvif_hash_cache_entry *entry, *n;
+ 	unsigned long flags;
  
+ 	if (xenvif_hash_cache_size == 0)
+@@ -103,8 +103,7 @@ static void xenvif_flush_hash(struct xenvif *vif)
+ 
+ 	spin_lock_irqsave(&vif->hash.cache.lock, flags);
+ 
+-	list_for_each_entry_rcu(entry, &vif->hash.cache.list, link,
+-				lockdep_is_held(&vif->hash.cache.lock)) {
++	list_for_each_entry_safe(entry, n, &vif->hash.cache.list, link) {
+ 		list_del_rcu(&entry->link);
+ 		vif->hash.cache.count--;
+ 		kfree_rcu(entry, rcu);
 -- 
 2.43.0
 
