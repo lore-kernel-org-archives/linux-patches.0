@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA91547F3;
-	Mon, 14 Oct 2024 14:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BA61547F3;
+	Mon, 14 Oct 2024 14:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916125; cv=none; b=EawFDAk6Si70aJrRX4CCPaxi93b9/Mieyk77Lw3LXrD64A0hOLu+N5X8a400JoMSXeASXpOzgWhIDFO5IrbsxVADf4fD+QAhbcHVEH1IoUaK5oX7PFIxbVKefpdo+VU0XNJ/5h1Ata2+TQHpJfCTPJMQOXJOOiFTdI7mPRxWE2g=
+	t=1728916128; cv=none; b=fu8SdJC06ZP7aGVdOlO6Wkn9JwlvugQ7V4VCOAVAIPIxjN8ws3H46vD/2ecqzdvOvdNKG1N7kHuLiJMImtiniqcHfmymQkNqOzPnrTSzsa9sEDk21ZJgrCN+QInnW7jlGt3ZTZtIxzU+ESTn9SlQ8IcWIxUfrpuz7r4m11q+wvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916125; c=relaxed/simple;
-	bh=zHdVGyCcZr51KvBLRcfKTij+Mcd2NB+875SkeI0JWHI=;
+	s=arc-20240116; t=1728916128; c=relaxed/simple;
+	bh=Wx63BEMQO+i5hpOjeK4g4WsXr6oWJ+5/Hyf9hpAOWPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiM77rlKquKBYJtQySFn6RH25DZhBx00dSqRGHBHc5EYs2EQ5snF2V1yeKVImLgIZA0lq+09/4PwZW/roYxZAvQD8diqBSDjmJu7b+1myLmjyvv1VRxUPf0vkdZFG2IxCIQCs0AxKmjzlKtHB/TL9FUP8+f+1J97ka07JgQ+ANw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuhwqVGU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DA/9Az0TNIe+TKA0eqKqEZPvjj0QvXZotQF+Y0lBbfqHujPAJjUNUupYYHH32DsI8qxLGvS1H/DvjaRN5aR/MTWA52EUHLvtb+xfayVxP6O6GpNvDsvO9LPugcUj7Nj3YYrNF7FLUvKrkdrtq7tByGvhi7P2+tdxW/g+KIUMGDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nahcDaXT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuhwqVGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F618C4CEC3;
-	Mon, 14 Oct 2024 14:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nahcDaXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A5BC4CEC3;
+	Mon, 14 Oct 2024 14:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916124;
-	bh=zHdVGyCcZr51KvBLRcfKTij+Mcd2NB+875SkeI0JWHI=;
+	s=korg; t=1728916128;
+	bh=Wx63BEMQO+i5hpOjeK4g4WsXr6oWJ+5/Hyf9hpAOWPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuhwqVGUEjQH//29Gqknj6xTg/0NQ8ICzRdtnezOb3zd12lfoL1HSGGiQiMq1lQwM
-	 vGpIMCieoCKzjox1FY4+tlgCiLKNk9Rd891TIAH6oGB2CGfDn+vqKfNaWN53CoprNE
-	 gGO9bmBwHCiw3gu0hXY4ilTCkCLinD3vYbXY6s/s=
+	b=nahcDaXTqAaaMX1O3QLTn4xAaU+vd9AurtmSoeTh5lLd8I78RCVKlD56YsNOjgZYG
+	 xRB14gs5yNKvOetlYlKE+FVsALsvF+5kqgPR44/rKjq8wrX7TmFSiAnQRtPAlBdlQM
+	 4e2ym7i/T1m6YrwlBf+p77VepqF6/CWwMXpimSm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo van Lil <inguin@gmx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 090/214] net: phy: dp83869: fix memory corruption when enabling fiber
-Date: Mon, 14 Oct 2024 16:19:13 +0200
-Message-ID: <20241014141048.506397175@linuxfoundation.org>
+Subject: [PATCH 6.11 061/214] comedi: ni_routing: tools: Check when the file could not be opened
+Date: Mon, 14 Oct 2024 16:18:44 +0200
+Message-ID: <20241014141047.371486394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,41 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo van Lil <inguin@gmx.de>
+From: Ruffalo Lavoisier <ruffalolavoisier@gmail.com>
 
-[ Upstream commit a842e443ca8184f2dc82ab307b43a8b38defd6a5 ]
+[ Upstream commit 5baeb157b341b1d26a5815aeaa4d3bb9e0444fda ]
 
-When configuring the fiber port, the DP83869 PHY driver incorrectly
-calls linkmode_set_bit() with a bit mask (1 << 10) rather than a bit
-number (10). This corrupts some other memory location -- in case of
-arm64 the priv pointer in the same structure.
+- After fopen check NULL before using the file pointer use
 
-Since the advertising flags are updated from supported at the end of the
-function the incorrect line isn't needed at all and can be removed.
-
-Fixes: a29de52ba2a1 ("net: dp83869: Add ability to advertise Fiber connection")
-Signed-off-by: Ingo van Lil <inguin@gmx.de>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241002161807.440378-1-inguin@gmx.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>
+Link: https://lore.kernel.org/r/20240906203025.89588-1-RuffaloLavoisier@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index d7aaefb5226b6..5f056d7db83ee 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -645,7 +645,6 @@ static int dp83869_configure_fiber(struct phy_device *phydev,
- 		     phydev->supported);
+diff --git a/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c b/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
+index d55521b5bdcb2..892a66b2cea66 100644
+--- a/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
++++ b/drivers/comedi/drivers/ni_routing/tools/convert_c_to_py.c
+@@ -140,6 +140,11 @@ int main(void)
+ {
+ 	FILE *fp = fopen("ni_values.py", "w");
  
- 	linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->supported);
--	linkmode_set_bit(ADVERTISED_FIBRE, phydev->advertising);
- 
- 	if (dp83869->mode == DP83869_RGMII_1000_BASE) {
- 		linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
++	if (fp == NULL) {
++		fprintf(stderr, "Could not open file!");
++		return -1;
++	}
++
+ 	/* write route register values */
+ 	fprintf(fp, "ni_route_values = {\n");
+ 	for (int i = 0; ni_all_route_values[i]; ++i)
 -- 
 2.43.0
 
