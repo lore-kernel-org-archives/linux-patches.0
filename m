@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6DD45C1C;
-	Mon, 14 Oct 2024 15:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97245C1C;
+	Mon, 14 Oct 2024 15:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918552; cv=none; b=sOQPGtwxyjBQDTHJHZVhvTQcs6TerI/ASTlvgC7paiUFeTXoye78lejgu89gBZiAvBNK2XaPVapnGxotv5siX7yp4SydsPg5RXBdK5uF5WO8Na4QfsG3U7PvedS6WbhkzPNwIVn6mVMG6DMU964l95umrUP9vXLsYPbsd6Kfszc=
+	t=1728918555; cv=none; b=giKJuAk4MzYXQetRVH3zmLhbVnkWykwKhfcpCLUJuiwJcM4K+HML8tt04xXH3eAzXZm+erqo6mAop6u85v22E/85R49L1bnERa2BAZn2PdWotrGxaDOnbBYikWq8elkIbhncMXqADYF06nnR+PKM3IpT0kuOgaxd15bmOdvfo3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918552; c=relaxed/simple;
-	bh=7Rw6IMi12e5fnVUSAp21MOa5FGLnqrNus7+Fdq4pMsE=;
+	s=arc-20240116; t=1728918555; c=relaxed/simple;
+	bh=kJKA6/yRDAJlNMqWfzedaZVztJsA0h8ZdraqQvUEWbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOMfUwQl1SGx4QkqppyiGrCKE4XCRx3OiBBjTk/MyKR/PoW3blyRQZWMZOOTKl2eVum+iB5HmEgR9bDkaHlPfg0V8kRZiIRX86eyWrXldv2H6JyNa4ZrJfOz1uRkqJwmh3AstjRlJG1E7HvC/flNnNGRUEPx+2hN6olP+xV466g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBgJ6bwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NpiCMlOUhNMmodmL5m30T9az123qRf9X1QX8ZMivhRcQF06Phu566J33ia1rei+czv9TnBK8IsVYkGLlKP5flCBaGS/FReP4tQe8KEUR5ZgwZFmD5/gAItgTv+9tRfj3rzKqNBzrzgB93dxgYuni6VqCuxcBxePO+LC2KlsdL0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VS9T5Xpi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBgJ6bwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD26C4CEC3;
-	Mon, 14 Oct 2024 15:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VS9T5Xpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CBEC4CEC3;
+	Mon, 14 Oct 2024 15:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918552;
-	bh=7Rw6IMi12e5fnVUSAp21MOa5FGLnqrNus7+Fdq4pMsE=;
+	s=korg; t=1728918555;
+	bh=kJKA6/yRDAJlNMqWfzedaZVztJsA0h8ZdraqQvUEWbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBgJ6bwR/rzo5mAhpvjcklzjTS5saS4OqtKxaSwT2b2SKQIfgEvqPIrQvrJQJ8d3O
-	 S6pu2qjAlZ0hh/B2VN5z1b2j0Ty8Rx6wQrPc39mHSJDQsRMg/DHazxRo0pvV9o2asr
-	 u+/flZyDhlIFADrdUYhQlkg14rA+lxP5cjvX7X6w=
+	b=VS9T5XpiRKELaJP+RIKG7PJSxVOahJJOY678EIZRbGAWt4DzkrOxeDwhmrpjXqKNL
+	 YUTPkRe9g/X3ERqa/ProryKiVIGhUABwOpuO7bRodY+7UTVplOxTGa0sIPs+tZKVQi
+	 uFsQR6iCihOv1cHUClXUxHLG0MgJhfnXGo4l9vWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Rodolfo Giometti <giometti@enneenne.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 354/798] pps: remove usage of the deprecated ida_simple_xx() API
-Date: Mon, 14 Oct 2024 16:15:08 +0200
-Message-ID: <20241014141231.851464377@linuxfoundation.org>
+Subject: [PATCH 6.1 355/798] pps: add an error check in parport_attach
+Date: Mon, 14 Oct 2024 16:15:09 +0200
+Message-ID: <20241014141231.890098542@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,54 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 55dbc5b5174d0e7d1fa397d05aa4cb145e8b887e ]
+[ Upstream commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+In parport_attach, the return value of ida_alloc is unchecked, witch leads
+to the use of an invalid index value.
 
-This is less verbose.
+To address this issue, index should be checked. When the index value is
+abnormal, the device should be freed.
 
-Link: https://lkml.kernel.org/r/9f681747d446b874952a892491387d79ffe565a9.1713089394.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Rodolfo Giometti <giometti@enneenne.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 62c5a01a5711 ("pps: add an error check in parport_attach")
+Found by code review, compile tested only.
+
+Cc: stable@vger.kernel.org
+Fixes: fb56d97df70e ("pps: client: use new parport device model")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps_parport.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pps/clients/pps_parport.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
-index 42f93d4c6ee32..af972cdc04b53 100644
+index af972cdc04b53..53e9c304ae0a7 100644
 --- a/drivers/pps/clients/pps_parport.c
 +++ b/drivers/pps/clients/pps_parport.c
-@@ -148,7 +148,7 @@ static void parport_attach(struct parport *port)
- 		return;
+@@ -149,6 +149,9 @@ static void parport_attach(struct parport *port)
  	}
  
--	index = ida_simple_get(&pps_client_index, 0, 0, GFP_KERNEL);
-+	index = ida_alloc(&pps_client_index, GFP_KERNEL);
+ 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
++	if (index < 0)
++		goto err_free_device;
++
  	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
  	pps_client_cb.private = device;
  	pps_client_cb.irq_func = parport_irq;
-@@ -188,7 +188,7 @@ static void parport_attach(struct parport *port)
+@@ -159,7 +162,7 @@ static void parport_attach(struct parport *port)
+ 						    index);
+ 	if (!device->pardev) {
+ 		pr_err("couldn't register with %s\n", port->name);
+-		goto err_free;
++		goto err_free_ida;
+ 	}
+ 
+ 	if (parport_claim_or_block(device->pardev) < 0) {
+@@ -187,8 +190,9 @@ static void parport_attach(struct parport *port)
+ 	parport_release(device->pardev);
  err_unregister_dev:
  	parport_unregister_device(device->pardev);
- err_free:
--	ida_simple_remove(&pps_client_index, index);
-+	ida_free(&pps_client_index, index);
- 	kfree(device);
- }
- 
-@@ -208,7 +208,7 @@ static void parport_detach(struct parport *port)
- 	pps_unregister_source(device->pps);
- 	parport_release(pardev);
- 	parport_unregister_device(pardev);
--	ida_simple_remove(&pps_client_index, device->index);
-+	ida_free(&pps_client_index, device->index);
+-err_free:
++err_free_ida:
+ 	ida_free(&pps_client_index, index);
++err_free_device:
  	kfree(device);
  }
  
