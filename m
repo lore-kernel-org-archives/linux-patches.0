@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEA519E7ED;
-	Mon, 14 Oct 2024 15:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8131B4F13;
+	Mon, 14 Oct 2024 15:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919137; cv=none; b=n5O7AoLO3WnEtfHK1ntZENIu1BoZ/ObtgoJhWk6T7WTCP0lzxouLreelTaenaOgrMXBkJQeog9B+4HE/w+2rUhbESLTBwBmR0W3PSa3hPEdawRGL4hFQRhx4NSZaU9xrvRR8G3BlTj03S7C/K5ogqyW7T/1Cr0PacVOKAPJe5Yo=
+	t=1728919140; cv=none; b=KU8RTJzX+E3pOkd4zJGnMmLriMfSoRQnN1CnWDZq5NYa8dBLEk6BAx8edGbycpO53iYS6k04zHe9iUDePehel7uGC3qAD/5Z74FhhloehVDLCtiyFpVr3igi6CYn75AHKzFMj42+PKolbECnJBzvVHeMazOqSCZ4q78MPRQSJ1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919137; c=relaxed/simple;
-	bh=MwTW+hjFnGmEIqI5aXDqN8awfYh327Rk3CXfiL0f16Q=;
+	s=arc-20240116; t=1728919140; c=relaxed/simple;
+	bh=YQv38f7d5sSjbjEKL88HKuLFIHZWcrB+yf4EXJ2AYNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJwLRWtqWOv6zD3DB9o58u5BwaL22CzTNpv6GJ3H2GoqXTYDWQLsSgnSqtzbAjir1RhjFOmzm3DU3I8FMp6JnUxDyoTx/xmUYhlZnwk6CYcnxloa25vOVs32D8AVmDR6nSqD60VNz0ik7XycYrCvZdXmILYcohIXPe1sWr3FGE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K63UPZOq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjGYRVDszZZZkmD8GRw0uboa5qlQ3fBP9Ad+ev6rMB5szGit6eKczQ2e2lrTIPb90kFnYHgaWD9TFRcPyFBvBb+OTjc6ugv+scmR2v4lUsHYDIaMVDuCm9c2dYN3I4WyJrMyLO1VjvUdKBskzDTtVKoGHInbD5URdtCEgbEn06M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh32CEdN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K63UPZOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D93C4CEC3;
-	Mon, 14 Oct 2024 15:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh32CEdN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120D5C4CEC3;
+	Mon, 14 Oct 2024 15:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919137;
-	bh=MwTW+hjFnGmEIqI5aXDqN8awfYh327Rk3CXfiL0f16Q=;
+	s=korg; t=1728919140;
+	bh=YQv38f7d5sSjbjEKL88HKuLFIHZWcrB+yf4EXJ2AYNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K63UPZOqwFv6VxHlL1LYCL8X24Jhzdmn8YuZD699AcTUGLdC5WaaR22rlmhm0pkW6
-	 CfxAH6yuKgNRE1jMKMJeRAiithGhoc65zv9tOVNCGe2VXei1zISAgdltLy/UuA7hnD
-	 0xE1jkO0Q7rF3JpyX8MUcPFr46jbGQc/QxAL5BKA=
+	b=mh32CEdNKzCbZixVu3ZF5ItCwwyVzLA5MGs25H50T5YvvL1qbvTrQdGEZSuUp78QN
+	 AWFRSEOe6rkDQtNZursGRY+oj1XGZSujUW7RsPREACcKJDcJ8U0iC/m2nojUcnzsEF
+	 Sx5drP0jUGSggEiNB9t7uVeaQs1HWKgLG7ea+3xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 522/798] selftests: vDSO: fix vdso_config for s390
-Date: Mon, 14 Oct 2024 16:17:56 +0200
-Message-ID: <20241014141238.487276711@linuxfoundation.org>
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 523/798] Revert "ALSA: hda: Conditionally use snooping for AMD HDMI"
+Date: Mon, 14 Oct 2024 16:17:57 +0200
+Message-ID: <20241014141238.525806055@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,51 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a6e23fb8d3c0e3904da70beaf5d7e840a983c97f ]
+commit 3f7f36a4559ef78a6418c5f0447fbfbdcf671956 upstream.
 
-Running vdso_test_correctness on s390x (aka s390 64 bit) emits a warning:
+This reverts commit 478689b5990deb626a0b3f1ebf165979914d6be4.
 
-Warning: failed to find clock_gettime64 in vDSO
+The fix seems leading to regressions for other systems.
+Also, the way to check the presence of IOMMU via get_dma_ops() isn't
+reliable and it's no longer applicable for 6.12.  After all, it's no
+right fix, so let's revert it at first.
 
-This is caused by the "#elif defined (__s390__)" check in vdso_config.h
-which the defines VDSO_32BIT.
+To be noted, the PCM buffer allocation has been changed to try the
+continuous pages at first since 6.12, so the problem could be already
+addressed without this hackish workaround.
 
-If __s390x__ is defined also __s390__ is defined. Therefore the correct
-check must make sure that only __s390__ is defined.
-
-Therefore add the missing !defined(__s390x__). Also use common
-__s390x__ define instead of __s390X__.
-
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Closes: https://lore.kernel.org/ZvgCdYfKgwHpJXGE@eldamar.lan
+Link: https://patch.msgid.link/20241002155948.4859-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vDSO/vdso_config.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_controller.h |    2 +-
+ sound/pci/hda/hda_intel.c      |   10 +---------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/vdso_config.h b/tools/testing/selftests/vDSO/vdso_config.h
-index f9890584f6fb4..72de45f587b2c 100644
---- a/tools/testing/selftests/vDSO/vdso_config.h
-+++ b/tools/testing/selftests/vDSO/vdso_config.h
-@@ -25,11 +25,11 @@
- #define VDSO_VERSION		1
- #define VDSO_NAMES		0
- #define VDSO_32BIT		1
--#elif defined (__s390__)
-+#elif defined (__s390__) && !defined(__s390x__)
- #define VDSO_VERSION		2
- #define VDSO_NAMES		0
- #define VDSO_32BIT		1
--#elif defined (__s390X__)
-+#elif defined (__s390x__)
- #define VDSO_VERSION		2
- #define VDSO_NAMES		0
- #elif defined(__mips__)
--- 
-2.43.0
-
+--- a/sound/pci/hda/hda_controller.h
++++ b/sound/pci/hda/hda_controller.h
+@@ -28,7 +28,7 @@
+ #else
+ #define AZX_DCAPS_I915_COMPONENT 0		/* NOP */
+ #endif
+-#define AZX_DCAPS_AMD_ALLOC_FIX	(1 << 14)	/* AMD allocation workaround */
++/* 14 unused */
+ #define AZX_DCAPS_CTX_WORKAROUND (1 << 15)	/* X-Fi workaround */
+ #define AZX_DCAPS_POSFIX_LPIB	(1 << 16)	/* Use LPIB as default */
+ #define AZX_DCAPS_AMD_WORKAROUND (1 << 17)	/* AMD-specific workaround */
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -40,7 +40,6 @@
+ 
+ #ifdef CONFIG_X86
+ /* for snoop control */
+-#include <linux/dma-map-ops.h>
+ #include <asm/set_memory.h>
+ #include <asm/cpufeature.h>
+ #endif
+@@ -301,7 +300,7 @@ enum {
+ 
+ /* quirks for ATI HDMI with snoop off */
+ #define AZX_DCAPS_PRESET_ATI_HDMI_NS \
+-	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_AMD_ALLOC_FIX)
++	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_SNOOP_OFF)
+ 
+ /* quirks for AMD SB */
+ #define AZX_DCAPS_PRESET_AMD_SB \
+@@ -1719,13 +1718,6 @@ static void azx_check_snoop_available(st
+ 	if (chip->driver_caps & AZX_DCAPS_SNOOP_OFF)
+ 		snoop = false;
+ 
+-#ifdef CONFIG_X86
+-	/* check the presence of DMA ops (i.e. IOMMU), disable snoop conditionally */
+-	if ((chip->driver_caps & AZX_DCAPS_AMD_ALLOC_FIX) &&
+-	    !get_dma_ops(chip->card->dev))
+-		snoop = false;
+-#endif
+-
+ 	chip->snoop = snoop;
+ 	if (!snoop) {
+ 		dev_info(chip->card->dev, "Force to non-snoop mode\n");
 
 
