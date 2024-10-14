@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95961ABEC7;
-	Mon, 14 Oct 2024 15:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0541B4F14;
+	Mon, 14 Oct 2024 15:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918967; cv=none; b=ipWQrocqMNVlqn6+p2ZgWhBLh7ofkdjPP+WOPYyYxEJwoTxozfu2WOejO+fk/7oef203zzVrwKkU6MhiUVGPWjEP7RlpQWkc6RZB1jlrJ7jhSSbUu/bEn4euxIbCvyN5CE20HmL/IrQ/AkMv22qa1BAur3MHv2C732CXOEkJvVQ=
+	t=1728918970; cv=none; b=ffTUsCZq3842vdHdw/I1lTv2qQQdtFSCLnT7XsWb3XvgcgGeJWtjj1yzB5kmfa8iUnY5DLLcSRNIeX59eCnvhzWrkmNUy8SIxZjg38dA104DSQZYyRyGVLx3nopW8LsVZAiRTNRQhP8cuu88bhDuBuSjE6s24AsMCemFVVaeUBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918967; c=relaxed/simple;
-	bh=DnlvF95FF/YH1s8c6XnxOtRSkP917/br7uD5G7isoqM=;
+	s=arc-20240116; t=1728918970; c=relaxed/simple;
+	bh=C/tpkFLCTAdR25Yf50URjXwTyy69jI1JV/K6Dvw+qkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvP5cykPmFCLIVOqNsJS3eWfsEgiuCLho2tTcQjz/xSiZdisMsGQHJ6LvavWQ51rPpgCqFknyi9agTZR8XrzrdVdLfFn3zus2izgdI4ng4irgjdPKIvAix02vtpGPk+Ar3pLWX9dECGoxCycwnyFcU8hU0SmzJ5F0K/Z504GEVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVQ1M8kz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uy0W6k4y9++wQ6yzTQEx89Z4LXG5fPibG+vk9d6YYfUH13phnXhIWPqfTHXg9Jh3sF9zhCYuJYmSOLbJEOArkuVQFdp2hi7J8KsS5xdMZ3P7eTUiarxsrGaBcsGHMx1y22KUpU2fSz4GkHPjaU8fiilLvU5pO1WIiwnV7SHQx5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIDhknZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVQ1M8kz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156F0C4CEC3;
-	Mon, 14 Oct 2024 15:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIDhknZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D0DC4CEC3;
+	Mon, 14 Oct 2024 15:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918966;
-	bh=DnlvF95FF/YH1s8c6XnxOtRSkP917/br7uD5G7isoqM=;
+	s=korg; t=1728918969;
+	bh=C/tpkFLCTAdR25Yf50URjXwTyy69jI1JV/K6Dvw+qkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVQ1M8kzV5tU1RQS95ms//q6RSOdkZ4K7f2BrPM+o5keJ+IbZ15xSfDskf+UIUcRF
-	 uz+eOVgHThKzYosj6hbaSvC+XT2AtahsopvSYTFbUaqY+CK/f4hsvYFkHXRVkwKjNX
-	 Wci/pMiEQQ2TRf1svqYcsftCM0rb/YMHpM2I77Ls=
+	b=pIDhknZIjuOhRxsXU9mpao8DM6CNqYESAAtESc0XjW7TdOtAxxhy/yju1SdNBNhvi
+	 McdQubzxMShj6driYLo1dHltIUbMSlmdX+j+/AJixYHOphOflS/1/iq6rXtgfjEN/u
+	 Khj/8p8f8WURzOVNE5UV6StcviTJVt+X/U6xNMtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Igor Pylypiv <ipylypiv@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 475/798] ata: pata_serverworks: Do not use the term blacklist
-Date: Mon, 14 Oct 2024 16:17:09 +0200
-Message-ID: <20241014141236.636386255@linuxfoundation.org>
+Subject: [PATCH 6.1 476/798] ata: sata_sil: Rename sil_blacklist to sil_quirks
+Date: Mon, 14 Oct 2024 16:17:10 +0200
+Message-ID: <20241014141236.674672181@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,61 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 858048568c9e3887d8b19e101ee72f129d65cb15 ]
+[ Upstream commit 93b0f9e11ce511353c65b7f924cf5f95bd9c3aba ]
 
-Let's not use the term blacklist in the function
-serverworks_osb4_filter() documentation comment and rather simply refer
-to what that function looks at: the list of devices with groken UDMA5.
-
-While at it, also constify the values of the csb_bad_ata100 array.
-
-Of note is that all of this should probably be handled using libata
-quirk mechanism but it is unclear if these UDMA5 quirks are specific
-to this controller only.
+Rename the array sil_blacklist to sil_quirks as this name is more
+neutral and is also consistent with how this driver define quirks with
+the SIL_QUIRK_XXX flags.
 
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_serverworks.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/ata/sata_sil.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ata/pata_serverworks.c b/drivers/ata/pata_serverworks.c
-index c0bc4af0d1960..804c74ce3c1df 100644
---- a/drivers/ata/pata_serverworks.c
-+++ b/drivers/ata/pata_serverworks.c
-@@ -46,10 +46,11 @@
- #define SVWKS_CSB5_REVISION_NEW	0x92 /* min PCI_REVISION_ID for UDMA5 (A2.0) */
- #define SVWKS_CSB6_REVISION	0xa0 /* min PCI_REVISION_ID for UDMA4 (A1.0) */
- 
--/* Seagate Barracuda ATA IV Family drives in UDMA mode 5
-- * can overrun their FIFOs when used with the CSB5 */
--
--static const char *csb_bad_ata100[] = {
-+/*
-+ * Seagate Barracuda ATA IV Family drives in UDMA mode 5
-+ * can overrun their FIFOs when used with the CSB5.
-+ */
-+static const char * const csb_bad_ata100[] = {
- 	"ST320011A",
- 	"ST340016A",
- 	"ST360021A",
-@@ -163,10 +164,11 @@ static unsigned int serverworks_osb4_filter(struct ata_device *adev, unsigned in
-  *	@adev: ATA device
-  *	@mask: Mask of proposed modes
+diff --git a/drivers/ata/sata_sil.c b/drivers/ata/sata_sil.c
+index 3b989a52879d9..f412b8d71252f 100644
+--- a/drivers/ata/sata_sil.c
++++ b/drivers/ata/sata_sil.c
+@@ -128,7 +128,7 @@ static const struct pci_device_id sil_pci_tbl[] = {
+ static const struct sil_drivelist {
+ 	const char *product;
+ 	unsigned int quirk;
+-} sil_blacklist [] = {
++} sil_quirks[] = {
+ 	{ "ST320012AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST330013AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST340017AS",		SIL_QUIRK_MOD15WRITE },
+@@ -600,8 +600,8 @@ static void sil_thaw(struct ata_port *ap)
+  *	list, and apply the fixups to only the specific
+  *	devices/hosts/firmwares that need it.
   *
-- *	Check the blacklist and disable UDMA5 if matched
-+ *	Check the list of devices with broken UDMA5 and
-+ *	disable UDMA5 if matched.
-  */
--
--static unsigned int serverworks_csb_filter(struct ata_device *adev, unsigned int mask)
-+static unsigned int serverworks_csb_filter(struct ata_device *adev,
-+					   unsigned int mask)
- {
- 	const char *p;
- 	char model_num[ATA_ID_PROD_LEN + 1];
+- *	20040111 - Seagate drives affected by the Mod15Write bug are blacklisted
+- *	The Maxtor quirk is in the blacklist, but I'm keeping the original
++ *	20040111 - Seagate drives affected by the Mod15Write bug are quirked
++ *	The Maxtor quirk is in sil_quirks, but I'm keeping the original
+  *	pessimistic fix for the following reasons...
+  *	- There seems to be less info on it, only one device gleaned off the
+  *	Windows	driver, maybe only one is affected.  More info would be greatly
+@@ -620,9 +620,9 @@ static void sil_dev_config(struct ata_device *dev)
+ 
+ 	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
+ 
+-	for (n = 0; sil_blacklist[n].product; n++)
+-		if (!strcmp(sil_blacklist[n].product, model_num)) {
+-			quirks = sil_blacklist[n].quirk;
++	for (n = 0; sil_quirks[n].product; n++)
++		if (!strcmp(sil_quirks[n].product, model_num)) {
++			quirks = sil_quirks[n].quirk;
+ 			break;
+ 		}
+ 
 -- 
 2.43.0
 
