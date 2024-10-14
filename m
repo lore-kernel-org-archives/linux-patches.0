@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99BF1ACDED;
-	Mon, 14 Oct 2024 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8BA49659;
+	Mon, 14 Oct 2024 15:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919945; cv=none; b=vBxx5ni4XN3k27ipWDbmu3RBcZq4nwt5TrsF45qvY2ywKz+9jkdey7gLbkoByqwhUYc90su7aaudYcQD2WWVcYWitkbgJDVfVLk/M36e+/TqYtWfQtDFKySNN1vbmOaT2hI9Fv/oN0Gagm3uTD5+hg8Y3O/rBA1OfDvoKGhaq7w=
+	t=1728919949; cv=none; b=gAM/y0g32Xa89SaAojHwvIyruyQ4uAPC5cs6IeyRUq1cTO2iVKCu71FsJ8Bp6Xp9Bl3wz1ZODFKOW0JgKEbk99Eh8Ys1ct+9EM6EJHUXLyvPOmoOoKTVgizt8kCd11hQ4ravOOMAm9wUZdcXzxQ3woj5BWo+36hu1q8GtFkTWlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919945; c=relaxed/simple;
-	bh=8hWPnoqwptbP54AuJAYIi0R3yzoMek3xCNo5zQZNYJQ=;
+	s=arc-20240116; t=1728919949; c=relaxed/simple;
+	bh=b8glmoQVLJgTojX3Wh1q+VbVipfJNb3AzcNfw+ToYw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7YateanfL5dPGg4RWXQalMOdeVJ6o5rZs1gaHv1DdEZoxMSqtzadx0AGtbBcANcSEh9AKPMTkzKW22ezXBtMXaoGPHA4t7bCrW6Ozat5AfMGyA4bdSCvCwBD1jZx4YmkX2fngj5EoWVTwjCPFFTW4sm2XxEb/LpVD1AcMuHno8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wuy36cs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FscobnmM9C8BVTjHUWMmiVXnMOf5HBJgxP4F6nDCCJWOiScBxX+SfPlsuNiUYXRtGJW+8AQfwRMenLJz6HIW0Q4wGsMpZ3JQwBa92wUiBFIH9JerqsS+FRU99rg8r0Hk7xOlUkfbIVgYFuSJYkSJZCxT69eQ0o4PsfWyo6wb8ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Coo29+/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wuy36cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236B5C4CEC3;
-	Mon, 14 Oct 2024 15:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Coo29+/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C43AC4CEC3;
+	Mon, 14 Oct 2024 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919945;
-	bh=8hWPnoqwptbP54AuJAYIi0R3yzoMek3xCNo5zQZNYJQ=;
+	s=korg; t=1728919949;
+	bh=b8glmoQVLJgTojX3Wh1q+VbVipfJNb3AzcNfw+ToYw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wuy36csR81t4hlQkBeQQc9XA/Z0YT1nIzYCFazalwyTebW0qM79/aZ2wLZLJYH9O
-	 KOfuZB03UP3IVV46YFMYHoPktQnWpY5Bt8JHCibwzkPzADEqyLwZ+11zZnM4uF2Tr5
-	 Cf1U1W5p0jOEPke5bU1vGaQ089GagXU9iowLJ9tk=
+	b=Coo29+/TbyVGvTuh5M7MQ5dSYh/IbM4PF4bm4q7Yb+Hb0NSFdjH17jW0XkfUY6i79
+	 xsQjcB8QWFc+0zdLuymD4tB3yl7sPQSxg2Dmv+J6y939NgVhQz79pQh44pgf8SH4Ss
+	 O/PezMZqtEwHVTAYubkrckbsGsff+q/oVse2C/J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 753/798] net: ibm: emac: mal: fix wrong goto
-Date: Mon, 14 Oct 2024 16:21:47 +0200
-Message-ID: <20241014141247.653833260@linuxfoundation.org>
+Subject: [PATCH 6.1 754/798] btrfs: zoned: fix missing RCU locking in error message when loading zone info
+Date: Mon, 14 Oct 2024 16:21:48 +0200
+Message-ID: <20241014141247.692843062@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,34 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 08c8acc9d8f3f70d62dd928571368d5018206490 ]
+[ Upstream commit fe4cd7ed128fe82ab9fe4f9fc8a73d4467699787 ]
 
-dcr_map is called in the previous if and therefore needs to be unmapped.
+At btrfs_load_zone_info() we have an error path that is dereferencing
+the name of a device which is a RCU string but we are not holding a RCU
+read lock, which is incorrect.
 
-Fixes: 1ff0fcfcb1a6 ("ibm_newemac: Fix new MAL feature handling")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20241007235711.5714-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by using btrfs_err_in_rcu() instead of btrfs_err().
+
+The problem is there since commit 08e11a3db098 ("btrfs: zoned: load zone's
+allocation offset"), back then at btrfs_load_block_group_zone_info() but
+then later on that code was factored out into the helper
+btrfs_load_zone_info() by commit 09a46725cc84 ("btrfs: zoned: factor out
+per-zone logic from btrfs_load_block_group_zone_info").
+
+Fixes: 08e11a3db098 ("btrfs: zoned: load zone's allocation offset")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 2 +-
+ fs/btrfs/zoned.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index ff5487bbebe37..a93c9230e982f 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -576,7 +576,7 @@ static int mal_probe(struct platform_device *ofdev)
- 		printk(KERN_ERR "%pOF: Support for 405EZ not enabled!\n",
- 				ofdev->dev.of_node);
- 		err = -ENODEV;
--		goto fail;
-+		goto fail_unmap;
- #endif
- 	}
- 
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 2c42e85a3e269..794526ab90d26 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1345,7 +1345,7 @@ static int btrfs_load_zone_info(struct btrfs_fs_info *fs_info, int zone_idx,
+ 	switch (zone.cond) {
+ 	case BLK_ZONE_COND_OFFLINE:
+ 	case BLK_ZONE_COND_READONLY:
+-		btrfs_err(fs_info,
++		btrfs_err_in_rcu(fs_info,
+ 		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
+ 			  (info->physical >> device->zone_info->zone_size_shift),
+ 			  rcu_str_deref(device->name), device->devid);
 -- 
 2.43.0
 
