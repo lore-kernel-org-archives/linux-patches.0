@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB251798C;
-	Mon, 14 Oct 2024 15:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDA21798C;
+	Mon, 14 Oct 2024 15:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918309; cv=none; b=TjBCIxtU81azruRfxv/9ReTsWcUnCKZKCKYGKV4FomC1KmUHXjEyu/Ce9sKWoFSzQMY3W8bwhXRGj7YGa1naKQsGacpPqJhOJMZztZcDnxnFzBSoPDXQCYqCu9hJfbEw8BDiN4Ofx9Linu2ADGreR8ApMBexejAwryOrYl02pGs=
+	t=1728918312; cv=none; b=qug/TmPZjnLJNxnaJOdTEDGIHu9InuJ31zkaHm+/2iKAmEH1Bc/tk2fz3y8fS6HEGcafMeh/RMWo49wGtuXtkONg185GYWkr9R+cXXomGzd8CAZbTZmTqcrB6jIyFLT6bWsfyQ0HSGQAENWn6ztbHyxXJaDhE+6JLxnQeJH9wmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918309; c=relaxed/simple;
-	bh=WESBwAJARjF6YKlDfUNuOCcG0yCmjmhJxePUbII4Dhc=;
+	s=arc-20240116; t=1728918312; c=relaxed/simple;
+	bh=+5j1hAq0tZ6AhKr53GaAYFnEKeuKSeSqOAJaGGAHRys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxjiBCMuFA8Ug4hOHnvuSEFcz5SQBawHEK34hPNFj6gIBjhKO6yEJLi1YLOuoLiYhgWxEhr9ygrLf6m47Sdhp1GKvVz7YCOtzG7mKyHyMOQfGu1G/ZPkxU4MQ3bk960rh01QPzq9Ab1gfcEfEk7vrjJ5tN43JxsYrZ6lDpZjKDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndGaWGwh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbboezL/ghGGz4JSgWO1iIcBLZUupQl6wek2erMaCZyz/OLD6F8AEVCdPwzopGUf9Z2GTGnfuzQ7bHMd3+M88BT47mqlJbPHvjjdhBcvdaesDy280MZo7x8m1DiOJZYmcCA9iwNEgMGySF9lba0oTpeD5xh9MzTHFngQfgN1gEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JGmNWU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndGaWGwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1DAC4CEC3;
-	Mon, 14 Oct 2024 15:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JGmNWU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5170C4CEC3;
+	Mon, 14 Oct 2024 15:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918308;
-	bh=WESBwAJARjF6YKlDfUNuOCcG0yCmjmhJxePUbII4Dhc=;
+	s=korg; t=1728918312;
+	bh=+5j1hAq0tZ6AhKr53GaAYFnEKeuKSeSqOAJaGGAHRys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndGaWGwh3Mb/sBRejyhZ922+JqEN9zmy7ZLzGWVZlBJd2OUzc4I3yf9xYnyRSrjhK
-	 CbKFHk1SM3wsAIicMZjDl1TgbnEd0HGCqIDfuSryTdsi/qz4SK1yGlgcfL8w2M0/k/
-	 tXz9FOAzfANUgopb148dpyw85jLXi2Rfmk2tuL8M=
+	b=1JGmNWU79ClQYMr+NBUDra+AYrIV0HpoWwRqt8gXB70U+td++hNlvqB2kn7bCBUNt
+	 gKmVlMTmRVmn3ly+z2tP2qQ/Dgkd8WjUnR0/Q3SFHjncSaVs/iqLh8q4RyyTqq7zks
+	 /vBaLujVW1YtXevtJoq46k1HZJ3MowHIkexP/Rho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 284/798] ASoC: rt5682: Return devm_of_clk_add_hw_provider to transfer the error
-Date: Mon, 14 Oct 2024 16:13:58 +0200
-Message-ID: <20241014141229.104304499@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 285/798] soc: versatile: integrator: fix OF node leak in probe() error path
+Date: Mon, 14 Oct 2024 16:13:59 +0200
+Message-ID: <20241014141229.142745664@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,37 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit fcca6d05ef49d5650514ea1dcfd12e4ae3ff2be6 upstream.
+commit 874c5b601856adbfda10846b9770a6c66c41e229 upstream.
 
-Return devm_of_clk_add_hw_provider() in order to transfer the error, if it
-fails due to resource allocation failure or device tree clock provider
-registration failure.
+Driver is leaking OF node reference obtained from
+of_find_matching_node().
 
+Fixes: f956a785a282 ("soc: move SoC driver for the ARM Integrator")
 Cc: stable@vger.kernel.org
-Fixes: ebbfabc16d23 ("ASoC: rt5682: Add CCF usage for providing I2S clks")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20240830143154.3448004-1-make24@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-1-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5682.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/versatile/soc-integrator.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/rt5682.c
-+++ b/sound/soc/codecs/rt5682.c
-@@ -2899,8 +2899,10 @@ int rt5682_register_dai_clks(struct rt56
- 		}
+--- a/drivers/soc/versatile/soc-integrator.c
++++ b/drivers/soc/versatile/soc-integrator.c
+@@ -113,6 +113,7 @@ static int __init integrator_soc_init(vo
+ 		return -ENODEV;
  
- 		if (dev->of_node) {
--			devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-+			ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
- 						    dai_clk_hw);
-+			if (ret)
-+				return ret;
- 		} else {
- 			ret = devm_clk_hw_register_clkdev(dev, dai_clk_hw,
- 							  init.name,
+ 	syscon_regmap = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
+ 
 
 
