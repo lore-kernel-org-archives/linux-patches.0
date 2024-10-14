@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6845B1AE009;
-	Mon, 14 Oct 2024 14:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906321AAE38;
+	Mon, 14 Oct 2024 14:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917258; cv=none; b=JATNbOSNvzgjufpgSmQVNUbkX3hnEd8JnRUCNk+lMkrqvL5XMjTXI9cjLx3kACUJatsROUk6WzQ1SKUxvravjr6uS39BXfmcaMXRTAXdIBMAWl6mvRXWYfp//K15I0z+PwxxJGFGIk1Lk9xkDHMMZMDN5lJ/sH8EZPcIw+OIY2I=
+	t=1728917261; cv=none; b=iQUJ2yPhNEPOr5x+h6Hq2BhvTqLjeg9ObcRVgdM5xlfgD/2j2dLuVExENZyKT18ywaQ73QkEqmrMua1RVQdRPPy+m2XepTsu3plCDbZ4sYmyor+UHNX6DLQQii7F/ZFw0S2koSoIIICE1K03oQz6tsjoK4pjl82BgNKQszfYlT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917258; c=relaxed/simple;
-	bh=h5lRCekdvc+JAtbkMdG47xlV75Mpas/BBghgEF2Ng1M=;
+	s=arc-20240116; t=1728917261; c=relaxed/simple;
+	bh=5Th43cCYoIe/c32yrT7odTRGBC+YIeEj6t1R00dS6dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDkcvUCwSrkVuXLzKmpiSg5gylfD7tm0mL7VJCchk0l0Z/hpx036mcRuOHFtyL6Ti+cBBwuJvhmtKPQOcsonlemdNUBMHVqZC4qa6UtS1DFxRvghe70TQ9/Ij5Em7IkxeoE7qccBwb/639d2aupV9fiQ+Nwr5ZjpLTmHq4CJaeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5o8B4xB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRmw+BA7FO5bEZRIxK6k6yxdN/QVn4EpLgTEE5xNHbNH8/1GB4+QpM1eTMRikdKBq4ugoY2nuRH1St6ZUE3x3EkgD/vkMG2u2DW35BlWm9dLIL7IbxGMkx8uh5Ne/I14nE5hxbkOgZ/HFXEpc9+ReEcqPWmIJesnOlu5FBT2p6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK+D1r98; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5o8B4xB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B7FC4CEC7;
-	Mon, 14 Oct 2024 14:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK+D1r98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8F7C4CEC3;
+	Mon, 14 Oct 2024 14:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917258;
-	bh=h5lRCekdvc+JAtbkMdG47xlV75Mpas/BBghgEF2Ng1M=;
+	s=korg; t=1728917261;
+	bh=5Th43cCYoIe/c32yrT7odTRGBC+YIeEj6t1R00dS6dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5o8B4xBVWYVJdZmBr3ww8KEQiS341IFTTdwLq6RP8wTTxhigA8nwOEmuXlHCGvZp
-	 4kqZCg2FlfGV2U17WnjlQB/U6Qv5T8cQCl0H12ZBb/ptsSB9VKNCa0Aj+aG+pH/Jfl
-	 kEmVh4fDRTKvdJJ6S/ghv5qCaaDXTvwVFI3HVB30=
+	b=XK+D1r98RbSUp454gmsvsbTdVMinv8ZOuSJ78BRvQDcO2G1XVBSRVN+dE1GEnv2do
+	 OjmrXe/P8YbWS80oIJlx7/Y28wN+jH/bUbFnBQNqi7wFlgavRHytUQ87jXB8rMPgh8
+	 x4GVe+qnfprmQiR7Yo7WGCITfS0qeStkAXOPFhjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anatolij Gustschin <agust@denx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 198/213] net: dsa: lan9303: ensure chip reset and wait for READY status
-Date: Mon, 14 Oct 2024 16:21:44 +0200
-Message-ID: <20241014141050.688354543@linuxfoundation.org>
+Subject: [PATCH 6.6 199/213] net: phy: Remove LED entry from LEDs list on unregister
+Date: Mon, 14 Oct 2024 16:21:45 +0200
+Message-ID: <20241014141050.727501538@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,83 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anatolij Gustschin <agust@denx.de>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 5c14e51d2d7df49fe0d4e64a12c58d2542f452ff upstream.
+commit f50b5d74c68e551667e265123659b187a30fe3a5 upstream.
 
-Accessing device registers seems to be not reliable, the chip
-revision is sometimes detected wrongly (0 instead of expected 1).
+Commit c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct
+ordering") correctly fixed a problem with using devm_ but missed
+removing the LED entry from the LEDs list.
 
-Ensure that the chip reset is performed via reset GPIO and then
-wait for 'Device Ready' status in HW_CFG register before doing
-any register initializations.
+This cause kernel panic on specific scenario where the port for the PHY
+is torn down and up and the kmod for the PHY is removed.
 
+On setting the port down the first time, the assosiacted LEDs are
+correctly unregistered. The associated kmod for the PHY is now removed.
+The kmod is now added again and the port is now put up, the associated LED
+are registered again.
+On putting the port down again for the second time after these step, the
+LED list now have 4 elements. With the first 2 already unregistered
+previously and the 2 new one registered again.
+
+This cause a kernel panic as the first 2 element should have been
+removed.
+
+Fix this by correctly removing the element when LED is unregistered.
+
+Reported-by: Daniel Golle <daniel@makrotopia.org>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
 Cc: stable@vger.kernel.org
-Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
-Signed-off-by: Anatolij Gustschin <agust@denx.de>
-[alex: reworked using read_poll_timeout()]
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20241004113655.3436296-1-alexander.sverdlin@siemens.com
+Fixes: c938ab4da0eb ("net: phy: Manual remove LEDs to ensure correct ordering")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241004182759.14032-1-ansuelsmth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303-core.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/net/phy/phy_device.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -6,6 +6,7 @@
- #include <linux/module.h>
- #include <linux/gpio/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/iopoll.h>
- #include <linux/mutex.h>
- #include <linux/mii.h>
- #include <linux/of.h>
-@@ -839,6 +840,8 @@ static void lan9303_handle_reset(struct
- 	if (!chip->reset_gpio)
- 		return;
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3082,10 +3082,11 @@ static __maybe_unused int phy_led_hw_is_
  
-+	gpiod_set_value_cansleep(chip->reset_gpio, 1);
-+
- 	if (chip->reset_duration != 0)
- 		msleep(chip->reset_duration);
- 
-@@ -864,8 +867,34 @@ static int lan9303_disable_processing(st
- static int lan9303_check_device(struct lan9303 *chip)
+ static void phy_leds_unregister(struct phy_device *phydev)
  {
- 	int ret;
-+	int err;
- 	u32 reg;
+-	struct phy_led *phyled;
++	struct phy_led *phyled, *tmp;
  
-+	/* In I2C-managed configurations this polling loop will clash with
-+	 * switch's reading of EEPROM right after reset and this behaviour is
-+	 * not configurable. While lan9303_read() already has quite long retry
-+	 * timeout, seems not all cases are being detected as arbitration error.
-+	 *
-+	 * According to datasheet, EEPROM loader has 30ms timeout (in case of
-+	 * missing EEPROM).
-+	 *
-+	 * Loading of the largest supported EEPROM is expected to take at least
-+	 * 5.9s.
-+	 */
-+	err = read_poll_timeout(lan9303_read, ret,
-+				!ret && reg & LAN9303_HW_CFG_READY,
-+				20000, 6000000, false,
-+				chip->regmap, LAN9303_HW_CFG, &reg);
-+	if (ret) {
-+		dev_err(chip->dev, "failed to read HW_CFG reg: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
-+	}
-+	if (err) {
-+		dev_err(chip->dev, "HW_CFG not ready: 0x%08x\n", reg);
-+		return err;
-+	}
-+
- 	ret = lan9303_read(chip->regmap, LAN9303_CHIP_REV, &reg);
- 	if (ret) {
- 		dev_err(chip->dev, "failed to read chip revision register: %d\n",
+-	list_for_each_entry(phyled, &phydev->leds, list) {
++	list_for_each_entry_safe(phyled, tmp, &phydev->leds, list) {
+ 		led_classdev_unregister(&phyled->led_cdev);
++		list_del(&phyled->list);
+ 	}
+ }
+ 
 
 
