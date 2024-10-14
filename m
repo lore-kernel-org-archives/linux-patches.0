@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739B71AC450;
-	Mon, 14 Oct 2024 15:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823021C6F5F;
+	Mon, 14 Oct 2024 15:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919285; cv=none; b=P6+oxuIwh2j29/Gykz3FpPN2uMwD6RUFJOn97UyGLYn6Ebcr0YYUK4s293e7ldAWnYRY9JIqr6WFPJ9zLTAGa/QpBOYhKic7IRcYOrF0VYjIbUBYx7PVBbtAmamAMqrJ8Pqhe2utFXYArndEjSqEx0LqPEOqPVQVAT1+Ne81oUA=
+	t=1728919288; cv=none; b=lrwKHGDo3bXFvVN4iOhGqZQdFjaZnl/dz9sOAK3PZlu7FGJc2sbTISTCYN5PkHpifTCVzx55iyNcgKi1whSRZLVWS7yfVmQ/8GoTOVi9DLrPpUSW0sDGM1NJrvfe9rDo+tI173JEQHHKVhulu0qhmYumFGOLF6jWfmc5sRJhZ84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919285; c=relaxed/simple;
-	bh=a6GSY4JvErJWIeGzLSaOlcL8U+/dQkReuZxcjejkaP0=;
+	s=arc-20240116; t=1728919288; c=relaxed/simple;
+	bh=dbyB0DU7lW3MuHuD2Ewp9kyO4hHRMQTbTXrorF9QPaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u7GQbBcMCHjgqkpsauqOnXM6oT+6CWqhBv+6nXM3RAaVEW4svfDJIJcLqw6KERxsFWRJ5L/5azLFbXyrccnZpgubAOpTsN9jDcDcsdawBARG3K+I0ZRUF2oWWxPV/PvMfa/VrKmOJytTIbd8jmU0hQdIKrsuOrhiH7Ov3DhEDaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKkavV6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z9uLuuc4QJha0z9N96iMGR37NnV8T2cgZvn2gim2JHrLCbSoejIq37Qrxocu0ZLo6MTZsl2lRUnSdk2/vrFG7/pNcABo05wD5rKMdPqPB2bq756eg4vlEz1jgk7MshbjJWlBSC4VbcAxLCOY8XUlICnd9JRCF0GnyIhplzPBllE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1oJAJci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKkavV6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE977C4CEC7;
-	Mon, 14 Oct 2024 15:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1oJAJci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47A4C4CECF;
+	Mon, 14 Oct 2024 15:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919285;
-	bh=a6GSY4JvErJWIeGzLSaOlcL8U+/dQkReuZxcjejkaP0=;
+	s=korg; t=1728919288;
+	bh=dbyB0DU7lW3MuHuD2Ewp9kyO4hHRMQTbTXrorF9QPaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKkavV6AwpJ3Gn0reGH/U21F033jVb5rYZcPBBFsWPCR8VOMNIaTtzT6/mNdKhRT7
-	 qwq7P9eUpCJahCfItrbPPFMRGrHOwJ2JRGEl8Nh/zqatchihR+SUfdf1ar/DubV074
-	 CmVk+T+Y+DNr/+z4auIqKFIje8q0YO7hWc2kYVSA=
+	b=D1oJAJcixQAFzvWOREYhX1VWQ88ThKozet1B+J4FbgrtHT6wA2xjR2tJLZLunrdVO
+	 zBt1OEi2qbJOfZrxVNIXwu04mhlkewb2dktNHQCPuVFR85nOpgjyI0BV3EzvSMsJ7m
+	 yF1fqI+dXDDSNTp2svdahTVmU/IeeuW1c5Zg9QOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>,
-	Deepak Rawat <drawat@vmware.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Thomas Hellstrom <thellstrom@vmware.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.1 534/798] drm: Consistently use struct drm_mode_rect for FB_DAMAGE_CLIPS
-Date: Mon, 14 Oct 2024 16:18:08 +0200
-Message-ID: <20241014141238.969355054@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 535/798] ALSA: core: add isascii() check to card ID generator
+Date: Mon, 14 Oct 2024 16:18:09 +0200
+Message-ID: <20241014141239.011018700@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -61,47 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jaroslav Kysela <perex@perex.cz>
 
-commit 8b0d2f61545545ab5eef923ed6e59fc3be2385e0 upstream.
+commit d278a9de5e1837edbe57b2f1f95a104ff6c84846 upstream.
 
-FB_DAMAGE_CLIPS is a plane property for damage handling. Its UAPI
-should only use UAPI types. Hence replace struct drm_rect with
-struct drm_mode_rect in drm_atomic_plane_set_property(). Both types
-are identical in practice, so there's no change in behavior.
+The card identifier should contain only safe ASCII characters. The isalnum()
+returns true also for characters for non-ASCII characters.
 
-Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Closes: https://lore.kernel.org/dri-devel/Zu1Ke1TuThbtz15E@intel.com/
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: d3b21767821e ("drm: Add a new plane property to send damage during plane update")
-Cc: Lukasz Spintzyk <lukasz.spintzyk@displaylink.com>
-Cc: Deepak Rawat <drawat@vmware.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Thomas Hellstrom <thellstrom@vmware.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.0+
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240923075841.16231-1-tzimmermann@suse.de
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4135
+Link: https://lore.kernel.org/linux-sound/yk3WTvKkwheOon_LzZlJ43PPInz6byYfBzpKkbasww1yzuiMRqn7n6Y8vZcXB-xwFCu_vb8hoNjv7DTNwH5TWjpEuiVsyn9HPCEXqwF4120=@protonmail.com/
+Cc: stable@vger.kernel.org
+Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://patch.msgid.link/20241002194649.1944696-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/init.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -567,7 +567,7 @@ static int drm_atomic_plane_set_property
- 					&state->fb_damage_clips,
- 					val,
- 					-1,
--					sizeof(struct drm_rect),
-+					sizeof(struct drm_mode_rect),
- 					&replaced);
- 		return ret;
- 	} else if (property == plane->scaling_filter_property) {
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -673,13 +673,19 @@ int snd_card_free(struct snd_card *card)
+ }
+ EXPORT_SYMBOL(snd_card_free);
+ 
++/* check, if the character is in the valid ASCII range */
++static inline bool safe_ascii_char(char c)
++{
++	return isascii(c) && isalnum(c);
++}
++
+ /* retrieve the last word of shortname or longname */
+ static const char *retrieve_id_from_card_name(const char *name)
+ {
+ 	const char *spos = name;
+ 
+ 	while (*name) {
+-		if (isspace(*name) && isalnum(name[1]))
++		if (isspace(*name) && safe_ascii_char(name[1]))
+ 			spos = name + 1;
+ 		name++;
+ 	}
+@@ -706,12 +712,12 @@ static void copy_valid_id_string(struct
+ {
+ 	char *id = card->id;
+ 
+-	while (*nid && !isalnum(*nid))
++	while (*nid && !safe_ascii_char(*nid))
+ 		nid++;
+ 	if (isdigit(*nid))
+ 		*id++ = isalpha(*src) ? *src : 'D';
+ 	while (*nid && (size_t)(id - card->id) < sizeof(card->id) - 1) {
+-		if (isalnum(*nid))
++		if (safe_ascii_char(*nid))
+ 			*id++ = *nid;
+ 		nid++;
+ 	}
+@@ -807,7 +813,7 @@ static ssize_t id_store(struct device *d
+ 
+ 	for (idx = 0; idx < copy; idx++) {
+ 		c = buf[idx];
+-		if (!isalnum(c) && c != '_' && c != '-')
++		if (!safe_ascii_char(c) && c != '_' && c != '-')
+ 			return -EINVAL;
+ 	}
+ 	memcpy(buf1, buf, copy);
 
 
