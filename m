@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4F21A76A5;
-	Mon, 14 Oct 2024 15:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC091A76A5;
+	Mon, 14 Oct 2024 15:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918612; cv=none; b=L842x1Yhd25037c6c/qN8CUHhDOs8Ns3tFwIMBaNZ90ggv7YiVNKe6w/M/iJC9ebzcNmf+rbEpNjuYglQ0h4d7gqn3xLoIpJfzHqxPCIayBsiW1clueIp8bkdvuGBw0sz4gRjgwnxgP4QezDBHlp9NbZd7IxfL2/EzgNE+GvbOk=
+	t=1728918616; cv=none; b=utROpuD9Cfh3qFt8q9GJt9upzkVeAplmr0TL94i5YisEFb4j2jbpuPD+doW91wTQAcBxIhU4rsssvWhJf3To0zYrr+gHCm+/NkjAUOguZ8lGTWxf0EYH2rm17sBoN94dP+k4cB4Rkh2FD7F7uvbiib0s5edkV1ge1JJF1qTNkdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918612; c=relaxed/simple;
-	bh=F3UPabyJUKJrHPuISZs8mIrKkkuhzT7qJBJwxzjvR8M=;
+	s=arc-20240116; t=1728918616; c=relaxed/simple;
+	bh=TE9eABTqUB/6gOcNu8CXOiw+A4vFdfmwWfey9+HZNKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YkAvyVL/Ki2l4SZx3e6PTzqd6MMos5pizGBQ0GBhRtpkv+Zq3NPWHNKM1N3TIx5oSs5Bp+goVYBi0bck9H3Ek1Ks91u2zKUxrEV1LMsyOuN+hazH0D+egNpXdkdRxdTrJ4mVZOGhmIlUUXLYJ3g5AgrQPkbrmcwiJcyjNKdfNAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKfg2Duq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAJxP4XUfS2RkauOzNkshS2EcATJ7AT3EOm7VT4NnSqad7NTcl6Q6zrKdVtKjR1Ow1sKr7a8jA/CgSUZiDBWVMEe0Km+PQDdt9z2PegP38oTkBe08OJO07w9X8UG60vk7gDgt4maRb2jfZmT6U/Z1ge6VrshB5czFEa/w3KlzTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHFKy5z9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKfg2Duq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB8C4CEC3;
-	Mon, 14 Oct 2024 15:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHFKy5z9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8083AC4CEC3;
+	Mon, 14 Oct 2024 15:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918612;
-	bh=F3UPabyJUKJrHPuISZs8mIrKkkuhzT7qJBJwxzjvR8M=;
+	s=korg; t=1728918615;
+	bh=TE9eABTqUB/6gOcNu8CXOiw+A4vFdfmwWfey9+HZNKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKfg2DuqmZE+LRvjitQoMoXqXBJ/xJLu2cEGqPjWwUDXPzqUCrnpX3SXLa6rhQGor
-	 m4hR3S/SwzLwMcAlQzlT4NMJ0vXPL+LIfMeKzWBM5zvhCC2SX2eZcqUskgsmkrnNoT
-	 0PrMW5bcw2+ZTuH4hhuuCUgdR1G/4QVunmrxLU98=
+	b=zHFKy5z9aCloAQojr+k1k1VplLjZwa4wtWqBtthxa8uVmD1DlXDQsWH5kZ90MhYSZ
+	 xVZSVnPPM+DomVDGQIw5rwScUhcGC7mxMc3JqlmshbPIC7PBp4Bjwl56CxfoQByIdr
+	 Gw9LOtf5y9KZQHVE25IZ59GVM4VIN2vZmNGDCmHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 372/798] iio: magnetometer: ak8975: Fix Unexpected device error
-Date: Mon, 14 Oct 2024 16:15:26 +0200
-Message-ID: <20241014141232.565255390@linuxfoundation.org>
+	"Erhard F." <erhard_f@mailbox.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 373/798] powerpc: Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with ld.lld 15+
+Date: Mon, 14 Oct 2024 16:15:27 +0200
+Message-ID: <20241014141232.607587414@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,86 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Apitzsch <git@apitzsch.eu>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 848f68c760ab1e14a9046ea6e45e3304ab9fa50b upstream.
+commit a11334d8327b3fd7987cbfb38e956a44c722d88f upstream.
 
-Explicity specify array indices to fix mapping between
-asahi_compass_chipset and ak_def_array.
-While at it, remove unneeded AKXXXX.
+Commit 5017b4594672 ("powerpc/64: Option to build big-endian with ELFv2
+ABI") restricted the ELFv2 ABI configuration such that it can only be
+selected when linking with ld.bfd, due to lack of testing with LLVM.
 
-Fixes: 4f9ea93afde1 ("iio: magnetometer: ak8975: Convert enum->pointer for data in the match tables")
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231001-ak_magnetometer-v1-1-09bf3b8798a3@apitzsch.eu
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+ld.lld can link ELFv2 kernels without any issues; in fact, it is the
+only ABI that ld.lld supports, as ELFv1 is not supported in ld.lld.
+
+As this has not seen a ton of real world testing yet, be conservative
+and only allow this option to be selected with the latest stable release
+of LLVM (15.x) and newer.
+
+While in the area, remove 'default n', as it is unnecessary to specify
+it explicitly since all boolean/tristate configuration symbols default
+to n.
+
+Tested-by: "Erhard F." <erhard_f@mailbox.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230118-ppc64-elfv2-llvm-v1-3-b9e2ec9da11d@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/ak8975.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ arch/powerpc/Kconfig |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -204,7 +204,6 @@ static long ak09912_raw_to_gauss(u16 dat
- 
- /* Compatible Asahi Kasei Compass parts */
- enum asahi_compass_chipset {
--	AKXXXX		= 0,
- 	AK8975,
- 	AK8963,
- 	AK09911,
-@@ -248,7 +247,7 @@ struct ak_def {
- };
- 
- static const struct ak_def ak_def_array[] = {
--	{
-+	[AK8975] = {
- 		.type = AK8975,
- 		.raw_to_gauss = ak8975_raw_to_gauss,
- 		.range = 4096,
-@@ -273,7 +272,7 @@ static const struct ak_def ak_def_array[
- 			AK8975_REG_HYL,
- 			AK8975_REG_HZL},
- 	},
--	{
-+	[AK8963] = {
- 		.type = AK8963,
- 		.raw_to_gauss = ak8963_09911_raw_to_gauss,
- 		.range = 8190,
-@@ -298,7 +297,7 @@ static const struct ak_def ak_def_array[
- 			AK8975_REG_HYL,
- 			AK8975_REG_HZL},
- 	},
--	{
-+	[AK09911] = {
- 		.type = AK09911,
- 		.raw_to_gauss = ak8963_09911_raw_to_gauss,
- 		.range = 8192,
-@@ -323,7 +322,7 @@ static const struct ak_def ak_def_array[
- 			AK09912_REG_HYL,
- 			AK09912_REG_HZL},
- 	},
--	{
-+	[AK09912] = {
- 		.type = AK09912,
- 		.raw_to_gauss = ak09912_raw_to_gauss,
- 		.range = 32752,
-@@ -348,7 +347,7 @@ static const struct ak_def ak_def_array[
- 			AK09912_REG_HYL,
- 			AK09912_REG_HZL},
- 	},
--	{
-+	[AK09916] = {
- 		.type = AK09916,
- 		.raw_to_gauss = ak09912_raw_to_gauss,
- 		.range = 32752,
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -593,8 +593,7 @@ config PPC64_BIG_ENDIAN_ELF_ABI_V2
+ 	bool "Build big-endian kernel using ELF ABI V2 (EXPERIMENTAL)"
+ 	depends on PPC64 && CPU_BIG_ENDIAN
+ 	depends on CC_HAS_ELFV2
+-	depends on LD_IS_BFD && LD_VERSION >= 22400
+-	default n
++	depends on LD_VERSION >= 22400 || LLD_VERSION >= 150000
+ 	help
+ 	  This builds the kernel image using the "Power Architecture 64-Bit ELF
+ 	  V2 ABI Specification", which has a reduced stack overhead and faster
 
 
