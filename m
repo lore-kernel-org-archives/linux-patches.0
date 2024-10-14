@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4606A1AA793;
-	Mon, 14 Oct 2024 15:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6B219E802;
+	Mon, 14 Oct 2024 15:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918707; cv=none; b=YIpF+pFbYYWYK/3cMHENdcLcK4UJw5vU3YL4n1Uqst8djulBpzATyb4lj+xoGl6N6j0VwKeJmFll9kGkqkMUPUq6/6LPAxWPeFxDdeNqra93tlXfR9GTyr9hbyRYxAct6aRX/iZ1LXr9QVZCIe3stdYnJXKRvZOp3NxrLtwC27I=
+	t=1728918710; cv=none; b=l60Uw0N0MS7/cSkO3AvL93gJB5YWz10e8B5UN0xf0PrnwUkVgkSM5iEUqkT71EUFQulpka1mxzSxl0rrZagXmh4vZzLHIcLqWcI7Stx520eZDG1x1ba5Dmli4v8366d3KoiD2Nl9QHGJ9i14295YxMRP+NxPJXYRcUVCKXWnU/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918707; c=relaxed/simple;
-	bh=o5w3q98MHN1EGXiR9TMS6QGWGfo7oFatSWSYGjhHq8M=;
+	s=arc-20240116; t=1728918710; c=relaxed/simple;
+	bh=OmbgVPamCxsp+hPRRVKmdHFNmW4svwdVqTwFOL4Y9eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfnLONar+ZO9MdGamSIVROP59NmWbmLzP6hh8gLPCy83h3iHAD7DgBBvbbI0Llal6R1i4mSJQXKJKc4Pl8K06MKrQChHipAhVkFe5II3Cq5EGQh7LrWpQG8eg/27UovH20EJU/Nid3uZQJ3clL1mVSie9ZWgWWC3qhPDJlmlyJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hblCh/Gj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M67FVw7y2ea3bjTX1lEKCaFmlUrlZdXtzFmVMRex8ZRWWEJrYOEc1X9zCMDEOp94sUoa5tXtMjrHQicqcDxTz+gIAUinZcWZPLJOJl9H+Vy/jc0YP6lUaZnzXxlsD+3BMdkcXT9GIaWT6RkizlawBzp5vr0rGvC8oCJbAOoOGJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9gYAJI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hblCh/Gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A9BC4CEC3;
-	Mon, 14 Oct 2024 15:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9gYAJI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD1AC4CEC3;
+	Mon, 14 Oct 2024 15:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918707;
-	bh=o5w3q98MHN1EGXiR9TMS6QGWGfo7oFatSWSYGjhHq8M=;
+	s=korg; t=1728918710;
+	bh=OmbgVPamCxsp+hPRRVKmdHFNmW4svwdVqTwFOL4Y9eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hblCh/GjthEHstqGVeHjTqDEqJr/45/eGTScs9UuclwR6MBFfNKcq4OE9d92ZeSVR
-	 LBrw6tk+SLZRUpLz0mXK30nNbk8ZFoQNplqSWTEYRuHYMhVd0PeIyMq15BLAvRnvnd
-	 +Topc7ALqjLad7k1reg0D4VcrBZaETUQVvkQ2o+4=
+	b=T9gYAJI3a1RXLj3pNsO5+6C3z0DFvQkExxrAnuezOKQ8wODJtcX8dF7or/TNbSnOC
+	 1Ey8n1hrfEQvG1yh9zB50njrW+yi88PR8L8AlS5UY7JQWkYe12U9Eca3HNPVJtDkaR
+	 0sChvV9CwMRP0jNVbrn6Wvi0o0hdTPaK4VspdS9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 358/798] mm/filemap: return early if failed to allocate memory for split
-Date: Mon, 14 Oct 2024 16:15:12 +0200
-Message-ID: <20241014141232.005642258@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 393/798] selftests: netfilter: Fix nft_audit.sh for newer nft binaries
+Date: Mon, 14 Oct 2024 16:15:47 +0200
+Message-ID: <20241014141233.383203336@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,40 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Phil Sutter <phil@nwl.cc>
 
-commit de60fd8ddeda2b41fbe11df11733838c5f684616 upstream.
+[ Upstream commit 8a89015644513ef69193a037eb966f2d55fe385a ]
 
-xas_split_alloc could fail with NOMEM, and in such case, it should abort
-early instead of keep going and fail the xas_split below.
+As a side-effect of nftables' commit dbff26bfba833 ("cache: consolidate
+reset command"), audit logs changed when more objects were reset than
+fit into a single netlink message.
 
-Link: https://lkml.kernel.org/r/20240416071722.45997-1-ryncsn@gmail.com
-Link: https://lkml.kernel.org/r/20240415171857.19244-1-ryncsn@gmail.com
-Link: https://lkml.kernel.org/r/20240415171857.19244-2-ryncsn@gmail.com
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Acked-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 6758c1128ceb ("mm/filemap: optimize filemap folio adding")
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since the objects' distribution in netlink messages is not relevant,
+implement a summarizing function which combines repeated audit logs into
+a single one with summed up 'entries=' value.
+
+Fixes: 203bb9d39866 ("selftests: netfilter: Extend nft_audit.sh")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../testing/selftests/netfilter/nft_audit.sh  | 57 ++++++++++---------
+ 1 file changed, 29 insertions(+), 28 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -867,9 +867,12 @@ noinline int __filemap_add_folio(struct
- 		unsigned int order = xa_get_order(xas.xa, xas.xa_index);
- 		void *entry, *old = NULL;
+diff --git a/tools/testing/selftests/netfilter/nft_audit.sh b/tools/testing/selftests/netfilter/nft_audit.sh
+index 99ed5bd6e8402..e4717444d38e7 100755
+--- a/tools/testing/selftests/netfilter/nft_audit.sh
++++ b/tools/testing/selftests/netfilter/nft_audit.sh
+@@ -25,12 +25,31 @@ logread_pid=$!
+ trap 'kill $logread_pid; rm -f $logfile $rulefile' EXIT
+ exec 3<"$logfile"
  
--		if (order > folio_order(folio))
-+		if (order > folio_order(folio)) {
- 			xas_split_alloc(&xas, xa_load(xas.xa, xas.xa_index),
- 					order, gfp);
-+			if (xas_error(&xas))
-+				goto error;
++lsplit='s/^\(.*\) entries=\([^ ]*\) \(.*\)$/pfx="\1"\nval="\2"\nsfx="\3"/'
++summarize_logs() {
++	sum=0
++	while read line; do
++		eval $(sed "$lsplit" <<< "$line")
++		[[ $sum -gt 0 ]] && {
++			[[ "$pfx $sfx" == "$tpfx $tsfx" ]] && {
++				let "sum += val"
++				continue
++			}
++			echo "$tpfx entries=$sum $tsfx"
 +		}
- 		xas_lock_irq(&xas);
- 		xas_for_each_conflict(&xas, entry) {
- 			old = entry;
++		tpfx="$pfx"
++		tsfx="$sfx"
++		sum=$val
++	done
++	echo "$tpfx entries=$sum $tsfx"
++}
++
+ do_test() { # (cmd, log)
+ 	echo -n "testing for cmd: $1 ... "
+ 	cat <&3 >/dev/null
+ 	$1 >/dev/null || exit 1
+ 	sleep 0.1
+-	res=$(diff -a -u <(echo "$2") - <&3)
++	res=$(diff -a -u <(echo "$2") <(summarize_logs <&3))
+ 	[ $? -eq 0 ] && { echo "OK"; return; }
+ 	echo "FAIL"
+ 	grep -v '^\(---\|+++\|@@\)' <<< "$res"
+@@ -129,31 +148,17 @@ do_test 'nft reset rules t1 c2' \
+ 'table=t1 family=2 entries=3 op=nft_reset_rule'
+ 
+ do_test 'nft reset rules table t1' \
+-'table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule'
++'table=t1 family=2 entries=9 op=nft_reset_rule'
+ 
+ do_test 'nft reset rules t2 c3' \
+-'table=t2 family=2 entries=189 op=nft_reset_rule
+-table=t2 family=2 entries=188 op=nft_reset_rule
+-table=t2 family=2 entries=126 op=nft_reset_rule'
++'table=t2 family=2 entries=503 op=nft_reset_rule'
+ 
+ do_test 'nft reset rules t2' \
+-'table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=186 op=nft_reset_rule
+-table=t2 family=2 entries=188 op=nft_reset_rule
+-table=t2 family=2 entries=129 op=nft_reset_rule'
++'table=t2 family=2 entries=509 op=nft_reset_rule'
+ 
+ do_test 'nft reset rules' \
+-'table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t1 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=3 op=nft_reset_rule
+-table=t2 family=2 entries=180 op=nft_reset_rule
+-table=t2 family=2 entries=188 op=nft_reset_rule
+-table=t2 family=2 entries=135 op=nft_reset_rule'
++'table=t1 family=2 entries=9 op=nft_reset_rule
++table=t2 family=2 entries=509 op=nft_reset_rule'
+ 
+ # resetting sets and elements
+ 
+@@ -177,13 +182,11 @@ do_test 'nft reset counters t1' \
+ 'table=t1 family=2 entries=1 op=nft_reset_obj'
+ 
+ do_test 'nft reset counters t2' \
+-'table=t2 family=2 entries=342 op=nft_reset_obj
+-table=t2 family=2 entries=158 op=nft_reset_obj'
++'table=t2 family=2 entries=500 op=nft_reset_obj'
+ 
+ do_test 'nft reset counters' \
+ 'table=t1 family=2 entries=1 op=nft_reset_obj
+-table=t2 family=2 entries=341 op=nft_reset_obj
+-table=t2 family=2 entries=159 op=nft_reset_obj'
++table=t2 family=2 entries=500 op=nft_reset_obj'
+ 
+ # resetting quotas
+ 
+@@ -194,13 +197,11 @@ do_test 'nft reset quotas t1' \
+ 'table=t1 family=2 entries=1 op=nft_reset_obj'
+ 
+ do_test 'nft reset quotas t2' \
+-'table=t2 family=2 entries=315 op=nft_reset_obj
+-table=t2 family=2 entries=185 op=nft_reset_obj'
++'table=t2 family=2 entries=500 op=nft_reset_obj'
+ 
+ do_test 'nft reset quotas' \
+ 'table=t1 family=2 entries=1 op=nft_reset_obj
+-table=t2 family=2 entries=314 op=nft_reset_obj
+-table=t2 family=2 entries=186 op=nft_reset_obj'
++table=t2 family=2 entries=500 op=nft_reset_obj'
+ 
+ # deleting rules
+ 
+-- 
+2.43.0
+
 
 
