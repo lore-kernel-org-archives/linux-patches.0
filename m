@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7031B4F2B;
-	Mon, 14 Oct 2024 15:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC4D1AB6E2;
+	Mon, 14 Oct 2024 15:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918049; cv=none; b=HPkeLTTIqoDp+OR/4Ayenj2xhCnIpgngYfHI+DNnDp7pIsp6Wr63as6u3jaGwDBxYCDxjgW5AC61YDYvevbZaG99Kh05CxydUecdwew4WvYVUk+S/1Q1yvnsYapOuVk48zWReht6Z7Xf2onnG9bBL9Lia+3c2sTmKlvgSTmjFDs=
+	t=1728918053; cv=none; b=q7w/Nu+QSTFSm1lWjDI1getlzj1RYq13a2iN45M9X7ozgRijejptfowfxuISRSFxxzL9HpVufDyhl7fWB2QZq4pTRlsBSvSrRXLzYPa2KcO6Bwm0aSHIh7FYxhA7E3OSsiI8HPBxk5gF8CtzTOQWN62A5z0Bz55bqAUSMNfPnyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918049; c=relaxed/simple;
-	bh=6Y1SrdgK5T5DAKl3EwmrlBxi9RUEbMGYDEIDNTjwJ/Y=;
+	s=arc-20240116; t=1728918053; c=relaxed/simple;
+	bh=d/p/HvxJrISm3CSxf1fAbQVLjU3ziFba/hYSHR8fOXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8DW6e5qhuq1ANiSA0rvU3LT1PfARrg3kxU5Udy3Gw/TOnvG2mN45ptxNq8yWVg2JYZvw64H7/Gckx+EA5kr4SkeRry4CB5IqIYhHpOs9KfzLOim/swJ6OijpyxjSdSy/MMzY3WZng8tv1SjTh8wzYW+HoiGGwABdCr0ej6QAy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gic1jhhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fd5zCf215udIqEQeCBH5wFJOn0CZi7GWwl3KbZ+34qIiHpfdW+BeY8aChPA/kT9lPtVEME0HjRV+7NdxXeDXSiY41QdlYaT2rGaix8+Ulx7/uJ71xZmpdECG1WR4ZBjVNCQ+jTAi86YODFYG5ILCD1jIhUCTJcRPvhbdC6qzFAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgeQsu8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gic1jhhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14571C4CEC3;
-	Mon, 14 Oct 2024 15:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgeQsu8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A759C4CEC3;
+	Mon, 14 Oct 2024 15:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918049;
-	bh=6Y1SrdgK5T5DAKl3EwmrlBxi9RUEbMGYDEIDNTjwJ/Y=;
+	s=korg; t=1728918053;
+	bh=d/p/HvxJrISm3CSxf1fAbQVLjU3ziFba/hYSHR8fOXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gic1jhhXpJKsH7giku8aH1dhujrWwyAzZr856gxk6ozMShQaKf53KYvOJx3ueIMft
-	 4yObacdlbDJQN56OxmNtd/ov1rcylM/AWh9nIMBBfqkwvPuGtiGl0ViUG63S2slxl7
-	 RnV4RaAqrVji57rx3/8i1Zb4utUgi4HewTv7jChs=
+	b=TgeQsu8a7HU74emgjopCM8MalngdZEhwuPCain3C9k1If0Sscwb7SvPhqvxl/GKNF
+	 VCtr2THqruz9d0FDt8XT60JvzaiRmcPuIsif02L0TXv7BKDoCb30VNSTX9x2HKZE25
+	 abI/dctCyxWLEr5GuwNDAcPpPgK0C+/BaE3PC03s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/798] clk: imx: imx8qxp: Parent should be initialized earlier than the clock
-Date: Mon, 14 Oct 2024 16:12:24 +0200
-Message-ID: <20241014141225.395821998@linuxfoundation.org>
+Subject: [PATCH 6.1 208/798] RDMA/rtrs: Reset hb_missed_cnt after receiving other traffic from peer
+Date: Mon, 14 Oct 2024 16:12:42 +0200
+Message-ID: <20241014141226.103765350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,54 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Jack Wang <jinpu.wang@ionos.com>
 
-[ Upstream commit 766c386c16c9899461b83573a06380d364c6e261 ]
+[ Upstream commit 3258cbbd86deaa2675e1799bc3d18bd1ef472641 ]
 
-The initialization order of SCU clocks affects the sequence of SCU clock
-resume. If there are no other effects, the earlier the initialization,
-the earlier the resume. During SCU clock resume, the clock rate is
-restored. As SCFW guidelines, configure the parent clock rate before
-configuring the child rate.
+Reset hb_missed_cnt after receiving traffic from other peer, so
+hb is more robust again high load on host or network.
 
-Fixes: babfaa9556d7 ("clk: imx: scu: add more scu clocks")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-15-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Link: https://patch.msgid.link/20240821112217.41827-5-haris.iqbal@ionos.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 3 ++-
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index fd89f0090779f..28265e28856c2 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -166,8 +166,8 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu("pwm_clk",   IMX_SC_R_LCD_0_PWM_0, IMX_SC_PM_CLK_PER);
- 	imx_clk_scu("elcdif_pll", IMX_SC_R_ELCDIF_PLL, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu2("lcd_clk", lcd_sels, ARRAY_SIZE(lcd_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_PER);
--	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
- 	imx_clk_scu("lcd_pxl_bypass_div_clk", IMX_SC_R_LCD_0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
- 
- 	/* Audio SS */
- 	imx_clk_scu("audio_pll0_clk", IMX_SC_R_AUDIO_PLL_0, IMX_SC_PM_CLK_PLL);
-@@ -207,11 +207,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
--	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
--	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_pll0_clk", IMX_SC_R_DC_1_PLL_0, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_pll1_clk", IMX_SC_R_DC_1_PLL_1, IMX_SC_PM_CLK_PLL);
- 	imx_clk_scu("dc1_bypass0_clk", IMX_SC_R_DC_1_VIDEO0, IMX_SC_PM_CLK_BYPASS);
-+	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
-+	imx_clk_scu2("dc1_disp1_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC1);
- 	imx_clk_scu("dc1_bypass1_clk", IMX_SC_R_DC_1_VIDEO1, IMX_SC_PM_CLK_BYPASS);
- 
- 	/* MIPI-LVDS SS */
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index cc07c91f9c549..9beae1e50d115 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -624,6 +624,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		 */
+ 		if (WARN_ON(wc->wr_cqe->done != rtrs_clt_rdma_done))
+ 			return;
++		clt_path->s.hb_missed_cnt = 0;
+ 		rtrs_from_imm(be32_to_cpu(wc->ex.imm_data),
+ 			       &imm_type, &imm_payload);
+ 		if (imm_type == RTRS_IO_RSP_IMM ||
+@@ -641,7 +642,6 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 				return  rtrs_clt_recv_done(con, wc);
+ 		} else if (imm_type == RTRS_HB_ACK_IMM) {
+ 			WARN_ON(con->c.cid);
+-			clt_path->s.hb_missed_cnt = 0;
+ 			clt_path->s.hb_cur_latency =
+ 				ktime_sub(ktime_get(), clt_path->s.hb_last_sent);
+ 			if (clt_path->flags & RTRS_MSG_NEW_RKEY_F)
+@@ -668,6 +668,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		/*
+ 		 * Key invalidations from server side
+ 		 */
++		clt_path->s.hb_missed_cnt = 0;
+ 		WARN_ON(!(wc->wc_flags & IB_WC_WITH_INVALIDATE ||
+ 			  wc->wc_flags & IB_WC_WITH_IMM));
+ 		WARN_ON(wc->wr_cqe->done != rtrs_clt_rdma_done);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index e978ee4bb73ae..726b690ebe652 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -1234,6 +1234,7 @@ static void rtrs_srv_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		 */
+ 		if (WARN_ON(wc->wr_cqe != &io_comp_cqe))
+ 			return;
++		srv_path->s.hb_missed_cnt = 0;
+ 		err = rtrs_post_recv_empty(&con->c, &io_comp_cqe);
+ 		if (err) {
+ 			rtrs_err(s, "rtrs_post_recv(), err: %d\n", err);
 -- 
 2.43.0
 
