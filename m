@@ -1,148 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC61013D29A;
-	Sat, 12 Oct 2024 23:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9000614BFA2
+	for <patches@lists.linux.dev>; Mon, 14 Oct 2024 07:59:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728774796; cv=none; b=LXChQpFkTu8kiy9DBsgfJErhDkjMzk2tM8zvQneT3G7vacpHGQucaJXwgRurckqEGK89/6KFvrmbPCgInUkPiXF4Te7pWc4q+hpxC4qk/X1zCI1PmOJgsfCbFPx/w8a/O19lKhO3mfPHC74CZHO0cY6H4RaxnL9vyLXRJZndWDM=
+	t=1728892751; cv=none; b=m1RCf0FxKaUDs+1IJ8h0GJNeczmOmEUfMGWccWzI95zTBMg7eqDPqjoR8bZ2dPfSNkrePDk5jLLTr6IvvhFDPmRIRqOBvg/gOAliuWsM9zarjL1RL0bOQJCOEl1P/FwC9TgXbAMhokLmEgtmCDXJ/UD3MrCVyr4XxqEjw+pzndM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728774796; c=relaxed/simple;
-	bh=AzeLI7/qmt92QUnf/gSnV2p9Yej95L5XnCrB93d6HHw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Fv/gG2AcphLgeWbOrU9JcDCQWUG5xL2fVkJ0o8XYiyx7YMjgtUCw3JYv+hfA27KPzwT4cHnQpKvZRrXSz8eSS+qyOurQfKPYhFA+oRL+6oaDjieQygWhBfWS1TOSbO+dMC9qNk6NcndJ2gt54KCLvrDhGLAAwHl9ZBbhL9G6uQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ij6iD3Ae; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728892751; c=relaxed/simple;
+	bh=oFF6VHGttnHusqmr3FN2QG++jdlGO4+8p6CDui+ULbk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u4OjiFekCZt27T+nePVu74I6DO2az53FvPhjT3GgbkwCl0p/B7Yo4A0TlaKBrFn/Ty4JDs9tBA/+MB3Psygt/pXyffs523cWXU1uBrn1hMCX/vDkNHrGdbBFqpfkl/3Xm3VNxtya9KvzOQQZ6BXMWtUZr/vERtcAopHGgnYgtk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eDsSokh/; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ij6iD3Ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE91C4CEC6;
-	Sat, 12 Oct 2024 23:13:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728774796;
-	bh=AzeLI7/qmt92QUnf/gSnV2p9Yej95L5XnCrB93d6HHw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Ij6iD3Ae2X0np//wdjkNu8Ffx1HFTa9RaD6+2ZjJEigh9yjk6l6hddthkpYAETzCQ
-	 /WLKWOGF+7PTfmqIFUdE0mDhRGgjy3nSxqMhgTXx/k3U9z1sfI5qzhsIyptfACUXMt
-	 hHSu2qxWmA01Wb4ascaBcPltGf6RV8kAb5idS4x8jCQXgjlrWm4MyITCR0uxg0Mzym
-	 3yInJBE+0lrUfZkWhZBMhq1fEPCXFTigZw8ioQv5VF9Vy3JD58a/YU/s1lH9Bg5TNW
-	 ZN0pc+AfKo6YQMcTUCrRKzi1CmNiVtM4bkrD+Ig5kaIzRTOjhnTbN9boVh38UTeLuT
-	 Zn0psdwiSJSIQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [RFC PATCH] rust: kernel: clean explicit lifetimes that can be elided
-Date: Sun, 13 Oct 2024 01:13:00 +0200
-Message-ID: <20241012231300.397010-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eDsSokh/"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb57f97d75so961911fa.2
+        for <patches@lists.linux.dev>; Mon, 14 Oct 2024 00:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728892747; x=1729497547; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ScjclWrKfNDFbBysTklj+SJ3rFHMGEWxbh3si/BH/Zk=;
+        b=eDsSokh/d3w9yHQ+Us/Fae7b7TtYJrLuJEbAD91QMBckEtBLvJ7e4BD+WYuOrcA8z7
+         GJ8wYDUQGMJM28lrxa44TZTAosrPEMnla8c+mtbHxc0ZSsgRCy0dCwVt3qDwFSCuSIFR
+         UzIpYg0OeWg3abxELeg6DaLOLnkOVgzd15Tmlgfv7cTBQXojS7YNkeQTq30uHBain2je
+         q8idhRYTYi5hdPnCxA89E+GyE9icHH9l4CBzwiXMBJlsAyPEETezh8K0ICuUDIjMAg6w
+         edo7UnbDpknmMnLWr/PHns37gGChpwFX3037yF/si3xAJrqYQgTtJtWbfBiOJoXAJvdZ
+         1Uiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728892747; x=1729497547;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ScjclWrKfNDFbBysTklj+SJ3rFHMGEWxbh3si/BH/Zk=;
+        b=DxDjnhLziv1yWkSz/hpaj5yhK91AvXOy8++ivgfBtP/G9HNO/GOZNxsXPMpfjfvsx+
+         kDw5mBj7DtBUh5hj3Sz+khjBzOdvXUjnxhxUkQK2Of5z62PpszGHu7/oumF3C7c7r+Gu
+         M6k2Hg1hEhpfCX7/y5HyC1/F6rl1OAR9TdGmT52uxcNcuzUdJzPE8j6NMr+CWxpuGZ5c
+         4SfOmLIr7j5UpqAZxNZ4GIocUYe+gVxttWE5LI5gl2+B8q/kt4IWyPXtl77hRH6lZgcv
+         bVzvlMOALuKSHMrtFaaUvAf838+VxHbPVZwpM4f6jm/G0oGdNmVWuKdSPioctT8m9Xx+
+         opUg==
+X-Forwarded-Encrypted: i=1; AJvYcCVZu5JcSFODKsmCe+LfsJj+cY8rMczBdGLvx4AhQr2PpTA5vIJAckzPE4BPLmwGJzTvDCDBL2DR@lists.linux.dev
+X-Gm-Message-State: AOJu0YxFM2lMYbyEMUI6xyBiAxciIzWvIG6ppt7/tj5BrIjrSZcUepiY
+	D2Q5EisaeqI3NNTVsf1pKjjug5yhIzyLvfSV5zZNdn7e00TxOJ3GlKSdzhYVM5IZ4VeMFoA1Ej3
+	YXmd0OU1nIX69M0cmwSM6XXuIBRxAu0jV+FkNWg==
+X-Google-Smtp-Source: AGHT+IEKyEtol/S+SVKZojpSYhC7ViJe62dDg31X0hlm2J4WIW4keP+c77Z9R7yIc1BX887mjL23tAglKwfPJlsZKB8=
+X-Received: by 2002:a05:6512:3e21:b0:539:ebb6:7b36 with SMTP id
+ 2adb3069b0e04-539ebb67d8cmr1600580e87.25.1728892746567; Mon, 14 Oct 2024
+ 00:59:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1728491453.git.nicolinc@nvidia.com> <88114b5c725bb3300a9599d3eeebded221a0b1f9.1728491453.git.nicolinc@nvidia.com>
+ <CABQgh9Eaj_vy1=sS2Pf7RC7Vy5PopDfwoshECULEU-jK3JF_sQ@mail.gmail.com>
+ <Zwn/4m8Ac0xEiJi8@Asurada-Nvidia> <CABQgh9Ft=xxJK-bjS6wCZ5BN4AiKtF9fzdBkevA3x2yb_4O4Kg@mail.gmail.com>
+In-Reply-To: <CABQgh9Ft=xxJK-bjS6wCZ5BN4AiKtF9fzdBkevA3x2yb_4O4Kg@mail.gmail.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Mon, 14 Oct 2024 15:58:55 +0800
+Message-ID: <CABQgh9HP1M8GAXMwf0ZNn5EpMBAvJU3JLRWcN5H1wfGrqXSe1Q@mail.gmail.com>
+Subject: Re: [PATCH v3 03/11] iommufd: Introduce IOMMUFD_OBJ_VIOMMU and its
+ related struct
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org, joro@8bytes.org, 
+	suravee.suthikulpanit@amd.com, robin.murphy@arm.com, dwmw2@infradead.org, 
+	baolu.lu@linux.intel.com, shuah@kernel.org, linux-kernel@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-kselftest@vger.kernel.org, eric.auger@redhat.com, 
+	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com, 
+	shameerali.kolothum.thodi@huawei.com, smostafa@google.com, yi.l.liu@intel.com, 
+	aik@amd.com, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-In nightly Clippy (i.e. Rust 1.83.0), the `needless_lifetimes` lint has
-been extended [1] to suggest eliding `impl` lifetimes, e.g.
+Hi, Nico
 
-    error: the following explicit lifetimes could be elided: 'a
-    --> rust/kernel/list.rs:647:6
-        |
-    647 | impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'a, T, ID> {}
-        |      ^^                                                                  ^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-        = note: `-D clippy::needless-lifetimes` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::needless_lifetimes)]`
-    help: elide the lifetimes
-        |
-    647 - impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'a, T, ID> {}
-    647 + impl<T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'_, T, ID> {}
+On Sat, 12 Oct 2024 at 18:18, Zhangfei Gao <zhangfei.gao@linaro.org> wrote:
+>
+> On Sat, 12 Oct 2024 at 12:49, Nicolin Chen <nicolinc@nvidia.com> wrote:
+> >
+> > On Sat, Oct 12, 2024 at 11:23:07AM +0800, Zhangfei Gao wrote:
+> >
+> > > > diff --git a/drivers/iommu/iommufd/viommu_api.c b/drivers/iommu/iommufd/viommu_api.c
+> > > > new file mode 100644
+> > > > index 000000000000..c1731f080d6b
+> > > > --- /dev/null
+> > > > +++ b/drivers/iommu/iommufd/viommu_api.c
+> > > > @@ -0,0 +1,57 @@
+> > > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > > +/* Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES
+> > > > + */
+> > > > +
+> > > > +#include "iommufd_private.h"
+> > > > +
+> > > > +struct iommufd_object *iommufd_object_alloc_elm(struct iommufd_ctx *ictx,
+> > > > +                                               size_t size,
+> > > > +                                               enum iommufd_object_type type)
+> > > > +{
+> > > > +       struct iommufd_object *obj;
+> > > > +       int rc;
+> > > > +
+> > > > +       obj = kzalloc(size, GFP_KERNEL_ACCOUNT);
+> > > > +       if (!obj)
+> > > > +               return ERR_PTR(-ENOMEM);
+> > > > +       obj->type = type;
+> > > > +       /* Starts out bias'd by 1 until it is removed from the xarray */
+> > > > +       refcount_set(&obj->shortterm_users, 1);
+> > > > +       refcount_set(&obj->users, 1);
+> > >
+> > > here set refcont 1
+> > >
+> > > iommufd_device_bind -> iommufd_object_alloc(ictx, idev,
+> > > IOMMUFD_OBJ_DEVICE): refcont -> 1
+> > > refcount_inc(&idev->obj.users); refcount -> 2
+> > > will cause iommufd_device_unbind fail.
+> > >
+> > > May remove refcount_inc(&idev->obj.users) in iommufd_device_bind
+> >
+> > Hmm, why would it fail? Or is it failing on your system?
+>
+> Not sure, still in check, it may only be on my platform.
+>
+> it hit
+> iommufd_object_remove:
+> if (WARN_ON(obj != to_destroy))
+>
+> iommufd_device_bind refcount=2
+> iommufd_device_attach refcount=3
+> //still not sure which operation inc the count?
+> iommufd_device_detach refcount=4
+>
 
-Thus clean them.
+Have a question,
+when should iommufd_vdevice_destroy be called, before or after
+iommufd_device_unbind.
 
-Link: https://github.com/rust-lang/rust-clippy/pull/13286 [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-Do we want this in general, or just in some cases? There is an issue about this
-where we may want to leave some feedback:
+Now iommufd_vdevice_destroy (ref--) is after unbind, hits the if
+(!refcount_dec_if_one(&obj->users)) check.
 
-    https://github.com/rust-lang/rust-clippy/issues/13514
+iommufd_device_bind
+iommufd_device_attach
+iommufd_vdevice_alloc_ioctl
 
- rust/kernel/list.rs   |  2 +-
- rust/kernel/rbtree.rs | 14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+iommufd_device_detach
+iommufd_device_unbind // refcount check fail
+iommufd_vdevice_destroy ref--
 
-diff --git a/rust/kernel/list.rs b/rust/kernel/list.rs
-index 5b4aec29eb67..cbccd932fa43 100644
---- a/rust/kernel/list.rs
-+++ b/rust/kernel/list.rs
-@@ -644,7 +644,7 @@ pub fn remove(self) -> ListArc<T, ID> {
-     }
- }
-
--impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'a, T, ID> {}
-+impl<T: ?Sized + ListItem<ID>, const ID: u64> FusedIterator for Iter<'_, T, ID> {}
-
- impl<'a, T: ?Sized + ListItem<ID>, const ID: u64> IntoIterator for &'a List<T, ID> {
-     type IntoIter = Iter<'a, T, ID>;
-diff --git a/rust/kernel/rbtree.rs b/rust/kernel/rbtree.rs
-index 25eb36fd1cdc..232a5eefa6f9 100644
---- a/rust/kernel/rbtree.rs
-+++ b/rust/kernel/rbtree.rs
-@@ -729,13 +729,13 @@ pub struct Cursor<'a, K, V> {
- // SAFETY: The [`Cursor`] has exclusive access to both `K` and `V`, so it is sufficient to require them to be `Send`.
- // The cursor only gives out immutable references to the keys, but since it has excusive access to those same
- // keys, `Send` is sufficient. `Sync` would be okay, but it is more restrictive to the user.
--unsafe impl<'a, K: Send, V: Send> Send for Cursor<'a, K, V> {}
-+unsafe impl<K: Send, V: Send> Send for Cursor<'_, K, V> {}
-
- // SAFETY: The [`Cursor`] gives out immutable references to K and mutable references to V,
- // so it has the same thread safety requirements as mutable references.
--unsafe impl<'a, K: Sync, V: Sync> Sync for Cursor<'a, K, V> {}
-+unsafe impl<K: Sync, V: Sync> Sync for Cursor<'_, K, V> {}
-
--impl<'a, K, V> Cursor<'a, K, V> {
-+impl<K, V> Cursor<'_, K, V> {
-     /// The current node
-     pub fn current(&self) -> (&K, &V) {
-         // SAFETY:
-@@ -948,11 +948,11 @@ pub struct Iter<'a, K, V> {
-
- // SAFETY: The [`Iter`] gives out immutable references to K and V, so it has the same
- // thread safety requirements as immutable references.
--unsafe impl<'a, K: Sync, V: Sync> Send for Iter<'a, K, V> {}
-+unsafe impl<K: Sync, V: Sync> Send for Iter<'_, K, V> {}
-
- // SAFETY: The [`Iter`] gives out immutable references to K and V, so it has the same
- // thread safety requirements as immutable references.
--unsafe impl<'a, K: Sync, V: Sync> Sync for Iter<'a, K, V> {}
-+unsafe impl<K: Sync, V: Sync> Sync for Iter<'_, K, V> {}
-
- impl<'a, K, V> Iterator for Iter<'a, K, V> {
-     type Item = (&'a K, &'a V);
-@@ -983,11 +983,11 @@ pub struct IterMut<'a, K, V> {
- // SAFETY: The [`IterMut`] has exclusive access to both `K` and `V`, so it is sufficient to require them to be `Send`.
- // The iterator only gives out immutable references to the keys, but since the iterator has excusive access to those same
- // keys, `Send` is sufficient. `Sync` would be okay, but it is more restrictive to the user.
--unsafe impl<'a, K: Send, V: Send> Send for IterMut<'a, K, V> {}
-+unsafe impl<K: Send, V: Send> Send for IterMut<'_, K, V> {}
-
- // SAFETY: The [`IterMut`] gives out immutable references to K and mutable references to V, so it has the same
- // thread safety requirements as mutable references.
--unsafe impl<'a, K: Sync, V: Sync> Sync for IterMut<'a, K, V> {}
-+unsafe impl<K: Sync, V: Sync> Sync for IterMut<'_, K, V> {}
-
- impl<'a, K, V> Iterator for IterMut<'a, K, V> {
-     type Item = (&'a K, &'a mut V);
-
-base-commit: 8cf0b93919e13d1e8d4466eb4080a4c4d9d66d7b
---
-2.47.0
+Thanks
