@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0228C1AB505;
-	Mon, 14 Oct 2024 15:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4A21AC887;
+	Mon, 14 Oct 2024 15:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919258; cv=none; b=ipk7zP3NWcdxrg+Tx67o4tKSlZfS8ghKC1y6yD4oWA6kv+JNgehbRGKc8keSuxfZpLYEFSL97e79+WrYHTp/ObxcJeOQxdFyEtejtqYnKwRlgiNw0IJ4P9JmoyNdAm7rZxZHzIaUPOif7y6BGcuEsOvTR89msjjR30dK70k5plw=
+	t=1728919261; cv=none; b=vA5rzk0m4ycqztfsyInVEfJv48wkc5RGUtfhkJZzNFjYgQkZ2AL7XoMs8qer0s4M7EOIvqCoAopW3H91i3ZHa3abpv/tOIi97JcRFXLOoZgBOai+v5WYCg70E3/nUCh9bW8YjRkpS9jYZSuU6NEVsBG1FKqlabOg7FnagI0GxN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919258; c=relaxed/simple;
-	bh=n7OmxHrOoxVjqjlYcAcM76XhGMYvfn7CYsm9SIENnn0=;
+	s=arc-20240116; t=1728919261; c=relaxed/simple;
+	bh=csEL9vhWq+vvlMJQ/y4Q7HVTwNoT7gmgGmRcnE1BxpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxcRRm+RN4i5+GMGf3y0Mi8aQzz29LRQU6cjd4gIU9UrfZZrmpy/IEiIOd2j30Y8+eKRC6VDEUSJnZSYhwj5jpVh+1YsMhZjLrfunA948t1+Cps1MqfyvbM8r022Jrulx1QQebeDwaXjDySyds/nDtdeL6qQmhN+uLJfmh9wMUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOKjjyQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dN5E05Gj6XJHshvb0WlMrFIOjvWqBe4KeUDAK4ycETSOPbJlTFowf+2gFsD+1zzD+ShBfmRVMAZX9BcYqmWnMNzT1EwhDw3iRqPC8H2a8C4GlVzYXE7s8nOkpITatTWI53MIrcrPeocV0bRzerqDOT/TRLchoDc80jb5MBjaua8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAxaPZBX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOKjjyQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F894C4CEC3;
-	Mon, 14 Oct 2024 15:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAxaPZBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EA2C4CECF;
+	Mon, 14 Oct 2024 15:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919257;
-	bh=n7OmxHrOoxVjqjlYcAcM76XhGMYvfn7CYsm9SIENnn0=;
+	s=korg; t=1728919261;
+	bh=csEL9vhWq+vvlMJQ/y4Q7HVTwNoT7gmgGmRcnE1BxpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOKjjyQvK2adCFbKGqboP1Q3QEJqCmMxiCxyvx5izPpOWy9me1FhYfItbOGcdW/6p
-	 y01v1PoZviODfjAoeRpjmE31JmdRUynWWoc0sTey2ILR20A4+gLzVTfcehhsWw/JfM
-	 bGzZ4n1p4G8eXLG4efODFaRp4o5BQE66zqImmXjA=
+	b=rAxaPZBX5RpLf2cvVXd9rgM2EinVBnDv5DUC6nW/Y5TidGFXbihx0NgYbuTqoPbPF
+	 KCmwkfIPORShJvkIb0OLeMK7dgx2qaeZl2O14zws83bTl4LUGV28mgWtj6k2SLz8My
+	 vyN4imsac8bUoVd2qEtTGk7E8odAH2cZbPRaij+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 557/798] parisc: Fix 64-bit userspace syscall path
-Date: Mon, 14 Oct 2024 16:18:31 +0200
-Message-ID: <20241014141239.876673761@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.1 531/798] power: supply: hwmon: Fix missing temp1_max_alarm attribute
+Date: Mon, 14 Oct 2024 16:18:05 +0200
+Message-ID: <20241014141238.851605962@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -49,64 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit d24449864da5838936669618356b0e30ca2999c3 upstream.
+commit e50a57d16f897e45de1112eb6478577b197fab52 upstream.
 
-Currently the glibc isn't yet ported to 64-bit for hppa, so
-there is no usable userspace available yet.
-But it's possible to manually build a static 64-bit binary
-and run that for testing. One such 64-bit test program is
-available at http://ftp.parisc-linux.org/src/64bit.tar.gz
-and it shows various issues with the existing 64-bit syscall
-path in the kernel.
-This patch fixes those issues.
+Temp channel 0 aka temp1 can have a temp1_max_alarm attribute for
+power_supply devices which have a POWER_SUPPLY_PROP_TEMP_ALERT_MAX
+property.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org      # v4.19+
+HWMON_T_MAX_ALARM was missing from power_supply_hwmon_info for
+temp channel 0, causing the hwmon temp1_max_alarm attribute to be
+missing from such power_supply devices.
+
+Add this to power_supply_hwmon_info to fix this.
+
+Fixes: f1d33ae806ec ("power: supply: remove duplicated argument in power_supply_hwmon_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240908185337.103696-2-hdegoede@redhat.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/syscall.S |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/power/supply/power_supply_hwmon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/syscall.S
-+++ b/arch/parisc/kernel/syscall.S
-@@ -232,10 +232,10 @@ linux_gateway_entry:
+--- a/drivers/power/supply/power_supply_hwmon.c
++++ b/drivers/power/supply/power_supply_hwmon.c
+@@ -299,7 +299,8 @@ static const struct hwmon_channel_info *
+ 			   HWMON_T_INPUT     |
+ 			   HWMON_T_MAX       |
+ 			   HWMON_T_MIN       |
+-			   HWMON_T_MIN_ALARM,
++			   HWMON_T_MIN_ALARM |
++			   HWMON_T_MAX_ALARM,
  
- #ifdef CONFIG_64BIT
- 	ldil	L%sys_call_table, %r1
--	or,=	%r2,%r2,%r2
--	addil	L%(sys_call_table64-sys_call_table), %r1
-+	or,ev	%r2,%r2,%r2
-+	ldil	L%sys_call_table64, %r1
- 	ldo	R%sys_call_table(%r1), %r19
--	or,=	%r2,%r2,%r2
-+	or,ev	%r2,%r2,%r2
- 	ldo	R%sys_call_table64(%r1), %r19
- #else
- 	load32	sys_call_table, %r19
-@@ -368,10 +368,10 @@ tracesys_next:
- 	extrd,u	%r19,63,1,%r2			/* W hidden in bottom bit */
- 
- 	ldil	L%sys_call_table, %r1
--	or,=	%r2,%r2,%r2
--	addil	L%(sys_call_table64-sys_call_table), %r1
-+	or,ev	%r2,%r2,%r2
-+	ldil	L%sys_call_table64, %r1
- 	ldo	R%sys_call_table(%r1), %r19
--	or,=	%r2,%r2,%r2
-+	or,ev	%r2,%r2,%r2
- 	ldo	R%sys_call_table64(%r1), %r19
- #else
- 	load32	sys_call_table, %r19
-@@ -1310,6 +1310,8 @@ ENTRY(sys_call_table)
- END(sys_call_table)
- 
- #ifdef CONFIG_64BIT
-+#undef __SYSCALL_WITH_COMPAT
-+#define __SYSCALL_WITH_COMPAT(nr, native, compat)	__SYSCALL(nr, native)
- 	.align 8
- ENTRY(sys_call_table64)
- #include <asm/syscall_table_64.h>    /* 64-bit syscalls */
+ 			   HWMON_T_LABEL     |
+ 			   HWMON_T_INPUT     |
 
 
