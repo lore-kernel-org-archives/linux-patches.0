@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD61610B;
-	Mon, 14 Oct 2024 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ACC17C77;
+	Mon, 14 Oct 2024 14:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916335; cv=none; b=iyxwwWkRPvYbZSrratzKyvjPYjnGjTO3P+IksgjP/VzGleIpwtCwbZ4WUdLQtuyya+sZiGApEORCu8WGp0r7zRmZKxQtiKGg5/iGRy4Ze6e7BCKl1T8CUpMIw2wcUf0+Zx/FEibWyFayYXQ8nUKbiK0pnEMl/sd3dbJsoMFKmc0=
+	t=1728916338; cv=none; b=IHi76FuA6hFPiih6j/h6MToCYqz6II3SUhxQT6SB9qvEtAnxmyApPTIwfclnnPvlj4CoT1+cdGEKxKB4T9b3lcHoFflkAYprFNSeYhuy3cfwBf285fALVYLKMN0+DQCEdgJtukfAo4iUNQzQw+e2LhNuXNbEUXznLvF8kmnhZGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916335; c=relaxed/simple;
-	bh=3Ubm44YpUSZBHEYQBgLlXkgmsw8bASQieU4mGEMTuHs=;
+	s=arc-20240116; t=1728916338; c=relaxed/simple;
+	bh=krBwssS6JrCXBGyaUO6BNpo2+229IkPf1iOS4wHSW6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H82F2euzN/15EGesQWSA19wpcojVnGqylpKBaPCFefc1zUFqb0FpWpSzSmIzAXm7y6LPaKrPoHjCEBJjCGRa+P3V8YEJ/MNwtGe/eZHMHZFN0ff/JQ8ne+48CzO16Rm3UhxnbHGHqrzXqavIkSxLh8Huw+C+5wAmQo8LJ9cbmhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4uDR8UM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VufIzdsS6Vi/lTapHa3XdSSaNxYV8+muQm8oNd3zJZ62owfXZ0kKShkwtY3NfngEZdwAE/CjsFiaZmFB55LnXPH+MuIKX0x67wC6h1ma3eWGjs6IJ/sDQKGiDFLv1514xaqjiyoEf4xRg3zBZspffYDXU7287X4xz/4JlNxCUEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blVojzUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4uDR8UM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65C3C4CEC3;
-	Mon, 14 Oct 2024 14:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blVojzUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA614C4CED0;
+	Mon, 14 Oct 2024 14:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916335;
-	bh=3Ubm44YpUSZBHEYQBgLlXkgmsw8bASQieU4mGEMTuHs=;
+	s=korg; t=1728916338;
+	bh=krBwssS6JrCXBGyaUO6BNpo2+229IkPf1iOS4wHSW6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j4uDR8UM8qtIKC3zYmjOLfikfGP00FvrZV2RqOoV5D8IdQddMCrsL/KDRWOK0LfW1
-	 QxXTIWgefii3sgNRXrrfJaQB3GXKssbKNthdYi7DlQF8WlAc6ubW/QilqFWaVje5lr
-	 nUoQ3eG33Wd3LMWM/cSY8uhTb2PIGq5IHTRkqi3g=
+	b=blVojzUvyN9rm7ugnf/HZ3fvm2bmBIwK9pJO9rM6ZKIJwXKuITevOAF7EE4DL4FAs
+	 YbgcxkqN/Fj3Kr/kdb7rRANDaT4W2agmzMV7+yQmwJs/B5lVoBBwbNVhOm8sARwL/6
+	 FV4Y+J6XhV6RGTpG5cSArpAlwskw34gSIr7jqT24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Colberg <peter.colberg@intel.com>,
-	Michael Adler <michael.adler@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Eric Tremblay <etremblay@distech-controls.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 153/214] hwmon: intel-m10-bmc-hwmon: relabel Columbiaville to CVL Die Temperature
-Date: Mon, 14 Oct 2024 16:20:16 +0200
-Message-ID: <20241014141050.959723979@linuxfoundation.org>
+Subject: [PATCH 6.11 154/214] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
+Date: Mon, 14 Oct 2024 16:20:17 +0200
+Message-ID: <20241014141050.998558837@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,36 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Colberg <peter.colberg@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit a017616fafc6b2a6b3043bf46f6381ef2611c188 ]
+[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
 
-Consistently use CVL instead of Columbiaville, since CVL is already
-being used in all other sensor labels for the Intel N6000 card.
+0-day reports:
 
-Fixes: e1983220ae14 ("hwmon: intel-m10-bmc-hwmon: Add N6000 sensors")
-Signed-off-by: Peter Colberg <peter.colberg@intel.com>
-Reviewed-by: Michael Adler <michael.adler@intel.com>
-Message-ID: <20240919173417.867640-1-peter.colberg@intel.com>
+drivers/hwmon/tmp513.c:162:21: error:
+	variable 'tmp51x_regmap_config' has initializer but incomplete type
+162 | static const struct regmap_config tmp51x_regmap_config = {
+    |                     ^
+
+struct regmap_config is only available if REGMAP is enabled.
+Add the missing Kconfig dependency to fix the problem.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Cc: Eric Tremblay <etremblay@distech-controls.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/intel-m10-bmc-hwmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/intel-m10-bmc-hwmon.c b/drivers/hwmon/intel-m10-bmc-hwmon.c
-index ca2dff1589251..96397ae6ff18f 100644
---- a/drivers/hwmon/intel-m10-bmc-hwmon.c
-+++ b/drivers/hwmon/intel-m10-bmc-hwmon.c
-@@ -358,7 +358,7 @@ static const struct m10bmc_sdata n6000bmc_temp_tbl[] = {
- 	{ 0x4f0, 0x4f4, 0x4f8, 0x52c, 0x0, 500, "Board Top Near FPGA Temperature" },
- 	{ 0x4fc, 0x500, 0x504, 0x52c, 0x0, 500, "Board Bottom Near CVL Temperature" },
- 	{ 0x508, 0x50c, 0x510, 0x52c, 0x0, 500, "Board Top East Near VRs Temperature" },
--	{ 0x514, 0x518, 0x51c, 0x52c, 0x0, 500, "Columbiaville Die Temperature" },
-+	{ 0x514, 0x518, 0x51c, 0x52c, 0x0, 500, "CVL Die Temperature" },
- 	{ 0x520, 0x524, 0x528, 0x52c, 0x0, 500, "Board Rear Side Temperature" },
- 	{ 0x530, 0x534, 0x538, 0x52c, 0x0, 500, "Board Front Side Temperature" },
- 	{ 0x53c, 0x540, 0x544, 0x0, 0x0, 500, "QSFP1 Case Temperature" },
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index b60fe2e58ad6c..543c40630d67e 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -2288,6 +2288,7 @@ config SENSORS_TMP464
+ config SENSORS_TMP513
+ 	tristate "Texas Instruments TMP513 and compatibles"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  If you say yes here you get support for Texas Instruments TMP512,
+ 	  and TMP513 temperature and power supply sensor chips.
 -- 
 2.43.0
 
