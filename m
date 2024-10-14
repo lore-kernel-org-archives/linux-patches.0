@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37D31BE238;
-	Mon, 14 Oct 2024 14:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6751C2337;
+	Mon, 14 Oct 2024 14:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917208; cv=none; b=LP0xjoWtVJBSeX7GmidLSkhKAfcXWpGhuFeJhtT5zUFnmUSpe7DlVyTRzTdslob99BlYNhjeTEcgq3ZNcYs9RMvCo7ZLfNVsApm2RFro3LVFeaP5T/wQ12jS7WHso5kKkDslsgsSh6B8+KfITDe8paI4o10alS4jHkId7K3D/3s=
+	t=1728917212; cv=none; b=NvjKS+mUFGhzIggRuGNi31YTc96wa+XOWt909xQbeoLwUbA/eTsGav2+JJw3gBfB6iPqXFHKR+Tnksbh5eSvwSTT/d4ZfgUB4N6wdZRxgb81odFIq6m3ZjzV0yiONSMx6BudswbyOVsZwPGPr30hyc2oY1VwQw6gHkFlh0gNw1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917208; c=relaxed/simple;
-	bh=5E/fAnYLZi2pUVxPbNIN64oeoDSDYUf5ZSC3kZ6ep8I=;
+	s=arc-20240116; t=1728917212; c=relaxed/simple;
+	bh=6c16AE8y4s5yGtVh8aB6O+bf4/HXq1cEu6uTdXduCrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0uhFWhvS/AN+r39Ifv3/zPD0xUprPIpajXM06cl1AHrtmYBDZ8YK3s42f2iq+62ZF67SVqn3y2N/WFDqbQkDBu9LGnRb35anh2tsp18gBgISyeH9Ezt/5WxN5rUDGtux2hK3rUsuhaLL3I0vcMEKGSahIpdUiTX2X1CJ86ZLSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7Dt7lJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K0xYy3zFmbj3rrwzqW2VSQBNhjgtMSsgng66bbZHgxxc9eLOkBpA6WXYBlkIeuAqS+vA8amlUU+BckGQdBf4/sEBbr94HnZrNLrnybYf/DSXdBf1oS0S1kX4dwDZiAPZcQIVhrY98NQJ69W7lHXzNqi6i49SUVmaA7CTcYz766I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCZj9M4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7Dt7lJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB33C4CECF;
-	Mon, 14 Oct 2024 14:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCZj9M4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74D1C4CEC3;
+	Mon, 14 Oct 2024 14:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917208;
-	bh=5E/fAnYLZi2pUVxPbNIN64oeoDSDYUf5ZSC3kZ6ep8I=;
+	s=korg; t=1728917212;
+	bh=6c16AE8y4s5yGtVh8aB6O+bf4/HXq1cEu6uTdXduCrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7Dt7lJTPoUZ1+iHEq0Wt4as/Bg+gZMlzVluzmsLZpWup3ikTwYsUlLuNemfC4pdu
-	 xVCqNEEcOKvy3H4Z8RDPka+FTknJ4f+zpeviGxomnqFd9WKb2bGCUueRKArdcm8we6
-	 /aTB7dE2aqHvWopjqoWooKu5QLyBfdeHyOnNRNVA=
+	b=LCZj9M4KQ3a7vKmCESspr4IkKxkQASAf1Dw8kvLlSjTD0RZ4PFoQ68qZcUodTa0zS
+	 Y7KUBhQa8mEEHQm4PcQD7dadWgPbGD6rwrDyQSFel/h6lJ0NOxNjyN+D9vxtBQxN7y
+	 BolOKKL1SFUipJCbY0GY78ZS0lsV9vGEN1WoSXUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Alberto Reguero <jose.alberto.reguero@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 184/213] usb: xhci: Fix problem with xhci resume from suspend
-Date: Mon, 14 Oct 2024 16:21:30 +0200
-Message-ID: <20241014141050.145834747@linuxfoundation.org>
+	Icenowy Zheng <uwu@icenowy.me>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 185/213] usb: storage: ignore bogus device raised by JieLi BR21 USB sound chip
+Date: Mon, 14 Oct 2024 16:21:31 +0200
+Message-ID: <20241014141050.185469319@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -50,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-commit d44238d8254a36249d576c96473269dbe500f5e4 upstream.
+commit a6555cb1cb69db479d0760e392c175ba32426842 upstream.
 
-I have a ASUS PN51 S mini pc that has two xhci devices. One from AMD,
-and other from ASMEDIA. The one from ASMEDIA have problems when resume
-from suspend, and keep broken until unplug the  power cord. I use this
-kernel parameter: xhci-hcd.quirks=128 and then it works ok. I make a
-path to reset only the ASMEDIA xhci.
+JieLi tends to use SCSI via USB Mass Storage to implement their own
+proprietary commands instead of implementing another USB interface.
+Enumerating it as a generic mass storage device will lead to a Hardware
+Error sense key get reported.
 
-Signed-off-by: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
+Ignore this bogus device to prevent appearing a unusable sdX device
+file.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240919184202.22249-1-jose.alberto.reguero@gmail.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241001083407.8336-1-uwu@icenowy.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/storage/unusual_devs.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -73,6 +73,7 @@
- #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
- #define PCI_DEVICE_ID_ASMEDIA_1142_XHCI			0x1242
- #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
-+#define PCI_DEVICE_ID_ASMEDIA_3042_XHCI			0x3042
- #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -2423,6 +2423,17 @@ UNUSUAL_DEV(  0xc251, 0x4003, 0x0100, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NOT_LOCKABLE),
  
- #define PCI_DEVICE_ID_CADENCE				0x17CD
-@@ -516,6 +517,10 @@ static void xhci_pci_quirks(struct devic
- 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042A_XHCI)
- 		xhci->quirks |= XHCI_ASMEDIA_MODIFY_FLOWCONTROL;
- 
-+	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
-+	    pdev->device == PCI_DEVICE_ID_ASMEDIA_3042_XHCI)
-+		xhci->quirks |= XHCI_RESET_ON_RESUME;
++/*
++ * Reported by Icenowy Zheng <uwu@icenowy.me>
++ * This is an interface for vendor-specific cryptic commands instead
++ * of real USB storage device.
++ */
++UNUSUAL_DEV(  0xe5b7, 0x0811, 0x0100, 0x0100,
++		"ZhuHai JieLi Technology",
++		"JieLi BR21",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_IGNORE_DEVICE),
 +
- 	if (pdev->vendor == PCI_VENDOR_ID_TI && pdev->device == 0x8241)
- 		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_7;
- 
+ /* Reported by Andrew Simmons <andrew.simmons@gmail.com> */
+ UNUSUAL_DEV(  0xed06, 0x4500, 0x0001, 0x0001,
+ 		"DataStor",
 
 
