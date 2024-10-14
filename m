@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF6A1AC447;
-	Mon, 14 Oct 2024 15:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39F21AC447;
+	Mon, 14 Oct 2024 15:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918172; cv=none; b=Cef5T7Z8d14sPhf5Oy1vzTOoHVRuLMT3hOcEVI1x8f7XUWaS2ck5lFFDdBoJ1eibIZ8qGgrQjfqgqg1fymTAiTWGx6kA5V9WqvofXPgoer/Tf9rsBDx15EoI87S9O7K+PoO2m7gmVs2zBFD45X47AUX4ZJAIItsW7uJ6gD57q0E=
+	t=1728918176; cv=none; b=U9fUpLli9YYLho/yIKa7wpXpvGVSVG7CeVfBYtCtwwTTe/pdH+lDlY+XTlIGH5wy1vbdirv+8C7uIJ4Q66PfOhypQN5AG8OgAA4FlU9qbFUaxUDes9Iv4b2q4hx+NqXpprlZeYQOoN6b+MWBIvprFaE3IYv7HytTpuCKJFU5R+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918172; c=relaxed/simple;
-	bh=G8G2bMeJM03Y7Gms1fbW/PQm7TJOCw60HvAFyzn/1xM=;
+	s=arc-20240116; t=1728918176; c=relaxed/simple;
+	bh=JUL2/AGYElFKzEjHU0BezQcCRdDGR6kuTqth4TEv1aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kipzMJ7FCd+l6wH+HzwEkplhEhjcNIjtcugcfngMYg4CKVAS7IsmTfBMtBr9Yph7zlC/y1Mm/WQV11afr3udVTrRk4Zqbrh8DqubTkMD+/5UBN+XgKIp+4Kuo/VItw0kYLCwpMU49qLaJwJzZGF0elGMMMk9fpH3X9ChYHv+bh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XY7iNX0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVa2IXmfBUWAcNj5Hx4ghtov48Sftchu3QmzI1y0Lj/JNQuXTKKnZf/g4TfoxoiyY0KU0pxoTUX+Yuv9tYlPCdohEFm5PvvR5kYq1SwZ9mymuSQB+OTW2c2xUNPNgjLzw55fGRmAtZuNQlPVOCu4+wmiAv/K0yhZuNZroVcLf1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gikupMVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY7iNX0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6D1C4CEC7;
-	Mon, 14 Oct 2024 15:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gikupMVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549A8C4CEC3;
+	Mon, 14 Oct 2024 15:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918172;
-	bh=G8G2bMeJM03Y7Gms1fbW/PQm7TJOCw60HvAFyzn/1xM=;
+	s=korg; t=1728918175;
+	bh=JUL2/AGYElFKzEjHU0BezQcCRdDGR6kuTqth4TEv1aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY7iNX0bItM+XEogLN28BFgx6++xOF5MtdQnxVoP2lZ5K+rBRXgcJ08cLl2XollbI
-	 vnhGe9/dfaF/7fgEI6kYioGaB3jb5slB8kv6Rh7d7PdOiVTzRBGNj5qCYxANvHCFjL
-	 3Qf4ChdOWsLUzuoJQR93CzAJt/qexky22Ss8hU4c=
+	b=gikupMVTRiiVcGwjnfi+j3HWboeFDijOod8G7bxg6gEW3SydFS6qvRpiksmsi9kGI
+	 K4a22mItTRcFgVy1BPbR7O96KPWG82aTYuPKVacCaoOwtYMsdJSmwyNtq/LURgDllh
+	 JA5tswrASYGqTeA+AIq14DyoHWXaSkzeJjyim2kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yang <yang.yang@vivo.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/798] spi: spi-fsl-lpspi: Undo runtime PM changes at driver exit time
-Date: Mon, 14 Oct 2024 16:13:18 +0200
-Message-ID: <20241014141227.516787330@linuxfoundation.org>
+Subject: [PATCH 6.1 245/798] lib/sbitmap: define swap_lock as raw_spinlock_t
+Date: Mon, 14 Oct 2024 16:13:19 +0200
+Message-ID: <20241014141227.556770767@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,37 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 3b577de206d52dbde9428664b6d823d35a803d75 ]
+[ Upstream commit 65f666c6203600053478ce8e34a1db269a8701c9 ]
 
-It's important to undo pm_runtime_use_autosuspend() with
-pm_runtime_dont_use_autosuspend() at driver exit time unless driver
-initially enabled pm_runtime with devm_pm_runtime_enable()
-(which handles it for you).
+When called from sbitmap_queue_get(), sbitmap_deferred_clear() may be run
+with preempt disabled. In RT kernel, spin_lock() can sleep, then warning
+of "BUG: sleeping function called from invalid context" can be triggered.
 
-Hence, call pm_runtime_dont_use_autosuspend() at driver exit time
-to fix it.
+Fix it by replacing it with raw_spin_lock.
 
-Fixes: 944c01a889d9 ("spi: lpspi: enable runtime pm for lpspi")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240906021251.610462-1-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Yang Yang <yang.yang@vivo.com>
+Fixes: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Yang Yang <yang.yang@vivo.com>
+Link: https://lore.kernel.org/r/20240919021709.511329-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/sbitmap.h | 2 +-
+ lib/sbitmap.c           | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index dd2381ac27f67..7d016464037c3 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -947,6 +947,7 @@ static int fsl_lpspi_remove(struct platform_device *pdev)
+diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
+index c09cdcc99471e..189140bf11fc4 100644
+--- a/include/linux/sbitmap.h
++++ b/include/linux/sbitmap.h
+@@ -40,7 +40,7 @@ struct sbitmap_word {
+ 	/**
+ 	 * @swap_lock: serializes simultaneous updates of ->word and ->cleared
+ 	 */
+-	spinlock_t swap_lock;
++	raw_spinlock_t swap_lock;
+ } ____cacheline_aligned_in_smp;
  
- 	fsl_lpspi_dma_exit(controller);
+ /**
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index 61075535a8073..1c813212453f5 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -65,7 +65,7 @@ static inline bool sbitmap_deferred_clear(struct sbitmap_word *map,
+ {
+ 	unsigned long mask, word_mask;
  
-+	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
- 	pm_runtime_disable(fsl_lpspi->dev);
+-	guard(spinlock_irqsave)(&map->swap_lock);
++	guard(raw_spinlock_irqsave)(&map->swap_lock);
+ 
+ 	if (!map->cleared) {
+ 		if (depth == 0)
+@@ -136,7 +136,7 @@ int sbitmap_init_node(struct sbitmap *sb, unsigned int depth, int shift,
+ 	}
+ 
+ 	for (i = 0; i < sb->map_nr; i++)
+-		spin_lock_init(&sb->map[i].swap_lock);
++		raw_spin_lock_init(&sb->map[i].swap_lock);
+ 
  	return 0;
  }
 -- 
