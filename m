@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571391BDC3;
-	Mon, 14 Oct 2024 14:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E84B1BDC3;
+	Mon, 14 Oct 2024 14:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917745; cv=none; b=TiM4ktDurGd5slJgjohb7SB/UELdTJtm4WO0QZg1RRe0Qsri84gWNHHpSglwXODzvQZHFGHDCfWd2o4JAvpGyKctpgmsBsmEmeiT9ABeEj0E9/DjYdeVTFC2pU/Joy56sJ6elvI5mF3oKUXNKCSuIul0ImhpiKr4Vx2DAsBfqTc=
+	t=1728917748; cv=none; b=O7QOO4DrFSkF/NMkPM6vi04gLRA14/oBicLP+m+g0s8BdDfV/VVYjA7Ti/c/3YwadItWO5fABA4r/N+t9Q4wUjfcJ0rF1dNguCnamFQcPNatX0MaIsV0F7giQQxf0t5vk14c/Qzm+XxR3Ogm51NHU5mG38VuE/Sgada/hkhMloI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917745; c=relaxed/simple;
-	bh=mVCgp3p9g8p9VaSMIsccek6fptMSaqs0gNngqKgcNkw=;
+	s=arc-20240116; t=1728917748; c=relaxed/simple;
+	bh=p7U0TD5GZCnyN/k2t5qlysEzw0MY4hOFgAfO2DRUwWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNdKyq2mxEJvMfTQHpi91BU4n1RZp3XfmPxpBpxMxOE/scu5bOxWZLP8rLq3xwR4PcNOvpkJdkuLzvMShg2+FcQN7GFXGet1X9Y2RBIWY/k2eXlW5+MRUuDiBz/53h5pONQD3Vu/np+2g9Ll5Zz+JvynstC/U5PXDdmrEtcwR7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/T5PIqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p8Df6/zpddgzmIDMg+396qk+v0CejQl9zER2OEnWO8IAa71nU9U1o8VtE39S3UkcSo1h54CPzUo0lFtN3f7KxOSZLfOHrHeKd493mbN/KkyDkTBjo4pE4tO1MtkT0XCfjUlWinRKzj//SjgdDcQCbfR8hhbo0c/s+381mTaQihk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP4WENdF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/T5PIqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C098C4CEC3;
-	Mon, 14 Oct 2024 14:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP4WENdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7E2C4CEC3;
+	Mon, 14 Oct 2024 14:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917744;
-	bh=mVCgp3p9g8p9VaSMIsccek6fptMSaqs0gNngqKgcNkw=;
+	s=korg; t=1728917748;
+	bh=p7U0TD5GZCnyN/k2t5qlysEzw0MY4hOFgAfO2DRUwWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/T5PIqzD3CusUYjOZhOc9Bgdr510zRX8YWi0s+p5Fc1p8RpjlcpTOicv59tOqr/s
-	 bb1hLn6sI2zypeiA35BPqJfm3eiv8+odK1PHjWHHltc6SgxaMVeznLuWyS5afV0UNE
-	 jZkv7VuLAXJgo4cuuA91ZHH52tS/Xc2o0xARnN2w=
+	b=oP4WENdFm0Xm/LU2Q2G0ajth0iC0v8ShKjPFA1om0ps5/dswxb0j9jNtUhIxI3O7X
+	 s5TaJavalKeqMHelQZ3MP7ljVZgqmr02Z56Mz+Y5QP5O3O/7CFbemqj546LP8VVJAp
+	 Riu9GIb1DH23knMExvogxZNz4Fui0XGUNEm18MNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Fei Shao <fshao@chromium.org>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	linux-mtd@lists.infradead.org,
+	Mirsad Todorovac <mtodorovac69@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/798] drm/mediatek: Fix missing configuration flags in mtk_crtc_ddp_config()
-Date: Mon, 14 Oct 2024 16:11:14 +0200
-Message-ID: <20241014141222.635456419@linuxfoundation.org>
+Subject: [PATCH 6.1 091/798] mtd: slram: insert break after errors in parsing the map
+Date: Mon, 14 Oct 2024 16:10:45 +0200
+Message-ID: <20241014141221.508271197@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -47,146 +48,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Mirsad Todorovac <mtodorovac69@gmail.com>
 
-[ Upstream commit fe30bae552ce27b9fefe0b12db1544e73d07325f ]
+[ Upstream commit 336c218dd7f0588ed8a7345f367975a00a4f003f ]
 
-In mtk_crtc_ddp_config(), mtk_crtc will use some configuration flags to
-generate instructions to cmdq_handle, such as:
-  state->pending_config
-  mtk_crtc->pending_planes
-  plane_state->pending.config
-  mtk_crtc->pending_async_planes
-  plane_state->pending.async_config
+GCC 12.3.0 compiler on linux-next next-20240709 tree found the execution
+path in which, due to lazy evaluation, devlength isn't initialised with the
+parsed string:
 
-These configuration flags may be set to false when a GCE IRQ comes calling
-ddp_cmdq_cb(). This may result in missing prepare instructions,
-especially if mtk_crtc_update_config() with the flase need_vblank (no need
-to wait for vblank) cases.
+   289		while (map) {
+   290			devname = devstart = devlength = NULL;
+   291
+   292			if (!(devname = strsep(&map, ","))) {
+   293				E("slram: No devicename specified.\n");
+   294				break;
+   295			}
+   296			T("slram: devname = %s\n", devname);
+   297			if ((!map) || (!(devstart = strsep(&map, ",")))) {
+   298				E("slram: No devicestart specified.\n");
+   299			}
+   300			T("slram: devstart = %s\n", devstart);
+ → 301			if ((!map) || (!(devlength = strsep(&map, ",")))) {
+   302				E("slram: No devicelength / -end specified.\n");
+   303			}
+ → 304			T("slram: devlength = %s\n", devlength);
+   305			if (parse_cmdline(devname, devstart, devlength) != 0) {
+   306				return(-EINVAL);
+   307			}
 
-Therefore, the mtk_crtc->config_updating flag is set at the beginning of
-mtk_crtc_update_config() to ensure that these configuration flags won't be
-changed when the mtk_crtc_ddp_config() is preparing instructions.
-But somehow the ddp_cmdq_cb() didn't use the mtk_crtc->config_updating
-flag to prevent those pending config flags from being cleared.
+Parsing should be finished after map == NULL, so a break is best inserted after
+each E("slram: ... \n") error message.
 
-To avoid missing the configuration when generating the config instruction,
-the config_updating flag should be added into ddp_cmdq_cb() and be
-protected with spin_lock.
-
-Fixes: 7f82d9c43879 ("drm/mediatek: Clear pending flag when cmdq packet is done")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240827-drm-fixup-0819-v3-1-4761005211ec@mediatek.com/
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240827-drm-fixup-0819-v3-2-4761005211ec@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-mtd@lists.infradead.org
+Signed-off-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240711234319.637824-1-mtodorovac69@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 27 +++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/mtd/devices/slram.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index beaaf44004cfd..e00c8e0a21027 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -65,6 +65,8 @@ struct mtk_drm_crtc {
- 	/* lock for display hardware access */
- 	struct mutex			hw_lock;
- 	bool				config_updating;
-+	/* lock for config_updating to cmd buffer */
-+	spinlock_t			config_lock;
- };
- 
- struct mtk_crtc_state {
-@@ -102,11 +104,16 @@ static void mtk_drm_crtc_finish_page_flip(struct mtk_drm_crtc *mtk_crtc)
- 
- static void mtk_drm_finish_page_flip(struct mtk_drm_crtc *mtk_crtc)
- {
-+	unsigned long flags;
-+
- 	drm_crtc_handle_vblank(&mtk_crtc->base);
-+
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	if (!mtk_crtc->config_updating && mtk_crtc->pending_needs_vblank) {
- 		mtk_drm_crtc_finish_page_flip(mtk_crtc);
- 		mtk_crtc->pending_needs_vblank = false;
- 	}
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
- }
- 
- #if IS_REACHABLE(CONFIG_MTK_CMDQ)
-@@ -289,12 +296,19 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 	struct mtk_drm_crtc *mtk_crtc = container_of(cmdq_cl, struct mtk_drm_crtc, cmdq_client);
- 	struct mtk_crtc_state *state;
- 	unsigned int i;
-+	unsigned long flags;
- 
- 	if (data->sta < 0)
- 		return;
- 
- 	state = to_mtk_crtc_state(mtk_crtc->base.state);
- 
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
-+	if (mtk_crtc->config_updating) {
-+		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+		goto ddp_cmdq_cb_out;
-+	}
-+
- 	state->pending_config = false;
- 
- 	if (mtk_crtc->pending_planes) {
-@@ -321,6 +335,10 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 		mtk_crtc->pending_async_planes = false;
- 	}
- 
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
-+ddp_cmdq_cb_out:
-+
- 	mtk_crtc->cmdq_vblank_cnt = 0;
- 	wake_up(&mtk_crtc->cb_blocking_queue);
- }
-@@ -544,9 +562,14 @@ static void mtk_drm_crtc_update_config(struct mtk_drm_crtc *mtk_crtc,
- 	struct mtk_drm_private *priv = crtc->dev->dev_private;
- 	unsigned int pending_planes = 0, pending_async_planes = 0;
- 	int i;
-+	unsigned long flags;
- 
- 	mutex_lock(&mtk_crtc->hw_lock);
-+
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	mtk_crtc->config_updating = true;
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 	if (needs_vblank)
- 		mtk_crtc->pending_needs_vblank = true;
- 
-@@ -600,7 +623,10 @@ static void mtk_drm_crtc_update_config(struct mtk_drm_crtc *mtk_crtc,
- 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
- 	}
- #endif
-+	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	mtk_crtc->config_updating = false;
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 	mutex_unlock(&mtk_crtc->hw_lock);
- }
- 
-@@ -971,6 +997,7 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
- 	drm_crtc_enable_color_mgmt(&mtk_crtc->base, 0, has_ctm, gamma_lut_size);
- 	priv->num_pipes++;
- 	mutex_init(&mtk_crtc->hw_lock);
-+	spin_lock_init(&mtk_crtc->config_lock);
- 
- #if IS_REACHABLE(CONFIG_MTK_CMDQ)
- 	mtk_crtc->cmdq_client.client.dev = mtk_crtc->mmsys_dev;
+diff --git a/drivers/mtd/devices/slram.c b/drivers/mtd/devices/slram.c
+index 28131a127d065..8297b366a0669 100644
+--- a/drivers/mtd/devices/slram.c
++++ b/drivers/mtd/devices/slram.c
+@@ -296,10 +296,12 @@ static int __init init_slram(void)
+ 		T("slram: devname = %s\n", devname);
+ 		if ((!map) || (!(devstart = strsep(&map, ",")))) {
+ 			E("slram: No devicestart specified.\n");
++			break;
+ 		}
+ 		T("slram: devstart = %s\n", devstart);
+ 		if ((!map) || (!(devlength = strsep(&map, ",")))) {
+ 			E("slram: No devicelength / -end specified.\n");
++			break;
+ 		}
+ 		T("slram: devlength = %s\n", devlength);
+ 		if (parse_cmdline(devname, devstart, devlength) != 0) {
 -- 
 2.43.0
 
