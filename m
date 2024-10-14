@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8618D1AE016;
-	Mon, 14 Oct 2024 14:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205A91C3021;
+	Mon, 14 Oct 2024 14:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917596; cv=none; b=OtQZnlsebp77xmaHi9uACKOx0RxBonRtxAnmQyJNR41q4cbx9PAcdvNdtFh1SrC0VRu3W9VszPuwvXFNFIfUcGH3HFWGF4RCaHtoOq+kX6ZWHRPUD9/0DEuLyXi9R21vm7K+DQBBf0CmxPVbDkiNajGzbXzyj5L6Tns0hBOHqxo=
+	t=1728917600; cv=none; b=n8p6d/iYJbLL/trVk2XN8ALIjsxB0HvCZEMI1qXNPuEEg5H0RUBmm06ME9+NIPtAhyWxPM9Ojllt9GZNWXdroYeN7bfktWeLsAQdgFcEDa4iJfIzJG+ZYgotJo06C71U+YOZhtBv8cHCLwTymyWpap/OgtA3/D+8R5uv8NmIqsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917596; c=relaxed/simple;
-	bh=yQ4h/Qq+jQv44K3kJfUbWWMCx1Hpek68xM56WwrrT5Y=;
+	s=arc-20240116; t=1728917600; c=relaxed/simple;
+	bh=u1zTIAxjINZud+gELEIsayJeWS7mTHyiHmRYsEtehHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fj6GGuZR6koyWgMqbVODeKzEcEjSRIUhh/ySKnAJb7NhIpK+PZiGdJ5eQW+aHvkoq6PcpLR6gO0ApgNAJaAFd+xOqptNrMlktBdBMqiV2kDunkshfyZUzY0QN7EZTxw3sRwW42tRTsoaq8NpWeGvqI/a+dxsKgoaUx0qLWdv+IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBD7hxiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MxEnsIMK5k/+gCAFYOdpkcLekb/ijVZvzwFlL/7U+/Q2NXwncN/2NS8416RXVcTsnAyROt39BMeNX0xLHQq6nsreed+3HUmqZg2sZ4uocrdu5a03k+3f8h0QL+QszgrczxuW9hRXUrETx2mWIgoFtUt2QY65cEcuzRvVYhRv23o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfAS3fyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBD7hxiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EF4C4CEC3;
-	Mon, 14 Oct 2024 14:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfAS3fyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847D6C4CEC3;
+	Mon, 14 Oct 2024 14:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917596;
-	bh=yQ4h/Qq+jQv44K3kJfUbWWMCx1Hpek68xM56WwrrT5Y=;
+	s=korg; t=1728917600;
+	bh=u1zTIAxjINZud+gELEIsayJeWS7mTHyiHmRYsEtehHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HBD7hxiqPFJ6NTFgKPSRCsEksJ56I+Gyu9l7k0StHoPOZREQjNDNY8OKNyI169qXX
-	 7l1HgWTxz/dfS1XhIgCZ3o4Ovn56g2G2R6X3SI3XIapbQHOKpdCILKd89kSF3b+0Dh
-	 yBfE34WrDglDaobHOTV14yVdbPyp2CZ2lPZL8/xY=
+	b=QfAS3fyburvnNNkuu7Q0fS1+A5joIMK73qERgDFwuEVHL8RtsGjccCf6eggChMSa0
+	 10pyjN6ALALfrJ3VqLo7AJWl+flWFTjGX8xr94LY4gqsvJjsiLYk6RnHjsKSc9DvbU
+	 mUgS8fcDt7TbTDIASw5vVHximZZ0Lbm3odH53TWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/798] arm64: dts: ti: k3-j721e-sk: Fix reversed C6x carveout locations
-Date: Mon, 14 Oct 2024 16:10:31 +0200
-Message-ID: <20241014141220.961943070@linuxfoundation.org>
+Subject: [PATCH 6.1 078/798] ARM: dts: microchip: sama7g5: Fix RTT clock
+Date: Mon, 14 Oct 2024 16:10:32 +0200
+Message-ID: <20241014141221.000784644@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,47 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-[ Upstream commit 9f3814a7c06b7c7296cf8c1622078ad71820454b ]
+[ Upstream commit 867bf1923200e6ad82bad0289f43bf20b4ac7ff9 ]
 
-The DMA carveout for the C6x core 0 is at 0xa6000000 and core 1 is at
-0xa7000000. These are reversed in DT. While both C6x can access either
-region, so this is not normally a problem, but if we start restricting
-the memory each core can access (such as with firewalls) the cores
-accessing the regions for the wrong core will not work. Fix this here.
+According to datasheet, Chapter 34. Clock Generator, section 34.2,
+Embedded characteristics, source clock for RTT is the TD_SLCK, registered
+with ID 1 by the slow clock controller driver. Fix RTT clock.
 
-Fixes: f46d16cf5b43 ("arm64: dts: ti: k3-j721e-sk: Add DDR carveout memory nodes")
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240801181232.55027-1-afd@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 7540629e2fc7 ("ARM: dts: at91: add sama7g5 SoC DT and sama7g5-ek")
+Link: https://lore.kernel.org/r/20240826165320.3068359-1-claudiu.beznea@tuxon.dev
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/sama7g5.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-index 80358cba6954c..f4a76926c4e64 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-@@ -111,7 +111,7 @@ main_r5fss1_core1_memory_region: r5f-memory@a5100000 {
- 			no-map;
+diff --git a/arch/arm/boot/dts/sama7g5.dtsi b/arch/arm/boot/dts/sama7g5.dtsi
+index 7bd8ae8e8d380..9cc0e86544ad4 100644
+--- a/arch/arm/boot/dts/sama7g5.dtsi
++++ b/arch/arm/boot/dts/sama7g5.dtsi
+@@ -221,7 +221,7 @@ rtt: rtc@e001d020 {
+ 			compatible = "microchip,sama7g5-rtt", "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
+ 			reg = <0xe001d020 0x30>;
+ 			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&clk32k 0>;
++			clocks = <&clk32k 1>;
  		};
  
--		c66_1_dma_memory_region: c66-dma-memory@a6000000 {
-+		c66_0_dma_memory_region: c66-dma-memory@a6000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa6000000 0x00 0x100000>;
- 			no-map;
-@@ -123,7 +123,7 @@ c66_0_memory_region: c66-memory@a6100000 {
- 			no-map;
- 		};
- 
--		c66_0_dma_memory_region: c66-dma-memory@a7000000 {
-+		c66_1_dma_memory_region: c66-dma-memory@a7000000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0x00 0xa7000000 0x00 0x100000>;
- 			no-map;
+ 		clk32k: clock-controller@e001d050 {
 -- 
 2.43.0
 
