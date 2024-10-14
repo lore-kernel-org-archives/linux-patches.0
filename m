@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3544E1AB503;
-	Mon, 14 Oct 2024 14:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03F21C7274;
+	Mon, 14 Oct 2024 14:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917467; cv=none; b=LRoAyJDYsLxpRh88u0tBAOGRtroKhAh2+aWET7I388rIz0Ly4cM5prjOv0Si6/jdhgqXeaeDH0hphqeAmLrGY3XHJC2ePqC38rwsIt2oiU23Oo1irrRI2iGOaKtCCnQKvR87gku2I5vecUxqB1RA0L8AMXj+EzKC5BgqQLIuLts=
+	t=1728917470; cv=none; b=T0dFeOmy9hWkPYTynusfLF/KwdOS92kb3sRoQ3O1Rel/sZgpP7efa7FN+sYBjvJ5pKIrYXNmdcELiamqUrD7WeHdZryePOm4U3j7mk5hTUSP8EmdDxKtBLFk3K0nue3VxKoEpgNMzj3HTWguQ3ZnAHGkHULnaTZSqvxLZ+cBMMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917467; c=relaxed/simple;
-	bh=Cl5vA4QhmxJMO6it8LbFRoeujODDdfcjZIqJ5YbRDT8=;
+	s=arc-20240116; t=1728917470; c=relaxed/simple;
+	bh=eLD0Ry9TrbJ5t0wXY63QI/dMKjNWMqtl+Xj5v6w/Cnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5lMg/0qBVSZ4rS7WxvXhrpcHFaeFzlf8CU2ytnXiCKWxFZ8LMm3O65XYLNLEB/tVMGlItVci3thfKDAiXh3YwhrNWeTpOOVpoW7FJc1SAhHeDkijsf/MdFTsFehzDysuEyCh6+VhhDjlKnnC6W1cJpFPwZZQAyqejynFYgjdJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdG4/3U3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEM4hWqaemvqkuPcZwRmgJ1PAv8btxpLcH0dUsCkXpuMrNb/wSxmLjD8SXNJQKdHodKFfzahCgISa9RoQ4tQapm8XaD9/ewQiq2/P8xOeu6qdQfE3+AK79UnX+vAlGO8S56oxtZMcEVXBCWZAjgEmuJ1sskPn0AK2GdctIbj2jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1a1LIbs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdG4/3U3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A12C4CEC3;
-	Mon, 14 Oct 2024 14:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1a1LIbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3229BC4CEC3;
+	Mon, 14 Oct 2024 14:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917467;
-	bh=Cl5vA4QhmxJMO6it8LbFRoeujODDdfcjZIqJ5YbRDT8=;
+	s=korg; t=1728917470;
+	bh=eLD0Ry9TrbJ5t0wXY63QI/dMKjNWMqtl+Xj5v6w/Cnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdG4/3U39MUL02EKfopd8LwPUeXeF8cqtXSoewzPnaPP073kKFArxnnTu0HYxHnbl
-	 JC064sVVm76wjwoozRgkLqHBAYnnFBmsdjklVb3t+NrZb5cwVLz5viS5IrFoddlF93
-	 b6NpiZKZ5EPumJluerblcU+m8eWMhPoy4K8kajw0=
+	b=l1a1LIbsqfpfKaIfhzyGLGxVkM/K+fokfNtOVc0hsMivT91p8+mfC1ZbPQLwUeh1W
+	 w4WmBmFTZZF2CnxJVqbyxPEWTfX4EHBpQ4RtQ7GhtTP8zMR7Mm+d1XOw8OEdyATTh+
+	 GUcslMJXD1YoWfPG9MBgYUgLMFTLhg8i6o6XnwYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/798] wifi: mt76: mt7915: fix rx filter setting for bfee functionality
-Date: Mon, 14 Oct 2024 16:09:57 +0200
-Message-ID: <20241014141219.634582882@linuxfoundation.org>
+Subject: [PATCH 6.1 044/798] wifi: cfg80211: fix two more possible UBSAN-detected off-by-one errors
+Date: Mon, 14 Oct 2024 16:09:58 +0200
+Message-ID: <20241014141219.673789774@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 6ac80fce713e875a316a58975b830720a3e27721 ]
+[ Upstream commit 15ea13b1b1fbf6364d4cd568e65e4c8479632999 ]
 
-Fix rx filter setting to prevent dropping NDPA frames. Without this
-change, bfee functionality may behave abnormally.
+Although not reproduced in practice, these two cases may be
+considered by UBSAN as off-by-one errors. So fix them in the
+same way as in commit a26a5107bc52 ("wifi: cfg80211: fix UBSAN
+noise in cfg80211_wext_siwscan()").
 
-Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
-Link: https://patch.msgid.link/20240827093011.18621-21-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
+Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20240909090806.1091956-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/wireless/nl80211.c | 3 ++-
+ net/wireless/sme.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 3280843ea8566..e3cfed419f18e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -540,8 +540,7 @@ static void mt7915_configure_filter(struct ieee80211_hw *hw,
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index dd9695306fb85..fe14997ce2c08 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -9465,7 +9465,8 @@ nl80211_parse_sched_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		return ERR_PTR(-ENOMEM);
  
- 	MT76_FILTER(CONTROL, MT_WF_RFCR_DROP_CTS |
- 			     MT_WF_RFCR_DROP_RTS |
--			     MT_WF_RFCR_DROP_CTL_RSV |
--			     MT_WF_RFCR_DROP_NDPA);
-+			     MT_WF_RFCR_DROP_CTL_RSV);
+ 	if (n_ssids)
+-		request->ssids = (void *)&request->channels[n_channels];
++		request->ssids = (void *)request +
++			struct_size(request, channels, n_channels);
+ 	request->n_ssids = n_ssids;
+ 	if (ie_len) {
+ 		if (n_ssids)
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index b97834284baef..e35c3c29cec7d 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -115,7 +115,8 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
+ 		n_channels = i;
+ 	}
+ 	request->n_channels = n_channels;
+-	request->ssids = (void *)&request->channels[n_channels];
++	request->ssids = (void *)request +
++		struct_size(request, channels, n_channels);
+ 	request->n_ssids = 1;
  
- 	*total_flags = flags;
- 	mt76_wr(dev, MT_WF_RFCR(band), phy->rxfilter);
+ 	memcpy(request->ssids[0].ssid, wdev->conn->params.ssid,
 -- 
 2.43.0
 
