@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF6E1547F3;
-	Mon, 14 Oct 2024 14:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7401AA793;
+	Mon, 14 Oct 2024 14:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916156; cv=none; b=CFtbGlu3UcCaFiZgtWUYT3eeS4Ly31Dzg4PNVuzvxYChWm1zHAKaNsv6wsYJSu9iJR+BYWkII9vXYrcK8mRDZlEezIFzt7wkHJa1OUzWjzit8jaHdnQieHhUChYi8Ub/IwXsI29KK+U0sGWHpBBoGK/h+l258gDdjIQeTknfeTE=
+	t=1728916159; cv=none; b=VCoXiSQoJEVxlxzTD3c+gt4/1kvPf9/Gk1ALCJchnoddyVOO85XxMw2WjoSxKyFOktHIQTPdB4ZNXOcoYOACZdFzWtVfDVwaBuV9iw/kbT1V1evdemgWWSc1G+BoZCPI8Ea9pqVwQHQnvJxhRKpmli8iUOr7/CoszNPMPP+hgC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916156; c=relaxed/simple;
-	bh=VulfSATv7IOfWM8yPIsyk/rglBh7UxbcghQg3eKztPw=;
+	s=arc-20240116; t=1728916159; c=relaxed/simple;
+	bh=+IJX+eIp3mx9uq91ouNSKDYIAWschSZjRF+V0Zet4Fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pClu1LdoYApX3/8Z2X2nmfTPveW3REMV+wB7yWQNnQQuyVVnBZOc+BAxbs6v4gI9KP71/+UjYJseiudxKLmZ+TfEqqychZ3tBRO3IildP6miqywwGnUJJW2hnefIEa7O0iorFDnuY32Dqb8ANuAur6AFJ7pBrtHLW8O0n+i3WFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnFHggh7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGLJGLmvXbBBxmpf4Q9b5HZbgtuFP6PNIfPBTmprhV5/BoxeogJLo+eDe7faXi0kRo57vh8xxGNy2Ya8yX5Yv8FYNgfmp2LIMHKb3PolGMTepWpXc0dQOF8WevsXE+5B6zPvrvrZqoWCwbBZgdcn+D3hEWY9/nLVMj61xRODdR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuCJqyuk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnFHggh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430A0C4CEC3;
-	Mon, 14 Oct 2024 14:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuCJqyuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868CCC4CED0;
+	Mon, 14 Oct 2024 14:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916155;
-	bh=VulfSATv7IOfWM8yPIsyk/rglBh7UxbcghQg3eKztPw=;
+	s=korg; t=1728916158;
+	bh=+IJX+eIp3mx9uq91ouNSKDYIAWschSZjRF+V0Zet4Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnFHggh7EWVNSVRo65S5RrFBXOCRXwK7zCQTcquDEru283fgfcFPrGfQBebd66xFZ
-	 8LrbWrqAhshhTTlHX4XKz3ucLIinzLYk1Wb/m9dZ4F4dXhUyv+RmOUlUkmDFARNtIy
-	 hkaU04OSij/nrAxYCuFO0G9leyJQAnAwdpOOiid0=
+	b=zuCJqyukq8esj9hPuKb7vtN3ZdTZNLWs0klAcOvTCgkUL1inux0ilSRPb8ijdrA3e
+	 3Bi3Rj5U217O+txRE0mhtzT3H015yTuDN6JT1piVGvPxkKKd/00PDUq4UhnfUOQZCo
+	 USSRVkErl5tjgqPodd5p9Q8IP2MVdUFvp8+e1hks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 101/214] net: pse-pd: Fix enabled status mismatch
-Date: Mon, 14 Oct 2024 16:19:24 +0200
-Message-ID: <20241014141048.936623074@linuxfoundation.org>
+Subject: [PATCH 6.11 102/214] Bluetooth: RFCOMM: FIX possible deadlock in rfcomm_sk_state_change
+Date: Mon, 14 Oct 2024 16:19:25 +0200
+Message-ID: <20241014141048.975150144@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,51 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit dda3529d2e84e2ee7b97158c9cdf5e10308f37bc ]
+[ Upstream commit 08d1914293dae38350b8088980e59fbc699a72fe ]
 
-PSE controllers like the TPS23881 can forcefully turn off their
-configuration state. In such cases, the is_enabled() and get_status()
-callbacks will report the PSE as disabled, while admin_state_enabled
-will show it as enabled. This mismatch can lead the user to attempt
-to enable it, but no action is taken as admin_state_enabled remains set.
+rfcomm_sk_state_change attempts to use sock_lock so it must never be
+called with it locked but rfcomm_sock_ioctl always attempt to lock it
+causing the following trace:
 
-The solution is to disable the PSE before enabling it, ensuring the
-actual status matches admin_state_enabled.
+======================================================
+WARNING: possible circular locking dependency detected
+6.8.0-syzkaller-08951-gfe46a7dd189e #0 Not tainted
+------------------------------------------------------
+syz-executor386/5093 is trying to acquire lock:
+ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1671 [inline]
+ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: rfcomm_sk_state_change+0x5b/0x310 net/bluetooth/rfcomm/sock.c:73
 
-Fixes: d83e13761d5b ("net: pse-pd: Use regulator framework within PSE framework")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241002121706.246143-1-kory.maincent@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+but task is already holding lock:
+ffff88807badfd28 (&d->lock){+.+.}-{3:3}, at: __rfcomm_dlc_close+0x226/0x6a0 net/bluetooth/rfcomm/core.c:491
+
+Reported-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
+Tested-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218
+Fixes: 3241ad820dbb ("[Bluetooth] Add timestamp support to L2CAP, RFCOMM and SCO")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pse-pd/pse_core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/bluetooth/rfcomm/sock.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/pse-pd/pse_core.c b/drivers/net/pse-pd/pse_core.c
-index 4f032b16a8a0a..f8e6854781e6e 100644
---- a/drivers/net/pse-pd/pse_core.c
-+++ b/drivers/net/pse-pd/pse_core.c
-@@ -785,6 +785,17 @@ static int pse_ethtool_c33_set_config(struct pse_control *psec,
- 	 */
- 	switch (config->c33_admin_control) {
- 	case ETHTOOL_C33_PSE_ADMIN_STATE_ENABLED:
-+		/* We could have mismatch between admin_state_enabled and
-+		 * state reported by regulator_is_enabled. This can occur when
-+		 * the PI is forcibly turn off by the controller. Call
-+		 * regulator_disable on that case to fix the counters state.
-+		 */
-+		if (psec->pcdev->pi[psec->id].admin_state_enabled &&
-+		    !regulator_is_enabled(psec->ps)) {
-+			err = regulator_disable(psec->ps);
-+			if (err)
-+				break;
-+		}
- 		if (!psec->pcdev->pi[psec->id].admin_state_enabled)
- 			err = regulator_enable(psec->ps);
- 		break;
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 37d63d768afb8..f48250e3f2e10 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -865,9 +865,7 @@ static int rfcomm_sock_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+ 
+ 	if (err == -ENOIOCTLCMD) {
+ #ifdef CONFIG_BT_RFCOMM_TTY
+-		lock_sock(sk);
+ 		err = rfcomm_dev_ioctl(sk, cmd, (void __user *) arg);
+-		release_sock(sk);
+ #else
+ 		err = -EOPNOTSUPP;
+ #endif
 -- 
 2.43.0
 
