@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164634A24;
-	Mon, 14 Oct 2024 14:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4A1A28C;
+	Mon, 14 Oct 2024 14:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916622; cv=none; b=WMC0XgkTjEqYEz7QKEzVDViTfDUA9XdxYxGvxJn00KfdYCmeeo+5nZS8+OAjAjcdE10dWI5fHA1eckULtgReyI899BKswp7KjwcRM7VPH1ROFe95gfTgj9D4AbEZzC1zw7MpDAreultmNz9Ljv/DOZ95WaHA3pbdnLzNQ/3SfiA=
+	t=1728916625; cv=none; b=QcSqpHAh3bOYXm/XoTw/hu2lWhwlWBmHhWgdNASc4XtY+u88kbFTJTFQetfWZ5eeNq9JvN10symI+rUETObuySDTCuILQDQfWpegv+lkU7U7gXzKz5leVuTicb7kT3ZmW8kKUfxVjBrOB5FvIWfHpfl6r2PLaUBFnqo6MTZs/Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916622; c=relaxed/simple;
-	bh=eywVfrXIgqhr7KUwFI/KZjugmm2yToNV2R+1lJzaUAE=;
+	s=arc-20240116; t=1728916625; c=relaxed/simple;
+	bh=R2lhpZeuJPWfq5mrSNv+1fUFdaUIZlUp7F9VTFrzt70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANoqCNxbJcpfdNU9MMHfXd0Mnf3LG8YO5x7T6rkHCicjtNxWZ1/UCuXr+saKQOcJ2u5HOuX3X6SbI3mBL52X/0A5Wq4bCAR1nwbSkSIuz4jCuwL6StSnCcDMc9b8imQIH+duLk1aQYurvTs8Ya65K/Ai5psyLM7DmdQOp5e+Xi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS5Qotg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k+evaEAIGyRZggN4pIE8gpmyBgYuZBTFL2J6EI3D782X2K7l2p1WKUp8U2yXwUUcxR2mVXZbvDqpOWv1Z7k8OXauN94dTy6m3JQN32z0eyK73f/RmZ0iAO/YuKb4oWWeDHbj82XPV2HJNExsqA/WGPXLhvURu4UK6rGcPJLnDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0F5L6s5V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS5Qotg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1CEC4CEC3;
-	Mon, 14 Oct 2024 14:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0F5L6s5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6573C4CEC3;
+	Mon, 14 Oct 2024 14:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916622;
-	bh=eywVfrXIgqhr7KUwFI/KZjugmm2yToNV2R+1lJzaUAE=;
+	s=korg; t=1728916625;
+	bh=R2lhpZeuJPWfq5mrSNv+1fUFdaUIZlUp7F9VTFrzt70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PS5Qotg0AFc4NmUk73w5t3yZBbRoJZZDeXeiZ1vATLxC2XASduh62zWxCtVlBRjcU
-	 IDx3girnOZhZ2FqN1plUdLjpPHBngM+mutGIvMHYJhDvglCFALrapnbJXmsSOSxU0Z
-	 rMvhq5gAJ706l+qMumoYJThBi8v4Z3ZmEjTwWW94=
+	b=0F5L6s5VruSvy7PlxQisEfXvt69mdLYrtqvdWxtEGgMHFWHlLt+V84D18Kj6/9ulh
+	 V9qxvT29UlV6K4Patl/mP1bAANA1ueSOGiyowTQR/cpd4o8k+eO2DsFnKUqaFDhBfb
+	 HEKM3HaYYiC6p4c1xiD78eD2XUdxEhedIjV0Y2gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/213] bus: mhi: ep: Add support for async DMA write operation
-Date: Mon, 14 Oct 2024 16:18:45 +0200
-Message-ID: <20241014141043.734244023@linuxfoundation.org>
+Subject: [PATCH 6.6 020/213] bus: mhi: ep: Add support for async DMA read operation
+Date: Mon, 14 Oct 2024 16:18:46 +0200
+Message-ID: <20241014141043.774413374@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,94 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit ee08acb58fe47fc3bc2c137965985cdb1df40b35 ]
+[ Upstream commit 2547beb00ddb40e55b773970622421d978f71473 ]
 
-In order to optimize the data transfer, let's use the async DMA operation
-for writing (queuing) data to the host.
-
-In the async path, the completion event for the transfer ring will only be
-sent to the host when the controller driver notifies the MHI stack of the
-actual transfer completion using the callback (mhi_ep_skb_completion)
-supplied in "struct mhi_ep_buf_info".
-
-Also to accommodate the async operation, the transfer ring read offset
-(ring->rd_offset) is cached in the "struct mhi_ep_chan" and updated locally
-to let the stack queue further ring items to the controller driver. But the
-actual read offset of the transfer ring will only be updated in the
-completion callback.
+As like the async DMA write operation, let's add support for async DMA read
+operation. In the async path, the data will be read from the transfer ring
+continuously and when the controller driver notifies the stack using the
+completion callback (mhi_ep_read_completion), then the client driver will
+be notified with the read data and the completion event will be sent to the
+host for the respective ring element (if requested by the host).
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Stable-dep-of: c7d0b2db5bc5 ("bus: mhi: ep: Do not allocate memory for MHI objects from DMA zone")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/internal.h |  1 +
- drivers/bus/mhi/ep/main.c     | 74 +++++++++++++++++++++++++----------
- include/linux/mhi_ep.h        |  4 ++
- 3 files changed, 59 insertions(+), 20 deletions(-)
+ drivers/bus/mhi/ep/main.c | 162 +++++++++++++++++++++-----------------
+ 1 file changed, 89 insertions(+), 73 deletions(-)
 
-diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-index a2125fa5fe2f9..accbf3a51d0cf 100644
---- a/drivers/bus/mhi/ep/internal.h
-+++ b/drivers/bus/mhi/ep/internal.h
-@@ -159,6 +159,7 @@ struct mhi_ep_chan {
- 	void (*xfer_cb)(struct mhi_ep_device *mhi_dev, struct mhi_result *result);
- 	enum mhi_ch_state state;
- 	enum dma_data_direction dir;
-+	size_t rd_offset;
- 	u64 tre_loc;
- 	u32 tre_size;
- 	u32 tre_bytes_left;
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 1ec9552d2b519..8765a7fb3d2c0 100644
+index 8765a7fb3d2c0..2cb7e21ad3b74 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -183,6 +183,8 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
- 
- 				goto err_unlock;
- 			}
-+
-+			mhi_chan->rd_offset = ch_ring->rd_offset;
- 		}
- 
- 		/* Set channel state to RUNNING */
-@@ -312,7 +314,7 @@ bool mhi_ep_queue_is_empty(struct mhi_ep_device *mhi_dev, enum dma_data_directio
- 	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
- 	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
- 
--	return !!(ring->rd_offset == ring->wr_offset);
-+	return !!(mhi_chan->rd_offset == ring->wr_offset);
+@@ -318,17 +318,81 @@ bool mhi_ep_queue_is_empty(struct mhi_ep_device *mhi_dev, enum dma_data_directio
  }
  EXPORT_SYMBOL_GPL(mhi_ep_queue_is_empty);
  
-@@ -339,7 +341,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
- 			return -ENODEV;
- 		}
- 
--		el = &ring->ring_cache[ring->rd_offset];
-+		el = &ring->ring_cache[mhi_chan->rd_offset];
- 
- 		/* Check if there is data pending to be read from previous read operation */
- 		if (mhi_chan->tre_bytes_left) {
-@@ -418,6 +420,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
- 				tr_done = true;
- 			}
- 
-+			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
- 			mhi_ep_ring_inc_index(ring);
- 		}
- 
-@@ -478,6 +481,35 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 	return 0;
- }
- 
-+static void mhi_ep_skb_completion(struct mhi_ep_buf_info *buf_info)
++static void mhi_ep_read_completion(struct mhi_ep_buf_info *buf_info)
 +{
 +	struct mhi_ep_device *mhi_dev = buf_info->mhi_dev;
 +	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
-+	struct mhi_ep_chan *mhi_chan = mhi_dev->dl_chan;
++	struct mhi_ep_chan *mhi_chan = mhi_dev->ul_chan;
 +	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
 +	struct mhi_ring_element *el = &ring->ring_cache[ring->rd_offset];
-+	struct device *dev = &mhi_dev->dev;
 +	struct mhi_result result = {};
 +	int ret;
 +
@@ -151,129 +94,222 @@ index 1ec9552d2b519..8765a7fb3d2c0 100644
 +		mhi_chan->xfer_cb(mhi_dev, &result);
 +	}
 +
-+	ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el, buf_info->size,
-+					   buf_info->code);
-+	if (ret) {
-+		dev_err(dev, "Error sending transfer completion event\n");
-+		return;
++	/*
++	 * The host will split the data packet into multiple TREs if it can't fit
++	 * the packet in a single TRE. In that case, CHAIN flag will be set by the
++	 * host for all TREs except the last one.
++	 */
++	if (buf_info->code != MHI_EV_CC_OVERFLOW) {
++		if (MHI_TRE_DATA_GET_CHAIN(el)) {
++			/*
++			 * IEOB (Interrupt on End of Block) flag will be set by the host if
++			 * it expects the completion event for all TREs of a TD.
++			 */
++			if (MHI_TRE_DATA_GET_IEOB(el)) {
++				ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el,
++							     MHI_TRE_DATA_GET_LEN(el),
++							     MHI_EV_CC_EOB);
++				if (ret < 0) {
++					dev_err(&mhi_chan->mhi_dev->dev,
++						"Error sending transfer compl. event\n");
++					goto err_free_tre_buf;
++				}
++			}
++		} else {
++			/*
++			 * IEOT (Interrupt on End of Transfer) flag will be set by the host
++			 * for the last TRE of the TD and expects the completion event for
++			 * the same.
++			 */
++			if (MHI_TRE_DATA_GET_IEOT(el)) {
++				ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el,
++							     MHI_TRE_DATA_GET_LEN(el),
++							     MHI_EV_CC_EOT);
++				if (ret < 0) {
++					dev_err(&mhi_chan->mhi_dev->dev,
++						"Error sending transfer compl. event\n");
++					goto err_free_tre_buf;
++				}
++			}
++		}
 +	}
 +
 +	mhi_ep_ring_inc_index(ring);
++
++err_free_tre_buf:
++	kmem_cache_free(mhi_cntrl->tre_buf_cache, buf_info->cb_buf);
 +}
 +
- /* TODO: Handle partially formed TDs */
- int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
+ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+-				struct mhi_ep_ring *ring,
+-				struct mhi_result *result,
+-				u32 len)
++			       struct mhi_ep_ring *ring)
  {
-@@ -488,7 +520,6 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
+ 	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	size_t tr_len, read_offset, write_offset;
+ 	struct mhi_ep_buf_info buf_info = {};
++	u32 len = MHI_EP_DEFAULT_MTU;
  	struct mhi_ring_element *el;
- 	u32 buf_left, read_offset;
- 	struct mhi_ep_ring *ring;
--	enum mhi_ev_ccs code;
- 	size_t tr_len;
- 	u32 tre_len;
+ 	bool tr_done = false;
++	void *buf_addr;
+ 	u32 buf_left;
  	int ret;
-@@ -512,7 +543,7 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
- 			goto err_exit;
+ 
+@@ -358,83 +422,50 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+ 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
+ 		write_offset = len - buf_left;
+ 
++		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
++		if (!buf_addr)
++			return -ENOMEM;
++
+ 		buf_info.host_addr = mhi_chan->tre_loc + read_offset;
+-		buf_info.dev_addr = result->buf_addr + write_offset;
++		buf_info.dev_addr = buf_addr + write_offset;
+ 		buf_info.size = tr_len;
++		buf_info.cb = mhi_ep_read_completion;
++		buf_info.cb_buf = buf_addr;
++		buf_info.mhi_dev = mhi_chan->mhi_dev;
++
++		if (mhi_chan->tre_bytes_left - tr_len)
++			buf_info.code = MHI_EV_CC_OVERFLOW;
+ 
+ 		dev_dbg(dev, "Reading %zd bytes from channel (%u)\n", tr_len, ring->ch_id);
+-		ret = mhi_cntrl->read_sync(mhi_cntrl, &buf_info);
++		ret = mhi_cntrl->read_async(mhi_cntrl, &buf_info);
+ 		if (ret < 0) {
+ 			dev_err(&mhi_chan->mhi_dev->dev, "Error reading from channel\n");
+-			return ret;
++			goto err_free_buf_addr;
+ 		}
+ 
+ 		buf_left -= tr_len;
+ 		mhi_chan->tre_bytes_left -= tr_len;
+ 
+-		/*
+-		 * Once the TRE (Transfer Ring Element) of a TD (Transfer Descriptor) has been
+-		 * read completely:
+-		 *
+-		 * 1. Send completion event to the host based on the flags set in TRE.
+-		 * 2. Increment the local read offset of the transfer ring.
+-		 */
+ 		if (!mhi_chan->tre_bytes_left) {
+-			/*
+-			 * The host will split the data packet into multiple TREs if it can't fit
+-			 * the packet in a single TRE. In that case, CHAIN flag will be set by the
+-			 * host for all TREs except the last one.
+-			 */
+-			if (MHI_TRE_DATA_GET_CHAIN(el)) {
+-				/*
+-				 * IEOB (Interrupt on End of Block) flag will be set by the host if
+-				 * it expects the completion event for all TREs of a TD.
+-				 */
+-				if (MHI_TRE_DATA_GET_IEOB(el)) {
+-					ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el,
+-								     MHI_TRE_DATA_GET_LEN(el),
+-								     MHI_EV_CC_EOB);
+-					if (ret < 0) {
+-						dev_err(&mhi_chan->mhi_dev->dev,
+-							"Error sending transfer compl. event\n");
+-						return ret;
+-					}
+-				}
+-			} else {
+-				/*
+-				 * IEOT (Interrupt on End of Transfer) flag will be set by the host
+-				 * for the last TRE of the TD and expects the completion event for
+-				 * the same.
+-				 */
+-				if (MHI_TRE_DATA_GET_IEOT(el)) {
+-					ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el,
+-								     MHI_TRE_DATA_GET_LEN(el),
+-								     MHI_EV_CC_EOT);
+-					if (ret < 0) {
+-						dev_err(&mhi_chan->mhi_dev->dev,
+-							"Error sending transfer compl. event\n");
+-						return ret;
+-					}
+-				}
+-
++			if (MHI_TRE_DATA_GET_IEOT(el))
+ 				tr_done = true;
+-			}
+ 
+ 			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
+-			mhi_ep_ring_inc_index(ring);
+ 		}
+-
+-		result->bytes_xferd += tr_len;
+ 	} while (buf_left && !tr_done);
+ 
+ 	return 0;
++
++err_free_buf_addr:
++	kmem_cache_free(mhi_cntrl->tre_buf_cache, buf_addr);
++
++	return ret;
+ }
+ 
+-static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_element *el)
++static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring)
+ {
+ 	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+ 	struct mhi_result result = {};
+-	u32 len = MHI_EP_DEFAULT_MTU;
+ 	struct mhi_ep_chan *mhi_chan;
+ 	int ret;
+ 
+@@ -455,27 +486,15 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
+ 		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 	} else {
+ 		/* UL channel */
+-		result.buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
+-		if (!result.buf_addr)
+-			return -ENOMEM;
+-
+ 		do {
+-			ret = mhi_ep_read_channel(mhi_cntrl, ring, &result, len);
++			ret = mhi_ep_read_channel(mhi_cntrl, ring);
+ 			if (ret < 0) {
+ 				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
+-				kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
+ 				return ret;
+ 			}
+ 
+-			result.dir = mhi_chan->dir;
+-			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+-			result.bytes_xferd = 0;
+-			memset(result.buf_addr, 0, len);
+-
+ 			/* Read until the ring becomes empty */
+ 		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
+-
+-		kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
+ 	}
+ 
+ 	return 0;
+@@ -781,7 +800,6 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
+ 	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, ch_ring_work);
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	struct mhi_ep_ring_item *itr, *tmp;
+-	struct mhi_ring_element *el;
+ 	struct mhi_ep_ring *ring;
+ 	struct mhi_ep_chan *chan;
+ 	unsigned long flags;
+@@ -826,10 +844,8 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
+ 			continue;
  		}
  
 -		el = &ring->ring_cache[ring->rd_offset];
-+		el = &ring->ring_cache[mhi_chan->rd_offset];
- 		tre_len = MHI_TRE_DATA_GET_LEN(el);
- 
- 		tr_len = min(buf_left, tre_len);
-@@ -521,33 +552,35 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
- 		buf_info.dev_addr = skb->data + read_offset;
- 		buf_info.host_addr = MHI_TRE_DATA_GET_PTR(el);
- 		buf_info.size = tr_len;
-+		buf_info.cb = mhi_ep_skb_completion;
-+		buf_info.cb_buf = skb;
-+		buf_info.mhi_dev = mhi_dev;
- 
--		dev_dbg(dev, "Writing %zd bytes to channel (%u)\n", tr_len, ring->ch_id);
--		ret = mhi_cntrl->write_sync(mhi_cntrl, &buf_info);
--		if (ret < 0) {
--			dev_err(dev, "Error writing to the channel\n");
--			goto err_exit;
--		}
 -
--		buf_left -= tr_len;
- 		/*
- 		 * For all TREs queued by the host for DL channel, only the EOT flag will be set.
- 		 * If the packet doesn't fit into a single TRE, send the OVERFLOW event to
- 		 * the host so that the host can adjust the packet boundary to next TREs. Else send
- 		 * the EOT event to the host indicating the packet boundary.
- 		 */
--		if (buf_left)
--			code = MHI_EV_CC_OVERFLOW;
-+		if (buf_left - tr_len)
-+			buf_info.code = MHI_EV_CC_OVERFLOW;
- 		else
--			code = MHI_EV_CC_EOT;
-+			buf_info.code = MHI_EV_CC_EOT;
- 
--		ret = mhi_ep_send_completion_event(mhi_cntrl, ring, el, tr_len, code);
--		if (ret) {
--			dev_err(dev, "Error sending transfer completion event\n");
-+		dev_dbg(dev, "Writing %zd bytes to channel (%u)\n", tr_len, ring->ch_id);
-+		ret = mhi_cntrl->write_async(mhi_cntrl, &buf_info);
-+		if (ret < 0) {
-+			dev_err(dev, "Error writing to the channel\n");
- 			goto err_exit;
- 		}
- 
--		mhi_ep_ring_inc_index(ring);
-+		buf_left -= tr_len;
-+
-+		/*
-+		 * Update the read offset cached in mhi_chan. Actual read offset
-+		 * will be updated by the completion handler.
-+		 */
-+		mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
- 	} while (buf_left);
- 
- 	mutex_unlock(&mhi_chan->lock);
-@@ -787,7 +820,7 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
- 		}
- 
- 		/* Sanity check to make sure there are elements in the ring */
--		if (ring->rd_offset == ring->wr_offset) {
-+		if (chan->rd_offset == ring->wr_offset) {
- 			mutex_unlock(&chan->lock);
- 			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
-@@ -1431,6 +1464,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 		ret = -ENOMEM;
- 		goto err_destroy_tre_buf_cache;
- 	}
-+
- 	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
- 	INIT_WORK(&mhi_cntrl->reset_work, mhi_ep_reset_worker);
- 	INIT_WORK(&mhi_cntrl->cmd_ring_work, mhi_ep_cmd_ring_worker);
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 14c6e8d3f5736..11bf3212f7822 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -51,16 +51,20 @@ struct mhi_ep_db_info {
- 
- /**
-  * struct mhi_ep_buf_info - MHI Endpoint transfer buffer info
-+ * @mhi_dev: MHI device associated with this buffer
-  * @dev_addr: Address of the buffer in endpoint
-  * @host_addr: Address of the bufffer in host
-  * @size: Size of the buffer
-+ * @code: Transfer completion code
-  * @cb: Callback to be executed by controller drivers after transfer completion (async)
-  * @cb_buf: Opaque buffer to be passed to the callback
-  */
- struct mhi_ep_buf_info {
-+	struct mhi_ep_device *mhi_dev;
- 	void *dev_addr;
- 	u64 host_addr;
- 	size_t size;
-+	int code;
- 
- 	void (*cb)(struct mhi_ep_buf_info *buf_info);
- 	void *cb_buf;
+ 		dev_dbg(dev, "Processing the ring for channel (%u)\n", ring->ch_id);
+-		ret = mhi_ep_process_ch_ring(ring, el);
++		ret = mhi_ep_process_ch_ring(ring);
+ 		if (ret) {
+ 			dev_err(dev, "Error processing ring for channel (%u): %d\n",
+ 				ring->ch_id, ret);
 -- 
 2.43.0
 
