@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583D01AB507;
-	Mon, 14 Oct 2024 14:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9CC1A76A5;
+	Mon, 14 Oct 2024 14:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916697; cv=none; b=uTt+NU33ByNJpH70JIBbRmMKdqdBd42qLGuerLkUDiVG+HREVX/z5zU97234lbyfSw/mMvQRcoflcqwjrSVAWWYVV18qYWu0i8alZ1OBXGexAaPBE7wlwZ8FeKiDaZB2ZTQrMv085dEXG6Tur+hXFq54k+7QJXKUh15kysYieOg=
+	t=1728916700; cv=none; b=tNNkym5iM+lViG5hfIfyJ9hLkZgPYFZXaTBvSnXbGUFl6YGDxd3mVBdW7SvRjjXqtaDQUfDj2nkumCX7TREYknnm97G2B7mmy+rtypbpq8qnuXDLmrqdigL01AVhUzsVxh65x/BCKKVTELrp2k+eEI7y5w2Y8WJFWO4JWWX16qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916697; c=relaxed/simple;
-	bh=zRCi4Je6rXnMOwP/mK0yvxVkEif9uhFeyAK9oUsCDtw=;
+	s=arc-20240116; t=1728916700; c=relaxed/simple;
+	bh=gaWP/TYZXZlMH5uKOH38Ru2bHaRjR18pnFd06AXfG+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1ur2EIyyDx0B67h6xVl0fogS1UV9MhQAbmzQkcqRE1cvFxc8mSBX/MPWreQ/V003slS0woQFVYmIHvEXD0SIHFxVV1Rt/v3e5hW2OCkSYikPJmZlVrzHMqR8AeHalnSaTy/WCcBMbeIT9Cx9tlnMz5875FYVbxRf/ija/3IJvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/xOlRL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVVH7U5hG2Gl3snJS4XITRDggsufafeEQ52sOrqM3A9UNXW/33YF3Jw4ugdMMkgwQLhuPfrJweUp2pktW0VFxXfzwQTI8nO846adatNHG86fkT5xm0uuuXe7vG0UQ/9/ywKPeK5tvQfp2A7Uk3urZ7nRuhwSlDgEqTsk0+eu4lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4Vhrpv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/xOlRL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFA3C4CEC3;
-	Mon, 14 Oct 2024 14:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4Vhrpv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E989C4CEC3;
+	Mon, 14 Oct 2024 14:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916697;
-	bh=zRCi4Je6rXnMOwP/mK0yvxVkEif9uhFeyAK9oUsCDtw=;
+	s=korg; t=1728916700;
+	bh=gaWP/TYZXZlMH5uKOH38Ru2bHaRjR18pnFd06AXfG+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/xOlRL7AWY9vvLZF1gHhSVYJDR64gk58n7yGq6NRvdgIvB8wnf/k6a0n2UahKAGl
-	 /NL3xvL7ZRHnes2BujSZQ/DYM9HuMQEnyntruk4PNi7/WIZki5f34DMkIxU74E3I9J
-	 3oNkLO/nRwxHEOd9AeKRNu7z/Lj0VWwqOJIo+yJ0=
+	b=e4Vhrpv21eCF2vysdvxTQAKzWnFgrbujr5ejNjXcEOquoPMOGUiDomLy7bOV2fdsS
+	 EPgMhYhWdrQO6doUPh9SA6b283PyzDBHmnYGm95qqLjaY3BWLi4jjn2/Bqxk/Iu1dI
+	 sE1IY3XZrjV5WvqKysavjsEc8gIxvStYbfR6HrKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/213] gfs2: Revert "ignore negated quota changes"
-Date: Mon, 14 Oct 2024 16:18:35 +0200
-Message-ID: <20241014141043.343934553@linuxfoundation.org>
+Subject: [PATCH 6.6 010/213] riscv: Remove SHADOW_OVERFLOW_STACK_SIZE macro
+Date: Mon, 14 Oct 2024 16:18:36 +0200
+Message-ID: <20241014141043.382030055@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -50,49 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Song Shuai <songshuaishuai@tinylab.org>
 
-[ Upstream commit 4b4b6374dc6134849f2bdca81fa2945b6ed6d9fc ]
+[ Upstream commit a7565f4d068b2e60f95c3223c3167c40b8fe83ae ]
 
-Commit 4c6a08125f22 ("gfs2: ignore negated quota changes") skips quota
-changes with qd_change == 0 instead of writing them back, which leaves
-behind non-zero qd_change values in the affected slots.  The kernel then
-assumes that those slots are unused, while the qd_change values on disk
-indicate that they are indeed still in use.  The next time the
-filesystem is mounted, those invalid slots are read in from disk, which
-will cause inconsistencies.
+The commit be97d0db5f44 ("riscv: VMAP_STACK overflow
+detection thread-safe") got rid of `shadow_stack`,
+so SHADOW_OVERFLOW_STACK_SIZE should be removed too.
 
-Revert that commit to avoid filesystem corruption.
-
-This reverts commit 4c6a08125f2249531ec01783a5f4317d7342add5.
-
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: be97d0db5f44 ("riscv: VMAP_STACK overflow detection thread-safe")
+Signed-off-by: Song Shuai <songshuaishuai@tinylab.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://lore.kernel.org/r/20231211110331.359534-1-songshuaishuai@tinylab.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ arch/riscv/include/asm/thread_info.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index ed602352fe1d3..c537e1d02cf3a 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -454,17 +454,6 @@ static bool qd_grab_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    qd->qd_sync_gen >= sync_gen)
- 		return false;
+diff --git a/arch/riscv/include/asm/thread_info.h b/arch/riscv/include/asm/thread_info.h
+index 4fb84c2e94c65..8c72d1bcdf141 100644
+--- a/arch/riscv/include/asm/thread_info.h
++++ b/arch/riscv/include/asm/thread_info.h
+@@ -33,7 +33,6 @@
  
--	/*
--	 * If qd_change is 0 it means a pending quota change was negated.
--	 * We should not sync it, but we still have a qd reference and slot
--	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
--	 */
--	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
--		slot_put(qd);
--		qd_put(qd);
--		return false;
--	}
--
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return false;
+ #define THREAD_SHIFT            (PAGE_SHIFT + THREAD_SIZE_ORDER)
+ #define OVERFLOW_STACK_SIZE     SZ_4K
+-#define SHADOW_OVERFLOW_STACK_SIZE (1024)
+ 
+ #define IRQ_STACK_SIZE		THREAD_SIZE
  
 -- 
 2.43.0
