@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510F01AAE1D;
-	Mon, 14 Oct 2024 15:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B721A76A5;
+	Mon, 14 Oct 2024 15:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918769; cv=none; b=JKLtSxTUGvddVKoRqWsYmsx2kUfhflDVrnusiplPV+qTRhZcR5tRyz+k5KI+qepaNy2IJAMGqWKZ8G4ieCZ/Qaf0KL6IxptUrjgh9O4N/Hfdk8oAg4aKohB55s+OmBEd0VfDkhDYhnO8qMGtLTVPnan9be3nkm4X58VcNfXlKjI=
+	t=1728918772; cv=none; b=amVpC8mAWYFfIji2DMmmKZH6J+bK3+f7KlmZ6pB3CT+PXcAsrlqwqZy3ElobObQ0T1cc3cyTlio++eUQ/vU5cRzHsCkm2i05LADrXs2WiB5ADXufCocqQFDGFcue0xUf44g6IoejmaTr856LBzlIYylyeP77dYUuakpnF6tTGJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918769; c=relaxed/simple;
-	bh=vfOCoOHKFxQxGeNGd4t3/k3nETRAwijwz4fMs5kHn3c=;
+	s=arc-20240116; t=1728918772; c=relaxed/simple;
+	bh=3ZzDsvGtWC0qcuy/xFet1m/olpNocxdXx13f2z7ciZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fI+7G91lZO+jwvgb7xybGIhsSwgG/4yOMaiX9auVZRnkClgbWJoUkWBgz+tIjPEo+MrmKKOx/6ej+Oc/aOrzWhP7kFge5Oxuh1U5vk/0ugs0rSAyN8TwEePB6Qx49567xRjaQnJ3RQqIuLN8NAmKTR3uoO1Yti0ckY4AnVTfqzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXHZ8ylS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uB9OEPy03YGpwnwt6/CKDRRIoI+BlpD0J+Gp0Zozf/scMCezL8iYi9TOiKrvzLniUQ/DWeUKC3ofzHjYI2fOAzgRbKusc4fYdql0FXaulFZb37azTUeZ+JQHuaFrCFW38783PcVuE3Pn13q7BNgds0ob2vxU5DqkueOMtQSFviU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpxojQ+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXHZ8ylS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDBEC4CEC3;
-	Mon, 14 Oct 2024 15:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpxojQ+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09D1C4CEC3;
+	Mon, 14 Oct 2024 15:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918768;
-	bh=vfOCoOHKFxQxGeNGd4t3/k3nETRAwijwz4fMs5kHn3c=;
+	s=korg; t=1728918772;
+	bh=3ZzDsvGtWC0qcuy/xFet1m/olpNocxdXx13f2z7ciZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXHZ8ylS2jptt4XDc3qUWLsO4tIQtZ5/iAOGE1SG9cL7dEkEyENj9l21w/EWL1jxF
-	 vxQVHMbUFFU2QGCynzq0HxB3EFLpZRevPwmx7gwlc42NnopA6ziEniPotUhqWiwdPO
-	 q1eODx+yLx/zQ8uEBZb6SxB4mee3n2QCuLDc6rIg=
+	b=OpxojQ+sVvgdGMPnKiMEWHty4jpHLafCPXSUk03N6SNc1E/g7E2g3JQLsjBBlBYwW
+	 PKDiPeJxNsvSndxBrEc7F+wmuVhgvbLxbqHV9GGxU7dNATv7oQik1ClyKA4mK65oyY
+	 ujAbpC6/ZHmr42iewT0LHzhRKvX3aih8JzBmzQJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+98afa303be379af6cdb2@syzkaller.appspotmail.com,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 418/798] wifi: ath9k_htc: Use __skb_set_length() for resetting urb before resubmit
-Date: Mon, 14 Oct 2024 16:16:12 +0200
-Message-ID: <20241014141234.368379213@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 419/798] ice: Adjust over allocation of memory in ice_sched_add_root_node() and ice_sched_add_node()
+Date: Mon, 14 Oct 2024 16:16:13 +0200
+Message-ID: <20241014141234.408947725@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,60 +48,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 94745807f3ebd379f23865e6dab196f220664179 ]
+[ Upstream commit 62fdaf9e8056e9a9e6fe63aa9c816ec2122d60c6 ]
 
-Syzbot points out that skb_trim() has a sanity check on the existing length of
-the skb, which can be uninitialised in some error paths. The intent here is
-clearly just to reset the length to zero before resubmitting, so switch to
-calling __skb_set_length(skb, 0) directly. In addition, __skb_set_length()
-already contains a call to skb_reset_tail_pointer(), so remove the redundant
-call.
+In ice_sched_add_root_node() and ice_sched_add_node() there are calls to
+devm_kcalloc() in order to allocate memory for array of pointers to
+'ice_sched_node' structure. But incorrect types are used as sizeof()
+arguments in these calls (structures instead of pointers) which leads to
+over allocation of memory.
 
-The syzbot report came from ath9k_hif_usb_reg_in_cb(), but there's a similar
-usage of skb_trim() in ath9k_hif_usb_rx_cb(), change both while we're at it.
+Adjust over allocation of memory by correcting types in devm_kcalloc()
+sizeof() arguments.
 
-Reported-by: syzbot+98afa303be379af6cdb2@syzkaller.appspotmail.com
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240812142447.12328-1-toke@toke.dk
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 6 ++----
+ drivers/net/ethernet/intel/ice/ice_sched.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index e0130beb304df..6c73c0c0b82a9 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -718,8 +718,7 @@ static void ath9k_hif_usb_rx_cb(struct urb *urb)
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 849b6c7f0506b..b07bd0c059f75 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -28,9 +28,8 @@ ice_sched_add_root_node(struct ice_port_info *pi,
+ 	if (!root)
+ 		return -ENOMEM;
  
- resubmit:
--	skb_reset_tail_pointer(skb);
--	skb_trim(skb, 0);
-+	__skb_set_length(skb, 0);
- 
- 	usb_anchor_urb(urb, &hif_dev->rx_submitted);
- 	ret = usb_submit_urb(urb, GFP_ATOMIC);
-@@ -756,8 +755,7 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
- 	case -ESHUTDOWN:
- 		goto free_skb;
- 	default:
--		skb_reset_tail_pointer(skb);
--		skb_trim(skb, 0);
-+		__skb_set_length(skb, 0);
- 
- 		goto resubmit;
- 	}
+-	/* coverity[suspicious_sizeof] */
+ 	root->children = devm_kcalloc(ice_hw_to_dev(hw), hw->max_children[0],
+-				      sizeof(*root), GFP_KERNEL);
++				      sizeof(*root->children), GFP_KERNEL);
+ 	if (!root->children) {
+ 		devm_kfree(ice_hw_to_dev(hw), root);
+ 		return -ENOMEM;
+@@ -181,10 +180,9 @@ ice_sched_add_node(struct ice_port_info *pi, u8 layer,
+ 	if (!node)
+ 		return -ENOMEM;
+ 	if (hw->max_children[layer]) {
+-		/* coverity[suspicious_sizeof] */
+ 		node->children = devm_kcalloc(ice_hw_to_dev(hw),
+ 					      hw->max_children[layer],
+-					      sizeof(*node), GFP_KERNEL);
++					      sizeof(*node->children), GFP_KERNEL);
+ 		if (!node->children) {
+ 			devm_kfree(ice_hw_to_dev(hw), node);
+ 			return -ENOMEM;
 -- 
 2.43.0
 
