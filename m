@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2D41AAE32;
-	Mon, 14 Oct 2024 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF9B1A0724;
+	Mon, 14 Oct 2024 14:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916071; cv=none; b=EcR8e0HCGqkDDpjIgqRPUQHd3ShKqgte+0Ac8oUPx5Q8IxDPQGAnyVjkAnPz3aRAla48DWyqCLrC9/XnAwKc9TgSb7Y2ESHfyAGJ2EwGv1RBWeTrTJesa3clbEHadj9lcfb4ZhiJXfiInmDvnJIfo0B3xogKG87LSiyg4BzLKuA=
+	t=1728916079; cv=none; b=vAiqYP3UMpTFwuVrdIOU+E8xIA6v6L4PlmaKFPZ6EON0ebneZVFt0InnHmcaoFAcGn2vt+trT+69HVlAJGJ5hNlqGOj6NDzySkPQkMecvoxUyq3eJPqOKi8JZBXK3Dm8/k0wi44Ii2fsyvdo+G/sCvqncv7QHefMI7lruUlvYuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916071; c=relaxed/simple;
-	bh=PVWBPgjN3Rjx5er8EqM9x7itslrUTiondgk8JTyXofE=;
+	s=arc-20240116; t=1728916079; c=relaxed/simple;
+	bh=Zi5ecuMFyaitR+E3FAFL/d0Msx/8VwAXriNN7u+NInA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvHVyWUQXb1nMFB12GkMKyUOykUdrarpQtqLc9mS9p4gXCBNOhfW4rP5rCWPH23hc0owc772F1Qxx5jGmTYN93FqMRyG1Ux1KpI3KYqSzGtYVoqnOvMa79WMcOUZFXjUw2mRkBDw8Qn/x1Oq/8dQCZ3JcvSQKg+OvpcOvwSLrgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxgLPQPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=StITY+pfb/0LyH5OJeSpJbDuUlaRzC/MjeKBrERS2VkFerGCd2uxZQAk1rTgBpsAbbsXz6hvFmwHzHd249KrDAqMEsSTTjr5e23aFM4dfthgwwUkVlzKBNA2qvSPZEjpvtqwEc5BsEAxc5ivDnYQasTTujme6N9gAnnc9iUZJkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6MJSTtP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxgLPQPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E879C4CEC3;
-	Mon, 14 Oct 2024 14:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6MJSTtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7707C4CEC3;
+	Mon, 14 Oct 2024 14:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916070;
-	bh=PVWBPgjN3Rjx5er8EqM9x7itslrUTiondgk8JTyXofE=;
+	s=korg; t=1728916079;
+	bh=Zi5ecuMFyaitR+E3FAFL/d0Msx/8VwAXriNN7u+NInA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxgLPQPipVr58Xyow9fYHvsncn0P6v6UFqROr6YpmYF3g3Z/i2A2b4ygWeOiJJE+9
-	 OcphATNH3z3Lm9svhW7RxMpaje4RG4uWL8Ukr3huW/Tuegs+ZwD+dbZ3qt/nt6yeH8
-	 KocGoQhrF6MjlAyHhiXiTvbdKWDzSoCLk+QpnFrs=
+	b=O6MJSTtPwr+xyhNkhNg+G/A+hFhKPeL7PY/2qqy5QCkAJQA6bHfXdhcVAe535BxR7
+	 KcfI9lahOTKcnwSdjKs/vXYXtqYOys5vG3jEFbmeW45OaG2SxCStOvcnGBq2FRYFCP
+	 dtq2A9IQW+BG1YO/wpe2AsjYNgH1DDObvFRgnAGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+3d613ae53c031502687a@syzkaller.appspotmail.com,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 077/214] drm/amd/display: Check null pointer before dereferencing se
-Date: Mon, 14 Oct 2024 16:19:00 +0200
-Message-ID: <20241014141047.993715766@linuxfoundation.org>
+Subject: [PATCH 6.11 078/214] fbcon: Fix a NULL pointer dereference issue in fbcon_putcs
+Date: Mon, 14 Oct 2024 16:19:01 +0200
+Message-ID: <20241014141048.032995402@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,39 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Qianqiang Liu <qianqiang.liu@163.com>
 
-[ Upstream commit ff599ef6970ee000fa5bc38d02fa5ff5f3fc7575 ]
+[ Upstream commit 5b97eebcce1b4f3f07a71f635d6aa3af96c236e7 ]
 
-[WHAT & HOW]
-se is null checked previously in the same function, indicating
-it might be null; therefore, it must be checked when used again.
+syzbot has found a NULL pointer dereference bug in fbcon.
+Here is the simplified C reproducer:
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
+struct param {
+	uint8_t type;
+	struct tiocl_selection ts;
+};
 
-Acked-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+int main()
+{
+	struct fb_con2fbmap con2fb;
+	struct param param;
+
+	int fd = open("/dev/fb1", 0, 0);
+
+	con2fb.console = 0x19;
+	con2fb.framebuffer = 0;
+	ioctl(fd, FBIOPUT_CON2FBMAP, &con2fb);
+
+	param.type = 2;
+	param.ts.xs = 0; param.ts.ys = 0;
+	param.ts.xe = 0; param.ts.ye = 0;
+	param.ts.sel_mode = 0;
+
+	int fd1 = open("/dev/tty1", O_RDWR, 0);
+	ioctl(fd1, TIOCLINUX, &param);
+
+	con2fb.console = 1;
+	con2fb.framebuffer = 0;
+	ioctl(fd, FBIOPUT_CON2FBMAP, &con2fb);
+
+	return 0;
+}
+
+After calling ioctl(fd1, TIOCLINUX, &param), the subsequent ioctl(fd, FBIOPUT_CON2FBMAP, &con2fb)
+causes the kernel to follow a different execution path:
+
+ set_con2fb_map
+  -> con2fb_init_display
+   -> fbcon_set_disp
+    -> redraw_screen
+     -> hide_cursor
+      -> clear_selection
+       -> highlight
+        -> invert_screen
+         -> do_update_region
+          -> fbcon_putcs
+           -> ops->putcs
+
+Since ops->putcs is a NULL pointer, this leads to a kernel panic.
+To prevent this, we need to call set_blitting_type() within set_con2fb_map()
+to properly initialize ops->putcs.
+
+Reported-by: syzbot+3d613ae53c031502687a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d613ae53c031502687a
+Tested-by: syzbot+3d613ae53c031502687a@syzkaller.appspotmail.com
+Signed-off-by: Qianqiang Liu <qianqiang.liu@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbcon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 9e05d77453ac3..900c9b2454b5a 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1832,7 +1832,7 @@ bool dc_validate_boot_timing(const struct dc *dc,
- 		if (crtc_timing->pix_clk_100hz != pix_clk_100hz)
- 			return false;
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 3f7333dca508c..fedd796c9a5cd 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -847,6 +847,8 @@ static int set_con2fb_map(int unit, int newidx, int user)
+ 			return err;
  
--		if (!se->funcs->dp_get_pixel_format)
-+		if (!se || !se->funcs->dp_get_pixel_format)
- 			return false;
+ 		fbcon_add_cursor_work(info);
++	} else if (vc) {
++		set_blitting_type(vc, info);
+ 	}
  
- 		if (!se->funcs->dp_get_pixel_format(
+ 	con2fb_map[unit] = newidx;
 -- 
 2.43.0
 
