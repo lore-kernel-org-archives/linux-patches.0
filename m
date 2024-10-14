@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A41AD403;
-	Mon, 14 Oct 2024 14:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77601AAE23;
+	Mon, 14 Oct 2024 14:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917708; cv=none; b=ZkXedP0eoKokpXLSYhPkRiOJ8TVDE1hkQP0+MDGN+xnU/bmqefOH75iDsu/Bd/pk7Jz9TUDsaYno69vTG5etozE8XNNj4cKOyBYLmEIFXzSvtcYj59NUHJD15en2k1+6MvoGY+iBt9Lrlxraft4k8voS08T/psluDQ/XA4dNSAA=
+	t=1728917712; cv=none; b=a+dc6zwxhkK7KsyFaxB7+Awq6Dqtzo1DYgGaGwFYUKxDojsBgIbIiemHEZ3LJ7hQa80Azkv/emnAZxiyApZMvXZeQxVNA82XbwvVJJ2bsV5pKKnhsNpVWskMz7FCFi4UyKQc3l1NFd4yitKj6GRAYDfbzMjcVAZOjwy1gcGK8CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917708; c=relaxed/simple;
-	bh=/EMc/10uUALAjGK1xOGBplp0tLiwpdmKlcd+mv1o3BA=;
+	s=arc-20240116; t=1728917712; c=relaxed/simple;
+	bh=7ZIUsM5kxF9TzBAmGF2TLfJ1hAFn239jSt1yQszAWZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bE34wfHNDI37IQwmreuiuusWCt+PK/nXBAUNct0Ea5C9ddvNNnkiUF/ZsQhAzOUDErPGd/uJDXPCZ8iFckGguiAWgLKALiugHuKm6vzI96HjpChaBSxipRfbFEBu9A3bl1AzEthycQrHAJ0+cnJPzVcChQfbNhKzxFL0cDaHFwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pKtS/2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YiLNsHS3MbzxkHY8133oduJfV8E0bj+ZXBYMsDM2lhls/o8KRGAp7Js3t2a9l2+6IrsSUnc1YxGa5SbpARcTlrkQ5naR6/YzhL98FKTP6v0o3ZoRO+hggK5WrB+Fgk9wTNLQNvtpGuxrpq6EwEfQHqGQqNiTSA7PwPWArjd95K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYdJ74U2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pKtS/2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE34C4CEC3;
-	Mon, 14 Oct 2024 14:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYdJ74U2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DE5C4CEC3;
+	Mon, 14 Oct 2024 14:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917708;
-	bh=/EMc/10uUALAjGK1xOGBplp0tLiwpdmKlcd+mv1o3BA=;
+	s=korg; t=1728917711;
+	bh=7ZIUsM5kxF9TzBAmGF2TLfJ1hAFn239jSt1yQszAWZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pKtS/2LqFJbNX4XWJb+xU6wI9zQ/ReNQB5o95zmrg9sPfgKVK4uGU5Z41Q4LwWEA
-	 6q/omRPDdczRyJ7fDCk9PYy0So0UlmdSJ0OI+0GhC8YMqiYkj9eMXdarCQzYJhs9V5
-	 9qKcbb3vFOMuhU4OkPS/Loo3AemcJ/wUPJPwFAC0=
+	b=aYdJ74U2bd9Jvp3n5VOBDErg6fWQXl9NiWrs8Gyzzu70K6W9O7XiCjg1UDijE21zS
+	 /cwGLBcvkNfJSSbLSTVpuJJZf9MbHLUmUOul1dnavMRS65UkUqDwyWwMNA46eaGWxY
+	 EDM54TEIITO5XlPkj2UT/kDtdvcokgCR52j7NnXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Gilbert Wu <Gilbert.Wu@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/798] scsi: smartpqi: revert propagate-the-multipath-failure-to-SML-quickly
-Date: Mon, 14 Oct 2024 16:11:04 +0200
-Message-ID: <20241014141222.247699368@linuxfoundation.org>
+Subject: [PATCH 6.1 111/798] scsi: NCR5380: Check for phase match during PDMA fixup
+Date: Mon, 14 Oct 2024 16:11:05 +0200
+Message-ID: <20241014141222.286392703@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -55,91 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gilbert Wu <Gilbert.Wu@microchip.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit f1393d52e6cda9c20f12643cbecf1e1dc357e0e2 ]
+[ Upstream commit 5768718da9417331803fc4bc090544c2a93b88dc ]
 
-Correct a rare multipath failure issue by reverting commit 94a68c814328
-("scsi: smartpqi: Quickly propagate path failures to SCSI midlayer") [1].
+It's not an error for a target to change the bus phase during a transfer.
+Unfortunately, the FLAG_DMA_FIXUP workaround does not allow for that -- a
+phase change produces a DRQ timeout error and the device borken flag will
+be set.
 
-Reason for revert: The patch propagated the path failure to SML quickly
-when one of the path fails during IO and AIO path gets disabled for a
-multipath device.
+Check the phase match bit during FLAG_DMA_FIXUP processing. Don't forget to
+decrement the command residual. While we are here, change shost_printk()
+into scmd_printk() for better consistency with other DMA error messages.
 
-But it created a new issue: when creating a volume on an encryption-enabled
-controller, the firmware reports the AIO path is disabled, which cause the
-driver to report a path failure to SML for a multipath device.
-
-There will be a new fix to handle "Illegal request" and "Invalid field in
-parameter list" on RAID path when the AIO path is disabled on a multipath
-device.
-
-[1] https://lore.kernel.org/all/164375209313.440833.9992416628621839233.stgit@brunhilda.pdev.net/
-
-Fixes: 94a68c814328 ("scsi: smartpqi: Quickly propagate path failures to SCSI midlayer")
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Gilbert Wu <Gilbert.Wu@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240711194704.982400-4-don.brace@microchip.com
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Fixes: 55181be8ced1 ("ncr5380: Replace redundant flags with FLAG_NO_DMA_FIXUP")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/99dc7d1f4c825621b5b120963a69f6cd3e9ca659.1723001788.git.fthain@linux-m68k.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 20 ++------------------
- 1 file changed, 2 insertions(+), 18 deletions(-)
+ drivers/scsi/NCR5380.c | 78 +++++++++++++++++++++---------------------
+ 1 file changed, 39 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index e44f6bb25a8ea..4a004e0c93690 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -2334,14 +2334,6 @@ static inline void pqi_mask_device(u8 *scsi3addr)
- 	scsi3addr[3] |= 0xc0;
- }
- 
--static inline bool pqi_is_multipath_device(struct pqi_scsi_dev *device)
--{
--	if (pqi_is_logical_device(device))
--		return false;
--
--	return (device->path_map & (device->path_map - 1)) != 0;
--}
--
- static inline bool pqi_expose_device(struct pqi_scsi_dev *device)
+diff --git a/drivers/scsi/NCR5380.c b/drivers/scsi/NCR5380.c
+index dece7d9eb4d36..ecd24af4b3f29 100644
+--- a/drivers/scsi/NCR5380.c
++++ b/drivers/scsi/NCR5380.c
+@@ -1485,6 +1485,7 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
+ 				unsigned char **data)
  {
- 	return !device->is_physical_device || !pqi_skip_device(device->scsi3addr);
-@@ -3238,14 +3230,12 @@ static void pqi_process_aio_io_error(struct pqi_io_request *io_request)
- 	int residual_count;
- 	int xfer_count;
- 	bool device_offline;
--	struct pqi_scsi_dev *device;
+ 	struct NCR5380_hostdata *hostdata = shost_priv(instance);
++	struct NCR5380_cmd *ncmd = NCR5380_to_ncmd(hostdata->connected);
+ 	int c = *count;
+ 	unsigned char p = *phase;
+ 	unsigned char *d = *data;
+@@ -1496,7 +1497,7 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
+ 		return -1;
+ 	}
  
- 	scmd = io_request->scmd;
- 	error_info = io_request->error_info;
- 	host_byte = DID_OK;
- 	sense_data_length = 0;
- 	device_offline = false;
--	device = scmd->device->hostdata;
+-	NCR5380_to_ncmd(hostdata->connected)->phase = p;
++	ncmd->phase = p;
  
- 	switch (error_info->service_response) {
- 	case PQI_AIO_SERV_RESPONSE_COMPLETE:
-@@ -3270,14 +3260,8 @@ static void pqi_process_aio_io_error(struct pqi_io_request *io_request)
- 			break;
- 		case PQI_AIO_STATUS_AIO_PATH_DISABLED:
- 			pqi_aio_path_disabled(io_request);
--			if (pqi_is_multipath_device(device)) {
--				pqi_device_remove_start(device);
--				host_byte = DID_NO_CONNECT;
--				scsi_status = SAM_STAT_CHECK_CONDITION;
--			} else {
--				scsi_status = SAM_STAT_GOOD;
--				io_request->status = -EAGAIN;
+ 	if (p & SR_IO) {
+ 		if (hostdata->read_overruns)
+@@ -1608,45 +1609,44 @@ static int NCR5380_transfer_dma(struct Scsi_Host *instance,
+  * request.
+  */
+ 
+-	if (hostdata->flags & FLAG_DMA_FIXUP) {
+-		if (p & SR_IO) {
+-			/*
+-			 * The workaround was to transfer fewer bytes than we
+-			 * intended to with the pseudo-DMA read function, wait for
+-			 * the chip to latch the last byte, read it, and then disable
+-			 * pseudo-DMA mode.
+-			 *
+-			 * After REQ is asserted, the NCR5380 asserts DRQ and ACK.
+-			 * REQ is deasserted when ACK is asserted, and not reasserted
+-			 * until ACK goes false.  Since the NCR5380 won't lower ACK
+-			 * until DACK is asserted, which won't happen unless we twiddle
+-			 * the DMA port or we take the NCR5380 out of DMA mode, we
+-			 * can guarantee that we won't handshake another extra
+-			 * byte.
+-			 */
+-
+-			if (NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
+-			                          BASR_DRQ, BASR_DRQ, 0) < 0) {
+-				result = -1;
+-				shost_printk(KERN_ERR, instance, "PDMA read: DRQ timeout\n");
 -			}
-+			scsi_status = SAM_STAT_GOOD;
-+			io_request->status = -EAGAIN;
- 			break;
- 		case PQI_AIO_STATUS_NO_PATH_TO_DEVICE:
- 		case PQI_AIO_STATUS_INVALID_DEVICE:
+-			if (NCR5380_poll_politely(hostdata, STATUS_REG,
+-			                          SR_REQ, 0, 0) < 0) {
+-				result = -1;
+-				shost_printk(KERN_ERR, instance, "PDMA read: !REQ timeout\n");
+-			}
+-			d[*count - 1] = NCR5380_read(INPUT_DATA_REG);
+-		} else {
+-			/*
+-			 * Wait for the last byte to be sent.  If REQ is being asserted for
+-			 * the byte we're interested, we'll ACK it and it will go false.
+-			 */
+-			if (NCR5380_poll_politely2(hostdata,
+-			     BUS_AND_STATUS_REG, BASR_DRQ, BASR_DRQ,
+-			     BUS_AND_STATUS_REG, BASR_PHASE_MATCH, 0, 0) < 0) {
+-				result = -1;
+-				shost_printk(KERN_ERR, instance, "PDMA write: DRQ and phase timeout\n");
++	if ((hostdata->flags & FLAG_DMA_FIXUP) &&
++	    (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH)) {
++		/*
++		 * The workaround was to transfer fewer bytes than we
++		 * intended to with the pseudo-DMA receive function, wait for
++		 * the chip to latch the last byte, read it, and then disable
++		 * DMA mode.
++		 *
++		 * After REQ is asserted, the NCR5380 asserts DRQ and ACK.
++		 * REQ is deasserted when ACK is asserted, and not reasserted
++		 * until ACK goes false. Since the NCR5380 won't lower ACK
++		 * until DACK is asserted, which won't happen unless we twiddle
++		 * the DMA port or we take the NCR5380 out of DMA mode, we
++		 * can guarantee that we won't handshake another extra
++		 * byte.
++		 *
++		 * If sending, wait for the last byte to be sent. If REQ is
++		 * being asserted for the byte we're interested, we'll ACK it
++		 * and it will go false.
++		 */
++		if (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
++					   BASR_DRQ, BASR_DRQ, 0)) {
++			if ((p & SR_IO) &&
++			    (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH)) {
++				if (!NCR5380_poll_politely(hostdata, STATUS_REG,
++							   SR_REQ, 0, 0)) {
++					d[c] = NCR5380_read(INPUT_DATA_REG);
++					--ncmd->this_residual;
++				} else {
++					result = -1;
++					scmd_printk(KERN_ERR, hostdata->connected,
++						    "PDMA fixup: !REQ timeout\n");
++				}
+ 			}
++		} else if (NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH) {
++			result = -1;
++			scmd_printk(KERN_ERR, hostdata->connected,
++				    "PDMA fixup: DRQ timeout\n");
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
