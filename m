@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C26481B3;
-	Mon, 14 Oct 2024 15:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08BE1BDC3;
+	Mon, 14 Oct 2024 15:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918277; cv=none; b=mIxX4fhrA2D08jQtiZM7vtrdq+WTg+o2wOcRn3K+J4KjGeBRYge29BRq4qDWfleJwKOIyh0WCiaSubTKoSKDJVu0GpmkfG0FUykWdMW3bwSq8kUmaeez/f1hgualv10hYz66C0LGqJRkLM/bvSrw5NupAFLTUeSRIkUG/PkVcWY=
+	t=1728918281; cv=none; b=EzS5emvSoMDjgVEW7SDLGy/E0hq8LnUAjpLo1tUx8cfjeMSRrwBqGiIg/UBK+xhqJTC+prlLqtux+o+0Tvgp5JRhJyAuoWAYsaNFnm+u1SyfgTo8JQiRDlDwS1F7MIGsJNDXUEaRJo6CqAIedIi5HCeJNK6Mn8UfGBiaGhoki58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918277; c=relaxed/simple;
-	bh=FRcU4Ecsl2NuxfEeY4Gf6DRsbZrGRuzAsIlMw08Feq4=;
+	s=arc-20240116; t=1728918281; c=relaxed/simple;
+	bh=fuwLa5hCsJ0IkcxTxLTAJf+VXPUbqaluaCIxYhL0GJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAbJpEXMC7tTF6hs12G+wrPigEEz83GxjXyf5S89TJbFe/biEOrle9nXFpurcPJ/Ec0NCPUf3eVFi0mCldrOPQuCkd23EycedMpwl8pjsIi6/bQvpo2tblq2wnE+okcISqMSk56+5BoLy7OYRHXEKHl9wsplgCt/JgPNa2ih5Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W12mmU0+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otgdWIOOKcf23rp4Lb/ySh5tHxXBTM1e1ra2DpmFz75KIrnWlssfcKqg3wVvpXaNO0IyYBKpA9FVudM8lYSpY41NA3MUssXhNlYsq1n4wBIUi+t+BDEMxJiyx0Fj+rfV9/fxtV//MEcJLzGwvbA1rVEjyibWB0GrN+cUHFhzL9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxrPWXU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W12mmU0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20A6C4CEC3;
-	Mon, 14 Oct 2024 15:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxrPWXU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DA1C4CEC3;
+	Mon, 14 Oct 2024 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918277;
-	bh=FRcU4Ecsl2NuxfEeY4Gf6DRsbZrGRuzAsIlMw08Feq4=;
+	s=korg; t=1728918280;
+	bh=fuwLa5hCsJ0IkcxTxLTAJf+VXPUbqaluaCIxYhL0GJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W12mmU0+cdg8QgHgwUpXaIXwfqTSX1OOhj0nULrkuqoSHifisfFytAOp1LO9lglid
-	 bcAHWqTyKd6/aoqquDxyC4FDbwkMnae4ANNWXzp+AP1kRJtNoKJ5u+h+DgMTU5n6iy
-	 k5S+w96sBQ0h+ti5kGUOMPnhJ402px49mcm9MIe8=
+	b=lxrPWXU1wlsgAlanwRU5N/D+VvlxRI9PvRDNQgTrxjkNiX5y384bXGjN7f7aO0Tk0
+	 dnnJLEovMRrKvEQeL8hsg2iTS7sKaDCqpM60xAI44Wn3OeDCNpSV6yshDG94yAuwE0
+	 W83jzjVm5LstHEwmXF775mc+S8CwqRsQeq4WWjNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 258/798] vhost_vdpa: assign irq bypass producer token correctly
-Date: Mon, 14 Oct 2024 16:13:32 +0200
-Message-ID: <20241014141228.071564704@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Oleksandr Tymoshenko <ovt@google.com>
+Subject: [PATCH 6.1 276/798] vfio/pci: fix potential memory leak in vfio_intx_enable()
+Date: Mon, 14 Oct 2024 16:13:50 +0200
+Message-ID: <20241014141228.779094357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,95 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 02e9e9366fefe461719da5d173385b6685f70319 ]
+commit 82b951e6fbd31d85ae7f4feb5f00ddd4c5d256e2 upstream.
 
-We used to call irq_bypass_unregister_producer() in
-vhost_vdpa_setup_vq_irq() which is problematic as we don't know if the
-token pointer is still valid or not.
+If vfio_irq_ctx_alloc() failed will lead to 'name' memory leak.
 
-Actually, we use the eventfd_ctx as the token so the life cycle of the
-token should be bound to the VHOST_SET_VRING_CALL instead of
-vhost_vdpa_setup_vq_irq() which could be called by set_status().
-
-Fixing this by setting up irq bypass producer's token when handling
-VHOST_SET_VRING_CALL and un-registering the producer before calling
-vhost_vring_ioctl() to prevent a possible use after free as eventfd
-could have been released in vhost_vring_ioctl(). And such registering
-and unregistering will only be done if DRIVER_OK is set.
-
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Fixes: 2cf1ba9a4d15 ("vhost_vdpa: implement IRQ offloading in vhost_vdpa")
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240816031900.18013-1-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 18c198c96a81 ("vfio/pci: Create persistent INTx handler")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
+Link: https://lore.kernel.org/r/20240415015029.3699844-1-yebin10@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vdpa.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index ef9e845a5a5c5..59587f9880d3c 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -191,11 +191,9 @@ static void vhost_vdpa_setup_vq_irq(struct vhost_vdpa *v, u16 qid)
- 	if (irq < 0)
- 		return;
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -215,8 +215,10 @@ static int vfio_intx_enable(struct vfio_
+ 		return -ENOMEM;
  
--	irq_bypass_unregister_producer(&vq->call_ctx.producer);
- 	if (!vq->call_ctx.ctx)
- 		return;
+ 	vdev->ctx = kzalloc(sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL_ACCOUNT);
+-	if (!vdev->ctx)
++	if (!vdev->ctx) {
++		kfree(name);
+ 		return -ENOMEM;
++	}
  
--	vq->call_ctx.producer.token = vq->call_ctx.ctx;
- 	vq->call_ctx.producer.irq = irq;
- 	ret = irq_bypass_register_producer(&vq->call_ctx.producer);
- 	if (unlikely(ret))
-@@ -571,6 +569,14 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			vq->last_avail_idx = vq_state.split.avail_index;
- 		}
- 		break;
-+	case VHOST_SET_VRING_CALL:
-+		if (vq->call_ctx.ctx) {
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_unsetup_vq_irq(v, idx);
-+			vq->call_ctx.producer.token = NULL;
-+		}
-+		break;
- 	}
+ 	vdev->num_ctx = 1;
  
- 	r = vhost_vring_ioctl(&v->vdev, cmd, argp);
-@@ -603,13 +609,16 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
- 			cb.callback = vhost_vdpa_virtqueue_cb;
- 			cb.private = vq;
- 			cb.trigger = vq->call_ctx.ctx;
-+			vq->call_ctx.producer.token = vq->call_ctx.ctx;
-+			if (ops->get_status(vdpa) &
-+			    VIRTIO_CONFIG_S_DRIVER_OK)
-+				vhost_vdpa_setup_vq_irq(v, idx);
- 		} else {
- 			cb.callback = NULL;
- 			cb.private = NULL;
- 			cb.trigger = NULL;
- 		}
- 		ops->set_vq_cb(vdpa, idx, &cb);
--		vhost_vdpa_setup_vq_irq(v, idx);
- 		break;
- 
- 	case VHOST_SET_VRING_NUM:
-@@ -1235,6 +1244,7 @@ static int vhost_vdpa_open(struct inode *inode, struct file *filep)
- 	for (i = 0; i < nvqs; i++) {
- 		vqs[i] = &v->vqs[i];
- 		vqs[i]->handle_kick = handle_vq_kick;
-+		vqs[i]->call_ctx.ctx = NULL;
- 	}
- 	vhost_dev_init(dev, vqs, nvqs, 0, 0, 0, false,
- 		       vhost_vdpa_process_iotlb_msg);
--- 
-2.43.0
-
 
 
