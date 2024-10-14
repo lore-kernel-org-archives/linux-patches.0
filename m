@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FE41BDC3;
-	Mon, 14 Oct 2024 15:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF46226296;
+	Mon, 14 Oct 2024 15:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918416; cv=none; b=HTVDNSJ23UE5slj6KnORl8e9/45vcEX40fFZKLoFNLwUREsLuzLK6WHo7jGG29jDW8xQcAYM02yM4+i7z1Z/bxqK5HV+kJMXwL88shA4fhEneYsuoDAw/zZOHAV4ctwMFDcEiz2WdFfB01p5P6NJn0O9hY4uydvaaNBjBUsO364=
+	t=1728918419; cv=none; b=kYNlbR7EYuj9MHZbjlnPv1yBlxVvmSsCsJ1jfRGhVq10gvhSeta0yCyly5BXA5SeDbuIz0gyp32jbTwpkmwb+0RhtEouSblsKb5NKRRZVsI4LB6XFoixUr6awK8B4lhnORhNv/h5VI0CwDU7bQM+Hr/Gv2JtpKidO5aZ3gFfKcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918416; c=relaxed/simple;
-	bh=BJPg4RGpSuN46moDCMk/W5QTrYJYJq0bCQxxvRdPito=;
+	s=arc-20240116; t=1728918419; c=relaxed/simple;
+	bh=KMKWdxW/UHm5JZSglGuQ6Gt4sibmB//O9vej9VupIvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAiXYJ/hY2unw18B7CVmxewGzhQg8UwgByV11Bq/GBioN86wbPCz5hfQJd4OAaTH+x3lIJJmILM9aoFhdmITZBBA25lWyhC3YSpT7hWPP/rzHP7dUEZ2oHtGUjJ1W3mdiDVTPFqc6bxh9JRbq2Z/TE12nwh7mmdcAKGb9A9tr30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uk7YaEeV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XM0F3dnqnMb1vHm6cXvn/1EV5U3lVbNt8nJNX2wBawlhwan9S/6JDTkbCo6jBVoHRTd28nQX+t229huWNR4xm5cGZ/eNqc4DeKsmC1dAm6kT4pZbfV/aq81XeYp7XFY7hZYhyaOxJpBHQuXzqQosT2ufMObtYPh82vSBOINk3Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwJaiwqG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uk7YaEeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6C3C4CEC7;
-	Mon, 14 Oct 2024 15:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwJaiwqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E1FC4CEC7;
+	Mon, 14 Oct 2024 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918416;
-	bh=BJPg4RGpSuN46moDCMk/W5QTrYJYJq0bCQxxvRdPito=;
+	s=korg; t=1728918419;
+	bh=KMKWdxW/UHm5JZSglGuQ6Gt4sibmB//O9vej9VupIvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uk7YaEeViLGRqVJZSwBhOCzRr+yPEgDwsmc1fX+yd9S1m1G4FNqQ6QUt34hIZl3GB
-	 XT0V7NGk4Q3gKYic0pacIh4i2qlJ9ru9VBTBgDf5EaFmW8CAlaaG7PUcGdCuA85Cf8
-	 6GvI/MYWvldxOX/3iyuE46izGlQ5ZEFFmSPGJkZQ=
+	b=OwJaiwqGYCni+6DOJe5BvzB7cQcMmgxqYBtcAFdKhlHZ5wIIanqj1W9SwEe1l3lkz
+	 S2zUHkRHHz279jZ0lShxDAYWMo5URC/dmhMdHfnjtOSZabSW1JwE8GOisuqHhx3vsZ
+	 Nh9umeh++afzMvmcw9jugdoNs6i3PXdsxdcNJSco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 316/798] xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.
-Date: Mon, 14 Oct 2024 16:14:30 +0200
-Message-ID: <20241014141230.364831414@linuxfoundation.org>
+	Pavan Kumar Paluri <papaluri@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 317/798] crypto: ccp - Properly unregister /dev/sev on sev PLATFORM_STATUS failure
+Date: Mon, 14 Oct 2024 16:14:31 +0200
+Message-ID: <20241014141230.409877291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -49,53 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Pavan Kumar Paluri <papaluri@amd.com>
 
-commit f81dfa3b57c624c56f2bff171c431bc7f5b558f2 upstream.
+commit ce3d2d6b150ba8528f3218ebf0cee2c2c572662d upstream.
 
-PCI xHC host should be stopped and xhci driver memory freed before putting
-host to PCI D3 state during PCI remove callback.
+In case of sev PLATFORM_STATUS failure, sev_get_api_version() fails
+resulting in sev_data field of psp_master nulled out. This later becomes
+a problem when unloading the ccp module because the device has not been
+unregistered (via misc_deregister()) before clearing the sev_data field
+of psp_master. As a result, on reloading the ccp module, a duplicate
+device issue is encountered as can be seen from the dmesg log below.
 
-Hosts with XHCI_SPURIOUS_WAKEUP quirk did this the wrong way around
-and set the host to D3 before calling usb_hcd_pci_remove(dev), which will
-access the host to stop it, and then free xhci.
+on reloading ccp module via modprobe ccp
 
-Fixes: f1f6d9a8b540 ("xhci: don't dereference a xhci member after removing xhci")
+Call Trace:
+  <TASK>
+  dump_stack_lvl+0xd7/0xf0
+  dump_stack+0x10/0x20
+  sysfs_warn_dup+0x5c/0x70
+  sysfs_create_dir_ns+0xbc/0xd
+  kobject_add_internal+0xb1/0x2f0
+  kobject_add+0x7a/0xe0
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? get_device_parent+0xd4/0x1e0
+  ? __pfx_klist_children_get+0x10/0x10
+  device_add+0x121/0x870
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  device_create_groups_vargs+0xdc/0x100
+  device_create_with_groups+0x3f/0x60
+  misc_register+0x13b/0x1c0
+  sev_dev_init+0x1d4/0x290 [ccp]
+  psp_dev_init+0x136/0x300 [ccp]
+  sp_init+0x6f/0x80 [ccp]
+  sp_pci_probe+0x2a6/0x310 [ccp]
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  local_pci_probe+0x4b/0xb0
+  work_for_cpu_fn+0x1a/0x30
+  process_one_work+0x203/0x600
+  worker_thread+0x19e/0x350
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xeb/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x3c/0x60
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+  kobject: kobject_add_internal failed for sev with -EEXIST, don't try to register things with the same name in the same directory.
+  ccp 0000:22:00.1: sev initialization failed
+  ccp 0000:22:00.1: psp initialization failed
+  ccp 0000:a2:00.1: no command queues available
+  ccp 0000:a2:00.1: psp enabled
+
+Address this issue by unregistering the /dev/sev before clearing out
+sev_data in case of PLATFORM_STATUS failure.
+
+Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240905143300.1959279-12-mathias.nyman@linux.intel.com
+Signed-off-by: Pavan Kumar Paluri <papaluri@amd.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -534,8 +534,10 @@ put_runtime_pm:
- static void xhci_pci_remove(struct pci_dev *dev)
- {
- 	struct xhci_hcd *xhci;
-+	bool set_power_d3;
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1362,6 +1362,8 @@ void sev_pci_init(void)
+ 	return;
  
- 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
-+	set_power_d3 = xhci->quirks & XHCI_SPURIOUS_WAKEUP;
- 
- 	xhci->xhc_state |= XHCI_STATE_REMOVING;
- 
-@@ -548,11 +550,11 @@ static void xhci_pci_remove(struct pci_d
- 		xhci->shared_hcd = NULL;
- 	}
- 
-+	usb_hcd_pci_remove(dev);
+ err:
++	sev_dev_destroy(psp_master);
 +
- 	/* Workaround for spurious wakeups at shutdown with HSW */
--	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
-+	if (set_power_d3)
- 		pci_set_power_state(dev, PCI_D3hot);
--
--	usb_hcd_pci_remove(dev);
+ 	psp_master->sev_data = NULL;
  }
  
- #ifdef CONFIG_PM
 
 
