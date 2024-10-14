@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F5C1C231D;
-	Mon, 14 Oct 2024 15:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E98F1C231D;
+	Mon, 14 Oct 2024 15:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918933; cv=none; b=aM5c/OGPQibckJWikFnyHia+OiQYivpcFvw8ucAeUxgkorHIwuQYZGT+CrJ5RGTL1umstg3G6IRAnDdy+vLpLjUMS3qF659QDEHxA0xtHlVWMLmnVKJlrHnJ9rVpV1v+TiIRD+yv5pCrIg9Yht0Gy46WlECwMHw+039LN/pnW5s=
+	t=1728918936; cv=none; b=AF/1BhrNu8whoLeQDT1d6qx/pEhmqQwumDbxJ5aXFhFhIMHau+9RPN/rY7gc3iu7m19omFBnHczFyd0mmTODTvB2Zau0vOy9qAFWZsVhtZK5CjWa6DVwSLPz1m94T5iZKkoXboJRsLp4v8vqlWEqw7MYv7K3BxyCNDdnPSH4+oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918933; c=relaxed/simple;
-	bh=SmwXG2Yz0C08tkGTEKJ19By3GpzuXwk1SbKp8CAVwmQ=;
+	s=arc-20240116; t=1728918936; c=relaxed/simple;
+	bh=XBUjjSi3Evjkf/4zyhCtC5DUfvAs98xYeys5WtP0VSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX5ron9yTlsSuvExEzz76xUwF48WzwC9oDGnr3pToKwpJsAwfUYrDoyKuwrYLaanHnWVvkDcx6E4C/yezqOdgG2elJVwTJDm9Sp5pQ6sRX9oGdcjaYo1QXaWZmw6bIhU3mli4oV5cte2ZtdENc6gFufexz1q7zNDic5kQiFABAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUEjSB/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XebTM4HR87CwUKbk4z1B6oGB6Mnwv2NHPH7u9kXdZtwHcibfIxfGNu0pADvHfBZpG6rcZ0AeJ78DW/8+1e33i8+8dYKYZbr3yZO+O4N6KljG3Est7/5KFqgvSQZVdXw2fMJDVb4hnru8SaWBHcNQJy7DoGvvPT+CUEl7G7NGa7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GicOBGgc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUEjSB/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A908C4CEC3;
-	Mon, 14 Oct 2024 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GicOBGgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D07C4CEC3;
+	Mon, 14 Oct 2024 15:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918932;
-	bh=SmwXG2Yz0C08tkGTEKJ19By3GpzuXwk1SbKp8CAVwmQ=;
+	s=korg; t=1728918936;
+	bh=XBUjjSi3Evjkf/4zyhCtC5DUfvAs98xYeys5WtP0VSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUEjSB/a0cAyL5F2AdcwoV8qH3JOiR10BZWdCgV5Ysq38RFYxB2WNamWx0oY/1u1+
-	 X+VDwCD7ULqSBju4N+oUdEyQp7WSThHQ47B3rd0aKODwu5fe08xs+q6DCN4TPOflrm
-	 /VEuwzkUFiKu2ZZE0mf/+9W0nVbjoJjD2gQXAzIY=
+	b=GicOBGgcOMnPtxvs9cyxIODopCHfmb0kpJyYZOc05Qa+AkKBAWd1Ppde+lzceFFrU
+	 ig/MUovGKP803HWmW4JpGUgRYWgRiGXmcSamWhGuUJBop7HwYnWxaRbPC/QV9K5cvf
+	 JnrJvKTg7w8Tyivdb/gSaOG0LcCFcceeupT6j83c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Konstantin Ovsepian <ovs@ovs.to>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Robert Beckett <bob.beckett@collabora.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 433/798] blk_iocost: fix more out of bound shifts
-Date: Mon, 14 Oct 2024 16:16:27 +0200
-Message-ID: <20241014141234.971396251@linuxfoundation.org>
+Subject: [PATCH 6.1 434/798] nvme-pci: qdepth 1 quirk
+Date: Mon, 14 Oct 2024 16:16:28 +0200
+Message-ID: <20241014141235.012700099@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,78 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Ovsepian <ovs@ovs.to>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 9bce8005ec0dcb23a58300e8522fe4a31da606fa ]
+[ Upstream commit 83bdfcbdbe5d901c5fa432decf12e1725a840a56 ]
 
-Recently running UBSAN caught few out of bound shifts in the
-ioc_forgive_debts() function:
+Another device has been reported to be unreliable if we have more than
+one outstanding command. In this new case, data corruption may occur.
+Since we have two devices now needing this quirky behavior, make a
+generic quirk flag.
 
-UBSAN: shift-out-of-bounds in block/blk-iocost.c:2142:38
-shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
-long')
-...
-UBSAN: shift-out-of-bounds in block/blk-iocost.c:2144:30
-shift exponent 80 is too large for 64-bit type 'u64' (aka 'unsigned long
-long')
-...
-Call Trace:
-<IRQ>
-dump_stack_lvl+0xca/0x130
-__ubsan_handle_shift_out_of_bounds+0x22c/0x280
-? __lock_acquire+0x6441/0x7c10
-ioc_timer_fn+0x6cec/0x7750
-? blk_iocost_init+0x720/0x720
-? call_timer_fn+0x5d/0x470
-call_timer_fn+0xfa/0x470
-? blk_iocost_init+0x720/0x720
-__run_timer_base+0x519/0x700
-...
+The same Apple quirk is clearly not "temporary", so update the comment
+while moving it.
 
-Actual impact of this issue was not identified but I propose to fix the
-undefined behaviour.
-The proposed fix to prevent those out of bound shifts consist of
-precalculating exponent before using it the shift operations by taking
-min value from the actual exponent and maximum possible number of bits.
-
-Reported-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20240822154137.2627818-1-ovs@ovs.to
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/linux-nvme/191d810a4e3.fcc6066c765804.973611676137075390@collabora.com/
+Reported-by: Robert Beckett <bob.beckett@collabora.com>
+Reviewed-by: Christoph Hellwig hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/nvme/host/nvme.h |  5 +++++
+ drivers/nvme/host/pci.c  | 18 +++++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 64b594d660b79..772e909e9fbfd 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2057,7 +2057,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
- 			      struct ioc_now *now)
- {
- 	struct ioc_gq *iocg;
--	u64 dur, usage_pct, nr_cycles;
-+	u64 dur, usage_pct, nr_cycles, nr_cycles_shift;
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 8e28d2de45c0e..5f8a146b70148 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -86,6 +86,11 @@ enum nvme_quirks {
+ 	 */
+ 	NVME_QUIRK_NO_DEEPEST_PS		= (1 << 5),
  
- 	/* if no debtor, reset the cycle */
- 	if (!nr_debtors) {
-@@ -2119,10 +2119,12 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
- 		old_debt = iocg->abs_vdebt;
- 		old_delay = iocg->delay;
- 
-+		nr_cycles_shift = min_t(u64, nr_cycles, BITS_PER_LONG - 1);
- 		if (iocg->abs_vdebt)
--			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles ?: 1;
-+			iocg->abs_vdebt = iocg->abs_vdebt >> nr_cycles_shift ?: 1;
++	/*
++	 *  Problems seen with concurrent commands
++	 */
++	NVME_QUIRK_QDEPTH_ONE			= (1 << 6),
 +
- 		if (iocg->delay)
--			iocg->delay = iocg->delay >> nr_cycles ?: 1;
-+			iocg->delay = iocg->delay >> nr_cycles_shift ?: 1;
+ 	/*
+ 	 * Set MEDIUM priority on SQ creation
+ 	 */
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 54a969aa72bed..f0063962c2c87 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2621,15 +2621,8 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 	else
+ 		dev->io_sqes = NVME_NVM_IOSQES;
  
- 		iocg_kick_waitq(iocg, true, now);
- 
+-	/*
+-	 * Temporary fix for the Apple controller found in the MacBook8,1 and
+-	 * some MacBook7,1 to avoid controller resets and data loss.
+-	 */
+-	if (pdev->vendor == PCI_VENDOR_ID_APPLE && pdev->device == 0x2001) {
++	if (dev->ctrl.quirks & NVME_QUIRK_QDEPTH_ONE) {
+ 		dev->q_depth = 2;
+-		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
+-			"set queue depth=%u to work around controller resets\n",
+-			dev->q_depth);
+ 	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
+ 		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
+ 		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
+@@ -3491,6 +3484,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 				NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
++		.driver_data = NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
+@@ -3617,7 +3612,12 @@ static const struct pci_device_id nvme_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0xcd02),
+ 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
+-		.driver_data = NVME_QUIRK_SINGLE_VECTOR },
++		/*
++		 * Fix for the Apple controller found in the MacBook8,1 and
++		 * some MacBook7,1 to avoid controller resets and data loss.
++		 */
++		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
++				NVME_QUIRK_QDEPTH_ONE },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
+ 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
 -- 
 2.43.0
 
