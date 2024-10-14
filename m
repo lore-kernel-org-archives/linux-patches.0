@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58E51AB505;
-	Mon, 14 Oct 2024 15:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCA1AA793;
+	Mon, 14 Oct 2024 15:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918622; cv=none; b=oMRuVCKnRqz9oD6LdWcNDA3bBJKBCOSCTmovkjdQ4DXxRO9wl8ihirlujGdXOL2OkXl61+SsTbXV7gi+1kIKNgQjiU8BOb8MnuZuTyalc336lDVJZIfYmDNvbS/PPk30LcmkmoF22SQqOVe5QBa2kjytwiFQKNPg3xftG1LWroQ=
+	t=1728918625; cv=none; b=LpvR3Pt51csrFif2hTqa867cF5U0Vz4MlYn06x2onMTWVCiWQ8tSPHT1RQk0mh/luBrc3KwTAviu/YowK85+KZ4n+gU9AvfkcQnLbJQP4vgIAg/4bqPWjh0M57sILK6QHNicvl+97BY+/TwO5gwMFhH7k9QueLaCek4bBRzdNdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918622; c=relaxed/simple;
-	bh=udYA6JsN5em/JbXA6iU/QJRfsA9opmAExJ2JbhKMv6I=;
+	s=arc-20240116; t=1728918625; c=relaxed/simple;
+	bh=fvDZQkxJUs+nA9GgGGqcyUJrPSnZOGQ1HBKGCEcNqMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZgedusjkmfvnTF1BKr3qDJNtRUo2rRsRqoWFyxtVc/it+jJs0aAFvYOV1kIAjwBsFOzzYBOXJRjzeUYJj7Ap7nlZijuNAAId6ubNvVzaW0tF1WAcLS6mZx3dIS5jsBdmNxbBv3FM16yreqHTRjMn8yX7KtHz+sSB1nE3+XwhHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5GR5fA2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=udZIi+dFH4gJn4rNIyymU7LR1S0xLR5wC0OocnoAiFb2rwVMEw5p3Y0BgbWn89cckyzB8I3PHmDWFlHw09KqbX+Q35575t5hwJNGH8szB27TdeLO/+D82NnzetFtwhbyrJJEVHy+j+Cm2syks75+KBw/WxZ8NvV7I47KoMrhRfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4kZM2UX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5GR5fA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3FFC4CEC3;
-	Mon, 14 Oct 2024 15:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4kZM2UX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AF3C4CEC3;
+	Mon, 14 Oct 2024 15:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918622;
-	bh=udYA6JsN5em/JbXA6iU/QJRfsA9opmAExJ2JbhKMv6I=;
+	s=korg; t=1728918625;
+	bh=fvDZQkxJUs+nA9GgGGqcyUJrPSnZOGQ1HBKGCEcNqMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5GR5fA2XoNe5HXVYhUEz2qaGWVhI0e+vlfnE3nYSOtxmLApbG4jXGNDzEUfJGH+u
-	 ACXqoJ1KYUEuFXd/ZxUmxidSEKhlorueOPOzE4Rb3NbTWH+U4G2LX2D6SMtfJOPF0T
-	 ik9T+kbFL8GpnLEGPX3OWNCE7HvWIYHZknK7IQNo=
+	b=e4kZM2UX0eT05yRX0uYyQftsxrNruvC+lKRr+EtmelqiqBcpntHvKJmOLtIgws7LF
+	 4zCIkdM7Wtwy5GNISPUvCUi96tGrxPRZofZDE9BPYiZR1eFvA0LIrvhSLHYYuaP+18
+	 xyVrYJvawDkCcPQTAacthXZcoPllvoq6B99ysmYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey Gladkov (Intel)" <legion@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCH 6.1 375/798] x86/tdx: Fix "in-kernel MMIO" check
-Date: Mon, 14 Oct 2024 16:15:29 +0200
-Message-ID: <20241014141232.686945401@linuxfoundation.org>
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Helmut Grohne <helmut@freexian.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>
+Subject: [PATCH 6.1 376/798] wifi: mt76: do not run mt76_unregister_device() on unregistered hw
+Date: Mon, 14 Oct 2024 16:15:30 +0200
+Message-ID: <20241014141232.725633905@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -45,62 +47,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Gladkov (Intel) <legion@kernel.org>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-commit d4fc4d01471528da8a9797a065982e05090e1d81 upstream.
+commit 41130c32f3a18fcc930316da17f3a5f3bc326aa1 upstream.
 
-TDX only supports kernel-initiated MMIO operations. The handle_mmio()
-function checks if the #VE exception occurred in the kernel and rejects
-the operation if it did not.
+Trying to probe a mt7921e pci card without firmware results in a
+successful probe where ieee80211_register_hw hasn't been called. When
+removing the driver, ieee802111_unregister_hw is called unconditionally
+leading to a kernel NULL pointer dereference.
+Fix the issue running mt76_unregister_device routine just for registered
+hw.
 
-However, userspace can deceive the kernel into performing MMIO on its
-behalf. For example, if userspace can point a syscall to an MMIO address,
-syscall does get_user() or put_user() on it, triggering MMIO #VE. The
-kernel will treat the #VE as in-kernel MMIO.
-
-Ensure that the target MMIO address is within the kernel before decoding
-instruction.
-
-Fixes: 31d58c4e557d ("x86/tdx: Handle in-kernel MMIO")
-Signed-off-by: Alexey Gladkov (Intel) <legion@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/565a804b80387970460a4ebc67c88d1380f61ad1.1726237595.git.legion%40kernel.org
-Signed-off-by: Alexey Gladkov (Intel) <legion@kernel.org>
+Link: https://bugs.debian.org/1029116
+Link: https://bugs.kali.org/view.php?id=8140
+Reported-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Fixes: 1c71e03afe4b ("mt76: mt7921: move mt7921_init_hw in a dedicated work")
+Tested-by: Helmut Grohne <helmut@freexian.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/be3457d82f4e44bb71a22b2b5db27b644a37b1e1.1677107277.git.lorenzo@kernel.org
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/tdx/tdx.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mac80211.c |    8 ++++++++
+ drivers/net/wireless/mediatek/mt76/mt76.h     |    1 +
+ 2 files changed, 9 insertions(+)
 
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -12,6 +12,7 @@
- #include <asm/insn.h>
- #include <asm/insn-eval.h>
- #include <asm/pgtable.h>
-+#include <asm/traps.h>
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -522,6 +522,7 @@ int mt76_register_phy(struct mt76_phy *p
+ 	if (ret)
+ 		return ret;
  
- /* TDX module Call Leaf IDs */
- #define TDX_GET_INFO			1
-@@ -371,6 +372,11 @@ static int handle_mmio(struct pt_regs *r
- 			return -EINVAL;
- 	}
++	set_bit(MT76_STATE_REGISTERED, &phy->state);
+ 	phy->dev->phys[phy->band_idx] = phy;
  
-+	if (!fault_in_kernel_space(ve->gla)) {
-+		WARN_ONCE(1, "Access to userspace address is not supported");
-+		return -EINVAL;
-+	}
+ 	return 0;
+@@ -532,6 +533,9 @@ void mt76_unregister_phy(struct mt76_phy
+ {
+ 	struct mt76_dev *dev = phy->dev;
+ 
++	if (!test_bit(MT76_STATE_REGISTERED, &phy->state))
++		return;
 +
- 	/*
- 	 * Reject EPT violation #VEs that split pages.
- 	 *
+ 	mt76_tx_status_check(dev, true);
+ 	ieee80211_unregister_hw(phy->hw);
+ 	dev->phys[phy->band_idx] = NULL;
+@@ -654,6 +658,7 @@ int mt76_register_device(struct mt76_dev
+ 		return ret;
+ 
+ 	WARN_ON(mt76_worker_setup(hw, &dev->tx_worker, NULL, "tx"));
++	set_bit(MT76_STATE_REGISTERED, &phy->state);
+ 	sched_set_fifo_low(dev->tx_worker.task);
+ 
+ 	return 0;
+@@ -664,6 +669,9 @@ void mt76_unregister_device(struct mt76_
+ {
+ 	struct ieee80211_hw *hw = dev->hw;
+ 
++	if (!test_bit(MT76_STATE_REGISTERED, &dev->phy.state))
++		return;
++
+ 	if (IS_ENABLED(CONFIG_MT76_LEDS))
+ 		mt76_led_cleanup(dev);
+ 	mt76_tx_status_check(dev, true);
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -388,6 +388,7 @@ struct mt76_tx_cb {
+ 
+ enum {
+ 	MT76_STATE_INITIALIZED,
++	MT76_STATE_REGISTERED,
+ 	MT76_STATE_RUNNING,
+ 	MT76_STATE_MCU_RUNNING,
+ 	MT76_SCANNING,
 
 
