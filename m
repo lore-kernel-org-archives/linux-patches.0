@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64C1ABEDF;
-	Mon, 14 Oct 2024 15:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D57E1AC423;
+	Mon, 14 Oct 2024 15:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918996; cv=none; b=ZB5XtpzaYz8g22kLYlYGJ/HvWwb5b9npMno5KrFhbhSH6NN008YXAKQf4SsWRjKHx9qbY2dDNdNrNTyRxVrP7ouecu7Y5Ttzu9n/jL711tDuiNHvHTj6qDsohmJRIDMyAYIEGYkeAlpTn/9H3bTGdpPxDWuA29IWAzIH0ZWB+os=
+	t=1728918999; cv=none; b=DZNIjc7B9Nqc0MqFp73Na5huvGF/8yydt6nDk4+SLJtGQfC1gJ3dDBcWInBL+AjQdKg0GqSrGw2W61fMjC2LvwxTYnnhJPOXkR2C2x2B/90k8r052sHiVkGTOAGidoJz5HWnZ7glqoNYG7u+N1IKUV9yPa1GGraGlxlt8WTUztc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918996; c=relaxed/simple;
-	bh=/9Vid/P7ZRwGPK1McQC3aFHMUpNXSpRFY9UOtISnb0M=;
+	s=arc-20240116; t=1728918999; c=relaxed/simple;
+	bh=vnjtV2kGC+EHY0G6eCovP8LtIi2YSWrGsiWVXQLi8pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmmxCxINdN2D0/2AstbMUBs61wXj7dI/9HoFOZZZN4DaNUrCnKdjZJHqRr/uAmCxzESOFnfR1VLjbUpvZ8nP98Xm+ACQ7EPKHIC8mLGkxSqyZiiNKL5Id0ztWjv9r5LfSyKDbtWZJ/CgtTl441WsERA1mQRuPA0iaSSY8SYyCxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVT13/LA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZGxlEYN+uy7OPX0CKhIXenxwBQgkuOenjP9dwYLQhZ6dyz1Nlqbbx7O/AmdbR8Jv/aWk6vwwdNYRUKT0dsxooA1XBv3fOkqEGjY5/eOSws3P7H5O3BEWamcjt2MS/XUDUVJW5FZaFZ6SRZKAstu4+31W4TXr9K0iAN+5qKSt49A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+qKHqNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVT13/LA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEC3C4CED3;
-	Mon, 14 Oct 2024 15:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+qKHqNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E41AC4CEC3;
+	Mon, 14 Oct 2024 15:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918996;
-	bh=/9Vid/P7ZRwGPK1McQC3aFHMUpNXSpRFY9UOtISnb0M=;
+	s=korg; t=1728918999;
+	bh=vnjtV2kGC+EHY0G6eCovP8LtIi2YSWrGsiWVXQLi8pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVT13/LAhHyK7BSjVoKWiRBmp3FpFs+nPF0t/Nc/1qen0netnICdEOSdq/QfouTWh
-	 V0/Oa63MD58QM4o17TXAkkFErpX2l3MH+Rjf2yvYe/XV5voPHkMFiOYoQ4A7iNbH2P
-	 IpmK/b/uHnrtWssnnfpMaZ2WUlXdXO3WSx5TL5IQ=
+	b=z+qKHqNZ4SyTQZVuciK8gREq91eSH+4uqgJohJ7JTUUJISBm55wJWlRBkyBGlRfq1
+	 Yn5/EJrPB3xcSeJYjba6Ore8hj9uMzy1iHBfcCX1T2KkLOtb/K2YuLizVJ+VVJLxlH
+	 wZXKYtkFxbknokW5C6vqBGDJvTh6+rSlXw/kwVSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 483/798] scsi: smartpqi: correct stream detection
-Date: Mon, 14 Oct 2024 16:17:17 +0200
-Message-ID: <20241014141236.948440312@linuxfoundation.org>
+Subject: [PATCH 6.1 484/798] jfs: Fix uninit-value access of new_ea in ea_buffer
+Date: Mon, 14 Oct 2024 16:17:18 +0200
+Message-ID: <20241014141236.987811272@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -55,48 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit 4c76114932d1d6fad2e72823e7898a3c960cf2a7 ]
+[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
 
-Correct stream detection by initializing the structure
-pqi_scsi_dev_raid_map_data to 0s.
+syzbot reports that lzo1x_1_do_compress is using uninit-value:
 
-When the OS issues SCSI READ commands, the driver erroneously considers
-them as SCSI WRITES. If they are identified as sequential IOs, the driver
-then submits those requests via the RAID path instead of the AIO path.
+=====================================================
+BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
 
-The 'is_write' flag might be set for SCSI READ commands also.  The driver
-may interpret SCSI READ commands as SCSI WRITE commands, resulting in IOs
-being submitted through the RAID path.
+...
 
-Note: This does not cause data corruption.
+Uninit was stored to memory at:
+ ea_put fs/jfs/xattr.c:639 [inline]
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240827185501.692804-3-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+...
+
+Local variable ea_buf created at:
+ __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
+ __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
+
+=====================================================
+
+The reason is ea_buf->new_ea is not initialized properly.
+
+Fix this by using memset to empty its content at the beginning
+in ea_get().
+
+Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/xattr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 4a004e0c93690..0b3aa91b46ffb 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5902,7 +5902,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
+diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
+index 8ef8dfc3c1944..76b89718fd526 100644
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -434,6 +434,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
  	int rc;
- 	struct pqi_scsi_dev *device;
- 	struct pqi_stream_data *pqi_stream_data;
--	struct pqi_scsi_dev_raid_map_data rmd;
-+	struct pqi_scsi_dev_raid_map_data rmd = { 0 };
+ 	int quota_allocation = 0;
  
- 	if (!ctrl_info->enable_stream_detection)
- 		return false;
++	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
++
+ 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
+ 	if (ji->ea.flag == 0)
+ 		ea_size = 0;
 -- 
 2.43.0
 
