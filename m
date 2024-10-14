@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B480B1AC427;
-	Mon, 14 Oct 2024 15:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB3C1B4F0B;
+	Mon, 14 Oct 2024 15:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920110; cv=none; b=q5pCvzprefb3AF87mB71IVKugBYzKgQuD1wckzbr16NX5sqNAzNiAyMCruqoDp4fK6h+8YSio2hNFJuLlv/lZ0f0XiZwgjc7ZHjqXDpsgoftQzR+sWZ3yP5Sy4MEMgnDCCX/HSHia0HA2aMUhqCqoAwpIOpcVe4NcU1ndskFGXo=
+	t=1728920113; cv=none; b=uW07IQBydFe1mK+3dStl+VfcvpjoyJIV6yTfChBGzYz3kjWVp6BZa/QB9cQIiiy/tVYsxj6Ch4mDoKWLQbb80TZON+Q4Hh16GgpHeQTG9IYZvJDveTFSWTORz6PsDc6SQ/7Wrx/kWfiQom8l58Rked4UzqT8p8zD1klXQ+KGwis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920110; c=relaxed/simple;
-	bh=KG9xQB3E1idac/N5nwGjkF+5qV+5WOMPn/dTkWcjlOg=;
+	s=arc-20240116; t=1728920113; c=relaxed/simple;
+	bh=PI8JIyr9PPAA+3gzbXDcF3Wv8FcToqv0FPsQI2nYUvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0aQi4LwOzA8pr8jlqyDgP26WYcgPkTuAXFx5hAtRnHQXJh8vDReAU7a5yn0oQJU1THvKauL+tni15XKdEuQ6b6q/9p7DM5Fy3OYUtvPPRO3YN/TA022C70cJaMm0lYnXmLrz1BhTlzYcqkmYuTAYjOecBAbaEzW1H/kkpVxikA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0RRm6T1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BETNE9t/lcSFYBHRsk+bxmGwcic2gywr9GGFfB3iUUcQqQZAATzEiGbu2/hSyO/CcBScug9N+awGsz4CEuGmFejAZxHsNWGVmIbh6cAgGSnA7OKZmWPzbrc6DsBNR3irjEj7C5nlQBLo0MyQOJCHT4uJz8MCi7Rr8DeoMCtEejs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSFQq6xr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0RRm6T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB53EC4CEC7;
-	Mon, 14 Oct 2024 15:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSFQq6xr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1DFC4CEC3;
+	Mon, 14 Oct 2024 15:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920110;
-	bh=KG9xQB3E1idac/N5nwGjkF+5qV+5WOMPn/dTkWcjlOg=;
+	s=korg; t=1728920113;
+	bh=PI8JIyr9PPAA+3gzbXDcF3Wv8FcToqv0FPsQI2nYUvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V0RRm6T1a+G0GonZ+r/Q5w5Gp6gls2eoLASOqiBfXy6t+/N1LfecvaRvYacqvAuaE
-	 5s/VkwQwlA8AuJue4NuE8lbPcE+xGQ/lQjOkWsameNJs988lFdUOrIK5rvD5JBR7Lp
-	 QVD+nNoBqeTYqc7OLLqq0S+ZDKAORMO//jbdM0oY=
+	b=mSFQq6xrVh8WEd6iOQKaOcaYuBbsjNqW7ZBxlEXbqJ0Y4B8xKaRPQxSU/+XaxrymT
+	 HVRPOYX0ma7vbl9nDIF6PPWAtCOc/KzlJLr6CNZZAg3gKQEEeOE8/JnqWTvpQrMxtD
+	 0CQEdT5RovGeSGCY86U7gxrkIwCi2W2hfYZQR5Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Kenton Groombridge <concord@gentoo.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 768/798] wifi: mac80211: Avoid address calculations via out of bounds array indexing
-Date: Mon, 14 Oct 2024 16:22:02 +0200
-Message-ID: <20241014141248.238508357@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Eric Tremblay <etremblay@distech-controls.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 769/798] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
+Date: Mon, 14 Oct 2024 16:22:03 +0200
+Message-ID: <20241014141248.276494695@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,98 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenton Groombridge <concord@gentoo.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 2663d0462eb32ae7c9b035300ab6b1523886c718 ]
+[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
 
-req->n_channels must be set before req->channels[] can be used.
+0-day reports:
 
-This patch fixes one of the issues encountered in [1].
+drivers/hwmon/tmp513.c:162:21: error:
+	variable 'tmp51x_regmap_config' has initializer but incomplete type
+162 | static const struct regmap_config tmp51x_regmap_config = {
+    |                     ^
 
-[   83.964255] UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:364:4
-[   83.964258] index 0 is out of range for type 'struct ieee80211_channel *[]'
-[...]
-[   83.964264] Call Trace:
-[   83.964267]  <TASK>
-[   83.964269]  dump_stack_lvl+0x3f/0xc0
-[   83.964274]  __ubsan_handle_out_of_bounds+0xec/0x110
-[   83.964278]  ieee80211_prep_hw_scan+0x2db/0x4b0
-[   83.964281]  __ieee80211_start_scan+0x601/0x990
-[   83.964291]  nl80211_trigger_scan+0x874/0x980
-[   83.964295]  genl_family_rcv_msg_doit+0xe8/0x160
-[   83.964298]  genl_rcv_msg+0x240/0x270
-[...]
+struct regmap_config is only available if REGMAP is enabled.
+Add the missing Kconfig dependency to fix the problem.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=218810
-
-Co-authored-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Kenton Groombridge <concord@gentoo.org>
-Link: https://msgid.link/20240605152218.236061-1-concord@gentoo.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[Xiangyu: Modified to apply on 6.1.y and 6.6.y]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Cc: Eric Tremblay <etremblay@distech-controls.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/scan.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/hwmon/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 0a6e40bd42f62..edbf468e0bea3 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -357,7 +357,8 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
- 	struct cfg80211_scan_request *req;
- 	struct cfg80211_chan_def chandef;
- 	u8 bands_used = 0;
--	int i, ielen, n_chans;
-+	int i, ielen;
-+	u32 *n_chans;
- 	u32 flags = 0;
- 
- 	req = rcu_dereference_protected(local->scan_req,
-@@ -367,34 +368,34 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
- 		return false;
- 
- 	if (ieee80211_hw_check(&local->hw, SINGLE_SCAN_ON_ALL_BANDS)) {
-+		local->hw_scan_req->req.n_channels = req->n_channels;
-+
- 		for (i = 0; i < req->n_channels; i++) {
- 			local->hw_scan_req->req.channels[i] = req->channels[i];
- 			bands_used |= BIT(req->channels[i]->band);
- 		}
--
--		n_chans = req->n_channels;
- 	} else {
- 		do {
- 			if (local->hw_scan_band == NUM_NL80211_BANDS)
- 				return false;
- 
--			n_chans = 0;
-+			n_chans = &local->hw_scan_req->req.n_channels;
-+			*n_chans = 0;
- 
- 			for (i = 0; i < req->n_channels; i++) {
- 				if (req->channels[i]->band !=
- 				    local->hw_scan_band)
- 					continue;
--				local->hw_scan_req->req.channels[n_chans] =
-+				local->hw_scan_req->req.channels[(*n_chans)++] =
- 							req->channels[i];
--				n_chans++;
-+
- 				bands_used |= BIT(req->channels[i]->band);
- 			}
- 
- 			local->hw_scan_band++;
--		} while (!n_chans);
-+		} while (!*n_chans);
- 	}
- 
--	local->hw_scan_req->req.n_channels = n_chans;
- 	ieee80211_prepare_scan_chandef(&chandef, req->scan_width);
- 
- 	if (req->flags & NL80211_SCAN_FLAG_MIN_PREQ_CONTENT)
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index a5143d01b95f8..6d4c4003c1e46 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -2101,6 +2101,7 @@ config SENSORS_TMP464
+ config SENSORS_TMP513
+ 	tristate "Texas Instruments TMP513 and compatibles"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  If you say yes here you get support for Texas Instruments TMP512,
+ 	  and TMP513 temperature and power supply sensor chips.
 -- 
 2.43.0
 
