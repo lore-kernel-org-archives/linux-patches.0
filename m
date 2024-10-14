@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AA4595B;
-	Mon, 14 Oct 2024 14:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3144595B;
+	Mon, 14 Oct 2024 14:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917087; cv=none; b=GyTrl235VXESBvrGyfFyZaqzEvLMx2hYkSfOpoT0CyjF8D3frNxOD9RbWhQcASJpUoU7M7RpP5k8U8VQ8UvKQjtC3XZYaVAmwLP2IrB6Tib86GWe2OMnSLhyNOjbXeaonlimNTm0bCdJ2OGib7b83zXICFw8x35q3T6IzJv6ypk=
+	t=1728917090; cv=none; b=aMtuCneO3877l/XRoAkDPpa2rJo8KP2xZmzEd5IzmA6eVJmXWaVZ1xPp7ZEXCEJSewpFojkUFupjrCpqov4kajqF/BxzVWi6EjtCzZQgT/MUsxPOss6W0NJkBgL6lhP3RgFp8uiGW4OHL+0y7X8q6ZJAUJzWDai9piFdnC+cXzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917087; c=relaxed/simple;
-	bh=t4mNrdwxMbK4uqlNzjnRRe/r5Yx5ROHH5iWo5knZpBg=;
+	s=arc-20240116; t=1728917090; c=relaxed/simple;
+	bh=8n0JVav/CYAHmLu5lLmN/O8tFkxkKUjo04gdG2J698s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyY3xpFapQ6vNGauJzZCHfJP2oTGFRLSYE6LHxyBUYQTVJxMP+Nc102FyuUMsZUFNYNh0xT19nXuxS6y/v5ryHTKErCfoQNwXP8C4+3RqJzH052icMhJ2F/RtNAck6CoN26O8q6Oc1RWwUqNWPpNOr78yh+Qk1zpvQRuq10H/rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYegqydY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q44lH3Qul+EzD0eFtCjGEkk9OSl1gEPbO5E071NijDCXnMIXQJbxox/ssalCkh0zt1qzYN24gHbSIZcm++jnqxu4R8yb94lwETFrnWIlbMmDo28J4xVeDvcpxEEXNJPS+tuec8CABT/SlXMDPFuMKwrX0qs+GgunBE14EnDWfrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRZBovbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYegqydY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81303C4CEC3;
-	Mon, 14 Oct 2024 14:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRZBovbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9613C4CEC3;
+	Mon, 14 Oct 2024 14:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917087;
-	bh=t4mNrdwxMbK4uqlNzjnRRe/r5Yx5ROHH5iWo5knZpBg=;
+	s=korg; t=1728917090;
+	bh=8n0JVav/CYAHmLu5lLmN/O8tFkxkKUjo04gdG2J698s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nYegqydYK+LZ3mU77Rq2ZVWg1pwFoYpLM0+LeP7VCObwHDFpsSKmkIsXm2PdMpOCk
-	 GhbA2P8bSyV0pLZsuK+9CZrlSV2fZrXswC5Make2WEmOxaFxSgwuXlY7jX9TjpVSXM
-	 REfK92NRwvq2Ux1WdgzO6+SdYFhPEqsqnVs1HYcs=
+	b=QRZBovbRx7AW/jEccNIgWzFlwRXNyc5afYowOff1rmtftUs22+Tq1jIVXWR3g17BD
+	 xs9qCSmT2GJ//edjQ3v29kAOlSlCyG2fA5Zu37EG77bhm/CA3ykfOQa6HuPWbrslow
+	 riyDpo7CnyXnwUScrkGANMQSim2YgRnV9BWvXmN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot+256c348558aa5cf611a9@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/213] ice: rename switchdev to eswitch
-Date: Mon, 14 Oct 2024 16:20:46 +0200
-Message-ID: <20241014141048.434649664@linuxfoundation.org>
+Subject: [PATCH 6.6 149/213] netfilter: xtables: avoid NFPROTO_UNSPEC where needed
+Date: Mon, 14 Oct 2024 16:20:55 +0200
+Message-ID: <20241014141048.783855867@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -54,353 +52,994 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 5a841e4eb8ed2fea91025b19af8a9ba544f63323 ]
+[ Upstream commit 0bfcb7b71e735560077a42847f69597ec7dcc326 ]
 
-Eswitch is used as a prefix for related functions. Main structure
-storing all data related to eswitch should also be named as eswitch
-instead of ice_switchdev_info. Rename it.
+syzbot managed to call xt_cluster match via ebtables:
 
-Also rename switchdev to eswitch where the context is not about eswitch
-mode.
+ WARNING: CPU: 0 PID: 11 at net/netfilter/xt_cluster.c:72 xt_cluster_mt+0x196/0x780
+ [..]
+ ebt_do_table+0x174b/0x2a40
 
-::uplink_netdev was changed to netdev for simplicity. There is no other
-netdev in function scope so it is obvious.
+Module registers to NFPROTO_UNSPEC, but it assumes ipv4/ipv6 packet
+processing.  As this is only useful to restrict locally terminating
+TCP/UDP traffic, register this for ipv4 and ipv6 family only.
 
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: fbcb968a98ac ("ice: Flush FDB entries before reset")
+Pablo points out that this is a general issue, direct users of the
+set/getsockopt interface can call into targets/matches that were only
+intended for use with ip(6)tables.
+
+Check all UNSPEC matches and targets for similar issues:
+
+- matches and targets are fine except if they assume skb_network_header()
+  is valid -- this is only true when called from inet layer: ip(6) stack
+  pulls the ip/ipv6 header into linear data area.
+- targets that return XT_CONTINUE or other xtables verdicts must be
+  restricted too, they are incompatbile with the ebtables traverser, e.g.
+  EBT_CONTINUE is a completely different value than XT_CONTINUE.
+
+Most matches/targets are changed to register for NFPROTO_IPV4/IPV6, as
+they are provided for use by ip(6)tables.
+
+The MARK target is also used by arptables, so register for NFPROTO_ARP too.
+
+While at it, bail out if connbytes fails to enable the corresponding
+conntrack family.
+
+This change passes the selftests in iptables.git.
+
+Reported-by: syzbot+256c348558aa5cf611a9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netfilter-devel/66fec2e2.050a0220.9ec68.0047.GAE@google.com/
+Fixes: 0269ea493734 ("netfilter: xtables: add cluster match")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Co-developed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h          |  6 +-
- drivers/net/ethernet/intel/ice/ice_eswitch.c  | 63 ++++++++++---------
- .../net/ethernet/intel/ice/ice_eswitch_br.c   | 12 ++--
- drivers/net/ethernet/intel/ice/ice_tc_lib.c   |  4 +-
- 4 files changed, 43 insertions(+), 42 deletions(-)
+ net/netfilter/xt_CHECKSUM.c    |  33 ++++++----
+ net/netfilter/xt_CLASSIFY.c    |  16 ++++-
+ net/netfilter/xt_CONNSECMARK.c |  36 +++++++----
+ net/netfilter/xt_CT.c          | 106 +++++++++++++++++++++------------
+ net/netfilter/xt_IDLETIMER.c   |  59 ++++++++++++------
+ net/netfilter/xt_LED.c         |  39 ++++++++----
+ net/netfilter/xt_NFLOG.c       |  36 +++++++----
+ net/netfilter/xt_RATEEST.c     |  39 ++++++++----
+ net/netfilter/xt_SECMARK.c     |  27 ++++++++-
+ net/netfilter/xt_TRACE.c       |  35 +++++++----
+ net/netfilter/xt_addrtype.c    |  15 ++++-
+ net/netfilter/xt_cluster.c     |  33 ++++++----
+ net/netfilter/xt_connbytes.c   |   4 +-
+ net/netfilter/xt_connlimit.c   |  39 ++++++++----
+ net/netfilter/xt_connmark.c    |  28 ++++++++-
+ net/netfilter/xt_mark.c        |  42 +++++++++----
+ 16 files changed, 422 insertions(+), 165 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index 7b3ce30ba38fa..f943964ec05ae 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -518,7 +518,7 @@ enum ice_misc_thread_tasks {
- 	ICE_MISC_THREAD_NBITS		/* must be last */
- };
- 
--struct ice_switchdev_info {
-+struct ice_eswitch {
- 	struct ice_vsi *control_vsi;
- 	struct ice_vsi *uplink_vsi;
- 	struct ice_esw_br_offloads *br_offloads;
-@@ -631,7 +631,7 @@ struct ice_pf {
- 	struct ice_link_default_override_tlv link_dflt_override;
- 	struct ice_lag *lag; /* Link Aggregation information */
- 
--	struct ice_switchdev_info switchdev;
-+	struct ice_eswitch eswitch;
- 	struct ice_esw_br_port *br_port;
- 
- #define ICE_INVALID_AGG_NODE_ID		0
-@@ -838,7 +838,7 @@ static inline struct ice_vsi *ice_find_vsi(struct ice_pf *pf, u16 vsi_num)
-  */
- static inline bool ice_is_switchdev_running(struct ice_pf *pf)
- {
--	return pf->switchdev.is_running;
-+	return pf->eswitch.is_running;
- }
- 
- #define ICE_FD_STAT_CTR_BLOCK_COUNT	256
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-index a655d499abfa8..e7f1e53314d76 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-@@ -16,12 +16,12 @@
-  * @vf: pointer to VF struct
-  *
-  * This function adds advanced rule that forwards packets with
-- * VF's VSI index to the corresponding switchdev ctrl VSI queue.
-+ * VF's VSI index to the corresponding eswitch ctrl VSI queue.
-  */
- static int
- ice_eswitch_add_vf_sp_rule(struct ice_pf *pf, struct ice_vf *vf)
- {
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
- 	struct ice_adv_rule_info rule_info = { 0 };
- 	struct ice_adv_lkup_elem *list;
- 	struct ice_hw *hw = &pf->hw;
-@@ -59,7 +59,7 @@ ice_eswitch_add_vf_sp_rule(struct ice_pf *pf, struct ice_vf *vf)
-  * @vf: pointer to the VF struct
-  *
-  * Delete the advanced rule that was used to forward packets with the VF's VSI
-- * index to the corresponding switchdev ctrl VSI queue.
-+ * index to the corresponding eswitch ctrl VSI queue.
-  */
- static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
- {
-@@ -70,7 +70,7 @@ static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
- }
- 
- /**
-- * ice_eswitch_setup_env - configure switchdev HW filters
-+ * ice_eswitch_setup_env - configure eswitch HW filters
-  * @pf: pointer to PF struct
-  *
-  * This function adds HW filters configuration specific for switchdev
-@@ -78,18 +78,18 @@ static void ice_eswitch_del_vf_sp_rule(struct ice_vf *vf)
-  */
- static int ice_eswitch_setup_env(struct ice_pf *pf)
- {
--	struct ice_vsi *uplink_vsi = pf->switchdev.uplink_vsi;
--	struct net_device *uplink_netdev = uplink_vsi->netdev;
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *uplink_vsi = pf->eswitch.uplink_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
-+	struct net_device *netdev = uplink_vsi->netdev;
- 	struct ice_vsi_vlan_ops *vlan_ops;
- 	bool rule_added = false;
- 
- 	ice_remove_vsi_fltr(&pf->hw, uplink_vsi->idx);
- 
--	netif_addr_lock_bh(uplink_netdev);
--	__dev_uc_unsync(uplink_netdev, NULL);
--	__dev_mc_unsync(uplink_netdev, NULL);
--	netif_addr_unlock_bh(uplink_netdev);
-+	netif_addr_lock_bh(netdev);
-+	__dev_uc_unsync(netdev, NULL);
-+	__dev_mc_unsync(netdev, NULL);
-+	netif_addr_unlock_bh(netdev);
- 
- 	if (ice_vsi_add_vlan_zero(uplink_vsi))
- 		goto err_def_rx;
-@@ -132,10 +132,10 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
- }
- 
- /**
-- * ice_eswitch_remap_rings_to_vectors - reconfigure rings of switchdev ctrl VSI
-+ * ice_eswitch_remap_rings_to_vectors - reconfigure rings of eswitch ctrl VSI
-  * @pf: pointer to PF struct
-  *
-- * In switchdev number of allocated Tx/Rx rings is equal.
-+ * In eswitch number of allocated Tx/Rx rings is equal.
-  *
-  * This function fills q_vectors structures associated with representor and
-  * move each ring pairs to port representor netdevs. Each port representor
-@@ -144,7 +144,7 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
-  */
- static void ice_eswitch_remap_rings_to_vectors(struct ice_pf *pf)
- {
--	struct ice_vsi *vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *vsi = pf->eswitch.control_vsi;
- 	int q_id;
- 
- 	ice_for_each_txq(vsi, q_id) {
-@@ -189,7 +189,7 @@ static void ice_eswitch_remap_rings_to_vectors(struct ice_pf *pf)
- /**
-  * ice_eswitch_release_reprs - clear PR VSIs configuration
-  * @pf: poiner to PF struct
-- * @ctrl_vsi: pointer to switchdev control VSI
-+ * @ctrl_vsi: pointer to eswitch control VSI
-  */
- static void
- ice_eswitch_release_reprs(struct ice_pf *pf, struct ice_vsi *ctrl_vsi)
-@@ -223,7 +223,7 @@ ice_eswitch_release_reprs(struct ice_pf *pf, struct ice_vsi *ctrl_vsi)
-  */
- static int ice_eswitch_setup_reprs(struct ice_pf *pf)
- {
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
- 	int max_vsi_num = 0;
- 	struct ice_vf *vf;
- 	unsigned int bkt;
-@@ -359,7 +359,7 @@ ice_eswitch_port_start_xmit(struct sk_buff *skb, struct net_device *netdev)
- }
- 
- /**
-- * ice_eswitch_set_target_vsi - set switchdev context in Tx context descriptor
-+ * ice_eswitch_set_target_vsi - set eswitch context in Tx context descriptor
-  * @skb: pointer to send buffer
-  * @off: pointer to offload struct
-  */
-@@ -382,7 +382,7 @@ ice_eswitch_set_target_vsi(struct sk_buff *skb,
- }
- 
- /**
-- * ice_eswitch_release_env - clear switchdev HW filters
-+ * ice_eswitch_release_env - clear eswitch HW filters
-  * @pf: pointer to PF struct
-  *
-  * This function removes HW filters configuration specific for switchdev
-@@ -390,8 +390,8 @@ ice_eswitch_set_target_vsi(struct sk_buff *skb,
-  */
- static void ice_eswitch_release_env(struct ice_pf *pf)
- {
--	struct ice_vsi *uplink_vsi = pf->switchdev.uplink_vsi;
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *uplink_vsi = pf->eswitch.uplink_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
- 	struct ice_vsi_vlan_ops *vlan_ops;
- 
- 	vlan_ops = ice_get_compat_vsi_vlan_ops(uplink_vsi);
-@@ -407,7 +407,7 @@ static void ice_eswitch_release_env(struct ice_pf *pf)
- }
- 
- /**
-- * ice_eswitch_vsi_setup - configure switchdev control VSI
-+ * ice_eswitch_vsi_setup - configure eswitch control VSI
-  * @pf: pointer to PF structure
-  * @pi: pointer to port_info structure
-  */
-@@ -486,12 +486,12 @@ static int ice_eswitch_enable_switchdev(struct ice_pf *pf)
- 		return -EINVAL;
- 	}
- 
--	pf->switchdev.control_vsi = ice_eswitch_vsi_setup(pf, pf->hw.port_info);
--	if (!pf->switchdev.control_vsi)
-+	pf->eswitch.control_vsi = ice_eswitch_vsi_setup(pf, pf->hw.port_info);
-+	if (!pf->eswitch.control_vsi)
- 		return -ENODEV;
- 
--	ctrl_vsi = pf->switchdev.control_vsi;
--	pf->switchdev.uplink_vsi = uplink_vsi;
-+	ctrl_vsi = pf->eswitch.control_vsi;
-+	pf->eswitch.uplink_vsi = uplink_vsi;
- 
- 	if (ice_eswitch_setup_env(pf))
- 		goto err_vsi;
-@@ -526,12 +526,12 @@ static int ice_eswitch_enable_switchdev(struct ice_pf *pf)
- }
- 
- /**
-- * ice_eswitch_disable_switchdev - disable switchdev resources
-+ * ice_eswitch_disable_switchdev - disable eswitch resources
-  * @pf: pointer to PF structure
-  */
- static void ice_eswitch_disable_switchdev(struct ice_pf *pf)
- {
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
- 
- 	ice_eswitch_napi_disable(pf);
- 	ice_eswitch_br_offloads_deinit(pf);
-@@ -625,7 +625,7 @@ void ice_eswitch_release(struct ice_pf *pf)
- 		return;
- 
- 	ice_eswitch_disable_switchdev(pf);
--	pf->switchdev.is_running = false;
-+	pf->eswitch.is_running = false;
- }
- 
- /**
-@@ -636,14 +636,15 @@ int ice_eswitch_configure(struct ice_pf *pf)
- {
- 	int status;
- 
--	if (pf->eswitch_mode == DEVLINK_ESWITCH_MODE_LEGACY || pf->switchdev.is_running)
-+	if (pf->eswitch_mode == DEVLINK_ESWITCH_MODE_LEGACY ||
-+	    pf->eswitch.is_running)
- 		return 0;
- 
- 	status = ice_eswitch_enable_switchdev(pf);
- 	if (status)
- 		return status;
- 
--	pf->switchdev.is_running = true;
-+	pf->eswitch.is_running = true;
+diff --git a/net/netfilter/xt_CHECKSUM.c b/net/netfilter/xt_CHECKSUM.c
+index c8a639f561684..9d99f5a3d1764 100644
+--- a/net/netfilter/xt_CHECKSUM.c
++++ b/net/netfilter/xt_CHECKSUM.c
+@@ -63,24 +63,37 @@ static int checksum_tg_check(const struct xt_tgchk_param *par)
  	return 0;
  }
  
-@@ -693,7 +694,7 @@ void ice_eswitch_stop_all_tx_queues(struct ice_pf *pf)
-  */
- int ice_eswitch_rebuild(struct ice_pf *pf)
+-static struct xt_target checksum_tg_reg __read_mostly = {
+-	.name		= "CHECKSUM",
+-	.family		= NFPROTO_UNSPEC,
+-	.target		= checksum_tg,
+-	.targetsize	= sizeof(struct xt_CHECKSUM_info),
+-	.table		= "mangle",
+-	.checkentry	= checksum_tg_check,
+-	.me		= THIS_MODULE,
++static struct xt_target checksum_tg_reg[] __read_mostly = {
++	{
++		.name		= "CHECKSUM",
++		.family		= NFPROTO_IPV4,
++		.target		= checksum_tg,
++		.targetsize	= sizeof(struct xt_CHECKSUM_info),
++		.table		= "mangle",
++		.checkentry	= checksum_tg_check,
++		.me		= THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "CHECKSUM",
++		.family		= NFPROTO_IPV6,
++		.target		= checksum_tg,
++		.targetsize	= sizeof(struct xt_CHECKSUM_info),
++		.table		= "mangle",
++		.checkentry	= checksum_tg_check,
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init checksum_tg_init(void)
  {
--	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
-+	struct ice_vsi *ctrl_vsi = pf->eswitch.control_vsi;
- 	int status;
- 
- 	ice_eswitch_napi_disable(pf);
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch_br.c b/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
-index 67bfd1f61cdd4..8944f01e7a0b0 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch_br.c
-@@ -947,7 +947,7 @@ ice_eswitch_br_vf_repr_port_init(struct ice_esw_br *bridge,
- static int
- ice_eswitch_br_uplink_port_init(struct ice_esw_br *bridge, struct ice_pf *pf)
- {
--	struct ice_vsi *vsi = pf->switchdev.uplink_vsi;
-+	struct ice_vsi *vsi = pf->eswitch.uplink_vsi;
- 	struct ice_esw_br_port *br_port;
- 	int err;
- 
-@@ -1185,7 +1185,7 @@ ice_eswitch_br_port_event(struct notifier_block *nb,
- static void
- ice_eswitch_br_offloads_dealloc(struct ice_pf *pf)
- {
--	struct ice_esw_br_offloads *br_offloads = pf->switchdev.br_offloads;
-+	struct ice_esw_br_offloads *br_offloads = pf->eswitch.br_offloads;
- 
- 	ASSERT_RTNL();
- 
-@@ -1194,7 +1194,7 @@ ice_eswitch_br_offloads_dealloc(struct ice_pf *pf)
- 
- 	ice_eswitch_br_deinit(br_offloads, br_offloads->bridge);
- 
--	pf->switchdev.br_offloads = NULL;
-+	pf->eswitch.br_offloads = NULL;
- 	kfree(br_offloads);
+-	return xt_register_target(&checksum_tg_reg);
++	return xt_register_targets(checksum_tg_reg, ARRAY_SIZE(checksum_tg_reg));
  }
  
-@@ -1205,14 +1205,14 @@ ice_eswitch_br_offloads_alloc(struct ice_pf *pf)
- 
- 	ASSERT_RTNL();
- 
--	if (pf->switchdev.br_offloads)
-+	if (pf->eswitch.br_offloads)
- 		return ERR_PTR(-EEXIST);
- 
- 	br_offloads = kzalloc(sizeof(*br_offloads), GFP_KERNEL);
- 	if (!br_offloads)
- 		return ERR_PTR(-ENOMEM);
- 
--	pf->switchdev.br_offloads = br_offloads;
-+	pf->eswitch.br_offloads = br_offloads;
- 	br_offloads->pf = pf;
- 
- 	return br_offloads;
-@@ -1223,7 +1223,7 @@ ice_eswitch_br_offloads_deinit(struct ice_pf *pf)
+ static void __exit checksum_tg_exit(void)
  {
- 	struct ice_esw_br_offloads *br_offloads;
+-	xt_unregister_target(&checksum_tg_reg);
++	xt_unregister_targets(checksum_tg_reg, ARRAY_SIZE(checksum_tg_reg));
+ }
  
--	br_offloads = pf->switchdev.br_offloads;
-+	br_offloads = pf->eswitch.br_offloads;
- 	if (!br_offloads)
- 		return;
+ module_init(checksum_tg_init);
+diff --git a/net/netfilter/xt_CLASSIFY.c b/net/netfilter/xt_CLASSIFY.c
+index 0accac98dea78..0ae8d8a1216e1 100644
+--- a/net/netfilter/xt_CLASSIFY.c
++++ b/net/netfilter/xt_CLASSIFY.c
+@@ -38,9 +38,9 @@ static struct xt_target classify_tg_reg[] __read_mostly = {
+ 	{
+ 		.name       = "CLASSIFY",
+ 		.revision   = 0,
+-		.family     = NFPROTO_UNSPEC,
++		.family     = NFPROTO_IPV4,
+ 		.hooks      = (1 << NF_INET_LOCAL_OUT) | (1 << NF_INET_FORWARD) |
+-		              (1 << NF_INET_POST_ROUTING),
++			      (1 << NF_INET_POST_ROUTING),
+ 		.target     = classify_tg,
+ 		.targetsize = sizeof(struct xt_classify_target_info),
+ 		.me         = THIS_MODULE,
+@@ -54,6 +54,18 @@ static struct xt_target classify_tg_reg[] __read_mostly = {
+ 		.targetsize = sizeof(struct xt_classify_target_info),
+ 		.me         = THIS_MODULE,
+ 	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name       = "CLASSIFY",
++		.revision   = 0,
++		.family     = NFPROTO_IPV6,
++		.hooks      = (1 << NF_INET_LOCAL_OUT) | (1 << NF_INET_FORWARD) |
++			      (1 << NF_INET_POST_ROUTING),
++		.target     = classify_tg,
++		.targetsize = sizeof(struct xt_classify_target_info),
++		.me         = THIS_MODULE,
++	},
++#endif
+ };
  
-diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-index 2bc89a8f6655f..c213121aa5010 100644
---- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-@@ -660,7 +660,7 @@ static int ice_tc_setup_redirect_action(struct net_device *filter_dev,
- 		   ice_tc_is_dev_uplink(target_dev)) {
- 		repr = ice_netdev_to_repr(filter_dev);
+ static int __init classify_tg_init(void)
+diff --git a/net/netfilter/xt_CONNSECMARK.c b/net/netfilter/xt_CONNSECMARK.c
+index 76acecf3e757a..1494b3ee30e11 100644
+--- a/net/netfilter/xt_CONNSECMARK.c
++++ b/net/netfilter/xt_CONNSECMARK.c
+@@ -114,25 +114,39 @@ static void connsecmark_tg_destroy(const struct xt_tgdtor_param *par)
+ 	nf_ct_netns_put(par->net, par->family);
+ }
  
--		fltr->dest_vsi = repr->src_vsi->back->switchdev.uplink_vsi;
-+		fltr->dest_vsi = repr->src_vsi->back->eswitch.uplink_vsi;
- 		fltr->direction = ICE_ESWITCH_FLTR_EGRESS;
- 	} else if (ice_tc_is_dev_uplink(filter_dev) &&
- 		   ice_is_port_repr_netdev(target_dev)) {
-@@ -772,7 +772,7 @@ ice_eswitch_add_tc_fltr(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr)
- 		rule_info.sw_act.src = hw->pf_id;
- 		rule_info.flags_info.act = ICE_SINGLE_ACT_LB_ENABLE;
- 	} else if (fltr->direction == ICE_ESWITCH_FLTR_EGRESS &&
--		   fltr->dest_vsi == vsi->back->switchdev.uplink_vsi) {
-+		   fltr->dest_vsi == vsi->back->eswitch.uplink_vsi) {
- 		/* VF to Uplink */
- 		rule_info.sw_act.flag |= ICE_FLTR_TX;
- 		rule_info.sw_act.src = vsi->idx;
+-static struct xt_target connsecmark_tg_reg __read_mostly = {
+-	.name       = "CONNSECMARK",
+-	.revision   = 0,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = connsecmark_tg_check,
+-	.destroy    = connsecmark_tg_destroy,
+-	.target     = connsecmark_tg,
+-	.targetsize = sizeof(struct xt_connsecmark_target_info),
+-	.me         = THIS_MODULE,
++static struct xt_target connsecmark_tg_reg[] __read_mostly = {
++	{
++		.name       = "CONNSECMARK",
++		.revision   = 0,
++		.family     = NFPROTO_IPV4,
++		.checkentry = connsecmark_tg_check,
++		.destroy    = connsecmark_tg_destroy,
++		.target     = connsecmark_tg,
++		.targetsize = sizeof(struct xt_connsecmark_target_info),
++		.me         = THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name       = "CONNSECMARK",
++		.revision   = 0,
++		.family     = NFPROTO_IPV6,
++		.checkentry = connsecmark_tg_check,
++		.destroy    = connsecmark_tg_destroy,
++		.target     = connsecmark_tg,
++		.targetsize = sizeof(struct xt_connsecmark_target_info),
++		.me         = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init connsecmark_tg_init(void)
+ {
+-	return xt_register_target(&connsecmark_tg_reg);
++	return xt_register_targets(connsecmark_tg_reg, ARRAY_SIZE(connsecmark_tg_reg));
+ }
+ 
+ static void __exit connsecmark_tg_exit(void)
+ {
+-	xt_unregister_target(&connsecmark_tg_reg);
++	xt_unregister_targets(connsecmark_tg_reg, ARRAY_SIZE(connsecmark_tg_reg));
+ }
+ 
+ module_init(connsecmark_tg_init);
+diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
+index 2be2f7a7b60f4..3ba94c34297cf 100644
+--- a/net/netfilter/xt_CT.c
++++ b/net/netfilter/xt_CT.c
+@@ -313,10 +313,30 @@ static void xt_ct_tg_destroy_v1(const struct xt_tgdtor_param *par)
+ 	xt_ct_tg_destroy(par, par->targinfo);
+ }
+ 
++static unsigned int
++notrack_tg(struct sk_buff *skb, const struct xt_action_param *par)
++{
++	/* Previously seen (loopback)? Ignore. */
++	if (skb->_nfct != 0)
++		return XT_CONTINUE;
++
++	nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
++
++	return XT_CONTINUE;
++}
++
+ static struct xt_target xt_ct_tg_reg[] __read_mostly = {
++	{
++		.name		= "NOTRACK",
++		.revision	= 0,
++		.family		= NFPROTO_IPV4,
++		.target		= notrack_tg,
++		.table		= "raw",
++		.me		= THIS_MODULE,
++	},
+ 	{
+ 		.name		= "CT",
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.targetsize	= sizeof(struct xt_ct_target_info),
+ 		.usersize	= offsetof(struct xt_ct_target_info, ct),
+ 		.checkentry	= xt_ct_tg_check_v0,
+@@ -327,7 +347,7 @@ static struct xt_target xt_ct_tg_reg[] __read_mostly = {
+ 	},
+ 	{
+ 		.name		= "CT",
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.revision	= 1,
+ 		.targetsize	= sizeof(struct xt_ct_target_info_v1),
+ 		.usersize	= offsetof(struct xt_ct_target_info, ct),
+@@ -339,7 +359,7 @@ static struct xt_target xt_ct_tg_reg[] __read_mostly = {
+ 	},
+ 	{
+ 		.name		= "CT",
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.revision	= 2,
+ 		.targetsize	= sizeof(struct xt_ct_target_info_v1),
+ 		.usersize	= offsetof(struct xt_ct_target_info, ct),
+@@ -349,49 +369,61 @@ static struct xt_target xt_ct_tg_reg[] __read_mostly = {
+ 		.table		= "raw",
+ 		.me		= THIS_MODULE,
+ 	},
+-};
+-
+-static unsigned int
+-notrack_tg(struct sk_buff *skb, const struct xt_action_param *par)
+-{
+-	/* Previously seen (loopback)? Ignore. */
+-	if (skb->_nfct != 0)
+-		return XT_CONTINUE;
+-
+-	nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
+-
+-	return XT_CONTINUE;
+-}
+-
+-static struct xt_target notrack_tg_reg __read_mostly = {
+-	.name		= "NOTRACK",
+-	.revision	= 0,
+-	.family		= NFPROTO_UNSPEC,
+-	.target		= notrack_tg,
+-	.table		= "raw",
+-	.me		= THIS_MODULE,
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "NOTRACK",
++		.revision	= 0,
++		.family		= NFPROTO_IPV6,
++		.target		= notrack_tg,
++		.table		= "raw",
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "CT",
++		.family		= NFPROTO_IPV6,
++		.targetsize	= sizeof(struct xt_ct_target_info),
++		.usersize	= offsetof(struct xt_ct_target_info, ct),
++		.checkentry	= xt_ct_tg_check_v0,
++		.destroy	= xt_ct_tg_destroy_v0,
++		.target		= xt_ct_target_v0,
++		.table		= "raw",
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "CT",
++		.family		= NFPROTO_IPV6,
++		.revision	= 1,
++		.targetsize	= sizeof(struct xt_ct_target_info_v1),
++		.usersize	= offsetof(struct xt_ct_target_info, ct),
++		.checkentry	= xt_ct_tg_check_v1,
++		.destroy	= xt_ct_tg_destroy_v1,
++		.target		= xt_ct_target_v1,
++		.table		= "raw",
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "CT",
++		.family		= NFPROTO_IPV6,
++		.revision	= 2,
++		.targetsize	= sizeof(struct xt_ct_target_info_v1),
++		.usersize	= offsetof(struct xt_ct_target_info, ct),
++		.checkentry	= xt_ct_tg_check_v2,
++		.destroy	= xt_ct_tg_destroy_v1,
++		.target		= xt_ct_target_v1,
++		.table		= "raw",
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init xt_ct_tg_init(void)
+ {
+-	int ret;
+-
+-	ret = xt_register_target(&notrack_tg_reg);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = xt_register_targets(xt_ct_tg_reg, ARRAY_SIZE(xt_ct_tg_reg));
+-	if (ret < 0) {
+-		xt_unregister_target(&notrack_tg_reg);
+-		return ret;
+-	}
+-	return 0;
++	return xt_register_targets(xt_ct_tg_reg, ARRAY_SIZE(xt_ct_tg_reg));
+ }
+ 
+ static void __exit xt_ct_tg_exit(void)
+ {
+ 	xt_unregister_targets(xt_ct_tg_reg, ARRAY_SIZE(xt_ct_tg_reg));
+-	xt_unregister_target(&notrack_tg_reg);
+ }
+ 
+ module_init(xt_ct_tg_init);
+diff --git a/net/netfilter/xt_IDLETIMER.c b/net/netfilter/xt_IDLETIMER.c
+index db720efa811d5..f8b25b6f5da73 100644
+--- a/net/netfilter/xt_IDLETIMER.c
++++ b/net/netfilter/xt_IDLETIMER.c
+@@ -458,28 +458,49 @@ static void idletimer_tg_destroy_v1(const struct xt_tgdtor_param *par)
+ 
+ static struct xt_target idletimer_tg[] __read_mostly = {
+ 	{
+-	.name		= "IDLETIMER",
+-	.family		= NFPROTO_UNSPEC,
+-	.target		= idletimer_tg_target,
+-	.targetsize     = sizeof(struct idletimer_tg_info),
+-	.usersize	= offsetof(struct idletimer_tg_info, timer),
+-	.checkentry	= idletimer_tg_checkentry,
+-	.destroy        = idletimer_tg_destroy,
+-	.me		= THIS_MODULE,
++		.name		= "IDLETIMER",
++		.family		= NFPROTO_IPV4,
++		.target		= idletimer_tg_target,
++		.targetsize     = sizeof(struct idletimer_tg_info),
++		.usersize	= offsetof(struct idletimer_tg_info, timer),
++		.checkentry	= idletimer_tg_checkentry,
++		.destroy        = idletimer_tg_destroy,
++		.me		= THIS_MODULE,
+ 	},
+ 	{
+-	.name		= "IDLETIMER",
+-	.family		= NFPROTO_UNSPEC,
+-	.revision	= 1,
+-	.target		= idletimer_tg_target_v1,
+-	.targetsize     = sizeof(struct idletimer_tg_info_v1),
+-	.usersize	= offsetof(struct idletimer_tg_info_v1, timer),
+-	.checkentry	= idletimer_tg_checkentry_v1,
+-	.destroy        = idletimer_tg_destroy_v1,
+-	.me		= THIS_MODULE,
++		.name		= "IDLETIMER",
++		.family		= NFPROTO_IPV4,
++		.revision	= 1,
++		.target		= idletimer_tg_target_v1,
++		.targetsize     = sizeof(struct idletimer_tg_info_v1),
++		.usersize	= offsetof(struct idletimer_tg_info_v1, timer),
++		.checkentry	= idletimer_tg_checkentry_v1,
++		.destroy        = idletimer_tg_destroy_v1,
++		.me		= THIS_MODULE,
+ 	},
+-
+-
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "IDLETIMER",
++		.family		= NFPROTO_IPV6,
++		.target		= idletimer_tg_target,
++		.targetsize     = sizeof(struct idletimer_tg_info),
++		.usersize	= offsetof(struct idletimer_tg_info, timer),
++		.checkentry	= idletimer_tg_checkentry,
++		.destroy        = idletimer_tg_destroy,
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "IDLETIMER",
++		.family		= NFPROTO_IPV6,
++		.revision	= 1,
++		.target		= idletimer_tg_target_v1,
++		.targetsize     = sizeof(struct idletimer_tg_info_v1),
++		.usersize	= offsetof(struct idletimer_tg_info_v1, timer),
++		.checkentry	= idletimer_tg_checkentry_v1,
++		.destroy        = idletimer_tg_destroy_v1,
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static struct class *idletimer_tg_class;
+diff --git a/net/netfilter/xt_LED.c b/net/netfilter/xt_LED.c
+index 36c9720ad8d6d..f7b0286d106ac 100644
+--- a/net/netfilter/xt_LED.c
++++ b/net/netfilter/xt_LED.c
+@@ -175,26 +175,41 @@ static void led_tg_destroy(const struct xt_tgdtor_param *par)
+ 	kfree(ledinternal);
+ }
+ 
+-static struct xt_target led_tg_reg __read_mostly = {
+-	.name		= "LED",
+-	.revision	= 0,
+-	.family		= NFPROTO_UNSPEC,
+-	.target		= led_tg,
+-	.targetsize	= sizeof(struct xt_led_info),
+-	.usersize	= offsetof(struct xt_led_info, internal_data),
+-	.checkentry	= led_tg_check,
+-	.destroy	= led_tg_destroy,
+-	.me		= THIS_MODULE,
++static struct xt_target led_tg_reg[] __read_mostly = {
++	{
++		.name		= "LED",
++		.revision	= 0,
++		.family		= NFPROTO_IPV4,
++		.target		= led_tg,
++		.targetsize	= sizeof(struct xt_led_info),
++		.usersize	= offsetof(struct xt_led_info, internal_data),
++		.checkentry	= led_tg_check,
++		.destroy	= led_tg_destroy,
++		.me		= THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "LED",
++		.revision	= 0,
++		.family		= NFPROTO_IPV6,
++		.target		= led_tg,
++		.targetsize	= sizeof(struct xt_led_info),
++		.usersize	= offsetof(struct xt_led_info, internal_data),
++		.checkentry	= led_tg_check,
++		.destroy	= led_tg_destroy,
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init led_tg_init(void)
+ {
+-	return xt_register_target(&led_tg_reg);
++	return xt_register_targets(led_tg_reg, ARRAY_SIZE(led_tg_reg));
+ }
+ 
+ static void __exit led_tg_exit(void)
+ {
+-	xt_unregister_target(&led_tg_reg);
++	xt_unregister_targets(led_tg_reg, ARRAY_SIZE(led_tg_reg));
+ }
+ 
+ module_init(led_tg_init);
+diff --git a/net/netfilter/xt_NFLOG.c b/net/netfilter/xt_NFLOG.c
+index e660c3710a109..d80abd6ccaf8f 100644
+--- a/net/netfilter/xt_NFLOG.c
++++ b/net/netfilter/xt_NFLOG.c
+@@ -64,25 +64,39 @@ static void nflog_tg_destroy(const struct xt_tgdtor_param *par)
+ 	nf_logger_put(par->family, NF_LOG_TYPE_ULOG);
+ }
+ 
+-static struct xt_target nflog_tg_reg __read_mostly = {
+-	.name       = "NFLOG",
+-	.revision   = 0,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = nflog_tg_check,
+-	.destroy    = nflog_tg_destroy,
+-	.target     = nflog_tg,
+-	.targetsize = sizeof(struct xt_nflog_info),
+-	.me         = THIS_MODULE,
++static struct xt_target nflog_tg_reg[] __read_mostly = {
++	{
++		.name       = "NFLOG",
++		.revision   = 0,
++		.family     = NFPROTO_IPV4,
++		.checkentry = nflog_tg_check,
++		.destroy    = nflog_tg_destroy,
++		.target     = nflog_tg,
++		.targetsize = sizeof(struct xt_nflog_info),
++		.me         = THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name       = "NFLOG",
++		.revision   = 0,
++		.family     = NFPROTO_IPV4,
++		.checkentry = nflog_tg_check,
++		.destroy    = nflog_tg_destroy,
++		.target     = nflog_tg,
++		.targetsize = sizeof(struct xt_nflog_info),
++		.me         = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init nflog_tg_init(void)
+ {
+-	return xt_register_target(&nflog_tg_reg);
++	return xt_register_targets(nflog_tg_reg, ARRAY_SIZE(nflog_tg_reg));
+ }
+ 
+ static void __exit nflog_tg_exit(void)
+ {
+-	xt_unregister_target(&nflog_tg_reg);
++	xt_unregister_targets(nflog_tg_reg, ARRAY_SIZE(nflog_tg_reg));
+ }
+ 
+ module_init(nflog_tg_init);
+diff --git a/net/netfilter/xt_RATEEST.c b/net/netfilter/xt_RATEEST.c
+index 80f6624e23554..4f49cfc278312 100644
+--- a/net/netfilter/xt_RATEEST.c
++++ b/net/netfilter/xt_RATEEST.c
+@@ -179,16 +179,31 @@ static void xt_rateest_tg_destroy(const struct xt_tgdtor_param *par)
+ 	xt_rateest_put(par->net, info->est);
+ }
+ 
+-static struct xt_target xt_rateest_tg_reg __read_mostly = {
+-	.name       = "RATEEST",
+-	.revision   = 0,
+-	.family     = NFPROTO_UNSPEC,
+-	.target     = xt_rateest_tg,
+-	.checkentry = xt_rateest_tg_checkentry,
+-	.destroy    = xt_rateest_tg_destroy,
+-	.targetsize = sizeof(struct xt_rateest_target_info),
+-	.usersize   = offsetof(struct xt_rateest_target_info, est),
+-	.me         = THIS_MODULE,
++static struct xt_target xt_rateest_tg_reg[] __read_mostly = {
++	{
++		.name       = "RATEEST",
++		.revision   = 0,
++		.family     = NFPROTO_IPV4,
++		.target     = xt_rateest_tg,
++		.checkentry = xt_rateest_tg_checkentry,
++		.destroy    = xt_rateest_tg_destroy,
++		.targetsize = sizeof(struct xt_rateest_target_info),
++		.usersize   = offsetof(struct xt_rateest_target_info, est),
++		.me         = THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name       = "RATEEST",
++		.revision   = 0,
++		.family     = NFPROTO_IPV6,
++		.target     = xt_rateest_tg,
++		.checkentry = xt_rateest_tg_checkentry,
++		.destroy    = xt_rateest_tg_destroy,
++		.targetsize = sizeof(struct xt_rateest_target_info),
++		.usersize   = offsetof(struct xt_rateest_target_info, est),
++		.me         = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static __net_init int xt_rateest_net_init(struct net *net)
+@@ -214,12 +229,12 @@ static int __init xt_rateest_tg_init(void)
+ 
+ 	if (err)
+ 		return err;
+-	return xt_register_target(&xt_rateest_tg_reg);
++	return xt_register_targets(xt_rateest_tg_reg, ARRAY_SIZE(xt_rateest_tg_reg));
+ }
+ 
+ static void __exit xt_rateest_tg_fini(void)
+ {
+-	xt_unregister_target(&xt_rateest_tg_reg);
++	xt_unregister_targets(xt_rateest_tg_reg, ARRAY_SIZE(xt_rateest_tg_reg));
+ 	unregister_pernet_subsys(&xt_rateest_net_ops);
+ }
+ 
+diff --git a/net/netfilter/xt_SECMARK.c b/net/netfilter/xt_SECMARK.c
+index 498a0bf6f0444..5bc5ea505eb9e 100644
+--- a/net/netfilter/xt_SECMARK.c
++++ b/net/netfilter/xt_SECMARK.c
+@@ -157,7 +157,7 @@ static struct xt_target secmark_tg_reg[] __read_mostly = {
+ 	{
+ 		.name		= "SECMARK",
+ 		.revision	= 0,
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.checkentry	= secmark_tg_check_v0,
+ 		.destroy	= secmark_tg_destroy,
+ 		.target		= secmark_tg_v0,
+@@ -167,7 +167,7 @@ static struct xt_target secmark_tg_reg[] __read_mostly = {
+ 	{
+ 		.name		= "SECMARK",
+ 		.revision	= 1,
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.checkentry	= secmark_tg_check_v1,
+ 		.destroy	= secmark_tg_destroy,
+ 		.target		= secmark_tg_v1,
+@@ -175,6 +175,29 @@ static struct xt_target secmark_tg_reg[] __read_mostly = {
+ 		.usersize	= offsetof(struct xt_secmark_target_info_v1, secid),
+ 		.me		= THIS_MODULE,
+ 	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "SECMARK",
++		.revision	= 0,
++		.family		= NFPROTO_IPV6,
++		.checkentry	= secmark_tg_check_v0,
++		.destroy	= secmark_tg_destroy,
++		.target		= secmark_tg_v0,
++		.targetsize	= sizeof(struct xt_secmark_target_info),
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "SECMARK",
++		.revision	= 1,
++		.family		= NFPROTO_IPV6,
++		.checkentry	= secmark_tg_check_v1,
++		.destroy	= secmark_tg_destroy,
++		.target		= secmark_tg_v1,
++		.targetsize	= sizeof(struct xt_secmark_target_info_v1),
++		.usersize	= offsetof(struct xt_secmark_target_info_v1, secid),
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init secmark_tg_init(void)
+diff --git a/net/netfilter/xt_TRACE.c b/net/netfilter/xt_TRACE.c
+index 5582dce98cae7..f3fa4f11348cd 100644
+--- a/net/netfilter/xt_TRACE.c
++++ b/net/netfilter/xt_TRACE.c
+@@ -29,25 +29,38 @@ trace_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 	return XT_CONTINUE;
+ }
+ 
+-static struct xt_target trace_tg_reg __read_mostly = {
+-	.name		= "TRACE",
+-	.revision	= 0,
+-	.family		= NFPROTO_UNSPEC,
+-	.table		= "raw",
+-	.target		= trace_tg,
+-	.checkentry	= trace_tg_check,
+-	.destroy	= trace_tg_destroy,
+-	.me		= THIS_MODULE,
++static struct xt_target trace_tg_reg[] __read_mostly = {
++	{
++		.name		= "TRACE",
++		.revision	= 0,
++		.family		= NFPROTO_IPV4,
++		.table		= "raw",
++		.target		= trace_tg,
++		.checkentry	= trace_tg_check,
++		.destroy	= trace_tg_destroy,
++		.me		= THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "TRACE",
++		.revision	= 0,
++		.family		= NFPROTO_IPV6,
++		.table		= "raw",
++		.target		= trace_tg,
++		.checkentry	= trace_tg_check,
++		.destroy	= trace_tg_destroy,
++	},
++#endif
+ };
+ 
+ static int __init trace_tg_init(void)
+ {
+-	return xt_register_target(&trace_tg_reg);
++	return xt_register_targets(trace_tg_reg, ARRAY_SIZE(trace_tg_reg));
+ }
+ 
+ static void __exit trace_tg_exit(void)
+ {
+-	xt_unregister_target(&trace_tg_reg);
++	xt_unregister_targets(trace_tg_reg, ARRAY_SIZE(trace_tg_reg));
+ }
+ 
+ module_init(trace_tg_init);
+diff --git a/net/netfilter/xt_addrtype.c b/net/netfilter/xt_addrtype.c
+index e9b2181e8c425..a770889431071 100644
+--- a/net/netfilter/xt_addrtype.c
++++ b/net/netfilter/xt_addrtype.c
+@@ -208,13 +208,24 @@ static struct xt_match addrtype_mt_reg[] __read_mostly = {
+ 	},
+ 	{
+ 		.name		= "addrtype",
+-		.family		= NFPROTO_UNSPEC,
++		.family		= NFPROTO_IPV4,
+ 		.revision	= 1,
+ 		.match		= addrtype_mt_v1,
+ 		.checkentry	= addrtype_mt_checkentry_v1,
+ 		.matchsize	= sizeof(struct xt_addrtype_info_v1),
+ 		.me		= THIS_MODULE
+-	}
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "addrtype",
++		.family		= NFPROTO_IPV6,
++		.revision	= 1,
++		.match		= addrtype_mt_v1,
++		.checkentry	= addrtype_mt_checkentry_v1,
++		.matchsize	= sizeof(struct xt_addrtype_info_v1),
++		.me		= THIS_MODULE
++	},
++#endif
+ };
+ 
+ static int __init addrtype_mt_init(void)
+diff --git a/net/netfilter/xt_cluster.c b/net/netfilter/xt_cluster.c
+index a047a545371e1..908fd5f2c3c84 100644
+--- a/net/netfilter/xt_cluster.c
++++ b/net/netfilter/xt_cluster.c
+@@ -146,24 +146,37 @@ static void xt_cluster_mt_destroy(const struct xt_mtdtor_param *par)
+ 	nf_ct_netns_put(par->net, par->family);
+ }
+ 
+-static struct xt_match xt_cluster_match __read_mostly = {
+-	.name		= "cluster",
+-	.family		= NFPROTO_UNSPEC,
+-	.match		= xt_cluster_mt,
+-	.checkentry	= xt_cluster_mt_checkentry,
+-	.matchsize	= sizeof(struct xt_cluster_match_info),
+-	.destroy	= xt_cluster_mt_destroy,
+-	.me		= THIS_MODULE,
++static struct xt_match xt_cluster_match[] __read_mostly = {
++	{
++		.name		= "cluster",
++		.family		= NFPROTO_IPV4,
++		.match		= xt_cluster_mt,
++		.checkentry	= xt_cluster_mt_checkentry,
++		.matchsize	= sizeof(struct xt_cluster_match_info),
++		.destroy	= xt_cluster_mt_destroy,
++		.me		= THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name		= "cluster",
++		.family		= NFPROTO_IPV6,
++		.match		= xt_cluster_mt,
++		.checkentry	= xt_cluster_mt_checkentry,
++		.matchsize	= sizeof(struct xt_cluster_match_info),
++		.destroy	= xt_cluster_mt_destroy,
++		.me		= THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init xt_cluster_mt_init(void)
+ {
+-	return xt_register_match(&xt_cluster_match);
++	return xt_register_matches(xt_cluster_match, ARRAY_SIZE(xt_cluster_match));
+ }
+ 
+ static void __exit xt_cluster_mt_fini(void)
+ {
+-	xt_unregister_match(&xt_cluster_match);
++	xt_unregister_matches(xt_cluster_match, ARRAY_SIZE(xt_cluster_match));
+ }
+ 
+ MODULE_AUTHOR("Pablo Neira Ayuso <pablo@netfilter.org>");
+diff --git a/net/netfilter/xt_connbytes.c b/net/netfilter/xt_connbytes.c
+index 93cb018c3055f..2aabdcea87072 100644
+--- a/net/netfilter/xt_connbytes.c
++++ b/net/netfilter/xt_connbytes.c
+@@ -111,9 +111,11 @@ static int connbytes_mt_check(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	ret = nf_ct_netns_get(par->net, par->family);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		pr_info_ratelimited("cannot load conntrack support for proto=%u\n",
+ 				    par->family);
++		return ret;
++	}
+ 
+ 	/*
+ 	 * This filter cannot function correctly unless connection tracking
+diff --git a/net/netfilter/xt_connlimit.c b/net/netfilter/xt_connlimit.c
+index 5d04ef80a61dc..d1d0fa6c8061e 100644
+--- a/net/netfilter/xt_connlimit.c
++++ b/net/netfilter/xt_connlimit.c
+@@ -106,26 +106,41 @@ static void connlimit_mt_destroy(const struct xt_mtdtor_param *par)
+ 	nf_conncount_destroy(par->net, par->family, info->data);
+ }
+ 
+-static struct xt_match connlimit_mt_reg __read_mostly = {
+-	.name       = "connlimit",
+-	.revision   = 1,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = connlimit_mt_check,
+-	.match      = connlimit_mt,
+-	.matchsize  = sizeof(struct xt_connlimit_info),
+-	.usersize   = offsetof(struct xt_connlimit_info, data),
+-	.destroy    = connlimit_mt_destroy,
+-	.me         = THIS_MODULE,
++static struct xt_match connlimit_mt_reg[] __read_mostly = {
++	{
++		.name       = "connlimit",
++		.revision   = 1,
++		.family     = NFPROTO_IPV4,
++		.checkentry = connlimit_mt_check,
++		.match      = connlimit_mt,
++		.matchsize  = sizeof(struct xt_connlimit_info),
++		.usersize   = offsetof(struct xt_connlimit_info, data),
++		.destroy    = connlimit_mt_destroy,
++		.me         = THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name       = "connlimit",
++		.revision   = 1,
++		.family     = NFPROTO_IPV6,
++		.checkentry = connlimit_mt_check,
++		.match      = connlimit_mt,
++		.matchsize  = sizeof(struct xt_connlimit_info),
++		.usersize   = offsetof(struct xt_connlimit_info, data),
++		.destroy    = connlimit_mt_destroy,
++		.me         = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static int __init connlimit_mt_init(void)
+ {
+-	return xt_register_match(&connlimit_mt_reg);
++	return xt_register_matches(connlimit_mt_reg, ARRAY_SIZE(connlimit_mt_reg));
+ }
+ 
+ static void __exit connlimit_mt_exit(void)
+ {
+-	xt_unregister_match(&connlimit_mt_reg);
++	xt_unregister_matches(connlimit_mt_reg, ARRAY_SIZE(connlimit_mt_reg));
+ }
+ 
+ module_init(connlimit_mt_init);
+diff --git a/net/netfilter/xt_connmark.c b/net/netfilter/xt_connmark.c
+index ad3c033db64e7..4277084de2e70 100644
+--- a/net/netfilter/xt_connmark.c
++++ b/net/netfilter/xt_connmark.c
+@@ -151,7 +151,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
+ 	{
+ 		.name           = "CONNMARK",
+ 		.revision       = 1,
+-		.family         = NFPROTO_UNSPEC,
++		.family         = NFPROTO_IPV4,
+ 		.checkentry     = connmark_tg_check,
+ 		.target         = connmark_tg,
+ 		.targetsize     = sizeof(struct xt_connmark_tginfo1),
+@@ -161,13 +161,35 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
+ 	{
+ 		.name           = "CONNMARK",
+ 		.revision       = 2,
+-		.family         = NFPROTO_UNSPEC,
++		.family         = NFPROTO_IPV4,
+ 		.checkentry     = connmark_tg_check,
+ 		.target         = connmark_tg_v2,
+ 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
+ 		.destroy        = connmark_tg_destroy,
+ 		.me             = THIS_MODULE,
+-	}
++	},
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name           = "CONNMARK",
++		.revision       = 1,
++		.family         = NFPROTO_IPV6,
++		.checkentry     = connmark_tg_check,
++		.target         = connmark_tg,
++		.targetsize     = sizeof(struct xt_connmark_tginfo1),
++		.destroy        = connmark_tg_destroy,
++		.me             = THIS_MODULE,
++	},
++	{
++		.name           = "CONNMARK",
++		.revision       = 2,
++		.family         = NFPROTO_IPV6,
++		.checkentry     = connmark_tg_check,
++		.target         = connmark_tg_v2,
++		.targetsize     = sizeof(struct xt_connmark_tginfo2),
++		.destroy        = connmark_tg_destroy,
++		.me             = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static struct xt_match connmark_mt_reg __read_mostly = {
+diff --git a/net/netfilter/xt_mark.c b/net/netfilter/xt_mark.c
+index 1ad74b5920b53..f76fe04fc9a4e 100644
+--- a/net/netfilter/xt_mark.c
++++ b/net/netfilter/xt_mark.c
+@@ -39,13 +39,35 @@ mark_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ((skb->mark & info->mask) == info->mark) ^ info->invert;
+ }
+ 
+-static struct xt_target mark_tg_reg __read_mostly = {
+-	.name           = "MARK",
+-	.revision       = 2,
+-	.family         = NFPROTO_UNSPEC,
+-	.target         = mark_tg,
+-	.targetsize     = sizeof(struct xt_mark_tginfo2),
+-	.me             = THIS_MODULE,
++static struct xt_target mark_tg_reg[] __read_mostly = {
++	{
++		.name           = "MARK",
++		.revision       = 2,
++		.family         = NFPROTO_IPV4,
++		.target         = mark_tg,
++		.targetsize     = sizeof(struct xt_mark_tginfo2),
++		.me             = THIS_MODULE,
++	},
++#if IS_ENABLED(CONFIG_IP_NF_ARPTABLES)
++	{
++		.name           = "MARK",
++		.revision       = 2,
++		.family         = NFPROTO_ARP,
++		.target         = mark_tg,
++		.targetsize     = sizeof(struct xt_mark_tginfo2),
++		.me             = THIS_MODULE,
++	},
++#endif
++#if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
++	{
++		.name           = "MARK",
++		.revision       = 2,
++		.family         = NFPROTO_IPV4,
++		.target         = mark_tg,
++		.targetsize     = sizeof(struct xt_mark_tginfo2),
++		.me             = THIS_MODULE,
++	},
++#endif
+ };
+ 
+ static struct xt_match mark_mt_reg __read_mostly = {
+@@ -61,12 +83,12 @@ static int __init mark_mt_init(void)
+ {
+ 	int ret;
+ 
+-	ret = xt_register_target(&mark_tg_reg);
++	ret = xt_register_targets(mark_tg_reg, ARRAY_SIZE(mark_tg_reg));
+ 	if (ret < 0)
+ 		return ret;
+ 	ret = xt_register_match(&mark_mt_reg);
+ 	if (ret < 0) {
+-		xt_unregister_target(&mark_tg_reg);
++		xt_unregister_targets(mark_tg_reg, ARRAY_SIZE(mark_tg_reg));
+ 		return ret;
+ 	}
+ 	return 0;
+@@ -75,7 +97,7 @@ static int __init mark_mt_init(void)
+ static void __exit mark_mt_exit(void)
+ {
+ 	xt_unregister_match(&mark_mt_reg);
+-	xt_unregister_target(&mark_tg_reg);
++	xt_unregister_targets(mark_tg_reg, ARRAY_SIZE(mark_tg_reg));
+ }
+ 
+ module_init(mark_mt_init);
 -- 
 2.43.0
 
