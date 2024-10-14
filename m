@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2475A17C77;
-	Mon, 14 Oct 2024 14:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2911720EB;
+	Mon, 14 Oct 2024 14:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916904; cv=none; b=Mcrdtgm0ZGnjxK7R6C3vsMipr7O2BcDPoOB2yuESZQH5/cXWRwqGmEAUNSLz3wPG5/K0+2l4s3kKU7nqiCDElLsIGvfCSbtz4qURZk0q6AEA2bx3kGXleq68XMTicZ5RpDtTvs7E/8j+if6w4kNajKENr/dUKmYWHYDmCzobStg=
+	t=1728916907; cv=none; b=nnK+QQoJJooGoW5T10nTec6UC9JmjTtpx3e84EBrXLLgM0gFmNMSmkDJitfAbvbNhKgmGQzGAj+SvKRAjPGsdhx6716n5DeDaFjjyVTn7Z4pDqWzsUhiYloHvL5JSRhEfXqALUZkWPNnhCmH8rw6Tho8UFBULz42ojmBomgLHkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916904; c=relaxed/simple;
-	bh=ZRPpzLTRhQ8L2tnXXd/DYT5PE1Pb5bFWWohTNlvNwB8=;
+	s=arc-20240116; t=1728916907; c=relaxed/simple;
+	bh=t7I48BFwI7szDBY4hTphbkFSWEGmskcnVgiHZ+HixVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsBkS7Y+IB4RbYqv1UDeqcn1uSGnM2SSdxEpb5jumliolDjNkhonyINa43GvHKdKBfFfMiUbciLOnZH/mI1+d+tAnhgRIVqvthRuA5hPfNLWV/7SZ51StSusBoOpnIXYyiUJ9uYch6R00+AJRhPt0xLM0HojyWefODo4ecdmA78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxapdwUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1c8fAOY4DIern9WwPz96EI/FyOsb/YOrPvBVri7rYZyBGFLAmENTxQoBN/GoZKIpL2ApUA0/lMzmQdpXjUlmV2053+/nRVjYg1igp2Ft1HA5gwN5CY59ft3g8ev/NcNhJGfJvG2Zh3IQIsLPYLiIemTSCHM9hSvY8z3zAQfKIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSzdfP7F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxapdwUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337BEC4CEC3;
-	Mon, 14 Oct 2024 14:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSzdfP7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60351C4CEC3;
+	Mon, 14 Oct 2024 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916903;
-	bh=ZRPpzLTRhQ8L2tnXXd/DYT5PE1Pb5bFWWohTNlvNwB8=;
+	s=korg; t=1728916907;
+	bh=t7I48BFwI7szDBY4hTphbkFSWEGmskcnVgiHZ+HixVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxapdwUAhiXOKiF9lYjIvfG0KlFDzkgQ8ZS5/Dv+dv7MAup2WDaoNIfQ9tZWY9RXC
-	 Xzp9mOkjmr2SpoZOLPmsm6JHHoX27l8jNfWTuImOsULLmBHSazNnoOfjDbfFzH0/nB
-	 ysU/Hkb/DQBXsY/08ZcGj4/eMkPNmsZA8YdG/muY=
+	b=eSzdfP7Ft3vkVmTIHvs4jSbIx45NmCCHOPFR1+S8fizbQIjaynhOkqDDb8kII4JmW
+	 RR2HNY5ikvk5R4Pej5v3ErnNu7yJPcmvYTlOxc5aLELoKhLPt0N+IOdq1wnIAPEm63
+	 Z+JNmZq/h23LJvhkaoFnAMb+ySyyflIKnroXhq9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Riyan Dhiman <riyandhiman14@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/213] tools/iio: Add memory allocation failure check for trigger_name
-Date: Mon, 14 Oct 2024 16:20:03 +0200
-Message-ID: <20241014141046.754257033@linuxfoundation.org>
+Subject: [PATCH 6.6 098/213] staging: vme_user: added bound check to geoid
+Date: Mon, 14 Oct 2024 16:20:04 +0200
+Message-ID: <20241014141046.794045976@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -51,36 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Riyan Dhiman <riyandhiman14@gmail.com>
 
-[ Upstream commit 3c6b818b097dd6932859bcc3d6722a74ec5931c1 ]
+[ Upstream commit a8a8b54350229f59c8ba6496fb5689a1632a59be ]
 
-Added a check to handle memory allocation failure for `trigger_name`
-and return `-ENOMEM`.
+The geoid is a module parameter that allows users to hardcode the slot number.
+A bound check for geoid was added in the probe function because only values
+between 0 and less than VME_MAX_SLOT are valid.
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240828093129.3040-1-zhujun2@cmss.chinamobile.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Riyan Dhiman <riyandhiman14@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240827125604.42771-2-riyandhiman14@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/vme_user/vme_fake.c   | 6 ++++++
+ drivers/staging/vme_user/vme_tsi148.c | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 0d0a7a19d6f95..9ef5ee087eda3 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -498,6 +498,10 @@ int main(int argc, char **argv)
- 			return -ENOMEM;
- 		}
- 		trigger_name = malloc(IIO_MAX_NAME_LENGTH);
-+		if (!trigger_name) {
-+			ret = -ENOMEM;
-+			goto error;
-+		}
- 		ret = read_sysfs_string("name", trig_dev_name, trigger_name);
- 		free(trig_dev_name);
- 		if (ret < 0) {
+diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
+index 7c53a8a7b79b8..95730d1270af8 100644
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1064,6 +1064,12 @@ static int __init fake_init(void)
+ 	struct vme_slave_resource *slave_image;
+ 	struct vme_lm_resource *lm;
+ 
++	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
++		pr_err("VME geographical address must be between 0 and %d (exclusive), but got %d\n",
++			VME_MAX_SLOTS, geoid);
++		return -EINVAL;
++	}
++
+ 	/* We need a fake parent device */
+ 	vme_root = root_device_register("vme");
+ 	if (IS_ERR(vme_root))
+diff --git a/drivers/staging/vme_user/vme_tsi148.c b/drivers/staging/vme_user/vme_tsi148.c
+index 2f5eafd509340..4566e391d913f 100644
+--- a/drivers/staging/vme_user/vme_tsi148.c
++++ b/drivers/staging/vme_user/vme_tsi148.c
+@@ -2252,6 +2252,12 @@ static int tsi148_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	struct vme_dma_resource *dma_ctrlr;
+ 	struct vme_lm_resource *lm;
+ 
++	if (geoid < 0 || geoid >= VME_MAX_SLOTS) {
++		dev_err(&pdev->dev, "VME geographical address must be between 0 and %d (exclusive), but got %d\n",
++			VME_MAX_SLOTS, geoid);
++		return -EINVAL;
++	}
++
+ 	/* If we want to support more than one of each bridge, we need to
+ 	 * dynamically generate this so we get one per device
+ 	 */
 -- 
 2.43.0
 
