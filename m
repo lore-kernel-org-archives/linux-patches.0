@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C61C1CACE1;
-	Mon, 14 Oct 2024 15:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C606F1CACE5;
+	Mon, 14 Oct 2024 15:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919638; cv=none; b=BU1y9YpujXb7JXppZza4Nyd3iGp2szZEApcqXWv4hBs8aHU8AjR5WaH4gDPsnmhd89PD58Xi2wY0IVlk0Og+v05yJYlJhea7Bf8eBtx0+QKvmHaCmsAZgioBHpehBJRBx2qbO/G9e6fj0loGvXm9Jd7b3/N70aZzxrbtRPQvcIQ=
+	t=1728919641; cv=none; b=S3yP8joFToXKInJCunwF4CrzAnP7lqLe652v8x6ueIKrgQ0GYWp1QXMP9CX9ANv99PdslpOZ97bsaOx3+hnbzI/Rn/XwML9ObPPVx0960nhff1T2l0uouv64lrlR7DQv9ltG29gKc8Bfj7cUWS11vadDdUFJXtc3J2kD7bHu8oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919638; c=relaxed/simple;
-	bh=zbLMyyPxT7ruyuc1dvltKZUe5TjHvg9rdqnWsH2/ymM=;
+	s=arc-20240116; t=1728919641; c=relaxed/simple;
+	bh=40pExZqKvuNo6wUoqC0DSu6l/D4fNoN/qywYGVeNkOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mFIgPaRr228I2nq3XsKg9eb9fDAhSJ3sxWCFgyb+oFi/HgAyRBJO679ahAQJskREgF69HU7y7TKJCUwpuKGiK8BWU0sQF41HaXIojzMFNMX/3GGgrXDgkenaY+zNv3qt3vBEPmSxYM5pvVxGI4wGRA3Ru2oG7UXM0G/tA0S2GkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikLec7of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k61qxAxTBaQWjQ/FCKOxBKMdVvXYVP6xn//87LWkKDgGwZsrT2LhzQ05PH1Ewr8EHELt3WciQn4Qrln5tdiWc3RCl/0IJDaGShs6rufzyL08VlRI332f+iGo6W9ryWCBBaTLK1q7zSOyviCYCxICw1LnVS9fsEpu9guzftzj2PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emal5Jd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikLec7of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DBCC4CED0;
-	Mon, 14 Oct 2024 15:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emal5Jd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4DEC4CEC3;
+	Mon, 14 Oct 2024 15:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919638;
-	bh=zbLMyyPxT7ruyuc1dvltKZUe5TjHvg9rdqnWsH2/ymM=;
+	s=korg; t=1728919641;
+	bh=40pExZqKvuNo6wUoqC0DSu6l/D4fNoN/qywYGVeNkOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikLec7of7fJhN1fKV7Tk4PpAZxaZShokFRZWZqGBdSECzqTGsMbUrwKNA8bUnrZVl
-	 0tkrEA8urvS02hUZ3LzuaLyO8uh1EvUmJQKmD8rWi6GeTId/sONhEV6Gk6KX7QMt6d
-	 IVj2dYBQYv4541yWJzQjXzapJmzrkIGYQn3kkW4I=
+	b=emal5Jd40UpOCo8gRZlJsSt678vDOCiEArJrgzRF+jAqNcHFT9q1vELHuewdTV4yw
+	 uQ1ZXtjNBiIIBlpzmPGOy2yF62NxkZZ5Kfg1Im048vhEcfg54yXNu427f98gkESqll
+	 SJnw0fIe5owwqw/OOzhJb0N5ycEYc03zUHSVSqzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yong <wang.yong12@zte.com.cn>,
-	Yang Yang <yang.yang29@zte.com.cn>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Brandon Duffany <brandon@buildbuddy.io>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 634/798] delayacct: improve the average delay precision of getdelay tool to microsecond
-Date: Mon, 14 Oct 2024 16:19:48 +0200
-Message-ID: <20241014141242.949100876@linuxfoundation.org>
+Subject: [PATCH 6.1 635/798] sched: psi: fix bogus pressure spikes from aggregation race
+Date: Mon, 14 Oct 2024 16:19:49 +0200
+Message-ID: <20241014141242.987554171@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -47,164 +47,189 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Yong <wang.yong12@zte.com.cn>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit eca7de7cdc382eb6e0d344c07b1449ed75f5b435 ]
+[ Upstream commit 3840cbe24cf060ea05a585ca497814609f5d47d1 ]
 
-Improve the average delay precision of getdelay tool to microsecond.  When
-using the getdelay tool, it is sometimes found that the average delay
-except CPU is not 0, but display is 0, because the precison is too low.
-For example, see delay average of SWAP below when using ZRAM.
+Brandon reports sporadic, non-sensical spikes in cumulative pressure
+time (total=) when reading cpu.pressure at a high rate. This is due to
+a race condition between reader aggregation and tasks changing states.
 
-print delayacct stats ON
-PID	32915
-CPU             count     real total  virtual total    delay total  delay average
-               339202     2793871936     9233585504        7951112          0.000ms
-IO              count    delay total  delay average
-                   41      419296904             10ms
-SWAP            count    delay total  delay average
-               242589     1045792384              0ms
+While it affects all states and all resources captured by PSI, in
+practice it most likely triggers with CPU pressure, since scheduling
+events are so frequent compared to other resource events.
 
-This wrong display is misleading, so improve the millisecond precision of
-the average delay to microsecond just like CPU.  Then user would get more
-accurate information of delay time.
+The race context is the live snooping of ongoing stalls during a
+pressure read. The read aggregates per-cpu records for stalls that
+have concluded, but will also incorporate ad-hoc the duration of any
+active state that hasn't been recorded yet. This is important to get
+timely measurements of ongoing stalls. Those ad-hoc samples are
+calculated on-the-fly up to the current time on that CPU; since the
+stall hasn't concluded, it's expected that this is the minimum amount
+of stall time that will enter the per-cpu records once it does.
 
-Link: https://lkml.kernel.org/r/202302131408087983857@zte.com.cn
-Signed-off-by: Wang Yong <wang.yong12@zte.com.cn>
-Reviewed-by: Yang Yang <yang.yang29@zte.com.cn>
-Cc: David Hildenbrand <david@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 3840cbe24cf0 ("sched: psi: fix bogus pressure spikes from aggregation race")
+The problem is that the path that concludes the state uses a CPU clock
+read that is not synchronized against aggregators; the clock is read
+outside of the seqlock protection. This allows aggregators to race and
+snoop a stall with a longer duration than will actually be recorded.
+
+With the recorded stall time being less than the last snapshot
+remembered by the aggregator, a subsequent sample will underflow and
+observe a bogus delta value, resulting in an erratic jump in pressure.
+
+Fix this by moving the clock read of the state change into the seqlock
+protection. This ensures no aggregation can snoop live stalls past the
+time that's recorded when the state concludes.
+
+Reported-by: Brandon Duffany <brandon@buildbuddy.io>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219194
+Link: https://lore.kernel.org/lkml/20240827121851.GB438928@cmpxchg.org/
+Fixes: df77430639c9 ("psi: Reduce calls to sched_clock() in psi")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/accounting/delay-accounting.rst | 14 +++++------
- .../zh_CN/accounting/delay-accounting.rst     | 10 ++++----
- tools/accounting/getdelays.c                  | 24 +++++++++----------
- 3 files changed, 24 insertions(+), 24 deletions(-)
+ kernel/sched/psi.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/accounting/delay-accounting.rst b/Documentation/accounting/delay-accounting.rst
-index 7103b62ba6d7e..79f537c9f160b 100644
---- a/Documentation/accounting/delay-accounting.rst
-+++ b/Documentation/accounting/delay-accounting.rst
-@@ -109,17 +109,17 @@ Get sum of delays, since system boot, for all pids with tgid 5::
- 	CPU             count     real total  virtual total    delay total  delay average
- 	                    8        7000000        6872122        3382277          0.423ms
- 	IO              count    delay total  delay average
--		            0              0              0ms
-+                   0              0          0.000ms
- 	SWAP            count    delay total  delay average
--	                    0              0              0ms
-+                       0              0          0.000ms
- 	RECLAIM         count    delay total  delay average
--		            0              0              0ms
-+                   0              0          0.000ms
- 	THRASHING       count    delay total  delay average
--	                    0              0              0ms
-+                       0              0          0.000ms
- 	COMPACT         count    delay total  delay average
--	                    0              0              0ms
--        WPCOPY          count    delay total  delay average
--                            0              0              0ms
-+                       0              0          0.000ms
-+   WPCOPY          count    delay total  delay average
-+                       0              0          0.000ms
- 
- Get IO accounting for pid 1, it works only with -p::
- 
-diff --git a/Documentation/translations/zh_CN/accounting/delay-accounting.rst b/Documentation/translations/zh_CN/accounting/delay-accounting.rst
-index a01dc3d5b0dbb..7b8693ccf80a9 100644
---- a/Documentation/translations/zh_CN/accounting/delay-accounting.rst
-+++ b/Documentation/translations/zh_CN/accounting/delay-accounting.rst
-@@ -92,15 +92,15 @@ getdelays命令的一般格式::
- 	CPU             count     real total  virtual total    delay total  delay average
- 	                    8        7000000        6872122        3382277          0.423ms
- 	IO              count    delay total  delay average
--	                    0              0              0ms
-+	                    0              0              0.000ms
- 	SWAP            count    delay total  delay average
--	                    0              0              0ms
-+	                    0              0              0.000ms
- 	RECLAIM         count    delay total  delay average
--	                    0              0              0ms
-+	                    0              0              0.000ms
- 	THRASHING       count    delay total  delay average
--	                    0              0              0ms
-+	                    0              0              0.000ms
- 	COMPACT         count    delay total  delay average
--	                    0              0              0ms
-+	                    0              0              0.000ms
-     WPCOPY          count    delay total  delay average
-                        0              0              0ms
- 
-diff --git a/tools/accounting/getdelays.c b/tools/accounting/getdelays.c
-index 938dec0dfaad8..23a15d8f2bf4f 100644
---- a/tools/accounting/getdelays.c
-+++ b/tools/accounting/getdelays.c
-@@ -198,17 +198,17 @@ static void print_delayacct(struct taskstats *t)
- 	printf("\n\nCPU   %15s%15s%15s%15s%15s\n"
- 	       "      %15llu%15llu%15llu%15llu%15.3fms\n"
- 	       "IO    %15s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n"
-+          "      %15llu%15llu%15.3fms\n"
- 	       "SWAP  %15s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n"
-+          "      %15llu%15llu%15.3fms\n"
- 	       "RECLAIM  %12s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n"
-+          "      %15llu%15llu%15.3fms\n"
- 	       "THRASHING%12s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n"
-+          "      %15llu%15llu%15.3fms\n"
- 	       "COMPACT  %12s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n"
-+          "      %15llu%15llu%15.3fms\n"
- 	       "WPCOPY   %12s%15s%15s\n"
--	       "      %15llu%15llu%15llums\n",
-+          "      %15llu%15llu%15.3fms\n",
- 	       "count", "real total", "virtual total",
- 	       "delay total", "delay average",
- 	       (unsigned long long)t->cpu_count,
-@@ -219,27 +219,27 @@ static void print_delayacct(struct taskstats *t)
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->blkio_count,
- 	       (unsigned long long)t->blkio_delay_total,
--	       average_ms(t->blkio_delay_total, t->blkio_count),
-+          average_ms((double)t->blkio_delay_total, t->blkio_count),
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->swapin_count,
- 	       (unsigned long long)t->swapin_delay_total,
--	       average_ms(t->swapin_delay_total, t->swapin_count),
-+          average_ms((double)t->swapin_delay_total, t->swapin_count),
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->freepages_count,
- 	       (unsigned long long)t->freepages_delay_total,
--	       average_ms(t->freepages_delay_total, t->freepages_count),
-+          average_ms((double)t->freepages_delay_total, t->freepages_count),
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->thrashing_count,
- 	       (unsigned long long)t->thrashing_delay_total,
--	       average_ms(t->thrashing_delay_total, t->thrashing_count),
-+          average_ms((double)t->thrashing_delay_total, t->thrashing_count),
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->compact_count,
- 	       (unsigned long long)t->compact_delay_total,
--	       average_ms(t->compact_delay_total, t->compact_count),
-+          average_ms((double)t->compact_delay_total, t->compact_count),
- 	       "count", "delay total", "delay average",
- 	       (unsigned long long)t->wpcopy_count,
- 	       (unsigned long long)t->wpcopy_delay_total,
--	       average_ms(t->wpcopy_delay_total, t->wpcopy_count));
-+          average_ms((double)t->wpcopy_delay_total, t->wpcopy_count));
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index 81dbced92df5f..fb56fcce29cd7 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -777,13 +777,14 @@ static void record_times(struct psi_group_cpu *groupc, u64 now)
  }
  
- static void task_context_switch_counts(struct taskstats *t)
+ static void psi_group_change(struct psi_group *group, int cpu,
+-			     unsigned int clear, unsigned int set, u64 now,
++			     unsigned int clear, unsigned int set,
+ 			     bool wake_clock)
+ {
+ 	struct psi_group_cpu *groupc;
+ 	unsigned int t, m;
+ 	enum psi_states s;
+ 	u32 state_mask;
++	u64 now;
+ 
+ 	lockdep_assert_rq_held(cpu_rq(cpu));
+ 	groupc = per_cpu_ptr(group->pcpu, cpu);
+@@ -798,6 +799,7 @@ static void psi_group_change(struct psi_group *group, int cpu,
+ 	 * SOME and FULL time these may have resulted in.
+ 	 */
+ 	write_seqcount_begin(&groupc->seq);
++	now = cpu_clock(cpu);
+ 
+ 	/*
+ 	 * Start with TSK_ONCPU, which doesn't have a corresponding
+@@ -911,18 +913,15 @@ void psi_task_change(struct task_struct *task, int clear, int set)
+ {
+ 	int cpu = task_cpu(task);
+ 	struct psi_group *group;
+-	u64 now;
+ 
+ 	if (!task->pid)
+ 		return;
+ 
+ 	psi_flags_change(task, clear, set);
+ 
+-	now = cpu_clock(cpu);
+-
+ 	group = task_psi_group(task);
+ 	do {
+-		psi_group_change(group, cpu, clear, set, now, true);
++		psi_group_change(group, cpu, clear, set, true);
+ 	} while ((group = group->parent));
+ }
+ 
+@@ -931,7 +930,6 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ {
+ 	struct psi_group *group, *common = NULL;
+ 	int cpu = task_cpu(prev);
+-	u64 now = cpu_clock(cpu);
+ 
+ 	if (next->pid) {
+ 		psi_flags_change(next, 0, TSK_ONCPU);
+@@ -948,7 +946,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 				break;
+ 			}
+ 
+-			psi_group_change(group, cpu, 0, TSK_ONCPU, now, true);
++			psi_group_change(group, cpu, 0, TSK_ONCPU, true);
+ 		} while ((group = group->parent));
+ 	}
+ 
+@@ -986,7 +984,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		do {
+ 			if (group == common)
+ 				break;
+-			psi_group_change(group, cpu, clear, set, now, wake_clock);
++			psi_group_change(group, cpu, clear, set, wake_clock);
+ 		} while ((group = group->parent));
+ 
+ 		/*
+@@ -998,7 +996,7 @@ void psi_task_switch(struct task_struct *prev, struct task_struct *next,
+ 		if ((prev->psi_flags ^ next->psi_flags) & ~TSK_ONCPU) {
+ 			clear &= ~TSK_ONCPU;
+ 			for (; group; group = group->parent)
+-				psi_group_change(group, cpu, clear, set, now, wake_clock);
++				psi_group_change(group, cpu, clear, set, wake_clock);
+ 		}
+ 	}
+ }
+@@ -1009,8 +1007,8 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	int cpu = task_cpu(curr);
+ 	struct psi_group *group;
+ 	struct psi_group_cpu *groupc;
+-	u64 now, irq;
+ 	s64 delta;
++	u64 irq;
+ 
+ 	if (!curr->pid)
+ 		return;
+@@ -1020,7 +1018,6 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	if (prev && task_psi_group(prev) == group)
+ 		return;
+ 
+-	now = cpu_clock(cpu);
+ 	irq = irq_time_read(cpu);
+ 	delta = (s64)(irq - rq->psi_irq_time);
+ 	if (delta < 0)
+@@ -1028,12 +1025,15 @@ void psi_account_irqtime(struct rq *rq, struct task_struct *curr, struct task_st
+ 	rq->psi_irq_time = irq;
+ 
+ 	do {
++		u64 now;
++
+ 		if (!group->enabled)
+ 			continue;
+ 
+ 		groupc = per_cpu_ptr(group->pcpu, cpu);
+ 
+ 		write_seqcount_begin(&groupc->seq);
++		now = cpu_clock(cpu);
+ 
+ 		record_times(groupc, now);
+ 		groupc->times[PSI_IRQ_FULL] += delta;
+@@ -1232,11 +1232,9 @@ void psi_cgroup_restart(struct psi_group *group)
+ 	for_each_possible_cpu(cpu) {
+ 		struct rq *rq = cpu_rq(cpu);
+ 		struct rq_flags rf;
+-		u64 now;
+ 
+ 		rq_lock_irq(rq, &rf);
+-		now = cpu_clock(cpu);
+-		psi_group_change(group, cpu, 0, 0, now, true);
++		psi_group_change(group, cpu, 0, 0, true);
+ 		rq_unlock_irq(rq, &rf);
+ 	}
+ }
 -- 
 2.43.0
 
