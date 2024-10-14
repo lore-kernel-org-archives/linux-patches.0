@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBED1AC45F;
-	Mon, 14 Oct 2024 14:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0B81C6F71;
+	Mon, 14 Oct 2024 14:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917702; cv=none; b=nIqfSKNohV90efbqznPsTVp97Yvf6gSBtlkjrS7ktUSBDn1EVteiqehF/BYJxx7JtKy0nTAosnYsleu0FYURRfFvjbGQ1fR0MVKzVfsatOsgdgUqpwBVC+lIfD9pm6n+z54N/7KU5UIzyOTX2WFQsuL+5tG2bWjOQQIJb6gNyhY=
+	t=1728917705; cv=none; b=gZ7oIyNnl7wU82llj8gr5xh6GeCdBD4N1miFJzJ+FDmLB2RqzI7W3tCgKOzZpR6Jl5OPwuaVbHhpHwmKLiIzcuHcAxj+NaImUAAN2g4ENWNf4c6gdVWOuGrETQLideTnGm3TvV0vuDHWY4OVHmYuYiWsE8x4l9av3Uv8y1ccm9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917702; c=relaxed/simple;
-	bh=ZoGxdMAc8Jy6p5Q9Ai17jjJEUCx8k5qpP9LD89juFuA=;
+	s=arc-20240116; t=1728917705; c=relaxed/simple;
+	bh=Kw+Px/RGMQQxXAvu0Tbc4oobtiY/eWl+C9ZJdichvfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3dVauxo6ZRbMs/+tjc13MRayV4FgbVk4Y94DIgDqiXrV6SCDOV/SeLkuJA6u2tTRFi9GPm66fEvFTsHYU8qeBScEzif6SKOzgRaynHJY9Yka3hVOiSRIXBczJLuQLx9qOiKKfSyd0xDWTfJIuN2TSaIMJpNHa1VXuWG6vShOkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvf60YZZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kEBSk9TAKslBzjnuoLz3NebJptqc4kuDqhldViFFbAbwAl4+dnA5e/z5CjlBHbs2jzvMEZ7zuQTrwnOZvb0VTU9kvDNCU9QgVesP7CUnwDYUdM7fOtPCHjQ5I7pVlSqSiwBZ1iKdWyctGHe07QS/EdGHw4wPZQlYvEY3FAI//Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pa+IsXV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvf60YZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515B0C4CEC3;
-	Mon, 14 Oct 2024 14:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa+IsXV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADED7C4CECF;
+	Mon, 14 Oct 2024 14:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917701;
-	bh=ZoGxdMAc8Jy6p5Q9Ai17jjJEUCx8k5qpP9LD89juFuA=;
+	s=korg; t=1728917705;
+	bh=Kw+Px/RGMQQxXAvu0Tbc4oobtiY/eWl+C9ZJdichvfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvf60YZZlSY8BR5eMgsQBVJqTds1jZKGOCnhc+rAPKwG2h5esnHBt/8mU0JltlG1y
-	 E8L6CWXmpMl6dpOjcBV1Zbw60H+TxrNUb2kAKi6qCvRooybqK1FCGieo3zFlMyX2fa
-	 UQFMs54dHq1vTjfl1wtO6UodmtABjtG0cLw2RS9k=
+	b=pa+IsXV7Nc5Ma64vBDWlSfPEfKB4NZBixntdlGQ+/BNpRa5AzpbvUfXbtGU+qxrz/
+	 OIAGjNRJd1SCWvvXHWjdNJLOYE0bgmgjQXWF2PswzsMgyFjpTUtNw+uOXdRCl97h7D
+	 BNmL2u2SkExKLzI0L4ajcSjL+HQYQfGttRo9YXG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/798] drm/radeon: Replace one-element array with flexible-array member
-Date: Mon, 14 Oct 2024 16:11:02 +0200
-Message-ID: <20241014141222.170496418@linuxfoundation.org>
+Subject: [PATCH 6.1 109/798] drm/radeon: properly handle vbios fake edid sizing
+Date: Mon, 14 Oct 2024 16:11:03 +0200
+Message-ID: <20241014141222.209487221@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,70 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit c81c5bd5cf2f428867e0bcfcccd4e4d2f8c68f51 ]
+[ Upstream commit 17c6baff3d5f65c8da164137a58742541a060b2f ]
 
-One-element arrays are deprecated, and we are replacing them with
-flexible array members instead. So, replace one-element array with
-flexible-array member in struct _ATOM_FAKE_EDID_PATCH_RECORD and
-refactor the rest of the code accordingly.
+The comment in the vbios structure says:
+// = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
 
-It's worth mentioning that doing a build before/after this patch results
-in no binary output differences.
+This fake edid struct has not been used in a long time, so I'm
+not sure if there were actually any boards out there with a non-128 byte
+EDID, but align the code with the comment.
 
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -fstrict-flex-arrays=3 [1].
-
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/239
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101836 [1]
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Reported-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lists.freedesktop.org/archives/amd-gfx/2024-June/109964.html
+Fixes: c324acd5032f ("drm/radeon/kms: parse the extended LCD info block")
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 17c6baff3d5f ("drm/radeon: properly handle vbios fake edid sizing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/atombios.h        | 2 +-
- drivers/gpu/drm/radeon/radeon_atombios.c | 7 +++++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon_atombios.c | 29 +++++++++++++-----------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/atombios.h b/drivers/gpu/drm/radeon/atombios.h
-index da35a970fcc0d..235e59b547a1e 100644
---- a/drivers/gpu/drm/radeon/atombios.h
-+++ b/drivers/gpu/drm/radeon/atombios.h
-@@ -3615,7 +3615,7 @@ typedef struct _ATOM_FAKE_EDID_PATCH_RECORD
- {
-   UCHAR ucRecordType;
-   UCHAR ucFakeEDIDLength;
--  UCHAR ucFakeEDIDString[1];    // This actually has ucFakeEdidLength elements.
-+  UCHAR ucFakeEDIDString[];    // This actually has ucFakeEdidLength elements.
- } ATOM_FAKE_EDID_PATCH_RECORD;
- 
- typedef struct  _ATOM_PANEL_RESOLUTION_PATCH_RECORD
 diff --git a/drivers/gpu/drm/radeon/radeon_atombios.c b/drivers/gpu/drm/radeon/radeon_atombios.c
-index 204127bad89ca..4ad5a328d9202 100644
+index 4ad5a328d9202..42ed71b6db8e9 100644
 --- a/drivers/gpu/drm/radeon/radeon_atombios.c
 +++ b/drivers/gpu/drm/radeon/radeon_atombios.c
-@@ -1727,8 +1727,11 @@ struct radeon_encoder_atom_dig *radeon_atombios_get_lvds_info(struct
+@@ -1712,26 +1712,29 @@ struct radeon_encoder_atom_dig *radeon_atombios_get_lvds_info(struct
+ 					fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
+ 					if (fake_edid_record->ucFakeEDIDLength) {
+ 						struct edid *edid;
+-						int edid_size =
+-							max((int)EDID_LENGTH, (int)fake_edid_record->ucFakeEDIDLength);
+-						edid = kmalloc(edid_size, GFP_KERNEL);
++						int edid_size;
++
++						if (fake_edid_record->ucFakeEDIDLength == 128)
++							edid_size = fake_edid_record->ucFakeEDIDLength;
++						else
++							edid_size = fake_edid_record->ucFakeEDIDLength * 128;
++						edid = kmemdup(&fake_edid_record->ucFakeEDIDString[0],
++							       edid_size, GFP_KERNEL);
+ 						if (edid) {
+-							memcpy((u8 *)edid, (u8 *)&fake_edid_record->ucFakeEDIDString[0],
+-							       fake_edid_record->ucFakeEDIDLength);
+-
+ 							if (drm_edid_is_valid(edid)) {
+ 								rdev->mode_info.bios_hardcoded_edid = edid;
+ 								rdev->mode_info.bios_hardcoded_edid_size = edid_size;
+-							} else
++							} else {
+ 								kfree(edid);
++							}
  						}
++						record += struct_size(fake_edid_record,
++								      ucFakeEDIDString,
++								      edid_size);
++					} else {
++						/* empty fake edid record must be 3 bytes long */
++						record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
  					}
- 					record += fake_edid_record->ucFakeEDIDLength ?
--						fake_edid_record->ucFakeEDIDLength + 2 :
--						sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
-+						  struct_size(fake_edid_record,
-+							      ucFakeEDIDString,
-+							      fake_edid_record->ucFakeEDIDLength) :
-+						  /* empty fake edid record must be 3 bytes long */
-+						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
+-					record += fake_edid_record->ucFakeEDIDLength ?
+-						  struct_size(fake_edid_record,
+-							      ucFakeEDIDString,
+-							      fake_edid_record->ucFakeEDIDLength) :
+-						  /* empty fake edid record must be 3 bytes long */
+-						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
  					break;
  				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
  					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
