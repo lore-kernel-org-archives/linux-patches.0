@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18501C3027;
-	Mon, 14 Oct 2024 15:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D433B298;
+	Mon, 14 Oct 2024 15:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919195; cv=none; b=UpWSYMBUL/66H5LDPM2gfrp6rrVEAUqzUFNDEwaZY99AlZ1JLSrmQjLRefGSywacM497kyga+zcP9hOj8Rk+C1k7B1fCa5k0kHCdhWFMrnqVRJdXqciyKnKMUVYsr60Tr3ywZUoZg4Z4HXuRFj8N5ZWbvZlljtWlInnELxgx6rU=
+	t=1728919199; cv=none; b=ts9ABpEsqe8iptUlts8pQs8CvGsTq4eLEPnAZz+3KmWZwt+KwvZim/bHdgKZjb29037HY55wx2E+U4i5EUrbteNXIOIm0dSN7dRCNd/SKOx4Wd62E8WA+JhrOYVToW2JQZGYgik9R8HNCqyyEV2wcDS/LfvwzMRshJrqvfvyUwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919195; c=relaxed/simple;
-	bh=YV+m1uzXUGW4oXl8+Xmu/sgfQlynzzYvUf0XE7xMBx0=;
+	s=arc-20240116; t=1728919199; c=relaxed/simple;
+	bh=O7HmYc9aIM3jnhwfy0X7uuHrqTmVI4fOrvABtx0FgwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjK/Ld2PKkK425W8gp6DARb+Z2gH+uGxoRley4FyE0tlZWbYxyQvPl8Ilsdk465F6PgcvWOQ0se/6e35skgOi6B6UlAqciTBmtsOSbzU+kR8Ck9SOkV+C5+UCj3YzqqgANk1PwQLLZW7VMoc7RpGdbsTXRMf9ketSjHYjQq9RPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTznoF1o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmvAbN5aeZhSZ2n652caS8BzfDlodhftwO4Ow+J2kge/+LWQXpKT/iat8yRogOuXWRl56MMrNHivLgi/WqsJTgmY5sulLlXAeSq7lw/SbI64hoGIlVrrNIMay0RSdnwfHgaIu9lAvSh6GjWjrnsdfnCElW/esWSdSMB+vRBT0gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdG8ymn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTznoF1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402F5C4CEC3;
-	Mon, 14 Oct 2024 15:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdG8ymn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835FFC4CEC3;
+	Mon, 14 Oct 2024 15:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919195;
-	bh=YV+m1uzXUGW4oXl8+Xmu/sgfQlynzzYvUf0XE7xMBx0=;
+	s=korg; t=1728919199;
+	bh=O7HmYc9aIM3jnhwfy0X7uuHrqTmVI4fOrvABtx0FgwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTznoF1o4jHGJnC5xue6ibBkDBZ2/s1RWwL80aoBFo0GS3uMOjHbSu3IVIJL6nILB
-	 +aIHw3wpLN3MtJ+qITPwjTj1yD+B/HwLxJ/WfrqWT75fpdPww+p9YriRxWZxYtdm/d
-	 bsjesz8N/vdJrW5dzMRBfITVEfKdpOp+ndR9iDls=
+	b=bdG8ymn9o871XfLDN4VdR7aJbbLkSticG7zfnyYDNo+gLakC9MD01wW8+VhN1V7uD
+	 iuM/ps3kCGq5sO1TLpJZ+oCRS2CH3g3fcccD4gIH8xn61Gogdr133svP8bzG2lAvyJ
+	 upqVddiJ7S/m+3Iuo7bFi3T5T+QDnguYKwer0B58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Tamboli <abhishektamboli9@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 540/798] ALSA: hda/realtek: Add a quirk for HP Pavilion 15z-ec200
-Date: Mon, 14 Oct 2024 16:18:14 +0200
-Message-ID: <20241014141239.214349472@linuxfoundation.org>
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 541/798] ext4: no need to continue when the number of entries is 1
+Date: Mon, 14 Oct 2024 16:18:15 +0200
+Message-ID: <20241014141239.253093225@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -50,33 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Tamboli <abhishektamboli9@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit d75dba49744478c32f6ce1c16b5f391c2d5cef5f upstream.
+commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
 
-Add the quirk for HP Pavilion Gaming laptop 15z-ec200 for
-enabling the mute led. The fix apply the ALC285_FIXUP_HP_MUTE_LED
-quirk for this model.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219303
-Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240930145300.4604-1-abhishektamboli9@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9767,6 +9767,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8898, "HP EliteBook 845 G8 Notebook PC", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -2047,7 +2047,7 @@ static struct ext4_dir_entry_2 *do_split
+ 		split = count/2;
+ 
+ 	hash2 = map[split].hash;
+-	continued = hash2 == map[split - 1].hash;
++	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
+ 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
+ 			(unsigned long)dx_get_block(frame->at),
+ 					hash2, split, count-split));
 
 
