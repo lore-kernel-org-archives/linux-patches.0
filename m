@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FEE1A76CC;
-	Mon, 14 Oct 2024 15:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7523A1B6;
+	Mon, 14 Oct 2024 15:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918210; cv=none; b=dzCghwVx4AwbFSfrShMlY62M0cHJk+I71n1MqtgQY3WGMdChWLSZ8evhanBiV+XegUvfgFWk+sXYH5YG9If13zSZsS0VsBVpjLeWsCI+ZizlQNXrlp275yXWUtE6g3KpIOMwMb/N2XJGCN6kBvNF0w/3a1lLlZYcYi8IjeTG/tQ=
+	t=1728918213; cv=none; b=tD9f4IJjw67Zw2ipP5c+qHFjJ9aUlPWZtS/X/eNyfwnTsvTjG2yLcpq9nKXz7hSMzAqKPHBdkIXepRarbMIpwi4VFyHIki/Twc/dY6AQcwa+3oLkDUsOVZLHxicIMqb2NssWarNTU3TVjfUqFmztofPLd4mZQku2uMQDYT14jUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918210; c=relaxed/simple;
-	bh=vcgu011KVNFNFOJERvFOGmORqWFHPQihA4ZSqnoVffk=;
+	s=arc-20240116; t=1728918213; c=relaxed/simple;
+	bh=cTSzKAbJRmoFsrceInAvKSVjWyHFdIaCIfRpKmG0LVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfbiiXeKrdWBbtMzNEVUyusxI7EPUdkzluy6KBN+T1G6hG3YZAWl1ekYk0ngJKi2A/pUmWE2FWJ0R0EXjfdU2QkRCavn1tL6qtQdTt4nZLSr85okMpJm6OJc80b96u0XBTtOgG9vNRyC6culpno4xVs2+twEZwKWeJzOBXTTkqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RE/RIPA/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UWrnU5uS/7uye+gvB8KWQv4JUOl0Z1K3Q2BbftOKyREAwzTUirV+WuGeYbJIVUHytm/nHADn3nU7EIfdwe8TKzraX9Id4oOsWC1hfPZlrJ9CVM2D2Bnou3k8MifFrVpbvXwZw7PsOh0J3l5LnOwLewqSpYjX+zQHVhFbXXeHWgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvr0M7tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RE/RIPA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22001C4CEC3;
-	Mon, 14 Oct 2024 15:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvr0M7tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5FC4CEC3;
+	Mon, 14 Oct 2024 15:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918209;
-	bh=vcgu011KVNFNFOJERvFOGmORqWFHPQihA4ZSqnoVffk=;
+	s=korg; t=1728918212;
+	bh=cTSzKAbJRmoFsrceInAvKSVjWyHFdIaCIfRpKmG0LVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RE/RIPA/1a78SEiSWRUZfcQIooCuKT+BvYQ2DpN1piauFQi51g9L5K2qcXen1e+99
-	 dvVwmK+OmIm03dMBjNUboQ5DniKX+mgao61FZvrGZd2PTl6T88Y4wY2K9TXNuI1Di+
-	 cPFCEVeXIWZE/JefKnadgZ35h123L57jW2+q8K94=
+	b=qvr0M7tkRtdC/STXBLzD0KIEZPcKCWWe2+TImvMDSOT3/n79HhOzNa8RV3R5l6In/
+	 T5kzNr9qR+ClHEs8SJhs4FLb5tOmUGLK+OK/O7RPcxRcYtCjcd0bUiFSRjyG6PdHbC
+	 RbFQHg0yBSsqH0FYW2Qz7JytMM3GbrJk3CkOk8HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 254/798] coresight: tmc: sg: Do not leak sg_table
-Date: Mon, 14 Oct 2024 16:13:28 +0200
-Message-ID: <20241014141227.914046163@linuxfoundation.org>
+Subject: [PATCH 6.1 255/798] cxl/pci: Break out range register decoding from cxl_hdm_decode_init()
+Date: Mon, 14 Oct 2024 16:13:29 +0200
+Message-ID: <20241014141227.953294704@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,71 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit c58dc5a1f886f2fcc1133746d0cbaa1fe7fd44ff ]
+[ Upstream commit 1acba6e9206c655f8eb6736c7cafbf022492f36d ]
 
-Running perf with cs_etm on Juno triggers the following kmemleak warning !
+There are 2 scenarios that requires additional handling. 1. A device that
+has active ranges in DVSEC range registers (RR) but no HDM decoder register
+block. 2. A device that has both RR active and HDM, but the HDM decoders
+are not programmed. The goal is to create emulated decoder software structs
+based on the RR.
 
-:~# cat /sys/kernel/debug/kmemleak
- unreferenced object 0xffffff8806b6d720 (size 96):
- comm "perf", pid 562, jiffies 4297810960
- hex dump (first 32 bytes):
- 38 d8 13 07 88 ff ff ff 00 d0 9e 85 c0 ff ff ff  8...............
- 00 10 00 88 c0 ff ff ff 00 f0 ff f7 ff 00 00 00  ................
- backtrace (crc 1dbf6e00):
- [<ffffffc08107381c>] kmemleak_alloc+0xbc/0xd8
- [<ffffffc0802f9798>] kmalloc_trace_noprof+0x220/0x2e8
- [<ffffffc07bb71948>] tmc_alloc_sg_table+0x48/0x208 [coresight_tmc]
- [<ffffffc07bb71cbc>] tmc_etr_alloc_sg_buf+0xac/0x240 [coresight_tmc]
- [<ffffffc07bb72538>] tmc_alloc_etr_buf.constprop.0+0x1f0/0x260 [coresight_tmc]
- [<ffffffc07bb7280c>] alloc_etr_buf.constprop.0.isra.0+0x74/0xa8 [coresight_tmc]
- [<ffffffc07bb72950>] tmc_alloc_etr_buffer+0x110/0x260 [coresight_tmc]
- [<ffffffc07bb38afc>] etm_setup_aux+0x204/0x3b0 [coresight]
- [<ffffffc08025837c>] rb_alloc_aux+0x20c/0x318
- [<ffffffc08024dd84>] perf_mmap+0x2e4/0x7a0
- [<ffffffc0802cceb0>] mmap_region+0x3b0/0xa08
- [<ffffffc0802cd8a8>] do_mmap+0x3a0/0x500
- [<ffffffc080295328>] vm_mmap_pgoff+0x100/0x1d0
- [<ffffffc0802cadf8>] ksys_mmap_pgoff+0xb8/0x110
- [<ffffffc080020688>] __arm64_sys_mmap+0x38/0x58
- [<ffffffc080028fc0>] invoke_syscall.constprop.0+0x58/0x100
+Move the CXL DVSEC range register decoding code block from
+cxl_hdm_decode_init() to its own function. Refactor code in preparation for
+the HDM decoder emulation.  There is no functionality change to the code.
+Name the new function to cxl_dvsec_rr_decode().
 
-This due to the fact that we do not free the "sg_table" itself while
-freeing up  the SG table and data pages. Fix this by freeing the sg_table
-in tmc_free_sg_table().
+The only change is to set range->start and range->end to CXL_RESOURCE_NONE
+and skipping the reading of base registers if the range size is 0, which
+equates to range not active.
 
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20240702132846.1677261-1-suzuki.poulose@arm.com
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/167640366839.935665.11816388524993234329.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 55e268694e8b ("cxl/pci: Fix to record only non-zero ranges")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/pci.c | 64 ++++++++++++++++++++++++++----------------
+ 1 file changed, 40 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index c88a6afb29512..74e8b7632305a 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -255,6 +255,7 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
- {
- 	tmc_free_table_pages(sg_table);
- 	tmc_free_data_pages(sg_table);
-+	kfree(sg_table);
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 5584af15300a8..194c8024216df 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -211,11 +211,10 @@ int cxl_await_media_ready(struct cxl_dev_state *cxlds)
  }
- EXPORT_SYMBOL_GPL(tmc_free_sg_table);
+ EXPORT_SYMBOL_NS_GPL(cxl_await_media_ready, CXL);
  
-@@ -336,7 +337,6 @@ struct tmc_sg_table *tmc_alloc_sg_table(struct device *dev,
- 		rc = tmc_alloc_table_pages(sg_table);
+-static int wait_for_valid(struct cxl_dev_state *cxlds)
++static int wait_for_valid(struct pci_dev *pdev, int d)
+ {
+-	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+-	int d = cxlds->cxl_dvsec, rc;
+ 	u32 val;
++	int rc;
+ 
+ 	/*
+ 	 * Memory_Info_Valid: When set, indicates that the CXL Range 1 Size high
+@@ -404,20 +403,11 @@ static bool __cxl_hdm_decode_init(struct cxl_dev_state *cxlds,
+ 	return true;
+ }
+ 
+-/**
+- * cxl_hdm_decode_init() - Setup HDM decoding for the endpoint
+- * @cxlds: Device state
+- * @cxlhdm: Mapped HDM decoder Capability
+- *
+- * Try to enable the endpoint's HDM Decoder Capability
+- */
+-int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
++static int cxl_dvsec_rr_decode(struct device *dev, int d,
++			       struct cxl_endpoint_dvsec_info *info)
+ {
+-	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+-	struct cxl_endpoint_dvsec_info info = { 0 };
++	struct pci_dev *pdev = to_pci_dev(dev);
+ 	int hdm_count, rc, i, ranges = 0;
+-	struct device *dev = &pdev->dev;
+-	int d = cxlds->cxl_dvsec;
+ 	u16 cap, ctrl;
+ 
+ 	if (!d) {
+@@ -448,7 +438,7 @@ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
+ 	if (!hdm_count || hdm_count > 2)
+ 		return -EINVAL;
+ 
+-	rc = wait_for_valid(cxlds);
++	rc = wait_for_valid(pdev, d);
  	if (rc) {
- 		tmc_free_sg_table(sg_table);
--		kfree(sg_table);
- 		return ERR_PTR(rc);
+ 		dev_dbg(dev, "Failure awaiting MEM_INFO_VALID (%d)\n", rc);
+ 		return rc;
+@@ -459,9 +449,9 @@ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
+ 	 * disabled, and they will remain moot after the HDM Decoder
+ 	 * capability is enabled.
+ 	 */
+-	info.mem_enabled = FIELD_GET(CXL_DVSEC_MEM_ENABLE, ctrl);
+-	if (!info.mem_enabled)
+-		goto hdm_init;
++	info->mem_enabled = FIELD_GET(CXL_DVSEC_MEM_ENABLE, ctrl);
++	if (!info->mem_enabled)
++		return 0;
+ 
+ 	for (i = 0; i < hdm_count; i++) {
+ 		u64 base, size;
+@@ -480,6 +470,13 @@ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
+ 			return rc;
+ 
+ 		size |= temp & CXL_DVSEC_MEM_SIZE_LOW_MASK;
++		if (!size) {
++			info->dvsec_range[i] = (struct range) {
++				.start = 0,
++				.end = CXL_RESOURCE_NONE,
++			};
++			continue;
++		}
+ 
+ 		rc = pci_read_config_dword(
+ 			pdev, d + CXL_DVSEC_RANGE_BASE_HIGH(i), &temp);
+@@ -495,22 +492,41 @@ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
+ 
+ 		base |= temp & CXL_DVSEC_MEM_BASE_LOW_MASK;
+ 
+-		info.dvsec_range[i] = (struct range) {
++		info->dvsec_range[i] = (struct range) {
+ 			.start = base,
+ 			.end = base + size - 1
+ 		};
+ 
+-		if (size)
+-			ranges++;
++		ranges++;
  	}
  
+-	info.ranges = ranges;
++	info->ranges = ranges;
++
++	return 0;
++}
++
++/**
++ * cxl_hdm_decode_init() - Setup HDM decoding for the endpoint
++ * @cxlds: Device state
++ * @cxlhdm: Mapped HDM decoder Capability
++ *
++ * Try to enable the endpoint's HDM Decoder Capability
++ */
++int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm)
++{
++	struct cxl_endpoint_dvsec_info info = { 0 };
++	struct device *dev = cxlds->dev;
++	int d = cxlds->cxl_dvsec;
++	int rc;
++
++	rc = cxl_dvsec_rr_decode(dev, d, &info);
++	if (rc < 0)
++		return rc;
+ 
+ 	/*
+ 	 * If DVSEC ranges are being used instead of HDM decoder registers there
+ 	 * is no use in trying to manage those.
+ 	 */
+-hdm_init:
+ 	if (!__cxl_hdm_decode_init(cxlds, cxlhdm, &info)) {
+ 		dev_err(dev,
+ 			"Legacy range registers configuration prevents HDM operation.\n");
 -- 
 2.43.0
 
