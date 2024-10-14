@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7250A1C7269;
-	Mon, 14 Oct 2024 15:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEFB1C231D;
+	Mon, 14 Oct 2024 15:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918926; cv=none; b=P7wbNqPLJgEoUMw2mynC+Mb3gaWsNQkpeX1caJ0JXh5TrL9GQVyBX9oW/MkUWLXwYZkuSYhjZA5sNolW+hrN7/mFNxDBNyQFM06TL2cf1IFwdOStd641HRyYbNVIKwiOkHB1l4/S8EsJxfijbJnQYhcnYZOhuUSnMu0yfHJM+9o=
+	t=1728918929; cv=none; b=s3GuTGIrbJbjzSKhjcJBdtDkSYaDHA5p0uqItG3yi967lJf2ZiIsKQ7LF8oqGboatupT/AtRs0vMQIxcL/Xbn6fvqVn+wpCnG/0dUZ2HXOYypHiFbbRCqL1jyD6BIFNIPNHErEunm1bB2JQX+8dnk601YkuFP8fMDE3UA0gdA0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918926; c=relaxed/simple;
-	bh=L0qpbreVptaP1cgH0O26BAL1PYb7cyUqSjABhYoc2cg=;
+	s=arc-20240116; t=1728918929; c=relaxed/simple;
+	bh=IBCLFLFQ0jYtEQCXWOHFCzp0lMUcTDMEWuucEODjO30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ko7y/XkYvWq+1Z/LFnXfL6t16JWJgkne8S+7B1ULT3lV+kUphPlVeuUOqt992u4N5j6Yi2+B2uATHM3fbtI0RUOO8qnCTdErQmgOEGfXDQLCon2//kv/WigSOpmDK8CO1/xXg3w66eaWys3ypnR8ic88+sOJdZ52wXC5dmJ9lCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7ugmA69; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IDOW0yTRULv9RBgZTJ5Oo9XCoIEq1lAXBdsQSxZ+NtoCW1EoPF9mVsRYjpzQGSBcrOcllcyex1nZpYWwVT8olXr4CSI7nHbLbd7WdgcvZ8A4vXpLNOpE+dI2jObEQ7+ulbOL9dzutUDB11p16FEA5MHOutJOyNBZNRiSJbJsM/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gviklQWr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7ugmA69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C268C4CEC3;
-	Mon, 14 Oct 2024 15:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gviklQWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4F1C4CEC3;
+	Mon, 14 Oct 2024 15:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918926;
-	bh=L0qpbreVptaP1cgH0O26BAL1PYb7cyUqSjABhYoc2cg=;
+	s=korg; t=1728918929;
+	bh=IBCLFLFQ0jYtEQCXWOHFCzp0lMUcTDMEWuucEODjO30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U7ugmA697SOK25FIjGPykHXviZ8DjJaeoF8EkJ3iPQ/2XmekZxc+ZUSA7lbjvXKPo
-	 m1fI/cTxSEWOXpVccRRCx3KRpgZdmexUB++7NDyO+C40ZUpsA9EpS2EyHaGXnpNvwv
-	 WgUJzf5Ct4l5CST2Lquvj/lQTeSRps4dZUYb2sN0=
+	b=gviklQWrpKQQhf4kMJTOWlJow2AZX2QYm1dzITo3omvsas4BgyYeCTqgPkxE9pSCL
+	 mzMXXHTMvH85h8ZmmSySdtAvqBwBXE1kS3QpfpV5r4UBMMP43x+M3n9bhXxgjjOs6I
+	 BpLrc0B27fzA0xz7Mxvjv9e+kPtNDBam2AFm0KfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hilda Wu <hildawu@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 431/798] Bluetooth: btusb: Add Realtek RTL8852C support ID 0x0489:0xe122
-Date: Mon, 14 Oct 2024 16:16:25 +0200
-Message-ID: <20241014141234.892411352@linuxfoundation.org>
+Subject: [PATCH 6.1 432/798] ACPI: video: Add force_vendor quirk for Panasonic Toughbook CF-18
+Date: Mon, 14 Oct 2024 16:16:26 +0200
+Message-ID: <20241014141234.932479429@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,65 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hilda Wu <hildawu@realtek.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit bdf9557f70e7512bb2f754abf90d9e9958745316 ]
+[ Upstream commit eb7b0f12e13ba99e64e3a690c2166895ed63b437 ]
 
-Add the support ID (0x0489, 0xe122) to usb_device_id table for
-Realtek RTL8852C.
+The Panasonic Toughbook CF-18 advertises both native and vendor backlight
+control interfaces. But only the vendor one actually works.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+acpi_video_get_backlight_type() will pick the non working native backlight
+by default, add a quirk to select the working vendor backlight instead.
 
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e122 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240907124419.21195-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index dc5150f677236..ca5828a274cdd 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -531,6 +531,8 @@ static const struct usb_device_id blacklist_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3592), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe122), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 60b0128a10e86..f7a2ab62c6c20 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -258,6 +258,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_vendor,
++	 /* Panasonic Toughbook CF-18 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Matsushita Electric Industrial"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "CF-18"),
++		},
++	},
  
- 	/* Realtek 8852BE Bluetooth devices */
- 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
+ 	/*
+ 	 * Toshiba models with Transflective display, these need to use
 -- 
 2.43.0
 
