@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811754C3D0;
-	Mon, 14 Oct 2024 15:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18DF1CA8D;
+	Mon, 14 Oct 2024 15:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728920077; cv=none; b=Yg3/+mN+xXePMtjxDcX+4aVjYLpCiTyu0xT/CA8HS2voz71zE5zMl7+fv2ig4p/Y+t7e37cHhgcARMDl7ZuThN4PDD+opwACWxrMRFNbm5yog96G6h9o3h690Od2CjUGoVw5hu8u+RCaiwW4AzpNRg5xB82u12EvbUt5EbFlLYk=
+	t=1728920086; cv=none; b=chDTmMO0aaJWur/w08VR9sNkVrugl2N6dtjydFAIZVWPbr073JhAP1e4TxkOz1MNS2jxXpijz3UyVr7zOjQp2ZmUq1fofVqTnmzEYPqRAYTUbiqYPK0cfVGH8wg3XqEOAbrmr45uTjgrMD/uMSN8dQDmpa/L9qI5j27NW1DSj+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728920077; c=relaxed/simple;
-	bh=UY4Td1fC/ivHksuIFBThF8zOQqgqNwBwBhT4UmbHrYQ=;
+	s=arc-20240116; t=1728920086; c=relaxed/simple;
+	bh=HwncEqEl9g7/IMpvUbjSyWyZY2m3i/SRn8wLwtphmus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CfDeUixGskHqddpbW+nk8wWU7t9uGhoJWxPPtn4wK4awGJ0nV2Fln6diKJZTu3Dsb4u+YSR7YxbxamSoSlq2QhUcZezJNiI1FRnMjMvpeKsGdCkqH0h1PWhZvktEObldmZKDKaHy8oRsZNb5AcdjXPnSSBdD04hDDy8s4wS1l8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWRCBv/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kaW9HBAYRO/ixPMY3XH4RJDkTbdr6MfqZBWYcQhk+5mIgq4Cx5Sh7jQTwiA8oPRBYOSQpzb/BaHMpY+m6XbOUKX5SvIkLchWKL2DhTyDp1npwIlfdY+1A8rARi7dl+76NcX6z5OsbwTswjrsYuWcYFq1TS22RxCBbl83SoKCAsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAF3eaSk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWRCBv/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46EDC4CEC3;
-	Mon, 14 Oct 2024 15:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAF3eaSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66938C4CEC3;
+	Mon, 14 Oct 2024 15:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728920077;
-	bh=UY4Td1fC/ivHksuIFBThF8zOQqgqNwBwBhT4UmbHrYQ=;
+	s=korg; t=1728920085;
+	bh=HwncEqEl9g7/IMpvUbjSyWyZY2m3i/SRn8wLwtphmus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWRCBv/DnRtNIU3IDjJpNHMs+P4x5bvHuop9geMuKUTPwd2o6/mXk0kr7dA57Vgpy
-	 A2d9StEZ+WXAX6q0601p+8iO/XNGuIh8/P9v/kM9XHjbWvJnGhVUOydO3sGOIogszf
-	 3FKPZqZoinmzh4q7SZ54iWFiwNQpYRSALm86vreI=
+	b=uAF3eaSk3rdRMMhO0xvhVr46GIqM3CLJtJoiJHQ+r02gmSimn11Tmt6u1MFWNZfxK
+	 SwGlVNR4ep66ad3G7gKW/3yx/EusAhehutJ6F97Zfyr5le8q61EGz4ArKDk2TAwvY4
+	 syBoxlwEP5dNBeKf+5mJ01zUQar7iEhhpvCx+DIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kun(llfl)" <llfl@linux.alibaba.com>,
-	JianXiong Zhao <zhaojianxiong.zjx@alibaba-inc.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 791/798] device-dax: correct pgoff align in dax_set_mapping()
-Date: Mon, 14 Oct 2024 16:22:25 +0200
-Message-ID: <20241014141249.147568876@linuxfoundation.org>
+	Yonatan Maman <Ymaman@Nvidia.com>,
+	Gal Shalom <GalShalom@Nvidia.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.1 792/798] nouveau/dmem: Fix vulnerability in migrate_to_ram upon copy error
+Date: Mon, 14 Oct 2024 16:22:26 +0200
+Message-ID: <20241014141249.187252362@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -47,121 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kun(llfl) <llfl@linux.alibaba.com>
+From: Yonatan Maman <Ymaman@Nvidia.com>
 
-commit 7fcbd9785d4c17ea533c42f20a9083a83f301fa6 upstream.
+commit 835745a377a4519decd1a36d6b926e369b3033e2 upstream.
 
-pgoff should be aligned using ALIGN_DOWN() instead of ALIGN().  Otherwise,
-vmf->address not aligned to fault_size will be aligned to the next
-alignment, that can result in memory failure getting the wrong address.
+The `nouveau_dmem_copy_one` function ensures that the copy push command is
+sent to the device firmware but does not track whether it was executed
+successfully.
 
-It's a subtle situation that only can be observed in
-page_mapped_in_vma() after the page is page fault handled by
-dev_dax_huge_fault.  Generally, there is little chance to perform
-page_mapped_in_vma in dev-dax's page unless in specific error injection
-to the dax device to trigger an MCE - memory-failure.  In that case,
-page_mapped_in_vma() will be triggered to determine which task is
-accessing the failure address and kill that task in the end.
+In the case of a copy error (e.g., firmware or hardware failure), the
+copy push command will be sent via the firmware channel, and
+`nouveau_dmem_copy_one` will likely report success, leading to the
+`migrate_to_ram` function returning a dirty HIGH_USER page to the user.
 
+This can result in a security vulnerability, as a HIGH_USER page that may
+contain sensitive or corrupted data could be returned to the user.
 
-We used self-developed dax device (which is 2M aligned mapping) , to
-perform error injection to random address.  It turned out that error
-injected to non-2M-aligned address was causing endless MCE until panic.
-Because page_mapped_in_vma() kept resulting wrong address and the task
-accessing the failure address was never killed properly:
+To prevent this vulnerability, we allocate a zero page. Thus, in case of
+an error, a non-dirty (zero) page will be returned to the user.
 
-
-[ 3783.719419] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3784.049006] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3784.049190] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3784.448042] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3784.448186] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3784.792026] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3784.792179] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3785.162502] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3785.162633] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3785.461116] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3785.461247] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3785.764730] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3785.764859] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3786.042128] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3786.042259] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3786.464293] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3786.464423] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3786.818090] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3786.818217] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-[ 3787.085297] mce: Uncorrected hardware memory error in user-access at
-200c9742380
-[ 3787.085424] Memory failure: 0x200c9742: recovery action for dax page:
-Recovered
-
-It took us several weeks to pinpoint this problem,  but we eventually
-used bpftrace to trace the page fault and mce address and successfully
-identified the issue.
-
-
-Joao added:
-
-; Likely we never reproduce in production because we always pin
-: device-dax regions in the region align they provide (Qemu does
-: similarly with prealloc in hugetlb/file backed memory).  I think this
-: bug requires that we touch *unpinned* device-dax regions unaligned to
-: the device-dax selected alignment (page size i.e.  4K/2M/1G)
-
-Link: https://lkml.kernel.org/r/23c02a03e8d666fef11bbe13e85c69c8b4ca0624.1727421694.git.llfl@linux.alibaba.com
-Fixes: b9b5777f09be ("device-dax: use ALIGN() for determining pgoff")
-Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
-Tested-by: JianXiong Zhao <zhaojianxiong.zjx@alibaba-inc.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5be73b690875 ("drm/nouveau/dmem: device memory helpers for SVM")
+Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
+Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
+Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-3-ymaman@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dax/device.c | 2 +-
+ drivers/gpu/drm/nouveau/nouveau_dmem.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dax/device.c b/drivers/dax/device.c
-index 9c1a729cd77e..6d74e62bbee0 100644
---- a/drivers/dax/device.c
-+++ b/drivers/dax/device.c
-@@ -86,7 +86,7 @@ static void dax_set_mapping(struct vm_fault *vmf, pfn_t pfn,
- 		nr_pages = 1;
+--- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
+@@ -194,7 +194,7 @@ static vm_fault_t nouveau_dmem_migrate_t
+ 	if (!spage || !(src & MIGRATE_PFN_MIGRATE))
+ 		goto done;
  
- 	pgoff = linear_page_index(vmf->vma,
--			ALIGN(vmf->address, fault_size));
-+			ALIGN_DOWN(vmf->address, fault_size));
+-	dpage = alloc_page_vma(GFP_HIGHUSER, vmf->vma, vmf->address);
++	dpage = alloc_page_vma(GFP_HIGHUSER | __GFP_ZERO, vmf->vma, vmf->address);
+ 	if (!dpage)
+ 		goto done;
  
- 	for (i = 0; i < nr_pages; i++) {
- 		struct page *page = pfn_to_page(pfn_t_to_pfn(pfn) + i);
--- 
-2.47.0
-
 
 
