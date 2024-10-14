@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304551AC450;
-	Mon, 14 Oct 2024 15:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4201B1ABEB7;
+	Mon, 14 Oct 2024 15:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918093; cv=none; b=dz7F7EvrKSPhHJat3bxTcexkjozMS/MCItIIIoHzkRo12sxa1Vk0uMUll4kio/yEe3LLH+UKD56MTz6c8D9QXx8qe6Z+ar/3lHAag4ELtY5kCybgXH26mIdR5eDxpmscUyfknLb5z2QbLFc+tJ8UhWRBOkedUN/6U3FjQf7jKaQ=
+	t=1728918096; cv=none; b=pqO/pPRe/OwjyY43ksTN/pB/vGWf3OGKJrjJwbI8X+yuLl9y8ddRI1LWe4U9rNix9NniYbt3KJl1rozmpBW24xGfNfDwWinFJjQu0srL6WVxABv37DBqFLeQpkRLu0yn90lxYtOYjNiYjuVwBcaVmJXTxglU05GBOUe1pZfD2E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918093; c=relaxed/simple;
-	bh=TELaisNKnxkwo7U0BIwXSI0ACiPFWv7IdjjRIHSg9GQ=;
+	s=arc-20240116; t=1728918096; c=relaxed/simple;
+	bh=M0Yr93ftA50JzKFlvo5ynrx2dJHKYWZE3PByOrrEmzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFPnSBVv83j5toFAybbuaqwmVP2sR6Og9oRvj7H7OoDYduELEQlRe6Tjtx24Vt0b/LsTxHY7d6CT2UOmhTBPFdFFs67zvL4SZTvPv4YoWol73grItC2ES2cAMYM4rdP3QNSr4Z+LNetPc/7FZXRVnPaud4XDkM5dVV+9BfoxolI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjkNo0vp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4hDPjaPdiuccUbVK/+Sws1TECV5ySKmYKiqEmfDmENMhXWpxfVaHW08/Lq9ArwxshD6R9YTj2X+FU3EycBYFdIWCmXe+WXrGUQFp7pkB8tvHYb1zmNwn63EpUDREwWB84OmdU0hoVu2DClpDYE48Q6+U040psF8tDf+URevwKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knFcmN2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjkNo0vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC11C4CEC3;
-	Mon, 14 Oct 2024 15:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knFcmN2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB79C4CEC3;
+	Mon, 14 Oct 2024 15:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918093;
-	bh=TELaisNKnxkwo7U0BIwXSI0ACiPFWv7IdjjRIHSg9GQ=;
+	s=korg; t=1728918096;
+	bh=M0Yr93ftA50JzKFlvo5ynrx2dJHKYWZE3PByOrrEmzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjkNo0vp1LQl2+kWfBb565cTBFHAeJQW2J7N/4Sps0ezzEC1nuPJYgwoc5fwo3YWo
-	 lGXPKWRoJqXNiWYj/gf/zxiOPKfSIKgSW+bRC5dEr/UmtBgUBETel71npqL9kg0+SV
-	 IhNFkQpagqGRrj9YYKhIwx23TLvccsaqUZEMtjTw=
+	b=knFcmN2vqB2M19d0DVjA9b8onJkNoIwmUY3uQpLOB232fL+B1hDqOZoiRW1TC/EPY
+	 0PRgqZD0h4uP7URa0hqaEKC+0zhOEF9d7V8sKw7xh+IUaoG6291/pLE7c8eNVwC7I6
+	 86jhRdi24xy23dAj6qnMASJCYOxxVmhqzC/nUN0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	wenglianfa <wenglianfa@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/798] RDMA/hns: Dont modify rq next block addr in HIP09 QPC
-Date: Mon, 14 Oct 2024 16:12:53 +0200
-Message-ID: <20241014141226.533402005@linuxfoundation.org>
+Subject: [PATCH 6.1 220/798] RDMA/hns: Fix Use-After-Free of rsv_qp on HIP08
+Date: Mon, 14 Oct 2024 16:12:54 +0200
+Message-ID: <20241014141226.572007981@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,47 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit 6928d264e328e0cb5ee7663003a6e46e4cba0a7e ]
+[ Upstream commit fd8489294dd2beefb70f12ec4f6132aeec61a4d0 ]
 
-The field 'rq next block addr' in QPC can be updated by driver only
-on HIP08. On HIP09 HW updates this field while driver is not allowed.
+Currently rsv_qp is freed before ib_unregister_device() is called
+on HIP08. During the time interval, users can still dereg MR and
+rsv_qp will be used in this process, leading to a UAF. Move the
+release of rsv_qp after calling ib_unregister_device() to fix it.
 
-Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
+Fixes: 70f92521584f ("RDMA/hns: Use the reserved loopback QPs to free MR before destroying MPT")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-2-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20240906093444.3571619-3-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index c4521ab66ee45..3318d27233e0d 100644
+index 3318d27233e0d..7ca85dcb5458c 100644
 --- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
 +++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -4572,12 +4572,14 @@ static int config_qp_rq_buf(struct hns_roce_dev *hr_dev,
- 		     upper_32_bits(to_hr_hw_page_addr(mtts[0])));
- 	hr_reg_clear(qpc_mask, QPC_RQ_CUR_BLK_ADDR_H);
+@@ -3058,6 +3058,9 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
  
--	context->rq_nxt_blk_addr = cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
--	qpc_mask->rq_nxt_blk_addr = 0;
+ static void hns_roce_v2_exit(struct hns_roce_dev *hr_dev)
+ {
++	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
++		free_mr_exit(hr_dev);
++
+ 	hns_roce_function_clear(hr_dev);
+ 
+ 	if (!hr_dev->is_vf)
+@@ -6935,9 +6938,6 @@ static void __hns_roce_hw_v2_uninit_instance(struct hnae3_handle *handle,
+ 	hr_dev->state = HNS_ROCE_DEVICE_STATE_UNINIT;
+ 	hns_roce_handle_device_err(hr_dev);
+ 
+-	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
+-		free_mr_exit(hr_dev);
 -
--	hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
--		     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
--	hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
-+		context->rq_nxt_blk_addr =
-+				cpu_to_le32(to_hr_hw_page_addr(mtts[1]));
-+		qpc_mask->rq_nxt_blk_addr = 0;
-+		hr_reg_write(context, QPC_RQ_NXT_BLK_ADDR_H,
-+			     upper_32_bits(to_hr_hw_page_addr(mtts[1])));
-+		hr_reg_clear(qpc_mask, QPC_RQ_NXT_BLK_ADDR_H);
-+	}
- 
- 	return 0;
- }
+ 	hns_roce_exit(hr_dev);
+ 	kfree(hr_dev->priv);
+ 	ib_dealloc_device(&hr_dev->ib_dev);
 -- 
 2.43.0
 
