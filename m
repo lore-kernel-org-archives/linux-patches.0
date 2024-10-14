@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4419D481B3;
-	Mon, 14 Oct 2024 15:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BF87C6E6;
+	Mon, 14 Oct 2024 15:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918233; cv=none; b=c7biWtikQSTGr4XqyKRILtCX4FZBoSNcHNGyx3zbxJuKM2/aRdbqo7aWMuYnP+IhDhLJ9wSSv9Sf5oVy/4A2UsRCmPaOp2bDJ1HQSBlWuLNKMEBnVe1hIlfPAAhrxtqQNPm2wPW9BkOdtpUemHP5gRXHupi1uDH77B3LLywlSP0=
+	t=1728918236; cv=none; b=GV9heRk0efgJHWl5uODMcXfwKf+7Q4PsYt9ad/Mnq/bbGE0lGuS6pUzlqlTLM4E7VPn7Pv/SZ4JZTpQivegeyFStnztGVwCKcaPy3kgrmN3k/QpFn20QNugupOqK8kLqY58QhHE4FpQr/Rgh2bYPMhlsV606jqo94DUFXRBIwxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918233; c=relaxed/simple;
-	bh=OaIq2iyylXQh8iqT3GsfMo3QE6DdTUx2xzb4ScJ9N+A=;
+	s=arc-20240116; t=1728918236; c=relaxed/simple;
+	bh=qn/h+u5comjC6ci14m2p4+PCf0aSqSrhw9GEW3zGrt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wa7oED9sxlSe9r8DOGjCAbpbpzRDs2igCqI25rHcvsfILBRdqxtYYuG2anOQb9o9iJQZbE6VIvHQ3OCnELH0lM8E8ySycgu0hSvaZcap5bonKOnpugyj7+DzOIPsXAYlDv/XwIBPGQtqAjVotwCw1VbjENIipuLNePraDRnGY3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3F8z8Gz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XI9ZpyjMeCUuC1ov34P+4E2LX9Wojp/Gh2RKJLpc2JsospEm3nYoy2VqufgBriUJ0ccsVa5bBUkBFDePeqw0CkKLyYPZRoLc+17UwOqo4sft1zg/LcZj0dURgrBmvfvzmKInfom6ux85mXbJQwCsaE1TW4f/E8DKjPLklYGBmLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0TVZdoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3F8z8Gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7423C4CEC3;
-	Mon, 14 Oct 2024 15:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0TVZdoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299B7C4CEC3;
+	Mon, 14 Oct 2024 15:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918233;
-	bh=OaIq2iyylXQh8iqT3GsfMo3QE6DdTUx2xzb4ScJ9N+A=;
+	s=korg; t=1728918236;
+	bh=qn/h+u5comjC6ci14m2p4+PCf0aSqSrhw9GEW3zGrt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3F8z8GzOet/4IlxdoGwdCXIzGe1lg1aMtuNvZSek2eI91FlfiMokmg5Ly8lXytdc
-	 cuQImZvZBIuw85Z0CgR9D2x7YA5ic3QZ8f8ZhlJ7U7jIvPFt14dCOOAT5Ua5k/UYss
-	 +tFH5NFcZYiZi15s+HA5m6QUJ49d4CEHf5XX3N3A=
+	b=x0TVZdoUicRqbGkJUuzLjZOECPbla85m2dk8k3GJ/aB9Gsbwx/G6hxjUgpS2JT8LP
+	 9nJCQTOH/4/fz2UBnsh/dQli4f9sSHDavMjXFmXBhJ3mBKTJQIk3EQcqGvDtVeVbeZ
+	 Wl2LdlzLcds3we0kxTHp4mD/RKgcWP6YqTyWpvL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Dai <jerry.dai@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 231/798] ntb: Force physically contiguous allocation of rx ring buffers
-Date: Mon, 14 Oct 2024 16:13:05 +0200
-Message-ID: <20241014141226.997428009@linuxfoundation.org>
+Subject: [PATCH 6.1 222/798] RDMA/hns: Fix spin_unlock_irqrestore() called with IRQs enabled
+Date: Mon, 14 Oct 2024 16:12:56 +0200
+Message-ID: <20241014141226.649617037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,86 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 061a785a114f159e990ea8ed8d1b7dca4b41120f ]
+[ Upstream commit 74d315b5af180220d561684d15897730135733a6 ]
 
-Physical addresses under IOVA on x86 platform are mapped contiguously
-as a side effect before the patch that removed CONFIG_DMA_REMAP. The
-NTB rx buffer ring is a single chunk DMA buffer that is allocated
-against the NTB PCI device. If the receive side is using a DMA device,
-then the buffers are remapped against the DMA device before being
-submitted via the dmaengine API. This scheme becomes a problem when
-the physical memory is discontiguous. When dma_map_page() is called
-on the kernel virtual address from the dma_alloc_coherent() call, the
-new IOVA mapping no longer points to all the physical memory allocated
-due to being discontiguous. Change dma_alloc_coherent() to dma_alloc_attrs()
-in order to force DMA_ATTR_FORCE_CONTIGUOUS attribute. This is the best
-fix for the circumstance. A potential future solution may be having the DMA
-mapping API providing a way to alias an existing IOVA mapping to a new
-device perhaps.
+Fix missuse of spin_lock_irq()/spin_unlock_irq() when
+spin_lock_irqsave()/spin_lock_irqrestore() was hold.
 
-This fix is not to fix the patch pointed to by the fixes tag, but to fix
-the issue arised in the ntb_transport driver on x86 platforms after the
-said patch is applied.
+This was discovered through the lock debugging, and the corresponding
+log is as follows:
 
-Reported-by: Jerry Dai <jerry.dai@intel.com>
-Fixes: f5ff79fddf0e ("dma-mapping: remove CONFIG_DMA_REMAP")
-Tested-by: Jerry Dai <jerry.dai@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+raw_local_irq_restore() called with IRQs enabled
+WARNING: CPU: 96 PID: 2074 at kernel/locking/irqflag-debug.c:10 warn_bogus_irq_restore+0x30/0x40
+...
+Call trace:
+ warn_bogus_irq_restore+0x30/0x40
+ _raw_spin_unlock_irqrestore+0x84/0xc8
+ add_qp_to_list+0x11c/0x148 [hns_roce_hw_v2]
+ hns_roce_create_qp_common.constprop.0+0x240/0x780 [hns_roce_hw_v2]
+ hns_roce_create_qp+0x98/0x160 [hns_roce_hw_v2]
+ create_qp+0x138/0x258
+ ib_create_qp_kernel+0x50/0xe8
+ create_mad_qp+0xa8/0x128
+ ib_mad_port_open+0x218/0x448
+ ib_mad_init_device+0x70/0x1f8
+ add_client_context+0xfc/0x220
+ enable_device_and_get+0xd0/0x140
+ ib_register_device.part.0+0xf4/0x1c8
+ ib_register_device+0x34/0x50
+ hns_roce_register_device+0x174/0x3d0 [hns_roce_hw_v2]
+ hns_roce_init+0xfc/0x2c0 [hns_roce_hw_v2]
+ __hns_roce_hw_v2_init_instance+0x7c/0x1d0 [hns_roce_hw_v2]
+ hns_roce_hw_v2_init_instance+0x9c/0x180 [hns_roce_hw_v2]
+
+Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20240906093444.3571619-6-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index 9532108d2dce1..5b25260e59253 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -807,16 +807,29 @@ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
- }
- 
- static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
--			       struct device *dma_dev, size_t align)
-+			       struct device *ntb_dev, size_t align)
- {
- 	dma_addr_t dma_addr;
- 	void *alloc_addr, *virt_addr;
- 	int rc;
- 
--	alloc_addr = dma_alloc_coherent(dma_dev, mw->alloc_size,
--					&dma_addr, GFP_KERNEL);
-+	/*
-+	 * The buffer here is allocated against the NTB device. The reason to
-+	 * use dma_alloc_*() call is to allocate a large IOVA contiguous buffer
-+	 * backing the NTB BAR for the remote host to write to. During receive
-+	 * processing, the data is being copied out of the receive buffer to
-+	 * the kernel skbuff. When a DMA device is being used, dma_map_page()
-+	 * is called on the kvaddr of the receive buffer (from dma_alloc_*())
-+	 * and remapped against the DMA device. It appears to be a double
-+	 * DMA mapping of buffers, but first is mapped to the NTB device and
-+	 * second is to the DMA device. DMA_ATTR_FORCE_CONTIGUOUS is necessary
-+	 * in order for the later dma_map_page() to not fail.
-+	 */
-+	alloc_addr = dma_alloc_attrs(ntb_dev, mw->alloc_size,
-+				     &dma_addr, GFP_KERNEL,
-+				     DMA_ATTR_FORCE_CONTIGUOUS);
- 	if (!alloc_addr) {
--		dev_err(dma_dev, "Unable to alloc MW buff of size %zu\n",
-+		dev_err(ntb_dev, "Unable to alloc MW buff of size %zu\n",
- 			mw->alloc_size);
- 		return -ENOMEM;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index c97b5dba17728..e158ed9e6c83c 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1443,19 +1443,19 @@ void hns_roce_lock_cqs(struct hns_roce_cq *send_cq, struct hns_roce_cq *recv_cq)
+ 		__acquire(&send_cq->lock);
+ 		__acquire(&recv_cq->lock);
+ 	} else if (unlikely(send_cq != NULL && recv_cq == NULL)) {
+-		spin_lock_irq(&send_cq->lock);
++		spin_lock(&send_cq->lock);
+ 		__acquire(&recv_cq->lock);
+ 	} else if (unlikely(send_cq == NULL && recv_cq != NULL)) {
+-		spin_lock_irq(&recv_cq->lock);
++		spin_lock(&recv_cq->lock);
+ 		__acquire(&send_cq->lock);
+ 	} else if (send_cq == recv_cq) {
+-		spin_lock_irq(&send_cq->lock);
++		spin_lock(&send_cq->lock);
+ 		__acquire(&recv_cq->lock);
+ 	} else if (send_cq->cqn < recv_cq->cqn) {
+-		spin_lock_irq(&send_cq->lock);
++		spin_lock(&send_cq->lock);
+ 		spin_lock_nested(&recv_cq->lock, SINGLE_DEPTH_NESTING);
+ 	} else {
+-		spin_lock_irq(&recv_cq->lock);
++		spin_lock(&recv_cq->lock);
+ 		spin_lock_nested(&send_cq->lock, SINGLE_DEPTH_NESTING);
  	}
-@@ -845,7 +858,7 @@ static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
- 	return 0;
- 
- err:
--	dma_free_coherent(dma_dev, mw->alloc_size, alloc_addr, dma_addr);
-+	dma_free_coherent(ntb_dev, mw->alloc_size, alloc_addr, dma_addr);
- 
- 	return rc;
  }
+@@ -1475,13 +1475,13 @@ void hns_roce_unlock_cqs(struct hns_roce_cq *send_cq,
+ 		spin_unlock(&recv_cq->lock);
+ 	} else if (send_cq == recv_cq) {
+ 		__release(&recv_cq->lock);
+-		spin_unlock_irq(&send_cq->lock);
++		spin_unlock(&send_cq->lock);
+ 	} else if (send_cq->cqn < recv_cq->cqn) {
+ 		spin_unlock(&recv_cq->lock);
+-		spin_unlock_irq(&send_cq->lock);
++		spin_unlock(&send_cq->lock);
+ 	} else {
+ 		spin_unlock(&send_cq->lock);
+-		spin_unlock_irq(&recv_cq->lock);
++		spin_unlock(&recv_cq->lock);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
