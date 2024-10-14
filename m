@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6694E1C729E;
-	Mon, 14 Oct 2024 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812F31AC884;
+	Mon, 14 Oct 2024 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919780; cv=none; b=TOc+YQF7p2o1YiLM/ib7KtBzSCQpaVzpYYZF6Mxhsxhk2mO6d1Vctek3+xkWoFZ2IfSFDgjTLPkkz3mT8gkucq8z7Lw9p7yn+d15lgkuSmd2690HfBmPVdNM4nVgsIlzZRj2fvI2Wew2KM+CQXXBZhRtl0c9PkQLormFq1bCCe0=
+	t=1728919783; cv=none; b=jphEIavUheYDKjRzoxdcV+5owxCPukSWff6uS3Iyj1aET07rwuAlbfpnsjcpxPOkqnhg4y/F8vflzsvDFIhzybxPTUK964q8NH8B76wT2Mx7DpIZoRUQfCtJJ3bWJbNh6q9FKQItOXOcDuOAUkBow5i9ZvpYHTmoX3MM0te7X9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919780; c=relaxed/simple;
-	bh=iuQswb5u+R6omW/wqo1hHeaE85h/cAwK40KshFuQwBU=;
+	s=arc-20240116; t=1728919783; c=relaxed/simple;
+	bh=8FL6jkXHP4w/YOPYHkr2jLoIyFZEzZUn7yUTh7tEA1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2n6SLRzJ2DpKrcZ5DHGZRrCGeIBd1f864wNihJulzT5PQgZS/KZuYakt86qQHsykc+8VqTiCkP+R6x8ZswWecqh0Q+a8BlCR5zHN4Ucga2gtjA9rBeaIPi8qO2HhGUEhgmavyB06SCzLl1LQqYip2Z7GXN4cGhP1oSV84pomuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sS3W1aES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDzlcpxA6jbDb0WxOVA4qre81d512GtElO1RN81LGgZ2isLxuPd09iDnAv7oeoC/Mlwy13Y4QMn+bwhBMN0mujSxUtnD1D94DgvxiM1yR0e7tUqHWGGN5M61zvqu/tLazcmvUT/qbUy+Ykhsdzbr8jvbsD2msKl7Tbv+P/SWMAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxDGtyKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sS3W1aES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700A0C4CEC3;
-	Mon, 14 Oct 2024 15:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxDGtyKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E5BC4CEC3;
+	Mon, 14 Oct 2024 15:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919779;
-	bh=iuQswb5u+R6omW/wqo1hHeaE85h/cAwK40KshFuQwBU=;
+	s=korg; t=1728919783;
+	bh=8FL6jkXHP4w/YOPYHkr2jLoIyFZEzZUn7yUTh7tEA1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sS3W1aESA8HiYZU/8/h2xf4ftC/ONnBlO1Wl/Jak+jxcu8/iNHsXWB6Th5J0y5wr5
-	 4Gx9dBWtM9C7RZwVNnzkw138E81gW9Ilo9GteCb/2xmU0lx3yMXmwtUI5vqJF/8EXa
-	 0eXL/gjbOKCBOScWUoTyssrpjkilaxh5EoLoqtc4=
+	b=hxDGtyKYxglqpxhECpBZzzeesXR4Wg/Dxfhu44ViJkyXMyiXNrP3AFjxZVWSqwnWX
+	 VMQstSO8uWH9ozcRM4vPjscqPdOdI2t6hngcxuJmaIXyVfQs9YU5ZcLpeZEYmeb9HH
+	 s1MWCmihMCwbEk1lNo34TY+Eq3r9l9+M69oGwyE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SiyuLi <siyuli@glenfly.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 697/798] PCI: Add function 0 DMA alias quirk for Glenfly Arise chip
-Date: Mon, 14 Oct 2024 16:20:51 +0200
-Message-ID: <20241014141245.451620357@linuxfoundation.org>
+Subject: [PATCH 6.1 706/798] RDMA/mlx5: Enforce umem boundaries for explicit ODP page faults
+Date: Mon, 14 Oct 2024 16:21:00 +0200
+Message-ID: <20241014141245.804656302@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -53,67 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 9246b487ab3c3b5993aae7552b7a4c541cc14a49 ]
+[ Upstream commit 8c6d097d830f779fc1725fbaa1314f20a7a07b4b ]
 
-Add DMA support for audio function of Glenfly Arise chip, which uses
-Requester ID of function 0.
+The new memory scheme page faults are requesting the driver to fetch
+additinal pages to the faulted memory access.
+This is done in order to prefetch pages before and after the area that
+got the page fault, assuming this will reduce the total amount of page
+faults.
 
-Link: https://lore.kernel.org/r/CA2BBD087345B6D1+20240823095708.3237375-1-wangyuli@uniontech.com
-Signed-off-by: SiyuLi <siyuli@glenfly.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-[bhelgaas: lower-case hex to match local code, drop unused Device IDs]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
+The driver should ensure it handles only the pages that are within the
+umem range.
+
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/20240909100504.29797-5-michaelgur@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c      | 4 ++++
- include/linux/pci_ids.h   | 2 ++
- sound/pci/hda/hda_intel.c | 2 +-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/odp.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 56dce858a6934..7ebce76778f71 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4144,6 +4144,10 @@ static void quirk_dma_func0_alias(struct pci_dev *dev)
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe832, quirk_dma_func0_alias);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe476, quirk_dma_func0_alias);
- 
-+/* Some Glenfly chips use function 0 as the PCIe Requester ID for DMA */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d40, quirk_dma_func0_alias);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d41, quirk_dma_func0_alias);
-+
- static void quirk_dma_func1_alias(struct pci_dev *dev)
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index af73c5ebe6ac5..d3cada2ae5a5b 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -734,24 +734,31 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+  *  >0: Number of pages mapped
+  */
+ static int pagefault_mr(struct mlx5_ib_mr *mr, u64 io_virt, size_t bcnt,
+-			u32 *bytes_mapped, u32 flags)
++			u32 *bytes_mapped, u32 flags, bool permissive_fault)
  {
- 	if (PCI_FUNC(dev->devfn) != 1)
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index f680897794fa2..69b8c46a42ea7 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -2638,6 +2638,8 @@
- #define PCI_DEVICE_ID_DCI_PCCOM8	0x0002
- #define PCI_DEVICE_ID_DCI_PCCOM2	0x0004
+ 	struct ib_umem_odp *odp = to_ib_umem_odp(mr->umem);
  
-+#define PCI_VENDOR_ID_GLENFLY		0x6766
+-	if (unlikely(io_virt < mr->ibmr.iova))
++	if (unlikely(io_virt < mr->ibmr.iova) && !permissive_fault)
+ 		return -EFAULT;
+ 
+ 	if (mr->umem->is_dmabuf)
+ 		return pagefault_dmabuf_mr(mr, bcnt, bytes_mapped, flags);
+ 
+ 	if (!odp->is_implicit_odp) {
++		u64 offset = io_virt < mr->ibmr.iova ? 0 : io_virt - mr->ibmr.iova;
+ 		u64 user_va;
+ 
+-		if (check_add_overflow(io_virt - mr->ibmr.iova,
+-				       (u64)odp->umem.address, &user_va))
++		if (check_add_overflow(offset, (u64)odp->umem.address,
++				       &user_va))
+ 			return -EFAULT;
+-		if (unlikely(user_va >= ib_umem_end(odp) ||
+-			     ib_umem_end(odp) - user_va < bcnt))
 +
- #define PCI_VENDOR_ID_INTEL		0x8086
- #define PCI_DEVICE_ID_INTEL_EESSC	0x0008
- #define PCI_DEVICE_ID_INTEL_PXHD_0	0x0320
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index a26f2a2d44cf2..b8d769b2d0f9a 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2748,7 +2748,7 @@ static const struct pci_device_id azx_ids[] = {
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
- 	/* GLENFLY */
--	{ PCI_DEVICE(0x6766, PCI_ANY_ID),
-+	{ PCI_DEVICE(PCI_VENDOR_ID_GLENFLY, PCI_ANY_ID),
- 	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
- 	  .class_mask = 0xffffff,
- 	  .driver_data = AZX_DRIVER_GFHDMI | AZX_DCAPS_POSFIX_LPIB |
++		if (permissive_fault) {
++			if (user_va < ib_umem_start(odp))
++				user_va = ib_umem_start(odp);
++			if ((user_va + bcnt) > ib_umem_end(odp))
++				bcnt = ib_umem_end(odp) - user_va;
++		} else if (unlikely(user_va >= ib_umem_end(odp) ||
++				    ib_umem_end(odp) - user_va < bcnt))
+ 			return -EFAULT;
+ 		return pagefault_real_mr(mr, odp, user_va, bcnt, bytes_mapped,
+ 					 flags);
+@@ -858,7 +865,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 	case MLX5_MKEY_MR:
+ 		mr = container_of(mmkey, struct mlx5_ib_mr, mmkey);
+ 
+-		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0);
++		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
+ 		if (ret < 0)
+ 			goto end;
+ 
+@@ -1724,7 +1731,7 @@ static void mlx5_ib_prefetch_mr_work(struct work_struct *w)
+ 	for (i = 0; i < work->num_sge; ++i) {
+ 		ret = pagefault_mr(work->frags[i].mr, work->frags[i].io_virt,
+ 				   work->frags[i].length, &bytes_mapped,
+-				   work->pf_flags);
++				   work->pf_flags, false);
+ 		if (ret <= 0)
+ 			continue;
+ 		mlx5_update_odp_stats(work->frags[i].mr, prefetch, ret);
+@@ -1775,7 +1782,7 @@ static int mlx5_ib_prefetch_sg_list(struct ib_pd *pd,
+ 		if (IS_ERR(mr))
+ 			return PTR_ERR(mr);
+ 		ret = pagefault_mr(mr, sg_list[i].addr, sg_list[i].length,
+-				   &bytes_mapped, pf_flags);
++				   &bytes_mapped, pf_flags, false);
+ 		if (ret < 0) {
+ 			mlx5r_deref_odp_mkey(&mr->mmkey);
+ 			return ret;
 -- 
 2.43.0
 
