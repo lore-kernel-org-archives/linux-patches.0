@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC5E1C82FB;
-	Mon, 14 Oct 2024 14:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D261CACC8;
+	Mon, 14 Oct 2024 14:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917238; cv=none; b=omOfG/Curdx6sCzdEzVMqHjb0ohIia3Ki8klMkeMYVtVPA4rSJr5EioVzuD3Kgo0V/CysHcnfZcx6Unk4EhiDp7858V6IRSz8UT7bYmc+dl5ROFP1CtCDSMMZpI701OTlLZh4Qq1cICBa8dHswJs6Pss22xZuRwBFk7GtTjekKM=
+	t=1728917241; cv=none; b=PpgghkQ8HmTfgfwIW8ZCC1/ncHu30kKKdGgZ7OxgrMTseGLwDWrE9X4E0TK/OTKOkdXyBudZjO/zzfvi0SrdWsmKS8AlIe3EB5tuRQFJVj3dbasmEePdLuG3W0gymVE7LHtwQNTMSu15CaI7lLyIT3h4P2biOFTTaTb+9I19jD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917238; c=relaxed/simple;
-	bh=tJyqG4AmNascUd2rxiAk2blCsLp/9l71rczjt0C29+M=;
+	s=arc-20240116; t=1728917241; c=relaxed/simple;
+	bh=7H44emfYO7KvLz9Cos3DU5nHDTCmqkRII/DzoIKFUoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9gBLwvDuEiHBTpw5Wt5brEGu1YWcRK6KF003xMmbCPv/qnyWIdp1Wh4HnPF6TBfwCmOyWXI/V0IrDdzvoJJu0tCvTxTsEnziIcrcOBOwzmYpr1v/T5x5agUUKa4DjozTXeyHk6EpsXLl2Wind6/QoEEfjJ28VkcTWHJlyX3atc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqNrlgi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+OSdnM4TyPKPY7GJDJdHhecbEw4cfwA+o+bRD1e3VtYP4mmVuJwomAbur1zvtBCVDS06XEe2mUQk4m0BLpJRTnsL6bITWbXdkipQgORKV509sZnChNstAeZnb5qhLuyag9rxN4EkuGStxX+gABAVzeJtfF4tveNYMZzfT7bW54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8ewIf6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqNrlgi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF44C4CEC3;
-	Mon, 14 Oct 2024 14:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8ewIf6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0888CC4CED2;
+	Mon, 14 Oct 2024 14:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917238;
-	bh=tJyqG4AmNascUd2rxiAk2blCsLp/9l71rczjt0C29+M=;
+	s=korg; t=1728917241;
+	bh=7H44emfYO7KvLz9Cos3DU5nHDTCmqkRII/DzoIKFUoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqNrlgi/T0tnpaDhUhid1I64QoPM37OUYpJatyIkbtsCiUb47FEp07ahVFZtgGZrv
-	 vDx7t08TEDSi6CaMPEKiZsqlLjojnIUYzQy97s3wPOCxBDR1UGrTolcHYR0i/GM93D
-	 l2gfIxxS1HbFGeDf5OGHACUO065Wo0kNkgFhssBU=
+	b=m8ewIf6fCJnDA9sYYCPs8hZl3+vx9oR1l+YnMWVbPYq8gCIStuHflMN7IU+4Ps7sy
+	 a8a4FvSlY0vCvB4QwV/FMqgzq8Zgh+KOBI6vxTdPXAZo80/0EFXBdvHyMgJ1pIh9yI
+	 XRQ9jinIv9bJ/aWb8uwleUVSuJiEnpWeYuyFPR1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Tremblay <etremblay@distech-controls.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/213] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
-Date: Mon, 14 Oct 2024 16:21:21 +0200
-Message-ID: <20241014141049.796462535@linuxfoundation.org>
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 193/213] scsi: ufs: Use pre-calculated offsets in ufshcd_init_lrb()
+Date: Mon, 14 Oct 2024 16:21:39 +0200
+Message-ID: <20241014141050.494150524@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -53,45 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Avri Altman <avri.altman@wdc.com>
 
-[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
+commit d5130c5a093257aa4542aaded8034ef116a7624a upstream.
 
-0-day reports:
+Replace manual offset calculations for response_upiu and prd_table in
+ufshcd_init_lrb() with pre-calculated offsets already stored in the
+utp_transfer_req_desc structure. The pre-calculated offsets are set
+differently in ufshcd_host_memory_configure() based on the
+UFSHCD_QUIRK_PRDT_BYTE_GRAN quirk, ensuring correct alignment and
+access.
 
-drivers/hwmon/tmp513.c:162:21: error:
-	variable 'tmp51x_regmap_config' has initializer but incomplete type
-162 | static const struct regmap_config tmp51x_regmap_config = {
-    |                     ^
-
-struct regmap_config is only available if REGMAP is enabled.
-Add the missing Kconfig dependency to fix the problem.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Cc: Eric Tremblay <etremblay@distech-controls.com>
-Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 26f968d7de82 ("scsi: ufs: Introduce UFSHCD_QUIRK_PRDT_BYTE_GRAN quirk")
+Cc: stable@vger.kernel.org
+Signed-off-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20240910044543.3812642-1-avri.altman@wdc.com
+Acked-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index ec38c88921589..b46c85e2197c0 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -2137,6 +2137,7 @@ config SENSORS_TMP464
- config SENSORS_TMP513
- 	tristate "Texas Instruments TMP513 and compatibles"
- 	depends on I2C
-+	select REGMAP_I2C
- 	help
- 	  If you say yes here you get support for Texas Instruments TMP512,
- 	  and TMP513 temperature and power supply sensor chips.
--- 
-2.43.0
-
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -2804,9 +2804,8 @@ static void ufshcd_init_lrb(struct ufs_h
+ 	struct utp_transfer_req_desc *utrdlp = hba->utrdl_base_addr;
+ 	dma_addr_t cmd_desc_element_addr = hba->ucdl_dma_addr +
+ 		i * ufshcd_get_ucd_size(hba);
+-	u16 response_offset = offsetof(struct utp_transfer_cmd_desc,
+-				       response_upiu);
+-	u16 prdt_offset = offsetof(struct utp_transfer_cmd_desc, prd_table);
++	u16 response_offset = le16_to_cpu(utrdlp[i].response_upiu_offset);
++	u16 prdt_offset = le16_to_cpu(utrdlp[i].prd_table_offset);
+ 
+ 	lrb->utr_descriptor_ptr = utrdlp + i;
+ 	lrb->utrd_dma_addr = hba->utrdl_dma_addr +
 
 
