@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3660F1AB525;
-	Mon, 14 Oct 2024 14:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3D71DA53;
+	Mon, 14 Oct 2024 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916973; cv=none; b=Fo2mDWjTATXPDxD7EqzoGHLAJyvPkgvGBzgAKKltpMlBptUFQnBtX1ODAAHjo7Il0TI+ukjN8ngnXwWSWqQmKICexd5rnZWXSvbwCe8JGV6wwMLOSizUTo6CkT19yY3N4liixpxUiG1hB6giUwhyvwSQor+OfhuEjIy0cDc2ckY=
+	t=1728916976; cv=none; b=eO2VtOo/kWurc6D5GZtWPSLF5lizrWUEMBUSfhZ/ehkTJvz2gmRvtpck+MSHjQHp1PudjjtpuIfuQw6utlHZ7QIxy9vIy6eT/w/3ZfTv6rnb7k+AmGmF+8Do868JYioa4uxkbQ8g8hXm1ja9oGBk5tObRmkN1za99T4c0ZBm2Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916973; c=relaxed/simple;
-	bh=rEZlPyRN8+njtR8i7QLrO4tf89dWcL1FTeFcsee0PiE=;
+	s=arc-20240116; t=1728916976; c=relaxed/simple;
+	bh=fod+zQtSqfb3gNc5IDyfdQJm6xHGbA6gwugNAMYAbs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jk5R8egq5bjkNDLyM1j17x6GwU/h8hQ1fkoIVgjxogNSOO5H6c23/R6/3fNGWRJOZEIz7dbLtJhOdzR/uHNALbi4KG5KdzIk+bnSqoEOBXmkL523Q3rG7+M0qAzTOJ75e84ogMEKnFEk8zrX+xyFdGjk+N8/oZlJ5ry/WOWq6AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPrPyOTH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=unoWv2nxl4P0WMXdYufIHfeBfFCCU7bzHlwltzdg/LjXnxWBRy7Pj2SjS9Hy8esL4hNJfyOGRMlxNwfdkIpx4uBHvY8/iZDbvVfu49+WPOabRrWlQ8VbbRZ4EKJmt60kQp02cEyUDBKGV8uITVL9hP+AkMQD5n/U9cpCRf7LjE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yls4OIqm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPrPyOTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C52FC4CEC3;
-	Mon, 14 Oct 2024 14:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yls4OIqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA95C4CEC3;
+	Mon, 14 Oct 2024 14:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916973;
-	bh=rEZlPyRN8+njtR8i7QLrO4tf89dWcL1FTeFcsee0PiE=;
+	s=korg; t=1728916976;
+	bh=fod+zQtSqfb3gNc5IDyfdQJm6xHGbA6gwugNAMYAbs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPrPyOTHUXVKDqHA/EXi1OqgAeXWl63FyZ21xJQuMY8qlKUVbTNafb3oJP2hmrFhQ
-	 j63Leyuf7kHoW1Sq8X3NayH8mGokQ/9El6vAUPKH+yZanYqLQn9JSoAxBl6J8ZdrhM
-	 72B4rvWdSepAF0/+N3aEHwvK4s4qLccEXxquG1u4=
+	b=Yls4OIqmrLhIJXSqk13p9CrXjPhNNU5E6ySdLzdwxDjT/6gRV3KRnrIU2uuyiStcM
+	 H6DJComoHNE0JGEuX/OPb3oloplv6wTpOl7bbvz0gxddihmkSuwydfLJvCM4d6HXfH
+	 ai+mkGvPdvck7ik9TGKPbz+x8NO79p5948cidNAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aananth V <aananthv@google.com>,
 	Neal Cardwell <ncardwell@google.com>,
 	Yuchung Cheng <ycheng@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/213] tcp: fix tcp_enter_recovery() to zero retrans_stamp when its safe
-Date: Mon, 14 Oct 2024 16:20:22 +0200
-Message-ID: <20241014141047.497233176@linuxfoundation.org>
+Subject: [PATCH 6.6 117/213] tcp: new TCP_INFO stats for RTO events
+Date: Mon, 14 Oct 2024 16:20:23 +0200
+Message-ID: <20241014141047.536250182@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -53,151 +54,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Aananth V <aananthv@google.com>
 
-[ Upstream commit b41b4cbd9655bcebcce941bef3601db8110335be ]
+[ Upstream commit 3868ab0f192581eff978501a05f3dc2e01541d77 ]
 
-Fix tcp_enter_recovery() so that if there are no retransmits out then
-we zero retrans_stamp when entering fast recovery. This is necessary
-to fix two buggy behaviors.
+The 2023 SIGCOMM paper "Improving Network Availability with Protective
+ReRoute" has indicated Linux TCP's RTO-triggered txhash rehashing can
+effectively reduce application disruption during outages. To better
+measure the efficacy of this feature, this patch adds three more
+detailed stats during RTO recovery and exports via TCP_INFO.
+Applications and monitoring systems can leverage this data to measure
+the network path diversity and end-to-end repair latency during network
+outages to improve their network infrastructure.
 
-Currently a non-zero retrans_stamp value can persist across multiple
-back-to-back loss recovery episodes. This is because we generally only
-clears retrans_stamp if we are completely done with loss recoveries,
-and get to tcp_try_to_open() and find !tcp_any_retrans_done(sk). This
-behavior causes two bugs:
+The following counters are added to tcp_sock in order to track RTO
+events over the lifetime of a TCP socket.
 
-(1) When a loss recovery episode (CA_Loss or CA_Recovery) is followed
-immediately by a new CA_Recovery, the retrans_stamp value can persist
-and can be a time before this new CA_Recovery episode starts. That
-means that timestamp-based undo will be using the wrong retrans_stamp
-(a value that is too old) when comparing incoming TS ecr values to
-retrans_stamp to see if the current fast recovery episode can be
-undone.
+1. u16 total_rto - Counts the total number of RTO timeouts.
+2. u16 total_rto_recoveries - Counts the total number of RTO recoveries.
+3. u32 total_rto_time - Counts the total time spent (ms) in RTO
+                        recoveries. (time spent in CA_Loss and
+                        CA_Recovery states)
 
-(2) If there is a roughly minutes-long sequence of back-to-back fast
-recovery episodes, one after another (e.g. in a shallow-buffered or
-policed bottleneck), where each fast recovery successfully makes
-forward progress and recovers one window of sequence space (but leaves
-at least one retransmit in flight at the end of the recovery),
-followed by several RTOs, then the ETIMEDOUT check may be using the
-wrong retrans_stamp (a value set at the start of the first fast
-recovery in the sequence). This can cause a very premature ETIMEDOUT,
-killing the connection prematurely.
+To compute total_rto_time, we add a new u32 rto_stamp field to
+tcp_sock. rto_stamp records the start timestamp (ms) of the last RTO
+recovery (CA_Loss).
 
-This commit changes the code to zero retrans_stamp when entering fast
-recovery, when this is known to be safe (no retransmits are out in the
-network). That ensures that when starting a fast recovery episode, and
-it is safe to do so, retrans_stamp is set when we send the fast
-retransmit packet. That addresses both bug (1) and bug (2) by ensuring
-that (if no retransmits are out when we start a fast recovery) we use
-the initial fast retransmit of this fast recovery as the time value
-for undo and ETIMEDOUT calculations.
+Corresponding fields are also added to the tcp_info struct.
 
-This makes intuitive sense, since the start of a new fast recovery
-episode (in a scenario where no lost packets are out in the network)
-means that the connection has made forward progress since the last RTO
-or fast recovery, and we should thus "restart the clock" used for both
-undo and ETIMEDOUT logic.
-
-Note that if when we start fast recovery there *are* retransmits out
-in the network, there can still be undesirable (1)/(2) issues. For
-example, after this patch we can still have the (1) and (2) problems
-in cases like this:
-
-+ round 1: sender sends flight 1
-
-+ round 2: sender receives SACKs and enters fast recovery 1,
-  retransmits some packets in flight 1 and then sends some new data as
-  flight 2
-
-+ round 3: sender receives some SACKs for flight 2, notes losses, and
-  retransmits some packets to fill the holes in flight 2
-
-+ fast recovery has some lost retransmits in flight 1 and continues
-  for one or more rounds sending retransmits for flight 1 and flight 2
-
-+ fast recovery 1 completes when snd_una reaches high_seq at end of
-  flight 1
-
-+ there are still holes in the SACK scoreboard in flight 2, so we
-  enter fast recovery 2, but some retransmits in the flight 2 sequence
-  range are still in flight (retrans_out > 0), so we can't execute the
-  new retrans_stamp=0 added here to clear retrans_stamp
-
-It's not yet clear how to fix these remaining (1)/(2) issues in an
-efficient way without breaking undo behavior, given that retrans_stamp
-is currently used for undo and ETIMEDOUT. Perhaps the optimal (but
-expensive) strategy would be to set retrans_stamp to the timestamp of
-the earliest outstanding retransmit when entering fast recovery. But
-at least this commit makes things better.
-
-Note that this does not change the semantics of retrans_stamp; it
-simply makes retrans_stamp accurate in some cases where it was not
-before:
-
-(1) Some loss recovery, followed by an immediate entry into a fast
-recovery, where there are no retransmits out when entering the fast
-recovery.
-
-(2) When a TFO server has a SYNACK retransmit that sets retrans_stamp,
-and then the ACK that completes the 3-way handshake has SACK blocks
-that trigger a fast recovery. In this case when entering fast recovery
-we want to zero out the retrans_stamp from the TFO SYNACK retransmit,
-and set the retrans_stamp based on the timestamp of the fast recovery.
-
-We introduce a tcp_retrans_stamp_cleanup() helper, because this
-two-line sequence already appears in 3 places and is about to appear
-in 2 more as a result of this bug fix patch series. Once this bug fix
-patches series in the net branch makes it into the net-next branch
-we'll update the 3 other call sites to use the new helper.
-
-This is a long-standing issue. The Fixes tag below is chosen to be the
-oldest commit at which the patch will apply cleanly, which is from
-Linux v3.5 in 2012.
-
-Fixes: 1fbc340514fc ("tcp: early retransmit: tcp_enter_recovery()")
+Signed-off-by: Aananth V <aananthv@google.com>
 Signed-off-by: Neal Cardwell <ncardwell@google.com>
 Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001200517.2756803-3-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 27c80efcc204 ("tcp: fix TFO SYN_RECV to not zero retrans_stamp with retransmits out")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/linux/tcp.h      |  8 ++++++++
+ include/uapi/linux/tcp.h | 12 ++++++++++++
+ net/ipv4/tcp.c           |  9 +++++++++
+ net/ipv4/tcp_input.c     | 15 +++++++++++++++
+ net/ipv4/tcp_minisocks.c |  4 ++++
+ net/ipv4/tcp_timer.c     | 17 +++++++++++++++--
+ 6 files changed, 63 insertions(+), 2 deletions(-)
 
+diff --git a/include/linux/tcp.h b/include/linux/tcp.h
+index 3c5efeeb024f6..9b371aa7c7962 100644
+--- a/include/linux/tcp.h
++++ b/include/linux/tcp.h
+@@ -377,6 +377,14 @@ struct tcp_sock {
+ 				 * Total data bytes retransmitted
+ 				 */
+ 	u32	total_retrans;	/* Total retransmits for entire connection */
++	u32	rto_stamp;	/* Start time (ms) of last CA_Loss recovery */
++	u16	total_rto;	/* Total number of RTO timeouts, including
++				 * SYN/SYN-ACK and recurring timeouts.
++				 */
++	u16	total_rto_recoveries;	/* Total number of RTO recoveries,
++					 * including any unfinished recovery.
++					 */
++	u32	total_rto_time;	/* ms spent in (completed) RTO recoveries. */
+ 
+ 	u32	urg_seq;	/* Seq of received urgent pointer */
+ 	unsigned int		keepalive_time;	  /* time before keep alive takes place */
+diff --git a/include/uapi/linux/tcp.h b/include/uapi/linux/tcp.h
+index 879eeb0a084b4..d1d08da6331ab 100644
+--- a/include/uapi/linux/tcp.h
++++ b/include/uapi/linux/tcp.h
+@@ -289,6 +289,18 @@ struct tcp_info {
+ 				      */
+ 
+ 	__u32   tcpi_rehash;         /* PLB or timeout triggered rehash attempts */
++
++	__u16	tcpi_total_rto;	/* Total number of RTO timeouts, including
++				 * SYN/SYN-ACK and recurring timeouts.
++				 */
++	__u16	tcpi_total_rto_recoveries;	/* Total number of RTO
++						 * recoveries, including any
++						 * unfinished recovery.
++						 */
++	__u32	tcpi_total_rto_time;	/* Total time spent in RTO recoveries
++					 * in milliseconds, including any
++					 * unfinished recovery.
++					 */
+ };
+ 
+ /* netlink attributes types for SCM_TIMESTAMPING_OPT_STATS */
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 1e3202f2b7a87..75371928d94f6 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3851,6 +3851,15 @@ void tcp_get_info(struct sock *sk, struct tcp_info *info)
+ 	info->tcpi_rcv_wnd = tp->rcv_wnd;
+ 	info->tcpi_rehash = tp->plb_rehash + tp->timeout_rehash;
+ 	info->tcpi_fastopen_client_fail = tp->fastopen_client_fail;
++
++	info->tcpi_total_rto = tp->total_rto;
++	info->tcpi_total_rto_recoveries = tp->total_rto_recoveries;
++	info->tcpi_total_rto_time = tp->total_rto_time;
++	if (tp->rto_stamp) {
++		info->tcpi_total_rto_time += tcp_time_stamp_raw() -
++						tp->rto_stamp;
++	}
++
+ 	unlock_sock_fast(sk, slow);
+ }
+ EXPORT_SYMBOL_GPL(tcp_get_info);
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 31e4f7bce00ce..057d39248bec7 100644
+index 057d39248bec7..d472f7052cd32 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -2501,6 +2501,16 @@ static bool tcp_any_retrans_done(const struct sock *sk)
- 	return false;
+@@ -2108,6 +2108,10 @@ void tcp_clear_retrans(struct tcp_sock *tp)
+ 	tp->undo_marker = 0;
+ 	tp->undo_retrans = -1;
+ 	tp->sacked_out = 0;
++	tp->rto_stamp = 0;
++	tp->total_rto = 0;
++	tp->total_rto_recoveries = 0;
++	tp->total_rto_time = 0;
  }
  
-+/* If loss recovery is finished and there are no retransmits out in the
-+ * network, then we clear retrans_stamp so that upon the next loss recovery
-+ * retransmits_timed_out() and timestamp-undo are using the correct value.
-+ */
-+static void tcp_retrans_stamp_cleanup(struct sock *sk)
+ static inline void tcp_init_undo(struct tcp_sock *tp)
+@@ -2899,6 +2903,14 @@ void tcp_enter_recovery(struct sock *sk, bool ece_ack)
+ 	tcp_set_ca_state(sk, TCP_CA_Recovery);
+ }
+ 
++static void tcp_update_rto_time(struct tcp_sock *tp)
 +{
-+	if (!tcp_any_retrans_done(sk))
-+		tcp_sk(sk)->retrans_stamp = 0;
++	if (tp->rto_stamp) {
++		tp->total_rto_time += tcp_time_stamp(tp) - tp->rto_stamp;
++		tp->rto_stamp = 0;
++	}
 +}
 +
- static void DBGUNDO(struct sock *sk, const char *msg)
- {
- #if FASTRETRANS_DEBUG > 1
-@@ -2868,6 +2878,9 @@ void tcp_enter_recovery(struct sock *sk, bool ece_ack)
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int mib_idx;
+ /* Process an ACK in CA_Loss state. Move to CA_Open if lost data are
+  * recovered or spurious. Otherwise retransmits more on partial ACKs.
+  */
+@@ -3103,6 +3115,8 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
+ 		break;
+ 	case TCP_CA_Loss:
+ 		tcp_process_loss(sk, flag, num_dupack, rexmit);
++		if (icsk->icsk_ca_state != TCP_CA_Loss)
++			tcp_update_rto_time(tp);
+ 		tcp_identify_packet_loss(sk, ack_flag);
+ 		if (!(icsk->icsk_ca_state == TCP_CA_Open ||
+ 		      (*ack_flag & FLAG_LOST_RETRANS)))
+@@ -6541,6 +6555,7 @@ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+ 		tcp_try_undo_recovery(sk);
  
-+	/* Start the clock with our fast retransmit, for undo and ETIMEDOUT. */
-+	tcp_retrans_stamp_cleanup(sk);
+ 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
++	tcp_update_rto_time(tp);
+ 	tp->retrans_stamp = 0;
+ 	inet_csk(sk)->icsk_retransmits = 0;
+ 
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 0c04c460001f1..cc2b608b1a8e7 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -560,6 +560,10 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
+ 		newtp->undo_marker = treq->snt_isn;
+ 		newtp->retrans_stamp = div_u64(treq->snt_synack,
+ 					       USEC_PER_SEC / TCP_TS_HZ);
++		newtp->total_rto = req->num_timeout;
++		newtp->total_rto_recoveries = 1;
++		newtp->total_rto_time = tcp_time_stamp_raw() -
++						newtp->retrans_stamp;
+ 	}
+ 	newtp->tsoffset = treq->ts_off;
+ #ifdef CONFIG_TCP_MD5SIG
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 64bcf384e9ddc..b65cd417b0f7c 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -411,6 +411,19 @@ abort:		tcp_write_err(sk);
+ 	}
+ }
+ 
++static void tcp_update_rto_stats(struct sock *sk)
++{
++	struct inet_connection_sock *icsk = inet_csk(sk);
++	struct tcp_sock *tp = tcp_sk(sk);
 +
- 	if (tcp_is_reno(tp))
- 		mib_idx = LINUX_MIB_TCPRENORECOVERY;
- 	else
++	if (!icsk->icsk_retransmits) {
++		tp->total_rto_recoveries++;
++		tp->rto_stamp = tcp_time_stamp(tp);
++	}
++	icsk->icsk_retransmits++;
++	tp->total_rto++;
++}
++
+ /*
+  *	Timer for Fast Open socket to retransmit SYNACK. Note that the
+  *	sk here is the child socket, not the parent (listener) socket.
+@@ -443,7 +456,7 @@ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
+ 	 */
+ 	inet_rtx_syn_ack(sk, req);
+ 	req->num_timeout++;
+-	icsk->icsk_retransmits++;
++	tcp_update_rto_stats(sk);
+ 	if (!tp->retrans_stamp)
+ 		tp->retrans_stamp = tcp_time_stamp(tp);
+ 	inet_csk_reset_xmit_timer(sk, ICSK_TIME_RETRANS,
+@@ -586,7 +599,7 @@ void tcp_retransmit_timer(struct sock *sk)
+ 
+ 	tcp_enter_loss(sk);
+ 
+-	icsk->icsk_retransmits++;
++	tcp_update_rto_stats(sk);
+ 	if (tcp_retransmit_skb(sk, tcp_rtx_queue_head(sk), 1) > 0) {
+ 		/* Retransmission failed because of local congestion,
+ 		 * Let senders fight for local resources conservatively.
 -- 
 2.43.0
 
