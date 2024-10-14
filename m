@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0462519E802;
-	Mon, 14 Oct 2024 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6B91AA7A5;
+	Mon, 14 Oct 2024 14:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728915870; cv=none; b=NiaOmJYY3no/vGvqhJgi0RUDNwrxSHomIKpT3cc0WiJo1H6v/etGC3L22I0iZTbwuh/AM3at9MeSC5FuvePvyYLA0ZfxdWBvhVQ1/JThdXB1a0XIr99ycZwEyjxXqweCXg7kKSyQl397G7PSesm3hf9sFxp/k/Z/2a7+4gUqkC4=
+	t=1728915873; cv=none; b=Hv5y3DUIFy1PYTAF31mlKUF84bMwbvrm94gws+mpeOVe6FP44CfqrewlifFy3xcPdlwQzkg0B3z2BuzP9aJiDIyXv1OHhjuLrHVfSxQWn04vZONWOdstELYu9+LdXr1iYafzS4D6aLlEhAKUNeU1na7Iq5zsS7iw3zT6dhhJF1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728915870; c=relaxed/simple;
-	bh=CExhM5u8FYH8GQg5Ljrh4Yd6nSdLYAC90I+mWb++Tv0=;
+	s=arc-20240116; t=1728915873; c=relaxed/simple;
+	bh=evcQytSPwmapF4wdxr6NhcD9B4oea7CfqjUZRULSrmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hshSPmxAwsCwP/kiMEEDn7R8RqF3rTjLD2p8Jz0CecNEhd0lp+9yBqxVaGrmTo+aylrAR2nWHWPBQsGifi0hv/MYLhnn06bX6a1XSLwV2vr4GEV4b32wQN6RrRkZskWnPAWxXTjhlYGFUD14qMKmVJGqiWddWZherYWlmesiqfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMK+xuhY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QoFkosdbM4MHYP2DhA9025A2jrMGM9PhuIC8aqayvWMuWfTBbGYqo0oi7X/4Vfooonn20XguXP0Ok03xLLLY7F0IOexkioxsAJIi1CWfLtTPXa4aPIzeudQcZzWp4uMo8NRJaL8ZiJ/X3gtWqgq4WALEDNBTIxXxKKr7ryqF/zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSvh+Xv3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMK+xuhY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0EFC4CEC3;
-	Mon, 14 Oct 2024 14:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSvh+Xv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E564C4CEC3;
+	Mon, 14 Oct 2024 14:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728915869;
-	bh=CExhM5u8FYH8GQg5Ljrh4Yd6nSdLYAC90I+mWb++Tv0=;
+	s=korg; t=1728915873;
+	bh=evcQytSPwmapF4wdxr6NhcD9B4oea7CfqjUZRULSrmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMK+xuhYofJmkQm4hnZvp5RiCTKQDcaxB0TL0F0VEGaeJFExyv7K9obFFvs/YBxS7
-	 j9cLoQLHXyvmN941rVqoitK9TNxfAT1tJ5Suvc5KkGRWQ1cZrn7Fyg0zCLRef926u+
-	 lmutQi8VTWFo0Q4UZ+KyIAWyTEp+EbQ3/TZ+hqKE=
+	b=RSvh+Xv3lrMYkIywTnPLqtBzaJtkynuZq7khEbc6A56xyGW3jtqDocSYbEZBtP/t+
+	 J2tDmbh9xF0iKhmFyn4i7vjqGGnlPdBbdB6CZ40GHA1TBgZoad1LFNAgn7rDYwqSE9
+	 38nvizGUVjiNv0mpgUIhpPVGwtSnSdZ2SYACXCcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <hodgesd@meta.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 022/214] bpf, x64: Fix a jit convergence issue
-Date: Mon, 14 Oct 2024 16:18:05 +0200
-Message-ID: <20241014141045.858542024@linuxfoundation.org>
+Subject: [PATCH 6.11 003/214] fs/ntfs3: Do not call file_modified if collapse range failed
+Date: Mon, 14 Oct 2024 16:17:46 +0200
+Message-ID: <20241014141045.125903072@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,184 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit c8831bdbfbab672c006a18006d36932a494b2fd6 ]
+[ Upstream commit 2db86f7995fe6b62a4d6fee9f3cdeba3c6d27606 ]
 
-Daniel Hodges reported a jit error when playing with a sched-ext program.
-The error message is:
-  unexpected jmp_cond padding: -4 bytes
-
-But further investigation shows the error is actual due to failed
-convergence. The following are some analysis:
-
-  ...
-  pass4, final_proglen=4391:
-    ...
-    20e:    48 85 ff                test   rdi,rdi
-    211:    74 7d                   je     0x290
-    213:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-    ...
-    289:    48 85 ff                test   rdi,rdi
-    28c:    74 17                   je     0x2a5
-    28e:    e9 7f ff ff ff          jmp    0x212
-    293:    bf 03 00 00 00          mov    edi,0x3
-
-Note that insn at 0x211 is 2-byte cond jump insn for offset 0x7d (-125)
-and insn at 0x28e is 5-byte jmp insn with offset -129.
-
-  pass5, final_proglen=4392:
-    ...
-    20e:    48 85 ff                test   rdi,rdi
-    211:    0f 84 80 00 00 00       je     0x297
-    217:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-    ...
-    28d:    48 85 ff                test   rdi,rdi
-    290:    74 1a                   je     0x2ac
-    292:    eb 84                   jmp    0x218
-    294:    bf 03 00 00 00          mov    edi,0x3
-
-Note that insn at 0x211 is 6-byte cond jump insn now since its offset
-becomes 0x80 based on previous round (0x293 - 0x213 = 0x80). At the same
-time, insn at 0x292 is a 2-byte insn since its offset is -124.
-
-pass6 will repeat the same code as in pass4. pass7 will repeat the same
-code as in pass5, and so on. This will prevent eventual convergence.
-
-Passes 1-14 are with padding = 0. At pass15, padding is 1 and related
-insn looks like:
-
-    211:    0f 84 80 00 00 00       je     0x297
-    217:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-    ...
-    24d:    48 85 d2                test   rdx,rdx
-
-The similar code in pass14:
-    211:    74 7d                   je     0x290
-    213:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-    ...
-    249:    48 85 d2                test   rdx,rdx
-    24c:    74 21                   je     0x26f
-    24e:    48 01 f7                add    rdi,rsi
-    ...
-
-Before generating the following insn,
-  250:    74 21                   je     0x273
-"padding = 1" enables some checking to ensure nops is either 0 or 4
-where
-  #define INSN_SZ_DIFF (((addrs[i] - addrs[i - 1]) - (prog - temp)))
-  nops = INSN_SZ_DIFF - 2
-
-In this specific case,
-  addrs[i] = 0x24e // from pass14
-  addrs[i-1] = 0x24d // from pass15
-  prog - temp = 3 // from 'test rdx,rdx' in pass15
-so
-  nops = -4
-and this triggers the failure.
-
-To fix the issue, we need to break cycles of je <-> jmp. For example,
-in the above case, we have
-  211:    74 7d                   je     0x290
-the offset is 0x7d. If 2-byte je insn is generated only if
-the offset is less than 0x7d (<= 0x7c), the cycle can be
-break and we can achieve the convergence.
-
-I did some study on other cases like je <-> je, jmp <-> je and
-jmp <-> jmp which may cause cycles. Those cases are not from actual
-reproducible cases since it is pretty hard to construct a test case
-for them. the results show that the offset <= 0x7b (0x7b = 123) should
-be enough to cover all cases. This patch added a new helper to generate 8-bit
-cond/uncond jmp insns only if the offset range is [-128, 123].
-
-Reported-by: Daniel Hodges <hodgesd@meta.com>
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20240904221251.37109-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 54 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 52 insertions(+), 2 deletions(-)
+ fs/ntfs3/file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 074b41fafbe3f..06b080b61aa57 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -64,6 +64,56 @@ static bool is_imm8(int value)
- 	return value <= 127 && value >= -128;
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index ca1ddc46bd866..cddc51f9a93b2 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -484,7 +484,7 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
  }
  
-+/*
-+ * Let us limit the positive offset to be <= 123.
-+ * This is to ensure eventual jit convergence For the following patterns:
-+ * ...
-+ * pass4, final_proglen=4391:
-+ *   ...
-+ *   20e:    48 85 ff                test   rdi,rdi
-+ *   211:    74 7d                   je     0x290
-+ *   213:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-+ *   ...
-+ *   289:    48 85 ff                test   rdi,rdi
-+ *   28c:    74 17                   je     0x2a5
-+ *   28e:    e9 7f ff ff ff          jmp    0x212
-+ *   293:    bf 03 00 00 00          mov    edi,0x3
-+ * Note that insn at 0x211 is 2-byte cond jump insn for offset 0x7d (-125)
-+ * and insn at 0x28e is 5-byte jmp insn with offset -129.
-+ *
-+ * pass5, final_proglen=4392:
-+ *   ...
-+ *   20e:    48 85 ff                test   rdi,rdi
-+ *   211:    0f 84 80 00 00 00       je     0x297
-+ *   217:    48 8b 77 00             mov    rsi,QWORD PTR [rdi+0x0]
-+ *   ...
-+ *   28d:    48 85 ff                test   rdi,rdi
-+ *   290:    74 1a                   je     0x2ac
-+ *   292:    eb 84                   jmp    0x218
-+ *   294:    bf 03 00 00 00          mov    edi,0x3
-+ * Note that insn at 0x211 is 6-byte cond jump insn now since its offset
-+ * becomes 0x80 based on previous round (0x293 - 0x213 = 0x80).
-+ * At the same time, insn at 0x292 is a 2-byte insn since its offset is
-+ * -124.
-+ *
-+ * pass6 will repeat the same code as in pass4 and this will prevent
-+ * eventual convergence.
-+ *
-+ * To fix this issue, we need to break je (2->6 bytes) <-> jmp (5->2 bytes)
-+ * cycle in the above. In the above example je offset <= 0x7c should work.
-+ *
-+ * For other cases, je <-> je needs offset <= 0x7b to avoid no convergence
-+ * issue. For jmp <-> je and jmp <-> jmp cases, jmp offset <= 0x7c should
-+ * avoid no convergence issue.
-+ *
-+ * Overall, let us limit the positive offset for 8bit cond/uncond jmp insn
-+ * to maximum 123 (0x7b). This way, the jit pass can eventually converge.
-+ */
-+static bool is_imm8_jmp_offset(int value)
-+{
-+	return value <= 123 && value >= -128;
-+}
-+
- static bool is_simm32(s64 value)
- {
- 	return value == (s64)(s32)value;
-@@ -2231,7 +2281,7 @@ st:			if (is_imm8(insn->off))
- 				return -EFAULT;
- 			}
- 			jmp_offset = addrs[i + insn->off] - addrs[i];
--			if (is_imm8(jmp_offset)) {
-+			if (is_imm8_jmp_offset(jmp_offset)) {
- 				if (jmp_padding) {
- 					/* To keep the jmp_offset valid, the extra bytes are
- 					 * padded before the jump insn, so we subtract the
-@@ -2313,7 +2363,7 @@ st:			if (is_imm8(insn->off))
- 				break;
- 			}
- emit_jmp:
--			if (is_imm8(jmp_offset)) {
-+			if (is_imm8_jmp_offset(jmp_offset)) {
- 				if (jmp_padding) {
- 					/* To avoid breaking jmp_offset, the extra bytes
- 					 * are padded before the actual jmp insn, so
+ /*
+- * ntfs_fallocate
++ * ntfs_fallocate - file_operations::ntfs_fallocate
+  *
+  * Preallocate space for a file. This implements ntfs's fallocate file
+  * operation, which gets called from sys_fallocate system call. User
+@@ -619,6 +619,8 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
+ 		ni_lock(ni);
+ 		err = attr_collapse_range(ni, vbo, len);
+ 		ni_unlock(ni);
++		if (err)
++			goto out;
+ 	} else if (mode & FALLOC_FL_INSERT_RANGE) {
+ 		/* Check new size. */
+ 		err = inode_newsize_ok(inode, new_size);
 -- 
 2.43.0
 
