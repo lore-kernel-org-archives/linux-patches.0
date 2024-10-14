@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A3424B34;
-	Mon, 14 Oct 2024 14:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0100C24B34;
+	Mon, 14 Oct 2024 14:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916680; cv=none; b=fdlHMtp/Jn2sAbW5AmaRrTPETQQAqgEnpgKWQF4FBQbicTuPJCPPuzu68F0C7WvAIJIBB9wP2h42cW3cEZf+PZDag4xjqGsGzla1eOClLJTxhy5W8GHDr5M0kliVV9/mF8/5qm8kRbAFQrB8G3daEO2zmfoBMHNECAQpVbG+Ng4=
+	t=1728916684; cv=none; b=fpyhzRhpcLfjMAmpOYiHq9FR3Xw71uaAsBZPg/1bYUv/ebInitoAKFR7zSXczL5d+0uFHwqsaXpTiE4xYZ6alcseSHhHXa4V3oV4+tivlwR2NqdY7V/xfK8Egdgyjkgex02HyjIlqT8NUrCtj/bi7fAkRpjpmyvN1b9PEUVg5vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916680; c=relaxed/simple;
-	bh=zn5r3WEK8FoJqgupltgiz8DmItn62tUveXQ5jvZmjWg=;
+	s=arc-20240116; t=1728916684; c=relaxed/simple;
+	bh=r8JzXsL5TF+2Ih6SNPOpY1FnH6hmbMO1R/API6ZKt5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBiGjApv1ovFtdRpidqHngTxpImbaANeN84CKryLTzcfeVWPUjIrLc4e0hzy7vJD5103yzoq490lKClo6/Dlh24AFoNNqpbFfmsSaHPSbon8OidpWZJkKkPnmIVIpfmSPF/i3fcKBePryhO6itBRzEZQZxXjSIYL+WKL3rs6Ilg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIU0c8S9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UI3v4tJBPVUTIKOfOcBwR5Iwr02Bo0PAwxNRsguG4GB3++Yjf8lIV2lgnLVFa35ytzgBfOWRiGB4mJj9WhtaYc/hZzzqPK5sq2pYxyJBb5uzoXXxCHWPAYeGGNHrnVz/jwaEOPeZ3VbyA1wwI/iz7qhOYwYh2XYDcompbREBd1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCQ5Xj7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIU0c8S9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71184C4CEC3;
-	Mon, 14 Oct 2024 14:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCQ5Xj7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252DBC4CEC3;
+	Mon, 14 Oct 2024 14:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916680;
-	bh=zn5r3WEK8FoJqgupltgiz8DmItn62tUveXQ5jvZmjWg=;
+	s=korg; t=1728916683;
+	bh=r8JzXsL5TF+2Ih6SNPOpY1FnH6hmbMO1R/API6ZKt5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIU0c8S9WWDzg6XeVtB6seIjtS/RQIg+HQmVT+oiZDSCvVM1o5B7FnUtx6M13jYJ0
-	 KzO57rjjsdCWGOGEUkV1t68dK03UZlINbWv/mrG0LGzYZhbaGMDvFt1eyx0ArzX5Gf
-	 kfKtZboMMSAdvatPnHrdoDbeCiqHGPbtwcw6er6A=
+	b=PCQ5Xj7B9icJbJI9hrV6O+9aaRJvwRvsNLcwNWggB+oyKpDAY/JnfmHTcIjcF8EGp
+	 U36Vxw7BSFP6HkKn7IgKPTN+Okr7FG47rgV7f7p9StevZQ7byeSF82LUEKV80hUW9u
+	 oGWmLtElJN860joiBjhM4vujgtLgAlqL3VS5zOTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/213] e1000e: move force SMBUS near the end of enable_ulp function
-Date: Mon, 14 Oct 2024 16:19:00 +0200
-Message-ID: <20241014141044.321909155@linuxfoundation.org>
+Subject: [PATCH 6.6 035/213] bootconfig: Fix the kerneldoc of _xbc_exit()
+Date: Mon, 14 Oct 2024 16:19:01 +0200
+Message-ID: <20241014141044.360278967@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -58,124 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit bfd546a552e140b0a4c8a21527c39d6d21addb28 ]
+[ Upstream commit 298b871cd55a607037ac8af0011b9fdeb54c1e65 ]
 
-The commit 861e8086029e ("e1000e: move force SMBUS from enable ulp
-function to avoid PHY loss issue") introduces a regression on
-PCH_MTP_I219_LM18 (PCIID: 0x8086550A). Without the referred commit, the
-ethernet works well after suspend and resume, but after applying the
-commit, the ethernet couldn't work anymore after the resume and the
-dmesg shows that the NIC link changes to 10Mbps (1000Mbps originally):
+Fix the kerneldoc of _xbc_exit() which is updated to have an @early
+argument and the function name is changed.
 
-    [   43.305084] e1000e 0000:00:1f.6 enp0s31f6: NIC Link is Up 10 Mbps Full Duplex, Flow Control: Rx/Tx
+Link: https://lore.kernel.org/all/171321744474.599864.13532445969528690358.stgit@devnote2/
 
-Without the commit, the force SMBUS code will not be executed if
-"return 0" or "goto out" is executed in the enable_ulp(), and in my
-case, the "goto out" is executed since FWSM_FW_VALID is set. But after
-applying the commit, the force SMBUS code will be ran unconditionally.
-
-Here move the force SMBUS code back to enable_ulp() and put it
-immediately ahead of hw->phy.ops.release(hw), this could allow the
-longest settling time as possible for interface in this function and
-doesn't change the original code logic.
-
-The issue was found on a Lenovo laptop with the ethernet hw as below:
-00:1f.6 Ethernet controller [0200]: Intel Corporation Device [8086:550a]
-(rev 20).
-
-And this patch is verified (cable plug and unplug, system suspend
-and resume) on Lenovo laptops with ethernet hw: [8086:550a],
-[8086:550b], [8086:15bb], [8086:15be], [8086:1a1f], [8086:1a1c] and
-[8086:0dc7].
-
-Fixes: 861e8086029e ("e1000e: move force SMBUS from enable ulp function to avoid PHY loss issue")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Acked-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-1-dc8593d2bbc6@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404150036.kPJ3HEFA-lkp@intel.com/
+Fixes: 89f9a1e876b5 ("bootconfig: use memblock_free_late to free xbc memory to buddy")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 22 +++++++++++++++++++++
- drivers/net/ethernet/intel/e1000e/netdev.c  | 18 -----------------
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ lib/bootconfig.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index f9e94be36e97f..2e98a2a0bead9 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1225,6 +1225,28 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000_hw *hw, bool to_sx)
- 	}
+diff --git a/lib/bootconfig.c b/lib/bootconfig.c
+index 8841554432d5b..97f8911ea339e 100644
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -901,7 +901,8 @@ static int __init xbc_parse_tree(void)
+ }
  
- release:
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
-+	/* Force SMBus mode in PHY */
-+	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
-+	if (ret_val) {
-+		e1000e_enable_phy_retry(hw);
-+		hw->phy.ops.release(hw);
-+		goto out;
-+	}
-+	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
-+	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
-+
-+	e1000e_enable_phy_retry(hw);
-+
-+	/* Force SMBus mode in MAC */
-+	mac_reg = er32(CTRL_EXT);
-+	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
-+	ew32(CTRL_EXT, mac_reg);
-+
- 	hw->phy.ops.release(hw);
- out:
- 	if (ret_val)
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index d377a286c0e1b..06d109063c8d8 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6623,7 +6623,6 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 	struct e1000_hw *hw = &adapter->hw;
- 	u32 ctrl, ctrl_ext, rctl, status, wufc;
- 	int retval = 0;
--	u16 smb_ctrl;
- 
- 	/* Runtime suspend should only enable wakeup for link changes */
- 	if (runtime)
-@@ -6701,23 +6700,6 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 				goto skip_phy_configurations;
- 			}
- 		}
--
--		/* Force SMBUS to allow WOL */
--		/* Switching PHY interface always returns MDI error
--		 * so disable retry mechanism to avoid wasting time
--		 */
--		e1000e_disable_phy_retry(hw);
--
--		e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
--		smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
--		e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
--
--		e1000e_enable_phy_retry(hw);
--
--		/* Force SMBus mode in MAC */
--		ctrl_ext = er32(CTRL_EXT);
--		ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
--		ew32(CTRL_EXT, ctrl_ext);
- 	}
- 
- 	/* Ensure that the appropriate bits are set in LPI_CTRL
+ /**
+- * xbc_exit() - Clean up all parsed bootconfig
++ * _xbc_exit() - Clean up all parsed bootconfig
++ * @early: Set true if this is called before budy system is initialized.
+  *
+  * This clears all data structures of parsed bootconfig on memory.
+  * If you need to reuse xbc_init() with new boot config, you can
 -- 
 2.43.0
 
