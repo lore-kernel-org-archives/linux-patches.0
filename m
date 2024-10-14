@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2B33BBF2;
-	Mon, 14 Oct 2024 15:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BA1AE876;
+	Mon, 14 Oct 2024 15:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918146; cv=none; b=Cjdc38FiqYidLn8IS7u1yFY5d6eLW8tcns6EXXH9xYQt9dUQ40yNbkrylepCC0uAhAWiqOvWvRdwa/P7Hbtfr0mWwA5niFosD5ADPBjHG9DAUyOuxCkosc3jo/kwQ7SEGcNL1zd7ekVHK+ZX4dnNusSnQh2WjsvHFV/PwrqiFOg=
+	t=1728918149; cv=none; b=pdHREWT2ZmDTDiCzt1f3DcxVb9bQ9PQOOe32l7tb2oiWWGply3mLFkYuLmHm84HOyn6RKI003KmcBO/tjz55s2QZ+D6VNEyzwoSxxWy23YF6paGx2Q8zwPjzlguKNE3R6ptQjzoZ/FS6ddg2Pl9wklJajMAogXyUups+f4+wfpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918146; c=relaxed/simple;
-	bh=FiBrUctCpVfyztz8zsqH8TS8uUaqVGCvwKN+j5cR6ps=;
+	s=arc-20240116; t=1728918149; c=relaxed/simple;
+	bh=3nfVyxqM8cIRCBgqb6o+XnpuPTOBCIX8n3nrlJ+I9Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebmTfrynBxLx55arkNyjYzTHsvWKQGjKZjOfmIdqZyP7L1h+NkB4fbIKka4LPe0Y/yNV/50PF0kaJNY3WNsTFjLu9MGJx4W2F6ZUp0p6SPu6d1jctPqiPD3qjU8NpOjDRwnCeicsyUnIw0sNVbBk0aHc0lwgAaAj0K2qzegADbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdZWOPWN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwP4nXlOv//NihT63CJmTInEghGsZmYN0YWif6bnsqSj2G6FgTxrehcEOxZb8MEP6TBYvs7c/mOB+Wsli3t7iO/3Vrx3Q49/J8n/NVwO04MR8DvzvuqrX3SXZV9fohzO1CN2sd8UYQb0SoIUjebziLnAcmK2qXnRRLdrZbb5nQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pePIIQh/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdZWOPWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6880AC4CEC3;
-	Mon, 14 Oct 2024 15:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pePIIQh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96ED5C4CEC7;
+	Mon, 14 Oct 2024 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918145;
-	bh=FiBrUctCpVfyztz8zsqH8TS8uUaqVGCvwKN+j5cR6ps=;
+	s=korg; t=1728918149;
+	bh=3nfVyxqM8cIRCBgqb6o+XnpuPTOBCIX8n3nrlJ+I9Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdZWOPWNqI4ziq/TK//i0Z0nDzUpKdZWGoETbHsZ3Be84JIDxdxf7Qt/on/TWW3j0
-	 1kSo+lccMZA+OMJiq6n3Hf66pcPD8i6pTzp0pFOIi3TWX4Gpl5j++QgcrfogG0Mirw
-	 WHMSZEKxK5AekAAvOSc2oR16yE6TjykqdRBw51NA=
+	b=pePIIQh/AL01M1K9iACuMezzAeCqnDnVm4dmuLZdhlSa7PhzVGIk50cHsuhyYsbLM
+	 7QI8WM6iwrC5wz2oOuFRoXnd7Pa1VGb/t+tt7sZ4Jq+utB/0dmpcxdExJvjSeu0nao
+	 UiYoVkm8sdqsLhhZaiCIXhjP7fmXMB+GuQdjbQ+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 237/798] f2fs: factor the read/write tracing logic into a helper
-Date: Mon, 14 Oct 2024 16:13:11 +0200
-Message-ID: <20241014141227.230431730@linuxfoundation.org>
+Subject: [PATCH 6.1 238/798] f2fs: fix to avoid racing in between read and OPU dio write
+Date: Mon, 14 Oct 2024 16:13:12 +0200
+Message-ID: <20241014141227.270300798@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,108 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit a28bca0f47feb5cdfc22be0e563bd4da2aed74f7 ]
+[ Upstream commit 0cac51185e65dc2a20686184e02f3cafc99eb202 ]
 
-Factor the logic to log a path for reads and writs into a helper
-shared between the read_iter and write_iter methods.
+If lfs mode is on, buffered read may race w/ OPU dio write as below,
+it may cause buffered read hits unwritten data unexpectly, and for
+dio read, the race condition exists as well.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Thread A			Thread B
+- f2fs_file_write_iter
+ - f2fs_dio_write_iter
+  - __iomap_dio_rw
+   - f2fs_iomap_begin
+    - f2fs_map_blocks
+     - __allocate_data_block
+      - allocated blkaddr #x
+       - iomap_dio_submit_bio
+				- f2fs_file_read_iter
+				 - filemap_read
+				  - f2fs_read_data_folio
+				   - f2fs_mpage_readpages
+				    - f2fs_map_blocks
+				     : get blkaddr #x
+				    - f2fs_submit_read_bio
+				IRQ
+				- f2fs_read_end_io
+				 : read IO on blkaddr #x complete
+IRQ
+- iomap_dio_bio_end_io
+ : direct write IO on blkaddr #x complete
+
+In LFS mode, if there is inflight dio, let's wait for its completion,
+this policy won't cover all race cases, however it is a tradeoff which
+avoids abusing lock around IO paths.
+
+Fixes: f847c699cff3 ("f2fs: allow out-place-update for direct IO in LFS mode")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 0cac51185e65 ("f2fs: fix to avoid racing in between read and OPU dio write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 61 +++++++++++++++++++++-----------------------------
- 1 file changed, 26 insertions(+), 35 deletions(-)
+ fs/f2fs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 6ce8997fc61e0..81394c08ef850 100644
+index 81394c08ef850..f03320c47c823 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -4457,6 +4457,27 @@ static ssize_t f2fs_dio_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	return ret;
- }
+@@ -4490,6 +4490,10 @@ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	if (trace_f2fs_dataread_start_enabled())
+ 		f2fs_trace_rw_file_path(iocb, iov_iter_count(to), READ);
  
-+static void f2fs_trace_rw_file_path(struct kiocb *iocb, size_t count, int rw)
-+{
-+	struct inode *inode = file_inode(iocb->ki_filp);
-+	char *buf, *path;
++	/* In LFS mode, if there is inflight dio, wait for its completion */
++	if (f2fs_lfs_mode(F2FS_I_SB(inode)))
++		inode_dio_wait(inode);
 +
-+	buf = f2fs_kmalloc(F2FS_I_SB(inode), PATH_MAX, GFP_KERNEL);
-+	if (!buf)
-+		return;
-+	path = dentry_path_raw(file_dentry(iocb->ki_filp), buf, PATH_MAX);
-+	if (IS_ERR(path))
-+		goto free_buf;
-+	if (rw == WRITE)
-+		trace_f2fs_datawrite_start(inode, iocb->ki_pos, count,
-+				current->pid, path, current->comm);
-+	else
-+		trace_f2fs_dataread_start(inode, iocb->ki_pos, count,
-+				current->pid, path, current->comm);
-+free_buf:
-+	kfree(buf);
-+}
-+
- static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
- {
- 	struct inode *inode = file_inode(iocb->ki_filp);
-@@ -4466,24 +4487,9 @@ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	if (!f2fs_is_compress_backend_ready(inode))
- 		return -EOPNOTSUPP;
- 
--	if (trace_f2fs_dataread_start_enabled()) {
--		char *p = f2fs_kmalloc(F2FS_I_SB(inode), PATH_MAX, GFP_KERNEL);
--		char *path;
--
--		if (!p)
--			goto skip_read_trace;
-+	if (trace_f2fs_dataread_start_enabled())
-+		f2fs_trace_rw_file_path(iocb, iov_iter_count(to), READ);
- 
--		path = dentry_path_raw(file_dentry(iocb->ki_filp), p, PATH_MAX);
--		if (IS_ERR(path)) {
--			kfree(p);
--			goto skip_read_trace;
--		}
--
--		trace_f2fs_dataread_start(inode, pos, iov_iter_count(to),
--					current->pid, path, current->comm);
--		kfree(p);
--	}
--skip_read_trace:
  	if (f2fs_should_use_dio(inode, iocb, to)) {
  		ret = f2fs_dio_read_iter(iocb, to);
  	} else {
-@@ -4789,24 +4795,9 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	if (preallocated < 0) {
- 		ret = preallocated;
- 	} else {
--		if (trace_f2fs_datawrite_start_enabled()) {
--			char *p = f2fs_kmalloc(F2FS_I_SB(inode),
--						PATH_MAX, GFP_KERNEL);
--			char *path;
--
--			if (!p)
--				goto skip_write_trace;
--			path = dentry_path_raw(file_dentry(iocb->ki_filp),
--								p, PATH_MAX);
--			if (IS_ERR(path)) {
--				kfree(p);
--				goto skip_write_trace;
--			}
--			trace_f2fs_datawrite_start(inode, orig_pos, orig_count,
--					current->pid, path, current->comm);
--			kfree(p);
--		}
--skip_write_trace:
-+		if (trace_f2fs_datawrite_start_enabled())
-+			f2fs_trace_rw_file_path(iocb, orig_count, WRITE);
-+
- 		/* Do the actual write. */
- 		ret = dio ?
- 			f2fs_dio_write_iter(iocb, from, &may_need_sync) :
 -- 
 2.43.0
 
