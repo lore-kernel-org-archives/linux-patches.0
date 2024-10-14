@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ACC17C77;
-	Mon, 14 Oct 2024 14:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AFF1798C;
+	Mon, 14 Oct 2024 14:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916338; cv=none; b=IHi76FuA6hFPiih6j/h6MToCYqz6II3SUhxQT6SB9qvEtAnxmyApPTIwfclnnPvlj4CoT1+cdGEKxKB4T9b3lcHoFflkAYprFNSeYhuy3cfwBf285fALVYLKMN0+DQCEdgJtukfAo4iUNQzQw+e2LhNuXNbEUXznLvF8kmnhZGo=
+	t=1728916341; cv=none; b=Awpwf6Fg/Tjv4iebh7v3f3awDkudeUTmQELuuLobxBa9Mfe/vxESEk1QBbed5MvNOnYGsWX/qPveUtNq4k1wJtwtYLh0w8zruGVGnAHx7SpjYhJ8v7/Zdmdus+i8z228jQOAFBv4QNfF9ilw6rX8qLMrt4iAHdJmIoFyQsjS42Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916338; c=relaxed/simple;
-	bh=krBwssS6JrCXBGyaUO6BNpo2+229IkPf1iOS4wHSW6M=;
+	s=arc-20240116; t=1728916341; c=relaxed/simple;
+	bh=bp4/XTy1mvJuIy35jhZttRsbmGmult6hEuS3oJROtF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VufIzdsS6Vi/lTapHa3XdSSaNxYV8+muQm8oNd3zJZ62owfXZ0kKShkwtY3NfngEZdwAE/CjsFiaZmFB55LnXPH+MuIKX0x67wC6h1ma3eWGjs6IJ/sDQKGiDFLv1514xaqjiyoEf4xRg3zBZspffYDXU7287X4xz/4JlNxCUEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blVojzUv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TNg8jABJ47L5YPkhIq911/DsSbaVjIf0cV3FfpL4ZRA1L2y3tkqp8cL1n1w5uoOwWqV25Wr58plRYsbw6/KX2KgXz/mXPcn6j0lJ4eU1huOm/cnKFAIzlD3bOlJXYw/mVw9FtgbbyrfenbOgHUw0AG1sqNCLIgdEdFDgsg7K1/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VP+0HNzE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blVojzUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA614C4CED0;
-	Mon, 14 Oct 2024 14:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VP+0HNzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397A8C4CEC7;
+	Mon, 14 Oct 2024 14:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916338;
-	bh=krBwssS6JrCXBGyaUO6BNpo2+229IkPf1iOS4wHSW6M=;
+	s=korg; t=1728916341;
+	bh=bp4/XTy1mvJuIy35jhZttRsbmGmult6hEuS3oJROtF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blVojzUvyN9rm7ugnf/HZ3fvm2bmBIwK9pJO9rM6ZKIJwXKuITevOAF7EE4DL4FAs
-	 YbgcxkqN/Fj3Kr/kdb7rRANDaT4W2agmzMV7+yQmwJs/B5lVoBBwbNVhOm8sARwL/6
-	 FV4Y+J6XhV6RGTpG5cSArpAlwskw34gSIr7jqT24=
+	b=VP+0HNzEQu+kSK02yGNsuJyMOU8mnkeHwM6egnsTCbijOfRN7uPvMHNx2qMXrg89p
+	 lTtMsTCMoSLQb9ogewoCv42tQr++n208vZmOnGKgHveXHWYkX7k09Ml1+Kz6IHa/py
+	 SrwLKcWgcKhAaHCLSasJF+be4xQXQDYrMfhqY5/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Tremblay <etremblay@distech-controls.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 154/214] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
-Date: Mon, 14 Oct 2024 16:20:17 +0200
-Message-ID: <20241014141050.998558837@linuxfoundation.org>
+Subject: [PATCH 6.11 128/214] drm/xe: Restore GT freq on GSC load error
+Date: Mon, 14 Oct 2024 16:19:51 +0200
+Message-ID: <20241014141049.988246428@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
+[ Upstream commit 3fd76be868ae5c7e9f905f3bcc2ce0e3d8f5aa08 ]
 
-0-day reports:
+As part of a Wa_22019338487, ensure that GT freq is restored
+even when GSC reload is not successful.
 
-drivers/hwmon/tmp513.c:162:21: error:
-	variable 'tmp51x_regmap_config' has initializer but incomplete type
-162 | static const struct regmap_config tmp51x_regmap_config = {
-    |                     ^
+Fixes: 3b1592fb7835 ("drm/xe/lnl: Apply Wa_22019338487")
 
-struct regmap_config is only available if REGMAP is enabled.
-Add the missing Kconfig dependency to fix the problem.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
-Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
-Cc: Eric Tremblay <etremblay@distech-controls.com>
-Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240925204918.1989574-1-vinay.belgaumkar@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 491418a258322bbd7f045e36884d2849b673f23d)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_gt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index b60fe2e58ad6c..543c40630d67e 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -2288,6 +2288,7 @@ config SENSORS_TMP464
- config SENSORS_TMP513
- 	tristate "Texas Instruments TMP513 and compatibles"
- 	depends on I2C
-+	select REGMAP_I2C
- 	help
- 	  If you say yes here you get support for Texas Instruments TMP512,
- 	  and TMP513 temperature and power supply sensor chips.
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index cb9df15e71376..0062a5e4d5fac 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -874,7 +874,9 @@ int xe_gt_sanitize_freq(struct xe_gt *gt)
+ 	int ret = 0;
+ 
+ 	if ((!xe_uc_fw_is_available(&gt->uc.gsc.fw) ||
+-	     xe_uc_fw_is_loaded(&gt->uc.gsc.fw)) && XE_WA(gt, 22019338487))
++	     xe_uc_fw_is_loaded(&gt->uc.gsc.fw) ||
++	     xe_uc_fw_is_in_error_state(&gt->uc.gsc.fw)) &&
++	    XE_WA(gt, 22019338487))
+ 		ret = xe_guc_pc_restore_stashed_freq(&gt->uc.guc.pc);
+ 
+ 	return ret;
 -- 
 2.43.0
 
