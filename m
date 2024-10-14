@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2581ABEB7;
-	Mon, 14 Oct 2024 14:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B651ABED9;
+	Mon, 14 Oct 2024 14:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917225; cv=none; b=q1LaSyxlNfTSZ5SOWQGmyrOTIVEHjdIpwUFvu1uNZerzKKpgZkH/omyYHT6NgTu4eMJvrdacnxkJzX+753S1NKyEThUUQE0UeRDWeIemD0qNcdP/0WoJwTZBeurgtiY6VAji3bwQwwP3P0CBf+P/gmDyM8GL9tSR3WFW/na1PcQ=
+	t=1728917228; cv=none; b=FR7fctmX2ImzDiCr8nooUIDkMYv/izMRfZyZI76EyBFozIwZ0TH+4aNUQ4Lp9iGijZWYxVZkdV9tE/0rl+mQDfIM8PMyP9zbFY8Mu1eXitmN6+nj3RUS5Hh1kYqpDh9pen+m19wO3rDgpRZhIWuLOG8juqqIgeQzSv1Hkhj8IqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917225; c=relaxed/simple;
-	bh=s2gORQoysaQE7nzrTG4bV7BMhT/VqcokqZsb+suK8Io=;
+	s=arc-20240116; t=1728917228; c=relaxed/simple;
+	bh=duqr0+8/kqKvG8zdqDzspq2mEzdYvcy6T0fMh8tq1rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PA6LZev3PgSH59bugboKPn8Lhvuv/XrXquY//p/ipISnzIlLDOTItQndlGp9Dgt7fX/oIvxV4l10Ylr6GQqIEAYsigECoPmKZy0L6kE0FdWr8GmpDcT7p29ckcIMh8rQR714JUK7oWQK6tqe4Ij4s6cAp9Q9ZLRXYAp7OJaVkrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFIU5m/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uFD+GgD//+rowI0+0Xegc5mwKLXex/61gEeB7qRC+rMPyK0sec/sE4nEWcxNIulcrF0C/BpzDUi7f9UtNTa0gBtqBQWsvXoevYBCfSVOLUJv3uSlhlRp6qxhV2bvorGDLNrtKrcywcjZLJJHr5gKHkj6E+6U8dIIZvW13lE17lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoK2xep9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFIU5m/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03FCC4CEC3;
-	Mon, 14 Oct 2024 14:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoK2xep9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0806BC4CEC7;
+	Mon, 14 Oct 2024 14:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917225;
-	bh=s2gORQoysaQE7nzrTG4bV7BMhT/VqcokqZsb+suK8Io=;
+	s=korg; t=1728917228;
+	bh=duqr0+8/kqKvG8zdqDzspq2mEzdYvcy6T0fMh8tq1rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oFIU5m/Cp0BBwOiXpWnUlN33r8O4U7MizCrp/NZZfXDmpbDBDDYSMNO6bmGPZmQ6t
-	 xjyoas9aU60D4/JVGvWFqX75A/KMKWDg4kyA0WyL1N/tjdAqcJ0AFKW0c4LdHGkck3
-	 Qt+rOvtyEaJJu2L4TDUisdWi9Oec5OSjw/a2kVKU=
+	b=UoK2xep9zc8J8Z3FrzhTssZZfEEtYZgVXIGNOUUPKYuiJF1V6NBnN/4QaS2RLDwsL
+	 E8jOehfayzGvWHpnYtmz8lqQdoN/Wl+pAeMdUG/4dvOzH9JMWlZvvmGwRzM5OwBTSh
+	 nxgyiQpCPneZDGzGdSvIt4Wk2oXbdVq8PKQpgAn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <bbrezillon@kernel.org>,
-	"Juan A. Suarez Romero" <jasuarez@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.6 189/213] drm/vc4: Stop the active perfmon before being destroyed
-Date: Mon, 14 Oct 2024 16:21:35 +0200
-Message-ID: <20241014141050.338338225@linuxfoundation.org>
+	Sean Paul <seanpaul@chromium.org>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.6 190/213] drm/i915/hdcp: fix connector refcounting
+Date: Mon, 14 Oct 2024 16:21:36 +0200
+Message-ID: <20241014141050.377626450@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -52,59 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 0b2ad4f6f2bec74a5287d96cb2325a5e11706f22 upstream.
+commit 4cc2718f621a6a57a02581125bb6d914ce74d23b upstream.
 
-Upon closing the file descriptor, the active performance monitor is not
-stopped. Although all perfmons are destroyed in `vc4_perfmon_close_file()`,
-the active performance monitor's pointer (`vc4->active_perfmon`) is still
-retained.
+We acquire a connector reference before scheduling an HDCP prop work,
+and expect the work function to release the reference.
 
-If we open a new file descriptor and submit a few jobs with performance
-monitors, the driver will attempt to stop the active performance monitor
-using the stale pointer in `vc4->active_perfmon`. However, this pointer
-is no longer valid because the previous process has already terminated,
-and all performance monitors associated with it have been destroyed and
-freed.
+However, if the work was already queued, it won't be queued multiple
+times, and the reference is not dropped.
 
-To fix this, when the active performance monitor belongs to a given
-process, explicitly stop it before destroying and freeing it.
+Release the reference immediately if the work was already queued.
 
-Cc: stable@vger.kernel.org # v4.17+
-Cc: Boris Brezillon <bbrezillon@kernel.org>
-Cc: Juan A. Suarez Romero <jasuarez@igalia.com>
-Fixes: 65101d8c9108 ("drm/vc4: Expose performance counters to userspace")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Juan A. Suarez <jasuarez@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241004123817.890016-2-mcanal@igalia.com
+Fixes: a6597faa2d59 ("drm/i915: Protect workers against disappearing connectors")
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.10+
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924153022.2255299-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit abc0742c79bdb3b164eacab24aea0916d2ec1cb5)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_perfmon.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_hdcp.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_perfmon.c
-+++ b/drivers/gpu/drm/vc4/vc4_perfmon.c
-@@ -116,6 +116,11 @@ void vc4_perfmon_open_file(struct vc4_fi
- static int vc4_perfmon_idr_del(int id, void *elem, void *data)
- {
- 	struct vc4_perfmon *perfmon = elem;
-+	struct vc4_dev *vc4 = (struct vc4_dev *)data;
+--- a/drivers/gpu/drm/i915/display/intel_hdcp.c
++++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
+@@ -1005,7 +1005,8 @@ static void intel_hdcp_update_value(stru
+ 	hdcp->value = value;
+ 	if (update_property) {
+ 		drm_connector_get(&connector->base);
+-		queue_work(i915->unordered_wq, &hdcp->prop_work);
++		if (!queue_work(i915->unordered_wq, &hdcp->prop_work))
++			drm_connector_put(&connector->base);
+ 	}
+ }
+ 
+@@ -2480,7 +2481,8 @@ void intel_hdcp_update_pipe(struct intel
+ 		mutex_lock(&hdcp->mutex);
+ 		hdcp->value = DRM_MODE_CONTENT_PROTECTION_DESIRED;
+ 		drm_connector_get(&connector->base);
+-		queue_work(i915->unordered_wq, &hdcp->prop_work);
++		if (!queue_work(i915->unordered_wq, &hdcp->prop_work))
++			drm_connector_put(&connector->base);
+ 		mutex_unlock(&hdcp->mutex);
+ 	}
+ 
+@@ -2497,7 +2499,9 @@ void intel_hdcp_update_pipe(struct intel
+ 		 */
+ 		if (!desired_and_not_enabled && !content_protection_type_changed) {
+ 			drm_connector_get(&connector->base);
+-			queue_work(i915->unordered_wq, &hdcp->prop_work);
++			if (!queue_work(i915->unordered_wq, &hdcp->prop_work))
++				drm_connector_put(&connector->base);
 +
-+	/* If the active perfmon is being destroyed, stop it first */
-+	if (perfmon == vc4->active_perfmon)
-+		vc4_perfmon_stop(vc4, perfmon, false);
+ 		}
+ 	}
  
- 	vc4_perfmon_put(perfmon);
- 
-@@ -130,7 +135,7 @@ void vc4_perfmon_close_file(struct vc4_f
- 		return;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
--	idr_for_each(&vc4file->perfmon.idr, vc4_perfmon_idr_del, NULL);
-+	idr_for_each(&vc4file->perfmon.idr, vc4_perfmon_idr_del, vc4);
- 	idr_destroy(&vc4file->perfmon.idr);
- 	mutex_unlock(&vc4file->perfmon.lock);
- 	mutex_destroy(&vc4file->perfmon.lock);
 
 
