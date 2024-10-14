@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0383F610B;
-	Mon, 14 Oct 2024 14:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9E1F9DA;
+	Mon, 14 Oct 2024 14:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916323; cv=none; b=PZZySyVPcQGfh62xoOaV5ACC6Ajij4rviaiTyqIqebgH30pAA1pW1kyq3JkZM2v3WinFfHEH+2scYeEI40vC9dfTSUzF92WPgNa8DacudGFYEoe68qIkJv8AneDodZ8cDTeOr9CAtWIzvUNoHYSUB6LPtV4vJeHd/j1CXmowYZQ=
+	t=1728916326; cv=none; b=FpBCT8IBBTSSNqpD27qvr0914wuKa+1hG6IQDFCOT0tNLo6gXlzyiASePGKudzu5x1qwXnFNG5w14fuUletpVU36tGwPoJwtAbomGHlJxlLXPGOeHAoS1g39Q/wNXY2P3T29GpkOLq/bLv+I8bucm3TGRU4WPvLzSDwdsb9opHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916323; c=relaxed/simple;
-	bh=7zjOJE8V9UR79h/7wOFi3Fd6nf3zfNHab5QM0fCUBtg=;
+	s=arc-20240116; t=1728916326; c=relaxed/simple;
+	bh=Fz3KUIMSTFe0DXN960jm6UVPvp6bisieyyCFoH89wqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UL/2gRiWNlWIurKm+teXOs6zzcfNGiEpC/sqNVv8GGl1yLwiW7NFRDIYbC6BtaSIt8u9HNhpAGWzxLa4R0BRMdN5KrDtMY57bqIx4SUNdk/i1waTJs41V2DmQYNpmBOOi/youJtvetLkusY3hB/WxHpDJbablzOYE/Cg4u4A6Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YV91A3ym; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVRhr1muyCY3u7w7xb8+i+UwxOalXXWhBYTvWuzTt8Q2xHx8wrTWw+DLcujCsyqo3cBtiFpUFso/BtZejshnK+ZrEZpQypDNBc2HsVodCILSeLiYt3bB94pKi9dRjlTnMZ2/IvDTGLN5RcGCG/mXuhCZ+In/xBhipqfBIT27ZdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4Mhtgj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YV91A3ym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D1CC4CEC3;
-	Mon, 14 Oct 2024 14:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4Mhtgj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875C7C4CEC7;
+	Mon, 14 Oct 2024 14:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916322;
-	bh=7zjOJE8V9UR79h/7wOFi3Fd6nf3zfNHab5QM0fCUBtg=;
+	s=korg; t=1728916325;
+	bh=Fz3KUIMSTFe0DXN960jm6UVPvp6bisieyyCFoH89wqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YV91A3ymms2SKsb0SNbVs5Jk9ELcCVJ1CKlKj0Q/CkH0ZyrE6WMzQWTO3BFlsgd2f
-	 16tPOlbWS3po+Bom+tBMPAoJCAiN8WjjWgJpE6D4tA/O3bnuVCc/DWcIduQpmoAt9J
-	 gfK+xqiWVlXB5l3QDvAutqkSVsywmLzPe2t3BKbs=
+	b=I4Mhtgj6FtkXPCDZRCfpOVSIXkbz3CPWAKOYxL4aqRofH9U3JUxCNal4QIVJTBbqt
+	 fZdY07jroRmGE3CDkMrg+7wt8JBoIIhVIryTHbF5/8InXYziUvRVfFeYBqfNepfS0D
+	 PEbfnWl1pY2FEyr9g/tfZjWdfNuw3Y1i/gCPwS2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 149/214] slip: make slhc_remember() more robust against malicious packets
-Date: Mon, 14 Oct 2024 16:20:12 +0200
-Message-ID: <20241014141050.802058341@linuxfoundation.org>
+Subject: [PATCH 6.11 150/214] rcu/nocb: Fix rcuog wake-up from offline softirq
+Date: Mon, 14 Oct 2024 16:20:13 +0200
+Message-ID: <20241014141050.840850530@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -52,168 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 7d3fce8cbe3a70a1c7c06c9b53696be5d5d8dd5c ]
+[ Upstream commit f7345ccc62a4b880cf76458db5f320725f28e400 ]
 
-syzbot found that slhc_remember() was missing checks against
-malicious packets [1].
+After a CPU has set itself offline and before it eventually calls
+rcutree_report_cpu_dead(), there are still opportunities for callbacks
+to be enqueued, for example from a softirq. When that happens on NOCB,
+the rcuog wake-up is deferred through an IPI to an online CPU in order
+not to call into the scheduler and risk arming the RT-bandwidth after
+hrtimers have been migrated out and disabled.
 
-slhc_remember() only checked the size of the packet was at least 20,
-which is not good enough.
+But performing a synchronized IPI from a softirq is buggy as reported in
+the following scenario:
 
-We need to make sure the packet includes the IPv4 and TCP header
-that are supposed to be carried.
+        WARNING: CPU: 1 PID: 26 at kernel/smp.c:633 smp_call_function_single
+        Modules linked in: rcutorture torture
+        CPU: 1 UID: 0 PID: 26 Comm: migration/1 Not tainted 6.11.0-rc1-00012-g9139f93209d1 #1
+        Stopper: multi_cpu_stop+0x0/0x320 <- __stop_cpus+0xd0/0x120
+        RIP: 0010:smp_call_function_single
+        <IRQ>
+        swake_up_one_online
+        __call_rcu_nocb_wake
+        __call_rcu_common
+        ? rcu_torture_one_read
+        call_timer_fn
+        __run_timers
+        run_timer_softirq
+        handle_softirqs
+        irq_exit_rcu
+        ? tick_handle_periodic
+        sysvec_apic_timer_interrupt
+        </IRQ>
 
-Add iph and th pointers to make the code more readable.
+Fix this with forcing deferred rcuog wake up through the NOCB timer when
+the CPU is offline. The actual wake up will happen from
+rcutree_report_cpu_dead().
 
-[1]
-
-BUG: KMSAN: uninit-value in slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  ppp_receive_nonmp_frame+0xe45/0x35e0 drivers/net/ppp/ppp_generic.c:2455
-  ppp_receive_frame drivers/net/ppp/ppp_generic.c:2372 [inline]
-  ppp_do_recv+0x65f/0x40d0 drivers/net/ppp/ppp_generic.c:2212
-  ppp_input+0x7dc/0xe60 drivers/net/ppp/ppp_generic.c:2327
-  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
-  __release_sock+0x1da/0x330 net/core/sock.c:3072
-  release_sock+0x6b/0x250 net/core/sock.c:3626
-  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4091 [inline]
-  slab_alloc_node mm/slub.c:4134 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1322 [inline]
-  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
-  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 0 UID: 0 PID: 5460 Comm: syz.2.33 Not tainted 6.12.0-rc2-syzkaller-00006-g87d6aab2389e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-
-Fixes: b5451d783ade ("slip: Move the SLIP drivers")
-Reported-by: syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/670646db.050a0220.3f80e.0027.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241009091132.2136321-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202409231644.4c55582d-lkp@intel.com
+Fixes: 9139f93209d1 ("rcu/nocb: Fix RT throttling hrtimer armed from offline CPU")
+Reviewed-by: "Joel Fernandes (Google)" <joel@joelfernandes.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 57 ++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ kernel/rcu/tree_nocb.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index 18df7ca661981..c3f5759c239ac 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -643,46 +643,57 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- int
- slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
- {
--	struct cstate *cs;
--	unsigned ihl;
--
-+	const struct tcphdr *th;
- 	unsigned char index;
-+	struct iphdr *iph;
-+	struct cstate *cs;
-+	unsigned int ihl;
- 
--	if(isize < 20) {
--		/* The packet is shorter than a legal IP header */
-+	/* The packet is shorter than a legal IP header.
-+	 * Also make sure isize is positive.
-+	 */
-+	if (isize < (int)sizeof(struct iphdr)) {
-+runt:
- 		comp->sls_i_runt++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
- 	}
-+	iph = (struct iphdr *)icp;
- 	/* Peek at the IP header's IHL field to find its length */
--	ihl = icp[0] & 0xf;
--	if(ihl < 20 / 4){
--		/* The IP header length field is too small */
--		comp->sls_i_runt++;
--		return slhc_toss( comp );
--	}
--	index = icp[9];
--	icp[9] = IPPROTO_TCP;
-+	ihl = iph->ihl;
-+	/* The IP header length field is too small,
-+	 * or packet is shorter than the IP header followed
-+	 * by minimal tcp header.
-+	 */
-+	if (ihl < 5 || isize < ihl * 4 + sizeof(struct tcphdr))
-+		goto runt;
-+
-+	index = iph->protocol;
-+	iph->protocol = IPPROTO_TCP;
- 
- 	if (ip_fast_csum(icp, ihl)) {
- 		/* Bad IP header checksum; discard */
- 		comp->sls_i_badcheck++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
- 	}
--	if(index > comp->rslot_limit) {
-+	if (index > comp->rslot_limit) {
- 		comp->sls_i_error++;
- 		return slhc_toss(comp);
- 	}
--
-+	th = (struct tcphdr *)(icp + ihl * 4);
-+	if (th->doff < sizeof(struct tcphdr) / 4)
-+		goto runt;
-+	if (isize < ihl * 4 + th->doff * 4)
-+		goto runt;
- 	/* Update local state */
- 	cs = &comp->rstate[comp->recv_current = index];
- 	comp->flags &=~ SLF_TOSS;
--	memcpy(&cs->cs_ip,icp,20);
--	memcpy(&cs->cs_tcp,icp + ihl*4,20);
-+	memcpy(&cs->cs_ip, iph, sizeof(*iph));
-+	memcpy(&cs->cs_tcp, th, sizeof(*th));
- 	if (ihl > 5)
--	  memcpy(cs->cs_ipopt, icp + sizeof(struct iphdr), (ihl - 5) * 4);
--	if (cs->cs_tcp.doff > 5)
--	  memcpy(cs->cs_tcpopt, icp + ihl*4 + sizeof(struct tcphdr), (cs->cs_tcp.doff - 5) * 4);
--	cs->cs_hsize = ihl*2 + cs->cs_tcp.doff*2;
-+	  memcpy(cs->cs_ipopt, &iph[1], (ihl - 5) * 4);
-+	if (th->doff > 5)
-+	  memcpy(cs->cs_tcpopt, &th[1], (th->doff - 5) * 4);
-+	cs->cs_hsize = ihl*2 + th->doff*2;
- 	cs->initialized = true;
- 	/* Put headers back on packet
- 	 * Neither header checksum is recalculated
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 2686ba122fa08..3630f712358e4 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -569,13 +569,19 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_LAZY,
+ 					   TPS("WakeLazy"));
+-		} else if (!irqs_disabled_flags(flags)) {
++		} else if (!irqs_disabled_flags(flags) && cpu_online(rdp->cpu)) {
+ 			/* ... if queue was empty ... */
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp(rdp, false);
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 					    TPS("WakeEmpty"));
+ 		} else {
++			/*
++			 * Don't do the wake-up upfront on fragile paths.
++			 * Also offline CPUs can't call swake_up_one_online() from
++			 * (soft-)IRQs. Rely on the final deferred wake-up from
++			 * rcutree_report_cpu_dead()
++			 */
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE,
+ 					   TPS("WakeEmptyIsDeferred"));
 -- 
 2.43.0
 
