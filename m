@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF3713B7A1;
-	Mon, 14 Oct 2024 14:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7191AA7A5;
+	Mon, 14 Oct 2024 14:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916983; cv=none; b=JwkY/mbRDY+k2H/Err59UzDYRtNT6kpad7c21JN9wAR2Uccir00Z16zL5AUKtE+89VX3bcEXIi1i5Llpj+hxj/5EI1jrYOt3ENlmBTr/a3owNZWdyEuYwYE9OO4UHYKcTthPpuclYId09jdjpxpMocfylp74dt1kG/pf7BzLkZk=
+	t=1728916987; cv=none; b=O82jxoa8cpwkfBr4+TX4LhhGQtFib126DD4VBmkV54DF9oQ7Ytjod+k36v7bP+O+sOMjoiIVAGrooDPv3vwAagTfbp4p21cMnp0os/vKBkTl2RbqUwuvfe7KRg1VnPZtr8cf2kGW3Nsu6VliOyWRk9x0FVQN/boqusZYpgT2/ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916983; c=relaxed/simple;
-	bh=sTuEKnZMnOttwsVxFKgvj9JCZBpg7HWwRrRC1tn2LZI=;
+	s=arc-20240116; t=1728916987; c=relaxed/simple;
+	bh=Z4ajsH1t7lv3E4k1sLPmQlxi4Ao78NOT0CpB6yx+1c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMZpeupJPtHXSUW0AU3pgugHVSTozxEFAXFcvB9xxoLU7NO5qH87d3H7RVH8XWvSUhztGlk4akYdQ/djQAH2XVR0MVrlfBHr89RPxAaW60jnd8St73AVeX3WI4eT1PMj79Pswp7Ref4sMFizEDu2wjWoKxxgOMsii4IJnvMZ+mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3p5iXjf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+EHGdy2b1DMjZqbfLp4CwjJ/20rovYUcAx8uKPui6yJCddtcSJIztRPMOw/EXws+9A3bg7BAX3F9srPG6Q57CWlYoYz21IVxe7cgGQuh1SrGnPWKOiO2WOdl25vVfzZASuhzRcdnXOWG3U3Ibh+vAFtRhrNDcMYDayH1yxFMXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNBM0YcH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3p5iXjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15133C4CEC3;
-	Mon, 14 Oct 2024 14:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNBM0YcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70832C4CEC3;
+	Mon, 14 Oct 2024 14:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916983;
-	bh=sTuEKnZMnOttwsVxFKgvj9JCZBpg7HWwRrRC1tn2LZI=;
+	s=korg; t=1728916986;
+	bh=Z4ajsH1t7lv3E4k1sLPmQlxi4Ao78NOT0CpB6yx+1c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3p5iXjfbAsyfdZMZmpLiX5n0iFP/GX1cWzHeC29GeSvBrCODXl0qhkVceZLrLqgU
-	 CbKhT2XRzf/GbM7nfLTforxLrTC08c6oI7NchpQemnRUjMKGRuwrlS1hLdWiGZK3/0
-	 rqFqe00W3/wh+kAqt2oIbkFNhZpc562spYsOZDYs=
+	b=aNBM0YcHxqXNVC9EkdazBIl2tlEAc9iGeanrubP/XLu59RDzm2M7ggrR7h8odF/tp
+	 9TzqIVys1X9jeiMp+1OLUNeiOn6cJrnqhy3kCZ+esf83ToILdVKkPf+u/x5hKWelG9
+	 bvy5J7hkNUz7QZYwsVlCao/X2ERJMCg2gA3NxF+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Ido Schimmel <idosch@nvidia.com>,
+	Andy Roulin <aroulin@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/213] rxrpc: Fix uninitialised variable in rxrpc_send_data()
-Date: Mon, 14 Oct 2024 16:20:25 +0200
-Message-ID: <20241014141047.612523466@linuxfoundation.org>
+Subject: [PATCH 6.6 120/213] netfilter: br_netfilter: fix panic with metadata_dst skb
+Date: Mon, 14 Oct 2024 16:20:26 +0200
+Message-ID: <20241014141047.652032140@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -54,55 +53,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Andy Roulin <aroulin@nvidia.com>
 
-[ Upstream commit 7a310f8d7dfe2d92a1f31ddb5357bfdd97eed273 ]
+[ Upstream commit f9ff7665cd128012868098bbd07e28993e314fdb ]
 
-Fix the uninitialised txb variable in rxrpc_send_data() by moving the code
-that loads it above all the jumps to maybe_error, txb being stored back
-into call->tx_pending right before the normal return.
+Fix a kernel panic in the br_netfilter module when sending untagged
+traffic via a VxLAN device.
+This happens during the check for fragmentation in br_nf_dev_queue_xmit.
 
-Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lists.infradead.org/pipermail/linux-afs/2024-October/008896.html
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20241001132702.3122709-3-dhowells@redhat.com
+It is dependent on:
+1) the br_netfilter module being loaded;
+2) net.bridge.bridge-nf-call-iptables set to 1;
+3) a bridge with a VxLAN (single-vxlan-device) netdevice as a bridge port;
+4) untagged frames with size higher than the VxLAN MTU forwarded/flooded
+
+When forwarding the untagged packet to the VxLAN bridge port, before
+the netfilter hooks are called, br_handle_egress_vlan_tunnel is called and
+changes the skb_dst to the tunnel dst. The tunnel_dst is a metadata type
+of dst, i.e., skb_valid_dst(skb) is false, and metadata->dst.dev is NULL.
+
+Then in the br_netfilter hooks, in br_nf_dev_queue_xmit, there's a check
+for frames that needs to be fragmented: frames with higher MTU than the
+VxLAN device end up calling br_nf_ip_fragment, which in turns call
+ip_skb_dst_mtu.
+
+The ip_dst_mtu tries to use the skb_dst(skb) as if it was a valid dst
+with valid dst->dev, thus the crash.
+
+This case was never supported in the first place, so drop the packet
+instead.
+
+PING 10.0.0.2 (10.0.0.2) from 0.0.0.0 h1-eth0: 2000(2028) bytes of data.
+[  176.291791] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000110
+[  176.292101] Mem abort info:
+[  176.292184]   ESR = 0x0000000096000004
+[  176.292322]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  176.292530]   SET = 0, FnV = 0
+[  176.292709]   EA = 0, S1PTW = 0
+[  176.292862]   FSC = 0x04: level 0 translation fault
+[  176.293013] Data abort info:
+[  176.293104]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[  176.293488]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[  176.293787]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[  176.293995] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000043ef5000
+[  176.294166] [0000000000000110] pgd=0000000000000000,
+p4d=0000000000000000
+[  176.294827] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[  176.295252] Modules linked in: vxlan ip6_udp_tunnel udp_tunnel veth
+br_netfilter bridge stp llc ipv6 crct10dif_ce
+[  176.295923] CPU: 0 PID: 188 Comm: ping Not tainted
+6.8.0-rc3-g5b3fbd61b9d1 #2
+[  176.296314] Hardware name: linux,dummy-virt (DT)
+[  176.296535] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS
+BTYPE=--)
+[  176.296808] pc : br_nf_dev_queue_xmit+0x390/0x4ec [br_netfilter]
+[  176.297382] lr : br_nf_dev_queue_xmit+0x2ac/0x4ec [br_netfilter]
+[  176.297636] sp : ffff800080003630
+[  176.297743] x29: ffff800080003630 x28: 0000000000000008 x27:
+ffff6828c49ad9f8
+[  176.298093] x26: ffff6828c49ad000 x25: 0000000000000000 x24:
+00000000000003e8
+[  176.298430] x23: 0000000000000000 x22: ffff6828c4960b40 x21:
+ffff6828c3b16d28
+[  176.298652] x20: ffff6828c3167048 x19: ffff6828c3b16d00 x18:
+0000000000000014
+[  176.298926] x17: ffffb0476322f000 x16: ffffb7e164023730 x15:
+0000000095744632
+[  176.299296] x14: ffff6828c3f1c880 x13: 0000000000000002 x12:
+ffffb7e137926a70
+[  176.299574] x11: 0000000000000001 x10: ffff6828c3f1c898 x9 :
+0000000000000000
+[  176.300049] x8 : ffff6828c49bf070 x7 : 0008460f18d5f20e x6 :
+f20e0100bebafeca
+[  176.300302] x5 : ffff6828c7f918fe x4 : ffff6828c49bf070 x3 :
+0000000000000000
+[  176.300586] x2 : 0000000000000000 x1 : ffff6828c3c7ad00 x0 :
+ffff6828c7f918f0
+[  176.300889] Call trace:
+[  176.301123]  br_nf_dev_queue_xmit+0x390/0x4ec [br_netfilter]
+[  176.301411]  br_nf_post_routing+0x2a8/0x3e4 [br_netfilter]
+[  176.301703]  nf_hook_slow+0x48/0x124
+[  176.302060]  br_forward_finish+0xc8/0xe8 [bridge]
+[  176.302371]  br_nf_hook_thresh+0x124/0x134 [br_netfilter]
+[  176.302605]  br_nf_forward_finish+0x118/0x22c [br_netfilter]
+[  176.302824]  br_nf_forward_ip.part.0+0x264/0x290 [br_netfilter]
+[  176.303136]  br_nf_forward+0x2b8/0x4e0 [br_netfilter]
+[  176.303359]  nf_hook_slow+0x48/0x124
+[  176.303803]  __br_forward+0xc4/0x194 [bridge]
+[  176.304013]  br_flood+0xd4/0x168 [bridge]
+[  176.304300]  br_handle_frame_finish+0x1d4/0x5c4 [bridge]
+[  176.304536]  br_nf_hook_thresh+0x124/0x134 [br_netfilter]
+[  176.304978]  br_nf_pre_routing_finish+0x29c/0x494 [br_netfilter]
+[  176.305188]  br_nf_pre_routing+0x250/0x524 [br_netfilter]
+[  176.305428]  br_handle_frame+0x244/0x3cc [bridge]
+[  176.305695]  __netif_receive_skb_core.constprop.0+0x33c/0xecc
+[  176.306080]  __netif_receive_skb_one_core+0x40/0x8c
+[  176.306197]  __netif_receive_skb+0x18/0x64
+[  176.306369]  process_backlog+0x80/0x124
+[  176.306540]  __napi_poll+0x38/0x17c
+[  176.306636]  net_rx_action+0x124/0x26c
+[  176.306758]  __do_softirq+0x100/0x26c
+[  176.307051]  ____do_softirq+0x10/0x1c
+[  176.307162]  call_on_irq_stack+0x24/0x4c
+[  176.307289]  do_softirq_own_stack+0x1c/0x2c
+[  176.307396]  do_softirq+0x54/0x6c
+[  176.307485]  __local_bh_enable_ip+0x8c/0x98
+[  176.307637]  __dev_queue_xmit+0x22c/0xd28
+[  176.307775]  neigh_resolve_output+0xf4/0x1a0
+[  176.308018]  ip_finish_output2+0x1c8/0x628
+[  176.308137]  ip_do_fragment+0x5b4/0x658
+[  176.308279]  ip_fragment.constprop.0+0x48/0xec
+[  176.308420]  __ip_finish_output+0xa4/0x254
+[  176.308593]  ip_finish_output+0x34/0x130
+[  176.308814]  ip_output+0x6c/0x108
+[  176.308929]  ip_send_skb+0x50/0xf0
+[  176.309095]  ip_push_pending_frames+0x30/0x54
+[  176.309254]  raw_sendmsg+0x758/0xaec
+[  176.309568]  inet_sendmsg+0x44/0x70
+[  176.309667]  __sys_sendto+0x110/0x178
+[  176.309758]  __arm64_sys_sendto+0x28/0x38
+[  176.309918]  invoke_syscall+0x48/0x110
+[  176.310211]  el0_svc_common.constprop.0+0x40/0xe0
+[  176.310353]  do_el0_svc+0x1c/0x28
+[  176.310434]  el0_svc+0x34/0xb4
+[  176.310551]  el0t_64_sync_handler+0x120/0x12c
+[  176.310690]  el0t_64_sync+0x190/0x194
+[  176.311066] Code: f9402e61 79402aa2 927ff821 f9400023 (f9408860)
+[  176.315743] ---[ end trace 0000000000000000 ]---
+[  176.316060] Kernel panic - not syncing: Oops: Fatal exception in
+interrupt
+[  176.316371] Kernel Offset: 0x37e0e3000000 from 0xffff800080000000
+[  176.316564] PHYS_OFFSET: 0xffff97d780000000
+[  176.316782] CPU features: 0x0,88000203,3c020000,0100421b
+[  176.317210] Memory Limit: none
+[  176.317527] ---[ end Kernel panic - not syncing: Oops: Fatal
+Exception in interrupt ]---\
+
+Fixes: 11538d039ac6 ("bridge: vlan dst_metadata hooks in ingress and egress paths")
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Andy Roulin <aroulin@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20241001154400.22787-2-aroulin@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bridge/br_netfilter_hooks.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index 8e0b94714e849..24f765d243db1 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -303,6 +303,11 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 	sk_clear_bit(SOCKWQ_ASYNC_NOSPACE, sk);
- 
- reload:
-+	txb = call->tx_pending;
-+	call->tx_pending = NULL;
-+	if (txb)
-+		rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
-+
- 	ret = -EPIPE;
- 	if (sk->sk_shutdown & SEND_SHUTDOWN)
- 		goto maybe_error;
-@@ -329,11 +334,6 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			goto maybe_error;
+diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
+index 68d5538613032..a1cfa75bbadb9 100644
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -33,6 +33,7 @@
+ #include <net/ip.h>
+ #include <net/ipv6.h>
+ #include <net/addrconf.h>
++#include <net/dst_metadata.h>
+ #include <net/route.h>
+ #include <net/netfilter/br_netfilter.h>
+ #include <net/netns/generic.h>
+@@ -871,6 +872,10 @@ static int br_nf_dev_queue_xmit(struct net *net, struct sock *sk, struct sk_buff
+ 		return br_dev_queue_push_xmit(net, sk, skb);
  	}
  
--	txb = call->tx_pending;
--	call->tx_pending = NULL;
--	if (txb)
--		rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
--
- 	do {
- 		if (!txb) {
- 			size_t remain, bufsize, chunk, offset;
++	/* Fragmentation on metadata/template dst is not supported */
++	if (unlikely(!skb_valid_dst(skb)))
++		goto drop;
++
+ 	/* This is wrong! We should preserve the original fragment
+ 	 * boundaries by preserving frag_list rather than refragmenting.
+ 	 */
 -- 
 2.43.0
 
