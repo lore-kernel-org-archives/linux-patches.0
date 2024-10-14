@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7319E802;
-	Mon, 14 Oct 2024 14:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D9B4A24;
+	Mon, 14 Oct 2024 14:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916545; cv=none; b=NgLraLfjwGhd77qk6KOvSCQkWbkd9GS/gRVNFh7n24TYR2yWeI8ScLZabgHRbvLYM7au6Mw0Ta7w9WGWAa6nVzm5BJRjQ1uAFbxvQGQYl201GgBxcz02ycw66CqTYzR1K4+xI0X+PPG/ZG426GUZ0sm2A4a6PRNYw3TcAlvBWxs=
+	t=1728916548; cv=none; b=hQLfyFpvUuFn3oR9paqUGjnWwSubtqNm3nvmBLowkl1jTfi6ZmDXu9gomd8QX6kFzKYa8AaTjaVXcOqgKlbBjkwfMuudbrVquo55i4kgUmmO9LnUXEFCqA44Mih0cApo7c1NtJuh976C/Xc7jixhKnoUpILwBFv18+xu6AcZ6EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916545; c=relaxed/simple;
-	bh=/VBKV0w8i3EXy4hP5+3BnX5kO/AbaIC47qk8Qxr9TGU=;
+	s=arc-20240116; t=1728916548; c=relaxed/simple;
+	bh=LRAXUBwPH7szKZWWXidJbipFUticwpYV15V0gFKJKv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZA5qHSTbFzQfjMHuQyUkOWbOyUu4sAK8q7uP9Ju/FdnJSw3Xf4x/UtXqlmsVMtsLCjlDN9QclOI0Z1khXZAajpGHASI/waG3Xe0JXixqB7ujbcmBLQfSSsfIyYr6gprx9uaXu4YCxJxQDmNbCWzXJqD8XAL15izV/fZqYkXJ3xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agHcVBX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4VZ//Fp6bb68BSyUUOzKbdbPSKWsgsa/aTsik8pMO5iM7ayeuzTviHBkZcj5UV5ShJNWdvQBsXwyLuCaQ0fBoOnAYxPIoBBuv8M+I1bMOHq7yb5CN7IgMozXcvstum5nWDFBl/+bF1S7ybYNOY9m+sJq2PP7mQklRHJ3VT4G9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0ZuNEqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agHcVBX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D21C4CEC3;
-	Mon, 14 Oct 2024 14:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0ZuNEqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD837C4CEC3;
+	Mon, 14 Oct 2024 14:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916544;
-	bh=/VBKV0w8i3EXy4hP5+3BnX5kO/AbaIC47qk8Qxr9TGU=;
+	s=korg; t=1728916548;
+	bh=LRAXUBwPH7szKZWWXidJbipFUticwpYV15V0gFKJKv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agHcVBX2oekqkWxdZ0lG3LJZKW+hpZfobNZxzSpWvGtxWPm8xcIdYgsZ4/19MsSFa
-	 wqjN7c7R/hKl45VSA4zgX6gOuam4IFv5AbknHKkHQ4wUk55kRHL8HRwZ92IMmqI6vz
-	 AyFrbF52HCtzFTYZ1cJbt2tRVCnZtmkgjqX8k7YA=
+	b=F0ZuNEqu6ih9CP++SHpTg49uAOHMWSKK9UFYETGkWmVEKnMQtJT5m1tFe9gTFAv+M
+	 Zzmj0fagPTmDN4ydBb+qrC6qugeQOYhf0NVw5vRCrZZnFmdLRmnAcIwFaHS7gVBoY2
+	 z+xOku/mv6Fj0jQr+vCiAFX028uOG3PPWN5iWJqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.11 213/214] PCI: Pass domain number to pci_bus_release_domain_nr() explicitly
-Date: Mon, 14 Oct 2024 16:21:16 +0200
-Message-ID: <20241014141053.288403051@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.11 196/214] net: phy: realtek: Fix MMD access on RTL8126A-integrated PHY
+Date: Mon, 14 Oct 2024 16:20:59 +0200
+Message-ID: <20241014141052.625422046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -45,128 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 0cca961a026177af69044f10d6ae76d8ce043764 upstream.
+commit a6ad589c1d118f9d5b1bc4c6888d42919f830340 upstream.
 
-The pci_bus_release_domain_nr() API is supposed to free the domain
-number allocated by pci_bus_find_domain_nr(). Most of the callers of
-pci_bus_find_domain_nr(), store the domain number in pci_bus::domain_nr.
+All MMD reads return 0 for the RTL8126A-integrated PHY. Therefore phylib
+assumes it doesn't support EEE, what results in higher power consumption,
+and a significantly higher chip temperature in my case.
+To fix this split out the PHY driver for the RTL8126A-integrated PHY
+and set the read_mmd/write_mmd callbacks to read from vendor-specific
+registers.
 
-As such, the pci_bus_release_domain_nr() implicitly frees the domain
-number by dereferencing 'struct pci_bus'. However, one of the callers
-of this API, the PCI endpoint subsystem, doesn't have 'struct pci_bus',
-so it only passes NULL. Due to this, the API will end up dereferencing
-the NULL pointer.
-
-To fix this issue, pass the domain number to this API explicitly. Since
-'struct pci_bus' is not used for anything else other than extracting the
-domain number, it makes sense to pass the domain number directly.
-
-Fixes: 0328947c5032 ("PCI: endpoint: Assign PCI domain number for endpoint controllers")
-Closes: https://lore.kernel.org/linux-pci/c0c40ddb-bf64-4b22-9dd1-8dbb18aa2813@stanley.mountain
-Link: https://lore.kernel.org/linux-pci/20240912053025.25314-1-manivannan.sadhasivam@linaro.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: 5befa3728b85 ("net: phy: realtek: add support for RTL8126A-integrated 5Gbps PHY")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c |    2 +-
- drivers/pci/pci.c                   |   14 +++++++-------
- drivers/pci/probe.c                 |    2 +-
- drivers/pci/remove.c                |    2 +-
- include/linux/pci.h                 |    2 +-
- 5 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/phy/realtek.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -840,7 +840,7 @@ void pci_epc_destroy(struct pci_epc *epc
- 	device_unregister(&epc->dev);
- 
- #ifdef CONFIG_PCI_DOMAINS_GENERIC
--	pci_bus_release_domain_nr(NULL, &epc->dev);
-+	pci_bus_release_domain_nr(&epc->dev, epc->domain_nr);
- #endif
- }
- EXPORT_SYMBOL_GPL(pci_epc_destroy);
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -6814,16 +6814,16 @@ static int of_pci_bus_find_domain_nr(str
- 	return ida_alloc(&pci_domain_nr_dynamic_ida, GFP_KERNEL);
+diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
+index c15d2f66ef0d..166f6a728373 100644
+--- a/drivers/net/phy/realtek.c
++++ b/drivers/net/phy/realtek.c
+@@ -1081,6 +1081,16 @@ static int rtl8221b_vn_cg_c45_match_phy_device(struct phy_device *phydev)
+ 	return rtlgen_is_c45_match(phydev, RTL_8221B_VN_CG, true);
  }
  
--static void of_pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent)
-+static void of_pci_bus_release_domain_nr(struct device *parent, int domain_nr)
++static int rtl8251b_c22_match_phy_device(struct phy_device *phydev)
++{
++	return rtlgen_is_c45_match(phydev, RTL_8251B, false);
++}
++
++static int rtl8251b_c45_match_phy_device(struct phy_device *phydev)
++{
++	return rtlgen_is_c45_match(phydev, RTL_8251B, true);
++}
++
+ static int rtlgen_resume(struct phy_device *phydev)
  {
--	if (bus->domain_nr < 0)
-+	if (domain_nr < 0)
- 		return;
- 
- 	/* Release domain from IDA where it was allocated. */
--	if (of_get_pci_domain_nr(parent->of_node) == bus->domain_nr)
--		ida_free(&pci_domain_nr_static_ida, bus->domain_nr);
-+	if (of_get_pci_domain_nr(parent->of_node) == domain_nr)
-+		ida_free(&pci_domain_nr_static_ida, domain_nr);
- 	else
--		ida_free(&pci_domain_nr_dynamic_ida, bus->domain_nr);
-+		ida_free(&pci_domain_nr_dynamic_ida, domain_nr);
- }
- 
- int pci_bus_find_domain_nr(struct pci_bus *bus, struct device *parent)
-@@ -6832,11 +6832,11 @@ int pci_bus_find_domain_nr(struct pci_bu
- 			       acpi_pci_bus_find_domain_nr(bus);
- }
- 
--void pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent)
-+void pci_bus_release_domain_nr(struct device *parent, int domain_nr)
- {
- 	if (!acpi_disabled)
- 		return;
--	of_pci_bus_release_domain_nr(bus, parent);
-+	of_pci_bus_release_domain_nr(parent, domain_nr);
- }
- #endif
- 
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1061,7 +1061,7 @@ unregister:
- 
- free:
- #ifdef CONFIG_PCI_DOMAINS_GENERIC
--	pci_bus_release_domain_nr(bus, parent);
-+	pci_bus_release_domain_nr(parent, bus->domain_nr);
- #endif
- 	kfree(bus);
- 	return err;
---- a/drivers/pci/remove.c
-+++ b/drivers/pci/remove.c
-@@ -179,7 +179,7 @@ void pci_remove_root_bus(struct pci_bus
- #ifdef CONFIG_PCI_DOMAINS_GENERIC
- 	/* Release domain_nr if it was dynamically allocated */
- 	if (host_bridge->domain_nr == PCI_DOMAIN_NR_NOT_SET)
--		pci_bus_release_domain_nr(bus, host_bridge->dev.parent);
-+		pci_bus_release_domain_nr(host_bridge->dev.parent, bus->domain_nr);
- #endif
- 
- 	pci_remove_bus(bus);
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1884,7 +1884,7 @@ static inline int acpi_pci_bus_find_doma
- { return 0; }
- #endif
- int pci_bus_find_domain_nr(struct pci_bus *bus, struct device *parent);
--void pci_bus_release_domain_nr(struct pci_bus *bus, struct device *parent);
-+void pci_bus_release_domain_nr(struct device *parent, int domain_nr);
- #endif
- 
- /* Some architectures require additional setup to direct VGA traffic */
+ 	int ret = genphy_resume(phydev);
+@@ -1418,7 +1428,7 @@ static struct phy_driver realtek_drvs[] = {
+ 		.suspend        = genphy_c45_pma_suspend,
+ 		.resume         = rtlgen_c45_resume,
+ 	}, {
+-		PHY_ID_MATCH_EXACT(0x001cc862),
++		.match_phy_device = rtl8251b_c45_match_phy_device,
+ 		.name           = "RTL8251B 5Gbps PHY",
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+@@ -1427,6 +1437,18 @@ static struct phy_driver realtek_drvs[] = {
+ 		.resume         = rtlgen_resume,
+ 		.read_page      = rtl821x_read_page,
+ 		.write_page     = rtl821x_write_page,
++	}, {
++		.match_phy_device = rtl8251b_c22_match_phy_device,
++		.name           = "RTL8126A-internal 5Gbps PHY",
++		.get_features   = rtl822x_get_features,
++		.config_aneg    = rtl822x_config_aneg,
++		.read_status    = rtl822x_read_status,
++		.suspend        = genphy_suspend,
++		.resume         = rtlgen_resume,
++		.read_page      = rtl821x_read_page,
++		.write_page     = rtl821x_write_page,
++		.read_mmd	= rtl822x_read_mmd,
++		.write_mmd	= rtl822x_write_mmd,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001ccad0),
+ 		.name		= "RTL8224 2.5Gbps PHY",
+-- 
+2.47.0
+
 
 
