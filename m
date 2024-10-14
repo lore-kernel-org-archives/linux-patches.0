@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627051BB6BB;
-	Mon, 14 Oct 2024 15:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE7F1AC885;
+	Mon, 14 Oct 2024 15:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919628; cv=none; b=QXBbhJy9RHyfcm8tKLufdJU2FO6Hb4FUUXwWJb2Wb8QdJ1OE00XeVmxJNhF4WgcUjfGM0rgnnhvzYl0Je5g77jbmC60wLPN3zI0jOprIjWPBMzMKnWBnLWfKgcRTQmoo5BeTHIvrUKapISbzPaUrk/vvVA8ZcoSB9ZLXh0w6mKo=
+	t=1728919632; cv=none; b=FKvihIai34WTtvKldrtsj2gGZCgDWbQ82pyoCNhX0rAZ6y1yKhpcbZt7ppUFjrdASbF074egetnHaBKPBjSnf52dyL4Nf+9ZzaaaaFFe4I9MQ8oK+zUSRJX3lLT9653KDJEj0JfG+a1T+7zcmifVpwzIyW3vDDdlCdOJiIwsD70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919628; c=relaxed/simple;
-	bh=vH/K9PHVOTX1xKFHBuE+SSywlmQhF1Bj5kTQtXjDEGI=;
+	s=arc-20240116; t=1728919632; c=relaxed/simple;
+	bh=Qda8jM2e5+1spywJIihty1F54WOJj4DpBCeltHmj7OY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngxhsrrpcpbU6Bye0m7idB9pxG/XqJMuB5zG4uK3rO1edan++IOqNTuwYLF+yqOdIsEdAMH1qG2KMq0G87bO7+nGF2ynOGyvrRwFbw32lo0msB8xxm/qbyZM5EncurQ+PCQoBI9h4VsK7N30Z8btpYxjicQUy9VFZAvdPT6yWZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCX0iMlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAa8Plb1tRFwI/7Yds/JEd78r+gbTnLWD75g1iC1rP3pf8pvZxmEsRZhbikL1N+eDk/FEa4qlhC8OI8ify23rcyEqfFOd459ne0ax5WvtHcu/u5tgRcRH2IqbfvuObeCpGWIexF15jsCVkpU+EENCZAMOGXd6kcdREaeUOrjr2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVjbN74o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCX0iMlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C465FC4CEC7;
-	Mon, 14 Oct 2024 15:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVjbN74o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD52C4CECF;
+	Mon, 14 Oct 2024 15:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919628;
-	bh=vH/K9PHVOTX1xKFHBuE+SSywlmQhF1Bj5kTQtXjDEGI=;
+	s=korg; t=1728919631;
+	bh=Qda8jM2e5+1spywJIihty1F54WOJj4DpBCeltHmj7OY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCX0iMlc9Ci1QR0LVdEgHTnsAZzLskAuenewAktUgGqctwluDPmk76OezWfdXeaI1
-	 ts5a336ErjM/oaL42X44tSdMR0DpOzTguMbbKckZJBHiCSTiirjPSAmiN/tN7e9EIf
-	 pZ4xLFmDzm5nMNhc3aZVL1ZfiFoDKWQBHj0kB/o4=
+	b=KVjbN74ou0hzOSjq/cA5GaQBglfD54MRlQAT4zE0zou/spxTmFmRxNYtaM5nw9hsq
+	 mP5NeL6Dfpg892olllKkpvipfgFBndWzZjtfyQ98BgvKp0bL5FZXkWVc5BjpITGxaT
+	 nh6wmisKnYGjZLVd4co43GsW/rIXr+L8SdwW6rso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 660/798] perf report: Fix segfault when sym sort key is not used
-Date: Mon, 14 Oct 2024 16:20:14 +0200
-Message-ID: <20241014141243.981118830@linuxfoundation.org>
+	Shiyang Ruan <ruansy.fnst@fujitsu.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 661/798] fsdax: dax_unshare_iter() should return a valid length
+Date: Mon, 14 Oct 2024 16:20:15 +0200
+Message-ID: <20241014141244.020694119@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -58,88 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 
-commit 9af2efee41b27a0f386fb5aa95d8d0b4b5d9fede upstream.
+commit 388bc034d91d480efa88abc5c8d6e6c8a878b1ab upstream.
 
-The fields in the hist_entry are filled on-demand which means they only
-have meaningful values when relevant sort keys are used.
+The copy_mc_to_kernel() will return 0 if it executed successfully.  Then
+the return value should be set to the length it copied.
 
-So if neither of 'dso' nor 'sym' sort keys are used, the map/symbols in
-the hist entry can be garbage.  So it shouldn't access it
-unconditionally.
-
-I got a segfault, when I wanted to see cgroup profiles.
-
-  $ sudo perf record -a --all-cgroups --synth=cgroup true
-
-  $ sudo perf report -s cgroup
-
-  Program received signal SIGSEGV, Segmentation fault.
-  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
-  48		return RC_CHK_ACCESS(map)->dso;
-  (gdb) bt
-  #0  0x00005555557a8d90 in map__dso (map=0x0) at util/map.h:48
-  #1  0x00005555557aa39b in map__load (map=0x0) at util/map.c:344
-  #2  0x00005555557aa592 in map__find_symbol (map=0x0, addr=140736115941088) at util/map.c:385
-  #3  0x00005555557ef000 in hists__findnew_entry (hists=0x555556039d60, entry=0x7fffffffa4c0, al=0x7fffffffa8c0, sample_self=true)
-      at util/hist.c:644
-  #4  0x00005555557ef61c in __hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
-      block_info=0x0, sample=0x7fffffffaa90, sample_self=true, ops=0x0) at util/hist.c:761
-  #5  0x00005555557ef71f in hists__add_entry (hists=0x555556039d60, al=0x7fffffffa8c0, sym_parent=0x0, bi=0x0, mi=0x0, ki=0x0,
-      sample=0x7fffffffaa90, sample_self=true) at util/hist.c:779
-  #6  0x00005555557f00fb in iter_add_single_normal_entry (iter=0x7fffffffa900, al=0x7fffffffa8c0) at util/hist.c:1015
-  #7  0x00005555557f09a7 in hist_entry_iter__add (iter=0x7fffffffa900, al=0x7fffffffa8c0, max_stack_depth=127, arg=0x7fffffffbce0)
-      at util/hist.c:1260
-  #8  0x00005555555ba7ce in process_sample_event (tool=0x7fffffffbce0, event=0x7ffff7c14128, sample=0x7fffffffaa90, evsel=0x555556039ad0,
-      machine=0x5555560388e8) at builtin-report.c:334
-  #9  0x00005555557b30c8 in evlist__deliver_sample (evlist=0x555556039010, tool=0x7fffffffbce0, event=0x7ffff7c14128,
-      sample=0x7fffffffaa90, evsel=0x555556039ad0, machine=0x5555560388e8) at util/session.c:1232
-  #10 0x00005555557b32bc in machines__deliver_event (machines=0x5555560388e8, evlist=0x555556039010, event=0x7ffff7c14128,
-      sample=0x7fffffffaa90, tool=0x7fffffffbce0, file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1271
-  #11 0x00005555557b3848 in perf_session__deliver_event (session=0x5555560386d0, event=0x7ffff7c14128, tool=0x7fffffffbce0,
-      file_offset=110888, file_path=0x555556038ff0 "perf.data") at util/session.c:1354
-  #12 0x00005555557affaf in ordered_events__deliver_event (oe=0x555556038e60, event=0x555556135aa0) at util/session.c:132
-  #13 0x00005555557bb605 in do_flush (oe=0x555556038e60, show_progress=false) at util/ordered-events.c:245
-  #14 0x00005555557bb95c in __ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND, timestamp=0) at util/ordered-events.c:324
-  #15 0x00005555557bba46 in ordered_events__flush (oe=0x555556038e60, how=OE_FLUSH__ROUND) at util/ordered-events.c:342
-  #16 0x00005555557b1b3b in perf_event__process_finished_round (tool=0x7fffffffbce0, event=0x7ffff7c15bb8, oe=0x555556038e60)
-      at util/session.c:780
-  #17 0x00005555557b3b27 in perf_session__process_user_event (session=0x5555560386d0, event=0x7ffff7c15bb8, file_offset=117688,
-      file_path=0x555556038ff0 "perf.data") at util/session.c:1406
-
-As you can see the entry->ms.map was NULL even if he->ms.map has a
-value.  This is because 'sym' sort key is not given, so it cannot assume
-whether he->ms.sym and entry->ms.sym is the same.  I only checked the
-'sym' sort key here as it implies 'dso' behavior (so maps are the same).
-
-Fixes: ac01c8c4246546fd ("perf hist: Update hist symbol when updating maps")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/r/20240826221045.1202305-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[akpm@linux-foundation.org: don't mess up `ret', per Matthew]
+Link: https://lkml.kernel.org/r/1675341227-14-1-git-send-email-ruansy.fnst@fujitsu.com
+Fixes: d984648e428b ("fsdax,xfs: port unshare to fsdax")
+Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dax.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -633,7 +633,7 @@ static struct hist_entry *hists__findnew
- 			 * mis-adjust symbol addresses when computing
- 			 * the history counter to increment.
- 			 */
--			if (he->ms.map != entry->ms.map) {
-+			if (hists__has(hists, sym) && he->ms.map != entry->ms.map) {
- 				if (he->ms.sym) {
- 					u64 addr = he->ms.sym->start;
- 					he->ms.sym = map__find_symbol(entry->ms.map, addr);
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -1247,8 +1247,9 @@ static s64 dax_unshare_iter(struct iomap
+ 	if (ret < 0)
+ 		goto out_unlock;
+ 
+-	ret = copy_mc_to_kernel(daddr, saddr, length);
+-	if (ret)
++	if (copy_mc_to_kernel(daddr, saddr, length) == 0)
++		ret = length;
++	else
+ 		ret = -EIO;
+ 
+ out_unlock:
 
 
