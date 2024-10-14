@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561C9487A7;
-	Mon, 14 Oct 2024 15:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F521BDC3;
+	Mon, 14 Oct 2024 15:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918350; cv=none; b=Tjgurx+QMcAFYf5O4H0yBghJPdg3/6H1/e556BTTNbi8WTN7hs3kVqxhKtBHC+kbp2+eOTO4yYRT+6Ve8amCz/J/msjmKl4nqZaTZVu+Sr8L4q7coYtrvKTDP4dsfRbmt+MjJm2W+VN9t6cD2rul/+B8lq7+cBAt6C3b0uilOGU=
+	t=1728918353; cv=none; b=t/Ww/BSNV+Gij9WthrCikByR3tQZtGjWUjSHuK8w5epaKZ5HMQ+c1UR5cx7C3fMPrGar/AsnGNIxxWRYFRt73itoCbVrRneVmf9nZ0Y/IUjaFK0oai+D5kp8SlrQpEtl65dXZTqosB2XIPLa8zMLNfXs8c3BtVwnH2CEoQ4jlR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918350; c=relaxed/simple;
-	bh=6e9MCUzm+0tALRTyQO7DcKLnkIEOrH7Ovm3tO9teI6w=;
+	s=arc-20240116; t=1728918353; c=relaxed/simple;
+	bh=3PNMWv/al0xUoixjl+SchFmnJIox29ZYqvkJm4c2Hgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ScwrV2CzptUqMZjbCAxRu1x73i5ZSybmUpjbYY5PihbeOWNmKDAkBAh+a+HW+Rs4BL4FdkdYh7yNKA2qMF57d7mvZd5XYnv0X52LB1FfpHvTr0s8CpeNCgtIdgCc68ILnX0PGh2teK+rF/m2aIw6WgGH+yNKRH4qmzZuBDm/pzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKpN1kLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZbloX2AYorcXOc/hKJytzxV3OukwANBpK+65U5fAq55rixG6UZEmdvSejKByXfcvsKb15EuuQkKha382lNbCrs525/O4pPDEUmac17xGRulpQEUlIsauqfhvzKUNcalsOwIpztQ6HThuUMTPvXe0nl5ag1hxXLfil58uSMMu+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQxR+3SL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKpN1kLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683EBC4CEC3;
-	Mon, 14 Oct 2024 15:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQxR+3SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA63C4CEC3;
+	Mon, 14 Oct 2024 15:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728918349;
-	bh=6e9MCUzm+0tALRTyQO7DcKLnkIEOrH7Ovm3tO9teI6w=;
+	s=korg; t=1728918353;
+	bh=3PNMWv/al0xUoixjl+SchFmnJIox29ZYqvkJm4c2Hgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKpN1kLSVJLQ6VORuf7XMmaAkD4o7erBQ+iLhvHMczUmFmqXfCbmpy4qOZYqii5ce
-	 HIbJpVo4pDGe5UdSTmoJgeSTEX5cZ+EnM5m0CgmnvS7y+XVnwBb1bHIBGQMGwXb8rX
-	 wu9B0qf9AETyehWapC+cZW9kPP8agUCS6XxafWZw=
+	b=HQxR+3SLqfQNybzSIq6I+146H/ZCW7kc51UcpGK7XAZX4c/n09JeVIVi9MxXBM/dD
+	 GH02QC1JMG7Ox9xR20IczGZ0+nEDzsqZIjS+Xaj9ZAf/Tcg4n66WgowdPSI9xoxHYP
+	 P4O/iOcjGfX6YAz420wHmBqRdsp+UhuaRvmV4kCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yanfei Xu <yanfei.xu@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/798] net: ipv6: select DST_CACHE from IPV6_RPL_LWTUNNEL
-Date: Mon, 14 Oct 2024 16:13:39 +0200
-Message-ID: <20241014141228.343863625@linuxfoundation.org>
+Subject: [PATCH 6.1 256/798] cxl/pci: Fix to record only non-zero ranges
+Date: Mon, 14 Oct 2024 16:13:30 +0200
+Message-ID: <20241014141227.991974168@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -46,46 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Yanfei Xu <yanfei.xu@intel.com>
 
-[ Upstream commit 93c21077bb9ba08807c459982d440dbbee4c7af3 ]
+[ Upstream commit 55e268694e8b07026c88191f9b6949b6887d9ce3 ]
 
-The rpl sr tunnel code contains calls to dst_cache_*() which are
-only present when the dst cache is built.
-Select DST_CACHE to build the dst cache, similar to other kconfig
-options in the same file.
-Compiling the rpl sr tunnel without DST_CACHE will lead to linker
-errors.
+The function cxl_dvsec_rr_decode() retrieves and records DVSEC ranges
+into info->dvsec_range[], regardless of whether it is non-zero range,
+and the variable info->ranges indicates the number of non-zero ranges.
+However, in cxl_hdm_decode_init(), the validation for
+info->dvsec_range[] occurs in a for loop that iterates based on
+info->ranges. It may result in zero range to be validated but non-zero
+range not be validated, in turn, the number of allowed ranges is to be
+0. Address it by only record non-zero ranges.
 
-Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This fix is not urgent as it requires a configuration that zeroes out
+the first dvsec range while populating the second. This has not been
+observed, but it is theoretically possible. If this gets picked up for
+-stable, no harm done, but there is no urgency to backport.
+
+Fixes: 560f78559006 ("cxl/pci: Retrieve CXL DVSEC memory info")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Yanfei Xu <yanfei.xu@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20240828084231.1378789-2-yanfei.xu@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/pci.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/net/ipv6/Kconfig b/net/ipv6/Kconfig
-index 658bfed1df8b1..71cefa4b866fe 100644
---- a/net/ipv6/Kconfig
-+++ b/net/ipv6/Kconfig
-@@ -323,6 +323,7 @@ config IPV6_RPL_LWTUNNEL
- 	bool "IPv6: RPL Source Routing Header support"
- 	depends on IPV6
- 	select LWTUNNEL
-+	select DST_CACHE
- 	help
- 	  Support for RFC6554 RPL Source Routing Header using the lightweight
- 	  tunnels mechanism.
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 194c8024216df..8d92a24fd73d9 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -471,10 +471,6 @@ static int cxl_dvsec_rr_decode(struct device *dev, int d,
+ 
+ 		size |= temp & CXL_DVSEC_MEM_SIZE_LOW_MASK;
+ 		if (!size) {
+-			info->dvsec_range[i] = (struct range) {
+-				.start = 0,
+-				.end = CXL_RESOURCE_NONE,
+-			};
+ 			continue;
+ 		}
+ 
+@@ -492,12 +488,10 @@ static int cxl_dvsec_rr_decode(struct device *dev, int d,
+ 
+ 		base |= temp & CXL_DVSEC_MEM_BASE_LOW_MASK;
+ 
+-		info->dvsec_range[i] = (struct range) {
++		info->dvsec_range[ranges++] = (struct range) {
+ 			.start = base,
+ 			.end = base + size - 1
+ 		};
+-
+-		ranges++;
+ 	}
+ 
+ 	info->ranges = ranges;
 -- 
 2.43.0
 
