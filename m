@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450C91AB521;
-	Mon, 14 Oct 2024 14:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDC31AA793;
+	Mon, 14 Oct 2024 14:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917675; cv=none; b=p3PSRGst37dCh0fQw1IInElTa/7hf6nepJyVcNZKuXrhDdoYClW7ts71Gi4tDTwg9Wyz9d3FoJ2J/5Wy7aGYy854qYX8POB9QByUQCMxzd1aipJK1WR7I/7cLZ9tWhaPOHEJ6U6uCFKsQClZwAtrctjclNeOW6EysVqNI471kLM=
+	t=1728917678; cv=none; b=VOaPlv9SY9BuecEer6ycytmNsFtaq4xsHcBXARHj/W2ZpB5dQcPoIsmCczsSLpZYFydEAI+IdL3slUJWMqQAqwElfudIgmaT7MeOMihmEJ/4VC89Lk+55DxfTQzK6KucfhSOfXarxl8didO4XBalPM0ue3HG9rR1M24JCyc/skE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917675; c=relaxed/simple;
-	bh=nQ3klMLfqva7vOqjm0bkLvU9Blf8eXJ5YQsswAsoC5Y=;
+	s=arc-20240116; t=1728917678; c=relaxed/simple;
+	bh=nNYvPaqFvq+AbAQKzmNJgRMZMC/m+CoTaxhdO/UKujA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpmGqUjqRHbZy6zdkSX2Afw+NJKKl7m5EqgKDfON3+sfODauC+l3QBdkA87IUpju3PgS8Xzt5XH2WB3oA7v+7Ij6QQZLgSVVpJNKX78x/ScpcTQEuiXeCMYnldVEwkOCxjGWIX2eI8yUitQeyDAdnfF4Hl3W16StfQrCpRXwhEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O26zLfFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+tkCQHfV2aMmiJTNDySxznItOF+ab/StsQBVN1m2xAUzcpMUMJ5TQnGJ+iol2cG0e1bODgtr2Hi+3uAYlZT+QTk4wDmTJ0SY6XCo7JapebWWfdM0PboBV6XNdKX9AkvvPpGNyAtB/med9FNHQS1FAu0xrT1Ipb5cT1OQ0Zdtz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX+6sQsu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O26zLfFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701FFC4CEC3;
-	Mon, 14 Oct 2024 14:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX+6sQsu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A51C4CEC3;
+	Mon, 14 Oct 2024 14:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917674;
-	bh=nQ3klMLfqva7vOqjm0bkLvU9Blf8eXJ5YQsswAsoC5Y=;
+	s=korg; t=1728917678;
+	bh=nNYvPaqFvq+AbAQKzmNJgRMZMC/m+CoTaxhdO/UKujA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O26zLfFHL7p9IbcPyhPp+LbWl+RvAJSl3Olbkr2TDOI16YO9NM0T0An63qJVMOnMv
-	 gj7/Mo0Avt9b70SOnl5gm9HMLai6kk3xmSChLFqvrfdhsFFtiXOzKdx6Dq1yzlRxMa
-	 KGrcZ+s54E8fK/ffviOvZ7W7JpUV2Jow9euqe+oo=
+	b=HX+6sQsubH16bMBG02QQIFQYidBXMNAjCkVkR9ZtinqnKyA0GujrlXRlHkChOEWgw
+	 3Dvab8idlb/M1lkE39Z9ZZYx14pOUbMXacD+UZTz08jvQUteA/MGIXjkx22hi4VMRe
+	 XXo/Y3Z0mMl9uldIhVg1xxxVKKwJnfEeO0+Q7m8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Matthias Brugger <matthias.bgg@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/798] mtd: rawnand: mtk: Fix init error path
-Date: Mon, 14 Oct 2024 16:10:55 +0200
-Message-ID: <20241014141221.899120640@linuxfoundation.org>
+Subject: [PATCH 6.1 102/798] pmdomain: core: Harden inter-column space in debug summary
+Date: Mon, 14 Oct 2024 16:10:56 +0200
+Message-ID: <20241014141221.937950433@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,42 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 2073ae37d550ea32e8545edaa94ef10b4fef7235 ]
+[ Upstream commit 692c20c4d075bd452acfbbc68200fc226c7c9496 ]
 
-Reviewing a series converting the for_each_chil_of_node() loops into
-their _scoped variants made me realize there was no cleanup of the
-already registered NAND devices upon error which may leak memory on
-systems with more than a chip when this error occurs. We should call the
-_nand_chips_cleanup() function when this happens.
+The inter-column space in the debug summary is two spaces.  However, in
+one case, the extra space is handled implicitly in a field width
+specifier.  Make inter-column space explicit to ease future maintenance.
 
-Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@kernel.org>
-Link: https://lore.kernel.org/linux-mtd/20240826153019.67106-2-miquel.raynal@bootlin.com
+Fixes: 45fbc464b047 ("PM: domains: Add "performance" column to debug summary")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ae61eb363621b981edde878e1e74d701702a579f.1725459707.git.geert+renesas@glider.be
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/mtk_nand.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/power/domain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/mtk_nand.c b/drivers/mtd/nand/raw/mtk_nand.c
-index 3a2b801937398..53fc19e1dc5b6 100644
---- a/drivers/mtd/nand/raw/mtk_nand.c
-+++ b/drivers/mtd/nand/raw/mtk_nand.c
-@@ -1480,8 +1480,10 @@ static int mtk_nfc_nand_chips_init(struct device *dev, struct mtk_nfc *nfc)
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index d238b47f74c34..e01bb359034b7 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -3119,7 +3119,7 @@ static int genpd_summary_one(struct seq_file *s,
+ 	else
+ 		snprintf(state, sizeof(state), "%s",
+ 			 status_lookup[genpd->status]);
+-	seq_printf(s, "%-30s  %-50s %u", genpd->name, state, genpd->performance_state);
++	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
  
- 	for_each_child_of_node_scoped(np, nand_np) {
- 		ret = mtk_nfc_nand_chip_init(dev, nfc, nand_np);
--		if (ret)
-+		if (ret) {
-+			mtk_nfc_nand_chips_cleanup(nfc);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
+ 	/*
+ 	 * Modifications on the list require holding locks on both
 -- 
 2.43.0
 
