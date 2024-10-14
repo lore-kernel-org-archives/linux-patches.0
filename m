@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8E21798C;
-	Mon, 14 Oct 2024 15:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DB31AE861;
+	Mon, 14 Oct 2024 15:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919453; cv=none; b=TWYuPbxTMK5/PeghHBdrGGQdUUfgNjPyX2uIHmhnZdBQpu5kJXcu/F0/5RWkyMHuip0kyVZruRf3dTp+hfdq0KoEZAJpHjTdBrz8xH3jpHFKESfhCNuivk3jyPFQIpRAWUXSG+U2miR7c2eUWiZR7Fyl5HlLw20VLCKl5hv5AGA=
+	t=1728919457; cv=none; b=hRj8XDSVojV5vA20CJV3Dss8eWGHqLKjxXoApI/fvxQ2TXOte54mY8CknaiSiFre4a4adgvIKDyLVXcnIvuSVgitBftWMuT/HXAajxYYmXEZBJ1hnHJVVHNuQ/HbzIDgNH39BkS+fHK67+lIFkj6IQNcuyKxLaJZgbSDskOi5s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919453; c=relaxed/simple;
-	bh=GDSGLhxgQpEytDzdcoIJoPCqPPsSyQQDAIaPOaW4H2w=;
+	s=arc-20240116; t=1728919457; c=relaxed/simple;
+	bh=LAuAhl4PEgvGz8111xK724r5nL+uYZzprCz3aN1ma7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euGFBcajpOAu8nUmHX3z0d17elO2XamiKuJDDbSlFgWeFy6I9Up1ZY63kPbhBHAmjBRWULDRzqUQMfd+CBc9rv49FaGkCPhYCtiXmZX/Gx1bRIwh/TjPjHfbv8kEdcoY4dcq5woUZfmCVo54tYUBRfsDUZikCGC5FJKMFRhOXXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is/W38dD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvF3xNYWUbyV7hs2Ts7Vt+Qswexsk4uQyeHtHy8AMNOqjrNonkW2tG0XobsUvFjDQ0AsJxloBSYjWsmz1dU0aFcDO0wm7AYIXyh28ifqVenO+qS7IjOOGuEjEjUXForFrN/qz484g0ikY4tqN60LV/Vn+6EvgFqIG/11LlJVkeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pq8y/4mX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is/W38dD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E3EC4CEC3;
-	Mon, 14 Oct 2024 15:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pq8y/4mX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC18C4CEC3;
+	Mon, 14 Oct 2024 15:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919453;
-	bh=GDSGLhxgQpEytDzdcoIJoPCqPPsSyQQDAIaPOaW4H2w=;
+	s=korg; t=1728919457;
+	bh=LAuAhl4PEgvGz8111xK724r5nL+uYZzprCz3aN1ma7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Is/W38dD0MuN2Lcjt0eK8hsJsnXTvjomn5FraFVNXlm2P5grk+jBQTMPxv5pxqhJk
-	 IRjaPD67i/ILm6URsy0onIW7m9ERInRBfQDs1awKNS4I1WiAqi1G2Vq+WGvQVt7h2X
-	 8VS6aQ6xEu1GVP+Qnwc8c6qGcnraIBlJUCNe4YE8=
+	b=Pq8y/4mXXDG4QhlyPKs+rkvxXPSVoqTJDSDxTDSll/xiHPbooSh0ldM62PGnPQC7Z
+	 nsQnn59VlkVrKlelAwPFohsNkhCLy8mMGrfzokjCK4BlQ+kr4JYihKqxeF8rZAkVte
+	 0bats1F5DPDxCMfoRyTq0qx3gp/ddmuZy+T1C6OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Wei Li <liwei391@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 611/798] tracing/timerlat: Fix a race during cpuhp processing
-Date: Mon, 14 Oct 2024 16:19:25 +0200
-Message-ID: <20241014141242.028545539@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.1 612/798] close_range(): fix the logics in descriptor table trimming
+Date: Mon, 14 Oct 2024 16:19:26 +0200
+Message-ID: <20241014141242.077768902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,88 +49,346 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Li <liwei391@huawei.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 829e0c9f0855f26b3ae830d17b24aec103f7e915 upstream.
+commit 678379e1d4f7443b170939525d3312cfc37bf86b upstream.
 
-There is another found exception that the "timerlat/1" thread was
-scheduled on CPU0, and lead to timer corruption finally:
+Cloning a descriptor table picks the size that would cover all currently
+opened files.  That's fine for clone() and unshare(), but for close_range()
+there's an additional twist - we clone before we close, and it would be
+a shame to have
+	close_range(3, ~0U, CLOSE_RANGE_UNSHARE)
+leave us with a huge descriptor table when we are not going to keep
+anything past stderr, just because some large file descriptor used to
+be open before our call has taken it out.
 
-```
-ODEBUG: init active (active state 0) object: ffff888237c2e108 object type: hrtimer hint: timerlat_irq+0x0/0x220
-WARNING: CPU: 0 PID: 426 at lib/debugobjects.c:518 debug_print_object+0x7d/0xb0
-Modules linked in:
-CPU: 0 UID: 0 PID: 426 Comm: timerlat/1 Not tainted 6.11.0-rc7+ #45
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:debug_print_object+0x7d/0xb0
-...
-Call Trace:
- <TASK>
- ? __warn+0x7c/0x110
- ? debug_print_object+0x7d/0xb0
- ? report_bug+0xf1/0x1d0
- ? prb_read_valid+0x17/0x20
- ? handle_bug+0x3f/0x70
- ? exc_invalid_op+0x13/0x60
- ? asm_exc_invalid_op+0x16/0x20
- ? debug_print_object+0x7d/0xb0
- ? debug_print_object+0x7d/0xb0
- ? __pfx_timerlat_irq+0x10/0x10
- __debug_object_init+0x110/0x150
- hrtimer_init+0x1d/0x60
- timerlat_main+0xab/0x2d0
- ? __pfx_timerlat_main+0x10/0x10
- kthread+0xb7/0xe0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2d/0x40
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-```
+Unfortunately, it had been dealt with in an inherently racy way -
+sane_fdtable_size() gets a "don't copy anything past that" argument
+(passed via unshare_fd() and dup_fd()), close_range() decides how much
+should be trimmed and passes that to unshare_fd().
 
-After tracing the scheduling event, it was discovered that the migration
-of the "timerlat/1" thread was performed during thread creation. Further
-analysis confirmed that it is because the CPU online processing for
-osnoise is implemented through workers, which is asynchronous with the
-offline processing. When the worker was scheduled to create a thread, the
-CPU may has already been removed from the cpu_online_mask during the offline
-process, resulting in the inability to select the right CPU:
+The problem is, a range that used to extend to the end of descriptor
+table back when close_range() had looked at it might very well have stuff
+grown after it by the time dup_fd() has allocated a new files_struct
+and started to figure out the capacity of fdtable to be attached to that.
 
-T1                       | T2
-[CPUHP_ONLINE]           | cpu_device_down()
-osnoise_hotplug_workfn() |
-                         |     cpus_write_lock()
-                         |     takedown_cpu(1)
-                         |     cpus_write_unlock()
-[CPUHP_OFFLINE]          |
-    cpus_read_lock()     |
-    start_kthread(1)     |
-    cpus_read_unlock()   |
+That leads to interesting pathological cases; at the very least it's a
+QoI issue, since unshare(CLONE_FILES) is atomic in a sense that it takes
+a snapshot of descriptor table one might have observed at some point.
+Since CLOSE_RANGE_UNSHARE close_range() is supposed to be a combination
+of unshare(CLONE_FILES) with plain close_range(), ending up with a
+weird state that would never occur with unshare(2) is confusing, to put
+it mildly.
 
-To fix this, skip online processing if the CPU is already offline.
+It's not hard to get rid of - all it takes is passing both ends of the
+range down to sane_fdtable_size().  There we are under ->files_lock,
+so the race is trivially avoided.
 
+So we do the following:
+	* switch close_files() from calling unshare_fd() to calling
+dup_fd().
+	* undo the calling convention change done to unshare_fd() in
+60997c3d45d9 "close_range: add CLOSE_RANGE_UNSHARE"
+	* introduce struct fd_range, pass a pointer to that to dup_fd()
+and sane_fdtable_size() instead of "trim everything past that point"
+they are currently getting.  NULL means "we are not going to be punching
+any holes"; NR_OPEN_MAX is gone.
+	* make sane_fdtable_size() use find_last_bit() instead of
+open-coding it; it's easier to follow that way.
+	* while we are at it, have dup_fd() report errors by returning
+ERR_PTR(), no need to use a separate int *errorp argument.
+
+Fixes: 60997c3d45d9 "close_range: add CLOSE_RANGE_UNSHARE"
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20240924094515.3561410-4-liwei391@huawei.com
-Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
-Signed-off-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/file.c               |   93 +++++++++++++++++-------------------------------
+ include/linux/fdtable.h |    8 ++--
+ kernel/fork.c           |   30 ++++++---------
+ 3 files changed, 50 insertions(+), 81 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -1813,6 +1813,8 @@ static void osnoise_hotplug_workfn(struc
- 	mutex_lock(&interface_lock);
- 	cpus_read_lock();
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -267,59 +267,45 @@ static inline void __clear_open_fd(unsig
+ 	__clear_bit(fd / BITS_PER_LONG, fdt->full_fds_bits);
+ }
  
-+	if (!cpu_online(cpu))
-+		goto out_unlock;
- 	if (!cpumask_test_cpu(cpu, &osnoise_cpumask))
- 		goto out_unlock;
+-static unsigned int count_open_files(struct fdtable *fdt)
+-{
+-	unsigned int size = fdt->max_fds;
+-	unsigned int i;
+-
+-	/* Find the last open fd */
+-	for (i = size / BITS_PER_LONG; i > 0; ) {
+-		if (fdt->open_fds[--i])
+-			break;
+-	}
+-	i = (i + 1) * BITS_PER_LONG;
+-	return i;
+-}
+-
+ /*
+  * Note that a sane fdtable size always has to be a multiple of
+  * BITS_PER_LONG, since we have bitmaps that are sized by this.
+  *
+- * 'max_fds' will normally already be properly aligned, but it
+- * turns out that in the close_range() -> __close_range() ->
+- * unshare_fd() -> dup_fd() -> sane_fdtable_size() we can end
+- * up having a 'max_fds' value that isn't already aligned.
+- *
+- * Rather than make close_range() have to worry about this,
+- * just make that BITS_PER_LONG alignment be part of a sane
+- * fdtable size. Becuase that's really what it is.
++ * punch_hole is optional - when close_range() is asked to unshare
++ * and close, we don't need to copy descriptors in that range, so
++ * a smaller cloned descriptor table might suffice if the last
++ * currently opened descriptor falls into that range.
+  */
+-static unsigned int sane_fdtable_size(struct fdtable *fdt, unsigned int max_fds)
++static unsigned int sane_fdtable_size(struct fdtable *fdt, struct fd_range *punch_hole)
+ {
+-	unsigned int count;
++	unsigned int last = find_last_bit(fdt->open_fds, fdt->max_fds);
+ 
+-	count = count_open_files(fdt);
+-	if (max_fds < NR_OPEN_DEFAULT)
+-		max_fds = NR_OPEN_DEFAULT;
+-	return ALIGN(min(count, max_fds), BITS_PER_LONG);
++	if (last == fdt->max_fds)
++		return NR_OPEN_DEFAULT;
++	if (punch_hole && punch_hole->to >= last && punch_hole->from <= last) {
++		last = find_last_bit(fdt->open_fds, punch_hole->from);
++		if (last == punch_hole->from)
++			return NR_OPEN_DEFAULT;
++	}
++	return ALIGN(last + 1, BITS_PER_LONG);
+ }
+ 
+ /*
+- * Allocate a new files structure and copy contents from the
+- * passed in files structure.
+- * errorp will be valid only when the returned files_struct is NULL.
++ * Allocate a new descriptor table and copy contents from the passed in
++ * instance.  Returns a pointer to cloned table on success, ERR_PTR()
++ * on failure.  For 'punch_hole' see sane_fdtable_size().
+  */
+-struct files_struct *dup_fd(struct files_struct *oldf, unsigned int max_fds, int *errorp)
++struct files_struct *dup_fd(struct files_struct *oldf, struct fd_range *punch_hole)
+ {
+ 	struct files_struct *newf;
+ 	struct file **old_fds, **new_fds;
+ 	unsigned int open_files, i;
+ 	struct fdtable *old_fdt, *new_fdt;
++	int error;
+ 
+-	*errorp = -ENOMEM;
+ 	newf = kmem_cache_alloc(files_cachep, GFP_KERNEL);
+ 	if (!newf)
+-		goto out;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	atomic_set(&newf->count, 1);
+ 
+@@ -336,7 +322,7 @@ struct files_struct *dup_fd(struct files
+ 
+ 	spin_lock(&oldf->file_lock);
+ 	old_fdt = files_fdtable(oldf);
+-	open_files = sane_fdtable_size(old_fdt, max_fds);
++	open_files = sane_fdtable_size(old_fdt, punch_hole);
+ 
+ 	/*
+ 	 * Check whether we need to allocate a larger fd array and fd set.
+@@ -349,14 +335,14 @@ struct files_struct *dup_fd(struct files
+ 
+ 		new_fdt = alloc_fdtable(open_files - 1);
+ 		if (!new_fdt) {
+-			*errorp = -ENOMEM;
++			error = -ENOMEM;
+ 			goto out_release;
+ 		}
+ 
+ 		/* beyond sysctl_nr_open; nothing to do */
+ 		if (unlikely(new_fdt->max_fds < open_files)) {
+ 			__free_fdtable(new_fdt);
+-			*errorp = -EMFILE;
++			error = -EMFILE;
+ 			goto out_release;
+ 		}
+ 
+@@ -367,7 +353,7 @@ struct files_struct *dup_fd(struct files
+ 		 */
+ 		spin_lock(&oldf->file_lock);
+ 		old_fdt = files_fdtable(oldf);
+-		open_files = sane_fdtable_size(old_fdt, max_fds);
++		open_files = sane_fdtable_size(old_fdt, punch_hole);
+ 	}
+ 
+ 	copy_fd_bitmaps(new_fdt, old_fdt, open_files / BITS_PER_LONG);
+@@ -401,8 +387,7 @@ struct files_struct *dup_fd(struct files
+ 
+ out_release:
+ 	kmem_cache_free(files_cachep, newf);
+-out:
+-	return NULL;
++	return ERR_PTR(error);
+ }
+ 
+ static struct fdtable *close_files(struct files_struct * files)
+@@ -734,37 +719,25 @@ int __close_range(unsigned fd, unsigned
+ 	if (fd > max_fd)
+ 		return -EINVAL;
+ 
+-	if (flags & CLOSE_RANGE_UNSHARE) {
+-		int ret;
+-		unsigned int max_unshare_fds = NR_OPEN_MAX;
++	if ((flags & CLOSE_RANGE_UNSHARE) && atomic_read(&cur_fds->count) > 1) {
++		struct fd_range range = {fd, max_fd}, *punch_hole = &range;
+ 
+ 		/*
+ 		 * If the caller requested all fds to be made cloexec we always
+ 		 * copy all of the file descriptors since they still want to
+ 		 * use them.
+ 		 */
+-		if (!(flags & CLOSE_RANGE_CLOEXEC)) {
+-			/*
+-			 * If the requested range is greater than the current
+-			 * maximum, we're closing everything so only copy all
+-			 * file descriptors beneath the lowest file descriptor.
+-			 */
+-			rcu_read_lock();
+-			if (max_fd >= last_fd(files_fdtable(cur_fds)))
+-				max_unshare_fds = fd;
+-			rcu_read_unlock();
+-		}
+-
+-		ret = unshare_fd(CLONE_FILES, max_unshare_fds, &fds);
+-		if (ret)
+-			return ret;
++		if (flags & CLOSE_RANGE_CLOEXEC)
++			punch_hole = NULL;
+ 
++		fds = dup_fd(cur_fds, punch_hole);
++		if (IS_ERR(fds))
++			return PTR_ERR(fds);
+ 		/*
+ 		 * We used to share our file descriptor table, and have now
+ 		 * created a private one, make sure we're using it below.
+ 		 */
+-		if (fds)
+-			swap(cur_fds, fds);
++		swap(cur_fds, fds);
+ 	}
+ 
+ 	if (flags & CLOSE_RANGE_CLOEXEC)
+--- a/include/linux/fdtable.h
++++ b/include/linux/fdtable.h
+@@ -22,7 +22,6 @@
+  * as this is the granularity returned by copy_fdset().
+  */
+ #define NR_OPEN_DEFAULT BITS_PER_LONG
+-#define NR_OPEN_MAX ~0U
+ 
+ struct fdtable {
+ 	unsigned int max_fds;
+@@ -117,7 +116,10 @@ struct task_struct;
+ 
+ void put_files_struct(struct files_struct *fs);
+ int unshare_files(void);
+-struct files_struct *dup_fd(struct files_struct *, unsigned, int *) __latent_entropy;
++struct fd_range {
++	unsigned int from, to;
++};
++struct files_struct *dup_fd(struct files_struct *, struct fd_range *) __latent_entropy;
+ void do_close_on_exec(struct files_struct *);
+ int iterate_fd(struct files_struct *, unsigned,
+ 		int (*)(const void *, struct file *, unsigned),
+@@ -126,8 +128,6 @@ int iterate_fd(struct files_struct *, un
+ extern int close_fd(unsigned int fd);
+ extern int __close_range(unsigned int fd, unsigned int max_fd, unsigned int flags);
+ extern struct file *close_fd_get_file(unsigned int fd);
+-extern int unshare_fd(unsigned long unshare_flags, unsigned int max_fds,
+-		      struct files_struct **new_fdp);
+ 
+ extern struct kmem_cache *files_cachep;
+ 
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1619,28 +1619,25 @@ static int copy_fs(unsigned long clone_f
+ static int copy_files(unsigned long clone_flags, struct task_struct *tsk)
+ {
+ 	struct files_struct *oldf, *newf;
+-	int error = 0;
+ 
+ 	/*
+ 	 * A background process may not have any files ...
+ 	 */
+ 	oldf = current->files;
+ 	if (!oldf)
+-		goto out;
++		return 0;
+ 
+ 	if (clone_flags & CLONE_FILES) {
+ 		atomic_inc(&oldf->count);
+-		goto out;
++		return 0;
+ 	}
+ 
+-	newf = dup_fd(oldf, NR_OPEN_MAX, &error);
+-	if (!newf)
+-		goto out;
++	newf = dup_fd(oldf, NULL);
++	if (IS_ERR(newf))
++		return PTR_ERR(newf);
+ 
+ 	tsk->files = newf;
+-	error = 0;
+-out:
+-	return error;
++	return 0;
+ }
+ 
+ static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)
+@@ -3126,17 +3123,16 @@ static int unshare_fs(unsigned long unsh
+ /*
+  * Unshare file descriptor table if it is being shared
+  */
+-int unshare_fd(unsigned long unshare_flags, unsigned int max_fds,
+-	       struct files_struct **new_fdp)
++static int unshare_fd(unsigned long unshare_flags, struct files_struct **new_fdp)
+ {
+ 	struct files_struct *fd = current->files;
+-	int error = 0;
+ 
+ 	if ((unshare_flags & CLONE_FILES) &&
+ 	    (fd && atomic_read(&fd->count) > 1)) {
+-		*new_fdp = dup_fd(fd, max_fds, &error);
+-		if (!*new_fdp)
+-			return error;
++		fd = dup_fd(fd, NULL);
++		if (IS_ERR(fd))
++			return PTR_ERR(fd);
++		*new_fdp = fd;
+ 	}
+ 
+ 	return 0;
+@@ -3194,7 +3190,7 @@ int ksys_unshare(unsigned long unshare_f
+ 	err = unshare_fs(unshare_flags, &new_fs);
+ 	if (err)
+ 		goto bad_unshare_out;
+-	err = unshare_fd(unshare_flags, NR_OPEN_MAX, &new_fd);
++	err = unshare_fd(unshare_flags, &new_fd);
+ 	if (err)
+ 		goto bad_unshare_cleanup_fs;
+ 	err = unshare_userns(unshare_flags, &new_cred);
+@@ -3286,7 +3282,7 @@ int unshare_files(void)
+ 	struct files_struct *old, *copy = NULL;
+ 	int error;
+ 
+-	error = unshare_fd(CLONE_FILES, NR_OPEN_MAX, &copy);
++	error = unshare_fd(CLONE_FILES, &copy);
+ 	if (error || !copy)
+ 		return error;
  
 
 
