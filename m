@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB5A1AB6DA;
-	Mon, 14 Oct 2024 14:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548B21BDC3;
+	Mon, 14 Oct 2024 14:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917729; cv=none; b=SpL91Nl5jORVqk0hPI5xES06vfkBNBX0tUrft8xs9NKPkU/MKGPUeMozJzlfvwMseaXnXRJP/Kw6YPsDSUbWjgo8mSKOjGXYjGxD3LZhVdZW0XgKWvJpXgyo5ZqAMVBUJ1xtrV17zTYeKQ6hy7NfVzkjmPqbv8E/vjz4qwXmnWo=
+	t=1728917732; cv=none; b=HZRIzJzky9wHR2rK8xjmzU8CkBqBarvoDur76tvlhTIO8XSzNElyl/wQWW5NHY0YUdsUZzmmLTY0FCt/tuo6tpa8c3ikhri2B9qN1Yww3vygtlzS5TlgLVXvk5G9nY7k3qcnNlswxrjdjLkXdFM7EgeBJ4agcS49FkQ2n1BjsX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917729; c=relaxed/simple;
-	bh=y8ExQyNIt0E54BnX7XsatOMETgvxjini91IugdHDdlE=;
+	s=arc-20240116; t=1728917732; c=relaxed/simple;
+	bh=Xpf7iqDhylOvP30WoNcaU3yLxI4TO2W1eGtpw6PGqy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGFXk17yie9Mgh3AXey/mKF/sLACDE2qv4ChyEaN4KL7maz9R6R0LgO5ZTQVlzaw09smThySwF8ihmlVrvBPKSdncxxnDGpcoAvtF2B4Ef6Fnw7Vz2uvaT6SpPLZXAGiDSfMCmvJk5PK+NkJDI6fAsCLxfDtNNIau7h69Cd2wFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaOt8O20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnkYlzqpU3Pies0ih4Li2GN9cabqCAJrs6/K9D7Xt7WbZ0tXroEjRWUjF45plTpDUNV5tj8PIo6qi9vYXh3xsduRaKpOj8OoHyZfYhN3HnxiAO1h8RJdD26Eq1w/dh47ev9exG1bzynlgVN3333kOOeeLottDoTOSJ6EqUO0l+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPWFwNdt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaOt8O20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26850C4CECF;
-	Mon, 14 Oct 2024 14:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPWFwNdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69057C4CEC3;
+	Mon, 14 Oct 2024 14:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917728;
-	bh=y8ExQyNIt0E54BnX7XsatOMETgvxjini91IugdHDdlE=;
+	s=korg; t=1728917731;
+	bh=Xpf7iqDhylOvP30WoNcaU3yLxI4TO2W1eGtpw6PGqy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaOt8O20M28Wdvccd3PWtvpJRJgQ9pFbkjOykJxXC5sxXwHIqyd0f4+BCI0YPDVtl
-	 sr+syDchSqjkFmF5gZZIOVGDiBnTjvG/fKm9kQYhDFSnjyCd9VHqS2+3s3sWDZNZ9b
-	 e1/CeQxalC7zAYVKuJfjznf4REQW6oa+YCZHtDYo=
+	b=mPWFwNdtWFgtUQMWvTfM95M/Ld6Vi2/CG6Sam4ZCI2ysl6oFdsMEESN1zIwqIpVoT
+	 JWHoncHoVxTVapZUzwZ0ZIBAfs+BEyrqrMxxWnuGy3ujLGTA+dAmfHtOx7bizNkKVR
+	 k/2gXkYSlHUZENZ3dYSPPF8L/mgRnznLVdMaq8rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/798] drm/bridge: lontium-lt8912b: Validate mode in drm_bridge_funcs::mode_valid()
-Date: Mon, 14 Oct 2024 16:11:10 +0200
-Message-ID: <20241014141222.480702940@linuxfoundation.org>
+Subject: [PATCH 6.1 090/798] hwmon: (max16065) Fix alarm attributes
+Date: Mon, 14 Oct 2024 16:10:44 +0200
+Message-ID: <20241014141221.469821571@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -51,94 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Ying <victor.liu@nxp.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit fe828fbd87786238b30f44cafd698d975d956c97 ]
+[ Upstream commit 119abf7d1815f098f7f91ae7abc84324a19943d7 ]
 
-If the bridge is attached with the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag set,
-this driver won't initialize a connector and hence display mode won't be
-validated in drm_connector_helper_funcs::mode_valid().  So, move the mode
-validation from drm_connector_helper_funcs::mode_valid() to
-drm_bridge_funcs::mode_valid(), because the mode validation is always done
-for the bridge.
+Chips reporting overcurrent alarms report it in the second alarm register.
+That means the second alarm register has to be read, even if the chip only
+supports 8 or fewer ADC channels.
 
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240813091637.1054586-1-victor.liu@nxp.com
+MAX16067 and MAX16068 report undervoltage and overvoltage alarms in
+separate registers. Fold register contents together to report both with
+the existing alarm attribute. This requires actually storing the chip type
+in struct max16065_data. Rename the variable 'chip' to match the variable
+name used in the probe function.
+
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 35 ++++++++++++------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ drivers/hwmon/max16065.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 55a7fa4670a7a..825d0973663aa 100644
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -411,22 +411,6 @@ static const struct drm_connector_funcs lt8912_connector_funcs = {
- 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
+index ab3c75bda5a03..24612f6c3d9c9 100644
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -79,7 +79,7 @@ static const bool max16065_have_current[] = {
  };
  
--static enum drm_mode_status
--lt8912_connector_mode_valid(struct drm_connector *connector,
--			    struct drm_display_mode *mode)
--{
--	if (mode->clock > 150000)
--		return MODE_CLOCK_HIGH;
--
--	if (mode->hdisplay > 1920)
--		return MODE_BAD_HVALUE;
--
--	if (mode->vdisplay > 1080)
--		return MODE_BAD_VVALUE;
--
--	return MODE_OK;
--}
--
- static int lt8912_connector_get_modes(struct drm_connector *connector)
- {
- 	struct edid *edid;
-@@ -454,7 +438,6 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
+ struct max16065_data {
+-	enum chips type;
++	enum chips chip;
+ 	struct i2c_client *client;
+ 	const struct attribute_group *groups[4];
+ 	struct mutex update_lock;
+@@ -162,10 +162,17 @@ static struct max16065_data *max16065_update_device(struct device *dev)
+ 						     MAX16065_CURR_SENSE);
+ 		}
  
- static const struct drm_connector_helper_funcs lt8912_connector_helper_funcs = {
- 	.get_modes = lt8912_connector_get_modes,
--	.mode_valid = lt8912_connector_mode_valid,
- };
+-		for (i = 0; i < DIV_ROUND_UP(data->num_adc, 8); i++)
++		for (i = 0; i < 2; i++)
+ 			data->fault[i]
+ 			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
  
- static void lt8912_bridge_mode_set(struct drm_bridge *bridge,
-@@ -596,6 +579,23 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
- 		drm_bridge_hpd_disable(lt->hdmi_port);
- }
++		/*
++		 * MAX16067 and MAX16068 have separate undervoltage and
++		 * overvoltage alarm bits. Squash them together.
++		 */
++		if (data->chip == max16067 || data->chip == max16068)
++			data->fault[0] |= data->fault[1];
++
+ 		data->last_updated = jiffies;
+ 		data->valid = true;
+ 	}
+@@ -514,6 +521,7 @@ static int max16065_probe(struct i2c_client *client)
+ 	if (unlikely(!data))
+ 		return -ENOMEM;
  
-+static enum drm_mode_status
-+lt8912_bridge_mode_valid(struct drm_bridge *bridge,
-+			 const struct drm_display_info *info,
-+			 const struct drm_display_mode *mode)
-+{
-+	if (mode->clock > 150000)
-+		return MODE_CLOCK_HIGH;
-+
-+	if (mode->hdisplay > 1920)
-+		return MODE_BAD_HVALUE;
-+
-+	if (mode->vdisplay > 1080)
-+		return MODE_BAD_VVALUE;
-+
-+	return MODE_OK;
-+}
-+
- static enum drm_connector_status
- lt8912_bridge_detect(struct drm_bridge *bridge)
- {
-@@ -626,6 +626,7 @@ static struct edid *lt8912_bridge_get_edid(struct drm_bridge *bridge,
- static const struct drm_bridge_funcs lt8912_bridge_funcs = {
- 	.attach = lt8912_bridge_attach,
- 	.detach = lt8912_bridge_detach,
-+	.mode_valid = lt8912_bridge_mode_valid,
- 	.mode_set = lt8912_bridge_mode_set,
- 	.enable = lt8912_bridge_enable,
- 	.detect = lt8912_bridge_detect,
++	data->chip = chip;
+ 	data->client = client;
+ 	mutex_init(&data->update_lock);
+ 
 -- 
 2.43.0
 
