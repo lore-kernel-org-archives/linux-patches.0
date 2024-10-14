@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD221AC8A2;
-	Mon, 14 Oct 2024 14:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F1C1AC8A2;
+	Mon, 14 Oct 2024 14:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917409; cv=none; b=dLyVPeeo2zemcnEZaGA8ZUyd83xgtvrRJO1EiQNugxsRbMyVv1vvZVEu2KPKthc0F6BfzH0CYI7O4Gd9T1JMIwIRiq4ng+K3VuBeSkBOb63I3ie7Y+o2fH0qGnU9Ab41olNpIsu+v4Qw2zFTDV5Q+/lmq3RhDHn1zy5zrN4XC/0=
+	t=1728917412; cv=none; b=kvsczR/slpPcIKHC51Zxv1ragGDGhAfpn4bQj0tpbQdbGxi0EuS6tPTczby/rm/wkPk+T1425Tx5Q/5vEBPoJeq20FytWJvFK+I739DZ6TARh1PNsu/cOkg6x7Kbaz8U3s2ldulKPs0+Pyky+iiDehmuCJx+ifubvhT1WLzBcNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917409; c=relaxed/simple;
-	bh=BSZjXo4nusqpQuC3nfLaVme0ZRLCASYtgSRqgC+AgpQ=;
+	s=arc-20240116; t=1728917412; c=relaxed/simple;
+	bh=H8tUOozogb3UbssZiJwGbCMqhNgT/THRJmIKSmVz9vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBHZNv13xkKiV7dVDSrfKtecfr3F56tBQ2QPwuYrOordZyITMEq++0KR1vSuOlDyOl105IGP9iGCktfEk7l8L6uZXVSxKlcqPRiEFDJl/B4DZL+znWfW4MQbw+HNwI+0BYOwy9Ii9Po32EWkZLK5OuDsE2xk9WPNXlDjBkWvjXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2ZUM1uV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+7oclK2qlJEm6LKbnzU+oWU4sJD0XTj3vcD6a5BjOewh8nDsBOFgz0SpuVmtFE10XBTdSye8WVD2MDyjLuAJo1F3EI4fJNHm4y2ZmO4Ti8m4ACu64xUDejK6G34AITQZjWbNUzE/X9fxPIyBHNdsJODK+vozPajU156ncBJOC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ls18m3wW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2ZUM1uV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EFAC4CEC3;
-	Mon, 14 Oct 2024 14:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ls18m3wW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B58EC4CEC3;
+	Mon, 14 Oct 2024 14:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728917408;
-	bh=BSZjXo4nusqpQuC3nfLaVme0ZRLCASYtgSRqgC+AgpQ=;
+	s=korg; t=1728917412;
+	bh=H8tUOozogb3UbssZiJwGbCMqhNgT/THRJmIKSmVz9vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2ZUM1uVjqqeHGKemBq9WTjrMIoBwZEupjekiG3mDaqs3Nrk43PfWonUcyVysDPKo
-	 lxR1KltpnugeuFZ5BysHUO/Opc7fRG8BxZM2g/qYjvXlcBrEofL5/pBVZl/3agqNy9
-	 yjjmhnGlaTENnln6t7twMqEzJIOxyQB6iTRgfpTE=
+	b=Ls18m3wWgQxa5aGHP63mUm+2bGT/1C6i9Li0dDQ8IUe2cl0SCNCyCEkLT8kzqPXLQ
+	 7C51kf43yyIP9WQmfka+gIOa+yKYnmu7J8Ypf/Z/J+PGuam7uFR2Vc0Z0KaANyrigU
+	 ERSyS0f95OqTks7azpJsW8ZLt+aZmSeSrgBDtFX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/798] wifi: iwlwifi: mvm: increase the time between ranging measurements
-Date: Mon, 14 Oct 2024 16:09:33 +0200
-Message-ID: <20241014141218.705770991@linuxfoundation.org>
+Subject: [PATCH 6.1 028/798] netfilter: nf_tables: reject element expiration with no timeout
+Date: Mon, 14 Oct 2024 16:09:42 +0200
+Message-ID: <20241014141219.053445066@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -52,37 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3a7ee94559dfd640604d0265739e86dec73b64e8 ]
+[ Upstream commit d2dc429ecb4e79ad164028d965c00f689e6f6d06 ]
 
-The algo running in fw may take a little longer than 5 milliseconds,
-(e.g. measurement on 80MHz while associated). Increase the minimum
-time between measurements to 7 milliseconds.
+If element timeout is unset and set provides no default timeout, the
+element expiration is silently ignored, reject this instead to let user
+know this is unsupported.
 
-Fixes: 830aa3e7d1ca ("iwlwifi: mvm: add support for range request command version 13")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240729201718.d3f3c26e00d9.I09e951290e8a3d73f147b88166fd9a678d1d69ed@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Also prepare for supporting timeout that never expire, where zero
+timeout and expiration must be also rejected.
+
+Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/constants.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/constants.h b/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-index c604f9f39b248..685649b48c570 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/constants.h
-@@ -103,7 +103,7 @@
- #define IWL_MVM_FTM_INITIATOR_SECURE_LTF	false
- #define IWL_MVM_FTM_RESP_NDP_SUPPORT		true
- #define IWL_MVM_FTM_RESP_LMR_FEEDBACK_SUPPORT	true
--#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	5
-+#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	7
- #define IWL_MVM_FTM_NON_TB_MAX_TIME_BETWEEN_MSR	1000
- #define IWL_MVM_D3_DEBUG			false
- #define IWL_MVM_USE_TWT				true
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 4ebd3382f15b0..77306f48b3994 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6411,6 +6411,9 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (nla[NFTA_SET_ELEM_EXPIRATION] != NULL) {
+ 		if (!(set->flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
++		if (timeout == 0)
++			return -EOPNOTSUPP;
++
+ 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_ELEM_EXPIRATION],
+ 					    &expiration);
+ 		if (err)
 -- 
 2.43.0
 
