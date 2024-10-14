@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CB220EB;
-	Mon, 14 Oct 2024 14:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F70620EB;
+	Mon, 14 Oct 2024 14:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916761; cv=none; b=u8MiAaBfiOPG3BhV+LuQwyrxn6fzd5taCeDIGzcU0SWy24aI3ezM4GkgeKzlPSh2d7YuMkiJIyUAVjjwPJuCG6X29pQ0dgMg70qqEI/TL/Nmrod6To/gRNGsXq3MLztgiy4fBbfzmFFFmX+h0o3l9mv+uTY/Q5Srd0eM8SgAPZo=
+	t=1728916764; cv=none; b=SwCs5GiL4J8Vm+EU7IiDXJwGj5kaM7JxpdPkNnABVhi1LvKBFmSk9tet0i8lauZ+7WESk64gyMKSt+5aNT/+HBvKzkb27HAmsqJC5yIVXwASY4vNkUJSaQFwbjeLqQ4cr2Q0+DIuIimz4HcbdD0brtOAblpNVXD5/Cg3fNDJNjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916761; c=relaxed/simple;
-	bh=b0SSWBybF3GCExOsHkSklEtOaAsHAe13ZyrMlFZb6bY=;
+	s=arc-20240116; t=1728916764; c=relaxed/simple;
+	bh=29U+ZR+TBn7jO35UaX8jYTTxvqI7s44YIlvGeaMmoFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCpHcIaKiLhP4ALtDpIvC/E/3lYKW7HFCCyb9O+8fIiqahVKIGWEZYBGMGc60qytmegB50Q5NLwGqhmOejR0Dj5pzAhhRRBxSV0ee+s89sYXo6IhoBD6EJdo/Baszk7/l0T4wEhrVFaBPnYRsYyVLXF92VOjyxB+5LPT4tTpgrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qELWplMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcsTGUrmxcT/QBkQPvxb2pubkVYc6FpSwdMp7Y3D/RtU8IooWKlWN6aiyMV9cYhrU82/TDs2JBetLwqLa4mNUQZD5lrIWcaOemyxbxFuz1848fZNMzJDv7IfsPbBXAopA3+9Nda8EwN4lW1rTchAuf0IuNQ8tV2MyeWAqpH1VPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIv2dwDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qELWplMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55118C4CEC3;
-	Mon, 14 Oct 2024 14:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIv2dwDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BCBC4CECF;
+	Mon, 14 Oct 2024 14:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916760;
-	bh=b0SSWBybF3GCExOsHkSklEtOaAsHAe13ZyrMlFZb6bY=;
+	s=korg; t=1728916764;
+	bh=29U+ZR+TBn7jO35UaX8jYTTxvqI7s44YIlvGeaMmoFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qELWplMpVwGXDKPkbzVDTJWXYjCRZJDIo1YcZjeiCC8FtFWXWrMW+fd7U+S7qd8RY
-	 98WBfirqGcJOFdtm+Ya1uRL9cNw6i9pNuWaOxxoEb6L/NtK2CqZr89wlg8m7ry8GYk
-	 nBkvs12NejJK9CsuRHGovXR6lrl54i8r7H4TNa3E=
+	b=LIv2dwDHyTMlGL9I9UNrJKHG/gtXizVu+T8MaQUCqoZy1N171FS/XGYSiQiLTULXc
+	 3u9fpyLZlZdbThx3Yye6a/ygHtGM2LKFw3+dNBQ3RL0o8+hwWawFEk7FFn54yub3T3
+	 mbTh3VvMyNtI0XVAFTclwd7+GBislhSR+WJDzj1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinke Han <jinkehan@didiglobal.com>,
-	Tao Chen <chen.dylane@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/213] bpf: Check percpu map value size first
-Date: Mon, 14 Oct 2024 16:19:23 +0200
-Message-ID: <20241014141045.216115925@linuxfoundation.org>
+Subject: [PATCH 6.6 058/213] s390/boot: Compile all files with the same march flag
+Date: Mon, 14 Oct 2024 16:19:24 +0200
+Message-ID: <20241014141045.255622720@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 References: <20241014141042.954319779@linuxfoundation.org>
@@ -53,57 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 1d244784be6b01162b732a5a7d637dfc024c3203 ]
+[ Upstream commit fccb175bc89a0d37e3ff513bb6bf1f73b3a48950 ]
 
-Percpu map is often used, but the map value size limit often ignored,
-like issue: https://github.com/iovisor/bcc/issues/2519. Actually,
-percpu map value size is bound by PCPU_MIN_UNIT_SIZE, so we
-can check the value size whether it exceeds PCPU_MIN_UNIT_SIZE first,
-like percpu map of local_storage. Maybe the error message seems clearer
-compared with "cannot allocate memory".
+Only a couple of files of the decompressor are compiled with the
+minimum architecture level. This is problematic for potential function
+calls between compile units, especially if a target function is within
+a compile until compiled for a higher architecture level, since that
+may lead to an unexpected operation exception.
 
-Signed-off-by: Jinke Han <jinkehan@didiglobal.com>
-Signed-off-by: Tao Chen <chen.dylane@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240910144111.1464912-2-chen.dylane@gmail.com
+Therefore compile all files of the decompressor for the same (minimum)
+architecture level.
+
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arraymap.c | 3 +++
- kernel/bpf/hashtab.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ arch/s390/boot/Makefile | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index c9843dde69081..1811efcfbd6e3 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -73,6 +73,9 @@ int array_map_alloc_check(union bpf_attr *attr)
- 	/* avoid overflow on round_up(map->value_size) */
- 	if (attr->value_size > INT_MAX)
- 		return -E2BIG;
-+	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
-+	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
-+		return -E2BIG;
+diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
+index c7c81e5f92189..e4def3a6c6cca 100644
+--- a/arch/s390/boot/Makefile
++++ b/arch/s390/boot/Makefile
+@@ -9,11 +9,8 @@ UBSAN_SANITIZE := n
+ KASAN_SANITIZE := n
+ KCSAN_SANITIZE := n
  
- 	return 0;
- }
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 85cd17ca38290..7c64ad4f3732b 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -458,6 +458,9 @@ static int htab_map_alloc_check(union bpf_attr *attr)
- 		 * kmalloc-able later in htab_map_update_elem()
- 		 */
- 		return -E2BIG;
-+	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
-+	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
-+		return -E2BIG;
+-KBUILD_AFLAGS := $(KBUILD_AFLAGS_DECOMPRESSOR)
+-KBUILD_CFLAGS := $(KBUILD_CFLAGS_DECOMPRESSOR)
+-
+ #
+-# Use minimum architecture for als.c to be able to print an error
++# Use minimum architecture level so it is possible to print an error
+ # message if the kernel is started on a machine which is too old
+ #
+ ifndef CONFIG_CC_IS_CLANG
+@@ -22,16 +19,10 @@ else
+ CC_FLAGS_MARCH_MINIMUM := -march=z10
+ endif
  
- 	return 0;
- }
+-ifneq ($(CC_FLAGS_MARCH),$(CC_FLAGS_MARCH_MINIMUM))
+-AFLAGS_REMOVE_head.o		+= $(CC_FLAGS_MARCH)
+-AFLAGS_head.o			+= $(CC_FLAGS_MARCH_MINIMUM)
+-AFLAGS_REMOVE_mem.o		+= $(CC_FLAGS_MARCH)
+-AFLAGS_mem.o			+= $(CC_FLAGS_MARCH_MINIMUM)
+-CFLAGS_REMOVE_als.o		+= $(CC_FLAGS_MARCH)
+-CFLAGS_als.o			+= $(CC_FLAGS_MARCH_MINIMUM)
+-CFLAGS_REMOVE_sclp_early_core.o	+= $(CC_FLAGS_MARCH)
+-CFLAGS_sclp_early_core.o	+= $(CC_FLAGS_MARCH_MINIMUM)
+-endif
++KBUILD_AFLAGS := $(filter-out $(CC_FLAGS_MARCH),$(KBUILD_AFLAGS_DECOMPRESSOR))
++KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_MARCH),$(KBUILD_CFLAGS_DECOMPRESSOR))
++KBUILD_AFLAGS += $(CC_FLAGS_MARCH_MINIMUM)
++KBUILD_CFLAGS += $(CC_FLAGS_MARCH_MINIMUM)
+ 
+ CFLAGS_sclp_early_core.o += -I$(srctree)/drivers/s390/char
+ 
 -- 
 2.43.0
 
