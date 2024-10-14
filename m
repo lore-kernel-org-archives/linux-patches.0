@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4F720EB;
-	Mon, 14 Oct 2024 14:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997D5610B;
+	Mon, 14 Oct 2024 14:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728916307; cv=none; b=pMnUCh77/hw4o8bjXGG1gpI9G8+/sAJ7PDmcjkeVwSBwS/rvucWj/OXq+6f3glXEwAEAHpmnGCDUof0Rf5jjfAKR08YFhVPBX3O/DyN9yceSywPRJFe82sp/LmBXYwfLKeLS/Pul9bPXjKW5tcm8FR7DmbPHiEJQpUIbIlJ9r2Q=
+	t=1728916310; cv=none; b=ldo+rYnNie44XzmcRJCoWSbXVlHuYpwH3gd1Mpntv/mj7Zs7Oqm4aCNd/gZQbA1JVV2s97zQ9lrSoH1k8A1wcE6oBdYYcQOByqSOCc1hGvYiRDtYsrrOWzpz5qWM+q6qY0dMITMJcD7tJkeu20Bo/TAM1AW309RpkoHJeg4ZmBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728916307; c=relaxed/simple;
-	bh=X2EQlGKlD+eka6sHu4iyEVQFaG0/A4prvFV1wO72cVM=;
+	s=arc-20240116; t=1728916310; c=relaxed/simple;
+	bh=po3OwcMN/bNdUl1IBtqJmy4joCrWx0ex9pzeoaFHXFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I63y7ta+JG4P3Of6/ALkSYDKyDZ1MTBEjfiDNwMHMC3llIFcU1s/htG8qgEOn84bdR00I31wvUdFBjLGo4fcjWAcqCGe9EGCC6/R4br2QqQFKo13M+QxDu78Jacm1ruNWQ/lRyWAaMCeTDC+fNe9SdbDXE6wZETB+ICStFT7k2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNhrV1jX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8x3i6YGo1UNEc2UAi6yy4/LH9eg1Wa/P+7CtxicVFHiMKAAmP7VkVsR749BDJHumboMdZBCYwcJZozUv4snW/8rnb1z8zmKcz3sCvyaTZgSxFKmdxyzHjFr2IpQZYktneLzGNPn0af3P3ga0rW3kUtLSBD2cq7YL2wWPmeKPLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvO6uket; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNhrV1jX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A63C4CEC3;
-	Mon, 14 Oct 2024 14:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvO6uket"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23724C4CEC3;
+	Mon, 14 Oct 2024 14:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728916307;
-	bh=X2EQlGKlD+eka6sHu4iyEVQFaG0/A4prvFV1wO72cVM=;
+	s=korg; t=1728916310;
+	bh=po3OwcMN/bNdUl1IBtqJmy4joCrWx0ex9pzeoaFHXFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNhrV1jXHxyA43DBwJNgqSQk4eEbfnQOzNbgWQ2BOj2MV+c99DfWpR3NyY6jD8bvW
-	 iWR2/hgPbxEjpljEypHZeHtOE7koyehZN2OUJ7TCOVGmTGrLB0v1Vq0pWYGiWv/cL8
-	 /DofrExczHqfsLgQJsqP86fS0dixcSEtuBoLom3g=
+	b=VvO6uket3iHAmaSw+6Wzfl1etlxmyWd1pBYydFIr1Vn0Pl0pxJFjttxgNj6MqvuE9
+	 SiUApR17UyoR/LGbIGyZ3g2qp68KfilJP7VIMo+XA5e2TVyVVkygON3bP2FcEgDhjz
+	 bbb2FXSatcziXElkPXtEfWsoU7/OuBQAtHkg3N6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 127/214] net/sched: accept TCA_STAB only for root qdisc
-Date: Mon, 14 Oct 2024 16:19:50 +0200
-Message-ID: <20241014141049.947908778@linuxfoundation.org>
+Subject: [PATCH 6.11 145/214] mpls: Handle error of rtnl_register_module().
+Date: Mon, 14 Oct 2024 16:20:08 +0200
+Message-ID: <20241014141050.644711662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141044.974962104@linuxfoundation.org>
 References: <20241014141044.974962104@linuxfoundation.org>
@@ -53,148 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 3cb7cf1540ddff5473d6baeb530228d19bc97b8a ]
+[ Upstream commit 5be2062e3080e3ff6707816caa445ec0c6eaacf7 ]
 
-Most qdiscs maintain their backlog using qdisc_pkt_len(skb)
-on the assumption it is invariant between the enqueue()
-and dequeue() handlers.
+Since introduced, mpls_init() has been ignoring the returned
+value of rtnl_register_module(), which could fail silently.
 
-Unfortunately syzbot can crash a host rather easily using
-a TBF + SFQ combination, with an STAB on SFQ [1]
+Handling the error allows users to view a module as an all-or-nothing
+thing in terms of the rtnetlink functionality.  This prevents syzkaller
+from reporting spurious errors from its tests, where OOM often occurs
+and module is automatically loaded.
 
-We can't support TCA_STAB on arbitrary level, this would
-require to maintain per-qdisc storage.
+Let's handle the errors by rtnl_register_many().
 
-[1]
-[   88.796496] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[   88.798611] #PF: supervisor read access in kernel mode
-[   88.799014] #PF: error_code(0x0000) - not-present page
-[   88.799506] PGD 0 P4D 0
-[   88.799829] Oops: Oops: 0000 [#1] SMP NOPTI
-[   88.800569] CPU: 14 UID: 0 PID: 2053 Comm: b371744477 Not tainted 6.12.0-rc1-virtme #1117
-[   88.801107] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   88.801779] RIP: 0010:sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
-[ 88.802544] Code: 0f b7 50 12 48 8d 04 d5 00 00 00 00 48 89 d6 48 29 d0 48 8b 91 c0 01 00 00 48 c1 e0 03 48 01 c2 66 83 7a 1a 00 7e c0 48 8b 3a <4c> 8b 07 4c 89 02 49 89 50 08 48 c7 47 08 00 00 00 00 48 c7 07 00
-All code
-========
-   0:	0f b7 50 12          	movzwl 0x12(%rax),%edx
-   4:	48 8d 04 d5 00 00 00 	lea    0x0(,%rdx,8),%rax
-   b:	00
-   c:	48 89 d6             	mov    %rdx,%rsi
-   f:	48 29 d0             	sub    %rdx,%rax
-  12:	48 8b 91 c0 01 00 00 	mov    0x1c0(%rcx),%rdx
-  19:	48 c1 e0 03          	shl    $0x3,%rax
-  1d:	48 01 c2             	add    %rax,%rdx
-  20:	66 83 7a 1a 00       	cmpw   $0x0,0x1a(%rdx)
-  25:	7e c0                	jle    0xffffffffffffffe7
-  27:	48 8b 3a             	mov    (%rdx),%rdi
-  2a:*	4c 8b 07             	mov    (%rdi),%r8		<-- trapping instruction
-  2d:	4c 89 02             	mov    %r8,(%rdx)
-  30:	49 89 50 08          	mov    %rdx,0x8(%r8)
-  34:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
-  3b:	00
-  3c:	48                   	rex.W
-  3d:	c7                   	.byte 0xc7
-  3e:	07                   	(bad)
-	...
-
-Code starting with the faulting instruction
-===========================================
-   0:	4c 8b 07             	mov    (%rdi),%r8
-   3:	4c 89 02             	mov    %r8,(%rdx)
-   6:	49 89 50 08          	mov    %rdx,0x8(%r8)
-   a:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
-  11:	00
-  12:	48                   	rex.W
-  13:	c7                   	.byte 0xc7
-  14:	07                   	(bad)
-	...
-[   88.803721] RSP: 0018:ffff9a1f892b7d58 EFLAGS: 00000206
-[   88.804032] RAX: 0000000000000000 RBX: ffff9a1f8420c800 RCX: ffff9a1f8420c800
-[   88.804560] RDX: ffff9a1f81bc1440 RSI: 0000000000000000 RDI: 0000000000000000
-[   88.805056] RBP: ffffffffc04bb0e0 R08: 0000000000000001 R09: 00000000ff7f9a1f
-[   88.805473] R10: 000000000001001b R11: 0000000000009a1f R12: 0000000000000140
-[   88.806194] R13: 0000000000000001 R14: ffff9a1f886df400 R15: ffff9a1f886df4ac
-[   88.806734] FS:  00007f445601a740(0000) GS:ffff9a2e7fd80000(0000) knlGS:0000000000000000
-[   88.807225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   88.807672] CR2: 0000000000000000 CR3: 000000050cc46000 CR4: 00000000000006f0
-[   88.808165] Call Trace:
-[   88.808459]  <TASK>
-[   88.808710] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
-[   88.809261] ? page_fault_oops (arch/x86/mm/fault.c:715)
-[   88.809561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
-[   88.809806] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
-[   88.810074] ? sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
-[   88.810411] sfq_reset (net/sched/sch_sfq.c:525) sch_sfq
-[   88.810671] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
-[   88.810950] tbf_reset (./include/linux/timekeeping.h:169 net/sched/sch_tbf.c:334) sch_tbf
-[   88.811208] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
-[   88.811484] netif_set_real_num_tx_queues (./include/linux/spinlock.h:396 ./include/net/sch_generic.h:768 net/core/dev.c:2958)
-[   88.811870] __tun_detach (drivers/net/tun.c:590 drivers/net/tun.c:673)
-[   88.812271] tun_chr_close (drivers/net/tun.c:702 drivers/net/tun.c:3517)
-[   88.812505] __fput (fs/file_table.c:432 (discriminator 1))
-[   88.812735] task_work_run (kernel/task_work.c:230)
-[   88.813016] do_exit (kernel/exit.c:940)
-[   88.813372] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
-[   88.813639] ? handle_mm_fault (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:97 ./arch/x86/include/asm/irqflags.h:155 ./include/linux/memcontrol.h:1022 ./include/linux/memcontrol.h:1045 ./include/linux/memcontrol.h:1052 mm/memory.c:5928 mm/memory.c:6088)
-[   88.813867] do_group_exit (kernel/exit.c:1070)
-[   88.814138] __x64_sys_exit_group (kernel/exit.c:1099)
-[   88.814490] x64_sys_call (??:?)
-[   88.814791] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
-[   88.815012] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-[   88.815495] RIP: 0033:0x7f44560f1975
-
-Fixes: 175f9c1bba9b ("net_sched: Add size table for qdiscs")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20241007184130.3960565-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 03c0566542f4 ("mpls: Netlink commands to add, remove, and dump routes")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 1 -
- net/sched/sch_api.c       | 7 ++++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ net/mpls/af_mpls.c | 32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 79edd5b5e3c91..5d74fa7e694cc 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -848,7 +848,6 @@ static inline void qdisc_calculate_pkt_len(struct sk_buff *skb,
- static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 				struct sk_buff **to_free)
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 0e6c94a8c2bc6..4f6836677e40b 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -2730,6 +2730,15 @@ static struct rtnl_af_ops mpls_af_ops __read_mostly = {
+ 	.get_stats_af_size = mpls_get_stats_af_size,
+ };
+ 
++static const struct rtnl_msg_handler mpls_rtnl_msg_handlers[] __initdata_or_module = {
++	{THIS_MODULE, PF_MPLS, RTM_NEWROUTE, mpls_rtm_newroute, NULL, 0},
++	{THIS_MODULE, PF_MPLS, RTM_DELROUTE, mpls_rtm_delroute, NULL, 0},
++	{THIS_MODULE, PF_MPLS, RTM_GETROUTE, mpls_getroute, mpls_dump_routes, 0},
++	{THIS_MODULE, PF_MPLS, RTM_GETNETCONF,
++	 mpls_netconf_get_devconf, mpls_netconf_dump_devconf,
++	 RTNL_FLAG_DUMP_UNLOCKED},
++};
++
+ static int __init mpls_init(void)
  {
--	qdisc_calculate_pkt_len(skb, sch);
- 	return sch->enqueue(skb, sch, to_free);
- }
+ 	int err;
+@@ -2748,24 +2757,25 @@ static int __init mpls_init(void)
  
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 74afc210527d2..2eefa47838799 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -593,7 +593,6 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
- 		pkt_len = 1;
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
--EXPORT_SYMBOL(__qdisc_calculate_pkt_len);
+ 	rtnl_af_register(&mpls_af_ops);
  
- void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
- {
-@@ -1201,6 +1200,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
- 			return -EINVAL;
- 		}
+-	rtnl_register_module(THIS_MODULE, PF_MPLS, RTM_NEWROUTE,
+-			     mpls_rtm_newroute, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MPLS, RTM_DELROUTE,
+-			     mpls_rtm_delroute, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MPLS, RTM_GETROUTE,
+-			     mpls_getroute, mpls_dump_routes, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MPLS, RTM_GETNETCONF,
+-			     mpls_netconf_get_devconf,
+-			     mpls_netconf_dump_devconf,
+-			     RTNL_FLAG_DUMP_UNLOCKED);
+-	err = ipgre_tunnel_encap_add_mpls_ops();
++	err = rtnl_register_many(mpls_rtnl_msg_handlers);
+ 	if (err)
++		goto out_unregister_rtnl_af;
++
++	err = ipgre_tunnel_encap_add_mpls_ops();
++	if (err) {
+ 		pr_err("Can't add mpls over gre tunnel ops\n");
++		goto out_unregister_rtnl;
++	}
  
-+		if (new &&
-+		    !(parent->flags & TCQ_F_MQROOT) &&
-+		    rcu_access_pointer(new->stab)) {
-+			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
-+			return -EINVAL;
-+		}
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
+ 	err = 0;
+ out:
+ 	return err;
+ 
++out_unregister_rtnl:
++	rtnl_unregister_many(mpls_rtnl_msg_handlers);
++out_unregister_rtnl_af:
++	rtnl_af_unregister(&mpls_af_ops);
++	dev_remove_pack(&mpls_packet_type);
+ out_unregister_pernet:
+ 	unregister_pernet_subsys(&mpls_net_ops);
+ 	goto out;
 -- 
 2.43.0
 
