@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B0C1B0137;
-	Mon, 14 Oct 2024 15:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840FC1AB538;
+	Mon, 14 Oct 2024 15:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919064; cv=none; b=nL3CkTZfOfedaf671RvNGrIUFNHl1pU1Nu/G1H2y7TXQRVTEitLZShAYP+MKCul4/n6ZiWnvCTO7+RPxsjndv/2Kp4Od4eZP9DgTfG8AO5oi4/frJiwzlYnw72jA3YtHZCc1+O7gkd/lj/4VE3hngD/uHxUtnirZ1Peo8tctRwU=
+	t=1728919067; cv=none; b=Iu4PMj9ORe9UjhCLvUjLMTvUMCpjHflECZxgAvGKNN2pnHY25JcA441KKizo3+cX9SZ5pdax0EDeCYrrOuUQKxQw+1KamEK+Nt5tCl4YsLwveT5y6Zt20bqBPIJbgEV4xsU39v9tL1PwqTDm3T/pUny0nzyzdyyOEf0EOmqXANI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919064; c=relaxed/simple;
-	bh=sD7KQ+FYzNhMg5wsnmnegd9cK7vnlZ0DVJJrdLAI77Y=;
+	s=arc-20240116; t=1728919067; c=relaxed/simple;
+	bh=1OfgciQKTtRDsDQG+HvcMc4huedjevJP9/8tpMCbiXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMbw5Lk0vEgaMVBfct1thmen5OFKTy3gFwJ1eqtgaYAs62dCRsf9K/IFM71WMTs+vEh8eE9EqnFFJAY5gpdmOgU1xr4hGqI/Z1bzfbkqwTZWSDURt4CwfBL6UhcljqMXLE5fKRXhSwZH97daTPdXvIHAF9VOUDAfwOs+GtQcpqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehWbBow7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EW7bKek5zSNvwgQY8YBHPd1QQ5naEZ6L8XohqAjHqaa7tEAWiJd3y4XbImht9IJDoGIcc4M25Mb0ernhWFFnk18h4z2xSfN7oEzQ2HyNO4cVpSbnEceGjjg7nC44OdnADPloRbxfXWlfUJj8QNogZPWiumQ1ZvGxHqCnS1dqQnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrca6jwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehWbBow7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A08BC4CEC3;
-	Mon, 14 Oct 2024 15:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrca6jwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB80C4CEC3;
+	Mon, 14 Oct 2024 15:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728919063;
-	bh=sD7KQ+FYzNhMg5wsnmnegd9cK7vnlZ0DVJJrdLAI77Y=;
+	s=korg; t=1728919067;
+	bh=1OfgciQKTtRDsDQG+HvcMc4huedjevJP9/8tpMCbiXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehWbBow7XZ5Ztmwttb72pDvyCU7/2tb+9VkQFdynCwb54ETCeeilJtKbRDQgpjeVC
-	 nQuMTjE4UY1qx2iVCSdFwHcQRujwRSC3pVYznIVt/SB1jBMerhvyXNMVe77HHAbvig
-	 6Dm6x2zv8LtMw40xogfCIJQip379JM2K63pAaUK8=
+	b=rrca6jwmLlgwP6/7taVm9B74ssm3vC/XB/Wdb6RCYvLznctV0GnUKUccz6w3zsmeN
+	 TipYL/k8oDgLg00t4rCuXXYjpel1W2e/ucEKbYfizcScgESvIZOc1ghVSDfDBJj5mF
+	 1wE2kz43ZFrS4qeiuo3UlubHA4dI43+RinqUlTt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 495/798] drm/amd/display: Initialize get_bytes_per_elements default to 1
-Date: Mon, 14 Oct 2024 16:17:29 +0200
-Message-ID: <20241014141237.418317857@linuxfoundation.org>
+Subject: [PATCH 6.1 504/798] of/irq: Refer to actual buffer size in of_irq_parse_one()
+Date: Mon, 14 Oct 2024 16:17:38 +0200
+Message-ID: <20241014141237.778859370@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
 References: <20241014141217.941104064@linuxfoundation.org>
@@ -54,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4067f4fa0423a89fb19a30b57231b384d77d2610 ]
+[ Upstream commit 39ab331ab5d377a18fbf5a0e0b228205edfcc7f4 ]
 
-Variables, used as denominators and maybe not assigned to other values,
-should not be 0. bytes_per_element_y & bytes_per_element_c are
-initialized by get_bytes_per_element() which should never return 0.
+Replace two open-coded calculations of the buffer size by invocations of
+sizeof() on the buffer itself, to make sure the code will always use the
+actual buffer size.
 
-This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
-
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/817c0b9626fd30790fc488c472a3398324cfcc0c.1724156125.git.geert+renesas@glider.be
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c | 2 +-
- .../gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/of/irq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-index 0fc9f3e3ffaef..f603486af6e30 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index a8e306606c4bd..c0578e22c625b 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -357,8 +357,8 @@ int of_irq_parse_one(struct device_node *device, int index, struct of_phandle_ar
+ 	addr = of_get_property(device, "reg", &addr_len);
  
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
+ 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
+-	if (addr_len > (3 * sizeof(__be32)))
+-		addr_len = 3 * sizeof(__be32);
++	if (addr_len > sizeof(addr_buf))
++		addr_len = sizeof(addr_buf);
+ 	if (addr)
+ 		memcpy(addr_buf, addr, addr_len);
  
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-index 618f4b682ab1b..9f28e4d3c664c 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-@@ -53,7 +53,7 @@ static void calculate_ttu_cursor(
- 
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
- 
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
 -- 
 2.43.0
 
