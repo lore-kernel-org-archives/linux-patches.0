@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E90B1D4154;
-	Tue, 15 Oct 2024 11:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D51D0492;
+	Tue, 15 Oct 2024 11:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993372; cv=none; b=ItL3/ONYbvSMgpxEejI7Mt1LpPFg/nONktcl3n/MN9KGMyYkpE23cNp530m7TH7VYNulBNvNa6lzqQuS+Sc55vLTz2b2E5/nXe/RlEhx+4g7rnUXxxuauzOdp9FNMZg0zJA/XkeOCXmXSkjbFxxokGC0WJ1uHHxPsCL5u58bEwA=
+	t=1728993375; cv=none; b=PzVcdwv77kRSf0VKNar5ZOsfVXxx99V3mtLW7is5stI8P4a5SqCBHvT658xLB2usWAb70SMlzbC9vBfeVc4+hBXBfI8bczEB16nSqqQHjnrzkrOqZw34Fp/+/57KKSvm5NVlOCFKDMIokuTXxlGhdd2dDwEGR9M+vLzjt2gAfN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993372; c=relaxed/simple;
-	bh=0jbu//JeJ6WA04IQ7wpUS2/huQk8f8BSL1/4ffh5y7U=;
+	s=arc-20240116; t=1728993375; c=relaxed/simple;
+	bh=OEpuJ3s59ikJz7sxXtgYhG6ZhKfdSam4MRsjCXwIUCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aR/i5yO8QZWEKgbdk0WVIR0CHh+uHYSdXZ/iw9akjTzckMX5zSL7ZO+iR0o7VAqQFZ1dOaFcYX6+7lROL9mEYm0pzKnXRrEBfZ3/wOkeFA37PcvN+Nr0hOOsyOrCl5J5DSG/v9QnD3OneAvTDUEKdMelnljzgD1lEcnDe6V3nwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xj8RhE9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/5oUaLCYrY92x/PJu4ZF1JzVTWjofNl8GaPyDMoxNXJbr1MRM2DoUPCO1GiBwzlbMhH8MZIQ3GK0o9N8s09lpGj4eCaAkaHb1UxCGiDjpaSd3mSBm53o3RI8RqdvRLbIdm/YPEdaIR0kePpssQjLouK+nnG0th3NahQd7zCixo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAaR4NhW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xj8RhE9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB84DC4CECF;
-	Tue, 15 Oct 2024 11:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAaR4NhW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D09C4CEC6;
+	Tue, 15 Oct 2024 11:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993372;
-	bh=0jbu//JeJ6WA04IQ7wpUS2/huQk8f8BSL1/4ffh5y7U=;
+	s=korg; t=1728993375;
+	bh=OEpuJ3s59ikJz7sxXtgYhG6ZhKfdSam4MRsjCXwIUCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xj8RhE9yTPutl1mPI9yav1TVpAQSaPU8Yty7ciVAWjTvO9lRykPyVc3wLzvcguxiT
-	 VE8Kf/IABxh2Irfu+2pW55hZZLK5/05TkAS9fMXt6tZH5Pd/mTrYqxeknoz51LSEQp
-	 n0cogtvd8olEc1gcmEtOh9qFX0fN0QXuH2EnC2To=
+	b=HAaR4NhW2/9GUs1O6/zsyhTAfEmv8PWvoUcUtPXHkDL13rF3/cFXzNino71ARKA4W
+	 NpnwM1OPCM7SaYkvfLOZ8+RbNqWAu5nomactNfOx1srRmGmKRioGJ8JvD70GfA9eiU
+	 VB99ZCQphYguBsaKQVaXjxniSTOioqShxbv1wyZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bd8d55ee2acd0a71d8ce@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Tom Parkin <tparkin@katalix.com>,
-	James Chapman <jchapman@katalix.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 392/691] ppp: do not assume bh is held in ppp_channel_bridge_input()
-Date: Tue, 15 Oct 2024 13:25:40 +0200
-Message-ID: <20241015112455.898750452@linuxfoundation.org>
+Subject: [PATCH 5.15 393/691] sctp: set sk_state back to CLOSED if autobind fails in sctp_listen_start
+Date: Tue, 15 Oct 2024 13:25:41 +0200
+Message-ID: <20241015112455.937342780@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,140 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit aec7291003df78cb71fd461d7b672912bde55807 ]
+[ Upstream commit 8beee4d8dee76b67c75dc91fd8185d91e845c160 ]
 
-Networking receive path is usually handled from BH handler.
-However, some protocols need to acquire the socket lock, and
-packets might be stored in the socket backlog is the socket was
-owned by a user process.
+In sctp_listen_start() invoked by sctp_inet_listen(), it should set the
+sk_state back to CLOSED if sctp_autobind() fails due to whatever reason.
 
-In this case, release_sock(), __release_sock(), and sk_backlog_rcv()
-might call the sk->sk_backlog_rcv() handler in process context.
+Otherwise, next time when calling sctp_inet_listen(), if sctp_sk(sk)->reuse
+is already set via setsockopt(SCTP_REUSE_PORT), sctp_sk(sk)->bind_hash will
+be dereferenced as sk_state is LISTENING, which causes a crash as bind_hash
+is NULL.
 
-sybot caught ppp was not considering this case in
-ppp_channel_bridge_input() :
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:sctp_inet_listen+0x7f0/0xa20 net/sctp/socket.c:8617
+  Call Trace:
+   <TASK>
+   __sys_listen_socket net/socket.c:1883 [inline]
+   __sys_listen+0x1b7/0x230 net/socket.c:1894
+   __do_sys_listen net/socket.c:1902 [inline]
 
-WARNING: inconsistent lock state
-6.11.0-rc7-syzkaller-g5f5673607153 #0 Not tainted
---------------------------------
-inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
-ksoftirqd/1/24 [HC0[0]:SC1[1]:HE1:SE0] takes:
- ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
- ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
- ffff0000db7f11e0 (&pch->downl){+.?.}-{2:2}, at: ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
-{SOFTIRQ-ON-W} state was registered at:
-   lock_acquire+0x240/0x728 kernel/locking/lockdep.c:5759
-   __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-   _raw_spin_lock+0x48/0x60 kernel/locking/spinlock.c:154
-   spin_lock include/linux/spinlock.h:351 [inline]
-   ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
-   ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
-   pppoe_rcv_core+0xfc/0x314 drivers/net/ppp/pppoe.c:379
-   sk_backlog_rcv include/net/sock.h:1111 [inline]
-   __release_sock+0x1a8/0x3d8 net/core/sock.c:3004
-   release_sock+0x68/0x1b8 net/core/sock.c:3558
-   pppoe_sendmsg+0xc8/0x5d8 drivers/net/ppp/pppoe.c:903
-   sock_sendmsg_nosec net/socket.c:730 [inline]
-   __sock_sendmsg net/socket.c:745 [inline]
-   __sys_sendto+0x374/0x4f4 net/socket.c:2204
-   __do_sys_sendto net/socket.c:2216 [inline]
-   __se_sys_sendto net/socket.c:2212 [inline]
-   __arm64_sys_sendto+0xd8/0xf8 net/socket.c:2212
-   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
-   invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
-   el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
-   do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
-   el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
-   el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
-   el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-irq event stamp: 282914
- hardirqs last  enabled at (282914): [<ffff80008b42e30c>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
- hardirqs last  enabled at (282914): [<ffff80008b42e30c>] _raw_spin_unlock_irqrestore+0x38/0x98 kernel/locking/spinlock.c:194
- hardirqs last disabled at (282913): [<ffff80008b42e13c>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
- hardirqs last disabled at (282913): [<ffff80008b42e13c>] _raw_spin_lock_irqsave+0x2c/0x7c kernel/locking/spinlock.c:162
- softirqs last  enabled at (282904): [<ffff8000801f8e88>] softirq_handle_end kernel/softirq.c:400 [inline]
- softirqs last  enabled at (282904): [<ffff8000801f8e88>] handle_softirqs+0xa3c/0xbfc kernel/softirq.c:582
- softirqs last disabled at (282909): [<ffff8000801fbdf8>] run_ksoftirqd+0x70/0x158 kernel/softirq.c:928
-
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&pch->downl);
-  <Interrupt>
-    lock(&pch->downl);
-
- *** DEADLOCK ***
-
-1 lock held by ksoftirqd/1/24:
-  #0: ffff80008f74dfa0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire+0x10/0x4c include/linux/rcupdate.h:325
-
-stack backtrace:
-CPU: 1 UID: 0 PID: 24 Comm: ksoftirqd/1 Not tainted 6.11.0-rc7-syzkaller-g5f5673607153 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-Call trace:
-  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:319
-  show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:326
-  __dump_stack lib/dump_stack.c:93 [inline]
-  dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:119
-  dump_stack+0x1c/0x28 lib/dump_stack.c:128
-  print_usage_bug+0x698/0x9ac kernel/locking/lockdep.c:4000
- mark_lock_irq+0x980/0xd2c
-  mark_lock+0x258/0x360 kernel/locking/lockdep.c:4677
-  __lock_acquire+0xf48/0x779c kernel/locking/lockdep.c:5096
-  lock_acquire+0x240/0x728 kernel/locking/lockdep.c:5759
-  __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-  _raw_spin_lock+0x48/0x60 kernel/locking/spinlock.c:154
-  spin_lock include/linux/spinlock.h:351 [inline]
-  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2272 [inline]
-  ppp_input+0x16c/0x854 drivers/net/ppp/ppp_generic.c:2304
-  ppp_async_process+0x98/0x150 drivers/net/ppp/ppp_async.c:495
-  tasklet_action_common+0x318/0x3f4 kernel/softirq.c:785
-  tasklet_action+0x68/0x8c kernel/softirq.c:811
-  handle_softirqs+0x2e4/0xbfc kernel/softirq.c:554
-  run_ksoftirqd+0x70/0x158 kernel/softirq.c:928
-  smpboot_thread_fn+0x4b0/0x90c kernel/smpboot.c:164
-  kthread+0x288/0x310 kernel/kthread.c:389
-  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
-
-Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
-Reported-by: syzbot+bd8d55ee2acd0a71d8ce@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/66f661e2.050a0220.38ace9.000f.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Tom Parkin <tparkin@katalix.com>
-Cc: James Chapman <jchapman@katalix.com>
-Link: https://patch.msgid.link/20240927074553.341910-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5e8f3f703ae4 ("sctp: simplify sctp listening code")
+Reported-by: syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/a93e655b3c153dc8945d7a812e6d8ab0d52b7aa0.1727729391.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/socket.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 7a8a717770fcc..590a8b2153392 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -2268,7 +2268,7 @@ static bool ppp_channel_bridge_input(struct channel *pch, struct sk_buff *skb)
- 	if (!pchb)
- 		goto out_rcu;
- 
--	spin_lock(&pchb->downl);
-+	spin_lock_bh(&pchb->downl);
- 	if (!pchb->chan) {
- 		/* channel got unregistered */
- 		kfree_skb(skb);
-@@ -2280,7 +2280,7 @@ static bool ppp_channel_bridge_input(struct channel *pch, struct sk_buff *skb)
- 		kfree_skb(skb);
- 
- outl:
--	spin_unlock(&pchb->downl);
-+	spin_unlock_bh(&pchb->downl);
- out_rcu:
- 	rcu_read_unlock();
- 
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 9fe13de66b272..2818cf160f3a3 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8542,8 +8542,10 @@ static int sctp_listen_start(struct sock *sk, int backlog)
+ 	 */
+ 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
+ 	if (!ep->base.bind_addr.port) {
+-		if (sctp_autobind(sk))
++		if (sctp_autobind(sk)) {
++			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+ 			return -EAGAIN;
++		}
+ 	} else {
+ 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
+ 			inet_sk_set_state(sk, SCTP_SS_CLOSED);
 -- 
 2.43.0
 
