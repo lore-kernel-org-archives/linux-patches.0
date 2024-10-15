@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CFD13F435;
-	Tue, 15 Oct 2024 11:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEA213F435;
+	Tue, 15 Oct 2024 11:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992658; cv=none; b=jLbxK6Nm9oWYa3k/lZeyUE39N/dNVpW0bthUR00HmuhQdUJzaG8OOFRBI0cfDBtsr45C2W24ZZsAGoq0Rlh2UaWiUP3hGtQkJDBKVwAciUurbKWhMD/heEjmc49mpAjggi+hcbsx+UM0AipOhHaKDbADHqQwK494sTz6U0qK6GY=
+	t=1728992661; cv=none; b=kGT/LpC26EQ2xcf6aMeNPMnG6b8MUKxQmRbpc5ie15+L0BERli1pQpc5htnkjLINR0ZMkCGko1V31Pr3Xiy1LtIBpxA2jV6V+He5WtlAXhAfmhg6h6wJtgI5LLTvz5Orj0eodXhJhiCe23kND1hXAP8vNjPofSl87EqxJlI2dEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992658; c=relaxed/simple;
-	bh=SnbrK2782dJE2Yl/yKgEUdCK9fbf7qqFfVfLeCpALMA=;
+	s=arc-20240116; t=1728992661; c=relaxed/simple;
+	bh=d3VECnFT2LX+lFxCaqwFyUP6Pdtdg375AJDzDTMkIEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKs4KL/ilUiKbz0xNn28kC/i4UtsyMpsEkGFmIPdHOpU7Co1+8uSQKOFQNlNffmQoKf81R8KDlI6+pspckIj5GenXp2LUpOR99lO0JuXhJT2Jb/OrT8O7kyPhyep/FoAZPETdpoChWAyyeSjRMNoVyM7E0GyFXotfPG1b0NNSwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed/Jk32I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hYKCUWJkz1sQzakgssf6y91MHvWTEsEa9QwaK2ndcPjTnU7iCzYgHg+gbezrJOzuKNEqTBrnD43mFV9kGr3Y4WSNJ8eVaRFMgz2TtkeMTzYzbh8H1gkxf1mEEzHsX3qSC+uvBbI+ZRQtexN8lLd/92wkE8xO1T993OYb7QO1eDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvjdLSxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed/Jk32I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270B8C4CEC6;
-	Tue, 15 Oct 2024 11:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvjdLSxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9F8C4CEC6;
+	Tue, 15 Oct 2024 11:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992657;
-	bh=SnbrK2782dJE2Yl/yKgEUdCK9fbf7qqFfVfLeCpALMA=;
+	s=korg; t=1728992661;
+	bh=d3VECnFT2LX+lFxCaqwFyUP6Pdtdg375AJDzDTMkIEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed/Jk32IadPjulVICSHRddRLeECUUW32VPD+YpM8SpyVggeCkJRRcHxnLJ84ebnna
-	 JRdCqyMDvSamne5yE/GyfEvaf1olq/IWC8Vui9c14ttsuzWk8dKv2waeaznsGscfPJ
-	 WaMeqHpRGSwz3/DBEaqE2maDqpQIsCLtdZavaX3Y=
+	b=AvjdLSxlx+JlEQSt2+aMcvTC/PJX4JAjOFrEexd4U6pD8iy941SwvvESVjvovalkV
+	 MBYNlRgZxOrAeXo2VdILsPyGzRGQ/hnFZtDoV7npUXbTQbWH63KP68KTks6WLdCklR
+	 w/lbSiuj7tvvH1gS+6JKC+/i55HNfpIq/ZSlsi5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/691] hwmon: (max16065) Fix overflows seen when writing limits
-Date: Tue, 15 Oct 2024 13:21:37 +0200
-Message-ID: <20241015112446.266119554@linuxfoundation.org>
+Subject: [PATCH 5.15 150/691] i2c: Add i2c_get_match_data()
+Date: Tue, 15 Oct 2024 13:21:38 +0200
+Message-ID: <20241015112446.310248531@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,44 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 744ec4477b11c42e2c8de9eb8364675ae7a0bd81 ]
+[ Upstream commit 564d73c4d9201526bd976b9379d2aaf1a7133e84 ]
 
-Writing large limits resulted in overflows as reported by module tests.
+Add i2c_get_match_data() to get match data for I2C, ACPI and
+DT-based matching, so that we can optimize the driver code.
 
-in0_lcrit: Suspected overflow: [max=5538, read 0, written 2147483647]
-in0_crit: Suspected overflow: [max=5538, read 0, written 2147483647]
-in0_min: Suspected overflow: [max=5538, read 0, written 2147483647]
-
-Fix the problem by clamping prior to multiplications and the use of
-DIV_ROUND_CLOSEST, and by using consistent variable types.
-
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+[wsa: simplified var initialization]
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 119abf7d1815 ("hwmon: (max16065) Fix alarm attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core-base.c | 19 +++++++++++++++++++
+ include/linux/i2c.h         |  2 ++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index ae3a6a7bdaa23..47d039c46cb09 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -114,9 +114,10 @@ static inline int LIMIT_TO_MV(int limit, int range)
- 	return limit * range / 256;
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index dccd94ee138e2..b163ef91aabab 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -113,6 +113,25 @@ const struct i2c_device_id *i2c_match_id(const struct i2c_device_id *id,
  }
+ EXPORT_SYMBOL_GPL(i2c_match_id);
  
--static inline int MV_TO_LIMIT(int mv, int range)
-+static inline int MV_TO_LIMIT(unsigned long mv, int range)
++const void *i2c_get_match_data(const struct i2c_client *client)
++{
++	struct i2c_driver *driver = to_i2c_driver(client->dev.driver);
++	const struct i2c_device_id *match;
++	const void *data;
++
++	data = device_get_match_data(&client->dev);
++	if (!data) {
++		match = i2c_match_id(driver->id_table, client);
++		if (!match)
++			return NULL;
++
++		data = (const void *)match->driver_data;
++	}
++
++	return data;
++}
++EXPORT_SYMBOL(i2c_get_match_data);
++
+ static int i2c_device_match(struct device *dev, struct device_driver *drv)
  {
--	return clamp_val(DIV_ROUND_CLOSEST(mv * 256, range), 0, 255);
-+	mv = clamp_val(mv, 0, ULONG_MAX / 256);
-+	return DIV_ROUND_CLOSEST(clamp_val(mv * 256, 0, range * 255), range);
- }
+ 	struct i2c_client	*client = i2c_verify_client(dev);
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index 2fb2f83bd5015..8bcc0142c32c2 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -349,6 +349,8 @@ struct i2c_adapter *i2c_verify_adapter(struct device *dev);
+ const struct i2c_device_id *i2c_match_id(const struct i2c_device_id *id,
+ 					 const struct i2c_client *client);
  
- static inline int ADC_TO_CURR(int adc, int gain)
++const void *i2c_get_match_data(const struct i2c_client *client);
++
+ static inline struct i2c_client *kobj_to_i2c_client(struct kobject *kobj)
+ {
+ 	struct device * const dev = kobj_to_dev(kobj);
 -- 
 2.43.0
 
