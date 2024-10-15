@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8DC1D89F5;
-	Tue, 15 Oct 2024 11:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202651EABBD;
+	Tue, 15 Oct 2024 11:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992862; cv=none; b=io1j8o1bQmF5Snc/c7/5sMATS1B1j2qGK1+L3ALGsPoCUXbmkZTt7mXQ1BlWatq4tL8P+7u9/PlspgAHYLRRQOwfKWJcyBXz17nLnHQLNBRFghkPIB2lBF46tKK9bRZQVDdQiKLbzxv3xPR5GyBJPb/cnnRsaOV6UHnYqZa2q0A=
+	t=1728992865; cv=none; b=P7mQKXqbZBuYA6mfKB6TwdbPC3HkaBcMLlkXzoFlOELnM1uMOZcI6gKaUzkfgw5JXHF0z3969Kdo2z3bgP0dKvTXU5xMNGvgBiwb+zoNOLPQ7YvapYaDJZYYnSSYF/7JXq9shywM8sL1nOI7qAROm8TSj1pbbW0WL0ZRZaSr8SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992862; c=relaxed/simple;
-	bh=mh/EzTFHeOViYH2/PS7t1YpV8CFZArZD4ZyrGTOvjcg=;
+	s=arc-20240116; t=1728992865; c=relaxed/simple;
+	bh=zF/xQ2wo83liMjfjVrj62I47GanvbqY2ue8uZ0X9mVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMTK8CUDp0N6tk7O1UWU8vEbtswF0Z92j5/tUm+zz0qMQ1MjvrGbzMIgv69HsrHFGwLz+JHLioLTlKGbKbHtLyiHMhZdQ8ObERYtog7X5D++HMltboQGG9TEWwp5N2YjxvEpT3GTu7/U0zNtmOlLlnmU/6UKZG/HdbzXbEYBQZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Zpz/1bp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPsTXAMufqsidg+wTa3Hq4l4xvsR6Q2soNAPokPCmbgPddmiRjIJTf8XSr2v2St3fjBGq+4dx36F04cl5i3UDjnkHL1nOiyxLuZVMz3O1FCrqrjgkujUWwwoyW5kkICjJjk2lrMdf3DrRg8OvGyp8Q+4haqi5dMK/NVXzgi67xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYu9I2k1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Zpz/1bp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17515C4CEC6;
-	Tue, 15 Oct 2024 11:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYu9I2k1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D378C4CECF;
+	Tue, 15 Oct 2024 11:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992861;
-	bh=mh/EzTFHeOViYH2/PS7t1YpV8CFZArZD4ZyrGTOvjcg=;
+	s=korg; t=1728992865;
+	bh=zF/xQ2wo83liMjfjVrj62I47GanvbqY2ue8uZ0X9mVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Zpz/1bpCk5z7gRznKMvdKLQljGYYx95EZYrlkCEZt2IVQ9+rJeVukTgcMGgI5VRb
-	 X2sgvje0kvo/N44oAdgCuMfy1/B025mf25Osc7Y1bmAjmTX03tMqUc18VTegcA2RtE
-	 gaf7aLICOY2nHLlVR6smCbJ0tt92OnYm/zHV5Kv8=
+	b=oYu9I2k1qNwWyVOgFQue2S+4t4NH7Jfpbf2AAV+NTA8ptoUocae7qRN5vuMGBMOmr
+	 Fho3hWiIUdOZsXEEGxbeX9Kulx5v9uTRTvoR0y3862qY7UW112/SD3nkS7F5WAWivU
+	 xOoX7Ndd1VnELkWLDKG8W6GrwVV0cpa6Y2v4f3CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 213/691] bpf: Fix bpf_strtol and bpf_strtoul helpers for 32bit
-Date: Tue, 15 Oct 2024 13:22:41 +0200
-Message-ID: <20241015112448.812711432@linuxfoundation.org>
+Subject: [PATCH 5.15 240/691] clk: ti: dra7-atl: Fix leak of of_nodes
+Date: Tue, 15 Oct 2024 13:23:08 +0200
+Message-ID: <20241015112449.882053645@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,72 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit cfe69c50b05510b24e26ccb427c7cc70beafd6c1 ]
+[ Upstream commit 9d6e9f10e2e031fb7bfb3030a7d1afc561a28fea ]
 
-The bpf_strtol() and bpf_strtoul() helpers are currently broken on 32bit:
+This fix leaking the of_node references in of_dra7_atl_clk_probe().
 
-The argument type ARG_PTR_TO_LONG is BPF-side "long", not kernel-side "long"
-and therefore always considered fixed 64bit no matter if 64 or 32bit underlying
-architecture.
+The docs for of_parse_phandle_with_args() say that the caller must call
+of_node_put() on the returned node. This adds the missing of_node_put()
+to fix the leak.
 
-This contract breaks in case of the two mentioned helpers since their BPF_CALL
-definition for the helpers was added with {unsigned,}long *res. Meaning, the
-transition from BPF-side "long" (BPF program) to kernel-side "long" (BPF helper)
-breaks here.
-
-Both helpers call __bpf_strtoll() with "long long" correctly, but later assigning
-the result into 32-bit "*(long *)" on 32bit architectures. From a BPF program
-point of view, this means upper bits will be seen as uninitialised.
-
-Therefore, fix both BPF_CALL signatures to {s,u}64 types to fix this situation.
-
-Now, changing also uapi/bpf.h helper documentation which generates bpf_helper_defs.h
-for BPF programs is tricky: Changing signatures there to __{s,u}64 would trigger
-compiler warnings (incompatible pointer types passing 'long *' to parameter of type
-'__s64 *' (aka 'long long *')) for existing BPF programs.
-
-Leaving the signatures as-is would be fine as from BPF program point of view it is
-still BPF-side "long" and thus equivalent to __{s,u}64 on 64 or 32bit underlying
-architectures.
-
-Note that bpf_strtol() and bpf_strtoul() are the only helpers with this issue.
-
-Fixes: d7a4cb9b6705 ("bpf: Introduce bpf_strtol and bpf_strtoul helpers")
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/481fcec8-c12c-9abb-8ecb-76c71c009959@iogearbox.net
-Link: https://lore.kernel.org/r/20240913191754.13290-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9ac33b0ce81f ("CLK: TI: Driver for DRA7 ATL (Audio Tracking Logic)")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240826-clk-fix-leak-v1-1-f55418a13aa6@baylibre.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/ti/clk-dra7-atl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 273f2f0deb239..13f870e47ab6d 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -512,7 +512,7 @@ static int __bpf_strtoll(const char *buf, size_t buf_len, u64 flags,
- }
+diff --git a/drivers/clk/ti/clk-dra7-atl.c b/drivers/clk/ti/clk-dra7-atl.c
+index 62508e74a47a7..fc266c0ab6293 100644
+--- a/drivers/clk/ti/clk-dra7-atl.c
++++ b/drivers/clk/ti/clk-dra7-atl.c
+@@ -258,6 +258,7 @@ static int of_dra7_atl_clk_probe(struct platform_device *pdev)
+ 		}
  
- BPF_CALL_4(bpf_strtol, const char *, buf, size_t, buf_len, u64, flags,
--	   long *, res)
-+	   s64 *, res)
- {
- 	long long _res;
- 	int err;
-@@ -537,7 +537,7 @@ const struct bpf_func_proto bpf_strtol_proto = {
- };
- 
- BPF_CALL_4(bpf_strtoul, const char *, buf, size_t, buf_len, u64, flags,
--	   unsigned long *, res)
-+	   u64 *, res)
- {
- 	unsigned long long _res;
- 	bool is_negative;
+ 		clk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
+ 		if (IS_ERR(clk)) {
+ 			pr_err("%s: failed to get atl clock %d from provider\n",
+ 			       __func__, i);
 -- 
 2.43.0
 
