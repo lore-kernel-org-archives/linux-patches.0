@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3371DD0CD;
-	Tue, 15 Oct 2024 13:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A9C1C4A28;
+	Tue, 15 Oct 2024 13:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998335; cv=none; b=suzfxvpzn/EhAGZkShXQkz0fdOwwPBUzxxhJfN7r8SXLLFrXrEhq24+zRmbdnOO2+ncM0e4qnL49bmpwP0MxO/4WDhoIAULcsZyheCKtrW/zJdZ0fJj95o1gybqkIcvrGpn/PtGmFw1K7Ewr5RRtEE9Q3S+9WZg65qJiMrnHBmg=
+	t=1728998338; cv=none; b=jnomiERbUboxxhN4KWZCw08FUuaCN2v76v0OwUBGSQ5LWhslgjnbP1RJ3Tjrw9Py45ifczgLLzOd5ATm9lqFPtkKk/07qgI1VJa3huGTTHmkfEaiLjQ+dTHsQyR/jUgn4/2M5u1mSbhMsH1WISoMA7WMBn6mZQsuJmv1C6Zh2Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998335; c=relaxed/simple;
-	bh=dW+iZHkeg9GZnScn/aivDXAUjkSGjuLjVOHHlDCxfd0=;
+	s=arc-20240116; t=1728998338; c=relaxed/simple;
+	bh=1XWBwjfOb5jDeuclA43mEwjKhFFjh3NwLDAG+8NJK8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGlC3rWsVb9rq1KaMrUU9XNx0kHT+3lOY8p5zSFMLRFGRpeqkzkii//k2UQYWT55H3U3wNaNSuhZ33JfhB0xDBoPaE1ioKgy0ngYok3zbrsTosIdLuEvJb2KoMRIHu3YE2V7plTrOjsfyP1h63tYuk0mHN2cDyk56L+DA5mdKyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX0whDnC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4HeiWFLeJ2bMiiEpIiXSJ5BIeQDE95tznl9wMFXzR2edBzBObnxOY6wyQsIICKQsQMbaa0qL7NPSjEwqeTd9lla8pf/USEaIdPc4ebu1UgnXesYGss96WmqX3j8JIvD4Bdpv9rOiQfr2ZZbhgjPjfdKPUfMeK4t2QY74tJnFwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY3Mnzgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX0whDnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15065C4CECE;
-	Tue, 15 Oct 2024 13:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY3Mnzgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC019C4CEC6;
+	Tue, 15 Oct 2024 13:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998334;
-	bh=dW+iZHkeg9GZnScn/aivDXAUjkSGjuLjVOHHlDCxfd0=;
+	s=korg; t=1728998338;
+	bh=1XWBwjfOb5jDeuclA43mEwjKhFFjh3NwLDAG+8NJK8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mX0whDnC99xnwR/XYDpiYmJmqoeamU2cqFfvUhKxty/GAxFZrExtfr1QO5k4XDvGx
-	 YGfljA38JZzpwDvCNrmeSnSvb2Ol9fzT92gdjxraqEeY4TuwLFl9XaJccbxs9Iq1v9
-	 yNMkI64RkA94wPPUeTCKhHnT3dy7cwTaEUQZTO6s=
+	b=zY3MnzgbmzwDO/jqS5dNRmnGTK7DDShPU0OPL5rQsLSh9c7NxbLj4HIiG0gCtCiIH
+	 qYT6o8IyjBORL/caPGeZ2hlGJZ8aVd7/ZsJs3D2nwe7r5zcGhi95xWXdvTvuZVPvYK
+	 cLaUqxipEU53zMWRDk40yrg6ClnUjwrzcCb5mxno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Torsten Hilbrich <torsten.hilbrich@secunet.com>,
-	Mathias Krause <minipli@grsecurity.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Jinke Han <jinkehan@didiglobal.com>,
+	Tao Chen <chen.dylane@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 448/518] Input: synaptics-rmi4 - fix UAF of IRQ domain on driver removal
-Date: Tue, 15 Oct 2024 14:45:52 +0200
-Message-ID: <20241015123934.295796743@linuxfoundation.org>
+Subject: [PATCH 5.10 449/518] bpf: Check percpu map value size first
+Date: Tue, 15 Oct 2024 14:45:53 +0200
+Message-ID: <20241015123934.334182897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,53 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Tao Chen <chen.dylane@gmail.com>
 
-commit fbf8d71742557abaf558d8efb96742d442720cc2 upstream.
+[ Upstream commit 1d244784be6b01162b732a5a7d637dfc024c3203 ]
 
-Calling irq_domain_remove() will lead to freeing the IRQ domain
-prematurely. The domain is still referenced and will be attempted to get
-used via rmi_free_function_list() -> rmi_unregister_function() ->
-irq_dispose_mapping() -> irq_get_irq_data()'s ->domain pointer.
+Percpu map is often used, but the map value size limit often ignored,
+like issue: https://github.com/iovisor/bcc/issues/2519. Actually,
+percpu map value size is bound by PCPU_MIN_UNIT_SIZE, so we
+can check the value size whether it exceeds PCPU_MIN_UNIT_SIZE first,
+like percpu map of local_storage. Maybe the error message seems clearer
+compared with "cannot allocate memory".
 
-With PaX's MEMORY_SANITIZE this will lead to an access fault when
-attempting to dereference embedded pointers, as in Torsten's report that
-was faulting on the 'domain->ops->unmap' test.
-
-Fix this by releasing the IRQ domain only after all related IRQs have
-been deactivated.
-
-Fixes: 24d28e4f1271 ("Input: synaptics-rmi4 - convert irq distribution to irq_domain")
-Reported-by: Torsten Hilbrich <torsten.hilbrich@secunet.com>
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20240222142654.856566-1-minipli@grsecurity.net
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Jinke Han <jinkehan@didiglobal.com>
+Signed-off-by: Tao Chen <chen.dylane@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240910144111.1464912-2-chen.dylane@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_driver.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/bpf/arraymap.c | 3 +++
+ kernel/bpf/hashtab.c  | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/input/rmi4/rmi_driver.c b/drivers/input/rmi4/rmi_driver.c
-index aa32371f04af6..ef9ea295f9e03 100644
---- a/drivers/input/rmi4/rmi_driver.c
-+++ b/drivers/input/rmi4/rmi_driver.c
-@@ -978,12 +978,12 @@ static int rmi_driver_remove(struct device *dev)
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 5102338129d5f..3d92e42c3895a 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -74,6 +74,9 @@ int array_map_alloc_check(union bpf_attr *attr)
+ 		 * access the elements.
+ 		 */
+ 		return -E2BIG;
++	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
++	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
++		return -E2BIG;
  
- 	rmi_disable_irq(rmi_dev, false);
- 
--	irq_domain_remove(data->irqdomain);
--	data->irqdomain = NULL;
--
- 	rmi_f34_remove_sysfs(rmi_dev);
- 	rmi_free_function_list(rmi_dev);
- 
-+	irq_domain_remove(data->irqdomain);
-+	data->irqdomain = NULL;
-+
  	return 0;
  }
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 72bc5f5752543..4c7cab79d90e5 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -404,6 +404,9 @@ static int htab_map_alloc_check(union bpf_attr *attr)
+ 		 * kmalloc-able later in htab_map_update_elem()
+ 		 */
+ 		return -E2BIG;
++	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
++	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
++		return -E2BIG;
  
+ 	return 0;
+ }
 -- 
 2.43.0
 
