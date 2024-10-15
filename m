@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E71C57B1;
-	Tue, 15 Oct 2024 12:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558741D1512;
+	Tue, 15 Oct 2024 12:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993701; cv=none; b=X/B5Jnq5wLa17eSDUGjLKf6WQ/utWgiA+E8y1kk5t0GUG6hM3tR0ictdIaiggl/Vn6wGkdvWBl8labuYeaSKxk8emFosE2tTS1agzQrZe+I7Ff7Z9jRTsmOmUheBZfI1bZ2sfBdDaj+1nBgzzKIRJNcjqYmHwy2qfF2BxhzcEEk=
+	t=1728993705; cv=none; b=hkrZ3sT0PQIMdzj0Kq6dgQ/TQj6jDot3iwzTf9bjjHWjvU+RBx7fxd8Q5oOsSDppI7Z0/7mZIozqDb7MQjnwh1zDcfzGdjBcrSlV2MVwGpHtwMHZLONU9x2coN8IYxtWGhXjKZLNobpPC5/aJ15S6pT/u2DK10LCPQEM/kz54AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993701; c=relaxed/simple;
-	bh=bIh0UWv0bgVV1KmR6gN9FveW+VGJhwLvvOlMR1QmUy4=;
+	s=arc-20240116; t=1728993705; c=relaxed/simple;
+	bh=3ryT81WhXEhmtsHuAOI8Lit8ICIBR77Xh+LOL0a8VTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l58AvXQzNdFJAWyDCSPcBDxKBkiDAqRHUgMQxq17+LDS1BNn3dFZng9jgDEBNT1afDqyVYD6/b9aqLHZXivudAKF5Bd8oZHWmkBXe16iScO2uSk9zz6sk1/bsyxOK1cEumLBUjud4jC+fTktUpSXzewsrDEgLIhUOVzC+doKqJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EiJenGMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlvJZUJfw9qRZ7YDYSQevTo9e1lDj2hPlTjpv3C+2D9q8BvD2rY75lehzG9fCZLkT0qsjd1kTHxQcQRU3/sPAGNmHBWMWpjKB8feKbqRoDSDOr3dma/m93+f+RLod+ZwSo88K/wNzQeaZVV2wb62LoyWxN8aK9JzOP2NgKFwSvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqmstP9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EiJenGMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53089C4CEC6;
-	Tue, 15 Oct 2024 12:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqmstP9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665BAC4CEC6;
+	Tue, 15 Oct 2024 12:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993701;
-	bh=bIh0UWv0bgVV1KmR6gN9FveW+VGJhwLvvOlMR1QmUy4=;
+	s=korg; t=1728993704;
+	bh=3ryT81WhXEhmtsHuAOI8Lit8ICIBR77Xh+LOL0a8VTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EiJenGMZ2AtHAaaBSAVzbDDzFgI2AVIIgO9NEfCnKZYhVDr8Ylua4asjJB7tUYi8+
-	 Dukii2jR+qtwHWqGEF3LlcSUWGLj24qM8WZF18jj5VfjQvy8R+A8h3Fb6ScUqT6Mbz
-	 9G1JR7nDPX63UFSxCBncswoLgIGDr4IzBWiy4QlM=
+	b=QqmstP9HBNcLtBoA8rRzGzjgiql7mfzg/MFkKugw5etGo8DOAZ5BSgO0w3o0Bm3Pv
+	 snn+gmGQklm3/wdoMvsTCu0jBRI2JuRXIqs/BMVwpaWnN2BWli/XuAUAYCERbrLLaH
+	 9PgALIyJ3V7LMxWXRQo2303ZQ0PvdzcBOOt0Nugs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 448/691] iommu/vt-d: Always reserve a domain ID for identity setup
-Date: Tue, 15 Oct 2024 13:26:36 +0200
-Message-ID: <20241015112458.129442476@linuxfoundation.org>
+Subject: [PATCH 5.15 483/691] selftests: vDSO: fix vdso_config for powerpc
+Date: Tue, 15 Oct 2024 13:27:11 +0200
+Message-ID: <20241015112459.509825020@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,42 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 2c13012e09190174614fd6901857a1b8c199e17d ]
+[ Upstream commit 7d297c419b08eafa69ce27243ee9bbecab4fcaa4 ]
 
-We will use a global static identity domain. Reserve a static domain ID
-for it.
+Running vdso_test_correctness on powerpc64 gives the following warning:
 
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Link: https://lore.kernel.org/r/20240809055431.36513-4-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+  ~ # ./vdso_test_correctness
+  Warning: failed to find clock_gettime64 in vDSO
+
+This is because vdso_test_correctness was built with VDSO_32BIT defined.
+
+__powerpc__ macro is defined on both powerpc32 and powerpc64 so
+__powerpc64__ needs to be checked first in vdso_config.h
+
+Fixes: 693f5ca08ca0 ("kselftest: Extend vDSO selftest")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 6 +++---
+ tools/testing/selftests/vDSO/vdso_config.h | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 46b2751c3f003..acb870a877ec0 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1846,10 +1846,10 @@ static int iommu_init_domains(struct intel_iommu *iommu)
- 	 * entry for first-level or pass-through translation modes should
- 	 * be programmed with a domain id different from those used for
- 	 * second-level or nested translation. We reserve a domain id for
--	 * this purpose.
-+	 * this purpose. This domain id is also used for identity domain
-+	 * in legacy mode.
- 	 */
--	if (sm_supported(iommu))
--		set_bit(FLPT_DEFAULT_DID, iommu->domain_ids);
-+	set_bit(FLPT_DEFAULT_DID, iommu->domain_ids);
- 
- 	return 0;
- }
+diff --git a/tools/testing/selftests/vDSO/vdso_config.h b/tools/testing/selftests/vDSO/vdso_config.h
+index 6188b16827d1d..446eb9737273b 100644
+--- a/tools/testing/selftests/vDSO/vdso_config.h
++++ b/tools/testing/selftests/vDSO/vdso_config.h
+@@ -18,13 +18,13 @@
+ #elif defined(__aarch64__)
+ #define VDSO_VERSION		3
+ #define VDSO_NAMES		0
+-#elif defined(__powerpc__)
++#elif defined(__powerpc64__)
+ #define VDSO_VERSION		1
+ #define VDSO_NAMES		0
+-#define VDSO_32BIT		1
+-#elif defined(__powerpc64__)
++#elif defined(__powerpc__)
+ #define VDSO_VERSION		1
+ #define VDSO_NAMES		0
++#define VDSO_32BIT		1
+ #elif defined (__s390__)
+ #define VDSO_VERSION		2
+ #define VDSO_NAMES		0
 -- 
 2.43.0
 
