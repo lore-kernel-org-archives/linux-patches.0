@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F43E1AF0CE;
-	Tue, 15 Oct 2024 13:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CB01E282B;
+	Tue, 15 Oct 2024 13:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998425; cv=none; b=qeZb5NJ2i1CpZ1dBJeCewBS/oq3FHBPsVraAoqnvHLuAzM5t9Lr3DoCpiTlw3eZte600Syh8P1Zi9BroszsNqSMEfchq8rJIAh7NjlbanyQaXOFuUyYYbPPvocEm8FxsiRyZq8bEmTKXbnKoL1XkvolHJH+2myxz2ORu+CHxqM0=
+	t=1728998429; cv=none; b=gM1Iv9g2fCuwRzClPYq3fjrZKtue8OUIst1Aoie4TGUFgNw6524n/rS3LvWfyDq7i/ZBEV8liGmPtA9H7P9i4BkNSdYDr3rN0rdNDGnzmdcWIMxGZVMKTI4ZQxsk8UhpLzUKlNuxvKwpuJVYQaBziB1nl57yiQf+8Pbju5x2t98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998425; c=relaxed/simple;
-	bh=Wba/AYzIbHFXp/QbEqKdsrtyUFk4Obd5XIcRn0U3cgI=;
+	s=arc-20240116; t=1728998429; c=relaxed/simple;
+	bh=/HXXJLAOVujbDiZPuYlENCqp+Brtp+VPHuxLo6A50yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FG1l3JCUOGzxiv+hJZ9ZpWb4neiTosEyLeVmltWEYZBO/Mmd6IRCXirYIwEl0dl//TPHCYBO5dNJP7MgJ+1zGFTVWJaVBg/7uGYu/T289O5Fw0699ah7P+joqFOrVaPGCCtefxOukEL5AHF1h63YxFt4jsSS63BXATrbAp2YOJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQfHduDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GBqgu1AUYyRvLm6QQMKm9rwKJarI77woo2vwegoZArxqwyaNrYmVKKSmmGFUVgDer4/SLmTYkrkhVwWzRQ+W7VjJPAVfGvrSPrfRoBd86bAwDkD9G5cLUrIH3NbFonBj7fEr2gBJ+d9lDTE4SUbkLiB5BL2TPqaQpIU9GpxKd+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNTelrgy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQfHduDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AD5C4CECF;
-	Tue, 15 Oct 2024 13:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNTelrgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60932C4CEC6;
+	Tue, 15 Oct 2024 13:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998425;
-	bh=Wba/AYzIbHFXp/QbEqKdsrtyUFk4Obd5XIcRn0U3cgI=;
+	s=korg; t=1728998428;
+	bh=/HXXJLAOVujbDiZPuYlENCqp+Brtp+VPHuxLo6A50yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQfHduDkbX5iHtpyRzrOE9sT+Z7mUhD9cMIaKIZ+YRF5c9JSdZI3+YqLoWr2FEViz
-	 XxnQ7xJqKLeddtl/+HvLcYawV/J3swdHVrUnn4r+NJBaWfyqWnuuLnvnUe1cHKrEtT
-	 q0ghhoqarYBbLrv5r9/1Zjwh/awPQEwsCjjO/J2Q=
+	b=oNTelrgymy0U6QMcRod9mRjkke0rkAFpcPNwbB/XtIEF+2IWMFaze3TJartGbRqor
+	 +p6BHxTRB+hcuX/hCheqxnGDWHskIRTx4kiMCaIXfHAVjJe1ByeM3R4Bx5UTpE8fCC
+	 Be6xt/GyO/9noEstmra3JHdb9139E5VSPfzSVUdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Mete Durlu <meted@linux.ibm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 442/518] tracing: Have saved_cmdlines arrays all in one allocation
-Date: Tue, 15 Oct 2024 14:45:46 +0200
-Message-ID: <20241015123934.065019192@linuxfoundation.org>
+Subject: [PATCH 5.10 443/518] virtio_console: fix misc probe bugs
+Date: Tue, 15 Oct 2024 14:45:47 +0200
+Message-ID: <20241015123934.102771331@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -58,102 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 0b18c852cc6fb8284ac0ab97e3e840974a6a8a64 ]
+[ Upstream commit b9efbe2b8f0177fa97bfab290d60858900aa196b ]
 
-The saved_cmdlines have three arrays for mapping PIDs to COMMs:
+This fixes the following issue discovered by code review:
 
- - map_pid_to_cmdline[]
- - map_cmdline_to_pid[]
- - saved_cmdlines
+after vqs have been created, a buggy device can send an interrupt.
 
-The map_pid_to_cmdline[] is PID_MAX_DEFAULT in size and holds the index
-into the other arrays. The map_cmdline_to_pid[] is a mapping back to the
-full pid as it can be larger than PID_MAX_DEFAULT. And the
-saved_cmdlines[] just holds the COMMs associated to the pids.
+A control vq callback will then try to schedule control_work which has
+not been initialized yet. Similarly for config interrupt.  Further, in
+and out vq callbacks invoke find_port_by_vq which attempts to take
+ports_lock which also has not been initialized.
 
-Currently the map_pid_to_cmdline[] and saved_cmdlines[] are allocated
-together (in reality the saved_cmdlines is just in the memory of the
-rounding of the allocation of the structure as it is always allocated in
-powers of two). The map_cmdline_to_pid[] array is allocated separately.
+To fix, init all locks and work before creating vqs.
 
-Since the rounding to a power of two is rather large (it allows for 8000
-elements in saved_cmdlines), also include the map_cmdline_to_pid[] array.
-(This drops it to 6000 by default, which is still plenty for most use
-cases). This saves even more memory as the map_cmdline_to_pid[] array
-doesn't need to be allocated.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240212174011.068211d9@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20240220140703.182330529@goodmis.org
-
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Tim Chen <tim.c.chen@linux.intel.com>
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Mete Durlu <meted@linux.ibm.com>
-Fixes: 44dc5c41b5b1 ("tracing: Fix wasted memory in saved_cmdlines logic")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Message-ID: <ad982e975a6160ad110c623c016041311ca15b4f.1726511547.git.mst@redhat.com>
+Fixes: 17634ba25544 ("virtio: console: Add a new MULTIPORT feature, support for generic ports")
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/char/virtio_console.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index b16291f4c5731..9f5b9036f001d 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2244,6 +2244,10 @@ struct saved_cmdlines_buffer {
- };
- static struct saved_cmdlines_buffer *savedcmd;
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 6d361420ffe82..1734b4341585c 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -2049,25 +2049,27 @@ static int virtcons_probe(struct virtio_device *vdev)
+ 		multiport = true;
+ 	}
  
-+/* Holds the size of a cmdline and pid element */
-+#define SAVED_CMDLINE_MAP_ELEMENT_SIZE(s)			\
-+	(TASK_COMM_LEN + sizeof((s)->map_cmdline_to_pid[0]))
-+
- static inline char *get_saved_cmdlines(int idx)
- {
- 	return &savedcmd->saved_cmdlines[idx * TASK_COMM_LEN];
-@@ -2258,7 +2262,6 @@ static void free_saved_cmdlines_buffer(struct saved_cmdlines_buffer *s)
- {
- 	int order = get_order(sizeof(*s) + s->cmdline_num * TASK_COMM_LEN);
- 
--	kfree(s->map_cmdline_to_pid);
- 	kmemleak_free(s);
- 	free_pages((unsigned long)s, order);
- }
-@@ -2271,7 +2274,7 @@ static struct saved_cmdlines_buffer *allocate_cmdlines_buffer(unsigned int val)
- 	int order;
- 
- 	/* Figure out how much is needed to hold the given number of cmdlines */
--	orig_size = sizeof(*s) + val * TASK_COMM_LEN;
-+	orig_size = sizeof(*s) + val * SAVED_CMDLINE_MAP_ELEMENT_SIZE(s);
- 	order = get_order(orig_size);
- 	size = 1 << (order + PAGE_SHIFT);
- 	page = alloc_pages(GFP_KERNEL, order);
-@@ -2283,16 +2286,11 @@ static struct saved_cmdlines_buffer *allocate_cmdlines_buffer(unsigned int val)
- 	memset(s, 0, sizeof(*s));
- 
- 	/* Round up to actual allocation */
--	val = (size - sizeof(*s)) / TASK_COMM_LEN;
-+	val = (size - sizeof(*s)) / SAVED_CMDLINE_MAP_ELEMENT_SIZE(s);
- 	s->cmdline_num = val;
- 
--	s->map_cmdline_to_pid = kmalloc_array(val,
--					      sizeof(*s->map_cmdline_to_pid),
--					      GFP_KERNEL);
--	if (!s->map_cmdline_to_pid) {
--		free_saved_cmdlines_buffer(s);
--		return NULL;
+-	err = init_vqs(portdev);
+-	if (err < 0) {
+-		dev_err(&vdev->dev, "Error %d initializing vqs\n", err);
+-		goto free_chrdev;
 -	}
-+	/* Place map_cmdline_to_pid array right after saved_cmdlines */
-+	s->map_cmdline_to_pid = (unsigned *)&s->saved_cmdlines[val * TASK_COMM_LEN];
+-
+ 	spin_lock_init(&portdev->ports_lock);
+ 	INIT_LIST_HEAD(&portdev->ports);
+ 	INIT_LIST_HEAD(&portdev->list);
  
- 	s->cmdline_idx = 0;
- 	memset(&s->map_pid_to_cmdline, NO_CMDLINE_MAP,
+-	virtio_device_ready(portdev->vdev);
+-
+ 	INIT_WORK(&portdev->config_work, &config_work_handler);
+ 	INIT_WORK(&portdev->control_work, &control_work_handler);
+ 
+ 	if (multiport) {
+ 		spin_lock_init(&portdev->c_ivq_lock);
+ 		spin_lock_init(&portdev->c_ovq_lock);
++	}
+ 
++	err = init_vqs(portdev);
++	if (err < 0) {
++		dev_err(&vdev->dev, "Error %d initializing vqs\n", err);
++		goto free_chrdev;
++	}
++
++	virtio_device_ready(portdev->vdev);
++
++	if (multiport) {
+ 		err = fill_queue(portdev->c_ivq, &portdev->c_ivq_lock);
+ 		if (err < 0) {
+ 			dev_err(&vdev->dev,
 -- 
 2.43.0
 
