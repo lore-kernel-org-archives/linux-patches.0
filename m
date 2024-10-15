@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD4C1AF0B2;
-	Tue, 15 Oct 2024 13:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9641C07E5;
+	Tue, 15 Oct 2024 13:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997455; cv=none; b=X7daIpHRoREn6X2g5Huaq4v4a+gwFs97DpHcKaqxsMXfYMWeAEjBH5lVo+71h1vsuQOEpAyeeSr7JOBzqunn8mTdwfQ4O5bxNn7f5Cv6JMURucyHaWoIzyA5Xx8RKQE2yRBxxHrcQmamTQIB9IHzSUGm63S8vhkNTatwaprqTQk=
+	t=1728997458; cv=none; b=NtxpKSl53z/VotJUHselegRy1icWDp+c9TEcSxCE56KkjXlGSl5OyPbnM3hN59VXrbCv8slKvlihTmHe3y+aF/tyV0SA6ZvaeYqqpZttJxy4b7dY3GYNAJamhOG5oqFc8lyDIEtx71UPFCdREupxiFINrtLJSdAZfeVX/8snfTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997455; c=relaxed/simple;
-	bh=SWYUrmzJccAf2e9WnDpcGni4JBzIgOuenqAbjyMiFGw=;
+	s=arc-20240116; t=1728997458; c=relaxed/simple;
+	bh=guQJ1OnY2I4A0w/KNvx4cgdzGiBRYB7JOnqPrthPqKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmiKQ+v+zphKNUhRXvqkYKSay3qBkXozE8XaRHQO2vqRihHWrkfykMBqa6NdXAZC0r8OWcz+U3AJPedLTo1NP+jaWCfJTxweY+zaX0uqfHxaNEy9oeCSRf1uPSHBJTaL0362c4KCOiWWpM1jpi3w6V3UUA31xCy1YPP0JmlIuEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezgv187f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XPZoS+1cX2IjgcdRq3STr9pl/R9D9xClgtUYVX4ljr/L48BduXUQjXalJBiBuiXtQmVd9dkAXS6w5nyo4JbS8bIryovBOF9M/vE35Dv8MTa1H2dSMEmnxR0AuKKtbmLrpHy8A4tuC2oQvqaCYaTadVCCkeAKABovdQK/QAQLW68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmzlfClM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezgv187f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880D9C4CEC6;
-	Tue, 15 Oct 2024 13:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmzlfClM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC430C4CEC6;
+	Tue, 15 Oct 2024 13:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997455;
-	bh=SWYUrmzJccAf2e9WnDpcGni4JBzIgOuenqAbjyMiFGw=;
+	s=korg; t=1728997458;
+	bh=guQJ1OnY2I4A0w/KNvx4cgdzGiBRYB7JOnqPrthPqKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezgv187fbtfVyH84E5FMs76E3vvX8m2M7kx8Blq8n6/THO619ncFvZ5DZp77hec1n
-	 ADQi69FVozHrTtLu22f4CdPfRsy/h5sx2+Th1Kmp0ahpciP0U0FLCUCaYcXp4SL8OR
-	 8hXKtKB7iATRawTUTlSaPYTqh0HJPGzAJl3Puwo8=
+	b=rmzlfClMt/hjX6vnCgVB6gNPTQ6V2KlLJdJpTeQZ/RYJHFVvFcNH22GHVmfw3H843
+	 qLBJWHP5NjmyHnJojeYZldBavlWf+oiv00WnFetcHkFqA1BFqOhkFxDzL7FmYj9ztd
+	 DXV2jPgwwK2lNc0GheROJXk2LpLE/dznLzzcWjEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonggil Song <yonggil.song@samsung.com>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/518] f2fs: fix typo
-Date: Tue, 15 Oct 2024 14:41:31 +0200
-Message-ID: <20241015123924.203738505@linuxfoundation.org>
+Subject: [PATCH 5.10 188/518] f2fs: fix to update i_ctime in __f2fs_setxattr()
+Date: Tue, 15 Oct 2024 14:41:32 +0200
+Message-ID: <20241015123924.241381074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,34 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonggil Song <yonggil.song@samsung.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d382e36970ecf8242921400db2afde15fb6ed49e ]
+[ Upstream commit 8874ad7dae8d91d24cc87c545c0073b3b2da5688 ]
 
-Fix typo in f2fs.h
-Detected by Jaeyoon Choi
+generic/728       - output mismatch (see /media/fstests/results//generic/728.out.bad)
+    --- tests/generic/728.out	2023-07-19 07:10:48.362711407 +0000
+    +++ /media/fstests/results//generic/728.out.bad	2023-07-19 08:39:57.000000000 +0000
+     QA output created by 728
+    +Expected ctime to change after setxattr.
+    +Expected ctime to change after removexattr.
+     Silence is golden
+    ...
+    (Run 'diff -u /media/fstests/tests/generic/728.out /media/fstests/results//generic/728.out.bad'  to see the entire diff)
+generic/729        1s
 
-Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
+It needs to update i_ctime after {set,remove}xattr, fix it.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/xattr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 4380df9b2d70a..a858a1f7f53d0 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -249,7 +249,7 @@ enum {
- 	ORPHAN_INO,		/* for orphan ino list */
- 	APPEND_INO,		/* for append ino list */
- 	UPDATE_INO,		/* for update ino list */
--	TRANS_DIR_INO,		/* for trasactions dir ino list */
-+	TRANS_DIR_INO,		/* for transactions dir ino list */
- 	FLUSH_INO,		/* for multiple device flushing */
- 	MAX_INO_ENTRY,		/* max. list */
- };
+diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
+index 4271bcc2738d1..a3a11678d414d 100644
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -756,17 +756,17 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+ 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
+ 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
+ 		f2fs_set_encrypted_inode(inode);
+-	f2fs_mark_inode_dirty_sync(inode, true);
+ 	if (!error && S_ISDIR(inode->i_mode))
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
+ 
+ same:
+ 	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
+ 		inode->i_mode = F2FS_I(inode)->i_acl_mode;
+-		inode->i_ctime = current_time(inode);
+ 		clear_inode_flag(inode, FI_ACL_MODE);
+ 	}
+ 
++	inode->i_ctime = current_time(inode);
++	f2fs_mark_inode_dirty_sync(inode, true);
+ exit:
+ 	kfree(base_addr);
+ 	return error;
 -- 
 2.43.0
 
