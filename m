@@ -1,56 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0212D1C07E0;
-	Tue, 15 Oct 2024 13:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E941C07DB;
+	Tue, 15 Oct 2024 13:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997362; cv=none; b=K6Hj1Ws8Sx0JnUG88t6qsCVHWvEYKYxqZhh9A9qtsD9oSWOB/4MXvxoMHEkj1D9pHGVMx/igwnp6dEDrM5JRu4JxIfuI2sM/BRvG66erqUjOcDH2+M/7HMAyAr9oT4KUIGrjDxzGUb1crUpkpi+mWuEuEVQCcmydkpy3R16b/p8=
+	t=1728997365; cv=none; b=RKIw3gOSf+g11kgNgEeui+ABKhoGzTDHam33Ofabo6qKD1t0t1QudN8P7VS9a6SNzKtxJjxR2W54fJpcDq9FSnB0R4i+IGsb9xqHJGt4dyf62kH3nwyF6YtBfJ/a1ww3m9oz/YXXbjSs0IEaopP9DG94kiSfjI+ue5C8vxae6G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997362; c=relaxed/simple;
-	bh=m/2a8h5gakcSLogsDAlRET9+x12ynAbxaUFztLxUqtg=;
+	s=arc-20240116; t=1728997365; c=relaxed/simple;
+	bh=NpUtAe26iRbmMOul+QNeQF7xgIgfkjYHQ2FIOKFX8h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEG5w6VyXnPDwhAsUzKal7+EKQJguHODsh3R669Iuo1GdqrYgLF3UPWuUgVgx6QpCFYP569SXoGJC5nquC1va5fkUBJ50js6HC7A1X2InnAagqHbXfLNrISHrnNUs6Y9OGyaKZ8dWKv/QUVee5w9WFiGAxFtUSX2qhRCM/5NGJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVZSUdrb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gz2KSiR71wQ4U/VbJEUj0EKM/uO28/H/pkTmZV1FeqW+r8r604UlOa26knRdP/s8VjRxdNxcVxLts/nAmKQmHa305YnZBGg9RmcmdUSohXFjRmZmAGXuZXPp9iPN5WEv0Lpz/6wmQBOaqGqdhzUiM9vtFEX0ti9HEWlq6f9KTCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTRB16Wt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVZSUdrb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED43BC4CEC6;
-	Tue, 15 Oct 2024 13:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTRB16Wt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52788C4CEC6;
+	Tue, 15 Oct 2024 13:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997361;
-	bh=m/2a8h5gakcSLogsDAlRET9+x12ynAbxaUFztLxUqtg=;
+	s=korg; t=1728997364;
+	bh=NpUtAe26iRbmMOul+QNeQF7xgIgfkjYHQ2FIOKFX8h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVZSUdrbQ4DGv/ecZmwJmkRkVdZFdOu6P7kwC5vCpzcyOIcR4QryY9i0HAbnzCYOr
-	 BAN9o8PRHEeQ9MspcNkWcnYwSRjltPmpnjFNGhAgMugumV1UA58hGbqq6q8ehBJh7K
-	 pm4mCSibgigAsFZD94jh5e9aU/Ipncq/aARRloOA=
+	b=eTRB16WtZiWCwIApAixNiuLmJXEhVjse2ZEQH9iJyfmeR26yGgVY+MYJS0P2nfemu
+	 SEKdhtPQqTq6DQSnkwB4tQ5u0m8npMoaJl59TdGVx0CjLYeWMLs1fYCg9wNGE4N7A8
+	 w1CkPTYowEeIVakdM5yYiSYnikIgshQaqm0FVlMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Chaitanya S Prakash <chaitanyas.prakash@arm.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	David Ahern <dsa@cumulusnetworks.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Junhao He <hejunhao3@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 160/518] perf time-utils: Fix 32-bit nsec parsing
-Date: Tue, 15 Oct 2024 14:41:04 +0200
-Message-ID: <20241015123923.176610442@linuxfoundation.org>
+Subject: [PATCH 5.10 134/518] xen/swiotlb: add alignment check for dma buffers
+Date: Tue, 15 Oct 2024 14:40:38 +0200
+Message-ID: <20241015123922.166861309@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -69,68 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 38e2648a81204c9fc5b4c87a8ffce93a6ed91b65 ]
+[ Upstream commit 9f40ec84a7976d95c34e7cc070939deb103652b0 ]
 
-The "time utils" test fails in 32-bit builds:
-  ...
-  parse_nsec_time("18446744073.709551615")
-  Failed. ptime 4294967295709551615 expected 18446744073709551615
-  ...
+When checking a memory buffer to be consecutive in machine memory,
+the alignment needs to be checked, too. Failing to do so might result
+in DMA memory not being aligned according to its requested size,
+leading to error messages like:
 
-Switch strtoul to strtoull as an unsigned long in 32-bit build isn't
-64-bits.
+  4xxx 0000:2b:00.0: enabling device (0140 -> 0142)
+  4xxx 0000:2b:00.0: Ring address not aligned
+  4xxx 0000:2b:00.0: Failed to initialise service qat_crypto
+  4xxx 0000:2b:00.0: Resetting device qat_dev0
+  4xxx: probe of 0000:2b:00.0 failed with error -14
 
-Fixes: c284d669a20d408b ("perf tools: Move parse_nsec_time to time-utils.c")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Chaitanya S Prakash <chaitanyas.prakash@arm.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Junhao He <hejunhao3@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Yang Jihong <yangjihong@bytedance.com>
-Link: https://lore.kernel.org/r/20240831070415.506194-3-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 9435cce87950 ("xen/swiotlb: Add support for 64KB page granularity")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/time-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/xen/swiotlb-xen.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/util/time-utils.c b/tools/perf/util/time-utils.c
-index 3024439216816..1b91ccd4d5234 100644
---- a/tools/perf/util/time-utils.c
-+++ b/tools/perf/util/time-utils.c
-@@ -20,7 +20,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
- 	u64 time_sec, time_nsec;
- 	char *end;
+diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
+index ad3ee4857e154..000d02ea4f7d8 100644
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -91,9 +91,15 @@ static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
+ {
+ 	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
+ 	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
++	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
  
--	time_sec = strtoul(str, &end, 10);
-+	time_sec = strtoull(str, &end, 10);
- 	if (*end != '.' && *end != '\0')
- 		return -1;
+ 	next_bfn = pfn_to_bfn(xen_pfn);
  
-@@ -38,7 +38,7 @@ int parse_nsec_time(const char *str, u64 *ptime)
- 		for (i = strlen(nsec_buf); i < 9; i++)
- 			nsec_buf[i] = '0';
- 
--		time_nsec = strtoul(nsec_buf, &end, 10);
-+		time_nsec = strtoull(nsec_buf, &end, 10);
- 		if (*end != '\0')
- 			return -1;
- 	} else
++	/* If buffer is physically aligned, ensure DMA alignment. */
++	if (IS_ALIGNED(p, algn) &&
++	    !IS_ALIGNED((phys_addr_t)next_bfn << XEN_PAGE_SHIFT, algn))
++		return 1;
++
+ 	for (i = 1; i < nr_pages; i++)
+ 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
+ 			return 1;
 -- 
 2.43.0
 
