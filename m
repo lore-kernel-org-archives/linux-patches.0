@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68FB1EABD2;
-	Tue, 15 Oct 2024 12:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4E21F1303;
+	Tue, 15 Oct 2024 12:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994223; cv=none; b=cy9qR+/nIv8OSweoYo+gfZJl2HEh0Dy319g7kG1eKxMGn6yPG/cUkX+OG8sLLep6rqXZFI15aogYu9NTv0WF4lOnsjYQZAXH6oxI2vCHP7Cl7nhp9xEsuogELxOs45fAGq+3PEYaaJVtWbd5IrmTJB0b7BKs0Mf/NPTw/frjLpA=
+	t=1728994227; cv=none; b=ST/jquTmDHU/VJ4z23TdJeYI2aOphOxk9jD10hyjS81uidQFRV+6We0zyVP4uxFBUwBqQu8tWfV1USBfK0v389RMpnFGmpyc7A7FGbcNktm4NnG0UzcrCALEtregje2TWOcHlTXEb0oWD97AUNHrvcW2eCzU9jka2x2fa/UrEkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994223; c=relaxed/simple;
-	bh=UPyDHCAxr+IknTWct2bsfTYSKcZQ+DocDQAnEQAF4Aw=;
+	s=arc-20240116; t=1728994227; c=relaxed/simple;
+	bh=3R5CURJ8YupyUx0fu9o6aMTiqvFUb4C+vGKCpbAflKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mW0x3aV//J6xn7Tg/eJheWPzoaleY7MITj3PMbtXpm4wOQh0BSX2aGuzreuDr8Ir3NQeErspknyb/mM0ujy/JNfV1AMi08lEwhxpaNasSh7iRfO09Q1UQ1osMhD4LjgncqPh/K7xgOfENorqynA5orX9NBgYbL5CNYfMyFIuaU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVE7W+jJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQXdgirwe/NqmDDdiAFbq7GVYeAsRKZcwx+d5LitfTshdqrvAsWbGHr0qjEIEe5e734XaYepQai6VASju4lMBpQMzcG1C2Cj2v7NvIYKbvp0kbW36rWuIBCUKJgmcMVrAuf2U3ZW0iQBTk+fvowp+RcOpJ5IsQNcaFx4Hlz6JC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kb8H7UnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVE7W+jJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4790AC4CECE;
-	Tue, 15 Oct 2024 12:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kb8H7UnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCD7C4CECE;
+	Tue, 15 Oct 2024 12:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994223;
-	bh=UPyDHCAxr+IknTWct2bsfTYSKcZQ+DocDQAnEQAF4Aw=;
+	s=korg; t=1728994227;
+	bh=3R5CURJ8YupyUx0fu9o6aMTiqvFUb4C+vGKCpbAflKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVE7W+jJ3rNYVjQ1kYp7ndiZTJZe5mBKv5Elq1kjBlQo+x0CzRAEdivmAtKeslURp
-	 ZzZ/YSVJJ24euAxtuZyLfciWQMX0LZAhX/gXaVlkINBkeXvVwqgVtpE3r7TZy19ext
-	 SA0hJ4DDYxPIle6Yg+grti4HN9yeoQ2KbnOC1zs4=
+	b=Kb8H7UnKo0kPgiOmp3JbbBlRoXUtaw2W/i4n420YewH0Z8B05AeeUCRApTf5UajhQ
+	 XZw9c4UR6WknB2jzRm6V1NpO/sIUkADUnJH4ueyTxFPudy1MhZiHWaY5hf85xD7HB3
+	 VYxcNZlW7arexabYGQDnc3s1gGQL77/BhndGzvt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 642/691] gpio: aspeed: Use devm_clk api to manage clock source
-Date: Tue, 15 Oct 2024 13:29:50 +0200
-Message-ID: <20241015112505.808010400@linuxfoundation.org>
+Subject: [PATCH 5.15 643/691] ice: Fix netif_is_ice() in Safe Mode
+Date: Tue, 15 Oct 2024 13:29:51 +0200
+Message-ID: <20241015112505.846840995@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,35 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit a6191a3d18119184237f4ee600039081ad992320 ]
+[ Upstream commit 8e60dbcbaaa177dacef55a61501790e201bf8c88 ]
 
-Replace of_clk_get with devm_clk_get_enabled to manage the clock source.
+netif_is_ice() works by checking the pointer to netdev ops. However, it
+only checks for the default ice_netdev_ops, not ice_netdev_safe_mode_ops,
+so in Safe Mode it always returns false, which is unintuitive. While it
+doesn't look like netif_is_ice() is currently being called anywhere in Safe
+Mode, this could change and potentially lead to unexpected behaviour.
 
-Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20241008081450.1490955-3-billy_tsai@aspeedtech.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: df006dd4b1dc ("ice: Add initial support framework for LAG")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index 3cfb2c6103c6b..21deb228c7d7b 100644
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -1156,7 +1156,7 @@ static int __init aspeed_gpio_probe(struct platform_device *pdev)
- 	if (!gpio_id)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 3cc344d5228b6..329bf24a3f0e5 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -55,7 +55,8 @@ static void ice_vsi_release_all(struct ice_pf *pf);
  
--	gpio->clk = of_clk_get(pdev->dev.of_node, 0);
-+	gpio->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(gpio->clk)) {
- 		dev_warn(&pdev->dev,
- 				"Failed to get clock from devicetree, debouncing disabled\n");
+ bool netif_is_ice(struct net_device *dev)
+ {
+-	return dev && (dev->netdev_ops == &ice_netdev_ops);
++	return dev && (dev->netdev_ops == &ice_netdev_ops ||
++		       dev->netdev_ops == &ice_netdev_safe_mode_ops);
+ }
+ 
+ /**
 -- 
 2.43.0
 
