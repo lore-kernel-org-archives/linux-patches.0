@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8DC1D90CD;
-	Tue, 15 Oct 2024 11:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526421E764A;
+	Tue, 15 Oct 2024 11:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993123; cv=none; b=kZneQvg+zid50BRQ4sRPzl4anY34mQvQU3gT95QtWsjPdLHHCdOKH/sdUY/uwhNtViUOMIWl4m5k4JrjxU6epzjlk9VeJTcAw1LGzHZQOqE7ATri/T11tSzy+YI1EejOee2xaiLXHmsBCWMVVZ9BlWDbSMoSqwqhtzotzXXFvkw=
+	t=1728993126; cv=none; b=n6r7blkuI/A6wjEHo+CyVeJRbo1G9eMAnTz/SOeOSkVukl/Sv22ZiNlOS8PamRFE/Nnli4nZGmxn2khZfY+34jWOVBOuODvP8JiLCIW1Jmw14r2KDBDtIuryZfX7Kxonjyj5AYgKhsJPxu+QTo4QgvpSrGnScO2ofU2Ypsc1/pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993123; c=relaxed/simple;
-	bh=iE3W9ud+u/z26N6ewCqEeW5VO0c33ynbNc2/JOJ2fh4=;
+	s=arc-20240116; t=1728993126; c=relaxed/simple;
+	bh=s5bWYtySKIoJtuUoEVmyEhxrFUyGAPkT+T7lDIKTH7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJaA8BSHUdnOTyDl8m5YAiOPn2KJZT6iGxtHhPwu67y6CL9RVOXW0gqi7MspG0kfOAdimHh1Hr8+iTqCH7bPUO/dNY9oG7X+/S9uV/meAiI+DaXmyYlCz7YDRzlqJvb0Tl0PqIdMLjFndgBaislog/PQ+J2Fmw2k3KoGzsuGIu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4ZgZLF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMZSExXXvYGxXWhxKOFy/VJZhAiCc7dP3OXWvxIcGHk8Q4T8Oj57ync6tdLylu16HbQPMtXeoiadMZP7GrqzxRWMrEFXBdKF2ucWcmJy55rwx2X1SPfAKrmioYfsqWKuLi84sFQVH5RCABp08zOikkm8mbkynTy0irHqJnMHm5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zy35CDo6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4ZgZLF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DBAC4CECE;
-	Tue, 15 Oct 2024 11:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zy35CDo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67FCC4CECF;
+	Tue, 15 Oct 2024 11:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993122;
-	bh=iE3W9ud+u/z26N6ewCqEeW5VO0c33ynbNc2/JOJ2fh4=;
+	s=korg; t=1728993126;
+	bh=s5bWYtySKIoJtuUoEVmyEhxrFUyGAPkT+T7lDIKTH7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4ZgZLF4Ut0cjpsuMgvdo1R9WHARYSSVKnuRbInLxdc9/dcu1qOdPUfVk1uFrRxHH
-	 cNNbKQleO5zQLYOtuyIDNYik0Ws4LfToR5GGp1vGFJktRjfwlQj3gxAP9EMVYPYyvh
-	 yF2BxfUeH0qm7MC/g6auUkrstSj1j9K1y+catVy8=
+	b=Zy35CDo6OQJYQFdQN0ColaRBFnej7pw38wU9oPvVRFoH481SWPEj/plnL47/Q5xCm
+	 NWFUKVuGTDmYcqT+WsOibCzb9V4lfH7efD9YTM47JCyElTToTH1xeMjz7FFxc+H2IA
+	 XNs4lnGF0LoX9cGQdJKUtncXiQPRDExdxohRxA0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Hancock <robert.hancock@calian.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 286/691] net: axienet: add coalesce timer ethtool configuration
-Date: Tue, 15 Oct 2024 13:23:54 +0200
-Message-ID: <20241015112451.697391931@linuxfoundation.org>
+Subject: [PATCH 5.15 287/691] net: axienet: Be more careful about updating tx_bd_tail
+Date: Tue, 15 Oct 2024 13:23:55 +0200
+Message-ID: <20241015112451.737170912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,175 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit 0b79b8dc97b9df4f873f63161e3050bafc4c4237 ]
+[ Upstream commit f0cf4000f5867ec4325d19d32bd83cf583065667 ]
 
-Add the ability to configure the RX/TX coalesce timer with ethtool.
-Change default setting to scale with the clock rate rather than being a
-fixed number of clock cycles.
+The axienet_start_xmit function was updating the tx_bd_tail variable
+multiple times, with potential rollbacks on error or invalid
+intermediate positions, even though this variable is also used in the
+TX completion path. Use READ_ONCE where this variable is read and
+WRITE_ONCE where it is written to make this update more atomic, and
+move the write before the MMIO write to start the transfer, so it is
+protected by that implicit write barrier.
 
 Signed-off-by: Robert Hancock <robert.hancock@calian.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 5a6caa2cfabb ("net: xilinx: axienet: Fix packet counting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  | 10 ++--
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 51 +++++++++++++++----
- 2 files changed, 47 insertions(+), 14 deletions(-)
+ .../net/ethernet/xilinx/xilinx_axienet_main.c | 26 +++++++++++--------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index d2c17def082b4..8b3b414b00113 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -119,11 +119,11 @@
- #define XAXIDMA_IRQ_ERROR_MASK		0x00004000 /* Error interrupt */
- #define XAXIDMA_IRQ_ALL_MASK		0x00007000 /* All interrupts */
- 
--/* Default TX/RX Threshold and waitbound values for SGDMA mode */
-+/* Default TX/RX Threshold and delay timer values for SGDMA mode */
- #define XAXIDMA_DFT_TX_THRESHOLD	24
--#define XAXIDMA_DFT_TX_WAITBOUND	254
-+#define XAXIDMA_DFT_TX_USEC		50
- #define XAXIDMA_DFT_RX_THRESHOLD	1
--#define XAXIDMA_DFT_RX_WAITBOUND	254
-+#define XAXIDMA_DFT_RX_USEC		50
- 
- #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
-@@ -425,7 +425,9 @@ struct axidma_bd {
-  * @csum_offload_on_tx_path:	Stores the checksum selection on TX side.
-  * @csum_offload_on_rx_path:	Stores the checksum selection on RX side.
-  * @coalesce_count_rx:	Store the irq coalesce on RX side.
-+ * @coalesce_usec_rx:	IRQ coalesce delay for RX
-  * @coalesce_count_tx:	Store the irq coalesce on TX side.
-+ * @coalesce_usec_tx:	IRQ coalesce delay for TX
-  */
- struct axienet_local {
- 	struct net_device *ndev;
-@@ -481,7 +483,9 @@ struct axienet_local {
- 	int csum_offload_on_rx_path;
- 
- 	u32 coalesce_count_rx;
-+	u32 coalesce_usec_rx;
- 	u32 coalesce_count_tx;
-+	u32 coalesce_usec_tx;
- };
- 
- /**
 diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index a33e860861d55..fd5f7ac7f4a6b 100644
+index fd5f7ac7f4a6b..bcecf4b7308c1 100644
 --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
 +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -33,7 +33,7 @@
- #include <linux/of_irq.h>
- #include <linux/of_address.h>
- #include <linux/skbuff.h>
--#include <linux/spinlock.h>
-+#include <linux/math64.h>
- #include <linux/phy.h>
- #include <linux/mii.h>
- #include <linux/ethtool.h>
-@@ -226,6 +226,28 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 			  lp->rx_bd_p);
- }
+@@ -747,7 +747,8 @@ static inline int axienet_check_tx_bd_space(struct axienet_local *lp,
  
-+/**
-+ * axienet_usec_to_timer - Calculate IRQ delay timer value
-+ * @lp:		Pointer to the axienet_local structure
-+ * @coalesce_usec: Microseconds to convert into timer value
-+ */
-+static u32 axienet_usec_to_timer(struct axienet_local *lp, u32 coalesce_usec)
-+{
-+	u32 result;
-+	u64 clk_rate = 125000000; /* arbitrary guess if no clock rate set */
-+
-+	if (lp->axi_clk)
-+		clk_rate = clk_get_rate(lp->axi_clk);
-+
-+	/* 1 Timeout Interval = 125 * (clock period of SG clock) */
-+	result = DIV64_U64_ROUND_CLOSEST((u64)coalesce_usec * clk_rate,
-+					 (u64)125000000);
-+	if (result > 255)
-+		result = 255;
-+
-+	return result;
-+}
-+
- /**
-  * axienet_dma_start - Set up DMA registers and start DMA operation
-  * @lp:		Pointer to the axienet_local structure
-@@ -241,7 +263,8 @@ static void axienet_dma_start(struct axienet_local *lp)
- 	 * the first RX packet. Otherwise leave at 0 to disable delay interrupt.
- 	 */
- 	if (lp->coalesce_count_rx > 1)
--		lp->rx_dma_cr |= (XAXIDMA_DFT_RX_WAITBOUND << XAXIDMA_DELAY_SHIFT) |
-+		lp->rx_dma_cr |= (axienet_usec_to_timer(lp, lp->coalesce_usec_rx)
-+					<< XAXIDMA_DELAY_SHIFT) |
- 				 XAXIDMA_IRQ_DELAY_MASK;
- 	axienet_dma_out32(lp, XAXIDMA_RX_CR_OFFSET, lp->rx_dma_cr);
- 
-@@ -252,7 +275,8 @@ static void axienet_dma_start(struct axienet_local *lp)
- 	 * the first TX packet. Otherwise leave at 0 to disable delay interrupt.
- 	 */
- 	if (lp->coalesce_count_tx > 1)
--		tx_cr |= (XAXIDMA_DFT_TX_WAITBOUND << XAXIDMA_DELAY_SHIFT) |
-+		tx_cr |= (axienet_usec_to_timer(lp, lp->coalesce_usec_tx)
-+				<< XAXIDMA_DELAY_SHIFT) |
- 			 XAXIDMA_IRQ_DELAY_MASK;
- 	axienet_dma_out32(lp, XAXIDMA_TX_CR_OFFSET, tx_cr);
- 
-@@ -1464,14 +1488,12 @@ axienet_ethtools_get_coalesce(struct net_device *ndev,
- 			      struct kernel_ethtool_coalesce *kernel_coal,
- 			      struct netlink_ext_ack *extack)
- {
--	u32 regval = 0;
+ 	/* Ensure we see all descriptor updates from device or TX IRQ path */
+ 	rmb();
+-	cur_p = &lp->tx_bd_v[(lp->tx_bd_tail + num_frag) % lp->tx_bd_num];
++	cur_p = &lp->tx_bd_v[(READ_ONCE(lp->tx_bd_tail) + num_frag) %
++			     lp->tx_bd_num];
+ 	if (cur_p->cntrl)
+ 		return NETDEV_TX_BUSY;
+ 	return 0;
+@@ -808,12 +809,15 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 	u32 csum_index_off;
+ 	skb_frag_t *frag;
+ 	dma_addr_t tail_p, phys;
++	u32 orig_tail_ptr, new_tail_ptr;
  	struct axienet_local *lp = netdev_priv(ndev);
--	regval = axienet_dma_in32(lp, XAXIDMA_RX_CR_OFFSET);
--	ecoalesce->rx_max_coalesced_frames = (regval & XAXIDMA_COALESCE_MASK)
--					     >> XAXIDMA_COALESCE_SHIFT;
--	regval = axienet_dma_in32(lp, XAXIDMA_TX_CR_OFFSET);
--	ecoalesce->tx_max_coalesced_frames = (regval & XAXIDMA_COALESCE_MASK)
--					     >> XAXIDMA_COALESCE_SHIFT;
+ 	struct axidma_bd *cur_p;
+-	u32 orig_tail_ptr = lp->tx_bd_tail;
 +
-+	ecoalesce->rx_max_coalesced_frames = lp->coalesce_count_rx;
-+	ecoalesce->rx_coalesce_usecs = lp->coalesce_usec_rx;
-+	ecoalesce->tx_max_coalesced_frames = lp->coalesce_count_tx;
-+	ecoalesce->tx_coalesce_usecs = lp->coalesce_usec_tx;
- 	return 0;
- }
++	orig_tail_ptr = lp->tx_bd_tail;
++	new_tail_ptr = orig_tail_ptr;
  
-@@ -1504,8 +1526,12 @@ axienet_ethtools_set_coalesce(struct net_device *ndev,
+ 	num_frag = skb_shinfo(skb)->nr_frags;
+-	cur_p = &lp->tx_bd_v[lp->tx_bd_tail];
++	cur_p = &lp->tx_bd_v[orig_tail_ptr];
  
- 	if (ecoalesce->rx_max_coalesced_frames)
- 		lp->coalesce_count_rx = ecoalesce->rx_max_coalesced_frames;
-+	if (ecoalesce->rx_coalesce_usecs)
-+		lp->coalesce_usec_rx = ecoalesce->rx_coalesce_usecs;
- 	if (ecoalesce->tx_max_coalesced_frames)
- 		lp->coalesce_count_tx = ecoalesce->tx_max_coalesced_frames;
-+	if (ecoalesce->tx_coalesce_usecs)
-+		lp->coalesce_usec_tx = ecoalesce->tx_coalesce_usecs;
+ 	if (axienet_check_tx_bd_space(lp, num_frag + 1)) {
+ 		/* Should not happen as last start_xmit call should have
+@@ -853,9 +857,9 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 	cur_p->cntrl = skb_headlen(skb) | XAXIDMA_BD_CTRL_TXSOF_MASK;
  
- 	return 0;
- }
-@@ -1536,7 +1562,8 @@ static int axienet_ethtools_nway_reset(struct net_device *dev)
- }
+ 	for (ii = 0; ii < num_frag; ii++) {
+-		if (++lp->tx_bd_tail >= lp->tx_bd_num)
+-			lp->tx_bd_tail = 0;
+-		cur_p = &lp->tx_bd_v[lp->tx_bd_tail];
++		if (++new_tail_ptr >= lp->tx_bd_num)
++			new_tail_ptr = 0;
++		cur_p = &lp->tx_bd_v[new_tail_ptr];
+ 		frag = &skb_shinfo(skb)->frags[ii];
+ 		phys = dma_map_single(lp->dev,
+ 				      skb_frag_address(frag),
+@@ -867,8 +871,6 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 			ndev->stats.tx_dropped++;
+ 			axienet_free_tx_chain(ndev, orig_tail_ptr, ii + 1,
+ 					      NULL);
+-			lp->tx_bd_tail = orig_tail_ptr;
+-
+ 			return NETDEV_TX_OK;
+ 		}
+ 		desc_set_phys_addr(lp, phys, cur_p);
+@@ -878,11 +880,13 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 	cur_p->cntrl |= XAXIDMA_BD_CTRL_TXEOF_MASK;
+ 	cur_p->skb = skb;
  
- static const struct ethtool_ops axienet_ethtool_ops = {
--	.supported_coalesce_params = ETHTOOL_COALESCE_MAX_FRAMES,
-+	.supported_coalesce_params = ETHTOOL_COALESCE_MAX_FRAMES |
-+				     ETHTOOL_COALESCE_USECS,
- 	.get_drvinfo    = axienet_ethtools_get_drvinfo,
- 	.get_regs_len   = axienet_ethtools_get_regs_len,
- 	.get_regs       = axienet_ethtools_get_regs,
-@@ -2091,7 +2118,9 @@ static int axienet_probe(struct platform_device *pdev)
- 	}
+-	tail_p = lp->tx_bd_p + sizeof(*lp->tx_bd_v) * lp->tx_bd_tail;
++	tail_p = lp->tx_bd_p + sizeof(*lp->tx_bd_v) * new_tail_ptr;
++	if (++new_tail_ptr >= lp->tx_bd_num)
++		new_tail_ptr = 0;
++	WRITE_ONCE(lp->tx_bd_tail, new_tail_ptr);
++
+ 	/* Start the transfer */
+ 	axienet_dma_out_addr(lp, XAXIDMA_TX_TDESC_OFFSET, tail_p);
+-	if (++lp->tx_bd_tail >= lp->tx_bd_num)
+-		lp->tx_bd_tail = 0;
  
- 	lp->coalesce_count_rx = XAXIDMA_DFT_RX_THRESHOLD;
-+	lp->coalesce_usec_rx = XAXIDMA_DFT_RX_USEC;
- 	lp->coalesce_count_tx = XAXIDMA_DFT_TX_THRESHOLD;
-+	lp->coalesce_usec_tx = XAXIDMA_DFT_TX_USEC;
- 
- 	ret = axienet_mdio_setup(lp);
- 	if (ret)
+ 	/* Stop queue if next transmit may not have space */
+ 	if (axienet_check_tx_bd_space(lp, MAX_SKB_FRAGS + 1)) {
 -- 
 2.43.0
 
