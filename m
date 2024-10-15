@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC471AF0AD;
-	Tue, 15 Oct 2024 12:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98F71C07D9;
+	Tue, 15 Oct 2024 12:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996875; cv=none; b=g9KAqyVflBdXt1Er6cFkGAZ4JrePPwnpX/A6doN5ofGfHkJa4eZUqwqYLviSdgKtznkbwrnkv9smz9qrT5v8dGCqLCjIeiXb2w/WEwis+gvLSG5vGqPF9R/Y+Eakn8UGlFTWSDtc2JXhwSeK1cwGWks7yRruafd24rmdakV3neo=
+	t=1728996879; cv=none; b=PMM2XQ0g8j5ws7H8ngqeH+YtJ9LBw5Wh+6JDcxgM/wih0tK7wETGN8fTJ9hxd1w60rkwxfLYDXF9NHsVCdKDNrwCJIYsceIh8/LTt4FfDbnKuHg0dMC8vJ5ubbvk5OVuc8AsSphiH3F+A8lZali6+G39wcZSmTDtXGptqM80fwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996875; c=relaxed/simple;
-	bh=sHHAf61EY0euac4ymZO70Zd1EBo2SgmKftgYK5To2RQ=;
+	s=arc-20240116; t=1728996879; c=relaxed/simple;
+	bh=20xDrth4ul4rwQwi6MeC2q8lrZIWw1A3OFIHxclMR6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnL2XH57ufw79Tj4K6UNkohXgQbWuJG9ycOutB5RcduydpGz6bjDrfHM372cKJ+7rC512S9LK8SZzKSfuT64wb12A/v6dY2mMHYklj1WAZVR2hjwpPXf7Y1ebXTFaUGDDEDnTTT/HkfGq8VXkxSrRxl61K9ixfOn/Fdf5oOUNqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExhXXw4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEMunRNr3abpU1u9n30Ge+oC3MbREFYrAgc+NSG3A6MYHvcP4uH+Q8kHl6Or1nEeV129gW4TcOlV/i/GBf6QlfApm5JFYYKJfFQqiqYodV1MQaZuZIbSqREMyZlyOs31KFsOSg/XMHG5DOE8Vyr5ULr1yCIOF36O6GaDQZzmyAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yogQVdnD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExhXXw4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11C3C4CEC6;
-	Tue, 15 Oct 2024 12:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yogQVdnD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A28DC4CEC6;
+	Tue, 15 Oct 2024 12:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996875;
-	bh=sHHAf61EY0euac4ymZO70Zd1EBo2SgmKftgYK5To2RQ=;
+	s=korg; t=1728996878;
+	bh=20xDrth4ul4rwQwi6MeC2q8lrZIWw1A3OFIHxclMR6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExhXXw4sLmsD1pWupHjbvT6MI2uwqYgD0gTm0/4IsWYF5JdWKJrpt1Q+YHJWm39IH
-	 bPZp5T8paSAiZ4RpxwN40UrMg9uVc05xrdLQayR+rSW9fKqj+vOMp3GH2sQZ9V/O/9
-	 oLk26VPt94GiUuZDULOMFIPv/QiQR7od006SN4Xg=
+	b=yogQVdnDD7U2364/GcfCVUgbZGMrocwfXfCELKPV2sQ+7+JbDv356k4YxkIaINg7S
+	 hDSo0suC8TPJGNEWohqX1/fAFlePMBPW2H9syvU/s5SclM7AC1VTPhgKQ95RhbBeIE
+	 GQA54tJj2z/gmW3Wsyfia6/eDq9kzz99NgqV95J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/518] net: dpaa: Pad packets to ETH_ZLEN
-Date: Tue, 15 Oct 2024 14:38:48 +0200
-Message-ID: <20241015123917.932651527@linuxfoundation.org>
+	stable@kernel.org,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 025/518] spi: nxp-fspi: fix the KASAN report out-of-bounds bug
+Date: Tue, 15 Oct 2024 14:38:49 +0200
+Message-ID: <20241015123917.970860892@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,62 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit cbd7ec083413c6a2e0c326d49e24ec7d12c7a9e0 ]
+commit 2a8787c1cdc7be24fdd8953ecd1a8743a1006235 upstream.
 
-When sending packets under 60 bytes, up to three bytes of the buffer
-following the data may be leaked. Avoid this by extending all packets to
-ETH_ZLEN, ensuring nothing is leaked in the padding. This bug can be
-reproduced by running
+Change the memcpy length to fix the out-of-bounds issue when writing the
+data that is not 4 byte aligned to TX FIFO.
 
-	$ ping -s 11 destination
+To reproduce the issue, write 3 bytes data to NOR chip.
 
-Fixes: 9ad1a3749333 ("dpaa_eth: add support for DPAA Ethernet")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240910143144.1439910-1-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+dd if=3b of=/dev/mtd0
+[   36.926103] ==================================================================
+[   36.933409] BUG: KASAN: slab-out-of-bounds in nxp_fspi_exec_op+0x26ec/0x2838
+[   36.940514] Read of size 4 at addr ffff00081037c2a0 by task dd/455
+[   36.946721]
+[   36.948235] CPU: 3 UID: 0 PID: 455 Comm: dd Not tainted 6.11.0-rc5-gc7b0e37c8434 #1070
+[   36.956185] Hardware name: Freescale i.MX8QM MEK (DT)
+[   36.961260] Call trace:
+[   36.963723]  dump_backtrace+0x90/0xe8
+[   36.967414]  show_stack+0x18/0x24
+[   36.970749]  dump_stack_lvl+0x78/0x90
+[   36.974451]  print_report+0x114/0x5cc
+[   36.978151]  kasan_report+0xa4/0xf0
+[   36.981670]  __asan_report_load_n_noabort+0x1c/0x28
+[   36.986587]  nxp_fspi_exec_op+0x26ec/0x2838
+[   36.990800]  spi_mem_exec_op+0x8ec/0xd30
+[   36.994762]  spi_mem_no_dirmap_read+0x190/0x1e0
+[   36.999323]  spi_mem_dirmap_write+0x238/0x32c
+[   37.003710]  spi_nor_write_data+0x220/0x374
+[   37.007932]  spi_nor_write+0x110/0x2e8
+[   37.011711]  mtd_write_oob_std+0x154/0x1f0
+[   37.015838]  mtd_write_oob+0x104/0x1d0
+[   37.019617]  mtd_write+0xb8/0x12c
+[   37.022953]  mtdchar_write+0x224/0x47c
+[   37.026732]  vfs_write+0x1e4/0x8c8
+[   37.030163]  ksys_write+0xec/0x1d0
+[   37.033586]  __arm64_sys_write+0x6c/0x9c
+[   37.037539]  invoke_syscall+0x6c/0x258
+[   37.041327]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.046244]  do_el0_svc+0x44/0x5c
+[   37.049589]  el0_svc+0x38/0x78
+[   37.052681]  el0t_64_sync_handler+0x13c/0x158
+[   37.057077]  el0t_64_sync+0x190/0x194
+[   37.060775]
+[   37.062274] Allocated by task 455:
+[   37.065701]  kasan_save_stack+0x2c/0x54
+[   37.069570]  kasan_save_track+0x20/0x3c
+[   37.073438]  kasan_save_alloc_info+0x40/0x54
+[   37.077736]  __kasan_kmalloc+0xa0/0xb8
+[   37.081515]  __kmalloc_noprof+0x158/0x2f8
+[   37.085563]  mtd_kmalloc_up_to+0x120/0x154
+[   37.089690]  mtdchar_write+0x130/0x47c
+[   37.093469]  vfs_write+0x1e4/0x8c8
+[   37.096901]  ksys_write+0xec/0x1d0
+[   37.100332]  __arm64_sys_write+0x6c/0x9c
+[   37.104287]  invoke_syscall+0x6c/0x258
+[   37.108064]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.112972]  do_el0_svc+0x44/0x5c
+[   37.116319]  el0_svc+0x38/0x78
+[   37.119401]  el0t_64_sync_handler+0x13c/0x158
+[   37.123788]  el0t_64_sync+0x190/0x194
+[   37.127474]
+[   37.128977] The buggy address belongs to the object at ffff00081037c2a0
+[   37.128977]  which belongs to the cache kmalloc-8 of size 8
+[   37.141177] The buggy address is located 0 bytes inside of
+[   37.141177]  allocated 3-byte region [ffff00081037c2a0, ffff00081037c2a3)
+[   37.153465]
+[   37.154971] The buggy address belongs to the physical page:
+[   37.160559] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x89037c
+[   37.168596] flags: 0xbfffe0000000000(node=0|zone=2|lastcpupid=0x1ffff)
+[   37.175149] page_type: 0xfdffffff(slab)
+[   37.179021] raw: 0bfffe0000000000 ffff000800002500 dead000000000122 0000000000000000
+[   37.186788] raw: 0000000000000000 0000000080800080 00000001fdffffff 0000000000000000
+[   37.194553] page dumped because: kasan: bad access detected
+[   37.200144]
+[   37.201647] Memory state around the buggy address:
+[   37.206460]  ffff00081037c180: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
+[   37.213701]  ffff00081037c200: fa fc fc fc 05 fc fc fc 03 fc fc fc 02 fc fc fc
+[   37.220946] >ffff00081037c280: 06 fc fc fc 03 fc fc fc fc fc fc fc fc fc fc fc
+[   37.228186]                                ^
+[   37.232473]  ffff00081037c300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.239718]  ffff00081037c380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.246962] ==================================================================
+[   37.254394] Disabling lock debugging due to kernel taint
+0+1 records in
+0+1 records out
+3 bytes copied, 0.335911 s, 0.0 kB/s
+
+Fixes: a5356aef6a90 ("spi: spi-mem: Add driver for NXP FlexSPI controller")
+Cc: stable@kernel.org
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://patch.msgid.link/20240911211146.3337068-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/dpaa/dpaa_eth.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi-nxp-fspi.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-index 90bd5583ac34..cf7e9b26a0e3 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-@@ -2155,12 +2155,12 @@ static netdev_tx_t
- dpaa_start_xmit(struct sk_buff *skb, struct net_device *net_dev)
- {
- 	const int queue_mapping = skb_get_queue_mapping(skb);
--	bool nonlinear = skb_is_nonlinear(skb);
- 	struct rtnl_link_stats64 *percpu_stats;
- 	struct dpaa_percpu_priv *percpu_priv;
- 	struct netdev_queue *txq;
- 	struct dpaa_priv *priv;
- 	struct qm_fd fd;
-+	bool nonlinear;
- 	int offset = 0;
- 	int err = 0;
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -731,14 +731,15 @@ static void nxp_fspi_fill_txfifo(struct
+ 	if (i < op->data.nbytes) {
+ 		u32 data = 0;
+ 		int j;
++		int remaining = op->data.nbytes - i;
+ 		/* Wait for TXFIFO empty */
+ 		ret = fspi_readl_poll_tout(f, f->iobase + FSPI_INTR,
+ 					   FSPI_INTR_IPTXWE, 0,
+ 					   POLL_TOUT, true);
+ 		WARN_ON(ret);
  
-@@ -2170,6 +2170,13 @@ dpaa_start_xmit(struct sk_buff *skb, struct net_device *net_dev)
- 
- 	qm_fd_clear_fd(&fd);
- 
-+	/* Packet data is always read as 32-bit words, so zero out any part of
-+	 * the skb which might be sent if we have to pad the packet
-+	 */
-+	if (__skb_put_padto(skb, ETH_ZLEN, false))
-+		goto enomem;
-+
-+	nonlinear = skb_is_nonlinear(skb);
- 	if (!nonlinear) {
- 		/* We're going to store the skb backpointer at the beginning
- 		 * of the data buffer, so we need a privately owned skb
--- 
-2.43.0
-
+-		for (j = 0; j < ALIGN(op->data.nbytes - i, 4); j += 4) {
+-			memcpy(&data, buf + i + j, 4);
++		for (j = 0; j < ALIGN(remaining, 4); j += 4) {
++			memcpy(&data, buf + i + j, min_t(int, 4, remaining - j));
+ 			fspi_writel(f, data, base + FSPI_TFDR + j);
+ 		}
+ 		fspi_writel(f, FSPI_INTR_IPTXWE, base + FSPI_INTR);
 
 
