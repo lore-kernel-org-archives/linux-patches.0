@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D841DD0F6;
-	Tue, 15 Oct 2024 13:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0597A227B8C;
+	Tue, 15 Oct 2024 13:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998095; cv=none; b=Qyq2tMPFf3z0qai76C4Qrrb+Lew0uG11Z2GqyCFWPBDbh7N4w3nfz7wGmnZDEOuNSney1caMq+X204NXC+1gTTF0TVPQ+BFjSnPMmdGS+jLnLgLhvaddcB4GiLOFfzXtTh/ee2yUtTU79cHc3uj9Gl4qS2VM81UleTy+OUXC1U0=
+	t=1728998099; cv=none; b=oJxUydxFYTmKZx4JmY0dUNbYETScwcoBJEbuko/lU9kYgwp8+EAD0bKqV/XAuY7VijS7ThvXv52MVj1Gb+AwhdMgkgytySLxUlgvtDOK/BUvF+e2metJg01WUBMFVeO8V46/1irZnY8R0rSLcz5hahZmFJH1FINPylhgahX3RF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998095; c=relaxed/simple;
-	bh=HmZkGp9qmhAx+MhTBlJ3OHaxoTMPsNMiR7AIyeHrl4U=;
+	s=arc-20240116; t=1728998099; c=relaxed/simple;
+	bh=YaTqVhnIFEQW4gA605KUJlajc3mSE02dTrl8GVk0QJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkZvIRz1jbn67ceS8VlW6SIL9isd6ajS+akkRntk5rIuiLdmL5Ftm5GObJgFwLNKD4n+Ayb8/15X5D2OyjRHNS40vpG/YKiTYfH2DqducK32/Y7qZ8DijnF2eTPhjXrnlmaDJTSSVI3QW21X4yLQS+Hz1MZxAOmzor62KotuwNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oG2IqydB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHpnKAyVVVaWd5tCrTKV3DMapMtzTeBycz27jTBTDI6rD2WuELry65hjCH3wf9o9zPlmpQxiybucXdWAWb677UKqnSJ+7kl8PeVflHCLdqraW2HZ45dk+tU8ZAVhrJE/blyGH3tT26ixtlk8sKmrPOYIG5idu3RNZ039jUl4Cz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEnawJlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oG2IqydB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8ACC4CEC6;
-	Tue, 15 Oct 2024 13:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEnawJlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2558BC4CEC6;
+	Tue, 15 Oct 2024 13:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998095;
-	bh=HmZkGp9qmhAx+MhTBlJ3OHaxoTMPsNMiR7AIyeHrl4U=;
+	s=korg; t=1728998098;
+	bh=YaTqVhnIFEQW4gA605KUJlajc3mSE02dTrl8GVk0QJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oG2IqydB/MDNn6+LI5ke3gihkzr8spmT1ypduRWSv5NsyialW99R53qa/+MBNq4+w
-	 TfFxSt4YhDHBzj2/3yiSCDttRCQ/OG+su7kcpYV830cHaWlE97iS7iYhYIW1j3wHDe
-	 viMptwfR5V5FVFCGmcAURNLspYZMiVX/1Fl7wm1k=
+	b=cEnawJlrSuwYRZHANgpmybSmqaS/ns6h6QUPCy5GQAHiBjh5XknHckE5AOT7oXzWp
+	 OIS5+8Sohh71Q07Y2eOJzpKMn/v2uX3lftAzc8I/Bs/UwG/9vkvkjk3W3jURZA38a0
+	 foI2XFlBj8px6ljdmjZwQkrs3FIkNu4DSLaqMdk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 370/518] ext4: no need to continue when the number of entries is 1
-Date: Tue, 15 Oct 2024 14:44:34 +0200
-Message-ID: <20241015123931.254316333@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 379/518] parisc: Fix 64-bit userspace syscall path
+Date: Tue, 15 Oct 2024 14:44:43 +0200
+Message-ID: <20241015123931.598637077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,33 +49,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Helge Deller <deller@kernel.org>
 
-commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
+commit d24449864da5838936669618356b0e30ca2999c3 upstream.
 
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Currently the glibc isn't yet ported to 64-bit for hppa, so
+there is no usable userspace available yet.
+But it's possible to manually build a static 64-bit binary
+and run that for testing. One such 64-bit test program is
+available at http://ftp.parisc-linux.org/src/64bit.tar.gz
+and it shows various issues with the existing 64-bit syscall
+path in the kernel.
+This patch fixes those issues.
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org      # v4.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/syscall.S |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1936,7 +1936,7 @@ static struct ext4_dir_entry_2 *do_split
- 		split = count/2;
+--- a/arch/parisc/kernel/syscall.S
++++ b/arch/parisc/kernel/syscall.S
+@@ -217,10 +217,10 @@ linux_gateway_entry:
  
- 	hash2 = map[split].hash;
--	continued = hash2 == map[split - 1].hash;
-+	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
- 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
- 			(unsigned long)dx_get_block(frame->at),
- 					hash2, split, count-split));
+ #ifdef CONFIG_64BIT
+ 	ldil	L%sys_call_table, %r1
+-	or,=	%r2,%r2,%r2
+-	addil	L%(sys_call_table64-sys_call_table), %r1
++	or,ev	%r2,%r2,%r2
++	ldil	L%sys_call_table64, %r1
+ 	ldo	R%sys_call_table(%r1), %r19
+-	or,=	%r2,%r2,%r2
++	or,ev	%r2,%r2,%r2
+ 	ldo	R%sys_call_table64(%r1), %r19
+ #else
+ 	load32	sys_call_table, %r19
+@@ -355,10 +355,10 @@ tracesys_next:
+ 	extrd,u	%r19,63,1,%r2			/* W hidden in bottom bit */
+ 
+ 	ldil	L%sys_call_table, %r1
+-	or,=	%r2,%r2,%r2
+-	addil	L%(sys_call_table64-sys_call_table), %r1
++	or,ev	%r2,%r2,%r2
++	ldil	L%sys_call_table64, %r1
+ 	ldo	R%sys_call_table(%r1), %r19
+-	or,=	%r2,%r2,%r2
++	or,ev	%r2,%r2,%r2
+ 	ldo	R%sys_call_table64(%r1), %r19
+ #else
+ 	load32	sys_call_table, %r19
+@@ -931,6 +931,8 @@ ENTRY(sys_call_table)
+ END(sys_call_table)
+ 
+ #ifdef CONFIG_64BIT
++#undef __SYSCALL_WITH_COMPAT
++#define __SYSCALL_WITH_COMPAT(nr, native, compat)	__SYSCALL(nr, native)
+ 	.align 8
+ ENTRY(sys_call_table64)
+ #include <asm/syscall_table_64.h>    /* 64-bit native syscalls */
 
 
