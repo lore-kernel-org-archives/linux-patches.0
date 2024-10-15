@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0ED15099D;
-	Tue, 15 Oct 2024 11:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65E91D90CD;
+	Tue, 15 Oct 2024 11:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992276; cv=none; b=YXQ6txu2lT5gQz9/GFOrpiA8drzt+LMr7wAJyWgsKhANVxDvU+PVltg2FMvAEzm+yPLD3Rip/6GaN47cA6o5H1vD4nAoa+5X09UgkGkU0JkwREIEgMzwG+PqF4ImhiQY6CknoqHVpk39ZyBG5vPO26POm3wjwaYF6lOt11XWOtQ=
+	t=1728992279; cv=none; b=mmNYqLWc/F1eEkplwxMu+ClYuKGaClnrkZ95+bfksOQt4HGpIy2XvY9MVFa6W8IoYUCj4t0Itn9XahUjuz/3f2jz8GLIM2Yfqu5iJIgUUR4ab72MxAieJXQSj8dh7wCD5Y2nk8BsVEAVkOxpjAwO55AXAz2UBhAOOviU9eM3ago=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992276; c=relaxed/simple;
-	bh=DIYO2WFXMp+17iS2Q/x+Kq/TuAJiUi8F5gXtoVGfQYA=;
+	s=arc-20240116; t=1728992279; c=relaxed/simple;
+	bh=hY0xNqwJjPGyjy/bqEJB/Ez2e8JFp6pf3pAkslfpOx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrJBRNORasl6gWhG81Bneg0ADkZIY8uYRmhdKovN8gzyzkP0odjIjZbNOjtXlxO7xUl9SgXlZ2yR7fjdSamQhcznoJXvqusqPXl9arUsuWGaW964++awGT9ayen/ukdNMXk2dxLmNnrYMm3IRXcrfLGj+TyLuOpVi44Ij9rOmmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I356AxbM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XH3gE20BTEPDabtzabmoglrawWwwT+jjO7K/kdw7iFepYF/6wVRTCpMBx1xeOsBh68MvQdLSZMlbu5GotmsGBfh6H026sqfGoW+bOipbVyLPIwHiqBC1zZzl+GAcpWytO6+8sQmfPn7o5pol1YqZ36FfrXrTl9RLF4ocsVrWnjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fIW9Te8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I356AxbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7ABC4CEC6;
-	Tue, 15 Oct 2024 11:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fIW9Te8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4DBC4CECE;
+	Tue, 15 Oct 2024 11:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992276;
-	bh=DIYO2WFXMp+17iS2Q/x+Kq/TuAJiUi8F5gXtoVGfQYA=;
+	s=korg; t=1728992279;
+	bh=hY0xNqwJjPGyjy/bqEJB/Ez2e8JFp6pf3pAkslfpOx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I356AxbM1Qrm2oGn+BM9AlCrdpPo0CqgKhyxGAAFRzkAd7Bx7Yn67SrWyd3MsvJjo
-	 c8UGt1vGufjFXzq7yDi7b2gIJ4excAkAJymu8Whr5CGpNywOrr+3Y+5b+zeljCmLtK
-	 eMXdWUCxKwfDWjfg2IfcBWrIiSTQJc0GDru8nEto=
+	b=0fIW9Te8RVAwOHIqiwZJcggZcq/ABKYetNRHEFEP0riFzYxu0kiN0NmXoEMC4ROPB
+	 rY0zFLAAcVrhcu0IkqtRVnieA5S7iUZ2o86CuhT7YlsuqpB+YYqNXTf9o30gso5g+0
+	 jYb6umHL+jWuVTjB75rySvfecHItjV0pEs+pV9q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/691] wifi: iwlwifi: mvm: dont wait for tx queues if firmware is dead
-Date: Tue, 15 Oct 2024 13:20:17 +0200
-Message-ID: <20241015112443.093298282@linuxfoundation.org>
+Subject: [PATCH 5.15 070/691] wifi: iwlwifi: clear trans->state earlier upon error
+Date: Tue, 15 Oct 2024 13:20:18 +0200
+Message-ID: <20241015112443.132354638@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,54 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 3a84454f5204718ca5b4ad2c1f0bf2031e2403d1 ]
+[ Upstream commit 094513f8a2fbddee51b055d8035f995551f98fce ]
 
-There is a WARNING in iwl_trans_wait_tx_queues_empty() (that was
-recently converted from just a message), that can be hit if we
-wait for TX queues to become empty after firmware died. Clearly,
-we can't expect anything from the firmware after it's declared dead.
+When the firmware crashes, we first told the op_mode and only then,
+changed the transport's state. This is a problem if the op_mode's
+nic_error() handler needs to send a host command: it'll see that the
+transport's state still reflects that the firmware is alive.
 
-Don't call iwl_trans_wait_tx_queues_empty() in this case. While it could
-be a good idea to stop the flow earlier, the flush functions do some
-maintenance work that is not related to the firmware, so keep that part
-of the code running even when the firmware is not running.
+Today, this has no consequences since we set the STATUS_FW_ERROR bit and
+that will prevent sending host commands. iwl_fw_dbg_stop_restart_recording
+looks at this bit to know not to send a host command for example.
+
+To fix the hibernation, we needed to reset the firmware without having
+an error and checking STATUS_FW_ERROR to see whether the firmware is
+alive will no longer hold, so this change is necessary as well.
+
+Change the flow a bit.
+Change trans->state before calling the op_mode's nic_error() method and
+check trans->state instead of STATUS_FW_ERROR. This will keep the
+current behavior of iwl_fw_dbg_stop_restart_recording upon firmware
+error, and it'll allow us to call iwl_fw_dbg_stop_restart_recording
+safely even if STATUS_FW_ERROR is clear, but yet, the firmware is not
+alive.
 
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.a7cbd794cee9.I44a739fbd4ffcc46b83844dd1c7b2eb0c7b270f6@changeid
-[edit commit message]
+Link: https://patch.msgid.link/20240825191257.9d7427fbdfd7.Ia056ca57029a382c921d6f7b6a6b28fc480f2f22@changeid
+[I missed this was a dependency for the hibernation fix, changed
+ the commit message a bit accordingly]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c    | 2 +-
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index fa7de3e47b8cc..0e2841fc84dcd 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -4776,6 +4776,10 @@ static void iwl_mvm_flush_no_vif(struct iwl_mvm *mvm, u32 queues, bool drop)
- 	int i;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index f34a02b33ccd4..fc630a0d9c83c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -2862,7 +2862,7 @@ void iwl_fw_dbg_stop_restart_recording(struct iwl_fw_runtime *fwrt,
+ {
+ 	int ret __maybe_unused = 0;
  
- 	if (!iwl_mvm_has_new_tx_api(mvm)) {
-+		/* we can't ask the firmware anything if it is dead */
-+		if (test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
-+			     &mvm->status))
-+			return;
- 		if (drop) {
- 			mutex_lock(&mvm->mutex);
- 			iwl_mvm_flush_tx_path(mvm,
-@@ -4857,8 +4861,11 @@ static void iwl_mvm_mac_flush(struct ieee80211_hw *hw,
+-	if (test_bit(STATUS_FW_ERROR, &fwrt->trans->status))
++	if (!iwl_trans_fw_running(fwrt->trans))
+ 		return;
  
- 	/* this can take a while, and we may need/want other operations
- 	 * to succeed while doing this, so do it without the mutex held
-+	 * If the firmware is dead, this can't work...
- 	 */
--	if (!drop && !iwl_mvm_has_new_tx_api(mvm))
-+	if (!drop && !iwl_mvm_has_new_tx_api(mvm) &&
-+	    !test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
-+		      &mvm->status))
- 		iwl_trans_wait_tx_queues_empty(mvm->trans, msk);
+ 	if (fw_has_capa(&fwrt->fw->ucode_capa,
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index a2919a32d7081..d2b31599340fc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -1393,8 +1393,8 @@ static inline void iwl_trans_fw_error(struct iwl_trans *trans, bool sync)
+ 
+ 	/* prevent double restarts due to the same erroneous FW */
+ 	if (!test_and_set_bit(STATUS_FW_ERROR, &trans->status)) {
+-		iwl_op_mode_nic_error(trans->op_mode, sync);
+ 		trans->state = IWL_TRANS_NO_FW;
++		iwl_op_mode_nic_error(trans->op_mode, sync);
+ 	}
  }
  
 -- 
