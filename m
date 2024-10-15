@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B2E1C07DF;
-	Tue, 15 Oct 2024 13:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FDD1C07DF;
+	Tue, 15 Oct 2024 13:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997977; cv=none; b=k5umUc5Q3/W9GUhnLblvby4WvE4fQAo4G6KDX01TlyLf6OA8eqTUSV9nQms8O4oAl54rAXtCrUA10WDaMEqZ5hCdJWVKDElVX9O+axSz4tUisu/cU7gqxeXqwGWMk/cd4GyAnzvejJ/QhwLqrMIZlFXqVHfRnOch9rdmunsy8Ac=
+	t=1728997981; cv=none; b=WFf0VKY9vY4CdOuIrS//3ZmxcufFPIQjXsFzKXht917MK41K7TxfOk3S1X2oZ2X8mckheniDg9UF8+fcSv0JPm1gZbeovemGI+A3N346JEKPtet9lGUPmup/SMkvUHVbltOvghLS4w35Gvj461exzneaAnHj368edkBRxpEMmiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997977; c=relaxed/simple;
-	bh=WAtzophLqe3yQ4EvHb/egoQUN3loa3rmaaHn2sVkxds=;
+	s=arc-20240116; t=1728997981; c=relaxed/simple;
+	bh=bUNjnbvIhhmWFwmGbTewMxwtnb1Uo1qr+yOp0+mbjpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HsDgDzITrHXZ58v4aYEcBK7CN9IfQi1RF9lxSoywaBtHl0DdBfFO2P9wVF8ProaPEik3bxIdURo3EphkoybY+MmBrh8F8m9bkHRuIOS3jTOsmVEQI2uqHI4puX/c45u5fs1NhA9rp8OXVKN4g2X/Hpz2oiJMwrVVRXn9ormr8vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdoh/pM7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJyJHmy+Vz6jRrKVOIKpH73iEUBNLggu/iF+Pu4xQG2g6Qhpq5rR+7xNzR/rsXPI8mFxhgx+pRNxc15qOuWshK31JGCf/Oe99kLg5FFabzeUtLy9n1cMPZc7ovjDT88j1W/M+K78z9vw+zOt/qnQ37nBOqkgLnA15//EQ6auvOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDN0aHWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdoh/pM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4B7C4CEC6;
-	Tue, 15 Oct 2024 13:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDN0aHWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78154C4CEC6;
+	Tue, 15 Oct 2024 13:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997977;
-	bh=WAtzophLqe3yQ4EvHb/egoQUN3loa3rmaaHn2sVkxds=;
+	s=korg; t=1728997980;
+	bh=bUNjnbvIhhmWFwmGbTewMxwtnb1Uo1qr+yOp0+mbjpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdoh/pM7UwPRCpppHMMY7caeD0uGiOfgWL5IMErLj1Vusjib/mVyHJrza7QlrCEd3
-	 53uxltTAs+yEL816N/jHfVeeZtvWaWU4+IgMjGJAbBjxUqRCCyLo2LwdcbUzVKSybw
-	 M4DD7VvjDp5wSylBTEpXzeGdcnnWWWGBCqe/OWjk=
+	b=vDN0aHWqJmLZAB+stv4ow3G3OXm77vJf01QXkTXud7TsUffToSmcrvqQXierzIZfG
+	 XbbkzWqsLT7ULVWKB+gkUI5oEcBmkbVPW4an1xKlafdVB4qVfD7WFUaKz+8Lbdk5ZA
+	 X0WISvjWT2CUInXvqYVUny7W8o46okP9t8BLP6Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 336/518] jfs: check if leafidx greater than num leaves per dmap tree
-Date: Tue, 15 Oct 2024 14:44:00 +0200
-Message-ID: <20241015123929.942166467@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 345/518] drm/amd/display: Initialize get_bytes_per_elements default to 1
+Date: Tue, 15 Oct 2024 14:44:09 +0200
+Message-ID: <20241015123930.287173796@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,50 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
+[ Upstream commit 4067f4fa0423a89fb19a30b57231b384d77d2610 ]
 
-syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
-than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
+Variables, used as denominators and maybe not assigned to other values,
+should not be 0. bytes_per_element_y & bytes_per_element_c are
+initialized by get_bytes_per_element() which should never return 0.
 
-Shaggy:
-Modified sanity check to apply to control pages as well as leaf pages.
+This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
 
-Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c | 2 +-
+ .../gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 750853367d4ff..8efd93992946b 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3006,9 +3006,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
+index 6a6d5970d1d58..0388694572f58 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
+@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
+ 
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
  {
- 	int ti, n = 0, k, x = 0;
--	int max_size;
-+	int max_size, max_idx;
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
  
- 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
-+	max_idx = is_ctl ? LPERCTL : LPERDMAP;
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
+index dc1c81a6e3771..8593fd07116a7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
+@@ -53,7 +53,7 @@ static void calculate_ttu_cursor(
  
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -3040,6 +3041,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- 		 */
- 		assert(n < 4);
- 	}
-+	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
-+		return -ENOSPC;
+ static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
+ {
+-	unsigned int ret_val = 0;
++	unsigned int ret_val = 1;
  
- 	/* set the return to the leftmost leaf describing sufficient
- 	 * free space.
+ 	if (source_format == dm_444_16) {
+ 		if (!is_chroma)
 -- 
 2.43.0
 
