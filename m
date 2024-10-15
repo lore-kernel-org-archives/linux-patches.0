@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4BF1D90A4;
-	Tue, 15 Oct 2024 13:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F74B1C4A01;
+	Tue, 15 Oct 2024 13:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998188; cv=none; b=Mf+fj5TSnxqBqLalmrw/LELzF9SknolaLTFYfadF9WT/mTyKqGKBNmLFchGgLsr4SSYXEaqiLthReZtYNn3wMU7ML8X08DdEMif6eOdFUpVasUfx/cDoxblEdCt7FCZ183D3O7FMhJ/GNoHBNV/IdIUrEb4qTbHKFSeuBhoIWns=
+	t=1728998194; cv=none; b=MhWr6k30KCcJHB5lhAwFpuMAHS46Mt98UKo9+uymHvRZTF8CK0aXbmwt18h4BncOcXcmS3pMv795twjqw0pZdsFvwGrximpfDspTusCV20iCXcz1+pWQ0NnELnjHhZ9RwOPuy1JOqy0OyyKJ9TlZ3U/a1BYxM5eA0Okwb0tAIJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998188; c=relaxed/simple;
-	bh=mG8n070ZwCr5MsQK2C3UD9fVa6fv4bh4c3y8UJ3XqaQ=;
+	s=arc-20240116; t=1728998194; c=relaxed/simple;
+	bh=9TJDSnKGdrZpqS04N/FLRIUZcXjTnwXxNLT+TImGGzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K49R4c9uKi1eaA8AAFPax3IExsTFAeZ8OhBomeBhTUZmMJCU5EbH0QuRgM5/hFjnRl/8cBSDYqVkD4BwB2tgj7BlbnSb/d/1R1ebC00aNTIaBqrkSQNDubrhjK8DhaNK2R8I6OK05iWaLiI581WAHN0svr7vOyWLX11Mwef+La4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGBEqOIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCd9wR8aE1CkQ4hQDj5fecH3slF2VyEQ6CfuNN2z4yHpK1qwEo3cI+VgJkoGRtk032O23XEH3xT2mITnM56xPlmSq+Q+Heqzru6c38n9GJhJU83+LwetVlZ7EOYnyVOO1IhKDJ8j4j0x0H0gaZzqu4P+ce1asfCgg1Mhw2lid2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA0Ju8fC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGBEqOIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A74C4CEC6;
-	Tue, 15 Oct 2024 13:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA0Ju8fC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47002C4CECE;
+	Tue, 15 Oct 2024 13:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998188;
-	bh=mG8n070ZwCr5MsQK2C3UD9fVa6fv4bh4c3y8UJ3XqaQ=;
+	s=korg; t=1728998193;
+	bh=9TJDSnKGdrZpqS04N/FLRIUZcXjTnwXxNLT+TImGGzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGBEqOIe35zOQPbBLZwh1TqEKumssurAFK9JJ3Se1x6XtDNWrhqCxWlz3f1u/SZQB
-	 GkCHPi8rV7wqklFwFSACniefSuKUeuP+8FdzAhBkVNPwbyeb1GKtGLOqmK/QfqQG1f
-	 LQJZUsFVJQ808cJqkeYa/VMMotinr+NtMbTM4ayw=
+	b=iA0Ju8fCOSGs2a4k2Y4en2aXYQiqAQr3LxcJVL1FIpntQkCU+kQSLgVT8a4IZvPas
+	 QND+peoCnM1IHjOid/ZZ8Rr6cMnR8CcPCoJwf+0OyyhUCvQ7QldpuC0jgrP0m5I4kk
+	 vEPJOSTcAyhyvVxO6YJ8t8xM2p3oG5pwWFK/1CpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 373/518] ext4: fix incorrect tid assumption in __jbd2_log_wait_for_space()
-Date: Tue, 15 Oct 2024 14:44:37 +0200
-Message-ID: <20241015123931.368346943@linuxfoundation.org>
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 374/518] ext4: drop ppath from ext4_ext_replay_update_ex() to avoid double-free
+Date: Tue, 15 Oct 2024 14:44:38 +0200
+Message-ID: <20241015123931.406002572@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,48 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 972090651ee15e51abfb2160e986fa050cfc7a40 upstream.
+commit 5c0f4cc84d3a601c99bc5e6e6eb1cbda542cce95 upstream.
 
-Function __jbd2_log_wait_for_space() assumes that '0' is not a valid value
-for transaction IDs, which is incorrect.  Don't assume that and invoke
-jbd2_log_wait_commit() if the journal had a committing transaction instead.
+When calling ext4_force_split_extent_at() in ext4_ext_replay_update_ex(),
+the 'ppath' is updated but it is the 'path' that is freed, thus potentially
+triggering a double-free in the following process:
 
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240724161119.13448-3-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+ext4_ext_replay_update_ex
+  ppath = path
+  ext4_force_split_extent_at(&ppath)
+    ext4_split_extent_at
+      ext4_ext_insert_extent
+        ext4_ext_create_new_leaf
+          ext4_ext_grow_indepth
+            ext4_find_extent
+              if (depth > path[0].p_maxdepth)
+                kfree(path)                 ---> path First freed
+                *orig_path = path = NULL    ---> null ppath
+  kfree(path)                               ---> path double-free !!!
+
+So drop the unnecessary ppath and use path directly to avoid this problem.
+And use ext4_find_extent() directly to update path, avoiding unnecessary
+memory allocation and freeing. Also, propagate the error returned by
+ext4_find_extent() instead of using strange error codes.
+
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
 Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-8-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ext4/extents.c |   21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -115,9 +115,12 @@ __releases(&journal->j_state_lock)
- 		if (space_left < nblocks) {
- 			int chkpt = journal->j_checkpoint_transactions != NULL;
- 			tid_t tid = 0;
-+			bool has_transaction = false;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5928,7 +5928,7 @@ out:
+ int ext4_ext_replay_update_ex(struct inode *inode, ext4_lblk_t start,
+ 			      int len, int unwritten, ext4_fsblk_t pblk)
+ {
+-	struct ext4_ext_path *path = NULL, *ppath;
++	struct ext4_ext_path *path;
+ 	struct ext4_extent *ex;
+ 	int ret;
  
--			if (journal->j_committing_transaction)
-+			if (journal->j_committing_transaction) {
- 				tid = journal->j_committing_transaction->t_tid;
-+				has_transaction = true;
-+			}
- 			spin_unlock(&journal->j_list_lock);
- 			write_unlock(&journal->j_state_lock);
- 			if (chkpt) {
-@@ -125,7 +128,7 @@ __releases(&journal->j_state_lock)
- 			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
- 				/* We were able to recover space; yay! */
- 				;
--			} else if (tid) {
-+			} else if (has_transaction) {
- 				/*
- 				 * jbd2_journal_commit_transaction() may want
- 				 * to take the checkpoint_mutex if JBD2_FLUSHED
+@@ -5944,30 +5944,29 @@ int ext4_ext_replay_update_ex(struct ino
+ 	if (le32_to_cpu(ex->ee_block) != start ||
+ 		ext4_ext_get_actual_len(ex) != len) {
+ 		/* We need to split this extent to match our extent first */
+-		ppath = path;
+ 		down_write(&EXT4_I(inode)->i_data_sem);
+-		ret = ext4_force_split_extent_at(NULL, inode, &ppath, start, 1);
++		ret = ext4_force_split_extent_at(NULL, inode, &path, start, 1);
+ 		up_write(&EXT4_I(inode)->i_data_sem);
+ 		if (ret)
+ 			goto out;
+-		kfree(path);
+-		path = ext4_find_extent(inode, start, NULL, 0);
++
++		path = ext4_find_extent(inode, start, &path, 0);
+ 		if (IS_ERR(path))
+-			return -1;
+-		ppath = path;
++			return PTR_ERR(path);
+ 		ex = path[path->p_depth].p_ext;
+ 		WARN_ON(le32_to_cpu(ex->ee_block) != start);
++
+ 		if (ext4_ext_get_actual_len(ex) != len) {
+ 			down_write(&EXT4_I(inode)->i_data_sem);
+-			ret = ext4_force_split_extent_at(NULL, inode, &ppath,
++			ret = ext4_force_split_extent_at(NULL, inode, &path,
+ 							 start + len, 1);
+ 			up_write(&EXT4_I(inode)->i_data_sem);
+ 			if (ret)
+ 				goto out;
+-			kfree(path);
+-			path = ext4_find_extent(inode, start, NULL, 0);
++
++			path = ext4_find_extent(inode, start, &path, 0);
+ 			if (IS_ERR(path))
+-				return -EINVAL;
++				return PTR_ERR(path);
+ 			ex = path[path->p_depth].p_ext;
+ 		}
+ 	}
 
 
