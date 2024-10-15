@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB96C1C07C9;
-	Tue, 15 Oct 2024 13:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBC51C07C4;
+	Tue, 15 Oct 2024 13:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997224; cv=none; b=BQhXYT+l3/bRRCZO2uy07h7Fbhzq9jV7O0MhLhT1/VS3cV/Odhx0fClVxS+zAeyIpExYfH+iAfGySdu6iHJzZ58KwZcA3DN9+07iogNgi9LkGSCbSDpdHGcwLaiaYHrioEadu/GVwh+5C5qy9Ru4MtEx4irE7Zu9GVO9Lg55chg=
+	t=1728997228; cv=none; b=jjcWy1rXVaY5vCjrwt4FsYo0kFHTqjVOd9MHJwbuYZzi/Z+gha0fxr9gRafLF7muto3DYtB++FwG/R78FySuLkSP56SlDuGqaQxB8R83/RQlK8nX268EVdg/2oN83i3YZ2XC6ZwatFZwaw29ke/FAiDQafSutvzrXO/zXeXnx+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997224; c=relaxed/simple;
-	bh=tseIqRELrryyXVkJdwawwaVJ7y24KGtdiQ1uqe8yXvI=;
+	s=arc-20240116; t=1728997228; c=relaxed/simple;
+	bh=6U8ngyw/hew8wGJN5lRNKEu26UfZsSCY3n95w6rl6/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phQLo8efYaNEikohWouDNV7mDjlN7XtHCIf2V4BmATxBD+4RPLx4/ijsEMlDYr/2O9GmGfk3smBmpj+yPN8BYHGJGeBmz/uprecX1DB9fud1HE+LMUK77r3SBkIoGwnYFRaeEkvQFPC+nNrGdj/WIpNF/oX0dEglpnf8I0ckuHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1ITV8RS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3SARsAh11RpwDEyspLKs2QfqKXvi1SSj9qjoJiHawgQjTglR9pj5Nag0s9WUn1FeKr7wfFZza+Rl4OlBSBXFonvn2SEo8n7CTIJKXWtF5eHEr7Zmc1GSLc/kFjywEVfux0ka3zQKWz6DHtjQE3qeyKlJq73a7voJqkZs7OX65M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHKJKM8s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1ITV8RS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2996C4CEC6;
-	Tue, 15 Oct 2024 13:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHKJKM8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B36C4CEC6;
+	Tue, 15 Oct 2024 13:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997224;
-	bh=tseIqRELrryyXVkJdwawwaVJ7y24KGtdiQ1uqe8yXvI=;
+	s=korg; t=1728997227;
+	bh=6U8ngyw/hew8wGJN5lRNKEu26UfZsSCY3n95w6rl6/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1ITV8RSdvCBIG8uiHHHU4VJshne5DbI0dTSSw3EuLiZdWOaXBYDj9jooueswRPh/
-	 dpthNNBSmh4Kaa0SZhT044b1NddLqyBw/DeX5XHDfUXsWI5WNFOBeV1MyeFzlzLjvv
-	 /Xmva1Oaj9W8t8+Z9OCSG39cyzc1dVwp79h4jCLg=
+	b=bHKJKM8sHtyldR/N9KZ611GR+rzA3IOQHf3WT0BUgK8I2JZYycUmYMnnxc6TnBmPq
+	 m1CbXHGd2CBAovNJleB/ldKKxgupN7RKctYP74rfVf2A2eWN6iersyZ95cd4MkPn70
+	 WsGEtwBv6ecAiaxwXLxIyAeM8XhFXt7Z0+fFrdx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 122/518] jfs: fix out-of-bounds in dbNextAG() and diAlloc()
-Date: Tue, 15 Oct 2024 14:40:26 +0200
-Message-ID: <20241015123921.704478703@linuxfoundation.org>
+Subject: [PATCH 5.10 123/518] drm/msm: Fix incorrect file name output in adreno_request_fw()
+Date: Tue, 15 Oct 2024 14:40:27 +0200
+Message-ID: <20241015123921.743292314@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit e63866a475562810500ea7f784099bfe341e761a ]
+[ Upstream commit e19366911340c2313a1abbb09c54eaf9bdea4f58 ]
 
-In dbNextAG() , there is no check for the case where bmp->db_numag is
-greater or same than MAXAG due to a polluted image, which causes an
-out-of-bounds. Therefore, a bounds check should be added in dbMount().
+In adreno_request_fw() when debugging information is printed to the log
+after firmware load, an incorrect filename is printed. 'newname' is used
+instead of 'fwname', so prefix "qcom/" is being added to filename.
+Looks like "copy-paste" mistake.
 
-And in dbNextAG(), a check for the case where agpref is greater than
-bmp->db_numag should be added, so an out-of-bounds exception should be
-prevented.
+Fix this mistake by replacing 'newname' with 'fwname'.
 
-Additionally, a check for the case where agno is greater or same than
-MAXAG should be added in diAlloc() to prevent out-of-bounds.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Reported-by: Jeongjun Park <aha310510@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: 2c41ef1b6f7d ("drm/msm/adreno: deal with linux-firmware fw paths")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602382/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 4 ++--
- fs/jfs/jfs_imap.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 9b6849b9bfdb9..801996da08a45 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -187,7 +187,7 @@ int dbMount(struct inode *ipbmap)
- 	}
- 
- 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
--	if (!bmp->db_numag) {
-+	if (!bmp->db_numag || bmp->db_numag >= MAXAG) {
- 		err = -EINVAL;
- 		goto err_release_metapage;
- 	}
-@@ -652,7 +652,7 @@ int dbNextAG(struct inode *ipbmap)
- 	 * average free space.
- 	 */
- 	for (i = 0 ; i < bmp->db_numag; i++, agpref++) {
--		if (agpref == bmp->db_numag)
-+		if (agpref >= bmp->db_numag)
- 			agpref = 0;
- 
- 		if (atomic_read(&bmp->db_active[agpref]))
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index 36ed756820648..da3a1c27d3498 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -1362,7 +1362,7 @@ int diAlloc(struct inode *pip, bool dir, struct inode *ip)
- 	/* get the ag number of this iag */
- 	agno = BLKTOAG(JFS_IP(pip)->agstart, JFS_SBI(pip->i_sb));
- 	dn_numag = JFS_SBI(pip->i_sb)->bmap->db_numag;
--	if (agno < 0 || agno > dn_numag)
-+	if (agno < 0 || agno > dn_numag || agno >= MAXAG)
- 		return -EIO;
- 
- 	if (atomic_read(&JFS_SBI(pip->i_sb)->bmap->db_active[agno])) {
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index a5f95801adfe9..773bd463ad47e 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -308,7 +308,7 @@ adreno_request_fw(struct adreno_gpu *adreno_gpu, const char *fwname)
+ 		ret = request_firmware_direct(&fw, fwname, drm->dev);
+ 		if (!ret) {
+ 			DRM_DEV_INFO(drm->dev, "loaded %s from legacy location\n",
+-				newname);
++				fwname);
+ 			adreno_gpu->fwloc = FW_LOCATION_LEGACY;
+ 			goto out;
+ 		} else if (adreno_gpu->fwloc != FW_LOCATION_UNKNOWN) {
 -- 
 2.43.0
 
