@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1571D0492;
-	Tue, 15 Oct 2024 11:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651F51D0492;
+	Tue, 15 Oct 2024 11:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993335; cv=none; b=d+OK222LO5xESm2EcaaSpK7u1YY6Mh70Qcx2ex/fyHdjvi1Xzmy0Yy2nK0sLMSt/MXvBB+8S6C5Z2YKfDPo5STmymM3uwkbCsg4iPi1sttAWnNyarXtQCdgONi1pK37DifffpbCl0YvKWkOrddgAvYtAuqVBZ6nud+bHdZVD1jA=
+	t=1728993338; cv=none; b=izc832n8iDxct2TPW40FCmYxoLniFpGU9WZJ+fF0ArT1/CBg0uU4/OAAFlThxIuVz+/i1E/moGAooGrbvyESLokm5k3D9uV8G7mnRqthY/4eHP7NqvOgcfrhSx3sy95X9e/f3VZCHT61k5+Hbaow1FEZ5rPE4uQQF9VgFIWx6hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993335; c=relaxed/simple;
-	bh=EHN/7tXlZwGabVsk7kgKFgceN9MubP88Xdcs7Il9a4I=;
+	s=arc-20240116; t=1728993338; c=relaxed/simple;
+	bh=mwIrPCEULNMX4PIYaZg66QDT5d5WWy6WFWkru5masOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfmoSV9mXmKbopUvzWdzqFfqWSY4S4RdxNfAHTZFBX0l+4Y827zH2g9RqE/9gVRAYjmpX9Qw2Vss8/+BUeNUybXbG9a8d2i2OGeOyWDqpuobtqnOz5NCAp5hCPVO87vzFISPy1lMgYpqgqTAc3z6oNXkDLAXWaUHCamo37QV2+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Am0C7sx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOjlbLgNmHjX3VFNWNePXXv86bkJCB1lGATyM60vZFyy2DAXp3Jn0hKxGKX51v9PEU025OKKGcmtmyXUhsL2GN//nK7S32Jg1G3LsptJumO5NG+3sjJVKaTLzs/tOQma1q5AUy4K1Jhi1D/P+qLJJy8xdNLmoXOrvlkUKzmNR8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8qafZXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Am0C7sx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531E4C4CEC6;
-	Tue, 15 Oct 2024 11:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8qafZXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73A0C4CEC6;
+	Tue, 15 Oct 2024 11:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993334;
-	bh=EHN/7tXlZwGabVsk7kgKFgceN9MubP88Xdcs7Il9a4I=;
+	s=korg; t=1728993338;
+	bh=mwIrPCEULNMX4PIYaZg66QDT5d5WWy6WFWkru5masOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Am0C7sx4C37t0RYmlqhvxKuGTq2SWk47r7YFZwWqDLUIwSbGjsw6Kyv/G9ugvCNl
-	 Plqagt5SEg+w13i4BfoffmYvOUem9kjMS9AeiQGr7tYswImiPryuP8//TKvq4vCjRE
-	 gz/S40tZSSr7YvD2Vn1FnYonf+yZotRGcXhHmgrg=
+	b=B8qafZXeW0YX7qDeRTofLzOfMc6DLZswfCw0S5so1WNLhQMlbZMGpPVLz7ni4SJcQ
+	 547SKywxwIgrMZgKNo2VUCa5PiNJSGLD8Fjm4PGCWXHLMVZFtNAgnYz1kk5pX/xNy/
+	 xhtx3X8O7ps4vixhtqQdV/kkr2vxCxuZ4yONtv6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanyuan Zhong <yzhong@purestorage.com>,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 379/691] net/mlx5: Added cond_resched() to crdump collection
-Date: Tue, 15 Oct 2024 13:25:27 +0200
-Message-ID: <20241015112455.387910512@linuxfoundation.org>
+Subject: [PATCH 5.15 350/691] soc: versatile: realview: fix memory leak during device remove
+Date: Tue, 15 Oct 2024 13:24:58 +0200
+Message-ID: <20241015112454.236753725@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,81 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ec793155894140df7421d25903de2e6bc12c695b ]
+[ Upstream commit 1c4f26a41f9d052f334f6ae629e01f598ed93508 ]
 
-Collecting crdump involves reading vsc registers from pci config space
-of mlx device, which can take long time to complete. This might result
-in starving other threads waiting to run on the cpu.
+If device is unbound, the memory allocated for soc_dev_attr should be
+freed to prevent leaks.
 
-Numbers I got from testing ConnectX-5 Ex MCX516A-CDAT in the lab:
-
-- mlx5_vsc_gw_read_block_fast() was called with length = 1310716.
-- mlx5_vsc_gw_read_fast() reads 4 bytes at a time. It was not used to
-  read the entire 1310716 bytes. It was called 53813 times because
-  there are jumps in read_addr.
-- On average mlx5_vsc_gw_read_fast() took 35284.4ns.
-- In total mlx5_vsc_wait_on_flag() called vsc_read() 54707 times.
-  The average time for each call was 17548.3ns. In some instances
-  vsc_read() was called more than one time when the flag was not set.
-  As expected the thread released the cpu after 16 iterations in
-  mlx5_vsc_wait_on_flag().
-- Total time to read crdump was 35284.4ns * 53813 ~= 1.898s.
-
-It was seen in the field that crdump can take more than 5 seconds to
-complete. During that time mlx5_vsc_wait_on_flag() did not release the
-cpu because it did not complete 16 iterations. It is believed that pci
-config reads were slow. Adding cond_resched() every 128 register read
-improves the situation. In the common case the, crdump takes ~1.8989s,
-the thread yields the cpu every ~4.51ms. If crdump takes ~5s, the thread
-yields the cpu every ~18.0ms.
-
-Fixes: 8b9d8baae1de ("net/mlx5: Add Crdump support")
-Reviewed-by: Yuanyuan Zhong <yzhong@purestorage.com>
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-2-ff4b35abed83@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: c774f2564c00 ("soc: versatile: realview: fix soc_dev leak during device remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/soc/versatile/soc-realview.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
-index 6b774e0c27665..c14f9529c25f2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/pci_vsc.c
-@@ -24,6 +24,11 @@
- 	pci_write_config_dword((dev)->pdev, (dev)->vsc_addr + (offset), (val))
- #define VSC_MAX_RETRIES 2048
+diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
+index c6876d232d8fd..d304ee69287af 100644
+--- a/drivers/soc/versatile/soc-realview.c
++++ b/drivers/soc/versatile/soc-realview.c
+@@ -93,7 +93,7 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(syscon_regmap))
+ 		return PTR_ERR(syscon_regmap);
  
-+/* Reading VSC registers can take relatively long time.
-+ * Yield the cpu every 128 registers read.
-+ */
-+#define VSC_GW_READ_BLOCK_COUNT 128
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
+ 
+@@ -106,10 +106,9 @@ static int realview_soc_probe(struct platform_device *pdev)
+ 	soc_dev_attr->family = "Versatile";
+ 	soc_dev_attr->custom_attr_group = realview_groups[0];
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		kfree(soc_dev_attr);
++	if (IS_ERR(soc_dev))
+ 		return -ENODEV;
+-	}
 +
- enum {
- 	VSC_CTRL_OFFSET = 0x4,
- 	VSC_COUNTER_OFFSET = 0x8,
-@@ -269,6 +274,7 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
- {
- 	unsigned int next_read_addr = 0;
- 	unsigned int read_addr = 0;
-+	unsigned int count = 0;
- 
- 	while (read_addr < length) {
- 		if (mlx5_vsc_gw_read_fast(dev, read_addr, &next_read_addr,
-@@ -276,6 +282,10 @@ int mlx5_vsc_gw_read_block_fast(struct mlx5_core_dev *dev, u32 *data,
- 			return read_addr;
- 
- 		read_addr = next_read_addr;
-+		if (++count == VSC_GW_READ_BLOCK_COUNT) {
-+			cond_resched();
-+			count = 0;
-+		}
- 	}
- 	return length;
- }
+ 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
+ 			  &realview_coreid);
+ 	if (ret)
 -- 
 2.43.0
 
